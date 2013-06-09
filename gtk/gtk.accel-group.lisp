@@ -83,8 +83,6 @@
     gtk-accel-group-modifier-mask
     "modifier-mask" "GdkModifierType" t nil)))
 
-;;; --- gtk-accel-group --------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-accel-group 'type)
  "@version{2013-4-22}
@@ -365,6 +363,8 @@
   (acceleratable g-object)
   (accel-key :uint)
   (accel-mods gdk-modifier-type))
+
+(export 'gtk-accel-group-activate)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_accel_group_lock ()

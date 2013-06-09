@@ -30,13 +30,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; GtkAdjustment
-;;; 
+;;;
 ;;; A representation of an adjustable bounded value
-;;;     
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;;     GtkAdjustment
-;;;     
+;;;
 ;;;     gtk_adjustment_new
 ;;;     gtk_adjustment_get_value
 ;;;     gtk_adjustment_set_value
@@ -373,13 +373,11 @@
 
 (defcfun ("gtk_adjustment_changed" gtk-adjustment-changed) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-5-23}
+ "@version{2013-6-4}
   @argument[adjustment]{a @class{gtk-adjustment} object}
-  @begin{short}
-    Emits a \"changed\" signal from the @class{gtk-adjustment}. This is
-    typically called by the owner of the @class{gtk-adjustment} after it has
-    changed any of the @class{gtkadjustment} fields other than the value.
-  @end{short}"
+  Emits a \"changed\" signal from the @class{gtk-adjustment}. This is
+  typically called by the owner of the @class{gtk-adjustment} after it has
+  changed any of the @class{gtk-adjustment} fields other than the value."
   (adjustment (g-object gtk-adjustment)))
 
 (export 'gtk-adjustment-changed)

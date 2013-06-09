@@ -115,7 +115,7 @@
 (defcfun ("gtk_page_setup_unix_dialog_set_page_setup"
            gtk-page-setup-unix-dialog-set-page-setup) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-5-30}
+ "@version{2013-6-9}
   @argument[dialog]{a @class{gtk-page-setup-unix-dialog} widget}
   @argument[page-setup]{a @class{gtk-page-setup} object}
   @begin{short}
@@ -123,11 +123,12 @@
     takes its values.
   @end{short}
 
-  Since 2.10"
+  Since 2.10
+  @see-function{gtk-page-setup-unix-dialog-get-page-setup}"
   (dialog (g-object gtk-page-setup-unix-dialog))
   (page-setup (g-object gkt-page-setup)))
 
-(export 'gtk-page-setup-unix-dialog-set-page-setpup)
+(export 'gtk-page-setup-unix-dialog-set-page-setup)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_page_setup_unix_dialog_get_page_setup ()
@@ -136,17 +137,18 @@
 (defcfun ("gtk_page_setup_unix_dialog_get_page_setup"
            gtk-page-setup-unix-dialog-get-page-setup) (g-object gtk-page-setup)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-30}
+ "@version{2013-6-9}
   @argument[dialog]{a @class{gtk-page-setup-unix-dialog} widget}
   @return{The current page setup.}
   @begin{short}
     Gets the currently selected page setup from the dialog.
   @end{short}
 
-  Since 2.10"
+  Since 2.10
+  @see-function{gtk-page-setup-unix-dialog-set-page-setup}"
   (dialog (g-object gtk-page-setup-unix-dialog)))
 
-(export 'gtk-page-setup-unix-dialog-get-page-setpup)
+(export 'gtk-page-setup-unix-dialog-get-page-setup)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_page_setup_unix_dialog_set_print_settings ()

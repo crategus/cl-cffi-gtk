@@ -35,7 +35,7 @@
 ;;;	
 ;;; Synopsis
 ;;;
-;;;    GtkColorSelectionDialog;
+;;;    GtkColorSelectionDialog
 ;;;
 ;;;    gtk_color_selection_dialog_new
 ;;;    gtk_color_selection_dialog_get_color_selection
@@ -65,29 +65,27 @@
     gtk-color-selection-dialog-ok-button
     "ok-button" "GtkWidget" t nil)))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-color-selection-dialog 'type)
- "@version{2013-2-24}
+ "@version{2013-6-3}
   @begin{short}
-    The GtkColorSelectionDialog provides a standard dialog which allows the user
-    to select a color much like the GtkFileChooserDialog provides a standard
-    dialog for file selection.
+    The @sym{gtk-color-selection-dialog} provides a standard dialog which allows
+    the user to select a color much like the @class{gtk-file-chooser-dialog}
+    provides a standard dialog for file selection.
   @end{short}
 
-  Use gtk_color_selection_dialog_get_color_selection() to get the
-  GtkColorSelection widget contained within the dialog. Use this widget and its
-  gtk_color_selection_get_current_color() function to gain access to the
-  selected color. Connect a handler for this widget's \"color-changed\" signal
-  to be notified when the color changes.
+  Use the @fun{gtk-color-selection-dialog-get-color-selection} function to get
+  the @class{gtk-color-selection} widget contained within the dialog. Use this
+  widget and its @fun{gtk-color-selection-get-current-color} function to gain
+  access to the selected color. Connect a handler for this widget's
+  \"color-changed\" signal to be notified when the color changes.
 
-  @b{GtkColorSelectionDialog as GtkBuildable}
-
-  The GtkColorSelectionDialog implementation of the GtkBuildable interface
-  exposes the embedded GtkColorSelection as internal child with the name
-  \"color_selection\". It also exposes the buttons with the names \"ok_button\",
-  \"cancel_button\" and \"help_button\".
+  @subheading{GtkColorSelectionDialog as GtkBuildable}
+    The @sym{gtk-color-selection-dialog} implementation of the
+    @class{gtk-buildable} interface exposes the embedded
+    @class{gtk-color-selection} as internal child with the name
+    \"color_selection\". It also exposes the buttons with the names
+    \"ok_button\", \"cancel_button\" and \"help_button\".
   @see-slot{gtk-color-selection-dialog-cancel-button}
   @see-slot{gtk-color-selection-dialog-color-selection}
   @see-slot{gtk-color-selection-dialog-help-button}
@@ -102,36 +100,31 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "cancel-button"
                                                'gtk-color-selection-dialog) 't)
- "The @code{\"cancel-button\"} property of type @code{GtkWidget*} (Read)@br{}
+ "The @code{\"cancel-button\"} property of type @class{gtk-widget} (Read) @br{}
   The cancel button of the dialog.")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "color-selection"
                                                'gtk-color-selection-dialog) 't)
- "The @code{\"color-selection\"} property of type @code{GtkWidget*} (Read)@br{}
+ "The @code{\"color-selection\"} property of type @class{gtk-widget}
+  (Read) @br{}
   The color selection embedded in the dialog.")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "help-button"
                                                'gtk-color-selection-dialog) 't)
- "The @code{\"help-button\"} property of type @code{GtkWidget*} (Read)@br{}
+ "The @code{\"help-button\"} property of type @class{gtk-widget} (Read) @br{}
   The help button of the dialog.")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "ok-button"
                                                'gtk-color-selection-dialog) 't)
- "The @code{\"ok-button\"} property of type @code{GtkWidget*} (Read)@br{}
+ "The @code{\"ok-button\"} property of type @class{gtk-widget} (Read) @br{}
   The OK button of the dialog.")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Accessors
+;;; Accessors of Properties
 ;;;
 ;;; ----------------------------------------------------------------------------
 
@@ -145,8 +138,6 @@
     @class{gtk-color-selection-dialog} class.
   @end{short}")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-color-selection-dialog-color-selection atdoc:*function-name-alias*)
       "Accessor"
@@ -157,8 +148,6 @@
     @class{gtk-color-selection-dialog} class.
   @end{short}")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-color-selection-dialog-help-button atdoc:*function-name-alias*)
       "Accessor"
@@ -168,8 +157,6 @@
     Accessor of the slot @code{\"help-button\"} of the
     @class{gtk-color-selection-dialog} class.
   @end{short}")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-color-selection-dialog-ok-button atdoc:*function-name-alias*)
@@ -189,10 +176,10 @@
 ;;; Creates a new GtkColorSelectionDialog.
 ;;;
 ;;; title :
-;;;    a string containing the title text for the dialog.
+;;;    a string containing the title text for the dialog
 ;;;
 ;;; Returns :
-;;;    a GtkColorSelectionDialog.
+;;;    A GtkColorSelectionDialog.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -207,7 +194,7 @@
 ;;;    a GtkColorSelectionDialog
 ;;;
 ;;; Returns :
-;;;    the embedded GtkColorSelection. [transfer none]
+;;;    The embedded GtkColorSelection.
 ;;;
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------

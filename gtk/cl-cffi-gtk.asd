@@ -155,9 +155,9 @@
    ;; GtkLockButton not implemented
 
    ;; Multiline Text Editor
+   (:file "gtk.text-tag")              ; GtkTextTag
    (:file "gtk.text-iter")             ; GtkTextIter
    (:file "gtk.text-mark")             ; GtkTextMark
-   (:file "gtk.text-tag")              ; GtkTextTag
    (:file "gtk.text-buffer")           ; GtkTextBuffer
    (:file "gtk.text-tag-table")        ; GtkTextTagTable
    (:file "gtk.text-view")             ; GtkTextView

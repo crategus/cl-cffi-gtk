@@ -755,9 +755,9 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_entry_completion_insert_action_markup"
-          gtk-entry-copmletion-insert-action-markup) :void
+           gtk-entry-completion-insert-action-markup) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-4-28}
+ "@version{2013-6-4}
   @argument[completion]{a @class{gtk-entry-completion} object}
   @argument[index]{the index of the item to insert}
   @argument[markup]{markup of the item to insert}

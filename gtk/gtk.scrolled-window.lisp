@@ -1,6 +1,6 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.scrolled-window.lisp
-;;; 
+;;;
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; <See http://common-lisp.net/project/cl-gtk2/>.
 ;;;
@@ -10,19 +10,19 @@
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
-;;; 
+;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
 ;;; as published by the Free Software Foundation, either version 3 of the
 ;;; License, or (at your option) any later version and with a preamble to
 ;;; the GNU Lesser General Public License that clarifies the terms for use
 ;;; with Lisp programs and is referred as the LLGPL.
-;;; 
+;;;
 ;;; This program is distributed in the hope that it will be useful,
 ;;; but WITHOUT ANY WARRANTY; without even the implied warranty of
 ;;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ;;; GNU Lesser General Public License for more details.
-;;; 
+;;;
 ;;; You should have received a copy of the GNU Lesser General Public
 ;;; License along with this program and the preamble to the Gnu Lesser
 ;;; General Public License.  If not, see <http://www.gnu.org/licenses/>
@@ -30,13 +30,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; GtkScrolledWindow
-;;; 
+;;;
 ;;; Adds scrollbars to its child widget
-;;;     
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;;     GtkScrolledWindow
-;;;     
+;;;
 ;;;     gtk_scrolled_window_new
 ;;;     gtk_scrolled_window_get_hadjustment
 ;;;     gtk_scrolled_window_get_vadjustment
@@ -60,23 +60,23 @@
 ;;;     gtk_scrolled_window_get_kinetic_scrolling
 ;;;     gtk_scrolled_window_set_capture_button_press
 ;;;     gtk_scrolled_window_get_capture_button_press
-;;; 
+;;;
 ;;; Object Hierarchy
-;;; 
+;;;
 ;;;   GObject
 ;;;    +----GInitiallyUnowned
 ;;;          +----GtkWidget
 ;;;                +----GtkContainer
 ;;;                      +----GtkBin
 ;;;                            +----GtkScrolledWindow
-;;; 
+;;;
 ;;; Implemented Interfaces
-;;; 
+;;;
 ;;; GtkScrolledWindow implements AtkImplementorIface and GtkBuildable.
-;;; 
-;;; 
+;;;
+;;;
 ;;; Signals
-;;; 
+;;;
 ;;;   "move-focus-out"                                : Action
 ;;;   "scroll-child"                                  : Action
 ;;; ----------------------------------------------------------------------------
@@ -484,9 +484,9 @@
 
 (defun gtk-scrolled-window-get-vadjustment (scrolled-window)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-22}
+ "@version{2013-6-4}
   @argument[scrolled-window]{a @class{gtk-scrolled-window} container}
-  @reurn{the vertical GtkAdjustment}
+  @return{The vertical @class{gtk-djustment} object.}
   Returns the vertical scrollbar's adjustment, used to connect the vertical
   scrollbar to the child widget's vertical scroll functionality."
   (gtk-scrolled-window-vadjustment scrolled-window))

@@ -171,25 +171,25 @@ GTK+ Widgets and Objects
     
   Action-based menus and toolbars
     
-    gtk.ui-manager.lisp              - GtkUIManager                - GTK+ 3.4.3*
-    gtk.action-group.lisp            - GtkActionGroup              - GTK+ 3.4.3*
-    gtk.action.lisp                  - GtkAction                   - GTK+ 3.4.3*
-    gtk.toggle-action.lisp           - GtkToggleAction             - GTK+ 3.4.3*
-    gtk.radio-action.lisp            - GtkRadioAction              - GTK+ 3.4.3*
-    gtk.recent-action.lisp           - GtkRecentAction             - GTK+ 3.4.3*
-    gtk.activatable.lisp             - GtkActivatable              - GTK+ 3.4.3*
+    gtk.ui-manager.lisp              - GtkUIManager                - GTK+ 3.6.4
+    gtk.action-group.lisp            - GtkActionGroup              - GTK+ 3.6.4
+    gtk.action.lisp                  - GtkAction                   - GTK+ 3.6.4
+    gtk.toggle-action.lisp           - GtkToggleAction             - GTK+ 3.6.4
+    gtk.radio-action.lisp            - GtkRadioAction              - GTK+ 3.6.4
+    gtk.recent-action.lisp           - GtkRecentAction             - GTK+ 3.6.4
+    gtk.activatable.lisp             - GtkActivatable              - GTK+ 3.6.4
 
   Selectors (Color/File/Font)
 
-    gtk.color-chooser.lisp           - GtkColorChooser             - GTK+ 3.4.3*
-    gtk.color-button.lisp            - GtkColorButton              - GTK+ 3.4.3*
-    gtk.color-chooser-widget.lisp    - GtkColorChooserWidget       - GTK+ 3.4.3*
-    gtk.color-chooser-dialog.lisp    - GtkColorChooserDialog       - GTK+ 3.4.3*
-    gtk.color-selection.lisp         - GtkColorSelection (**)      - GTK+ 3.2.3*
-    gtk.color-selection-dialog.lisp  - GtkColorSelectionDialog(**) - GTK+ 3.2.3*
-    gtk.hsv.lisp                     - GtkHSV (**)                 - GTK+ 3.2.3*
+    gtk.color-chooser.lisp           - GtkColorChooser             - GTK+ 3.6.4
+    gtk.color-button.lisp            - GtkColorButton              - GTK+ 3.6.4
+    gtk.color-chooser-widget.lisp    - GtkColorChooserWidget       - GTK+ 3.6.4
+    gtk.color-chooser-dialog.lisp    - GtkColorChooserDialog       - GTK+ 3.6.4
+    gtk.color-selection.lisp         - GtkColorSelection (**)      - GTK+ 3.6.4
+    gtk.color-selection-dialog.lisp  - GtkColorSelectionDialog(**) - GTK+ 3.6.4
+    gtk.hsv.lisp                     - GtkHSV (**)                 - GTK+ 3.6.4
 
-    gtk.file-chooser.lisp            - GtkFileChooser              - GTK+ 3.4.3*
+    gtk.file-chooser.lisp            - GtkFileChooser              - GTK+ 3.6.4
     gtk.file-chooser-button.lisp     - GtkFileChooserButton        - GTK+ 3.4.3*
     gtk.file-chooser-dialog.lisp     - GtkFileChooserDialog        - GTK+ 3.4.3*
     gtk.file-chooser-widget.lisp     - GtkFileChooserWidget        - GTK+ 3.4.3*

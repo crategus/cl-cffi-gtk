@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 
 ;;;
@@ -37,7 +37,6 @@
 ;;; Synopsis
 ;;;
 ;;;     GtkUIManager
-;;;     GtkUIManagerItemType
 ;;;
 ;;;     gtk_ui_manager_new
 ;;;     gtk_ui_manager_set_add_tearoffs
@@ -49,9 +48,12 @@
 ;;;     gtk_ui_manager_get_widget
 ;;;     gtk_ui_manager_get_toplevels
 ;;;     gtk_ui_manager_get_action
+;;;     gtk_ui_manager_add_ui_from_resource
 ;;;     gtk_ui_manager_add_ui_from_string
 ;;;     gtk_ui_manager_add_ui_from_file
 ;;;     gtk_ui_manager_new_merge_id
+;;;
+;;;     GtkUIManagerItemType
 ;;;
 ;;;     gtk_ui_manager_add_ui
 ;;;     gtk_ui_manager_remove_ui
@@ -239,15 +241,10 @@
    (ui
     gtk-ui-manager-ui
     "ui" "gchararray" t nil)))
-;   (:cffi accel-group
-;          gtk-ui-manager-accel-group g-object
-;          "gtk_ui_manager_get_accel_group" nil)))
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-ui-manager 'type)
- "@version{2013-3-28}
+ "@version{2013-6-2}
   @begin{short}
     A @sym{gtk-ui-manager} constructs a user interface (menus and toolbars) from
     one or more UI definitions, which reference actions from one or more action
@@ -259,9 +256,8 @@
     described by the following DTD.
 
   @subheading{Note}
-    Do not confuse the GtkUIManager UI Definitions described here with the
-    similarly named @class{gtk-builder} UI Definitions.
-
+    Do not confuse the @sym{gtk-ui-manager} UI Definitions described here with
+    the similarly named @class{gtk-builder} UI Definitions.
     @begin{pre}
    <!ELEMENT ui          (menubar|toolbar|popup|accelerator)* >
    <!ELEMENT menubar     (menuitem|separator|placeholder|menu)* >
@@ -300,9 +296,9 @@
     @end{pre}
     There are some additional restrictions beyond those specified in the DTD,
     e. g. every toolitem must have a toolbar in its anchestry and every menuitem
-    must have a menubar or popup in its anchestry. Since a GMarkup parser is
-    used to parse the UI description, it must not only be valid XML, but valid
-    GMarkup.
+    must have a menubar or popup in its anchestry. Since a @code{GMarkup} parser
+    is used to parse the UI description, it must not only be valid XML, but
+    valid @code{GMarkup}.
 
     If a name is not specified, it defaults to the action. If an action is not
     specified either, the element name is used. The name and action attributes
@@ -341,16 +337,18 @@
     XML, with the exception that placeholders are merged into their parents. The
     correspondence of XML elements to widgets should be almost obvious:
     @begin[code]{table}
-      @entry[menubar]{a GtkMenuBar}
-      @entry[toolbar]{a GtkToolbar}
-      @entry[popup]{a toplevel GtkMenu}
-      @entry[menu]{a GtkMenu attached to a menuitem}
-      @entry[menuitem]{a GtkMenuItem subclass, the exact type depends on the
-        action}
-      @entry[toolitem]{a GtkToolItem subclass, the exact type depends on the
-        action. Note that toolitem elements may contain a menu element, but only
-        if their associated action specifies a GtkMenuToolButton as proxy.}
-      @entry[separator]{a GtkSeparatorMenuItem or GtkSeparatorToolItem}
+      @entry[menubar]{a @class{gtk-menu-bar}}
+      @entry[toolbar]{a @class{gtk-toolbar}}
+      @entry[popup]{a toplevel @class{gtk-menu}}
+      @entry[menu]{a @class{gtk-menu} attached to a menuitem}
+      @entry[menuitem]{a @class{gtk-menu-item} subclass, the exact type depends
+        on the action}
+      @entry[toolitem]{a @class{gtk-tool-item} subclass, the exact type depends
+        on the action. Note that toolitem elements may contain a menu element,
+        but only if their associated action specifies a
+        @class{gtk-menu-tool-button} as proxy.}
+      @entry[separator]{a @class{gtk-separator-menu-item} or
+        @class{gtk-separator-tool-item}}
       @entry[accelerator]{a keyboard accelerator}
     @end{table}
     The \"position\" attribute determines where a constructed widget is
@@ -358,14 +356,15 @@
     \"top\", the widget is prepended, otherwise it is appended.
 
   @subheading{UI Merging}
-    The most remarkable feature of GtkUIManager is that it can overlay a set of
-    menuitems and toolitems over another one, and demerge them later.
+    The most remarkable feature of @sym{gtk-ui-manager} is that it can
+    overlay a set of menuitems and toolitems over another one, and demerge
+    them later.
 
     Merging is done based on the names of the XML elements. Each element is
     identified by a path which consists of the names of its anchestors,
-    separated by slashes. For example, the menuitem named \"Left\" in the example
-    above has the path /ui/menubar/JustifyMenu/Left and the toolitem with the
-    same name has path /ui/toolbar1/JustifyToolItems/Left.
+    separated by slashes. For example, the menuitem named \"Left\" in the
+    example above has the path /ui/menubar/JustifyMenu/Left and the toolitem
+    with the same name has path /ui/toolbar1/JustifyToolItems/Left.
 
   @subheading{Accelerators}
     Every action has an accelerator path. Accelerators are installed together
@@ -374,10 +373,10 @@
     accelerators for actions even if they have no visible proxies.
 
   @subheading{Smart Separators}
-    The separators created by GtkUIManager are \"smart\", i.e. they do not show
-    up in the UI unless they end up between two visible menu or tool items.
-    Separators which are located at the very beginning or end of the menu or
-    toolbar containing them, or multiple separators next to each other, are
+    The separators created by @sym{gtk-ui-manager} are \"smart\", i. e. they
+    do not show up in the UI unless they end up between two visible menu or tool
+    items. Separators which are located at the very beginning or end of the menu
+    or toolbar containing them, or multiple separators next to each other, are
     hidden. This is a useful feature, since the merging of UI elements from
     multiple sources can make it hard or impossible to determine in advance
     whether a separator will end up in such an unfortunate position.
@@ -389,30 +388,32 @@
   @subheading{Empty Menus}
     Submenus pose similar problems to separators inconnection with merging. It
     is impossible to know in advance whether they will end up empty after
-    merging. GtkUIManager offers two ways to treat empty submenus:
+    merging. @sym{gtk-ui-manager} offers two ways to treat empty submenus:
     @begin{itemize}
       @begin{item}
-        make them disappear by hiding the menu item they're attached to
+        Make them disappear by hiding the menu item they are attached to.
       @end{item}
       @begin{item}
-        add an insensitive \"Empty\" item
+        Add an insensitive \"Empty\" item.
       @end{item}
     @end{itemize}
-    The behaviour is chosen based on the \"hide_if_empty\" property of the
-    action to which the submenu is associated.
+    The behaviour is chosen based on the @code{\"hide-if-empty\"} property of
+    the action to which the submenu is associated.
 
   @subheading{GtkUIManager as GtkBuildable}
-    The GtkUIManager implementation of the GtkBuildable interface accepts
-    GtkActionGroup objects as <child> elements in UI definitions.
+    The @sym{gtk-ui-manager} implementation of the @class{gtk-buildable}
+    interface accepts @class{gtk-action-group} objects as <child> elements in
+    UI definitions.
 
-    A GtkUIManager UI definition as described above can be embedded in an
-    GtkUIManager <object> element in a GtkBuilder UI definition.
+    A @sym{gtk-ui-manager} UI definition as described above can be embedded in
+    an @sym{gtk-ui-manager} <object> element in a @class{gtk-builder} UI
+    definition.
 
-    The widgets that are constructed by a GtkUIManager can be embedded in other
-    parts of the constructed user interface with the help of the \"constructor\"
-    attribute. See the example below.
+    The widgets that are constructed by a @sym{gtk-ui-manager} can be embedded
+    in other parts of the constructed user interface with the help of the
+    \"constructor\" attribute. See the example below.
 
-    @b{Example:} An embedded GtkUIManager UI definition
+    @b{Example:} An embedded @sym{gtk-ui-manager} UI definition
     @begin{pre}
    <object class=\"GtkUIManager\" id=\"uiman\">
      <child>
@@ -442,10 +443,10 @@
       @begin{pre}
  lambda (mangager)   : No Recursion
       @end{pre}
-      The ::actions-changed signal is emitted whenever the set of actions
+      The \"actions-changed\" signal is emitted whenever the set of actions
       changes.
       @begin[code]{table}
-        @entry[manager]{a GtkUIManager}
+        @entry[manager]{A @sym{gtk-ui-manager}.}
       @end{table}
       Since 2.4
 
@@ -453,12 +454,12 @@
       @begin{pre}
  lambda (manager widget)   : No Recursion
       @end{pre}
-      The ::add-widget signal is emitted for each generated menubar and toolbar.
-      It is not emitted for generated popup menus, which can be obtained by
-      gtk_ui_manager_get_widget().
+      The \"add-widget\" signal is emitted for each generated menubar and
+      toolbar. It is not emitted for generated popup menus, which can be
+      obtained by the @fun{gtk-ui-manager-get-widget} function.
       @begin[code]{table}
-        @entry[manager]{a GtkUIManager}
-        @entry[widget]{the added widget}
+        @entry[manager]{A @sym{gtk-ui-manager}.}
+        @entry[widget]{The added widget.}
       @end{table}
       Since 2.4
 
@@ -466,14 +467,15 @@
       @begin{pre}
  lambda (manager action proxy)   : No Recursion
       @end{pre}
-      The ::connect-proxy signal is emitted after connecting a proxy to an
+      The \"connect-proxy\" signal is emitted after connecting a proxy to an
       action in the group.
       This is intended for simple customizations for which a custom action class
-      would be too clumsy, e.g. showing tooltips for menuitems in the statusbar.
+      would be too clumsy, e. g. showing tooltips for menuitems in the
+      statusbar.
       @begin[code]{table}
-        @entry[manager]{the ui manager}
-        @entry[action]{the action}
-        @entry[proxy]{the proxy}
+        @entry[manager]{The ui manager.}
+        @entry[action]{The action.}
+        @entry[proxy]{The proxy.}
       @end{table}
       Since 2.4
 
@@ -481,12 +483,12 @@
       @begin{pre}
  lambda (manager action proxy)   : No Recursion
       @end{pre}
-      The ::disconnect-proxy signal is emitted after disconnecting a proxy from
-      an action in the group.
+      The \"disconnect-proxy\" signal is emitted after disconnecting a proxy
+      from an action in the group.
       @begin[code]{table}
-        @entry[manager]{the ui manager}
-        @entry[action]{the action}
-        @entry[proxy]{the proxy}
+        @entry[manager]{The ui manager.}
+        @entry[action]{The action.}
+        @entry[proxy]{The proxy.}
       @end{table}
       Since 2.4
 
@@ -494,12 +496,13 @@
       @begin{pre}
  lambda (manager action)   : No Recursion
       @end{pre}
-      The ::post-activate signal is emitted just after the action is activated.
+      The \"post-activate\" signal is emitted just after the action is
+      activated.
       This is intended for applications to get notification just after any
       action is activated.
       @begin[code]{table}
-        @entry[manager]{the ui manager}
-        @entry[action]{the action}
+        @entry[manager]{The ui manager.}
+        @entry[action]{The action.}
       @end{table}
       Since 2.4
 
@@ -507,12 +510,13 @@
       @begin{pre}
  lambda (manager action)   : No Recursion
       @end{pre}
-      The ::pre-activate signal is emitted just before the action is activated.
+      The \"pre-activate\" signal is emitted just before the action is
+      activated.
       This is intended for applications to get notification just before any
       action is activated.
       @begin[code]{table}
-        @entry[manager]{the ui manager}
-        @entry[action]{the action}
+        @entry[manager]{The ui manager.}
+        @entry[action]{The action.}
       @end{table}
       Since 2.4
   @end{dictionary}
@@ -529,30 +533,28 @@
 (setf (documentation (atdoc:get-slot-from-name "add-tearoffs"
                                                'gtk-ui-manager) 't)
  "The @code{\"add-tearoffs\"} property of type @code{:boolean}
-  (Read / Write)@br{}
-  @b{Warning}@br{}
-  GtkUIManager:add-tearoffs has been deprecated since version 3.4 and should
-  not be used in newly-written code. Tearoff menus are deprecated and should
-  not be used in newly written code.
+  (Read / Write) @br{}
+  @subheading{Warning}
+    The @code{\"add-tearoffs\"} property has been deprecated since version 3.4
+    and should not be used in newly-written code. Tearoff menus are deprecated
+    and should not be used in newly written code.
 
   The \"add-tearoffs\" property controls whether generated menus have tearoff
   menu items.
   Note that this only affects regular menus. Generated popup menus never have
   tearoff menu items. @br{}
-  Default value: FALSE @br{}
+  Default value: @code{nil} @br{}
   Since 2.4")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "ui" 'gtk-ui-manager) 't)
- "The @code{\"ui\"} property of type @code{:string} (Read)@br{}
+ "The @code{\"ui\"} property of type @code{:string} (Read) @br{}
   An XML string describing the merged UI. @br{}
   Default value: \"<ui>\n</ui>\n\"")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Accessors
+;;; Accessors of Properties
 ;;;
 ;;; ----------------------------------------------------------------------------
 
@@ -562,8 +564,6 @@
       (documentation 'gtk-ui-manager-add-tearoffs 'function)
  "@version{2013-3-27}
   Accessor of the slot \"add-tearoffs\" of the @class{gtk-ui-manager} class.")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-ui-manager-ui atdoc:*function-name-alias*)
@@ -591,15 +591,13 @@
   (:accelerator 256)
   (:popup-with-accels 512))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-ui-manager-item-type atdoc:*symbol-name-alias*) "Flags"
       (gethash 'gtk-ui-manager-item-type atdoc:*external-symbols*)
- "@version{2013-3-28}
+ "@version{2013-6-2}
   @begin{short}
-    These enumeration values are used by gtk_ui_manager_add_ui() to determine
-    what UI element to create.
+    These enumeration values are used by the @fun{gtk-ui-manager-add-ui}
+    function to determine what UI element to create.
   @end{short}
   @begin{pre}
 (define-g-flags \"GtkUIManagerItemType\" gtk-ui-manager-item-type
@@ -628,7 +626,7 @@
     @entry[:toolitem]{Create a toolitem.}
     @entry[:separator]{Create a separator.}
     @entry[:accelerator]{Install an accelerator.}
-    @entry[:popup-with-accels]{Same as GTK_UI_MANAGER_POPUP, but the actions'
+    @entry[:popup-with-accels]{Same as @code{:popup}, but the actions'
       accelerators are shown.}
   @end{table}")
 
@@ -702,18 +700,18 @@
 (defcfun ("gtk_ui_manager_insert_action_group"
           gtk-ui-manager-insert-action-group) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-28}
-  @argument[manager]{a GtkUIManager object}
-  @argument[action_group]{the action group to be inserted}
-  @argument[pos]{the position at which the group will be inserted.}
+ "@version{2013-6-2}
+  @argument[manager]{a @class{gtk-ui-manager} object}
+  @argument[action-group]{the action group to be inserted}
+  @argument[pos]{the position at which the group will be inserted}
   @begin{short}
     Inserts an action group into the list of action groups associated with
     manager. Actions in earlier groups hide actions with the same name in later
     groups.
   @end{short}
 
-  If pos is larger than the number of action groups in manager, or negative,
-  action_group will be inserted at the end of the internal list.
+  If @arg{pos} is larger than the number of action groups in manager, or
+  negative, @arg{action-group} will be inserted at the end of the internal list.
 
   Since 2.4"
   (ui-manager g-object)
@@ -729,9 +727,9 @@
 (defcfun ("gtk_ui_manager_remove_action_group"
           gtk-ui-manager-remove-action-group) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-28}
-  @argument[manager]{a GtkUIManager object}
-  @argument[action_group]{the action group to be removed}
+ "@version{2013-6-2}
+  @argument[manager]{a @class{gtk-ui-manager} object}
+  @argument[action-group]{the action group to be removed}
   @begin{short}
     Removes an action group from the list of action groups associated with
     manager.
@@ -750,11 +748,10 @@
 (defcfun ("gtk_ui_manager_get_action_groups" gtk-ui-manager-action-groups)
     (g-list g-object :free-from-foreign nil)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-28}
+ "@version{2013-6-2}
   @argument[manager]{a @class{gtk-ui-manager} object}
   @begin{return}
-    A GList of action groups. The list is owned by GTK+ and should not be
-    modified
+    A list of action groups.
   @end{return}
   @short{Returns the list of action groups associated with manager.}
 
@@ -785,18 +782,19 @@
 
 (defcfun ("gtk_ui_manager_get_widget" gtk-ui-manager-widget) g-object
  #+cl-cffi-gtk-documentation
- "@version{2013-3-28}
-  @argument[manager]{a GtkUIManager}
+ "@version{2013-6-2}
+  @argument[manager]{a @class{gtk-ui-manager} object}
   @argument[path]{a path}
   @begin{return}
-    The widget found by following the path, or NULL if no widget was found.
+    The widget found by following the @arg{path}, or @code{nil} if no widget
+    was found.
   @end{return}
   @begin{short}
-    Looks up a widget by following a path. The path consists of the names
-    specified in the XML description of the UI. separated by '/'. Elements which
-    don't have a name or action attribute in the XML (e. g. <popup>) can be
-    addressed by their XML element name (e. g. \"popup\"). The root element
-    (\"/ui\") can be omitted in the path.
+    Looks up a widget by following a @arg{path}. The @arg{path} consists of the
+    names specified in the XML description of the UI. separated by '/'. Elements
+    which do not have a name or action attribute in the XML (e. g. <popup>) can
+    be addressed by their XML element name (e. g. \"popup\"). The root element
+    (\"/ui\") can be omitted in the @arg{path}.
   @end{short}
 
   Note that the widget found by following a path that ends in a <menu> element
@@ -820,14 +818,12 @@
 (defcfun ("gtk_ui_manager_get_toplevels" gtk-ui-manager-toplevels)
     (g-slist g-object :free-from-foreign t)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-28}
-  @argument[manager]{a GtkUIManager}
+ "@version{2013-6-2}
+  @argument[manager]{a @class{gtk-ui-manager} object}
   @argument[types]{specifies the types of toplevel widgets to include. Allowed
-    types are GTK_UI_MANAGER_MENUBAR, GTK_UI_MANAGER_TOOLBAR and
-    GTK_UI_MANAGER_POPUP.}
+    types are @code{:menubar}, @code{:toolbar} and @code{:popup}}
   @begin{return}
-    A newly-allocated GSList of all toplevel widgets of the requested types.
-    Free the returned list with g_slist_free().
+    A newly-allocated list of all toplevel widgets of the requested types.
   @end{return}
   @begin{short}
     Obtains a list of all toplevel widgets of the requested types.
@@ -845,23 +841,52 @@
 
 (defcfun ("gtk_ui_manager_get_action" gtk-ui-manager-action) g-object
  #+cl-cffi-gtk-documentation
- "@version{2013-3-28}
+ "@version{2013-6-2}
   @argument[manager]{a @class{gtk-ui-manager} object}
   @argument[path]{a path}
   @begin{return}
-    The action whose proxy widget is found by following the path, or NULL if
-    no widget was found.
+    The action whose proxy widget is found by following the @arg{path},
+    or @code{nil} if no widget was found.
   @end{return}
   @begin{short}
-    Looks up an action by following a path. See gtk_ui_manager_get_widget() for
-    more information about paths.
+    Looks up an action by following a @arg{path}.
   @end{short}
+  See the @fun{gtk-ui-manager-get-widget} function for more information about
+  paths.
 
-  Since 2.4"
+  Since 2.4
+  @see-function{gtk-ui-manager-get-widget}"
   (ui-manager g-object)
   (path :string))
 
 (export 'gtk-ui-manager-action)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_ui_manager_add_ui_from_resource ()
+;;;
+;;; guint gtk_ui_manager_add_ui_from_resource (GtkUIManager *manager,
+;;;                                            const gchar *resource_path,
+;;;                                            GError **error);
+;;;
+;;; Parses a resource file containing a UI definition and merges it with the
+;;; current contents of manager.
+;;;
+;;; manager :
+;;;     a GtkUIManager object
+;;;
+;;; resource_path :
+;;;     the resource path of the file to parse
+;;;
+;;; error :
+;;;     return location for an error
+;;;
+;;; Returns :
+;;;     The merge id for the merged UI. The merge id can be used to unmerge the
+;;;     UI with gtk_ui_manager_remove_ui(). If an error occurred, the return
+;;;     value is 0.
+;;;
+;;; Since 3.4
+;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_ui_manager_add_ui_from_string ()
@@ -875,18 +900,15 @@
   (length g-ssize)
   (error :pointer))
 
-(defun gtk-ui-manager-add-ui-from-string (ui-manager string)
+(defun gtk-ui-manager-add-ui-from-string (ui-manager buffer)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-28}
-  @argument[manager]{a GtkUIManager object}
+ "@version{2013-6-2}
+  @argument[manager]{a @class{gtk-ui-manager} object}
   @argument[buffer]{the string to parse}
-  @argument[length]{the length of buffer (may be -1 if buffer is
-    nul-terminated)}
-  @argument[error]{return location for an error}
   @begin{return}
-    The merge id for the merged UI. The merge id can be used to unmerge the
-    UI with gtk_ui_manager_remove_ui(). If an error occurred, the return
-    value is 0.
+    The merge ID for the merged UI. The merge ID can be used to unmerge the
+    UI with the @fun{gtk-ui-manager-remove-ui} function. If an error occurred,
+    the return value is 0.
   @end{return}
   @begin{short}
     Parses a string containing a UI definition and merges it with the current
@@ -895,7 +917,7 @@
 
   Since 2.4"
   (with-g-error (err)
-    (%gtk-ui-manager-add-ui-from-string ui-manager string -1 err)))
+    (%gtk-ui-manager-add-ui-from-string ui-manager buffer -1 err)))
 
 (export 'gtk-ui-manager-add-ui-from-string)
 
@@ -909,16 +931,15 @@
   (file-name :string)
   (error :pointer))
 
-(defun gtk-ui-manager-add-ui-from-file (ui-manager file-name)
+(defun gtk-ui-manager-add-ui-from-file (ui-manager filename)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-28}
-  @argument[manager]{a GtkUIManager object}
+ "@version{2013-6-2}
+  @argument[manager]{a @class{gtk-ui-manager} object}
   @argument[filename]{the name of the file to parse}
-  @argument[error]{return location for an error}
   @begin{return}
-    The merge id for the merged UI. The merge id can be used to unmerge the
-    UI with gtk_ui_manager_remove_ui(). If an error occurred, the return
-    value is 0.
+    The merge ID for the merged UI. The merge ID can be used to unmerge the
+    UI with the @fun{gtk-ui-manager-remove-ui} function. If an error occurred,
+    the return value is 0.
   @end{return}
   @begin{short}
     Parses a file containing a UI definition and merges it with the current
@@ -927,7 +948,7 @@
 
   Since 2.4"
   (with-g-error (err)
-    (%gtk-ui-manager-add-ui-from-file ui-manager file-name err)))
+    (%gtk-ui-manager-add-ui-from-file ui-manager filename err)))
 
 (export 'gtk-ui-manager-add-ui-from-file)
 
@@ -937,11 +958,12 @@
 
 (defcfun ("gtk_ui_manager_new_merge_id" gtk-ui-manager-new-merge-id) :uint
  #+cl-cffi-gtk-documentation
- "@version{2013-3-28}
-  @argument[manager]{a GtkUIManager}
-  @return{an unused merge id.}
+ "@version{2013-6-2}
+  @argument[manager]{a @class{gtk-ui-manager} object}
+  @return{An unused merge ID.}
   @begin{short}
-    Returns an unused merge id, suitable for use with gtk_ui_manager_add_ui().
+    Returns an unused merge ID, suitable for use with the
+    @fun{gtk-ui-manager-add-ui} function.
   @end{short}
 
   Since 2.4"
@@ -955,28 +977,28 @@
 
 (defcfun ("gtk_ui_manager_add_ui" gtk-ui-manager-add-ui) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-28}
-  @argument[manager]{a GtkUIManager}
-  @argument[merge_id]{the merge id for the merged UI, see
-    gtk_ui_manager_new_merge_id()}
+ "@version{2013-6-2}
+  @argument[manager]{a @class{gtk-ui-manager} object}
+  @argument[merge-id]{the merge ID for the merged UI, see the
+    @fun{gtk-ui-manager-new-merge-id} function}
   @argument[path]{a path}
   @argument[name]{the name for the added UI element}
-  @argument[action]{the name of the action to be proxied, or NULL to add a
-    separator}
-  @argument[type]{the type of UI element to add.}
-  @argument[top]{if TRUE, the UI element is added before its siblings, otherwise
-    it is added after its siblings.}
+  @argument[action]{the name of the action to be proxied, or @code{nil} to add
+    a separator}
+  @argument[type]{the type of UI element to add}
+  @argument[top]{if @em{true}, the UI element is added before its siblings,
+    otherwise it is added after its siblings}
   @begin{short}
     Adds a UI element to the current contents of manager.
   @end{short}
 
-  If type is GTK_UI_MANAGER_AUTO, GTK+ inserts a menuitem, toolitem or
-  separator if such an element can be inserted at the place determined by
-  path. Otherwise type must indicate an element that can be inserted at the
-  place determined by path.
+  If type is @code{:auto}, GTK+ inserts a menuitem, toolitem or separator if
+  such an element can be inserted at the place determined by @arg{path}.
+  Otherwise type must indicate an element that can be inserted at the place
+  determined by @arg{path}.
 
-  If path points to a menuitem or toolitem, the new element will be inserted
-  before or after this item, depending on top.
+  If @arg{path} points to a menuitem or toolitem, the new element will be
+  inserted before or after this item, depending on top.
 
   Since 2.4"
   (ui-manager g-object)
@@ -995,15 +1017,16 @@
 
 (defcfun ("gtk_ui_manager_remove_ui" gtk-ui-manager-remove-ui) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-28}
-  @argument[manager]{a GtkUIManager object}
-  @argument[merge_id]{a merge id as returned by
-    gtk_ui_manager_add_ui_from_string()}
+ "@version{2013-6-2}
+  @argument[manager]{a @class{gtk-ui-manager} object}
+  @argument[merge-id]{a merge ID as returned by the
+    @fun{gtk-ui-manager-add-ui-from-string} function}
   @begin{short}
-    Unmerges the part of managers content identified by merge_id.
+    Unmerges the part of managers content identified by @arg{merge-id}.
   @end{short}
 
-  Since 2.4"
+  Since 2.4
+  @see-function{gtk-ui-manager-add-ui-from-string}"
   (ui-manager g-object)
   (merge-id :uint))
 
@@ -1032,15 +1055,15 @@
 
 (defcfun ("gtk_ui_manager_ensure_update" gtk-ui-manager-ensure-update) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-28}
-  @argument[manager]{a GtkUIManager}
+ "@version{2013-6-2}
+  @argument[manager]{a @class{gtk-ui-manager} object}
   @begin{short}
     Makes sure that all pending updates to the UI have been completed.
   @end{short}
 
-  This may occasionally be necessary, since GtkUIManager updates the UI in an
-  idle function. A typical example where this function is useful is to enforce
-  that the menubar and toolbar have been added to the main window before
+  This may occasionally be necessary, since @class{gtk-ui-manager} updates the
+  UI in an idle function. A typical example where this function is useful is to
+  enforce that the menubar and toolbar have been added to the main window before
   showing it:
   @begin{pre}
    gtk_container_add (GTK_CONTAINER (window), vbox);

@@ -1037,7 +1037,7 @@
 
 (defcfun ("gtk_text_iter_get_attributes" %gtk-text-iter-get-attributes) :boolean
   (iter (g-boxed-foreign gtk-text-iter))
-  (values (g-object gtk-text-attributes)))
+  (values gtk-text-attributes))
 
 (defun gtk-text-iter-get-attributes (iter default-attributes)
  #+cl-cffi-gtk-documentation

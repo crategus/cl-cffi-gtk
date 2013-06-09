@@ -1045,6 +1045,6 @@
   Since 2.6"
   (gtk-image-pixel-size image))
 
-(export 'gtk-imgage-get-pixel-size)
+(export 'gtk-image-get-pixel-size)
 
 ;;; --- End of file gtk.image.lisp ---------------------------------------------

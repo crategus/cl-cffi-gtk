@@ -2,10 +2,11 @@
 ;;; gtk.action.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -140,11 +141,9 @@
     gtk-action-visible-vertical
     "visible-vertical" "gboolean" t t)))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-action 'type)
- "@version{2013-2-5}
+ "@version{2013-6-2}
   @begin{short}
     Actions represent operations that the user can be perform, along with some
     information how it should be presented in the interface. Each action
@@ -158,7 +157,7 @@
     @item{a name (not translated, for path lookup)}
     @item{a label (translated, for display)}
     @item{an accelerator}
-    @item{whether label indicates a stock id}
+    @item{whether label indicates a stock ID}
     @item{a tooltip (optional, translated)}
     @item{a toolbar label (optional, shorter than label)}
   @end{itemize}
@@ -175,22 +174,21 @@
   Each action can have one or more proxy widgets. To act as an action proxy,
   widget needs to implement @class{gtk-activatable} interface. Proxies mirror
   the state of the action and should change when the action's state changes.
-  Properties that are always mirrored by proxies are \"sensitive\" and
-  \"visible\". \"gicon\", \"icon-name\", \"label\", \"short-label\" and
-  \"stock-id\" properties are only mirorred if proxy widget has
-  \"use-action-appearance\" property set to @arg{true}.
+  Properties that are always mirrored by proxies are @code{\"sensitive\"} and
+  @code{\"visible\"}. @code{\"gicon\"}, @code{\"icon-name\"}, @code{\"label\"},
+  @code{\"short-label\"} and @code{\"stock-id\"} properties are only mirorred
+  if proxy widget has @code{\"use-action-appearance\"} property set to
+  @arg{true}.
 
   When the proxy is activated, it should activate its action.
   @begin[Signal Details]{dictionary}
     @subheading{The \"activate\" signal}
-      The \"activate\" signal is emitted when the action is activated.
       @begin{pre}
- void user_function (GtkAction *action,
-                     gpointer   user_data)      : No Recursion
+ lambda (action)   : No Recursion
       @end{pre}
+      The \"activate\" signal is emitted when the action is activated.
       @begin[code]{table}
-        @entry[action]{the @sym{gtk-action}}
-        @entry[user_data]{user data set when the signal handler was connected.}
+        @entry[action]{The @sym{gtk-action}.}
       @end{table}
       Since 2.4
   @end{dictionary}
@@ -209,8 +207,7 @@
   @see-slot{gtk-action-visible}
   @see-slot{gtk-action-visible-horizontal}
   @see-slot{gtk-action-visible-overflown}
-  @see-slot{gtk-action-visible-vertical}
-")
+  @see-slot{gtk-action-visible-vertical}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -221,171 +218,143 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "action-group" 'gtk-action) 't)
  "The @code{\"action-group\"} property of type @class{gtk-action-group}
-  (Read / Write)@br{}
+  (Read / Write) @br{}
   The @class{gtk-action-group} this @sym{gtk-action} is associated with, or
   @code{nil} (for internal use).")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "always-show-image" 'gtk-action) 't)
- "The @code{\"always-show-image\"} property of type @code{gboolean}
-  (Read / Write / Construct)@br{}
+(setf (documentation (atdoc:get-slot-from-name "always-show-image"
+                                               'gtk-action) 't)
+ "The @code{\"always-show-image\"} property of type @code{:boolean}
+  (Read / Write / Construct) @br{}
   If @arg{true}, the action's menu item proxies will ignore the
   @code{\"gtk-menu-images\"} setting and always show their image, if available.
   Use this property if the menu item would be useless or hard to use without
-  their image.@br{}
-  Default value: @code{nil}@br{}
+  their image. @br{}
+  Default value: @code{nil} @br{}
   Since 2.20")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gicon" 'gtk-action) 't)
- "The @code{\"gicon\"} property of type @code{GIcon*} (Read / Write)@br{}
-  The GIcon displayed in the GtkAction.
-  Note that the stock icon is preferred, if the \"stock-id\" property holds the
-  id of an existing stock icon.
+ "The @code{\"gicon\"} property of type @code{GIcon} (Read / Write) @br{}
+  The @code{GIcon} displayed in the @sym{gtk-action}.
+  Note that the stock icon is preferred, if the @code{\"stock-id\"} property
+  holds the ID of an existing stock icon.
   This is an appearance property and thus only applies if
-  \"use-action-appearance\" is @arg{true}.@br{}
+  @code{\"use-action-appearance\"} is @arg{true}. @br{}
   Since 2.16")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "hide-if-empty" 'gtk-action) 't)
- "The @code{\"hide-if-empty\"} property of type @code{gboolean}
-  (Read / Write)@br{}
-  When @arg{true}, empty menu proxies for this action are hidden.@br{}
+ "The @code{\"hide-if-empty\"} property of type @code{:boolean}
+  (Read / Write) @br{}
+  When @arg{true}, empty menu proxies for this action are hidden. @br{}
   Default value: @arg{true}")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "icon-name" 'gtk-action) 't)
- "The @code{\"icon-name\"} property of type @code{gchar*} (Read / Write)@br{}
+ "The @code{\"icon-name\"} property of type @code{:string} (Read / Write) @br{}
   The name of the icon from the icon theme.
   Note that the stock icon is preferred, if the @code{\"stock-id\"} property
-  holds the id of an existing stock icon, and the @code{GIcon} is preferred if
+  holds the ID of an existing stock icon, and the @code{GIcon} is preferred if
   the @code{\"gicon\"} property is set.
   This is an appearance property and thus only applies if
-  @code{\"use-action-appearance\"} is @arg{true}.@br{}
-  Default value: @code{nil}@br{}
+  @code{\"use-action-appearance\"} is @arg{true}. @br{}
+  Default value: @code{nil} @br{}
   Since 2.10")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "is-important" 'gtk-action) 't)
- "The @code{\"is-important\"} property of type @code{gboolean}
-  (Read / Write)@br{}
+ "The @code{\"is-important\"} property of type @code{:boolean}
+  (Read / Write) @br{}
   Whether the action is considered important. When @arg{true}, toolitem proxies
-  for this action show text in @code{GTK_TOOLBAR_BOTH_HORIZ} mode.@br{}
+  for this action show text in @code{:both-horiz} mode. @br{}
   Default value: @code{nil}")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "label" 'gtk-action) 't)
- "The @code{\"label\"} property of type @code{gchar*} (Read / Write)@br{}
+ "The @code{\"label\"} property of type @code{:string} (Read / Write) @br{}
   The label used for menu items and buttons that activate this action. If the
   label is @code{nil}, GTK+ uses the stock label specified via the
-  @code{\"stock-id\"} property.
-  This is an appearance property and thus only applies if
-  \"use-action-appearance\" is @arg{true}.@br{}
+  @code{\"stock-id\"} property. This is an appearance property and thus only
+  applies if @code{\"use-action-appearance\"} is @arg{true}. @br{}
   Default value: @code{nil}")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "name" 'gtk-action) 't)
- "The @code{\"name\"} property of type @code{gchar*}
-  (Read / Write / Construct)@br{}
-  A unique name for the action.@br{}
+ "The @code{\"name\"} property of type @code{:string}
+  (Read / Write / Construct) @br{}
+  A unique name for the action. @br{}
   Default value: @code{nil}")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "sensitive" 'gtk-action) 't)
- "The @code{\"sensitive\"} property of type @code{gboolean} (Read / Write)@br{}
-  Whether the action is enabled.@br{}
+ "The @code{\"sensitive\"} property of type @code{:boolean} (Read / Write) @br{}
+  Whether the action is enabled. @br{}
   Default value: @arg{true}")
-;;;
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "short-label" 'gtk-action) 't)
- "The @code{\"short-label\"} property of type @code{gchar*} (Read / Write)@br{}
-  A shorter label that may be used on toolbar buttons.
-  This is an appearance property and thus only applies if
-  \"use-action-appearance\" is @arg{true}.@br{}
+ "The @code{\"short-label\"} property of type @code{:string}
+  (Read / Write) @br{}
+  A shorter label that may be used on toolbar buttons. This is an appearance
+  property and thus only applies if @code{\"use-action-appearance\"} is
+  @arg{true}. @br{}
   Default value: @code{nil}")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "stock-id" 'gtk-action) 't)
- "The @code{\"stock-id\"} property of type @code{gchar*} (Read / Write)@br{}
-  The stock icon displayed in widgets representing this action.
-  This is an appearance property and thus only applies if
-  \"use-action-appearance\" is @arg{true}.@br{}
+ "The @code{\"stock-id\"} property of type @code{:string} (Read / Write) @br{}
+  The stock icon displayed in widgets representing this action. This is an
+  appearance property and thus only applies if @code{\"use-action-appearance\"}
+  is @arg{true}. @br{}
   Default value: @code{nil}")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "tooltip" 'gtk-action) 't)
- "The @code{\"tooltip\"} property of type @code{gchar*} (Read / Write)@br{}
-  A tooltip for this action.@br{}
+ "The @code{\"tooltip\"} property of type @code{:string} (Read / Write) @br{}
+  A tooltip for this action. @br{}
   Default value: @code{nil}")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "visible" 'gtk-action) 't)
- "The @code{\"visible\"} property of type  @code{gboolean} (Read / Write)@br{}
-  Whether the action is visible.@br{}
+ "The @code{\"visible\"} property of type  @code{:boolean} (Read / Write) @br{}
+  Whether the action is visible. @br{}
   Default value: @arg{true}")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "visible-horizontal" 'gtk-action) 't)
- "The @code{\"visible-horizontal\"} property of type @code{gboolean}
-  (Read / Write)@br{}
+(setf (documentation (atdoc:get-slot-from-name "visible-horizontal"
+                                               'gtk-action) 't)
+ "The @code{\"visible-horizontal\"} property of type @code{:boolean}
+  (Read / Write) @br{}
   Whether the toolbar item is visible when the toolbar is in a horizontal
-  orientation.@br{}
+  orientation. @br{}
   Default value: @arg{true}")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "visible-overflown" 'gtk-action) 't)
- "The @code{\"visible-overflown\"} property of type @code{gboolean}
-  (Read / Write)@br{}
+(setf (documentation (atdoc:get-slot-from-name "visible-overflown"
+                                               'gtk-action) 't)
+ "The @code{\"visible-overflown\"} property of type @code{:boolean}
+  (Read / Write) @br{}
   When @arg{true}, toolitem proxies for this action are represented in the
-  toolbar overflow menu.@br{}
-  Default value: @arg{true}@br{}
+  toolbar overflow menu. @br{}
+  Default value: @arg{true} @br{}
   Since 2.6")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "visible-vertical" 'gtk-action) 't)
- "The @code{\"visible-vertical\"} property of type @code{gboolean}
-  (Read / Write)@br{}
+(setf (documentation (atdoc:get-slot-from-name "visible-vertical"
+                                               'gtk-action) 't)
+ "The @code{\"visible-vertical\"} property of type @code{:boolean}
+  (Read / Write) @br{}
   Whether the toolbar item is visible when the toolbar is in a vertical
-  orientation.@br{}
+  orientation. @br{}
   Default value: @arg{true}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Accessors
+;;; Accessors of Properties
 ;;;
 ;;; ----------------------------------------------------------------------------
-
-;;; --- gtk-action-action-group ------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-action-group atdoc:*function-name-alias*)
@@ -397,8 +366,6 @@
     class.
   @end{short}")
 
-;;; --- gtk-action-always-show-image -------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-always-show-image atdoc:*function-name-alias*)
       "Accessor"
@@ -408,8 +375,6 @@
     Accessor of the slot @code{\"always-show-image\"} of the @class{gtk-action}
     class.
   @end{short}")
-
-;;; --- gtk-action-gicon -------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-gicon atdoc:*function-name-alias*)
@@ -421,8 +386,6 @@
     class.
   @end{short}")
 
-;;; --- gtk-action-hide-if-empty -----------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-hide-if-empty atdoc:*function-name-alias*)
       "Accessor"
@@ -432,8 +395,6 @@
     Accessor of the slot @code{\"hide-if-empty\"} of the @class{gtk-action}
     class.
   @end{short}")
-
-;;; --- gtk-action-icon-name ---------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-icon-name atdoc:*function-name-alias*)
@@ -445,8 +406,6 @@
     class.
   @end{short}")
 
-;;; --- gtk-action-is-important ------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-is-important atdoc:*function-name-alias*)
       "Accessor"
@@ -457,8 +416,6 @@
     class.
   @end{short}")
 
-;;; --- gtk-action-label -------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-label atdoc:*function-name-alias*)
       "Accessor"
@@ -467,8 +424,6 @@
   @begin{short}
     Accessor of the slot @code{\"label\"} of the @class{gtk-action} class.
   @end{short}")
-
-;;; --- gtk-action-name --------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-name atdoc:*function-name-alias*)
@@ -479,8 +434,6 @@
     Accessor of the slot @code{\"name\"} of the @class{gtk-action} class.
   @end{short}")
 
-;;; --- gtk-action-sensitive ---------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-sensitive atdoc:*function-name-alias*)
       "Accessor"
@@ -489,8 +442,6 @@
   @begin{short}
     Accessor of the slot @code{\"senstive\"} of the @class{gtk-action} class.
   @end{short}")
-
-;;; --- gtk-action-short-label -------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-short-label atdoc:*function-name-alias*)
@@ -501,8 +452,6 @@
     Accessor of the slot @code{\"short-label\"} of the @class{gtk-action} class.
   @end{short}")
 
-;;; --- gtk-action-stock-id ----------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-stock-id atdoc:*function-name-alias*)
       "Accessor"
@@ -511,8 +460,6 @@
   @begin{short}
     Accessor of the slot @code{\"stock-id\"} of the @class{gtk-action} class.
   @end{short}")
-
-;;; --- gtk-action-tooltip -----------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-tooltip atdoc:*function-name-alias*)
@@ -523,8 +470,6 @@
     Accessor of the slot @code{\"tooltip\"} of the @class{gtk-action} class.
   @end{short}")
 
-;;; --- gtk-action-visible -----------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-visible atdoc:*function-name-alias*)
       "Accessor"
@@ -533,8 +478,6 @@
   @begin{short}
     Accessor of the slot @code{\"visible\"} of the @class{gtk-action} class.
   @end{short}")
-
-;;; --- gtk-action-visible-horizontal ------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-visible-horizontal atdoc:*function-name-alias*)
@@ -546,8 +489,6 @@
     class.
   @end{short}")
 
-;;; --- gtk-action-visible-overflown -------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-visible-overflown atdoc:*function-name-alias*)
       "Accessor"
@@ -557,8 +498,6 @@
     Accessor of the slot @code{\"visible-overflown\"} of the @class{gtk-action}
     class.
   @end{short}")
-
-;;; --- gtk-action-visible-vertical --------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-visible-vertical atdoc:*function-name-alias*)
@@ -576,29 +515,31 @@
 
 (declaim (inline gtk-action-new))
 
-(defun gtk-action-new (name label tooltip stock-id)
+(defun gtk-action-new (name &optional (label nil) (tooltip nil) (stock-id nil))
  #+cl-cffi-gtk-documentation
- "@version{2013-2-9}
-  @argument[name]{A unique name for the action.}
+ "@version{2013-6-9}
+  @argument[name]{a unique name for the action}
   @argument[label]{the label displayed in menu items and on buttons,
     or @code{nil}}
   @argument[tooltip]{a tooltip for the action, or @code{nil}}
   @argument[stock-id]{the stock icon to display in widgets representing the
     action, or @code{nil}}
-  @return{A new @class{gtk-action object}.}
+  @return{A new @class{gtk-action} object.}
   @begin{short}
     Creates a new @class{gtk-action} object.
   @end{short}
   To add the action to a @class{gtk-action-group} and set the accelerator for
-  the action, call @fun{gtk-action-group-add-action-with-accel}. See the section
-  called UI Definitions for information on allowed action names.
+  the action, call the @fun{gtk-action-group-add-action-with-accel} function.
+  See the section called \"UI Definitions\" for information on allowed action
+  names.
 
-  Since 2.4"
+  Since 2.4
+  @see-function{gtk-action-group-add-action-with-accel}"
   (make-instance 'gtk-action
                  :name name
-                 :label label
-                 :tooltip tooltip
-                 :stock-id stock-id))
+                 :label (if label label (null-pointer))
+                 :tooltip (if tooltip tooltip (null-pointer))
+                 :stock-id (if stock-id stock-id (null-pointer))))
 
 (export 'gtk-action-new)
 
@@ -610,10 +551,11 @@
 
 (defun gtk-action-get-name (action)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-9}
+ "@version{2013-6-2}
   @argument[action]{the action object}
   @return{The name of the action.}
   @short{Returns the name of the action.}
+
   Since 2.4"
   (gtk-action-name action))
 
@@ -625,11 +567,11 @@
 
 (defcfun ("gtk_action_is_sensitive" gtk-action-is-sensitive) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-2-9}
+ "@version{2013-6-2}
   @argument[action]{the action object}
-  @return{@arg{true} if the action and its associated action group are both
+  @return{@arg{True} if the action and its associated action group are both
     sensitive.}
-  @short{Returns whether the action is effectively sensitive.}
+  @short{Returns whether the action is effectively sensitive.} @break{}
   Since 2.4."
   (action g-object))
 
@@ -677,11 +619,12 @@
 
 (defcfun ("gtk_action_is_visible" gtk-action-is-visible) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-2-9}
+ "@version{2013-6-2}
   @argument[action]{the action object}
-  @return{@arg{true} if the action and its associated action group are both
+  @return{@arg{True} if the action and its associated action group are both
     visible.}
   @short{Returns whether the action is effectively visible.}
+
   Since 2.4"
   (action g-object))
 
@@ -744,7 +687,7 @@
 
 (defcfun ("gtk_action_create_icon" gtk-action-create-icon) g-object
  #+cl-cffi-gtk-documentation
- "@version{2013-2-9}
+ "@version{2013-6-2}
   @argument[action]{the action object}
   @argument[icon-size]{the size of the icon that should be created}
   @return{A widget that displays the icon for this action.}
@@ -752,6 +695,7 @@
     This function is intended for use by action implementations to create icons
     displayed in the proxy widgets.
   @end{short}
+
   Since 2.4"
   (action g-object)
   (icon-size gtk-icon-size))
@@ -764,10 +708,11 @@
 
 (defcfun ("gtk_action_create_menu_item" gtk-action-create-menu-item) g-object
  #+cl-cffi-gtk-documentation
- "@version{2013-2-9}
+ "@version{2013-6-2}
   @argument[action]{the action object}
   @return{A menu item connected to the action.}
   @short{Creates a menu item widget that proxies for the given action.}
+
   Since 2.4"
   (action g-object))
 
@@ -779,10 +724,11 @@
 
 (defcfun ("gtk_action_create_tool_item" gtk-action-create-tool-item) g-object
  #+cl-cffi-gtk-documentation
- "@version{2013-2-9}
+ "@version{2013-6-2}
   @argument[action]{the action object}
   @return{A toolbar item connected to the action.}
   @short{Creates a toolbar item widget that proxies for the given action.}
+
   Since 2.4"
   (action g-object))
 
@@ -794,14 +740,15 @@
 
 (defcfun ("gtk_action_create_menu" gtk-action-create-menu) g-object
  #+cl-cffi-gtk-documentation
- "@version{2013-2-9}
-  @argument[action]{a @class{gtk-action} object.}
+ "@version{2013-5-2}
+  @argument[action]{a @class{gtk-action} object}
   @return{The menu item provided by the action, or @code{nil}.}
   @begin{short}
     If action provides a @class{gtk-menu} widget as a submenu for the menu item
     or the toolbar item it creates, this function returns an instance of that
     menu.
-  @end{short}@break{}
+  @end{short}
+
   Since 2.12"
   (action g-object))
 
@@ -814,12 +761,14 @@
 (defcfun ("gtk_action_get_proxies" gtk-action-proxies)
     (g-slist g-object :free-from-foreign nil)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-9}
+ "@version{2013-6-2}
   @argument[action]{the action object}
-  @return{A @type{g-slist} of proxy widgets.}
+  @return{A list of proxy widgets.}
   @short{Returns the proxy widgets for an action.}
-  See also @fun{gtk-activatable-get-related-action}.
- Since 2.4"
+  See also the @fun{gtk-activatable-get-related-action} funcion.
+
+  Since 2.4
+  @see-function{gtk-activatable-get-related-action}"
   (action g-object))
 
 (export 'gtk-action-proxies)
@@ -830,19 +779,24 @@
 
 (defcfun ("gtk_action_connect_accelerator" gtk-action-connect-accelerator) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-2-9}
+ "@version{2013-6-2}
   @argument[action]{a @class{gtk-action} object}
   @begin{short}
     Installs the accelerator for action if action has an accel path and group.
   @end{short}
-  See @fun{gtk-action-set-accel-path} and @fun{gtk-action-set-accel-group}.
+  See the functions @fun{gtk-action-set-accel-path} and
+  @fun{gtk-action-set-accel-group}.
 
   Since multiple proxies may independently trigger the installation of the
   accelerator, the action counts the number of times this function has been
-  called and doesn't remove the accelerator until
-  @fun{gtk-action-disconnect-accelerator} has been called as many times.
+  called and doesn't remove the accelerator until the
+  @fun{gtk-action-disconnect-accelerator} function has been called as many
+  times.
 
- Since 2.4"
+  Since 2.4
+  @see-function{gtk-action-set-accel-path}
+  @see-function{gtk-action-set-accel-group}
+  @see-function{gtk-action-disconnect-accelerator}"
   (action g-object))
 
 (export 'gtk-action-connect-accelerator)
@@ -854,12 +808,15 @@
 (defcfun ("gtk_action_disconnect_accelerator" gtk-action-disconnect-accelerator)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2013-2-9}
+ "@version{2013-6-2}
   @argument[action]{a @class{gtk-action} object}
   @begin{short}
-    Undoes the effect of one call to @fun{gtk-action-connect-accelerator}.
+    Undoes the effect of one call to the @fun{gtk-action-connect-accelerator}
+    function.
   @end{short}
-  Since 2.4"
+
+  Since 2.4
+  @see-function{gtk-action-connect-accelerator}"
   (action g-object))
 
 (export 'gtk-action-disconnect-accelerator)
@@ -870,16 +827,17 @@
 
 (defcfun ("gtk_action_block_activate" gtk-action-block-activate) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-2-9}
+ "@version{2013-6-2}
   @argument[action]{a @class{gtk-action} object}
-  @short{Disable activation signals from the action}
+  @short{Disable activation signals from the action.}
 
-  This is needed when updating the state of your proxy GtkActivatable widget
-  could result in calling gtk_action_activate(), this is a convenience
-  function to avoid recursing in those cases (updating toggle state for
-  instance).
+  This is needed when updating the state of your proxy @class{gtk-activatable}
+  widget could result in calling the @fun{gtk-action-activate} function, this
+  is a convenience function to avoid recursing in those cases (updating toggle
+  state for instance).
 
-  Since 2.16"
+  Since 2.16
+  @see-function{gtk-action-activate}"
   (action (g-object gtk-action)))
 
 (export 'gtk-action-block-activate)
@@ -890,9 +848,10 @@
 
 (defcfun ("gtk_action_unblock_activate" gtk-action-unblock-activate) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-2-9}
+ "@version{2013-6-2}
   @argument[action]{a @class{gtk-action} object}
   @short{Reenable activation signals from the action.}
+
   Since 2.16"
   (action (g-object gtk-action)))
 
@@ -942,10 +901,11 @@
 
 (defcfun ("gtk_action_get_accel_path" gtk-action-get-accel-path) :string
  #+cl-cffi-gtk-documentation
- "@version{2013-2-9}
+ "@version{2013-6-2}
   @argument[action]{the action object}
-  @return{the accel path for this action, or @code{nil} if none is set.}
+  @return{The accel path for this action, or @code{nil} if none is set.}
   @short{Returns the accel path for this action.}
+
   Since 2.6"
   (action (g-object gtk-action)))
 
@@ -957,7 +917,7 @@
 
 (defcfun ("gtk_action_set_accel_path" gtk-action-set-accel-path) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-2-9}
+ "@version{2013-6-2}
   @argument[action]{the action object}
   @argument[accel-path]{the accelerator path}
   @begin{short}
@@ -967,9 +927,10 @@
 
   Note that @arg{accel-path} string will be stored in a @type{g-quark}.
   Therefore, if you pass a static string, you can save some memory by interning
-  it first with @fun{g-intern-static-string}.
+  it first with the @fun{g-intern-static-string} function.
 
-  Since 2.4"
+  Since 2.4
+  @see-function{g-intern-static-string}"
   (action (g-object gtk-action))
   (accel-path :string))
 
@@ -998,7 +959,7 @@
 
 (defcfun ("gtk_action_set_accel_group" gtk-action-set-accel-group) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-2-9}
+ "@version{2013-6-2}
   @argument[action]{the action object}
   @argument[accel-group]{a @class{gtk-accel-group} or @code{nil}}
   @begin{short}
@@ -1303,6 +1264,5 @@
 ;;;
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
-
 
 ;;; --- End of file gtk.action.lisp --------------------------------------------

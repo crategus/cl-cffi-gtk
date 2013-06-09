@@ -1614,7 +1614,7 @@
   @see-function{gtk-label-set-use-underline}"
   (gtk-label-use-underline label))
 
-(export 'gtk-label-get-user-underline)
+(export 'gtk-label-get-use-underline)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_label_get_single_line_mode ()

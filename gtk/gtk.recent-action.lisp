@@ -55,37 +55,12 @@
 ;;; Properties
 ;;;
 ;;;   "show-numbers"             gboolean              : Read / Write
-;;;
-;;; Description
-;;;
-;;; A GtkRecentAction represents a list of recently used files, which can be
-;;; shown by widgets such as GtkRecentChooserDialog or GtkRecentChooserMenu.
-;;;
-;;; To construct a submenu showing recently used files, use a GtkRecentAction as
-;;; the action for a <menuitem>. To construct a menu toolbutton showing the
-;;; recently used files in the popup menu, use a GtkRecentAction as the action
-;;; for a <toolitem> element.
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "show-numbers" property
-;;;
-;;;   "show-numbers"             gboolean              : Read / Write
-;;;
-;;; Whether the items should be displayed with a number.
-;;;
-;;; Default value: FALSE
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkRecentAction
-;;;
-;;; struct GtkRecentAction;
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GtkRecentAction" gtk-recent-action
@@ -97,6 +72,48 @@
   ((show-numbers
     gtk-recent-action-show-numbers
     "show-numbers" "gboolean" t t)))
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-recent-action 'type)
+ "@version{2013-6-2}
+  @begin{short}
+    A @sym{gtk-recent-action} represents a list of recently used files, which
+    can be shown by widgets such as @class{gtk-recent-chooser-dialog} or
+    @class{gtk-recent-chooser-menu}.
+  @end{short}
+
+  To construct a submenu showing recently used files, use a
+  @sym{gtk-recent-action} as the action for a <menuitem>. To construct a menu
+  toolbutton showing the recently used files in the popup menu, use a
+  @sym{gtk-recent-action} as the action for a <toolitem> element.")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Property Details
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "show-numbers"
+                                               'gtk-recent-action) 't)
+ "The @code{\"show-numbers\"} property of type @code{:boolean}
+  (Read / Write) @br{}
+  Whether the items should be displayed with a number. @br{}
+  Default value: @code{nil}")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors of Properties
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-recent-action-show-numbers atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-recent-action-show-numbers 'function)
+ "@version{2013-6-2}
+  Accessor of the slot @code{\"show-numbers\"} of the @class{gtk-recent-action}
+  class.")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_action_new ()
@@ -197,6 +214,5 @@
 ;;;
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
-
 
 ;;; --- End of file gtk.recent-action.lisp -------------------------------------

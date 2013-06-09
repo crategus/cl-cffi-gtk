@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -63,14 +63,13 @@
     gtk-toggle-action-draw-as-radio
     "draw-as-radio" "gboolean" t t)))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-toggle-action 'type)
- "@version{2013-3-25}
+ "@version{2013-6-2}
   @begin{short}
-    A GtkToggleAction corresponds roughly to a GtkCheckMenuItem. It has an
-    \"active\" state specifying whether the action has been checked or not.
+    A @sym{gtk-toggle-action} corresponds roughly to a
+    @class{gtk-check-menu-item}. It has an \"active\" state specifying whether
+    the action has been checked or not.
   @end{short}
   @begin[Signal Details]{dictionary}
     @subheading{The \"toggled\" signal}
@@ -78,9 +77,9 @@
  lambda (toggleaction)   : Run First
       @end{pre}
       Should be connected if you wish to perform an action whenever the
-      GtkToggleAction state is changed.
+      @sym{gtk-toggle-action} state is changed.
       @begin[code]{table}
-        @entry[toggleaction]{the object which received the signal.}
+        @entry[toggleaction]{The object which received the signal.}
       @end{table}
   @end{dictionary}
   @see-slot{gtk-toggle-action-active}
@@ -94,26 +93,24 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "active" 'gtk-toggle-action) 't)
- "The @code{\"active\"} property of type @code{:boolean} (Read / Write)@br{}
+ "The @code{\"active\"} property of type @code{:boolean} (Read / Write) @br{}
   Whether the toggle action should be active. @br{}
-  Default value: @code{nil}@br{}
+  Default value: @code{nil} @br{}
   Since 2.10")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "draw-as-radio"
                                                'gtk-toggle-action) 't)
  "The @code{\"draw-as-radio\"} property of type @code{:boolean}
-  (Read / Write)@br{}
+  (Read / Write) @br{}
   Whether the proxies for this action look like radio action proxies.
   This is an appearance property and thus only applies if
-  \"use-action-appearance\" is TRUE. @br{}
+  @code{\"use-action-appearance\"} is @em{true}. @br{}
   Default value: @code{nil}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Accessors
+;;; Accessors of Properties
 ;;;
 ;;; ----------------------------------------------------------------------------
 
@@ -124,8 +121,6 @@
  "@version{2013-3-25}
   Accessor of the slot @code{\"active\"} of the @class{gtk-toggle-action}
   class.")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-toggle-action-draw-as-radio atdoc:*function-name-alias*)
@@ -243,6 +238,5 @@
 ;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
-
 
 ;;; --- End of file gtk.toggle-action.lisp -------------------------------------

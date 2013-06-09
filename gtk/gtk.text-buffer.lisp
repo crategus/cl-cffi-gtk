@@ -758,7 +758,7 @@
   (end (g-boxed-foreign gtk-text-iter))
   (default-editable :boolean))
 
-(export 'gtk-text-buffer-insert-range)
+(export 'gtk-text-buffer-insert-range-interactive)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_insert_with_tags ()

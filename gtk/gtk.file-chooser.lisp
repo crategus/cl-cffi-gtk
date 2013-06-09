@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -102,8 +102,6 @@
 ;;;     gtk_file_chooser_set_file
 ;;;     gtk_file_chooser_unselect_file
 ;;;
-;;;
-;;;
 ;;; Signals
 ;;;
 ;;;   "confirm-overwrite"                               : Run Last
@@ -111,194 +109,6 @@
 ;;;   "file-activated"                                  : Run Last
 ;;;   "selection-changed"                               : Run Last
 ;;;   "update-preview"                                  : Run Last
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Signal Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "confirm-overwrite" signal
-;;;
-;;; GtkFileChooserConfirmation user_function (GtkFileChooser *chooser,
-;;;                                           gpointer        user_data)
-;;;                                                                   : Run Last
-;;;
-;;; This signal gets emitted whenever it is appropriate to present a
-;;; confirmation dialog when the user has selected a file name that already
-;;; exists. The signal only gets emitted when the file chooser is in
-;;; GTK_FILE_CHOOSER_ACTION_SAVE mode.
-;;;
-;;; Most applications just need to turn on the "do-overwrite-confirmation"
-;;; property (or call the gtk_file_chooser_set_do_overwrite_confirmation()
-;;; function), and they will automatically get a stock confirmation dialog.
-;;; Applications which need to customize this behavior should do that, and also
-;;; connect to the "confirm-overwrite" signal.
-;;;
-;;; A signal handler for this signal must return a GtkFileChooserConfirmation
-;;; value, which indicates the action to take. If the handler determines that
-;;; the user wants to select a different filename, it should return
-;;; GTK_FILE_CHOOSER_CONFIRMATION_SELECT_AGAIN. If it determines that the user
-;;; is satisfied with his choice of file name, it should return
-;;; GTK_FILE_CHOOSER_CONFIRMATION_ACCEPT_FILENAME. On the other hand, if it
-;;; determines that the stock confirmation dialog should be used, it should
-;;; return GTK_FILE_CHOOSER_CONFIRMATION_CONFIRM. The following example
-;;; illustrates this.
-;;;
-;;; Example 87. Custom confirmation
-;;;
-;;;   static GtkFileChooserConfirmation
-;;;   confirm_overwrite_callback (GtkFileChooser *chooser, gpointer data)
-;;;   {
-;;;     char *uri;
-;;;     uri = gtk_file_chooser_get_uri (chooser);
-;;;
-;;;     if (is_uri_read_only (uri))
-;;;       {
-;;;         if (user_wants_to_replace_read_only_file (uri))
-;;;           return GTK_FILE_CHOOSER_CONFIRMATION_ACCEPT_FILENAME;
-;;;         else
-;;;           return GTK_FILE_CHOOSER_CONFIRMATION_SELECT_AGAIN;
-;;;       } else
-;;;         // fall back to the default dialog
-;;;         return GTK_FILE_CHOOSER_CONFIRMATION_CONFIRM;
-;;;   }
-;;;
-;;;   ...
-;;;
-;;;   chooser = gtk_file_chooser_dialog_new (...);
-;;;
-;;;   gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (dialog),
-;;;                                                   TRUE);
-;;;   g_signal_connect (chooser, "confirm-overwrite",
-;;;                     G_CALLBACK (confirm_overwrite_callback), NULL);
-;;;
-;;;   if (gtk_dialog_run (chooser) == GTK_RESPONSE_ACCEPT)
-;;;           save_to_file (gtk_file_chooser_get_filename
-;;;                                                (GTK_FILE_CHOOSER (chooser));
-;;;
-;;;   gtk_widget_destroy (chooser);
-;;;
-;;;
-;;; chooser :
-;;;     the object which received the signal.
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; Returns :
-;;;     a GtkFileChooserConfirmation value that indicates which action to take
-;;;     after emitting the signal.
-;;;
-;;; Since 2.8
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "current-folder-changed" signal
-;;;
-;;; void user_function (GtkFileChooser *chooser,
-;;;                     gpointer        user_data)      : Run Last
-;;;
-;;; This signal is emitted when the current folder in a GtkFileChooser changes.
-;;; This can happen due to the user performing some action that changes folders,
-;;; such as selecting a bookmark or visiting a folder on the file list. It can
-;;; also happen as a result of calling a function to explicitly change the
-;;; current folder in a file chooser.
-;;;
-;;; Normally you do not need to connect to this signal, unless you need to keep
-;;; track of which folder a file chooser is showing.
-;;;
-;;; See also: gtk_file_chooser_set_current_folder(),
-;;; gtk_file_chooser_get_current_folder(),
-;;; gtk_file_chooser_set_current_folder_uri(),
-;;; gtk_file_chooser_get_current_folder_uri().
-;;;
-;;; chooser :
-;;;     the object which received the signal.
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "file-activated" signal
-;;;
-;;; void user_function (GtkFileChooser *chooser,
-;;;                     gpointer        user_data)      : Run Last
-;;;
-;;; This signal is emitted when the user "activates" a file in the file chooser.
-;;; This can happen by double-clicking on a file in the file list, or by
-;;; pressing Enter.
-;;;
-;;; Normally you do not need to connect to this signal. It is used internally by
-;;; GtkFileChooserDialog to know when to activate the default button in the
-;;; dialog.
-;;;
-;;; See also: gtk_file_chooser_get_filename(), gtk_file_chooser_get_filenames(),
-;;; gtk_file_chooser_get_uri(), gtk_file_chooser_get_uris().
-;;;
-;;; chooser :
-;;;     the object which received the signal.
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "selection-changed" signal
-;;;
-;;; void user_function (GtkFileChooser *chooser,
-;;;                     gpointer        user_data)      : Run Last
-;;;
-;;; This signal is emitted when there is a change in the set of selected files
-;;; in a GtkFileChooser. This can happen when the user modifies the selection
-;;; with the mouse or the keyboard, or when explicitly calling functions to
-;;; change the selection.
-;;;
-;;; Normally you do not need to connect to this signal, as it is easier to wait
-;;; for the file chooser to finish running, and then to get the list of selected
-;;; files using the functions mentioned below.
-;;;
-;;; See also: gtk_file_chooser_select_filename(),
-;;; gtk_file_chooser_unselect_filename(), gtk_file_chooser_get_filename(),
-;;; gtk_file_chooser_get_filenames(), gtk_file_chooser_select_uri(),
-;;; gtk_file_chooser_unselect_uri(), gtk_file_chooser_get_uri(),
-;;; gtk_file_chooser_get_uris().
-;;;
-;;; chooser :
-;;;     the object which received the signal.
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "update-preview" signal
-;;;
-;;; void user_function (GtkFileChooser *chooser,
-;;;                     gpointer        user_data)      : Run Last
-;;;
-;;; This signal is emitted when the preview in a file chooser should be
-;;; regenerated. For example, this can happen when the currently selected file
-;;; changes. You should use this signal if you want your file chooser to have a
-;;; preview widget.
-;;;
-;;; Once you have installed a preview widget with
-;;; gtk_file_chooser_set_preview_widget(), you should update it when this signal
-;;; is emitted. You can use the functions
-;;; gtk_file_chooser_get_preview_filename() or
-;;; gtk_file_chooser_get_preview_uri() to get the name of the file to preview.
-;;; Your widget may not be able to preview all kinds of files; your callback
-;;; must call gtk_file_chooser_set_preview_widget_active() to inform the file
-;;; chooser about whether the preview was generated successfully or not.
-;;;
-;;; Please see the example code in the section called “Adding a Preview Widget”.
-;;;
-;;; See also: gtk_file_chooser_set_preview_widget(),
-;;; gtk_file_chooser_set_preview_widget_active(),
-;;; gtk_file_chooser_set_use_preview_label(),
-;;; gtk_file_chooser_get_preview_filename(), gtk_file_chooser_get_preview_uri().
-;;;
-;;; chooser :
-;;;     the object which received the signal.
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -396,20 +206,21 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-file-chooser atdoc:*class-name-alias*) "Interface"
       (documentation 'gtk-file-chooser 'type)
- "@version{2013-3-3}
+ "@version{2013-6-4}
   @begin{short}
-    GtkFileChooser is an interface that can be implemented by file selection
-    widgets. In GTK+, the main objects that implement this interface are
-    GtkFileChooserWidget, GtkFileChooserDialog, and GtkFileChooserButton. You do
-    not need to write an object that implements the GtkFileChooser interface
-    unless you are trying to adapt an existing file selector to expose a
-    standard programming interface.
+    @sym{gtk-file-chooser} is an interface that can be implemented by file
+    selection widgets. In GTK+, the main objects that implement this interface
+    are @class{gtk-file-chooser-widget}, @class{gtk-file-chooser-dialog}, and
+    @class{gtk-file-chooser-button}. You do not need to write an object that
+    implements the @sym{gtk-file-chooser} interface unless you are trying to
+    adapt an existing file selector to expose a standard programming interface.
   @end{short}
 
-  GtkFileChooser allows for shortcuts to various places in the filesystem. In
-  the default implementation these are displayed in the left pane. It may be a
-  bit confusing at first that these shortcuts come from various sources and in
-  various flavours, so lets explain the terminology here:
+  @sym{gtk-file-chooser} allows for shortcuts to various places in the
+  filesystem. In the default implementation these are displayed in the left
+  pane. It may be a bit confusing at first that these shortcuts come from
+  various sources and in various flavours, so lets explain the terminology
+  here:
   @begin{table}
     @begin[Bookmarks]{entry}
       are created by the user, by dragging folders from the right pane to the
@@ -426,37 +237,38 @@
       \"roots\" of the filesystem.
     @end{entry}
   @end{table}
-  @heading{File Names and Encodings}
-  When the user is finished selecting files in a GtkFileChooser, your program
-  can get the selected names either as filenames or as URIs. For URIs, the
-  normal escaping rules are applied if the URI contains non-ASCII characters.
-  However, filenames are always returned in the character set specified by the
-  G_FILENAME_ENCODING environment variable. Please see the GLib documentation
-  for more details about this variable.
+  @subheading{File Names and Encodings}
+    When the user is finished selecting files in a @sym{gtk-file-chooser}, your
+    program can get the selected names either as filenames or as URIs. For URIs,
+    the normal escaping rules are applied if the URI contains non-ASCII
+    characters. However, filenames are always returned in the character set
+    specified by the @code{G_FILENAME_ENCODING} environment variable. Please see
+    the GLib documentation for more details about this variable.
 
   @subheading{Note}
-  This means that while you can pass the result of
-  gtk_file_chooser_get_filename() to open(2) or fopen(3), you may not be able
-  to directly set it as the text of a GtkLabel widget unless you convert it
-  first to UTF-8, which all GTK+ widgets expect. You should use
-  g_filename_to_utf8() to convert filenames into strings that can be passed
-  to GTK+ widgets.
+    This means that while you can pass the result of the
+    @fun{gtk-file-chooser-get-filename} function to @code{open(2)} or
+    @code{fopen(3)}, you may not be able to directly set it as the text of a
+    @class{gtk-label} widget unless you convert it first to UTF-8, which all
+    GTK+ widgets expect. You should use the @fun{g-filename-to-utf8} function
+    to convert filenames into strings that can be passed to GTK+ widgets.
 
-  @heading{Adding a Preview Widget}
-  You can add a custom preview widget to a file chooser and then get
-  notification about when the preview needs to be updated. To install a
-  preview widget, use gtk_file_chooser_set_preview_widget(). Then, connect to
-  the \"update-preview\" signal to get notified when you need to update the
-  contents of the preview.
+  @subheading{Adding a Preview Widget}
+    You can add a custom preview widget to a file chooser and then get
+    notification about when the preview needs to be updated. To install a
+    preview widget, use the @fun{gtk-file-chooser-set-preview-widget} function.
+    Then, connect to the \"update-preview\" signal to get notified when you need
+    to update the contents of the preview.
 
-  Your callback should use gtk_file_chooser_get_preview_filename() to see what
-  needs previewing. Once you have generated the preview for the corresponding
-  file, you must call gtk_file_chooser_set_preview_widget_active() with a
-  boolean flag that indicates whether your callback could successfully
-  generate a preview.
+    Your callback should use the @fun{gtk-file-chooser-get-preview-filename}
+    function to see what needs previewing. Once you have generated the preview
+    for the corresponding file, you must call the
+    @fun{gtk-file-chooser-set-preview-widget-active} function with a boolean
+    flag that indicates whether your callback could successfully generate a
+    preview.
 
-  Example 84. Sample Usage
-  @begin{pre}
+    @b{Example:} Sample Usage
+    @begin{pre}
    {
      GtkImage *preview;
 
@@ -490,16 +302,16 @@
 
      gtk_file_chooser_set_preview_widget_active (file_chooser, have_preview);
    @}
-  @end{pre}
-  @heading{Adding Extra Widgets}
-  You can add extra widgets to a file chooser to provide options that are not
-  present in the default design. For example, you can add a toggle button to
-  give the user the option to open a file in read-only mode. You can use
-  gtk_file_chooser_set_extra_widget() to insert additional widgets in a file
-  chooser.
+    @end{pre}
+  @subheading{Adding Extra Widgets}
+    You can add extra widgets to a file chooser to provide options that are not
+    present in the default design. For example, you can add a toggle button to
+    give the user the option to open a file in read-only mode. You can use the
+    @fun{gtk-file-chooser-set-extra-widget} function to insert additional
+    widgets in a file chooser.
 
-  Example 85. Sample Usage
-  @begin{pre}
+    @b{Example:} Sample Usage
+    @begin{pre}
    GtkWidget *toggle;
 
    ...
@@ -508,36 +320,36 @@
    gtk_widget_show (toggle);
    gtk_file_chooser_set_extra_widget (my_file_chooser, toggle);
    @}
-  @end{pre}
+    @end{pre}
   @subheading{Note}
-  If you want to set more than one extra widget in the file chooser, you can a
-  container such as a GtkBox or a GtkGrid and include your widgets in it.
-  Then, set the container as the whole extra widget.
+    If you want to set more than one extra widget in the file chooser, you can a
+    container such as a @class{gtk-box} or a @class{gtk-grid} and include your
+    widgets in it. Then, set the container as the whole extra widget.
 
-  @heading{Key Bindings}
-  Internally, GTK+ implements a file chooser's graphical user interface with
-  the private GtkFileChooserDefaultClass. This widget has several key bindings
-  and their associated signals. This section describes the available key
-  binding signals.
+  @subheading{Key Bindings}
+    Internally, GTK+ implements a file chooser's graphical user interface with
+    the private @code{GtkFileChooserDefaultClass}. This widget has several key
+    bindings and their associated signals. This section describes the available
+    key binding signals.
 
-  Example 86. GtkFileChooser key binding example
+    @b{Example:} @sym{gtk-file-chooser} key binding example
 
-  The default keys that activate the key-binding signals in
-  GtkFileChooserDefaultClass are as follows:
-  @begin{table}
-    @entry[Signal name]{Default key combinations}
-    @entry[location-popup]{Control+L (empty path);
-                           / (path of \"/\") [a]; ~ (path of \"~\")}
-    @entry[up-folder]{Alt+Up; Alt+Shift+Up [b]; Backspace}
-    @entry[down-folder]{Alt+Down; Alt+Shift+Down [c]}
-    @entry[home-folder]{Alt+Home}
-    @entry[desktop-folder]{Alt+D}
-    @entry[quick-bookmark]{Alt+1 through Alt+0}
-  @end{table}
-  You can change these defaults to something else. For example, to add a Shift
-  modifier to a few of the default bindings, you can include the following
-  fragment in your .config/gtk-3.0/gtk.css file:
-  @begin{pre}
+    The default keys that activate the key-binding signals in
+    @code{GtkFileChooserDefaultClass} are as follows:
+    @begin{table}
+      @entry[Signal name]{Default key combinations} 
+      @entry[location-popup]{Control+L (empty path);
+                             / (path of \"/\") [a]; ~ (path of \"~\")}
+      @entry[up-folder]{Alt+Up; Alt+Shift+Up [b]; Backspace}
+      @entry[down-folder]{Alt+Down; Alt+Shift+Down [c]}
+      @entry[home-folder]{Alt+Home}
+      @entry[desktop-folder]{Alt+D}
+      @entry[quick-bookmark]{Alt+1 through Alt+0}
+    @end{table}
+    You can change these defaults to something else. For example, to add a Shift
+    modifier to a few of the default bindings, you can include the following
+    fragment in your .config/gtk-3.0/gtk.css file:
+    @begin{pre}
    @@binding-set MyOwnFilechooserBindings
    {
      bind \"<Alt><Shift>Up\" { \"up-folder\" () @}
@@ -549,12 +361,11 @@
    {
       gtk-key-bindings: MyOwnFilechooserBindings
    @}
-  @end{pre}
+    @end{pre}
+
   @subheading{The \"GtkFileChooserDefault::location-popup\" signal}
     @begin{pre}
- void user_function (GtkFileChooserDefault *chooser,
-                     const char            *path,
-                     gpointer      user_data);
+ lambda (chooser path)
     @end{pre}
     This is used to make the file chooser show a \"Location\" dialog which the
     user can use to manually type the name of the file he wishes to select. The
@@ -565,9 +376,8 @@
     bound to ~ (tilde) with a path string of \"~\" itself for access to home
     directories.
     @begin[code]{table}
-      @entry[chooser]{the object which received the signal.}
-      @entry[path]{default contents for the text entry for the file name}
-      @entry[user_data]{user data set when the signal handler was connected.}
+      @entry[chooser]{The object which received the signal.}
+      @entry[path]{Default contents for the text entry for the file name.}
     @end{table}
     @subheading{Note}
     You can create your own bindings for the \"location-popup\" signal with
@@ -589,21 +399,17 @@
 
   @subheading{The \"GtkFileChooserDefault::up-folder\" signal}
     @begin{pre}
- void user_function (GtkFileChooserDefault *chooser,
-                     gpointer user_data);
+ lambda (chooser)
     @end{pre}
     This is used to make the file chooser go to the parent of the current folder
     in the file hierarchy. By default this is bound to Backspace and Alt+Up (the
     Up key in the numeric keypad also works).
     @begin[code]{table}
-      @entry[chooser]{the object which received the signal.}
-      @entry[user_data]{user data set when the signal handler was connected.}
+      @entry[chooser]{The object which received the signal.}
     @end{table}
-
   @subheading{The \"GtkFileChooserDefault::down-folder\" signal}
     @begin{pre}
- void user_function (GtkFileChooserDefault *chooser,
-                     gpointer user_data);
+ lambda (chooser)
     @end{pre}
     This is used to make the file chooser go to a child of the current folder in
     the file hierarchy. The subfolder that will be used is displayed in the path
@@ -612,40 +418,30 @@
     \"baz\" subfolder. By default this is bound to Alt+Down (the Down key in the
     numeric keypad also works).
     @begin[code]{table}
-      @entry[chooser]{the object which received the signal.}
-      @entry[user_data]{user data set when the signal handler was connected.}
+      @entry[chooser]{The object which received the signal.}
     @end{table}
-
   @subheading{The \"GtkFileChooserDefault::home-folder\" signal}
     @begin{pre}
- void user_function (GtkFileChooserDefault *chooser,
-                     gpointer user_data);
+ lambda (chooser)
     @end{pre}
     This is used to make the file chooser show the user's home folder in the
     file list. By default this is bound to Alt+Home (the Home key in the numeric
     keypad also works).
     @begin[code]{table}
-      @entry[chooser]{the object which received the signal.}
-      @entry[user_data]{user data set when the signal handler was connected.}
+      @entry[chooser]{The object which received the signal.}
     @end{table}
-
   @subheading{The \"GtkFileChooserDefault::desktop-folder\" signal}
     @begin{pre}
- void user_function (GtkFileChooserDefault *chooser,
-                     gpointer user_data);
+ lambda (chooser)
     @end{pre}
     This is used to make the file chooser show the user's Desktop folder in the
     file list. By default this is bound to Alt+D.
     @begin[code]{table}
-      @entry[chooser]{the object which received the signal.}
-      @entry[user_data]{user data set when the signal handler was connected.}
+      @entry[chooser]{The object which received the signal.}
     @end{table}
-
   @subheading{The \"GtkFileChooserDefault::quick-bookmark\" signal}
     @begin{pre}
- void user_function (GtkFileChooserDefault *chooser,
-                     gint bookmark_index,
-                     gpointer user_data);
+ lambda (chooser bookmark-index)
     @end{pre}
     This is used to make the file chooser switch to the bookmark specified in
     the bookmark_index parameter. For example, if you have three bookmarks, you
@@ -655,12 +451,170 @@
     index 0, and so on successively; Alt+0 is defined to switch to the bookmark
     at index 10.
     @begin[code]{table}
-      @entry[chooser]{the object which received the signal.}
-      @entry[bookmark_indes]{index of the bookmark to switch to; the indices
+      @entry[chooser]{The object which received the signal.}
+      @entry[bookmark-index]{Index of the bookmark to switch to; the indices
         start at 0.}
-      @entry[user_data]{user data set when the signal handler was connected.}
     @end{table}
+  @begin[Signal Details]{dictionary}
+    @subheading{The \"confirm-overwrite\" signal}
+      @begin{pre}
+ lambda (chooser)   : Run Last
+      @end{pre}
+      This signal gets emitted whenever it is appropriate to present a
+      confirmation dialog when the user has selected a file name that already
+      exists. The signal only gets emitted when the file chooser is in
+      @code{:action-save} mode.
 
+      Most applications just need to turn on the \"do-overwrite-confirmation\"
+      property (or call the @fun{gtk-file-chooser-set-do-overwrite-confirmation}
+      function), and they will automatically get a stock confirmation dialog.
+      Applications which need to customize this behavior should do that, and
+      also connect to the \"confirm-overwrite\" signal.
+
+      A signal handler for this signal must return a
+      @symbol{gtk-file-chooser-confirmation} value, which indicates the action
+      to take. If the handler determines that the user wants to select a
+      different filename, it should return @code{:select-again}. If it
+      determines that the user is satisfied with his choice of file name, it
+      should return @code{:accept-filename}. On the other hand, if it
+      determines that the stock confirmation dialog should be used, it should
+      return @code{:confirm}. The following example illustrates this.
+
+      @b{Example:} Custom confirmation
+      @begin{pre}
+   static GtkFileChooserConfirmation
+   confirm_overwrite_callback (GtkFileChooser *chooser, gpointer data)
+   {
+     char *uri;
+     uri = gtk_file_chooser_get_uri (chooser);
+
+     if (is_uri_read_only (uri))
+       {
+         if (user_wants_to_replace_read_only_file (uri))
+           return GTK_FILE_CHOOSER_CONFIRMATION_ACCEPT_FILENAME;
+         else
+           return GTK_FILE_CHOOSER_CONFIRMATION_SELECT_AGAIN;
+       @} else
+         // fall back to the default dialog
+         return GTK_FILE_CHOOSER_CONFIRMATION_CONFIRM;
+   @}
+
+   ...
+
+   chooser = gtk_file_chooser_dialog_new (...);
+
+   gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (dialog),
+                                                   TRUE);
+   g_signal_connect (chooser, \"confirm-overwrite\",
+                     G_CALLBACK (confirm_overwrite_callback), NULL);
+
+   if (gtk_dialog_run (chooser) == GTK_RESPONSE_ACCEPT)
+           save_to_file (gtk_file_chooser_get_filename
+                                                (GTK_FILE_CHOOSER (chooser));
+
+   gtk_widget_destroy (chooser);
+      @end{pre}
+      @begin[code]{table}
+        @entry[chooser]{The object which received the signal.}
+        @entry[Returns]{A @symbol{gtk-file-chooser-confirmation} value that
+          indicates which action to take after emitting the signal.}
+      @end{table}
+      Since 2.8
+
+    @subheading{The \"current-folder-changed\" signal}
+      @begin{pre}
+ lambda (chooser)   : Run Last
+      @end{pre}
+      This signal is emitted when the current folder in a @sym{gtk-file-chooser}
+      changes. This can happen due to the user performing some action that
+      changes folders, such as selecting a bookmark or visiting a folder on the
+      file list. It can also happen as a result of calling a function to
+      explicitly change the current folder in a file chooser.
+
+      Normally you do not need to connect to this signal, unless you need to
+      keep track of which folder a file chooser is showing.
+
+      See also the functions: @fun{gtk-file-chooser-set-current-folder},
+      @fun{gtk-file-chooser-get-current-folder},
+      @fun{gtk-file-chooser-set-current-folder-uri},
+      @fun{gtk-file-chooser-get-current-folder-uri}.
+      @begin[code]{table}
+        @entry[chooser]{The object which received the signal.}
+      @end{table}
+    @subheading{The \"file-activated\" signal}
+      @begin{pre}
+ lambda (chooser)   : Run Last
+      @end{pre}
+      This signal is emitted when the user \"activates\" a file in the file
+      chooser. This can happen by double-clicking on a file in the file list,
+      or by pressing Enter.
+
+      Normally you do not need to connect to this signal. It is used internally
+      by @class{gtk-file-chooser-dialog} to know when to activate the default
+      button in the dialog.
+
+      See also the functions: @fun{gtk-file-chooser-get-filename},
+      @fun{gtk-file-chooser-get-filenames},
+      @fun{gtk-file-chooser-get-uri},
+      @fun{gtk-file-chooser-get-uris}.
+      @begin[code]{table}
+        @entry[chooser]{The object which received the signal.}
+      @end{table}
+    @subheading{The \"selection-changed\" signal}
+      @begin{pre}
+ lambda (chooser)   : Run Last
+      @end{pre}
+      This signal is emitted when there is a change in the set of selected files
+      in a @sym{gtk-file-chooser}. This can happen when the user modifies the
+      selection with the mouse or the keyboard, or when explicitly calling
+      functions to change the selection.
+
+      Normally you do not need to connect to this signal, as it is easier to
+      wait for the file chooser to finish running, and then to get the list of
+      selected files using the functions mentioned below.
+
+      See also the functions: @fun{gtk-file-chooser-select-filename},
+      @fun{gtk-file-chooser-unselect-filename},
+      @fun{gtk-file-chooser-get-filename},
+      @fun{gtk-file-chooser-get-filenames},
+      @fun{gtk-file-chooser-select-uri},
+      @fun{gtk-file-chooser-unselect-uri},
+      @fun{gtk-file-chooser-get-uri},
+      @fun{gtk-file-chooser-get-uris}.
+      @begin[code]{table}
+        @entry[chooser]{The object which received the signal.}
+      @end{table}
+    @subheading{The \"update-preview\" signal}
+      @begin{pre}
+ lambda (chooser)   : Run Last
+      @end{pre}
+      This signal is emitted when the preview in a file chooser should be
+      regenerated. For example, this can happen when the currently selected file
+      changes. You should use this signal if you want your file chooser to have
+      a preview widget.
+
+      Once you have installed a preview widget with the
+      @fun{gtk-file-chooser-set-preview-widget} function, you should update it
+      when this signal is emitted. You can use the functions
+      @fun{gtk-file-chooser-get-preview-filename} or
+      @fun{gtk-file-chooser-get-preview-uri} to get the name of the file to
+      preview. Your widget may not be able to preview all kinds of files; your
+      callback must call the @fun{gtk-file-chooser-set-preview-widget-active} to
+      inform the file chooser about whether the preview was generated
+      successfully or not.
+
+      Please see the example code in the section called “Adding a Preview
+      Widget”.
+
+      See also the function: @fun{gtk-file-chooser-set-preview-widget},
+      @fun{gtk-file-chooser-set-preview-widget-active},
+      @fun{gtk-file-chooser-set-use-preview-label},
+      @fun{gtk-file-chooser-get-preview-filename},
+      @fun{gtk-file-chooser-get-preview-uri}.
+      @begin[code]{table}
+        @entry[chooser]{The object which received the signal.}
+      @end{table}
+  @end{dictionary}
   @see-slot{gtk-file-chooser-action}
   @see-slot{gtk-file-chooser-create-folders}
   @see-slot{gtk-file-chooser-do-overwrite-confirmation}
@@ -671,9 +625,7 @@
   @see-slot{gtk-file-chooser-preview-widget-active}
   @see-slot{gtk-file-chooser-select-multiple}
   @see-slot{gtk-file-chooser-show-hidden}
-  @see-slot{gtk-file-chooser-use-preview-label}
-
-")
+  @see-slot{gtk-file-chooser-use-preview-label}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -683,107 +635,95 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "action" 'gtk-file-chooser) 't)
- "The @code{\"action\"} property of type @code{GtkFileChooserAction}
-  (Read / Write)@br{}
-  The type of operation that the file selector is performing.@br{}
-  Default value: GTK_FILE_CHOOSER_ACTION_OPEN")
-
-;;; ----------------------------------------------------------------------------
+ "The @code{\"action\"} property of type @symbol{gtk-file-chooser-action}
+  (Read / Write) @br{}
+  The type of operation that the file selector is performing. @br{}
+  Default value: @code{:action-open}")
 
 #+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "create-folders" 'gtk-file-chooser) 't)
- "The @code{\"create-folders\"} property of type @code{gboolean}
-  (Read / Write)@br{}
-  Whether a file chooser not in GTK_FILE_CHOOSER_ACTION_OPEN mode will offer
-  the user to create new folders.@br{}
-  Default value: TRUE@br{}
+(setf (documentation (atdoc:get-slot-from-name "create-folders"
+                                               'gtk-file-chooser) 't)
+ "The @code{\"create-folders\"} property of type @code{:boolean}
+  (Read / Write) @br{}
+  Whether a file chooser not in @code{:action-open} mode will offer the user to
+  create new folders. @br{}
+  Default value: @em{true} @br{}
   Since 2.18")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "do-overwrite-confirmation" 'gtk-file-chooser) 't)
- "The @code{\"do-overwrite-confirmation\"} property of type @code{gboolean}
-  (Read / Write)@br{}
-  Whether a file chooser in GTK_FILE_CHOOSER_ACTION_SAVE mode will present an
-  overwrite confirmation dialog if the user selects a file name that already
-  exists.@br{}
-  Default value: FALSE@br{}
+(setf (documentation (atdoc:get-slot-from-name "do-overwrite-confirmation"
+                                               'gtk-file-chooser) 't)
+ "The @code{\"do-overwrite-confirmation\"} property of type @code{:boolean}
+  (Read / Write) @br{}
+  Whether a file chooser in @code{:action-save} mode will present an overwrite
+  confirmation dialog if the user selects a file name that already exists. @br{}
+  Default value: @code{nil} @br{}
   Since 2.8")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "extra-widget" 'gtk-file-chooser) 't)
- "The @code{\"extra-widget\"} property of type @code{GtkWidget*}
-  (Read / Write)@br{}
+(setf (documentation (atdoc:get-slot-from-name "extra-widget"
+                                               'gtk-file-chooser) 't)
+ "The @code{\"extra-widget\"} property of type @class{gtk-widget}
+  (Read / Write) @br{}
   Application supplied widget for extra options.")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "filter" 'gtk-file-chooser) 't)
- "The @code{\"filter\"} property of type @code{GtkFileFilter*}
-  (Read / Write)@br{}
+ "The @code{\"filter\"} property of type @class{gtk-file-filter}
+  (Read / Write) @br{}
   The current filter for selecting which files are displayed.")
 
-;;; ----------------------------------------------------------------------------
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "local-only"
+                                               'gtk-file-chooser) 't)
+ "The @code{\"local-only\"} property of type @code{:boolean}
+  (Read / Write) @br{}
+  Whether the selected file(s) should be limited to local file: URLs. @br{}
+  Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "local-only" 'gtk-file-chooser) 't)
- "The @code{\"local-only\"} property of type @code{gboolean}
-  (Read / Write)@br{}
-  Whether the selected file(s) should be limited to local file: URLs.@br{}
-  Default value: TRUE")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "preview-widget" 'gtk-file-chooser) 't)
- "The @code{\"preview-widget\"} property of type @code{GtkWidget*}
-  (Read / Write)@br{}
+(setf (documentation (atdoc:get-slot-from-name "preview-widget"
+                                               'gtk-file-chooser) 't)
+ "The @code{\"preview-widget\"} property of type @class{gtk-widget}
+  (Read / Write) @br{}
   Application supplied widget for custom previews.")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "preview-widget-active" 'gtk-file-chooser) 't)
- "The @code{\"preview-widget-active\"} property of type @code{gboolean}
-  (Read / Write)@br{}
+(setf (documentation (atdoc:get-slot-from-name "preview-widget-active"
+                                               'gtk-file-chooser) 't)
+ "The @code{\"preview-widget-active\"} property of type @code{:boolean}
+  (Read / Write) @br{}
   Whether the application supplied widget for custom previews should be
-  shown.@br{}
-  Default value: TRUE")
-
-;;; ----------------------------------------------------------------------------
+  shown. @br{}
+  Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "select-multiple" 'gtk-file-chooser) 't)
- "The @code{\"select-multiple\"} property of type @code{gboolean}
-  (Read / Write)@br{}
-  Whether to allow multiple files to be selected.@br{}
-  Default value: FALSE")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "show-hidden" 'gtk-file-chooser) 't)
- "The @code{\"show-hidden\"} property of type @code{gboolean}
-  (Read / Write)@br{}
-  Whether the hidden files and folders should be displayed.@br{}
-  Default value: FALSE")
-
-;;; ----------------------------------------------------------------------------
+(setf (documentation (atdoc:get-slot-from-name "select-multiple"
+                                               'gtk-file-chooser) 't)
+ "The @code{\"select-multiple\"} property of type @code{:boolean}
+  (Read / Write) @br{}
+  Whether to allow multiple files to be selected. @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "use-preview-label" 'gtk-file-chooser) 't)
- "The @code{\"use-preview-label\"} property of type @code{gboolean}
-  (Read / Write)@br{}
-  Whether to display a stock label with the name of the previewed file.@br{}
-  Default value: TRUE")
+(setf (documentation (atdoc:get-slot-from-name "show-hidden"
+                                               'gtk-file-chooser) 't)
+ "The @code{\"show-hidden\"} property of type @code{:boolean}
+  (Read / Write) @br{}
+  Whether the hidden files and folders should be displayed. @br{}
+  Default value: @code{nil}")
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "use-preview-label"
+                                               'gtk-file-chooser) 't)
+ "The @code{\"use-preview-label\"} property of type @code{:boolean}
+  (Read / Write) @br{}
+  Whether to display a stock label with the name of the previewed file. @br{}
+  Default value: @em{true}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Accessors
+;;; Accessors of Properties
 ;;;
 ;;; ----------------------------------------------------------------------------
 
@@ -797,8 +737,6 @@
     interface.
   @end{short}")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-file-chooser-create-folders atdoc:*function-name-alias*)
       "Accessor"
@@ -808,8 +746,6 @@
     Accessor of the slot @code{\"create-folders\"} of the
     @class{gtk-file-chooser} interface.
   @end{short}")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-file-chooser-do-overwrite-confirmation atdoc:*function-name-alias*)
@@ -821,8 +757,6 @@
     @class{gtk-file-chooser} interface.
   @end{short}")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-file-chooser-extra-widget atdoc:*function-name-alias*)
       "Accessor"
@@ -832,8 +766,6 @@
     Accessor of the slot @code{\"extra-widget\"} of the
     @class{gtk-file-chooser} interface.
   @end{short}")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-file-chooser-filter atdoc:*function-name-alias*)
@@ -845,8 +777,6 @@
     @class{gtk-file-chooser} interface.
   @end{short}")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-file-chooser-local-only atdoc:*function-name-alias*)
       "Accessor"
@@ -856,8 +786,6 @@
     Accessor of the slot @code{\"local-only\"} of the
     @class{gtk-file-chooser} interface.
   @end{short}")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-file-chooser-preview-widget atdoc:*function-name-alias*)
@@ -869,8 +797,6 @@
     @class{gtk-file-chooser} interface.
   @end{short}")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-file-chooser-preview-widget-active atdoc:*function-name-alias*)
       "Accessor"
@@ -880,8 +806,6 @@
     Accessor of the slot @code{\"preview-widget-active\"} of the
     @class{gtk-file-chooser} interface.
   @end{short}")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-file-chooser-select-multiple atdoc:*function-name-alias*)
@@ -893,8 +817,6 @@
     @class{gtk-file-chooser} interface.
   @end{short}")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-file-chooser-show-hidden atdoc:*function-name-alias*)
       "Accessor"
@@ -904,8 +826,6 @@
     Accessor of the slot @code{\"show-hidden\"} of the
     @class{gtk-file-chooser} interface.
   @end{short}")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-file-chooser-use-preview-label atdoc:*function-name-alias*)
@@ -928,8 +848,6 @@
   (:save 1)
   (:select-folder 2)
   (:create-folder 3))
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-file-chooser-action atdoc:*symbol-name-alias*) "Enum"
@@ -969,8 +887,6 @@
   (:confirm 0)
   (:accept-filename 1)
   (:select-again 2))
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-file-chooser-confirmation atdoc:*symbol-name-alias*) "Enum"
@@ -2381,6 +2297,5 @@
 ;;;
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
-
 
 ;;; --- End of file gtk.file-chooser.lisp --------------------------------------

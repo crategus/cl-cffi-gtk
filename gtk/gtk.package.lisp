@@ -1710,9 +1710,9 @@ gtk_text_buffer_set_text (buffer, \"Hello, this is some text\", -1);
       you can apply tags that change the attributes for a region of text. For
       text features that come from the theme - such as font and foreground color
       - use standard @class{gtk-widget} functions such as
-      @fun{gtk-widget-modify-font} or @fun{gtk-widget-override-text}. For other
-      attributes there are dedicated methods on @class{gtk-text-view} such as
-      @fun{gtk-text-view-set-tabs}.
+      @fun{gtk-widget-override-font} or @fun{gtk-widget-override-text}. For
+      other attributes there are dedicated methods on @class{gtk-text-view} such
+      as @fun{gtk-text-view-set-tabs}.
       @begin{pre}
 GtkWidget *view;
 GtkTextBuffer *buffer;
@@ -3023,12 +3023,41 @@ setup_tree (void)
   @end{section}
   @begin[Action-based menus and toolbars]{section}
     @begin[GtkUIManager]{subsection}
+      Constructing menus and toolbars from an XML description.
+
+      @about-class{gtk-ui-manager}
+      @about-function{gtk-ui-manager-new}
+      @about-function{gtk-ui-manager-set-add-tearoffs}
+      @about-function{gtk-ui-manager-get-add-tearoffs}
+      @about-function{gtk-ui-manager-insert-action-group}
+      @about-function{gtk-ui-manager-remove-action-group}
+      @about-function{gtk-ui-manager-get-action-groups}
+      @about-function{gtk-ui-manager-get-accel-group}
+      @about-function{gtk-ui-manager-get-widget}
+      @about-function{gtk-ui-manager-get-toplevels}
+      @about-function{gtk-ui-manager-get-action}
+      @about-function{gtk-ui-manager-add-ui-from-resource}
+      @about-function{gtk-ui-manager-add-ui-from-string}
+      @about-function{gtk-ui-manager-add-ui-from-file}
+      @about-function{gtk-ui-manager-new-merge-id}
+      @about-symbol{gtk-ui-manager-item-type}
+      @about-function{gtk-ui-manager-add-ui}
+      @about-function{gtk-ui-manager-remove-ui}
+      @about-function{gtk-ui-manager-get-ui}
+      @about-function{gtk-ui-manager-ensure-update}
     @end{subsection}
     @begin[GtkActionGroup]{subsection}
       A group of actions.
 
       @about-class{gtk-action-group}
       @about-function{gtk-action-group-new}
+      @about-function{gtk-action-group-get-name}
+      @about-function{gtk-action-group-get-sensitive}
+      @about-function{gtk-action-group-set-sensitive}
+      @about-function{gtk-action-group-get-visible}
+      @about-function{gtk-action-group-set-visible}
+      @about-function{gtk-action-group-get-accel-group}
+      @about-function{gtk-action-group-set-accel-group}
       @about-function{gtk-action-group-get-action}
       @about-function{gtk-action-group-list-actions}
       @about-function{gtk-action-group-add-action}
@@ -3037,10 +3066,10 @@ setup_tree (void)
       @about-symbol{gtk-action-entry}
       @about-function{gtk-action-group-add-actions}
       @about-function{gtk-action-group-add-actions-full}
-      @about-class{gtk-toggle-action-entry}
+      @about-symbol{gtk-toggle-action-entry}
       @about-function{gtk-action-group-add-toggle-actions}
       @about-function{gtk-action-group-add-toggle-actions-full}
-      @about-class{gtk-radio-action-entry}
+      @about-symbol{gtk-radio-action-entry}
       @about-function{gtk-action-group-add-radio-actions}
       @about-function{gtk-action-group-add-radio-actions-full}
       @about-function{gtk-action-group-set-translate-func}
@@ -3052,8 +3081,13 @@ setup_tree (void)
 
       @about-class{gtk-action}
       @about-function{gtk-action-new}
+      @about-function{gtk-action-get-name}
       @about-function{gtk-action-is-sensitive}
+      @about-function{gtk-action-get-sensitive}
+      @about-function{gtk-action-set-sensitive}
       @about-function{gtk-action-is-visible}
+      @about-function{gtk-action-get-visible}
+      @about-function{gtk-action-set-visible}
       @about-function{gtk-action-activate}
       @about-function{gtk-action-create-icon}
       @about-function{gtk-action-create-menu-item}
@@ -3064,16 +3098,61 @@ setup_tree (void)
       @about-function{gtk-action-disconnect-accelerator}
       @about-function{gtk-action-block-activate}
       @about-function{gtk-action-unblock-activate}
+      @about-function{gtk-action-get-always-show-image}
+      @about-function{gtk-action-set-always-show-image}
       @about-function{gtk-action-get-accel-path}
       @about-function{gtk-action-set-accel-path}
       @about-function{gtk-action-get-accel-closure}
       @about-function{gtk-action-set-accel-group}
+      @about-function{gtk-action-set-label}
+      @about-function{gtk-action-get-label}
+      @about-function{gtk-action-set-short-label}
+      @about-function{gtk-action-get-short-label}
+      @about-function{gtk-action-set-tooltip}
+      @about-function{gtk-action-get-tooltip}
+      @about-function{gtk-action-set-stock-id}
+      @about-function{gtk-action-get-stock-id}
+      @about-function{gtk-action-set-gicon}
+      @about-function{gtk-action-get-gicon}
+      @about-function{gtk-action-set-icon-name}
+      @about-function{gtk-action-icon-name}
+      @about-function{gtk-action-set-visible-horizontal}
+      @about-function{gtk-action-get-visible-horizontal}
+      @about-function{gtk-action-set-visible-vertical}
+      @about-function{gtk-action-get-visible-vertical}
+      @about-function{gtk-action-set-is-important}
+      @about-function{gtk-action-get-is-important}
     @end{subsection}
     @begin[GtkToogleAction]{subsection}
+      An action which can be toggled between two states.
+
+      @about-class{gtk-toggle-action}
+      @about-function{gtk-toggle-action-new}
+      @about-function{gtk-toggle-action-toggled}
+      @about-function{gtk-toggle-action-set-active}
+      @about-function{gtk-toggle-action-get-active}
+      @about-function{gtk-toggle-action-set-draw-as-radio}
+      @about-function{gtk-toggle-action-get-draw-as-radio}
     @end{subsection}
     @begin[GtkRadioAction]{subsection}
+      An action of which only one in a group can be active.
+
+      @about-class{gtk-radio-action}
+      @about-function{gtk-radio-action-new}
+      @about-function{gtk-radio-action-get-group}
+      @about-function{gtk-radio-action-set-group}
+      @about-function{gtk-radio-action-join-group}
+      @about-function{gtk-radio-action-get-current-value}
+      @about-function{gtk-radio-action-set-current-value}
     @end{subsection}
     @begin[GtkRecentAction]{subsection}
+      An action of which represents a list of recently used files.
+
+      @about-class{gtk-recent-action}
+      @about-function{gtk-recent-action-new}
+      @about-function{gtk-recent-action-new-for-manager}
+      @about-function{gtk-recent-action-get-show-numbers}
+      @about-function{gtk-recent-action-set-show-numbers}
     @end{subsection}
     @begin[GtkActivatable]{subsection}
       An interface for activatable widgets.
@@ -3090,20 +3169,158 @@ setup_tree (void)
   @end{section}
   @begin[Selectors (Color, File and Font)]{section}
     @begin[GtkColorChooser]{subsection}
+      Interface implemented by widgets for choosing colors.
+
+      @about-class{gtk-color-chooser}
+      @about-function{gtk-color-chooser-get-rgba}
+      @about-function{gtk-color-chooser-set-rgba}
+      @about-function{gtk-color-chooser-get-use-alpha}
+      @about-function{gtk-color-chooser-set-use-alpha}
+      @about-function{gtk-color-chooser-add-palette}
     @end{subsection}
     @begin[GtkColorButton]{subsection}
+      A button to launch a color selection dialog.
+
+      @about-class{gtk-color-button}
+      @about-function{gtk-color-button-new}
+      @about-function{gtk-color-button-new-with-color}
+      @about-function{gtk-color-button-new-with-rgba}
+      @about-function{gtk-color-button-set-color}
+      @about-function{gtk-color-button-get-color}
+      @about-function{gtk-color-button-set-alpha}
+      @about-function{gtk-color-button-get-alpha}
+      @about-function{gtk-color-button-set-rgba}
+      @about-function{gtk-color-button-get-rgba}
+      @about-function{gtk-color-button-set-use-alpha}
+      @about-function{gtk-color-button-get-use-alpha}
+      @about-function{gtk-color-button-set-title}
+      @about-function{gtk-color-button-get-title}
     @end{subsection}
     @begin[GtkColorChooserWidget]{subsection}
+      A widget for choosing colors.
+
+      @about-class{gtk-color-chooser-widget}
+      @about-function{gtk-color-chooser-widget-new}
     @end{subsection}
     @begin[GtkColorChooserDialog]{subsection}
+      A dialog for choosing colors.
+
+      @about-class{gtk-color-chooser-dialog}
+      @about-function{gtk-color-chooser-dialog-new}
     @end{subsection}
     @begin[GtkColorSelection]{subsection}
+      A widget used to select a color.
+
+      @about-class{gtk-color-selection}
+      @about-function{gtk-color-selection-new}
+      @about-function{gtk-color-selection-set-has-opacity-control}
+      @about-function{gtk-color-selection-get-has-opacity-control}
+      @about-function{gtk-color-selection-set-has-palette}
+      @about-function{gtk-color-selection-get-has-palette}
+      @about-function{gtk-color-selection-get-current-alpha}
+      @about-function{gtk-color-selection-set-current-alpha}
+      @about-function{gtk-color-selection-get-current-color}
+      @about-function{gtk-color-selection-set-current-color}
+      @about-function{gtk-color-selection-get-previous-alpha}
+      @about-function{gtk-color-selection-set-previous-alpha}
+      @about-function{gtk-color-selection-get-previous-color}
+      @about-function{gtk-color-selection-set-previous-color}
+      @about-function{gtk-color-selection-get-current-rgba}
+      @about-function{gtk-color-selection-set-current-rgba}
+      @about-function{gtk-color-selection-get-previous-rgba}
+      @about-function{gtk-color-selection-set-previous-rgba}
+      @about-function{gtk-color-selection-is-adjusting}
+      @about-function{gtk-color-selection-palette-from-string}
+      @about-function{gtk-color-selection-palette-to-string}
+      @about-function{gtk-color-selection-set-change-palette-with-screen-hook}
     @end{subsection}
     @begin[GtkColorSelectionDialog]{subsection}
+      Deprecated dialog box for selecting a color.
+
+      @about-class{gtk-color-selection-dialog}
+      @about-function{gtk-color-selection-dialog-new}
+      @about-function{gtk-color-selection-dialog-get-color-selection}
     @end{subsection}
     @begin[GtkHSV]{subsection}
+      A \"color wheel\" widget.
+
+      @about-class{gtk-hsv}
+      @about-function{gtk-hsv-new}
+      @about-function{gtk-hsv-set-color}
+      @about-function{gtk-hsv-get-color}
+      @about-function{gtk-hsv-set-metrics}
+      @about-function{gtk-hsv-get-metrics}
+      @about-function{gtk-hsv-is-adjusting}
+      @about-function{gtk-hsv-to-rgb}
+      @about-function{gtk-rgb-to-hsv}
     @end{subsection}
     @begin[GtkFileChooser]{subsection}
+      File chooser interface used by @class{gkt-file-chooser-widget} and
+      @class{gtk-file-chooser-dialog}.
+
+      @about-class{gtk-file-chooser}
+      @about-symbol{gtk-file-chooser-action}
+      @about-symbol{gtk-file-chooser-confirmation}
+      @about-symbol{GTK_FILE_CHOOSER_ERROR}
+      @about-symbol{gtk-file-chooser-error}
+      @about-function{gtk-file-chooser-set-action}
+      @about-function{gtk-file-chooser-get-action}
+      @about-function{gtk-file-chooser-set-local-only}
+      @about-function{gtk-file-chooser-get-local-only}
+      @about-function{gtk-file-chooser-set-select-multiple}
+      @about-function{gtk-file-chooser-get-select-multiple}
+      @about-function{gtk-file-chooser-set-show-hidden}
+      @about-function{gtk-file-chooser-get-show-hidden}
+      @about-function{gtk-file-chooser-set-do-overwrite-confirmation}
+      @about-function{gtk-file-chooser-get-do-overwrite-confirmation}
+      @about-function{gtk-file-chooser-set-create-folders}
+      @about-function{gtk-file-chooser-get-create-folders}
+      @about-function{gtk-file-chooser-set-current-name}
+      @about-function{gtk-file-chooser-get-filename}
+      @about-function{gtk-file-chooser-set-filename}
+      @about-function{gtk-file-chooser-select-filename}
+      @about-function{gtk-file-chooser-unselect-filename}
+      @about-function{gtk-file-chooser-select-all}
+      @about-function{gtk-file-chooser-unselect-all}
+      @about-function{gtk-file-chooser-get-filenames}
+      @about-function{gtk-file-chooser-set-current-folder}
+      @about-function{gtk-file-chooser-get-current-folder}
+      @about-function{gtk-file-chooser-get-uri}
+      @about-function{gtk-file-chooser-set-uri}
+      @about-function{gtk-file-chooser-select-uri}
+      @about-function{gtk-file-chooser-unselect-uri}
+      @about-function{gtk-file-chooser-get-uris}
+      @about-function{gtk-file-chooser-set-current-folder-uri}
+      @about-function{gtk-file-chooser-get-current-folder-uri}
+      @about-function{gtk-file-chooser-set-preview-widget}
+      @about-function{gtk-file-chooser-get-preview-widget}
+      @about-function{gtk-file-chooser-set-preview-widget-active}
+      @about-function{gtk-file-chooser-get-preview-widget-active}
+      @about-function{gtk-file-chooser-set-use-preview-label}
+      @about-function{gtk-file-chooser-get-use-preview-label}
+      @about-function{gtk-file-chooser-get-preview-filename}
+      @about-function{gtk-file-chooser-get-preview-uri}
+      @about-function{gtk-file-chooser-set-extra-widget}
+      @about-function{gtk-file-chooser-get-extra-widget}
+      @about-function{gtk-file-chooser-add-filter}
+      @about-function{gtk-file-chooser-remove-filter}
+      @about-function{gtk-file-chooser-list-filters}
+      @about-function{gtk-file-chooser-set-filter}
+      @about-function{gtk-file-chooser-get-filter}
+      @about-function{gtk-file-chooser-add-shortcut-folder}
+      @about-function{gtk-file-chooser-remove-shortcut-folder}
+      @about-function{gtk-file-chooser-list-shortcut-folders}
+      @about-function{gtk-file-chooser-add-shortcut-folder-uri}
+      @about-function{gtk-file-chooser-remove-shortcut-folder-uri}
+      @about-function{gtk-file-chooser-list-shortcut-folder-uris}
+      @about-function{gtk-file-chooser-get-current-folder-file}
+      @about-function{gtk-file-chooser-get-file}
+      @about-function{gtk-file-chooser-get-files}
+      @about-function{gtk-file-chooser-get-preview-file}
+      @about-function{gtk-file-chooser-select-file}
+      @about-function{gtk-file-chooser-set-current-folder-file}
+      @about-function{gtk-file-chooser-set-file}
+      @about-function{gtk-file-chooser-unselect-file}
     @end{subsection}
     @begin[GtkFileChooserButton]{subsection}
       A button to launch a file selection dialog.

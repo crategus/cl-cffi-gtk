@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -62,12 +62,10 @@
    gtk-activatable-use-action-appearance
    "use-action-appearance" "gboolean" t t))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-activatable atdoc:*class-name-alias*) "Interface"
       (documentation 'gtk-activatable 'type)
- "@version{2013-3-29}
+ "@version{2013-6-2}
   @begin{short}
     Activatable widgets can be connected to a @class{gtk-action} and reflects
     the state of its action. A @sym{gtk-activatable} can also provide feedback
@@ -327,40 +325,36 @@ use-action-appearance property ...
 (setf (documentation (atdoc:get-slot-from-name "related-action"
                                                'gtk-activatable) 't)
  "The @code{\"related-action\"} property of type @class{gtk-action}
-  (Read / Write)@br{}
+  (Read / Write)  @br{}
   The action that this activatable will activate and receive updates from for
   various states and possibly appearance. @br{}
   @b{Note:} @class{gtk-activatable} implementors need to handle this
-  property and call @fun{gtk-activatable-do-set-related-action} when it
-  changes.@br{}
+  property and call the @fun{gtk-activatable-do-set-related-action} function
+  when it changes. @br{}
   Since 2.16")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "use-action-appearance"
                                                'gtk-activatable) 't)
  "The @code{\"use-action-appearance\"} property of type @code{:boolean}
-  (Read / Write)@br{}
+  (Read / Write) @br{}
   Whether this activatable should reset its layout and appearance when setting
   the related action or when the action changes appearance.
   See the @class{gtk-action} documentation directly to find which properties
   should be ignored by the @class{gtk-activatable} when this property is
-  @code{nil}.@br{}
+  @code{nil}. @br{}
   @b{Note:}
   @class{gtk-activatable} implementors need to handle this property and call
   @fun{gtk-activatable-sync-action-properties} on the activatable widget when
-  it changes.@br{}
-  Default value: @code{true}@br{}
+  it changes. @br{}
+  Default value: @code{true} @br{}
   Since 2.16")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Accessors
+;;; Accessors of Properties
 ;;;
 ;;; ----------------------------------------------------------------------------
-
-;;; --- gtk-activatable-related-action -----------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-activatable-related-action atdoc:*function-name-alias*)
@@ -369,8 +363,6 @@ use-action-appearance property ...
  "@version{2013-3-29}
   Accessor of the slot @code{\"related-action\"} of the @class{gtk-activatable}
   class.")
-
-;;; --- gtk-activatable-use-action-appearance ----------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-activatable-use-action-appearance

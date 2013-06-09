@@ -2128,7 +2128,7 @@
   @see-function{gtk-entry-set-invisible-char}"
   (gtk-entry-invisible-char entry))
 
-(export 'gtk-entry-invisible-char)
+(export 'gtk-entry-get-invisible-char)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_entry_set_alignment ()

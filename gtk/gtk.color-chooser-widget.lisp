@@ -2,7 +2,7 @@
 ;;; gtk.color-chooser-widget.lisp
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2012, 2013 Dieter Kaiser
@@ -54,11 +54,9 @@
     gtk-color-chooser-widget-show-editor
     "show-editor" "gboolean" t t)))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-color-chooser-widget 'type)
- "@version{2013-2-24}
+ "@version{2013-6-3}
   @begin{short}
     The @sym{gtk-color-chooser-widget} widget lets the user select a color. By
     default, the chooser presents a prefined palette of colors, plus a small
@@ -71,8 +69,9 @@
   The chooser automatically remembers the last selection, as well as custom
   colors.
  
-  To change the initially selected color, use @fun{gtk-color-chooser-set-rgba}.
-  To get the selected font use @fun{gtk-color-chooser-get-rgba}.
+  To change the initially selected color, use the
+  @fun{gtk-color-chooser-set-rgba} function. To get the selected font use the
+  @fun{gtk-color-chooser-get-rgba} function.
 
   The @sym{gtk-color-chooser-widget} is used in the
   @class{gtk-color-chooser-dialog} to provide a dialog for selecting colors.
@@ -87,21 +86,19 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "show-editor"
                                                'gtk-color-chooser-widget) 't)
- "The @code{\"show-editor\"} property of type @code{gboolean}
-  (Read / Write)@br{}
+ "The @code{\"show-editor\"} property of type @code{:boolean}
+  (Read / Write) @br{}
   The @code{\"show-editor\"} property is @arg{true} when the color chooser is
   showing the single-color editor. It can be set to switch the color chooser
-  into single-color editing mode.@br{}
-  Default value: @code{nil}@br{}
+  into single-color editing mode. @br{}
+  Default value: @code{nil} @br{}
   Since 3.4")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Accessors
+;;; Accessors of Properties
 ;;;
 ;;; ----------------------------------------------------------------------------
-
-;;; --- gtk-color-chooser-widget-show-editor -----------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-color-chooser-widget-show-editor atdoc:*function-name-alias*)
@@ -121,7 +118,7 @@
 
 (defun gtk-color-chooser-widget-new ()
  #+cl-cffi-gtk-documentation
- "@version{2013-2-24}
+ "@version{2013-6-3}
   @return{A new @class{gtk-color-chooser-widget} widget.}
   @short{Creates a new @class{gtk-color-chooser-widget} widget.}
 

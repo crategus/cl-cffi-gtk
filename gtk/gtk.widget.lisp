@@ -5249,27 +5249,29 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_modify_font ()
-;;;
-;;; void gtk_widget_modify_font (GtkWidget *widget,
-;;;                              PangoFontDescription *font_desc);
-;;;
-;;; Warning
-;;;
-;;; gtk_widget_modify_font has been deprecated since version 3.0 and should not
-;;; be used in newly-written code. Use gtk_widget_override_font() instead.
-;;;
-;;; Sets the font to use for a widget.
-;;;
-;;; All other style values are left untouched.
-;;; See also gtk_widget_modify_style().
-;;;
-;;; widget :
-;;;     a GtkWidget
-;;;
-;;; font_desc :
-;;;     the font description to use, or NULL to undo the effect of previous
-;;;     calls to gtk_widget_modify_font()
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_widget_modify_font" gtk-widget-modify-font) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-9}
+  @argument[widget]{a @class{gtk-widget} object}
+  @argument[font-desc]{the font description to use, or @code{nil} to undo the
+    effect of previous calls to the @sym{gtk-widget-modify-font} function}
+  @subheading{Warning}
+    @sym{gtk-widget-modify-font} has been deprecated since version 3.0 and
+    should not be used in newly written code. Use the
+    @fun{gtk-widget-override-font} function instead.
+
+  @short{Sets the font to use for a widget.}
+
+  All other style values are left untouched. See also the
+  @fun{gtk-widget-modify-style} function.
+  @see-function{gtk-widget-override-font}
+  @see-function{gtk-widget-modify-style}"
+  (widget (g-object gtk-widget))
+  (font-desc (g-boxed-foreign pango-font-description)))
+
+(export 'gtk-widget-modify-font)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_modify_cursor ()
@@ -5597,27 +5599,31 @@
 
 (defun gtk-widget-set-double-buffered (widget double-buffered)
  #+cl-cffi-gtk-documentation
- "@version{2012-12-29}
+ "@version{2013-6-9}
   @argument[widget]{a @class{gtk-widget} object}
   @argument[double-buffered]{@arg{true} to double-buffer a @arg{widget}}
   @begin{short}
     Widgets are double buffered by default; you can use this function to turn
     off the buffering.
   @end{short}
-  \"Double buffered\" simply means that @fun{gdk-window-begin-paint-region} and
-  @fun{gdk-window-end-paint} are called automatically around expose events sent
-  to the widget. @fun{gdk-window-begin-paint-region} diverts all drawing to a
-  widget's window to an offscreen buffer, and @fun{gdk-window-end-paint} draws
-  the buffer to the screen. The result is that users see the window update in
-  one smooth step, and don't see individual graphics primitives being rendered.
+  \"Double buffered\" simply means that the functions
+  @fun{gdk-window-begin-paint-region} and @fun{gdk-window-end-paint} are called
+  automatically around expose events sent to the widget. The
+  @fun{gdk-window-begin-paint-region} function diverts all drawing to a
+  widget's window to an offscreen buffer, and the @fun{gdk-window-end-paint}
+  function draws the buffer to the screen. The result is that users see the
+  window update in one smooth step, and do not see individual graphics
+  primitives being rendered.
 
-  In very simple terms, double buffered widgets don't flicker, so you would
+  In very simple terms, double buffered widgets do not flicker, so you would
   only use this function to turn off double buffering if you had special needs
   and really knew what you were doing.
 
-  Note: if you turn off double-buffering, you have to handle expose events,
-  since even the clearing to the background color or pixmap will not happen
-  automatically (as it is done in @fun{gdk-window-begin-paint-region}).
+  @subheading{Note}
+    If you turn off double-buffering, you have to handle expose events,
+    since even the clearing to the background color or pixmap will not happen
+    automatically (as it is done in in the @fun{gdk-window-begin-paint-region}
+    function).
   @see-function{gdk-window-begin-paint-region}
   @see-function{gdk-window-end-paint}"
   (setf (gtk-widget-double-buffered widget) double-buffered))
