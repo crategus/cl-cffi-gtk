@@ -54,27 +54,448 @@
   (assert-eql 48 +g-type-reserved-bse-last+)
   (assert-eql 49 +g-type-reserved-user-first+)
 
+  ;; +g-type-fundamental-max+
   (assert-eql (ash 255 2) +g-type-fundamental-max+)
+
+  ;; g-type-make-fundamental
   (assert-eql (ash 256 2) (g-type-make-fundamental 256))
-
+  
+  ;; g-type-gtype
   (assert-equal "GType" (gtype-name (gtype (g-type-gtype))))
-  (assert-eql 134837944 (gtype-id (gtype (g-type-gtype))))
+  (assert-eql 134818672 (gtype-id (gtype (g-type-gtype))))
 
-  (assert-false (g-type-is-abstract (gtype "gboolean")))
-  (assert-false (g-type-is-abstract (gtype "GObject")))
-  (assert-true  (g-type-is-abstract (gtype "GtkWidget")))
-  (assert-true  (g-type-is-abstract (gtype "GtkContainer")))
-  (assert-false (g-type-is-abstract (gtype "GtkWindow")))
+  ;; g-type-is-abstract
+  (assert-false (g-type-is-abstract +g-type-invalid+))
+  (assert-false (g-type-is-abstract +g-type-none+))
+  (assert-false (g-type-is-abstract +g-type-interface+))
+  (assert-false (g-type-is-abstract +g-type-char+))
+  (assert-false (g-type-is-abstract +g-type-uchar+))
+  (assert-false (g-type-is-abstract +g-type-boolean+))
+  (assert-false (g-type-is-abstract +g-type-int+))
+  (assert-false (g-type-is-abstract +g-type-uint+))
+  (assert-false (g-type-is-abstract +g-type-long+))
+  (assert-false (g-type-is-abstract +g-type-ulong+))
+  (assert-false (g-type-is-abstract +g-type-int64+))
+  (assert-false (g-type-is-abstract +g-type-uint64+))
+  (assert-true  (g-type-is-abstract +g-type-enum+))
+  (assert-true  (g-type-is-abstract +g-type-flags+))
+  (assert-false (g-type-is-abstract +g-type-float+))
+  (assert-false (g-type-is-abstract +g-type-double+))
+  (assert-false (g-type-is-abstract +g-type-string+))
+  (assert-false (g-type-is-abstract +g-type-pointer+))
+  (assert-true  (g-type-is-abstract +g-type-boxed+))
+  (assert-true  (g-type-is-abstract +g-type-param+))
+  (assert-false (g-type-is-abstract +g-type-object+))
+  (assert-false (g-type-is-abstract +g-type-variant+))
 
-  (assert-false (g-type-is-derived (gtype "gboolean")))
-  (assert-false (g-type-is-derived (gtype "GObject")))
-  (assert-true  (g-type-is-derived (gtype "GtkWidget")))
-  (assert-true  (g-type-is-derived (gtype "GtkWindow")))
+  (assert-true  (g-type-is-abstract "GtkWidget"))
+  (assert-true  (g-type-is-abstract "GtkContainer"))
+  (assert-false (g-type-is-abstract "GtkBox"))
+  (assert-false (g-type-is-abstract "GtkWindow"))
+  (assert-false (g-type-is-abstract "GtkOrientable"))
+  (assert-false (g-type-is-abstract "GtkAccelFlags"))
+  (assert-false (g-type-is-abstract "GtkArrowPlacement"))
+  (assert-false (g-type-is-abstract "GdkRGBA"))
+  (assert-false (g-type-is-abstract "GtkTreePath"))
 
-  (assert-true  (g-type-is-fundamental (gtype "gboolean")))
-  (assert-true  (g-type-is-fundamental (gtype "GObject")))
-  (assert-false (g-type-is-fundamental (gtype "GtkWidget")))
-  (assert-false (g-type-is-fundamental (gtype "GtkWindow"))))
+  ;; g-type-is-derived
+  (assert-false (g-type-is-derived +g-type-invalid+))
+  (assert-false (g-type-is-derived +g-type-none+))
+  (assert-false (g-type-is-derived +g-type-interface+))
+  (assert-false (g-type-is-derived +g-type-char+))
+  (assert-false (g-type-is-derived +g-type-uchar+))
+  (assert-false (g-type-is-derived +g-type-boolean+))
+  (assert-false (g-type-is-derived +g-type-int+))
+  (assert-false (g-type-is-derived +g-type-uint+))
+  (assert-false (g-type-is-derived +g-type-long+))
+  (assert-false (g-type-is-derived +g-type-ulong+))
+  (assert-false (g-type-is-derived +g-type-int64+))
+  (assert-false (g-type-is-derived +g-type-uint64+))
+  (assert-false (g-type-is-derived +g-type-enum+))
+  (assert-false (g-type-is-derived +g-type-flags+))
+  (assert-false (g-type-is-derived +g-type-float+))
+  (assert-false (g-type-is-derived +g-type-double+))
+  (assert-false (g-type-is-derived +g-type-string+))
+  (assert-false (g-type-is-derived +g-type-pointer+))
+  (assert-false (g-type-is-derived +g-type-boxed+))
+  (assert-false (g-type-is-derived +g-type-param+))
+  (assert-false (g-type-is-derived +g-type-object+))
+  (assert-false (g-type-is-derived +g-type-variant+))
+
+  (assert-true  (g-type-is-derived "GtkWidget"))
+  (assert-true  (g-type-is-derived "GtkContainer"))
+  (assert-true  (g-type-is-derived "GtkBox"))
+  (assert-true  (g-type-is-derived "GtkWindow"))
+  (assert-true  (g-type-is-derived "GtkOrientable"))
+  (assert-true  (g-type-is-derived "GtkAccelFlags"))
+  (assert-true  (g-type-is-derived "GtkArrowPlacement"))
+  (assert-true  (g-type-is-derived "GdkRGBA"))
+  (assert-true  (g-type-is-derived "GtkTreePath"))
+
+  ;; g-type-is-fundamental
+  (assert-true  (g-type-is-fundamental +g-type-invalid+))
+  (assert-true  (g-type-is-fundamental +g-type-none+))
+  (assert-true  (g-type-is-fundamental +g-type-interface+))
+  (assert-true  (g-type-is-fundamental +g-type-char+))
+  (assert-true  (g-type-is-fundamental +g-type-uchar+))
+  (assert-true  (g-type-is-fundamental +g-type-boolean+))
+  (assert-true  (g-type-is-fundamental +g-type-int+))
+  (assert-true  (g-type-is-fundamental +g-type-uint+))
+  (assert-true  (g-type-is-fundamental +g-type-long+))
+  (assert-true  (g-type-is-fundamental +g-type-ulong+))
+  (assert-true  (g-type-is-fundamental +g-type-int64+))
+  (assert-true  (g-type-is-fundamental +g-type-uint64+))
+  (assert-true  (g-type-is-fundamental +g-type-enum+))
+  (assert-true  (g-type-is-fundamental +g-type-flags+))
+  (assert-true  (g-type-is-fundamental +g-type-float+))
+  (assert-true  (g-type-is-fundamental +g-type-double+))
+  (assert-true  (g-type-is-fundamental +g-type-string+))
+  (assert-true  (g-type-is-fundamental +g-type-pointer+))
+  (assert-true  (g-type-is-fundamental +g-type-boxed+))
+  (assert-true  (g-type-is-fundamental +g-type-param+))
+  (assert-true  (g-type-is-fundamental +g-type-object+))
+  (assert-true  (g-type-is-fundamental +g-type-variant+))
+
+  (assert-false (g-type-is-fundamental "GtkWidget"))
+  (assert-false (g-type-is-fundamental "GtkContainer"))
+  (assert-false (g-type-is-fundamental "GtkBox"))
+  (assert-false (g-type-is-fundamental "GtkWindow"))
+  (assert-false (g-type-is-fundamental "GtkOrientable"))
+  (assert-false (g-type-is-fundamental "GtkAccelFlags"))
+  (assert-false (g-type-is-fundamental "GtkArrowPlacement"))
+  (assert-false (g-type-is-fundamental "GdkRGBA"))
+  (assert-false (g-type-is-fundamental "GtkTreePath"))
+
+  ;; g-type-is-value-type
+  (assert-false (g-type-is-value-type +g-type-invalid+))
+  (assert-false (g-type-is-value-type +g-type-none+))
+  (assert-false (g-type-is-value-type +g-type-interface+))
+  (assert-true  (g-type-is-value-type +g-type-char+))
+  (assert-true  (g-type-is-value-type +g-type-uchar+))
+  (assert-true  (g-type-is-value-type +g-type-boolean+))
+  (assert-true  (g-type-is-value-type +g-type-int+))
+  (assert-true  (g-type-is-value-type +g-type-uint+))
+  (assert-true  (g-type-is-value-type +g-type-long+))
+  (assert-true  (g-type-is-value-type +g-type-ulong+))
+  (assert-true  (g-type-is-value-type +g-type-int64+))
+  (assert-true  (g-type-is-value-type +g-type-uint64+))
+  (assert-false (g-type-is-value-type +g-type-enum+))
+  (assert-false (g-type-is-value-type +g-type-flags+))
+  (assert-true  (g-type-is-value-type +g-type-float+))
+  (assert-true  (g-type-is-value-type +g-type-double+))
+  (assert-true  (g-type-is-value-type +g-type-string+))
+  (assert-true  (g-type-is-value-type +g-type-pointer+))
+  (assert-false (g-type-is-value-type +g-type-boxed+))
+  (assert-true  (g-type-is-value-type +g-type-param+))
+  (assert-true  (g-type-is-value-type +g-type-object+))
+  (assert-true  (g-type-is-value-type +g-type-variant+))
+
+  (assert-true  (g-type-is-value-type "GtkWidget"))
+  (assert-true  (g-type-is-value-type "GtkContainer"))
+  (assert-true  (g-type-is-value-type "GtkBox"))
+  (assert-true  (g-type-is-value-type "GtkWindow"))
+  (assert-true  (g-type-is-value-type "GtkOrientable"))
+  (assert-true  (g-type-is-value-type "GtkAccelFlags"))
+  (assert-true  (g-type-is-value-type "GtkArrowPlacement"))
+  (assert-true  (g-type-is-value-type "GdkRGBA"))
+  (assert-true  (g-type-is-value-type "GtkTreePath"))
+
+  ;; g-type-has-value-table
+;  (assert-false (g-type-has-value-table +g-type-invalid+))
+;  (assert-false (g-type-has-value-table +g-type-none+))
+  (assert-false (g-type-has-value-table +g-type-interface+))
+  (assert-true  (g-type-has-value-table +g-type-char+))
+  (assert-true  (g-type-has-value-table +g-type-uchar+))
+  (assert-true  (g-type-has-value-table +g-type-boolean+))
+  (assert-true  (g-type-has-value-table +g-type-int+))
+  (assert-true  (g-type-has-value-table +g-type-uint+))
+  (assert-true  (g-type-has-value-table +g-type-long+))
+  (assert-true  (g-type-has-value-table +g-type-ulong+))
+  (assert-true  (g-type-has-value-table +g-type-int64+))
+  (assert-true  (g-type-has-value-table +g-type-uint64+))
+  (assert-true  (g-type-has-value-table +g-type-enum+))
+  (assert-true  (g-type-has-value-table +g-type-flags+))
+  (assert-true  (g-type-has-value-table +g-type-float+))
+  (assert-true  (g-type-has-value-table +g-type-double+))
+  (assert-true  (g-type-has-value-table +g-type-string+))
+  (assert-true  (g-type-has-value-table +g-type-pointer+))
+  (assert-false (g-type-has-value-table +g-type-boxed+))
+  (assert-true  (g-type-has-value-table +g-type-param+))
+  (assert-true  (g-type-has-value-table +g-type-object+))
+  (assert-true  (g-type-has-value-table +g-type-variant+))
+
+  (assert-true  (g-type-has-value-table "GtkWidget"))
+  (assert-true  (g-type-has-value-table "GtkContainer"))
+  (assert-true  (g-type-has-value-table "GtkBox"))
+  (assert-true  (g-type-has-value-table "GtkWindow"))
+  (assert-true  (g-type-has-value-table "GtkOrientable"))
+  (assert-true  (g-type-has-value-table "GtkAccelFlags"))
+  (assert-true  (g-type-has-value-table "GtkArrowPlacement"))
+  (assert-true  (g-type-has-value-table "GdkRGBA"))
+  (assert-true  (g-type-has-value-table "GtkTreePath"))
+
+  ;; g-type-is-classed
+  (assert-false (g-type-is-classed +g-type-invalid+))
+  (assert-false (g-type-is-classed +g-type-none+))
+  (assert-false (g-type-is-classed +g-type-interface+))
+  (assert-false (g-type-is-classed +g-type-char+))
+  (assert-false (g-type-is-classed +g-type-uchar+))
+  (assert-false (g-type-is-classed +g-type-boolean+))
+  (assert-false (g-type-is-classed +g-type-int+))
+  (assert-false (g-type-is-classed +g-type-uint+))
+  (assert-false (g-type-is-classed +g-type-long+))
+  (assert-false (g-type-is-classed +g-type-ulong+))
+  (assert-false (g-type-is-classed +g-type-int64+))
+  (assert-false (g-type-is-classed +g-type-uint64+))
+  (assert-true  (g-type-is-classed +g-type-enum+))
+  (assert-true  (g-type-is-classed +g-type-flags+))
+  (assert-false (g-type-is-classed +g-type-float+))
+  (assert-false (g-type-is-classed +g-type-double+))
+  (assert-false (g-type-is-classed +g-type-string+))
+  (assert-false (g-type-is-classed +g-type-pointer+))
+  (assert-false (g-type-is-classed +g-type-boxed+))
+  (assert-true  (g-type-is-classed +g-type-param+))
+  (assert-true  (g-type-is-classed +g-type-object+))
+  (assert-false (g-type-is-classed +g-type-variant+))
+
+  (assert-true  (g-type-is-classed "GtkWidget"))
+  (assert-true  (g-type-is-classed "GtkContainer"))
+  (assert-true  (g-type-is-classed "GtkBox"))
+  (assert-true  (g-type-is-classed "GtkWindow"))
+  (assert-false (g-type-is-classed "GtkOrientable"))
+  (assert-true  (g-type-is-classed "GtkAccelFlags"))
+  (assert-true  (g-type-is-classed "GtkArrowPlacement"))
+  (assert-false (g-type-is-classed "GdkRGBA"))
+  (assert-false (g-type-is-classed "GtkTreePath"))
+
+  ;; g-type-is-instantiatable
+  (assert-false (g-type-is-instantiatable +g-type-invalid+))
+  (assert-false (g-type-is-instantiatable +g-type-none+))
+  (assert-false (g-type-is-instantiatable +g-type-interface+))
+  (assert-false (g-type-is-instantiatable +g-type-char+))
+  (assert-false (g-type-is-instantiatable +g-type-uchar+))
+  (assert-false (g-type-is-instantiatable +g-type-boolean+))
+  (assert-false (g-type-is-instantiatable +g-type-int+))
+  (assert-false (g-type-is-instantiatable +g-type-uint+))
+  (assert-false (g-type-is-instantiatable +g-type-long+))
+  (assert-false (g-type-is-instantiatable +g-type-ulong+))
+  (assert-false (g-type-is-instantiatable +g-type-int64+))
+  (assert-false (g-type-is-instantiatable +g-type-uint64+))
+  (assert-false (g-type-is-instantiatable +g-type-enum+))
+  (assert-false (g-type-is-instantiatable +g-type-flags+))
+  (assert-false (g-type-is-instantiatable +g-type-float+))
+  (assert-false (g-type-is-instantiatable +g-type-double+))
+  (assert-false (g-type-is-instantiatable +g-type-string+))
+  (assert-false (g-type-is-instantiatable +g-type-pointer+))
+  (assert-false (g-type-is-instantiatable +g-type-boxed+))
+  (assert-true  (g-type-is-instantiatable +g-type-param+))
+  (assert-true  (g-type-is-instantiatable +g-type-object+))
+  (assert-false (g-type-is-instantiatable +g-type-variant+))
+
+  (assert-true  (g-type-is-instantiatable "GtkWidget"))
+  (assert-true  (g-type-is-instantiatable "GtkContainer"))
+  (assert-true  (g-type-is-instantiatable "GtkBox"))
+  (assert-true  (g-type-is-instantiatable "GtkWindow"))
+  (assert-false (g-type-is-instantiatable "GtkOrientable"))
+  (assert-false (g-type-is-instantiatable "GtkAccelFlags"))
+  (assert-false (g-type-is-instantiatable "GtkArrowPlacement"))
+  (assert-false (g-type-is-instantiatable "GdkRGBA"))
+  (assert-false (g-type-is-instantiatable "GtkTreePath"))
+
+  ;; g-type-is-derivable
+  (assert-false (g-type-is-derivable +g-type-invalid+))
+  (assert-false (g-type-is-derivable +g-type-none+))
+  (assert-true  (g-type-is-derivable +g-type-interface+))
+  (assert-true  (g-type-is-derivable +g-type-char+))
+  (assert-true  (g-type-is-derivable +g-type-uchar+))
+  (assert-true  (g-type-is-derivable +g-type-boolean+))
+  (assert-true  (g-type-is-derivable +g-type-int+))
+  (assert-true  (g-type-is-derivable +g-type-uint+))
+  (assert-true  (g-type-is-derivable +g-type-long+))
+  (assert-true  (g-type-is-derivable +g-type-ulong+))
+  (assert-true  (g-type-is-derivable +g-type-int64+))
+  (assert-true  (g-type-is-derivable +g-type-uint64+))
+  (assert-true  (g-type-is-derivable +g-type-enum+))
+  (assert-true  (g-type-is-derivable +g-type-flags+))
+  (assert-true  (g-type-is-derivable +g-type-float+))
+  (assert-true  (g-type-is-derivable +g-type-double+))
+  (assert-true  (g-type-is-derivable +g-type-string+))
+  (assert-true  (g-type-is-derivable +g-type-pointer+))
+  (assert-true  (g-type-is-derivable +g-type-boxed+))
+  (assert-true  (g-type-is-derivable +g-type-param+))
+  (assert-true  (g-type-is-derivable +g-type-object+))
+  (assert-true  (g-type-is-derivable +g-type-variant+))
+
+  (assert-true  (g-type-is-derivable "GtkWidget"))
+  (assert-true  (g-type-is-derivable "GtkContainer"))
+  (assert-true  (g-type-is-derivable "GtkBox"))
+  (assert-true  (g-type-is-derivable "GtkWindow"))
+  (assert-true  (g-type-is-derivable "GtkOrientable"))
+  (assert-true  (g-type-is-derivable "GtkAccelFlags"))
+  (assert-true  (g-type-is-derivable "GtkArrowPlacement"))
+  (assert-true  (g-type-is-derivable "GdkRGBA"))
+  (assert-true  (g-type-is-derivable "GtkTreePath"))
+
+  ;; g-type-is-deep-derivable
+  (assert-false (g-type-is-deep-derivable +g-type-invalid+))
+  (assert-false (g-type-is-deep-derivable +g-type-none+))
+  (assert-false (g-type-is-deep-derivable +g-type-interface+))
+  (assert-false (g-type-is-deep-derivable +g-type-char+))
+  (assert-false (g-type-is-deep-derivable +g-type-uchar+))
+  (assert-false (g-type-is-deep-derivable +g-type-boolean+))
+  (assert-false (g-type-is-deep-derivable +g-type-int+))
+  (assert-false (g-type-is-deep-derivable +g-type-uint+))
+  (assert-false (g-type-is-deep-derivable +g-type-long+))
+  (assert-false (g-type-is-deep-derivable +g-type-ulong+))
+  (assert-false (g-type-is-deep-derivable +g-type-int64+))
+  (assert-false (g-type-is-deep-derivable +g-type-uint64+))
+  (assert-false (g-type-is-deep-derivable +g-type-enum+))
+  (assert-false (g-type-is-deep-derivable +g-type-flags+))
+  (assert-false (g-type-is-deep-derivable +g-type-float+))
+  (assert-false (g-type-is-deep-derivable +g-type-double+))
+  (assert-false (g-type-is-deep-derivable +g-type-string+))
+  (assert-false (g-type-is-deep-derivable +g-type-pointer+))
+  (assert-false (g-type-is-deep-derivable +g-type-boxed+))
+  (assert-true  (g-type-is-deep-derivable +g-type-param+))
+  (assert-true  (g-type-is-deep-derivable +g-type-object+))
+  (assert-false (g-type-is-deep-derivable +g-type-variant+))
+
+  (assert-true  (g-type-is-deep-derivable "GtkWidget"))
+  (assert-true  (g-type-is-deep-derivable "GtkContainer"))
+  (assert-true  (g-type-is-deep-derivable "GtkBox"))
+  (assert-true  (g-type-is-deep-derivable "GtkWindow"))
+  (assert-false (g-type-is-deep-derivable "GtkOrientable"))
+  (assert-false (g-type-is-deep-derivable "GtkAccelFlags"))
+  (assert-false (g-type-is-deep-derivable "GtkArrowPlacement"))
+  (assert-false (g-type-is-deep-derivable "GdkRGBA"))
+  (assert-false (g-type-is-deep-derivable "GtkTreePath"))
+
+  ;; g-type-is-interface
+  (assert-false (g-type-is-interface +g-type-invalid+))
+  (assert-false (g-type-is-interface +g-type-none+))
+  (assert-true  (g-type-is-interface +g-type-interface+))
+  (assert-false (g-type-is-interface +g-type-char+))
+  (assert-false (g-type-is-interface +g-type-uchar+))
+  (assert-false (g-type-is-interface +g-type-boolean+))
+  (assert-false (g-type-is-interface +g-type-int+))
+  (assert-false (g-type-is-interface +g-type-uint+))
+  (assert-false (g-type-is-interface +g-type-long+))
+  (assert-false (g-type-is-interface +g-type-ulong+))
+  (assert-false (g-type-is-interface +g-type-int64+))
+  (assert-false (g-type-is-interface +g-type-uint64+))
+  (assert-false (g-type-is-interface +g-type-enum+))
+  (assert-false (g-type-is-interface +g-type-flags+))
+  (assert-false (g-type-is-interface +g-type-float+))
+  (assert-false (g-type-is-interface +g-type-double+))
+  (assert-false (g-type-is-interface +g-type-string+))
+  (assert-false (g-type-is-interface +g-type-pointer+))
+  (assert-false (g-type-is-interface +g-type-boxed+))
+  (assert-false (g-type-is-interface +g-type-param+))
+  (assert-false (g-type-is-interface +g-type-object+))
+  (assert-false (g-type-is-interface +g-type-variant+))
+
+  (assert-false (g-type-is-interface "GtkWidget"))
+  (assert-false (g-type-is-interface "GtkContainer"))
+  (assert-false (g-type-is-interface "GtkBox"))
+  (assert-false (g-type-is-interface "GtkWindow"))
+  (assert-true  (g-type-is-interface "GtkOrientable"))
+  (assert-false (g-type-is-interface "GtkAccelFlags"))
+  (assert-false (g-type-is-interface "GtkArrowPlacement"))
+  (assert-false (g-type-is-interface "GdkRGBA"))
+  (assert-false (g-type-is-interface "GtkTreePath"))
+
+;;;     GTypeInterface
+;;;     GTypeClass
+;;;     GTypeInstance
+;;;     GTypeInfo
+;;;     GTypeFundamentalInfo
+;;;     GInterfaceInfo
+;;;     GTypeValueTable
+
+;;;     G_TYPE_FROM_INSTANCE
+;;;     G_TYPE_FROM_CLASS
+;;;     G_TYPE_FROM_INTERFACE
+;;;     G_TYPE_INSTANCE_GET_CLASS                * not implemented *
+;;;     G_TYPE_INSTANCE_GET_INTERFACE            * not implemented *
+;;;     G_TYPE_INSTANCE_GET_PRIVATE              * not implemented *
+;;;     G_TYPE_CLASS_GET_PRIVATE                 * not implemented *
+;;;     G_TYPE_CHECK_INSTANCE                    * not implemented *
+;;;     G_TYPE_CHECK_INSTANCE_CAST               * not implemented *
+;;;     G_TYPE_CHECK_INSTANCE_TYPE
+;;;     G_TYPE_CHECK_CLASS_CAST                  * not implemented *
+;;;     G_TYPE_CHECK_CLASS_TYPE
+;;;     G_TYPE_CHECK_VALUE                       * not implemented *
+;;;     G_TYPE_CHECK_VALUE_TYPE                  * not implemented *
+;;;     G_TYPE_FLAG_RESERVED_ID_BIT              * not implemented *
+
+;;;     g_type_init
+;;;
+;;;     GTypeDebugFlags                          * not implemented *
+;;;
+;;;     g_type_init_with_debug_flags             * not implemented *
+;;;     g_type_name
+;;;     g_type_qname
+;;;     g_type_from_name
+;;;     g_type_parent
+;;;     g_type_depth
+;;;     g_type_next_base
+;;;     g_type_is_a
+;;;     g_type_class_ref
+;;;     g_type_class_peek
+;;;     g_type_class_peek_static
+;;;     g_type_class_unref
+;;;     g_type_class_peek_parent
+;;;     g_type_class_add_private
+;;;     g_type_add_class_private                 * not implemented *
+;;;     g_type_interface_peek
+;;;     g_type_interface_peek_parent             * not implemented *
+;;;     g_type_default_interface_ref
+;;;     g_type_default_interface_peek
+;;;     g_type_default_interface_unref
+;;;     g_type_children
+;;;     g_type_interfaces
+;;;     g_type_interface_prerequisites
+;;;     g_type_set_qdata
+;;;     g_type_get_qdata
+;;;
+;;;     GTypeQuery
+;;;
+;;;     g_type_query
+;;;     g_type_register_static
+;;;     g_type_register_static_simple
+;;;     g_type_register_dynamic                  * not implemented *
+;;;     g_type_register_fundamental              * not implemented *
+;;;     g_type_add_interface_static
+;;;     g_type_add_interface_dynamic             * not implemented *
+;;;     g_type_interface_add_prerequisite
+;;;     g_type_get_plugin                        * not implemented *
+;;;     g_type_interface_get_plugin              * not implemented *
+;;;     g_type_fundamental_next
+;;;     g_type_fundamental
+;;;     g_type_create_instance                   * not implemented *
+;;;     g_type_free_instance                     * not implemented *
+;;;     g_type_add_class_cache_func              * not implemented *
+;;;     g_type_remove_class_cache_func           * not implemented *
+;;;     g_type_class_unref_uncached              * not implemented *
+;;;     g_type_add_interface_check               * not implemented *
+;;;     g_type_remove_interface_check            * not implemented *
+;;;     g_type_value_table_peek
+;;;     g_type_ensure
+;;;     g_type_get_type_registration_serial
+;;;
+;;;     G_DEFINE_TYPE                            * not implemented *
+;;;     G_DEFINE_TYPE_WITH_CODE                  * not implemented *
+;;;     G_DEFINE_ABSTRACT_TYPE                   * not implemented *
+;;;     G_DEFINE_ABSTRACT_TYPE_WITH_CODE         * not implemented *
+;;;     G_DEFINE_INTERFACE                       * not implemented *
+;;;     G_DEFINE_INTERFACE_WITH_CODE             * not implemented *
+;;;     G_IMPLEMENT_INTERFACE                    * not implemented *
+;;;     G_DEFINE_TYPE_EXTENDED                   * not implemented *
+;;;     G_DEFINE_BOXED_TYPE                      * not implemented *
+;;;     G_DEFINE_BOXED_TYPE_WITH_CODE            * not implemented *
+;;;     G_DEFINE_POINTER_TYPE                    * not implemented *
+;;;     G_DEFINE_POINTER_TYPE_WITH_CODE          * not implemented *
+)
 
 (define-test g-type-info-g-type-flags
   (assert-eql 4 (foreign-type-size 'g-type-flags))
@@ -365,7 +786,7 @@
         (name "GtkLabel")
         (gtype (gtype "GtkLabel")))
     ;; gtype-id
-    (assert-eql 134918464 (gtype-id gtype))
+    (assert-eql 134917616 (gtype-id gtype))
     ;; gtype-name
     (assert-equal name (gtype-name gtype))
     ;; gtype-from-id

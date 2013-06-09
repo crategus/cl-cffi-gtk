@@ -64,7 +64,17 @@
   ))
 
 (define-test g-object-base
-  (assert-true (g-type-is-object (gtype "GtkButton")))
+  ;; g-type-is-object
+  (assert-true  (g-type-is-object (gtype "GtkButton")))
+  (assert-false (g-type-is-object (gtype "gboolean")))
+  ;; g-is-object
+  (assert-true (g-is-object (make-instance 'gtk-button)))
+  ;; g-is-object-class
+  (assert-true (g-is-object-class (g-type-class-ref (gtype "GtkButton"))))
+  ;; g-object-type
+  (assert-equal (gtype "GtkButton") (g-object-type (make-instance 'gtk-button)))
+
+    
   (assert-equal "GtkButton" (g-type-name (g-object-type (make-instance 'gtk-button))))
   (assert-equal "GtkButton" (g-object-type-name (make-instance 'gtk-button)))
   (assert-equal "GtkButton" (g-type-name (g-object-class-type (g-type-class-ref (gtype "GtkButton")))))
