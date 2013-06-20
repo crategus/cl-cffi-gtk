@@ -260,58 +260,62 @@
 
 (defcfun ("pango_layout_context_changed" pango-layout-context-changed) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-4}
+ "@version{2013-6-17}
   @argument[layout]{a @class{pango-layout} object}
   @begin{short}
-    Forces recomputation of any state in the PangoLayout that might depend on
-    the layout's context. This function should be called if you make changes to
-    the context subsequent to creating the layout.
-  @end{short}"
+    Forces recomputation of any state in the @class{pango-layout} that might
+    depend on the @arg{layout}'s context.
+  @end{short}
+  This function should be called if you make changes to the context subsequent
+  to creating the @arg{layout}."
   (layout (g-object pango-layout)))
 
 (export 'pango-layout-context-changed)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_set_text ()
-;;;
-;;; void pango_layout_set_text (PangoLayout *layout,
-;;;                             const char *text,
-;;;                             int length);
-;;;
-;;; Sets the text of the layout.
-;;;
-;;; Note that if you have used pango_layout_set_markup() or
-;;; pango_layout_set_markup_with_accel() on layout before, you may want to call
-;;; pango_layout_set_attributes() to clear the attributes set on the layout
-;;; from the markup as this function does not clear attributes.
-;;;
-;;; layout :
-;;;     a PangoLayout
-;;;
-;;; text :
-;;;     a valid UTF-8 string
-;;;
-;;; length :
-;;;     maximum length of text, in bytes. -1 indicates that the string is
-;;;     nul-terminated and the length should be calculated. The text will also
-;;;     be truncated on encountering a nul-termination even when length is
-;;;     positive.
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_layout_set_text" %pango-layout-set-text) :void
+  (layout (g-object pango-layout))
+  (text :string)
+  (length :int))
+
+(defun pango-layout-set-text (layout text)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-17}
+  @argument[layout]{a @class{pango-layout} object}
+  @argument[text]{a valid UTF-8 string}
+  @begin{short}
+    Sets the text of the @arg{layout}.
+  @end{short}
+
+  Note that if you have used the functions @fun{pango-layout-set-markup} or
+  @fun{pango-layout-set-markup-with-accel} on layout before, you may want to
+  call the function @fun{pango-layout-set-attributes} to clear the attributes
+  set on the layout from the markup as this function does not clear attributes.
+  @see-function{pango-layout-get-text}
+  @see-function{pango-layout-set-markup}
+  @see-function{pango-layout-set-markup-with-accel}
+  @see-function{pango-layout-set-attributes}"
+  (%pango-layout-set-text layout text (length text)))
+
+(export 'pango-layout-set-text)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_get_text ()
-;;;
-;;; const char * pango_layout_get_text (PangoLayout *layout);
-;;;
-;;; Gets the text in the layout. The returned text should not be freed or
-;;; modified.
-;;;
-;;; layout :
-;;;     a PangoLayout
-;;;
-;;; Returns :
-;;;     the text in the layout.
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_layout_get_text" pango-layout-get-text) :string
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-17}
+  @argument[layout]{a @class{pango-layout} object}
+  @return{The text in the @arg{layout}.}
+  Gets the text in the @arg{layout}.
+  @see-function{pango-layout-set-text}"
+  (layout (g-object pango-layout)))
+
+(export 'pango-layout-get-text)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_get_character_count ()
