@@ -62,7 +62,7 @@
   
   ;; g-type-gtype
   (assert-equal "GType" (gtype-name (gtype (g-type-gtype))))
-  (assert-eql 134818672 (gtype-id (gtype (g-type-gtype))))
+  (assert-eql 134838728 (gtype-id (gtype (g-type-gtype))))
 
   ;; g-type-is-abstract
   (assert-false (g-type-is-abstract +g-type-invalid+))
@@ -470,8 +470,21 @@
 ;;;     g_type_interface_add_prerequisite
 ;;;     g_type_get_plugin                        * not implemented *
 ;;;     g_type_interface_get_plugin              * not implemented *
-;;;     g_type_fundamental_next
-;;;     g_type_fundamental
+
+  ;; g_type_fundamental_next
+  (assert-eql 196 (g-type-fundamental-next)
+
+  ;; g_type_fundamental
+  (assert-equal (gtype "GObject") (g-type-fundamental "GtkWidget"))
+  (assert-equal (gtype "GObject") (g-type-fundamental "GtkContainer"))
+  (assert-equal (gtype "GObject") (g-type-fundamental "GtkBox"))
+  (assert-equal (gtype "GObject") (g-type-fundamental "GtkWindow"))
+  (assert-equal (gtype "GInterface") (g-type-fundamental "GtkOrientable"))
+  (assert-equal (gtype "GFlags") (g-type-fundamental "GtkAccelFlags"))
+  (assert-equal (gtype "GEnum") (g-type-fundamental "GtkArrowPlacement"))
+  (assert-equal (gtype "GBoxed") (g-type-fundamental "GdkRGBA"))
+  (assert-equal (gtype "GBoxed") (g-type-fundamental "GtkTreePath"))
+
 ;;;     g_type_create_instance                   * not implemented *
 ;;;     g_type_free_instance                     * not implemented *
 ;;;     g_type_add_class_cache_func              * not implemented *
@@ -479,9 +492,43 @@
 ;;;     g_type_class_unref_uncached              * not implemented *
 ;;;     g_type_add_interface_check               * not implemented *
 ;;;     g_type_remove_interface_check            * not implemented *
-;;;     g_type_value_table_peek
+
+  ;; g_type_value_table_peek
+;  (assert-false (g-type-value-table-peek +g-type-invalid+))
+;  (assert-false (g-type-value-table-peek +g-type-none+))
+  (assert-false (not (null-pointer-p (g-type-value-table-peek +g-type-interface+))))
+  (assert-true  (not (null-pointer-p (g-type-value-table-peek +g-type-char+))))
+  (assert-true  (not (null-pointer-p (g-type-value-table-peek +g-type-uchar+))))
+  (assert-true  (not (null-pointer-p (g-type-value-table-peek +g-type-boolean+))))
+  (assert-true  (not (null-pointer-p (g-type-value-table-peek +g-type-int+))))
+  (assert-true  (not (null-pointer-p (g-type-value-table-peek +g-type-uint+))))
+  (assert-true  (not (null-pointer-p (g-type-value-table-peek +g-type-long+))))
+  (assert-true  (not (null-pointer-p (g-type-value-table-peek +g-type-ulong+))))
+  (assert-true  (not (null-pointer-p (g-type-value-table-peek +g-type-int64+))))
+  (assert-true  (not (null-pointer-p (g-type-value-table-peek +g-type-uint64+))))
+  (assert-true  (not (null-pointer-p (g-type-value-table-peek +g-type-enum+))))
+  (assert-true  (not (null-pointer-p (g-type-value-table-peek +g-type-flags+))))
+  (assert-true  (not (null-pointer-p (g-type-value-table-peek +g-type-float+))))
+  (assert-true  (not (null-pointer-p (g-type-value-table-peek +g-type-double+))))
+  (assert-true  (not (null-pointer-p (g-type-value-table-peek +g-type-string+))))
+  (assert-true  (not (null-pointer-p (g-type-value-table-peek +g-type-pointer+))))
+  (assert-false (not (null-pointer-p (g-type-value-table-peek +g-type-boxed+))))
+  (assert-true  (not (null-pointer-p (g-type-value-table-peek +g-type-param+))))
+  (assert-true  (not (null-pointer-p (g-type-value-table-peek +g-type-object+))))
+  (assert-true  (not (null-pointer-p (g-type-value-table-peek +g-type-variant+))))
+
+  (assert-true  (not (null-pointer-p (g-type-value-table-peek "GtkWidget"))))
+  (assert-true  (not (null-pointer-p (g-type-value-table-peek "GtkContainer"))))
+  (assert-true  (not (null-pointer-p (g-type-value-table-peek "GtkBox"))))
+  (assert-true  (not (null-pointer-p (g-type-value-table-peek "GtkWindow"))))
+  (assert-true  (not (null-pointer-p (g-type-value-table-peek "GtkOrientable"))))
+  (assert-true  (not (null-pointer-p (g-type-value-table-peek "GtkAccelFlags"))))
+  (assert-true  (not (null-pointer-p (g-type-value-table-peek "GtkArrowPlacement"))))
+  (assert-true  (not (null-pointer-p (g-type-value-table-peek "GdkRGBA"))))
+  (assert-true  (not (null-pointer-p (g-type-value-table-peek "GtkTreePath"))))
+
 ;;;     g_type_ensure
-;;;     g_type_get_type_registration_serial
+;;;     g_type_get_type_registration_serial      * not implemented *
 ;;;
 ;;;     G_DEFINE_TYPE                            * not implemented *
 ;;;     G_DEFINE_TYPE_WITH_CODE                  * not implemented *
