@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -96,36 +96,27 @@
    (model
     gtk-cell-view-model
     "model" "GtkTreeModel" t t)))
-;   (:cffi displayed-row
-;          gtk-cell-view-displayed-row (g-boxed-foreign gtk-tree-path)
-;          "gtk_cell_view_get_displayed_row"
-;          "gtk_cell_view_set_displayed_row")
-;   (:cffi cell-renderers
-;          gtk-cell-view-cell-renderers
-;          (g-list (g-object gtk-cell-renderer) :free-from-foreign t)
-;          "gtk_cell_view_get_cell_renderers" nil)))
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-cell-view 'type)
- "@version{2013-2-23}
+ "@version{2013-6-19}
   @begin{short}
-    A GtkCellView displays a single row of a GtkTreeModel using a GtkCellArea
-    and GtkCellAreaContext. A GtkCellAreaContext can be provided to the
-    GtkCellView at construction time in order to keep the cellview in context of
-    a group of cell views, this ensures that the renderers displayed will be
-    properly aligned with eachother (like the aligned cells in the menus of
-    GtkComboBox).
+    A @sym{gtk-cell-view} displays a single row of a @class{gtk-tree-model}
+    using a @class{gtk-cell-area} and @class{gtk-cell-area-context}. A
+    @class{gtk-cell-area-context} can be provided to the @class{gtk-cell-view}
+    at construction time in order to keep the cellview in context of a group of
+    cell views, this ensures that the renderers displayed will be properly
+    aligned with eachother like the aligned cells in the menus of
+    @class{gtk-combo-box}.
   @end{short}
 
-  GtkCellView is GtkOrientable in order to decide in which orientation the
-  underlying GtkCellAreaContext should be allocated. Taking the GtkComboBox
-  menu as an example, cellviews should be oriented horizontally if the menus
-  are listed top-to-bottom and thus all share the same width but may have
-  separate individual heights (left-to-right menus should be allocated
-  vertically since they all share the same height but may have variable
-  widths).
+  @sym{gtk-cell-view} is @class{gtk-orientable} in order to decide in which
+  orientation the underlying @class{gtk-cell-area-context} should be allocated.
+  Taking the @class{gtk-combo-box} menu as an example, cellviews should be
+  oriented horizontally if the menus are listed top-to-bottom and thus all share
+  the same width but may have separate individual heights (left-to-right menus
+  should be allocated vertically since they all share the same height but may
+  have variable widths).
   @see-slot{gtk-cell-view-background}
   @see-slot{gtk-cell-view-background-gdk}
   @see-slot{gtk-cell-view-background-rgba}
@@ -134,8 +125,7 @@
   @see-slot{gtk-cell-view-cell-area-context}
   @see-slot{gtk-cell-view-draw-sensitive}
   @see-slot{gtk-cell-view-fit-model}
-  @see-slot{gtk-cell-view-model}
-")
+  @see-slot{gtk-cell-view-model}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -145,97 +135,89 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "background" 'gtk-cell-view) 't)
- "The @code{\"background\"} property of type @code{gchar*} (Write)@br{}
-  Background color as a string.@br{}
-  Default value: NULL")
-
-;;; ----------------------------------------------------------------------------
+ "The @code{\"background\"} property of type @code{:string} (Write) @br{}
+  Background color as a string. @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "background-gdk" 'gtk-cell-view) 't)
- "The @code{\"background-gdk\"} property of type @code{GdkColor*}
-  (Read / Write)@br{}
+(setf (documentation (atdoc:get-slot-from-name "background-gdk"
+                                               'gtk-cell-view) 't)
+ "The @code{\"background-gdk\"} property of type @class{gdk-color}
+  (Read / Write) @br{}
   @b{Warning:}
-  GtkCellView:background-gdk has been deprecated since version 3.4 and should
+  @code{\"background-gdk\"} has been deprecated since version 3.4 and should
   not be used in newly-written code. Use @code{\"background-rgba\"}
-  instead.@br{}
-  The background color as a GdkColor")
-
-;;; ----------------------------------------------------------------------------
+  instead. @br{}
+  The background color as a @class{gdk-color}")
 
 #+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "background-rgba" 'gtk-cell-view) 't)
- "The @code{\"background-rgba\"} property of type @code{GdkRGBA*}
-  (Read / Write)@br{}
-  The background color as a GdkRGBA@br{}
+(setf (documentation (atdoc:get-slot-from-name "background-rgba"
+                                               'gtk-cell-view) 't)
+ "The @code{\"background-rgba\"} property of type @class{gdk-rgba}
+  (Read / Write) @br{}
+  The background color as a @class{gdk-rgba}. @br{}
   Since 3.0")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "background-set" 'gtk-cell-view) 't)
- "The @code{\"background-set\"} property of type @code{gboolean}
-  (Read / Write)@br{}
-  Whether this tag affects the background color.@br{}
-  Default value: FALSE")
-
-;;; ----------------------------------------------------------------------------
+(setf (documentation (atdoc:get-slot-from-name "background-set"
+                                               'gtk-cell-view) 't)
+ "The @code{\"background-set\"} property of type @code{:boolean}
+  (Read / Write) @br{}
+  Whether this tag affects the background color. @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "cell-area" 'gtk-cell-view) 't)
- "The @code{\"cell-area\"} property of type @code{GtkCellArea*}
-  (Read / Write / Construct)@br{}
-  The GtkCellArea rendering cells@br{}
-  If no area is specified when creating the cell view with
-  gtk_cell_view_new_with_context() a horizontally oriented GtkCellAreaBox will
-  be used.@br{}
-  since 3.0")
-
-;;; ----------------------------------------------------------------------------
+ "The @code{\"cell-area\"} property of type @class{gtk-cell-area}
+  (Read / Write / Construct) @br{}
+  The @class{gtk-cell-area} rendering cells. @br{}
+  If no area is specified when creating the cell view with the function
+  @fun{gtk-cell-view-new-with-context} a horizontally oriented
+  @fun{gtk-cell-area-box} will be used. @br{}
+  Since 3.0")
 
 #+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "cell-area-context" 'gtk-cell-view) 't)
- "The @code{\"cell-area-context\"} property of type @code{GtkCellAreaContext*}
-  (Read / Write / Construct)@br{}
-  The GtkCellAreaContext used to compute the geometry of the cell view.@br{}
+(setf (documentation (atdoc:get-slot-from-name "cell-area-context"
+                                               'gtk-cell-view) 't)
+ "The @code{\"cell-area-context\"} property of type
+  @class{gtk-cell-area-context} (Read / Write / Construct) @br{}
+  The @class{gtk-cell-area-context} used to compute the geometry of the cell
+  view.
   A group of cell views can be assigned the same context in order to ensure
   the sizes and cell alignments match across all the views with the same
-  context.@br{}
-  GtkComboBox menus uses this to assign the same context to all cell views in
-  the menu items for a single menu (each submenu creates its own context since
-  the size of each submenu does not depend on parent or sibling menus).@br{}
-  since 3.0")
-
-;;; ----------------------------------------------------------------------------
+  context.
+  @class{gtk-combo-box} menus uses this to assign the same context to all cell
+  views in the menu items for a single menu (each submenu creates its own
+  context since the size of each submenu does not depend on parent or sibling
+  menus). @br{}
+  Since 3.0")
 
 #+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "draw-sensitive" 'gtk-cell-view) 't)
- "The @code{\"draw-sensitive\"} property of type @code{gboolean}
-  (Read / Write)@br{}
+(setf (documentation (atdoc:get-slot-from-name "draw-sensitive"
+                                               'gtk-cell-view) 't)
+ "The @code{\"draw-sensitive\"} property of type @code{:boolean}
+  (Read / Write) @br{}
   Whether all cells should be draw as sensitive for this view regardless of
   the actual cell properties (used to make menus with submenus appear
-  sensitive when the items in submenus might be insensitive).@br{}
-  since 3.0@br{}
-  Default value: FALSE")
-
-;;; ----------------------------------------------------------------------------
+  sensitive when the items in submenus might be insensitive). @br{}
+  Default value: @code{nil} @br{}
+  Since 3.0")
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "fit-model" 'gtk-cell-view) 't)
- "The @code{\"fit-model\"} property of type @code{gboolean} (Read / Write)@br{}
+ "The @code{\"fit-model\"} property of type @code{:boolean} (Read / Write) @br{}
   Whether the view should request enough space to always fit the size of every
-  row in the model (used by the combo box to ensure the combo box size doesnt
-  change when different items are selected).@br{}
-  since 3.0@br{}
-  Default value: FALSE")
-
-;;; ----------------------------------------------------------------------------
+  row in the model (used by the combo box to ensure the combo box size does not
+  change when different items are selected). @br{}
+  Default value: @code{nil} @br{}
+  Since 3.0 @br{}")
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "model" 'gtk-cell-view) 't)
- "The @code{\"model\"} property of type @code{GtkTreeModel*} (Read / Write)@br{}
-  The model for cell view@br{}
-  since 2.10")
+ "The @code{\"model\"} property of type @class{gtk-tree-model}
+  (Read / Write) @br{}
+  The model for cell view. @br{}
+  Since 2.10")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -526,22 +508,25 @@
 
 (defun gtk-cell-view-get-size-of-row (cell-view path)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-23}
-  @argument[cell-view]{a GtkCellView}
-  @argument[path]{a GtkTreePath}
-  @return{TRUE}
+ "@version{2013-6-19}
+  @argument[cell-view]{a @class{gtk-cell-view}}
+  @argument[path]{a @class{gtk-tree-path}}
+  @return{@em{True}}
   @subheading{Warning}
-    gtk_cell_view_get_size_of_row has been deprecated since version 3.0 and
-    should not be used in newly-written code. Combo box formerly used this to
-    calculate the sizes for cellviews, now you can achieve this by either using
-    the @code{\"fit-model\"} property or by setting the currently displayed row
-    of the GtkCellView and using gtk_widget_get_preferred_size().
+    @sym{gtk-cell-view-get-size-of-row} has been deprecated since version 3.0
+    and should not be used in newly-written code. Combo box formerly used this
+    to calculate the sizes for cellviews, now you can achieve this by either
+    using the @code{\"fit-model\"} property or by setting the currently
+    displayed row of the @class{gtk-cell-view} and using the function
+    @fun{gtk-widget-get-preferred-size}.
+
   @begin{short}
-    Sets requisition to the size needed by cell_view to display the model row
-    pointed to by path.
+    Sets requisition to the size needed by @arg{cell-view} to display the model
+    row pointed to by path.
   @end{short}
 
-  Since 2.6"
+  Since 2.6
+  @see-function{gtk-widget-get-preferred-size}"
   (let ((requisition (make-gtk-requisition)))
     (%gtk-cell-view-get-size-of-row cell-view path requisition)
     requisition))
@@ -661,6 +646,5 @@
 ;;;
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
-
 
 ;;; --- End of file gtk.cell-view.lisp -----------------------------------------

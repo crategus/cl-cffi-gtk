@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -81,7 +81,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-file-chooser-button 'type)
- "@version{2013-4-1}
+ "@version{2013-6-18}
   @begin{short}
     The @sym{gtk-file-chooser-button} is a widget that lets the user select a
     file. It implements the @class{gtk-file-chooser} interface. Visually, it is
@@ -108,7 +108,7 @@
   @subheading{Important}
     The @sym{gtk-file-chooser-button} will ellipsize the label, and thus will
     request little horizontal space. To give the button more space, you should
-    call @fun{gtk-widget-get-preferred-size},
+    call the functions @fun{gtk-widget-get-preferred-size},
     @fun{gtk-file-chooser-button-set-width-chars}, or pack the button in such a
     way that other interface elements give space to the widget.
   @begin[Signal Details]{dictionary}
@@ -138,9 +138,9 @@
 (setf (documentation (atdoc:get-slot-from-name "dialog"
                                                'gtk-file-chooser-button) 't)
  "The @code{\"dialog\"} property of type @class{gtk-file-chooser}
-  (Write / Construct Only)@br{}
+  (Write / Construct Only) @br{}
   Instance of the @class{gtk-file-chooser-dialog} associated with the
-  button.@br{}
+  button. @br{}
   Since 2.6")
 
 ;;; ----------------------------------------------------------------------------
@@ -149,10 +149,10 @@
 (setf (documentation (atdoc:get-slot-from-name "focus-on-click"
                                                'gtk-file-chooser-button) 't)
  "The @code{\"focus-on-click\"} property of type @code{:boolean}
-  (Read / Write)@br{}
+  (Read / Write) @br{}
   Whether the @sym{gtk-file-chooser-button} button grabs focus when it is
-  clicked with the mouse.@br{}
-  Default value: @em{true}@br{}
+  clicked with the mouse. @br{}
+  Default value: @em{true} @br{}
   Since 2.10")
 
 ;;; ----------------------------------------------------------------------------
@@ -160,10 +160,10 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "title"
                                                'gtk-file-chooser-button) 't)
- "The @code{\"title\"} property of type @code{:string} (Read / Write)@br{}
+ "The @code{\"title\"} property of type @code{:string} (Read / Write) @br{}
   Title to put on the @class{gtk-file-chooser-dialog} associated with the
-  button.@br{}
-  Default value: \"Select a File\"@br{}
+  button. @br{}
+  Default value: \"Select a File\" @br{}
   Since 2.6")
 
 ;;; ----------------------------------------------------------------------------
@@ -171,10 +171,10 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "width-chars"
                                                'gtk-file-chooser-button) 't)
- "The @code{\"width-chars\"} property of type @code{:int} (Read / Write)@br{}
-  The width of the entry and label inside the button, in characters.@br{}
-  Allowed values: >= @code{G_MAXULONG}@br{}
-  Default value: -1@br{}
+ "The @code{\"width-chars\"} property of type @code{:int} (Read / Write) @br{}
+  The width of the entry and label inside the button, in characters. @br{}
+  Allowed values: >= @code{G_MAXULONG} @br{}
+  Default value: -1 @br{}
   Since 2.6")
 
 ;;; ----------------------------------------------------------------------------
@@ -230,6 +230,10 @@
   @end{short}")
 
 ;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors of Child Properties
+;;;
+;;; ----------------------------------------------------------------------------
 
 (define-child-property "GtkFileChooserButton"
                        gtk-file-chooser-button-child-expand
@@ -251,10 +255,6 @@
                        gtk-file-chooser-button-child-position
                        "position" "gint" t t t)
 
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Child Properties
-;;;
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
@@ -323,10 +323,10 @@
 
 (defun gtk-file-chooser-button-new (title action)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-3}
-  @argument[title]{the title of the browse dialog.}
-  @argument[action]{the open mode for the widget.}
-  @return{a new button widget.}
+ "@version{2013-6-18}
+  @argument[title]{the title of the browse dialog}
+  @argument[action]{the open mode for the widget}
+  @return{A new button widget.}
   @begin{short}
     Creates a new file-selecting button widget.
   @end{short}
@@ -346,21 +346,21 @@
 
 (defun gtk-file-chooser-button-new-with-dialog (dialog)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-3}
+ "@version{2013-6-18}
   @argument[dialog]{the widget to use as dialog}
-  @return{a new button widget.}
+  @return{A new button widget.}
   @begin{short}
-    Creates a GtkFileChooserButton widget which uses dialog as its file-picking
-    window.
+    Creates a @class{gtk-file-chooser-button} widget which uses dialog as its
+    file-picking window.
   @end{short}
 
-  Note that dialog must be a GtkDialog (or subclass) which implements the
-  GtkFileChooser interface and must not have GTK_DIALOG_DESTROY_WITH_PARENT
-  set.
+  Note that dialog must be a @class{gtk-dialog} (or subclass) which implements
+  the @class{gtk-file-chooser} interface and must not have
+  @code{:destroy-with-parent} set.
 
   Also note that the dialog needs to have its confirmative button added with
-  response GTK_RESPONSE_ACCEPT or GTK_RESPONSE_OK in order for the button to
-  take over the file selected in the dialog.
+  response @code{:accept} or @code{:ok} in order for the button to take over the
+  file selected in the dialog.
 
   Since 2.6"
   (make-instance 'gtk-file-chooser-button
@@ -376,12 +376,12 @@
 
 (defun gtk-file-chooser-button-get-title (button)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-3}
-  @argument[button]{the button widget to examine.}
-  @return{a pointer to the browse dialog's title.}
+ "@version{2013-6-18}
+  @argument[button]{the button widget to examine}
+  @return{A pointer to the browse dialog's title.}
   @begin{short}
-    Retrieves the title of the browse dialog used by button. The returned value
-    should not be modified or freed.
+    Retrieves the title of the browse dialog used by @arg{button}. The returned
+    value should not be modified or freed.
   @end{short}
 
   Since 2.6"
@@ -397,9 +397,9 @@
 
 (defun gtk-file-chooser-button-set-title (button title)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-3}
-  @argument[button]{the button widget to modify.}
-  @argument[title]{the new browse dialog title.}
+ "@version{2013-6-18}
+  @argument[button]{the button widget to modify}
+  @argument[title]{the new browse dialog title}
   @begin{short}
     Modifies the title of the browse dialog used by button.
   @end{short}
@@ -417,10 +417,10 @@
 
 (defun gtk-file-chooser-button-get-width-chars (button)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-3}
-  @argument[button]{the button widget to examine.}
+ "@version{2013-6-18}
+  @argument[button]{the button widget to examine}
   @begin{return}
-    an integer width (in characters) that the button will use to size itself.
+    An integer width (in characters) that the button will use to size itself.
   @end{return}
   @begin{short}
     Retrieves the width in characters of the button widget's entry and/or label.
@@ -439,11 +439,11 @@
 
 (defun gtk-file-chooser-button-set-width-chars (button n-chars)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-3}
-  @argument[button]{the button widget to examine.}
-  @argument[n_chars]{the new width, in characters.}
+ "@version{2013-6-18}
+  @argument[button]{the button widget to examine}
+  @argument[n-chars]{the new width, in characters}
   @begin{short}
-    Sets the width (in characters) that button will use to n_chars.
+    Sets the width (in characters) that button will use to @arg{n-chars}.
   @end{short}
 
   Since 2.6"
@@ -459,15 +459,17 @@
 
 (defun gtk-file-chooser-button-get-focus-on-click (button)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-3}
-  @argument[button]{a GtkFileChooserButton}
-  @return{TRUE if the button grabs focus when it is clicked with the mouse.}
+ "@version{2013-6-18}
+  @argument[button]{a @class{gtk-file-chooser-button} widget}
+  @return{@em{True} if the button grabs focus when it is clicked with the
+    mouse.}
   @begin{short}
     Returns whether the button grabs focus when it is clicked with the mouse.
   @end{short}
-  See gtk_file_chooser_button_set_focus_on_click().
+  See the function @fun{gtk-file-chooser-button-set-focus-on-click}.
 
-  Since 2.10"
+  Since 2.10
+  @see-function{gtk-file-chooser-button-set-focus-on-click}"
   (gtk-file-chooser-button-focus-on-click button))
 
 (export 'gtk-file-chooser-button-get-focus-on-click)
@@ -480,15 +482,15 @@
 
 (defun gtk-file-chooser-button-set-focus-on-click (button focus-on-click)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-3}
-  @argument[button]{a GtkFileChooserButton}
-  @argument[focus_on_click]{whether the button grabs focus when clicked with
+ "@version{2013-6-18}
+  @argument[button]{a @class{gtk-file-chooser-button} widget}
+  @argument[focus-on-click]{whether the button grabs focus when clicked with
     the mouse}
   @begin{short}
     Sets whether the button will grab focus when it is clicked with the mouse.
   @end{short}
   Making mouse clicks not grab focus is useful in places like toolbars where
-  you don't want the keyboard focus removed from the main area of the
+  you do not want the keyboard focus removed from the main area of the
   application.
 
   Since 2.10"

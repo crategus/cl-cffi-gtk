@@ -1709,10 +1709,10 @@ gtk_text_buffer_set_text (buffer, \"Hello, this is some text\", -1);
       can change the default attributes for a given @class{gtk-text-view}, and
       you can apply tags that change the attributes for a region of text. For
       text features that come from the theme - such as font and foreground color
-      - use standard @class{gtk-widget} functions such as
-      @fun{gtk-widget-override-font} or @fun{gtk-widget-override-text}. For
-      other attributes there are dedicated methods on @class{gtk-text-view} such
-      as @fun{gtk-text-view-set-tabs}.
+      - use standard @class{gtk-widget} functions such as the function
+      @fun{gtk-widget-override-font}. For other attributes there are dedicated
+      methods on @class{gtk-text-view} such as the function
+      @fun{gtk-text-view-set-tabs}.
       @begin{pre}
 GtkWidget *view;
 GtkTextBuffer *buffer;
@@ -2583,8 +2583,94 @@ setup_tree (void)
       @about-function{gtk-tree-get-row-drag-data}
     @end{subsection}
     @begin[GtkCellView]{subsection}
+      A widget displaying a single row of a @class{gtk-tree-model}.
+
+      @about-class{gtk-cell-view}
+      @about-function{gtk-cell-view-new}
+      @about-function{gtk-cell-view-new-with-context}
+      @about-function{gtk-cell-view-new-with-text}
+      @about-function{gtk-cell-view-new-with-markup}
+      @about-function{gtk-cell-view-new-with-pixbuf}
+      @about-function{gtk-cell-view-set-model}
+      @about-function{gtk-cell-view-get-model}
+      @about-function{gtk-cell-view-set-displayed-row}
+      @about-function{gtk-cell-view-get-displayed-row}
+      @about-function{gtk-cell-view-get-size-of-row}
+      @about-function{gtk-cell-view-set-background-color}
+      @about-function{gtk-cell-view-set-background-rgba}
+      @about-function{gtk-cell-view-set-draw-sensitive}
+      @about-function{gtk-cell-view-get-draw-sensitive}
+      @about-function{gtk-cell-view-set-fit-model}
+      @about-function{gtk-cell-view-get-fit-model}
     @end{subsection}
     @begin[GtkIconView]{subsection}
+      A widget which displays a list of icons in a grid.
+
+      @about-class{gtk-icon-view}
+      @about-function{gtk-icon-view-new}
+      @about-function{gtk-icon-view-new-with-area}
+      @about-function{gtk-icon-view-new-with-model}
+      @about-function{gtk-icon-view-set-model}
+      @about-function{gtk-icon-view-get-model}
+      @about-function{gtk-icon-view-set-text-column}
+      @about-function{gtk-icon-view-get-text-column}
+      @about-function{gtk-icon-view-set-markup-column}
+      @about-function{gtk-icon-view-get-markup-column}
+      @about-function{gtk-icon-view-set-pixbuf-column}
+      @about-function{gtk-icon-view-get-pixbuf-column}
+      @about-function{gtk-icon-view-get-path-at-pos}
+      @about-function{gtk-icon-view-get-item-at-pos}
+      @about-function{gtk-icon-view-convert-widget-to-bin-window-coords}
+      @about-function{gtk-icon-view-set-cursor}
+      @about-function{gtk-icon-view-get-cursor}
+      @about-function{gtk-icon-view-selected-foreach}
+      @about-function{gtk-icon-view-set-selection-mode}
+      @about-function{gtk-icon-view-get-selection-mode}
+      @about-function{gtk-icon-view-set-item-orientation}
+      @about-function{gtk-icon-view-get-item-orientation}
+      @about-function{gtk-icon-view-set-columns}
+      @about-function{gtk-icon-view-get-columns}
+      @about-function{gtk-icon-view-set-item-width}
+      @about-function{gtk-icon-view-get-item-width}
+      @about-function{gtk-icon-view-set-spacing}
+      @about-function{gtk-icon-view-get-spacing}
+      @about-function{gtk-icon-view-set-row-spacing}
+      @about-function{gtk-icon-view-get-row-spacing}
+      @about-function{gtk-icon-view-set-column-spacing}
+      @about-function{gtk-icon-view-get-column-spacing}
+      @about-function{gtk-icon-view-set-margin}
+      @about-function{gtk-icon-view-get-margin}
+      @about-function{gtk-icon-view-set-item-padding}
+      @about-function{gtk-icon-view-get-item-padding}
+      @about-function{gtk-icon-view-get-cell-rect}
+      @about-function{gtk-icon-view-select-path}
+      @about-function{gtk-icon-view-unselect-path}
+      @about-function{gtk-icon-view-path-is-selected}
+      @about-function{gtk-icon-view-get-selected-items}
+      @about-function{gtk-icon-view-select-all}
+      @about-function{gtk-icon-view-unselect-all}
+      @about-function{gtk-icon-view-item-activated}
+      @about-function{gtk-icon-view-scroll-to-path}
+      @about-function{gtk-icon-view-get-visible-range}
+      @about-function{gtk-icon-view-set-tooltip-item}
+      @about-function{gtk-icon-view-set-tooltip-cell}
+      @about-function{gtk-icon-view-get-tooltip-context}
+      @about-function{gtk-icon-view-set-tooltip-column}
+      @about-function{gtk-icon-view-get-tooltip-column}
+      @about-function{gtk-icon-view-get-item-row}
+      @about-function{gtk-icon-view-get-item-column}
+      @about-symbol{gtk-icon-view-drop-position}
+
+      @about-function{gtk-icon-view-enable-model-drag-source}
+      @about-function{gtk-icon-view-enable-model-drag-dest}
+      @about-function{gtk-icon-view-unset-model-drag-source}
+      @about-function{gtk-icon-view-unset-model-drag-dest}
+      @about-function{gtk-icon-view-set-reorderable}
+      @about-function{gtk-icon-view-get-reorderable}
+      @about-function{gtk-icon-view-set-drag-dest-item}
+      @about-function{gtk-icon-view-get-drag-dest-item}
+      @about-function{gtk-icon-view-get-dest-item-at-pos}
+      @about-function{gtk-icon-view-create-drag-icon}
     @end{subsection}
     @begin[GtkTreeSortable]{subsection}
     @end{subsection}
@@ -3336,22 +3422,112 @@ setup_tree (void)
       @about-function{gtk-file-chooser-button-set-focus-on-click}
     @end{subsection}
     @begin[GtkFileChooserDialog]{subsection}
+      A file chooser dialog, suitable for \"File/Open\" or \"File/Save\"
+      commands.
+
+      @about-class{gtk-file-chooser-dialog}
+      @about-function{gtk-file-chooser-dialog-new}
     @end{subsection}
     @begin[GtkFileChooserWidget]{subsection}
+      File chooser widget that can be embedded in other widgets.
+
+      @about-class{gtk-file-chooser-widget}
+      @about-function{gtk-file-chooser-widget-new}
     @end{subsection}
     @begin[GtkFileFilter]{subsection}
+      A filter for selecting a file subset.
+
+      @about-class{gtk-file-filter}
+      @about-symbol{gtk-file-filter-info}
+      @about-symbol{gtk-file-filter-flags}
+      @about-function{gtk-file-filter-new}
+      @about-function{gtk-file-filter-set-name}
+      @about-function{gtk-file-filter-get-name}
+      @about-function{gtk-file-filter-add-mime-type}
+      @about-function{gtk-file-filter-add-pattern}
+      @about-function{gtk-file-filter-add-pixbuf-formats}
+      @about-function{gtk-file-filter-add-custom}
+      @about-function{gtk-file-filter-get-needed}
+      @about-function{gtk-file-filter-filter}
     @end{subsection}
     @begin[GtkFontChooser]{subsection}
+      Interface implemented by widgets displaying fonts.
+
+      @about-class{gtk-font-chooser}
+      @about-function{gtk-font-chooser-get-font-family}
+      @about-function{gtk-font-chooser-get-font-face}
+      @about-function{gtk-font-chooser-get-font-size}
+      @about-function{gtk-font-chooser-get-font}
+      @about-function{gtk-font-chooser-set-font}
+      @about-function{gtk-font-chooser-get-font-desc}
+      @about-function{gtk-font-chooser-set-font-desc}
+      @about-function{gtk-font-chooser-get-preview-text}
+      @about-function{gtk-font-chooser-set-preview-text}
+      @about-function{gtk-font-chooser-get-show-preview-entry}
+      @about-function{gtk-font-chooser-set-show-preview-entry}
+      @about-function{gtk-font-chooser-set-filter-func}
     @end{subsection}
     @begin[GtkFontButton]{subsection}
+      A button to launch a font chooser dialog.
+
+      @about-class{gtk-font-button}
+      @about-function{gtk-font-button-new}
+      @about-function{gtk-font-button-new-with-font}
+      @about-function{gtk-font-button-set-font-name}
+      @about-function{gtk-font-button-get-font-name}
+      @about-function{gtk-font-button-set-show-style}
+      @about-function{gtk-font-button-get-show-style}
+      @about-function{gtk-font-button-set-show-size}
+      @about-function{gtk-font-button-get-show-size}
+      @about-function{gtk-font-button-set-use-font}
+      @about-function{gtk-font-button-get-use-font}
+      @about-function{gtk-font-button-set-use-size}
+      @about-function{gtk-font-button-get-use-size}
+      @about-function{gtk-font-button-set-title}
+      @about-function{gtk-font-button-get-title}
     @end{subsection}
     @begin[GtkFontChooserWidget]{subsection}
+      A widget for selecting fonts.
+
+      @about-class{gtk-font-chooser-widget}
+      @about-function{gtk-font-chooser-widget-new}
     @end{subsection}
     @begin[GtkFontChooserDialog]{subsection}
+      A dialog for selecting fonts.
+
+      @about-class{gtk-font-chooser-dialog}
+      @about-function{gtk-font-chooser-dialog-new}
     @end{subsection}
-    @begin[GtkSelection]{subsection}
+    @begin[GtkFontSelection]{subsection}
+      Deprecated widget for selecting fonts.
+
+      @about-class{gtk-font-selection}
+      @about-function{gtk-font-selection-new}
+      @about-function{gtk-font-selection-get-font-name}
+      @about-function{gtk-font-selection-set-font-name}
+      @about-function{gtk-font-selection-get-preview-text}
+      @about-function{gtk-font-selection-set-preview-text}
+      @about-function{gtk-font-selection-get-face}
+      @about-function{gtk-font-selection-get-face-list}
+      @about-function{gtk-font-selection-get-family}
+      @about-function{gtk-font-selection-get-size}
+      @about-function{gtk-font-selection-get-family-list}
+      @about-function{gtk-font-selection-get-preview-entry}
+      @about-function{gtk-font-selection-get-size-entry}
+      @about-function{gtk-font-selection-get-size-list}
     @end{subsection}
-    @begin[GtkFonSelectionDialog]{subsection}
+    @begin[GtkFontSelectionDialog]{subsection}
+      Deprecated dialog box for selecting fonts.
+
+      @about-class{gtk-font-selection-dialog}
+      @about-function{gtk-font-selection-dialog-new}
+      @about-function{gtk-font-selection-dialog-get-font-name}
+      @about-function{gtk-font-selection-dialog-set-font-name}
+      @about-function{gtk-font-selection-dialog-get-preview-text}
+      @about-function{gtk-font-selection-dialog-set-preview-text}
+      @about-function{gtk-font-selection-dialog-get-cancel-button}
+      @about-function{gtk-font-selection-dialog-get-ok-button}
+      @about-function{gtk-font-selection-dialog-get-font-selection}
     @end{subsection}
   @end{section}
   @begin[Layout Containers]{section}

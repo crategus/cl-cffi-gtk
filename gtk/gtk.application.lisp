@@ -621,17 +621,16 @@
 (declaim (inline gtk-application-new))
 
 (defun gtk-application-new (application-id flags)
- "@version{2013-5-29}
-  @argument[application-id]{the application id}
+ "@version{2013-6-9}
+  @argument[application-id]{the application ID}
   @argument[flags]{the application flags}
   @return{A new @class{gtk-application} object.}
   @begin{short}
     Creates a new @class{gtk-application} object.
   @end{short}
 
-  This function calls the @fun{g-type-init} function for you. The @fun{gtk-init}
-  function is called as soon as the application gets registered as the primary
-  instance.
+  The @fun{gtk-init} function is called as soon as the application gets
+  registered as the primary instance.
 
   Concretely, the @fun{gtk-init} function is called in the default handler for
   the \"startup\" signal. Therefore, @class{gtk-application} subclasses should
@@ -647,7 +646,9 @@
   The application id must be valid. See the @fun{g-application-id-is-valid}
   function.
 
-  Since 3.0"
+  Since 3.0
+  @see-function{gtk-init}
+  @see-function{g-application-id-is-valid}"
   (make-instance 'gtk-application
                  :application-id application-id
                  :flags flags))

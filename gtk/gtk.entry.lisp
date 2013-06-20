@@ -2456,7 +2456,7 @@
 (defun gtk-entry-get-visibility (entry)
  #+cl-cffi-gtk-documentation
  "@version{2013-4-28}
-  @argument[entry]{a @class{gtkentry} widget}
+  @argument[entry]{a @class{gtk-entry} widget}
   @return{@em{True} if the text is currently visible.}
   @begin{short}
     Retrieves whether the text in @arg{entry} is visible.

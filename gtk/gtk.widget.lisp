@@ -1072,7 +1072,7 @@
       The \"drag-data-get\" signal is emitted on the drag source when the drop
       site requests the data which is dragged. It is the responsibility of the
       signal handler to fill data with the data in the format which is
-      indicated by info. See @fun{gtk-selection-data-set} and
+      indicated by info. See the functions @fun{gtk-selection-data-set} and
       @fun{gtk-selection-data-set-text}.
       @begin[code]{table}
         @entry[widget]{The object which received the signal.}
@@ -1551,7 +1551,7 @@
       new windows.
       @begin[code]{table}
         @entry[widget]{The object which received the signal.}
-        @entry[event]{The @class{gdk-event-any} which triggered this signal.}
+        @entry[event]{The @class{gdk-event} which triggered this signal.}
         @entry[Returns]{@em{True} to stop other handlers from being invoked for
           the event. @code{Nil} to propagate the event further.}
       @end{table}
@@ -1872,7 +1872,7 @@
       new windows.
       @begin[code]{table}
         @entry[widget]{The object which received the signal.}
-        @entry[event]{The @class{gdk-event-any} which triggered this signal.}
+        @entry[event]{The @class{gdk-event} which triggered this signal.}
         @entry[Returns]{@em{True} to stop other handlers from being invoked for
           the event. @code{Nil} to propagate the event further.}
       @end{table}
@@ -4889,11 +4889,12 @@
 
 (defcfun ("gtk_widget_get_composite_name" gtk-widget-get-composite-name) :string
  #+cl-cffi-gtk-documentation
- "@version{2013-1-6}
-  @argument[widget]{a @class{gtk-widget} instance}
+ "@version{2013-6-17}
+  @argument[widget]{a @class{gtk-widget} object}
   @return{The composite name of @arg{widget}, or @code{nil} if @arg{widget} is
     not a composite child.}
-  @short{Obtains the composite name of a @arg{widget}.}"
+  Obtains the composite name of a @arg{widget}.
+  @see-function{gtk-widget-set-composite-name}"
   (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-get-composite-name)
@@ -4905,14 +4906,14 @@
 (defcfun ("gtk_widget_override_background_color"
            gtk-widget-override-background-color) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-1-6}
-  @argument[widget]{a @class{gtk-widget} instance}
+ "@version{2013-6-17}
+  @argument[widget]{a @class{gtk-widget} object}
   @argument[state]{the state for which to set the background color}
   @argument[color]{the color to assign, or @code{nil} to undo the effect of
     previous calls to @sym{gtk-widget-override-background-color}}
   @short{Sets the background color to use for a @arg{widget}.}
 
-  All other style values are left untouched. See
+  All other style values are left untouched. See the function
   @fun{gtk-widget-override-color}.
 
   Since 3.0
@@ -5668,15 +5669,16 @@
 
 (defcfun ("gtk_widget_set_composite_name" gtk-widget-set-composite-name) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-1-6}
-  @argument[widget]{a @class{gtk-widget} instance}
+ "@version{2013-6-17}
+  @argument[widget]{a @class{gtk-widget} object}
   @argument[name]{the name to set}
   @begin{short}
     Sets a widgets composite name.
   @end{short}
-  The widget must be a composite child of its parent; see
+  The @arg{widget} must be a composite child of its parent; see the function
   @fun{gtk-widget-push-composite-child}.
-  @see-function{gtk-widget-push-composite-child}"
+  @see-function{gtk-widget-push-composite-child}
+  @see-function{gtk-widget-get-composite-name}"
   (widget (g-object gtk-widget))
   (name :string))
 
@@ -6688,17 +6690,17 @@
 
 (defcfun ("gtk_widget_error_bell" gtk-widget-error-bell) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-10}
-  @argument[widget]{A @class{gtk-widget} widget.}
+ "@version{2013-6-17}
+  @argument[widget]{a @class{gtk-widget} object}
   @begin{short}
     Notifies the user about an input-related error on this @arg{widget}. If the
-    \"gtk-error-bell\" setting is @em{true}, it calls @fun{gdk-window-beep},
-    otherwise it does nothing.
+    \"gtk-error-bell\" setting is @em{true}, it calls the function
+    @fun{gdk-window-beep}, otherwise it does nothing.
   @end{short}
 
-  Note that the effect of @fun{gdk-window-beep} can be configured in many ways,
-  depending on the windowing backend and the desktop environment or window
-  manager that is used.
+  Note that the effect of the function @fun{gdk-window-beep} can be configured
+  in many ways, depending on the windowing backend and the desktop environment
+  or window manager that is used.
 
   Since 2.12
   @see-function{gdk-window-beep}"
@@ -6708,50 +6710,56 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_keynav_failed ()
-;;;
-;;; gboolean gtk_widget_keynav_failed (GtkWidget *widget,
-;;;                                    GtkDirectionType direction);
-;;;
-;;; This function should be called whenever keyboard navigation within a single
-;;; widget hits a boundary. The function emits the "keynav-failed" signal on the
-;;; widget and its return value should be interpreted in a way similar to the
-;;; return value of gtk_widget_child_focus():
-;;;
-;;; When TRUE is returned, stay in the widget, the failed keyboard navigation is
-;;; Ok and/or there is nowhere we can/should move the focus to.
-;;;
-;;; When FALSE is returned, the caller should continue with keyboard navigation
-;;; outside the widget, e.g. by calling gtk_widget_child_focus() on the widget's
-;;; toplevel.
-;;;
-;;; The default ::keynav-failed handler returns TRUE for GTK_DIR_TAB_FORWARD and
-;;; GTK_DIR_TAB_BACKWARD. For the other values of GtkDirectionType, it looks at
-;;; the "gtk-keynav-cursor-only" setting and returns FALSE if the setting is
-;;; TRUE. This way the entire user interface becomes cursor-navigatable on input
-;;; devices such as mobile phones which only have cursor keys but no tab key.
-;;;
-;;; Whenever the default handler returns TRUE, it also calls
-;;; gtk_widget_error_bell() to notify the user of the failed keyboard
-;;; navigation.
-;;;
-;;; A use case for providing an own implementation of ::keynav-failed (either
-;;; by connecting to it or by overriding it) would be a row of GtkEntry widgets
-;;; where the user should be able to navigate the entire row with the cursor
-;;; keys, as e.g. known from user interfaces that require entering license keys.
-;;;
-;;; widget :
-;;;     a GtkWidget
-;;;
-;;; direction :
-;;;     direction of focus movement
-;;;
-;;; Returns :
-;;;     TRUE if stopping keyboard navigation is fine, FALSE if the emitting
-;;;     widget should try to handle the keyboard navigation attempt in its
-;;;     parent container(s).
-;;;
-;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_widget_keynav_failed" gtk-widget-keynav-failed) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-17}
+  @argument[widget]{a @class{gtk-widget} object}
+  @argument[direction]{direction of type @symbol{gtk-direction-type} of focus
+    movement}
+  @return{@em{True} if stopping keyboard navigation is fine, @code{nil} if the
+    emitting widget should try to handle the keyboard navigation attempt in its
+    parent container(s).}
+  @begin{short}
+    This function should be called whenever keyboard navigation within a single
+    widget hits a boundary.
+  @end{short}
+  The function emits the \"keynav-failed\" signal on the widget and its return
+  value should be interpreted in a way similar to the return value of the
+  function @fun{gtk-widget-child-focus}:
+  @begin{itemize}
+    @item{When @em{true} is returned, stay in the widget, the failed keyboard
+      navigation is Ok and/or there is nowhere we can/should move the focus
+      to.}
+    @item{When @code{nil} is returned, the caller should continue with
+      keyboard navigation outside the widget, e. g. by calling the function
+      @fun{gtk-widget-child-focus} on the widget's toplevel.}
+  @end{itemize}
+  The default \"keynav-failed\" handler returns @em{true} for
+  @code{:tab-forward} and @code{:tab-backward}. For the other values of
+  @symbol{gtk-direction-type}, it looks at the @code{\"gtk-keynav-cursor-only\"}
+  setting and returns @code{nil} if the setting is @em{true}. This way the
+  entire user interface becomes cursor-navigatable on input devices such as
+  mobile phones which only have cursor keys but no tab key.
+
+  Whenever the default handler returns @em{true}, it also calls the function
+  @fun{gtk-widget-error-bell} to notify the user of the failed keyboard
+  navigation.
+
+  A use case for providing an own implementation of \"keynav-failed\" (either
+  by connecting to it or by overriding it) would be a row of @class{gtk-entry}
+  widgets where the user should be able to navigate the entire row with the
+  cursor keys, as e. g. known from user interfaces that require entering license
+  keys.
+
+  Since 2.12
+  @see-function{gtk-widget-child-focus}
+  @see-function{gtk-widget-error-bell}"
+  (widget (g-object gtk-widget))
+  (direction gtk-direction-type))
+
+(export 'gtk-widget-keynav-failed)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_tooltip_markup ()
@@ -7719,39 +7727,49 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_set_support_multidevice ()
-;;;
-;;; void gtk_widget_set_support_multidevice (GtkWidget *widget,
-;;;                                          gboolean support_multidevice);
-;;;
-;;; Enables or disables multiple pointer awareness. If this setting is TRUE,
-;;; widget will start receiving multiple, per device enter/leave events. Note
-;;; that if custom GdkWindows are created in "realize",
-;;; gdk_window_set_support_multidevice() will have to be called manually on
-;;; them.
-;;;
-;;; widget :
-;;;     a GtkWidget
-;;;
-;;; support_multidevice :
-;;;     TRUE to support input from multiple devices.
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_widget_set_support_multidevice"
+           gtk-widget-set-support-multidevice) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-17}
+  @argument[widget]{a @class{gtk-widget} object}
+  @argument[support-multidevice]{@em{true} to support input from multiple
+    devices}
+  @begin{short}
+    Enables or disables multiple pointer awareness.
+  @end{short}
+  If this setting is @em{true}, @arg{widget} will start receiving multiple,
+  per device enter/leave events. Note that if custom @class{gdk-window}'s are
+  created in \"realize\", the function @sym{gdk-window-set-support-multidevice}
+  will have to be called manually on them.
+
+  Since 3.0
+  @see-function{gtk-widget-get-support-multidevice}"
+  (widget (g-object gtk-widget))
+  (support-multidevice :boolean))
+
+(export 'gtk-widget-set-support-multidevice)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_support_multidevice ()
-;;;
-;;; gboolean gtk_widget_get_support_multidevice (GtkWidget *widget);
-;;;
-;;; Returns TRUE if widget is multiple pointer aware. See
-;;; gtk_widget_set_support_multidevice() for more information.
-;;;
-;;; widget :
-;;;     a GtkWidget
-;;;
-;;; Returns :
-;;;     TRUE if widget is multidevice aware.
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_widget_get_support_multidevice"
+           gtk-widget-get-support-multidevice) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-17}
+  @argument[widget]{a @class{gtk-widget} object}
+  @return{@em{True} if @arg{widget} is multidevice aware.}
+  @begin{short}
+    Returns @em{true} if @arg{widget} is multiple pointer aware.
+  @end{short}
+  See the function @fun{gtk-widget-set-support-multidevice} for more
+  information.
+  @see-function{gtk-widget-set-support-multidevice}"
+  (widget (g-object gtk-widget)))
+
+(export 'gtk-widget-get-support-multidevice)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_set_realized ()

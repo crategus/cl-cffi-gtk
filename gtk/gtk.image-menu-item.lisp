@@ -145,7 +145,7 @@
       (documentation 'gtk-image-menu-item-accel-group 'function)
  "@version{2013-3-27}
   Accessor of the slot @code{\"accel-group\"} of the
-  @class{gtk-image-menu-item-accel-group} class.")
+  @class{gtk-image-menu-item} class.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-image-menu-item-always-show-image atdoc:*function-name-alias*)
@@ -153,7 +153,7 @@
       (documentation 'gtk-image-menu-item-always-show-image 'function)
  "@version{2013-3-27}
   Accessor of the slot @code{\"always-show-image\"} of the
-  @class{gtk-image-menu-item-accel-group} class.")
+  @class{gtk-image-menu-item} class.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-image-menu-item-image atdoc:*function-name-alias*)
@@ -161,7 +161,7 @@
       (documentation 'gtk-image-menu-item-image 'function)
  "@version{2013-3-27}
   Accessor of the slot @code{\"image\"} of the
-  @class{gtk-image-menu-item-accel-group} class.")
+  @class{gtk-image-menu-item} class.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-image-menu-item-use-stock atdoc:*function-name-alias*)
@@ -169,7 +169,7 @@
       (documentation 'gtk-image-menu-item-use-stock 'function)
  "@version{2013-3-27}
   Accessor of the slot @code{\"use-stock\"} of the
-  @class{gtk-image-menu-item-accel-group} class.")
+  @class{gtk-image-menu-item} class.")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_image_menu_item_set_image ()

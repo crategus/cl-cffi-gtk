@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -82,27 +82,30 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-font-selection-dialog 'type)
- "@version{2013-3-6}
+ "@version{2013-6-18}
   @begin{short}
-    The GtkFontSelectionDialog widget is a dialog box for selecting a font.
+    The @class{gtk-font-selection-dialog} widget is a dialog box for selecting
+    a font.
   @end{short}
 
-  To set the font which is initially selected, use
-  gtk_font_selection_dialog_set_font_name().
+  To set the font which is initially selected, use the function
+  @fun{gtk-font-selection-dialog-set-font-name}.
 
-  To get the selected font use gtk_font_selection_dialog_get_font_name().
+  To get the selected font use the function
+  @fun{gtk-font-selection-dialog-get-font-name}.
 
-  To change the text which is shown in the preview area, use
-  gtk_font_selection_dialog_set_preview_text().
+  To change the text which is shown in the preview area, use the function
+  @fun{gtk-font-selection-dialog-set-preview-text}.
 
-  In GTK+ 3.2, GtkFontSelectionDialog has been deprecated in favor of
-  GtkFontChooserDialog.
+  In GTK+ 3.2, @sym{gtk-font-selection-dialog} has been deprecated in favor of
+  @class{gtk-font-chooser-dialog}.
 
-  @heading{GtkFontSelectionDialog as GtkBuildable}
-  The GtkFontSelectionDialog implementation of the GtkBuildable interface
-  exposes the embedded GtkFontSelection as internal child with the name
-  \"font_selection\". It also exposes the buttons with the names \"ok_button\",
-  \"cancel_button\" and \"apply_button\".")
+  @subheading{GtkFontSelectionDialog as GtkBuildable}
+    The @sym{gtk-font-selection-dialog} implementation of the
+    @class{gtk-buildable} interface exposes the embedded
+    @class{gtk-font-selection} as internal child with the name
+    \"font_selection\". It also exposes the buttons with the names
+    \"ok_button\", \"cancel_button\" and \"apply_button\".")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_font_selection_dialog_new ()
@@ -285,7 +288,6 @@
 ;;;
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
-
 
 ;;; --- End of file gtk.font-selection-dialog.lisp -----------------------------
 

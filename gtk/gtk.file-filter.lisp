@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -63,38 +63,38 @@
    :type-initializer "gtk_file_filter_get_type")
   nil)
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-file-filter 'type)
- "@version{2013-3-5}
+ "@version{2013-6-18}
   @begin{short}
-    A GtkFileFilter can be used to restrict the files being shown in a
-    GtkFileChooser. Files can be filtered based on their name (with
-    gtk_file_filter_add_pattern()), on their mime type (with
-    gtk_file_filter_add_mime_type()), or by a custom filter function (with
-    gtk_file_filter_add_custom()).
+    A @sym{gtk-file-filter} can be used to restrict the files being shown in a
+    @class{gtk-file-chooser}. Files can be filtered based on their name with
+    the function @fun{gtk-file-filter-add-pattern}, on their mime type with the
+    function @fun{gtk-file-filter-add-mime-type}, or by a custom filter function
+    with the function @fun{gtk-file-filter-add-custom}.
   @end{short}
 
-  Filtering by mime types handles aliasing and subclassing of mime types; e.g.
+  Filtering by mime types handles aliasing and subclassing of mime types; e. g.
   a filter for text/plain also matches a file with mime type application/rtf,
-  since application/rtf is a subclass of text/plain. Note that GtkFileFilter
-  allows wildcards for the subtype of a mime type, so you can e.g. filter for
-  image/*.
+  since application/rtf is a subclass of text/plain. Note that
+  @sym{gtk-file-filter} allows wildcards for the subtype of a mime type, so you
+  can e. g. filter for image/*.
 
-  Normally, filters are used by adding them to a GtkFileChooser, see
-  gtk_file_chooser_add_filter(), but it is also possible to manually use a
-  filter on a file with gtk_file_filter_filter().
+  Normally, filters are used by adding them to a @class{gtk-file-chooser}, see
+  the function @fun{gtk-file-chooser-add-filter}, but it is also possible to
+  manually use a filter on a file with the function
+  @fun{gtk-file-filter-filter}.
 
-  @heading{GtkFileFilter as GtkBuildable}
-  The GtkFileFilter implementation of the GtkBuildable interface supports
-  adding rules using the <mime-types>, <patterns> and <applications> elements
-  and listing the rules within. Specifying a <mime-type> or <pattern> is the
-  same as calling gtk_recent_filter_add_mime_type() or
-  gtk_recent_filter_add_pattern()
+  @subheading{GtkFileFilter as GtkBuildable}
+    The @class{gtk-file-filter} implementation of the @class{gtk-buildable}
+    interface supports adding rules using the <mime-types>, <patterns> and
+    <applications> elements and listing the rules within. Specifying a
+    <mime-type> or <pattern> is the same as calling the function
+    @fun{gtk-recent-filter-add-mime-type} or
+    @fun{gtk-recent-filter-add-pattern}.
  
-  Example 90. A UI definition fragment specifying GtkFileFilter rules
-  @begin{pre}
+    @b{Example:} A UI definition fragment specifying @sym{gtk-file-filter} rules
+    @begin{pre}
    <object class=\"GtkFileFilter\">
      <mime-types>
        <mime-type>text/plain</mime-type>
@@ -105,7 +105,7 @@
        <pattern>*.png</pattern>
      </patterns>
    </object>
-  @end{pre}")
+    @end{pre}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkFileFilterInfo
@@ -150,15 +150,13 @@
   (:display-name 4)
   (:mime-type 8))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-file-filter-flags atdoc:*symbol-name-alias*) "Flags"
       (gethash 'gtk-file-filter-flags atdoc:*external-symbols*)
- "@version{2013-3-5}
+ "@version{2013-6-18}
   @begin{short}
-    These flags indicate what parts of a GtkFileFilterInfo struct are filled or
-    need to be filled.
+    These flags indicate what parts of a @symbol{gtk-file-filter-info} structure
+    are filled or need to be filled.
   @end{short}
   @begin{pre}
 (define-g-flags \"GtkFileFilterFlags\" gtk-file-filter-flags
@@ -170,11 +168,11 @@
   (:mime-type 8))
   @end{pre}
   @begin[code]{table}
-    @entry[:filename]{the filename of the file being tested}
-    @entry[:uri]{the URI for the file being tested}
-    @entry[:display-name]{the string that will be used to display the file in
-      the file chooser}
-    @entry[:mime-type]{the mime type of the file}
+    @entry[:filename]{The filename of the file being tested.}
+    @entry[:uri]{The URI for the file being tested.}
+    @entry[:display-name]{The string that will be used to display the file in
+      the file chooser.}
+    @entry[:mime-type]{The mime type of the file.}
   @end{table}")
 
 ;;; ----------------------------------------------------------------------------
@@ -275,8 +273,8 @@
 
 (defcfun ("gtk_file_filter_add_pattern" gtk-file-filter-add-pattern) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-5}
-  @argument[filter]{a GtkFileFilter}
+ "@version{2013-6-18}
+  @argument[filter]{a @class{gtk-file-filter} object}
   @argument[pattern]{a shell style glob}
   @begin{short}
     Adds a rule allowing a shell style glob to a filter.
@@ -295,10 +293,11 @@
 (defcfun ("gtk_file_filter_add_pixbuf_formats"
           gtk-file-filter-add-pixbuf-formats) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-5}
-  @argument[filter]{a GtkFileFilter}
+ "@version{2013-6-18}
+  @argument[filter]{a @class{gtk-file-filter} object}
   @begin{short}
-    Adds a rule allowing image files in the formats supported by GdkPixbuf.
+    Adds a rule allowing image files in the formats supported by
+    @class{gdk-pixbuf}.
   @end{short}
 
   Since 2.6"
@@ -385,6 +384,5 @@
 ;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
-
 
 ;;; ---- End of file gtk.file-filter.lisp --------------------------------------

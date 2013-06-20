@@ -56,51 +56,47 @@
    gtk-cell-editable-editing-canceld
    "editing-canceled" "gboolean" t t))
 
-;;; ----------------------------------------------------------------------------
-
-(setf (documentation 'gtk-cell-editable 'type)
- "@version{2013-2-18}
+(setf (gethash 'gtk-cell-editable atdoc:*class-name-alias*) "Interface"
+      (documentation 'gtk-cell-editable 'type)
+ "@version{2013-6-17}
   @begin{short}
-    The GtkCellEditable interface must be implemented for widgets to be usable
-    when editing the contents of a GtkTreeView cell.
+    The @sym{gtk-cell-editable} interface must be implemented for widgets to be
+    usable when editing the contents of a @class{gtk-tree-view} cell.
   @end{short}
   @begin[Signal Details]{dictionary}
     @subheading{The \"editing-done\" signal}
+      @begin{pre}
+ lambda (cell-editable)   : Run Last
+      @end{pre}
       This signal is a sign for the cell renderer to update its value from the
       cell_editable.
-      Implementations of GtkCellEditable are responsible for emitting this signal
-      when they are done editing, e.g. GtkEntry is emitting it when the user
-      presses Enter.
-      gtk_cell_editable_editing_done() is a convenience method for emitting
-      \"editing-done\".
-      @begin{pre}
- void user_function (GtkCellEditable *cell_editable,
-                     gpointer         user_data)          : Run Last
-      @end{pre}
+      Implementations of @sym{gtk-cell-editable} are responsible for emitting
+      this signal when they are done editing, e. g. @class{gtk-entry} is
+      emitting it when the user presses Enter.
+      The function @fun{gtk-cell-editable-editing-done} is a convenience method
+      for emitting the \"editing-done\" signal.
       @begin[code]{table}
-        @entry[cell_editable]{the object on which the signal was emitted}
-        @entry[user_data]{user data set when the signal handler was connected.}
+        @entry[cell-editable]{The object on which the signal was emitted.}
       @end{table}
-
     @subheading{The \"remove-widget\" signal}
       @begin{pre}
- void user_function (GtkCellEditable *cell_editable,
-                     gpointer         user_data)          : Run Last
+ lambda (cell-editable)   : Run Last
       @end{pre}
       This signal is meant to indicate that the cell is finished editing, and
       the widget may now be destroyed.
-      Implementations of GtkCellEditable are responsible for emitting this
-      signal when they are done editing. It must be emitted after the
+      Implementations of @sym{gtk-cell-editable} are responsible for emitting
+      this signal when they are done editing. It must be emitted after the
       \"editing-done\" signal, to give the cell renderer a chance to update the
       cell's value before the widget is removed.
-      gtk_cell_editable_remove_widget() is a convenience method for emitting
-      \"remove-widget\".
+      The function @fun{gtk-cell-editable-remove-widget} is a convenience method
+      for emitting the \"remove-widget\" signal.
       @begin[code]{table}
-        @entry[cell_editable]{the object on which the signal was emitted}
-        @entry[user_data]{user data set when the signal handler was connected.}
+        @entry[cell-editable]{The object on which the signal was emitted.}
       @end{table}
   @end{dictionary}
-  @see-slot{gtk-cell-editable-editing-canceled}")
+  @see-slot{gtk-cell-editable-editing-canceled}
+  @see-function{gtk-cell-editable-editing-done}
+  @see-function{gtk-cell-editable-remove-widget}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;

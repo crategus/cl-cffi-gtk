@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -61,21 +61,25 @@
    :type-initializer "gtk_file_chooser_widget_get_type")
   nil)
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-file-chooser-widget 'type)
- "@version{2013-3-3}
+ "@version{2013-6-18}
   @begin{short}
-    GtkFileChooserWidget is a widget suitable for selecting files. It is the
-    main building block of a GtkFileChooserDialog. Most applications will only
-    need to use the latter; you can use GtkFileChooserWidget as part of a larger
-    window if you have special needs.
+    @sym{gtk-file-chooser-widget} is a widget suitable for selecting files. It
+    is the main building block of a @class{gtk-file-chooser-dialog}. Most
+    applications will only need to use the latter; you can use
+    @class{gtk-file-chooser-widget} as part of a larger window if you have
+    special needs.
   @end{short}
 
-  Note that GtkFileChooserWidget does not have any methods of its own.
-  Instead, you should use the functions that work on a GtkFileChooser.")
+  Note that @sym{gtk-file-chooser-widget} does not have any methods of its own.
+  Instead, you should use the functions that work on a @class{gtk-file-chooser}
+  object.")
 
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors of Child Properties
+;;;
 ;;; ----------------------------------------------------------------------------
 
 (define-child-property "GtkFileChooserWidget"
@@ -98,10 +102,6 @@
                        gtk-file-chooser-widget-child-position
                        "position" "gint" t t t)
 
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Child Properties
-;;;
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
@@ -129,7 +129,8 @@
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-file-chooser-widget-child-padding atdoc:*function-name-alias*)
+(setf (gethash 'gtk-file-chooser-widget-child-padding
+               atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-file-chooser-widget-child-padding 'function)
  "@version{2013-3-3}
@@ -141,7 +142,8 @@
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-file-chooser-widget-child-pack-type atdoc:*function-name-alias*)
+(setf (gethash 'gtk-file-chooser-widget-child-pack-type
+               atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-file-chooser-widget-child-pack-type 'function)
  "@version{2013-3-3}
@@ -153,7 +155,8 @@
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-file-chooser-widget-child-position atdoc:*function-name-alias*)
+(setf (gethash 'gtk-file-chooser-widget-child-position
+               atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-file-chooser-widget-child-position 'function)
  "@version{2013-3-3}

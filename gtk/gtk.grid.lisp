@@ -26,13 +26,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; GtkGrid
-;;; 
+;;;
 ;;; Pack widgets in a rows and columns
-;;;     
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;;     GtkGrid
-;;;     
+;;;
 ;;;     gtk_grid_new
 ;;;     gtk_grid_attach
 ;;;     gtk_grid_attach_next_to
@@ -216,7 +216,7 @@
   class.")
 
 ;;; ----------------------------------------------------------------------------
-    
+
 (define-child-property "GtkGrid"
                        gtk-grid-child-height
                        "height" "gint" t t t)

@@ -816,44 +816,44 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_selection_data_set_text ()
-;;;
-;;; gboolean gtk_selection_data_set_text (GtkSelectionData *selection_data,
-;;;                                       const gchar *str,
-;;;                                       gint len);
-;;;
-;;; Sets the contents of the selection from a UTF-8 encoded string. The string
-;;; is converted to the form determined by selection_data->target.
-;;;
-;;; selection_data :
-;;;     a GtkSelectionData
-;;;
-;;; str :
-;;;     a UTF-8 string
-;;;
-;;; len :
-;;;     the length of str, or -1 if str is nul-terminated.
-;;;
-;;; Returns :
-;;;     TRUE if the selection was successfully set, otherwise FALSE.
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_selection_data_set_text" %gtk-selection-data-set-text) :boolean
+  (selection-data (g-boxed-foreign gtk-selection-data))
+  (str :string)
+  (len :int))
+
+(defun gtk-selection-data-set-text (selection-data str)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-17}
+  @argument[selection-data]{a @class{gtk-selection-data} structure}
+  @argument[str]{a UTF-8 string}
+  @return{@em{True} if the selection was successfully set, otherwise
+    @code{nil}.}
+  Sets the contents of the selection from a UTF-8 encoded string. The string
+  is converted to the form determined by @code{selection_data->target}."
+  (%gtk-selection-data-set-text selection-data str (length str)))
+
+(export 'gtk-selection-data-set-text)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_selection_data_get_text ()
-;;;
-;;; guchar * gtk_selection_data_get_text
-;;;                                    (const GtkSelectionData *selection_data);
-;;;
-;;; Gets the contents of the selection data as a UTF-8 string.
-;;;
-;;; selection_data :
-;;;     a GtkSelectionData
-;;;
-;;; Returns :
-;;;     if the selection data contained a recognized text type and it could be
-;;;     converted to UTF-8, a newly allocated string containing the converted
-;;;     text, otherwise NULL. If the result is non-NULL it must be freed with
-;;;     g_free().
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_selection_data_get_text" gtk-selection-data-get-text) :string
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-17}
+  @argument[selection-data]{a @class{gtk-selection-data} structure}
+  @begin{return}
+    If the selection data contained a recognized text type and it could be
+    converted to UTF-8, a newly allocated string containing the converted
+    text, otherwise @code{nil}. If the result is non-@code{nil} it must be
+    freed with @code{g_free()}.
+  @end{return}
+  Gets the contents of the selection data as a UTF-8 string."
+  (selection-data (g-boxed-foreign gtk-selection-data)))
+
+(export 'gtk-selection-data-get-text)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_selection_data_set_pixbuf ()

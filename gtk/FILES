@@ -117,8 +117,8 @@ GTK+ Widgets and Objects
     gtk.tree-view.lisp               - GtkTreeView                 - GTK+ 3.6.4
     gtk.tree-view-drag-and-drop.lisp - GtkTreeView drag and drop   - GTK+ 3.6.4
     
-    gtk.cell-view.lisp               - GtkCellView                 - GTK+ 3.4.3*
-    gtk.icon-view.lisp               - GtkIconView                 - GTK+ 3.4.3*
+    gtk.cell-view.lisp               - GtkCellView                 - GTK+ 3.6.4
+    gtk.icon-view.lisp               - GtkIconView                 - GTK+ 3.6.4
     
     gtk.tree-sortable.lisp           - GtkTreeSortable             - GTK+ 3.4.3*
     gtk.tree-model-sort.lisp         - GtkTreeModelSort            - GTK+ 3.4.3*
@@ -190,17 +190,17 @@ GTK+ Widgets and Objects
     gtk.hsv.lisp                     - GtkHSV (**)                 - GTK+ 3.6.4
 
     gtk.file-chooser.lisp            - GtkFileChooser              - GTK+ 3.6.4
-    gtk.file-chooser-button.lisp     - GtkFileChooserButton        - GTK+ 3.4.3*
-    gtk.file-chooser-dialog.lisp     - GtkFileChooserDialog        - GTK+ 3.4.3*
-    gtk.file-chooser-widget.lisp     - GtkFileChooserWidget        - GTK+ 3.4.3*
-    gtk.file-filter.lisp             - GtkFileFilter               - GTK+ 3.4.3*
+    gtk.file-chooser-button.lisp     - GtkFileChooserButton        - GTK+ 3.6.4
+    gtk.file-chooser-dialog.lisp     - GtkFileChooserDialog        - GTK+ 3.6.4
+    gtk.file-chooser-widget.lisp     - GtkFileChooserWidget        - GTK+ 3.6.4
+    gtk.file-filter.lisp             - GtkFileFilter               - GTK+ 3.6.4
 
-    gtk.font-chooser.lisp            - GtkFontChooser              - GTK+ 3.4.3*
-    gtk.font-button.lisp             - GtkFontButton               - GTK+ 3.4.3*
-    gtk.font-chooser-widget.lisp     - GtkFontChooserWidget        - GTK+ 3.4.3*
-    gtk.font-chooser-dialog.lisp     - GtkFontChooserDialog        - GTK+ 3.4.3*
-    gtk.font-selection.lisp          - GtkFontSelection (**)       - GTK+ 3.2.3*
-    gtk.font-selection-dialog.lisp   - GtkFontSelectionDialog (**) - GTK+ 3.4.3*
+    gtk.font-chooser.lisp            - GtkFontChooser              - GTK+ 3.6.4
+    gtk.font-button.lisp             - GtkFontButton               - GTK+ 3.6.4
+    gtk.font-chooser-widget.lisp     - GtkFontChooserWidget        - GTK+ 3.6.4
+    gtk.font-chooser-dialog.lisp     - GtkFontChooserDialog        - GTK+ 3.6.4
+    gtk.font-selection.lisp          - GtkFontSelection (**)       - GTK+ 3.6.4
+    gtk.font-selection-dialog.lisp   - GtkFontSelectionDialog (**) - GTK+ 3.6.4
   
   Layout Containers
   

@@ -30,13 +30,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; GtkAssistant
-;;; 
+;;;
 ;;; A widget used to guide users through multi-step operations
-;;;     
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;;     GtkAssistant
-;;;     
+;;;
 ;;;     gtk_assistant_new
 ;;;     gtk_assistant_get_current_page
 ;;;     gtk_assistant_set_current_page
@@ -47,9 +47,9 @@
 ;;;     gtk_assistant_insert_page
 ;;;     gtk_assistant_remove_page
 ;;;     gtk_assistant_set_forward_page_func
-;;;     
+;;;
 ;;;     GtkAssistantPageType
-;;;     
+;;;
 ;;;     gtk_assistant_set_page_type
 ;;;     gtk_assistant_get_page_type
 ;;;     gtk_assistant_set_page_title
@@ -173,7 +173,7 @@
       @end{pre}
       The \"apply\" signal is emitted when the apply button is clicked.
       The default behavior of the @sym{gtk-assistant} is to switch to the page
-      after the current page, unless the current page is the last one. 
+      after the current page, unless the current page is the last one.
       A handler for the \"apply\" signal should carry out the actions for which
       the wizard has collected data. If the action takes a long time to
       complete, you might consider putting a page of type @code{:progress} after
@@ -483,20 +483,20 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkAssistantPageFunc ()
-;;; 
+;;;
 ;;; gint (*GtkAssistantPageFunc) (gint current_page, gpointer data);
-;;; 
+;;;
 ;;; A function used by gtk_assistant_set_forward_page_func() to know which is
 ;;; the next page given a current one. It's called both for computing the next
 ;;; page when the user presses the "forward" button and for handling the
 ;;; behavior of the "last" button.
-;;; 
+;;;
 ;;; current_page :
 ;;;     The page number used to calculate the next page.
-;;; 
+;;;
 ;;; data :
 ;;;     user data
-;;; 
+;;;
 ;;; Returns :
 ;;;     The next page number.
 ;;; ----------------------------------------------------------------------------
@@ -689,111 +689,111 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_assistant_set_page_header_image ()
-;;; 
+;;;
 ;;; void gtk_assistant_set_page_header_image (GtkAssistant *assistant,
 ;;;                                           GtkWidget *page,
 ;;;                                           GdkPixbuf *pixbuf);
-;;; 
+;;;
 ;;; Warning
-;;; 
+;;;
 ;;; gtk_assistant_set_page_header_image has been deprecated since version 3.2
 ;;; and should not be used in newly-written code. Since GTK+ 3.2, a header is no
 ;;; longer shown; add your header decoration to the page content instead.
-;;; 
+;;;
 ;;; Sets a header image for page.
-;;; 
+;;;
 ;;; assistant :
 ;;;     a GtkAssistant
-;;; 
+;;;
 ;;; page :
 ;;;     a page of assistant
-;;; 
+;;;
 ;;; pixbuf :
 ;;;     the new header image page
-;;; 
+;;;
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_assistant_get_page_header_image ()
-;;; 
+;;;
 ;;; GdkPixbuf * gtk_assistant_get_page_header_image (GtkAssistant *assistant,
 ;;;                                                  GtkWidget *page);
-;;; 
+;;;
 ;;; Warning
-;;; 
+;;;
 ;;; gtk_assistant_get_page_header_image has been deprecated since version 3.2
 ;;; and should not be used in newly-written code. Since GTK+ 3.2, a header is no
 ;;; longer shown; add your header decoration to the page content instead.
-;;; 
+;;;
 ;;; Gets the header image for page.
-;;; 
+;;;
 ;;; assistant :
 ;;;     a GtkAssistant
-;;; 
+;;;
 ;;; page :
 ;;;     a page of assistant
-;;; 
+;;;
 ;;; Returns :
 ;;;     the header image for page, or NULL if there's no header image for the
 ;;;     page
-;;; 
+;;;
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_assistant_set_page_side_image ()
-;;; 
+;;;
 ;;; void gtk_assistant_set_page_side_image (GtkAssistant *assistant,
 ;;;                                         GtkWidget *page,
 ;;;                                         GdkPixbuf *pixbuf);
-;;; 
+;;;
 ;;; Warning
-;;; 
+;;;
 ;;; gtk_assistant_set_page_side_image has been deprecated since version 3.2 and
 ;;; should not be used in newly-written code. Since GTK+ 3.2, sidebar images are
 ;;; not shown anymore.
-;;; 
+;;;
 ;;; Sets a side image for page.
-;;; 
+;;;
 ;;; This image used to be displayed in the side area of the assistant when page
 ;;; is the current page.
-;;; 
+;;;
 ;;; assistant :
 ;;;     a GtkAssistant
-;;; 
+;;;
 ;;; page :
 ;;;     a page of assistant
-;;; 
+;;;
 ;;; pixbuf :
 ;;;     the new side image page
-;;; 
+;;;
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_assistant_get_page_side_image ()
-;;; 
+;;;
 ;;; GdkPixbuf * gtk_assistant_get_page_side_image (GtkAssistant *assistant,
 ;;;                                                GtkWidget *page);
-;;; 
+;;;
 ;;; Warning
-;;; 
+;;;
 ;;; gtk_assistant_get_page_side_image has been deprecated since version 3.2 and
 ;;; should not be used in newly-written code. Since GTK+ 3.2, sidebar images are
 ;;; not shown anymore.
-;;; 
+;;;
 ;;; Gets the side image for page.
-;;; 
+;;;
 ;;; assistant :
 ;;;     a GtkAssistant
-;;; 
+;;;
 ;;; page :
 ;;;     a page of assistant
-;;; 
+;;;
 ;;; Returns :
 ;;;     the side image for page, or NULL if there's no side image for the page
-;;; 
+;;;
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
@@ -867,10 +867,11 @@
 ;;; gtk_assistant_remove_action_widget ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_assistant_remove_action_widget" assistant-remove-action-widget)
+(defcfun ("gtk_assistant_remove_action_widget"
+           gtk-assistant-remove-action-widget)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2013-4-21}
+ "@version{2013-6-14}
   @argument[assistant]{a @class{gtk-assistant} widget}
   @argument[child]{a @class{gtk-widget} object}
   @begin{short}

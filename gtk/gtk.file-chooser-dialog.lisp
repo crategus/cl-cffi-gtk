@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -55,11 +55,9 @@
    :type-initializer "gtk_file_chooser_dialog_get_type")
   nil)
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-file-chooser-dialog 'type)
- "@version{2013-3-3}
+ "@version{2013-6-18}
   @begin{short}
     @sym{gtk-file-chooser-dialog} is a dialog box suitable for use with
     \"File/Open\" or \"File/Save as\" commands. This widget works by putting a
@@ -69,13 +67,13 @@
     those for @class{gtk-dialog}.
   @end{short}
 
-  Note that GtkFileChooserDialog does not have any methods of its own.
-  Instead, you should use the functions that work on a GtkFileChooser.
+  Note that @sym{gtk-file-chooser-dialog} does not have any methods of its own.
+  Instead, you should use the functions that work on a @class{gtk-file-chooser}.
 
-  Example 89. Typical usage
+  @b{Example:} Typical usage
 
   In the simplest of cases, you can the following code to use
-  GtkFileChooserDialog to select a file for opening:
+  @sym{gtk-file-chooser-dialog} to select a file for opening:
   @begin{pre}
    GtkWidget *dialog;
 
@@ -131,45 +129,45 @@
    gtk_widget_destroy (dialog);
   @end{pre}
 
-  @heading{Setting up a file chooser dialog}
-  There are various cases in which you may need to use a GtkFileChooserDialog:
-  @begin{itemize}
-    @begin{item}
-      To select a file for opening, as for a File/Open command. Use
-      GTK_FILE_CHOOSER_ACTION_OPEN.
-    @end{item}
-    @begin{item}
-      To save a file for the first time, as for a File/Save command. Use
-      GTK_FILE_CHOOSER_ACTION_SAVE, and suggest a name such as \"Untitled\" with
-      gtk_file_chooser_set_current_name().
-    @end{item}
-    @begin{item}
-      To save a file under a different name, as for a File/Save As command.
-      Use GTK_FILE_CHOOSER_ACTION_SAVE, and set the existing filename with
-      gtk_file_chooser_set_filename().
-    @end{item}
-    @begin{item}
-      To choose a folder instead of a file. Use
-      GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER.
-    @end{item}
-  @end{itemize}
+  @subheading{Setting up a file chooser dialog}
+    There are various cases in which you may need to use a
+    @class{gtk-file-chooser-dialog}:
+    @begin{itemize}
+      @begin{item}
+        To select a file for opening, as for a File/Open command. Use
+        @code{:open}.
+      @end{item}
+      @begin{item}
+        To save a file for the first time, as for a File/Save command. Use
+        @code{:save}, and suggest a name such as \"Untitled\" with the function
+        @fun{gtk-file-chooser-set-current-name}.
+      @end{item}
+      @begin{item}
+        To save a file under a different name, as for a File/Save As command.
+        Use @code{:save}, and set the existing filename with the function
+        @fun{gtk-file-chooser-set-filename}.
+      @end{item}
+      @begin{item}
+        To choose a folder instead of a file. Use @code{:select-folder}.
+      @end{item}
+    @end{itemize}
 
   @subheading{Note}
-  Old versions of the file chooser's documentation suggested using
-  gtk_file_chooser_set_current_folder() in various situations, with the
-  intention of letting the application suggest a reasonable default folder.
-  This is no longer considered to be a good policy, as now the file chooser is
-  able to make good suggestions on its own. In general, you should only cause
-  the file chooser to show a specific folder when it is appropriate to use
-  gtk_file_chooser_set_filename(), i.e. when you are doing a File/Save As
-  command and you already have a file saved somewhere.
+    Old versions of the file chooser's documentation suggested using the
+    function @fun{gtk-file-chooser-set-current-folder} in various situations,
+    with the intention of letting the application suggest a reasonable default
+    folder. This is no longer considered to be a good policy, as now the file
+    chooser is able to make good suggestions on its own. In general, you should
+    only cause the file chooser to show a specific folder when it is appropriate
+    to use the function @fun{gtk-file-chooser-set-filename}, i. e. when you are
+    doing a File/Save As command and you already have a file saved somewhere.
 
-  @heading{Response Codes}
-  GtkFileChooserDialog inherits from GtkDialog, so buttons that go in its
-  action area have response codes such as GTK_RESPONSE_ACCEPT and
-  GTK_RESPONSE_CANCEL. For example, you could call
-  gtk_file_chooser_dialog_new() as follows:
-  @begin{pre}
+  @subheading{Response Codes}
+    @sym{gtk-file-chooser-dialog} inherits from @class{gtk-dialog}, so buttons
+    that go in its action area have response codes such as @code{:accept} and
+    @code{:cancel}. For example, you could call the function
+    @fun{gtk-file-chooser-dialog-new} as follows:
+    @begin{pre}
    GtkWidget *dialog;
 
    dialog = gtk_file_chooser_dialog_new (\"Open File\",
@@ -178,27 +176,27 @@
                                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                                          GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
                                          NULL);
-  @end{pre}
-  This will create buttons for \"Cancel\" and \"Open\" that use stock response
-  identifiers from GtkResponseType. For most dialog boxes you can use your own
-  custom response codes rather than the ones in GtkResponseType, but
-  GtkFileChooserDialog assumes that its \"accept\"-type action, e.g. an \"Open\"
-  or \"Save\" button, will have one of the following response codes:
-  @begin{pre}
-   GTK_RESPONSE_ACCEPT
-   GTK_RESPONSE_OK
-   GTK_RESPONSE_YES
-   GTK_RESPONSE_APPLY
-  @end{pre}
-  This is because GtkFileChooserDialog must intercept responses and switch to
-  folders if appropriate, rather than letting the dialog terminate - the
-  implementation uses these known response codes to know which responses can
-  be blocked if appropriate.
+    @end{pre}
+    This will create buttons for \"Cancel\" and \"Open\" that use stock response
+    identifiers from @symbol{gtk-response-type}. For most dialog boxes you can
+    use your own custom response codes rather than the ones in
+    @symbol{gtk-response-type}, but @sym{gtk-file-chooser-dialog} assumes that
+    its \"accept\"-type action, e. g. an \"Open\"
+    or \"Save\" button, will have one of the following response codes:
+    @begin{pre}
+     @code{:accept}
+     @code{:ok}
+     @code{:yes}
+     @code{:apply}
+    @end{pre}
+    This is because @sym{gtk-file-chooser-dialog} must intercept responses and
+    switch to folders if appropriate, rather than letting the dialog terminate
+    - the implementation uses these known response codes to know which responses
+    can be blocked if appropriate.
 
   @subheading{Note}
-  To summarize, make sure you use a stock response code when you use
-  GtkFileChooserDialog to ensure proper operation.
-")
+    To summarize, make sure you use a stock response code when you use
+    @class{gtk-file-chooser-dialog} to ensure proper operation.")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_dialog_new ()
@@ -206,21 +204,22 @@
 
 (defun gtk-file-chooser-dialog-new (title parent action &rest buttons)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-3}
-  @argument[title]{Title of the dialog, or NULL.}
-  @argument[parent]{Transient parent of the dialog, or NULL.}
-  @argument[action]{Open or save mode for the dialog}
-  @argument[first_button_text]{stock ID or text to go in the first button,
-    or NULL.}
+ "@version{2013-6-18}
+  @argument[title]{title of the dialog, or @code{nil}}
+  @argument[parent]{Transient parent of the dialog, or @code{nil}}
+  @argument[action]{open or save mode for the dialog}
+  @argument[first-button-text]{stock ID or text to go in the first button,
+    or @code{nil}}
   @argument[...]{response ID for the first button, then additional (button, id)
-    pairs, ending with NULL}
-  @return{a new GtkFileChooserDialog}
+    pairs}
+  @return{A new @class{gtk-file-chooser-dialog} widget.}
   @begin{short}
-    Creates a new GtkFileChooserDialog. This function is analogous to
-   gtk_dialog_new_with_buttons().
+    Creates a new @class{gtk-file-chooser-dialog} widget. This function is
+    analogous to the function @fun{gtk-dialog-new-with-buttons}.
   @end{short}
 
-  Since 2.4"
+  Since 2.4
+  @see-function{gtk-dialog-new-with-buttons}"
   (let ((dialog (make-instance 'gtk-file-chooser-dialog
                                :title title
                                :parent parent

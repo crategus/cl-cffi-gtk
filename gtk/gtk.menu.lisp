@@ -1,28 +1,28 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.menu.lisp
-;;; 
+;;;
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;; 
+;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
 ;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
-;;; 
+;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
-;;; 
+;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
 ;;; as published by the Free Software Foundation, either version 3 of the
 ;;; License, or (at your option) any later version and with a preamble to
 ;;; the GNU Lesser General Public License that clarifies the terms for use
 ;;; with Lisp programs and is referred as the LLGPL.
-;;; 
+;;;
 ;;; This program is distributed in the hope that it will be useful,
 ;;; but WITHOUT ANY WARRANTY; without even the implied warranty of
 ;;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ;;; GNU Lesser General Public License for more details.
-;;; 
+;;;
 ;;; You should have received a copy of the GNU Lesser General Public
 ;;; License along with this program and the preamble to the Gnu Lesser
 ;;; General Public License.  If not, see <http://www.gnu.org/licenses/>
@@ -30,13 +30,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; GtkMenu
-;;; 
+;;;
 ;;; A menu widget
-;;;     
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;;     GtkMenu
-;;;     
+;;;
 ;;;     gtk_menu_new
 ;;;     gtk_menu_new_from_model
 ;;;     gtk_menu_set_screen
@@ -55,7 +55,7 @@
 ;;;     gtk_menu_get_tearoff_state
 ;;;     gtk_menu_set_reserve_toggle_size
 ;;;     gtk_menu_get_reserve_toggle_size
-;;;     
+;;;
 ;;;     gtk_menu_popdown
 ;;;     gtk_menu_reposition
 ;;;     gtk_menu_get_active
@@ -121,7 +121,7 @@
   @class{gtk-menu-item} in another @sym{gtk-menu}.
 
   A @sym{gtk-menu} can also be popped up by activating a
-  @class{gtk-option-menu}. Other composite widgets such as the
+  @class{gtk-combo-box} widget. Other composite widgets such as the
   @class{gtk-notebook} can pop up a @sym{gtk-menu} as well.
 
   Applications can display a @sym{gtk-menu} as a popup menu by calling the
@@ -147,7 +147,7 @@
    g_return_val_if_fail (GTK_IS_MENU (widget), FALSE);
    g_return_val_if_fail (event != NULL, FALSE);
 
-   /* The \"widget\" is the menu that was supplied when 
+   /* The \"widget\" is the menu that was supplied when
     * g_signal_connect_swapped() was called.
     */
    menu = GTK_MENU (widget);
@@ -157,7 +157,7 @@
        event_button = (GdkEventButton *) event;
        if (event_button->button == GDK_BUTTON_SECONDARY)
          {
-           gtk_menu_popup (menu, NULL, NULL, NULL, NULL, 
+           gtk_menu_popup (menu, NULL, NULL, NULL, NULL,
                            event_button->button, event_button->time);
            return TRUE;
          @}
@@ -465,23 +465,23 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_new_from_model ()
-;;; 
+;;;
 ;;; GtkWidget * gtk_menu_new_from_model (GMenuModel *model);
-;;; 
+;;;
 ;;; Creates a GtkMenu and populates it with menu items and submenus according to
 ;;; model.
-;;; 
+;;;
 ;;; The created menu items are connected to actions found in the
 ;;; GtkApplicationWindow to which the menu belongs - typically by means of being
 ;;; attached to a widget (see gtk_menu_attach_to_widget()) that is contained
 ;;; within the GtkApplicationWindows widget hierarchy.
-;;; 
+;;;
 ;;; model :
 ;;;     a GMenuModel
-;;; 
+;;;
 ;;; Returns :
 ;;;     a new GtkMenu
-;;; 
+;;;
 ;;; Since 3.4
 ;;; ----------------------------------------------------------------------------
 
@@ -559,7 +559,7 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_popup_for_device ()
-;;; 
+;;;
 ;;; void gtk_menu_popup_for_device (GtkMenu *menu,
 ;;;                                 GdkDevice *device,
 ;;;                                 GtkWidget *parent_menu_shell,
@@ -569,53 +569,53 @@
 ;;;                                 GDestroyNotify destroy,
 ;;;                                 guint button,
 ;;;                                 guint32 activate_time);
-;;; 
+;;;
 ;;; Displays a menu and makes it available for selection.
-;;; 
+;;;
 ;;; Applications can use this function to display context-sensitive menus, and
 ;;; will typically supply NULL for the parent_menu_shell, parent_menu_item,
 ;;; func, data and destroy parameters. The default menu positioning function
 ;;; will position the menu at the current position of device (or its
 ;;; corresponding pointer).
-;;; 
+;;;
 ;;; The button parameter should be the mouse button pressed to initiate the menu
 ;;; popup. If the menu popup was initiated by something other than a mouse
 ;;; button press, such as a mouse button release or a keypress, button should be
 ;;; 0.
-;;; 
+;;;
 ;;; The activate_time parameter is used to conflict-resolve initiation of
 ;;; concurrent requests for mouse/keyboard grab requests. To function properly,
 ;;; this needs to be the time stamp of the user event (such as a mouse click or
 ;;; key press) that caused the initiation of the popup. Only if no such event is
 ;;; available, gtk_get_current_event_time() can be used instead.
-;;; 
+;;;
 ;;; menu :
 ;;;     a GtkMenu
-;;; 
+;;;
 ;;; device :
 ;;;     a GdkDevice
-;;; 
+;;;
 ;;; parent_menu_shell :
 ;;;     the menu shell containing the triggering menu item, or NULL
-;;; 
+;;;
 ;;; parent_menu_item :
 ;;;     the menu item whose activation triggered the popup, or NULL
-;;; 
+;;;
 ;;; func :
 ;;;     a user supplied function used to position the menu, or NULL
-;;; 
+;;;
 ;;; data :
 ;;;     user supplied data to be passed to func
-;;; 
+;;;
 ;;; destroy :
 ;;;     destroy notify for data
-;;; 
+;;;
 ;;; button :
 ;;;     the mouse button which was pressed to initiate the event
-;;; 
+;;;
 ;;; activate_time :
 ;;;     the time at which the activation event occurred
-;;; 
+;;;
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
@@ -990,7 +990,7 @@
     selection has not yet been made, the first menu item is selected.
   @end{return}
   Returns the selected menu item from the @arg{menu}. This is used by the
-  @class{gtk-option-menu}."
+  @class{gtk-combo-box} widget."
   (gtk-menu-active menu))
 
 (export 'gtk-menu-get-active)
@@ -1008,7 +1008,7 @@
   @argument[index]{the index of the @arg{menu} item to select. Index values are
     from 0 to n-1.}
   Selects the specified menu item within the @arg{menu}. This is used by the
-  @class{gtk-option-menu} and should not be used by anyone else."
+  @class{gtk-combo-box} widget and should not be used by anyone else."
   (setf (gtk-menu-active menu) index))
 
 (export 'gtk-menu-set-active)
@@ -1034,20 +1034,20 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_attach_to_widget ()
-;;; 
+;;;
 ;;; void gtk_menu_attach_to_widget (GtkMenu *menu,
 ;;;                                 GtkWidget *attach_widget,
 ;;;                                 GtkMenuDetachFunc detacher);
-;;; 
+;;;
 ;;; Attaches the menu to the widget and provides a callback function that will
 ;;; be invoked when the menu calls gtk_menu_detach() during its destruction.
-;;; 
+;;;
 ;;; menu :
 ;;;     a GtkMenu
-;;; 
+;;;
 ;;; attach_widget :
 ;;;     the GtkWidget that the menu will be attached to
-;;; 
+;;;
 ;;; detacher :
 ;;;     the user supplied callback function that will be called when the menu
 ;;;     calls gtk_menu_detach()
@@ -1071,14 +1071,14 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_get_attach_widget ()
-;;; 
+;;;
 ;;; GtkWidget * gtk_menu_get_attach_widget (GtkMenu *menu);
-;;; 
+;;;
 ;;; Returns the GtkWidget that the menu is attached to.
-;;; 
+;;;
 ;;; menu :
 ;;;     a GtkMenu
-;;; 
+;;;
 ;;; Returns :
 ;;;     the GtkWidget that the menu is attached to
 ;;; ----------------------------------------------------------------------------
@@ -1105,30 +1105,30 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkMenuPositionFunc ()
-;;; 
+;;;
 ;;; void (*GtkMenuPositionFunc) (GtkMenu *menu,
 ;;;                              gint *x,
 ;;;                              gint *y,
 ;;;                              gboolean *push_in,
 ;;;                              gpointer user_data);
-;;; 
+;;;
 ;;; A user function supplied when calling gtk_menu_popup() which controls the
 ;;; positioning of the menu when it is displayed. The function sets the x and y
 ;;; parameters to the coordinates where the menu is to be drawn. To make the
 ;;; menu appear on a different monitor than the mouse pointer,
 ;;; gtk_menu_set_monitor() must be called.
-;;; 
+;;;
 ;;; menu :
 ;;;     a GtkMenu.
-;;; 
+;;;
 ;;; x :
 ;;;     address of the gint representing the horizontal position where the menu
 ;;;     shall be drawn
-;;; 
+;;;
 ;;; y :
 ;;;     address of the gint representing the vertical position where the menu
 ;;;     shall be drawn. This is an output parameter
-;;; 
+;;;
 ;;; push_in :
 ;;;     This parameter controls how menus placed outside the monitor are
 ;;;     handled. If this is set to TRUE and part of the menu is outside the
@@ -1139,22 +1139,22 @@
 ;;;     resizing. In practice, this behavior is only useful for combobox popups
 ;;;     or option menus and cannot be used to simply confine a menu to monitor
 ;;;     boundaries. In that case, changing the scroll offset is not desirable.
-;;; 
+;;;
 ;;; user_data :
 ;;;     the data supplied by the user in the gtk_menu_popup() data parameter.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkMenuDetachFunc ()
-;;; 
+;;;
 ;;; void (*GtkMenuDetachFunc) (GtkWidget *attach_widget, GtkMenu *menu);
-;;; 
+;;;
 ;;; A user function supplied when calling gtk_menu_attach_to_widget() which will
 ;;; be called when the menu is later detached from the widget.
-;;; 
+;;;
 ;;; attach_widget :
 ;;;     the GtkWidget that the menu is being detached from.
-;;; 
+;;;
 ;;; menu :
 ;;;     the GtkMenu being detached.
 ;;; ----------------------------------------------------------------------------

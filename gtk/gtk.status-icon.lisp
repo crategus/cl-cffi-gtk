@@ -1194,19 +1194,23 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_status_icon_is_embedded ()
-;;; 
-;;; gboolean gtk_status_icon_is_embedded (GtkStatusIcon *status_icon);
-;;; 
-;;; Returns whether the status icon is embedded in a notification area.
-;;; 
-;;; status_icon :
-;;;     a GtkStatusIcon
-;;; 
-;;; Returns :
-;;;     TRUE if the status icon is embedded in a notification area.
-;;; 
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+;; TODO: Replace this code with a call the accessor gtk-status-icon-embedded
+
+(defcfun ("gtk_status_icon_is_embedded" gtk-status-icon-is-embedded) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-17}
+  @argument[status-icon]{a @class{gtk-status-icon} object}
+  @return{@em{True} if the status icon is embedded in a notification area.}
+  @begin{short}
+    Returns whether the status icon is embedded in a notification area.
+  @end{short}
+
+  Since 2.10"
+  (status-icon (g-object gtk-status-icon)))
+
+(export 'gtk-status-icon-is-embedded)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_status_icon_position_menu ()

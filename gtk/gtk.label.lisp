@@ -1153,7 +1153,7 @@
 
 (defun gtk-label-get-mnemonic-keyval (label)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-13}
+ "@version{2013-6-17}
   @argument[label]{a @class{gtk-label} widget}
   @return{GDK keyval usable for accelerators, or @code{GDK_VoidSymbol}.}
   If the label has been set so that it has an mnemonic key this function
@@ -1161,7 +1161,7 @@
   mnemonic set up it returns @code{GDK_VoidSymbol}."
   (gtk-label-mnemonic-keyval label))
 
-(export 'gtk-label-mnemonic-keyval)
+(export 'gtk-label-get-mnemonic-keyval)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_label_get_selectable ()

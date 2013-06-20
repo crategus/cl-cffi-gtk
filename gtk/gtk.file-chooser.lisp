@@ -206,7 +206,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-file-chooser atdoc:*class-name-alias*) "Interface"
       (documentation 'gtk-file-chooser 'type)
- "@version{2013-6-4}
+ "@version{2013-6-18}
   @begin{short}
     @sym{gtk-file-chooser} is an interface that can be implemented by file
     selection widgets. In GTK+, the main objects that implement this interface
@@ -229,7 +229,7 @@
     @end{entry}
     @begin[Shortcuts]{entry}
       can be provided by the application or by the underlying filesystem
-      abstraction (e.g. both the gnome-vfs and the Windows filesystems provide
+      abstraction (e. g. both the gnome-vfs and the Windows filesystems provide
       \"Desktop\" shortcuts). Shortcuts cannot be modified by the user.
     @end{entry}
     @begin[Volumes]{entry}
@@ -852,10 +852,10 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-file-chooser-action atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-file-chooser-action atdoc:*external-symbols*)
- "@version{2013-3-3}
+ "@version{2013-6-18}
   @begin{short}
-    Describes whether a GtkFileChooser is being used to open existing files or
-    to save to a possibly new file.
+    Describes whether a @class{gtk-file-chooser} interface is being used to open
+    existing files or to save to a possibly new file.
   @end{short}
   @begin{pre}
 (define-g-enum \"GtkFileChooserAction\" gtk-file-chooser-action
@@ -891,12 +891,12 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-file-chooser-confirmation atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-file-chooser-confirmation atdoc:*external-symbols*)
- "@version{2013-3-3}
+ "@version{2013-6-18}
   @begin{short}
     Used as a return value of handlers for the \"confirm-overwrite\" signal of a
-    GtkFileChooser. This value determines whether the file chooser will present
-    the stock confirmation dialog, accept the user's choice of a filename, or
-    let the user choose another filename.
+    @class{gtk-file-chooser} interface. This value determines whether the file
+    chooser will present the stock confirmation dialog, accept the user's choice
+    of a filename, or let the user choose another filename.
   @end{short}
   @begin{pre}
 (define-g-enum \"GtkFileChooserConfirmation\" gtk-file-chooser-confirmation
@@ -936,15 +936,13 @@
   (:already-exists 2)
   (:incomplete-hostname 3))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-file-chooser-error atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-file-chooser-error atdoc:*external-symbols*)
- "@version{2013-3-3}
+ "@version{2013-6-18}
   @begin{short}
     These identify the various errors that can occur while calling
-    GtkFileChooser functions.
+    @sym{gtk-file-chooser} interface functions.
   @end{short}
   @begin{pre}
 (define-g-enum \"GtkFileChooserError\" gtk-file-chooser-error
@@ -958,10 +956,10 @@
   @begin[code]{table}
     @entry[:nonexistent]{Indicates that a file does not exist.}
     @entry[:bad-filename]{Indicates a malformed filename.}
-    @entry[:already-exists]{Indicates a duplicate path (e.g. when adding a
-      bookmark).}
-    @entry[:incomplete-hostname]{Indicates an incomplete hostname (e.g.
-      \"http://foo\" without a slash after that).}
+    @entry[:already-exists]{Indicates a duplicate path, e. g. when adding a
+      bookmark.}
+    @entry[:incomplete-hostname]{Indicates an incomplete hostname, e. g.
+      \"http://foo\" without a slash after that.}
   @end{table}")
 
 ;;; ----------------------------------------------------------------------------
@@ -972,16 +970,15 @@
 
 (defun gtk-file-chooser-set-action (chooser action)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-3}
-  @argument[chooser]{a GtkFileChooser}
+ "@version{2013-6-18}
+  @argument[chooser]{a @class{gtk-file-chooser} object}
   @argument[action]{the action that the file selector is performing}
   @begin{short}
     Sets the type of operation that the chooser is performing; the user
     interface is adapted to suit the selected action.
   @end{short}
   For example, an option to create a new folder might be shown if the action is
-  GTK_FILE_CHOOSER_ACTION_SAVE but not if the action is
-  GTK_FILE_CHOOSER_ACTION_OPEN.
+  @code{:save} but not if the action is @code{:open}.
 
   Since 2.4"
   (setf (gtk-file-chooser-action chooser) action))
@@ -996,15 +993,16 @@
 
 (defun gtk-file-chooser-get-action (chooser)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-3}
-  @argument[chooser]{a GtkFileChooser}
+ "@version{2013-6-18}
+  @argument[chooser]{a @class{gtk-file-chooser} object}
   @return{the action that the file selector is performing}
   @begin{short}
     Gets the type of operation that the file chooser is performing.
   @end{short}
-  See gtk_file_chooser_set_action().
+  See the function @fun{gtk-file-chooser-set-action}.
 
-  Since 2.4"
+  Since 2.4
+  @see-function{gtk-file-chooser-set-action}"
   (gtk-file-chooser-action chooser))
 
 (export 'gtk-file-chooser-get-action)
@@ -1017,19 +1015,22 @@
 
 (defun gtk-file-chooser-set-local-only (chooser local-only)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-3}
-  @argument[chooser]{a GtkFileChooser}
-  @argument[local_only]{TRUE if only local files can be selected}
+ "@version{2013-6-18}
+  @argument[chooser]{a @class{gtk-file-chooser} object}
+  @argument[local-only]{@em{true} if only local files can be selected}
   @begin{short}
     Sets whether only local files can be selected in the file selector.
   @end{short}
-  If local_only is TRUE (the default), then the selected file are files are
-  guaranteed to be accessible through the operating systems native file file
-  system and therefore the application only needs to worry about the filename
-  functions in GtkFileChooser, like gtk_file_chooser_get_filename(), rather
-  than the URI functions like gtk_file_chooser_get_uri(),
+  If @arg{local-only} is @em{true} (the default), then the selected file are
+  files are guaranteed to be accessible through the operating systems native
+  file file system and therefore the application only needs to worry about the
+  filename functions in @class{gtk-file-chooser}, like the function
+  @fun{gtk-file-chooser-get-filename}, rather than the URI functions like
+  the function @fun{gtk-file-chooser-get-uri},
 
-  Since 2.4"
+  Since 2.4
+  @see-function{gtk-file-chooser-get-filename}
+  @see-function{gtk-file-chooser-get-uri}"
   (setf (gtk-file-chooser-local-only chooser) local-only))
 
 (export 'gtk-file-chooser-set-local-only)
@@ -1042,15 +1043,16 @@
 
 (defun gtk-file-chooser-get-local-only (chooser)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-3}
-  @argument[chooser]{a GtkFileChooser}
-  @return{TRUE if only local files can be selected.}
+ "@version{2013-6-18}
+  @argument[chooser]{a @class{gtk-file-chooser} object}
+  @return{@em{True} if only local files can be selected.}
   @begin{short}
     Gets whether only local files can be selected in the file selector.
   @end{short}
-  See gtk_file_chooser_set_local_only()
+  See the function @fun{gtk-file-chooser-set-local-only}.
 
-  Since 2.4"
+  Since 2.4
+  @see-function{gtk-file-chooser-set-local-only}"
   (gtk-file-chooser-local-only chooser))
 
 (export 'gtk-file-chooser-get-local-only)
@@ -1063,14 +1065,14 @@
 
 (defun gtk-file-chooser-set-select-multiple (chooser select-multiple)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-3}
-  @argument[chooser]{a GtkFileChooser}
-  @argument[select_multiple]{TRUE if multiple files can be selected.}
+ "@version{2013-6-18}
+  @argument[chooser]{a @class{gtk-file-chooser} object}
+  @argument[select-multiple]{@em{true} if multiple files can be selected}
   @begin{short}
     Sets whether multiple files can be selected in the file selector.
   @end{short}
-  This is only relevant if the action is set to be GTK_FILE_CHOOSER_ACTION_OPEN
-  or GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER.
+  This is only relevant if the action is set to be @code{:open} or
+  @code{:select-folder}.
 
   Since 2.4"
   (setf (gtk-file-chooser-select-multiple chooser) select-multiple))
@@ -1085,15 +1087,16 @@
 
 (defun gtk-file-chooser-get-select-multiple (chooser)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-3}
-  @argument[chooser]{a GtkFileChooser}
-  @return{TRUE if multiple files can be selected.}
+ "@version{2013-6-18}
+  @argument[chooser]{a @class{gtk-file-chooser} object}
+  @return{@em{True} if multiple files can be selected.}
   @begin{short}
     Gets whether multiple files can be selected in the file selector.
   @end{short}
-  See gtk_file_chooser_set_select_multiple().
+  See the function @fun{gtk-file-chooser-set-select-multiple}.
 
-  Since 2.4"
+  Since 2.4
+  @see-function{gtk-file-chooser-set-select-multiple}"
   (gtk-file-chooser-select-multiple chooser))
 
 (export 'gtk-file-chooser-get-select-multiple)
@@ -1106,9 +1109,10 @@
 
 (defun gtk-file-chooser-set-show-hidden (chooser show-hidden)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-3}
-  @argument[chooser]{a GtkFileChooser}
-  @argument[show_hidden]{TRUE if hidden files and folders should be displayed.}
+ "@version{2013-6-18}
+  @argument[chooser]{a @class{gtk-file-chooser} object}
+  @argument[show-hidden]{@em{true} if hidden files and folders should be
+    displayed}
   @begin{short}
     Sets whether hidden files and folders are displayed in the file selector.
   @end{short}
@@ -1126,15 +1130,16 @@
 
 (defun gtk-file-chooser-get-show-hidden (chooser)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-3}
-  @argument[chooser]{a GtkFileChooser}
-  @return{TRUE if hidden files and folders are displayed.}
+ "@version{2013-6-18}
+  @argument[chooser]{a @class{gtk-file-chooser} object}
+  @return{@em{True} if hidden files and folders are displayed.}
   @begin{short}
     Gets whether hidden files and folders are displayed in the file selector.
   @end{short}
-  See gtk_file_chooser_set_show_hidden().
+  See the function @fun{gtk-file-chooser-set-show-hidden}.
 
-  Since 2.6"
+  Since 2.6
+  @see-function{gtk-file-chooser-set-show-hidden}"
   (gtk-file-chooser-show-hidden chooser))
 
 (export 'gtk-file-chooser-get-show-hidden)
@@ -1147,22 +1152,22 @@
 
 (defun gtk-file-chooser-set-do-overwrite-confirmation (chooser confirmation)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-3}
-  @argument[chooser]{a GtkFileChooser}
-  @argument[do_overwrite_confirmation]{whether to confirm overwriting in save
+ "@version{2013-6-18}
+  @argument[chooser]{a @class{gtk-file-chooser} object}
+  @argument[do-overwrite-confirmation]{whether to confirm overwriting in save
     mode}
   @begin{short}
-    Sets whether a file chooser in GTK_FILE_CHOOSER_ACTION_SAVE mode will
-    present a confirmation dialog if the user types a file name that already
-    exists. This is FALSE by default.
+    Sets whether a file chooser in @code{:save} mode will present a confirmation
+    dialog if the user types a file name that already exists. This is @code{nil}
+    by default.
   @end{short}
 
   Regardless of this setting, the chooser will emit the \"confirm-overwrite\"
   signal when appropriate.
 
-  If all you need is the stock confirmation dialog, set this property to TRUE.
-  You can override the way confirmation is done by actually handling the
-  \"confirm-overwrite\" signal; please refer to its documentation for the
+  If all you need is the stock confirmation dialog, set this property to
+  @em{true}. You can override the way confirmation is done by actually handling
+  the \"confirm-overwrite\" signal; please refer to its documentation for the
   details.
 
   Since 2.8"
@@ -1178,10 +1183,10 @@
 
 (defun gtk-file-chooser-get-do-overwrite-confirmation (chooser)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-3}
-  @argument[chooser]{a GtkFileChooser}
-  @return{TRUE if the file chooser will present a confirmation dialog; FALSE
-    otherwise.}
+ "@version{2013-6-18}
+  @argument[chooser]{a @class{gtk-file-chooser} object}
+  @return{@em{True} if the file chooser will present a confirmation dialog;
+    @code{nil} otherwise.}
   @begin{short}
     Queries whether a file chooser is set to confirm for overwriting when the
     user types a file name that already exists.
@@ -1200,14 +1205,14 @@
 
 (defun gtk-file-chooser-set-create-folders (chooser create-folders)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-3}
-  @argument[chooser]{a GtkFileChooser}
-  @argument[create_folders]{TRUE if the New Folder button should be displayed}
+ "@version{2013-6-18}
+  @argument[chooser]{a @class{gtk-file-chooser} object}
+  @argument[create-folders]{@em{true} if the New Folder button should be
+    displayed}
   @begin{short}
     Sets whether file choser will offer to create new folders.
   @end{short}
-  This is only relevant if the action is not set to be
-  GTK_FILE_CHOOSER_ACTION_OPEN.
+  This is only relevant if the action is not set to be @code{:open}.
 
   Since 2.18"
   (setf (gtk-file-chooser-create-folders chooser) create-folders))
@@ -1222,15 +1227,16 @@
 
 (defun gtk-file-chooser-get-create-folders (chooser)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-3}
-  @argument[chooser]{a GtkFileChooser}
-  @return{TRUE if the New Folder button should be displayed.}
+ "@version{2013-6-18}
+  @argument[chooser]{a @class{gtk-file-chooser} object}
+  @return{@em{True} if the New Folder button should be displayed.}
   @begin{short}
     Gets whether file choser will offer to create new folders.
   @end{short}
-  See gtk_file_chooser_set_create_folders().
+  See the function @fun{gtk-file-chooser-set-create-folders}.
 
-  Since 2.18"
+  Since 2.18
+  @see-function{gtk-file-chooser-set-create-folders}"
   (gtk-file-chooser-create-folders chooser))
 
 (export 'gtk-file-chooser-get-create-folders)
@@ -1242,8 +1248,8 @@
 (defcfun ("gtk_file_chooser_set_current_name" gtk-file-chooser-set-current-name)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-3}
-  @argument[chooser]{a GtkFileChooser}
+ "@version{2013-6-18}
+  @argument[chooser]{a @class{gtk-file-chooser} object}
   @argument[name]{the filename to use, as a UTF-8 string}
   @begin{short}
     Sets the current name in the file selector, as if entered by the user.
@@ -1253,12 +1259,15 @@
   dialog. You can pass \"Untitled.doc\" or a similarly suitable suggestion for
   the name.
 
-  If you want to preselect a particular existing file, you should use
-  gtk_file_chooser_set_filename() or gtk_file_chooser_set_uri() instead.
-  Please see the documentation for those functions for an example of using
-  gtk_file_chooser_set_current_name() as well.
+  If you want to preselect a particular existing file, you should use the
+  functions @fun{gtk-file-chooser-set-filename} or
+  @fun{gtk-file-chooser-set-uri} instead.
+  Please see the documentation for those functions for an example of using the
+  function @sym{gtk-file-chooser-set-current-name} as well.
 
-  Since 2.4"
+  Since 2.4
+  @see-function{gtk-file-chooser-set-filename}
+  @see-function{gtk-file-chooser-set-uri}"
   (chooser (g-object gtk-file-chooser))
   (name :string :free-to-foreign t :encoding :utf-8))
 
@@ -1271,7 +1280,7 @@
 (defcfun ("gtk_file_chooser_get_filename" gtk-file-chooser-get-filename)
     (:string :free-from-foreign t)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-30}
+ "@version{2013-6-18}
   @argument[chooser]{a @class{gtk-file-chooser} object}
   @begin{return}
     The currently selected filename, or @code{nil} if no file is selected, or

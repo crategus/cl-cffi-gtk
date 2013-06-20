@@ -501,8 +501,7 @@
   @end{dictionary}
   @see-slot{gtk-cell-area-edit-widget}
   @see-slot{gtk-cell-area-edited-cell}
-  @see-slot{gtk-cell-area-focus-cell}
-")
+  @see-slot{gtk-cell-area-focus-cell}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -551,11 +550,9 @@
 (setf (gethash 'gtk-cell-area-edit-widget atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-area-edit-widget 'function)
- "@version{2013-2-15}
-  @begin{short}
-    Accessor of the slot @code{\"edit-widget\"} of the
-    @class{gtk-cell-area-edit-widget} class.
-  @end{short}")
+ "@version{2013-6-17}
+  Accessor of the slot @code{\"edit-widget\"} of the @class{gtk-cell-area}
+  class.")
 
 ;;; --- gtk-cell-area-edited-cell ----------------------------------------------
 
@@ -563,11 +560,9 @@
 (setf (gethash 'gtk-cell-area-edited-cell atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-area-edited-cell 'function)
- "@version{2013-2-15}
-  @begin{short}
-    Accessor of the slot @code{\"edited-cell\"} of the
-    @class{gtk-cell-area-edited-cell} class.
-  @end{short}")
+ "@version{2013-6-17}
+  Accessor of the slot @code{\"edited-cell\"} of the @class{gtk-cell-area}
+  class.")
 
 ;;; --- gtk-cell-area-edit-widget ----------------------------------------------
 
@@ -575,11 +570,9 @@
 (setf (gethash 'gtk-cell-area-focus-cell atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-area-focus-cell 'function)
- "@version{2013-2-15}
-  @begin{short}
-    Accessor of the slot @code{\"focus-cell\"} of the
-    @class{gtk-cell-area-focus-cell} class.
-  @end{short}")
+ "@version{2013-6-17}
+  Accessor of the slot @code{\"focus-cell\"} of the @class{gtk-cell-area}
+  class.")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkCellAreaClass
@@ -1963,20 +1956,24 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_area_get_edit_widget ()
-;;;
-;;; GtkCellEditable * gtk_cell_area_get_edit_widget (GtkCellArea *area);
-;;;
-;;; Gets the GtkCellEditable widget currently used to edit the currently edited
-;;; cell.
-;;;
-;;; area :
-;;;     a GtkCellArea
-;;;
-;;; Returns :
-;;;     The currently active GtkCellEditable widget.
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-cell-area-get-edit-widget))
+
+(defun gtk-cell-area-get-edit-widget (area)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-17}
+  @argument[area]{a @class{gtk-cell-area} object}
+  @return{The currently active @class{gtk-cell-editable} widget.}
+  @begin{short}
+    Gets the @class{gtk-cell-editable} widget currently used to edit the
+    currently edited cell.
+  @end{short}
+
+  Since 3.0"
+  (gtk-cell-area-edit-widget area))
+
+(export 'gtk-cell-area-get-edit-widget)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_area_activate_cell ()
