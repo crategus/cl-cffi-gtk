@@ -81,9 +81,9 @@
 
 @set GTK-MISC-SET-ALIGNMENT http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-misc-set-alignment.html
 
-@c GtkOptionMenu
+@c GtkComboBox
 
-@set GTK-OPTION-MENU http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-option-menu.html
+@set GTK-COMBO-BOX http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-combo-box.html
 
 @c GtkOrientable
 

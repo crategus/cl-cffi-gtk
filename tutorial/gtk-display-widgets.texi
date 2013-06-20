@@ -5,7 +5,7 @@
 @c Author   : Dieter Kaiser
 @c Date     : 26.04.2012
 @c Revision : 01.07.2012
-@c 
+@c
 @c Copyright (C) 2012 by Dieter Kaiser
 @c -----------------------------------------------------------------------------
 
@@ -42,8 +42,8 @@ Labels are used a lot in GTK+, and are relatively simple.  The
 @url{@value{GTK-LABEL}, @code{gtk-label}} widget displays a small amount of
 text.  As the name implies, most labels are used to label another widget such as
 a @url{@value{GTK-BUTTON}, @code{gtk-button}}, a @url{@value{GTK-MENU-ITEM},
-@code{gtk-menu-item}}, or a @url{@value{GTK-OPTION-MENU},
-@code{gtk-option-menu}}.  Labels emit no signals as they do not have an
+@code{gtk-menu-item}}, or a @url{@value{GTK-COMBO-BOX},
+@code{gtk-combo-box}}.  Labels emit no signals as they do not have an
 associated X window.  If you need to catch signals, or do clipping, place it
 inside a @url{@value{GTK-EVENT-BOX}, @code{gtk-event-box}} widget or a Button
 widget.
@@ -85,7 +85,7 @@ to the functions @url{@value{GTK-LABEL-NEW-WITH-MNEMONIC},
 @code{gtk-label-new-with-mnemonic}} or
 @url{@value{GTK-LABEL-SET-TEXT-WITH-MNEMONIC},
 @code{gtk-label-set-text-with-mnemonic}}.
- 
+
 Mnemonics automatically activate any activatable widget the label is inside,
 such as a @url{@value{GTK-BUTTON}, @code{gtk-button}}; if the label is not
 inside the mnemonic's target widget, you have to tell the label about the target
@@ -103,7 +103,7 @@ Here's a simple example where the label is inside a button:
 
 There is a convenience function to create buttons with a mnemonic label
 already inside:
-@verbatim 
+@verbatim
   ;; Pressing Alt+H will activate this button
   (let ((button (gtk-button-new-with-mnemonic "_Hello")))
     [...] )
@@ -161,11 +161,11 @@ the user, file, or a network to @url{@value{GTK-LABEL-SET-MARKUP},
 @code{g-markup-escape-text} or @code{g-markup-printf-escaped}.  (Note: The
 functions @code{g-markup-escape-text} and @code{g-markup-printf-escaped} are
 not implemented in the Lisp binding.)
- 
+
 Markup strings are just a convenient way to set the
 @url{@value{PANGO-ATTR-LIST}, @code{pango-attr-list}} on a label;
 @url{@value{GTK-LABEL-SET-ATTRIBUTES}, @code{gtk-label-set-attributes}} may be a
-simpler way to set attributes in some cases.  Be careful though; 
+simpler way to set attributes in some cases.  Be careful though;
 @url{@value{PANGO-ATTR-LIST}, @code{pango-attr-list}} tends to cause
 internationalization problems, unless you're applying attributes to the
 entire string (i.e. unless you set the range of each attribute to
@@ -182,7 +182,7 @@ Labels can be made selectable with @url{@value{GTK-LABEL-SET-SELECTABLE},
 @code{gtk-label-set-selectable}}.  Selectable labels allow the user to copy the
 label contents to the clipboard.  Only labels that contain useful-to-copy
 information - such as error messages - should be made selectable.
- 
+
 @subheading Text layout
 
 A label can contain any number of paragraphs, but will have performance
@@ -217,7 +217,7 @@ a whole aligns in its available space, see @url{@value{GTK-MISC-SET-ALIGNMENT},
 @caption{Values of the type @code{GtkJustification}}
 @end float
 @table @code
-@item :left 
+@item :left
       The text is placed at the left edge of the label.
 @item :right
       The text is placed at the right edge of the label.
@@ -259,17 +259,17 @@ browsers, with colored, underlined text.  The title attribute is displayed as a
 tooltip on the link.  An example looks like this:
 
 @verbatim
-  (gtk-label-set-markup label 
+  (gtk-label-set-markup label
     "Go to the <a href=\"http://gtk.org/\"> GTK+ Website</a> for more ...")))
 @end verbatim
- 
+
 It is possible to implement custom handling for links and their tooltips
 with the @code{activate-link} signal and the
 @url{@value{GTK-LABEL-GET-CURRENT-URI}, @code{gtk-label-get-current-uri}}
 function.
 
 @subheading GtkLabel as GtkBuildable
- 
+
 The @url{@value{GTK-LABEL}, @code{gtk-label}} implementation of the
 @url{@value{GTK-BUILDABLE}, @code{gtk-buildable}} interface supports a custom
 @code{<attributes>} element, which supports any number of @code{<attribute>}
@@ -562,7 +562,7 @@ from 0 to 1.
 
 A progress bar may be set to one of a number of orientations using the function
 @code{gtk-progress-bar-set-orientation}.  The second argument is the
-orientation and can take one of the values 
+orientation and can take one of the values
 
 The orientation argument may take one of the values of
 @ref{table-gtk-progress-bar-orientation} to indicate the direction in which the
