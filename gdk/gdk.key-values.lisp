@@ -2,13 +2,14 @@
 ;;; gdk.key-values.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GDK 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -74,139 +75,12 @@
 ;;;   "direction-changed"                              : Run Last
 ;;;   "keys-changed"                                   : Run Last
 ;;;   "state-changed"                                  : Run Last
-;;;
-;;; Description
-;;;
-;;; Key values are the codes which are sent whenever a key is pressed or
-;;; released. They appear in the GdkEventKey.keyval field of the GdkEventKey
-;;; structure, which is passed to signal handlers for the "key-press-event" and
-;;; "key-release-event" signals. The complete list of key values can be found in
-;;; the <gdk/gdkkeysyms.h> header file.
-;;;
-;;; Key values are regularly updated from the upstream X.org X11 implementation,
-;;; so new values are added regularly. They will be prefixed with GDK_KEY_
-;;; rather than XF86XK_ or XK_ (for older symbols).
-;;;
-;;; Key values can be converted into a string representation using
-;;; gdk_keyval_name(). The reverse function, converting a string to a key value,
-;;; is provided by gdk_keyval_from_name().
-;;;
-;;; The case of key values can be determined using gdk_keyval_is_upper() and
-;;; gdk_keyval_is_lower(). Key values can be converted to upper or lower case
-;;; using gdk_keyval_to_upper() and gdk_keyval_to_lower().
-;;;
-;;; When it makes sense, key values can be converted to and from Unicode
-;;; characters with gdk_keyval_to_unicode() and gdk_unicode_to_keyval().
-;;;
-;;; One GdkKeymap object exists for each user display. gdk_keymap_get_default()
-;;; returns the GdkKeymap for the default display; to obtain keymaps for other
-;;; displays, use gdk_keymap_get_for_display(). A keymap is a mapping from
-;;; GdkKeymapKey to key values. You can think of a GdkKeymapKey as a
-;;; representation of a symbol printed on a physical keyboard key. That is, it
-;;; contains three pieces of information. First, it contains the hardware
-;;; keycode; this is an identifying number for a physical key. Second, it
-;;; contains the level of the key. The level indicates which symbol on the key
-;;; will be used, in a vertical direction. So on a standard US keyboard, the key
-;;; with the number "1" on it also has the exclamation point ("!") character on
-;;; it. The level indicates whether to use the "1" or the "!" symbol. The letter
-;;; keys are considered to have a lowercase letter at level 0, and an uppercase
-;;; letter at level 1, though only the uppercase letter is printed. Third, the
-;;; GdkKeymapKey contains a group; groups are not used on standard US keyboards,
-;;; but are used in many other countries. On a keyboard with groups, there can
-;;; be 3 or 4 symbols printed on a single key. The group indicates movement in a
-;;; horizontal direction. Usually groups are used for two different languages.
-;;; In group 0, a key might have two English characters, and in group 1 it might
-;;; have two Hebrew characters. The Hebrew characters will be printed on the key
-;;; next to the English characters.
-;;;
-;;; In order to use a keymap to interpret a key event, it's necessary to first
-;;; convert the keyboard state into an effective group and level. This is done
-;;; via a set of rules that varies widely according to type of keyboard and user
-;;; configuration. The function gdk_keymap_translate_keyboard_state() accepts a
-;;; keyboard state -- consisting of hardware keycode pressed, active modifiers,
-;;; and active group -- applies the appropriate rules, and returns the
-;;; group/level to be used to index the keymap, along with the modifiers which
-;;; did not affect the group and level. i.e. it returns "unconsumed modifiers."
-;;; The keyboard group may differ from the effective group used for keymap
-;;; lookups because some keys don't have multiple groups - e.g. the Enter key is
-;;; always in group 0 regardless of keyboard state.
-;;;
-;;; Note that gdk_keymap_translate_keyboard_state() also returns the keyval,
-;;; i.e. it goes ahead and performs the keymap lookup in addition to telling you
-;;; which effective group/level values were used for the lookup. GdkEventKey
-;;; already contains this keyval, however, so you don't normally need to call
-;;; gdk_keymap_translate_keyboard_state() just to get the keyval.
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Signal Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "direction-changed" signal
-;;;
-;;; void user_function (GdkKeymap *keymap,
-;;;                     gpointer   user_data)      : Run Last
-;;;
-;;; The ::direction-changed signal gets emitted when the direction of the keymap
-;;; changes.
-;;;
-;;; keymap :
-;;;     the object on which the signal is emitted
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; Since 2.0
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "keys-changed" signal
-;;;
-;;; void user_function (GdkKeymap *keymap,
-;;;                     gpointer   user_data)      : Run Last
-;;;
-;;; The ::keys-changed signal is emitted when the mapping represented by keymap
-;;; changes.
-;;;
-;;; keymap :
-;;;     the object on which the signal is emitted
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; Since 2.2
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "state-changed" signal
-;;;
-;;; void user_function (GdkKeymap *keymap,
-;;;                     gpointer   user_data)      : Run Last
-;;;
-;;; The ::state-changed signal is emitted when the state of the keyboard
-;;; changes, e.g when Caps Lock is turned on or off. See
-;;; gdk_keymap_get_caps_lock_state().
-;;;
-;;; keymap :
-;;;     the object on which the signal is emitted
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gdk)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GdkKeymap
-;;;
-;;; typedef struct _GdkKeymap GdkKeymap;
-;;;
-;;; A GdkKeymap defines the translation from keyboard state (including a
-;;; hardware key, a modifier mask, and active keyboard group) to a keyval. This
-;;; translation has two phases. The first phase is to determine the effective
-;;; keyboard group and level for the keyboard state; the second phase is to look
-;;; up the keycode/group/level triplet in the keymap and see what keyval it
-;;; corresponds to.
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GdkKeymap" gdk-keymap
@@ -216,34 +90,118 @@
    :type-initializer "gdk_keymap_get_type")
   nil)
 
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gdk-keymap 'type)
+ "@version{2013-6-13}
+  @begin{short}
+    A @sym{gdk-keymap} defines the translation from keyboard state (including a
+    hardware key, a modifier mask, and active keyboard group) to a keyval. This
+    translation has two phases. The first phase is to determine the effective
+    keyboard group and level for the keyboard state; the second phase is to look
+    up the keycode/group/level triplet in the keymap and see what keyval it
+    corresponds to.
+  @end{short}
+  Key values are the codes which are sent whenever a key is pressed or
+  released. They appear in the @code{keyval} field of the @class{gdk-event-key}
+  structure, which is passed to signal handlers for the \"key-press-event\" and
+  \"key-release-event\" signals. The complete list of key values can be found in
+  the @code{<gdk/gdkkeysyms.h>} header file.
+
+  Key values are regularly updated from the upstream X.org X11 implementation,
+  so new values are added regularly. They will be prefixed with @code{GDK_KEY_}
+  rather than @code{XF86XK_} or @code{XK_} (for older symbols).
+
+  Key values can be converted into a string representation using the
+  @fun{gdk-keyval-name} function. The reverse function, converting a string to
+  a key value, is provided by the @fun{gdk-keyval-from-name}.
+
+  The case of key values can be determined using the functions
+  @fun{gdk-keyval-is-upper} and @fun{gdk-keyval-is-lower}. Key values can be
+  converted to upper or lower case using the functions @fun{gdk-keyval-to-upper}
+  and @fun{gdk-keyval-to-lower}.
+
+  When it makes sense, key values can be converted to and from Unicode
+  characters with the functions @fun{gdk-keyval-to-unicode} and
+  @fun{gdk-unicode-to-keyval}.
+
+  One @sym{gdk-keymap} object exists for each user display. The
+  @fun{gdk-keymap-get-default} functions returns the GdkKeymap for the default
+  display; to obtain keymaps for other displays, use the
+  @fun{gdk-keymap-get-for-display} function. A keymap is a mapping from
+  @class{gdk-keymap-key} to key values. You can think of a
+  @class{gdk-keymap-key} as a representation of a symbol printed on a physical
+  keyboard key. That is, it contains three pieces of information. First, it
+  contains the hardware keycode; this is an identifying number for a physical
+  key. Second, it contains the level of the key. The level indicates which
+  symbol on the key will be used, in a vertical direction. So on a standard US
+  keyboard, the key with the number \"1\" on it also has the exclamation point
+  (\"!\") character on it. The level indicates whether to use the \"1\" or the
+  \"!\" symbol. The letter keys are considered to have a lowercase letter at
+  level 0, and an uppercase letter at level 1, though only the uppercase letter
+  is printed. Third, the @class{gdk-keymap-key} contains a group; groups are
+  not used on standard US keyboards, but are used in many other countries. On a
+  keyboard with groups, there can be 3 or 4 symbols printed on a single key. The
+  group indicates movement in a horizontal direction. Usually groups are used
+  for two different languages. In group 0, a key might have two English
+  characters, and in group 1 it might have two Hebrew characters. The Hebrew
+  characters will be printed on the key next to the English characters.
+
+  In order to use a keymap to interpret a key event, it is necessary to first
+  convert the keyboard state into an effective group and level. This is done
+  via a set of rules that varies widely according to type of keyboard and user
+  configuration. The function @fun{gdk-keymap-translate-keyboard-state} accepts
+  a keyboard state - consisting of hardware keycode pressed, active modifiers,
+  and active group - applies the appropriate rules, and returns the
+  group/level to be used to index the keymap, along with the modifiers which
+  did not affect the group and level. i. e. it returns \"unconsumed modifiers.\"
+  The keyboard group may differ from the effective group used for keymap
+  lookups because some keys do not have multiple groups - e. g. the Enter key is
+  always in group 0 regardless of keyboard state.
+
+  Note that the function @fun{gdk-keymap-translate-keyboard-state} also returns
+  the keyval, i. e. it goes ahead and performs the keymap lookup in addition to
+  telling you which effective group/level values were used for the lookup.
+  @class{gdk-event-key} already contains this keyval, however, so you do not
+  normally need to call the function @fun{gdk-keymap-translate-keyboard-state}
+  just to get the keyval.
+  @begin[Signal Details]{dictionary}
+    @subheading{The \"direction-changed\" signal}
+      @begin{pre}
+ lambda (keymap)   : Run Last
+      @end{pre}
+      The \"direction-changed\" signal gets emitted when the direction of the
+      keymap changes.
+      @begin[code]{table}
+        @entry[keymap]{The object on which the signal is emitted.}
+      @end{table}
+      Since 2.0
+
+    @subheading{The \"keys-changed\" signal}
+      @begin{pre}
+ lambda (keymap)   : Run Last
+      @end{pre}
+      The \"keys-changed\" signal is emitted when the mapping represented by
+      keymap changes.
+      @begin[code]{table}
+        @entry[keymap]{The object on which the signal is emitted.}
+      @end{table}
+      Since 2.2
+
+    @subheading{The \"state-changed\" signal}
+      @begin{pre}
+ lambda (keymap)   : Run Last
+      @end{pre}
+      The \"state-changed\" signal is emitted when the state of the keyboard
+      changes, e. g when Caps Lock is turned on or off. See the function
+      @fun{gdk-keymap-get-caps-lock-state}.
+      @begin[code]{table}
+        @entry[keymap]{The object on which the signal is emitted.}
+      @end{table}
+      Since 2.16
+  @end{dictionary}")
+
 ;;; ----------------------------------------------------------------------------
 ;;; struct GdkKeymapKey
-;;;
-;;; struct GdkKeymapKey {
-;;;   guint keycode;
-;;;   gint  group;
-;;;   gint  level;
-;;; };
-;;;
-;;; A GdkKeymapKey is a hardware key that can be mapped to a keyval.
-;;;
-;;; guint keycode;
-;;;     the hardware keycode. This is an identifying number for a physical key.
-;;;
-;;; gint group;
-;;;     indicates movement in a horizontal direction. Usually groups are used
-;;;     for two different languages. In group 0, a key might have two English
-;;;     characters, and in group 1 it might have two Hebrew characters. The
-;;;     Hebrew characters will be printed on the key next to the English
-;;;     characters.
-;;;
-;;; gint level;
-;;;     indicates which symbol on the key will be used, in a vertical direction.
-;;;     So on a standard US keyboard, the key with the number "1" on it also has
-;;;     the exclamation point ("!") character on it. The level indicates whether
-;;;     to use the "1" or the "!" symbol. The letter keys are considered to have
-;;;     a lowercase letter at level 0, and an uppercase letter at level 1,
-;;;     though only the uppercase letter is printed.
 ;;; ----------------------------------------------------------------------------
 
 (define-g-boxed-cstruct gdk-keymap-key nil
@@ -251,65 +209,84 @@
   (group :int :initform 0)
   (level :int :initform 0))
 
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gdk-keymap-key 'type)
+ "@version{2013-6-13}
+  @begin{short}
+    A @sym{gdk-keymap-key} is a hardware key that can be mapped to a keyval.
+  @end{short}
+  @begin{pre}
+(define-g-boxed-cstruct gdk-keymap-key nil
+  (keycode :uint :initform 0)
+  (group :int :initform 0)
+  (level :int :initform 0))
+  @end{pre}
+  @begin[code]{table}
+    @entry[keycode]{The hardware keycode. This is an identifying number for a
+      physical key.}
+    @entry[group]{Indicates movement in a horizontal direction. Usually groups
+      are used for two different languages. In group 0, a key might have two
+      English characters, and in group 1 it might have two Hebrew characters.
+      The Hebrew characters will be printed on the key next to the English
+      characters.}
+    @entry[level]{Indicates which symbol on the key will be used, in a vertical
+      direction. So on a standard US keyboard, the key with the number \"1\" on
+      it also has the exclamation point (\"!\") character on it. The level
+      indicates whether to use the \"1\" or the \"!\" symbol. The letter keys
+      are considered to have a lowercase letter at level 0, and an uppercase
+      letter at level 1, though only the uppercase letter is printed.}
+  @end{table}")
+
+(export 'gdk-keymap-key)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_keymap_get_default ()
-;;;
-;;; GdkKeymap * gdk_keymap_get_default (void);
-;;;
-;;; Returns the GdkKeymap attached to the default display.
-;;;
-;;; Returns :
-;;;     the GdkKeymap attached to the default display
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_keymap_get_default" gdk-keymap-get-default)
-    (g-object gdk-keymap))
+    (g-object gdk-keymap)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-13}
+  @return{The @class{gdk-keymap} attached to the default display.}
+  Returns the @class{gdk-keymap} attached to the default display.")
 
 (export 'gdk-keymap-get-default)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_keymap_get_for_display ()
-;;;
-;;; GdkKeymap * gdk_keymap_get_for_display (GdkDisplay *display);
-;;;
-;;; Returns the GdkKeymap attached to display.
-;;;
-;;; display :
-;;;     the GdkDisplay.
-;;;
-;;; Returns :
-;;;     the GdkKeymap attached to display
-;;;
-;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_keymap_get_for_display" gdk-keymap-get-for-display)
     (g-object gdk-keymap)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-13}
+  @argument[display]{the @class{gdk-display} object}
+  @return{The @class{gdk-keymap} attached to @arg{display}.}
+  @short{Returns the @class{gdk-keymap} attached to @arg{display}.}
+
+  Since 2.2"
   (display (g-object gdk-display)))
 
 (export 'gdk-keymap-get-for-display)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_keymap_lookup_key ()
-;;;
-;;; guint gdk_keymap_lookup_key (GdkKeymap *keymap, const GdkKeymapKey *key);
-;;;
-;;; Looks up the keyval mapped to a keycode/group/level triplet. If no keyval is
-;;; bound to key, returns 0. For normal user input, you want to use
-;;; gdk_keymap_translate_keyboard_state() instead of this function, since the
-;;; effective group/level may not be the same as the current keyboard state.
-;;;
-;;; keymap :
-;;;     a GdkKeymap
-;;;
-;;; key :
-;;;     a GdkKeymapKey with keycode, group, and level initialized
-;;;
-;;; Returns :
-;;;     a keyval, or 0 if none was mapped to the given key
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_keymap_lookup_key" gdk-keymap-lookup-key) :uint
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-13}
+  @argument[keymap]{a @class{gdk-keymap}}
+  @argument[key]{a @class{gdk-keymap-key} with keycode, group, and level
+    initialized}
+  @return{A keyval, or 0 if none was mapped to the given key.}
+  @begin{short}
+    Looks up the keyval mapped to a keycode/group/level triplet. If no keyval is
+    bound to @arg{key}, returns 0.
+  @end{short}
+  For normal user input, you want to use the function
+  @fun{gdk-keymap-translate-keyboard-state} instead of this function, since the
+  effective group/level may not be the same as the current keyboard state."
   (keymap (g-object gdk-keymap))
   (key (g-boxed-foreign gdk-keymap-key)))
 
@@ -317,89 +294,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_keymap_translate_keyboard_state ()
-;;;
-;;; gboolean gdk_keymap_translate_keyboard_state
-;;;                                       (GdkKeymap *keymap,
-;;;                                        guint hardware_keycode,
-;;;                                        GdkModifierType state,
-;;;                                        gint group,
-;;;                                        guint *keyval,
-;;;                                        gint *effective_group,
-;;;                                        gint *level,
-;;;                                        GdkModifierType *consumed_modifiers);
-;;;
-;;; Translates the contents of a GdkEventKey into a keyval, effective group, and
-;;; level. Modifiers that affected the translation and are thus unavailable for
-;;; application use are returned in consumed_modifiers. See the section called
-;;; 'Description' for an explanation of groups and levels. The effective_group
-;;; is the group that was actually used for the translation; some keys such as
-;;; Enter are not affected by the active keyboard group. The level is derived
-;;; from state. For convenience, GdkEventKey already contains the translated
-;;; keyval, so this function isn't as useful as you might think.
-;;;
-;;; Note
-;;;
-;;; consumed_modifiers gives modifiers that should be masked out from state when
-;;; comparing this key press to a hot key. For instance, on a US keyboard, the
-;;; plus symbol is shifted, so when comparing a key press to a <Control>plus
-;;; accelerator <Shift> should be masked out.
-;;;
-;;;   /* We want to ignore irrelevant modifiers like ScrollLock */
-;;;   #define ALL_ACCELS_MASK (GDK_CONTROL_MASK | GDK_SHIFT_MASK |
-;;;                            GDK_MOD1_MASK)
-;;;   gdk_keymap_translate_keyboard_state (keymap, event->hardware_keycode,
-;;;                                        event->state, event->group,
-;;;                                        &keyval, NULL, NULL, &consumed);
-;;;   if (keyval == GDK_PLUS &&
-;;;       (event->state & ~consumed & ALL_ACCELS_MASK) == GDK_CONTROL_MASK)
-;;;     /* Control was pressed */
-;;;
-;;; An older interpretation consumed_modifiers was that it contained all
-;;; modifiers that might affect the translation of the key; this allowed
-;;; accelerators to be stored with irrelevant consumed modifiers, by doing:
-;;;
-;;;   /* XXX Don't do this XXX */
-;;;   if (keyval == accel_keyval &&
-;;;       (event->state & ~consumed & ALL_ACCELS_MASK) ==
-;;;                                                    (accel_mods & ~consumed))
-;;;     /* Accelerator was pressed */
-;;;
-;;; However, this did not work if multi-modifier combinations were used in the
-;;; keymap, since, for instance, <Control> would be masked out even if only
-;;; <Control><Alt> was used in the keymap. To support this usage as well as well
-;;; as possible, all single modifier combinations that could affect the key for
-;;; any combination of modifiers will be returned in consumed_modifiers;
-;;; multi-modifier combinations are returned only when actually found in state.
-;;; When you store accelerators, you should always store them with consumed
-;;; modifiers removed. Store <Control>plus, not <Control><Shift>plus,
-;;;
-;;; keymap :
-;;;     a GdkKeymap
-;;;
-;;; hardware_keycode :
-;;;     a keycode
-;;;
-;;; state :
-;;;     a modifier state
-;;;
-;;; group :
-;;;     active keyboard group
-;;;
-;;; keyval :
-;;;     return location for keyval, or NULL
-;;;
-;;; effective_group :
-;;;     return location for effective group, or NULL
-;;;
-;;; level :
-;;;     return location for level, or NULL
-;;;
-;;; consumed_modifiers :
-;;;     return location for modifiers that were used to determine the group or
-;;;     level, or NULL
-;;;
-;;; Returns :
-;;;     TRUE if there was a keyval bound to the keycode/state/group
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_keymap_translate_keyboard_state"
@@ -413,7 +307,67 @@
   (level (:pointer :int))
   (consumed-modifiers (:pointer gdk-modifier-type)))
 
-(defun keymap-translate-keyboard-state (keymap hardware-keycode state group)
+(defun gdk-keymap-translate-keyboard-state (keymap hardware-keycode state group)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-13}
+  @argument[keymap]{a @class{gdk-keymap} object}
+  @argument[hardware-keycode]{a keycode}
+  @argument[state]{a modifier state}
+  @argument[group]{active keyboard group}
+  @begin{return}
+    @code{keyval} -- keyval, or NULL @br{}
+    @code{effective-group} -- effective group, or NULL @br{}
+    @code{level} -- level, or NULL @br{}
+    @code{consumed-modifiers} -- modifiers that were used to determine the
+      group or level, or NULL
+  @end{return}
+  @begin{short}
+    Translates the contents of a @class{gdk-event-key} into a keyval, effective
+    group, and level.
+  @end{short}
+  Modifiers that affected the translation and are thus unavailable for
+  application use are returned in @arg{consumed-modifiers}. See the section
+  called 'Description' for an explanation of groups and levels. The
+  @arg{effective-group} is the group that was actually used for the translation;
+  some keys such as Enter are not affected by the active keyboard group. The
+  level is derived from state. For convenience, @class{gdk-event-key} already
+  contains the translated keyval, so this function is not as useful as you might
+  think.
+
+  @subheading{Note}
+    @arg{consumed-modifiers} gives modifiers that should be masked out from
+    state when comparing this key press to a hot key. For instance, on a US
+    keyboard, the plus symbol is shifted, so when comparing a key press to a
+    <Control>plus accelerator <Shift> should be masked out.
+    @begin{pre}
+   /* We want to ignore irrelevant modifiers like ScrollLock */
+   #define ALL_ACCELS_MASK (GDK_CONTROL_MASK | GDK_SHIFT_MASK |
+                            GDK_MOD1_MASK)
+   gdk_keymap_translate_keyboard_state (keymap, event->hardware_keycode,
+                                        event->state, event->group,
+                                        &keyval, NULL, NULL, &consumed);
+   if (keyval == GDK_PLUS &&
+       (event->state & ~consumed & ALL_ACCELS_MASK) == GDK_CONTROL_MASK)
+     /* Control was pressed */
+    @end{pre}
+    An older interpretation consumed_modifiers was that it contained all
+    modifiers that might affect the translation of the key; this allowed
+    accelerators to be stored with irrelevant consumed modifiers, by doing:
+    @begin{pre}
+   /* XXX Don't do this XXX */
+   if (keyval == accel_keyval &&
+       (event->state & ~consumed & ALL_ACCELS_MASK) ==
+                                                    (accel_mods & ~consumed))
+     /* Accelerator was pressed */
+    @end{pre}
+    However, this did not work if multi-modifier combinations were used in the
+    keymap, since, for instance, <Control> would be masked out even if only
+    <Control><Alt> was used in the keymap. To support this usage as well as well
+    as possible, all single modifier combinations that could affect the key for
+    any combination of modifiers will be returned in consumed_modifiers;
+    multi-modifier combinations are returned only when actually found in state.
+    When you store accelerators, you should always store them with consumed
+    modifiers removed. Store <Control>plus, not <Control><Shift>plus."
   (with-foreign-objects ((keyval :uint)
                          (effective-group :int)
                          (level :int)
@@ -435,36 +389,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_keymap_get_entries_for_keyval ()
-;;;
-;;; gboolean gdk_keymap_get_entries_for_keyval (GdkKeymap *keymap,
-;;;                                             guint keyval,
-;;;                                             GdkKeymapKey **keys,
-;;;                                             gint *n_keys);
-;;;
-;;; Obtains a list of keycode/group/level combinations that will generate
-;;; keyval. Groups and levels are two kinds of keyboard mode; in general, the
-;;; level determines whether the top or bottom symbol on a key is used, and the
-;;; group determines whether the left or right symbol is used. On US keyboards,
-;;; the shift key changes the keyboard level, and there are no groups. A group
-;;; switch key might convert a keyboard between Hebrew to English modes, for
-;;; example. GdkEventKey contains a group field that indicates the active
-;;; keyboard group. The level is computed from the modifier mask. The returned
-;;; array should be freed with g_free().
-;;;
-;;; keymap :
-;;;     a GdkKeymap
-;;;
-;;; keyval :
-;;;     a keyval, such as GDK_a, GDK_Up, GDK_Return, etc.
-;;;
-;;; keys :
-;;;     return location for an array of GdkKeymapKey
-;;;
-;;; n_keys :
-;;;     return location for number of elements in returned array
-;;;
-;;; Returns :
-;;;     TRUE if keys were found and returned
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_keymap_get_entries_for_keyval"
@@ -475,6 +399,24 @@
   (n-keys (:pointer :int)))
 
 (defun gdk-keymap-get-entries-for-keyval (keymap keyval)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-13}
+  @argument[keymap]{a @class{gdk-keymap} object}
+  @argument[keyval]{a keyval, such as GDK_a, GDK_Up, GDK_Return, etc.}
+  @begin{return}
+    @code{keys} -- a list of @class{gdk-keymap-key} @br{}
+  @end{return}
+  @begin{short}
+    Obtains a list of keycode/group/level combinations that will generate
+    keyval.
+  @end{short}
+  Groups and levels are two kinds of keyboard mode; in general, the level
+  determines whether the top or bottom symbol on a key is used, and the
+  group determines whether the left or right symbol is used. On US keyboards,
+  the shift key changes the keyboard level, and there are no groups. A group
+  switch key might convert a keyboard between Hebrew to English modes, for
+  example. @class{gdk-event-key} contains a group field that indicates the
+  active keyboard group. The level is computed from the modifier mask."
   (with-foreign-objects ((keys :pointer) (n-keys :int))
     (when (%gdk-keymap-get-entries-for-keyval keymap keyval keys n-keys)
       (let ((keys (mem-ref keys :pointer))
@@ -495,36 +437,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_keymap_get_entries_for_keycode ()
-;;;
-;;; gboolean gdk_keymap_get_entries_for_keycode (GdkKeymap *keymap,
-;;;                                              guint hardware_keycode,
-;;;                                              GdkKeymapKey **keys,
-;;;                                              guint **keyvals,
-;;;                                              gint *n_entries);
-;;;
-;;; Returns the keyvals bound to hardware_keycode. The Nth GdkKeymapKey in keys
-;;; is bound to the Nth keyval in keyvals. Free the returned arrays with
-;;; g_free(). When a keycode is pressed by the user, the keyval from this list
-;;; of entries is selected by considering the effective keyboard group and
-;;; level. See gdk_keymap_translate_keyboard_state().
-;;;
-;;; keymap :
-;;;     a GdkKeymap
-;;;
-;;; hardware_keycode :
-;;;     a keycode
-;;;
-;;; keys :
-;;;     return location for array of GdkKeymapKey, or NULL
-;;;
-;;; keyvals :
-;;;     return location for array of keyvals, or NULL
-;;;
-;;; n_entries :
-;;;     length of keys and keyvals
-;;;
-;;; Returns :
-;;;     TRUE if there were any entries
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_keymap_get_entries_for_keycode"
@@ -536,6 +448,21 @@
   (n-entries (:pointer :int)))
 
 (defun gdk-keymap-get-entries-for-keycode (keymap hardware-keycode)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-13}
+  @argument[keymap]{a @class{gdk-keymap} object}
+  @argument[hardware-keycode]{a keycode}
+  @begin{return}
+    @code{keys} -- list of @class{gdk-keymap-key}, or @code{nil} @br{}
+    @code{keyvals} --list of keyvals, or @code{nil} @br{}
+  @end{return}
+  @begin{short}
+    Returns the keyvals bound to @arg{hardware-keycode}.
+  @end{short}
+  The Nth @class{gdk-keymap-key} in keys is bound to the Nth keyval in keyvals.
+  When a keycode is pressed by the user, the keyval from this list
+  of entries is selected by considering the effective keyboard group and
+  level. See the function @fun{gdk-keymap-translate-keyboard-state}."
   (with-foreign-objects ((keys :pointer) (keyvals :pointer) (n-keys :int))
     (when (%gdk-keymap-get-entries-for-keycode keymap
                                                hardware-keycode
@@ -565,142 +492,117 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_keymap_get_direction ()
-;;;
-;;; PangoDirection gdk_keymap_get_direction (GdkKeymap *keymap);
-;;;
-;;; Returns the direction of effective layout of the keymap.
-;;;
-;;; keymap :
-;;;     a GdkKeymap
-;;;
-;;; Returns :
-;;;     PANGO_DIRECTION_LTR or PANGO_DIRECTION_RTL if it can determine the
-;;;     direction. PANGO_DIRECTION_NEUTRAL otherwise.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_keymap_get_direction" gdk-keymap-get-direction) pango-direction
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-13}
+  @argument[keymap]{a @class{gdk-keymap} object}
+  @begin{return}
+    @code{:ltr} or @code{:rtl} if it can determine the direction.
+    @code{:neutral} otherwise.
+  @end{return}
+  Returns the direction of effective layout of the @arg{keymap}."
   (keymap (g-object gdk-keymap)))
 
 (export 'gdk-keymap-get-direction)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_keymap_have_bidi_layouts ()
-;;;
-;;; gboolean gdk_keymap_have_bidi_layouts (GdkKeymap *keymap);
-;;;
-;;; Determines if keyboard layouts for both right-to-left and left-to-right
-;;; languages are in use.
-;;;
-;;; keymap :
-;;;     a GdkKeymap
-;;;
-;;; Returns :
-;;;     TRUE if there are layouts in both directions, FALSE otherwise
-;;;
-;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_keymap_have_bidi_layouts" gdk-keymap-have-bidi-layouts) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-13}
+  @argument[keymap]{a @class{gdk-keymap} object}
+  @return{@em{True} if there are layouts in both directions,
+    @code{nil} otherwise.}
+  @begin{short}
+    Determines if keyboard layouts for both right-to-left and left-to-right
+    languages are in use.
+  @end{short}
+
+  Since 2.12"
   (keymap (g-object gdk-keymap)))
 
 (export 'gdk-keymap-have-bidi-layouts)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_keymap_get_caps_lock_state ()
-;;;
-;;; gboolean gdk_keymap_get_caps_lock_state (GdkKeymap *keymap);
-;;;
-;;; Returns whether the Caps Lock modifer is locked.
-;;;
-;;; keymap :
-;;;     a GdkKeymap
-;;;
-;;; Returns :
-;;;     TRUE if Caps Lock is on
-;;;
-;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_keymap_get_caps_lock_state" gdk-keymap-get-caps-lock-state)
     :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-13}
+  @argument[keymap]{a @class{gdk-keymap} object}
+  @return{@em{True} if Caps Lock is on.}
+  @short{Returns whether the Caps Lock modifer is locked.}
+
+  Since 2.16"
   (keymap (g-object gdk-keymap)))
 
 (export 'gdk-keymap-get-caps-lock-state)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_keymap_get_num_lock_state ()
-;;;
-;;; gboolean gdk_keymap_get_num_lock_state (GdkKeymap *keymap);
-;;;
-;;; Returns whether the Num Lock modifer is locked.
-;;;
-;;; keymap :
-;;;     a GdkKeymap
-;;;
-;;; Returns :
-;;;     TRUE if Num Lock is on
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_keymap_get_num_lock_state" gdk-keymap-get-num-lock-state)
     :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-13}
+  @argument[keymap]{a @class{gdk-keymap} object}
+  @return{@em{True} if Num Lock is on.}
+  @short{Returns whether the Num Lock modifer is locked.}
+
+  Since 3.0"
   (keymap (g-object gdk-keymap)))
 
 (export 'gdk-keymap-get-num-lock-state)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_keymap_get_modifier_state ()
-;;;
-;;; guint gdk_keymap_get_modifier_state (GdkKeymap *keymap);
-;;;
-;;; Returns the current modifier state.
-;;;
-;;; keymap :
-;;;     a GdkKeymap
-;;;
-;;; Returns :
-;;;     the current modifier state.
-;;;
-;;; Since 3.4
 ;;; ----------------------------------------------------------------------------
 
 ;; The return value is of type gdk-modifer-type
 
 (defcfun ("gdk_keymap_get_modifier_state" gdk-keymap-get-modifier-state)
     gdk-modifier-type
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-13}
+  @argument[keymap]{a @class{gdk-keymap} object}
+  @return{The current modifier state.}
+  @short{Returns the current modifier state.}
+
+  Since 3.4"
   (keymap (g-object gdk-keymap)))
 
 (export 'gdk-keymap-get-modifier-state)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_keymap_add_virtual_modifiers ()
-;;;
-;;; void gdk_keymap_add_virtual_modifiers (GdkKeymap *keymap,
-;;;                                        GdkModifierType *state);
-;;;
-;;; Adds virtual modifiers (i.e. Super, Hyper and Meta) which correspond to the
-;;; real modifiers (i.e Mod2, Mod3, ...) in modifiers. are set in state to their
-;;; non-virtual counterparts (i.e. Mod2, Mod3,...) and set the corresponding
-;;; bits in state.
-;;;
-;;; GDK already does this before delivering key events, but for compatibility
-;;; reasons, it only sets the first virtual modifier it finds, whereas this
-;;; function sets all matching virtual modifiers.
-;;;
-;;; This function is useful when matching key events against accelerators.
-;;;
-;;; keymap :
-;;;     a GdkKeymap
-;;;
-;;; state :
-;;;     pointer to the modifier mask to change
-;;;
-;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_keymap_add_virtual_modifiers" gdk-keymap-add-virtual-modifiers)
     :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-13}
+  @argument[keymap]{a @class{gdk-keymap} object}
+  @argument[state]{pointer to the modifier mask to change}
+  @begin{short}
+    Adds virtual modifiers (i. e. Super, Hyper and Meta) which correspond to the
+    real modifiers (i. e Mod2, Mod3, ...) in modifiers and set the corresponding
+    bits in state.
+  @end{short}
+
+  GDK already does this before delivering key events, but for compatibility
+  reasons, it only sets the first virtual modifier it finds, whereas this
+  function sets all matching virtual modifiers.
+
+  This function is useful when matching key events against accelerators.
+
+  Since 2.20"
   (keymap (g-object gdk-keymap))
   (state gdk-modifier-type))
 
@@ -708,32 +610,28 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_keymap_map_virtual_modifiers ()
-;;;
-;;; gboolean gdk_keymap_map_virtual_modifiers (GdkKeymap *keymap,
-;;;                                            GdkModifierType *state);
-;;;
-;;; Maps the virtual modifiers (i.e. Super, Hyper and Meta) which are set in
-;;; state to their non-virtual counterparts (i.e. Mod2, Mod3,...) and set the
-;;; corresponding bits in state.
-;;;
-;;; This function is useful when matching key events against accelerators.
-;;;
-;;; keymap :
-;;;     a GdkKeymap
-;;;
-;;; state :
-;;;     pointer to the modifier state to map
-;;;
-;;; Returns :
-;;;     TRUE if no virtual modifiers were mapped to the same non-virtual
-;;;     modifier. Note that FALSE is also returned if a virtual modifier is
-;;;     mapped to a non-virtual modifier that was already set in state.
-;;;
-;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_keymap_map_virtual_modifiers" gdk-keymap-map-virtual-modifiers)
     :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-13}
+  @argument[keymap]{a @class{gdk-keymap} object}
+  @argument[state]{pointer to the modifier state to map}
+  @begin{return}
+    @em{True} if no virtual modifiers were mapped to the same non-virtual
+    modifier. Note that @code{nil} is also returned if a virtual modifier is
+    mapped to a non-virtual modifier that was already set in state.
+  @end{return}
+  @begin{short}
+    Maps the virtual modifiers (i. e. Super, Hyper and Meta) which are set in
+    state to their non-virtual counterparts (i. e. Mod2, Mod3,...) and set the
+    corresponding bits in state.
+  @end{short}
+
+  This function is useful when matching key events against accelerators.
+
+  Since 2.20"
   (keymap (g-object gdk-keymap))
   (state gdk-modifier-type))
 
@@ -770,66 +668,50 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_keyval_name ()
-;;;
-;;; gchar * gdk_keyval_name (guint keyval);
-;;;
-;;; Converts a key value into a symbolic name.
-;;;
-;;; The names are the same as those in the <gdk/gdkkeysyms.h> header file but
-;;; without the leading "GDK_KEY_".
-;;;
-;;; keyval :
-;;;     a key value
-;;;
-;;; Returns :
-;;;     a string containing the name of the key, or NULL if keyval is not a
-;;;     valid key. The string should not be modified
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_keyval_name" gdk-keyval-name) (:string :free-from-foreign nil)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-13}
+  @argument[keyval]{a key value}
+  @begin{return}
+   A string containing the name of the key, or NULL if keyval is not a
+   valid key. The string should not be modified.
+  @end{return}
+  @begin{short}
+    Converts a key value into a symbolic name.
+  @end{short}
+
+  The names are the same as those in the @code{<gdk/gdkkeysyms.h>} header file
+  but without the leading @code{\"GDK_KEY_\"}."
   (keyval :uint))
 
 (export 'gdk-keyval-name)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_keyval_from_name ()
-;;;
-;;; guint gdk_keyval_from_name (const gchar *keyval_name);
-;;;
-;;; Converts a key name to a key value.
-;;;
-;;; The names are the same as those in the <gdk/gdkkeysyms.h> header file but
-;;; without the leading "GDK_KEY_".
-;;;
-;;; keyval_name :
-;;;     a key name
-;;;
-;;; Returns :
-;;;     the corresponding key value, or GDK_KEY_VoidSymbol if the key name is
-;;;     not a valid key
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_keyval_from_name" gdk-keyval-from-name) :uint
+ #+cl-cffi-gtk-documentation
+ "@version{2013-5-13}
+  @argument[keyval-name]{a key name}
+  @begin{return}
+    The corresponding key value, or @code{GDK_KEY_VoidSymbol} if the key name is
+    not a valid key.
+  @end{return}
+  @begin{short}
+    Converts a key name to a key value.
+  @end{short}
+
+  The names are the same as those in the @code{<gdk/gdkkeysyms.h>} header file
+  but without the leading @code{\"GDK_KEY_\"}."
   (keyval-name :string))
 
 (export 'gdk-keyval-from-name)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_keyval_convert_case ()
-;;;
-;;; void gdk_keyval_convert_case (guint symbol, guint *lower, guint *upper);
-;;;
-;;; Obtains the upper- and lower-case versions of the keyval symbol. Examples of
-;;; keyvals are GDK_KEY_a, GDK_KEY_Enter, GDK_KEY_F1, etc.
-;;;
-;;; symbol :
-;;;     a keyval
-;;;
-;;; lower :
-;;;     return location for lowercase version of symbol
-;;;
-;;; upper :
-;;;     return location for uppercase version of symbol
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_keyval_convert_case" %gdk-keyval-convert-case) :void
@@ -838,6 +720,15 @@
   (upper (:pointer :uint)))
 
 (defun gdk-keyval-convert-case (symbol)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-13}
+  @argument[symbol]{a keyval}
+  @begin{return}
+    @code{lower} --  lowercase version of symbol @br{}
+    @code{upper} -- uppercase version of symbol
+  @end{return}
+  Obtains the upper-case and lower-case versions of the @arg{keyval} symbol.
+  Examples of keyvals are GDK_KEY_a, GDK_KEY_Enter, GDK_KEY_F1, etc."
   (with-foreign-objects ((lower :uint) (upper :uint))
     (%gdk-keyval-convert-case symbol lower upper)
     (values (mem-ref lower :uint)
@@ -847,98 +738,66 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_keyval_to_upper ()
-;;;
-;;; guint gdk_keyval_to_upper (guint keyval);
-;;;
-;;; Converts a key value to upper case, if applicable.
-;;;
-;;; keyval :
-;;;     a key value.
-;;;
-;;; Returns :
-;;;     the upper case form of keyval, or keyval itself if it is already in
-;;;     upper case or it is not subject to case conversion.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_keyval_to_upper" gdk-keyval-to-upper) :uint
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-13}
+  @argument[keyval]{a key value}
+  @return{The upper case form of @arg{keyval}, or @arg{keyval} itself if it is
+    already in upper case or it is not subject to case conversion.}
+  Converts a key value to upper case, if applicable."
   (keyval :uint))
 
 (export 'gdk-keyval-to-upper)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_keyval_to_lower ()
-;;;
-;;; guint gdk_keyval_to_lower (guint keyval);
-;;;
-;;; Converts a key value to lower case, if applicable.
-;;;
-;;; keyval :
-;;;     a key value.
-;;;
-;;; Returns :
-;;;     the lower case form of keyval, or keyval itself if it is already in
-;;;     lower case or it is not subject to case conversion.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_keyval_to_lower" gdk-keyval-to-lower) :uint
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-13}
+  @argument[keyval]{a key value}
+  @return{The lower case form of @arg{keyval}, or @arg{keyval} itself if it is
+    already in lower case or it is not subject to case conversion.}
+  Converts a key value to lower case, if applicable."
   (keyval :uint))
 
 (export 'gdk-keyval-to-lower)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_keyval_is_upper ()
-;;;
-;;; gboolean gdk_keyval_is_upper (guint keyval);
-;;;
-;;; Returns TRUE if the given key value is in upper case.
-;;;
-;;; keyval :
-;;;     a key value.
-;;;
-;;; Returns :
-;;;     TRUE if keyval is in upper case, or if keyval is not subject to case
-;;;     conversion.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_keyval_is_upper" gdk-keyval-is-upper) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-13}
+  @argument[keyval]{a key value}
+  @return{@em{True} if @arg{keyval} is in upper case, or if @arg{keyval} is not
+    subject to case conversion.}
+  Returns @em{true} if the given key value is in upper case."
   (keyval :uint))
 
 (export 'gdk-keyval-is-upper)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_keyval_is_lower ()
-;;;
-;;; gboolean gdk_keyval_is_lower (guint keyval);
-;;;
-;;; Returns TRUE if the given key value is in lower case.
-;;;
-;;; keyval :
-;;;     a key value.
-;;;
-;;; Returns :
-;;;     TRUE if keyval is in lower case, or if keyval is not subject to case
-;;;     conversion.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_keyval_is_lower" gdk-keyval-is-lower) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-12}
+  @argument[keyval]{a key value}
+  @return{@em{True} if @arg{keyval} is in lower case, or if @arg{keyval} is not
+    subject to case conversion.}
+  Returns @em{true} if the given key value is in lower case."
   (keyval :uint))
 
 (export 'gdk-keyval-is-lower)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_keyval_to_unicode ()
-;;;
-;;; guint32 gdk_keyval_to_unicode (guint keyval);
-;;;
-;;; Convert from a GDK key symbol to the corresponding ISO10646 (Unicode)
-;;; character.
-;;;
-;;; keyval :
-;;;     a GDK key symbol
-;;;
-;;; Returns :
-;;;     the corresponding unicode character, or 0 if there is no corresponding
-;;;     character.
 ;;; ----------------------------------------------------------------------------
 
 (define-foreign-type unichar ()
@@ -955,26 +814,42 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_keyval_to_unicode" gdk-keyval-to-unicode) unichar
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-13}
+  @argument[keyval]{a GDK key symbol}
+  @return{The corresponding unicode character, or @code{#\Nul} if there is no
+    corresponding character.}
+  @begin{short}
+    Convert from a GDK key symbol to the corresponding ISO10646 (Unicode)
+    character.
+  @end{short}
+  @begin[Example]{dictionary}
+    @begin{pre}
+ (mapcar 'gdk-keyval-to-unicode '(65 66 67 68 69 70 71))
+=> (#\A #\B #\C #\D #\E #\F #\G)
+    @end{pre}
+  @end{dictionary}"
   (keyval :uint))
 
 (export 'gdk-keyval-to-unicode)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_unicode_to_keyval ()
-;;;
-;;; guint gdk_unicode_to_keyval (guint32 wc);
-;;;
-;;; Convert from a ISO10646 character to a key symbol.
-;;;
-;;; wc :
-;;;     a ISO10646 encoded character
-;;;
-;;; Returns :
-;;;     the corresponding GDK key symbol, if one exists. or, if there is no
-;;;     corresponding symbol, wc | 0x01000000
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_unicode_to_keyval" gdk-unicode-to-keyval) :uint
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-13}
+  @argument[wc]{a ISO10646 encoded character}
+  @return{The corresponding GDK key symbol, if one exists, or, if there is no
+    corresponding symbol, @code{@arg{wc} | 0x01000000}.}
+  @short{Convert from a ISO10646 character to a key symbol.}
+  @begin[Examples]{dictionary}
+    @begin{pre}
+ (mapcar 'gdk-unicode-to-keyval '(#\a #\b #\c))
+=> (97 98 99)
+    @end{pre}
+  @end{dictionary}"
   (char unichar))
 
 (export 'gdk-unicode-to-keyval)

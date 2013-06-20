@@ -848,6 +848,12 @@
 (define-g-boxed-opaque gdk-event-sequence "GdkEventSequence"
   :alloc (error "GdkEventSequence can not be created from Lisp side."))
 
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gdk-event-sequence 'type)
+ "@version{2013-6-17}
+  See the function @fun{gdk-event-get-event-sequence}.
+  @see-function{gdk-event-get-event-sequence}")
+
 (export (boxed-related-symbols 'gdk-event-sequence))
 
 ;;; ----------------------------------------------------------------------------
@@ -1019,7 +1025,7 @@
   @begin{pre}
  GdkEvent *event;
  GdkEventType type;
- 
+
  type = event->type;
   @end{pre}
   To access other fields of the event structs, the pointer to the event can be
@@ -1041,7 +1047,7 @@
   @end{pre}
   @begin{pre}
   union GdkEvent
- 
+
   union _GdkEvent
   {
     GdkEventType              type;
@@ -1066,10 +1072,26 @@
     GdkEventGrabBroken        grab_broken;
   @};
   @end{pre}
+  @see-constructor{make-gdk-event}
+  @see-scontructor{copy-gdk-event}
   @see-slot{gdk-event-type}
   @see-slot{gdk-event-window}
-  @see-slot{gdk-event-send-event}
-")
+  @see-slot{gdk-event-send-event}")
+
+;;; --- copy-gdk-event ---------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'copy-gdk-event 'function)
+ "@version{2013-6-15}
+  @argument[instance]{a @class{gdk-event} structure}
+  Copy constructor of a @class{gdk-event} structure.")
+
+;;; --- make-gdk-event ---------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'make-gdk-event 'function)
+ "@version{2013-6-15}
+  Creates a @class{gdk-event} structure.")
 
 ;;; --- gdk-event-type ---------------------------------------------------------
 
@@ -1147,7 +1169,7 @@
  @};
   @end{pre}
   @begin[code]{table}
-    @entry[GdkEventType type]{the type of the event (GDK_KEY_PRESS or 
+    @entry[GdkEventType type]{the type of the event (GDK_KEY_PRESS or
       GDK_KEY_RELEASE).}
     @entry[GdkWindow *window]{the window which received the event.}
     @entry[gint8 send_event]{TRUE if the event was sent explicitly (e.g. using
@@ -1175,6 +1197,8 @@
     @entry[guint is_modifier : 1]{a flag that indicates if hardware_keycode is
       mapped to a modifier. Since 2.10}
   @end{table}
+  @see-constructor{copy-gdk-event-key}
+  @see-constructor{make-gdk-event-key}
   @see-slot{gdk-event-key-type}
   @see-slot{gdk-event-key-window}
   @see-slot{gdk-event-key-send-event}
@@ -1186,6 +1210,21 @@
   @see-slot{gdk-event-key-hardware-keycode}
   @see-slot{gdk-event-key-group}
   @see-slot{gdk-event-key-is-modifier}")
+
+;;; --- copy-gdk-event-key -----------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'copy-gdk-event-key 'function)
+ "@version{2013-6-15}
+  @argument[instance]{a @class{gdk-event-key} structure}
+  Copy constructor of a @class{gdk-event-key} structure.")
+
+;;; --- make-gdk-event-key -----------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'make-gdk-event-key 'function)
+ "@version{2013-6-15}
+  Creates a @class{gdk-event-key} structure.")
 
 ;;; --- gdk-event-key-type -----------------------------------------------------
 
@@ -1374,6 +1413,8 @@
     @entry[gdouble y_root]{the y coordinate of the pointer relative to the root
       of the screen.}
   @end{table}
+  @see-constructor{copy-gdk-event-button}
+  @see-constructor{make-gdk-event-button}
   @see-slot{gdk-event-button-type}
   @see-slot{gdk-event-button-window}
   @see-slot{gdk-event-button-send-event}
@@ -1386,6 +1427,21 @@
   @see-slot{gdk-event-button-device}
   @see-slot{gdk-event-button-x-root}
   @see-slot{gdk-event-button-y-root}")
+
+;;; --- copy-gdk-event-button --------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'copy-gdk-event-button 'function)
+ "@version{2013-6-15}
+  @argument[instance]{a @class{gdk-event-button} structure}
+  Copy constructor of a @class{gdk-event-button} structure.")
+
+;;; --- make-gdk-event-button --------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'make-gdk-event-button 'function)
+ "@version{2013-6-15}
+  Creates a @class{gdk-event-button} structure.")
 
 ;;; --- gdk-event-button-type --------------------------------------------------
 
@@ -1582,6 +1638,21 @@
   @see-slot{gdk-event-touch-x-root}
   @see-slot{gdk-event-touch-y-root}")
 
+;;; --- copy-gdk-event-touch ---------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'copy-gdk-event-touch 'function)
+ "@version{2013-6-15}
+  @argument[instance]{a @class{gdk-event-touch} structure}
+  Copy constructor of a @class{gdk-event-touch} structure.")
+
+;;; --- make-gdk-event-touch ---------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'make-gdk-event-touch 'function)
+ "@version{2013-6-15}
+  Creates a @class{gdk-event-touch} structure.")
+
 ;;; --- gdk-event-touch-type ---------------------------------------------------
 
 #+cl-cffi-gtk-documentation
@@ -1766,6 +1837,8 @@
     @entry[gdouble delta_x]{}
     @entry[gdouble delta_y]{}
   @end{table}
+  @see-constructor{copy-gdk-event-scroll}
+  @see-constructor{make-gdk-event-scroll}
   @see-slot{gdk-event-scroll-type}
   @see-slot{gdk-event-scroll-window}
   @see-slot{gdk-event-scroll-send-event}
@@ -1778,8 +1851,22 @@
   @see-slot{gdk-event-scroll-x-root}
   @see-slot{gdk-event-scroll-y-root}
   @see-slot{gdk-event-scroll-delta-x}
-  @see-slot{gdk-event-scroll-delta-y}
-")
+  @see-slot{gdk-event-scroll-delta-y}")
+
+;;; --- copy-gdk-event-scroll --------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'copy-gdk-event-scroll 'function)
+ "@version{2013-6-15}
+  @argument[instance]{a @class{gdk-event-scroll} structure}
+  Copy constructor of a @class{gdk-event-scroll} structure.")
+
+;;; --- make-gdk-event-scroll --------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'make-gdk-event-scroll 'function)
+ "@version{2013-6-15}
+  Creates a @class{gdk-event-scroll} structure.")
 
 ;;; --- gdk-event-scroll-type --------------------------------------------------
 
@@ -1957,6 +2044,8 @@
     @entry[gdouble y_root]{the y coordinate of the pointer relative to the root
       of the screen.}
   @end{table}
+  @see-constructor{copy-gdk-event-motion}
+  @see-constructor{make-gdk-event-motion}
   @see-slot{gdk-event-motion-type}
   @see-slot{gdk-event-motion-window}
   @see-slot{gdk-event-motion-send-event}
@@ -1969,6 +2058,21 @@
   @see-slot{gdk-event-motion-device}
   @see-slot{gdk-event-motion-x-root}
   @see-slot{gdk-event-motion-y-root}")
+
+;;; --- copy-gdk-event-motion --------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'copy-gdk-event-motion 'function)
+ "@version{2013-6-15}
+  @argument[instance]{a @class{gdk-event-motion} structure}
+  Copy constructor of a @class{gdk-event-motion} structure.")
+
+;;; --- make-gdk-event-motion --------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'make-gdk-event-motion 'function)
+ "@version{2013-6-15}
+  Creates a @class{gdk-event-motion} structure.")
 
 ;;; --- gdk-event-motion-type --------------------------------------------------
 
@@ -2135,12 +2239,29 @@
       contiguous GDK_EXPOSE events in one go, though GDK performs some exposure
       compression so this is not normally needed.}
   @end{table}
+  @see-constructor{copy-gdk-event-expose}
+  @see-constructor{make-gdk-event-expose}
   @see-slot{gdk-event-expose-type}
   @see-slot{gdk-event-expose-window}
   @see-slot{gdk-event-expose-send-event}
   @see-slot{gdk-event-expose-area}
   @see-slot{gdk-event-expose-region}
   @see-slot{gdk-event-expose-count}")
+
+;;; --- copy-gdk-event-expose --------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'copy-gdk-event-expose 'function)
+ "@version{2013-6-15}
+  @argument[instance]{a @class{gdk-event-expose} structure}
+  Copy constructor of a @class{gdk-event-expose} structure.")
+
+;;; --- make-gdk-event-expose --------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'make-gdk-event-expose 'function)
+ "@version{2013-6-15}
+  Creates a @class{gdk-event-expose} structure.")
 
 ;;; --- gdk-event-expose-type --------------------------------------------------
 
@@ -2232,10 +2353,27 @@
     @entry[GdkVisibilityState state]{the new visibility state
      (@code{:fully-obscured}, @code{:partial} or @code{:unobscured}).}
   @end{table}
+  @see-constructor{copy-gdk-event-visibility}
+  @see-constructor{make-gdk-event-visibility}
   @see-slot{gdk-event-visibility-type}
   @see-slot{gdk-event-visibility-window}
   @see-slot{gdk-event-visibility-send-event}
   @see-slot{gdk-event-visibility-state}")
+
+;;; --- copy-gdk-event-visibility ----------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'copy-gdk-event-visibility 'function)
+ "@version{2013-6-15}
+  @argument[instance]{a @class{gdk-event-visibility} structure}
+  Copy constructor of a @class{gdk-event-visibility} structure.")
+
+;;; --- make-gdk-event-visibility ----------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'make-gdk-event-visibility 'function)
+ "@version{2013-6-15}
+  Creates a @class{gdk-event-visibility} structure.")
 
 ;;; --- gdk-event-visibility-type ----------------------------------------------
 
@@ -2332,6 +2470,8 @@
       (e.g. Control, Shift and Alt) and the pointer buttons.
       See @symbol{gdk-modifier-type}.}
   @end{table}
+  @see-constructor{copy-gdk-event-crossing}
+  @see-constructor{make-gdk-event-crossing}
   @see-slot{gdk-event-crossing-type}
   @see-slot{gdk-event-crossing-window}
   @see-slot{gdk-event-crossing-send-event}
@@ -2345,6 +2485,21 @@
   @see-slot{gdk-event-crossing-detail}
   @see-slot{gdk-event-crossing-focus}
   @see-slot{gdk-event-crossing-state}")
+
+;;; --- copy-gdk-event-crossing ------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'copy-gdk-event-crossing 'function)
+ "@version{2013-6-15}
+  @argument[instance]{a @class{gdk-event-crossing} structure}
+  Copy constructor of a @class{gdk-event-crossing} structure.")
+
+;;; --- make-gdk-event-crossing ------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'make-gdk-event-crossing 'function)
+ "@version{2013-6-15}
+  Creates a @class{gdk-event-crossing} structure.")
 
 ;;; --- gdk-event-crossing-type ------------------------------------------------
 
@@ -2513,10 +2668,27 @@
     @entry[gint16 in]{TRUE if the window has gained the keyboard focus, FALSE if
       it has lost the focus.}
   @end{table}
+  @see-constructor{copy-gdk-event-focus}
+  @see-constructor{make-gdk-event-focus}
   @see-slot{gdk-event-focus-type}
   @see-slot{gdk-event-focus-window}
   @see-slot{gdk-event-focus-send-event}
   @see-slot{gdk-event-focus-in}")
+
+;;; --- copy-gdk-event-focus ---------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'copy-gdk-event-focus 'function)
+ "@version{2013-6-15}
+  @argument[instance]{a @class{gdk-event-focus} structure}
+  Copy constructor of a @class{gdk-event-focus} structure.")
+
+;;; --- make-gdk-event ---------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'make-gdk-event-focus 'function)
+ "@version{2013-6-15}
+  Creates a @class{gdk-event-focus} structure.")
 
 ;;; --- gdk-event-focus-type ---------------------------------------------------
 
@@ -2588,6 +2760,8 @@
     @entry[gint width]{the new width of the window.}
     @entry[gint height]{the new height of the window.}
   @end{table}
+  @see-constructor{copy-gdk-event-configure}
+  @see-constructor{make-gdk-event-configure}
   @see-slot{gdk-event-configure-type}
   @see-slot{gdk-event-configure-window}
   @see-slot{gdk-event-configure-send-event}
@@ -2595,6 +2769,21 @@
   @see-slot{gdk-event-configure-y}
   @see-slot{gdk-event-configure-width}
   @see-slot{gdk-event-configure-height}")
+
+;;; --- copy-gdk-event-configure -----------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'copy-gdk-event-configure 'function)
+ "@version{2013-6-15}
+  @argument[instance]{a @class{gdk-event-configure} structure}
+  Copy constructor of a @class{gdk-event-configure} structure.")
+
+;;; --- make-gdk-event-configure -----------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'make-gdk-event-configure 'function)
+ "@version{2013-6-15}
+  Creates a @class{gdk-event-configure} structure.")
 
 ;;; --- gdk-event-configure-type -----------------------------------------------
 
@@ -2698,13 +2887,29 @@
     @entry[guint state]{whether the property was changed
       (GDK_PROPERTY_NEW_VALUE) or deleted (GDK_PROPERTY_DELETE).}
   @end{table}
+  @see-constructor{copy-gdk-event-property}
+  @see-constructor{make-gdk-event-property}
   @see-slot{gdk-event-property-type}
   @see-slot{gdk-event-property-window}
   @see-slot{gdk-event-property-send-event}
   @see-slot{gdk-event-property-atom}
   @see-slot{gdk-event-property-time}
-  @see-slot{gdk-event-property-state}
-")
+  @see-slot{gdk-event-property-state}")
+
+;;; --- copy-gdk-event-property ------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'copy-gdk-event-property 'function)
+ "@version{2013-6-15}
+  @argument[instance]{a @class{gdk-event-property} structure}
+  Copy constructor of a @class{gdk-event-property} structure.")
+
+;;; --- make-gdk-event-property ------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'make-gdk-event-property 'function)
+ "@version{2013-6-15}
+  Creates a @class{gdk-event-property} structure.")
 
 ;;; --- gdk-event-property-type ------------------------------------------------
 
@@ -2802,9 +3007,11 @@
     @entry[GdkAtom property]{the property in which to place the result of the
       conversion.}
     @entry[guint32 time]{the time of the event in milliseconds.}
-    @entry[GdkWindow *requestor]{the window on which to place property or NULL 
+    @entry[GdkWindow *requestor]{the window on which to place property or NULL
       if none.}
   @end{table}
+  @see-constructor{copy-gdk-event-selection}
+  @see-constructor{make-gdk-event-selection}
   @see-slot{gdk-event-selection-type}
   @see-slot{gdk-event-selection-window}
   @see-slot{gdk-event-selection-send-event}
@@ -2813,6 +3020,21 @@
   @see-slot{gdk-event-selection-property}
   @see-slot{gdk-event-selection-time}
   @see-slot{gdk-event-selection-requestor}")
+
+;;; --- copy-gdk-event-selection -----------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'copy-gdk-event-selection 'function)
+ "@version{2013-6-15}
+  @argument[instance]{a @class{gdk-event-selection} structure}
+  Copy constructor of a @class{gdk-event-selection} structure.")
+
+;;; --- make-gdk-event-selection -----------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'make-gdk-event-selection 'function)
+ "@version{2013-6-15}
+  Creates a @class{gdk-event-selection} structure.")
 
 ;;; --- gdk-event-selection-type -----------------------------------------------
 
@@ -2943,6 +3165,8 @@
     @entry[gshort y_root]{the y coordinate of the pointer relative to the root
       of the screen, only set for @code{:drag-motion} and @code{:drop-start}.}
   @end{table}
+  @see-constructor{copy-gdk-event-dnd}
+  @see-constructor{make-gdk-event-dnd}
   @see-slot{gdk-event-dnd-type}
   @see-slot{gdk-event-dnd-window}
   @see-slot{gdk-event-dnd-send-event}
@@ -2950,6 +3174,21 @@
   @see-slot{gdk-event-dnd-time}
   @see-slot{gdk-event-dnd-x-root}
   @see-slot{gdk-event-dnd-y-root}")
+
+;;; --- copy-gdk-event-dnd -----------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'copy-gdk-event-dnd 'function)
+ "@version{2013-6-15}
+  @argument[instance]{a @class{gdk-event-dnd} structure}
+  Copy constructor of a @class{gdk-event-dnd} structure.")
+
+;;; --- make-gdk-event-dnd -----------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'make-gdk-event-dnd 'function)
+ "@version{2013-6-15}
+  Creates a @class{gdk-event-dnd} structure.")
 
 ;;; --- gdk-event-dnd-type -----------------------------------------------------
 
@@ -3057,11 +3296,28 @@
     @entry[guint32 time]{the time of the event in milliseconds.}
     @entry[GdkDevice *device]{the device where the event originated.}
   @end{table}
+  @see-constructor{copy-gdk-event-proximity}
+  @see-constructor{make-gdk-event-proximity}
   @see-slot{gdk-event-proximity-type}
   @see-slot{gdk-event-proximity-window}
   @see-slot{gdk-event-proximity-send-event}
   @see-slot{gdk-event-proximity-time}
   @see-slot{gdk-event-proximity-device}")
+
+;;; --- copy-gdk-event ---------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'copy-gdk-event-proximity 'function)
+ "@version{2013-6-15}
+  @argument[instance]{a @class{gdk-event-proximity} structure}
+  Copy constructor of a @class{gdk-event-proximity} structure.")
+
+;;; --- make-gdk-event-proximity -----------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'make-gdk-event-proximity 'function)
+ "@version{2013-6-15}
+  Creates a @class{gdk-event-proximity} structure.")
 
 ;;; --- gdk-event-proximity-type -----------------------------------------------
 
@@ -3150,11 +3406,28 @@
     @entry[GdkWindowState new_window_state]{the new window state, a combination
       of GdkWindowState bits.}
   @end{table}
+  @see-constructor{copy-gdk-event-window-state}
+  @see-constructor{make-gdk-event-window-state}
   @see-slot{gdk-event-window-state-type}
   @see-slot{gdk-event-window-state-window}
   @see-slot{gdk-event-window-state-send-event}
   @see-slot{gdk-event-window-state-changed-mask}
   @see-slot{gdk-event-window-state-new-window-state}")
+
+;;; --- copy-gdk-event-window-state --------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'copy-gdk-event-window-state 'function)
+ "@version{2013-6-15}
+  @argument[instance]{a @class{gdk-event-window-state} structure}
+  Copy constructor of a @class{gdk-event-window-state} structure.")
+
+;;; --- make-gdk-event-window-state --------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'make-gdk-event-window-state 'function)
+ "@version{2013-6-15}
+  Creates a @class{gdk-event-window-state} structure.")
 
 ;;; --- gdk-event-window-state-type --------------------------------------------
 
@@ -3231,7 +3504,7 @@
    GdkEventType type;
    GdkWindow *window;
    gint8 send_event;
-   GdkSettingAction action; 
+   GdkSettingAction action;
    char *name;
  @};
   @end{pre}
@@ -3245,11 +3518,28 @@
       GDK_SETTING_ACTION_DELETED).}
     @entry[char *name]{the name of the setting.}
   @end{table}
+  @see-constructor{copy-gdk-event-setting}
+  @see-constructor{make-gdk-event-setting}
   @see-slot{gdk-event-setting-type}
   @see-slot{gdk-event-setting-window}
   @see-slot{gdk-event-setting-send-event}
   @see-slot{gdk-event-setting-action}
   @see-slot{gdk-event-setting-name}")
+
+;;; --- copy-gdk-event-setting -------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'copy-gdk-event-setting 'function)
+ "@version{2013-6-15}
+  @argument[instance]{a @class{gdk-event-setting} structure}
+  Copy constructor of a @class{gdk-event-setting} structure.")
+
+;;; --- make-gdk-event ---------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'make-gdk-event-setting 'function)
+ "@version{2013-6-15}
+  Creates a @class{gdk-event-setting} structure.")
 
 ;;; --- gdk-event-setting-type -------------------------------------------------
 
@@ -3330,7 +3620,7 @@
    GdkWindow *owner;
    GdkOwnerChange reason;
    GdkAtom selection;
-   guint32 time; 
+   guint32 time;
    guint32 selection_time;
  @};
   @end{pre}
@@ -3349,6 +3639,8 @@
       was taken over}
   @end{table}
   Since 2.6
+  @see-constructor{copy-gdk-event-owner-change}
+  @see-constructor{make-gdk-event-owner-change}
   @see-slot{gdk-event-owner-change-type}
   @see-slot{gdk-event-owner-change-window}
   @see-slot{gdk-event-owner-change-send-event}
@@ -3357,6 +3649,21 @@
   @see-slot{gdk-event-owner-change-selection}
   @see-slot{gdk-event-owner-change-time}
   @see-slot{gdk-event-owner-change-selection-time}")
+
+;;; --- copy-gdk-event-owner-change --------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'copy-gdk-event-owner-change 'function)
+ "@version{2013-6-15}
+  @argument[instance]{a @class{gdk-event-owner-change} structure}
+  Copy constructor of a @class{gdk-event-owner-change} structure.")
+
+;;; --- make-gdk-event-owner-change --------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'make-gdk-event-owner-change 'function)
+ "@version{2013-6-15}
+  Creates a @class{gdk-event-owner-change} structure.")
 
 ;;; --- gdk-event-owner-change-type --------------------------------------------
 
@@ -3492,12 +3799,29 @@
       Otherwise grab_window is NULL.}
   @end{table}
   Since 2.8
+  @see-constructor{copy-gdk-event-grab-broken}
+  @see-constructor{make-gdk-event-grab-broken}
   @see-slot{gdk-event-grab-broken-type}
   @see-slot{gdk-event-grab-broken-window}
   @see-slot{gdk-event-grab-broken-send-event}
   @see-slot{gdk-event-grab-broken-keyboard}
   @see-slot{gdk-event-grab-broken-implicit}
   @see-slot{gdk-event-grab-broken-grab-window}")
+
+;;; --- copy-gdk-event-grab-broken ---------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'copy-gdk-event-grab-broken 'function)
+ "@version{2013-6-15}
+  @argument[instance]{a @class{gdk-event-grab-broken} structure}
+  Copy constructor of a @class{gdk-event-grab-broken} structure.")
+
+;;; --- make-gdk-event-grab-broken ---------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'make-gdk-event-grab-broken 'function)
+ "@version{2013-6-15}
+  Creates a @class{gdk-event-grab-broken} structure.")
 
 ;;; --- gdk-event-grab-broken-type ---------------------------------------------
 

@@ -87,12 +87,35 @@
     @entry[green]{The green component of the color.}
     @entry[blue]{The blue component of the color.}
   @end{table}
+  @see-constructor{make-gdk-color}
+  @see-constructor{copy-gdk-color}
   @see-slot{gdk-color-pixel}
   @see-slot{gdk-color-red}
   @see-slot{gdk-color-green}
   @see-slot{gdk-color-blue}")
 
 (export (boxed-related-symbols 'gdk-color))
+
+;;; --- copy-gdk-color ---------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'copy-gdk-color 'function)
+ "@version{2013-6-15}
+  @argument[instance]{a @class{gdk-color} structure}
+  Copy constructor of a @class{gdk-color} structure.")
+
+;;; --- make-gdk-color ---------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'make-gdk-color 'function)
+ "@version{2013-6-15}
+  @argument[pixel]{For allocated colors, the pixel value used to draw this
+      color on the screen. Not used anymore.}
+  @argument[red]{The red component of the color. This is a value between
+      @code{0} and @code{65535}, with @code{65535} indicating full intensity.}
+  @argument[green]{The green component of the color.}
+  @argument[blue]{The blue component of the color.}
+  Creates a @class{gdk-color} structure.")
 
 ;;; --- gdk-color-pixel --------------------------------------------------------
 
@@ -127,7 +150,7 @@
     Accessor of the slot \"green\" of the @class{gdk-color} struct.
   @end{short}")
 
-;;; --- gdk-color-pixel --------------------------------------------------------
+;;; --- gdk-color-blue ---------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-color-blue atdoc:*function-name-alias*)

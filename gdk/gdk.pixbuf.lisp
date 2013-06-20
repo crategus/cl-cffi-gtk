@@ -46,60 +46,46 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pixbuf_get_from_window ()
-;;;
-;;; GdkPixbuf * gdk_pixbuf_get_from_window (GdkWindow *window,
-;;;                                         gint src_x,
-;;;                                         gint src_y,
-;;;                                         gint width,
-;;;                                         gint height);
-;;;
-;;; Transfers image data from a GdkWindow and converts it to an RGB(A)
-;;; representation inside a GdkPixbuf. In other words, copies image data from a
-;;; server-side drawable to a client-side RGB(A) buffer. This allows you to
-;;; efficiently read individual pixels on the client side.
-;;;
-;;; This function will create an RGB pixbuf with 8 bits per channel with the
-;;; same size specified by the width and height arguments. The pixbuf will
-;;; contain an alpha channel if the window contains one.
-;;;
-;;; If the window is off the screen, then there is no image data in the
-;;; obscured/offscreen regions to be placed in the pixbuf. The contents of
-;;; portions of the pixbuf corresponding to the offscreen region are undefined.
-;;;
-;;; If the window you're obtaining data from is partially obscured by other
-;;; windows, then the contents of the pixbuf areas corresponding to the obscured
-;;; regions are undefined.
-;;;
-;;; If the window is not mapped (typically because it's iconified/minimized or
-;;; not on the current workspace), then NULL will be returned.
-;;;
-;;; If memory can't be allocated for the return value, NULL will be returned
-;;; instead.
-;;;
-;;; (In short, there are several ways this function can fail, and if it fails
-;;; it returns NULL; so check the return value.)
-;;;
-;;; window :
-;;;     Source window
-;;;
-;;; src_x :
-;;;     Source X coordinate within window
-;;;
-;;; src_y :
-;;;     Source Y coordinate within window
-;;;
-;;; width :
-;;;     Width in pixels of region to get
-;;;
-;;; height :
-;;;     Height in pixels of region to get
-;;;
-;;; Returns :
-;;;     A newly-created pixbuf with a reference count of 1, or NULL on error.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_pixbuf_get_from_window" gdk-pixbuf-get-from-window)
     (g-object gdk-pixbuf)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-17}
+  @argument[window]{source window}
+  @argument[src-x]{source x coordinate within window}
+  @argument[src-y]{source y coordinate within window}
+  @argument[width]{width in pixels of region to get}
+  @argument[height]{height in pixels of region to get}
+  @return{A newly-created pixbuf with a reference count of 1, or @code{nil} on
+    error.}
+  @begin{short}
+    Transfers image data from a @class{gdk-window} and converts it to an
+    RGB(A) representation inside a @class{gdk-pixbuf}. In other words, copies
+    image data from a server-side drawable to a client-side RGB(A) buffer. This
+    allows you to efficiently read individual pixels on the client side.
+  @end{short}
+
+  This function will create an RGB pixbuf with 8 bits per channel with the
+  same size specified by the width and height arguments. The pixbuf will
+  contain an alpha channel if the window contains one.
+
+  If the window is off the screen, then there is no image data in the
+  obscured/offscreen regions to be placed in the pixbuf. The contents of
+  portions of the pixbuf corresponding to the offscreen region are undefined.
+
+  If the window you're obtaining data from is partially obscured by other
+  windows, then the contents of the pixbuf areas corresponding to the obscured
+  regions are undefined.
+
+  If the window is not mapped (typically because it is iconified/minimized or
+  not on the current workspace), then @code{nil} will be returned.
+
+  If memory cannot be allocated for the return value, @code{nil} will be
+  returned instead.
+
+  (In short, there are several ways this function can fail, and if it fails
+  it returns @code{nil}; so check the return value.)"
   (window (g-object gdk-window))
   (src-x :int)
   (src-y :int)
@@ -110,42 +96,30 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pixbuf_get_from_surface ()
-;;;
-;;; GdkPixbuf * gdk_pixbuf_get_from_surface (cairo_surface_t *surface,
-;;;                                          gint src_x,
-;;;                                          gint src_y,
-;;;                                          gint width,
-;;;                                          gint height);
-;;;
-;;; Transfers image data from a cairo_surface_t and converts it to an RGB(A)
-;;; representation inside a GdkPixbuf. This allows you to efficiently read
-;;; individual pixels from cairo surfaces. For GdkWindows, use
-;;; gdk_pixbuf_get_from_window() instead.
-;;;
-;;; This function will create an RGB pixbuf with 8 bits per channel. The pixbuf
-;;; will contain an alpha channel if the surface contains one.
-;;;
-;;; surface :
-;;;     surface to copy from
-;;;
-;;; src_x :
-;;;     Source X coordinate within surface
-;;;
-;;; src_y :
-;;;     Source Y coordinate within surface
-;;;
-;;; width :
-;;;     Width in pixels of region to get
-;;;
-;;; height :
-;;;     Height in pixels of region to get
-;;;
-;;; Returns :
-;;;     A newly-created pixbuf with a reference count of 1, or NULL on error.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_pixbuf_get_from_surface" gdk-pixbuf-get-from-surface)
     (g-object gdk-pixbuf)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-17}
+  @argument[surface]{surface to copy from}
+  @argument[src-x]{source x coordinate within surface}
+  @argument[src-y]{source y coordinate within surface}
+  @argument[width]{width in pixels of region to get}
+  @argument[height]{height in pixels of region to get}
+  @return{A newly-created pixbuf with a reference count of 1,
+    or @code{nil} on error.}
+  @begin{short}
+    Transfers image data from a @symbol{cairo-surface-t} and converts it to an
+    RGB(A) representation inside a @class{gdk-pixbuf} object.
+  @end{short}
+  This allows you to efficiently read individual pixels from cairo surfaces. For
+  @class{gdk-window}'s, use the function @fun{gdk-pixbuf-get-from-window}
+  instead.
+
+  This function will create an RGB pixbuf with 8 bits per channel. The pixbuf
+  will contain an alpha channel if the surface contains one.
+  @see-function{gdk-pixbuf-get-from-window}"
   (surface cairo-surface-t)
   (src-x :int)
   (src-y :int)

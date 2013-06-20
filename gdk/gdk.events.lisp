@@ -2,7 +2,7 @@
 ;;; gdk.events.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See yhttp://common-lisp.net/project/cl-gtk2/>.
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GDK 3 Reference Manual
 ;;; Version 3.4.3. See http://www.gtk.org. See <http://www.gtk.org>.
@@ -126,14 +126,16 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; GDK_PRIORITY_REDRAW
-;;;
-;;; #define GDK_PRIORITY_REDRAW (G_PRIORITY_HIGH_IDLE + 20)
-;;;
-;;; This is the priority that the idle handler processing window updates is
-;;; given in the GLib Main Loop.
 ;;; ----------------------------------------------------------------------------
 
-(defconstant gdk-priority-redraw (+ g-priority-high-idle 20))
+(defconstant gdk-priority-redraw (+ g-priority-high-idle 20)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-14}
+  This is the priority that the idle handler processing window updates is
+  given in the GLib Main Loop.")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gdk-priority-redraw atdoc:*variable-name-alias*) "Constant")
 
 (export 'gdk-priority-redraw)
 
@@ -193,69 +195,71 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_events_pending ()
-;;;
-;;; gboolean gdk_events_pending (void);
-;;;
-;;; Checks if any events are ready to be processed for any display.
-;;;
-;;; Returns :
-;;;     TRUE if any events are pending.
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_events_pending" gdk-events-pending) :boolean)
+(defcfun ("gdk_events_pending" gdk-events-pending) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-15}
+  @return{@em{True} if any events are pending.}
+  Checks if any events are ready to be processed for any display.")
 
 (export 'gdk-events-pending)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_event_peek ()
-;;;
-;;; GdkEvent * gdk_event_peek (void);
-;;;
-;;; If there is an event waiting in the event queue of some open display,
-;;; returns a copy of it. See gdk_display_peek_event().
-;;;
-;;; Returns :
-;;;     a copy of the first GdkEvent on some event queue, or NULL if no events
-;;;     are in any queues. The returned GdkEvent should be freed with
-;;;     gdk_event_free().
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_event_peek" gdk-event-peek) (g-boxed-foreign gdk-event :return))
+(defcfun ("gdk_event_peek" gdk-event-peek) (g-boxed-foreign gdk-event :return)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-15}
+  @begin{return}
+    A copy of the first @class{gdk-event} on some event queue, or @code{nil} if
+    no events are in any queues.
+  @end{return}
+  @begin{short}
+    If there is an event waiting in the event queue of some open display,
+    returns a copy of it.
+  @end{short}
+  See the function @fun{gdk-display-peek-event}.
+  @see-function{gdk-display-peek-event}")
 
 (export 'gdk-event-peek)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_event_get ()
-;;;
-;;; GdkEvent * gdk_event_get (void);
-;;;
-;;; Checks all open displays for a GdkEvent to process,to be processed on,
-;;; fetching events from the windowing system if necessary. See
-;;; gdk_display_get_event().
-;;;
-;;; Returns :
-;;;     the next GdkEvent to be processed, or NULL if no events are pending. The
-;;;     returned GdkEvent should be freed with gdk_event_free().
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_event_get" gdk-event-get) (g-boxed-foreign gdk-event :return))
+(defcfun ("gdk_event_get" gdk-event-get) (g-boxed-foreign gdk-event :return)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-15}
+  @begin{return}
+    The next @class{gdk-event} to be processed, or @code{nil} if no events are
+    pending.
+  @end{return}
+  @begin{short}
+    Checks all open displays for a @class{gdk-event} to process, to be processed
+    on, fetching events from the windowing system if necessary.
+  @end{short}
+  See the function @fun{gdk-display-get-event}.
+  @see-function{gdk-display-get-event}")
 
 (export 'gdk-event-get)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_event_put ()
-;;;
-;;; void gdk_event_put (const GdkEvent *event);
-;;;
-;;; Appends a copy of the given event onto the front of the event queue for
-;;; event->any.window's display, or the default event queue if event->any.window
-;;; is NULL. See gdk_display_put_event().
-;;;
-;;; event :
-;;;     a GdkEvent.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_event_put" gdk-event-put) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-15}
+  @argument[event]{a @class{gdk-event} structure}
+  @begin{short}
+    Appends a copy of the given event onto the front of the event queue for
+    @code{event->any.window}'s display, or the default event queue if
+    @code{event->any.window} is @code{nil}.
+  @end{short}
+  See the function @fun{gdk-display-put-event}.
+  @see-function{gdk-display-put-event}"
   (event (g-boxed-foreign gdk-event)))
 
 (export 'gdk-event-put)
@@ -309,24 +313,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_event_get_axis ()
-;;;
-;;; gboolean gdk_event_get_axis (const GdkEvent *event,
-;;;                              GdkAxisUse axis_use,
-;;;                              gdouble *value);
-;;;
-;;; Extract the axis value for a particular axis use from an event structure.
-;;;
-;;; event :
-;;;     a GdkEvent
-;;;
-;;; axis_use :
-;;;     the axis use to look for
-;;;
-;;; value :
-;;;     location to store the value found
-;;;
-;;; Returns :
-;;;     TRUE if the specified axis was found, otherwise FALSE
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_event_get_axis" %gdk-event-get-axis) :boolean
@@ -334,9 +320,15 @@
   (axis-use gdk-axis-use)
   (value (:pointer :double)))
 
-(defun gdk-event-get-axis (event axis)
+(defun gdk-event-get-axis (event axis-use)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-15}
+  @argument[event]{a @class{gdk-event} structure}
+  @argument[axis-use]{the axis use to look for}
+  @return{@code{value} -- the value found}
+  Extract the axis value for a particular axis use from an event structure."
   (with-foreign-object (value :double)
-    (when (%gdk-event-get-axis event axis value)
+    (when (%gdk-event-get-axis event axis-use value)
       (mem-ref value :double))))
 
 (export 'gdk-event-get-axis)
@@ -382,24 +374,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_event_get_coords ()
-;;;
-;;; gboolean gdk_event_get_coords (const GdkEvent *event,
-;;;                                gdouble *x_win,
-;;;                                gdouble *y_win);
-;;;
-;;; Extract the event window relative x/y coordinates from an event.
-;;;
-;;; event :
-;;;     a GdkEvent
-;;;
-;;; x_win :
-;;;     location to put event window x coordinate
-;;;
-;;; y_win :
-;;;     location to put event window y coordinate
-;;;
-;;; Returns :
-;;;     TRUE if the event delivered event window coordinates
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_event_get_coords" %gdk-event-get-coords) :boolean
@@ -410,9 +384,18 @@
 ;; The Lisp implementation returns the values.
 
 (defun gdk-event-get-coords (event)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-15}
+  @argument[event]{a @class{gdk-event} structure}
+  @begin{return}
+    @code{x-win} -- event window x coordinate @br{}
+    @code{y-win} -- event window y coordinate @br{}
+  @end{return}
+  Extract the event window relative x/y coordinates from an event."
   (with-foreign-objects ((x :double) (y :double))
     (when (%gdk-event-get-coords event x y)
-      (values (mem-ref x :double) (mem-ref y :double)))))
+      (values (mem-ref x :double)
+              (mem-ref y :double)))))
 
 (export 'gdk-event-get-coords)
 
@@ -456,24 +439,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_event_get_root_coords ()
-;;;
-;;; gboolean gdk_event_get_root_coords (const GdkEvent *event,
-;;;                                     gdouble *x_root,
-;;;                                     gdouble *y_root);
-;;;
-;;; Extract the root window relative x/y coordinates from an event.
-;;;
-;;; event :
-;;;     a GdkEvent
-;;;
-;;; x_root :
-;;;     location to put root window x coordinate
-;;;
-;;; y_root :
-;;;     location to put root window y coordinate
-;;;
-;;; Returns :
-;;;     TRUE if the event delivered root window coordinates
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_event_get_root_coords" %gdk-event-get-root-coords) :boolean
@@ -482,9 +447,18 @@
   (y-win (:pointer :double)))
 
 (defun gdk-event-get-root-coords (event)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-15}
+  @argument[event]{a @class{gdk-event} structure}
+  @begin{return}
+    @code{x-root} -- root window x coordinate @br{}
+    @code{y-root} -- root window y coordinate
+  @end{return}
+  Extract the root window relative x/y coordinates from an event."
   (with-foreign-objects ((x :double) (y :double))
     (when (%gdk-event-get-root-coords event x y)
-      (values (mem-ref x :double) (mem-ref y :double)))))
+      (values (mem-ref x :double)
+              (mem-ref y :double)))))
 
 (export 'gdk-event-get-root-coords)
 
@@ -510,26 +484,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_event_get_scroll_deltas ()
-;;;
-;;; gboolean gdk_event_get_scroll_deltas (const GdkEvent *event,
-;;;                                       gdouble *delta_x,
-;;;                                       gdouble *delta_y);
-;;;
-;;; Retrieves the scroll deltas from a GdkEvent
-;;;
-;;; event :
-;;;     a GdkEvent
-;;;
-;;; delta_x :
-;;;     return location for X delta
-;;;
-;;; delta_y :
-;;;     return location for Y delta
-;;;
-;;; Returns :
-;;;     TRUE if the event contains smooth scroll information
-;;;
-;;; Since 3.4
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_event_get_scroll_deltas" %gdk-event-get-scroll-deltas) :boolean
@@ -538,6 +492,18 @@
   (delta-y (:pointer :double)))
 
 (defun gdk-event-get-scroll-deltas (event)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-15}
+  @argument[event]{a @class{gdk-event} structure}
+  @begin{return}
+    @code{delta-x} -- X delta @br{}
+    @code{delta-y} -- Y delta
+  @end{return}
+  @begin{short}
+    Retrieves the scroll deltas from a @class{gdk-event} structure.
+  @end{short}
+
+  Since 3.4"
   (with-foreign-objects ((x :double) (y :double))
     (when (%gdk-event-get-scroll-deltas event x y)
       (values (mem-ref x :double)
@@ -547,50 +513,41 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_event_get_state ()
-;;;
-;;; gboolean gdk_event_get_state (const GdkEvent *event, GdkModifierType *state)
-;;;
-;;; If the event contains a "state" field, puts that field in state. Otherwise
-;;; stores an empty state (0). Returns TRUE if there was a state field in the
-;;; event. event may be NULL, in which case it's treated as if the event had no
-;;; state field.
-;;;
-;;; event :
-;;;     a GdkEvent or NULL
-;;;
-;;; state :
-;;;     return location for state
-;;;
-;;; Returns :
-;;;     TRUE if there was a state field in the event
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_event_get_state" %gdk_event_get_state) :boolean
+(defcfun ("gdk_event_get_state" %gdk-event-get-state) :boolean
   (event (g-boxed-foreign gdk-event))
   (state (:pointer gdk-modifier-type)))
 
 (defun gdk-event-get-state (event)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-15}
+  @argument[event]{a @class{gdk-event} structure or @code{nil}}
+  @begin{return}
+    @code{state} -- state
+  @end{return}
+  @begin{short}
+    If the event contains a \"state\" field, puts that field in state.
+  @end{short}
+  Otherwise stores an empty state (0). @arg{event} may be @code{nil}, in which
+  case it is treated as if the event had no state field."
   (with-foreign-object (state 'gdk-modifier-type)
-    (when (%gdk_event_get_state event state)
+    (when (%gdk-event-get-state event state)
       (mem-ref state 'gdk-modifier-type))))
 
 (export 'gdk-event-get-state)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_event_get_time ()
-;;;
-;;; guint32 gdk_event_get_time (const GdkEvent *event);
-;;;
-;;; returns GDK_CURRENT_TIME. If event is NULL, returns GDK_CURRENT_TIME.
-;;;
-;;; event :
-;;;     a GdkEvent
-;;;
-;;; Returns :
-;;;     time stamp field from event
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_event_get_time" gdk-event-get-time) :uint32
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-17}
+  @argument[event]{a @class{gdk-event} structure}
+  @return{Time stamp field from event.}
+  Returns the current time of @arg{event}. If @arg{event} is @code{nil}, returns
+  @variable{+gdk-current-time+}."
   (event (g-boxed-foreign gdk-event)))
 
 (export 'gdk-event-get-time)
@@ -623,32 +580,34 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_event_request_motions ()
-;;;
-;;; void gdk_event_request_motions (const GdkEventMotion *event);
-;;;
-;;; Request more motion notifies if event is a motion notify hint event.
-;;;
-;;; This function should be used instead of gdk_window_get_pointer() to request
-;;; further motion notifies, because it also works for extension events where
-;;; motion notifies are provided for devices other than the core pointer.
-;;; Coordinate extraction, processing and requesting more motion events from a
-;;; GDK_MOTION_NOTIFY event usually works like this:
-;;;
-;;;   {
-;;;     /* motion_event handler */
-;;;     x = motion_event->x;
-;;;     y = motion_event->y;
-;;;     /* handle (x,y) motion */
-;;;     gdk_event_request_motions (motion_event); /* handles is_hint events */
-;;;   }
-;;;
-;;; event :
-;;;     a valid GdkEvent
-;;;
-;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_event_request_motions" gdk-event-request-motions) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-17}
+  @argument[event]{a valid @class{gdk-event} structure}
+  @begin{short}
+    Request more motion notifies if event is a motion notify hint event.
+  @end{short}
+
+  This function should be used instead of the function
+  @fun{gdk-window-get-pointer} to request further motion notifies, because it
+  also works for extension events where motion notifies are provided for devices
+  other than the core pointer. Coordinate extraction, processing and requesting
+  more motion events from a @code{GDK_MOTION_NOTIFY} event usually works like
+  this:
+  @begin{pre}
+   {
+     /* motion_event handler */
+     x = motion_event->x;
+     y = motion_event->y;
+     /* handle (x,y) motion */
+     gdk_event_request_motions (motion_event); /* handles is_hint events */
+   @}
+  @end{pre}
+
+  Since 2.12
+  @see-function{gdk-window-get-pointer}"
   (event (g-boxed-foreign gdk-event)))
 
 (export 'gdk-event-request-motions)
@@ -759,26 +718,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_event_handler_set ()
-;;;
-;;; void gdk_event_handler_set (GdkEventFunc func,
-;;;                             gpointer data,
-;;;                             GDestroyNotify notify);
-;;;
-;;; Sets the function to call to handle all events from GDK.
-;;;
-;;; Note that GTK+ uses this to install its own event handler, so it is usually
-;;; not useful for GTK+ applications. (Although an application can call this
-;;; function then call gtk_main_do_event() to pass events to GTK+.)
-;;;
-;;; func :
-;;;     the function to call to handle events from GDK.
-;;;
-;;; data :
-;;;     user data to pass to the function.
-;;;
-;;; notify :
-;;;     the function to call when the handler function is removed, i.e. when
-;;;     gdk_event_handler_set() is called with another event handler.
 ;;; ----------------------------------------------------------------------------
 
 (defcallback gdk-event-func-callback :void
@@ -792,9 +731,21 @@
   (data :pointer)
   (notify :pointer))
 
-(defun gdk-event-handler-set (fn)
+(defun gdk-event-handler-set (func)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-17}
+  @argument[func]{the function to call to handle events from GDK}
+  @begin{short}
+    Sets the function to call to handle all events from GDK.
+  @end{short}
+
+  Note that GTK+ uses this to install its own event handler, so it is usually
+  not useful for GTK+ applications. (Although an application can call this
+  function then call the function @fun{gtk-main-do-event} to pass events to
+  GTK+.)
+  @see-function{gtk-main-do-event}"
   (%gdk-event-handler-set (callback gdk-event-func-callback)
-                          (glib::allocate-stable-pointer fn)
+                          (glib::allocate-stable-pointer func)
                           (callback glib::stable-pointer-destroy-notify-cb)))
 
 (export 'gdk-event-handler-set)
@@ -817,33 +768,29 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_get_show_events ()
-;;;
-;;; gboolean gdk_get_show_events (void);
-;;;
-;;; Gets whether event debugging output is enabled.
-;;;
-;;; Returns :
-;;;     TRUE if event debugging output is enabled.
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_get_show_events" gdk-get-show-events) :boolean)
+(defcfun ("gdk_get_show_events" gdk-get-show-events) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-17}
+  @return{@em{True} if event debugging output is enabled.}
+  Gets whether event debugging output is enabled.")
 
 (export 'gdk-get-show-events)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_set_show_events ()
-;;;
-;;; void gdk_set_show_events (gboolean show_events);
-;;;
-;;; Sets whether a trace of received events is output. Note that GTK+ must be
-;;; compiled with debugging (that is, configured using the --enable-debug
-;;; option) to use this option.
-;;;
-;;; show_events :
-;;;     TRUE to output event debugging information.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_set_show_events" gdk-set-show-events) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-17}
+  @argument[show-events]{@em{True} to output event debugging information.}
+  @begin{short}
+    Sets whether a trace of received events is output.
+  @end{short}
+  Note that GTK+ must be compiled with debugging (that is, configured using the
+  @code{--enable-debug} option) to use this option."
   (show-events :boolean))
 
 (export 'gdk-set-show-events)
@@ -963,21 +910,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_setting_get ()
-;;;
-;;; gboolean gdk_setting_get (const gchar *name, GValue *value);
-;;;
-;;; Obtains a desktop-wide setting, such as the double-click time, for the
-;;; default screen. See gdk_screen_get_setting().
-;;;
-;;; name :
-;;;     the name of the setting.
-;;;
-;;; value :
-;;;     location to store the value of the setting.
-;;;
-;;; Returns :
-;;;     TRUE if the setting existed and a value was stored in value, FALSE
-;;;     otherwise.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_setting_get" %gdk-setting-get) :boolean
@@ -985,6 +917,18 @@
   (value (:pointer g-value)))
 
 (defun gdk-get-setting (name)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-17}
+  @argument[name]{the name of the setting}
+  @begin{return}
+    @code{value} -- the value of the setting
+  @end{return}
+  @begin{short}
+    Obtains a desktop-wide setting, such as the double-click time, for the
+    default screen.
+  @end{short}
+  See the function @fun{gdk-screen-get-setting}.
+  @see-function{gdk-screen-get-setting}"
   (with-foreign-object (value 'g-value)
     (g-value-zero value)
     (when (%gdk-setting-get name value)

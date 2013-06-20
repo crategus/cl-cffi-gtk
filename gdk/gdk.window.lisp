@@ -535,17 +535,15 @@
   :south-east
   :static)
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-gravity atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gdk-gravity atdoc:*external-symbols*)
- "@version{2013-4-4}
+ "@version{2013-6-10}
   @begin{short}
     Defines the reference point of a window and the meaning of coordinates
-    passed to @fun{gtk-window-move}. See @fun{gtk-window-move} and the
-    \"implementation notes\" section of the Extended Window Manager Hints
-    specification for more details.
+    passed to the @fun{gtk-window-move} function. See the @fun{gtk-window-move}
+    function and the \"implementation notes\" section of the Extended Window
+    Manager Hints specification for more details.
   @end{short}
   @begin{pre}
 (define-g-enum \"GdkGravity\" gdk-gravity
@@ -563,18 +561,19 @@
   :static)
   @end{pre}
   @begin[code]{table}
-    @entry[:north-west]{the reference point is at the top left corner.}
-    @entry[:north]{the reference point is in the middle of the top edge.}
-    @entry[:north-east]{the reference point is at the top right corner.}
-    @entry[:west]{the reference point is at the middle of the left edge.}
-    @entry[:center]{the reference point is at the center of the window.}
-    @entry[:east]{the reference point is at the middle of the right edge.}
-    @entry[:south-west]{the reference point is at the lower left corner.}
-    @entry[:south]{the reference point is at the middle of the lower edge.}
-    @entry[:south-east]{the reference point is at the lower right corner.}
-    @entry[:static]{the reference point is at the top left corner of the
+    @entry[:north-west]{The reference point is at the top left corner.}
+    @entry[:north]{The reference point is in the middle of the top edge.}
+    @entry[:north-east]{The reference point is at the top right corner.}
+    @entry[:west]{The reference point is at the middle of the left edge.}
+    @entry[:center]{The reference point is at the center of the window.}
+    @entry[:east]{The reference point is at the middle of the right edge.}
+    @entry[:south-west]{The reference point is at the lower left corner.}
+    @entry[:south]{The reference point is at the middle of the lower edge.}
+    @entry[:south-east]{The reference point is at the lower right corner.}
+    @entry[:static]{The reference point is at the top left corner of the
       window itself, ignoring window manager decorations.}
-  @end{table}")
+  @end{table}
+  @see-function{gtk-window-move}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GdkGeometry
@@ -593,45 +592,41 @@
   (max-aspect :double :initform 0.0d0)
   (gravity gdk-gravity :initform :north-west))
 
-(export (boxed-related-symbols 'gdk-geometry))
-
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-geometry atdoc:*class-name-alias*) "CStruct"
       (documentation 'gdk-geometry 'type)
- "@version{2013-4-5}
+ "@version{2013-6-10}
   @begin{short}
-    The GdkGeometry struct gives the window manager information about a window's
-    geometry constraints. Normally you would set these on the GTK+ level using
-    gtk_window_set_geometry_hints(). GtkWindow then sets the hints on the
-    GdkWindow it creates.
+    The @sym{gdk-geometry} structure gives the window manager information about
+    a window's geometry constraints. Normally you would set these on the GTK+
+    level using the @fun{gtk-window-set-geometry-hints} function.
+    @class{gtk-window} then sets the hints on the @class{gdk-window} it creates.
   @end{short}
 
-  gdk_window_set_geometry_hints() expects the hints to be fully valid already
-  and simply passes them to the window manager; in contrast,
-  gtk_window_set_geometry_hints() performs some interpretation. For example,
-  GtkWindow will apply the hints to the geometry widget instead of the
-  toplevel window, if you set a geometry widget. Also, the
-  min_width/min_height/max_width/max_height fields may be set to -1, and
-  GtkWindow will substitute the size request of the window or geometry widget.
-  If the minimum size hint is not provided, GtkWindow will use its requisition
-  as the minimum size. If the minimum size is provided and a geometry widget
-  is set, GtkWindow will take the minimum size as the minimum size of the
-  geometry widget rather than the entire window. The base size is treated
-  similarly.
+  The @fun{gdk-window-set-geometry-hints} function expects the hints to be fully
+  valid already and simply passes them to the window manager; in contrast, the
+  @fun{gtk-window-set-geometry-hints} function performs some interpretation. For
+  example, @class{gtk-window} will apply the hints to the geometry widget
+  instead of the toplevel window, if you set a geometry widget. Also, the
+  @code{min-width}/@code{min-height}/@code{max-width}/@code{max-height} fields
+  may be set to -1, and @class{gtk-window} will substitute the size request of
+  the window or geometry widget. If the minimum size hint is not provided,
+  @class{gtk-window} will use its requisition as the minimum size. If the
+  minimum size is provided and a geometry widget is set, @class{gtk-window} will
+  take the minimum size as the minimum size of the geometry widget rather than
+  the entire window. The base size is treated similarly.
 
-  The canonical use-case for gtk_window_set_geometry_hints() is to get a
-  terminal widget to resize properly. Here, the terminal text area should be
-  the geometry widget; GtkWindow will then automatically set the base size to
-  the size of other widgets in the terminal window, such as the menubar and
-  scrollbar. Then, the width_inc and height_inc fields should be set to the
-  size of one character in the terminal. Finally, the base size should be set
-  to the size of one character. The net effect is that the minimum size of the
-  terminal will have a 1x1 character terminal area, and only terminal sizes on
-  the \"character grid\" will be allowed.
+  The canonical use-case for the @fun{gtk-window-set-geometry-hints} function is
+  to get a terminal widget to resize properly. Here, the terminal text area
+  should be the geometry widget; @class{gtk-window} will then automatically set
+  the base size to the size of other widgets in the terminal window, such as the
+  menubar and scrollbar. Then, the @code{width-inc} and @code{height-inc} fields
+  should be set to the size of one character in the terminal. Finally, the base
+  size should be set to the size of one character. The net effect is that the
+  minimum size of the terminal will have a 1 x 1 character terminal area, and
+  only terminal sizes on the \"character grid\" will be allowed.
 
-  Here's an example of how the terminal example would be implemented, assuming
+  Here is an example of how the terminal example would be implemented, assuming
   a terminal area widget called \"terminal\" and a toplevel window \"toplevel\":
   @begin{pre}
  GdkGeometry hints;
@@ -650,12 +645,12 @@
                                 GDK_HINT_MIN_SIZE |
                                 GDK_HINT_BASE_SIZE);
   @end{pre}
-  The other useful fields are the min_aspect and max_aspect fields; these
-  contain a width/height ratio as a floating point number. If a geometry
-  widget is set, the aspect applies to the geometry widget rather than the
-  entire window. The most common use of these hints is probably to set
-  min_aspect and max_aspect to the same value, thus forcing the window to keep
-  a constant aspect ratio.
+  The other useful fields are the @code{min-aspect} and @code{max-aspect}
+  fields; these contain a width/height ratio as a floating point number. If a
+  geometry widget is set, the aspect applies to the geometry widget rather than
+  the entire window. The most common use of these hints is probably to set
+  @code{min-aspect} and @code{max-aspect} to the same value, thus forcing the
+  window to keep a constant aspect ratio.
   @begin{pre}
 (define-g-boxed-cstruct gdk-geometry \"GdkGeometry\"
   (min-width :int :initform 0)
@@ -671,37 +666,45 @@
   (gravity gdk-gravity :initform :north-west))
   @end{pre}
   @begin[code]{table}
-    @entry[min-width]{minimum width of window (or -1 to use requisition,
-      with GtkWindow only)}
-    @entry[min-height]{minimum height of window (or -1 to use requisition,
-      with GtkWindow only)}
-    @entry[max-width}{maximum width of window (or -1 to use requisition,
-      with GtkWindow only)}
-    @entry[max-height]{maximum height of window (or -1 to use requisition,
-      with GtkWindow only)}
-    @entry[base-width]{allowed window widths are base_width + width_inc * N
-      where N is any integer (-1 allowed with GtkWindow)}
-    @entry[base-height]{allowed window widths are base_height + height_inc * N
-      where N is any integer (-1 allowed with GtkWindow)}
-    @entry[width-increment]{width resize increment}
-    @entry[height-increment]{height resize increment}
-    @entry[min-aspect]{minimum width/height ratio}
-    @entry[max-aspect]{maximum width/height ratio}
-    @entry[win-gravity]{window gravity, see gtk_window_set_gravity()}
+    @entry[min-width]{Minimum width of window (or -1 to use requisition,
+      with @class{gtk-window} only).}
+    @entry[min-height]{Minimum height of window (or -1 to use requisition,
+      with @class{gtk-window} only).}
+    @entry[max-width]{Maximum width of window (or -1 to use requisition,
+      with @class{gtk-window} only).}
+    @entry[max-height]{Maximum height of window (or -1 to use requisition,
+      with @class{gtk-window} only).}
+    @entry[base-width]{Allowed window widths are @code{base-width} +
+      @code{width-inc} * @code{N} where @code{N} is any integer (-1 allowed with
+      @class{gtk-window}).}
+    @entry[base-height]{Allowed window widths are @code{base-height} +
+      @code{height-inc} * @code{N} where @code{N} is any integer (-1 allowed
+      with @class{gtk-window}).}
+    @entry[width-increment]{Width resize increment.}
+    @entry[height-increment]{Height resize increment.}
+    @entry[min-aspect]{Minimum width/height ratio.}
+    @entry[max-aspect]{Maximum width/height ratio.}
+    @entry[win-gravity]{Window gravity, see the @fun{gtk-window-set-gravity}
+      function.}
   @end{table}
   @see-constructor{make-gdk-geometry}
   @see-constructor{copy-gdk-geometry}
-  @see-slot{min-width}
-  @see-slot{min-height}
-  @see-slot{max-width}
-  @see-slot{max-height}
-  @see-slot{base-width}
-  @see-slot{base-height}
-  @see-slot{width-increment}
-  @see-slot{height-increment}
-  @see-slot{min-aspect}
-  @see-slot{max-aspect}
-  @see-slot{gravity gdk-gravity}")
+  @see-slot{gdk-geometry-min-width}
+  @see-slot{gdk-geometry-min-height}
+  @see-slot{gdk-geometry-max-width}
+  @see-slot{gdk-geometry-max-height}
+  @see-slot{gdk-geometry-base-width}
+  @see-slot{gdk-geometry-base-height}
+  @see-slot{gdk-geometry-width-increment}
+  @see-slot{gdk-geometry-height-increment}
+  @see-slot{gdk-geometry-min-aspect}
+  @see-slot{gdk-geometry-max-aspect}
+  @see-slot{gdk-geometry-win-gravity}
+  @see-function{gtk-window-set-geometry-hints}
+  @see-function{gdk-window-set-geometry-hints}
+  @see-function{gtk-window-set-gravity}")
+
+(export (boxed-related-symbols 'gdk-geometry))
 
 ;;; --- copy-gdk-window-attr ---------------------------------------------------
 

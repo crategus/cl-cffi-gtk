@@ -2,26 +2,26 @@ Content from the GDK 3.6.4 Reference Manual
 
   gdk.general.lisp          - Library initialization - GDK 3.6.4
   gdk.display-manager.lisp  - GdkDisplayManager      - GDK 3.6.4
-  gdk.display.lisp          - GdkDisplay             - GDK 3.4.3
-  gdk.screen.lisp           - GdkScreen              - GDK 3.4.3
-  gdk.device-manager.lisp   - GdkDeviceManger        - GDK 3.4.3
-  gdk.device.lisp           - GdkDevice              - GDK 3.4.3
-  gdk.rectangle.lisp        - Points and Rectangles  - GDK 3.4.3
-  gdk.pixbuf.lisp           - Pixbufs                - GDK 3.4.3
-  gdk.color.lisp            - Colors                 - GDK 3.4.3
-  gdk.rgba.lisp             - RGBA Colors            - GDK 3.4.3
-  gdk.visual.lisp           - Visuals                - GDK 3.4.3
-  gdk.cursor.lisp           - Cursors                - GDK 3.4.3
-  gdk.window.lisp           - Windows                - GDK 3.4.3
-  gdk.event.lisp            - Events                 - GDK 3.4.3
-  gdk.event-structures.lisp - Event Structures       - GDK 3.4.3
-  gdk.key-values.lisp       - Key Values             - GDK 3.4.3
-  gdk.selections.lisp       - Selections             - GDK 3.4.3
-  gdk.drag-and-drop-lisp    - Drag And Drop          - GDK 3.4.3
-  gdk.properties.lisp       - Properties and Atoms   - GDK 3.4.3
-  gdk.threads.lisp          - Threads                - GDK 3.4.3
-  gdk.pango.lisp            - Pango Interaction      - GDK 3.4.3
-  gdk.cairo.lisp            - Cairo Interaction      - GDK 3.4.3
+  gdk.display.lisp          - GdkDisplay             - GDK 3.6.4
+  gdk.screen.lisp           - GdkScreen              - GDK 3.6.4
+  gdk.device-manager.lisp   - GdkDeviceManger        - GDK 3.4.3*
+  gdk.device.lisp           - GdkDevice              - GDK 3.4.3*
+  gdk.rectangle.lisp        - Points and Rectangles  - GDK 3.4.3*
+  gdk.pixbuf.lisp           - Pixbufs                - GDK 3.4.3*
+  gdk.color.lisp            - Colors                 - GDK 3.4.3*
+  gdk.rgba.lisp             - RGBA Colors            - GDK 3.4.3*
+  gdk.visual.lisp           - Visuals                - GDK 3.4.3*
+  gdk.cursor.lisp           - Cursors                - GDK 3.4.3*
+  gdk.window.lisp           - Windows                - GDK 3.4.3*
+  gdk.event.lisp            - Events                 - GDK 3.4.3*
+  gdk.event-structures.lisp - Event Structures       - GDK 3.4.3*
+  gdk.key-values.lisp       - Key Values             - GDK 3.4.3*
+  gdk.selections.lisp       - Selections             - GDK 3.4.3*
+  gdk.drag-and-drop-lisp    - Drag And Drop          - GDK 3.4.3*
+  gdk.properties.lisp       - Properties and Atoms   - GDK 3.4.3*
+  gdk.threads.lisp          - Threads                - GDK 3.6.4
+  gdk.pango.lisp            - Pango Interaction      - GDK 3.4.3*
+  gdk.cairo.lisp            - Cairo Interaction      - GDK 3.4.3*
 
   not implemented           - X Window System Interaction
 

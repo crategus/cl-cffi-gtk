@@ -2,13 +2,14 @@
 ;;; gdk.threads.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GDK 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -258,6 +259,19 @@
 ;;;     return 0;
 ;;;   }
 ;;;
+;;; Unfortunately, all of the above documentation holds with the X11 backend
+;;; only. With the Win32 backend, GDK and GTK+ calls should not be attempted
+;;; from multiple threads at all. Combining the GDK lock with other locks such
+;;; as the Python global interpreter lock can be complicated.
+;;;
+;;; For these reason, the threading support has been deprecated in GTK+ 3.6.
+;;; Instead of calling GTK+ directly from multiple threads, it is recommended to
+;;; use g_idle_add(), g_main_context_invoke() and similar functions to make
+;;; these calls from the main thread instead. The main thread is the thread
+;;; which has called gtk_init() and is running the GTK+ mainloop. GTK+ itself
+;;; will continue to use the GDK lock internally as long as the deprecated
+;;; functionality is still available, and other libraries should probably do
+;;; the same.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gdk)
@@ -267,6 +281,10 @@
 ;;; A marco to execute code between gdk-threads-enter and gdk-threads-leave
 
 (defmacro with-gdk-threads-lock (&body body)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-17}
+  A Lisp macro to execute @arg{body} between the functions
+  @fun{gdk-threads-enter} and @fun{gdk-threads-leave}."
   `(progn
      (gdk-threads-enter)
      (unwind-protect
@@ -299,7 +317,6 @@
 ;;; gdk_threads_enter() should be used instead of this macro.
 ;;; ----------------------------------------------------------------------------
 
-
 ;;; ----------------------------------------------------------------------------
 ;;; GDK_THREADS_LEAVE
 ;;;
@@ -308,46 +325,68 @@
 ;;; This macro marks the end of a critical section begun with GDK_THREADS_ENTER.
 ;;; ----------------------------------------------------------------------------
 
-
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_threads_init ()
-;;;
-;;; void gdk_threads_init (void);
-;;;
-;;; Initializes GDK so that it can be used from multiple threads in conjunction
-;;; with gdk_threads_enter() and gdk_threads_leave().
-;;;
-;;; This call must be made before any use of the main loop from GTK+; to be
-;;; safe, call it before gtk_init().
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_threads_init" gdk-threads-init) :void)
+(defcfun ("gdk_threads_init" gdk-threads-init) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-17}
+  @subheading{Warning}
+    The function @sym{gdk-threads-init} has been deprecated since version 3.6
+    and should not be used in newly-written code. All GDK and GTK+ calls should
+    be made from the main thread.
+
+  @begin{short}
+    Initializes GDK so that it can be used from multiple threads in conjunction
+    with the functions @fun{gdk-threads-enter} and @fun{gdk-threads-leave}.
+  @end{short}
+
+  This call must be made before any use of the main loop from GTK+; to be
+  safe, call it before the function @fun{gtk-init}.
+  @see-function{gdk-threads-enter}
+  @see-function{gdk-threads-leave}")
 
 (glib::at-init () (gdk-threads-init))
 
+(export 'gdk-threads-init)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_threads_enter ()
-;;;
-;;; void gdk_threads_enter (void);
-;;;
-;;; This function marks the beginning of a critical section in which GDK and
-;;; GTK+ functions can be called safely and without causing race conditions.
-;;; Only one thread at a time can be in such a critial section.
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_threads_enter" gdk-threads-enter) :void)
+(defcfun ("gdk_threads_enter" gdk-threads-enter) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-17}
+  @subheading{Warning}
+    The function @sym{gdk-threads-enter} has been deprecated since version 3.6
+    and should not be used in newly-written code. All GDK and GTK+ calls should
+    be made from the main thread.
+
+  @begin{short}
+    This function marks the beginning of a critical section in which GDK and
+    GTK+ functions can be called safely and without causing race conditions.
+    Only one thread at a time can be in such a critial section.
+  @end{short}")
 
 (export 'gdk-threads-enter)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_threads_leave ()
-;;;
-;;; void gdk_threads_leave (void);
-;;;
-;;; Leaves a critical region begun with gdk_threads_enter().
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_threads_leave" gdk-threads-leave) :void)
+(defcfun ("gdk_threads_leave" gdk-threads-leave) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-17}
+  @subheading{Warning}
+    The function @sym{gdk-threads-leave} has been deprecated since version 3.6
+    and should not be used in newly-written code. All GDK and GTK+ calls should
+    be made from the main thread.
+
+  @begin{short}
+    Leaves a critical region begun with the function @fun{gdk-threads-enter}.
+  @end{short}
+  @see-function{gdk-threads-enter}")
 
 (export 'gdk-threads-leave)
 
@@ -355,6 +394,12 @@
 ;;; gdk_threads_set_lock_functions ()
 ;;;
 ;;; void gdk_threads_set_lock_functions (GCallback enter_fn, GCallback leave_fn)
+;;;
+;;; Warning
+;;;
+;;; gdk_threads_set_lock_functions has been deprecated since version 3.6 and
+;;; should not be used in newly-written code. All GDK and GTK+ calls should be
+;;; made from the main thread
 ;;;
 ;;; Allows the application to replace the standard method that GDK uses to
 ;;; protect its data structures. Normally, GDK creates a single GMutex that is
@@ -388,101 +433,32 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_threads_add_idle ()
-;;;
-;;; guint gdk_threads_add_idle (GSourceFunc function, gpointer data);
-;;;
-;;; A wrapper for the common usage of gdk_threads_add_idle_full() assigning the
-;;; default priority, G_PRIORITY_DEFAULT_IDLE.
-;;;
-;;; See gdk_threads_add_idle_full().
-;;;
-;;; function :
-;;;     function to call
-;;;
-;;; data :
-;;;     data to pass to function
-;;;
-;;; Returns :
-;;;     the ID (greater than 0) of the event source.
-;;;
-;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
 
-;; The Lisp implementation does not support the argument data.
-
 (defun gdk-threads-add-idle (func)
-  (%gdk-threads-add-idle-full g-priority-default
-                              (callback source-func-cb)
-                              (glib::allocate-stable-pointer func)
-                              (callback glib::stable-pointer-destroy-notify-cb)))
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-17}
+  @argument[func]{function to call}
+  @return{The ID (greater than 0) of the event source.}
+  @begin{short}
+    A wrapper for the common usage of the function
+    @fun{gdk-threads-add-idle-full} assigning the default priority,
+    @var{g-priority-default-idle}.
+  @end{short}
+
+  See the function @fun{gdk-threads-add-idle-full}.
+
+  Since 2.12
+  @see-function{gdk-threads-add-idle-full}"
+  (%gdk-threads-add-idle-full g-priority-default-idle
+                             (callback source-func-cb)
+                             (glib::allocate-stable-pointer func)
+                             (callback glib::stable-pointer-destroy-notify-cb)))
 
 (export 'gdk-threads-add-idle)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_threads_add_idle_full ()
-;;;
-;;; guint gdk_threads_add_idle_full (gint priority,
-;;;                                  GSourceFunc function,
-;;;                                  gpointer data,
-;;;                                  GDestroyNotify notify);
-;;;
-;;; Adds a function to be called whenever there are no higher priority events
-;;; pending. If the function returns FALSE it is automatically removed from the
-;;; list of event sources and will not be called again.
-;;;
-;;; This variant of g_idle_add_full() calls function with the GDK lock held. It
-;;; can be thought of a MT-safe version for GTK+ widgets for the following use
-;;; case, where you have to worry about idle_callback() running in thread A and
-;;; accessing self after it has been finalized in thread B:
-;;;
-;;;   static gboolean
-;;;   idle_callback (gpointer data)
-;;;   {
-;;;      /* gdk_threads_enter(); would be needed for g_idle_add() */
-;;;
-;;;      SomeWidget *self = data;
-;;;      /* do stuff with self */
-;;;
-;;;      self->idle_id = 0;
-;;;
-;;;      /* gdk_threads_leave(); would be needed for g_idle_add() */
-;;;      return FALSE;
-;;;   }
-;;;
-;;;   static void
-;;;   some_widget_do_stuff_later (SomeWidget *self)
-;;;   {
-;;;      self->idle_id = gdk_threads_add_idle (idle_callback, self)
-;;;      /* using g_idle_add() here would require thread protection in the
-;;;         callback */
-;;;   }
-;;;
-;;;   static void
-;;;   some_widget_finalize (GObject *object)
-;;;   {
-;;;      SomeWidget *self = SOME_WIDGET (object);
-;;;      if (self->idle_id)
-;;;        g_source_remove (self->idle_id);
-;;;      G_OBJECT_CLASS (parent_class)->finalize (object);
-;;;   }
-;;;
-;;; priority :
-;;;     the priority of the idle source. Typically this will be in the range
-;;;     between G_PRIORITY_DEFAULT_IDLE and G_PRIORITY_HIGH_IDLE
-;;;
-;;; function :
-;;;     function to call
-;;;
-;;; data :
-;;;     data to pass to function
-;;;
-;;; notify :
-;;;     function to call when the idle is removed, or NULL
-;;;
-;;; Returns :
-;;;     the ID (greater than 0) of the event source.
-;;;
-;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_threads_add_idle_full" %gdk-threads-add-idle-full) :uint
@@ -498,6 +474,57 @@
 ;; to the Lisp function func.
 
 (defun gdk-threads-add-idle-full (priority func)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-17}
+  @argument[priority]{the priority of the idle source. Typically this will be in
+    the range between @var{g-priority-default-idle} and
+    @var{g-priority-high-idle}.}
+  @argument[func]{function to call}
+  @return{The ID (greater than 0) of the event source.}
+  @begin{short}
+    Adds a function to be called whenever there are no higher priority events
+    pending. If the function returns @code{nil} it is automatically removed from
+    the list of event sources and will not be called again.
+  @end{short}
+
+  This variant of the function @fun{g-idle-add-full} calls function with the
+  GDK lock held. It can be thought of a MT-safe version for GTK+ widgets for the
+  following use case, where you have to worry about @code{idle_callback()}
+  running in thread A and accessing self after it has been finalized in
+  thread B:
+  @begin{pre}
+   static gboolean
+   idle_callback (gpointer data)
+   {
+      /* gdk_threads_enter(); would be needed for g_idle_add() */
+
+      SomeWidget *self = data;
+      /* do stuff with self */
+
+      self->idle_id = 0;
+
+      /* gdk_threads_leave(); would be needed for g_idle_add() */
+      return FALSE;
+   @}
+
+   static void
+   some_widget_do_stuff_later (SomeWidget *self)
+   {
+      self->idle_id = gdk_threads_add_idle (idle_callback, self)
+      /* using g_idle_add() here would require thread protection in the
+         callback */
+   @}
+
+  static void
+   some_widget_finalize (GObject *object)
+   {
+      SomeWidget *self = SOME_WIDGET (object);
+      if (self->idle_id)
+        g_source_remove (self->idle_id);
+      G_OBJECT_CLASS (parent_class)->finalize (object);
+   @}
+  @end{pre}
+  Since 2.12"
   (%gdk-threads-add-idle-full priority
                               (callback source-func-cb)
                               (glib::allocate-stable-pointer func)
@@ -507,116 +534,38 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_threads_add_timeout ()
-;;;
-;;; guint gdk_threads_add_timeout (guint interval,
-;;;                                GSourceFunc function,
-;;;                                gpointer data);
-;;;
-;;; A wrapper for the common usage of gdk_threads_add_timeout_full() assigning
-;;; the default priority, G_PRIORITY_DEFAULT.
-;;;
-;;; See gdk_threads_add_timeout_full().
-;;;
-;;; interval :
-;;;     the time between calls to the function, in milliseconds (1/1000ths of a
-;;;     second)
-;;;
-;;; function :
-;;;     function to call
-;;;
-;;; data :
-;;;     data to pass to function
-;;;
-;;; Returns :
-;;;     the ID (greater than 0) of the event source.
-;;;
-;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
 
 ;; The Lisp implementation does not support the argument data.
 
 (defun gdk-threads-add-timeout (interval func)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-17}
+  @argument[interval]{the time between calls to the function, in milliseconds
+    (1/1000ths of a second)}
+  @argument[func]{function to call}
+  @return{The ID (greater than 0) of the event source.}
+  @begin{short}
+    A wrapper for the common usage of the function
+    @fun{gdk-threads-add-timeout-full} assigning the default priority,
+    @var{g-priority-default}.
+  @end{short}
+
+  See the function @fun{gdk-threads-add-timeout-full}.
+
+  Since 2.12
+  @see-function{gdk-threads-add-timeout-full}"
   (%gdk-threads-add-timeout-full
-                              g-priority-default
-                              interval
-                              (callback source-func-cb)
-                              (glib::allocate-stable-pointer func)
-                              (callback glib::stable-pointer-destroy-notify-cb)))
+                             g-priority-default
+                             interval
+                             (callback source-func-cb)
+                             (glib::allocate-stable-pointer func)
+                             (callback glib::stable-pointer-destroy-notify-cb)))
 
 (export 'gdk-threads-add-timeout)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_threads_add_timeout_full ()
-;;;
-;;; guint gdk_threads_add_timeout_full (gint priority,
-;;;                                     guint interval,
-;;;                                     GSourceFunc function,
-;;;                                     gpointer data,
-;;;                                     GDestroyNotify notify);
-;;;
-;;; Sets a function to be called at regular intervals holding the GDK lock, with
-;;; the given priority. The function is called repeatedly until it returns
-;;; FALSE, at which point the timeout is automatically destroyed and the
-;;; function will not be called again. The notify function is called when the
-;;; timeout is destroyed. The first call to the function will be at the end of
-;;; the first interval.
-;;;
-;;; Note that timeout functions may be delayed, due to the processing of other
-;;; event sources. Thus they should not be relied on for precise timing. After
-;;; each call to the timeout function, the time of the next timeout is
-;;; recalculated based on the current time and the given interval (it does not
-;;; try to 'catch up' time lost in delays).
-;;;
-;;; This variant of g_timeout_add_full() can be thought of a MT-safe version for
-;;; GTK+ widgets for the following use case:
-;;;
-;;;   static gboolean timeout_callback (gpointer data)
-;;;   {
-;;;      SomeWidget *self = data;
-;;;
-;;;      /* do stuff with self */
-;;;
-;;;      self->timeout_id = 0;
-;;;
-;;;      return G_SOURCE_REMOVE;
-;;;   }
-;;;
-;;;   static void some_widget_do_stuff_later (SomeWidget *self)
-;;;   {
-;;;      self->timeout_id = g_timeout_add (timeout_callback, self)
-;;;   }
-;;;
-;;;   static void some_widget_finalize (GObject *object)
-;;;   {
-;;;      SomeWidget *self = SOME_WIDGET (object);
-;;;
-;;;      if (self->timeout_id)
-;;;        g_source_remove (self->timeout_id);
-;;;
-;;;      G_OBJECT_CLASS (parent_class)->finalize (object);
-;;;   }
-;;;
-;;; priority :
-;;;     the priority of the timeout source. Typically this will be in the range
-;;;     between G_PRIORITY_DEFAULT_IDLE and G_PRIORITY_HIGH_IDLE.
-;;;
-;;; interval :
-;;;     the time between calls to the function, in milliseconds (1/1000ths of a
-;;;     second)
-;;;
-;;; function :
-;;;     function to call
-;;;
-;;; data :
-;;;     data to pass to function
-;;;
-;;; notify :
-;;;     function to call when the timeout is removed, or NULL
-;;;
-;;; Returns :
-;;;     the ID (greater than 0) of the event source.
-;;;
-;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_threads_add_timeout_full" %gdk-threads-add-timeout-full) :uint
@@ -629,6 +578,62 @@
 ;; The Lisp implementation does not support the arguments data and notify.
 
 (defun gdk-threads-add-timeout-full (priority interval func)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-17}
+  @argument[priority]{the priority of the timeout source. Typically this will
+    be in the range between @var{g-priority-default-idle} and
+    @var{g-priority-high-idle}.}
+  @argument[interval]{the time between calls to the function, in milliseconds
+    (1/1000ths of a second)}
+  @argument[func]{function to call}
+  @return{The ID (greater than 0) of the event source.}
+  @begin{short}
+    Sets a function to be called at regular intervals holding the GDK lock, with
+    the given priority. The function is called repeatedly until it returns
+    @code{nil}, at which point the timeout is automatically destroyed and the
+    function will not be called again. The notify function is called when the
+    timeout is destroyed. The first call to the function will be at the end of
+    the first interval.
+  @end{short}
+
+  Note that timeout functions may be delayed, due to the processing of other
+  event sources. Thus they should not be relied on for precise timing. After
+  each call to the timeout function, the time of the next timeout is
+  recalculated based on the current time and the given interval (it does not
+  try to 'catch up' time lost in delays).
+
+  This variant of the function @fun{g-timeout-add-full} can be thought of a
+  MT-safe version for GTK+ widgets for the following use case:
+  @begin{pre}
+   static gboolean timeout_callback (gpointer data)
+   {
+      SomeWidget *self = data;
+
+      /* do stuff with self */
+
+      self->timeout_id = 0;
+
+      return G_SOURCE_REMOVE;
+   @}
+
+   static void some_widget_do_stuff_later (SomeWidget *self)
+   {
+      self->timeout_id = g_timeout_add (timeout_callback, self)
+   @}
+
+   static void some_widget_finalize (GObject *object)
+   {
+      SomeWidget *self = SOME_WIDGET (object);
+
+      if (self->timeout_id)
+        g_source_remove (self->timeout_id);
+
+      G_OBJECT_CLASS (parent_class)->finalize (object);
+   @}
+  @end{pre}
+
+  Since 2.12
+  @see-function{g-timeout-add-full}"
   (%gdk-threads-add-timeout-full priority
                                  interval
                                  (callback source-func-cb)
@@ -639,76 +644,37 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_threads_add_timeout_seconds ()
-;;;
-;;; guint gdk_threads_add_timeout_seconds (guint interval,
-;;;                                        GSourceFunc function,
-;;;                                        gpointer data);
-;;;
-;;; A wrapper for the common usage of gdk_threads_add_timeout_seconds_full()
-;;; assigning the default priority, G_PRIORITY_DEFAULT.
-;;;
-;;; For details, see gdk_threads_add_timeout_full().
-;;;
-;;; interval :
-;;;     the time between calls to the function, in seconds
-;;;
-;;; function :
-;;;     function to call
-;;;
-;;; data :
-;;;     data to pass to function
-;;;
-;;; Returns :
-;;;     the ID (greater than 0) of the event source.
-;;;
-;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
 
 ;; The Lisp implementation does not support the argument data.
 
 (defun gdk-threads-add-timeout-seconds (interval func)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-17}
+  @argument[interval]{the time between calls to the function, in seconds}
+  @argument[func]{function to call}
+  @return{The ID (greater than 0) of the event source.}
+  @begin{short}
+    A wrapper for the common usage of the function
+    @fun{gdk-threads-add-timeout-seconds-full} assigning the default priority,
+    @var{g-priority-default}.
+  @end{short}
+
+  For details, see the function @fun{gdk-threads-add-timeout-full}.
+
+  Since 2.14
+  @see-function{gdk-threads-add-timeout-full}"
   (%gdk-threads-add-timeout-seconds-full
-                                   g-priority-default
-                                   interval
-                                   (callback source-func-cb)
-                                   (glib::allocate-stable-pointer func)
-                                   (callback glib::stable-pointer-destroy-notify-cb)))
+                             g-priority-default
+                             interval
+                             (callback source-func-cb)
+                             (glib::allocate-stable-pointer func)
+                             (callback glib::stable-pointer-destroy-notify-cb)))
 
 (export 'gdk-threads-add-timeout-seconds)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_threads_add_timeout_seconds_full ()
-;;;
-;;; guint gdk_threads_add_timeout_seconds_full (gint priority,
-;;;                                             guint interval,
-;;;                                             GSourceFunc function,
-;;;                                             gpointer data,
-;;;                                             GDestroyNotify notify);
-;;;
-;;; A variant of gdk_threads_add_timeout_full() with second-granularity. See
-;;; g_timeout_add_seconds_full() for a discussion of why it is a good idea to
-;;; use this function if you don't need finer granularity.
-;;;
-;;; priority :
-;;;     the priority of the timeout source. Typically this will be in the range
-;;;     between G_PRIORITY_DEFAULT_IDLE and G_PRIORITY_HIGH_IDLE.
-;;;
-;;; interval :
-;;;     the time between calls to the function, in seconds
-;;;
-;;; function :
-;;;     function to call
-;;;
-;;; data :
-;;;     data to pass to function
-;;;
-;;; notify :
-;;;     function to call when the timeout is removed, or NULL
-;;;
-;;; Returns :
-;;;     the ID (greater than 0) of the event source.
-;;;
-;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_threads_add_timeout_seconds_full"
@@ -722,12 +688,28 @@
 ;; The Lisp implementation does not support the arguments data and notify.
 
 (defun gdk-threads-add-timeout-seconds-full (priority interval func)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-17}
+  @argument[priority]{the priority of the timeout source. Typically this will be
+    in the range between @var{g-priority-default-idle} and
+    @var{g-priority-high-idle}.}
+  @argument[interval]{the time between calls to the function, in seconds}
+  @argument[func]{function to call}
+  @return{The ID (greater than 0) of the event source.}
+  @begin{short}
+    A variant of the function @fun{gdk-threads-add-timeout-full} with
+    second-granularity.
+  @end{short}
+  See the function @fun{g-timeout-add-seconds-full} for a discussion of why it
+  is a good idea to use this function if you do not need finer granularity.
+
+  Since 2.14"
   (%gdk-threads-add-timeout-seconds-full
-                                   priority
-                                   interval
-                                   (callback source-func-cb)
-                                   (glib::allocate-stable-pointer func)
-                                   (callback glib::stable-pointer-destroy-notify-cb)))
+                             priority
+                             interval
+                             (callback source-func-cb)
+                             (glib::allocate-stable-pointer func)
+                             (callback glib::stable-pointer-destroy-notify-cb)))
 
 (export 'gdk-threads-add-timeout-seconds-full)
 

@@ -183,6 +183,41 @@
   @end{section}
   @begin[GdkDevice]{section}
     Object representing an input device
+
+    @about-class{gdk-device}
+    @about-symbol{gdk-input-source}
+    @about-symbol{gdk-input-mode}
+    @about-symbol{gdk-axis-use}
+    @about-symbol{gdk-device-type}
+    @about-symbol{gdk-grab-ownership}
+    @about-function{gdk-device-get-name}
+    @about-function{gdk-device-get-source}
+    @about-function{gdk-device-set-mode}
+    @about-function{gdk-device-get-mode}
+    @about-function{gdk-device-set-key}
+    @about-function{gdk-device-get-key}
+    @about-function{gdk-device-set-axis-use}
+    @about-function{gdk-device-get-axis-use}
+    @about-function{gdk-device-get-associated-device}
+    @about-function{gdk-device-list-slave-devices}
+    @about-function{gdk-device-get-device-type}
+    @about-function{gdk-device-get-display}
+    @about-function{gdk-device-get-has-cursor}
+    @about-function{gdk-device-get-n-axes}
+    @about-function{gdk-device-get-n-keys}
+    @about-function{gdk-device-warp}
+    @about-symbol{gdk-grab-status}
+    @about-function{gdk-device-grab}
+    @about-function{gdk-device-ungrab}
+    @about-function{gdk-device-get-state}
+    @about-function{gdk-device-get-position}
+    @about-function{gdk-device-get-window-at-position}
+    @about-struct{gdk-time-coord}
+    @about-function{gdk-device-get-history}
+    @about-function{gdk-device-free-history}
+    @about-function{gdk-device-get-axis}
+    @about-function{gdk-device-list-axes}
+    @about-function{gdk-device-get-axis-value}
   @end{section}
   @begin[Points and Rectangles]{section}
     Simple graphical data types.
@@ -198,7 +233,16 @@
     @about-function{gdk-rectangle-union}
   @end{section}
   @begin[Pixbufs]{section}
-    Functions for obtaining pixbufs
+    Functions for obtaining pixbufs.
+
+    Pixbufs are client-side images. For details on how to create and manipulate
+    pixbufs, see the @class{gdk-pixbuf} API documentation.
+
+    The functions described here allow to obtain pixbufs from
+    @class{gdk-window}'s and cairo surfaces.
+
+    @about-function{gdk-pixbuf-get-from-window}
+    @about-function{gdk-pixbuf-get-from-surface}
   @end{section}
   @begin[Colors]{section}
     Manipulation of colors
@@ -213,9 +257,40 @@
   @end{section}
   @begin[RGBA Colors]{section}
     RGBA colors
+
+    @about-struct{gdk-rgba}
+    @about-function{gdk-rgba-copy}
+    @about-function{gdk-rgba-free}
+    @about-function{gdk-rgba-parse}
+    @about-function{gdk-rgba-equal}
+    @about-function{gdk-rgba-hash}
+    @about-function{gdk-rgba-to-string}
   @end{section}
   @begin[Visuals]{section}
     Low-level display hardware information
+
+    @about-class{gdk-visual}
+    @about-symbol{gdk-visual-type}
+    @about-symbol{gdk-byte-order}
+    @about-function{gdk-query-depths}
+    @about-function{gdk-query-visual-types}
+    @about-function{gdk-list-visuals}
+    @about-function{gdk-visual-get-bits-per-rgb}
+    @about-function{gdk-visual-get-blue-pixel-details}
+    @about-function{gdk-visual-get-byte-order}
+    @about-function{gdk-visual-get-colormap-size}
+    @about-function{gdk-visual-get-depth}
+    @about-function{gdk-visual-get-green-pixel-details}
+    @about-function{gdk-visual-get-red-pixel-details}
+    @about-function{gdk-visual-get-visual-type}
+    @about-function{gdk-visual-get-best-depth}
+    @about-function{gdk-visual-get-best-type}
+    @about-function{gdk-visual-get-system}
+    @about-function{gdk-visual-get-best}
+    @about-function{gdk-visual-get-best-with-depth}
+    @about-function{gdk-visual-get-best-with-type}
+    @about-function{gdk-visual-get-best-with-both}
+    @about-function{gdk-visual-get-screen}
   @end{section}
   @begin[Cursors]{section}
     Standard and pixmap cursors.
@@ -391,7 +466,53 @@
     @about-function{gdk-window-get-effective-toplevel}
   @end{section}
   @begin[Events]{section}
-    Functions for handling events from the window system
+    Functions for handling events from the window system.
+
+    @about-symbol{gdk-event-type}
+    @about-symbol{gdk-event-mask}
+    @about-variable{+gdk-current-time+}
+    @about-variable{+gdk-priority-events+}
+    @about-variable{+gdk-priority-redraw+}
+    @about-variable{+gdk-event-progage+}
+    @about-variable{+gdk-event-stop+}
+    @about-variable{+gdk-button-primary+}
+    @about-variable{+gdk-button-middle+}
+    @about-variable{+gdk-button-secondary+}
+    @about-function{gdk-events-pending}
+    @about-function{gdk-event-peek}
+    @about-function{gdk-event-get}
+    @about-function{gdk-event-put}
+    @about-function{gdk-event-new}
+    @about-function{gdk-event-copy}
+    @about-function{gdk-event-free}
+    @about-function{gdk-event-get-axis}
+    @about-function{gdk-event-get-button}
+    @about-function{gdk-event-get-click-count}
+    @about-function{gdk-event-get-coords}
+    @about-function{gdk-event-get-keycode}
+    @about-function{gdk-event-get-keyval}
+    @about-function{gdk-event-get-root-coords}
+    @about-function{gdk-event-get-scroll-direction}
+    @about-function{gdk-event-get-scroll-deltas}
+    @about-function{gdk-event-get-state}
+    @about-function{gdk-event-get-time}
+    @about-symbol{gdk-event-sequence}
+    @about-function{gdk-event-get-event-sequence}
+    @about-function{gdk-event-request-motions}
+    @about-function{gdk-event-get-angle}
+    @about-function{gdk-event-get-center}
+    @about-function{gdk-events-get-distance}
+    @about-function{gdk-event-triggers-context-menu}
+    @about-function{gdk-event-handler-set}
+    @about-function{gdk-get-show-events}
+    @about-function{gdk-set-show-events}
+    @about-function{gdk-event-set-screen}
+    @about-function{gdk-event-get-screen}
+    @about-function{gdk-event-get-device}
+    @about-function{gdk-event-set-device}
+    @about-function{gdk-event-get-source-device}
+    @about-function{gdk-event-set-source-device}
+    @about-function{gdk-setting-get}
   @end{section}
   @begin[Event Structures]{section}
     The event structs contain data specific to each type of event in GDK.
@@ -433,6 +554,32 @@
   @end{section}
   @begin[Key Values]{section}
     Functions for manipulating keyboard codes
+
+    @about-class{gdk-keymap}
+    @about-struct{gdk-keymap-key}
+    @about-function{gdk-keymap-get-default}
+    @about-function{gdk-keymap-get-for-display}
+    @about-function{gdk-keymap-lookup-key}
+    @about-function{gdk-keymap-translate-keyboard-state}
+    @about-function{gdk-keymap-get-entries-for-keyval}
+    @about-function{gdk-keymap-get-entries-for-keycode}
+    @about-function{gdk-keymap-get-direction}
+    @about-function{gdk-keymap-have-bidi-layouts}
+    @about-function{gdk-keymap-get-caps-lock-state}
+    @about-function{gdk-keymap-get-num-lock-state}
+    @about-function{gdk-keymap-get-modifier-state}
+    @about-function{gdk-keymap-add-virtual-modifiers}
+    @about-function{gdk-keymap-map-virtual-modifiers}
+    @about-function{gdk-keymap-get-modifier-mask}
+    @about-function{gdk-keyval-name}
+    @about-function{gdk-keyval-from-name}
+    @about-function{gdk-keyval-convert-case}
+    @about-function{gdk-keyval-to-upper}
+    @about-function{gdk-keyval-to-lower}
+    @about-function{gdk-keyval-is-upper}
+    @about-function{gdk-keyval-is-lower}
+    @about-function{gdk-keyval-to-unicode}
+    @about-function{gdk-unicode-to-keyval}
   @end{section}
   @begin[Selections]{section}
     Functions for transfering data via the X selection mechanism.
@@ -514,13 +661,220 @@
     @about-function{gdk-property-delete}
   @end{section}
   @begin[Threads]{section}
-    Functions for using GDK in multi-threaded programs
+    Functions for using GDK in multi-threaded programs.
+
+    For thread safety, GDK relies on the thread primitives in GLib, and on the
+    thread-safe GLib main loop.
+
+    GLib is completely thread safe (all global data is automatically locked),
+    but individual data structure instances are not automatically locked for
+    performance reasons. So e. g. you must coordinate accesses to the same
+    @code{GHashTable} from multiple threads.
+
+    GTK+ is \"thread aware\" but not thread safe - it provides a global lock
+    controlled by the functions @fun{gdk-threads-enter}/@fun{gdk-threads-leave}
+    which protects all use of GTK+. That is, only one thread can use GTK+ at any
+    given time.
+
+    Unfortunately the above holds with the X11 backend only. With the Win32
+    backend, GDK calls should not be attempted from multiple threads at all.
+
+    You must call the function @fun{gdk-threads-init} before executing any
+    other GTK+ or GDK functions in a threaded GTK+ program.
+
+    Idles, timeouts, and input functions from GLib, such as the function
+    @fun{g-idle-add}, are executed outside of the main GTK+ lock. So, if you
+    need to call GTK+ inside of such a callback, you must surround the callback
+    with a @fun{gdk-threads-enter}/@fun{gdk-threads-leave} pair or use the
+    function @fun{gdk-threads-add-idle-full} which does this for you. However,
+    event dispatching from the mainloop is still executed within the main GTK+
+    lock, so callback functions connected to event signals like
+    \"button-press-event\", do not need thread protection.
+
+    In particular, this means, if you are writing widgets that might be used in
+    threaded programs, you must surround timeouts and idle functions in this
+    matter.
+
+    As always, you must also surround any calls to GTK+ not made within a signal
+    handler with a @fun{gdk-threads-enter}/@fun{gdk-threads-leave} pair.
+
+    Before calling the function @fun{gdk-threads-leave} from a thread other than
+    your main thread, you probably want to call the function @fun{gdk-flush} to
+    send all pending commands to the windowing system. (The reason you do not
+    need to do this from the main thread is that GDK always automatically
+    flushes pending commands when it runs out of incoming events to process and
+    has to sleep while waiting for more events.)
+
+    A minimal main program for a threaded GTK+ application looks like:
+    @begin{pre}
+   int
+   main (int argc, char *argv[])
+   {
+     GtkWidget *window;
+
+     gdk_threads_init ();
+     gdk_threads_enter ();
+
+     gtk_init (&argc, &argv);
+
+     window = create_window ();
+     gtk_widget_show (window);
+
+     gtk_main ();
+     gdk_threads_leave ();
+
+     return 0;
+   @}
+    @end{pre}
+    Callbacks require a bit of attention. Callbacks from GTK+ signals are made
+    within the GTK+ lock. However callbacks from GLib (timeouts, IO callbacks,
+    and idle functions) are made outside of the GTK+ lock. So, within a signal
+    handler you do not need to call the function @fun{gdk-threads-enter}, but
+    within the other types of callbacks, you do.
+
+    Unfortunately, all of the above documentation holds with the X11 backend
+    only. With the Win32 backend, GDK and GTK+ calls should not be attempted
+    from multiple threads at all. Combining the GDK lock with other locks such
+    as the Python global interpreter lock can be complicated.
+
+    For these reason, the threading support has been deprecated in GTK+ 3.6.
+    Instead of calling GTK+ directly from multiple threads, it is recommended to
+    use the functions @fun{g-idle-add}, @fun{g-main-context-invoke} and similar
+    functions to make these calls from the main thread instead. The main thread
+    is the thread which has called the function @fun{gtk-init} and is running
+    the GTK+ mainloop. GTK+ itself will continue to use the GDK lock internally
+    as long as the deprecated functionality is still available, and other
+    libraries should probably do the same.
+
+    @about-function{gdk-threads-init}
+    @about-function{gdk-threads-enter}
+    @about-function{gdk-threads-leave}
+    @about-function{gdk-threads-set-lock-functions}
+    @about-function{gdk-threads-add-idle}
+    @about-function{gdk-threads-add-idle-full}
+    @about-function{gdk-threads-add-timeout}
+    @about-function{gdk-threads-add-timeout-full}
+    @about-function{gdk-threads-add-timeout-seconds}
+    @about-function{gdk-threads-add-timeout-seconds-full}
   @end{section}
   @begin[Pango Interaction]{section}
     Using Pango in GDK
+
+    Pango is the text layout system used by GDK and GTK+. The functions and
+    types in this section are used to obtain clip regions for
+    @class{pango-layout}'s, and to get @class{pango-context}'s that can be
+    used with GDK.
+
+    Creating a @class{pango-layout} object is the first step in rendering text,
+    and requires getting a handle to a @class{pango-context}. For GTK+ programs,
+    you will usually want to use the functions
+    @fun{gtk-widget-get-pango-context}, or @fun{gtk-widget-create-pango-layout},
+    rather than using the lowlevel function
+    @fun{gdk-pango-context-get-for-screen}. Once you have a
+    @class{pango-layout} object, you can set the text and attributes of it with
+    Pango functions like @fun{pango-layout-set-text} and get its size with
+    @fun{pango-layout-get-size}. (Note that Pango uses a fixed point system
+    internally, so converting between Pango units and pixels using
+    @code{PANGO_SCALE} or the @code{PANGO_PIXELS()} macro.)
+
+    Rendering a Pango layout is done most simply with the function
+    @fun{pango-cairo-show-layout}; you can also draw pieces of the layout with
+    the function @fun{pango-cairo-show-layout-line}.
+
+    @b{Example:} Draw transformed text with Pango and cairo
+    @begin{pre}
+ #define RADIUS 100
+ #define N_WORDS 10
+ #define FONT \"Sans Bold 18\"
+
+   PangoContext *context;
+   PangoLayout *layout;
+   PangoFontDescription *desc;
+
+   double radius;
+   int width, height;
+   int i;
+
+   /* Set up a transformation matrix so that the user space coordinates for
+    * where we are drawing are [-RADIUS, RADIUS], [-RADIUS, RADIUS]
+    * We first center, then change the scale */
+
+   width = gdk_window_get_width (window);
+   height = gdk_window_get_height (window);
+   radius = MIN (width, height) / 2.;
+
+   cairo_translate (cr,
+                    radius + (width - 2 * radius) / 2,
+                    radius + (height - 2 * radius) / 2);
+                    cairo_scale (cr, radius / RADIUS, radius / RADIUS);
+
+   /* Create a PangoLayout, set the font and text */
+   context = gdk_pango_context_get_for_screen (screen);
+   layout = pango_layout_new (context);
+   pango_layout_set_text (layout, \"Text\", -1);
+   desc = pango_font_description_from_string (FONT);
+   pango_layout_set_font_description (layout, desc);
+   pango_font_description_free (desc);
+
+   /* Draw the layout N_WORDS times in a circle */
+   for (i = 0; i < N_WORDS; i++)
+     {
+       double red, green, blue;
+       double angle = 2 * G_PI * i / n_words;
+
+       cairo_save (cr);
+
+       /* Gradient from red at angle == 60 to blue at angle == 300 */
+       red = (1 + cos (angle - 60)) / 2;
+       green = 0;
+       blue = 1 - red;
+
+       cairo_set_source_rgb (cr, red, green, blue);
+       cairo_rotate (cr, angle);
+
+       /* Inform Pango to re-layout the text with the new transformation
+          matrix */
+       pango_cairo_update_layout (cr, layout);
+
+       pango_layout_get_size (layout, &width, &height);
+
+       cairo_move_to (cr, - width / 2 / PANGO_SCALE, - DEFAULT_TEXT_RADIUS);
+       pango_cairo_show_layout (cr, layout);
+
+       cairo_restore (cr);
+     @}
+
+   g_object_unref (layout);
+   g_object_unref (context);
+    @end{pre}
+    @about-function{gdk-pango-layout-get-clip-region}
+    @about-function{gdk-pango-layout-line-get-clip-region}
+    @about-function{gdk-pango-context-get}
+    @about-function{gdk-pango-context-get-for-screen}
   @end{section}
   @begin[Cairo Interaction]{section}
-    Functions to support using cairo
+    Functions to support using cairo.
+
+    Cairo is a graphics library that supports vector graphics and image
+    compositing that can be used with GDK. GTK+ does all of its drawing using
+    cairo.
+
+    GDK does not wrap the cairo API, instead it allows to create cairo contexts
+    which can be used to draw on @class{gdk-window}'s. Additional functions
+    allow use @class{gdk-rectangle}'s with cairo and to use @class{gdk-color}'s,
+    @class{gdk-rgba}'s, @class{gdk-pixbuf}'s and @class{gdk-window}'s as sources
+    for drawing operations.
+
+    @about-function{gdk-window-create-similar-surface}
+    @about-function{gdk-cairo-create}
+    @about-function{gdk-cairo-get-clip-rectangle}
+    @about-function{gdk-cairo-set-source-color}
+    @about-function{gdk-cairo-set-source-rgba}
+    @about-function{gdk-cairo-set-source-pixbuf}
+    @about-function{gdk-cairo-set-source-window}
+    @about-function{gdk-cairo-rectangle}
+    @about-function{gdk-cairo-region}
+    @about-function{gdk-cairo-region-create-from-surface}
   @end{section}
   @begin[X Window System Interaction]{section}
     X backend-specific functions

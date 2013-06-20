@@ -62,10 +62,6 @@
   (blue :double :initform 0.0d0)
   (alpha :double :initform 0.0d0))
 
-(export (boxed-related-symbols 'gdk-rgba))
-
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-rgba atdoc:*class-name-alias*) "CStruct"
       (documentation 'gdk-rgba 'type)
@@ -94,6 +90,8 @@
   @see-slot{green}
   @see-slot{blue}
   @see-slot{alpha}")
+
+(export (boxed-related-symbols 'gdk-rgba))
 
 ;;; --- copy-gdk-rgba ----------------------------------------------------------
 
@@ -156,25 +154,19 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_rgba_copy ()
-;;; 
-;;; GdkRGBA * gdk_rgba_copy (const GdkRGBA *rgba);
-;;; 
-;;; Makes a copy of a GdkRGBA structure.
-;;; 
-;;; The result must be freed through gdk_rgba_free().
-;;; 
-;;; rgba :
-;;;     a GdkRGBA
-;;; 
-;;; Returns :
-;;;     A newly allocated GdkRGBA, with the same contents as rgba
-;;; 
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gdk-rgba-copy))
 
 (defun gdk-rgba-copy (rgba)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-14}
+  @argument[rgba]{a @class{gdk-rgba} structure}
+  @return{A newly allocated @class{gdk-rgba}, with the same contents
+    as @arg{rgba}.}
+  @short{Makes a copy of a @class{gdk-rgba} structure.}
+
+  Since 3.0"
   (copy-gdk-rgba rgba))
 
 (export 'gdk-rgba-copy)
@@ -194,35 +186,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_rgba_parse ()
-;;; 
-;;; gboolean gdk_rgba_parse (GdkRGBA *rgba, const gchar *spec);
-;;; 
-;;; Parses a textual representation of a color, filling in the red, green, blue
-;;; and alpha fields of the rgba struct.
-;;; 
-;;; The string can be either one of:
-;;; 
-;;;     A standard name (Taken from the X11 rgb.txt file).
-;;;     A hex value in the form 'rgb' 'rrggbb' 'rrrgggbbb' or 'rrrrggggbbbb'
-;;;     A RGB color in the form 'rgb(r,g,b)' (In this case the color will have
-;;;       full opacity)
-;;;     A RGBA color in the form 'rgba(r,g,b,a)'
-;;; 
-;;; Where 'r', 'g', 'b' and 'a' are respectively the red, green, blue and alpha
-;;; color values. In the last two cases, r g and b are either integers in the
-;;; range 0 to 255 or precentage values in the range 0% to 100%, and a is a
-;;; floating point value in the range 0 to 1.
-;;; 
-;;; rgba :
-;;;     the GdkRGBA struct to fill in
-;;; 
-;;; spec :
-;;;     the string specifying the color
-;;; 
-;;; Returns :
-;;;     TRUE if the parsing succeeded
-;;; 
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_rgba_parse" %gdk-rgba-parse) :boolean
@@ -230,6 +193,30 @@
   (spec :string))
 
 (defun gdk-rgba-parse (spec)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-14}
+  @argument[spec]{the string specifying the color}
+  @return{The @class{gdk-rgba} structure to fill in.}
+  @begin{short}
+    Parses a textual representation of a color, and returns a rgba structure
+    filling in the red, green, blue and alpha fields.
+  @end{short}
+
+  The string can be either one of:
+  @begin{itemize}
+    @item{A standard name (Taken from the X11 rgb.txt file).}
+    @item{A hex value in the form 'rgb' 'rrggbb' 'rrrgggbbb' or 'rrrrggggbbbb'.}
+    @item{A RGB color in the form 'rgb(r,g,b)' (In this case the color will have
+      full opacity).}
+    @item{A RGBA color in the form 'rgba(r,g,b,a)'.}
+  @end{itemize}
+
+  Where 'r', 'g', 'b' and 'a' are respectively the red, green, blue and alpha
+  color values. In the last two cases, r g and b are either integers in the
+  range 0 to 255 or precentage values in the range 0% to 100%, and a is a
+  floating point value in the range 0 to 1.
+
+  Since 3.0"
   (let ((rgba (make-gdk-rgba)))
     (when (%gdk-rgba-parse rgba spec)
       rgba)))
@@ -238,24 +225,17 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_rgba_equal ()
-;;; 
-;;; gboolean gdk_rgba_equal (gconstpointer p1, gconstpointer p2);
-;;; 
-;;; Compares two RGBA colors.
-;;; 
-;;; p1 :
-;;;     a GdkRGBA pointer
-;;; 
-;;; p2 :
-;;;     another GdkRGBA pointer
-;;; 
-;;; Returns :
-;;;     TRUE if the two colors compare equal
-;;; 
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_rgba_equal" gdk-rgba-equal) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-14}
+  @argument[p1]{a @class{gdk-rgba} structure}
+  @argument[p2]{another @class{gdk-rgba} structure}
+  @return{@em{True} if the two colors compare equal.}
+  @short{Compares two RGBA colors.}
+
+  Since 3.0"
   (color1 (g-boxed-foreign gdk-rgba))
   (color2 (g-boxed-foreign gdk-rgba)))
 
@@ -263,53 +243,49 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_rgba_hash ()
-;;; 
-;;; guint gdk_rgba_hash (gconstpointer p);
-;;; 
-;;; A hash function suitable for using for a hash table that stores GdkRGBAs.
-;;; 
-;;; p :
-;;;     a GdkRGBA pointer
-;;; 
-;;; Returns :
-;;;     The hash value for p
-;;; 
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_rgba_hash" gdk-rgba-hash) :uint
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-14}
+  @argument[p]{a @class{gdk-rgba} structure}
+  @return{The hash value for @arg{p}.}
+  @begin{short}
+    A hash function suitable for using for a hash table that stores
+    @class{gdk-rgba}'s.
+  @end{short}
+
+  Since 3.0"
   (p (g-boxed-foreign gdk-rgba)))
 
 (export 'gdk-rgba-hash)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_rgba_to_string ()
-;;; 
-;;; gchar * gdk_rgba_to_string (const GdkRGBA *rgba);
-;;; 
-;;; Returns a textual specification of rgba in the form rgb (r, g, b) or
-;;; rgba (r, g, b, a), where 'r', 'g', 'b' and 'a' represent the red, green,
-;;; blue and alpha values respectively. r, g, and b are represented as integers
-;;; in the range 0 to 255, and a is represented as floating point value in the
-;;; range 0 to 1.
-;;; 
-;;; These string forms are string forms those supported by the CSS3 colors
-;;; module, and can be parsed by gdk_rgba_parse().
-;;; 
-;;; Note that this string representation may loose some precision, since r, g
-;;; and b are represented as 8-bit integers. If this is a concern, you should
-;;; use a different representation.
-;;; 
-;;; rgba :
-;;;     a GdkRGBA
-;;; 
-;;; Returns :
-;;;     A newly allocated text string
-;;; 
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_rgba_to_string" gdk-rgba-to-string) :string
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-14}
+  @argument[rgba]{a @class{gdk-rgba} structure}
+  @return{A newly allocated text string.}
+  @begin{short}
+    Returns a textual specification of rgba in the form rgb (r, g, b) or
+    rgba (r, g, b, a), where 'r', 'g', 'b' and 'a' represent the red, green,
+    blue and alpha values respectively. r, g, and b are represented as integers
+    in the range 0 to 255, and a is represented as floating point value in the
+    range 0 to 1.
+  @end{short}
+
+  These string forms are string forms those supported by the CSS3 colors
+  module, and can be parsed by the function @fun{gdk-rgba-parse}.
+
+  Note that this string representation may loose some precision, since r, g
+  and b are represented as 8-bit integers. If this is a concern, you should
+  use a different representation.
+
+  Since 3.0
+  @see-function{gdk-rgba-parse}"
   (rgba (g-boxed-foreign gdk-rgba)))
 
 (export 'gdk-rgba-to-string)

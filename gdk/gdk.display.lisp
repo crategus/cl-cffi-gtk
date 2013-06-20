@@ -93,11 +93,9 @@
    :type-initializer "gdk_display_get_type")
   nil)
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gdk-display 'type)
- "@version{2013-4-4}
+ "@version{2013-6-17}
   @begin{short}
     @sym{gdk-display} objects purpose are two fold:
     @begin{itemize}
@@ -142,7 +140,10 @@
         @entry[display]{The @sym{gdk-display} object on which the signal is
           emitted.}
       @end{table}
-  @end{dictionary}")
+  @end{dictionary}
+  @see-class{gdk-screen}
+  @see-class{gdk-device-manager}
+  @see-function{gdk-display-get-device-manager}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_display_open ()
