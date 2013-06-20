@@ -1352,28 +1352,26 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_type_n_items ()
-;;;
-;;; gsize g_variant_type_n_items (const GVariantType *type);
-;;;
-;;; Determines the number of items contained in a tuple or dictionary entry
-;;; type.
-;;;
-;;; This function may only be used with tuple or dictionary entry types, but
-;;; must not be used with the generic tuple type G_VARIANT_TYPE_TUPLE.
-;;;
-;;; In the case of a dictionary entry type, this function will always return 2.
-;;;
-;;; type :
-;;;     a tuple or dictionary entry GVariantType
-;;;
-;;; Returns :
-;;;     the number of items in type
-;;;
-;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_variant_type_n_items" g-variant-type-n-items) g-size
-  (type (gobject:g-boxed-foreign g-variant-type)))
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-16}
+  @argument[type]{a tuple or dictionary entry @class{g-variant-type}}
+  @return{The number of items in @arg{type}.}
+  @begin{short}
+    Determines the number of items contained in a tuple or dictionary entry
+    @arg{type}.
+  @end{short}
+
+  This function may only be used with tuple or dictionary entry types, but
+  must not be used with the generic tuple type @var{+g-variant-type-tuple+}.
+
+  In the case of a dictionary entry type, this function will always return 2.
+
+  Since 2.24
+  @see-variable{+g-variant-type-tuple+}"
+  (type (gobject::g-boxed-foreign g-variant-type)))
 
 (export 'g-variant-type-n-items)
 

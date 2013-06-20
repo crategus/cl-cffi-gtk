@@ -27,7 +27,7 @@
 
 (defsystem :cl-cffi-gtk-glib
   :name :cl-cffi-gtk-glib
-  :version "2.32.3"                          ; Version of the GLib Library
+  :version "2.36.0"                          ; Version of the GLib Library
   :author "Dieter Kaiser"
   :license "LLGPL"
   :serial t

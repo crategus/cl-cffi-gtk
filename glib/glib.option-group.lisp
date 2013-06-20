@@ -194,7 +194,7 @@
 ;;;
 ;;; G_OPTION_ERROR_UNKNOWN_OPTION
 ;;;     An option was not known to the parser. This error will only be reported,
-;;;     if the parser hasn't been instructed to ignore unknown options, see 
+;;;     if the parser hasn't been instructed to ignore unknown options, see
 ;;;     g_option_context_set_ignore_unknown_options().
 ;;;
 ;;; G_OPTION_ERROR_BAD_VALUE
@@ -940,7 +940,7 @@
 
 ;; TODO: This does not work. More work is neeeded.
 
-(defcfun ("g_option_context_add_main_entries" 
+(defcfun ("g_option_context_add_main_entries"
           %g-option-context-add-main-entries) :void
   (context g-option-context)
   (entries (:pointer g-option-entry))

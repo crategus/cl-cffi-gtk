@@ -28,18 +28,18 @@
 (in-package :glib)
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
-  
+
   (defvar *initializers-table* (make-hash-table :test 'equalp))
   (defvar *initializers* nil)
-  
+
   (defun register-initializer (key fn)
     (unless (gethash key *initializers-table*)
       (setf (gethash key *initializers-table*) t
             *initializers* (nconc *initializers* (list fn)))))
-  
+
   (defvar *finalizers-table* (make-hash-table :test 'equalp))
   (defvar *finalizers* nil)
-  
+
   (defun register-finalizer (key fn)
     (unless (gethash key *finalizers-table*)
       (setf (gethash key *finalizers-table*) t
@@ -78,7 +78,7 @@
 ;;; once (once on the same set of parameters).
 ;;;
 ;;; Example:
-;;; 
+;;;
 ;;; (defmethod initialize-instance :after ((class gobject-class)
 ;;;                                        &key &allow-other-keys)
 ;;;   (register-object-type (gobject-class-g-type-name class)
@@ -99,7 +99,7 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; Load the foreign libraries Glib and GThread
-  
+
 (at-init ()
   (eval-when (:compile-toplevel :load-toplevel :execute)
     (define-foreign-library glib
@@ -110,7 +110,7 @@
       (t (:default "libglib-2.0"))))
   (use-foreign-library glib))
 
-(at-init ()  
+(at-init ()
   (eval-when (:compile-toplevel :load-toplevel :execute)
     (define-foreign-library gthread
       ((:and :unix (:not :darwin))

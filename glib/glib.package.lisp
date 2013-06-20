@@ -30,18 +30,18 @@
   (:export ;; Symbols from glib.init.lisp
 ;           #:at-init
 ;           #:at-finalize
-           
+
            ;; Symbols from glib.stable-pointer.lisp
 ;           #:allocate-stable-pointer
 ;           #:free-stable-pointer
 ;           #:get-stable-pointer-value
            #:with-stable-pointer
 ;           #:stable-pointer-destroy-notify-cb
-           
+
            ;; Symbols from glib.version.lisp
 ;           #:push-library-version-features
 ;           #:require-library-version
-           
+
            ;; Symbols from glib.error.lisp
            #:with-catching-to-g-error
            #:with-g-error))
@@ -56,8 +56,8 @@
   Windows and OS X. GLib is released under the GNU Library General Public
   License (GNU LGPL).
 
-  This is the API documentation of a Lisp binding to the library GLib. Only a 
-  small part of GLib is implemented in Lisp which is necessary to implement 
+  This is the API documentation of a Lisp binding to the library GLib. Only a
+  small part of GLib is implemented in Lisp which is necessary to implement
   GTK+ in Lisp.
   @begin[Version Information]{section}
     Variables and functions to check the GLib version.
@@ -458,25 +458,26 @@
 
     GLib provides a standard method of reporting errors from a called function
     to the calling code. (This is the same problem solved by exceptions in other
-    languages.) It's important to understand that this method is both a data
+    languages.) It is important to understand that this method is both a data
     type (the GError object) and a set of rules. If you use GError incorrectly,
     then your code will not properly interoperate with other code that uses
     GError, and users of your API will probably get confused.
 
     First and foremost: GError should only be used to report recoverable runtime
     errors, never to report programming errors. If the programmer has screwed
-    up, then you should use g_warning(), g_return_if_fail(), g_assert(),
-    g_error(), or some similar facility. (Incidentally, remember that the
-    g_error() function should only be used for programming errors, it should not
-    be used to print any error reportable via GError.)
+    up, then you should use @code{g_warning()}, @code{g_return_if_fail()},
+    @code{g_assert()}, @code{g_error()}, or some similar facility.
+    (Incidentally, remember that the @code{g_error()} function should only be
+    used for programming errors, it should not be used to print any error
+    reportable via GError.)
 
     Examples of recoverable runtime errors are \"file not found\" or \"failed to
-    parse input.\" Examples of programming errors are \"NULL passed to strcmp()\"
-    or \"attempted to free the same pointer twice.\" These two kinds of errors are
-    fundamentally different: runtime errors should be handled or reported to the
-    user, programming errors should be eliminated by fixing the bug in the
-    program. This is why most functions in GLib and GTK+ do not use the GError
-    facility.
+    parse input.\" Examples of programming errors are \"NULL passed to
+    strcmp()\" or \"attempted to free the same pointer twice.\" These two kinds
+    of errors are fundamentally different: runtime errors should be handled or
+    reported to the user, programming errors should be eliminated by fixing the
+    bug in the program. This is why most functions in GLib and GTK+ do not use
+    the GError facility.
 
     Functions that can fail take a return location for a GError as their last
     argument. For example:
@@ -486,8 +487,8 @@
                                 gsize        *length,
                                 GError      **error);
     @end{pre}
-    If you pass a non-NULL value for the error argument, it should point to a
-    location where an error can be placed. For example:
+    If you pass a non-@code{NULL} value for the error argument, it should point
+    to a location where an error can be placed. For example:
     @begin{pre}
   gchar *contents;
   GError *err = NULL;
@@ -507,44 +508,48 @@
       g_assert (contents != NULL);
     @}
     @end{pre}
-    Note that err != NULL in this example is a reliable indicator of whether
-    g_file_get_contents() failed. Additionally, g_file_get_contents() returns a
-    boolean which indicates whether it was successful.
+    Note that @code{err != NULL} in this example is a reliable indicator of
+    whether @code{g_file_get_contents()} failed. Additionally,
+    @code{g_file_get_contents()} returns a boolean which indicates whether it
+    was successful.
 
-    Because g_file_get_contents() returns FALSE on failure, if you are only
-    interested in whether it failed and don't need to display an error message,
-    you can pass NULL for the error argument:
+    Because @code{g_file_get_contents()} returns @code{FALSE} on failure, if you
+    are only interested in whether it failed and do not need to display an error
+    message, you can pass @code{NULL} for the error argument:
     @begin{pre}
   if (g_file_get_contents (\"foo.txt\", &contents, NULL, NULL))
      /* no error occurred */ ;
   else
     /* error */ ;
     @end{pre}
-    The GError object contains three fields: domain indicates the module the
-    error-reporting function is located in, code indicates the specific error
-    that occurred, and message is a user-readable error message with as many
-    details as possible. Several functions are provided to deal with an error
-    received from a called function: g_error_matches() returns TRUE if the error
-    matches a given domain and code, g_propagate_error() copies an error into an
-    error location (so the calling function will receive it), and
-    g_clear_error() clears an error location by freeing the error and resetting
-    the location to NULL. To display an error to the user, simply display
-    error->message, perhaps along with additional context known only to the
-    calling function (the file being opened, or whatever -- though in the
-    g_file_get_contents() case, error->message already contains a filename).
+    The GError object contains three fields: @arg{domain} indicates the module
+    the error-reporting function is located in, @arg{code} indicates the
+    specific error that occurred, and @arg{message} is a user-readable error
+    message with as many details as possible. Several functions are provided to
+    deal with an error received from a called function: @code{g_error_matches()}
+    returns @code{TRUE} if the error matches a given domain and code,
+    @code{g_propagate_error()} copies an error into an error location (so the
+    calling function will receive it), and @code{g_clear_error()} clears an
+    error location by freeing the error and resetting the location to
+    @code{NULL}. To display an error to the user, simply display
+    @code{error->message}, perhaps along with additional context known only to
+    the calling function (the file being opened, or whatever - though in the
+    @code{g_file_get_contents()} case, @code{error->message} already contains a
+    filename).
 
     When implementing a function that can report errors, the basic tool is
-    g_set_error(). Typically, if a fatal error occurs you want to g_set_error(),
-    then return immediately. g_set_error() does nothing if the error location
-    passed to it is NULL. Here's an example:
+    @code{g_set_error()}. Typically, if a fatal error occurs you want to
+    @code{g_set_error()}, then return immediately. @code{g_set_error()} does
+    nothing if the error location passed to it is @code{NULL}. Here is an
+    example:
     @begin{pre}
   gint
   foo_open_file (GError **error)
   {
     gint fd;
-   
+
     fd = open (\"file.txt\", O_RDONLY);
-  
+
     if (fd < 0)
       {
         g_set_error (error,
@@ -560,39 +565,39 @@
     @end{pre}
     Things are somewhat more complicated if you yourself call another function
     that can report a GError. If the sub-function indicates fatal errors in some
-    way other than reporting a GError, such as by returning TRUE on success, you
-    can simply do the following:
+    way other than reporting a GError, such as by returning @code{TRUE} on
+    success, you can simply do the following:
     @begin{pre}
   gboolean
   my_function_that_can_fail (GError **err)
   {
     g_return_val_if_fail (err == NULL || *err == NULL, FALSE);
-  
+
     if (!sub_function_that_can_fail (err))
       {
         /* assert that error was set by the sub-function */
         g_assert (err == NULL || *err != NULL);
         return FALSE;
       @}
-   
+
     /* otherwise continue, no error occurred */
     g_assert (err == NULL || *err == NULL);
   @}
     @end{pre}
     If the sub-function does not indicate errors other than by reporting a
     GError, you need to create a temporary GError since the passed-in one may be
-    NULL. g_propagate_error() is intended for use in this case.
+    @code{NULL}. @code{g_propagate_error()} is intended for use in this case.
     @begin{pre}
   gboolean
   my_function_that_can_fail (GError **err)
   {
     GError *tmp_error;
-   
+
     g_return_val_if_fail (err == NULL || *err == NULL, FALSE);
-   
+
     tmp_error = NULL;
     sub_function_that_can_fail (&tmp_error);
-   
+
     if (tmp_error != NULL)
       {
         /* store tmp_error in err, if err != NULL,
@@ -601,7 +606,7 @@
         g_propagate_error (err, tmp_error);
         return FALSE;
       @}
-   
+
     /* otherwise continue, no error occurred */
   @}
     @end{pre}
@@ -625,26 +630,27 @@
       @}
   @}
     @end{pre}
-    tmp_error should be checked immediately after sub_function_that_can_fail(),
-    and either cleared or propagated upward. The rule is: after each error, you
-    must either handle the error, or return it to the calling function. Note
-    that passing NULL for the error location is the equivalent of handling an
-    error by always doing nothing about it. So the following code is fine,
-    assuming errors in sub_function_that_can_fail() are not fatal to
-    my_function_that_can_fail():
+    @code{tmp_error} should be checked immediately after
+    @code{sub_function_that_can_fail()}, and either cleared or propagated
+    upward. The rule is: after each error, you must either handle the error, or
+    return it to the calling function. Note that passing @code{NULL} for the
+    error location is the equivalent of handling an error by always doing
+    nothing about it. So the following code is fine, assuming errors in
+    @code{sub_function_that_can_fail()} are not fatal to
+    @code{my_function_that_can_fail()}:
     @begin{pre}
   gboolean
   my_function_that_can_fail (GError **err)
   {
     GError *tmp_error;
-   
+
     g_return_val_if_fail (err == NULL || *err == NULL, FALSE);
-   
+
     sub_function_that_can_fail (NULL); /* ignore errors */
-   
+
     tmp_error = NULL;
     other_function_that_can_fail (&tmp_error);
-   
+
     if (tmp_error != NULL)
       {
         g_propagate_error (err, tmp_error);
@@ -652,15 +658,15 @@
       @}
   @}
     @end{pre}
-    Note that passing NULL for the error location ignores errors; it's
-    equivalent to try { sub_function_that_can_fail(); @} catch (...) {@} in C++.
-    It does not mean to leave errors unhandled; it means to handle them by doing
-    nothing.
- 
+    Note that passing @code{NULL} for the error location ignores errors; it is
+    equivalent to try @code{{ sub_function_that_can_fail(); @} catch (...) {@}}
+    in C++. It does not mean to leave errors unhandled; it means to handle them
+    by doing nothing.
+
     @b{Error domains and codes are conventionally named as follows:}
     @begin{itemize}
-      @item{The error domain is called <NAMESPACE>_<MODULE>_ERROR, for example
-        G_SPAWN_ERROR or G_THREAD_ERROR:
+      @item{The error domain is called @code{<NAMESPACE>_<MODULE>_ERROR}, for
+        example @code{G_SPAWN_ERROR} or @code{G_THREAD_ERROR}:
         @begin{pre}
   #define G_SPAWN_ERROR g_spawn_error_quark ()
 
@@ -671,60 +677,61 @@
     @}
         @end{pre}}
       @item{The quark function for the error domain is called
-        <namespace>_<module>_error_quark, for example g_spawn_error_quark() or
-        g_thread_error_quark().}
-      @item{The error codes are in an enumeration called <Namespace><Module>Error;
-        for example,GThreadError or GSpawnError.}
+        @code{<namespace>_<module>_error_quark}, for example
+        @code{g_spawn_error_quark()} or @code{g_thread_error_quark()}.}
+      @item{The error codes are in an enumeration called
+        @code{<Namespace><Module>Error}; for example, @code{GThreadError} or
+        @code{GSpawnError}.}
       @item{Members of the error code enumeration are called
-        <NAMESPACE>_<MODULE>_ERROR_<CODE>, for example G_SPAWN_ERROR_FORK or
-        G_THREAD_ERROR_AGAIN.}
-      @item{If there's a \"generic\" or \"unknown\" error code for unrecoverable errors
-        it doesn't make sense to distinguish with specific codes, it should be
-        called <NAMESPACE>_<MODULE>_ERROR_FAILED, for example
-        G_SPAWN_ERROR_FAILED.}
+        @code{<NAMESPACE>_<MODULE>_ERROR_<CODE>}, for example
+        @code{G_SPAWN_ERROR_FORK} or @code{G_THREAD_ERROR_AGAIN}.}
+      @item{If there is a \"generic\" or \"unknown\" error code for
+        unrecoverable errors it does not make sense to distinguish with specific
+        codes, it should be called @code{<NAMESPACE>_<MODULE>_ERROR_FAILED}, for
+        example @code{G_SPAWN_ERROR_FAILED}.}
     @end{itemize}
     @b{Summary of rules for use of GError:}
     @begin{itemize}
       @item{Do not report programming errors via GError.}
       @item{The last argument of a function that returns an error should be a
-        location where a GError can be placed (i.e. \"GError** error\"). If GError
-        is used with varargs, the GError** should be the last argument before
-        the \"...\".}
-      @item{The caller may pass NULL for the GError** if they are not interested in
-        details of the exact error that occurred.}
-      @item{If NULL is passed for the GError** argument, then errors should not be
-        returned to the caller, but your function should still abort and return
-        if an error occurs. That is, control flow should not be affected by
-        whether the caller wants to get a GError.}
-      @item{If a GError is reported, then your function by definition had a fatal
-        failure and did not complete whatever it was supposed to do. If the
-        failure was not fatal, then you handled it and you should not report it.
-        If it was fatal, then you must report it and discontinue whatever you
-        were doing immediately.}
-      @item{If a GError is reported, out parameters are not guaranteed to be set to
-        any defined value.}
-      @item{A GError* must be initialized to NULL before passing its address to a
-        function that can report errors.}
-      @item{\"Piling up\" errors is always a bug. That is, if you assign a new GError
-        to a GError* that is non-NULL, thus overwriting the previous error, it
-        indicates that you should have aborted the operation instead of
-        continuing. If you were able to continue, you should have cleared the
-        previous error with g_clear_error(). g_set_error() will complain if you
-        pile up errors.}
+        location where a GError can be placed (i. e. \"@code{GError** error}\").
+        If GError is used with varargs, the @code{GError**} should be the last
+        argument before the \"...\".}
+      @item{The caller may pass @code{NULL} for the @code{GError**} if they are
+        not interested in details of the exact error that occurred.}
+      @item{If @code{NULL} is passed for the @code{GError**} argument, then
+        errors should not be returned to the caller, but your function should
+        still abort and return if an error occurs. That is, control flow should
+        not be affected by whether the caller wants to get a GError.}
+      @item{If a GError is reported, then your function by definition had a
+        fatal failure and did not complete whatever it was supposed to do. If
+        the failure was not fatal, then you handled it and you should not report
+        it. If it was fatal, then you must report it and discontinue whatever
+        you were doing immediately.}
+      @item{If a GError is reported, out parameters are not guaranteed to be set
+        to any defined value.}
+      @item{A @code{GError*} must be initialized to @code{NULL} before passing
+        its address to a function that can report errors.}
+      @item{\"Piling up\" errors is always a bug. That is, if you assign a new
+        GError to a @code{GError*} that is non-@code{NULL}, thus overwriting the
+        previous error, it indicates that you should have aborted the operation
+        instead of continuing. If you were able to continue, you should have
+        cleared the previous error with @code{g_clear_error()}.
+        @code{g_set_error()} will complain if you pile up errors.}
       @item{By convention, if you return a boolean value indicating success then
-        TRUE means success and FALSE means failure. If FALSE is returned, the
-        error must be set to a non-NULL value.}
-      @item{A NULL return value is also frequently used to mean that an error
-        occurred. You should make clear in your documentation whether NULL is a
-        valid return value in non-error cases; if NULL is a valid value, then
-        users must check whether an error was returned to see if the function
-        succeeded.}
-      @item{When implementing a function that can report errors, you may want to add
-        a check at the top of your function that the error return location is
-        either NULL or contains a NULL error (e.g. g_return_if_fail
-        (error == NULL || *error == NULL);).}
+        @code{TRUE} means success and @code{FALSE} means failure. If
+        @code{FALSE} is returned, the error must be set to a non-@code{NULL}
+        value.}
+      @item{A @code{NULL} return value is also frequently used to mean that an
+        error occurred. You should make clear in your documentation whether
+        @code{NULL} is a valid return value in non-error cases; if @code{NULL}
+        is a valid value, then users must check whether an error was returned to
+        see if the function succeeded.}
+      @item{When implementing a function that can report errors, you may want to
+        add a check at the top of your function that the error return location
+        is either @code{NULL} or contains a @code{NULL} error (e. g.
+        @code{g_return_if_fail (error == NULL || *error == NULL);}).}
     @end{itemize}
-
     @about-type{g-error}
     @about-function{g-error-new}
     @about-function{g-error-new-literal}

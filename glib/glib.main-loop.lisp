@@ -296,7 +296,8 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-source atdoc:*type-name-alias*) "CStruct"
       (documentation 'g-source 'type)
- "The @sym{g-source} structure is an opaque data type representing an event
+ "@version{2013-6-9}
+  The @sym{g-source} structure is an opaque data type representing an event
   source.")
 
 (export 'g-source)
@@ -2539,7 +2540,7 @@
 (defcfun ("g_source_add_poll" g-source-add-poll) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-5-13}
-  @argument[source]{a @symbol{g-source} structure}
+  @argument[source]{a @type{g-source} structure}
   @argument[fd]{a @type{g-poll-fd} structure holding information about a file
     descriptor to watch}
   @begin{short}
@@ -2563,7 +2564,7 @@
 (defcfun ("g_source_remove_poll" g-source-remove-poll) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-5-13}
-  @argument[source]{a @symbol{g-source} structure}
+  @argument[source]{a @type{g-source} structure}
   @argument[fd]{a @type{g-poll-fd} structure previously passed to the function
     @fun{g-source-add-poll}}
   Removes a file descriptor from the set of file descriptors polled for this
@@ -2624,7 +2625,7 @@
 (defcfun ("g_source_get_time" g-source-get-time) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-4-9}
-  @argument[source]{a @symbol{g-source} structure}
+  @argument[source]{a @type{g-source} structure}
   @return{The monotonic time in microseconds.}
   @begin{short}
     Gets the time to be used when checking this source.
@@ -2648,7 +2649,7 @@
 (defcfun ("g_source_get_current_time" g-source-get-current-time) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-4-9}
-  @argument[source]{a @symbol{g-source} structure}
+  @argument[source]{a @type{g-source} structure}
   @argument[timeval]{a @symbol{g-time-val} structure in which to store current
     time.}
   @subheading{Warning}
@@ -2678,7 +2679,7 @@
   @begin{short}
     Removes the source with the given id from the default main context.
   @end{short}
-  The id of a @symbol{g-source} is given by the function @fun{g-source-get-id},
+  The id of a @type{g-source} is given by the function @fun{g-source-get-id},
   or will be returned by the functions @fun{g-source-attach}, @fun{g-idle-add},
   @fun{g-idle-add-full}, @fun{g-timeout-add}, @fun{g-timeout-add-full},
   @fun{g-child-watch-add}, @fun{g-child-watch-add-full}, @fun{g-io-add-watch},
