@@ -775,19 +775,16 @@
 
 (defun g-application-new (application-id flags)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-1}
-  @argument[application-id]{The application ID.}
-  @argument[flags]{The application flags.}
-  @return{A new @class{g-application} instance.}
+ "@version{2013-6-9}
+  @argument[application-id]{the application ID}
+  @argument[flags]{the application flags}
+  @return{A new @class{g-application} object.}
   @begin{short}
-    Creates a new @class{g-application} instance.
+    Creates a new @class{g-application} object.
   @end{short}
 
-  This function calls the function @fun{g-type-init} for you.
-
-  The application ID must be valid. See the function
-  @fun{g-application-id-is-valid}.
-  @see-function{g-type-init}
+  The application ID must be valid. See the @fun{g-application-id-is-valid}
+  function.
   @see-function{g-application-id-is-valid}"
   (make-instance 'g-application
                  :application-id application-id
