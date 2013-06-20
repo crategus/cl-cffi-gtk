@@ -56,6 +56,7 @@
    gtk-cell-editable-editing-canceld
    "editing-canceled" "gboolean" t t))
 
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-editable atdoc:*class-name-alias*) "Interface"
       (documentation 'gtk-cell-editable 'type)
  "@version{2013-6-17}
