@@ -2,13 +2,15 @@
 ;;; gobject.enumeration.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file has been copied from the
-;;; GObject Reference Manual Version 2.32.4. See http://www.gtk.org
+;;; GObject Reference Manual Version 2.36.2. See <http://www.gtk.org>.
+;;; The API documentation of the Lisp binding is available at
+;;; <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -127,14 +129,10 @@
   (:name (:string :free-from-foreign nil :free-to-foreign nil))
   (:nick (:string :free-from-foreign nil :free-to-foreign nil)))
 
-(export 'g-enum-value)
-
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-enum-value atdoc:*symbol-name-alias*) "CStruct"
       (gethash 'g-enum-value atdoc:*external-symbols*)
- "@version{2013-4-2}
+ "@version{2013-6-10}
   @begin{short}
     A structure which contains a single enum value, its name, and its nickname.
   @end{short}
@@ -145,10 +143,12 @@
   (:nick (:string :free-from-foreign nil :free-to-foreign nil)))
   @end{pre}
   @begin[code]{table}
-    @entry[:value]{the enum value}
-    @entry[:name]{the name of the value}
-    @entry[:nick]{the nickname of the value}
+    @entry[:value]{The enum value.}
+    @entry[:name]{The name of the value.}
+    @entry[:nick]{The nickname of the value.}
   @end{table}")
+
+(export 'g-enum-value)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GEnumClass
@@ -161,14 +161,10 @@
   (:n-values :uint)
   (:values (:pointer g-enum-value)))
 
-(export 'g-enum-class)
-
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-enum-class atdoc:*symbol-name-alias*) "CStruct"
       (gethash 'g-enum-class atdoc:*external-symbols*)
- "@version{2013-2-6}
+ "@version{2013-6-10}
   @begin{short}
     The class of an enumeration type holds information about its possible
     values.
@@ -182,13 +178,15 @@
   (:values (:pointer g-enum-value)))
   @end{pre}
   @begin[code]{table}
-    @entry[:type-class]{the parent class}
-    @entry[:minimum]{the smallest possible value.}
-    @entry[:maximum]{the largest possible value.}
-    @entry[:n-values]{the number of possible values.}
-    @entry[:values]{an array of @symbol{g-enum-value} structs describing the
+    @entry[:type-class]{The parent class.}
+    @entry[:minimum]{The smallest possible value.}
+    @entry[:maximum]{The largest possible value.}
+    @entry[:n-values]{The number of possible values.}
+    @entry[:values]{An array of @symbol{g-enum-value} structs describing the
       individual values.}
   @end{table}")
+
+(export 'g-enum-class)
 
 ;;; ----------------------------------------------------------------------------
 ;;; Struct g-flags-value
@@ -199,14 +197,10 @@
   (:name (:string :free-from-foreign nil :free-to-foreign nil))
   (:nick (:string :free-from-foreign nil :free-to-foreign nil)))
 
-(export 'g-flags-value)
-
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-flags-value atdoc:*symbol-name-alias*) "CStruct"
       (gethash 'g-flags-value atdoc:*external-symbols*)
- "@version{2013-2-6}
+ "@version{2013-6-10}
   @begin{short}
     A structure which contains a single flags value, its name, and its nickname.
   @end{short}
@@ -217,10 +211,12 @@
   (:nick (:string :free-from-foreign nil :free-to-foreign nil)))
   @end{pre}
   @begin[code]{table}
-    @entry[:value]{the flags value}
-    @entry[:name]{the name of the value}
-    @entry[:nick]{the nickname of the value}
+    @entry[:value]{The flags value.}
+    @entry[:name]{The name of the value.}
+    @entry[:nick]{The nickname of the value.}
   @end{table}")
+
+(export 'g-flags-value)
 
 ;;; ----------------------------------------------------------------------------
 ;;; Struct g-flags-class
@@ -232,14 +228,10 @@
   (:n-values :uint)
   (:values (:pointer g-flags-value)))
 
-(export 'g-flags-class)
-
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-flags-class atdoc:*symbol-name-alias*) "CStruct"
       (gethash 'g-flags-class atdoc:*external-symbols*)
- "@version{2013-2-6}
+ "@version{2013-6-10}
   @begin{short}
     The class of a flags type holds information about its possible values.
   @end{short}
@@ -251,12 +243,14 @@
   (:values (:pointer g-flags-value)))
   @end{pre}
   @begin[code]{table}
-    @entry[:type-class]{the parent class}
-    @entry[:mask]{a mask covering all possible values.}
-    @entry[:n-values]{the number of possible values.}
-    @entry[:values]{an array of @symbol{g-flags-value} structs describing the
+    @entry[:type-class]{The parent class.}
+    @entry[:mask]{A mask covering all possible values.}
+    @entry[:n-values]{The number of possible values.}
+    @entry[:values]{An array of @symbol{g-flags-value} structs describing the
       individual values.}
   @end{table}")
+
+(export 'g-flags-class)
 
 ;;; ----------------------------------------------------------------------------
 ;;; define-g-flags
@@ -313,12 +307,10 @@
 
 (defun g-enum-class-type (class)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-6}
+ "@version{2013-6-10}
   @argument[class]{a @symbol{g-enum-class}}
-  @return{the @class{g-type}}
-  @begin{short}
-    Get the type identifier from a given @symbol{g-enum-class} structure.
-  @end{short}"
+  @return{The @class{g-type}.}
+  Get the type identifier from a given @symbol{g-enum-class} structure."
   (g-type-from-class class))
 
 (export 'g-enum-class-type)
@@ -331,12 +323,10 @@
 
 (defun g-enum-class-type-name (class)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-6}
+ "@version{2013-6-10}
   @argument[class]{a @symbol{g-enum-class}}
   @return{The type name.}
-  @begin{short}
-    Get the static type name from a given GEnumClass structure.
-  @end{short}"
+  Get the static type name from a given GEnumClass structure."
   (g-type-name (g-type-from-class class)))
 
 (export 'g-enum-class-type-name)
@@ -347,15 +337,13 @@
 
 (declaim (inline g-type-is-enum))
 
-(defun g-type-is-enum (gtype)
+(defun g-type-is-enum (type)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-6}
-  @argument[type]{a @class{g-type} ID.}
-  @return{@arg{true} if type \"is a\" @variable{+g-type-enum+}.}
-  @begin{short}
-    Checks whether type \"is a\" @variable{+g-type-enum}.
-  @end{short}"
-  (eql (g-type-fundamental gtype) +g-type-enum+))
+ "@version{2013-6-12}
+  @argument[type]{a @class{g-type} ID}
+  @return{@em{True} if @arg{type} \"is a\" @variable{+g-type-enum+}.}
+  Checks whether @arg{type} \"is a\" @variable{+g-type-enum+}."
+  (eql (gtype-id (g-type-fundamental type)) +g-type-enum+))
 
 (export 'g-type-is-enum)
 
@@ -384,21 +372,24 @@
 ;;;     a GEnumClass
 ;;; ----------------------------------------------------------------------------
 
+(defun g-is-enum-class (class)
+  (g-type-check-class-type class +g-type-enum+))
+
+(export 'g-is-enum-class)
+
 ;;; ----------------------------------------------------------------------------
 ;;; g-type-is-flags
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline g-type-is-flags))
 
-(defun g-type-is-flags (gtype)
+(defun g-type-is-flags (type)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-6}
-  @argument[type]{a @class{g-type} ID.}
-  @return{@arg{true} if type \"is a\" @variable{+g-type-flags+}.}
-  @begin{short}
-    Checks whether type \"is a\" @variable{+g-type-flags+}.
-  @end{short}"
-  (eql (g-type-fundamental gtype) +g-type-flags+))
+ "@version{2013-6-12}
+  @argument[type]{a @class{g-type} ID}
+  @return{@em{True} if @arg{type} \"is a\" @variable{+g-type-flags+}.}
+  Checks whether @arg{type} \"is a\" @variable{+g-type-flags+}."
+  (eql (gtype-id (g-type-fundamental type)) +g-type-flags+))
 
 (export 'g-type-is-flags)
 
@@ -435,12 +426,10 @@
 
 (defun g-flags-class-type (class)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-6}
+ "@version{2013-6-10}
   @argument[class]{a @symbol{g-flags-class}}
-  @retrun{the @class{g-type}}
-  @begin{short}
-    Get the type identifier from a given @symbol{g-flags-class} structure.
-  @end{short}"
+  @return{The @class{g-type}.}
+  Get the type identifier from a given @symbol{g-flags-class} structure."
   (g-type-from-class class))
 
 (export 'g-flags-class-type)
@@ -453,12 +442,10 @@
 
 (defun g-flags-class-type-name (class)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-6}
+ "@version{2013-6-10}
   @argument[class]{a @symbol{g-flags-class}}
   @return{The type name.}
-  @begin{short}
-    Get the static type name from a given @symbol{g-flags-class} structure.
-  @end{short}"
+  Get the static type name from a given @symbol{g-flags-class} structure."
   (g-type-name (g-type-from-class class)))
 
 (export 'g-flags-class-type-name)
@@ -624,9 +611,9 @@
 
 (defcfun ("g_enum_register_static" g-enum-register-static) g-type
  #+cl-cffi-gtk-documentation
- "@version{2013-2-6}
-  @argument[name]{A nul-terminated string used as the name of the new type.}
-  @argument[static-values]{An array of @symbol{g-enum-value} structs for the
+ "@version{2013-6-10}
+  @argument[name]{a string used as the name of the new type}
+  @argument[static-values]{an array of @symbol{g-enum-value} structs for the
     possible enumeration values. The array is terminated by a struct with all
     members being 0. @class{g-object} keeps a reference to the data, so it
     cannot be stack-allocated.}
@@ -649,20 +636,20 @@
 
 (defcfun ("g_flags_register_static" g-flags-register-static) g-type
  #+cl-cffi-gtk-documentation
- "@version{2013-2-6}
-  @argument[name]{A nul-terminated string used as the name of the new type.}
-  @argument[static_values]{An array of GFlagsValue structs for the possible
-    flags values. The array is terminated by a struct with all members being 0.
-    @class{g-object} keeps a reference to the data, so it cannot be
+ "@version{2013-6-10}
+  @argument[name]{a string used as the name of the new type}
+  @argument[static-values]{an array of @symbol{g-flags-value} structs for the
+    possible flags values. The array is terminated by a struct with all members
+    being 0. @class{g-object} keeps a reference to the data, so it cannot be
     stack-allocated.}
   @return{The new type identifier.}
   @begin{short}
     Registers a new static flags type with the name name.
   @end{short}
 
-  It is normally more convenient to let glib-mkenums generate a
+  It is normally more convenient to let @code{glib-mkenums} generate a
   @code{my_flags_get_type()} function from a usual C enumeration definition than
-  to write one yourself using @fun{g-flags-register-static}."
+  to write one yourself using @sym{g-flags-register-static}."
   (name :string)
   (static-values (:pointer g-flags-value)))
 

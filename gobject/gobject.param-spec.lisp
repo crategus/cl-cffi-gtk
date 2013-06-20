@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file has been copied from the
-;;; GObject Reference Manual Version 2.32.4. See <http://www.gtk.org>.
+;;; GObject Reference Manual Version 2.36.2. See <http://www.gtk.org>.
 ;;; The API documentation of the Lisp binding is available at
 ;;; <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -105,10 +105,6 @@
   (:static-blurb #.(ash 1 7))
   (:deprecated #.(ash 1 31)))
 
-(export 'g-param-flags)
-
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-param-flags atdoc:*symbol-name-alias*) "Bitfield"
       (gethash 'g-param-flags atdoc:*external-symbols*)
@@ -151,6 +147,8 @@
       future version. A warning will be generated if it is used while running
       with @code{G_ENABLE_DIAGNOSTIC=1}. Since 2.26}
   @end{table}")
+
+(export 'g-param-flags)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GParamSpec
@@ -251,10 +249,6 @@
   (:value-validate :pointer)
   (:values-cmp :pointer))
 
-(export 'g-param-spec-class)
-
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-param-spec-class atdoc:*symbol-name-alias*) "CStruct"
       (gethash 'g-param-spec-class atdoc:*external-symbols*)
@@ -288,6 +282,8 @@
       (recommended, the default is @code{memcmp()}), see
       @fun{g-param-values-cmp}.}
   @end{table}")
+
+(export 'g-param-spec-class)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_IS_PARAM()

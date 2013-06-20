@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file has been copied from the
-;;; GObject Reference Manual Version 2.34.3. See <http://www.gtk.org>.
+;;; GObject Reference Manual Version 2.36.2. See <http://www.gtk.org>.
 ;;; The API documentation of the Lisp binding is available at
 ;;; <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -36,7 +36,6 @@
 ;;;
 ;;; Synopsis
 ;;;
-;;;    GParameter
 ;;;    GObject
 ;;;    GObjectClass
 ;;;    GObjectConstructParam
@@ -62,6 +61,8 @@
 ;;;    g_object_interface_list_properties
 ;;;    g_object_new
 ;;;    g_object_newv
+;;;
+;;;    GParameter
 ;;;
 ;;;    g_object_ref
 ;;;    g_object_unref
@@ -89,18 +90,21 @@
 ;;;    g_object_notify_by_pspec
 ;;;    g_object_freeze_notify
 ;;;    g_object_thaw_notify
-
+;;;
 ;;;    g_object_get_data
 ;;;    g_object_set_data
 ;;;    g_object_set_data_full
 ;;;    g_object_steal_data
-
+;;;    g_object_dup_data
+;;;    g_object_replace_data
+;;;
 ;;;    g_object_get_qdata
 ;;;    g_object_set_qdata
 ;;;    g_object_set_qdata_full
 ;;;    g_object_steal_qdata
 ;;;    g_object_dup_qdata
 ;;;    g_object_replace-qdata
+;;;
 ;;;    g_object_set_property
 ;;;    g_object_get_property
 ;;;    g_object_new_valist
@@ -1034,18 +1038,17 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_OBJECT_GET_CLASS()
-;;;
-;;; #define G_OBJECT_GET_CLASS(object)
-;;;         (G_TYPE_INSTANCE_GET_CLASS ((object), G_TYPE_OBJECT, GObjectClass))
-;;;
-;;; Get the class structure associated to a GObject instance.
-;;;
-;;; object :
-;;;     a GObject instance.
-;;;
-;;; Returns :
-;;;     pointer to object class structure.
 ;;; ----------------------------------------------------------------------------
+
+(defun g-object-get-class (object)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-9}
+  @argument[object]{a @class{g-object} instance}
+  @return{Pointer to @arg{object} class structure.}
+  @short{Get the class structure associated to a @class{g-object} instance.}"
+  (g-type-instance-get-class object))
+
+(export 'g-object-get-class)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_OBJECT_TYPE()
@@ -1136,16 +1139,16 @@
 (defcfun ("g_object_class_install_property" g-object-class-install-property)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2013-01-01}
-  @argument[oclass]{a GObjectClass}
-  @argument[property-id]{the id for the new property}
-  @argument[pspec]{the GParamSpec for the new property}
+ "@version{2013-6-9}
+  @argument[class]{a @symbol{g-object-class}}
+  @argument[property-id]{the ID for the new property}
+  @argument[pspec]{the @symbol{g-param-spec} for the new property}
   @begin{short}
     Installs a new property. This is usually done in the class initializer.
   @end{short}
 
   Note that it is possible to redefine a property in a derived class, by
-  installing a property with the same name. This can be useful at times, e.g.
+  installing a property with the same name. This can be useful at times, e. g.
   to change the range of allowed values or the default value."
   (class (:pointer g-object-class))
   (property-id :uint)
@@ -1234,14 +1237,14 @@
 (defcfun ("g_object_class_find_property" g-object-class-find-property)
     (:pointer g-param-spec)
  #+cl-cffi-gtk-documentation
- "@version{2013-01-01}
-  @argument[oclass]{a GObjectClass}
+ "@version{2013-6-9}
+  @argument[class]{a @symbol{g-object-class}}
   @argument[property-name]{the name of the property to look up}
-  @return{the GParamSpec for the property, or @code{nil} if the class doesn't
-    have a property of that name}
+  @return{The @symbol{g-param-spec} for the property, or @code{nil} if the class
+    does not have a property of that name.}
   @short{Looks up the @symbol{g-param-spec} for a property of a class.}
   @begin[Example]{dictionary}
-    The @sym{g-param-spec} structure for the property \"label\" of the
+    The @symbol{g-param-spec} structure for the property \"label\" of the
     @class{gtk-button} is looked up.
     @begin{pre}
  (setq param
@@ -1259,7 +1262,8 @@
  (foreign-slot-value param '(:struct g-param-spec) :owner-type)
 => #S(GTYPE :NAME \"GtkButton\" :%ID 134906760)
     @end{pre}
-  @end{dictionary}"
+  @end{dictionary}
+  @see-symbol{g-param-spec}"
   (class (:pointer g-object-class))
   (property-name :string))
 
@@ -1276,19 +1280,21 @@
 
 (defun g-object-class-list-properties (type)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-10}
-  @argument[type]{a type id of a class}
+ "@version{2013-6-9}
+  @argument[type]{a type ID of a class}
   @return{A list of @symbol{g-param-spec} CStruct for all properties of a
     class.}
   @begin{short}
     Get a list of @symbol{g-param-spec} CStruct for all properties of a
     class.
   @end{short}
-  @begin[Note]{dictionary}
+
+  @subheading{Note}
     The C implementation of the corresponding function does not take a
-    type id, but a GObjectClass as the first argument. The Lisp function gets
-    the GObjectClass with @code{(g-type-class-ref @arg{type})}.
-  @end{dictionary}"
+    type ID, but a @symbol{g-object-class} as the first argument. The Lisp
+    function gets the @class{g-object-class} with
+    @code{(g-type-class-ref @arg{type})}.
+  @see-symbol{g-param-spec}"
   (assert (g-type-is-a type +g-type-object+))
   (with-unwind (class (g-type-class-ref type) g-type-class-unref)
     (with-foreign-object (n-properties :uint)
@@ -1308,30 +1314,33 @@
 (defcfun ("g_object_class_override_property"
            g-object-class-override-property) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-1-10}
-  @argument[oclass]{a @symbol{g-object-class} CStruct}
+ "@version{2013-6-9}
+  @argument[class]{a @symbol{g-object-class} CStruct}
   @argument[property-id]{the new property ID}
   @argument[name]{the name of a property registered in a parent class or in an
-    interface of this class.}
+    interface of this class}
   @begin{short}
     Registers @arg{property-id} as referring to a property with the name
-    @arg{name} in a parent class or in an interface implemented by @arg{oclass}.
+    @arg{name} in a parent class or in an interface implemented by @arg{class}.
   @end{short}
   This allows this class to override a property implementation in a parent class
   or to provide the implementation of a property from an interface.
-  @begin[Note]{dictionary}
+  @subheading{Note}
     Internally, overriding is implemented by creating a property of type
     @code{GParamSpecOverride}; generally operations that query the properties of
-    the object class, such as @fun{g-object-class-find-property} or
-    @fun{g-object-class-list-properties} will return the overridden property.
+    the object class, such as the functions @fun{g-object-class-find-property}
+    or @fun{g-object-class-list-properties} will return the overridden property.
     However, in one case, the @code{construct_properties} argument of the
     constructor virtual function, the @code{GParamSpecOverride} is passed
     instead, so that the @code{param_id} field of the @symbol{g-param-spec}
     CStruct will be correct. For virtually all uses, this makes no difference.
-    If you need to get the overridden property, you can call
-    @fun{g-param-spec-get-redirect-target}.
-  @end{dictionary}
-  Since 2.4"
+    If you need to get the overridden property, you can call the
+    @fun{g-param-spec-get-redirect-target} function.
+
+  Since 2.4
+  @see-function{g-object-class-find-property}
+  @see-function{g-object-class-list-properties}
+  @see-function{g-param-spec-get-redirect-target}"
   (class (:pointer g-object-class))
   (property-id :uint)
   (name :string))
@@ -1345,9 +1354,9 @@
 (defcfun ("g_object_interface_install_property"
            g-object-interface-install-property) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-1-10}
+ "@version{2013-6-9}
   @argument[g-iface]{any interface vtable for the interface, or the default
-    vtable for the interface.}
+    vtable for the interface}
   @argument[pspec]{the @symbol{g-param-spec} CStruct for the new property}
   @begin{short}
     Add a property to an interface; this is only useful for interfaces that are
@@ -1355,18 +1364,19 @@
   @end{short}
   Adding a property to an interface forces all objects classes with that
   interface to have a compatible property. The compatible property could be a
-  newly created @symbol{g-param-spec} CStruct, but normally
-  @fun{g-object-class-override-property} will be used so that the object class
-  only needs to provide an implementation and inherits the property
+  newly created @symbol{g-param-spec} CStruct, but normally the
+  @fun{g-object-class-override-property} function will be used so that the
+  object class only needs to provide an implementation and inherits the property
   description, default value, bounds, and so forth from the interface
   property.
 
   This function is meant to be called from the interface's default vtable
-  initialization function (the class_init member of GTypeInfo.) It must not be
-  called after after class_init has been called for any object types
-  implementing this interface.
+  initialization function (the @code{class_init} member of
+  @symbol{g-type-info}.) It must not be called after after @code{class_init} has
+  been called for any object types implementing this interface.
 
-  Since 2.4"
+  Since 2.4
+  @see-function{g-object-class-override-property}"
   (g-iface :pointer)
   (pspec (:pointer g-param-spec)))
 
@@ -1379,10 +1389,10 @@
 (defcfun ("g_object_interface_find_property" g-object-interface-find-property)
     (:pointer g-param-spec)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-10}
+ "@version{2013-6-9}
   @argument[g-iface]{any interface vtable for the interface, or the default
     vtable for the interface}
-  @argument[property-name]{name of a property to lookup.}
+  @argument[property-name]{name of a property to lookup}
   @return{The @symbol{g-param-spec} CStruct for the property of the interface
     with the name @arg{property-name}, or @code{nil} if no such property
     exists.}
@@ -1390,10 +1400,13 @@
     Find the @symbol{g-param-spec} CStruct with the given name for an interface.
   @end{short}
   Generally, the interface vtable passed in as @arg{g-iface} will be the default
-  vtable from @fun{g-type-default-interface-ref}, or, if you know the interface
-  has already been loaded, @fun{g-type-default-interface-peek}.
+  vtable from the @fun{g-type-default-interface-ref} function, or, if you know
+  the interface has already been loaded, the @fun{g-type-default-interface-peek}
+  function.
 
-  Since 2.4"
+  Since 2.4
+  @see-function{g-type-default-interface-ref}
+  @see-fun{g-type-default-interface-peek}"
   (interface :pointer)
   (property-name :string))
 
@@ -1410,22 +1423,26 @@
 
 (defun g-object-interface-list-properties (type)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-10}
-  @argument[type]{a type id of an interface}
+ "@version{2013-6-9}
+  @argument[type]{a type ID of an interface}
   @return{A list of @symbol{g-param-spec} CStruct for all properties of an
     interface.}
   @begin{short}
     Lists the properties of an interface.
   @end{short}
   Generally, the interface vtable passed in as @arg{g-iface} will be the default
-  vtable from @fun{g-type-default-interface-ref}, or, if you know the interface
-  has already been loaded, @fun{g-type-default-interface-peek}.
-  @begin[Note]{dictionary}
+  vtable from the @fun{g-type-default-interface-ref} function, or, if you know
+  the interface has already been loaded, the @fun{g-type-default-interface-peek}
+  function.
+
+  @subheading{Note}
     The C implementation of the corresponding function does not take a
-    type id, but a vtable as the first argument. The Lisp function gets
+    type ID, but a vtable as the first argument. The Lisp function gets
     the vtable with @code{(g-type-default-interface-ref type)}.
-  @end{dictionary}
-  Since 2.4"
+
+  Since 2.4
+  @see-function{g-type-default-interface-ref}
+  @see-function{g-type-default-interface-peek}"
   (assert (g-type-is-a type +g-type-interface+))
   (with-unwind (g-iface (g-type-default-interface-ref type)
                         g-type-default-interface-unref)
@@ -1511,9 +1528,9 @@
 
 (defcfun ("g_object_ref" g-object-ref) :pointer
  #+cl-cffi-gtk-documentation
- "@version{2013-1-10}
+ "@version{2013-6-9}
   @argument[object]{a @class{g-object} instance}
-  @return{the same object}
+  @return{The same @arg{object}.}
   @short{Increases the reference count of object.}"
   (object :pointer))
 
@@ -1525,12 +1542,12 @@
 
 (defcfun ("g_object_unref" g-object-unref) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-1-10}
+ "@version{2013-6-9}
   @argument[object]{a @class{g-object} instance}
   @begin{short}
-    Decreases the reference count of object.
+    Decreases the reference count of @arg{object}.
   @end{short}
-  When its reference count drops to 0, the object is finalized (i.e. its memory
+  When its reference count drops to 0, the object is finalized (i. e. its memory
   is freed)."
   (object :pointer))
 
@@ -1542,17 +1559,17 @@
 
 (defcfun ("g_object_ref_sink" g-object-ref-sink) :pointer
  #+cl-cffi-gtk-documentation
- "@version{2013-1-10}
+ "@version{2013-6-9}
   @argument[object]{a @class{g-object} instance}
   @return{@arg{object}}
   @begin{short}
     Increase the reference count of @arg{object}, and possibly remove the
-    floating reference, if object has a floating reference.
+    floating reference, if @arg{object} has a floating reference.
   @end{short}
-  In other words, if the object is floating, then this call \"assumes
+  In other words, if the @arg{object} is floating, then this call \"assumes
   ownership\" of the floating reference, converting it to a normal reference by
   clearing the floating flag while leaving the reference count unchanged. If
-  the object is not floating, then this call adds a new normal reference
+  the @arg{object} is not floating, then this call adds a new normal reference
   increasing the reference count by one.
 
   Since 2.10"
@@ -1593,9 +1610,9 @@
 ;;; GInitiallyUnowned implementation and should never be accessed directly.
 ;;; ----------------------------------------------------------------------------
 
-(defctype %g-initially-unowned %g-object)
+;(defctype %g-initially-unowned %g-object)
 
-(export '%g-initially-unowned)
+;(export '%g-initially-unowned)
 
 ;;; ----------------------------------------------------------------------------
 
@@ -1608,11 +1625,11 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'g-initially-unowned 'type)
- "@version{2012-12-29}
+ "@version{2013-6-9}
   @begin{short}
-    GInitiallyUnowned is derived from GObject. The only difference between the
-    two is that the initial reference of a GInitiallyUnowned is flagged as a
-    floating reference.
+    @sym{g-initially-unowned} is derived from @class{g-object}. The only
+    difference between the two is that the initial reference of a
+    @sym{g-initially-unowned} is flagged as a floating reference.
   @end{short}
   This means that it is not specifically claimed to be
   \"owned\" by any code portion. The main motivation for providing floating
@@ -1621,10 +1638,11 @@
  container = create_container ();
  container_add_child (container, create_child());
   @end{pre}
-  If container_add_child() will g_object_ref_sink() the passed in child, no
-  reference of the newly created child is leaked. Without floating references,
-  container_add_child() can only g_object_ref() the new child, so to implement
-  this code without reference leaks, it would have to be written as:
+  If @code{container_add_child()} will @fun{g-object-ref-sink} the passed in
+  child, no reference of the newly created child is leaked. Without floating
+  references, @code{container_add_child()} can only @fun{g-object-ref} the new
+  child, so to implement this code without reference leaks, it would have to be
+  written as:
   @begin{pre}
  Child *child;
  container = create_container ();
@@ -1633,16 +1651,17 @@
  g_object_unref (child);
   @end{pre}
   The floating reference can be converted into an ordinary reference by
-  calling g_object_ref_sink(). For already sunken objects (objects that don't
-  have a floating reference anymore), g_object_ref_sink() is equivalent to
-  g_object_ref() and returns a new reference. Since floating references are
+  calling the @fun{g-object-ref-sink} function. For already sunken objects
+  (objects that do not have a floating reference anymore), the
+  @fun{g-object-ref-sink} function is equivalent to the @fun{g-object-ref}
+  function and returns a new reference. Since floating references are
   useful almost exclusively for C convenience, language bindings that provide
   automated reference and memory ownership maintenance (such as smart pointers
   or garbage collection) should not expose floating references in their API.
 
   Some object implementations may need to save an objects floating state
-  across certain code portions (an example is GtkMenu), to achieve this, the
-  following sequence can be used:
+  across certain code portions (an example is @class{gtk-menu}), to achieve
+  this, the following sequence can be used:
   @begin{pre}
  /* save floating state */
  gboolean was_floating = g_object_is_floating (object);
@@ -1654,17 +1673,9 @@
     g_object_force_floating (object);
  g_object_unref (object); /* release previously acquired reference */
   @end{pre}
-  All the fields in the GInitiallyUnowned structure are private to the
-  GInitiallyUnowned implementation and should never be accessed directly.
-  @begin[Lisp Implementation]{dictionary}
-    @begin{pre}
-(defclass g-initially-unowned (g-object)
-  ()
-  (:metaclass gobject-class)
-  (:g-type-name . \"GInitiallyUnowned\")
-  (:g-type-initializer . \"g_initially_unowned_get_type\"))
-    @end{pre}
-  @end{dictionary}")
+  All the fields in the @sym{g-initially-unowned} structure are private to the
+  @sym{g-initially-unowned} implementation and should never be accessed
+  directly.")
 
 (export 'g-initially-unowned)
 
@@ -1686,42 +1697,40 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_object_is_floating ()
-;;;
-;;; gboolean g_object_is_floating (gpointer object);
-;;;
-;;; Checks whether object has a floating reference.
-;;;
-;;; object :
-;;;     a GObject
-;;;
-;;; Returns :
-;;;     TRUE if object has a floating reference
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_object_is_floating" g-object-is-floating) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-9}
+  @argument[object]{a @class{g-object}}
+  @return{@em{True} if @arg{object} has a floating reference.}
+  @begin{short}
+    Checks whether @arg{object} has a floating reference.
+  @end{short}
+
+  Since 2.10"
   (object :pointer))
 
 (export 'g-object-is-floating)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_object_force_floating ()
-;;;
-;;; void g_object_force_floating (GObject *object);
-;;;
-;;; This function is intended for GObject implementations to re-enforce a
-;;; floating object reference. Doing this is seldom required: all
-;;; GInitiallyUnowneds are created with a floating reference which usually just
-;;; needs to be sunken by calling g_object_ref_sink().
-;;;
-;;; object :
-;;;     a GObject
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_object_force_floating" g-object-force-floating) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-9}
+  @argument[object]{a @class{g-object}}
+  @begin{short}
+    This function is intended for @class{g-object} implementations to re-enforce
+    a floating object reference.
+  @end{short}
+  Doing this is seldom required: all @sym{g-initially-unowned}'s are created
+  with a floating reference which usually just needs to be sunken by calling
+  the @fun{g-object-ref-sink} function.
+
+  Since 2.10
+  @see-function{g-object-ref-sink}"
   (object :pointer))
 
 (export 'g-object-force-floating)
@@ -1746,31 +1755,26 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_object_weak_ref ()
-;;;
-;;; void g_object_weak_ref (GObject *object, GWeakNotify notify, gpointer data);
-;;;
-;;; Adds a weak reference callback to an object. Weak references are used for
-;;; notification when an object is finalized. They are called "weak references"
-;;; because they allow you to safely hold a pointer to an object without calling
-;;; g_object_ref() (g_object_ref() adds a strong reference, that is, forces the
-;;; object to stay alive).
-;;;
-;;; Note that the weak references created by this method are not thread-safe:
-;;; they cannot safely be used in one thread if the object's last
-;;; g_object_unref() might happen in another thread. Use GWeakRef if
-;;; thread-safety is required.
-;;;
-;;; object :
-;;;     GObject to reference weakly
-;;;
-;;; notify :
-;;;     callback to invoke before the object is freed
-;;;
-;;; data :
-;;;     extra data to pass to notify
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_object_weak_ref" g-object-weak-ref) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-9}
+  @argument[object]{@class{g-object} to reference weakly}
+  @argument[notify]{callback to invoke before the @arg{object} is freed}
+  @argument[data]{extra data to pass to @arg{notify}}
+  @begin{short}
+    Adds a weak reference callback to an object.
+  @end{short}
+  Weak references are used for notification when an object is finalized. They
+  are called \"weak references\" because they allow you to safely hold a pointer
+  to an object without calling @fun{g-object-ref} (@fun{g-object-ref} adds a
+  strong reference, that is, forces the object to stay alive).
+
+  Note that the weak references created by this method are not thread-safe:
+  they cannot safely be used in one thread if the object's last
+  @fun{g-object-unref} might happen in another thread. Use @class{g-weak-ref} if
+  thread-safety is required."
   (object :pointer)
   (notify :pointer)
   (data :pointer))
@@ -1779,24 +1783,17 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_object_weak_unref ()
-;;;
-;;; void g_object_weak_unref (GObject *object,
-;;;                           GWeakNotify notify,
-;;;                           gpointer data);
-;;;
-;;; Removes a weak reference callback to an object.
-;;;
-;;; object :
-;;;     GObject to remove a weak reference from
-;;;
-;;; notify :
-;;;     callback to search for
-;;;
-;;; data :
-;;;     data to search for
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_object_weak_unref" g-object-weak-unref) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-9}
+  @argument[object]{@class{g-object} to remove a weak reference from}
+  @argument[notify]{callback to search for}
+  @argument[data]{data to search for}
+  @begin{short}
+    Removes a weak reference callback to an object.
+  @end{short}"
   (object :pointer)
   (notify :pointer)
   (data :pointer))
@@ -1897,51 +1894,46 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_object_add_toggle_ref ()
-;;;
-;;; void g_object_add_toggle_ref (GObject *object,
-;;;                               GToggleNotify notify,
-;;;                               gpointer data);
-;;;
-;;; Increases the reference count of the object by one and sets a callback to be
-;;; called when all other references to the object are dropped, or when this is
-;;; already the last reference to the object and another reference is
-;;; established.
-;;;
-;;; This functionality is intended for binding object to a proxy object managed
-;;; by another memory manager. This is done with two paired references: the
-;;; strong reference added by g_object_add_toggle_ref() and a reverse reference
-;;; to the proxy object which is either a strong reference or weak reference.
-;;;
-;;; The setup is that when there are no other references to object, only a weak
-;;; reference is held in the reverse direction from object to the proxy object,
-;;; but when there are other references held to object, a strong reference is
-;;; held. The notify callback is called when the reference from object to the
-;;; proxy object should be toggled from strong to weak (is_last_ref true) or
-;;; weak to strong (is_last_ref false).
-;;;
-;;; Since a (normal) reference must be held to the object before calling
-;;; g_object_add_toggle_ref(), the initial state of the reverse link is always
-;;; strong.
-;;;
-;;; Multiple toggle references may be added to the same gobject, however if
-;;; there are multiple toggle references to an object, none of them will ever be
-;;; notified until all but one are removed. For this reason, you should only
-;;; ever use a toggle reference if there is important state in the proxy object.
-;;;
-;;; object :
-;;;     a GObject
-;;;
-;;; notify :
-;;;     a function to call when this reference is the last reference to the
-;;;     object, or is no longer the last reference.
-;;;
-;;; data :
-;;;     data to pass to notify
-;;;
-;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_object_add_toggle_ref" g-object-add-toggle-ref) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-9}
+  @argument[object]{a @class{g-object}}
+  @argument[notify]{a function to call when this reference is the last reference
+    to the @arg{object}, or is no longer the last reference}
+  @argument[data]{data to pass to notify}
+  @begin{short}
+    Increases the reference count of the @arg{object} by one and sets a callback
+    to be called when all other references to the @arg{object} are dropped, or
+    when this is already the last reference to the @arg{object} and another
+    reference is established.
+  @end{short}
+
+  This functionality is intended for binding @arg{object} to a proxy object
+  managed by another memory manager. This is done with two paired references:
+  the strong reference added by the @sym{g-object-add-toggle-ref} function and a
+  reverse reference to the proxy object which is either a strong reference or
+  weak reference.
+
+  The setup is that when there are no other references to @arg{object}, only a
+  weak reference is held in the reverse direction from @arg{object} to the proxy
+  object, but when there are other references held to @arg{object}, a strong
+  reference is held. The @arg{notify} callback is called when the reference from
+  @arg{object} to the proxy object should be toggled from strong to weak
+  (@code{is_last_ref} @em{true}) or weak to strong (@code{is_last_ref}
+  @code{nil}).
+
+  Since a (normal) reference must be held to the object before calling the
+  @sym{g-object-add-toggle-ref} function, the initial state of the reverse link
+  is always strong.
+
+  Multiple toggle references may be added to the same gobject, however if
+  there are multiple toggle references to an object, none of them will ever be
+  notified until all but one are removed. For this reason, you should only
+  ever use a toggle reference if there is important state in the proxy object.
+
+  Since 2.8"
   (object :pointer)
   (notify :pointer)
   (data :pointer))
@@ -1950,28 +1942,22 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_object_remove_toggle_ref ()
-;;;
-;;; void g_object_remove_toggle_ref (GObject *object,
-;;;                                  GToggleNotify notify,
-;;;                                  gpointer data);
-;;;
-;;; Removes a reference added with g_object_add_toggle_ref(). The reference
-;;; count of the object is decreased by one.
-;;;
-;;; object :
-;;;     a GObject
-;;;
-;;; notify :
-;;;     a function to call when this reference is the last reference to the
-;;;     object, or is no longer the last reference.
-;;;
-;;; data :
-;;;     data to pass to notify
-;;;
-;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_object_remove_toggle_ref" g-object-remove-toggle-ref) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-9}
+  @argument[object]{a @class{g-object}}
+  @argument[notify]{a function to call when this reference is the last reference
+    to the @arg{object}, or is no longer the last reference}
+  @argument[data]{data to pass to @arg{notify}}
+  @begin{short}
+    Removes a reference added with the @fun{g-object-add-toggle-ref} function.
+    The reference count of the @arg{object} is decreased by one.
+  @end{short}
+
+  Since 2.8
+  @see-function{g-object-add-toggle-ref}"
   (object :pointer)
   (notify :pointer)
   (data :pointer))
@@ -2211,64 +2197,59 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_object_freeze_notify ()
-;;;
-;;; void g_object_freeze_notify (GObject *object);
-;;;
-;;; Increases the freeze count on object. If the freeze count is non-zero, the
-;;; emission of "notify" signals on object is stopped. The signals are queued
-;;; until the freeze count is decreased to zero.
-;;;
-;;; This is necessary for accessors that modify multiple properties to prevent
-;;; premature notification while the object is still being modified.
-;;;
-;;; object :
-;;;     a GObject
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_object_freeze_notify" g-object-freeze-notify) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-9}
+  @argument[object]{a @class{g-object}}
+  @begin{short}
+    Increases the freeze count on @arg{object}. If the freeze count is non-zero,
+    the emission of \"notify\" signals on object is stopped. The signals are
+    queued until the freeze count is decreased to zero.
+  @end{short}
+
+  This is necessary for accessors that modify multiple properties to prevent
+  premature notification while the object is still being modified."
   (object :pointer))
 
 (export 'g-object-freeze-notify)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_object_thaw_notify ()
-;;;
-;;; void g_object_thaw_notify (GObject *object);
-;;;
-;;; Reverts the effect of a previous call to g_object_freeze_notify(). The
-;;; freeze count is decreased on object and when it reaches zero, all queued
-;;; "notify" signals are emitted.
-;;;
-;;; It is an error to call this function when the freeze count is zero.
-;;;
-;;; object :
-;;;     a GObject
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_object_thaw_notify" g-object-thaw-notify) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-9}
+  @argument[object]{a @class{g-object}}
+  @begin{short}
+    Reverts the effect of a previous call to the @fun{g-object-freeze-notify}
+    function.
+  @end{short}
+  The freeze count is decreased on @arg{object} and when it reaches zero, all
+  queued \"notify\" signals are emitted.
+
+  It is an error to call this function when the freeze count is zero.
+  @see-function{g-object-freeze-notify}"
   (object :pointer))
 
 (export 'g-object-thaw-notify)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_object_get_data ()
-;;;
-;;; gpointer g_object_get_data (GObject *object, const gchar *key);
-;;;
-;;; Gets a named field from the objects table of associations (see
-;;; g_object_set_data()).
-;;;
-;;; object :
-;;;     GObject containing the associations
-;;;
-;;; key :
-;;;     name of the key for that association
-;;;
-;;; Returns :
-;;;     the data if found, or NULL if no such data exists
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_object_get_data" g-object-get-data) :pointer
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-9}
+  @argument[object]{@class{g-object} containing the associations}
+  @argument[key]{name of the key for that association}
+  @return{The data if found, or @code{nil} if no such data exists.}
+  @begin{short}
+    Gets a named field from the objects table of associations.
+  @end{short}
+  See the @fun{g-object-set-data} function."
   (object g-object)
   (key :string))
 
@@ -2276,60 +2257,47 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_object_set_data ()
-;;;
-;;; void g_object_set_data (GObject *object, const gchar *key, gpointer data);
-;;;
-;;; Each object carries around a table of associations from strings to pointers.
-;;; This function lets you set an association.
-;;;
-;;; If the object already had an association with that name, the old association
-;;; will be destroyed.
-;;;
-;;; object :
-;;;     GObject containing the associations.
-;;;
-;;; key :
-;;;     name of the key
-;;;
-;;; data :
-;;;     data to associate with that key
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_object_set_data" g-object-set-data) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-9}
+  @argument[object]{@class{g-object} containing the associations}
+  @argument[key]{name of the key}
+  @argument[data]{data to associate with that key}
+  @begin{short}
+    Each object carries around a table of associations from strings to pointers.
+    This function lets you set an association.
+  @end{short}
+
+  If the @arg{object} already had an association with that name, the old association
+  will be destroyed."
   (object g-object)
   (key :string)
-  (new-value :pointer))
+  (data :pointer))
 
 (export 'g-object-set-data)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_object_set_data_full ()
-;;;
-;;; void g_object_set_data_full (GObject *object,
-;;;                              const gchar *key,
-;;;                              gpointer data,
-;;;                              GDestroyNotify destroy);
-;;;
-;;; Like g_object_set_data() except it adds notification for when the
-;;; association is destroyed, either by setting it to a different value or when
-;;; the object is destroyed.
-;;;
-;;; Note that the destroy callback is not called if data is NULL.
-;;;
-;;; object :
-;;;     GObject containing the associations
-;;;
-;;; key :
-;;;     name of the key
-;;;
-;;; data :
-;;;     data to associate with that key
-;;;
-;;; destroy :
-;;;     function to call when the association is destroyed
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_object_set_data_full" g-object-set-data-full) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-9}
+  @argument[object]{@class{g-object} containing the associations}
+  @argument[key]{name of the key}
+  @argument[data]{data to associate with that @arg{key}}
+  @argument[destroy]{function to call when the association is destroyed}
+  @begin{short}
+    Like the @fun{g-object-set-data} function except it adds notification for
+    when the association is destroyed, either by setting it to a different value
+    or when the object is destroyed.
+  @end{short}
+
+  Note that the @arg{destroy} callback is not called if @arg{data} is
+  @code{nil}.
+  @see-function{g-object-set-data}"
   (object :pointer)
   (key :string)
   (data :pointer)
@@ -2339,23 +2307,16 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_object_steal_data ()
-;;;
-;;; gpointer g_object_steal_data (GObject *object, const gchar *key);
-;;;
-;;; Remove a specified datum from the object's data associations, without
-;;; invoking the association's destroy handler.
-;;;
-;;; object :
-;;;     GObject containing the associations
-;;;
-;;; key :
-;;;     name of the key
-;;;
-;;; Returns :
-;;;     the data if found, or NULL if no such data exists
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_object_steal_data" g-object-steal-data) :pointer
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-9}
+  @argument[object]{@class{g-object} containing the associations}
+  @argument[key]{name of the key}
+  @return{The data if found, or @code{nil} if no such data exists.}
+  Remove a specified datum from the @arg{object}'s data associations, without
+  invoking the association's destroy handler."
   (object :pointer)
   (key :string))
 
@@ -2650,21 +2611,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_object_set_property ()
-;;;
-;;; void g_object_set_property (GObject *object,
-;;;                             const gchar *property_name,
-;;;                             const GValue *value);
-;;;
-;;; Sets a property on an object.
-;;;
-;;; object :
-;;;     a GObject
-;;;
-;;; property_name :
-;;;     the name of the property to set
-;;;
-;;; value :
-;;;     the value
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_object_set_property" %g-object-set-property) :void
@@ -2674,6 +2620,12 @@
 
 (defun set-gobject-property (object-ptr property-name new-value
                                         &optional property-type)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-9}
+  @argument[object]{a @class{g-object}}
+  @argument[property-name]{the name of the property to set}
+  @argument[value]{the value}
+  Sets a property on an object."
   (unless property-type
     (setf property-type
           (class-property-type (g-type-from-instance object-ptr)
@@ -2687,29 +2639,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_object_get_property ()
-;;;
-;;; void g_object_get_property (GObject *object,
-;;;                             const gchar *property_name,
-;;;                             GValue *value);
-;;;
-;;; Gets a property of an object. value must have been initialized to the
-;;; expected type of the property (or a type to which the expected type can be
-;;; transformed) using g_value_init().
-;;;
-;;; In general, a copy is made of the property contents and the caller is
-;;; responsible for freeing the memory by calling g_value_unset().
-;;;
-;;; Note that g_object_get_property() is really intended for language bindings,
-;;; g_object_get() is much more convenient for C programming.
-;;;
-;;; object :
-;;;     a GObject
-;;;
-;;; property_name :
-;;;     the name of the property to get
-;;;
-;;; value :
-;;;     return location for the property value
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_object_get_property" %g-object-get-property) :void
@@ -2718,6 +2647,19 @@
   (value (:pointer g-value)))
 
 (defun get-gobject-property (object-ptr property-name &optional property-type)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-9}
+  @argument[object]{a @class{g-object}}
+  @argument[property-name]{the name of the property to get}
+  @return{The property value.}
+  @begin{short}
+    Gets a property of an @arg{object}.
+  @end{short}
+
+  Note that the @sym{g-object-get-property} is really intended for language
+  bindings, the @fun{g-object-get} function is much more convenient for C
+  programming.
+  @see-function{g-object-get}"
   (restart-case
     (unless property-type
       (setf property-type

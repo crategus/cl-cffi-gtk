@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file has been copied from the
-;;; GObject Reference Manual Version 2.32.4. See <http://www.gtk.org>.
+;;; GObject Reference Manual Version 2.36.2. See <http://www.gtk.org>.
 ;;; The API documentation of the Lisp binding is available at
 ;;; <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -212,21 +212,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GClosure
-;;;
-;;; struct GClosure {
-;;;   volatile           guint     in_marshal : 1;
-;;;   volatile           guint     is_invalid : 1;
-;;; };
-;;;
-;;; A GClosure represents a callback supplied by the programmer.
-;;;
-;;; volatile guint in_marshal : 1;
-;;;     Indicates whether the closure is currently being invoked with
-;;;     g_closure_invoke()
-;;;
-;;; volatile guint is_invalid : 1;
-;;;     Indicates whether the closure has been invalidated by
-;;;     g_closure_invalidate()
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-closure
@@ -235,21 +220,35 @@
   (:data :pointer)
   (:notifiers :pointer))
 
+#+cl-cffi-gtk-documentation
+(setf (gethash 'g-closure atdoc:*symbol-name-alias*) "CStruct"
+      (gethash 'g-closure atdoc:*external-symbols*)
+ "@version{2013-6-12}
+  @begin{short}
+    A @sym{g-closure} represents a callback supplied by the programmer.
+  @end{short}
+  @begin{pre}
+(defcstruct g-closure
+  (:private-data :uint32)
+  (:marshal :pointer)
+  (:data :pointer)
+  (:notifiers :pointer))
+  @end{pre}")
+
 (export 'g-closure)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_CLOSURE
-;;;
-;;; #define G_TYPE_CLOSURE (g_closure_get_type ())
-;;;
-;;; The GType for GClosure.
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_closure_get_type" g-type-closure) g-type)
-
-(export 'g-type-closure)
+(defcfun ("g_closure_get_type" g-type-closure) g-type
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-12}
+  The @class{g-type} for @symbol{g-closure}.")
 
 (glib::at-init nil (g-type-closure))
+
+(export 'g-type-closure)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GCClosure
@@ -464,91 +463,84 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_closure_ref ()
-;;;
-;;; GClosure * g_closure_ref (GClosure *closure);
-;;;
-;;; Increments the reference count on a closure to force it staying alive while
-;;; the caller holds a pointer to it.
-;;;
-;;; closure :
-;;;     GClosure to increment the reference count on
-;;;
-;;; Returns :
-;;;     The closure passed in, for convenience
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_closure_ref" g-closure-ref) (:pointer g-closure)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-12}
+  @argument[closure]{@symbol{g-closure} to increment the reference count on}
+  @return{The @arg{closure} passed in, for convenience.}
+  Increments the reference count on a @arg{closure} to force it staying alive
+  while the caller holds a pointer to it."
   (closure (:pointer g-closure)))
 
 (export 'g-closure-ref)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_closure_sink ()
-;;;
-;;; void g_closure_sink (GClosure *closure);
-;;;
-;;; Takes over the initial ownership of a closure. Each closure is initially
-;;; created in a floating state, which means that the initial reference count is
-;;; not owned by any caller. g_closure_sink() checks to see if the object is
-;;; still floating, and if so, unsets the floating state and decreases the
-;;; reference count. If the closure is not floating, g_closure_sink() does
-;;; nothing. The reason for the existence of the floating state is to prevent
-;;; cumbersome code sequences like:
-;;;
-;;;   closure = g_cclosure_new (cb_func, cb_data);
-;;;   g_source_set_closure (source, closure);
-;;;   g_closure_unref (closure); // XXX GObject doesn't really need this
-;;;
-;;; Because g_source_set_closure() (and similar functions) take ownership of the
-;;; initial reference count, if it is unowned, we instead can write:
-;;;
-;;;   g_source_set_closure (source, g_cclosure_new (cb_func, cb_data));
-;;;
-;;; Generally, this function is used together with g_closure_ref(). Ane example
-;;; of storing a closure for later notification looks like:
-;;;
-;;;   static GClosure *notify_closure = NULL;
-;;;   void
-;;;   foo_notify_set_closure (GClosure *closure)
-;;;   {
-;;;     if (notify_closure)
-;;;       g_closure_unref (notify_closure);
-;;;     notify_closure = closure;
-;;;     if (notify_closure)
-;;;       {
-;;;         g_closure_ref (notify_closure);
-;;;         g_closure_sink (notify_closure);
-;;;       }
-;;;   }
-;;;
-;;; Because g_closure_sink() may decrement the reference count of a closure (if
-;;; it hasn't been called on closure yet) just like g_closure_unref(),
-;;; g_closure_ref() should be called prior to this function.
-;;;
-;;; closure :
-;;;     GClosure to decrement the initial reference count on, if it's still
-;;;     being held
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_closure_sink" g-closure-sink) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-12}
+  @argument[closure]{@symbol{g-closure} to decrement the initial reference count
+    on, if it is still being held}
+  @begin{short}
+    Takes over the initial ownership of a @arg{closure}.
+  @end{short}
+  Each closure is initially created in a floating state, which means that the
+  initial reference count is not owned by any caller. The @sym{g-closure-sink}
+  function checks to see if the object is still floating, and if so, unsets the
+  floating state and decreases the reference count. If the closure is not
+  floating, the @fun{g-closure-sink} function does nothing. The reason for the
+  existence of the floating state is to prevent cumbersome code sequences like:
+  @begin{pre}
+   closure = g_cclosure_new (cb_func, cb_data);
+   g_source_set_closure (source, closure);
+   g_closure_unref (closure); // XXX GObject doesn't really need this
+  @end{pre}
+  Because the @fun{g-source-set-closure} function (and similar functions) take
+  ownership of the initial reference count, if it is unowned, we instead can
+  write:
+  @begin{pre}
+   g_source_set_closure (source, g_cclosure_new (cb_func, cb_data));
+  @end{pre}
+  Generally, this function is used together with the @fun{g-closure-ref}
+  function. Ane example of storing a closure for later notification looks like:
+  @begin{pre}
+   static GClosure *notify_closure = NULL;
+   void
+   foo_notify_set_closure (GClosure *closure)
+   {
+     if (notify_closure)
+       g_closure_unref (notify_closure);
+     notify_closure = closure;
+     if (notify_closure)
+       {
+         g_closure_ref (notify_closure);
+         g_closure_sink (notify_closure);
+       @}
+   @}
+  @end{pre}
+  Because the @sym{g-closure-sink} may decrement the reference count of a
+  closure (if it has not been called on closure yet) just like the functions
+  @fun{g-closure-unref}, @fun{g-closure-ref} should be called prior to this
+  function."
   (closure (:pointer g-closure)))
 
 (export 'g-closure-sink)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_closure_unref ()
-;;;
-;;; void g_closure_unref (GClosure *closure);
-;;;
-;;; Decrements the reference count of a closure after it was previously
-;;; incremented by the same caller. If no other callers are using the closure,
-;;; then the closure will be destroyed and freed.
-;;;
-;;; closure :
-;;;     GClosure to decrement the reference count on
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_closure_unref" g-closure-unref) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-12}
+  @argument[closure]{@symbol{g-closure} to decrement the reference count on}
+  Decrements the reference count of a @arg{closure} after it was previously
+  incremented by the same caller. If no other callers are using the
+  @arg{closure}, then the closure will be destroyed and freed."
   (closure (:pointer g-closure)))
 
 (export 'g-closure-unref)
@@ -584,57 +576,50 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_closure_invalidate ()
-;;;
-;;; void g_closure_invalidate (GClosure *closure);
-;;;
-;;; Sets a flag on the closure to indicate that its calling environment has
-;;; become invalid, and thus causes any future invocations of g_closure_invoke()
-;;; on this closure to be ignored. Also, invalidation notifiers installed on the
-;;; closure will be called at this point. Note that unless you are holding a
-;;; reference to the closure yourself, the invalidation notifiers may unref the
-;;; closure and cause it to be destroyed, so if you need to access the closure
-;;; after calling g_closure_invalidate(), make sure that you've previously
-;;; called g_closure_ref().
-;;;
-;;; Note that g_closure_invalidate() will also be called when the reference
-;;; count of a closure drops to zero (unless it has already been invalidated
-;;; before).
-;;;
-;;; closure :
-;;;     GClosure to invalidate
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_closure_invalidate" g-closure-invalidate) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-12}
+  @argument[closure]{@symbol{g-closure} to invalidate}
+  @begin{short}
+    Sets a flag on the @arg{closure} to indicate that its calling environment
+    has become invalid, and thus causes any future invocations of the
+    @fun{g-closure-invoke} function on this @arg{closure} to be ignored.
+  @end{short}
+  Also, invalidation notifiers installed on the @arg{closure} will be called at
+  this point. Note that unless you are holding a reference to the closure
+  yourself, the invalidation notifiers may unref the closure and cause it to be
+  destroyed, so if you need to access the closure after calling the
+  @sym{g-closure-invalidate} function, make sure that you have previously
+  called the @fun{g-closure-ref} function.
+
+  Note that the @sym{g-closure-invalidate} function will also be called when the
+  reference count of a closure drops to zero (unless it has already been
+  invalidated before)."
   (closure (:pointer g-closure)))
 
 (export 'g-closure-invalidate)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_closure_add_finalize_notifier ()
-;;;
-;;; void g_closure_add_finalize_notifier (GClosure *closure,
-;;;                                       gpointer notify_data,
-;;;                                       GClosureNotify notify_func);
-;;;
-;;; Registers a finalization notifier which will be called when the reference
-;;; count of closure goes down to 0. Multiple finalization notifiers on a single
-;;; closure are invoked in unspecified order. If a single call to
-;;; g_closure_unref() results in the closure being both invalidated and
-;;; finalized, then the invalidate notifiers will be run before the finalize
-;;; notifiers.
-;;;
-;;; closure :
-;;;     a GClosure
-;;;
-;;; notify_data :
-;;;     data to pass to notify_func
-;;;
-;;; notify_func :
-;;;     the callback function to register
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_closure_add_finalize_notifier" g-closure-add-finalize-notifier)
     :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-12}
+  @argument[closure]{a @symbol{g-closure}}
+  @argument[notify-data]{data to pass to @arg{notify-func}}
+  @argument[notify-func]{the callback function to register}
+  @begin{short}
+    Registers a finalization notifier which will be called when the reference
+    count of closure goes down to 0.
+  @end{short}
+  Multiple finalization notifiers on a single closure are invoked in unspecified
+  order. If a single call to the @fun{g-closure-unref} function results in the
+  closure being both invalidated and finalized, then the invalidate notifiers
+  will be run before the finalize notifiers."
   (closure (:pointer g-closure))
   (notify-data :pointer)
   (notify-func :pointer))
@@ -643,27 +628,21 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_closure_add_invalidate_notifier ()
-;;;
-;;; void g_closure_add_invalidate_notifier (GClosure *closure,
-;;;                                         gpointer notify_data,
-;;;                                         GClosureNotify notify_func);
-;;;
-;;; Registers an invalidation notifier which will be called when the closure is
-;;; invalidated with g_closure_invalidate(). Invalidation notifiers are invoked
-;;; before finalization notifiers, in an unspecified order.
-;;;
-;;; closure :
-;;;     a GClosure
-;;;
-;;; notify_data :
-;;;     data to pass to notify_func
-;;;
-;;; notify_func :
-;;;     the callback function to register
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_closure_add_invalidate_notifier" g-closure-add-invalidate-notifier)
     :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-12}
+  @argument[closure]{a @symbol{g-closure}}
+  @argument[notify-data]{data to pass to @arg{notify-func}}
+  @argument[notify-func]{the callback function to register}
+  @begin{short}
+    Registers an invalidation notifier which will be called when the closure is
+    invalidated with the @fun{g-closure-invalidate} function.
+  @end{short}
+  Invalidation notifiers are invoked before finalization notifiers, in an
+  unspecified order."
   (closure (:pointer g-closure))
   (notify-data :pointer)
   (notify-func :pointer))
@@ -716,56 +695,53 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_closure_new_simple ()
-;;;
-;;; GClosure * g_closure_new_simple (guint sizeof_closure, gpointer data);
-;;;
-;;; Allocates a struct of the given size and initializes the initial part as a
-;;; GClosure. This function is mainly useful when implementing new types of
-;;; closures.
-;;;
-;;;   typedef struct _MyClosure MyClosure;
-;;;   struct _MyClosure
-;;;   {
-;;;     GClosure closure;
-;;;     // extra data goes here
-;;;   };
-;;;
-;;;   static void
-;;;   my_closure_finalize (gpointer  notify_data,
-;;;                        GClosure *closure)
-;;;   {
-;;;     MyClosure *my_closure = (MyClosure *)closure;
-;;;
-;;;     // free extra data here
-;;;   }
-;;;
-;;;   MyClosure *my_closure_new (gpointer data)
-;;;   {
-;;;     GClosure *closure;
-;;;     MyClosure *my_closure;
-;;;
-;;;     closure = g_closure_new_simple (sizeof (MyClosure), data);
-;;;     my_closure = (MyClosure *) closure;
-;;;
-;;;     // initialize extra data here
-;;;
-;;;     g_closure_add_finalize_notifier (closure, notify_data,
-;;;                                      my_closure_finalize);
-;;;     return my_closure;
-;;;   }
-;;;
-;;; sizeof_closure :
-;;;     the size of the structure to allocate, must be at least sizeof
-;;;     (GClosure)
-;;;
-;;; data :
-;;;     data to store in the data field of the newly allocated GClosure
-;;;
-;;; Returns :
-;;;     a newly allocated GClosure
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_closure_new_simple" g-closure-new-simple) (:pointer g-closure)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-12}
+  @argument[sizeof-closure]{the size of the structure to allocate, must be at
+    least @code{sizeof (GClosure)}}
+  @argument[data]{data to store in the data field of the newly allocated
+    @symbol{g-closure}}
+  @return{A newly allocated @symbol{g-closure}.}
+  @begin{short}
+    Allocates a structure of the given size and initializes the initial part as
+    a @symbol{g-closure}.
+  @end{short}
+  This function is mainly useful when implementing new types of closures.
+  @begin{pre}
+   typedef struct _MyClosure MyClosure;
+   struct _MyClosure
+   {
+     GClosure closure;
+     // extra data goes here
+   @};
+
+   static void
+   my_closure_finalize (gpointer  notify_data,
+                        GClosure *closure)
+   {
+     MyClosure *my_closure = (MyClosure *)closure;
+
+     // free extra data here
+   @}
+
+   MyClosure *my_closure_new (gpointer data)
+   {
+     GClosure *closure;
+     MyClosure *my_closure;
+
+     closure = g_closure_new_simple (sizeof (MyClosure), data);
+     my_closure = (MyClosure *) closure;
+
+     // initialize extra data here
+
+     g_closure_add_finalize_notifier (closure, notify_data,
+                                      my_closure_finalize);
+     return my_closure;
+   @}
+  @end{pre}"
   (sizeof-closure :uint)
   (data :pointer))
 
@@ -773,23 +749,21 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_closure_set_marshal ()
-;;;
-;;; void g_closure_set_marshal (GClosure *closure, GClosureMarshal marshal);
-;;;
-;;; Sets the marshaller of closure. The marshal_data of marshal provides a way
-;;; for a meta marshaller to provide additional information to the marshaller.
-;;; (See g_closure_set_meta_marshal().) For GObject's C predefined marshallers
-;;; (the g_cclosure_marshal_*() functions), what it provides is a callback
-;;; function to use instead of closure->callback.
-;;;
-;;; closure :
-;;;     a GClosure
-;;;
-;;; marshal :
-;;;     a GClosureMarshal function
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_closure_set_marshal" g-closure-set-marshal) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-12}
+  @argument[closure]{a @symbol{g-closure}}
+  @argument[marshal]{a @code{GClosureMarshal} function}
+  @begin{short}
+    Sets the marshaller of closure.
+  @end{short}
+  The @arg{marshal-data} of marshal provides a way for a meta marshaller to
+  provide additional information to the marshaller. (See the
+  @fun{g-closure-set-meta-marshal}.) For GObject's C predefined marshallers
+  (the @code{g_cclosure_marshal_*()} functions), what it provides is a callback
+  function to use instead of @code{closure->callback}."
   (closure (:pointer g-closure))
   (marshal :pointer))
 

@@ -266,45 +266,49 @@
     @about-function{g-object-ref-sink}
     @about-function{g-clear-object}
     @about-class{g-initially-unowned}
-    @about-class{g-initially-unownedClass}
+    @about-class{g-initially-unowned-class}
     @about-function{G_TYPE_INITIALLY_UNOWNED}
-    @about-function{g_object_is_floating}
-    @about-function{g_object_force_floating}
-    @about-function{g_object_weak_ref}
-    @about-function{g_object_weak_unref}
-    @about-function{g_object_add_weak_pointer}
-    @about-function{g_object_remove_weak_pointer}
-    @about-function{g_object_add_toggle_ref}
-    @about-function{g_object_remove_toggle_ref}
-    @about-function{g_object_connect}
-    @about-function{g_object_disconnect}
-    @about-function{g_object_set}
-    @about-function{g_object_get}
-    @about-function{g_object_notify}
-    @about-function{g_object_notify_by_pspec}
-    @about-function{g_object_freeze_notify}
-    @about-function{g_object_thaw_notify}
-    @about-function{g_object_get_data}
-    @about-function{g_object_set_data}
-    @about-function{g_object_set_data_full}
-    @about-function{g_object_steal_data}
-    @about-function{g_object_get_qdata}
-    @about-function{g_object_set_qdata}
-    @about-function{g_object_set_qdata_full}
-    @about-function{g_object_steal_qdata}
-    @about-function{g_object_set_property}
-    @about-function{g_object_get_property}
-    @about-function{g_object_new_valist}
-    @about-function{g_object_set_valist}
-    @about-function{g_object_get_valist}
-    @about-function{g_object_watch_closure}
-    @about-function{g_object_run_dispose}
+    @about-function{g-object-is-floating}
+    @about-function{g-object-force-floating}
+    @about-function{g-object-weak-ref}
+    @about-function{g-object-weak-unref}
+    @about-function{g-object-add-weak-pointer}
+    @about-function{g-object-remove-weak-pointer}
+    @about-function{g-object-add-toggle-ref}
+    @about-function{g-object-remove-toggle-ref}
+    @about-function{g-object-connect}
+    @about-function{g-object-disconnect}
+    @about-function{g-object-set}
+    @about-function{g-object-get}
+    @about-function{g-object-notify}
+    @about-function{g-object-notify-by-pspec}
+    @about-function{g-object-freeze-notify}
+    @about-function{g-object-thaw-notify}
+    @about-function{g-object-get-data}
+    @about-function{g-object-set-data}
+    @about-function{g-object-set-data-full}
+    @about-function{g-object-steal-data}
+    @about-function{g-object-dup-data}
+    @about-function{g-object-replace-data}
+    @about-function{g-object-get-qdata}
+    @about-function{g-object-set-qdata}
+    @about-function{g-object-set-qdata-full}
+    @about-function{g-object-steal-qdata}
+    @about-function{g-object-dup-qdata}
+    @about-function{g-object-replace-qdata}
+    @about-function{g-object-set-property}
+    @about-function{g-object-get-property}
+    @about-function{g-object-new-valist}
+    @about-function{g-object-set-valist}
+    @about-function{g-object-get-valist}
+    @about-function{g-object-watch-closure}
+    @about-function{g-object-run-dispose}
     @about-function{G_OBJECT_WARN_INVALID_PROPERTY_ID}
     @about-function{GWeakRef}
-    @about-function{g_weak_ref_init}
-    @about-function{g_weak_ref_clear}
-    @about-function{g_weak_ref_get}
-    @about-function{g_weak_ref_set}
+    @about-function{g-weak-ref-init}
+    @about-function{g-weak-ref-clear}
+    @about-function{g-weak-ref-get}
+    @about-function{g-weak-ref-set}
   @end{section}
   @begin[Enumeration and Flag Types]{section}
     The GLib type system provides fundamental types for enumeration and flags
@@ -374,13 +378,17 @@
     @about-function{g-type-variant-type}
     @about-function{g-type-error}
     @about-function{g-type-date-time}
+    @about-function{g-type-time-zone}
     @about-function{g-type-io-channel}
     @about-function{g-type-io-condition}
     @about-function{g-type-variant-builder}
     @about-function{g-type-key-file}
     @about-function{g-type-main-context}
     @about-function{g-type-main-loop}
+    @about-function{g-type-markup-parse-context}
     @about-function{g-type-source}
+    @about-function{g-type-polled}
+    @about-function{g-type-thread}
     @about-symbol{GStrv}
   @end{section}
   @begin[Generic Values]{section}
@@ -694,20 +702,20 @@
       @item{Invocation of the object method handler for G_SIGNAL_RUN_CLEANUP
         signals}
     @end{enumerate}
-     The user-provided signal handlers are called in the order they were
-     connected in. All handlers may prematurely stop a signal emission, and any
-     number of handlers may be connected, disconnected, blocked or unblocked
-     during a signal emission. There are certain criteria for skipping user
-     handlers in stages 2 and 4 of a signal emission. First, user handlers may
-     be blocked, blocked handlers are omitted during callback invocation, to
-     return from the \"blocked\" state, a handler has to get unblocked exactly
-     the same amount of times it has been blocked before. Second, upon emission
-     of a G_SIGNAL_DETAILED signal, an additional \"detail\" argument passed in
-     to g_signal_emit() has to match the detail argument of the signal handler
-     currently subject to invocation. Specification of no detail argument for
-     signal handlers (omission of the detail part of the signal specification
-     upon connection) serves as a wildcard and matches any detail argument
-     passed in to emission.
+    The user-provided signal handlers are called in the order they were
+    connected in. All handlers may prematurely stop a signal emission, and any
+    number of handlers may be connected, disconnected, blocked or unblocked
+    during a signal emission. There are certain criteria for skipping user
+    handlers in stages 2 and 4 of a signal emission. First, user handlers may
+    be blocked, blocked handlers are omitted during callback invocation, to
+    return from the \"blocked\" state, a handler has to get unblocked exactly
+    the same amount of times it has been blocked before. Second, upon emission
+    of a G_SIGNAL_DETAILED signal, an additional \"detail\" argument passed in
+    to g_signal_emit() has to match the detail argument of the signal handler
+    currently subject to invocation. Specification of no detail argument for
+    signal handlers (omission of the detail part of the signal specification
+    upon connection) serves as a wildcard and matches any detail argument
+    passed in to emission.
 
     @about-symbol{GSignalInvocationHint}
     @about-symbol{GSignalCMarshaller}
@@ -717,52 +725,52 @@
     @about-function{G_SIGNAL_TYPE_STATIC_SCOPE}
     @about-function{G_SIGNAL_MATCH_MASK}
     @about-function{G_SIGNAL_FLAGS_MASK}
-    @about-function{g_signal_new}
-    @about-function{g_signal_newv}
-    @about-function{g_signal_new_valist}
-    @about-function{g_signal_query}
-    @about-function{g_signal_lookup}
-    @about-function{g_signal_name}
-    @about-function{g_signal_list_ids}
-    @about-function{g_signal_emit}
-    @about-function{g_signal_emit_by_name}
-    @about-function{g_signal_emitv}
-    @about-function{g_signal_emit_valist}
+    @about-function{g-signal-new}
+    @about-function{g-signal-newv}
+    @about-function{g-signal-new-valist}
+    @about-function{g-signal-query}
+    @about-function{g-signal-lookup}
+    @about-function{g-signal-name}
+    @about-function{g-signal-list-ids}
+    @about-function{g-signal-emit}
+    @about-function{g-signal-emit-by-name}
+    @about-function{g-signal-emitv}
+    @about-function{g-signal-emit-valist}
     @about-function{g-signal-connect}
-    @about-function{g_signal_connect_after}
-    @about-function{g_signal_connect_swapped}
-    @about-function{g_signal_connect_object}
+    @about-function{g-signal-connect-after}
+    @about-function{g-signal-connect-swapped}
+    @about-function{g-signal-connect-object}
     @about-symbol{GConnectFlags}
-    @about-function{g_signal_connect_data}
-    @about-function{g_signal_connect_closure}
-    @about-function{g_signal_connect_closure_by_id}
-    @about-function{g_signal_handler_block}
-    @about-function{g_signal_handler_unblock}
-    @about-function{g_signal_handler_disconnect}
-    @about-function{g_signal_handler_find}
-    @about-function{g_signal_handlers_block_matched}
-    @about-function{g_signal_handlers_unblock_matched}
-    @about-function{g_signal_handlers_disconnect_matched}
-    @about-function{g_signal_handler_is_connected}
-    @about-function{g_signal_handlers_block_by_func}
-    @about-function{g_signal_handlers_unblock_by_func}
-    @about-function{g_signal_handlers_disconnect_by_func}
-    @about-function{g_signal_handlers_disconnect_by_data}
-    @about-function{g_signal_has_handler_pending}
-    @about-function{g_signal_stop_emission}
-    @about-function{g_signal_stop_emission_by_name}
-    @about-function{g_signal_override_class_closure}
-    @about-function{g_signal_chain_from_overridden}
-    @about-function{g_signal_new_class_handler}
-    @about-function{g_signal_override_class_handler}
-    @about-function{g_signal_chain_from_overridden_handler}
-    @about-function{g_signal_add_emission_hook}
-    @about-function{g_signal_remove_emission_hook}
-    @about-function{g_signal_parse_name}
-    @about-function{g_signal_get_invocation_hint}
-    @about-function{g_signal_type_cclosure_new}
-    @about-function{g_signal_accumulator_first_wins}
-    @about-function{g_signal_accumulator_true_handled}
+    @about-function{g-signal-connect-data}
+    @about-function{g-signal-connect-closure}
+    @about-function{g-signal-connect-closure-by-id}
+    @about-function{g-signal-handler-block}
+    @about-function{g-signal-handler-unblock}
+    @about-function{g-signal-handler-disconnect}
+    @about-function{g-signal-handler-find}
+    @about-function{g-signal-handlers-block-matched}
+    @about-function{g-signal-handlers-unblock-matched}
+    @about-function{g-signal-handlers-disconnect-matched}
+    @about-function{g-signal-handler-is-connected}
+    @about-function{g-signal-handlers-block-by-func}
+    @about-function{g-signal-handlers-unblock-by-func}
+    @about-function{g-signal-handlers-disconnect-by-func}
+    @about-function{g-signal-handlers-disconnect-by-data}
+    @about-function{g-signal-has-handler-pending}
+    @about-function{g-signal-stop-emission}
+    @about-function{g-signal-stop-emission-by-name}
+    @about-function{g-signal-override-class-closure}
+    @about-function{g-signal-chain-from-overridden}
+    @about-function{g-signal-new-class-handler}
+    @about-function{g-signal-override-class-handler}
+    @about-function{g-signal-chain-from-overridden-handler}
+    @about-function{g-signal-add-emission-hook}
+    @about-function{g-signal-remove-emission-hook}
+    @about-function{g-signal-parse-name}
+    @about-function{g-signal-get-invocation-hint}
+    @about-function{g-signal-type-cclosure-new}
+    @about-function{g-signal-accumulator-first-wins}
+    @about-function{g-signal-accumulator-true-handled}
   @end{section}
   @begin[Closures]{section}
     Functions as first-class objects
@@ -809,7 +817,35 @@
         automatically removed when the objects they point to go away.
       @end{item}
     @end{itemize}
-  @end{section}
-")
+
+    @about-symbol{G_CLOSURE_NEEDS_MARSHAL}
+    @about-symbol{G_CLOSURE_N_NOTIFIERS}
+    @about-symbol{G_CCLOSURE_SWAP_DATA}
+    @about-symbol{G_CALLBACK}
+    @about-symbol{g-closure}
+    @about-function{g-type-closure}
+    @about-symbol{g-cclosure}
+    @about-function{g-cclosure-new}
+    @about-function{g-cclosure-new-swap}
+    @about-function{g-cclosure-new-object}
+    @about-function{g-cclosure-new-object-swap}
+    @about-function{g-cclosure-marshal-generic}
+    @about-function{g-closure-new-object}
+    @about-function{g-closure-ref}
+    @about-function{g-closure-sink}
+    @about-function{g-closure-unref}
+    @about-function{g-closure-invoke}
+    @about-function{g-closure-invalidate}
+    @about-function{g-closure-add-finalize-notifier}
+    @about-function{g-closure-add-invalidate-notifier}
+    @about-function{g-closure-remove-finalize-notifier}
+    @about-function{g-closure-remove-invalidate-notifier}
+    @about-function{g-closure-new-simple}
+    @about-function{g-closure-set-marshal}
+    @about-function{g-closure-add-marshal-guards}
+    @about-function{g-closure-set-meta-marshal}
+    @about-function{g-closure-set-closure}
+    @about-function{g-closure-set-dummy-callback}
+  @end{section}")
 
 ;;; --- End of file gobject.package.lisp ---------------------------------------

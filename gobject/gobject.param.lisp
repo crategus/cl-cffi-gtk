@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file has been copied from the
-;;; GObject Reference Manual Version 2.34.3. See <http://www.gtk.org>.
+;;; GObject Reference Manual Version 2.36.2. See <http://www.gtk.org>.
 ;;; The API documentation of the Lisp binding is available at
 ;;; <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -374,10 +374,6 @@
   (:parent-instance g-param-spec)
   (:default-value :boolean))
 
-(export 'g-param-spec-boolean)
-
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-param-spec-boolean atdoc:*symbol-name-alias*) "CStruct"
       (gethash 'g-param-spec-boolean atdoc:*external-symbols*)
@@ -395,6 +391,8 @@
     @entry[:parent-instance]{private @symbol{g-param-spec} portion}
     @entry[:default-value]{default value for the property specified}
   @end{table}")
+
+(export 'g-param-spec-boolean)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_param_spec_boolean ()
@@ -513,8 +511,6 @@
   (:maximum :int8)
   (:default-value :int8))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-param-spec-char atdoc:*symbol-name-alias*) "CStruct"
       (gethash 'g-param-spec-char atdoc:*external-symbols*)
@@ -536,6 +532,8 @@
     @entry[:maximum]{maximum value for the property specified}
     @entry[:default-value]{default value for the property specified}
   @end{table}")
+
+(export 'g-param-spec-char)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_param_spec_char ()
@@ -702,8 +700,6 @@
   (:maximum :uint8)
   (:default-value :uint8))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-param-spec-uchar atdoc:*symbol-name-alias*) "CStruct"
       (gethash 'g-param-spec-uchar atdoc:*external-symbols*)
@@ -725,6 +721,8 @@
     @entry[:maximum]{maximum value for the property specified}
     @entry[:default-value]{default value for the property specified}
   @end{table}")
+
+(export 'g-param-spec-uchar)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_param_spec_uchar ()
@@ -843,8 +841,6 @@
   (:maximum :int)
   (:default-value :int))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-param-spec-int atdoc:*symbol-name-alias*) "CStruct"
       (gethash 'g-param-spec-int atdoc:*external-symbols*)
@@ -866,6 +862,8 @@
     @entry[:maximum]{maximum value for the property specified}
     @entry[:default-value]{default value for the property specified}
   @end{table}")
+
+(export 'g-param-spec-int)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_param_spec_int ()
@@ -985,8 +983,6 @@
   (:maximum :uint)
   (:default-value :uint))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-param-spec-uint atdoc:*symbol-name-alias*) "CStruct"
       (gethash 'g-param-spec-uint atdoc:*external-symbols*)
@@ -1008,6 +1004,8 @@
     @entry[:maximum]{maximum value for the property specified}
     @entry[:default-value]{default value for the property specified}
   @end{table}")
+
+(export 'g-param-spec-uint)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_param_spec_uint ()
@@ -1130,8 +1128,6 @@
   (:maximum :long)
   (:default-value :ulong))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-param-spec-long atdoc:*symbol-name-alias*) "CStruct"
       (gethash 'g-param-spec-long atdoc:*external-symbols*)
@@ -1153,6 +1149,8 @@
     @entry[:maximum]{maximum value for the property specified}
     @entry[:default-value]{default value for the property specified}
   @end{table}")
+
+(export 'g-param-spec-long)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_param_spec_long ()
@@ -1275,8 +1273,6 @@
   (:maximum :ulong)
   (:default-value :ulong))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-param-spec-ulong atdoc:*symbol-name-alias*) "CStruct"
       (gethash 'g-param-spec-ulong atdoc:*external-symbols*)
@@ -1298,6 +1294,8 @@
     @entry[:maximum]{maximum value for the property specified}
     @entry[:default-value]{default value for the property specified}
   @end{table}")
+
+(export 'g-param-spec-ulong)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_param_spec_ulong ()
@@ -1420,8 +1418,6 @@
   (:maximum :int64)
   (:default-value :int64))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-param-spec-int64 atdoc:*symbol-name-alias*) "CStruct"
       (gethash 'g-param-spec-int64 atdoc:*external-symbols*)
@@ -1443,6 +1439,8 @@
     @entry[:maximum]{maximum value for the property specified}
     @entry[:default-value]{default value for the property specified}
   @end{table}")
+
+(export 'g-param-spec-int64)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_param_spec_int64 ()
@@ -1565,8 +1563,6 @@
   (:maximum :uint64)
   (:default-value :uint64))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-param-spec-uint64 atdoc:*symbol-name-alias*) "CStruct"
       (gethash 'g-param-spec-uint64 atdoc:*external-symbols*)
@@ -1588,6 +1584,8 @@
     @entry[:maximum]{maximum value for the property specified}
     @entry[:default-value]{default value for the property specified}
   @end{table}")
+
+(export 'g-param-spec-uint64)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_param_spec_uint64 ()
@@ -1712,8 +1710,6 @@
   (:default-value :float)
   (:epsilon :float))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-param-spec-float atdoc:*symbol-name-alias*) "CStruct"
       (gethash 'g-param-spec-float atdoc:*external-symbols*)
@@ -1738,6 +1734,8 @@
     @entry[:epsilon]{values closer than epsilon will be considered identical by
       @fun{g-param-values-cmp} the default value is 1e-30.}
   @end{table}")
+
+(export 'g-param-spec-float)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_param_spec_float ()
@@ -1861,8 +1859,6 @@
   (:default-value :double)
   (:epsilon :double))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-param-spec-double atdoc:*symbol-name-alias*) "CStruct"
       (gethash 'g-param-spec-double atdoc:*external-symbols*)
@@ -1887,6 +1883,8 @@
     @entry[:epsilon]{values closer than epsilon will be considered identical by
       @fun{g-param-values-cmp} the default value is 1e-90.}
   @end{table}")
+
+(export 'g-param-spec-double)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_param_spec_double ()
@@ -2010,8 +2008,6 @@
   (:enum-class (:pointer g-enum-class))
   (:default-value :int))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-param-spec-enum atdoc:*symbol-name-alias*) "CStruct"
       (gethash 'g-param-spec-enum atdoc:*external-symbols*)
@@ -2031,6 +2027,8 @@
     @entry[:enum-class]{the @symbol{g-enum-class} for the enum}
     @entry[:default-value]{default value for the property specified}
   @end{table}")
+
+(export 'g-param-spec-enum)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_param_spec_enum ()
@@ -2153,10 +2151,6 @@
   (:flags-class (:pointer g-flags-class))
   (:default-value :uint))
 
-(export 'g-param-spec-flags)
-
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-param-spec-flags atdoc:*symbol-name-alias*) "CStruct"
       (gethash 'g-param-spec-flags atdoc:*external-symbols*)
@@ -2176,6 +2170,8 @@
     @entry[:flags-class]{the @symbol{g-flags-class} for the flags}
     @entry[:default-value]{default value for the property specified}
   @end{table}")
+
+(export 'g-param-spec-flags)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_param_spec_flags ()
@@ -2303,8 +2299,6 @@
   ;;;   guint         ensure_non_null : 1;
   (:flags-for-null :uint))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-param-spec-string atdoc:*symbol-name-alias*) "CStruct"
       (gethash 'g-param-spec-string atdoc:*external-symbols*)
@@ -2334,6 +2328,8 @@
     @entry[:flags-for-null]{replace empty string by @code{NULL} and
       @code{NULL} strings by an empty string}
   @end{table}")
+
+(export 'g-param-spec-string)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gchararray
@@ -2523,10 +2519,6 @@
 (defcstruct g-param-spec-param
   (:parent-instance g-param-spec))
 
-(export 'g-param-spec-param)
-
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-param-spec-param atdoc:*symbol-name-alias*) "CStruct"
       (gethash 'g-param-spec-param atdoc:*external-symbols*)
@@ -2542,6 +2534,8 @@
   @begin[code]{table}
     @entry[:parent-instance]{private @symbol{g-param-spec} portion}
   @end{table}")
+
+(export 'g-param-spec-param)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_param_spec_param ()
@@ -2711,10 +2705,6 @@
 (defcstruct g-param-spec-boxed
   (:parent-instance g-param-spec))
 
-(export 'g-param-spec-boxed)
-
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-param-spec-boxed atdoc:*symbol-name-alias*) "CStruct"
       (gethash 'g-param-spec-boxed atdoc:*external-symbols*)
@@ -2730,6 +2720,8 @@
   @begin[code]{table}
     @entry[:parent-instance]{private @symbol{g-param-spec} portion}
   @end{table}")
+
+(export 'g-param-spec-boxed)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_param_spec_boxed ()
@@ -2918,10 +2910,6 @@
 (defcstruct g-param-spec-pointer
   (:parent-instance g-param-spec))
 
-(export 'g-param-spec-pointer)
-
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-param-spec-pointer atdoc:*symbol-name-alias*) "CStruct"
       (gethash 'g-param-spec-pointer atdoc:*external-symbols*)
@@ -2937,6 +2925,8 @@
   @begin[code]{table}
     @entry[:parent-instance]{private @symbol{g-param-spec} portion}
   @end{table}")
+
+(export 'g-param-spec-pointer)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_param_spec_pointer ()
@@ -3052,10 +3042,6 @@
 (defcstruct g-param-spec-object
   (:parent-instance g-param-spec))
 
-(export 'g-param-spec-object)
-
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-param-spec-object atdoc:*symbol-name-alias*) "CStruct"
       (gethash 'g-param-spec-object atdoc:*external-symbols*)
@@ -3071,6 +3057,8 @@
   @begin[code]{table}
     @entry[:parent-instance]{private @symbol{g-param-spec} portion}
   @end{table}")
+
+(export 'g-param-spec-object)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_param_spec_object ()
@@ -3358,8 +3346,6 @@
   (:element-spec (:pointer g-param-spec))
   (:fixed-n-elements :uint))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-param-spec-value-array atdoc:*symbol-name-alias*) "CStruct"
       (gethash 'g-param-spec-value-array atdoc:*external-symbols*)
@@ -3381,6 +3367,8 @@
     @entry[:fixed-n-elements]{if greater than 0, arrays of this property will
       always have this many elements}
   @end{table}")
+
+(export 'g-param-spec-value-array)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_param_spec_value_array ()
@@ -3563,10 +3551,6 @@
   (:parent-instance g-param-spec)
   (:is-a-type g-type))
 
-(export 'g-param-spec-g-type)
-
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-param-spec-g-type atdoc:*symbol-name-alias*) "CStruct"
       (gethash 'g-param-spec-g-type atdoc:*external-symbols*)
@@ -3585,6 +3569,8 @@
     @entry[:is-a-type]{a @class{g-type} whose subtypes can occur as values}
   @end{table}
   Since 2.10")
+
+(export 'g-param-spec-g-type)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_param_spec_gtype ()

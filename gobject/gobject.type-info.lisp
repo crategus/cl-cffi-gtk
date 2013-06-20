@@ -95,7 +95,7 @@
 ;;;     G_TYPE_FROM_INSTANCE
 ;;;     G_TYPE_FROM_CLASS
 ;;;     G_TYPE_FROM_INTERFACE
-;;;     G_TYPE_INSTANCE_GET_CLASS                * not implemented *
+;;;     G_TYPE_INSTANCE_GET_CLASS
 ;;;     G_TYPE_INSTANCE_GET_INTERFACE            * not implemented *
 ;;;     G_TYPE_INSTANCE_GET_PRIVATE              * not implemented *
 ;;;     G_TYPE_CLASS_GET_PRIVATE                 * not implemented *
@@ -108,11 +108,11 @@
 ;;;     G_TYPE_CHECK_VALUE_TYPE                  * not implemented *
 ;;;     G_TYPE_FLAG_RESERVED_ID_BIT              * not implemented *
 ;;;
-;;;     g_type_init
+;;;     g_type_init                              * deprecated *
 ;;;
-;;;     GTypeDebugFlags                          * not implemented *
+;;;     GTypeDebugFlags                          * deprecated *
 ;;;
-;;;     g_type_init_with_debug_flags             * not implemented *
+;;;     g_type_init_with_debug_flags             * deprecated *
 ;;;     g_type_name
 ;;;     g_type_qname
 ;;;     g_type_from_name
@@ -646,7 +646,15 @@
 
 ;; gtype is a Lisp representation of a foreign GType
 
-(defstruct gtype
+(defstruct (gtype
+             ;; a print function to get nice output
+             (:print-function
+               (lambda (struct stream depth)
+                 (declare (ignore depth))
+                 (print-unreadable-object (struct stream)
+                   (format stream "GTYPE :name \"~A\" :id ~D"
+                                  (gtype-name struct)
+                                  (gtype-%id struct))))))
   name
   %id)
 
@@ -787,13 +795,14 @@
               "Whether the type designator is mangled with
                the @code{G_SIGNAL_TYPE_STATIC_SCOPE} flag"))
   (:documentation
-    "Values of this CFFI foreign type @sym{g-type} identify the C GType. GType
-     is designated by its name (a string) or a numeric identifier. Functions
-     accept GType designators as a string or integer and return them as a
-     string. The functions @fun{g-type-name} and @fun{g-type-from-name} are used
-     to convert between the name and the numeric identifier. Numeric identifier
-     of GType may be different between different program runs. But string
-     identifier of GType does not change.")
+    "Values of this CFFI foreign type @sym{g-type} identify the C GType.
+     @sym{g-type} is designated by its name (a string) or a numeric identifier.
+     Functions accept @sym{g-type} designators as a string or integer and return
+     them as a string. The functions @fun{g-type-name} and
+     @fun{g-type-from-name} are used to convert between the name and the numeric
+     identifier. Numeric identifier of @sym{g-type} may be different between
+     different program runs. But string identifier of @sym{g-type} does not
+     change.")
   (:actual-type %g-type)
   (:simple-parser g-type))
 
@@ -845,7 +854,7 @@
 
 (defun g-type-make-fundamental (x)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-6}
+ "@version{2013-6-11}
   @argument[x]{a fundamental type number}
   @return{The type ID of the @class{g-type}.}
   @begin{short}
@@ -854,14 +863,14 @@
     new fundamental types.
   @end{short}
   @subheading{Note}
-    @sym{g-type-make-fundamental} does not return a Lisp @code{gtype} value,
+    @sym{g-type-make-fundamental} does not return a Lisp @class{g-type} value,
     but the ID number of the @class{g-type}.
   @begin[Examples]{dictionary}
     @begin{pre}
  (g-type-make-fundamental 5)
 => 20
  (gtype (g-type-make-fundamental 5))
-=> #S(GTYPE :NAME \"gboolean\" :%ID 20)
+=> <GTYPE :name \"gboolean\" :id 20>
     @end{pre}
   @end{dictionary}
   @see-function{g-type-fundamental-next}"
@@ -984,8 +993,13 @@
  "@version{2013-6-6}
   @argument[type]{a @class{g-type}}
   @return{@em{True} if @arg{type} has a @symbol{g-type-value-table}.}
-  Checks if @arg{type} has a @symbol{g-type-value-table}.
-  @see-symbol{g-type-value-table}"
+  @begin{short}
+    Checks if @arg{type} has a @symbol{g-type-value-table}.
+  @end{short}
+  @sym{g-type-has-value-table} calls the @fun{g-type-value-table-peek} function
+  to do the check.
+  @see-symbol{g-type-value-table}
+  @see-function{g-type-value-table-peek}"
   (not (null-pointer-p (g-type-value-table-peek type))))
 
 (export 'g-type-has-value-table)
@@ -1565,32 +1579,18 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_INSTANCE_GET_CLASS()
-;;;
-;;; #define G_TYPE_INSTANCE_GET_CLASS(instance, g_type, c_type)
-;;;         (_G_TYPE_IGC ((instance), (g_type), c_type))
-;;;
-;;; Get the class structure of a given instance, casted to a specified ancestor
-;;; type g_type of the instance.
-;;;
-;;; Note that while calling a GInstanceInitFunc(), the class pointer gets
-;;; modified, so it might not always return the expected pointer.
-;;;
-;;; This macro should only be used in type implementations.
-;;;
-;;; instance :
-;;;     Location of the GTypeInstance structure.
-;;;
-;;; g_type :
-;;;     The GType of the class to be returned.
-;;;
-;;; c_type :
-;;;     The C type of the class structure.
-;;;
-;;; Returns :
-;;;     a pointer to the class structure
 ;;; ----------------------------------------------------------------------------
 
 (defun g-type-instance-get-class (instance)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-9}
+  @argument[instance]{the @class{g-type-instance} structure}
+  @return{A pointer to the class structure.}
+  @begin{short}
+    Get the class structure of a given instance.
+  @end{short}
+
+  This function should only be used in type implementations."
   (let ((ptr (if (pointerp instance) instance (pointer instance))))
     (foreign-slot-value ptr 'g-type-instance :class)))
 
@@ -1826,26 +1826,20 @@
 
 (defcfun ("g_type_init" g-type-init) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-4-1}
+ "@version{2013-6-9}
+  @subheading{Warning}
+    The @sym{g-type-init} function has been deprecated since version 2.36 and
+    should not be used in newly written code. the type system is now initialised
+    automatically.
+
   @begin{short}
-    Prior to any use of the type system, @sym{g-type-init} has to be called to
-    initialize the type system and assorted other code portions such as the
-    various fundamental type implementations or the signal system.
-  @end{short}
+    This function used to initialise the type system. Since GLib 2.36, the type
+    system is initialised automatically and this function does nothing.
+  @end{short}")
 
-  This function is idempotent. If you call it multiple times, all but the first
-  calls will be silently ignored. There is no way to undo the effect of
-  @sym{g-type-init}.
+; (glib::at-init () (g-type-init))
 
-  Since version 2.24 this also initializes the thread system.
-
-  @subheading{Note}
-    In the Lisp binding to GTK+ @sym{g-type-init} is called, when loading the
-    library.")
-
-(glib::at-init () (g-type-init))
-
-(export 'g-type-init)
+; (export 'g-type-init)
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GTypeDebugFlags
@@ -1857,10 +1851,16 @@
 ;;;   G_TYPE_DEBUG_MASK    = 0x03
 ;;; } GTypeDebugFlags;
 ;;;
-;;; The GTypeDebugFlags enumeration values can be passed to
-;;; g_type_init_with_debug_flags() to trigger debugging messages during runtime.
-;;; Note that the messages can also be triggered by setting the GOBJECT_DEBUG
-;;; environment variable to a ':'-separated list of "objects" and "signals".
+;;; Warning
+;;;
+;;; GTypeDebugFlags has been deprecated since version 2.36 and should not be
+;;; used in newly-written code. g_type_init() is now done automatically
+;;;
+;;; These flags used to be passed to g_type_init_with_debug_flags() which is now
+;;; deprecated.
+;;;
+;;; If you need to enable debugging features, use the GOBJECT_DEBUG environment
+;;; variable.
 ;;;
 ;;; G_TYPE_DEBUG_NONE
 ;;;     Print no messages.
@@ -1875,18 +1875,31 @@
 ;;;     Mask covering all debug flags.
 ;;; ----------------------------------------------------------------------------
 
+;;; * deprecated *
+
 ;;; ----------------------------------------------------------------------------
 ;;; g_type_init_with_debug_flags ()
 ;;;
 ;;; void g_type_init_with_debug_flags (GTypeDebugFlags debug_flags);
 ;;;
-;;; Similar to g_type_init(), but additionally sets debug flags.
+;;; Warning
 ;;;
-;;; This function is idempotent.
+;;; g_type_init_with_debug_flags has been deprecated since version 2.36 and
+;;; should not be used in newly-written code. the type system is now initialised
+;;; automatically
+;;;
+;;; This function used to initialise the type system with debugging flags. Since
+;;; GLib 2.36, the type system is initialised automatically and this function
+;;; does nothing.
+;;;
+;;; If you need to enable debugging features, use the GOBJECT_DEBUG environment
+;;; variable.
 ;;;
 ;;; debug_flags :
 ;;;     Bitwise combination of GTypeDebugFlags values for debugging purposes.
 ;;; ----------------------------------------------------------------------------
+
+;;; * deprecated *
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_type_name ()
@@ -2960,16 +2973,16 @@
 
 (defcfun ("g_type_add_interface_static" g-type-add-interface-static) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-4-2}
+ "@version{2013-6-11}
   @argument[instance-type]{@class{g-type} value of an instantiable type}
   @argument[interface-type]{@class{g-type} value of an interface type}
   @argument[info]{the @symbol{g-interface-info} structure for this
     (@arg{instance-type}, @arg{interface-type}) combination}
   @begin{short}
-    Adds the static @arg{interface-type} to @arg{instantiable-type}. The
-    information contained in the @symbol{g-interface-info} structure pointed to
-    by info is used to manage the relationship.
-  @end{short}"
+    Adds the static @arg{interface-type} to @arg{instantiable-type}.
+  @end{short}
+  The information contained in the @symbol{g-interface-info} structure pointed
+  to by info is used to manage the relationship."
   (instance-type g-type)
   (interface-type g-type)
   (info (:pointer g-interface-info)))
@@ -3004,7 +3017,7 @@
 (defcfun ("g_type_interface_add_prerequisite" g-type-interface-add-prerequisite)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2013-4-2}
+ "@version{2013-6-11}
   @argument[interface-type]{a @class{g-type} of an interface type}
   @argument[prerequisite-type]{a @class{g-type} of an interface or
     instantiatable type}
@@ -3014,8 +3027,8 @@
   @end{short}
   This means that any type implementing @arg{interface-type} must also implement
   @arg{prerequisite-type}. Prerequisites can be thought of as an alternative to
-  interface derivation (which GType does not support). An interface can have at
-  most one instantiatable prerequisite type."
+  interface derivation (which the GType API does not support). An interface can
+  have at most one instantiatable prerequisite type."
   (interface-type g-type)
   (prerequisite-type g-type))
 
@@ -3064,14 +3077,15 @@
 
 (defcfun ("g_type_fundamental_next" g-type-fundamental-next) %g-type
  #+cl-cffi-gtk-documentation
- "@version{2013-4-2}
+ "@version{2013-6-17}
   @begin{return}
     The nextmost fundamental type ID to be registered, or 0 if the type
     system ran out of fundamental type IDs.
   @end{return}
   Returns the next free fundamental type ID which can be used to register a
-  new fundamental type with @fun{g-type-register-fundamental}. The returned type
-  ID represents the highest currently registered fundamental type identifier.")
+  new fundamental type with @code{g_type_register_fundamental()}. The returned
+  type ID represents the highest currently registered fundamental type
+  identifier.")
 
 (export 'g-type-fundamental-next)
 
@@ -3081,7 +3095,7 @@
 
 (defcfun ("g_type_fundamental" g-type-fundamental) g-type
  #+cl-cffi-gtk-documentation
- "@version{2013-4-2}
+ "@version{2013-6-10}
   @argument[type]{a valid @class{g-type}}
   @return{The fundamental type of the argument @arg{type}.}
   @begin{short}
@@ -3089,10 +3103,14 @@
     are types that serve as ultimate bases for the derived types, thus they are
     the roots of distinct inheritance hierarchies.
   @end{short}
-  @begin[Example]{dictionary}
+  @begin[Examples]{dictionary}
     @begin{pre}
  (g-type-fundamental \"GtkButton\")
-=> #S(GTYPE :NAME \"GObject\" :%ID 80)
+=> #<GTYPE :name \"GObject\" :id 80>
+ (g-type-fundamental \"GtkOrientable\")
+=> #<GTYPE :name \"GInterface\" :id 8>
+ (g-type-fundamental \"GtkWindowType\")
+=> #<GTYPE :name \"GEnum\" :id 48>
     @end{pre}
   @end{dictionary}"
   (type g-type))
@@ -3255,17 +3273,18 @@
 (defcfun ("g_type_value_table_peek" g-type-value-table-peek)
     (:pointer g-type-value-table)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-2}
-  @argument[type]{A @class{g-type} value}
+ "@version{2013-6-11}
+  @argument[type]{a @class{g-type} value}
   @return{Location of the @symbol{g-type-value-table} associated with
-    @arg{type} or @code{NULL} if there is no @symbol{g-type-value-table}
+    @arg{type} or @code{null-pointer} if there is no @symbol{g-type-value-table}
     associated with @arg{type}.}
   @begin{short}
     Returns the location of the @symbol{g-type-value-table} associated with
     @arg{type}.
   @end{short}
   Note that this function should only be used from source code that implements
-  or has internal knowledge of the implementation of @arg{type}."
+  or has internal knowledge of the implementation of @arg{type}.
+  @see-function{g-type-has-value-table}"
   (type g-type))
 
 (export 'g-type-value-table-peek)

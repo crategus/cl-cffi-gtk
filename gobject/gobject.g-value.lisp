@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file has been copied from the
-;;; GObject Reference Manual Version 2.34.3. See <http://www.gtk.org>.
+;;; GObject Reference Manual Version 2.36.2. See <http://www.gtk.org>.
 ;;; The API documentation of the Lisp binding is available at
 ;;; <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -521,11 +521,14 @@
 ;;; ----------------------------------------------------------------------------
 
 (defun g-type-value ()
- "@version{2013-4-2}
+ "@version{2013-6-9}
   @return{The type ID of @symbol{g-value}.}
   The type ID of the @symbol{g-value} type which is a boxed type, used to pass
-  around pointers to GValues."
+  around pointers to @symbol{g-value}'s.
+  @see-symbol{g-value}"
   (cffi:foreign-funcall "g_value_get_type" g-type))
+
+(export 'g-type-value)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_VALUE_ARRAY
