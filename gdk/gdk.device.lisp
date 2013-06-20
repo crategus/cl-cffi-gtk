@@ -1146,15 +1146,15 @@
     @entry[time]{The timestamp for this event.}
     @entry[axes]{the values of the device's axes.}
   @end{table}
-  @see-constructor{make-gdk-time-coord}
   @see-constructor{copy-gdk-time-coord}
+  @see-constructor{make-gdk-time-coord}
   @see-slot{gdk-time-coord-time}
   @see-slot{gdk-time-coord-axes}")
 
 ;;; --- copy-gdk-time-coord ----------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (documentation 'copy-gdk-rgba 'function)
+(setf (documentation 'copy-gdk-time-coord 'function)
  "@version{2013-4-5}
   @argument[instance]{a @class{gdk-time-coord} struct}
   Copy constructor of a @class{gdk-time-coord} struct.")
