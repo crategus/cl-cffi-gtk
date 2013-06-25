@@ -2,12 +2,12 @@ for Cairo 1.12.2
 
 Drawing
 
-    cairo.context.lisp - cariro_t       - Cairo 1.12.2
-    cairo.paths.lisp   - cairo_path_t   - Cairo 1.12.2
+    cairo.context.lisp - cariro_t                                - Cairo 1.12.2
+    cairo.paths.lisp   - cairo_path_t                            - Cairo 1.12.2
 
     cairo_pattern_t — Sources for drawing
     
-    cairo-regions.lisp - cairo_region_t - Cairo 1.12.2
+    cairo-regions.lisp - cairo_region_t                          - Cairo 1.12.2
     
     Transformations — Manipulating the current transformation matrix
     text — Rendering text and glyphs
@@ -27,7 +27,7 @@ Surfaces
 
     cairo_device_t — interface to underlying rendering system
     
-    cario.surface.lisp - cario_surface_t - Cairo 1.12.2
+    cario.surface.lisp - cario_surface_t                         - Cairo 1.12.2
     
     Image Surfaces — Rendering to memory buffers
     PDF Surfaces — Rendering PDF documents
