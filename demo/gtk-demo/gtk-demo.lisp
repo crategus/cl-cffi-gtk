@@ -6,6 +6,7 @@
 
 (in-package :gtk-demo)
 
+(load "assistant.lisp")
 (load "box-packing.lisp")
 (load "table-packing.lisp")
 (load "grid-packing.lisp")
@@ -47,6 +48,7 @@
 (load "combo-box.lisp")
 (load "combo-box-text.lisp")
 (load "menu.lisp")
+(load "pixbufs.lisp")
 
 ;;; ----------------------------------------------------------------------------
 
@@ -124,6 +126,9 @@
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Dialogs"
                                 "dialogs.lisp" "EXAMPLE-DIALOG" 0)
+      (gtk-tree-store-set model (gtk-tree-store-append model parent)
+                                "Assistant"
+                                "assistant.lisp" "DEMO-ASSISTANT" 0)
     )
     (let ((parent (gtk-tree-store-set model (gtk-tree-store-append model nil)
                                             "Display Widgets")))
@@ -277,6 +282,10 @@
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "The Event Box"
                                 "event-box.lisp" "EXAMPLE-EVENT-BOX" 0)
+      (gtk-tree-store-set model (gtk-tree-store-append model parent)
+                                "Demo Pixbufs"
+                                "pixbufs.lisp" "DEMO-PIXBUFS" 0)
+
     )
     model))
 
