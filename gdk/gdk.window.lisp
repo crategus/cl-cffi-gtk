@@ -420,7 +420,7 @@
     @entry[:child]{Child window (used to implement e. g. @class{gtk-entry}).}
     @entry[:temp]{Override redirect temporary window (used to implement
       @class{gtk-menu}).}
-    @entry[:foreign]{Foreign window (see the @fun{gdk-window-foreign-new}).}
+    @entry[:foreign]{Foreign window.}
     @entry[:offscreen]{Offscreen window (see the section called
       \"Offscreen Windows\"). Since 2.18.}
   @end{table}")
@@ -1442,7 +1442,7 @@
 
 (defun gdk-window-at-pointer ()
  #+cl-cffi-gtk-documentation
- "@version{2013-4-4}
+ "@version{2013-6-23}
   @begin{return}
     @code{window} -- window under the mouse pointer @br{}
     @code{win-x} -- origin of the window under the pointer @br{}
@@ -1455,13 +1455,13 @@
 
   @begin{short}
     Obtains the window underneath the mouse pointer, returning the location of
-    that window in win_x, win_y. Returns NULL if the window under the mouse
-    pointer is not known to GDK (if the window belongs to another application
-    and a GdkWindow hasn't been created for it with gdk_window_foreign_new())
+    that window in @arg{win-x}, @arg{win-y}. Returns @code{nil} if the window
+    under the mouse pointer is not known to GDK.
   @end{short}
 
-  NOTE: For multihead-aware widgets or applications use
-  gdk_display_get_window_at_pointer() instead."
+  @subheading{Note}
+    For multihead-aware widgets or applications use the function
+    @fun{gdk-display-get-window-at-pointer} instead."
   (with-foreign-objects ((x :int) (y :int))
     (let ((window (%gdk-window-at-pointer x y)))
       (if window
@@ -1476,18 +1476,21 @@
 
 (defcfun ("gdk_window_show" gdk-window-show) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-4-5}
-  @argument[window]{a GdkWindow}
+ "@version{2013-6-23}
+  @argument[window]{a @class{gdk-window} object}
   @begin{short}
-    Like gdk_window_show_unraised(), but also raises the window to the top of
-    the window stack (moves the window to the front of the Z-order).
+    Like the function @fun{gdk-window-show-unraised}, but also raises the window
+    to the top of the window stack (moves the window to the front of the
+    Z-order).
   @end{short}
 
-  This function maps a window so it's visible onscreen. Its opposite is
-  gdk_window_hide().
+  This function maps a window so it is visible onscreen. Its opposite is the
+  function @fun{gdk-window-hide}.
 
-  When implementing a GtkWidget, you should call this function on the widget's
-  GdkWindow as part of the \"map\" method."
+  When implementing a @class{gtk-widget}, you should call this function on the
+  widget's @class{gdk-window} as part of the \"map\" method.
+  @see-function{gdk-window-show-unraised}
+  @see-function{gdk-window-hide}"
   (window (g-object gdk-window)))
 
 (export 'gdk-window-show)
@@ -1874,23 +1877,28 @@
 
 (defcfun ("gdk_window_set_opacity" gdk-window-set-opacity) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-4-5}
-  @argument[window]{a top-level GdkWindow}
+ "@version{2013-6-24}
+  @argument[window]{a top-level @class{gdk-window} object}
   @argument[opacity]{opacity}
   @begin{short}
     Request the windowing system to make window partially transparent, with
-    opacity 0 being fully transparent and 1 fully opaque. (Values of the opacity
-    parameter are clamped to the [0,1] range.)
+    opacity 0 being fully transparent and 1 fully opaque. Values of the opacity
+    parameter are clamped to the [0,1] range.
   @end{short}
 
   On X11, this works only on X screens with a compositing manager running.
 
-  For setting up per-pixel alpha, see gdk_screen_get_rgba_visual(). For making
-  non-toplevel windows translucent, see gdk_window_set_composited().
+  For setting up per-pixel alpha, see the function
+  @fun{gdk-screen-get-rgba-visual}. For making non-toplevel windows translucent,
+  see the function @fun{gdk-window-set-composited}.
 
-  Since 2.12"
+  Since 2.12
+  @see-function{gdk-screen-get-rgba-visual}
+  @see-function{gdk-window-set-composited}"
   (window (g-object gdk-window))
   (opacity :double))
+
+(export 'gdk-window-set-opacity)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_set_composited ()

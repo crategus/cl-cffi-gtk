@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GDK 3 Reference Manual
-;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -121,7 +121,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gdk-device 'type)
- "@version{2013-3-22}
+ "@version{2013-6-21}
   @begin{short}
     The @sym{gdk-device} object represents a single input device, such as a
     keyboard, a mouse, a touchpad, etc.
@@ -169,82 +169,66 @@
   have a @code{nil} associated device. @br{}
   Since 3.0")
 
-;;;-----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "device-manager" 'gdk-device) 't)
  "The @code{\"device-manager\"} property of type @class{gdk-device-manager}
-  (Read / Write / Construct)@br{}
+  (Read / Write / Construct) @br{}
   The @class{gdk-device-manager} the @sym{gdk-device} pertains to. @br{}
   Since 3.0")
-
-;;;-----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "display" 'gdk-device) 't)
  "The @code{\"display\"} property of type @class{gdk-display}
-  (Read / Write / Construct)@br{}
+  (Read / Write / Construct) @br{}
   The @class{gdk-display} the @sym{gdk-device} pertains to. @br{}
   Since 3.0")
-
-;;;-----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "has-cursor" 'gdk-device) 't)
  "The @code{\"has-cursor\"} property of type @code{:boolean}
-  (Read / Write / Construct)@br{}
+  (Read / Write / Construct) @br{}
   Whether the device is represented by a cursor on the screen. Devices of type
   @code{:master} will have @em{true} here. @br{}
-  Default value: @code{nil}
+  Default value: @code{nil} @br{}
   Since 3.0")
-
-;;;-----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "input-mode" 'gdk-device) 't)
  "The @code{\"input-mode\"} property of type @symbol{gdk-input-mode}
-  (Read / Write)@br{}
+  (Read / Write) @br{}
   Input mode for the device. @br{}
-  Default value: @code{:disabled}@br{}
+  Default value: @code{:disabled} @br{}
   Since 3.0")
-
-;;;-----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "input-source" 'gdk-device) 't)
  "The @code{\"input-source\"} property of type @symbol{gdk-input-source}
-  (Read / Write / Construct)@br{}
+  (Read / Write / Construct) @br{}
   Source type for the device. @br{}
-  Default value: @code{:mouse}@br{}
+  Default value: @code{:mouse} @br{}
   Since 3.0")
-
-;;;-----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "n-axes" 'gdk-device) 't)
- "The @code{\"n-axes\"} property of type @code{:uint} (Read)@br{}
+ "The @code{\"n-axes\"} property of type @code{:uint} (Read) @br{}
   Number of axes in the device. @br{}
-  Default value: 0@br{}
+  Default value: 0 @br{}
   Since 3.0")
-
-;;;-----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "name" 'gdk-device) 't)
  "The @code{\"name\"} property of type @code{:string}
-  (Read / Write / Construct)@br{}
+  (Read / Write / Construct) @br{}
   The device name. @br{}
-  Default value: @code{nil}
+  Default value: @code{nil} @br{}
   Since 3.0")
-
-;;;-----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "type" 'gdk-device) 't)
  "The @code{\"type\"} property of type @symbol{gdk-device-type}
-  (Read / Write / Construct)@br{}
+  (Read / Write / Construct) @br{}
   Device role in the device manager. @br{}
-  Default value: @code{:master}@br{}
+  Default value: @code{:master} @br{}
   Since 3.0")
 
 ;;; ----------------------------------------------------------------------------
@@ -261,8 +245,6 @@
   Accessor of the slot @code{\"associated-device\"} of the @class{gdk-device}
   class.")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-device-device-manager atdoc:*function-name-alias*)
       "Accessor"
@@ -270,8 +252,6 @@
  "@version{2013-3-22}
   Accessor of the slot @code{\"device-manager\"} of the @class{gdk-device}
   class.")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-device-display atdoc:*function-name-alias*)
@@ -281,8 +261,6 @@
   Accessor of the slot @code{\"display\"} of the @class{gdk-device}
   class.")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-device-has-cursor atdoc:*function-name-alias*)
       "Accessor"
@@ -290,8 +268,6 @@
  "@version{2013-3-22}
   Accessor of the slot @code{\"has-cursor\"} of the @class{gdk-device}
   class.")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-device-input-mode atdoc:*function-name-alias*)
@@ -301,8 +277,6 @@
   Accessor of the slot @code{\"input-mode\"} of the @class{gdk-device}
   class.")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-device-input-source atdoc:*function-name-alias*)
       "Accessor"
@@ -311,16 +285,12 @@
   Accessor of the slot @code{\"input-source\"} of the @class{gdk-device}
   class.")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-device-n-axes atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-device-n-axes 'function)
  "@version{2013-3-22}
   Accessor of the slot @code{\"n-axes\"} of the @class{gdk-device} class.")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-device-name atdoc:*function-name-alias*)
@@ -329,16 +299,12 @@
  "@version{2013-3-22}
   Accessor of the slot @code{\"name\"} of the @class{gdk-device} class.")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-device-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-device-type 'function)
  "@version{2013-3-22}
   Accessor of the slot @code{\"type\"} of the @class{gdk-device} class.")
-
-;;; ----------------------------------------------------------------------------
 
 #-windows
 (define-g-object-class "GdkX11DeviceXI2" gdk-x11-device-xi2
@@ -365,12 +331,10 @@
   (:touchscreen 5)
   (:touchpad 6))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-input-source atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gdk-input-source atdoc:*external-symbols*)
- "@version{}
+ "@version{2013-6-21}
   @begin{short}
     An enumeration describing the type of an input device in general terms.
   @end{short}
@@ -411,12 +375,10 @@
   (:screen 1)
   (:window 2))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-input-mode atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gdk-input-mode atdoc:*external-symbols*)
- "@version{2013-3-22}
+ "@version{2013-6-21}
   @begin{short}
     An enumeration that describes the mode of an input device.
   @end{short}
@@ -454,12 +416,10 @@
   (:wheel 6)
   (:last 7))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-axis-use atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gdk-axis-use atdoc:*external-symbols*)
- "@version{2013-3-22}
+ "@version{2013-6-21}
   @begin{short}
     An enumeration describing the way in which a device axis (valuator) maps
     onto the predefined valuator types that GTK+ understands.
@@ -499,12 +459,10 @@
   (:slave 1)
   (:floating 2))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-device-type atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gdk-device-type atdoc:*external-symbols*)
- "@version{2013-3-22}
+ "@version{2013-6-21}
   @begin{short}
     Indicates the device type. See above for more information about the meaning
     of these device types.
@@ -536,12 +494,10 @@
   (:window 1)
   (:application 2))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-grab-ownership atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gdk-grab-ownership atdoc:*external-symbols*)
- "@version{2013-3-22}
+ "@version{2013-6-21}
   @begin{short}
     Defines how device grabs interact with other devices.
   @end{short}
@@ -568,9 +524,9 @@
 
 (defun gdk-device-get-name (device)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-22}
+ "@version{2013-6-21}
   @argument[device]{a @class{gdk-device} object}
-  @return{a name}
+  @return{A name.}
   @short{Determines the name of the device.}
 
   Since 2.20"
@@ -586,9 +542,9 @@
 
 (defun gdk-device-get-source (device)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-22}
+ "@version{2013-6-21}
   @argument[device]{a @class{gdk-device} object}
-  @return{a @symbol{gdk-input-source}}
+  @return{A @symbol{gdk-input-source}.}
   @short{Determines the type of the device.}
 
   Since 2.20"
@@ -604,10 +560,10 @@
 
 (defun gdk-device-set-mode (device mode)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-22}
+ "@version{2013-6-21}
   @argument[device]{a @class{gdk-device} object}
   @argument[mode]{the input mode}
-  @return{@em{true} if the mode was successfully changed}
+  @return{@em{True} if the mode was successfully changed.}
   Sets a the mode of an input device. The mode controls if the device is
   active and whether the device's range is mapped to the entire screen or to a
   single window."
@@ -623,9 +579,9 @@
 
 (defun gdk-device-get-mode (device)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-22}
+ "@version{2013-6-21}
   @argument[device]{a @class{gdk-device} object}
-  @return{a @symbol{gdk-input-source}}
+  @return{A @symbol{gdk-input-source}.}
   @short{Determines the mode of the device.}
 
   Since 2.20"
@@ -639,7 +595,7 @@
 
 (defcfun ("gdk_device_set_key" gdk-device-set-key) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-22}
+ "@version{2013-6-21}
   @argument[device]{a @class{gdk-device} object}
   @argument[index]{the index of the macro button to set}
   @argument[keyval]{the keyval to generate}
@@ -665,15 +621,16 @@
 
 (defun gdk-device-get-key (device index)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-22}
+ "@version{2013-6-21}
   @argument[device]{a @class{gdk-device} object}
   @argument[index]{the index of the macro button to get}
-  @argument[keyval]{return value for the keyval}
-  @argument[modifiers]{return value for modifiers}
-  @return{@em{True} if keyval is set for index.}
+  @begin{return}
+    @code{keyval} -- value for the keyval @br{}
+    @code{modifiers} -- value for modifiers
+  @end{return}
   @begin{short}
-    If index_ has a valid keyval, this function will return TRUE and fill in
-    keyval and modifiers with the keyval settings.
+    If @arg{index} has a valid keyval, this function will return @arg{keyval}
+    and @arg{modifiers} with the keyval settings.
   @end{short}
 
   Since 2.20"
@@ -691,7 +648,7 @@
 
 (defcfun ("gdk_device_set_axis_use" gdk-device-set-axis-use) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-22}
+ "@version{2013-6-21}
   @argument[device]{a pointer @class{gdk-device} object}
   @argument[index]{the index of the axis}
   @argument[use]{specifies how the axis is used}
@@ -708,11 +665,11 @@
 
 (defcfun ("gdk_device_get_axis_use" gdk-device-get-axis-use) gdk-axis-use
  #+cl-cffi-gtk-documentation
- "@version{2013-3-22}
+ "@version{2013-6-21}
   @argument[device]{a pointer @class{gdk-device} object}
   @argument[index]{the index of the axis}
   @return{A @symbol{gdk-axis-use} specifying how the axis is used.}
-  @return{Returns the axis use for @arg{index}.}
+  @short{Returns the axis use for @arg{index}.}
 
   Since 2.20"
   (device (g-object gdk-device))
@@ -728,7 +685,7 @@
 
 (defun gdk-device-get-associated-device (device)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-22}
+ "@version{2013-6-21}
   @argument[device]{a @class{gdk-device} object}
   @return{The associated device, or @code{nil}.}
   @begin{short}
@@ -739,7 +696,7 @@
   If device is of type @code{:slave}, it will return the master device to which
   device is attached to.
 
-  If device is of type GDK_DEVICE_TYPE_FLOATING, NULL will be returned, as
+  If device is of type @code{:floating}, @code{nil} will be returned, as
   there is no associated device.
 
   Since 3.0"
@@ -754,15 +711,13 @@
 (defcfun ("gdk_device_list_slave_devices" gdk-device-list-slave-devices)
     (g-list (g-object gdk-device))
  #+cl-cffi-gtk-documentation
- "@version{2013-3-22}
+ "@version{2013-6-21}
   @argument[device]{a @class{gdk-device} object}
   @begin{return}
-    The list of slave devices, or NULL. The list must be freed with
-    g_list_free(), the contents of the list are owned by GTK+ and should not
-    be freed.
+    The list of slave devices, or @code{nil}.
   @end{return}
-  If the device is of type GDK_DEVICE_TYPE_MASTER, it will return the list of
-  slave devices attached to it, otherwise it will return NULL"
+  If the device is of type @code{:master}, it will return the list of
+  slave devices attached to it, otherwise it will return @code{nil}."
   (device (g-object gdk-device)))
 
 (export 'gdk-device-list-slave-devices)
@@ -775,10 +730,10 @@
 
 (defun gdk-device-get-device-type (device)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-22}
-  @argument[device]{a GdkDevice}
-  @return{The GdkDeviceType for device.}
-  @short{Returns the device type for device.}
+ "@version{2013-6-21}
+  @argument[device]{a @class{gdk-device} object}
+  @return{The @symbol{gdk-device-type} for @arg{device}.}
+  @short{Returns the device type for @arg{device}.}
 
   Since 3.0"
   (gdk-device-type device))
@@ -793,13 +748,12 @@
 
 (defun gdk-device-get-display (device)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-22}
-  @argument[device]{a GdkDevice}
+ "@version{2013-6-21}
+  @argument[device]{a @class{gdk-device} object}
   @begin{return}
-    A GdkDisplay. This memory is owned by GTK+, and must not be freed or
-    unreffed.
+    A @class{gdk-display} object.
   @end{return}
-  @short{Returns the GdkDisplay to which device pertains.}
+  @short{Returns the @class{gdk-display} to which @arg{device} pertains.}
 
   Since 3.0"
   (gdk-device-display device))
@@ -814,9 +768,9 @@
 
 (defun gdk-device-get-has-cursor (device)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-22}
-  @argument[device]{a GdkDevice}
-  @return{TRUE if the pointer follows device motion.}
+ "@version{2013-6-21}
+  @argument[device]{a @class{gdk-device} object}
+  @return{@em{True} if the pointer follows device motion.}
   @short{Determines whether the pointer follows device motion.}
 
   Since 2.20"
@@ -832,10 +786,10 @@
 
 (defun gdk-device-get-n-axes (device)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-22}
-  @argument[device]{a pointer GdkDevice}
+ "@version{2013-6-21}
+  @argument[device]{a pointer @class{gdk-device} object}
   @return{The number of axes.}
-  @short{Returns the number of axes the device currently has.}
+  @short{Returns the number of axes the @arg{device} currently has.}
 
   Since 3.0"
   (gdk-device-n-axes device))
@@ -848,10 +802,10 @@
 
 (defcfun ("gdk_device_get_n_keys" gdk-device-get-n-keys) :int
  #+cl-cffi-gtk-documentation
- "@version{2013-3-22}
-  @argument[device]{a GdkDevice}
+ "@version{2013-6-21}
+  @argument[device]{a @class{gdk-device} object}
   @return{The number of keys.}
-  @short{Returns the number of keys the device currently has.}
+  @short{Returns the number of keys the @arg{device} currently has.}
 
   Since 2.24"
   (device (g-object gdk-device)))
@@ -864,15 +818,15 @@
 
 (defcfun ("gdk_device_warp" gdk-device-warp) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-22}
+ "@version{2013-6-21}
   @argument[device]{the device to warp}
   @argument[screen]{the screen to warp device to}
-  @argument[x]{the X coordinate of the destination}
-  @argument[y]{the Y coordinate of the destination}
+  @argument[x]{the x coordinate of the destination}
+  @argument[y]{the y coordinate of the destination}
   @begin{short}
-    Warps device in display to the point x,y on the screen screen, unless the
-    device is confined to a window by a grab, in which case it will be moved as
-    far as allowed by the grab. Warping the pointer creates events as if the
+    Warps @arg{device} in display to the point x,y on the screen screen, unless
+    the device is confined to a window by a grab, in which case it will be moved
+    as far as allowed by the grab. Warping the pointer creates events as if the
     user had moved the mouse instantaneously to the destination.
   @end{short}
 
@@ -901,15 +855,13 @@
   :not-viewable
   :frozen)
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-grab-status atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gdk-grab-status atdoc:*external-symbols*)
- "@version{2013-4-3}
+ "@version{2013-6-21}
   @begin{short}
-    Returned by @fun{gdk-pointer-grab} and @fun{gdk-keyboard-grab} to indicate
-    success or the reason for the failure of the grab attempt.
+    Returned by the functions @fun{gdk-pointer-grab} and @fun{gdk-keyboard-grab}
+    to indicate success or the reason for the failure of the grab attempt.
   @end{short}
   @begin{pre}
 (define-g-enum \"GdkGrabStatus\" gdk-grab-status
@@ -938,34 +890,36 @@
 
 (defcfun ("gdk_device_grab" gdk-device-grab) gdk-grab-status
  #+cl-cffi-gtk-documentation
- "@version{2013-3-22}
-  @argument[device]{a GdkDevice. To get the device you can use
-    gtk_get_current_event_device() or gdk_event_get_device() if the grab is
-    in reaction to an event. Also, you can use
-    gdk_device_manager_get_client_pointer() but only in code that isn't
-    triggered by a GdkEvent and there aren't other means to get a meaningful
-    GdkDevice to operate on.}
-  @argument[window]{the GdkWindow which will own the grab (the grab window)}
-  @argument[grab_ownership]{specifies the grab ownership.}
-  @argument[owner_events]{if FALSE then all device events are reported with
-    respect to window and are only reported if selected by event_mask. If TRUE
-    then pointer events for this application are reported as normal, but pointer
-    events outside this application are reported with respect to window and only
-    if selected by event_mask. In either mode, unreported events are discarded.}
-  @argument[event_mask]{specifies the event mask, which is used in accordance
-    with owner_events.}
+ "@version{2013-6-21}
+  @argument[device]{a @class{gdk-device} object. To get the device you can use
+    the function @fun{gtk-get-current-event-device} or
+    @fun{gdk-event-get-device} if the grab is in reaction to an event. Also, you
+    can use the function @fun{gdk-device-manager-get-client-pointer} but only in
+    code that is not triggered by a @class{gkd-event} and there are not other
+    means to get a meaningful @class{gdk-device} to operate on.}
+  @argument[window]{the @class{gdk-window} which will own the grab (the grab
+    window)}
+  @argument[grab-ownership]{specifies the grab ownership}
+  @argument[owner-events]{if @code{nil} then all device events are reported with
+    respect to window and are only reported if selected by @arg{event-mask}. I
+    @em{true} then pointer events for this application are reported as normal,
+    but pointer events outside this application are reported with respect to
+    window and only if selected by @arg{event-mask}. In either mode, unreported
+    events are discarded.}
+  @argument[event-mask]{specifies the event mask, which is used in accordance
+    with @arg{owner-events}.}
   @argument[cursor]{the cursor to display while the grab is active if the device
-    is a pointer. If this is NULL then the normal cursors are used for window
-    and its descendants, and the cursor for window is used elsewhere.}
+    is a pointer. If this is @code{nil} then the normal cursors are used for
+    window and its descendants, and the cursor for window is used elsewhere.}
   @argument[time]{the timestamp of the event which led to this pointer grab.
-    This usually comes from the GdkEvent struct, though GDK_CURRENT_TIME can be
-    used if the time isn't known.}
-  @return{GDK_GRAB_SUCCESS if the grab was successful.}
+    This usually comes from the @class{gdk-event} structure, though
+    @var{+gdk-current-time+} can be used if the time is not known.}
+  @return{@code{:sucess} if the grab was successful.}
   @begin{short}
     Grabs the device so that all events coming from this device are passed to
-    this application until the device is ungrabbed with gdk_device_ungrab(), or
-    the window becomes unviewable. This overrides any previous grab on the
-    device by this client.
+    this application until the device is ungrabbed with the function
+    @fun{gdk-device-ungrab}, or the window becomes unviewable. This overrides
+    any previous grab on the device by this client.
   @end{short}
 
   Device grabs are used for operations which need complete control over the
@@ -976,12 +930,13 @@
   and button release events, then a button press event will cause an automatic
   pointer grab until the button is released. X does this automatically since
   most applications expect to receive button press and release events in
-  pairs. It is equivalent to a pointer grab on the window with owner_events
-  set to TRUE.
+  pairs. It is equivalent to a pointer grab on the window with
+  @arg{owner-events} set to @em{true}.
 
   If you set up anything at the time you take the grab that needs to be
-  cleaned up when the grab ends, you should handle the GdkEventGrabBroken
-  events that are emitted when the grab ends unvoluntarily.
+  cleaned up when the grab ends, you should handle the
+  @class{gdk-event-grab-broken} events that are emitted when the grab ends
+  unvoluntarily.
 
   Since 3.0"
   (device (g-object gdk-device))
@@ -1000,9 +955,9 @@
 
 (defcfun ("gdk_device_ungrab" gdk-device-ungrab) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-22}
-  @argument[device]{a GdkDevice}
-  @argument[time]{a timestap (e.g. GDK_CURRENT_TIME).}
+ "@version{2013-6-21}
+  @argument[device]{a @class{gdk-device} object}
+  @argument[time]{a timestap (e. g. @var{+gkd-current-time+}}
   @short{Release any grab on device.}
 
   Since 3.0"
@@ -1023,14 +978,14 @@
 
 (defun gdk-device-get-state (device window)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-22}
-  @argument[device]{a GdkDevice}
-  @argument[window]{a GdkWindow}
+ "@version{2013-6-21}
+  @argument[device]{a @class{gdk-device} object}
+  @argument[window]{a @class{gdk-window} object}
   @return{@code{mask} -- the modifiers, or @code{nil}.}
   Gets the current state of a pointer device relative to window. As a slave
   device coordinates are those of its master pointer, This function may not be
-  called on devices of type GDK_DEVICE_TYPE_SLAVE, unless there is an ongoing
-  grab on them, see gdk_device_grab()."
+  called on devices of type @code{:slave}, unless there is an ongoing grab on
+  them, see the function @fun{gdk-device-grab}."
   (with-foreign-objects ((axes :double (gdk-device-n-axes device))
                          (mask 'gdk-modifier-type))
     (%gdk-device-get-state device window axes mask)
@@ -1052,18 +1007,18 @@
 
 (defun gdk-device-get-position (device)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-22}
+ "@version{2013-6-21}
   @argument[device]{pointer device to query status about}
   @begin{return}
-    @code{screen} -- the GdkScreen the device is on, or NULL @br{}
-    @code{x} -- root window X coordinate of device, or NULL @br{}
-    @code{y} -- root window Y coordinate of device, or NULL
+    @code{screen} -- the @class{gdk-screen} the device is on, or @code{nil}@br{}
+    @code{x} -- root window x coordinate of device, or @code{nil} @br{}
+    @code{y} -- root window y coordinate of device, or @code{nil}
   @end{return}
   @begin{short}
     Gets the current location of device. As a slave device coordinates are those
     of its master pointer. This function may not be called on devices of type
-    GDK_DEVICE_TYPE_SLAVE, unless there is an ongoing grab on them, see
-    gdk_device_grab().
+    @code{:slave}, unless there is an ongoing grab on them, see the function
+    @fun{gdk-device-grab}.
   @end{short}
 
   Since 3.0"
@@ -1089,12 +1044,12 @@
 
 (defun gdk-device-get-window-at-position (device)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-22}
+ "@version{2013-6-21}
   @argument[device]{pointer @class{gdk-device} to query info to}
   @begin{return}
-    @code{win-x} -- X coordinate of the device location, relative to the window
-    origin, or @code{nil}@br{}
-    @code{win-y} -- Y coordinate of the device location, relative to the window
+    @code{win-x} -- x coordinate of the device location, relative to the window
+    origin, or @code{nil} @br{}
+    @code{win-y} -- y coordinate of the device location, relative to the window
     origin, or @code{nil}
   @end{return}
   @begin{short}
@@ -1125,14 +1080,10 @@
   (time :uint32)
   (axes :double :count 128))
 
-(export (boxed-related-symbols 'gdk-time-coord))
-
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-time-coord atdoc:*class-name-alias*) "CStruct"
       (documentation 'gdk-time-coord 'type)
- "@version{2013-3-22}
+ "@version{2013-6-21}
   @begin{short}
     The @sym{gdk-time-coord} structure stores a single event in a motion
     history.
@@ -1144,12 +1095,14 @@
   @end{pre}
   @begin[code]{table}
     @entry[time]{The timestamp for this event.}
-    @entry[axes]{the values of the device's axes.}
+    @entry[axes]{The values of the device's axes.}
   @end{table}
   @see-constructor{copy-gdk-time-coord}
   @see-constructor{make-gdk-time-coord}
   @see-slot{gdk-time-coord-time}
   @see-slot{gdk-time-coord-axes}")
+  
+(export (boxed-related-symbols 'gdk-time-coord))
 
 ;;; --- copy-gdk-time-coord ----------------------------------------------------
 
@@ -1202,21 +1155,21 @@
 
 (defun gdk-device-get-history (device window start stop)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-5}
+ "@version{2013-6-21}
   @argument[device]{a @class{gdk-device} object}
   @argument[window]{the window with respect to which which the event coordinates
     will be reported}
   @argument[start]{starting timestamp for range of events to return}
   @argument[stop]{ending timestamp for the range of events to return}
   @begin{return}
-    A list of GdkTimeCoord if the windowing system supports motion history and
-    at least one event was found, or @code{nil}.
+    A list of @symbol{gdk-time-coord} if the windowing system supports motion
+    history and at least one event was found, or @code{nil}.
   @end{return}
   Obtains the motion history for a pointer device; given a starting and ending
   timestamp, return all events in the motion history for the device in the
   given range of time. Some windowing systems do not support motion history,
-  in which case, FALSE will be returned. (This is not distinguishable from the
-  case where motion history is supported and no events were found.)"
+  in which case, @code{nil} will be returned. (This is not distinguishable from
+  the case where motion history is supported and no events were found.)"
   (with-foreign-objects ((events :pointer) (n-events :int))
     (when (%gdk-device-get-history device window start stop events n-events)
       (prog1
@@ -1237,10 +1190,10 @@
 
 (defcfun ("gdk_device_free_history" gdk-device-free-history) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-22}
-  @argument[events]{an array of GdkTimeCoord}
-  @argument[n-events]{the length of the array.}
-  Frees an array of GdkTimeCoord that was returned by
+ "@version{2013-6-21}
+  @argument[events]{an array of @symbol{gdk-time-coord}}
+  @argument[n-events]{the length of the array}
+  Frees an array of @symbol{gdk-time-coord} that was returned by the function
   @fun{gdk-device-get-history}.
   @see-function{gdk-device-get-history}"
   (events (:pointer (:pointer gdk-time-coord-cstruct)))
@@ -1260,12 +1213,13 @@
 
 (defun gdk-device-get-axis (device axes axis-use)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-22}
+ "@version{2013-6-21}
   @argument[device]{a @class{gdk-device} object}
   @argument[axes]{pointer to an array of axes}
   @argument[use]{the use to look for}
-  @argument[value]{location to store the found value}
-  @return{@em{True} if the given axis use was found, otherwise @code{nil}.}
+  @begin{return}
+    @code{value} -- the found value, otherwise @code{nil}
+  @end{return}
   Interprets an array of double as axis values for a given device, and locates
   the value in the array for a given axis use."
   (assert (= (gdk-device-n-axes device) (length axes)))
@@ -1328,6 +1282,5 @@
 ;;;
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
-
 
 ;;; --- End of file gdk.device.lisp --------------------------------------------

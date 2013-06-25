@@ -148,10 +148,6 @@
   (width :int :initform 0)
   (height :int :initform 0))
 
-(export (boxed-related-symbols 'gdk-rectangle))
-
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-rectangle atdoc:*class-name-alias*) "CStruct"
       (documentation 'gdk-rectangle 'type)
@@ -181,6 +177,8 @@
   @see-slot{gdk-rectangle-y}
   @see-slot{gdk-rectangle-width}
   @see-slot{gdk-rectangle-height}")
+
+(export (boxed-related-symbols 'gdk-rectangle))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -248,8 +246,8 @@
 (defun gdk-rectangle-intersect (src-1 src-2)
  #+cl-cffi-gtk-documentation
  "@version{2013-1-25}
-  @argument[src1]{a @class{gdk-rectangle}}
-  @argument[src2]{a @class{gdk-rectangle}}
+  @argument[src1]{a @class{gdk-rectangle} structure}
+  @argument[src2]{a @class{gdk-rectangle} structure}
   @return{The intersection of @arg{src1} and @arg{src2}, or @code{nil}.}
   @begin{short}
     Calculates the intersection of two rectangles.

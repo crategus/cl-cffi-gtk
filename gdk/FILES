@@ -4,8 +4,8 @@ Content from the GDK 3.6.4 Reference Manual
   gdk.display-manager.lisp  - GdkDisplayManager      - GDK 3.6.4
   gdk.display.lisp          - GdkDisplay             - GDK 3.6.4
   gdk.screen.lisp           - GdkScreen              - GDK 3.6.4
-  gdk.device-manager.lisp   - GdkDeviceManger        - GDK 3.4.3*
-  gdk.device.lisp           - GdkDevice              - GDK 3.4.3*
+  gdk.device-manager.lisp   - GdkDeviceManger        - GDK 3.6.4
+  gdk.device.lisp           - GdkDevice              - GDK 3.6.4
   gdk.rectangle.lisp        - Points and Rectangles  - GDK 3.4.3*
   gdk.pixbuf.lisp           - Pixbufs                - GDK 3.4.3*
   gdk.color.lisp            - Colors                 - GDK 3.4.3*
