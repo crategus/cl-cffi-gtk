@@ -2,7 +2,7 @@
 ;;; gtk.input-dialog.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
 ;;; Version 3.2.3. See http://www.gtk.org.
@@ -29,17 +29,17 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; GtkInputDialog
-;;; 
+;;;
 ;;; Configure devices for the XInput extension
-;;; 
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;;     GtkInputDialog
 ;;;
 ;;;     gtk_input_dialog_new
-;;; 
+;;;
 ;;; Object Hierarchy
-;;; 
+;;;
 ;;;   GObject
 ;;;    +----GInitiallyUnowned
 ;;;          +----GtkObject
@@ -49,28 +49,28 @@
 ;;;                                  +----GtkWindow
 ;;;                                        +----GtkDialog
 ;;;                                              +----GtkInputDialog
-;;; 
+;;;
 ;;; Implemented Interfaces
-;;; 
+;;;
 ;;; GtkInputDialog implements AtkImplementorIface and GtkBuildable.
 ;;;
 ;;; Signals
-;;; 
+;;;
 ;;;   "disable-device"                                 : Run Last
 ;;;   "enable-device"                                  : Run Last
-;;; 
+;;;
 ;;; Description
-;;; 
+;;;
 ;;; GtkInputDialog displays a dialog which allows the user to configure XInput
 ;;; extension devices. For each device, they can control the mode of the device
 ;;; (disabled, screen-relative, or window-relative), the mapping of axes to
 ;;; coordinates, and the mapping of the devices macro keys to key press events.
-;;; 
+;;;
 ;;; GtkInputDialog contains two buttons to which the application can connect;
 ;;; one for closing the dialog, and one for saving the changes. No actions are
 ;;; bound to these by default. The changes that the user makes take effect
 ;;; immediately.
-;;; 
+;;;
 ;;; As of GTK+ 2.20, GtkInputDialog has been deprecated since it is too
 ;;; specialized.
 ;;;
@@ -80,39 +80,39 @@
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "disable-device" signal
-;;; 
+;;;
 ;;; void user_function (GtkInputDialog *inputdialog,
 ;;;                     GdkDevice      *arg1,
 ;;;                     gpointer        user_data)        : Run Last
-;;; 
+;;;
 ;;; This signal is emitted when the user changes the mode of a device from a
 ;;; GDK_MODE_SCREEN or GDK_MODE_WINDOW to GDK_MODE_ENABLED.
-;;; 
+;;;
 ;;; inputdialog :
 ;;;     the object which received the signal
-;;; 
+;;;
 ;;; deviceid :
 ;;;     The ID of the newly disabled device.
-;;; 
+;;;
 ;;; user_data :
 ;;;     user data set when the signal handler was connected
 ;;;
 ;;; ----------------------------------------------------------------------------
 ;;; The "enable-device" signal
-;;; 
+;;;
 ;;; void user_function (GtkInputDialog *inputdialog,
 ;;;                     GdkDevice      *arg1,
 ;;;                     gpointer        user_data)        : Run Last
-;;; 
+;;;
 ;;; This signal is emitted when the user changes the mode of a device from
 ;;; GDK_MODE_DISABLED to a GDK_MODE_SCREEN or GDK_MODE_WINDOW.
-;;; 
+;;;
 ;;; inputdialog :
 ;;;     the object which received the signal.
-;;; 
+;;;
 ;;; deviceid :
 ;;;     The ID of the newly enabled device.
-;;; 
+;;;
 ;;; user_data :
 ;;;     user data set when the signal handler was connected.
 ;;; ----------------------------------------------------------------------------
@@ -121,11 +121,11 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkInputDialog
-;;; 
+;;;
 ;;; struct GtkInputDialog;
 ;;;
 ;;; Warning
-;;; 
+;;;
 ;;; GtkInputDialog is deprecated and should not be used in newly-written code.
 ;;; ----------------------------------------------------------------------------
 
@@ -138,16 +138,16 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_input_dialog_new ()
-;;; 
+;;;
 ;;; GtkWidget * gtk_input_dialog_new (void);
-;;; 
+;;;
 ;;; Warning
-;;; 
+;;;
 ;;; gtk_input_dialog_new has been deprecated since version 2.20 and should not
 ;;; be used in newly-written code. Don't use this widget anymore.
-;;; 
+;;;
 ;;; Creates a new GtkInputDialog.
-;;; 
+;;;
 ;;; Returns :
 ;;;     the new GtkInputDialog.
 ;;; ----------------------------------------------------------------------------

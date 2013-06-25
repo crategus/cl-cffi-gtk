@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See >http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -59,7 +59,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-editable atdoc:*class-name-alias*) "Interface"
       (documentation 'gtk-cell-editable 'type)
- "@version{2013-6-17}
+ "@version{2013-6-22}
   @begin{short}
     The @sym{gtk-cell-editable} interface must be implemented for widgets to be
     usable when editing the contents of a @class{gtk-tree-view} cell.
@@ -70,7 +70,7 @@
  lambda (cell-editable)   : Run Last
       @end{pre}
       This signal is a sign for the cell renderer to update its value from the
-      cell_editable.
+      @arg{cell-editable}.
       Implementations of @sym{gtk-cell-editable} are responsible for emitting
       this signal when they are done editing, e. g. @class{gtk-entry} is
       emitting it when the user presses Enter.
@@ -109,9 +109,9 @@
 (setf (documentation (atdoc:get-slot-from-name "editing-canceled"
                                                'gtk-cell-editable) 't)
  "The @code{\"editing-canceled\"} property of type @code{:boolean}
-  (Read / Write)@br{}
-  Indicates whether editing on the cell has been canceled.@br{}
-  Default value: @code{nil}@br{}
+  (Read / Write) @br{}
+  Indicates whether editing on the cell has been canceled. @br{}
+  Default value: @code{nil} @br{}
   Since 2.20")
 
 ;;; ----------------------------------------------------------------------------
@@ -124,7 +124,7 @@
 (setf (gethash 'gtk-cell-editable-editing-canceled atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-editable-editing-canceled 'function)
- "@version{2013-5-22}
+ "@version{2013-6-22}
   Accessor of the slot @code{\"editing-canceled\"} of the
   @class{gtk-cell-editable} class.")
 
@@ -151,14 +151,12 @@
 (defcfun ("gtk_cell_editable_start_editing" gtk-cell-editable-start-editing)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2013-2-19}
-  @argument[cell-editable]{A GtkCellEditable}
-  @argument[event]{A GdkEvent, or NULL.}
-  @begin{short}
-    Begins editing on a cell_editable. event is the GdkEvent that began the
-    editing process. It may be NULL, in the instance that editing was initiated
-    through programatic means.
-  @end{short}"
+ "@version{2013-6-22}
+  @argument[cell-editable]{a @class{gtk-cell-editable} object}
+  @argument[event]{a @class{gdk-event}, or @code{nil}}
+  Begins editing on a @arg{cell-editable}. @arg{event} is the @class{gdk-event}
+  that began the editing process. It may be @code{nil}, in the instance that
+  editing was initiated through programatic means."
   (cell-editable (g-object gtk-cell-editable))
     (event (g-boxed-foreign gdk-event)))
 
@@ -170,9 +168,9 @@
 
 (defcfun ("gtk_cell_editable_editing_done" gtk-cell-editable-editing-done) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-2-19}
-  @argument[cell_editable]{A GtkTreeEditable}
-  @short{Emits the \"editing-done\" signal.}"
+ "@version{2013-6-22}
+  @argument[cell-editable]{a @class{gtk-tree-editable} object}
+  Emits the \"editing-done\" signal."
   (cell-editable (g-object gtk-cell-editable)))
 
 (export 'gtk-cell-editable-editing-done)
@@ -184,9 +182,9 @@
 (defcfun ("gtk_cell_editable_remove_widget" gtk-cell-editable-remove-widget)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2013-2-19}
-  @argument[cell_editable]{A GtkTreeEditable}
-  @short{Emits the \"remove-widget\" signal.}"
+ "@version{2013-6-22}
+  @argument[cell-editable]{a @class{gtk-tree-editable} object}
+  Emits the \"remove-widget\" signal."
   (cell-editable (g-object gtk-cell-editable)))
 
 (export 'gtk-cell-editable-remove-widget)

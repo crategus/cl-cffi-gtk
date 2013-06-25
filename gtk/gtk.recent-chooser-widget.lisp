@@ -2,7 +2,7 @@
 ;;; gtk.recent-chooser-widget.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
 ;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
@@ -30,27 +30,27 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; GtkRecentChooserWidget
-;;; 
+;;;
 ;;; Displays recently used files
-;;;     
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;;     GtkRecentChooserWidget
 ;;;
 ;;;     gtk_recent_chooser_widget_new
 ;;;     gtk_recent_chooser_widget_new_for_manager
-;;; 
+;;;
 ;;; Object Hierarchy
-;;; 
+;;;
 ;;;   GObject
 ;;;    +----GInitiallyUnowned
 ;;;          +----GtkWidget
 ;;;                +----GtkContainer
 ;;;                      +----GtkBox
 ;;;                            +----GtkRecentChooserWidget
-;;; 
+;;;
 ;;; Implemented Interfaces
-;;; 
+;;;
 ;;; GtkRecentChooserWidget implements AtkImplementorIface, GtkBuildable,
 ;;; GtkOrientable and GtkRecentChooser.
 ;;; ----------------------------------------------------------------------------
@@ -96,7 +96,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
-;; TODO: Check the implementation of the child properties. 
+;; TODO: Check the implementation of the child properties.
 ;;       GtkRecentChooserWidget has no documented child properties.
 
 #|
@@ -123,35 +123,35 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_chooser_widget_new ()
-;;; 
+;;;
 ;;; GtkWidget * gtk_recent_chooser_widget_new (void);
-;;; 
+;;;
 ;;; Creates a new GtkRecentChooserWidget object. This is an embeddable widget
 ;;; used to access the recently used resources list.
-;;; 
+;;;
 ;;; Returns :
 ;;;     a new GtkRecentChooserWidget
-;;; 
+;;;
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_chooser_widget_new_for_manager ()
-;;; 
+;;;
 ;;; GtkWidget * gtk_recent_chooser_widget_new_for_manager
 ;;;                                                 (GtkRecentManager *manager);
-;;; 
+;;;
 ;;; Creates a new GtkRecentChooserWidget with a specified recent manager.
-;;; 
+;;;
 ;;; This is useful if you have implemented your own recent manager, or if you
 ;;; have a customized instance of a GtkRecentManager object.
-;;; 
+;;;
 ;;; manager :
 ;;;     a GtkRecentManager
-;;; 
+;;;
 ;;; Returns :
 ;;;     a new GtkRecentChooserWidget
-;;; 
+;;;
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 

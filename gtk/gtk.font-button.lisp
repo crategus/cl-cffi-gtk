@@ -273,15 +273,16 @@
 
 (defun gtk-font-button-set-font-name (font-button fontname)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-18}
+ "@version{2013-6-24}
   @argument[font-button]{a @class{gtk-font-button} widget}
-  @argument[fontname]{name of font to display in font chooser dialog}
+  @argument[fontname]{name of font to display in the font chooser dialog}
   @return{The @arg{fontname}.}
   @begin{short}
-    Sets or updates the currently-displayed font in font picker dialog.
+    Sets or updates the currently displayed font in the font picker dialog.
   @end{short}
 
-  Since 2.4"
+  Since 2.4
+  @see-function{gtk-font-button-get-font-name}"
   (setf (gtk-font-button-font-name font-button) fontname))
 
 (export 'gtk-font-button-set-font-name)
@@ -294,7 +295,7 @@
 
 (defun gtk-font-button-get-font-name (font-button)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-18}
+ "@version{2013-6-24}
   @argument[font-button]{a @class{gtk-font-button} widget}
   @return{An internal copy of the font name.}
   @begin{short}
@@ -307,7 +308,8 @@
   from the @class{pango-font-description} object.
 
   Since 2.4
-  @see-fun{pango-font-description-from-string}"
+  @see-function{pango-font-description-from-string}
+  @see-function{gtk-font-button-set-font-name}"
   (gtk-font-button-font-name font-button))
 
 (export 'gtk-font-button-get-font-name)

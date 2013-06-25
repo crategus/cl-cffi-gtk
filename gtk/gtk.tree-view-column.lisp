@@ -1304,7 +1304,7 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-5-16}
   @argument[tree-column]{a @class{gtk-tree-view-column} object}
-  @argument[widget]{a child @class{gkt-widget}, or @code{nil}}
+  @argument[widget]{a child @class{gtk-widget}, or @code{nil}}
   Sets the widget in the header to be @arg{widget}. If widget is @code{nil},
   then the header button is set with a @class{gtk-label} set to the title of
   @arg{tree-column}."

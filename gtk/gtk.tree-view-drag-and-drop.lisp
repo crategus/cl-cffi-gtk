@@ -30,11 +30,11 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; GtkTreeView drag-and-drop
-;;; 
+;;;
 ;;; Interfaces for drag-and-drop support in GtkTreeView
-;;;     
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;;     GtkTreeDragSource
 ;;;     GtkTreeDragSourceIface
 ;;;
@@ -70,8 +70,9 @@
     API.
   @end{short}
 
-  The low-level API consists of the GTK+ DND API, augmented by some treeview
-  utility functions: @fun{gtk-tree-view-set-drag-dest-row},
+  The low-level API consists of the GTK+ DND API, augmented by some tree view
+  utility functions:
+  @fun{gtk-tree-view-set-drag-dest-row},
   @fun{gtk-tree-view-get-drag-dest-row},
   @fun{gtk-tree-view-get-dest-row-at-pos},
   @fun{gtk-tree-view-create-row-drag-icon},
@@ -83,23 +84,29 @@
   On the other hand, if you write to the high-level API, then all the
   bookkeeping of rows is done for you, as well as things like hover-to-open
   and auto-scroll, but your models have to implement the
-  @class{gtk-tree-drag-source} and @class{gtk-tree-drag-dest} interfaces.")
+  @class{gtk-tree-drag-source} and @class{gtk-tree-drag-dest} interfaces.
+  @see-function{gtk-tree-view-set-drag-dest-row}
+  @see-function{gtk-tree-view-get-drag-dest-row}
+  @see-function{gtk-tree-view-get-dest-row-at-pos}
+  @see-function{gtk-tree-view-create-row-drag-icon}
+  @see-function{gtk-tree-set-row-drag-data}
+  @see-function{gtk-tree-get-row-drag-data}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkTreeDragSourceIface
-;;; 
+;;;
 ;;; struct GtkTreeDragSourceIface {
 ;;;   GTypeInterface g_iface;
-;;; 
+;;;
 ;;;   /* VTable - not signals */
-;;; 
+;;;
 ;;;   gboolean (* row_draggable)    (GtkTreeDragSource *drag_source,
 ;;;                                  GtkTreePath       *path);
-;;;                                 
+;;;
 ;;;   gboolean (* drag_data_get)    (GtkTreeDragSource *drag_source,
 ;;;                                  GtkTreePath       *path,
 ;;;                                  GtkSelectionData  *selection_data);
-;;;                                 
+;;;
 ;;;   gboolean (* drag_data_delete) (GtkTreeDragSource *drag_source,
 ;;;                                  GtkTreePath       *path);
 ;;; };
@@ -121,67 +128,67 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_drag_source_drag_data_delete ()
-;;; 
+;;;
 ;;; gboolean gtk_tree_drag_source_drag_data_delete
 ;;;                                             (GtkTreeDragSource *drag_source,
 ;;;                                              GtkTreePath *path);
-;;; 
+;;;
 ;;; Asks the GtkTreeDragSource to delete the row at path, because it was moved
 ;;; somewhere else via drag-and-drop. Returns FALSE if the deletion fails
 ;;; because path no longer exists, or for some model-specific reason. Should
 ;;; robustly handle a path no longer found in the model!
-;;; 
+;;;
 ;;; drag_source :
 ;;;     a GtkTreeDragSource
-;;; 
+;;;
 ;;; path :
 ;;;     row that was being dragged
-;;; 
+;;;
 ;;; Returns :
 ;;;     TRUE if the row was successfully deleted
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_drag_source_drag_data_get ()
-;;; 
+;;;
 ;;; gboolean gtk_tree_drag_source_drag_data_get
 ;;;                                          (GtkTreeDragSource *drag_source,
 ;;;                                           GtkTreePath *path,
 ;;;                                           GtkSelectionData *selection_data);
-;;; 
+;;;
 ;;; Asks the GtkTreeDragSource to fill in selection_data with a representation
 ;;; of the row at path. selection_data->target gives the required type of the
 ;;; data. Should robustly handle a path no longer found in the model!
-;;; 
+;;;
 ;;; drag_source :
 ;;;     a GtkTreeDragSource
-;;; 
+;;;
 ;;; path :
 ;;;     row that was dragged
-;;; 
+;;;
 ;;; selection_data :
 ;;;     a GtkSelectionData to fill with data from the dragged row
-;;; 
+;;;
 ;;; Returns :
 ;;;     TRUE if data of the required type was provided
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_drag_source_row_draggable ()
-;;; 
+;;;
 ;;; gboolean gtk_tree_drag_source_row_draggable (GtkTreeDragSource *drag_source,
 ;;;                                              GtkTreePath *path);
-;;; 
+;;;
 ;;; Asks the GtkTreeDragSource whether a particular row can be used as the
 ;;; source of a DND operation. If the source doesn't implement this interface,
 ;;; the row is assumed draggable.
-;;; 
+;;;
 ;;; drag_source :
 ;;;     a GtkTreeDragSource
-;;; 
+;;;
 ;;; path :
 ;;;     row on which user is initiating a drag
-;;; 
+;;;
 ;;; Returns :
 ;;;     TRUE if the row can be dragged
 ;;; ----------------------------------------------------------------------------
@@ -197,13 +204,13 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tree-drag-dest atdoc:*class-name-alias*) "Interface"
       (documentation 'gtk-tree-drag-dest 'type)
- "@version{2013-5-31}
+ "@version{2013-6-21}
   @begin{short}
     GTK+ supports Drag-and-Drop in tree views with a high-level and a low-level
     API.
   @end{short}
 
-  The low-level API consists of the GTK+ DND API, augmented by some treeview
+  The low-level API consists of the GTK+ DND API, augmented by some tree view
   utility functions: @fun{gtk-tree-view-set-drag-dest-row},
   @fun{gtk-tree-view-get-drag-dest-row},
   @fun{gtk-tree-view-get-dest-row-at-pos},
@@ -216,20 +223,26 @@
   On the other hand, if you write to the high-level API, then all the
   bookkeeping of rows is done for you, as well as things like hover-to-open
   and auto-scroll, but your models have to implement the
-  @class{gtk-tree-drag-source} and @class{gtk-tree-drag-dest} interfaces.")
+  @class{gtk-tree-drag-source} and @class{gtk-tree-drag-dest} interfaces.
+  @see-function{gtk-tree-view-set-drag-dest-row}
+  @see-function{gtk-tree-view-get-drag-dest-row}
+  @see-function{gtk-tree-view-get-dest-row-at-pos}
+  @see-function{gtk-tree-view-create-row-drag-icon}
+  @see-function{gtk-tree-set-row-drag-data}
+  @see-function{gtk-tree-get-row-drag-data}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkTreeDragDestIface
-;;; 
+;;;
 ;;; struct GtkTreeDragDestIface {
 ;;;   GTypeInterface g_iface;
-;;; 
+;;;
 ;;;   /* VTable - not signals */
-;;; 
+;;;
 ;;;   gboolean (* drag_data_received) (GtkTreeDragDest   *drag_dest,
 ;;;                                    GtkTreePath       *dest,
 ;;;                                    GtkSelectionData  *selection_data);
-;;;            
+;;;
 ;;;   gboolean (* row_drop_possible)  (GtkTreeDragDest   *drag_dest,
 ;;;                                    GtkTreePath       *dest_path,
 ;;;                                    GtkSelectionData  *selection_data);
@@ -250,76 +263,76 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_drag_dest_drag_data_received ()
-;;; 
+;;;
 ;;; gboolean gtk_tree_drag_dest_drag_data_received
 ;;;                                          (GtkTreeDragDest *drag_dest,
 ;;;                                           GtkTreePath *dest,
 ;;;                                           GtkSelectionData *selection_data);
-;;; 
+;;;
 ;;; Asks the GtkTreeDragDest to insert a row before the path dest, deriving the
 ;;; contents of the row from selection_data. If dest is outside the tree so that
 ;;; inserting before it is impossible, FALSE will be returned. Also, FALSE may
 ;;; be returned if the new row is not created for some model-specific reason.
 ;;; Should robustly handle a dest no longer found in the model!
-;;; 
+;;;
 ;;; drag_dest :
 ;;;     a GtkTreeDragDest
-;;; 
+;;;
 ;;; dest :
 ;;;     row to drop in front of
-;;; 
+;;;
 ;;; selection_data :
 ;;;     data to drop
-;;; 
+;;;
 ;;; Returns :
 ;;;     whether a new row was created before position dest
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_drag_dest_row_drop_possible ()
-;;; 
+;;;
 ;;; gboolean gtk_tree_drag_dest_row_drop_possible
 ;;;                                          (GtkTreeDragDest *drag_dest,
 ;;;                                           GtkTreePath *dest_path,
 ;;;                                           GtkSelectionData *selection_data);
-;;; 
+;;;
 ;;; Determines whether a drop is possible before the given dest_path, at the
 ;;; same depth as dest_path. i.e., can we drop the data in selection_data at
 ;;; that location. dest_path does not have to exist; the return value will
 ;;; almost certainly be FALSE if the parent of dest_path doesn't exist, though.
-;;; 
+;;;
 ;;; drag_dest :
 ;;;     a GtkTreeDragDest
-;;; 
+;;;
 ;;; dest_path :
 ;;;     destination row
-;;; 
+;;;
 ;;; selection_data :
 ;;;     the data being dragged
-;;; 
+;;;
 ;;; Returns :
 ;;;     TRUE if a drop is possible before dest_path
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_set_row_drag_data ()
-;;; 
+;;;
 ;;; gboolean gtk_tree_set_row_drag_data (GtkSelectionData *selection_data,
 ;;;                                      GtkTreeModel *tree_model,
 ;;;                                      GtkTreePath *path);
-;;; 
+;;;
 ;;; Sets selection data of target type GTK_TREE_MODEL_ROW. Normally used in a
 ;;; drag_data_get handler.
-;;; 
+;;;
 ;;; selection_data :
 ;;;     some GtkSelectionData
-;;; 
+;;;
 ;;; tree_model :
 ;;;     a GtkTreeModel
-;;; 
+;;;
 ;;; path :
 ;;;     a row in tree_model
-;;; 
+;;;
 ;;; Returns :
 ;;;     TRUE if the GtkSelectionData had the proper target type to allow us to
 ;;;     set a tree row
@@ -327,11 +340,11 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_get_row_drag_data ()
-;;; 
+;;;
 ;;; gboolean gtk_tree_get_row_drag_data (GtkSelectionData *selection_data,
 ;;;                                      GtkTreeModel **tree_model,
 ;;;                                      GtkTreePath **path);
-;;; 
+;;;
 ;;; Obtains a tree_model and path from selection data of target type
 ;;; GTK_TREE_MODEL_ROW. Normally called from a drag_data_received handler. This
 ;;; function can only be used if selection_data originates from the same process
@@ -340,16 +353,16 @@
 ;;; corruption. In the GtkTreeDragDest drag_data_received handler, you can
 ;;; assume that selection data of type GTK_TREE_MODEL_ROW is in from the current
 ;;; process. The returned path must be freed with gtk_tree_path_free().
-;;; 
+;;;
 ;;; selection_data :
 ;;;     a GtkSelectionData
-;;; 
+;;;
 ;;; tree_model :
 ;;;     a GtkTreeModel
-;;; 
+;;;
 ;;; path :
 ;;;     row in tree_model
-;;; 
+;;;
 ;;; Returns :
 ;;;     TRUE if selection_data had target type GTK_TREE_MODEL_ROW and is
 ;;;     otherwise valid

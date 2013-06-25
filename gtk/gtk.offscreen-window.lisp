@@ -54,7 +54,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-offscreen-window 'type)
- "@version{2013-3-30}
+ "@version{2013-6-25}
   @begin{short}
     @sym{gtk-offscreen-window} is strictly intended to be used for obtaining
     snapshots of widgets that are not part of a normal widget hierarchy.
@@ -83,8 +83,8 @@
 
 (defun gtk-offscreen-window-new ()
  #+cl-cffi-gtk-documentation
- "@version{2013-3-30}
-  @return{a @class{gtk-offscreen-window} object}
+ "@version{2013-6-25}
+  @return{a @class{gtk-offscreen-window} widget}
   @begin{short}
     Creates a toplevel container widget that is used to retrieve snapshots of
     widgets without showing them on the screen.
@@ -102,17 +102,18 @@
 (defcfun ("gtk_offscreen_window_get_surface" gtk-offscreen-window-get-surface)
     cairo-surface-t
  #+cl-cffi-gtk-documentation
- "@version{2013-4-21}
+ "@version{2013-6-25}
   @argument[offscreen]{the @class{gtk-offscreen-window} contained widget}
   @return{A @symbol{cairo-surface-t} pointer to the @arg{offscreen} surface,
-    or @code{null}-pointer.}
+    or a @code{null}-pointer.}
   @begin{short}
     Retrieves a snapshot of the contained widget in the form of a
     @symbol{cairo-surface-t}. If you need to keep this around over window
     resizes then you should add a reference to it.
   @end{short}
 
-  Since 2.20"
+  Since 2.20
+  @see-function{gtk-offscreen-window-get-pixbuf}"
   (offscreen (g-object gtk-offscreen-window)))
 
 (export 'gtk-offscreen-window-get-surface)
@@ -124,16 +125,16 @@
 (defcfun ("gtk_offscreen_window_get_pixbuf" gtk-offscreen-window-get-pixbuf)
     (g-object gdk-pixbuf)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-21}
+ "@version{2013-6-25}
   @argument[offscreen]{the @class{gtk-offscreen-window} contained widget}
   @return{A @class{gdk-pixbuf} object, or @code{nil}.}
   @begin{short}
     Retrieves a snapshot of the contained widget in the form of a
-    @class{gdk-pixbuf} object. This is a new pixbuf with a reference count of 1,
-    and the application should unreference it once it is no longer needed.
+    @class{gdk-pixbuf} object.
   @end{short}
 
-  Since 2.20"
+  Since 2.20
+  @see-function{gtk-offscreen-window-get-surface}"
   (offscreen (g-object gtk-offscreen-window)))
 
 (export 'gtk-offscreen-window-get-pixbuf)

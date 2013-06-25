@@ -30,13 +30,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; GtkViewport
-;;; 
+;;;
 ;;; An adapter which makes widgets scrollable
-;;;     
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;;     GtkViewport
-;;;     
+;;;
 ;;;     gtk_viewport_new
 ;;;     gtk_viewport_get_hadjustment             * deprecated *
 ;;;     gtk_viewport_get_vadjustment             * deprecated *
@@ -69,9 +69,9 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-viewport 'type)
- "@version{2013-5-15}
+ "@version{2013-6-20}
   @begin{short}
-    The @sym{gkt-viewport} widget acts as an adaptor class, implementing
+    The @sym{gtk-viewport} widget acts as an adaptor class, implementing
     scrollability for child widgets that lack their own scrolling capabilities.
     Use @sym{gtk-viewport} to scroll child widgets such as @class{gtk-grid},
     @class{gtk-box}, and so on.
@@ -139,82 +139,82 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_viewport_get_hadjustment ()
-;;; 
+;;;
 ;;; GtkAdjustment * gtk_viewport_get_hadjustment (GtkViewport *viewport);
-;;; 
+;;;
 ;;; Warning
-;;; 
+;;;
 ;;; gtk_viewport_get_hadjustment has been deprecated since version 3.0 and
 ;;; should not be used in newly-written code. Use
 ;;; gtk_scrollable_get_hadjustment()
-;;; 
+;;;
 ;;; Returns the horizontal adjustment of the viewport.
-;;; 
+;;;
 ;;; viewport :
 ;;;     a GtkViewport.
-;;; 
+;;;
 ;;; Returns :
 ;;;     the horizontal adjustment of viewport
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_viewport_get_vadjustment ()
-;;; 
+;;;
 ;;; GtkAdjustment * gtk_viewport_get_vadjustment (GtkViewport *viewport);
-;;; 
+;;;
 ;;; Warning
-;;; 
+;;;
 ;;; gtk_viewport_get_vadjustment has been deprecated since version 3.0 and
 ;;; should not be used in newly-written code. Use
 ;;; gtk_scrollable_get_vadjustment()
-;;; 
+;;;
 ;;; Returns the vertical adjustment of the viewport.
-;;; 
+;;;
 ;;; viewport :
 ;;;     a GtkViewport.
-;;; 
+;;;
 ;;; Returns :
 ;;;     the vertical adjustment of viewport
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_viewport_set_hadjustment ()
-;;; 
+;;;
 ;;; void gtk_viewport_set_hadjustment (GtkViewport *viewport,
 ;;;                                    GtkAdjustment *adjustment);
-;;; 
+;;;
 ;;; Warning
-;;; 
+;;;
 ;;; gtk_viewport_set_hadjustment has been deprecated since version 3.0 and
 ;;; should not be used in newly-written code. Use
 ;;; gtk_scrollable_set_hadjustment()
-;;; 
+;;;
 ;;; Sets the horizontal adjustment of the viewport.
-;;; 
+;;;
 ;;; viewport :
 ;;;     a GtkViewport.
-;;; 
+;;;
 ;;; adjustment :
 ;;;     a GtkAdjustment
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_viewport_set_vadjustment ()
-;;; 
+;;;
 ;;; void gtk_viewport_set_vadjustment (GtkViewport *viewport,
 ;;;                                    GtkAdjustment *adjustment);
-;;; 
+;;;
 ;;; Warning
-;;; 
+;;;
 ;;; gtk_viewport_set_vadjustment has been deprecated since version 3.0 and
 ;;; should not be used in newly-written code. Use
 ;;; gtk_scrollable_set_vadjustment()
-;;; 
+;;;
 ;;; Sets the vertical adjustment of the viewport.
-;;; 
+;;;
 ;;; viewport :
 ;;;     a GtkViewport.
-;;; 
+;;;
 ;;; adjustment :
 ;;;     a GtkAdjustment
 ;;; ----------------------------------------------------------------------------

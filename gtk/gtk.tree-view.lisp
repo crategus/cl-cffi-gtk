@@ -1961,18 +1961,18 @@
 
 (defun gtk-tree-view-set-reorderable (tree-view reorderable)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-31}
+ "@version{2013-6-21}
   @argument[tree-view]{a @class{gtk-tree-view} widget}
   @argument[reorderable]{@em{true}, if the tree can be reordered}
   @begin{short}
     This function is a convenience function to allow you to reorder models that
-    support the @class{gtk-tree-drag-source-iface} and the
-    @class{gtk-tree-drag-dest-iface}.
+    support the @class{gtk-tree-drag-source} interface and the
+    @class{gtk-tree-drag-dest} interface.
   @end{short}
   Both @class{gtk-tree-store} and @class{gtk-list-store} support these. If
   @arg{reorderable} is @em{true}, then the user can reorder the model by
   dragging and dropping rows. The developer can listen to these changes by
-  connecting to the model's row_inserted and \"row-deleted\" signals. The
+  connecting to the model's \"row-inserted\" and \"row-deleted\" signals. The
   reordering is implemented by setting up the tree view as a drag source and
   destination. Therefore, drag and drop can not be used in a reorderable view
   for any other purpose.

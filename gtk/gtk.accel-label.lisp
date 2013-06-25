@@ -2,7 +2,7 @@
 ;;; gtk.accel-label.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
 ;;; Version 3.6.4. See http://www.gtk.org.
@@ -98,21 +98,21 @@
   @code{:visible} set, see @symbol{gtk-accel-flags}. A @sym{gtk-accel-label} can
   display multiple accelerators and even signal names, though it is almost
   always used to display just one accelerator key.
- 
+
   @b{Example:} Creating a simple menu item with an accelerator key.
   @begin{pre}
     GtkWidget *save_item;
     GtkAccelGroup *accel_group;
- 
+
     /* Create a GtkAccelGroup and add it to the window. */
     accel_group = gtk_accel_group_new ();
     gtk_window_add_accel_group (GTK_WINDOW (window), accel_group);
- 
+
     /* Create the menu item using the convenience function. */
     save_item = gtk_menu_item_new_with_label (\"Save\");
     gtk_widget_show (save_item);
     gtk_container_add (GTK_CONTAINER (menu), save_item);
- 
+
     /* Now add the accelerator to the GtkMenuItem. Note that since we called
        gtk_menu_item_new_with_label() to create the GtkMenuItem the
        GtkAccelLabel is automatically set up to display the GtkMenuItem

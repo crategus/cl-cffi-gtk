@@ -449,32 +449,32 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_drag_get_data ()
-;;;
-;;; void gtk_drag_get_data (GtkWidget *widget,
-;;;                         GdkDragContext *context,
-;;;                         GdkAtom target,
-;;;                         guint32 time_);
-;;;
-;;; Gets the data associated with a drag. When the data is received or the
-;;; retrieval fails, GTK+ will emit a "drag-data-received" signal. Failure of
-;;; the retrieval is indicated by the length field of the selection_data signal
-;;; parameter being negative. However, when gtk_drag_get_data() is called
-;;; implicitely because the GTK_DEST_DEFAULT_DROP was set, then the widget will
-;;; not receive notification of failed drops.
-;;;
-;;; widget :
-;;;     the widget that will receive the "drag-data-received" signal.
-;;;
-;;; context :
-;;;     the drag context
-;;;
-;;; target :
-;;;     the target (form of the data) to retrieve.
-;;;
-;;; time_ :
-;;;     a timestamp for retrieving the data. This will generally be the time
-;;;     received in a "drag-motion"" or "drag-drop"" signal.
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_drag_get_data" gtk-drag-get-data) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-23}
+  @argument[widget]{the widget that will receive the \"drag-data-received\"
+    signal}
+  @argument[context]{the drag context}
+  @argument[target]{the target (form of the data) to retrieve}
+  @argument[time]{a timestamp for retrieving the data. This will generally be
+    the time received in a \"drag-motion\" or \"drag-drop\" signal.}
+  @begin{short}
+    Gets the data associated with a drag.
+  @end{short}
+  When the data is received or the retrieval fails, GTK+ will emit a
+  \"drag-data-received\" signal. Failure of the retrieval is indicated by the
+  length field of the selection_data signal parameter being negative. However,
+  when the funcion @sym{gtk-drag-get-data} is called implicitely because the
+  @code{GTK_DEST_DEFAULT_DROP} was set, then the widget will not receive
+  notification of failed drops."
+  (widget (g-object gtk-widget))
+  (context (g-object gdk-drag-context))
+  (target gdk-atom-as-string)
+  (time :uint32))
+
+(export 'gtk-drag-get-data)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_drag_get_source_widget ()

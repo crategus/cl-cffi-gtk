@@ -2,7 +2,7 @@
 ;;; gtk.cell-area-box.lisp
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2012, 2013 Dieter Kaiser
@@ -78,54 +78,53 @@
     gtk-cell-area-box-spacing
     "spacing" "gint" t t)))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-cell-area-box 'type)
- "@version{2013-2-15}
+ "@version{2013-6-21}
   @begin{short}
-    The GtkCellAreaBox renders cell renderers into a row or a column depending
-    on its GtkOrientation.
+    The @sym{gtk-cell-area-box} renders cell renderers into a row or a column
+    depending on its @class{gtk-orientation}.
   @end{short}
 
-  GtkCellAreaBox uses a notion of packing. Packing refers to adding cell
-  renderers with reference to a particular position in a GtkCellAreaBox. There
-  are two reference positions: the start and the end of the box. When the
-  GtkCellAreaBox is oriented in the GTK_ORIENTATION_VERTICAL orientation, the
-  start is defined as the top of the box and the end is defined as the bottom.
-  In the GTK_ORIENTATION_HORIZONTAL orientation start is defined as the left
-  side and the end is defined as the right side.
+  @sym{gtk-cell-area-box} uses a notion of packing. Packing refers to adding
+  cell renderers with reference to a particular position in a
+  @sym{gtk-cell-area-box}. There are two reference positions: the start and the
+  end of the box. When the @sym{gtk-cell-area-box} is oriented in the
+  @code{:vertical} orientation, the start is defined as the top of the box and
+  the end is defined as the bottom. In the @code{:horizontal} orientation start
+  is defined as the left side and the end is defined as the right side.
 
-  Alignments of GtkCellRenderers rendered in adjacent rows can be configured
-  by configuring the \"align\" child cell property with
-  gtk_cell_area_cell_set_property() or by specifying the \"align\" argument to
-  gtk_cell_area_box_pack_start() and gtk_cell_area_box_pack_end().
+  Alignments of @class{gtk-cell-renderer}s rendered in adjacent rows can be
+  configured by configuring the \"align\" child cell property with the function
+  @fun{gtk-cell-area-cell-set-property} or by specifying the \"align\" argument
+  to the functions @fun{gtk-cell-area-box-pack-start} and
+  @fun{gtk-cell-area-box-pack-end}.
   @begin[Child Property Details]{dictionary}
     @subheading{The \"align\" child property}
-      @code{\"align\"} of type @code{gboolean} (Read / Write)@br{}
-      Whether the cell renderer should be aligned in adjacent rows.@br{}
-      Default value: @code{nil}@br{}
+      @code{\"align\"} of type @code{:boolean} (Read / Write) @br{}
+      Whether the cell renderer should be aligned in adjacent rows. @br{}
+      Default value: @code{nil} @br{}
       Since 3.0
 
     @subheading{The \"expand\" child property}
-      @code{\"expand\"} of type @code{gboolean} (Read / Write)@br{}
+      @code{\"expand\"} of type @code{:boolean} (Read / Write) @br{}
       Whether the cell renderer should receive extra space when the area
-      receives more than its natural size.@br{}
-      Default value: @code{nil}@br{}
+      receives more than its natural size. @br{}
+      Default value: @code{nil} @br{}
       Since 3.0
 
     @subheading{The \"fixed-size\" child property}
-      @code{\"fixed-size\"} of type @code{gboolean} (Read / Write)@br{}
+      @code{\"fixed-size\"} of type @code{:boolean} (Read / Write) @br{}
       Whether the cell renderer should require the same size for all rows for
-      which it was requested.@br{}
-      Default value: @code{true}@br{}
+      which it was requested. @br{}
+      Default value: @em{true} @br{}
       Since 3.0
 
     @subheading{The \"pack-type\" child property}
-      @code{\"pack-type\"} of type @code{GtkPackType} (Read / Write)@br{}
-      A GtkPackType indicating whether the cell renderer is packed with
-      reference to the start or end of the area.@br{}
-      Default value: @code{:start}@br{}
+      @code{\"pack-type\"} of type @symbol{gtk-pack-type} (Read / Write) @br{}
+      A @symbol{gtk-pack-type} indicating whether the cell renderer is packed
+      with reference to the start or end of the area. @br{}
+      Default value: @code{:start} @br{}
       Since 3.0
   @end{dictionary}
   @see-slot{gtk-cell-area-box-spacing}")
@@ -138,10 +137,10 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "spacing" 'gtk-cell-area-box) 't)
- "The @code{\"spacing\"} property of type @code{gint} (Read / Write)@br{}
-  The amount of space to reserve between cells.@br{}
-  Allowed values: @code{>= 0}@br{}
-  Default value: @code{0}@br{}
+ "The @code{\"spacing\"} property of type @code{:int} (Read / Write) @br{}
+  The amount of space to reserve between cells. @br{}
+  Allowed values: >= 0 @br{}
+  Default value: 0 @br{}
   Since 3.0")
 
 ;;; ----------------------------------------------------------------------------
@@ -150,17 +149,13 @@
 ;;;
 ;;; ----------------------------------------------------------------------------
 
-;;; --- gtk-cell-area-box-spacing ----------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-area-box-spacing atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-area-box-spacing 'function)
- "@version{2013-2-15}
-  @begin{short}
-    Accessor of the slot @code{\"spacing\"} of the @class{gtk-cell-area-box}
-    class.
-  @end{short}")
+ "@version{2013-6-21}
+  Accessor of the slot @code{\"spacing\"} of the @class{gtk-cell-area-box}
+  class.")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkCellAreaBoxClass
@@ -279,6 +274,5 @@
 ;;;
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
-
 
 ;;; --- End of file gtk.cell-area-box.lisp -------------------------------------

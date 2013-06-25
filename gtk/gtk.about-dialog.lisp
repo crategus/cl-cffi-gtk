@@ -1275,7 +1275,7 @@
 
 (defun gtk-about-dialog-set-logo-icon-name (about icon-name)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-21}
+ "@version{2013-6-24}
   @argument[about]{a @class{gtk-about-dialog} widget}
   @argument[icon-name]{an icon name, or @code{nil}}
   @begin{short}
@@ -1284,10 +1284,11 @@
     @fun{gtk-window-set-default-icon} will be used.
   @end{short}
 
-  Since 2.6"
+  Since 2.6
+  @see-function{gtk-window-set-default-icon}"
   (setf (gtk-about-dialog-logo-icon-name about) icon-name))
 
-(export 'gtk-about-dialog-logo-set-icon-name)
+(export 'gtk-about-dialog-set-logo-icon-name)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_about_dialog_add_credit_section ()

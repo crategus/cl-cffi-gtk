@@ -124,7 +124,7 @@
     widgets that belong to the size group are specified by a <widgets> element
     that may contain multiple <widget> elements, one for each member of the size
     group. The name attribute gives the id of the widget.
- 
+
     @b{Example:} A UI definition fragment with @sym{gtk-size-group}
     @begin{pre}
    <object class=\"GtkSizeGroup\">
@@ -199,8 +199,6 @@
   (:horizontal 1)
   (:vertical 2)
   (:both 3))
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-size-group-mode atdoc:*symbol-name-alias*) "Enum"

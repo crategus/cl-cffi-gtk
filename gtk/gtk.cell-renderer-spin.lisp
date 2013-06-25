@@ -2,10 +2,10 @@
 ;;; gtk.cell-renderer-spin.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See >http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -30,11 +30,11 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; GtkCellRendererSpin
-;;; 
+;;;
 ;;; Renders a spin button in a cell
-;;;     
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;; GtkCellRendererSpin
 ;;;
 ;;; gtk_cell_renderer_spin_new
@@ -61,31 +61,29 @@
     gtk-cell-renderer-spin-digits
     "digits" "guint" t t)))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-cell-renderer-spin 'type)
- "@version{2013-2-23}
+ "@version{2013-6-22}
   @begin{short}
-    GtkCellRendererSpin renders text in a cell like GtkCellRendererText from
-    which it is derived.
+    @sym{gtk-cell-renderer-spin} renders text in a cell like
+    @class{gtk-cell-renderer-text} from which it is derived.
   @end{short}
-  But while GtkCellRendererText offers a simple entry to edit the text,
-  GtkCellRendererSpin offers a GtkSpinButton widget. Of course, that means that
-  the text has to be parseable as a floating point number.
+  But while @class{gtk-cell-renderer-text} offers a simple entry to edit the
+  text, @sym{gtk-cell-renderer-spin} offers a @class{gtk-spin-button} widget. Of
+  course, that means that the text has to be parseable as a floating point
+  number.
 
-  The range of the spinbutton is taken from the adjustment property of the
+  The range of the spin button is taken from the adjustment property of the
   cell renderer, which can be set explicitly or mapped to a column in the tree
-  model, like all properties of cell renders. GtkCellRendererSpin also has
-  properties for the \"climb-rate\" and the number of \"digits\" to display.
-  Other GtkSpinButton properties can be set in a handler for the
+  model, like all properties of cell renders. @sym{gtk-cell-renderer-spin} also
+  has properties for the \"climb-rate\" and the number of \"digits\" to display.
+  Other @class{gtk-spin-button} properties can be set in a handler for the
   \"editing-started\" signal.
 
-  The GtkCellRendererSpin cell renderer was added in GTK+ 2.10.
+  The @sym{gtk-cell-renderer-spin} cell renderer was added in GTK+ 2.10.
   @see-slot{gtk-cell-renderer-spin-adjustment}
   @see-slot{gtk-cell-renderer-spin-climb-rate}
-  @see-slot{gtk-cell-renderer-spin-digits}
-")
+  @see-slot{gtk-cell-renderer-spin-digits}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -94,31 +92,30 @@
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "adjustment" 'gtk-cell-renderer-spin) 't)
+(setf (documentation (atdoc:get-slot-from-name "adjustment"
+                                               'gtk-cell-renderer-spin) 't)
  "The @code{\"adjustment\"} property of type @class{gtk-adjustment}
-  (Read / Write)@br{}
-  The adjustment that holds the value of the spinbutton. This must be non-NULL
-  for the cell renderer to be editable.@br{}
+  (Read / Write) @br{}
+  The adjustment that holds the value of the spin button. This must be
+  non-@code{nil} for the cell renderer to be editable. @br{}
   Since 2.10")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "climb-rate" 'gtk-cell-renderer-spin) 't)
- "The @code{\"climb-rate\"} property of type @code{gdouble} (Read / Write)@br{}
-  The acceleration rate when you hold down a button.@br{}
-  Allowed values: >= 0@br{}
-  Default value: 0@br{}
+(setf (documentation (atdoc:get-slot-from-name "climb-rate"
+                                               'gtk-cell-renderer-spin) 't)
+ "The @code{\"climb-rate\"} property of type @code{:double} (Read / Write) @br{}
+  The acceleration rate when you hold down a button. @br{}
+  Allowed values: >= 0 @br{}
+  Default value: 0 @br{}
   Since 2.10")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "digits" 'gtk-cell-renderer-spin) 't)
- "The @code{\"digits\"} property of type @code{guint} (Read / Write)@br{}
-  The number of decimal places to display.@br{}
-  Allowed values: <= 20@br{}
-  Default value: 0@br{}
+(setf (documentation (atdoc:get-slot-from-name "digits"
+                                               'gtk-cell-renderer-spin) 't)
+ "The @code{\"digits\"} property of type @code{:uint} (Read / Write) @br{}
+  The number of decimal places to display. @br{}
+  Allowed values: <= 20 @br{}
+  Default value: 0 @br{}
   Since 2.10")
 
 ;;; ----------------------------------------------------------------------------
@@ -127,41 +124,29 @@
 ;;;
 ;;; ----------------------------------------------------------------------------
 
-;;; --- gtk-cell-renderer-spin-adjustment --------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-renderer-spin-adjustment atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-renderer-spin-adjustment 'function)
- "@version{2013-2-23}
-  @begin{short}
-    Accessor of the slot @code{\"adjustment\"} of the
-    @class{gtk-cell-renderer-spin} class.
-  @end{short}")
-
-;;; --- gtk-cell-renderer-spin-climb-rate --------------------------------------
+ "@version{2013-6-22}
+  Accessor of the slot @code{\"adjustment\"} of the
+  @class{gtk-cell-renderer-spin} class.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-renderer-spin-climb-rate atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-renderer-spin-climb-rate 'function)
- "@version{2013-2-23}
-  @begin{short}
-    Accessor of the slot @code{\"climb-rate\"} of the
-    @class{gtk-cell-renderer-spin} class.
-  @end{short}")
-
-;;; --- gtk-cell-renderer-spin-digits ------------------------------------------
+ "@version{2013-6-22}
+  Accessor of the slot @code{\"climb-rate\"} of the
+  @class{gtk-cell-renderer-spin} class.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-renderer-spin-digits atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-renderer-spin-digits 'function)
- "@version{2013-2-23}
-  @begin{short}
-    Accessor of the slot @code{\"digits\"} of the
-    @class{gtk-cell-renderer-spin} class.
-  @end{short}")
+ "@version{2013-6-22}
+  Accessor of the slot @code{\"digits\"} of the
+  @class{gtk-cell-renderer-spin} class.")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_renderer_spin_new ()
@@ -171,10 +156,9 @@
 
 (defun gtk-cell-renderer-spin-new ()
  #+cl-cffi-gtk-documentation
- "@version{2013-2-23}
-  @return{A new GtkCellRendererSpin.}
-
-  @short{Creates a new GtkCellRendererSpin.}
+ "@version{2013-6-22}
+  @return{A new @class{gtk-cell-renderer-spin} object.}
+  @short{Creates a new @class{gtk-cell-renderer-spin} object.}
 
   Since 2.10"
   (make-instance 'gtk-cell-renderer-spin))

@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See >http://www.gtk.org>. The API documentation of the
+;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -52,13 +52,10 @@
 ;;;          +----GtkCellRenderer
 ;;;                +----GtkCellRendererToggle
 ;;;
-;;;
 ;;; Signals
 ;;;
 ;;;   "toggled"                                        : Run Last
-;;;
-;;;
-
+;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
 
@@ -87,13 +84,11 @@
     gtk-cell-renderer-toggle-radio
     "radio" "gboolean" t t)))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-cell-renderer-toggle 'type)
- "@version{2013-2-23}
+ "@version{2013-6-22}
   @begin{short}
-    GtkCellRendererToggle renders a toggle button in a cell.
+    @sym{gtk-cell-renderer-toggle} renders a toggle button in a cell.
   @end{short}
   The button is drawn as a radio or a checkbutton, depending on the
   @code{\"radio\"} property. When activated, it emits the @code{\"toggled\"}
@@ -101,24 +96,20 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"toggled\" signal}
       @begin{pre}
- void user_function (GtkCellRendererToggle *cell_renderer,
-                     gchar                 *path,
-                     gpointer               user_data)          : Run Last
+ lambda (cell-renderer path)   : Run Last
       @end{pre}
-      The ::toggled signal is emitted when the cell is toggled.
+      The \"toggled\" signal is emitted when the cell is toggled.
       @begin[code]{table}
-        @entry[cell_renderer]{the object which received the signal}
-        @entry[path]{string representation of GtkTreePath describing the event
-          location}
-        @entry[user_data]{user data set when the signal handler was connected.}
+        @entry[cell-renderer]{The object which received the signal.}
+        @entry[path]{String representation of @class{gtk-tree-path} structure
+          describing the event location.}
       @end{table}
   @end{dictionary}
   @see-slot{gtk-cell-renderer-toggle-activatable}
   @see-slot{gtk-cell-renderer-toggle-active}
   @see-slot{gtk-cell-renderer-toggle-inconsistent}
   @see-slot{gtk-cell-renderer-toggle-indicator-size}
-  @see-slot{gtk-cell-renderer-toggle-radio}
-")
+  @see-slot{gtk-cell-renderer-toggle-radio}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -127,45 +118,43 @@
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "activatable" 'gtk-cell-renderer-toggle) 't)
- "The @code{\"activatable\"} property of type @code{gboolean}
-  (Read / Write)@br{}
-  The toggle button can be activated.@br{}
-  Default value: TRUE")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "active" 'gtk-cell-renderer-toggle) 't)
- "The @code{\"active\"} property of type @code{gboolean} (Read / Write)@br{}
-  The toggle state of the button.@br{}
-  Default value: FALSE")
-
-;;; ----------------------------------------------------------------------------
+(setf (documentation (atdoc:get-slot-from-name "activatable"
+                                               'gtk-cell-renderer-toggle) 't)
+ "The @code{\"activatable\"} property of type @code{:boolean}
+  (Read / Write) @br{}
+  The toggle button can be activated. @br{}
+  Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "inconsistent" 'gtk-cell-renderer-toggle) 't)
- "The @code{\"inconsistent\"} property of type @code{gboolean}
-  (Read / Write)@br{}
-  The inconsistent state of the button.@br{}
-  Default value: FALSE")
-
-;;; ----------------------------------------------------------------------------
+(setf (documentation (atdoc:get-slot-from-name "active"
+                                               'gtk-cell-renderer-toggle) 't)
+ "The @code{\"active\"} property of type @code{:boolean} (Read / Write) @br{}
+  The toggle state of the button. @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "indicator-size" 'gtk-cell-renderer-toggle) 't)
- "The @code{\"indicator-size\"} property of type @code{gint} (Read / Write)@br{}
-  Size of check or radio indicator.@br{}
-  Allowed values: >= 0@br{}
+(setf (documentation (atdoc:get-slot-from-name "inconsistent"
+                                               'gtk-cell-renderer-toggle) 't)
+ "The @code{\"inconsistent\"} property of type @code{:boolean}
+  (Read / Write) @br{}
+  The inconsistent state of the button. @br{}
+  Default value: @code{nil}")
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "indicator-size"
+                                               'gtk-cell-renderer-toggle) 't)
+ "The @code{\"indicator-size\"} property of type @code{:int}
+  (Read / Write) @br{}
+  Size of check or radio indicator. @br{}
+  Allowed values: >= 0 @br{}
   Default value: 16")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "radio" 'gtk-cell-renderer-toggle) 't)
- "The @code{\"radio\"} property of type @code{gboolean} (Read / Write)@br{}
-  Draw the toggle button as a radio button.@br{}
-  Default value: FALSE")
+(setf (documentation (atdoc:get-slot-from-name "radio"
+                                               'gtk-cell-renderer-toggle) 't)
+ "The @code{\"radio\"} property of type @code{:boolean} (Read / Write) @br{}
+  Draw the toggle button as a radio button. @br{}
+  Default value: @code{nil}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -200,7 +189,8 @@
 ;;; --- gtk-cell-renderer-toggle-inconsistent ----------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-cell-renderer-toggle-inconsistent atdoc:*function-name-alias*)
+(setf (gethash 'gtk-cell-renderer-toggle-inconsistent
+               atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-renderer-toggle-inconsistent 'function)
  "@version{2013-2-23}
@@ -212,7 +202,8 @@
 ;;; --- gtk-cell-renderer-toggle-indicator-size --------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-cell-renderer-toggle-indicator-size atdoc:*function-name-alias*)
+(setf (gethash 'gtk-cell-renderer-toggle-indicator-size
+               atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-renderer-toggle-indicator-size 'function)
  "@version{2013-2-23}
@@ -241,16 +232,17 @@
 
 (defun gtk-cell-renderer-toggle-new ()
  #+cl-cffi-gtk-documentation
- "@version{2013-2-23}
+ "@version{2013-6-22}
   @return{The new cell renderer.}
   @begin{short}
-    Creates a new GtkCellRendererToggle.
+    Creates a new @class{gtk-cell-renderer-toggle} object.
   @end{short}
   Adjust rendering parameters using object properties. Object properties can be
-  set globally (with g_object_set()). Also, with GtkTreeViewColumn, you can bind
-  a property to a value in a GtkTreeModel. For example, you can bind the
-  @code{\"active\"} property on the cell renderer to a boolean value in the
-  model, thus causing the check button to reflect the state of the model."
+  set globally (with the function @fun{g-object-set}). Also, with
+  @class{gtk-tree-view-column}, you can bind a property to a value in a
+  @class{gtk-tree-model}. For example, you can bind the @code{\"active\"}
+  property on the cell renderer to a boolean value in the model, thus causing
+  the check button to reflect the state of the model."
   (make-instance 'gtk-cell-renderer-toggle))
 
 (export 'gtk-cell-renderer-toggle-new)
@@ -264,11 +256,9 @@
 (defun gtk-cell-renderer-toggle-get-radio (toggle)
  #+cl-cffi-gtk-documentation
  "@version{2013-2-23}
-  @argument[toggle]{a GtkCellRendererToggle}
-  @return{TRUE if we're rendering radio toggles rather than checkboxes}
-  @begin{short}
-    Returns whether we're rendering radio toggles rather than checkboxes.
-  @end{short}"
+  @argument[toggle]{a @class{gtk-cell-renderer-toggle} object}
+  @return{@em{True} if we are rendering radio toggles rather than checkboxes.}
+  Returns whether we are rendering radio toggles rather than checkboxes."
   (gtk-cell-renderer-toggle-radio toggle))
 
 (export 'gtk-cell-renderer-toggle-get-radio)
@@ -281,18 +271,18 @@
 
 (defun gtk-cell-renderer-toggle-set-radio (toggle radio)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-23}
-  @argument[toggle]{a GtkCellRendererToggle}
-  @argument[radio]{TRUE to make the toggle look like a radio button}
+ "@version{2013-6-22}
+  @argument[toggle]{a @class{gtk-cell-renderer-toggle} object}
+  @argument[radio]{@em{true} to make the toggle look like a radio button}
   @begin{short}
-    If radio is TRUE, the cell renderer renders a radio toggle (i.e. a toggle in
-    a group of mutually-exclusive toggles). If FALSE, it renders a check toggle
-    (a standalone boolean option).
+    If @arg{radio} is @em{true}, the cell renderer renders a radio toggle (i. e.
+    a toggle in a group of mutually-exclusive toggles). If @code{nil}, it
+    renders a check toggle (a standalone boolean option).
   @end{short}
   This can be set globally for the cell renderer, or changed just before
-  rendering each cell in the model (for GtkTreeView, you set up a per-row
-  setting using GtkTreeViewColumn to associate model columns with cell renderer
-  properties)."
+  rendering each cell in the model (for @class{gtk-tree-view}, you set up a
+  per-row setting using @class{gtk-tree-view-column} to associate model columns
+  with cell renderer properties)."
   (setf (gtk-cell-renderer-toggle-radio toggle) radio))
 
 (export 'gtk-cell-renderer-toggle-set-radio)
@@ -305,13 +295,12 @@
 
 (defun gtk-cell-renderer-toggle-get-active (toggle)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-23}
-  @argument[toggle]{a GtkCellRendererToggle}
-  @return{TRUE if the cell renderer is active.}
-  @begin{short}
-    Returns whether the cell renderer is active. See
-    gtk_cell_renderer_toggle_set_active().
-  @end{short}"
+ "@version{2013-6-22}
+  @argument[toggle]{a @class{gtk-cell-renderer-toggle} object}
+  @return{@em{True} if the cell renderer is active.}
+  Returns whether the cell renderer is active. See the function
+  @fun{gtk-cell-renderer-toggle-set-active}.
+  @see-function{gtk-cell-renderer-toggle-set-active}"
   (gtk-cell-renderer-toggle-active toggle))
 
 (export 'gtk-cell-renderer-toggle-get-active)
@@ -324,12 +313,10 @@
 
 (defun gtk-cell-renderer-toggle-set-active (toggle setting)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-23}
-  @argument[toggle]{a GtkCellRendererToggle.}
-  @argument[setting]{the value to set.}
-  @begin{short}
-    Activates or deactivates a cell renderer.
-  @end{short}"
+ "@version{2013-6-22}
+  @argument[toggle]{a @class{gtk-cell-renderer-toggle} object}
+  @argument[setting]{the value to set}
+  Activates or deactivates a cell renderer."
   (setf (gtk-cell-renderer-toggle-active toggle) setting))
 
 (export 'gtk-cell-renderer-toggle-set-active)
@@ -342,15 +329,16 @@
 
 (defun gtk-cell-renderer-toggle-get-activatable (toggle)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-23}
-  @argument[toggle]{a GtkCellRendererToggle}
-  @return{TRUE if the cell renderer is activatable.}
+ "@version{2013-6-22}
+  @argument[toggle]{a @class{gtk-cell-renderer-toggle} object}
+  @return{@em{True} if the cell renderer is activatable.}
   @begin{short}
     Returns whether the cell renderer is activatable.
   @end{short}
-  See gtk_cell_renderer_toggle_set_activatable().
+  See the function @fun{gtk-cell-renderer-toggle-set-activatable}.
 
-  Since 2.18"
+  Since 2.18
+  @see-function{gtk-cell-renderer-toggle-set-activatable}"
   (gtk-cell-renderer-toggle-activatable toggle))
 
 (export 'gtk-cell-renderer-toggle-get-activatable)
@@ -363,9 +351,9 @@
 
 (defun gtk-cell-renderer-toggle-set-activatable (toggle setting)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-23}
-  @argument[toggle]{a GtkCellRendererToggle.}
-  @argument[setting]{the value to set.}
+ "@version{2013-6-22}
+  @argument[toggle]{a @class{gtk-cell-renderer-toggle} object}
+  @argument[setting]{the value to set}
   @short{Makes the cell renderer activatable.}
 
   Since 2.18"

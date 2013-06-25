@@ -1266,14 +1266,14 @@
 
 (defcfun ("gtk_label_set_mnemonic_widget" gtk-label-set-mnemonic-widget) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-4-14}
+ "@version{2013-6-20}
   @argument[label]{a @class{gtk-label} widget}
   @argument[widget]{the target @class{gtk-widget}}
   @begin{short}
     If the @arg{label} has been set so that it has an mnemonic key (using i. e.
-    @fun{gtk-label-set-markup-with-mnemonic},
-    @fun{gtk-label-set-text-with_mnemonic},
-    @fun{gtk-label-new-with-mnemonic} or the @code{\"use_underline\"} property)
+    the functions @fun{gtk-label-set-markup-with-mnemonic},
+    @fun{gtk-label-set-text-with-mnemonic}, @fun{gtk-label-new-with-mnemonic} or
+    the @code{\"use_underline\"} property)
     the @arg{label} can be associated with a widget that is the target of the
     mnemonic.
   @end{short}
@@ -1287,7 +1287,7 @@
   there are no mnemonic collisions and toggle focus between the colliding
   widgets otherwise.
   @see-function{gtk-label-set-markup-with-mnemonic}
-  @see-function{gtk-label-set-text-with_mnemonic}
+  @see-function{gtk-label-set-text-with-mnemonic}
   @see-function{gtk-label-new-with-mnemonic}"
   (label (g-object gtk-label)))
 

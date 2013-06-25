@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -56,29 +56,25 @@
   (:export t
    :type-initializer "gtk_tree_sortable_get_type"))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tree-sortable atdoc:*class-name-alias*) "Interface"
       (documentation 'gtk-tree-sortable 'type)
- "@version{2013-3-10}
+ "@version{2013-6-21}
   @begin{short}
-    GtkTreeSortable is an interface to be implemented by tree models which
-    support sorting. The GtkTreeView uses the methods provided by this interface
-    to sort the model.
+    @sym{gtk-tree-sortable} is an interface to be implemented by tree models
+    which support sorting. The @class{gtk-tree-view} uses the methods provided
+    by this interface to sort the model.
   @end{short}
   @begin[Signal Details]{dictionary}
     @subheading{The \"sort-column-changed\" signal}
-      The ::sort-column-changed signal is emitted when the sort column or sort
-      order of sortable is changed. The signal is emitted before the contents of
-      sortable are resorted.
       @begin{pre}
- void user_function (GtkTreeSortable *sortable,
-                     gpointer         user_data)      : Run Last
+ lambda (sortable)   : Run Last
       @end{pre}
+      The \"sort-column-changed\" signal is emitted when the sort column or sort
+      order of @arg{sortable} is changed. The signal is emitted before the
+      contents of @arg{sortable} are resorted.
       @begin[code]{table}
-        @entry[sortable]{the object on which the signal is emitted}
-        @entry[user_data]{user data set when the signal handler was connected.}
+        @entry[sortable]{The object on which the signal is emitted.}
       @end{table}
   @end{dictionary}")
 
@@ -116,35 +112,30 @@
   ;; signal
   (:skip sort-columns-changed :pointer)
   ;; methods
-  (get-sort-column-id
-   (:boolean (sortable (g-object gtk-tree-sortable))
-             (sort-column-id (:pointer :int))
-             (order (:pointer gtk-sort-type)))
-   :impl-call ((sortable)
-               (multiple-value-bind (sorted-p r-sort-column-id r-order)
-                   (gtk-tree-sortable-get-sort-column-id-impl sortable)
-                 (unless (null-pointer-p sort-column-id)
-                   (setf (mem-ref sort-column-id :int) r-sort-column-id))
-                 (unless (null-pointer-p order)
-                   (setf (mem-ref order 'gtk-sort-type) r-order))
-                 sorted-p)))
-  (set-sort-column-id (:void
-                        (sortable (g-object gtk-tree-sortable))
+  (get-sort-column-id (:boolean (sortable (g-object gtk-tree-sortable))
+                                (sort-column-id (:pointer :int))
+                                (order (:pointer gtk-sort-type)))
+    :impl-call ((sortable)
+                (multiple-value-bind (sorted-p r-sort-column-id r-order)
+                    (gtk-tree-sortable-get-sort-column-id-impl sortable)
+                  (unless (null-pointer-p sort-column-id)
+                    (setf (mem-ref sort-column-id :int) r-sort-column-id))
+                  (unless (null-pointer-p order)
+                    (setf (mem-ref order 'gtk-sort-type) r-order))
+                  sorted-p)))
+  (set-sort-column-id (:void (sortable (g-object gtk-tree-sortable))
+                             (sort-column-id :int)
+                             (order gtk-sort-type)))
+  (set-sort-func (:void (sortable (g-object gtk-tree-sortable))
                         (sort-column-id :int)
-                        (order gtk-sort-type)))
-  (set-sort-func (:void
-                   (sortable (g-object gtk-tree-sortable))
-                   (sort-column-id :int)
-                   (func :pointer)
-                   (data :pointer)
-                   (destroy-notify :pointer)))
-  (set-default-sort-func (:void
-                           (sortable (g-object gtk-tree-sortable))
-                           (func :pointer)
-                           (data :pointer)
-                           (destroy-notify :pointer)))
-  (has-default-sort-func (:boolean
-                           (sortable (g-object gtk-tree-sortable)))))
+                        (func :pointer)
+                        (data :pointer)
+                        (destroy-notify :pointer)))
+  (set-default-sort-func (:void (sortable (g-object gtk-tree-sortable))
+                                (func :pointer)
+                                (data :pointer)
+                                (destroy-notify :pointer)))
+  (has-default-sort-func (:boolean (sortable (g-object gtk-tree-sortable)))))
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkTreeIterCompareFunc ()

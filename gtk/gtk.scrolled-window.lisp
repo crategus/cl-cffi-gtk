@@ -2,7 +2,7 @@
 ;;; gtk.scrolled-window.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; <See http://common-lisp.net/project/cl-gtk2/>.
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
 ;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
@@ -124,11 +124,9 @@
     gtk-scrolled-window-window-placement-set
     "window-placement-set" "gboolean" t t)))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-scrolled-window 'type)
- "@version{2013-5-22}
+ "@version{2013-6-20}
   @begin{short}
     @sym{gtk-scrolled-window} is a @class{gtk-bin} subclass: it is a container
     the accepts a single child widget. @sym{gtk-scrolled-window} adds scrollbars
@@ -143,7 +141,7 @@
 
   For widgets that lack native scrolling support, the @class{gtk-viewport}
   widget acts as an adaptor class, implementing scrollability for child widgets
-  that lack their own scrolling capabilities. Use @class{gkt-viewport} to scroll
+  that lack their own scrolling capabilities. Use @class{gtk-viewport} to scroll
   child widgets such as @class{gtk-grid}, @class{gtk-box}, and so on.
 
   If a widget has native scrolling abilities, it can be added to the

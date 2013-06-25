@@ -4043,12 +4043,12 @@
 ;;; gtk_widget_set_parent ()
 ;;; ----------------------------------------------------------------------------
 
-(declaim (inline gkt-widget-set-parent))
+(declaim (inline gtk-widget-set-parent))
 
 (defun gtk-widget-set-parent (widget parent)
  #+cl-cffi-gtk-documentation
- "@version{2012-12-29}
-  @argumen[twidget]{a @class{gtk-widget} instance}
+ "@version{2012-6-25}
+  @argumen[twidget]{a @class{gtk-widget} object}
   @argument[parent]{parent container}
   @begin{short}
     This function is useful only when implementing subclasses of
@@ -4667,8 +4667,8 @@
 
 (defcfun ("gtk_widget_set_direction" gtk-widget-set-direction) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-1-6}
-  @argument[widget]{a @class{gtk-widget} instance}
+ "@version{2013-6-25}
+  @argument[widget]{a @class{gtk-widget} object}
   @argument[dir]{the new direction}
   @begin{short}
     Sets the reading direction on a particular @arg{widget}.
@@ -4681,10 +4681,11 @@
   containers where the containers are arranged in an order that is explicitely
   visual rather than logical (such as buttons for text justification).
 
-  If the direction is set @code{:none}, then the value set by
+  If the direction is set to the value @code{:none} of the
+  @symbol{gtk-text-direction} enumeration, then the value set by the function
   @fun{gtk-widget-set-default-direction} will be used.
   @see-function{gtk-widget-set-default-direction}"
-  (widget (g-object gkt-widget))
+  (widget (g-object gtk-widget))
   (dir gtk-text-direction))
 
 (export 'gtk-widget-set-direction)
@@ -5257,7 +5258,7 @@
  "@version{2013-6-9}
   @argument[widget]{a @class{gtk-widget} object}
   @argument[font-desc]{the font description to use, or @code{nil} to undo the
-    effect of previous calls to the @sym{gtk-widget-modify-font} function}
+    effect of previous calls to the function @sym{gtk-widget-modify-font}}
   @subheading{Warning}
     @sym{gtk-widget-modify-font} has been deprecated since version 3.0 and
     should not be used in newly written code. Use the
@@ -5265,10 +5266,8 @@
 
   @short{Sets the font to use for a widget.}
 
-  All other style values are left untouched. See also the
-  @fun{gtk-widget-modify-style} function.
-  @see-function{gtk-widget-override-font}
-  @see-function{gtk-widget-modify-style}"
+  All other style values are left untouched.
+  @see-function{gtk-widget-override-font}"
   (widget (g-object gtk-widget))
   (font-desc (g-boxed-foreign pango-font-description)))
 
@@ -7170,16 +7169,16 @@
 ;;; gtk_widget_get_can_default ()
 ;;; ----------------------------------------------------------------------------
 
-(declaim (inline gkt-widget-get-can-default))
+(declaim (inline gtk-widget-get-can-default))
 
 (defun gtk-widget-get-can-default (widget)
  #+cl-cffi-gtk-documentation
- "@version{2012-12-29}
-  @argument[widget]{a @class{gtk-widget} instance}
-  @return{@arg{ture} if @arg{widget} can be a default widget, @code{nil}
-    otherwise}
+ "@version{2012-6-25}
+  @argument[widget]{a @class{gtk-widget} object}
+  @return{@arg{True} if @arg{widget} can be a default widget, @code{nil}
+    otherwise.}
   @short{Determines whether @arg{widget} can be a default widget.}
-  See @fun{gtk-widget-set-can-default}.
+  See the function @fun{gtk-widget-set-can-default}.
 
   Since 2.18
   @see-function{gtk-widget-set-can-default}"

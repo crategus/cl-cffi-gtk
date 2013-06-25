@@ -579,39 +579,49 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_action_get_sensitive ()
-;;;
-;;; gboolean gtk_action_get_sensitive (GtkAction *action);
-;;;
-;;; Returns whether the action itself is sensitive. Note that this doesn't
-;;; necessarily mean effective sensitivity. See gtk_action_is_sensitive() for
-;;; that.
-;;;
-;;; action :
-;;;     the action object
-;;;
-;;; Returns :
-;;;     TRUE if the action itself is sensitive.
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-action-get-sensitive))
+
+(defun gtk-action-get-sensitive (action)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-20}
+  @argument[action]{the action object}
+  @return{@em{True} if the @arg{action} itself is sensitive.}
+  @begin{short}
+    Returns whether the @arg{action} itself is sensitive. Note that this does
+    not necessarily mean effective sensitivity. See the function
+    @fun{gtk-action-is-sensitive} for that.
+  @end{short}
+
+  Since 2.4
+  @fun{gtk-action-is-sensitive}"
+  (gtk-action-sensitive action))
+
+(export 'gtk-action-get-sensitive)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_action_set_sensitive ()
-;;;
-;;; void gtk_action_set_sensitive (GtkAction *action, gboolean sensitive);
-;;;
-;;; Sets the ::sensitive property of the action to sensitive. Note that this
-;;; doesn't necessarily mean effective sensitivity. See
-;;; gtk_action_is_sensitive() for that.
-;;;
-;;; action :
-;;;     the action object
-;;;
-;;; sensitive :
-;;;     TRUE to make the action sensitive
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-action-set-sensitive))
+
+(defun gtk-action-set-sensitive (action sensitive)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-20}
+  @argument[action]{the action object}
+  @argument[sensitive]{@em{true} to make the @arg{action} sensitive}
+  @begin{short}
+    Sets the @code{\"sensitive\"} property of the @arg{action} to sensitive.
+  @end{short}
+  Note that this does not necessarily mean effective sensitivity. See the
+  function @fun{gtk-action-is-sensitive} for that.
+
+  Since 2.6
+  @see-function{gtk-action-is-sensitive}"
+  (setf (gtk-action-sensitive action) sensitive))
+
+(export 'gtk-action-set-sensitive)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_action_is_visible ()
@@ -619,11 +629,11 @@
 
 (defcfun ("gtk_action_is_visible" gtk-action-is-visible) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-6-2}
+ "@version{2013-6-20}
   @argument[action]{the action object}
-  @return{@arg{True} if the action and its associated action group are both
-    visible.}
-  @short{Returns whether the action is effectively visible.}
+  @return{@arg{True} if the @arg{action} and its associated action group are
+    both visible.}
+  @short{Returns whether the @arg{action} is effectively visible.}
 
   Since 2.4"
   (action g-object))
@@ -632,38 +642,49 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_action_get_visible ()
-;;;
-;;; gboolean gtk_action_get_visible (GtkAction *action);
-;;;
-;;; Returns whether the action itself is visible. Note that this doesn't
-;;; necessarily mean effective visibility. See gtk_action_is_sensitive() for
-;;; that.
-;;;
-;;; action :
-;;;     the action object
-;;;
-;;; Returns :
-;;;     TRUE if the action itself is visible.
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-action-get-visible))
+
+(defun gtk-action-get-visible (action)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-20}
+  @argument[action]{the action object}
+  @return{@em{True} if the @arg{action} itself is visible.}
+  @begin{short}
+    Returns whether the @arg{action} itself is visible.
+  @end{short}
+  Note that this does not necessarily mean effective visibility.
+  See the function @fun{gtk-action-is-sensitive} for that.
+
+  Since 2.4
+  @see-function{gtk-action-is-sensitive}"
+  (gtk-action-visible action))
+
+(export 'gtk-action-get-visible)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_action_set_visible ()
-;;;
-;;; void gtk_action_set_visible (GtkAction *action, gboolean visible);
-;;;
-;;; Sets the ::visible property of the action to visible. Note that this doesn't
-;;; necessarily mean effective visibility. See gtk_action_is_visible() for that.
-;;;
-;;; action :
-;;;     the action object
-;;;
-;;; visible :
-;;;     TRUE to make the action visible
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-action-set-visible))
+
+(defun gtk-action-set-visible (action visible)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-20}
+  @argument[action]{the action object}
+  @argument[visible]{@em{true} to make the @arg{action} visible}
+  @begin{short}
+    Sets the @code{\"visible\"} property of the @arg{action} to visible.
+  @end{short}
+  Note that this does not necessarily mean effective visibility.
+  See the function @fun{gtk-action-is-visible} for that.
+
+  Since 2.6
+  @see-function{gtk-action-is-visible}"
+  (setf (gtk-action-set-visible action) visible))
+
+(export 'gtk-action-set-visible)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_action_activate ()

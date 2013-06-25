@@ -1077,7 +1077,7 @@
       @about-function{gtk-assistant-previous-page}
     @end{subsection}
     @begin[GtkOffscreenWindow]{subsection}
-      A toplevel to manage offscreen rendering of child widgets.
+      A toplevel widget to manage offscreen rendering of child widgets.
 
       @about-class{gtk-offscreen-window}
       @about-function{gtk-offscreen-window-new}
@@ -2660,7 +2660,6 @@ setup_tree (void)
       @about-function{gtk-icon-view-get-item-row}
       @about-function{gtk-icon-view-get-item-column}
       @about-symbol{gtk-icon-view-drop-position}
-
       @about-function{gtk-icon-view-enable-model-drag-source}
       @about-function{gtk-icon-view-enable-model-drag-dest}
       @about-function{gtk-icon-view-unset-model-drag-source}
@@ -2673,40 +2672,268 @@ setup_tree (void)
       @about-function{gtk-icon-view-create-drag-icon}
     @end{subsection}
     @begin[GtkTreeSortable]{subsection}
+      The interface for sortable models used by @class{gtk-tree-view}.
+
+      @about-class{gtk-tree-sortable}
+      @about-class{gtk-tree-sortable-iface}
+      @about-function{gtk-tree-sortable-sort-column-changed}
+      @about-function{gtk-tree-sortable-get-sort-column-id}
+      @about-function{gtk-tree-sortable-set-sort-column-id}
+      @about-function{gtk-tree-sortable-set-sort-func}
+      @about-function{gtk-tree-sortable-set-default-sort-func}
+      @about-function{gtk-tree-sortable-has-default-sort-func}
     @end{subsection}
     @begin[GtkTreeModelSort]{subsection}
+      A @class{gtk-tree-model} which makes an underlying tree model sortable.
+
+      @about-class{gtk-tree-model-sort}
+      @about-function{gtk-tree-model-sort-new-with-model}
+      @about-function{gtk-tree-model-sort-get-model}
+      @about-function{gtk-tree-model-sort-convert-child-path-to-path}
+      @about-function{gtk-tree-model-sort-convert-child-iter-to-iter}
+      @about-function{gtk-tree-model-sort-convert-path-to-child-path}
+      @about-function{gtk-tree-model-sort-convert-iter-to-child-iter}
+      @about-function{gtk-tree-model-sort-reset-default-sort-func}
+      @about-function{gtk-tree-model-sort-clear-cache}
+      @about-function{gtk-tree-model-sort-iter-is-valid}
     @end{subsection}
-    @begin[GtkModelFilter]{subsection}
+    @begin[GtkTreeModelFilter]{subsection}
+      A @class{gtk-tree-model} which hides parts of an underlying tree model.
+
+      @about-class{gtk-tree-model-filter}
+      @about-function{gtk-tree-model-filter-new}
+      @about-function{gtk-tree-model-filter-set-visible-func}
+      @about-function{gtk-tree-model-filter-set-modify-func}
+      @about-function{gtk-tree-model-filter-set-visible-column}
+      @about-function{gtk-tree-model-filter-get-model}
+      @about-function{gtk-tree-model-filter-convert-child-iter-to-iter}
+      @about-function{gtk-tree-model-filter-convert-iter-to-child-iter}
+      @about-function{gtk-tree-model-filter-convert-child-path-to-path}
+      @about-function{gtk-tree-model-filter-convert-path-to-child-path}
+      @about-function{gtk-tree-model-filter-refilter}
+      @about-function{gtk-tree-model-filter-clear-cache}
     @end{subsection}
     @begin[GtkCellLayout]{subsection}
+      An interface for packing cells.
+
+      @about-class{gtk-cell-layout}
+      @about-class{gtk-cell-layout-iface}
+      @about-function{gtk-cell-layout-pack-start}
+      @about-function{gtk-cell-layout-pack-end}
+      @about-function{gtk-cell-layout-get-area}
+      @about-function{gtk-cell-layout-get-cells}
+      @about-function{gtk-cell-layout-reorder}
+      @about-function{gtk-cell-layout-clear}
+      @about-function{gtk-cell-layout-set-attributes}
+      @about-function{gtk-cell-layout-add-attribute}
+      @about-function{gtk-cell-layout-set-cell-data-func}
+      @about-function{gtk-cell-layout-clear-attributes}
     @end{subsection}
     @begin[GtkCellArea]{subsection}
+      An abstract class for laying out @class{gtk-cell-renderers}.
+
+      @about-class{gtk-cell-area}
+      @about-class{gtk-cell-area-class}
+      @about-symbol{GTK-CELL-AREA-WARN-INVALID-CELL-PROPERTY-ID}
+      @about-function{gtk-cell-area-add}
+      @about-function{gtk-cell-area-remove}
+      @about-function{gtk-cell-area-has-renderer}
+      @about-function{gtk-cell-area-foreach}
+      @about-function{gtk-cell-area-foreach-alloc}
+      @about-function{gtk-cell-area-event}
+      @about-function{gtk-cell-area-render}
+      @about-function{gtk-cell-area-get-cell-allocation}
+      @about-function{gtk-cell-area-get-cell-at-position}
+      @about-function{gtk-cell-area-create-context}
+      @about-function{gtk-cell-area-copy-context}
+      @about-function{gtk-cell-area-get-request-mode}
+      @about-function{gtk-cell-area-get-preferred-width}
+      @about-function{gtk-cell-area-get-preferred-height-for-width}
+      @about-function{gtk-cell-area-get-preferred-height}
+      @about-function{gtk-cell-area-get-preferred-width-for-height}
+      @about-function{gtk-cell-area-get-current-path-string}
+      @about-function{gtk-cell-area-apply-attributes}
+      @about-function{gtk-cell-area-attribute-connect}
+      @about-function{gtk-cell-area-attribute-disconnect}
+      @about-function{gtk-cell-area-class-install-cell-property}
+      @about-function{gtk-cell-area-class-find-cell-property}
+      @about-function{gtk-cell-area-class-list-cell-properties}
+      @about-function{gtk-cell-area-add-with-properties}
+      @about-function{gtk-cell-area-cell-set}
+      @about-function{gtk-cell-area-cell-get}
+      @about-function{gtk-cell-area-cell-set-valist}
+      @about-function{gtk-cell-area-cell-get-valist}
+      @about-function{gtk-cell-area-cell-set-property}
+      @about-function{gtk-cell-area-cell-get-property}
+      @about-function{gtk-cell-area-is-activatable}
+      @about-function{gtk-cell-area-activate}
+      @about-function{gtk-cell-area-focus}
+      @about-function{gtk-cell-area-set-focus-cell}
+      @about-function{gtk-cell-area-get-focus-cell}
+      @about-function{gtk-cell-area-add-focus-sibling}
+      @about-function{gtk-cell-area-remove-focus-sibling}
+      @about-function{gtk-cell-area-is-focus-sibling}
+      @about-function{gtk-cell-area-get-focus-siblings}
+      @about-function{gtk-cell-area-get-focus-from-sibling}
+      @about-function{gtk-cell-area-get-edited-cell}
+      @about-function{gtk-cell-area-get-edit-widget}
+      @about-function{gtk-cell-area-activate-cell}
+      @about-function{gtk-cell-area-stop-editing}
+      @about-function{gtk-cell-area-inner-cell-area}
+      @about-function{gtk-cell-area-request-renderer}
     @end{subsection}
     @begin[GtkCellAreaBox]{subsection}
+      A cell area that renders @class{gtk-cell-renderer}s into a row or a
+      column.
+
+      @about-class{gtk-cell-area-box}
+      @about-class{gtk-cell-area-box-class}
+      @about-function{gtk-cell-area-box-new}
+      @about-function{gtk-cell-area-box-pack-start}
+      @about-function{gtk-cell-area-box-pack-end}
+      @about-function{gtk-cell-area-box-get-spacing}
+      @about-function{gtk-cell-area-box-set-spacing}
     @end{subsection}
     @begin[GtkcellAreaContext]{subsection}
+      Stores geometrical information for a series of rows in a
+      @class{gtk-cell-area}.
+
+      @about-class{gtk-cell-area-context-class}
+      @about-class{gtk-cell-area-context}
+      @about-function{gtk-cell-area-context-get-area}
+      @about-function{gtk-cell-area-context-allocate}
+      @about-function{gtk-cell-area-context-reset}
+      @about-function{gtk-cell-area-context-get-preferred-width}
+      @about-function{gtk-cell-area-context-get-preferred-height}
+      @about-function{gtk-cell-area-context-get-preferred-height-for-width}
+      @about-function{gtk-cell-area-context-get-preferred-width-for-height}
+      @about-function{gtk-cell-area-context-get-allocation}
+      @about-function{gtk-cell-area-context-push-preferred-width}
+      @about-function{gtk-cell-area-context-push-preferred-height}
     @end{subsection}
     @begin[GtkCellRenderer]{subsection}
+      An object for rendering a single cell.
+
+      @about-class{gtk-cell-renderer-state}
+      @about-class{gtk-cell-renderer-mode}
+      @about-class{gtk-cell-renderer}
+      @about-class{gtk-cell-renderer-class}
+      @about-function{gtk-cell-renderer-get-aligned-area}
+      @about-function{gtk-cell-renderer-get-size}
+      @about-function{gtk-cell-renderer-render}
+      @about-function{gtk-cell-renderer-activate}
+      @about-function{gtk-cell-renderer-start-editing}
+      @about-function{gtk-cell-renderer-stop-editing}
+      @about-function{gtk-cell-renderer-get-fixed-size}
+      @about-function{gtk-cell-renderer-set-fixed-size}
+      @about-function{gtk-cell-renderer-get-visible}
+      @about-function{gtk-cell-renderer-set-visible}
+      @about-function{gtk-cell-renderer-get-sensitive}
+      @about-function{gtk-cell-renderer-set-sensitive}
+      @about-function{gtk-cell-renderer-get-alignment}
+      @about-function{gtk-cell-renderer-set-alignment}
+      @about-function{gtk-cell-renderer-get-padding}
+      @about-function{gtk-cell-renderer-set-padding}
+      @about-function{gtk-cell-renderer-get-state}
+      @about-function{gtk-cell-renderer-is-activatable}
+      @about-function{gtk-cell-renderer-get-preferred-height}
+      @about-function{gtk-cell-renderer-get-preferred-height-for-width}
+      @about-function{gtk-cell-renderer-get-preferred-size}
+      @about-function{gtk-cell-renderer-get-preferred-width}
+      @about-function{gtk-cell-renderer-get-preferred-width-for-height}
+      @about-function{gtk-cell-renderer-get-request-mode}
     @end{subsection}
     @begin[GtkCellEditable]{subsection}
+      Interface for widgets which can are used for editing cells.
+
+      @about-class{gtk-cell-editable}
+      @about-class{gtk-cell-editable-iface}
+      @about-function{gtk-cell-editable-start-editing}
+      @about-function{gtk-cell-editable-editing-done}
+      @about-function{gtk-cell-editable-remove-widget}
     @end{subsection}
     @begin[GtkCellRendererAccel]{subsection}
+      Renders a keyboard accelerator in a cell.
+
+      @about-class{gtk-cell-renderer-accel}
+      @about-symbol{gtk-cell-renderer-accel-mode}
+      @about-function{gtk-cell-renderer-accel-new}
     @end{subsection}
     @begin[GtkCellRendererComo]{subsection}
+      Renders a combobox in a cell.
+
+      @about-class{gtk-cell-renderer-combo}
+      @about-function{gtk-cell-renderer-combo-new}
     @end{subsection}
     @begin[GtkCellRendererPixbuf]{subsection}
+      Renders a pixbuf in a cell.
+
+      @about-class{gtk-cell-renderer-pixbuf}
+      @about-function{gtk-cell-renderer-pixbuf-new}
     @end{subsection}
     @begin[GtkCellRendererProgress]{subsection}
+      Renders numbers as progress bars.
+
+      @about-class{gtk-cell-renderer-progress}
+      @about-function{gtk-cell-renderer-progress-new}
     @end{subsection}
     @begin[GtkCellRendererSpin]{subsection}
+      Renders a spin button in a cell.
+
+      @about-class{gtk-cell-renderer-spin}
+      @about-function{gtk-cell-renderer-spin-new}
     @end{subsection}
     @begin[GtkCellRendererText]{subsection}
+      Renders text in a cell.
+
+      @about-class{gtk-cell-renderer-text}
+      @about-function{gtk-cell-renderer-text-new}
+      @about-function{gtk-cell-renderer-text-set-fixed-height-from-font}
     @end{subsection}
     @begin[GtkCellRendererToggle]{subsection}
+      Renders a toggle button in a cell.
+
+      @about-class{gtk-cell-renderer-toggle}
+      @about-function{gtk-cell-renderer-toggle-new}
+      @about-function{gtk-cell-renderer-toggle-get-radio}
+      @about-function{gtk-cell-renderer-toggle-set-radio}
+      @about-function{gtk-cell-renderer-toggle-get-active}
+      @about-function{gtk-cell-renderer-toggle-set-active}
+      @about-function{gtk-cell-renderer-toggle-get-activatable}
+      @about-function{gtk-cell-renderer-toggle-set-activatable}
     @end{subsection}
     @begin[GtkCellRendererSpinner]{subsection}
+      Renders a spinning animation in a cell.
+
+      @about-class{gtk-cell-renderer-spinner}
+      @about-function{gtk-cell-renderer-spinner-new}
     @end{subsection}
     @begin[GtkListStore]{subsection}
+      A list-like data structure that can be used with the
+      @class{gtk-tree-view}.
+
+      @about-class{gtk-list-store}
+      @about-function{gtk-list-store-new}
+      @about-function{gtk-list-store-newv}
+      @about-function{gtk-list-store-set-column-types}
+      @about-function{gtk-list-store-set}
+      @about-function{gtk-list-store-set-valist}
+      @about-function{gtk-list-store-set-value}
+      @about-function{gtk-list-store-set-valuesv}
+      @about-function{gtk-list-store-remove}
+      @about-function{gtk-list-store-insert}
+      @about-function{gtk-list-store-insert-before}
+      @about-function{gtk-list-store-insert-after}
+      @about-function{gtk-list-store-insert-with-values}
+      @about-function{gtk-list-store-insert-with-valuesv}
+      @about-function{gtk-list-store-prepend}
+      @about-function{gtk-list-store-append}
+      @about-function{gtk-list-store-clear}
+      @about-function{gtk-list-store-iter-is-valid}
+      @about-function{gtk-list-store-reorder}
+      @about-function{gtk-list-store-swap}
+      @about-function{gtk-list-store-move-before}
+      @about-function{gtk-list-store-move-after}
     @end{subsection}
     @begin[GtkTreeStore]{subsection}
       A tree-like data structure that can be used with the
@@ -3341,7 +3568,7 @@ setup_tree (void)
       @about-function{gtk-rgb-to-hsv}
     @end{subsection}
     @begin[GtkFileChooser]{subsection}
-      File chooser interface used by @class{gkt-file-chooser-widget} and
+      File chooser interface used by @class{gtk-file-chooser-widget} and
       @class{gtk-file-chooser-dialog}.
 
       @about-class{gtk-file-chooser}

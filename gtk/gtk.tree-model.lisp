@@ -400,11 +400,11 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tree-iter atdoc:*class-name-alias*) "CStruct"
       (documentation 'gtk-tree-iter 'type)
- "@version{2013-5-12}
+ "@version{2013-6-21}
   @begin{short}
-    The @sym{gtk-tree-iter} is the primary structure for accessing a
+    The @sym{gtk-tree-iter} structure is the primary structure for accessing a
     @class{gtk-tree-model}. Models are expected to put a unique integer in the
-    stamp member, and put model-specific data in the three @arg{user-data}
+    @arg{stamp} member, and put model specific data in the three @arg{user-data}
     members.
   @end{short}
   @begin{pre}
@@ -416,9 +416,9 @@
   @end{pre}
   @begin[code]{table}
     @entry[stamp]{A unique stamp to catch invalid iterators.}
-    @entry[user-data]{Model-specific data.}
-    @entry[user-data2]{Model-specific data.}
-    @entry[user-data3]{Model-specific data.}
+    @entry[user-data]{Model specific data.}
+    @entry[user-data-2]{Model specific data.}
+    @entry[user-data-3]{Model specific data.}
   @end{table}")
 
 (export 'gtk-tree-iter)

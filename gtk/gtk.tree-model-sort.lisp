@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -57,37 +57,35 @@
 (define-g-object-class "GtkTreeModelSort" gtk-tree-model-sort
   (:superclass g-object
    :export t
-   :interfaces ("GtkTreeDragSource"
-                "GtkTreeModel"
-                "GtkTreeSortable")
+   :interfaces ("GtkTreeModel"
+                "GtkTreeSortable"
+                "GtkTreeDragSource")
    :type-initializer "gtk_tree_model_sort_get_type")
   ((model
     gtk-tree-model-sort-model
-    "model" "GtkTreeModel" t nil)))
-
-;;; ----------------------------------------------------------------------------
+    "model" "GtkTreeModel" t t)))
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-tree-model-sort 'type)
- "@version{2013-3-10}
+ "@version{2013-6-21}
   @begin{short}
-    The GtkTreeModelSort is a model which implements the GtkTreeSortable
-    interface. It does not hold any data itself, but rather is created with a
-    child model and proxies its data. It has identical column types to this
-    child model, and the changes in the child are propagated. The primary
-    purpose of this model is to provide a way to sort a different model without
-    modifying it. Note that the sort function used by GtkTreeModelSort is not
-    guaranteed to be stable.
+    The @sym{gtk-tree-model-sort} is a model which implements the
+    @class{gtk-tree-sortable} interface. It does not hold any data itself, but
+    rather is created with a child model and proxies its data. It has identical
+    column types to this child model, and the changes in the child are
+    propagated. The primary purpose of this model is to provide a way to sort a
+    different model without modifying it. Note that the sort function used by
+    @sym{gtk-tree-model-sort} is not guaranteed to be stable.
   @end{short}
 
   The use of this is best demonstrated through an example. In the following
-  sample code we create two GtkTreeView widgets each with a view of the same
-  data. As the model is wrapped here by a GtkTreeModelSort, the two
-  GtkTreeViews can each sort their view of the data without affecting the
-  other. By contrast, if we simply put the same model in each widget, then
-  sorting the first would sort the second.
+  sample code we create two @class{gtk-tree-view} widgets each with a view of
+  the same data. As the model is wrapped here by a @sym{gtk-tree-model-sort},
+  the two @class{gtk-tree-view}'s can each sort their view of the data without
+  affecting the other. By contrast, if we simply put the same model in each
+  widget, then sorting the first would sort the second.
 
-  Example 62. Using a GtkTreeModelSort
+  @b{Example:} Using a @sym{gtk-tree-model-sort}
   @begin{pre}
    {
      GtkTreeView *tree_view1;
@@ -115,12 +113,12 @@
    @}
   @end{pre}
   To demonstrate how to access the underlying child model from the sort model,
-  the next example will be a callback for the GtkTreeSelection \"changed\"
-  signal. In this callback, we get a string from COLUMN_1 of the model. We
-  then modify the string, find the same selected row on the child model, and
-  change the row there.
+  the next example will be a callback for the @class{gtk-tree-selection}
+  \"changed\" signal. In this callback, we get a string from @code{COLUMN_1} of
+  the model. We then modify the string, find the same selected row on the child
+  model, and change the row there.
 
-  Example 63. Accessing the child model of in a selection changed callback
+  @b{Example:} Accessing the child model of in a selection changed callback
   @begin{pre}
    void
    selection_changed (GtkTreeSelection *selection, gpointer data)
@@ -178,8 +176,8 @@
 (setf (documentation (atdoc:get-slot-from-name "model"
                                                'gtk-tree-model-sort) 't)
  "The @code{\"model\"} property of type @class{gtk-tree-model}
-  (Read / Write / Construct)@br{}
-  The model for the TreeModelSort to sort.")
+  (Read / Write / Construct) @br{}
+  The model for the @sym{gtk-tree-model-sort} to sort.")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -191,11 +189,9 @@
 (setf (gethash 'gtk-tree-model-sort-model atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tree-model-sort-model 'function)
- "@version{2013-3-10}
-  @begin{short}
-    Accessor of the slot @code{\"model\"} of the @class{gtk-tree-model-sort}
-    class.
-  @end{short}")
+ "@version{2013-6-21}
+  Accessor of the slot @code{\"model\"} of the @class{gtk-tree-model-sort}
+  class.")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_model_sort_new_with_model ()
@@ -231,19 +227,19 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_tree_model_sort_convert_child_path_to_path"
-          gtk-tree-model-sort-convert-child-path-to-path)  
+           gtk-tree-model-sort-convert-child-path-to-path)
     (g-boxed-foreign gtk-tree-path :return)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-10}
-  @argument[tree_model_sort]{A GtkTreeModelSort}
-  @argument[child_path]{A GtkTreePath to convert}
-  @return{A newly allocated GtkTreePath, or NULL}
+ "@version{2013-6-21}
+  @argument[tree-model-sort]{a @class{gtk-tree-model-sort} object}
+  @argument[child-path]{a @class{gtk-tree-path} structure to convert}
+  @return{A newly allocated @class{gtk-tree-path} structure, or @code{nil}.}
   @begin{short}
-    Converts child_path to a path relative to tree_model_sort. That is,
-    child_path points to a path in the child model. The returned path will point
-    to the same row in the sorted model. If child_path isn't a valid path on the
-    child model, then NULL is returned.
-  @end{short}"
+    Converts @arg{child-path} to a path relative to @arg{tree-model-sort}.
+  @end{short}
+  That is, @arg{child-path} points to a path in the child model. The returned
+  path will point to the same row in the sorted model. If @arg{child-path} is
+  not a valid path on the child model, then @code{nil} is returned."
   (tree-model-sort (g-object gtk-tree-model-sort))
   (child-path (g-boxed-foreign gtk-tree-path)))
 
@@ -260,23 +256,22 @@
   (child-iter (g-boxed-foreign gtk-tree-iter)))
 
 (defun gtk-tree-model-sort-convert-child-iter-to-iter (tree-model-sort
-                                                        child-iter)
+                                                       child-iter)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-10}
-  @argument[tree_model_sort]{A GtkTreeModelSort}
-  @argument[sort_iter]{An uninitialized GtkTreeIter.}
-  @argument[child_iter]{A valid GtkTreeIter pointing to a row on the child
-    model}
+ "@version{2013-6-21}
+  @argument[tree-model-sort]{a @class{gtk-tree-model-sort} object}
+  @argument[child-iter]{a valid @class{gtk-tree-iter} structure pointing to a
+    row on the child model}
   @begin{return}
-    TRUE, if sort_iter was set, i.e. if sort_iter is a valid iterator
-    pointer to a visible row in the child model.
+    @code{sort-iter} -- a valid iterator to a visible row in the child model,
+    or @code{nil}
   @end{return}
   @begin{short}
-    Sets sort_iter to point to the row in tree_model_sort that corresponds to
-    the row pointed at by child_iter. If sort_iter was not set, FALSE is
-    returned.
+    Sets @arg{sort-iter} to point to the row in @arg{tree-model-sort} that
+    corresponds to the row pointed at by @arg{child-iter}. If @arg{sort-iter}
+    was not set, @code{nil} is returned.
   @end{short}
-  Note: a boolean is only returned since 2.14."
+  Note: A boolean is only returned since 2.14."
   (let ((sort-iter (make-gtk-tree-iter)))
     (when (%gtk-tree-model-sort-convert-child-iter-to-iter tree-model-sort
                                                            sort-iter
@@ -290,22 +285,23 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_tree_model_sort_convert_path_to_child_path"
-          gtk-tree-model-sort-convert-path-to-child-path)
+           gtk-tree-model-sort-convert-path-to-child-path)
     (g-boxed-foreign gtk-tree-path :return)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-10}
-  @argument[tree_model_sort]{A GtkTreeModelSort}
-  @argument[sorted_path]{A GtkTreePath to convert}
-  @return{A newly allocated GtkTreePath, or NULL}
+ "@version{2013-6-21}
+  @argument[tree-model-sort]{a @class{gtk-tree-model-sort} object}
+  @argument[sorted-path]{a @class{gtk-tree-path} structure to convert}
+  @return{A newly allocated @class{gtk-tree-path} structure, or @code{nil}.}
   @begin{short}
-    Converts sorted_path to a path on the child model of tree_model_sort. That
-    is, sorted_path points to a location in tree_model_sort. The returned path
-    will point to the same location in the model not being sorted. If
-    sorted_path does not point to a location in the child model, NULL is
-    returned.
-  @end{short}"
+    Converts @arg{sorted-path} to a path on the child model of
+    @arg{tree-model-sort}.
+  @end{short}
+  That is, @arg{sorted-path} points to a location in @arg{tree-model-sort}. The
+  returned path will point to the same location in the model not being sorted.
+  If @arg{sorted-path} does not point to a location in the child model,
+  @code{nil} is returned."
   (tree-model-sort (g-object gtk-tree-model-sort))
-  (sort-path (g-boxed-foreign gtk-tree-path)))
+  (sorted-path (g-boxed-foreign gtk-tree-path)))
 
 (export 'gtk-tree-model-sort-convert-path-to-child-path)
 
@@ -321,14 +317,14 @@
 
 (defun tree-model-sort-convert-iter-to-child-iter (tree-model-sort sorted-iter)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-10}
-  @argument[tree_model_sort]{A GtkTreeModelSort}
-  @argument[child_iter]{An uninitialized GtkTreeIter.}
-  @argument[sorted_iter]{A valid GtkTreeIter pointing to a row on
-    tree_model_sort.}
-  @begin{short}
-    Sets child_iter to point to the row pointed to by sorted_iter.
-  @end{short}"
+ "@version{2013-6-21}
+  @argument[tree-model-sort]{a @class{gtk-tree-model-sort} object}
+  @argument[sorted-iter]{a valid @class{gtk-tree-iter} structure pointing to a
+    row on @arg{tree-model-sort}}
+  @begin{return}
+    @code{child-iter} -- a @class{gtk-tree-iter} structure
+  @end{return}
+  Sets @arg{child-iter} to point to the row pointed to by @arg{sorted-iter}."
   (let ((child-iter (make-gtk-tree-iter)))
     (%gtk-tree-model-sort-convert-iter-to-child-iter tree-model-sort
                                                      child-iter
@@ -345,14 +341,14 @@
           gtk-tree-model-sort-reset-default-sort-func)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2013-5-13}
+ "@version{2013-6-21}
   @argument[tree-model-sort]{a @class{gtk-tree-model-sort} object}
   @begin{short}
-    This resets the default sort function to be in the 'unsorted' state. That
-    is, it is in the same order as the child model. It will re-sort the model
-    to be in the same order as the child model only if the
-    @class{gtk-tree-model-sort} is in 'unsorted' state.
-  @end{short}"
+    This resets the default sort function to be in the 'unsorted' state.
+  @end{short}
+  That is, it is in the same order as the child model. It will re-sort the model
+  to be in the same order as the child model only if the
+  @class{gtk-tree-model-sort} is in 'unsorted' state."
   (tree-model-sort (g-object gtk-tree-model-sort)))
 
 (export 'gtk-tree-model-sort-reset-default-sort-func)
@@ -364,16 +360,16 @@
 (defcfun ("gtk_tree_model_sort_clear_cache" gtk-tree-model-sort-clear-cache)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2013-5-13}
+ "@version{2013-6-21}
   @argument[tree-model-sort]{a @class{gtk-tree-model-sort} object}
   @begin{short}
     This function should almost never be called. It clears the
     @arg{tree-model-sort} of any cached iterators that have not been reffed with
-    the function @fun{gtk-tree-model-ref-node}. This might be useful if the
-    child model being sorted is static (and does not change often) and there has
-    been a lot of unreffed access to nodes. As a side effect of this function,
-    all unreffed iters will be invalid.
+    the function @fun{gtk-tree-model-ref-node}.
   @end{short}
+  This might be useful if the child model being sorted is static (and does not
+  change often) and there has been a lot of unreffed access to nodes. As a side
+  effect of this function, all unreffed iters will be invalid.
   @see-function{gtk-tree-model-ref-node}"
   (tree-model-sort (g-object gtk-tree-model-sort)))
 
@@ -386,9 +382,9 @@
 (defcfun ("gtk_tree_model_sort_iter_is_valid" gtk-tree-model-sort-iter-is-valid)
     :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-5-13}
+ "@version{2013-6-21}
   @argument[tree-model-sort]{a @class{gtk-tree-model-sort} object}
-  @argument[iter]{a @class{gtk-tree-iter} object}
+  @argument[iter]{a @class{gtk-tree-iter} structure}
   @return{@em{True} if the @arg{iter} is valid, @code{nil} if the @arg{iter} is
     invalid.}
   @subheading{Warning}
