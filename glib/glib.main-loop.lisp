@@ -1752,35 +1752,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_idle_add_full ()
-;;;
-;;; guint g_idle_add_full (gint priority,
-;;;                        GSourceFunc function,
-;;;                        gpointer data,
-;;;                        GDestroyNotify notify);
-;;;
-;;; Adds a function to be called whenever there are no higher priority events
-;;; pending. If the function returns FALSE it is automatically removed from the
-;;; list of event sources and will not be called again.
-;;;
-;;; This internally creates a main loop source using g_idle_source_new() and
-;;; attaches it to the main loop context using g_source_attach(). You can do
-;;; these steps manually if you need greater control.
-;;;
-;;; priority :
-;;;     the priority of the idle source. Typically this will be in the range
-;;;     between G_PRIORITY_DEFAULT_IDLE and G_PRIORITY_HIGH_IDLE.
-;;;
-;;; function :
-;;;     function to call
-;;;
-;;; data :
-;;;     data to pass to function
-;;;
-;;; notify :
-;;;     function to call when the idle is removed, or NULL
-;;;
-;;; Returns :
-;;;     the ID (greater than 0) of the event source. Rename to: g_idle_add
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_idle_add_full" g-idle-add-full) :uint
@@ -2673,20 +2644,20 @@
 
 (defcfun ("g_source_remove" g-source-remove) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-4-9}
+ "@version{2013-6-24}
   @argument[tag]{the ID of the source to remove}
   @return{@em{True} if the source was found and removed.}
   @begin{short}
-    Removes the source with the given id from the default main context.
+    Removes the source with the given ID from the default main context.
   @end{short}
-  The id of a @type{g-source} is given by the function @fun{g-source-get-id},
+  The ID of a @type{g-source} is given by the function @fun{g-source-get-id},
   or will be returned by the functions @fun{g-source-attach}, @fun{g-idle-add},
   @fun{g-idle-add-full}, @fun{g-timeout-add}, @fun{g-timeout-add-full},
   @fun{g-child-watch-add}, @fun{g-child-watch-add-full}, @fun{g-io-add-watch},
   and @fun{g-io-add-watch-full}.
 
-  See also @fun{g-source-destroy}. You must use @fun{g-source-destroy} for
-  sources added to a non-default main context.
+  See also the function @fun{g-source-destroy}. You must use the function
+  @fun{g-source-destroy} for sources added to a non-default main context.
   @see-function{g-source-get-id}
   @see-function{g-source-destroy}"
   (tag :uint))
