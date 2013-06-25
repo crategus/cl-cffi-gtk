@@ -3348,26 +3348,27 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_window_set_auto_startup_notification"
-          gtk-set-window-auto-startup-notification) :void
+           gtk-window-set-auto-startup-notification) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-29}
+ "@version{2013-6-23}
   @argument[setting]{@em{true} to automatically do startup notification}
   @begin{short}
-    By default, after showing the first @class{gtk-window}, GTK+ calls
-    @fun{gdk-notify-startup-complete}. Call this function to disable the
-    automatic startup notification. You might do this if your first window is a
-    splash screen, and you want to delay notification until after your real main
-    window has been shown, for example.
+    By default, after showing the first @class{gtk-window}, GTK+ calls the
+    function @fun{gdk-notify-startup-complete}. Call this function to disable
+    the automatic startup notification. You might do this if your first window
+    is a splash screen, and you want to delay notification until after your real
+    main window has been shown, for example.
   @end{short}
 
   In that example, you would disable startup notification temporarily, show
   your splash screen, then re-enable it so that showing the main window would
   automatically result in notification.
 
-  Since 2.2"
+  Since 2.2
+  @see-function{gdk-notify-startup-complete}"
   (setting :boolean))
 
-(export 'gtk-set-window-auto-startup-notification)
+(export 'gtk-window-set-auto-startup-notification)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_get_opacity ()
