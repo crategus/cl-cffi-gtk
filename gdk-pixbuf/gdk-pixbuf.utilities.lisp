@@ -86,47 +86,37 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pixbuf_copy_area ()
-;;;
-;;; void gdk_pixbuf_copy_area (const GdkPixbuf *src_pixbuf,
-;;;                            int src_x,
-;;;                            int src_y,
-;;;                            int width,
-;;;                            int height,
-;;;                            GdkPixbuf *dest_pixbuf,
-;;;                            int dest_x,
-;;;                            int dest_y);
-;;;
-;;; Copies a rectangular area from src_pixbuf to dest_pixbuf. Conversion of
-;;; pixbuf formats is done automatically.
-;;;
-;;; If the source rectangle overlaps the destination rectangle on the same
-;;; pixbuf, it will be overwritten during the copy operation. Therefore, you can
-;;; not use this function to scroll a pixbuf.
-;;;
-;;; src_pixbuf :
-;;;     Source pixbuf.
-;;;
-;;; src_x :
-;;;     Source X coordinate within src_pixbuf.
-;;;
-;;; src_y :
-;;;     Source Y coordinate within src_pixbuf.
-;;;
-;;; width :
-;;;     Width of the area to copy.
-;;;
-;;; height :
-;;;     Height of the area to copy.
-;;;
-;;; dest_pixbuf :
-;;;     Destination pixbuf.
-;;;
-;;; dest_x :
-;;;     X coordinate within dest_pixbuf.
-;;;
-;;; dest_y :
-;;;     Y coordinate within dest_pixbuf.
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gdk_pixbuf_copy_area" gdk-pixbuf-copy-area) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-22}
+  @argument[src-pixbuf]{source pixbuf}
+  @argument[src-x]{source x coordinate within @arg{src-pixbuf}}
+  @argument[src-y]{source y coordinate within @arg{src-pixbuf}}
+  @argument[width]{width of the area to copy}
+  @argument[height]{height of the area to copy}
+  @argument[dest-pixbuf]{destination pixbuf}
+  @argument[dest-x]{x coordinate within @arg{dest-pixbuf}}
+  @argument[dest-y]{y coordinate within @arg{dest-pixbuf}}
+  @begin{short}
+    Copies a rectangular area from @arg{src-pixbuf} to @arg{dest-pixbuf}.
+    Conversion of pixbuf formats is done automatically.
+  @end{short}
+
+  If the source rectangle overlaps the destination rectangle on the same
+  pixbuf, it will be overwritten during the copy operation. Therefore, you can
+  not use this function to scroll a pixbuf."
+  (src-pixbuf (g-object gdk-pixbuf))
+  (scc-x :int)
+  (src-y :int)
+  (width :int)
+  (height :int)
+  (dest-pixbuf (g-object gdk-pixbuf))
+  (dest-x :int)
+  (dest-y :int))
+
+(export 'gdk-pixbuf-copy-area)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pixbuf_saturate_and_pixelate ()

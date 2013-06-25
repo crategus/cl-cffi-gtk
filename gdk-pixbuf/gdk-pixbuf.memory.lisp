@@ -72,36 +72,30 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pixbuf_new ()
-;;;
-;;; GdkPixbuf * gdk_pixbuf_new (GdkColorspace colorspace,
-;;;                             gboolean has_alpha,
-;;;                             int bits_per_sample,
-;;;                             int width,
-;;;                             int height);
-;;;
-;;; Creates a new GdkPixbuf structure and allocates a buffer for it. The buffer
-;;; has an optimal rowstride. Note that the buffer is not cleared; you will have
-;;; to fill it completely yourself.
-;;;
-;;; colorspace :
-;;;     Color space for image
-;;;
-;;; has_alpha :
-;;;     Whether the image should have transparency information
-;;;
-;;; bits_per_sample :
-;;;     Number of bits per color sample
-;;;
-;;; width :
-;;;     Width of image in pixels, must be > 0
-;;;
-;;; height :
-;;;     Height of image in pixels, must be > 0
-;;;
-;;; Returns :
-;;;     A newly-created GdkPixbuf with a reference count of 1, or NULL if not
-;;;     enough memory could be allocated for the image buffer.
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gdk_pixbuf_new" gdk-pixbuf-new) (g-object gdk-pixbuf)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-22}
+  @argument[colorspace]{color space for image}
+  @argument[has-alpha]{whether the image should have transparency information}
+  @argument[bits-per-sample]{number of bits per color sample}
+  @argument[width]{width of image in pixels, must be > 0}
+  @argument[height]{height of image in pixels, must be > 0}
+  @begin{return}
+    A newly-created @class{gdk-pixbuf} with a reference count of 1, or
+    @code{nil} if not enough memory could be allocated for the image buffer.
+  @end{return}
+  Creates a new @class{gdk-pixbuf} structure and allocates a buffer for it. The
+  buffer has an optimal rowstride. Note that the buffer is not cleared; you will
+  have to fill it completely yourself."
+  (colorspace gdk-colorspace)
+  (has-alpha :boolean)
+  (bits-per-sample :int)
+  (width :int)
+  (height :int))
+
+(export 'gdk-pixbuf-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pixbuf_new_from_data ()

@@ -117,13 +117,11 @@
    :type-initializer "gdk_colorspace_get_type")
   :rgb)
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-colorspace atdoc:*symbol-name-alias*)
       "Enum"
       (gethash 'gdk-colorspace atdoc:*external-symbols*)
- "@version{2013-2-16}
+ "@version{2013-6-22}
   @begin{short}
     This enumeration defines the color spaces that are supported by the
     GDK-Pixbuf library. Currently only RGB is supported.

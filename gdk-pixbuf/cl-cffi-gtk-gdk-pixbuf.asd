@@ -38,6 +38,7 @@
                (:file "gdk-pixbuf.load")      ; Loading a Pixbuf
                (:file "gdk-pixbuf.save")      ; Saving a Pixbuf
                (:file "gdk-pixbuf.memory")    ; Image Data in Memory
+               (:file "gdk-pixbuf.scaling")   ; Scaling pixbufs
                (:file "gdk-pixbuf.utilities") ; Utility functions
               )
   :depends-on (:cl-cffi-gtk-gobject

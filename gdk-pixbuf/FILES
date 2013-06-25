@@ -1,7 +1,7 @@
 Content from the GDK-Pixbuf 2.28.1 Reference Manual
 
-  gdk-pixbuf.version.lisp   - Library version numbers - 2.26.1
-  gdk-pixbuf.structure.lisp - Information that describes an image - 2.26.1
+  gdk-pixbuf.version.lisp   - Library version numbers                  - 2.26.1
+  gdk-pixbuf.structure.lisp - Information that describes an image      - 2.26.1
 
     Reference Counting and Memory Mangement - Reference counting and memory management on pixbufs
 
@@ -10,11 +10,13 @@ Content from the GDK-Pixbuf 2.28.1 Reference Manual
   gdk-pixbuf.memory.lisp - Creating a pixbuf from image data in memory - 2.28.1
 
     Inline data - Functions for inlined pixbuf handling.
-    Scaling - Scaling pixbufs and scaling and compositing pixbufs
+
+  gdk-pixbuf.scaling.lisp - Scaling pixbufs                            - 2.28.1
+
     Rendering - Rendering a pixbuf to a GDK drawable.
     Drawables to Pixbufs - Getting parts of a GDK drawable's image data into a pixbuf.
 
-  gdk-pixbuf.utilities.lisp - Utility and miscellaneous convenience functions - 2.28.0
+  gdk-pixbuf.utilities.lisp - Utility functions                        - 2.28.0
 
     Animations - Animated images.
     GdkPixbufLoader - Application-driven progressive image loading.
