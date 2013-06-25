@@ -315,6 +315,8 @@
 
 (in-package :gobject)
 
+(defcvar ("g_param_spec_types" g-param-spec-types) (:pointer g-type))
+
 ;;; ----------------------------------------------------------------------------
 ;;; G_IS_PARAM_SPEC_BOOLEAN()
 ;;;
@@ -360,11 +362,15 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_PARAM_BOOLEAN
-;;;
-;;; #define G_TYPE_PARAM_BOOLEAN (g_param_spec_types[2])
-;;;
-;;; The GType of GParamSpecBoolean.
 ;;; ----------------------------------------------------------------------------
+
+(defparameter g-type-param-boolean
+              (mem-aref g-param-spec-types 'g-type 2)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-20}
+  The @class{g-type} of @class{g-param-spec-boolean}.")
+
+(export 'g-type-param-boolean)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GParamSpecBoolean
@@ -495,11 +501,15 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_PARAM_CHAR
-;;;
-;;; #define G_TYPE_PARAM_CHAR (g_param_spec_types[0])
-;;;
-;;; The GType of GParamSpecChar.
 ;;; ----------------------------------------------------------------------------
+
+(defparameter g-type-param-char
+              (mem-aref g-param-spec-types 'g-type 0)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-20}
+  The @class{g-type} of @class{g-param-spec-char}.")
+
+(export 'g-type-param-char)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GParamSpecChar

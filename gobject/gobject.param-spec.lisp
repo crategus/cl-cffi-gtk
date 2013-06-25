@@ -113,7 +113,6 @@
     Through the @sym{g-param-flags} flag values, certain aspects of parameters
     can be configured.
   @end{short}
-
   @begin{pre}
 (defbitfield g-param-flags
   (:readable #.(ash 1 0))
@@ -294,7 +293,7 @@
  "@version{2013-2-7}
   @argument[type]{a @class{g-type} ID}
   @begin{short}
-    Checks whether type \"is a\" @code{G_TYPE_PARAM.}
+    Checks whether type \"is a\" @code{G_TYPE_PARAM}.
   @end{short}"
   (eql (gtype-id (g-type-fundamental gtype)) +g-type-param+))
 
@@ -769,48 +768,49 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_param_spec_internal ()
-;;;
+;;; ----------------------------------------------------------------------------
+
 ;;; gpointer g_param_spec_internal (GType param_type,
 ;;;                                 const gchar *name,
 ;;;                                 const gchar *nick,
 ;;;                                 const gchar *blurb,
 ;;;                                 GParamFlags flags);
-;;;
-;;; Creates a new GParamSpec instance.
-;;;
-;;; A property name consists of segments consisting of ASCII letters and digits,
-;;; separated by either the '-' or '_' character. The first character of a
-;;; property name must be a letter. Names which violate these rules lead to
-;;; undefined behaviour.
-;;;
-;;; When creating and looking up a GParamSpec, either separator can be used, but
-;;; they cannot be mixed. Using '-' is considerably more efficient and in fact
-;;; required when using property names as detail strings for signals.
-;;;
-;;; Beyond the name, GParamSpecs have two more descriptive strings associated
-;;; with them, the nick, which should be suitable for use as a label for the
-;;; property in a property editor, and the blurb, which should be a somewhat
-;;; longer description, suitable for e.g. a tooltip. The nick and blurb should
-;;; ideally be localized.
-;;;
-;;; param_type :
-;;;     the GType for the property; must be derived from G_TYPE_PARAM
-;;;
-;;; name :
-;;;     the canonical name of the property
-;;;
-;;; nick :
-;;;     the nickname of the property
-;;;
-;;; blurb :
-;;;     a short description of the property
-;;;
-;;; flags :
-;;;     a combination of GParamFlags
-;;;
-;;; Returns :
-;;;     a newly allocated GParamSpec instance
-;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_param_spec_internal" g-param-spec-internal) :pointer
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-20}
+  @argument[param-type]{the @class{g-type} for the property; must be derived
+    from @code{G_TYPE_PARAM}}
+  @argument[name]{the canonical name of the property}
+  @argument[nick]{the nickname of the property}
+  @argument[blurb]{a short description of the property}
+  @argument[flags]{a combination of @symbol{g-param-flags}}
+  @return{A newly allocated @symbol{g-param-spec} instance.}
+  @begin{short}
+    Creates a new @symbol{g-param-spec} instance.
+  @end{short}
+
+  A property @arg{name} consists of segments consisting of ASCII letters and
+  digits, separated by either the '-' or '_' character. The first character of
+  a property @arg{name} must be a letter. Names which violate these rules lead
+  to undefined behaviour.
+
+  When creating and looking up a @symbol{g-param-spec}, either separator can be
+  used, but they cannot be mixed. Using '-' is considerably more efficient and
+  in fact required when using property names as detail strings for signals.
+
+  Beyond the @arg{name}, @symbol{g-param-spec}'s have two more descriptive
+  strings associated with them, the @arg{nick}, which should be suitable for use
+  as a label for the property in a property editor, and the @arg{blurb}, which
+  should be a somewhat longer description, suitable for e. g. a tooltip. The
+  @arg{nick} and @arg{blurb} should ideally be localized."
+  (param-type g-type)
+  (name :string)
+  (nick :string)
+  (blurb :string)
+  (flags g-param-flags))
+
+(export 'g-param-spec-internal)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GParamSpecTypeInfo
