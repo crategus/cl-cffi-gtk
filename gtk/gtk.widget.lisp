@@ -4043,8 +4043,8 @@
 
 (defun gtk-widget-set-parent (widget parent)
  #+cl-cffi-gtk-documentation
- "@version{2012-6-25}
-  @argumen[twidget]{a @class{gtk-widget} object}
+ "@version{2013-7-3}
+  @argumen[widget]{a @class{gtk-widget} object}
   @argument[parent]{parent container}
   @begin{short}
     This function is useful only when implementing subclasses of
