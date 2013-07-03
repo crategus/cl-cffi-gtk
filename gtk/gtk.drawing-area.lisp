@@ -54,11 +54,9 @@
    :type-initializer "gtk_drawing_area_get_type")
   nil)
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-drawing-area 'type)
- "@version{2013-5-23}
+ "@version{2013-7-1}
   @begin{short}
     The @sym{gtk-drawing-area} widget is used for creating custom user interface
     elements. It is essentially a blank widget; you can draw on it.
@@ -66,13 +64,13 @@
   After creating a drawing area, the application may want to connect to:
   @begin{itemize}
     @begin{item}
-      Mouse and button press signals to respond to input from the user. (Use
-      @fun{gtk-widget-add-events} to enable events you wish to receive.)
+      Mouse and button press signals to respond to input from the user. Use the
+      function @fun{gtk-widget-add-events} to enable events you wish to receive.
     @end{item}
     @begin{item}
       The \"realize\" signal to take any necessary actions when the widget is
-      instantiated on a particular display. (Create GDK resources in response
-      to this signal.)
+      instantiated on a particular display. Create GDK resources in response
+      to this signal.
     @end{item}
     @begin{item}
       The \"configure-event\" signal to take any necessary actions when the
@@ -131,11 +129,16 @@
 
   To receive mouse events on a drawing area, you will need to enable them with
   the function @fun{gtk-widget-add-events}. To receive keyboard events, you will
-  need to set the \"can-focus\" property on the drawing area, and you should
-  probably draw some user-visible indication that the drawing area is focused.
-  Use the function @fun{gtk-widget-has-focus} in your expose event handler to
-  decide whether to draw the focus indicator. See the function
-  @fun{gtk-render-focus} for one way to draw focus.")
+  need to set the @code{\"can-focus\"} property on the drawing area, and you
+  should probably draw some user-visible indication that the drawing area is
+  focused. Use the function @fun{gtk-widget-has-focus} in your expose event
+  handler to decide whether to draw the focus indicator. See the function
+  @see-function{gtk-render-focus} for one way to draw focus.
+  @see-function{gtk-widget-add-events}
+  @see-function{gtk-widget-queue-draw-area}
+  @see-function{gdk-window-invalidate-rect}
+  @see-function{gtk-widget-has-focus}
+  @see-function{gtk-render-focus}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_drawing_area_new ()

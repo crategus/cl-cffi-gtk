@@ -249,6 +249,11 @@
 ;;; struct GtkTargetEntry
 ;;; ----------------------------------------------------------------------------
 
+;(defcstruct gtk-target-entry
+;  (target :string)
+;  (flags gtk-target-flags)
+;  (info :uint))
+
 (define-g-boxed-cstruct gtk-target-entry "GtkTargetEntry"
   (target :string :initform 0)
   (flags gtk-target-flags :initform 0)
@@ -257,7 +262,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-target-entry atdoc:*class-name-alias*) "CStruct"
       (documentation 'gtk-target-entry 'type)
- "@version{2013-4-18}
+ "@version{2013-6-27}
   @begin{short}
     A @sym{gtk-target-entry} structure represents a single type of data
     than can be supplied for by a widget for a selection or for supplied or
@@ -347,6 +352,14 @@
 ;;; in an efficient form. This structure should be treated as opaque.
 ;;; ----------------------------------------------------------------------------
 
+(glib::at-init ()
+  (gobject::type-initializer-call "gtk_target_list_get_type"))
+
+(define-g-boxed-opaque gtk-target-list "GtkTargetList"
+  :alloc (%gtk-target-list-new (null-pointer) 0))
+
+(export 'gtk-target-list)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_target_entry_new ()
 ;;;
@@ -370,6 +383,13 @@
 ;;;     gtk_target_entry_free()
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-target-entry-new))
+
+(defun gtk-target-entry-new (target flags info)
+  (make-gtk-target-entry :target target :flags flags :info info))
+
+(export 'gtk-target-entry-new)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_target_entry_copy ()
 ;;;
@@ -383,6 +403,13 @@
 ;;; Returns :
 ;;;     a pointer to a copy of data. Free with gtk_target_entry_free()
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-target-entry-copy))
+
+(defun gtk-target-entry-copy (target)
+  (copy-gtk-target-entry target))
+  
+(export 'gtk-target-entry-copy)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_target_entry_free ()
@@ -413,6 +440,19 @@
 ;;; Returns :
 ;;;     the new GtkTargetList
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_target_list_new" %gtk-target-list-new)
+    (g-boxed-foreign gtk-target-list)
+  (targets :pointer)
+  (n-targets :uint))
+
+(defun gtk-target-list-new (&optional (targets nil))
+  (if targets
+      (with-foreign-boxed-array (n-targets targets-ptr gtk-target-entry targets)
+        (%gtk-target-list-new targets-ptr n-targets))
+      (%gtk-target-list-new (null-pointer) 0)))
+
+(export 'gtk-target-list-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_target_list_ref ()
@@ -463,6 +503,14 @@
 ;;;     an ID that will be passed back to the application
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_target_list_add" gtk-target-list-add) :void
+  (list (g-boxed-foreign gtk-target-list))
+  (target gdk-atom)
+  (flags gtk-target-flags)
+  (info :uint))
+
+(export 'gtk-target-list-add)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_target_list_add_table ()
 ;;;
@@ -482,6 +530,18 @@
 ;;;     number of targets in the table
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_target_list_add_table" %gtk-target-list-add-table) :void
+  (list (g-boxed-foreign gtk-target-list))
+  (targets :pointer)
+  (n-targets :uint))
+  
+(defun gtk-target-list-add-table (list targets)
+  (when targets
+    (with-foreign-boxed-array (n-targets targets-ptr gtk-target-entry targets)
+      (%gtk-target-list-add-table list targets-ptr n-targets))))
+
+(export 'gtk-target-list-add-table)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_target_list_add_text_targets ()
 ;;;
@@ -498,6 +558,13 @@
 ;;;
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_target_list_add_text_targets" gtk-target-list-add-text-targets)
+    :void
+  (list (g-boxed-foreign gtk-target-list))
+  (info :uint))
+
+(export 'gtk-target-list-add-text-targets)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_target_list_add_image_targets ()
@@ -522,6 +589,14 @@
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_target_list_add_image_targets" gtk-target-list-add-image-targets)
+    :void
+  (list (g-boxed-foreign gtk-target-list))
+  (info :uint)
+  (writeable :boolean))
+  
+(export 'gtk-target-list-add-image-targets)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_target_list_add_uri_targets ()
 ;;;
@@ -538,6 +613,13 @@
 ;;;
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_target_list_add_uri_targets" gtk-target-list-add-uri-targets)
+    :void
+  (list (g-boxed-foreign gtk-target-list))
+  (info :uint))
+
+(export 'gtk-target-list-add-uri-targets)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_target_list_add_rich_text_targets ()
@@ -568,6 +650,15 @@
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_target_list_add_rich_text_targets"
+           gtk-target-list-add-rich-text-targets) :void
+  (list (g-boxed-foreign gtk-target-list))
+  (info :uint)
+  (deserializable :boolean)
+  (buffer (g-object gtk-text-buffer)))
+
+(export 'gtk-target-list-add-rich-text-targets)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_target_list_remove ()
 ;;;
@@ -581,6 +672,12 @@
 ;;; target :
 ;;;     the interned atom representing the target
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_target_list_remove" gtk-target-list-remove) :void
+  (list (g-boxed-foreign gtk-target-list))
+  (target gdk-atom-as-string))
+
+(export 'gtk-target-list-remove)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_target_list_find ()
@@ -603,6 +700,18 @@
 ;;; Returns :
 ;;;     TRUE if the target was found, otherwise FALSE
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_target_list_find" %gtk-target-list-find) :boolean
+  (list (g-boxed-foreign gtk-target-list))
+  (target gdk-atom-as-string)
+  (info :pointer))
+
+(defun gtk-target-list-find (list target)
+  (with-foreign-object (info :uint)
+    (when (%gtk-target-list-find list target info)
+      (mem-ref info :uint))))
+
+(export 'gtk-target-list-find)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_target_table_free ()
@@ -785,6 +894,14 @@
 ;;;     TRUE if requested succeeded. FALSE if we could not process request.
 ;;;     (e.g., there was already a request in process for this widget).
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_selection_convert" gtk-selection-convert) :boolean
+  (widget (g-object gtk-widget))
+  (selection gdk-atom-as-string)
+  (target gdk-atom-as-string)
+  (time :uint))
+
+(export 'gtk-selection-convert)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_selection_data_set ()

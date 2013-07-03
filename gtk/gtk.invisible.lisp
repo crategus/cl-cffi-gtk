@@ -59,8 +59,6 @@
     gtk-invisible-screen
     "screen" "GdkScreen" t t)))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-invisible 'type)
  "@version{2013-4-16}
@@ -93,8 +91,12 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-invisible-screen atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-invisible-screen 'function)
- "@version{2013-4-16}
-  Accessor of the slot @code{\"screen\"} of the @class{gtk-invisible} class.")
+ "@version{2013-7-1}
+  Accessor of the slot @code{\"screen\"} of the @class{gtk-invisible} class.
+  See the accessor functions @fun{gtk-invisible-get-screen} and
+  @fun{gtk-invisible-set-screen} for more information.
+  @see-function{gtk-invisible-get-screen}
+  @see-function{gtk-invisible-set-screen}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_invisible_new ()
@@ -141,7 +143,7 @@
 
 (defun gtk-invisible-set-screen (invisible screen)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-16}
+ "@version{2013-7-1}
   @argument[invisible]{a @class{gtk-invisible} widget}
   @argument[screen]{a @class{gdk-screen} object}
   @begin{short}
@@ -149,7 +151,8 @@
     will be displayed.
   @end{short}
 
-  Since 2.2"
+  Since 2.2
+  @see-function{gtk-invisible-get-screen}"
   (setf (gtk-invisible-screen invisible) screen))
 
 (export 'gtk-invisible-set-screen)
@@ -162,14 +165,15 @@
 
 (defun gtk-invisible-get-screen (invisible)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-16}
+ "@version{2013-7-1}
   @argument[invisible]{a @class{gtk-invisible} widget}
   @return{The associated @class{gdk-screen} object.}
   @begin{short}
     Returns the @class{gdk-screen} object associated with invisible.
   @end{short}
 
-  Since 2.2"
+  Since 2.2
+  @see-function{gtk-invisible-set-screen}"
   (gtk-invisible-screen invisible))
 
 (export 'gtk-invisible-get-screen)

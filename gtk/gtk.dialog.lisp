@@ -73,11 +73,9 @@
    :type-initializer "gtk_dialog_get_type")
  nil)
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-dialog 'type)
- "@version{2013-4-15}
+ "@version{2013-7-3}
   @begin{short}
     Dialog windows are a convenient way to prompt the user for a small amount of
     input, e. g. to display a message, ask a question, or anything else that
@@ -85,7 +83,7 @@
   @end{short}
 
   GTK+ treats a dialog as a window split vertically. The top section is known as
-  the \"content-area\" and is a @class{gtk-box} with a @code{:vertical}
+  the \"content-area\" and is a @class{gtk-box} widget with a @code{:vertical}
   orientation. This is where widgets such as a @class{gtk-label} or a
   @class{gtk-entry} should be packed. The bottom area is known as the
   \"action-area\". This is generally used for packing buttons into the dialog
@@ -100,11 +98,11 @@
   can be accessed through the functions @fun{gtk-dialog-get-content-area} and
   @fun{gtk-dialog-get-action-area}, as can be seen from the example below.
 
-  A modal dialog (that is, one which freezes the rest of the application
-  from user input), can be created by calling @fun{gtk-window-set-modal} on
-  the dialog. When using @fun{gtk-dialog-new-with-buttons} you can also pass
-  the @code{:modal} flag of type @symbol{gtk-dialog-flags} to make a dialog
-  modal.
+  A modal dialog, that is, one which freezes the rest of the application
+  from user input, can be created by calling the function
+  @fun{gtk-window-set-modal} on the dialog. When using the function
+  @fun{gtk-dialog-new-with-buttons} you can also pass the @code{:modal} flag of
+  type @symbol{gtk-dialog-flags} to make a dialog modal.
 
   If you add buttons to a @class{gtk-dialog} window using the functions
   @fun{gtk-dialog-new-with-buttons}, @fun{gtk-dialog-add-button},
@@ -112,8 +110,8 @@
   clicking the button will emit a signal called \"response\" with a response
   ID that you specified. GTK+ will never assign a meaning to positive response
   IDs; these are entirely user-defined. But for convenience, you can use the
-  response IDs in the @symbol{gtk-response-type} enumeration (these all have
-  values less than zero). If a dialog receives a delete event, the
+  response IDs in the @symbol{gtk-response-type} enumeration. These all have
+  values less than zero. If a dialog receives a delete event, the
   \"response\" signal will be emitted with a response ID of
   @code{:delete-event}.
 
@@ -148,6 +146,47 @@
     (gtk-container-add (gtk-dialog-get-content-area dialog) label)
     (gtk-widget-show-all dialog)))
   @end{pre}
+  You can use a dialog window as a toplevel window from Lisp code. The following
+  code shows a complete example of a function which displays a message in a
+  dialog window. In this case you have to connect to the \"response\" signal.
+  It is not possible to use the functions @fun{gtk-dialog-run} and 
+  @fun{gtk-dialog-response}. In the Lisp binding your program will hang, when
+  using this functions to run the dialog window and to get the response.
+
+  @b{Example:} A toplevel dialog which can be called from any Lisp code
+  @begin{pre}
+(defun demo-dialog-toplevel (message)
+ (let ((response nil))
+   (within-main-loop
+    (let (;; Create the widgets
+          (dialog (gtk-dialog-new-with-buttons \"Demo Toplevel Dialog\"
+                                               nil ; No Parent window
+                                               '(:modal)
+                                               \"gtk-ok\"
+                                               :none
+                                               \"gtk-cancel\"
+                                               :cancel))
+          (label (gtk-label-new message)))
+      ;; Signal handler for the dialog to handle the signal \"destroy\".
+      (g-signal-connect dialog \"destroy\"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          ;; Quit the main loop and destroy the thread.
+                          (leave-gtk-main)))
+      ;; Get the response and destroy the dialog.
+      (g-signal-connect dialog \"response\"
+                        (lambda (dialog response-id)
+                          (declare (ignore response-id))
+                          (setf response response-id)
+                          (gtk-widget-destroy dialog)))
+      ;; Add the label, and show everything we have added to the dialog.
+      (gtk-container-add (gtk-dialog-get-content-area dialog) label)
+      (gtk-widget-show-all dialog)))
+    ;; Wait until the dialog is destroyed.
+    (join-gtk-main)
+    (when response
+      (format t \"The response ID is ~A\" response))))
+  @end{pre}
   @subheading{GtkDialog as GtkBuildable}
     The @sym{gtk-dialog} implementation of the @class{gtk-buildable} interface
     exposes the @code{vbox} and @code{action_area} as internal children with
@@ -156,11 +195,11 @@
     @sym{gtk-dialog} supports a custom @code{<action-widgets>} element, which
     can contain multiple @code{<action-widget>} elements. The
     @code{\"response\"} attribute specifies a numeric response, and the content
-    of the element is the id of widget which should be a child of the dialogs
+    of the element is the ID of widget which should be a child of the dialogs
     @code{action_area}.
 
     @b{Example:} A @class{gtk-dialog} UI definition fragment.
-  @begin{pre}
+    @begin{pre}
  <object class=\"GtkDialog\" id=\"dialog1\">
    <child internal-child=\"vbox\">
      <object class=\"GtkVBox\" id=\"vbox\">
@@ -181,28 +220,28 @@
      <action-widget response=\"-5\">button_cancel</action-widget>
    </action-widgets>
  </object>
-  @end{pre}
+    @end{pre}
   @begin[Style Property Details]{dictionary}
     @subheading{The \"action-area-border\" style property}
-      @code{\"action-area-border\"} of type @code{:int} (Read)@br{}
+      @code{\"action-area-border\"} of type @code{:int} (Read) @br{}
       Width of border around the button area at the bottom of the dialog. @br{}
       Allowed values: >= 0 @br{}
       Default value: 5
 
     @subheading{The \"button-spacing\" style property}
-      @code{\"button-spacing\"} of type @code{:int} (Read)@br{}
+      @code{\"button-spacing\"} of type @code{:int} (Read) @br{}
       Spacing between buttons. @br{}
-      Allowed values: >= 0@br{}
+      Allowed values: >= 0 @br{}
       Default value: 6
 
     @subheading{The \"content-area-border\" style property}
-      @code{\"content-area-border\"} of type @code{:int} (Read)@br{}
+      @code{\"content-area-border\"} of type @code{:int} (Read) @br{}
       Width of border around the main dialog area. @br{}
       Allowed values: >= 0 @br{}
       Default value: 2
 
     @subheading{The \"content-area-spacing\" style property}
-      @code{\"content-area-spacing\"} of type @code{:int} Read)@br{}
+      @code{\"content-area-spacing\"} of type @code{:int} Read) @br{}
       The default spacing used between elements of the content area of the
       dialog, as returned by the function @fun{gtk-dialog-get-content-area},
       unless the function @fun{gtk-box-set-spacing} was called on that widget
@@ -229,8 +268,8 @@
       Emitted when an action widget is clicked, the dialog receives a delete
       event, or the application programmer calls the function
       @fun{gtk-dialog-response}. On a delete event, the response ID is
-      @code{:delete-event}. Otherwise, it depends on which action widget was
-      clicked.
+      @code{:delete-event} of type @symbol{gtk-response-type}. Otherwise, it
+      depends on which action widget was clicked.
       @begin[code]{table}
         @entry[dialog]{The object on which the signal is emitted.}
         @entry[response-id]{The response ID.}
@@ -247,12 +286,10 @@
   (:modal 1)
   (:destroy-with-parent 2))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-dialog-flags atdoc:*symbol-name-alias*) "Flags"
       (gethash 'gtk-dialog-flags atdoc:*external-symbols*)
- "@version{2013-4-15}
+ "@version{2013-7-3}
   @short{Flags used to influence the dialog construction.}
   @begin{pre}
 (define-g-flags \"GtkDialogFlags\" gtk-dialog-flags
@@ -266,7 +303,9 @@
       see the function @fun{gtk-window-set-modal}.}
     @entry[:destroy-with-parent]{Destroy the dialog when its parent is
       destroyed, see the function @fun{gtk-window-set-destroy-with-parent}.}
-  @end{table}")
+  @end{table}
+  @see-function{gtk-window-set-modal}
+  @see-function{gtk-window-set-destroy-with-parent}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkResponseType
@@ -287,17 +326,15 @@
   (:apply -10)
   (:help -11))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-response-type atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-response-type atdoc:*external-symbols*)
- "@version{2013-3-16}
+ "@version{2013-7-3}
   @begin{short}
-    Predefined values for use as response ids in @fun{gtk-dialog-add-button}.
+    Predefined values for use as response IDs in @fun{gtk-dialog-add-button}.
   @end{short}
   All predefined values are negative, GTK+ leaves positive values for
-  application defined response ids.
+  application defined response IDs.
   @begin{pre}
 (define-g-enum \"GtkResponseType\" gtk-response-type
   (:export t
@@ -315,10 +352,10 @@
   (:help -11))
   @end{pre}
   @begin[code]{table}
-    @entry[:none]{Returned if an action widget has no response id, or if the
+    @entry[:none]{Returned if an action widget has no response ID, or if the
       dialog gets programmatically hidden or destroyed.}
-    @entry[:reject]{Generic response id, not used by GTK+ dialogs.}
-    @entry[:accept]{Generic response id, not used by GTK+ dialogs.}
+    @entry[:reject]{Generic response ID, not used by GTK+ dialogs.}
+    @entry[:accept]{Generic response ID, not used by GTK+ dialogs.}
     @entry[:delete-event]{Returned if the dialog is deleted.}
     @entry[:ok]{Returned by OK buttons in GTK+ dialogs.}
     @entry[:cancel]{Returned by Cancel buttons in GTK+ dialogs.}
@@ -327,7 +364,8 @@
     @entry[:no]{Returned by No buttons in GTK+ dialogs.}
     @entry[:apply]{Returned by Apply buttons in GTK+ dialogs.}
     @entry[:help]{Returned by Help buttons in GTK+ dialogs.}
-  @end{table}")
+  @end{table}
+  @see-function{gtk-dialog-add-button}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_dialog_new ()
@@ -337,13 +375,15 @@
 
 (defun gtk-dialog-new ()
  #+cl-cffi-gtk-documentation
- "@version{2013-4-15}
+ "@version{2013-7-3}
   @return{The new dialog window.}
   @short{Creates a new dialog window.}
 
-  Widgets should not be packed into this @class{gtk-window} directly, but into
+  Widgets should not be packed into this dialog window directly, but into
   the @code{vbox} and @code{action_area}, as described in the documentation
-  for @class{gtk-dialog}."
+  for @class{gtk-dialog}.
+  @see-function{gtk-dialog-get-action-area}
+  @see-function{gtk-dialog-get-content-area}"
   (make-instance 'gtk-dialog))
 
 (export 'gtk-dialog-new)
@@ -354,33 +394,33 @@
 
 (defun gtk-dialog-new-with-buttons (title parent flags &rest buttons)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-15}
+ "@version{2013-7-3}
   @argument[title]{title of the dialog, or @code{nil}}
   @argument[parent]{transient parent of the dialog, or @code{nil}}
-  @argument[flags]{from @symbol{gtk-dialog-flags}}
+  @argument[flags]{a list from @symbol{gtk-dialog-flags}}
   @argument[buttons]{pairs with a button text or stock ID and the response ID
     for the button}
   @return{A new @class{gtk-dialog} window.}
   @begin{short}
-    Creates a new @class{gtk-dialog} window with title @arg{title} (or
-    @code{nil} for the default title; see the function
-    @fun{gtk-window-set-title}) and transient parent @arg{parent} (or @code{nil}
-    for none; see @fun{gtk-window-set-transient-for}). The flags argument can be
-    used to make the dialog modal (@code{:modal}) and/or to have it destroyed
-    along with its transient parent (@code{:destroy-with-parent}). After flags,
-    button text/response ID pairs should be listed. Button text can be either a
-    stock ID such as @code{GTK_STOCK_OK}, or some arbitrary text. A response ID
-    can be any positive number, or one of the values in the
-    @symbol{gtk-response-type} enumeration. If the user clicks one of
-    these dialog buttons, @class{gtk-dialog} will emit the \"response\" signal
-    with the corresponding response ID. If a @class{gtk-dialog} receives the
-    \"delete-event\" signal, it will emit the \"response\" signal with a
-    response ID of @code{:delete-event}. However, destroying a dialog does not
-    emit the \"response\" signal; so be careful relying on the \"response\"
-    signal when using the @code{:destroy-with-parent} flag. Buttons are from
-    left to right, so the first button in the list will be the leftmost button
-    in the dialog.
+    Creates a new @class{gtk-dialog} window with title @arg{title}, or
+    @code{nil} for the default title, see the function
+    @fun{gtk-window-set-title}, and transient parent @arg{parent}, or @code{nil}
+    for none, see @fun{gtk-window-set-transient-for}. The @arg{flags} argument
+    can be used to make the dialog modal with the flag @code{:modal} of type
+    @symbol{gtk-dialog-flags} and/or to have it destroyed along with its
+    transient @arg{parent} with the flag @code{:destroy-with-parent}. After
+    @arg{flags}, button text/response ID pairs should be listed.
   @end{short}
+  Button text can be either a stock ID such as @code{\"gtk-ok\"}, or some
+  arbitrary text. A response ID can be any positive number, or one of the values
+  in the @symbol{gtk-response-type} enumeration. If the user clicks one of
+  these dialog buttons, @class{gtk-dialog} will emit the \"response\" signal
+  with the corresponding response ID. If a @class{gtk-dialog} receives the
+  \"delete-event\" signal, it will emit the \"response\" signal with a response
+  ID of @code{:delete-event}. However, destroying a dialog does not emit the
+  \"response\" signal; so be careful relying on the \"response\" signal when
+  using the @code{:destroy-with-parent} flag. Buttons are from left to right, so
+  the first button in the list will be the leftmost button in the dialog.
 
   Here is a simple example:
   @begin{pre}
@@ -416,7 +456,7 @@
 
 (defcfun ("gtk_dialog_run" gtk-dialog-run) gtk-response-type
  #+cl-cffi-gtk-documentation
- "@version{2013-4-15}
+ "@version{2013-7-3}
   @argument[dialog]{a @class{gtk-dialog} window}
   @return{The response ID.}
   @begin{short}
@@ -455,8 +495,8 @@
    (gtk-widget-destroy dialog))
   @end{pre}
   Note that even though the recursive main loop gives the effect of a modal
-  dialog (it prevents the user from interacting with other windows in the same
-  window group while the dialog is run), callbacks such as timeouts, IO
+  dialog, because it prevents the user from interacting with other windows in
+  the same window group while the dialog is run, callbacks such as timeouts, IO
   channel watches, DND drops, etc, will be triggered during a
   @sym{gtk-dialog-run} call.
   @see-function{gtk-dialog-response}
@@ -471,7 +511,7 @@
 
 (defcfun ("gtk_dialog_response" gtk-dialog-response) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-4-15}
+ "@version{2013-7-3}
   @argument[dialog]{a @class{gtk-dialog} window}
   @argument[response-id]{response ID}
   @begin{short}
@@ -492,7 +532,7 @@
 
 (defcfun ("gtk_dialog_add_button" gtk-dialog-add-button) (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-15}
+ "@version{2013-7-3}
   @argument[dialog]{a @class{gtk-dialog} window}
   @argument[button-text]{text of button, or stock ID}
   @argument[response-id]{response ID for the button}
@@ -503,7 +543,9 @@
     \"response\" signal with the given @arg{response-id}.
   @end{short}
   The button is appended to the end of the @arg{dialog}'s action area. The
-  button widget is returned, but usually you do not need it."
+  button widget is returned, but usually you do not need it.
+  @see-function{gtk-dialog-add-buttons}
+  @see-function{gtk-dialog-add-action-widget}"
   (dialog (g-object gtk-dialog))
   (button-text :string)
   (response-id gtk-response-type))
@@ -516,7 +558,7 @@
 
 (defun gtk-dialog-add-buttons (dialog &rest buttons)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-15}
+ "@version{2013-7-3}
   @argument[dialog]{a @class{gtk-dialog} window}
   @argument[buttons]{pairs with a button text or stock ID and the response ID
     for the button}
@@ -528,7 +570,8 @@
   @subheading{Note}
     The Lisp implementation does not call the C function, but the function
     @fun{gtk-dialog-add-button} is called in a loop to add the buttons.
-  @see-function{gtk-dialog-add-button}"
+  @see-function{gtk-dialog-add-button}
+  @see-function{gtk-dialog-add-action-widget}"
   (let ((n (/ (length buttons) 2)))
     (assert (eql n (truncate (length buttons) 2)))
     (dotimes (i n)
@@ -542,7 +585,7 @@
 
 (defcfun ("gtk_dialog_add_action_widget" gtk-dialog-add-action-widget) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-4-15}
+ "@version{2013-7-3}
   @argument[dialog]{a @class{gtk-dialog} window}
   @argument[child]{an activatable widget}
   @argument[response-id]{response ID for @arg{child}}
@@ -554,7 +597,9 @@
   @end{short}
   The @arg{child} widget is appended to the end of the @arg{dialog}'s action
   area. If you want to add a non-activatable widget, simply pack it into the
-  @code{action-area} field of the @class{gtk-dialog}."
+  @code{action-area} field of the @class{gtk-dialog} window.
+  @see-function{gtk-dialog-add-button}
+  @see-function{gtk-dialog-add-buttons}"
   (dialog (g-object gtk-dialog))
   (child (g-object gtk-widget))
   (response-id gtk-response-type))
@@ -568,7 +613,7 @@
 (defcfun ("gtk_dialog_set_default_response" gtk-dialog-set-default-response)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2013-4-15}
+ "@version{2013-7-3}
   @argument[dialog]{a @class{gtk-dialog} window}
   @argument[response-id]{a response ID}
   @begin{short}
@@ -588,7 +633,7 @@
 (defcfun ("gtk_dialog_set_response_sensitive" gtk-dialog-set-response-sensitive)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2013-4-15}
+ "@version{2013-7-3}
   @argument[dialog]{a @class{gtk-dialog} window}
   @argument[response-id]{a response ID}
   @argument[setting]{@em{true} for sensitive}
@@ -609,16 +654,17 @@
 (defcfun ("gtk_dialog_get_response_for_widget"
           gtk-dialog-get-response-for-widget) :int
  #+cl-cffi-gtk-documentation
- "@version{2013-4-15}
+ "@version{2013-7-3}
   @argument[dialog]{a @class{gtk-dialog} window}
   @argument[widget]{a widget in the action area of @arg{dialog}}
-  @return{The response id of @arg{widget}, or @code{:none} if @arg{widget}
-    does not have a response id set.}
+  @return{The response ID of @arg{widget}, or @code{:none} if @arg{widget}
+    does not have a response ID set.}
   @begin{short}
-    Gets the response id of a @arg{widget} in the action area of a @arg{dialog}.
+    Gets the response ID of a @arg{widget} in the action area of a @arg{dialog}.
   @end{short}
 
-  Since 2.8"
+  Since 2.8
+  @see-function{gtk-dialog-get-widget-for-response}"
   (dialog (g-object gtk-dialog))
   (widget (g-object gtk-widget)))
 
@@ -631,9 +677,9 @@
 (defcfun ("gtk_dialog_get_widget_for_response"
           gtk-dialog-get-widget-for-response) g-object
  #+cl-cffi-gtk-documentation
- "@version{2013-4-15}
+ "@version{2013-7-3}
   @argument[dialog]{a @class{gtk-dialog} window}
-  @argument[response-id]{the response ID used by the @arg{dialog} widget}
+  @argument[response-id]{the response ID used by the @arg{dialog} window}
   @return{The widget button that uses the given @arg{response-id},
     or @code{nil}.}
   @begin{short}
@@ -641,7 +687,8 @@
     of a @arg{dialog}.
   @end{short}
 
-  Since 2.20"
+  Since 2.20
+  @see-function{gtk-dialog-get-response-for widget}"
   (dialog (g-object gtk-dialog))
   (response-id gtk-response-type))
 
@@ -654,12 +701,13 @@
 (defcfun ("gtk_dialog_get_action_area" gtk-dialog-get-action-area)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-15}
+ "@version{2013-7-3}
   @argument[dialog]{a @class{gtk-dialog} window}
   @return{The action area.}
   @short{Returns the action area of @arg{dialog}.}
 
-  Since 2.14"
+  Since 2.14
+  @see-function{gtk-dialog-get-content-area}"
   (dialog (g-object gtk-dialog)))
 
 (export 'gtk-dialog-get-action-area)
@@ -671,7 +719,7 @@
 (defcfun ("gtk_dialog_get_content_area" gtk-dialog-get-content-area)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-15}
+ "@version{2013-7-3}
   @argument[dialog]{a @class{gtk-dialog} window}
   @begin{return}
     The content area of type @class{gtk-box} with a @code{:vertical}
@@ -679,7 +727,8 @@
   @end{return}
   @short{Returns the content area of @arg{dialog}.}
 
-  Since 2.14"
+  Since 2.14
+  @see-function{gtk-dialog-get-action-area}"
   (dialog (g-object gtk-dialog)))
 
 (export 'gtk-dialog-get-content-area)
@@ -691,7 +740,7 @@
 (defcfun ("gtk_alternative_dialog_button_order"
           gtk-alternative-dialog-button-order) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-4-15}
+ "@version{2013-7-3}
   @argument[screen]{a @class{gdk-screen} object, or @code{nil} to use the
     default screen}
   @return{Whether the alternative button order should be used.}
@@ -721,7 +770,7 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-4-15}
   @argument[dialog]{a @class{gtk-dialog} window}
-  @argument[response-list]{a list of response ids of @arg{dialog}'s buttons}
+  @argument[response-list]{a list of response IDs of @arg{dialog}'s buttons}
   @begin{short}
     Sets an alternative button order.
   @end{short}
@@ -738,35 +787,39 @@
   Use this function after adding all the buttons to your dialog, as the
   following example shows:
   @begin{pre}
- cancel_button = gtk_dialog_add_button (GTK_DIALOG (dialog),
-                                        GTK_STOCK_CANCEL,
-                                        GTK_RESPONSE_CANCEL);
+    (let (;; Create a dialog with three buttons
+          (dialog (gtk-dialog-new-with-buttons \"Demo Dialog\"
+                                               nil ; No Parent window
+                                               '(:modal)
+                                               \"gtk-cancel\"
+                                               :cancel
+                                               \"gtk-ok\"
+                                               :ok
+                                               \"gtk-apply\"
+                                               :apply)))
+      ;; Set the default button.
+      (gtk-widget-grab-default (gtk-dialog-get-widget-for-response dialog :ok))
 
- ok_button = gtk_dialog_add_button (GTK_DIALOG (dialog),
-                                    GTK_STOCK_OK,
-                                    GTK_RESPONSE_OK);
+      ;; Allow alternative button order for the default screen.
+      (setf (gtk-settings-gtk-alternative-button-order
+              (gtk-settings-get-default))
+            t)
 
- gtk_widget_grab_default (ok_button);
+      ;; Set the alternative button order.
+      (gtk-dialog-set-alternative-button-order dialog '(:ok :cancel :apply))
 
- help_button = gtk_dialog_add_button (GTK_DIALOG (dialog),
-                                      GTK_STOCK_HELP,
-                                      GTK_RESPONSE_HELP);
-
- gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                          GTK_RESPONSE_OK,
-                                          GTK_RESPONSE_CANCEL,
-                                          GTK_RESPONSE_HELP,
-                                          -1);
+      ...)
   @end{pre}
+
   Since 2.6"
   (with-foreign-object (new-order 'gtk-response-type (length response-list))
     (loop
        for i from 0
        for response in response-list
        do (setf (mem-aref new-order 'gtk-response-type i) response))
-    (gtk-dialog-set-alternative-button-order-from-array dialog
-                                                        (length response-list)
-                                                        new-order))
+    (%gtk-dialog-set-alternative-button-order-from-array dialog
+                                                         (length response-list)
+                                                         new-order))
   response-list)
 
 (export 'gtk-dialog-set-alternative-button-order)
@@ -775,10 +828,13 @@
 ;;; gtk_dialog_set_alternative_button_order_from_array ()
 ;;; ----------------------------------------------------------------------------
 
+;; This function is for internal use and not exported.
+;; The function is called from gtk-dialog-set-alternative-button-order.
+
 (defcfun ("gtk_dialog_set_alternative_button_order_from_array"
-          gtk-dialog-set-alternative-button-order-from-array) :void
+          %gtk-dialog-set-alternative-button-order-from-array) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-4-15}
+ "@version{2013-7-3}
   @argument[dialog]{a @class{gtk-dialog} window}
   @argument[n-params]{the number of response IDs in @arg{new-order}}
   @argument[new-order]{an array of response IDs of @arg{dialog}'s buttons}
@@ -796,7 +852,5 @@
   (dialog (g-object gtk-dialog))
   (n-params :int)
   (new-order (:pointer gtk-response-type)))
-
-(export 'gtk-dialog-set-alternative-button-order-from-array)
 
 ;;; --- End of file gtk.dialog.lisp --------------------------------------------

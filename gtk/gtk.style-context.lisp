@@ -2660,37 +2660,31 @@ tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_render_focus ()
-;;;
-;;; void gtk_render_focus (GtkStyleContext *context,
-;;;                        cairo_t *cr,
-;;;                        gdouble x,
-;;;                        gdouble y,
-;;;                        gdouble width,
-;;;                        gdouble height);
-;;;
-;;; Renders a focus indicator on the rectangle determined by x, y, width,
-;;; height.
-;;;
-;;; context :
-;;;     a GtkStyleContext
-;;;
-;;; cr :
-;;;     a cairo_t
-;;;
-;;; x :
-;;;     X origin of the rectangle
-;;;
-;;; y :
-;;;     Y origin of the rectangle
-;;;
-;;; width :
-;;;     rectangle width
-;;;
-;;; height :
-;;;     rectangle height
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_render_focus" gtk-render-focus) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-7-1}
+  @argument[context]{a @class{gtk-style-context} object}
+  @argument[cr]{a @symbol{cairo-t}}
+  @argument[x]{x origin of the rectangle}
+  @argument[y]{y origin of the rectangle}
+  @argument[width]{rectangle width}
+  @argument[height]{rectangle height}
+  @begin{short}
+    Renders a focus indicator on the rectangle determined by @arg{x}, @arg{y},
+    @arg{width}, @arg{height}.
+  @end{short}
+
+  Since 3.0"
+  (context (g-object gtk-style-context))
+  (cr cairo-t)
+  (x :double)
+  (y :double)
+  (width :double)
+  (height :double))
+
+(export 'gtk-render-focus)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_render_frame ()

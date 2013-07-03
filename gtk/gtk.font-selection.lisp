@@ -370,7 +370,7 @@
 (defcfun ("gtk_font_selection_get_face" gtk-font-selection-get-face)
     (g-object pango-font-face)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-24}
+ "@version{2013-7-1}
   @argument[fontsel]{a @class{gtk-font-selection} widget}
   @begin{return}
     A @class{pango-font-face} representing the selected font group details.
@@ -388,7 +388,7 @@
   Since 2.14"
   (fontsel (g-object gtk-font-selection)))
 
-(export 'gtk-font-selection-face)
+(export 'gtk-font-selection-get-face)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_font_selection_get_face_list ()

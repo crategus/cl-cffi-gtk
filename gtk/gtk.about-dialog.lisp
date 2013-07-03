@@ -131,8 +131,6 @@
     gtk-about-dialog-wrap-license
     "wrap-license" "gboolean" t t)))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-about-dialog 'type)
  "@version{2013-4-21}
@@ -215,8 +213,6 @@
   see the introduction for more details.@br{}
   Since 2.6")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "authors" 'gtk-about-dialog) 't)
  "The @code{\"authors\"} property of type @type{g-strv} (Read / Write).@br{}
@@ -224,8 +220,6 @@
   email addresses and URLs, which will be displayed as links, see the
   introduction for more details.@br{}
   Since 2.6")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "comments" 'gtk-about-dialog) 't)
@@ -236,8 +230,6 @@
   Default value: @code{nil}@br{}
   Since 2.6")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "copyright"
                                                'gtk-about-dialog) 't)
@@ -246,19 +238,14 @@
   Default value: @code{nil}@br{}
   Since 2.6")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "documenters"
                                                'gtk-about-dialog) 't)
- "The @code{\"documenters\"} property of type @class{g-strv}
-  (Read / Write).@br{}
+ "The @code{\"documenters\"} property of type @type{g-strv}
+  (Read / Write). @br{}
   The people documenting the program, as a list of strings. Each string may
-  contain email addresses and URLs, which will be displayed as links, see the
-  introduction for more details.@br{}
+  contain email addresses and URLs, which will be displayed as links. @br{}
   Since 2.6")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "license" 'gtk-about-dialog) 't)
@@ -272,8 +259,6 @@
   @code{:custom} of the @symbol{gtk-license} enumeration as a side effect.@br{}
   Default value: @code{nil}@br{}
   Since 2.6")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "license-type"
@@ -295,16 +280,12 @@
   Default value: @code{:unkown}@br{}
   Since 3.0")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "logo" 'gtk-about-dialog) 't)
  "The @code{\"logo\"} property of type @class{gdk-pixbuf} (Read / Write).@br{}
   A logo for the about box. If this is not set, it defaults to
   @fun{gtk-window-get-default-icon-list}.@br{}
   Since 2.6")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "logo-icon-name"
@@ -316,8 +297,6 @@
   Default value: @code{nil}@br{}
   Since 2.6")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "program-name"
                                                'gtk-about-dialog) 't)
@@ -327,8 +306,6 @@
   @fun{g-get-application-name}.@br{}
   Default value: @code{nil}@br{}
   Since 2.12")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "translator-credits"
@@ -341,16 +318,12 @@
   Default value: @code{nil}@br{}
   Since 2.6")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "version" 'gtk-about-dialog) 't)
  "The @code{\"version\"} property of type @code{:string} (Read / Write).@br{}
   The version of the program.@br{}
   Default value: @code{nil}@br{}
   Since 2.6")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "website" 'gtk-about-dialog) 't)
@@ -360,8 +333,6 @@
   Default value: @code{nil}@br{}
   Since 2.6")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "website-label"
                                                'gtk-about-dialog) 't)
@@ -370,8 +341,6 @@
   The label for the link to the website of the program.@br{}
   Default value: @code{nil}@br{}
   Since 2.6")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "wrap-license"
@@ -607,8 +576,6 @@
   (:bsd 6)
   (:mit-x11 7)
   (:artistic 8))
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-license atdoc:*symbol-name-alias*) "Enum"

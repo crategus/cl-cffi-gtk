@@ -36,8 +36,8 @@
 ;;; Synopsis
 ;;;
 ;;;     GtkFileFilter
-;;;     GtkFileFilterInfo
 ;;;     GtkFileFilterFlags
+;;;     GtkFileFilterInfo
 ;;;
 ;;;     gtk_file_filter_new
 ;;;     gtk_file_filter_set_name
@@ -92,7 +92,7 @@
     <mime-type> or <pattern> is the same as calling the function
     @fun{gtk-recent-filter-add-mime-type} or
     @fun{gtk-recent-filter-add-pattern}.
- 
+
     @b{Example:} A UI definition fragment specifying @sym{gtk-file-filter} rules
     @begin{pre}
    <object class=\"GtkFileFilter\">
@@ -106,37 +106,6 @@
      </patterns>
    </object>
     @end{pre}")
-
-;;; ----------------------------------------------------------------------------
-;;; struct GtkFileFilterInfo
-;;;
-;;; struct GtkFileFilterInfo {
-;;;   GtkFileFilterFlags contains;
-;;;
-;;;   const gchar *filename;
-;;;   const gchar *uri;
-;;;   const gchar *display_name;
-;;;   const gchar *mime_type;
-;;; };
-;;;
-;;; A GtkFileFilterInfo struct is used to pass information about the tested file
-;;; to gtk_file_filter_filter().
-;;;
-;;; GtkFileFilterFlags contains;
-;;;     Flags indicating which of the following fields need are filled
-;;;
-;;; const gchar *filename;
-;;;     the filename of the file being tested
-;;;
-;;; const gchar *uri;
-;;;     the URI for the file being tested
-;;;
-;;; const gchar *display_name;
-;;;     the string that will be used to display the file in the file chooser
-;;;
-;;; const gchar *mime_type;
-;;;     the mime type of the file
-;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkFileFilterFlags
@@ -174,6 +143,46 @@
       the file chooser.}
     @entry[:mime-type]{The mime type of the file.}
   @end{table}")
+
+;;; ----------------------------------------------------------------------------
+;;; struct GtkFileFilterInfo
+;;; ----------------------------------------------------------------------------
+
+(defcstruct gtk-file-filter-info
+  (containts gtk-file-filter-flags)
+  (filename :string)
+  (uri :string)
+  (display-name :string)
+  (mime-type :string))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-file-filter-info atdoc:*symbol-name-alias*) "CStruct"
+      (gethash 'gtk-file-filter-info atdoc:*external-symbols*)
+ "@version{2013-7-1}
+  @begin{short}
+    A @sym{gtk-file-filter-info} structure is used to pass information about
+    the tested file to the function @fun{gtk-file-filter-filter}.
+  @end{short}
+  @begin{pre}
+(defcstruct gtk-file-filter
+  (containts gtk-file-filter-flags)
+  (filename :string)
+  (uri :string)
+  (display-name :string)
+  (mime-type :string))
+  @end{pre}
+  @begin[code]{table}
+    @entry[contains]{Flags indicating which of the following fields need are
+      filled.}
+    @entry[filename]{The filename of the file being tested.}
+    @entry[uri]{The URI for the file being tested.}
+    @entry[display-name]{The string that will be used to display the file in
+      the file chooser.}
+    @entry[mime-type]{The mime type of the file.}
+  @end{table}
+  @see-function{gtk-file-filter-filter}")
+
+(export 'gtk-file-filter-info)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkFileFilterFunc ()

@@ -337,7 +337,7 @@
     The default keys that activate the key-binding signals in
     @code{GtkFileChooserDefaultClass} are as follows:
     @begin{table}
-      @entry[Signal name]{Default key combinations} 
+      @entry[Signal name]{Default key combinations}
       @entry[location-popup]{Control+L (empty path);
                              / (path of \"/\") [a]; ~ (path of \"~\")}
       @entry[up-folder]{Alt+Up; Alt+Shift+Up [b]; Backspace}
@@ -603,8 +603,8 @@
       inform the file chooser about whether the preview was generated
       successfully or not.
 
-      Please see the example code in the section called “Adding a Preview
-      Widget”.
+      Please see the example code in the section called \"Adding a Preview
+      Widget\".
 
       See also the function: @fun{gtk-file-chooser-set-preview-widget},
       @fun{gtk-file-chooser-set-preview-widget-active},

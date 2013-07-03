@@ -113,8 +113,6 @@
     gtk-image-use-fallback
     "use-fallback" "gboolean" t t)))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-image 'type)
  "@version{2013-4-21}
@@ -223,16 +221,12 @@
   Filename to load and display. @br{}
   Default value: @code{nil}")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gicon" 'gtk-image) 't)
  "The @code{\"gicon\"} property of type @class{g-icon} (Read / Write)@br{}
   The @class{g-icon} displayed in the @sym{gtk-image}. For themed icons, If the
   icon theme is changed, the image will be updated automatically. @br{}
  Since 2.14")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "icon-name" 'gtk-image) 't)
@@ -242,15 +236,11 @@
   Default value: @code{nil}@br{}
   Since 2.6")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "icon-set" 'gtk-image) 't)
  "The @code{\"icon-set\"} property of type @class{gtk-icon-set}
   (Read / Write)@br{}
   Icon set to display.")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "icon-size" 'gtk-image) 't)
@@ -259,14 +249,10 @@
   Allowed values: >= 0@br{}
   Default value: 4")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "pixbuf" 'gtk-image) 't)
  "The @code{\"pixbuf\"} property of type @class{gdk-pixbuf} (Read / Write)@br{}
   A @class{gdk-pixbuf} to display.")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "pixbuf-animation"
@@ -274,8 +260,6 @@
  "The @code{\"pixbuf-animation\"} property of type @class{gdk-pixbuf-animation}
   (Read / Write)@br{}
   @class{gdk-pixbuf-animation} to display.")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "pixel-size" 'gtk-image) 't)
@@ -286,8 +270,6 @@
   Allowed values: >= @code{G_MAXULONG} @br{}
   Default value: -1@br{}
   Since 2.6")
-;;;
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "stock" 'gtk-image) 't)
@@ -295,16 +277,12 @@
   Stock ID for a stock image to display. @br{}
   Default value: @code{nil}")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "storage-type" 'gtk-image) 't)
  "The @code{\"storage-type\"} property of type @symbol{gtk-image-type}
   (Read)@br{}
   The representation being used for image data. @br{}
   Default value: @code{:empty}")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "use-fallback" 'gtk-image) 't)
@@ -329,16 +307,12 @@
  "@version{2013-3-27}
   Accessor of the slot @code{\"file\"} of the @class{gtk-image} class.")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-image-gicon atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-image-gicon 'function)
  "@version{2013-3-27}
   Accessor of the slot @code{\"gicon\"} of the @class{gtk-image} class.")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-image-icon-name atdoc:*function-name-alias*)
@@ -347,16 +321,12 @@
  "@version{2013-3-27}
   Accessor of the slot @code{\"icon-name\"} of the @class{gtk-image} class.")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-image-icon-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-image-icon-set 'function)
  "@version{2013-3-27}
   Accessor of the slot @code{\"icon-set\"} of the @class{gtk-image} class.")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-image-icon-size atdoc:*function-name-alias*)
@@ -365,16 +335,12 @@
  "@version{2013-3-27}
   Accessor of the slot @code{\"icon-size\"} of the @class{gtk-image} class.")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-image-pixbuf atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-image-pixbuf 'function)
  "@version{2013-3-27}
   Accessor of the slot @code{\"pixbuf\"} of the @class{gtk-image} class.")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-image-pixbuf-animation atdoc:*function-name-alias*)
@@ -384,16 +350,12 @@
   Accessor of the slot @code{\"pixbuf-animation\"} of the @class{gtk-image}
   class.")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-image-pixel-size atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-image-pixel-size 'function)
  "@version{2013-3-27}
   Accessor of the slot @code{\"pixel-size\"} of the @class{gtk-image} class.")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-image-stock atdoc:*function-name-alias*)
@@ -402,16 +364,12 @@
  "@version{2013-3-27}
   Accessor of the slot @code{\"stock\"} of the @class{gtk-image} class.")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-image-storage-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-image-storage-type 'function)
  "@version{2013-3-27}
   Accessor of the slot @code{\"storage-type\"} of the @class{gtk-image} class.")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-image-use-fallback atdoc:*function-name-alias*)
@@ -434,8 +392,6 @@
   (:animation 4)
   (:icon-name 5)
   (:gicon 6))
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-image-type atdoc:*symbol-name-alias*) "Enum"
@@ -768,25 +724,29 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_image_new_from_icon_name ()
-;;;
-;;; GtkWidget * gtk_image_new_from_icon_name (const gchar *icon_name,
-;;;                                           GtkIconSize size);
-;;;
-;;; Creates a GtkImage displaying an icon from the current icon theme. If the
-;;; icon name isn't known, a "broken image" icon will be displayed instead. If
-;;; the current icon theme is changed, the icon will be updated appropriately.
-;;;
-;;; icon_name :
-;;;     an icon name
-;;;
-;;; size :
-;;;     a stock icon size
-;;;
-;;; Returns :
-;;;     a new GtkImage displaying the themed icon
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_image_new_from_icon_name" gtk-image-new-from-icon-name)
+    (g-object gtk-image)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-29}
+  @argument[icon-name]{an icon name}
+  @argument[size]{a stock icon size}
+  @return{A new @class{gtk-image} widget displaying the themed icon.}
+  @begin{short}
+    Creates a @class{gtk-image} widget displaying an icon from the current icon
+    theme.
+  @end{short}
+  If the icon name is not known, a \"broken image\" icon will be displayed
+  instead. If the current icon theme is changed, the icon will be updated
+  appropriately.
+
+  Since 2.6
+  @see-function{gtk-image-set-from-icon-name}"
+  (icon-name :string)
+  (size gtk-icon-size))
+
+(export 'gtk-image-new-from-icon-name)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_image_new_from_gicon ()
@@ -922,24 +882,25 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_image_set_from_icon_name ()
-;;;
-;;; void gtk_image_set_from_icon_name (GtkImage *image,
-;;;                                    const gchar *icon_name,
-;;;                                    GtkIconSize size);
-;;;
-;;; See gtk_image_new_from_icon_name() for details.
-;;;
-;;; image :
-;;;     a GtkImage
-;;;
-;;; icon_name :
-;;;     an icon name
-;;;
-;;; size :
-;;;     an icon size
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_image_set_from_icon_name" gtk-image-set-from-icon-name) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-29}
+  @argument[image]{a @class{gtk-image} widget}
+  @argument[icon-name]{an icon name}
+  @argument[size]{an icon size}
+  @begin{short}
+    See the function @fun{gtk-image-new-from-icon-name} for details.
+  @end{short}
+
+  Since 2.6
+  @see-function{gtk-image-new-from-icon-name}"
+  (image (g-object gtk-image))
+  (icon-name :string)
+  (size gtk-icon-size))
+
+(export 'gtk-image-set-from-icon-name)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_image_set_from_gicon ()
@@ -1015,16 +976,17 @@
 
 (defun gtk-image-set-pixel-size (image pixel-size)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-21}
-  @argument[image]{a @class{gtk-image} object}
+ "@version{2013-6-29}
+  @argument[image]{a @class{gtk-image} widget}
   @argument[pixel-size]{the new pixel size}
   @begin{short}
     Sets the pixel size to use for named icons. If the pixel size is set to a
-    value != -1, it is used instead of the icon size set by the function
-    @fun{gtk-image-set-from-icon-name}.
+    value not equal to -1, it is used instead of the icon size set by the
+    function @fun{gtk-image-set-from-icon-name}.
   @end{short}
 
-  Since 2.6"
+  Since 2.6
+  @see-function{gtk-image-set-from-icon-name}"
   (setf (gtk-image-pixel-size image) pixel-size))
 
 (export 'gtk-image-set-pixel-size)
@@ -1037,8 +999,8 @@
 
 (defun gtk-image-get-pixel-size (image)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-21}
-  @argument[image]{a @class{gtk-image} object}
+ "@version{2013-6-29}
+  @argument[image]{a @class{gtk-image} widget}
   @return{The pixel size used for named icons.}
   @short{Gets the pixel size used for named icons.}
 

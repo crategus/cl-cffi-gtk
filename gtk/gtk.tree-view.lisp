@@ -245,7 +245,7 @@
 
   @subheading{GtkTreeView as GtkBuildable}
     The @sym{gtk-tree-view} implementation of the @class{gtk-buildable}
-    interface accepts @class{gtkt-tree-view-column} objects as @code{<child>}
+    interface accepts @class{gtk-tree-view-column} objects as @code{<child>}
     elements and exposes the internal @class{gtk-tree-selection} in UI
     definitions.
 
@@ -2899,39 +2899,49 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_view_get_fixed_height_mode ()
-;;;
-;;; gboolean gtk_tree_view_get_fixed_height_mode (GtkTreeView *tree_view);
-;;;
-;;; Returns whether fixed height mode is turned on for tree_view.
-;;;
-;;; tree_view :
-;;;     a GtkTreeView
-;;;
-;;; Returns :
-;;;     TRUE if tree_view is in fixed height mode
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-tree-view-get-fixed-height-mode))
+
+(defun gtk-tree-view-get-fixed-height-mode (tree-view)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-30}
+  @argument[tree-view]{a @class{gtk-tree-view} widget}
+  @return{@em{True} if @arg{tree-view} is in fixed height mode.}
+  @begin{short}
+    Returns whether fixed height mode is turned on for @arg{tree-view}.
+  @end{short}
+
+  Since 2.6
+  @see-function{gtk-tree-view-set-fixed-height-mode}"
+  (gtk-tree-view-fixed-height-mode tree-view))
+
+(export 'gtk-tree-view-get-fixed-height-mode)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_view_set_fixed_height_mode ()
-;;;
-;;; void gtk_tree_view_set_fixed_height_mode (GtkTreeView *tree_view,
-;;;                                           gboolean enable);
-;;;
-;;; Enables or disables the fixed height mode of tree_view. Fixed height mode
-;;; speeds up GtkTreeView by assuming that all rows have the same height. Only
-;;; enable this option if all rows are the same height and all columns are of
-;;; type GTK_TREE_VIEW_COLUMN_FIXED.
-;;;
-;;; tree_view :
-;;;     a GtkTreeView
-;;;
-;;; enable :
-;;;     TRUE to enable fixed height mode
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-tree-view-set-fixed-height-mode))
+
+(defun gtk-tree-view-set-fixed-height-mode (tree-view enable)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-30}
+  @argument[tree-view]{a @class{gtk-tree-view} widget}
+  @argument[enable]{@em{true} to enable fixed height mode}
+  @begin{short}
+    Enables or disables the fixed height mode of @arg{tree-view}.
+  @end{short}
+  Fixed height mode speeds up @class{gtk-tree-view} by assuming that all rows
+  have the same height. Only enable this option if all rows are the same height
+  and all columns are of type @code{:column-fixed} of the
+  @symbol{gtk-tree-view-column-sizing} enumeration.
+
+  Since 2.6
+  @see-function{gtk-tree-view-get-fixed-height-mode}"
+  (setf (gtk-tree-view-fixed-height-mode tree-view) enable))
+
+(export 'gtk-tree-view-set-fixed-height-mode)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_view_get_hover_selection ()

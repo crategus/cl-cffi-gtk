@@ -80,8 +80,6 @@
    :type-initializer "gtk_clipboard_get_type")
   nil)
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-clipboard 'type)
  "@version{2013-4-22}
@@ -197,6 +195,15 @@
 ;;; data :
 ;;;     the user_data supplied to gtk_clipboard_request_text().
 ;;; ----------------------------------------------------------------------------
+
+(defcallback gtk-clipboard-text-received-func-cb :void
+    ((clipboard (g-object gtk-clipboard))
+     (text :string)
+     (data :pointer))
+  (let ((fn (glib::get-stable-pointer-value data)))
+    (restart-case
+        (funcall fn clipboard text)
+      (return-from-gtk-clipboard-text-received-func-cb () nil))))
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkClipboardImageReceivedFunc ()
@@ -604,13 +611,25 @@
 ;;; clipboard :
 ;;;     a GtkClipboard
 ;;;
-;;; callback :
+;;; func :
 ;;;     a function to call when the text is received, or the retrieval fails.
 ;;;     (It will always be called one way or the other.)
 ;;;
-;;; user_data :
+;;; data :
 ;;;     user data to pass to callback.
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_clipboard_request_text" %gtk-clipboard-request-text) :void
+  (clipboard (g-object gtk-clipboard))
+  (func :pointer)
+  (data :pointer))
+
+(defun gtk-clipboard-request-text (clipboard func)
+  (%gtk-clipboard-request-text clipboard
+                               (callback gtk-clipboard-text-received-func-cb)
+                               (glib::allocate-stable-pointer func)))
+
+(export 'gtk-clipboard-request-text)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_clipboard_request_image ()

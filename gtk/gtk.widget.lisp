@@ -992,9 +992,9 @@
       @end{pre}
       The \"delete-event\" signal is emitted if a user requests that a
       toplevel window is closed. The default handler for this signal destroys
-      the window. Connecting @fun{gtk-widget-hide-on-delete} to this signal will
-      cause the window to be hidden instead, so that it can later be shown again
-      without reconstructing it.
+      the window. Connecting the function @fun{gtk-widget-hide-on-delete} to
+      this signal will cause the window to be hidden instead, so that it can
+      later be shown again without reconstructing it.
     @begin[code]{table}
       @entry[widget]{The object which received the signal.}
       @entry[event]{The event which triggered this signal.}
@@ -3347,13 +3347,10 @@
 
 (defcfun ("gtk_widget_hide" gtk-widget-hide) :void
  #+cl-cffi-gtk-documentation
- "@version{2012-12-23}
-  @argument[widget]{a @class{gtk-widget} instance}
-  @begin{short}
-    Reverses the effects of @fun{gtk-widget-show}, causing the @arg{widget} to
-    be hidden (invisible to the user).
-  @end{short}
-  @see-class{gtk-widget}
+ "@version{2013-6-30}
+  @argument[widget]{a @class{gtk-widget} object}
+  Reverses the effects of the function @fun{gtk-widget-show}, causing the
+  @arg{widget} to be hidden (invisible to the user).
   @see-function{gtk-widget-show}"
   (widget (g-object gtk-widget)))
 
@@ -3493,12 +3490,11 @@
 
 (defcfun ("gtk_widget_queue_draw" gtk-widget-queue-draw) :void
 #+cl-cffi-gtk-documentation
- "@version{2013-2-4}
-  @argument[widget]{a @class{gtk-widget} instance}
-  @begin{short}
-    Equivalent to calling @fun{gtk-widget-queue-draw-area} for the entire area
-    of a @arg{widget}.
-  @end{short}"
+ "@version{2013-6-30}
+  @argument[widget]{a @class{gtk-widget} object}
+  Equivalent to calling the function @fun{gtk-widget-queue-draw-area} for the
+  entire area of a @arg{widget}.
+  @see-function{gtk-widget-queue-draw-area}"
   (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-queue-draw)
@@ -4488,22 +4484,26 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_hide_on_delete ()
-;;;
-;;; gboolean gtk_widget_hide_on_delete (GtkWidget *widget);
-;;;
-;;; Utility function; intended to be connected to the "delete-event" signal on
-;;; a GtkWindow. The function calls gtk_widget_hide() on its argument, then
-;;; returns TRUE. If connected to ::delete-event, the result is that clicking
-;;; the close button for a window (on the window frame, top right corner
-;;; usually) will hide but not destroy the window. By default, GTK+ destroys
-;;; windows when ::delete-event is received.
-;;;
-;;; widget :
-;;;     a GtkWidget
-;;;
-;;; Returns :
-;;;     TRUE
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_widget_hide_on_delete" gtk-widget-hide-on-delete) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-30}
+  @argument[widget]{a @class{gtk-widget} object}
+  @return{@em{True}.}
+  @begin{short}
+    Utility function; intended to be connected to the \"delete-event\" signal on
+    a @class{gtk-window}.
+  @end{short}
+  The function calls the function @fun{gtk-widget-hide} on its argument, then
+  returns @em{true}. If connected to the \"delete-event\" signal, the result is
+  that clicking the close button for a window (on the window frame, top right
+  corner usually) will hide but not destroy the window. By default, GTK+
+  destroys windows when the \"delete-event\" signal is received.
+  @see-function{gtk-widget-hide}"
+  (widget (g-object gtk-widget)))
+
+(export 'gtk-widget-hide-on-delete)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_set_style ()
@@ -5510,23 +5510,25 @@
 
 (defcfun ("gtk_widget_queue_draw_area" gtk-widget-queue-draw-area) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-1-6}
-  @argument[widget]{a @class{gtk-widget} instance}
+ "@version{2013-6-30}
+  @argument[widget]{a @class{gtk-widget} object}
   @argument[x]{x coordinate of upper-left corner of rectangle to redraw}
   @argument[y]{y coordinate of upper-left corner of rectangle to redraw}
   @argument[width]{width of region to draw}
   @argument[height]{height of region to draw}
   @begin{short}
-    Convenience function that calls @fun{gtk-widget-queue-draw-region} on the
-    region created from the given coordinates.
+    Convenience function that calls the function
+    @fun{gtk-widget-queue-draw-region} on the region created from the given
+    coordinates.
   @end{short}
 
   The region here is specified in widget coordinates. Widget coordinates are a
-  bit odd; for historical reasons, they are defined as widget->window
+  bit odd; for historical reasons, they are defined as @code{widget->window}
   coordinates for widgets that are not @code{:no-window} widgets, and are
-  relative to widget->allocation.x, widget->allocation.y for widgets that are
-  @code{:no-window} widgets."
-  (widget g-object)
+  relative to @code{widget->allocation.x}, @code{widget->allocation.y} for
+  widgets that are @code{:no-window} widgets.
+  @see-function{gtk-widget-queue-draw-region}"
+  (widget (g-object gtk-widget))
   (x :int)
   (y :int)
   (width :int)
@@ -5540,13 +5542,13 @@
 
 (defcfun ("gtk_widget_queue_draw_region" gtk-widget-queue-draw-region) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-10}
+ "@version{2013-6-30}
   @argument[widget]{a @class{gtk-widget} widget}
-  @argument[region]{region to draw}
+  @argument[region]{region of type @symbol{cairo-region-t} to draw}
   @begin{short}
-    Invalidates the rectangular area of @arg{widget} defined by region by
-    calling @fun{gdk-window-invalidate-region} on the @arg{widget}'s window and
-    all its child windows.
+    Invalidates the rectangular area of @arg{widget} defined by @arg{region} by
+    calling the function @fun{gdk-window-invalidate-region} on the
+    @arg{widget}'s window and all its child windows.
   @end{short}
   Once the main loop becomes idle (after the current batch of events has been
   processed, roughly), the window will receive expose events for the union of
@@ -5556,7 +5558,8 @@
   might also use it to schedule a redraw of a @class{gtk-drawing-area} or some
   portion thereof.
 
-  Since 3.0"
+  Since 3.0
+  @see-function{gdk-window-invalidate-region}"
   (widget (g-object gtk-widget))
   (region cairo-region-t))
 
@@ -7412,19 +7415,23 @@
 
 (defun gtk-widget-set-visible (widget visible)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-5}
-  @argument[widget]{a @class{gtk-widget} instance}
+ "@version{2013-6-30}
+  @argument[widget]{a @class{gtk-widget} object}
   @argument[visible]{whether the @arg{widget} should be shown or not}
   @begin{short}
     Sets the visibility state of @arg{widget}.
   @end{short}
-  Note that setting this to @arg{true} doesn't mean the widget is actually
-  viewable, see @fun{gtk-widget-get-visible}.
+  Note that setting this to @arg{true} does not mean the widget is actually
+  viewable, see the function @fun{gtk-widget-get-visible}.
 
-  This function simply calls @fun{gtk-widget-show} or @fun{gtk-widget-hide} but
-  is nicer to use when the visibility of the widget depends on some condition.
+  This function simply calls the functions @fun{gtk-widget-show} or
+  @fun{gtk-widget-hide} but is nicer to use when the visibility of the widget
+  depends on some condition.
 
-  Since 2.18"
+  Since 2.18
+  @see-function{gtk-widget-get-visible}
+  @see-function{gtk-widget-show}
+  @see-function{gtk-widget-hide}"
   (setf (gtk-widget-visible widget) visible))
 
 (export 'gtk-widget-set-visible)

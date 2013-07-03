@@ -156,8 +156,6 @@
     gtk-label-wrap-mode
     "wrap-mode" "PangoWrapMode" t t)))
 
-;;; --- gtk-label --------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-label 'type)
  "@version{2013-4-12}
@@ -411,15 +409,11 @@
   Default value: 0@br{}
   Since 2.6")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "attributes" 'gtk-label) 't)
  "The @code{\"attributes\"} property of type @class{pango-attr-list}
   (Read / Write)@br{}
   A list of style attributes to apply to the text of the label.")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "cursor-position" 'gtk-label) 't)
@@ -428,25 +422,21 @@
   Allowed values: >= 0@br{}
   Default value: 0")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "ellipsize" 'gtk-label) 't)
  "The @code{\"ellipsize\"} property of type @symbol{pango-ellipsize-mode}
-  (Read / Write)@br{}
+  (Read / Write) @br{}
   The preferred place to ellipsize the string, if the label does not have
   enough room to display the entire string, specified as a value of the
-  @symbol{pango-ellisize-mode} enumeration.
+  @symbol{pango-ellipsize-mode} enumeration.
   Note that setting this property to a value other than @code{:none} has the
   side-effect that the label requests only enough space to display the ellipsis
   \"...\". In particular, this means that ellipsizing labels do not work well
   in notebook tabs, unless the tab's @code{\"tab-expand\"} property is set to
-  @arg{true}. Other ways to set a label's width are
-  @fun{gtk-widget-set-size-request} and @fun{gtk-label-set-width-chars}.@br{}
-  Default value: @code{:none}@br{}
+  @arg{true}. Other ways to set a label's width are the functions
+  @fun{gtk-widget-set-size-request} and @fun{gtk-label-set-width-chars}. @br{}
+  Default value: @code{:none} @br{}
   Since 2.6")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "justify" 'gtk-label) 't)
@@ -458,15 +448,11 @@
   that.@br{}
   Default value: @code{:left}")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "label" 'gtk-label) 't)
  "The @code{\"label\"} property of type @code{:string} (Read / Write)@br{}
   The text of the label.@br{}
   Default value: \"\"")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "max-width-chars" 'gtk-label) 't)
@@ -481,23 +467,17 @@
   Default value: -1@br{}
   Since 2.6")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "mnemonic-keyval" 'gtk-label) 't)
  "The @code{\"mnemonic-keyval\"} property of @code{:uint} (Read)@br{}
   The mnemonic accelerator key for this label.@br{}
   Default value: 16777215")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "mnemonic-widget" 'gtk-label) 't)
  "The @code{\"mnemonic-widget\"} property of type @class{gtk-widget}
   (Read / Write)@br{}
   The widget to be activated when the label's mnemonic key is pressed.")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "pattern" 'gtk-label) 't)
@@ -506,15 +486,11 @@
   text to underline.@br{}
   Default value: @code{nil}")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "selectable" 'gtk-label) 't)
  "The @code{\"selectable\"} property of type @code{:boolean} (Read / Write)@br{}
   Whether the label text can be selected with the mouse.@br{}
   Default value: @code{nil}")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "selection-bound" 'gtk-label) 't)
@@ -523,8 +499,6 @@
   chars.@br{}
   Allowed values: >= 0 @br{}
   Default value: 0")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "single-line-mode"
@@ -539,8 +513,6 @@
   Default value: @code{nil} @br{}
   Since 2.6")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "track-visited-links"
                                                'gtk-label) 't)
@@ -553,16 +525,12 @@
   Default value: @em{true}@br{}
   Since 2.18")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "use-markup" 'gtk-label) 't)
  "The @code{\"use-markup\"} property of type @code{:boolean} (Read / Write)@br{}
   The text of the label includes XML markup. See the function
   @fun{pango-parse-markup}.@br{}
   Default value: @code{nil}")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "use-underline" 'gtk-label) 't)
@@ -571,8 +539,6 @@
   If set, an underline in the text indicates the next character should be used
   for the mnemonic accelerator key.@br{}
   Default value: @code{nil}")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "width-chars" 'gtk-label) 't)
@@ -586,15 +552,11 @@
   Default value: -1@br{}
   Since 2.6")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "wrap" 'gtk-label) 't)
  "The @code{wrap} property of type @code{:boolean} (Read / Write)@br{}
   If set, wrap lines if the text becomes too wide.@br{}
   Default value: @code{nil}")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "wrap-mode" 'gtk-label) 't)
@@ -622,8 +584,6 @@
     class.
   @end{short}")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-label-attributes atdoc:*function-name-alias*)
       "Accessor"
@@ -633,8 +593,6 @@
     Accessor of the slot @code{\"attributes\"} of the @class{gtk-label}
     class.
   @end{short}")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-label-cursor-position atdoc:*function-name-alias*)
@@ -646,8 +604,6 @@
     class.
   @end{short}")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-label-ellipsize atdoc:*function-name-alias*)
       "Accessor"
@@ -657,8 +613,6 @@
     Accessor of the slot @code{\"ellipsize\"} of the @class{gtk-label}
     class.
   @end{short}")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-label-justify atdoc:*function-name-alias*)
@@ -670,8 +624,6 @@
     class.
   @end{short}")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-label-label atdoc:*function-name-alias*)
       "Accessor"
@@ -681,8 +633,6 @@
     Accessor of the slot @code{\"label\"} of the @class{gtk-label}
     class.
   @end{short}")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-label-max-width-chars atdoc:*function-name-alias*)
@@ -694,8 +644,6 @@
     class.
   @end{short}")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-label-mnemonic-keyval atdoc:*function-name-alias*)
       "Accessor"
@@ -705,8 +653,6 @@
     Accessor of the slot @code{\"mnemonic-keyval\"} of the @class{gtk-label}
     class.
   @end{short}")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-label-mnemonic-widget atdoc:*function-name-alias*)
@@ -718,8 +664,6 @@
     class.
   @end{short}")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-label-pattern atdoc:*function-name-alias*)
       "Accessor"
@@ -729,8 +673,6 @@
     Accessor of the slot @code{\"pattern\"} of the @class{gtk-label}
     class.
   @end{short}")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-label-selectable atdoc:*function-name-alias*)
@@ -742,8 +684,6 @@
     class.
   @end{short}")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-label-selection-bound atdoc:*function-name-alias*)
       "Accessor"
@@ -753,8 +693,6 @@
     Accessor of the slot @code{\"selection-bound\"} of the @class{gtk-label}
     class.
   @end{short}")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-label-single-line-mode atdoc:*function-name-alias*)
@@ -766,8 +704,6 @@
     class.
   @end{short}")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-label-track-visited-links atdoc:*function-name-alias*)
       "Accessor"
@@ -777,8 +713,6 @@
     Accessor of the slot @code{\"trac-visited-links\"} of the @class{gtk-label}
     class.
   @end{short}")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-label-use-markup atdoc:*function-name-alias*)
@@ -790,8 +724,6 @@
     class.
   @end{short}")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-label-use-underline atdoc:*function-name-alias*)
       "Accessor"
@@ -801,8 +733,6 @@
     Accessor of the slot @code{\"use-underline\"} of the @class{gtk-label}
     class.
   @end{short}")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-label-width-chars atdoc:*function-name-alias*)
@@ -814,8 +744,6 @@
     class.
   @end{short}")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-label-wrap atdoc:*function-name-alias*)
       "Accessor"
@@ -825,8 +753,6 @@
     Accessor of the slot @code{\"wrap\"} of the @class{gtk-label}
     class.
   @end{short}")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-label-wrap-mode atdoc:*function-name-alias*)
@@ -1722,9 +1648,9 @@
 
 (defun gtk-label-set-single-line-mode (label single-line-mode)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-14}
+ "@version{2013-6-29}
   @argument[label]{a @class{gtk-label} widget}
-  @argument[single-line-mode]{@em{True} if the @arg{label} should be in single
+  @argument[single-line-mode]{@em{true} if the @arg{label} should be in single
     line mode}
   @begin{short}
     Sets whether the @arg{label} is in single line mode.
@@ -1733,7 +1659,7 @@
   Since 2.6"
   (setf (gtk-label-single-line-mode label) single-line-mode))
 
-(export 'gtk-label-single-line-mode)
+(export 'gtk-label-set-single-line-mode)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_label_set_angle ()

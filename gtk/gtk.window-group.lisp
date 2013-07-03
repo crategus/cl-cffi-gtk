@@ -58,8 +58,6 @@
     :type-initializer "gtk_window_group_get_type")
   nil)
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-window-group 'type)
  "@version{2013-3-28}

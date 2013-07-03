@@ -1754,34 +1754,44 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_view_set_editable ()
-;;;
-;;; void gtk_text_view_set_editable (GtkTextView *text_view, gboolean setting);
-;;;
-;;; Sets the default editability of the GtkTextView. You can override this
-;;; default setting with tags in the buffer, using the "editable" attribute of
-;;; tags.
-;;;
-;;; text_view :
-;;;     a GtkTextView
-;;;
-;;; setting :
-;;;     whether it's editable
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-text-view-set-editable))
+
+(defun gtk-text-view-set-editable (text-view setting)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-30}
+  @argument[text-view]{a @class{gtk-text-view} widget}
+  @argument[setting]{whether @arg{text-view} editable}
+  @begin{short}
+    Sets the default editability of the @class{gtk-text-view}.
+  @end{short}
+  You can override this default setting with tags in the buffer, using the
+  \"editable\" attribute of tags.
+  @see-function{gtk-text-view-get-editable}"
+  (setf (gtk-text-view-editable text-view) setting))
+
+(export 'gtk-text-view-set-editable)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_view_get_editable ()
-;;;
-;;; gboolean gtk_text_view_get_editable (GtkTextView *text_view);
-;;;
-;;; Returns the default editability of the GtkTextView. Tags in the buffer may
-;;; override this setting for some ranges of text.
-;;;
-;;; text_view :
-;;;     a GtkTextView
-;;;
-;;; Returns :
-;;;     whether text is editable by default
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-text-view-get-editable))
+
+(defun gtk-text-view-get-editable (text-view)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-30}
+  @argument[text-view]{a @class{gtk-text-view} widget}
+  @return{Whether text is editable by default.}
+  @begin{short}
+    Returns the default editability of the @class{gtk-text-view}.
+  @end{short}
+  Tags in the buffer may override this setting for some ranges of text.
+  @see-function{gtk-text-view-set-editable}"
+  (gtk-text-view-editable text-view))
+
+(export 'gtk-text-view-get-editable)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_view_set_cursor_visible ()

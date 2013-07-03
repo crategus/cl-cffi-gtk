@@ -752,41 +752,36 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_renderer_render ()
-;;;
-;;; void gtk_cell_renderer_render (GtkCellRenderer *cell,
-;;;                                cairo_t *cr,
-;;;                                GtkWidget *widget,
-;;;                                const GdkRectangle *background_area,
-;;;                                const GdkRectangle *cell_area,
-;;;                                GtkCellRendererState flags);
-;;;
-;;; Invokes the virtual render function of the GtkCellRenderer. The three
-;;; passed-in rectangles are areas in cr. Most renderers will draw within
-;;; cell_area; the xalign, yalign, xpad, and ypad fields of the GtkCellRenderer
-;;; should be honored with respect to cell_area. background_area includes the
-;;; blank space around the cell, and also the area containing the tree expander;
-;;; so the background_area rectangles for all cells tile to cover the entire
-;;; window.
-;;;
-;;; cell :
-;;;     a GtkCellRenderer
-;;;
-;;; cr :
-;;;     a cairo context to draw to
-;;;
-;;; widget :
-;;;     the widget owning window
-;;;
-;;; background_area :
-;;;     entire cell area (including tree expanders and maybe padding on the
-;;;     sides)
-;;;
-;;; cell_area :
-;;;     area normally rendered by a cell renderer
-;;;
-;;; flags :
-;;;     flags that affect rendering
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_cell_renderer_render" gtk-cell-renderer-render) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-30}
+  @argument[cell]{a @class{gtk-cell-renderer} object}
+  @argument[cr]{a cairo context to draw to}
+  @argument[widget]{the widget owning window}
+  @argument[background-area]{entire cell area including tree expanders and
+    maybe padding on the sides}
+  @argument[cell-area]{area normally rendered by a cell renderer}
+  @argument[flags]{flags that affect rendering}
+  @begin{short}
+    Invokes the virtual render function of the @class{gtk-cell-renderer}.
+  @end{short}
+  The three passed-in rectangles are areas in @arg{cr}. Most renderers will
+  draw within @arg{cell-area}; the @code{xalign}, @code{yalign}, @code{xpad},
+  and @code{ypad} fields of the @class{gtk-cell-renderer} should be honored with
+  respect to @arg{cell-area}. @arg{background-area} includes the blank space
+  around the cell, and also the area containing the tree expander; so the
+  @arg{background-area} rectangles for all cells tile to cover the entire
+  window."
+  (cell (g-object gtk-cell-renderer))
+  (cr cairo-t)
+  (widget (g-object gtk-widget))
+  (background-area (g-boxed-foreign gdk-rectangle))
+  (cell-area (g-boxed-foreign gdk-rectangle))
+  (flags gtk-cell-renderer-state))
+
+(export 'gtk-cell-renderer-render)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_renderer_activate ()

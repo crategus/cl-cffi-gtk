@@ -83,7 +83,7 @@
  "@version{2013-6-21}
   @begin{short}
     The @sym{gtk-cell-area-box} renders cell renderers into a row or a column
-    depending on its @class{gtk-orientation}.
+    depending on its @symbol{gtk-orientation}.
   @end{short}
 
   @sym{gtk-cell-area-box} uses a notion of packing. Packing refers to adding

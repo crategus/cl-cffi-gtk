@@ -30,11 +30,11 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; GtkToolbar
-;;; 
+;;;
 ;;; Create bars of buttons and other widgets
-;;;     
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;;     GtkToolbar
 ;;;     GtkToolbarSpaceStyle
 ;;;
@@ -172,7 +172,7 @@
       Emitted when the orientation of the toolbar changes.
       @begin[code]{table}
         @entry[toolbar]{The object which emitted the signal.}
-        @entry[orientation]{The new @class{gtk-orientation} of the toolbar.}
+        @entry[orientation]{The new @symbol{gtk-orientation} of the toolbar.}
       @end{table}
     @subheading{The \"popup-context-menu\" signal}
       @begin{pre}
@@ -491,125 +491,125 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_toolbar_set_show_arrow ()
-;;; 
+;;;
 ;;; void gtk_toolbar_set_show_arrow (GtkToolbar *toolbar, gboolean show_arrow);
-;;; 
+;;;
 ;;; Sets whether to show an overflow menu when toolbar doesn't have room for all
 ;;; items on it. If TRUE, items that there are not room are available through an
 ;;; overflow menu.
-;;; 
+;;;
 ;;; toolbar :
 ;;;     a GtkToolbar
-;;; 
+;;;
 ;;; show_arrow :
 ;;;     Whether to show an overflow menu
-;;; 
+;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_toolbar_unset_icon_size ()
-;;; 
+;;;
 ;;; void gtk_toolbar_unset_icon_size (GtkToolbar *toolbar);
-;;; 
+;;;
 ;;; Unsets toolbar icon size set with gtk_toolbar_set_icon_size(), so that user
 ;;; preferences will be used to determine the icon size.
-;;; 
+;;;
 ;;; toolbar :
 ;;;     a GtkToolbar
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_toolbar_get_show_arrow ()
-;;; 
+;;;
 ;;; gboolean gtk_toolbar_get_show_arrow (GtkToolbar *toolbar);
-;;; 
+;;;
 ;;; Returns whether the toolbar has an overflow menu. See
 ;;; gtk_toolbar_set_show_arrow().
-;;; 
+;;;
 ;;; toolbar :
 ;;;     a GtkToolbar
-;;; 
+;;;
 ;;; Returns :
 ;;;     TRUE if the toolbar has an overflow menu.
-;;; 
+;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_toolbar_get_style ()
-;;; 
+;;;
 ;;; GtkToolbarStyle gtk_toolbar_get_style (GtkToolbar *toolbar);
-;;; 
+;;;
 ;;; Retrieves whether the toolbar has text, icons, or both . See
 ;;; gtk_toolbar_set_style().
-;;; 
+;;;
 ;;; toolbar :
 ;;;     a GtkToolbar
-;;; 
+;;;
 ;;; Returns :
 ;;;     the current style of toolbar
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_toolbar_get_icon_size ()
-;;; 
+;;;
 ;;; GtkIconSize gtk_toolbar_get_icon_size (GtkToolbar *toolbar);
-;;; 
+;;;
 ;;; Retrieves the icon size for the toolbar. See gtk_toolbar_set_icon_size().
-;;; 
+;;;
 ;;; toolbar :
 ;;;     a GtkToolbar
-;;; 
+;;;
 ;;; Returns :
 ;;;     the current icon size for the icons on the toolbar
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_toolbar_get_relief_style ()
-;;; 
+;;;
 ;;; GtkReliefStyle gtk_toolbar_get_relief_style (GtkToolbar *toolbar);
-;;; 
+;;;
 ;;; Returns the relief style of buttons on toolbar. See gtk_button_set_relief().
-;;; 
+;;;
 ;;; toolbar :
 ;;;     a GtkToolbar
-;;; 
+;;;
 ;;; Returns :
 ;;;     The relief style of buttons on toolbar.
-;;; 
+;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_toolbar_set_style ()
-;;; 
+;;;
 ;;; void gtk_toolbar_set_style (GtkToolbar *toolbar, GtkToolbarStyle style);
-;;; 
+;;;
 ;;; Alters the view of toolbar to display either icons only, text only, or both.
-;;; 
+;;;
 ;;; toolbar :
 ;;;     a GtkToolbar.
-;;; 
+;;;
 ;;; style :
 ;;;     the new style for toolbar.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_toolbar_set_icon_size ()
-;;; 
+;;;
 ;;; void gtk_toolbar_set_icon_size (GtkToolbar *toolbar, GtkIconSize icon_size);
-;;; 
+;;;
 ;;; This function sets the size of stock icons in the toolbar. You can call it
 ;;; both before you add the icons and after they've been added. The size you set
 ;;; will override user preferences for the default icon size.
-;;; 
+;;;
 ;;; This should only be used for special-purpose toolbars, normal application
 ;;; toolbars should respect the user preferences for the size of icons.
-;;; 
+;;;
 ;;; toolbar :
 ;;;     A GtkToolbar
-;;; 
+;;;
 ;;; icon_size :
 ;;;     The GtkIconSize that stock icons in the toolbar shall have.
 ;;; ----------------------------------------------------------------------------

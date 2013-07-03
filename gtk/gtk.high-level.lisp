@@ -208,5 +208,43 @@
                  repeat 10
                  do (with-progress-bar-action (sleep 1))))))))
 
+;;; A function to show a simple message dialog
+
+(defun show-message (message &key (buttons :ok) (message-type :info)
+                                  (use-markup nil))
+  (let ((dialog (make-instance 'gtk-message-dialog
+                               :text message
+                               :buttons buttons
+                               :message-type message-type
+                               :use-markup use-markup)))
+    (prog1
+      (gtk-dialog-run dialog)
+      (gtk-widget-destroy dialog))))
+
+(export 'show-message)
+
+;;; Handle an error and show an error message dialog
+
+(defmacro with-gtk-message-error-handler (&body body)
+  (let ((dialog (gensym))
+        (e (gensym)))
+    `(handler-case
+         (progn ,@body)
+       (error (,e)
+              (using* ((,dialog (make-instance
+                                  'gtk-message-dialog
+                                  :message-type :error
+                                  :buttons :ok
+                                  :text
+                                  (format nil
+                                          "Error~%~A~%during execution of~%~A"
+                                          ,e
+                                          '(progn ,@body)))))
+                      (gtk-dialog-run ,dialog)
+                      (gtk-widget-destroy ,dialog)
+                      nil)))))
+
+(export 'with-gtk-message-error-handler)
+
 |#
 ;;; --- End of file gtk.high-level.lisp ----------------------------------------

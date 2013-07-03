@@ -36,26 +36,27 @@
    :gobject :gdk :gdk-pixbuf :glib :gio :iter :pango :cairo)
   (:export #:cl-cffi-gtk-build-info
 
-           #:define-child-property
-           #:container-class-child-properties
-           #:generate-child-properties
-           #:tree-lisp-store
-           #:tree-lisp-store-root
-           #:tree-node
-           #:make-tree-node
-           #:tree-node-tree
-           #:tree-node-parent
-           #:tree-node-id
-           #:tree-node-item
-           #:tree-node-children
-           #:tree-node-insert-at
-           #:tree-node-remove-at
-           #:tree-node-child-at
-           #:tree-lisp-store-add-column
+;           #:define-child-property
+;           #:container-class-child-properties
+;           #:generate-child-properties
+;           #:tree-lisp-store
+;           #:tree-lisp-store-root
+;           #:tree-node
+;           #:make-tree-node
+;           #:tree-node-tree
+;           #:tree-node-parent
+;           #:tree-node-id
+;           #:tree-node-item
+;           #:tree-node-children
+;           #:tree-node-insert-at
+;           #:tree-node-remove-at
+;           #:tree-node-child-at
+;           #:tree-lisp-store-add-column
 
 ;           #:gtk-call-aborted
 ;           #:gtk-call-aborted-condition
-           #:let-ui))
+;           #:let-ui
+           ))
 
 (defpackage :gtk-examples
   (:use :cl :gtk :gdk :gobject)
@@ -2730,7 +2731,7 @@ setup_tree (void)
       @about-function{gtk-cell-layout-clear-attributes}
     @end{subsection}
     @begin[GtkCellArea]{subsection}
-      An abstract class for laying out @class{gtk-cell-renderers}.
+      An abstract class for laying out @class{gtk-cell-renderer}'s.
 
       @about-class{gtk-cell-area}
       @about-class{gtk-cell-area-class}
@@ -3665,8 +3666,8 @@ setup_tree (void)
       A filter for selecting a file subset.
 
       @about-class{gtk-file-filter}
-      @about-symbol{gtk-file-filter-info}
       @about-symbol{gtk-file-filter-flags}
+      @about-symbol{gtk-file-filter-info}
       @about-function{gtk-file-filter-new}
       @about-function{gtk-file-filter-set-name}
       @about-function{gtk-file-filter-get-name}
