@@ -2617,24 +2617,31 @@
 ;;; g_source_get_current_time ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_source_get_current_time" g-source-get-current-time) :void
+(defcfun ("g_source_get_current_time" %g-source-get-current-time) :void
+  (source (:pointer g-source))
+  (timeval (:pointer g-time-val)))
+
+(defun g-source-get-current-time (source)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-9}
+ "@version{2013-6-26}
   @argument[source]{a @type{g-source} structure}
-  @argument[timeval]{a @symbol{g-time-val} structure in which to store current
-    time.}
+  @begin{return}
+    @code{timeval} -- a @type{g-time-val} structure in which to store current
+    time
+  @end{return}
   @subheading{Warning}
     @sym{g-source-get-current-time} has been deprecated since version 2.28 and
-    should not be used in newly written code. Use @fun{g-source-get-time}
-    instead.
+    should not be used in newly written code. Use the function
+    @fun{g-source-get-time} instead.
 
   @begin{short}
-    This function ignores source and is otherwise the same as
+    This function ignores @arg{source} and is otherwise the same as the function
     @fun{g-get-current-time}.
   @end{short}
   @see-function{g-source-get-time}"
-  (source (:pointer g-source))
-  (timeval (:pointer g-time-val)))
+  (with-foreign-object (timeval 'g-time-val)
+    (%g-source-get-current-time source timeval)
+    timeval))
 
 (export 'g-source-get-current-time)
 

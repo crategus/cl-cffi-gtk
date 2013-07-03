@@ -651,9 +651,9 @@
 (setf (gethash '+g-variant-type-dictionary+ atdoc:*variable-name-alias*)
       "Constant"
       (documentation '+g-variant-type-dictionary+ 'variable)
- "@version{2013-4-9}
+ "@version{2013-6-29}
   @variable-value{\"a{?*@}\"}
-  An indefinite type that is a supertype of every dictionary type -- that is,
+  An indefinite type that is a supertype of every dictionary type. That is,
   any array type that has an element type equal to any dictionary entry type.")
 
 (export '+g-variant-type-dictionary+)

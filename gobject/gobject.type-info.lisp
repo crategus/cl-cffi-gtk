@@ -1837,9 +1837,9 @@
     system is initialised automatically and this function does nothing.
   @end{short}")
 
-; (glib::at-init () (g-type-init))
+ (glib::at-init () (g-type-init))
 
-; (export 'g-type-init)
+ (export 'g-type-init)
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GTypeDebugFlags

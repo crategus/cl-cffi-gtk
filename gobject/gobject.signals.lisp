@@ -376,59 +376,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GSignalFlags
-;;;
-;;; typedef enum {
-;;;   G_SIGNAL_RUN_FIRST    = 1 << 0,
-;;;   G_SIGNAL_RUN_LAST     = 1 << 1,
-;;;   G_SIGNAL_RUN_CLEANUP  = 1 << 2,
-;;;   G_SIGNAL_NO_RECURSE   = 1 << 3,
-;;;   G_SIGNAL_DETAILED     = 1 << 4,
-;;;   G_SIGNAL_ACTION       = 1 << 5,
-;;;   G_SIGNAL_NO_HOOKS     = 1 << 6,
-;;;   G_SIGNAL_MUST_COLLECT = 1 << 7,
-;;;   G_SIGNAL_DEPRECATED   = 1 << 8
-;;; } GSignalFlags;
-;;;
-;;; The signal flags are used to specify a signal's behaviour, the overall
-;;; signal description outlines how especially the RUN flags control the stages
-;;; of a signal emission.
-;;;
-;;; G_SIGNAL_RUN_FIRST
-;;;     Invoke the object method handler in the first emission stage.
-;;;
-;;; G_SIGNAL_RUN_LAST
-;;;     Invoke the object method handler in the third emission stage.
-;;;
-;;; G_SIGNAL_RUN_CLEANUP
-;;;     Invoke the object method handler in the last emission stage.
-;;;
-;;; G_SIGNAL_NO_RECURSE
-;;;     Signals being emitted for an object while currently being in emission
-;;;     for this very object will not be emitted recursively, but instead cause
-;;;     the first emission to be restarted.
-;;;
-;;; G_SIGNAL_DETAILED
-;;;     This signal supports "::detail" appendices to the signal name upon
-;;;     handler connections and emissions.
-;;;
-;;; G_SIGNAL_ACTION
-;;;     Action signals are signals that may freely be emitted on alive objects
-;;;     from user code via g_signal_emit() and friends, without the need of
-;;;     being embedded into extra code that performs pre or post emission
-;;;     adjustments on the object. They can also be thought of as object methods
-;;;     which can be called generically by third-party code.
-;;;
-;;; G_SIGNAL_NO_HOOKS
-;;;     No emissions hooks are supported for this signal.
-;;;
-;;; G_SIGNAL_MUST_COLLECT
-;;;     Varargs signal emission will always collect the arguments, even if there
-;;;     are no signal handlers connected. Since 2.30.
-;;;
-;;; G_SIGNAL_DEPRECATED
-;;;     The signal is deprecated and will be removed in a future version.
-;;;     A warning will be generated if it is connected while running with
-;;;     G_ENABLE_DIAGNOSTIC=1. Since 2.32.
 ;;; ----------------------------------------------------------------------------
 
 (defbitfield g-signal-flags
@@ -441,6 +388,52 @@
   :no-hooks
   :must-collect
   :deprecated)
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'g-signal-flags atdoc:*symbol-name-alias*) "Bitfield"
+      (gethash 'g-signal-flags atdoc:*external-symbols*)
+ "@version{2013-6-30}
+  @begin{short}
+    The signal flags are used to specify a signal's behaviour, the overall
+    signal description outlines how especially the RUN flags control the stages
+    of a signal emission.
+  @end{short}
+  @begin{pre}
+(defbitfield g-signal-flags
+  :run-first
+  :run-last
+  :run-cleanup
+  :no-recurse
+  :detailed
+  :action
+  :no-hooks
+  :must-collect
+  :deprecated)
+  @end{pre}
+  @begin[code]{table}
+    @entry[:run-first]{Invoke the object method handler in the first emission
+      stage.}
+    @entry[:run-last]{Invoke the object method handler in the third emission
+      stage.}
+    @entry[:run-cleanup]{Invoke the object method handler in the last emission
+      stage.}
+    @entry[:no-recurse]{Signals being emitted for an object while currently
+      being in emission for this very object will not be emitted recursively,
+      but instead cause the first emission to be restarted.}
+    @entry[:detailed]{This signal supports \"::detail\" appendices to the
+      signal name upon handler connections and emissions.}
+    @entry[:action]{Action signals are signals that may freely be emitted on
+      alive objects from user code via the function @fun{g-signal-emit} and
+      friends, without the need of being embedded into extra code that performs
+      pre or post emission adjustments on the object. They can also be thought
+      of as object methods which can be called generically by third-party code.}
+    @entry[:no-hooks]{No emissions hooks are supported for this signal.}
+    @entry[:must-collect]{Varargs signal emission will always collect the
+      arguments, even if there are no signal handlers connected. Since 2.30.}
+    @entry[:deprecated]{The signal is deprecated and will be removed in a future
+      version. A warning will be generated if it is connected while running with
+      @code{G_ENABLE_DIAGNOSTIC = 1}. Since 2.32.}
+  @end{table}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GSignalMatchType
@@ -706,76 +699,38 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_signal_newv ()
-;;;
-;;; guint g_signal_newv (const gchar *signal_name,
-;;;                      GType itype,
-;;;                      GSignalFlags signal_flags,
-;;;                      GClosure *class_closure,
-;;;                      GSignalAccumulator accumulator,
-;;;                      gpointer accu_data,
-;;;                      GSignalCMarshaller c_marshaller,
-;;;                      GType return_type,
-;;;                      guint n_params,
-;;;                      GType *param_types);
-;;;
-;;; Creates a new signal. (This is usually done in the class initializer.)
-;;;
-;;; See g_signal_new() for details on allowed signal names.
-;;;
-;;; If c_marshaller is NULL g_cclosure_marshal_generic will be used as the
-;;; marshaller for this signal.
-;;;
-;;; signal_name :
-;;;     the name for the signal
-;;;
-;;; itype :
-;;;     the type this signal pertains to. It will also pertain to types which
-;;;     are derived from this type
-;;;
-;;; signal_flags :
-;;;     a combination of GSignalFlags specifying detail of when the default
-;;;     handler is to be invoked. You should at least specify G_SIGNAL_RUN_FIRST
-;;;     or G_SIGNAL_RUN_LAST
-;;;
-;;; class_closure :
-;;;     The closure to invoke on signal emission; may be NULL.
-;;;
-;;; accumulator :
-;;;     the accumulator for this signal; may be NULL.
-;;;
-;;; accu_data :
-;;;     user data for the accumulator
-;;;
-;;; c_marshaller :
-;;;     the function to translate arrays of parameter values to signal emissions
-;;;     into C language callback invocations or NULL.
-;;;
-;;; return_type :
-;;;     the type of return value, or G_TYPE_NONE for a signal without a return
-;;;     value
-;;;
-;;; n_params :
-;;;     the length of param_types
-;;;
-;;; param_types :
-;;;     an array of types, one for each parameter
-;;;
-;;; Returns :
-;;;     the signal id
 ;;; ----------------------------------------------------------------------------
 
-;;; guint g_signal_newv (const gchar *signal_name,
-;;;                      GType itype,
-;;;                      GSignalFlags signal_flags,
-;;;                      GClosure *class_closure,
-;;;                      GSignalAccumulator accumulator,
-;;;                      gpointer accu_data,
-;;;                      GSignalCMarshaller c_marshaller,
-;;;                      GType return_type,
-;;;                      guint n_params,
-;;;                      GType *param_types);
-
 (defcfun ("g_signal_newv" g-signal-newv) :uint
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-30}
+  @argument[signal-name]{the name for the signal}
+  @argument[itype]{the type this signal pertains to. It will also pertain to
+    types which are derived from this type.}
+  @argument[signal-flags]{a combination of @symbol{g-signal-flags} specifying
+    detail of when the default handler is to be invoked. You should at least
+    specify @code{:run-first} or @code{:run-last}}
+  @argument[class-closure]{the closure to invoke on signal emission;
+    may be @code{nil}}
+  @argument[accumulator]{the accumulator for this signal; may be @code{nil}}
+  @argument[accu-data]{user data for the accumulator}
+  @argument[c-marshaller]{the function to translate arrays of parameter values
+    to signal emissions into C language callback invocations or @code{nil}}
+  @argument[return-type]{the type of return value, or @var{+g-type-none+} for
+    a signal without a return value}
+  @argument[n-params]{the length of @arg{param-types}}
+  @argument[param-types]{an array of types, one for each parameter}
+  @return{The signal ID.}
+  @begin{short}
+    Creates a new signal. (This is usually done in the class initializer.)
+  @end{short}
+
+  See the function @fun{g-signal-new} for details on allowed signal names.
+
+  If @arg{c-marshaller} is @code{nil} the function
+  @code{g-cclosure-marshal-generic} will be used as the marshaller for this
+  signal.
+  @see-function{g-signal-new}"
   (signal-name :string)
   (itype g-type)
   (signal-flags g-signal-flags)

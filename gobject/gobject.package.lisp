@@ -717,11 +717,11 @@
     upon connection) serves as a wildcard and matches any detail argument
     passed in to emission.
 
-    @about-symbol{GSignalInvocationHint}
-    @about-symbol{GSignalCMarshaller}
-    @about-symbol{GSignalFlags}
-    @about-symbol{GSignalMatchType}
-    @about-symbol{GSignalQuery}
+    @about-symbol{g-signal-invocation-hint}
+    @about-symbol{g-signal-cmarshaller}
+    @about-symbol{g-signal-flags}
+    @about-symbol{g-signal-match-type}
+    @about-symbol{g-signal-query}
     @about-function{G_SIGNAL_TYPE_STATIC_SCOPE}
     @about-function{G_SIGNAL_MATCH_MASK}
     @about-function{G_SIGNAL_FLAGS_MASK}
@@ -740,7 +740,7 @@
     @about-function{g-signal-connect-after}
     @about-function{g-signal-connect-swapped}
     @about-function{g-signal-connect-object}
-    @about-symbol{GConnectFlags}
+    @about-symbol{g-connect-flags}
     @about-function{g-signal-connect-data}
     @about-function{g-signal-connect-closure}
     @about-function{g-signal-connect-closure-by-id}

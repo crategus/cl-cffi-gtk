@@ -211,10 +211,6 @@
   (tv-sec :long)
   (tv-usec :long))
 
-(export 'g-time-val)
-
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-time-val atdoc:*type-name-alias*) "CStruct"
       (documentation 'g-time-val 'type)
@@ -237,6 +233,8 @@
     @entry[tv-sec]{seconds}
     @entry[tv-usec]{microseconds}
   @end{table}")
+
+(export 'g-time-val)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_get_current_time ()
