@@ -77,6 +77,8 @@
 ;          (let ((dest (gdk-rectangle-intersect src-rect
 ;                                               back-rect)))
 ;            (when dest
+              (format t "in loop ~a ~a~%" frame-num i)
+              #-nil
               (gdk-pixbuf-composite (aref *image-pixbufs* i)
                                     frame
                                     (gdk-rectangle-x dest-rect)
@@ -91,11 +93,14 @@
 ;                                    (truncate (if (eql i (* 2 (truncate (/ i 2))))
 ;                                        (max 127 (abs (* 255 (sin (* f 2.0d0 3.14)))))
 ;                                        (max 127 (abs (* 255 (cos (* f 2.0d0 3.14)))))))
-                                    255
- )
+                                    255)
 ;))
 )))
-    (gtk-widget-queue-draw area)
+    ;; TODO: This function call causes a memory overflow.
+;    (gtk-widget-queue-draw area)
+
+    (gtk-widget-queue-draw-area area  0 0 (gdk-rectangle-width back-rect) (gdk-rectangle-height back-rect))
+
     (incf frame-num 1)
     t)
 
@@ -127,7 +132,7 @@
         (setf frame (gdk-pixbuf-new :rgb nil 8 back-width back-height))
 
         (gtk-container-add window area)
-        (setf timeout-id (g-timeout-add 50 #'timeout))
+        (setf timeout-id (g-timeout-add 500 #'timeout))
         (format t "~&timeout-id = ~A~%" timeout-id)
 
         (gtk-widget-show-all window)))))
