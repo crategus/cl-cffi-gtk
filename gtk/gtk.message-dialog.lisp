@@ -423,16 +423,19 @@
   When the user clicks a button a \"response\" signal is emitted with response
   IDs from @symbol{gtk-response-type}. See @class{gtk-dialog} for more details.
   @see-symbol{gtk-response-type}"
-  (let ((dialog (make-instance 'gtk-message-dialog 
-                               :parent parent
+  (let ((dialog (make-instance 'gtk-message-dialog
                                :message-type type
-                               :buttons buttons
-                               :text (apply #'format
-                                            (cons nil (cons message args))))))
+                               :buttons buttons)))
+    (if message
+        (setf (gtk-message-dialog-text dialog)
+        (apply #'format (cons nil (cons message args)))))
+    (if parent
+        (gtk-widget-set-transient-for dialog parent))
     (if (member :modal flags)
         (gtk-window-set-modal dialog t))
     (if (member :destroy-with-parent flags)
-        (gtk-window-set-destroy-with-parent dialog t))))
+        (gtk-window-set-destroy-with-parent dialog t))
+    dialog))
 
 (export 'gtk-message-dialog-new)
 
@@ -472,37 +475,32 @@
                                       :error
                                       close
                                       nil)))
-  (gtk-message-dialog-set-markup dialog)
+  (gtk-message-dialog-set-markup dialog markup)
   ... )
-;;; GtkWidget *dialog;
-;;; dialog = gtk_message_dialog_new (main_application_window,
-;;;                                  GTK_DIALOG_DESTROY_WITH_PARENT,
-;;;                                  GTK_MESSAGE_ERROR,
-;;;                                  GTK_BUTTONS_CLOSE,
-;;;                                  NULL);
-;;; gtk_message_dialog_set_markup (GTK_MESSAGE_DIALOG (dialog),
-;;;                                markup);
-;;; Since 2.4
-"
+  @end{pre}
+  Since 2.4"
   (let ((dialog (make-instance 'gtk-message-dialog
-                               :parent parent
                                :use-markup t
                                :message-type type
-                               :buttons buttons
-                               :text (apply #'format
-                                            (cons nil (cons message args))))))
+                               :buttons buttons)))
+    (if message
+        (setf (gtk-message-dialog-text dialog)
+        (apply #'format (cons nil (cons message args)))))
+    (if parent
+        (gtk-widget-set-transient-for dialog parent))
     (if (member :modal flags)
         (gtk-window-set-modal dialog t))
     (if (member :destroy-with-parent flags)
-        (gtk-window-set-destroy-with-parent dialog t))))
+        (gtk-window-set-destroy-with-parent dialog t))
+    dialog))
 
-(export 'gtk-message-dialog-new)
+(export 'gtk-message-dialog-new-with-markup)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_message_dialog_set_markup ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_message_dialog_set_markup" gtk-message-dialog-set-markup) :void
+(defun gtk-message-dialog-set-markup (dialog text)
  #+cl-cffi-gtk-documentation
  "@version{2013-7-3}
   @argument[dialog]{a @class{gtk-message-dialog} window}
@@ -513,8 +511,8 @@
   @end{short}
 
   Since 2.4"
-  (dialog (g-object gtk-message-dialog))
-  (text :string))
+  (setf (gtk-message-dialog-use-markup dialog) t
+        (gtk-message-dialog-text dialog) text))
 
 (export 'gtk-message-dialog-set-markup)
 
@@ -558,73 +556,77 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_message_dialog_format_secondary_text ()
-;;;
-;;; void gtk_message_dialog_format_secondary_text
-;;;                                           (GtkMessageDialog *message_dialog,
-;;;                                            const gchar *message_format,
-;;;                                            ...);
-;;;
-;;; Sets the secondary text of the message dialog to be message_format (with
-;;; printf()-style).
-;;;
-;;; Note that setting a secondary text makes the primary text become bold,
-;;; unless you have provided explicit markup.
-;;;
-;;; message_dialog :
-;;;     a GtkMessageDialog
-;;;
-;;; message_format :
-;;;     printf()-style format string, or NULL
-;;;
-;;; ... :
-;;;     arguments for message_format
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-message-dialog-format-secondary-text))
+
+(defun gtk-message-dialog-format-secondary-text (dialog message &rest args)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-7-3}
+  @argument[dialog]{a @class{gtk-message-dialog} window}
+  @argument[message]{@code{format}-style format string, or @code{nil}}
+  @argument[args]{argumentes for @arg{message}}
+  @begin{short}
+    Sets the secondary text of the message dialog to be @arg{message} with
+    @code{format}-style and the arguments @arg{args}.
+  @end{short}
+
+  Note that setting a secondary text makes the primary text become bold,
+  unless you have provided explicit markup.
+
+  Since 2.6
+  @see-function{gtk-message-dialog-format-secondary-markup}"
+  (setf (gtk-message-dialog-secondary-text dialog)
+        (apply #'format (cons nil (cons message args)))))
+
+(export 'gtk-message-dialog-format-secondary-text)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_message_dialog_format_secondary_markup ()
-;;;
-;;; void gtk_message_dialog_format_secondary_markup
-;;;                                           (GtkMessageDialog *message_dialog,
-;;;                                            const gchar *message_format,
-;;;                                            ...);
-;;;
-;;; Sets the secondary text of the message dialog to be message_format (with
-;;; printf()-style), which is marked up with the Pango text markup language.
-;;;
-;;; Note that setting a secondary text makes the primary text become bold,
-;;; unless you have provided explicit markup.
-;;;
-;;; Due to an oversight, this function does not escape special XML characters
-;;; like gtk_message_dialog_new_with_markup() does. Thus, if the arguments may
-;;; contain special XML characters, you should use g_markup_printf_escaped() to
-;;; escape it.
-;;;
-;;; gchar *msg;
-;;;
-;;; msg = g_markup_printf_escaped (message_format, ...);
-;;; gtk_message_dialog_format_secondary_markup (message_dialog, "%s", msg);
-;;; g_free (msg);
-;;;
-;;; message_dialog :
-;;;     a GtkMessageDialog
-;;;
-;;; message_format :
-;;;     printf()-style markup string (see Pango markup format), or NULL
-;;;
-;;; ... :
-;;;     arguments for message_format
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-message-dialog-format-secondary-markup))
+
+(defun gtk-message-dialog-format-secondary-markup (dialog message &rest args)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-7-3}
+  @argument[dialog]{a @class{gtk-message-dialog} window}
+  @argument[message]{@code{format}-style markup string (see Pango markup
+    format), or @code{nil}}
+  @argument[args]{arguments for @arg{message}
+  @begin{short}
+    Sets the secondary text of the message dialog to be @arg{message with
+    @code{format}-style, which is marked up with the Pango text markup language.
+  @end{short}
+
+  Note that setting a secondary text makes the primary text become bold,
+  unless you have provided explicit markup.
+
+  Due to an oversight, this function does not escape special XML characters
+  like the function @fun{gtk-message-dialog-new-with-markup} does. Thus, if the
+  arguments may contain special XML characters, you should use
+  @code{g_markup_printf_escaped()} to escape it.
+  @begin{pre}
+ gchar *msg;
+
+ msg = g_markup_printf_escaped (message_format, ...);
+ gtk_message_dialog_format_secondary_markup (message_dialog, \"%s\", msg);
+ g_free (msg);
+  @end{pre}
+  Since 2.6
+  @see-function{gtk-message-dialog-new-with-markup}"
+  (setf (gtk-message-dialog-secondary-use-markup dialog) t
+        (gtk-message-dialog-secondary-text dialog)
+        (apply #'format (cons nil (cons message args)))))
+
+(export 'gtk-message-dialog-format-secondary-markup)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_message_dialog_get_message_area ()
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_message_dialog_get_message_area"
-           gtk-message-dialog-get-message-area) (g-object g-widget)
+           gtk-message-dialog-get-message-area) (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
  "@version{2013-4-16}
   @argument[dialog]{a @class{gtk-message-dialog} window}
