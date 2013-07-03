@@ -176,17 +176,21 @@
 (setf (gethash 'gdk-screen-font-options atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-screen-font-options 'function)
- "@version{2013-4-4}
+ "@version{2013-6-30}
   Accessor of the slot @code{\"font-options\"} of the @class{gdk-screen}
-  class.")
+  class.
+  @see-function{gdk-screen-get-font-options}
+  @see-function{gdk-screen-set-font-options}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-screen-resolution atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-screen-resolution 'function)
- "@version{2013-4-4}
+ "@version{2013-6-30}
   Accessor of the slot @code{\"resolution\"} of the @class{gdk-screen}
-  class.")
+  class.
+  @see-function{gdk-screen-get-resolution}
+  @see-function{gdk-screen-set-resolution}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_screen_get_default ()
@@ -413,7 +417,7 @@
     Returns the height of @arg{screen} in millimeters.
   @end{short}
   Note that on some X servers this value will not be correct.
-  
+
   Since 2.2
   @see-function{gdk-screen-get-height}
   @see-function{gdk-screen-get-width-mm}"
@@ -611,10 +615,10 @@
 (defcfun ("gdk_screen_get_monitor_at_point" gdk-screen-get-monitor-at-point)
     :int
  #+cl-cffi-gtk-documentation
- "@version{2013-6-17}
+ "@version{2013-6-30}
   @argument[screen]{a @class{gdk-screen} object}
-  @argument[x]{the x coordinate in the virtual screen}
-  @argument[y]{the y coordinate in the virtual screen}
+  @argument[x]{the x coordinate in the virtual @arg{screen}}
+  @argument[y]{the y coordinate in the virtual @arg{screen}}
   @begin{return}
     The monitor number in which the point (x,y) lies, or a monitor close to
     (x,y) if the point is not in any monitor.
@@ -638,7 +642,7 @@
 (defcfun ("gdk_screen_get_monitor_at_window" gdk-screen-get-monitor-at-window)
     :int
  #+cl-cffi-gtk-documentation
- "@version{2013-6-17}
+ "@version{2013-6-30}
   @argument[screen]{a @class{gdk-screen} object}
   @argument[window]{a @class{gdk-window} object}
   @begin{return}
@@ -652,7 +656,7 @@
   @end{short}
 
   Since 2.2
-  @see-function{gdk-screen-get-monitor-at-pointer}"
+  @see-function{gdk-screen-get-monitor-at-point}"
   (screen (g-object gdk-screen))
   (window (g-object gdk-window)))
 

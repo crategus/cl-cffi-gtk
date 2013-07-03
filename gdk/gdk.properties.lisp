@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GDK 3 Reference Manual
-;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -140,11 +140,19 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; GDK_NONE
-;;;
-;;; #define GDK_NONE _GDK_MAKE_ATOM (0)
-;;;
-;;; A null value for GdkAtom, used in a similar way as None in the Xlib API.
 ;;; ----------------------------------------------------------------------------
+
+(defparameter +gdk-none+ "NONE" ; in sbcl defconstant does not work for a string
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-28}
+  @variable-value{\"NONE\"}
+  A null value for @symbol{gdk-atom}, used in a similar way as None in the
+  Xlib API.")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash '+gdk-none+ atdoc:*variable-name-alias*) "Constant")
+
+(export '+gdk-none+)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_text_property_to_utf8_list_for_display ()
@@ -208,12 +216,12 @@
 
 (defcfun ("gdk_atom_intern" gdk-atom-intern) gdk-atom
  #+cl-cffi-gtk-documentation
- "@version{2013-4-17}
+ "@version{2013-6-28}
   @argument[atom-name]{a string}
   @argument[only-if-exists]{if @em{true}, GDK is allowed to not create a new
-    atom, but just return @code{GDK_NONE} if the requested atom does not already
-    exists. Currently, the flag is ignored, since checking the existance of an
-    atom is as expensive as creating it.}
+    atom, but just return @var{+gdk-none+} if the requested atom does not
+    already exists. Currently, the flag is ignored, since checking the existance
+    of an atom is as expensive as creating it.}
   @return{The atom corresponding to @arg{atom-name}.}
   Finds or creates an atom corresponding to a given string."
   (atom-name :string)
@@ -251,12 +259,12 @@
 
 (defcfun ("gdk_atom_name" gdk-atom-name) (g-string :free-from-foreign t)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-17}
+ "@version{2013-6-28}
   @argument[atom]{a @symbol{gdk-atom}}
   @begin{return}
-    A newly allocated string containing the string corresponding to @arg{atom}.
+    A string containing the string corresponding to @arg{atom}.
   @end{return}
-  Determines the string corresponding to an atom."
+  Determines the string corresponding to @arg{atom}."
   (atom gdk-atom))
 
 (export 'gdk-atom-name)

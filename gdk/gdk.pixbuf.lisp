@@ -2,9 +2,10 @@
 ;;; gdk.pixbuf.lisp
 ;;;
 ;;; The documentation has been copied from the GDK 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org.
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012 Dieter Kaiser
+;;; Copyright (C) 2012, 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -51,7 +52,7 @@
 (defcfun ("gdk_pixbuf_get_from_window" gdk-pixbuf-get-from-window)
     (g-object gdk-pixbuf)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-17}
+ "@version{2013-7-3}
   @argument[window]{source window}
   @argument[src-x]{source x coordinate within window}
   @argument[src-y]{source y coordinate within window}
@@ -74,7 +75,7 @@
   obscured/offscreen regions to be placed in the pixbuf. The contents of
   portions of the pixbuf corresponding to the offscreen region are undefined.
 
-  If the window you're obtaining data from is partially obscured by other
+  If the window you are obtaining data from is partially obscured by other
   windows, then the contents of the pixbuf areas corresponding to the obscured
   regions are undefined.
 
@@ -84,8 +85,9 @@
   If memory cannot be allocated for the return value, @code{nil} will be
   returned instead.
 
-  (In short, there are several ways this function can fail, and if it fails
-  it returns @code{nil}; so check the return value.)"
+  In short, there are several ways this function can fail, and if it fails
+  it returns @code{nil}; so check the return value.
+  @see-function{gdk-pixbuf-get-from-surface}"
   (window (g-object gdk-window))
   (src-x :int)
   (src-y :int)
@@ -101,7 +103,7 @@
 (defcfun ("gdk_pixbuf_get_from_surface" gdk-pixbuf-get-from-surface)
     (g-object gdk-pixbuf)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-17}
+ "@version{2013-7-3}
   @argument[surface]{surface to copy from}
   @argument[src-x]{source x coordinate within surface}
   @argument[src-y]{source y coordinate within surface}

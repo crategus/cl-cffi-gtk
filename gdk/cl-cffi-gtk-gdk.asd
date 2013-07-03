@@ -27,7 +27,7 @@
 
 (defsystem :cl-cffi-gtk-gdk
   :name :cl-cffi-gtk-gdk
-  :version "3.4.3"                            ; Version of the GDK Libraray
+  :version "3.6.4"                            ; Version of the GDK Libraray
   :author "Dieter Kaiser"
   :license "LLGPL"
   :serial t

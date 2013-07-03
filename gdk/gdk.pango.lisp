@@ -292,9 +292,9 @@
 
   The newly created context will have the default font options (see
   @symbol{cairo-font-options-t}) for the @arg{screen}; if these options change
-  it will not be updated. Using the function @fun{gtk-widget-get-pango-context} is
-  more convenient if you want to keep a context around and track changes to the
-  @arg{screen}'s font rendering settings.
+  it will not be updated. Using the function @fun{gtk-widget-get-pango-context}
+  is more convenient if you want to keep a context around and track changes to
+  the @arg{screen}'s font rendering settings.
 
   Since 2.2
   @see-function{gtk-widget-get-pango-context}

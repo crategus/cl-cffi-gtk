@@ -1906,30 +1906,28 @@
 
 (defcfun ("gdk_window_set_composited" gdk-window-set-composited) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-6-5}
+ "@version{2013-6-26}
   @argument[window]{a @class{gdk-window} object}
-  @argument[composited]{TRUE to set the window as composited}
+  @argument[composited]{@em{true} to set the @arg{window} as composited}
   @begin{short}
     Sets a @class{gdk-window} as composited, or unsets it. Composited windows do
     not automatically have their contents drawn to the screen. Drawing is
     redirected to an offscreen buffer and an expose event is emitted on the
     parent of the composited window. It is the responsibility of the parent's
     expose handler to manually merge the off-screen content onto the screen in
-    whatever way it sees fit. See Example 4, \"Composited windows\"?for an
-    example.
+    whatever way it sees fit.
   @end{short}
 
-  It only makes sense for child windows to be composited; see the
-  @fun{gdk-window-set-opacity} function if you need translucent toplevel
-  windows.
+  It only makes sense for child windows to be composited; see the function
+  @fun{gdk-window-set-opacity} if you need translucent toplevel windows.
 
   An additional effect of this call is that the area of this window is no
   longer clipped from regions marked for invalidation on its parent. Draws
   done on the parent window are also no longer clipped by the child.
 
-  This call is only supported on some systems (currently, only X11 with new
-  enough Xcomposite and Xdamage extensions). You must call the
-  @fun{gdk-display-supports-composite} function to check if setting a window as
+  This call is only supported on some systems, currently, only X11 with new
+  enough Xcomposite and Xdamage extensions. You must call the function
+  @fun{gdk-display-supports-composite} to check if setting a window as
   composited is supported before attempting to do so.
 
   Since 2.12

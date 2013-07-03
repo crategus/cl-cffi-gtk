@@ -2,7 +2,7 @@
 ;;; gdk.rgba.lisp
 ;;; 
 ;;; The documentation has been copied from the GDK 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org. See <http://www.gtk.org>.
+;;; Version 3.6.4. See http://www.gtk.org. See <http://www.gtk.org>.
 ;;; The API  documentation of the Lisp binding is available at
 ;;; <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;; 
@@ -183,6 +183,8 @@
 ;;; 
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+;; not needed
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_rgba_parse ()

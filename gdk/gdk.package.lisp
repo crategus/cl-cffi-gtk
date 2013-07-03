@@ -588,24 +588,39 @@
     data between programs. A selection is a essentially a named clipboard,
     identified by a string interned as a @symol{gdk-atom}. By claiming ownership
     of a selection, an application indicates that it will be responsible for
-    supplying its contents. The most common selections are \"PRIMARY\" and
-    \"CLIPBOARD\".
+    supplying its contents. The most common selections are @code{\"PRIMARY\"}
+    and @code{\"CLIPBOARD\"}.
 
     The contents of a selection can be represented in a number of formats,
     called targets. Each target is identified by an atom. A list of all possible
     targets supported by the selection owner can be retrieved by requesting the
-    special target \"TARGETS\". When a selection is retrieved, the data is
-    accompanied by a type (an atom), and a format (an integer, representing the
-    number of bits per item). See Properties and Atoms for more information.
+    special target @code{\"TARGETS\"}. When a selection is retrieved, the data
+    is accompanied by a type (an atom), and a format (an integer, representing
+    the number of bits per item). See Properties and Atoms for more information.
 
     The functions in this section only contain the lowlevel parts of the
     selection protocol. A considerably more complicated implementation is needed
-    on top of this. GTK+ contains such an implementation in the functions in
-    @code{gtkselection.h} and programmers should use those functions instead of
-    the ones presented here. If you plan to implement selection handling
-    directly on top of the functions here, you should refer to the X
-    Inter-client Communication Conventions Manual (ICCCM).
+    on top of this. GTK+ contains such an implementation and programmers should
+    use those functions instead of the ones presented here. If you plan to
+    implement selection handling directly on top of the functions here, you
+    should refer to the X Inter-client Communication Conventions Manual (ICCCM).
 
+    @about-variable{+gdk-selection-primary+}
+    @about-variable{+gdk-selection-secondary+}
+    @about-variable{+gdk-selection-clipboard+}
+    @about-variable{+gdk-target-bitmap+}
+    @about-variable{+gdk-target-colormap+}
+    @about-variable{+gdk-target-drawable+}
+    @about-variable{+gdk-target-pixmap+}
+    @about-variable{+gdk-target-string+}
+    @about-variable{+gdk-selection-type-atom+}
+    @about-variable{+gdk-selection-type-bitmap+}
+    @about-variable{+gdk-selection-type-colormap+}
+    @about-variable{+gdk-selection-type-drawable+}
+    @about-variable{+gdk-selection-type-integer+}
+    @about-variable{+gdk-selection-type-pixmap+}
+    @about-variable{+gdk-selection-type-window+}
+    @about-variable{+gdk-selection-type-string+}
     @about-function{gdk-selection-owner-set}
     @about-function{gdk-selection-owner-set-for-display}
     @about-function{gdk-selection-owner-get}
@@ -646,10 +661,31 @@
   @begin[Properties and Atoms]{section}
     Functions to manipulate properties on windows.
 
+    Each window under X can have any number of associated properties attached to
+    it. Properties are arbitrary chunks of data identified by atoms. (An atom is
+    a numeric index into a string table on the X server. They are used to
+    transfer strings efficiently between clients without having to transfer the
+    entire string.) A property has an associated type, which is also identified
+    using an atom.
+
+    A property has an associated format, an integer describing how many bits are
+    in each unit of data inside the property. It must be 8, 16, or 32. When data
+    is transferred between the server and client, if they are of different
+    endianesses it will be byteswapped as necessary according to the format of
+    the property. Note that on the client side, properties of format 32 will be
+    stored with one unit per long, even if a long integer has more than 32 bits
+    on the platform. (This decision was apparently made for Xlib to maintain
+    compatibility with programs that assumed longs were 32 bits, at the expense
+    of programs that knew better.)
+
+    The functions in this section are used to add, remove and change properties
+    on windows, to convert atoms to and from strings and to manipulate some
+    types of data commonly stored in X window properties.
+
     @about-symbol{gdk-atom}
     @about-symbol{GDK_ATOM_TO_POINTER}
     @about-symbol{GDK_POINTER_TO_ATOM}
-    @about-symbol{GDK_NONE}
+    @about-variable{+gdk-none+}
     @about-function{gdk-text-property-to-utf8-list-for-display}
     @about-function{gdk-utf8-to-string-target}
     @about-function{gdk-atom-intern}
@@ -657,7 +693,7 @@
     @about-function{gdk-atom-name}
     @about-function{gdk-property-get}
     @about-function{gdk-property-change}
-    @about-symbol{GdkPropMode}
+    @about-symbol{gdk-prop-mode}
     @about-function{gdk-property-delete}
   @end{section}
   @begin[Threads]{section}

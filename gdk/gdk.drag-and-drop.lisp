@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GDK 3 Reference Manual
-;;; Version 3.4.3. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -85,12 +85,10 @@
   (:ole2 5)
   (:local 6))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-drag-protocol atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gdk-drag-protocol atdoc:*external-symbols*)
- "@version{2013-4-7}
+ "@version{2013-6-30}
   @begin{short}
     Used in @class{gdk-drag-context} to indicate the protocol according to
     which DND is done.
@@ -108,12 +106,12 @@
   (:local 6))
   @end{pre}
   @begin[code]{table}
-    @entry[:none]{no protocol.}
+    @entry[:none]{No protocol.}
     @entry[:motif]{The Motif DND protocol.}
     @entry[:xdnd]{The Xdnd protocol.}
     @entry{:rootwin]{An extension to the Xdnd protocol for unclaimed root
       window drops.}
-    @entry[:win32-dropfiles]{The simple WM_DROPFILES protocol.}
+    @entry[:win32-dropfiles]{The simple @code{WM_DROPFILES} protocol.}
     @entry[:ole2]{The complex OLE2 DND protocol (not implemented).}
     @entry[:local]{Intra-application DND.}
   @end{table}")
@@ -132,15 +130,13 @@
   (:private 16)
   (:ask 32))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-drag-action atdoc:*symbol-name-alias*) "Flags"
       (gethash 'gdk-drag-action atdoc:*external-symbols*)
- "@version{2013-4-7}
+ "@version{2013-6-30}
   @begin{short}
-    Used in GdkDragContext to indicate what the destination should do with the
-    dropped data.
+    Used in @class{gdk-drag-context} to indicate what the destination should do
+    with the dropped data.
   @end{short}
   @begin{pre}
 (define-g-flags \"GdkDragAction\" gdk-drag-action
@@ -157,57 +153,16 @@
     @entry[:default]{Means nothing, and should not be used.}
     @entry[:copy]{Copy the data.}
     @entry[:move]{Move the data, i. e. first copy it, then delete it from the
-      source using the DELETE target of the X selection protocol.}
+      source using the \"DELETE\" target of the X selection protocol.}
     @entry[:link]{Add a link to the data. Note that this is only useful if
       source and destination agree on what it means.}
     @entry[:private]{Special action which tells the source that the destination
-      will do something that the source doesn't understand.}
+      will do something that the source does not understand.}
     @entry[:ask]{Ask the user what to do with the data.}
   @end{table}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; GdkDragContext
-;;; ----------------------------------------------------------------------------
-
-(defcstruct %gdk-drag-context
-  (parent-instance gobject::%g-object)
-  (protocol gdk-drag-protocol)
-  (is-source :boolean)
-  (source-window (g-object gdk-window))
-  (dest-window (g-object gdk-window))
-  (targets (g-list gdk-atom-as-string :free-from-foreign nil))
-  (actions gdk-drag-action)
-  (suggested-action gdk-drag-action)
-  (action gdk-drag-action)
-  (start-time :uint32))
-
-(defun %gdk-drag-context-get-protocol (context)
-  (foreign-slot-value (pointer context) '%gdk-drag-context 'protocol))
-
-(defun %gdk-drag-context-get-is-source (context)
-  (foreign-slot-value (pointer context) '%gdk-drag-context 'is-source))
-
-(defun %gdk-drag-context-get-source-window (context)
-  (foreign-slot-value (pointer context) '%gdk-drag-context 'source-window))
-
-(defun %gdk-drag-context-get-dest-window (context)
-  (foreign-slot-value (pointer context) '%gdk-drag-context 'dest-window))
-
-(defun %gdk-drag-context-get-targets (context)
-  (foreign-slot-value (pointer context) '%gdk-drag-context 'targets))
-
-(defun %gdk-drag-context-get-actions (context)
-  (foreign-slot-value (pointer context) '%gdk-drag-context 'actions))
-
-(defun %gdk-drag-context-get-suggested-action (context)
-  (foreign-slot-value (pointer context) '%gdk-drag-context 'suggested-action))
-
-(defun %gdk-drag-context-get-action (context)
-  (foreign-slot-value (pointer context) '%gdk-drag-context 'action))
-
-(defun %gdk-drag-context-get-start-time (context)
-  (foreign-slot-value (pointer context) '%gdk-drag-context 'start-time))
-
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GdkDragContext" gdk-drag-context
@@ -216,44 +171,14 @@
    :interfaces nil
    :type-initializer "gdk_drag_context_get_type")
   nil)
-;  ((:cffi protocol
-;          gdk-drag-context-protocol gdk-drag-protocol
-;          %gdk-drag-context-get-protocol nil)
-;   (:cffi is-source
-;          gdk-drag-context-is-source :boolean
-;          %gdk-drag-context-get-is-source nil)
-;   (:cffi source-window
-;          gdk-drag-context-source-window (g-object gdk-window)
-;          %gdk-drag-context-get-source-window nil)
-;   (:cffi dest-window
-;          gdk-drag-context-dest-window (g-object gdk-window)
-;          %gdk-drag-context-get-dest-window nil)
-;   (:cffi targets
-;          gdk-drag-context-targets
-;          (g-list gdk-atom-as-string :free-from-foreign nil)
-;          %gdk-drag-context-get-targets nil)
-;   (:cffi actions
-;          gdk-drag-context-actions gdk-drag-action
-;          %gdk-drag-context-get-actions nil)
-;   (:cffi suggested-action
-;          gdk-drag-context-suggested-action gdk-drag-action
-;          %gdk-drag-context-get-suggested-action nil)
-;   (:cffi action
-;          gdk-drag-context-action gdk-drag-action
-;          %gdk-drag-context-get-action nil)
-;   (:cffi start-time
-;          gdk-drag-context-start-time :uint32
-;          %gdk-drag-context-get-start-time nil)))
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gdk-drag-context 'type)
- "@version{2013-4-7}
+ "@version{2013-6-30}
   @begin{short}
     These functions provide a low level interface for drag and drop. The X
     backend of GDK supports both the Xdnd and Motif drag and drop protocols
-    transparently, the Win32 backend supports the WM_DROPFILES protocol.
+    transparently, the Win32 backend supports the @code{WM_DROPFILES} protocol.
   @end{short}
 
   GTK+ provides a higher level abstraction based on top of these functions,
@@ -350,24 +275,24 @@
 
 (defun gdk-drag-find-window-for-screen (context window screen x-root y-root)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-7}
+ "@version{2013-6-30}
   @argument[context]{a @class{gdk-drag-context} object}
   @argument[drag-window]{a window which may be at the pointer position, but
     should be ignored, since it is put up by the drag source as an icon}
   @argument[screen]{the screen where the destination window is sought}
-  @argument[x_root]{the x position of the pointer in root coordinates}
-  @argument[y_root]{the y position of the pointer in root coordinates}
+  @argument[x-root]{the x position of the pointer in root coordinates}
+  @argument[y-root]{the y position of the pointer in root coordinates}
   @begin{return}
-    @code{dest-window} -- the destination window in @br{}
-    @code{protocol} -- the DND protocol in
+    @code{dest-window} -- the destination window @br{}
+    @code{protocol} -- the DND protocol
   @end{return}
   @begin{short}
     Finds the destination window and DND protocol to use at the given pointer
     position.
   @end{short}
 
-  This function is called by the drag source to obtain the dest_window and
-  protocol parameters for @fun{gdk-drag-motion}.
+  This function is called by the drag source to obtain the @arg{dest-window}
+  and protocol parameters for the function @fun{gdk-drag-motion}.
 
   Since 2.2
   @see-function{gdk-drag-motion}"
@@ -391,15 +316,16 @@
 (defcfun ("gdk_drag_begin" gdk-drag-begin)
     (g-object gdk-drag-context :already-referenced)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-7}
+ "@version{2013-6-30}
   @argument[window]{the source window for this drag}
   @argument[targets]{the offered targets, as list of @symbol{gdk-atom}'s}
   @return{A newly created @class{gdk-drag-context} object.}
   @begin{short}
-    Starts a drag and creates a new drag context for it. This function assumes
-    that the drag is controlled by the client pointer device, use
-    @fun{gdk-drag-begin-for-device} to begin a drag with a different device.
+    Starts a drag and creates a new drag context for it.
   @end{short}
+  This function assumes that the drag is controlled by the client pointer
+  device, use the function @fun{gdk-drag-begin-for-device} to begin a drag with
+  a different device.
 
   This function is called by the drag source.
   @see-function{gdk-drag-begin-for-device}"
@@ -493,7 +419,7 @@
 
 (defcfun ("gdk_drag_status" gdk-drag-status) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-4-7}
+ "@version{2013-6-30}
   @argument[context]{a @class{gdk-drag-context} object}
   @argument[action]{the selected action which will be taken when a drop happens,
     or 0 to indicate that a drop will not be accepted}
@@ -502,7 +428,7 @@
     Selects one of the actions offered by the drag source.
   @end{short}
 
-  This function is called by the drag destination in response to
+  This function is called by the drag destination in response to the function
   @fun{gdk-drag-motion} called by the drag source.
   @see-function{gdk-drag-motion}"
   (context (g-object gdk-drag-context))
@@ -517,14 +443,14 @@
 
 (defcfun ("gdk_drag_drop_succeeded" gdk-drag-drop-succeeded) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-4-7}
+ "@version{2013-6-30}
   @argument[context]{a @class{gdk-drag-context} object}
   @return{@em{True} if the drop was successful.}
   @begin{short}
-    Returns whether the dropped data has been successfully transferred. This
-    function is intended to be used while handling a GDK_DROP_FINISHED event,
-    its return value is meaningless at other times.
+    Returns whether the dropped data has been successfully transferred.
   @end{short}
+  This function is intended to be used while handling a @code{:drop-finished}
+  event, its return value is meaningless at other times.
 
   Since 2.6"
   (context (g-object gdk-drag-context)))
