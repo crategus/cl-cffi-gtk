@@ -82,18 +82,20 @@
 ;;; {
 ;;;   GdkPixbuf *dest;
 ;;;
-;;;   dest = gdk_pixbuf_new (GDK_COLORSPACE_RGB, FALSE, 8, event->area.width, event->area.height);
+;;;   dest = gdk_pixbuf_new (GDK_COLORSPACE_RGB, FALSE, 8,
+;;;                          event->area.width, event->area.height);
 ;;;
 ;;;   gdk_pixbuf_composite_color (pixbuf, dest,
-;;;                               0, 0, event->area.width, event->area.height,
-;;;                               -event->area.x, -event->area.y,
-;;;                               (double) widget->allocation.width / gdk_pixbuf_get_width (pixbuf),
-;;;                               (double) widget->allocation.height / gdk_pixbuf_get_height (pixbuf),
-;;;                               GDK_INTERP_BILINEAR, 255,
-;;;                               event->area.x, event->area.y, 16, 0xaaaaaa, 0x555555);
+;;;         0, 0, event->area.width, event->area.height,
+;;;         -event->area.x, -event->area.y,
+;;;         (double) widget->allocation.width / gdk_pixbuf_get_width (pixbuf),
+;;;         (double) widget->allocation.height / gdk_pixbuf_get_height (pixbuf),
+;;;         GDK_INTERP_BILINEAR, 255,
+;;;         event->area.x, event->area.y, 16, 0xaaaaaa, 0x555555);
 ;;;
-;;;   gdk_draw_pixbuf (widget->window, widget->style->fg_gc[GTK_STATE_NORMAL], dest,
-;;;                    0, 0, event->area.x, event->area.y,
+;;;   gdk_draw_pixbuf (widget->window, widget->style->fg_gc[GTK_STATE_NORMAL],
+;;;                    dest, 0, 0,
+;;;                    event->area.x, event->area.y,
 ;;;                    event->area.width, event->area.height,
 ;;;                    GDK_RGB_DITHER_NORMAL, event->area.x, event->area.y);
 ;;;
@@ -170,11 +172,17 @@
 ;;;                                      int dest_height,
 ;;;                                      GdkInterpType interp_type);
 ;;;
-;;; Create a new GdkPixbuf containing a copy of src scaled to dest_width x dest_height. Leaves src unaffected. interp_type should be GDK_INTERP_NEAREST if you want maximum speed (but when scaling down GDK_INTERP_NEAREST is usually unusably ugly). The default interp_type should be GDK_INTERP_BILINEAR which offers reasonable quality and speed.
+;;; Create a new GdkPixbuf containing a copy of src scaled to dest_width x
+;;; dest_height. Leaves src unaffected. interp_type should be GDK_INTERP_NEAREST
+;;; if you want maximum speed (but when scaling down GDK_INTERP_NEAREST is
+;;; usually unusably ugly). The default interp_type should be
+;;; GDK_INTERP_BILINEAR which offers reasonable quality and speed.
 ;;;
-;;; You can scale a sub-portion of src by creating a sub-pixbuf pointing into src; see gdk_pixbuf_new_subpixbuf().
+;;; You can scale a sub-portion of src by creating a sub-pixbuf pointing into
+;;; src; see gdk_pixbuf_new_subpixbuf().
 ;;;
-;;; For more complicated scaling/compositing see gdk_pixbuf_scale() and gdk_pixbuf_composite().
+;;; For more complicated scaling/compositing see gdk_pixbuf_scale() and
+;;; gdk_pixbuf_composite().
 ;;;
 ;;; src :
 ;;;     a GdkPixbuf
@@ -189,63 +197,59 @@
 ;;;     the interpolation type for the transformation.
 ;;;
 ;;; Returns :
-;;;     the new GdkPixbuf, or NULL if not enough memory could be allocated for it. [transfer full]
+;;;     The new GdkPixbuf, or NULL if not enough memory could be allocated
+;;;     for it.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pixbuf_scale ()
-;;;
-;;; void                gdk_pixbuf_scale                    (const GdkPixbuf *src,
-;;;                                                          GdkPixbuf *dest,
-;;;                                                          int dest_x,
-;;;                                                          int dest_y,
-;;;                                                          int dest_width,
-;;;                                                          int dest_height,
-;;;                                                          double offset_x,
-;;;                                                          double offset_y,
-;;;                                                          double scale_x,
-;;;                                                          double scale_y,
-;;;                                                          GdkInterpType interp_type);
-;;;
-;;; Creates a transformation of the source image src by scaling by scale_x and scale_y then translating by offset_x and offset_y, then renders the rectangle (dest_x, dest_y, dest_width, dest_height) of the resulting image onto the destination image replacing the previous contents.
-;;;
-;;; Try to use gdk_pixbuf_scale_simple() first, this function is the industrial-strength power tool you can fall back to if gdk_pixbuf_scale_simple() isn't powerful enough.
-;;;
-;;; If the source rectangle overlaps the destination rectangle on the same pixbuf, it will be overwritten during the scaling which results in rendering artifacts.
-;;;
-;;; src :
-;;;     a GdkPixbuf
-;;;
-;;; dest :
-;;;     the GdkPixbuf into which to render the results
-;;;
-;;; dest_x :
-;;;     the left coordinate for region to render
-;;;
-;;; dest_y :
-;;;     the top coordinate for region to render
-;;;
-;;; dest_width :
-;;;     the width of the region to render
-;;;
-;;; dest_height :
-;;;     the height of the region to render
-;;;
-;;; offset_x :
-;;;     the offset in the X direction (currently rounded to an integer)
-;;;
-;;; offset_y :
-;;;     the offset in the Y direction (currently rounded to an integer)
-;;;
-;;; scale_x :
-;;;     the scale factor in the X direction
-;;;
-;;; scale_y :
-;;;     the scale factor in the Y direction
-;;;
-;;; interp_type :
-;;;     the interpolation type for the transformation.
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gdk_pixbuf_scale" gdk-pixbuf-scale) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-30}
+  @argument[src]{a @class{gdk-pixbuf} object}
+  @argument[dest]{the @class{gdk-pixbuf} into which to render the results}
+  @argument[dest-x]{the left coordinate for region to render}
+  @argument[dest-y]{the top coordinate for region to render}
+  @argument[dest-width]{the width of the region to render}
+  @argument[dest-height]{the height of the region to render}
+  @argument[offset-x]{the offset in the x direction (currently rounded to an
+    integer)}
+  @argument[offset-y]{the offset in the y direction (currently rounded to an
+    integer)}
+  @argument[scale-x]{the scale factor in the x direction}
+  @argument[scale-y]{the scale factor in the y direction}
+  @argument[interp-type]{the interpolation type for the transformation}
+  @begin{short}
+    Creates a transformation of the source image @arg{src} by scaling by
+    @arg{scale-x} and @arg{scale-y} then translating by @arg{offset-x} and
+    @arg{offset-y}, then renders the rectangle (@arg{dest-x}, @arg{dest-y},
+    @arg{dest-width}, @arg{dest-height}) of the resulting image onto the
+    destination image replacing the previous contents.
+  @end{short}
+
+  Try to use the function @fun{gdk-pixbuf-scale-simple} first, this function is
+  the industrial-strength power tool you can fall back to if the function
+  @fun{gdk-pixbuf-scale-simple} is not powerful enough.
+
+  If the source rectangle overlaps the destination rectangle on the same
+  pixbuf, it will be overwritten during the scaling which results in rendering
+  artifacts.
+  @see-function{gdk-pixbuf-scale-simple}"
+  (src (g-object gdk-pixbuf))
+  (dest (g-object gdk-pixbuf))
+  (dest-x :int)
+  (dest-y :int)
+  (dest-width :int)
+  (dest-height :int)
+  (offset-x :double)
+  (offset-y :double)
+  (scale-x :double)
+  (scale-y :double)
+  (interp-type gdk-interp-type))
+
+(export 'gdk-pixbuf-scale)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pixbuf_composite_color_simple ()
@@ -306,12 +310,12 @@
   @argument[dest-height]{the height of the region to render}
   @argument[offset-x]{the offset in the x direction (currently rounded to an
     integer)}
-  @argument[offset-y]{the offset in the Y direction (currently rounded to an
+  @argument[offset-y]{the offset in the y direction (currently rounded to an
     integer)}
-  @argument[scale-x]{the scale factor in the X direction}
-  @argument[scale-y]{the scale factor in the Y direction}
+  @argument[scale-x]{the scale factor in the x direction}
+  @argument[scale-y]{the scale factor in the y direction}
   @argument[interp-type]{the interpolation type for the transformation}
-  @argument[overall-alpha]{overall alpha for source image (0..255)}
+  @argument[overall-alpha]{overall alpha for source image (0 .. 255)}
   @begin{short}
     Creates a transformation of the source image @arg{src} by scaling by
     @arg{scale-x} and @arg{scale-y} then translating by @arg{offset-x} and
@@ -341,27 +345,32 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pixbuf_composite_color ()
 ;;;
-;;; void                gdk_pixbuf_composite_color          (const GdkPixbuf *src,
-;;;                                                          GdkPixbuf *dest,
-;;;                                                          int dest_x,
-;;;                                                          int dest_y,
-;;;                                                          int dest_width,
-;;;                                                          int dest_height,
-;;;                                                          double offset_x,
-;;;                                                          double offset_y,
-;;;                                                          double scale_x,
-;;;                                                          double scale_y,
-;;;                                                          GdkInterpType interp_type,
-;;;                                                          int overall_alpha,
-;;;                                                          int check_x,
-;;;                                                          int check_y,
-;;;                                                          int check_size,
-;;;                                                          guint32 color1,
-;;;                                                          guint32 color2);
+;;; void gdk_pixbuf_composite_color (const GdkPixbuf *src,
+;;;                                  GdkPixbuf *dest,
+;;;                                  int dest_x,
+;;;                                  int dest_y,
+;;;                                  int dest_width,
+;;;                                  int dest_height,
+;;;                                  double offset_x,
+;;;                                  double offset_y,
+;;;                                  double scale_x,
+;;;                                  double scale_y,
+;;;                                  GdkInterpType interp_type,
+;;;                                  int overall_alpha,
+;;;                                  int check_x,
+;;;                                  int check_y,
+;;;                                  int check_size,
+;;;                                  guint32 color1,
+;;;                                  guint32 color2);
 ;;;
-;;; Creates a transformation of the source image src by scaling by scale_x and scale_y then translating by offset_x and offset_y, then composites the rectangle (dest_x ,dest_y, dest_width, dest_height) of the resulting image with a checkboard of the colors color1 and color2 and renders it onto the destination image.
+;;; Creates a transformation of the source image src by scaling by scale_x and
+;;; scale_y then translating by offset_x and offset_y, then composites the
+;;; rectangle (dest_x ,dest_y, dest_width, dest_height) of the resulting image
+;;; with a checkboard of the colors color1 and color2 and renders it onto the
+;;; destination image.
 ;;;
-;;; See gdk_pixbuf_composite_color_simple() for a simpler variant of this function suitable for many tasks.
+;;; See gdk_pixbuf_composite_color_simple() for a simpler variant of this
+;;; function suitable for many tasks.
 ;;;
 ;;; src :
 ;;;     a GdkPixbuf
@@ -400,7 +409,8 @@
 ;;;     overall alpha for source image (0..255)
 ;;;
 ;;; check_x :
-;;;     the X offset for the checkboard (origin of checkboard is at -check_x, -check_y)
+;;;     the X offset for the checkboard (origin of checkboard is at
+;;;     -check_x, -check_y)
 ;;;
 ;;; check_y :
 ;;;     the Y offset for the checkboard

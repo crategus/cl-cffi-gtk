@@ -178,18 +178,21 @@
  {
    GdkPixbuf *dest;
 
-   dest = gdk_pixbuf_new (GDK_COLORSPACE_RGB, FALSE, 8, event->area.width, event->area.height);
+   dest = gdk_pixbuf_new (GDK_COLORSPACE_RGB, FALSE, 8,
+                          event->area.width, event->area.height);
 
    gdk_pixbuf_composite_color (pixbuf, dest,
-                               0, 0, event->area.width, event->area.height,
-                               -event->area.x, -event->area.y,
-                               (double) widget->allocation.width / gdk_pixbuf_get_width (pixbuf),
-                               (double) widget->allocation.height / gdk_pixbuf_get_height (pixbuf),
-                               GDK_INTERP_BILINEAR, 255,
-                               event->area.x, event->area.y, 16, 0xaaaaaa, 0x555555);
+            0, 0,
+            event->area.width, event->area.height,
+            -event->area.x, -event->area.y,
+            (double) widget->allocation.width / gdk_pixbuf_get_width (pixbuf),
+            (double) widget->allocation.height / gdk_pixbuf_get_height (pixbuf),
+            GDK_INTERP_BILINEAR, 255,
+            event->area.x, event->area.y, 16, 0xaaaaaa, 0x555555);
 
-   gdk_draw_pixbuf (widget->window, widget->style->fg_gc[GTK_STATE_NORMAL], dest,
-                    0, 0, event->area.x, event->area.y,
+   gdk_draw_pixbuf (widget->window, widget->style->fg_gc[GTK_STATE_NORMAL],
+                    dest, 0, 0,
+                    event->area.x, event->area.y,
                     event->area.width, event->area.height,
                     GDK_RGB_DITHER_NORMAL, event->area.x, event->area.y);
 

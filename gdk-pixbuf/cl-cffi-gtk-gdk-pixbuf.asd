@@ -27,7 +27,7 @@
 
 (defsystem :cl-cffi-gtk-gdk-pixbuf
   :name :cl-cffi-gtk-gdk-pixbuf
-  :version "2.26.1"                           ; Version of GdK Pixbuf Library
+  :version "2.28.0"                           ; Version of GdK Pixbuf Library
   :author "Dieter Kaiser"
   :license "LLGPL"
   :serial t
