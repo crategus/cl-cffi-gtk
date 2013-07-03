@@ -1,7 +1,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; cl-cffi-gtk-cairo.asd
 ;;;
-;;; Copyright (C) 2012 Dieter Kaiser
+;;; Copyright (C) 2012, 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -23,7 +23,7 @@
 
 (defsystem :cl-cffi-gtk-cairo
   :name :cl-cffi-gtk-cairo
-  :version "0.0.0"
+  :version "1.12.14"                          ; Version of the Cairo Library
   :author  "Dieter Kaiser"
   :license "LLGPL"
   :serial t
@@ -34,6 +34,7 @@
                (:file "cairo.surface")
                (:file "cairo.context")
                (:file "cairo.paths")
+               (:file "cairo.font-options")
               )
   :depends-on (:cffi
                :cl-cffi-gtk-glib

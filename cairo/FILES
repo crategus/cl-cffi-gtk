@@ -1,50 +1,57 @@
-for Cairo 1.12.2
+Content from the Cairo 1.12.14 Reference Manual
+
+    *   - needs update
+    %   - not fully implemented
+    &   - objects and structures are implemented, some functions are missing
+   (**) - deprecated
 
 Drawing
 
-    cairo.context.lisp - cariro_t                                - Cairo 1.12.2
-    cairo.paths.lisp   - cairo_path_t                            - Cairo 1.12.2
+ cairo.context.lisp - The cairo drawing context                 - Cairo 1.12.2 *
+ cairo.paths.lisp - Creating paths and manipulating path data   - Cairo 1.12.2 *
 
-    cairo_pattern_t — Sources for drawing
-    
-    cairo-regions.lisp - cairo_region_t                          - Cairo 1.12.2
-    
-    Transformations — Manipulating the current transformation matrix
-    text — Rendering text and glyphs
-    Raster Sources — Supplying arbitrary image data
+  cairo_pattern_t - Sources for drawing
+
+ cairo.regions.lisp - Representing a pixel-aligned area         - Cairo 1.12.2 *
+
+  Transformations - Manipulating the current transformation matrix
+  text - Rendering text and glyphs
+  Raster Sources - Supplying arbitrary image data
 
 Fonts
 
-    cairo_font_face_t — Base class for font faces
-    cairo_scaled_font_t — Font face at particular size and options
-    cairo_font_options_t — How a font should be rendered
-    FreeType Fonts — Font support for FreeType
-    Win32 Fonts — Font support for Microsoft Windows
-    Quartz (CGFont) Fonts — Font support via CGFont on OS X
-    User Fonts — Font support with font data provided by the user 
+  cairo_font_face_t - Base class for font faces
+  cairo_scaled_font_t - Font face at particular size and options
+
+ cairo.font-options.lisp - How a font should be rendered        - Cairo 1.12.14%
+
+  FreeType Fonts - Font support for FreeType
+  Win32 Fonts - Font support for Microsoft Windows
+  Quartz Fonts - Font support via CGFont on OS X
+  User Fonts - Font support with font data provided by the user
 
 Surfaces
 
-    cairo_device_t — interface to underlying rendering system
-    
-    cario.surface.lisp - cario_surface_t                         - Cairo 1.12.2
-    
-    Image Surfaces — Rendering to memory buffers
-    PDF Surfaces — Rendering PDF documents
-    PNG Support — Reading and writing PNG images
-    PostScript Surfaces — Rendering PostScript documents
-    Recording Surfaces — Records all drawing operations
-    Win32 Surfaces — Microsoft Windows surface support
-    SVG Surfaces — Rendering SVG documents
-    Quartz Surfaces — Rendering to Quartz surfaces
-    XCB Surfaces — X Window System rendering using the XCB library
-    XLib Surfaces — X Window System rendering using XLib
-    XLib-XRender Backend — X Window System rendering using XLib and the X Render extension
-    Script Surfaces — Rendering to replayable scripts 
+  cairo_device_t - interface to underlying rendering system
+
+ cario.surface.lisp - Base class for surfaces                   - Cairo 1.12.2 *
+
+  Image Surfaces - Rendering to memory buffers
+  PDF Surfaces - Rendering PDF documents
+  PNG Support - Reading and writing PNG images
+  PostScript Surfaces - Rendering PostScript documents
+  Recording Surfaces - Records all drawing operations
+  Win32 Surfaces - Microsoft Windows surface support
+  SVG Surfaces - Rendering SVG documents
+  Quartz Surfaces - Rendering to Quartz surfaces
+  XCB Surfaces - X Window System rendering using the XCB library
+  XLib Surfaces - X Window System rendering using XLib
+  XLib-XRender Backend - X Window System rendering using the X Render extension
+  Script Surfaces - Rendering to replayable scripts
 
 Utilities
 
-    cairo_matrix_t — Generic matrix operations
-    Error handling — Decoding cairo's status
-    Types — Generic data types
+  cairo_matrix_t - Generic matrix operations
+  Error handling - Decoding cairo's status
+  Types - Generic data types
 

@@ -41,21 +41,7 @@
   This is the API documentation of a Lisp binding to Cairo. At this time only a
   few types and functions are implemented, which are needed to compile the Lisp
   bindung to GTK+.
-  @begin[Version Information]{section}
-    Cairo provides the ability to examine the version at either compile-time or
-    run-time and in both a human-readable form as well as an encoded form
-    suitable for direct comparison. Cairo also provides the function
-    @fun{cairo-version-encode} to perform the encoding.
 
-    @about-variable{+cairo-version-major+}
-    @about-variable{+cairo-version-minor+}
-    @about-variable{+cairo-version-micro+}
-    @about-variable{+cairo-version-string+}
-    @about-variable{+cairo-version+}
-    @about-function{cairo-version-encode}
-    @about-function{cairo-version}
-    @about-function{cairo-version-string}
-  @end{section}
   @begin[Drawing]{section}
     The Cairo drawing context.
 
@@ -202,6 +188,36 @@
     @about-function{cairo-region-xor}
     @about-function{cairo-region-xor-rectangle}
   @end{section}
+  @begin[Fonts]{section}
+    @begin[Font Options]{subsection}
+      How a font should be rendered.
+
+      The font options specify how fonts should be rendered. Most of the time
+      the font options implied by a surface are just right and do not need any
+      changes, but for pixel-based targets tweaking font options may result in
+      superior output on a particular display.
+
+      @about-symbol{cairo-font-options-t}
+      @about-function{cairo-font-options-create}
+      @about-function{cairo-font-options-copy}
+      @about-function{cairo-font-options-destroy}
+      @about-function{cairo-font-options-status}
+      @about-function{cairo-font-options-merge}
+      @about-function{cairo-font-options-hash}
+      @about-function{cairo-font-options-equal}
+      @about-function{cairo-font-options-set_antialias}
+      @about-function{cairo-font-options-get_antialias}
+      @about-symbol{cairo-subpixel-order-t}
+      @about-function{cairo-font-options-set-subpixel-order}
+      @about-function{cairo-font-options-get-subpixel-order}
+      @about-symbol{cairo-hint-style-t}
+      @about-function{cairo-font-options-set-hint-style}
+      @about-function{cairo-font-options-get-hint-style}
+      @about-symbol{cairo-hint-metrics-t}
+      @about-function{cairo-font-options-set-hint-metrics}
+      @about-function{cairo-font-options-get-hint-metrics}
+    @end{subsection}
+  @end{section}
   @begin[Surfaces]{section}
     Base class for surfaces
 
@@ -282,6 +298,22 @@
     @about-function{cairo-surface-map-to-image}
     @about-function{cairo-surface-unmap-image}
   @end{section}
-")
+  @begin[Utilities]{section}
+    @begin[Version Information]{subsection}
+      Cairo provides the ability to examine the version at either compile-time
+      or run-time and in both a human-readable form as well as an encoded form
+      suitable for direct comparison. Cairo also provides the function
+      @fun{cairo-version-encode} to perform the encoding.
+
+      @about-variable{+cairo-version-major+}
+      @about-variable{+cairo-version-minor+}
+      @about-variable{+cairo-version-micro+}
+      @about-variable{+cairo-version-string+}
+      @about-variable{+cairo-version+}
+      @about-function{cairo-version-encode}
+      @about-function{cairo-version}
+      @about-function{cairo-version-string}
+    @end{subsection}
+  @end{section}")
 
 ;;; --- End of file cairo.package.lisp -----------------------------------------
