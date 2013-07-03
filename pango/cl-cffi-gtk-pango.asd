@@ -27,7 +27,7 @@
 
 (defsystem :cl-cffi-gtk-pango
   :name :cl-cffi-gtk-pango
-  :version "0.0.0"
+  :version "1.32.5"                              ; Version of Pango Library
   :author "Dieter Kaiser"
   :license "LLGPL"
   :serial t
@@ -38,7 +38,11 @@
                (:file "pango.fonts")
                (:file "pango.layout")
                (:file "pango.script")
-               (:file "pango"))
+               (:file "pango.bidirectional")
+               (:file "pango.renderer")
+               (:file "pango.context")
+               (:file "pango.glyph")
+              )
   :depends-on (:cl-cffi-gtk-glib
                :cl-cffi-gtk-gobject
                :iterate))

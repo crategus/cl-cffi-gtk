@@ -575,7 +575,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (define-g-boxed-opaque pango-language "PangoLanguage"
-  :alloc (error "PangoLanguage can not be created from Lisp side"))
+  :alloc (error "PangoLanguage can not be created from Lisp side."))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'pango-language atdoc:*class-name-alias*) "CStruct"
@@ -603,79 +603,73 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_language_from_string ()
-;;;
-;;; PangoLanguage * pango_language_from_string (const char *language);
-;;;
-;;; Take a RFC-3066 format language tag as a string and convert it to a
-;;; PangoLanguage pointer that can be efficiently copied (copy the pointer) and
-;;; compared with other language tags (compare the pointer.)
-;;;
-;;; This function first canonicalizes the string by converting it to lowercase,
-;;; mapping '_' to '-', and stripping all characters other than letters and '-'.
-;;;
-;;; Use pango_language_get_default() if you want to get the PangoLanguage for
-;;; the current locale of the process.
-;;;
-;;; language :
-;;;     a string representing a language tag, or NULL
-;;;
-;;; Returns :
-;;;     an opaque pointer to a PangoLanguage structure, or NULL if language
-;;;     was NULL. The returned pointer will be valid forever after, and should
-;;;     not be freed.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("pango_language_from_string" pango-language-from-string)
     (g-boxed-foreign pango-language)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-30}
+  @argument[language]{a string representing a language tag, or @code{nil}}
+  @begin{return}
+    An opaque pointer to a @class{pango-language} structure, or @code{nil} if
+    language was @code{NULL}. The returned pointer will be valid forever after,
+    and should not be freed.
+  @end{return}
+  @begin{short}
+    Take a RFC-3066 format language tag as a string and convert it to a
+    @class{pango-language} pointer that can be efficiently copied (copy the
+    pointer) and compared with other language tags (compare the pointer.)
+  @end{short}
+
+  This function first canonicalizes the string by converting it to lowercase,
+  mapping '_' to '-', and stripping all characters other than letters and '-'.
+
+  Use the function @fun{pango-language-get-default} if you want to get the
+  @class{pango-language} for the current locale of the process.
+  @see-function{pango-language-get-default}"
   (language :string))
 
 (export 'pango-language-from-string)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_language_to_string ()
-;;;
-;;; const char * pango_language_to_string (PangoLanguage *language);
-;;;
-;;; Gets the RFC-3066 format string representing the given language tag.
-;;;
-;;; language :
-;;;     a language tag
-;;;
-;;; Returns :
-;;;     a string representing the language tag. This is owned by Pango and
-;;;     should not be freed
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("pango_language_to_string" pango-language-to-string) :string
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-30}
+  @argument[language]{a language tag}
+  @begin{return}
+    A string representing the language tag. This is owned by Pango and
+    should not be freed.
+  @end{return}
+  Gets the RFC-3066 format string representing the given language tag."
   (language (g-boxed-foreign pango-language)))
 
 (export 'pango-language-to-string)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_language_matches ()
-;;;
-;;; gboolean pango_language_matches (PangoLanguage *language,
-;;;                                  const char *range_list);
-;;;
-;;; Checks if a language tag matches one of the elements in a list of language
-;;; ranges. A language tag is considered to match a range in the list if the
-;;; range is '*', the range is exactly the tag, or the range is a prefix of the
-;;; tag, and the character after it in the tag is '-'.
-;;;
-;;; language :
-;;;     a language tag (see pango_language_from_string()), NULL is allowed and
-;;;     matches nothing but '*'
-;;;
-;;; range_list :
-;;;     a list of language ranges, separated by ';', ':', ',', or space
-;;;     characters. Each element must either be '*', or a RFC 3066 language
-;;;     range canonicalized as by pango_language_from_string()
-;;;
-;;; Returns :
-;;;     TRUE if a match was found
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("pango_language_matches" pango-language-matches) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-30}
+  @argument[language]{a language tag (see the function
+    @fun{pango-language-from-string}), @code{nil} is allowed and matches
+    nothing but '*'}
+  @argument[range-list]{a list of language ranges, separated by ';', ':', ',',
+    or space characters. Each element must either be '*', or a RFC 3066 language
+    range canonicalized as by the function @fun{pango-language-from-string}}
+  @return{@em{True} if a match was found.}
+  @begin{short}
+    Checks if a language tag matches one of the elements in a list of language
+    ranges.
+  @end{short}
+  A language tag is considered to match a range in the list if the range is '*',
+  the range is exactly the tag, or the range is a prefix of the tag, and the
+  character after it in the tag is '-'.
+  @see-function{pango-language-from-string}"
   (language (g-boxed-foreign pango-language))
   (range-list :string))
 
@@ -793,36 +787,35 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_language_get_sample_string ()
-;;;
-;;; const char * pango_language_get_sample_string (PangoLanguage *language);
-;;;
-;;; Get a string that is representative of the characters needed to render a
-;;; particular language.
-;;;
-;;; The sample text may be a pangram, but is not necessarily. It is chosen to
-;;; be demonstrative of normal text in the language, as well as exposing font
-;;; feature requirements unique to the language. It is suitable for use as
-;;; sample text in a font selection dialog.
-;;;
-;;; If language is NULL, the default language as found by
-;;; pango_language_get_default() is used.
-;;;
-;;; If Pango does not have a sample string for language, the classic
-;;; "The quick brown fox..." is returned. This can be detected by comparing the
-;;; returned pointer value to that returned for (non-existent) language code
-;;; "xx". That is, compare to:
-;;;
-;;; pango_language_get_sample_string (pango_language_from_string ("xx"))
-;;;
-;;; language :
-;;;     a PangoLanguage, or NULL
-;;;
-;;; Returns :
-;;;     the sample string. This value is owned by Pango and should not be freed.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("pango_language_get_sample_string" pango-language-get-sample-string)
     :string
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-30}
+  @argument[language]{a @class{pango-language}, or @code{nil}}
+  @begin{return}
+    The sample string. This value is owned by Pango and should not be freed.
+  @end{return}
+  @begin{short}
+    Get a string that is representative of the characters needed to render a
+    particular language.
+  @end{short}
+
+  The sample text may be a pangram, but is not necessarily. It is chosen to
+  be demonstrative of normal text in the language, as well as exposing font
+  feature requirements unique to the language. It is suitable for use as
+  sample text in a font selection dialog.
+
+  If language is @code{nil}, the default language as found by the function
+  @fun{pango-language-get-default} is used.
+
+  If Pango does not have a sample string for language, the classic
+  \"The quick brown fox...\" is returned. This can be detected by comparing the
+  returned pointer value to that returned for (non-existent) language code
+  \"xx\". That is, compare to:
+  @code{(pango-language-get-sample-string (pango-language-from-string \"xx\"))}
+  @see-function{pango-language-get-default}"
   (language (g-boxed-foreign pango-language)))
 
 (export 'pango-language-get-sample-string)

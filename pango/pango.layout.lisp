@@ -171,14 +171,15 @@
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "PangoLayout" pango-layout
-  (:type-initializer "pango_layout_get_type")
-  ())
-
-;;; ----------------------------------------------------------------------------
+  (:superclass g-object
+   :export t
+   :interfaces nil
+   :type-initializer "gtk_socket_get_type")
+  nil)
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'pango-layout 'type)
- "@version{2013-4-12}
+ "@version{2013-6-30}
   @begin{short}
     The @sym{pango-layout} structure represents an entire paragraph of text. It
     is initialized with a @class{pango-context}, UTF-8 string and set of
@@ -189,8 +190,7 @@
   @end{short}
 
   There are also a number of parameters to adjust the formatting of a
-  @sym{pango-layout}, which are illustrated in Figure 1, \"Adjustable parameters
-  for a PangoLayout\". It is possible, as well, to ignore the 2-D setup, and
+  @sym{pango-layout}. It is possible, as well, to ignore the 2-D setup, and
   simply treat the results of a @sym{pango-layout} as a list of lines.
 
   The @sym{pango-layout} structure is opaque, and has no user-visible fields.")
@@ -283,7 +283,7 @@
 
 (defun pango-layout-set-text (layout text)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-17}
+ "@version{2013-6-30}
   @argument[layout]{a @class{pango-layout} object}
   @argument[text]{a valid UTF-8 string}
   @begin{short}
@@ -291,8 +291,8 @@
   @end{short}
 
   Note that if you have used the functions @fun{pango-layout-set-markup} or
-  @fun{pango-layout-set-markup-with-accel} on layout before, you may want to
-  call the function @fun{pango-layout-set-attributes} to clear the attributes
+  @fun{pango-layout-set-markup-with-accel} on @arg{layout} before, you may want
+  to call the function @fun{pango-layout-set-attributes} to clear the attributes
   set on the layout from the markup as this function does not clear attributes.
   @see-function{pango-layout-get-text}
   @see-function{pango-layout-set-markup}
@@ -602,8 +602,6 @@
   (:char 1)
   (:word-char 2))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'pango-wrap-mode atdoc:*symbol-name-alias*) "Enum"
       (gethash 'pango-wrap-mode atdoc:*external-symbols*)
@@ -702,8 +700,6 @@
   (:start 1)
   (:middle 2)
   (:end 3))
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'pango-ellipsize-mode atdoc:*symbol-name-alias*) "Enum"
@@ -1856,18 +1852,32 @@
 ;;;   /* Resolved PangoDirection of line */
 ;;;   guint        resolved_dir : 3;
 ;;; };
-;;;
-;;; The PangoLayoutLine structure represents one of the lines resulting from
-;;; laying out a paragraph via PangoLayout. PangoLayoutLine structures are
-;;; obtained by calling pango_layout_get_line() and are only valid until the
-;;; text, attributes, or settings of the parent PangoLayout are modified.
-;;;
-;;; Routines for rendering PangoLayout objects are provided in code specific
-;;; to each rendering system.
 ;;; ----------------------------------------------------------------------------
+
+;; TODO: Implement PangoLayoutLine as a Gboxed Cstruct
 
 (define-g-boxed-opaque pango-layout-line "PangoLayoutLine"
   :alloc (error "Use Pango to create PANGO-LAYOUT-LINEs"))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'pango-layout-line atdoc:*class-name-alias*) "CStruct"
+      (documentation 'pango-layout-line 'type)
+ "@version{2013-6-30}
+  @begin{short}
+    The @sym{pango-layout-line} structure represents one of the lines resulting
+    from laying out a paragraph via @class{pango-layout}.
+  @end{short}
+  @sym{pango-layout-line} structures are obtained by calling the function
+  @fun{pango-layout-get-line} and are only valid until the text, attributes,
+  or settings of the parent @class{pango-layout} are modified.
+
+  Routines for rendering @class{pango-layout} objects are provided in code
+  specific to each rendering system.
+  @begin{pre}
+(define-g-boxed-opaque pango-layout-line \"PangoLayoutLine\"
+  :alloc (error \"Use Pango to create PANGO-LAYOUT-LINEs\"))
+  @end{pre}
+  @see-function{pango-layout-get-line}")
 
 (export (boxed-related-symbols 'pango-layout-line))
 

@@ -2,13 +2,14 @@
 ;;; pango.attributes.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the Pango Reference Manual
-;;; for Pango 1.30.0. See http://www.gtk.org.
+;;; for Pango 1.30.0. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -923,38 +924,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum PangoUnderline
-;;;
-;;; typedef enum {
-;;;   PANGO_UNDERLINE_NONE,
-;;;   PANGO_UNDERLINE_SINGLE,
-;;;   PANGO_UNDERLINE_DOUBLE,
-;;;   PANGO_UNDERLINE_LOW,
-;;;   PANGO_UNDERLINE_ERROR
-;;; } PangoUnderline;
-;;;
-;;; the PangoUnderline enumeration is used to specify whether text should be
-;;; underlined, and if so, the type of underlining.
-;;;
-;;; PANGO_UNDERLINE_NONE
-;;;     no underline should be drawn
-;;;
-;;; PANGO_UNDERLINE_SINGLE
-;;;     a single underline should be drawn
-;;;
-;;; PANGO_UNDERLINE_DOUBLE
-;;;     a double underline should be drawn
-;;;
-;;; PANGO_UNDERLINE_LOW
-;;;     a single underline should be drawn at a position beneath the ink extents
-;;;     of the text being underlined. This should be used only for underlining
-;;;     single characters, such as for keyboard accelerators.
-;;;     PANGO_UNDERLINE_SINGLE should be used for extended portions of text.
-;;;
-;;; PANGO_UNDERLINE_ERROR
-;;;     a wavy underline should be drawn below. This underline is typically
-;;;     used to indicate an error such as a possilble mispelling; in some cases
-;;;     a contrasting color may automatically be used. This type of underlining
-;;;     is available since Pango 1.4.
 ;;; ----------------------------------------------------------------------------
 
 (define-g-enum "PangoUnderline" pango-underline
@@ -965,6 +934,38 @@
   (:double 2)
   (:low 3)
   (:error 4))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'pango-underline atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'pango-underline atdoc:*external-symbols*)
+ "@version{2013-6-30}
+  @begin{short}
+    The @sym{pango-underline} enumeration is used to specify whether text should
+    be underlined, and if so, the type of underlining.
+  @end{short}
+  @begin{pre}
+(define-g-enum \"PangoUnderline\" pango-underline
+  (:export t
+   :type-initializer \"pango_underline_get_type\")
+  (:none 0)
+  (:single 1)
+  (:double 2)
+  (:low 3)
+  (:error 4))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:none]{No underline should be drawn.}
+    @entry[:single]{A single underline should be drawn.}
+    @entry[:double]{A double underline should be drawn.}
+    @entry[:low]{A single underline should be drawn at a position beneath the
+      ink extents of the text being underlined. This should be used only for
+      underlining single characters, such as for keyboard accelerators.
+      @code{:single} should be used for extended portions of text.}
+    @entry[:error]{A wavy underline should be drawn below. This underline is
+      typically used to indicate an error such as a possible mispelling; in some
+      cases a contrasting color may automatically be used. This type of
+      underlining is available since Pango 1.4.}
+  @end{table}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; PANGO_TYPE_UNDERLINE
@@ -1301,19 +1302,21 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'pango-attr-list atdoc:*class-name-alias*) "CStruct"
       (documentation 'pango-attr-list 'type)
- "@version{2013-4-12}
+ "@version{2013-6-30}
   @begin{short}
     The @sym{pango-attr-list} structure represents a list of attributes that
-    apply to a section of text. The attributes are, in general, allowed to
-    overlap in an arbitrary fashion, however, if the attributes are manipulated
-    only through @fun{pango-attr-list-change}, the overlap between properties
-    will meet stricter criteria.
+    apply to a section of text.
   @end{short}
+  The attributes are, in general, allowed to overlap in an arbitrary fashion,
+  however, if the attributes are manipulated only through the function
+  @fun{pango-attr-list-change}, the overlap between properties will meet
+  stricter criteria.
 
   Since the @sym{pango-attr-list} structure is stored as a linear list, it is
   not suitable for storing attributes for large amounts of text. In general, you
   should not use a single @sym{pango-attr-list} for more than one paragraph of
-  text.")
+  text.
+  @see-function{pango-attr-list-change}")
 
 (export (boxed-related-symbols 'pango-attr-list))
 

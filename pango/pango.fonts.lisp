@@ -2,13 +2,14 @@
 ;;; pango.fonts.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the Pango Reference Manual
-;;; for Pango 1.30.0. See http://www.gtk.org.
+;;; for Pango 1.30.0. See <http://www.gtk.org>. The API documentation of the
+;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -195,16 +196,24 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; PangoFontDescription
-;;; 
-;;; typedef struct _PangoFontDescription PangoFontDescription;
-;;; 
-;;; The PangoFontDescription structure represents the description of an ideal
-;;; font. These structures are used both to list what fonts are available on
-;;; the system and also for specifying the characteristics of a font to load.
 ;;; ----------------------------------------------------------------------------
 
 (define-g-boxed-opaque pango-font-description "PangoFontDescription"
   :alloc (error "PangoFontDescription can not be created from Lisp side"))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'pango-font-description atdoc:*class-name-alias*) "CStruct"
+      (documentation 'pango-font-description 'type)
+ "@version{2013-6-26}
+  @begin{short}
+    The @sym{pango-font-description} structure represents the description of an
+    ideal font. These structures are used both to list what fonts are available
+    on the system and also for specifying the characteristics of a font to load.
+  @end{short}
+  @begin{pre}
+(define-g-boxed-opaque pango-font-description \"PangoFontDescription\"
+  :alloc (error \"PangoFontDescription can not be created from Lisp side\"))
+  @end{pre}")
 
 (export (boxed-related-symbols 'pango-font-description))
 
@@ -218,23 +227,37 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum PangoStyle
-;;; 
-;;; typedef enum {
-;;;   PANGO_STYLE_NORMAL,
-;;;   PANGO_STYLE_OBLIQUE,
-;;;   PANGO_STYLE_ITALIC
-;;; } PangoStyle;
-;;; 
-;;; An enumeration specifying the various slant styles possible for a font.
-;;; 
-;;; PANGO_STYLE_NORMAL
-;;;     the font is upright.
-;;; 
-;;; PANGO_STYLE_OBLIQUE
-;;;     the font is slanted, but in a roman style.
-;;; 
-;;; PANGO_STYLE_ITALIC
-;;;     the font is slanted in an italic style.
+;;; ----------------------------------------------------------------------------
+
+(define-g-enum "PangoStyle" pango-style
+  (:export t
+   :type-initializer "pango_style_get_type")
+  (:normal 0)
+  (:oblique 1)
+  (:italic 2))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'pango-style atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'pango-style atdoc:*external-symbols*)
+ "@version{2013-6-29}
+  @begin{short}
+    An enumeration specifying the various slant styles possible for a font.
+  @end{short}
+  @begin{pre}
+(define-g-enum \"PangoStyle\" pango-style
+  (:export t
+   :type-initializer \"pango_style_get_type\")
+  (:normal 0)
+  (:oblique 1)
+  (:italic 2))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:normal]{The font is upright.}
+    @entry[:oblique]{The font is slanted, but in a roman style.}
+    @entry[:italic]{The font is slanted in an italic style.}
+  @end{table}")
+
+;;; ----------------------------------------------------------------------------
 ;;; PANGO_TYPE_STYLE
 ;;; 
 ;;; #define PANGO_TYPE_STYLE (pango_style_get_type())
@@ -242,106 +265,87 @@
 ;;; The GObject type for PangoStyle.
 ;;; ----------------------------------------------------------------------------
 
-(define-g-enum "PangoStyle" pango-style
-  (:export t
-   :type-initializer "pango_style_get_type")
-  (:pango-style-normal 0)
-  (:pango-style-oblique 1)
-  (:pango-style-italic 2))
-
 ;;; ----------------------------------------------------------------------------
 ;;; enum PangoWeight
-;;; 
-;;; typedef enum {
-;;;   PANGO_WEIGHT_THIN = 100,
-;;;   PANGO_WEIGHT_ULTRALIGHT = 200,
-;;;   PANGO_WEIGHT_LIGHT = 300,
-;;;   PANGO_WEIGHT_BOOK = 380,
-;;;   PANGO_WEIGHT_NORMAL = 400,
-;;;   PANGO_WEIGHT_MEDIUM = 500,
-;;;   PANGO_WEIGHT_SEMIBOLD = 600,
-;;;   PANGO_WEIGHT_BOLD = 700,
-;;;   PANGO_WEIGHT_ULTRABOLD = 800,
-;;;   PANGO_WEIGHT_HEAVY = 900,
-;;;   PANGO_WEIGHT_ULTRAHEAVY = 1000
-;;; } PangoWeight;
-;;; 
-;;; An enumeration specifying the weight (boldness) of a font. This is a
-;;; numerical value ranging from 100 to 900, but there are some predefined
-;;; values:
-;;; 
-;;; PANGO_WEIGHT_THIN
-;;;     the thin weight (= 100; Since: 1.24)
-;;; 
-;;; PANGO_WEIGHT_ULTRALIGHT
-;;;     the ultralight weight (= 200)
-;;; 
-;;; PANGO_WEIGHT_LIGHT
-;;;     the light weight (= 300)
-;;; 
-;;; PANGO_WEIGHT_BOOK
-;;;     the book weight (= 380; Since: 1.24)
-;;; 
-;;; PANGO_WEIGHT_NORMAL
-;;;     the default weight (= 400)
-;;; 
-;;; PANGO_WEIGHT_MEDIUM
-;;;     the normal weight (= 500; Since: 1.24)
-;;; 
-;;; PANGO_WEIGHT_SEMIBOLD
-;;;     the semibold weight (= 600)
-;;; 
-;;; PANGO_WEIGHT_BOLD
-;;;     the bold weight (= 700)
-;;; 
-;;; PANGO_WEIGHT_ULTRABOLD
-;;;     the ultrabold weight (= 800)
-;;; 
-;;; PANGO_WEIGHT_HEAVY
-;;;     the heavy weight (= 900)
-;;; 
-;;; PANGO_WEIGHT_ULTRAHEAVY
-;;;     the ultraheavy weight (= 1000; Since: 1.24)
 ;;; ----------------------------------------------------------------------------
 
 (define-g-enum "PangoWeight" pango-weight
   (:export t
    :type-initializer "pango_weight_get_type")
-  (:pango-weight-thin 100)
-  (:pango-weight-ultralight 200)
-  (:pango-weight-light 300)
-  (:pango-weight-book 380)
-  (:pango-weight-normal 400)
-  (:pango-weight-medium 500)
-  (:pango-weight-semibold 600)
-  (:pango-weight-bold 700)
-  (:pango-weight-ultrabold 800)
-  (:pango-weight-heavy 900)
-  (:pango-weight-ultraheavy 1000))
-  
-(defconstant +pango-weight-thin+ 100)
-(defconstant +pango-weight-ultralight+ 200)
-(defconstant +pango-weight-light+ 300)
-(defconstant +pango-weight-book+ 380)
-(defconstant +pango-weight-normal+ 400)
-(defconstant +pango-weight-medium+ 500)
-(defconstant +pango-weight-semibold+ 600)
-(defconstant +pango-weight-bold+ 700)
-(defconstant +pango-weight-ultrabold+ 800)
-(defconstant +pango-weight-heavy+ 900)
-(defconstant +pango-weight-ultraheavy+ 1000)
+  (:thin 100)
+  (:ultralight 200)
+  (:light 300)
+  (:book 380)
+  (:normal 400)
+  (:medium 500)
+  (:semibold 600)
+  (:bold 700)
+  (:ultrabold 800)
+  (:heavy 900)
+  (:ultraheavy 1000))
 
-(export '+pango-weight-thin+)
-(export '+pango-weight-ultralight+)
-(export '+pango-weight-light+)
-(export '+pango-weight-book+)
-(export '+pango-weight-normal+)
-(export '+pango-weight-medium+)
-(export '+pango-weight-semibold+)
-(export '+pango-weight-bold+)
-(export '+pango-weight-ultrabold+)
-(export '+pango-weight-heavy+)
-(export '+pango-weight-ultraheavy+)
+#+cl-cffi-gtk-documentation
+(setf (gethash 'pango-weight atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'pango-weight atdoc:*external-symbols*)
+ "@version{2013-6-29}
+  @begin{short}
+    An enumeration specifying the weight (boldness) of a font. This is a
+    numerical value ranging from 100 to 900, but there are some predefined
+    values.
+  @end{short}
+  @begin{pre}
+(define-g-enum \"PangoWeight\" pango-weight
+  (:export t
+   :type-initializer \"pango_weight_get_type\")
+  (:thin 100)
+  (:ultralight 200)
+  (:light 300)
+  (:book 380)
+  (:normal 400)
+  (:medium 500)
+  (:semibold 600)
+  (:bold 700)
+  (:ultrabold 800)
+  (:heavy 900)
+  (:ultraheavy 1000))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:thin]{The thin weight. Since 1.24.}
+    @entry[:ultralight]{The ultralight weight.}
+    @entry[:light]{The light weight.}
+    @entry[:book]{The book weight. Since 1.24.}
+    @entry[:normal]{The default weight.}
+    @entry[:medium]{The normal weight. Since 1.24.}
+    @entry[:semibold]{The semibold weight.}
+    @entry[:bold]{The bold weight.}
+    @entry[:ultrabold]{The ultrabold weight.}
+    @entry[:heavy]{The heavy weight.}
+    @entry[:ultraheavy]{The ultraheavy weight. Since 1.24.}
+  @end{table}")
+
+;(defconstant +pango-weight-thin+ 100)
+;(defconstant +pango-weight-ultralight+ 200)
+;(defconstant +pango-weight-light+ 300)
+;(defconstant +pango-weight-book+ 380)
+;(defconstant +pango-weight-normal+ 400)
+;(defconstant +pango-weight-medium+ 500)
+;(defconstant +pango-weight-semibold+ 600)
+;(defconstant +pango-weight-bold+ 700)
+;(defconstant +pango-weight-ultrabold+ 800)
+;(defconstant +pango-weight-heavy+ 900)
+;(defconstant +pango-weight-ultraheavy+ 1000)
+
+;(export '+pango-weight-thin+)
+;(export '+pango-weight-ultralight+)
+;(export '+pango-weight-light+)
+;(export '+pango-weight-book+)
+;(export '+pango-weight-normal+)
+;(export '+pango-weight-medium+)
+;(export '+pango-weight-semibold+)
+;(export '+pango-weight-bold+)
+;(export '+pango-weight-ultrabold+)
+;(export '+pango-weight-heavy+)
+;(export '+pango-weight-ultraheavy+)
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum PangoVariant
@@ -992,55 +996,51 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_font_description_from_string ()
-;;; 
-;;; PangoFontDescription * pango_font_description_from_string (const char *str)
-;;; 
-;;; Creates a new font description from a string representation in the form
-;;; "[FAMILY-LIST] [STYLE-OPTIONS] [SIZE]", where FAMILY-LIST is a comma
-;;; separated list of families optionally terminated by a comma, STYLE_OPTIONS
-;;; is a whitespace separated list of words where each WORD describes one of
-;;; style, variant, weight, stretch, or gravity, and SIZE is a decimal number
-;;; (size in points) or optionally followed by the unit modifier "px" for
-;;; absolute size. Any one of the options may be absent. If FAMILY-LIST is
-;;; absent, then the family_name field of the resulting font description will
-;;; be initialized to NULL. If STYLE-OPTIONS is missing, then all style options
-;;; will be set to the default values. If SIZE is missing, the size in the
-;;; resulting font description will be set to 0.
-;;; 
-;;; str :
-;;;     string representation of a font description.
-;;; 
-;;; Returns :
-;;;     a new PangoFontDescription.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("pango_font_description_from_string"
            pango-font-description-from-string)
     (g-boxed-foreign pango-font-description)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-29}
+  @argument[str]{string representation of a font description}
+  @return{A new @class{pango-font-description}.}
+  @begin{short}
+    Creates a new font description from a string representation in the form
+    @code{[FAMILY-LIST] [STYLE-OPTIONS] [SIZE]}, where @code{FAMILY-LIST} is a
+    comma separated list of families optionally terminated by a comma,
+    @code{STYLE_OPTIONS} is a whitespace separated list of words where each
+    @code{WORD} describes one of style, variant, weight, stretch, or gravity,
+    and @code{SIZE} is a decimal number (size in points) or optionally followed
+    by the unit modifier @code{px} for absolute size.
+  @end{short}
+  Any one of the options may be absent. If @code{FAMILY-LIST} is absent, then
+  the @code{family_name} field of the resulting font description will
+  be initialized to @code{NULL}. If @code{STYLE-OPTIONS} is missing, then all
+  style options will be set to the default values. If @code{SIZE} is missing,
+  the size in the resulting font description will be set to 0."
   (str :string))
 
 (export 'pango-font-description-from-string)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_font_description_to_string ()
-;;; 
-;;; char * pango_font_description_to_string (const PangoFontDescription *desc);
-;;; 
-;;; Creates a string representation of a font description.
-;;; See pango_font_description_from_string() for a description of the format of
-;;; the string representation. The family list in the string description will
-;;; only have a terminating comma if the last word of the list is a valid style
-;;; option.
-;;; 
-;;; desc :
-;;;     a PangoFontDescription
-;;; 
-;;; Returns :
-;;;     a new string that must be freed with g_free().
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("pango_font_description_to_string"
            pango-font-description-to-string) :string
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-29}
+  @argument[desc]{a @class{pango-font-description} object}
+  @return{A new string that must be freed with @code{g_free()}.}
+  @begin{short}
+    Creates a string representation of a font description.
+  @end{short}
+  See the function @fun{pango-font-description-from-string} for a description of
+  the format of the string representation. The family list in the string
+  description will only have a terminating comma if the last word of the list
+  is a valid style option.
+  @see-function{pango-font-description-from-string}"
   (desc (g-boxed-foreign pango-font-description)))
 
 (export 'pango-font-description-to-string)
@@ -1253,18 +1253,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; PangoFont
-;;; 
-;;; typedef struct _PangoFont PangoFont;
-;;; 
-;;; The PangoFont structure is used to represent a font in a
-;;; rendering-system-independent matter. To create an implementation of a
-;;; PangoFont, the rendering-system specific code should allocate a larger
-;;; structure that contains a nested PangoFont, fill in the klass member of the
-;;; nested PangoFont with a pointer to a appropriate PangoFontClass, then call
-;;; pango_font_init() on the structure.
-;;; 
-;;; The PangoFont structure contains one member which the implementation fills
-;;; in.
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "PangoFont" pango-font
@@ -1273,6 +1261,22 @@
    :interfaces nil
    :type-initializer "pango_font_get_type")
   nil)
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'pango-font 'type)
+ "@version{2013-6-29}
+  @begin{short}
+    The @sym{pango-font} structure is used to represent a font in a
+    rendering-system-independent matter.
+  @end{short}
+  To create an implementation of a @sym{pango-font}, the rendering-system
+  specific code should allocate a larger structure that contains a nested
+  @sym{pango-font}, fill in the klass member of the nested @sym{pango-font} with
+  a pointer to a appropriate @class{pango-font-class}, then call the function
+  @fun{pango-font-init} on the structure.
+
+  The @sym{pango-font} structure contains one member which the implementation
+  fills in.")
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_font_find_shaper ()
@@ -1434,12 +1438,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct PangoFontFamily
-;;; 
-;;; struct PangoFontFamily;
-;;; 
-;;; The PangoFontFamily structure is used to represent a family of related font
-;;; faces. The faces in a family share a common design, but differ in slant,
-;;; weight, width and other aspects.
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "PangoFontFamily" pango-font-family
@@ -1449,24 +1447,33 @@
     :type-initializer "pango_font_family_get_type")
   nil)
 
+#+cl-cffi-gtk-documentation
+(setf (documentation 'pango-font-family 'type)
+ "@version{2013-6-29}
+  @begin{short}
+    The @sym{pango-font-family} structure is used to represent a family of
+    related font faces.
+  @end{short}
+  The faces in a family share a common design, but differ in slant, weight,
+  width and other aspects.")
+
 ;;; ----------------------------------------------------------------------------
 ;;; pango_font_family_get_name ()
-;;; 
-;;; const char * pango_font_family_get_name (PangoFontFamily *family);
-;;; 
-;;; Gets the name of the family. The name is unique among all fonts for the font
-;;; backend and can be used in a PangoFontDescription to specify that a face
-;;; from this family is desired.
-;;; 
-;;; family :
-;;;     a PangoFontFamily
-;;; 
-;;; Returns :
-;;;     the name of the family. This string is owned by the family object and
-;;;     must not be modified or freed.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("pango_font_family_get_name" pango-font-family-get-name) :string
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-29}
+  @argument[family]{a @class{pango-font-family} object}
+  @begin{return}
+    The name of the family. This string is owned by the family object and
+    must not be modified or freed.
+  @end{return}
+  @begin{short}
+    Gets the name of the family.
+  @end{short}
+  The name is unique among all fonts for the font backend and can be used in a
+  PangoFontDescription to specify that a face from this family is desired."
   (family (g-object pango-font-family)))
 
 (export 'pango-font-family-get-name)
@@ -1521,11 +1528,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct PangoFontFace
-;;; 
-;;; struct PangoFontFace;
-;;; 
-;;; The PangoFontFace structure is used to represent a group of fonts with the
-;;; same family, slant, weight, width, but varying sizes.
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "PangoFontFace" pango-font-face
@@ -1535,24 +1537,30 @@
     :type-initializer "pango_font_face_get_type")
   nil)
 
+#+cl-cffi-gtk-documentation
+(setf (documentation 'pango-font-face 'type)
+ "@version{2013-6-29}
+  The @sym{pango-font-face} structure is used to represent a group of fonts with
+  the same family, slant, weight, width, but varying sizes.")
+
 ;;; ----------------------------------------------------------------------------
 ;;; pango_font_face_get_face_name ()
-;;; 
-;;; const char * pango_font_face_get_face_name (PangoFontFace *face);
-;;; 
-;;; Gets a name representing the style of this face among the different faces
-;;; in the PangoFontFamily for the face. This name is unique among all faces in
-;;; the family and is suitable for displaying to users.
-;;; 
-;;; face :
-;;;     a PangoFontFace.
-;;; 
-;;; Returns :
-;;;     the face name for the face. This string is owned by the face object and
-;;;     must not be modified or freed.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("pango_font_face_get_face_name" pango-font-face-get-face-name) :string
+ #+cl-cffi-gtk-documentation
+ "@version{2013-6-29}
+  @argument[face]{a @class{pango-font-face} object}
+  @begin{return}
+    The face name for the face. This string is owned by the face object and
+    must not be modified or freed.
+  @end{return}
+  @begin{short}
+    Gets a name representing the style of this face among the different faces
+    in the @class{pango-font-family} for the face.
+  @end{short}
+  This name is unique among all faces in the family and is suitable for
+  displaying to users."
   (face (g-object pango-font-face)))
 
 (export 'pango-font-face-get-face-name)
@@ -1941,7 +1949,7 @@
 ;;;     a PangoLanguage tag
 ;;; 
 ;;; Returns :
-;;;     the newly allocated PangoFontsetSimple, which should be freed with
+;;;     The newly allocated PangoFontsetSimple, which should be freed with
 ;;;     g_object_unref().
 ;;; ----------------------------------------------------------------------------
 
@@ -1957,7 +1965,7 @@
 ;;;     a PangoFontsetSimple
 ;;; 
 ;;; font :
-;;;     a PangoFont.
+;;;     a PangoFont
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1971,7 +1979,7 @@
 ;;;     a PangoFontsetSimple
 ;;; 
 ;;; Returns :
-;;;     the size of fontset
+;;;     The size of fontset.
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- End of file pango.fonts.lisp -------------------------------------------
