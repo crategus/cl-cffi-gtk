@@ -34,8 +34,6 @@
            (parse-g-param-spec g-param-spec))
       (g-type-class-unref class))))
 
-(export 'container-child-property-info)
-
 (defun container-call-get-property (container child property-name type)
   (with-foreign-object (gvalue 'g-value)
     (g-value-zero gvalue)
@@ -50,8 +48,6 @@
     (%gtk-container-child-set-property container child property-name gvalue)
     (g-value-unset gvalue)
     (values)))
-
-(export '(container-call-get-property container-call-set-property))
 
 (defmacro define-child-property (container-type
                                   property-name property-gname
@@ -77,20 +73,6 @@
      ,@(when export
              (list `(export ',property-name)))))
 
-(defun container-class-child-properties (type)
-  (setf type (gtype type))
-  (let ((class (g-type-class-ref type)))
-    (unwind-protect
-      (with-foreign-object (n-props :uint)
-        (let ((params (gtk-container-class-list-child-properties class n-props)))
-          (unwind-protect
-            (loop
-              for i from 0 below (mem-ref n-props :uint)
-              for param = (mem-aref params :pointer i)
-              collect (parse-g-param-spec param))
-            (g-free params))))
-      (g-type-class-unref class))))
-
 (defun child-property-name (type-name property-name package-name)
   (intern (format nil "~A-CHILD-~A"
                   (symbol-name (registered-object-type-by-name type-name))
@@ -100,7 +82,7 @@
 (defun generate-child-properties (&optional (type-root "GtkContainer") (package-name "GTK"))
   (setf type-root (gtype type-root))
   (append (loop
-             for property in (container-class-child-properties type-root)
+             for property in (gtk-container-class-list-child-properties type-root)
              collect
                `(define-child-property
                     ,(gtype-name type-root)

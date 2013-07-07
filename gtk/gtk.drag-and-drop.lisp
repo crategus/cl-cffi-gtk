@@ -181,69 +181,82 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_drag_dest_set ()
-;;;
-;;; void gtk_drag_dest_set (GtkWidget *widget,
-;;;                         GtkDestDefaults flags,
-;;;                         const GtkTargetEntry *targets,
-;;;                         gint n_targets,
-;;;                         GdkDragAction actions);
-;;;
-;;; Sets a widget as a potential drop destination, and adds default behaviors.
-;;;
-;;; The default behaviors listed in flags have an effect similar to installing
-;;; default handlers for the widget's drag-and-drop signals ("drag-motion",
-;;; "drag-drop", ...). They all exist for convenience. When passing
-;;; GTK_DEST_DEFAULT_ALL for instance it is sufficient to connect to the
-;;; widget's "drag-data-received" signal to get primitive, but consistent
-;;; drag-and-drop support.
-;;;
-;;; Things become more complicated when you try to preview the dragged data, as
-;;; described in the documentation for "drag-motion". The default behaviors
-;;; described by flags make some assumptions, that can conflict with your own
-;;; signal handlers. For instance GTK_DEST_DEFAULT_DROP causes invokations of
-;;; gdk_drag_status() in the context of "drag-motion", and invokations of
-;;; gtk_drag_finish() in "drag-data-received". Especially the later is dramatic,
-;;; when your own "drag-motion" handler calls gtk_drag_get_data() to inspect the
-;;; dragged data.
-;;;
-;;; There's no way to set a default action here, you can use the "drag-motion"
-;;; callback for that. Here's an example which selects the action to use
-;;; depending on whether the control key is pressed or not:
-;;;
-;;; static void
-;;; drag_motion (GtkWidget *widget,
-;;;              GdkDragContext *context,
-;;;              gint x,
-;;;              gint y,
-;;;              guint time)
-;;; {
-;;;   GdkModifierType mask;
-;;;
-;;;   gdk_window_get_pointer (gtk_widget_get_window (widget),
-;;;                           NULL, NULL, &mask);
-;;;   if (mask & GDK_CONTROL_MASK)
-;;;     gdk_drag_status (context, GDK_ACTION_COPY, time);
-;;;   else
-;;;     gdk_drag_status (context, GDK_ACTION_MOVE, time);
-;;; }
-;;;
-;;; widget :
-;;;     a GtkWidget
-;;;
-;;; flags :
-;;;     which types of default drag behavior to use
-;;;
-;;; targets :
-;;;     a pointer to an array of GtkTargetEntrys indicating the drop types that
-;;;     this widget will accept, or NULL. Later you can access the list with
-;;;     gtk_drag_dest_get_target_list() and gtk_drag_dest_find_target()
-;;;
-;;; n_targets :
-;;;     the number of entries in targets
-;;;
-;;; actions :
-;;;     a bitmask of possible actions for a drop onto this widget.
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_drag_dest_set" %gtk-drag-dest-set) :void
+  (widget (g-object gtk-widget))
+  (flags gtk-dest-defaults)
+  (targets :pointer)
+  (n-targets :int)
+  (actions gdk-drag-action))
+
+(defun gtk-drag-dest-set (widget flags targets actions)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-7-4}
+  @argument[widget]{a @class{gtk-widget} object}
+  @argument[flags]{which types of default drag behavior to use}
+  @argument[targets]{a list of @class{gtk-target-entry}s indicating the drop
+    types that this @arg{widget} will accept, or @code{nil}. Later you can
+    access the list with the functions @fun{gtk-drag-dest-get-target-list} and
+    @fun{gtk-drag-dest-find-target}}
+  @argument[actions]{a bitmask of possible actions for a drop onto
+    this @arg{widget}}
+  @begin{short}
+    Sets a @arg{widget} as a potential drop destination, and adds default
+    behaviors.
+  @end{short}
+
+  The default behaviors listed in @arg{flags} have an effect similar to
+  installing default handlers for the @arg{widget}'s drag-and-drop signals
+  (\"drag-motion\", \"drag-drop\", ...). They all exist for convenience. When
+  passing @code{:all} for instance it is sufficient to connect to the
+  @arg{widget}'s \"drag-data-received\" signal to get primitive, but consistent
+  drag-and-drop support.
+
+  Things become more complicated when you try to preview the dragged data, as
+  described in the documentation for the \"drag-motion\" signal. The default
+  behaviors described by @arg{flags} make some assumptions, that can conflict
+  with your own signal handlers. For instance @code{:drop} causes invokations of
+  the function @fun{gdk-drag-status} in the context of the \"drag-motion\"
+  signal, and invokations of the function @fun{gtk-drag-finish} in the
+  \"drag-data-received\" handler. Especially the later is dramatic, when your
+  own \"drag-motion\" handler calls the function @fun{gtk-drag-get-data} to
+  inspect the dragged data.
+
+  There is no way to set a default action here, you can use the the
+  \"drag-motion\" callback for that. Here is an example which selects the action
+  to use depending on whether the control key is pressed or not:
+  @begin{pre}
+ static void
+ drag_motion (GtkWidget *widget,
+              GdkDragContext *context,
+              gint x,
+              gint y,
+              guint time)
+ {
+   GdkModifierType mask;
+
+   gdk_window_get_pointer (gtk_widget_get_window (widget),
+                           NULL, NULL, &mask);
+   if (mask & GDK_CONTROL_MASK)
+     gdk_drag_status (context, GDK_ACTION_COPY, time);
+   else
+     gdk_drag_status (context, GDK_ACTION_MOVE, time);
+ @}
+  @end{pre}
+  @see-function{gtk-drag-dest-get-target-list}
+  @see-function{gtk-drag-dest-find-target}
+  @see-function{gdk-drag-status}
+  @see-function{gtk-drag-finish}
+  @see-function{gtk-drag-get-data}"
+  (with-foreign-boxed-array (n-targets targets-ptr gtk-target-entry targets)
+    (%gtk-drag-dest-set widget
+                        flags
+                        targets-ptr
+                        n-targets
+                        actions)))
+
+(export 'gtk-drag-dest-set)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_drag_dest_set_proxy ()
@@ -493,27 +506,36 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_drag_highlight ()
-;;;
-;;; void gtk_drag_highlight (GtkWidget *widget);
-;;;
-;;; Draws a highlight around a widget. This will attach handlers to "draw", so
-;;; the highlight will continue to be displayed until gtk_drag_unhighlight() is
-;;; called.
-;;;
-;;; widget :
-;;;     a widget to highlight
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_drag_highlight" gtk-drag-highlight) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-7-4}
+  @argument[widget]{a widget to highlight}
+  @begin{short}
+    Draws a highlight around a @arg{widget}.
+  @end{short}
+  This will attach handlers to \"draw\", so the highlight will continue to be
+  displayed until the function @fun{gtk-drag-unhighlight} is called.
+  @see-function{gtk-drag-unhighlight}"
+  (widget (g-object gtk-widget)))
+
+(export 'gtk-drag-highlight)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_drag_unhighlight ()
-;;;
-;;; void gtk_drag_unhighlight (GtkWidget *widget);
-;;;
-;;; Removes a highlight set by gtk_drag_highlight() from a widget.
-;;;
-;;; widget :
-;;;     a widget to remove the highlight from.
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_drag_unhighlight" gtk-drag-unhighlight) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-7-4}
+  @argument[widget]{a widget to remove the highlight from}
+  Removes a highlight set by the function @fun{gtk-drag-highlight} from a
+  widget.
+  @see-function{gtk-drag-highlight}"
+  (widget (g-object gtk-widget)))
+
+(export 'gtk-drag-unhighlight)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_drag_begin ()
@@ -768,48 +790,58 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_drag_source_set ()
-;;;
-;;; void gtk_drag_source_set (GtkWidget *widget,
-;;;                           GdkModifierType start_button_mask,
-;;;                           const GtkTargetEntry *targets,
-;;;                           gint n_targets,
-;;;                           GdkDragAction actions);
-;;;
-;;; Sets up a widget so that GTK+ will start a drag operation when the user
-;;; clicks and drags on the widget. The widget must have a window.
-;;;
-;;; widget :
-;;;     a GtkWidget
-;;;
-;;; start_button_mask :
-;;;     the bitmask of buttons that can start the drag
-;;;
-;;; targets :
-;;;     the table of targets that the drag will support, may be NULL
-;;;
-;;; n_targets :
-;;;     the number of items in targets
-;;;
-;;; actions :
-;;;     the bitmask of possible actions for a drag from this widget
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_drag_source_set" %gtk-drag-source-set) :void
+  (widget (g-object gtk-widget))
+  (start-button-mask gdk-modifier-type)
+  (targets :pointer)
+  (n-targets :int)
+  (actions gdk-drag-action))
+
+(defun gtk-drag-source-set (widget start-button-mask targets actions)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-7-4}
+  @argument[widget]{a @class{gtk-widget} object}
+  @argument[start-button-mask]{the bitmask of buttons that can start the drag}
+  @argument[targets]{the list of targets that the drag will support,
+    may be @code{nil}}
+  @argument[actions]{the bitmask of possible actions for a drag from this
+    widget}
+  Sets up a widget so that GTK+ will start a drag operation when the user
+  clicks and drags on the @arg{widget}. The @arg{widget} must have a window."
+  (with-foreign-boxed-array (n-targets targets-ptr gtk-target-entry targets)
+    (%gtk-drag-source-set widget
+                          start-button-mask
+                          targets-ptr
+                          n-targets
+                          actions)))
+
+(export 'gtk-drag-source-set)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_drag_source_set_icon_pixbuf ()
-;;;
-;;; void gtk_drag_source_set_icon_pixbuf (GtkWidget *widget, GdkPixbuf *pixbuf);
-;;;
-;;; Sets the icon that will be used for drags from a particular widget from a
-;;; GdkPixbuf. GTK+ retains a reference for pixbuf and will release it when it
-;;; is no longer needed.
-;;;
-;;; widget :
-;;;     a GtkWidget
-;;;
-;;; pixbuf :
-;;;     the GdkPixbuf for the drag icon
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_drag_source_set_icon_pixbuf" gtk-drag-source-set-icon-pixbuf)
+    :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-7-4}
+  @argument[widget]{a @class{gtk-widget} object}
+  @argument[pixbuf]{the @class{gdk-pixbuf} for the drag icon}
+  @begin{short}
+    Sets the icon that will be used for drags from a particular @arg{widget}
+    from a @class{gdk-pixbuf}.
+  @end{short}
+  GTK+ retains a reference for @arg{pixbuf} and will release it when it is no
+  longer needed.
+  @see-function{gtk-drag-source-set-icon-stock}
+  @see-function{gtk-drag-source-set-icon-name}
+  @see-function{gtk-drag-source-set-icon-gicon}"
+  (widget (g-object gtk-widget))
+  (pixbuf (g-object gdk-pixbuf)))
+
+(export 'gtk-drag-source-set-icon-pixbuf)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_drag_source_set_icon_stock ()

@@ -99,7 +99,7 @@
   automatically updated on widget hierarchy changes.
 
   The widget path generation is generally simple:
- 
+
   @b{Example:} Defining a button within a window
   @begin{pre}
  {

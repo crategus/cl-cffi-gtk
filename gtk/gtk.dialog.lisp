@@ -53,7 +53,6 @@
 ;;;     gtk_dialog_get_widget_for_response
 ;;;     gtk_dialog_get_action_area
 ;;;     gtk_dialog_get_content_area
-;;;
 ;;;     gtk_alternative_dialog_button_order
 ;;;     gtk_dialog_set_alternative_button_order
 ;;;     gtk_dialog_set_alternative_button_order_from_array

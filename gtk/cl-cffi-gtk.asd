@@ -279,7 +279,7 @@
    (:file "gtk.print-context")         ; Encapsulates context for drawing pages
    (:file "gtk.print-settings")        ; Stores print settings
    (:file "gtk.page-setup")            ; Stores page setup information
-   ; GtkPaperSize — Support for named paper sizes
+   (:file "gtk.paper-size")            ; Support for named paper sizes
    ; GtkPrinter — Represents a printer
    ; GtkPrintJob — Represents a print job
    #-win32
@@ -296,12 +296,12 @@
    (:file "gtk.resource-files")        ; Routines for handling resource files
 
    ;; More definitions. The documentation is not completed.
-   (:file "gtk.generated-classes")
-   ; (:file "gtk.selectors")
-   (:file "gtk.timer")
+;   (:file "gtk.generated-classes")
+;   (:file "gtk.selectors")
+;   (:file "gtk.timer")
 
    ;; Lisp
-   (:file "gtk.high-level")
+;   (:file "gtk.high-level")
    (:file "gtk.init"))
   :depends-on (:cl-cffi-gtk-glib
                :cl-cffi-gtk-gobject

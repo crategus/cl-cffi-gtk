@@ -731,12 +731,13 @@
     scrollbar arrows through the theme, giving theme authors more control over
     the look of applications without the need to write a theme engine in C.
 
-    Use @fun{gtk-widget-class-install-style-property} to install style
-    properties for a widget class, @fun{gtk-widget-class-find-style-property} or
+    Use the function @fun{gtk-widget-class-install-style-property} to install
+    style properties for a widget class, the functions
+    @fun{gtk-widget-class-find-style-property} or
     @fun{gtk-widget-class-list-style-properties} to get information about
-    existing style properties and @fun{gtk-widget-style-get-property},
-    @fun{gtk-widget-style-get} or @fun{gtk-widget-style-get-valist} to
-    obtain the value of a style property.
+    existing style properties and the functions
+    @fun{gtk-widget-style-get-property} or @fun{gtk-widget-style-get}
+    to obtain the value of a style property.
 
   @subheading{gtk-widget as gtk-buildable}
     The @sym{gtk-widget} implementation of the @class{gtk-buildable} interface
@@ -1044,10 +1045,10 @@
       @end{pre}
       The \"drag-begin\" signal is emitted on the drag source when a drag is
       started. A typical reason to connect to this signal is to set up a custom
-      drag icon with @fun{gtk-drag-source-set-icon}.
+      drag icon with e. g. the function @fun{gtk-drag-source-set-icon-pixbuf}.
       Note that some widgets set up a drag icon in the default handler of this
-      signal, so you may have to use @fun{g-signal-connect-after} to override
-      what the default handler did.
+      signal, so you may have to use the function @fun{g-signal-connect-after}
+      to override what the default handler did.
       @begin[code]{table}
         @entry[widget]{The object which received the signal.}
         @entry[drag-context]{The drag context.}
@@ -5774,12 +5775,12 @@
 
 (defun gtk-widget-class-list-style-properties (type)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-6}
+ "@version{2013-7-4}
   @argument[type]{a widget class name}
   @return{A list of @symbol{g-param-spec}.}
   @short{Returns all style properties of a widget class.}
 
- Since 2.2"
+  Since 2.2"
   (setf type (gtype type))
   (let ((class (g-type-class-ref type)))
     (unwind-protect

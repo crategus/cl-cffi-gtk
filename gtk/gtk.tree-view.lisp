@@ -212,7 +212,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-tree-view 'type)
- "@version{2013-5-31}
+ "@version{2013-7-4}
   @begin{short}
     Widget that displays any object that implements the @class{gtk-tree-model}
     interface.
@@ -2017,7 +2017,7 @@
 
 (defun gtk-tree-view-get-path-at-pos (tree-view x y)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-31}
+ "@version{2013-7-4}
   @argument[tree-view]{a @class{gtk-tree-view} widget}
   @argument[x]{the x position to be identified (relative to bin_window)}
   @argument[y]{the y position to be identified (relative to bin_window)}
@@ -2046,9 +2046,10 @@
   does not have a model.
 
   For converting widget coordinates (e. g. the ones you get from
-  @code{GtkWidget::query-tooltip}), please see the
+  @code{GtkWidget::query-tooltip}), please see the function
   @fun{gtk-tree-view-convert-widget-to-bin-window-coords}.
-  @see-function{gtk-tree-view-get-bin-window}"
+  @see-function{gtk-tree-view-get-bin-window}
+  @see-function{gtk-tree-view-convert-widget-to-bin-window-coords}"
   (with-foreign-objects ((path :pointer)
                          (column :pointer)
                          (cell-x :int)
@@ -2081,7 +2082,7 @@
 
 (defun gtk-tree-view-is-blank-at-pos (tree-view x y)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-31}
+ "@version{2013-7-4}
   @argument[tree-view]{a @class{gtk-tree-view} widget}
   @argument[x]{the x position to be identified (relative to bin_window)}
   @argument[y]{the y position to be identified (relative to bin_window)}
@@ -2106,7 +2107,7 @@
   @code{event->window == gtk_tree_view_get_bin_window()}.
 
   For converting widget coordinates (e. g. the ones you get from
-  @code{GtkWidget::query-tooltip}), please see the
+  @code{GtkWidget::query-tooltip}), please see the function
   @fun{gtk-tree-view-convert-widget-to-bin-window-coords}.
 
   The @arg{path}, @arg{column}, @arg{cell-x} and @arg{cell-y} arguments will be
@@ -2114,7 +2115,8 @@
   Please see the @fun{gtk-tree-view-get-path-at-pos} function for more
   information.
 
-  Since 3.0"
+  Since 3.0
+  @see-function{gtk-tree-view-convert-widget-to-bin-window-coords}"
   (with-foreign-objects ((path :pointer)
                          (column :pointer)
                          (cell-x :int)

@@ -478,7 +478,7 @@
                                                'gtk-icon-view) 't)
  "The @code{\"selection-mode\"} property of type @symbol{gtk-selection-mode}
   (Read / Write) @br{}
-  The @code{\"selection-mode\"} property specifies the selection mode of icon
+  The @code{\"selection-mode\"} property specifies the selection mode of an icon
   view. If the mode is @code{:multiple}, rubberband selection is enabled, for
   the other modes, only keyboard selection is possible. @br{}
   Default value: @code{:single} @br{}
@@ -529,8 +529,6 @@
     class.
   @end{short}")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-icon-view-column-spacing atdoc:*function-name-alias*)
       "Accessor"
@@ -541,8 +539,6 @@
     class.
   @end{short}")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-icon-view-columns atdoc:*function-name-alias*)
       "Accessor"
@@ -551,8 +547,6 @@
   @begin{short}
     Accessor of the slot @code{\"columns\"} of the @class{gtk-icon-view} class.
   @end{short}")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-icon-view-item-orientation atdoc:*function-name-alias*)
@@ -564,8 +558,6 @@
     class.
   @end{short}")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-icon-view-item-padding atdoc:*function-name-alias*)
       "Accessor"
@@ -575,8 +567,6 @@
     Accessor of the slot @code{\"item-padding\"} of the @class{gtk-icon-view}
     class.
   @end{short}")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-icon-view-item-width atdoc:*function-name-alias*)
@@ -588,8 +578,6 @@
     class.
   @end{short}")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-icon-view-margin atdoc:*function-name-alias*)
       "Accessor"
@@ -599,8 +587,6 @@
     Accessor of the slot @code{\"margin\"} of the @class{gtk-icon-view}
     class.
   @end{short}")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-icon-view-markup-column atdoc:*function-name-alias*)
@@ -612,8 +598,6 @@
     class.
   @end{short}")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-icon-view-model atdoc:*function-name-alias*)
       "Accessor"
@@ -623,8 +607,6 @@
     Accessor of the slot @code{\"model\"} of the @class{gtk-icon-view}
     class.
   @end{short}")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-icon-view-pixbuf-column atdoc:*function-name-alias*)
@@ -636,8 +618,6 @@
     class.
   @end{short}")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-icon-view-reorderable atdoc:*function-name-alias*)
       "Accessor"
@@ -647,8 +627,6 @@
     Accessor of the slot @code{\"reorderable\"} of the @class{gtk-icon-view}
     class.
   @end{short}")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-icon-view-row-spacing atdoc:*function-name-alias*)
@@ -660,19 +638,15 @@
     class.
   @end{short}")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-icon-view-selection-mode atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-icon-view-selection-mode 'function)
- "@version{2013-3-8}
-  @begin{short}
-    Accessor of the slot @code{\"selection-mode\"} of the @class{gtk-icon-view}
-    class.
-  @end{short}")
-
-;;; ----------------------------------------------------------------------------
+ "@version{2013-7-4}
+  Accessor of the slot @code{\"selection-mode\"} of the @class{gtk-icon-view}
+  class.
+  @see-function{gtk-icon-view-get-selection-mode}
+  @see-function{gtk-icon-view-set-selection-mode}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-icon-view-spacing atdoc:*function-name-alias*)
@@ -684,8 +658,6 @@
     class.
   @end{short}")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-icon-view-text-column atdoc:*function-name-alias*)
       "Accessor"
@@ -695,8 +667,6 @@
     Accessor of the slot @code{\"text-column\"} of the @class{gtk-icon-view}
     class.
   @end{short}")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-icon-view-tooltip-column atdoc:*function-name-alias*)
@@ -1022,7 +992,7 @@
     (values (mem-ref rx :int)
             (mem-ref ry :int))))
 
-(export 'gtk-icon-view-conver-widget-to-bin-window-coords)
+(export 'gtk-icon-view-convert-widget-to-bin-window-coords)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_set_cursor ()
@@ -1133,36 +1103,45 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_set_selection_mode ()
-;;;
-;;; void gtk_icon_view_set_selection_mode (GtkIconView *icon_view,
-;;;                                        GtkSelectionMode mode);
-;;;
-;;; Sets the selection mode of the icon_view.
-;;;
-;;; icon_view :
-;;;     A GtkIconView.
-;;;
-;;; mode :
-;;;     The selection mode
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-icon-view-set-selection-mode))
+
+(defun gtk-icon-view-set-selection-mode (icon-view mode)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-7-4}
+  @argument[icon-view]{a @class{gtk-icon-view} widget}
+  @argument[mode]{the selection mode of type @symbol{gtk-selection-mode}}
+  @begin{short}
+    Sets the selection mode of the @arg{icon-view}.
+  @end{short}
+
+  Since 2.6
+  @see-function{gtk-icon-view-get-selection-mode}"
+  (setf (gtk-icon-view-selection-mode icon-view) mode))
+
+(export 'gtk-icon-view-set-selection-mode)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_get_selection_mode ()
-;;;
-;;; GtkSelectionMode gtk_icon_view_get_selection_mode (GtkIconView *icon_view);
-;;;
-;;; Gets the selection mode of the icon_view.
-;;;
-;;; icon_view :
-;;;     A GtkIconView.
-;;;
-;;; Returns :
-;;;     the current selection mode
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-icon-view-get-selection-mode))
+
+(defun gtk-icon-view-get-selection-mode (icon-view)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-7-4}
+  @argument[icon-view]{a @class{gtk-icon-view} widget}
+  @return{The current selection mode of type @symbol{gtk-selection-mode}.}
+  @begin{short}
+    Gets the selection mode of the @arg{icon-view}.
+  @end{short}
+
+  Since 2.6
+  @see-function{gtk-icon-view-set-selection-mode}"
+  (gtk-icon-view-selection-mode icon-view))
+
+(export 'gtk-icon-view-get-selection-mode)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_set_item_orientation ()

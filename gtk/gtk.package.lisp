@@ -389,7 +389,7 @@
 
       @about-struct{gtk-selection-data}
       @about-struct{gtk-target-entry}
-      @about-struct{gtk-target-list}
+      @about-class{gtk-target-list}
       @about-function{gtk-target-entry-new}
       @about-function{gtk-target-entry-copy}
       @about-function{gtk-target-entry-free}

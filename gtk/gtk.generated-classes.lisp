@@ -27,14 +27,6 @@
 
 (in-package :gtk)
 
-(define-g-enum "GtkUnit"
-    unit
-    (:export t :type-initializer "gtk_unit_get_type")
-  (:pixel 0)
-  (:points 1)
-  (:inch 2)
-  (:mm 3))
-
 (define-g-enum "GtkNotebookTab"
     notebook-tab
     (:export t :type-initializer "gtk_notebook_tab_get_type")

@@ -85,7 +85,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-accel-group 'type)
- "@version{2013-4-22}
+ "@version{2013-7-6}
   @begin{short}
     A @sym{gtk-accel-group} object represents a group of keyboard accelerators,
     typically attached to a toplevel @class{gtk-window} widget with the function
@@ -147,25 +147,19 @@
 ;;;
 ;;; ----------------------------------------------------------------------------
 
-;;; --- gtk-accel-group-is-locked ----------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "is-locked"
                                                'gtk-accel-group) 't)
- "@version{2013-4-17}
-  The @code{\"is-locked\"} property of type @code{:boolean} (Read)@br{}
-  Is the accel group locked.@br{}
+ "The @code{\"is-locked\"} property of type @code{:boolean} (Read) @br{}
+  Is the accel group locked. @br{}
   Default value: @code{nil}")
-
-;;; --- gtk-accel-group-modifier-mask ------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "modifier-mask"
                                                'gtk-accel-group) 't)
- "@version{2013-4-17}
-  The @code{\"modifier-mask\"} property of type @symbol{gdk-modifier-type}
-  (Read)@br{}
-  The modifier mask.@br{}
+ "The @code{\"modifier-mask\"} property of type @symbol{gdk-modifier-type}
+  (Read) @br{}
+  The modifier mask. @br{}
   Default value: @code{'(:shift-mask :control-mask :mod1-mask :super-mask
                          :hyper-mask :meta-mask)}")
 
@@ -175,25 +169,23 @@
 ;;;
 ;;; ----------------------------------------------------------------------------
 
-;;; --- gtk-accel-group-is-locked ----------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-accel-group-is-locked atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-accel-group-is-locked 'function)
- "@version{2013-4-17}
+ "@version{2013-7-6}
   Accessor of the slot @code{\"is-locked\"} of the @class{gtk-accel-group}
-  class.")
-
-;;; --- gtk-accel-group-modifier-mask ------------------------------------------
+  class.
+  @see-function{gtk-accel-group-get-is-locked}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-accel-group-modifier-mask atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-accel-group-modifier-mask 'function)
- "@version{2013-4-17}
-  Accessor of the slot @code{\"modifer-mask\"} of the @class{gtk-accel-group}
-  class.")
+ "@version{2013-7-6}
+  Accessor of the slot @code{\"modifier-mask\"} of the @class{gtk-accel-group}
+  class.
+  @see-function{gtk-accel-group-get-modifier-mask}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_accel_group_new ()
@@ -203,7 +195,7 @@
 
 (defun gtk-accel-group-new ()
  #+cl-cffi-gtk-documentation
- "@version{2014-4-17}
+ "@version{2013-7-6}
   @return{A new @class{gtk-accel-group} object.}
   Creates a new @class{gtk-accel-group} object."
   (make-instance 'gtk-accel-group))
@@ -397,20 +389,29 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_accel_group_get_is_locked ()
-;;;
-;;; gboolean gtk_accel_group_get_is_locked (GtkAccelGroup *accel_group);
-;;;
-;;; Locks are added and removed using gtk_accel_group_lock() and
-;;; gtk_accel_group_unlock().
-;;;
-;;; accel_group :
-;;;     a GtkAccelGroup
-;;;
-;;; Returns :
-;;;     TRUE if there are 1 or more locks on the accel_group, FALSE otherwise.
-;;;
-;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-accel-group-get-is-locked))
+
+(defun gtk-accel-group-get-is-locked (accel-group)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-7-6}
+  @argument[accel-group]{a @class{gtk-accel-group} object}
+  @begin{return}
+    @em{True} if there are 1 or more locks on the @arg{accel-group},
+    @code{nil} otherwise.
+  @end{return}
+  @begin{short}
+    Locks are added and removed using the functions @fun{gtk-accel-group-lock}
+    and @fun{gtk-accel-group-unlock}.
+  @end{short}
+
+  Since 2.14
+  @see-function{gtk-accel-group-lock}
+  @see-function{gtk-accel-group-unlock}"
+  (gtk-accel-group-is-locked accel-group))
+
+(export 'gtk-accel-group-get-is-locked)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_accel_group_from_accel_closure ()
@@ -429,21 +430,25 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_accel_group_get_modifier_mask ()
-;;;
-;;; GdkModifierType gtk_accel_group_get_modifier_mask
-;;;                                                (GtkAccelGroup *accel_group);
-;;;
-;;; Gets a GdkModifierType representing the mask for this accel_group. For
-;;; example, GDK_CONTROL_MASK, GDK_SHIFT_MASK, etc.
-;;;
-;;; accel_group :
-;;;     a GtkAccelGroup
-;;;
-;;; Returns :
-;;;     the modifier mask for this accel group.
-;;;
-;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-accel-group-get-modifier-mask))
+
+(defun gtk-accel-group-get-modifier-mask (accel-group)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-7-6}
+  @argument[accel-group]{a @class{gtk-accel-group} object}
+  @return{The modifier mask for this accel group.}
+  @begin{short}
+    Gets a @symbol{gdk-modifier-type} representing the mask for this
+    @arg{accel-group}. For example, @code{:control-mask}, @code{:shift-mask},
+    etc.
+  @end{short}
+
+  Since 2.14"
+  (gtk-accel-group-modifier-mask accel-group))
+
+(export 'gtk-accel-group-get-modifier-mask)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_accel_groups_activate ()

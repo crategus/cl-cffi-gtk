@@ -161,8 +161,6 @@
  "@version{2013-4-18}
   Returns an object of type @class{gtk-selection-data}")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'copy-gtk-selection-data 'function)
  "@version{2013-4-18}
@@ -179,8 +177,6 @@
   structure.
   @see-class{gtk-selection-data}")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-selection-data-target atdoc:*function-name-alias*)
       "Accessor"
@@ -189,8 +185,6 @@
   Accessor for the slot @code{target} of the @class{gtk-selection-data}
   structure.
   @see-class{gtk-selection-data}")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-selection-data-type atdoc:*function-name-alias*)
@@ -201,8 +195,6 @@
   structure.
   @see-class{gtk-selection-data}")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-selection-data-format atdoc:*function-name-alias*)
       "Accessor"
@@ -211,8 +203,6 @@
   Accessor for the slot @code{format} of the @class{gtk-selection-data}
   structure.
   @see-class{gtk-selection-data}")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-selection-data-data atdoc:*function-name-alias*)
@@ -223,8 +213,6 @@
   structure.
   @see-class{gtk-selection-data}")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-selection-data-length atdoc:*function-name-alias*)
       "Accessor"
@@ -233,8 +221,6 @@
   Accessor for the slot @code{length} of the @class{gtk-selection-data}
   structure.
   @see-class{gtk-selection-data}")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-selection-data-display atdoc:*function-name-alias*)
@@ -248,11 +234,6 @@
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkTargetEntry
 ;;; ----------------------------------------------------------------------------
-
-;(defcstruct gtk-target-entry
-;  (target :string)
-;  (flags gtk-target-flags)
-;  (info :uint))
 
 (define-g-boxed-cstruct gtk-target-entry "GtkTargetEntry"
   (target :string :initform 0)
@@ -297,8 +278,6 @@
  "@version{2012-12-23}
   Returns an object of type @class{gtk-target-entry}")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'copy-gtk-target-entry 'function)
  "@version{2012-12-23}
@@ -313,16 +292,12 @@
   Accessor for the slot @code{target} of the @class{gtk-target-entry} structure.
   @see-class{gtk-target-entry}")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-target-entry-flags atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-target-entry-flags 'function)
  "@version{2012-12-23}
   Accessor for the slot @code{flags} of the @class{gtk-target-entry} structure.
   @see-class{gtk-target-entry}")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-target-entry-info atdoc:*function-name-alias*) "Accessor"
@@ -333,23 +308,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkTargetList
-;;;
-;;; typedef struct {
-;;;   GList *list;
-;;;   guint ref_count;
-;;;  };
-;;;
-;;; typedef struct _GtkTargetPair GtkTargetPair;
-;;; struct _GtkTargetPair
-;;; {
-;;;   GdkAtom   target;
-;;;   guint     flags;
-;;;   guint     info;
-;;; } GtkTargetList;
-;;;
-;;; A GtkTargetList structure is a reference counted list of GtkTargetPair. It
-;;; is used to represent the same information as a table of GtkTargetEntry, but
-;;; in an efficient form. This structure should be treated as opaque.
 ;;; ----------------------------------------------------------------------------
 
 (glib::at-init ()
@@ -358,57 +316,58 @@
 (define-g-boxed-opaque gtk-target-list "GtkTargetList"
   :alloc (%gtk-target-list-new (null-pointer) 0))
 
-(export 'gtk-target-list)
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-target-list atdoc:*class-name-alias*) "CStruct"
+      (documentation 'gtk-target-list 'type)
+ "@version{2013-7-4}
+  @begin{short}
+    A @sym{gtk-target-list} structure is used to represent the same information
+    as a table of @class{gtk-target-entry}, but in an efficient form. This
+    structure should be treated as opaque.
+  @end{short}
+  @begin{pre}
+(define-g-boxed-opaque gtk-target-list \"GtkTargetList\"
+  :alloc (%gtk-target-list-new (null-pointer) 0))
+  @end{pre}")
+
+(export (boxed-related-symbols 'gtk-target-list))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_target_entry_new ()
-;;;
-;;; GtkTargetEntry * gtk_target_entry_new (const gchar *target,
-;;;                                        guint flags,
-;;;                                        guint info);
-;;;
-;;; Makes a new GtkTargetEntry structure.
-;;;
-;;; target :
-;;;     String identifier for target
-;;;
-;;; flags :
-;;;     Set of flags, see GtkTargetFlags
-;;;
-;;; info :
-;;;     an ID that will be passed back to the application
-;;;
-;;; Returns :
-;;;     a pointer to a new GtkTargetEntry structure. Free with
-;;;     gtk_target_entry_free()
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-target-entry-new))
 
 (defun gtk-target-entry-new (target flags info)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-7-4}
+  @argument[target]{string identifier for target}
+  @argument[flags]{set of flags of type @symbol{gtk-target-flags}}
+  @argument[info]{an ID that will be passed back to the application}
+  @begin{return}
+    A new @class{gtk-target-entry} structure.
+  @end{return}
+  Makes a new @class{gtk-target-entry} structure."
   (make-gtk-target-entry :target target :flags flags :info info))
 
 (export 'gtk-target-entry-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_target_entry_copy ()
-;;;
-;;; GtkTargetEntry * gtk_target_entry_copy (GtkTargetEntry *data);
-;;;
-;;; Makes a copy of a GtkTargetEntry structure and its data.
-;;;
-;;; data :
-;;;     a pointer to a GtkTargetEntry structure.
-;;;
-;;; Returns :
-;;;     a pointer to a copy of data. Free with gtk_target_entry_free()
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-target-entry-copy))
 
 (defun gtk-target-entry-copy (target)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-7-4}
+  @argument[target]{a @class{gtk-target-entry} structure}
+  @begin{return}
+    A copy of @arg{target}.
+  @end{return}
+  Makes a copy of a @class{gtk-target-entry} structure and its data."
   (copy-gtk-target-entry target))
-  
+
 (export 'gtk-target-entry-copy)
 
 ;;; ----------------------------------------------------------------------------
@@ -534,7 +493,7 @@
   (list (g-boxed-foreign gtk-target-list))
   (targets :pointer)
   (n-targets :uint))
-  
+
 (defun gtk-target-list-add-table (list targets)
   (when targets
     (with-foreign-boxed-array (n-targets targets-ptr gtk-target-entry targets)
@@ -594,7 +553,7 @@
   (list (g-boxed-foreign gtk-target-list))
   (info :uint)
   (writeable :boolean))
-  
+
 (export 'gtk-target-list-add-image-targets)
 
 ;;; ----------------------------------------------------------------------------

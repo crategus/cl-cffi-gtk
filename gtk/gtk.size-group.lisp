@@ -66,8 +66,6 @@
     gtk-size-group-mode
     "mode" "GtkSizeGroupMode" t t)))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-size-group 'type)
  "@version{2013-5-23}
@@ -154,8 +152,6 @@
   Default value: @code{nil} @br{}
   Since 2.8")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "mode" 'gtk-size-group) 't)
  "The @code{\"mode\"} property of type @symbol{gtk-size-group-mode}
@@ -177,8 +173,6 @@
  "@version{2013-3-23}
   Accessor of the slot @code{\"ignore-hidden\"} of the @class{gtk-size-group}
   class.")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-size-group-mode atdoc:*function-name-alias*)
@@ -368,7 +362,7 @@
 (defcfun ("gtk_size_group_get_widgets" gtk-size-group-get-widgets)
     (g-slist g-object :free-from-foreign nil)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-23}
+ "@version{2013-7-4}
   @argument[size-group]{a @class{gtk-size-group} object}
   @begin{return}
     A list of widgets. The list is owned by GTK+ and should not be modified.
@@ -378,8 +372,8 @@
   @end{short}
 
   Since 2.10"
-  (size-group g-object))
+  (size-group (g-object gtk-size-group)))
 
-(export 'gtk-size-group-widgets)
+(export 'gtk-size-group-get-widgets)
 
 ;;; --- End of file gtk.size-group.lisp ---------------------------------------

@@ -55,7 +55,7 @@ GTK+ Widgets and Objects
 
     gtk.dialog.lisp                  - GtkDialog                   - GTK+ 3.6.4
     gtk.invisible.lisp               - GtkInvisible                - GTK+ 3.6.4
-    gtk.message-dialog.lisp          - GtkMessageDialog            - GTK+ 3.6.4&
+    gtk.message-dialog.lisp          - GtkMessageDialog            - GTK+ 3.6.4
     gtk.window.lisp                  - GtkWindow                   - GTK+ 3.6.4%
     gtk.window-group.lisp            - GtkWindowGroup              - GTK+ 3.6.4%
     gtk.about-dialog.lisp            - GtkAboutDialog              - GTK+ 3.6.4%
@@ -237,8 +237,8 @@ GTK+ Widgets and Objects
     gtk.print-context.lisp           - GtkPrintContext             - GTK+ 3.6.4%
     gtk.print-settings.lisp          - GtkPrintSettings            - GTK+ 3.6.4%
     gtk.page-setup.lisp              - GtkPageSetup                - GTK+ 3.6.4%
+    gtk.paper-size.lisp              - GtkPaperSize                - GTK+ 3.6.4%
 
-    not implemented                  - GtkPaperSize
     not implemented                  - GtkPrinter
     not implemented                  - GtkPrintJob
 
@@ -255,7 +255,7 @@ GTK+ Widgets and Objects
     gtk.handle-box.lisp              - GtkHandleBox (**)           - GTK+ 3.6.4%
     gtk.im-context-simple.lisp       - GtkIMContextSimple          - GTK+ 3.6.4%
     gtk.im-multicontext.lisp         - GtkIMMulticontext           - GTK+ 3.6.4%
-    gtk.size-group.lisp              - GtkSizeGroup                - GTK+ 3.6.4%
+    gtk.size-group.lisp              - GtkSizeGroup                - GTK+ 3.6.4
     gtk.tooltip.lisp                 - GtkTooltip                  - GTK+ 3.6.4%
     gtk.viewport.lisp                - GtkViewport                 - GTK+ 3.6.4%
     

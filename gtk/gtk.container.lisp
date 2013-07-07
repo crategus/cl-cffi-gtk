@@ -100,8 +100,6 @@
     gtk-container-resize-mode
     "resize-mode" "GtkResizeMode" t t)))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-container 'type)
  "@version{2013-5-24}
@@ -260,10 +258,9 @@
     existing child properties.
 
     To set the value of a child property, use the functions
-    @fun{gtk-container-child-set-property}, @fun{gtk-container-child-set} or
-    @fun{gtk-container-child-set-valist}. To obtain the value of a child
-    property, use the functions @fun{gtk-container-child-get-property},
-    @fun{gtk-container-child-get} or @fun{gtk-container-child-get-valist}.
+    @fun{gtk-container-child-set-property} or @fun{gtk-container-child-set}. To
+    obtain the value of a child property, use the functions
+    @fun{gtk-container-child-get-property} or @fun{gtk-container-child-get}.
     To emit notification about child property changes, use the function
     @fun{gtk-widget-child-notify}.
 
@@ -1176,17 +1173,33 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_container_class_list_child_properties"
-           gtk-container-class-list-child-properties)
+          %gtk-container-class-list-child-properties)
     (:pointer (:pointer g-param-spec))
- #+cl-cffi-gtk-documentation
- "@version{2013-5-25}
-  @argument[class]{a @class{gtk-container} class}
-  @argument[n-properties]{location to return the number of child properties
-    found}
-  @return{A newly allocated list of @symbol{g-param-spec}.}
-  Returns all child properties of a container class."
   (class (:pointer g-object-class))
   (n-properties (:pointer :int)))
+
+(defun gtk-container-class-list-child-properties (type)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-7-5}
+  @argument[type]{a @class{gtk-container} type}
+  @return{A list of @symbol{g-param-spec}.}
+  @short{Returns all child properties of a container type.}
+
+  @subheading{Note}
+    In the Lisp binding we pass the type of a container class and not
+    a pointer to the container class as argument to the function."
+  (setf type (gtype type))
+  (let ((class (g-type-class-ref type)))
+    (unwind-protect
+      (with-foreign-object (n-props :uint)
+        (let ((params (%gtk-container-class-list-child-properties class n-props)))
+          (unwind-protect
+            (loop
+              for i from 0 below (mem-ref n-props :uint)
+              for param = (mem-aref params :pointer i)
+              collect (parse-g-param-spec param))
+            (g-free params))))
+      (g-type-class-unref class))))
 
 (export 'gtk-container-class-list-child-properties)
 

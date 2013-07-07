@@ -593,9 +593,9 @@
   @argument[dialog]{a @class{gtk-message-dialog} window}
   @argument[message]{@code{format}-style markup string (see Pango markup
     format), or @code{nil}}
-  @argument[args]{arguments for @arg{message}
+  @argument[args]{arguments for @arg{message}}
   @begin{short}
-    Sets the secondary text of the message dialog to be @arg{message with
+    Sets the secondary text of the message dialog to be @arg{message} with
     @code{format}-style, which is marked up with the Pango text markup language.
   @end{short}
 

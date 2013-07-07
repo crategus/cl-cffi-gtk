@@ -287,19 +287,20 @@
 (defcfun ("gtk_tree_store_set_valuesv"
            gtk-tree-store-set-valuesv) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-4-14}
+ "@version{2013-7-4}
   @argument[tree-store]{a @class{gtk-tree-store} object}
   @argument[iter]{a valid @class{gtk-tree-iter} for the row being modified}
   @argument[columns]{an array of column numbers}
   @argument[values]{an array of @symbol{g-value}'s}
   @argument[n-values]{the length of the columns and values arrays}
   @begin{short}
-    A variant of @fun{gtk-tree-store-set-valist} which takes the columns and
-    values as two arrays, instead of varargs. This function is mainly intended
+    A variant of the function @fun{gtk-tree-store-set} which takes the columns
+    and values as two arrays. This function is mainly intended
     for language bindings or in case the number of columns to change is not
     known until run-time.
   @end{short}
-  Since 2.12"
+  Since 2.12
+  @see-function{gtk-tree-store-set}"
   (tree-store (g-object gtk-tree-store))
   (iter (g-boxed-foreign gtk-tree-iter))
   (columns :pointer)

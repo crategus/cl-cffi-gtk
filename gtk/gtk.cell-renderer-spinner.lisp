@@ -71,11 +71,11 @@
   @em{true} and increment the @code{\"pulse\"} property at regular intervals.
   The usual way to set the cell renderer properties for each cell is to bind
   them to columns in your tree model using e. g. the function
-  @fun{gtk-tree-view-column-add_attribute}.
+  @fun{gtk-tree-view-column-add-attribute}.
   @see-slot{gtk-cell-renderer-spinner-active}
   @see-slot{gtk-cell-renderer-spinner-pulse}
   @see-slot{gtk-cell-renderer-spinner-size}
-  @see-function{gtk-tree-view-column-add_attribute}")
+  @see-function{gtk-tree-view-column-add-attribute}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
