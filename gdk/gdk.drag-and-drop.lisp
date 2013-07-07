@@ -366,9 +366,9 @@
  "@version{2013-4-7}
   @argument[context]{a @class{gdk-drag-context} object}
   @argument[dest-window]{the new destination window, obtained by
-    @fun{gdk-drag-find-window}}
+    @fun{gdk-drag-find-window-for-screen}}
   @argument[protocol]{the DND protocol in use, obtained by
-    @fun{gdk-drag-find-window}}
+    @fun{gdk-drag-find-window-for-screen}}
   @argument[x-root]{the x position of the pointer in root coordinates}
   @argument[y-root]{the y position of the pointer in root coordinates}
   @argument[suggested-action]{the suggested action}
@@ -380,7 +380,7 @@
   @end{short}
 
   This function is called by the drag source.
-  @see-function{gdk-drag-find-window}"
+  @see-function{gdk-drag-find-window-for-screen}"
   (context (g-object gdk-drag-context))
   (dest-window (g-object gdk-window))
   (protocol gdk-drag-protocol)
