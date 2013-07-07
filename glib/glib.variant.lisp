@@ -1403,8 +1403,8 @@
 
 (defcfun ("g_variant_get_int64" g-variant-get-int64) :int64
  #+cl-cffi-gtk-documentation
- "@version{2013-4-11}
-  @argument[value]{a int64 @symbol{g-ariant} instance}
+ "@version{2013-7-4}
+  @argument[value]{a int64 @symbol{g-variant} instance}
   @return{A @code{gint64}.}
   @short{Returns the 64-bit signed integer value of @arg{value}.}
 
@@ -2396,25 +2396,21 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_equal ()
-;;;
-;;; gboolean g_variant_equal (gconstpointer one, gconstpointer two);
-;;;
-;;; Checks if one and two have the same type and value.
-;;;
-;;; The types of one and two are gconstpointer only to allow use of this
-;;; function with GHashTable. They must each be a GVariant.
-;;;
-;;; one :
-;;;     a GVariant instance
-;;;
-;;; two :
-;;;     a GVariant instance
-;;;
-;;; Returns :
-;;;     TRUE if one and two are equal
-;;;
-;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_variant_equal" g-variant-equal) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-7-4}
+  @argument[one]{a @symbol{g-variant} instance}
+  @argument[two]{a @symbol{g-variant} instance}
+  @return{@em{True} if @arg{one} and @arg{two} are equal.}
+  @short{Checks if @arg{one} and @arg{two} have the same type and value.}
+
+  Since 2.24"
+  (one (:pointer g-variant))
+  (two (:pointer g-variant)))
+
+(export 'g-variant-equal)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_print ()
