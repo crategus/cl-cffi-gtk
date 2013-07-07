@@ -41,6 +41,7 @@
 
 (defvar *verbose* nil)
 
+(load "rtest-gtk-accel-group.lisp")
 (load "rtest-gtk-action-group.lisp")
 (load "rtest-gtk-adjustment.lisp")
 (load "rtest-gtk-application.lisp")
