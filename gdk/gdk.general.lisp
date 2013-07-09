@@ -304,7 +304,10 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-4-3}
   @return{The width of the default screen in pixels.}
-  Returns the width of the default screen in pixels.")
+  Returns the width of the default screen in pixels.
+  @see-function{gdk-screen-height}
+  @see-function{gdk-screen-width-mm}
+  @see-function{gdk-screen-height-mm}")
 
 (export 'gdk-screen-width)
 
@@ -316,7 +319,10 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-4-3}
   @return{The height of the default screen in pixels.}
-  Returns the height of the default screen in pixels.")
+  Returns the height of the default screen in pixels.
+  @see-function{gdk-screen-width}
+  @see-function{gdk-screen-width-mm}
+  @see-function{gdk-screen-height-mm}")
 
 (export 'gdk-screen-height)
 
@@ -330,7 +336,10 @@
   @return{The width of the default screen in millimeters, though it is not
     always correct.}
   Returns the width of the default screen in millimeters. Note that on many X
-  servers this value will not be correct.")
+  servers this value will not be correct.
+  @see-function{gdk-screen-width}
+  @see-function{gdk-screen-height}
+  @see-function{gdk-screen-height-mm}")
 
 (export 'gdk-screen-width-mm)
 
@@ -344,7 +353,10 @@
   @return{The height of the default screen in millimeters, though it is not
     always correct.}
   Returns the height of the default screen in millimeters. Note that on many X
-  servers this value will not be correct.")
+  servers this value will not be correct.
+  @see-function{gdk-screen-height}
+  @see-function{gdk-screen-width}
+  @see-function{gtk-screen-width-mm}")
 
 (export 'gdk-screen-height-mm)
 
