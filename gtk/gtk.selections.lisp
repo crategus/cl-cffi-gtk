@@ -36,6 +36,7 @@
 ;;; Synopsis
 ;;;
 ;;;     GtkSelectionData
+;;;     GtkTargetFlags  <-- gtk.selections.lisp
 ;;;     GtkTargetEntry
 ;;;     GtkTargetList
 ;;;
@@ -230,6 +231,46 @@
   Accessor for the slot @code{display} of the @class{gtk-selection-data}
   structure.
   @see-class{gtk-selection-data}")
+
+;;; ----------------------------------------------------------------------------
+;;; enum GtkTargetFlags
+;;; ----------------------------------------------------------------------------
+
+(define-g-flags "GtkTargetFlags" gtk-target-flags
+  (:export t
+   :type-initializer "gtk_target_flags_get_type")
+  (:same-app 1)
+  (:same-widget 2)
+  (:other-app 4)
+  (:other-widget 8))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-target-flags atdoc:*symbol-name-alias*) "Flags"
+      (gethash 'gtk-target-flags atdoc:*external-symbols*)
+ "@version{2013-4-17}
+  @begin{short}
+    The @sym{gtk-target-flags} enumeration is used to specify constraints on an
+    entry in a @code{GtkTargetTable}.
+  @end{short}
+  @begin{pre}
+(define-g-flags \"GtkTargetFlags\" gtk-target-flags
+  (:export t
+   :type-initializer \"gtk_target_flags_get_type\")
+  (:same-app 1)
+  (:same-widget 2)
+  (:other-app 4)
+  (:other-widget 8))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:same-app]{If this is set, the target will only be selected for drags
+      within a single application.}
+    @entry[:same-widget]{If this is set, the target will only be selected for
+      drags within a single widget.}
+    @entry[:other-app]{If this is set, the target will not be selected for drags
+      within a single application.}
+    @entry[:other-widget]{If this is set, the target will not be selected for
+      drags within a single widget.}
+  @end{table}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkTargetEntry
