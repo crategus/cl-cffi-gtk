@@ -890,12 +890,12 @@
 
 (defcfun ("gdk_device_grab" gdk-device-grab) gdk-grab-status
  #+cl-cffi-gtk-documentation
- "@version{2013-6-21}
+ "@version{2013-7-7}
   @argument[device]{a @class{gdk-device} object. To get the device you can use
-    the function @fun{gtk-get-current-event-device} or
+    the functions @fun{gtk-get-current-event-device} or
     @fun{gdk-event-get-device} if the grab is in reaction to an event. Also, you
     can use the function @fun{gdk-device-manager-get-client-pointer} but only in
-    code that is not triggered by a @class{gkd-event} and there are not other
+    code that is not triggered by a @class{gdk-event} and there are not other
     means to get a meaningful @class{gdk-device} to operate on.}
   @argument[window]{the @class{gdk-window} which will own the grab (the grab
     window)}
@@ -1101,7 +1101,7 @@
   @see-constructor{make-gdk-time-coord}
   @see-slot{gdk-time-coord-time}
   @see-slot{gdk-time-coord-axes}")
-  
+
 (export (boxed-related-symbols 'gdk-time-coord))
 
 ;;; --- copy-gdk-time-coord ----------------------------------------------------
