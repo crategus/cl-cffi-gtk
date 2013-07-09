@@ -30,13 +30,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; GtkBin
-;;; 
+;;;
 ;;; A container with just one child
-;;;     
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;;     GtkBin
-;;;     
+;;;
 ;;;     gtk_bin_get_child
 ;;; ----------------------------------------------------------------------------
 
@@ -54,18 +54,16 @@
    :type-initializer "gtk_bin_get_type")
   nil)
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-bin 'type)
- "@version{2013-5-25}
+ "@version{2013-7-7}
   @short{The @class{gtk-bin} widget is a container with just one child.}
   It is not very useful itself, but it is useful for deriving subclasses, since
   it provides common code needed for handling a single child widget.
 
   Many GTK+ widgets are subclasses of @class{gtk-bin}, including
   @class{gtk-window}, @class{gtk-button}, @class{gtk-frame},
-  @class{gtk-handle-box} or @class{gtk-scroll-window}.")
+  @class{gtk-handle-box} or @class{gtk-scrolled-window}.")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_bin_get_child ()
@@ -75,7 +73,7 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-5-25}
   @argument[bin]{a @class{gtk-bin} widget}
-  @return{Pointer to child of the @class{gtk-bin}.}
+  @return{Pointer to the child of the @class{gtk-bin}.}
   @begin{short}
     Gets the child of the @class{gtk-bin}, or @code{nil} if the @arg{bin}
     contains no child widget.
