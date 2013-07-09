@@ -834,20 +834,22 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_event_get_device ()
-;;;
-;;; GdkDevice * gdk_event_get_device (const GdkEvent *event);
-;;;
-;;; If the event contains a "device" field, this function will return it, else
-;;; it will return NULL.
-;;;
-;;; event :
-;;;     a GdkEvent.
-;;;
-;;; Returns :
-;;;     a GdkDevice, or NULL
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gdk_event_get_device" gdk-event-get-device) (g-object gdk-device)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-7-7}
+  @argument[event]{a @class{gdk-event} event}
+  @return{A @class{gdk-device} object, or @code{nil}.}
+  @begin{short}
+    If the event contains a \"device\" field, this function will return it,
+    else it will return @code{nil}.
+  @end{short}
+
+  Since 3.0"
+  (event (g-boxed-foreign gdk-event)))
+
+(export 'gdk-event-get-device)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_event_set_device ()
