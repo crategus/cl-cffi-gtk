@@ -62,7 +62,8 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_window_create_similar_surface"
-           gdk-window-create-similar-surface) cairo-surface-t
+           gdk-window-create-similar-surface)
+    (:pointer (:struct cairo-surface-t))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-5}
   @argument[window]{window to make new surface similar to}
@@ -194,7 +195,7 @@
   that the origin of pixbuf is @arg{pixbuf-x}, @arg{pixbuf-y}.
 
   Since 2.8"
-  (cr cairo-t)
+  (cr (:pointer (:struct cairo-t)))
   (pixbuf (g-object gdk-pixbuf))
   (pixbuf-x :double)
   (pxibuf-y :double))

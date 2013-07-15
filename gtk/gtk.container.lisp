@@ -827,7 +827,7 @@
   (container (g-object gtk-container))
   (child (g-object gtk-widget))
   (property-name :string)
-  (value (:pointer g-value)))
+  (value (:pointer (:struct g-value))))
 
 (defun gtk-container-child-get-property (container child property-name)
  #+cl-cffi-gtk-documentation
@@ -840,7 +840,7 @@
   (let ((type (param-spec-type
                 (container-child-property-info (g-type-from-instance container)
                                                property-name))))
-    (with-foreign-object (gvalue 'g-value)
+    (with-foreign-object (gvalue '(:struct g-value))
       (g-value-zero gvalue)
       (g-value-init gvalue type)
       (%gtk-container-child-get-property container child property-name gvalue)
@@ -859,7 +859,7 @@
   (container (g-object gtk-container))
   (child (g-object gtk-widget))
   (property-name :string)
-  (value (:pointer g-value)))
+  (value (:pointer (:struct g-value))))
 
 (defun gtk-container-child-set-property (container child property-name value)
  #+cl-cffi-gtk-documentation
@@ -872,7 +872,7 @@
   (let ((type (param-spec-type
                 (container-child-property-info (g-type-from-instance container)
                                                property-name))))
-    (with-foreign-object (gvalue 'g-value)
+    (with-foreign-object (gvalue '(:struct g-value))
       (set-g-value gvalue value type :zero-g-value t)
       (%gtk-container-child-set-property container child property-name gvalue)
       (g-value-unset gvalue)
@@ -1174,8 +1174,8 @@
 
 (defcfun ("gtk_container_class_list_child_properties"
           %gtk-container-class-list-child-properties)
-    (:pointer (:pointer g-param-spec))
-  (class (:pointer g-object-class))
+    (:pointer (:pointer (:struct g-param-spec)))
+  (class (:pointer (:struct g-object-class)))
   (n-properties (:pointer :int)))
 
 (defun gtk-container-class-list-child-properties (type)

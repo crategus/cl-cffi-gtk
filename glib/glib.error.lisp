@@ -392,9 +392,9 @@
 (defun maybe-raise-g-error-condition (err)
   (unless (null-pointer-p err)
     (error 'g-error-condition
-           :domain (foreign-slot-value err 'g-error :domain)
-           :code (foreign-slot-value err 'g-error :code)
-           :message (foreign-slot-value err 'g-error :message))))
+           :domain (foreign-slot-value err '(:struct g-error) :domain)
+           :code (foreign-slot-value err '(:struct g-error) :code)
+           :message (foreign-slot-value err '(:struct g-error) :message))))
 
 (defmacro with-g-error ((err) &body body)
   `(with-foreign-object (,err :pointer)

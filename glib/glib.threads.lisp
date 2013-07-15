@@ -299,7 +299,7 @@
 ;;; Since 2.32
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_thread_new" %g-thread-new) (:pointer g-thread)
+(defcfun ("g_thread_new" %g-thread-new) (:pointer (:struct g-thread))
   (name :string)
   (func :pointer)
   (data :pointer))
@@ -407,7 +407,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_thread_join" g-thread-join) :pointer
-  (thread (:pointer g-thread)))
+  (thread (:pointer (:struct g-thread))))
 
 (export 'g-thread-join)
 
@@ -465,7 +465,7 @@
 ;;;     the GThread representing the current thread
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_thread_self" g-thread-self) (:pointer g-thread))
+(defcfun ("g_thread_self" g-thread-self) (:pointer (:struct g-thread)))
 
 (export 'g-thread-self)
 

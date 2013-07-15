@@ -265,7 +265,8 @@
 ;;; g_option_context_new ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_option_context_new" %g-option-context-new) g-option-context
+(defcfun ("g_option_context_new" %g-option-context-new)
+    (:pointer (:struct g-option-context))
   (parameter-string :string))
 
 (defun g-option-context-new (&optional (parameter-string (null-pointer)))
@@ -307,7 +308,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_option_context_set_summary" %g-option-context-set-summary) :void
-  (context g-option-context)
+  (context (:pointer (:struct g-option-context)))
   (summary :string))
 
 (defun g-option-context-set-summary (context summary)
@@ -347,7 +348,7 @@
 
   Since 2.12
   @see-function{g-option-context-set-summary}"
-  (context g-option-context))
+  (context (:pointer (:struct g-option-context))))
 
 (export 'g-option-context-get-summary)
 
@@ -357,7 +358,7 @@
 
 (defcfun ("g_option_context_set_description" %g-option-context-set-description)
     :void
-  (context g-option-context)
+  (context (:pointer (:struct g-option-context)))
   (description :string))
 
 (defun g-option-context-set-description (context description)
@@ -396,7 +397,7 @@
 
   Since 2.12
   @see-function{g-option-context-set-description}"
-  (context g-option-context))
+  (context (:pointer (:struct g-option-context))))
 
 (export 'g-option-context-get-description)
 
@@ -464,7 +465,7 @@
 
 (defcfun ("g_option_context_set_translate_func"
           %g-option-context-set-translate-func) :void
-  (context g-option-context)
+  (context (:pointer (:struct g-option-context)))
   (func :pointer)
   (func-data :pointer)
   (destroy-notify :pointer))
@@ -567,7 +568,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_option_context_parse" %g-option-context-parse) :boolean
-  (context g-option-context)
+  (context (:pointer (:struct g-option-context)))
   (argc (:pointer :int))
   (argv (:pointer (:pointer :string)))
   (err :pointer))
@@ -583,8 +584,7 @@
 
     (when (%g-option-context-parse context argc-ptr argv-ptr err)
       (values (mem-ref argc-ptr :int)
-              (convert-from-foreign argv-ptr '(g-strv :free-from-foreign nil)))
-    )
+              (convert-from-foreign argv-ptr '(g-strv :free-from-foreign nil))))
 ;    (convert-from-foreign argv-ptr 'g-strv)
 )))
 
@@ -697,11 +697,12 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_option_context_get_help" %g-option-context-get-help) :string
-  (context g-option-context)
+  (context (:pointer (:struct g-option-context)))
   (main-help :boolean)
   (group :pointer))
 
-(defun g-option-context-get-help (context main-help &optional (group (null-pointer)))
+(defun g-option-context-get-help (context main-help
+                                  &optional (group (null-pointer)))
   (%g-option-context-get-help context main-help group))
 
 (export 'g-option-context-get-help)
@@ -942,10 +943,11 @@
 
 (defcfun ("g_option_context_add_main_entries"
           %g-option-context-add-main-entries) :void
-  (context g-option-context)
-  (entries (:pointer g-option-entry))
+  (context (:pointer (:struct g-option-context)))
+  (entries (:pointer (:pointer (:struct g-option-entry))))
   (translation-domain :string))
 
+#+nil
 (defun g-option-context-add-main-entries (context entries translation-domain)
   (let ((n-entries (length entries)))
     (with-foreign-object (entries-ptr 'g-option-entry (1+ n-entries))
@@ -973,6 +975,7 @@
                                             entries-ptr
                                             translation-domain)))))
 
+#+nil
 (export 'g-option-context-add-main-entries)
 
 ;;; ----------------------------------------------------------------------------

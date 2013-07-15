@@ -5,7 +5,7 @@
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -175,7 +175,7 @@
   (destructuring-bind (name type &key count initform inline) slot
     (if inline
         (make-cstruct-inline-slot-description :name name
-                                              :type (generated-cunion-name type)
+                                              :type (list :union (generated-cunion-name type))
                                               :count count
                                               :initform initform
                                               :inline-p inline
@@ -207,7 +207,7 @@
                  (for count = (cstruct-slot-description-count slot))
                  (collect `(,name ,type ,@(when count `(:count ,count))))))
        (defcunion ,(generated-cunion-name name)
-         (,name ,(generated-cstruct-name name)))
+         (,name (:struct ,(generated-cstruct-name name))))
        (eval-when (:compile-toplevel :load-toplevel :execute)
          (setf (get ',name 'g-boxed-foreign-info)
                (make-g-boxed-cstruct-wrapper-info :name ',name
@@ -235,7 +235,7 @@
         (memcpy copy
                 native
                 (foreign-type-size
-                  (generated-cstruct-name (g-boxed-info-name info))))
+                  (list :struct (generated-cstruct-name (g-boxed-info-name info)))))
         copy)))
 
 (defmethod boxed-free-fn ((info g-boxed-cstruct-wrapper-info) native)
@@ -253,7 +253,7 @@
         (cond
           ((cstruct-slot-description-count slot)
            (iter (with ptr = (foreign-slot-pointer native
-                                                   cstruct-type
+                                                   (list :struct cstruct-type)
                                                    slot-name))
                  (with array = (slot-value proxy slot-name))
                  (for i from 0 below (cstruct-slot-description-count slot))
@@ -266,11 +266,11 @@
              (copy-slots-to-native
                       (slot-value proxy slot-name)
                       (foreign-slot-pointer native
-                                            cstruct-type
+                                            (list :struct cstruct-type)
                                             slot-name)
                       (g-boxed-cstruct-wrapper-info-cstruct-description info))))
           (t
-           (setf (foreign-slot-value native cstruct-type slot-name)
+           (setf (foreign-slot-value native (list :struct cstruct-type) slot-name)
                  (slot-value proxy slot-name))))))
 
 (defun create-structure (structure-name)
@@ -289,7 +289,7 @@
            (setf (slot-value proxy slot-name)
                  (make-array (list (cstruct-slot-description-count slot))))
            (iter (with ptr = (foreign-slot-pointer native
-                                                   cstruct-type
+                                                   (list :struct cstruct-type)
                                                    slot-name))
                  (with array = (slot-value proxy slot-name))
                  (for i from 0 below (cstruct-slot-description-count slot))
@@ -304,11 +304,11 @@
              (copy-slots-to-proxy
                       (slot-value proxy slot-name)
                       (foreign-slot-pointer native
-                                            cstruct-type
+                                            (list :struct cstruct-type)
                                             slot-name)
                       (g-boxed-cstruct-wrapper-info-cstruct-description info))))
           (t (setf (slot-value proxy slot-name)
-                   (foreign-slot-value native cstruct-type slot-name))))))
+                   (foreign-slot-value native (list :struct cstruct-type) slot-name))))))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -318,7 +318,7 @@
       (let* ((info (g-boxed-foreign-info type))
              (native-struct-type
                (generated-cstruct-name (g-boxed-info-name info))))
-        (with-foreign-object (native-struct native-struct-type)
+        (with-foreign-object (native-struct (list :struct native-struct-type))
           (copy-slots-to-native
                         proxy
                         native-struct
@@ -567,7 +567,7 @@
   `(defcunion ,(generated-cunion-name (var-structure-name struct))
      ,@(iter (for str in (all-structures struct))
              (collect `(,(var-structure-name str)
-                         ,(generated-cstruct-name (var-structure-name str)))))))
+                         (:struct ,(generated-cstruct-name (var-structure-name str))))))))
 
 (defun generate-structure-1 (str)
   (let ((name (var-structure-name str)))
@@ -610,7 +610,7 @@
       `(values ',(var-structure-name str)
                ',(var-structure-resulting-cstruct-description str))
       `(case (foreign-slot-value ,native-var
-                                 ',(generated-cstruct-name (var-structure-name str))
+                                 '(:struct ,(generated-cstruct-name (var-structure-name str)))
                                  ',(var-structure-discriminator-slot str))
          ,@(iter (for variant in (var-structure-variants str))
                  (for v-str = (var-structure-variant-structure variant))
@@ -692,7 +692,7 @@
         (memcpy copy
                 native
                 (foreign-type-size
-                  (generated-cunion-name (g-boxed-info-name info))))
+                  (list :struct (generated-cunion-name (g-boxed-info-name info)))))
         copy)))
 
 (defmethod boxed-free-fn ((info g-boxed-variant-cstruct-info) native)
@@ -707,9 +707,9 @@
       (let* ((type (g-boxed-foreign-info foreign-type))
              (description (decide-native-type type proxy)))
         (with-foreign-object
-            (native-struct (generated-cunion-name
+            (native-struct (list :struct (generated-cunion-name
                              (var-structure-name
-                               (g-boxed-variant-cstruct-info-root type))))
+                               (g-boxed-variant-cstruct-info-root type)))))
           (copy-slots-to-native proxy native-struct description)
           (values (boxed-copy-fn type native-struct) proxy)))))
 
@@ -923,13 +923,13 @@
         (i (gensym "I-")))
     `(let* ((,values-seq-1 ,values-seq)
             (,n-var (length ,values-seq-1)))
-       (with-foreign-object (,array-var ',cstruct ,n-var)
+       (with-foreign-object (,array-var '(:struct ,cstruct) ,n-var)
          (let ((,i 0))
            (map nil (lambda (,x)
                       (copy-boxed-slots-to-foreign
                        ,x
                        (inc-pointer ,array-var
-                                    (* ,i (foreign-type-size ',cstruct)))
+                                    (* ,i (foreign-type-size '(:struct ,cstruct))))
                        ',type)
                       (incf ,i))
                 ,values-seq-1))

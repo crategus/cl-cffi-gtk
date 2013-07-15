@@ -591,7 +591,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (define-vtable ("GtkTreeModel" gtk-tree-model)
-  (:skip parent-instance g-type-interface)
+  (:skip parent-instance (:pointer (:struct g-type-interface)))
   ;; some signals
   (:skip tree-model-row-changed :pointer)
   (:skip tree-model-row-inserted :pointer)
@@ -613,7 +613,7 @@
               (tree-model g-object)
               (iter (g-boxed-foreign gtk-tree-iter))
               (n :int)
-              (value (:pointer g-value)))
+              (value (:pointer (:struct g-value))))
              :impl-call
              ((tree-model iter n)
               (multiple-value-bind (v type)
@@ -1441,7 +1441,7 @@
   (model g-object)
   (iter (g-boxed-foreign gtk-tree-iter))
   (column :int)
-  (value (:pointer g-value)))
+  (value (:pointer (:struct g-value))))
 
 (defun gtk-tree-model-get-value (tree-model iter column)
  #+cl-cffi-gtk-documentation
@@ -1451,7 +1451,7 @@
   @argument[column]{the column to lookup the value at}
   @return{The value at @arg{column}.}
   Initializes and sets value to that at @arg{column}."
-  (with-foreign-object (v 'g-value)
+  (with-foreign-object (v '(:struct g-value))
     (g-value-zero v)
     (%gtk-tree-model-get-value tree-model iter column v)
     (prog1

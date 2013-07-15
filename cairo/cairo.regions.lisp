@@ -100,7 +100,8 @@
 ;;; cairo_region_create ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("cairo_region_create" cairo-region-create) cairo-region-t
+(defcfun ("cairo_region_create" cairo-region-create)
+    (:pointer (:struct cairo-region-t))
  #+cl-cffi-gtk-documentation
  "@version{2013-3-3}
   @begin{return}

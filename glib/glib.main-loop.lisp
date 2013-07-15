@@ -385,7 +385,7 @@
 ;;; g_main_loop_new ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_main_loop_new" g-main-loop-new) (:pointer g-main-loop)
+(defcfun ("g_main_loop_new" g-main-loop-new) (:pointer (:struct g-main-loop))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-9}
   @argument[context]{a @type{g-main-context}, if a @code{null}-pointer, the
@@ -407,7 +407,7 @@
   @end{dictionary}
   @see-type{g-main-loop}
   @see-function{g-main-loop-run}"
-  (context (:pointer g-main-context))
+  (context (:pointer (:struct g-main-context)))
   (is-running :boolean))
 
 (export 'g-main-loop-new)
@@ -416,14 +416,14 @@
 ;;; g_main_loop_ref ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_main_loop_ref" g-main-loop-ref) (:pointer g-main-loop)
+(defcfun ("g_main_loop_ref" g-main-loop-ref) (:pointer (:struct g-main-loop))
  #+cl-cffi-gtk-documentation
  "@version{2012-12-25}
   @argument[loop]{a @type{g-main-loop}}
   @return{The argument @arg{loop}.}
   @short{Increases the reference count on a @type{g-main-loop} object by one.}
   @see-type{g-main-loop}"
-  (loop (:pointer g-main-loop)))
+  (loop (:pointer (:struct g-main-loop))))
 
 (export 'g-main-loop-ref)
 
@@ -431,14 +431,14 @@
 ;;; g_main_loop_unref ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_main_loop_unref" g-main-loop-unref) (:pointer g-main-loop)
+(defcfun ("g_main_loop_unref" g-main-loop-unref) :void
  #+cl-cffi-gtk-documentation
  "@version{2012-12-25}
   @argument[loop]{a @type{g-main-loop}}
   @short{Decreases the reference count on a @type{g-main-loop} object by one.}
   If the result is zero, free the @arg{loop} and free all associated memory.
   @see-type{g-main-loop}"
-  (loop (:pointer g-main-loop)))
+  (loop (:pointer (:struct g-main-loop))))
 
 (export 'g-main-loop-unref)
 
@@ -456,7 +456,7 @@
   @end{short}
   If this is called for the thread of the @arg{loop}'s @type{g-main-context}, it
   will process events from the @arg{loop}, otherwise it will simply wait."
-  (loop (:pointer g-main-loop)))
+  (loop (:pointer (:struct g-main-loop))))
 
 (export 'g-main-loop-run)
 
@@ -475,7 +475,7 @@
   @sym{g-main-loop-quit} is called will still be executed.
   @see-type{g-main-loop}
   @see-function{g-main-loop-run}"
-  (loop (:pointer g-main-loop)))
+  (loop (:pointer (:struct g-main-loop))))
 
 (export 'g-main-loop-quit)
 
@@ -494,7 +494,7 @@
   @end{short}
   @see-type{g-main-loop}
   @see-function{g-main-loop-run}"
-  (loop (:pointer g-main-loop)))
+  (loop (:pointer (:struct g-main-loop))))
 
 (export 'g-main-loop-is-running)
 
@@ -503,7 +503,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_main_loop_get_context" g-main-loop-get-context)
-    (:pointer g-main-context)
+    (:pointer (:struct g-main-context))
  #+cl-cffi-gtk-documentation
  "@version{2012-12-25}
   @argument[loop]{a @type{g-main-loop}}
@@ -511,7 +511,7 @@
   @short{Returns the @type{g-main-context} of @arg{loop}.}
   @see-type{g-main-loop}
   @see-type{g-main-context}"
-  (loop (:pointer g-main-loop)))
+  (loop (:pointer (:struct g-main-loop))))
 
 (export 'g-main-loop-get-context)
 
@@ -721,7 +721,8 @@
 ;;; g_main_context_new ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_main_context_new" g-main-context-new) (:pointer g-main-context)
+(defcfun ("g_main_context_new" g-main-context-new)
+    (:pointer (:struct g-main-context))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-9}
   @return{The new @type{g-main-context} structure.}
@@ -734,14 +735,15 @@
 ;;; g_main_context_ref ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_main_context_ref" g-main-context-ref) (:pointer g-main-context)
+(defcfun ("g_main_context_ref" g-main-context-ref)
+    (:pointer (:struct g-main-context))
  #+cl-cffi-gtk-documentation
  "@version{2012-4-9}
   @argument[context]{a @type{g-main-context} object}
   @return{The @arg{context} that was passed in (since 2.6).}
   Increases the reference count on a @type{g-main-context} object by one.
   @see-function{g-main-context-unref}"
-  (context (:pointer g-main-context)))
+  (context (:pointer (:struct g-main-context))))
 
 (export 'g-main-context-ref)
 
@@ -749,15 +751,14 @@
 ;;; g_main_context_unref ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_main_context_unref" g-main-context-unref) (:pointer g-main-context)
+(defcfun ("g_main_context_unref" g-main-context-unref) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-4-9}
+ "@version{2013-7-12}
   @argument[context]{a @type{g-main-context} object}
   Decreases the reference count on a @type{g-main-context} object by one. If
   the result is zero, free the @arg{context} and free all associated memory.
-  @see-type{g-main-context}
   @see-function{g-main-context-ref}"
-  (context (:pointer g-main-context)))
+  (context (:pointer (:struct g-main-context))))
 
 (export 'g-main-context-unref)
 
@@ -766,7 +767,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_main_context_default" g-main-context-default)
-    (:pointer g-main-context)
+    (:pointer (:struct g-main-context))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-9}
   @return{The global default main context.}
@@ -801,7 +802,7 @@
   Note that even when @arg{may-block} is @em{true}, it is still possible for
   @sym{g-main-context-iteration} to return @code{nil}, since the the wait may be
   interrupted for other reasons than an event source becoming ready."
-  (context (:pointer g-main-context))
+  (context (:pointer (:struct g-main-context)))
   (may-block :boolean))
 
 (export 'g-main-context-iteration)
@@ -839,7 +840,7 @@
     the default context will be used}
   @return{@em{True} if events are pending.}
   Checks if any sources have pending events for the given @arg{context}."
-  (context (:pointer g-main-context)))
+  (context (:pointer (:struct g-main-context))))
 
 (export 'g-main-context-pending)
 
@@ -862,7 +863,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_main_context_find_source_by_id" g-main-context-find-source-by-id)
-    (:pointer g-source)
+    (:pointer (:struct g-source))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-9}
   @argument[context]{a @type{g-main-context} object, if @code{null}-pointer,
@@ -871,7 +872,7 @@
   @return{The @type{g-source} object if found, otherwise, @code{null}-pointer.}
   Finds a @type{g-source} object given a pair of context and ID.
   @see-function{g-source-get-id}"
-  (context (:pointer g-main-context))
+  (context (:pointer (:struct g-main-context)))
   (source-id :uint))
 
 (export 'g-main-context-find-source-by-id)
@@ -882,7 +883,7 @@
 
 (defcfun ("g_main_context_find_source_by_user_data"
           g-main-context-find-source-by-user-data)
-    (:pointer g-source)
+    (:pointer (:struct g-source))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-9}
   @argument[context]{a @type{g-main-context} object}
@@ -893,7 +894,7 @@
   @end{short}
   If multiple sources exist with the same user data, the first one found will be
   returned."
-  (context (:pointer g-main-context))
+  (context (:pointer (:struct g-main-context)))
   (user-data :pointer))
 
 (export 'g-main-context-find-source-by-user-data)
@@ -904,7 +905,7 @@
 
 (defcfun ("g_main_context_find_source_by_funcs_user_data"
           g-main-context-find-source-by-funcs-user-data)
-    (:pointer g-source)
+    (:pointer (:struct g-source))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-4}
   @argument[context]{a @type{g-main-context} object, if @code{null}-pointer,
@@ -918,8 +919,8 @@
   If multiple sources exist with the same source function and user data, the
   first one found will be returned.
   @see-function{g-source-new}"
-  (context (:pointer g-main-context))
-  (funcs (:pointer g-source-funcs))
+  (context (:pointer (:struct g-main-context)))
+  (funcs (:pointer (:struct g-source-funcs)))
   (user-data :pointer))
 
 (export 'g-main-context-find-source-by-funcs-user-data)
@@ -934,7 +935,7 @@
   @argument[context]{a @type{g-main-context} object}
   If @arg{context} is currently waiting in a @code{poll()}, interrupt the
   @code{poll()}, and continue the iteration process."
-  (context (:pointer g-main-context)))
+  (context (:pointer (:struct g-main-context))))
 
 (export 'g-main-context-wakeup)
 
@@ -962,7 +963,7 @@
   @see-function{g-main-context-query}
   @see-function{g-main-context-check}
   @see-function{g-main-context-dispatch}"
-  (context (:pointer g-main-context)))
+  (context (:pointer (:struct g-main-context))))
 
 (export 'g-main-context-acquire)
 
@@ -982,7 +983,7 @@
   only when @sym{g-main-context-release} is called as many times as it was
   acquired.
   @see-function{g-main-context-acquire}"
-  (context (:pointer g-main-context)))
+  (context (:pointer (:struct g-main-context))))
 
 (export 'g-main-context-release)
 
@@ -1003,7 +1004,7 @@
   to get ownership of context.
 
   Since 2.10"
-  (context (:pointer g-main-context)))
+  (context (:pointer (:struct g-main-context))))
 
 (export 'g-main-context-is-owner)
 
@@ -1027,9 +1028,9 @@
   @arg{cond} until that owner releases ownership or until @arg{cond} is
   signaled, then try again (once) to become the owner.
   @see-function{g-main-context-acquire}"
-  (context (:pointer g-main-context))
-  (cond (:pointer g-cond))
-  (mutex (:pointer g-mutex)))
+  (context (:pointer (:struct g-main-context)))
+  (cond (:pointer (:struct g-cond)))
+  (mutex (:pointer (:struct g-mutex))))
 
 (export 'g-main-context-wait)
 
@@ -1050,7 +1051,7 @@
   The resulting information for polling is determined by calling
   @fun{g-main-context-query}.
   @see-function{g-main-context-query}"
-  (context (:pointer g-main-context))
+  (context (:pointer (:struct g-main-context)))
   (priority-ret (:pointer :int)))
 
 (export 'g-main-context-prepare)
@@ -1072,10 +1073,10 @@
   @arg{n-fds} records need to be stored, the number of records that need to be
     stored.}
   Determines information necessary to poll this main loop."
-  (context (:pointer g-main-context))
+  (context (:pointer (:struct g-main-context)))
   (max-priority :int)
   (timeout (:pointer :int))
-  (fds (:pointer g-poll-fd))
+  (fds (:pointer (:struct g-poll-fd)))
   (n-dfs :int))
 
 (export 'g-main-context-query)
@@ -1094,9 +1095,9 @@
   @argument[n-fds]{return value of @code{g-main-context-query}}
   @return{@em{True} if some sources are ready to be dispatched.}
   Passes the results of polling back to the main loop."
-  (context (:pointer g-main-context))
+  (context (:pointer (:struct g-main-context)))
   (max-priority :int)
-  (fds (:pointer g-poll-fd))
+  (fds (:pointer (:struct g-poll-fd)))
   (n-fds :int))
 
 (export 'g-main-context-check)
@@ -1110,7 +1111,7 @@
  "@version{2013-4-9}
   @argument[context]{a @type{g-main-context} object}
   Dispatches all pending sources."
-  (context (:pointer g-main-context)))
+  (context (:pointer (:struct g-main-context))))
 
 (export 'g-main-context-dispatch)
 
@@ -1131,7 +1132,7 @@
 
   This function could possibly be used to integrate the GLib event loop with
   an external event loop."
-  (context (:pointer g-main-context))
+  (context (:pointer (:struct g-main-context)))
   (func :pointer))
 
 (export 'g-main-context-set-poll-func)
@@ -1147,7 +1148,7 @@
   @return{The poll function.}
   Gets the poll function set by @fun{g-main-context-set-poll-func}.
   @see-function{g-main-context-set-poll-func}"
-  (context (:pointer g-main-context)))
+  (context (:pointer (:struct g-main-context))))
 
 (export 'g-main-context-get-poll-func)
 
@@ -1195,8 +1196,8 @@
   This will very seldom be used directly. Instead a typical event source will
   use @fun{g-source-add-poll} instead.
   @see-function{g-source-add-poll}"
-  (context (:pointer g-main-context))
-  (fd (:pointer g-poll-fd))
+  (context (:pointer (:struct g-main-context)))
+  (fd (:pointer (:struct g-poll-fd)))
   (priority :int))
 
 (export 'g-main-context-add-poll)
@@ -1215,8 +1216,8 @@
     Removes file descriptor from the set of file descriptors to be polled for a
     particular context.
   @end{short}"
-  (context (:pointer g-main-context))
-  (fd (:pointer g-poll-fd)))
+  (context (:pointer (:struct g-main-context)))
+  (fd (:pointer (:struct g-poll-fd))))
 
 (export 'g-main-context-remove-poll)
 
@@ -1262,7 +1263,8 @@
 ;;; g_main_current_source ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_main_current_source" g-main-current-source) (:pointer g-source)
+(defcfun ("g_main_current_source" g-main-current-source)
+    (:pointer (:struct g-source))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-9}
   @return{The currently firing source or @code{null}-pointer.}
@@ -1461,18 +1463,20 @@
 ;;; g_timeout_source_new ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_timeout_source_new" g-timeout-source-new) (:pointer g-source)
+(defcfun ("g_timeout_source_new" g-timeout-source-new)
+    (:pointer (:struct g-source))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-9}
-  @argument[interval]{the timeout interval in milliseconds.}
-  @return{the newly-created timeout source}
+  @argument[interval]{the timeout interval in milliseconds}
+  @return{The newly-created timeout source.}
   @short{Creates a new timeout source.}
 
   The source will not initially be associated with any @type{g-main-context} and
   must be added to one with @fun{g-source-attach} before it will be executed.
 
   The interval given is in terms of monotonic time, not wall clock time. See
-  @code{g_get_monotonic_time()}."
+  @fun{g-get-monotonic-time}.
+  @see-function{g-get-monotonic-time}"
   (interval-milliseconds :int))
 
 (export 'g-timeout-source-new)
@@ -1482,7 +1486,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_timeout_source_new_seconds" g-timeout-source-new-seconds)
-    (:pointer g-source)
+    (:pointer (:struct g-source))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-9}
   @argument[interval]{the timeout interval in seconds}
@@ -1703,7 +1707,7 @@
 ;;; g_idle_source_new ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_idle_source_new" g-idle-source-new) (:pointer g-source)
+(defcfun ("g_idle_source_new" g-idle-source-new) (:pointer (:struct g-source))
  #+cl-cffi-gtk-documentation
  "@version{2013-2-7}
   @return{The newly created idle source.}
@@ -2038,7 +2042,7 @@
 ;;; g_source_new ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_source_new" g-source-new) (:pointer g-source)
+(defcfun ("g_source_new" g-source-new) (:pointer (:struct g-source))
  #+cl-cffi-gtk-documentation
  "@version{2013-01-01}
   @argument[source-funcs]{structure containing functions that implement the
@@ -2053,7 +2057,7 @@
 
   The source will not initially be associated with any GMainContext and must
   be added to one with g_source_attach() before it will be executed."
-  (source-funcs (:pointer g-source-funcs))
+  (source-funcs (:pointer (:struct g-source-funcs)))
   (struct-size :uint))
 
 (export 'g-source-new)
@@ -2062,13 +2066,13 @@
 ;;; g_source_ref ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_source_ref" g-source-ref) (:pointer g-source)
+(defcfun ("g_source_ref" g-source-ref) (:pointer (:struct g-source))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-9}
   @argument[source]{a GSource}
   @return{source}
   @short{Increases the reference count on a source by one.}"
-  (source (:pointer g-source)))
+  (source (:pointer (:struct g-source))))
 
 (export 'g-source-ref)
 
@@ -2084,7 +2088,7 @@
   @end{short}
   If the resulting reference count is zero the source and associated memory will
   be destroyed."
-  (source (:pointer g-source)))
+  (source (:pointer (:struct g-source))))
 
 (export 'g-source-unref)
 
@@ -2103,8 +2107,8 @@
   @end{short}
 
   Since 2.12"
-  (source (:pointer g-source))
-  (funcs (:pointer g-source-funcs)))
+  (source (:pointer (:struct g-source)))
+  (funcs (:pointer (:struct g-source-funcs))))
 
 (export 'g-source-set-funcs)
 
@@ -2122,8 +2126,8 @@
     Adds a GSource to a context so that it will be executed within that context.
   @end{short}
   Remove it by calling @fun{g-source-destroy}."
-  (source (:pointer g-source))
-  (context (:pointer g-main-context)))
+  (source (:pointer (:struct g-source)))
+  (context (:pointer (:struct g-main-context))))
 
 (export 'g-source-attach)
 
@@ -2139,7 +2143,7 @@
     Removes a source from its GMainContext, if any, and mark it as destroyed.
   @end{short}
   The source cannot be subsequently added to another context."
-  (source (:pointer g-source)))
+  (source (:pointer (:struct g-source))))
 
 (export 'g-source-destroy)
 
@@ -2209,7 +2213,7 @@
   @}
   @end{pre}
   Since 2.12"
-  (source (:pointer g-source)))
+  (source (:pointer (:struct g-source))))
 
 (export 'g-source-is-destroyed)
 
@@ -2228,7 +2232,7 @@
   While the main loop is being run, a source will be dispatched if it is ready
   to be dispatched and no sources at a higher (numerically smaller) priority are
   ready to be dispatched."
-  (source (:pointer g-source))
+  (source (:pointer (:struct g-source)))
   (priority :int))
 
 (export 'g-source-set-priority)
@@ -2243,7 +2247,7 @@
   @argument[source]{a GSource}
   @return{the priority of the source}
   @short{Gets the priority of a source.}"
-  (source (:pointer g-source)))
+  (source (:pointer (:struct g-source))))
 
 (export 'g-source-get-priority)
 
@@ -2262,7 +2266,7 @@
   If can_recurse is TRUE, then while the source is being dispatched then this
   source will be processed normally. Otherwise, all processing of this source is
   blocked until the dispatch function returns."
-  (source (:pointer g-source))
+  (source (:pointer (:struct g-source)))
   (can-recurse :boolean))
 
 (export 'g-source-set-can-recurse)
@@ -2280,7 +2284,7 @@
     Checks whether a source is allowed to be called recursively.
   @end{short}
   See g_source_set_can_recurse()."
-  (source (:pointer g-source)))
+  (source (:pointer (:struct g-source))))
 
 (export 'g-source-get-can-recurse)
 
@@ -2299,7 +2303,7 @@
   The ID of a source is a positive integer which is unique within a particular
   main loop context. The reverse mapping from ID to source is done by
   g_main_context_find_source_by_id()."
-  (source (:pointer g-source)))
+  (source (:pointer (:struct g-source))))
 
 (export 'g-source-get-id)
 
@@ -2318,7 +2322,7 @@
   The name may be NULL if it has never been set with g_source_set_name().
 
   Since 2.26"
-  (source (:pointer g-source)))
+  (source (:pointer (:struct g-source))))
 
 (export 'g-source-get-name)
 
@@ -2346,7 +2350,7 @@
   event type in the source name.
 
   Since 2.26"
-  (source (:pointer g-source))
+  (source (:pointer (:struct g-source)))
   (name :string))
 
 (export 'g-source-set-name)
@@ -2374,7 +2378,8 @@
 ;;; g_source_get_context ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_source_get_context" g-source-get-context) (:pointer g-main-context)
+(defcfun ("g_source_get_context" g-source-get-context)
+    (:pointer (:struct g-main-context))
  #+cl-cffi-gtk-documentation
  "@version{2013-01-01}
   @argument[source]{a GSource}
@@ -2384,7 +2389,7 @@
     Gets the GMainContext with which the source is associated.
   @end{short}
   Calling this function on a destroyed source is an error."
-  (source (:pointer g-source)))
+  (source (:pointer (:struct g-source))))
 
 (export 'g-source-get-context)
 
@@ -2435,7 +2440,7 @@
 |#
 
 (defcfun ("g_source_set_callback" %g-source-set-callback) :void
-  (source (:pointer g-source))
+  (source (:pointer (:struct g-source)))
   (func :pointer)
   (data :pointer)
   (notify :pointer))
@@ -2523,8 +2528,8 @@
   field in the @type{g-poll-fd} structure and return @em{true} if events need
   to be processed.
   @see-function{g-source-new}"
-  (source (:pointer g-source))
-  (fd (:pointer g-poll-fd)))
+  (source (:pointer (:struct g-source)))
+  (fd (:pointer (:struct g-poll-fd))))
 
 (export 'g-source-add-poll)
 
@@ -2540,8 +2545,8 @@
     @fun{g-source-add-poll}}
   Removes a file descriptor from the set of file descriptors polled for this
   source."
-  (source (:pointer g-source))
-  (fd (:pointer g-poll-fd)))
+  (source (:pointer (:struct g-source)))
+  (fd (:pointer (:struct g-poll-fd))))
 
 (export 'g-source-remove-poll)
 
@@ -2593,7 +2598,7 @@
 ;;; g_source_get_time ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_source_get_time" g-source-get-time) :void
+(defcfun ("g_source_get_time" g-source-get-time) :uint64
  #+cl-cffi-gtk-documentation
  "@version{2013-4-9}
   @argument[source]{a @type{g-source} structure}
@@ -2609,7 +2614,7 @@
   reasonable alternative otherwise. See @fun{g-get-monotonic-time}.
 
   Since 2.28"
-  (source (:pointer g-source)))
+  (source (:pointer (:struct g-source))))
 
 (export 'g-source-get-time)
 
@@ -2618,8 +2623,8 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_source_get_current_time" %g-source-get-current-time) :void
-  (source (:pointer g-source))
-  (timeval (:pointer g-time-val)))
+  (source (:pointer (:struct g-source)))
+  (timeval (:pointer (:struct g-time-val))))
 
 (defun g-source-get-current-time (source)
  #+cl-cffi-gtk-documentation
@@ -2639,7 +2644,7 @@
     @fun{g-get-current-time}.
   @end{short}
   @see-function{g-source-get-time}"
-  (with-foreign-object (timeval 'g-time-val)
+  (with-foreign-object (timeval '(:struct g-time-val))
     (%g-source-get-current-time source timeval)
     timeval))
 
@@ -2690,7 +2695,7 @@
   If multiple sources exist with the same source functions and user data, only
   one will be destroyed.
   @see-function{g-source-new}"
-  (funcs (:pointer g-source-funcs))
+  (funcs (:pointer (:struct g-source-funcs)))
   (user-data :pointer))
 
 (export 'g-source-remove-by-funcs-user-data)

@@ -1339,7 +1339,7 @@
 
   Since 2.6
   @see-function{gtk-label-set-width-chars}"
-  (gtk-label-get-width-chars label))
+  (gtk-label-width-chars label))
 
 (export 'gtk-label-get-width-chars)
 
@@ -1361,7 +1361,7 @@
 
   Since 2.6
   @see-function{gtk-label-set-width-chars}"
-  (gtk-label-get-max-width-chars label))
+  (gtk-label-max-width-chars label))
 
 (export 'gtk-label-get-max-width-chars)
 

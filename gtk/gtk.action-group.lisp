@@ -592,7 +592,7 @@
 (defcfun ("gtk_action_group_add_actions" 
           %gtk-action-group-add-actions) :void
   (action-group (g-object gtk-action-group))
-  (entries (:pointer gtk-action-entry))
+  (entries (:pointer (:struct gtk-action-entry)))
   (n-entries :uint)
   (user-data :pointer))
 
@@ -612,22 +612,22 @@
   Since 2.4
   @see-function{gtk-action-group-add-action}"
   (let ((n-entries (length entries)))
-    (with-foreign-object (entries-ptr 'gtk-action-entry n-entries)
+    (with-foreign-object (entries-ptr '(:struct gtk-action-entry) n-entries)
       (loop
         for entry in entries
         for i from 0
-        for entry-ptr = (mem-aref entries-ptr 'gtk-action-entry i)
-        do (setf (foreign-slot-value entry-ptr 'gtk-action-entry 'name)
+        for entry-ptr = (mem-aptr entries-ptr '(:struct gtk-action-entry) i)
+        do (setf (foreign-slot-value entry-ptr '(:struct gtk-action-entry) 'name)
                  (first entry)
-                 (foreign-slot-value entry-ptr 'gtk-action-entry 'stock-id)
+                 (foreign-slot-value entry-ptr '(:struct gtk-action-entry) 'stock-id)
                  (if (second entry) (second entry) (null-pointer))
-                 (foreign-slot-value entry-ptr 'gtk-action-entry 'label)
+                 (foreign-slot-value entry-ptr '(:struct gtk-action-entry) 'label)
                  (if (third entry) (third entry) (null-pointer))
-                 (foreign-slot-value entry-ptr 'gtk-action-entry 'accelerator)
+                 (foreign-slot-value entry-ptr '(:struct gtk-action-entry) 'accelerator)
                  (if (fourth entry) (fourth entry) (null-pointer))
-                 (foreign-slot-value entry-ptr 'gtk-action-entry 'tooltip)
+                 (foreign-slot-value entry-ptr '(:struct gtk-action-entry) 'tooltip)
                  (if (fifth entry) (fifth entry) (null-pointer))
-                 (foreign-slot-value entry-ptr 'gtk-action-entry 'callback)
+                 (foreign-slot-value entry-ptr '(:struct gtk-action-entry) 'callback)
                  (if (sixth entry) (sixth entry) (null-pointer))))
       (%gtk-action-group-add-actions action-group
                                      entries-ptr

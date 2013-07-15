@@ -46,28 +46,28 @@
          (defcallback ,call-cb ,return-type (,@args (,data :pointer))
            (let* ((,object (convert-from-foreign
                              (foreign-slot-value ,data
-                                                 'object-func-ref
+                                                 '(:struct object-func-ref)
                                                  :object)
                              'g-object))
-                  (,fn-id (foreign-slot-value ,data 'object-func-ref :fn-id))
+                  (,fn-id (foreign-slot-value ,data '(:struct object-func-ref) :fn-id))
                   (,fn (retrieve-handler-from-object ,object ,fn-id)))
              (funcall ,fn ,@arg-names)))
          (defcallback ,destroy-cb :void ((,data :pointer))
            (let* ((,object (convert-from-foreign
                              (foreign-slot-value ,data
-                                                 'object-func-ref
+                                                 '(:struct object-func-ref)
                                                  :object)
                             'g-object))
-                  (,fn-id (foreign-slot-value ,data 'object-func-ref :fn-id)))
+                  (,fn-id (foreign-slot-value ,data '(:struct object-func-ref) :fn-id)))
              (delete-handler-from-object ,object ,fn-id))
            (foreign-free ,data))))))
 
 (defun create-fn-ref (object function)
-  (let ((ref (foreign-alloc 'object-func-ref))
+  (let ((ref (foreign-alloc '(:struct object-func-ref)))
         (fn-id (save-handler-to-object object function)))
-    (setf (foreign-slot-value ref 'object-func-ref :object)
+    (setf (foreign-slot-value ref '(:struct object-func-ref) :object)
           (pointer object)
-          (foreign-slot-value ref 'object-func-ref :fn-id)
+          (foreign-slot-value ref '(:struct object-func-ref) :fn-id)
           fn-id)
     ref))
 

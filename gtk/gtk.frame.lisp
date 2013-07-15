@@ -373,7 +373,7 @@
   Retrieves the shadow type of the @arg{frame}.
   See the function @fun{gtk-frame-set-shadow-type}.
   @see-function{gtk-frame-set-shadow-type}"
-  (gtk-frame-get-shadow-type frame))
+  (gtk-frame-shadow-type frame))
 
 (export 'gtk-frame-get-shadow-type)
 

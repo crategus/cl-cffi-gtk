@@ -241,7 +241,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_get_current_time" %g-get-current-time) :void
-  (result (:pointer g-time-val)))
+  (result (:pointer (:struct g-time-val))))
 
 (defun g-get-current-time ()
  #+cl-cffi-gtk-documentation
@@ -253,7 +253,7 @@
 
   You may find @fun{g-get-real-time} to be more convenient.
   @see-function{g-get-real-time}"
-  (with-foreign-object (result 'g-time-val)
+  (with-foreign-object (result '(:struct g-time-val))
     (%g-get-current-time result)
     result))
 
@@ -470,7 +470,7 @@
   (prog1
     (iter (for c initially pointer then (g-list-next c))
           (until (null-pointer-p c))
-          (collect (convert-from-foreign (foreign-slot-value c '%g-list 'data)
+          (collect (convert-from-foreign (foreign-slot-value c '(:struct %g-list) 'data)
                                          (g-list-type-type type))))
     (when (g-list-type-free-from-foreign type)
       (g-list-free pointer))))
@@ -513,7 +513,7 @@
     If list elements contain dynamically-allocated memory, you should either
     use @code{g_list_free_full()} or free them manually first.
   @end{dictionary}"
-  (lst (:pointer %g-list)))
+  (lst (:pointer (:struct %g-list))))
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_list_next ()
@@ -527,7 +527,7 @@
   @short{A convenience macro to get the next element in a GList.}"
   (if (null-pointer-p lst)
       (null-pointer)
-      (foreign-slot-value lst '%g-list 'next)))
+      (foreign-slot-value lst '(:struct %g-list) 'next)))
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_list_append ()
@@ -571,8 +571,8 @@
 
 ;;; GList * g_list_append (GList *list, gpointer data);
 
-(defcfun ("g_list_append" %g-list-append) %g-list
-  (list %g-list)
+(defcfun ("g_list_append" %g-list-append) (:pointer (:struct %g-list))
+  (list (:pointer (:struct %g-list)))
   (data :pointer))
 
 ;;; ----------------------------------------------------------------------------
@@ -604,7 +604,7 @@
   (prog1
     (iter (for c initially pointer then (g-slist-next c))
           (until (null-pointer-p c))
-          (collect (convert-from-foreign (foreign-slot-value c '%g-slist 'data)
+          (collect (convert-from-foreign (foreign-slot-value c '(:struct %g-slist) 'data)
                                          (g-slist-type-type type))))
     (when (g-slist-type-free-from-foreign type)
       (g-slist-free pointer))))
@@ -615,10 +615,10 @@
     (iter (for item in lst)
           (for n = (g-slist-alloc))
           (for ptr = (convert-to-foreign item (g-slist-type-type type)))
-          (setf (foreign-slot-value n '%g-slist 'data) ptr)
-          (setf (foreign-slot-value n '%g-slist 'next) (null-pointer))
+          (setf (foreign-slot-value n '(:struct %g-slist) 'data) ptr)
+          (setf (foreign-slot-value n '(:struct %g-slist) 'next) (null-pointer))
           (when last
-            (setf (foreign-slot-value last '%g-slist 'next) n))
+            (setf (foreign-slot-value last '(:struct %g-slist) 'next) n))
           (setf last n)
           (when (first-iteration-p)
             (setf result n)))
@@ -641,7 +641,7 @@
 ;;; g_slist_alloc ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_slist_alloc" g-slist-alloc) (:pointer %g-slist)
+(defcfun ("g_slist_alloc" g-slist-alloc) (:pointer (:struct %g-slist))
  #+cl-cffi-gtk-documentation
  "@return{a pointer to the newly-allocated GSList element.}
   @short{Allocates space for one GSList element.}
@@ -661,7 +661,7 @@
     If list elements contain dynamically-allocated memory, you should either
     use g_slist_free_full() or free them manually first.
   @end{dictionary}"
-  (lst (:pointer %g-slist)))
+  (lst (:pointer (:struct %g-slist))))
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_slist_next ()
@@ -674,6 +674,6 @@
   @short{A convenience macro to get the next element in a GSList.}"
   (if (null-pointer-p lst)
       (null-pointer)
-      (foreign-slot-value lst '%g-slist 'next)))
+      (foreign-slot-value lst '(:struct %g-slist) 'next)))
 
 ;;; --- End of file glib.misc.lisp ---------------------------------------------

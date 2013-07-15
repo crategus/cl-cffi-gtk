@@ -209,7 +209,7 @@
   @argument[value]{new value for the cell}
   Sets the data in the cell specified by iter and column. The type of value
   must be convertible to the type of the column."
-  (with-foreign-object (v 'g-value)
+  (with-foreign-object (v '(:struct g-value))
     (set-g-value v
                  value
                  (gtk-tree-model-get-column-type tree-store column)
@@ -243,19 +243,19 @@
   and it will be copied if it is a @var{+g-type-string+} or
   @var{+g-type-boxed+}."
   (let ((n (length values)))
-    (with-foreign-objects ((value-ar 'g-value n)
+    (with-foreign-objects ((value-ar '(:struct g-value) n)
                            (columns-ar :int n))
       (iter (for i from 0 below n)
             (for value in values)
             (for type = (gtk-tree-model-get-column-type tree-store i))
             (setf (mem-aref columns-ar :int i) i)
-            (set-g-value (mem-aref value-ar 'g-value i)
+            (set-g-value (mem-aptr value-ar '(:struct g-value) i)
                          value
                          type
                          :zero-g-value t))
       (gtk-tree-store-set-valuesv tree-store iter columns-ar value-ar n)
       (iter (for i from 0 below n)
-            (g-value-unset (mem-aref value-ar 'g-value i)))
+            (g-value-unset (mem-aptr value-ar '(:struct g-value) i)))
       iter)))
 
 (export 'gtk-tree-store-set)
@@ -458,13 +458,13 @@
   Since 2.10"
   (let ((n (length values))
         (iter (make-gtk-tree-iter)))
-    (with-foreign-objects ((v-ar 'g-value n)
+    (with-foreign-objects ((v-ar '(:struct g-value) n)
                            (columns-ar :int n))
       (iter (for i from 0 below n)
             (for value in values)
             (for type = (gtk-tree-model-get-column-type tree-store i))
             (setf (mem-aref columns-ar :int i) i)
-            (set-g-value (mem-aref v-ar 'g-value i) value type :zero-g-value t))
+            (set-g-value (mem-aptr v-ar '(:struct g-value) i) value type :zero-g-value t))
       (%gtk-tree-store-insert-with-valuesv tree-store
                                            iter
                                            parent
@@ -473,7 +473,7 @@
                                            v-ar
                                            n)
       (iter (for i from 0 below n)
-            (g-value-unset (mem-aref v-ar 'g-value i)))
+            (g-value-unset (mem-aptr v-ar '(:struct g-value) i)))
       iter)))
 
 (export 'gtk-tree-store-insert-with-values)

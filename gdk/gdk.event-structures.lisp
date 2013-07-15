@@ -867,7 +867,7 @@
   (:variant type
             ((:expose) gdk-event-expose
              (area gdk-rectangle :inline t)
-             (region cairo-region-t)
+             (region (:pointer (:struct cairo-region-t)))
              (count :int))
 
             ((:visibility-notify) gdk-event-visibility

@@ -502,7 +502,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_icon_theme_lookup_icon" gtk-icon-theme-lookup-icon)
-    (:pointer gtk-icon-info)
+    (:pointer (:struct gtk-icon-info))
  #+cl-cffi-gtk-documentation
  "@version{2013-3-15}
   @argument[icon-theme]{a @class{gtk-icon-theme} object.}

@@ -452,8 +452,8 @@
   (:saved-state :uint8)
   (:name (:pointer :char))
   (:style :pointer)
-  (:requisition gtk-requisition-cstruct)
-  (:allocation gtk-allocation-cstruct)
+  (:requisition (:pointer (:struct gtk-requisition-cstruct)))
+  (:allocation (:pointer (:struct gtk-allocation-cstruct)))
   (:window :pointer)
   (:parent :pointer))
 
@@ -5562,7 +5562,7 @@
   Since 3.0
   @see-function{gdk-window-invalidate-region}"
   (widget (g-object gtk-widget))
-  (region cairo-region-t))
+  (region (:pointer (:struct cairo-region-t))))
 
 (export 'gtk-widget-queue-draw-region)
 
@@ -5748,7 +5748,8 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_class_find_style_property"
-          gtk-widget-class-find-style-property) (:pointer g-param-spec)
+          gtk-widget-class-find-style-property)
+    (:pointer (:struct g-param-spec))
  #+cl-cffi-gtk-documentation
  "@version{2013-1-6}
   @argument[class]{a pointer to a C widget class structure}
@@ -5769,7 +5770,7 @@
 
 (defcfun ("gtk_widget_class_list_style_properties"
           %gtk-widget-class-list-style-properties)
-    (:pointer (:pointer g-param-spec))
+    (:pointer (:pointer (:struct g-param-spec)))
   (class :pointer)
   (n-properties (:pointer :int)))
 
@@ -5802,7 +5803,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_region_intersect" gtk-widget-region-intersect)
-    cairo-region-t
+    (:pointer (:struct cairo-region-t))
  #+cl-cffi-gtk-documentation
  "@version{2013-1-6}
   @argument[widget]{a @class{gtk-widget} instance}
@@ -5821,7 +5822,7 @@
   The result may be empty, use @fun{cairo-region-is-empty} to check.
   @see-function{cairo-region-is-empty}"
   (widget (g-object gtk-widget))
-  (region cairo-region-t))
+  (region (:pointer (:struct cairo-region-t))))
 
 (export 'gtk-widget-region-intersect)
 
@@ -5917,7 +5918,7 @@
 (defcfun ("gtk_widget_style_get_property" %gtk-widget-style-get-property) :void
   (widget (g-object gtk-widget))
   (property-name :string)
-  (value (:pointer g-value)))
+  (value (:pointer (:struct g-value))))
 
 ;; TODO: Check the implementation. We have to pass a pointer for widget.
 
@@ -5930,7 +5931,7 @@
   @short{Gets the value of a style property of @arg{widget}.}"
   (let ((property-type (gtype (gtk-widget-style-property-type widget
                                                               property-name))))
-  (with-foreign-object (value 'g-value)
+  (with-foreign-object (value '(:struct g-value))
     ;; TODO: Check the implementation of g-value-zero and g-value-init
     ;;       This can be simplified.
     (g-value-zero value)
@@ -5974,7 +5975,7 @@
     (setf property-type
           (gtk-widget-style-property-type widget property-name)))
   (setf property-type (gtype property-type))
-  (with-foreign-object (gvalue 'g-value)
+  (with-foreign-object (gvalue '(:struct g-value))
     (g-value-zero gvalue)
     (g-value-init gvalue property-type)
     (prog1 (%gtk-widget-style-get-property widget property-name gvalue)

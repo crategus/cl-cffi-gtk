@@ -108,7 +108,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (define-vtable ("GtkTreeSortable" gtk-tree-sortable)
-  (:skip parent-instance g-type-interface)
+  (:skip parent-instance (:pointer (:struct g-type-interface)))
   ;; signal
   (:skip sort-columns-changed :pointer)
   ;; methods

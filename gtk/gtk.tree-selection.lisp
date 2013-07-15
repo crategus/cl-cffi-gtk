@@ -247,7 +247,7 @@
 
 (declaim (inline gtk-tree-selection-get-mode))
 
-(defun gtk-tree-selection-get-mode (selection type)
+(defun gtk-tree-selection-get-mode (selection)
  #+cl-cffi-gtk-documentation
  "@version{2013-5-12}
   @argument[selection]{a @class{gtk-tree-selection} object}

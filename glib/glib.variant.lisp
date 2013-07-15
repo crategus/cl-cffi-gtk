@@ -396,7 +396,7 @@
   @end{short}
 
   Since 2.24"
-  (value (:pointer g-variant)))
+  (value (:pointer (:struct g-variant))))
 
 (export 'g-variant-unref)
 
@@ -404,7 +404,7 @@
 ;;; g_variant_ref ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_variant_ref" g-variant-ref) (:pointer g-variant)
+(defcfun ("g_variant_ref" g-variant-ref) (:pointer (:struct g-variant))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-11}
   @argument[value]{a @symbol{g-variant}}
@@ -412,7 +412,7 @@
   @short{Increases the reference count of @arg{value}.}
 
   Since 2.24"
-  (value (:pointer g-variant)))
+  (value (:pointer (:struct g-variant))))
 
 (export 'g-variant-ref)
 
@@ -420,7 +420,7 @@
 ;;; g_variant_ref_sink ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_variant_ref_sink" g-variant-ref-sink) (:pointer g-variant)
+(defcfun ("g_variant_ref_sink" g-variant-ref-sink) (:pointer (:struct g-variant))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-11}
   @argument[value]{a @symbol{g-variant}}
@@ -449,7 +449,7 @@
   in situations where values are not floating.
 
   Since 2.24"
-  (value (:pointer g-variant)))
+  (value (:pointer (:struct g-variant))))
 
 (export 'g-variant-ref-sink)
 
@@ -475,7 +475,7 @@
   counts.
 
   Since 2.26"
-  (value (:pointer g-variant)))
+  (value (:pointer (:struct g-variant))))
 
 (export 'g-variant-is-floating)
 
@@ -521,7 +521,7 @@
   reference. If @fun{g-variant-take-ref} runs first then the result will be that
   the floating reference is converted to a hard reference and an additional
   reference on top of that one is added. It is best to avoid this situation."
-  (value (:pointer g-variant)))
+  (value (:pointer (:struct g-variant))))
 
 (export 'g-variant-take-ref)
 
@@ -543,7 +543,7 @@
   freed.
 
   Since 2.24"
-  (value (:pointer g-variant)))
+  (value (:pointer (:struct g-variant))))
 
 (export 'g-variant-get-type)
 
@@ -565,7 +565,7 @@
 
   Since 2.24
   @see-function{g-variant-type-peek-string}"
-  (value (:pointer g-variant)))
+  (value (:pointer (:struct g-variant))))
 
 (export 'g-variant-get-type-string)
 
@@ -584,7 +584,7 @@
   @end{short}
 
   Since 2.24"
-  (value (:pointer g-variant))
+  (value (:pointer (:struct g-variant)))
   (type (gobject:g-boxed-foreign g-variant-type)))
 
 (export 'g-variant-is-of-type)
@@ -603,7 +603,7 @@
   @end{short}
 
   Since 2.24"
-  (value (:pointer g-variant)))
+  (value (:pointer (:struct g-variant))))
 
 (export 'g-variant-is-container)
 
@@ -732,7 +732,7 @@
     Classifies @arg{value} according to its top-level type.
   @end{short}
   Since 2.24."
-  (value (:pointer g-variant)))
+  (value (:pointer (:struct g-variant))))
 
 (export 'g-variant-classify)
 
@@ -891,7 +891,7 @@
 ;;; g_variant_new_boolean ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_variant_new_boolean" g-variant-new-boolean) (:pointer g-variant)
+(defcfun ("g_variant_new_boolean" g-variant-new-boolean) (:pointer (:struct g-variant))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-11}
   @argument[value]{a @code{gboolean} value}
@@ -910,7 +910,7 @@
 ;;; g_variant_new_byte ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_variant_new_byte" g-variant-new-byte) (:pointer g-variant)
+(defcfun ("g_variant_new_byte" g-variant-new-byte) (:pointer (:struct g-variant))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-11}
   @argument[value]{a @code{guint8} value}
@@ -926,7 +926,7 @@
 ;;; g_variant_new_int16 ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_variant_new_int16" g-variant-new-int16) (:pointer g-variant)
+(defcfun ("g_variant_new_int16" g-variant-new-int16) (:pointer (:struct g-variant))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-11}
   @argument[value]{a @code{gint16} value}
@@ -943,7 +943,7 @@
 ;;; g_variant_new_uint16 ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_variant_new_uint16" g-variant-new-uint16) (:pointer g-variant)
+(defcfun ("g_variant_new_uint16" g-variant-new-uint16) (:pointer (:struct g-variant))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-11}
   @argument[value]{a @code{guint16} value}
@@ -959,7 +959,7 @@
 ;;; g_variant_new_int32 ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_variant_new_int32" g-variant-new-int32) (:pointer g-variant)
+(defcfun ("g_variant_new_int32" g-variant-new-int32) (:pointer (:struct g-variant))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-11}
   @argument[value]{a @code{gint32} value}
@@ -976,7 +976,7 @@
 ;;; g_variant_new_uint32 ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_variant_new_uint32" g-variant-new-uint32) (:pointer g-variant)
+(defcfun ("g_variant_new_uint32" g-variant-new-uint32) (:pointer (:struct g-variant))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-11}
   @argument[value]{a @code{guint32} value}
@@ -993,7 +993,7 @@
 ;;; g_variant_new_int64 ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_variant_new_int64" g-variant-new-int64) (:pointer g-variant)
+(defcfun ("g_variant_new_int64" g-variant-new-int64) (:pointer (:struct g-variant))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-11}
   @argument[value]{a @code{gint64} value}
@@ -1010,7 +1010,7 @@
 ;;; g_variant_new_uint64 ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_variant_new_uint64" g-variant-new-uint64) (:pointer g-variant)
+(defcfun ("g_variant_new_uint64" g-variant-new-uint64) (:pointer (:struct g-variant))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-11}
   @argument[value]{a @code{guint64} value}
@@ -1027,7 +1027,7 @@
 ;;; g_variant_new_handle ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_variant_new_handle" g-variant-new-handle) (:pointer g-variant)
+(defcfun ("g_variant_new_handle" g-variant-new-handle) (:pointer (:struct g-variant))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-11}
   @argument[value]{a @code{gint32} value}
@@ -1047,7 +1047,7 @@
 ;;; g_variant_new_double ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_variant_new_double" g-variant-new-double) (:pointer g-variant)
+(defcfun ("g_variant_new_double" g-variant-new-double) (:pointer (:struct g-variant))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-11}
   @argument[value]{a @code{gdouble} floating point value}
@@ -1063,7 +1063,7 @@
 ;;; g_variant_new_string ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_variant_new_string" g-variant-new-string) (:pointer g-variant)
+(defcfun ("g_variant_new_string" g-variant-new-string) (:pointer (:struct g-variant))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-11}
   @argument[string]{a normal utf8 nul-terminated string}
@@ -1083,7 +1083,7 @@
 ;; TODO: Check the text
 
 (defcfun ("g_variant_new_object_path" g-variant-new-object-path)
-    (:pointer g-variant)
+    (:pointer (:struct g-variant))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-11}
   @argument[object-path]{a string}
@@ -1131,7 +1131,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_variant_new_signature" g-variant-new-signature)
-    (:pointer g-variant)
+    (:pointer (:struct g-variant))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-11}
   @argument[signature]{a string}
@@ -1176,7 +1176,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_variant_new_variant" g-variant-new-variant)
-    (:pointer g-variant)
+    (:pointer (:struct g-variant))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-11}
   @argument[value]{a @symbol{g-variant} instance}
@@ -1190,7 +1190,7 @@
   instance takes ownership of child.
 
   Since 2.24"
-  (value (:pointer g-variant)))
+  (value (:pointer (:struct g-variant))))
 
 (export 'g-variant-new-variant)
 
@@ -1298,7 +1298,7 @@
   @var{+g-variant-type-boolean+}.
 
   Since 2.24"
-  (value (:pointer g-variant)))
+  (value (:pointer (:struct g-variant))))
 
 (export 'g-variant-get-boolean)
 
@@ -1317,7 +1317,7 @@
   @var{+g-variant-type-byte+}.
 
   Since 2.24"
-  (value (:pointer g-variant)))
+  (value (:pointer (:struct g-variant))))
 
 (export 'g-variant-get-byte)
 
@@ -1336,7 +1336,7 @@
   @var{+g-variant-type-int16+}.
 
   Since 2.24"
-  (value (:pointer g-variant)))
+  (value (:pointer (:struct g-variant))))
 
 (export 'g-variant-get-int16)
 
@@ -1355,7 +1355,7 @@
   @var{+g-variant-type-uint16+}.
 
   Since 2.24"
-  (value (:pointer g-variant)))
+  (value (:pointer (:struct g-variant))))
 
 (export 'g-variant-get-uint16)
 
@@ -1374,7 +1374,7 @@
   @var{+g-variant-type-int32+}.
 
   Since 2.24"
-  (value (:pointer g-variant)))
+  (value (:pointer (:struct g-variant))))
 
 (export 'g-variant-get-int32)
 
@@ -1393,7 +1393,7 @@
   @var{+g-varaint-type-uint32+}.
 
   Since 2.24"
-  (value (:pointer g-variant)))
+  (value (:pointer (:struct g-variant))))
 
 (export 'g-variant-get-uint32)
 
@@ -1412,7 +1412,7 @@
   @var{+g-variant-type-int64+}.
 
   Since 2.24"
-  (value (:pointer g-variant)))
+  (value (:pointer (:struct g-variant))))
 
 (export 'g-variant-get-int64)
 
@@ -1431,7 +1431,7 @@
   @var{+g-variant-type-uint64+}.
 
   Since 2.24"
-  (value (:pointer g-variant)))
+  (value (:pointer (:struct g-variant))))
 
 (export 'g-variant-get-uint64)
 
@@ -1454,7 +1454,7 @@
   you probably do not need them.
 
   Since 2.24"
-  (value (:pointer g-variant)))
+  (value (:pointer (:struct g-variant))))
 
 (export 'g-variant-get-handle)
 
@@ -1473,7 +1473,7 @@
   @var{+g-variant-type-double+}.
 
   Since 2.24"
-  (value (:pointer g-variant)))
+  (value (:pointer (:struct g-variant))))
 
 (export 'g-variant-get-double)
 
@@ -1482,7 +1482,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_variant_get_string" %g-variant-get-string) :string
-  (value (:pointer g-variant))
+  (value (:pointer (:struct g-variant)))
   (length :pointer))
 
 (defun g-variant-get-string (value)
@@ -2407,8 +2407,8 @@
   @short{Checks if @arg{one} and @arg{two} have the same type and value.}
 
   Since 2.24"
-  (one (:pointer g-variant))
-  (two (:pointer g-variant)))
+  (one (:pointer (:struct g-variant)))
+  (two (:pointer (:struct g-variant))))
 
 (export 'g-variant-equal)
 

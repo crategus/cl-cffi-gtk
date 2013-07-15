@@ -591,7 +591,7 @@
   function will behave as cairo_move_to(cr, x, y).
 
   Since 1.0"
-  (cr cairo-t)
+  (cr (:pointer (:struct cairo-t)))
   (x :double)
   (y :double))
 
@@ -612,7 +612,7 @@
   @end{short}
 
   Since 1.0"
-  (cr cairo-t)
+  (cr (:pointer (:struct cairo-t)))
   (x :double)
   (y :double))
 
@@ -644,7 +644,7 @@
     cairo_close_path (cr);
   @end{pre}
   Since 1.0"
-  (cr cairo-t)
+  (cr (:pointer (:struct cairo-t)))
   (x :double)
   (y :double)
   (width :double)

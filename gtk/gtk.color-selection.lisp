@@ -1,28 +1,28 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.color-selection.lisp
-;;; 
+;;;
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;; 
+;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
 ;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
-;;; 
+;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
-;;; 
+;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
 ;;; as published by the Free Software Foundation, either version 3 of the
 ;;; License, or (at your option) any later version and with a preamble to
 ;;; the GNU Lesser General Public License that clarifies the terms for use
 ;;; with Lisp programs and is referred as the LLGPL.
-;;; 
+;;;
 ;;; This program is distributed in the hope that it will be useful,
 ;;; but WITHOUT ANY WARRANTY; without even the implied warranty of
 ;;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ;;; GNU Lesser General Public License for more details.
-;;; 
+;;;
 ;;; You should have received a copy of the GNU Lesser General Public
 ;;; License along with this program and the preamble to the Gnu Lesser
 ;;; General Public License.  If not, see <http://www.gnu.org/licenses/>
@@ -30,13 +30,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; GtkColorSelection
-;;; 
+;;;
 ;;; A widget used to select a color
-;;; 
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;;     GtkColorSelection
-;;;     
+;;;
 ;;;     gtk_color_selection_new
 ;;;     gtk_color_selection_set_has_opacity_control
 ;;;     gtk_color_selection_get_has_opacity_control
@@ -448,13 +448,14 @@
 ;;; gtk_color_selection_get_previous_alpha ()
 ;;; ----------------------------------------------------------------------------
 
-(defun gtk-color-selection-get-previous-alpha (colorsel)
+(defcfun ("gtk_color_selection_get_previous_alpha"
+           gtk-color-selection-get-previous-alpha) :uint16
  #+cl-cffi-gtk-documentation
  "@version{2013-6-3}
   @argument[colorsel]{a @class{gtk-color-selection} widget}
   @return{An integer between 0 and 65535.}
   @short{Returns the previous alpha value.}"
-  (gtk-color-selection-previous-alpha colorsel))
+  (colorsel (g-object gtk-color-selection)))
 
 (export 'gtk-color-selection-get-previous-alpha)
 
@@ -462,7 +463,8 @@
 ;;; gtk_color_selection_set_previous_alpha ()
 ;;; ----------------------------------------------------------------------------
 
-(defun gtk-color-selection-set-previous-alpha (colorsel alpha)
+(defcfun ("gtk_color_selection_set_previous_alpha"
+           gtk-color-selection-set-previous-alpha) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-6-3}
   @argument[colorsel]{a @class{gtk-color-selection} widget}
@@ -473,7 +475,8 @@
 
   This function should be called with some hesitations, as it might seem
   confusing to have that alpha change."
-  (setf (gtk-color-selection-previous-alpha colorsel) alpha))
+  (colorsel (g-object gtk-color-selection))
+  (alpha :uint16))
 
 (export 'gtk-color-selection-set-previous-alpha)
 
@@ -522,77 +525,77 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_color_selection_get_current_rgba ()
-;;; 
+;;;
 ;;; void gtk_color_selection_get_current_rgba (GtkColorSelection *colorsel,
 ;;;                                            GdkRGBA *rgba);
-;;; 
+;;;
 ;;; Sets rgba to be the current color in the GtkColorSelection widget.
-;;; 
+;;;
 ;;; colorsel :
 ;;;     a GtkColorSelection
-;;; 
+;;;
 ;;; rgba :
 ;;;     a GdkRGBA to fill in with the current color. [out]
-;;; 
+;;;
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_color_selection_set_current_rgba ()
-;;; 
+;;;
 ;;; void gtk_color_selection_set_current_rgba (GtkColorSelection *colorsel,
 ;;;                                            const GdkRGBA *rgba);
-;;; 
+;;;
 ;;; Sets the current color to be rgba.
-;;; 
+;;;
 ;;; The first time this is called, it will also set the original color to be
 ;;; rgba too.
-;;; 
+;;;
 ;;; colorsel :
 ;;;     a GtkColorSelection
-;;; 
+;;;
 ;;; rgba :
 ;;;     A GdkRGBA to set the current color with
-;;; 
+;;;
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_color_selection_get_previous_rgba ()
-;;; 
+;;;
 ;;; void gtk_color_selection_get_previous_rgba (GtkColorSelection *colorsel,
 ;;;                                             GdkRGBA *rgba);
-;;; 
+;;;
 ;;; Fills rgba in with the original color value.
-;;; 
+;;;
 ;;; colorsel :
 ;;;     a GtkColorSelection
-;;; 
+;;;
 ;;; rgba :
 ;;;     a GdkRGBA to fill in with the original color value
-;;; 
+;;;
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_color_selection_set_previous_rgba ()
-;;; 
+;;;
 ;;; void gtk_color_selection_set_previous_rgba (GtkColorSelection *colorsel,
 ;;;                                             const GdkRGBA *rgba);
-;;; 
+;;;
 ;;; Sets the 'previous' color to be rgba.
-;;; 
+;;;
 ;;; This function should be called with some hesitations, as it might seem
 ;;; confusing to have that color change. Calling
 ;;; gtk_color_selection_set_current_rgba() will also set this color the first
 ;;; time it is called.
-;;; 
+;;;
 ;;; colorsel :
 ;;;     a GtkColorSelection
-;;; 
+;;;
 ;;; rgba :
 ;;;     a GdkRGBA to set the previous color with
-;;; 
+;;;
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
@@ -671,42 +674,42 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkColorSelectionChangePaletteFunc ()
-;;; 
+;;;
 ;;; void (*GtkColorSelectionChangePaletteFunc) (const GdkColor *colors,
 ;;;                                             gint n_colors);
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_color_selection_set_change_palette_with_screen_hook ()
-;;; 
+;;;
 ;;; GtkColorSelectionChangePaletteWithScreenFunc
 ;;; gtk_color_selection_set_change_palette_with_screen_hook
 ;;;                          (GtkColorSelectionChangePaletteWithScreenFunc func)
-;;; 
+;;;
 ;;; Installs a global function to be called whenever the user tries to modify
 ;;; the palette in a color selection.
-;;; 
+;;;
 ;;; This function should save the new palette contents, and update the
 ;;; "gtk-color-palette" GtkSettings property so all GtkColorSelection widgets
 ;;; will be modified.
-;;; 
+;;;
 ;;; func :
 ;;;     a function to call when the custom palette needs saving
-;;; 
+;;;
 ;;; Returns :
 ;;;     the previous change palette hook (that was replaced)
-;;; 
+;;;
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkColorSelectionChangePaletteWithScreenFunc ()
-;;; 
+;;;
 ;;; void (*GtkColorSelectionChangePaletteWithScreenFunc)
 ;;;                                                     (GdkScreen *screen,
 ;;;                                                      const GdkColor *colors,
 ;;;                                                      gint n_colors);
-;;; 
+;;;
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
 

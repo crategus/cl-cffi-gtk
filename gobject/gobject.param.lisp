@@ -377,7 +377,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-param-spec-boolean
-  (:parent-instance g-param-spec)
+  (:parent-instance (:pointer (:struct g-param-spec))) ; changed from g-param-spec
   (:default-value :boolean))
 
 #+cl-cffi-gtk-documentation
@@ -390,7 +390,7 @@
   @end{short}
   @begin{pre}
 (defcstruct g-param-spec-boolean
-  (:parent-instance g-param-spec)
+  (:parent-instance (:pointer (:struct g-param-spec)))
   (:default-value :boolean))
   @end{pre}
   @begin[code]{table}
@@ -405,7 +405,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_param_spec_boolean" g-param-spec-boolean)
-    (:pointer g-param-spec-boolean)
+    (:pointer (:struct g-param-spec-boolean))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-2}
   @argument[name]{canonical name of the property specified}
@@ -437,7 +437,7 @@
   @argument[value]{a valid @symbol{g-value} of type @code{gboolean}}
   @argument[v-boolean]{boolean value to be set}
   Set the contents of a @code{gboolean} @symbol{g-value} to @arg{v-boolean}."
-  (value (:pointer g-value))
+  (value (:pointer (:struct g-value)))
   (v-boolean :boolean))
 
 (export 'g-value-set-boolean)
@@ -452,7 +452,7 @@
   @argument[value]{a valid @symbol{g-value} of type @code{gboolean}}
   @return{Boolean contents of @arg{value}.}
   @short{Get the contents of a @code{gboolean} @symbol{g-value}.}"
-  (value (:pointer g-value)))
+  (value (:pointer (:struct g-value))))
 
 (export 'g-value-get-boolean)
 
@@ -516,7 +516,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-param-spec-char
-  (:parent-instance g-param-spec)
+  (:parent-instance (:pointer (:struct g-param-spec)))
   (:minimum :int8)
   (:maximum :int8)
   (:default-value :int8))
@@ -531,7 +531,7 @@
   @end{short}
   @begin{pre}
 (defcstruct g-param-spec-char
-  (:parent-instance g-param-spec)
+  (:parent-instance (:pointer (:struct g-param-spec)))
   (:minimum :int8)
   (:maximum :int8)
   (:default-value :int8))
@@ -549,9 +549,10 @@
 ;;; g_param_spec_char ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_param_spec_char" g-param-spec-char) (:pointer g-param-spec-char)
+(defcfun ("g_param_spec_char" g-param-spec-char)
+    (:pointer (:struct g-param-spec-char))
  #+cl-cffi-gtk-documentation
- "@version{2013-4-2}
+ "@version{2013-7-14}
   @argument[name]{canonical name of the property specified}
   @argument[nick]{nick name for the property specified}
   @argument[blurb]{description of the property specified}
@@ -589,7 +590,7 @@
   @begin{short}
     Set the contents of a @code{gchar} @symbol{g-value} to @arg{v-char}.
   @end{short}"
-  (value (:pointer g-value))
+  (value (:pointer (:struct g-value)))
   (v-char :char))
 
 (export 'g-value-set-char)
@@ -612,7 +613,7 @@
     unsigned, such as ARM and PowerPC. See @fun{g-value-get-schar}.
 
     @short{Get the contents of a @code{gchar} @symbol{g-value}.}"
-  (value (:pointer g-value)))
+  (value (:pointer (:struct g-value))))
 
 (export 'g-value-get-char)
 
@@ -628,7 +629,7 @@
   @short{Get the contents of a @code{gchar} @symbol{g-value}.}
 
   Since 2.32"
-  (value (:pointer g-value)))
+  (value (:pointer (:struct g-value))))
 
 (export 'g-value-get-schar)
 
@@ -644,7 +645,7 @@
   @short{Set the contents of a @code{gchar} @symbol{g-value} to @arg{v-char}.}
 
   Since 2.32"
-  (value (:pointer g-value))
+  (value (:pointer (:struct g-value)))
   (v-char :int8))
 
 (export 'g-value-set-schar)
@@ -694,18 +695,22 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_PARAM_UCHAR
-;;;
-;;; #define G_TYPE_PARAM_UCHAR           (g_param_spec_types[1])
-;;;
-;;; The GType of GParamSpecUChar.
 ;;; ----------------------------------------------------------------------------
+
+(defparameter g-type-param-uchar
+              (mem-aref g-param-spec-types 'g-type 1)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-7-14}
+  The @class{g-type} of @class{g-param-spec-uchar}.")
+
+(export 'g-type-param-uchar)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GParamSpecUChar
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-param-spec-uchar
-  (:parent-instance g-param-spec)
+  (:parent-instance (:pointer (:struct g-param-spec)))
   (:minimum :uint8)
   (:maximum :uint8)
   (:default-value :uint8))
@@ -713,23 +718,23 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-param-spec-uchar atdoc:*symbol-name-alias*) "CStruct"
       (gethash 'g-param-spec-uchar atdoc:*external-symbols*)
- "@version{2013-4-2}
+ "@version{2013-7-14}
   @begin{short}
     A @symbol{g-param-spec} derived structure that contains the meta data for
     unsigned character properties.
   @end{short}
   @begin{pre}
 (defcstruct g-param-spec-uchar
-  (:parent-instance g-param-spec)
+  (:parent-instance (:pointer (:struct g-param-spec)))
   (:minimum :uint8)
   (:maximum :uint8)
   (:default-value :uint8))
   @end{pre}
   @begin[code]{table}
-    @entry[:parent-instance]{private @symbol{g-param-spec} portion}
-    @entry[:minimum]{minimum value for the property specified}
-    @entry[:maximum]{maximum value for the property specified}
-    @entry[:default-value]{default value for the property specified}
+    @entry[:parent-instance]{Private @symbol{g-param-spec} portion.}
+    @entry[:minimum]{Minimum value for the property specified.}
+    @entry[:maximum]{Maximum value for the property specified.}
+    @entry[:default-value]{Fefault value for the property specified.}
   @end{table}")
 
 (export 'g-param-spec-uchar)
@@ -738,7 +743,8 @@
 ;;; g_param_spec_uchar ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_param_spec_uchar" g-param-spec-uchar) (:pointer g-param-spec-uchar)
+(defcfun ("g_param_spec_uchar" g-param-spec-uchar)
+    (:pointer (:struct g-param-spec-uchar))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-2}
   @argument[name]{canonical name of the property specified}
@@ -771,7 +777,7 @@
   @argument[value]{a valid @symbol{g-value} of type @code{guchar}}
   @argument[v-uchar]{unsigned character value to be set}
   Set the contents of a @code{guchar} @symbol{g-value} to @arg{v-uchar}."
-  (value (:pointer g-value))
+  (value (:pointer (:struct g-value)))
   (v-uchar :uchar))
 
 (export 'g-value-set-uchar)
@@ -786,7 +792,7 @@
   @argument[value]{a valid @symbol{g-value} of type @code{guchar}}
   @return{Unsigned character contents of @arg{value}.}
   Get the contents of a @code{guchar} @symol{g-value}."
-  (value (:pointer g-value)))
+  (value (:pointer (:struct g-value))))
 
 (export 'g-value-get-uchar)
 
@@ -841,12 +847,20 @@
 ;;; The GType of GParamSpecInt.
 ;;; ----------------------------------------------------------------------------
 
+(defparameter g-type-param-int
+              (mem-aref g-param-spec-types 'g-type 3)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-7-14}
+  The @class{g-type} of @class{g-param-spec-int}.")
+
+(export 'g-type-param-int)
+
 ;;; ----------------------------------------------------------------------------
 ;;; struct GParamSpecInt
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-param-spec-int
-  (:parent-instance g-param-spec)
+  (:parent-instance (:pointer (:struct g-param-spec)))
   (:minimum :int)
   (:maximum :int)
   (:default-value :int))
@@ -861,7 +875,7 @@
   @end{short}
   @begin{pre}
 (defcstruct g-param-spec-int
-  (:parent-instance g-param-spec)
+  (:parent-instance (:pointer (:struct g-param-spec)))
   (:minimum :int)
   (:maximum :int)
   (:default-value :int))
@@ -879,7 +893,8 @@
 ;;; g_param_spec_int ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_param_spec_int" g-param-spec-int) (:pointer g-param-spec-int)
+(defcfun ("g_param_spec_int" g-param-spec-int)
+    (:pointer (:struct g-param-spec-int))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-2}
   @argument[name]{canonical name of the property specified}
@@ -916,7 +931,7 @@
   @argument[value]{a valid @symbol{g-value} of type @code{gint}}
   @argument[v-int]{integer value to be set}
   Set the contents of a @code{gint} @symbol{g-value} to @arg{v-int}."
-  (value (:pointer g-value))
+  (value (:pointer (:struct g-value)))
   (v-int :int))
 
 (export 'g-value-set-int)
@@ -931,7 +946,7 @@
   @argument[value]{a valid @symbol{g-value} of type @code{gint}}
   @return{Integer contents of @arg{value}.}
   Get the contents of a @code{gint} @symbol{g-value}."
-  (value (:pointer g-value)))
+  (value (:pointer (:struct g-value))))
 
 (export 'g-value-get-int)
 
@@ -988,7 +1003,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-param-spec-uint
-  (:parent-instance g-param-spec)
+  (:parent-instance (:pointer (:struct g-param-spec)))
   (:minimum :uint)
   (:maximum :uint)
   (:default-value :uint))
@@ -1003,7 +1018,7 @@
   @end{short}
   @begin{pre}
 (defcstruct g-param-spec-uint
-  (:parent-instance g-param-spec)
+  (:parent-instance (:pointer (:struct g-param-spec)))
   (:minimum :uint)
   (:maximum :uint)
   (:default-value :uint))
@@ -1021,7 +1036,8 @@
 ;;; g_param_spec_uint ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_param_spec_uint" g-param-spec-uint) (:pointer g-param-spec-uint)
+(defcfun ("g_param_spec_uint" g-param-spec-uint)
+    (:pointer (:struct g-param-spec-uint))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-2}
   @argument[name]{canonical name of the property specified}
@@ -1058,7 +1074,7 @@
   @argument[value]{a valid @symbol{g-value} of type @code{guint}}
   @argument[v-uint]{unsigned integer value to be set}
   Set the contents of a @code{guint} @symbol{g-value} to @arg{v-uint}."
-  (value (:pointer g-value))
+  (value (:pointer (:struct g-value)))
   (v-uint :uint))
 
 (export 'g-value-set-uint)
@@ -1073,7 +1089,7 @@
   @argument[value]{a valid @symbol{g-value} of type @code{guint}}
   @return{Unsigned integer contents of @arg{value}.}
   Get the contents of a @code{guint} @symbol{g-value}."
-  (value (:pointer g-value)))
+  (value (:pointer (:struct g-value))))
 
 (export 'g-value-get-uint)
 
@@ -1133,7 +1149,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-param-spec-long
-  (:parent-instance g-param-spec)
+  (:parent-instance (:pointer (:struct g-param-spec)))
   (:minimum :long)
   (:maximum :long)
   (:default-value :ulong))
@@ -1148,7 +1164,7 @@
   @end{short}
   @begin{pre}
 (defcstruct g-param-spec-long
-  (:parent-instance g-param-spec)
+  (:parent-instance (:pointer (:struct g-param-spec)))
   (:minimum :long)
   (:maximum :long)
   (:default-value :ulong))
@@ -1166,7 +1182,8 @@
 ;;; g_param_spec_long ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_param_spec_long" g-param-spec-long) (:pointer g-param-spec-long)
+(defcfun ("g_param_spec_long" g-param-spec-long)
+    (:pointer (:struct g-param-spec-long))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-2}
   @argument[name]{canonical name of the property specified}
@@ -1203,7 +1220,7 @@
   @argument[value]{a valid @symbol{g-value} of type @code{glong}}
   @argument[v-long]{long integer value to be set}
   Set the contents of a @code{glong} @symbol{g-value} to @arg{v-long}."
-  (value (:pointer g-value))
+  (value (:pointer (:struct g-value)))
   (v-long :long))
 
 (export 'g-value-set-long)
@@ -1218,7 +1235,7 @@
   @argument[value]{a valid @symbol{g-value} of type @code{glong}}
   @return{Long integer contents of @arg{value}.}
   Get the contents of a @code{glong} @symbol{g-value}."
-  (g-value (:pointer g-value)))
+  (g-value (:pointer (:struct g-value))))
 
 (export 'g-value-get-long)
 
@@ -1278,7 +1295,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-param-spec-ulong
-  (:parent-instance g-param-spec)
+  (:parent-instance (:pointer (:struct g-param-spec)))
   (:minimum :ulong)
   (:maximum :ulong)
   (:default-value :ulong))
@@ -1293,7 +1310,7 @@
   @end{short}
   @begin{pre}
 (defcstruct g-param-spec-ulong
-  (:parent-instance g-param-spec)
+  (:parent-instance (:pointer (:struct g-param-spec)))
   (:minimum :ulong)
   (:maximum :ulong)
   (:default-value :ulong))
@@ -1311,7 +1328,8 @@
 ;;; g_param_spec_ulong ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_param_spec_ulong" g-param-spec-ulong) (:pointer g-param-spec-ulong)
+(defcfun ("g_param_spec_ulong" g-param-spec-ulong)
+    (:pointer (:struct g-param-spec-ulong))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-2}
   @argument[name]{canonical name of the property specified}
@@ -1348,7 +1366,7 @@
   @argument[value]{a valid @symbol{g-value} of type @code{gulong}}
   @argument[v-ulong]{unsigned long integer value to be set}
   Set the contents of a @code{gulong} @symbol{g-value} to @arg{v-ulong}."
-  (value (:pointer g-value))
+  (value (:pointer (:struct g-value)))
   (v-ulong :ulong))
 
 (export 'g-value-set-ulong)
@@ -1363,7 +1381,7 @@
   @argument[value]{a valid @symbol{g-value} of type @code{gulong}}
   @return{Unsigned long integer contents of @arg{value}.}
   Get the contents of a @code{gulong} @symbol{g-value}."
-  (value (:pointer g-value)))
+  (value (:pointer (:struct g-value))))
 
 (export 'g-value-get-ulong)
 
@@ -1423,7 +1441,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-param-spec-int64
-  (:parent-instance g-param-spec)
+  (:parent-instance (:pointer (:struct g-param-spec)))
   (:minimum :int64)
   (:maximum :int64)
   (:default-value :int64))
@@ -1438,7 +1456,7 @@
   @end{short}
   @begin{pre}
 (defcstruct g-param-spec-int64
-  (:parent-instance g-param-spec)
+  (:parent-instance (:pointer (:struct g-param-spec)))
   (:minimum :int64)
   (:maximum :int64)
   (:default-value :int64))
@@ -1456,7 +1474,8 @@
 ;;; g_param_spec_int64 ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_param_spec_int64" g-param-spec-int64) (:pointer g-param-spec-int64)
+(defcfun ("g_param_spec_int64" g-param-spec-int64)
+    (:pointer (:struct g-param-spec-int64))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-2}
   @argument[name]{canonical name of the property specified}
@@ -1493,7 +1512,7 @@
   @argument[value]{a valid @symbol{g-value} of type @code{gint64}}
   @argument[v-int64]{64bit integer value to be set}
   Set the contents of a @code{gint64} @symbol{g-value} to @arg{v-int64}."
-  (value (:pointer g-value))
+  (value (:pointer (:struct g-value)))
   (v-int64 :int64))
 
 (export 'g-value-set-int64)
@@ -1508,7 +1527,7 @@
   @argument[value]{a valid @symbol{g-value} of type @code{gint64}}
   @return{64bit integer contents of @arg{value}.}
   Get the contents of a @code{gint64} @symbol{g-value}."
-  (value (:pointer g-value)))
+  (value (:pointer (:struct g-value))))
 
 (export 'g-value-get-int64)
 
@@ -1568,7 +1587,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-param-spec-uint64
-  (:parent-instance g-param-spec)
+  (:parent-instance (:pointer (:struct g-param-spec)))
   (:minimum :uint64)
   (:maximum :uint64)
   (:default-value :uint64))
@@ -1583,7 +1602,7 @@
   @end{short}
   @begin{pre}
 (defcstruct g-param-spec-uint64
-  (:parent-instance g-param-spec)
+  (:parent-instance (:pointer (:struct g-param-spec)))
   (:minimum :uint64)
   (:maximum :uint64)
   (:default-value :uint64))
@@ -1602,7 +1621,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_param_spec_uint64" g-param-spec-uint64)
-    (:pointer g-param-spec-uint64)
+    (:pointer (:struct g-param-spec-uint64))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-2}
   @argument[name]{canonical name of the property specified}
@@ -1639,7 +1658,7 @@
   @argument[value]{a valid @symbol{g-value} of type @code{guint64}}
   @argument[v-uint64]{unsigned 64bit integer value to be set}
   Set the contents of a @code{guint64} @symbol{g-value} to @arg{v-uint64}."
-  (value (:pointer g-value))
+  (value (:pointer (:struct g-value)))
   (v-uint64 :uint64))
 
 (export 'g-value-set-uint64)
@@ -1654,7 +1673,7 @@
   @argument[value]{a valid @symbol{g-value} of type @code{guint64}}
   @return{Unsigned 64bit integer contents of @arg{value}.}
   Get the contents of a @code{guint64} @symbol{g-value}."
-  (g-value (:pointer g-value)))
+  (g-value (:pointer (:struct g-value))))
 
 (export 'g-value-get-uint64)
 
@@ -1714,7 +1733,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-param-spec-float
-  (:parent-instance g-param-spec)
+  (:parent-instance (:pointer (:struct g-param-spec)))
   (:minimum :float)
   (:maximum :float)
   (:default-value :float)
@@ -1730,7 +1749,7 @@
   @end{short}
   @begin{pre}
 (defcstruct g-param-spec-float
-  (:parent-instance g-param-spec)
+  (:parent-instance (:pointer (:struct g-param-spec)))
   (:minimum :float)
   (:maximum :float)
   (:default-value :float)
@@ -1751,7 +1770,8 @@
 ;;; g_param_spec_float ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_param_spec_float" g-param-spec-float) (:pointer g-param-spec-float)
+(defcfun ("g_param_spec_float" g-param-spec-float)
+    (:pointer (:struct g-param-spec-float))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-2}
   @argument[name]{canonical name of the property specified}
@@ -1788,7 +1808,7 @@
   @argument[value]{a valid @symbol{g-value} of type @code{gfloat}}
   @argument[v-float]{float value to be set}
   Set the contents of a @code{gfloat} @symbol{g-value} to @arg{v-float}."
-  (value (:pointer g-value))
+  (value (:pointer (:struct g-value)))
   (v-float :float))
 
 (export 'g-value-set-float)
@@ -1803,7 +1823,7 @@
   @argument[value]{a valid @symbol{g-value} of type @code{gfloat}}
   @return{Float contents of @arg{value}.}
   Get the contents of a @code{gfloat} @symbol{g-value}."
-  (g-value (:pointer g-value)))
+  (g-value (:pointer (:struct g-value))))
 
 (export 'g-value-get-float)
 
@@ -1863,7 +1883,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-param-spec-double
-  (:parent-instance g-param-spec)
+  (:parent-instance (:pointer (:struct g-param-spec)))
   (:minimum :double)
   (:maximum :double)
   (:default-value :double)
@@ -1879,7 +1899,7 @@
   @end{short}
   @begin{pre}
 (defcstruct g-param-spec-double
-  (:parent-instance g-param-spec)
+  (:parent-instance (:pointer (:struct g-param-spec)))
   (:minimum :double)
   (:maximum :double)
   (:default-value :double)
@@ -1901,7 +1921,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_param_spec_double" g-param-spec-double)
-    (:pointer g-param-spec-double)
+    (:pointer (:struct g-param-spec-double))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-2}
   @argument[name]{canonical name of the property specified}
@@ -1938,7 +1958,7 @@
   @argument[value]{a valid @symbol{g-value} of type @code{gdouble}}
   @argument[v-double]{double value to be set}
   Set the contents of a @code{gdouble} to @arg{v-double}."
-  (value (:pointer g-value))
+  (value (:pointer (:struct g-value)))
   (v-double :double))
 
 (export 'g-value-set-double)
@@ -1953,7 +1973,7 @@
   @argument[value]{a valid @symbol{g-value} of type @code{gdouble}}
   @return{Double contents of @arg{value}.}
   Get the contents of a @code{gdouble} @symbol{g-value}."
-  (value (:pointer g-value)))
+  (value (:pointer (:struct g-value))))
 
 (export 'g-value-get-double)
 
@@ -2014,8 +2034,8 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-param-spec-enum
-  (:parent-instance g-param-spec)
-  (:enum-class (:pointer g-enum-class))
+  (:parent-instance (:pointer (:struct g-param-spec)))
+  (:enum-class (:pointer (:struct g-enum-class)))
   (:default-value :int))
 
 #+cl-cffi-gtk-documentation
@@ -2028,7 +2048,7 @@
   @end{short}
   @begin{pre}
 (defcstruct g-param-spec-enum
-  (:parent-instance g-param-spec)
+  (:parent-instance (:pointer (:struct g-param-spec)))
   (:enum-class (:pointer g-enum-class))
   (:default-value :int))
   @end{pre}
@@ -2044,7 +2064,8 @@
 ;;; g_param_spec_enum ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_param_spec_enum" g-param-spec-enum) (:pointer g-param-spec-enum)
+(defcfun ("g_param_spec_enum" g-param-spec-enum)
+    (:pointer (:struct g-param-spec-enum))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-2}
   @argument[name]{canonical name of the property specified}
@@ -2080,7 +2101,7 @@
     @code{GEnum}}
   @argument[v-enum]{enum value to be set}
   Set the contents of a @code{GEnum} @symbol{g-value} to @arg{v-enum}."
-  (value (:pointer g-value))
+  (value (:pointer (:struct g-value)))
   (v-enum :int))
 
 (export 'g-value-set-enum)
@@ -2096,7 +2117,7 @@
     @code{GEnum}}
   @return{Enum contents of @arg{value}.}
   Get the contents of a @code{GEnum} @symbol{g-value}."
-  (value (:pointer g-value)))
+  (value (:pointer (:struct g-value))))
 
 (export 'g-value-get-enum)
 
@@ -2157,8 +2178,8 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-param-spec-flags
-  (:parent-instance g-param-spec)
-  (:flags-class (:pointer g-flags-class))
+  (:parent-instance (:pointer (:struct g-param-spec)))
+  (:flags-class (:pointer (:struct g-flags-class)))
   (:default-value :uint))
 
 #+cl-cffi-gtk-documentation
@@ -2171,7 +2192,7 @@
   @end{short}
   @begin{pre}
 (defcstruct g-param-spec-flags
-  (:parent-instance g-param-spec)
+  (:parent-instance (:pointer (:struct g-param-spec)))
   (:flags-class (:pointer g-flags-class))
   (:default-value :uint))
   @end{pre}
@@ -2187,7 +2208,8 @@
 ;;; g_param_spec_flags ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_param_spec_flags" g-param-spec-flags) (:pointer g-param-spec-flags)
+(defcfun ("g_param_spec_flags" g-param-spec-flags)
+    (:pointer (:struct g-param-spec-flags))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-2}
   @argument[name]{canonical name of the property specified}
@@ -2223,7 +2245,7 @@
     @code{GFlags}}
   @argument[v-flags]{flags value to be set}
   Set the contents of a @code{GFlags} @symbol{g-value} to @arg{v-flags}."
-  (value (:pointer g-value))
+  (value (:pointer (:struct g-value)))
   (v-flags :int))
 
 (export 'g-value-set-flags)
@@ -2239,7 +2261,7 @@
     @code{GFlags}}
   @return{Flags contents of @arg{value}.}
   Get the contents of a @code{GFlags} @symbol{g-value}."
-  (value (:pointer g-value)))
+  (value (:pointer (:struct g-value))))
 
 (export 'g-value-get-flags)
 
@@ -2299,7 +2321,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-param-spec-string
-  (:parent-instance g-param-spec)
+  (:parent-instance (:pointer (:struct g-param-spec)))
   (:default-value (:string :free-to-foreign nil :free-from-foreign nil))
   (:cset-first (:string :free-to-foreign nil :free-from-foreign nil))
   (:cset-nth (:string :free-to-foreign nil :free-from-foreign nil))
@@ -2319,7 +2341,7 @@
   @end{short}
   @begin{pre}
 (defcstruct g-param-spec-string
-  (:parent-instance g-param-spec)
+  (:parent-instance (:pointer (:struct g-param-spec)))
   (:default-value (:string :free-to-foreign nil :free-from-foreign nil))
   (:cset-first (:string :free-to-foreign nil :free-from-foreign nil))
   (:cset-nth (:string :free-to-foreign nil :free-from-foreign nil))
@@ -2353,7 +2375,8 @@
 ;;; g_param_spec_string ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun g-param-spec-string (:pointer g-param-spec-string)
+(defcfun ("g_param_spec_string" g-param-spec-string)
+    (:pointer (:struct g-param-spec-string))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-3}
   @argument[name]{canonical name of the property specified}
@@ -2386,7 +2409,7 @@
   @argument[v-string]{caller-owned string to be duplicated for the
     @symbol{g-value}}
   Set the contents of a @code{gstring} @symbol{g-value} to @arg{v-string}."
-  (value (:pointer g-value))
+  (value (:pointer (:struct g-value)))
   (v-string :string))
 
 (export 'g-value-set-string)
@@ -2452,7 +2475,7 @@
   @argument[value]{a valid @symbol{g-value} of type @code{gstring}}
   @return{String content of @arg{value}.}
   Get the contents of a @code{gstring} @symbol{g-value}."
-  (value (:pointer g-value)))
+  (value (:pointer (:struct g-value))))
 
 (export 'g-value-get-string)
 
@@ -2527,7 +2550,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-param-spec-param
-  (:parent-instance g-param-spec))
+  (:parent-instance (:pointer (:struct g-param-spec))))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-param-spec-param atdoc:*symbol-name-alias*) "CStruct"
@@ -2539,7 +2562,7 @@
   @end{short}
   @begin{pre}
 (defcstruct g-param-spec-param
-  (:parent-instance g-param-spec))
+  (:parent-instance (:pointer (:struct g-param-spec))))
   @end{pre}
   @begin[code]{table}
     @entry[:parent-instance]{private @symbol{g-param-spec} portion}
@@ -2551,7 +2574,8 @@
 ;;; g_param_spec_param ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_param_spec_param" g-param-spec-param) (:pointer g-param-spec-param)
+(defcfun ("g_param_spec_param" g-param-spec-param)
+    (:pointer (:struct g-param-spec-param))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-3}
   @argument[name]{canonical name of the property specified}
@@ -2584,8 +2608,8 @@
   @argument[value]{a valid @symbol{g-value} of type @code{GParam}}
   @argument[param]{the @symbol{g-param-spec} to be set}
   Set the contents of a @code{GParam} @symbol{g-value} to @arg{param}."
-  (value (:pointer g-value))
-  (param (:pointer g-param-spec)))
+  (value (:pointer (:struct g-value)))
+  (param (:pointer (:struct g-param-spec))))
 
 (export 'g-value-set-param)
 
@@ -2630,14 +2654,15 @@
 ;;; g_value_get_param ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_value_get_param" g-value-get-param) (:pointer g-param-spec)
+(defcfun ("g_value_get_param" g-value-get-param)
+    (:pointer (:struct g-param-spec))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-3}
   @argument[value]{a valid @symbol{g-value} whose type is derived from
     @code{GParam}}
   @return{@symbol{g-param-spec} content of @arg{value}.}
   Get the contents of a @code{GParam} @symbol{g-value}."
-  (value (:pointer g-value)))
+  (value (:pointer (:struct g-value))))
 
 (export 'g-value-get-param)
 
@@ -2713,7 +2738,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-param-spec-boxed
-  (:parent-instance g-param-spec))
+  (:parent-instance (:pointer (:struct g-param-spec))))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-param-spec-boxed atdoc:*symbol-name-alias*) "CStruct"
@@ -2725,7 +2750,7 @@
   @end{short}
   @begin{pre}
 (defcstruct g-param-spec-boxed
-  (:parent-instance g-param-spec))
+  (:parent-instance (:pointer (:struct g-param-spec))))
   @end{pre}
   @begin[code]{table}
     @entry[:parent-instance]{private @symbol{g-param-spec} portion}
@@ -2737,7 +2762,8 @@
 ;;; g_param_spec_boxed ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_param_spec_boxed" g-param-spec-boxed) (:pointer g-param-spec-boxed)
+(defcfun ("g_param_spec_boxed" g-param-spec-boxed)
+    (:pointer (:struct g-param-spec-boxed))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-3}
   @argument[name]{canonical name of the property specified}
@@ -2771,7 +2797,7 @@
   @argument[v-boxed]{boxed value to be set}
   Set the contents of a @code{GBoxed} derived @symbol{g-value} to
   @arg{v-boxed}."
-  (value (:pointer g-value))
+  (value (:pointer (:struct g-value)))
   (v-boxed :pointer))
 
 (export 'g-value-set-boxed)
@@ -2808,7 +2834,7 @@
   @end{short}
 
   Since 2.4"
-  (value (:pointer g-value))
+  (value (:pointer (:struct g-value)))
   (v-boxed :pointer))
 
 (export 'g-value-take-boxed)
@@ -2842,7 +2868,7 @@
   @argument[value]{a valid @symbol{g-value} of @code{GBoxed} derived type}
   @return{Boxed contents of @arg{value}.}
   Get the contents of a @code{GBoxed} derived @symbol{g-value}."
-  (value (:pointer g-value)))
+  (value (:pointer (:struct g-value))))
 
 (export 'g-value-get-boxed)
 
@@ -2918,7 +2944,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-param-spec-pointer
-  (:parent-instance g-param-spec))
+  (:parent-instance (:pointer (:struct g-param-spec))))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-param-spec-pointer atdoc:*symbol-name-alias*) "CStruct"
@@ -2930,7 +2956,7 @@
   @end{short}
   @begin{pre}
 (defcstruct g-param-spec-pointer
-  (:parent-instance g-param-spec))
+  (:parent-instance (:pointer (:struct g-param-spec))))
   @end{pre}
   @begin[code]{table}
     @entry[:parent-instance]{private @symbol{g-param-spec} portion}
@@ -2943,7 +2969,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_param_spec_pointer" g-param-spec-pointer)
-    (:pointer g-param-spec-pointer)
+    (:pointer (:struct g-param-spec-pointer))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-3}
   @argument[name]{canonical name of the property specified}
@@ -2974,7 +3000,7 @@
   @argument[value]{a valid @symbol{g-value} of @code{gpointer}}
   @argument[v-pointer]{pointer value to be set}
   Set the contents of a pointer @symbol{g-value} to @arg{v-pointer}."
-  (value (:pointer g-value))
+  (value (:pointer (:struct g-value)))
   (v-pointer :pointer))
 
 (export 'g-value-set-pointer)
@@ -2989,7 +3015,7 @@
   @argument[value]{a valid @symbol{g-value} of @code{gpointer}}
   @return{Pointer contents of @arg{value}.}
   Get the contents of a pointer @symbol{g-value}."
-  (value (:pointer g-value)))
+  (value (:pointer (:struct g-value))))
 
 (export 'g-value-get-pointer)
 
@@ -3050,7 +3076,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-param-spec-object
-  (:parent-instance g-param-spec))
+  (:parent-instance (:pointer (:struct g-param-spec))))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-param-spec-object atdoc:*symbol-name-alias*) "CStruct"
@@ -3062,7 +3088,7 @@
   @end{short}
   @begin{pre}
 (defcstruct g-param-spec-object
-  (:parent-instance g-param-spec))
+  (:parent-instance (:pointer (:struct g-param-spec))))
   @end{pre}
   @begin[code]{table}
     @entry[:parent-instance]{private @symbol{g-param-spec} portion}
@@ -3075,7 +3101,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_param_spec_object" g-param-spec-object)
-    (:pointer g-param-spec-object)
+    (:pointer (:struct g-param-spec-object))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-3}
   @argument[name]{canonical name of the property specified}
@@ -3103,7 +3129,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_value_set_object" %g-value-set-object) :void
-  (value (:pointer g-value))
+  (value (:pointer (:struct g-value)))
   (v-object :pointer))
 
 (defun g-value-set-object (value v-object)
@@ -3175,7 +3201,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_value_get_object" %g-value-get-object) :pointer
-  (value (:pointer g-value)))
+  (value (:pointer (:struct g-value))))
 
 ;; TODO: %g-value-get-object returns a pointer. The pointer is translated
 ;;       with get-object-for-pointer to a Lisp object. The transformation
@@ -3352,8 +3378,8 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-param-spec-value-array
-  (:parent-instance g-param-spec)
-  (:element-spec (:pointer g-param-spec))
+  (:parent-instance (:pointer (:struct g-param-spec)))
+  (:element-spec (:pointer (:struct g-param-spec)))
   (:fixed-n-elements :uint))
 
 #+cl-cffi-gtk-documentation
@@ -3366,7 +3392,7 @@
   @end{short}
   @begin{pre}
 (defcstruct g-param-spec-value-array
-  (:parent-instance g-param-spec)
+  (:parent-instance (:pointer (:struct g-param-spec)))
   (:element-spec (:pointer g-param-spec))
   (:fixed-n-elements :uint))
   @end{pre}
@@ -3385,7 +3411,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_param_spec_value_array" g-param-spec-value-array)
-    (:pointer g-param-spec-value-array)
+    (:pointer (:struct g-param-spec-value-array))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-3}
   @argument[name]{canonical name of the property specified}
@@ -3406,7 +3432,7 @@
   (name :string)
   (nick :string)
   (blurb :string)
-  (element-spec (:pointer g-param-spec))
+  (element-spec (:pointer (:struct g-param-spec)))
   (flags g-param-flags))
 
 (export 'g-param-spec-value-array)
@@ -3558,7 +3584,7 @@
 ;; TODO: The name is changed to g-param-spec-g-type !?
 
 (defcstruct g-param-spec-g-type
-  (:parent-instance g-param-spec)
+  (:parent-instance (:pointer (:struct g-param-spec)))
   (:is-a-type g-type))
 
 #+cl-cffi-gtk-documentation
@@ -3571,7 +3597,7 @@
   @end{short}
   @begin{pre}
 (defcstruct g-param-spec-g-type
-  (:parent-instance g-param-spec)
+  (:parent-instance (:pointer (:struct g-param-spec)))
   (:is-a-type g-type))
   @end{pre}
   @begin[code]{table}
@@ -3589,7 +3615,7 @@
 ;; TODO: The name is changed to g-param-spec-g-type !?
 
 (defcfun ("g_param_spec_gtype" g-param-spec-g-type)
-    (:pointer g-param-spec-g-type)
+    (:pointer (:struct g-param-spec-g-type))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-3}
   @argument[name]{canonical name of the property specified}
@@ -3629,7 +3655,7 @@
   @short{Get the contents of a @code{G_TYPE_GTYPE} @symbol{g-value}.}
 
   Since 2.12"
-  (g-value (:pointer g-value)))
+  (g-value (:pointer (:struct g-value))))
 
 (export 'g-value-get-g-type)
 
@@ -3649,7 +3675,7 @@
   @end{short}
 
   Since 2.12"
-  (value (:pointer g-value))
+  (value (:pointer (:struct g-value)))
   (v-gtype g-type))
 
 (export 'g-value-set-g-type)
@@ -3781,7 +3807,8 @@
 ;;; g_value_get_variant ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_value_get_variant" g-value-get-variant) (:pointer g-variant)
+(defcfun ("g_value_get_variant" g-value-get-variant)
+    (:pointer (:struct g-variant))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-3}
   @argument[value]{a valid @symbol{g-value} of type @code{GVariant}}
@@ -3789,7 +3816,7 @@
   @short{Get the contents of a variant @symbol{g-value}.}
 
   Since 2.26"
-  (value (:pointer g-value)))
+  (value (:pointer (:struct g-value))))
 
 (export 'g-value-get-variant)
 
@@ -3825,8 +3852,8 @@
   @end{short}
 
   Since 2.26"
-  (value (:pointer g-value))
-  (variant (:pointer g-variant)))
+  (value (:pointer (:struct g-value)))
+  (variant (:pointer (:struct g-variant))))
 
 (export 'g-value-set-variant)
 

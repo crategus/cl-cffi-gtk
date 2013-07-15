@@ -35,7 +35,7 @@
       (g-type-class-unref class))))
 
 (defun container-call-get-property (container child property-name type)
-  (with-foreign-object (gvalue 'g-value)
+  (with-foreign-object (gvalue '(:struct g-value))
     (g-value-zero gvalue)
     (g-value-init gvalue (gtype type))
     (%gtk-container-child-get-property container child property-name gvalue)
@@ -43,7 +43,7 @@
       (g-value-unset gvalue))))
 
 (defun container-call-set-property (container child property-name new-value type)
-  (with-foreign-object (gvalue 'g-value)
+  (with-foreign-object (gvalue '(:struct g-value))
     (set-g-value gvalue new-value (gtype type) :zero-g-value t)
     (%gtk-container-child-set-property container child property-name gvalue)
     (g-value-unset gvalue)

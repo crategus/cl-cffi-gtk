@@ -159,7 +159,7 @@
 ;;; cairo_create ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("cairo_create" cairo-create) cairo-t
+(defcfun ("cairo_create" cairo-create) (:pointer (:struct cairo-t))
  #+cl-cffi-gtk-documentation
  "@version{2012-12-21}
   @argument[target]{target surface for the context}
@@ -187,7 +187,7 @@
   reference to it.
 
   Since 1.0"
-  (target cairo-surface-t))
+  (target (:pointer (:struct cairo-surface-t))))
 
 (export 'cairo-create)
 
@@ -195,7 +195,7 @@
 ;;; cairo_reference ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("cairo_reference" cairo-reference) cairo-t
+(defcfun ("cairo_reference" cairo-reference) (:pointer (:struct cairo-t))
  #+cl-cffi-gtk-documentation
  "@version{2013-3-2}
   @argument[cr]{a cairo_t}
@@ -209,7 +209,7 @@
   cairo_get_reference_count().
 
   Since 1.0"
-  (cr cairo-t))
+  (cr (:pointer (:struct cairo-t))))
 
 (export 'cairo-reference)
 
@@ -228,7 +228,7 @@
   @end{short}
 
   Since 1.0"
-  (cr cairo-t))
+  (cr (:pointer (:struct cairo-t))))
 
 (export 'cairo-destroy)
 
@@ -478,7 +478,7 @@
   @code{(cairo-set-source-rgb cr 0.0 0.0 0.0)}).
 
  Since 1.0"
-  (cr cairo-t)
+  (cr (:pointer (:struct cairo-t)))
   (red :double)
   (green :double)
   (blue :double))
@@ -578,8 +578,8 @@
   @code{cairo_pattern_set_extend()}).
 
   Since 1.0"
-  (cr cairo-t)
-  (surface cairo-surface-t)
+  (cr (:pointer (:struct cairo-t)))
+  (surface (:pointer (:struct cairo-surface-t)))
   (x :double)
   (y :double))
 
@@ -1002,7 +1002,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("cairo_set_line_width" %cairo-set-line-width) :void
-  (cr cairo-t)
+  (cr (:pointer (:struct cairo-t)))
   (width :double))
 
 (defun cairo-set-line-width (cr width)
@@ -1577,7 +1577,7 @@
   @end{short}
 
   Since 1.0"
-  (cr cairo-t))
+  (cr (:pointer (:struct cairo-t))))
 
 (export 'cairo-fill)
 
@@ -1727,7 +1727,7 @@
   @end{short}
 
   Since 1.0"
-  (cr cairo-t))
+  (cr (:pointer (:struct cairo-t))))
 
 (export 'cairo-paint)
 
@@ -1789,7 +1789,7 @@
   drawn in the case of either degenerate segments or sub-paths.
 
   Since 1.0"
-  (cr cairo-t))
+  (cr (:pointer (:struct cairo-t))))
 
 (export 'cairo-stroke)
 

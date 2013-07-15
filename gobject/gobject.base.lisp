@@ -155,7 +155,7 @@
 
 (defcstruct g-parameter
   (:name (:string :free-from-foreign nil :free-to-foreign nil))
-  (:value g-value))
+  (:value (:struct g-value))) ; A struct, not a pointer.
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-parameter atdoc:*symbol-name-alias*)
@@ -190,7 +190,7 @@
 ;; It is defined to access the property ref-count for debugging the code.
 
 (defcstruct %g-object
-  (:type-instance g-type-instance)
+  (:type-instance (:pointer (:struct g-type-instance)))
   (:ref-count :uint)
   (:data :pointer))
 
@@ -202,7 +202,7 @@
   (foreign-slot-value (if (pointerp pointer)
                           pointer
                           (pointer pointer))
-                      '%g-object :ref-count))
+                      '(:struct %g-object) :ref-count))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -711,7 +711,7 @@
                     (class-property-type object-type name))
                   args-names)))
   (let ((args-count (length args-names)))
-    (with-foreign-object (parameters 'g-parameter args-count)
+    (with-foreign-object (parameters '(:struct g-parameter) args-count)
       (loop
          for i from 0 below args-count
          for arg-name in args-names
@@ -720,21 +720,21 @@
          for arg-g-type = (if arg-type
                               arg-type
                               (class-property-type object-type arg-name))
-         for parameter = (mem-aref parameters 'g-parameter i)
-         do (setf (foreign-slot-value parameter 'g-parameter :name) arg-name)
-         do (set-g-value (foreign-slot-value parameter 'g-parameter :value)
+         for parameter = (mem-aptr parameters '(:struct g-parameter) i)
+         do (setf (foreign-slot-value parameter '(:struct g-parameter) :name) arg-name)
+         do (set-g-value (foreign-slot-pointer parameter '(:struct g-parameter) :value)
                          arg-value arg-g-type :zero-g-value t))
       (unwind-protect
            (g-object-newv object-type args-count parameters)
         (loop
            for i from 0 below args-count
-           for parameter = (mem-aref parameters 'g-parameter i)
+           for parameter = (mem-aptr parameters '(:struct g-parameter) i)
            do (foreign-string-free (mem-ref (foreign-slot-pointer parameter
-                                                                  'g-parameter
+                                                                  '(:struct g-parameter)
                                                                   :name)
                                             :pointer))
            do (g-value-unset (foreign-slot-pointer parameter
-                                                   'g-parameter
+                                                   '(:struct g-parameter)
                                                    :value)))))))
 
 ;;; ----------------------------------------------------------------------------
@@ -742,7 +742,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-object-class
-  (:type-class g-type-class)
+  (:type-class (:pointer (:struct g-type-class)))
   (:construct-properties :pointer)
   (:constructor :pointer)
   (:set-property :pointer)
@@ -863,8 +863,8 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-object-construct-param
-  (:pspec (:pointer g-param-spec))
-  (:value (:pointer g-value)))
+  (:pspec (:pointer (:struct g-param-spec)))
+  (:value (:pointer (:struct g-value))))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-object-construct-param atdoc:*symbol-name-alias*) "CStruct"
@@ -1150,9 +1150,9 @@
   Note that it is possible to redefine a property in a derived class, by
   installing a property with the same name. This can be useful at times, e. g.
   to change the range of allowed values or the default value."
-  (class (:pointer g-object-class))
+  (class (:pointer (:struct g-object-class)))
   (property-id :uint)
-  (pspec (:pointer g-param-spec)))
+  (pspec (:pointer (:struct g-param-spec))))
 
 (export 'g-object-class-install-property)
 
@@ -1235,7 +1235,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_object_class_find_property" g-object-class-find-property)
-    (:pointer g-param-spec)
+    (:pointer (:struct g-param-spec))
  #+cl-cffi-gtk-documentation
  "@version{2013-6-9}
   @argument[class]{a @symbol{g-object-class}}
@@ -1264,7 +1264,7 @@
     @end{pre}
   @end{dictionary}
   @see-symbol{g-param-spec}"
-  (class (:pointer g-object-class))
+  (class (:pointer (:struct g-object-class)))
   (property-name :string))
 
 (export 'g-object-class-find-property)
@@ -1274,8 +1274,8 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_object_class_list_properties" %g-object-class-list-properties)
-    (:pointer (:pointer g-param-spec))
-  (class (:pointer g-object-class))
+    (:pointer (:pointer (:struct g-param-spec)))
+  (class (:pointer (:struct g-object-class)))
   (n-properties (:pointer :uint)))
 
 (defun g-object-class-list-properties (type)
@@ -1341,7 +1341,7 @@
   @see-function{g-object-class-find-property}
   @see-function{g-object-class-list-properties}
   @see-function{g-param-spec-get-redirect-target}"
-  (class (:pointer g-object-class))
+  (class (:pointer (:struct g-object-class)))
   (property-id :uint)
   (name :string))
 
@@ -1378,7 +1378,7 @@
   Since 2.4
   @see-function{g-object-class-override-property}"
   (g-iface :pointer)
-  (pspec (:pointer g-param-spec)))
+  (pspec (:pointer (:struct g-param-spec))))
 
 (export 'g-object-interface-install-property)
 
@@ -1387,7 +1387,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_object_interface_find_property" g-object-interface-find-property)
-    (:pointer g-param-spec)
+    (:pointer (:struct g-param-spec))
  #+cl-cffi-gtk-documentation
  "@version{2013-6-9}
   @argument[g-iface]{any interface vtable for the interface, or the default
@@ -1417,7 +1417,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_object_interface_list_properties"
-          %g-object-interface-list-properties) (:pointer g-param-spec)
+          %g-object-interface-list-properties) (:pointer (:struct g-param-spec))
   (interface :pointer)
   (n-properties (:pointer :uint)))
 
@@ -1518,7 +1518,7 @@
   to their default values."
   (object-type g-type)
   (n-parameter :uint)
-  (parameters (:pointer g-parameter)))
+  (parameters (:pointer (:struct g-parameter))))
 
 (export 'g-object-newv)
 
@@ -2616,7 +2616,7 @@
 (defcfun ("g_object_set_property" %g-object-set-property) :void
   (object :pointer)
   (property-name :string)
-  (value (:pointer g-value)))
+  (value (:pointer (:struct g-value))))
 
 (defun set-gobject-property (object-ptr property-name new-value
                                         &optional property-type)
@@ -2631,7 +2631,7 @@
           (class-property-type (g-type-from-instance object-ptr)
                                property-name
                                :assert-writable t)))
-  (with-foreign-object (value 'g-value)
+  (with-foreign-object (value '(:struct g-value))
     (set-g-value value new-value property-type :zero-g-value t)
     (unwind-protect
       (%g-object-set-property object-ptr property-name value)
@@ -2644,7 +2644,7 @@
 (defcfun ("g_object_get_property" %g-object-get-property) :void
   (object :pointer)
   (property-name :string)
-  (value (:pointer g-value)))
+  (value (:pointer (:struct g-value))))
 
 (defun get-gobject-property (object-ptr property-name &optional property-type)
  #+cl-cffi-gtk-documentation
@@ -2667,8 +2667,7 @@
                                  property-name
                                  :assert-readable t)))
     (return-nil () (return-from get-gobject-property nil)))
-  (with-foreign-object (value 'g-value)
-    (g-value-zero value)
+  (with-foreign-object (value '(:struct g-value))
     (g-value-init value property-type)
     (%g-object-get-property object-ptr property-name value)
     (unwind-protect

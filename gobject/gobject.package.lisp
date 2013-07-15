@@ -30,8 +30,6 @@
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
 
-(declaim #+sbcl(sb-ext:muffle-conditions style-warning))
-
 (defpackage :gobject
   (:nicknames :g)
   (:use :c2cl :glib :cffi :tg :bordeaux-threads :iter :closer-mop)

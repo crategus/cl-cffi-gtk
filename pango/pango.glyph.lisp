@@ -975,7 +975,7 @@
 ;;;     pango_glyph_string_free().
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("pango_glyph_string_new" %pango-glyp-string-new) :pointer)
+(defcfun ("pango_glyph_string_new" %pango-glyph-string-new) :pointer)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_glyph_string_copy ()

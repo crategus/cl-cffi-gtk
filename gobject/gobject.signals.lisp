@@ -148,7 +148,7 @@
 ;; A lisp-closure is a specialization of g-closure for Lisp function callbacks.
 
 (defcstruct lisp-closure
-  (:parent-instance g-closure)
+  (:parent-instance (:struct g-closure)) ; A structure, not a pointer.
   (:object :pointer)
   (:function-id :int))
 
@@ -160,11 +160,11 @@
 
 (defun create-closure (object fn)
   (let ((function-id (save-handler-to-object object fn))
-        (closure (g-closure-new-simple (foreign-type-size 'lisp-closure)
+        (closure (g-closure-new-simple (foreign-type-size '(:struct lisp-closure))
                                        (null-pointer))))
-    (setf (foreign-slot-value closure 'lisp-closure :function-id)
+    (setf (foreign-slot-value closure '(:struct lisp-closure) :function-id)
           function-id
-          (foreign-slot-value closure 'lisp-closure :object)
+          (foreign-slot-value closure '(:struct lisp-closure) :object)
           (pointer object))
     (g-closure-add-finalize-notifier closure
                                      (null-pointer)
@@ -198,19 +198,19 @@
 ;; A GClosureMarshal function used when creating a signal handler
 
 (defcallback lisp-closure-marshal :void
-    ((closure (:pointer lisp-closure))
-     (return-value (:pointer g-value))
+    ((closure (:pointer (:struct lisp-closure)))
+     (return-value (:pointer (:struct g-value)))
      (count-of-args :uint)
-     (args (:pointer g-value))
+     (args (:pointer (:struct g-value)))
      (invocation-hint :pointer)
      (marshal-data :pointer))
   (declare (ignore invocation-hint marshal-data))
   (let* ((args (parse-closure-arguments count-of-args args))
          (function-id (foreign-slot-value closure
-                                          'lisp-closure
+                                          '(:struct lisp-closure)
                                           :function-id))
          (addr (pointer-address (foreign-slot-value closure
-                                                    'lisp-closure
+                                                    '(:struct lisp-closure)
                                                     :object)))
          (object (or (gethash addr *foreign-gobjects-strong*)
                      (gethash addr *foreign-gobjects-weak*)))
@@ -228,7 +228,7 @@
 (defun parse-closure-arguments (count-of-args args)
   (loop
      for i from 0 below count-of-args
-     collect (parse-g-value (mem-aref args 'g-value i))))
+     collect (parse-g-value (mem-aptr args '(:struct g-value) i))))
 
 (defun retrieve-handler-from-object (object handler-id)
   (aref (g-object-signal-handlers object) handler-id))
@@ -244,7 +244,8 @@
 ;; A finalization notifier function used when creating a signal handler
 
 (defcallback lisp-closure-finalize :void
-    ((data :pointer) (closure (:pointer lisp-closure)))
+    ((data :pointer)
+     (closure (:pointer (:struct lisp-closure))))
   (declare (ignore data))
   (finalize-lisp-closure closure))
 
@@ -254,10 +255,10 @@
 
 (defun finalize-lisp-closure (closure)
   (let* ((function-id (foreign-slot-value closure
-                                          'lisp-closure
+                                          '(:struct lisp-closure)
                                           :function-id))
          (addr (pointer-address (foreign-slot-value closure
-                                                    'lisp-closure
+                                                    '(:struct lisp-closure)
                                                     :object)))
          (object (or (gethash addr *foreign-gobjects-strong*)
                      (gethash addr *foreign-gobjects-weak*))))
@@ -825,20 +826,20 @@
 
 (defcfun ("g_signal_query" %g-signal-query) :void
   (signal-id :uint)
-  (query (:pointer %g-signal-query)))
+  (query (:pointer (:struct %g-signal-query))))
 
 (defun g-signal-query (signal-id)
-  (with-foreign-object (query '%g-signal-query)
+  (with-foreign-object (query '(:struct %g-signal-query))
     (%g-signal-query signal-id query)
     (assert (not (zerop (foreign-slot-value query
-                                            '%g-signal-query
+                                            '(:struct %g-signal-query)
                                             :signal-id))))
     (let ((param-types
            (iter (with param-types = (foreign-slot-value query
-                                                         '%g-signal-query
+                                                         '(:struct %g-signal-query)
                                                          :param-types))
                  (for i from 0 below (foreign-slot-value query
-                                                         '%g-signal-query
+                                                         '(:struct %g-signal-query)
                                                          :n-params))
                  (for param-type = (mem-aref param-types
                                              '(g-type :mangled-p t)
@@ -846,16 +847,16 @@
                  (collect param-type))))
       (make-signal-info :id signal-id
                         :name (foreign-slot-value query
-                                                  '%g-signal-query
+                                                  '(:struct %g-signal-query)
                                                   :signal-name)
                         :owner-type (foreign-slot-value query
-                                                        '%g-signal-query
+                                                        '(:struct %g-signal-query)
                                                         :owner-type)
                         :flags (foreign-slot-value query
-                                                   '%g-signal-query
+                                                   '(:struct %g-signal-query)
                                                    :signal-flags)
                         :return-type (foreign-slot-value query
-                                                         '%g-signal-query
+                                                         '(:struct %g-signal-query)
                                                          :return-type)
                         :param-types param-types))))
 
@@ -967,15 +968,15 @@
     (unless signal-info
       (error "Signal ~A not found on object ~A" signal-name object))
     (let ((params-count (length (signal-info-param-types signal-info))))
-      (with-foreign-object (params 'g-value (1+ params-count))
-        (set-g-value (mem-aref params 'g-value 0)
+      (with-foreign-object (params '(:struct g-value) (1+ params-count)) ;
+        (set-g-value (mem-aptr params '(:struct g-value) 0)              ;
                      object
                      object-type
                      :zero-g-value t)
         (iter (for i from 0 below params-count)
               (for arg in args)
               (for type in (signal-info-param-types signal-info))
-              (set-g-value (mem-aref params 'g-value (1+ i))
+              (set-g-value (mem-aptr params '(:struct g-value) (1+ i)) ;
                            arg
                            type
                            :zero-g-value t))
@@ -988,7 +989,7 @@
                               signal-name
                               (null-pointer))
               ;; Emit a signal which has a return value
-              (with-foreign-object (return-value 'g-value)
+              (with-foreign-object (return-value '(:struct g-value)) ;
                 (g-value-zero return-value)
                 (g-value-init return-value
                               (signal-info-return-type signal-info))
@@ -1001,7 +1002,7 @@
                   (parse-g-value return-value)
                   (g-value-unset return-value))))
           (iter (for i from 0 below (1+ params-count))
-                (g-value-unset (mem-aref params 'g-value i))))))))
+                (g-value-unset (mem-aptr params '(:struct g-value) i))))))))  ;
 
 (export 'g-signal-emit)
 
@@ -1058,10 +1059,10 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_signal_emitv" g-signal-emitv) :void
-  (instance-and-params (:pointer g-value))
+  (instance-and-params (:pointer (:struct g-value)))
   (signal-id :uint)
   (detail g-quark)
-  (return-value (:pointer g-value)))
+  (return-value (:pointer (:struct g-value))))
 
 (export 'g-signal-emitv)
 
@@ -1310,7 +1311,7 @@
 (defcfun ("g_signal_connect_closure" g-signal-connect-closure) :ulong
   (instance :pointer)
   (detailed-signal :string)
-  (closure (:pointer g-closure))
+  (closure (:pointer (:struct g-closure)))
   (after :boolean))
 
 (export 'g-signal-connect-closure)
@@ -1484,7 +1485,7 @@
   (mask g-signal-match-type)
   (signal-id :uint)
   (detail g-quark)
-  (closure g-closure)
+  (closure (:pointer (:struct g-closure)))
   (func :pointer)
   (data :pointer))
 

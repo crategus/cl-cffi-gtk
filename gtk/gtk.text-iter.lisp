@@ -242,7 +242,7 @@
   (dummy14 :pointer))
 
 (defun gtk-text-iter-alloc ()
-  (with-foreign-object (iter '%gtk-text-iter)
+  (with-foreign-object (iter '(:struct %gtk-text-iter)) ; Is this correct?
     (%gtk-text-iter-copy iter)))
 
 ;;; ----------------------------------------------------------------------------
@@ -1037,7 +1037,7 @@
 
 (defcfun ("gtk_text_iter_get_attributes" %gtk-text-iter-get-attributes) :boolean
   (iter (g-boxed-foreign gtk-text-iter))
-  (values gtk-text-attributes))
+  (values (:pointer (:struct gtk-text-attributes))))
 
 (defun gtk-text-iter-get-attributes (iter default-attributes)
  #+cl-cffi-gtk-documentation
@@ -1862,9 +1862,8 @@
 ;;; gtk_text_iter_set_visible_line_offset ()
 ;;; ----------------------------------------------------------------------------
 
-(declaim (inline gtk-text-iter-set-visible-line-offset))
-
-(defun gtk-text-iter-set-visible-line-offset (iter char-on-line)
+(defcfun ("gtk_text_iter_set_visible_line_offset"
+           gtk-text-iter-set-visible-line-offset) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-4-29}
   @argument[iter]{a @class{gtk-text-iter} object}
@@ -1873,7 +1872,8 @@
   visible characters, i. e. text with a tag making it invisible is not counted
   in the offset.
   @see-function{gtk-text-iter-set-line-offset}"
-  (setf (gtk-text-iter-visisble-line-offset iter) char-on-line))
+  (iter (g-boxed-foreign gtk-text-iter))
+  (char-on-line :int))
 
 (export 'gtk-text-iter-set-visible-line-offset)
 

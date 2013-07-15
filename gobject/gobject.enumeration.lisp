@@ -155,11 +155,11 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-enum-class
-  (:type-class g-type-class)
+  (:type-class (:pointer (:struct g-type-class)))
   (:minimum :int)
   (:maximum :int)
   (:n-values :uint)
-  (:values (:pointer g-enum-value)))
+  (:values (:pointer (:struct g-enum-value))))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-enum-class atdoc:*symbol-name-alias*) "CStruct"
@@ -171,7 +171,7 @@
   @end{short}
   @begin{pre}
 (defcstruct g-enum-class
-  (:type-class g-type-class)
+  (:type-class (:pointer (:struct g-type-class)))
   (:minimum :int)
   (:maximum :int)
   (:n-values :uint)
@@ -223,10 +223,10 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-flags-class
-  (:type-class g-type-class)
+  (:type-class (:pointer (:struct g-type-class)))
   (:mask :uint)
   (:n-values :uint)
-  (:values (:pointer g-flags-value)))
+  (:values (:pointer (:struct g-flags-value))))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-flags-class atdoc:*symbol-name-alias*) "CStruct"
@@ -237,7 +237,7 @@
   @end{short}
   @begin{pre}
 (defcstruct g-flags-class
-  (:type-class g-type-class)
+  (:type-class (:pointer (:struct g-type-class)))
   (:mask :uint)
   (:n-values :uint)
   (:values (:pointer g-flags-value)))
@@ -302,6 +302,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; g-enum-class-type
 ;;; ----------------------------------------------------------------------------
+
+;; TODO: The function return for any class the type.
 
 (declaim (inline g-enum-class-type))
 
@@ -626,7 +628,7 @@
   @code{my_enum_get_type()} function from a usual C enumeration definition than
   to write one yourself using @sym{g-enum-register-static}."
   (name :string)
-  (static-values (:pointer g-enum-value)))
+  (static-values (:pointer (:struct g-enum-value))))
 
 (export 'g-enum-register-static)
 
@@ -651,7 +653,7 @@
   @code{my_flags_get_type()} function from a usual C enumeration definition than
   to write one yourself using @sym{g-flags-register-static}."
   (name :string)
-  (static-values (:pointer g-flags-value)))
+  (static-values (:pointer (:struct g-flags-value))))
 
 (export 'g-flags-register-static)
 

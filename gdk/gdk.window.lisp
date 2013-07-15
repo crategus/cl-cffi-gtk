@@ -2081,7 +2081,7 @@
 
   Since 2.8"
   (window (g-object gdk-window))
-  (region cairo-region-t)
+  (region (:pointer (:struct cairo-region-t)))
   (dx :int)
   (dy :int))
 
@@ -2467,7 +2467,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_window_get_clip_region" gdk-window-get-clip-region)
-    cairo-region-t
+    (:pointer (:struct cairo-region-t))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-5}
   @argument[window]{a GdkWindow}
@@ -2545,7 +2545,7 @@
   One matching call to gdk_window_end_paint() is required for each call to
   gdk_window_begin_paint_region()."
   (window (g-object gdk-window))
-  (region cairo-region-t))
+  (region (:pointer (:struct cairo-region-t))))
 
 (export 'gdk-window-begin-paint-region)
 
@@ -2577,7 +2577,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_window_get_visible_region" gdk-window-get-visible-region)
-    cairo-region-t
+    (:pointer (:struct cairo-region-t))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-5}
   @argument[window]{a GdkWindow}
@@ -2641,7 +2641,7 @@
   gdk_window_invalidate_maybe_recurse if you need fine grained control over
   which children are invalidated."
   (window (g-object gdk-window))
-  (region cairo-region-t)
+  (region (:pointer (:struct cairo-region-t)))
   (invalidate-children :boolean))
 
 (export 'gdk-window-invalidate-region)
@@ -2678,7 +2678,7 @@
 (defcfun ("gdk_window_invalidate_maybe_recurse"
           %gdk-window-invalidate-maybe-recurse) :void
   (window (g-object gdk-window))
-  (region cairo-region-t)
+  (region (:pointer (:struct cairo-region-t)))
   (child-func :pointer)
   (user-data :pointer))
 
@@ -2719,7 +2719,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_window_get_update_area" gdk-window-get-update-area)
-    cairo-region-t
+    (:pointer (:struct cairo-region-t))
  #+cl-cffi-gtk-documentation
  "@argument[window]{a GdkWindow}
   @return{the update area for window}
@@ -3160,7 +3160,7 @@
 
   This function works on both toplevel and child windows."
   (window (g-object gdk-window))
-  (region cairo-region-t)
+  (region (:pointer (:struct cairo-region-t)))
   (offset-x :int)
   (offset-y :int))
 
@@ -3231,7 +3231,7 @@
 
   Since 2.10"
   (window (g-object gdk-window))
-  (shape-region cairo-region-t)
+  (shape-region (:pointer (:struct cairo-region-t)))
   (offset-x :int)
   (offset-y :int))
 
@@ -4667,7 +4667,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_offscreen_window_get_surface" gdk-offscreen-window-get-surface)
-    cairo-surface-t
+    (:pointer (:struct cairo-surface-t))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-5}
   @argument[window]{a GdkWindow}

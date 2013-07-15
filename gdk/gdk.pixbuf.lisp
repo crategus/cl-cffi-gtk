@@ -122,7 +122,7 @@
   This function will create an RGB pixbuf with 8 bits per channel. The pixbuf
   will contain an alpha channel if the surface contains one.
   @see-function{gdk-pixbuf-get-from-window}"
-  (surface cairo-surface-t)
+  (surface (:pointer (:struct cairo-surface-t)))
   (src-x :int)
   (src-y :int)
   (width :int)

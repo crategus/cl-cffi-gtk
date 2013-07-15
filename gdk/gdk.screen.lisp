@@ -760,7 +760,7 @@
   FIXME needs a list of valid settings here, or a link to more information.
 
   Since 2.2"
-  (with-foreign-object (value 'g-value)
+  (with-foreign-object (value '(:struct g-value))
     (g-value-init value)
     (when (%gdk-screen-get-setting screen name value)
       (prog1

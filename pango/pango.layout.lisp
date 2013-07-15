@@ -174,7 +174,7 @@
   (:superclass g-object
    :export t
    :interfaces nil
-   :type-initializer "gtk_socket_get_type")
+   :type-initializer "pango_layout_get_type")
   nil)
 
 #+cl-cffi-gtk-documentation

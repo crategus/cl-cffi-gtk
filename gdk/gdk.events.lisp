@@ -916,7 +916,7 @@
 
 (defcfun ("gdk_setting_get" %gdk-setting-get) :boolean
   (name :string)
-  (value (:pointer g-value)))
+  (value (:pointer (:struct g-value))))
 
 (defun gdk-get-setting (name)
  #+cl-cffi-gtk-documentation
@@ -931,7 +931,7 @@
   @end{short}
   See the function @fun{gdk-screen-get-setting}.
   @see-function{gdk-screen-get-setting}"
-  (with-foreign-object (value 'g-value)
+  (with-foreign-object (value '(:struct g-value))
     (g-value-zero value)
     (when (%gdk-setting-get name value)
       (prog1

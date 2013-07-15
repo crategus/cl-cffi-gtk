@@ -1511,7 +1511,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct gtk-text-attributes
-  (:appearance gtk-text-appearance)
+  (:appearance (:pointer (:struct gtk-text-appearance)))
   (:justification gtk-justification)
   (:direction gtk-text-direction)
   (:font (g-boxed-foreign pango-font-description))
@@ -1522,7 +1522,7 @@
   (:pixels-above-lines :int)
   (:pixels-below-lines :int)
   (:pixels-inside-wrap :int)
-  (:tabs :pointer) ; type is pango-tab-array
+  (:tabs :pointer)             ; type is pango-tab-array
   (:wrap-mode gtk-wrap-mode)
   (:language (g-boxed-foreign pango-language))
   (:invisible :uint)
@@ -1541,7 +1541,7 @@
   @end{short}
   @begin{pre}
 (defcstruct gtk-text-attributes
-  (:appearance gtk-text-appearance)
+  (:appearance (:pointer (:struct gtk-text-appearance)))
   (:justification gtk-justification)
   (:direction gtk-text-direction)
   (:font (g-boxed-foreign pango-font-description))

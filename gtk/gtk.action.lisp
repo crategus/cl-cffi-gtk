@@ -682,7 +682,7 @@
 
   Since 2.6
   @see-function{gtk-action-is-visible}"
-  (setf (gtk-action-set-visible action) visible))
+  (setf (gtk-action-visible action) visible))
 
 (export 'gtk-action-set-visible)
 

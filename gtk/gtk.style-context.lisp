@@ -2678,7 +2678,7 @@ tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
 
   Since 3.0"
   (context (g-object gtk-style-context))
-  (cr cairo-t)
+  (cr (:pointer (:struct cairo-t)))
   (x :double)
   (y :double)
   (width :double)

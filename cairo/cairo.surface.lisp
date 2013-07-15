@@ -416,13 +416,13 @@
  "@version{2013-3-3}
   @argument[surface]{a cairo_surface_t}
   @begin{short}
-    Decreases the reference count on surface by one. If the result is zero, then
-    surface and all associated resources are freed.
+    Decreases the reference count on surface by one. If the result is zero,
+    then surface and all associated resources are freed.
   @end{short}
   See cairo_surface_reference().
 
   Since 1.0"
-  (surface cairo-surface-t))
+  (surface (:pointer (:struct cairo-surface-t))))
 
 (export 'cairo-surface-destroy)
 

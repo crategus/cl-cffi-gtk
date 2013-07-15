@@ -507,7 +507,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_action_group_get_action_state_hint"
-           g-action-group-get-action-state-hint) (:pointer g-variant)
+           g-action-group-get-action-state-hint) (:pointer (:struct g-variant))
  #+cl-cffi-gtk-documentation
  "@version{2013-5-1}
   @argument[action-group]{a @class{g-action-group} object}
@@ -545,7 +545,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_action_group_get_action_state" g-action-group-get-action-state)
-    (:pointer g-variant)
+    (:pointer (:struct g-variant))
  #+cl-cffi-gtk-documentation
  "@version{2013-5-1}
   @argument[action-group]{a @class{g-action-group} object}
@@ -599,7 +599,7 @@
   @see-function{g-action-group-get-action-state-hint}"
   (action-group (g-object g-action-group))
   (action-name :string)
-  (value (:pointer g-variant)))
+  (value (:pointer (:struct g-variant))))
 
 (export 'g-action-group-change-action-state)
 
@@ -717,7 +717,7 @@
   Since 2.28"
   (action-group (g-object g-action-group))
   (action-name :string)
-  (state (:pointer g-variant)))
+  (state (:pointer (:struct g-variant))))
 
 (export 'g-action-group-action-state-changed)
 

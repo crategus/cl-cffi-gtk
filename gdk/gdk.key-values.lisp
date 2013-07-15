@@ -395,7 +395,7 @@
           %gdk-keymap-get-entries-for-keyval) :boolean
   (keymap (g-object gdk-keymap))
   (keyval :uint)
-  (keys (:pointer (:pointer gdk-keymap-key-cstruct)))
+  (keys (:pointer (:pointer (:struct gdk-keymap-key-cstruct))))
   (n-keys (:pointer :int)))
 
 (defun gdk-keymap-get-entries-for-keyval (keymap keyval)
@@ -426,9 +426,9 @@
                 (for keymap-key =
                   (convert-from-foreign
                     (inc-pointer
-                             keys
-                             (* i
-                                (foreign-type-size 'gdk-keymap-key-cstruct)))
+                      keys
+                      (* i
+                         (foreign-type-size '(:struct gdk-keymap-key-cstruct))))
                     '(g-boxed-foreign gdk-keymap-key)))
                 (collect keymap-key))
           (g-free keys))))))
@@ -443,7 +443,7 @@
           %gdk-keymap-get-entries-for-keycode) :boolean
   (keymap (g-object gdk-keymap))
   (hardware-keycode :uint)
-  (keys (:pointer (:pointer gdk-keymap-key-cstruct)))
+  (keys (:pointer (:pointer (:struct gdk-keymap-key-cstruct))))
   (keyvals (:pointer (:pointer :uint)))
   (n-entries (:pointer :int)))
 
@@ -478,9 +478,9 @@
                 (for keymap-key =
                   (convert-from-foreign
                     (inc-pointer
-                             keys
-                             (* i
-                                (foreign-type-size 'gdk-keymap-key-cstruct)))
+                      keys
+                      (* i
+                         (foreign-type-size '(:struct gdk-keymap-key-cstruct))))
                     '(g-boxed-foreign gdk-keymap-key)))
                 (collect keymap-key into r-keys)
                 (collect keyval into r-keyvals)

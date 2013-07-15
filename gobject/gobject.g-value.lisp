@@ -267,7 +267,7 @@
 
 (defcstruct g-value
   (:type g-type)
-  (:data g-value-data :count 2))
+  (:data (:union g-value-data) :count 2)) ; Not a pointer. Is this correct?
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-value atdoc:*symbol-name-alias*) "CStruct"
@@ -393,7 +393,7 @@
   @end{short}
   @begin[Example]{dictionary}
     @begin{pre}
- (setq value 
+ (setq value
        (with-foreign-object (value 'g-value)
          (g-value-init value \"gint\")))
 => #.(SB-SYS:INT-SAP #XB7910FE8)
@@ -421,7 +421,7 @@
   @end{short}
   @begin[Example]{dictionary}
     @begin{pre}
- (setq value 
+ (setq value
        (with-foreign-object (value 'g-value)
          (g-value-init value \"gint\")))
 => #.(SB-SYS:INT-SAP #XB7910FE8)
@@ -429,7 +429,7 @@
 => #S(GTYPE :NAME \"gint\" :%ID 24)
     @end{pre}
   @end{dictionary}"
-  (foreign-slot-value value 'g-value :type))
+  (foreign-slot-value value '(:struct g-value) :type))
 
 (export 'g-value-type)
 
@@ -447,7 +447,7 @@
   @end{short}
   @begin[Example]{dictionary}
     @begin{pre}
- (setq value 
+ (setq value
        (with-foreign-object (value 'g-value)
          (g-value-init value \"gint\")))
 => #.(SB-SYS:INT-SAP #XB7910FE8)
@@ -528,6 +528,8 @@
   @see-symbol{g-value}"
   (cffi:foreign-funcall "g_value_get_type" g-type))
 
+(glib::at-init nil (g-type-value))
+
 (export 'g-type-value)
 
 ;;; ----------------------------------------------------------------------------
@@ -548,8 +550,8 @@
 ;;; g_value_init ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_value_init" %g-value-init) (:pointer g-value)
-  (value (:pointer g-value))
+(defcfun ("g_value_init" %g-value-init) (:pointer (:struct g-value))
+  (value (:pointer (:struct g-value)))
   (gtype g-type))
 
 ;; Initializes the GValue in 'unset' state.
@@ -558,7 +560,7 @@
 
 (defun g-value-zero (value)
   (loop
-     for i from 0 below (foreign-type-size 'g-value)
+     for i from 0 below (foreign-type-size '(:struct g-value))
      do (setf (mem-ref value :uchar i) 0)))
 
 (export 'g-value-zero)
@@ -590,8 +592,8 @@
   @argument[dest-value]{an initialized @symbol{g-value} structure of the same
     type as @arg{src-value}}
   Copies the value of @arg{src-value} into @arg{dest-value}."
-  (src-value (:pointer g-value))
-  (dst-value (:pointer g-value)))
+  (src-value (:pointer (:struct g-value)))
+  (dst-value (:pointer (:struct g-value))))
 
 (export 'g-value-copy)
 
@@ -599,14 +601,14 @@
 ;;; g_value_reset ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_value_reset" g-value-reset) (:pointer g-value)
+(defcfun ("g_value_reset" g-value-reset) (:pointer (:struct g-value))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-2}
   @argument[value]{an initialized @symbol{g-value} structure}
   @return{The @symbol{g-value} structure that has been passed in.}
   Clears the current value in @arg{value} and resets it to the default value
   as if the value had just been initialized."
-  (value (:pointer g-value)))
+  (value (:pointer (:struct g-value))))
 
 (export 'g-value-reset)
 
@@ -624,7 +626,7 @@
   @end{short}
   An unset value is the same as an uninitialized (zero-filled) @symbol{g-value}
   structure."
-  (value (:pointer g-value)))
+  (value (:pointer (:struct g-value))))
 
 (export 'g-value-unset)
 
@@ -639,7 +641,7 @@
   @argument[instance]{the instance}
   Sets @arg{value} from an instantiatable type via the @arg{value_table}'s
   @arg{collect_value()} function."
-  (value (:pointer g-value))
+  (value (:pointer (:struct g-value)))
   (instance :pointer))
 
 (export 'g-value-set-instance)
@@ -730,8 +732,8 @@
   lossage. Especially transformations into strings might reveal seemingly
   arbitrary results and should not be relied upon for production code (such as
   rcfile value or object property serialization)."
-  (src-value (:pointer g-value))
-  (dest-value (:pointer g-value)))
+  (src-value (:pointer (:struct g-value)))
+  (dest-value (:pointer (:struct g-value))))
 
 (export 'g-value-transform)
 
@@ -791,7 +793,7 @@
   The main purpose of this function is to describe @symbol{g-value} contents for
   debugging output, the way in which the contents are described may change
   between different GLib versions."
-  (value (:pointer g-value)))
+  (value (:pointer (:struct g-value))))
 
 (export 'g-strdup-value-contents)
 

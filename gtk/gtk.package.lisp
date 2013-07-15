@@ -29,8 +29,6 @@
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
 
-(declaim #+sbcl(sb-ext:muffle-conditions style-warning))
-
 (defpackage :gtk
   (:use :cl :cl-user :cffi
    :gobject :gdk :gdk-pixbuf :glib :gio :iter :pango :cairo)

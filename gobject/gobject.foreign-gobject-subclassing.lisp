@@ -42,14 +42,14 @@
   (log-for :subclass "(instance-init ~A ~A)~%" instance class)
   (log-for :subclass "Initializing instance ~A for type ~A (creating ~A)~%"
            instance
-           (gtype-name (foreign-slot-value class 'g-type-class :type))
+           (gtype-name (foreign-slot-value class '(:struct g-type-class) :type))
            *current-creating-object*)
   (unless (or *current-creating-object*
               *currently-making-object-p*
               (gethash (pointer-address instance) *foreign-gobjects-strong*)
               (gethash (pointer-address instance) *foreign-gobjects-weak*))
     (log-for :subclass "Proceeding with initialization...~%")
-    (let* ((type (foreign-slot-value class 'g-type-class :type))
+    (let* ((type (foreign-slot-value class '(:struct g-type-class) :type))
            (type-name (gtype-name type))
            (lisp-type-info (gethash type-name *registered-types*))
            (lisp-class (object-type-class lisp-type-info)))
@@ -73,9 +73,9 @@
     (register-object-type type-name lisp-class)
     )
 
-  (setf (foreign-slot-value class 'g-object-class :get-property)
+  (setf (foreign-slot-value class '(:struct g-object-class) :get-property)
         (callback c-object-property-get)
-        (foreign-slot-value class 'g-object-class :set-property)
+        (foreign-slot-value class '(:struct g-object-class) :set-property)
         (callback c-object-property-set))
   (install-properties class))
 
@@ -85,7 +85,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defun install-properties (class)
-  (let* ((name (gtype-name (foreign-slot-value class 'g-type-class :type)))
+  (let* ((name (gtype-name (foreign-slot-value class '(:struct g-type-class) :type)))
          (lisp-type-info (gethash name *registered-types*)))
     (iter (for property in (object-type-properties lisp-type-info))
           (for param-spec = (property->param-spec property))
@@ -339,7 +339,9 @@
 
 (defun interface-init (iface data)
   (destructuring-bind (class-name interface-name)
-      (prog1 (glib::get-stable-pointer-value data) (free-stable-pointer data))
+      (prog1
+        (glib::get-stable-pointer-value data)
+        (glib::free-stable-pointer data))
     (declare (ignorable class-name))
     (let* ((vtable (gethash interface-name *vtables*))
            (vtable-cstruct (vtable-description-cstruct-name vtable)))
@@ -360,10 +362,10 @@
 (defun add-interface (name interface)
   (let* ((interface-info (list name interface))
          (interface-info-ptr (glib::allocate-stable-pointer interface-info)))
-    (with-foreign-object (info 'g-interface-info)
-      (setf (foreign-slot-value info 'g-interface-info :interface-init)
+    (with-foreign-object (info '(:struct g-interface-info))
+      (setf (foreign-slot-value info '(:struct g-interface-info) :interface-init)
             (callback c-interface-init)
-            (foreign-slot-value info 'g-interface-info :interface-data)
+            (foreign-slot-value info '(:struct g-interface-info) :interface-data)
             interface-info-ptr)
       (g-type-add-interface-static (gtype name) (gtype interface) info))))
 
@@ -381,10 +383,10 @@
                                    *foreign-gobjects-strong*)
                           (gethash (pointer-address object)
                                    *foreign-gobjects-weak*)))
-         (property-name (foreign-slot-value pspec 'g-param-spec :name))
-         (property-type (foreign-slot-value pspec 'g-param-spec :value-type))
+         (property-name (foreign-slot-value pspec '(:struct g-param-spec) :name))
+         (property-type (foreign-slot-value pspec '(:struct g-param-spec) :value-type))
          (type-name (gtype-name (foreign-slot-value pspec
-                                                    'g-param-spec
+                                                    '(:struct g-param-spec)
                                                     :owner-type)))
          (lisp-type-info (gethash type-name *registered-types*))
          (property-info (find property-name
@@ -416,9 +418,9 @@
                                    *foreign-gobjects-strong*)
                           (gethash (pointer-address object)
                                    *foreign-gobjects-weak*)))
-         (property-name (foreign-slot-value pspec 'g-param-spec :name))
+         (property-name (foreign-slot-value pspec '(:struct g-param-spec) :name))
          (type-name (gtype-name (foreign-slot-value pspec
-                                                    'g-param-spec
+                                                    '(:struct g-param-spec)
                                                     :owner-type)))
          (lisp-type-info (gethash type-name *registered-types*))
          (property-info (find property-name

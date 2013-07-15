@@ -369,7 +369,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_action_get_state_hint" g-action-get-state-hint)
-    (:pointer g-variant)
+    (:pointer (:struct g-variant))
  #+cl-cffi-gtk-documentation
  "@version{2013-5-1}
   @argument[action]{a @class{g-action} object}
@@ -476,7 +476,7 @@
   @see-function{g-action-get-state-type}
   @see-function{g-action-get-state-hint}"
   (action (g-object g-action))
-  (value (:pointer g-variant)))
+  (value (:pointer (:struct g-variant))))
 
 (export 'g-action-change-state)
 

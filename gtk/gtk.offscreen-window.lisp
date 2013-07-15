@@ -100,7 +100,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_offscreen_window_get_surface" gtk-offscreen-window-get-surface)
-    cairo-surface-t
+    (:pointer (:struct cairo-surface-t))
  #+cl-cffi-gtk-documentation
  "@version{2013-6-25}
   @argument[offscreen]{the @class{gtk-offscreen-window} contained widget}

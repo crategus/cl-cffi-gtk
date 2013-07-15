@@ -613,7 +613,7 @@
 ;;; gdk_device_get_key ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_device_get_key" %gdk-device-get-key) :void
+(defcfun ("gdk_device_get_key" %gdk-device-get-key) :boolean
   (device (g-object gdk-device))
   (index :int)
   (keyval (:pointer :uint))
@@ -634,7 +634,7 @@
   @end{short}
 
   Since 2.20"
-  (with-foreign-objects ((keyval :int)
+  (with-foreign-objects ((keyval :uint)
                          (modifiers 'gdk-modifier-type))
     (when (%gdk-device-get-key device index keyval modifiers)
       (values keyval
@@ -1150,7 +1150,7 @@
   (window (g-object gdk-window))
   (start :uint32)
   (stop :uint32)
-  (events (:pointer (:pointer (:pointer gdk-time-coord-cstruct))))
+  (events (:pointer (:pointer (:pointer (:struct gdk-time-coord-cstruct)))))
   (n-events (:pointer :int)))
 
 (defun gdk-device-get-history (device window start stop)
@@ -1196,7 +1196,7 @@
   Frees an array of @symbol{gdk-time-coord} that was returned by the function
   @fun{gdk-device-get-history}.
   @see-function{gdk-device-get-history}"
-  (events (:pointer (:pointer gdk-time-coord-cstruct)))
+  (events (:pointer (:pointer (:struct gdk-time-coord-cstruct))))
   (n-events :int))
 
 (export 'gdk-device-free-history)

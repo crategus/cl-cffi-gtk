@@ -465,14 +465,14 @@
 ;;; g_closure_ref ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_closure_ref" g-closure-ref) (:pointer g-closure)
+(defcfun ("g_closure_ref" g-closure-ref) (:pointer (:struct g-closure))
  #+cl-cffi-gtk-documentation
  "@version{2013-6-12}
   @argument[closure]{@symbol{g-closure} to increment the reference count on}
   @return{The @arg{closure} passed in, for convenience.}
   Increments the reference count on a @arg{closure} to force it staying alive
   while the caller holds a pointer to it."
-  (closure (:pointer g-closure)))
+  (closure (:pointer (:struct g-closure))))
 
 (export 'g-closure-ref)
 
@@ -526,7 +526,7 @@
   closure (if it has not been called on closure yet) just like the functions
   @fun{g-closure-unref}, @fun{g-closure-ref} should be called prior to this
   function."
-  (closure (:pointer g-closure)))
+  (closure (:pointer (:struct g-closure))))
 
 (export 'g-closure-sink)
 
@@ -541,7 +541,7 @@
   Decrements the reference count of a @arg{closure} after it was previously
   incremented by the same caller. If no other callers are using the
   @arg{closure}, then the closure will be destroyed and freed."
-  (closure (:pointer g-closure)))
+  (closure (:pointer (:struct g-closure))))
 
 (export 'g-closure-unref)
 
@@ -597,7 +597,7 @@
   Note that the @sym{g-closure-invalidate} function will also be called when the
   reference count of a closure drops to zero (unless it has already been
   invalidated before)."
-  (closure (:pointer g-closure)))
+  (closure (:pointer (:struct g-closure))))
 
 (export 'g-closure-invalidate)
 
@@ -620,7 +620,7 @@
   order. If a single call to the @fun{g-closure-unref} function results in the
   closure being both invalidated and finalized, then the invalidate notifiers
   will be run before the finalize notifiers."
-  (closure (:pointer g-closure))
+  (closure (:pointer (:struct g-closure)))
   (notify-data :pointer)
   (notify-func :pointer))
 
@@ -643,7 +643,7 @@
   @end{short}
   Invalidation notifiers are invoked before finalization notifiers, in an
   unspecified order."
-  (closure (:pointer g-closure))
+  (closure (:pointer (:struct g-closure)))
   (notify-data :pointer)
   (notify-func :pointer))
 
@@ -697,7 +697,8 @@
 ;;; g_closure_new_simple ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_closure_new_simple" g-closure-new-simple) (:pointer g-closure)
+(defcfun ("g_closure_new_simple" g-closure-new-simple)
+    (:pointer (:struct g-closure))
  #+cl-cffi-gtk-documentation
  "@version{2013-6-12}
   @argument[sizeof-closure]{the size of the structure to allocate, must be at
@@ -764,7 +765,7 @@
   @fun{g-closure-set-meta-marshal}.) For GObject's C predefined marshallers
   (the @code{g_cclosure_marshal_*()} functions), what it provides is a callback
   function to use instead of @code{closure->callback}."
-  (closure (:pointer g-closure))
+  (closure (:pointer (:struct g-closure)))
   (marshal :pointer))
 
 (export 'g-closure-set-marshal)

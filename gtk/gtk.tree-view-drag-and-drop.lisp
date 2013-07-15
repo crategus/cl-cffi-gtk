@@ -113,7 +113,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (define-vtable ("GtkTreeDragSource" gtk-tree-drag-source)
-  (:skip parent-instance g-type-interface)
+  (:skip parent-instance (:pointer (:struct g-type-interface)))
   ;;methods
   (row-draggable (:boolean
           (tree-drag-source g-object)
@@ -250,7 +250,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (define-vtable ("GtkTreeDragDest" gtk-tree-drag-dest)
-  (:skip parent-instance g-type-interface)
+  (:skip parent-instance (:pointer (:struct g-type-interface)))
   ;;methods
   (drag-data-received (:boolean
                (tree-drag-dest g-object)

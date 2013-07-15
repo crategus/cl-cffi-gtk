@@ -775,7 +775,7 @@
   @arg{background-area} rectangles for all cells tile to cover the entire
   window."
   (cell (g-object gtk-cell-renderer))
-  (cr cairo-t)
+  (cr (:pointer (:struct cairo-t)))
   (widget (g-object gtk-widget))
   (background-area (g-boxed-foreign gdk-rectangle))
   (cell-area (g-boxed-foreign gdk-rectangle))

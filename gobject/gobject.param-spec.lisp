@@ -154,7 +154,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-param-spec
-  (:type-instance g-type-instance)
+  (:type-instance (:pointer (:struct g-type-instance)))
   (:name (:string :free-from-foreign nil :free-to-foreign nil))
   (:flags g-param-flags)
   (:value-type g-type)
@@ -163,7 +163,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-param-spec atdoc:*symbol-name-alias*) "CStruct"
       (gethash 'g-param-spec atdoc:*external-symbols*)
- "@version{2013-6-5}
+ "@version{2013-7-14}
   @begin{short}
     @sym{g-param-spec} is an object structure that encapsulates the metadata
     required to specify parameters, such as e. g. @class{g-object} properties.
@@ -175,7 +175,7 @@
   called the canonical name of the parameter.
   @begin{pre}
 (defcstruct g-param-spec
-  (:type-instance g-type-instance)
+  (:type-instance (:pointer (:struct g-type-instance)))
   (:name (:string :free-from-foreign nil :free-to-foreign nil))
   (:flags g-param-flags)
   (:value-type g-type)
@@ -226,22 +226,22 @@
 ;; Transform a value of the C type GParamSpec to Lisp type param-spec
 
 (defun parse-g-param-spec (param)
-  (let ((flags (foreign-slot-value param 'g-param-spec :flags)))
+  (let ((flags (foreign-slot-value param '(:struct g-param-spec) :flags)))
     (make-param-spec
-        :name (foreign-slot-value param 'g-param-spec :name)
-        :type (foreign-slot-value param 'g-param-spec :value-type)
+        :name (foreign-slot-value param '(:struct g-param-spec) :name)
+        :type (foreign-slot-value param '(:struct g-param-spec) :value-type)
         :readable (not (null (member :readable flags)))
         :writable (not (null (member :writable flags)))
         :constructor (not (null (member :construct flags)))
         :constructor-only (not (null (member :construct-only flags)))
-        :owner-type (foreign-slot-value param 'g-param-spec :owner-type))))
+        :owner-type (foreign-slot-value param '(:struct g-param-spec) :owner-type))))
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GParamSpecClass
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-param-spec-class
-  (:type-class g-type-class)
+  (:type-class (:pointer (:struct g-type-class)))
   (:value-type g-type)
   (:finalize :pointer)
   (:value-set-default :pointer)
@@ -259,7 +259,7 @@
   @fun{g-param-type-register-static}.
   @begin{pre}
 (defcstruct g-param-spec-class
-  (:type-class g-type-class)
+  (:type-class (:pointer (:struct g-type-class)))
   (:value-type g-type)
   (:finalize :pointer)
   (:value-set-default :pointer)
@@ -400,7 +400,7 @@
  "@version{2013-2-7}
   @argument[pspec]{a valid @symbol{g-param-spec}}
   @short{Retrieves the GType to initialize a GValue for this parameter.}"
-  (foreign-slot-value pspec 'g-param-spec :value-type))
+  (foreign-slot-value pspec '(:struct g-param-spec) :value-type))
 
 (export 'g-param-spec-value-type)
 
@@ -464,7 +464,7 @@
  "@version{2013-2-7}
   @argument[pspec]{a valid @symbol{g-param-spec}}
   @short{Decrements the reference count of a pspec.}"
-  (pspec (:pointer g-param-spec)))
+  (pspec (:pointer (:struct g-param-spec))))
 
 (export 'g-param-spec-unref)
 
@@ -488,14 +488,15 @@
 ;;; g_param_spec_ref_sink ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_param_spec_ref_sink" g-param-spec-ref-sink) (:pointer g-param-spec)
+(defcfun ("g_param_spec_ref_sink" g-param-spec-ref-sink)
+    (:pointer (:struct g-param-spec))
  #+cl-cffi-gtk-documentation
  "@version{2013-2-7}
   @argument[pspec]{a valid @symbol{g-param-spec}}
   @return{the GParamSpec that was passed into this function}
   @short{Convenience function to ref and sink a GParamSpec.}@break{}
   Since 2.10"
-  (pspec (:pointer g-param-spec)))
+  (pspec (:pointer (:struct g-param-spec))))
 
 (export 'g-param-spec-ref-sink)
 
@@ -509,8 +510,8 @@
   @argument[pspec]{a valid @symbol{g-param-spec}}
   @argument[value]{a GValue of correct type for pspec}
   @short{Sets value to its default value as specified in pspec.}"
-  (pspec (:pointer g-param-spec))
-  (value (:pointer g-value)))
+  (pspec (:pointer (:struct g-param-spec)))
+  (value (:pointer (:struct g-value))))
 
 (export 'g-param-value-set-default)
 
@@ -527,8 +528,8 @@
   @begin{short}
     Checks whether value contains the default value as specified in pspec.
   @end{short}"
-  (pspec (:pointer g-param-spec))
-  (value (:pointer g-value)))
+  (pspec (:pointer (:struct g-param-spec)))
+  (value (:pointer (:struct g-value))))
 
 (export 'g-param-value-defaults)
 
@@ -550,8 +551,8 @@
   value may not be smaller than -42 and not be greater than +42. If value
   contains an integer outside of this range, it is modified accordingly, so
   the resulting value will fit into the range -42 .. +42."
-  (pspec (:pointer g-param-spec))
-  (value (:pointer g-value)))
+  (pspec (:pointer (:struct g-param-spec)))
+  (value (:pointer (:struct g-value))))
 
 (export 'g-param-value-validate)
 
@@ -602,9 +603,9 @@
   Compares @arg{value1} with @arg{value2} according to pspec, and return -1, 0
   or +1, if @arg{value1} is found to be less than, equal to or greater than
   value2, respectively."
-  (pspec (:pointer g-param-spec))
-  (value1 (:pointer g-value))
-  (value2 (:pointer g-value)))
+  (pspec (:pointer (:struct g-param-spec)))
+  (value1 (:pointer (:struct g-value)))
+  (value2 (:pointer (:struct g-value))))
 
 (export 'g-param-values-cmp)
 
@@ -622,7 +623,7 @@
   @end{short}@break{}
   The name is always an \"interned\" string (as per g_intern_string()). This
   allows for pointer-value comparisons."
-  (pspec (:pointer g-param-spec)))
+  (pspec (:pointer (:struct g-param-spec))))
 
 (export 'g-param-spec-get-name)
 
@@ -636,7 +637,7 @@
   @argument[pspec]{a valid @symbol{g-param-spec}}
   @return{The nickname of @arg{pspec}.}
   @short{Get the nickname of a GParamSpec.}"
-  (pspec (:pointer g-param-spec)))
+  (pspec (:pointer (:struct g-param-spec))))
 
 (export 'g-param-spec-get-nick)
 
@@ -650,7 +651,7 @@
   @argument[pspec]{a valid @symbol{g-param-spec}}
   @return{The short description of @arg{pspec}.}
   @short{Get the short description of a GParamSpec.}"
-  (pspec (:pointer g-param-spec)))
+  (pspec (:pointer (:struct g-param-spec))))
 
 (export 'g-param-spec-get-blurb)
 
@@ -743,7 +744,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_param_spec_get_redirect_target" g-param-spec-get-redirect-target)
-    (:pointer g-param-spec)
+    (:pointer (:struct g-param-spec))
  #+cl-cffi-gtk-documentation
  "@version{2013-3-2}
   @argument[pspec]{a @symbol{g-param-spec} structure}
@@ -762,19 +763,13 @@
   example of the use of this capability.
 
   Since 2.4"
-  (pspec (:pointer g-param-spec)))
+  (pspec (:pointer (:struct g-param-spec))))
 
 (export 'g-param-spec-get-redirect-target)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_param_spec_internal ()
 ;;; ----------------------------------------------------------------------------
-
-;;; gpointer g_param_spec_internal (GType param_type,
-;;;                                 const gchar *name,
-;;;                                 const gchar *nick,
-;;;                                 const gchar *blurb,
-;;;                                 GParamFlags flags);
 
 (defcfun ("g_param_spec_internal" g-param-spec-internal) :pointer
  #+cl-cffi-gtk-documentation

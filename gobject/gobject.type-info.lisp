@@ -1141,17 +1141,18 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-type-instance
-  (:class (:pointer g-type-class)))
+  (:class (:pointer (:struct g-type-class))))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-type-instance atdoc:*symbol-name-alias*) "CStruct"
       (gethash 'g-type-instance atdoc:*external-symbols*)
- "@version{2012-12-16}
+ "@version{2013-7-14}
   @short{An opaque structure used as the base of all type instances.}
   @begin{pre}
 (defcstruct g-type-instance
-  (:class (:pointer g-type-class)))
-  @end{pre}")
+  (:class (:pointer (:struct g-type-class))))
+  @end{pre}
+  @see-symbol{g-type-class}")
 
 (export 'g-type-instance)
 
@@ -1529,7 +1530,7 @@
   @end{dictionary}"
   (let ((ptr (if (pointerp instance) instance (pointer instance))))
     (g-type-from-class (foreign-slot-value ptr
-                                           'g-type-instance :class))))
+                                           '(:struct g-type-instance) :class))))
 
 (export 'g-type-from-instance)
 
@@ -1551,7 +1552,7 @@
 => #S(GTYPE :NAME \"GtkWidget\" :%ID 134888256)
     @end{pre}
   @end{dictionary}"
-  (foreign-slot-value class 'g-type-class :type))
+  (foreign-slot-value class '(:struct g-type-class) :type))
 
 (export 'g-type-from-class)
 
@@ -1573,7 +1574,7 @@
 => #S(GTYPE :NAME \"GtkOrientable\" :%ID 134887472)
     @end{pre}
   @end{dictionary}"
-  (foreign-slot-value interface 'g-type-interface :type))
+  (foreign-slot-value interface '(:struct g-type-interface) :type))
 
 (export 'g-type-from-interface)
 
@@ -1592,7 +1593,7 @@
 
   This function should only be used in type implementations."
   (let ((ptr (if (pointerp instance) instance (pointer instance))))
-    (foreign-slot-value ptr 'g-type-instance :class)))
+    (foreign-slot-value ptr '(:struct g-type-instance) :class)))
 
 (export 'g-type-instance-get-class)
 
@@ -2037,7 +2038,7 @@
 ;;; g_type_class_ref ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_type_class_ref" g-type-class-ref) (:pointer g-type-class)
+(defcfun ("g_type_class_ref" g-type-class-ref) (:pointer (:struct g-type-class))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-1}
   @argument[type]{type ID of a classed type}
@@ -2052,7 +2053,8 @@
 ;;; g_type_class_peek ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_type_class_peek" g-type-class-peek) (:pointer g-type-class)
+(defcfun ("g_type_class_peek" g-type-class-peek)
+    (:pointer (:struct g-type-class))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-1}
   @argument[type]{type ID of a classed type}
@@ -2084,7 +2086,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_type_class_peek_static" g-type-class-peek-static)
-    (:pointer g-type-class)
+    (:pointer (:struct g-type-class))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-1}
   @argument[type]{type ID of a classed type}
@@ -2115,7 +2117,7 @@
   Once the last reference count of a class has been released, classes may be
   finalized by the type system, so further dereferencing of a class pointer
   after @sym{g-type-class-unref} are invalid."
-  (class (:pointer g-type-class)))
+  (class (:pointer (:struct g-type-class))))
 
 (export 'g-type-class-unref)
 
@@ -2124,7 +2126,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_type_class_peek_parent" g-type-class-peek-parent)
-    (:pointer g-type-class)
+    (:pointer (:struct g-type-class))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-1}
   @argument[class]{the @symbol{g-type-class} structure to retrieve the parent
@@ -2141,7 +2143,7 @@
   @begin{pre}
  (g-type-class-peek (g-type-parent class))
   @end{pre}"
-  (g-class (:pointer g-type-class)))
+  (g-class (:pointer (:struct g-type-class))))
 
 (export 'g-type-class-peek-parent)
 
@@ -2215,7 +2217,7 @@
  @}
   @end{pre}
   Since 2.4"
-  (class (:pointer g-type-class))
+  (class (:pointer (:struct g-type-class)))
   (private-size g-size))
 
 (export 'g-type-class-add-private)
@@ -2246,7 +2248,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_type_interface_peek" g-type-interface-peek)
-    (:pointer g-type-interface)
+    (:pointer (:struct g-type-interface))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-1}
   @argument[instance-class]{a @symbol{g-type-class} structure}
@@ -2266,7 +2268,7 @@
 => #S(GTYPE :NAME \"GtkOrientable\" :%ID 134887472)
     @end{pre}
   @end{dictionary}"
-  (instance-class (:pointer g-type-class))
+  (instance-class (:pointer (:struct g-type-class)))
   (iface-type g-type))
 
 (export 'g-type-interface-peek)
@@ -2602,7 +2604,7 @@
   structure should be considered constant and have to be left untouched.
   @see-class{g-type-query}"
   (type g-type)
-  (query (:pointer g-type-query)))
+  (query (:pointer (:struct g-type-query))))
 
 (export 'g-type-query)
 
@@ -2858,7 +2860,7 @@
   @see-symbol{g-type-flags}"
   (parent-type g-type)
   (type-name :string)
-  (info (:pointer g-type-info))
+  (info (:pointer (:struct g-type-info)))
   (flags g-type-flags))
 
 (export 'g-type-register-static)
@@ -2985,7 +2987,7 @@
   to by info is used to manage the relationship."
   (instance-type g-type)
   (interface-type g-type)
-  (info (:pointer g-interface-info)))
+  (info (:pointer (:struct g-interface-info))))
 
 (export 'g-type-add-interface-static)
 
@@ -3271,7 +3273,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_type_value_table_peek" g-type-value-table-peek)
-    (:pointer g-type-value-table)
+    (:pointer (:struct g-type-value-table))
  #+cl-cffi-gtk-documentation
  "@version{2013-6-11}
   @argument[type]{a @class{g-type} value}

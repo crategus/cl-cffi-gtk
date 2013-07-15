@@ -430,7 +430,7 @@
         (setf (gtk-message-dialog-text dialog)
         (apply #'format (cons nil (cons message args)))))
     (if parent
-        (gtk-widget-set-transient-for dialog parent))
+        (gtk-window-set-transient-for dialog parent))
     (if (member :modal flags)
         (gtk-window-set-modal dialog t))
     (if (member :destroy-with-parent flags)
@@ -487,7 +487,7 @@
         (setf (gtk-message-dialog-text dialog)
         (apply #'format (cons nil (cons message args)))))
     (if parent
-        (gtk-widget-set-transient-for dialog parent))
+        (gtk-window-set-transient-for dialog parent))
     (if (member :modal flags)
         (gtk-window-set-modal dialog t))
     (if (member :destroy-with-parent flags)

@@ -28,8 +28,6 @@
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
 
-(declaim #+sbcl(sb-ext:muffle-conditions style-warning))
-
 (defpackage :gio
   (:use :glib :gobject :cl :cffi))
 

@@ -1466,7 +1466,7 @@
   will not have any effect.
 
   Since 3.4"
-  (setf (gkt-window-hide-titlebar-when-maximized window) setting))
+  (setf (gtk-window-hide-titlebar-when-maximized window) setting))
 
 (export 'gtk-window-set-hide-titlebar-when-maximized)
 

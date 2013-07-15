@@ -80,7 +80,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (define-g-boxed-opaque gtk-widget-path "GtkWidgetPath"
-  :alloc (%gtk-widget-path-new))
+  :alloc (gtk-widget-path-new))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-widget-path atdoc:*class-name-alias*) "CStruct"
