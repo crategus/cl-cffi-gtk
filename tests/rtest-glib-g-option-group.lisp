@@ -24,7 +24,7 @@
 (in-package :glib-tests)
 
 (defun translate-function (str)
-  (format t "in TRANSLATE-FUNCTION~%")
+;  (format t "in TRANSLATE-FUNCTION~%")
   (string-upcase str))
 
 ;;; static gint repeats = 2;
@@ -57,9 +57,9 @@
     (g-option-context-set-translate-func context #'translate-function)
     (g-option-context-set-summary context "summary")
     (g-option-context-set-description context "description")
-    (assert-false (g-option-context-get-summary context))
+    (assert-equal "summary" (g-option-context-get-summary context))
     
-    (format t "~&~A~%" (g-option-context-get-help context t))
+;    (format t "~&~A~%" (g-option-context-get-help context t))
 
   )
 )

@@ -44,7 +44,7 @@
 (load "rtest-gobject-param-spec.lisp")
 (load "rtest-gobject-signals.lisp")
 ;(load "rtest-gobject-subclassing.lisp")
-(load "rtest-gobject-type-info.lisp")
+;(load "rtest-gobject-type-info.lisp")
 (load "rtest-gobject-base.lisp")
 
 ;;; ----------------------------------------------------------------------------

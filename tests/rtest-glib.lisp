@@ -89,7 +89,8 @@
     (assert-true (null-pointer-p (g-malloc 0))))
 
   ;; g-time-val CStruct
-  (assert-eq :pointer (cffi::canonicalize-foreign-type 'g-time-val))
+  (assert-equal '(:struct g-time-val) 
+                (cffi::canonicalize-foreign-type '(:struct g-time-val)))
   (with-foreign-object (ptr 'g-time-val)
     ;; Write values into the slots.
     ;; The CStruct is exported, but not the slots.
