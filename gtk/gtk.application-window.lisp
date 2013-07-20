@@ -99,7 +99,7 @@
   looks on different platforms). This behaviour can be overridden with the
   @code{\"show-menubar\"} property. If the desktop environment does not display
   the application menu, then it will automatically be included in the menubar.
- 
+
   @b{Example:} A @class{gtk-application-window} with a menubar
   @begin{pre}
  app = gtk_application_new ();

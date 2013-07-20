@@ -26,26 +26,26 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; GtkSwitch
-;;; 
+;;;
 ;;; A "light switch" style toggle
-;;;     
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;;     GtkSwitch
-;;;     
+;;;
 ;;;     gtk_switch_new
 ;;;     gtk_switch_set_active
 ;;;     gtk_switch_get_active
-;;; 
+;;;
 ;;; Object Hierarchy
-;;; 
+;;;
 ;;;   GObject
 ;;;    +----GInitiallyUnowned
 ;;;          +----GtkWidget
 ;;;                +----GtkSwitch
-;;; 
+;;;
 ;;; Implemented Interfaces
-;;; 
+;;;
 ;;; GtkSwitch implements AtkImplementorIface, GtkBuildable, GtkActionable and
 ;;; GtkActivatable.
 ;;;
@@ -54,13 +54,13 @@
 ;;;   "active"                   gboolean              : Read / Write
 ;;;
 ;;; Style Properties
-;;; 
+;;;
 ;;;   "slider-width"             gint                  : Read
-;;; 
+;;;
 ;;; Signals
-;;; 
+;;;
 ;;;   "activate"                                       : Action
-;;; ---------------------------------------------------------------------------- 
+;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
 

@@ -30,15 +30,15 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; GtkSpinButton
-;;; 
+;;;
 ;;; Retrieve an integer or floating-point number from the user
-;;;     
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;;     GtkSpinButton
 ;;;     GtkSpinButtonUpdatePolicy
 ;;;     GtkSpinType
-;;;     
+;;;
 ;;;     gtk_spin_button_configure
 ;;;     gtk_spin_button_new
 ;;;     gtk_spin_button_new_with_range
@@ -64,26 +64,26 @@
 ;;;     gtk_spin_button_get_value
 ;;;     gtk_spin_button_get_wrap
 ;;;     GTK_INPUT_ERROR
-;;; 
+;;;
 ;;; Object Hierarchy
-;;; 
+;;;
 ;;;   GObject
 ;;;    +----GInitiallyUnowned
 ;;;          +----GtkWidget
 ;;;                +----GtkEntry
 ;;;                      +----GtkSpinButton
-;;; 
+;;;
 ;;; Implemented Interfaces
-;;; 
+;;;
 ;;; GtkSpinButton implements AtkImplementorIface, GtkBuildable, GtkEditable,
 ;;; GtkCellEditable, and GtkOrientable.
-;;; 
+;;;
 ;;; Style Properties
-;;; 
+;;;
 ;;;   "shadow-type"           GtkShadowType              : Read
-;;; 
+;;;
 ;;; Signals
-;;; 
+;;;
 ;;;   "change-value"                                     : Action
 ;;;   "input"                                            : Run Last
 ;;;   "output"                                           : Run Last
@@ -202,7 +202,7 @@
    GtkAdjustment *adjustment;
 
    adjustment = gtk_adjustment_new (2.500, 0.0, 5.0, 0.001, 0.1, 0.0);
- 
+
    window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
    gtk_container_set_border_width (GTK_CONTAINER (window), 5);
 
@@ -301,7 +301,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "adjustment"
                                                'gtk-spin-button) 't)
- "The @code{\"adjustment\"} property of type @class{gtk-adjustment} 
+ "The @code{\"adjustment\"} property of type @class{gtk-adjustment}
   (Read / Write)@br{}
   The adjustment that holds the value of the spin button.")
 
@@ -541,106 +541,106 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_spin_button_configure ()
-;;; 
+;;;
 ;;; void gtk_spin_button_configure (GtkSpinButton *spin_button,
 ;;;                                 GtkAdjustment *adjustment,
 ;;;                                 gdouble climb_rate,
 ;;;                                 guint digits);
-;;; 
+;;;
 ;;; Changes the properties of an existing spin button. The adjustment, climb
 ;;; rate, and number of decimal places are all changed accordingly, after this
 ;;; function call.
-;;; 
+;;;
 ;;; spin_button :
 ;;;     a GtkSpinButton
-;;; 
+;;;
 ;;; adjustment :
 ;;;     a GtkAdjustment
-;;; 
+;;;
 ;;; climb_rate :
 ;;;     the new climb rate
-;;; 
+;;;
 ;;; digits :
 ;;;     the number of decimal places to display in the spin button
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_spin_button_new ()
-;;; 
+;;;
 ;;; GtkWidget * gtk_spin_button_new (GtkAdjustment *adjustment,
 ;;;                                  gdouble climb_rate,
 ;;;                                  guint digits);
-;;; 
+;;;
 ;;; Creates a new GtkSpinButton.
-;;; 
+;;;
 ;;; adjustment :
 ;;;     the GtkAdjustment object that this spin button should use, or NULL
-;;; 
+;;;
 ;;; climb_rate :
 ;;;     specifies how much the spin button changes when an arrow is clicked on
-;;; 
+;;;
 ;;; digits :
 ;;;     the number of decimal places to display
-;;; 
+;;;
 ;;; Returns :
 ;;;     The new spin button as a GtkWidget
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_spin_button_new_with_range ()
-;;; 
+;;;
 ;;; GtkWidget * gtk_spin_button_new_with_range (gdouble min,
 ;;;                                             gdouble max,
 ;;;                                             gdouble step);
-;;; 
+;;;
 ;;; This is a convenience constructor that allows creation of a numeric
 ;;; GtkSpinButton without manually creating an adjustment. The value is
 ;;; initially set to the minimum value and a page increment of 10 * step is the
 ;;; default. The precision of the spin button is equivalent to the precision of
 ;;; step.
-;;; 
+;;;
 ;;; Note that the way in which the precision is derived works best if step is a
 ;;; power of ten. If the resulting precision is not suitable for your needs, use
 ;;; gtk_spin_button_set_digits() to correct it.
-;;; 
+;;;
 ;;; min :
 ;;;     Minimum allowable value
-;;; 
+;;;
 ;;; max :
 ;;;     Maximum allowable value
-;;; 
+;;;
 ;;; step :
 ;;;     Increment added or subtracted by spinning the widget
-;;; 
+;;;
 ;;; Returns :
 ;;;     The new spin button as a GtkWidget
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_spin_button_set_adjustment ()
-;;; 
+;;;
 ;;; void gtk_spin_button_set_adjustment (GtkSpinButton *spin_button,
 ;;;                                      GtkAdjustment *adjustment);
-;;; 
+;;;
 ;;; Replaces the GtkAdjustment associated with spin_button.
-;;; 
+;;;
 ;;; spin_button :
 ;;;     a GtkSpinButton
-;;; 
+;;;
 ;;; adjustment :
 ;;;     a GtkAdjustment to replace the existing adjustment
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_spin_button_get_adjustment ()
-;;; 
+;;;
 ;;; GtkAdjustment * gtk_spin_button_get_adjustment (GtkSpinButton *spin_button);
-;;; 
+;;;
 ;;; Get the adjustment associated with a GtkSpinButton
-;;; 
+;;;
 ;;; spin_button :
 ;;;     a GtkSpinButton
-;;; 
+;;;
 ;;; Returns :
 ;;;     the GtkAdjustment of spin_button
 ;;; ----------------------------------------------------------------------------
@@ -665,42 +665,42 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_spin_button_set_increments ()
-;;; 
+;;;
 ;;; void gtk_spin_button_set_increments (GtkSpinButton *spin_button,
 ;;;                                      gdouble step,
 ;;;                                      gdouble page);
-;;; 
+;;;
 ;;; Sets the step and page increments for spin_button. This affects how quickly
 ;;; the value changes when the spin button's arrows are activated.
-;;; 
+;;;
 ;;; spin_button :
 ;;;     a GtkSpinButton
-;;; 
+;;;
 ;;; step :
 ;;;     increment applied for a button 1 press.
-;;; 
+;;;
 ;;; page :
 ;;;     increment applied for a button 2 press.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_spin_button_set_range ()
-;;; 
+;;;
 ;;; void gtk_spin_button_set_range (GtkSpinButton *spin_button,
 ;;;                                 gdouble min,
 ;;;                                 gdouble max);
-;;; 
+;;;
 ;;; Sets the minimum and maximum allowable values for spin_button.
-;;; 
+;;;
 ;;; If the current value is outside this range, it will be adjusted to fit
 ;;; within the range, otherwise it will remain unchanged.
-;;; 
+;;;
 ;;; spin_button :
 ;;;     a GtkSpinButton
-;;; 
+;;;
 ;;; min :
 ;;;     minimum allowable value
-;;; 
+;;;
 ;;; max :
 ;;;     maximum allowable value
 ;;; ----------------------------------------------------------------------------
@@ -721,14 +721,14 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_spin_button_set_value ()
-;;; 
+;;;
 ;;; void gtk_spin_button_set_value (GtkSpinButton *spin_button, gdouble value);
-;;; 
+;;;
 ;;; Sets the value of spin_button.
-;;; 
+;;;
 ;;; spin_button :
 ;;;     a GtkSpinButton
-;;; 
+;;;
 ;;; value :
 ;;;     the new value
 ;;; ----------------------------------------------------------------------------
@@ -787,15 +787,15 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_spin_button_set_wrap ()
-;;; 
+;;;
 ;;; void gtk_spin_button_set_wrap (GtkSpinButton *spin_button, gboolean wrap);
-;;; 
+;;;
 ;;; Sets the flag that determines if a spin button value wraps around to the
 ;;; opposite limit when the upper or lower limit of the range is exceeded.
-;;; 
+;;;
 ;;; spin_button :
 ;;;     a GtkSpinButton
-;;; 
+;;;
 ;;; wrap :
 ;;;     a flag indicating if wrapping behavior is performed
 ;;; ----------------------------------------------------------------------------
@@ -833,34 +833,34 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_spin_button_get_digits ()
-;;; 
+;;;
 ;;; guint gtk_spin_button_get_digits (GtkSpinButton *spin_button);
-;;; 
+;;;
 ;;; Fetches the precision of spin_button. See gtk_spin_button_set_digits().
-;;; 
+;;;
 ;;; spin_button :
 ;;;     a GtkSpinButton
-;;; 
+;;;
 ;;; Returns :
 ;;;     the current precision
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_spin_button_get_increments ()
-;;; 
+;;;
 ;;; void gtk_spin_button_get_increments (GtkSpinButton *spin_button,
 ;;;                                      gdouble *step,
 ;;;                                      gdouble *page);
-;;; 
+;;;
 ;;; Gets the current step and page the increments used by spin_button. See
 ;;; gtk_spin_button_set_increments().
-;;; 
+;;;
 ;;; spin_button :
 ;;;     a GtkSpinButton
-;;; 
+;;;
 ;;; step :
 ;;;     location to store step increment, or NULL
-;;; 
+;;;
 ;;; page :
 ;;;     location to store page increment, or NULL
 ;;; ----------------------------------------------------------------------------
@@ -885,19 +885,19 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_spin_button_get_range ()
-;;; 
+;;;
 ;;; void gtk_spin_button_get_range (GtkSpinButton *spin_button,
 ;;;                                 gdouble *min,
 ;;;                                 gdouble *max);
-;;; 
+;;;
 ;;; Gets the range allowed for spin_button. See gtk_spin_button_set_range().
-;;; 
+;;;
 ;;; spin_button :
 ;;;     a GtkSpinButton
-;;; 
+;;;
 ;;; min :
 ;;;     location to store minimum allowed value, or NULL
-;;; 
+;;;
 ;;; max :
 ;;;     location to store maximum allowed value, or NULL
 ;;; ----------------------------------------------------------------------------
@@ -956,25 +956,25 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_spin_button_get_wrap ()
-;;; 
+;;;
 ;;; gboolean gtk_spin_button_get_wrap (GtkSpinButton *spin_button);
-;;; 
+;;;
 ;;; Returns whether the spin button's value wraps around to the opposite limit
 ;;; when the upper or lower limit of the range is exceeded. See
 ;;; gtk_spin_button_set_wrap().
-;;; 
+;;;
 ;;; spin_button :
 ;;;     a GtkSpinButton
-;;; 
+;;;
 ;;; Returns :
 ;;;     TRUE if the spin button wraps around
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; GTK_INPUT_ERROR
-;;; 
+;;;
 ;;; #define GTK_INPUT_ERROR -1
-;;; 
+;;;
 ;;; Constant to return from a signal handler for the "input" signal in case of
 ;;; conversion failure.
 ;;; ----------------------------------------------------------------------------

@@ -30,11 +30,11 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; GtkToggleToolButton
-;;; 
+;;;
 ;;; A GtkToolItem containing a toggle button
-;;;     
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;;     GtkToggleToolButton
 ;;;
 ;;;     gtk_toggle_tool_button_new
@@ -114,70 +114,70 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_toggle_tool_button_new ()
-;;; 
+;;;
 ;;; GtkToolItem * gtk_toggle_tool_button_new (void);
-;;; 
+;;;
 ;;; Returns a new GtkToggleToolButton
-;;; 
+;;;
 ;;; Returns :
 ;;;     a newly created GtkToggleToolButton
-;;; 
+;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_toggle_tool_button_new_from_stock ()
-;;; 
+;;;
 ;;; GtkToolItem * gtk_toggle_tool_button_new_from_stock (const gchar *stock_id);
-;;; 
+;;;
 ;;; Creates a new GtkToggleToolButton containing the image and text from a stock
 ;;; item. Some stock ids have preprocessor macros like GTK_STOCK_OK and
 ;;; GTK_STOCK_APPLY.
-;;; 
+;;;
 ;;; It is an error if stock_id is not a name of a stock item.
-;;; 
+;;;
 ;;; stock_id :
 ;;;     the name of the stock item
-;;; 
+;;;
 ;;; Returns :
 ;;;     A new GtkToggleToolButton
-;;; 
+;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_toggle_tool_button_set_active ()
-;;; 
+;;;
 ;;; void gtk_toggle_tool_button_set_active (GtkToggleToolButton *button,
 ;;;                                         gboolean is_active);
-;;; 
+;;;
 ;;; Sets the status of the toggle tool button. Set to TRUE if you want the
 ;;; GtkToggleButton to be 'pressed in', and FALSE to raise it. This action
 ;;; causes the toggled signal to be emitted.
-;;; 
+;;;
 ;;; button :
 ;;;     a GtkToggleToolButton
-;;; 
+;;;
 ;;; is_active :
 ;;;     whether button should be active
-;;; 
+;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_toggle_tool_button_get_active ()
-;;; 
+;;;
 ;;; gboolean gtk_toggle_tool_button_get_active (GtkToggleToolButton *button);
-;;; 
+;;;
 ;;; Queries a GtkToggleToolButton and returns its current state. Returns TRUE if
 ;;; the toggle button is pressed in and FALSE if it is raised.
-;;; 
+;;;
 ;;; button :
 ;;;     a GtkToggleToolButton
-;;; 
+;;;
 ;;; Returns :
 ;;;     TRUE if the toggle tool button is pressed in, FALSE if not
-;;; 
+;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 

@@ -1,28 +1,28 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.alignment.lisp
-;;; 
+;;;
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;; 
+;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
 ;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
-;;; 
+;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
-;;; 
+;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
 ;;; as published by the Free Software Foundation, either version 3 of the
 ;;; License, or (at your option) any later version and with a preamble to
 ;;; the GNU Lesser General Public License that clarifies the terms for use
 ;;; with Lisp programs and is referred as the LLGPL.
-;;; 
+;;;
 ;;; This program is distributed in the hope that it will be useful,
 ;;; but WITHOUT ANY WARRANTY; without even the implied warranty of
 ;;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ;;; GNU Lesser General Public License for more details.
-;;; 
+;;;
 ;;; You should have received a copy of the GNU Lesser General Public
 ;;; License along with this program and the preamble to the Gnu Lesser
 ;;; General Public License.  If not, see <http://www.gnu.org/licenses/>
@@ -30,13 +30,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; GtkAlignment
-;;; 
+;;;
 ;;; A widget which controls the alignment and size of its child
-;;;     
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;;     GtkAlignment
-;;;     
+;;;
 ;;;     gtk_alignment_new
 ;;;     gtk_alignment_set
 ;;;     gtk_alignment_get_padding
@@ -96,7 +96,7 @@
   expand to fill the space allocated to the @sym{gtk-alignment}. The values can
   range from 0 (meaning the child does not expand at all) to 1 (meaning the
   child expands to fill all of the available space).
-  
+
   The align settings are used to place the child widget within the available
   area. The values range from 0 (top or left) to 1 (bottom or right). Of
   course, if the scale settings are both set to 1, the alignment settings have

@@ -30,13 +30,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; GtkWindowGroup
-;;; 
+;;;
 ;;; Limit the effect of grabs
-;;;     
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;;     GtkWindowGroup
-;;;     
+;;;
 ;;;     gtk_window_group_new
 ;;;     gtk_window_group_add_window
 ;;;     gtk_window_group_remove_window

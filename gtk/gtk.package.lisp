@@ -29,42 +29,36 @@
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
 
+(in-package :cl-user)
+
+(defvar *cl-cffi-gtk-build-time* (multiple-value-list (get-decoded-time)))
+(defvar *cl-cffi-gtk-version* "1.0.0")
+
+(export '*cl-cffi-gtk-build-time*)
+(export '*cl-cffi-gtk-version*)
+
 (defpackage :gtk
   (:use :cl :cl-user :cffi
    :gobject :gdk :gdk-pixbuf :glib :gio :iter :pango :cairo)
-  (:export #:cl-cffi-gtk-build-info
-
-;           #:define-child-property
-;           #:container-class-child-properties
-;           #:generate-child-properties
-;           #:tree-lisp-store
-;           #:tree-lisp-store-root
-;           #:tree-node
-;           #:make-tree-node
-;           #:tree-node-tree
-;           #:tree-node-parent
-;           #:tree-node-id
-;           #:tree-node-item
-;           #:tree-node-children
-;           #:tree-node-insert-at
-;           #:tree-node-remove-at
-;           #:tree-node-child-at
-;           #:tree-lisp-store-add-column
-
-;           #:gtk-call-aborted
-;           #:gtk-call-aborted-condition
-;           #:let-ui
-           ))
-
-(defpackage :gtk-examples
-  (:use :cl :gtk :gdk :gobject)
-  (:export #:test-dialog))
+  (:export #:cl-cffi-gtk-build-info))
 
 (in-package :gtk)
 
-#+sbcl (when (and (find-package "SB-EXT")
-                  (find-symbol "SET-FLOATING-POINT-MODES" (find-package "SB-EXT")))
-         (funcall (find-symbol "SET-FLOATING-POINT-MODES" (find-package "SB-EXT")) :traps nil))
+(glib::at-init ()
+  (eval-when (:compile-toplevel :load-toplevel :execute)
+    (format t "~&Loading GTK ...~%")
+    (define-foreign-library gtk
+      ((:and :unix (:not :darwin))
+       (:or "libgtk-3.so.0" "libgtk-3.so"))
+      (:darwin (:or "libgtk-x11-2.0.0.dylib" "libgtk-x11-2.0.dylib"))
+      (:windows (:or "libgtk-3-0.dll" "libgtk-win32-2.0-0.dll"))
+      (t "libgtk-3-0")))
+  (use-foreign-library gtk))
+
+#+sbcl 
+(when (and (find-package "SB-EXT")
+           (find-symbol "SET-FLOATING-POINT-MODES" (find-package "SB-EXT")))
+  (funcall (find-symbol "SET-FLOATING-POINT-MODES" (find-package "SB-EXT")) :traps nil))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -3168,7 +3162,7 @@ setup_tree (void)
       @about-function{gtk-tool-shell-rebuild-menu}
       @about-function{gtk-tool-shell-get-text-size-group}
     @end{subsection}
-    @begin[GtkTollbar]{subsection}
+    @begin[GtkToolbar]{subsection}
       Create bars of buttons and other widgets.
 
       @about-class{gtk-toolbar}

@@ -1,28 +1,28 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.scale.lisp
-;;; 
+;;;
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;; 
+;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
 ;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
-;;; 
+;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
-;;; 
+;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
 ;;; as published by the Free Software Foundation, either version 3 of the
 ;;; License, or (at your option) any later version and with a preamble to
 ;;; the GNU Lesser General Public License that clarifies the terms for use
 ;;; with Lisp programs and is referred as the LLGPL.
-;;; 
+;;;
 ;;; This program is distributed in the hope that it will be useful,
 ;;; but WITHOUT ANY WARRANTY; without even the implied warranty of
 ;;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ;;; GNU Lesser General Public License for more details.
-;;; 
+;;;
 ;;; You should have received a copy of the GNU Lesser General Public
 ;;; License along with this program and the preamble to the Gnu Lesser
 ;;; General Public License.  If not, see <http://www.gnu.org/licenses/>
@@ -30,13 +30,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; GtkScale
-;;; 
+;;;
 ;;; A slider widget for selecting a value from a range
-;;;     
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;;     GtkScale
-;;;     
+;;;
 ;;;     gtk_scale_new
 ;;;     gtk_scale_new_with_range
 ;;;     gtk_scale_set_digits
@@ -373,7 +373,7 @@
   @return{The number of decimal places that are displayed.}
   Gets the number of decimal places that are displayed in the value."
   (gtk-scale-digits scale))
-  
+
 (export 'gtk-scale-get-digits)
 
 ;;; ----------------------------------------------------------------------------
@@ -506,7 +506,7 @@
   @code{:top} are drawn to the left of the scale, anything else to the right.
 
   If markup is not @code{nil}, text is shown next to the tick mark.
- 
+
   To remove marks from a scale, use the function @fun{gtk-scale-clear-marks}.
 
   Since 2.16
@@ -539,13 +539,13 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkHScale
-;;; 
+;;;
 ;;; A horizontal slider widget for selecting a value from a range
-;;;     
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;;     GtkHScale
-;;;     
+;;;
 ;;;     gtk_hscale_new
 ;;;     gtk_hscale_new_with_range
 ;;; ----------------------------------------------------------------------------
@@ -649,13 +649,13 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkVScale
-;;; 
+;;;
 ;;; A vertical slider widget for selecting a value from a range
-;;;     
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;;     GtkVScale
-;;;     
+;;;
 ;;;     gtk_vscale_new
 ;;;     gtk_vscale_new_with_range
 ;;; ----------------------------------------------------------------------------

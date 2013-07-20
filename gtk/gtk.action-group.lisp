@@ -589,7 +589,7 @@
 ;;; gtk_action_group_add_actions ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_action_group_add_actions" 
+(defcfun ("gtk_action_group_add_actions"
           %gtk-action-group-add-actions) :void
   (action-group (g-object gtk-action-group))
   (entries (:pointer (:struct gtk-action-entry)))

@@ -30,13 +30,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; GtkStatusIcon
-;;; 
+;;;
 ;;; Display an icon in the system tray
-;;;     
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;;     GtkStatusIcon
-;;;     
+;;;
 ;;;     gtk_status_icon_new
 ;;;     gtk_status_icon_new_from_pixbuf
 ;;;     gtk_status_icon_new_from_file
@@ -622,312 +622,312 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_status_icon_new ()
-;;; 
+;;;
 ;;; GtkStatusIcon * gtk_status_icon_new (void);
-;;; 
+;;;
 ;;; Creates an empty status icon object.
-;;; 
+;;;
 ;;; Returns :
 ;;;     a new GtkStatusIcon
-;;; 
+;;;
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_status_icon_new_from_pixbuf ()
-;;; 
+;;;
 ;;; GtkStatusIcon * gtk_status_icon_new_from_pixbuf (GdkPixbuf *pixbuf);
-;;; 
+;;;
 ;;; Creates a status icon displaying pixbuf.
-;;; 
+;;;
 ;;; The image will be scaled down to fit in the available space in the
 ;;; notification area, if necessary.
-;;; 
+;;;
 ;;; pixbuf :
 ;;;     a GdkPixbuf
-;;; 
+;;;
 ;;; Returns :
 ;;;     a new GtkStatusIcon
-;;; 
+;;;
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_status_icon_new_from_file ()
-;;; 
+;;;
 ;;; GtkStatusIcon * gtk_status_icon_new_from_file (const gchar *filename);
-;;; 
+;;;
 ;;; Creates a status icon displaying the file filename.
-;;; 
+;;;
 ;;; The image will be scaled down to fit in the available space in the
 ;;; notification area, if necessary.
-;;; 
+;;;
 ;;; filename :
 ;;;     a filename
-;;; 
+;;;
 ;;; Returns :
 ;;;     a new GtkStatusIcon
-;;; 
+;;;
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_status_icon_new_from_stock ()
-;;; 
+;;;
 ;;; GtkStatusIcon * gtk_status_icon_new_from_stock (const gchar *stock_id);
-;;; 
+;;;
 ;;; Creates a status icon displaying a stock icon. Sample stock icon names are
 ;;; GTK_STOCK_OPEN, GTK_STOCK_QUIT. You can register your own stock icon names,
 ;;; see gtk_icon_factory_add_default() and gtk_icon_factory_add().
-;;; 
+;;;
 ;;; stock_id :
 ;;;     a stock icon id
-;;; 
+;;;
 ;;; Returns :
 ;;;     a new GtkStatusIcon
-;;; 
+;;;
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_status_icon_new_from_icon_name ()
-;;; 
+;;;
 ;;; GtkStatusIcon * gtk_status_icon_new_from_icon_name (const gchar *icon_name);
-;;; 
+;;;
 ;;; Creates a status icon displaying an icon from the current icon theme. If the
 ;;; current icon theme is changed, the icon will be updated appropriately.
-;;; 
+;;;
 ;;; icon_name :
 ;;;     an icon name
-;;; 
+;;;
 ;;; Returns :
 ;;;     a new GtkStatusIcon
-;;; 
+;;;
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_status_icon_new_from_gicon ()
-;;; 
+;;;
 ;;; GtkStatusIcon * gtk_status_icon_new_from_gicon (GIcon *icon);
-;;; 
+;;;
 ;;; Creates a status icon displaying a GIcon. If the icon is a themed icon, it
 ;;; will be updated when the theme changes.
-;;; 
+;;;
 ;;; icon :
 ;;;     a GIcon
-;;; 
+;;;
 ;;; Returns :
 ;;;     a new GtkStatusIcon
-;;; 
+;;;
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_status_icon_set_from_pixbuf ()
-;;; 
+;;;
 ;;; void gtk_status_icon_set_from_pixbuf (GtkStatusIcon *status_icon,
 ;;;                                       GdkPixbuf *pixbuf);
-;;; 
+;;;
 ;;; Makes status_icon display pixbuf. See gtk_status_icon_new_from_pixbuf() for
 ;;; details.
-;;; 
+;;;
 ;;; status_icon :
 ;;;     a GtkStatusIcon
-;;; 
+;;;
 ;;; pixbuf :
 ;;;     a GdkPixbuf or NULL
-;;; 
+;;;
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_status_icon_set_from_file ()
-;;; 
+;;;
 ;;; void gtk_status_icon_set_from_file (GtkStatusIcon *status_icon,
 ;;;                                     const gchar *filename);
-;;; 
+;;;
 ;;; Makes status_icon display the file filename. See
 ;;; gtk_status_icon_new_from_file() for details.
-;;; 
+;;;
 ;;; status_icon :
 ;;;     a GtkStatusIcon
-;;; 
+;;;
 ;;; filename :
 ;;;     a filename
-;;; 
+;;;
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_status_icon_set_from_stock ()
-;;; 
+;;;
 ;;; void gtk_status_icon_set_from_stock (GtkStatusIcon *status_icon,
 ;;;                                      const gchar *stock_id);
-;;; 
+;;;
 ;;; Makes status_icon display the stock icon with the id stock_id. See
 ;;; gtk_status_icon_new_from_stock() for details.
-;;; 
+;;;
 ;;; status_icon :
 ;;;     a GtkStatusIcon
-;;; 
+;;;
 ;;; stock_id :
 ;;;     a stock icon id
-;;; 
+;;;
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_status_icon_set_from_icon_name ()
-;;; 
+;;;
 ;;; void gtk_status_icon_set_from_icon_name (GtkStatusIcon *status_icon,
 ;;;                                          const gchar *icon_name);
-;;; 
+;;;
 ;;; Makes status_icon display the icon named icon_name from the current icon
 ;;; theme. See gtk_status_icon_new_from_icon_name() for details.
-;;; 
+;;;
 ;;; status_icon :
 ;;;     a GtkStatusIcon
-;;; 
+;;;
 ;;; icon_name :
 ;;;     an icon name
-;;; 
+;;;
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_status_icon_set_from_gicon ()
-;;; 
+;;;
 ;;; void gtk_status_icon_set_from_gicon (GtkStatusIcon *status_icon,
 ;;;                                      GIcon *icon);
-;;; 
+;;;
 ;;; Makes status_icon display the GIcon. See gtk_status_icon_new_from_gicon()
 ;;; for details.
-;;; 
+;;;
 ;;; status_icon :
 ;;;     a GtkStatusIcon
-;;; 
+;;;
 ;;; icon :
 ;;;     a GIcon
-;;; 
+;;;
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_status_icon_get_storage_type ()
-;;; 
+;;;
 ;;; GtkImageType gtk_status_icon_get_storage_type (GtkStatusIcon *status_icon);
-;;; 
+;;;
 ;;; Gets the type of representation being used by the GtkStatusIcon to store
 ;;; image data. If the GtkStatusIcon has no image data, the return value will be
 ;;; GTK_IMAGE_EMPTY.
-;;; 
+;;;
 ;;; status_icon :
 ;;;     a GtkStatusIcon
-;;; 
+;;;
 ;;; Returns :
 ;;;     the image representation being used
-;;; 
+;;;
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_status_icon_get_pixbuf ()
-;;; 
+;;;
 ;;; GdkPixbuf * gtk_status_icon_get_pixbuf (GtkStatusIcon *status_icon);
-;;; 
+;;;
 ;;; Gets the GdkPixbuf being displayed by the GtkStatusIcon. The storage type of
 ;;; the status icon must be GTK_IMAGE_EMPTY or GTK_IMAGE_PIXBUF (see
 ;;; gtk_status_icon_get_storage_type()). The caller of this function does not
 ;;; own a reference to the returned pixbuf.
-;;; 
+;;;
 ;;; status_icon :
 ;;;     a GtkStatusIcon
-;;; 
+;;;
 ;;; Returns :
 ;;;     the displayed pixbuf, or NULL if the image is empty
-;;; 
+;;;
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_status_icon_get_stock ()
-;;; 
+;;;
 ;;; const gchar * gtk_status_icon_get_stock (GtkStatusIcon *status_icon);
-;;; 
+;;;
 ;;; Gets the id of the stock icon being displayed by the GtkStatusIcon. The
 ;;; storage type of the status icon must be GTK_IMAGE_EMPTY or GTK_IMAGE_STOCK
 ;;; (see gtk_status_icon_get_storage_type()). The returned string is owned by
 ;;; the GtkStatusIcon and should not be freed or modified.
-;;; 
+;;;
 ;;; status_icon :
 ;;;     a GtkStatusIcon
-;;; 
+;;;
 ;;; Returns :
 ;;;     stock id of the displayed stock icon, or NULL if the image is empty.
-;;; 
+;;;
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_status_icon_get_icon_name ()
-;;; 
+;;;
 ;;; const gchar * gtk_status_icon_get_icon_name (GtkStatusIcon *status_icon);
-;;; 
+;;;
 ;;; Gets the name of the icon being displayed by the GtkStatusIcon. The storage
 ;;; type of the status icon must be GTK_IMAGE_EMPTY or GTK_IMAGE_ICON_NAME (see
 ;;; gtk_status_icon_get_storage_type()). The returned string is owned by the
 ;;; GtkStatusIcon and should not be freed or modified.
-;;; 
+;;;
 ;;; status_icon :
 ;;;     a GtkStatusIcon
-;;; 
+;;;
 ;;; Returns :
 ;;;     name of the displayed icon, or NULL if the image is empty.
-;;; 
+;;;
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_status_icon_get_gicon ()
-;;; 
+;;;
 ;;; GIcon * gtk_status_icon_get_gicon (GtkStatusIcon *status_icon);
-;;; 
+;;;
 ;;; Retrieves the GIcon being displayed by the GtkStatusIcon. The storage type
 ;;; of the status icon must be GTK_IMAGE_EMPTY or GTK_IMAGE_GICON (see
 ;;; gtk_status_icon_get_storage_type()). The caller of this function does not
 ;;; own a reference to the returned GIcon.
-;;; 
+;;;
 ;;; If this function fails, icon is left unchanged;
-;;; 
+;;;
 ;;; status_icon :
 ;;;     a GtkStatusIcon
-;;; 
+;;;
 ;;; Returns :
 ;;;     the displayed icon, or NULL if the image is empty
-;;; 
+;;;
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_status_icon_get_size ()
-;;; 
+;;;
 ;;; gint gtk_status_icon_get_size (GtkStatusIcon *status_icon);
-;;; 
+;;;
 ;;; Gets the size in pixels that is available for the image. Stock icons and
 ;;; named icons adapt their size automatically if the size of the notification
 ;;; area changes. For other storage types, the size-changed signal can be used
 ;;; to react to size changes.
-;;; 
+;;;
 ;;; Note that the returned size is only meaningful while the status icon is
 ;;; embedded (see gtk_status_icon_is_embedded()).
-;;; 
+;;;
 ;;; status_icon :
 ;;;     a GtkStatusIcon
-;;; 
+;;;
 ;;; Returns :
 ;;;     the size that is available for the image
-;;; 
+;;;
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
@@ -955,7 +955,7 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk-status-icon-get-screen
-;;; ---------------------------------------------------------------------------- 
+;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-status-icon-get-screen))
 
@@ -1023,130 +1023,130 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_status_icon_set_tooltip_markup ()
-;;; 
+;;;
 ;;; void gtk_status_icon_set_tooltip_markup (GtkStatusIcon *status_icon,
 ;;;                                          const gchar *markup);
-;;; 
+;;;
 ;;; Sets markup as the contents of the tooltip, which is marked up with the
 ;;; Pango text markup language.
-;;; 
+;;;
 ;;; This function will take care of setting "has-tooltip" to TRUE and of the
 ;;; default handler for the "query-tooltip" signal.
-;;; 
+;;;
 ;;; See also the "tooltip-markup" property and gtk_tooltip_set_markup().
-;;; 
+;;;
 ;;; status_icon :
 ;;;     a GtkStatusIcon
-;;; 
+;;;
 ;;; markup :
 ;;;     the contents of the tooltip for status_icon, or NULL
-;;; 
+;;;
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_status_icon_get_tooltip_markup ()
-;;; 
+;;;
 ;;; gchar * gtk_status_icon_get_tooltip_markup (GtkStatusIcon *status_icon);
-;;; 
+;;;
 ;;; Gets the contents of the tooltip for status_icon.
-;;; 
+;;;
 ;;; status_icon :
 ;;;     a GtkStatusIcon
-;;; 
+;;;
 ;;; Returns :
 ;;;     the tooltip text, or NULL. You should free the returned string with
 ;;;     g_free() when done.
-;;; 
+;;;
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_status_icon_set_has_tooltip ()
-;;; 
+;;;
 ;;; void gtk_status_icon_set_has_tooltip (GtkStatusIcon *status_icon,
 ;;;                                       gboolean has_tooltip);
-;;; 
+;;;
 ;;; Sets the has-tooltip property on status_icon to has_tooltip. See
 ;;; "has-tooltip" for more information.
-;;; 
+;;;
 ;;; status_icon :
 ;;;     a GtkStatusIcon
-;;; 
+;;;
 ;;; has_tooltip :
 ;;;     whether or not status_icon has a tooltip
-;;; 
+;;;
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_status_icon_get_has_tooltip ()
-;;; 
+;;;
 ;;; gboolean gtk_status_icon_get_has_tooltip (GtkStatusIcon *status_icon);
-;;; 
+;;;
 ;;; Returns the current value of the has-tooltip property. See "has-tooltip" for
 ;;; more information.
-;;; 
+;;;
 ;;; status_icon :
 ;;;     a GtkStatusIcon
-;;; 
+;;;
 ;;; Returns :
 ;;;     current value of has-tooltip on status_icon.
-;;; 
+;;;
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_status_icon_set_title ()
-;;; 
+;;;
 ;;; void gtk_status_icon_set_title (GtkStatusIcon *status_icon,
 ;;;                                 const gchar *title);
-;;; 
+;;;
 ;;; Sets the title of this tray icon. This should be a short, human-readable,
 ;;; localized string describing the tray icon. It may be used by tools like
 ;;; screen readers to render the tray icon.
-;;; 
+;;;
 ;;; status_icon :
 ;;;     a GtkStatusIcon
-;;; 
+;;;
 ;;; title :
 ;;;     the title
-;;; 
+;;;
 ;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_status_icon_get_title ()
-;;; 
+;;;
 ;;; const gchar * gtk_status_icon_get_title (GtkStatusIcon *status_icon);
-;;; 
+;;;
 ;;; Gets the title of this tray icon. See gtk_status_icon_set_title().
-;;; 
+;;;
 ;;; status_icon :
 ;;;     a GtkStatusIcon
-;;; 
+;;;
 ;;; Returns :
 ;;;     the title of the status icon
-;;; 
+;;;
 ;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_status_icon_set_name ()
-;;; 
+;;;
 ;;; void gtk_status_icon_set_name (GtkStatusIcon *status_icon,
 ;;;                                const gchar *name);
-;;; 
+;;;
 ;;; Sets the name of this tray icon. This should be a string identifying this
 ;;; icon. It is may be used for sorting the icons in the tray and will not be
 ;;; shown to the user.
-;;; 
+;;;
 ;;; status_icon :
 ;;;     a GtkStatusIcon
-;;; 
+;;;
 ;;; name :
 ;;;     the name
-;;; 
+;;;
 ;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
 
@@ -1214,96 +1214,96 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_status_icon_position_menu ()
-;;; 
+;;;
 ;;; void gtk_status_icon_position_menu (GtkMenu *menu,
 ;;;                                     gint *x,
 ;;;                                     gint *y,
 ;;;                                     gboolean *push_in,
 ;;;                                     gpointer user_data);
-;;; 
+;;;
 ;;; Menu positioning function to use with gtk_menu_popup() to position menu
 ;;; aligned to the status icon user_data.
-;;; 
+;;;
 ;;; menu :
 ;;;     the GtkMenu
-;;; 
+;;;
 ;;; x :
 ;;;     return location for the x position
-;;; 
+;;;
 ;;; y :
 ;;;     return location for the y position
-;;; 
+;;;
 ;;; push_in :
 ;;;     whether the first menu item should be offset (pushed in) to be aligned
 ;;;     with the menu popup position (only useful for GtkOptionMenu)
-;;; 
+;;;
 ;;; user_data :
 ;;;     the status icon to position the menu on
-;;; 
+;;;
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_status_icon_get_geometry ()
-;;; 
+;;;
 ;;; gboolean gtk_status_icon_get_geometry (GtkStatusIcon *status_icon,
 ;;;                                        GdkScreen **screen,
 ;;;                                        GdkRectangle *area,
 ;;;                                        GtkOrientation *orientation);
-;;; 
+;;;
 ;;; Obtains information about the location of the status icon on screen. This
 ;;; information can be used to e.g. position popups like notification bubbles.
-;;; 
+;;;
 ;;; See gtk_status_icon_position_menu() for a more convenient alternative for
 ;;; positioning menus.
-;;; 
+;;;
 ;;; Note that some platforms do not allow GTK+ to provide this information, and
 ;;; even on platforms that do allow it, the information is not reliable unless
 ;;; the status icon is embedded in a notification area, see
 ;;; gtk_status_icon_is_embedded().
-;;; 
+;;;
 ;;; status_icon :
 ;;;     a GtkStatusIcon
-;;; 
+;;;
 ;;; screen :
 ;;;     return location for the screen, or NULL if the information is not
 ;;;     needed
-;;; 
+;;;
 ;;; area :
 ;;;     return location for the area occupied by the status icon, or NULL
-;;; 
+;;;
 ;;; orientation :
 ;;;     return location for the orientation of the panel in which the status
 ;;;     icon is embedded, or NULL. A panel at the top or bottom of the screen is
 ;;;     horizontal, a panel at the left or right is vertical
-;;; 
+;;;
 ;;; Returns :
 ;;;     TRUE if the location information has been filled in
-;;; 
+;;;
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_status_icon_get_x11_window_id ()
-;;; 
+;;;
 ;;; guint32 gtk_status_icon_get_x11_window_id (GtkStatusIcon *status_icon);
-;;; 
+;;;
 ;;; This function is only useful on the X11/freedesktop.org platform. It returns
 ;;; a window ID for the widget in the underlying status icon implementation.
 ;;; This is useful for the Galago notification service, which can send a window
 ;;; ID in the protocol in order for the server to position notification windows
 ;;; pointing to a status icon reliably.
-;;; 
+;;;
 ;;; This function is not intended for other use cases which are more likely to
 ;;; be met by one of the non-X11 specific methods, such as
 ;;; gtk_status_icon_position_menu().
-;;; 
+;;;
 ;;; status_icon :
 ;;;     a GtkStatusIcon
-;;; 
+;;;
 ;;; Returns :
 ;;;     An 32 bit unsigned integer identifier for the underlying X11 Window
-;;; 
+;;;
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
 

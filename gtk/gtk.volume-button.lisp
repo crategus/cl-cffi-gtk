@@ -30,13 +30,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; GtkVolumeButton
-;;; 
+;;;
 ;;; A button which pops up a volume control
-;;;     
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;;     GtkVolumeButton
-;;;     
+;;;
 ;;;     gtk_volume_button_new
 ;;;
 ;;; Object Hierarchy

@@ -339,8 +339,8 @@
 (defcfun ("gtk_combo_box_text_get_active_text"
            gtk-combo-box-text-get-active-text) :string
  #+cl-cffi-gtk-documentation
- "@version{2013-6-1}
-  @argument[combo-box]{A @class{gtk-combo-box-text} widget}
+ "@version{2013-7-15}
+  @argument[combo-box]{a @class{gtk-combo-box-text} widget}
   @begin{return}
     A string containing the currently active text.
   @end{return}

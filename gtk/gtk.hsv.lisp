@@ -30,11 +30,11 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; GtkHSV
-;;; 
+;;;
 ;;; A 'color wheel' widget
-;;; 
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;;     GtkHSV
 ;;;
 ;;;     gtk_hsv_new
@@ -47,7 +47,7 @@
 ;;;     gtk_rgb_to_hsv
 ;;;
 ;;; Signals
-;;; 
+;;;
 ;;;   "changed"                                        : Run First
 ;;;   "move"                                           : Action
 ;;; ----------------------------------------------------------------------------
@@ -90,14 +90,14 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_hsv_new ()
-;;; 
+;;;
 ;;; GtkWidget * gtk_hsv_new (void)
-;;; 
+;;;
 ;;; Creates a new HSV color selector.
-;;; 
+;;;
 ;;; Returns :
 ;;;     A newly-created HSV color selector.
-;;; 
+;;;
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
 
@@ -147,7 +147,7 @@
   @begin{short}
     Queries the current color in an HSV color selector. Returned values will be
     in the [0.0, 1.0] range.
-  @end{short} 
+  @end{short}
 
   Since 2.14"
   (with-foreign-objects ((h :double) (s :double) (v :double))

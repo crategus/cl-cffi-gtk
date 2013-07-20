@@ -30,18 +30,18 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; GtkRecentChooserDialog
-;;; 
+;;;
 ;;; Displays recently used files in a dialog
-;;;     
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;;     GtkRecentChooserDialog
 ;;;
 ;;;     gtk_recent_chooser_dialog_new
 ;;;     gtk_recent_chooser_dialog_new_for_manager
-;;; 
+;;;
 ;;; Object Hierarchy
-;;; 
+;;;
 ;;;   GObject
 ;;;    +----GInitiallyUnowned
 ;;;          +----GtkWidget
@@ -50,9 +50,9 @@
 ;;;                            +----GtkWindow
 ;;;                                  +----GtkDialog
 ;;;                                        +----GtkRecentChooserDialog
-;;; 
+;;;
 ;;; Implemented Interfaces
-;;; 
+;;;
 ;;; GtkRecentChooserDialog implements AtkImplementorIface, GtkBuildable and
 ;;; GtkRecentChooser.
 ;;; ----------------------------------------------------------------------------
@@ -117,68 +117,68 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_chooser_dialog_new ()
-;;; 
+;;;
 ;;; GtkWidget * gtk_recent_chooser_dialog_new (const gchar *title,
 ;;;                                            GtkWindow *parent,
 ;;;                                            const gchar *first_button_text,
 ;;;                                            ...);
-;;; 
+;;;
 ;;; Creates a new GtkRecentChooserDialog. This function is analogous to
 ;;; gtk_dialog_new_with_buttons().
-;;; 
+;;;
 ;;; title :
 ;;;     Title of the dialog, or NULL.
-;;; 
+;;;
 ;;; parent :
 ;;;     Transient parent of the dialog, or NULL,.
-;;; 
+;;;
 ;;; first_button_text :
 ;;;     stock ID or text to go in the first button, or NULL
-;;; 
+;;;
 ;;; ... :
 ;;;     response ID for the first button, then additional (button, id) pairs,
 ;;;     ending with NULL
-;;; 
+;;;
 ;;; Returns :
 ;;;     a new GtkRecentChooserDialog
-;;; 
+;;;
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_chooser_dialog_new_for_manager ()
-;;; 
+;;;
 ;;; GtkWidget * gtk_recent_chooser_dialog_new_for_manager
 ;;;                                             (const gchar *title,
 ;;;                                              GtkWindow *parent,
 ;;;                                              GtkRecentManager *manager,
 ;;;                                              const gchar *first_button_text,
 ;;;                                              ...);
-;;; 
+;;;
 ;;; Creates a new GtkRecentChooserDialog with a specified recent manager.
-;;; 
+;;;
 ;;; This is useful if you have implemented your own recent manager, or if you
 ;;; have a customized instance of a GtkRecentManager object.
-;;; 
+;;;
 ;;; title :
 ;;;     Title of the dialog, or NULL
-;;; 
+;;;
 ;;; parent :
 ;;;     Transient parent of the dialog, or NULL,
-;;; 
+;;;
 ;;; manager :
 ;;;     a GtkRecentManager
-;;; 
+;;;
 ;;; first_button_text :
 ;;;     stock ID or text to go in the first button, or NULL
-;;; 
+;;;
 ;;; ... :
 ;;;     response ID for the first button, then additional (button, id) pairs,
 ;;;     ending with NULL
-;;; 
+;;;
 ;;; Returns :
 ;;;     a new GtkRecentChooserDialog
-;;; 
+;;;
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 

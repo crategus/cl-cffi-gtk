@@ -30,11 +30,11 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; GtkMisc
-;;; 
+;;;
 ;;; Base class for widgets with alignments and padding
-;;; 
+;;;
 ;;;     GtkMisc
-;;;     
+;;;
 ;;;     gtk_misc_set_alignment
 ;;;     gtk_misc_set_padding
 ;;;     gtk_misc_get_alignment

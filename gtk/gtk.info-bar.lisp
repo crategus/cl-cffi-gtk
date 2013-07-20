@@ -27,13 +27,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; GtkInfoBar
-;;; 
+;;;
 ;;; Report important messages to the user
-;;;     
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;;     GtkInfoBar
-;;;     
+;;;
 ;;;     gtk_info_bar_new
 ;;;     gtk_info_bar_new_with_buttons
 ;;;     gtk_info_bar_add_action_widget
@@ -90,7 +90,7 @@
   can by classified as error message, warning, informational message, etc, by
   using the function @fun{gtk-info-bar-set-message-type}. GTK+ uses the message
   type to determine the background color of the message area.
- 
+
   @b{Example:} Simple @sym{gtk-info-bar} usage.
   @begin{pre}
  /* set up info bar */
@@ -107,9 +107,9 @@
  gtk_grid_attach (GTK_GRID (grid),
                   info_bar,
                   0, 2, 1, 1);
- 
+
  /* ... */
- 
+
  /* show an error message */
  gtk_label_set_text (GTK_LABEL (message_label), error_message);
  gtk_info_bar_set_message_type (GTK_INFO_BAR (info_bar),

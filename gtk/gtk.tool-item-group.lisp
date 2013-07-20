@@ -26,11 +26,11 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; GtkToolItemGroup
-;;; 
+;;;
 ;;; A sub container used in a tool palette
-;;;     
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;;     GtkToolItemGroup
 ;;;
 ;;;     gtk_tool_item_group_get_collapsed
@@ -297,313 +297,325 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_item_group_get_collapsed ()
-;;; 
+;;;
 ;;; gboolean gtk_tool_item_group_get_collapsed (GtkToolItemGroup *group);
-;;; 
+;;;
 ;;; Gets whether group is collapsed or expanded.
-;;; 
+;;;
 ;;; group :
 ;;;     a GtkToolItemGroup
-;;; 
+;;;
 ;;; Returns :
 ;;;     TRUE if group is collapsed, FALSE if it is expanded
-;;; 
+;;;
 ;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_item_group_get_drop_item ()
-;;; 
-;;; GtkToolItem * gtk_tool_item_group_get_drop_item (GtkToolItemGroup *group,
-;;;                                                  gint x,
-;;;                                                  gint y);
-;;; 
-;;; Gets the tool item at position (x, y).
-;;; 
-;;; group :
-;;;     a GtkToolItemGroup
-;;; 
-;;; x :
-;;;     the x position
-;;; 
-;;; y :
-;;;     the y position
-;;; 
-;;; Returns :
-;;;     the GtkToolItem at position (x, y). [transfer none]
-;;; 
-;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_tool_item_group_get_drop_item" gtk-tool-item-group-get-drop-item)
+    (g-object gtk-tool-item)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-7-15}
+  @argument[group]{a @class{gtk-tool-item-group} widget}
+  @argument[x]{the x position}
+  @argument[y]{the y position}
+  @return{The @class{gtk-tool-item} at position (@arg{x}, @arg{y}).}
+  @short{Gets the tool item at position (x, y).}
+
+  Since 2.20"
+  (group (g-object gtk-tool-item-group))
+  (x :int)
+  (y :int))
+
+(export 'gtk-tool-item-group-get-drop-item)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_item_group_get_ellipsize ()
-;;; 
+;;;
 ;;; PangoEllipsizeMode gtk_tool_item_group_get_ellipsize
 ;;;                                                   (GtkToolItemGroup *group);
-;;; 
+;;;
 ;;; Gets the ellipsization mode of group.
-;;; 
+;;;
 ;;; group :
 ;;;     a GtkToolItemGroup
-;;; 
+;;;
 ;;; Returns :
 ;;;     the PangoEllipsizeMode of group
-;;; 
+;;;
 ;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_item_group_get_item_position ()
-;;; 
+;;;
 ;;; gint gtk_tool_item_group_get_item_position (GtkToolItemGroup *group,
 ;;;                                             GtkToolItem *item);
-;;; 
+;;;
 ;;; Gets the position of item in group as index.
-;;; 
+;;;
 ;;; group :
 ;;;     a GtkToolItemGroup
-;;; 
+;;;
 ;;; item :
 ;;;     a GtkToolItem
-;;; 
+;;;
 ;;; Returns :
 ;;;     the index of item in group or -1 if item is no child of group
-;;; 
+;;;
 ;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_tool_item_group_get_item_position"
+           gtk-tool-item-group-get-item-position) :int
+  (group (g-object gtk-tool-item-group))
+  (item (g-object gtk-tool-item)))
+
+(export 'gtk-tool-item-group-get-item-position)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_item_group_get_n_items ()
-;;; 
+;;;
 ;;; guint gtk_tool_item_group_get_n_items (GtkToolItemGroup *group);
-;;; 
+;;;
 ;;; Gets the number of tool items in group.
-;;; 
+;;;
 ;;; group :
 ;;;     a GtkToolItemGroup
-;;; 
+;;;
 ;;; Returns :
 ;;;     the number of tool items in group
-;;; 
+;;;
 ;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_item_group_get_label ()
-;;; 
+;;;
 ;;; const gchar * gtk_tool_item_group_get_label (GtkToolItemGroup *group);
-;;; 
+;;;
 ;;; Gets the label of group.
-;;; 
+;;;
 ;;; group :
 ;;;     a GtkToolItemGroup
-;;; 
+;;;
 ;;; Returns :
 ;;;     the label of group. The label is an internal string of group and must
 ;;;     not be modified. Note that NULL is returned if a custom label has been
 ;;;     set with gtk_tool_item_group_set_label_widget()
-;;; 
+;;;
 ;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_item_group_get_label_widget ()
-;;; 
+;;;
 ;;; GtkWidget * gtk_tool_item_group_get_label_widget (GtkToolItemGroup *group);
-;;; 
+;;;
 ;;; Gets the label widget of group. See gtk_tool_item_group_set_label_widget().
-;;; 
+;;;
 ;;; group :
 ;;;     a GtkToolItemGroup
-;;; 
+;;;
 ;;; Returns :
 ;;;     the label widget of group
-;;; 
+;;;
 ;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_item_group_get_nth_item ()
-;;; 
+;;;
 ;;; GtkToolItem * gtk_tool_item_group_get_nth_item (GtkToolItemGroup *group,
 ;;;                                                 guint index);
-;;; 
+;;;
 ;;; Gets the tool item at index in group.
-;;; 
+;;;
 ;;; group :
 ;;;     a GtkToolItemGroup
-;;; 
+;;;
 ;;; index :
 ;;;     the index
-;;; 
+;;;
 ;;; Returns :
 ;;;     the GtkToolItem at index
-;;; 
+;;;
 ;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_item_group_get_header_relief ()
-;;; 
+;;;
 ;;; GtkReliefStyle gtk_tool_item_group_get_header_relief
 ;;;                                                   (GtkToolItemGroup *group);
-;;; 
+;;;
 ;;; Gets the relief mode of the header button of group.
-;;; 
+;;;
 ;;; group :
 ;;;     a GtkToolItemGroup
-;;; 
+;;;
 ;;; Returns :
 ;;;     the GtkReliefStyle
-;;; 
+;;;
 ;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_item_group_insert ()
-;;; 
-;;; void gtk_tool_item_group_insert (GtkToolItemGroup *group,
-;;;                                  GtkToolItem *item,
-;;;                                  gint position);
-;;; 
-;;; Inserts item at position in the list of children of group.
-;;; 
-;;; group :
-;;;     a GtkToolItemGroup
-;;; 
-;;; item :
-;;;     the GtkToolItem to insert into group
-;;; 
-;;; position :
-;;;     the position of item in group, starting with 0. The position -1 means
-;;;     end of list.
-;;; 
-;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_tool_item_group_insert" gtk-tool-item-group-insert) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-7-17}
+  @argument[group]{a @class{gtk-tool-item-group} widget}
+  @argument[item]{the @class{gtk-tool-item} to insert into group}
+  @argument[position]{the position of @arg{item} in @arg{group}, starting with
+    0. The position -1 means end of list.}
+  @begin{short}
+    Inserts @arg{item} at @arg{position} in the list of children of @arg{group}.
+  @end{short}
+
+  Since 2.20"
+  (group (g-object gtk-tool-item-group))
+  (item (g-object gtk-tool-item))
+  (position :int))
+
+(export 'gtk-tool-item-group-insert)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_item_group_new ()
-;;; 
+;;;
 ;;; GtkWidget * gtk_tool_item_group_new (const gchar *label);
-;;; 
+;;;
 ;;; Creates a new tool item group with label label.
-;;; 
+;;;
 ;;; label :
 ;;;     the label of the new group
-;;; 
+;;;
 ;;; Returns :
 ;;;     a new GtkToolItemGroup.
-;;; 
+;;;
 ;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_item_group_set_collapsed ()
-;;; 
+;;;
 ;;; void gtk_tool_item_group_set_collapsed (GtkToolItemGroup *group,
 ;;;                                         gboolean collapsed);
-;;; 
+;;;
 ;;; Sets whether the group should be collapsed or expanded.
-;;; 
+;;;
 ;;; group :
 ;;;     a GtkToolItemGroup
-;;; 
+;;;
 ;;; collapsed :
 ;;;     whether the group should be collapsed or expanded
-;;; 
+;;;
 ;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_item_group_set_ellipsize ()
-;;; 
+;;;
 ;;; void gtk_tool_item_group_set_ellipsize (GtkToolItemGroup *group,
 ;;;                                         PangoEllipsizeMode ellipsize);
-;;; 
+;;;
 ;;; Sets the ellipsization mode which should be used by labels in group.
-;;; 
+;;;
 ;;; group :
 ;;;     a GtkToolItemGroup
-;;; 
+;;;
 ;;; ellipsize :
 ;;;     the PangoEllipsizeMode labels in group should use
-;;; 
+;;;
 ;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_item_group_set_item_position ()
-;;; 
+;;;
 ;;; void gtk_tool_item_group_set_item_position (GtkToolItemGroup *group,
 ;;;                                             GtkToolItem *item,
 ;;;                                             gint position);
-;;; 
+;;;
 ;;; Sets the position of item in the list of children of group.
-;;; 
+;;;
 ;;; group :
 ;;;     a GtkToolItemGroup
-;;; 
+;;;
 ;;; item :
 ;;;     the GtkToolItem to move to a new position, should be a child of group.
-;;; 
+;;;
 ;;; position :
 ;;;     the new position of item in group, starting with 0. The position -1
 ;;;     means end of list.
-;;; 
+;;;
 ;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_tool_item_group_set_item_position"
+           gtk-tool-item-group-set-item-position) :void
+  (group (g-object gtk-tool-item-group))
+  (item (g-object gtk-tool-item))
+  (position :int))
+
+(export 'gtk-tool-item-group-set-item-position)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_item_group_set_label ()
-;;; 
+;;;
 ;;; void gtk_tool_item_group_set_label (GtkToolItemGroup *group,
 ;;;                                     const gchar *label);
-;;; 
+;;;
 ;;; Sets the label of the tool item group. The label is displayed in the header
 ;;; of the group.
-;;; 
+;;;
 ;;; group :
 ;;;     a GtkToolItemGroup
-;;; 
+;;;
 ;;; label :
 ;;;     the new human-readable label of of the group
-;;; 
+;;;
 ;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_item_group_set_label_widget ()
-;;; 
+;;;
 ;;; void gtk_tool_item_group_set_label_widget (GtkToolItemGroup *group,
 ;;;                                            GtkWidget *label_widget);
-;;; 
+;;;
 ;;; Sets the label of the tool item group. The label widget is displayed in the
 ;;; header of the group, in place of the usual label.
-;;; 
+;;;
 ;;; group :
 ;;;     a GtkToolItemGroup
-;;; 
+;;;
 ;;; label_widget :
 ;;;     the widget to be displayed in place of the usual label
-;;; 
+;;;
 ;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_item_group_set_header_relief ()
-;;; 
+;;;
 ;;; void gtk_tool_item_group_set_header_relief (GtkToolItemGroup *group,
 ;;;                                             GtkReliefStyle style);
-;;; 
+;;;
 ;;; Set the button relief of the group header. See gtk_button_set_relief() for
 ;;; details.
-;;; 
+;;;
 ;;; group :
 ;;;     a GtkToolItemGroup
-;;; 
+;;;
 ;;; style :
 ;;;     the GtkReliefStyle
-;;; 
+;;;
 ;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
 

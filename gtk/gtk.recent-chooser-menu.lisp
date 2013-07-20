@@ -30,20 +30,20 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; GtkRecentChooserMenu
-;;; 
+;;;
 ;;; Displays recently used files in a menu
-;;;     
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;;     GtkRecentChooserMenu
 ;;;
 ;;;     gtk_recent_chooser_menu_new
 ;;;     gtk_recent_chooser_menu_new_for_manager
 ;;;     gtk_recent_chooser_menu_get_show_numbers
 ;;;     gtk_recent_chooser_menu_set_show_numbers
-;;; 
+;;;
 ;;; Object Hierarchy
-;;; 
+;;;
 ;;;   GObject
 ;;;    +----GInitiallyUnowned
 ;;;          +----GtkWidget
@@ -51,14 +51,14 @@
 ;;;                      +----GtkMenuShell
 ;;;                            +----GtkMenu
 ;;;                                  +----GtkRecentChooserMenu
-;;; 
+;;;
 ;;; Implemented Interfaces
-;;; 
+;;;
 ;;; GtkRecentChooserMenu implements AtkImplementorIface, GtkBuildable,
 ;;; GtkRecentChooser and GtkActivatable.
 ;;;
 ;;; Properties
-;;; 
+;;;
 ;;;   "show-numbers"             gboolean              : Read / Write
 ;;; ----------------------------------------------------------------------------
 
@@ -75,7 +75,7 @@
   (:superclass gtk-menu
    :export t
    :interfaces ("AtkImplementorIface"
-                "GtkBuildable" 
+                "GtkBuildable"
                 "GtkRecentChooser"
                 "GtkActivatable")
    :type-initializer "gtk_recent_chooser_menu_get_type")
@@ -143,7 +143,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
-;; TODO: Check the implementation of the child properties. 
+;; TODO: Check the implementation of the child properties.
 ;;       GtkRecentChooserMenu has no documented child properties.
 
 #|
@@ -166,83 +166,83 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_chooser_menu_new ()
-;;; 
+;;;
 ;;; GtkWidget * gtk_recent_chooser_menu_new (void);
-;;; 
+;;;
 ;;; Creates a new GtkRecentChooserMenu widget.
-;;; 
+;;;
 ;;; This kind of widget shows the list of recently used resources as a menu,
 ;;; each item as a menu item. Each item inside the menu might have an icon,
 ;;; representing its MIME type, and a number, for mnemonic access.
-;;; 
+;;;
 ;;; This widget implements the GtkRecentChooser interface.
-;;; 
+;;;
 ;;; This widget creates its own GtkRecentManager object. See the
 ;;; gtk_recent_chooser_menu_new_for_manager() function to know how to create a
 ;;; GtkRecentChooserMenu widget bound to another GtkRecentManager object.
-;;; 
+;;;
 ;;; Returns :
 ;;;     a new GtkRecentChooserMenu
-;;; 
+;;;
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_chooser_menu_new_for_manager ()
-;;; 
+;;;
 ;;; GtkWidget * gtk_recent_chooser_menu_new_for_manager
 ;;;                                                 (GtkRecentManager *manager);
-;;; 
+;;;
 ;;; Creates a new GtkRecentChooserMenu widget using manager as the underlying
 ;;; recently used resources manager.
-;;; 
+;;;
 ;;; This is useful if you have implemented your own recent manager, or if you
 ;;; have a customized instance of a GtkRecentManager object or if you wish to
 ;;; share a common GtkRecentManager object among multiple GtkRecentChooser
 ;;; widgets.
-;;; 
+;;;
 ;;; manager :
 ;;;     a GtkRecentManager
-;;; 
+;;;
 ;;; Returns :
 ;;;     a new GtkRecentChooserMenu, bound to manager.
-;;; 
+;;;
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_chooser_menu_get_show_numbers ()
-;;; 
+;;;
 ;;; gboolean gtk_recent_chooser_menu_get_show_numbers
 ;;;                                                (GtkRecentChooserMenu *menu);
-;;; 
+;;;
 ;;; Returns the value set by gtk_recent_chooser_menu_set_show_numbers().
-;;; 
+;;;
 ;;; menu :
 ;;;     a GtkRecentChooserMenu
-;;; 
+;;;
 ;;; Returns :
 ;;;     TRUE if numbers should be shown.
-;;; 
+;;;
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_chooser_menu_set_show_numbers ()
-;;; 
+;;;
 ;;; void gtk_recent_chooser_menu_set_show_numbers (GtkRecentChooserMenu *menu,
 ;;;                                                gboolean show_numbers);
-;;; 
+;;;
 ;;; Sets whether a number should be added to the items of menu. The numbers are
 ;;; shown to provide a unique character for a mnemonic to be used inside ten
 ;;; menu item's label. Only the first the items get a number to avoid clashes.
-;;; 
+;;;
 ;;; menu :
 ;;;     a GtkRecentChooserMenu
-;;; 
+;;;
 ;;; show_numbers :
 ;;;     whether to show numbers
-;;; 
+;;;
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 

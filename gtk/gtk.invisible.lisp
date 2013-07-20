@@ -30,13 +30,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; GtkInvisible
-;;; 
+;;;
 ;;; A widget which is not displayed
-;;;     
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;;     GtkInvisible
-;;;     
+;;;
 ;;;     gtk_invisible_new
 ;;;     gtk_invisible_new_for_screen
 ;;;     gtk_invisible_set_screen

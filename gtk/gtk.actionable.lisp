@@ -126,10 +126,10 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkActionableInterface
-;;; 
+;;;
 ;;; struct GtkActionableInterface {
 ;;;   GTypeInterface g_iface;
-;;; 
+;;;
 ;;;   const gchar * (* get_action_name)         (GtkActionable *actionable);
 ;;;   void          (* set_action_name)         (GtkActionable *actionable,
 ;;;                                              const gchar   *action_name);
@@ -137,20 +137,20 @@
 ;;;   void          (* set_action_target_value) (GtkActionable *actionable,
 ;;;                                              GVariant *action_target_value);
 ;;; };
-;;; 
+;;;
 ;;; The interface vtable for GtkActionable.
-;;; 
+;;;
 ;;; GTypeInterface g_iface;
-;;; 
+;;;
 ;;; get_action_name ()
 ;;;     virtual pointer for gtk_actionable_get_action_name()
-;;; 
+;;;
 ;;; set_action_name ()
 ;;;     virtual pointer for gtk_actionable_set_action_name()
-;;; 
+;;;
 ;;; get_action_target_value ()
 ;;;     virtual pointer for gtk_actionable_get_action_target_value()
-;;; 
+;;;
 ;;; set_action_target_value ()
 ;;;     virtual pointer for gtk_actionable_set_action_target_value
 ;;; ----------------------------------------------------------------------------
@@ -269,28 +269,28 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_actionable_set_action_target ()
-;;; 
+;;;
 ;;; void gtk_actionable_set_action_target (GtkActionable *actionable,
 ;;;                                        const gchar *format_string,
 ;;;                                        ...);
-;;; 
+;;;
 ;;; Sets the target of an actionable widget.
-;;; 
+;;;
 ;;; This is a convenience function that calls g_variant_new() for format_string
 ;;; and uses the result to call gtk_actionable_set_action_target_value().
-;;; 
+;;;
 ;;; If you are setting a string-valued target and want to set the action name at
 ;;; the same time, you can use gtk_actionable_set_detailed_action_name().
-;;; 
+;;;
 ;;; actionable :
 ;;;     a GtkActionable widget
-;;; 
+;;;
 ;;; format_string :
 ;;;     a GVariant format string
-;;; 
+;;;
 ;;; ... :
 ;;;     arguments appropriate for format_string
-;;; 
+;;;
 ;;; Since 3.4
 ;;; ----------------------------------------------------------------------------
 

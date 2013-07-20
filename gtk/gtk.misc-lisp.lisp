@@ -27,6 +27,8 @@
 
 (in-package :gtk)
 
+
+
 (defcallback call-from-main-loop-callback :boolean
     ((data :pointer))
   (restart-case

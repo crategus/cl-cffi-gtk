@@ -30,13 +30,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; GtkOrientable
-;;; 
+;;;
 ;;; An interface for flippable widgets
-;;;     
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;;     GtkOrientable
-;;;     
+;;;
 ;;;     gtk_orientable_get_orientation
 ;;;     gtk_orientable_set_orientation
 ;;; ----------------------------------------------------------------------------
@@ -69,7 +69,7 @@
   or @class{gtk-vscale}). @sym{gtk-orientable} is more flexible in that it
   allows the orientation to be changed at runtime, allowing the widgets to
   \"flip\".
- 
+
   @sym{gtk-orientable} was introduced in GTK+ 2.16.
   @see-slot{gtk-orientable-orientation}")
 

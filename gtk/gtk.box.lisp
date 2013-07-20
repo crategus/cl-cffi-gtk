@@ -79,7 +79,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-box 'type)
- "@version{2013-5-18}
+ "@version{2013-7-15}
   @begin{short}
     The @sym{gtk-box} widget organizes child widgets into a rectangular area.
   @end{short}
@@ -117,10 +117,11 @@
   Use @fun{gtk-box-reorder-child} to move a @sym{gtk-box} child to a different
   place in the box.
 
-  Use @fun{gtk-box-set-child-packing} to reset the @arg{\"expand\"}, 
+  Use @fun{gtk-box-set-child-packing} to reset the @arg{\"expand\"},
   @arg{\"fill\"} and @arg{\"padding\"} child properties. Use
   @fun{gtk-box-query-child-packing} to query these fields.
-  @subheading{Note]}
+
+  @subheading{Note}
     Note that a single-row or single-column @class{gtk-grid} provides exactly
     the same functionality as @sym{gtk-box}.
   @begin[Child Property Details]{dictionary}
@@ -142,7 +143,7 @@
       @code{\"vexpand\"} properties are the preferred way to influence child
       size allocation in containers.@br{}
       Default value: @em{true}
-  
+
     @subheading{The \"pack-type\" child property}
       @code{\"pack-type\"} of type @symbol{gtk-pack-type} (Read / Write)@br{}
       A @symbol{gtk-pack-type} indicating whether the child is packed with
@@ -319,29 +320,35 @@
 
 (defun gtk-box-pack-start (box child &key (expand t) (fill t) (padding 0))
  #+cl-cffi-gtk-documentation
- "@version{2013-5-18}
+ "@version{2013-7-15}
   @argument[box]{a @class{gtk-box} container}
   @argument[child]{the @class{gtk-widget} to be added to @arg{box}}
   @argument[expand]{@arg{true} if the new @arg{child} is to be given extra space
     allocated to @arg{box}. The extra space will be divided evenly between all
-    children that use this option.}
+    children that use this option. The default value is @em{true}.}
   @argument[fill]{@arg{true} if space given to @arg{child} by the expand option
     is actually allocated to @arg{child}, rather than just padding it. This
     parameter has no effect if @arg{expand} is set to @code{nil}. A @arg{child}
     is always allocated the full height of a horizontal @class{gtk-box} and the
     full width of a vertical @class{gtk-box}. This option affects the other
-    dimension.}
+    dimension. The default value is @em{true}.}
   @argument[padding]{extra space in pixels to put between this @arg{child} and
     its neighbors, over and above the global amount specified by
     @arg{\"spacing\"} property. If @arg{child} is a widget at one of the
     reference ends of @arg{box}, then padding pixels are also put between
-    @arg{child} and the reference edge of @arg{box}.}
+    @arg{child} and the reference edge of @arg{box}. The default value is 0.}
   @begin{short}
     Adds @arg{child} to @arg{box}, packed with reference to the start of
     @arg{box}.
   @end{short}
   The @arg{child} is packed after any other child packed with reference to the
   start of @arg{box}.
+
+  @subheading{Note:}
+    In the Lisp binding the arguments @arg{expand}, @arg{fill}, and
+    @arg{padding} are keyword arguments, which have default values. The default
+    value of the arguments @arg{expand} and @arg{fill} is @em{true}. The default
+    value of the argument @arg{padding} is 0.
   @see-function{gtk-box-pack-end}"
   (%gtk-box-pack-start box child expand fill padding))
 

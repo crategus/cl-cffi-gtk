@@ -451,18 +451,19 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_drag_get_source_widget ()
-;;;
-;;; GtkWidget * gtk_drag_get_source_widget (GdkDragContext *context);
-;;;
-;;; Determines the source widget for a drag.
-;;;
-;;; context :
-;;;     a (destination side) drag context
-;;;
-;;; Returns :
-;;;     if the drag is occurring within a single application, a pointer to the
-;;;     source widget. Otherwise, NULL.
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_drag_get_source_widget" gtk-drag-get-source-widget)
+    (g-object gtk-widget)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-7-17}
+  @argument[context]{a destination side drag context}
+  @return{If the drag is occurring within a single application, a pointer to
+    the source widget. Otherwise, @code{nil}.}
+  Determines the source widget for a drag."
+  (context (g-object gdk-drag-context)))
+
+(export 'gtk-drag-get-source-widget)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_drag_highlight ()

@@ -26,11 +26,11 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; GtkToolPalette
-;;; 
+;;;
 ;;; A tool palette with categories
-;;;     
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;;     GtkToolPalette
 ;;;
 ;;;     gtk_tool_palette_new
@@ -46,14 +46,15 @@
 ;;;     gtk_tool_palette_get_style
 ;;;     gtk_tool_palette_set_style
 ;;;     gtk_tool_palette_unset_style
+;;;
+;;;     GtkToolPaletteDragTargets
+;;;
 ;;;     gtk_tool_palette_add_drag_dest
 ;;;     gtk_tool_palette_get_drag_item
 ;;;     gtk_tool_palette_get_drag_target_group
 ;;;     gtk_tool_palette_get_drag_target_item
 ;;;     gtk_tool_palette_get_drop_group
 ;;;     gtk_tool_palette_get_drop_item
-;;;
-;;;     GtkToolPaletteDragTargets
 ;;;
 ;;;     gtk_tool_palette_set_drag_source
 ;;;     gtk_tool_palette_get_hadjustment
@@ -101,7 +102,7 @@
   @class{gtk-tool-item}'s cannot be added directly to a @sym{gtk-tool-palette}
   - instead they are added to a @class{gtk-tool-item-group} which can than be
   added to a @sym{gtk-tool-palette}. To add a @class{gtk-tool-item-group} to a
-  @sym{gtk-tool-palette}, use the @fun{gtk-container-add} function.
+  @sym{gtk-tool-palette}, use the function @fun{gtk-container-add}.
   @begin{pre}
  GtkWidget *palette, *group;
  GtkToolItem *item;
@@ -114,9 +115,9 @@
  gtk_tool_item_group_insert (GTK_TOOL_ITEM_GROUP (group), item, -1);
   @end{pre}
   The easiest way to use drag and drop with @sym{gtk-tool-palette} is to call
-  the @fun{gtk-tool-palette-add-drag-dest} function with the desired drag source
-  palette and the desired drag target widget. Then the
-  @fun{gtk-tool-palette-get-drag-item} function can be used to get the dragged
+  the function @fun{gtk-tool-palette-add-drag-dest} with the desired drag source
+  palette and the desired drag target widget. Then the function
+  @fun{gtk-tool-palette-get-drag-item} can be used to get the dragged
   item in the \"drag-data-received\" signal handler of the drag target.
   @begin{pre}
  static void
@@ -131,14 +132,14 @@
  {
    GtkWidget *palette;
    GtkWidget *item;
- 
+
    /* Get the dragged item */
    palette = gtk_widget_get_ancestor (gtk_drag_get_source_widget (context),
                                       GTK_TYPE_TOOL_PALETTE);
    if (palette != NULL)
      item = gtk_tool_palette_get_drag_item (GTK_TOOL_PALETTE (palette),
                                             selection);
- 
+
    /* Do something with item */
  @}
 
@@ -171,7 +172,13 @@
   @end{dictionary}
   @see-slot{gtk-tool-palette-icon-size}
   @see-slot{gtk-tool-palette-icon-size-set}
-  @see-slot{gtk-tool-palette-toolbar-style}")
+  @see-slot{gtk-tool-palette-toolbar-style}
+  @see-class{gtk-tool-item}
+  @see-class{gtk-tool-item-group}
+  @see-fun{gtk-tool-palette-new}
+  @see-function{gtk-container-add}
+  @see-function{gtk-tool-palette-add-drag-dest}
+  @see-function{gtk-tool-palette-get-drag-item}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -277,446 +284,490 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_palette_new ()
-;;; 
-;;; GtkWidget * gtk_tool_palette_new (void);
-;;; 
-;;; Creates a new tool palette.
-;;; 
-;;; Returns :
-;;;     a new GtkToolPalette
-;;; 
-;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-tool-palette-new))
+
+(defun gtk-tool-palette-new ()
+ #+cl-cffi-gtk-documentation
+ "@version{2013-7-17}
+  @return{A new @class{gtk-tool-palette} widget.}
+  @short{Creates a new tool palette.}
+
+  Since 2.20"
+  (make-instance 'gtk-tool-palette))
+
+(export 'gtk-tool-palette-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_palette_get_exclusive ()
-;;; 
+;;;
 ;;; gboolean gtk_tool_palette_get_exclusive (GtkToolPalette *palette,
 ;;;                                          GtkToolItemGroup *group);
-;;; 
+;;;
 ;;; Gets whether group is exclusive or not. See
 ;;; gtk_tool_palette_set_exclusive().
-;;; 
+;;;
 ;;; palette :
 ;;;     a GtkToolPalette
-;;; 
+;;;
 ;;; group :
 ;;;     a GtkToolItemGroup which is a child of palette
-;;; 
+;;;
 ;;; Returns :
 ;;;     TRUE if group is exclusive
-;;; 
+;;;
 ;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_palette_set_exclusive ()
-;;; 
+;;;
 ;;; void gtk_tool_palette_set_exclusive (GtkToolPalette *palette,
 ;;;                                      GtkToolItemGroup *group,
 ;;;                                      gboolean exclusive);
-;;; 
+;;;
 ;;; Sets whether the group should be exclusive or not. If an exclusive group is
 ;;; expanded all other groups are collapsed.
-;;; 
+;;;
 ;;; palette :
 ;;;     a GtkToolPalette
-;;; 
+;;;
 ;;; group :
 ;;;     a GtkToolItemGroup which is a child of palette
-;;; 
+;;;
 ;;; exclusive :
 ;;;     whether the group should be exclusive or not
-;;; 
+;;;
 ;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_palette_get_expand ()
-;;; 
+;;;
 ;;; gboolean gtk_tool_palette_get_expand (GtkToolPalette *palette,
 ;;;                                       GtkToolItemGroup *group);
-;;; 
+;;;
 ;;; Gets whether group should be given extra space. See
 ;;; gtk_tool_palette_set_expand().
-;;; 
+;;;
 ;;; palette :
 ;;;     a GtkToolPalette
-;;; 
+;;;
 ;;; group :
 ;;;     a GtkToolItemGroup which is a child of palette
-;;; 
+;;;
 ;;; Returns :
 ;;;     TRUE if group should be given extra space, FALSE otherwise
-;;; 
+;;;
 ;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_palette_set_expand ()
-;;; 
+;;;
 ;;; void gtk_tool_palette_set_expand (GtkToolPalette *palette,
 ;;;                                   GtkToolItemGroup *group,
 ;;;                                   gboolean expand);
-;;; 
+;;;
 ;;; Sets whether the group should be given extra space.
-;;; 
+;;;
 ;;; palette :
 ;;;     a GtkToolPalette
-;;; 
+;;;
 ;;; group :
 ;;;     a GtkToolItemGroup which is a child of palette
-;;; 
+;;;
 ;;; expand :
 ;;;     whether the group should be given extra space
-;;; 
+;;;
 ;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_palette_get_group_position ()
-;;; 
+;;;
 ;;; gint gtk_tool_palette_get_group_position (GtkToolPalette *palette,
 ;;;                                           GtkToolItemGroup *group);
-;;; 
+;;;
 ;;; Gets the position of group in palette as index. See
 ;;; gtk_tool_palette_set_group_position().
-;;; 
+;;;
 ;;; palette :
 ;;;     a GtkToolPalette
-;;; 
+;;;
 ;;; group :
 ;;;     a GtkToolItemGroup
-;;; 
+;;;
 ;;; Returns :
 ;;;     the index of group or -1 if group is not a child of palette
-;;; 
+;;;
 ;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_palette_set_group_position ()
-;;; 
+;;;
 ;;; void gtk_tool_palette_set_group_position (GtkToolPalette *palette,
 ;;;                                           GtkToolItemGroup *group,
 ;;;                                           gint position);
-;;; 
+;;;
 ;;; Sets the position of the group as an index of the tool palette. If position
 ;;; is 0 the group will become the first child, if position is -1 it will become
 ;;; the last child.
-;;; 
+;;;
 ;;; palette :
 ;;;     a GtkToolPalette
-;;; 
+;;;
 ;;; group :
 ;;;     a GtkToolItemGroup which is a child of palette
-;;; 
+;;;
 ;;; position :
 ;;;     a new index for group
-;;; 
+;;;
 ;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_palette_get_icon_size ()
-;;; 
+;;;
 ;;; GtkIconSize gtk_tool_palette_get_icon_size (GtkToolPalette *palette);
-;;; 
+;;;
 ;;; Gets the size of icons in the tool palette. See
 ;;; gtk_tool_palette_set_icon_size().
-;;; 
+;;;
 ;;; palette :
 ;;;     a GtkToolPalette
-;;; 
+;;;
 ;;; Returns :
 ;;;     the GtkIconSize of icons in the tool palette
-;;; 
+;;;
 ;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_palette_set_icon_size ()
-;;; 
+;;;
 ;;; void gtk_tool_palette_set_icon_size (GtkToolPalette *palette,
 ;;;                                      GtkIconSize icon_size);
-;;; 
+;;;
 ;;; Sets the size of icons in the tool palette.
-;;; 
+;;;
 ;;; palette :
 ;;;     a GtkToolPalette
-;;; 
+;;;
 ;;; icon_size :
 ;;;     the GtkIconSize that icons in the tool palette shall have
-;;; 
+;;;
 ;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-tool-palette-set-icon-size))
+
+(defun gtk-tool-palette-set-icon-size (palette icon-size)
+  (setf (gtk-tool-palette-icon-size palette) icon-size))
+
+(export 'gtk-tool-palette-set-icon-size)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_palette_unset_icon_size ()
-;;; 
+;;;
 ;;; void gtk_tool_palette_unset_icon_size (GtkToolPalette *palette);
-;;; 
+;;;
 ;;; Unsets the tool palette icon size set with gtk_tool_palette_set_icon_size(),
 ;;; so that user preferences will be used to determine the icon size.
-;;; 
+;;;
 ;;; palette :
 ;;;     a GtkToolPalette
-;;; 
+;;;
 ;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_palette_get_style ()
-;;; 
+;;;
 ;;; GtkToolbarStyle gtk_tool_palette_get_style (GtkToolPalette *palette);
-;;; 
+;;;
 ;;; Gets the style (icons, text or both) of items in the tool palette.
-;;; 
+;;;
 ;;; palette :
 ;;;     a GtkToolPalette
-;;; 
+;;;
 ;;; Returns :
 ;;;     the GtkToolbarStyle of items in the tool palette.
-;;; 
+;;;
 ;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_palette_set_style ()
-;;; 
-;;; void gtk_tool_palette_set_style (GtkToolPalette *palette,
-;;;                                  GtkToolbarStyle style);
-;;; 
-;;; Sets the style (text, icons or both) of items in the tool palette.
-;;; 
-;;; palette :
-;;;     a GtkToolPalette
-;;; 
-;;; style :
-;;;     the GtkToolbarStyle that items in the tool palette shall have
-;;; 
-;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-tool-palette-set-style))
+
+(defun gtk-tool-palette-set-style (palette style)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-7-17}
+  @argument[palette]{a @class{gtk-tool-palette} widget}
+  @argument[style]{the @symbol{gtk-toolbar-style} that items in the tool
+    palette shall have}
+  @begin{short}
+    Sets the style (text, icons or both) of items in the tool palette.
+  @end{short}
+
+  Since 2.20
+  @see-symbol{gtk-toolbar-style}
+  @see-function{gtk-tool-palette-get-style}
+  @see-function{gtk-tool-palette-unset-style}"
+  (setf (gtk-tool-palette-toolbar-style palette) style))
+
+(export 'gtk-tool-palette-set-style)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_palette_unset_style ()
-;;; 
-;;; void gtk_tool_palette_unset_style (GtkToolPalette *palette);
-;;; 
-;;; Unsets a toolbar style set with gtk_tool_palette_set_style(), so that user
-;;; preferences will be used to determine the toolbar style.
-;;; 
-;;; palette :
-;;;     a GtkToolPalette
-;;; 
-;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_tool_palette_unset_style" gtk-tool-palette-unset-style) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-7-17}
+  @argument[palette]{a @class{gtk-tool-palette} widget}
+  @begin{short}
+    Unsets a toolbar style set with the function
+    @fun{gtk-tool-palette-set-style}, so that user preferences will be used to
+    determine the toolbar style.
+  @end{short}
+
+  Since 2.20
+  @see-function{gtk-tool-palette-get-style}
+  @see-function{gtk-tool-palette-set-style}"
+  (palette (g-object gtk-tool-palette)))
+
+(export 'gtk-tool-palette-unset-style)
+
+;;; ----------------------------------------------------------------------------
+;;; enum GtkToolPaletteDragTargets
+;;; ----------------------------------------------------------------------------
+
+(define-g-flags "GtkToolPaletteDragTargets" gtk-tool-palette-drag-targets
+  (:export t
+   :type-initializer "gtk_tool_palette_drag_targets_get_type")
+  (:items 1)
+  (:groups 2))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-tool-palette-drag-targets atdoc:*symbol-name-alias*) "Flags"
+      (gethash 'gtk-tool-palette-drag-targets atdoc:*external-symbols*)
+ "@version{2013-7-17}
+  @begin{short}
+    Flags used to specify the supported drag targets.
+  @end{short}
+  @begin{pre}
+(define-g-flags \"GtkToolPaletteDragTargets\" gtk-tool-palette-drag-targets
+  (:export t
+   :type-initializer \"gtk_tool_palette_drag_targets_get_type\")
+  (:items 1)
+  (:groups 2))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:items]{Support drag of items.}
+    @entry[:groups]{Support drag of groups.}
+  @end{table}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_palette_add_drag_dest ()
-;;; 
+;;;
 ;;; void gtk_tool_palette_add_drag_dest (GtkToolPalette *palette,
 ;;;                                      GtkWidget *widget,
 ;;;                                      GtkDestDefaults flags,
 ;;;                                      GtkToolPaletteDragTargets targets,
 ;;;                                      GdkDragAction actions);
-;;; 
+;;;
 ;;; Sets palette as drag source (see gtk_tool_palette_set_drag_source()) and
 ;;; sets widget as a drag destination for drags from palette. See
 ;;; gtk_drag_dest_set().
-;;; 
+;;;
 ;;; palette :
 ;;;     a GtkToolPalette
-;;; 
+;;;
 ;;; widget :
 ;;;     a GtkWidget which should be a drag destination for palette
-;;; 
+;;;
 ;;; flags :
 ;;;     the flags that specify what actions GTK+ should take for drops on that
 ;;;     widget
-;;; 
+;;;
 ;;; targets :
 ;;;     the GtkToolPaletteDragTargets which the widget should support
-;;; 
+;;;
 ;;; actions :
 ;;;     the GdkDragActions which the widget should suppport
-;;; 
+;;;
 ;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_tool_palette_add_drag_dest" gtk-tool-palette-add-drag-dest) :void
+  (palette (g-object gtk-tool-palette))
+  (widget (g-object gtk-widget))
+  (flags gtk-dest-defaults)
+  (targets gtk-tool-palette-drag-targets)
+  (actions gdk-drag-action))
+
+(export 'gtk-tool-palette-add-drag-dest)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_palette_get_drag_item ()
-;;; 
-;;; GtkWidget * gtk_tool_palette_get_drag_item
-;;;                                         (GtkToolPalette *palette,
-;;;                                          const GtkSelectionData *selection);
-;;; 
-;;; Get the dragged item from the selection. This could be a GtkToolItem or a
-;;; GtkToolItemGroup.
-;;; 
-;;; palette :
-;;;     a GtkToolPalette
-;;; 
-;;; selection :
-;;;     a GtkSelectionData
-;;; 
-;;; Returns :
-;;;     the dragged item in selection
-;;; 
-;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_tool_palette_get_drag_item" gtk-tool-palette-get-drag-item)
+    (g-object gtk-widget)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-7-17}
+  @argument[palette]{a @class{gtk-tool-palette} widget}
+  @argument[selection]{a @class{gtk-selection-data}}
+  @return{The dragged item in @arg{selection}.}
+  @begin{short}
+    Get the dragged item from the @arg{selection}. This could be a
+    @class{gtk-tool-item} or a @class{gtk-tool-item-group}.
+  @end{short}
+
+  Since 2.20"
+  (palette (g-object gtk-tool-palette))
+  (selection (g-boxed-foreign gtk-selection-data)))
+
+(export 'gtk-tool-palette-get-drag-item)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_palette_get_drag_target_group ()
-;;; 
+;;;
 ;;; const GtkTargetEntry * gtk_tool_palette_get_drag_target_group (void);
-;;; 
+;;;
 ;;; Get the target entry for a dragged GtkToolItemGroup.
-;;; 
+;;;
 ;;; Returns :
 ;;;     the GtkTargetEntry for a dragged group
-;;; 
+;;;
 ;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_palette_get_drag_target_item ()
-;;; 
+;;;
 ;;; const GtkTargetEntry * gtk_tool_palette_get_drag_target_item (void);
-;;; 
+;;;
 ;;; Gets the target entry for a dragged GtkToolItem.
-;;; 
+;;;
 ;;; Returns :
 ;;;     the GtkTargetEntry for a dragged item
-;;; 
+;;;
 ;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_palette_get_drop_group ()
-;;; 
-;;; GtkToolItemGroup * gtk_tool_palette_get_drop_group (GtkToolPalette *palette,
-;;;                                                     gint x,
-;;;                                                     gint y);
-;;; 
-;;; Gets the group at position (x, y).
-;;; 
-;;; palette :
-;;;     a GtkToolPalette
-;;; 
-;;; x :
-;;;     the x position
-;;; 
-;;; y :
-;;;     the y position
-;;; 
-;;; Returns :
-;;;     the GtkToolItemGroup at position or NULL if there is no such group
-;;; 
-;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_tool_palette_get_drop_group" gtk-tool-palette-get-drop-group)
+    (g-object gtk-tool-item-group)
+ #+cl-cffi-gtk-documentation
+ "@version{201³-7-17}
+  @argument[palette]{a @class{gtk-tool-palette} widget}
+  @argument[x]{the x position}
+  @argument[y]{the y position}
+  @return{The @class{gtk-tool-item-group} at position or @code{nil} if there is
+    no such group.}
+  Gets the group at position (@arg{x}, @arg{y}).
+
+  Since 2.20"
+  (palette (g-object gtk-tool-palette))
+  (x :int)
+  (y :int))
+
+(export 'gtk-tool-palette-get-drop-group)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_palette_get_drop_item ()
-;;; 
+;;;
 ;;; GtkToolItem * gtk_tool_palette_get_drop_item (GtkToolPalette *palette,
 ;;;                                               gint x,
 ;;;                                               gint y);
-;;; 
+;;;
 ;;; Gets the item at position (x, y). See gtk_tool_palette_get_drop_group().
-;;; 
+;;;
 ;;; palette :
 ;;;     a GtkToolPalette
-;;; 
+;;;
 ;;; x :
 ;;;     the x position
-;;; 
+;;;
 ;;; y :
 ;;;     the y position
-;;; 
+;;;
 ;;; Returns :
 ;;;     the GtkToolItem at position or NULL if there is no such item
-;;; 
+;;;
 ;;; Since 2.20
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; enum GtkToolPaletteDragTargets
-;;; 
-;;; typedef enum {
-;;;   GTK_TOOL_PALETTE_DRAG_ITEMS  = (1 << 0),
-;;;   GTK_TOOL_PALETTE_DRAG_GROUPS = (1 << 1)
-;;; } GtkToolPaletteDragTargets;
-;;; 
-;;; Flags used to specify the supported drag targets.
-;;; 
-;;; GTK_TOOL_PALETTE_DRAG_ITEMS
-;;;     Support drag of items.
-;;; 
-;;; GTK_TOOL_PALETTE_DRAG_GROUPS
-;;;     Support drag of groups.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_palette_set_drag_source ()
-;;; 
+;;;
 ;;; void gtk_tool_palette_set_drag_source (GtkToolPalette *palette,
 ;;;                                        GtkToolPaletteDragTargets targets);
-;;; 
+;;;
 ;;; Sets the tool palette as a drag source. Enables all groups and items in the
 ;;; tool palette as drag sources on button 1 and button 3 press with copy and
 ;;; move actions. See gtk_drag_source_set().
-;;; 
+;;;
 ;;; palette :
 ;;;     a GtkToolPalette
-;;; 
+;;;
 ;;; targets :
 ;;;     the GtkToolPaletteDragTargets which the widget should support
-;;; 
+;;;
 ;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_palette_get_hadjustment ()
-;;; 
+;;;
 ;;; GtkAdjustment * gtk_tool_palette_get_hadjustment (GtkToolPalette *palette);
-;;; 
+;;;
 ;;; Warning
-;;; 
+;;;
 ;;; gtk_tool_palette_get_hadjustment has been deprecated since version 3.0 and
 ;;; should not be used in newly-written code. Use
 ;;; gtk_scrollable_get_hadjustment()
-;;; 
+;;;
 ;;; Gets the horizontal adjustment of the tool palette.
-;;; 
+;;;
 ;;; palette :
 ;;;     a GtkToolPalette
-;;; 
+;;;
 ;;; Returns :
 ;;;     the horizontal adjustment of palette
-;;; 
+;;;
 ;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_palette_get_vadjustment ()
-;;; 
+;;;
 ;;; GtkAdjustment * gtk_tool_palette_get_vadjustment (GtkToolPalette *palette);
-;;; 
+;;;
 ;;; Warning
-;;; 
+;;;
 ;;; gtk_tool_palette_get_vadjustment has been deprecated since version 3.0 and
 ;;; should not be used in newly-written code. Use
 ;;; gtk_scrollable_get_vadjustment()
-;;; 
+;;;
 ;;; Gets the vertical adjustment of the tool palette.
-;;; 
+;;;
 ;;; palette :
 ;;;     a GtkToolPalette
-;;; 
+;;;
 ;;; Returns :
 ;;;     the vertical adjustment of palette
-;;; 
+;;;
 ;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
 

@@ -30,13 +30,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; GtkLayout
-;;; 
+;;;
 ;;; Infinite scrollable area containing child widgets and/or custom drawing
-;;;     
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;;     GtkLayout
-;;;     
+;;;
 ;;;     gtk_layout_new
 ;;;     gtk_layout_put
 ;;;     gtk_layout_move
@@ -290,92 +290,92 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_layout_get_hadjustment ()
-;;; 
+;;;
 ;;; GtkAdjustment * gtk_layout_get_hadjustment (GtkLayout *layout);
-;;; 
+;;;
 ;;; Warning
-;;; 
+;;;
 ;;; gtk_layout_get_hadjustment has been deprecated since version 3.0 and should
 ;;; not be used in newly-written code. Use gtk_scrollable_get_hadjustment()
-;;; 
+;;;
 ;;; This function should only be called after the layout has been placed in a
 ;;; GtkScrolledWindow or otherwise configured for scrolling. It returns the
 ;;; GtkAdjustment used for communication between the horizontal scrollbar and
 ;;; layout.
-;;; 
+;;;
 ;;; See GtkScrolledWindow, GtkScrollbar, GtkAdjustment for details.
-;;; 
+;;;
 ;;; layout :
 ;;;     a GtkLayout
-;;; 
+;;;
 ;;; Returns :
 ;;;     horizontal scroll adjustment
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_layout_get_vadjustment ()
-;;; 
+;;;
 ;;; GtkAdjustment * gtk_layout_get_vadjustment (GtkLayout *layout);
-;;; 
+;;;
 ;;; Warning
-;;; 
+;;;
 ;;; gtk_layout_get_vadjustment has been deprecated since version 3.0 and should
 ;;; not be used in newly-written code. Use gtk_scrollable_get_vadjustment()
-;;; 
+;;;
 ;;; This function should only be called after the layout has been placed in a
 ;;; GtkScrolledWindow or otherwise configured for scrolling. It returns the
 ;;; GtkAdjustment used for communication between the vertical scrollbar and
 ;;; layout.
-;;; 
+;;;
 ;;; See GtkScrolledWindow, GtkScrollbar, GtkAdjustment for details.
-;;; 
+;;;
 ;;; layout :
 ;;;     a GtkLayout
-;;; 
+;;;
 ;;; Returns :
 ;;;     vertical scroll adjustment
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_layout_set_hadjustment ()
-;;; 
+;;;
 ;;; void gtk_layout_set_hadjustment (GtkLayout *layout,
 ;;;                                  GtkAdjustment *adjustment);
-;;; 
+;;;
 ;;; Warning
-;;; 
+;;;
 ;;; gtk_layout_set_hadjustment has been deprecated since version 3.0 and should
 ;;; not be used in newly-written code. Use gtk_scrollable_set_hadjustment()
-;;; 
+;;;
 ;;; Sets the horizontal scroll adjustment for the layout.
-;;; 
+;;;
 ;;; See GtkScrolledWindow, GtkScrollbar, GtkAdjustment for details.
-;;; 
+;;;
 ;;; layout :
 ;;;     a GtkLayout
-;;; 
+;;;
 ;;; adjustment :
 ;;;     new scroll adjustment
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_layout_set_vadjustment ()
-;;; 
+;;;
 ;;; void gtk_layout_set_vadjustment (GtkLayout *layout,
 ;;;                                  GtkAdjustment *adjustment);
-;;; 
+;;;
 ;;; Warning
-;;; 
+;;;
 ;;; gtk_layout_set_vadjustment has been deprecated since version 3.0 and should
 ;;; not be used in newly-written code. Use gtk_scrollable_set_vadjustment()
-;;; 
+;;;
 ;;; Sets the vertical scroll adjustment for the layout.
-;;; 
+;;;
 ;;; See GtkScrolledWindow, GtkScrollbar, GtkAdjustment for details.
-;;; 
+;;;
 ;;; layout :
 ;;;     a GtkLayout
-;;; 
+;;;
 ;;; adjustment :
 ;;;     new scroll adjustment
 ;;; ----------------------------------------------------------------------------

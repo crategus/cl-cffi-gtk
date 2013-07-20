@@ -611,7 +611,7 @@
   Upon errors 0 will be returned and error will be assigned a @class{g-error}
   from the @code{GTK_BUILDER_ERROR}, @code{G_MARKUP_ERROR} or
   @code{G_FILE_ERROR domain}.
- 
+
   @subheading{Note}
     If you are adding an object that depends on an object that is not its child
     (for instance a @class{gtk-tree-view} that depends on its

@@ -1091,13 +1091,14 @@
       The \"drag-data-received\" signal is emitted on the drop site when the
       dragged data has been received. If the data was received in order to
       determine whether the drop will be accepted, the handler is expected to
-      call @fun{gdk-drag-status} and not finish the drag. If the data was
-      received in response to a \"drag-drop\" signal (and this is the last
-      target to be received), the handler for this signal is expected to process
-      the received data and then call @fun{gtk-drag-finish}, setting the success
-      parameter depending on whether the data was processed successfully.
-      The handler may inspect and modify @code{drag_context->action} before
-      calling @fun{gtk-drag-finish}, e. g. to implement @code{:ask} of type
+      call the function @fun{gdk-drag-status} and not finish the drag. If the
+      data was received in response to a \"drag-drop\" signal (and this is the
+      last target to be received), the handler for this signal is expected to
+      process the received data and then call the function
+      @fun{gtk-drag-finish}, setting the success parameter depending on whether
+      the data was processed successfully. The handler may inspect and modify
+      @code{drag_context->action} before calling the function
+      @fun{gtk-drag-finish}, e. g. to implement @code{:ask} of type
       @symbol{gdk-drag-action} as shown in the following example:
       @begin{pre}
  void
@@ -1145,7 +1146,7 @@
         @entry[data]{The received data.}
         @entry[info]{The info that has been registered with the target in the
           @class{gtk-target-list}.}
-        @entry[time]{the timestamp at which the data was received.}
+        @entry[time]{The timestamp at which the data was received.}
       @end{table}
     @subheading{The \"drag-drop\" signal}
       @begin{pre}
@@ -4022,16 +4023,18 @@
 
 (defun gtk-widget-set-sensitive (widget sensitive)
  #+cl-cffi-gtk-documentation
- "@version{2012-12-20}
-  @argument[widget]{a @class{gtk-widget} instance}
+ "@version{2013-7-15}
+  @argument[widget]{a @class{gtk-widget} object}
   @argument[sensitive]{@arg{true} to make the @arg{widget} sensitive}
   @begin{short}
-    Sets the sensitivity of a widget.
+    Sets the sensitivity of a @arg{widget}.
   @end{short}
   A widget is sensitive if the user can interact with it. Insensitive widgets
-  are \"grayed out\" and the user can't interact with them. Insensitive widgets
+  are \"grayed out\" and the user cannot interact with them. Insensitive widgets
   are known as \"inactive\", \"disabled\", or \"ghosted\" in some other
-  toolkits."
+  toolkits.
+  @see-function{gtk-widget-get-sensitive}
+  @see-function{gtk-widget-is-sensitive}"
   (setf (gtk-widget-sensitive widget) sensitive))
 
 (export 'gtk-widget-set-sensitive)
@@ -4106,20 +4109,24 @@
 
 (defun gtk-widget-set-events (widget events)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-28}
+ "@version{2013-7-17}
   @argument[widget]{a @class{gtk-widget} object}
   @argument[events]{event mask}
   @begin{short}
     Sets the event mask (see @symbol{gdk-event-mask}) for @arg{widget}.
   @end{short}
   The event mask determines which events a widget will receive. Keep in mind
-  that different widgets have different default event masks, and by changing the
-  event mask you may disrupt a widget's functionality, so be careful. This
-  function must be called while a widget is unrealized. Consider
-  @code{gtk_widget_add_events()} for widgets that are already realized, or if
+  that different widgets have different default event masks, and by changing
+  the event mask you may disrupt a widget's functionality, so be careful. This
+  function must be called while a widget is unrealized. Consider the function
+  @fun{gtk-widget-add-events} for widgets that are already realized, or if
   you want to preserve the existing event mask. This function can not be used
   with @code{:no-window} widgets; to get events on those widgets, place them
-  inside a @class{gtk-event-box} and receive events on the event box."
+  inside a @class{gtk-event-box} and receive events on the event box.
+  @see-symbol{gdk-event-mask}
+  @see-function{gtk-widget-get-events}
+  @see-function{gtk-widget-add-events}
+  @see-class{gtk-event-box}"
   (setf (gtk-widget-events widget) events))
 
 (export 'gtk-widget-set-events)
@@ -4132,32 +4139,42 @@
 
 (defun gtk-widget-get-events (widget)
  #+cl-cffi-gtk-documentation
- "@version{2012-12-29}
-  @argument[widget]{a @class{gtk-widget} instance}
-  @return{event mask for @arg{widget}}
+ "@version{2013-7-17}
+  @argument[widget]{a @class{gtk-widget} object}
+  @return{event mask from @symbol{gdk-event-mask} flags for @arg{widget}}
   @begin{short}
-    Returns the event mask for the widget (a bitfield containing flags from the
-    @symbol{gdk-event-mask enumeration}).
+    Returns the event mask for the widget. The event mask is a bitfield
+    containing flags from the @symbol{gdk-event-mask} flags.
   @end{short}
-  These are the events that the widget will receive."
+  These are the events that the widget will receive.
+  @see-symbol{gdk-event-mask}
+  @see-function{gtk-widget-set-events}
+  @see-function{gtk-widget-add-events}"
   (gtk-widget-events widget))
 
 (export 'gtk-widget-get-events)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_add_events ()
-;;;
-;;; void gtk_widget_add_events (GtkWidget *widget, gint events);
-;;;
-;;; Adds the events in the bitfield events to the event mask for widget.
-;;; See gtk_widget_set_events() for details.
-;;;
-;;; widget :
-;;;     a GtkWidget
-;;;
-;;; events :
-;;;     an event mask, see GdkEventMask
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-widget-add-events (widget events)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-7-17}
+  @argument[widget]{a @class{gtk-widget} object}
+  @argument[events]{an event mask, see @symbol{gdk-event-mask}}
+  @begin{short}
+    Adds the events in the bitfield @arg{events} to the event mask for
+    @arg{widget}.
+  @end{short}
+  See @fun{gtk-widget-set-events} for details.
+  @see-symbol{gdk-event-mask}
+  @see-function{gtk-widget-set-events}
+  @see-function{gtk-widget-get-events}"
+  (setf (gtk-widget-events widget)
+        (append (gtk-widget-events widget) events)))
+
+(export 'gtk-widget-add-events)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_set_device_events ()
@@ -7329,18 +7346,21 @@
 
 (defun gtk-widget-get-sensitive (widget)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-5}
-  @argument[widget]{a @class{gtk-widget} instance}
-  @return{@arg{true} if the @arg{widget} is sensitive}
+ "@version{2013-7-15}
+  @argument[widget]{a @class{gtk-widget} object}
+  @return{@arg{True} if the @arg{widget} is sensitive.}
   @begin{short}
-    Returns the @arg{widget}'s sensitivity (in the sense of returning the value
-    that has been set using @fun{gtk-widget-set-sensitive}).
+    Returns the @arg{widget}'s sensitivity, in the sense of returning the value
+    that has been set using the function @fun{gtk-widget-set-sensitive}.
   @end{short}
 
   The effective sensitivity of a widget is however determined by both its own
-  and its parent widget's sensitivity. See @fun{gtk-widget-is-sensitive}.
+  and its parent widget's sensitivity. See the function
+  @fun{gtk-widget-is-sensitive}.
 
-  Since 2.18"
+  Since 2.18
+  @see-function{gtk-widget-set-sensitive}
+  @see-function{gtk-widget-is-sensitive}"
   (gtk-widget-sensitive widget))
 
 (export 'gtk-widget-get-sensitive)
@@ -7351,15 +7371,17 @@
 
 (defcfun ("gtk_widget_is_sensitive" gtk-widget-is-sensitive) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-1-6}
-  @argument[widget]{a @class{gtk-widget} instance}
-  @return{@arg{true} if the widget is effectively sensitive}
+ "@version{2013-7-15}
+  @argument[widget]{a @class{gtk-widget} object}
+  @return{@arg{True} if the @arg{widget} is effectively sensitive.}
   @begin{short}
-    Returns the widget's effective sensitivity, which means it is sensitive
-   itself and also its parent widget is sensitive.
+    Returns the @arg{widget}'s effective sensitivity, which means it is
+    sensitive itself and also its parent widget is sensitive.
   @end{short}
 
-  Since 2.18"
+  Since 2.18
+  @see-function{gtk-widget-get-sensitive}
+  @see-function{gtk-widget-set-sensitive}"
   (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-is-sensitive)
@@ -8563,12 +8585,19 @@
 
 (defun gtk-widget-get-margin-left (widget)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-5}
-  @argument[widget]{a @class{gtk-widget} instance}
-  @return{The left margin of widget}
-  @short{Gets the value of the \"margin-left\" property.}
+ "@version{2013-7-15}
+  @argument[widget]{a @class{gtk-widget} object}
+  @return{The left margin of widget.}
+  @short{Gets the value of the @code{\"margin-left\"} property.}
 
-  Since 3.0"
+  Since 3.0
+  @see-function{gtk-widget-set-margin-left}
+  @see-function{gtk-widget-get-margin-right}
+  @see-function{gtk-widget-set-margin-right}
+  @see-function{gtk-widget-get-margin-top}
+  @see-function{gtk-widget-set-margin-top}
+  @see-function{gtk-widget-get-margin-bottom}
+  @see-function{gtk-widget-set-margin-bottom}"
   (gtk-widget-margin-left widget))
 
 (export 'gtk-widget-get-margin-left)
@@ -8581,12 +8610,21 @@
 
 (defun gtk-widget-set-margin-left (widget margin)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-5}
-  @argument[widget]{a @class{gtk-widget} instance}
+ "@version{2013-7-15}
+  @argument[widget]{a @class{gtk-widget} object}
   @argument[margin]{the left margin}
-  @short{Sets the left margin of widget. See the \"margin-left\" property.}
+  @begin{short}
+    Sets the left margin of widget. See the @code{\"margin-left\"} property.
+  @end{short}
 
-  Since 3.0"
+  Since 3.0
+  @see-function{gtk-widget-get-margin-left}
+  @see-function{gtk-widget-get-margin-right}
+  @see-function{gtk-widget-set-margin-right}
+  @see-function{gtk-widget-get-margin-top}
+  @see-function{gtk-widget-set-margin-top}
+  @see-function{gtk-widget-get-margin-bottom}
+  @see-function{gtk-widget-set-margin-bottom}"
   (setf (gtk-widget-margin-left widget) margin))
 
 (export 'gtk-widget-set-margin-left)
@@ -8599,12 +8637,19 @@
 
 (defun gtk-widget-get-margin-right (widget)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-5}
-  @argument[widget]{a @class{gtk-widget} instance}
-  @return{The right margin of widget}
-  @short{Gets the value of the \"margin-right\" property.}
+ "@version{2013-7-15}
+  @argument[widget]{a @class{gtk-widget} object}
+  @return{The right margin of widget.}
+  @short{Gets the value of the @code{\"margin-right\"} property.}
 
-  Since 3.0"
+  Since 3.0
+  @see-function{gtk-widget-get-margin-left}
+  @see-function{gtk-widget-set-margin-left}
+  @see-function{gtk-widget-set-margin-right}
+  @see-function{gtk-widget-get-margin-top}
+  @see-function{gtk-widget-set-margin-top}
+  @see-function{gtk-widget-get-margin-bottom}
+  @see-function{gtk-widget-set-margin-bottom}"
   (gtk-widget-margin-right widget))
 
 (export 'gtk-widget-get-margin-right)
@@ -8617,12 +8662,21 @@
 
 (defun gtk-widget-set-margin-right (widget margin)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-5}
-  @argument[widget]{a @class{gtk-widget} instance}
+ "@version{2013-7-15}
+  @argument[widget]{a @class{gtk-widget} object}
   @argument[margin]{the right margin}
-  @short{Sets the right margin of widget. See the \"margin-right\" property.}
+  @begin{short}
+    Sets the right margin of widget. See the @code{\"margin-right\"} property.
+  @end{short}
 
-  Since 3.0"
+  Since 3.0
+  @see-function{gtk-widget-get-margin-left}
+  @see-function{gtk-widget-set-margin-left}
+  @see-function{gtk-widget-get-margin-right}
+  @see-function{gtk-widget-get-margin-top}
+  @see-function{gtk-widget-set-margin-top}
+  @see-function{gtk-widget-get-margin-bottom}
+  @see-function{gtk-widget-set-margin-bottom}"
   (setf (gtk-widget-margin-right widget) margin))
 
 (export 'gtk-widget-set-margin-right)
@@ -8635,12 +8689,19 @@
 
 (defun gtk-widget-get-margin-top (widget)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-5}
-  @argument[widget]{a @class{gtk-widget} instance}
-  @return{The top margin of widget}
-  @short{Gets the value of the \"margin-top\" property.}
+ "@version{2013-7-15}
+  @argument[widget]{a @class{gtk-widget} object}
+  @return{The top margin of widget.}
+  @short{Gets the value of the @code{\"margin-top\"} property.}
 
-  Since 3.0"
+  Since 3.0
+  @see-function{gtk-widget-get-margin-left}
+  @see-function{gtk-widget-set-margin-left}
+  @see-function{gtk-widget-get-margin-right}
+  @see-function{gtk-widget-set-margin-right}
+  @see-function{gtk-widget-set-margin-top}
+  @see-function{gtk-widget-get-margin-bottom}
+  @see-function{gtk-widget-set-margin-bottom}"
   (gtk-widget-margin-top widget))
 
 (export 'gtk-widget-get-margin-top)
@@ -8653,12 +8714,21 @@
 
 (defun gtk-widget-set-margin-top (widget margin)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-5}
-  @argument[widget]{a @class{gtk-widget} instance}
+ "@version{2013-7-15}
+  @argument[widget]{a @class{gtk-widget} object}
   @argument[margin]{the top margin}
-  @short{Sets the top margin of widget. See the \"margin-top\" property.}
+  @begin{short}
+    Sets the top margin of widget. See the @code{\"margin-top\"} property.
+  @end{short}
 
-  Since 3.0"
+  Since 3.0
+  @see-function{gtk-widget-get-margin-left}
+  @see-function{gtk-widget-set-margin-left}
+  @see-function{gtk-widget-get-margin-right}
+  @see-function{gtk-widget-set-margin-right}
+  @see-function{gtk-widget-get-margin-top}
+  @see-function{gtk-widget-get-margin-bottom}
+  @see-function{gtk-widget-set-margin-bottom}"
   (setf (gtk-widget-margin-top widget) margin))
 
 (export 'gtk-widget-set-margin-top)
@@ -8671,12 +8741,19 @@
 
 (defun gtk-widget-get-margin-bottom (widget)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-5}
-  @argument[widget]{a @class{gtk-widget} instance}
-  @return{The bottom margin of widget}
-  @short{Gets the value of the \"margin-bottom\" property.}
+ "@version{2013-7-15}
+  @argument[widget]{a @class{gtk-widget} object}
+  @return{The bottom margin of widget.}
+  @short{Gets the value of the @code{\"margin-bottom\"} property.}
 
-  Since 3.0"
+  Since 3.0
+  @see-function{gtk-widget-get-margin-left}
+  @see-function{gtk-widget-set-margin-left}
+  @see-function{gtk-widget-get-margin-right}
+  @see-function{gtk-widget-set-margin-right}
+  @see-function{gtk-widget-get-margin-top}
+  @see-function{gtk-widget-set-margin-top}
+  @see-function{gtk-widget-set-margin-bottom}"
   (gtk-widget-margin-bottom widget))
 
 (export 'gtk-widget-get-margin-bottom)
@@ -8689,12 +8766,21 @@
 
 (defun gtk-widget-set-margin-bottom (widget margin)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-5}
-  @argument[widget]{a @class{gtk-widget} instance}
+ "@version{2013-7-15}
+  @argument[widget]{a @class{gtk-widget} object}
   @argument[margin]{the bottom margin}
-  @short{Sets the bottom margin of widget. See the \"margin-bottom\" property.}
+  @begin{short}
+    Sets the bottom margin of widget. See the @code{\"margin-bottom\"} property.
+  @end{short}
 
-  Since 3.0"
+  Since 3.0
+  @see-function{gtk-widget-get-margin-left}
+  @see-function{gtk-widget-set-margin-left}
+  @see-function{gtk-widget-get-margin-right}
+  @see-function{gtk-widget-set-margin-right}
+  @see-function{gtk-widget-get-margin-top}
+  @see-function{gtk-widget-set-margin-top}
+  @see-function{gtk-widget-get-margin-bottom}"
   (setf (gtk-widget-margin-top widget) margin))
 
 (export 'gtk-widget-set-margin-bottom)

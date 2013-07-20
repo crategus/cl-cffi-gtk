@@ -30,11 +30,11 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; GtkProgressBar
-;;; 
+;;;
 ;;; A widget which indicates progress visually
-;;;     
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;;     GtkProgressBar
 ;;;
 ;;;     gtk_progress_bar_new

@@ -687,15 +687,18 @@
 (defcfun ("gtk_image_new_from_stock" gtk-image-new-from-stock)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-21}
+ "@version{2013-7-15}
   @argument[stock-id]{a stock icon name}
-  @argument[size]{a stock icon size}
-  @return{A new @class{gtk-image} object displaying the stock icon.}
-  Creates a @class{gtk-image} object displaying a stock icon. Sample stock icon
+  @argument[size]{a stock icon size from the @symbol{gtk-icon-size} enumeration}
+  @return{A new @class{gtk-image} widget displaying the stock icon.}
+  Creates a @class{gtk-image} widget displaying a stock icon. Sample stock icon
   names are @code{\"gtk-open\"}, @code{\"gtk-quit\"}. Sample stock sizes are
   @code{:menu}, @code{:small-toolbar}. If the stock icon name is not known, the
   image will be empty. You can register your own stock icon names, see the
-  functions @fun{gtk-icon-factory-add-default} and @fun{gtk-icon-factory-add}."
+  functions @fun{gtk-icon-factory-add-default} and @fun{gtk-icon-factory-add}.
+  @see-symbol{gtk-icon-size}
+  @see-function{gtk-icon-factory-add}
+  @see-function{gtk-icon-factory-add-default}"
   (stock-id :string)
   (size gtk-icon-size))
 

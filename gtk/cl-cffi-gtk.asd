@@ -30,29 +30,23 @@
 
 ;;; ----------------------------------------------------------------------------
 
-(in-package :cl-user)
 
-(defvar *cl-cffi-gtk-build-time* (multiple-value-list (get-decoded-time)))
-(defvar *cl-cffi-gtk-version* "1.0.0")
-
-(export '*cl-cffi-gtk-build-time*)
-(export '*cl-cffi-gtk-version*)
 
 ;;; ----------------------------------------------------------------------------
 
 (in-package #:cl-cffi-gtk-system)
 
-(defclass plain-file (static-file)
-  ((type :initarg :type :reader plain-file-type :initform nil)))
+;(defclass plain-file (static-file)
+;  ((type :initarg :type :reader plain-file-type :initform nil)))
 
-(defmethod source-file-type ((c plain-file) (s module))
-  (plain-file-type c))
+;(defmethod source-file-type ((c plain-file) (s module))
+;  (plain-file-type c))
 
 ;;; ----------------------------------------------------------------------------
 
 (defsystem :cl-cffi-gtk
   :name :cl-cffi-gtk
-  :version "0.0.0"
+  :version "3.6.4"                     ; Version of the library
   :author "Dieter Kaiser"
   :license "LLGPL"
   :serial t
@@ -69,6 +63,7 @@
    (:file "gtk.accel-map")             ; Loadable keyboard accelerator
    (:file "gtk.selections")            ; Inter-process communication
    (:file "gtk.drag-and-drop")         ; Controlling drag and drop
+   (:file "gtk.stock-item")            ; Stock Items
    (:file "gtk.clipboard")             ; Storing data on clipboards
    (:file "gtk.settings")              ; Sharing settings
    (:file "gtk.mount-operation")       ; Filesystem utilities
@@ -302,7 +297,8 @@
 
    ;; Lisp
 ;   (:file "gtk.high-level")
-   (:file "gtk.init"))
+   (:file "gtk.init")
+)
   :depends-on (:cl-cffi-gtk-glib
                :cl-cffi-gtk-gobject
                :cl-cffi-gtk-gio

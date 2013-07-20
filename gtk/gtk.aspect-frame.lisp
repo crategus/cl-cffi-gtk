@@ -30,13 +30,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; GtkAspectFrame
-;;; 
+;;;
 ;;; A frame that constrains its child to a particular aspect ratio
-;;;     
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;;     GtkAspectFrame
-;;;     
+;;;
 ;;;     gtk_aspect_frame_new
 ;;;     gtk_aspect_frame_set
 ;;; ----------------------------------------------------------------------------

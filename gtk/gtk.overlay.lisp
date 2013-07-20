@@ -29,13 +29,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; GtkOverlay
-;;; 
+;;;
 ;;; A container which overlays widgets on top of each other
-;;;     
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;;     GtkOverlay
-;;;     
+;;;
 ;;;     gtk_overlay_new
 ;;;     gtk_overlay_add_overlay
 ;;; ----------------------------------------------------------------------------

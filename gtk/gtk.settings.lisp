@@ -1078,7 +1078,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-shell-shows-menubar"
                                                'gtk-settings) 't)
- "The @code{\"gtk-shell-shows-menubar\"} property of type @code{:boolean} 
+ "The @code{\"gtk-shell-shows-menubar\"} property of type @code{:boolean}
   (Read / Write)@br{}
   Set to @em{true} if the desktop environment is displaying the menubar,
   @code{nil} if the app should display it itself.@br{}
@@ -1089,7 +1089,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-show-input-method-menu"
                                                'gtk-settings) 't)
- "The @code{\"gtk-show-input-method-menu\"} property of type @code{:boolean} 
+ "The @code{\"gtk-show-input-method-menu\"} property of type @code{:boolean}
   (Read / Write)@br{}
   Whether the context menus of entries and text views should offer to change
   the input method.@br{}

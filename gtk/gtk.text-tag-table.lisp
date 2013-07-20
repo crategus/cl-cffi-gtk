@@ -30,13 +30,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; GtkTextTagTable
-;;; 
+;;;
 ;;; Collection of tags that can be used together
-;;;     
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;;     GtkTextTagTable
-;;;     
+;;;
 ;;;     gtk_text_tag_table_new
 ;;;     gtk_text_tag_table_add
 ;;;     gtk_text_tag_table_remove

@@ -81,7 +81,7 @@
 
    /* The following call is only necessary if one of
     * the ancestors of the socket is not yet visible.
-    */ 
+    */
    gtk_widget_realize (socket);
    g_print (\"The ID of the sockets window is
              %<GTKDOCLINK HREF=\"x\">x</GTKDOCLINK>\n\",

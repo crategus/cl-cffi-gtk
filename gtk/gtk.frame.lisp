@@ -76,19 +76,18 @@
     gtk-frame-shadow-type
     "shadow-type" "GtkShadowType" t t)))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-frame 'type)
- "@version{2013-3-24}
+ "@version{2013-7-15}
   @begin{short}
-    The frame widget is a Bin that surrounds its child with a decorative frame
-    and an optional label.
+    The frame widget is a @class{gtk-bin} widget that surrounds its child with
+    a decorative frame and an optional label.
   @end{short}
   If present, the label is drawn in a gap in the top side of the frame. The
-  position of the label can be controlled with @fun{gtk-frame-set-label-align}.
+  position of the label can be controlled with the function
+  @fun{gtk-frame-set-label-align}.
 
-  @subheading{gtk-frame as gtk-buildable}
+  @subheading{GtkFrame as GtkBuildable}
     The @sym{gtk-frame} implementation of the @class{gtk-buildable} interface
     supports placing a child in the label position by specifying
     @code{\"label\"} as the @code{\"type\"} attribute of a @code{<child>}
@@ -110,7 +109,8 @@
   @see-slot{gtk-frame-label-widget}
   @see-slot{gtk-frame-label-xalign}
   @see-slot{gtk-frame-label-yalign}
-  @see-slot{gtk-frame-shadow-type}")
+  @see-slot{gtk-frame-shadow-type}
+  @see-function{gtk-frame-set-label-align}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -120,52 +120,44 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "label" 'gtk-frame) 't)
- "The @code{\"label\"} property of type  @code{:string} (Read / Write)@br{}
-  Text of the frame's label.@br{}
+ "The @code{\"label\"} property of type  @code{:string} (Read / Write) @br{}
+  Text of the frame's label. @br{}
   Default value: @code{nil}")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "label-widget" 'gtk-frame) 't)
  "The @code{\"label-widget\"} property of type @class{gtk-widget}
-  (Read / Write)@br{}
+  (Read / Write) @br{}
   A widget to display in place of the usual frame label.")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "label-xalign" 'gtk-frame) 't)
- "The @code{\"label-xalign\"} property of type @code{:float} (Read / Write)@br{}
-  The horizontal alignment of the label.@br{}
-  Allowed values: [0,1]@br{}
+ "The @code{\"label-xalign\"} property of type @code{:float}
+  (Read / Write) @br{}
+  The horizontal alignment of the label. @br{}
+  Allowed values: [0,1] @br{}
   Default value: 0")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "label-yalign" 'gtk-frame) 't)
- "The @code{\"label-yalign\"} property of type @code{:float} (Read / Write)@br{}
-  The vertical alignment of the label.@br{}
-  Allowed values: [0,1]@br{}
+ "The @code{\"label-yalign\"} property of type @code{:float}
+  (Read / Write) @br{}
+  The vertical alignment of the label. @br{}
+  Allowed values: [0,1] @br{}
   Default value: 0.5")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "shadow-type" 'gtk-frame) 't)
  "The @code{\"shadow-type\"} property of type @symbol{gtk-shadow-type}
-  (Read / Write)@br{}
-  Appearance of the frame border.@br{}
+  (Read / Write) @br{}
+  Appearance of the frame border. @br{}
   Default value: @code{:etched-in}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Accessors
+;;; Accessors of Properties
 ;;;
 ;;; ----------------------------------------------------------------------------
-
-;;; --- gtk-frame-label --------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-frame-label atdoc:*function-name-alias*) "Accessor"
@@ -173,15 +165,11 @@
  "@version{2013-5-20}
   Accessor of the slot @code{\"label\"} of the @class{gtk-frame} class.")
 
-;;; --- gtk-frame-label-widget -------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-frame-label-widget atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-frame-label-widget 'function)
  "@version{2013-5-20}
   Accessor of the slot @code{\"label-widget\"} of the @class{gtk-frame} class.")
-
-;;; --- gtk-frame-label-xalign -------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-frame-label-xalign atdoc:*function-name-alias*) "Accessor"
@@ -189,15 +177,11 @@
  "@version{2013-5-20}
   Accessor of the slot @code{\"label-xalign\"} of the @class{gtk-frame} class.")
 
-;;; --- gtk-frame-label-yalign -------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-frame-label-yalign atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-frame-label-yalign 'function)
  "@version{2013-5-20}
   Accessor of the slot @code{\"label-yalign\"} of the @class{gtk-frame} class.")
-
-;;; --- gtk-frame-shadow-type --------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-frame-shadow-type atdoc:*function-name-alias*) "Accessor"

@@ -30,11 +30,11 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; GtkSeparatorToolItem
-;;; 
+;;;
 ;;; A toolbar item that separates groups of other toolbar items
-;;;     
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;;     GtkSeparatorToolItem
 ;;;
 ;;;     gtk_separator_tool_item_new
