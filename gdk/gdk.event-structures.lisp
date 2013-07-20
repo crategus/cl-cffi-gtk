@@ -723,7 +723,8 @@
 ;;; ----------------------------------------------------------------------------
 
 (define-g-flags "GdkEventMask" gdk-event-mask
-  ()
+  (:export t
+   :type-initializer "gdk_event_mask_get_type")
   (:exposure-mask 2)
   (:pointer-motion-mask 4)
   (:pointer-motion-hint-mask 8)
@@ -754,33 +755,34 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-event-mask atdoc:*symbol-name-alias*) "Flags"
       (gethash 'gdk-event-mask atdoc:*external-symbols*)
- "@version{2013-1-6}
+ "@version{2013-7-17}
   @begin{short}
     A set of bit-flags to indicate which events a window is to receive. Most of
     these masks map onto one or more of the @symbol{gdk-event-type} event
     types.
   @end{short}
 
-  @code{:pointer-motion-hint-mask} is a special mask which is used to reduce the
-  number of @code{:motion-notifiy} events received. Normally a
+  @code{:pointer-motion-hint-mask} is a special mask which is used to reduce
+  the number of @code{:motion-notifiy} events received. Normally a
   @code{:motion-notify} event is received each time the mouse moves. However,
-  if the application spends a lot of time processing the event (updating the
-  display, for example), it can lag behind the position of the mouse. When using
+  if the application spends a lot of time processing the event, updating the
+  display, for example, it can lag behind the position of the mouse. When using
   @code{:pointer-motion-hint-mask}, fewer @code{:motion-notify} events will
   be sent, some of which are marked as a hint (the @code{is_hint} member is
   @arg{true}). To receive more motion events after a motion hint event, the
-  application needs to asks for more, by calling
+  application needs to asks for more, by calling the function
   @fun{gdk-event-request-motions}.
 
   If @code{:touch-mask} is enabled, the window will receive touch events from
   touch-enabled devices. Those will come as sequences of @class{gdk-event-touch}
   with type @code{:touch-update}, enclosed by two events with type
-  @code{:touch-begin} and @code{:touch-end} (or @code{:touch-cancel}).
-  @code{gdk_event_get_event_sequence()} returns the event sequence for these
-  events, so different sequences may be distinguished.
+  @code{:touch-begin} and @code{:touch-end}, or @code{:touch-cancel}.
+  The function @fun{gdk-event-get-event-sequence} returns the event sequence
+  for these events, so different sequences may be distinguished.
   @begin{pre}
 (define-g-flags \"GdkEventMask\" gdk-event-mask
-  ()
+  (:export t
+   :type-initializer \"gdk_event_mask_get_type\")
   (:exposure-mask 2)
   (:pointer-motion-mask 4)
   (:pointer-motion-hint-mask 8)
@@ -807,37 +809,41 @@
   (:all-events-mask 4194302))
   @end{pre}
   @begin[code]{table}
-    @entry[:exposure-mask]{receive expose events}
-    @entry[:pointer-motion-mask]{receive all pointer motion events}
-    @entry[:pointer-motion-hint-mask]{see the explanation above}
-    @entry[:button-motion-mask]{receive pointer motion events while any
-      button is pressed}
-    @entry[:button1-motion-mask]{receive pointer motion events while 1
-      button is pressed}
-    @entry[:button2-motion-mask]{receive pointer motion events while 2
-      button is pressed}
-    @entry[:button3-motion-mask]{receive pointer motion events while 3
-      button is pressed}
-    @entry[:button-press-mask]{receive button press events}
-    @entry[:button-release-mask]{receive button release events}
-    @entry[:key-press-mask]{receive key press events}
-    @entry[:key-release-mask]{receive key release events}
-    @entry[:enter-notify-mask]{receive window enter events}
-    @entry[:leave-notify-mask]{receive window leave events}
-    @entry[:focus-change-mask]{receive focus change events}
-    @entry[:structure-mask]{receive events about window configuration
-      change}
-    @entry[:property-change-mask]{receive property change events}
-    @entry[:visibility-notify-mask]{receive visibility change events}
-    @entry[:proximity-in-mask]{receive proximity in events}
-    @entry[:proximity-out-mask]{receive proximity out events}
-    @entry[:substructure-mask]{receive events about window configuration
-      changes of child windows}
-    @entry[:scroll-mask]{receive scroll events}
-    @entry[:touch-mask]{receive touch events}
-    @entry[:smooth-scroll-mask]{receive smooth scrolling events}
-    @entry[:all-events-mask]{the combination of all the above event masks.}
-  @end{table}")
+    @entry[:exposure-mask]{Receive expose events.}
+    @entry[:pointer-motion-mask]{Receive all pointer motion events.}
+    @entry[:pointer-motion-hint-mask]{See the explanation above.}
+    @entry[:button-motion-mask]{Receive pointer motion events while any
+      button is pressed.}
+    @entry[:button1-motion-mask]{Receive pointer motion events while 1
+      button is pressed.}
+    @entry[:button2-motion-mask]{Receive pointer motion events while 2
+      button is pressed.}
+    @entry[:button3-motion-mask]{Receive pointer motion events while 3
+      button is pressed.}
+    @entry[:button-press-mask]{Receive button press events.}
+    @entry[:button-release-mask]{Receive button release events.}
+    @entry[:key-press-mask]{Receive key press events.}
+    @entry[:key-release-mask]{Receive key release events.}
+    @entry[:enter-notify-mask]{Receive window enter events.}
+    @entry[:leave-notify-mask]{Receive window leave events.}
+    @entry[:focus-change-mask]{Receive focus change events.}
+    @entry[:structure-mask]{Receive events about window configuration
+      change.}
+    @entry[:property-change-mask]{Receive property change events.}
+    @entry[:visibility-notify-mask]{Receive visibility change events.}
+    @entry[:proximity-in-mask]{Receive proximity in events.}
+    @entry[:proximity-out-mask]{Receive proximity out events.}
+    @entry[:substructure-mask]{Receive events about window configuration
+      changes of child windows.}
+    @entry[:scroll-mask]{Receive scroll events.}
+    @entry[:touch-mask]{Receive touch events.}
+    @entry[:smooth-scroll-mask]{Receive smooth scrolling events.}
+    @entry[:all-events-mask]{The combination of all the above event masks.}
+  @end{table}
+  @see-symbol{gdk-event-type}
+  @see-class{gdk-event-touch}
+  @see-function{gdk-event-request-motions}
+  @see-function{gdk-event-get-event-sequence}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; GdkEventSequence
