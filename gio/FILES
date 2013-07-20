@@ -1,5 +1,10 @@
 Content from the GIO Reference Manual for Version 2.36.1
 
+    *   - needs update
+    %   - not fully implemented
+    &   - objects and structures are implemented, some functions are missing
+   (**) - deprecated
+
 File Operations
 
   GFile - File and Directory Handling
@@ -64,7 +69,7 @@ File types and applications
 
   GContentType - Platform-specific content typing
 
-  gio.app-info.lisp - GAppInfo                                     - GIO 2.36.1
+  gio.app-info.lisp - GAppInfo                                     - GIO 2.36.1%
 
   GDesktopAppInfo - Application information from desktop files
 
@@ -78,10 +83,13 @@ Volumes and Drives
 
 Icons
 
-  GIcon - Interface for icons
+  gio.icon.lisp - GIcon                                            - GIO 2.36.3
+
   GFileIcon - Icons pointing to an image file
   GLoadableIcon - Loadable Icons
-  GThemedIcon - Icon theming support
+
+  gio.themed-icon.lisp - GThemedIcon                               - GIO 2.36.3
+
   GEmblemedIcon - Icon with emblems
   GEmblem - An object for emblems
 
@@ -189,14 +197,14 @@ Permissions
 
 Application support
 
-  gio.application.lisp         - GApplication                      - GIO 2.36.1
+  gio.application.lisp         - GApplication                      - GIO 2.36.1%
 
   GApplicationCommandLine - A command-line invocation of an application
 
-  gio.action-group.lisp        - GActionGroup                      - GIO 2.36.1
-  gio.action-map.lisp          - GActionMap                        - GIO 2.36.1
-  gio.simple-action-group.lisp - GSimpleActionGroup                - GIO 2.36.1
-  gio.action.lisp              - GAction                           - GIO 2.26.1
+  gio.action-group.lisp        - GActionGroup                      - GIO 2.36.1%
+  gio.action-map.lisp          - GActionMap                        - GIO 2.36.1%
+  gio.simple-action-group.lisp - GSimpleActionGroup                - GIO 2.36.1%
+  gio.action.lisp              - GAction                           - GIO 2.36.1
   gio.simple-action.lisp       - GSimpleAction                     - GIO 2.36.1
 
   GRemoteActionGroup - a GActionGroup that interacts with other processes

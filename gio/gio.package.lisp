@@ -41,6 +41,7 @@
   developers prefer it over raw POSIX calls. Among other things that means using
   GObject. It also means not cloning the POSIX API, but providing higher-level,
   document-centric interfaces.
+  @end{section}
   @begin[Files types and applications]{section}
     @begin[GAppInfo]{subsection}
       Application information and launch contexts.
@@ -90,6 +91,28 @@
         @about-function{g-app-launch-context-new}
     @end{subsection}
   @end{section}
+  @begin[Icons]{section}
+    @begin[GIcon]{subsection}
+      Interface for icons.
+
+      @about-class{g-icon}
+      @about-class{g-icon-iface}
+      @about-function{g-icon-hash}
+      @about-function{g-icon-equal}
+      @about-function{g-icon-to-string}
+      @about-function{g-icon-new-for-string}
+    @end{subsection}
+    @begin[GThemedIcon]{subsection}
+      Icon theming support.
+
+      @about-class{g-themed-icon}
+      @about-function{g-themed-icon-new}
+      @about-function{g-themed-icon-new-from-names}
+      @about-function{g-themed-icon-new-with-default-fallbacks}
+      @about-function{g-themed-icon-prepend-name}
+      @about-function{g-themed-icon-append-name}
+      @about-function{g-themed-icon-get-names}
+    @end{subsection}
   @begin[Application support]{section}
     @begin[GApplication]{subsection}
       Core application class.

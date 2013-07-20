@@ -73,8 +73,6 @@
    g-action-state-type
    "state-type" "GVariantType" t nil))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'g-action 'type)
  "@version{2013-5-1}
@@ -129,8 +127,6 @@
   Default value: @em{true}@br{}
   Since 2.28")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "name" 'g-action) 't)
  "The @code{\"name\"} property of type @code{:string} (Read)@br{}
@@ -139,16 +135,12 @@
   Default value: @code{nil}@br{}
   Since 2.28")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "parameter-type" 'g-action) 't)
  "The @code{\"parameter-type\"} property of type @symbol{g-variant-type}
   (Read)@br{}
   The type of the parameter that must be given when activating the action.@br{}
   Since 2.28")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "state" 'g-action) 't)
@@ -157,8 +149,6 @@
   Allowed values: @code{GVariant<*>}@br{}
   Default value: @code{nil}@br{}
   Since 2.28")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "state-type" 'g-action) 't)
@@ -173,8 +163,6 @@
 ;;;
 ;;; ----------------------------------------------------------------------------
 
-;;; --- g-action-enabled -------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-action-enabled atdoc:*function-name-alias*)
       "Accessor"
@@ -184,8 +172,6 @@
     Accessor of the slot @code{\"enabled\"} of the @class{g-action} class.
   @end{short}")
 
-;;; --- g-action-name ----------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-action-name atdoc:*function-name-alias*)
       "Accessor"
@@ -194,8 +180,6 @@
   @begin{short}
     Accessor of the slot @code{\"name\"} of the @class{g-action} class.
   @end{short}")
-
-;;; --- g-action-parameter-type ------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-action-parameter-type atdoc:*function-name-alias*)
@@ -207,8 +191,6 @@
     class.
   @end{short}")
 
-;;; --- g-action-state ---------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-action-state atdoc:*function-name-alias*)
       "Accessor"
@@ -217,8 +199,6 @@
   @begin{short}
     Accessor of the slot @code{\"state\"} of the @class{g-action} class.
   @end{short}")
-
-;;; --- g-action-state-type ----------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-action-state-type atdoc:*function-name-alias*)
