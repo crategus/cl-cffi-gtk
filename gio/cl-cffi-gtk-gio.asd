@@ -26,14 +26,19 @@
 
 (defsystem :cl-cffi-gtk-gio
   :name :cl-cffi-gtk-gio
-  :version "2.36.1"                  ; Version of GIO
+  :version "2.36.0"                  ; Version of GIO
   :author "Dieter Kaiser"
   :license "LLGPL"
   :serial t
   :components
   ((:file "gio.package")
    (:file "gio.init")
+   ;; Application information and launch contexts
    (:file "gio.app-info")            ; Application information, launch contexts
+   ;; Icons
+   (:file "gio.icon")                ; Interface for icons
+   (:file "gio.themed-icon")         ; Icon theming support
+   ;; Application support
    (:file "gio.action")              ; An action interface
    (:file "gio.action-group")        ; A group of actions
    (:file "gio.action-map")          ; Interface for action containers
