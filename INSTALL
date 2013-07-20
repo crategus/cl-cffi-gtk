@@ -35,8 +35,9 @@ For example for SBCL on a Linux system the symlinks are added to the directory
 The cl-cffi-gtk library depends further on the following libraries, which
 must be installed:
 
-   CFFI
+   CFFI Version 0.11.2
    see http://common-lisp.net/project/cffi/
+   Warning: Older versions of CFFI will not work.
    
    Trivial-Garbage
    see http://www.cliki.net/trivial-garbage
