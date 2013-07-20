@@ -29,6 +29,7 @@
 
 (glib::at-init ()
   (eval-when (:compile-toplevel :load-toplevel :execute)
+    (format t "~&Loading GDK ...~%")
     (define-foreign-library gdk
       ((:and :unix (:not :darwin))
        (:or "libgdk-3.so.0" "libgdk-3.so"))
@@ -36,14 +37,15 @@
       (:windows "libgdk-3-0.dll")
       (t "libgdk-3-0"))
 
-    (define-foreign-library gtk
-      ((:and :unix (:not :darwin))
-       (:or "libgtk-3.so.0" "libgtk-3.so"))
-      (:darwin (:or "libgtk-x11-2.0.0.dylib" "libgtk-x11-2.0.dylib"))
-      (:windows (:or "libgtk-3-0.dll" "libgtk-win32-2.0-0.dll"))
-      (t "libgtk-3-0")))
+;    (define-foreign-library gtk
+;      ((:and :unix (:not :darwin))
+;       (:or "libgtk-3.so.0" "libgtk-3.so"))
+;      (:darwin (:or "libgtk-x11-2.0.0.dylib" "libgtk-x11-2.0.dylib"))
+;      (:windows (:or "libgtk-3-0.dll" "libgtk-win32-2.0-0.dll"))
+;      (t "libgtk-3-0"))
+)
 
-  (use-foreign-library gdk)
-  (use-foreign-library gtk))
+  (use-foreign-library gdk))
+;  (use-foreign-library gtk))
 
 ;;; End of file gdk.init.lisp --------------------------------------------------
