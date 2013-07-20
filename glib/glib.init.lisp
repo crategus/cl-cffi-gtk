@@ -2,10 +2,10 @@
 ;;; glib.init.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -102,6 +102,7 @@
 
 (at-init ()
   (eval-when (:compile-toplevel :load-toplevel :execute)
+    (format t "~&Loading Glib ...~%")
     (define-foreign-library glib
       ((:and :unix (:not :darwin))
        (:or "libglib-2.0.so.0" "libglib-2.0.so"))
