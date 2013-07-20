@@ -368,7 +368,8 @@
               (mem-aref g-param-spec-types 'g-type 2)
  #+cl-cffi-gtk-documentation
  "@version{2013-6-20}
-  The @class{g-type} of @class{g-param-spec-boolean}.")
+  The @class{g-type} of @symbol{g-param-spec-boolean}.
+  @see-symbol{g-param-spec-boolean}")
 
 (export 'g-type-param-boolean)
 
@@ -383,7 +384,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-param-spec-boolean atdoc:*symbol-name-alias*) "CStruct"
       (gethash 'g-param-spec-boolean atdoc:*external-symbols*)
- "@version{2013-4-2}
+ "@version{2013-7-17}
   @begin{short}
     A @symbol{g-param-spec} derived structure that contains the meta data for
     boolean properties.
@@ -394,9 +395,10 @@
   (:default-value :boolean))
   @end{pre}
   @begin[code]{table}
-    @entry[:parent-instance]{private @symbol{g-param-spec} portion}
-    @entry[:default-value]{default value for the property specified}
-  @end{table}")
+    @entry[:parent-instance]{Private @symbol{g-param-spec} portion.}
+    @entry[:default-value]{Default value for the property specified.}
+  @end{table}
+  @see-symbol{g-param-spec}")
 
 (export 'g-param-spec-boolean)
 
@@ -407,7 +409,7 @@
 (defcfun ("g_param_spec_boolean" g-param-spec-boolean)
     (:pointer (:struct g-param-spec-boolean))
  #+cl-cffi-gtk-documentation
- "@version{2013-4-2}
+ "@version{2013-7-17}
   @argument[name]{canonical name of the property specified}
   @argument[nick]{nick name for the property specified}
   @argument[blurb]{description of the property specified}
@@ -418,7 +420,10 @@
     Creates a new @symbol{g-param-spec-boolean} instance specifying a
     @var{+g-type-boolean+} property.
   @end{short}
-  See @fun{g-param-spec-internal} for details on property names."
+  See @fun{g-param-spec-internal} for details on property names.
+  @see-symbol{g-param-spec-boolean}
+  @see-variable{+g-type-boolean+}
+  @see-function{g-param-spec-internal}"
   (name :string)
   (nick :string)
   (blurb :string)
@@ -506,8 +511,9 @@
 (defparameter g-type-param-char
               (mem-aref g-param-spec-types 'g-type 0)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-20}
-  The @class{g-type} of @class{g-param-spec-char}.")
+ "@version{2013-7-17}
+  The @class{g-type} of the @symbol{g-param-spec-char} structure.
+  @see-symbol{g-param-spec-char}")
 
 (export 'g-type-param-char)
 
@@ -524,7 +530,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-param-spec-char atdoc:*symbol-name-alias*) "CStruct"
       (gethash 'g-param-spec-char atdoc:*external-symbols*)
- "@version{2013-4-2}
+ "@version{2013-7-17}
   @begin{short}
     A @symbol{g-param-spec} derived structure that contains the meta data for
     character properties.
@@ -537,11 +543,12 @@
   (:default-value :int8))
   @end{pre}
   @begin[code]{table}
-    @entry[:parent-instance]{private @symbol{g-param-spec} portion}
-    @entry[:minimum]{minimum value for the property specified}
-    @entry[:maximum]{maximum value for the property specified}
-    @entry[:default-value]{default value for the property specified}
-  @end{table}")
+    @entry[:parent-instance]{Private @symbol{g-param-spec} portion.}
+    @entry[:minimum]{Minimum value for the property specified.}
+    @entry[:maximum]{Maximum value for the property specified.}
+    @entry[:default-value]{Default value for the property specified.}
+  @end{table}
+  @see-symbol{g-param-spec}")
 
 (export 'g-param-spec-char)
 
@@ -552,7 +559,7 @@
 (defcfun ("g_param_spec_char" g-param-spec-char)
     (:pointer (:struct g-param-spec-char))
  #+cl-cffi-gtk-documentation
- "@version{2013-7-14}
+ "@version{2013-7-17}
   @argument[name]{canonical name of the property specified}
   @argument[nick]{nick name for the property specified}
   @argument[blurb]{description of the property specified}
@@ -562,7 +569,9 @@
   @argument[flags]{flags for the property specified}
   @return{A newly created parameter specification.}
   Creates a new @symbol{g-param-spec-char} instance specifying a
-  @var{+g-type-char+} property."
+  @var{+g-type-char+} property.
+  @see-symbol{g-param-spec-char}
+  @see-variable{+g-type-char+}"
   (name :string)
   (nick :string)
   (blurb :string)

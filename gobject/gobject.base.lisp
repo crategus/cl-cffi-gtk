@@ -389,19 +389,6 @@
       (log-for :gc  "Error in dispose: ~A~%" e)
       (format t "Error in dispose: ~A~%" e))))
 
-(defun register-gobject-for-gc (pointer)
-  (with-recursive-lock-held (*gobject-gc-hooks-lock*)
-    (let ((locks-were-present (not (null *gobject-gc-hooks*))))
-      (push pointer *gobject-gc-hooks*)
-      (unless locks-were-present
-        (log-for :gc "adding idle-gc-hook to main loop~%")
-        (glib::%g-idle-add (callback g-idle-gc-hook) (null-pointer))))))
-
-(defcallback g-idle-gc-hook :boolean ((data :pointer))
-  (declare (ignore data))
-  (activate-gc-hooks)
-  nil)
-
 (defun activate-gc-hooks ()
   (with-recursive-lock-held (*gobject-gc-hooks-lock*)
     (when *gobject-gc-hooks*
@@ -411,7 +398,23 @@
          do (g-object-remove-toggle-ref pointer
                                         (callback g-toggle-notify)
                                         (null-pointer)))
-      (setf *gobject-gc-hooks* nil))))
+      (setf *gobject-gc-hooks* nil)))
+  nil)
+
+(defun register-gobject-for-gc (pointer)
+  (with-recursive-lock-held (*gobject-gc-hooks-lock*)
+    (let ((locks-were-present (not (null *gobject-gc-hooks*))))
+      (push pointer *gobject-gc-hooks*)
+      (unless locks-were-present
+        (log-for :gc "adding idle-gc-hook to main loop~%")
+        (g-idle-add #'activate-gc-hooks)))))
+;        (glib::%g-idle-add (callback g-idle-gc-hook) (null-pointer))))))
+
+(defcallback g-idle-gc-hook :boolean ((data :pointer))
+  (declare (ignore data))
+  (format t "~%~%IN G-IDLE-GC-HOOKS~%~%")
+  (activate-gc-hooks)
+  nil)
 
 ;;; ----------------------------------------------------------------------------
 
