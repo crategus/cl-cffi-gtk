@@ -15,9 +15,9 @@ from http://www.gtk.org is included into the Lisp files to document the Lisp
 binding to the GTK+ library. This documentation is also available online at
 http://www.crategus.com/books/cl-cffi-gtk/
 
-At this time, the library is developed and tested with SBCL 1.0.57 and
-GTK+ 3.6.0 on a Linux system. Furthermore, the following libraries GLIB 2.34.1,
-Pango 1.30.1, and Cairo 1.12.2 are loaded.
+At this time, the library is developed and tested with SBCL 1.1.9 and
+GTK+ 3.6.4 on a Linux system. Furthermore, the following libraries GLIB 2.36.0,
+Pango 1.32.5, and Cairo 1.12.4 are loaded.
 
 Examples of the usage are included in a gtk-demo and tutorial examples. Start
 with the tutorial available online at
