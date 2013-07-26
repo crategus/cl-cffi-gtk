@@ -41,7 +41,6 @@
   developers prefer it over raw POSIX calls. Among other things that means using
   GObject. It also means not cloning the POSIX API, but providing higher-level,
   document-centric interfaces.
-  @end{section}
   @begin[Files types and applications]{section}
     @begin[GAppInfo]{subsection}
       Application information and launch contexts.
@@ -113,6 +112,7 @@
       @about-function{g-themed-icon-append-name}
       @about-function{g-themed-icon-get-names}
     @end{subsection}
+  @end{section}
   @begin[Application support]{section}
     @begin[GApplication]{subsection}
       Core application class.
