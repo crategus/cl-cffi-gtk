@@ -28,12 +28,13 @@
 (defpackage :glib
   (:use :cl :cffi :iter)
   (:export ;; Symbols from glib.stable-pointer.lisp
+           #:allocate-stable-pointer
+           #:get-stable-pointer-value
+           #:stable-pointer-destroy-notify-cb
            #:with-stable-pointer
            ;; Symbols from glib.error.lisp
            #:with-catching-to-g-error
            #:with-g-error))
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (find-package :glib) t)
@@ -67,195 +68,70 @@
     @about-symbol{GLIB_VERSION_2_28}
     @about-symbol{GLIB_VERSION_2_30}
     @about-symbol{GLIB_VERSION_2_32}
+    @about-symbol{GLIB_VERSION_2_34}
+    @about-symbol{GLIB_VERSION_2_36}
     @about-symbol{GLIB_VERSION_MIN_REQUIRED}
     @about-symbol{GLIB_VERSION_MAX_ALLOWED}
+    @about-symbol{GLIB_DISABLE_DEPRECATION_WARNINGS}
   @end{section}
   @begin[Miscellaneous]{section}
     Documentation of several type definitions and functions, which are
     needed for the implemenation of the GTK+ library. Only a small part of the
     GLib library is implemented.
-
-    @heading{Basic Types}
+    @begin[Basic Types]{subsection}
       Standard GLib types, defined for ease-of-use and portability.
       Only the following types are implemented:
 
       @about-type{g-size}
       @about-type{g-ssize}
       @about-type{g-offset}
-
-    @heading{Memory Allocation}
+    @end{subsection}
+    @begin[Memory Allocation]{subsection}
       The following functions for the general memory-handling are implemented:
 
       @about-function{g-malloc}
       @about-function{g-free}
-
-    @heading{Date and Time Functions}
+    @end{subsection}
+    @begin[Date and Time Functions]{subsection}
       Calendrical calculations and miscellaneous time stuff.
       Only the following struct is implemented:
 
       @about-type{g-time-val}
-
-    @heading{String Utility Functions - Various string-related functions}
+      @about-function{g-get-current-time}
+      @about-function{g-get-monotonic-time}
+      @about-function{g-get-real-time}
+    @end{subsection}
+    @begin[String Utility Functions]{subsection}
       Implemented is:
 
       @about-type{g-string}
       @about-type{g-strv}
-
-    @heading{Doubly-Linked Lists}
+    @end{subsection}
+    @begin[Doubly-Linked Lists]{subsection}
       Linked lists containing integer values or pointers to data, with the ability
       to iterate over the list in both directions
 
       Implemented is:
 
       @about-type{g-list}
-
-    @heading{Singly-Linked Lists}
+    @end{subsection}
+    @begin[Singly-Linked Lists]{subsection}
       Linked lists containing integer values or pointers to data, limited to
       iterating over the list in one direction
 
       Implemented is:
 
       @about-type{g-slist}
-  @end{section}
-  @begin[Threads]{section}
-    Portable support for threads, mutexes, locks, conditions and thread private
-    data.
+    @end{subsection}
+    @begin[Threads]{subsection}
+      Portable support for threads, mutexes, locks, conditions and thread private
+      data.
 
-    Threads act almost like processes, but unlike processes all threads of one
-    process share the same memory. This is good, as it provides easy
-    communication between the involved threads via this shared memory, and it is
-    bad, because strange things (so called \"Heisenbugs\") might happen if the
-    program is not carefully designed. In particular, due to the concurrent
-    nature of threads, no assumptions on the order of execution of code running
-    in different threads can be made, unless order is explicitly forced by the
-    programmer through synchronization primitives.
+      Implemented is:
 
-    The aim of the thread-related functions in GLib is to provide a portable
-    means for writing multi-threaded software. There are primitives for mutexes
-    to protect the access to portions of memory (@code{GMutex}, @code{GRecMutex}
-    and @code{GRWLock}). There is a facility to use individual bits for locks
-    (@code{g_bit_lock()}). There are primitives for condition variables to allow
-    synchronization of threads (@code{GCond}). There are primitives for
-    thread-private data - data that every thread has a private instance of
-    (@code{GPrivate}). There are facilities for one-time initialization
-    (@code{GOnce}, @code{g_once_init_enter()}). Finally, there are primitives to
-    create and manage threads (@type{g-thread}).
-
-    The GLib threading system used to be initialized with
-    @code{g_thread_init()}. This is no longer necessary. Since version 2.32, the
-    GLib threading system is automatically initialized at the start of your
-    program, and all thread-creation functions and synchronization primitives
-    are available right away.
-
-    Note that it is not safe to assume that your program has no threads even if
-    you don't call @fun{g-thread-new} yourself. GLib and GIO can and will create
-    threads for their own purposes in some cases, such as when using
-    @code{g_unix_signal_source_new()} or when using GDBus.
-
-    Originally, UNIX did not have threads, and therefore some traditional UNIX
-    APIs are problematic in threaded programs. Some notable examples are
-    @begin{itemize}
-      @item{C library functions that return data in statically allocated
-        buffers, such as @code{strtok()} or @code{strerror()}. For many of
-        these, there are thread-safe variants with a @code{_r} suffix, or you
-        can look at corresponding GLib APIs (like @code{g_strsplit()} or
-        @code{g_strerror()}).}
-      @item{@code{setenv()} and @code{unsetenv()} manipulate the process
-        environment in a not thread-safe way, and may interfere with
-        @code{getenv()} calls in other threads. Note that @code{getenv()} calls
-        may be hidden behind other APIs. For example, GNU @code{gettext()} calls
-        @code{getenv()} under the covers. In general, it is best to treat the
-        environment as readonly. If you absolutely have to modify the
-        environment, do it early in @code{main()}, when no other threads are
-        around yet.}
-      @item{@code{setlocale()} changes the locale for the entire process,
-        affecting all threads. Temporary changes to the locale are often made to
-        change the behavior of string scanning or formatting functions like
-        @code{scanf()} or @code{printf()}. GLib offers a number of string APIs
-        (like @code{g_ascii_formatd()} or @code{g_ascii_strtod()}) that can
-        often be used as an alternative. Or you can use the @code{uselocale()}
-        function to change the locale only for the current thread.}
-    @item{@code{fork()} only takes the calling thread into the child's copy of
-        the process image. If other threads were executing in critical sections
-        they could have left mutexes locked which could easily cause deadlocks
-        in the new child. For this reason, you should call @code{exit()} or
-        @code{exec()} as soon as possible in the child and only make signal-safe
-        library calls before that.}
-    @item{@code{daemon()} uses @code{fork()} in a way contrary to what is
-      described above. It should not be used with GLib programs.}
-    @end{itemize}
-    GLib itself is internally completely thread-safe (all global data is
-    automatically locked), but individual data structure instances are not
-    automatically locked for performance reasons. For example, you must
-    coordinate accesses to the same @code{GHashTable} from multiple threads. The
-    two notable exceptions from this rule are @type{g-main-loop} and
-    @code{GAsyncQueue}, which are thread-safe and need no further
-    application-level locking to be accessed from multiple threads. Most
-    refcounting functions such as g_object_ref() are also thread-safe.
-
-    @about-function{G_THREAD_ERROR}
-    @about-type{g-thread-error}
-    @about-type{g-thread}
-    @about-function{g-thread-new}
-    @about-function{g-thread-try-new}
-    @about-function{g-thread-ref}
-    @about-function{g-thread-unref}
-    @about-function{g-thread-join}
-    @about-function{g-thread-yield}
-    @about-function{g-thread-exit}
-    @about-function{g-thread-self}
-    @about-function{g-mutex-init}
-    @about-function{g-mutex-clear}
-    @about-function{g-mutex-lock}
-    @about-function{g-mutex-trylock}
-    @about-function{g-mutex-unlock}
-    @about-function{g-rec-mutex-init}
-    @about-function{g-rec-mutex-clear}
-    @about-function{g-rec-mutex-lock}
-    @about-function{g-rec-mutex-trylock}
-    @about-function{g-rec-mutex-unlock}
-    @about-type{g-mutex}
-    @about-function{G_LOCK_DEFINE}
-    @about-function{G_LOCK_DEFINE_STATIC}
-    @about-function{G_LOCK_EXTERN}
-    @about-function{G_LOCK}
-    @about-function{G_TRYLOCK}
-    @about-function{G_UNLOCK}
-    @about-function{GRecMutex}
-    @about-function{GRWLock}
-    @about-function{g-rw-lock-init}
-    @about-function{g-rw-lock-clear}
-    @about-function{g-rw-lock-writer-lock}
-    @about-function{g-rw-lock-writer-trylock}
-    @about-function{g-rw-lock-writer-unlock}
-    @about-function{g-rw-lock-reader-lock}
-    @about-function{g-rw-lock-reader-trylock}
-    @about-function{g-rw-lock-reader-unlock}
-    @about-type{g-cond}
-    @about-function{g-cond-init}
-    @about-function{g-cond-clear}
-    @about-function{g-cond-wait}
-    @about-function{g-cond-timed-wait}
-    @about-function{g-cond-wait-until}
-    @about-function{g-cond-signal}
-    @about-function{g-cond-broadcast}
-    @about-function{GPrivate}
-    @about-function{G_PRIVATE_INIT}
-    @about-function{g-private-get}
-    @about-function{g-private-set}
-    @about-function{g-private-replace}
-    @about-function{GOnce}
-    @about-function{GOnceStatus}
-    @about-function{G_ONCE_INIT}
-    @about-function{g-once}
-    @about-function{g-once-init-enter}
-    @about-function{g-once-init-leave}
-    @about-function{g-bit-lock}
-    @about-function{g-bit-trylock}
-    @about-function{g-bit-unlock}
-    @about-function{g-pointer-bit-lock}
-    @about-function{g-pointer-bit-trylock}
-    @about-function{g-pointer-bit-unlock}
+      @about-type{g-mutex}
+      @about-type{g-cond}
+    @end{subsection}
   @end{section}
   @begin[The Main Event Loop]{section}
     The main event loop manages all the available sources of events for GLib and
@@ -340,13 +216,13 @@
     @about-function{g-main-run}
     @about-function{g-main-quit}
     @about-function{g-main-is-running}
-    @about-function{G_PRIORITY_HIGH}
-    @about-function{G_PRIORITY_DEFAULT}
-    @about-function{G_PRIORITY_HIGH_IDLE}
-    @about-function{G_PRIORITY_DEFAULT_IDLE}
-    @about-function{G_PRIORITY_LOW}
-    @about-function{G_SOURCE_CONTINUE}
-    @about-function{G_SOURCE_REMOVE}
+    @about-variable{g-priority-high}
+    @about-variable{g-priority-default}
+    @about-variable{g-priority-high-idle}
+    @about-variable{g-priority-default-idle}
+    @about-variable{g-priority-low}
+    @about-variable{+g-source-continue+}
+    @about-variable{+g-source-remove+}
     @about-type{g-main-context}
     @about-function{g-main-context-new}
     @about-function{g-main-context-ref}
@@ -419,6 +295,12 @@
     @about-function{g-source-get-context}
     @about-function{g-source-set-callback}
     @about-function{g-source-set-callback-indirect}
+    @about-function{g-source-set-ready-time}
+    @about-function{g-source-get-ready-time}
+    @about-function{g-source-add-unix-fd}
+    @about-function{g-source-remove-unix-fd}
+    @about-function{g-source-modify-unix-fd}
+    @about-function{g-source-query-unix-fd}
     @about-function{g-source-add-poll}
     @about-function{g-source-remove-poll}
     @about-function{g-source-add-child-source}
@@ -444,281 +326,10 @@
     A system for reporting errors.
 
     GLib provides a standard method of reporting errors from a called function
-    to the calling code. (This is the same problem solved by exceptions in other
-    languages.) It is important to understand that this method is both a data
-    type (the GError object) and a set of rules. If you use GError incorrectly,
-    then your code will not properly interoperate with other code that uses
-    GError, and users of your API will probably get confused.
+    to the calling code. In the Lisp binding we provide internally the to macros
+    @code{with-g-error} and @code{with-catching-to-g-error} to handle errors
+    from the GTK+ and GLIB libraries. Only the type @type{g-error} is exported.
 
-    First and foremost: GError should only be used to report recoverable runtime
-    errors, never to report programming errors. If the programmer has screwed
-    up, then you should use @code{g_warning()}, @code{g_return_if_fail()},
-    @code{g_assert()}, @code{g_error()}, or some similar facility.
-    (Incidentally, remember that the @code{g_error()} function should only be
-    used for programming errors, it should not be used to print any error
-    reportable via GError.)
-
-    Examples of recoverable runtime errors are \"file not found\" or \"failed to
-    parse input.\" Examples of programming errors are \"NULL passed to
-    strcmp()\" or \"attempted to free the same pointer twice.\" These two kinds
-    of errors are fundamentally different: runtime errors should be handled or
-    reported to the user, programming errors should be eliminated by fixing the
-    bug in the program. This is why most functions in GLib and GTK+ do not use
-    the GError facility.
-
-    Functions that can fail take a return location for a GError as their last
-    argument. For example:
-    @begin{pre}
-  gboolean g_file_get_contents (const gchar  *filename,
-                                gchar       **contents,
-                                gsize        *length,
-                                GError      **error);
-    @end{pre}
-    If you pass a non-@code{NULL} value for the error argument, it should point
-    to a location where an error can be placed. For example:
-    @begin{pre}
-  gchar *contents;
-  GError *err = NULL;
-  g_file_get_contents (\"foo.txt\", &contents, NULL, &err);
-  g_assert ((contents == NULL && err != NULL) ||
-            (contents != NULL && err == NULL));
-  if (err != NULL)
-    {
-      /* Report error to user, and free error */
-      g_assert (contents == NULL);
-      fprintf (stderr, \"Unable to read file: %s\n\", err->message);
-      g_error_free (err);
-    @}
-  else
-    {
-      /* Use file contents */
-      g_assert (contents != NULL);
-    @}
-    @end{pre}
-    Note that @code{err != NULL} in this example is a reliable indicator of
-    whether @code{g_file_get_contents()} failed. Additionally,
-    @code{g_file_get_contents()} returns a boolean which indicates whether it
-    was successful.
-
-    Because @code{g_file_get_contents()} returns @code{FALSE} on failure, if you
-    are only interested in whether it failed and do not need to display an error
-    message, you can pass @code{NULL} for the error argument:
-    @begin{pre}
-  if (g_file_get_contents (\"foo.txt\", &contents, NULL, NULL))
-     /* no error occurred */ ;
-  else
-    /* error */ ;
-    @end{pre}
-    The GError object contains three fields: @arg{domain} indicates the module
-    the error-reporting function is located in, @arg{code} indicates the
-    specific error that occurred, and @arg{message} is a user-readable error
-    message with as many details as possible. Several functions are provided to
-    deal with an error received from a called function: @code{g_error_matches()}
-    returns @code{TRUE} if the error matches a given domain and code,
-    @code{g_propagate_error()} copies an error into an error location (so the
-    calling function will receive it), and @code{g_clear_error()} clears an
-    error location by freeing the error and resetting the location to
-    @code{NULL}. To display an error to the user, simply display
-    @code{error->message}, perhaps along with additional context known only to
-    the calling function (the file being opened, or whatever - though in the
-    @code{g_file_get_contents()} case, @code{error->message} already contains a
-    filename).
-
-    When implementing a function that can report errors, the basic tool is
-    @code{g_set_error()}. Typically, if a fatal error occurs you want to
-    @code{g_set_error()}, then return immediately. @code{g_set_error()} does
-    nothing if the error location passed to it is @code{NULL}. Here is an
-    example:
-    @begin{pre}
-  gint
-  foo_open_file (GError **error)
-  {
-    gint fd;
-
-    fd = open (\"file.txt\", O_RDONLY);
-
-    if (fd < 0)
-      {
-        g_set_error (error,
-                     FOO_ERROR,                 /* error domain */
-                     FOO_ERROR_BLAH,            /* error code */
-                     \"Failed to open file: %s\", /* error message */
-                     g_strerror (errno));
-        return -1;
-      @}
-    else
-      return fd;
-  @}
-    @end{pre}
-    Things are somewhat more complicated if you yourself call another function
-    that can report a GError. If the sub-function indicates fatal errors in some
-    way other than reporting a GError, such as by returning @code{TRUE} on
-    success, you can simply do the following:
-    @begin{pre}
-  gboolean
-  my_function_that_can_fail (GError **err)
-  {
-    g_return_val_if_fail (err == NULL || *err == NULL, FALSE);
-
-    if (!sub_function_that_can_fail (err))
-      {
-        /* assert that error was set by the sub-function */
-        g_assert (err == NULL || *err != NULL);
-        return FALSE;
-      @}
-
-    /* otherwise continue, no error occurred */
-    g_assert (err == NULL || *err == NULL);
-  @}
-    @end{pre}
-    If the sub-function does not indicate errors other than by reporting a
-    GError, you need to create a temporary GError since the passed-in one may be
-    @code{NULL}. @code{g_propagate_error()} is intended for use in this case.
-    @begin{pre}
-  gboolean
-  my_function_that_can_fail (GError **err)
-  {
-    GError *tmp_error;
-
-    g_return_val_if_fail (err == NULL || *err == NULL, FALSE);
-
-    tmp_error = NULL;
-    sub_function_that_can_fail (&tmp_error);
-
-    if (tmp_error != NULL)
-      {
-        /* store tmp_error in err, if err != NULL,
-         * otherwise call g_error_free() on tmp_error
-         */
-        g_propagate_error (err, tmp_error);
-        return FALSE;
-      @}
-
-    /* otherwise continue, no error occurred */
-  @}
-    @end{pre}
-    Error pileups are always a bug. For example, this code is incorrect:
-    @begin{pre}
-  gboolean
-  my_function_that_can_fail (GError **err)
-  {
-    GError *tmp_error;
-
-    g_return_val_if_fail (err == NULL || *err == NULL, FALSE);
-
-    tmp_error = NULL;
-    sub_function_that_can_fail (&tmp_error);
-    other_function_that_can_fail (&tmp_error);
-
-    if (tmp_error != NULL)
-      {
-        g_propagate_error (err, tmp_error);
-        return FALSE;
-      @}
-  @}
-    @end{pre}
-    @code{tmp_error} should be checked immediately after
-    @code{sub_function_that_can_fail()}, and either cleared or propagated
-    upward. The rule is: after each error, you must either handle the error, or
-    return it to the calling function. Note that passing @code{NULL} for the
-    error location is the equivalent of handling an error by always doing
-    nothing about it. So the following code is fine, assuming errors in
-    @code{sub_function_that_can_fail()} are not fatal to
-    @code{my_function_that_can_fail()}:
-    @begin{pre}
-  gboolean
-  my_function_that_can_fail (GError **err)
-  {
-    GError *tmp_error;
-
-    g_return_val_if_fail (err == NULL || *err == NULL, FALSE);
-
-    sub_function_that_can_fail (NULL); /* ignore errors */
-
-    tmp_error = NULL;
-    other_function_that_can_fail (&tmp_error);
-
-    if (tmp_error != NULL)
-      {
-        g_propagate_error (err, tmp_error);
-        return FALSE;
-      @}
-  @}
-    @end{pre}
-    Note that passing @code{NULL} for the error location ignores errors; it is
-    equivalent to try @code{{ sub_function_that_can_fail(); @} catch (...) {@}}
-    in C++. It does not mean to leave errors unhandled; it means to handle them
-    by doing nothing.
-
-    @b{Error domains and codes are conventionally named as follows:}
-    @begin{itemize}
-      @item{The error domain is called @code{<NAMESPACE>_<MODULE>_ERROR}, for
-        example @code{G_SPAWN_ERROR} or @code{G_THREAD_ERROR}:
-        @begin{pre}
-  #define G_SPAWN_ERROR g_spawn_error_quark ()
-
-  GQuark
-  g_spawn_error_quark (void)
-    {
-      return g_quark_from_static_string (\"g-spawn-error-quark\");
-    @}
-        @end{pre}}
-      @item{The quark function for the error domain is called
-        @code{<namespace>_<module>_error_quark}, for example
-        @code{g_spawn_error_quark()} or @code{g_thread_error_quark()}.}
-      @item{The error codes are in an enumeration called
-        @code{<Namespace><Module>Error}; for example, @code{GThreadError} or
-        @code{GSpawnError}.}
-      @item{Members of the error code enumeration are called
-        @code{<NAMESPACE>_<MODULE>_ERROR_<CODE>}, for example
-        @code{G_SPAWN_ERROR_FORK} or @code{G_THREAD_ERROR_AGAIN}.}
-      @item{If there is a \"generic\" or \"unknown\" error code for
-        unrecoverable errors it does not make sense to distinguish with specific
-        codes, it should be called @code{<NAMESPACE>_<MODULE>_ERROR_FAILED}, for
-        example @code{G_SPAWN_ERROR_FAILED}.}
-    @end{itemize}
-    @b{Summary of rules for use of GError:}
-    @begin{itemize}
-      @item{Do not report programming errors via GError.}
-      @item{The last argument of a function that returns an error should be a
-        location where a GError can be placed (i. e. \"@code{GError** error}\").
-        If GError is used with varargs, the @code{GError**} should be the last
-        argument before the \"...\".}
-      @item{The caller may pass @code{NULL} for the @code{GError**} if they are
-        not interested in details of the exact error that occurred.}
-      @item{If @code{NULL} is passed for the @code{GError**} argument, then
-        errors should not be returned to the caller, but your function should
-        still abort and return if an error occurs. That is, control flow should
-        not be affected by whether the caller wants to get a GError.}
-      @item{If a GError is reported, then your function by definition had a
-        fatal failure and did not complete whatever it was supposed to do. If
-        the failure was not fatal, then you handled it and you should not report
-        it. If it was fatal, then you must report it and discontinue whatever
-        you were doing immediately.}
-      @item{If a GError is reported, out parameters are not guaranteed to be set
-        to any defined value.}
-      @item{A @code{GError*} must be initialized to @code{NULL} before passing
-        its address to a function that can report errors.}
-      @item{\"Piling up\" errors is always a bug. That is, if you assign a new
-        GError to a @code{GError*} that is non-@code{NULL}, thus overwriting the
-        previous error, it indicates that you should have aborted the operation
-        instead of continuing. If you were able to continue, you should have
-        cleared the previous error with @code{g_clear_error()}.
-        @code{g_set_error()} will complain if you pile up errors.}
-      @item{By convention, if you return a boolean value indicating success then
-        @code{TRUE} means success and @code{FALSE} means failure. If
-        @code{FALSE} is returned, the error must be set to a non-@code{NULL}
-        value.}
-      @item{A @code{NULL} return value is also frequently used to mean that an
-        error occurred. You should make clear in your documentation whether
-        @code{NULL} is a valid return value in non-error cases; if @code{NULL}
-        is a valid value, then users must check whether an error was returned to
-        see if the function succeeded.}
-      @item{When implementing a function that can report errors, you may want to
-        add a check at the top of your function that the error return location
-        is either @code{NULL} or contains a @code{NULL} error (e. g.
-        @code{g_return_if_fail (error == NULL || *error == NULL);}).}
-    @end{itemize}
     @about-type{g-error}
     @about-function{g-error-new}
     @about-function{g-error-new-literal}
@@ -733,7 +344,7 @@
     @about-function{g-prefix-error}
     @about-function{g-propagate-prefixed-error}
   @end{section}
-  @begin[Miscellaneous Utility Functions]{section}
+  @begin[Utility Functions]{section}
     A selection of portable utility functions.
 
     @about-function{g-get-application-name}
@@ -787,6 +398,43 @@
     @about-function{GDebugKey}
     @about-function{g-qsort-with-data}
     @about-function{g-nullify-pointer}
+  @end{section}
+  @begin[Commandline option parser]{section}
+    Parses commandline options.
+
+    @about-symbol{g-option-error}
+    @about-symbol{G_OPTION_ERROR}
+    @about-type{g-option-context}
+    @about-function{g-option-context-new}
+    @about-function{g-option-context-set-summary}
+    @about-function{g-option-context-get-summary}
+    @about-function{g-option-context-set-description}
+    @about-function{g-option-context-get-description}
+    @about-function{g-option-context-set-translate-func}
+    @about-function{g-option-context-set-translation-domain}
+    @about-function{g-option-context-free}
+    @about-function{g-option-context-parse}
+    @about-function{g-option-context-set-help-enabled}
+    @about-function{g-option-context-get-help-enabled}
+    @about-function{g-option-context-set-ignore-unknown-options}
+    @about-function{g-option-context-get-ignore-unknown-options}
+    @about-function{g-option-context-get-help}
+    @about-symbol{g-option-arg}
+    @about-symbol{g-option-flags}
+    @about-symbol{G_OPTION_REMAINING}
+    @about-type{g-option-entry}
+    @about-function{g-option-context-add-main-entries}
+    @about-class{g-option-group}
+    @about-function{g-option-context-add-group}
+    @about-function{g-option-context-set-main-group}
+    @about-function{g-option-context-get-main-group}
+    @about-function{g-option-group-new}
+    @about-function{g-option-group-free}
+    @about-function{g-option-group-add-entries}
+    @about-function{g-option-group-set-parse-hooks}
+    @about-function{g-option-group-set-error-hook}
+    @about-function{g-option-group-set-translate-func}
+    @about-function{g-option-group-set-translation-domain}
   @end{section}
   @begin[GVariantType]{section}
     Introduction to the GVariant type system.

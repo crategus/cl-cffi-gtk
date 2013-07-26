@@ -4,10 +4,10 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation of this file has been copied from the
-;;; GLib 2.36.3 Reference Manual. See <http://www.gtk.org>.
-;;; The API documentation of the Lisp binding is available at
-;;; <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GLib 2.36.3 Reference
+;;; Manual and modified to document the Lisp binding to the GLib library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -402,16 +402,16 @@
      (unwind-protect
           (progn ,@body)
        (maybe-raise-g-error-condition (mem-ref ,err :pointer))
-       (g-clear-error ,err))))
+       (%g-clear-error ,err))))
 
 (defmacro with-catching-to-g-error ((err) &body body)
   `(handler-case
        (progn ,@body)
      (g-error-condition (e)
-       (g-set-error-literal ,err
-                            (g-error-condition-domain e)
-                            (g-error-condition-code e)
-                            (g-error-condition-message e)))))
+       (%g-set-error-literal ,err
+                             (g-error-condition-domain e)
+                             (g-error-condition-code e)
+                             (g-error-condition-message e)))))
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_error_new ()
@@ -441,7 +441,7 @@
 ;;; g_error_new_literal ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_error_new_literal" g-error-new-literal) :pointer
+(defcfun ("g_error_new_literal" %g-error-new-literal) :pointer
  #+cl-cffi-gtk-documentation
  "@version{2013-6-16}
   @argument[domain]{error domain}
@@ -458,8 +458,6 @@
   (domain g-quark)
   (code :int)
   (message :string))
-
-(export 'g-error-new-literal)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_error_new_valist ()
@@ -494,20 +492,18 @@
 ;;; g_error_free ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_error_free" g-error-free) :void
+(defcfun ("g_error_free" %g-error-free) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-6-16}
   @argument[error]{a @type{g-error} structure}
   Frees a @type{g-error} structure and associated resources."
   (error :pointer))
 
-(export 'g-error-free)
-
 ;;; ----------------------------------------------------------------------------
 ;;; g_error_copy ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_error_copy" g-error-copy) :pointer
+(defcfun ("g_error_copy" %g-error-copy) :pointer
  #+cl-cffi-gtk-documentation
  "@version{2013-6-16}
   @argument[error]{a @type{g-error} structure}
@@ -515,13 +511,11 @@
   Makes a copy of @arg{error}."
   (error :pointer))
 
-(export 'g-error-copy)
-
 ;;; ----------------------------------------------------------------------------
 ;;; g_error_matches ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_error_matches" g-error-matches) :boolean
+(defcfun ("g_error_matches" %g-error-matches) :boolean
  #+cl-cffi-gtk-documentation
  "@version{2013-6-16}
   @argument[error]{a @type{g-error} structure or @code{nil}}
@@ -536,8 +530,6 @@
   (error :pointer)
   (domain g-quark)
   (code :int))
-
-(export 'g-error-matches)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_set_error ()
@@ -571,7 +563,7 @@
 ;;; g_set_error_literal ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_set_error_literal" g-set-error-literal) :void
+(defcfun ("g_set_error_literal" %g-set-error-literal) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-6-16}
   @argument[err]{a return location for a @type{g-error} structure,
@@ -595,13 +587,11 @@
   (code :int)
   (message :string))
 
-(export 'g-set-error-literal)
-
 ;;; ----------------------------------------------------------------------------
 ;;; g_propagate_error ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_propagate_error" g-propagate-error) :void
+(defcfun ("g_propagate_error" %g-propagate-error) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-6-16}
   @argument[dest]{error return location}
@@ -614,13 +604,11 @@
   (dest :pointer)
   (src :pointer))
 
-(export 'g-propagate-error)
-
 ;;; ----------------------------------------------------------------------------
 ;;; g_clear_error ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_clear_error" g-clear-error) :void
+(defcfun ("g_clear_error" %g-clear-error) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-6-16}
   @argument[err]{a @type{g-error} structure return location}
@@ -628,8 +616,6 @@
   calls the function @fun{g-error-free} on @arg{err} and sets @arg{err} to
   @code{NULL}."
   (err :pointer))
-
-(export 'g-clear-error)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_prefix_error ()

@@ -1,9 +1,14 @@
-GLib 2.36.3
+Content from the Glib Reference Manual for Version 2.36.3
+
+    *   - needs update
+    %   - not fully implemented
+    &   - objects and structures are implemented, some functions are missing
+   (**) - deprecated
 
 GLib Fundamentals
 
-  glib.version.lisp            - Version Information              - Glib 2.32.3*
-  glib.misc.lisp               - Basic Types                      - Glib 2.32.3*
+  glib.version.lisp            - Version Information              - Glib 2.36.3%
+  glib.misc.lisp               - Basic Types                      - Glib 2.36.3%
 
     Standard Macros            - commonly-used macros
     Type Conversion Macros     - portably storing integers in pointer variables
@@ -16,22 +21,22 @@ GLib Fundamentals
 
 GLib Core Application Support
 
-  glib.main-loop.lisp          - The Main Event Loop              - Glib 2.32.3*
-  glib.threads.lisp            - Threads                          - Glib 2.32.3*
+  glib.main-loop.lisp          - The Main Event Loop              - Glib 2.36.3%
+  glib.misc.lisp               - Threads                          - Glib 2.36.3%
 
     Thread Pools               - pools of threads to execute work concurrently
     Asynchronous Queues        - asynchronous communication between threads
     Dynamic Loading of Modules - portable method for dynamically loading
                                  'plug-ins'
 
-  glib.misc.lisp               - Memory Allocation                - Glib 2.32.3*
+  glib.misc.lisp               - Memory Allocation                - Glib 2.36.3%
 
     Memory Slices              - efficient way to allocate groups of equal-sized
                                  chunks of memory
     IO Channels                - portable support for using files, pipes and
                                  sockets
 
-  glib.error.lisp              - Error Reporting                  - Glib 2.36.3
+  glib.error.lisp              - Error Reporting                  - Glib 2.36.3%
 
     Message Output and
     Debugging Functions        - functions to output messages and
@@ -41,7 +46,7 @@ GLib Core Application Support
 
 GLib Utilities
 
-  glib.misc.lisp               - String Utility Functions         - Glib 2.32.3*
+  glib.misc.lisp               - String Utility Functions         - Glib 2.36.3%
 
     Character Set Conversion   - convert strings between different character
                                  sets
@@ -52,7 +57,7 @@ GLib Utilities
     Secure HMAC Digests        - computes the HMAC for data
     Internationalization       - gettext support macros
 
-  glib.misc.lisp               - Date and Time Functions          - Glib 2.32.3*
+  glib.misc.lisp               - Date and Time Functions          - Glib 2.36.3%
 
     GTimeZone                  - a structure representing a time zone
     GDateTime                  - a structure representing Date and Time
@@ -60,19 +65,17 @@ GLib Utilities
     Hook Functions             - support for manipulating lists of hook
                                  functions
 
-  glib.utils.lisp              - Miscellaneous Utility Functions  - Glib 2.32.3*
+  glib.utils.lisp              - Miscellaneous Utility Functions  - Glib 2.36.3%
 
     Lexical Scanner            - a general purpose lexical scanner
     Timers                     - keep track of elapsed time
-
-  glib.misc.lisp               - Spawing Processes                - Glib 2.32.3*
-
+    Spawning Processes         - process launching 
     File Utilities             - various file-related functions
     URI Functions              - manipulating URIs
     Hostname Utilities         - Internet hostname utilities
     Shell-related Utilities    - shell-like commandline handling
 
-  glib.option-group.lisp       - parses commandline options       - Glib 2.34.3*
+  glib.option-group.lisp       - parses commandline options       - Glib 2.36.3%
 
     Glob-style pattern
     matching                   - matches strings against patterns containing
@@ -93,8 +96,8 @@ GLib Utilities
 
 GLib Data Types
 
-  glib.misc.lisp               - Doubly-Linked Lists              - Glib 2.30.2*
-  glib.misc.lisp               - Singly-Linked Lists              - Glib 2.30.2*
+  glib.misc.lisp               - Doubly-Linked Lists              - Glib 2.36.3%
+  glib.misc.lisp               - Singly-Linked Lists              - Glib 2.36.3%
 
     Double-ended Queues        - double-ended queue data structure
     Sequences                  - scalable lists
@@ -114,7 +117,7 @@ GLib Data Types
                                  optimized for searching and traversing in order
     N-ary Trees                - trees of data with any number of branches
 
-  glib.quarks.lisp             - Quarks                           - Glib 2.32.3*
+  glib.quarks.lisp             - Quarks                           - Glib 2.36.3%
 
     Keyed Data Lists           - lists of data elements which are accessible by
                                  a string or GQuark identifier

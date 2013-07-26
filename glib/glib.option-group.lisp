@@ -4,10 +4,10 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation of this file has been copied from the
-;;; GLib 2.34.3 Reference Manual. See <http://www.gtk.org>.
-;;; The API documentation of the Lisp binding is available at
-;;; <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GLib 2.36.3 Reference
+;;; Manual and modified to document the Lisp binding to the GLib library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2013 Dieter Kaiser
 ;;;
@@ -31,7 +31,7 @@
 ;;;
 ;;; Commandline option parser
 ;;;
-;;; Commandline option parser — parses commandline options
+;;; Parses commandline options
 ;;;
 ;;; Synopsis
 ;;;
@@ -254,10 +254,18 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-option-context atdoc:*type-name-alias*) "CStruct"
       (documentation 'g-option-context 'type)
- "@version{2013-5-19}
-  A @sym{g-option-context} structure defines which options are accepted by the
-  commandline option parser. The structure has only private fields and should
-  not be directly accessed.")
+ "@version{2013-7-24}
+  @begin{short}
+    A @sym{g-option-context} structure defines which options are accepted by the
+    commandline option parser. The structure has only private fields and should
+    not be directly accessed.
+  @end{short}
+
+  See the function @fun{g-option-context-add-main-entries} for adding options
+  to a @sym{g-option-context} and the function @fun{g-option-context-parse} for
+  parsing the command line options.
+  @see-function{g-option-context-add-main-entries}
+  @see-function{g-option-context-parse}")
 
 (export 'g-option-context)
 
@@ -271,34 +279,50 @@
 
 (defun g-option-context-new (&optional (parameter-string (null-pointer)))
  #+cl-cffi-gtk-documentation
- "@version{2013-3-7}
+ "@version{2013-7-24}
   @argument[parameter-string]{a string which is displayed in the first line of
     --help output, after the usage summary programname [OPTION...]}
   @begin{return}
-    A newly created @symbol{g-option-context}, which must be freed with
-    @symbol{g-option-context-free} after use.
+    A newly created @type{g-option-context}, which must be freed with the
+    function @fun{g-option-context-free} after use.
   @end{return}
   @short{Creates a new option context.}
 
   The @arg{parameter-string} can serve multiple purposes. It can be used to add
   descriptions for \"rest\" arguments, which are not parsed by the
-  @symbol{g-option-context}, typically something like \"FILES\" or
+  @type{g-option-context}, typically something like \"FILES\" or
   \"FILE1 FILE2...\". If you are using @code{G_OPTION_REMAINING} for collecting
   \"rest\" arguments, GLib handles this automatically by using the
-  @arg{arg-description} of the corresponding @symbol{g-option-entry} in the
+  @arg{arg-description} of the corresponding @type{g-option-entry} in the
   usage summary.
 
   Another usage is to give a short summary of the program functionality, like
   \" - frob the strings\", which will be displayed in the same line as the
   usage. For a longer description of the program functionality that should be
-  displayed as a paragraph below the usage line, use
-  @symbol{g-option-context-set-summary}.
+  displayed as a paragraph below the usage line, use the function
+  @fun{g-option-context-set-summary}.
 
-  Note that the parameter_string is translated using the function set with
-  @symbol{g-option-context-set-translate-func}, so it should normally be passed
-  untranslated.
+  Note that the @arg{parameter-string} is translated using the function set
+  with the function @fun{g-option-context-set-translate-func}, so it should
+  normally be passed untranslated.
+  @begin[Example]{dictionary}
+    @begin{pre}
+ (g-option-context-new \"This is an example for a description.\")
+=> #.(SB-SYS:INT-SAP #X0817EB48)
+ (g-option-context-get-help * nil)
+=> 
+\"Aufruf:
+  sbcl [OPTION …] This is an example for a description.
 
-  Since 2.6"
+Hilfeoptionen:
+  -h, --help       Hilfeoptionen anzeigen
+\"
+    @end{pre}
+  @end{dictionary}
+  Since 2.6
+  @see-function{g-option-context-free}
+  @see-function{g-option-context-set-summary}
+  @see-function{g-option-context-set-translate-func}"
   (%g-option-context-new parameter-string))
 
 (export 'g-option-context-new)
@@ -424,43 +448,13 @@
 (defcallback g-translate-func-cb (:string :free-from-foreign nil)
     ((str :string)
      (data :pointer))
-  (let ((fn (glib::get-stable-pointer-value data)))
+  (let ((fn (glib:get-stable-pointer-value data)))
     (restart-case
         (funcall fn str)
       (return-from-g-translate-func-cb () nil))))
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_option_context_set_translate_func ()
-;;;
-;;; void g_option_context_set_translate_func (GOptionContext *context,
-;;;                                           GTranslateFunc func,
-;;;                                           gpointer data,
-;;;                                           GDestroyNotify destroy_notify);
-;;;
-;;; Sets the function which is used to translate the contexts user-visible
-;;; strings, for --help output. If func is NULL, strings are not translated.
-;;;
-;;; Note that option groups have their own translation functions, this function
-;;; only affects the parameter_string (see g_option_context_new()), the summary
-;;; (see g_option_context_set_summary()) and the description (see
-;;; g_option_context_set_description()).
-;;;
-;;; If you are using gettext(), you only need to set the translation domain,
-;;; see g_option_context_set_translation_domain().
-;;;
-;;; context :
-;;;     a GOptionContext
-;;;
-;;; func :
-;;;     the GTranslateFunc, or NULL
-;;;
-;;; data :
-;;;     user data to pass to func, or NULL
-;;;
-;;; destroy_notify :
-;;;     a function which gets called to free data, or NULL
-;;;
-;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_option_context_set_translate_func"
@@ -471,31 +465,59 @@
   (destroy-notify :pointer))
 
 (defun g-option-context-set-translate-func (context func)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-7-24}
+  @argument[context]{a @type{g-option-context}}
+  @argument[func]{the @code{GTranslateFunc}, or @code{NULL}}
+  @begin{short}
+    Sets the function which is used to translate the contexts user-visible
+    strings, for --help output. If @arg{func} is @code{NULL}, strings are not
+    translated.
+  @end{short}
+
+  Note that option groups have their own translation functions, this function
+  only affects the @code{parameter-string}, see the function
+  @fun{g-option-context-new}, the @code{summary}, see the function
+  @fun{g-option-context-set-summary}, and the @code{description}, see the
+  function @fun{g-option-context-set-description}.
+
+  If you are using @code{gettext()}, you only need to set the translation
+  domain, see the function @fun{g-option-context-set-translation-domain}.
+
+  Since 2.12
+  @see-function{g-option-context-new}
+  @see-function{g-option-context-set-summary}
+  @see-function{g-option-context-set-description}
+  @see-function{g-option-context-set-translation-domain}"
   (%g-option-context-set-translate-func
                            context
                            (callback g-translate-func-cb)
-                           (glib::allocate-stable-pointer func)
-                           (callback glib::stable-pointer-destroy-notify-cb)))
+                           (glib:allocate-stable-pointer func)
+                           (callback glib:stable-pointer-destroy-notify-cb)))
 
 (export 'g-option-context-set-translate-func)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_option_context_set_translation_domain ()
-;;;
-;;; void g_option_context_set_translation_domain (GOptionContext *context,
-;;;                                               const gchar *domain);
-;;;
-;;; A convenience function to use gettext() for translating user-visible
-;;; strings.
-;;;
-;;; context :
-;;;     a GOptionContext
-;;;
-;;; domain :
-;;;     the domain to use
-;;;
-;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_option_context_set_translation_domain"
+           g-option-context-set-translation-domain) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-7-24}
+  @argument[context]{a @type{g-option-context}}
+  @argument[domain]{the domain to use}
+  @begin{short}
+    A convenience function to use @code{gettext()} for translating user-visible
+    strings.
+  @end{short}
+
+  Since 2.12
+  @see-type{g-option-context}"
+  (context (:pointer (:struct g-option-context)))
+  (domain :string))
+
+(export 'g-option-context-set-translation-domain)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_option_context_free ()
@@ -525,89 +547,80 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_option_context_parse ()
-;;;
-;;; gboolean g_option_context_parse (GOptionContext *context,
-;;;                                  gint *argc,
-;;;                                  gchar ***argv,
-;;;                                  GError **error);
-;;;
-;;; Parses the command line arguments, recognizing options which have been added
-;;; to context. A side-effect of calling this function is that g_set_prgname()
-;;; will be called.
-;;;
-;;; If the parsing is successful, any parsed arguments are removed from the
-;;; array and argc and argv are updated accordingly. A '--' option is stripped
-;;; from argv unless there are unparsed options before and after it, or some of
-;;; the options after it start with '-'. In case of an error, argc and argv are
-;;; left unmodified.
-;;;
-;;; If automatic --help support is enabled (see
-;;; g_option_context_set_help_enabled()), and the argv array contains one of the
-;;; recognized help options, this function will produce help output to stdout
-;;; and call exit (0).
-;;;
-;;; Note that function depends on the current locale for automatic character set
-;;; conversion of string and filename arguments.
-;;;
-;;; context :
-;;;     a GOptionContext
-;;;
-;;; argc :
-;;;     a pointer to the number of command line arguments
-;;;
-;;; argv :
-;;;     a pointer to the array of command line arguments
-;;;
-;;; error :
-;;;     a return location for errors
-;;;
-;;; Returns :
-;;;     TRUE if the parsing was successful, FALSE if an error occurred
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_option_context_parse" %g-option-context-parse) :boolean
   (context (:pointer (:struct g-option-context)))
   (argc (:pointer :int))
-  (argv (:pointer (:pointer :string)))
+  (argv (:pointer g-strv))
   (err :pointer))
 
-(defun g-option-context-parse (context argc argv)
+(defun g-option-context-parse (context argv)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-7-24}
+  @argument[context]{a @type{g-option-context} instance}
+  @argument[argv]{a list of strings with the command line arguments}
+  @return{@em{True} if the parsing was successful, @code{nil} if an error
+    occurred.}
+  @begin{short}
+    Parses the command line arguments, recognizing options which have been added
+    to @arg{context}. A side-effect of calling this function is that the
+    function @fun{g-set-prgname} will be called.
+  @end{short}
+
+  If the parsing is successful, any parsed arguments are removed from the
+  list @arg{argv} are updated accordingly. A '--' option is stripped
+  from @arg{argv} unless there are unparsed options before and after it, or some
+  of the options after it start with '-'. In case of an error, @arg{argv} are
+  left unmodified.
+
+  If automatic --help support is enabled, see the function
+  @fun{g-option-context-set-help-enabled}, and the @arg{argv} list contains one
+  of the recognized help options, this function will produce help output to
+  stdout and call exit (0).
+
+  Note that function depends on the current locale for automatic character set
+  conversion of string and filename arguments.
+
+  Since 2.6
+  @see-type{g-option-context}
+  @see-function{g-set-prgname}
+  @see-function{g-option-context-set-help-enabled}"
   (with-g-error (err)
     (with-foreign-objects ((argc-ptr :int)
-                           (argv-ptr '(:pointer :string)))
+                           (argv-ptr '(:pointer g-strv)))
       (setf (mem-ref argc-ptr :int)
-            argc
-            (mem-ref argv-ptr '(:pointer :string))
+            (length argv)
+            (mem-ref argv-ptr '(:pointer g-strv))
             (convert-to-foreign argv 'g-strv))
-
-    (when (%g-option-context-parse context argc-ptr argv-ptr err)
-      (values (mem-ref argc-ptr :int)
-              (convert-from-foreign argv-ptr '(g-strv :free-from-foreign nil))))
-;    (convert-from-foreign argv-ptr 'g-strv)
-)))
+      (%g-option-context-parse context argc-ptr argv-ptr err))))
 
 (export 'g-option-context-parse)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_option_context_set_help_enabled ()
-;;;
-;;; void g_option_context_set_help_enabled (GOptionContext *context,
-;;;                                         gboolean help_enabled);
-;;;
-;;; Enables or disables automatic generation of --help output. By default,
-;;; g_option_context_parse() recognizes --help, -h, -?, --help-all and
-;;; --help-groupname and creates suitable output to stdout.
-;;;
-;;; context :
-;;;     a GOptionContext
-;;;
-;;; help_enabled :
-;;;     TRUE to enable --help, FALSE to disable it
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_option_context_set_help_enabled" g-option-context-set-help-enabled)
+    :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-7-24}
+  @argument[context]{a @type{g-option-context} instance}
+  @argument[help-enabled]{@em{true} to enable --help, @code{nil} to disable it}
+  @begin{short}
+    Enables or disables automatic generation of --help output.
+  @end{short}
+  By default, the function @fun{g-option-context-parse} recognizes --help, -h,
+  -?, --help-all and --help-groupname and creates suitable output to stdout.
+
+  Since 2.6
+  @see-type{g-option-context}
+  @see-function{g-option-context-parse}
+  @see-function{g-option-context-get-help-enabled}"
+  (contex (:pointer (:struct g-option-context)))
+  (help-enabled :boolean))
+
+(export 'g-option-context-set-help-enabled)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_option_context_get_help_enabled ()
@@ -670,30 +683,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_option_context_get_help ()
-;;;
-;;; gchar * g_option_context_get_help (GOptionContext *context,
-;;;                                    gboolean main_help,
-;;;                                    GOptionGroup *group);
-;;;
-;;; Returns a formatted, translated help text for the given context. To obtain
-;;; the text produced by --help, call g_option_context_get_help (context, TRUE,
-;;; NULL). To obtain the text produced by --help-all, call
-;;; g_option_context_get_help (context, FALSE, NULL). To obtain the help text
-;;; for an option group, call g_option_context_get_help (context, FALSE, group).
-;;;
-;;; context :
-;;;     a GOptionContext
-;;;
-;;; main_help :
-;;;     if TRUE, only include the main group
-;;;
-;;; group :
-;;;     the GOptionGroup to create help for, or NULL
-;;;
-;;; Returns :
-;;;     A newly allocated string containing the help text
-;;;
-;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_option_context_get_help" %g-option-context-get-help) :string
@@ -703,64 +692,33 @@
 
 (defun g-option-context-get-help (context main-help
                                   &optional (group (null-pointer)))
+ #+cl-cffi-gtk-documentation
+ "@version{2013-7-24}
+  @argument[context]{a @type{g-option-context}}
+  @arg{main-help]{if @em{true}, only include the main group}
+  @argument[group]{the @type{g-option-group} to create help for, or @code{nil}}
+  @return{A newly allocated string containing the help text.}
+  @begin{short}
+    Returns a formatted, translated help text for the given context.
+  @end{short}
+  To obtain the text produced by --help, call
+  @code{(g-option-context-get-help context t)}. To obtain the text produced by
+  --help-all, call @code{(g-option-context-get-help context nil}. To obtain the
+  help text for an option group, call
+  @code{(g-option-context-get-help context nil group)}.
+
+  Since 2.14
+  @see-type{g-option-context}
+  @see-type{g-option-group}"
   (%g-option-context-get-help context main-help group))
 
 (export 'g-option-context-get-help)
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GOptionArg
-;;;
-;;; typedef enum {
-;;;   G_OPTION_ARG_NONE,
-;;;   G_OPTION_ARG_STRING,
-;;;   G_OPTION_ARG_INT,
-;;;   G_OPTION_ARG_CALLBACK,
-;;;   G_OPTION_ARG_FILENAME,
-;;;   G_OPTION_ARG_STRING_ARRAY,
-;;;   G_OPTION_ARG_FILENAME_ARRAY,
-;;;   G_OPTION_ARG_DOUBLE,
-;;;   G_OPTION_ARG_INT64
-;;; } GOptionArg;
-;;;
-;;; The GOptionArg enum values determine which type of extra argument the
-;;; options expect to find. If an option expects an extra argument, it can be
-;;; specified in several ways; with a short option: -x arg, with a long option:
-;;; --name arg or combined in a single argument: --name=arg.
-;;;
-;;; G_OPTION_ARG_NONE
-;;;     No extra argument. This is useful for simple flags.
-;;;
-;;; G_OPTION_ARG_STRING
-;;;     The option takes a string argument.
-;;;
-;;; G_OPTION_ARG_INT
-;;;     The option takes an integer argument.
-;;;
-;;; G_OPTION_ARG_CALLBACK
-;;;     The option provides a callback to parse the extra argument.
-;;;
-;;; G_OPTION_ARG_FILENAME
-;;;     The option takes a filename as argument.
-;;;
-;;; G_OPTION_ARG_STRING_ARRAY
-;;;     The option takes a string argument, multiple uses of the option are
-;;;     collected into an array of strings.
-;;;
-;;; G_OPTION_ARG_FILENAME_ARRAY
-;;;     The option takes a filename as argument, multiple uses of the option are
-;;;     collected into an array of strings.
-;;;
-;;; G_OPTION_ARG_DOUBLE
-;;;     The option takes a double argument. The argument can be formatted either
-;;;     for the user's locale or for the "C" locale. Since 2.12
-;;;
-;;; G_OPTION_ARG_INT64
-;;;     The option takes a 64-bit integer. Like G_OPTION_ARG_INT but for larger
-;;;     numbers. The number can be in decimal base, or in hexadecimal (when
-;;;     prefixed with 0x, for example, 0xffffffff). Since 2.12
 ;;; ----------------------------------------------------------------------------
 
-(defbitfield g-option-arg
+(defcenum g-option-arg
   :none
   :string
   :int
@@ -771,54 +729,104 @@
   :double
   :int64)
 
+#+cl-cffi-gtk-documentation
+(setf (gethash 'g-option-arg atdoc:*symbol-name-alias*) "CEnum"
+      (gethash 'g-option-arg atdoc:*external-symbols*)
+ "@version{2013-7-24}
+  @begin{short}
+    The @sym{g-option-arg} enum values determine which type of extra argument
+    the options expect to find. If an option expects an extra argument, it can
+    be specified in several ways; with a short option: -x arg, with a long
+    option: --name arg or combined in a single argument: --name=arg.
+  @end{short}
+  @begin{pre}
+(defcenum g-option-arg
+  :none
+  :string
+  :int
+  :callback
+  :filename
+  :string-array
+  :filename-array
+  :double
+  :int64)
+  @end{pre}
+  @begin[code]{table}
+    @entry[:none]{No extra argument. This is useful for simple flags.}
+    @entry[:string]{The option takes a string argument.}
+    @entry[:int]{The option takes an integer argument.}
+    @entry[:callback]{The option provides a callback to parse the extra
+      argument.}
+    @entry[:filename]{The option takes a filename as argument.}
+    @entry[:string-array]{The option takes a string argument, multiple uses of
+      the option are collected into a list of strings.}
+    @entry[:filename-array]{The option takes a filename as argument, multiple
+      uses of the option are collected into a list of strings.}
+    @entry[:double]{The option takes a double argument. The argument can be
+      formatted either for the user's locale or for the \"C\" locale.
+      Since 2.12.}
+    @entry[:int64]{The option takes a 64-bit integer. Like @code{:int} but for
+      larger numbers. The number can be in decimal base, or in hexadecimal
+      (when prefixed with 0x, for example, 0xffffffff). Since 2.12.}
+  @end{table}")
+
+(export 'g-option-arg)
+
 ;;; ----------------------------------------------------------------------------
 ;;; enum GOptionFlags
-;;;
-;;; typedef enum {
-;;;   G_OPTION_FLAG_HIDDEN       = 1 << 0,
-;;;   G_OPTION_FLAG_IN_MAIN      = 1 << 1,
-;;;   G_OPTION_FLAG_REVERSE      = 1 << 2,
-;;;   G_OPTION_FLAG_NO_ARG       = 1 << 3,
-;;;   G_OPTION_FLAG_FILENAME     = 1 << 4,
-;;;   G_OPTION_FLAG_OPTIONAL_ARG = 1 << 5,
-;;;   G_OPTION_FLAG_NOALIAS      = 1 << 6
-;;; } GOptionFlags;
-;;;
-;;; Flags which modify individual options.
-;;;
-;;; G_OPTION_FLAG_HIDDEN
-;;;     The option doesn't appear in --help output.
-;;;
-;;; G_OPTION_FLAG_IN_MAIN
-;;;     The option appears in the main section of the --help output, even if it
-;;;     is defined in a group.
-;;;
-;;; G_OPTION_FLAG_REVERSE
-;;;     For options of the G_OPTION_ARG_NONE kind, this flag indicates that the
-;;;     sense of the option is reversed.
-;;;
-;;; G_OPTION_FLAG_NO_ARG
-;;;     For options of the G_OPTION_ARG_CALLBACK kind, this flag indicates that
-;;;     the callback does not take any argument (like a G_OPTION_ARG_NONE
-;;;     option). Since 2.8
-;;;
-;;; G_OPTION_FLAG_FILENAME
-;;;     For options of the G_OPTION_ARG_CALLBACK kind, this flag indicates that
-;;;     the argument should be passed to the callback in the GLib filename
-;;;     encoding rather than UTF-8. Since 2.8
-;;;
-;;; G_OPTION_FLAG_OPTIONAL_ARG
-;;;     For options of the G_OPTION_ARG_CALLBACK kind, this flag indicates that
-;;;     the argument supply is optional. If no argument is given then data of
-;;;     GOptionParseFunc will be set to NULL. Since 2.8
-;;;
-;;; G_OPTION_FLAG_NOALIAS
-;;;     This flag turns off the automatic conflict resolution which prefixes
-;;;     long option names with groupname- if there is a conflict. This option
-;;;     should only be used in situations where aliasing is necessary to model
-;;;     some legacy commandline interface. It is not safe to use this option,
-;;;     unless all option groups are under your direct control. Since 2.8.
 ;;;-----------------------------------------------------------------------------
+
+(defbitfield g-option-flags
+  :hidden
+  :in-main
+  :reverse
+  :no-arg
+  :filename
+  :optional-arg
+  :noalias)
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'g-option-flags atdoc:*symbol-name-alias*) "Bitfield"
+      (gethash 'g-option-flags atdoc:*external-symbols*)
+ "@version{2013-7-23}
+  @short{Flags which modify individual options.}
+  @begin{pre}
+(defbitfield g-option-flags
+  :hidden
+  :in-main
+  :reverse
+  :no-arg
+  :filename
+  :optional-arg
+  :noalias)
+  @end{pre}
+  @begin[code]{table}
+    @entry[:hidden]{The option does not appear in --help output.}
+    @entry[:in-main]{The option appears in the main section of the --help
+      output, even if it is defined in a group.}
+    @entry[:reverse]{For options of the @code{:none} kind, see
+      @symbol{g-option-arg}, this flag indicates that the sense of the option
+      is reversed.}
+    @entry[:no-arg]{For options of the @code{:callback} kind, see
+      @symbol{g-option-arg}, this flag indicates that the callback does not take
+      any argument (like a @code{:none} option). Since 2.8.}
+    @entry[:filename]{For options of the @code{:arg-callback}, see
+      @symbol{g-option-arg} kind, this flag indicates that the argument should
+      be passed to the callback in the GLib filename encoding rather than UTF-8.
+      Since 2.8.}
+    @entry[:optional-arg]{For options of the @code{:arg-callback} kind, see
+      @symbol{g-option-arg}, this flag indicates that the argument supply is
+      optional. If no argument is given then data of @code{GOptionParseFunc}
+      will be set to @code{NULL}. Since 2.8.}
+    @entry[:noalias]{This flag turns off the automatic conflict resolution which
+      prefixes long option names with groupname - if there is a conflict. This
+      option should only be used in situations where aliasing is necessary to
+      model some legacy commandline interface. It is not safe to use this
+      option, unless all option groups are under your direct control.
+      Since 2.8.}
+  @end{table}")
+
+(export 'g-option-flags)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_OPTION_REMAINING
@@ -839,107 +847,71 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GOptionEntry
-;;;
-;;; struct GOptionEntry {
-;;;   const gchar *long_name;
-;;;   gchar        short_name;
-;;;   gint         flags;
-;;;
-;;;   GOptionArg   arg;
-;;;   gpointer     arg_data;
-;;;
-;;;   const gchar *description;
-;;;   const gchar *arg_description;
-;;; };
-;;;
-;;; A GOptionEntry defines a single option. To have an effect, they must be
-;;; added to a GOptionGroup with g_option_context_add_main_entries() or
-;;; g_option_group_add_entries().
-;;;
-;;; const gchar *long_name;
-;;;     The long name of an option can be used to specify it in a commandline as
-;;;     --long_name. Every option must have a long name. To resolve conflicts if
-;;;     multiple option groups contain the same long name, it is also possible
-;;;     to specify the option as --groupname-long_name.
-;;;
-;;; gchar short_name;
-;;;     If an option has a short name, it can be specified -short_name in a
-;;;     commandline. short_name must be a printable ASCII character different
-;;;     from '-', or zero if the option has no short name.
-;;;
-;;; gint flags;
-;;;     Flags from GOptionFlags.
-;;;
-;;; GOptionArg arg;
-;;;     The type of the option, as a GOptionArg.
-;;;
-;;; gpointer arg_data;
-;;;     If the arg type is G_OPTION_ARG_CALLBACK, then arg_data must point to a
-;;;     GOptionArgFunc callback function, which will be called to handle the
-;;;     extra argument. Otherwise, arg_data is a pointer to a location to store
-;;;     the value, the required type of the location depends on the arg type:
-;;;
-;;;     G_OPTION_ARG_NONE gboolean
-;;;     G_OPTION_ARG_STRING gchar*
-;;;     G_OPTION_ARG_INT gint
-;;;     G_OPTION_ARG_FILENAME gchar*
-;;;     G_OPTION_ARG_STRING_ARRAY gchar**
-;;;     G_OPTION_ARG_FILENAME_ARRAY gchar**
-;;;     G_OPTION_ARG_DOUBLE gdouble
-;;;
-;;;     If arg type is G_OPTION_ARG_STRING or G_OPTION_ARG_FILENAME the location
-;;;     will contain a newly allocated string if the option was given. That
-;;;     string needs to be freed by the callee using g_free(). Likewise if arg
-;;;     type is G_OPTION_ARG_STRING_ARRAY or G_OPTION_ARG_FILENAME_ARRAY, the
-;;;     data should be freed using g_strfreev().
-;;;
-;;; const gchar *description;
-;;;     the description for the option in --help output. The description is
-;;;     translated using the translate_func of the group, see
-;;;     g_option_group_set_translation_domain().
-;;;
-;;; const gchar *arg_description;
-;;;     The placeholder to use for the extra argument parsed by the option in
-;;;     --help output. The arg_description is translated using the
-;;;     translate_func of the group, see
-;;;     g_option_group_set_translation_domain().
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-option-entry
   (long-name :string)
   (short-name :char)
-  (flags :int)
+  (flags g-option-flags)
   (arg g-option-arg)
   (arg-data :pointer)
   (description :string)
   (arg-description :string))
 
+#+cl-cffi-gtk-documentation
+(setf (gethash 'g-option-entry atdoc:*type-name-alias*) "CStruct"
+      (documentation 'g-option-entry 'type)
+ "@version{2013-7-24}
+  @begin{short}
+    A @sym{g-option-entry} defines a single option. To have an effect, they must
+    be added to a @type{g-option-group} with the function
+    @fun{g-option-context-add-main-entries} or the function
+    @fun{g-option-group-add-entries}.
+  @end{short}
+  @begin{pre}
+(defcstruct g-option-entry
+  (long-name :string)
+  (short-name :char)
+  (flags g-option-flags)
+  (arg g-option-arg)
+  (arg-data :pointer)
+  (description :string)
+  (arg-description :string))
+  @end{pre}
+  @begin[code]{table}
+    @entry[long-name]{The long name of an option can be used to specify it in a
+      commandline as --long_name. Every option must have a long name. To resolve
+      conflicts if multiple option groups contain the same long name, it is also
+      possible to specify the option as --groupname-long_name.}
+    @entry[short-name]{If an option has a short name, it can be specified
+      -short_name in a commandline. @arg{short-name} must be a printable ASCII
+      character different from '-', or zero if the option has no short name.}
+    @entry[flags]{Flags from @symbol{g-option-flags}.}
+    @entry[arg]{The type of the option, as a @symbol{g-option-arg}.}
+    @entry[arg-data]{If the @arg{arg} type is @code{:callback}, then
+      @arg{arg-data} must point to a @code{GOptionArgFunc} callback function,
+      which will be called to handle the extra argument. Otherwise,
+      @arg{arg-data} is a pointer to a location to store the value, the required
+      type of the location depends on the @arg{arg} type.
+      If @arg{arg} type is @code{:string} or @code{:filename} the location
+      will contain a newly allocated string if the option was given.}
+    @entry[description]{The description for the option in --help output. The
+      description is translated using the @code{translate-func} of the group,
+      see the function @fun{g-option-group-set-translation-domain}.}
+    @entry[arg-description]{The placeholder to use for the extra argument parsed
+      by the option in --help output. The @arg{arg-description} is translated
+      using the @code{translate-func} of the group, see the function
+      @fun{g-option-group-set-translation-domain}.}
+  @end{table}
+  @see-function{g-option-context-add-main-entries}
+  @see-function{g-option-group-add-entries}
+  @see-function{g-option-group-set-translation-domain}")
+
 (export 'g-option-entry)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_option_context_add_main_entries ()
-;;;
-;;; void g_option_context_add_main_entries (GOptionContext *context,
-;;;                                         const GOptionEntry *entries,
-;;;                                         const gchar *translation_domain);
-;;;
-;;; A convenience function which creates a main group if it doesn't exist, adds
-;;; the entries to it and sets the translation domain.
-;;;
-;;; context :
-;;;     a GOptionContext
-;;;
-;;; entries :
-;;;     a NULL-terminated array of GOptionEntrys
-;;;
-;;; translation_domain :
-;;;     a translation domain to use for translating the --help output for the
-;;;     options in entries with gettext(), or NULL.
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
-
-;; TODO: This does not work. More work is neeeded.
 
 (defcfun ("g_option_context_add_main_entries"
           %g-option-context-add-main-entries) :void
@@ -947,70 +919,123 @@
   (entries (:pointer (:pointer (:struct g-option-entry))))
   (translation-domain :string))
 
-#+nil
 (defun g-option-context-add-main-entries (context entries translation-domain)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-7-24}
+  @argument[context]{a @type{g-option-context}}
+  @arg[entries]{a list of  of @symbol{g-option-entry}s}
+  @argument[translation-domain]{a translation domain to use for translating the
+    --help output for the options in entries with @code{gettext()},
+    or @code{NULL}}
+  @begin{short}
+    A convenience function which creates a main group if it does not exist,
+    adds the @arg{entries} to it and sets the translation domain.
+  @end{short}
+
+  Since 2.6
+  @ysee-type{g-option-context}
+  @see-symbol{g-opton-entry}"
   (let ((n-entries (length entries)))
-    (with-foreign-object (entries-ptr 'g-option-entry (1+ n-entries))
+    (with-foreign-object (entries-ptr '(:struct g-option-entry) (1+ n-entries))
       (loop
         for entry in entries
         for i from 0
-        for entry-ptr = (mem-aref entries-ptr 'g-option-entry i)
-        do (setf (foreign-slot-value entry-ptr 'g-option-entry 'long-name)
+        for entry-ptr = (mem-aptr entries-ptr '(:struct g-option-entry) i)
+        do (setf (foreign-slot-value entry-ptr
+                                     '(:struct g-option-entry)
+                                     'long-name)
                  (first entry)
-                 (foreign-slot-value entry-ptr 'g-option-entry 'short-name)
-                 (if (second entry) (second entry) (null-pointer))
-                 (foreign-slot-value entry-ptr 'g-option-entry 'flags)
-                 (if (third entry) (third entry) (null-pointer))
-                 (foreign-slot-value entry-ptr 'g-option-entry 'arg)
-                 (if (fourth entry) (fourth entry) (null-pointer))
-                 (foreign-slot-value entry-ptr 'g-option-entry 'arg-data)
-                 (if (fifth entry) (fifth entry) (null-pointer))
-                 (foreign-slot-value entry-ptr 'g-option-entry 'description)
-                 (if (sixth entry) (sixth entry) (null-pointer))
-                 (foreign-slot-value entry-ptr 'g-option-entry 'arg-description)
+                 (foreign-slot-value entry-ptr
+                                     '(:struct g-option-entry)
+                                     'short-name)
+                 (if (second entry)
+                     (char-code (second entry))
+                     0)
+                 (foreign-slot-value entry-ptr
+                                     '(:struct g-option-entry)
+                                     'flags)
+                 (third entry)
+                 (foreign-slot-value entry-ptr
+                                     '(:struct g-option-entry)
+                                     'arg)
+                 (fourth entry)
+                 (foreign-slot-value entry-ptr
+                                     '(:struct g-option-entry)
+                                     'arg-data)
+                 (progn
+                   (cond ((member (fourth entry)
+                                  '(:none :int :double :string :filename
+                                    :string-array :filename-array :int64))
+                          (symbol-value (fifth entry)))
+                         (t (error "Case not handled for g-option-entry"))))
+                 (foreign-slot-value entry-ptr
+                                     '(:struct g-option-entry)
+                                     'description)
+                 (sixth entry)
+                 (foreign-slot-value entry-ptr
+                                     '(:struct g-option-entry)
+                                     'arg-description)
                  (if (seventh entry) (seventh entry) (null-pointer))))
-      (let ((entry-ptr (mem-aref entries-ptr 'g-option-entry n-entries)))
-        (setf (foreign-slot-value entry-ptr 'g-option-entry 'long-name) (null-pointer))
+      (let ((entry-ptr (mem-aptr entries-ptr
+                                 '(:struct g-option-entry)
+                                 n-entries)))
+        (setf (foreign-slot-value entry-ptr
+                                  '(:struct g-option-entry) 'long-name)
+              (null-pointer))
         (%g-option-context-add-main-entries context
                                             entries-ptr
-                                            translation-domain)))))
+                                            (if translation-domain
+                                                translation-domain
+                                                (null-pointer)))))))
 
-#+nil
 (export 'g-option-context-add-main-entries)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GOptionGroup
-;;;
-;;; typedef struct _GOptionGroup GOptionGroup;
-;;;
-;;; A GOptionGroup struct defines the options in a single group. The struct has
-;;; only private fields and should not be directly accessed.
-;;;
-;;; All options in a group share the same translation function. Libraries which
-;;; need to parse commandline options are expected to provide a function for
-;;; getting a GOptionGroup holding their options, which the application can then
-;;; add to its GOptionContext.
 ;;; ----------------------------------------------------------------------------
+
+(defcstruct g-option-group)
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'g-option-group atdoc:*type-name-alias*) "CStruct"
+      (documentation 'g-option-group 'type)
+ "@version{2013-7-25}
+  @begin{short}
+    A @sym{g-option-group} structure defines the options in a single group. The
+    struct has only private fields and should not be directly accessed.
+  @end{short}
+
+  All options in a group share the same translation function. Libraries which
+  need to parse commandline options are expected to provide a function for
+  getting a @sym{g-option-group} holding their options, which the application
+  can then add to its @type{g-option-context}.
+  @see-type{g-option-context}")
+
+(export 'g-option-group)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_option_context_add_group ()
-;;;
-;;; void g_option_context_add_group (GOptionContext *context,
-;;;                                  GOptionGroup *group);
-;;;
-;;; Adds a GOptionGroup to the context, so that parsing with context will
-;;; recognize the options in the group. Note that the group will be freed
-;;; together with the context when g_option_context_free() is called, so you
-;;; must not free the group yourself after adding it to a context.
-;;;
-;;; context :
-;;;     a GOptionContext
-;;;
-;;; group :
-;;;     the group to add
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_option_context_add_group" g-option-context-add-group) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-7-25}
+  @argument[context]{a @type{g-option-context}}
+  @argument[group]{the group to add}
+  @begin{short}
+    Adds a @type{g-option-group} to the @arg{context}, so that parsing with
+    @arg{context} will recognize the options in the group.
+  @end{short}
+  Note that the group will be freed together with the context when the function
+  @fun{g-option-context-free} is called, so you must not free the group yourself
+  after adding it to a context.
+
+  Since 2.6
+  @see-function{g-option-context-free}"
+  (context (:pointer (:struct g-option-context)))
+  (group (:pointer (:struct g-option-group))))
+
+(export 'g-option-context-add-group)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_option_context_set_main_group ()

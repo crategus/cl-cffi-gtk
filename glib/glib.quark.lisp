@@ -2,13 +2,15 @@
 ;;; glib.quark.lisp
 ;;;
 ;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
+;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation of this file has been copied from the
-;;; GLib 2.32.3 Reference Manual. See http://www.gtk.org.
+;;; The documentation of this file is taken from the GLib 2.36.3 Reference
+;;; Manual and modified to document the Lisp binding to the GLib library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2012 Dieter Kaiser
+;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -36,6 +38,7 @@
 ;;;
 ;;;     GQuark
 ;;;
+;;;     G_DEFINE_QUARK
 ;;;     g_quark_from_string
 ;;;     g_quark_from_static_string
 ;;;     g_quark_to_string
@@ -100,6 +103,25 @@
   @see-function{g-intern-static-string}")
 
 (export 'g-quark)
+
+;;; ----------------------------------------------------------------------------
+;;; G_DEFINE_QUARK()
+;;;
+;;; #define G_DEFINE_QUARK(QN, q_n)
+;;;
+;;; A convenience macro which defines a function returning the GQuark for the
+;;; name QN. The function will be named q_n_quark(). Note that the quark name
+;;; will be stringified automatically in the macro, so you shouldn't use double
+;;; quotes.
+;;;
+;;; QN :
+;;;     the name to return a GQuark for
+;;;
+;;; q_n :
+;;;     prefix for the function name
+;;;
+;;; Since 2.34
+;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_quark_from_string ()

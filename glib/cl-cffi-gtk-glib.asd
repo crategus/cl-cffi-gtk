@@ -37,12 +37,11 @@
 
                (:file "glib.version")        ; Glib Version information
                (:file "glib.misc")           ; Various Glib Types and Functions
-               (:file "glib.threads")        ; Thread abstraction
                (:file "glib.main-loop")      ; The Main Event Loop
                (:file "glib.quark")          ; Association between string and id
                (:file "glib.error")          ; Error Reporting
                (:file "glib.utils")          ; Miscellaneous Utility Functions
-               (:file "glib.option-group")   ; Parses commandline options)
+               (:file "glib.option-group")   ; Parses commandline options
               )
   :depends-on (:cffi
                :iterate

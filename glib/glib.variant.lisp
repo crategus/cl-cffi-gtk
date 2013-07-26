@@ -1,10 +1,10 @@
 ;;; ----------------------------------------------------------------------------
 ;;; glib.variant.lisp
 ;;;
-;;; The documentation of this file has been copied from the
-;;; GLib 2.32.3 Reference Manual. See <http://www.gtk.org>.
-;;; The API documentation of the Lisp binding is available at
-;;; <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GLib 2.32.3 Reference
+;;; Manual and modified to document the Lisp binding to the GLib library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2012, 2013 Dieter Kaiser
 ;;;
@@ -459,7 +459,7 @@
 
 (defcfun ("g_variant_is_floating" g-variant-is-floating) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-4-11}
+ "@version{2013-7-20}
   @argument[value]{a @symbol{g-variant}}
   @return{Whether @arg{value} is floating.}
   @begin{short}
@@ -468,13 +468,15 @@
 
   This function should only ever be used to assert that a given variant is or
   is not floating, or for debug purposes. To acquire a reference to a variant
-  that might be floating, always use @fun{g-variant-ref-sink} or
+  that might be floating, always use the functions @fun{g-variant-ref-sink} or
   @fun{g-variant-take-ref}.
 
-  See @fun{g-variant-ref-sink} for more information about floating reference
-  counts.
+  See the function @fun{g-variant-ref-sink} for more information about floating
+  reference counts.
 
-  Since 2.26"
+  Since 2.26
+  @see-function{g-variant-ref-sink}
+  @see-function{g-variant-take-ref}"
   (value (:pointer (:struct g-variant))))
 
 (export 'g-variant-is-floating)
@@ -483,19 +485,19 @@
 ;;; g_variant_take_ref ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_variant_take_ref" g-variant-takge-ref)
+(defcfun ("g_variant_take_ref" g-variant-take-ref)
     (gobject:g-boxed-foreign g-variant-type)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-11}
+ "@version{2013-7-20}
   @argument[value]{a @symbol{g-variant}}
   @return{The same @arg{value}.}
   @begin{short}
     If @arg{value} is floating, sink it. Otherwise, do nothing.
   @end{short}
 
-  Typically you want to use @fun{g-variant-ref-sink} in order to automatically
-  do the correct thing with respect to floating or non-floating references, but
-  there is one specific scenario where this function is helpful.
+  Typically you want to use the function @fun{g-variant-ref-sink} in order to
+  automatically do the correct thing with respect to floating or non-floating
+  references, but there is one specific scenario where this function is helpful.
 
   The situation where this function is helpful is when creating an API that
   allows the user to provide a callback function that returns a
@@ -514,13 +516,16 @@
   returned in the first place, or a floating reference that has been converted
   to a full reference.
 
-  This function has an odd interaction when combined with
+  This function has an odd interaction when combined with the function
   @fun{g-variant-ref-sink} running at the same time in another thread on the
-  same @symbol{g-variant} instance. If @fun{g-variant-ref-sink} runs first then
-  the result will be that the floating reference is converted to a hard
-  reference. If @fun{g-variant-take-ref} runs first then the result will be that
-  the floating reference is converted to a hard reference and an additional
-  reference on top of that one is added. It is best to avoid this situation."
+  same @symbol{g-variant} instance. If the function @fun{g-variant-ref-sink}
+  runs first then the result will be that the floating reference is converted to
+  a hard reference. If the function @sym{g-variant-take-ref} runs first then the
+  result will be that the floating reference is converted to a hard reference
+  and an additional reference on top of that one is added. It is best to avoid
+  this situation.
+  @see-symbol{g-variant}
+  @see-function{g-variant-ref-sink}"
   (value (:pointer (:struct g-variant))))
 
 (export 'g-variant-take-ref)
@@ -1384,15 +1389,17 @@
 
 (defcfun ("g_variant_get_uint32" g-variant-get-uint32) :uint32
  #+cl-cffi-gtk-documentation
- "@version{2013-4-11}
+ "@version{2013-7-20}
   @arguemnt[value]{a uint32 @symbol{g-variant} instance}
   @return{A @code{guint32}.}
-  @short{Returns the 32-bit unsigned integer value of @ar{value}.}
+  @short{Returns the 32-bit unsigned integer value of @arg{value}.}
 
   It is an error to call this function with a value of any type other than
-  @var{+g-varaint-type-uint32+}.
+  @var{+g-variant-type-uint32+}.
 
-  Since 2.24"
+  Since 2.24
+  @see-symbol{g-variant}
+  @see-variable{+g-variant-type-uint32+}"
   (value (:pointer (:struct g-variant))))
 
 (export 'g-variant-get-uint32)

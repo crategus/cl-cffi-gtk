@@ -29,9 +29,6 @@
 (asdf:load-system :atdoc)
 (asdf:load-system :cl-cffi-gtk-glib)
 
-;; Load the documentation of the Libraray GLib
-(load "atdoc-glib.lisp")
-
 (defpackage :atdoc-glib
   (:use :glib :common-lisp)
   (:export #:generate-html
@@ -40,6 +37,11 @@
            #:generate-info))
 
 (in-package :atdoc-glib)
+
+(unexport 'glib:allocate-stable-pointer :glib)
+(unexport 'glib:stable-pointer-destroy-notify-cb :glib)
+(unexport 'glib:get-stable-pointer-value :glib)
+(unexport 'glib:with-stable-pointer :glib)
 
 (defun generate-html ()
   (let* ((base (asdf:component-pathname (asdf:find-system :cl-cffi-gtk-glib)))
