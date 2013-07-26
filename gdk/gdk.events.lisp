@@ -67,7 +67,7 @@
 ;;;     gdk_event_get_state
 ;;;     gdk_event_get_time
 ;;;
-;;;     GdkEventSequence
+;;;     GdkEventSequence  --> gdk.event-structures.lisp
 ;;;
 ;;;     gdk_event_get_event_sequence
 ;;;     gdk_event_request_motions
@@ -562,21 +562,26 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_event_get_event_sequence ()
-;;;
-;;; GdkEventSequence * gdk_event_get_event_sequence (const GdkEvent *event);
-;;;
-;;; If event if of type GDK_TOUCH_BEGIN, GDK_TOUCH_UPDATE, GDK_TOUCH_END or
-;;; GDK_TOUCH_CANCEL, returns the GdkEventSequence to which the event belongs.
-;;; Otherwise, return NULL.
-;;;
-;;; event :
-;;;     a GdkEvent
-;;;
-;;; Returns :
-;;;     the event sequence that the event belongs to
-;;;
-;;; Since 3.4
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gdk_event_get_event_sequence" gdk-event-get-event-sequence)
+    (g-boxed-foreign gdk-event-sequence)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-7-22}
+  @argument[event]{a @class{gdk-event}}
+  @return{The event sequence that the event belongs to.}
+  @begin{short}
+    If @arg{event} if of type @code{:touch-begin}, @code{:touch-update},
+    @code{:touch-end} or @code{:touch-cancel}, returns the
+    @class{gdk-event-sequence} to which the @arg{event} belongs.
+    Otherwise, return @code{nil}.
+  @end{short}
+
+  Since 3.4
+  @see-class{gdk-event-sequence}"
+  (event (g-boxed-foreign gdk-event)))
+
+(export 'gdk-event-get-event-sequence)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_event_request_motions ()

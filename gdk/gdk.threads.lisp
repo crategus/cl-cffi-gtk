@@ -343,7 +343,7 @@
   @end{short}
 
   This call must be made before any use of the main loop from GTK+; to be
-  safe, call it before the function @fun{gtk-init}.
+  safe, call it before the function @code{gtk_init()}.
   @see-function{gdk-threads-enter}
   @see-function{gdk-threads-leave}")
 
@@ -632,8 +632,7 @@
    @}
   @end{pre}
 
-  Since 2.12
-  @see-function{g-timeout-add-full}"
+  Since 2.12"
   (%gdk-threads-add-timeout-full priority
                                  interval
                                  (callback source-func-cb)

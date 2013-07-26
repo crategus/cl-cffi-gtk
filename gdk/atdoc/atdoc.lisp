@@ -29,9 +29,6 @@
 (asdf:load-system :atdoc)
 (asdf:load-system :cl-cffi-gtk-gdk)
 
-;; Load the documentation of the Libraray gdk
-(load "atdoc-gdk.lisp")
-
 (defpackage :atdoc-gdk
   (:use :gdk :common-lisp)
   (:export #:generate-html

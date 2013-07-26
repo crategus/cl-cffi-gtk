@@ -278,8 +278,8 @@
     Disables multidevice support in GDK.
   @end{short}
   This call must happen prior to the functions @fun{gdk-display-open},
-  @fun{gtk-init}, @fun{gtk-init-with-args} or @fun{gtk-init-check} in order
-  to take effect.
+  @code{gtk_init()}, @code{gtk_init_with_args()} or @code{gtk_init_check()} in
+  order to take effect.
 
   Most common GTK+ applications will not ever need to call this. Only
   applications that do mixed GDK/Xlib calls could want to disable multidevice
@@ -287,10 +287,7 @@
   observe the presence of XInput 2.
 
   Since 3.0
-  @see-function{gdk-display-open}
-  @see-function{gtk-init}
-  @see-function{gtk-init-with-args}
-  @see-function{gtk-init-check}")
+  @see-function{gdk-display-open}")
 
 (export 'gdk-disable-multidevice)
 

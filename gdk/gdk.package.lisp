@@ -775,7 +775,7 @@
     Instead of calling GTK+ directly from multiple threads, it is recommended to
     use the functions @fun{g-idle-add}, @fun{g-main-context-invoke} and similar
     functions to make these calls from the main thread instead. The main thread
-    is the thread which has called the function @fun{gtk-init} and is running
+    is the thread which has called the function @code{gtk_init()} and is running
     the GTK+ mainloop. GTK+ itself will continue to use the GDK lock internally
     as long as the deprecated functionality is still available, and other
     libraries should probably do the same.

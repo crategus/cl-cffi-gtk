@@ -48,6 +48,7 @@
 ;;;     GdkEventType     <-- gdk.events.lisp
 ;;;     GdkModifierType  <-- gdk.window.lisp
 ;;;     GdkEventMask     <-- gdk.events.lisp
+;;;     GdkEventSequence <-- gdk-events.lisp
 ;;;
 ;;;     GdkEvent
 ;;;
