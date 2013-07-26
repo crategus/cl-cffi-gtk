@@ -29,8 +29,6 @@
 (asdf:load-system :atdoc)
 (asdf:load-system :cl-cffi-gtk-gobject)
 
-(load "atdoc-gobject.lisp")
-
 (defpackage :atdoc-gobject
   (:use :gobject :common-lisp)
   (:export #:generate-html

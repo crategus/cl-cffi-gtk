@@ -363,18 +363,16 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_IS_ENUM_CLASS()
-;;;
-;;; #define G_IS_ENUM_CLASS(class)
-;;;         (G_TYPE_CHECK_CLASS_TYPE ((class), G_TYPE_ENUM))
-;;;
-;;; Checks whether class "is a" valid GEnumClass structure of type G_TYPE_ENUM
-;;; or derived.
-;;;
-;;; class :
-;;;     a GEnumClass
 ;;; ----------------------------------------------------------------------------
 
 (defun g-is-enum-class (class)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-7-21}
+  @argument[class]{a @symbol{g-enum-class}}
+  Checks whether class \"is a\" valid @symbol{g-enum-class} structure of type
+  @var{+g-type-enum+} or derived.
+  @see-symbol{g-enum-class}
+  @see-variable{+g-type-enum+}"
   (g-type-check-class-type class +g-type-enum+))
 
 (export 'g-is-enum-class)

@@ -413,10 +413,10 @@
          do (boxed-free-fn type pointer))
       (setf *gboxed-gc-hooks* nil))))
 
-(defcallback gboxed-idle-gc-hook :boolean ((data :pointer))
-  (declare (ignore data))
-  (activate-gboxed-gc-hooks)
-  nil)
+;(defcallback gboxed-idle-gc-hook :boolean ((data :pointer))
+;  (declare (ignore data))
+;  (activate-gboxed-gc-hooks)
+;  nil)
 
 (defun register-gboxed-for-gc (type pointer)
   (with-recursive-lock-held (*gboxed-gc-hooks-lock*)
@@ -424,7 +424,8 @@
       (push (list pointer type) *gboxed-gc-hooks*)
       (unless locks-were-present
         (log-for :gc "adding gboxed idle-gc-hook to main loop~%")
-        (glib::%g-idle-add (callback gboxed-idle-gc-hook) (null-pointer))))))
+        (g-idle-add #'activate-gboxed-gc-hooks)))))
+;        (glib::%g-idle-add (callback gboxed-idle-gc-hook) (null-pointer))))))
 
 (defun make-boxed-free-finalizer (type pointer)
   (lambda () (register-gboxed-for-gc type pointer)))

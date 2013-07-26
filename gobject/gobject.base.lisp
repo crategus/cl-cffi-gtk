@@ -410,11 +410,11 @@
         (g-idle-add #'activate-gc-hooks)))))
 ;        (glib::%g-idle-add (callback g-idle-gc-hook) (null-pointer))))))
 
-(defcallback g-idle-gc-hook :boolean ((data :pointer))
-  (declare (ignore data))
-  (format t "~%~%IN G-IDLE-GC-HOOKS~%~%")
-  (activate-gc-hooks)
-  nil)
+;(defcallback g-idle-gc-hook :boolean ((data :pointer))
+;  (declare (ignore data))
+;  (format t "~%~%IN G-IDLE-GC-HOOKS~%~%")
+;  (activate-gc-hooks)
+;  nil)
 
 ;;; ----------------------------------------------------------------------------
 

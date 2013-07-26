@@ -554,11 +554,14 @@
   (value (:pointer (:struct g-value)))
   (gtype g-type))
 
-;; Initializes the GValue in 'unset' state.
-;; This function is called from g-value-init to initialize the GValue
-;; structure with zeros. VALUE is a C pointer to the GValue structure.
-
 (defun g-value-zero (value)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-7-21}
+  This function is called from the function @fun{g-value-init} to initialize
+  the @symbol{g-value} structure with zeros. @arg{value} is a C pointer to the
+  @symbol{g-value} structure.
+  @see-symbol{g-value}
+  @see-function{g-value-init}"
   (loop
      for i from 0 below (foreign-type-size '(:struct g-value))
      do (setf (mem-ref value :uchar i) 0)))
