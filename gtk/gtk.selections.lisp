@@ -425,20 +425,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_target_list_new ()
-;;;
-;;; GtkTargetList * gtk_target_list_new (const GtkTargetEntry *targets,
-;;;                                      guint ntargets);
-;;;
-;;; Creates a new GtkTargetList from an array of GtkTargetEntry.
-;;;
-;;; targets :
-;;;     Pointer to an array of GtkTargetEntry.
-;;;
-;;; ntargets :
-;;;     number of entries in targets.
-;;;
-;;; Returns :
-;;;     the new GtkTargetList
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_target_list_new" %gtk-target-list-new)
@@ -447,6 +433,14 @@
   (n-targets :uint))
 
 (defun gtk-target-list-new (&optional (targets nil))
+ #+cl-cffi-gtk-documentation
+ "@version{2013-7-21}
+  @argument[targets]{pointer to an array of @class{gtk-target-entry}}
+  @return{The new @class{gtk-target-list}.}
+  Creates a new @class{gtk-target-list} from an array of
+  @class{gtk-target-entry}.
+  @see-class{gtk-target-entry}
+  @see-class{gtk-target-list}"
   (if targets
       (with-foreign-boxed-array (n-targets targets-ptr gtk-target-entry targets)
         (%gtk-target-list-new targets-ptr n-targets))
@@ -868,34 +862,23 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_selection_convert ()
-;;;
-;;; gboolean gtk_selection_convert (GtkWidget *widget,
-;;;                                 GdkAtom selection,
-;;;                                 GdkAtom target,
-;;;                                 guint32 time_);
-;;;
-;;; Requests the contents of a selection. When received, a "selection-received"
-;;; signal will be generated.
-;;;
-;;; widget :
-;;;     The widget which acts as requestor
-;;;
-;;; selection :
-;;;     Which selection to get
-;;;
-;;; target :
-;;;     Form of information desired (e.g., STRING)
-;;;
-;;; time_ :
-;;;     Time of request (usually of triggering event) In emergency, you could
-;;;     use GDK_CURRENT_TIME
-;;;
-;;; Returns :
-;;;     TRUE if requested succeeded. FALSE if we could not process request.
-;;;     (e.g., there was already a request in process for this widget).
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_selection_convert" gtk-selection-convert) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-7-21}
+  @argument[widget]{the widget which acts as requestor}
+  @argument[selection]{which selection to get}
+  @argument[target]{form of information desired, e. g., @code{STRING})}
+  @argument[time]{time of request, usually of triggering event, in emergency,
+    you could use @var{+gdk-current-time+}}
+  @begin{return}
+    @em{True} if requested succeeded. @code{Nil} if we could not process
+    request. E.g., there was already a request in process for this widget.
+  @end{return}
+  Requests the contents of a @arg{selection}. When received, a
+  \"selection-received\" signal will be generated.
+  @see-class{gtk-selection-data}"
   (widget (g-object gtk-widget))
   (selection gdk-atom-as-string)
   (target gdk-atom-as-string)

@@ -169,7 +169,7 @@
 (defcfun ("gtk_cell_editable_editing_done" gtk-cell-editable-editing-done) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-6-22}
-  @argument[cell-editable]{a @class{gtk-tree-editable} object}
+  @argument[cell-editable]{a @class{gtk-cell-editable} object}
   Emits the \"editing-done\" signal."
   (cell-editable (g-object gtk-cell-editable)))
 
@@ -183,7 +183,7 @@
     :void
  #+cl-cffi-gtk-documentation
  "@version{2013-6-22}
-  @argument[cell-editable]{a @class{gtk-tree-editable} object}
+  @argument[cell-editable]{a @class{gtk-cell-editable} object}
   Emits the \"remove-widget\" signal."
   (cell-editable (g-object gtk-cell-editable)))
 

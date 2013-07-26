@@ -351,26 +351,23 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_item_group_get_item_position ()
-;;;
-;;; gint gtk_tool_item_group_get_item_position (GtkToolItemGroup *group,
-;;;                                             GtkToolItem *item);
-;;;
-;;; Gets the position of item in group as index.
-;;;
-;;; group :
-;;;     a GtkToolItemGroup
-;;;
-;;; item :
-;;;     a GtkToolItem
-;;;
-;;; Returns :
-;;;     the index of item in group or -1 if item is no child of group
-;;;
-;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_tool_item_group_get_item_position"
            gtk-tool-item-group-get-item-position) :int
+ #+cl-cffi-gtk-documentation
+ "@version{2013-7-21}
+  @argument[group]{a @class{gtk-tool-item-group} object}
+  @argument[item]{a @class{gtk-tool-item} object}
+  @return{The index of @arg{item} in @arg{group} or -1 if @arg{item} is no
+    child of @arg{group}}
+  @begin{short}
+    Gets the position of @arg{item} in @arg{group} as index.
+  @end{short}
+
+  Since 2.20
+  @see-class{gtk-tool-item}
+  @see-class{gtk-tool-item-group}"
   (group (g-object gtk-tool-item-group))
   (item (g-object gtk-tool-item)))
 
@@ -478,7 +475,9 @@
     Inserts @arg{item} at @arg{position} in the list of children of @arg{group}.
   @end{short}
 
-  Since 2.20"
+  Since 2.20
+  @see-class{gtk-tool-item}
+  @see-class{gtk-tool-item-group}"
   (group (g-object gtk-tool-item-group))
   (item (g-object gtk-tool-item))
   (position :int))
@@ -537,28 +536,24 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_item_group_set_item_position ()
-;;;
-;;; void gtk_tool_item_group_set_item_position (GtkToolItemGroup *group,
-;;;                                             GtkToolItem *item,
-;;;                                             gint position);
-;;;
-;;; Sets the position of item in the list of children of group.
-;;;
-;;; group :
-;;;     a GtkToolItemGroup
-;;;
-;;; item :
-;;;     the GtkToolItem to move to a new position, should be a child of group.
-;;;
-;;; position :
-;;;     the new position of item in group, starting with 0. The position -1
-;;;     means end of list.
-;;;
-;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_tool_item_group_set_item_position"
            gtk-tool-item-group-set-item-position) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-7-21}
+  @argument[group]{a @class{gtk-tool-item-group} object}
+  @argument[item]{the @class{gtk-tool-item} to move to a new position, should
+    be a child of @arg{group}}
+  @argument[position]{the new position of @arg{item} in @arg{group}, starting
+    with 0. The position -1 means end of list.}
+  @begin{short}
+    Sets the position of @arg{item} in the list of children of @arg{group}.
+  @end{short}
+
+  Since 2.20
+  @see-class{gtk-tool-item}
+  @see-class{gtk-tool-item-group}"
   (group (g-object gtk-tool-item-group))
   (item (g-object gtk-tool-item))
   (position :int))

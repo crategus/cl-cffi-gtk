@@ -37,10 +37,10 @@
     (return-from-callback () nil)))
 
 (defun call-from-gtk-main-loop (func &key (priority g-priority-default-idle))
-  (g-idle-add-full priority
-                   (callback call-from-main-loop-callback)
-                   (glib::allocate-stable-pointer func)
-                   (callback glib::stable-pointer-destroy-notify-cb))
+  (glib::%g-idle-add-full priority
+                          (callback call-from-main-loop-callback)
+                          (glib::allocate-stable-pointer func)
+                          (callback glib::stable-pointer-destroy-notify-cb))
   (ensure-gtk-main))
 
 (export 'call-from-gtk-main-loop)

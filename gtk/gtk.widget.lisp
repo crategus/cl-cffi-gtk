@@ -2584,9 +2584,9 @@
 ;;; --- gtk-widget-no-show-all --------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-widget-name atdoc:*function-name-alias*) "Accessor"
-      (documentation 'gtk-widget-name 'function)
- "@version{2013-1-5}
+(setf (gethash 'gtk-widget-no-show-all atdoc:*function-name-alias*) "Accessor"
+      (documentation 'gtk-widget-no-show-all 'function)
+ "@version{2013-7-21}
   @begin{short}
     Accessor of the slot \"no-show-all\" of the @class{gtk-widget} class.
   @end{short}
@@ -3859,21 +3859,20 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_intersect" %gtk-widget-intersect) :boolean
- #+cl-cffi-gtk-documentation
- "@argument[widget]{a @class{gtk-widget} instance}
-  @argument[area]{a rectangle}
-  @return{Returns the intersection as a rectangle, if there was an intersection
-    or @code{nil}.}
-  @begin{short}
-    Computes the intersection of a @arg{widget}'s area and @arg{area}, and
-    returns the intersection as a rectangle of type @class{gdk-rectangle} if
-    there was an intersection.
-  @end{short}"
   (widget g-object)
   (area (g-boxed-foreign gdk-rectangle))
   (intersection (g-boxed-foreign gdk-rectangle)))
 
 (defun gtk-widget-intersect (widget area)
+ #+cl-cffi-gtk-documentation
+ "@argument[widget]{a @class{gtk-widget} object}
+  @argument[area]{a rectangle}
+  @return{Returns the intersection as a rectangle, if there was an intersection
+    or @code{nil}.}
+  Computes the intersection of a @arg{widget}'s area and @arg{area}, and
+  returns the intersection as a rectangle of type @class{gdk-rectangle} if
+  there was an intersection.
+  @see-class{gdk-rectangle}"
   (let ((intersection (make-gdk-rectangle)))
     (when (%gtk-widget-intersect widget area intersection)
       intersection)))
@@ -8197,6 +8196,11 @@
 
 (defcfun ("gtk_widget_get_preferred_height" %gtk-widget-get-preferred-height)
     :void
+  (widget (g-object gtk-widget))
+  (minium-height (:pointer :int))
+  (natural-height (:pointer :int)))
+
+(defun gtk-widget-get-preferred-height (widget)
  #+cl-cffi-gtk-documentation
  "@version{2013-1-6}
   @argument[widget]{a @class{gtk-widget} instance}
@@ -8216,11 +8220,6 @@
   @end{dictionary}
   @see-function{gtk-widget-get-preferred-width}
   @see-class{gtk-size-group}"
-  (widget (g-object gtk-widget))
-  (minium-height (:pointer :int))
-  (natural-height (:pointer :int)))
-
-(defun gtk-widget-get-preferred-height (widget)
   (with-foreign-objects ((minimum-height :int) (natural-height :int))
     (%gtk-widget-get-preferred-height widget minimum-height natural-height)
     (values (mem-ref minimum-height :int)

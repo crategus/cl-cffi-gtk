@@ -31,8 +31,6 @@
 (asdf:load-system :atdoc)
 (asdf:load-system :cl-cffi-gtk)
 
-(load "atdoc-gtk.lisp")
-
 (defpackage :atdoc-gtk
   (:use :gtk :common-lisp)
   (:export #:generate-html

@@ -116,10 +116,10 @@
   @subheading{Default files}
     An application can cause GTK+ to parse a specific RC file by calling the
     function @fun{gtk-rc-parse}. In addition to this, certain files will be
-    read at the end of the function @code{gtk-init}. Unless modified, the files
-    looked for will be @code{<SYSCONFDIR>/gtk-2.0/gtkrc} and @code{.gtkrc-3.0}
-    in the users home directory. @code{(<SYSCONFDIR>} defaults to
-    @code{/usr/local/etc}. It can be changed with the @code{--prefix} or
+    read at the end of the function @code{gtk_init()}. Unless modified, the
+    files looked for will be @code{<SYSCONFDIR>/gtk-2.0/gtkrc} and
+    @code{.gtkrc-3.0} in the users home directory. @code{(<SYSCONFDIR>} defaults
+    to @code{/usr/local/etc}. It can be changed with the @code{--prefix} or
     @code{--sysconfdir} options when configuring GTK+.)
 
     The set of these default files can be retrieved with the function

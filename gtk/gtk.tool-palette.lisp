@@ -447,24 +447,23 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_palette_set_icon_size ()
-;;;
-;;; void gtk_tool_palette_set_icon_size (GtkToolPalette *palette,
-;;;                                      GtkIconSize icon_size);
-;;;
-;;; Sets the size of icons in the tool palette.
-;;;
-;;; palette :
-;;;     a GtkToolPalette
-;;;
-;;; icon_size :
-;;;     the GtkIconSize that icons in the tool palette shall have
-;;;
-;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-tool-palette-set-icon-size))
 
 (defun gtk-tool-palette-set-icon-size (palette icon-size)
+ #+cl-cffi-gtk-documentation
+ "@version{2014-7-21}
+  @argument[palette]{a @class{gtk-tool-palette} widget}
+  @argument[icon-size]{the @symbol{gtk-icon-size} that icons in the tool
+    palette shall have}
+  @begin{short}
+    Sets the size of icons in the tool palette.
+  @end{short}
+
+  Since 2.20
+  @see-class{gtk-tool-palette}
+  @see-symbol{gtk-icon-size}"
   (setf (gtk-tool-palette-icon-size palette) icon-size))
 
 (export 'gtk-tool-palette-set-icon-size)
@@ -575,37 +574,31 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_palette_add_drag_dest ()
-;;;
-;;; void gtk_tool_palette_add_drag_dest (GtkToolPalette *palette,
-;;;                                      GtkWidget *widget,
-;;;                                      GtkDestDefaults flags,
-;;;                                      GtkToolPaletteDragTargets targets,
-;;;                                      GdkDragAction actions);
-;;;
-;;; Sets palette as drag source (see gtk_tool_palette_set_drag_source()) and
-;;; sets widget as a drag destination for drags from palette. See
-;;; gtk_drag_dest_set().
-;;;
-;;; palette :
-;;;     a GtkToolPalette
-;;;
-;;; widget :
-;;;     a GtkWidget which should be a drag destination for palette
-;;;
-;;; flags :
-;;;     the flags that specify what actions GTK+ should take for drops on that
-;;;     widget
-;;;
-;;; targets :
-;;;     the GtkToolPaletteDragTargets which the widget should support
-;;;
-;;; actions :
-;;;     the GdkDragActions which the widget should suppport
-;;;
-;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_tool_palette_add_drag_dest" gtk-tool-palette-add-drag-dest) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-7-21}
+  @argument[palette]{a @class{gtk-tool-palette} widget}
+  @argument[widget]{a @class{gtk-widget} which should be a drag destination for
+    @arg{palette}}
+  @argument[flags]{the flags that specify what actions GTK+ should take for
+    drops on that @arg{widget}}
+  @argument[targets]{the @symbol{gtk-tool-palette-drag-targets} which the
+    @arg{widget} should support}
+  @argument[actions]{the @symbol{gkd-drag-action}s which the @arg{widget}
+    should suppport}
+  @begin{short}
+    Sets @arg{palette} as drag source (see the function
+    @fun{gtk-tool-palette-set-drag-source}) and sets @arg{widget} as a drag
+    destination for drags from palette. See the function
+    @fun{gtk-drag-dest-set}.
+  @end{short}
+
+  Since 2.20
+  @see-class{gtk-tool-palette}
+  @see-function{gtk-drag-dest-set}
+  @see-function{gtk-tool-palette-set-drag-source}"
   (palette (g-object gtk-tool-palette))
   (widget (g-object gtk-widget))
   (flags gtk-dest-defaults)
@@ -675,9 +668,13 @@
   @argument[y]{the y position}
   @return{The @class{gtk-tool-item-group} at position or @code{nil} if there is
     no such group.}
-  Gets the group at position (@arg{x}, @arg{y}).
+  @begin{short}
+    Gets the group at position (@arg{x}, @arg{y}).
+  @end{short}
 
-  Since 2.20"
+  Since 2.20
+  @see-class{gtk-tool-palette}
+  @see-class{gtk-tool-item-group}"
   (palette (g-object gtk-tool-palette))
   (x :int)
   (y :int))

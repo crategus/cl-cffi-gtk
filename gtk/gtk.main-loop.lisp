@@ -41,7 +41,7 @@
 ;;;     gtk_init                                 * not exported *
 ;;;     gtk_init_check                           * not exported *
 ;;;     gtk_init_with_args                       * not implemented *
-;;;     gtk_get_option_group                     * not implemented *
+;;;     gtk_get_option_group
 ;;;     gtk_events_pending
 ;;;     gtk_main
 ;;;     gtk_main_level
@@ -83,7 +83,7 @@
  #+cl-cffi-gtk-documentation
  "@version{2012-12-23}
   @begin{short}
-    Prevents @code{gtk-init}, @fun{gtk-init-check},
+    Prevents @code{gtk_init()}, @code{gtk_init_check()},
     @code{gtk_init_with_args()} and @code{gtk_parse_args()} from automatically
     calling @code{setlocale (LC_ALL, \"\")}.
   @end{short}
@@ -93,13 +93,11 @@
 
   Most programs should not need to call this function.
   @begin[Lisp Implemention]{dictionary}
-    In the Lisp implementationt the function @sym{gtk-init} is called
+    In the Lisp implementationt the function @sym{%gtk-init} is called
     automatically when loading the library @code{cl-cffi-gtk}. Therefore
     @sym{gtk-disable-setlocale} does not have any effect.
   @end{dictionary}
-  @see-function{gtk-init-check}")
-
-;(export 'gtk-disable-setlocale)
+  @see-function{%gtk-init-check}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_get_default_language ()
@@ -190,29 +188,29 @@
   see those standard arguments.
 
   Note that there are some alternative ways to initialize GTK+: if you are
-  calling @code{gtk_parse_args()}, @fun{gtk-init-check},
+  calling @code{gtk_parse_args()}, @fun{%gtk-init-check},
   @code{gtk_init_with_args()} or @code{g_option_context_parse()} with the option
-  group returned by @code{gtk_get_option_group()}, you don't have to call
-  @sym{gtk-init}.
+  group returned by the function @fun{gtk-get-option-group}, you do not have to
+  call @code{gtk_init()}.
   @begin[Notes]{dictionary}
     This function will terminate your program if it was unable to initialize the
     windowing system for some reason. If you want your program to fall back to a
-    textual interface you want to call @fun{gtk-init-check} instead.
+    textual interface you want to call @fun{%gtk-init-check} instead.
 
     Since 2.18, GTK+ calls signal @code{(SIGPIPE, SIG_IGN)} during
     initialization, to ignore @code{SIGPIPE} signals, since these are almost
     never wanted in graphical applications. If you do need to handle
-    @code{SIGPIPE} for some reason, reset the handler after @code{gtk-init}, but
-    notice that other libraries (e.g. @code{libdbus} or @code{gvfs}) might do
-    similar things.
+    @code{SIGPIPE} for some reason, reset the handler after @code{gtk_init()},
+    butt notice that other libraries (e.g. @code{libdbus} or @code{gvfs}) might
+    do similar things.
   @end{dictionary}
   @begin[Lisp Implemention]{dictionary}
-    In the Lisp implementation @code{gtk-init} calls the C function
-    @code{gtk_init_check()} which is implemented through @fun{gtk-init-check}.
-    Both functions are never called directly. The function @code{gtk-init} is
+    In the Lisp implementation @code{%gtk-init} calls the C function
+    @code{gtk_init_check()} which is implemented through @fun{%gtk-init-check}.
+    Both functions are never called directly. The function @code{%gtk-init} is
     called automatically when loading the library @code{cl-cffi-gtk}.
   @end{dictionary}
-  @see-function{gtk-init-check}"
+  @see-function{%gtk-init-check}"
   (%gtk-init-check (foreign-alloc :int :initial-element 0)
                    (foreign-alloc :string :initial-contents '("/usr/bin/sbcl")))
   #+ (and sbcl (not win32))
@@ -254,9 +252,9 @@
   This way the application can fall back to some other means of communication
   with the user - for example a curses or command line interface.
   @begin[Lisp Implemention]{dictionary}
-    In the Lisp implementation @sym{gtk-init-check} is called from the
-    function @code{gtk-init}. Both functions are never called directly. The
-    function @code{gtk-init} is called automatically when loading the library
+    In the Lisp implementation @sym{%gtk-init-check} is called from the
+    function @code{%gtk-init}. Both functions are never called directly. The
+    function @code{%gtk-init} is called automatically when loading the library
     @code{cl-cffi-gtk}.
   @end{dictionary}"
   (argc (:pointer :int))
@@ -329,7 +327,11 @@
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
-;; TODO: Implement GOptionGroup
+(defcfun ("gtk_get_option_group" gtk-get-option-group)
+    (:pointer (:struct g-option-group))
+  (open-default-display :boolean))
+
+(export 'gtk-get-option-group)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_events_pending ()

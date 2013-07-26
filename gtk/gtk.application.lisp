@@ -621,7 +621,7 @@
 (declaim (inline gtk-application-new))
 
 (defun gtk-application-new (application-id flags)
- "@version{2013-6-9}
+ "@version{2013-7-25}
   @argument[application-id]{the application ID}
   @argument[flags]{the application flags}
   @return{A new @class{gtk-application} object.}
@@ -629,25 +629,24 @@
     Creates a new @class{gtk-application} object.
   @end{short}
 
-  The @fun{gtk-init} function is called as soon as the application gets
+  The @code{gtk_init()} function is called as soon as the application gets
   registered as the primary instance.
 
-  Concretely, the @fun{gtk-init} function is called in the default handler for
-  the \"startup\" signal. Therefore, @class{gtk-application} subclasses should
-  chain up in their \"startup\" handler before using any GTK+ API.
+  Concretely, the @code{gtk_init()} function is called in the default handler
+  for the \"startup\" signal. Therefore, @class{gtk-application} subclasses
+  should chain up in their \"startup\" handler before using any GTK+ API.
 
-  Note that commandline arguments are not passed to the @fun{gtk-init} function.
-  All GTK+ functionality that is available via commandline arguments can also be
-  achieved by setting suitable environment variables such as @code{G_DEBUG}, so
-  this should not be a big problem. If you absolutely must support GTK+
-  commandline arguments, you can explicitly call the @fun{gtk-init} function
-  before creating the application instance.
+  Note that commandline arguments are not passed to the function
+  @code{gtk_init()}. All GTK+ functionality that is available via commandline
+  arguments can also be achieved by setting suitable environment variables such
+  as @code{G_DEBUG}, so this should not be a big problem. If you absolutely must
+  support GTK+ commandline arguments, you can explicitly call the function
+  @code{gtk_init} before creating the application instance.
 
-  The application id must be valid. See the @fun{g-application-id-is-valid}
-  function.
+  The application ID must be valid. See the function
+  @fun{g-application-id-is-valid}.
 
   Since 3.0
-  @see-function{gtk-init}
   @see-function{g-application-id-is-valid}"
   (make-instance 'gtk-application
                  :application-id application-id

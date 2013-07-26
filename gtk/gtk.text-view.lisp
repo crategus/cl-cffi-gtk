@@ -133,8 +133,8 @@
     gtk-text-view-buffer
     "buffer" "GtkTextBuffer" t t)
    (cursor-visible
-   gtk-text-view-cursor-visible
-   "cursor-visible" "gboolean" t t)
+    gtk-text-view-cursor-visible
+    "cursor-visible" "gboolean" t t)
    (editable
     gtk-text-view-editable
     "editable" "gboolean" t t)
@@ -1393,24 +1393,24 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_view_set_border_window_size"
-          gtk-text-view-set-border-window-size) :void
+           gtk-text-view-set-border-window-size) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-5-10}
+ "@version{2013-7-21}
   @argument[text-view]{a @class{gtk-text-view} object}
   @argument[type]{window to affect}
   @argument[size]{width or height of the window}
-  Sets the width of @code{:left} or @code{:right}, or the height of @code{:top}
-  or @code{:bottom}. Automatically destroys the corresponding window if the size
-  is set to 0, and creates the window if the size is set to non-zero. This
-  function can only be used for the \"border windows\", it does not work with
-  @code{:widget}, @code{:text}, or @code{:private}."
-  (view (g-object gtk-text-view))
+  @begin{short}
+    Sets the width of @code{:left} or @code{:right}, or the height of
+    @code{:top} or @code{:bottom}.
+  @end{short}
+  Automatically destroys the corresponding window if the size is set to 0, and
+  creates the window if the size is set to non-zero. This function can only be
+  used for the \"border windows\", it does not work with @code{:widget},
+  @code{:text}, or @code{:private}.
+  @see-function{gtk-text-view-get-border-window-size}"
+  (text-view (g-object gtk-text-view))
   (type gtk-text-window-type)
   (size :int))
-
-(defun (setf gtk-text-view-border-window-size) (new-value view type)
-  (gtk-text-view-set-border-window-size view type new-value)
-  new-value)
 
 (export 'gtk-text-view-set-border-window-size)
 
@@ -1419,24 +1419,19 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_view_get_border_window_size"
-          gtk-text-view-get-border-window-size) :int
+           gtk-text-view-get-border-window-size) :int
  #+cl-cffi-gtk-documentation
- "@version{2013-5-10}
+ "@version{2013-7-21}
   @argument[text-view]{a @class{gtk-text-view} object}
   @argument[type]{window to return size from}
   @return{Width of window.}
   Gets the width of the specified border window. See the function
   @fun{gtk-text-view-set-border-window-size}.
   @see-function{gtk-text-view-set-border-window-size}"
-  (view (g-object gtk-text-view))
+  (text-view (g-object gtk-text-view))
   (type gtk-text-window-type))
 
 (export 'gtk-text-view-get-border-window-size)
-
-(defun gtk-text-view-border-window-size (view type)
-  (gtk-text-view-get-border-window-size view type))
-
-(export 'gtk-text-view-border-window-size)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_view_forward_display_line ()

@@ -518,7 +518,7 @@
     with the current contents of builder.
   @end{short}
 
-  Upon errors 0 will be returned and error will be assigned a @class{g-error}
+  Upon errors 0 will be returned and error will be assigned a @type{g-error}
   from the @code{GTK_BUILDER_ERROR}, @code{G_MARKUP_ERROR} or
   @code{G_FILE_ERROR domain}.
 
@@ -578,7 +578,7 @@
     with the current contents of builder.
   @end{short}
 
-  Upon errors 0 will be returned and error will be assigned a @class{g-error}
+  Upon errors 0 will be returned and error will be assigned a @type{g-error}
   from the @code{GTK_BUILDER_ERROR} or @code{G_MARKUP_ERROR domain}.
 
   Since 2.12"
@@ -608,7 +608,7 @@
     Parses a file containing a @class{gtk-builder} UI definition building only
     the requested objects and merges them with the current contents of builder.
   @end{short}
-  Upon errors 0 will be returned and error will be assigned a @class{g-error}
+  Upon errors 0 will be returned and error will be assigned a @type{g-error}
   from the @code{GTK_BUILDER_ERROR}, @code{G_MARKUP_ERROR} or
   @code{G_FILE_ERROR domain}.
 
@@ -658,7 +658,7 @@
     the requested objects and merges them with the current contents of builder.
   @end{short}
 
-  Upon errors 0 will be returned and error will be assigned a @class{g-error}
+  Upon errors 0 will be returned and error will be assigned a @type{g-error}
   from the @code{GTK_BUILDER_ERROR} or @code{G_MARKUP_ERROR} domain.
 
   @subheading{Note}

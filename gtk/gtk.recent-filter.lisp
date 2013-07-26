@@ -77,7 +77,7 @@
   nil)
 
 #+cl-cffi-gtk-documentation
-(setf (documentation 'gtk-recent-filer 'type)
+(setf (documentation 'gtk-recent-filter 'type)
  "@version{2013-5-28}
   @begin{short}
     A @sym{gtk-recent-filter} can be used to restrict the files being shown in a

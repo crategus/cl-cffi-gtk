@@ -594,29 +594,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_clipboard_request_text ()
-;;;
-;;; void gtk_clipboard_request_text (GtkClipboard *clipboard,
-;;;                                  GtkClipboardTextReceivedFunc callback,
-;;;                                  gpointer user_data);
-;;;
-;;; Requests the contents of the clipboard as text. When the text is later
-;;; received, it will be converted to UTF-8 if necessary, and callback will be
-;;; called.
-;;;
-;;; The text parameter to callback will contain the resulting text if the
-;;; request succeeded, or NULL if it failed. This could happen for various
-;;; reasons, in particular if the clipboard was empty or if the contents of the
-;;; clipboard could not be converted into text form.
-;;;
-;;; clipboard :
-;;;     a GtkClipboard
-;;;
-;;; func :
-;;;     a function to call when the text is received, or the retrieval fails.
-;;;     (It will always be called one way or the other.)
-;;;
-;;; data :
-;;;     user data to pass to callback.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_clipboard_request_text" %gtk-clipboard-request-text) :void
@@ -625,6 +602,22 @@
   (data :pointer))
 
 (defun gtk-clipboard-request-text (clipboard func)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-7-21}
+  @argument[clipboard]{a @class{gtk-clipboard} object}
+  @argument[func]{a function to call when the text is received, or the
+    retrieval fails. It will always be called one way or the other.}
+  @begin{short}
+    Requests the contents of the @arg{clipboard} as text. When the text is later
+    received, it will be converted to UTF-8 if necessary, and callback will be
+    called.
+  @end{short}
+
+  The text parameter to callback will contain the resulting text if the
+  request succeeded, or @code{nil} if it failed. This could happen for various
+  reasons, in particular if the clipboard was empty or if the contents of the
+  clipboard could not be converted into text form.
+  @see-class{gtk-clipboard}"
   (%gtk-clipboard-request-text clipboard
                                (callback gtk-clipboard-text-received-func-cb)
                                (glib::allocate-stable-pointer func)))

@@ -150,6 +150,16 @@
   (:export t
    :type-initializer "gtk_print_operation_preview_get_type"))
 
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-print-operation-preview 'type)
+ "@version{2013-7-21}
+  @short{}
+  @begin{pre}
+(define-g-interface \"GtkPrintOperationPreview\" gtk-print-operation-preview
+  (:export t
+   :type-initializer \"gtk_print_operation_preview_get_type\"))
+  @end{pre}")
+
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkPrintOperation
 ;;; ----------------------------------------------------------------------------
