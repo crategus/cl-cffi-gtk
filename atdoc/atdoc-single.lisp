@@ -31,9 +31,6 @@
 (asdf:load-system :atdoc)
 (asdf:load-system :cl-cffi-gtk)
 
-;; Load the documentation
-(load "atdoc-gtk.lisp")
-
 (defpackage :atdoc-gtk
   (:use :gtk :gdk :gdk-pixbuf :gobject :glib :gio :pango :cairo :common-lisp)
   (:export #:generate-html
@@ -42,6 +39,70 @@
            #:generate-info))
 
 (in-package :atdoc-gtk)
+
+;; Unexport symbols we do not want to document.
+
+(unexport 'glib:allocate-stable-pointer :glib)
+(unexport 'glib:stable-pointer-destroy-notify-cb :glib)
+(unexport 'glib:get-stable-pointer-value :glib)
+(unexport 'glib:with-stable-pointer :glib)
+(unexport 'glib:with-catching-to-g-error :glib)
+(unexport 'glib:with-g-error :glib)
+
+(unexport 'gobject:*debug-gc* :gobject)
+(unexport 'gobject:*debug-subclass* :gobject)
+(unexport 'gobject:*gobject-debug* :gobject)
+(unexport 'gobject:*lisp-name-exceptions* :gobject)
+
+(unexport 'gobject:boxed-related-symbols :gobject)
+(unexport 'gobject:copy-boxed-slots-to-foreign :gobject)
+(unexport 'gobject:create-fn-ref :gobject)
+(unexport 'gobject:define-boxed-opaque-accessor :gobject)
+(unexport 'gobject:define-cb-methods :gobject)
+(unexport 'gobject:define-g-boxed-cstruct :gobject)
+(unexport 'gobject:define-g-boxed-opaque :gobject)
+(unexport 'gobject:define-g-boxed-variant-cstruct :gobject)
+(unexport 'gobject:define-g-enum :gobject)
+(unexport 'gobject:define-g-flags :gobject)
+(unexport 'gobject:define-g-interface :gobject)
+(unexport 'gobject:define-g-object-class :gobject)
+(unexport 'gobject:define-vtable :gobject)
+(unexport 'gobject:get-g-type-definition :gobject)
+(unexport 'gobject:gobject-class-direct-g-type-name :gobject)
+(unexport 'gobject:gobject-class-g-type-initializer :gobject)
+(unexport 'gobject:gobject-class-g-type-name :gobject)
+(unexport 'gobject:gobject-class-interface-p :gobject)
+(unexport 'gobject:list-signals :gobject)
+(unexport 'gobject:parse-g-param-spec :gobject)
+(unexport 'gobject:parse-g-value :gobject)
+(unexport 'gobject:register-object-type :gobject)
+(unexport 'gobject:register-object-type-implementation :gobject)
+(unexport 'gobject:registered-object-type-by-name :gobject)
+(unexport 'gobject:set-g-value :gobject)
+(unexport 'gobject:signal-info :gobject)
+(unexport 'gobject:using* :gobject)
+(unexport 'gobject:with-foreign-boxed-array :gobject)
+
+(unexport 'gobject:param-spec-name :gobject)
+(unexport 'gobject:param-spec-readable :gobject)
+(unexport 'gobject:param-spec-type :gobject)
+(unexport 'gobject:param-spec-writable :gobject)
+
+(unexport 'gobject:lisp-closure :gobject)
+
+(unexport 'gobject:signal-info-detail :gobject)
+(unexport 'gobject:signal-info-flags :gobject)
+(unexport 'gobject:signal-info-id :gobject)
+(unexport 'gobject:signal-info-name :gobject)
+(unexport 'gobject:signal-info-owner-type :gobject)
+(unexport 'gobject:signal-info-param-types :gobject)
+(unexport 'gobject:signal-info-return-type :gobject)
+
+(unexport 'gtk:atk-implementor-iface :gtk)
+(unexport 'gtk:call-from-gtk-main-loop :gtk)
+(unexport 'gtk:ensure-gtk-main :gtk)
+(unexport 'gtk:gtk-window-ubuntu-no-proxy :gtk)
+(unexport 'gtk:with-text-buffer-user-action :gtk)
 
 (defun generate-html ()
   (let* ((base (asdf:component-pathname (asdf:find-system :cl-cffi-gtk)))
