@@ -5,7 +5,7 @@
 @c Author   : Dieter Kaiser
 @c Date     : 23.06.2012
 @c Revision : 30.06.2012
-@c 
+@c
 @c Copyright (C) 2012 by Dieter Kaiser
 @c -----------------------------------------------------------------------------
 
@@ -59,7 +59,7 @@ range 0 to 1.
 
 These string forms are string forms those supported by the CSS3 colors
 module, and can be parsed by gdk_rgba_parse().
- 
+
 Note that this string representation may loose some precision, since r, g
 and b are represented as 8-bit integers. If this is a concern, you should
 use a different representation.
@@ -110,7 +110,7 @@ is shown in @ref{figure-color-button}.
         (g-signal-connect window "destroy"
                           (lambda (widget)
                             (declare (ignore widget))
-                            (gtk-main-quit)))
+                            (leave-gtk-main)))
         (g-signal-connect button "color-set"
            (lambda (widget)
              (let ((rgba (gtk-color-chooser-get-rgba widget)))
@@ -129,7 +129,7 @@ number of settable custom colors.  It is also possible to select a different
 color with the single-color editor.  To enter the single-color editing mode, use
 the context menu of any color of the palette, or use the '+' button to add a new
 custom color.
- 
+
 The chooser automatically remembers the last selection, as well as custom
 colors.
 
@@ -192,7 +192,7 @@ palette and the default gray palette with the function
         (g-signal-connect window "destroy"
                           (lambda (widget)
                             (declare (ignore widget))
-                            (gtk-main-quit)))
+                            (leave-gtk-main)))
         (gtk-widget-override-background-color area :normal color)
         (gtk-widget-set-events area :button-press-mask)
         (g-signal-connect area "event"
@@ -230,12 +230,12 @@ various flavours, so lets explain the terminology here:
      are created by the user, by dragging folders from the right pane to the
      left pane, or by using the "Add". Bookmarks can be renamed and deleted
      by the user.
- 
+
 @item Shortcuts
      can be provided by the application or by the underlying filesystem
      abstraction (e.g. both the gnome-vfs and the Windows filesystems provide
      "Desktop" shortcuts). Shortcuts cannot be modified by the user.
- 
+
 @item Volumes
      are provided by the underlying filesystem abstraction. They are the
      "roots" of the filesystem.
@@ -263,7 +263,7 @@ to GTK+ widgets.
 @need 800
 @noindent
 @b{Adding a Preview Widget}
- 
+
 You can add a custom preview widget to a file chooser and then get
 notification about when the preview needs to be updated. To install a
 preview widget, use @code{gtk-file-chooser-set-preview-widget}. Then, connect
@@ -279,7 +279,7 @@ indicates whether your callback could successfully generate a preview.
 @need 800
 @noindent
 @b{Adding Extra Widgets}
- 
+
 You can add extra widgets to a file chooser to provide options that are not
 present in the default design.  For example, you can add a toggle button to
 give the user the option to open a file in read-only mode. You can use
@@ -374,7 +374,7 @@ save.  The dialog is shown in @ref{figure-file-chooser-dialog}.
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       ;; Handle the signal "clicked" for the button.
       (g-signal-connect button "clicked"
          (lambda (widget)
@@ -417,7 +417,7 @@ to open a file.
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       (g-signal-connect button "file-set"
                         (lambda (widget)
                           (declare (ignore widget))
@@ -480,7 +480,7 @@ widget for selecting a font in a preference dialog.
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       ;; Set a filter function to select fonts for the font chooser
       (gtk-font-chooser-set-filter-func button #'font-filter)
       (g-signal-connect button "font-set"

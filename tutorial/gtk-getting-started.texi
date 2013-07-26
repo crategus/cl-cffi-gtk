@@ -3,8 +3,8 @@
 @c License  : GNU General Public License (GPL)
 @c Author   : Dieter Kaiser
 @c Date     : 26.12.2011
-@c Revision : 16.02.2013
-@c 
+@c Revision : 25.07.2013
+@c
 @c Copyright (C) 2011 - 2013 by Dieter Kaiser
 @c -----------------------------------------------------------------------------
 
@@ -27,9 +27,9 @@ install it.  The latest version is available from the repository at
 @url{http://github.com/crategus/cl-cffi-gtk}.  The @code{cl-cffi-gtk} library
 is ASDF installable and can be loaded with the command
 @code{(asdf:load-system :cl-cffi-gtk)} from the Lisp prompt.  The library is
-developed with the Lisp SBCL 1.0.57 on a Linux system and GTK+ 3.6.
+developed with the Lisp SBCL 1.1.9 on a Linux system and GTK+ 3.6.
 
-At this time (February 2013) there is no GTK+ 3 library for Windows available at
+At this time (July 2013) there is no GTK+ 3 library for Windows available at
 @url{http://www.gtk.org}.  The current maintained version is GTK+ 2.24.  The
 repository at @url{http://github.com/crategus/cl-cffi-gtk} has a branch
 @code{gtk-2-24} which is tested with SBCL 1.0.54 and GTK+ 2.24 on Windows, but
@@ -63,25 +63,25 @@ The @code{cl-cffi-gtk} library depends further on the following libraries:
       See @url{http://common-lisp.net/project/cffi/} and
       @url{http://www.crategus.com/books/cffi/}.
 
-      @b{Warning:} Use the version 0.10.1.7 of the CFFI library. The latest
-      version from the repository contains a change which is incompatible with
-      the Lisp implementation of the GBoxed type.
-   
+      @b{Warning:} Yout must use the version 0.11.2 or newer of the CFFI
+      library. Older versions of CFFI are no longer compatible with the
+      implementation of @code{cl-cffi-gtk}.
+
 @item Trivial-Garbage
       provides a portable API to finalizers, weak hash-tables
       and weak pointers on all major CL implementations. See
       @url{http://www.cliki.net/trivial-garbage} and
       @url{http://www.crategus.com/books/trivial-garbage/}.
-   
+
 @item Iterate
       is a lispy and extensible replacement for the LOOP macro.
       See @url{http://common-lisp.net/project/iterate/}.
-   
+
 @item Bordeaux-Threads
       lets you write multi-threaded applications in a portable way.
       See @url{http://common-lisp.net/project/bordeaux-threads/} and
       @url{http://www.crategus.com/books/bordeaux-threads/}.
-   
+
 @item Closer-MOP
       Closer to MOP is a compatibility layer that rectifies many of the absent
       or incorrect MOP features as detected by MOP Feature Tests.
@@ -90,28 +90,27 @@ The @code{cl-cffi-gtk} library depends further on the following libraries:
 @end table
 
 @findex cl-cffi-gtk-build-info
-@set CL-CFFI-GTK-BUILD-INFO http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_cl-cffi-gtk-build-info.html
+@set cl-cffi-gtk-build-info http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_cl-cffi-gtk-build-info.html
 
 Information about the installation can be obtained with the function
-@url{@value{CL-CFFI-GTK-BUILD-INFO}, @code{cl-cffi-gtk-build-info}}.  This is an
-example for the output, when calling the function from the Lisp prompt after
-loading the library:
+@url{cl-cffi-gtk-build-info}.  This is an example for the output, when calling
+the function from the Lisp prompt after loading the library:
 @example
 * (cl-cffi-gtk-build-info)
 
 cl-cffi-gtk version: 1.0.0
-cl-cffi-gtk build date: 20:18 2/16/2013
-GTK+ version: 3.6.0
-GLIB version: 2.34.1
-GDK-Pixbuf version: 2.26.4
-Pango version: 1.30.1
-Cairo version: 1.12.2
+cl-cffi-gtk build date: 11:22 7/25/2013
+GTK+ version: 3.6.4
+GLIB version: 2.36.0
+GDK-Pixbuf version: 2.28.0
+Pango version: 1.32.5
+Cairo version: 1.12.14
 Machine type: X86
 Machine version: Intel(R) Core(TM)2 Duo CPU     T7250  @ 2.00GHz
 Software type: Linux
-Software version: 3.5.0-24-generic
+Software version: 3.8.0-27-generic
 Lisp implementation type: SBCL
-Lisp implementation version: 1.0.57
+Lisp implementation version: 1.1.9
 @end example
 
 @c -----------------------------------------------------------------------------
@@ -166,7 +165,6 @@ int main (int argc, char *argv[])
 @findex gtk-window-new
 @findex gtk-widget-show
 @findex gtk-widget-show-all
-@findex gtk-init
 @findex gtk-main
 @findex g-signal-connect
 @findex gtk-main-quit
@@ -175,20 +173,18 @@ int main (int argc, char *argv[])
 @findex window-new, gtk-window-new
 @findex widget-show, gtk-widget-show
 @findex widget-show-all, gtk-widget-show-all
-@findex init, gtk-init
 @findex main, gtk-main
 @findex signal-connect, g-signal-connect
 @findex main-quit, gtk-main-quit
 
-@set WITHIN-MAIN-LOOP http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_within-main-loop.html
-@set GTK-WINDOW-NEW http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-window-new.html
-@set GTK-WIDGET-SHOW http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-widget-show.html
-@set GTK-WIDGET-SHOW-ALL http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-widget-show-all.html
-@set GTK-INIT http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-init.html
-@set GTK-MAIN http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-main.html
-@set G-SIGNAL-CONNECT http://www.crategus.com/books/cl-cffi-gtk/pages/gobject_fun_g-signal-connect.html
-@set GTK-MAIN-QUIT http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-main-quit.html
-@set LEAVE-GTK-MAIN http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_leave-gtk-main.html
+@set within-main-loop http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_within-main-loop.html
+@set gtk-window-new http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-window-new.html
+@set gtk-widget-show http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-widget-show.html
+@set gtk-widget-show-all http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-widget-show-all.html
+@set gtk-main http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-main.html
+@set g-signal-connect http://www.crategus.com/books/cl-cffi-gtk/pages/gobject_fun_g-signal-connect.html
+@set gtk-main-quit http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-main-quit.html
+@set leave-gtk-main http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_leave-gtk-main.html
 
 @float Example, example-simple-window
 @caption{A Simple Window in the programing language Lisp}
@@ -221,44 +217,35 @@ own package @code{:gtk-tutorial} for the example program. The package
 @code{:cairo} for Cairo.  In further examples of this tutorial these first lines
 of code are omitted.
 
-The macro @url{@value{WITHIN-MAIN-LOOP}, @code{within-main-loop}} is a wrapper
-around a GTK+ program.  The functionality of the macro corresponds to the C
-functions @code{gtk_init()} and @code{gtk_main()} which initialize and start a
-GTK+ program.  Both functions have corresponding Lisp functions with the names
-@url{@value{GTK-INIT}, @code{gtk-init}} and @url{@value{GTK-MAIN},
-@code{gtk-main}}, but these functions are not used in this tutorial.  
-@url{@value{GTK-INIT},  @code{gtk-init}} is automatically called when loading
-the Lisp library @code{cl-cffi-gtk} and the function @url{@value{GTK-MAIN},
-@code{gtk-main}} is called from the macro @url{@value{WITHIN-MAIN-LOOP},
-@code{within-main-loop}}.
+The macro @xurl{within-main-loop} is a wrapper around a GTK+ program.  The
+functionality of the macro corresponds to the C functions @code{gtk_init()} and
+@code{gtk_main()} which initialize and start a GTK+ program.  Both functions
+have corresponding Lisp functions. The function @code{gtk_main()} is exported as
+the Lisp function @xurl{gtk-main}. The correspoinding Lisp function to
+@code{gtk_init()} is called internally when loading the library, but not
+exported.
 
 Already in this simple example we have connected a signal to the created window.
 The signal "destroy" is emitted when the user quits the window. The function
-@url{@value{G-SIGNAL-CONNECT}, @code{g-signal-connect}} connects a Lisp lambda
-function to this signal, which calls the function @url{@value{LEAVE-GTK-MAIN},
-@code{leave-gtk-main}} to destroy the GTK+ main loop. Like
-the macro @url{@value{WITHIN-MAIN-LOOP}, @code{within-main-loop}} the function 
-@url{@value{LEAVE-GTK-MAIN}, @code{leave-gtk-main}} is special for the Lisp
-binding. It calls internally the C function @code{gtk_main_quit()}, but does
-some extra work to finish the Lisp program. The C function
-@code{gtk_main_quit()} is available in the Lisp binding as
-@url{@value{GTK-MAIN-QUIT}, @code{gtk-main-quit}}, but do not call this function
-in your code.
+@xurl{g-signal-connect} connects a Lisp lambda function to this signal, which
+calls the function @xurl{leave-gtk-main} to destroy the GTK+ main loop. Like
+the macro @xurl{within-main-loop} the function @xurl{leave-gtk-main} is special
+for the Lisp binding. It calls internally the C function @code{gtk_main_quit()},
+but does some extra work to finish the Lisp program. The C function
+@code{gtk_main_quit()} is available in the Lisp binding as @xurl{gtk-main-quit},
+but do not call this function in your code.
 
 Only two further functions are needed in this simple example.  The window is
-created with the function @url{@value{GTK-WINDOW-NEW}, @code{gtk-window-new}}.
-The keyword @code{:toplevel} tells GTK+ to create a toplevel window.  The second
-call @url{@value{GTK-WIDGET-SHOW-ALL}, @code{gtk-widget-show-all}} displays the
-new window.
+created with the function @xurl{gtk-window-new}. The keyword @code{:toplevel}
+tells GTK+ to create a toplevel window.  The second call
+@xurl{gtk-widget-show-all} displays the new window.
 
-In addition to the function @url{@value{GTK-WIDGET-SHOW-ALL},
-@code{gtk-widget-show-all}} the function @url{@value{GTK-WIDGET-SHOW},
-@code{gtk-widget-show}} is available.  The function
-@url{@value{GTK-WIDGET-SHOW}, @code{gtk-widget-show}} only displays the widget,
-which is the argument to the function.  The function
-@url{@value{GTK-WIDGET-SHOW-ALL}, @code{gtk-widget-show-all}} displays the
-window and all including child widgets.  For the first simple window this makes
-no difference, because the window has not child widgets.
+In addition to the function @xurl{gtk-widget-show-all} the function
+@xurl{gtk-widget-show} is available.  The function @xurl{gtk-widget-show} only
+displays the widget, which is the argument to the function.  The function
+@xurl{gtk-widget-show-all} displays the window and all including child widgets.
+For the first simple window this makes no difference, because the window has not
+child widgets.
 
 @c -----------------------------------------------------------------------------
 @node More about the Lisp binding to GTK+, Hello World in GTK+, A Simple Window, Top
@@ -276,29 +263,27 @@ no difference, because the window has not child widgets.
 @findex window, gtk-window
 @findex make-instance
 
-@set GTK-WINDOW http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-window.html
-@set GTK-WIDGET http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-widget.html
-@set GTK-BIN http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-bin.html
-@set GTK-CONTAINER http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-container.html
+@set gtk-window http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-window.html
+@set gtk-widget http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-widget.html
+@set gtk-bin http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-bin.html
+@set gtk-container http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-container.html
 
 @ref{figure-getting-started} and @ref{example-getting-started} show a second
 implementation of the simple program discussed in @ref{A Simple Window}.
 The second implementation uses the fact, that all GTK+ widgets are internally
 represented in the Lisp binding through a Lisp class.  The Lisp class
-@url{@value{GTK-WINDOW}, @code{gtk-window}} represents the required window,
-which corresponds to the C class @code{GtkWindow}.  An instance of the Lisp
-class @url{@value{GTK-WINDOW}, @code{gtk-window}} can be created with the
-function @code{make-instance}.  Furthermore, the slots of the window class can
-be given new values to overwrite the default values.  These slots represent the
-properties of the C classes. You can consult the 
+@xurl{gtk-window} represents the required window, which corresponds to the C
+class @code{GtkWindow}.  An instance of the Lisp class @xurl{gtk-window} can be
+created with the function @code{make-instance}.  Furthermore, the slots of the
+window class can be given new values to overwrite the default values.  These
+slots represent the properties of the C classes. You can consult the
 @url{http://www.crategus.com/books/cl-cffi-gtk, cl-cffi-gtk API documentation}
 for more information about the implementation of the Lisp binding to GTK+.  In
 addition an instance has all properties of the inherited classes.  The object
 hierarchy in the @url{http://www.crategus.com/books/cl-cffi-gtk,
-cl-cffi-gtk API documentation} shows, that the class @url{@value{GTK-WINDOW},
-@code{gtk-window}} inherits all properties of the classes 
-@url{@value{GTK-WIDGET}, @code{gtk-widget}}, @url{@value{GTK-CONTAINER},
-@code{gtk-container}}, and @url{@value{GTK-BIN}, @code{gtk-bin}}.
+cl-cffi-gtk API documentation} shows, that the class @xurl{gtk-window} inherits
+all properties of the classes @xurl{gtk-widget}, @xurl{gtk-container}, and
+@xurl{gtk-bin}.
 
 @findex type
 @findex title
@@ -320,16 +305,16 @@ in @ref{figure-getting-started}.
 @findex :toplevel
 @findex :popup
 
-@set GTK-WINDOW-TYPE-ENUM http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_symbol_gtk-window-type.html
+@set gtk-window-type http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_sym_gtk-window-type.html
 
 The keyword @code{:toplevel} is one of the values of the enumeration type
 @code{GtkWindowType} in C.  In the Lisp binding this enumeration is implemented
-as @url{@value{GTK-WINDOW-TYPE-ENUM}, @code{gtk-window-type}} with the two
-possible keywords @code{:toplevel} for @code{GTK_WINDOW_TOPLEVEL} and
-@code{:popup} for @code{GTK_WINDOW_POPUP}.  Most windows are of the type
-@code{:toplevel}.  Windows with this type are managed by the window manager and
-have a frame by default.  Windows with type @code{:popup} are ignored by the
-window manager and are used to implement widgets such as menus or tooltips.
+as @xurl{gtk-window-type} with the two possible keywords @code{:toplevel} for
+@code{GTK_WINDOW_TOPLEVEL} and @code{:popup} for @code{GTK_WINDOW_POPUP}.  Most
+windows are of the type @code{:toplevel}.  Windows with this type are managed by
+the window manager and have a frame by default.  Windows with type @code{:popup}
+are ignored by the window manager and are used to implement widgets such as
+menus or tooltips.
 
 @float Example, example-getting-started
 @caption{Getting Started}
@@ -352,9 +337,8 @@ window manager and are used to implement widgets such as menus or tooltips.
 @end verbatim
 
 The @ref{example-getting-started} shows, that the Lisp function
-@url{@value{GTK-WINDOW-NEW}, @code{gtk-window-new}} is not really needed.  The
-function @url{@value{GTK-WINDOW-NEW}, @code{gtk-window-new}} is internally
-implemented in the Lisp binding simply as:
+@xurl{gtk-window-new} is not really needed.  The function @xurl{gtk-window-new}
+is internally implemented in the Lisp binding simply as:
 
 @example
 (defun gtk-window-new (type)
@@ -367,20 +351,19 @@ implemented in the Lisp binding simply as:
 @findex window-set-title, gtk-window-set-title
 @findex window-set-default-size, gkt-window-set-default-size
 
-@set GTK-WINDOW-SET-TITLE http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-window-set-title.html
-@set GTK-WINDOW-SET-DEFAULT-SIZE http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-window-set-default-size.html
+@set gtk-window-set-title http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-window-set-title.html
+@set gtk-window-set-default-size http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-window-set-default-size.html
 
 To set the title of the window or to change the default width of a window the
 C library knows accessor functions to set the corresponding values.  In C the
 title of the window is set with the function @code{gtk_window_set_title()}.
-The corresponding Lisp function is @url{@value{GTK-WINDOW-SET-TITLE},
-@code{gtk-window-set-title}}.  Accordingly, the default width of the window can
-be set in C with the function @code{gtk_window_set_default_size()}, which sets
-both the default width and the default height.  In Lisp this function is named
-@url{@value{GTK-WINDOW-SET-DEFAULT-SIZE}, @code{gtk-window-set-default-size}}.
-As we have seen, these Lisp accessor functions are not really needed when
-creating a window, but the functions are provided to allow the user to translate
-a C program more easy to Lisp.
+The corresponding Lisp function is @xurl{gtk-window-set-title}.  Accordingly,
+the default width of the window can be set in C with the function
+@code{gtk_window_set_default_size()}, which sets both the default width and the
+default height.  In Lisp this function is named
+@xurl{gtk-window-set-default-size}. As we have seen, these Lisp accessor
+functions are not really needed when creating a window, but the functions are
+provided to allow the user to translate a C program more easy to Lisp.
 
 @findex default-width
 @findex default-height
@@ -395,17 +378,16 @@ a C program more easy to Lisp.
 @findex window-set-default-size, gtk-window-set-default-size
 @findex window-get-default-size, gtk-window-get-default-size
 
-@set GTK-WINDOW-DEFAULT-WIDTH http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-window-default-width.html
-@set GTK-WINDOW-DEFAULT-HEIGHT http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-window-default-height.html
+@set gtk-window-default-width http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-window-default-width.html
+@set gtk-window-default-height http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-window-default-height.html
 
 At last, in Lisp it is possible to use the accessors of the slots to get or
 set the value of a widget property.  The properties @code{default-width} and
-@code{default-height} of the Lisp class @url{@value{GTK-WINDOW},
-@code{gtk-window}} have the Lisp accessor functions
-@url{@value{GTK-WINDOW-DEFAULT-WIDTH}, @code{gtk-window-default-width}} and
-@url{@value{GTK-WINDOW-DEFAULT-HEIGHT}, @code{gtk-window-default-height}}.  With
-these accessor functions the C function @code{gtk_window_set_default_size()} is
-implemented the following way in the Lisp library:
+@code{default-height} of the Lisp class @xurl{gtk-window} have the Lisp accessor
+functions @xurl{gtk-window-default-width} and @xurl{gtk-window-default-height}.
+With these accessor functions the C function
+@code{gtk_window_set_default_size()} is implemented the following way in the
+Lisp library:
 
 @example
 (defun gtk-window-set-default-size (window width height)
@@ -492,14 +474,14 @@ int main( int argc, char *argv[] )
     /* GtkWidget is the storage type for widgets */
     GtkWidget *window;
     GtkWidget *button;
-    
+
     /* This is called in all GTK applications. Arguments are parsed
      * from the command line and are returned to the application. */
     gtk_init (&argc, &argv);
-    
+
     /* create a new window */
     window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-    
+
     /* When the window is given the "delete-event" signal (this is given
      * by the window manager, usually by the "close" option, or on the
      * titlebar), we ask it to call the delete_event () function
@@ -507,46 +489,46 @@ int main( int argc, char *argv[] )
      * function is NULL and is ignored in the callback function. */
     g_signal_connect (window, "delete-event",
 		      G_CALLBACK (delete_event), NULL);
-    
-    /* Here we connect the "destroy" event to a signal handler.  
+
+    /* Here we connect the "destroy" event to a signal handler.
      * This event occurs when we call gtk_widget_destroy() on the window,
      * or if we return FALSE in the "delete-event" callback. */
     g_signal_connect (window, "destroy",
 		      G_CALLBACK (destroy), NULL);
-    
+
     /* Sets the border width of the window. */
     gtk_container_set_border_width (GTK_CONTAINER (window), 10);
-    
+
     /* Creates a new button with the label "Hello World". */
     button = gtk_button_new_with_label ("Hello World");
-    
+
     /* When the button receives the "clicked" signal, it will call the
      * function hello() passing it NULL as its argument.  The hello()
      * function is defined above. */
     g_signal_connect (button, "clicked",
 		      G_CALLBACK (hello), NULL);
-    
+
     /* This will cause the window to be destroyed by calling
      * gtk_widget_destroy(window) when "clicked".  Again, the destroy
      * signal could come from here, or the window manager. */
     g_signal_connect_swapped (button, "clicked",
 			      G_CALLBACK (gtk_widget_destroy),
                               window);
-    
+
     /* This packs the button into the window (a gtk container). */
     gtk_container_add (GTK_CONTAINER (window), button);
-    
+
     /* The final step is to display this newly created widget. */
     gtk_widget_show (button);
-    
+
     /* and the window */
     gtk_widget_show (window);
-    
+
     /* All GTK applications must have a gtk_main(). Control ends here
      * and waits for an event to occur (like a key press or
      * mouse event). */
     gtk_main ();
-    
+
     return 0;
 }
 @end verbatim
@@ -556,9 +538,8 @@ difference is, that the function @code{make-instance} is used to create the
 window and the button.  Another point is, that the definition of separate
 callback functions is avoided.  The callback functions are short, implemented
 through Lisp @code{lambda} functions and are passed as the third argument to
-the function @url{@value{G-SIGNAL-CONNECT}, @code{g-signal-connect}}.  More
-about signals and callback functions follows in
-@ref{Introduction to Signals and Callbacks}.
+the function @xurl{g-signal-connect}.  More about signals and callback functions
+follows in @ref{Introduction to Signals and Callbacks}.
 
 @findex GtkContainer
 
@@ -571,23 +552,21 @@ about signals and callback functions follows in
 @findex container-border-width, gtk-container-border-width
 @findex container-set-border-width, gtk-container-set-border-width
 
-@set GTK-CONTAINER-BORDER-WIDTH http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-container-border-width.html
-@set GTK-CONTAINER-SET-BORDER-WIDTH http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-container-set-border-width.html
+@set gtk-container-border-width http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-container-border-width.html
+@set gtk-container-set-border-width http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-container-set-border-width.html
 
 In @ref{example-hello-world} a border with a width of @code{12} is added to
 the window setting the property @code{border-width} when creating the window
 with the function @code{make-instance}.  The C implementation uses the function
 @code{gtk_container_set_border_width()} which is available in Lisp as
-@url{@value{GTK-CONTAINER-SET-BORDER-WIDTH},
-@code{gtk-container-set-border-width}}.  The property @code{border-width} is
+@xurl{gtk-container-set-border-width}.  The property @code{border-width} is
 inherited from the C class @code{GtkContainer}, which in the Lisp library is
-represented through the Lisp class @url{@value{GTK-CONTAINER},
-@code{gtk-container}}.  Therefore, the accessor function has the prefix
-@code{gtk_container} in C and @code{gtk-container} in Lisp.  In addition Lisp
-knows the accessor function @url{@value{GTK-CONTAINER-BORDER-WIDTH},
-@code{gtk-container-border-width}} to set or to get the property 
+represented through the Lisp class @xurl{gtk-container}.  Therefore, the
+accessor function has the prefix @code{gtk_container} in C and
+@code{gtk-container} in Lisp.  In addition Lisp knows the accessor function
+@xurl{gtk-container-border-width} to set or to get the property
 @code{border-width}.  A full list of properties of @code{GtkContainer} is
-available at @url{@value{GTK-CONTAINER}, @code{gtk-container}}.
+available at @xurl{gtk-container}.
 
 @float Example, example-hello-world
 @caption{Hello World in the programing language Lisp}
@@ -630,10 +609,9 @@ available at @url{@value{GTK-CONTAINER}, @code{gtk-container}}.
 @findex widget-show, gtk-widget-show
 
 An attentive reader notes that in distinction to the C implementation the
-function @url{@value{GTK-WIDGET-SHOW}, @code{gtk-widget-show}} is not called for
-every single widget, which are in @ref{example-hello-world} the window and the
-button.  Instead the function @url{@value{GTK-WIDGET-SHOW-ALL},
-@code{gtk-widget-show-all}} is used to display the window with all including
+function @xurl{gtk-widget-show} is not called for every single widget, which are
+in @ref{example-hello-world} the window and the button.  Instead the function
+@xurl{gtk-widget-show-all} is used to display the window with all including
 widgets.
 
 @findex gtk-widget-destroy
@@ -645,19 +623,18 @@ widgets.
 @findex main-quit, gtk-main-quit
 @findex container-add, gtk-container-add
 
-@set GTK-WIDGET-DESTROY http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-widget-destroy.html
-@set GTK-CONTAINER-ADD http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-container-add.html
+@set gtk-widget-destroy http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-widget-destroy.html
+@set gtk-conatiner-add http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-container-add.html
 
 Three more functions are introduced in @ref{example-hello-world}.  The function
-@url{@value{GTK-WIDGET-DESTROY}, @code{gtk-widget-destroy}} takes as an argument
-any widget and destroys it.  In the above example this function is called by the
-signal handler of the button. When the button is clicked by the user, the signal
-"clicked" is catched by the signal handler, which causes a call of the function
-@url{@value{GTK-WIDGET-DESTROY}, @code{gtk-widget-destroy}} for the toplevel
-window.  Now the toplevel window receives the signal "destroy", which is handled
-by a signal handler of the toplevel window.  This signal handler calls the
-function @url{@value{LEAVE-GTK-MAIN}, @code{leave-gtk-main}}, which stops the
-event loop and finishes the application.
+@xurl{gtk-widget-destroy} takes as an argument any widget and destroys it.  In
+the above example this function is called by the signal handler of the button.
+When the button is clicked by the user, the signal "clicked" is catched by the
+signal handler, which causes a call of the function @xurl{gtk-widget-destroy}
+for the toplevel window.  Now the toplevel window receives the signal "destroy",
+which is handled by a signal handler of the toplevel window.  This signal
+handler calls the function @xurl{leave-gtk-main}, which stops the event loop and
+finishes the application.
 
 A second signal handler is connected to the toplevel window to catch the
 signal "delete-event".  The signal "delete-event" occurs, when the user or the
@@ -667,9 +644,9 @@ the signal handler the handling of the signal is stopped and the window is not
 closed, but the execution of the application is continued.  To close the window,
 the user has to press the button in this example.
 
-At last, the function @url{@value{GTK-CONTAINER-ADD}, @code{gtk-container-add}}
-is used to put the button into the toplevel window.  @ref{Packing Widgets} shows
-how it is possible to put more than one widget into a window.
+At last, the function @xurl{gtk-container-add} is used to put the button into
+the toplevel window.  @ref{Packing Widgets} shows how it is possible to put more
+than one widget into a window.
 
 @c -----------------------------------------------------------------------------
 @node Introduction to Signals and Callbacks, An Upgraded Hello World, Hello World in GTK+, Top
@@ -720,11 +697,11 @@ specific signals generate different calling parameters.
 @findex signal-connect, g-signal-connect
 
 This mechanism is realized in Lisp with a similar function
-@url{@value{G-SIGNAL-CONNECT}, @code{g-signal-connect}} which has the arguments
-@code{widget}, @code{name}, and @code{func}.  In distinction from C the Lisp
-function @url{@value{G-SIGNAL-CONNECT}, @code{g-signal-connect}} has not the
-argument @code{func_data}.  The functionality of passing data to a callback
-function can be realized with the help of a @code{lambda} function in Lisp.
+@xurl{g-signal-connect} which has the arguments @code{widget}, @code{name}, and
+@code{func}.  In distinction from C the Lisp function @xurl{g-signal-connect}
+has not the argument @code{func_data}.  The functionality of passing data to a
+callback function can be realized with the help of a @code{lambda} function in
+Lisp.
 
 As an example the following code shows a typical C implementation which is used
 in the Hello World program.
@@ -750,7 +727,7 @@ function as a callback function which is passed as the third argument.
 (g-signal-connect window "destroy"
                   (lambda (widget)
                     (declare (ignore widget))
-                    (gtk-main-quit)))
+                    (leave-gtk-main)))
 @end example
 
 If it is necessary to have a separate function which needs user data, the
@@ -774,7 +751,7 @@ than it is also possible to implement something like
 (g-signal-connect window "destroy" #'separate-event-handler)
 @end example
 
-Furthermore, the C function 
+Furthermore, the C function
 
 @example
 gulong g_signal_connect_swapped (gpointer    *object,
@@ -860,7 +837,7 @@ int main( int argc, char *argv[] )
 
     /* Creates a new button with the label "Button 1". */
     button = gtk_button_new_with_label ("Button 1");
-    
+
     /* Now when the button is clicked, we call the "callback" function
      * with a pointer to "button 1" as its argument */
     g_signal_connect (button, "clicked",
@@ -891,7 +868,7 @@ int main( int argc, char *argv[] )
     gtk_widget_show (box1);
 
     gtk_widget_show (window);
-    
+
     /* Rest in gtk_main and wait for the fun to begin! */
     gtk_main ();
 
@@ -905,23 +882,19 @@ int main( int argc, char *argv[] )
 
 The Lisp implementation in @ref{example-upgraded-hello-world} tries to be close
 to the C program.  Therefore, the window and the box are created with the
-functions @url{@value{GTK-WINDOW-NEW}, @code{gtk-window-new}} and
-@url{@value{GTK-BOX-NEW}, @code{gtk-box-new}}.  Various properties like the
-title of the window, the default size or the border width are set with the
-functions @url{@value{GTK-WINDOW-SET-TITLE}, @code{gtk-window-set-title}},
-@url{@value{GTK-WINDOW-SET-DEFAULT-SIZE},@code{gtk-window-set-default-size}}
-and @url{@value{GTK-CONTAINER-SET-BORDER-WIDTH},
-@code{gtk-container-set-border-width}}.  As described for
-@ref{example-hello-world} the function @url{@value{GTK-WIDGET-SHOW-ALL}, 
-@code{gtk-widget-show-all}} is used to display the window including all child
-widgets.
+functions @xurl{gtk-window-new} and @xurl{gtk-box-new}.  Various properties like
+the title of the window, the default size or the border width are set with the
+functions @xurl{gtk-window-set-title}, @xurl{gtk-window-set-default-size}
+and @xurl{gtk-container-set-border-width}.  As described for
+@ref{example-hello-world} the function @xurl{gtk-widget-show-all} is used to
+display the window including all child widgets.
 
 One main difference of the Lisp implementation is the use of the function
-@url{@value{GTK-BOX-NEW}, @code{gtk-box-new}} with an argument
-@code{:horizontal} to create a horizontal box.  The @code{GtkHBox} widget which
-is used in the GTK+ 2.0 Tutorial is deprecated and is replaced by @code{GtkBox}
-with the property @code{orientation}.  More about boxes and their usages follows
-in @ref{Packing Widgets}.
+@xurl{gtk-box-new} with an argument @code{:horizontal} to create a horizontal
+box.  The @code{GtkHBox} widget which is used in the GTK+ 2.0 Tutorial is
+deprecated and is replaced by @code{GtkBox} with the property
+@code{orientation}.  More about boxes and their usages follows in
+@ref{Packing Widgets}.
 
 @float Example, example-upgraded-hello-world
 @caption{Upgraded Hello world}
@@ -958,13 +931,12 @@ in @ref{Packing Widgets}.
 The second implementation in @ref{example-upgraded-hello-world-2} makes
 more use of a Lisp style.  The window is created with the Lisp function
 @code{make-instance}.  All desired properties of the window are initialized by
-assigning values to the slots of the classes @url{@value{GTK-WINDOW}, 
-@code{gtk-window}} and @url{@value{GTK-BOX}, @code{gtk-box}}.  The Lisp
-implementation uses a lot keywords arguments with default values for long lists
-of arguments.  In @ref{example-upgraded-hello-world-2} the keyword arguments
-@code{expand}, @code{fill}, and @code{padding} of the function
-@url{@value{GTK-BOX-PACK-START}, @code{gtk-box-pack-start}} take their default
-values.  In future examples of this tutorial the style shown in
+assigning values to the slots of the classes @xurl{gtk-window} and
+@xurl{gtk-box}.  The Lisp implementation uses a lot keywords arguments with
+default values for long lists of arguments.  In
+@ref{example-upgraded-hello-world-2} the keyword arguments @code{expand},
+@code{fill}, and @code{padding} of the function @xurl{gtk-box-pack-start} take
+their default values.  In future examples of this tutorial the style shown in
 @ref{example-upgraded-hello-world-2} is preferred.  Furthermore, the C code is
 no longer presented for comparison.
 
@@ -974,7 +946,7 @@ no longer presented for comparison.
 @verbatim
 (defun example-upgraded-hello-world-2 ()
   (within-main-loop
-    (let ((window (make-instance 'gtk-window 
+    (let ((window (make-instance 'gtk-window
                                  :type :toplevel
                                  :title "Hello Buttons"
                                  :default-width 250

@@ -4,9 +4,9 @@
 @c Language : English
 @c Author   : Dieter Kaiser
 @c Date     : 03.02.2012
-@c Revision : 01.02.2013
+@c Revision : 25.07.2013
 @c
-@c Copyright (C) 2012 by Dieter Kaiser
+@c Copyright (C) 2012, 2013 by Dieter Kaiser
 @c -----------------------------------------------------------------------------
 
 @menu
@@ -37,20 +37,16 @@
 @findex button-new-from-stock, gtk-button-new-from-stock
 
 We have almost seen all there is to see of the button widget, which is
-represented by the @url{@value{GTK-BUTTON}, @code{gtk-button}} class.  The
-button widget is pretty simple.  There is however more than one way to create a
-button.  You can use the the function @url{@value{GTK-BUTTON-NEW-WITH-LABEL},
-@code{gtk-button-new-with-label}} or the function
-@url{@value{GTK-BUTTON-NEW-WITH-MNEMONIC}, @code{gtk-button-new-with-mnemonic}}
-to create a button with a label, use @url{@value{GTK-BUTTON-NEW-FROM-STOCK},
-@code{gtk-button-new-from-stock}} to create a button containing the image and
-text from a stock item or use @url{@value{GTK-BUTTON-NEW},
-@code{gtk-button-new}} to create a blank button.  It is then up to you to pack a
-label or pixmap into this new button. To do this, create a new box, and then
-pack your objects into this box using the function
-@url{@value{GTK-BOX-PACK-START}, @code{gtk-box-pack-start}}, and then use the
-function @url{@value{GTK-CONTAINER-ADD}, @code{gtk-container-add}} to pack the
-box into the button.
+represented by the @xurl{gtk-button} class.  The button widget is pretty simple.
+There is however more than one way to create a button.  You can use the the
+function @xurl{gtk-button-new-with-label} or the function
+@xurl{gtk-button-new-with-mnemonic} to create a button with a label, use
+@xurl{gtk-button-new-from-stock} to create a button containing the image and
+text from a stock item or use @xurl{gtk-button-new} to create a blank button.
+It is then up to you to pack a label or pixmap into this new button.  To do
+this, create a new box, and then pack your objects into this box using the
+function @xurl{gtk-box-pack-start}, and then use the function
+@xurl{gtk-container-add} to pack the box into the button.
 
 @ifnotinfo
 @float Figure, figure-button
@@ -59,11 +55,15 @@ box into the button.
 @end float
 @end ifnotinfo
 
-@ref{figure-button} is an example of using @url{@value{GTK-BUTTON-NEW},
-@code{gtk-button-new}} to create a button with an image and a label in it.  The
-code to create a box is shown in @ref{example-image-label-box} and breaken up
-from the rest so you can use it in your programs.  The main program which uses
-this subroutine is shown in @ref{example-button}.
+@findex gtk-image-new-from-file
+@findex image-new-from-file, gtk-image-new-from-file
+
+@ref{figure-button} is an example of using @xurl{gtk-button-new} to create a
+button with an image and a label in it.  The image is loaded from a file with
+the function @xurl{gtk-image-new-from-file}.  The code to create a box is shown
+in @ref{example-image-label-box} and breaken up from the rest so you can use it
+in your programs.  The main program which uses this subroutine is shown in
+@ref{example-button}.
 
 The @code{image-label-box} function could be used to pack images and labels into
 any widget that can be a container.
@@ -89,14 +89,11 @@ both a label and an image the global setting of the property
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       (gtk-container-add button box)
       (gtk-container-add window button)
       (gtk-widget-show-all window))))
 @end verbatim
-
-@findex gtk-image-new-from-file
-@findex image-new-from-file, gtk-image-new-from-file
 
 @float Example, example-image-label-box
 @caption{Code to create a button with an image and a label}
@@ -147,7 +144,7 @@ both a label and an image the global setting of the property
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       ;; Set gtk-button-images to T. This allows buttons with text and image.
       (setf (gtk-settings-gtk-button-images (gtk-settings-get-default)) t)
       ;; These are the standard functions to create a button.
@@ -200,10 +197,14 @@ both a label and an image the global setting of the property
 @findex gtk-toggle-button-new
 @findex gtk-toggle-button-new-with-label
 @findex gtk-toggle-button-new-with-mnemonic
+@findex gtk-toogle-button-get-active
+@findex gtk-toogle-button-set-active
 
 @findex toggle-button-new, gtk-toggle-button-new
 @findex toggle-button-new-with-label, gtk-toggle-button-new-with-label
 @findex toggle-button-new-with-mnemonic, gtk-toggle-button-new-with-mnemonic
+@findex toggle-button-get-active, gtk-toogle-button-get-active
+@findex toggle-button-set-active, gtk-toogle-button-set-active
 
 Toggle buttons are derived from normal buttons and are very similar, except
 toggle buttons always are in one of two states, alternated by a click.  Toggle
@@ -212,21 +213,22 @@ back up.  Toggle buttons are the basis for check buttons and radio buttons, as
 such, many of the calls used for toggle buttons are inherited by radio and check
 buttons.
 
-Toggle buttons can be created with the functions @code{gtk-toggle-button-new},
-@code{gtk-toggle-button-new-with-label}, and
-@code{gtk-toggle-button-new-with-mnemonic}.  The first function creates a blank
+Toggle buttons can be created with the functions @xurl{gtk-toggle-button-new},
+@xurl{gtk-toggle-button-new-with-label}, and
+@xurl{gtk-toggle-button-new-with-mnemonic}.  The first function creates a blank
 toggle button, and the last two functions, a toggle button with a label widget
-already packed into it.  The @code{gtk-toggle-button-new-with-mnemonic} variant
+already packed into it.  The @xurl{gtk-toggle-button-new-with-mnemonic} variant
 additionally parses the label for '_'-prefixed mnemonic characters.
 
 To retrieve the state of the toggle widget, including radio and check buttons,
 a construct as shown in the example below is used.  This tests the state of the
-toggle button, by accessing the active field of the toggle widget's structure.
-The signal of interest to us emitted by toggle buttons (the toggle button
-check button, and radio button widgets) is the "toggled" signal.  To check the
-state of these buttons, set up a signal handler to catch the toggled signal, and
-access the property @code{active} to determine the state of the button.  A
-signal handler will look something like:
+toggle button, by accessing the active field of the toggle widget's structure
+with the function @xurl{gtk-toogle-button-get-active}.  The signal of interest
+to us emitted by toggle buttons (the toggle button check button, and radio
+button widgets) is the "toggled" signal.  To check the state of these buttons,
+set up a signal handler to catch the toggled signal, and access the property
+@code{active} to determine the state of the button.  A signal handler will look
+something like:
 
 @example
 (g-signal-connect button "toggled"
@@ -247,17 +249,17 @@ signal handler will look something like:
 @findex toggle-button-get-active, gtk-toggle-button-get-active
 
 To force the state of a toggle button, and its children, the radio and check
-buttons, use this function @code{gtk-toggle-button-set-active}.  This function
+buttons, use this function @xurl{gtk-toggle-button-set-active}.  This function
 can be used to set the state of the toggle button, and its children the radio
 and check buttons.  Passing in your created button as the first argument, and a
 @code{T} or @code{NIL} for the second state argument to specify whether it
 should be down (depressed) or up (released).  Default is up, or @code{NIL}.
 
-Note that when you use the @code{gtk-toggle-button-set-active} function, and the
+Note that when you use the @xurl{gtk-toggle-button-set-active} function, and the
 state is actually changed, it causes the "clicked" and "toggled" signals to be
 emitted from the button.  The current state of the toggle button as a boolean
 @code{T} or @code{NIL} value is returned from the function
-@code{gtk-toggle-button-get-active}.
+@xurl{gtk-toggle-button-get-active}.
 
 In @ref{example-table-packing-2} the usage of toggle buttons is shown.
 
@@ -265,9 +267,9 @@ In @ref{example-table-packing-2} the usage of toggle buttons is shown.
 @node Check Buttons, Radio Buttons, Toggle Buttons, Top
 @section Check Buttons
 
-@findex GtkCheckButtons
-@findex gtk-check-buttons
-@findex check-buttons, gtk-check-buttons
+@findex GtkCheckButton
+@findex gtk-check-button
+@findex check-button, gtk-check-button
 
 @findex gtk-check-button-new
 @findex gtk-check-button-new-with-label
@@ -388,7 +390,7 @@ becoming active).
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       ;; Create three radio buttons and put the buttons in a vbox
       (let ((vbox (make-instance 'gtk-box
                                  :orientation :vertical
@@ -512,7 +514,7 @@ is shown in @ref{example-link-button}.
       (g-signal-connect window "destroy"
                                (lambda (widget)
                                  (declare (ignore widget))
-                                 (gtk-main-quit)))
+                                 (leave-gtk-main)))
       (gtk-container-add grid
                          (make-instance 'gtk-label
                                         :use-markup t
@@ -591,7 +593,7 @@ is connected to the switch to display a label with the state of the switch.
       (g-signal-connect window "destroy"
                                (lambda (widget)
                                  (declare (ignore widget))
-                                 (gtk-main-quit)))
+                                 (leave-gtk-main)))
       (g-signal-connect switch "notify::active"
          (lambda (widget param)
            (declare (ignore param))

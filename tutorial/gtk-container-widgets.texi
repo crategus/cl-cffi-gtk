@@ -44,30 +44,27 @@
 @end float
 @end ifnotinfo
 
-The alignment container @url{@value{GTK-ALIGNMENT}, @code{gtk-alignment}} allows
-to place a widget within its window at a position and size relative to the size
-of the @url{@value{GTK-ALIGNMENT}, @code{gtk-alignment}} container itself. For
-example, it can be very useful for centering a widget within the window.
+The alignment container @xurl{gtk-alignment} allows to place a widget within its
+window at a position and size relative to the size of the @xurl{gtk-alignment}
+container itself.  For example, it can be very useful for centering a widget
+within the window.
 
-The @url{@value{GTK-ALIGNMENT}, @code{gtk-alignment}} container has the four
-properties @code{xalign}, @code{yalign}, @code{xscale}, and @code{yscale}.  The
-properties are floating point numbers.  The align settings are used to place the
-child widget within the available area.  The values range from @code{0.0} (top
-or left) to @code{1.0} (bottom or right).  Of course, if the scale settings are
-both set to @code{1.0}, the alignment settings have no effect.  The scale
-settings are used to specify how much the child widget should expand to fill
-the space allocated to the @url{@value{GTK-ALIGNMENT}, @code{gtk-alignment}}.
-The values can range from @code{0.0} (meaning the child doesn't expand at all)
-to @code{1.0} (meaning the child expands to fill all of the available space).
+The @xurl{gtk-alignment} container has the four properties @code{xalign},
+@code{yalign}, @code{xscale}, and @code{yscale}.  The properties are floating
+point numbers.  The align settings are used to place the child widget within the
+available area.  The values range from @code{0.0} (top or left) to @code{1.0}
+(bottom or right).  Of course, if the scale settings are both set to
+@code{1.0}, the alignment settings have no effect.  The scale settings are used
+to specify how much the child widget should expand to fill the space allocated
+to the @xurl{gtk-alignment}.  The values can range from @code{0.0} (meaning the
+child doesn't expand at all) to @code{1.0} (meaning the child expands to fill
+all of the available space).
 
-The properties are set when creating the @url{@value{GTK-ALIGNMENT},
-@code{gtk-alignment}} container with the function
-@url{@value{GTK-ALIGNMENT-NEW}, @code{gtk-alignment-new}}.  For an existing
-@url{@value{GTK-ALIGNMENT}, @code{gtk-alignment}} container the properties can
-be set with the function @url{@value{GTK-ALIGNMENT-SET},
-@code{gtk-alignment-set}}.  A child widget can be added to the
-@url{@value{GTK-ALIGNMENT}, @code{gtk-alignment}} container using the function
-@url{@value{GTK-CONTAINER-ADD}, @code{gtk-container-add}}.
+The properties are set when creating the @xurl{gtk-alignment} container with the
+function @xurl{gtk-alignment-new}.  For an existing @xurl{gtk-alignment}
+container the properties can be set with the function @xurl{gtk-alignment-set}.
+A child widget can be added to the @xurl{gtk-alignment} container using the
+function @xurl{gtk-container-add}.
 
 @findex gtk-alignment-set-padding
 @findex gtk-alignment-get-padding
@@ -75,12 +72,11 @@ be set with the function @url{@value{GTK-ALIGNMENT-SET},
 @findex alignment-set-padding, gtk-alignment-set-padding
 @findex alignment-get-padding, gtk-alignment-get-padding
 
-In addition, the @url{@value{GTK-ALIGNMENT}, @code{gtk-alignment}} container has
-the properties @code{top-padding}, @code{bottom-padding}, @code{left-padding},
-and @code{right-padding}. These properties control how many space is added to
-the sides of the widget. The functions @url{@value{GTK-ALIGNMENT-SET-PADDING},
-@code{gtk-alignment-set-padding}} and @url{@value{GTK-ALIGNMENT-GET-PADDING},
-@code{gtk-alignment-get-padding}} are used to set or to retrieve the values of
+In addition, the @xurl{gtk-alignment} container has the properties
+@code{top-padding}, @code{bottom-padding}, @code{left-padding}, and
+@code{right-padding}.  These properties control how many space is added to
+the sides of the widget. The functions @xurl{gtk-alignment-set-padding} and
+@xurl{gtk-alignment-get-padding} are used to set or to retrieve the values of
 the padding properties.
 
 @noindent
@@ -88,8 +84,7 @@ the padding properties.
 
 Note that the desired effect can in most cases be achieved by using the
 "halign", "valign" and "margin" properties on the child widget, so
-@url{@value{GTK-ALIGNMENT}, @code{gtk-alignment}} should not be used in new
-code.
+@xurl{gtk-alignment} should not be used in new code.
 
 @float Example, example-alignment
 @caption{Alignment Widget}
@@ -426,23 +421,22 @@ example is shown in @ref{example-frame}.
 @end float
 @end ifnotinfo
 
-The @url{@value{GTK-ASPECT-FRAME}, @code{gtk-aspect-frame}} aspect frame
-container is like a frame container, except that it also enforces the aspect
-ratio (that is, the ratio of the width to the height) of the child widget to
-have a certain value, adding extra space if necessary.  This is useful, for
-instance, if you want to preview a larger image. The size of the preview should
-vary when the user resizes the window, but the aspect ratio needs to always
-match the original image.
+The @xurl{gtk-aspect-frame} aspect frame container is like a frame container,
+except that it also enforces the aspect ratio (that is, the ratio of the width
+to the height) of the child widget to have a certain value, adding extra space
+if necessary.  This is useful, for instance, if you want to preview a larger
+image. The size of the preview should vary when the user resizes the window, but
+the aspect ratio needs to always match the original image.
 
 To create a new aspect frame use @code{(make-instance 'gtk-aspect-frame)} or the
-function @url{@value{GTK-ASPECT-FRAME}, @code{gtk-aspect-frame-new}}. The
-arguments @code{xalign} and @code{yalign} specify alignment as with alignment
-containers.  If the property @code{obey-child} is @emph{true}, the aspect ratio
-of a child widget will match the aspect ratio of the ideal size it requests.
-Otherwise, it is given by @code{ratio}.
+function @xurl{gtk-aspect-frame-new}.  The arguments @code{xalign} and
+@code{yalign} specify alignment as with alignment containers.  If the property
+@code{obey-child} is @emph{true}, the aspect ratio of a child widget will match
+the aspect ratio of the ideal size it requests.  Otherwise, it is given by
+@code{ratio}.
 
 The options of an existing aspect frame can be changed with the function
-@url{@value{GTK-ASPECT-FRAME-SET}, @code{gtk-aspect-frame-set}}.
+@xurl{gtk-aspect-frame-set}.
 
 As an example, the following program uses an aspect frame widget to present a
 drawing area whose aspect ratio will always be 2:1, no matter how the user

@@ -5,7 +5,7 @@
 @c Author   : Dieter Kaiser
 @c Date     : 05.04.2012
 @c Revision : 06.04.2012
-@c 
+@c
 @c Copyright (C) 2012 by Dieter Kaiser
 @c -----------------------------------------------------------------------------
 
@@ -52,7 +52,7 @@ A @code{GtkMenu} can also be popped up by activating a @code{GtkOptionMenu}.
 Other composite widgets such as the @code{GtkNotebook} can pop up a GtkMenu as
 well.
 
-Applications can display a @code{GtkMenu} as a popup menu by calling the 
+Applications can display a @code{GtkMenu} as a popup menu by calling the
 @code{gtk-menu-popup} function.
 
 @c TODO: Implement an example with a signal handler which displays a popup menu
@@ -64,7 +64,7 @@ Applications can display a @code{GtkMenu} as a popup menu by calling the
 The @code{GtkMenuItem} widget and the derived widgets are the only valid childs
 for menus.  Their function is to correctly handle highlighting, alignment,
 events and submenus.
- 
+
 As it derives from @code{GtkBin} it can hold any valid child widget, altough
 only a few are really useful.
 
@@ -96,11 +96,11 @@ the interface.
 
 A @code{GtkTearoffMenuItem} is a special @code{GtkMenuItem} which is used to
 tear off and reattach its menu.
- 
+
 When its menu is shown normally, the @code{GtkTearoffMenuItem} is drawn as a
 dotted line indicating that the menu can be torn off.  Activating it causes its
 menu to be torn off and displayed in its own window as a tearoff menu.
- 
+
 When its menu is shown as a tearoff menu, the @code{GtkTearoffMenuItem} is drawn
 as dotted line which has a left pointing arrow graphic indicating that the
 tearoff menu can be reattached.  Activating it will erase the tearoff menu
@@ -126,7 +126,7 @@ window.
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       ;; Create the menu-bar and the items of the menu-bar.
       (let ((menubar (make-instance 'gtk-menu-bar
                                     :visible t
@@ -411,7 +411,7 @@ window.
       (g-signal-connect (gtk-builder-get-object builder "window") "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       (gtk-widget-show (gtk-builder-get-object builder "window")))))
 @end verbatim
 

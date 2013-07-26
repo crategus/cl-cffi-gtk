@@ -4,7 +4,7 @@
 @c Language : English
 @c Author   : Dieter Kaiser
 @c Date     : 06.02.2012
-@c Revision : 18.05.2013
+@c Revision : 25.07.2013
 @c 
 @c Copyright (C) 2012, 2013 by Dieter Kaiser
 @c -----------------------------------------------------------------------------
@@ -24,10 +24,9 @@
 
 When creating an application, it is necessary to put more than one widget inside
 a window.  The first Hello world example only used one button so it could simply
-use the function @url{@value{GTK-CONTAINER-ADD}, @code{gtk-container-add}} to
-"pack" the button into the window. But when you want to put more than one widget
-into a window, how do you control where that widget is positioned? This is where
-packing comes in.
+use the function @xurl{gtk-container-add} to "pack" the button into the window.
+But when you want to put more than one widget into a window, how do you control
+where that widget is positioned? This is where packing comes in.
 
 Most packing is done by creating boxes.  These are invisible widget containers
 that can pack widgets into, which come in two forms, a horizontal box, and a
@@ -59,23 +58,20 @@ desired effect.
 @findex gtk-orientable
 @findex orientable, gtk-orientable
 
-To create a new box of the type @url{@value{GTK-BOX}, @code{gtk-box}}, the
-function @url{@value{GTK-BOX-NEW}, @code{gtk-box-new}} or the call
-@code{(make-instance 'gtk-box)} is used.  The first argument of the function
-@url{@value{GTK-BOX-NEW}, @code{gtk-box-new}} takes a keyword of the enumeration
-type @code{GtkOrientation}}, which is in the Lisp
-binding implemented as @url{@value{GTK-ORIENTATION}, @code{gtk-orientation}}
-with the values @code{:horizontal} or @code{:vertical} to determine a horizontal
-or a vertical box.  Because @url{@value{GTK-BOX}, @code{gtk-box}} implements
-the interface @url{@value{GTK-ORIENTABLE}, @code{gtk-orientable}} an instance
-of @url{@value{GTK-BOX}, @code{gtk-box}} has the property
-@code{orientiation} of type @url{@value{GTK-ORIENTATION},
-@code{gtk-orientation}}, which can be set by a call of @code{make-instance}.
+To create a new box of the type @xurl{gtk-box}, the function @xurl{gtk-box-new}
+or the call @code{(make-instance 'gtk-box)} is used.  The first argument of the
+function @xurl{gtk-box-new} takes a keyword of the enumeration type
+@code{GtkOrientation}}, which is in the Lisp binding implemented as
+@xurl{gtk-orientation} with the values @code{:horizontal} or @code{:vertical} to
+determine a horizontal or a vertical box.  Because @xurl{gtk-box} implements
+the interface @xurl{gtk-orientable} an instance of @xurl{gtk-box} has the
+property @code{orientiation} of type @xurl{gtk-orientation}, which can be set by
+a call of @code{make-instance}.
 
 The following examples show two equivalent ways to create an instance of a
-horizontal box.  The second argument of the function @url{@value{GTK-BOX-NEW},
-@code{gtk-box-new}} is the value of the property @code{spacing}, which is
-described in @ref{Details of Boxes}.
+horizontal box.  The second argument of the function @xurl{gtk-box-new} is the
+value of the property @code{spacing}, which is described in
+@ref{Details of Boxes}.
 @verbatim
   (let ((box (gtk-box-new :horizontal 3)))
     [...] )
@@ -88,21 +84,18 @@ or
     [...] )
 @end verbatim
 
-The @url{@value{GTK-BOX-PACK-START}, @code{gtk-box-pack-start}} and
-@url{@value{GTK-BOX-PACK-END}, @code{gtk-box-pack-end}} functions are used to
-place widgets inside of boxes.  The @url{@value{GTK-BOX-PACK-START},
-@code{gtk-box-pack-start}} function starts at the top and works its way down in
-a vertical box, and packs left to right in a horizontal box.  The function
-@url{@value{GTK-BOX-PACK-END}, @code{gtk-box-pack-end}} does the opposite,
+The @xurl{gtk-box-pack-start} and @xurl{gtk-box-pack-end} functions are used to
+place widgets inside of boxes.  The @xurl{gtk-box-pack-start} function starts at
+the top and works its way down in a vertical box, and packs left to right in a
+horizontal box.  The function @xurl{gtk-box-pack-end} does the opposite,
 packing from bottom to top in a vertical box, and right to left in a horizontal
 box.  The widgets, which are packed into a box, can be containers, which are
 composed of other widgets.  Using the functions for packing widgets in boxes
 allows to right justify or left justify the widgets.  The functions can be
 mixed in any way to achieve the desired effect.  Most of the examples in this
-tutorial use the function @url{@value{GTK-BOX-PACK-START},
-@code{gtk-box-pack-start}}.  In the following example a vertical box is created.
-Then two label widgets are packed into the box with the function
-@url{@value{GTK-BOX-PACK-START}, @code{gtk-box-pack-start}}.
+tutorial use the function @xurl{gtk-box-pack-start}.  In the following example
+a vertical box is created. Then two label widgets are packed into the box with
+the function @xurl{gtk-box-pack-start}.
 
 @verbatim
   (let ((box (gtk-box-new :vertical 3)))
@@ -119,14 +112,12 @@ user quite a bit of flexibility when placing widgets.
 @noindent
 @emph{Note:}
 
-The classes @url{@value{GTK-HBOX}, @code{gtk-hbox}} for horizontal and
-@url{@value{GTK-VBOX}, @code{gtk-vbox}} for vertical boxes are deprecated, but
-still present in GTK+ 3.4, which is the version used in this tutorial.  In this
-tutorial these classes are not used. In addition a single-row or single-column
-@url{@value{GTK-GRID}, @code{gtk-grid}} provides exactly the same functionality
-as @url{@value{GTK-BOX}, @code{gtk-box}}.  See @ref{Packing Using Grids} for
-examples to replace @url{@value{GTK-BOX}, @code{gtk-box}} with
-@url{@value{GTK-GRID}, @code{gtk-grid}}.
+The classes @xurl{gtk-hbox} for horizontal and @xurl{gtk-vbox} for vertical
+boxes are deprecated, but still present in GTK+ 3.6, which is the version used
+in this tutorial.  In this tutorial these classes are not used. In addition a
+single-row or single-column @xurl{gtk-grid} provides exactly the same
+functionality as @xurl{gtk-box}.  See @ref{Packing Using Grids} for examples to
+replace @xurl{gtk-box} with @xurl{gtk-grid}.
 
 @c -----------------------------------------------------------------------------
 @node Details of Boxes, Packing Using Tables, Packing Boxes, Top
@@ -167,28 +158,24 @@ complete example for creating a box is therefore
 @ref{figure-box-packing} shows an example of packing buttons into horizontal
 boxes.  The buttons have a small spacing of 3.  Each line of the example
 contains one horizontal box with several buttons.  The first button represents
-the call of the function @url{@value{GTK-BOX-PACK-START},
-@code{gtk-box-pack-start}} and the following buttons represent the arguments of
-the function.  The first two arguments are @code{box} for the box and
-@code{child} for the child widgets to put into the box, which are in our example
-buttons.  The further arguments of @url{@value{GTK-BOX-PACK-START},
-@code{gtk-box-pack-start}} are in the C implementation @code{expand},
-@code{fill} and @code{padding}.  In the Lisp binding to GTK+ these arguments are
-defined as the keyword arguments @code{:expand} and @code{:fill}, which both
-have a default value of @emph{true}, and @code{:padding} with a default value of
-@code{0}.  The keyword arguments can be omitted, when the default values should
-not be changed.
+the call of the function @xurl{gtk-box-pack-start} and the following buttons
+represent the arguments of the function.  The first two arguments are @code{box}
+for the box and @code{child} for the child widgets to put into the box, which
+are in our example buttons.  The further arguments of @xurl{gtk-box-pack-start}
+are in the C implementation @code{expand}, @code{fill} and @code{padding}.  In
+the Lisp binding to GTK+ these arguments are defined as the keyword arguments
+@code{:expand} and @code{:fill}, which both have a default value of
+@emph{true}, and @code{:padding} with a default value of @code{0}.  The keyword
+arguments can be omitted, when the default values should not be changed.
 
 The keyword argument @code{:expand} with a value @code{T} to the functions
-@url{@value{GTK-BOX-PACK-START}, @code{gtk-box-pack-start}} and
-@url{@value{GTK-BOX-PACK-END}, @code{gtk-box-pack-end}} controls whether the
+@xurl{gtk-box-pack-start} and @xurl{gtk-box-pack-end} controls whether the
 widgets are laid out in the box to fill in all the extra space in the box so
 the box is expanded to fill the area allotted to it; or with a value @code{nil}
 the box is shrunk to just fit the widgets.  Setting expand to @code{nil} allows
 to do right and left justification of the widgets.  Otherwise, the widgets
 expand to fit into the box.  The same effect can be achieved by using only one
-of the functions @url{@value{GTK-BOX-PACK-START}, @code{gtk-box-pack-start}} or
-@url{@value{GTK-BOX-PACK-END}, @code{gtk-box-pack-end}}.
+of the functions @xurl{gtk-box-pack-start} or @xurl{gtk-box-pack-end}.
 
 The keyword argument @code{:fill} with a value @emph{true} to the
 @code{gtk-box-pack} functions control whether the extra space is allocated to
@@ -216,15 +203,12 @@ of the buttons in the boxes.
 @findex orientation, gtk-orientation
 
 The example uses two widgets which are not introduced up to now.  The first
-one is the @url{@value{GTK-LABEL}, @code{gtk-label}} widget, which is described
-in @ref{Labels} and is used to display text.  The second one is the
-@url{@value{GTK-SEPARATOR}, @code{gtk-separator}} widget, which draws a
-horizontal or vertical line.  The orientation of the line depends on the only
-argument to the function @url{@value{GTK-SEPARATOR-NEW},
-@code{gtk-separator-new}}, which is of the enumeration type
-@url{@value{GTK-ORIENTATION}, @code{gtk-orientation}} with the values
-@code{:horizontal} for a horizontal line and @code{:vertical} for a vertical
-line.
+one is the @xurl{gtk-label} widget, which is described in @ref{Labels} and is
+used to display text.  The second one is the @xurl{gtk-separator} widget, which
+draws a horizontal or vertical line.  The orientation of the line depends on the
+only argument to the function @xurl{gtk-separator-new}, which is of the
+enumeration type @xurl{gtk-orientation} with the values @code{:horizontal} for
+a horizontal line and @code{:vertical} for a vertical line.
 
 @float Example, example-box-packing
 @caption{Example Packing Boxes}
@@ -356,21 +340,21 @@ line.
 Tables are another way of packing widgets and can be extremely useful in certain
 situations.  Using tables a grid is created that widgets can placed in.  The
 widgets may take up as many spaces as specified.  Tables can be created with the
-function @url{@value{GTK-TABLE-NEW}, @code{gtk-table-new}}.  The function takes
-three arguments which set the properties of a table.  Alternatively, the table
-is created with the function @code{make-instance}.
+function @xurl{gtk-table-new}.  The function takes three arguments which set the
+properties of a table.  Alternatively, the table is created with the function
+@code{make-instance}.
 
-The first argument of @url{@value{GTK-TABLE-NEW}, @code{gtk-table-new}} is the
-number of rows to make in the table, while the second is the number of columns.
-The last argument @code{homogeneous} has to do with how the boxes of the table
-are sized.  If @code{homogeneous} is @code{T}, the table boxes are resized to
-the size of the largest widget in the table.  If @code{homogeneous} is
-@code{NIL}, the size of a table boxes is dictated by the tallest widget in its
-same row, and the widest widget in its column.  The rows and columns are laid
-out from @code{0} to @code{n}, where @code{n} is the number specified in the
-call to @url{@value{GTK-TABLE-NEW}, @code{gtk-table-new}}.  For @code{rows = 2}
-and @code{columns = 2}, the layout is shown in @ref{figure-table-layout}.  Note
-that the coordinate system starts in the upper left hand corner.
+The first argument of @xurl{gtk-table-new} is the number of rows to make in the
+table, while the second is the number of columns. The last argument
+@code{homogeneous} has to do with how the boxes of the table are sized.  If
+@code{homogeneous} is @code{T}, the table boxes are resized to the size of the
+largest widget in the table.  If @code{homogeneous} is @code{NIL}, the size of
+a table boxes is dictated by the tallest widget in its same row, and the widest
+widget in its column.  The rows and columns are laid out from @code{0} to
+@code{n}, where @code{n} is the number specified in the call to the function
+@xurl{gtk-table-new}.  For @code{rows = 2} and @code{columns = 2}, the layout is
+shown in @ref{figure-table-layout}.  Note that the coordinate system starts in
+the upper left hand corner.
 
 @float Figure, figure-table-layout
 @caption{Layout of a 2 x 2 table}
@@ -387,17 +371,17 @@ that the coordinate system starts in the upper left hand corner.
 @findex gtk-table-attach
 @findex table-attach, gtk-table-attach
 
-To place a widget into a table, the function @url{@value{GTK-TABLE-ATTACH},
-@code{gtk-table-attach}} can be used.  The arguments are listed in
-@ref{table-gtk-table-attach}.  The first argument @code{table} is the table you
-have created and the second @code{child} the widget you wish to place into the
-table.  The left and right attach arguments specify where to place the widget,
-and how many boxes to use.  If you want a button in the lower right table entry
-of a 2 x 2 table, and want it to fill that entry only, @code{left-attach} is
-@code{= 1}, @code{right-attach = 2}, @code{top-attach = 1},
-@code{bottom-attach = 2}.  Now, if you wanted a widget to take up the whole top
-row of a 2 x 2 table, you would use @code{left-attach = 0},
-@code{right-attach = 2}, @code{top-attach = 0}, @code{bottom-attach = 1}.
+To place a widget into a table, the function @xurl{gtk-table-attach} can be
+used.  The arguments are listed in @ref{table-gtk-table-attach}.  The first
+argument @code{table} is the table you have created and the second @code{child}
+the widget you wish to place into the table.  The left and right attach
+arguments specify where to place the widget, and how many boxes to use.  If
+you want a button in the lower right table entry of a 2 x 2 table, and want it
+to fill that entry only, @code{left-attach} is @code{= 1},
+@code{right-attach = 2}, @code{top-attach = 1}, @code{bottom-attach = 2}.  Now,
+if you wanted a widget to take up the whole top row of a 2 x 2 table, you would
+use @code{left-attach = 0}, @code{right-attach = 2}, @code{top-attach = 0},
+@code{bottom-attach = 1}.
 
 @need 800
 @float Table, table-gtk-table-attach
@@ -433,11 +417,10 @@ The amount of padding above and below the child widget.  The default value is
 @findex GtkAttachOptions
 
 The arguments @code{:xoptions} and @code{:yoptions} are of the enumeration
-type @url{@value{GTK-ATTACH-OPTIONS}, @code{GtkAttachOptions}} and used to
-specify packing options.  The packing options can be OR'ed together to allow
-multiple options.  In the Lisp binding a list of options is used to combine
-multiple options.  Possible values of the enumeration type
-@url{@value{GTK-ATTACH-OPTIONS}, @code{GtkAttachOptions}} are listed in
+type @xurl{gtk-attach-options} and used to specify packing options.  The packing
+options can be OR'ed together to allow multiple options.  In the Lisp binding a
+list of options is used to combine multiple options.  Possible values of the
+enumeration type @xurl{gtk-attach-options} are listed in
 @ref{table-GtkAttachOptions}.
 
 Padding is just like in boxes, creating a clear area around the widget specified
@@ -467,13 +450,11 @@ This will cause the table to expand to use up any remaining space in the window.
 
 In the Lisp binding the arguments @code{:xoptions}, @code{:yoptions},
 @code{:xpadding}, and @code{:ypadding} of the function
-@url{@value{GTK-TABLE-ATTACH}, @code{gtk-table-attach}} are defined as keyword
-arguments with default values as shown in @ref{table-gtk-table-attach}.  In the
-C library this is realized with a second function
-@code{gtk_table_attach_defaults()}.  In the Lisp binding the function
-@url{@value{GTK-TABLE-ATTACH-DEFAULTS}, @code{gtk-table-attach-defaults}} is a
-second equivalent implementation of @url{@value{GTK-TABLE-ATTACH},
-@code{gtk-table-attach}}, when using the default values of the keyword
+@xurl{gtk-table-attach} are defined as keyword arguments with default values as
+shown in @ref{table-gtk-table-attach}.  In the C library this is realized with a
+second function @code{gtk_table_attach_defaults()}.  In the Lisp binding the
+function @xurl{gtk-table-attach-defaults} is a second equivalent implementation
+of @xurl{gtk-table-attach}, when using the default values of the keyword
 arguments.
 
 @findex gtk-table-set-row-spacing
@@ -482,13 +463,12 @@ arguments.
 @findex table-set-row-spacing, gtk-table-set-row-spacing
 @findex table-set-col-spacing, gtk-table-set-col-spacing
 
-The functions @url{@value{GTK-TABLE-SET-ROW-SPACING},
-@code{gtk-table-set-row-spacing}} and @url{@value{GTK-TABLE-SET-COL-SPACING},
-@code{gtk-table-set-col-spacing}} places spacing between the rows at the
+The functions @xurl{gtk-table-set-row-spacing} and
+@xurl{gtk-table-set-col-spacing} places spacing between the rows at the
 specified row or column.  The first argument of the functions is a
-@url{@value{GTK-TABLE}, @code{gtk-table}}, the second argument a row or a column
-and the third argument the spacing.  Note that for columns, the space goes to
-the right of the column, and for rows, the space goes below the row.
+@xurl{gtk-table}, the second argument a row or a column and the third argument
+the spacing.  Note that for columns, the space goes to the right of the column,
+and for rows, the space goes below the row.
 
 @findex gtk-table-set-row-spacings
 @findex gtk-table-set-col-spacings
@@ -497,22 +477,20 @@ the right of the column, and for rows, the space goes below the row.
 @findex table-set-col-spacings, gtk-table-set-col-spacings
 
 You can also set a consistent spacing of all rows and columns with the
-functions @url{@value{GTK-TABLE-SET-ROW-SPACINGS},
-@code{gtk-table-set-row-spacings}} and @url{@value{GTK-TABLE-SET-COL-SPACINGS},
-@code{gtk-table-set-col-spacings}}.  Both functions take a
-@url{@value{GTK-TABLE}, @code{gtk-table}} as the first argument and the desired
-spacing @code{spacing} as the second argument. Note that with these calls, the
-last row and last column do not get any spacing.
+functions @xurl{gtk-table-set-row-spacings} and
+@xurl{gtk-table-set-col-spacings}.  Both functions take a @xurl{gtk-table} as
+the first argument and the desired spacing @code{spacing} as the second
+argument. Note that with these calls, the last row and last column do not get
+any spacing.
 
 @noindent
 @emph{Note:}
 
-@url{@value{GTK-TABLE}, @code{gtk-table}} has been deprecated since GTK+ 3.4.
-It is recommended to use @url{@value{GTK-GRID}, @code{gtk-grid}} instead.
-@url{@value{GTK-GRID}, @code{gtk-grid}} provides the same capabilities as
-@url{@value{GTK-TABLE}, @code{gtk-table}} for arranging widgets in a rectangular
-grid, but does support height-for-width geometry management, which is newly
-introduced for widgets in GTK+ 3. This chapter will vanish in the near future.
+@xurl{gtk-table} has been deprecated since GTK+ 3.4. It is recommended to use
+@xurl{gtk-grid} instead. @xurl{gtk-grid} provides the same capabilities as
+@xurl{gtk-table} for arranging widgets in a rectangular grid, but does support
+height-for-width geometry management, which is newly introduced for widgets in
+GTK+ 3. This chapter will vanish in the near future.
 
 @c -----------------------------------------------------------------------------
 @node Table Packing Example, Packing Using Grids, Packing Using Tables, Top
@@ -640,24 +618,21 @@ described in @ref{Toggle Buttons} later in this tutorial.  The code of
 @findex GtkGrid
 @findex gtk-grid
 
-@url{@value{GTK-GRID}, @code{gtk-grid}} is an attempt to write a comprehensive,
-legacy-free, box-layout container that is flexible enough to replace
-@url{@value{GTK-BOX}, @code{gtk-box}}, @url{@value{GTK-TABLE}, @code{gtk-table}}
+@xurl{gtk-grid} is an attempt to write a comprehensive, legacy-free, box-layout
+container that is flexible enough to replace @xurl{gtk-box}, @xurl{gtk-table}
 and the like.
 
-The layout model of @url{@value{GTK-GRID}, @code{gtk-grid}} is to arrange its
-children in rows and columns. This is done by assigning positions on a
-two-dimensions grid that stretches arbitrarily far in all directions. Children
-can span multiple rows or columns.
+The layout model of @xurl{gtk-grid} is to arrange its children in rows and
+columns. This is done by assigning positions on a two-dimensions grid that
+stretches arbitrarily far in all directions. Children can span multiple rows or
+columns.
 
 @c -----------------------------------------------------------------------------
 @subsection GtkBox versus GtkGrid - packing
 
-@url{@value{GTK-BOX}, @code{gtk-box}} works by arranging child widgets in a
-single line, either horizontally or vertically. It allows packing children from
-the beginning or end, using @url{@value{GTK-BOX-PACK-START},
-@code{gtk-box-pack-start}} and @url{@value{GTK-BOX-PACK-END},
-@code{gtk-box-pack-end}}.
+@xurl{gtk-box} works by arranging child widgets in a single line, either
+horizontally or vertically. It allows packing children from the beginning or
+end, using @xurl{gtk-box-pack-start} and @xurl{gtk-box-pack-end}.
 
 The following code creates a simple box with two labels:
 @verbatim
@@ -667,7 +642,7 @@ The following code creates a simple box with two labels:
     [...] )
 @end verbatim
 
-This can be done with @url{@value{GTK-GRID}, @code{gtk-grid}} as follows:
+This can be done with @xurl{gtk-grid} as follows:
 @verbatim
   (let ((grid (gtk-grid-new))
         (child1 (gtk-label-new "ONE"))
@@ -677,61 +652,57 @@ This can be done with @url{@value{GTK-GRID}, @code{gtk-grid}} as follows:
     [...]  )
 @end verbatim
 
-And similarly for @url{@value{GTK-BOX-PACK-END}, @code{gtk-box-pack-end}}. In
-that case, you would use @code{:left} to place the grid children from left to
-right.
+And similarly for @xurl{gtk-box-pack-end}. In that case, you would use
+@code{:left} to place the grid children from left to right.
 
 If you only need to pack children from the start, using
-@url{@value{GTK-CONTAINER-ADD}, @code{gtk-container-add}} is an even simpler
-alternative. @url{@value{GTK-GRID}, @code{gtk-grid}} places children added with
-@url{@value{GTK-CONTAINER-ADD}, @code{gtk-container-add}} in a single row or
-column according to its "orientation".
+@xurl{gtk-container-add} is an even simpler alternative. @xurl{gtk-grid} places
+children added with @xurl{gtk-container-add} in a single row or column according
+to its "orientation".
 
-One difference to keep in mind is that the @url{@value{GTK-BOX-PACK-START},
-@code{gtk-box-pack-start}} and @url{@value{GTK-BOX-PACK-END},
-@code{gtk-box-pack-end}} functions allow you to place an arbitrary number of
+One difference to keep in mind is that the @xurl{gtk-box-pack-start} and
+@xurl{gtk-box-pack-end} functions allow you to place an arbitrary number of
 children from either end without ever 'colliding in the middle'.  With
-@url{@value{GTK-GRID}, @code{gtk-grid}}, you have to leave enough space between
-the two ends, if you want to combine packing from both ends towards the middle.
-In practice, this should be easy to avoid; and @url{@value{GTK-GRID},
-@code{gtk-grid}} simply ignores entirely empty rows or columns for layout and
-spacing.
+@xurl{gtk-grid}, you have to leave enough space between the two ends, if you
+want to combine packing from both ends towards the middle.  In practice, this
+should be easy to avoid; and @xurl{gtk-grid} simply ignores entirely empty rows
+or columns for layout and spacing.
 
-On the other hand, @url{@value{GTK-GRID}, @code{gtk-grid}} is more flexible in
-that its grid extends indefinitively in both directions - there is no problem
-with using negative numbers for the grid positions. So, if you discover that
-you need to place a widget before your existing arrangement, you always can.
+On the other hand, @xurl{gtk-grid} is more flexible in that its grid extends
+indefinitively in both directions - there is no problem with using negative
+numbers for the grid positions.  So, if you discover that you need to place a
+widget before your existing arrangement, you always can.
 
 @c -----------------------------------------------------------------------------
 @subsection GtkBox versus GtkGrid: sizing
 
-When adding a child to a @url{@value{GTK-BOX}, @code{gtk-box}}, there are two
-hard-to-remember parameters (child properties, more exactly) named @code{expand}
-and @code{fill} that determine how the child size behaves in the main direction
-of the box. If @code{expand} is set, the box allows the position occupied by the
-child to grow when extra space is available. If @code{fill} is also set, the
-extra space is allocated to the child widget itself. Otherwise it is left
-'free'.  There is no control about the 'minor' direction; children are always
-given the full size in the minor direction.
+When adding a child to a @xurl{gtk-box}, there are two hard-to-remember
+parameters (child properties, more exactly) named @code{expand} and @code{fill}
+that determine how the child size behaves in the main direction of the box.  If
+@code{expand} is set, the box allows the position occupied by the child to grow
+when extra space is available.  If @code{fill} is also set, the extra space is
+allocated to the child widget itself.  Otherwise it is left 'free'.  There is no
+control about the 'minor' direction; children are always given the full size in
+the minor direction.
 
-@url{@value{GTK-GRID}, @code{gtk-grid}} does not have any custom child
-properties for controlling size allocation to children. Instead, it fully
-supports the newly introduced @code{hexpand}, @code{vexpand}, @code{halign} and
-@code{valign} properties for widgets.
+@xurl{gtk-grid} does not have any custom child properties for controlling size
+allocation to children.  Instead, it fully supports the newly introduced
+@code{hexpand}, @code{vexpand}, @code{halign} and @code{valign} properties for
+widgets.
 
 The @code{hexpand} and @code{vexpand} properties operate in a similar way to
-the expand child properties of @url{@value{GTK-BOX}, @code{gtk-box}}.  As soon
-as a column contains a hexpanding child, @url{@value{GTK-GRID}, @code{gtk-grid}}
-allows the column to grow when extra space is available (similar for rows and
-@code{vexpand}). In contrast to @url{@value{GTK-BOX}, @code{gtk-box}}, all the
-extra space is always allocated to the child widget, there are no 'free' areas.
+the expand child properties of @xurl{gtk-box}.  As soon as a column contains a
+hexpanding child, @xurl{gtk-grid} allows the column to grow when extra space is
+available (similar for rows and @code{vexpand}). In contrast to @xurl{gtk-box},
+all the extra space is always allocated to the child widget, there are no 'free'
+areas.
 
 To replace the functionality of the @code{fill} child properties, you can set the
 @code{halign} and @code{valign} properties.  An align value of @code{:fill} has
 the same effect as setting @code{fill} to @i{true}, a value of @code{:center}
 has the same effect as setting @code{fill} to @code{nil}.
 
-Expansion and alignment with @url{@value{GTK-BOX}, @code{gtk-box}}:
+Expansion and alignment with @xurl{gtk-box}:
 @verbatim  
   (let ((box (gtk-box-new :horizontal 0)))
     (gtk-box-pack-start box (gtk-label-new "ONE") t nil 0)
@@ -739,7 +710,7 @@ Expansion and alignment with @url{@value{GTK-BOX}, @code{gtk-box}}:
     [...] )
 @end verbatim
 
-This can be done with @url{@value{GTK-GRID}, @code{gtk-grid}} as follows:
+This can be done with @xurl{gtk-grid} as follows:
 @verbatim
   (let ((grid (gtk-grid-new))
         (child1 (make-instance 'gtk-label
@@ -755,52 +726,47 @@ This can be done with @url{@value{GTK-GRID}, @code{gtk-grid}} as follows:
     [...] )
 @end verbatim
 
-One difference between the new @url{@value{GTK-WIDGET}, @code{gtk-widget}}
-expand properties and the @url{@value{GTK-BOX}, @code{gtk-box}} child property
-of the same name is that widget expandability is 'inherited' from children. What
-this means is that a container will become itself expanding as soon as it has an
-expanding child.  This is typically what you want, it lets you e. g. mark the
-content pane of your application window as expanding, and all the intermediate
-containers between the content pane and the toplevel window will automatically
-do the right thing.  This automatism can be overridden at any point by setting
-the expand flags on a container explicitly.
+One difference between the new @xurl{gtk-widget} expand properties and the
+@xurl{gtk-box} child property of the same name is that widget expandability is
+'inherited' from children.  What this means is that a container will become
+itself expanding as soon as it has an expanding child.  This is typically what
+you want, it lets you e. g. mark the content pane of your application window as
+expanding, and all the intermediate containers between the content pane and the
+toplevel window will automatically do the right thing.  This automatism can be
+overridden at any point by setting the expand flags on a container explicitly.
 
-Another difference between @url{@value{GTK-BOX}, @code{gtk-box}} and
-@url{@value{GTK-GRID}, @code{gtk-grid}} with respect to expandability is when
-there are no expanding children at all.  In this case, @url{@value{GTK-BOX},
-@code{gtk-box}} will forcibly expand all children whereas @url{@value{GTK-GRID},
-@code{gtk-grid}} will not. In practice, the effect of this is typically that a
-grid will 'stick to the corner' when the toplevel containing it is grown,
-instead of spreading out its children over the entire area.  The problem can be
-fixed by setting some or all of the children to expand.
+Another difference between @xurl{gtk-box} and @xurl{gtk-grid} with respect to
+expandability is when there are no expanding children at all.  In this case,
+@xurl{gtk-box} will forcibly expand all children whereas @xurl{gtk-grid} will
+not.  In practice, the effect of this is typically that a grid will 'stick to
+the corner' when the toplevel containing it is grown, instead of spreading out
+its children over the entire area.  The problem can be fixed by setting some or
+all of the children to expand.
 
-When you set the @code{homogeneous} property on a @url{@value{GTK-BOX},
-@code{gtk-box}}, it reserves the same space for all its children.
-@url{@value{GTK-GRID}, @code{gtk-grid}} does this in a very similar way, with
-@code{row-homogeneous} and @code{column-homogeneous} properties which control
-whether all rows have the same height and whether all columns have the same
-width.
+When you set the @code{homogeneous} property on a @xurl{gtk-box}, it reserves
+the same space for all its children.  @xurl{gtk-grid} does this in a very
+similar way, with @code{row-homogeneous} and @code{column-homogeneous}
+properties which control whether all rows have the same height and whether all
+columns have the same width.
 
 @c -----------------------------------------------------------------------------
 @subsection GtkBox versus GtkGrid - spacing
 
-With @url{@value{GTK-BOX}, @code{gtk-box}}, you have to specify the "spacing"
-when you construct it. This property specifies the space that separates the
-children from each other. Additionally, you can specify extra space to put
-around each child individually, using the @code{padding} child property.
+With @xurl{gtk-box}, you have to specify the "spacing" when you construct it.
+This property specifies the space that separates the children from each other.
+Additionally, you can specify extra space to put around each child individually,
+using the @code{padding} child property.
 
-@url{@value{GTK-GRID}, @code{gtk-grid}} is very similar when it comes to spacing
-between the children, except that it has two separate properties,
-@code{row-spacing} and @code{column-spacing}, for the space to leave between
-rows and columns.  Note that row-spacing is the space between rows, not inside a
-row.  So, if you doing a horizontal layout, you need to set
-@code{column-spacing}.
+@xurl{gtk-grid} is very similar when it comes to spacing between the children,
+except that it has two separate properties, @code{row-spacing} and
+@code{column-spacing}, for the space to leave between rows and columns.  Note
+that row-spacing is the space between rows, not inside a row.  So, if you doing
+a horizontal layout, you need to set @code{column-spacing}.
 
-@url{@value{GTK-GRID}, @code{gtk-grid}} does not have any custom child
-properties to specify per-child padding; instead you can use the @code{margin}
-property. You can also set different padding on each side with the
-@code{margin-left}, @code{margin-right}, @code{margin-top} and
-@code{margin-bottom} properties.
+@xurl{gtk-grid} does not have any custom child properties to specify per-child
+padding; instead you can use the @code{margin} property. You can also set
+different padding on each side with the @code{margin-left}, @code{margin-right},
+@code{margin-top} and @code{margin-bottom} properties.
 
 Example with spacing in boxes:
 @verbatim
@@ -810,7 +776,7 @@ Example with spacing in boxes:
     [...] )
 @end verbatim
 
-This can be done with @url{@value{GTK-GRID}, @code{gtk-grid}} as follows:
+This can be done with @xurl{gtk-grid} as follows:
 @verbatim
   (let ((grid (gtk-grid-new))
         (child (make-instance 'gtk-label
@@ -826,16 +792,14 @@ This can be done with @url{@value{GTK-GRID}, @code{gtk-grid}} as follows:
 
 We repeat the implementation of @ref{example-box-packing} and
 @ref{example-table-packing} using @code{GtkGrid}.  The first
-@ref{example-grid-packing} shows how to replace @url{@value{GTK-BOX},
-@code{gtk-box}} with @url{@value{GTK-GRID}, @code{gtk-grid}} to create vertical
-and horizontal boxes.  In the second @ref{example-grid-packing-2}
-@url{@value{GTK-TABLE}, @code{gtk-table}} is replaced with
-@url{@value{GTK-GRID}, @code{gtk-grid}}. See @ref{figure-box-packing} and
-@ref{figure-table-packing} for the output of the example programs.
+@ref{example-grid-packing} shows how to replace @xurl{gtk-box} with
+@xurl{gtk-grid} to create vertical and horizontal boxes.  In the second
+@ref{example-grid-packing-2} @xurl{gtk-table} is replaced with @xurl{gtk-grid}.
+See @ref{figure-box-packing} and @ref{figure-table-packing} for the output of
+the example programs.
 
 @float Example, example-grid-packing
-@caption{@ref{example-box-packing} using @url{@value{GTK-GRID},
-@code{gtk-grid}}}
+@caption{@ref{example-box-packing} using @xurl{gtk-grid}}
 @end float
 @verbatim
 (defun make-grid (homogeneous spacing expand align margin)
@@ -941,8 +905,7 @@ and horizontal boxes.  In the second @ref{example-grid-packing-2}
 @end verbatim
 
 @float Example, example-grid-packing-2
-@caption{@ref{example-table-packing} using @url{@value{GTK-GRID},
-@code{gtk-grid}}}
+@caption{@ref{example-table-packing} using @xurl{gtk-grid}}
 @end float
 @verbatim
 (defun example-grid-packing-2 ()

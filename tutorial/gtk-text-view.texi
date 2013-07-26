@@ -5,7 +5,7 @@
 @c Author   : Dieter Kaiser
 @c Date     : 22.05.2012
 @c Revision : 01.07.2012
-@c 
+@c
 @c Copyright (C) 2012 by Dieter Kaiser
 @c -----------------------------------------------------------------------------
 
@@ -116,7 +116,7 @@ The simplest usage of @code{GtkTextView} might look like in
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       (gtk-text-buffer-set-text buffer "Hello, this is some text.")
       (gtk-container-add window view)
       (gtk-widget-show-all window))))
@@ -161,7 +161,7 @@ methods on @code{GtkTextView} such as @code{gtk-text-view-set-tabs}.
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       (gtk-text-buffer-set-text buffer "Hello, this is some text.")
       ;; Change default font throughout the widget
       (gtk-widget-override-font

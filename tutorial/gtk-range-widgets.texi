@@ -5,7 +5,7 @@
 @c Author   : Dieter Kaiser
 @c Date     : 09.03.2012
 @c Revision : 01.07.2012
-@c 
+@c
 @c Copyright (C) 2012 by Dieter Kaiser
 @c -----------------------------------------------------------------------------
 
@@ -104,7 +104,7 @@ As with scrollbars, the @code{GtkScale} widget is a horizontal or vertical
 scale, depending on the value of the @code{orientation} property.  A scale can
 be created with the function @code{gtk-scale-new}, which takes two arguments.
 The first argument gives the direction @code{:horizontal} or @code{:vertical}
-and the second a @code{GtkAdjustment}.  
+and the second a @code{GtkAdjustment}.
 
 The adjustment argument can either be an adjustment which has already been
 created with @code{gtk-adjustment-new}, or @code{NIL}, in which case, an
@@ -148,7 +148,7 @@ default, as is the value field in its adjustment.  You can change this with the
 function @code{gtk-scale-set-digits}.  The first argument is a widget of type
 @code{GtkScale} and the second argument @code{digits}, where @code{digits} is
 the number of decimal places you want.  You can set digits to anything you like,
-but no more than 13 decimal places will actually be drawn on screen.                                                             
+but no more than 13 decimal places will actually be drawn on screen.
 
 Finally, the value can be drawn in different positions relative to the trough
 with the function @code{gtk-scale-set-value-pos}.  The first argument is again
@@ -312,7 +312,7 @@ signal being given to the window.
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       ;; Packing of the global widgets hscale, vscale, and scrollbar
       (gtk-container-add window box1)
       (gtk-box-pack-start box1 box2)
@@ -421,7 +421,7 @@ signal being given to the window.
                    (gtk-adjustment-page-increment adjustment))))
         (gtk-box-pack-start box
                             (make-instance 'gtk-label
-                                           :label "Scrollbar Page Size:") 
+                                           :label "Scrollbar Page Size:")
                             :expand nil :fill nil)
         (gtk-box-pack-start box scale)
         (gtk-box-pack-start box1 box))

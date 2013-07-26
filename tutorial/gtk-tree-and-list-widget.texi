@@ -5,7 +5,7 @@
 @c Author   : Dieter Kaiser
 @c Date     : 08.07.2012
 @c Revision : 08.07.2012
-@c 
+@c
 @c Copyright (C) 2012 by Dieter Kaiser
 @c -----------------------------------------------------------------------------
 
@@ -192,7 +192,7 @@ are added to it.
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       (gtk-container-add window view)
       (gtk-widget-show-all window))))
 @end verbatim

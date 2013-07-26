@@ -38,28 +38,22 @@
 @findex label-set-text, gtk-label-set-text
 @findex label-get-text, gtk-label-get-text
 
-Labels are used a lot in GTK+, and are relatively simple.  The
-@url{@value{GTK-LABEL}, @code{gtk-label}} widget displays a small amount of
-text.  As the name implies, most labels are used to label another widget such as
-a @url{@value{GTK-BUTTON}, @code{gtk-button}}, a @url{@value{GTK-MENU-ITEM},
-@code{gtk-menu-item}}, or a @url{@value{GTK-COMBO-BOX},
-@code{gtk-combo-box}}.  Labels emit no signals as they do not have an
-associated X window.  If you need to catch signals, or do clipping, place it
-inside a @url{@value{GTK-EVENT-BOX}, @code{gtk-event-box}} widget or a Button
-widget.
+Labels are used a lot in GTK+, and are relatively simple.  The @xurl{gtk-label}
+widget displays a small amount of text.  As the name implies, most labels are
+used to label another widget such as a @xurl{gtk-button}, a
+@xurl{gtk-menu-item}, or a @xurl{gtk-combo-box}.  Labels emit no signals as they
+do not have an associated X window.  If you need to catch signals, or do
+clipping, place it inside a @xurl{gtk-event-box} widget or a Button widget.
 
 To create a new label, use @code{make-instance} with the class name
-@url{@value{GTK-LABEL}, @code{gtk-label}} or the functions
-@url{@value{GTK-LABEL-NEW}, @code{gtk-label-new}} or
-@url{@value{GTK-LABEL-NEW-WITH-MNEMONIC}, @code{gtk-label-new-with-mnemonic}}.
-The sole argument of the functions is the string you wish the label to display.
-To change the text of the label after creation, use the function
-@url{@value{GTK-LABEL-SET-TEXT}, @code{gtk-label-set-text}}.  The first argument
+@xurl{gtk-label} or the functions @xurl{gtk-label-new} or
+@xurl{gtk-label-new-with-mnemonic}.  The sole argument of the functions is the
+string you wish the label to display.  To change the text of the label after
+creation, use the function @xurl{gtk-label-set-text}.  The first argument
 is the label you created previously, and the second is the new string. The space
 needed for the new string will be automatically adjusted if needed.  You can
 produce multi-line labels by putting line breaks in the label string.  To
-retrieve the current string, use @url{@value{GTK-LABEL-GET-TEXT},
-@code{gtk-label-get-text}}.
+retrieve the current string, use @xurl{gtk-label-get-text}.
 
 @ifnotinfo
 @float Figure, figure-labels
@@ -81,18 +75,15 @@ retrieve the current string, use @url{@value{GTK-LABEL-GET-TEXT},
 Labels may contain mnemonics.  Mnemonics are underlined characters in the
 label, used for keyboard navigation.  Mnemonics are created by providing a
 string with an underscore before the mnemonic character, such as "_File",
-to the functions @url{@value{GTK-LABEL-NEW-WITH-MNEMONIC},
-@code{gtk-label-new-with-mnemonic}} or
-@url{@value{GTK-LABEL-SET-TEXT-WITH-MNEMONIC},
-@code{gtk-label-set-text-with-mnemonic}}.
+to the functions @xurl{gtk-label-new-with-mnemonic} or
+@xurl{gtk-label-set-text-with-mnemonic}.
 
 Mnemonics automatically activate any activatable widget the label is inside,
-such as a @url{@value{GTK-BUTTON}, @code{gtk-button}}; if the label is not
-inside the mnemonic's target widget, you have to tell the label about the target
-using @url{@value{GTK-LABEL-SET-MNEMONIC-WIDGET},
-@code{gtk-label-set-mnemonic-widget}}.
+such as a @xurl{gtk-button}; if the label is not inside the mnemonic's target
+widget, you have to tell the label about the target using
+@xurl{gtk-label-set-mnemonic-widget}.
 
-Here's a simple example where the label is inside a button:
+Here is a simple example where the label is inside a button:
 @verbatim
   ;; Pressing Alt+H will activate this button
   (let* ((button (gtk-button-new))
@@ -110,9 +101,8 @@ already inside:
 @end verbatim
 
 To create a mnemonic for a widget alongside the label, such as a
-@url{@value{GTK-ENTRY}, @code{gtk-entry}}, you have to point the label at the
-entry with @url{@value{GTK-LABEL-SET-MNEMONIC-WIDGET},
-@code{gtk-label-set-mnemonic-widget}}:
+@xurl{gtk-entry}, you have to point the label at the entry with
+@xurl{gtk-label-set-mnemonic-widget}:
 @verbatim
   ;; Pressing Alt+H will focus the entry
   (let* ((entry (gtk-entry-new))
@@ -153,20 +143,17 @@ or
 
 @c TODO: g-markup-escape-text and g-markup-printf-escaped are not implemented.
 
-The markup passed to @url{@value{GTK-LABEL-SET-MARKUP},
-@code{gtk-label-set-markup}} must be valid; for example, literal <, > and &
-characters must be escaped as \<, \gt;, and \&.  If you pass text obtained from
-the user, file, or a network to @url{@value{GTK-LABEL-SET-MARKUP},
-@code{gtk-label-set-markup}}, you'll want to escape it with
-@code{g-markup-escape-text} or @code{g-markup-printf-escaped}.  (Note: The
-functions @code{g-markup-escape-text} and @code{g-markup-printf-escaped} are
-not implemented in the Lisp binding.)
+The markup passed to @xurl{gtk-label-set-markup} must be valid; for example,
+literal <, > and & characters must be escaped as \<, \gt;, and \&.  If you pass
+text obtained from the user, file, or a network to @xurl{gtk-label-set-markup},
+you will want to escape it with @code{g-markup-escape-text} or
+@code{g-markup-printf-escaped}.  (Note: The functions
+@code{g-markup-escape-text} and @code{g-markup-printf-escaped} are not
+implemented in the Lisp binding.)
 
-Markup strings are just a convenient way to set the
-@url{@value{PANGO-ATTR-LIST}, @code{pango-attr-list}} on a label;
-@url{@value{GTK-LABEL-SET-ATTRIBUTES}, @code{gtk-label-set-attributes}} may be a
-simpler way to set attributes in some cases.  Be careful though;
-@url{@value{PANGO-ATTR-LIST}, @code{pango-attr-list}} tends to cause
+Markup strings are just a convenient way to set the @xurl{pango-attr-list} on a
+label; @xurl{gtk-label-set-attributes} may be a simpler way to set attributes in
+some cases.  Be careful though; @xurl{pango-attr-list} tends to cause
 internationalization problems, unless you're applying attributes to the
 entire string (i.e. unless you set the range of each attribute to
 @code{[0, G_MAXINT)}).  The reason is that specifying the @code{start_index}
@@ -178,10 +165,10 @@ exact string being displayed, so translations will cause problems.
 @findex gtk-label-set-selectable
 @findex label-set-selectable, gtk-label-set-selectable
 
-Labels can be made selectable with @url{@value{GTK-LABEL-SET-SELECTABLE},
-@code{gtk-label-set-selectable}}.  Selectable labels allow the user to copy the
-label contents to the clipboard.  Only labels that contain useful-to-copy
-information - such as error messages - should be made selectable.
+Labels can be made selectable with @xurl{gtk-label-set-selectable}.  Selectable
+labels allow the user to copy the label contents to the clipboard.  Only labels
+that contain useful-to-copy information - such as error messages - should be
+made selectable.
 
 @subheading Text layout
 
@@ -193,10 +180,9 @@ by newlines or other paragraph separators understood by Pango.
 @findex label-set-line-wrap, gtk-label-set-line-wrap
 
 The label widget is capable of line wrapping the text automatically.  This can
-be activated using the function @url{@value{GTK-LABEL-SET-LINE-WRAP},
-@code{gtk-label-set-line-wrap}}.  The first argument is the label and the second
-argument take @code{T} or @code{NIL} to switch on or to switch off the line
-wrapping.
+be activated using the function @xurl{gtk-label-set-line-wrap}.  The first
+argument is the label and the second argument take @code{T} or @code{NIL} to
+switch on or to switch off the line wrapping.
 
 @findex GtkJustification
 @findex gtk-justification
@@ -205,13 +191,12 @@ wrapping.
 @findex gtk-label-set-justify
 @findex label-set-justify, gtk-label-set-justify
 
-@url{@value{GTK-LABEL-SET-JUSTIFY}, @code{gtk-label-set-justify}} sets how the
-lines in a label align with one another.  The first argument is the label and
-the second argument one of the following values of the enumeration type
-@url{@value{GTK-JUSTIFICATION}, @code{gtk-justification}}.  The possible values
-are shown in @ref{table-gtk-justification}.  If you want to set how the label as
-a whole aligns in its available space, see @url{@value{GTK-MISC-SET-ALIGNMENT},
-@code{gtk-misc-set-alignment}}.
+@xurl{gtk-label-set-justify} sets how the lines in a label align with one
+another.  The first argument is the label and the second argument one of the
+following values of the enumeration type @xurl{gtk-justification}.  The possible
+values are shown in @ref{table-gtk-justification}.  If you want to set how the
+label as a whole aligns in its available space, see the function
+@xurl{gtk-misc-set-alignment}.
 
 @float Table, table-gtk-justification
 @caption{Values of the type @code{GtkJustification}}
@@ -240,12 +225,11 @@ use all of the available width.
 @findex label-set-pattern, gtk-label-set-pattern
 
 If you want your label underlined, then you can set a pattern on the label with
-the function @url{@value{GTK-LABEL-SET-PATTERN}, @code{gtk-label-set-pattern}}.
-The pattern argument indicates how the underlining should look.  It consists of
-a string of underscore and space characters.  An underscore indicates that the
-corresponding character in the label should be underlined.  For example, the
-string "__ __" would underline the first two characters and eight and ninth
-characters.
+the function @xurl{gtk-label-set-pattern}.  The pattern argument indicates how
+the underlining should look.  It consists of a string of underscore and space
+characters.  An underscore indicates that the corresponding character in the
+label should be underlined.  For example, the string "__ __" would underline the
+first two characters and eight and ninth characters.
 
 @subheading Links
 
@@ -264,17 +248,15 @@ tooltip on the link.  An example looks like this:
 @end verbatim
 
 It is possible to implement custom handling for links and their tooltips
-with the @code{activate-link} signal and the
-@url{@value{GTK-LABEL-GET-CURRENT-URI}, @code{gtk-label-get-current-uri}}
+with the @code{activate-link} signal and the @xurl{gtk-label-get-current-uri}
 function.
 
 @subheading GtkLabel as GtkBuildable
 
-The @url{@value{GTK-LABEL}, @code{gtk-label}} implementation of the
-@url{@value{GTK-BUILDABLE}, @code{gtk-buildable}} interface supports a custom
-@code{<attributes>} element, which supports any number of @code{<attribute>}
-elements. The @code{<attribute>} element has attributes named @code{name},
-@code{value}, @code{start} and @code{end} and allows you to specify
+The @xurl{gtk-label} implementation of the @xurl{gtk-buildable} interface
+supports a custom @code{<attributes>} element, which supports any number of
+@code{<attribute>} elements. The @code{<attribute>} element has attributes named
+@code{name}, @code{value}, @code{start} and @code{end} and allows you to specify
 @code{PangoAttribute} values for this label.
 
 @float Example, example-label-ui

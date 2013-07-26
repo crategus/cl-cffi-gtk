@@ -5,7 +5,7 @@
 @c Author   : Dieter Kaiser
 @c Date     : 15.02.2012
 @c Revision : 16.07.2012
-@c 
+@c
 @c Copyright (C) 2012 by Dieter Kaiser
 @c -----------------------------------------------------------------------------
 
@@ -153,7 +153,7 @@ widget.  The tooltip pops up, when the mouse is over the button.
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       ;; Create buttons with an arrow and add the buttons to the grid
       (gtk-container-add grid (create-arrow-button :up :in))
       (gtk-container-add grid (create-arrow-button :down :out))
@@ -185,7 +185,7 @@ widget.  The tooltip pops up, when the mouse is over the button.
 
 @code{GtkCalendar} is a widget that displays a Gregorian calendar, one month at
 a time.  It can be created with @code{gtk-calendar-new}.
- 
+
 @findex gtk-calendar-select-month
 @findex calendar-select-month, gtk-calendar-select-month
 @findex gtk-calendar-select-day
@@ -201,7 +201,7 @@ displayed month using @code{gtk-calendar-select-day}.
 @findex calendar-unmark-day, gtk-calendar-unmark-day
 @findex gtk-calendar-clear-marks
 @findex calendar-clear-marks, gtk-calendar-clear-marks
- 
+
 To place a visual marker on a particular day, use @code{gtk-calendar-mark-day}
 and to remove the marker, @code{gtk-calendar-unmark-day}.  Alternative, all
 marks can be cleared with @code{gtk-calendar-clear-marks}.
@@ -214,10 +214,10 @@ The way in which the calendar itself is displayed can be altered using
 
 @findex gtk-calendar-get-date
 @findex calendar-get-date, gtk-calendar-get-date
- 
+
 The selected date can be retrieved from a @code{GtkCalendar} using
 @code{gtk-calendar-get-date}.
- 
+
 Users should be aware that, although the Gregorian calendar is the legal
 calendar in most countries, it was adopted progressively between 1582 and
 1929.  Display before these dates is likely to be historically incorrect.
@@ -253,7 +253,7 @@ whenever the 12th day of a month is selected.
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       ;; Connect a signal handler to print the selected day
       (g-signal-connect calendar "day-selected"
                         (lambda (widget)
@@ -374,7 +374,7 @@ mouse pointer is than associated to the @code{GdkWindow} with the function
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       ;; Set the events for the event box
       (gtk-widget-set-events eventbox :button-press-mask)
       ;; Connect a signal to the eventbox
@@ -385,7 +385,7 @@ mouse pointer is than associated to the @code{GdkWindow} with the function
       ;; Add the label to the event box and the event box to the window
       (gtk-container-add eventbox label)
       (gtk-container-add window eventbox)
-      ;; Realize the event box 
+      ;; Realize the event box
       (gtk-widget-realize eventbox)
       ;; Set a new cursor for the event box
       (gdk-window-set-cursor (gtk-widget-window eventbox)
@@ -511,7 +511,7 @@ After creation and configuration of the dialog window the dialog is executed
 with the function @code{gtk-dialog-run}.  The function takes the dialog window
 of type @code{GtkDialog} as the only argument.  After closing the dialog window
 with one of the buttons the response is returned as an integer value of type
-@code{GtkResponseType}. 
+@code{GtkResponseType}.
 
 @c -----------------------------------------------------------------------------
 @node Message Dialog, About Dialog, General Dialog, Top
@@ -597,17 +597,17 @@ possible to give credits to the authors, documenters, translators and
 artists who have worked on the program.  An about dialog is typically opened
 when the user selects the About option from the Help menu.  All parts of the
 dialog are optional.
- 
+
 About dialogs often contain links and email addresses.  @code{GtkAboutDialog}
 displays these as clickable links.  By default, it calls @code{gtk_show_uri()}
 when a user clicks one.  The behavior can be overridden with the "activate-link"
 signal.
- 
+
 To make constructing a @code{GtkAboutDialog} as convenient as possible, the C
 library knows the function @code{gtk_show_about_dialog()} which constructs and
 shows a dialog and keeps it around so that it can be shown again.  This function
 is not implemented in the Lisp binding.
- 
+
 Note that GTK+ sets a default title of @code{_("About %s")} on the dialog
 window, where @code{%s} is replaced by the name of the application, but in
 order to ensure proper translation of the title, applications should set the
@@ -639,7 +639,7 @@ e.g. using @code{gtk-dialog-run}. In this case, you might need to know that the
           Lesser General Public License.  If not, see ~
           <http://www.gnu.org/licenses/> and ~
           <http://opensource.franz.com/preamble.html>."))
-          
+
 (defun create-dialog ()
   (let ((dialog (make-instance 'gtk-dialog
                                :title "Dialog Window"
@@ -683,7 +683,7 @@ e.g. using @code{gtk-dialog-run}. In this case, you might need to know that the
                                (format nil
                                        "This is a message dialog of type ~
                                         :info with a secondary text."))))
-    ;; Run the message dialog    
+    ;; Run the message dialog
     (gtk-dialog-run dialog)
     ;; Destroy the message dialog
     (gtk-widget-destroy dialog)))
@@ -720,8 +720,8 @@ e.g. using @code{gtk-dialog-run}. In this case, you might need to know that the
                                :spacing 6)))
       (g-signal-connect window "destroy"
                         (lambda (widget)
-                          (declare (ignore widget)) 
-                          (gtk-main-quit)))
+                          (declare (ignore widget))
+                          (leave-gtk-main)))
       (gtk-container-add window vbox)
       (let ((button (make-instance 'gtk-button
                                    :label "Open a Dialog Window")))
@@ -826,7 +826,7 @@ for every character entered or removed.
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       (g-signal-connect entry "activate"
                         (lambda (widget)
                           (declare (ignore widget))
@@ -1041,7 +1041,7 @@ function @code{gtk-spin-button-update}.
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       (let ((vbox (make-instance 'gtk-vbox))
             (spinner (make-instance 'gtk-spin-button
                                     :adjustment
@@ -1307,7 +1307,7 @@ entry.
       (g-signal-connect window "destroy"
                         (lambda (w)
                           (declare (ignore w))
-                          (gtk-main-quit)))
+                          (leave-gtk-main)))
       (g-signal-connect button "clicked"
          (lambda (widget)
            (declare (ignore widget))
