@@ -55,7 +55,7 @@
       (t "libgtk-3-0")))
   (use-foreign-library gtk))
 
-#+sbcl 
+#+sbcl
 (when (and (find-package "SB-EXT")
            (find-symbol "SET-FLOATING-POINT-MODES" (find-package "SB-EXT")))
   (funcall (find-symbol "SET-FLOATING-POINT-MODES" (find-package "SB-EXT")) :traps nil))
@@ -1930,7 +1930,7 @@ gtk_text_buffer_apply_tag (buffer, tag, &start, &end);
       @about-function{gtk-text-buffer-unregister-serialize-format}
     @end{subsection}
     @begin[GtkTextTag]{subsection}
-      A tag that can be applied to text in a @class{gkt-text-buffer}.
+      A tag that can be applied to text in a @class{gtk-text-buffer}.
 
       @about-class{gtk-text-tag}
       @about-symbol{gtk-wrap-mode}
