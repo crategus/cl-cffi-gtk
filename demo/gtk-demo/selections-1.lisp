@@ -1,6 +1,7 @@
 ;;;; Retrieving Selections
 
 (defun selection-received (widget selection-data time)
+  (declare (ignore widget time))
   (format t "Event 'selection-received' event: ~A~%" selection-data)
   (cond ((< (gtk-selection-data-length selection-data) 0)
          (format t "Selection retrieval failed.~%"))
@@ -9,11 +10,13 @@
          (format t "Selection 'Targets' was not returned as atoms.~%"))
         (t
           (format t "All is fine: ~A~%" (gtk-selection-data-data selection-data))
-          (setq n-atoms (/ (gtk-selection-data-length selection-data) (foreign-type-size 'gdk-atom)))
-          (with-foreign-object (atoms-ptr 'gdk-atom n-atoms)
-            (loop for i from 0 below n-atoms do
-                  (format t "~A~%" (gdk-atom-name (mem-aref atoms-ptr 'gdk-atom i))))))
-))
+          (let ((n-atoms (/ (gtk-selection-data-length selection-data) (foreign-type-size 'gdk-atom))))
+            (with-foreign-object (atoms-ptr 'gdk-atom n-atoms)
+              (loop 
+                for i from 0 below n-atoms do
+                (format t "~A~%" (gdk-atom-name (mem-aref atoms-ptr 'gdk-atom i)))))))
+
+  ))
 
 
 (defun demo-selections-1 ()
@@ -37,8 +40,7 @@
                           (gtk-selection-convert window
                                                  "PRIMARY"
                                                  "TARGETS"
-                                                 +gdk-current-time+)
-))
+                                                 +gdk-current-time+)))
 
       (g-signal-connect window "selection-received" #'selection-received)
 

@@ -33,6 +33,7 @@
       (back-rect (make-gdk-rectangle))
       (src-rect (make-gdk-rectangle))
       (dest-rect (make-gdk-rectangle))
+      (surface nil)
      )
 
   (defun load-pixbufs ()
@@ -47,11 +48,12 @@
                    (gdk-pixbuf-new-from-file file-name))))
 
   (defun timeout ()
-    (let* ((f (* 1.0d0 (/ (mod frame-num cycle-len) cycle-len)))
+    (let* ((cr (cairo-create surface))
+           (f (* 1.0d0 (/ (mod frame-num cycle-len) cycle-len)))
            (xmid (/ back-width 2.0d0))
            (ymid (/ back-height 2.0d0))
            (radius (/ (min xmid ymid) 2.0d0)))
-;      (format t "~& f = ~A~%" f)
+      (format t "~& TIMEOUT f = ~A~%" f)
       (gdk-pixbuf-copy-area background 0 0 back-width back-height frame 0 0)
       (dotimes (i 8)
         (let* ((ang (* 2.0d0 3.14d0 (- (/ i 8) f)))
@@ -77,7 +79,7 @@
 ;          (let ((dest (gdk-rectangle-intersect src-rect
 ;                                               back-rect)))
 ;            (when dest
-              (format t "in loop ~a ~a~%" frame-num i)
+;              (format t "in loop ~a ~a~%" frame-num i)
               #-nil
               (gdk-pixbuf-composite (aref *image-pixbufs* i)
                                     frame
@@ -95,14 +97,20 @@
 ;                                        (max 127 (abs (* 255 (cos (* f 2.0d0 3.14)))))))
                                     255)
 ;))
-)))
+))
     ;; TODO: This function call causes a memory overflow.
 ;    (gtk-widget-queue-draw area)
-
+;    (format t "~%~%~%LOOP:~%~%")
+;    (room)
+    (gdk-cairo-set-source-pixbuf cr frame 0.0d0 0.0d0)
+    (cairo-paint cr)
+    (cairo-destroy cr)
     (gtk-widget-queue-draw-area area  0 0 (gdk-rectangle-width back-rect) (gdk-rectangle-height back-rect))
+;    (room)
+;    (sb-ext:gc)
 
     (incf frame-num 1)
-    t)
+    t))
 
   (defun demo-pixbufs ()
     (within-main-loop
@@ -119,12 +127,36 @@
                                    (leave-gtk-main)))
         (setf frame-num 0)
         (g-signal-connect area "draw"
-                             (lambda (widget cr)
-                               (declare (ignore widget))
-;                               (format t "~&Signal draw: ~A ~A~%" cr frame)
-                               (gdk-cairo-set-source-pixbuf (pointer cr) frame 0.0d0 0.0d0)
-                               (cairo-paint (pointer cr))
-                               t))
+           (lambda (widget cr)
+             (declare (ignore widget))
+             (cairo-set-source-surface (pointer cr) surface 0.0d0 0.0d0)
+             (cairo-paint (pointer cr))
+             nil))
+;                             (lambda (widget cr)
+;                               (declare (ignore widget))
+;                               (gdk-cairo-set-source-pixbuf (pointer cr) frame 0.0d0 0.0d0)
+;                               (cairo-paint (pointer cr))
+;                               nil))
+
+        (g-signal-connect area "configure-event"
+           (lambda (widget event)
+             (declare (ignore event))
+             (when surface
+               (cairo-surface-destroy surface))
+             (setq surface
+                   (gdk-window-create-similar-surface
+                                   (gtk-widget-get-window widget)
+                                   :color
+                                   (gtk-widget-get-allocated-width widget)
+                                   (gtk-widget-get-allocated-height widget)))
+             ;; Clear surface
+             (let ((cr (cairo-create surface)))
+               (cairo-set-source-rgb cr 1.0d0 1.0d0 1.0d0)
+               (cairo-paint cr)
+               (cairo-destroy cr))
+             (format t "leave event 'configure-event'~%")
+             t))
+
         ;; Load the background and the images.
         (load-pixbufs)
         
@@ -132,7 +164,7 @@
         (setf frame (gdk-pixbuf-new :rgb nil 8 back-width back-height))
 
         (gtk-container-add window area)
-        (setf timeout-id (g-timeout-add 500 #'timeout))
+        (setf timeout-id (g-timeout-add 250 #'timeout))
         (format t "~&timeout-id = ~A~%" timeout-id)
 
         (gtk-widget-show-all window)))))

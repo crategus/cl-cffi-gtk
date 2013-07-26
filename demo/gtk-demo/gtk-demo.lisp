@@ -1,3 +1,4 @@
+
 (asdf:load-system :cl-cffi-gtk)
 
 (defpackage :gtk-demo
@@ -17,26 +18,29 @@
 (load "dialog-toplevel.lisp")
 (load "dialogs.lisp")
 (load "drawing.lisp")
+(load "fixed.lisp")
+(load "frame.lisp")
 (load "grid-packing.lisp")
 (load "labels.lisp")
 (load "link-button.lisp")
 (load "selections-1.lisp")
+(load "simple-file-chooser.lisp")
 (load "simple-message.lisp")
 (load "simple-text-view.lisp")
 (load "simple-window.lisp")
 (load "switch.lisp")
-
 (load "table-packing.lisp")
-(load "toggle-buttons.lisp")
 (load "text-view-attributes.lisp")
-(load "simple-file-chooser.lisp")
+(load "toggle-buttons.lisp")
+(load "tool-palette.lisp")
+
+
 (load "more-labels.lisp")
 (load "progress-bar.lisp")
 (load "statusbar.lisp")
 (load "info-bar.lisp")
 (load "scale-widgets.lisp")
 (load "alignment.lisp")
-(load "fixed.lisp")
 (load "aspect-frame.lisp")
 (load "paned-window.lisp")
 (load "scrolled-window.lisp")
@@ -257,6 +261,9 @@
                                 "Fixed Container"
                                 "fixed.lisp" "EXAMPLE-FIXED" 0)
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
+                                "Frame Container"
+                                "frame.lisp" "DEMO-FRAME" 0)
+      (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Aspect Frame"
                                 "aspect-frame.lisp" "EXAMPLE-ASPECT-FRAME" 0)
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
@@ -365,5 +372,9 @@
                                 (create-text source-buffer t)
                                 (gtk-label-new-with-mnemonic "_Source"))
       (gtk-container-add window hbox)
-      (gtk-widget-show-all window))))
+      (gtk-widget-show-all window)))
+
+  (join-gtk-main))
+
+(export 'main)
 
