@@ -4,9 +4,10 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.6.4 and modified to document the Lisp binding to the GDK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -56,14 +57,21 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-bin 'type)
- "@version{2013-7-7}
-  @short{The @class{gtk-bin} widget is a container with just one child.}
-  It is not very useful itself, but it is useful for deriving subclasses, since
-  it provides common code needed for handling a single child widget.
+ "@version{2013-8-1}
+  @begin{short}
+    The @class{gtk-bin} widget is a container with just one child. It is not
+    very useful itself, but it is useful for deriving subclasses, since it
+    provides common code needed for handling a single child widget.
+  @end{short}
 
-  Many GTK+ widgets are subclasses of @class{gtk-bin}, including
+  Many GTK+ widgets are subclasses of @sym{gtk-bin}, including
   @class{gtk-window}, @class{gtk-button}, @class{gtk-frame},
-  @class{gtk-handle-box} or @class{gtk-scrolled-window}.")
+  @class{gtk-handle-box} or @class{gtk-scrolled-window}.
+  @see-class{gtk-window}
+  @see-class{gtk-button}
+  @see-class{gtk-frame}
+  @see-class{gtk-handle-box}
+  @see-class{gtk-scrolled-window}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_bin_get_child ()

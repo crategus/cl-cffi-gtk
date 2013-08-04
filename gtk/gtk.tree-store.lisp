@@ -517,7 +517,7 @@
   (iter (g-boxed-foreign gtk-tree-iter))
   (parent (g-boxed-foreign gtk-tree-iter)))
 
-(defun tree-store-prepend (tree-store parent)
+(defun gtk-tree-store-prepend (tree-store parent)
  #+cl-cffi-gtk-documentation
  "@version{2013-3-27}
   @argument[tree_store]{A GtkTreeStore}

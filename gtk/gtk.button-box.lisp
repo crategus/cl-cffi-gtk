@@ -82,8 +82,8 @@
   @fun{gtk-button-box-set-layout} retrieve and alter the method used to spread
   the buttons in a button box across the container, respectively.
 
-  The main purpose of @class{gtk-button-box} is to make sure the children have
-  all the same size. @class{gkt-button-box} gives all children the same size,
+  The main purpose of @sym{gtk-button-box} is to make sure the children have
+  all the same size. @sym{gtk-button-box} gives all children the same size,
   but it does allow 'outliers' to keep their own larger size. To force all
   children to be strictly the same size without exceptions, you can set the
   @code{\"homogeneous\"} property to @em{true}.

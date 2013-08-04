@@ -27,8 +27,6 @@
 
 (in-package :gtk)
 
-
-
 (defcallback call-from-main-loop-callback :boolean
     ((data :pointer))
   (restart-case
@@ -39,11 +37,9 @@
 (defun call-from-gtk-main-loop (func &key (priority g-priority-default-idle))
   (glib::%g-idle-add-full priority
                           (callback call-from-main-loop-callback)
-                          (glib::allocate-stable-pointer func)
-                          (callback glib::stable-pointer-destroy-notify-cb))
+                          (glib:allocate-stable-pointer func)
+                          (callback glib:stable-pointer-destroy-notify-cb))
   (ensure-gtk-main))
-
-(export 'call-from-gtk-main-loop)
 
 (defcallback call-timeout-from-main-loop-callback :boolean
     ((data :pointer))
@@ -52,6 +48,16 @@
     (return-from-callback () nil)))
 
 (defmacro within-main-loop (&body body)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-7-30}
+  The macro @sym{within-main-loop} is a wrapper around a GTK+ program. The
+  functionality of the macro corresponds to the C functions @code{gtk_init()}
+  and @code{gtk_main()} which initialize and start a GTK+ program. Both
+  functions have corresponding Lisp functions. The function
+  @code{gtk_main()} is exported as the Lisp function @fun{gtk-main}. The
+  corresponding Lisp function to @code{gtk_init()} is called internally when
+  loading the library, but is not exported.
+  @see-function{gtk-main}"
   `(call-from-gtk-main-loop (lambda () ,@body)))
 
 (export 'within-main-loop)
@@ -67,7 +73,5 @@
   `(progn
      ,@body
      (ensure-gtk-main)))
-
-(export 'with-main-loop)
 
 ;;; --- End of file gtk.misc-lisp.lisp -----------------------------------------

@@ -1581,7 +1581,7 @@
   (width (:pointer :int))
   (height (:pointer :int)))
 
-(defun tree-view-column-cell-get-size (tree-column cell-area)
+(defun gtk-tree-view-column-cell-get-size (tree-column cell-area)
  #+cl-cffi-gtk-documentation
  "@version{2013-5-16}
   @argument[tree-column]{a @class{gtk-tree-view-column} object}
@@ -1693,7 +1693,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_tree_view_column_queue_resize"
-          %gtk-tree-view-column-queue-resize) :void
+           gtk-tree-view-column-queue-resize) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-5-16}
   @argument[tree-column]{a @class{gtk-tree-view-column} object}

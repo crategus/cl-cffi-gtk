@@ -4,9 +4,10 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.6.4 and modified to document the Lisp binding to the GDK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -723,7 +724,7 @@
   (make-instance 'gtk-combo-box
                  :has-entry t))
 
-(export 'gtk-combox-box-new-with-entry)
+(export 'gtk-combo-box-new-with-entry)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_new_with_model ()
@@ -758,17 +759,21 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_new_with_area ()
-;;;
-;;; GtkWidget * gtk_combo_box_new_with_area (GtkCellArea *area);
-;;;
-;;; Creates a new empty GtkComboBox using area to layout cells.
-;;;
-;;; area :
-;;;     the GtkCellArea to use to layout cell renderers
-;;;
-;;; Returns :
-;;;     A new GtkComboBox.
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-combo-box-new-with-area))
+
+(defun gtk-combo-box-new-with-area (area)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-3}
+  @argument[area]{the @class{gtk-cell-area} to use to layout cell renderers}
+  @return{A new @class{gtk-combo-box} widget.}
+  Creates a new empty @class{gtk-combo-box} using @arg{area} to layout cells.
+  @see-class{gtk-combo-box}"
+  (make-instance 'gtk-combo-box
+                 :cell-area area))
+
+(export 'gtk-combo-box-new-with-area)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_new_with_area_and_entry ()
@@ -952,14 +957,16 @@
 
 (defun gtk-combo-box-get-active-iter (combo-box)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-31}
+ "@version{2013-8-3}
   @argument[combo-box]{a @class{gtk-combo-box} widget}
-  @return{the iter, or @code{nil}}
+  @return{The @arg{iter}, or @code{nil}.}
   @begin{short}
-    Returns iter to point to the current active item, if it exists.
+    Returns @arg{iter} to point to the current active item, if it exists.
   @end{short}
 
-  Since 2.4"
+  Since 2.4
+  @see-class{gtk-combo-box}
+  @see-function{gtk-combo-box-set-active-iter}"
   (let ((iter (make-instance 'gtk-tree-iter)))
     (when (%gtk-combo-box-get-active-iter combo-box iter)
       iter)))
@@ -968,21 +975,25 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_set_active_iter ()
-;;;
-;;; void gtk_combo_box_set_active_iter (GtkComboBox *combo_box,
-;;;                                     GtkTreeIter *iter);
-;;;
-;;; Sets the current active item to be the one referenced by iter, or unsets the
-;;; active item if iter is NULL.
-;;;
-;;; combo_box :
-;;;     A GtkComboBox
-;;;
-;;; iter :
-;;;     The GtkTreeIter, or NULL.
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_combo_box_set_active_iter" gtk-combo-box-set-active-iter) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-3}
+  @argument[combo-box]{a @class{gtk-combo-box} widget}
+  @argument[iter]{the @class{gtk-tree-iter}, or @code{nil}}
+  @begin{short}
+    Sets the current active item to be the one referenced by @arg{iter}, or
+    unsets the active item if @arg{iter} is @code{nil}.
+  @end{short}
+
+  Since 2.4
+  @see-class{gtk-combo-box}
+  @see-function{gtk-combo-box-get-active-iter}"
+  (combo-box (g-object gtk-combo-box))
+  (iter (g-boxed-foreign gtk-tree-iter)))
+
+(export 'gtk-combo-box-set-active-iter)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_get_id_column ()

@@ -376,7 +376,7 @@
 ;;; gtk_scale_button_get_popup ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_scale_button_get_popup" gtk-scale-button-popup)
+(defcfun ("gtk_scale_button_get_popup" gtk-scale-button-get-popup)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
  "@version{2013-4-12}
@@ -393,7 +393,7 @@
 ;;; gtk_scale_button_get_plus_button ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_scale_button_get_plus_button" gtk-scale-button-plus-button)
+(defcfun ("gtk_scale_button_get_plus_button" gtk-scale-button-get-plus-button)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
  "@version{2013-4-12}
@@ -410,7 +410,7 @@
 ;;; gtk_scale_button_get_minus_button ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_scale_button_get_minus_button" gtk-scale-button-minus-button)
+(defcfun ("gtk_scale_button_get_minus_button" gtk-scale-button-get-minus-button)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
  "@version{2013-4-12}

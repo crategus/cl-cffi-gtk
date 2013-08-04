@@ -96,10 +96,10 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "action-target"
                                                'gtk-actionable) 't)
- "The @code{\"action-target\"} property of type @symbol{g-variant}
+ "The @code{\"action-target\"} property of type @type{g-variant}
   (Read / Write) @br{}
   The parameter for action invocations. @br{}
-  Allowed values: a @symbol{g-variant} @br{}
+  Allowed values: a @type{g-variant} @br{}
   Default value: @code{nil}")
 
 ;;; ----------------------------------------------------------------------------
@@ -238,9 +238,9 @@
 
 (defun gtk-actionable-set-action-target-value (actionable target-value)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-29}
+ "@version{2013-7-27}
   @argument[actionable]{a @class{gtk-actionable} widget}
-  @argument[target-value]{a @symbol{g-variant} to set as the target value,
+  @argument[target-value]{a @type{g-variant} to set as the target value,
     or @code{nil}}
   @begin{short}
     Sets the target value of an actionable widget.
@@ -259,10 +259,13 @@
   action. Clicking on a particular button will activate the action with the
   target of that button, which will typically cause the action's state to
   change to that value. Since the action's state is now equal to the target
-  value of the button, the button will now be rendered as active (and the
-  other buttons, with different targets, rendered inactive).
+  value of the button, the button will now be rendered as active and the
+  other buttons, with different targets, rendered inactive.
 
-  Since 3.4"
+  Since 3.4
+  @see-class{gtk-actionable}
+  @see-type{g-variant}
+  @see-class{g-action}"
   (setf (gtk-actionable-action-target actionable) target-value))
 
 (export 'gtk-actionable-set-action-target-value)

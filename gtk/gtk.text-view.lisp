@@ -942,10 +942,10 @@
   (x-align :double)
   (y-align :double))
 
-(defun text-view-scroll-to-iter (text-view iter &key
-                                           (within-margin 0.4)
-                                           (x-align 0.0 x-align-supplied)
-                                           (y-align 0.0 y-align-supplied))
+(defun gtk-text-view-scroll-to-iter (text-view iter &key
+                                               (within-margin 0.4)
+                                               (x-align 0.0 x-align-supplied)
+                                               (y-align 0.0 y-align-supplied))
  #+cl-cffi-gtk-documentation
  "@version{2013-5-10}
   @argument[text-view]{a @class{gtk-text-view} object}

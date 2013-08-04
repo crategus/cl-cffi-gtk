@@ -315,7 +315,8 @@
   (child-iter (g-boxed-foreign gtk-tree-iter))
   (sorted-iter (g-boxed-foreign gtk-tree-iter)))
 
-(defun tree-model-sort-convert-iter-to-child-iter (tree-model-sort sorted-iter)
+(defun gtk-tree-model-sort-convert-iter-to-child-iter (tree-model-sort
+                                                       sorted-iter)
  #+cl-cffi-gtk-documentation
  "@version{2013-6-21}
   @argument[tree-model-sort]{a @class{gtk-tree-model-sort} object}

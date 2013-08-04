@@ -4,9 +4,10 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.6.4 and modified to document the Lisp binding to the GDK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -129,14 +130,14 @@
 
 (declaim (inline gtk-statusbar-new))
 
-(defun gkt-statusbar-new ()
+(defun gtk-statusbar-new ()
  #+cl-cffi-gtk-documentation
- "@version{2013-4-23}
+ "@version{2013-8-1}
   @return{The new @class{gtk-statusbar} widget.}
-  Creates a new GtkStatusbar ready for messages."
+  Creates a new @class{gtk-statusbar} ready for messages."
   (make-instance 'gtk-statusbar))
 
-(export 'gtk-statusbar)
+(export 'gtk-statusbar-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_statusbar_get_context_id ()

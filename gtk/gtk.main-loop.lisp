@@ -307,28 +307,31 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_get_option_group ()
-;;;
-;;; GOptionGroup * gtk_get_option_group (gboolean open_default_display);
-;;;
-;;; Returns a GOptionGroup for the commandline arguments recognized by GTK+ and
-;;; GDK.
-;;;
-;;; You should add this group to your GOptionContext with
-;;; g_option_context_add_group(), if you are using g_option_context_parse() to
-;;; parse your commandline arguments.
-;;;
-;;; open_default_display :
-;;;     whether to open the default display when parsing the commandline
-;;;     arguments
-;;;
-;;; Returns :
-;;;     a GOptionGroup for the commandline arguments recognized by GTK+
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_get_option_group" gtk-get-option-group)
     (:pointer (:struct g-option-group))
+ #+cl-cffi-gtk-documentation
+ "@version{2013-7-31}
+  @argument[open-default-display]{whether to open the default display when
+    parsing the commandline arguments}
+  @begin{return}
+    A @class{g-option-group} for the commandline arguments recognized by GTK+
+  @end{return}
+  @begin{short}
+    Returns a @class{g-option-group} for the commandline arguments recognized
+    by GTK+ and GDK.
+  @end{short}
+
+  You should add this group to your @class{g-option-context} with
+  the function @fun{g-option-context-add-group}, if you are using the function
+  @fun{g-option-context-parse} to parse your commandline arguments.
+
+  Since 2.6
+  @see-class{g-option-group}
+  @see-class{g-option-context}
+  @see-function{g-option-context-add-group}
+  @see-function{g-option-context-parse}"
   (open-default-display :boolean))
 
 (export 'gtk-get-option-group)
@@ -367,17 +370,18 @@
 
 (defun gtk-main ()
  #+cl-cffi-gtk-documentation
- "@version{2013-4-22}
+ "@version{2013-7-30}
   @short{Runs the main loop until the function @fun{gtk-main-quit} is called.}
 
-  You can nest calls to @sym{gtk-main}. In that case the function
+  You can nest calls to the function @sym{gtk-main}. In that case the function
   @fun{gtk-main-quit} will make the innermost invocation of the main loop
   return.
 
   @subheading{Lisp Implementation}
-    In the Lisp binding to GTK+ @sym{gtk-main} is not called directly but
-    through the @fun{within-main-loop} macro. The @fun{within-main-loop} macro
-    does some additional bookkeeping, which is necessary to run a Lisp program.
+    In the Lisp binding to GTK+ the function @sym{gtk-main} is not called
+    directly but through the macro @fun{within-main-loop}. The macro
+    @fun{within-main-loop} does some additional bookkeeping, which is necessary
+    to run a Lisp program.
   @see-function{within-main-loop}
   @see-function{gtk-main-quit}"
   (with-gdk-threads-lock (%gtk-main)))
@@ -403,16 +407,17 @@
 
 (defcfun ("gtk_main_quit" gtk-main-quit) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-4-22}
+ "@version{2013-7-30}
   @begin{short}
     Makes the innermost invocation of the main loop return when it regains
     control.
   @end{short}
 
   @subheading{Lisp Implementation}
-    In the Lisp binding to GTK+ @sym{gtk-main-quit} is not called, but the
-    function @fun{leave-gtk-main}. The function @fun{leave-gtk-main} does some
-    additional bookkeeping, which is necessary to stop a Lisp program safely.
+    In the Lisp binding to GTK+ the function @sym{gtk-main-quit} is not called,
+    but the function @fun{leave-gtk-main}. The function @fun{leave-gtk-main}
+    does some additional bookkeeping, which is necessary to stop a Lisp program
+    safely.
   @see-function{leave-gtk-main}
   @see-function{gtk-main}")
 

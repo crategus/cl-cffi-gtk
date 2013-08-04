@@ -1136,23 +1136,23 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-window-type atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-window-type atdoc:*external-symbols*)
- "@version{2012-4-18}
+ "@version{2013-7-30}
   @begin{short}
     An enumeration for the possible types of a @class{gtk-window} widget.
   @end{short}
   A @class{gtk-window} widget can be one of the types @code{:toplevel} or
   @code{:popup}. Most things you would consider a \"window\" should have type
   @code{:toplevel}; windows with this type are managed by the window manager and
-  have a frame by default (call @fun{gtk-window-set-decorated} to toggle the
-  frame). Windows with type @code{:popup} are ignored by the window manager;
-  window manager keybindings will not work on them, the window manager will not
-  decorate the window with a frame, many GTK+ features that rely on the window
-  manager will not work (e. g. resize grips and maximization/minimization).
-  @code{:popup} is used to implement widgets such as @class{gtk-menu} or
-  tooltips that you normally do not think of as windows per se. Nearly all
-  windows should be @code{:toplevel}. In particular, do not use @code{:popup}
-  just to turn off the window borders; use @fun{gtk-window-set-decorated} for
-  that.
+  have a frame by default. Call the function @fun{gtk-window-set-decorated} to
+  toggle the frame. Windows with type @code{:popup} are ignored by the window
+  manager; window manager keybindings will not work on them, the window manager
+  will not decorate the window with a frame, many GTK+ features that rely on the
+  window manager will not work (e. g. resize grips and
+  maximization/minimization). The type @code{:popup} is used to implement
+  widgets such as @class{gtk-menu} or tooltips that you normally do not think of
+  as windows per se. Nearly all windows should be of type @code{:toplevel}. In
+  particular, do not use the type @code{:popup} just to turn off the window
+  borders; use the function @fun{gtk-window-set-decorated} for that.
   @begin{pre}
 (define-g-enum \"GtkWindowType\" gtk-window-type
   (:export t

@@ -69,7 +69,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-im-context 'type)
- "@version{2013-5-26}
+ "@version{2013-7-27}
   @begin{short}
     @sym{gtk-im-context} defines the interface for GTK+ input methods. An input
     method is used by GTK+ text input widgets like @class{gtk-entry} to map
@@ -77,7 +77,7 @@
   @end{short}
 
   The user may change the current input method via a context menu, unless the
-  \"gtk-show-input-method-menu\" @class{gk-settings} property is set to
+  \"gtk-show-input-method-menu\" @class{gtk-settings} property is set to
   @code{nil}. The default input method can be set programmatically via the
   \"gtk-im-module\" @class{gtk-settings} property. Alternatively, you may set
   the @code{GTK_IM_MODULE} environment variable as documented in gtk-running.

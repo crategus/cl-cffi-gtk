@@ -98,24 +98,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkUnit
-;;;
-;;; typedef enum {
-;;;   GTK_UNIT_NONE,
-;;;   GTK_UNIT_POINTS,
-;;;   GTK_UNIT_INCH,
-;;;   GTK_UNIT_MM
-;;; } GtkUnit;
-;;;
-;;; GTK_UNIT_NONE
-;;;
-;;;
-;;; GTK_UNIT_POINTS
-;;;
-;;;
-;;; GTK_UNIT_INCH
-;;;
-;;;
-;;; GTK_UNIT_MM
 ;;; ----------------------------------------------------------------------------
 
 (define-g-enum "GtkUnit" gtk-unit
@@ -127,9 +109,9 @@
   (:mm 3))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-paper-size atdoc:*symbol-name-alias*) "Enum"
-      (gethash 'gtk-paper-size atdoc:*external-symbols*)
- "@version{2013-7-5}
+(setf (gethash 'gtk-unit atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'gtk-unit atdoc:*external-symbols*)
+ "@version{2013-7-31}
   @short{}
   @begin{pre}
 (define-g-enum \"GtkUnit\" gtk-unit

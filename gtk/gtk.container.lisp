@@ -4,9 +4,10 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.6.4 and modified to document the Lisp binding to the GDK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -102,7 +103,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-container 'type)
- "@version{2013-5-24}
+ "@version{2013-8-1}
   @short{Base class for widgets which contain other widgets.}
 
   A GTK+ user interface is constructed by nesting widgets inside widgets.
@@ -123,15 +124,14 @@
 
   The second type of container can have more than one child; its purpose is to
   manage layout. This means that these containers assign sizes and positions
-  to their children. For example, a @class{gtk-hbox} arranges its children in a
-  horizontal row, and a @class{gtk-grid} arranges the widgets it contains in a
-  two-dimensional grid.
+  to their children. For example, a  @class{gtk-grid} arranges the widgets it
+  contains in a two-dimensional grid.
 
   @subheading{Height for width geometry management}
-    GTK+ uses a height-for-width (and width-for-height) geometry management
+    GTK+ uses a height-for-width and width-for-height geometry management
     system. Height-for-width means that a widget can change how much vertical
     space it needs, depending on the amount of horizontal space that it is given
-    (and similar for width-for-height).
+    and similar for width-for-height.
 
     There are some things to keep in mind when implementing container widgets
     that make use of GTK+'s height for width geometry management system. First,
@@ -226,16 +226,16 @@
     that a container must prioritize one dimension over the other. So if a
     container is a height-for-width container it must first allocate all widgets
     horizontally using a @class{gtk-requested-size} array and the function
-    @fun{gtk-distribute-natural-allocation} and then add any extra space (if
-    and where appropriate) for the widget to expand.
+    @fun{gtk-distribute-natural-allocation} and then add any extra space, if
+    and where appropriate, for the widget to expand.
 
     After adding all the expand space, the container assumes it was allocated
     sufficient height to fit all of its content. At this time, the container
     must use the total horizontal sizes of each widget to request the
     height-for-width of each of its children and store the requests in a
-    @class{gtk-requested-size} array for any widgets that stack vertically (for
+    @class{gtk-requested-size} array for any widgets that stack vertically, for
     tabular containers this can be generalized into the heights and widths of
-    rows and columns). The vertical space must then again be distributed using
+    rows and columns. The vertical space must then again be distributed using
     the function @fun{gtk-distribute-natural-allocation} while this time
     considering the allocated height of the widget minus any vertical spacing
     that the container adds. Then vertical expand space should be added where
@@ -304,7 +304,32 @@
   @end{dictionary}
   @see-slot{gtk-container-border-width}
   @see-slot{gtk-container-child}
-  @see-slot{gtk-container-resize-mode}")
+  @see-slot{gtk-container-resize-mode}
+  @see-class{gtk-bin}
+  @see-class{gtk-grid}
+  @see-class{gtk-box}
+  @see-class{gtk-buildable}
+  @see-class{gtk-widget}
+  @see-class{gtk-window}
+  @see-class{gtk-frame}
+  @see-class{gtk-label}
+  @see-class{gtk-image}
+  @see-class{gtk-button}
+  @see-class{gtk-requested-size}
+  @see-symbol{gtk-size-request-mode}
+  @see-function{gtk-widget-get-preferred-width}
+  @see-function{gtk-widget-get-preferred-height}
+  @see-function{gtk-widget-get-preferred-height-for-width}
+  @see-function{gtk-widget-get-preferred-width-for-height}
+  @see-function{gtk-distribute-natural-allocation}
+  @see-function{gtk-container-class-install-child-property}
+  @see-function{gtk-container-class-find-child-property}
+  @see-function{gtk-container-class-list-child-properties}
+  @see-function{gtk-container-child-set-property}
+  @see-function{gtk-container-child-set}
+  @see-function{gtk-container-child-get-property}
+  @see-function{gtk-container-child-get}
+  @see-function{gtk-widget-child-notify}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -341,29 +366,36 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-container-border-width atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-container-border-width 'function)
- "@version{2013-1-4}
+ "@version{2013-8-1}
   @begin{short}
-    Accessor of the slot @code{border-width} of the @class{gtk-container} class.
+    Accessor of the slot @code{\"border-width\"} of the @class{gtk-container}
+    class.
   @end{short}
   See the function @fun{gtk-container-set-border-width} for details.
+  @see-class{gtk-container}
+  @see-function{gtk-container-get-border-width}
   @see-function{gtk-container-set-border-width}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-container-child atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-container-child 'function)
- "@version{2013-1-20}
+ "@version{2013-8-1}
   @begin{short}
-    Accessor of the slot @code{child} of the @class{gtk-container} class.
-  @end{short}")
+    Accessor of the slot @code{\"child\"} of the @class{gtk-container} class.
+  @end{short}
+  @see-class{gtk-container}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-container-resize-mode atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-container-resize-mode 'function)
- "@version{2013-1-4}
+ "@version{2013-8-1}
   @begin{short}
-    Accessor of the slot @code{resize-mode} of the @class{gtk-container} class.
+    Accessor of the slot @code{\"resize-mode\"} of the @class{gtk-container}
+    class.
   @end{short}
   See the function @fun{gtk-container-set-resize-mode} for details.
+  @see-class{gtk-container}
+  @see-function{gtk-container-get-resize-mode}
   @see-function{gtk-container-set-resize-mode}")
 
 ;;; ----------------------------------------------------------------------------
@@ -398,10 +430,13 @@
 
 (defcfun ("gtk_container_add" gtk-container-add) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-5-24}
+ "@version{2013-8-1}
   @argument[container]{a @class{gtk-container} widget}
   @argument[widget]{a @arg{widget} to be placed inside @arg{container}}
-  @short{Adds @arg{widget} to @arg{container}.}
+  @begin{short}
+    Adds @arg{widget} to @arg{container}.
+  @end{short}
+
   Typically used for simple containers such as @class{gtk-window},
   @class{gtk-frame}, or @class{gtk-button}; for more complicated layout
   containers such as @class{gtk-box} or @class{gtk-grid}, this function will
@@ -410,6 +445,10 @@
   alternative to @sym{gtk-container-add} in those cases. A widget may be added
   to only one container at a time; you cannot place the same widget inside two
   different containers.
+  @see-class{gtk-container}
+  @see-class{gtk-window}
+  @see-class{gtk-frame}
+  @see-class{gtk-button}
   @see-function{gtk-box-pack-start}
   @see-function{gtk-grid-attach}"
   (container (g-object gtk-container))
@@ -475,11 +514,13 @@
 
 (defun gtk-container-get-resize-mode (container)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-24}
+ "@version{2013-8-1}
   @argument[container]{a @class{gtk-container} widget}
-  @return{The current resize mode.}
+  @return{The current resize mode of type @symbol{gtk-resize-mode}.}
   @short{Returns the resize mode for the @arg{container}.}
   See the function @fun{gtk-container-set-resize-mode}.
+  @see-class{gtk-container}
+  @see-symbol{gtk-resize-mode}
   @see-function{gtk-container-set-resize-mode}"
   (gtk-container-resize-mode container))
 
@@ -493,14 +534,17 @@
 
 (defun gtk-container-set-resize-mode (container resize-mode)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-24}
+ "@version{2013-8-1}
   @argument[container]{a @class{gtk-container} widget}
-  @argument[resize-mode]{The new resize mode.}
+  @argument[resize-mode]{the new resize mode of type @symbol{gtk-resize-mode}}
   @short{Sets the resize mode for the @arg{container}.}
 
   The resize mode of a container determines whether a resize request will be
   passed to the container's parent, queued for later execution or executed
-  immediately."
+  immediately.
+  @see-class{gtk-container}
+  @see-symbol{gtk-resize-mode}
+  @see-function{gtk-container-get-resize-mode}"
   (setf (gtk-container-resize-mode container) resize-mode))
 
 (export 'gtk-container-set-resize-mode)
@@ -562,12 +606,14 @@
 (defcfun ("gtk_container_get_children" gtk-container-get-children)
     (g-list g-object :free-from-foreign t)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-25}
+ "@version{2013-8-1}
   @argument[container]{a @class{gtk-container} widget}
-  @return{A newly allocated list of the container's non-internal children.}
-  @short{Returns the container's non-internal children.}
+  @return{A newly allocated list of the @arg{container}'s non-internal
+    children.}
+  @short{Returns the @arg{container}'s non-internal children.}
   See the function @fun{gtk-container-forall} for details on what constitutes
   an \"internal\" child.
+  @see-class{gtk-container}
   @see-fun{gtk-container-forall}"
   (container (g-object gtk-container)))
 
@@ -994,11 +1040,12 @@
 
 (defun gtk-container-get-border-width (container)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-25}
+ "@version{2013-8-1}
   @argument[container]{a @class{gtk-container} widget}
   @return{The current border width.}
   @short{Retrieves the border width of the @arg{container}.}
   See the function @fun{gtk-container-set-border-width}.
+  @see-class{gtk-container}
   @see-function{gtk-container-set-border-width}"
   (gtk-container-border-width container))
 
@@ -1012,7 +1059,7 @@
 
 (defun gtk-container-set-border-width (container border-width)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-25}
+ "@version{2013-8-1}
   @argument[container]{a @class{gtk-container} widget}
   @argument[border-width]{amount of blank space to leave outside the container.
     Valid values are in the range 0 - 65535 pixels.}
@@ -1025,6 +1072,10 @@
   only one side, one approach is to create a @class{gtk-alignment} widget, call
   the function @fun{gtk-widget-set-size-request} to give it a size, and place it
   on the side of the container as a spacer.
+  @see-class{gtk-widget}
+  @see-class{gtk-window}
+  @see-class{gtk-alignment}
+  @see-function{gtk-container-get-border-width}
   @see-function{gtk-widget-set-size-request}"
   (setf (gtk-container-border-width container) border-width))
 

@@ -70,6 +70,18 @@
       (bt:join-thread *main-thread*)))
 
   (defun leave-gtk-main ()
+   #+cl-cffi-gtk-documentation
+   "@version{2013-7-30}
+    @begin{short}
+      Makes the innermost invocation of the main loop return when it regains
+      control.
+    @end{short}
+
+    In the Lisp binding to GTK+ the function @fun{gtk-main-quit} is not called,
+    but the function @sym{leave-gtk-main}. The function @sym{leave-gtk-main}
+    does some additional bookkeeping, which is necessary to stop a Lisp program
+    safely.
+    @see-function{gtk-main-quit}"
     (bt:with-lock-held (*main-thread-lock*)
       (decf *main-thread-level*)
       (when (zerop *main-thread-level*)

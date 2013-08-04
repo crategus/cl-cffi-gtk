@@ -31,6 +31,10 @@
 
 (in-package :cl-user)
 
+;; Muffle compiler-notes globally
+#+sbcl
+(declaim (sb-ext:muffle-conditions sb-ext:compiler-note))
+
 (defvar *cl-cffi-gtk-build-time* (multiple-value-list (get-decoded-time)))
 (defvar *cl-cffi-gtk-version* "1.0.0")
 
@@ -596,10 +600,43 @@
       @about-function{gtk-render-insertion-cursor}
     @end{subsection}
     @begin[GtkCssProvider]{subsection}
-      not implemented
+      CSS-like styling for widgets.
+
+      @about-class{gtk-css-provider}
+      @about-function{gtk-css-provider-get-default}
+      @about-function{gtk-css-provider-get-named}
+      @about-function{gtk-css-provider-load-from-data}
+      @about-function{gtk-css-provider-load-from-file}
+      @about-function{gtk-css-provider-load-from-path}
+      @about-function{gtk-css-provider-new}
+      @about-function{gtk-css-provider-to-string}
+      @about-symbol{GTK-CSS-PROVIDER-ERROR}
+      @about-symbol{GtkCssProviderError}
+      @about-symbol{GtkCssSection}
+      @about-symbol{GtkCssSectionType}
+      @about-function{gtk-css-section-get-end-line}
+      @about-function{gtk-css-section-get-end-position}
+      @about-function{gtk-css-section-get-file}
+      @about-function{gtk-css-section-get-parent}
+      @about-function{gtk-css-section-get-section-type}
+      @about-function{gtk-css-section-get-start-line}
+      @about-function{gtk-css-section-get-start-position}
+      @about-function{gtk-css-section-ref}
+      @about-function{gtk-css-section-unref}
     @end{subsection}
     @begin[GtkStyleProvider]{subsection}
-      not implemented
+      Interface to provide style information to @class{gtk-style-context}.
+
+      @about-class{GtkStyleProviderIface}
+      @about-class{gtk-style-provider}
+      @about-symbol{GTK-STYLE-PROVIDER-PRIORITY-FALLBACK}
+      @about-symbol{GTK-STYLE-PROVIDER-PRIORITY-THEME}
+      @about-symbol{GTK-STYLE-PROVIDER-PRIORITY-SETTINGS}
+      @about-symbol{GTK-STYLE-PROVIDER-PRIORITY-APPLICATION}
+      @about-symbol{GTK-STYLE-PROVIDER-PRIORITY-USER}
+      @about-function{gtk-style-provider-get-icon-factory}
+      @about-function{gtk-style-provider-get-style}
+      @about-function{gtk-style-provider-get-style-property}
     @end{subsection}
     @begin[GtkStyleProperties]{subsection}
       not implemented
@@ -4280,7 +4317,38 @@ setup_tree (void)
       @about-function{gtk-page-setup-to-key-file}
     @end{subsection}
     @begin[GtkPaperSize]{subsection}
-      not implemented
+      Support for named paper sizes.
+
+      @about-class{gtk-paper-size}
+      @about-symbol{gtk-unit}
+      @about-symbol{GTK-PAPER-NAME-A3}
+      @about-symbol{GTK-PAPER-NAME-A4}
+      @about-symbol{GTK-PAPER-NAME-A5}
+      @about-symbol{GTK-PAPER-NAME-B5}
+      @about-symbol{GTK-PAPER-NAME-LETTER}
+      @about-symbol{GTK-PAPER-NAME-EXECUTIVE}
+      @about-symbol{GTK-PAPER-NAME-LEGAL}
+      @about-function{gtk-paper-size-new}
+      @about-function{gtk-paper-size-new-from-ppd}
+      @about-function{gtk-paper-size-new-custom}
+      @about-function{gtk-paper-size-copy}
+      @about-function{gtk-paper-size-free}
+      @about-function{gtk-paper-size-is-equal}
+      @about-function{gtk-paper-size-get-paper-sizes}
+      @about-function{gtk-paper-size-get-name}
+      @about-function{gtk-paper-size-get-display-name}
+      @about-function{gtk-paper-size-get-ppd-name}
+      @about-function{gtk-paper-size-get-width}
+      @about-function{gtk-paper-size-get-height}
+      @about-function{gtk-paper-size-is-custom}
+      @about-function{gtk-paper-size-set-size}
+      @about-function{gtk-paper-size-get-default-top-margin}
+      @about-function{gtk-paper-size-get-default-bottom-margin}
+      @about-function{gtk-paper-size-get-default-left-margin}
+      @about-function{gtk-paper-size-get-default-right-margin}
+      @about-function{gtk-paper-size-get-defaultþ}
+      @about-function{gtk-paper-size-new-from-key-file}
+      @about-function{gtk-paper-size-to-key-file}
     @end{subsection}
     @begin[GtkPrinter]{subsection}
       not implemented

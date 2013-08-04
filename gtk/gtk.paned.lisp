@@ -467,7 +467,7 @@
 ;;; gtk_paned_get_child1 ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_paned_get_child1" gtk-paned-child1) g-object
+(defcfun ("gtk_paned_get_child1" gtk-paned-get-child1) g-object
  #+cl-cffi-gtk-documentation
  "@version{2013-5-18}
   @argument[paned]{a @class{gtk-paned} container}
@@ -483,7 +483,7 @@
 ;;; gtk_paned_get_child2 ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_paned_get_child2" gtk-paned-child2) g-object
+(defcfun ("gtk_paned_get_child2" gtk-paned-get-child2) g-object
  #+cl-cffi-gtk-documentation
  "@version{2013-5-18}
   @argument[paned]{a @class{gtk-paned} container}

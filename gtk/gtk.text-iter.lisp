@@ -4,9 +4,10 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.6.4 and modified to document the Lisp binding to the GDK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -453,10 +454,12 @@
 
 (defun gtk-text-iter-get-char (iter)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-28}
+ "@version{2013-8-4}
   @argument[iter]{an iterator}
   @return{A Unicode character, or 0 if @arg{iter} is not dereferenceable.}
-  returns 0."
+  Returns a Unicode character, or 0 if @arg{iter} is not dereferenceable.
+  @see-class{gtk-text-iter}
+  @see-class{gtk-text-iter}"
   (gtk-text-iter-char iter))
 
 (export 'gtk-text-iter-get-char)
@@ -982,15 +985,16 @@
 
 (defun gtk-text-iter-is-cursor-position (iter)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-28}
+ "@version{2013-8-2}
   @argument[iter]{a @class{gtk-text-iter} object}
   @return{@em{True} if the cursor can be placed at @arg{iter}.}
   See the function @fun{gtk-text-iter-forward-cursor-position}, the
-  @class{pango-log-attr} structure or the function @fun{pango-break} for details
-  on what a cursor position is.
-  @see-function{gtk-text-iter-forward-cursor-position}
-  @see-class{pango-log-attr}
-  @see-function{pango-break}"
+  @symbol{pango-log-attr} structure or the function @fun{pango-break} for
+  details on what a cursor position is.
+  @see-class{gtk-text-iter}
+  @see-symbol{pango-log-attr}
+  @see-function{pango-break}
+  @see-function{gtk-text-iter-forward-cursor-position}"
   (%gtk-text-iter-is-cursor-position iter))
 
 (export 'gtk-text-iter-is-cursor-position)
@@ -1367,25 +1371,31 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_iter_forward_cursor_position ()
-;;;
-;;; gboolean gtk_text_iter_forward_cursor_position (GtkTextIter *iter);
-;;;
-;;; Moves iter forward by a single cursor position. Cursor positions are
-;;; (unsurprisingly) positions where the cursor can appear. Perhaps
-;;; surprisingly, there may not be a cursor position between all characters.
-;;; The most common example for European languages would be a carriage
-;;; return/newline sequence. For some Unicode characters, the equivalent of say
-;;; the letter "a" with an accent mark will be represented as two characters,
-;;; first the letter then a "combining mark" that causes the accent to be
-;;; rendered; so the cursor can't go between those two characters. See also the
-;;; PangoLogAttr structure and pango_break() function.
-;;;
-;;; iter :
-;;;     a GtkTextIter
-;;;
-;;; Returns :
-;;;     TRUE if we moved and the new position is dereferenceable
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_text_iter_forward_cursor_position"
+           gtk-text-iter-forward-cursor-position) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-2}
+  @argument[iter]{a @class{gtk-text-iter}}
+  @return{@em{True} if we moved and the new position is dereferenceable.}
+  @begin{short}
+    Moves @arg{iter} forward by a single cursor position.
+  @end{short}
+  Cursor positions are (unsurprisingly) positions where the cursor can appear.
+  Perhaps surprisingly, there may not be a cursor position between all
+  characters. The most common example for European languages would be a carriage
+  return/newline sequence. For some Unicode characters, the equivalent of say
+  the letter \"a\" with an accent mark will be represented as two characters,
+  first the letter then a \"combining mark\" that causes the accent to be
+  rendered; so the cursor cannot go between those two characters. See also the
+  @symbol{pango-log-attr} structure and @fun{pango-break} function.
+  @see-class{gtk-text-iter}
+  @see-symbol{pango-log-attr}
+  @see-function{pango-break}"
+  (iter (g-boxed-foreign gtk-text-iter)))
+
+(export 'gtk-text-iter-forward-cursor-position)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_iter_backward_cursor_position ()
@@ -1441,20 +1451,25 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_iter_backward_sentence_start ()
-;;;
-;;; gboolean gtk_text_iter_backward_sentence_start (GtkTextIter *iter);
-;;;
-;;; Moves backward to the previous sentence start; if iter is already at the
-;;; start of a sentence, moves backward to the next one. Sentence boundaries are
-;;; determined by Pango and should be correct for nearly any language (if not,
-;;; the correct fix would be to the Pango text boundary algorithms).
-;;;
-;;; iter :
-;;;     a GtkTextIter
-;;;
-;;; Returns :
-;;;     TRUE if iter moved and is not the end iterator
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_text_iter_backward_sentence_start"
+           gtk-text-iter-backward-sentence-start) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-2}
+  @argument[iter]{a @class{gtk-text-iter} object}
+  @return{@em{True} if @arg{iter} moved and is not the end iterator.}
+  @begin{short}
+    Moves backward to the previous sentence start; if @arg{iter} is already at
+    the start of a sentence, moves backward to the next one.
+  @end{short}
+  Sentence boundaries are determined by Pango and should be correct for nearly
+  any language. If not, the correct fix would be to the Pango text boundary
+  algorithms.
+  @see-class{gtk-text-iter}"
+  (iter (g-boxed-foreign gtk-text-iter)))
+
+(export 'gtk-text-iter-backward-sentence-start)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_iter_backward_sentence_starts ()
@@ -1562,41 +1577,52 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_iter_forward_visible_word_end ()
-;;;
-;;; gboolean gtk_text_iter_forward_visible_word_end (GtkTextIter *iter);
-;;;
-;;; Moves forward to the next visible word end. (If iter is currently on a word
-;;; end, moves forward to the next one after that.) Word breaks are determined
-;;; by Pango and should be correct for nearly any language (if not, the correct
-;;; fix would be to the Pango word break algorithms).
-;;;
-;;; iter :
-;;;     a GtkTextIter
-;;;
-;;; Returns :
-;;;     TRUE if iter moved and is not the end iterator
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_text_iter_forward_visible_word_end"
+           gtk-text-iter-forwad-visible-word-end) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-2}
+  @argument[iter]{a @class{gtk-text-iter}}
+  @return{@em{True} if @arg{iter} moved and is not the end iterator.}
+  @begin{short}
+    Moves forward to the next visible word end.
+  @end{short}
+  If @arg{iter} is currently on a word end, moves forward to the next one after
+  that. Word breaks are determined by Pango and should be correct for nearly any
+  language. If not, the correct fix would be to the Pango word break algorithms.
+
+  Since 2.4
+  @see-class{gtk-text-iter}
+  @see-function{gtk-text-iter-backward-visible-word-start}"
+  (iter (g-boxed-foreign gtk-text-iter)))
+
+(export 'gtk-text-iter-forward-visible-word-end)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_iter_backward_visible_word_start ()
-;;;
-;;; gboolean gtk_text_iter_backward_visible_word_start (GtkTextIter *iter);
-;;;
-;;; Moves backward to the previous visible word start. (If iter is currently on
-;;; a word start, moves backward to the next one after that.) Word breaks are
-;;; determined by Pango and should be correct for nearly any language (if not,
-;;; the correct fix would be to the Pango word break algorithms).
-;;;
-;;; iter :
-;;;     a GtkTextIter
-;;;
-;;; Returns :
-;;;     TRUE if iter moved and is not the end iterator
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_text_iter_backward_visible_word_start"
+           gtk-text-iter-backward-visible-word-start) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-2}
+  @argument[iter]{a @class{gtk-text-iter}}
+  @return{@em{True} if @arg{iter} moved and is not the end iterator.}
+  @begin{short}
+    Moves backward to the previous visible word start.
+  @end{short}
+  If @arg{iter} is currently on a word start, moves backward to the next one
+  after that. Word breaks are determined by Pango and should be correct for
+  nearly any language. If not, the correct fix would be to the Pango word break
+  algorithms.
+
+  Since 2.4
+  @see-class{gtk-text-iter}
+  @see-function{gtk-text-iter-forward-visible-word-end}"
+  (iter (g-boxed-foreign gtk-text-iter)))
+
+(export 'gtk-text-iter-backward-visible-word-start)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_iter_forward_visible_cursor_position ()
@@ -1828,19 +1854,22 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_iter_set_line_index ()
-;;;
-;;; void gtk_text_iter_set_line_index (GtkTextIter *iter, gint byte_on_line);
-;;;
-;;; Same as gtk_text_iter_set_line_offset(), but works with a byte index. The
-;;; given byte index must be at the start of a character, it can't be in the
-;;; middle of a UTF-8 encoded character.
-;;;
-;;; iter :
-;;;     a GtkTextIter
-;;;
-;;; byte_on_line :
-;;;     a byte index relative to the start of iter's current line
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_text_iter_set_line_index" gtk-text-iter-set-line-index) :void
+ #+cl-cffi-gtk-documentation
+ "@ver{2013-7-30}
+  @argument[iter]{a @class{gtk-text-iter} object}
+  @argument[byte-on-line]{a byte index relative to the start of @arg{iter}'s
+    current line }
+  Same as the function @fun{gtk-text-iter-set-line-offset}, but works with a
+  byte index. The given byte index must be at the start of a character, it
+  cannot be in the middle of a UTF-8 encoded character.
+  @see-function{gtk-text-iter-set-line-offset} "
+  (iter (g-boxed-foreign gtk-text-iter))
+  (byte-on-line :int))
+
+(export 'gtk-text-iter-set-line-index)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_iter_set_visible_line_index ()
