@@ -84,7 +84,7 @@
       @about-function{pango-get-log-attrs}
       @about-function{pango-find-paragraph-boundary}
       @about-function{pango-pango-default-break}
-      @about-class{pango-log-attr}
+      @about-symbol{pango-log-attr}
       @about-function{pango-shape}
       @about-function{pango-shape-full}
     @end{subsection}

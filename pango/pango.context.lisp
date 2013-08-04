@@ -936,120 +936,126 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; PangoLogAttr
-;;;
-;;; typedef struct {
-;;;   guint is_line_break : 1;      /* Can break line in front of character */
-;;;
-;;;   guint is_mandatory_break : 1; /* Must break line in front of character */
-;;;
-;;;   guint is_char_break : 1;      /* Can break here when doing char wrap */
-;;;
-;;;   guint is_white : 1;           /* Whitespace character */
-;;;
-;;;   /* Cursor can appear in front of character (i.e. this is a grapheme
-;;;    * boundary, or the first character in the text).
-;;;    */
-;;;   guint is_cursor_position : 1;
-;;;
-;;;   /* Note that in degenerate cases, you could have both start/end set on
-;;;    * some text, most likely for sentences (e.g. no space after a period, so
-;;;    * the next sentence starts right away).
-;;;    */
-;;;
-;;;   guint is_word_start : 1;      /* first character in a word */
-;;;   guint is_word_end   : 1;      /* is first non-word char after a word */
-;;;
-;;;   /* There are two ways to divide sentences. The first assigns all
-;;;    * intersentence whitespace/control/format chars to some sentence,
-;;;    * so all chars are in some sentence; is_sentence_boundary denotes
-;;;    * the boundaries there. The second way doesn't assign
-;;;    * between-sentence spaces, etc. to any sentence, so
-;;;    * is_sentence_start/is_sentence_end mark the boundaries of those
-;;;    * sentences.
-;;;    */
-;;;   guint is_sentence_boundary : 1;
-;;;   guint is_sentence_start : 1;  /* first character in a sentence */
-;;;   guint is_sentence_end : 1;    /* first non-sentence char after a sentence */
-;;;
-;;;   /* If set, backspace deletes one character rather than
-;;;    * the entire grapheme cluster.
-;;;    */
-;;;   guint backspace_deletes_character : 1;
-;;;
-;;;   /* Only few space variants (U+0020 and U+00A0) have variable
-;;;    * width during justification.
-;;;    */
-;;;   guint is_expandable_space : 1;
-;;;
-;;;   /* Word boundary as defined by UAX#29 */
-;;;   guint is_word_boundary : 1; /* is NOT in the middle of a word */
-;;; } PangoLogAttr;
-;;;
-;;; The PangoLogAttr structure stores information about the attributes of a
-;;; single character.
-;;;
-;;; guint is_line_break : 1;
-;;;     if set, can break line in front of character
-;;;
-;;; guint is_mandatory_break : 1;
-;;;     if set, must break line in front of character
-;;;
-;;; guint is_char_break : 1;
-;;;     if set, can break here when doing character wrapping
-;;;
-;;; guint is_white : 1;
-;;;     is whitespace character
-;;;
-;;; guint is_cursor_position : 1;
-;;;     if set, cursor can appear in front of character. i.e. this is a grapheme
-;;;     boundary, or the first character in the text. This flag implements
-;;;     Unicode's Grapheme Cluster Boundaries semantics.
-;;;
-;;; guint is_word_start : 1;
-;;;     is first character in a word
-;;;
-;;; guint is_word_end : 1;
-;;;     is first non-word char after a word Note that in degenerate cases, you
-;;;     could have both is_word_start and is_word_end set for some character.
-;;;
-;;; guint is_sentence_boundary : 1;
-;;;     is a sentence boundary. There are two ways to divide sentences. The
-;;;     first assigns all inter-sentence whitespace/control/format chars to some
-;;;     sentence, so all chars are in some sentence; is_sentence_boundary
-;;;     denotes the boundaries there. The second way doesn't assign
-;;;     between-sentence spaces, etc. to any sentence, so
-;;;     is_sentence_start/is_sentence_end mark the boundaries of those
-;;;     sentences.
-;;;
-;;; guint is_sentence_start : 1;
-;;;     is first character in a sentence
-;;;
-;;; guint is_sentence_end : 1;
-;;;     is first char after a sentence. Note that in degenerate cases, you could
-;;;     have both is_sentence_start and is_sentence_end set for some character.
-;;;     (e.g. no space after a period, so the next sentence starts right away)
-;;;
-;;; guint backspace_deletes_character : 1;
-;;;     if set, backspace deletes one character rather than the entire grapheme
-;;;     cluster. This field is only meaningful on grapheme boundaries (where
-;;;     is_cursor_position is set). In some languages, the full grapheme (e.g.
-;;;     letter + diacritics) is considered a unit, while in others, each
-;;;     decomposed character in the grapheme is a unit. In the default
-;;;     implementation of pango_break(), this bit is set on all grapheme
-;;;     boundaries except those following Latin, Cyrillic or Greek base
-;;;     characters.
-;;;
-;;; guint is_expandable_space : 1;
-;;;     is a whitespace character that can possibly be expanded for
-;;;     justification purposes. (Since: 1.18)
-;;;
-;;; guint is_word_boundary : 1;
-;;;     is a word boundary. More specifically, means that this is not a position
-;;;     in the middle of a word. For example, both sides of a punctuation mark
-;;;     are considered word boundaries. This flag is particularly useful when
-;;;     selecting text word-by-word. This flag implements Unicode's Word
-;;;     Boundaries semantics. (Since: 1.22)
 ;;; ----------------------------------------------------------------------------
+
+(defcstruct pango-log-attr
+  (is-line-break :uint) ; Can break line in front of character
+  (is-mandatory-break :uint) ; Must break line in front of character
+  (is-char-break :uint) ;Can break here when doing char wrap
+  (is-white :uint) ; Whitespace character
+  ;; Cursor can appear in front of character (i.e. this is a grapheme
+  ;; boundary, or the first character in the text).
+  (is-cursor-position :uint)
+  ;; Note that in degenerate cases, you could have both start/end set on
+  ;; some text, most likely for sentences (e.g. no space after a period, so
+  ;; the next sentence starts right away).
+  (is-word-start :uint) ; first character in a word
+  (is-word-end :uint) ; is first non-word char after a word
+  ;; There are two ways to divide sentences. The first assigns all
+  ;; intersentence whitespace/control/format chars to some sentence,
+  ;; so all chars are in some sentence; is_sentence_boundary denotes
+  ;; the boundaries there. The second way doesn't assign
+  ;; between-sentence spaces, etc. to any sentence, so
+  ;; is_sentence_start/is_sentence_end mark the boundaries of those
+  ;; sentences.
+  (is-sentence-boundary :uint)
+  (is-sentence-start :uint) ; first character in a sentence
+  (is-sentence-end :uint) ; first non-sentence char after a sentence
+  ;; If set, backspace deletes one character rather than
+  ;; the entire grapheme cluster.
+  (backspcaces-deletes-character :uint)
+  ;; Only few space variants (U+0020 and U+00A0) have variable
+  ;; width during justification.
+  (is-expandable-space :uint)
+  ;; Word boundary as defined by UAX#29
+  (is-word-boundary :uint) ; is NOT in the middle of a word
+)
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'pango-log-attr atdoc:*symbol-name-alias*) "CStruct"
+      (gethash 'pango-log-attr atdoc:*external-symbols*)
+ "@version{2013-8-2}
+  @begin{short}
+    The @sym{pango-log-attr} structure stores information about the attributes
+    of a single character.
+  @end{short}
+  @begin{pre}
+(defcstruct pango-log-attr
+  (is-line-break :uint) ; Can break line in front of character
+  (is-mandatory-break :uint) ; Must break line in front of character
+  (is-char-break :uint) ;Can break here when doing char wrap
+  (is-white :uint) ; Whitespace character
+  ;; Cursor can appear in front of character (i.e. this is a grapheme
+  ;; boundary, or the first character in the text).
+  (is-cursor-position :uint)
+  ;; Note that in degenerate cases, you could have both start/end set on
+  ;; some text, most likely for sentences (e.g. no space after a period, so
+  ;; the next sentence starts right away).
+  (is-word-start :uint) ; first character in a word
+  (is-word-end :uint) ; is first non-word char after a word
+  ;; There are two ways to divide sentences. The first assigns all
+  ;; intersentence whitespace/control/format chars to some sentence,
+  ;; so all chars are in some sentence; is_sentence_boundary denotes
+  ;; the boundaries there. The second way doesn't assign
+  ;; between-sentence spaces, etc. to any sentence, so
+  ;; is_sentence_start/is_sentence_end mark the boundaries of those
+  ;; sentences.
+  (is-sentence-boundary :uint)
+  (is-sentence-start :uint) ; first character in a sentence
+  (is-sentence-end :uint) ; first non-sentence char after a sentence
+  ;; If set, backspace deletes one character rather than
+  ;; the entire grapheme cluster.
+  (backspcaces-deletes-character :uint)
+  ;; Only few space variants (U+0020 and U+00A0) have variable
+  ;; width during justification.
+  (is-expandable-space :uint)
+  ;; Word boundary as defined by UAX#29
+  (is-word-boundary :uint) ; is NOT in the middle of a word
+)
+  @end{pre}
+  @begin[code]{table}
+    @entry[is-line-break]{If set, can break line in front of character.}
+    @entry[is-mandatory-break]{If set, must break line in front of character.}
+    @entry[is-char-break]{If set, can break here when doing character wrapping.}
+    @entry[is-white}{Is whitespace character.}
+    @entry[is-cursor-position]{If set, cursor can appear in front of character.
+      I. e. this is a grapheme boundary, or the first character in the text.
+      This flag implements Unicode's Grapheme Cluster Boundaries semantics.}
+    @entry[is-word-start]{Is first character in a word.}
+    @entry[is-word-end]{Is first non-word char after a word. Note that in
+      degenerate cases, you could have both @code{is-word-start} and
+      @code{is-word-end} set for some character.}
+    @entry[is-sentence-boundary]{Is a sentence boundary. There are two ways to
+      divide sentences. The first assigns all inter-sentence
+      whitespace/control/format chars to some sentence, so all chars are in some
+      sentence; is_sentence_boundary denotes the boundaries there. The second
+      way does not assign between-sentence spaces, etc. to any sentence, so
+      @code{is-sentence_start}/@code{is-sentence-end} mark the boundaries of
+      those sentences.}
+    @entry[is-sentence-start]{Is first character in a sentence.}
+    @entry[is-sentence-end}{Is first char after a sentence. Note that in
+      degenerate cases, you could have both @code{is-sentence-start} and
+      @code{is-sentence-end} set for some character, e. g. no space after a
+      period, so the next sentence starts right away.}
+    @entry[backspace-deletes-character]{If set, backspace deletes one character
+      rather than the entire grapheme cluster. This field is only meaningful on
+      grapheme boundaries, where @code{is-cursor-position} is set. In some
+      languages, the full grapheme, e. g. letter + diacritics, is considered a
+      unit, while in others, each decomposed character in the grapheme is a
+      unit. In the default implementation of @fun{pango-break}, this bit is set
+      on all grapheme boundaries except those following Latin, Cyrillic or Greek
+      base characters.}
+    @entry[is-expandable-space]{Is a whitespace character that can possibly be
+      expanded for justification purposes. Since 1.18}
+    @entry[is-word-boundary]{Is a word boundary. More specifically, means that
+      this is not a position in the middle of a word. For example, both sides of
+      a punctuation mark are considered word boundaries. This flag is
+      particularly useful when selecting text word-by-word. This flag implements
+      Unicode's Word Boundaries semantics. Since 1.22}
+  @end{table}
+  @see-function{pango-break}")
+
+(export 'pango-log-attr)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_shape ()
