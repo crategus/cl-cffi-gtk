@@ -1,4 +1,8 @@
 ;;;; Simple Window
+;;;;
+;;;; This example shows a very simple window. The program creates a 200 x 200
+;;;; pixel window. In this case the window has the default title "sbcl". The
+;;;; window can be sized and moved.
 
 (defun example-simple-window ()
   (within-main-loop

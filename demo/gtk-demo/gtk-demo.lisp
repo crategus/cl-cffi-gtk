@@ -1,3 +1,25 @@
+;;; ----------------------------------------------------------------------------
+;;; gtk-demo.lisp
+;;;
+;;; Copyright (C) 2013 Dieter Kaiser
+;;;
+;;; This program is free software: you can redistribute it and/or modify
+;;; it under the terms of the GNU Lesser General Public License for Lisp
+;;; as published by the Free Software Foundation, either version 3 of the
+;;; License, or (at your option) any later version and with a preamble to
+;;; the GNU Lesser General Public License that clarifies the terms for use
+;;; with Lisp programs and is referred as the LLGPL.
+;;;
+;;; This program is distributed in the hope that it will be useful,
+;;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;;; GNU Lesser General Public License for more details.
+;;;
+;;; You should have received a copy of the GNU Lesser General Public
+;;; License along with this program and the preamble to the Gnu Lesser
+;;; General Public License.  If not, see <http://www.gnu.org/licenses/>
+;;; and <http://opensource.franz.com/preamble.html>.
+;;; ----------------------------------------------------------------------------
 
 (asdf:load-system :cl-cffi-gtk)
 
@@ -87,10 +109,7 @@
                  (read-line stream nil)))
           ((null line))
         (gtk-text-buffer-insert source-buffer (string-left-trim ";" line))
-        (gtk-text-buffer-insert source-buffer (format nil "~%"))))
-))
-
-      
+        (gtk-text-buffer-insert source-buffer (format nil "~%"))))))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -104,17 +123,15 @@
                               :editable nil
                               :cursor-visible nil)))
     (gtk-container-add scrolled view)
-
     (if is-source
         (progn
-          (gtk-widget-override-font view
-                                    (pango-font-description-from-string "monospace"))
+          (gtk-widget-override-font
+              view
+              (pango-font-description-from-string "monospace"))
           (gtk-text-buffer-set-text buffer "This is the place for the source."))
         (gtk-text-buffer-set-text buffer "This is the place for the info."))
     ;; return the scrolled window
-    scrolled
-  )
-)
+    scrolled))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -199,14 +216,14 @@
                                 "EXAMPLE-TEXT-VIEW-ATTRIBUTES" 0)
     )
     (let ((parent (gtk-tree-store-set model (gtk-tree-store-append model nil)
-                                             "Tree, List and Icon Grid Widgets")))
+                                            "Tree, List and Icon Grid Widgets")))
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Simple Tree View"
                                 "simple-tree-view.lisp"
                                 "EXAMPLE-SIMPLE-TREE-VIEW" 0)
     )
     (let ((parent (gtk-tree-store-set model (gtk-tree-store-append model nil)
-                                             "Menus, Combo Box, Toolbar")))
+                                            "Menus, Combo Box, Toolbar")))
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Combo Box"
                                 "combo-box.lisp"
@@ -312,7 +329,6 @@
                                                              renderer
                                                              "text" 0)))
       (gtk-tree-view-append-column view column))
-
     (g-signal-connect view "row-activated"
        (lambda (tree-view path column)
          (declare (ignore column))
@@ -320,22 +336,16 @@
                 (iter (gtk-tree-model-get-iter model path))
                 (func-name (gtk-tree-model-get-value model iter 2))
                 (func (find-symbol func-name :gtk-demo)))
-           (format t "~&ROW in GtkTreeView is activated for ~A.~%" func-name)
            (if func
                (funcall func)
                (format t "~%No function.~%")))))
-
     (gtk-tree-selection-set-mode selection :browse)
     (g-signal-connect selection "changed"
        (lambda (tree-selection)
          (let* ((iter (gtk-tree-selection-get-selected tree-selection))
                 (filename (gtk-tree-model-get-value model iter 1)))
-           (format t "~&Selection get \"changed\" signal: ~&~A ~A~%" (length filename) filename)
            (if (> (length filename) 0)
-               (load-file filename))
-)))
-
-
+               (load-file filename)))))
       view))
 
 ;;; ----------------------------------------------------------------------------
@@ -346,35 +356,45 @@
                                  :type :toplevel
                                  :title "GTK+ Lisp Code Demos"
                                  :default-width 800
-                                 :default-height 600))
-          (hbox (make-instance 'gtk-box
-                               :orientation :horizontal))
+                                 :default-height 600
+                                 :border-width 6))
+          ;; A horizontal pane
+          (content (make-instance 'gtk-paned
+                                  :orientation :horizontal))
+          ;; A scrollable
+          (scroller (make-instance 'gtk-scrolled-window
+                                   :hscrollbar-policy :never
+                                   :vscrollbar-policy :automatic
+                                   :hexpand t
+                                   :vexpand t))
+          ;; A notebook
           (notebook (make-instance 'gtk-notebook
                                    :scrollable t))
-          (view (create-view-and-model))
-         )
+          (view (create-view-and-model)))
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
                           (leave-gtk-main)))
+      ;; Set an icon for the application
       (let ((pixbuf (gdk-pixbuf-new-from-file "gtk-logo-rgb.gif")))
         (setq pixbuf (gdk-pixbuf-add-alpha pixbuf t 255 255 255))
         (gtk-window-set-default-icon-list (list pixbuf)))
-
-;        (gtk-window-set-default-icon pixbuf))
-
-      (gtk-box-pack-start hbox view :expand nil :fill nil :padding 0)
-      (gtk-box-pack-start hbox notebook :expand t :fill t :padding 0)
+      ;; Add the widgets to the content of the window
+      (gtk-container-add scroller view)
+      (gtk-paned-add1 content scroller)
+      (gtk-paned-add2 content notebook)
+      ;; Add the notebook pages to the notebook
       (gtk-notebook-append-page notebook
                                 (create-text info-buffer nil)
                                 (gtk-label-new-with-mnemonic "_Info"))
       (gtk-notebook-append-page notebook
                                 (create-text source-buffer t)
                                 (gtk-label-new-with-mnemonic "_Source"))
-      (gtk-container-add window hbox)
+      ;; Add the content to the window
+      (gtk-container-add window content)
       (gtk-widget-show-all window)))
-
   (join-gtk-main))
 
 (export 'main)
 
+;;; --- End of file gtk-demo.lisp ----------------------------------------------
