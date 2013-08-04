@@ -439,7 +439,7 @@
   @begin[GVariantType]{section}
     Introduction to the GVariant type system.
 
-    @about-symbol{g-variant-type}
+    @about-class{g-variant-type}
     @about-variable{+g-variant-type-boolean+}
     @about-variable{+g-variant-type-byte+}
     @about-variable{+g-variant-type-int16+}
@@ -501,7 +501,7 @@
   @begin[GVariant]{section}
     Strongly typed value datatype.
 
-    @about-symbol{g-variant}
+    @about-type{g-variant}
     @about-function{g-variant-unref}
     @about-function{g-variant-ref}
     @about-function{g-variant-ref-sink}
@@ -513,6 +513,7 @@
     @about-function{g-variant-is-container}
     @about-function{g-variant-compare}
     @about-function{g-variant-classify}
+    @about-function{g-variant-check-format-string}
     @about-symbol{g-variant-class}
     @about-function{g-variant-get}
     @about-function{g-variant-get-va}
@@ -573,8 +574,10 @@
     @about-function{g-variant-get-fixed-array}
     @about-function{g-variant-get-size}
     @about-function{g-variant-get-data}
+    @about-function{g-variant-get-data-as-bytes}
     @about-function{g-variant-store}
     @about-function{g-variant-new-from-data}
+    @about-function{g-variant-new-from-bytes}
     @about-function{g-variant-byteswap}
     @about-function{g-variant-get-normal-form}
     @about-function{g-variant-g-variant-is-normal-form}

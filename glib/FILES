@@ -124,8 +124,8 @@ GLib Data Types
     Datasets                   - associate groups of data elements with
                                  particular memory locations
 
-  glib.variant-type.lisp       - GVariantType                     - Glib 2.32.3*
-  glib.variant.lisp            - GVariant                         - Glib 2.32.3*
+  glib.variant-type.lisp       - GVariantType                     - Glib 2.36.3
+  glib.variant.lisp            - GVariant                         - Glib 2.36.3%
 
     GVariant Format Strings    - varargs conversion of GVariants
     GVariant Text Format       - textual representation of GVariants

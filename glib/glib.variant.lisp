@@ -1,7 +1,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; glib.variant.lisp
 ;;;
-;;; The documentation of this file is taken from the GLib 2.32.3 Reference
+;;; The documentation of this file is taken from the GLib 2.36.3 Reference
 ;;; Manual and modified to document the Lisp binding to the GLib library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
@@ -49,6 +49,7 @@
 ;;;
 ;;;     GVariantClass
 ;;;
+;;;     g_variant_check_format_string
 ;;;     g_variant_get
 ;;;     g_variant_get_va
 ;;;     g_variant_new
@@ -113,8 +114,10 @@
 ;;;
 ;;;     g_variant_get_size
 ;;;     g_variant_get_data
+;;;     g_variant_get_data_as_bytes
 ;;;     g_variant_store
 ;;;     g_variant_new_from_data
+;;;     g_variant_new_from_bytes
 ;;;     g_variant_byteswap
 ;;;     g_variant_get_normal_form
 ;;;     g_variant_is_normal_form
@@ -157,33 +160,25 @@
 ;;;     g_variant_parse
 ;;;     g_variant_new_parsed_va
 ;;;     g_variant_new_parsed
-;;;
 ;;; ----------------------------------------------------------------------------
 
 (in-package :glib)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GVariant
-;;;
-;;; typedef struct _GVariant GVariant;
-;;;
-;;; GVariant is an opaque data structure and can only be accessed using the
-;;; following functions.
-;;;
-;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct g-variant)
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'g-variant atdoc:*symbol-name-alias*) "CStruct"
-      (gethash 'g-variant atdoc:*external-symbols*)
- "@version{2013-4-11}
+(setf (gethash 'g-variant atdoc:*type-name-alias*) "CStruct"
+      (documentation 'g-variant 'type)
+ "@version{2013-7-27}
   @begin{short}
     @sym{g-variant} is a variant datatype; it stores a value along with
     information about the type of that value. The range of possible values is
     determined by the type. The type system used by @sym{g-variant} is
-    @symbol{g-variant-type}.
+    @class{g-variant-type}.
   @end{short}
 
   @sym{g-variant} instances always have a type and a value (which are given at
@@ -205,7 +200,7 @@
   also be sent over the network.
 
   @sym{g-variant} is largely compatible with D-Bus. Almost all types of
-  @sym{g-variant} instances can be sent over D-Bus. See @symbol{g-variant-type}
+  @sym{g-variant} instances can be sent over D-Bus. See @class{g-variant-type}
   for exceptions. (However, @sym{g-variant}'s serialisation format is not the
   same as the serialisation format of a D-Bus message body: use
   @code{GDBusMessage}, in the gio library, for those.)
@@ -389,7 +384,7 @@
 (defcfun ("g_variant_unref" g-variant-unref) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-4-11}
-  @argument[value]{a @symbol{g-variant}}
+  @argument[value]{a @type{g-variant}}
   @begin{short}
     Decreases the reference count of @arg{value}. When its reference count
     drops to 0, the memory used by the variant is freed.
@@ -407,7 +402,7 @@
 (defcfun ("g_variant_ref" g-variant-ref) (:pointer (:struct g-variant))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-11}
-  @argument[value]{a @symbol{g-variant}}
+  @argument[value]{a @type{g-variant}}
   @return{The same @arg{value}.}
   @short{Increases the reference count of @arg{value}.}
 
@@ -423,16 +418,16 @@
 (defcfun ("g_variant_ref_sink" g-variant-ref-sink) (:pointer (:struct g-variant))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-11}
-  @argument[value]{a @symbol{g-variant}}
+  @argument[value]{a @type{g-variant}}
   @return{The same @arg{value}.}
   @begin{short}
-    @symbol{g-variant} uses a floating reference count system. All functions
+    @type{g-variant} uses a floating reference count system. All functions
     with names starting with @sym{g_variant_new_} return floating references.
   @end{short}
 
-  Calling @fun{g-variant-ref-sink} on a @symbol{g-variant} with a floating
+  Calling @fun{g-variant-ref-sink} on a @type{g-variant} with a floating
   reference will convert the floating reference into a full reference. Calling
-  @fun{g-variant-ref-sink} on a non-floating @symbol{g-variant} results in an
+  @fun{g-variant-ref-sink} on a non-floating @type{g-variant} results in an
   additional normal reference being added.
 
   In other words, if the @arg{value} is floating, then this call
@@ -440,7 +435,7 @@
   reference. If the @arg{value} is not floating, then this call adds a new
   normal reference increasing the reference count by one.
 
-  All calls that result in a @symbol{g-variant} instance being inserted into a
+  All calls that result in a @type{g-variant} instance being inserted into a
   container will call @fun{g-variant-ref-sink} on the instance. This means that
   if the value was just created (and has only its floating reference) then the
   container will assume sole ownership of the value at that point and the caller
@@ -460,7 +455,7 @@
 (defcfun ("g_variant_is_floating" g-variant-is-floating) :boolean
  #+cl-cffi-gtk-documentation
  "@version{2013-7-20}
-  @argument[value]{a @symbol{g-variant}}
+  @argument[value]{a @type{g-variant}}
   @return{Whether @arg{value} is floating.}
   @begin{short}
     Checks whether @arg{value} has a floating reference count.
@@ -489,7 +484,7 @@
     (gobject:g-boxed-foreign g-variant-type)
  #+cl-cffi-gtk-documentation
  "@version{2013-7-20}
-  @argument[value]{a @symbol{g-variant}}
+  @argument[value]{a @type{g-variant}}
   @return{The same @arg{value}.}
   @begin{short}
     If @arg{value} is floating, sink it. Otherwise, do nothing.
@@ -501,13 +496,13 @@
 
   The situation where this function is helpful is when creating an API that
   allows the user to provide a callback function that returns a
-  @symbol{g-variant}. We certainly want to allow the user the flexibility to
+  @type{g-variant}. We certainly want to allow the user the flexibility to
   return a non-floating reference from this callback (for the case where the
   value that is being returned already exists).
 
-  At the same time, the style of the @symbol{g-variant} API makes it likely that
-  for newly-created @symbol{g-variant} instances, the user can be saved some
-  typing if they are allowed to return a @symbol{g-variant} with a floating
+  At the same time, the style of the @type{g-variant} API makes it likely that
+  for newly-created @type{g-variant} instances, the user can be saved some
+  typing if they are allowed to return a @type{g-variant} with a floating
   reference.
 
   Using this function on the return value of the user's callback allows the
@@ -518,7 +513,7 @@
 
   This function has an odd interaction when combined with the function
   @fun{g-variant-ref-sink} running at the same time in another thread on the
-  same @symbol{g-variant} instance. If the function @fun{g-variant-ref-sink}
+  same @type{g-variant} instance. If the function @fun{g-variant-ref-sink}
   runs first then the result will be that the floating reference is converted to
   a hard reference. If the function @sym{g-variant-take-ref} runs first then the
   result will be that the floating reference is converted to a hard reference
@@ -538,8 +533,8 @@
     (gobject:g-boxed-foreign g-variant-type)
  #+cl-cffi-gtk-documentation
  "@version{2013-4-11}
-  @argument[value]{a @symbol{g-variant}}
-  @return{A @symbol{g-variant-type}.}
+  @argument[value]{a @type{g-variant}}
+  @return{A @class{g-variant-type}.}
   @begin{short}
     Determines the type of @arg{value}.
   @end{short}
@@ -559,13 +554,13 @@
 (defcfun ("g_variant_get_type_string" g-variant-get-type-string) :string
  #+cl-cffi-gtk-documentation
  "@version{2013-4-11}
-  @argument[value]{a @symbol{g-variant}}
+  @argument[value]{a @type{g-variant}}
   @return{The type string for the type of @arg{value}.}
   @begin{short}
     Returns the type string of @arg{value}.
   @end{short}
   Unlike the result of calling @fun{g-variant-type-peek-string}, this string is
-  nul-terminated. This string belongs to @symbol{g-variant} and must not be
+  nul-terminated. This string belongs to @type{g-variant} and must not be
   freed.
 
   Since 2.24
@@ -581,8 +576,8 @@
 (defcfun ("g_variant_is_of_type" g-variant-is-of-type) :boolean
  #+cl-cffi-gtk-documentation
  "@version{2013-4-11}
-  @argument[value]{a @symbol{g-variant} instance}
-  @argument[type]{a @symbol{g-variant-type}}
+  @argument[value]{a @type{g-variant} instance}
+  @argument[type]{a @class{g-variant-type}}
   @return{@em{True} if the type of @arg{value} matches @arg{type}.}
   @begin{short}
     Checks if a @arg{value} has a type matching the provided @arg{type}.
@@ -601,7 +596,7 @@
 (defcfun ("g_variant_is_container" g-variant-is-container) :boolean
  #+cl-cffi-gtk-documentation
  "@version{2013-4-11}
-  @argument[value]{a @symbol{g-variant} instance}
+  @argument[value]{a @type{g-variant} instance}
   @return{@em{True} if @arg{value} is a container.}
   @begin{short}
     Checks if @arg{value} is a container.
@@ -619,8 +614,8 @@
 (defcfun ("g_variant_compare" g-variant-compare) :int
  #+cl-cffi-gtk-documentation
  "@version{2013-4-11}
-  @argument[one]{a basic-typed @symbol{g-variant} instance}
-  @argument[two]{a @symbol{g-variant} instance of the same type}
+  @argument[one]{a basic-typed @type{g-variant} instance}
+  @argument[two]{a @type{g-variant} instance of the same type}
   @return{Negative value if a < b; zero if a = b; positive value if a > b.}
   @begin{short}
     Compares @arg{one} and @arg{two}.
@@ -628,7 +623,7 @@
 
   The types of @arg{one} and @arg{two} are @code{:pointer} only to allow use of
   this function with @code{GTree}, @code{GPtrArray}, etc. They must each be a
-  @symbol{g-variant}.
+  @type{g-variant}.
 
   Comparison is only defined for basic types (i.e.: booleans, numbers, strings).
   For booleans, @code{nil} is less than @em{true}. Numbers are ordered in the
@@ -678,7 +673,7 @@
 (setf (gethash 'g-variant-class atdoc:*symbol-name-alias*) "Enum"
       (gethash 'g-variant-class atdoc:*external-symbols*)
  "@version{2013-2-7}
-  @short{The range of possible top-level types of @symbol{g-variant} instances.}
+  @short{The range of possible top-level types of @type{g-variant} instances.}
   Since 2.24.
   @begin{pre}
 (defcenum g-variant-class
@@ -702,24 +697,24 @@
   (:dict-entry  #.(char-code #\{)))
   @end{pre}
   @begin[code]{table}
-    @entry[:boolean]{The @symbol{g-variant} is a boolean.}
-    @entry[:byte]{The @symbol{g-variant} is a byte.}
-    @entry[:int16]{The @symbol{g-variant} is a signed 16 bit integer.}
-    @entry[:uint16]{The @symbol{g-variant} is an unsigned 16 bit integer.}
-    @entry[:int32]{The @symbol{g-variant} is a signed 32 bit integer.}
-    @entry[:unit32]{The @symbol{g-variant} is an unsigned 32 bit integer.}
-    @entry[:int64]{The @symbol{g-variant} is a signed 64 bit integer.}
-    @entry[:uint64]{The @symbol{g-variant} is an unsigned 64 bit integer.}
-    @entry[:handle]{The @symbol{g-variant} is a file handle index.}
-    @entry[:double]{The @symbol{g-variant} is a double precision floating point value.}
-    @entry[:string]{The @symbol{g-variant} is a normal string.}
-    @entry[:object-path]{The @symbol{g-variant} is a D-Bus object path string.}
-    @entry[:signature]{The @symbol{g-variant} is a D-Bus signature string.}
-    @entry[:variant]{The @symbol{g-variant} is a variant.}
-    @entry[:maybe]{The @symbol{g-variant} is a maybe-typed value.}
-    @entry[:array]{The @symbol{g-variant} is an array.}
-    @entry[:tuple]{The @symbol{g-variant} is a tuple.}
-    @entry[:dict-entry]{The @symbol{g-variant} is a dictionary entry.}
+    @entry[:boolean]{The @type{g-variant} is a boolean.}
+    @entry[:byte]{The @type{g-variant} is a byte.}
+    @entry[:int16]{The @type{g-variant} is a signed 16 bit integer.}
+    @entry[:uint16]{The @type{g-variant} is an unsigned 16 bit integer.}
+    @entry[:int32]{The @type{g-variant} is a signed 32 bit integer.}
+    @entry[:unit32]{The @type{g-variant} is an unsigned 32 bit integer.}
+    @entry[:int64]{The @type{g-variant} is a signed 64 bit integer.}
+    @entry[:uint64]{The @type{g-variant} is an unsigned 64 bit integer.}
+    @entry[:handle]{The @type{g-variant} is a file handle index.}
+    @entry[:double]{The @type{g-variant} is a double precision floating point value.}
+    @entry[:string]{The @type{g-variant} is a normal string.}
+    @entry[:object-path]{The @type{g-variant} is a D-Bus object path string.}
+    @entry[:signature]{The @type{g-variant} is a D-Bus signature string.}
+    @entry[:variant]{The @type{g-variant} is a variant.}
+    @entry[:maybe]{The @type{g-variant} is a maybe-typed value.}
+    @entry[:array]{The @type{g-variant} is an array.}
+    @entry[:tuple]{The @type{g-variant} is a tuple.}
+    @entry[:dict-entry]{The @type{g-variant} is a dictionary entry.}
   @end{table}")
 
 (export 'g-variant-class)
@@ -731,7 +726,7 @@
 (defcfun ("g_variant_classify" g-variant-classify) g-variant-class
  #+cl-cffi-gtk-documentation
  "@version{2013-4-11}
-  @argument[value]{a @symbol{g-variant} instance}
+  @argument[value]{a @type{g-variant} instance}
   @return{The @symbol{g-variant-class} of value.}
   @begin{short}
     Classifies @arg{value} according to its top-level type.
@@ -740,6 +735,43 @@
   (value (:pointer (:struct g-variant))))
 
 (export 'g-variant-classify)
+
+;;; ----------------------------------------------------------------------------
+;;; g_variant_check_format_string ()
+;;;
+;;; gboolean g_variant_check_format_string (GVariant *value,
+;;;                                         const gchar *format_string,
+;;;                                         gboolean copy_only);
+;;;
+;;; Checks if calling g_variant_get() with format_string on value would be valid
+;;; from a type-compatibility standpoint. format_string is assumed to be a valid
+;;; format string (from a syntactic standpoint).
+;;;
+;;; If copy_only is TRUE then this function additionally checks that it would be
+;;; safe to call g_variant_unref() on value immediately after the call to
+;;; g_variant_get() without invalidating the result. This is only possible if
+;;; deep copies are made (ie: there are no pointers to the data inside of the
+;;; soon-to-be-freed GVariant instance). If this check fails then a g_critical()
+;;; is printed and FALSE is returned.
+;;;
+;;; This function is meant to be used by functions that wish to provide varargs
+;;; accessors to GVariant values of uncertain values (eg: g_variant_lookup() or
+;;; g_menu_model_get_item_attribute()).
+;;;
+;;; value :
+;;;     a GVariant
+;;;
+;;; format_string :
+;;;     a valid GVariant format string
+;;;
+;;; copy_only :
+;;;     TRUE to ensure the format string makes deep copies
+;;;
+;;; Returns :
+;;;     TRUE if format_string is safe to use
+;;;
+;;; Since 2.34
+;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_variant_get ()
@@ -896,13 +928,14 @@
 ;;; g_variant_new_boolean ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_variant_new_boolean" g-variant-new-boolean) (:pointer (:struct g-variant))
+(defcfun ("g_variant_new_boolean" g-variant-new-boolean)
+    (:pointer (:struct g-variant))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-11}
   @argument[value]{a @code{gboolean} value}
-  @return{A floating reference to a new boolean @symbol{g-variant} instance.}
+  @return{A floating reference to a new boolean @type{g-variant} instance.}
   @begin{short}
-    Creates a new boolean @symbol{g-variant} instance -- either @em{true} or
+    Creates a new boolean @type{g-variant} instance -- either @em{true} or
     @code{nil}.
   @end{short}
 
@@ -915,12 +948,13 @@
 ;;; g_variant_new_byte ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_variant_new_byte" g-variant-new-byte) (:pointer (:struct g-variant))
+(defcfun ("g_variant_new_byte" g-variant-new-byte)
+    (:pointer (:struct g-variant))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-11}
   @argument[value]{a @code{guint8} value}
-  @return{A floating reference to a new byte @symbol{g-variant} instance.}
-  @short{Creates a new byte @symbol{g-variant} instance.}
+  @return{A floating reference to a new byte @type{g-variant} instance.}
+  @short{Creates a new byte @type{g-variant} instance.}
 
   Since 2.24"
   (value :uchar))
@@ -931,13 +965,14 @@
 ;;; g_variant_new_int16 ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_variant_new_int16" g-variant-new-int16) (:pointer (:struct g-variant))
+(defcfun ("g_variant_new_int16" g-variant-new-int16)
+    (:pointer (:struct g-variant))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-11}
   @argument[value]{a @code{gint16} value}
-  @return{A floating reference to a new @code{int16} @symbol{g-variant}
+  @return{A floating reference to a new @code{int16} @type{g-variant}
     instance.}
-  @short{Creates a new @code{int16} @symbol{g-variant} instance.}
+  @short{Creates a new @code{int16} @type{g-variant} instance.}
 
   Since 2.24"
   (value :int16))
@@ -948,13 +983,14 @@
 ;;; g_variant_new_uint16 ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_variant_new_uint16" g-variant-new-uint16) (:pointer (:struct g-variant))
+(defcfun ("g_variant_new_uint16" g-variant-new-uint16)
+    (:pointer (:struct g-variant))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-11}
   @argument[value]{a @code{guint16} value}
-  @return{A floating reference to a new @code{uint16} @symbol{g-variant}
+  @return{A floating reference to a new @code{uint16} @type{g-variant}
     instance.}
-  @short{Creates a new @code{uint16} @symbol{g-variant} instance.}
+  @short{Creates a new @code{uint16} @type{g-variant} instance.}
   Since 2.24"
   (value :uint16))
 
@@ -964,13 +1000,14 @@
 ;;; g_variant_new_int32 ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_variant_new_int32" g-variant-new-int32) (:pointer (:struct g-variant))
+(defcfun ("g_variant_new_int32" g-variant-new-int32)
+    (:pointer (:struct g-variant))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-11}
   @argument[value]{a @code{gint32} value}
-  @return{A floating reference to a new @code{int32} @symbol{g-variant}
+  @return{A floating reference to a new @code{int32} @type{g-variant}
     instance.}
-  @short{Creates a new @code{int32} @symbol{g-variant} instance.}
+  @short{Creates a new @code{int32} @type{g-variant} instance.}
 
   Since 2.24."
   (value :int32))
@@ -981,13 +1018,14 @@
 ;;; g_variant_new_uint32 ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_variant_new_uint32" g-variant-new-uint32) (:pointer (:struct g-variant))
+(defcfun ("g_variant_new_uint32" g-variant-new-uint32)
+    (:pointer (:struct g-variant))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-11}
   @argument[value]{a @code{guint32} value}
-  @return{A floating reference to a new @code{uint32} @symbol{g-variant}
+  @return{A floating reference to a new @code{uint32} @type{g-variant}
     instance.}
-  @short{Creates a new @code{uint32} @symbol{g-variant} instance.}
+  @short{Creates a new @code{uint32} @type{g-variant} instance.}
 
   Since 2.24"
   (value :uint32))
@@ -998,13 +1036,14 @@
 ;;; g_variant_new_int64 ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_variant_new_int64" g-variant-new-int64) (:pointer (:struct g-variant))
+(defcfun ("g_variant_new_int64" g-variant-new-int64)
+    (:pointer (:struct g-variant))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-11}
   @argument[value]{a @code{gint64} value}
-  @return{A floating reference to a new @code{int64} @symbol{g-variant}
+  @return{A floating reference to a new @code{int64} @type{g-variant}
     instance.}
-  @short{Creates a new @code{int64} @symbol{g-variant} instance.}
+  @short{Creates a new @code{int64} @type{g-variant} instance.}
 
   Since 2.24"
   (value :int64))
@@ -1015,13 +1054,14 @@
 ;;; g_variant_new_uint64 ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_variant_new_uint64" g-variant-new-uint64) (:pointer (:struct g-variant))
+(defcfun ("g_variant_new_uint64" g-variant-new-uint64)
+    (:pointer (:struct g-variant))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-11}
   @argument[value]{a @code{guint64} value}
-  @return{A floating reference to a new @code{uint64} @symbol{g-variant}
+  @return{A floating reference to a new @code{uint64} @type{g-variant}
     instance.}
-  @short{Creates a new @code{uint64} @symbol{g-variant} instance.}
+  @short{Creates a new @code{uint64} @type{g-variant} instance.}
 
   Since 2.24"
   (value :uint64))
@@ -1032,12 +1072,13 @@
 ;;; g_variant_new_handle ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_variant_new_handle" g-variant-new-handle) (:pointer (:struct g-variant))
+(defcfun ("g_variant_new_handle" g-variant-new-handle)
+    (:pointer (:struct g-variant))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-11}
   @argument[value]{a @code{gint32} value}
-  @return{A floating reference to a new handle @symbol{g-variant} instance.}
-  @short{Creates a new handle @symbol{g-variant} instance.}
+  @return{A floating reference to a new handle @type{g-variant} instance.}
+  @short{Creates a new handle @type{g-variant} instance.}
 
   By convention, handles are indexes into an array of file descriptors that
   are sent alongside a D-Bus message. If you are not interacting with D-Bus,
@@ -1052,12 +1093,13 @@
 ;;; g_variant_new_double ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_variant_new_double" g-variant-new-double) (:pointer (:struct g-variant))
+(defcfun ("g_variant_new_double" g-variant-new-double)
+    (:pointer (:struct g-variant))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-11}
   @argument[value]{a @code{gdouble} floating point value}
-  @return{A floating reference to a new double @symbol{g-variant} instance.}
-  @short{Creates a new double @symbol{g-variant} instance.}
+  @return{A floating reference to a new double @type{g-variant} instance.}
+  @short{Creates a new double @type{g-variant} instance.}
 
   Since 2.24"
   (value :double))
@@ -1068,12 +1110,13 @@
 ;;; g_variant_new_string ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_variant_new_string" g-variant-new-string) (:pointer (:struct g-variant))
+(defcfun ("g_variant_new_string" g-variant-new-string)
+    (:pointer (:struct g-variant))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-11}
   @argument[string]{a normal utf8 nul-terminated string}
-  @return{A floating reference to a new string @symbol{g-variant} instance.}
-  @short{Creates a string @symbol{g-variant} with the contents of string.}
+  @return{A floating reference to a new string @type{g-variant} instance.}
+  @short{Creates a string @type{g-variant} with the contents of string.}
   String must be valid utf8.
 
   Since 2.24"
@@ -1085,21 +1128,19 @@
 ;;; g_variant_new_object_path ()
 ;;; ----------------------------------------------------------------------------
 
-;; TODO: Check the text
-
 (defcfun ("g_variant_new_object_path" g-variant-new-object-path)
     (:pointer (:struct g-variant))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-11}
   @argument[object-path]{a string}
-  @return{A floating reference to a new object path @symbol{g-variant}
+  @return{A floating reference to a new object path @type{g-variant}
     instance.}
   @begin{short}
-    Creates a D-Bus object path @symbol{g-variant} with the contents of
+    Creates a D-Bus object path @type{g-variant} with the contents of
     @arg{string}.
   @end{short}
   @arg{string} must be a valid D-Bus object path. Use
-  @fun{g-variant-is-object-path} if you're not sure.
+  @fun{g-variant-is-object-path} if you are not sure.
 
   Since 2.24."
   (object-path :string))
@@ -1140,9 +1181,9 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-4-11}
   @argument[signature]{a string}
-  @return{A floating reference to a new signature @symbol{g-variant} instance.}
+  @return{A floating reference to a new signature @type{g-variant} instance.}
   @begin{short}
-    Creates a D-Bus type signature @symbol{g-variant} with the contents of
+    Creates a D-Bus type signature @type{g-variant} with the contents of
     string.
   @end{short}
   @arg{string} must be a valid D-Bus type signature.
@@ -1168,7 +1209,7 @@
   You should ensure that a string is a valid D-Bus type signature before passing
   it to @fun{g-variant-new-signature}.
 
-  D-Bus type signatures consist of zero or more definite @symbol{g-variant-type}
+  D-Bus type signatures consist of zero or more definite @class{g-variant-type}
   strings in sequence.
 
   Since 2.24"
@@ -1184,10 +1225,10 @@
     (:pointer (:struct g-variant))
  #+cl-cffi-gtk-documentation
  "@version{2013-4-11}
-  @argument[value]{a @symbol{g-variant} instance}
-  @return{A floating reference to a new variant @symbol{g-variant} instance.}
+  @argument[value]{a @type{g-variant} instance}
+  @return{A floating reference to a new variant @type{g-variant} instance.}
   @begin{short}
-    Boxes value. The result is a @symbol{g-variant} instance representing a
+    Boxes value. The result is a @type{g-variant} instance representing a
     variant containing the original value.
   @end{short}
 
@@ -1295,7 +1336,7 @@
 (defcfun ("g_variant_get_boolean" g-variant-get-boolean) :boolean
  #+cl-cffi-gtk-documentation
  "@version{2013-4-11}
-  @argument[value]{a boolean @symbol{g-variant} instance}
+  @argument[value]{a boolean @type{g-variant} instance}
   @return{The boolean values @em{true} or @code{nil}.}
   @short{Returns the boolean value of @arg{value}.}
 
@@ -1314,7 +1355,7 @@
 (defcfun ("g_variant_get_byte" g-variant-get-byte) :uchar
  #+cl-cffi-gtk-documentation
  "@version{2013-4-11}
-  @argument[value]{a byte @symbol{g-variant} instance}
+  @argument[value]{a byte @type{g-variant} instance}
   @return{A @code{guchar}.}
   @short{Returns the byte value of @arg{value}.}
 
@@ -1333,7 +1374,7 @@
 (defcfun ("g_variant_get_int16" g-variant-get-int16) :int16
  #+cl-cffi-gtk-documentation
  "@version{2013-4-11}
-  @argument[value]{a int16 @symbol{g-variant} instance}
+  @argument[value]{a int16 @type{g-variant} instance}
   @return{A @code{gint16}.}
   @short{Returns the 16-bit signed integer value of @arg{value}.}
 
@@ -1352,7 +1393,7 @@
 (defcfun ("g_variant_get_uint16" g-variant-get-uint16) :uint16
  #+cl-cffi-gtk-documentation
  "@version{2013-4-11}
-  @argument[value]{a uint16 @symbol{g-variant} instance}
+  @argument[value]{a uint16 @type{g-variant} instance}
   @return{A @code{guint16}.}
   @short{Returns the 16-bit unsigned integer value of value.}
 
@@ -1370,15 +1411,17 @@
 
 (defcfun ("g_variant_get_int32" g-variant-get-int32) :int32
  #+cl-cffi-gtk-documentation
- "@version{2013-4-11}
-  @argument[value]{a int32 @symbol{g-variant} instance}
+ "@version{2013-7-28}
+  @argument[value]{a int32 @type{g-variant} instance}
   @return{A @code{gint32}.}
-  @return{Returns the 32-bit signed integer value of @arg{value}.}
+  @short{Returns the 32-bit signed integer value of @arg{value}.}
 
   It is an error to call this function with a value of any type other than
   @var{+g-variant-type-int32+}.
 
-  Since 2.24"
+  Since 2.24
+  @see-type{g-variant}
+  @see-variable{+g-variant-type-int32+}"
   (value (:pointer (:struct g-variant))))
 
 (export 'g-variant-get-int32)
@@ -1390,7 +1433,7 @@
 (defcfun ("g_variant_get_uint32" g-variant-get-uint32) :uint32
  #+cl-cffi-gtk-documentation
  "@version{2013-7-20}
-  @arguemnt[value]{a uint32 @symbol{g-variant} instance}
+  @arguemnt[value]{a uint32 @type{g-variant} instance}
   @return{A @code{guint32}.}
   @short{Returns the 32-bit unsigned integer value of @arg{value}.}
 
@@ -1411,7 +1454,7 @@
 (defcfun ("g_variant_get_int64" g-variant-get-int64) :int64
  #+cl-cffi-gtk-documentation
  "@version{2013-7-4}
-  @argument[value]{a int64 @symbol{g-variant} instance}
+  @argument[value]{a int64 @type{g-variant} instance}
   @return{A @code{gint64}.}
   @short{Returns the 64-bit signed integer value of @arg{value}.}
 
@@ -1430,7 +1473,7 @@
 (defcfun ("g_variant_get_uint64" g-variant-get-uint64) :uint64
  #+cl-cffi-gtk-documentation
  "@version{2013-4-11}
-  @argument[value]{a uint64 @symbol{g-variant} instance}
+  @argument[value]{a uint64 @type{g-variant} instance}
   @return{A @code{guint64}.}
   @short{Returns the 64-bit unsigned integer value of @arg{value}.}
 
@@ -1449,7 +1492,7 @@
 (defcfun ("g_variant_get_handle" g-variant-get-handle) :int32
  #+cl-cffi-gtk-documentation
  "@version{2013-4-11}
-  @argument[value]{a handle @symbol{g-variant} instance}
+  @argument[value]{a handle @type{g-variant} instance}
   @return{A @code{gint32}.}
   @short{Returns the 32-bit signed integer value of @arg{value}.}
 
@@ -1472,7 +1515,7 @@
 (defcfun ("g_variant_get_double" g-variant-get-double) :double
  #+cl-cffi-gtk-documentation
  "@version{2013-4-11}
-  @argument[value]{a double @symbol{g-variant} instance}
+  @argument[value]{a double @type{g-variant} instance}
   @return{A @code{gdouble}.}
   @short{Returns the double precision floating point value of @arg{value}.}
 
@@ -1495,10 +1538,10 @@
 (defun g-variant-get-string (value)
  #+cl-cffi-gtk-documentation
  "@version{2013-4-11}
-  @argument[value]{a string @symbol{g-variant} instance}
+  @argument[value]{a string @type{g-variant} instance}
   @return{The constant string, utf8 encoded.}
   @begin{short}
-    Returns the string value of a @symbol{g-variant} instance with a string
+    Returns the string value of a @type{g-variant} instance with a string
     type. This includes the types @var{+g-variant-type-string+},
     @var{+g-variant-type-object-path+} and @var{+g-variant-type-signature+}.
   @end{short}
@@ -2214,6 +2257,24 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
+;;; g_variant_get_data_as_bytes ()
+;;;
+;;; GBytes * g_variant_get_data_as_bytes (GVariant *value);
+;;;
+;;; Returns a pointer to the serialised form of a GVariant instance. The
+;;; semantics of this function are exactly the same as g_variant_get_data(),
+;;; except that the returned GBytes holds a reference to the variant data.
+;;;
+;;; value :
+;;;     a GVariant
+;;;
+;;; Returns :
+;;;     A new GBytes representing the variant data. [transfer full]
+;;;
+;;; Since 2.36
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; g_variant_store ()
 ;;;
 ;;; void g_variant_store (GVariant *value, gpointer data);
@@ -2295,6 +2356,34 @@
 ;;;     a new floating GVariant of type type
 ;;;
 ;;; Since 2.24
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; g_variant_new_from_bytes ()
+;;;
+;;; GVariant * g_variant_new_from_bytes (const GVariantType *type,
+;;;                                      GBytes *bytes,
+;;;                                      gboolean trusted);
+;;;
+;;; Constructs a new serialised-mode GVariant instance. This is the inner
+;;; interface for creation of new serialised values that gets called from
+;;; various functions in gvariant.c.
+;;;
+;;; A reference is taken on bytes.
+;;;
+;;; type :
+;;;     a GVariantType
+;;;
+;;; bytes :
+;;;     a GBytes
+;;;
+;;; trusted :
+;;;     if the contents of bytes are trusted
+;;;
+;;; Returns :
+;;;     a new GVariant with a floating reference
+;;;
+;;; Since 2.36
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2408,8 +2497,8 @@
 (defcfun ("g_variant_equal" g-variant-equal) :boolean
  #+cl-cffi-gtk-documentation
  "@version{2013-7-4}
-  @argument[one]{a @symbol{g-variant} instance}
-  @argument[two]{a @symbol{g-variant} instance}
+  @argument[one]{a @type{g-variant} instance}
+  @argument[two]{a @type{g-variant} instance}
   @return{@em{True} if @arg{one} and @arg{two} are equal.}
   @short{Checks if @arg{one} and @arg{two} have the same type and value.}
 
