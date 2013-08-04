@@ -288,7 +288,7 @@
   Like @symbol{glib-micro-version}, but from the Lisp library used at
   application compile time, rather than from the C library loaded at
   application run time.
-  @see-symbol{g-micro-version}")
+  @see-symbol{glib-micro-version}")
 
 (export '+glib-micro-version+)
 
@@ -429,7 +429,7 @@
 ;;;
 ;;; A macro that should be defined before including the glib.h header. If it is
 ;;; defined, no compiler warnings will be produced for uses of deprecated GLib
-;;; APIs. 
+;;; APIs.
 ;;; ----------------------------------------------------------------------------
 
 ;;; Lisp support to check the library version
