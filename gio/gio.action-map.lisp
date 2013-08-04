@@ -3,7 +3,7 @@
 ;;;
 ;;; The documentation has been copied from the GIO Reference Manual
 ;;; for GIO 2.36.1. The latest version of this documentation can be found
-;;; on-line at <http://library.gnome.org/devel/gio/unstable/>. 
+;;; on-line at <http://library.gnome.org/devel/gio/unstable/>.
 ;;; The API documentation of the Lisp binding is available at
 ;;; <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -150,10 +150,10 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-action-entry atdoc:*class-name-alias*) "CStruct"
       (documentation 'g-action-entry 'type)
- "@version{2013-5-1}
+ "@version{2013-7-27}
   @begin{short}
     The @sym{g-action-entry} structure defines a single action. It is for use
-    with @fun{g-action-map-add-action-entries}.
+    with the function @fun{g-action-map-add-action-entries}.
   @end{short}
 
   The order of the items in the structure are intended to reflect frequency
@@ -161,7 +161,7 @@
   some of the later values as @code{nil}. All values after name are optional.
   Additional optional fields may be added in the future.
 
-  See @fun{g-action-map-add-action-entries} for an example.
+  See the function @fun{g-action-map-add-action-entries} for an example.
   @begin{pre}
 (define-g-boxed-cstruct g-action-entry \"GActionEntry\"
   (name :string)
@@ -176,9 +176,9 @@
       the action.}
     @entry[parameter-type]{The type of the parameter that must be
       passed to the activate function for this action, given as a single
-      @symbol{g-variant} type string (or @code{nil} for no parameter).}
+      @type{g-variant} type string (or @code{nil} for no parameter).}
     @entry[state]{The initial state for this action, given in
-      @symbol{g-variant} text format. The state is parsed with no extra type
+      @type{g-variant} text format. The state is parsed with no extra type
       information, so type tags must be added to the string if they are
       necessary.}
     @entry[change-state]{The callback to connect to the \"change-state\"
@@ -209,22 +209,24 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'make-g-action-entry 'function)
- "@version{2013-2-25}
+ "@version{2013-7-27}
   @argument[name]{the name of the action}
   @argument[activate]{the callback to connect to the \"activate\" signal of
     the action}
   @argument[parameter-type]{the type of the parameter that must be
       passed to the activate function for this action, given as a single
-      @symbol{g-variant} type string (or @code{nil} for no parameter)}
+      @type{g-variant} type string (or @code{nil} for no parameter)}
   @argument[state]{the initial state for this action, given in
-      @symbol{g-variant} text format. The state is parsed with no extra type
+      @type{g-variant} text format. The state is parsed with no extra type
       information, so type tags must be added to the string if they are
       necessary.}
   @argument[change-state]{the callback to connect to the \"change-state\"
       signal of the action}
   @begin{short}
     Creates a @class{g-action-entry} struct.
-  @end{short}")
+  @end{short}
+  @see-class{g-action-entry}
+  @see-type{g-variant}")
 
 ;;; --- g-action-entry-name ----------------------------------------------------
 

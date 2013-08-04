@@ -118,7 +118,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'g-application 'type)
- "@version{2013-5-1}
+ "@version{2013-7-27}
   @begin{short}
     A @sym{g-application} is the foundation of an application, unique for a
     given application identifier. The @sym{g-application} class wraps some
@@ -153,14 +153,14 @@
   On Linux, the application identifier is claimed as a well-known bus name on
   the user's session bus. This means that the uniqueness of your application
   is scoped to the current session. It also means that your application may
-  provide additional services (through registration of other object paths) at
+  provide additional services through registration of other object paths at
   that bus name. The registration of these object paths should be done with
   the shared GDBus session bus. Note that due to the internal architecture of
-  GDBus, method calls can be dispatched at any time (even if a main loop is
-  not running). For this reason, you must ensure that any object paths that
+  GDBus, method calls can be dispatched at any time, even if a main loop is
+  not running. For this reason, you must ensure that any object paths that
   you wish to register are registered before @sym{g-application} attempts to
-  acquire the bus name of your application (which happens in the function
-  @fun{g-application-register}). Unfortunately, this means that you cannot use
+  acquire the bus name of your application, which happens in the function
+  @fun{g-application-register}. Unfortunately, this means that you cannot use
   the function @fun{g-application-get-is-remote} to decide if you want to
   register object paths.
 
@@ -176,8 +176,8 @@
 
   There is a number of different entry points into a @sym{g-application}:
   @begin{itemize}
-    @item{via 'Activate' (i.e. just starting the application)}
-    @item{via 'Open' (i.e. opening some files)}
+    @item{via 'Activate' (i. e. just starting the application)}
+    @item{via 'Open' (i. e. opening some files)}
     @item{by handling a command-line}
     @item{via activating an action}
   @end{itemize}
@@ -186,7 +186,7 @@
 
   Regardless of which of these entry points is used to start the application,
   @sym{g-application} passes some platform data from the launching instance to
-  the primary instance, in the form of a @symbol{g-variant} dictionary mapping
+  the primary instance, in the form of a @type{g-variant} dictionary mapping
   strings to variants. To use platform data, override the @code{before_emit} or
   @code{after_emit} virtual functions in your @sym{g-application} subclass. When
   dealing with @code{GApplicationCommandLine} objects, the platform data is
@@ -196,7 +196,7 @@
 
   As the name indicates, the platform data may vary depending on the operating
   system, but it always includes the current directory (key \"cwd\"), and
-  optionally the environment (ie the set of environment variables and their
+  optionally the environment (i. e. the set of environment variables and their
   values) of the calling process (key \"environ\"). The environment is only
   added to the platform data if the @code{:send-enviroment} flag is set.
   @sym{g-application} subclasses can add their own platform data by overriding
@@ -460,7 +460,22 @@
   @see-slot{g-application-flags}
   @see-slot{g-application-inactivity-timeout}
   @see-slot{g-application-is-registered}
-  @see-slot{g-application-is-remote}")
+  @see-slot{g-application-is-remote}
+  @see-class{gtk-application}
+  @see-class{g-action-group}
+  @see-function{g-action-group-activate-action}
+  @see-class{g-action-map}
+  @see-function{g-action-map-add-action}
+  @see-symbol{g-application-flags}
+  @see-function{g-application-run}
+  @see-function{g-application-open}
+  @see-function{g-application-activate}
+  @see-function{g-application-register}
+  @see-function{g-application-hold}
+  @see-function{g-application-release}
+  @see-function{g-application-id-is-valid}
+  @see-function{g-application-get-is-remote}
+  @see-function{g-application-command-line-set-exit-status}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -472,10 +487,8 @@
 (setf (documentation (atdoc:get-slot-from-name "action-group"
                                                'g-application) 't)
  "The @code{\"action-group\"} property of type @class{g-action-group}
-  (Write)@br{}
+  (Write) @br{}
   The group of actions that the application exports.")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "application-id"
@@ -485,15 +498,11 @@
   The unique identifier for the application. @br{}
   Default value: @code{nil}")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "flags" 'g-application) 't)
  "The @code{\"flags\"} property of type @symbol{g-application-flags}
   (Read / Write)@br{}
   Flags specifying the behaviour of the application.")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "inactivity-timeout"
@@ -503,16 +512,12 @@
   Time (ms) to stay alive after becoming idle. @br{}
   Default value: 0")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "is-registered"
                                                'g-application) 't)
  "The @code{\"is-registered\"} property of type @code{:boolean} (Read) @br{}
   If the function @fun{g-application-register} has been called. @br{}
   Default value: @code{nil}")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "is-remote" 'g-application) 't)
@@ -534,8 +539,6 @@
   Accessor of the slot @code{\"action-group\"} of the @class{g-application}
   class.")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-application-application-id atdoc:*function-name-alias*)
       "Accessor"
@@ -543,8 +546,6 @@
  "@version{2013-5-1}
   Accessor of the slot @code{\"application-id\"} of the @class{g-application}
   class.")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-application-flags atdoc:*function-name-alias*)
@@ -554,8 +555,6 @@
   Accessor of the slot @code{\"flags\"} of the @class{g-application}
   class.")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-application-inactivity-timeout atdoc:*function-name-alias*)
       "Accessor"
@@ -564,8 +563,6 @@
   Accessor of the slot @code{\"inactivity-timeout\"} of the
   @class{g-application} class.")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-application-is-registered atdoc:*function-name-alias*)
       "Accessor"
@@ -573,8 +570,6 @@
  "@version{2013-5-1}
   Accessor of the slot @code{\"is-registered\"} of the @class{g-application}
   class.")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-application-is-remote atdoc:*function-name-alias*)

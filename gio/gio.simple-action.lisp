@@ -3,7 +3,7 @@
 ;;;
 ;;; The documentation has been copied from the GIO Reference Manual
 ;;; for GIO 2.36.1. The latest version of this documentation can be found
-;;; on-line at <http://library.gnome.org/devel/gio/unstable/>. 
+;;; on-line at <http://library.gnome.org/devel/gio/unstable/>.
 ;;; The API documentation of the Lisp binding is available at
 ;;; <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -141,7 +141,7 @@
    :interfaces ("GAction")
    :type-initializer "g_simple_action_get_type")
   nil)
-;; The implementation of the C GSimpleAction class has the following 
+;; The implementation of the C GSimpleAction class has the following
 ;; properties, but these properties are inherited from the interface GAction
 ;; in the Lisp implementation.
 ;  ((enabled
@@ -255,7 +255,7 @@
 
 (defun g-simple-action-new-stateful (name parameter-type state)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-4}
+ "@version{2013-7-27}
   @argument[name]{the name of the action}
   @argument[parameter-type]{the type of the parameter to the activate function}
   @argument[state]{the initial state of the action}
@@ -265,11 +265,14 @@
   @end{short}
 
   @arg{state} is the initial state of the action. All future state values must
-  have the same @symbol{g-variant-type} as the initial state.
+  have the same @class{g-variant-type} as the initial state.
 
-  If the state @symbol{g-variant} is floating, it is consumed.
+  If the state @type{g-variant} is floating, it is consumed.
 
-  Since 2.28"
+  Since 2.28
+  @see-class{g-simple-action}
+  @see-type{g-variant}
+  @see-class{g-variant-type}"
   (make-instance 'g-simple-action
                  :name name
                  :parameter-type parameter-type
@@ -311,9 +314,9 @@
 
 (defun g-simple-action-set-state (action value)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-2}
+ "@version{2013-7-27}
   @argument[simple]{a @class{g-simple-action} object}
-  @argument[value]{the new @symbol{g-variant} for the state}
+  @argument[value]{the new @type{g-variant} for the state}
   @begin{short}
     Sets the state of the action.
   @end{short}
@@ -326,6 +329,7 @@
   change.
 
   Since 2.30
+  @see-class{g-simple-action}
   @see-function{g-action-change-state}"
   (setf (g-action-state action) value))
 

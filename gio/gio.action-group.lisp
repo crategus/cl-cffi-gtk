@@ -3,7 +3,7 @@
 ;;;
 ;;; The documentation has been copied from the GIO Reference Manual
 ;;; for GIO 2.36.1. The latest version of this documentation can be found
-;;; on-line at <http://library.gnome.org/devel/gio/unstable/>. 
+;;; on-line at <http://library.gnome.org/devel/gio/unstable/>.
 ;;; The API documentation of the Lisp binding is available at
 ;;; <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -90,7 +90,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-action-group atdoc:*symbol-name-alias*) "Interface"
       (documentation 'g-action-group 'type)
- "@version{2013-5-1}
+ "@version{2013-7-27}
   @begin{short}
     @sym{g-action-group} represents a group of actions. Actions can be used to
     expose functionality in a structured way, either from one part of a program
@@ -101,14 +101,14 @@
 
   The main way to interact with the actions in a @sym{g-action-group} is to
   activate them with the function @fun{g-action-group-activate-action}.
-  Activating an action may require a @symbol{g-variant} parameter. The required
+  Activating an action may require a @type{g-variant} parameter. The required
   type of the parameter can be inquired with the function
   @fun{g-action-group-get-action-parameter-type}. Actions may be disabled,
   see the function @fun{g-action-group-get-action-enabled}. Activating a
   disabled action has no effect.
 
-  Actions may optionally have a state in the form of a GVariant. The current
-  state of an action can be inquired with the function
+  Actions may optionally have a state in the form of a @type{g-variant}. The
+  current state of an action can be inquired with the function
   @fun{g-action-group-get-action-state}. Activating a stateful action may change
   its state, but it is also possible to set the state by calling
   the function @fun{g-action-group-change-action-state}.
@@ -118,7 +118,7 @@
   a stateful action, with a boolean state. Activating the action would toggle
   the state.
 
-  Each action in the group has a unique name (which is a string). All method
+  Each action in the group has a unique name which is a string. All method
   calls, except the function @fun{g-action-group-list-actions} take the name
   of an action as an argument.
 
@@ -187,7 +187,14 @@
         @entry[value]{The new value of the state.}
       @end{table}
       Since 2.28
-  @end{dictionary}")
+  @end{dictionary}
+  @see-function{g-action-group-activate-action}
+  @see-function{g-action-group-get-action-parameter-type}
+  @see-function{g-action-group-get-action-enabled}
+  @see-function{g-action-group-get-action-state}
+  @see-function{g-action-group-change-action-state}
+  @see-function{g-action-group-list-actions}
+  @see-function{g-action-group-query-action}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GActionGroupInterface
@@ -437,7 +444,7 @@
 (defcfun ("g_action_group_get_action_parameter_type"
            g-action-group-get-action-parameter-type) (g-boxed-foreign g-variant-type)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-1}
+ "@version{2013-7-27}
   @argument[action-group]{a @class{g-action-group} object}
   @argument[action-name]{the name of the action to query}
   @return{The parameter type.}
@@ -447,17 +454,18 @@
   @end{short}
 
   When activating the action using the function
-  @fun{g-action-group-activate-action}, the @symbol{g-variant} given to that
+  @fun{g-action-group-activate-action}, the @type{g-variant} given to that
   function must be of the type returned by this function.
 
   In the case that this function returns @code{nil}, you must not give any
-  @symbol{g-variant}, but @code{nil} instead.
+  @type{g-variant}, but @code{nil} instead.
 
   The parameter type of a particular action will never change but it is
   possible for an action to be removed and for a new action to be added with
   the same name but a different parameter type.
 
   Since 2.28
+  @see-class{g-action-group}
   @see-function{g-action-group-activate-action}"
   (action-group (g-object g-action-group))
   (action-name :string))
@@ -471,7 +479,7 @@
 (defcfun ("g_action_group_get_action_state_type"
            g-action-group-get-action-state-type) (g-boxed-foreign g-variant-type)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-1}
+ "@version{2013-7-27}
   @argument[action-group]{a @class{g-action-group} object}
   @argument[action-name]{the name of the action to query}
   @return{The state type, if the action is stateful.}
@@ -480,10 +488,10 @@
   @end{short}
 
   If the action is stateful then this function returns the
-  @symbol{g-variant-type} of the state. All calls to the function
-  @fun{g-action-group-change-action-state} must give a @symbol{g-variant} of
+  @class{g-variant-type} of the state. All calls to the function
+  @fun{g-action-group-change-action-state} must give a @type{g-variant} of
   this type and the function @fun{g-action-group-get-action-state} will return
-  a @symbol{g-variant} of the same type.
+  a @type{g-variant} of the same type.
 
   If the action is not stateful then this function will return @code{nil}. In
   that case, the function @fun{g-action-group-get-action-state} will return
@@ -495,6 +503,7 @@
   name but a different state type.
 
   Since 2.28
+  @see-class{g-action-group}
   @see-function{g-action-group-change-action-state}
   @see-function{g-action-group-get-action-state}"
   (action-group (g-object g-action-group))
@@ -509,7 +518,7 @@
 (defcfun ("g_action_group_get_action_state_hint"
            g-action-group-get-action-state-hint) (:pointer (:struct g-variant))
  #+cl-cffi-gtk-documentation
- "@version{2013-5-1}
+ "@version{2013-7-27}
   @argument[action-group]{a @class{g-action-group} object}
   @argument[action-name]{the name of the action to query}
   @return{The state range hint.}
@@ -522,8 +531,8 @@
   that there is no hint about the valid range of values for the state of the
   action.
 
-  If a @symbol{g-variant} array is returned then each item in the array is a
-  possible value for the state. If a @sym{g-variant} pair (i. e.: two-tuple) is
+  If a @type{g-variant} array is returned then each item in the array is a
+  possible value for the state. If a @type{g-variant} pair (i. e.: two-tuple) is
   returned then the tuple specifies the inclusive lower and upper bound of valid
   values for the state.
 
@@ -531,10 +540,12 @@
   state value outside of the hinted range and setting a value within the range
   may fail.
 
-  The return value (if non-@code{null}) should be freed with
-  @code{g_variant_unref()} when it is no longer required.
+  The return value, if non-@code{null}, should be freed with the function
+  @fun{g-variant-unref} when it is no longer required.
 
-  Since 2.28"
+  Since 2.28
+  @see-class{g-action-group}
+  @see-function{g-variant-unref}"
   (action-group (g-object g-action-group))
   (action-name :string))
 
@@ -576,7 +587,7 @@
 (defcfun ("g_action_group_change_action_state"
            g-action-group-change-action-state) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-5-1}
+ "@version{2013-7-27}
   @argument[action-group]{a @class{g-action-group} object}
   @argument[action-name]{the name of the action to request the change on}
   @argument[value]{the new state}
@@ -592,9 +603,10 @@
   state or may change its state to something other than value.
   See the function @fun{g-action-group-get-action-state-hint}.
 
-  If the value @symbol{g-variant} is floating, it is consumed.
+  If the value @type{g-variant} is floating, it is consumed.
 
   Since 2.28
+  @see-class{g-action-group}
   @see-function{g-action-group-get-action-state-type}
   @see-function{g-action-group-get-action-state-hint}"
   (action-group (g-object g-action-group))
