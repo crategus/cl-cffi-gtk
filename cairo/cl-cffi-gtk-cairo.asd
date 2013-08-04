@@ -30,6 +30,7 @@
   :components ((:file "cairo.package")
                (:file "cairo.init")
                (:file "cairo.version")
+               (:file "cairo.status")         ; Decoding cairo's status
                (:file "cairo.regions")
                (:file "cairo.surface")
                (:file "cairo.context")
