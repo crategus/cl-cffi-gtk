@@ -436,39 +436,10 @@
       @code{G_ENABLE_DIAGNOSTIC = 1}. Since 2.32.}
   @end{table}")
 
+(export 'g-signal-flags)
+
 ;;; ----------------------------------------------------------------------------
 ;;; enum GSignalMatchType
-;;;
-;;; typedef enum {
-;;;   G_SIGNAL_MATCH_ID        = 1 << 0,
-;;;   G_SIGNAL_MATCH_DETAIL    = 1 << 1,
-;;;   G_SIGNAL_MATCH_CLOSURE   = 1 << 2,
-;;;   G_SIGNAL_MATCH_FUNC      = 1 << 3,
-;;;   G_SIGNAL_MATCH_DATA      = 1 << 4,
-;;;   G_SIGNAL_MATCH_UNBLOCKED = 1 << 5
-;;; } GSignalMatchType;
-;;;
-;;; The match types specify what g_signal_handlers_block_matched(),
-;;; g_signal_handlers_unblock_matched() and
-;;; g_signal_handlers_disconnect_matched() match signals by.
-;;;
-;;; G_SIGNAL_MATCH_ID
-;;;     The signal id must be equal.
-;;;
-;;; G_SIGNAL_MATCH_DETAIL
-;;;     The signal detail be equal.
-;;;
-;;; G_SIGNAL_MATCH_CLOSURE
-;;;     The closure must be the same.
-;;;
-;;; G_SIGNAL_MATCH_FUNC
-;;;     The C closure callback must be the same.
-;;;
-;;; G_SIGNAL_MATCH_DATA
-;;;     The closure data must be the same.
-;;;
-;;; G_SIGNAL_MATCH_UNBLOCKED
-;;;     Only unblocked signals may matched.
 ;;; ----------------------------------------------------------------------------
 
 (defbitfield g-signal-match-type
@@ -478,6 +449,39 @@
   :func
   :data
   :unblocked)
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'g-signal-match-type atdoc:*symbol-name-alias*) "Bitfield"
+      (gethash 'g-signal-match-type atdoc:*external-symbols*)
+ "@version{2013-7-31}
+  @begin{short}
+    The match types specify what the functions
+    @fun{g-signal-handlers-block-matched},
+    @fun{g-signal-handlers-unblock-matched} and
+    @fun{g-signal-handlers-disconnect-matched} match signals by.
+  @end{short}
+  @begin{pre}
+(defbitfield g-signal-match-type
+  :id
+  :detail
+  :closure
+  :func
+  :data
+  :unblocked)
+  @end{pre}
+  @begin[code]{table}
+    @entry[:id]{The signal id must be equal.}
+    @entry[:detail]{The signal detail be equal.}
+    @entry[:closure]{The closure must be the same.}
+    @entry[:func]{The C closure callback must be the same.}
+    @entry[:data]{The closure data must be the same.}
+    @entry[:unblocked]{Only unblocked signals may matched.}
+  @end{table}
+  @see-function{g-signal-handlers-block-matched}
+  @see-function{g-signal-handlers-unblock-matched}
+  @see-function{g-signal-handlers-disconnect-matched}")
+
+(export 'g-signal-match-type)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GSignalQuery
@@ -1100,16 +1104,21 @@
 
 (defun g-signal-connect (instance detailed-signal handler &key after)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-5}
+ "@version{2013-7-30}
   @argument[instance]{the instance to connect to}
   @argument[detailed-signal]{a string of the form \"signal-name::detail\"}
-  @argument[handler]{the @code{GCallback} to connect}
+  @argument[handler]{the callback function to connect}
+  @argument[key]{if @em{true} the @arg{handler} is called after the default
+    handler}
   @return{The handler ID.}
   @begin{short}
-    Connects a @code{GCallback} function to a signal for a particular object.
+    Connects a callback function to a signal for a particular object.
   @end{short}
 
-  The handler will be called before the default handler of the signal."
+  The handler will be called before the default handler of the signal. If the
+  keyword argument @arg{after} is @em{true}, the @arg{handler} will be called
+  after the default handler of the signal.
+  @see-function{g-signal-connect-after}"
   (g-signal-connect-closure (pointer instance)
                             detailed-signal
                             (create-closure instance handler)
@@ -1119,32 +1128,27 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_signal_connect_after()
-;;;
-;;; #define g_signal_connect_after(instance, detailed_signal, c_handler, data)
-;;;
-;;; Connects a GCallback function to a signal for a particular object.
-;;;
-;;; The handler will be called after the default handler of the signal.
-;;;
-;;; instance :
-;;;     the instance to connect to.
-;;;
-;;; detailed_signal :
-;;;     a string of the form "signal-name::detail".
-;;;
-;;; c_handler :
-;;;     the GCallback to connect.
-;;;
-;;; data :
-;;;     data to pass to c_handler calls.
-;;;
-;;; Returns :
-;;;     the handler id
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline g-signal-connect-after))
 
 (defun g-signal-connect-after (instance detailed-signal handler)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-7-30}
+  @argument[instance]{the instance to connect to.}
+  @argument[detailed-signal]{a string of the form \"signal-name::detail\"}
+  @argument[handler]{the callback function to connect}
+  @return{The handler ID.}
+  @begin{short}
+    Connects a callback function to a signal for a particular object.
+  @end{short}
+
+  The @arg{handler} will be called after the default handler of the signal.
+
+  @subheading{Lisp implementation}
+    In the Lisp implementation the function @fun{g-signal-connect} has a
+    keyword argument @arg{after}.
+  @see-function{g-signal-connect}"
   (g-signal-connect instance detailed-signal handler :after t))
 
 (export 'g-signal-connect-after)
