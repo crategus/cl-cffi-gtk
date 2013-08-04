@@ -3,9 +3,9 @@
 @c License  : GNU General Public License (GPL)
 @c Author   : Dieter Kaiser
 @c Date     : 26.12.2011
-@c Revision : 25.07.2013
+@c Revision : 01.08.2013
 @c
-@c Copyright (C) 2011 - 2013 by Dieter Kaiser
+@c Copyright (C) 2011, 2012, 2013 by Dieter Kaiser
 @c -----------------------------------------------------------------------------
 
 @menu
@@ -47,13 +47,9 @@ Cairo. These libraries can be loaded separately with the following commands:
    (asdf:load-system 'cl-cffi-gtk-cairo)
 @end verbatim
 
-It is assumed, that the corresponding system definition files
-@code{cl-cffi-gtk.asd} for GTK+, @code{cl-cffi-gtk-glib.asd} for GLib,
-@code{cl-cffi-gtk-gobject.asd} for GObject, @code{cl-cffi-gtk-gdk.asd} for GDK,
-@code{cl-cffi-gdk-pixbuf.asd} for GDK-Pixbuf, @code{cl-cffi-gtk-gio.asd} for
-GIO, @code{cl-cffi-gtk-pango.asd}, for Pango and @code{cl-cffi-gtk-cairo.asd}
-for Cairo are correctly registered to @code{asdf:*central-registry*} or the
-corresponding symlinks are created.
+Please consult the ASDF documentation which is available at
+@url{http://common-lisp.net/project/asdf/} for configuring ASDF
+to find your systems.
 
 The @code{cl-cffi-gtk} library depends further on the following libraries:
 @table @emph
@@ -93,7 +89,7 @@ The @code{cl-cffi-gtk} library depends further on the following libraries:
 @set cl-cffi-gtk-build-info http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_cl-cffi-gtk-build-info.html
 
 Information about the installation can be obtained with the function
-@url{cl-cffi-gtk-build-info}.  This is an example for the output, when calling
+@xurl{cl-cffi-gtk-build-info}.  This is an example for the output, when calling
 the function from the Lisp prompt after loading the library:
 @example
 * (cl-cffi-gtk-build-info)
@@ -193,7 +189,8 @@ int main (int argc, char *argv[])
 (asdf:load-system :cl-cffi-gtk)
 
 (defpackage :gtk-tutorial
-  (:use :gtk :gdk :gobject :glib :pango :cairo :common-lisp))
+  (:use :gtk :gdk :gdk-pixbuf :gobject
+   :glib :gio :pango :cairo :common-lisp))
 
 (in-package :gtk-tutorial)
 
@@ -213,25 +210,30 @@ int main (int argc, char *argv[])
 The first four lines of code load the @code{cl-cffi-gtk} library and define an
 own package @code{:gtk-tutorial} for the example program. The package
 @code{:gtk-tutorial} includes the symbols from the packages @code{:gtk} for GTK,
-@code{:gdk} for GDK, @code{:glib} for GLib, @code{:pango} for Pango, and
-@code{:cairo} for Cairo.  In further examples of this tutorial these first lines
-of code are omitted.
+@code{:gdk} for GDK, @code{:gdk-pixbuf} for GDK-Pixbuf, @code{:gobject} for
+GObject, @code{:glib} for GLib, @code{:gio} for GIO, @code{:pango} for Pango,
+and @code{:cairo} for Cairo.  Most of the symbols of the included packages are
+not needed for the first simple examples, but we include all packages so later
+no symbol is missing.  In further examples of this tutorial these first lines of
+code are omitted.
 
 The macro @xurl{within-main-loop} is a wrapper around a GTK+ program.  The
 functionality of the macro corresponds to the C functions @code{gtk_init()} and
 @code{gtk_main()} which initialize and start a GTK+ program.  Both functions
-have corresponding Lisp functions. The function @code{gtk_main()} is exported as
-the Lisp function @xurl{gtk-main}. The correspoinding Lisp function to
-@code{gtk_init()} is called internally when loading the library, but not
+have corresponding Lisp functions.  The function @code{gtk_main()} is exported
+as the Lisp function @xurl{gtk-main}.  The corresponding Lisp function to
+@code{gtk_init()} is called internally when loading the library, but is not
 exported.
 
 Already in this simple example we have connected a signal to the created window.
-The signal "destroy" is emitted when the user quits the window. The function
-@xurl{g-signal-connect} connects a Lisp lambda function to this signal, which
-calls the function @xurl{leave-gtk-main} to destroy the GTK+ main loop. Like
-the macro @xurl{within-main-loop} the function @xurl{leave-gtk-main} is special
-for the Lisp binding. It calls internally the C function @code{gtk_main_quit()},
-but does some extra work to finish the Lisp program. The C function
+More about signals and callback functions follows in
+@ref{Introduction to Signals and Callbacks}.  The signal "destroy" is emitted
+when the user quits the window. The function @xurl{g-signal-connect} connects a
+Lisp lambda function to this signal, which calls the function
+@xurl{leave-gtk-main} to destroy the GTK+ main loop.  Like the macro
+@xurl{within-main-loop} the function @xurl{leave-gtk-main} is special for the
+Lisp binding. It calls internally the C function @code{gtk_main_quit()}, but
+does some extra work to finish the Lisp program. The C function
 @code{gtk_main_quit()} is available in the Lisp binding as @xurl{gtk-main-quit},
 but do not call this function in your code.
 
@@ -555,9 +557,9 @@ follows in @ref{Introduction to Signals and Callbacks}.
 @set gtk-container-border-width http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-container-border-width.html
 @set gtk-container-set-border-width http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-container-set-border-width.html
 
-In @ref{example-hello-world} a border with a width of @code{12} is added to
-the window setting the property @code{border-width} when creating the window
-with the function @code{make-instance}.  The C implementation uses the function
+In @ref{example-hello-world} a border with a width of 12 is added to the window
+setting the property @code{border-width} when creating the window with the
+function @code{make-instance}.  The C implementation uses the function
 @code{gtk_container_set_border_width()} which is available in Lisp as
 @xurl{gtk-container-set-border-width}.  The property @code{border-width} is
 inherited from the C class @code{GtkContainer}, which in the Lisp library is
@@ -624,7 +626,7 @@ widgets.
 @findex container-add, gtk-container-add
 
 @set gtk-widget-destroy http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-widget-destroy.html
-@set gtk-conatiner-add http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-container-add.html
+@set gtk-container-add http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-container-add.html
 
 Three more functions are introduced in @ref{example-hello-world}.  The function
 @xurl{gtk-widget-destroy} takes as an argument any widget and destroys it.  In
@@ -639,7 +641,7 @@ finishes the application.
 A second signal handler is connected to the toplevel window to catch the
 signal "delete-event".  The signal "delete-event" occurs, when the user or the
 window manager tries to close the window.  In this case, the signal handler
-prints a message on the console.   Because the value @code{T} is returned from
+prints a message on the console.   Because the value @emph{true} is returned from
 the signal handler the handling of the signal is stopped and the window is not
 closed, but the execution of the application is continued.  To close the window,
 the user has to press the button in this example.
@@ -751,17 +753,19 @@ than it is also possible to implement something like
 (g-signal-connect window "destroy" #'separate-event-handler)
 @end example
 
-Furthermore, the C function
+@c Commenting the following out. Check it in more detail.
 
-@example
-gulong g_signal_connect_swapped (gpointer    *object,
-                                 const gchar *name,
-                                 GCallback   func,
-                                 gpointer    *callback_data);
-@end example
-
-is not implemented in Lisp.  Again this functionality is already present with
-the help of @code{lambda} functions in Lisp.
+@c Furthermore, the C function
+@c 
+@c @example
+@c gulong g_signal_connect_swapped (gpointer    *object,
+@c                                  const gchar *name,
+@c                                  GCallback   func,
+@c                                  gpointer    *callback_data);
+@c @end example
+@c 
+@c is not implemented in Lisp.  Again this functionality is already present with
+@c the help of @code{lambda} functions in Lisp.
 
 @c -----------------------------------------------------------------------------
 @node An Upgraded Hello World, Drawing, Introduction to Signals and Callbacks, Top
@@ -986,23 +990,29 @@ no longer presented for comparison.
 @end float
 @end ifnotinfo
 
+@findex gtk-drawing-area
+@findex drawing-area, gtk-drawing-area
+
+@findex gtk-widget-queue-draw
+@findex widget-queue-draw, gtk-widget-queue-draw
+
 Many widgets, like buttons, do all their drawing themselves.  You just tell them
 the label you want to see, and they figure out what font to use, draw the button
 outline and focus rectangle, etc.  Sometimes, it is necessary to do some custom
-drawing.  In that case, a @code{GtkDrawingArea} might be the right widget to
+drawing.  In that case, a @xurl{gtk-drawing-area} might be the right widget to
 use.  It offers a canvas on which you can draw by connecting to the "draw"
 signal.
 
-The contents of a widget often need to be partially or fully redrawn, e.g. when
-another window is moved and uncovers part of the widget, or when tie window
+The contents of a widget often need to be partially or fully redrawn, e. g. when
+another window is moved and uncovers part of the widget, or when the window
 containing it is resized.  It is also possible to explicitly cause part or all
-of the widget to be redrawn, by calling @code{gtk-widget-queue-draw} or its
-variants.  GTK+ takes care of most of the details by providing a ready-to-use
-cairo context to the ::draw signal handler.
+of the widget to be redrawn, by calling the function
+@xurl{gtk-widget-queue-draw} or its variants.  GTK+ takes care of most of the
+details by providing a ready-to-use cairo context to the "draw" signal handler.
 
-The following example shows a ::draw signal handler.  It is a bit more
-complicated than the previous examples, since it also demonstrates input event
-handling by means of ::button-press and ::motion-notify handlers.
+The following example shows a "draw" signal handler.  It is a more complicated
+than the previous examples, since it also demonstrates input event handling by
+means of "button-press" and "motion-notify" handlers.
 
 @float Example, example-drawing
 @caption{Drawing in response to input}

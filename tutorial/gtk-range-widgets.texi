@@ -4,9 +4,9 @@
 @c Language : English
 @c Author   : Dieter Kaiser
 @c Date     : 09.03.2012
-@c Revision : 01.07.2012
+@c Revision : 01.08.2013
 @c
-@c Copyright (C) 2012 by Dieter Kaiser
+@c Copyright (C) 2012, 2013 by Dieter Kaiser
 @c -----------------------------------------------------------------------------
 
 @menu
@@ -54,16 +54,16 @@ it is generally easier to use the scrolled window widget in most cases).  For
 other purposes, you should use scale widgets, as they are friendlier and more
 featureful.
 
-The @code{GtkScrollbar} widget is a horizontal or vertical scrollbar, depending
+The @xurl{gtk-scrollbar} widget is a horizontal or vertical scrollbar, depending
 on the value of the @code{orientation} property.  A scrollbar can be created
-with the function @code{gtk-scrollbar-new}, which takes two arguments.  The
+with the function @xurl{gtk-scrollbar-new}, which takes two arguments.  The
 first argument gives the direction @code{:horizontal} or @code{:vertical} and
-the second a @code{GtkAdjustment}.  The second argument can be @code{NIL}.
-In this case a @code{GtkAdjustment} is created.
+the second a @xurl{gtk-adjustment}.  The second argument can be @code{NIL}.
+In this case a @xurl{gtk-adjustment} is created.
 
 The position of the thumb in a scrollbar is controlled by the scroll
-adjustments.  See @code{GtkAdjustment} for the fields in an adjustment - for
-@code{GtkScrollbar}, the property @code{value} of @code{GtkAdjustment}
+adjustments.  See @xurl{gtk-adjustment} for the fields in an adjustment - for
+@xurl{gtk-scrollbar}, the property @code{value} of @xurl{gtk-adjustment}
 represents the position of the scrollbar, which must be between the
 @code{lower} and @code{(upper - page-size)} properties.  The property
 @code{page-size} represents the size of the visible scrollable area.  The
@@ -73,12 +73,12 @@ example the PageDown key).
 
 @emph{Note}
 
-The @code{GtkHScrollbar} widget for a horizontal scrollbar and the
-@code{GtkVScrollbar} widget for a vertical scrollbar are deprecated, but
-present in GTK+ 3.2.  Furthermore, the deprecated functions
-@code{gtk-hscrollbar-new} and @code{gtk-vscrollbar-new} are availabe in
-GTK+ 3.2, but these functions return a @code{GtkScrollbar} widget and not a
-@code{GtkHScrollbar} or @code{GtkVScrollbar} widget.
+The @xurl{gtk-hscrollbar} widget for a horizontal scrollbar and the
+@xurl{gtk-vscrollbar} widget for a vertical scrollbar are deprecated, but
+present in GTK+ 3.6.  Furthermore, the deprecated functions
+@xurl{gtk-hscrollbar-new} and @xurl{gtk-vscrollbar-new} are availabe in
+GTK+ 3.6, but these functions return a @xurl{gtk-scrollbar} widget and not a
+@code{gtk-hscrollbar} or @code{gtk-vscrollbar} widget.
 
 @c -----------------------------------------------------------------------------
 @node Scale Widgets, Common Range Functions, Scrollbar Widgets, Top
@@ -100,22 +100,22 @@ example, to adjust the magnification level on a zoomed preview of a picture, or
 to control the brightness of a color, or to specify the number of minutes of
 inactivity before a screensaver takes over the screen.
 
-As with scrollbars, the @code{GtkScale} widget is a horizontal or vertical
+As with scrollbars, the @xurl{gtk-scale} widget is a horizontal or vertical
 scale, depending on the value of the @code{orientation} property.  A scale can
-be created with the function @code{gtk-scale-new}, which takes two arguments.
+be created with the function @xurl{gtk-scale-new}, which takes two arguments.
 The first argument gives the direction @code{:horizontal} or @code{:vertical}
-and the second a @code{GtkAdjustment}.
+and the second a @xurl{gtk-adjustment}.
 
 The adjustment argument can either be an adjustment which has already been
-created with @code{gtk-adjustment-new}, or @code{NIL}, in which case, an
-anonymous adjustment is created with all of its values set to @code{0.0} (which
+created with @xurl{gtk-adjustment-new}, or @code{NIL}, in which case, an
+anonymous adjustment is created with all of its values set to 0.0 (which
 is not very useful in this case).  In order to avoid confusing yourself, you
-probably want to create your adjustment with a @code{page-size} of @code{0.0} so
+probably want to create your adjustment with a @code{page-size} of 0.0 so
 that its upper value actually corresponds to the highest value the user can
-select.  The function @code{gtk-scale-new-with-range} variant take care of
+select.  The function @xurl{gtk-scale-new-with-range} variant take care of
 creating a suitable adjustment.  The function takes four arguments.  The first
 argument is again the orientation of the scale and the next arguments represent
-the values for creating an @code{GtkAdjustment} with intial values for the
+the values for creating an @xurl{gtk-adjustment} with intial values for the
 properties @code{lower}, @code{upper}, and @code{step-increment}.  If you are
 already thoroughly confused, read the section @ref{Adjustments} again for an
 explanation of what exactly adjustments do and how to create and manipulate
@@ -138,48 +138,26 @@ them.
 
 Scale widgets can display their current value as a number beside the trough.
 The default behaviour is to show the value, but you can change this with this
-with the function @code{gtk-scale-set-draw-value}, which takes as the first
-argument a widget of type @code{GtkScale} and as the second argument
+with the function @xurl{gtk-scale-set-draw-value}, which takes as the first
+argument a widget of type @xurl{gtk-scale} and as the second argument
 @code{draw-value}, which is either @code{T} or @code{NIL}, with predictable
 consequences for either one.
 
 The value displayed by a scale widget is rounded to one decimal point by
 default, as is the value field in its adjustment.  You can change this with the
-function @code{gtk-scale-set-digits}.  The first argument is a widget of type
-@code{GtkScale} and the second argument @code{digits}, where @code{digits} is
+function @xurl{gtk-scale-set-digits}.  The first argument is a widget of type
+@xurl{gtk-scale} and the second argument @code{digits}, where @code{digits} is
 the number of decimal places you want.  You can set digits to anything you like,
 but no more than 13 decimal places will actually be drawn on screen.
 
 Finally, the value can be drawn in different positions relative to the trough
-with the function @code{gtk-scale-set-value-pos}.  The first argument is again
+with the function @xurl{gtk-scale-set-value-pos}.  The first argument is again
 a scale widget.  The second argument @code{pos} is of the enumeration type
-@code{GtkPositionType}.  Possible values are shown in
-@ref{table-gtk-position-type}.
+@xurl{gtk-position-type}.
 
-If you position the value on the "side" of the trough (e.g., on the top or
+If you position the value on the "side" of the trough (e. g., on the top or
 bottom of a horizontal scale widget), then it will follow the slider up and
 down the trough.
-
-@float Table, table-gtk-position-type
-@caption{The enumeration type @code{GtkPositionType} describes which edge of a
-widget a certain feature is positioned at, e.g. the tabs of a
-@code{GtkNotebook}, the handle of a @code{GtkHandleBox} or the label of a
-@code{GtkScale}.}
-@shortcaption{Values of the type @code{GtkPositionType}.}
-@end float
-@table @code
-@item :left
-      The feature is at the left edge.
-
-@item :right
-      The feature is at the right edge.
-
-@item :top
-      The feature is at the top edge.
-
-@item :bottom
-      The feature is at the bottom edge.
-@end table
 
 @c -----------------------------------------------------------------------------
 @node Common Range Functions, Example Range Widgets, Scale Widgets, Top
@@ -202,19 +180,18 @@ functions that will work on all range widgets.
 @findex range-adjustment-changed, gtk-range-adjustment-changed
 
 Getting and setting the adjustment for a range widget "on the fly" is done with
-the functions @code{gtk-range-get-adjustment} and
-@code{gtk-range-set-adjustment}.  The function @code{gtk-range-get-adjustment}
-returns the adjustment to which range is connected.
+the functions @xurl{gtk-range-get-adjustment} and
+@xurl{gtk-range-set-adjustment}.  The function @xurl{gtk-range-get-adjustment}
+returns the adjustment to which the range is connected.
 
-@code{gtk-range-set-adjustment} does absolutely nothing if you pass it the
+@xurl{gtk-range-set-adjustment} does absolutely nothing if you pass it the
 adjustment that range is already using, regardless of whether you changed any
 of its fields or not.  If you pass it a new adjustment, it will unreference the
 old one if it exists (possibly destroying it), connect the appropriate signals
-to the new one, and call the function @code{gtk-range-adjustment-changed}, which
-will recalculate the size or position of the slider and redraw if necessary.
-As mentioned in the section on adjustments, if you wish to reuse the same
-adjustment, when you modify its values directly, you should emit the "changed"
-signal on it.
+to the new one, and emit the "changed" signal, which will recalculate the size
+or position of the slider and redraw if necessary.  As mentioned in the section
+on adjustments, if you wish to reuse the same adjustment, when you modify its
+values directly, you should emit the "changed" signal on it.
 
 @c -----------------------------------------------------------------------------
 @subheading Key and Mouse bindings
@@ -257,7 +234,7 @@ controls for adjusting some of the parameters mentioned above and in the section
 on adjustments, so you can see how they affect the way these widgets work for
 the user.
 
-You will notice that the program does not call @code{g-signal-connect} for the
+You will notice that the program does not call @xurl{g-signal-connect} for the
 "delete-event", but only for the "destroy" signal. This will still perform the
 desired function, because an unhandled "delete-event" will result in a "destroy"
 signal being given to the window.

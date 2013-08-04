@@ -4,9 +4,9 @@
 @c Language : English
 @c Author   : Dieter Kaiser
 @c Date     : 26.04.2012
-@c Revision : 01.07.2012
+@c Revision : 01.08.2013
 @c
-@c Copyright (C) 2012 by Dieter Kaiser
+@c Copyright (C) 2012, 2013 by Dieter Kaiser
 @c -----------------------------------------------------------------------------
 
 @menu
@@ -532,60 +532,41 @@ and @ref{example-more-labels}.
 @end float
 @end ifnotinfo
 
-Progress bars are used to show the status of an operation.  They are pretty easy
-to use, as you will see with the code below.  But first lets start out with the
-function @code{gtk-progress-bar-new} to create a new progress bar.  Now that the
-progress bar has been created we can use it and set the fraction with the
-function @code{gtk-progress-bar-set-fraction}, which has two arguments.  The
-first argument is the progress bar you wish to operate on, and the second
-argument is the amount "completed", meaning the amount the progress bar has been
-filled from 0-100%.  This is passed to the function as a real number ranging
-from 0 to 1.
+Progress bars are implemented as the class @xurl{gtk-progress-bar} and are used
+to show the status of an operation.  They are pretty easy to use, as you will
+see with the code below.  But first lets start out with the function
+@xurl{gtk-progress-bar-new} to create a new progress bar.  Now that the progress
+bar has been created we can use it and set the fraction with the function
+@xurl{gtk-progress-bar-set-fraction}, which has two arguments.  The first
+argument is the progress bar you wish to operate on, and the second argument is
+the amount "completed", meaning the amount the progress bar has been filled from
+0 - 100%.  This is passed to the function as a real number ranging from 0 to 1.
 
 A progress bar may be set to one of a number of orientations using the function
-@code{gtk-progress-bar-set-orientation}.  The second argument is the
-orientation and can take one of the values
-
-The orientation argument may take one of the values of
-@ref{table-gtk-progress-bar-orientation} to indicate the direction in which the
-progress bar moves.
-
-@float Table, table-gtk-progress-bar-orientation
-@caption{@code{GtkProgressBarOrientation} is an enumeration representing
-possible orientations and growth directions for the visible progress bar.}
-@shortcaption{Values of the type @code{GtkProgressBarOrientation}}
-@end float
-@table @code
-@item :left-to-right
-      A horizontal progress bar growing from left to right.
-@item :right-to-left
-      A horizontal progress bar growing from right to left.
-@item :bottom-to-top
-      A vertical progress bar growing from bottom to top.
-@item :top-to-bottom
-      A vertical progress bar growing from top to bottom.
-@end table
+@xurl{gtk-orientable-set-orientation}.  The second argument is the
+orientation and may take one of the values of @code{:horizontal} or
+@code{:vertical} of the @xurl{gtk-orientation} enumeration.  Progress bars
+normally grow from top to bottom or left to right. With the function
+@xurl{gtk-progress-bar-set-inverted} can be set to grrow in the opposite
+direction.
 
 As well as indicating the amount of progress that has occurred, the progress bar
 may be set to just indicate that there is some activity.  This can be useful in
 situations where progress cannot be measured against a value range.  The
-function @code{gtk-progress-bar-pulse} indicates that some progress has been
+function @xurl{gtk-progress-bar-pulse} indicates that some progress has been
 made.  The step size of the activity indicator is set using the function
-@code{gtk-progress-bar-set-pulse-step}.
+@xurl{gtk-progress-bar-set-pulse-step}.
 
-When not in activity mode, the progress bar can also display a configurable text
-string within its trough, using the function @code{gtk-progress-bar-set-text}.
-
-You can turn off the display of the string by calling
-@code{gtk-progess-bar-set-text} again with @code{NIL} as second argument.
-
-The current text setting of a progressbar can be retrieved with the function
-@code{gtk-progress-bar-get-text}.
+The progress bar can also display a configurable text string within its trough,
+using the function @xurl{gtk-progress-bar-set-text}.  You can turn off the
+display of the string by calling @xurl{gtk-progress-bar-set-text} again with
+@code{NIL} as second argument.  The current text setting of a progress bar can
+be retrieved with the function @xurl{gtk-progress-bar-get-text}.
 
 Progress Bars are usually used with timeouts or other such functions (see
 section on Timeouts, I/O and Idle Functions) to give the illusion of
-multitasking.  All will employ the @code{gtk-progress-bar-set-fraction} or
-@code{gtk-progress-bar-pulse} functions in the same manner.
+multitasking.  All will employ the @xurl{gtk-progress-bar-set-fraction} or
+@xurl{gtk-progress-bar-pulse} functions in the same manner.
 
 @ref{example-progress-bar} shows an example of the progress bar, updated using
 timeouts.  This code also shows you how to reset the Progress Bar.  The output
@@ -699,25 +680,19 @@ used to identify different "users".  The message on top of the stack is the one
 displayed, no matter what context it is in. Messages are stacked in
 last-in-first-out order, not context identifier order.
 
-A statusbar is created with a call to @code{gtk-statusbar-new}.  A new context
+A statusbar is created with a call to @xurl{gtk-statusbar-new}.  A new context
 Identifier is requested using a call to the function
-@code{gtk-statusbar-get-context-id} with a short textual description of the
+@xurl{gtk-statusbar-get-context-id} with a short textual description of the
 context as the second argument.
 
 There are three functions that can operate on statusbars:
-@code{gtk-statusbar-push}, @code{gtk-statusbar-pop}, and
-@code{gtk-statusbar-remove}.  The first function, @code{gtk-statusbar-push}, is
+@xurl{gtk-statusbar-push}, @xurl{gtk-statusbar-pop}, and
+@xurl{gtk-statusbar-remove}.  The first function, @xurl{gtk-statusbar-push}, is
 used to add a new message to the statusbar.  It returns a message identifier,
-which can be passed later to the function @code{gtk-statusbar-remove} to remove
+which can be passed later to the function @xurl{gtk-statusbar-remove} to remove
 the message with the given message and context identifiers from the stack of
-the statusbar.  The function @code{gtk-statusbar-pop} removes the message
+the statusbar.  The function @xurl{gtk-statusbar-pop} removes the message
 highest in the stack with the given context identifier.
-
-In addition to messages, statusbars may also display a resize grip, which can
-be dragged with the mouse to resize the toplevel window containing the
-statusbar, similar to dragging the window frame.  The functions
-@code{gtk-statusbar-set-has-resize-grip} and
-@code{gtk-statusbar-get-has-resize-grip} control the display of the resize grip.
 
 @ref{example-statusbar} creates a statusbar and two buttons, one for pushing
 items onto the statusbar, and one for popping the last item back off.
@@ -772,21 +747,21 @@ items onto the statusbar, and one for popping the last item back off.
 @end float
 @end ifnotinfo
 
-@code{GtkInfoBar} is a widget that can be used to show messages to the user
+@xurl{gtk-info-bar} is a widget that can be used to show messages to the user
 without showing a dialog.  It is often temporarily shown at the top or bottom of
-a document.  In contrast to @code{GtkDialog}, which has a horizontal action area
-at the bottom, @code{GtkInfoBar} has a vertical action area at the side.
+a document.  In contrast to @xurl{gtk-dialog}, which has a horizontal action
+area at the bottom, @xurl{gtk-info-bar} has a vertical action area at the side.
 
-The API of @code{GtkInfoBar} is very similar to @code{GtkDialog}, allowing you
-to add buttons to the action area with @code{gtk-info-bar-add-button} or
-@code{gtk-info-bar-new-with-buttons}.  The sensitivity of action widgets can be
-controlled with @code{gtk-info-bar-set-response-sensitive}.  To add widgets to
-the main content area of a @code{GtkInfoBar}, use
-@code{gtk-info-bar-get-content-area} and add your widgets to the container.
+The API of @xurl{gtk-info-bar} is very similar to @xurl{gtk-dialog}, allowing
+you to add buttons to the action area with @xurl{gtk-info-bar-add-button} or
+@xurl{gtk-info-bar-new-with-buttons}.  The sensitivity of action widgets can be
+controlled with @xurl{gtk-info-bar-set-response-sensitive}.  To add widgets to
+the main content area of a @xurl{gtk-info-bar}, use the function
+@xurl{gtk-info-bar-get-content-area} and add your widgets to the container.
 
-Similar to @code{GtkMessageDialog}, the contents of a @code{GtkInfoBar} can by
-classified as error message, warning, informational message, etc, by using
-@code{gtk-info-bar-set-message-type}.  GTK+ uses the message type to determine
+Similar to @xurl{gtk-message-dialog}, the contents of a @xurl{gtk-info-bar} can
+by classified as error message, warning, informational message, etc, by using
+@xurl{gtk-info-bar-set-message-type}.  GTK+ uses the message type to determine
 the background color of the message area.
 
 @float Example, example-info-bar

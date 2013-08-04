@@ -4,9 +4,9 @@
 @c Language : English
 @c Author   : Dieter Kaiser
 @c Date     : 09.03.2012
-@c Revision : 16.05.2012
+@c Revision : 01.08.2013
 @c 
-@c Copyright (C) 2012 by Dieter Kaiser
+@c Copyright (C) 2012, 2013 by Dieter Kaiser
 @c -----------------------------------------------------------------------------
 
 @menu
@@ -28,7 +28,7 @@ GTK+ has various widgets that can be visually adjusted by the user using the
 mouse or the keyboard, such as the range widgets, described in
 @ref{Range Widgets}.  There are also a few widgets that display some adjustable
 portion of a larger area of data, such as the viewport widget
-@code{GtkViewport}.
+@xurl{gtk-viewport}.
 
 Obviously, an application needs to be able to react to changes the user makes in
 range widgets.  One way to do this would be to have each widget emit its own
@@ -42,12 +42,12 @@ adjustment value, then the programmer may have to write their own signal
 handlers to translate between the "output" of one widget's signal and the
 "input" of another's adjustment setting function.
 
-GTK+ solves this problem using the object @code{GtkAdjustment}, which is not a
+GTK+ solves this problem using the object @xurl{gtk-adjustment}, which is not a
 widget but a way for widgets to store and pass adjustment information in an
-abstract and flexible form.  The most obvious use of @code{GtkAdjustment} is to
+abstract and flexible form.  The most obvious use of @xurl{gtk-adjustment} is to
 store the configuration parameters and values of range widgets, such as
-scrollbars and scale controls.  However, since @code{GtkAdjustment} is derived
-from @code{GObject}, adjustments have some special powers beyond those of normal
+scrollbars and scale controls.  However, since @xurl{gtk-adjustment} is derived
+from @xurl{g-object}, adjustments have some special powers beyond those of normal
 data structures.  Most importantly, they can emit signals, just like widgets,
 and these signals can be used not only to allow a program to react to user input
 on adjustable widgets, but also to propagate adjustment values transparently
@@ -66,7 +66,7 @@ incorporate them: Progress Bars, Viewports, Scrolled Windows, and others.
 Many of the widgets which use adjustment objects do so automatically, but some
 cases will be shown in later examples where you may need to create an adjustment
 yourself.  An adjustment can be created with the function
-@code{gtk-adjustment-new} which has the arguments @code{value}, @code{lower},
+@xurl{gtk-adjustment-new} which has the arguments @code{value}, @code{lower},
 @code{upper}, @code{step-increment}, @code{page-increment}, and
 @code{page-size}.
 
@@ -138,7 +138,7 @@ Ok, you say, that's nice, but what if I want to create my own handlers to
 respond when the user adjusts a range widget or a spin button, and how do I get
 at the value of the adjustment in these handlers? To answer these questions and
 more, let's start by taking a look at the Lisp class representing
-@code{GtkAdjustment} itself:
+@xurl{gtk-adjustment} itself:
 
 @verbatim
 (define-g-object-class "GtkAdjustment" gtk-adjustment
@@ -174,14 +174,14 @@ more, let's start by taking a look at the Lisp class representing
 
 The slots of the class are @code{lower}, @code{page-increment},
 @code{page-size}, @code{step-increment}, @code{upper}, and @code{value}.  The
-slots represent the properties of the C class @code{GtkAdjustment}.  The slots
+slots represent the properties of the C class @xurl{gtk-adjustment}.  The slots
 can be accessed with the corresponding Lisp accessor functions.  Alternativly,
 the C accessor functions like @code{gtk_adjustment_get_value()} and
 @code{gtk_adjustment_set_value()} are availabe in the Lisp binding through e. g.
-@code{gtk-adjustment-get-value} and @code{gtk-adjustment-set-value} for the
+@xurl{gtk-adjustment-get-value} and @xurl{gtk-adjustment-set-value} for the
 property @code{value}.
 
-As mentioned earlier, an adjustment object is a subclass of @code{GObject} just
+As mentioned earlier, an adjustment object is a subclass of @xurl{g-object} just
 like all the various widgets, and thus it is able to emit signals.  This is, of
 course, why updates happen automagically when you share an adjustment object
 between a scrollbar and another adjustable widget; all adjustable widgets
@@ -192,7 +192,7 @@ The various widgets that use the adjustment object will emit the signal
 "value-changed" on an adjustment whenever they change its value.  This happens
 both when user input causes the slider to move on a range widget, as well as
 when the program explicitly changes the value with
-@code{gtk-adjustment-set-value}.  So, for example, if you have a scale widget,
+@xurl{gtk-adjustment-set-value}.  So, for example, if you have a scale widget,
 and you want to change the rotation of a picture whenever its value changes, you
 would create a callback like this:
 

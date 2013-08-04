@@ -311,7 +311,7 @@ clipping.
 To create a new @code{GtkEventBox} widget, use the call
 @code{(make-instance 'gtk-event-box)} or the function @code{gtk-event-box-new}.
 A child widget can then be added to this @code{GtkEventBox} with the function
-@code{gtk-container-add}.  With the function @code{gtk-widget-set-events} the
+@xurl{gtk-container-add}.  With the function @code{gtk-widget-set-events} the
 events are set for the event box which can be connected to a signal handler.
 To create the resources associated with an event box, the function
 @code{gtk-widget-realize} has to be called explicitly for the @code{GtkEventBox}

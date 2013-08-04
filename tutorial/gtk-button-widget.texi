@@ -4,7 +4,7 @@
 @c Language : English
 @c Author   : Dieter Kaiser
 @c Date     : 03.02.2012
-@c Revision : 25.07.2013
+@c Revision : 01.08.2013
 @c
 @c Copyright (C) 2012, 2013 by Dieter Kaiser
 @c -----------------------------------------------------------------------------
@@ -197,14 +197,14 @@ both a label and an image the global setting of the property
 @findex gtk-toggle-button-new
 @findex gtk-toggle-button-new-with-label
 @findex gtk-toggle-button-new-with-mnemonic
-@findex gtk-toogle-button-get-active
-@findex gtk-toogle-button-set-active
+@findex gtk-toggle-button-get-active
+@findex gtk-toggle-button-set-active
 
 @findex toggle-button-new, gtk-toggle-button-new
 @findex toggle-button-new-with-label, gtk-toggle-button-new-with-label
 @findex toggle-button-new-with-mnemonic, gtk-toggle-button-new-with-mnemonic
-@findex toggle-button-get-active, gtk-toogle-button-get-active
-@findex toggle-button-set-active, gtk-toogle-button-set-active
+@findex toggle-button-get-active, gtk-toggle-button-get-active
+@findex toggle-button-set-active, gtk-toggle-button-set-active
 
 Toggle buttons are derived from normal buttons and are very similar, except
 toggle buttons always are in one of two states, alternated by a click.  Toggle
@@ -223,7 +223,7 @@ additionally parses the label for '_'-prefixed mnemonic characters.
 To retrieve the state of the toggle widget, including radio and check buttons,
 a construct as shown in the example below is used.  This tests the state of the
 toggle button, by accessing the active field of the toggle widget's structure
-with the function @xurl{gtk-toogle-button-get-active}.  The signal of interest
+with the function @xurl{gtk-toggle-button-get-active}.  The signal of interest
 to us emitted by toggle buttons (the toggle button check button, and radio
 button widgets) is the "toggled" signal.  To check the state of these buttons,
 set up a signal handler to catch the toggled signal, and access the property
@@ -279,15 +279,16 @@ In @ref{example-table-packing-2} the usage of toggle buttons is shown.
 @findex check-button-new-with-label, gtk-check-button-new-with-label
 @findex check-button-new-with-mnemonic, gtk-check-button-new-with-mnemonic
 
-Check buttons inherit many properties and functions from the toggle buttons
-above, but look a little different.  Rather than being buttons with text inside
-them, they are small squares with the text to the right of them.  These are
-often used for toggling options on and off in applications.
+Check buttons are implemented as the class @xurl{gtk-check-button} and inherit
+many properties and functions from the toggle buttons above, but look a little
+different.  Rather than being buttons with text inside them, they are small
+squares with the text to the right of them.  These are often used for toggling
+options on and off in applications.
 
 The creation functions are similar to those of the normal button:
-@code{gtk-check-button-new}, @code{gtk-check-button-new-with-label}, and
-@code{gtk-check-button-new-with-mnemonic}.  The
-@code{gtk-check-button-new-with-label} function creates a check button with a
+@xurl{gtk-check-button-new}, @xurl{gtk-check-button-new-with-label}, and
+@xurl{gtk-check-button-new-with-mnemonic}.  The
+@xurl{gtk-check-button-new-with-label} function creates a check button with a
 label beside it.
 
 Checking the state of the check button is identical to that of the toggle
@@ -318,16 +319,15 @@ one may be selected or depressed at a time.  This is good for places in your
 application where you need to select from a short list of options.
 
 Creating a new radio button is done with one of these calls:
-@code{gtk-radio-button-new},
-@code{gtk-radio-button-new-with-label}, and
-@code{gtk-radio-button-new-with-mnemonic}.  These functions take a list of
+@xurl{gtk-radio-button-new}, @xurl{gtk-radio-button-new-with-label}, and
+@xurl{gtk-radio-button-new-with-mnemonic}.  These functions take a list of
 radio buttons as the first argument or @code{NIL}.  When @code{NIL} a new
 list of radio buttons is created.  The newly created list for the radio buttons
-can be get with the function @code{gtk-radio-button-get-group}.  More radio
+can be get with the function @xurl{gtk-radio-button-get-group}.  More radio
 buttons can then be added to this list.  The important thing to remember is that
-@code{gtk-radio-button-get-group} must be called for each new button added to
+@xurl{gtk-radio-button-get-group} must be called for each new button added to
 the group, with the previous button passed in as an argument.  The result is
-then passed into the next call to @code{gtk-radio-button-new} or the other two
+then passed into the next call to @xurl{gtk-radio-button-new} or the other two
 functions for creating a radio button.  This allows a chain of buttons to be
 established.  @ref{example-toggle-buttons} creates a radio button group with
 three buttons.
@@ -350,12 +350,12 @@ need for a variable to hold the list of buttons:
 @findex radio-button-new-with-mnemonic-from-widget, gtk-radio-button-new-with-mnemonic-from-widget
 
 Each of these functions has a variant, which take a radio button as the first
-argument and allows to omit the @code{gtk-radio-button-get-group} call.  In this
+argument and allows to omit the @xurl{gtk-radio-button-get-group} call.  In this
 case the new radio button is added to the list of radio buttons the argument is
 already a part of.  These functions are:
-@code{gtk-radio-button-new-from-widget},
-@code{gtk-radio-button-new-with-label-from-widget}, and
-@code{gtk-radio-button-new-with-mnemonic-from-widget}.
+@xurl{gtk-radio-button-new-from-widget},
+@xurl{gtk-radio-button-new-with-label-from-widget}, and
+@xurl{gtk-radio-button-new-with-mnemonic-from-widget}.
 
 @ifnotinfo
 @float Figure, figure-toggle-buttons
@@ -365,7 +365,7 @@ already a part of.  These functions are:
 @end ifnotinfo
 
 It is also a good idea to explicitly set which button should be the default
-depressed button with the function @code{gtk-toggle-button-set-active}.  This is
+depressed button with the function @xurl{gtk-toggle-button-set-active}.  This is
 described in the section on toggle buttons, and works in exactly the same way.
 Once the radio buttons are grouped together, only one of the group may be active
 at a time.  If the user clicks on one radio button, and then on another, the
@@ -477,19 +477,20 @@ becoming active).
 @end float
 @end ifnotinfo
 
-A @code{GtkLinkButton} is a @code{GtkButton} with a hyperlink, similar to the
+A @xurl{gtk-link-button} is a @xurl{gtk-button} with a hyperlink, similar to the
 one used by web browsers, which triggers an action when clicked.  It is useful
 to show quick links to resources.
 
-A link button is created by calling either @code{gtk-link-button-new} or
-@code{gtk-link-button-new-with-label}.  If using the former, the URI you pass to
-the constructor is used as a label for the widget.
+A link button is created by calling either the functions
+@xurl{gtk-link-button-new} or @xurl{gtk-link-button-new-with-label}.  If using
+the former, the URI you pass to the constructor is used as a label for the
+widget.
 
-The URI bound to a @code{GtkLinkButton} can be set specifically using
-@code{gtk-link-button-set-uri}, and retrieved using
-@code{gtk-link-button-get-uri}.
+The URI bound to a @xurl{gtk-link-button} can be set specifically using the
+function @xurl{gtk-link-button-set-uri}, and retrieved using the function
+@xurl{gtk-link-button-get-uri}.
 
-By default, @code{GtkLinkButton} calls @code{gtk-show-uri} when the button is
+By default, @xurl{gtk-link-button} calls @xurl{gtk-show-uri} when the button is
 clicked.  This behaviour can be overridden by connecting to the "activate-link"
 signal and returning @code{T} from the signal handler.
 
@@ -558,14 +559,14 @@ is shown in @ref{example-link-button}.
 @end float
 @end ifnotinfo
 
-@code{GtkSwitch} is a widget that has two states: on or off.  The user can
+@xurl{gtk-switch} is a widget that has two states: on or off.  The user can
 control which state should be active by clicking the empty area, or by dragging
-the handle.  The switch is created with the function @code{gtk-switch-new} or
+the handle.  The switch is created with the function @xurl{gtk-switch-new} or
 the call @code{(make-instance 'gtk-switch)}.
 
-@code{GtkSwitch} has the property @code{active}, which can be set with the
-function @code{gtk-switch-set-active} or retrieved with the function
-@code{gtk-switch-get-active}.
+@xurl{gtk-switch} has the property @code{active}, which can be set with the
+function @xurl{gtk-switch-set-active} or retrieved with the function
+@xurl{gtk-switch-get-active}.
 
 An example of a switch is shown in @ref{figure-switch}.  The code is shown in
 @ref{example-switch}.  Note that in the example the signal "notify::active"

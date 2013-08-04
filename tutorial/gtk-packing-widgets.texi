@@ -4,7 +4,7 @@
 @c Language : English
 @c Author   : Dieter Kaiser
 @c Date     : 06.02.2012
-@c Revision : 25.07.2013
+@c Revision : 01.08.2013
 @c 
 @c Copyright (C) 2012, 2013 by Dieter Kaiser
 @c -----------------------------------------------------------------------------

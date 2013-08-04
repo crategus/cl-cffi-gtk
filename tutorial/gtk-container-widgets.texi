@@ -4,8 +4,8 @@
 @c Language : German
 @c Author   : Dieter Kaiser
 @c Date     : 09.02.2012
-@c Revision : 17.05.2013
-@c 
+@c Revision : 01.08.2013
+@c
 @c Copyright (C) 2012, 2013 by Dieter Kaiser
 @c -----------------------------------------------------------------------------
 
@@ -186,20 +186,20 @@ Note that the desired effect can in most cases be achieved by using the
 @end float
 @end ifnotinfo
 
-The @code{GtkFixed} widget is a container widget which allows to place child
+The @xurl{gtk-fixed} widget is a container widget which allows to place child
 widgets at a fixed position within the container, relative to the upper left
 hand corner.  The position of the child widgets can be changed dynamically.
-Only a few functions are associated with the @code{GtkFixed} widget
-like @code{gtk-fixed-new}, @code{gtk-fixed-put}, and @code{gtk-fixed-move}.
+Only a few functions are associated with the @xurl{gtk-fixed} widget
+like @xurl{gtk-fixed-new}, @xurl{gtk-fixed-put}, and @xurl{gtk-fixed-move}.
 
-The function @code{gtk-fixed-new} creates a new @code{GtkFixed} widget.  The
-function @code{gtk-fixed-put} places a widget in the container fixed at the
+The function @xurl{gtk-fixed-new} creates a new @xurl{gtk-fixed} widget.  The
+function @xurl{gtk-fixed-put} places a widget in the container fixed at the
 position specified by the arguments @code{x} and @code{y}.  The function
-@code{gtk-fixed-move} allows the specified widget to be moved to a new position.
+@xurl{gtk-fixed-move} allows the specified widget to be moved to a new position.
 
 For most applications, you should not use this container.  It keeps you from
 having to learn about the other GTK+ containers, but it results in broken
-applications.  With @code{GtkFixed}, the following things will result in
+applications.  With @xurl{gtk-fixed}, the following things will result in
 truncated text, overlapping widgets, and other display bugs:
 
 @itemize
@@ -216,7 +216,7 @@ truncated text, overlapping widgets, and other display bugs:
 In addition, the fixed widget can not properly be mirrored in right-to-left
 languages such as Hebrew and Arabic. i.e. normally GTK+ will flip the
 interface to put labels to the right of the thing they label, but it can't
-do that with @code{GtkFixed}.  So your application will not be usable in
+do that with @xurl{gtk-fixed}.  So your application will not be usable in
 right-to-left languages.
 
 Finally, fixed positioning makes it kind of annoying to add/remove GUI
@@ -224,7 +224,7 @@ elements, since you have to reposition all the other elements.  This is a
 long-term maintenance problem for your application.
 
 If you know none of these things are an issue for your application, and
-prefer the simplicity of @code{GtkFixed}, by all means use the widget. But you
+prefer the simplicity of @xurl{gtk-fixed}, by all means use the widget. But you
 should be aware of the tradeoffs.
 
 @findex GtkAllocation
@@ -240,10 +240,10 @@ should be aware of the tradeoffs.
 The following example illustrates how to use a fixed container.  In this example
 three buttons are put into the fixed widget at random positions.  A click on
 a button moves the button to a new random position. To retrieve the size of
-the fixed widget the function @code{gtk-widget-get-allocation} is used, which
-returns a rectangle of type @code{GtkAllocation}. The width and the height of
-the fixed widget are then get with the functions @code{gdk-rectangle-width} and
-@code{gtk-rectangle-height}.
+the fixed widget the function @xurl{gtk-widget-get-allocation} is used, which
+returns a rectangle of type @xurl{gtk-allocation}.  The width and the height of
+the fixed widget are then get with the functions @xurl{gdk-rectangle-width} and
+@xurl{gdk-rectangle-height}.
 
 @float Example, example-fixed
 @caption{Fixed Container}
@@ -298,26 +298,26 @@ the fixed widget are then get with the functions @code{gdk-rectangle-width} and
 @findex layout-get-size, gtk-layout-get-size
 @findex layout-set-size, gtk-layout-set-size
 
-The layout container @code{GtkLayout} is similar to the fixed container
-@code{GtkFixed} except that it implements an infinite (where infinity is less
+The layout container @xurl{gtk-layout} is similar to the fixed container
+@xurl{gtk-fixed} except that it implements an infinite (where infinity is less
 than 2^32) scrolling area.  The X window system has a limitation where windows
 can be at most 32767 pixels wide or tall.  The layout container gets around this
 limitation by doing some exotic stuff using window and bit gravities, so that
 you can have smooth scrolling even when you have many child widgets in your
 scrolling area.
 
-A layout container is created using @code{gtk-layout-new} which accepts the
+A layout container is created using @xurl{gtk-layout-new} which accepts the
 optional arguments @code{hadjustment} and @code{vadjustment} to specify
 adjustment objects that the layout widget will use for its scrolling.
 
 Widgets can be added and moved in the Layout container using the functions
-@code{gtk-layout-put} and @code{gtk-layout-move}.  The size of the layout
-container can be set using the function @code{gtk-layout-set-size}.
+@xurl{gtk-layout-put} and @xurl{gtk-layout-move}.  The size of the layout
+container can be set using the function @xurl{gtk-layout-set-size}.
 
-@code{GtkLayout} implements the interface @code{GtkScrollable}.  Therefore, for
+@xurl{gtk-layout} implements the interface @xurl{gtk-scrollable}.  Therefore, for
 manipulating the horizontal and vertical adjustment widgets the functions
-@code{gtk-scrollable-get-hadjustment}, @code{gtk-scrollable-get-vadjustment},
-@code{gtk-scrollable-set-hadjustment}, and @code{gtk-scrollable-set-vadjustment}
+@xurl{gtk-scrollable-get-hadjustment}, @xurl{gtk-scrollable-get-vadjustment},
+@xurl{gtk-scrollable-set-hadjustment}, and @xurl{gtk-scrollable-set-vadjustment}
 are available.
 
 @c -----------------------------------------------------------------------------
@@ -346,21 +346,21 @@ optionally be labelled.  The position of the label and the style of the box can
 be altered to suit.
 
 A frame can be created with @code{(make-instance 'gtk-frame)} or the function
-@code{gtk-frame-new}.  The label is by default placed in the upper left hand
+@xurl{gtk-frame-new}.  The label is by default placed in the upper left hand
 corner of the frame. A value of @code{NIL} for the label argument will result in
 no label being displayed.  The text of the label can be changed using the
-function @code{gtk-frame-set-label}.
+function @xurl{gtk-frame-set-label}.
 
 @findex gtk-frame-set-label-align
 @findex frame-set-label-align, gtk-frame-set-label-align
 
 The position of the label can be changed using the function
-@code{gtk-frame-set-label-align} which has the arguments @code{xalign} and
-@code{yalign} which take values between @code{0.0} and @code{1.0}. @code{xalign}
+@xurl{gtk-frame-set-label-align} which has the arguments @code{xalign} and
+@code{yalign} which take values between 0.0 and 1.0. @code{xalign}
 indicates the position of the label along the top horizontal of the frame.
 @code{yalign} indicates the vertival position of the label.  With a value of
-@code{0.5} of @code{yalign} the label is positioned in the middle of the line
-of the frame.  The default value of @code{xalign} is @code{0.0} which places the
+0.5 of @code{yalign} the label is positioned in the middle of the line
+of the frame.  The default value of @code{xalign} is 0.0 which places the
 label at the left hand end of the frame.
 
 @findex GtkShadowType
@@ -370,9 +370,9 @@ label at the left hand end of the frame.
 @findex gtk-frame-set-shadow-type
 @findex frame-set-shadow-type, gtk-frame-set-shadow-type
 
-The function @code{gtk-frame-set-shadow-type} alters the style of the box that
+The function @xurl{gtk-frame-set-shadow-type} alters the style of the box that
 is used to outline the frame.  The second argument is a keyword of the
-enumeration type @code{GtkShadowType}.  The possible values are listed in
+enumeration type @xurl{gtk-shadow-type}.  The possible values are listed in
 @ref{table-gtk-shadow-type}.
 
 @ref{example-frame} illustrates the use of the frame widget.  The code of this
@@ -487,14 +487,14 @@ resizes the top-level window.
 @end float
 @end ifnotinfo
 
-@code{GtkPaned} has two panes, arranged either horizontally or vertically.  The
+@xurl{gtk-paned} has two panes, arranged either horizontally or vertically.  The
 division between the two panes is adjustable by the user by dragging a handle.
 
 @findex gtk-paned-new
 @findex paned-new, gtk-paned-new
 
-A paned window can be created with the function @code{gtk-paned-new}, which
-takes as an argument a value of type @code{GtkOrientation}.  With the value
+A paned window can be created with the function @xurl{gtk-paned-new}, which
+takes as an argument a value of type @xurl{gtk-orientation}.  With the value
 @code{:horizontal} a horizontal paned window is created, and with the value
 @code{:vertical} a vertical paned window.
 
@@ -509,8 +509,8 @@ takes as an argument a value of type @code{GtkOrientation}.  With the value
 @findex paned-add2, gtk-paned-add2
 
 Child widgets are added to the panes of the widget with the functions
-@code{gtk-paned-pack1} and @code{gtk-paned-pack2} or the functions
-@code{gtk-paned-add1} and @code{gtk-paned-add2}.  The division between the two
+@xurl{gtk-paned-pack1} and @xurl{gtk-paned-pack2} or the functions
+@xurl{gtk-paned-add1} and @xurl{gtk-paned-add2}.  The division between the two
 children is set by default from the size requests of the children, but it can be
 adjusted by the user.
 
@@ -518,7 +518,7 @@ A paned widget draws a separator between the two child widgets and a small
 handle that the user can drag to adjust the division.  It does not draw any
 relief around the children or around the separator.  (The space in which the
 separator is called the gutter.)  Often, it is useful to put each child
-inside a @code{GtkFrame} with the shadow type set to @code{:in} so that the
+inside a @xurl{gtk-frame} with the shadow type set to @code{:in} so that the
 gutter appears as a ridge.  No separator is drawn if one of the children is
 missing.
 
@@ -534,7 +534,7 @@ if resize is @code{T} for both children.
 @findex paned-set-position, gtk-paned-set-position
 
 The application can set the position of the slider as if it were set by the
-user, by calling @code{gtk-paned-set-position}.
+user, by calling @xurl{gtk-paned-set-position}.
 
 @ref{figure-paned-window} shows a simple example.   The corresponding code is
 shown in @ref{example-paned-window}
@@ -577,26 +577,26 @@ shown in @ref{example-paned-window}
 @findex gtk-viewport-new
 @findex viewport-new, gtk-viewport-new
 
-The @code{GtkViewport} widget acts as an adaptor class, implementing
+The @xurl{gtk-viewport} widget acts as an adaptor class, implementing
 scrollability for child widgets that lack their own scrolling capabilities.
-Use @code{GtkViewport} to scroll child widgets such as @code{GtkGrid},
-@code{GtkBox}, and so on.
+Use @xurl{gtk-viewport} to scroll child widgets such as @xurl{gtk-grid},
+@xurl{gtk-box}, and so on.
 
 @findex gtk-scrolled-window-add-with-viewport
 @findex scrolled-window-add-with-viewport, gtk-scrolled-window-add-with-viewport
 
-If a widget has native scrolling abilities, such as @code{GtkTextView},
-@code{GtkTreeView} or @code{GtkIconview}, it can be added to a
-@code{GtkScrolledWindow} with @code{gtk-container-add}.  If a widget does not,
-you must first add the widget to a @code{GtkViewport}, then add the viewport to
+If a widget has native scrolling abilities, such as @xurl{gtk-text-view},
+@xurl{gtk-tree-view} or @xurl{gtk-icon-view}, it can be added to a
+@xurl{gtk-scrolled-window} with @xurl{gtk-container-add}.  If a widget does not,
+you must first add the widget to a @xurl{gtk-viewport}, then add the viewport to
 the scrolled window.  The convenience function
-@code{gtk-scrolled-window-add-with-viewport} does exactly this, so you
+@xurl{gtk-scrolled-window-add-with-viewport} does exactly this, so you
 can ignore the presence of the viewport.
 
-The @code{GtkViewport} will start scrolling content only if allocated less than
+The @xurl{gtk-viewport} will start scrolling content only if allocated less than
 the child widget's minimum size in a given orientation.
 
-A viewport is created with the function @code{gtk-viewport-new}.  The function
+A viewport is created with the function @xurl{gtk-viewport-new}.  The function
 takes two arguments to specify the horizontal and vertical adjustments that the
 widget is to use when you create the widget.  It will create its own if you
 pass @code{NIL} as the value of the arguments.
@@ -611,17 +611,17 @@ pass @code{NIL} as the value of the arguments.
 @findex scrollable-get-vadjustment, gtk-scrollable-get-vadjustment
 @findex scrollable-set-vadjustment, gtk-scrollable-set-vadjustment
 
-@code{GtkViewport} implement the interface @code{GtkScrollable}.  Therefore, the
-you can get and set the adjustments after the widget has been created using the
-one of the four functions @code{gtk-scrollable-get-hadjustment},
-@code{gtk-scrollable-get-vadjustment}, @code{gtk-scrollable-set-hadjustment},
-and @code{gtk-scrollable-set-vadjustment}.
+@xurl{gtk-viewport} implement the interface @xurl{gtk-scrollable}.  Therefore,
+the you can get and set the adjustments after the widget has been created using
+the one of the four functions @xurl{gtk-scrollable-get-hadjustment},
+@xurl{gtk-scrollable-get-vadjustment}, @xurl{gtk-scrollable-set-hadjustment},
+and @xurl{gtk-scrollable-set-vadjustment}.
 
 @findex gtk-viewport-set-shadow-type
 @findex viewport-set-shadow-type, gtk-viewport-set-shadow-type
 
-The only other viewport function is @code{gtk-viewport-set-shadow-type} used to
-alter its appearance.  The second argument is of type @code{GtkShadowType}.
+The only other viewport function is @xurl{gtk-viewport-set-shadow-type} used to
+alter its appearance.  The second argument is of type @xurl{gtk-shadow-type}.
 Possible values are listed in @ref{table-gtk-shadow-type}.
 
 @c -----------------------------------------------------------------------------
@@ -635,54 +635,54 @@ Possible values are listed in @ref{table-gtk-shadow-type}.
 @end float
 @end ifnotinfo
 
-@code{GtkScrolledWindow} is a @code{GtkBin} subclass: it's a container the
-accepts a single child widget.  @code{GtkScrolledWindow} adds scrollbars to the
-child widget and optionally draws a beveled frame around the child widget.
+@xurl{gtk-scrolled-window} is a @xurl{gtk-bin} subclass: it is a container that
+accepts a single child widget.  @xurl{gtk-scrolled-window} adds scrollbars to
+the child widget and optionally draws a beveled frame around the child widget.
 
 The scrolled window can work in two ways.  Some widgets have native scrolling
-support; these widgets implement the @code{GtkScrollable} interface. Widgets
-with native scroll support include @code{GtkTreeView}, @code{GtkTextView}, and
-@code{GtkLayout}.
+support; these widgets implement the @xurl{gtk-scrollable} interface. Widgets
+with native scroll support include @xurl{gtk-tree-view}, @xurl{gtk-text-view},
+and @code{gtk-layout}.
 
-For widgets that lack native scrolling support, the @code{GtkViewport} widget
+For widgets that lack native scrolling support, the @xurl{gtk-viewport} widget
 acts as an adaptor class, implementing scrollability for child widgets that lack
-their own scrolling capabilities.  Use @code{GtkViewport} to scroll child
-widgets such as @code{GtkGrid}, @code{GtkBox}, and so on.
+their own scrolling capabilities.  Use @xurl{gtk-viewport} to scroll child
+widgets such as @xurl{gtk-grid}, @xurl{gtk-box}, and so on.
 
 If a widget has native scrolling abilities, it can be added to the
-@code{GtkScrolledWindow} with @code{gtk-container-add}.  If a widget does not,
-you must first add the widget to a @code{GtkViewport}, then add the
-@code{GtkViewport} to the scrolled window.  The convenience function
-@code{gtk-scrolled-window-add-with-viewport} does exactly this, so you can
+@xurl{gtk-scrolled-window} with @xurl{gtk-container-add}.  If a widget does not,
+you must first add the widget to a @xurl{gtk-viewport}, then add the
+@xurl{gtk-viewport} to the scrolled window.  The convenience function
+@xurl{gtk-scrolled-window-add-with-viewport} does exactly this, so you can
 ignore the presence of the viewport.
 
 The position of the scrollbars is controlled by the scroll adjustments.  See
-@code{GtkAdjustment} for the fields in an adjustment - for @code{GtkScrollbar},
-used by @code{GtkScrolledWindow}, the "value" field represents the position of
-the scrollbar, which must be between the "lower" field and "upper - page-size".
-The "page-size" field represents the size of the visible scrollable area.
-The "step-increment" and "page-increment" fields are used when the user asks
-to step down (using the small stepper arrows) or page down (using for example
-the PageDown key).
+@curl{gtk-adjustment} for the fields in an adjustment - for
+@xurl{gtk-scrollbar}, used by @xurl{gtk-scrolled-window}, the "value" field
+represents the position of the scrollbar, which must be between the "lower"
+field and "upper - page-size".  The "page-size" field represents the size of the
+visible scrollable area.  The "step-increment" and "page-increment" fields are
+used when the user asks to step down (using the small stepper arrows) or page
+down (using for example the PageDown key).
 
-If a @code{GtkScrolledWindow} doesn't behave quite as you would like, or doesn't
-have exactly the right layout, it's very possible to set up your own scrolling
-with @code{GtkScrollbar} and for example a @code{GtkGrid}.
+If a @xurl{gtk-scrolled-window} does not behave quite as you would like, or
+does not have exactly the right layout, it is very possible to set up your own
+scrolling with @xurl{gtk-scrollbar} and for example a @xurl{gtk-grid}.
 
-The function @code{gtk-scrolled-window-new} is used to create a new scrolled
+The function @xurl{gtk-scrolled-window-new} is used to create a new scrolled
 window, where the first argument is the adjustment for the horizontal
 direction, and the second, the adjustment for the vertical direction.  These
 are almost always set to @code{NIL}.
 
-The function @code{gtk-scrolled-window-set-policy} sets the policy to be used
+The function @xurl{gtk-scrolled-window-set-policy} sets the policy to be used
 with respect to the scrollbars.  The first argument is the scrolled window you
 wish to change.  The second sets the policy for the horizontal scrollbar, and
 the third the policy for the vertical scrollbar.
 
-The policy is of the enumeration type @code{GtkPolicyType} and may be one of
+The policy is of the enumeration type @xurl{gtk-policy-type} and may be one of
 @code{:automatic} or @code{:always}.  @code{:automatic} will automatically
 decide whether you need scrollbars, whereas @code{:always} will always leave
-the scrollbars there. All possible values of @code{GtkPolicyType} are listed
+the scrollbars there. All possible values of @xurl{gtk-policy-type} are listed
 in @ref{table-gtk-policy-type}.
 
 @float Table, table-gtk-policy-type
@@ -769,12 +769,12 @@ throughout your application.  The layout/spacing can be altered by the
 programmer, or if desired, by the user to alter the 'feel' of a program to a
 small degree.
 
-@code{gtk-button-box-get-layout} and @code{gtk-button-box-set-layout} retrieve
+@xurl{gtk-button-box-get-layout} and @xurl{gtk-button-box-set-layout} retrieve
 and alter the method used to spread the buttons in a button box across the
 container, respectively.
 
-The main purpose of @code{GtkButtonBox} is to make sure the children have all
-the same size.  @code{GtkButtonBox} gives all children the same size, but it
+The main purpose of @xurl{gtk-button-box} is to make sure the children have all
+the same size.  @xurl{gtk-button-box} gives all children the same size, but it
 does allow 'outliers' to keep their own larger size.  To force all children to
 be strictly the same size without exceptions, you can set the "homogeneous"
 property to @code{T}.
@@ -782,13 +782,13 @@ property to @code{T}.
 To excempt individual children from homogeneous sizing regardless of their
 'outlier' status, you can set the "non-homogeneous" child property.
 
-You can create a new button box with the function @code{gtk-button-box-new},
+You can create a new button box with the function @xurl{gtk-button-box-new},
 which creates a horizontal or vertical box depending on the argument
 @code{orientation} which takes the values @code{:horizontal} or
 @code{:vertical}, respectively.
 
 Buttons are added to a Button Box using the usual function
-@code{gtk-container-add}.
+@xurl{gtk-container-add}.
 
 @ref{example-button-box} is an example that illustrates all the different
 layout settings for button boxes.
@@ -913,18 +913,19 @@ layout settings for button boxes.
 @node Toolbar, Notebook, Button Boxes, Top
 @section Toolbar
 
-A toolbar is created with a call to @code{gtk-toolbar-new}.
- 
-A toolbar can contain instances of a subclass of @code{GtkToolItem}.  To add a
-@code{GtkToolItem} to the a toolbar, use @code{gtk-toolbar-insert}.  To remove
-an item from the toolbar use @code{gtk-container-remove}.  To add a button to
-the toolbar, add an instance of @code{GtkToolButton}.
- 
+A toolbar is created with a call to @xurl{gtk-toolbar-new}.
+
+A toolbar can contain instances of a subclass of @xurl{gtk-tool-item}.  To add a
+@xurl{gtk-tool-item} to the a toolbar, use @xurl{gtk-toolbar-insert}.  To remove
+an item from the toolbar use @xurl{gtk-container-remove}.  To add a button to
+the toolbar, add an instance of @xurl{gtk-tool-button}.
+
 Toolbar items can be visually grouped by adding instances of
-@code{GtkSeparatorToolItem} to the toolbar. If the GtkToolbar child property
-"expand" is TRUE and the property "draw" is set to FALSE, the effect is to
-force all following items to the end of the toolbar.
- 
+@xurl{gtk-separator-tool-item} to the toolbar. If the @xurl{gtk-toolbar} child
+property "expand" is @emph{true} and the property @code{"draw"} is set to
+@code{nil}, the effect is to force all following items to the end of the
+toolbar.
+
 Creating a context menu for the toolbar can be done by connecting to the
 "popup-context-menu" signal.
 
@@ -940,16 +941,16 @@ Creating a context menu for the toolbar can be done by connecting to the
 @end float
 @end ifnotinfo
 
-The @code{GtkNotebook} widget is a @code{GtkContainer} whose children are pages
-that can be switched between using tab labels along one edge.
- 
-There are many configuration options for @code{GtkNotebook}.  Among other
+The @xurl{gtk-notebook} widget is a @xurl{gtk-container} whose children are
+pages that can be switched between using tab labels along one edge.
+
+There are many configuration options for @xurl{gtk-notebook}.  Among other
 things, you can choose on which edge the tabs appear (see
-@code{gtk-notebook-set-tab-pos}), whether, if there are too many tabs to fit
+@xurl{gtk-notebook-set-tab-pos}), whether, if there are too many tabs to fit
 the notebook should be made bigger or scrolling arrows added (see
-@code{gtk-notebook-set-scrollable}), and whether there will be a popup menu
-allowing the users to switch pages (see @code{gtk-notebook-popup-enable},
-@code{gtk-notebook-popup-disable}).
+@xurl{gtk-notebook-set-scrollable}), and whether there will be a popup menu
+allowing the users to switch pages (see @xurl{gtk-notebook-popup-enable},
+@xurl{gtk-notebook-popup-disable}).
 
 @float Example, example-notebook
 @caption{Notebook}
