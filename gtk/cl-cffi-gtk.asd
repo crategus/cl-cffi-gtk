@@ -28,21 +28,7 @@
 (defpackage #:cl-cffi-gtk-system
   (:use #:cl #:asdf))
 
-;;; ----------------------------------------------------------------------------
-
-
-
-;;; ----------------------------------------------------------------------------
-
 (in-package #:cl-cffi-gtk-system)
-
-;(defclass plain-file (static-file)
-;  ((type :initarg :type :reader plain-file-type :initform nil)))
-
-;(defmethod source-file-type ((c plain-file) (s module))
-;  (plain-file-type c))
-
-;;; ----------------------------------------------------------------------------
 
 (defsystem :cl-cffi-gtk
   :name :cl-cffi-gtk
@@ -83,6 +69,8 @@
    ;; Theming in Gtk+
    (:file "gtk.stock-images")          ; Manipulating stock icons
    (:file "gtk.style-context")         ; Rendering UI elements
+   (:file "gtk.style-provider")        ; Interface to provide style information
+   (:file "gtk.css-provider")          ; CSS-like styling for widgets
    (:file "gtk.icon-theme")            ; Looking up icons by name
    (:file "gtk.style")                 ; Functions for drawing widget parts
    (:file "gtk.widget-path")           ; Widget path abstraction

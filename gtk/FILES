@@ -28,9 +28,9 @@ GTK+ Core Reference
 Theming in GTK+
 
     gtk.style-context.lisp           - GtkStyleContext             - GTK+ 3.6.4%
+    gtk.css-provider.lisp            - GtkCssProvider              - GTK+ 3.6.4%
+    gtk-style-provider.lisp          - GtkStyleProvider            - GTK+ 3.6.4%
 
-    not implemented                  - GtkCssProvider
-    not implemented                  - GtkStyleProvider
     not implemented                  - GtkStyleProperties
     not implemented                  - GtkThemingEngine
 
@@ -54,7 +54,7 @@ GTK+ Widgets and Objects
     gtk.dialog.lisp                  - GtkDialog                   - GTK+ 3.6.4
     gtk.invisible.lisp               - GtkInvisible                - GTK+ 3.6.4
     gtk.message-dialog.lisp          - GtkMessageDialog            - GTK+ 3.6.4
-    gtk.window.lisp                  - GtkWindow                   - GTK+ 3.6.4%
+    gtk.window.lisp                  - GtkWindow                   - GTK+ 3.6.4
     gtk.window-group.lisp            - GtkWindowGroup              - GTK+ 3.6.4%
     gtk.about-dialog.lisp            - GtkAboutDialog              - GTK+ 3.6.4%
     gtk.assistant.lisp               - GtkAssistant                - GTK+ 3.6.4
@@ -65,8 +65,8 @@ GTK+ Widgets and Objects
     gtk.accel-label.lisp             - GtkAccelLabel               - GTK+ 3.6.4%
     gtk.image.lisp                   - GtkImage                    - GTK+ 3.6.4&
     gtk.label.lisp                   - GtkLabel                    - GTK+ 3.6.4
-    gtk.progress-bar.lisp            - GtkProgressBar              - GTK+ 3.6.4%
-    gtk.statusbar                    - GtkStatusbar                - GTK+ 3.6.4%
+    gtk.progress-bar.lisp            - GtkProgressBar              - GTK+ 3.6.4
+    gtk.statusbar                    - GtkStatusbar                - GTK+ 3.6.4
 
     not implemented                  - GtkLevelBar
 
@@ -79,7 +79,7 @@ GTK+ Widgets and Objects
     gtk.button.lisp                  - GtkButton                   - GTK+ 3.6.4%
     gtk.check-button.lisp            - GtkCheckButton              - GTK+ 3.6.4%
     gtk.radio-button.lisp            - GtkRadioButton              - GTK+ 3.6.4%
-    gtk.toggle-button.lisp           - GtkToggleButton             - GTK+ 3.6.4%
+    gtk.toggle-button.lisp           - GtkToggleButton             - GTK+ 3.6.4
     gtk.link-button.lisp             - GtkLinkButton               - GTK+ 3.6.4%
     gtk.scale-button.lisp            - GtkScaleButton              - GTK+ 3.6.4%
     gtk.volume-button.lisp           - GtkVolumeButton             - GTK+ 3.6.4%
@@ -146,7 +146,7 @@ GTK+ Widgets and Objects
 
   Menus, Combo Box, Toolbar
 
-    gtk.combo-box.lisp               - GtkComboBox                 - GTK+ 3.6.4%
+    gtk.combo-box.lisp               - GtkComboBox                 - GTK+ 3.6.4&
     gtk.combo-box-text.lisp          - GtkComboBoxText             - GTK+ 3.6.4%
 
     gtk.menu.lisp                    - GtkMenu                     - GTK+ 3.6.4%
@@ -261,8 +261,8 @@ GTK+ Widgets and Objects
 
   Abstract Base Classes
 
-    gtk.widget.lisp                  - GtkWidget                   - GTK+ 3.6.4%
-    gtk.container.lisp               - GtkContainer                - GTK+ 3.6.4%
+    gtk.widget.lisp                  - GtkWidget                   - GTK+ 3.6.4&
+    gtk.container.lisp               - GtkContainer                - GTK+ 3.6.4&
     gtk.bin.lisp                     - GtkBin                      - GTK+ 3.6.4
     gtk.menu-shell.lisp              - GtkMenuShell                - GTK+ 3.6.4%
     gtk.misc.lisp                    - GtkMisc                     - GTK+ 3.6.4%
