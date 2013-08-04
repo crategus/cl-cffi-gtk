@@ -57,7 +57,7 @@ The pdf version of the tutorial is build with the command:
 
 The html version can be build with the command:
 
-   perl texi2html -split_chapter gtk-tutorial.texi
+   perl texi2html --css-include=manual.css -split_chapter gtk-tutorial.texi
 
 For generating the documentation it is assumed that a Tex system is installed.
 
