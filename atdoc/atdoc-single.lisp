@@ -54,6 +54,7 @@
 (unexport 'gobject:*gobject-debug* :gobject)
 (unexport 'gobject:*lisp-name-exceptions* :gobject)
 
+(unexport 'gobject:g-boxed-foreign :gobject)
 (unexport 'gobject:boxed-related-symbols :gobject)
 (unexport 'gobject:copy-boxed-slots-to-foreign :gobject)
 (unexport 'gobject:create-fn-ref :gobject)
@@ -98,11 +99,20 @@
 (unexport 'gobject:signal-info-param-types :gobject)
 (unexport 'gobject:signal-info-return-type :gobject)
 
+(unexport 'gobject:gtype :gobject)
+(unexport 'gobject:gtype-from-id :gobject)
+(unexport 'gobject:gtype-from-name :gobject)
+(unexport 'gobject:gtype-id :gobject)
+(unexport 'gobject:gtype-name :gobject)
+
+(unexport 'gdk:gdk-atom-as-string :gdk)
+
 (unexport 'gtk:atk-implementor-iface :gtk)
-(unexport 'gtk:call-from-gtk-main-loop :gtk)
 (unexport 'gtk:ensure-gtk-main :gtk)
 (unexport 'gtk:gtk-window-ubuntu-no-proxy :gtk)
 (unexport 'gtk:with-text-buffer-user-action :gtk)
+
+(unexport 'gtk:gtk-notebook-add-page :gtk)
 
 (defun generate-html ()
   (let* ((base (asdf:component-pathname (asdf:find-system :cl-cffi-gtk)))
