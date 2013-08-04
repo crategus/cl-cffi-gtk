@@ -1,10 +1,10 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gdk.cairo.lisp
 ;;;
-;;; The documentation has been copied from the GDK 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org. See <http://www.gtk.org>.
-;;; The API  documentation of the Lisp binding is available at
-;;; <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GDK 3 Reference Manual
+;;; Version 3.6.4 and modified to document the Lisp binding to the GDK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2012, 2013 Dieter Kaiser
 ;;;
@@ -116,6 +116,11 @@
 ;;;
 ;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gdk_cairo_create" gdk-cairo-create)  (:pointer (:struct cairo-t))
+  (window (g-object gdk-window)))
+
+(export 'gdk-cairo-create)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_cairo_get_clip_rectangle ()
@@ -234,6 +239,14 @@
 ;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gdk_cairo_set_source_window" gdk-cairo-set-source-window) :void
+  (cr (:pointer (:struct cairo-t)))
+  (window (g-object gdk-window))
+  (x :double)
+  (y :double))
+
+(export 'gdk-cairo-set-source-window)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_cairo_rectangle ()
 ;;;
@@ -265,6 +278,12 @@
 ;;;
 ;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gdk_cairo_region" gdk-cairo-region) :void
+  (cr (:pointer (:struct cairo-t)))
+  (region (:pointer (:struct cairo-region-t))))
+
+(export 'gdk-cairo-region)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_cairo_region_create_from_surface ()

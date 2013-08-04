@@ -15,9 +15,9 @@ Content from the GDK 3.6.4 Reference Manual
   gdk.pixbuf.lisp           - Pixbufs                - GDK 3.6.4
   gdk.color.lisp            - Colors                 - GDK 3.6.4
   gdk.rgba.lisp             - RGBA Colors            - GDK 3.6.4
-  gdk.visual.lisp           - Visuals                - GDK 3.4.3*
-  gdk.cursor.lisp           - Cursors                - GDK 3.4.3*
-  gdk.window.lisp           - Windows                - GDK 3.4.3*
+  gdk.visual.lisp           - Visuals                - GDK 3.6.4
+  gdk.cursor.lisp           - Cursors                - GDK 3.6.4
+  gdk.window.lisp           - Windows                - GDK 3.6.4&
   gdk.event.lisp            - Events                 - GDK 3.4.3*
   gdk.event-structures.lisp - Event Structures       - GDK 3.4.3*
   gdk.key-values.lisp       - Key Values             - GDK 3.4.3*
@@ -26,7 +26,7 @@ Content from the GDK 3.6.4 Reference Manual
   gdk.properties.lisp       - Properties and Atoms   - GDK 3.6.4&
   gdk.threads.lisp          - Threads                - GDK 3.6.4&
   gdk.pango.lisp            - Pango Interaction      - GDK 3.4.3*
-  gdk.cairo.lisp            - Cairo Interaction      - GDK 3.4.3*
+  gdk.cairo.lisp            - Cairo Interaction      - GDK 3.6.4&
 
   not implemented           - X Window System Interaction
 

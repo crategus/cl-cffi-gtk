@@ -4,9 +4,10 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GDK 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GDK 3 Reference Manual
+;;; Version 3.6.4 and modified to document the Lisp binding to the GDK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -1155,21 +1156,23 @@
 
 (defun gdk-device-get-history (device window start stop)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-21}
+ "@version{2013-7-27}
   @argument[device]{a @class{gdk-device} object}
   @argument[window]{the window with respect to which which the event coordinates
     will be reported}
   @argument[start]{starting timestamp for range of events to return}
   @argument[stop]{ending timestamp for the range of events to return}
   @begin{return}
-    A list of @symbol{gdk-time-coord} if the windowing system supports motion
+    A list of @class{gdk-time-coord} if the windowing system supports motion
     history and at least one event was found, or @code{nil}.
   @end{return}
   Obtains the motion history for a pointer device; given a starting and ending
   timestamp, return all events in the motion history for the device in the
   given range of time. Some windowing systems do not support motion history,
-  in which case, @code{nil} will be returned. (This is not distinguishable from
-  the case where motion history is supported and no events were found.)"
+  in which case, @code{nil} will be returned. This is not distinguishable from
+  the case where motion history is supported and no events were found.
+  @see-class{gdk-device}
+  @see-class{gdk-time-coord}"
   (with-foreign-objects ((events :pointer) (n-events :int))
     (when (%gdk-device-get-history device window start stop events n-events)
       (prog1
@@ -1190,11 +1193,12 @@
 
 (defcfun ("gdk_device_free_history" gdk-device-free-history) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-6-21}
-  @argument[events]{an array of @symbol{gdk-time-coord}}
+ "@version{2013-7-27}
+  @argument[events]{an array of @class{gdk-time-coord}}
   @argument[n-events]{the length of the array}
-  Frees an array of @symbol{gdk-time-coord} that was returned by the function
+  Frees an array of @class{gdk-time-coord} that was returned by the function
   @fun{gdk-device-get-history}.
+  @see-class{gdk-time-coord}
   @see-function{gdk-device-get-history}"
   (events (:pointer (:pointer (:struct gdk-time-coord-cstruct))))
   (n-events :int))

@@ -4,10 +4,10 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GDK 3 Reference Manual
-;;; Version 3.4.3. See http://www.gtk.org. See <http://www.gtk.org>.
-;;; The API  documentation of the Lisp binding is available at
-;;; <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GDK 3 Reference Manual
+;;; Version 3.6.4 and modified to document the Lisp binding to the GDK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -225,27 +225,24 @@
     gdk-window-cursor
     "cursor" "GdkCursor" t t)))
 
-;;;-----------------------------------------------------------------------------
-
 (setf (documentation 'gdk-window 'type)
  "@version{2013-6-5}
   @begin{short}
     Onscreen display areas in the target window system.
 
-    A @sym{gdk-window} object is a (usually) rectangular region on the screen.
+    A @sym{gdk-window} object is a usually rectangular region on the screen.
     It is a low-level object, used to implement high-level objects such as
     @class{gtk-widget} and @class{gtk-window} widgets on the GTK+ level. A
     @class{gtk-window} widget is a toplevel window, the thing a user might think
     of as a \"window\" with a titlebar and so on; a @class{gtk-window} widget
     may contain many @sym{gdk-window} objects. For example, each
-    @class{gtk-button} widget instance has a @sym{gdk-window} object associated
-    with it.
+    @class{gtk-button} widget has a @sym{gdk-window} object associated with it.
   @end{short}
 
   @subheading{Composited Windows}
     Normally, the windowing system takes care of rendering the contents of a
     child window onto its parent window. This mechanism can be intercepted by
-    calling the @fun{gdk-window-set-composited} function on the child window.
+    calling the function @fun{gdk-window-set-composited} on the child window.
     For a composited window it is the responsibility of the application to
     render the window contents at the right spot.
 
@@ -258,8 +255,8 @@
     therefore is no longer automatically drawn to the screen.
 
     When the contents of the event box change, an expose event is generated on
-    its parent window (which, in this case, belongs to the toplevel
-    @class{gtk-window} widget). The expose handler for this widget is
+    its parent window which, in this case, belongs to the toplevel
+    @class{gtk-window} widget. The expose handler for this widget is
     responsible for emerging the changes back on the screen in the way that it
     wishes.
 
@@ -355,7 +352,12 @@
       @end{table}
       Since 2.18
   @end{dictionary}
-  @see-slot{gdk-window-cursor}")
+  @see-slot{gdk-window-cursor}
+  @see-class{gtk-widget}
+  @see-class{gtk-window}
+@fun{gdk-window-set-composited}
+
+")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -2505,45 +2507,51 @@
 
 (defcfun ("gdk_window_begin_paint_region" gdk-window-begin-paint-region) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-4-5}
-  @argument[window]{a GdkWindow}
+ "@version{2013-7-26}
+  @argument[window]{a @class{gdk-window} object}
   @argument[region]{region you intend to draw to}
   @begin{short}
-    Indicates that you are beginning the process of redrawing region. A backing
-    store (offscreen buffer) large enough to contain region will be created. The
-    backing store will be initialized with the background color or background
-    surface for window. Then, all drawing operations performed on window will be
-    diverted to the backing store. When you call gdk_window_end_paint(), the
-    backing store will be copied to window, making it visible onscreen. Only the
-    part of window contained in region will be modified; that is, drawing
-    operations are clipped to region.
+    Indicates that you are beginning the process of redrawing region.
   @end{short}
+  A backing store (offscreen buffer) large enough to contain @arg{region} will
+  be created. The backing store will be initialized with the background color or
+  background surface for @arg{window}. Then, all drawing operations performed on
+  @arg{window} will be diverted to the backing store. When you call the function
+  @fun{gdk-window-end-paint}, the backing store will be copied to @arg{window},
+  making it visible onscreen. Only the part of @arg{window} contained in region
+  will be modified; that is, drawing operations are clipped to @arg{region}.
 
   The net result of all this is to remove flicker, because the user sees the
-  finished product appear all at once when you call gdk_window_end_paint(). If
-  you draw to window directly without calling gdk_window_begin_paint_region(),
-  the user may see flicker as individual drawing operations are performed in
-  sequence. The clipping and background-initializing features of
-  gdk_window_begin_paint_region() are conveniences for the programmer, so you
-  can avoid doing that work yourself.
+  finished product appear all at once when you call the function
+  @fun{gdk-window-end-paint}. If you draw to @arg{window} directly without
+  calling the function @sym{gdk-window-begin-paint-region}, the user may see
+  flicker as individual drawing operations are performed in sequence. The
+  clipping and background-initializing features of the function
+  @sym{gdk-window-begin-paint-region} are conveniences for the programmer, so
+  you can avoid doing that work yourself.
 
-  When using GTK+, the widget system automatically places calls to
-  gdk_window_begin_paint_region() and gdk_window_end_paint() around emissions
-  of the expose_event signal. That is, if you're writing an expose event
-  handler, you can assume that the exposed area in GdkEventExpose has already
-  been cleared to the window background, is already set as the clip region,
-  and already has a backing store. Therefore in most cases, application code
-  need not call gdk_window_begin_paint_region(). (You can disable the
-  automatic calls around expose events on a widget-by-widget basis by calling
-  gtk_widget_set_double_buffered().)
+  When using GTK+, the widget system automatically places calls to the functions
+  @sym{gdk-window-begin-paint-region} and @fun{gdk-window-end-paint} around
+  emissions of the \"expose-event\" signal. That is, if you are writing an
+  expose event handler, you can assume that the exposed area in
+  @class{gdk-event-expose} has already been cleared to the window background, is
+  already set as the clip region, and already has a backing store. Therefore in
+  most cases, application code need not call the function
+  @sym{gdk-window-begin-paint-region}. You can disable the automatic calls
+  around expose events on a widget-by-widget basis by calling the function
+  @fun{gtk-widget-set-double-buffered}.
 
-  If you call this function multiple times before calling the matching
-  gdk_window_end_paint(), the backing stores are pushed onto a stack.
-  gdk_window_end_paint() copies the topmost backing store onscreen, subtracts
-  the topmost region from all other regions in the stack, and pops the stack.
-  All drawing operations affect only the topmost backing store in the stack.
-  One matching call to gdk_window_end_paint() is required for each call to
-  gdk_window_begin_paint_region()."
+  If you call this function multiple times before calling the matching function
+  @fun{gdk-window-end-paint}, the backing stores are pushed onto a stack. The
+  function @fun{gdk-window-end-paint} copies the topmost backing store onscreen,
+  subtracts the topmost region from all other regions in the stack, and pops the
+  stack. All drawing operations affect only the topmost backing store in the
+  stack. One matching call to the function @fun{gdk-window-end-paint} is
+  required for each call to the function @sym{gdk-window-begin-paint-region}.
+  @see-class{gdk-window}
+  @see-class{gdk-event-expose}
+  @see-function{gdk-window-end-paint}
+  @see-function{gtk-widget-set-double-buffered}"
   (window (g-object gdk-window))
   (region (:pointer (:struct cairo-region-t))))
 
@@ -2555,18 +2563,19 @@
 
 (defcfun ("gdk_window_end_paint" gdk-window-end-paint) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-2-25}
+ "@version{2013-7-26}
   @argument[window]{a @class{gdk-window} object}
   @begin{short}
-    Indicates that the backing store created by the most recent call to
-    @fun{gdk-window-begin-paint-region} should be copied onscreen and deleted,
-    leaving the next-most-recent backing store or no backing store at all as the
-    active paint region.
+    Indicates that the backing store created by the most recent call to the
+    function @fun{gdk-window-begin-paint-region} should be copied onscreen and
+    deleted, leaving the next-most-recent backing store or no backing store at
+    all as the active paint region.
   @end{short}
-  See @fun{gdk-window-begin-paint-region} for full details.
+  See the function @fun{gdk-window-begin-paint-region} for full details.
 
-  It is an error to call this function without a matching
+  It is an error to call this function without a matching call to the function
   @fun{gdk-window-begin-paint-region} first.
+  @see-class{gdk-window}
   @see-function{gdk-window-begin-paint-region}"
   (window (g-object gdk-window)))
 
@@ -3792,7 +3801,7 @@
 ;;; gdk_window_set_urgency_hint ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_window_set_urgency_hint" gdk-window-urgency-hint) :void
+(defcfun ("gdk_window_set_urgency_hint" gdk-window-set-urgency-hint) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-4-5}
   @argument[window]{a toplevel GdkWindow}
@@ -4707,7 +4716,7 @@
 ;;; gdk_offscreen_window_get_embedder ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_offscreen_window_get_embedder" gdk-offscreen-get-window-embedder)
+(defcfun ("gdk_offscreen_window_get_embedder" gdk-offscreen-window-get-embedder)
     (g-object gdk-window)
  #+cl-cffi-gtk-documentation
  "@version{2013-4-5}
