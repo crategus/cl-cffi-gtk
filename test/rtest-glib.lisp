@@ -11,4 +11,6 @@
 (load "rtest-glib-main-loop.lisp")
 (load "rtest-glib-utils.lisp")
 (load "rtest-glib-option-group.lisp")
+(load "rtest-glib-variant.lisp")
+(load "rtest-glib-variant-type.lisp")
 

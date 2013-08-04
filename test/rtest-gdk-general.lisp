@@ -1,0 +1,84 @@
+
+(def-suite gdk-general :in gdk-suite)
+(in-suite gdk-general)
+
+;;;   gdk_init                                   * not implemented *
+;;;   gdk_init_check                             * not implemented *
+;;;   gdk_parse_args                             * not implemented *
+
+;;;   gdk_get_display_arg_name
+
+(test gdk-get-display-arg-name
+  (is-false (gdk-get-display-arg-name)))
+
+;;;   gdk_notify_startup_complete
+;;;   gdk_notify_startup_complete_with_id
+
+;;;   gdk_get_program_class
+
+(defvar *first-run-program-class* t)
+
+(test gdk-get-program-class
+  (if *first-run-program-class*
+      (is (equal "Sbcl" (gdk-get-program-class)))
+      (is (equal "Program class" (gdk-get-program-class)))))
+
+;;;   gdk_set_program_class
+
+(test gdk-set-program-class
+  (when *first-run-program-class*
+    (gdk-set-program-class "Program class")
+    (setf *first-run-program-class* nil))
+  (is (equal "Program class" (gdk-get-program-class))))
+
+;;;   gdk_get_display
+
+(test gdk-get-display
+  (is (equal (g-getenv "DISPLAY") (gdk-get-display))))
+
+;;;   gdk_flush
+
+;;;   gdk_screen_width
+
+(test gdk-screen-width
+  (is (= 1280 (gdk-screen-width))))
+
+;;;   gdk_screen_height
+
+(test gdk-screen-height
+  (is (= 800 (gdk-screen-height))))
+
+;;;   gdk_screen_width_mm
+
+(test gdk-screen-width-mm
+  (is (= 338 (gdk-screen-width-mm))))
+
+;;;   gdk_screen_height_mm
+
+(test gdk-screen-height-mm
+  (is (= 211 (gdk-screen-height-mm))))
+
+;;;   gdk_pointer_grab                           * deprecated *
+;;;   gdk_pointer_ungrab                         * deprecated *
+;;;   gdk_pointer_is_grabbed                     * deprecated *
+
+;;;   gdk_set_double_click_time
+
+;;;   gdk_keyboard_grab                          * deprecated *
+;;;   gdk_keyboard_ungrab                        * deprecated *
+
+;;;   gdk_beep
+
+;;;   gdk_error_trap_push
+;;;   gdk_error_trap_pop
+;;;   gdk_error_trap_pop_ignored
+
+;;;   GDK_WINDOWING_X11
+;;;   GDK_WINDOWING_WIN32
+
+;;;   GDK_VERSION_3_0
+;;;   GDK_VERSION_3_2
+;;;   GDK_VERSION_3_4
+;;;   GDK_VERSION_MIN_REQUIRED
+;;;   GDK_VERSION_MAX_ALLOWED
+

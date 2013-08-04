@@ -30,7 +30,15 @@
 ;;;     g_environ_getenv
 ;;;     g_environ_setenv
 ;;;     g_environ_unsetenv
-;;;     g_getenv
+
+;;;   g_getenv
+
+(test g-getenv
+  (is (equal "/home/dieter" (g-getenv "HOME"))))
+
+(test g-getenv
+  (is (equal ":0" (g-getenv "DISPLAY"))))
+
 ;;;     g_setenv
 ;;;     g_unsetenv
 ;;;     g_listenv
