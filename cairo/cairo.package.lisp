@@ -1,10 +1,10 @@
 ;;; ----------------------------------------------------------------------------
 ;;; cairo.package.lisp
 ;;;
-;;; The documentation has been copied from the Cairo Reference Manual
-;;; for Cairo 1.12.2. See <http://cairographics.org>.
-;;; The API documentation of the Lisp binding is available at
-;;; <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the Cairo Reference Manual
+;;; Version 1.12.2 and modified to document the Lisp binding to the Cairo
+;;; library. See <http://cairographics.org>. The API documentation of the Lisp
+;;; binding is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2012, 2013 Dieter Kaiser
 ;;;
@@ -29,8 +29,6 @@
 (defpackage :cairo
   (:use :cl :cffi :glib))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation (find-package :cairo) t)
  "Cairo is a software library used to provide a vector graphics-based,
@@ -48,13 +46,14 @@
     @symbol{cairo-t} is the main object used when drawing with Cairo. To
     draw with Cairo, you create a @symbol{cairo-t}, set the target surface,
     and drawing options for the @symbol{cairo-t}, create shapes with functions
-    like @code{cairo_move_to()} and @code{cairo_line_to()}, and then draw shapes
-    with @code{cairo_stroke()} or @fun{cairo-fill}.
- 
-    @symbol{cairo-t}'s can be pushed to a stack via @code{cairo_save()}. They
-    may then safely be changed, without losing the current state. Use
-    @code{cairo_restore()} to restore to the saved state.
-  
+    like @fun{cairo-move-to} and @fun{cairo-line-to}, and then draw shapes
+    with the functions @fun{cairo-stroke} or @fun{cairo-fill}.
+
+    @symbol{cairo-t}'s can be pushed to a stack via the function
+    @fun{cairo-save}. They may then safely be changed, without losing the
+    current state. Use the function @fun{cairo-restore} to restore to the saved
+    state.
+
     @about-symbol{cairo-t}
     @about-function{cairo-create}
     @about-function{cairo-reference}
@@ -219,21 +218,22 @@
     @end{subsection}
   @end{section}
   @begin[Surfaces]{section}
-    Base class for surfaces
+    Base class for surfaces.
 
-    cairo_surface_t is the abstract type representing all different drawing
-    targets that cairo can render to. The actual drawings are performed using a
-    cairo context.
+    @symbol{cairo-surface-t} is the abstract type representing all different
+    drawing targets that cairo can render to. The actual drawings are performed
+    using a cairo context.
 
     A cairo surface is created by using backend-specific constructors, typically
-    of the form cairo_backend_surface_create().
+    of the form @code{cairo-backend-surface-create}.
 
     Most surface types allow accessing the surface without using Cairo
     functions. If you do this, keep in mind that it is mandatory that you call
-    cairo_surface_flush() before reading from or writing to the surface and that
-    you must use cairo_surface_mark_dirty() after modifying it.
-    
-    Example 1. Directly modifying an image surface
+    the function @fun{cairo-surface-flush} before reading from or writing to
+    the surface and that you must use the function
+    @fun{cairo-surface-mark-dirty} after modifying it.
+
+    @b{Example 1.} Directly modifying an image surface
     @begin{pre}
  void
  modify_image_surface (cairo_surface_t *surface)
@@ -243,7 +243,7 @@
 
    // flush to ensure all writing to the image was done
    cairo_surface_flush (surface);
- 
+
    // modify the image
    data = cairo_image_surface_get_data (surface);
    width = cairo_image_surface_get_width (surface);
@@ -256,8 +256,8 @@
  @}
     @end{pre}
     Note that for other surface types it might be necessary to acquire the
-    surface's device first. See cairo_device_acquire() for a discussion of
-    devices.
+    surface's device first. See the function @fun{cairo-device-acquire} for a
+    discussion of devices.
 
     @about-symbol{CAIRO_HAS_MIME_SURFACE}
     @about-symbol{CAIRO_MIME_TYPE_JP2}
@@ -299,6 +299,24 @@
     @about-function{cairo-surface-unmap-image}
   @end{section}
   @begin[Utilities]{section}
+    @begin[Error handling]{subsection}
+      Decoding cairo's status.
+
+      Cairo uses a single status type to represent all kinds of errors. A
+      status value of @code{:success} represents no error and has an integer
+      value of zero. All other status values represent an error.
+
+      Cairo's error handling is designed to be easy to use and safe. All major
+      cairo objects retain an error status internally which can be queried
+      anytime by the users using @code{cairo*-status} calls. In the mean time,
+      it is safe to call all cairo functions normally even if the underlying
+      object is in an error status. This means that no error handling code is
+      required before or after each individual cairo function call.
+
+      @about-symbol{cairo-status-t}
+      @about-function{cairo-status-to-string}
+      @about-function{cairo-debug-reset-static-data}
+    @end{subsection}
     @begin[Version Information]{subsection}
       Cairo provides the ability to examine the version at either compile-time
       or run-time and in both a human-readable form as well as an encoded form

@@ -1,10 +1,10 @@
 ;;; ----------------------------------------------------------------------------
 ;;; cairo.context.lisp
 ;;;
-;;; The documentation has been copied from the Cairo Reference Manual
-;;; for Cairo 1.12.2. See <http://cairographics.org>.
-;;; The API documentation of the Lisp binding is available at
-;;; <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the Cairo Reference Manual
+;;; Version 1.12.2 and modified to document the Lisp binding to the Cairo
+;;; library. See <http://cairographics.org>. The API documentation of the Lisp
+;;; binding is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2012, 2013 Dieter Kaiser
 ;;;
@@ -161,32 +161,36 @@
 
 (defcfun ("cairo_create" cairo-create) (:pointer (:struct cairo-t))
  #+cl-cffi-gtk-documentation
- "@version{2012-12-21}
+ "@version{2013-8-4}
   @argument[target]{target surface for the context}
   @begin{return}
-    a newly allocated cairo_t with a reference count of 1. The initial
-    reference count should be released with cairo_destroy() when you are
-    done using the cairo_t. This function never returns NULL. If memory
-    cannot be allocated, a special cairo_t object will be returned on which
-    cairo_status() returns CAIRO_STATUS_NO_MEMORY. If you attempt to target
-    a surface which does not support writing (such as cairo_mime_surface_t)
-    then a CAIRO_STATUS_WRITE_ERROR will be raised. You can use this object
-    normally, but no drawing will be done.
+    A newly allocated @symbol{cairo-t} with a reference count of 1. The initial
+    reference count should be released with the function @fun{cairo-destroy}
+    when you are done using the @symbol{cairo-t}. This function never returns
+    @code{NULL}. If memory cannot be allocated, a special @symbol{cairo-t}
+    object will be returned on which the function @fun{cairo-status} returns
+    @code{:no-memory}. If you attempt to target a surface which does not support
+    writing, such as @symbol{cairo-mime-surface-t}, then a @code{:write-error}
+    will be raised. You can use this object normally, but no drawing will be
+    done.
   @end{return}
   @begin{short}
-    Creates a new cairo_t with all graphics state parameters set to default
-    values and with target as a target surface.
+    Creates a new @symbol{cairo-t} with all graphics state parameters set to
+    default values and with target as a target surface.
   @end{short}
-  The target surface should be
-  constructed with a backend-specific function such as
-  cairo_image_surface_create() (or any other cairo_backend_surface_create()
-  variant).
+  The target surface should be constructed with a backend-specific function such
+  as @fun{cairo-image-surface-create}, or any other variant.
 
-  This function references target, so you can immediately call
-  cairo_surface_destroy() on it if you don't need to maintain a separate
+  This function references target, so you can immediately call the function
+  @fun{cairo-surface-destroy} on it if you do not need to maintain a separate
   reference to it.
 
-  Since 1.0"
+  Since 1.0
+  @see-symbol{cairo-t}
+  @see-symbol{cairo-mime-surface-t}
+  @see-function{cairo-status}
+  @see-function{cairo-image-surface-create}
+  @see-function{cairo-surface-destroy}"
   (target (:pointer (:struct cairo-surface-t))))
 
 (export 'cairo-create)
@@ -197,18 +201,22 @@
 
 (defcfun ("cairo_reference" cairo-reference) (:pointer (:struct cairo-t))
  #+cl-cffi-gtk-documentation
- "@version{2013-3-2}
-  @argument[cr]{a cairo_t}
-  @return{the referenced cairo_t.}
+ "@version{2013-8-4}
+  @argument[cr]{a @symbol{cairo-t}}
+  @return{The referenced @symbol{cairo-t}.}
   @begin{short}
-    Increases the reference count on cr by one. This prevents cr from being
-    destroyed until a matching call to cairo_destroy() is made.
+    Increases the reference count on @arg{cr} by one. This prevents @arg{cr}
+    from being destroyed until a matching call to the function
+    @fun{cairo-destroy} is made.
   @end{short}
 
-  The number of references to a cairo_t can be get using
-  cairo_get_reference_count().
+  The number of references to a @symbol{cairo-t} can be get using the function
+  @fun{cairo-get-reference-count}.
 
-  Since 1.0"
+  Since 1.0
+  @see-symbol{cairo-t}
+  @see-function{cairo-destroy}
+  @see-function{cairo-get-reference-count}"
   (cr (:pointer (:struct cairo-t))))
 
 (export 'cairo-reference)
@@ -219,15 +227,17 @@
 
 (defcfun ("cairo_destroy" cairo-destroy) :void
  #+cl-cffi-gtk-documentation
- "@version{2012-12-21}
+ "@version{2013-8-4}
   @argument[cr]{a @symbol{cairo-t}}
   @begin{short}
     Decreases the reference count on @arg{cr} by one. If the result is zero,
-    then @arg{cr} and all associated resources are freed. See
-    @code{cairo_reference()}.
+    then @arg{cr} and all associated resources are freed.
   @end{short}
+  See the function @fun{cairo-reference}.
 
-  Since 1.0"
+  Since 1.0
+  @see-symbol{cairo-t}
+  @see-function{cairo-reference}"
   (cr (:pointer (:struct cairo-t))))
 
 (export 'cairo-destroy)
@@ -459,7 +469,7 @@
 
 (defcfun ("cairo_set_source_rgb" cairo-set-source-rgb) :void
  #+cl-cffi-gtk-documentation
- "@version{2012-12-21}
+ "@version{2012-8-4}
   @argument[cr]{a cairo context}
   @argument[red]{red component of color}
   @argument[green]{green component of color}
@@ -470,14 +480,15 @@
     source pattern is set.
   @end{short}
 
-  The color components are floating point numbers in the range @code{0.0} to
-  @code{1.0}. If the values passed in are outside that range, they will be
+  The color components are floating point numbers in the range 0.0 to
+  1.0. If the values passed in are outside that range, they will be
   clamped.
 
-  The default source pattern is opaque black, (that is, it is equivalent to
-  @code{(cairo-set-source-rgb cr 0.0 0.0 0.0)}).
+  The default source pattern is opaque black, that is, it is equivalent to
+  @code{(cairo-set-source-rgb cr 0.0 0.0 0.0)}.
 
- Since 1.0"
+  Since 1.0
+  @see-symbol{cairo-t}"
   (cr (:pointer (:struct cairo-t)))
   (red :double)
   (green :double)
@@ -554,30 +565,36 @@
 
 (defcfun ("cairo_set_source_surface" cairo-set-source-surface) :void
  #+cl-cffi-gtk-documentation
- "@version{2012-12-21}
+ "@version{2013-8-4}
   @argument[cr]{a cairo context}
   @argument[surface]{a surface to be used to set the source pattern}
-  @argument[x]{User-space X coordinate for surface origin}
-  @argument[y]{User-space Y coordinate for surface origin}
+  @argument[x]{user-space x coordinate for surface origin}
+  @argument[y]{user-space y coordinate for surface origin}
   @begin{short}
     This is a convenience function for creating a pattern from surface and
-    setting it as the source in @arg{cr} with @code{cairo_set_source()}.
+    setting it as the source in @arg{cr} with the function
+    @fun{cairo-set-source}.
   @end{short}
 
   The @arg{x} and @arg{y} parameters give the user-space coordinate at which the
-  surface origin should appear. (The surface origin is its upper-left corner
-  before any transformation has been applied.) The @arg{x} and @arg{y}
+  surface origin should appear. The surface origin is its upper-left corner
+  before any transformation has been applied. The @arg{x} and @arg{y}
   parameters are negated and then set as translation values in the pattern
   matrix.
 
   Other than the initial translation pattern matrix, as described above, all
-  other pattern attributes, (such as its extend mode), are set to the default
-  values as in @code{cairo_pattern_create_for_surface()}. The resulting pattern
-  can be queried with @code{cairo_get_source()} so that these attributes can be
-  modified if desired, (eg. to create a repeating pattern with
-  @code{cairo_pattern_set_extend()}).
+  other pattern attributes, such as its extend mode, are set to the default
+  values as in the function @fun{cairo-pattern-create-for-surface}. The
+  resulting pattern can be queried with the function @fun{cairo-get-source} so
+  that these attributes can be modified if desired, e. g. to create a repeating
+  pattern with with the function @fun{cairo-pattern-set-extend}.
 
-  Since 1.0"
+  Since 1.0
+  @see-symbol{cairo-t}
+  @see-function{cairo-set-source}
+  @see-function{cairo-get-source}
+  @see-function{cairo-pattern-create-for-surface}
+  @see-function{cairo-pattern-set-extend}"
   (cr (:pointer (:struct cairo-t)))
   (surface (:pointer (:struct cairo-surface-t)))
   (x :double)
@@ -1007,31 +1024,37 @@
 
 (defun cairo-set-line-width (cr width)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-2}
-  @argument[cr]{a cairo_t}
+ "@version{2013-8-4}
+  @argument[cr]{a @symbol{cairo-t}}
   @argument[width]{a line width}
   @begin{short}
     Sets the current line width within the cairo context. The line width value
-    specifies the diameter of a pen that is circular in user space, (though
+    specifies the diameter of a pen that is circular in user space, though
     device-space pen may be an ellipse in general due to scaling/shear/rotation
-    of the CTM).
+    of the Coordinate Transformation Matrix (CTM).
   @end{short}
 
-  Note: When the description above refers to user space and CTM it refers to
+  @b{Note:} When the description above refers to user space and CTM it refers to
   the user space and CTM in effect at the time of the stroking operation, not
-  the user space and CTM in effect at the time of the call to
-  cairo_set_line_width(). The simplest usage makes both of these spaces
-  identical. That is, if there is no change to the CTM between a call to
-  cairo_set_line_width() and the stroking operation, then one can just pass
-  user-space values to cairo_set_line_width() and ignore this note.
+  the user space and CTM in effect at the time of the call to the function
+  @sym{cairo-set-line-width}. The simplest usage makes both of these spaces
+  identical. That is, if there is no change to the CTM between a call to the
+  function @sym{cairo-set-line-width} and the stroking operation, then one can
+  just pass user-space values to the function @sym{cairo-set-line-width} and
+  ignore this note.
 
   As with the other stroke parameters, the current line width is examined by
-  cairo_stroke(), cairo_stroke_extents(), and cairo_stroke_to_path(), but does
-  not have any effect during path construction.
+  the functions @fun{cairo-stroke}, @fun{cairo-stroke-extents}, and
+  @fun{cairo-stroke-to-path}, but does not have any effect during path
+  construction.
 
   The default line width value is 2.0.
 
-  Since 1.0"
+  Since 1.0
+  @see-symbol{cairo-t}
+  @see-function{cairo-stroke}
+  @see-function{cairo-stroke-extents}
+  @see-function{cairo-stroke-to-path}"
   (%cairo-set-line-width cr (coerce width 'double-float)))
 
 (export 'cairo-set-line-width)
@@ -1108,203 +1131,201 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum cairo_operator_t
-;;;
-;;; typedef enum {
-;;;     CAIRO_OPERATOR_CLEAR,
-;;;
-;;;     CAIRO_OPERATOR_SOURCE,
-;;;     CAIRO_OPERATOR_OVER,
-;;;     CAIRO_OPERATOR_IN,
-;;;     CAIRO_OPERATOR_OUT,
-;;;     CAIRO_OPERATOR_ATOP,
-;;;
-;;;     CAIRO_OPERATOR_DEST,
-;;;     CAIRO_OPERATOR_DEST_OVER,
-;;;     CAIRO_OPERATOR_DEST_IN,
-;;;     CAIRO_OPERATOR_DEST_OUT,
-;;;     CAIRO_OPERATOR_DEST_ATOP,
-;;;
-;;;     CAIRO_OPERATOR_XOR,
-;;;     CAIRO_OPERATOR_ADD,
-;;;     CAIRO_OPERATOR_SATURATE,
-;;;
-;;;     CAIRO_OPERATOR_MULTIPLY,
-;;;     CAIRO_OPERATOR_SCREEN,
-;;;     CAIRO_OPERATOR_OVERLAY,
-;;;     CAIRO_OPERATOR_DARKEN,
-;;;     CAIRO_OPERATOR_LIGHTEN,
-;;;     CAIRO_OPERATOR_COLOR_DODGE,
-;;;     CAIRO_OPERATOR_COLOR_BURN,
-;;;     CAIRO_OPERATOR_HARD_LIGHT,
-;;;     CAIRO_OPERATOR_SOFT_LIGHT,
-;;;     CAIRO_OPERATOR_DIFFERENCE,
-;;;     CAIRO_OPERATOR_EXCLUSION,
-;;;     CAIRO_OPERATOR_HSL_HUE,
-;;;     CAIRO_OPERATOR_HSL_SATURATION,
-;;;     CAIRO_OPERATOR_HSL_COLOR,
-;;;     CAIRO_OPERATOR_HSL_LUMINOSITY
-;;; } cairo_operator_t;
-;;;
-;;; cairo_operator_t is used to set the compositing operator for all cairo
-;;; drawing operations.
-;;;
-;;; The default operator is CAIRO_OPERATOR_OVER.
-;;;
-;;; The operators marked as unbounded modify their destination even outside of
-;;; the mask layer (that is, their effect is not bound by the mask layer).
-;;; However, their effect can still be limited by way of clipping.
-;;;
-;;; To keep things simple, the operator descriptions here document the behavior
-;;; for when both source and destination are either fully transparent or fully
-;;; opaque. The actual implementation works for translucent layers too. For a
-;;; more detailed explanation of the effects of each operator, including the
-;;; mathematical definitions, see http://cairographics.org/operators/.
-;;;
-;;; CAIRO_OPERATOR_CLEAR
-;;;     clear destination layer (bounded) (Since 1.0)
-;;;
-;;; CAIRO_OPERATOR_SOURCE
-;;;     replace destination layer (bounded) (Since 1.0)
-;;;
-;;; CAIRO_OPERATOR_OVER
-;;;     draw source layer on top of destination layer (bounded) (Since 1.0)
-;;;
-;;; CAIRO_OPERATOR_IN
-;;;     draw source where there was destination content (unbounded) (Since 1.0)
-;;;
-;;; CAIRO_OPERATOR_OUT
-;;;     draw source where there was no destination content (unbounded)
-;;;     (Since 1.0)
-;;;
-;;; CAIRO_OPERATOR_ATOP
-;;;     draw source on top of destination content and only there (Since 1.0)
-;;;
-;;; CAIRO_OPERATOR_DEST
-;;;     ignore the source (Since 1.0)
-;;;
-;;; CAIRO_OPERATOR_DEST_OVER
-;;;     draw destination on top of source (Since 1.0)
-;;;
-;;; CAIRO_OPERATOR_DEST_IN
-;;;     leave destination only where there was source content (unbounded)
-;;;     (Since 1.0)
-;;;
-;;; CAIRO_OPERATOR_DEST_OUT
-;;;     leave destination only where there was no source content (Since 1.0)
-;;;
-;;; CAIRO_OPERATOR_DEST_ATOP
-;;;     leave destination on top of source content and only there (unbounded)
-;;;     (Since 1.0)
-;;;
-;;; CAIRO_OPERATOR_XOR
-;;;     source and destination are shown where there is only one of them
-;;;     (Since 1.0)
-;;;
-;;; CAIRO_OPERATOR_ADD
-;;;     source and destination layers are accumulated (Since 1.0)
-;;;
-;;; CAIRO_OPERATOR_SATURATE
-;;;     like over, but assuming source and dest are disjoint geometries
-;;;     (Since 1.0)
-;;;
-;;; CAIRO_OPERATOR_MULTIPLY
-;;;     source and destination layers are multiplied. This causes the result to
-;;;     be at least as dark as the darker inputs. (Since 1.10)
-;;;
-;;; CAIRO_OPERATOR_SCREEN
-;;;     source and destination are complemented and multiplied. This causes the
-;;;     result to be at least as light as the lighter inputs. (Since 1.10)
-;;;
-;;; CAIRO_OPERATOR_OVERLAY
-;;;     multiplies or screens, depending on the lightness of the destination
-;;;     color. (Since 1.10)
-;;;
-;;; CAIRO_OPERATOR_DARKEN
-;;;     replaces the destination with the source if it is darker, otherwise
-;;;     keeps the source. (Since 1.10)
-;;;
-;;; CAIRO_OPERATOR_LIGHTEN
-;;;     replaces the destination with the source if it is lighter, otherwise
-;;;     keeps the source. (Since 1.10)
-;;;
-;;; CAIRO_OPERATOR_COLOR_DODGE
-;;;     brightens the destination color to reflect the source color.
-;;;     (Since 1.10)
-;;;
-;;; CAIRO_OPERATOR_COLOR_BURN
-;;;     darkens the destination color to reflect the source color. (Since 1.10)
-;;;
-;;; CAIRO_OPERATOR_HARD_LIGHT
-;;;     Multiplies or screens, dependent on source color. (Since 1.10)
-;;;
-;;; CAIRO_OPERATOR_SOFT_LIGHT
-;;;     Darkens or lightens, dependent on source color. (Since 1.10)
-;;;
-;;; CAIRO_OPERATOR_DIFFERENCE
-;;;     Takes the difference of the source and destination color. (Since 1.10)
-;;;
-;;; CAIRO_OPERATOR_EXCLUSION
-;;;     Produces an effect similar to difference, but with lower contrast.
-;;;     (Since 1.10)
-;;;
-;;; CAIRO_OPERATOR_HSL_HUE
-;;;     Creates a color with the hue of the source and the saturation and
-;;;     luminosity of the target. (Since 1.10)
-;;;
-;;; CAIRO_OPERATOR_HSL_SATURATION
-;;;     Creates a color with the saturation of the source and the hue and
-;;;     luminosity of the target. Painting with this mode onto a gray area
-;;;     produces no change. (Since 1.10)
-;;;
-;;; CAIRO_OPERATOR_HSL_COLOR
-;;;     Creates a color with the hue and saturation of the source and the
-;;;     luminosity of the target. This preserves the gray levels of the target
-;;;     and is useful for coloring monochrome images or tinting color images.
-;;;     (Since 1.10)
-;;;
-;;; CAIRO_OPERATOR_HSL_LUMINOSITY
-;;;     Creates a color with the luminosity of the source and the hue and
-;;;     saturation of the target. This produces an inverse effect to
-;;;     CAIRO_OPERATOR_HSL_COLOR. (Since 1.10)
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defcenum cairo-operator-t
+  :clear
+  :source
+  :over
+  :in
+  :out
+  :atop
+  :dest
+  :dest-over
+  :dest-in
+  :dest-out
+  :dest-atop
+  :xor
+  :add
+  :saturate
+  :multiply
+  :screen
+  :overlay
+  :darken
+  :lighten
+  :color-dodge
+  :color-burn
+  :hard-light
+  :soft-ligth
+  :difference
+  :exclusion
+  :hsl-hue
+  :hsl-saturation
+  :hsl-color
+  :hsl-luminosity)
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'cairo-operator-t atdoc:*symbol-name-alias*) "CEnum"
+      (gethash 'cairo-operator-t atdoc:*external-symbols*)
+ "@version{2013-8-4}
+  @begin{short}
+    @sym{cairo-operator-t} is used to set the compositing operator for all cairo
+   drawing operations.
+  @end{short}
+
+  The default operator is @code{:over}.
+
+  The operators marked as unbounded modify their destination even outside of
+  the mask layer, that is, their effect is not bound by the mask layer.
+  However, their effect can still be limited by way of clipping.
+
+  To keep things simple, the operator descriptions here document the behavior
+  for when both source and destination are either fully transparent or fully
+  opaque. The actual implementation works for translucent layers too. For a
+  more detailed explanation of the effects of each operator, including the
+  mathematical definitions, see http://cairographics.org/operators/.
+  @begin{pre}
+(defcenum cairo-operator-t
+  :clear
+  :source
+  :over
+  :in
+  :out
+  :atop
+  :dest
+  :dest-over
+  :dest-in
+  :dest-out
+  :dest-atop
+  :xor
+  :add
+  :saturate
+  :multiply
+  :screen
+  :overlay
+  :darken
+  :lighten
+  :color-dodge
+  :color-burn
+  :hard-light
+  :soft-ligth
+  :difference
+  :exclusion
+  :hsl-hue
+  :hsl-saturation
+  :hsl-color
+  :hsl-luminosity)
+  @end{pre}
+  @begin[code]{table}
+    @entry[:clear]{Clear destination layer (bounded). Since 1.0}
+    @entry[:source]{Replace destination layer (bounded). Since 1.0}
+    @entry[:over]{Draw source layer on top of destination layer (bounded).
+      Since 1.0}
+    @entry[:in]{Draw source where there was destination content (unbounded).
+    Since 1.0}
+    @entry[:out]{Draw source where there was no destination content (unbounded).
+      Since 1.0}
+    @entry[:atop]{Draw source on top of destination content and only there.
+      Since 1.0}
+    @entry[:dest]{Ignore the source. Since 1.0}
+    @entry[:dest-over]{Draw destination on top of source. Since 1.0}
+    @entry[:dest-in]{Leave destination only where there was source content
+      (unbounded). Since 1.0}
+    @entry[:dest-out]{Leave destination only where there was no source content.
+      Since 1.0}
+    @entry[:dest-atop]{Leave destination on top of source content and only
+      there (unbounded). Since 1.0}
+    @entry[:xor]{Source and destination are shown where there is only one of
+      them. Since 1.0}
+    @entry[:add]{Source and destination layers are accumulated. Since 1.0}
+    @entry[:saturate]{Like over, but assuming source and dest are disjoint
+      geometries. Since 1.0}
+    @entry[:multiply]{Source and destination layers are multiplied. This causes
+      the result to be at least as dark as the darker inputs. Since 1.10}
+    @entry[:screen]{Source and destination are complemented and multiplied. This
+      causes the result to be at least as light as the lighter inputs.
+      Since 1.10}
+    @entry[:overlay]{Multiplies or screens, depending on the lightness of the
+      destination color. Since 1.10}
+    @entry[:darken]{Replaces the destination with the source if it is darker,
+      otherwise keeps the source. Since 1.10.}
+    @entry[:lighten]{Replaces the destination with the source if it is lighter,
+      otherwise keeps the source. Since 1.10}
+    @entry[:dodge]{Brightens the destination color to reflect the source color.
+      Since 1.10}
+    @entry[:burn]{Darkens the destination color to reflect the source color.
+      Since 1.10}
+    @entry[:hard-light]{Multiplies or screens, dependent on source color.
+      Since 1.10}
+    @entry[:soft-light]{Darkens or lightens, dependent on source color.
+      Since 1.10}
+    @entry[:difference]{Takes the difference of the source and destination
+      color. Since 1.10}
+    @entry[:exclusion]{Produces an effect similar to difference, but with lower
+      contrast. Since 1.10}
+    @entry[:hsl-hue]{Creates a color with the hue of the source and the
+      saturation and luminosity of the target. Since 1.10}
+    @entry[:hsl-saturation]{Creates a color with the saturation of the source
+      and the hue and luminosity of the target. Painting with this mode onto a
+      gray area produces no change. Since 1.10}
+    @entry[:hsl-color]{Creates a color with the hue and saturation of the source
+      and the luminosity of the target. This preserves the gray levels of the
+      target and is useful for coloring monochrome images or tinting color
+      images. Since 1.10}
+    @entry[:hsl-luinosity]{Creates a color with the luminosity of the source and
+      the hue and saturation of the target. This produces an inverse effect to
+      @code{:hsl-color}. Since 1.10}
+  @end{table}
+  Since 1.0")
+
+(export 'cairo-operator-t)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_set_operator ()
-;;;
-;;; void cairo_set_operator (cairo_t *cr, cairo_operator_t op);
-;;;
-;;; Sets the compositing operator to be used for all drawing operations. See
-;;; cairo_operator_t for details on the semantics of each available compositing
-;;; operator.
-;;;
-;;; The default operator is CAIRO_OPERATOR_OVER.
-;;;
-;;; cr :
-;;;     a cairo_t
-;;;
-;;; op :
-;;;     a compositing operator, specified as a cairo_operator_t
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_set_operator" cairo-set-operator) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-4}
+  @argument[cr]{a @symbol{cairo-t}}
+  @argument[op]{a compositing operator, specified as a
+    @symbol{cairo-operator-t}}
+  @begin{short}
+    Sets the compositing operator to be used for all drawing operations. See the
+    @symbol{cairo-operator-t} enumeration for details on the semantics of each
+    available compositing operator.
+  @end{short}
+
+  The default operator is @code{:over}.
+
+  Since 1.0
+  @see-symbol{cairo-t}
+  @see-symbol{cairo-operator-t}
+  @see-function{cairo-get-operator}"
+  (cr (:pointer (:struct cairo-t)))
+  (op cairo-operator-t))
+
+(export 'cairo-set-operator)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_get_operator ()
-;;;
-;;; cairo_operator_t cairo_get_operator (cairo_t *cr);
-;;;
-;;; Gets the current compositing operator for a cairo context.
-;;;
-;;; cr :
-;;;     a cairo context
-;;;
-;;; Returns :
-;;;     the current compositing operator.
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_get_operator" cairo-get-operator) cairo-operator-t
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-4}
+  @argument[cr]{a cairo context}
+  @return{The current compositing operator.}
+  @begin{short}
+    Gets the current compositing operator for a cairo context.
+  @end{short}
+  Since 1.0
+  @see-symbol{cairo-t}
+  @see-symbol{cairo-operator-t}
+  @see-function{cairo-set-operator}"
+  (cr (:pointer (:struct cairo-t))))
+
+(export 'cairo-get-operator)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_set_tolerance ()
@@ -1348,30 +1369,43 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_clip ()
-;;;
-;;; void cairo_clip (cairo_t *cr);
-;;;
-;;; Establishes a new clip region by intersecting the current clip region with
-;;; the current path as it would be filled by cairo_fill() and according to the
-;;; current fill rule (see cairo_set_fill_rule()).
-;;;
-;;; After cairo_clip(), the current path will be cleared from the cairo context.
-;;;
-;;; The current clip region affects all drawing operations by effectively
-;;; masking out any changes to the surface that are outside the current clip
-;;; region.
-;;;
-;;; Calling cairo_clip() can only make the clip region smaller, never larger.
-;;; But the current clip is part of the graphics state, so a temporary
-;;; restriction of the clip region can be achieved by calling cairo_clip()
-;;; within a cairo_save()/cairo_restore() pair. The only other means of
-;;; increasing the size of the clip region is cairo_reset_clip().
-;;;
-;;; cr :
-;;;     a cairo context
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_clip" cairo-clip) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-4}
+  @argument[cr]{a cairo context}
+  @begin{short}
+    Establishes a new clip region by intersecting the current clip region with
+    the current path as it would be filled by the function @fun{cairo-fill} and
+    according to the current fill rule, see the function
+    @fun{cairo-set-fill-rule}.
+  @end{short}
+
+  After a call of the function @sym{cairo-clip}, the current path will be
+  cleared from the cairo context.
+
+  The current clip region affects all drawing operations by effectively
+  masking out any changes to the surface that are outside the current clip
+  region.
+
+  Calling the function @sym{cairo-clip} can only make the clip region smaller,
+  never larger. But the current clip is part of the graphics state, so a
+  temporary restriction of the clip region can be achieved by calling
+  the function @sym{cairo-clip} within a @fun{cairo-save}/@fun{cairo-restore}
+  pair. The only other means of increasing the size of the clip region is
+  the function @fun{cairo-reset-clip}.
+
+  Since 1.0
+  @see-symbol{cairo-t}
+  @see-function{cairo-fill}
+  @see-function{cairo-set-fill-rule}
+  @see-function{cairo-save}
+  @see-function{cairo-restor}
+  @see-function{cairo-reset-clip}"
+  (cr (:pointer (:struct cairo-t))))
+
+(export 'cairo-clip)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_clip_preserve ()
@@ -1567,16 +1601,20 @@
 
 (defcfun ("cairo_fill" cairo-fill) :void
  #+cl-cffi-gtk-documentation
- "@version{2012-12-21}
+ "@version{2013-8-4}
   @argument[cr]{a cairo context}
   @begin{short}
     A drawing operator that fills the current path according to the current fill
-    rule, (each sub-path is implicitly closed before being filled). After
-    @sym{cairo-fill}, the current path will be cleared from the cairo context.
-    See @code{cairo_set_fill_rule()} and @code{cairo_fill_preserve()}.
+    rule, each sub-path is implicitly closed before being filled.
   @end{short}
+  After the function @sym{cairo-fill}, the current path will be cleared from the
+  cairo context. See the functions @fun{cairo-set-fill-rule} and
+  @fun{cairo-fill-preserve}.
 
-  Since 1.0"
+  Since 1.0
+  @see-symbol{cairo-t}
+  @see-function{cairo-set-fill-rule}
+  @see-function{cairo-fill-preserve}"
   (cr (:pointer (:struct cairo-t))))
 
 (export 'cairo-fill)
@@ -1719,36 +1757,42 @@
 
 (defcfun ("cairo_paint" cairo-paint) :void
  #+cl-cffi-gtk-documentation
- "@version{2012-12-21}
+ "@version{2013-8-4}
   @argument[cr]{a cairo context}
   @begin{short}
     A drawing operator that paints the current source everywhere within the
     current clip region.
   @end{short}
 
-  Since 1.0"
+  Since 1.0
+  @see-symbol{cairo-t}"
   (cr (:pointer (:struct cairo-t))))
 
 (export 'cairo-paint)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_paint_with_alpha ()
-;;;
-;;; void cairo_paint_with_alpha (cairo_t *cr, double alpha);
-;;;
-;;; A drawing operator that paints the current source everywhere within the
-;;; current clip region using a mask of constant alpha value alpha. The effect
-;;; is similar to cairo_paint(), but the drawing is faded out using the alpha
-;;; value.
-;;;
-;;; cr :
-;;;     a cairo context
-;;;
-;;; alpha :
-;;;     alpha value, between 0 (transparent) and 1 (opaque)
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_paint_with_alpha" cairo-paint-with-alpha) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-4}
+  @argument[cr]{a cairo context}
+  @argument[alpha]{alpha value, between 0 (transparent) and 1 (opaque)}
+  @begin{short}
+    A drawing operator that paints the current source everywhere within the
+    current clip region using a mask of constant alpha value alpha. The effect
+    is similar to the function @fun{cairo-paint}, but the drawing is faded out
+    using the alpha value.
+  @end{short}
+
+  Since 1.0
+  @see-symbol{cairo-t}
+  @see-function{cairo-paint}"
+  (cr (:pointer (:struct cairo-t)))
+  (alpha :double))
+
+(export 'cairo-paint-with-alpha)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_stroke ()
@@ -1756,39 +1800,51 @@
 
 (defcfun ("cairo_stroke" cairo-stroke) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-2}
+ "@version{2013-8-4}
   @argument[cr]{a cairo context}
   @begin{short}
     A drawing operator that strokes the current path according to the current
-    line width, line join, line cap, and dash settings. After cairo_stroke(),
-    the current path will be cleared from the cairo context.
+    line width, line join, line cap, and dash settings. After the function
+    @sym{cairo-stroke}, the current path will be cleared from the cairo context.
   @end{short}
-  See cairo_set_line_width(), cairo_set_line_join(), cairo_set_line_cap(),
-  cairo_set_dash(), and cairo_stroke_preserve().
+  See the functions @fun{cairo-set-line-width}, @fun{cairo-set-line-join},
+  @fun{cairo-set-line-cap}, @fun{cairo-set-dash}, and
+  @fun{cairo-stroke-preserve}.
 
-  Note: Degenerate segments and sub-paths are treated specially and provide a
-  useful result. These can result in two different situations:
+  @b{Note:} Degenerate segments and sub-paths are treated specially and provide
+  a useful result. These can result in two different situations:
   @begin{enumerate}
     @begin{item}
-      Zero-length \"on\" segments set in cairo_set_dash(). If the cap style is
-      CAIRO_LINE_CAP_ROUND or CAIRO_LINE_CAP_SQUARE then these segments will be
-      drawn as circular dots or squares respectively. In the case of
-      CAIRO_LINE_CAP_SQUARE, the orientation of the squares is determined by
-      the direction of the underlying path.
+      Zero-length \"on\" segments set in the function @fun{cairo-set-dash}. If
+      the cap style of type @symbol{cairo-line-cap-t} is @code{:round} or
+      @code{:square} then these segments will be drawn as circular dots or
+      squares respectively. In the case of @code{:square}, the orientation of
+      the squares is determined by the direction of the underlying path.
     @end{item}
     @begin{item}
-      A sub-path created by cairo_move_to() followed by either a
-      cairo_close_path() or one or more calls to cairo_line_to() to the same
-      coordinate as the cairo_move_to(). If the cap style is
-      CAIRO_LINE_CAP_ROUND then these sub-paths will be drawn as circular dots.
-      Note that in the case of CAIRO_LINE_CAP_SQUARE a degenerate sub-path will
-      not be drawn at all, (since the correct orientation is indeterminate).
+      A sub-path created by the function @fun{cairo-move-to} followed by either
+      a call to the function @fun{cairo-close-path} or one or more calls to the
+      function @fun{cairo-line-to} to the same coordinate as the the function
+      @fun{cairo-move-to}. If the cap style is @code{:round} then these
+      sub-paths will be drawn as circular dots. Note that in the case of
+      @code{:square} a degenerate sub-path will not be drawn at all, since the
+      correct orientation is indeterminate.
     @end{item}
   @end{enumerate}
-  In no case will a cap style of CAIRO_LINE_CAP_BUTT cause anything to be
-  drawn in the case of either degenerate segments or sub-paths.
+  In no case will a cap style of @code{:butt} cause anything to be drawn in the
+  case of either degenerate segments or sub-paths.
 
-  Since 1.0"
+  Since 1.0
+  @see-symbol{cairo-t}
+  @see-symbol{cairo-line-cap-t}
+  @see-function{cairo-set-line-width}
+  @see-function{cairo-set-line-join}
+  @see-function{cairo-set-line-cap}
+  @see-function{cairo-set-dash}
+  @see-function{cairo-stroke-preserve}
+  @see-function{cairo-move-to}
+  @see-function{cairo-close-path}
+  @see-function{cairo-line-to}"
   (cr (:pointer (:struct cairo-t))))
 
 (export 'cairo-stroke)
