@@ -60,6 +60,7 @@
 
 (load "rtest-gtk-entry-buffer.lisp")
 (load "rtest-gtk-frame.lisp")
+(load "rtest-gtk-main-loop.lisp")
 (load "rtest-gtk-tool-palette.lisp")
 (load "rtest-gtk-widget.lisp")
 
