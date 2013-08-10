@@ -5,6 +5,10 @@
 @code{@url{@value{\nodename\}, @code{\nodename\}}}
 @end macro
 
+@c GtkActionable
+
+@set gtk-actionable http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-actionable.html
+
 @c GtkAdjustment
 
 @set gtk-adjustment http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-adjustment.html
@@ -23,6 +27,17 @@
 @c GtkAllocation
 
 @set gtk-allocation http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-allocation.html
+
+@c GtkApplication
+
+@set gtk-application http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-application.html
+@set gtk-application-set-app-menu http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-application-set-app-menu.html
+@set gtk-application-set-menubar http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-application-set-menubar.html
+@set gtk-application-inhibit http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-application-inhibit.html
+
+@c GtkApplicationWindow
+
+@set gtk-application-window http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-application-window.html
 
 @c GtkAspectFrame
 
@@ -51,6 +66,10 @@
 @c GtkBuildable
 
 @set gtk-buildable http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-buildable.html
+
+@c GtkBuilder
+
+@set gtk-builder http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-builder.html
 
 @c GtkButton
 
@@ -179,6 +198,10 @@
 @c GtkMessageDialog
 
 @set gtk-message-dialog http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-message-dialog.html
+
+@c GtkMenuBar
+
+@set gtk-menu-bar http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-menu-bar.html
 
 @c GtkMisc
 
@@ -380,6 +403,30 @@
 @c GObject
 
 @set g-object http://www.crategus.com/books/cl-cffi-gtk/pages/gobject_class_g-object.html
+
+@c -----------------------------------------------------------------------------
+
+@c GIO
+
+@c GActionGroup
+
+@set g-action-group http://www.crategus.com/books/cl-cffi-gtk/pages/gio_class_g-action-group.html
+@set g-action-group-activate-action http://www.crategus.com/books/cl-cffi-gtk/pages/gio_fun_g-action-group-activate-action.html
+
+@c GActionMap
+
+@set g-action-map http://www.crategus.com/books/cl-cffi-gtk/pages/gio_class_g-action-map.html
+@set g-action-map http://www.crategus.com/books/cl-cffi-gtk/pages/gio_class_g-action-map.html
+
+@c GApplication
+
+@set g-application http://www.crategus.com/books/cl-cffi-gtk/pages/gio_class_g-application.html
+
+@c GMenuModel
+
+@set g-menu-model http://www.crategus.com/books/cl-cffi-gtk/pages/gio_class_g-menu-model.html
+
+@c -----------------------------------------------------------------------------
 
 @c PangoAttrList
 
