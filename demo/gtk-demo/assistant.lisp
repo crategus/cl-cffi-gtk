@@ -94,6 +94,7 @@
                           (gtk-widget-destroy widget)))
       (g-signal-connect assistant "prepare"
         (lambda (assistant page)
+          (declare (ignore page))
           (let ((current-page (gtk-assistant-get-current-page assistant))
                 (n-pages (gtk-assistant-get-n-pages assistant)))
             (gtk-window-set-title assistant

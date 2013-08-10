@@ -44,8 +44,17 @@
       (g-signal-connect combo-box "changed"
          (lambda (widget)
            (declare (ignore widget))
-           (show-message (format nil "You clicked on row ~A~%"
-                                 (gtk-combo-box-get-active combo-box)))))
+           (let ((dialog (make-instance 'gtk-message-dialog
+                                        :message-type :info
+                                        :buttons :ok
+                                        :text "Info Message Dialog"
+                                        :secondary-text
+                                        (format nil "You clicked on row ~A~%"
+                                                (gtk-combo-box-get-active combo-box)))))
+             ;; Run the message dialog
+             (gtk-dialog-run dialog)
+             ;; Destroy the message dialog
+             (gtk-widget-destroy dialog))))
       ;; Create renderers for the cells
       (let ((renderer (make-instance 'gtk-cell-renderer-text
                                      :text "A text")))

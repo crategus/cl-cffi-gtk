@@ -189,6 +189,7 @@ paste_received (GtkClipboard *clipboard,
 
       (g-signal-connect button2 "clicked"
                         (lambda (button)
+                          (declare (ignore button))
                           (let ( ;; Get the clipboard object
                                 (clipboard (gtk-widget-get-clipboard entry2 "CLIPBOARD")))
                             (gtk-clipboard-request-text clipboard

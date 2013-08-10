@@ -15,7 +15,6 @@
       ;; Ensure that the dialog window is destroyed when the user responds.
       (g-signal-connect dialog "response"
                         (lambda (dialog response-id)
-                          (declare (ignore response-id))
                           (setf response response-id)
                           (gtk-widget-destroy dialog)))
       ;; Add the buttons
