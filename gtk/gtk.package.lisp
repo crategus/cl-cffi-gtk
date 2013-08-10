@@ -83,7 +83,7 @@
       Before using GTK+, it needs to be initialized; initialization connects to
       the window system display, and parses some standard command line
       arguments. In the C library the @code{gtk_init()} macro initializes GTK+.
-      In the Lisp binding to GTK+, GTk+ is initialized, when loading the
+      In the Lisp binding to GTK+, GTK+ is initialized, when loading the
       @code{cl-cffi-gtk} library. Therefore, no functions are exported, which
       initialize GTK+.
 
@@ -5112,7 +5112,7 @@ setup_tree (void)
       Application class
 
       @about-class{gtk-application}
-      @about-class{gtk-application-inhibit-flags}
+      @about-symbol{gtk-application-inhibit-flags}
       @about-function{gtk-application-new}
       @about-function{gtk-application-add-window}
       @about-function{gtk-application-remove-window}
@@ -5130,7 +5130,7 @@ setup_tree (void)
       @about-function{gtk-application-remove-accelerator}
     @end{subsection}
     @begin[GtkApplicationWindow]{subsection}
-      GtkWindow subclass with GtkApplication support.
+      @class{gtk-window} subclass with @class{gtk-application} support.
 
       @about-class{gtk-application-window}
       @about-function{gtk-application-window-new}
