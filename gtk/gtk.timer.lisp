@@ -27,6 +27,12 @@
 
 (in-package :gtk)
 
+(defcallback call-timeout-from-main-loop-callback :boolean
+    ((data :pointer))
+  (restart-case
+      (progn (funcall (glib::get-stable-pointer-value data)))
+    (return-from-callback () nil)))
+
 (defun gtk-main-add-timeout (millisec func &key (priority g-priority-default))
   (g-timeout-add-full priority
                       millisec

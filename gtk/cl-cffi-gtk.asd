@@ -38,7 +38,6 @@
   :serial t
   :components
   ((:file "gtk.package")
-   (:file "gtk.misc-lisp")
    (:file "gtk.child-properties")
 
    ;; Gtk+ Core
