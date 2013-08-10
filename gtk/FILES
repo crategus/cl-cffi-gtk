@@ -297,7 +297,7 @@ GTK+ Widgets and Objects
 
   Application support
 
-    gtk.application.lisp             - GtkApplication              - GTK+ 3.6.4%
+    gtk.application.lisp             - GtkApplication              - GTK+ 3.6.4
     gtk.application-window.lisp      - GtkApplicationWindow        - GTK+ 3.6.4%
     gtk.actionable.lisp              - GtkActionable               - GTK+ 3.6.4%
 
