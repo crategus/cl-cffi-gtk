@@ -1,11 +1,10 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gio.simple-action-group.lisp
 ;;;
-;;; The documentation has been copied from the GIO Reference Manual
-;;; for GIO 2.36.1. The latest version of this documentation can be found
-;;; on-line at <http://library.gnome.org/devel/gio/unstable/>. 
-;;; The API documentation of the Lisp binding is available at
-;;; <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GIO Reference Manual
+;;; Version 2.36.4 and modified to document the Lisp binding to the GIO library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2012, 2013 Dieter Kaiser
 ;;;
@@ -67,14 +66,17 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'g-simple-action-group 'type)
- "@version{2013-5-1}
+ "@version{2013-8-9}
   @begin{short}
     @sym{g-simple-action-group} is a hash table filled with @class{g-action}
     objects, implementing the @class{g-action-group} and @class{g-action-map}
     interfaces.
   @end{short}
 
-  Since 2.28")
+  Since 2.28
+  @see-class{g-action}
+  @see-class{g-action-map}
+  @see-class{g-action-group}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_simple_action_group_new ()
@@ -84,13 +86,14 @@
 
 (defun g-simple-action-group-new ()
  #+cl-cffi-gtk-documentation
- "@version{2013-5-1}
+ "@version{2013-8-9}
   @return{A new @class{g-simple-action-group} object.}
   @begin{short}
     Creates a new, empty, @class{g-simple-action-group}.
   @end{short}
 
-  Since 2.28"
+  Since 2.28
+  @see-class{g-simple-action-group}"
   (make-instance 'g-simple-action-group))
 
 (export 'g-simple-action-group-new)
@@ -102,7 +105,7 @@
 (defcfun ("g_simple_action_group_lookup" g-simple-action-group-lookup)
     (g-object g-action)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-1}
+ "@version{2013-8-9}
   @argument[simple]{a @class{g-simple-action-group} object}
   @argument[action-name]{the name of an action}
   @return{A @class{g-action}, or @code{nil}.}
@@ -112,7 +115,9 @@
 
   If no such action exists, returns @code{nil}.
 
-  Since 2.28"
+  Since 2.28
+  @see-class{g-action}
+  @see-class{g-simple-action-group}"
   (simple (g-object g-simple-action-group))
   (action-name :string))
 
@@ -167,12 +172,7 @@
 ;;; g_simple_action_group_add_entries ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_simple_action_group_add_entries"
-          %g-simple-action-group-add-entries) :void
-  (simple (g-object g-simple-action-group))
-  (entries :pointer)
-  (n-entries :int)
-  (user-data :pointer))
+(declaim (inline g-simple-action-group-add-entries))
 
 (defun g-simple-action-group-add-entries (simple entries)
  #+cl-cffi-gtk-documentation
@@ -186,11 +186,7 @@
   @end{short}
 
   Since 2.30"
-  (with-foreign-boxed-array (n-entries entries-ptr g-action-entry entries)
-    (%g-simple-action-group-add-entries simple
-                                        entries-ptr
-                                        n-entries
-                                        (null-pointer))))
+  (g-action-map-add-action-entries simple entries))
 
 (export 'g-simple-action-group-add-entries)
 

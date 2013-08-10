@@ -4,9 +4,10 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GIO Reference Manual
-;;; for GIO 2.36.1. The latest version of this documentation can be found
-;;; on-line at <http://library.gnome.org/devel/gio/unstable/>.
+;;; The documentation of this file is taken from the GIO Reference Manual
+;;; Version 2.36.4 and modified to document the Lisp binding to the GDK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2012, 2013 Dieter Kaiser
 ;;;
@@ -206,6 +207,34 @@
       @about-function{g-simple-action-new-stateful}
       @about-function{g-simple-action-set-enabled}
       @about-function{g-simple-action-set-state}
+    @end{subsection}
+    @begin[GMenuModel]{subsection}
+      An abstract class representing the contents of a menu.
+
+      @about-class{g-menu-model}
+      @about-function{g-menu-model-is-mutable}
+      @about-function{g-menu-model-get-n-items}
+      @about-variable{+g-menu-attribute-action+}
+      @about-variable{+g-menu-attribute-label+}
+      @about-variable{+g-menu-attribute-target+}
+      @about-variable{+g-menu-link-section+}
+      @about-variable{+g-menu-link-submenu+}
+      @about-function{g-menu-model-get-item-attribute-value}
+      @about-function{g-menu-model-get-item-attribute}
+      @about-function{g-menu-model-get-item-link}
+      @about-function{g-menu-model-iterate-item-attributes}
+      @about-function{g-menu-model-iterate-item-links}
+      @about-function{g-menu-model-items-changed}
+      @about-symbol{g-menu-attribute-iter}
+      @about-function{g-menu-attribute-iter-get-next}
+      @about-function{g-menu-attribute-iter-get-name}
+      @about-function{g-menu-attribute-iter-get-value}
+      @about-function{g-menu-attribute-iter-next}
+      @about-function{g-menu-link-iter}
+      @about-function{g-menu-link-iter-get-name}
+      @about-function{g-menu-link-iter-get-next}
+      @about-function{g-menu-link-iter-get-value}
+      @about-function{g-menu-link-iter-next}
     @end{subsection}
   @end{section}")
 

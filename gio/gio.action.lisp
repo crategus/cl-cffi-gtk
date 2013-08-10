@@ -1,11 +1,10 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gio.action.lisp
 ;;;
-;;; The documentation has been copied from the GIO Reference Manual
-;;; for GIO 2.36.1. The latest version of this documentation can be found
-;;; on-line at <http://library.gnome.org/devel/gio/unstable/>.
-;;; The API documentation of the Lisp binding is available at
-;;; <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GIO Reference Manual
+;;; Version 2.36.4 and modified to document the Lisp binding to the GIO library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2012, 2013 Dieter Kaiser
 ;;;

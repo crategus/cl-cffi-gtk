@@ -1,4 +1,4 @@
-Content from the GIO Reference Manual for Version 2.36.1
+Content from the GIO Reference Manual for Version 2.36.4
 
     *   - needs update
     %   - not fully implemented
@@ -69,7 +69,7 @@ File types and applications
 
   GContentType - Platform-specific content typing
 
-  gio.app-info.lisp - GAppInfo                                     - GIO 2.36.1%
+  gio.app-info.lisp - GAppInfo                                     - GIO 2.36.1*
 
   GDesktopAppInfo - Application information from desktop files
 
@@ -83,12 +83,12 @@ Volumes and Drives
 
 Icons
 
-  gio.icon.lisp - GIcon                                            - GIO 2.36.3
+  gio.icon.lisp - GIcon                                            - GIO 2.36.3*
 
   GFileIcon - Icons pointing to an image file
   GLoadableIcon - Loadable Icons
 
-  gio.themed-icon.lisp - GThemedIcon                               - GIO 2.36.3
+  gio.themed-icon.lisp - GThemedIcon                               - GIO 2.36.3*
 
   GEmblemedIcon - Icon with emblems
   GEmblem - An object for emblems
@@ -197,20 +197,22 @@ Permissions
 
 Application support
 
-  gio.application.lisp         - GApplication                      - GIO 2.36.1%
+  gio.application.lisp         - GApplication                      - GIO 2.36.4&
 
   GApplicationCommandLine - A command-line invocation of an application
 
-  gio.action-group.lisp        - GActionGroup                      - GIO 2.36.1%
-  gio.action-map.lisp          - GActionMap                        - GIO 2.36.1%
-  gio.simple-action-group.lisp - GSimpleActionGroup                - GIO 2.36.1%
-  gio.action.lisp              - GAction                           - GIO 2.36.1
-  gio.simple-action.lisp       - GSimpleAction                     - GIO 2.36.1
+  gio.action-group.lisp        - GActionGroup                      - GIO 2.36.4&
+  gio.action-map.lisp          - GActionMap                        - GIO 2.36.4
+  gio.simple-action-group.lisp - GSimpleActionGroup                - GIO 2.36.4
+  gio.action.lisp              - GAction                           - GIO 2.36.4
+  gio.simple-action.lisp       - GSimpleAction                     - GIO 2.36.4
 
   GRemoteActionGroup - a GActionGroup that interacts with other processes
   GActionGroup exporter - Export GActionGroups on D-Bus
   GDBusActionGroup - A D-Bus GActionGroup implementation
-  GMenuModel - An abstract class representing the contents of a menu
+
+  gio.menu-model-lisp          - GMenuModel -                      - GIO 2.36.4%
+
   GMenu - A simple implementation of GMenuModel
   GMenuModel exporter - Export GMenuModels on D-Bus
   GDBusMenuModel - A D-Bus GMenuModel implementation

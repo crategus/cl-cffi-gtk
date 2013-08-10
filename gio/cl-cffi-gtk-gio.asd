@@ -45,6 +45,7 @@
    (:file "gio.simple-action")       ; Simple GAction implementation
    (:file "gio.simple-action-group") ; Simple GActionGroup implementation
    (:file "gio.application")         ; Core application class
+   (:file "gio.menu-model")          ; Class representing the contents of a menu
   )
   :depends-on (:cl-cffi-gtk-glib
                :cl-cffi-gtk-gobject))
