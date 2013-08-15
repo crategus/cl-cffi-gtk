@@ -52,6 +52,7 @@
 @c GtkBin
 
 @set gtk-bin http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-bin.html
+@set gtk-bin-get-child http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-bin-get-child.html
 
 @c GtkBox
 
@@ -86,6 +87,10 @@
 @set gtk-button-box-get-layout http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-button-box-get-layout.html
 @set gtk-button-box-set-layout http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-button-box-set-layout.html
 
+@c GtkCellLayout
+
+@set gtk-cell-layout http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-cell-layout.html
+
 @c GtkCheckButton
 
 @set gtk-check-button http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-check-button.html
@@ -96,6 +101,17 @@
 @c GtkComboBox
 
 @set gtk-combo-box http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-combo-box.html
+
+@c GtkComboBox
+
+@set gtk-combo-box-text http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-combo-box-text.html
+@set gtk-combo-box-text-new http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-combo-box-text-new.html
+@set gtk-combo-box-text-new-with-entry http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-combo-box-text-new-with-entry.html
+@set gtk-combo-box-text-append-text http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-combo-box-text-append-text.html
+@set gtk-combo-box-text-insert-text http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-combo-box-text-insert-text.html
+@set gtk-combo-box-text-prepend-text http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-combo-box-text-prepend-text.html
+@set gtk-combo-box-text-remove http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-combo-box-text-remove.html
+@set gtk-combo-box-text-get-active-text http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-combo-box-text-get-active-text.html
 
 @c GtkContainer
 
@@ -349,9 +365,51 @@
 @set gtk-table-set-row-spacings http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-table-set-row-spacings.html
 @set gtk-table-set-col-spacings http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-table-set-col-spacings.html
 
+@c GtkTextBuffer
+
+@set gtk-text-buffer http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-text-buffer.html
+@set gtk-text-buffer-new http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-buffer-new.html
+@set gtk-text-buffer-place-cursor http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-buffer-place-cursor.html
+@set gtk-text-buffer-get-selection-bounds http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-buffer-get-selection-bounds.html
+@set gtk-text-buffer-select-range http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-buffer-select-range.html
+@set gtk-text-buffer-create-mark http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-buffer-create-mark.html
+@set gtk-text-buffer-get-mark http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-buffer-get-mark.html
+@set gtk-text-buffer-get-iter-at-mark http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-buffer-get-iter-at-mark.html
+@set gtk-text-buffer-delete-mark http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-buffer-delete-mark.html
+@set gtk-text-buffer-delete-mark-by-name http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-buffer-delete-mark-by-name.html
+
+@c GtkTextIter
+
+@set gtk-text-iter http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-text-iter.html
+@set gtk-text-iter-search http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-iter-search.html
+@set gtk-text-iter-forward-search http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-iter-forward-search.html
+@set gtk-text-iter-backward-search http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-iter-backward-search.html
+@set gtk-text-iter-set-line-offset http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-iter-set-line-offset.html
+@set gtk-text-iter-forward-to-line-end http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-iter-forward-to-line-end.html
+@set gtk-text-iter-find-char http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-iter-find-char.html
+@set gtk-text-iter-backward-find-char http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-iter-backward-find-char.html
+@set gtk-text-iter-forward-char http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-iter-forward-char.html
+@set gtk-text-iter-get-char http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-iter-get-char.html
+
+@c GtkTextMark
+
+@set gtk-text-mark http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-text-mark.html
+
+@c GtkTextTab
+
+@set gtk-text-tag http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-text-tag.html
+
+@c GtkTextTabTable
+
+@set gtk-text-tag-table http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-text-tag-table.html
+
 @c GtkTextView
 
 @set gtk-text-view http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-text-view.html
+@set gtk-text-view-new-with-buffer http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-view-new-with-buffer.html
+@set gtk-text-view-set-buffer http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-view-set-buffer.html
+@set gtk-text-view-set-tabs http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-view-set-tabs.html
+@set gtk-text-view-scroll-mark-onscreen http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-view-scroll-mark-onscreen.html
 
 @c GtkToggleButton
 
@@ -390,6 +448,7 @@
 
 @set gtk-widget-queue-draw http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-widget-queue-draw.html
 @set gtk-widget-get-allocation http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-widget-get-allocation.html
+@set gtk-widget-override-font http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-widget-override-font.html
 
 @c -----------------------------------------------------------------------------
 

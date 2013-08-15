@@ -11,18 +11,51 @@
 
 @menu
 * Text Widget Overview::
-* Simple Example::
-* Example of Changing Text Attributes::
+* Simple Multiline Text Widget::
+* Formated Text in Text Widget::
+* Cut Copy and Paste::
+* Searching::
+* Examing and Modify Text::
+* Images and Widgets::
+* Buffer and Window Coordinates::
+* Final Notes::
 @end menu
 
 @c -----------------------------------------------------------------------------
-@node Text Widget Overview, Simple Example, Top, Top
+@node Text Widget Overview, Simple Multiline Text Widget, Top, Top
 @section Text Widget Overview
 
+@findex GtkTextBuffer
+@findex gtk-text-buffer
+@findex text-buffer, gtk-text-buffer
+
+@findex GtkTextView
+@findex gtk-text-view
+@findex text-view, gtk-text-view
+
+@findex GtkTextTag
+@findex gtk-text-tag
+@findex text-tag, gtk-text-tag
+
+@findex GtkTextTagTable
+@findex gtk-text-tag-table
+@findex text-tag-table, gtk-text-tag-table
+
+@findex GtkTextIter
+@findex gtk-text-iter
+@findex text-iter, gtk-text-iter
+
+@findex GtkTexMark
+@findex gtk-text-mark
+@findex text-mark, gtk-text-mark
+
+@findex gtk-text-buffer-place-cursor
+@findex text-buffer-place-cursor, gtk-text-buffer-place-cursor
+
 GTK+ has an extremely powerful framework for multiline text editing.  The
-primary objects involved in the process are @code{GtkTextBuffer}, which
-represents the text being edited, and @code{GtkTextView}, a widget which can
-display a @code{GtkTextBuffer}.  Each buffer can be displayed by any number of
+primary objects involved in the process are @xurl{gtk-text-buffer}, which
+represents the text being edited, and @xurl{gtk-text-view}, a widget which can
+display a @xurl{gtk-text-buffer}.  Each buffer can be displayed by any number of
 views.
 
 One of the important things to remember about text in GTK+ is that it's in the
@@ -36,11 +69,11 @@ applied to some range of text.  For example, a tag might be called "bold" and
 make the text inside the tag bold.  However, the tag concept is more general
 than that; tags don't have to affect appearance.  They can instead affect the
 behavior of mouse and key presses, "lock" a range of text so the user can't edit
-it, or countless other things.  A tag is represented by a @code{GtkTextTag}
-object.  One @code{GtkTextTag} can be applied to any number of text ranges in
+it, or countless other things.  A tag is represented by a @xurl{gtk-text-tag}
+object.  One @xurl{gtk-text-tag} can be applied to any number of text ranges in
 any number of buffers.
 
-Each tag is stored in a @code{GtkTextTagTable}.  A tag table defines a set of
+Each tag is stored in a @xurl{gtk-text-tag-table}.  A tag table defines a set of
 tags that can be used together.  Each buffer has one tag table associated with
 it; only tags from that tag table can be used with the buffer.  A single tag
 table can be shared between multiple buffers, however.
@@ -50,9 +83,9 @@ your tag that makes things bold "bold"), but they can also be anonymous (which
 is convenient if you're creating tags on-the-fly).
 
 Most text manipulation is accomplished with iterators, represented by a
-@code{GtkTextIter}.  An iterator represents a position between two characters in
-the text buffer.  @code{GtkTextIter} is a struct designed to be allocated on the
-stack; it's guaranteed to be copiable by value and never contain any
+@xurl{gtk-text-iter}.  An iterator represents a position between two characters
+in the text buffer.  @xurl{gtk-text-iter} is a struct designed to be allocated
+on the stack; it is guaranteed to be copiable by value and never contain any
 heap-allocated data.  Iterators are not valid indefinitely; whenever the buffer
 is modified in a way that affects the number of characters in the buffer, all
 outstanding iterators become invalid.  (Note that deleting 5 characters and then
@@ -60,21 +93,22 @@ reinserting 5 still invalidates iterators, though you end up with the same
 number of characters you pass through a state with a different number).
 
 Because of this, iterators can't be used to preserve positions across buffer
-modifications.  To preserve a position, the @code{GtkTextMark} object is ideal.
-You can think of a mark as an invisible cursor or insertion point; it floats in
-the buffer, saving a position.  If the text surrounding the mark is deleted, the
-mark remains in the position the text once occupied; if text is inserted at the
-mark, the mark ends up either to the left or to the right of the new text,
-depending on its gravity.  The standard text cursor in left-to-right languages
-is a mark with right gravity, because it stays to the right of inserted text.
+modifications.  To preserve a position, the @xurl{gtk-text-mark} object is
+ideal.  You can think of a mark as an invisible cursor or insertion point; it
+floats in the buffer, saving a position.  If the text surrounding the mark is
+deleted, the mark remains in the position the text once occupied; if text is
+inserted at the mark, the mark ends up either to the left or to the right of the
+new text, depending on its gravity.  The standard text cursor in left-to-right
+languages is a mark with right gravity, because it stays to the right of
+inserted text.
 
 Like tags, marks can be either named or anonymous.  There are two marks built-in
-to @code{GtkTextBuffer}; these are named "insert" and "selection_bound" and
+to @xurl{gtk-text-buffer}; these are named "insert" and "selection_bound" and
 refer to the insertion point and the boundary of the selection which is not the
 insertion point, respectively.  If no text is selected, these two marks will be
 in the same position.  You can manipulate what is selected and where the cursor
 appears by moving these marks around.  If you want to place the cursor in
-response to a user action, be sure to use @code{gtk-text-buffer-place-cursor},
+response to a user action, be sure to use @xurl{gtk-text-buffer-place-cursor},
 which moves both at once without causing a temporary selection (moving one then
 the other temporarily selects the range in between the old and new positions).
 
@@ -87,8 +121,8 @@ are represented with multiple bytes in UTF-8, and the two-character sequence
 "\r\n" is also considered a line separator.
 
 @c -----------------------------------------------------------------------------
-@node Simple Example, Example of Changing Text Attributes, Text Widget Overview, Top
-@section Simple Example
+@node Simple Multiline Text Widget, Formated Text in Text Widget, Text Widget Overview, Top
+@section Simple Multiline Text Widget
 
 @ifnotinfo
 @float Figure, figure-simple-text-view
@@ -97,7 +131,7 @@ are represented with multiple bytes in UTF-8, and the two-character sequence
 @end float
 @end ifnotinfo
 
-The simplest usage of @code{GtkTextView} might look like in
+The simplest usage of @xurl{gtk-text-view} might look like in
 @ref{example-simple-text-view}.  The output is shown in
 @ref{figure-simple-text-view}.
 
@@ -122,14 +156,23 @@ The simplest usage of @code{GtkTextView} might look like in
       (gtk-widget-show-all window))))
 @end verbatim
 
-In many cases it's also convenient to first create the buffer with
-@code{gtk-text-buffer-new}, then create a widget for that buffer with
-@code{gtk-text-view-new-with-buffer}.  Or you can change the buffer the widget
-displays after the widget is created with @code{gtk-text-view-set-buffer}.
+@findex gtk-text-buffer-new
+@findex text-buffer-new, gtk-text-buffer-new
+
+@findex gtk-text-view-new-with-buffer
+@findex text-view-new-with-buffer, gtk-text-view-new-with-buffer
+
+@findex gtk-text-view-set-buffer
+@findex text-view-set-buffer, gtk-text-view-set-buffer
+
+In many cases it is also convenient to first create the buffer with
+@xutl{gtk-text-buffer-new}, then create a widget for that buffer with
+@xurl{gtk-text-view-new-with-buffer}.  Or you can change the buffer the widget
+displays after the widget is created with @xurl{gtk-text-view-set-buffer}.
 
 @c -----------------------------------------------------------------------------
-@node Example of Changing Text Attributes, , Simple Example, Top
-@section Example of Changing Text Attributes
+@node Formated Text in Text Widget, Cut Copy and Paste, Simple Multiline Text Widget, Top
+@section Formated Text in Text Widget
 
 @ifnotinfo
 @float Figure, figure-text-view-attributes
@@ -138,13 +181,19 @@ displays after the widget is created with @code{gtk-text-view-set-buffer}.
 @end float
 @end ifnotinfo
 
-There are two ways to affect text attributes in @code{GtkTextView}.  You can
-change the default attributes for a given @code{GtkTextView}, and you can apply
-tags that change the attributes for a region of text.  For text features that
-come from the theme — such as font and foreground color — use standard
-@code{GtkWidget} functions such as @code{gtk-widget-modify-font} or
-@code{gtk-widget-override-text}.  For other attributes there are dedicated
-methods on @code{GtkTextView} such as @code{gtk-text-view-set-tabs}.
+@findex gtk-widget-override-font
+@findex widget-override-font, gtk-widget-override-font
+
+@findex gtk-text-view-set-tabs
+@findex text-view-set-tabs, gtk-text-view-set-tabs
+
+There are two ways to affect text attributes in @xurl{gtk-text-view}.  You can
+change the default attributes for a given @xurl{gtk-text-view}, and you can
+apply tags that change the attributes for a region of text.  For text features
+that come from the theme - such as font and foreground color - use standard
+@xurl{gtk-widget} functions such as @xurl{gtk-widget-override-font}.  For other
+attributes there are dedicated methods on @xurl{gtk-text-view} such as
+@xurl{gtk-text-view-set-tabs}.
 
 @float Example, example-text-view-attributes
 @caption{Changing Text Attributes of a Text View}
@@ -188,5 +237,501 @@ methods on @code{GtkTextView} such as @code{gtk-text-view-set-tabs}.
       (gtk-widget-show-all window))))
 @end verbatim
 
+@c -----------------------------------------------------------------------------
+@node Cut Copy and Paste, Searching, Formated Text in Text Widget, Top
+@section Cut, Copy and Paste
+
+@c -----------------------------------------------------------------------------
+@node Searching, Examing and Modify Text, Cut Copy and Paste, Top
+@section Searching
+
+@findex gtk-text-iter-forward-search
+@findex text-iter-forward-search, gtk-text-iter-forward-search
+
+@findex gtk-text-iter-backward-search
+@findex text-iter-backward-search, gtk-text-iter-backward-search
+
+@findex gtk-text-iter-search
+@findex text-iter-search, gtk-text-iter-search
+
+@findex gtk-text-buffer-get-selection-bounds
+@findex text-buffer-get-selection-bounds, gtk-text-buffer-get-selection-bounds
+
+@findex gtk-text-buffer-select-range
+@findex text-buffer-select-range, gtk-text-buffer-select-range
+
+The functions @xurl{gtk-text-iter-forward-search} and
+@xurl{gtk-text-iter-backward-search} with the arguments @code{iter},
+@code{str}, @code{flags}, @code{limit} can be used to search for a given text
+within a buffer.  Both functions return as the first value a boolean to indicate
+wether the search was sucessful.  If this is the case the second and third
+values contain the iterators @code{match-start} and @code{match-end}.
+
+The function @xurl{gtk-text-iter-forward-search} searches for @code{str}
+starting from @code{iter} in the forward direction.  The start and end iterators
+of the first matched string are return as the values @code{match-start} and
+@code{match-end}.  The search is limited to the iterator @code{limit}, if
+specified.  The function returns @code{nil}, if no match is found.  The
+function @xurl{gtk-text-iter-backward-search} is same as
+@xurl{gtk-text-iter-forward-search} but, as its name suggests, it searches in
+the backward direction.
+
+In the Lips binding to GTK+ we have in addition the function
+@xurl{gtk-text-iter-search} which combines the functions for forward and
+backward search and handles the arguments @code{flags} and @code{limit} as
+keyword arguments.  In addition the keyword argument @code{direction} with a
+default value of @code{:forward} indicates the direction of the search.  Set
+the value of @code{direction} to @code{:backward} for backward search.
+
+The function @xurl{gtk-text-buffer-get-selection-bounds} was introduced earlier,
+to obtain the iterators around the current selection.  To set the current
+selection programmatically the function @xurl{gtk-text-buffer-select-range} with
+the arguments @code{buffer}, @code{start}, @code{end} can be used.  The function
+sets the selection bounds of @code{buffer} to @code{start} and @code{end}.  The
+following example which demonstrates searching, uses this function to highlight
+matched text.
+
+@ifnotinfo
+@float Figure, figure-text-view-search
+@caption{Searching text in a text view.}
+@center @image{figures/text-view-search, 201pt}
+@end float
+@end ifnotinfo
+
+@float Example, example-text-view-search
+@caption{Searching text in a text view.}
+@end float
+@verbatim
+(defvar *some-text*
+        "One of the important things to remember about text in GTK+ is that it
+is in the UTF-8 encoding. This means that one character can be encoded as
+multiple bytes. Character counts are usually referred to as offsets, while byte
+counts are called indexes. If you confuse these two, things will work fine with
+ASCII, but as soon as your buffer contains multibyte characters, bad things will
+happen.")
+
+(defun example-text-view-search ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :title "Example Text View Search"
+                                 :type :toplevel
+                                 :default-width 300
+                                 :default-height 200))
+          (entry (make-instance 'gtk-entry))
+          (button (make-instance 'gtk-button
+                                 :label "Search"))
+          (scrolled (make-instance 'gtk-scrolled-window))
+          (text-view (make-instance 'gtk-text-view
+                                    :wrap-mode :word
+                                    :hexpand t
+                                    :vexpand t))
+          (vbox (make-instance 'gtk-grid
+                               :orientation :vertical))
+          (hbox (make-instance 'gtk-grid
+                               :orientation :horizontal)))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (leave-gtk-main)))
+      ;; Signal handler for the search button
+      (g-signal-connect button "clicked"
+         (lambda (widget)
+           (declare (ignore widget))
+           (let* ((text (gtk-entry-get-text entry))
+                  (buffer (gtk-text-view-get-buffer text-view))
+                  (iter (gtk-text-buffer-get-start-iter buffer)))
+             (multiple-value-bind (found start end)
+                 (gtk-text-iter-search iter text)
+               (when found
+                 (gtk-text-buffer-select-range buffer start end))))))
+      (gtk-text-buffer-set-text (gtk-text-view-get-buffer text-view)
+                                *some-text*)
+      (gtk-container-add scrolled text-view)
+      (gtk-container-add hbox entry)
+      (gtk-container-add hbox button)
+      (gtk-container-add vbox hbox)
+      (gtk-container-add vbox scrolled)
+      (gtk-container-add window vbox)
+      (gtk-widget-show-all window))))
+@end verbatim
+
+@subheading Continuing the search with Marks
+
+If you had executed the above program you would have noted that, if there were
+more than one occurrence of the text in the buffer, pressing search will only
+highlight the first occurrence of the text.  To provide a feature similarly to
+Find Next; the program has to remember the location where the previous search
+stopped.  So that you can start searching from that location. And this should
+happen even if the buffer were modified between the two searches.  We could
+store the @code{match-end} iter passed on the function
+@xurl{gtk-text-iter-search} and use it as the starting point for the next search.
+But the problem is that if the buffer were modified in between, the iter would
+get invalidated. This takes us to marks.
+
+@findex gtk-text-buffer-create-mark
+@findex text-buffer-create-mark, gtk-text-buffer-create-mark
+
+@findex gtk-text-buffer-get-mark
+@findex text-buffer-get-mark, gtk-text-buffer-get-mark
+
+@findex gtk-text-buffer-get-iter-at-mark
+@findex text-buffer-get-iter-at-mark, gtk-text-buffer-get-iter-at-mark
+
+A mark preserves a position in the buffer between modifications.  This is
+possible because their behavior is defined when text is inserted or deleted.
+When text containing a mark is deleted, the mark remains in the position
+originally occupied by the deleted text. When text is inserted at a mark, a mark
+with left gravity will be moved to the beginning of the newly-inserted text, and
+a mark with right gravity will be moved to the end.
+
+The gravity of the mark is specified while creation. The function
+@xurl{gtk-text-buffer-create-mark} with the arguments @code{buffer},
+@code{mark-name}, @code{where} and @code{left-grafity} can be used to create a
+mark associated with a buffer.
+
+The iter @code{where} specifies a position in the buffer which has to be marked.
+@code{left-gravity} determines how the mark moves when text is inserted at the
+mark.  The argument @code{mark-name} is a string that can be used to identify
+the mark.  If @code{mark-name} is specified, the mark can be retrieved using the
+function @xurl{gtk-text-buffer-get-mark}
+
+With named tags, you do not have to carry around a pointer to the marker, which
+can be easily retrieved using the function @xurl{gtk-text-buffer-get-mark}.  A
+mark by itself cannot be used for buffer operations, it has to converted into an
+iter just before buffer operations are to be performed. The function
+@xurl{gtk-text-buffer-get-iter-at-mark} with the arguments @code{buffer} and
+@code{mark} returns the iter at the position of @code{mark}.
+
+@subheading The Scrolling Problem
+
+@findex gtk-text-view-scroll-mark-onscreen
+@findex gtk-text-view-scroll-mark-onscreen, gtk-text-view-scroll-mark-onscreen
+
+Before we show an example, we have to solve the problem that the text view
+should scroll to the matched text.  It can be irritating when the matched text
+is not in the visible portion of the buffer.  The function
+@xurl{gtk-text-view-scroll-mark-onscreen} with the arguments @code{text-view}
+and @code{mark} scrolls to a position in the buffer.  The argument @code{mark}
+specifies the position to scroll to.  Note that this is a method of the
+@xurl{gtk-text-view} widget rather than a @xurl{gtk-text-buffer} object.  Since
+it does not change the contents of the buffer, it only changes the way a buffer
+is viewed.
+
+The following example shows the usage of marks to continue the search.
+
+@ifnotinfo
+@float Figure, figure-text-view-find-next
+@caption{Searching text in a text view.}
+@center @image{figures/text-view-find-next, 201pt}
+@end float
+@end ifnotinfo
+
+@float Example, example-text-view-find-next
+@caption{Searching text in a text view.}
+@end float
+@verbatim
+(defun find-text (text-view text iter)
+  (let ((buffer (gtk-text-view-get-buffer text-view)))
+    (multiple-value-bind (found start end)
+        (gtk-text-iter-search iter text)
+      (when found
+        (gtk-text-buffer-select-range buffer start end)
+        (let ((last-pos (gtk-text-buffer-create-mark buffer "last-pos" end)))
+          (gtk-text-view-scroll-mark-onscreen text-view last-pos))))))
+
+(defun example-text-view-find-next ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :title "Multiline Text Search"
+                                 :type :toplevel
+                                 :default-width 450
+                                 :default-height 200))
+          (entry (make-instance 'gtk-entry))
+          (button-search (make-instance 'gtk-button
+                                        :label "Search"))
+          (button-next (make-instance 'gtk-button
+                                      :label "Next"))
+          (scrolled (make-instance 'gtk-scrolled-window))
+          (text-view (make-instance 'gtk-text-view
+                                    :hexpand t
+                                    :vexpand t))
+          (vbox (make-instance 'gtk-grid
+                               :orientation :vertical))
+          (hbox (make-instance 'gtk-grid
+                               :orientation :horizontal)))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (leave-gtk-main)))
+      (g-signal-connect button-search "clicked"
+         (lambda (widget)
+           (declare (ignore widget))
+           (let* ((text (gtk-entry-get-text entry))
+                  (buffer (gtk-text-view-get-buffer text-view))
+                  (iter (gtk-text-buffer-get-start-iter buffer)))
+             (find-text text-view text iter))))
+      (g-signal-connect button-next "clicked"
+         (lambda (widget)
+           (declare (ignore widget))
+           (let* ((text (gtk-entry-get-text entry))
+                  (buffer (gtk-text-view-get-buffer text-view))
+                  (last-pos (gtk-text-buffer-get-mark buffer "last-pos")))
+             (when last-pos
+               (find-text text-view
+                          text
+                          (gtk-text-buffer-get-iter-at-mark buffer
+                                                            last-pos))))))
+      (gtk-text-buffer-set-text (gtk-text-view-get-buffer text-view)
+                                *some-text*)
+      (gtk-container-add scrolled text-view)
+      (gtk-container-add hbox entry)
+      (gtk-container-add hbox button-search)
+      (gtk-container-add hbox button-next)
+      (gtk-container-add vbox hbox)
+      (gtk-container-add vbox scrolled)
+      (gtk-container-add window vbox)
+      (gtk-widget-show-all window))))
+@end verbatim
+
+@subheading More on Marks
+
+@findex gtk-text-buffer-delete-mark
+@findex text-buffer-delete-mark, gtk-text-buffer-delete-mark
+
+@findex gtk-text-buffer-delete-mark-by-name
+@findex text-buffer-delete-mark-by-name, gtk-text-buffer-delete-mark-by-name
+
+When a mark is no longer required, it can be deleted using the functions
+@xurl{gtk-text-buffer-delete-mark} or
+@xurl{gtk-text-buffer-delete-mark-by-name}.
+There are two marks built-in to @xurl{gtk-text-buffer} - "insert" and
+"selection-bound".  The "insert" mark refers to the cursor position, also called
+the insertion point.  A selection is bounded by two marks.  One is the "insert"
+mark and the other is "selection-bound" mark.  When no text is selected the two
+marks are in the same position.
+
+@c -----------------------------------------------------------------------------
+@node Examing and Modify Text, Images and Widgets, Searching, Top
+@section Examing and Modify Text
+
+@findex gtk-text-iter-set-line-offset
+@findex text-iter-set-line-offset, gtk-text-iter-set-line-offset
+
+@findex gtk-text-iter-forward-to-line-end
+@findex text-iter-forward-to-line-end, gtk-text-iter-forward-to-line-end
+
+Examining and modifying text is another common operation performed on text
+buffers.  Examples are converting a selected portion of text into a comment
+while editing a program, determining and inserting the correct end tag while
+editing HTML, inserting a pair of HTML tags around the current word, etc.  The
+@xurl{gtk-text-iter} object provides functions to do such processing.
+
+In this section we will develop two programs to demonstrate these functions.
+The first program will insert start/end li tags (not to be confused with text
+attribute tags) around the current line, when a button is clicked.  The second
+program will insert an end tag for an unclosed start tag.
+
+To insert tags around the current line, we first obtain an iter at the current
+cursor position. Then we move the iter to the beginning of the line, insert the
+start tag, move the iter to the end of the line, and insert the end tag.  An
+iter can be moved to a specified offset in the same line using the function
+@xurl{gtk-text-iter-set-line-offset} with the arguments @code{iter} and
+@code{char-on-line}.  The function moves @code{iter} within the line, to the
+character offset specified by @code{char-on-line}.  If @code{char-on-line} is
+equal to the no. of characters in the line, the iter is moved to the start of
+the next line.  A character offset of zero, will move the iter to the beginning
+of the line.  The @code{iter} can be moved to the end of the line using the
+function @xurl{gtk-text-iter-forward-to-line-end}.  Now that we know the
+functions required to implement the first program, here is the code.
+
+@ifnotinfo
+@float Figure, figure-text-view-editing-1
+@center @image{figures/text-view-editing-1, 201pt}
+@end float
+@end ifnotinfo
+
+@float Example, example-text-view-editing-1
+@caption{Modifiy text in a text view.}
+@end float
+@verbatim
+(defun example-text-editing-text-1 ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :title "Multiline Text Editing"
+                                 :type :toplevel
+                                 :default-width 300
+                                 :default-height 200))
+          (text-view (make-instance 'gtk-text-view
+                                    :hexpand t
+                                    :vexpand t))
+          (button (make-instance 'gtk-button
+                                 :label "Make List Item"))
+          (vbox (make-instance 'gtk-grid
+                                :orientation :vertical)))
+    (g-signal-connect window "destroy"
+                      (lambda (widget)
+                        (declare (ignore widget))
+                        (leave-gtk-main)))
+    (g-signal-connect button "clicked"
+       (lambda (widget)
+         (declare (ignore widget))
+         (let* ((buffer (gtk-text-view-get-buffer text-view))
+                (cursor (gtk-text-buffer-get-mark buffer "insert"))
+                (iter (gtk-text-buffer-get-iter-at-mark buffer cursor)))
+           (gtk-text-iter-set-line-offset iter 0)
+           (gtk-text-buffer-insert buffer "<li>" :position iter)
+           (gtk-text-iter-forward-to-line-end iter)
+           (gtk-text-buffer-insert buffer "</li>" :position iter))))
+   (gtk-text-buffer-set-text (gtk-text-view-get-buffer text-view)
+                             (format nil "Item 1~%Item 2~%Item 3~%"))
+   (gtk-container-add vbox text-view)
+   (gtk-container-add vbox button)
+   (gtk-container-add window vbox)
+   (gtk-widget-show-all window))))
+@end verbatim
+
+@findex gtk-text-iter-find-char
+@findex gtk-text-iter-find-char, gtk-text-iter-find-char
+
+@findex gtk-text-iter-backward-find-char
+@findex gtk-text-iter-backward-find-char, gtk-text-iter-backward-find-char
+
+For the second program, we will have to first get the iter at the current cursor
+position.  We then search backwards from the cursor position, through the buffer
+till we hit on an unclosed tag.  We then insert the corresponding end tag at the
+current cursor position.  Note that the procedure given does not take care of
+many special cases, and might not be the best way to determine an unclosed tag.
+But it serves our purpose of explaining text manipulation functions. Developing
+a perfect algorithm to determine an unclosed tag, is out of the scope of this
+tutorial.  We can identify tags using the left angle bracket. So searching for
+start/end tags involves search for the left angle bracket. This can be done
+using the function @xurl{gtk-text-iter-backward-find-char} or the function
+@xurl{gtk-text-iter-find-char} with a value @code{:backward} for the keyword
+argument @code{direction}.
+
+@findex gtk-text-iter-forward-char
+@findex text-iter-forward-char, gtk-text-iter-forward-char
+
+The function proceeds backwards from @code{iter}, and calls @code{pred} for each
+character in the buffer, with the character as argument, till @code{pred}
+returns @emph{true}. If a match is found, the function moves @code{iter} to the
+matching position and returns @emph{true}. If a match is not found, the function
+moves @code{iter} to the beginning of the buffer or @code{limit} (if not
+@code{nil}) and returns @code{nil}.  For our purpose we write a predicate that
+returns @emph{true} when the character is a left angle bracket.  When we hit on
+a left angle bracket we check whether the corresponding tag is a start tag or an
+end tag.  This is done by examining the character immediately after the left
+angle bracket.  If it is a '/' it is an end tag.  To extract the character after
+the angle bracket we move the left angle bracket @code{iter} by one character.
+And then extract the character at that position.  To move an @code{iter} forward
+by one character, the function @xurl{gtk-text-iter-forward-char} can be used.
+
+@findex gtk-text-iter-get-char
+@findex text-iter-get-char, gtk-text-iter-get-char
+
+To extract the character at an @code{iter} the function
+@xurl{gtk-text-iter-get-char} can be used.  After determining the tag type we do
+the following,
+@itemize @bullet
+  @item If the tag is an end tag, we push the tag name into a stack and then
+        proceed to find more tags.
+  @item If it is a start tag, we pop out it's matching tag from the stack. While
+        poping out, if there were no more items in the stack, we have hit on an
+        unmatched start tag! We then insert the corresponding end tag at the
+        current cursor position.
+@end itemize
+We have not mentioned how we extract the tag name.  The tag name is extracted
+using two iters (start and end iter).  The start iter is obtained by starting
+from the left angle bracket iter and searching for an alphanumeric character,
+in the forward direction.  The end iter is obtained by starting from the start
+iter and searching for a non-alphanumeric character, in the forward direction.
+The search can be done using the forward variant of the the function
+@xurl{gtk-text-iter-backward-find-char}.  The code for the second example
+follows.
+
+@ifnotinfo
+@float Figure, figure-text-view-editing-2
+@center @image{figures/text-view-editing-2, 201pt}
+@end float
+@end ifnotinfo
+
+@float Example, example-text-view-editing-2
+@caption{Modifiy text in a text view.}
+@end float
+@verbatim
+(defun get-this-tag (iter buffer)
+  (let* ((start-tag (gtk-text-iter-copy iter))
+         end-tag)
+    (and (gtk-text-iter-find-char start-tag #'alpha-char-p)
+         (setq end-tag (gtk-text-iter-copy start-tag))
+         (gtk-text-iter-find-char end-tag
+                                  (lambda (ch) (not (alphanumericp ch))))
+         (gtk-text-buffer-get-text buffer start-tag end-tag nil))))
+
+(defun closing-tag-p (iter)
+  (let ((slash (gtk-text-iter-copy iter)))
+    (gtk-text-iter-forward-char slash)
+    (eql (gtk-text-iter-get-char slash) #\/)))
+
+(defun example-text-view-editing-2 ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :title "Multiline Editing Text"
+                                 :type :toplevel
+                                 :default-width 300
+                                 :defalut-height 200))
+          (text-view (make-instance 'gtk-text-view
+                                    :hexpand t
+                                    :vexpand t))
+          (button (make-instance 'gtk-button
+                                 :label "Insert Close Tag"))
+          (vbox (make-instance 'gtk-grid
+                               :orientation :vertical)))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (leave-gtk-main)))
+      (g-signal-connect button "clicked"
+         (lambda (widget)
+           (declare (ignore widget))
+           (let* ((buffer (gtk-text-view-get-buffer text-view))
+                  (cursor (gtk-text-buffer-get-mark buffer "insert"))
+                  (iter (gtk-text-buffer-get-iter-at-mark buffer cursor)))
+
+             (do ((stack '()))
+                 ((not (gtk-text-iter-find-char iter
+                                               (lambda (ch) (eq ch #\<))
+                                               :direction :backward)))
+               (let ((tag (get-this-tag iter buffer)))
+                 (if (closing-tag-p iter)
+                     (push tag stack)
+                     (let ((tag-in-stack (pop stack)))
+                       (when (not tag-in-stack)
+                         (gtk-text-buffer-insert buffer
+                                                 (format nil "</~a>" tag))
+                         (return)))))))))
+      (gtk-text-buffer-set-text (gtk-text-view-get-buffer text-view)
+                                (format nil
+                                        "<html>~%~
+                                         <head><title>Title</title></head>~%~
+                                         <body>~%~
+                                         <h1>Heading</h1>~%"))
+      (gtk-container-add vbox text-view)
+      (gtk-container-add vbox button)
+      (gtk-container-add window vbox)
+      (gtk-widget-show-all window))))
+@end verbatim
+
+@c -----------------------------------------------------------------------------
+@node Images and Widgets, Buffer and Window Coordinates, Examing and Modify Text, Top
+@section Images and Widgets
+
+@c -----------------------------------------------------------------------------
+@node Buffer and Window Coordinates, Final Notes, Images and Widgets, Top
+@section Buffer and Window Coordinates
+
+@c -----------------------------------------------------------------------------
+@node Final Notes, , Buffer and Window Coordinates, Top
+@section Final Notes
 
 

@@ -1236,24 +1236,24 @@ function @code{gtk-spin-button-update}.
 @end float
 @end ifnotinfo
 
-A @code{GtkComboBox} is a widget that allows the user to choose from a list of
-valid choices. The @code{GtkComboBox} displays the selected choice.  When
-activated, the @code{GtkComboBox} displays a popup which allows the user to make
-a new choice.  The style in which the selected value is displayed, and the style
-of the popup is determined by the current theme.  It may be similar to a
+A @xurl{gtk-combo-box} is a widget that allows the user to choose from a list of
+valid choices.  The @xurl{gtk-combo-box} displays the selected choice.  When
+activated, the @xurl{gtk-combo-box} displays a popup which allows the user to
+make a new choice.  The style in which the selected value is displayed, and the
+style of the popup is determined by the current theme.  It may be similar to a
 Windows-style combo box.
 
 @findex GtkCellLayout
 @findex gtk-cell-layout
 @findex cell-layout, gtk-cell-layout
 
-The @code{GtkComboBox} uses the model-view pattern; the list of valid choices is
-specified in the form of a tree model, and the display of the choices can be
+The @xurl{gtk-combo-box} uses the model-view pattern; the list of valid choices
+is specified in the form of a tree model, and the display of the choices can be
 adapted to the data in the model by using cell renderers, as you would in a
-tree view.  This is possible since @code{GtkComboBox} implements the
-@code{GtkCellLayout} interface.  The tree model holding the valid choices is not
-restricted to a flat list, it can be a real tree, and the popup will reflect the
-tree structure.
+tree view.  This is possible since @xurl{gtk-combo-box} implements the
+@xurl{gtk-cell-layout} interface.  The tree model holding the valid choices is
+not restricted to a flat list, it can be a real tree, and the popup will reflect
+the tree structure.
 
 @findex has-entry
 @findex GtkEntry
@@ -1264,13 +1264,13 @@ tree structure.
 @findex bin-get-child, gtk-bin-get-child
 
 To allow the user to enter values not in the model, the @code{has-entry}
-property allows the @code{GtkComboBox} to contain a @code{GtkEntry}.  This entry
-can be accessed by calling @code{gtk-bin-get-child} on the combo box.
+property allows the @xurl{gtk-combo-box} to contain a @xurl{gtk-entry}.  This
+entry can be accessed by calling @xurl{gtk-bin-get-child} on the combo box.
 
-For a simple list of textual choices, the model-view API of @code{GtkComboBox}
-can be a bit overwhelming.  In this case, @code{GtkComboBoxText} offers a simple
-alternative.  Both @code{GtkComboBox} and @code{GtkComboBoxText} can contain an
-entry.
+For a simple list of textual choices, the model-view API of @xurl{gtk-combo-box}
+can be a bit overwhelming.  In this case, @xurl{gtk-combo-box-text} offers a
+simple alternative.  Both @xurl{gtk-combo-box} and @xurl{gtk-combo-box-text} can
+contain an entry.
 
 @float Example, example-combo-box
 @caption{Combo Box}
@@ -1362,8 +1362,8 @@ entry.
 @end float
 @end ifnotinfo
 
-A @code{GtkComboBoxText} is a simple variant of @code{GtkComboBox} that hides
-the model-view complexity for simple text-only use cases.
+A @xurl{gtk-combo-box-text} is a simple variant of @xurl{gtk-combo-box} that
+hides the model-view complexity for simple text-only use cases.
 
 @findex gtk-combo-box-text-new
 @findex gtk-combo-box-text-new-with-entry
@@ -1371,8 +1371,8 @@ the model-view complexity for simple text-only use cases.
 @findex combo-box-text-new, gtk-combo-box-text-new
 @findex combo-box-text-new-with-entry, gtk-combo-box-text-new-with-entry
 
-To create a @code{GtkComboBoxText}, use @code{gtk-combo-box-text-new} or
-@code{gtk-combo-box-text-new-with-entry}.
+To create a @xurl{gtk-combo-box-text}, use the functions
+@xurl{gtk-combo-box-text-new} or @xurl{gtk-combo-box-text-new-with-entry}.
 
 @findex gtk-combo-box-text-append-text
 @findex gtk-combo-box-text-insert-text
@@ -1384,10 +1384,10 @@ To create a @code{GtkComboBoxText}, use @code{gtk-combo-box-text-new} or
 @findex combo-box-text-prepend-text, gtk-combo-box-text-prepend-text
 @findex combo-box-text-remove, gtk-combo-box-text-remove
 
-You can add items to a @code{GtkComboBoxText} with
-@code{gtk-combo-box-text-append_text}, @code{gtk-combo-box-text-insert-text} or
-@code{gtk-combo-box-text-prepend-text} and remove options with
-@code{gtk-combo-box-text-remove}.
+You can add items to a @xurl{gtk-combo-box-text} with the functions
+@xurl{gtk-combo-box-text-append-text}, @xurl{gtk-combo-box-text-insert-text} or
+@xurl{gtk-combo-box-text-prepend-text} and remove options with the function
+@xurl{gtk-combo-box-text-remove}.
 
 @findex gtk-combo-box-text-get-active-text
 @findex gtk-bin-get-child
@@ -1395,10 +1395,10 @@ You can add items to a @code{GtkComboBoxText} with
 @findex combo-box-text-get-active-tect, gtk-combo-box-text-get-active-text
 @findex bin-get-child, gtk-bin-get-child
 
-If the @code{GtkComboBoxText} contains an entry (via the @code{has-entry}
-property), its contents can be retrieved using
-@code{gtk-combo-box-text-get-active-text}.  The entry itself can be accessed by
-calling @code{gtk-bin-get-child} on the combo box.
+If the @xurl{gtk-combo-box-text} contains an entry via the @code{has-entry}
+property, its contents can be retrieved using
+@xurl{gtk-combo-box-text-get-active-text}.  The entry itself can be accessed by
+calling @xurl{gtk-bin-get-child} on the combo box.
 
 @float Example, example-combo-box-text
 @caption{Combo Box Text}

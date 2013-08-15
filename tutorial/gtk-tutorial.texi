@@ -148,8 +148,14 @@ Layout Widgets
 Multiline Text Editor
 * Multiline Text Editor::
 * Text Widget Overview::
-* Simple Example::
-* Example of Changing Text Attributes::
+* Simple Multiline Text Widget::
+* Formated Text in Text Widget::
+* Cut Copy and Paste::
+* Searching::
+* Examing and Modify Text::
+* Images and Widgets::
+* Buffer and Window Coordinates::
+* Final Notes::
 
 Tree and List Widgets
 * Tree and List Widgets::
