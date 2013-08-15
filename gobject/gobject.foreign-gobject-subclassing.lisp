@@ -455,16 +455,16 @@
        (log-for :subclass
                 "Registering GObject type implementation ~A for type ~A~%"
                 ',class ,name)
-       (with-foreign-object (query 'g-type-query)
+       (with-foreign-object (query '(:struct g-type-query))
          (g-type-query (gtype ,parent) query)
          (g-type-register-static-simple (gtype ,parent)
                                         ,name
                                         (foreign-slot-value query
-                                                            'g-type-query
+                                                            '(:struct g-type-query)
                                                             :class-size)
                                         (callback c-class-init)
                                         (foreign-slot-value query
-                                                            'g-type-query
+                                                            '(:struct g-type-query)
                                                             :instance-size)
                                         (callback c-instance-init) nil))
        (add-interfaces ,name))
