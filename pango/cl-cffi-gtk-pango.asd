@@ -35,6 +35,7 @@
                (:file "pango.init")
                (:file "pango.version")
                (:file "pango.attributes")
+               (:file "pango.tab-array")
                (:file "pango.fonts")
                (:file "pango.layout")
                (:file "pango.script")
