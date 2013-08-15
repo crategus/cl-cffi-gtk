@@ -22,8 +22,8 @@ Content from the GDK-Pixbuf 2.28.1 Reference Manual
     Drawables to Pixbufs - Getting parts of a GDK drawable's image data into a pixbuf.
 
   gdk-pixbuf.utilities.lisp - Utility functions                        - 2.28.0%
+  gdk-pixbuf.animation.lisp - Animated images                          - 2.28.1%
 
-    Animations - Animated images.
     GdkPixbufLoader - Application-driven progressive image loading.
     Module Interface - Extending GdkPixBuf
     gdk-pixbuf Xlib initialization - Initializing the gdk-pixbuf Xlib library.

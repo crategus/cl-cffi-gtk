@@ -40,6 +40,7 @@
                (:file "gdk-pixbuf.memory")    ; Image Data in Memory
                (:file "gdk-pixbuf.scaling")   ; Scaling pixbufs
                (:file "gdk-pixbuf.utilities") ; Utility functions
+               (:file "gdk-pixbuf.animation") ; Animated images
               )
   :depends-on (:cl-cffi-gtk-gobject
                :cl-cffi-gtk-glib

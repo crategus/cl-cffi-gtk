@@ -1,9 +1,10 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gdk.pixbuf-package.lisp
 ;;;
-;;; The documentation has been copied from the GDK-PixBuf Reference Manual
-;;; Version 2.26.1. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GDK-PixBuf Reference Manual
+;;; Version 2.26.1 and modified to document the Lisp binding to the GDK-PixBuf
+;;; library. See <http://www.gtk.org>. The API documentation of the Lisp binding
+;;; is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -222,6 +223,33 @@
     @about-function{gdk-pixbuf-saturate-and-pixelate}
     @about-function{gdk-pixbuf-apply-embedded-orientation}
     @about-function{gdk-pixbuf-fill}
+  @end{section}
+  @begin[Animations]{section}
+    Animated images.
+
+    @about-class{gdk-pixbuf-animation}
+    @about-class{gdk-pixbuf-animation-iter}
+    @about-function{gdk-pixbuf-animation-new-from-file}
+    @about-function{gdk-pixbuf-animation-new-from-resource}
+    @about-function{gdk-pixbuf-animation-new-from-stream}
+    @about-function{gdk-pixbuf-animation-new-from-stream-async}
+    @about-function{gdk-pixbuf-animation-new-from-stream-finish}
+    @about-function{gdk-pixbuf-animation-ref}
+    @about-function{gdk-pixbuf-animation-unref}
+    @about-function{gdk-pixbuf-animation-get-width}
+    @about-function{gdk-pixbuf-animation-get-height}
+    @about-function{gdk-pixbuf-animation-get-iter}
+    @about-function{gdk-pixbuf-animation-is-static-image}
+    @about-function{gdk-pixbuf-animation-get-static-image}
+    @about-function{gdk-pixbuf-animation-iter-advance}
+    @about-function{gdk-pixbuf-animation-iter-get-delay-time}
+    @about-function{gdk-pixbuf-animation-iter-on-currently-loading-frame}
+    @about-function{gdk-pixbuf-animation-iter-get-pixbuf}
+    @about-class{gdk-pixbuf-simple-anim}
+    @about-function{gdk-pixbuf-simple-anim-new}
+    @about-function{gdk-pixbuf-simple-anim-add-frame}
+    @about-function{gdk-pixbuf-simple-anim-set-loop}
+    @about-function{gdk-pixbuf-simple-anim-get-loop}
   @end{section}")
 
 ;;; --- End of file gdk.pixbuf-package.lisp ------------------------------------
