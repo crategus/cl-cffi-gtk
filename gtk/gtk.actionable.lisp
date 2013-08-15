@@ -1,11 +1,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.actionable.lisp
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012 - 2013 Dieter Kaiser
+;;; Copyright (C) 2012, 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -58,12 +59,10 @@
    gtk-actionable-action-target
    "action-target" "GVariant" t t))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-actionable atdoc:*class-name-alias*) "Interface"
       (documentation 'gtk-actionable 'type)
- "@version{2013-5-29}
+ "@version{2013-8-11}
   @begin{short}
     This interface provides a convenient way of associating widgets with actions
     on a @class{gtk-application-window} or @class{gtk-application}.
@@ -73,12 +72,14 @@
   @code{\"action-target\"}. There are also some convenience APIs for setting
   these properties.
 
-  This interface is presently only meaningful if used on a widget that is (or
-  will be) located inside of a @class{gtk-application-window} and can only be
+  This interface is presently only meaningful if used on a widget that is, or
+  will be, located inside of a @class{gtk-application-window} and can only be
   used to associate the widget with actions on that window, or its associated
   @class{gtk-application}.
   @see-slot{gtk-actionable-action-name}
-  @see-slot{gtk-actionable-action-target}")
+  @see-slot{gtk-actionable-action-target}
+  @see-class{gtk-application}
+  @see-class{gtk-application-window}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -89,7 +90,8 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "action-name"
                                                'gtk-actionable) 't)
- "The @code{\"action-name\"} property of type @code{:string} (Read / Write)@br{}
+ "The @code{\"action-name\"} property of type @code{:string}
+  (Read / Write) @br{}
   The name of the associated action, like \"app.quit\". @br{}
   Default value: @code{nil}")
 
@@ -112,17 +114,22 @@
 (setf (gethash 'gtk-actionable-action-name atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-actionable-action-name 'function)
- "@version{2013-5-29}
+ "@version{2013-8-11}
   Accessor of the slot @code{\"action-name\"} of the @class{gtk-actionable}
-  inferface.")
+  inferface.
+  @see-class{gtk-actionable}
+  @see-function{gtk-actionable-get-action-name}
+  @see-function{gtk-actionable-set-action-name}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-actionable-action-target atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-actionable-action-target 'function)
- "@version{2013-5-29}
+ "@version{2013-8-11}
   Accessor of the slot @code{\"action-target\"} of the @class{gtk-actionable}
-  inferface.")
+  inferface.
+  @see-class{gtk-actionable}
+  @see-function{gtk-actionable-set-action-target}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkActionableInterface
@@ -163,7 +170,7 @@
 
 (defun gtk-actionable-get-action-name (actionable)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-29}
+ "@version{2013-8-11}
   @argument[actionable]{a @class{gtk-actionable} widget}
   @return{The action name, or @code{nil} if none is set.}
   @begin{short}
@@ -172,7 +179,9 @@
 
   See the @fun{gtk-actionable-set-action-name} function for more information.
 
-  Since 3.4"
+  Since 3.4
+  @see-class{gtk-actionable}
+  @see-function{gtk-actionable-set-action-name}"
   (gtk-actionable-action-name actionable))
 
 (export 'gtk-actionable-get-action-name)
@@ -185,25 +194,30 @@
 
 (defun gtk-actionable-set-action-name (actionable action-name)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-29}
+ "@version{2013-8-11}
   @argument[actionable]{a @class{gtk-actionable} widget}
   @argument[action-name]{an action name, or @code{nil}}
   @begin{short}
     Specifies the name of the action with which this widget should be
     associated.
   @end{short}
-  If @arg{action.name} is @code{nil} then the widget will be unassociated from
+  If @arg{action-name} is @code{nil} then the widget will be unassociated from
   any previous action.
 
-  Usually this function is used when the widget is located (or will be
-  located) within the hierarchy of a @class{gtk-application-window}.
+  Usually this function is used when the widget is located, or will be
+  located, within the hierarchy of a @class{gtk-application-window}.
 
   Names are of the form \"win.save\" or \"app.quit\" for actions on the
   containing @class{gtk-application-window} or its associated
   @class{gtk-application}, respectively. This is the same form used for actions
   in the @class{g-menu} associated with the window.
 
-  Since 3.4"
+  Since 3.4
+  @see-class{gtk-actionable}
+  @see-class{gtk-application}
+  @see-class{gtk-application-window}
+  @see-class{g-menu}
+  @see-function{gtk-actionable-get-action-name}"
   (setf (gtk-actionable-action-name actionable) action-name))
 
 (export 'gtk-actionable-set-action-name)
@@ -216,7 +230,7 @@
 
 (defun gtk-actionable-get-action-target-value (actionable)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-29}
+ "@version{2013-8-11}
   @argument[actionable]{a @class{gtk-actionable} widget}
   @return{The current target value.}
   @begin{short}
@@ -225,7 +239,9 @@
 
   See the @fun{gtk-actionable-set-target-value} function for more information.
 
-  Since 3.4"
+  Since 3.4
+  @see-class{gtk-actionable}
+  @see-function{gtk-actionable-set-target-value}"
   (gtk-actionable-action-target actionable))
 
 (export 'gtk-actionable-get-action-target-value)

@@ -236,11 +236,10 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gicon" 'gtk-action) 't)
- "The @code{\"gicon\"} property of type @code{GIcon} (Read / Write) @br{}
-  The @code{GIcon} displayed in the @sym{gtk-action}.
-  Note that the stock icon is preferred, if the @code{\"stock-id\"} property
-  holds the ID of an existing stock icon.
-  This is an appearance property and thus only applies if
+ "The @code{\"gicon\"} property of type @class{g-icon} (Read / Write) @br{}
+  The @class{g-icon} displayed in the @sym{gtk-action}. Note that the stock icon
+  is preferred, if the @code{\"stock-id\"} property holds the ID of an existing
+  stock icon. This is an appearance property and thus only applies if
   @code{\"use-action-appearance\"} is @arg{true}. @br{}
   Since 2.16")
 
@@ -254,11 +253,10 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "icon-name" 'gtk-action) 't)
  "The @code{\"icon-name\"} property of type @code{:string} (Read / Write) @br{}
-  The name of the icon from the icon theme.
-  Note that the stock icon is preferred, if the @code{\"stock-id\"} property
-  holds the ID of an existing stock icon, and the @code{GIcon} is preferred if
-  the @code{\"gicon\"} property is set.
-  This is an appearance property and thus only applies if
+  The name of the icon from the icon theme. Note that the stock icon is
+  preferred, if the @code{\"stock-id\"} property holds the ID of an existing
+  stock icon, and the @class{g-icon} is preferred if the @code{\"gicon\"}
+  property is set. This is an appearance property and thus only applies if
   @code{\"use-action-appearance\"} is @arg{true}. @br{}
   Default value: @code{nil} @br{}
   Since 2.10")
@@ -360,51 +358,48 @@
 (setf (gethash 'gtk-action-action-group atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-action-group 'function)
- "@version{2013-2-9}
-  @begin{short}
-    Accessor of the slot @code{\"action-group\"} of the @class{gtk-action}
-    class.
-  @end{short}")
+ "@version{2013-8-11}
+  Accessor of the slot @code{\"action-group\"} of the @class{gtk-action} class.
+  @see-class{gtk-action}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-always-show-image atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-always-show-image 'function)
- "@version{2013-2-9}
-  @begin{short}
-    Accessor of the slot @code{\"always-show-image\"} of the @class{gtk-action}
-    class.
-  @end{short}")
+ "@version{2013-8-11}
+  Accessor of the slot @code{\"always-show-image\"} of the @class{gtk-action}
+  class.
+  @see-class{gtk-action}
+  @see-function{gtk-action-get-always-show-image}
+  @see-function{gtk-action-set-always-show-image}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-gicon atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-gicon 'function)
- "@version{2013-2-9}
-  @begin{short}
-    Accessor of the slot @code{\"gicon\"} of the @class{gtk-action}
-    class.
-  @end{short}")
+ "@version{2013-8-11}
+  Accessor of the slot @code{\"gicon\"} of the @class{gtk-action} class.
+  @see-class{gtk-action}
+  @see-function{gtk-action-get-gicon}
+  @see-function{gtk-action-set-gicon}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-hide-if-empty atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-hide-if-empty 'function)
- "@version{2013-2-9}
-  @begin{short}
-    Accessor of the slot @code{\"hide-if-empty\"} of the @class{gtk-action}
-    class.
-  @end{short}")
+ "@version{2013-8-11}
+  Accessor of the slot @code{\"hide-if-empty\"} of the @class{gtk-action} class.
+  @see-class{gtk-action}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-icon-name atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-icon-name 'function)
- "@version{2013-2-9}
-  @begin{short}
-    Accessor of the slot @code{\"icon-name\"} of the @class{gtk-action}
-    class.
-  @end{short}")
+ "@version{2013-8-11}
+  Accessor of the slot @code{\"icon-name\"} of the @class{gtk-action} class.
+  @see-class{gtk-action}
+  @see-function{gtk-action-get-icon-name}
+  @see-function{gtk-action-set-icon-name}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-is-important atdoc:*function-name-alias*)
@@ -688,19 +683,24 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_action_activate ()
-;;;
-;;; void gtk_action_activate (GtkAction *action);
-;;;
-;;; Emits the "activate" signal on the specified action, if it isn't
-;;; insensitive. This gets called by the proxy widgets when they get activated.
-;;;
-;;; It can also be used to manually activate an action.
-;;;
-;;; action :
-;;;     the action object
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_action_activate" gtk-action-activate) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-11}
+  @argument[action]{the action object}
+  @begin{short}
+    Emits the \"activate\" signal on the specified action, if it is not
+    insensitive. This gets called by the proxy widgets when they get activated.
+  @end{short}
+
+  It can also be used to manually activate an action.
+
+  Since 2.4
+  @see-class{gtk-action}"
+  (action (g-object gtk-acktion)))
+
+(export 'gtk-action-activate)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_action_create_icon ()
@@ -880,41 +880,55 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_action_get_always_show_image ()
-;;;
-;;; gboolean gtk_action_get_always_show_image (GtkAction *action);
-;;;
-;;; Returns whether action's menu item proxies will ignore the "gtk-menu-images"
-;;; setting and always show their image, if available.
-;;;
-;;; action :
-;;;     a GtkAction
-;;;
-;;; Returns :
-;;;     TRUE if the menu item proxies will always show their image
-;;;
-;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-action-get-always-show-image))
+
+(defun gtk-action-get-always-show-image (action)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-11}
+  @argument[action]{a @class{gtk-action} object}
+  @return{@em{True} if the menu item proxies will always show their image.}
+  @begin{short}
+    Returns whether action's menu item proxies will ignore the
+    @code{\"gtk-menu-images\"} setting and always show their image, if
+    available.
+  @end{short}
+
+  Since 2.20
+  @see-class{gtk-action}
+  @see-function{gtk-action-set-always-show-image}"
+  (gtk-action-always-show-image action))
+
+(export 'gtk-action-get-always-show-image)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_action_set_always_show_image ()
-;;;
-;;; void gtk_action_set_always_show_image (GtkAction *action,
-;;;                                        gboolean always_show);
-;;;
-;;; Sets whether action's menu item proxies will ignore the "gtk-menu-images"
-;;; setting and always show their image, if available.
-;;;
-;;; Use this if the menu item would be useless or hard to use without their
-;;; image.
-;;;
-;;; action :
-;;;     a GtkAction
-;;;
-;;; always_show :
-;;;     TRUE if menuitem proxies should always show their image
-;;;
-;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-action-set-always-show-image))
+
+(defun gtk-action-set-always-show-image (action always-show)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-11}
+  @argument[action]{a @class{gtk-action} object}
+  @argument[always-show]{@em{true} if menu item proxies should always show their
+    image}
+  @begin{short}
+    Sets whether @arg{action}'s menu item proxies will ignore the
+    @code{\"gtk-menu-images\"} setting and always show their image, if
+    available.
+  @end{short}
+
+  Use this if the menu item would be useless or hard to use without their
+  image.
+
+  Since 2.20
+  @see-class{gtk-action}
+  @see-function{gtk-action-get-always-show-image}"
+  (setf (gtk-action-always-show-image action) always-show))
+
+(export 'gtk-action-set-always-show-image)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_action_get_accel_path ()
@@ -1125,67 +1139,91 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_action_set_gicon ()
-;;;
-;;; void gtk_action_set_gicon (GtkAction *action, GIcon *icon);
-;;;
-;;; Sets the icon of action.
-;;;
-;;; action :
-;;;     a GtkAction
-;;;
-;;; icon :
-;;;     the GIcon to set
-;;;
-;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-action-set-gicon))
+
+(defun gtk-action-set-gicon (action icon)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-11}
+  @argument[action]{a @class{gtk-action} object}
+  @argument[icon]{the @class{g-icon} to set}
+  @begin{short}
+    Sets the icon of action.
+  @end{short}
+
+  Since 2.16
+  @see-class{gtk-action}
+  @see-function{gtk-action-get-gicon}"
+  (setf (gtk-action-gicon action) icon))
+
+(export 'gtk-action-set-gicon)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_action_get_gicon ()
-;;;
-;;; GIcon * gtk_action_get_gicon (GtkAction *action);
-;;;
-;;; Gets the gicon of action.
-;;;
-;;; action :
-;;;     a GtkAction
-;;;
-;;; Returns :
-;;;     The action's GIcon if one is set.
-;;;
-;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-action-get-gicon))
+
+(defun gtk-action-get-gicon (action)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-11}
+  @argument[action]{a @class{gtk-action} object}
+  @return{The @arg{action}'s @class{g-icon} if one is set.}
+  @begin{short}
+    Gets the @class{g-icon} of @arg{action}.
+  @end{short}
+
+  Since 2.16
+  @see-class{gtk-action}
+  @see-function{gtk-action-set-gicon}"
+  (gtk-action-gicon action))
+
+(export 'gtk-action-get-gicon)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_action_set_icon_name ()
-;;;
-;;; void gtk_action_set_icon_name (GtkAction *action, const gchar *icon_name);
-;;;
-;;; Sets the icon name on action
-;;;
-;;; action :
-;;;     a GtkAction
-;;;
-;;; icon_name :
-;;;     the icon name to set
-;;;
-;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-action-set-icon-name))
+
+(defun gtk-action-set-icon-name (action icon-name)
+ #+cl-cffi-gtk-documentation
+ "@version{2ß13-8-11}
+  @argument[action]{a @class{gtk-action} object}
+  @argument[icon-name]{the icon name to set}
+  @begin{short}
+    Sets the icon name on @arg{action}.
+  @end{short}
+
+  Since 2.16
+  @see-class{gtk-action}
+  @see-function{gtk-action-get-icon-name}"
+  (setf (gtk-action-icon-name action) icon-name))
+
+(export 'gtk-action-set-icon-name)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_action_get_icon_name ()
-;;;
-;;; const gchar * gtk_action_get_icon_name (GtkAction *action);
-;;;
-;;; Gets the icon name of action.
-;;;
-;;; action :
-;;;     a GtkAction
-;;;
-;;; Returns :
-;;;     the icon name
-;;;
-;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-action-get-icon-name))
+
+(defun gtk-action-get-icon-name (action)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-11}
+  @argument[action]{a @class{gtk-action} object}
+  @return{The icon name.}
+  @begin{short}
+    Gets the icon name of @arg{action}.
+  @end{short}
+
+  Since 2.16
+  @see-class{gtk-action}
+  @see-function{gtk-action-set-icon-name}"
+  (gtk-action-icon-name action))
+
+(export 'gtk-action-get-icon-name)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_action_set_visible_horizontal ()

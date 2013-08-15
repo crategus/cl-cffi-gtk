@@ -2977,19 +2977,22 @@ tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
 
 (defcfun ("gtk_render_icon_pixbuf" gtk-render-icon-pixbuf) (g-object gdk-pixbuf)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-14}
+ "@version{2013-8-10}
   @argument[context]{a @class{gtk-style-context} object}
   @argument[source]{the @class{gtk-icon-source} specifying the icon to render}
-  @argument[size]{the size to render the icon at, a @arg{size} of#
-    @code{(GtkIconSize) -1} means render at the @arg{size} of the source and
-    do not scale}
+  @argument[size]{the size to render the icon at, a @arg{size} of
+    @code{(GtkIconSize) - 1} means render at the @arg{size} of the @arg{source}
+    and do not scale}
   @return{A newly-created @class{gdk-pixbuf} containing the rendered icon.}
   @begin{short}
     Renders the icon specified by @arg{source} at the given @arg{size},
     returning the result in a pixbuf.
   @end{short}
 
-  Since 3.0"
+  Since 3.0
+  @see-class{gtk-style-context}
+  @see-class{gtk-icon-source}
+  @see-class{gdk-pixbuf}"
   (context (g-object gtk-style-context))
   (source (g-boxed-foreign gtk-icon-source))
   (size gtk-icon-size))

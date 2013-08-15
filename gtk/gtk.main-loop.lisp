@@ -317,10 +317,10 @@
   @argument[open-default-display]{whether to open the default display when
     parsing the commandline arguments}
   @begin{return}
-    A @class{g-option-group} for the commandline arguments recognized by GTK+.
+    A @type{g-option-group} for the commandline arguments recognized by GTK+.
   @end{return}
   @begin{short}
-    Returns a @class{g-option-group} for the commandline arguments recognized
+    Returns a @type{g-option-group} for the commandline arguments recognized
     by GTK+ and GDK.
   @end{short}
 
@@ -329,7 +329,7 @@
   @fun{g-option-context-parse} to parse your commandline arguments.
 
   Since 2.6
-  @see-class{g-option-group}
+  @see-type{g-option-group}
   @see-class{g-option-context}
   @see-function{g-option-context-add-group}
   @see-function{g-option-context-parse}"
@@ -430,18 +430,18 @@
 
 (defcfun ("gtk_main_iteration" gtk-main-iteration) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2012-12-20}
+ "@version{2013-8-10}
   @return{@em{True} if the function @fun{gtk-main-quit} has been called for the
     innermost main loop.}
   @short{Runs a single iteration of the main loop.}
 
   If no events are waiting to be processed GTK+ will block until the next
-  event is noticed. If you do not want to block look at
+  event is noticed. If you do not want to block look at the function
   @fun{gtk-main-iteration-do} or check if any events are pending with
   the function @fun{gtk-events-pending} first.
-  @see-function{gtk-main-iteration-do}
+  @see-function{gtk-main-quit}
   @see-function{gtk-events-pending}
-  @see-function{gtk-main-quit}")
+  @see-function{gtk-main-iteration-do}")
 
 (export 'gtk-main-iteration)
 

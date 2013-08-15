@@ -64,8 +64,6 @@
     gtk-accel-label-accel-widget
     "accel-widget" "GtkWidget" t t)))
 
-;;; --- gtk-accel-label --------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-accel-label 'type)
  "@version{2013-4-22}
@@ -140,8 +138,6 @@
   (Read / Write)@br{}
   The closure to be monitored for accelerator changes.")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "accel-widget"
                                                'gtk-accel-label) 't)
@@ -156,8 +152,6 @@
 ;;;
 ;;; ----------------------------------------------------------------------------
 
-;;; --- gtk-accel-label-accel-closure ------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-accel-label-accel-closure atdoc:*function-name-alias*)
       "Accessor"
@@ -165,8 +159,6 @@
  "@version{2013-4-22}
   Accessor of the slot @code{\"accel-closure\"} of the @class{gtk-accel-label}
   class.")
-
-;;; --- gtk-accel-label-accel-widget -------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-accel-label-accel-widget atdoc:*function-name-alias*)
@@ -271,30 +263,32 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_accel_label_set_accel ()
-;;;
-;;; void gtk_accel_label_set_accel (GtkAccelLabel *accel_label,
-;;;                                 guint accelerator_key,
-;;;                                 GdkModifierType accelerator_mods);
-;;;
-;;; Manually sets a keyval and modifier mask as the accelerator rendered by
-;;; accel_label.
-;;;
-;;; If a keyval and modifier are explicitly set then these values are used
-;;; regardless of any associated accel closure or widget.
-;;;
-;;; Providing an accelerator_key of 0 removes the manual setting.
-;;;
-;;; accel_label :
-;;;     a GtkAccelLabel
-;;;
-;;; accelerator_key :
-;;;     a keyval, or 0
-;;;
-;;; accelerator_mods :
-;;;     the modifier mask for the accel
-;;;
-;;; Since 3.6
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_accel_label_set_accel" gtk-accel-label-set-accel) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-11}
+  @argument[accel-label]{a @class{gtk-accel-label} widget}
+  @argument[accelerator-key]{a keyval, or 0}
+  @argument[accelerator-mods]{the modifier mask of type
+    @symbol{gdk-modifier-type} for the accel}
+  @begin{short}
+    Manually sets a keyval and modifier mask as the accelerator rendered by
+    @arg{accel-label}.
+  @end{short}
+
+  If a keyval and modifier are explicitly set then these values are used
+  regardless of any associated accel closure or widget.
+
+  Providing an @arg{accelerator-key} of 0 removes the manual setting.
+
+  Since 3.6
+  @see-class{gtk-accel-label}"
+  (accel-label (g-object gtk-accel-label))
+  (accelerator-key :uint)
+  (accelerator-mods gdk-modifier-type))
+
+(export 'gtk-accel-label-set-accel)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_accel_label_refetch ()

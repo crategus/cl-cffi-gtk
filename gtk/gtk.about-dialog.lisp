@@ -1259,24 +1259,26 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_about_dialog_add_credit_section ()
-;;;
-;;; void gtk_about_dialog_add_credit_section (GtkAboutDialog *about,
-;;;                                           const gchar *section_name,
-;;;                                           const gchar **people);
-;;;
-;;; Creates a new section in the Credits page.
-;;;
-;;; about :
-;;;     A GtkAboutDialog
-;;;
-;;; section_name :
-;;;     The name of the section
-;;;
-;;; people :
-;;;     The people who belong to that section
-;;;
-;;; Since 3.4
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_about_dialog_add_credit_section"
+           gtk-about-dialog-add-credit-section) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-11}
+  @argument[about]{a @class{gtk-about-dialog} widget}
+  @argument[section-name]{the name of the section}
+  @argument[people]{a list of the people who belong to that section}
+  @begin{short}
+    Creates a new section in the Credits page.
+  @end{short}
+
+  Since 3.4
+  @see-class{gtk-about-dialog}"
+  (about (g-object gtk-about-dialog))
+  (section-name :string)
+  (people g-strv))
+
+(export 'gtk-about-dialog-add-credit-section)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_show_about_dialog ()

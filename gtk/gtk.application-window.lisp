@@ -1,9 +1,10 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.application-window.lisp
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2013 Dieter Kaiser
 ;;;
@@ -57,11 +58,9 @@
      gtk-application-window-show-menubar
      "show-menubar" "gboolean" t t)))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-application-window 'type)
- "@version{2013-5-29}
+ "@version{2013-8-11}
   @begin{short}
     @sym{gtk-application-window} is a @class{gtk-window} subclass that offers
     some extra functionality for better integration with @class{gtk-application}
@@ -73,10 +72,10 @@
   This class implements the @class{g-action-group} and @class{g-action-map}
   interfaces, to let you add window-specific actions that will be exported by
   the associated @class{gtk-application}, together with its application-wide
-  actions. Window-specific actions are prefixed with the \"win\". prefix and
-  application-wide actions are prefixed with the \"app\". prefix. Actions must
+  actions. Window-specific actions are prefixed with the \"win.\" prefix and
+  application-wide actions are prefixed with the \"app.\" prefix. Actions must
   be addressed with the prefixed name when referring to them from a
-  @code{GMenuModel}.
+  @class{g-menu-model}.
 
   Note that widgets that are placed inside a @sym{gtk-application-window} can
   also activate these actions, if they implement the @class{gtk-actionable}
@@ -84,58 +83,68 @@
 
   As with @class{gtk-application}, the GDK lock will be acquired when processing
   actions arriving from other processes and should therefore be held when
-  activating actions locally (if GDK threads are enabled).
+  activating actions locally if GDK threads are enabled.
 
-  The settings \"gtk-shell-shows-app-menu\" and \"gtk-shell-shows-menubar\" tell
-  GTK+ whether the desktop environment is showing the application menu and
-  menubar models outside the application as part of the desktop shell. For
-  instance, on OS X, both menus will be displayed remotely; on Windows neither
-  will be. gnome-shell (starting with version 3.4) will display the
-  application menu, but not the menubar.
+  The settings @code{\"gtk-shell-shows-app-menu\"} and
+  @code{\"gtk-shell-shows-menubar\"} tell GTK+ whether the desktop environment
+  is showing the application menu and menubar models outside the application as
+  part of the desktop shell. For instance, on OS X, both menus will be displayed
+  remotely; on Windows neither will be. gnome-shell, starting with version 3.4,
+  will display the application menu, but not the menubar.
 
   If the desktop environment does not display the menubar, then
   @class{g-application-window} will automatically show a @class{gtk-menubar} for
-  it. (see the @class{gtk-application} docs for some screenshots of how this
-  looks on different platforms). This behaviour can be overridden with the
+  it. See the @class{gtk-application} docs for some screenshots of how this
+  looks on different platforms. This behaviour can be overridden with the
   @code{\"show-menubar\"} property. If the desktop environment does not display
   the application menu, then it will automatically be included in the menubar.
 
   @b{Example:} A @class{gtk-application-window} with a menubar
   @begin{pre}
- app = gtk_application_new ();
-
- builder = gtk_builder_new ();
- gtk_builder_add_from_string (builder,
-    \"<interface>\"
-    \"  <menu id='menubar'>\"
-    \"    <submenu label='_Edit'>\"
-    \"      <item label='_Copy' action='win.copy'/>\"
-    \"      <item label='_Paste' action='win.paste'/>\"
-    \"    </submenu>\"
-    \"  </menu>\"
-    \"</interface>\");
-  gtk_application_set_menubar
-                (G_APPLICATION (app),
-                 G_MENU_MODEL (gtk_builder_get_object (builder, \"menubar\")));
- g_object_unref (builder);
-
- ...
-
- window = gtk_application_window_new (app);
+ ;; Intitialize the the menubar
+ (let ((builder (make-instance 'gtk-builder)))
+   ;; Read the menus from a string
+   (gtk-builder-add-from-string
+       builder
+       (format nil
+               \"<interface> ~
+                   <menu id='menubar'> ~
+                     <submenu label='_Edit'> ~
+                       <item label='_Copy' action='win.copy'/> ~
+                       <item label='_Paste' action='win.paste'/> ~
+                     </submenu> ~
+                   </menu> ~
+                 </interface>\"))
+   ;; Set the menubar
+   (gtk-application-set-menubar application
+                                (gtk-builder-get-object builder
+                                                        \"menubar\"))
+   ... )
   @end{pre}
-  The XML format understood by @class{gtk-builder} for @code{GMenuModel}
-  consists of a toplevel <menu> element, which contains one or more <item>
-  elements. Each <item> element contains <attribute> and <link> elements with
-  a mandatory name attribute. <link> elements have the same content model as
-  <menu>.
+  The XML format understood by @class{gtk-builder} for @class{g-menu-model}
+  consists of a toplevel @code{<menu>} element, which contains one or more
+  @code{<item>} elements. Each @code{<item>} element contains @code{<attribute>}
+  and @code{<link>} elements with a mandatory name attribute. @code{<link>}
+  elements have the same content model as @code{<menu>}.
 
   Attribute values can be translated using gettext, like other
-  @class{gtk-builder} content. <attribute> elements can be marked for
-  translation with a translatable=\"yes\" attribute. It is also possible to
+  @class{gtk-builder} content. @code{<attribute>} elements can be marked for
+  translation with a translatable = \"yes\" attribute. It is also possible to
   specify message context and translator comments, using the context and
   comments attributes. To make use of this, the @class{gtk-builder} must have
   been given the gettext domain to use.
-  @see-slot{gtk-application-window-show-menubar}")
+  @see-slot{gtk-application-window-show-menubar}
+  @see-class{gtk-window}
+  @see-class{gtk-application}
+  @see-class{g-action-group}
+  @see-class{g-action-map}
+  @see-class{g-menu-model}
+  @see-class{gtk-actionable}
+  @see-class{gtk-menubar}
+  @see-class{gtk-builder}
+  @see-class{g-menu-model}
+  @see-function{gtk-application-set-app-menu}
+  @see-function{gtk-application-set-menubar}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -168,7 +177,10 @@
       (documentation 'gtk-application-window-show-menubar 'function)
  "@version{2013-5-29}
   Accessor of the slot @code{\"show-menubar\"} of the
-  @class{gtk-application-window} class.")
+  @class{gtk-application-window} class.
+  @see-class{gtk-application-window}
+  @see-function{gtk-application-window-get-show-menubar}
+  @see-function{gtk-application-window-set-show-menubar}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_application_window_new ()
@@ -177,12 +189,14 @@
 (defcfun ("gtk_application_window_new" gtk-application-window-new)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-29}
+ "@version{2013-8-11}
   @argument[application]{a @class{gtk-application} object}
-  @return{A newly created @class{gtk-application-window} object}
-  @short{Creates a new @class{gtk-application-window} object.}
+  @return{A newly created @class{gtk-application-window} widget.}
+  @short{Creates a new @class{gtk-application-window} widget.}
 
-  Since 3.4"
+  Since 3.4
+  @see-class{gtk-application}
+  @see-class{gtk-application-window}"
   (application (g-object gtk-application)))
 
 (export 'gtk-application-window-new)
@@ -195,15 +209,17 @@
 
 (defun gtk-application-window-set-show-menubar (window show-menubar)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-29}
-  @argument[window]{a @class{gtk-application-window} object}
+ "@version{2013-8-11}
+  @argument[window]{a @class{gtk-application-window} widget}
   @argument[show-menubar]{whether to show a menubar when needed}
   @begin{short}
-    Sets whether the window will display a menubar for the app menu and menubar
-    as needed.
+    Sets whether the @arg{window} will display a menubar for the app menu and
+    menubar as needed.
   @end{short}
 
-  Since 3.4"
+  Since 3.4
+  @see-class{gtk-application-window}
+  @see-function{gtk-application-window-get-show-menubar}"
   (setf (gtk-application-window-show-menubar window) show-menubar))
 
 (export 'gtk-application-window-set-show-menubar)
@@ -216,35 +232,43 @@
 
 (defun gtk-application-window-get-show-menubar (window)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-29}
-  @argument[window]{a @class{gtk-application-window} object}
+ "@version{2013-8-11}
+  @argument[window]{a @class{gtk-application-window} widget}
   @return{@em{True} if @arg{window} will display a menubar when needed.}
   @begin{short}
-    Returns whether the window will display a menubar for the app menu and
+    Returns whether the @arg{window} will display a menubar for the app menu and
     menubar as needed.
   @end{short}
 
-  Since 3.4"
+  Since 3.4
+  @see-class{gtk-application-window}
+  @see-function{gtk-application-window-set-show-menubar}"
   (gtk-application-window-show-menubar window))
 
 (export 'gtk-application-window-get-show-menubar)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_application_window_get_id ()
-;;;
-;;; guint gtk_application_window_get_id (GtkApplicationWindow *window);
-;;;
-;;; Returns the unique ID of the window. If the window has not yet been added
-;;; to a GtkApplication, returns 0.
-;;;
-;;; window :
-;;;     a GtkApplicationWindow
-;;;
-;;; Returns :
-;;;     the unique ID for window, or 0 if the window has not yet been added to
-;;;     a GtkApplication
-;;;
-;;; Since 3.6
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_application_window_get_id" gtk-application-window-get-id) :uint
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-11}
+  @argument[window]{a @class{gtk-application-window} widget}
+  @begin{return}
+    The unique ID for @arg{window}, or 0 if the @arg{window} has not yet been
+    added to a @class{gtk-application}.
+  @end{return}
+  @begin{short}
+    Returns the unique ID of the @arg{window}. If the @arg{window} has not yet
+    been added to a @class{gtk-application}, returns 0.
+  @end{short}
+
+  Since 3.6
+  @see-class{gtk-application}
+  @see-class{gtk-application-window}"
+  (window (g-object gtk-application-window)))
+
+(export 'gtk-application-window-get-id)
 
 ;;; --- End of file gtk.application-window.lisp --------------------------------

@@ -126,11 +126,12 @@
 
 (defun gtk-text-tag-table-new ()
  #+cl-cffi-gtk-documentation
- "@version{2013-5-5}
+ "@version{2013-8-14}
   @return{A new @class{gtk-text-tag-table} object.}
   Creates a new @class{gtk-text-tag-table} object. The table contains no tags
-  by default."
-  (make-instance 'gtk-text-tag-table-new))
+  by default.
+  @see-class{gtk-text-tag-table}"
+  (make-instance 'gtk-text-tag-table))
 
 (export 'gtk-text-tag-table-new)
 

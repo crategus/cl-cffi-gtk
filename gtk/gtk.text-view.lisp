@@ -4,9 +4,10 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -177,8 +178,6 @@
    (wrap-mode
     gtk-text-view-wrap-mode
     "wrap-mode" "GtkWrapMode" t t)))
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-text-view 'type)
@@ -547,8 +546,8 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "tabs" 'gtk-text-view) 't)
- "The @code{\"tabs\"} property of type @code{PangoTabArray*}
-  (Read / Write)@br{}
+ "The @code{\"tabs\"} property of type @class{pango-tab-array}
+  (Read / Write) @br{}
   Custom tabs for this text.")
 
 ;;; ----------------------------------------------------------------------------
@@ -718,8 +717,11 @@
 (setf (gethash 'gtk-text-view-tabs atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-view-tabs 'function)
- "@version{2013-3-25}
-  Accessor of the slot @code{\"tabs\"} of the @class{gtk-text-view} class.")
+ "@version{2013-8-10}
+  Accessor of the slot @code{\"tabs\"} of the @class{gtk-text-view} class.
+  @see-class{gtk-text-view}
+  @see-function{gtk-text-view-get-tabs}
+  @see-function{gtk-text-view-set-tabs}")
 
 ;;; ----------------------------------------------------------------------------
 
@@ -2077,35 +2079,50 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_view_set_tabs ()
-;;;
-;;; void gtk_text_view_set_tabs (GtkTextView *text_view, PangoTabArray *tabs);
-;;;
-;;; Sets the default tab stops for paragraphs in text_view. Tags in the buffer
-;;; may override the default.
-;;;
-;;; text_view :
-;;;     a GtkTextView
-;;;
-;;; tabs :
-;;;     tabs as a PangoTabArray
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-text-view-set-tabs))
+
+(defun gtk-text-view-set-tabs (text-view tabs)
+ "@version{2013-8-10}
+  @argument[text-view]{a @class{gtk-text-view} widget}
+  @argument[tabs]{tabs as a @class{pango-tab-array} structure}
+  Sets the default tab stops for paragraphs in @arg{text-view}. Tags in the
+  buffer may override the default.
+  @see-class{gtk-text-view}
+  @see-class{pango-tab-array}
+  @see-function{gtk-text-view-get-tabs}"
+  (setf (gtk-text-view-tabs text-view) tabs))
+
+(export 'gtk-text-view-set-tabs)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_view_get_tabs ()
-;;;
-;;; PangoTabArray * gtk_text_view_get_tabs (GtkTextView *text_view);
-;;;
-;;; Gets the default tabs for text_view. Tags in the buffer may override the
-;;; defaults. The returned array will be NULL if "standard" (8-space) tabs are
-;;; used. Free the return value with pango_tab_array_free().
-;;;
-;;; text_view :
-;;;     a GtkTextView
-;;;
-;;; Returns :
-;;;     copy of default tab array, or NULL if "standard" tabs are used; must be
-;;;     freed with pango_tab_array_free().
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-text-view-get-tabs))
+
+(defun gtk-text-view-get-tabs (text-view)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-10}
+  @argument[text-view]{a @class{gtk-text-view} widget}
+  @begin{return}
+    Copy of default tab array, or @code{nil} if \"standard\" tabs are used; must
+    be freed with @fun{pango-tab-array-free}.
+  @end{return}
+  @begin{short}
+    Gets the default tabs for @arg{text-view}.
+  @end{short}
+  Tags in the buffer may override the defaults. The returned array will be
+  @code{nil} if \"standard\" (8-space) tabs are used. Free the return value with
+  @fun{pango-tab-array-free}.
+  @see-class{gtk-text-view}
+  @see-function{gtk-text-view-set-tabs}
+  @see-class{pango-tab-array}
+  @see-function{pango-tab-array-free}"
+  (gtk-text-view-tabs text-view))
+
+(export 'gtk-text-view-get-tabs)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_view_set_accepts_tab ()

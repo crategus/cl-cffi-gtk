@@ -30,7 +30,16 @@
 
 (in-package #:cl-cffi-gtk-system)
 
+(defclass gtk-source-file (cl-source-file) ())
+
+#+sbcl
+(defmethod perform :around ((o compile-op) (s gtk-source-file))
+  (handler-bind ((sb-ext:compiler-note #'muffle-warning))
+    (let ((*compile-print* nil))
+      (call-next-method))))
+
 (defsystem :cl-cffi-gtk
+  :default-component-class gtk-source-file
   :name :cl-cffi-gtk
   :version "3.6.4"                     ; Version of the library
   :author "Dieter Kaiser"

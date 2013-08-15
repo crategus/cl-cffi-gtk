@@ -60,7 +60,9 @@
   (:export t
    :type-initializer "gtk_buildable_get_type"))
 
-(setf (documentation 'gtk-buildable 'type)
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-buildable atdoc:*class-name-alias*) "Interface"
+      (documentation 'gtk-buildable 'type)
  "@short{Interface for objects that can be built by @class{gtk-builder}.}
 
   @sym{gtk-buildable} allows objects to extend and customize their

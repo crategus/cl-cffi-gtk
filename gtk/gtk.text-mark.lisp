@@ -148,33 +148,35 @@
 ;;; gtk_text_mark_new ()
 ;;; ----------------------------------------------------------------------------
 
-(declaim (inline gtk-text-mark-new))
-
 (defun gtk-text-mark-new (name left-gravity)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-29}
+ "@version{2013-8-13}
   @argument[name]{mark name or @code{nil}}
   @argument[left-gravity]{whether the mark should have left gravity}
   @return{New @class{gtk-text-mark} object.}
   @begin{short}
-    Creates a text mark. Add it to a buffer using the function
-    @fun{gtk-text-buffer-add-mark}. If @arg{name} is @code{nil}, the mark is
-    anonymous; otherwise, the mark can be retrieved by @arg{name} using
-    @fun{gtk-text-buffer-get-mark}. If a mark has left gravity, and text
-    is inserted at the mark's current location, the mark will be moved to the
-    left of the newly-inserted text. If the mark has right gravity
-    (@arg{left-gravity} = @code{nil}), the mark will end up on the right of
-    newly inserted text. The standard left-to-right cursor is a mark with right
-    gravity (when you type, the cursor stays on the right side of the text
-    you are typing).
+    Creates a text mark.
   @end{short}
+  Add it to a buffer using the function @fun{gtk-text-buffer-add-mark}. If
+  @arg{name} is @code{nil}, the mark is anonymous; otherwise, the mark can be
+  retrieved by @arg{name} using the function @fun{gtk-text-buffer-get-mark}. If
+  a mark has left gravity, and text is inserted at the mark's current location,
+  the mark will be moved to the left of the newly-inserted text. If the mark has
+  right gravity, @arg{left-gravity} = @code{nil}, the mark will end up on the
+  right of newly inserted text. The standard left-to-right cursor is a mark with
+  right gravity, when you type, the cursor stays on the right side of the text
+  you are typing.
 
   Since 2.12
+  @see-class{gtk-text-mark}
   @see-function{gtk-text-buffer-add-mark}
   @see-function{gtk-text-buffer-get-mark}"
-  (make-instance 'gtk-text-mark
-                 :name name
-                 :left-gravity left-gravity))
+  (if name
+      (make-instance 'gtk-text-mark
+                     :name name
+                     :left-gravity left-gravity)
+      (make-instance 'gtk-text-mark
+                     :left-grafity left-gravity)))
 
 (export 'gtk-text-mark-new)
 

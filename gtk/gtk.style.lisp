@@ -421,37 +421,37 @@
 ;;;
 ;;; Warning
 ;;;
-;;;    gtk_style_render_icon has been deprecated since version 3.0 and should
-;;;    not be used in newly-written code. Use gtk_render_icon_pixbuf()
-;;;    instead
+;;; gtk_style_render_icon has been deprecated since version 3.0 and should
+;;; not be used in newly-written code. Use gtk_render_icon_pixbuf()
+;;; instead
 ;;;
-;;;    Renders the icon specified by source at the given size according to the
-;;;    given parameters and returns the result in a pixbuf.
+;;; Renders the icon specified by source at the given size according to the
+;;; given parameters and returns the result in a pixbuf.
 ;;;
-;;;    style :
-;;;    a GtkStyle
+;;; style :
+;;;     a GtkStyle
 ;;;
-;;;    source :
-;;;    the GtkIconSource specifying the icon to render
+;;; source :
+;;;     the GtkIconSource specifying the icon to render
 ;;;
-;;;    direction :
-;;;    a text direction
+;;; direction :
+;;;     a text direction
 ;;;
-;;;    state :
-;;;    a state
+;;; state :
+;;;     a state
 ;;;
-;;;    size :
-;;;    the size to render the icon at. A size of (GtkIconSize)-1 means render
-;;;    at the size of the source and don't scale
+;;; size :
+;;;     the size to render the icon at. A size of (GtkIconSize)-1 means render
+;;;     at the size of the source and don't scale
 ;;;
-;;;    widget :
-;;;    the widget
+;;; widget :
+;;;     the widget
 ;;;
-;;;    detail :
-;;;    a style detail
+;;; detail :
+;;;     a style detail
 ;;;
-;;;    Returns :
-;;;    a newly-created GdkPixbuf containing the rendered icon
+;;; Returns :
+;;;     A newly-created GdkPixbuf containing the rendered icon.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------

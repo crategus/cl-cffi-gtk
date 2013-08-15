@@ -4,9 +4,10 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -90,16 +91,23 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_hsv_new ()
-;;;
-;;; GtkWidget * gtk_hsv_new (void)
-;;;
-;;; Creates a new HSV color selector.
-;;;
-;;; Returns :
-;;;     A newly-created HSV color selector.
-;;;
-;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-hsv-new))
+
+(defun gtk-hsv-new ()
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-11}
+  @return{A newly-created HSV color selector.}
+  @begin{short}
+    Creates a new HSV color selector.
+  @end{short}
+
+  Since 2.14
+  @see-class{gtk-hsv}"
+  (make-instance 'gtk-hsv))
+
+(export 'gtk-hshv)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_hsv_set_color ()

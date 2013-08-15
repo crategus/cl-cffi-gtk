@@ -571,7 +571,7 @@
 
 (defun gtk-application-new (application-id flags)
  "@version{2013-7-25}
-  @argument[application-id]{the application ID}
+  @argument[application-id]{the application ID of type @code{:string}}
   @argument[flags]{the application flags of type @symbol{g-application-flags}}
   @return{A new @class{gtk-application} object.}
   @begin{short}
@@ -597,6 +597,7 @@
 
   Since 3.0
   @see-class{gtk-application}
+  @see-symbol{g-application-flags}
   @see-function{g-application-id-is-valid}"
   (make-instance 'gtk-application
                  :application-id application-id
@@ -1052,7 +1053,7 @@
 ;;; gtk_application_remove_accelerator ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_application_remove_accelarator"
+(defcfun ("gtk_application_remove_accelerator"
            gtk-application-remove-accelerator) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-8-8}
