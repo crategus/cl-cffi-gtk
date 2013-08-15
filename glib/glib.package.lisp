@@ -424,7 +424,7 @@
     @about-symbol{G_OPTION_REMAINING}
     @about-type{g-option-entry}
     @about-function{g-option-context-add-main-entries}
-    @about-class{g-option-group}
+    @about-type{g-option-group}
     @about-function{g-option-context-add-group}
     @about-function{g-option-context-set-main-group}
     @about-function{g-option-context-get-main-group}
