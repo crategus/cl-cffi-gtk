@@ -11,8 +11,8 @@ Basic Pango Interfaces
  pamgo.glyph.lisp - Storing information about glyphs             - Pango 1.32.6%
  pango.fonts.lisp - Structures representing abstract fonts       - Pango 1.30.0*
  pango.attributes.lisp - Attributes for annotating text          - Pango 1.30.0*
+ pango.tab-array.lisp - Structures for storing tab stops         - Pango 1.32.6%
 
-  Tab Stops - Structures for storing tab stops
   Text Attribute Markup - Simple markup language to encode text with attributes
 
  pango.layout.lisp - High-level layout driver objects            - Pango 1.30.0*
