@@ -1,9 +1,10 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gdk-pixbuf.scaling.lisp
 ;;;
-;;; The documentation has been copied from the GDK-PixBuf Reference Manual
-;;; Version 2.28.1. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GDK-PixBuf Reference Manual
+;;; Version 2.28.1 and modified to document the Lisp binding to the GDK-PixBuf
+;;; library. See <http://www.gtk.org>. The API documentation of the Lisp binding
+;;; is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
