@@ -4,9 +4,10 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -60,8 +61,6 @@
    :interfaces nil
    :type-initializer "gtk_tooltip_get_type")
   nil)
-
-;;; ----------------------------------------------------------------------------
 
 (setf (documentation 'gtk-tooltip 'type)
  "@version{2013-5-23}
@@ -229,28 +228,30 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tooltip_set_icon_from_gicon ()
-;;;
-;;; void gtk_tooltip_set_icon_from_gicon (GtkTooltip *tooltip,
-;;;                                       GIcon *gicon,
-;;;                                       GtkIconSize size);
-;;;
-;;; Sets the icon of the tooltip (which is in front of the text) to be the icon
-;;; indicated by gicon with the size indicated by size. If gicon is NULL, the
-;;; image will be hidden.
-;;;
-;;; tooltip :
-;;;     a GtkTooltip
-;;;
-;;; gicon :
-;;;     a GIcon representing the icon, or NULL
-;;;
-;;; size :
-;;;     a stock icon size
-;;;
-;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
 
-;;; TODO: GIcon is not implemented
+(defcfun ("gtk_tooltip_set_icon_from_gicon" gtk-tooltip-set-icon-from-gicon)
+    :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-11}
+  @argument[tooltip]{a @class{gtk-tooltip} widget}
+  @argument[gicon]{a @class{g-icon} representing the icon, or @code{nil}}
+  @argument[size]{a stock icon size of type @symbol{gtk-icon-size}}
+  @begin{short}
+    Sets the icon of the @arg{tooltip}, which is in front of the text, to be the
+    icon indicated by @arg{gicon} with the size indicated by @arg{size}. If
+    @arg{gicon} is @code{nil}, the image will be hidden.
+  @end{short}
+
+  Since 2.20
+  @see-class{gtk-tooltip}
+  @see-class{g-icon}
+  @see-symbol{gtk-icon-size}"
+  (tooltip (g-object gtk-tooltip))
+  (gicon (g-object g-icon))
+  (size gtk-icon-size))
+
+(export 'gtk-tooltip-icon-from-gicon)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tooltip_set_custom ()
