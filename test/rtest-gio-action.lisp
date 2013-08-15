@@ -4,7 +4,7 @@
 
 ;;;   GAction
 
-(test gio-action-interface
+(test g-action
   ;; Type checks
   (is-false (g-type-is-object "GAction"))
   (is-false (g-type-is-abstract "GAction"))
@@ -68,16 +68,18 @@
                 (STATE-TYPE G-ACTION-STATE-TYPE "state-type" "GVariantType" T NIL))
                 (get-g-type-definition "GAction"))))
 
-;;;     GActionInterface
+;;;   GActionInterface
 
-;;;     g_action_get_name
-;;;     g_action_get_parameter_type
-;;;     g_action_get_state_type
-;;;     g_action_get_state_hint
+;;;   This function are checked in rtest-gio-simple-action.lisp
+
+;;;   g_action_get_name
+;;;   g_action_get_parameter_type
+;;;   g_action_get_state_type
+;;;   g_action_get_state_hint
 ;;;
-;;;     g_action_get_enabled
-;;;     g_action_get_state
+;;;   g_action_get_enabled
+;;;   g_action_get_state
 ;;;
-;;;     g_action_change_state
-;;;     g_action_activate
+;;;   g_action_change_state
+;;;   g_action_activate
 

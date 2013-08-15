@@ -164,7 +164,7 @@
     (g-action-activate action (g-variant-new-boolean t))
 ))
 
-;;;     g_simple_action_set_enabled
+;;;   g_simple_action_set_enabled
 
 (test g-simple-action-set-enabled
   (let ((action (g-simple-action-new-stateful "simple"
@@ -195,7 +195,7 @@
     (g-signal-emit action "activate" (g-variant-new-boolean nil))
 ))
 
-;;;     g_simple_action_set_state
+;;;   g_simple_action_set_state
 
 (test g-simple-action-set-state
   (let ((action (g-simple-action-new-stateful "simple"
@@ -206,4 +206,42 @@
     (is-false (g-variant-get-boolean (g-action-get-state action)))
     (g-simple-action-set-state action (g-variant-new-boolean t))
     (is-true (g-variant-get-boolean (g-action-get-state action)))))
+
+;;;   Example from the API documentation
+
+(test change-volume-state
+  (let ((action (g-simple-action-new-stateful "volume"
+                                              (g-variant-type-new "i") ; int32
+                                              (g-variant-new-int32 0))))
+    (g-signal-connect action "change-state"
+                      (lambda (simple-action value)
+                        (let ((requested (g-variant-get-int32 value)))
+                          ;; Volume only goes from 0 to 10
+                          (when (and (>= requested 0) (<= requested 10))
+                            (g-simple-action-set-state simple-action value)))))
+    ;; Emit the "change-state" signal on action
+    (g-action-change-state action (g-variant-new-int32 5))
+    (is (= 5 (g-variant-get-int32 (g-action-get-state action))))
+    ;; The value is > 10.
+    (g-action-change-state action (g-variant-new-int32 20))
+    ;; The state has not changed.
+    (is (= 5 (g-variant-get-int32 (g-action-get-state action))))
+))
+
+
+#|
+   change_volume_state (GSimpleAction *action,
+                        GVariant      *value,
+                        gpointer       user_data)
+   {
+     gint requested;
+     requested = g_variant_get_int32 (value);
+
+     // Volume only goes from 0 to 10
+     if (0 <= requested && requested <= 10)
+       g_simple_action_set_state (action, value);
+   @}
+|#
+
+
 
