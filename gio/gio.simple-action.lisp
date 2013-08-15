@@ -61,77 +61,12 @@
 ;;;
 ;;;   "activate"                                      : Run Last
 ;;;   "change-state"                                  : Run Last
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "enabled" property
-;;;
-;;;   "enabled"                  gboolean              : Read / Write
-;;;
-;;; If action is currently enabled.
-;;;
-;;; If the action is disabled then calls to g_action_activate() and
-;;; g_action_change_state() have no effect.
-;;;
-;;; Default value: TRUE
-;;;
-;;; Since 2.28
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "name" property
-;;;
-;;;   "name"                     gchar*               : Read / Write / Construct
-;;;
-;;; The name of the action. This is mostly meaningful for identifying the action
-;;; once it has been added to a GSimpleActionGroup.
-;;;
-;;; Default value: NULL
-;;;
-;;; Since 2.28
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "parameter-type" property
-;;;
-;;;   "parameter-type"           GVariantType*        : Read / Write / Construct
-;;;
-;;; The type of the parameter that must be given when activating the action.
-;;;
-;;; Since 2.28
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "state" property
-;;;
-;;;   "state"                    GVariant*             : Read / Write
-;;;
-;;; The state of the action, or NULL if the action is stateless.
-;;;
-;;; Allowed values: GVariant<*>
-;;;
-;;; Default value: NULL
-;;;
-;;; Since 2.28
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "state-type" property
-;;;
-;;;   "state-type"               GVariantType*         : Read
-;;;
-;;; The GVariantType of the state that the action has, or NULL if the action is
-;;; stateless.
-;;;
-;;; Since 2.28
-;;;
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gio)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GSimpleAction
-;;;
-;;; typedef struct _GSimpleAction GSimpleAction;
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GSimpleAction" g-simple-action
@@ -139,57 +74,51 @@
    :export t
    :interfaces ("GAction")
    :type-initializer "g_simple_action_get_type")
-  nil)
-;; The implementation of the C GSimpleAction class has the following
-;; properties, but these properties are inherited from the interface GAction
-;; in the Lisp implementation.
-;  ((enabled
-;    g-simple-action-enabled
-;    "enabled" "gboolean" t t)
-;   (name
-;    g-simple-action-name
-;    "name" "gchar" t t)
-;   (parameter-type
-;    g-simple-action-parameter-type
-;    "parameter-type" "GVariantType" t t)
-;   (state
-;    g-simple-action-state
-;    "state" "GVariant" t t)
-;   (state-type
-;    g-simple-action-state-type
-;    "state-type" "GVariantType" t t)))
+  ((enabled
+    g-simple-action-enabled
+    "enabled" "gboolean" t t)
+   (name
+    g-simple-action-name
+    "name" "gchar" t t)
+   (parameter-type
+    g-simple-action-parameter-type
+    "parameter-type" "GVariantType" t t)
+   (state
+    g-simple-action-state
+    "state" "GVariant" t t)
+   (state-type
+    g-simple-action-state-type
+    "state-type" "GVariantType" t t)))
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'g-simple-action 'type)
- "@version{2013-5-1}
+ "@version{2013-8-10}
   @begin{short}
-    A @class{g-simple-action} is the obvious simple implementation of the
+    A @sym{g-simple-action} is the obvious simple implementation of the
     @class{g-action} interface. This is the easiest way to create an action for
     purposes of adding it to a @class{g-simple-action-group}.
   @end{short}
-
-  See also @class{gtk-action}.
   @begin[Signal Details]{dictionary}
     @subheading{The \"activate\" signal}
       @begin{pre}
- lambda (simple parameter)   : Run Last
+ lambda (action parameter)   : Run Last
       @end{pre}
-      Indicates that the action was just activated.
+      Indicates that the @arg{action} was just activated.
       @arg{parameter} will always be of the expected type. In the event that an
       incorrect type was given, no signal will be emitted.
       @begin[code]{table}
-        @entry[simple]{The @class{g-simple-action} object.}
+        @entry[action]{The @class{g-simple-action} object.}
         @entry[parameter]{The parameter to the activation.}
       @end{table}
       Since 2.28
 
     @subheading{The \"change-state\" signal}
       @begin{pre}
- lambda (simple value)   : Run Last
+ lambda (action value)   : Run Last
       @end{pre}
-      Indicates that the action just received a request to change its state.
-      @arg{value} will always be of the correct state type. In the event that an
-      incorrect type was given, no signal will be emitted.
+      Indicates that the @arg{action} just received a request to change its
+      state. @arg{value} will always be of the correct state type. In the event
+      that an incorrect type was given, no signal will be emitted.
 
       If no handler is connected to this signal then the default behaviour is to
       call the function @fun{g-simple-action-set-state} to set the state to the
@@ -199,18 +128,12 @@
 
       @b{Example:} Example 'change-state' handler
       @begin{pre}
-   static void
-   change_volume_state (GSimpleAction *action,
-                        GVariant      *value,
-                        gpointer       user_data)
-   {
-     gint requested;
-     requested = g_variant_get_int32 (value);
-
-     // Volume only goes from 0 to 10
-     if (0 <= requested && requested <= 10)
-       g_simple_action_set_state (action, value);
-   @}
+ (g-signal-connect action \"change-state\"
+                   (lambda (simple-action value)
+                     (let ((requested (g-variant-get-int32 value)))
+                       ;; Volume only goes from 0 to 10
+                       (when (and (>= requested 0) (<= requested 10))
+                         (g-simple-action-set-state simple-action value)))))
       @end{pre}
       The handler need not set the state to the requested value. It could set it
       to any value at all, or take some other action.
@@ -219,7 +142,58 @@
         @entry[value]{The requested value for the state.}
       @end{table}
       Since 2.30
-  @end{dictionary}")
+  @end{dictionary}
+  @see-class{g-action}
+  @see-class{g-simple-action-group}
+  @see-function{g-simple-action-set-state}")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Property Details
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "enabled" 'g-simple-action) 't)
+ "The @code{\"enabled\"} property of type @code{:boolean} (Read) @br{}
+  If action is currently enabled.
+  If the action is disabled then calls to the functions @fun{g-action-activate}
+  and @fun{g-action-change-state} have no effect. @br{}
+  Default value: @em{true} @br{}
+  Since 2.28")
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "name" 'g-simple-action) 't)
+ "The @code{\"name\"} property of type @code{:string} (Read) @br{}
+  The name of the action. This is mostly meaningful for identifying the action
+  once it has been added to a @class{g-action-group}. @br{}
+  Default value: @code{nil} @br{}
+  Since 2.28")
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "parameter-type"
+                                               'g-simple-action) 't)
+ "The @code{\"parameter-type\"} property of type @class{g-variant-type}
+  (Read) @br{}
+  The type of the parameter that must be given when activating the action. @br{}
+  Since 2.28")
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "state" 'g-simple-action) 't)
+ "The @code{\"state\"} property of type @type{g-variant} (Read) @br{}
+  The state of the action, or @code{nil} if the action is stateless. @br{}
+  Allowed values: @code{GVariant<*>} @br{}
+  Default value: @code{nil} @br{}
+  Since 2.28")
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "state-type"
+                                               'g-simple-action) 't)
+ "The @code{\"state-type\"} property of type @class{g-variant-type}
+  (Read) @br{}
+  The @class{g-variant-type} of the state that the action has, or @code{nil} if
+  the action is stateless. @br{}
+  Since 2.28")
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_simple_action_new ()
@@ -227,7 +201,7 @@
 
 (defun g-simple-action-new (name parameter-type)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-4}
+ "@version{2013-8-10}
   @argument[name]{the name of the action}
   @argument[parameter-type]{the type of parameter to the activate function}
   @return{A new @class{g-simple-action} object.}
@@ -239,6 +213,7 @@
   @fun{g-simple-action-new-stateful}.
 
   Since 2.28
+  @see-class{g-simple-action}
   @see-function{g-simple-action-new-stateful}"
   (make-instance 'g-simple-action
                  :name name
@@ -254,7 +229,7 @@
 
 (defun g-simple-action-new-stateful (name parameter-type state)
  #+cl-cffi-gtk-documentation
- "@version{2013-7-27}
+ "@version{2013-8-10}
   @argument[name]{the name of the action}
   @argument[parameter-type]{the type of the parameter to the activate function}
   @argument[state]{the initial state of the action}
@@ -270,6 +245,7 @@
 
   Since 2.28
   @see-class{g-simple-action}
+  @see-function{g-simple-action-new}
   @see-type{g-variant}
   @see-class{g-variant-type}"
   (make-instance 'g-simple-action
@@ -287,11 +263,11 @@
 
 (defun g-simple-action-set-enabled (action enabled)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-2}
-  @argument[simple]{a @class{g-simple-action} object}
-  @argument[enabled]{whether the action is enabled}
+ "@version{2013-8-10}
+  @argument[action]{a @class{g-simple-action} object}
+  @argument[enabled]{whether the @arg{action} is enabled}
   @begin{short}
-    Sets the action as enabled or not.
+    Sets the @arg{action} as enabled or not.
   @end{short}
 
   An action must be enabled in order to be activated or in order to have its
@@ -300,7 +276,8 @@
   This should only be called by the implementor of the action. Users of the
   action should not attempt to modify its enabled flag.
 
-  Since 2.28"
+  Since 2.28
+  @see-class{g-simple-action}"
   (setf (g-action-enabled action) enabled))
 
 (export 'g-simple-action-set-enabled)
@@ -313,22 +290,23 @@
 
 (defun g-simple-action-set-state (action value)
  #+cl-cffi-gtk-documentation
- "@version{2013-7-27}
-  @argument[simple]{a @class{g-simple-action} object}
+ "@version{2013-8-10}
+  @argument[action]{a @class{g-simple-action} object}
   @argument[value]{the new @type{g-variant} for the state}
   @begin{short}
-    Sets the state of the action.
+    Sets the state of the @arg{action} to @arg{value}.
   @end{short}
 
-  This directly updates the 'state' property to the given value.
+  This directly updates the @code{\"state\"} property to the given @arg{value}.
 
   This should only be called by the implementor of the action. Users of the
-  action should not attempt to directly modify the 'state' property. Instead,
-  they should call the function @fun{g-action-change-state} to request the
-  change.
+  action should not attempt to directly modify the @code{\"state\"} property.
+  Instead, they should call the function @fun{g-action-change-state} to request
+  the change.
 
   Since 2.30
   @see-class{g-simple-action}
+  @see-type{g-variant}
   @see-function{g-action-change-state}"
   (setf (g-action-state action) value))
 
