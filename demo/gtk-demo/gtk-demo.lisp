@@ -30,6 +30,7 @@
 (in-package :gtk-demo)
 
 (load "application.lisp")
+(load "application-window.lisp")
 (load "assistant.lisp")
 (load "box-packing.lisp")
 (load "button.lisp")

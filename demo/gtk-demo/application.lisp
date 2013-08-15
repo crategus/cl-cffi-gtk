@@ -302,7 +302,7 @@
                  :inactivity-timeout 30000
                  :register-session t))
 
-(defun example-application (&optional (argc 0) (argv (null-pointer)))
+(defun demo-application (&optional (argc 0) (argv (null-pointer)))
   (let (;; Create an instance of the application Bloat Pad
         (bloat-pad (bloat-pad-new)))
     (format t "call G-APPLICATION-RUN.~%")
