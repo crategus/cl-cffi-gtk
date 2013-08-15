@@ -310,7 +310,7 @@
  (g-option-context-new \"This is an example for a description.\")
 => #.(SB-SYS:INT-SAP #X0817EB48)
  (g-option-context-get-help * nil)
-=> 
+=>
 \"Aufruf:
   sbcl [OPTION …] This is an example for a description.
 
@@ -1002,7 +1002,7 @@ Hilfeoptionen:
  "@version{2013-7-25}
   @begin{short}
     A @sym{g-option-group} structure defines the options in a single group. The
-    struct has only private fields and should not be directly accessed.
+    structure has only private fields and should not be directly accessed.
   @end{short}
 
   All options in a group share the same translation function. Libraries which
@@ -1128,20 +1128,74 @@ Hilfeoptionen:
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_option_group_add_entries ()
-;;;
-;;; void g_option_group_add_entries (GOptionGroup *group,
-;;;                                  const GOptionEntry *entries);
-;;;
-;;; Adds the options specified in entries to group.
-;;;
-;;; group :
-;;;     a GOptionGroup
-;;;
-;;; entries :
-;;;     a NULL-terminated array of GOptionEntrys
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_option_group_add_entries"
+          %g-option-group-add-entries) :void
+  (context (:pointer (:struct g-option-group)))
+  (entries (:pointer (:pointer (:struct g-option-entry)))))
+
+(defun g-option-group-add-entries (group entries)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-7-24}
+  @argument[group]{a @type{g-option-group} structure}
+  @argument[entries]{a list of options}
+  @begin{short}
+    Adds the options specified in @arg{entries} to @arg{group}.
+  @end{short}
+
+  Since 2.6
+  @see-type{g-option-group}"
+  (let ((n-entries (length entries)))
+    (with-foreign-object (entries-ptr '(:struct g-option-entry) (1+ n-entries))
+      (loop
+        for entry in entries
+        for i from 0
+        for entry-ptr = (mem-aptr entries-ptr '(:struct g-option-entry) i)
+        do (setf (foreign-slot-value entry-ptr
+                                     '(:struct g-option-entry)
+                                     'long-name)
+                 (first entry)
+                 (foreign-slot-value entry-ptr
+                                     '(:struct g-option-entry)
+                                     'short-name)
+                 (if (second entry)
+                     (char-code (second entry))
+                     0)
+                 (foreign-slot-value entry-ptr
+                                     '(:struct g-option-entry)
+                                     'flags)
+                 (third entry)
+                 (foreign-slot-value entry-ptr
+                                     '(:struct g-option-entry)
+                                     'arg)
+                 (fourth entry)
+                 (foreign-slot-value entry-ptr
+                                     '(:struct g-option-entry)
+                                     'arg-data)
+                 (progn
+                   (cond ((member (fourth entry)
+                                  '(:none :int :double :string :filename
+                                    :string-array :filename-array :int64))
+                          (symbol-value (fifth entry)))
+                         (t (error "Case not handled for g-option-entry"))))
+                 (foreign-slot-value entry-ptr
+                                     '(:struct g-option-entry)
+                                     'description)
+                 (sixth entry)
+                 (foreign-slot-value entry-ptr
+                                     '(:struct g-option-entry)
+                                     'arg-description)
+                 (if (seventh entry) (seventh entry) (null-pointer))))
+      (let ((entry-ptr (mem-aptr entries-ptr
+                                 '(:struct g-option-entry)
+                                 n-entries)))
+        (setf (foreign-slot-value entry-ptr
+                                  '(:struct g-option-entry) 'long-name)
+              (null-pointer))
+        (%g-option-group-add-entries group entries-ptr)))))
+
+(export 'g-option-group-add-entries)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GOptionParseFunc ()
