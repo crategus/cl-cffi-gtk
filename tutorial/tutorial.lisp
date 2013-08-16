@@ -2470,11 +2470,6 @@
 
 ;; Calendar
 
-(defun calendar-detail (calendar year month day)
-  (declare (ignore calendar year month))
-  (when (= day 12)
-    "This day has a tooltip."))
-
 (defun example-calendar ()
   (within-main-loop
     (let ((window (make-instance 'gtk-window
@@ -2486,6 +2481,7 @@
           (frame (make-instance 'gtk-frame))
           (calendar (make-instance 'gtk-calendar
                                    :show-details nil)))
+      ;; Connect a signal handler to the window
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
@@ -2499,9 +2495,14 @@
                                   (gtk-calendar-month calendar)
                                   (gtk-calendar-day calendar))))
       ;; Install a calendar detail function
-      (gtk-calendar-set-detail-func calendar #'calendar-detail)
+      (gtk-calendar-set-detail-func calendar
+                                    (lambda (calendar year month day)
+                                      (declare (ignore calendar year month))
+                                      (when (= day 12)
+                                        "This day has a tooltip.")))
       ;; Mark a day
       (gtk-calendar-mark-day calendar 6)
+      ;; Put the calendar into the frame and the frame into the window.
       (gtk-container-add frame calendar)
       (gtk-container-add window frame)
       (gtk-widget-show-all window))))

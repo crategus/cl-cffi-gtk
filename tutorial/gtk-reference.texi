@@ -9,8 +9,15 @@
 @c Copyright (C) 2012 by Dieter Kaiser
 @c -----------------------------------------------------------------------------
 
-@c -----------------------------------------------------------------------------
-@anchor{GtkAdjustment}
+@menu
+* GtkAdjustment::
+* GtkAlignment::
+* GtkArrow::
+@end menu
+
+@node GtkAdjustment, GtkAlignment, Top, Top
+@section GtkAdjustment
+
 @deffn {Class} GtkAdjustment
 
 A representation of an adjustable bounded value
@@ -20,6 +27,22 @@ A representation of an adjustable bounded value
   GObject
    +----GInitiallyUnowned
          +----GtkAdjustment
+@end verbatim
+
+@b{Properties}
+@verbatim
+  "lower"                  gdouble            : Read / Write
+  "page-increment"         gdouble            : Read / Write
+  "page-size"              gdouble            : Read / Write
+  "step-increment"         gdouble            : Read / Write
+  "upper"                  gdouble            : Read / Write
+  "value"                  gdouble            : Read / Write
+@end verbatim
+
+@b{Signals}
+@verbatim
+  "changed"                                   : No Recursion
+  "value-changed"                             : No Recursion
 @end verbatim
 
 @b{Functions}
@@ -43,26 +66,12 @@ A representation of an adjustable bounded value
   gtk_adjustment_set_step_increment
   gtk_adjustment_set_upper
 @end verbatim
-
-@b{Properties}
-@verbatim
-  "lower"                  gdouble            : Read / Write
-  "page-increment"         gdouble            : Read / Write
-  "page-size"              gdouble            : Read / Write
-  "step-increment"         gdouble            : Read / Write
-  "upper"                  gdouble            : Read / Write
-  "value"                  gdouble            : Read / Write
-@end verbatim
-
-@b{Signals}
-@verbatim
-  "changed"                                   : No Recursion
-  "value-changed"                             : No Recursion
-@end verbatim
 @end deffn
 
 @c -----------------------------------------------------------------------------
-@anchor{GtkAlignment}
+@node GtkAlignment, GtkArrow, GtkAdjustment, Top
+@section GtkAlignment
+
 @deffn {Class} GtkAlignment
 
 A widget which controls the alignment and size of its child
@@ -75,14 +84,6 @@ A widget which controls the alignment and size of its child
                +----GtkContainer
                      +----GtkBin
                            +----GtkAlignment
-@end verbatim
-
-@b{Functions}
-@verbatim
-  gtk_alignment_new
-  gtk_alignment_set
-  gtk_alignment_get_padding
-  gtk_alignment_set_padding
 @end verbatim
 
 @b{Implemented Interfaces}
@@ -101,11 +102,21 @@ A widget which controls the alignment and size of its child
   "yalign"                 gfloat             : Read / Write
   "yscale"                 gfloat             : Read / Write
 @end verbatim
+
+@b{Functions}
+@verbatim
+  gtk_alignment_new
+  gtk_alignment_set
+  gtk_alignment_get_padding
+  gtk_alignment_set_padding
+@end verbatim
 @end deffn
 
 @c -----------------------------------------------------------------------------
-@anchor{GtkArrow}
-@deffn {Class} GtkArrow
+@node GtkArrow, , GtkAlignment, Top
+@section GtkArrow
+
+@deffn {Class} @xurl{gtk-arrow}
 
 Displays an arrow
 
@@ -118,15 +129,9 @@ Displays an arrow
                     +----GtkArrow
 @end verbatim
 
-@b{Functions}
-@verbatim
-  gtk_arrow_new
-  gtk_arrow_set
-@end verbatim
-
 @b{Implemented Interfaces}
 
-@code{GtkArrow} implements @code{AtkImplementorIface} and @code{GtkBuildable}.
+@xurl{gtk-arrow} implements @code{AtkImplementorIface} and @xurl{gtk-buildable}.
 
 @b{Properties}
 @verbatim
@@ -138,6 +143,11 @@ Displays an arrow
 @verbatim
   "arrow-scaling"          gfloat             : Read
 @end verbatim
+
+@b{Functions}
+
+  @xurl{gtk-arrow-new} @*
+  @xurl{gtk-arrow-set}
 @end deffn
 
 @c -----------------------------------------------------------------------------

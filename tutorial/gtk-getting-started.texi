@@ -351,7 +351,7 @@ is internally implemented in the Lisp binding simply as:
 @findex gtk-window-set-default-size
 
 @findex window-set-title, gtk-window-set-title
-@findex window-set-default-size, gkt-window-set-default-size
+@findex window-set-default-size, gtk-window-set-default-size
 
 @set gtk-window-set-title http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-window-set-title.html
 @set gtk-window-set-default-size http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-window-set-default-size.html
@@ -756,14 +756,14 @@ than it is also possible to implement something like
 @c Commenting the following out. Check it in more detail.
 
 @c Furthermore, the C function
-@c 
+@c
 @c @example
 @c gulong g_signal_connect_swapped (gpointer    *object,
 @c                                  const gchar *name,
 @c                                  GCallback   func,
 @c                                  gpointer    *callback_data);
 @c @end example
-@c 
+@c
 @c is not implemented in Lisp.  Again this functionality is already present with
 @c the help of @code{lambda} functions in Lisp.
 

@@ -13,7 +13,7 @@
 @ifinfo
 This is a Texinfo GTK+ 3 Tutorial for Lisp
 
-Copyright (C) 2012 Dieter Kaiser
+Copyright (C) 2012, 2013 Dieter Kaiser
 
 @format
 INFO-DIR-SECTION Math
@@ -29,8 +29,7 @@ END-INFO-DIR-ENTRY
 @end macro
 @end ifinfo
 
-@c @include category-macros.texi
-
+@c Links to the external GTK+ API documenation
 @include gtk-links.texi
 
 @titlepage
@@ -74,6 +73,7 @@ Appendix
 * Tables::
 * Figures::
 * Examples::
+* Licenses::
 
 Index
 * Function and Variable Index:: Index.
@@ -266,11 +266,13 @@ Application Support
 @appendix Examples
 @listoffloats Example
 
-@node Function and Variable Index,  , Menu Widget, Top
+@node Function and Variable Index, Licenses, Menu Widget, Top
 @appendix Function and Variable Index
 @printindex fn
 
-
+@node Licenses, , Function and Variable Index, Top
+@appendix Licenses
+@include gtk-licenses.texi
 
 @bye
 

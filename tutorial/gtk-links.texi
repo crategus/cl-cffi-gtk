@@ -39,6 +39,16 @@
 
 @set gtk-application-window http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-application-window.html
 
+@c GtkArrow
+
+@set gtk-arrow http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-arrow.html
+@set gtk-arrow-new http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-arrow-new.html
+@set gtk-arrow-set http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-arrow-set.html
+
+@c GtkArrowType
+
+@set gtk-arrow-type http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_sym_gtk-arrow-type.html
+
 @c GtkAspectFrame
 
 @set gtk-aspect-frame http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-aspect-frame.html
@@ -86,6 +96,19 @@
 @set gtk-button-box-new http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-button-box-new.html
 @set gtk-button-box-get-layout http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-button-box-get-layout.html
 @set gtk-button-box-set-layout http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-button-box-set-layout.html
+
+@c GtkCalendar
+
+@set gtk-calendar http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-calendar.html
+@set gtk-calendar-new http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-calendar-new.html
+@set gtk-calendar-select-month http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-calendar-select-month.html
+@set gtk-calendar-select-day http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-calendar-select-day.html
+@set gtk-calendar-mark-day http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-calendar-mark-day.html
+@set gtk-calendar-unmark-day http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-calendar-unmark-day.html
+@set gtk-calendar-clear-marks http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-calendar-clear-marks.html
+@set gtk-calendar-set-display-options http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-calendar-set-display-options.html
+@set gtk-calendar-get-date http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-calendar-get-date.html
+@set gtk-calendar-set-detail-func http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-calendar-set-detail-func.html
 
 @c GtkCellLayout
 
@@ -449,6 +472,7 @@
 @set gtk-widget-queue-draw http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-widget-queue-draw.html
 @set gtk-widget-get-allocation http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-widget-get-allocation.html
 @set gtk-widget-override-font http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-widget-override-font.html
+@set gtk-widget-set-tooltip-text http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-widget-set-tooltip-text.html
 
 @c -----------------------------------------------------------------------------
 

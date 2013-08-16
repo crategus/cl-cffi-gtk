@@ -4,9 +4,9 @@
 @c Language : English
 @c Author   : Dieter Kaiser
 @c Date     : 15.02.2012
-@c Revision : 16.07.2012
-@c
-@c Copyright (C) 2012 by Dieter Kaiser
+@c Revision : 16.08.2013
+@c 
+@c Copyright (C) 2012, 2013 by Dieter Kaiser
 @c -----------------------------------------------------------------------------
 
 @menu
@@ -40,63 +40,28 @@
 @findex gtk-arrow-set
 @findex arrow-set, gtk-arrow-set
 
-The arrow widget draws an arrowhead, facing in a number of possible directions
-and having a number of possible styles.  It can be very useful when placed on a
-button.  Like the label widget, the arrow widget emits no signals.
-There are only two functions for manipulating an arrow widget
-@code{gtk-arrow-new} and @code{gtk-arrow-set}.  The first function creates a new
-arrow widget with the indicated type and appearance.  The second function allows
-these values to be altered retrospectively.  The type of an arrow can be one of
-of the values of the enumeration type @code{GtkArrowType} in
-@ref{table-gtk-arrow-type}.  These values obviously indicate the direction in
-which the arrow will point.
-
 @findex GtkArrowType
 @findex gtk-arrow-type
 @findex arrow-type, gtk-arrow-type
 
-@float Table, table-gtk-arrow-type
-@caption{Values of the type @code{GtkArrowType} to indicate the
-direction in which a @code{GtkArrow} should point.}
-@shortcaption{Values of the type @code{GtkArrowType}}
-@end float
-@table @code
-@item :up
-      Represents an upward pointing arrow.
-@item :down
-      Represents a downward pointing arrow.
-@item :left
-      Represents a left pointing arrow.
-@item :right
-      Represents a right pointing arrow.
-@item :none
-      No arrow.
-@end table
-
-The shadow type argument is of the enumeration type @code{GtkShadowType} and
-may take one of the the values in @ref{table-gtk-shadow-type}.
+The arrow widget draws an arrowhead, facing in a number of possible directions
+and having a number of possible styles.  It can be very useful when placed on a
+button.  Like the label widget, the arrow widget emits no signals.
+There are only two functions for manipulating an arrow widget
+@xurl{gtk-arrow-new} and @xurl{gtk-arrow-set}.  The first function creates a new
+arrow widget with the indicated type and appearance.  The second function allows
+these values to be altered retrospectively.  The type of an arrow can be one of
+of the values of the enumeration type @xurl{gtk-arrow-type}. Possible values are
+@code{:up}, @code{:down}, @code{:left} and @code{:right}.  These values
+obviously indicate the direction in which the arrow will point.
 
 @findex GtkShadowType
 @findex gtk-shadow-type
 @findex shadow-type, gtk-shadow-type
 
-@float Table, table-gtk-shadow-type
-@caption{Values of the enumeration type @code{GtkShadowType} used to change
-the appearance of an outline typically provided by a @code{GtkFrame}.}
-@shortcaption{Values of the type @code{GtkShadowType}}
-@end float
-@table @code
-@item :none
-      No outline.
-@item :in
-      The outline is bevelled inwards.
-@item :out
-      The outline is bevelled outwards like a button. This is the default.
-@item :etched-in
-      The outline has a sunken 3d appearance.
-@item :etched-out
-      The outline has a raised 3d appearance.
-@end table
+The shadow type argument is of the enumeration type @xurl{gtk-shadow-type} and
+may take one of the the values @code{:none}, @code{:in}, @code{:etched-in} and
+@code{:etched-out}.
 
 @findex arrow-scaling
 
@@ -109,7 +74,7 @@ type @code{double} in a range of @code{[0,1]}.  The default value is @code{0.7}.
 
 @ref{example-arrows} shows a brief example to illustrate the use of arrows in
 buttons.  In addition, this example introduces the function
-@code{gtk-widget-set-tooltip-text}, which attaches a tooltip to the button
+@xurl{gtk-widget-set-tooltip-text}, which attaches a tooltip to the button
 widget.  The tooltip pops up, when the mouse is over the button.
 
 @float Example, example-arrows
@@ -183,17 +148,17 @@ widget.  The tooltip pops up, when the mouse is over the button.
 @findex gtk-calendar-new
 @findex calendar-new, gtk-calendar-new
 
-@code{GtkCalendar} is a widget that displays a Gregorian calendar, one month at
-a time.  It can be created with @code{gtk-calendar-new}.
+The @xurl{gtk-calendar} widget displays a Gregorian calendar, one month at
+a time.  It can be created with the function @xurl{gtk-calendar-new}.
 
 @findex gtk-calendar-select-month
 @findex calendar-select-month, gtk-calendar-select-month
 @findex gtk-calendar-select-day
 @findex calendar-select-day, gtk-calendar-select-day
 
-The month and year currently displayed can be altered with
-@code{gtk-calendar-select-month}.  The exact day can be selected from the
-displayed month using @code{gtk-calendar-select-day}.
+The month and year currently displayed can be altered with the function
+@xurl{gtk-calendar-select-month}.  The exact day can be selected from the
+displayed month using the function @xurl{gtk-calendar-select-day}.
 
 @findex gtk-calendar-mark-day
 @findex calendar-mark-day, gtk-calendar-mark-day
@@ -202,21 +167,22 @@ displayed month using @code{gtk-calendar-select-day}.
 @findex gtk-calendar-clear-marks
 @findex calendar-clear-marks, gtk-calendar-clear-marks
 
-To place a visual marker on a particular day, use @code{gtk-calendar-mark-day}
-and to remove the marker, @code{gtk-calendar-unmark-day}.  Alternative, all
-marks can be cleared with @code{gtk-calendar-clear-marks}.
+To place a visual marker on a particular day, use the function
+@xurl{gtk-calendar-mark-day} and to remove the marker the function
+@xurl{gtk-calendar-unmark-day}.  Alternative, all marks can be cleared with
+the function @xurl{gtk-calendar-clear-marks}.
 
 @findex gtk-calendar-set-display-options
 @findex calendar-set-display-options, gtk-calendar-set-display-options
 
-The way in which the calendar itself is displayed can be altered using
-@code{gtk-calendar-set-display-options}.
+The way in which the calendar itself is displayed can be altered using the
+function @xurl{gtk-calendar-set-display-options}.
 
 @findex gtk-calendar-get-date
 @findex calendar-get-date, gtk-calendar-get-date
 
-The selected date can be retrieved from a @code{GtkCalendar} using
-@code{gtk-calendar-get-date}.
+The selected date can be retrieved from a @xurl{gtk-calendar} using the function
+@xurl{gtk-calendar-get-date}.
 
 Users should be aware that, although the Gregorian calendar is the legal
 calendar in most countries, it was adopted progressively between 1582 and
@@ -227,18 +193,13 @@ calendar in most countries, it was adopted progressively between 1582 and
 
 @ref{example-calendar} shows a brief example of the calendar widget.  It is
 possible to set a special function with the function
-@code{gtk-calendar-set-detail-func}.  The example uses this to show a tooltip
+@xurl{gtk-calendar-set-detail-func}.  The example uses this to show a tooltip
 whenever the 12th day of a month is selected.
 
 @float Example, example-calendar
-@caption{Calendar}
+@caption{Example Calendar}
 @end float
 @verbatim
-(defun calendar-detail (calendar year month day)
-  (declare (ignore calendar year month))
-  (when (= day 12)
-    "This day has a tooltip."))
-
 (defun example-calendar ()
   (within-main-loop
     (let ((window (make-instance 'gtk-window
@@ -250,6 +211,7 @@ whenever the 12th day of a month is selected.
           (frame (make-instance 'gtk-frame))
           (calendar (make-instance 'gtk-calendar
                                    :show-details nil)))
+      ;; Connect a signal handler to the window
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
@@ -263,9 +225,14 @@ whenever the 12th day of a month is selected.
                                   (gtk-calendar-month calendar)
                                   (gtk-calendar-day calendar))))
       ;; Install a calendar detail function
-      (gtk-calendar-set-detail-func calendar #'calendar-detail)
+      (gtk-calendar-set-detail-func calendar
+                                    (lambda (calendar year month day)
+                                      (declare (ignore calendar year month))
+                                      (when (= day 12)
+                                        "This day has a tooltip.")))
       ;; Mark a day
       (gtk-calendar-mark-day calendar 6)
+      ;; Put the calendar into the frame and the frame into the window.
       (gtk-container-add frame calendar)
       (gtk-container-add window frame)
       (gtk-widget-show-all window))))
