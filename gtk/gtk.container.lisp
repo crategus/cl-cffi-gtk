@@ -208,8 +208,8 @@
     Height for width requests are generally implemented in terms of a virtual
     allocation of widgets in the input orientation. Assuming an height-for-width
     request mode, a container would implement the
-    @fun{get-preferred-height-for-width} virtual function by first calling the
-    function @fun{gtk-widget-get-preferred-width} for each of its children.
+    @code{get_preferred_height_for_width()} virtual function by first calling
+    the function @fun{gtk-widget-get-preferred-width} for each of its children.
 
     For each potential group of children that are lined up horizontally, the
     values returned by the function @fun{gtk-widget-get-preferred-width} should
