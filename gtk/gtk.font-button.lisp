@@ -426,7 +426,7 @@
 (defun gtk-font-button-get-use-font (font-button)
  #+cl-cffi-gtk-documentation
  "@version{2013-6-18}
-  @argument[font-button]{a @class{gkt-font-button} widget}
+  @argument[font-button]{a @class{gtk-font-button} widget}
   @return{Whether the selected font is used in the label.}
   @begin{short}
     Returns whether the selected font is used in the label.

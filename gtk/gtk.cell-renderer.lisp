@@ -374,7 +374,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "mode" 'gtk-cell-renderer) 't)
- "The @code{\"mode\"} property of type @symbol{gkt-cell-renderer-mode}
+ "The @code{\"mode\"} property of type @symbol{gtk-cell-renderer-mode}
   (Read / Write) @br{}
   Editable mode of the CellRenderer. @br{}
   Default value: @code{:inert}")

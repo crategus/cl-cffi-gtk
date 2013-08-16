@@ -672,7 +672,7 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-8-8}
   @argument[application]{a @class{gtk-application} object}
-  @return{A list of @class{gkt-window} widgets}
+  @return{A list of @class{gtk-window} widgets}
   @begin{short}
     Gets a list of the @class{gtk-window}'s associated with @arg{application}.
   @end{short}

@@ -380,7 +380,7 @@
 ;;; gtk_scale_get_draw_value ()
 ;;; ----------------------------------------------------------------------------
 
-(declaim (inline gkt-scale-get-draw-value))
+(declaim (inline gtk-scale-get-draw-value))
 
 (defun gtk-scale-get-draw-value (scale)
  #+cl-cffi-gtk-documentation

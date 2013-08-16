@@ -126,7 +126,7 @@
   Since 2.10
   @see-function{gtk-page-setup-unix-dialog-get-page-setup}"
   (dialog (g-object gtk-page-setup-unix-dialog))
-  (page-setup (g-object gkt-page-setup)))
+  (page-setup (g-object gtk-page-setup)))
 
 (export 'gtk-page-setup-unix-dialog-set-page-setup)
 
@@ -166,7 +166,7 @@
   @end{short}
 
   Since 2.10"
-  (dialog (g-object gkt-page-setup-unix-dialog))
+  (dialog (g-object gtk-page-setup-unix-dialog))
   (print-settings (g-object gtk-print-settings)))
 
 (export 'gtk-page-setup-unix-dialog-set-print-settings)
@@ -186,7 +186,7 @@
   @end{short}
 
   Since 2.10"
-  (dialog (g-object gkt-page-setup-unix-dialog))
+  (dialog (g-object gtk-page-setup-unix-dialog))
   (print-settings (g-object gtk-print-settings)))
 
 (export 'gtk-page-setup-unix-dialog-get-print-settings)

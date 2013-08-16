@@ -996,30 +996,33 @@
   (range-end (g-boxed-foreign gtk-text-iter))
   (include-hidden-chars :boolean))
 
-(defun gtk-text-buffer-slice (buffer start end &key
-                                     include-hidden-chars)
+(defun gtk-text-buffer-get-slice (buffer start end &key include-hidden-chars)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-5}
+ "@version{2013-8-16}
   @argument[buffer]{a @class{gtk-text-buffer} object}
   @argument[start]{start of a range}
   @argument[end]{end of a range}
   @argument[include-hidden-chars]{whether to include invisible text}
   @return{An allocated UTF-8 string.}
-  Returns the text in the range [@arg{start}, @arg{end}). Excludes undisplayed
-  text (text marked with tags that set the invisibility attribute) if
-  @arg{include-hidden-chars} is @code{nil}. The returned string includes a
-  @code{0xFFFC} character whenever the buffer contains embedded images, so byte
-  and character indexes into the returned string do correspond to byte and
-  character indexes into the buffer. Contrast with the function
-  @fun{gtk-text-buffer-get-text}. Note that @code{0xFFFC} can occur in normal
-  text as well, so it is not a reliable indicator that a pixbuf or widget is in
-  the buffer."
+  @begin{short}
+    Returns the text in the range [@arg{start}, @arg{end}). Excludes undisplayed
+    text, text marked with tags that set the invisibility attribute, if
+    @arg{include-hidden-chars} is @code{nil}.
+  @end{short}
+  The returned string includes a @code{0xFFFC} character whenever the buffer
+  contains embedded images, so byte and character indexes into the returned
+  string do correspond to byte and character indexes into the buffer. Contrast
+  with the function @fun{gtk-text-buffer-get-text}. Note that @code{0xFFFC} can
+  occur in normal text as well, so it is not a reliable indicator that a pixbuf
+  or widget is in the buffer.
+  @see-class{gtk-text-buffer}
+  @see-function{gtk-text-buffer-get-text}"
   (%gtk-text-buffer-get-slice buffer
                               start
                               end
                               include-hidden-chars))
 
-(export 'gtk-text-buffer-slice)
+(export 'gtk-text-buffer-get-slice)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_insert_pixbuf ()
@@ -1778,14 +1781,15 @@
 
 (defun gtk-text-buffer-get-bounds (buffer)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-5}
+ "@version{2013-8-16}
   @argument[buffer]{a @class{gtk-text-buffer} object}
   @begin{return}
-    @code{start} -- iterator with first position in the buffer@br{}
-    @code{end} -- iterator with the end iterator
+    @code{start} -- iterator with first position in the buffer @br{}
+    @code{end} -- iterator with the end position in the buffer
   @end{return}
   Retrieves the first and last iterators in the @arg{buffer}, i. e. the entire
-  @arg{buffer} lies within the range [@arg{start}, @arg{end})."
+  @arg{buffer} lies within the range [@arg{start}, @arg{end}).
+  @see-class{gtk-text-buffer}"
   (let ((start (make-instance 'gtk-text-iter))
         (end (make-instance 'gtk-text-iter)))
     (%gtk-text-buffer-get-bounds buffer start end)
@@ -1870,7 +1874,7 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-5-5}
   @argument[buffer]{a @class{gtk-text-buffer} object}
-  @argument[clipboard]{the @class{gkt-clipboard} object to paste from}
+  @argument[clipboard]{the @class{gtk-clipboard} object to paste from}
   @argument[override-location]{location to insert pasted text, or @code{nil}
     for at the cursor}
   @argument[default-editable]{whether the buffer is editable by default}
@@ -2318,7 +2322,7 @@
   @see-class{gtk-target-list}
   @see-symbol{gtk-text-buffer-target-info}
   @see-function{gtk-target-list-add-rich-text-targets}
-  @see-function{gtk-target-list-add-text-targets}"  
+  @see-function{gtk-target-list-add-text-targets}"
   (gtk-text-buffer-paste-target-list buffer))
 
 (export 'gtk-text-buffer-get-paste-target-list)

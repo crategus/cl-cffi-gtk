@@ -432,7 +432,7 @@
       @arg{cell-area}.
       @begin[code]{table}
         @entry[area]{The @sym{gtk-cell-area} where editing started.}
-        @entry[renderer]{The @class{gkt-cell-renderer} that started the edited.}
+        @entry[renderer]{The @class{gtk-cell-renderer} that started the edited.}
         @entry[editable]{The @class{gtk-cell-editable} widget to add.}
         @entry[cell-area]{The @class{gtk-widget} relative @class{gdk-rectangle}
           coordinates where editable should be added.}

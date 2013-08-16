@@ -1177,7 +1177,7 @@
 (defcfun ("gtk_tree_view_column_clicked" gtk-tree-view-column-clicked) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-5-16}
-  @argument[tree-column]{a @class{gkt-tree-view-column} object}
+  @argument[tree-column]{a @class{gtk-tree-view-column} object}
   Emits the \"clicked\" signal on the column. This function will only work if
   @arg{tree-column} is clickable."
   (tree-column (g-object gtk-tree-view-column)))
