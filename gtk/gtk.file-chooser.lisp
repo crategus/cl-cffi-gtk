@@ -4,9 +4,10 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -57,7 +58,7 @@
 ;;;     gtk_file_chooser_get_create_folders
 ;;;     gtk_file_chooser_set_current_name
 ;;;     gtk_file_chooser_get_filename
-;;;     gtk_file_chooser_set_filename
+;;;     gtk_file_chooserset_filename
 ;;;     gtk_file_chooser_select_filename
 ;;;     gtk_file_chooser_unselect_filename
 ;;;     gtk_file_chooser_select_all
@@ -155,7 +156,7 @@
    "use-preview-label" "gboolean" t t))
 ;  #+win32
 ;  (:cffi filename
-;         gtk-file-chooser-filename
+;         gtk-file-tename
 ;         (g-string :free-from-foreign t :free-to-foreign t)
 ;         "gtk_file_chooser_get_filename_utf8"
 ;         "gtk_file_chooser_set_filename_utf8")
@@ -678,7 +679,7 @@
                                                'gtk-file-chooser) 't)
  "The @code{\"local-only\"} property of type @code{:boolean}
   (Read / Write) @br{}
-  Whether the selected file(s) should be limited to local file: URLs. @br{}
+  Whether the selected file(s) should be limited to local file URLs. @br{}
   Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
@@ -731,111 +732,126 @@
 (setf (gethash 'gtk-file-chooser-action atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-file-chooser-action 'function)
- "@version{2013-3-3}
-  @begin{short}
-    Accessor of the slot @code{\"action\"} of the @class{gtk-file-chooser}
-    interface.
-  @end{short}")
+ "@version{2013-8-17}
+  Accessor of the slot @code{\"action\"} of the @class{gtk-file-chooser}
+  interface.
+  @see-class{gtk-file-chooser}
+  @see-symbol{gtk-file-chooser-action}
+  @see-function{gtk-file-chooser-get-action}
+  @see-function{gtk-file-chooser-set-action}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-file-chooser-create-folders atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-file-chooser-create-folders 'function)
- "@version{2013-3-3}
-  @begin{short}
-    Accessor of the slot @code{\"create-folders\"} of the
-    @class{gtk-file-chooser} interface.
-  @end{short}")
+ "@version{2013-8-17}
+  Accessor of the slot @code{\"create-folders\"} of the @class{gtk-file-chooser}
+  interface.
+  @see-class{gtk-file-chooser}
+  @see-function{gtk-file-chooser-get-create-folders}
+  @see-function{gtk-file-chooser-set-create-folders}")
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-file-chooser-do-overwrite-confirmation atdoc:*function-name-alias*)
+(setf (gethash 'gtk-file-chooser-do-overwrite-confirmation
+               atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-file-chooser-do-overwrite-confirmation 'function)
- "@version{2013-3-3}
-  @begin{short}
-    Accessor of the slot @code{\"do-overwrite-confirmation\"} of the
-    @class{gtk-file-chooser} interface.
-  @end{short}")
+ "@version{2013-8-17}
+  Accessor of the slot @code{\"do-overwrite-confirmation\"} of the
+  @class{gtk-file-chooser} interface.
+  @see-class{gtk-file-chooser}
+  @see-function{gtk-file-chooser-get-do-overwrite-confirmation}
+  @see-function{gtk-file-chooser-set-do-overwrite-confirmation}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-file-chooser-extra-widget atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-file-chooser-extra-widget 'function)
- "@version{2013-3-3}
-  @begin{short}
-    Accessor of the slot @code{\"extra-widget\"} of the
-    @class{gtk-file-chooser} interface.
-  @end{short}")
+ "@version{2013-8-17}
+  Accessor of the slot @code{\"extra-widget\"} of the @class{gtk-file-chooser}
+  interface.
+  @see-class{gtk-file-chooser}
+  @see-function{gtk-file-chooser-get-extra-widget}
+  @see-function{gtk-file-chooser-set-extra-widget}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-file-chooser-filter atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-file-chooser-filter 'function)
- "@version{2013-3-3}
-  @begin{short}
-    Accessor of the slot @code{\"filter\"} of the
-    @class{gtk-file-chooser} interface.
-  @end{short}")
+ "@version{2013-8-17}
+  Accessor of the slot @code{\"filter\"} of the @class{gtk-file-chooser}
+  interface.
+  @see-class{gtk-file-chooser}
+  @see-class{gtk-file-filter}
+  @see-function{gtk-file-chooser-get-filter}
+  @see-function{gtk-file-chooser-set-filter}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-file-chooser-local-only atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-file-chooser-local-only 'function)
- "@version{2013-3-3}
-  @begin{short}
-    Accessor of the slot @code{\"local-only\"} of the
-    @class{gtk-file-chooser} interface.
-  @end{short}")
+ "@version{2013-8-17}
+  Accessor of the slot @code{\"local-only\"} of the @class{gtk-file-chooser}
+  interface.
+  @see-class{gtk-file-chooser}
+  @see-function{gtk-file-chooser-get-local-only}
+  @see-function{gtk-file-chooser-set-local-only}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-file-chooser-preview-widget atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-file-chooser-preview-widget 'function)
- "@version{2013-3-3}
-  @begin{short}
-    Accessor of the slot @code{\"preview-widget\"} of the
-    @class{gtk-file-chooser} interface.
-  @end{short}")
+ "@version{2013-8-17}
+  Accessor of the slot @code{\"preview-widget\"} of the @class{gtk-file-chooser}
+  interface.
+  @see-class{gtk-file-chooser}
+  @see-function{gtk-file-chooser-get-preview-widget}
+  @see-function{gtk-file-chooser-set-preview-widget}")
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-file-chooser-preview-widget-active atdoc:*function-name-alias*)
+(setf (gethash 'gtk-file-chooser-preview-widget-active
+               atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-file-chooser-preview-widget-active 'function)
- "@version{2013-3-3}
-  @begin{short}
-    Accessor of the slot @code{\"preview-widget-active\"} of the
-    @class{gtk-file-chooser} interface.
-  @end{short}")
+ "@version{2013-8-17}
+  Accessor of the slot @code{\"preview-widget-active\"} of the
+  @class{gtk-file-chooser} interface.
+  @see-class{gtk-file-chooser}
+  @see-function{gtk-file-chooser-get-preview-widget-active}
+  @see-function{gtk-file-chooser-set-preview-widget-active}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-file-chooser-select-multiple atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-file-chooser-select-multiple 'function)
- "@version{2013-3-3}
-  @begin{short}
-    Accessor of the slot @code{\"select-multiple\"} of the
-    @class{gtk-file-chooser} interface.
-  @end{short}")
+ "@version{2013-8-17}
+  Accessor of the slot @code{\"select-multiple\"} of the
+  @class{gtk-file-chooser} interface.
+  @see-class{gtk-file-chooser}
+  @see-function{gtk-file-chooser-get-select-multiple}
+  @see-function{gtk-file-chooser-set-select-multiple}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-file-chooser-show-hidden atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-file-chooser-show-hidden 'function)
- "@version{2013-3-3}
-  @begin{short}
-    Accessor of the slot @code{\"show-hidden\"} of the
-    @class{gtk-file-chooser} interface.
-  @end{short}")
+ "@version{2013-8-17}
+  Accessor of the slot @code{\"show-hidden\"} of the @class{gtk-file-chooser}
+  interface.
+  @see-class{gtk-file-chooser}
+  @see-function{gtk-file-chooser-get-show-hidden}
+  @see-function{gtk-file-chooser-set-show-hidden}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-file-chooser-use-preview-label atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-file-chooser-use-preview-label 'function)
- "@version{2013-3-3}
-  @begin{short}
-    Accessor of the slot @code{\"use-preview-label\"} of the
-    @class{gtk-file-chooser} interface.
-  @end{short}")
+ "@version{2013-8-17}
+  Accessor of the slot @code{\"use-preview-label\"} of the
+  @class{gtk-file-chooser} interface.
+  @see-class{gtk-file-chooser}
+  @see-function{gtk-file-chooser-get-use-preview-label}
+  @see-function{gtk-file-chooser-set-use-preview-label}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkFileChooserAction
@@ -970,9 +986,10 @@
 
 (defun gtk-file-chooser-set-action (chooser action)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-18}
+ "@version{2013-8-17}
   @argument[chooser]{a @class{gtk-file-chooser} object}
-  @argument[action]{the action that the file selector is performing}
+  @argument[action]{the action of type @symbol{gtk-file-chooser-action} that
+    the file selector is performing}
   @begin{short}
     Sets the type of operation that the chooser is performing; the user
     interface is adapted to suit the selected action.
@@ -980,7 +997,10 @@
   For example, an option to create a new folder might be shown if the action is
   @code{:save} but not if the action is @code{:open}.
 
-  Since 2.4"
+  Since 2.4
+  @see-class{gtk-file-chooser}
+  @see-symbol{gtk-file-chooser-action}
+  @see-function{gtk-file-chooser-get-action}"
   (setf (gtk-file-chooser-action chooser) action))
 
 (export 'gtk-file-chooser-set-action)
@@ -993,15 +1013,18 @@
 
 (defun gtk-file-chooser-get-action (chooser)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-18}
+ "@version{2013-8-17}
   @argument[chooser]{a @class{gtk-file-chooser} object}
-  @return{the action that the file selector is performing}
+  @return{the action of type @symbol{gtk-file-chooser-action} that the file
+    selector is performing}
   @begin{short}
     Gets the type of operation that the file chooser is performing.
   @end{short}
   See the function @fun{gtk-file-chooser-set-action}.
 
   Since 2.4
+  @see-class{gtk-file-chooser}
+  @see-symbol{gtk-file-chooser-action}
   @see-function{gtk-file-chooser-set-action}"
   (gtk-file-chooser-action chooser))
 
@@ -1015,13 +1038,13 @@
 
 (defun gtk-file-chooser-set-local-only (chooser local-only)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-18}
+ "@version{2013-8-17}
   @argument[chooser]{a @class{gtk-file-chooser} object}
   @argument[local-only]{@em{true} if only local files can be selected}
   @begin{short}
     Sets whether only local files can be selected in the file selector.
   @end{short}
-  If @arg{local-only} is @em{true} (the default), then the selected file are
+  If @arg{local-only} is @em{true}, the default, then the selected file are
   files are guaranteed to be accessible through the operating systems native
   file file system and therefore the application only needs to worry about the
   filename functions in @class{gtk-file-chooser}, like the function
@@ -1029,8 +1052,10 @@
   the function @fun{gtk-file-chooser-get-uri},
 
   Since 2.4
+  @see-class{gtk-file-chooser}
+  @see-function{gtk-file-chooser-get-uri}
   @see-function{gtk-file-chooser-get-filename}
-  @see-function{gtk-file-chooser-get-uri}"
+  @see-function{gtk-file-chooser-get-local-only}"
   (setf (gtk-file-chooser-local-only chooser) local-only))
 
 (export 'gtk-file-chooser-set-local-only)
@@ -1043,7 +1068,7 @@
 
 (defun gtk-file-chooser-get-local-only (chooser)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-18}
+ "@version{2013-8-17}
   @argument[chooser]{a @class{gtk-file-chooser} object}
   @return{@em{True} if only local files can be selected.}
   @begin{short}
@@ -1052,6 +1077,7 @@
   See the function @fun{gtk-file-chooser-set-local-only}.
 
   Since 2.4
+  @see-class{gtk-file-chooser}
   @see-function{gtk-file-chooser-set-local-only}"
   (gtk-file-chooser-local-only chooser))
 
@@ -1065,7 +1091,7 @@
 
 (defun gtk-file-chooser-set-select-multiple (chooser select-multiple)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-18}
+ "@version{2013-8-17}
   @argument[chooser]{a @class{gtk-file-chooser} object}
   @argument[select-multiple]{@em{true} if multiple files can be selected}
   @begin{short}
@@ -1074,7 +1100,9 @@
   This is only relevant if the action is set to be @code{:open} or
   @code{:select-folder}.
 
-  Since 2.4"
+  Since 2.4
+  @see-class{gtk-file-chooser}
+  @see-function{gtk-file-chooser-get-select-multiple}"
   (setf (gtk-file-chooser-select-multiple chooser) select-multiple))
 
 (export 'gtk-file-chooser-set-select-multiple)
@@ -1087,7 +1115,7 @@
 
 (defun gtk-file-chooser-get-select-multiple (chooser)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-18}
+ "@version{2013-8-17}
   @argument[chooser]{a @class{gtk-file-chooser} object}
   @return{@em{True} if multiple files can be selected.}
   @begin{short}
@@ -1096,6 +1124,7 @@
   See the function @fun{gtk-file-chooser-set-select-multiple}.
 
   Since 2.4
+  @see-class{gtk-file-chooser}
   @see-function{gtk-file-chooser-set-select-multiple}"
   (gtk-file-chooser-select-multiple chooser))
 
@@ -1109,7 +1138,7 @@
 
 (defun gtk-file-chooser-set-show-hidden (chooser show-hidden)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-18}
+ "@version{2013-8-17}
   @argument[chooser]{a @class{gtk-file-chooser} object}
   @argument[show-hidden]{@em{true} if hidden files and folders should be
     displayed}
@@ -1117,7 +1146,9 @@
     Sets whether hidden files and folders are displayed in the file selector.
   @end{short}
 
-  Since 2.6"
+  Since 2.6
+  @see-class{gtk-file-chooser}
+  @see-function{gtk-file-chooser-get-show-hidden}"
   (setf (gtk-file-chooser-show-hidden chooser) show-hidden))
 
 (export 'gtk-file-chooser-set-show-hidden)
@@ -1130,7 +1161,7 @@
 
 (defun gtk-file-chooser-get-show-hidden (chooser)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-18}
+ "@version{2013-8-17}
   @argument[chooser]{a @class{gtk-file-chooser} object}
   @return{@em{True} if hidden files and folders are displayed.}
   @begin{short}
@@ -1139,6 +1170,7 @@
   See the function @fun{gtk-file-chooser-set-show-hidden}.
 
   Since 2.6
+  @see-class{gtk-file-chooser}
   @see-function{gtk-file-chooser-set-show-hidden}"
   (gtk-file-chooser-show-hidden chooser))
 
@@ -1152,15 +1184,15 @@
 
 (defun gtk-file-chooser-set-do-overwrite-confirmation (chooser confirmation)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-18}
+ "@version{2013-8-17}
   @argument[chooser]{a @class{gtk-file-chooser} object}
   @argument[do-overwrite-confirmation]{whether to confirm overwriting in save
     mode}
   @begin{short}
     Sets whether a file chooser in @code{:save} mode will present a confirmation
-    dialog if the user types a file name that already exists. This is @code{nil}
-    by default.
+    dialog if the user types a file name that already exists.
   @end{short}
+  This is @code{nil} by default.
 
   Regardless of this setting, the chooser will emit the \"confirm-overwrite\"
   signal when appropriate.
@@ -1170,7 +1202,9 @@
   the \"confirm-overwrite\" signal; please refer to its documentation for the
   details.
 
-  Since 2.8"
+  Since 2.8
+  @see-class{gtk-file-chooser}
+  @see-function{gtk-file-chooser-get-do-overwrite-confirmation}"
   (setf (gtk-file-chooser-do-overwrite-confirmation chooser) confirmation))
 
 (export 'gtk-file-chooser-set-do-overwrite-confirmation)
@@ -1183,7 +1217,7 @@
 
 (defun gtk-file-chooser-get-do-overwrite-confirmation (chooser)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-18}
+ "@version{2013-8-17}
   @argument[chooser]{a @class{gtk-file-chooser} object}
   @return{@em{True} if the file chooser will present a confirmation dialog;
     @code{nil} otherwise.}
@@ -1192,7 +1226,9 @@
     user types a file name that already exists.
   @end{short}
 
-  Since 2.8"
+  Since 2.8
+  @see-class{gtk-file-chooser}
+  @see-function{gtk-file-chooser-set-do-overwrite-confirmation}"
   (gtk-file-chooser-do-overwrite-confirmation chooser))
 
 (export 'gtk-file-chooser-get-do-overwrite-confirmation)
@@ -1205,7 +1241,7 @@
 
 (defun gtk-file-chooser-set-create-folders (chooser create-folders)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-18}
+ "@version{2013-8-17}
   @argument[chooser]{a @class{gtk-file-chooser} object}
   @argument[create-folders]{@em{true} if the New Folder button should be
     displayed}
@@ -1214,7 +1250,9 @@
   @end{short}
   This is only relevant if the action is not set to be @code{:open}.
 
-  Since 2.18"
+  Since 2.18
+  @see-class{gtk-file-chooser}
+  @see-function{gtk-file-chooser-get-create-folders}"
   (setf (gtk-file-chooser-create-folders chooser) create-folders))
 
 (export 'gtk-file-chooser-set-create-folders)
@@ -1227,7 +1265,7 @@
 
 (defun gtk-file-chooser-get-create-folders (chooser)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-18}
+ "@version{2013-8-17}
   @argument[chooser]{a @class{gtk-file-chooser} object}
   @return{@em{True} if the New Folder button should be displayed.}
   @begin{short}
@@ -1236,6 +1274,7 @@
   See the function @fun{gtk-file-chooser-set-create-folders}.
 
   Since 2.18
+  @see-class{gtk-file-chooser}
   @see-function{gtk-file-chooser-set-create-folders}"
   (gtk-file-chooser-create-folders chooser))
 
@@ -1248,7 +1287,7 @@
 (defcfun ("gtk_file_chooser_set_current_name" gtk-file-chooser-set-current-name)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2013-6-18}
+ "@version{2013-8-17}
   @argument[chooser]{a @class{gtk-file-chooser} object}
   @argument[name]{the filename to use, as a UTF-8 string}
   @begin{short}
@@ -1266,6 +1305,7 @@
   function @sym{gtk-file-chooser-set-current-name} as well.
 
   Since 2.4
+  @see-class{gtk-file-chooser}
   @see-function{gtk-file-chooser-set-filename}
   @see-function{gtk-file-chooser-set-uri}"
   (chooser (g-object gtk-file-chooser))
@@ -1280,7 +1320,7 @@
 (defcfun ("gtk_file_chooser_get_filename" gtk-file-chooser-get-filename)
     (:string :free-from-foreign t)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-18}
+ "@version{2013-8-17}
   @argument[chooser]{a @class{gtk-file-chooser} object}
   @begin{return}
     The currently selected filename, or @code{nil} if no file is selected, or
@@ -1295,59 +1335,65 @@
   If the file chooser is in folder mode, this function returns the selected
   folder.
 
-  Since 2.4"
+  Since 2.4
+  @see-class{gtk-file-chooser}
+  @see-function{gtk-file-chooser-set-filename}"
   (chooser (g-object gtk-file-chooser)))
 
 (export 'gtk-file-chooser-get-filename)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_set_filename ()
-;;;
-;;; gboolean gtk_file_chooser_set_filename (GtkFileChooser *chooser,
-;;;                                         const char *filename);
-;;;
-;;; Sets filename as the current filename for the file chooser, by changing to
-;;; the file's parent folder and actually selecting the file in list; all other
-;;; files will be unselected. If the chooser is in GTK_FILE_CHOOSER_ACTION_SAVE
-;;; mode, the file's base name will also appear in the dialog's file name entry.
-;;;
-;;; Note that the file must exist, or nothing will be done except for the
-;;; directory change.
-;;;
-;;; You should use this function only when implementing a File/Save As... dialog
-;;; for which you already have a file name to which the user may save. For
-;;; example, when the user opens an existing file and then does File/Save As...
-;;; on it to save a copy or a modified version. If you don't have a file name
-;;; already - for example, if the user just created a new file and is saving it
-;;; for the first time, do not call this function. Instead, use something
-;;; similar to this:
-;;;
-;;;   if (document_is_new)
-;;;     {
-;;;       /* the user just created a new document */
-;;;       gtk_file_chooser_set_current_name (chooser, "Untitled document");
-;;;     }
-;;;   else
-;;;     {
-;;;       /* the user edited an existing document */
-;;;       gtk_file_chooser_set_filename (chooser, existing_filename);
-;;;     }
-;;;
-;;; In the first case, the file chooser will present the user with useful
-;;; suggestions as to where to save his new file. In the second case, the file's
-;;; existing location is already known, so the file chooser will use it.
-;;;
-;;; chooser :
-;;;     a GtkFileChooser
-;;;
-;;; filename :
-;;;     the filename to set as current
-;;;
-;;; Returns :
-;;;     Not useful.
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_file_chooser_set_filename" gtk-file-chooser-set-filename)
+    :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-17}
+  @argument[chooser]{a @class{gtk-file-chooser} object}
+  @argument[filename]{the filename to set as current}
+  @return{Not useful.}
+  @begin{short}
+    Sets @arg{filename} as the current filename for the file chooser, by
+    changing to the file's parent folder and actually selecting the file in
+    list; all other files will be unselected.
+  @end{short}
+  If the chooser is in @code{:save} mode, the file's base name will also appear
+  in the dialog's file name entry.
+
+  Note that the file must exist, or nothing will be done except for the
+  directory change.
+
+  You should use this function only when implementing a \"File/Save As...\"
+  dialog for which you already have a file name to which the user may save. For
+  example, when the user opens an existing file and then does
+  \"File/Save As...\" on it to save a copy or a modified version. If you do not
+  have a file name already - for example, if the user just created a new file
+  and is saving it for the first time, do not call this function. Instead, use
+  something similar to this:
+  @begin{pre}
+ if (document_is_new)
+   {
+     /* the user just created a new document */
+     gtk_file_chooser_set_current_name (chooser, \"Untitled document\");
+   @}
+  else
+   {
+     /* the user edited an existing document */
+     gtk_file_chooser_set_filename (chooser, existing_filename);
+   @}
+  @end{pre}
+  In the first case, the file chooser will present the user with useful
+  suggestions as to where to save his new file. In the second case, the file's
+  existing location is already known, so the file chooser will use it.
+
+  Since 2.4
+  @see-class{gtk-file-chooser}
+  @see-function{gtk-file-chooser-get-filename}"
+  (chooser (g-object gtk-file-chooser))
+  (filename :string))
+
+(export 'gtk-file-chooser-set-filename)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_select_filename ()
@@ -1676,145 +1722,197 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_set_preview_widget ()
-;;;
-;;; void gtk_file_chooser_set_preview_widget (GtkFileChooser *chooser,
-;;;                                           GtkWidget *preview_widget);
-;;;
-;;; Sets an application-supplied widget to use to display a custom preview of
-;;; the currently selected file. To implement a preview, after setting the
-;;; preview widget, you connect to the "update-preview" signal, and call
-;;; gtk_file_chooser_get_preview_filename() or
-;;; gtk_file_chooser_get_preview_uri() on each change. If you can display a
-;;; preview of the new file, update your widget and set the preview active using
-;;; gtk_file_chooser_set_preview_widget_active(). Otherwise, set the preview
-;;; inactive.
-;;;
-;;; When there is no application-supplied preview widget, or the
-;;; application-supplied preview widget is not active, the file chooser may
-;;; display an internally generated preview of the current file or it may
-;;; display no preview at all.
-;;;
-;;; chooser :
-;;;     a GtkFileChooser
-;;;
-;;; preview_widget :
-;;;     widget for displaying preview.
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-file-chooser-set-preview-widget))
+
+(defun gtk-file-chooser-set-preview-widget (chooser preview-widget)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-17}
+  @argument[chooser]{a @class{gtk-file-chooser} object}
+  @argument[preview-widget]{widget for displaying preview}
+  @begin{short}
+    Sets an application-supplied widget to use to display a custom preview of
+    the currently selected file.
+  @end{short}
+  To implement a preview, after setting the preview widget, you connect to the
+  \"update-preview\" signal, and call the functions
+  @fun{gtk-file-chooser-get-preview-filename} or
+  @fun{gtk-file-chooser-get-preview-uri} on each change. If you can display a
+  preview of the new file, update your widget and set the preview active using
+  the function @fun{gtk-file-chooser-set-preview-widget-active}. Otherwise, set
+  the preview inactive.
+
+  When there is no application-supplied preview widget, or the
+  application-supplied preview widget is not active, the file chooser may
+  display an internally generated preview of the current file or it may
+  display no preview at all.
+
+  Since 2.4
+  @see-class{gtk-file-chooser}
+  @see-function{gtk-file-chooser-get-preview-uri}
+  @see-function{gtk-file-chooser-get-preview-widget}
+  @see-function{gtk-file-chooser-get-preview-filename}
+  @see-function{gtk-file-chooser-set-preview-widget-active}"
+  (setf (gtk-file-chooser-preview-widget chooser) preview-widget))
+
+(export 'gtk-file-chooser-set-preview-widget)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_get_preview_widget ()
-;;;
-;;; GtkWidget * gtk_file_chooser_get_preview_widget (GtkFileChooser *chooser);
-;;;
-;;; Gets the current preview widget; see gtk_file_chooser_set_preview_widget().
-;;;
-;;; chooser :
-;;;     a GtkFileChooser
-;;;
-;;; Returns :
-;;;     the current preview widget, or NULL
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-file-chooser-get-preview-widget))
+
+(defun gtk-file-chooser-get-preview-widget (chooser)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-17}
+  @argument[chooser]{a @class{gtk-file-chooser} object}
+  @return{The current preview widget, or @code{nil}.}
+  @begin{short}
+    Gets the current preview widget.
+  @end{short}
+  See the function @fun{gtk-file-chooser-set-preview-widget}.
+
+  Since 2.4
+  @see-class{gtk-file-chooser}
+  @see-function{gtk-file-chooser-set-preview-widget}"
+  (gtk-file-chooser-preview-widget chooser))
+
+(export 'gtk-file-chooser-get-preview-widget)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_set_preview_widget_active ()
-;;;
-;;; void gtk_file_chooser_set_preview_widget_active (GtkFileChooser *chooser,
-;;;                                                  gboolean active);
-;;;
-;;; Sets whether the preview widget set by gtk_file_chooser_set_preview_widget()
-;;; should be shown for the current filename. When active is set to false, the
-;;; file chooser may display an internally generated preview of the current file
-;;; or it may display no preview at all. See
-;;; gtk_file_chooser_set_preview_widget() for more details.
-;;;
-;;; chooser :
-;;;     a GtkFileChooser
-;;;
-;;; active :
-;;;     whether to display the user-specified preview widget
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-file-chooser-set-preview-widget-active))
+
+(defun gtk-file-chooser-set-preview-widget-active (chooser active)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-17}
+  @argument[chooser]{a @class{gtk-file-chooser} object}
+  @argument[active]{whether to display the user-specified preview widget}
+  @begin{short}
+    Sets whether the preview widget set by the function
+    @fun{gtk-file-chooser-set-preview-widget} should be shown for the current
+    filename.
+  @end{short}
+  When @arg{active} is set to false, the file chooser may display an internally
+  generated preview of the current file or it may display no preview at all.
+  See the function @fun{gtk-file-chooser-set-preview-widget} for more details.
+
+  Since 2.4
+  @see-class{gtk-file-chooser}
+  @see-function{gtk-file-chooser-set-preview-widget}
+  @see-function{gtk-file-chooser-get-preview-widget-active}"
+  (setf (gtk-file-chooser-preview-widget-active chooser) active))
+
+(export 'gtk-file-chooser-set-preview-widget-active)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_get_preview_widget_active ()
-;;;
-;;; gboolean gtk_file_chooser_get_preview_widget_active
-;;;                                                   (GtkFileChooser *chooser);
-;;;
-;;; Gets whether the preview widget set by gtk_file_chooser_set_preview_widget()
-;;; should be shown for the current filename. See
-;;; gtk_file_chooser_set_preview_widget_active().
-;;;
-;;; chooser :
-;;;     a GtkFileChooser
-;;;
-;;; Returns :
-;;;     TRUE if the preview widget is active for the current filename.
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-file-chooser-get-preview-widget-active))
+
+(defun gtk-file-chooser-get-preview-widget-active (chooser)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-17}
+  @argument[chooser]{a @class{gtk-file-chooser} object}
+  @return{@em{True} if the preview widget is active for the current filename.}
+  @begin{short}
+    Gets whether the preview widget set by the function
+    @fun{gtk-file-chooser-set-preview-widget} should be shown for the current
+    filename.
+  @end{short}
+  See the function @fun{gtk-file-chooser-set-preview-widget-active}.
+
+  Since 2.4
+  @see-class{gtk-file-chooser}
+  @see-function{gtk-file-chooser-set-preview-widget}
+  @see-function{gtk-file-chooser-set-preview-widget-active}"
+  (gtk-file-chooser-preview-widget-active chooser))
+
+(export 'gtk-file-chooser-get-preview-widget-active)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_set_use_preview_label ()
-;;;
-;;; void gtk_file_chooser_set_use_preview_label (GtkFileChooser *chooser,
-;;;                                              gboolean use_label);
-;;;
-;;; Sets whether the file chooser should display a stock label with the name of
-;;; the file that is being previewed; the default is TRUE. Applications that
-;;; want to draw the whole preview area themselves should set this to FALSE and
-;;; display the name themselves in their preview widget.
-;;;
-;;; See also: gtk_file_chooser_set_preview_widget()
-;;;
-;;; chooser :
-;;;     a GtkFileChooser
-;;;
-;;; use_label :
-;;;     whether to display a stock label with the name of the previewed file
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-file-chooser-set-use-preview-label))
+
+(defun gtk-file-chooser-set-use-preview-label (chooser use-label)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-17}
+  @argument[chooser]{a @class{gtk-file-chooser} object}
+  @argument[use-label]{whether to display a stock label with the name of the
+    previewed file}
+  @begin{short}
+    Sets whether the file chooser should display a stock label with the name of
+    the file that is being previewed; the default is @em{true}.
+  @end{short}
+  Applications that want to draw the whole preview area themselves should set
+  this to @code{nil} and display the name themselves in their preview widget.
+
+  See also the function @fun{gtk-file-chooser-set-preview-widget}.
+
+  Since 2.4
+  @see-class{gtk-file-chooser}
+  @see-function{gtk-file-chooser-set-preview-widget}
+  @see-function{gtk-file-chooser-get-use-preview-label}"
+  (setf (gtk-file-chooser-use-preview-label chooser) use-label))
+
+(export 'gtk-file-chooser-set-use-preview-label)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_get_use_preview_label ()
-;;;
-;;; gboolean gtk_file_chooser_get_use_preview_label (GtkFileChooser *chooser);
-;;;
-;;; Gets whether a stock label should be drawn with the name of the previewed
-;;; file. See gtk_file_chooser_set_use_preview_label().
-;;;
-;;; chooser :
-;;;     a GtkFileChooser
-;;;
-;;; Returns :
-;;;     TRUE if the file chooser is set to display a label with the name of the
-;;;     previewed file, FALSE otherwise.
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-file-chooser-get-use-preview-label))
+
+(defun gtk-file-chooser-get-use-preview-label (chooser)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-17}
+  @argument[chooser]{a @class{gtk-file-chooser} object}
+  @begin{return}
+    @em{True} if the file chooser is set to display a label with the name of the
+    previewed file, @code{nil} otherwise.
+  @end{return}
+  @begin{short}
+    Gets whether a stock label should be drawn with the name of the previewed
+    file.
+  @end{short}
+  See the function @fun{gtk-file-chooser-set-use-preview-label}.
+  @see-class{gtk-file-chooser}
+  @see-function{gtk-file-chooser-set-use-preview-label}"
+  (gtk-file-chooser-get-use-preview-label chooser))
+
+(export 'gtk-file-chooser-get-use-preview-label)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_get_preview_filename ()
-;;;
-;;; char * gtk_file_chooser_get_preview_filename (GtkFileChooser *chooser);
-;;;
-;;; Gets the filename that should be previewed in a custom preview widget. See
-;;; gtk_file_chooser_set_preview_widget().
-;;;
-;;; chooser :
-;;;     a GtkFileChooser
-;;;
-;;; Returns :
-;;;     the filename to preview, or NULL if no file is selected, or if the
-;;;     selected file cannot be represented as a local filename. Free with
-;;;     g_free().
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_file_chooser_get_preview_filename"
+           gtk-file-chooser-get-preview-filename) (:string :free-from-foreign t)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-17}
+  @argument[chooser]{a @class{gtk-file-chooser} object}
+  @begin{return}
+    The filename to preview, or @code{nil} if no file is selected, or if the
+    selected file cannot be represented as a local filename.
+  @end{return}
+  @begin{short}
+    Gets the filename that should be previewed in a custom preview widget.
+  @end{short}
+  See the function @fun{gtk-file-chooser-set-preview-widget}.
+
+  Since 2.4
+  @see-class{gtk-file-chooser}
+  @see-function{gtk-file-chooser-set-preview-widget}"
+  (chooser (g-object gtk-file-chooser)))
+
+(export 'gtk-file-chooser-get-preview-filename)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_get_preview_uri ()
@@ -1836,36 +1934,48 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_set_extra_widget ()
-;;;
-;;; void gtk_file_chooser_set_extra_widget (GtkFileChooser *chooser,
-;;;                                         GtkWidget *extra_widget);
-;;;
-;;; Sets an application-supplied widget to provide extra options to the user.
-;;;
-;;; chooser :
-;;;     a GtkFileChooser
-;;;
-;;; extra_widget :
-;;;     widget for extra options
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-file-chooser-set-extra-widget))
+
+(defun gtk-file-chooser-set-extra-widget (chooser extra-widget)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-17}
+  @argument[chooser]{a @class{gtk-file-chooser} object}
+  @argument[extra-widget]{widget for extra options}
+  @begin{short}
+    Sets an application-supplied widget to provide extra options to the user.
+  @end{short}
+
+  Since 2.4
+  @see-class{gtk-file-chooser}
+  @see-function{gtk-file-chooser-get-extra-widget}"
+  (setf (gtk-file-chooser-extra-widget chooser) extra-widget))
+
+(export 'gtk-file-chooser-set-extra-widget)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_get_extra_widget ()
-;;;
-;;; GtkWidget * gtk_file_chooser_get_extra_widget (GtkFileChooser *chooser);
-;;;
-;;; Gets the current preview widget; see gtk_file_chooser_set_extra_widget().
-;;;
-;;; chooser :
-;;;     a GtkFileChooser
-;;;
-;;; Returns :
-;;;     the current extra widget, or NULL
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-file-chooser-get-extra-widget))
+
+(defun gtk-file-chooser-get-extra-widget (chooser)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-17}
+  @argument[chooser]{a @class{gtk-file-chooser} object}
+  @return{The current extra widget, or @code{nil}.}
+  @begin{short}
+    Gets the current preview widget.
+  @end{short}
+  See the function @fun{gtk-file-chooser-set-extra-widget}.
+
+  Since 2.4
+  @see-class{gtk-file-chooser}
+  @see-function{gtk-file-chooser-set-extra-widget}"
+  (gtk-file-chooser-extra-widget chooser))
+
+(export 'gtk-file-chooser-get-extra-widget)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_add_filter ()
@@ -1926,40 +2036,55 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_set_filter ()
-;;;
-;;; void gtk_file_chooser_set_filter (GtkFileChooser *chooser,
-;;;                                   GtkFileFilter *filter);
-;;;
-;;; Sets the current filter; only the files that pass the filter will be
-;;; displayed. If the user-selectable list of filters is non-empty, then the
-;;; filter should be one of the filters in that list. Setting the current filter
-;;; when the list of filters is empty is useful if you want to restrict the
-;;; displayed set of files without letting the user change it.
-;;;
-;;; chooser :
-;;;     a GtkFileChooser
-;;;
-;;; filter :
-;;;     a GtkFileFilter
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-file-chooser-set-filter))
+
+(defun gtk-file-chooser-set-filter (chooser filter)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-17}
+  @argument[chooser]{a @class{gtk-file-chooser} object}
+  @argument[filter]{a @class{gtk-file-filter}}
+  @begin{short}
+    Sets the current filter; only the files that pass the filter will be
+    displayed.
+  @end{short}
+  If the user-selectable list of filters is non-empty, then the filter should be
+  one of the filters in that list. Setting the current filter when the list of
+  filters is empty is useful if you want to restrict the displayed set of files
+  without letting the user change it.
+
+  Since 2.4
+  @see-class{gtk-file-chooser}
+  @see-class{gtk-file-filter}
+  @see-function{gtk-file-chooser-get-filter}"
+  (setf (gtk-file-chooser-filter chooser) filter))
+
+(export 'gtk-file-chooser-set-filter)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_get_filter ()
-;;;
-;;; GtkFileFilter * gtk_file_chooser_get_filter (GtkFileChooser *chooser);
-;;;
-;;; Gets the current filter; see gtk_file_chooser_set_filter().
-;;;
-;;; chooser :
-;;;     a GtkFileChooser
-;;;
-;;; Returns :
-;;;     the current filter, or NULL
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-file-chooser-get-filter))
+
+(defun gtk-file-chooser-get-filter (chooser)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-17}
+  @argument[chooser]{a @class{gtk-file-chooser} object}
+  @return{The current filter, or @code{nil}.}
+  @begin{short}
+    Gets the current filter.
+  @end{short}
+  See the function @fun{gtk-file-chooser-set-filter}.
+
+  Since 2.4
+  @see-class{gtk-file-chooser}
+  @see-class{gtk-file-filter}
+  @see-function{gtk-file-chooser-set-filter}"
+  (gtk-file-chooser-filter chooser))
+
+(export 'gtk-file-chooser-get-filter)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_add_shortcut_folder ()
