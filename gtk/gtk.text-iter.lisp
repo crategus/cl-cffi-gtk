@@ -1376,7 +1376,7 @@
 ;;; gtk_text_iter_backward_line ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk-text-iter-backward-line" gtk-text-iter-backward-line) :boolean
+(defcfun ("gtk_text_iter_backward_line" gtk-text-iter-backward-line) :boolean
  #+cl-cffi-gtk-documentation
  "@version{2013-8-14}
   @argument[iter]{an iterator}
