@@ -234,13 +234,13 @@
 ;;; gtk_combo_box_text_insert ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_combo_text_insert" %gtk-combo-text-insert) :void
+(defcfun ("gtk_combo_box_text_insert" %gtk-combo-box-text-insert) :void
   (combo-box (g-object gtk-combo-box-text))
   (position :int)
   (id :string)
   (text :string))
 
-(defun gtk-combo-text-insert (combo-box position id text)
+(defun gtk-combo-box-text-insert (combo-box position id text)
  #+cl-cffi-gtk-documentation
  "@version{2013-8-15}
   @argument[combo-box]{a @class{gtk-combo-box-text} widget}
@@ -258,12 +258,12 @@
 
   Since 3.0
   @see-class{gtk-combo-box-text}"
-  (%gtk-combo-text-insert combo-box
-                          position
-                          (if id id (null-pointer))
-                          text))
+  (%gtk-combo-box-text-insert combo-box
+                              position
+                              (if id id (null-pointer))
+                              text))
 
-(export 'gtk-combo-text-insert)
+(export 'gtk-combo-box-text-insert)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_text_append_text ()
@@ -370,7 +370,7 @@
 ;;; gtk_combo_box_text_remove_all ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk-combo_text_remove_all" gtk-combo-text-remove-all) :void
+(defcfun ("gtk_combo_text_remove_all" gtk-combo-text-remove-all) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-8-15}
   @argument[combo-box]{a @class{gtk-combo-box-text} widget}
