@@ -956,12 +956,13 @@
 
 (defcfun ("gdk_device_ungrab" gdk-device-ungrab) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-6-21}
+ "@version{2013-8-17}
   @argument[device]{a @class{gdk-device} object}
-  @argument[time]{a timestap (e. g. @var{+gkd-current-time+}}
-  @short{Release any grab on device.}
+  @argument[time]{a timestap (e. g. @var{+gdk-current-time+}}
+  @short{Release any grab on @arg{device}.}
 
-  Since 3.0"
+  Since 3.0
+  @see-class{gdk-device}"
   (device (g-object gdk-device))
   (time :uint32))
 
