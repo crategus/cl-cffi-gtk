@@ -47,9 +47,8 @@ GLib Core Application Support
 GLib Utilities
 
   glib.misc.lisp               - String Utility Functions         - Glib 2.36.3%
+  glib.convert.lisp            - Character Set Conversion         - Glib 2.36.3%
 
-    Character Set Conversion   - convert strings between different character
-                                 sets
     Unicode Manipulation       - functions operating on Unicode characters and
                                  UTF-8 strings
     Base64 Encoding            - encodes and decodes data in Base64 format
@@ -69,7 +68,7 @@ GLib Utilities
 
     Lexical Scanner            - a general purpose lexical scanner
     Timers                     - keep track of elapsed time
-    Spawning Processes         - process launching 
+    Spawning Processes         - process launching
     File Utilities             - various file-related functions
     URI Functions              - manipulating URIs
     Hostname Utilities         - Internet hostname utilities

@@ -36,10 +36,11 @@
                (:file "glib.stable-pointer") ; Stable Pointers for callbacks
 
                (:file "glib.version")        ; Glib Version information
-               (:file "glib.misc")           ; Various Glib Types and Functions
-               (:file "glib.main-loop")      ; The Main Event Loop
                (:file "glib.quark")          ; Association between string and id
+               (:file "glib.misc")           ; Various Glib Types and Functions
                (:file "glib.error")          ; Error Reporting
+               (:file "glib.convert")        ; Convert strings
+               (:file "glib.main-loop")      ; The Main Event Loop
                (:file "glib.utils")          ; Miscellaneous Utility Functions
                (:file "glib.option-group")   ; Parses commandline options
               )
