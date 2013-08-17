@@ -4,9 +4,9 @@
 @c Language : English
 @c Author   : Dieter Kaiser
 @c Date     : 23.06.2012
-@c Revision : 30.06.2012
+@c Revision : 17.08.2013
 @c
-@c Copyright (C) 2012 by Dieter Kaiser
+@c Copyright (C) 2012, 2013 by Dieter Kaiser
 @c -----------------------------------------------------------------------------
 
 @menu
@@ -22,7 +22,7 @@
 @c -----------------------------------------------------------------------------
 @subsection Representing Colors
 
-Colors are represented as a structure of the type @code{GdkRGBA}, which is
+Colors are represented as a structure of the type @xurl{gdk-rgba}, which is
 defined in the library GDK.  The stucture has the properties @code{red},
 @code{green}, @code{blue}, and @code{alpha} to represent rgba colors.  It is
 based on cairo's way to deal with colors and mirrors its behavior.  All values
@@ -32,45 +32,47 @@ are in the range from @code{0.0d0} to @code{1.0d0} inclusive.  So the color
 clamped to this range when drawing.
 
 To create a representation of the color red use
-@code{(make-gdk-rgba :red 1.0d0)}.  Alternatively, the function
-@code{gdk-rgba-parse} parses a textual representation of a color, filling in the
-red, green, blue and alpha fields of the @code{GdkRGBA} structure.  The string
-can be either one of:
+@code{(make-gdk-rgba :red 1.0d0)}.  The function @xurl{make-gdk-rgba} is the
+constructor of the Lisp implementation for creating a @xurl{gdk-rgba} structure.
+Alternatively, the function @xurl{gdk-rgba-parse} parses a textual
+representation of a color, filling in the red, green, blue and alpha fields of
+the @xurl{gdk-rgba} structure.  The string can be either one of:
 
 @itemize
-@item A standard name (Taken from the X11 rgb.txt file).
-@item A hex value in the form 'rgb' 'rrggbb' 'rrrgggbbb' or 'rrrrggggbbbb'
-@item A RGB color in the form 'rgb(r,g,b)' (In this case the color will have
-      full opacity)
-@item A RGBA color in the form 'rgba(r,g,b,a)'
+@item A standard name taken from the X11 @code{rgb.txt} file.
+@item A hex value in the form @code{rgb}, @code{rrggbb}, @code{rrrgggbbb} or
+      @code{rrrrggggbbb}'
+@item A RGB color in the form @code{rgb(r,g,b)}. In this case the color will
+      have full opacity.
+@item A RGBA color in the form @code{rgba(r,g,b,a)}.
 @end itemize
 
-Where 'r', 'g', 'b' and 'a' are respectively the red, green, blue and alpha
-color values. In the last two cases, r g and b are either integers in the
-range 0 to 255 or precentage values in the range 0% to 100%, and a is a
-floating point value in the range 0 to 1.
+Where @code{r}, @code{g}, @code{b} and @code{a} are respectively the red, green,
+blue and alpha color values. In the last two cases, @code{r},  @code{g} and
+@code{b} are either integers in the range 0 to 255 or precentage values in the
+range 0% to 100%, and a is a floating point value in the range 0 to 1.
 
-Conversely, the function @code{gdk-rgba-to-string} returns a textual
-specification of the rgba color in the form rgb (r, g, b) or
-rgba (r, g, b, a), where 'r', 'g', 'b' and 'a' represent the red, green,
-blue and alpha values respectively.  r, g, and b are represented as integers
-in the range 0 to 255, and a is represented as floating point value in the
-range 0 to 1.
+Conversely, the function @xurl{gdk-rgba-to-string} returns a textual
+specification of the rgba color in the form @code{rgb (r, g, b)} or
+@code{rgba (r, g, b, a)}, where @code{r}, @code{g}, @code{b} and @code{a}
+represent the red, green, blue and alpha values respectively.  @code{r},
+@code{g}, and @code{b} are represented as integers in the range 0 to 255, and
+@code{a} is represented as floating point value in the range 0 to 1.
 
 These string forms are string forms those supported by the CSS3 colors
-module, and can be parsed by gdk_rgba_parse().
+module, and can be parsed by the function @xurl{gdk-rgba-parse}.
 
-Note that this string representation may loose some precision, since r, g
-and b are represented as 8-bit integers. If this is a concern, you should
-use a different representation.
+Note that this string representation may loose some precision, since @code{r},
+@code{g}, and @code{b} are represented as 8-bit integers. If this is a concern,
+you should use a different representation.
 
 A simple example is the representation of the color red, which can be created
-with @code{(gdk-rgba-parse "Red"} from a string and converted back to a textual
-with (gdk-rgba-to-string (gdk-rgba-parse "Red")).  The result of the last
-function is @code{"rgba(255,0,0,0)"}.
+with the call @code{(gdk-rgba-parse "Red"} from a string and converted back to a
+textual with the call @code{(gdk-rgba-to-string (gdk-rgba-parse "Red"))}.  The
+result of the last function is @code{"rgba(255,0,0,0)"}.
 
 Note, that GTK+ knows a second representation of colors as a structure
-of type @code{GdkColor}.  The implementation is semilar.  The widgets for
+of type @xurl{gdk-color}.  The implementation is semilar.  The widgets for
 choosing a color know both representations.
 
 @c -----------------------------------------------------------------------------
@@ -83,15 +85,17 @@ choosing a color know both representations.
 @end float
 @end ifnotinfo
 
-The @code{GtkColorButton} is a button which displays the currently selected
+The @xurl{gtk-color-button} is a button which displays the currently selected
 color and allows to open a color selection dialog to change the color.  It is
 suitable widget for selecting a color in a preference dialog.  It
-implements the @code{GtkColorChooser} interface.
+implements the @xurl{gtk-color-chooser} interface.
 
 @ref{example-color-button} shows a simple implementation of a
 @code{GtkColorButton}.  The example displays a button with the predefined color
 gray.  When clicking the button, a color selection dialog is opened.  The dialog
-is shown in @ref{figure-color-button}.
+is shown in @ref{figure-color-button}.  To get the currently selected color you
+should connect a signal handler to the signal "color-set" and the retrieve the
+color with the function @xurl{gtk-color-chooser-get-rgba}.
 
 @float Example, example-color-button
 @caption{Color Button}
@@ -120,9 +124,9 @@ is shown in @ref{figure-color-button}.
         (gtk-widget-show-all window)))))
 @end verbatim
 
-The @code{GtkColorChooserDialog} widget is a dialog for choosing a color.  It
-implements the @code{GtkColorChooser} interface.  To provide a dialog in the
-@code{GtkColorChooserDialog} the @code{GtkColorChooserWidget} is used.
+The @xurl{gtk-color-chooser-dialog} widget is a dialog for choosing a color.  It
+implements the @xurl{gtk-color-chooser} interface.  To provide a dialog in the
+@xurl{gtk-color-chooser-dialog} the @xurl{gtk-color-chooser-widget} is used.
 
 By default, the chooser presents a prefined palette of colors, plus a small
 number of settable custom colors.  It is also possible to select a different
@@ -133,12 +137,13 @@ custom color.
 The chooser automatically remembers the last selection, as well as custom
 colors.
 
-To change the initially selected color, use @code{gtk-color-chooser-set_rgba}.
-To get the selected color use @code{gtk-color-chooser-get-rgba}.
+To change the initially selected color, use the function
+@xurl{gtk-color-chooser-set-rgba}.  To get the selected color use the function
+@xurl{gtk-color-chooser-get-rgba}.
 
 @ref{example-color-chooser-dialog} shows how to replace the default color
 palette and the default gray palette with the function
-@code{gtk-color-chooser-add-palette}.
+@xurl{gtk-color-chooser-add-palette}.
 
 @ifnotinfo
 @float Figure, figure-color-chooser-dialog
@@ -213,17 +218,17 @@ palette and the default gray palette with the function
 @end float
 @end ifnotinfo
 
-@code{GtkFileChooser} is an interface that can be implemented by file selection
-widgets. In GTK+, the main objects that implement this interface are
-@code{GtkFileChooserWidget}, @code{GtkFileChooserDialog}, and
-@code{GtkFileChooserButton}. You do not need to write an object that implements
-the @code{GtkFileChooser} interface unless you are trying to adapt an existing
-file selector to expose a standard programming interface.
+@xurl{gtk-file-chooser} is an interface that can be implemented by file
+selection widgets. In GTK+, the main objects that implement this interface are
+@xurl{gtk-file-chooser-widget}, @xurl{gtk-file-chooser-dialog}, and
+@xurl{gtk-file-chooser-button}. You do not need to write an object that
+implements the @xurl{gtk-file-chooser} interface unless you are trying to adapt
+an existing file selector to expose a standard programming interface.
 
-@code{GtkFileChooser} allows for shortcuts to various places in the filesystem.
-In the default implementation these are displayed in the left pane. It may be a
-bit confusing at first that these shortcuts come from various sources and in
-various flavours, so lets explain the terminology here:
+@xurl{gtk-file-chooser} allows for shortcuts to various places in the
+filesystem.  In the default implementation these are displayed in the left pane.
+It may be a bit confusing at first that these shortcuts come from various
+sources and in various flavours, so lets explain the terminology here:
 
 @table @emph
 @item Bookmarks
@@ -245,20 +250,20 @@ various flavours, so lets explain the terminology here:
 @noindent
 @b{File Names and Encodings}
 
-When the user is finished selecting files in a @code{GtkFileChooser}, your
-program can get the selected names either as filenames or as URIs. For URIs,
+When the user is finished selecting files in a @xurl{gtk-file-chooser}, your
+program can get the selected names either as filenames or as URIs.  For URIs,
 the normal escaping rules are applied if the URI contains non-ASCII characters.
 However, filenames are always returned in the character set specified by the
-@code{G_FILENAME_ENCODING} environment variable. Please see the Glib
+@code{G_FILENAME_ENCODING} environment variable.  Please see the Glib
 documentation for more details about this variable.
 
 @b{Note:}
 This means that while you can pass the result of
-@code{gtk-file-chooser-get-filename} to open(2) or fopen(3), you may not be able
-to directly set it as the text of a @code{GtkLabel} widget unless you convert it
-first to UTF-8, which all GTK+ widgets expect. You should use
-@code{g-filename-to-utf8} to convert filenames into strings that can be passed
-to GTK+ widgets.
+@xurl{gtk-file-chooser-get-filename} to @code{open(2)} or @code{fopen(3)}, you
+may not be able to directly set it as the text of a @xurl{gtk-label} widget
+unless you convert it first to UTF-8, which all GTK+ widgets expect. You should
+use the function @xurl{g-filename-to-utf8} to convert filenames into strings
+that can be passed to GTK+ widgets.
 
 @need 800
 @noindent
@@ -266,14 +271,14 @@ to GTK+ widgets.
 
 You can add a custom preview widget to a file chooser and then get
 notification about when the preview needs to be updated. To install a
-preview widget, use @code{gtk-file-chooser-set-preview-widget}. Then, connect
+preview widget, use @xurl{gtk-file-chooser-set-preview-widget}. Then, connect
 to the "update-preview" signal to get notified when you need to update the
 contents of the preview.
 
-Your callback should use @code{gtk-file-chooser-get-preview-filename} to see
+Your callback should use @xurl{gtk-file-chooser-get-preview-filename} to see
 what needs previewing.  Once you have generated the preview for the
 corresponding file, you must call
-@code{gtk-file-chooser-set-preview-widget-active} with a boolean flag that
+@xurl{gtk-file-chooser-set-preview-widget-active} with a boolean flag that
 indicates whether your callback could successfully generate a preview.
 
 @need 800
@@ -283,30 +288,30 @@ indicates whether your callback could successfully generate a preview.
 You can add extra widgets to a file chooser to provide options that are not
 present in the default design.  For example, you can add a toggle button to
 give the user the option to open a file in read-only mode. You can use
-@code{gtk-file-chooser-set-extra-widget} to insert additional widgets in a file
-chooser.
+@xurl{gtk-file-chooser-set-extra-widget} to insert additional widgets in a
+file chooser.
 
 @b{Note:}
 If you want to set more than one extra widget in the file chooser, you can use
-a container such as a @code{GtkVBox} or a @code{GtkTable} and include your
+a container such as a @xurl{gtk-vbox} or a @xurl{gtk-table} and include your
 widgets in it.  Then, set the container as the whole extra widget.
 
-@code{GtkFileChooserDialog} is a dialog box suitable for use with "File/Open" or
-"File/Save as" commands.  This widget works by putting a
-@code{GtkFileChooserWidget} inside a @code{GtkDialog}.  It exposes the
+@xurl{gtk-file-chooser-dialog} is a dialog box suitable for use with "File/Open"
+or "File/Save as" commands.  This widget works by putting a
+@xurl{gtk-file-chooser-widget} inside a @xurl{gtk-dialog}.  It exposes the
 @code{GtkFileChooserIface} interface, so you can use all of the
-@code{GtkFileChooser} functions on the file chooser dialog as well as those for
-@code{GtkDialog}.
+@xurl{gtk-file-chooser} functions on the file chooser dialog as well as those
+for @xurl{gtk-dialog}.
 
-Note that @code{GtkFileChooserDialog} does not have any methods of its own.
-Instead, you should use the functions that work on a @code{GtkFileChooser}.
+Note that @xurl{gtk-file-chooser-dialog} does not have any methods of its own.
+Instead, you should use the functions that work on a @xurl{gtk-file-chooser}.
 
 @subheading Setting up a file chooser dialog
 
-The enumeration @code{GtkFileChooserAction} describes whether a
-@code{GtkFileChooser} is being used to open existing files or to save to a
+The enumeration @xurl{gtk-file-chooser-action} describes whether a
+@xurl{gtk-file-chooser} is being used to open existing files or to save to a
 possibly new file.  These are the cases in which you may need to use a
-@code{GtkFileChooserDialog}.
+@xurl{gtk-file-chooser-dialog}.
 
 @itemize
 @item To select a file for opening, as for a File/Open command.  Use
@@ -314,19 +319,19 @@ possibly new file.  These are the cases in which you may need to use a
       a file chooser dialog.
 @item To save a file for the first time, as for a File/Save command.  Use
       the keyword @code{:save}, and suggest a name such as "Untitled" with
-      @code{gtk-file-chooser-set-current-name}.
+      @xurl{gtk-file-chooser-set-current-name}.
 @item To save a file under a different name, as for a File/Save As command.
       Use the keyword @code{:save}, and set the existing filename with
-      @code{gtk-file-chooser-set-file-name}.
+      @xurl{gtk-file-chooser-set-filename}.
 @item To choose a folder instead of a file. Use the keyword
       @code{select-folder}.
 @end itemize
 
 @subheading Response Codes
 
-@code{GtkFileChooserDialog} inherits from @code{GtkDialog}, so buttons that go
-in its action area have response codes such as @code{:accept} and @code{:canel}.
-For example, you could create a file chooser dialog as follows:
+@xurl{gtk-file-chooser-dialog} inherits from @xurl{gtk-dialog}, so buttons that
+go in its action area have response codes such as @code{:accept} and
+@code{:canel}.  For example, you could create a file chooser dialog as follows:
 
 @example
 (let ((dialog (gtk-file-chooser-dialog-new "Speichern"
@@ -338,17 +343,17 @@ For example, you could create a file chooser dialog as follows:
 @end example
 
 This will create buttons for "Cancel" and "Save" that use stock response
-identifiers from @code{GtkResponseType}. For most dialog boxes you can use your
-own custom response codes rather than the ones in @code{GtkResponseType}, but
-@code{GtkFileChooserDialog} assumes that its "accept"-type action, e.g. an
-"Open" or "Save" button, will have one of the following response codes
+identifiers from @xurl{gtk-response-type}.  For most dialog boxes you can use
+your own custom response codes rather than the ones in @xurl{gtk-response-type},
+but @xurl{gtk-file-chooser-dialog} assumes that its "accept"-type action, e. g.
+an "Open" or "Save" button, will have one of the following response codes
 @code{:accept}, @code{:ok}, @code{:yes}, or @code{:apply}.
 
-This is because @code{GtkFileChooserDialog} must intercept responses and switch
-to folders if appropriate, rather than letting the dialog terminate - the
+This is because @xurl{gtk-file-chooser-dialog} must intercept responses and
+switch to folders if appropriate, rather than letting the dialog terminate - the
 implementation uses these known response codes to know which responses can be
 blocked if appropriate.  To summarize, make sure you use a stock response code
-when you use @code{GtkFileChooserDialog} to ensure proper operation.
+when you use @xurl{gtk-file-chooser-dialog} to ensure proper operation.
 
 @ref{example-file-chooser-dialog} shows an example for selecting a file for
 save.  The dialog is shown in @ref{figure-file-chooser-dialog}.
@@ -392,10 +397,10 @@ save.  The dialog is shown in @ref{figure-file-chooser-dialog}.
       (gtk-widget-show-all window))))
 @end verbatim
 
-The @code{GtkFileChooserButton} is a widget that lets the user select a file.
-It implements the @code{GtkFileChooser} interface.  Visually, it is a file name
-with a button to bring up a @code{GtkFileChooserDialog}.  The user can then use
-that dialog to change the file associated with that button.
+The @xurl{gtk-file-chooser-button} is a widget that lets the user select a file.
+It implements the @xurl{gtk-file-chooser} interface.  Visually, it is a file
+name with a button to bring up a @xurl{gtk-file-chooser-dialog}.  The user can
+then use that dialog to change the file associated with that button.
 
 @ref{example-file-chooser-button} shows an example for a file chooser button
 to open a file.
@@ -438,25 +443,26 @@ to open a file.
 @end float
 @end ifnotinfo
 
-The @code{GtkFontChooserWidget} widget lists the available fonts, styles and
+The @xurl{gtk-font-chooser-widget} widget lists the available fonts, styles and
 sizes, allowing the user to select a font.  It is used in the
-@code{GtkFontChooserDialog} widget to provide a dialog box for selecting fonts.
+@xurl{gtk-font-chooser-dialog} widget to provide a dialog box for selecting
+fonts.
 
-The @code{GtkFontChooserDialog} widget is a dialog for selecting a font.  It
-implements the @code{GtkFontChooser} interface.
+The @xurl{gtk-font-chooser-dialog} widget is a dialog for selecting a font.  It
+implements the @xurl{gtk-font-chooser} interface.
 
-To set the font which is initially selected, use
-@code{gtk-font-chooser-set-font} or @code{gtk-font-chooser-set-font-desc}.
+To set the font which is initially selected, use the functions
+@xurl{gtk-font-chooser-set-font} or @xurl{gtk-font-chooser-set-font-desc}.
 
-To get the selected font use @code{gtk-font-chooser-get-font} or
-@code{gtk-font-chooser-get-font-desc}.
+To get the selected font use the functions @xurl{gtk-font-chooser-get-font} or
+@xurl{gtk-font-chooser-get-font-desc}.
 
-To change the text which is shown in the preview area, use
-@code{gtk-font-chooser-set-preview-text()}.
+To change the text which is shown in the preview area, use the function
+@xurl{gtk-font-chooser-set-preview-text}.
 
-The @code{GtkFontButton} is a button which displays the currently selected font
-and allows to open a font chooser dialog to change the font.  It is a suitable
-widget for selecting a font in a preference dialog.
+The @xurl{gtk-font-button} is a button which displays the currently selected
+font and allows to open a font chooser dialog to change the font.  It is a
+suitable widget for selecting a font in a preference dialog.
 
 @float Example, example-font-button
 @caption{Font Chooser Dialog with a filter to select fonts}

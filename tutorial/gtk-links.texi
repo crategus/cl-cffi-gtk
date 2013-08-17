@@ -121,11 +121,30 @@
 @set gtk-check-button-new-with-label http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-check-button-new-with-label.html
 @set gtk-check-button-new-with-mnemonic http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-check-button-new-with-mnemonic.html
 
+@c GtkColorButton
+
+@set gtk-color-button http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-color-button.html
+
+@c GtkColorChooser
+
+@set gtk-color-chooser http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-color-chooser.html
+@set gtk-color-chooser-get-rgba http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-color-chooser-get-rgba.html
+@set gtk-color-chooser-set-rgba http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-color-chooser-set-rgba.html
+@set gtk-color-chooser-add-palette http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-color-chooser-add-palette.html
+
+@c GtkColorChooserDialog
+
+@set gtk-color-chooser-dialog http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-color-chooser-dialog.html
+
+@c GtkColorChooserWidget
+
+@set gtk-color-chooser-widget http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-color-chooser-widget.html
+
 @c GtkComboBox
 
 @set gtk-combo-box http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-combo-box.html
 
-@c GtkComboBox
+@c GtkComboBoxText
 
 @set gtk-combo-box-text http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-combo-box-text.html
 @set gtk-combo-box-text-new http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-combo-box-text-new.html
@@ -156,12 +175,57 @@
 
 @set gtk-event-box http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-event-box.html
 
+@c GtkFileChooser
+
+@set gtk-file-chooser http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-file-chooser.html
+@set gtk-file-chooser-action http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_sym_gtk-file-chooser-action.html
+@set gtk-file-chooser-get-filename http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-file-chooser-get-filename.html
+@set gtk-file-chooser-set-preview-widget http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-file-chooser-set-preview-widget.html
+@set gtk-file-chooser-get-preview-filename http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-file-chooser-get-preview-filename.html
+@set gtk-file-chooser-set-preview-widget-active http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-file-chooser-set-preview-widget-active.html
+@set gtk-file-chooser-set-extra-widget http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-file-chooser-set-extra-widget.html
+@set gtk-file-chooser-set-current-name http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-file-chooser-set-current-name.html
+@set gtk-file-chooser-set-filename http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-file-chooser-set-filename.html
+
+@c GtkFileChooserButton
+
+@set gtk-file-chooser-button http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-file-chooser-button.html
+
+@c GtkFileChooserDialog
+
+@set gtk-file-chooser-dialog http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-file-chooser-dialog.html
+
+@c GtkFileChooserWidget
+
+@set gtk-file-chooser-widget http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-file-chooser-widget.html
+
 @c GtkFixed
 
 @set gtk-fixed http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-fixed.html
 @set gtk-fixed-new http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-fixed-new.html
 @set gtk-fixed-put http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-fixed-put.html
 @set gtk-fixed-move http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-fixed-move.html
+
+@c GtkFontChooser
+
+@set gtk-font-chooser http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-font-chooser.html
+@set gtk-font-chooser-set-font http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-font-chooser-set-font.html
+@set gtk-font-chooser-set-font-desc http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-font-chooser-set-font-desc.html
+@set gtk-font-chooser-get-font http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-font-chooser-get-font.html
+@set gtk-font-chooser-get-font-desc http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-font-chooser-get-font-desc.html
+@set gtk-font-chooser-set-preview-text http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-font-chooser-set-preview-text.html
+
+@c GtkFontChooserDialog
+
+@set gtk-font-chooser-dialog http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-font-chooser-dialog.html
+
+@c GtkFontChooserWidget
+
+@set gtk-font-chooser-widget http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-font-chooser-widget.html
+
+@c GtkFontButton
+
+@set gtk-font-button http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-font-button.html
 
 @c GtkFrame
 
@@ -312,6 +376,10 @@
 @set gtk-range http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-range.html
 @set gtk-range-get-adjustment http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-range-get-adjustment.html
 @set gtk-range-set-adjustment http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-range-set-adjustment.html
+
+@c GtkResponseType
+
+@set gtk-response-type http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_sym_gtk-response-type.html
 
 @c GtkScale
 
@@ -476,16 +544,35 @@
 
 @c -----------------------------------------------------------------------------
 
+@c GDK
+
+@c GdkColor
+
+@set gdk-color http://www.crategus.com/books/cl-cffi-gtk/pages/gdk_class_gdk-color.html
+
 @c GdkRectangle
 
 @set gdk-rectangle-height http://www.crategus.com/books/cl-cffi-gtk/pages/gdk_fun_gdk-rectangle-height.html
 @set gdk-rectangle-width http://www.crategus.com/books/cl-cffi-gtk/pages/gdk_fun_gdk-rectangle-width.html
+
+@c GdkRGBA
+
+@set gdk-rgba http://www.crategus.com/books/cl-cffi-gtk/pages/gdk_class_gdk-rgba.html
+@set make-gdk-rgba http://www.crategus.com/books/cl-cffi-gtk/pages/gdk_fun_make-gdk-rgba.html
+@set gdk-rgba-parse http://www.crategus.com/books/cl-cffi-gtk/pages/gdk_fun_gdk-rgba-parse.html
+@set gdk-rgba-to-string http://www.crategus.com/books/cl-cffi-gtk/pages/gdk_fun_gdk-rgba-to-string.html
 
 @c -----------------------------------------------------------------------------
 
 @c GObject
 
 @set g-object http://www.crategus.com/books/cl-cffi-gtk/pages/gobject_class_g-object.html
+
+@c -----------------------------------------------------------------------------
+
+@c GLIB
+
+@set g-filename-to-utf8 http://www.crategus.com/books/cl-cffi-gtk/pages/glib_fun_g-filename-to-utf8.html
 
 @c -----------------------------------------------------------------------------
 

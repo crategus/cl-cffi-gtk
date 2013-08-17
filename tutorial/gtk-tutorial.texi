@@ -56,8 +56,8 @@ END-INFO-DIR-ENTRY
 * Introduction::                Introduction to GTK+ 3 for Lisp
 * Getting Started::             First steps
 * Packing Widgets::             Packing widgets into boxes
-* Button Widgets::
-* Display Widgets::
+* Button Widgets::              All about buttons
+* Display Widgets::             Labels, Progress, Status, and Info Bars
 * Adjustments::
 * Range Widgets::
 * Layout Widgets::
