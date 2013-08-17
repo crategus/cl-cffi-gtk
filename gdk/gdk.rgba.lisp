@@ -1,25 +1,25 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gdk.rgba.lisp
-;;; 
+;;;
 ;;; The documentation of this file is taken from the GDK 3 Reference Manual
 ;;; Version 3.6.4 and modified to document the Lisp binding to the GDK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
-;;; 
+;;;
 ;;; Copyright (C) 2012, 2013 Dieter Kaiser
-;;; 
+;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
 ;;; as published by the Free Software Foundation, either version 3 of the
 ;;; License, or (at your option) any later version and with a preamble to
 ;;; the GNU Lesser General Public License that clarifies the terms for use
 ;;; with Lisp programs and is referred as the LLGPL.
-;;; 
+;;;
 ;;; This program is distributed in the hope that it will be useful,
 ;;; but WITHOUT ANY WARRANTY; without even the implied warranty of
 ;;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ;;; GNU Lesser General Public License for more details.
-;;; 
+;;;
 ;;; You should have received a copy of the GNU Lesser General Public
 ;;; License along with this program and the preamble to the Gnu Lesser
 ;;; General Public License.  If not, see <http://www.gnu.org/licenses/>
@@ -27,22 +27,22 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; RGBA Colors
-;;; 
+;;;
 ;;; RGBA colors
-;;;     
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;;     GdkRGBA
-;;;     
+;;;
 ;;;     gdk_rgba_copy
 ;;;     gdk_rgba_free
 ;;;     gdk_rgba_parse
 ;;;     gdk_rgba_equal
 ;;;     gdk_rgba_hash
 ;;;     gdk_rgba_to_string
-;;;     
+;;;
 ;;; Description
-;;; 
+;;;
 ;;; The GdkRGBA struct is a convenient way to pass rgba colors around. It's
 ;;; based on cairo's way to deal with colors and mirrors its behavior. All
 ;;; values are in the range from 0.0 to 1.0 inclusive. So the color
@@ -65,10 +65,10 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-rgba atdoc:*class-name-alias*) "CStruct"
       (documentation 'gdk-rgba 'type)
- "@version{2013-4-5}
+ "@version{2013-8-17}
   @begin{short}
-    The GdkRGBA structure is used to represent a (possibly translucent) color,
-    in a way that is compatible with cairos notion of color.
+    The @sym{gdk-rgba} structure is used to represent a (possibly translucent)
+    color, in a way that is compatible with cairos notion of color.
   @end{short}
   @begin{pre}
 (define-g-boxed-cstruct gdk-rgba \"GdkRGBA\"
@@ -86,71 +86,87 @@
   @end{table}
   @see-constructor{make-gdk-rgba}
   @see-constructor{copy-gdk-rgba}
-  @see-slot{red}
-  @see-slot{green}
-  @see-slot{blue}
-  @see-slot{alpha}")
+  @see-slot{gdk-rgba-red}
+  @see-slot{gdk-rgba-green}
+  @see-slot{gdk-rgba-blue}
+  @see-slot{gdk-rgba-alpha}")
 
 (export (boxed-related-symbols 'gdk-rgba))
 
-;;; --- copy-gdk-rgba ----------------------------------------------------------
+;;; ----------------------------------------------------------------------------
+;;;
+;;;  Contstructors
+;;;
+;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'copy-gdk-rgba 'function)
- "@version{2013-4-5}
-  @argument[instance]{a @class{gdk-rgba} struct}
-  Copy constructor of a @class{gdk-rgba} struct.")
-
-;;; --- make-gdk-rgba ----------------------------------------------------------
+ "@version{2013-8-17}
+  @argument[instance]{a @class{gdk-rgba} structure}
+  Copy constructor of a @class{gdk-rgba} structure.
+  @see-class{gdk-rgba}")
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'make-gdk-rgba 'function)
- "@version{2013-4-5}
+ "@version{2013-8-17}
   @argument[red]{The intensity of the red channel from 0.0 to 1.0 inclusive.}
   @argument[green]{The intensity of the green channel from 0.0 to 1.0
     inclusive.}
   @argument[blue]{The intensity of the blue channel from 0.0 to 1.0 inclusive.}
   @argument[alpha]{The opacity of the color from 0.0 for completely translucent
     to 1.0 for opaque.}
-  @begin{short}
-    Creates a @class{gdk-rgba} struct.
-  @end{short}")
+  Creates a @class{gdk-rgba} structure.
+  @see-class{gdk-rgba}")
 
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Slot Accessors
+;;;
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-rgba-red atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-rgba-red 'function)
- "@version{2013-4-5}
-  Accessor of the slot @code{red} of the @class{gdk-rgba} struct.")
-
-;;; ----------------------------------------------------------------------------
+ "@version{2013-8-17}
+  Accessor of the slot @code{red} of the @class{gdk-rgba} structure.
+  @see-class{gdk-rgba}
+  @see-function{gdk-rgba-green}
+  @see-function{gdk-rgba-blue}
+  @see-function{gdk-rgba-alpha}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-rgba-green atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-rgba-green 'function)
- "@version{2013-4-5}
-  Accessor of the slot @code{green} of the @class{gdk-rgba} struct.")
-
-;;; ----------------------------------------------------------------------------
+ "@version{2013-8-17}
+  Accessor of the slot @code{green} of the @class{gdk-rgba} structure.
+  @see-class{gdk-rgba}
+  @see-function{gdk-rgba-red}
+  @see-function{gdk-rgba-blue}
+  @see-function{gdk-rgba-alpha}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-rgba-blue atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-rgba-blue 'function)
- "@version{2013-4-5}
-  Accessor of the slot @code{blue} of the @class{gdk-rgba} struct.")
-
-;;; ----------------------------------------------------------------------------
+ "@version{2013-8-17}
+  Accessor of the slot @code{blue} of the @class{gdk-rgba} structure.
+  @see-class{gdk-rgba}
+  @see-function{gdk-rgba-red}
+  @see-function{gdk-rgba-green}
+  @see-function{gdk-rgba-alpha}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-rgba-alpha atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-rgba-alpha 'function)
- "@version{2013-4-5}
-  Accessor of the slot @code{alpha} of the @class{gdk-rgba} struct.")
+ "@version{2013-8-17}
+  Accessor of the slot @code{alpha} of the @class{gdk-rgba} structure.
+  @see-class{gdk-rgba}
+  @see-function{gdk-rgba-red}
+  @see-function{gdk-rgba-green}
+  @see-function{gdk-rgba-blue}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_rgba_copy ()
@@ -160,27 +176,33 @@
 
 (defun gdk-rgba-copy (rgba)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-14}
+ "@version{2013-8-17}
   @argument[rgba]{a @class{gdk-rgba} structure}
-  @return{A newly allocated @class{gdk-rgba}, with the same contents
+  @return{A newly allocated @class{gdk-rgba} structure, with the same contents
     as @arg{rgba}.}
   @short{Makes a copy of a @class{gdk-rgba} structure.}
 
-  Since 3.0"
+  @subheading{Note:}
+    In the Lisp implementation this function is implemented as a call of the
+    constructor @fun{copy-gdk-rgba}.
+
+  Since 3.0
+  @see-class{gdk-rgba}
+  @see-function{copy-gdk-rgba}"
   (copy-gdk-rgba rgba))
 
 (export 'gdk-rgba-copy)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_rgba_free ()
-;;; 
+;;;
 ;;; void gdk_rgba_free (GdkRGBA *rgba);
-;;; 
+;;;
 ;;; Frees a GdkRGBA struct created with gdk_rgba_copy()
-;;; 
+;;;
 ;;; rgba :
 ;;;     a GdkRGBA
-;;; 
+;;;
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
@@ -196,9 +218,9 @@
 
 (defun gdk-rgba-parse (spec)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-14}
+ "@version{2013-8-17}
   @argument[spec]{the string specifying the color}
-  @return{The @class{gdk-rgba} structure to fill in.}
+  @return{A @class{gdk-rgba} structure with the filled in values.}
   @begin{short}
     Parses a textual representation of a color, and returns a rgba structure
     filling in the red, green, blue and alpha fields.
@@ -206,19 +228,22 @@
 
   The string can be either one of:
   @begin{itemize}
-    @item{A standard name (Taken from the X11 rgb.txt file).}
-    @item{A hex value in the form 'rgb' 'rrggbb' 'rrrgggbbb' or 'rrrrggggbbbb'.}
-    @item{A RGB color in the form 'rgb(r,g,b)' (In this case the color will have
-      full opacity).}
-    @item{A RGBA color in the form 'rgba(r,g,b,a)'.}
+    @item{A standard name taken from the X11 @code{rgb.txt} file.}
+    @item{A hex value in the form @code{rgb}, @code{rrggbb}, @code{rrrgggbbb}
+      or @code{rrrrggggbbbb}.}
+    @item{A RGB color in the form @code{rgb(r,g,b)}. In this case the color will
+      have full opacity.}
+    @item{A RGBA color in the form @code{rgba(r,g,b,a)}.}
   @end{itemize}
+  Where @code{r}, @code{g}, @code{b} and @code{a} are respectively the red,
+  green, blue and alpha color values. In the last two cases, @code{r}, @code{g}
+  and @code{b} are either integers in the range 0 to 255 or precentage values in
+  the range 0% to 100%, and @code{a} is a floating point value in the range
+  0 to 1.
 
-  Where 'r', 'g', 'b' and 'a' are respectively the red, green, blue and alpha
-  color values. In the last two cases, r g and b are either integers in the
-  range 0 to 255 or precentage values in the range 0% to 100%, and a is a
-  floating point value in the range 0 to 1.
-
-  Since 3.0"
+  Since 3.0
+  @see-class{gdk-rgba}
+  @see-function{gdk-rgba-to-string}"
   (let ((rgba (make-gdk-rgba)))
     (when (%gdk-rgba-parse rgba spec)
       rgba)))
@@ -231,13 +256,14 @@
 
 (defcfun ("gdk_rgba_equal" gdk-rgba-equal) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-6-14}
+ "@version{2013-8-17}
   @argument[p1]{a @class{gdk-rgba} structure}
   @argument[p2]{another @class{gdk-rgba} structure}
   @return{@em{True} if the two colors compare equal.}
   @short{Compares two RGBA colors.}
 
-  Since 3.0"
+  Since 3.0
+  @see-class{gdk-rgba}"
   (color1 (g-boxed-foreign gdk-rgba))
   (color2 (g-boxed-foreign gdk-rgba)))
 
@@ -249,7 +275,7 @@
 
 (defcfun ("gdk_rgba_hash" gdk-rgba-hash) :uint
  #+cl-cffi-gtk-documentation
- "@version{2013-6-14}
+ "@version{2013-8-17}
   @argument[p]{a @class{gdk-rgba} structure}
   @return{The hash value for @arg{p}.}
   @begin{short}
@@ -257,7 +283,8 @@
     @class{gdk-rgba}'s.
   @end{short}
 
-  Since 3.0"
+  Since 3.0
+  @see-class{gdk-rgba}"
   (p (g-boxed-foreign gdk-rgba)))
 
 (export 'gdk-rgba-hash)
@@ -268,25 +295,27 @@
 
 (defcfun ("gdk_rgba_to_string" gdk-rgba-to-string) :string
  #+cl-cffi-gtk-documentation
- "@version{2013-6-14}
+ "@version{2013-8-15}
   @argument[rgba]{a @class{gdk-rgba} structure}
   @return{A newly allocated text string.}
   @begin{short}
-    Returns a textual specification of rgba in the form rgb (r, g, b) or
-    rgba (r, g, b, a), where 'r', 'g', 'b' and 'a' represent the red, green,
-    blue and alpha values respectively. r, g, and b are represented as integers
-    in the range 0 to 255, and a is represented as floating point value in the
-    range 0 to 1.
+    Returns a textual specification of rgba in the form @code{rgb (r, g, b)} or
+    @code{rgba (r, g, b, a)}, where @code{r}, @code{g}, @code{b} and @code{a}
+    represent the red, green, blue and alpha values respectively.
   @end{short}
+  @code{r}, @code{g}, and @code{b} are represented as integers in the range 0
+  to 255, and @code{a} is represented as floating point value in the range
+  0 to 1.
 
   These string forms are string forms those supported by the CSS3 colors
   module, and can be parsed by the function @fun{gdk-rgba-parse}.
 
-  Note that this string representation may loose some precision, since r, g
-  and b are represented as 8-bit integers. If this is a concern, you should
-  use a different representation.
+  Note that this string representation may loose some precision, since @code{r},
+  @code{g} and @code{b} are represented as 8-bit integers. If this is a concern,
+  you should use a different representation.
 
   Since 3.0
+  @see-class{gdk-rgba}
   @see-function{gdk-rgba-parse}"
   (rgba (g-boxed-foreign gdk-rgba)))
 
