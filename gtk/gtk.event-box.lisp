@@ -4,9 +4,10 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -63,18 +64,15 @@
     gtk-event-box-visible-window
     "visible-window" "gboolean" t t)))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-event-box 'type)
- "@version{2013-5-23}
-  @begin{short}
-    The @sym{gtk-event-box} widget is a subclass of @class{gtk-bin} which also
-    has its own window. It is useful since it allows you to catch events for
-    widgets which do not have their own window.
-  @end{short}
+ "@version{2013-8-17}
+  The @sym{gtk-event-box} widget is a subclass of @class{gtk-bin} which also has
+  its own window. It is useful since it allows you to catch events for widgets
+  which do not have their own window.
   @see-slot{gtk-event-box-above-child}
-  @see-slot{gtk-event-box-visible-window}")
+  @see-slot{gtk-event-box-visible-window}
+  @see-class{gtk-bin}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -89,8 +87,6 @@
   Whether the event-trapping window of the eventbox is above the window of the
   child widget as opposed to below it. @br{}
   Default value: @code{nil}")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "visible-window" 'gtk-event-box) 't)
@@ -110,23 +106,23 @@
 (setf (gethash 'gtk-event-box-above-child atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-event-box-above-child 'function)
- "@version{2013-3-2}
-  @begin{short}
-    Accessor of the slot @code{\"above-child\"} of the
-    @class{gtk-event-box} class.
-  @end{short}")
-
-;;; ----------------------------------------------------------------------------
+ "@version{2013-8-17}
+  Accessor of the slot @code{\"above-child\"} of the @class{gtk-event-box}
+  class.
+  @see-class{gtk-event-box}
+  @see-function{gtk-event-box-get-above-child}
+  @see-function{gtk-event-box-set-above-child}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-event-box-visible-window atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-event-box-visible-window 'function)
- "@version{2013-3-2}
-  @begin{short}
-    Accessor of the slot @code{\"visible-window\"} of the
-    @class{gtk-event-box} class.
-  @end{short}")
+ "@version{2013-8-17}
+  Accessor of the slot @code{\"visible-window\"} of the @class{gtk-event-box}
+  class.
+  @see-class{gtk-event-box}
+  @see-function{gtk-event-box-get-visible-window}
+  @see-function{gtk-event-box-set-visible-window}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_event_box_new ()
@@ -136,9 +132,10 @@
 
 (defun gtk-event-box-new ()
  #+cl-cffi-gtk-documentation
- "@version{2013-5-23}
+ "@version{2013-8-17}
   @return{A new @class{gtk-event-box} widget.}
-  @short{Creates a new @class{gtk-event-box} widget.}"
+  Creates a new @class{gtk-event-box} widget.
+  @see-class{gtk-event-box}"
   (make-instance 'gtk-event-box))
 
 (export 'gtk-event-box-new)
@@ -151,7 +148,7 @@
 
 (defun gtk-event-box-set-above-child (event-box above-child)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-23}
+ "@version{2013-8-17}
   @argument[event-box]{a @class{gtk-event-box} widget}
   @argument[above-child]{@em{true} if the event box window is above its child}
   @begin{short}
@@ -164,7 +161,9 @@
 
   The default is to keep the window below the child.
 
-  Since 2.4"
+  Since 2.4
+  @see-class{gtk-event-box}
+  @see-function{gtk-event-box-get-above-child}"
   (setf (gtk-event-box-above-child event-box) above-child))
 
 (export 'gtk-event-box-set-above-child)
@@ -177,7 +176,7 @@
 
 (defun gtk-event-box-get-above-child (event-box)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-23}
+ "@version{2013-8-17}
   @argument[event-box]{a @class{gtk-event-box} object}
   @return{@em{True} if the event box window is above the window of its child.}
   @begin{short}
@@ -187,6 +186,7 @@
   See the function @fun{gtk-event-box-set-above-child} for details.
 
   Since 2.4
+  @see-class{gtk-event-box}
   @see-function{gtk-event-box-set-above-child}"
   (gtk-event-box-above-child event-box))
 
@@ -200,7 +200,7 @@
 
 (defun gtk-event-box-set-visible-window (event-box visible-window)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-23}
+ "@version{2013-8-17}
   @argument[event-box]{a @class{gtk-event-box} widget}
   @argument[visible-window]{@em{true} to make the event box have a visible
     window}
@@ -238,8 +238,10 @@
     just at the same place on the screen.
 
   Since 2.4
+  @see-class{gtk-event-box}
+  @see-function{gtk-widget-add-events}
   @see-function{gtk-event-box-set-above-child}
-  @see-function{gtk-widget-add-events}"
+  @see-function{gtk-event-box-get-visible-window}"
   (setf (gtk-event-box-visible-window event-box) visible-window))
 
 (export 'gtk-event-box-set-visible-window)
@@ -252,7 +254,7 @@
 
 (defun gtk-event-box-get-visible-window (event-box)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-23}
+ "@version{2013-8-17}
   @argument[event-box]{a @class{gtk-event-box} widget}
   @return{@em{True} if the event box window is visible.}
   @begin{short}
@@ -261,6 +263,7 @@
   See the function @fun{gtk-event-box-set-visible-window} for details.
 
   Since 2.4
+  @see-class{gtk-event-box}
   @see-function{gtk-event-box-set-visible-window}"
   (gtk-event-box-visible-window event-box))
 
