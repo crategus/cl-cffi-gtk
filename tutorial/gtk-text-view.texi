@@ -4,9 +4,9 @@
 @c Language : English
 @c Author   : Dieter Kaiser
 @c Date     : 22.05.2012
-@c Revision : 01.07.2012
+@c Revision : 18.08.2013
 @c
-@c Copyright (C) 2012 by Dieter Kaiser
+@c Copyright (C) 2012, 2013 by Dieter Kaiser
 @c -----------------------------------------------------------------------------
 
 @menu
@@ -166,7 +166,7 @@ The simplest usage of @xurl{gtk-text-view} might look like in
 @findex text-view-set-buffer, gtk-text-view-set-buffer
 
 In many cases it is also convenient to first create the buffer with
-@xutl{gtk-text-buffer-new}, then create a widget for that buffer with
+@xurl{gtk-text-buffer-new}, then create a widget for that buffer with
 @xurl{gtk-text-view-new-with-buffer}.  Or you can change the buffer the widget
 displays after the widget is created with @xurl{gtk-text-view-set-buffer}.
 
@@ -236,6 +236,139 @@ attributes there are dedicated methods on @xurl{gtk-text-view} such as
       (gtk-container-add window view)
       (gtk-widget-show-all window))))
 @end verbatim
+
+@subheading More about Tags
+
+Tag objects are associated with a buffer and are created using the function
+@xurl{gtk-text-buffer-create-tag}.  Tags can be optionally associated with a
+name @code{tag-name}.  Thus, the tag could be referred using the returned
+pointer or using the @code{tag-name}.  For anonymous tags, @code{nil} is passed
+to @code{tag-name}.  The group of properties represented by this tag is listed
+as name/value pairs after the @code{tag-name}.  The list of property/value pairs
+is terminated with a @code{NULL} pointer.  "style", "weight", "editable",
+"justification" are some common property names.  The following table lists their
+meaning and assignable values.
+
+See the GTK+ manual @url{http://www.crategus.com/books/cl-cffi-gtk/}, for a
+complete list of properties and their corresponding values.
+
+The created tag can then be applied to a range of text using the functions
+@xurl{gtk-text-buffer-apply-tag} and @xurl{gtk-text-buffer-apply-tag-by-name}.
+The first function specifies the tag to be applied by a tag object and the
+second function specifies the tag by it's name.  The range of text over with the
+tag is to applies is specified by the start and end iters.  Below is an
+extension of the previous example, that has a tool-bar to apply different tags
+to selected regions of text.
+
+@ifnotinfo
+@float Figure, figure-text-tags
+@caption{Searching text in a text view.}
+@center @image{figures/text-view-tags, 201pt}
+@end float
+@end ifnotinfo
+
+@float Example, example-text-tags
+@caption{Applying tags.}
+@end float
+@verbatim
+(defun on-button-clicked (buffer tag)
+  (multiple-value-bind (start end)
+      (gtk-text-buffer-get-selection-bounds buffer)
+    (gtk-text-buffer-apply-tag-by-name buffer tag start end)))
+
+(defun example-text-view-tags ()
+  (within-main-loop
+    (let* ((window (make-instance 'gtk-window
+                                  :title "Multiline Text Input"
+                                  :type :toplevel
+                                  :default-width 300
+                                  :default-height 200))
+           (vbox (make-instance 'gtk-grid
+                                :orientation :vertical))
+           (bbox (make-instance 'gtk-grid
+                                :orientation :horizontal))
+           (text-view (make-instance 'gtk-text-view
+                                     :hexpand t
+                                     :vexpand t))
+           (buffer (gtk-text-view-get-buffer text-view)))
+      (g-signal-connect window "destroy"
+                               (lambda (widget)
+                                 (declare (ignore widget))
+                                 (leave-gtk-main)))
+      (gtk-container-add vbox bbox)
+      (gtk-container-add vbox text-view)
+      (gtk-text-buffer-set-text buffer "Hello World Text View")
+      ;; Create tags associated with the buffer.
+      (gtk-text-tag-table-add (gtk-text-buffer-get-tag-table buffer)
+                              (make-instance 'gtk-text-tag
+                                             :name "bold"
+                                             :weight 700)) ; :bold
+      (gtk-text-tag-table-add (gtk-text-buffer-get-tag-table buffer)
+                              (make-instance 'gtk-text-tag
+                                             :name "italic"
+                                             :style :italic))
+      (gtk-text-tag-table-add (gtk-text-buffer-get-tag-table buffer)
+                              (make-instance 'gtk-text-tag
+                                             :name "font"
+                                             :font "fixed"))
+      ;; Create button for bold.
+      (let ((button (make-instance 'gtk-button :label "Bold")))
+        (g-signal-connect button "clicked"
+           (lambda (widget)
+             (declare (ignore widget))
+             (on-button-clicked buffer "bold")))
+        (gtk-container-add bbox button))
+      ;; Create button for italic.
+      (let ((button (make-instance 'gtk-button :label "Italic")))
+        (g-signal-connect button "clicked"
+           (lambda (widget)
+             (declare (ignore widget))
+             (on-button-clicked buffer "italic")))
+        (gtk-container-add bbox button))
+      ;; Create button for fixed font.
+      (let ((button (make-instance 'gtk-button :label "Font Fixed")))
+        (g-signal-connect button "clicked"
+           (lambda (widget)
+             (declare (ignore widget))
+             (on-button-clicked buffer "font")))
+        (gtk-container-add bbox button))
+      ;; Create the close button.
+      (let ((button (make-instance 'gtk-button :label "Close")))
+        (g-signal-connect button "clicked"
+                          (lambda (widget)
+                            (declare (ignore widget))
+                            (gtk-widget-destroy window)))
+        (gtk-container-add vbox button))
+      (gtk-container-add window vbox)
+      (gtk-widget-show-all window))))
+@end verbatim
+
+@subheading More Functions for Applying and Removing tags
+
+In the previous section, the function @xurl{gtk-text-buffer-insert} was
+introduced.  A variant @xurl{gtk-text-buffer-insert-with-tags} of this function
+can be used to insert text with tags applied.
+
+The tags argument list is terminated by a @code{NULL} pointer. The
+@code{_by_name} suffixed variants are also available, in which the tags to be
+applied are specified by the tag names.  Tags applied to a range of text can be
+removed by using the function @xurl{gtk-text-buffer-remove-tag}.
+
+This function also has the @code{_by_name} prefixed variant.  All tags on a
+range of text can be removed in one go using the function
+@xurl{gtk-text-buffer-remove-all-tags}.
+
+@subheading Formatting the Entire Widget
+
+The above functions apply attributes to portions of text in a buffer.  If
+attributes have to be applied for the entire @xurl{gtk-text-view} widget, the
+@code{gtk-text-view-set-*} functions can be used.  For example, the function
+@xurl{gtk-text-view-set-editable} makes @code{text-view} editable/non-editable.
+
+See the GTK+ API documentation @url{http://www.crategus.com/books/cl-cffi-gtk/}
+for a complete list of available functions.  The attributes set by these
+functions, on the entire widget, can be overridden by applying tags to portions
+of text in the buffer.
 
 @c -----------------------------------------------------------------------------
 @node Cut Copy and Paste, Searching, Formated Text in Text Widget, Top
@@ -726,9 +859,341 @@ follows.
 @node Images and Widgets, Buffer and Window Coordinates, Examing and Modify Text, Top
 @section Images and Widgets
 
+@subheading Inserting Images
+
+A text buffer can hold images and anchor location for widgets.  An image can be
+inserted into a buffer using the function @xurl{gtk-text-buffer-insert-pixbuf}
+with the arguments @code{buffer}, @code{iter}, and @code{pixbuf}.  An image
+represented by @code{pixbuf} is inserted at @code{iter}. The @code{pixbuf} can
+be created from an image file using the function
+@xurl{gdk-pixbuf-new-from-file}. See the API documentation for @xurl{gdk-pixbuf}
+for more details.
+
+The example program given below takes in an image filename and inserts the
+corresponding image into a buffer.
+
+@ifnotinfo
+@float Figure, figure-text-view-insert-image
+@center @image{figures/text-view-insert-image, 201pt}
+@end float
+@end ifnotinfo
+
+@float Example, example-text-insert-image
+@caption{Insert an image.}
+@end float
+@verbatim
+(defun example-text-view-insert-image ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :type :toplevel
+                                 :title "Multiline Text Widget"
+                                 :default-width 300
+                                 :default-height 200))
+          (text-view (make-instance 'gtk-text-view
+                                    :hexpand t
+                                    :vexpand t))
+          (button (make-instance 'gtk-button
+                                 :label "Insert Image"))
+          (vbox (make-instance 'gtk-grid
+                               :orientation :vertical)))
+    (g-signal-connect window "destroy"
+                      (lambda (widget)
+                        (declare (ignore widget))
+                        (leave-gtk-main)))
+    ;; Signal handler to insert an image at the current cursor position.
+    (g-signal-connect button "clicked"
+       (lambda (widget)
+         (declare (ignore widget))
+         (let* ((pixbuf (gdk-pixbuf-new-from-file "save.png"))
+                (buffer (gtk-text-view-get-buffer text-view))
+                (cursor (gtk-text-buffer-get-insert buffer))
+                (iter (gtk-text-buffer-get-iter-at-mark buffer cursor)))
+           (gtk-text-buffer-insert-pixbuf buffer iter pixbuf))))
+    (gtk-container-add vbox text-view)
+    (gtk-container-add vbox button)
+    (gtk-container-add window vbox)
+    (gtk-widget-show-all window))))
+@end verbatim
+
+@subheading Retrieving Images
+
+Images in a buffer are represented by the character @code{0xFFFC} (Unicode
+object replacement character).  When text containing images is retrieved from
+a buffer using the function @xurl{gtk-text-buffer-get-text} the @code{0xFFFC}
+characters representing images are dropped off in the returned text. If these
+characters representing images are required, use the slice variant - 
+@xurl{gtk-text-buffer-get-slice}.  The image at a given position can be
+retrieved using the function @xurl{gtk-text-iter-get-pixbuf}.
+
+@subheading Inserting Widgets
+
+Inserting a widget, unlike inserting an image, is a two step process. The
+additional complexity is due to the functionality split between
+@xurl{gtk-text-view} and @xurl{gtk-text-buffer}.  The first step is to create
+and insert a @xurl{gtk-text-child-anchor}.  A widget is held in a buffer using a
+@xurl{gtk-text-child-anchor}.  A child anchor according to the GTK manual is a
+spot in the buffer where child widgets can be anchored.  A child anchor can be
+created and inserted into a buffer using the function
+@xurl{gtk-text-buffer-create-child-anchor} with the arguments @code{buffer} and
+@code{iter}.  Where @code{iter} specifies the position in the buffer, where the
+widget is to be inserted.  The next step is to add a child widget to the text
+view, at the anchor location with the function
+@xurl{gtk-text-view-add-child-at-anchor}.
+
+An anchor can hold only one widget, it could be a container widget, which in
+turn can contain many widgets, unless you are doing tricky things like
+displaying the same buffer using different @xurl{gtk-text-view} objects.  The
+following program inserts a button widget into a text buffer, whenever the user
+clicks on the Insert button.
+
+@ifnotinfo
+@float Figure, figure-text-view-insert-widget
+@center @image{figures/text-view-insert-widget, 201pt}
+@end float
+@end ifnotinfo
+
+@float Example, example-text-insert-widget
+@caption{Insert a widget.}
+@end float
+@verbatim
+(defun example-text-view-insert-widget ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :type :toplevel
+                                 :title "Multiline Text Widget"
+                                 :default-width 300
+                                 :default-height 200))
+          (text-view (make-instance 'gtk-text-view
+                                    :hexpand t
+                                    :vexpand t))
+          (button (make-instance 'gtk-button
+                                 :label "Insert Widget"))
+          (vbox (make-instance 'gtk-grid
+                               :orientation :vertical)))
+    (g-signal-connect window "destroy"
+                      (lambda (widget)
+                        (declare (ignore widget))
+                        (leave-gtk-main)))
+    ;; Signal handler to insert a widget at the current cursor position.
+    (g-signal-connect button "clicked"
+       (lambda (widget)
+         (declare (ignore widget))
+         (let* ((buffer (gtk-text-view-get-buffer text-view))
+                (cursor (gtk-text-buffer-get-insert buffer))
+                (iter (gtk-text-buffer-get-iter-at-mark buffer cursor))
+                (anchor (gtk-text-buffer-create-child-anchor buffer iter))
+                (button (gtk-button-new-with-label "New Button")))
+           (gtk-text-view-add-child-at-anchor text-view button anchor)
+           (gtk-widget-show button))))
+    (gtk-container-add vbox text-view)
+    (gtk-container-add vbox button)
+    (gtk-container-add window vbox)
+    (gtk-widget-show-all window))))
+@end verbatim
+
+@subheading Retrieving Widgets
+
+Child anchors are also represented in the buffer using the object replacement
+character @code{0xFFFC}.  Retrieving a widget is also a two step process.
+First, the child anchor has to be retrieved.  This can be done using the
+function @xurl{gtk-text-iter-get-child-anchor}.  Next, the widget(s) associated
+with the child anchor has to be retrieved.  This can be done using the function
+@xurl{gtk-text-child-anchor-get-widgets}.  The function returns a list of
+widgets.  As mentioned earlier, if you are not doing tricky things like multiple
+views for the same buffer, you will find only one widget in this list.
+
 @c -----------------------------------------------------------------------------
 @node Buffer and Window Coordinates, Final Notes, Images and Widgets, Top
 @section Buffer and Window Coordinates
+
+Sometimes it is necessary to know the position of the text cursor on the screen,
+or the word in a buffer under the mouse cursor.  For example, when you want to
+display the prototype of a function as a tooltip, when the user types open
+parenthesis.  To do this, you will have to understand buffer coordinates and
+window coordinates.
+
+Both the buffer and window coordinates are pixel level coordinates. The
+difference is that the window coordinates takes into account only the portion of
+the buffer displayed on the screen.  The concept would be better explained using
+a diagram.  The large white box(with grid lines) in the following diagram
+depicts the text buffer.  And the smaller inner grey box is the visible portion
+of the text buffer, displayed by the text view widget.
+
+@ifnotinfo
+@float Figure, figure-buffercoord
+@center @image{figures/buffercoord, 123pt}
+@end float
+@end ifnotinfo
+
+The buffer coordinates of the red dot (represented as (x, y)) is (4, 3).  But
+the window coordinates of the red dot is (2, 1).  This is because the window
+coordinates are calculated relative the visible portion of the text buffer.
+Similarly, the buffer coordinates of the blue dot is (3, 5) and the window
+coordinates is (1, 3).
+
+In this section, you will learn how to display tooltips under the text cursor.
+The procedure is as follows,
+@itemize @bullet
+  @item The buffer coordinates of the text cursor is obtained.
+  @item The buffer coordinates is converted to window coordinates (x1, y1).
+  @item The position (x2, y2) of the text view widget on the screen is obtained.
+  @item A window with the tooltip is displayed at (x1+x2, y1+y2).
+@end itemize
+The buffer coordinates of a particular character in a buffer can be obtained
+using the function @xurl{gtk-text-view-get-iter-at-location} with the argument
+@code{iter}.  The function gets the rectangle that contains the character at
+@code{iter} and returns it.  The @code{x} and @code{y} members of
+@code{location} gives us the buffer coordinates.
+
+The buffer coordinates can be converted into window coordinates using the
+function @xurl{gtk-text-view-buffer-to-window-coords}.  The function converts
+buffer coordinates @code{(buffer-x, buffer-y)}, to window coordinates
+@code{(window-x, window-y)}.
+
+Now that we know the position of the character within the text view widget, we
+will have to find the position of the text view widget on the screen.
+
+Each GTK widget has a corresponding @xurl{gdk-window} associated with it.  Once
+we know the @xurl{gdk-window} associated with a widget, we can obtain it's X-Y
+coordinates using @xurl{gdk-window-get-origin}.  The @xurl{gdk-window} of the
+text view widget can be obtained using the function
+@xurl{gtk-text-view-get-window}.  Here again you will have to pass
+@code{:widget} for the argument @code{win}.
+
+We now know the functions required to display a tooltip under the text cursor.
+Before we proceed to the example, you will have to know which signal has to be
+trapped to do display the tooltip. Since we want the tooltip to be displayed
+when the user inserts open parenthesis, "insert-text" emitted by the buffer
+object can be used.  As the signal's name suggests it is called whenever the
+user inserts text into the buffer.  The callback prototype is
+@code{lambda (buffer pos text length)}.
+
+The function is called with @code{position} after the inserted text @code{pos},
+the inserted text @code{text} and the length of the inserted text @code{length}.
+
+Below is an example program that displays a tooltip for the printf family of
+functions.
+
+@ifnotinfo
+@float Figure, figure-text-view-tooltip
+@center @image{figures/text-view-tooltip, 201pt}
+@end float
+@end ifnotinfo
+
+@float Example, example-text-insert-widget
+@caption{Show tooltips in a Text View.}
+@end float
+@verbatim
+(let ((tooltip nil))
+  (defun get-tip (word)
+    (cdr (assoc word
+                '(("printf" . "(const char *format, ...)")
+                  ("fprintf" . "(FILE *stream, const char *format, ...)")
+                  ("sprintf" . "(char *str, const char *format, ...)")
+                  ("fputc" . "(int c, FILE *stream)")
+                  ("fputs" . "(const char *s, FILE *stream)")
+                  ("putc" . "(int c, FILE *stream)")
+                  ("putchar" . "(int c)")
+                  ("puts" . "(const char *s)"))
+                :test #'equal)))
+
+  (defun tip-window-new (tip-text)
+    (let ((win (make-instance 'gtk-window
+                              :type :popup
+                              :border-width 0))
+          (event-box (make-instance 'gtk-event-box
+                                    :border-width 1))
+          (label (make-instance 'gtk-label
+                                :label tip-text)))
+      (gtk-widget-override-font label
+                                (pango-font-description-from-string "Courier"))
+      (gtk-widget-override-background-color win
+                                            :normal
+                                            (gdk-rgba-parse "Black"))
+      (gtk-widget-override-color win :normal (gdk-rgba-parse "Blue"))
+      (gtk-container-add event-box label)
+      (gtk-container-add win event-box)
+      win))
+
+  (defun insert-open-brace (window text-view location)
+    (let ((start (gtk-text-iter-copy location)))
+      (when (gtk-text-iter-backward-word-start start)
+        (let* ((word (string-trim " " (gtk-text-iter-get-text start location)))
+               (tip-text (get-tip word)))
+          (when tip-text
+            (let ((rect (gtk-text-view-get-iter-location text-view location))
+                  (win (gtk-text-view-get-window text-view :widget)))
+              (multiple-value-bind (win-x win-y)
+                  (gtk-text-view-buffer-to-window-coords text-view
+                                                         :widget
+                                                         (gdk-rectangle-x rect)
+                                                         (gdk-rectangle-y rect))
+                (multiple-value-bind (x y)
+                    (gdk-window-get-origin win)
+                  ;; Destroy any previous tool tip window
+                  (when tooltip
+                    (gtk-widget-destroy tooltip)
+                    (setf tooltip nil))
+                  ;; Create a new tool tip window
+                  (setf tooltip (tip-window-new tip-text))
+                  ;; Place it at the calculated position.
+                  (gtk-window-move tooltip
+                                   (+ win-x x)
+                                   (+ win-y y (gdk-rectangle-height rect)))
+                  (gtk-widget-show-all tooltip)))))))))
+
+  (defun example-text-view-tooltip ()
+    (within-main-loop
+      (let* ((window (make-instance 'gtk-window
+                                    :title "Multiline Text Search"
+                                    :type :toplevel
+                                    :default-width 450
+                                    :default-height 200))
+             (scrolled (make-instance 'gtk-scrolled-window))
+             (text-view (make-instance 'gtk-text-view
+                                       :hexpand t
+                                       :vexpand t))
+             (buffer (gtk-text-view-get-buffer text-view)))
+        ;; Signal handler for the window
+        (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (when tooltip
+                            (gtk-widget-destroy tooltip)
+                            (setf tooltip nil))
+                          (leave-gtk-main)))
+        ;; Signal handler for the buffer of the text view
+        (g-signal-connect buffer "insert-text"
+           (lambda (buffer location text len)
+             (declare (ignore buffer len))
+             (when (equal text "(")
+               (insert-open-brace window text-view location))
+             (when (equal text ")")
+               (when tooltip
+                 (gtk-widget-destroy tooltip)
+                 (setf tooltip nil)))))
+        ;; Change the default font
+        (gtk-widget-override-font
+            text-view
+            (pango-font-description-from-string "Courier 12"))
+        ;; Add the widgets to window and show all
+        (gtk-container-add scrolled text-view)
+        (gtk-container-add window scrolled)
+        (gtk-widget-show-all window)))))
+@end verbatim
+
+@subheading More on Buffer and Window Coordinates
+
+In the previous section we obtained the screen coordinates for a position in the
+buffer.  What if we want to do the exact opposite, i. e. what if we want to find
+the position in the buffer corresponding to a particular X-Y coordinate.  The
+@xurl{gtk-text-view} has functions for these as well.
+
+Window coordinates can be converted to buffer coordinates using the function
+@xurl{gtk-text-view-window-to-buffer-coords}.
+
+The iter at a buffer coordinate can be obtained using the function
+@xurl{gtk-text-view-get-iter-at-location}.
 
 @c -----------------------------------------------------------------------------
 @node Final Notes, , Buffer and Window Coordinates, Top

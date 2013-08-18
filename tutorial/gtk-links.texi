@@ -468,6 +468,21 @@
 @set gtk-text-buffer-get-iter-at-mark http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-buffer-get-iter-at-mark.html
 @set gtk-text-buffer-delete-mark http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-buffer-delete-mark.html
 @set gtk-text-buffer-delete-mark-by-name http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-buffer-delete-mark-by-name.html
+@set gtk-text-buffer-insert-pixbuf http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-buffer-insert-pixbuf.html
+@set gtk-text-buffer-get-text http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-buffer-get-text.html
+@set gtk-text-buffer-get-slice http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-buffer-get-slice.html
+@set gtk-text-buffer-create-child-anchor http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-buffer-create-child-anchor.html
+@set gtk-text-buffer-insert http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-buffer-insert.html
+@set gtk-text-buffer-remove-tag http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-buffer-remove-tag.html
+@set gtk-text-buffer-remove-all-tags http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-buffer-remove-all-tags.html
+@set gtk-text-buffer-apply-tag http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-buffer-apply-tag.html
+@set gtk-text-buffer-apply-tag-by-name http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-buffer-apply-tag-by-name.html
+@set gtk-text-buffer-create-tag http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-buffer-create-tag.html
+
+@c GtkTextChildAnchor
+
+@set gtk-text-child-anchor http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-text-child-anchor.html
+@set gtk-text-child-anchor-get-widgets http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-child-anchor-get-widgets.html
 
 @c GtkTextIter
 
@@ -481,6 +496,8 @@
 @set gtk-text-iter-backward-find-char http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-iter-backward-find-char.html
 @set gtk-text-iter-forward-char http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-iter-forward-char.html
 @set gtk-text-iter-get-char http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-iter-get-char.html
+@set gtk-text-iter-get-pixbuf http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-iter-get-pixbuf.html
+@set gtk-text-iter-get-child-anchor http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-iter-get-child-anchor.html
 
 @c GtkTextMark
 
@@ -501,6 +518,12 @@
 @set gtk-text-view-set-buffer http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-view-set-buffer.html
 @set gtk-text-view-set-tabs http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-view-set-tabs.html
 @set gtk-text-view-scroll-mark-onscreen http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-view-scroll-mark-onscreen.html
+@set gtk-text-view-add-child-at-anchor http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-view-add-child-at-anchor.html
+@set gtk-text-view-get-iter-at-location http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-view-get-iter-at-location.html
+@set gtk-text-view-buffer-to-window-coords http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-view-buffer-to-window-coords.html
+@set gtk-text-view-get-window http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-view-get-window.html
+@set gtk-text-view-window-to-buffer-coords http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-view-window-to-buffer-coords.html
+@set gtk-text-view-set-editable http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-view-set-editable.html
 
 @c GtkToggleButton
 
@@ -561,6 +584,18 @@
 @set make-gdk-rgba http://www.crategus.com/books/cl-cffi-gtk/pages/gdk_fun_make-gdk-rgba.html
 @set gdk-rgba-parse http://www.crategus.com/books/cl-cffi-gtk/pages/gdk_fun_gdk-rgba-parse.html
 @set gdk-rgba-to-string http://www.crategus.com/books/cl-cffi-gtk/pages/gdk_fun_gdk-rgba-to-string.html
+
+@c -----------------------------------------------------------------------------
+
+@c GdkPixbuf
+
+@set gdk-pixbuf http://www.crategus.com/books/cl-cffi-gtk/pages/gdk-pixbuf_class_gdk-pixbuf.html
+@set gdk-pixbuf-new-from-file http://www.crategus.com/books/cl-cffi-gtk/pages/gdk-pixbuf_fun_gdk-pixbuf-new-from-file.html
+
+@c GdkWindow
+
+@set gdk-window http://www.crategus.com/books/cl-cffi-gtk/pages/gdk_class_gdk-window.html
+@set gdk-window-get-origin http://www.crategus.com/books/cl-cffi-gtk/pages/gdk_fun_gdk-window-get-origin.html
 
 @c -----------------------------------------------------------------------------
 
