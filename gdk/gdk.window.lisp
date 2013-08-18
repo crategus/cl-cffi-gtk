@@ -3910,15 +3910,21 @@
 
 (defun gdk-window-get-origin (window)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-5}
-  @argument[window]{a GdkWindow}
+ "@version{2013-8-18}
+  @argument[window]{a @class{gdk-window} object}
+  @begin{return}
+    @code{x} -- x coordinate @br{}
+    @code{y} -- y coordinate
+  @end{return}
   @begin{short}
-    @code{x} -- X coordinate @br{}
-    @code{y} -- Y coordinate
+    Obtains the position of a window in root window coordinates.
   @end{short}
-  Obtains the position of a window in root window coordinates. (Compare with
-  gdk_window_get_position() and gdk_window_get_geometry() which return the
-  position of a window relative to its parent window.)"
+  Compare with the functions @fun{gdk-window-get-position} and
+  @fun{gdk-window-get-geometry} which return the position of a window relative
+  to its parent window.
+  @see-class{gdk-window}
+  @see-function{gdk-window-get-position}
+  @see-function{gdk-window-get-geometry}"
   (with-foreign-objects ((x :int) (y :int))
     (%gdk-window-get-origin window x y)
     (values (mem-ref x :int)
