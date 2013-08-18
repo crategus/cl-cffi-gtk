@@ -279,67 +279,121 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_MENU_ATTRIBUTE_ACTION
-;;;
-;;; #define G_MENU_ATTRIBUTE_ACTION "action"
-;;;
-;;; The menu item attribute which holds the action name of the item. Action
-;;; names are namespaced with an identifier for the action group in which the
-;;; action resides. For example, "win." for window-specific actions and "app."
-;;; for application-wide actions.
-;;;
-;;; See also g_menu_model_get_item_attribute() and g_menu_item_set_attribute().
-;;;
-;;; Since 2.32
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash '+g-menu-attribute-action+ atdoc:*variable-name-alias*)
+      "Constant")
+
+(defparameter +g-menu-attribute-action+ "action"
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-18}
+  @variable-value{\"action\"}
+  @begin{short}
+    The menu item attribute which holds the action name of the item.
+  @end{short}
+  Action names are namespaced with an identifier for the action group in which
+  the action resides. For example, \"win.\" for window-specific actions and
+  \"app.\" for application-wide actions.
+
+  See also the functions @fun{g-menu-model-get-item-attribute} and
+  @fun{g-menu-item-set-attribute}.
+
+  Since 2.32
+  @see-function{g-menu-model-get-item-attribute}
+  @see-function{g-menu-item-set-attribute}")
+
+(export '+g-menu-attribute-action+)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_MENU_ATTRIBUTE_LABEL
-;;;
-;;; #define G_MENU_ATTRIBUTE_LABEL "label"
-;;;
-;;; The menu item attribute which holds the label of the item.
-;;;
-;;; Since 2.32
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash '+g-menu-attribute-label+ atdoc:*variable-name-alias*)
+      "Constant")
+
+(defparameter +g-menu-attribute-label+ "label"
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-18}
+  @variable-value{\"label\"}
+  @begin{short}
+    The menu item attribute which holds the label of the item.
+  @end{short}
+
+  Since 2.32")
+
+(export '+g-menu-attribute-label+)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_MENU_ATTRIBUTE_TARGET
-;;;
-;;; #define G_MENU_ATTRIBUTE_TARGET "target"
-;;;
-;;; The menu item attribute which holds the target with which the item's action
-;;; will be activated.
-;;;
-;;; See also g_menu_item_set_action_and_target()
-;;;
-;;; Since 2.32
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash '+g-menu-attribute-target+ atdoc:*variable-name-alias*)
+      "Constant")
+
+(defparameter +g-menu-attribute-target+ "target"
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-18}
+  @variable-value{\"target\"}
+  @begin{short}
+    The menu item attribute which holds the target with which the item's action
+    will be activated.
+  @end{short}
+
+  See also the function @fun{g-menu-item-set-action-and-target}.
+
+  Since 2.32
+  @see-function{g-menu-item-set-action-and-target}")
+
+(export '+g-menu-attribute-target+)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_MENU_LINK_SECTION
-;;;
-;;; #define G_MENU_LINK_SECTION "section"
-;;;
-;;; The name of the link that associates a menu item with a section. The linked
-;;; menu will usually be shown in place of the menu item, using the item's label
-;;; as a header.
-;;;
-;;; See also g_menu_item_set_link().
-;;;
-;;; Since 2.32
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash '+g-menu-link-section+ atdoc:*variable-name-alias*) "Constant")
+
+(defparameter +g-menu-link-section+ "section"
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-18}
+  @variable-value{\"section\"}
+  @begin{short}
+    The name of the link that associates a menu item with a section. The linked
+    menu will usually be shown in place of the menu item, using the item's label
+    as a header.
+  @end{short}
+
+  See also the function @fun{g-menu-item-set-link}.
+
+  Since 2.32
+  @see-function{g-menu-item-set-link}")
+
+(export '+g-menu-link-section+)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_MENU_LINK_SUBMENU
-;;;
-;;; #define G_MENU_LINK_SUBMENU "submenu"
-;;;
-;;; The name of the link that associates a menu item with a submenu.
-;;;
-;;; See also g_menu_item_set_link().
-;;;
-;;; Since 2.32
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash '+g-menu-link-submenu+ atdoc:*variable-name-alias*) "Constant")
+
+(defparameter +g-menu-link-submenu+ "submenu"
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-18}
+  @variable-value{\"submenu\"}
+  @begin{short}
+    The name of the link that associates a menu item with a submenu.
+  @end{short}
+
+  See also the function @fun{g-menu-item-set-link}.
+
+  Since 2.32
+  @see-function{g-menu-item-set-link}")
+
+(export '+g-menu-link-submenu+)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_menu_model_get_item_attribute_value ()
