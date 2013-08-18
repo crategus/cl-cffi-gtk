@@ -360,7 +360,7 @@
 
   Since 2.24
   @see-class{gtk-combo-text}
-  @see-function{gtk-combo-text-remove-all}"
+  @see-function{gtk-combo-box-text-remove-all}"
   (combo-box (g-object gtk-combo-box-text))
   (position :int))
 
@@ -370,7 +370,7 @@
 ;;; gtk_combo_box_text_remove_all ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_combo_text_remove_all" gtk-combo-text-remove-all) :void
+(defcfun ("gtk_combo_box_text_remove_all" gtk-combo-box-text-remove-all) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-8-15}
   @argument[combo-box]{a @class{gtk-combo-box-text} widget}
@@ -383,7 +383,7 @@
   @see-function{gtk-combo-text-remove}"
   (combo-box (g-object gtk-combo-text)))
 
-(export 'gtk-combo-box-text)
+(export 'gtk-combo-box-text-remove-all)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_text_get_active_text ()
