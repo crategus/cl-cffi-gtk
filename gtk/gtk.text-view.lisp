@@ -1068,22 +1068,25 @@
   (iter (g-boxed-foreign gtk-text-iter))
   (location (g-boxed-foreign gdk-rectangle)))
 
-(defun gtk-text-view-iter-location (text-view iter)
+(defun gtk-text-view-get-iter-location (text-view iter)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-10}
+ "@version{2013-8-18}
   @argument[text-view]{a @class{gtk-text-view} object}
   @argument[iter]{a @class{gtk-text-iter} object}
   @return{Bounds of the character at @arg{iter}.}
-  Gets a rectangle which roughly contains the character at @arg{iter}. The
-  rectangle position is in buffer coordinates; use the function
+  @begin{short}
+    Gets a rectangle which roughly contains the character at @arg{iter}.
+  @end{short}
+  The rectangle position is in buffer coordinates; use the function
   @fun{gtk-text-view-buffer-to-window-coords} to convert these coordinates to
   coordinates for one of the windows in the text view.
+  @see-class{gtk-text-view}
   @see-function{gtk-text-view-buffer-to-window-coords}"
   (let ((rect (make-gdk-rectangle :x 0 :y 0 :width 0 :height 0)))
     (%gtk-text-view-get-iter-location text-view iter rect)
     rect))
 
-(export 'gtk-text-view-iter-location)
+(export 'gtk-text-view-get-iter-location)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_view_get_cursor_locations ()
@@ -1282,9 +1285,9 @@
 (defun gtk-text-view-buffer-to-window-coords (text-view window-type
                                                         buffer-x buffer-y)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-10}
+ "@version{2013-8-18}
   @argument[text-view]{a @class{gtk-text-view} object}
-  @argument[win]{a @class{gtk-text-window-type} except @code{:private}}
+  @argument[win]{a @symbol{gtk-text-window-type} except @code{:private}}
   @argument[buffer-x]{buffer x coordinate}
   @argument[buffer-y]{buffer y coordinate}
   @begin{return}
@@ -1298,6 +1301,8 @@
 
   Note that you cannot convert coordinates for a nonexisting window (see the
   function @fun{gtk-text-view-set-border-window-size}).
+  @see-class{gtk-text-view}
+  @see-symbol{gtk-text-window-type}
   @see-function{gtk-text-view-set-border-window-size}"
   (with-foreign-objects ((window-x :int) (window-y :int))
     (%gtk-text-view-buffer-to-window-coords text-view
@@ -1357,15 +1362,21 @@
 (defcfun ("gtk_text_view_get_window" gtk-text-view-get-window)
     (g-object gdk-window)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-10}
-  @argument[text-view]{a @class{gtk-text-view} object}
-  @argument[win]{window to get}
+ "@version{2013-8-18}
+  @argument[text-view]{a @class{gtk-text-view} widget}
+  @argument[win]{window to get, one of the @symbol{gtk-text-window-type}
+    enumeration}
   @return{a @class{gdk-window,} or @code{nil}}
-  Retrieves the @class{gdk-window} object corresponding to an area of the text
-  view; possible windows include the overall widget window, child windows on the
+  @begin{short}
+    Retrieves the @class{gdk-window} object corresponding to an area of the text
+    view.
+  @end{short}
+  Possible windows include the overall widget window, child windows on the
   left, right, top, bottom, and the window that displays the text buffer.
   Windows are @code{nil} and nonexistent if their width or height is 0, and are
-  nonexistent before the widget has been realized."
+  nonexistent before the widget has been realized.
+  @see-class{gtk-text-view}
+  @see-symbol{gtk-text-window-type}"
   (text-view (g-object gtk-text-view))
   (win gtk-text-window-type))
 
@@ -1636,10 +1647,11 @@
 (defcfun ("gtk_text_child_anchor_get_widgets" gtk-text-child-anchor-get-widgets)
     (g-list (g-object gtk-widget) :free-from-foreign t)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-10}
+ "@version{2013-8-18}
   @argument[anchor]{a @class{gtk-text-child-anchor} object}
   @return{List of widgets anchored at @arg{anchor}.}
-  Gets a list of all widgets anchored at this child @arg{anchor}."
+  Gets a list of all widgets anchored at this child @arg{anchor}.
+  @see-class{gtk-text-child-anchor}"
   (anchor (g-object gtk-text-child-anchor)))
 
 (export 'gtk-text-child-anchor-get-widgets)
