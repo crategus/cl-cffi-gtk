@@ -4,10 +4,10 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation of this file has been copied from the
-;;; GObject Reference Manual Version 2.36.2. See <http://www.gtk.org>.
-;;; The API documentation of the Lisp binding is available at
-;;; <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GObject Reference Manual
+;;; Version 2.36.2 and modified to document the Lisp binding to the GObject
+;;; library. See <http://www.gtk.org>. The API documentation of the Lisp binding
+;;; is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -811,21 +811,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_signal_query ()
-;;;
-;;; void g_signal_query (guint signal_id, GSignalQuery *query);
-;;;
-;;; Queries the signal system for in-depth information about a specific signal.
-;;; This function will fill in a user-provided structure to hold signal-specific
-;;; information. If an invalid signal id is passed in, the signal_id member of
-;;; the GSignalQuery is 0. All members filled into the GSignalQuery structure
-;;; should be considered constant and have to be left untouched.
-;;;
-;;; signal_id :
-;;;     The signal id of the signal to query information for.
-;;;
-;;; query :
-;;;     A user provided structure that is filled in with constant values upon
-;;;     success.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_signal_query" %g-signal-query) :void
@@ -833,6 +818,19 @@
   (query (:pointer (:struct %g-signal-query))))
 
 (defun g-signal-query (signal-id)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-20}
+  @argument[signal-id]{the signal ID of the signal to query information for}
+  @begin{return}
+    @code{query} -- the signal info
+  @end{return}
+  @begin{short}
+    Returns the signal info.
+  @end{short}
+
+  Queries the signal system for in-depth information about a specific signal.
+  This function will return signal-specific information. If an invalid signal ID
+  is passed in, the @arg{signal-id} member is 0."
   (with-foreign-object (query '(:struct %g-signal-query))
     (%g-signal-query signal-id query)
     (assert (not (zerop (foreign-slot-value query
@@ -868,28 +866,25 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_signal_lookup ()
-;;;
-;;; guint g_signal_lookup (const gchar *name, GType itype);
-;;;
-;;; Given the name of the signal and the type of object it connects to, gets the
-;;; signal's identifying integer. Emitting the signal by number is somewhat
-;;; faster than using the name each time.
-;;;
-;;; Also tries the ancestors of the given type.
-;;;
-;;; See g_signal_new() for details on allowed signal names.
-;;;
-;;; name :
-;;;     the signal's name.
-;;;
-;;; itype :
-;;;     the type that the signal operates on.
-;;;
-;;; Returns :
-;;;     the signal's identifying number, or 0 if no signal was found.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_signal_lookup" g-signal-lookup) :uint
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-20}
+  @argument[name]{the signal's name}
+  @argument[itype]{the type that the signal operates on}
+  @return{The signal's identifying number, or 0 if no signal was found.}
+  @begin{short}
+    Given the name of the signal and the type of object it connects to, gets the
+    signal's identifying integer.
+  @end{short}
+  Emitting the signal by number is somewhat faster than using the name each
+  time.
+
+  Also tries the ancestors of the given type.
+
+  See the function @fun{g-signal-new} for details on allowed signal names.
+  @see-function{g-signal-new}"
   (name :string)
   (itype g-type))
 
@@ -897,42 +892,24 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_signal_name ()
-;;;
-;;; const gchar * g_signal_name (guint signal_id);
-;;;
-;;; Given the signal's identifier, finds its name.
-;;;
-;;; Two different signals may have the same name, if they have differing types.
-;;;
-;;; signal_id :
-;;;     the signal's identifying number.
-;;;
-;;; Returns :
-;;;     the signal name, or NULL if the signal number was invalid.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_signal_name" g-signal-name) :string
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-20}
+  @argument[signal-id]{the signal's identifying number}
+  @return{The signal name, or @code{nil} if the signal number was invalid.}
+  @begin{short}
+    Given the signal's identifier, finds its name.
+  @end{short}
+
+  Two different signals may have the same name, if they have differing types."
   (signal-id :uint))
 
 (export 'g-signal-name)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_signal_list_ids ()
-;;;
-;;; guint * g_signal_list_ids (GType itype, guint *n_ids);
-;;;
-;;; Lists the signals by id that a certain instance or interface type created.
-;;; Further information about the signals can be acquired through
-;;; g_signal_query().
-;;;
-;;; itype :
-;;;     Instance or interface type.
-;;;
-;;; n_ids :
-;;;     Location to store the number of signal ids for itype.
-;;;
-;;; Returns :
-;;;     Newly allocated array of signal IDs.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_signal_list_ids" %g-signal-list-ids) (:pointer :uint)
@@ -942,6 +919,16 @@
 ;; Returns a list of signal ids for itype
 
 (defun g-signal-list-ids (itype)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-20}
+  @argument[itype]{instance or interface type}
+  @return{A list of signal IDs.}
+  @begin{short}
+    Lists the signals by ID that a certain instance or interface type created.
+  @end{short}
+  Further information about the signals can be acquired through the function
+  @fun{g-signal-query}.
+  @see-function{g-signal-query}"
   (when (g-type-is-object itype) ; itype must be of type GObject
     (with-foreign-object (n-ids :uint)
       (with-unwind (ids (%g-signal-list-ids itype n-ids) g-free)
@@ -1036,33 +1023,28 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_signal_emitv ()
-;;;
-;;; void g_signal_emitv (const GValue *instance_and_params,
-;;;                      guint signal_id,
-;;;                      GQuark detail,
-;;;                      GValue *return_value);
-;;;
-;;; Emits a signal.
-;;;
-;;; Note that g_signal_emitv() doesn't change return_value if no handlers are
-;;; connected, in contrast to g_signal_emit() and g_signal_emit_valist().
-;;;
-;;; instance_and_params :
-;;;     argument list for the signal emission. The first element in the array is
-;;;     a GValue for the instance the signal is being emitted on. The rest are
-;;;     any arguments to be passed to the signal.
-;;;
-;;; signal_id :
-;;;     the signal id
-;;;
-;;; detail :
-;;;     the detail
-;;;
-;;; return_value :
-;;;     Location to store the return value of the signal emission.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_signal_emitv" g-signal-emitv) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-20}
+  @argument[instance-and-params]{argument list for the signal emission. The
+    first element in the array is a @symbol{g-value} for the instance the signal
+    is being emitted on. The rest are any arguments to be passed to the signal.}
+  @argument[signal-id]{the signal id}
+  @argument[detail]{the detail}
+  @argument[return-value]{Location to store the return value of the signal
+    emission.}
+  @begin{short}
+    Emits a signal.
+  @end{short}
+
+  Note that the function @sym{g-signal-emitv} does not change @arg{return-value}
+  if no handlers are connected, in contrast to the functions @fun{g-signal-emit}
+  and @fun{g-signal-emit-valist}.
+  @see-symbol{g-value}
+  @see-function{g-signal-emit}
+  @see-function{g-signal-emit-valist}"
   (instance-and-params (:pointer (:struct g-value)))
   (signal-id :uint)
   (detail g-quark)
@@ -1287,32 +1269,18 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_signal_connect_closure ()
-;;;
-;;; gulong g_signal_connect_closure (gpointer instance,
-;;;                                  const gchar *detailed_signal,
-;;;                                  GClosure *closure,
-;;;                                  gboolean after);
-;;;
-;;; Connects a closure to a signal for a particular object.
-;;;
-;;; instance :
-;;;     the instance to connect to.
-;;;
-;;; detailed_signal :
-;;;     a string of the form "signal-name::detail".
-;;;
-;;; closure :
-;;;     the closure to connect.
-;;;
-;;; after :
-;;;     whether the handler should be called before or after the default handler
-;;;     of the signal.
-;;;
-;;; Returns :
-;;;     the handler id
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_signal_connect_closure" g-signal-connect-closure) :ulong
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-20}
+  @argument[instance]{the instance to connect to}
+  @argument[detailed-signal]{a string of the form \"signal-name::detail\"}
+  @argument[closure]{the closure to connect}
+  @argument[after]{whether the handler should be called before or after the
+    default handler of the signal}
+  @return{The handler ID.}
+  Connects a closure to a signal for a particular object."
   (instance :pointer)
   (detailed-signal :string)
   (closure (:pointer (:struct g-closure)))
@@ -1353,26 +1321,23 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_signal_handler_block ()
-;;;
-;;; void g_signal_handler_block (gpointer instance, gulong handler_id);
-;;;
-;;; Blocks a handler of an instance so it will not be called during any signal
-;;; emissions unless it is unblocked again. Thus "blocking" a signal handler
-;;; means to temporarily deactive it, a signal handler has to be unblocked
-;;; exactly the same amount of times it has been blocked before to become active
-;;; again.
-;;;
-;;; The handler_id has to be a valid signal handler id, connected to a signal of
-;;; instance.
-;;;
-;;; instance :
-;;;     The instance to block the signal handler of.
-;;;
-;;; handler_id :
-;;;     Handler id of the handler to be blocked.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_signal_handler_block" g-signal-handler-block) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-20}
+  @argument[instance]{the instance to block the signal handler of}
+  @argument[handler-id]{handler ID of the handler to be blocked}
+  @begin{short}
+    Blocks a handler of an instance so it will not be called during any signal
+    emissions unless it is unblocked again.
+  @end{short}
+  Thus \"blocking\" a signal handler means to temporarily deactive it, a signal
+  handler has to be unblocked exactly the same amount of times it has been
+  blocked before to become active again.
+
+  The @arg{handler-id} has to be a valid signal handler ID, connected to a
+  signal of instance."
   (instance g-object)
   (handler-id :ulong))
 
@@ -1380,30 +1345,28 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_signal_handler_unblock ()
-;;;
-;;; void g_signal_handler_unblock (gpointer instance, gulong handler_id);
-;;;
-;;; Undoes the effect of a previous g_signal_handler_block() call. A blocked
-;;; handler is skipped during signal emissions and will not be invoked,
-;;; unblocking it (for exactly the amount of times it has been blocked before)
-;;; reverts its "blocked" state, so the handler will be recognized by the signal
-;;; system and is called upon future or currently ongoing signal emissions
-;;; (since the order in which handlers are called during signal emissions is
-;;; deterministic, whether the unblocked handler in question is called as part
-;;; of a currently ongoing emission depends on how far that emission has
-;;; proceeded yet).
-;;;
-;;; The handler_id has to be a valid id of a signal handler that is connected to
-;;; a signal of instance and is currently blocked.
-;;;
-;;; instance :
-;;;     The instance to unblock the signal handler of.
-;;;
-;;; handler_id :
-;;;     Handler id of the handler to be unblocked.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_signal_handler_unblock" g-signal-handler-unblock) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-20}
+  @argument[instance]{the instance to unblock the signal handler of}
+  @argument[handler-id]{handler ID of the handler to be unblocked}
+  @begin{short}
+    Undoes the effect of a previous @fun{g-signal-handler-block} call.
+  @end{short}
+  A blocked handler is skipped during signal emissions and will not be invoked,
+  unblocking it (for exactly the amount of times it has been blocked before)
+  reverts its \"blocked\" state, so the handler will be recognized by the signal
+  system and is called upon future or currently ongoing signal emissions
+  (since the order in which handlers are called during signal emissions is
+  deterministic, whether the unblocked handler in question is called as part
+  of a currently ongoing emission depends on how far that emission has
+  proceeded yet).
+
+  The @arg{handler-id} has to be a valid id of a signal handler that is
+  connected to a signal of instance and is currently blocked.
+  @see-function{g-signal-handler-block}"
   (instance g-object)
   (handler-id :ulong))
 
@@ -1411,24 +1374,22 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_signal_handler_disconnect ()
-;;;
-;;; void g_signal_handler_disconnect (gpointer instance, gulong handler_id);
-;;;
-;;; Disconnects a handler from an instance so it will not be called during any
-;;; future or currently ongoing emissions of the signal it has been connected
-;;; to. The handler_id becomes invalid and may be reused.
-;;;
-;;; The handler_id has to be a valid signal handler id, connected to a signal of
-;;; instance.
-;;;
-;;; instance :
-;;;     The instance to remove the signal handler from.
-;;;
-;;; handler_id :
-;;;     Handler id of the handler to be disconnected.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_signal_handler_disconnect" g-signal-handler-disconnect) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-20}
+  @argument[instance]{the instance to remove the signal handler from}
+  @argument[handler-id]{handler ID of the handler to be disconnected}
+  @begin{short}
+    Disconnects a handler from an instance so it will not be called during any
+    future or currently ongoing emissions of the signal it has been connected
+    to.
+  @end{short}
+  The @arg{handler-id} becomes invalid and may be reused.
+
+  The @arg{handler-id} has to be a valid signal handler id, connected to a
+  signal of instance."
   (object g-object)
   (handler-id :ulong))
 
@@ -1475,14 +1436,6 @@
 ;;; Returns :
 ;;;     A valid non-0 signal handler id for a successful match.
 ;;; ----------------------------------------------------------------------------
-
-;;; gulong g_signal_handler_find (gpointer instance,
-;;;                               GSignalMatchType mask,
-;;;                               guint signal_id,
-;;;                               GQuark detail,
-;;;                               GClosure *closure,
-;;;                               gpointer func,
-;;;                               gpointer data);
 
 (defcfun ("g_signal_handler_find" %g-signal-handler-find) :ulong
   (instance g-object)

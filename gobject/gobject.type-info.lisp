@@ -795,14 +795,17 @@
               "Whether the type designator is mangled with
                the @code{G_SIGNAL_TYPE_STATIC_SCOPE} flag"))
   (:documentation
-    "Values of this CFFI foreign type @sym{g-type} identify the C GType.
+    "@version{2013-8-22}
+     Values of this CFFI foreign type @sym{g-type} identify the C GType.
      @sym{g-type} is designated by its name (a string) or a numeric identifier.
      Functions accept @sym{g-type} designators as a string or integer and return
      them as a string. The functions @fun{g-type-name} and
      @fun{g-type-from-name} are used to convert between the name and the numeric
      identifier. Numeric identifier of @sym{g-type} may be different between
      different program runs. But string identifier of @sym{g-type} does not
-     change.")
+     change.
+     @see-function{g-type-name}
+     @see-function{g-type-from-name}")
   (:actual-type %g-type)
   (:simple-parser g-type))
 
