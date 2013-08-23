@@ -345,8 +345,10 @@ to selected regions of text.
 
 @subheading More Functions for Applying and Removing tags
 
+@c TODO: gtk-text-buffer-insert-with-tags is not implemented
+
 In the previous section, the function @xurl{gtk-text-buffer-insert} was
-introduced.  A variant @xurl{gtk-text-buffer-insert-with-tags} of this function
+introduced.  A variant @code{gtk-text-buffer-insert-with-tags} of this function
 can be used to insert text with tags applied.
 
 The tags argument list is terminated by a @code{NULL} pointer. The
