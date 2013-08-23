@@ -2,6 +2,8 @@
 (def-suite gtk-main-loop :in gtk-suite)
 (in-suite gtk-main-loop)
 
+(defvar *verbose-gtk-main-loop* t)
+
 ;;;   gtk_disable_setlocale                    * not exported *
 
 ;;;   gtk_get_default_language
@@ -20,20 +22,60 @@
   (is-true (pointerp (gtk-get-option-group nil))))
 
 ;;;   gtk_events_pending
-;;;   gtk_main
 
+;;;   gtk_main
+;;;   gtk_main_quit
 ;;;   gtk_main_level
 
-(test gtk-main-level
-  (is (= 0 (gtk-main-level)))
-  (ensure-gtk-main)
-  (sleep 1)
-  (is (= 1 (gtk-main-level)))
-  (leave-gtk-main)
-  (sleep 1)
-  (is (= 0 (gtk-main-level))))
+(defun main-idle-cb ()
+  (format t "~&Execute main-idle-cb in level ~A.~%"
+            (gtk-main-level))
+  ;; Quit the main loop.
+  (gtk-main-quit)
+  ;; Remove the idle source.
+  +g-source-remove+)
 
-;;;     gtk_main_quit
+(test gtk-main
+  ;; Add a idle source to the main loop.
+  (g-idle-add #'main-idle-cb)
+  ;; Start the main loop.
+  ;; We return if gtk-main-quit is called in the idle callback.
+  (gtk-main))
+
+(defun main ()
+  ;; Add a idle source to the main loop.
+  (g-idle-add #'main-idle-cb)
+  ;; Start the main loop.
+  ;; We return if gtk-main-quit is called in the idle callback.
+  (gtk-main))
+
+(let ((counter 0))
+  (defun main-timeout-callback ()
+    (incf counter)
+    (is (= 1 (gtk-main-level)))
+    (when *verbose-gtk-main-loop*
+      (format t "~&main-timeout-callback called ~d times~%" counter))
+    (is (= 1 (gtk-main-level)))
+    (if (>= counter 3)
+        (progn
+          ;; Reset the counter
+          (setf counter 0)
+          ;; Stop the main loop from running
+          (gtk-main-quit)
+          ;; Stop the source
+          +g-source-remove+)
+        ;; Continue the source
+        +g-source-continue+)))
+
+(test gtk-main.1
+  (let ()
+    ;; Add a timeout source to the main loop.
+    (g-timeout-add 100 #'main-timeout-callback)
+    ;; Start the main loop. We return if gtk-main-quit is called in the timeout.
+    (gtk-main)))
+
+
+
 ;;;     gtk_main_iteration
 ;;;     gtk_main_iteration_do
 ;;;     gtk_main_do_event
