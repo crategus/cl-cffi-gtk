@@ -603,7 +603,7 @@
   recalculated based on the current time and the given interval (it does not
   try to 'catch up' time lost in delays).
 
-  This variant of the function @fun{g-timeout-add-full} can be thought of a
+  This variant of the function @code{g_timeout_add_full()} can be thought of a
   MT-safe version for GTK+ widgets for the following use case:
   @begin{pre}
    static gboolean timeout_callback (gpointer data)
@@ -637,8 +637,8 @@
   (%gdk-threads-add-timeout-full priority
                                  interval
                                  (callback source-func-cb)
-                                 (glib::allocate-stable-pointer func)
-                                 (callback glib::stable-pointer-destroy-notify-cb)))
+                                 (glib:allocate-stable-pointer func)
+                                 (callback glib:stable-pointer-destroy-notify-cb)))
 
 (export 'gdk-threads-add-timeout-full)
 

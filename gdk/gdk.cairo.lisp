@@ -42,17 +42,6 @@
 ;;;     gdk_cairo_rectangle
 ;;;     gdk_cairo_region
 ;;;     gdk_cairo_region_create_from_surface
-;;;
-;;; Description
-;;;
-;;; Cairo is a graphics library that supports vector graphics and image
-;;; compositing that can be used with GDK. GTK+ does all of its drawing using
-;;; cairo.
-;;;
-;;; GDK does not wrap the cairo API, instead it allows to create cairo contexts
-;;; which can be used to draw on GdkWindows. Additional functions allow use
-;;; GdkRectangles with cairo and to use GdkColors, GdkRGBAs, GdkPixbufs and
-;;; GdkWindows as sources for drawing operations.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gdk)
@@ -97,27 +86,29 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_cairo_create ()
-;;;
-;;; cairo_t * gdk_cairo_create (GdkWindow *window);
-;;;
-;;; Creates a Cairo context for drawing to window.
-;;;
-;;; Warning
-;;;
-;;; Note that calling cairo_reset_clip() on the resulting cairo_t will produce
-;;; undefined results, so avoid it at all costs.
-;;;
-;;; window :
-;;;     a GdkWindow
-;;;
-;;; Returns :
-;;;     A newly created Cairo context. Free with cairo_destroy() when you are
-;;;     done drawing.
-;;;
-;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_cairo_create" gdk-cairo-create)  (:pointer (:struct cairo-t))
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-20}
+  @argument[window]{a @class{gdk-window} object}
+  @begin{return}
+    A newly created Cairo context. Free with the function @fun{cairo-destroy}
+    when you are done drawing.
+  @end{return}
+  @begin{short}
+    Creates a Cairo context for drawing to window.
+  @end{short}
+
+  @subheading{Warning}
+    Note that calling the function @fun{cairo-reset-clip} on the resulting
+    @sym{cairo-t} will produce undefined results, so avoid it at all costs.
+
+  Since 2.8
+  @see-class{gdk-window}
+  @see-symbol{cairo-t}
+  @see-function{cairo-destroy}
+  @see-function{cairo-reset-clip}"
   (window (g-object gdk-window)))
 
 (export 'gdk-cairo-create)
@@ -209,37 +200,29 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_cairo_set_source_window ()
-;;;
-;;; void gdk_cairo_set_source_window (cairo_t *cr,
-;;;                                   GdkWindow *window,
-;;;                                   gdouble x,
-;;;                                   gdouble y);
-;;;
-;;; Sets the given window as the source pattern for cr.
-;;;
-;;; The pattern has an extend mode of CAIRO_EXTEND_NONE and is aligned so that
-;;; the origin of window is x, y. The window contains all its subwindows when
-;;; rendering.
-;;;
-;;; Note that the contents of window are undefined outside of the visible part
-;;; of window, so use this function with care.
-;;;
-;;; cr :
-;;;     a cairo context
-;;;
-;;; window :
-;;;     a GdkWindow
-;;;
-;;; x :
-;;;     X coordinate of location to place upper left corner of window
-;;;
-;;; y :
-;;;     Y coordinate of location to place upper left corner of window
-;;;
-;;; Since 2.24
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_cairo_set_source_window" gdk-cairo-set-source-window) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-20}
+  @argument[cr]{a cairo context}
+  @argument[window]{a @class{gdk-window} object}
+  @argument[x]{x coordinate of location to place upper left corner of window}
+  @argument[y]{y coordinate of location to place upper left corner of window}
+  @begin{short}
+    Sets the given @arg{window} as the source pattern for @arg{cr}.
+  @end{short}
+
+  The pattern has an extend mode of @code{CAIRO_EXTEND_NONE} and is aligned so
+  that the origin of window is @arg{x}, @arg{y}. The window contains all its
+  subwindows when rendering.
+
+  Note that the contents of window are undefined outside of the visible part
+  of window, so use this function with care.
+
+  Since 2.24
+  @see-class{gdk-window}
+  @see-symbol{cairo-t}"
   (cr (:pointer (:struct cairo-t)))
   (window (g-object gdk-window))
   (x :double)
@@ -265,21 +248,20 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_cairo_region ()
-;;;
-;;; void gdk_cairo_region (cairo_t *cr, const cairo_region_t *region);
-;;;
-;;; Adds the given region to the current path of cr.
-;;;
-;;; cr :
-;;;     a cairo context
-;;;
-;;; region :
-;;;     a cairo_region_t
-;;;
-;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_cairo_region" gdk-cairo-region) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-20}
+  @argument[cr]{a cairo context}
+  @argument[region]{a @symbol{cairo-region-t}}
+  @begin{short}
+    Adds the given @arg{region} to the current path of @arg{cr}.
+  @end{short}
+
+  Since 2.8
+  @see-symbol{cairo-t}
+  @see-symbol{cairo-region-t}"
   (cr (:pointer (:struct cairo-t)))
   (region (:pointer (:struct cairo-region-t))))
 

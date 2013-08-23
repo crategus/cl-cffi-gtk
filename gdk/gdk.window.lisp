@@ -382,8 +382,11 @@
 (setf (gethash 'gdk-window-cursor atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-window-cursor 'function)
- "@version{2013-4-4}
-  Accessor of the slot @code{\"cursor\"} of the @class{gdk-window} class.")
+ "@version{2013-8-23}
+  Accessor of the slot @code{\"cursor\"} of the @class{gdk-window} class.
+  @see-class{gdk-window}
+  @see-function{gdk-window-get-cursor}
+  @see-function{gdk-window-set-cursor}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GdkWindowType
@@ -402,7 +405,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-window-type atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gdk-window-type atdoc:*external-symbols*)
- "@version{2013-6-5}
+ "@version{2013-8-23}
   @short{Describes the kind of window.}
   @begin{pre}
 (define-g-enum \"GdkWindowType\" gdk-window-type
@@ -418,14 +421,17 @@
   @begin[code]{table}
     @entry[:root]{Root window; this window has no parent, covers the entire
       screen, and is created by the window system.}
-    @entry[:toplevel]{Toplevel window (used to implement @class{gtk-window}).}
-    @entry[:child]{Child window (used to implement e. g. @class{gtk-entry}).}
-    @entry[:temp]{Override redirect temporary window (used to implement
-      @class{gtk-menu}).}
+    @entry[:toplevel]{Toplevel window, used to implement @class{gtk-window}.}
+    @entry[:child]{Child window, used to implement e. g. @class{gtk-entry}.}
+    @entry[:temp]{Override redirect temporary window, used to implement
+      @class{gtk-menu}.}
     @entry[:foreign]{Foreign window.}
-    @entry[:offscreen]{Offscreen window (see the section called
-      \"Offscreen Windows\"). Since 2.18.}
-  @end{table}")
+    @entry[:offscreen]{Offscreen window, see the section called
+      \"Offscreen Windows\". Since 2.18.}
+  @end{table}
+  @see-class{gdk-window}
+  @see-class{gtk-window}
+  @see-class{gtk-entry}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GdkWindowWindowClass
@@ -440,7 +446,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-window-window-class atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gdk-window-window-class atdoc:*external-symbols*)
- "@version{2013-6-5}
+ "@version{2013-8-23}
   @begin{short}
     @code{:input-output} windows are the standard kind of window you might
     expect. Such windows receive events and are also displayed on screen.
@@ -458,7 +464,8 @@
   @begin[code]{table}
     @entry[:input-output]{Window for graphics and events.}
     @entry[:input-only]{Window for events only.}
-  @end{table}")
+  @end{table}
+  @see-class{gdk-window}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GdkWindowHints
@@ -478,18 +485,19 @@
   (:user-size 256))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-window-hints atdoc:*symbol-name-alias*) "Enum"
+(setf (gethash 'gdk-window-hints atdoc:*symbol-name-alias*) "Flags"
       (gethash 'gdk-window-hints atdoc:*external-symbols*)
- "@version{2013-3-29}
+ "@version{2013-8-23}
   @begin{short}
-    Used to indicate which fields of a @class{gdk-geometry} struct should be
+    Used to indicate which fields of a @class{gdk-geometry} structure should be
     paid attention to. Also, the presence/absence of @code{:pos},
     @code{:user-pos}, and @code{:user-size} is significant, though they do not
     directly refer to @class{gdk-geometry} fields. @code{:user-pos} will be set
-    automatically by @class{gtk-window} if you call @fun{gtk-window-move}.
-    @code{:user-pos} and @code{:user-size} should be set if the user specified
-    a size/position using a - geometry command-line argument;
-    @fun{gtk-window-parse-geometry} automatically sets these flags.
+    automatically by @class{gtk-window} if you call the function
+    @fun{gtk-window-move}. @code{:user-pos} and @code{:user-size} should be set
+    if the user specified a size/position using a - geometry command-line
+    argument; the function @fun{gtk-window-parse-geometry} automatically sets
+    these flags.
   @end{short}
   @begin{pre}
 (define-g-flags \"GdkWindowHints\" gdk-window-hints
@@ -506,18 +514,21 @@
   (:user-size 256))
   @end{pre}
   @begin[code]{table}
-    @entry[:pos]{indicates that the program has positioned the window}
-    @entry[:min-size]{min size fields are set}
-    @entry[:max-size]{max size fields are set}
-    @entry[:base-size]{base size fields are set}
-    @entry[:aspect]{aspect ratio fields are set}
-    @entry[:resize-inc]{resize increment fields are set}
-    @entry[:win-gravity]{window gravity field is set}
-    @entry[:user-pos]{indicates that the window's position was explicitly set
-      by the user}
-    @entry[:user-size]{indicates that the window's size was explicitly set by
-      the user}
-  @end{table}")
+    @entry[:pos]{Indicates that the program has positioned the window.}
+    @entry[:min-size]{Min size fields are set.}
+    @entry[:max-size]{Max size fields are set.}
+    @entry[:base-size]{Base size fields are set.}
+    @entry[:aspect]{Aspect ratio fields are set.}
+    @entry[:resize-inc]{Resize increment fields are set.}
+    @entry[:win-gravity]{Window gravity field is set.}
+    @entry[:user-pos]{Indicates that the window's position was explicitly set
+      by the user.}
+    @entry[:user-size]{Indicates that the window's size was explicitly set by
+      the user.}
+  @end{table}
+  @see-class{gdk-geometry}
+  @see-class{gtk-window}
+  @see-function{gtk-window-parse-geometry}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GdkGravity
@@ -540,12 +551,12 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-gravity atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gdk-gravity atdoc:*external-symbols*)
- "@version{2013-6-10}
+ "@version{2013-8-23}
   @begin{short}
     Defines the reference point of a window and the meaning of coordinates
-    passed to the @fun{gtk-window-move} function. See the @fun{gtk-window-move}
-    function and the \"implementation notes\" section of the Extended Window
-    Manager Hints specification for more details.
+    passed to the function @fun{gtk-window-move}. See the function
+    @fun{gtk-window-move} and the \"implementation notes\" section of the
+    Extended Window Manager Hints specification for more details.
   @end{short}
   @begin{pre}
 (define-g-enum \"GdkGravity\" gdk-gravity
@@ -575,6 +586,7 @@
     @entry[:static]{The reference point is at the top left corner of the
       window itself, ignoring window manager decorations.}
   @end{table}
+  @see-class{gdk-window}
   @see-function{gtk-window-move}")
 
 ;;; ----------------------------------------------------------------------------
@@ -597,17 +609,17 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-geometry atdoc:*class-name-alias*) "CStruct"
       (documentation 'gdk-geometry 'type)
- "@version{2013-6-10}
+ "@version{2013-8-23}
   @begin{short}
     The @sym{gdk-geometry} structure gives the window manager information about
     a window's geometry constraints. Normally you would set these on the GTK+
-    level using the @fun{gtk-window-set-geometry-hints} function.
+    level using the function @fun{gtk-window-set-geometry-hints}.
     @class{gtk-window} then sets the hints on the @class{gdk-window} it creates.
   @end{short}
 
-  The @fun{gdk-window-set-geometry-hints} function expects the hints to be fully
+  The function @fun{gdk-window-set-geometry-hints} expects the hints to be fully
   valid already and simply passes them to the window manager; in contrast, the
-  @fun{gtk-window-set-geometry-hints} function performs some interpretation. For
+  function @fun{gtk-window-set-geometry-hints} performs some interpretation. For
   example, @class{gtk-window} will apply the hints to the geometry widget
   instead of the toplevel window, if you set a geometry widget. Also, the
   @code{min-width}/@code{min-height}/@code{max-width}/@code{max-height} fields
@@ -618,7 +630,7 @@
   take the minimum size as the minimum size of the geometry widget rather than
   the entire window. The base size is treated similarly.
 
-  The canonical use-case for the @fun{gtk-window-set-geometry-hints} function is
+  The canonical use-case for the function @fun{gtk-window-set-geometry-hints} is
   to get a terminal widget to resize properly. Here, the terminal text area
   should be the geometry widget; @class{gtk-window} will then automatically set
   the base size to the size of other widgets in the terminal window, such as the
@@ -668,26 +680,26 @@
   (gravity gdk-gravity :initform :north-west))
   @end{pre}
   @begin[code]{table}
-    @entry[min-width]{Minimum width of window (or -1 to use requisition,
-      with @class{gtk-window} only).}
-    @entry[min-height]{Minimum height of window (or -1 to use requisition,
-      with @class{gtk-window} only).}
-    @entry[max-width]{Maximum width of window (or -1 to use requisition,
-      with @class{gtk-window} only).}
-    @entry[max-height]{Maximum height of window (or -1 to use requisition,
-      with @class{gtk-window} only).}
+    @entry[min-width]{Minimum width of window or -1 to use requisition,
+      with @class{gtk-window} only.}
+    @entry[min-height]{Minimum height of window or -1 to use requisition,
+      with @class{gtk-window} only.}
+    @entry[max-width]{Maximum width of window or -1 to use requisition,
+      with @class{gtk-window} only.}
+    @entry[max-height]{Maximum height of window or -1 to use requisition,
+      with @class{gtk-window} only.}
     @entry[base-width]{Allowed window widths are @code{base-width} +
-      @code{width-inc} * @code{N} where @code{N} is any integer (-1 allowed with
-      @class{gtk-window}).}
+      @code{width-inc} * @code{N} where @code{N} is any integer, -1 is allowed
+      with @class{gtk-window}.}
     @entry[base-height]{Allowed window widths are @code{base-height} +
-      @code{height-inc} * @code{N} where @code{N} is any integer (-1 allowed
-      with @class{gtk-window}).}
+      @code{height-inc} * @code{N} where @code{N} is any integer, -1 is allowed
+      with @class{gtk-window}.}
     @entry[width-increment]{Width resize increment.}
     @entry[height-increment]{Height resize increment.}
     @entry[min-aspect]{Minimum width/height ratio.}
     @entry[max-aspect]{Maximum width/height ratio.}
-    @entry[win-gravity]{Window gravity, see the @fun{gtk-window-set-gravity}
-      function.}
+    @entry[win-gravity]{Window gravity, see the function
+      @fun{gtk-window-set-gravity}.}
   @end{table}
   @see-constructor{make-gdk-geometry}
   @see-constructor{copy-gdk-geometry}
@@ -702,168 +714,153 @@
   @see-slot{gdk-geometry-min-aspect}
   @see-slot{gdk-geometry-max-aspect}
   @see-slot{gdk-geometry-win-gravity}
-  @see-function{gtk-window-set-geometry-hints}
+  @see-class{gdk-window}
+  @see-class{gtk-window}
   @see-function{gdk-window-set-geometry-hints}
+  @see-function{gtk-window-set-geometry-hints}
   @see-function{gtk-window-set-gravity}")
 
 (export (boxed-related-symbols 'gdk-geometry))
 
-;;; --- copy-gdk-window-attr ---------------------------------------------------
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Constructors for GdkGeometry
+;;;
+;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'copy-gdk-geometry 'function)
- "@version{2013-4-5}
-  @argument[instance]{a @class{gdk-geometry} struct}
-  Copy constructor of a @class{gdk-geometry} struct.")
-
-;;; --- make-gdk-window-attr ---------------------------------------------------
+ "@version{2013-8-23}
+  @argument[instance]{a @class{gdk-geometry} structure}
+  Copy constructor of a @class{gdk-geometry} structure.
+  @see-class{gdk-geometry}
+  @see-function{copy-gdk-geometry}")
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'make-gdk-geometry 'function)
  "@version{2013-4-5}
-    @argument[min-width]{minimum width of window (or -1 to use requisition,
-      with GtkWindow only)}
-    @argument[min-height]{minimum height of window (or -1 to use requisition,
-      with GtkWindow only)}
-    @argument[max-width}{maximum width of window (or -1 to use requisition,
-      with GtkWindow only)}
-    @argument[max-height]{maximum height of window (or -1 to use requisition,
-      with GtkWindow only)}
-    @argument[base-width]{allowed window widths are base_width + width_inc * N
-      where N is any integer (-1 allowed with GtkWindow)}
-    @argument[base-height]{allowed window widths are base_height + height_inc
-       * N where N is any integer (-1 allowed with GtkWindow)}
+    @argument[min-width]{minimum width of window or -1 to use requisition,
+      with @class{gtk-window} only}
+    @argument[min-height]{minimum height of window or -1 to use requisition,
+      with @class{gtk-window} only}
+    @argument[max-width}{maximum width of window or -1 to use requisition,
+      with @class{gtk-window} only}
+    @argument[max-height]{maximum height of window or -1 to use requisition,
+      with @class{gtk-window} only}
+    @argument[base-width]{allowed window widths are @code{base-width +
+      width-inc * N} where @code{N} is any integer, -1 is allowed with
+      @class{gtk-window}}
+    @argument[base-height]{allowed window widths are @code{base-height +
+      height-inc * N} where @code{N} is any integer, -1 allowed with
+      @class{gtk-window}}
     @argument[width-increment]{width resize increment}
     @argument[height-increment]{height resize increment}
     @argument[min-aspect]{minimum width/height ratio}
     @argument[max-aspect]{maximum width/height ratio}
-    @argument[win-gravity]{window gravity, see gtk_window_set_gravity()}
+    @argument[win-gravity]{window gravity, see the function
+      @fun{gtk-window-set-gravity}}
   @begin{short}
-    Creates a @class{gdk-geometry} struct.
-  @end{short}")
+    Creates a @class{gdk-geometry} structure.
+  @end{short}
+  @see-class{gdk-geometry}
+  @see-function{copy-geometry}
+  @see-function{gtk-window-set-gravity}")
 
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors of the GdkGeometry structure
+;;;
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-geometry-min-width atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-geometry-min-width 'function)
- "@version{2013-4-4}
-  @begin{short}
-    Accessor of the slot @code{min-width} of the @class{gdk-geometry} struct.
-  @end{short}")
-
-;;; ----------------------------------------------------------------------------
+ "@version{2013-8-23}
+  Accessor of the slot @code{min-width} of the @class{gdk-geometry} structure.
+  @see-class{gdk-geometry}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-geometry-min-height atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-geometry-min-height 'function)
- "@version{2013-4-4}
-  @begin{short}
-    Accessor of the slot @code{min-height} of the @class{gdk-geometry} struct.
-  @end{short}")
-
-;;; ----------------------------------------------------------------------------
+ "@version{2013-8-23}
+  Accessor of the slot @code{min-height} of the @class{gdk-geometry} structure.
+  @see-class{gdk-geometry}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-geometry-max-width atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-geometry-max-width 'function)
- "@version{2013-4-4}
-  @begin{short}
-    Accessor of the slot @code{max-width} of the @class{gdk-geometry} struct.
-  @end{short}")
-
-;;; ----------------------------------------------------------------------------
+ "@version{2013-8-23}
+  Accessor of the slot @code{max-width} of the @class{gdk-geometry} structure.
+  @see-class{gdk-geometry}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-geometry-max-height atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-geometry-max-height 'function)
- "@version{2013-4-4}
-  @begin{short}
-    Accessor of the slot @code{max-height} of the @class{gdk-geometry} struct.
-  @end{short}")
-
-;;; ----------------------------------------------------------------------------
+ "@version{2013-8-23}
+  Accessor of the slot @code{max-height} of the @class{gdk-geometry} structure.
+  @see-class{gdk-geometry}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-geometry-base-width atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-geometry-base-width 'function)
- "@version{2013-4-4}
-  @begin{short}
-    Accessor of the slot @code{base-width} of the @class{gdk-geometry} struct.
-  @end{short}")
-
-;;; ----------------------------------------------------------------------------
+ "@version{2013-8-23}
+  Accessor of the slot @code{base-width} of the @class{gdk-geometry} structure.
+  @see-class{gdk-geometry}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-geometry-base-height atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-geometry-base-height 'function)
- "@version{2013-4-4}
-  @begin{short}
-    Accessor of the slot @code{base-height} of the @class{gdk-geometry} struct.
-  @end{short}")
-
-;;; ----------------------------------------------------------------------------
+ "@version{2013-8-23}
+  Accessor of the slot @code{base-height} of the @class{gdk-geometry} structure.
+  @see-class{gdk-geometry}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-geometry-width-increment atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-geometry-width-increment 'function)
- "@version{2013-4-4}
-  @begin{short}
-    Accessor of the slot @code{width-increment} of the @class{gdk-geometry}
-    struct.
-  @end{short}")
-
-;;; ----------------------------------------------------------------------------
+ "@version{2013-8-23}
+  Accessor of the slot @code{width-increment} of the @class{gdk-geometry}
+  structure.
+  @see-class{gdk-geometry}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-geometry-height-increment atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-geometry-height-increment 'function)
- "@version{2013-4-4}
-  @begin{short}
-    Accessor of the slot @code{height-increment} of the @class{gdk-geometry}
-    struct.
-  @end{short}")
-
-;;; ----------------------------------------------------------------------------
+ "@version{2013-8-23}
+  Accessor of the slot @code{height-increment} of the @class{gdk-geometry}
+  structure.
+  @see-class{gdk-geometry}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-geometry-min-aspect atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-geometry-min-aspect 'function)
- "@version{2013-4-4}
-  @begin{short}
-    Accessor of the slot @code{min-aspect} of the @class{gdk-geometry} struct.
-  @end{short}")
-
-;;; ----------------------------------------------------------------------------
+ "@version{2013-8-23}
+  Accessor of the slot @code{min-aspect} of the @class{gdk-geometry} structure.
+  @see-class{gdk-geometry}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-geometry-max-aspect atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-geometry-max-aspect 'function)
- "@version{2013-4-4}
-  @begin{short}
-    Accessor of the slot @code{max-aspect} of the @class{gdk-geometry} struct.
-  @end{short}")
-
-;;; ----------------------------------------------------------------------------
+ "@version{2013-8-23}
+  Accessor of the slot @code{max-aspect} of the @class{gdk-geometry} structure.
+  @see-class{gdk-geometry}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-geometry-gravity atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-geometry-gravity 'function)
- "@version{2013-4-4}
-  @begin{short}
-    Accessor of the slot @code{gravity} of the @class{gdk-geometry} struct.
-  @end{short}")
+ "@version{2013-8-23}
+  Accessor of the slot @code{gravity} of the @class{gdk-geometry} structure.
+  @see-class{gdk-geometry}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GdkWindowEdge
@@ -881,12 +878,10 @@
   (:south 6)
   (:south-east 7))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-window-edge atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gdk-window-edge atdoc:*external-symbols*)
- "@version{2013-4-5}
+ "@version{2013-8-23}
   @begin{short}
     Determines a window edge or corner.
   @end{short}
@@ -904,15 +899,16 @@
   (:south-east 7))
   @end{pre}
   @begin[code]{table}
-    @entry[:north-west]{the top left corner.}
-    @entry[:north]{the top edge.}
-    @entry[:north-east]{the top right corner.}
-    @entry[:west]{the left edge.}
-    @entry[:east]{the right edge.}
-    @entry[:south-west]{the lower left corner.}
-    @entry[:south]{the lower edge.}
-    @entry[:south-east]{the lower right corner.}
-  @end{table}")
+    @entry[:north-west]{The top left corner.}
+    @entry[:north]{The top edge.}
+    @entry[:north-east]{The top right corner.}
+    @entry[:west]{The left edge.}
+    @entry[:east]{The right edge.}
+    @entry[:south-west]{The lower left corner.}
+    @entry[:south]{The lower edge.}
+    @entry[:south-east]{The lower right corner.}
+  @end{table}
+  @see-class{gdk-window}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GdkWindowTypeHint
@@ -936,12 +932,10 @@
   (:combo 12)
   (:dnd 13))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-window-type-hint atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gdk-window-type-hint atdoc:*external-symbols*)
- "@version{2013-4-5}
+ "@version{2013-8-23}
   @begin{short}
     These are hints for the window manager that indicate what type of function
     the window has. The window manager can use this when determining decoration
@@ -973,7 +967,7 @@
     @entry[:normal]{Normal toplevel window.}
     @entry[:dialog]{Dialog window.}
     @entry[:menu]{Window used to implement a menu; GTK+ uses this hint only for
-      torn-off menus, see GtkTearoffMenuItem.}
+      torn-off menus, see @class{gtk-tearoff-menu-item}.}
     @entry[:toolbar]{Window used to implement toolbars.}
     @entry[:splashscreen]{Window used to display a splash screen during
       application startup.}
@@ -989,7 +983,9 @@
       to a status icon.}
     @entry[:combo]{A popup from a combo box.}
     @entry[:dnd]{A window that is used to implement a DND cursor.}
-  @end{table}")
+  @end{table}
+  @see-class{gdk-window}
+  @see-class{gtk-tearoff-menu-item}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GdkWindowAttr
@@ -1011,16 +1007,12 @@
   (override-redirect :boolean :initform nil)
   (type-hint gdk-window-type-hint :initform :normal))
 
-(export (boxed-related-symbols 'gdk-window-attr))
-
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-window-attr atdoc:*class-name-alias*) "CStruct"
       (documentation 'gdk-window-attr 'type)
- "@version{2013-4-4}
+ "@version{2013-8-23}
   @begin{short}
-    Attributes to use for a newly-created window.
+    Attributes to use for a newly created window.
   @end{short}
   @begin{pre}
 (define-g-boxed-cstruct gdk-window-attr \"GdkWindowAttr\"
@@ -1040,21 +1032,27 @@
   (type-hint gdk-window-type-hint :initform :normal))
   @end{pre}
   @begin[code]{table}
-    @entry[title]{title of the window (for toplevel windows)}
-    @entry[event-mask]{event mask (see gdk_window_set_events())}
-    @entry[x]{X coordinate relative to parent window (see gdk_window_move())}
-    @entry[y]{Y coordinate relative to parent window (see gdk_window_move())}
-    @entry[width]{width of window}
-    @entry[height]{height of window}
-    @entry[window-class]{GDK_INPUT_OUTPUT (normal window) or GDK_INPUT_ONLY
-      (invisible window that receives events)}
-    @entry[visual]{GdkVisual for window}
-    @entry[window-type]{type of window}
-    @entry[cursor]{cursor for the window (see gdk_window_set_cursor())}
-    @entry[wmclass-name]{don't use (see gtk_window_set_wmclass())}
-    @entry[wmclass-class]{do not use (see gtk_window_set_wmclass())}
-    @entry[override-redirect]{TRUE to bypass the window manager}
-    @entry[type-hint]{a hint of the function of the window}
+    @entry[title]{Title of the window for toplevel windows.}
+    @entry[event-mask]{Event mask, see the function
+      @fun{gdk-window-set-events}.}
+    @entry[x]{x coordinate relative to parent window, see the function
+      @fun{gdk-window-move}.}
+    @entry[y]{y coordinate relative to parent window, see the function
+      @fun{gdk-window-move}.}
+    @entry[width]{Width of window.}
+    @entry[height]{Height of window.}
+    @entry[window-class]{@code{:input-output} normal window or
+      @code{:input-only} invisible window that receives events.}
+    @entry[visual]{A @class{gdk-visual} for window.}
+    @entry[window-type]{Type of window.}
+    @entry[cursor]{Cursor for the window, see the function
+      @fun{gdk-window-set-cursor}.}
+    @entry[wmclass-name]{Do not use,  see the function
+      @fun{gtk-window-set-wmclass}.}
+    @entry[wmclass-class]{Do not use, see the function
+      @fun{gtk-window-set-wmclass}.}
+    @entry[override-redirect]{@em{True} to bypass the window manager.}
+    @entry[type-hint]{A hint of the function of the window.}
   @end{table}
   @see-slot{gdk-window-attr-title}
   @see-slot{gdk-window-attr-event-mask}
@@ -1071,199 +1069,185 @@
   @see-slot{gdk-window-attr-override-redirect}
   @see-slot{gdk-window-attr-type-hint gdk-window-type-hint}
   @see-constructor{copy-gdk-window-attr}
-  @see-constructor{make-gdk-window-attr}")
+  @see-constructor{make-gdk-window-attr}
+  @see-class{gdk-visual}
+  @see-function{gdk-window-move}
+  @see-function{gdk-window-set-cursor}
+  @see-function{gdk-window-set-events}
+  @see-function{gtk-window-set-wmclass}")
+  
+(export (boxed-related-symbols 'gdk-window-attr))
 
-;;; --- copy-gdk-window-attr ---------------------------------------------------
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Constructors for the GdkWindowAttr structure
+;;;
+;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'copy-gdk-window-attr 'function)
- "@version{2013-4-4}
-  @argument[instance]{a @class{gdk-window-attr} struct}
-  Copy constructor of a @class{gdk-window-attr} struct.")
-
-;;; --- make-gdk-window-attr ---------------------------------------------------
+ "@version{2013-8-23}
+  @argument[instance]{a @class{gdk-window-attr} structure}
+  Copy constructor of a @class{gdk-window-attr} structure.
+  @see-class{gdk-window-attr}")
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'make-gdk-window-attr 'function)
- "@version{2013-2-25}
-  @argument[title]{title of the window (for toplevel windows)}
-  @argument[event-mask]{event mask (see gdk_window_set_events())}
-  @argument[x]{X coordinate relative to parent window (see gdk_window_move())}
-  @argument[y]{Y coordinate relative to parent window (see gdk_window_move())}
+ "@version{2013-8-23}
+  @argument[title]{title of the window, for toplevel windows}
+  @argument[event-mask]{event mask, see the function
+    @fun{gdk-window-set-events}}
+  @argument[x]{x coordinate relative to parent window, see the function
+    @fun{gdk-window-move}}
+  @argument[y]{y coordinate relative to parent window, see the function
+    @fun{gdk-window-move}}
   @argument[width]{width of window}
   @argument[height]{height of window}
-  @argument[window-class]{GDK_INPUT_OUTPUT (normal window) or GDK_INPUT_ONLY
-    (invisible window that receives events)}
-  @argument[visual]{GdkVisual for window}
+  @argument[window-class]{@code{:input-output} normal window or
+    @code{:input-only} invisible window that receives events}
+  @argument[visual]{a @class{gdk-visual} for window}
   @argument[window-type]{type of window}
-  @argument[cursor]{cursor for the window (see gdk_window_set_cursor())}
-  @argument[wmclass-name]{don't use (see gtk_window_set_wmclass())}
-  @argument[wmclass-class]{do not use (see gtk_window_set_wmclass())}
-  @argument[override-redirect]{TRUE to bypass the window manager}
+  @argument[cursor]{cursor for the window, see the function
+    @fun{gdk-window-set-cursor}}
+  @argument[wmclass-name]{do not use, see the function
+    @fun{gtk-window-set-wmclass}}
+  @argument[wmclass-class]{do not use, see the function
+    @fun{gtk-window-set-wmclass}}
+  @argument[override-redirect]{@em{true} to bypass the window manager}
   @argument[type-hint]{a hint of the function of the window}
   @begin{short}
-    Creates a @class{gdk-window-attr} struct.
-  @end{short}")
+    Creates a @class{gdk-window-attr} structure.
+  @end{short}
+  @see-class{gdk-window-attr}  
+  @see-function{gdk-window-move}
+  @see-function{gdk-window-set-cursor}
+  @see-function{gdk-window-set-events}
+  @see-function{gtk-window-set-wmclass}")
 
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors of the GdkWindowAttr structure
+;;;
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-window-attr-title atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-window-attr-title 'function)
- "@version{2013-4-4}
-  @begin{short}
-    Accessor of the slot @code{title} of the @class{gdk-window-attr} struct.
-  @end{short}")
-
-;;; ----------------------------------------------------------------------------
+ "@version{2013-8-23}
+  Accessor of the slot @code{title} of the @class{gdk-window-attr} structure.
+  @see-class{gdk-window-attr}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-window-attr-event-mask atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-window-attr-event-mask 'function)
- "@version{2013-4-4}
-  @begin{short}
-    Accessor of the slot @code{event-mask} of the @class{gdk-window-attr}
-    struct.
-  @end{short}")
-
-;;; ----------------------------------------------------------------------------
+ "@version{2013-8-23}
+  Accessor of the slot @code{event-mask} of the @class{gdk-window-attr}
+  structure.
+  @see-class{gdk-window-attr}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-window-attr-x atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-window-attr-x 'function)
- "@version{2013-4-4}
-  @begin{short}
-    Accessor of the slot @code{x} of the @class{gdk-window-attr} struct.
-  @end{short}")
-
-;;; ----------------------------------------------------------------------------
+ "@version{2013-8-23}
+  Accessor of the slot @code{x} of the @class{gdk-window-attr} structure.
+  @see-class{gdk-window-attr}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-window-attr-y atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-window-attr-y 'function)
- "@version{2013-4-4}
-  @begin{short}
-    Accessor of the slot @code{y} of the @class{gdk-window-attr} struct.
-  @end{short}")
-
-;;; ----------------------------------------------------------------------------
+ "@version{2013-8-23}
+  Accessor of the slot @code{y} of the @class{gdk-window-attr} structure.
+  @see-class{gdk-window-attr}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-window-attr-width atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-window-attr-width 'function)
- "@version{2013-4-4}
-  @begin{short}
-    Accessor of the slot @code{width} of the @class{gdk-window-attr} struct.
-  @end{short}")
-
-;;; ----------------------------------------------------------------------------
+ "@version{2013-8-23}
+  Accessor of the slot @code{width} of the @class{gdk-window-attr} structure.
+  @see-class{gtk-window-attr}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-window-attr-height atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-window-attr-height 'function)
- "@version{2013-4-4}
-  @begin{short}
-    Accessor of the slot @code{height} of the @class{gdk-window-attr} struct.
-  @end{short}")
-
-;;; ----------------------------------------------------------------------------
+ "@version{2013-8-23}
+  Accessor of the slot @code{height} of the @class{gdk-window-attr} structure.
+  @see-class{gdk-window-attr}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-window-attr-window-class atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-window-attr-window-class 'function)
- "@version{2013-4-4}
-  @begin{short}
-    Accessor of the slot @code{window-class} of the @class{gdk-window-attr}
-    struct.
-  @end{short}")
-
-;;; ----------------------------------------------------------------------------
+ "@version{2013-8-23}
+  Accessor of the slot @code{window-class} of the @class{gdk-window-attr}
+  structure.
+  @see-class{gdk-window-attr}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-window-attr-visual atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-window-attr-visual 'function)
- "@version{2013-4-4}
-  @begin{short}
-    Accessor of the slot @code{visual} of the @class{gdk-window-attr} struct.
-  @end{short}")
-
-;;; ----------------------------------------------------------------------------
+ "@version{2013-8-23}
+  Accessor of the slot @code{visual} of the @class{gdk-window-attr} structure.
+  @see-class{gdk-window-attr}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-window-attr-window-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-window-attr-window-type 'function)
- "@version{2013-4-4}
-  @begin{short}
-    Accessor of the slot @code{window-type} of the @class{gdk-window-attr}#
-    struct.
-  @end{short}")
-
-;;; ----------------------------------------------------------------------------
+ "@version{2013-8-23}
+  Accessor of the slot @code{window-type} of the @class{gdk-window-attr}
+  structure.
+  @see-class{gdk-window-attr}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-window-attr-cursor atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-window-attr-cursor 'function)
- "@version{2013-4-4}
-  @begin{short}
-    Accessor of the slot @code{cursor} of the @class{gdk-window-attr} struct.
-  @end{short}")
-
-;;; ----------------------------------------------------------------------------
+ "@version{2013-8-23}
+  Accessor of the slot @code{cursor} of the @class{gdk-window-attr} structure.
+  @see-class{gdk-window-attr}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-window-attr-wmclass-name atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-window-attr-wmclass-name 'function)
- "@version{2013-4-4}
-  @begin{short}
-    Accessor of the slot @code{wmclass-name} of the @class{gdk-window-attr}
-    struct.
-  @end{short}")
-
-;;; ----------------------------------------------------------------------------
+ "@version{2013-8-23}
+  Accessor of the slot @code{wmclass-name} of the @class{gdk-window-attr}
+  structure.
+  @see-class{gdk-window-attr}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-window-attr-wmclass-class atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-window-attr-wmclass-class 'function)
- "@version{2013-4-4}
-  @begin{short}
-    Accessor of the slot @code{wmclass-class} of the @class{gdk-window-attr}
-    struct.
-  @end{short}")
-
-;;; ----------------------------------------------------------------------------
+ "@version{2013-8-23}
+  Accessor of the slot @code{wmclass-class} of the @class{gdk-window-attr}
+  structure.
+  @see-class{gdk-window-attr}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-window-attr-override-redirect atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-window-attr-override-redirect 'function)
- "@version{2013-4-4}
-  @begin{short}
-    Accessor of the slot @code{override-redirect} of the @class{gdk-window-attr}
-    struct.
-  @end{short}")
-
-;;; ----------------------------------------------------------------------------
+ "@version{2013-8-23}
+  Accessor of the slot @code{override-redirect} of the @class{gdk-window-attr}
+  structure.
+  @see-class{gdk-window-attr}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-window-attr-type-hint atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-window-attr-type-hint 'function)
- "@version{2013-4-4}
-  @begin{short}
-    Accessor of the slot @code{type-hint} of the @class{gdk-window-attr} struct.
-  @end{short}")
+ "@version{2013-8-23}
+  Accessor of the slot @code{type-hint} of the @class{gdk-window-attr}
+  structure.
+  @see-class{gdk-window-attr}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GdkWindowAttributesType
@@ -1281,20 +1265,20 @@
   (:noredir 128)
   (:type-hint 256))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-window-attributes-type atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gdk-window-attributes-type atdoc:*external-symbols*)
- "@version{2013-4-5}
+ "@version{2013-8-23}
   @begin{short}
-    Used to indicate which fields in the GdkWindowAttr struct should be honored.
-    For example, if you filled in the \"cursor\" and \"x\" fields of
-    GdkWindowAttr, pass \"GDK_WA_X | GDK_WA_CURSOR\" to gdk_window_new(). Fields
-    in GdkWindowAttr not covered by a bit in this enum are required; for
-    example, the width/height, wclass, and window_type fields are required, they
-    have no corresponding flag in GdkWindowAttributesType.
+    Used to indicate which fields in the @class{gdk-window-attr} structure
+    should be honored.
   @end{short}
+  For example, if you filled in the @code{cursor} and @code{x} fields of
+  @class{gdk-window-attr}, pass @code{'(:x :cursor)} to the function
+  @fun{gdk-window-new}. Fields in @class{gdk-window-attr} not covered by a bit
+  in this enum are required; for example, the @code{width}/@code{height},
+  @code{wclass}, and @code{window-type} fields are required, they have no
+  corresponding flag in @sym{gdk-window-attributes-type}.
   @begin{pre}
 (define-g-flags \"GdkWindowAttributesType\" gdk-window-attributes-type
   (:export t
@@ -1309,15 +1293,18 @@
   (:type-hint 256))
   @end{pre}
   @begin[code]{table}
-    @entry[:title]{Honor the title field}
-    @entry[:x]{Honor the X coordinate field}
-    @entry[:y]{Honor the Y coordinate field}
-    @entry[:cursor]{Honor the cursor field}
-    @entry[:visual]{Honor the visual field}
-    @entry[:wmclass]{Honor the wmclass_class and wmclass_name fields}
-    @entry[:noredir]{Honor the override_redirect field}
-    @entry[:type-hint]{Honor the type_hint field}
-  @end{table}")
+    @entry[:title]{Honor the @code{title} field.}
+    @entry[:x]{Honor the @code{x} coordinate field.}
+    @entry[:y]{Honor the @code{y} coordinate field.}
+    @entry[:cursor]{Honor the @code{cursor} field.}
+    @entry[:visual]{Honor the @code{visual} field.}
+    @entry[:wmclass]{Honor the @code{wmclass-class} and @code{wmclass-name}
+      fields.}
+    @entry[:noredir]{Honor the @code{override-redirect} field.}
+    @entry[:type-hint]{Honor the @code{type-hint} field.}
+  @end{table}
+  @see-class{gdk-window-attr}
+  @see-function{gdk-window-new}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_new ()
@@ -1326,16 +1313,25 @@
 (defcfun ("gdk_window_new" gdk-window-new)
     (g-object gdk-window :already-referenced)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-5}
-  @argument[parent]{a GdkWindow, or NULL to create the window as a child of the
-    default root window for the default display}
-  @argument[attributes]{attributes of the new window}
-  @argument[attributes_mask]{mask indicating which fields in attributes are
-    valid}
-  @return{The new GdkWindow.}
-  Creates a new GdkWindow using the attributes from attributes. See
-  GdkWindowAttr and GdkWindowAttributesType for more details. Note: to use
-  this on displays other than the default display, parent must be specified."
+ "@version{2013-8-23}
+  @argument[parent]{a @class{gdk-window}, or @code{nil} to create the window as
+    a child of the default root window for the default display}
+  @argument[attributes]{attributes of type @class{gdk-window-attr} of the new
+    window}
+  @argument[attributes-mask]{mask of type @symbol{gdk-window-attributes-type}
+    indicating which fields in attributes are valid}
+  @return{The new @class{gdk-window}.}
+  @begin{short}
+    Creates a new @class{gdk-window} using the attributes from @arg{attributes}.
+  @end{short}
+  See @class{gdk-window-attr} and @symbol{gdk-window-attributes-type} for more
+  details.
+
+  @b{Note:} To use this on displays other than the default display, @arg{parent}
+  must be specified.
+  @see-class{gdk-window}
+  @see-class{gdk-window-attr}
+  @see-symbol{gdk-window-attributes-type}"
   (parent (g-object gdk-window))
   (attributes (g-boxed-foreign gdk-window-attr))
   (attributes-mask gdk-window-attributes-type))
@@ -1348,18 +1344,19 @@
 
 (defcfun ("gdk_window_destroy" gdk-window-destroy) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-4-5}
-  @argument[window]{a GdkWindow}
+ "@version{2013-8-23}
+  @argument[window]{a @class{gdk-window} object}
   @begin{short}
-    Destroys the window system resources associated with window and decrements
-    window's reference count. The window system resources for all children of
-    window are also destroyed, but the children's reference counts are not
-    decremented.
+    Destroys the window system resources associated with @arg{window} and
+    decrements @arg{window}'s reference count.
   @end{short}
+  The window system resources for all children of @arg{window} are also
+  destroyed, but the children's reference counts are not decremented.
 
   Note that a window will not be destroyed automatically when its reference
   count reaches zero. You must call this function yourself before that
-  happens."
+  happens.
+  @see-class{gdk-window}"
   (window (g-object gdk-window)))
 
 (export 'gdk-window-destroy)
@@ -1371,10 +1368,15 @@
 (defcfun ("gdk_window_get_window_type" gdk-window-get-window-type)
     gdk-window-type
  #+cl-cffi-gtk-documentation
- "@version{2013-4-5}
-  @argument[window]{a GdkWindow}
-  @return{type of window}
-  Gets the type of the window. See GdkWindowType."
+ "@version{2013-8-23}
+  @argument[window]{a @class{gdk-window} object}
+  @return{type of @arg{window}}
+  @begin{short}
+    Gets the type of the window.
+  @end{short}
+  See @symbol{gdk-window-type}.
+  @see-class{gdk-window}
+  @see-symbol{gdk-window-type}"
   (window (g-object gdk-window)))
 
 (export 'gdk-window-get-window-type)
@@ -1386,14 +1388,16 @@
 (defcfun ("gdk_window_get_display" gdk-window-get-display)
     (g-object gdk-display)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-5}
-  @argument[window]{a GdkWindow}
-  @return{the GdkDisplay associated with window}
+ "@version{2013-8-23}
+  @argument[window]{a @class{gdk-window} object}
+  @return{The @class{gdk-display} associated with @arg{window}.}
   @begin{short}
-    Gets the GdkDisplay associated with a GdkWindow.
+    Gets the @class{gdk-display} associated with a @class{gdk-window}.
   @end{short}
 
-  Since 2.24"
+  Since 2.24
+  @see-class{gdk-window}
+  @see-class{gdk-display}"
   (window (g-object gdk-window)))
 
 (export 'gdk-window-get-display)
@@ -1404,14 +1408,16 @@
 
 (defcfun ("gdk_window_get_screen" gdk-window-get-screen) (g-object gdk-screen)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-5}
-  @argument[window]{a GdkWindow}
-  @return{the GdkScreen associated with window}
+ "@version{2013-8-23}
+  @argument[window]{a @class{gdk-window} object}
+  @return{The @class{gdk-screen} associated with @arg{window}.}
   @begin{short}
-    Gets the GdkScreen associated with a GdkWindow.
+    Gets the @class{gdk-screen} associated with a @class{gdk-window}.
   @end{short}
 
-  Since 2.24"
+  Since 2.24
+  @see-class{gdk-window}
+  @see-class{gdk-screen}"
   (window (g-object gdk-window)))
 
 (export 'gdk-window-get-screen)
@@ -1422,14 +1428,16 @@
 
 (defcfun ("gdk_window_get_visual" gdk-window-get-visual) (g-object gdk-visual)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-5}
-  @argument[window]{a GdkWindow}
-  @return{a GdkVisual}
+ "@version{2013-8-23}
+  @argument[window]{a @class{gdk-window} object}
+  @return{A @class{gdk-visual} object.}
   @begin{short}
-    Gets the GdkVisual describing the pixel format of window.
+    Gets the @class{gdk-visual} describing the pixel format of @arg{window}.
   @end{short}
 
-  Since 2.24"
+  Since 2.24
+  @see-class{gdk-window}
+  @see-class{gdk-screen}"
   (window (g-object gdk-window)))
 
 (export 'gdk-window-get-visual)
@@ -1444,7 +1452,7 @@
 
 (defun gdk-window-at-pointer ()
  #+cl-cffi-gtk-documentation
- "@version{2013-6-23}
+ "@version{2013-8-23}
   @begin{return}
     @code{window} -- window under the mouse pointer @br{}
     @code{win-x} -- origin of the window under the pointer @br{}
@@ -1452,8 +1460,8 @@
   @end{return}
   @subheading{Warning}
     @sym{gdk-window-at-pointer} has been deprecated since version 3.0 and
-    should not be used in newly-written code.
-    Use @fun{gdk-device-get-window-at-position} instead.
+    should not be used in newly written code.
+    Use the function @fun{gdk-device-get-window-at-position} instead.
 
   @begin{short}
     Obtains the window underneath the mouse pointer, returning the location of
@@ -1463,7 +1471,10 @@
 
   @subheading{Note}
     For multihead-aware widgets or applications use the function
-    @fun{gdk-display-get-window-at-pointer} instead."
+    @fun{gdk-display-get-window-at-pointer} instead.
+  @see-class{gdk-window}
+  @fun{gdk-display-get-window-at-pointer}
+  @fun{gdk-device-get-window-at-position}"
   (with-foreign-objects ((x :int) (y :int))
     (let ((window (%gdk-window-at-pointer x y)))
       (if window
@@ -1478,12 +1489,12 @@
 
 (defcfun ("gdk_window_show" gdk-window-show) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-6-23}
+ "@version{2013-8-23}
   @argument[window]{a @class{gdk-window} object}
   @begin{short}
     Like the function @fun{gdk-window-show-unraised}, but also raises the window
-    to the top of the window stack (moves the window to the front of the
-    Z-order).
+    to the top of the window stack, moves the window to the front of the
+    Z-order.
   @end{short}
 
   This function maps a window so it is visible onscreen. Its opposite is the
@@ -1491,8 +1502,10 @@
 
   When implementing a @class{gtk-widget}, you should call this function on the
   widget's @class{gdk-window} as part of the \"map\" method.
-  @see-function{gdk-window-show-unraised}
-  @see-function{gdk-window-hide}"
+  @see-class{gdk-window}
+  @see-class{gtk-widget}
+  @see-function{gdk-window-hide}
+  @see-function{gdk-window-show-unraised}"
   (window (g-object gdk-window)))
 
 (export 'gdk-window-show)
@@ -1503,17 +1516,20 @@
 
 (defcfun ("gdk_window_show_unraised" gdk-window-show-unraised) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-5-4}
-  @argument[window]{a GdkWindow}
+ "@version{2013-8-23}
+  @argument[window]{a @class{gdk-window} object}
   @begin{short}
-    Shows a GdkWindow onscreen, but does not modify its stacking order. In
-    contrast, gdk_window_show() will raise the window to the top of the window
-    stack.
+    Shows a @class{gdk-window} onscreen, but does not modify its stacking order.
   @end{short}
+  In contrast, the function @fun{gdk-window-show} will raise the window to the
+  top of the window stack.
 
-  On the X11 platform, in Xlib terms, this function calls XMapWindow() (it
-  also updates some internal GDK state, which means that you can't really use
-  XMapWindow() directly on a GDK window)."
+  On the X11 platform, in Xlib terms, this function calls the function
+  @code{XMapWindow()}, it also updates some internal GDK state, which means that
+  you cannot really use the function @code{XMapWindow()} directly on a GDK
+  window.
+  @see-class{gdk-window}
+  @see-function{gdk-window-show}"
   (window (g-object gdk-window)))
 
 (export 'gdk-window-show-unraised)
@@ -1524,11 +1540,15 @@
 
 (defcfun ("gdk_window_hide" gdk-window-hide) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-4-5}
-  @argument[window]{a GdkWindow}
-  For toplevel windows, withdraws them, so they will no longer be known to the
-  window manager; for all windows, unmaps them, so they won't be displayed.
-  Normally done automatically as part of gtk_widget_hide()."
+ "@version{2013-8-23}
+  @argument[window]{a @class{gdk-window} object}
+  @begin{short}
+    For toplevel windows, withdraws them, so they will no longer be known to the
+    window manager; for all windows, unmaps them, so they will not be displayed.
+  @end{short}
+  Normally done automatically as part of the function @fun{gtk-widget-hide}.
+  @see-class{gdk-window}  
+  @see-function{gtk-widget-hide}"
   (window (g-object gdk-window)))
 
 (export 'gdk-window-hide)
@@ -1539,14 +1559,15 @@
 
 (defcfun ("gdk_window_is_destroyed" gdk-window-is-destroyed) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-4-5}
-  @argument[window]{a GdkWindow}
-  @return{TRUE if the window is destroyed}
+ "@version{2013-8-23}
+  @argument[window]{a @class{gdk-window} object}
+  @return{@em{True} if the @arg{window} is destroyed.}
   @begin{short}
-    Check to see if a window is destroyed.
+    Check to see if a @arg{window} is destroyed.
   @end{short}
 
-  Since 2.18"
+  Since 2.18
+  @see-class{gdk-window}"
   (window (g-object gdk-window)))
 
 (export 'gdk-window-is-destroyed)
@@ -1557,11 +1578,14 @@
 
 (defcfun ("gdk_window_is_visible" gdk-window-is-visible) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-4-5}
-  @argument[window]{a GdkWindow}
-  @return{TRUE if the window is mapped}
-  Checks whether the window has been mapped (with gdk_window_show() or
-  gdk_window_show_unraised())."
+ "@version{2013-8-23}
+  @argument[window]{a @class{gdk-window} object}
+  @return{@em{True} if the @arg{window} is mapped.}
+  Checks whether the window has been mapped with the functions
+  @fun{gdk-window-show} or @fun{gdk-window-show-unraised}.
+  @see-class{gdk-window}
+  @see-function{gdk-window-show}
+  @see-function{gdk-window-show-unraised}"
   (window (g-object gdk-window)))
 
 (export 'gdk-window-is-visible)
@@ -1572,12 +1596,15 @@
 
 (defcfun ("gdk_window_is_viewable" gdk-window-is-viewable) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-4-5}
-  @argument[window]{a GdkWindow}
-  @return{TRUE if the window is viewable}
-  Check if the window and all ancestors of the window are mapped. (This is not
-  necessarily \"viewable\" in the X sense, since we only check as far as we have
-  GDK window parents, not to the root window.)"
+ "@version{2013-8-23}
+  @argument[window]{a @class{gdk-window} object}
+  @return{@em{True} if the @arg{window} is viewable.}
+  @begin{short}
+    Check if the @arg{window} and all ancestors of the @arg{window} are mapped.
+  @end{short}
+  This is not necessarily \"viewable\" in the X sense, since we only check as
+  far as we have GDK window parents, not to the root window.
+  @see-class{gdk-window}"
   (window (g-object gdk-window)))
 
 (export 'gdk-window-is-viewable)
@@ -1588,14 +1615,15 @@
 
 (defcfun ("gdk_window_is_input_only" gdk-window-is-input-only) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-4-5}
-  @argument[window]{a toplevel GdkWindow}
-  @return{TRUE if window is input only}
+ "@version{2013-8-23}
+  @argument[window]{a toplevel @class{gdk-window} oject}
+  @return{@em{True} if @arg{window} is input only.}
   @begin{short}
-    Determines whether or not the window is an input only window.
+    Determines whether or not the @arg{window} is an input only window.
   @end{short}
 
-  Since 2.22"
+  Since 2.22
+  @see-class{gdk-window}"
   (window (g-object gdk-window)))
 
 (export 'gdk-window-is-input-only)
@@ -1606,14 +1634,15 @@
 
 (defcfun ("gdk_window_is_shaped" gdk-window-is-shaped) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-4-5}
-  @argument[window]{a toplevel GdkWindow}
-  @return{TRUE if window is shaped}
+ "@version{2013-8-23}
+  @argument[window]{a toplevel @class{gdk-window} object}
+  @return{@em{True} if @arg{window} is shaped.}
   @begin{short}
-    Determines whether or not the window is shaped.
+    Determines whether or not the @arg{window} is shaped.
   @end{short}
 
-  Since 2.22"
+  Since 2.22
+  @see-class{gdk-window}"
   (window (g-object gdk-window)))
 
 (export 'gdk-window-is-shaped)
@@ -3447,21 +3476,24 @@
 
 (defun gdk-window-set-cursor (window cursor)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-13}
-  @argument[window]{a @class{gdk-window} instance}
-  @argument[cursor]{a cursor}
+ "@version{2013-8-23}
+  @argument[window]{a @class{gdk-window} object}
+  @argument[cursor]{a @class{gdk-cursor}}
   @begin{short}
-    Sets the default mouse pointer for a @class{gdk-window} instance.
+    Sets the default mouse pointer for a @class{gdk-window} object.
   @end{short}
-  Use @fun{gdk-cursor-new-for-display} or @fun{gdk-cursor-new-from-pixbuf} to
-  create the @arg{cursor}. To make the @arg{cursor} invisible, use
-  @code{:blank-cursor} of the @symbol{gdk-cursor-type} enumeration. Passing
-  @code{nil} for the @arg{cursor} argument to @sym{gdk-window-set-cursor} means
-  that @arg{window} will use the cursor of its parent window. Most windows
-  should use this default.
+  Use the functions @fun{gdk-cursor-new-for-display} or
+  @fun{gdk-cursor-new-from-pixbuf} to create the @arg{cursor}. To make the
+  @arg{cursor} invisible, use @code{:blank-cursor} of the
+  @symbol{gdk-cursor-type} enumeration. Passing @code{nil} for the @arg{cursor}
+  argument to @sym{gdk-window-set-cursor} means that @arg{window} will use the
+  cursor of its parent window. Most windows should use this default.
+  @see-class{gdk-window}
+  @see-class{gdk-cursor}
+  @see-symbol{gdk-cursor-type}
+  @see-function{gdk-cursor-get-cursor}
   @see-function{gdk-cursor-new-for-display}
-  @see-function{gdk-cursor-new-from-pixbuf}
-  @see-symbol{gdk-cursor-type}"
+  @see-function{gdk-cursor-new-from-pixbuf}"
   (setf (gdk-window-cursor window) cursor))
 
 (export 'gdk-window-set-cursor)
@@ -3474,8 +3506,8 @@
 
 (defun gdk-window-get-cursor (window)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-13}
-  @argument[window]{a @class{gdk-window} instance}
+ "@version{2013-8-23}
+  @argument[window]{a @class{gdk-window} object}
   @return{A @class{gdk-cursor}, or @code{nil}. The returned object is owned by
     the @class{gdk-window} and should not be unreferenced directly. Use
     @fun{gdk-window-set-cursor} to unset the cursor of the window.}
@@ -3486,7 +3518,10 @@
   If the return value is @code{nil} then there is no custom cursor set on the
   specified window, and it is using the cursor for its parent window.
 
-  Since 2.18"
+  Since 2.18
+  @see-class{gdk-window}
+  @see-class{gdk-cursor}
+  @see-function{gdk-window-set-cursor}"
   (gdk-window-cursor window))
 
 (export 'gdk-window-get-cursor)

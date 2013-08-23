@@ -891,15 +891,15 @@
 
 (defcfun ("gdk_device_grab" gdk-device-grab) gdk-grab-status
  #+cl-cffi-gtk-documentation
- "@version{2013-7-7}
+ "@version{2013-8-21}
   @argument[device]{a @class{gdk-device} object. To get the device you can use
     the functions @fun{gtk-get-current-event-device} or
     @fun{gdk-event-get-device} if the grab is in reaction to an event. Also, you
     can use the function @fun{gdk-device-manager-get-client-pointer} but only in
     code that is not triggered by a @class{gdk-event} and there are not other
     means to get a meaningful @class{gdk-device} to operate on.}
-  @argument[window]{the @class{gdk-window} which will own the grab (the grab
-    window)}
+  @argument[window]{the @class{gdk-window} which will own the grab, the grab
+    window}
   @argument[grab-ownership]{specifies the grab ownership}
   @argument[owner-events]{if @code{nil} then all device events are reported with
     respect to window and are only reported if selected by @arg{event-mask}. I
@@ -924,7 +924,7 @@
   @end{short}
 
   Device grabs are used for operations which need complete control over the
-  given device events (either pointer or keyboard). For example in GTK+ this
+  given device events, either pointer or keyboard. For example in GTK+ this
   is used for Drag and Drop operations, popup menus and such.
 
   Note that if the event mask of an X window has selected both button press
@@ -939,7 +939,16 @@
   @class{gdk-event-grab-broken} events that are emitted when the grab ends
   unvoluntarily.
 
-  Since 3.0"
+  Since 3.0
+  @see-class{gdk-device}
+  @see-class{gdk-window}
+  @see-class{gdk-event}
+  @see-class{gdk-event-grab-broken}
+  @see-function{gdk-device-ungrab}
+  @see-function{gdk-event-get-device}
+  @see-function{gtk-get-current-event-device}
+  @see-function{gdk-device-manager-get-client-pointer}
+  @see-variable{+gdk-current-time+}"
   (device (g-object gdk-device))
   (window (g-object gdk-window))
   (grab-ownership gdk-grab-ownership)
@@ -956,13 +965,14 @@
 
 (defcfun ("gdk_device_ungrab" gdk-device-ungrab) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-8-17}
+ "@version{2013-8-21}
   @argument[device]{a @class{gdk-device} object}
   @argument[time]{a timestap (e. g. @var{+gdk-current-time+}}
   @short{Release any grab on @arg{device}.}
 
   Since 3.0
-  @see-class{gdk-device}"
+  @see-class{gdk-device}
+  @see-function{gdk-device-grab}"
   (device (g-object gdk-device))
   (time :uint32))
 

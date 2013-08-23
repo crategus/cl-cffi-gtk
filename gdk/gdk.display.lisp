@@ -470,19 +470,20 @@
 (defcfun ("gdk_display_get_event" gdk-display-get-event)
     (g-boxed-foreign gdk-event :return)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-4}
+ "@version{2013-8-21}
   @argument[display]{a @class{gdk-display} object}
   @begin{return}
     The next @class{gdk-event} event to be processed, or @code{nil} if no events
-    are pending. The returned @class{gdk-event} event should be freed with
-    @fun{gdk-event-free}.
+    are pending.
   @end{return}
   @begin{short}
     Gets the next @class{gdk-event} event to be processed for @arg{display},
     fetching events from the windowing system if necessary.
   @end{short}
 
-  Since 2.2"
+  Since 2.2
+  @see-class{gdk-display}
+  @see-class{gdk-event}"
   (display (g-object gdk-display)))
 
 (export 'gdk-display-get-event)
@@ -494,21 +495,22 @@
 (defcfun ("gdk_display_peek_event" gdk-display-peek-event)
          (g-boxed-foreign gdk-event :return)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-4}
+ "@version{2013-8-21}
   @argument[display]{a @class{gdk-display} object}
   @begin{return}
     A copy of the first @class{gdk-event} event on the event queue, or
-    @code{nil} if no events are in the queue. The returned @class{gdk-event}
-    event should be freed with the function @fun{gdk-event-free}.
+    @code{nil} if no events are in the queue.
   @end{return}
   @begin{short}
     Gets a copy of the first @class{gdk-event} event in the @arg{display}'s
-    event queue, without removing the event from the queue. (Note that this
-    function will not get more events from the windowing system. It only checks
-    the events that have already been moved to the GDK event queue.)
+    event queue, without removing the event from the queue.
   @end{short}
+  Note that this function will not get more events from the windowing system. It
+  only checks the events that have already been moved to the GDK event queue.
 
-  Since 2.2"
+  Since 2.2
+  @see-class{gdk-display}
+  @see-class{gdk-event}"
   (display (g-object gdk-display)))
 
 (export 'gdk-display-peek-event)
