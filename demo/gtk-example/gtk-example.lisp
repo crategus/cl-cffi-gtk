@@ -7,5 +7,7 @@
 (in-package :gtk-example)
 
 (load "dialog.lisp")
+(load "grab.lisp")
+(load "list-store.lisp")
 (load "message-dialog-new.lisp")
 
