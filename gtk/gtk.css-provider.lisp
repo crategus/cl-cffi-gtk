@@ -1073,19 +1073,18 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_css_provider_get_default ()
-;;;
-;;; GtkCssProvider * gtk_css_provider_get_default (void);
-;;;
-;;; Returns the provider containing the style settings used as a fallback for
-;;; all widgets.
-;;;
-;;; Returns :
-;;;     The provider used for fallback styling. This memory is owned by GTK+,
-;;;     and you must not free it.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_css_provider_get_default" gtk-css-provider-get-default)
-    (g-object gtk-css-provider))
+    (g-object gtk-css-provider)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-20}
+  @begin{return}
+    The provider used for fallback styling.
+  @end{return}
+  Returns the provider containing the style settings used as a fallback for
+  all widgets.
+  @see-class{gtk-css-provider}")
 
 (export 'gtk-css-provider-get-default)
 
@@ -1205,25 +1204,25 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_css_provider_to_string ()
-;;;
-;;; char * gtk_css_provider_to_string (GtkCssProvider *provider);
-;;;
-;;; Convertes the provider into a string representation in CSS format.
-;;;
-;;; Using gtk_css_provider_load_from_data() with the return value from this
-;;; function on a new provider created with gtk_css_provider_new() will
-;;; basically create a duplicate of this provider.
-;;;
-;;; provider :
-;;;     the provider to write to a string
-;;;
-;;; Returns :
-;;;     a new string representing the provider.
-;;;
-;;; Since 3.2
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_css_provider_to_string" gtk-css-provider-to-string) :string
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-20}
+  @argument[provider]{the provider to write to a string}
+  @return{A string representing the provider.}
+  @begin{short}
+    Convertes the provider into a string representation in CSS format.
+  @end{short}
+
+  Using the function @fun{gtk-css-provider-load-from-data} with the return value
+  from this function on a new provider created with the function
+  @fun{gtk-css-provider-new} will basically create a duplicate of this provider.
+
+  Since 3.2
+  @see-class{gtk-css-provider}
+  @see-function{gtk-css-provider-new}
+  @see-function{gtk-css-provider-load-from-data}"
   (provider (g-object gtk-css-provider)))
 
 (export 'gtk-css-provider-to-string)

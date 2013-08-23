@@ -165,6 +165,32 @@
 ;;; ----------------------------------------------------------------------------
 
 (defun gtk-text-iter-move (iter &key (count 1) (by :char) (direction :forward))
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-20}
+  This is a convenience function of the Lisp implementation which combines
+  the following functions in a single function:
+  @fun{gtk-text-iter-forward-chars},
+  @fun{gtk-text-iter-forward-lines},
+  @fun{gtk-text-iter-forward-word-ends},
+  @fun{gtk-text-iter-backward-word-starts},
+  @fun{gtk-text-iter-forward-cursor-positions},
+  @fun{gtk-text-iter-forward-sentence-ends},
+  @fun{gtk-text-iter-backward-sentence-starts},
+  @fun{gtk-text-iter-forward-visible-word-ends},
+  @fun{gtk-text-iter-backward-visible-word-starts},
+  @fun{gtk-text-iter-forward-visible-lines}, and
+  @fun{gtk-text-iter-forward-visible-cursor-positions}
+  @see-function{gtk-text-iter-forward-chars}
+  @see-function{gtk-text-iter-forward-lines}
+  @see-function{gtk-text-iter-forward-word-ends}
+  @see-function{gtk-text-iter-backward-word-starts}
+  @see-function{gtk-text-iter-forward-cursor-positions}
+  @see-function{gtk-text-iter-forward-sentence-ends}
+  @see-function{gtk-text-iter-backward-sentence-starts}
+  @see-function{gtk-text-iter-forward-visible-word-ends}
+  @see-function{gtk-text-iter-backward-visible-word-starts}
+  @see-function{gtk-text-iter-forward-visible-lines}
+  @see-function{gtk-text-iter-forward-visible-cursor-positions}"
   (assert (typep by '(member :char :line :word :cursor-position :sentence
                              :visible-word :visible-line
                              :visible-cursor-position)))

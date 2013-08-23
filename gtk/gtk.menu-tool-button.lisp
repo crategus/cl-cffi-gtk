@@ -4,9 +4,10 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -65,21 +66,22 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-menu-tool-button 'type)
- "@version{2013-6-1}
+ "@version{2013-8-23}
   @begin{short}
     A @sym{gtk-menu-tool-button} is a @class{gtk-tool-item} that contains a
     button and a small additional button with an arrow. When clicked, the arrow
     button pops up a dropdown menu.
   @end{short}
 
-  Use the @fun{gtk-menu-tool-button-new} function to create a new
-  @sym{gtk-menu-tool-button}. Use the @fun{gtk-menu-tool-button-new-from-stock}
-  function to create a new @sym{gtk-menu-tool-button} containing a stock item.
+  Use the function @fun{gtk-menu-tool-button-new} to create a new
+  @sym{gtk-menu-tool-button}. Use the function
+  @fun{gtk-menu-tool-button-new-from-stock} to create a new
+  @sym{gtk-menu-tool-button} containing a stock item.
 
   @subheading{GtkMenuToolButton as GtkBuildable}
     The @sym{gtk-menu-tool-button} implementation of the @class{gtk-buildable}
     interface supports adding a menu by specifying \"menu\" as the \"type\"
-    attribute of a <child> element.
+    attribute of a @code{<child>} element.
 
     @b{Example:} A UI definition fragment with menus
     @begin{pre}
@@ -94,7 +96,7 @@
       @begin{pre}
  lambda (button)   : Run First
       @end{pre}
-      The \"show-menu\" signal is emitted before the menu is shown. @br{}
+      The \"show-menu\" signal is emitted before the menu is shown.
       It can be used to populate the menu on demand, using the
       @fun{gtk-menu-tool-button-get-menu} function.
       Note that even if you populate the menu dynamically in this way, you must
@@ -128,119 +130,164 @@
 (setf (gethash 'gtk-menu-tool-button-menu atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-menu-tool-button-menu 'function)
- "@version{2013-3-16}
+ "@version{2013-8-23}
   Accessor of the slot @code{\"menu\"} of the @class{gtk-menu-tool-button}
-  class.")
+  class.
+  @see-class{gtk-menu-tool-button}
+  @see-function{gtk-menu-tool-button-get-menu}
+  @see-function{gtk-menu-tool-button-set-menu}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_tool_button_new ()
-;;;
-;;; GtkToolItem * gtk_menu_tool_button_new (GtkWidget *icon_widget,
-;;;                                         const gchar *label);
-;;;
-;;; Creates a new GtkMenuToolButton using icon_widget as icon and label as
-;;; label.
-;;;
-;;; icon_widget :
-;;;     a widget that will be used as icon widget, or NULL.
-;;;
-;;; label :
-;;;     a string that will be used as label, or NULL.
-;;;
-;;; Returns :
-;;;     the new GtkMenuToolButton
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-menu-tool-button-new (icon-widget label)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-23}
+  @argument[icon-widget]{a widget that will be used as icon widget,
+    or @code{nil}}
+  @argument[label]{a string that will be used as label, or @code{nil}}
+  @return{The new @class{gtk-menu-tool-button} widget}
+  @begin{short}
+    Creates a new @class{gtk-menu-tool-button} using @arg{icon-widget} as icon
+    and @arg{label} as label.
+  @end{short}
+
+  Since 2.6
+  @see-class{gtk-menu-tool-button}
+  @see-function{gtk-menu-tool-button-new-from-stock}"
+  (let ((button (make-instance 'gtk-menu-tool-button)))
+    (when icon-widget
+      (setf (gtk-tool-button-icon-widget button) icon-widget))
+    (when label
+      (setf (gtk-tool-button-label button) label))
+    button))
+
+(export 'gtk-menu-tool-button-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_tool_button_new_from_stock ()
-;;;
-;;; GtkToolItem * gtk_menu_tool_button_new_from_stock (const gchar *stock_id);
-;;;
-;;; Creates a new GtkMenuToolButton. The new GtkMenuToolButton will contain an
-;;; icon and label from the stock item indicated by stock_id.
-;;;
-;;; stock_id :
-;;;     the name of a stock item
-;;;
-;;; Returns :
-;;;     the new GtkMenuToolButton
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-menu-tool-button-new-from-stock))
+
+(defun gtk-menu-tool-button-new-from-stock (stock-id)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-23}
+  @argument[stock-id]{the name of a stock item}
+  @return{The new @class{gtk-menu-tool-button} widget.}
+  @begin{short}
+    Creates a new @class{gtk-menu-tool-button}.
+  @end{short}
+  The new @class{gtk-menu-tool-button} will contain an icon and label from the
+  stock item indicated by @arg{stock-id}.
+
+  Since 2.6
+  @see-class{gtk-menu-tool-button}
+  @see-function{gtk-menu-tool-button-new}"
+  (make-instance 'gtk-menu-tool-button
+                 :stock-id stock-id))
+
+(export 'gtk-menu-tool-button-new-from-stock)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_tool_button_set_menu ()
-;;;
-;;; void gtk_menu_tool_button_set_menu (GtkMenuToolButton *button,
-;;;                                     GtkWidget *menu);
-;;;
-;;; Sets the GtkMenu that is popped up when the user clicks on the arrow. If
-;;; menu is NULL, the arrow button becomes insensitive.
-;;;
-;;; button :
-;;;     a GtkMenuToolButton
-;;;
-;;; menu :
-;;;     the GtkMenu associated with GtkMenuToolButton
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-menu-tool-button-set-menu))
+
+(defun gtk-menu-tool-button-set-menu (button menu)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-23}
+  @argument[button]{a @class{gtk-menu-tool-button} widget}
+  @argument[menu]{the @class{gtk-menu} associated with @arg{button}}
+  @begin{short}
+    Sets the @class{gtk-menu} that is popped up when the user clicks on the
+    arrow.
+  @end{short}
+  If @arg{menu} is @code{nil}, the arrow button becomes insensitive.
+
+  Since 2.6
+  @see-class{gtk-menu}
+  @see-class{gtk-menu-tool-button}
+  @see-function{gtk-menu-tool-button-get-menu}"
+  (setf (gtk-menu-tool-button-menu button) menu))
+
+(export 'gtk-menu-tool-button-set-menu)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_tool_button_get_menu ()
-;;;
-;;; GtkWidget * gtk_menu_tool_button_get_menu (GtkMenuToolButton *button);
-;;;
-;;; Gets the GtkMenu associated with GtkMenuToolButton.
-;;;
-;;; button :
-;;;     a GtkMenuToolButton
-;;;
-;;; Returns :
-;;;     the GtkMenu associated with GtkMenuToolButton
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-menu-tool-button-get-menu))
+
+(defun gtk-menu-tool-button-get-menu (button)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-23}
+  @argument[button]{a @class{gtk-menu-tool-button} widget}
+  @return{The @class{gtk-menu} associated with @arg{button}.}
+  @begin{short}
+    Gets the @class{gtk-menu} associated with @arg{button}.
+  @end{short}
+
+  Since 2.6
+  @see-class{gtk-menu}
+  @see-class{gtk-menu-tool-button}
+  @see-function{gtk-menu-tool-button-set-menu}"
+  (gtk-menu-tool-button-menu button))
+
+(export 'gtk-menu-tool-button-get-menu)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_tool_button_set_arrow_tooltip_text ()
-;;;
-;;; void gtk_menu_tool_button_set_arrow_tooltip_text (GtkMenuToolButton *button,
-;;;                                                   const gchar *text);
-;;;
-;;; Sets the tooltip text to be used as tooltip for the arrow button which pops
-;;; up the menu. See gtk_tool_item_set_tooltip_text() for setting a tooltip on
-;;; the whole GtkMenuToolButton.
-;;;
-;;; button :
-;;;     a GtkMenuToolButton
-;;;
-;;; text :
-;;;     text to be used as tooltip text for button's arrow button
-;;;
-;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_menu_tool_button_set_arrow_tooltip_text"
+           gtk-menu-tool-button-set-arrow-tooltip-text) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-23}
+  @argument[button]{a @class{gtk-menu-tool-button} widget}
+  @argument[text]{text to be used as tooltip text for @arg{button}'s
+    arrow button}
+  @begin{short}
+    Sets the tooltip text to be used as tooltip for the arrow button which pops
+    up the menu.
+  @end{short}
+  See the function @fun{gtk-tool-item-set-tooltip-text} for setting a tooltip on
+  the whole @class{gtk-menu-tool-button}.
+
+  Since 2.12
+  @see-class{gtk-menu-tool-button}
+  @see-function{gtk-tool-item-set-tooltip-text}"
+  (button (g-object gtk-menu-tool-button))
+  (text :string))
+
+(export 'gtk-menu-tool-button-set-arrow-tooltip-text)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_tool_button_set_arrow_tooltip_markup ()
-;;;
-;;; void gtk_menu_tool_button_set_arrow_tooltip_markup
-;;;                                                  (GtkMenuToolButton *button,
-;;;                                                   const gchar *markup);
-;;;
-;;; Sets the tooltip markup text to be used as tooltip for the arrow button
-;;; which pops up the menu. See gtk_tool_item_set_tooltip_text() for setting a
-;;; tooltip on the whole GtkMenuToolButton.
-;;;
-;;; button :
-;;;     a GtkMenuToolButton
-;;;
-;;; markup :
-;;;     markup text to be used as tooltip text for button's arrow button
-;;;
-;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_menu_tool_button_set_arrow_tooltip_markup"
+           gtk-menu-tool-button-set-arrow-tooltip-markup) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-23}
+  @argument[button]{a @class{gtk-menu-tool-button} widget}
+  @argument[markup]{markup text to be used as tooltip text for @arg{button}'s
+    arrow button}
+  @begin{short}
+    Sets the tooltip markup text to be used as tooltip for the arrow button
+    which pops up the menu.
+  @end{short}
+  See the function @fun{gtk-tool-item-set-tooltip-text} for setting a tooltip on
+  the whole @class{gtk-menu-tool-button}.
+
+  Since 2.12
+  @see-class{gtk-menu-tool-button}
+  @see-function{gtk-tool-item-set-tooltip-text}"
+  (button (g-object gtk-menu-tool-button))
+  (markup :string))
+
+(export 'gtk-menu-tool-button-set-arrow-tooltip-markup)
 
 ;;; --- End of file gtk.menu-tool-button.lisp ----------------------------------

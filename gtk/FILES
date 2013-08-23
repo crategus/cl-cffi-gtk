@@ -90,7 +90,7 @@ GTK+ Widgets and Objects
 
   Numeric/Text Data Entry
 
-    gtk.entry.lisp                   - GtkEntry                    - GTK+ 3.6.4%
+    gtk.entry.lisp                   - GtkEntry                    - GTK+ 3.6.4&
     gtk.entry-buffer.lisp            - GtkEntryBuffer              - GTK+ 3.6.4
     gtk.entry-completion.lisp        - GtkEntryCompletion          - GTK+ 3.6.4&
     gtk.scale.lisp                   - GtkScale, ...               - GTK+ 3.6.4
@@ -164,9 +164,9 @@ GTK+ Widgets and Objects
     gtk.tool-palette.lisp            - GtkToolPalette              - GTK+ 3.6.4&
     gtk.tool-item-group.lisp         - GtkToolItemGroup            - GTK+ 3.6.4&
     gtk.separator-tool-item.lisp     - GtkSeparatorToolItem        - GTK+ 3.6.4
-    gtk.tool-button.lisp             - GtkToolButton               - GTK+ 3.6.4&
-    gtk.menu-tool-button.lisp        - GtkMenuToolButton           - GTK+ 3.6.4&
-    gtk.toggle-tool-button.lisp      - GtkToggleToolButton         - GTK+ 3.6.4&
+    gtk.tool-button.lisp             - GtkToolButton               - GTK+ 3.6.4
+    gtk.menu-tool-button.lisp        - GtkMenuToolButton           - GTK+ 3.6.4
+    gtk.toggle-tool-button.lisp      - GtkToggleToolButton         - GTK+ 3.6.4
     gtk.radio-tool-button.lisp       - GtkRadioToolButton          - GTK+ 3.6.4
 
   Action-based menus and toolbars

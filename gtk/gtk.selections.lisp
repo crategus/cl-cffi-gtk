@@ -476,28 +476,18 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_target_list_add ()
-;;;
-;;; void gtk_target_list_add (GtkTargetList *list,
-;;;                           GdkAtom target,
-;;;                           guint flags,
-;;;                           guint info);
-;;;
-;;; Appends another target to a GtkTargetList.
-;;;
-;;; list :
-;;;     a GtkTargetList
-;;;
-;;; target :
-;;;     the interned atom representing the target
-;;;
-;;; flags :
-;;;     the flags for this target
-;;;
-;;; info :
-;;;     an ID that will be passed back to the application
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_target_list_add" gtk-target-list-add) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-20}
+  @argument[list]{a @class{gtk-target-list} structure}
+  @argument[target]{the interned atom representing the target}
+  @argument[flags]{the flags for this target of type @symbol{gtk-target-flags}}
+  @argument[info]{an ID that will be passed back to the application}
+  Appends another target to a @class{gtk-target-list}.
+  @see-class{gtk-target-list}
+  @symbol{gtk-target-flags}"
   (list (g-boxed-foreign gtk-target-list))
   (target gdk-atom)
   (flags gtk-target-flags)
@@ -507,21 +497,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_target_list_add_table ()
-;;;
-;;; void gtk_target_list_add_table (GtkTargetList *list,
-;;;                                 const GtkTargetEntry *targets,
-;;;                                 guint ntargets);
-;;;
-;;; Prepends a table of GtkTargetEntry to a target list.
-;;;
-;;; list :
-;;;     a GtkTargetList
-;;;
-;;; targets :
-;;;     the table of GtkTargetEntry
-;;;
-;;; ntargets :
-;;;     number of targets in the table
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_target_list_add_table" %gtk-target-list-add-table) :void
@@ -530,6 +505,13 @@
   (n-targets :uint))
 
 (defun gtk-target-list-add-table (list targets)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-20}
+  @argument[list]{a @class{gtk-target-list} structure}
+  @argument[targets]{the table of @class{gtk-target-entry}}
+  Prepends a table of @class{gtk-target-entry} to a target list.
+  @see-class{gtk-target-list}
+  @see-class{gtk-target-entry}"
   (when targets
     (with-foreign-boxed-array (n-targets targets-ptr gtk-target-entry targets)
       (%gtk-target-list-add-table list targets-ptr n-targets))))
@@ -538,23 +520,23 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_target_list_add_text_targets ()
-;;;
-;;; void gtk_target_list_add_text_targets (GtkTargetList *list, guint info);
-;;;
-;;; Appends the text targets supported by GtkSelection to the target list. All
-;;; targets are added with the same info.
-;;;
-;;; list :
-;;;     a GtkTargetList
-;;;
-;;; info :
-;;;     an ID that will be passed back to the application
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_target_list_add_text_targets" gtk-target-list-add-text-targets)
     :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-20}
+  @argument[list]{a @class{gtk-target-list} structure}
+  @argument[info]{an ID that will be passed back to the application}
+  @begin{short}
+    Appends the text targets supported by @class{gtk-selection} to the target
+    list.
+  @end{short}
+  All targets are added with the same info.
+
+  Since 2.6
+  @see-class{gtk-target-list}
+  @see-class{gtk-selection}"
   (list (g-boxed-foreign gtk-target-list))
   (info :uint))
 
@@ -562,29 +544,25 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_target_list_add_image_targets ()
-;;;
-;;; void gtk_target_list_add_image_targets (GtkTargetList *list,
-;;;                                         guint info,
-;;;                                         gboolean writable);
-;;;
-;;; Appends the image targets supported by GtkSelection to the target list. All
-;;; targets are added with the same info.
-;;;
-;;; list :
-;;;     a GtkTargetList
-;;;
-;;; info :
-;;;     an ID that will be passed back to the application
-;;;
-;;; writable :
-;;;     whether to add only targets for which GTK+ knows how to convert a pixbuf
-;;;     into the format
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_target_list_add_image_targets" gtk-target-list-add-image-targets)
     :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-20}
+  @argument[list]{a @class{gtk-target-list} structure}
+  @argument[info]{an ID that will be passed back to the application}
+  @argument[writable]{whether to add only targets for which GTK+ knows how to
+    convert a pixbuf into the format}
+  @begin{short}
+    Appends the image targets supported by @class{gtk-selection} to the target
+    list.
+  @end{short}
+  All targets are added with the same info.
+
+  Since 2.6
+  @see-class{gtk-target-list}
+  @see-class{gtk-selection}"
   (list (g-boxed-foreign gtk-target-list))
   (info :uint)
   (writeable :boolean))
@@ -593,23 +571,23 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_target_list_add_uri_targets ()
-;;;
-;;; void gtk_target_list_add_uri_targets (GtkTargetList *list, guint info);
-;;;
-;;; Appends the URI targets supported by GtkSelection to the target list. All
-;;; targets are added with the same info.
-;;;
-;;; list :
-;;;     a GtkTargetList
-;;;
-;;; info :
-;;;     an ID that will be passed back to the application
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_target_list_add_uri_targets" gtk-target-list-add-uri-targets)
     :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-20}
+  @argument[list]{a @class{gtk-target-list} structure}
+  @argument[info]{an ID that will be passed back to the application}
+  @begin{short}
+    Appends the URI targets supported by @class{gtk-selection} to the target
+    list.
+  @end{short}
+  All targets are added with the same info.
+
+  Since 2.6
+  @see-class{gtk-target-list}
+  @see-class{gtk-selection}"
   (list (g-boxed-foreign gtk-target-list))
   (info :uint))
 
@@ -617,35 +595,29 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_target_list_add_rich_text_targets ()
-;;;
-;;; void gtk_target_list_add_rich_text_targets (GtkTargetList *list,
-;;;                                             guint info,
-;;;                                             gboolean deserializable,
-;;;                                             GtkTextBuffer *buffer);
-;;;
-;;; Appends the rich text targets registered with
-;;; gtk_text_buffer_register_serialize_format() or
-;;; gtk_text_buffer_register_deserialize_format() to the target list. All
-;;; targets are added with the same info.
-;;;
-;;; list :
-;;;     a GtkTargetList
-;;;
-;;; info :
-;;;     an ID that will be passed back to the application
-;;;
-;;; deserializable :
-;;;     if TRUE, then deserializable rich text formats will be added,
-;;;     serializable formats otherwise.
-;;;
-;;; buffer :
-;;;     a GtkTextBuffer.
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_target_list_add_rich_text_targets"
            gtk-target-list-add-rich-text-targets) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-20}
+  @argument[list]{a @class{gtk-target-list} structure}
+  @argument[info]{an ID that will be passed back to the application}
+  @argument[deserializable]{if @em{true}, then deserializable rich text formats
+    will be added, serializable formats otherwise}
+  @argument[buffer]{a @class{gtk-text-buffer}}
+  @begin{short}
+    Appends the rich text targets registered with the functions
+    @fun{gtk-text-buffer-register-serialize-format} or
+    @fun{gtk-text-buffer-register-deserialize-format} to the target list.
+  @end{short}
+  All targets are added with the same info.
+
+  Since 2.10
+  @see-class{gtk-target-list}
+  @see-class{gtk-text-buffer}
+  @see-function{gtk-text-buffer-register-serialize-format}
+  @see-function{gtk-text-buffer-register-deserialize-format}"
   (list (g-boxed-foreign gtk-target-list))
   (info :uint)
   (deserializable :boolean)
@@ -655,19 +627,15 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_target_list_remove ()
-;;;
-;;; void gtk_target_list_remove (GtkTargetList *list, GdkAtom target);
-;;;
-;;; Removes a target from a target list.
-;;;
-;;; list :
-;;;     a GtkTargetList
-;;;
-;;; target :
-;;;     the interned atom representing the target
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_target_list_remove" gtk-target-list-remove) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-20}
+  @argument[list]{a @class{gtk-target-list} structure}
+  @argument[target]{the interned atom representing the target}
+  Removes a target from a target list.
+  @see-class{gtk-target-list}"
   (list (g-boxed-foreign gtk-target-list))
   (target gdk-atom-as-string))
 
@@ -675,24 +643,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_target_list_find ()
-;;;
-;;; gboolean gtk_target_list_find (GtkTargetList *list,
-;;;                                GdkAtom target,
-;;;                                guint *info);
-;;;
-;;; Looks up a given target in a GtkTargetList.
-;;;
-;;; list :
-;;;     a GtkTargetList
-;;;
-;;; target :
-;;;     an interned atom representing the target to search for
-;;;
-;;; info :
-;;;     a pointer to the location to store application info for target, or NULL
-;;;
-;;; Returns :
-;;;     TRUE if the target was found, otherwise FALSE
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_target_list_find" %gtk-target-list-find) :boolean
@@ -701,6 +651,15 @@
   (info :pointer))
 
 (defun gtk-target-list-find (list target)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-20}
+  @argument[list]{a @class{gtk-target-list} structure}
+  @argument[target]{an interned atom representing the target to search for}
+  @begin{return}
+    @code{info} -- application info for target, or @code{nil}
+  @end{return}
+  Looks up a given target in a @class{gtk-target-list}.
+  @see-class{gtk-target-list}"
   (with-foreign-object (info :uint)
     (when (%gtk-target-list-find list target info)
       (mem-ref info :uint))))

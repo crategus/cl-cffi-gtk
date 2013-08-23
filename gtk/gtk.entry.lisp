@@ -4,9 +4,10 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -3351,59 +3352,66 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkInputHints
-;;;
-;;; typedef enum {
-;;;   GTK_INPUT_HINT_NONE                = 0,
-;;;   GTK_INPUT_HINT_SPELLCHECK          = 1 << 0,
-;;;   GTK_INPUT_HINT_NO_SPELLCHECK       = 1 << 1,
-;;;   GTK_INPUT_HINT_WORD_COMPLETION     = 1 << 2,
-;;;   GTK_INPUT_HINT_LOWERCASE           = 1 << 3,
-;;;   GTK_INPUT_HINT_UPPERCASE_CHARS     = 1 << 4,
-;;;   GTK_INPUT_HINT_UPPERCASE_WORDS     = 1 << 5,
-;;;   GTK_INPUT_HINT_UPPERCASE_SENTENCES = 1 << 6,
-;;;   GTK_INPUT_HINT_INHIBIT_OSK         = 1 << 7
-;;; } GtkInputHints;
-;;;
-;;; Describes hints that might be taken into account by input methods or
-;;; applications. Note that input methods may already tailor their behaviour
-;;; according to the GtkInputPurpose of the entry.
-;;;
-;;; Some common sense is expected when using these flags - mixing
-;;; GTK_INPUT_HINT_LOWERCASE with any of the uppercase hints makes no sense.
-;;;
-;;; This enumeration may be extended in the future; input methods should ignore
-;;; unknown values.
-;;;
-;;; GTK_INPUT_HINT_NONE
-;;;     No special behaviour suggested
-;;;
-;;; GTK_INPUT_HINT_SPELLCHECK
-;;;     Suggest checking for typos
-;;;
-;;; GTK_INPUT_HINT_NO_SPELLCHECK
-;;;     Suggest not checking for typos
-;;;
-;;; GTK_INPUT_HINT_WORD_COMPLETION
-;;;     Suggest word completion
-;;;
-;;; GTK_INPUT_HINT_LOWERCASE
-;;;     Suggest to convert all text to lowercase
-;;;
-;;; GTK_INPUT_HINT_UPPERCASE_CHARS
-;;;     Suggest to capitalize all text
-;;;
-;;; GTK_INPUT_HINT_UPPERCASE_WORDS
-;;;     Suggest to capitalize the first character of each word
-;;;
-;;; GTK_INPUT_HINT_UPPERCASE_SENTENCES
-;;;     Suggest to capitalize the first word of each sentence
-;;;
-;;; GTK_INPUT_HINT_INHIBIT_OSK
-;;;     Suggest to not show an onscreen keyboard (e. g for a calculator that
-;;;     already has all the keys).
-;;;
-;;; Since 3.6
 ;;; ----------------------------------------------------------------------------
+
+(define-g-flags "GtkInputHints" gtk-input-hints
+  (:export t
+   :type-initializer "gtk_input_hints_get_type")
+  (:none 0)
+  (:spellcheck #.(ash 1 0))
+  (:no-spellcheck #.(ash 1 1))
+  (:word-completion #.(ash 1 2))
+  (:lowercase #.(ash 1 3))
+  (:uppercase-chars #.(ash 1 4))
+  (:uppercase-words #.(ash 1 5))
+  (:uppercase-sentences #.(ash 1 6))
+  (:inhibit-osk #.(ash 1 7)))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-input-hints atdoc:*symbol-name-alias*) "Flags"
+      (gethash 'gtk-input-hints atdoc:*external-symbols*)
+ "@version{2013-8-20}
+  @begin{short}
+    Describes hints that might be taken into account by input methods or
+    applications. Note that input methods may already tailor their behaviour
+    according to the @symbol{gtk-input-purpose} of the entry.
+  @end{short}
+
+  Some common sense is expected when using these flags - mixing
+  @code{:lowercase} with any of the uppercase hints makes no sense.
+
+  This flags may be extended in the future; input methods should ignore
+  unknown values.
+  @begin{pre}
+(define-g-flags \"GtkInputHints\" gtk-input-hints
+  (:export t
+   :type-initializer \"gtk_input_hints_get_type\")
+  (:none 0)
+  (:spellcheck #.(ash 1 0))
+  (:no-spellcheck #.(ash 1 1))
+  (:word-completion #.(ash 1 2))
+  (:lowercase #.(ash 1 3))
+  (:uppercase-chars #.(1 4))
+  (:uppercase-words #.(1 5))
+  (:uppercase-sentences #.(1 6))
+  (:inhibit-osk #.(1 7)))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:none]{No special behaviour suggested.}
+    @entry[:spellcheck]{Suggest checking for typos.}
+    @entry[:no-spellcheck]{Suggest not checking for typos.}
+    @entry[:word-completion]{Suggest word completion.}
+    @entry[:lowercase]{Suggest to convert all text to lowercase.}
+    @entry[:uppercase-chars]{Suggest to capitalize all text.}
+    @entry[:uppercase-words]{Suggest to capitalize the first character of each
+      word.}
+    @entry[:uppercase-sentences]{Suggest to capitalize the first word of each
+      sentence.}
+    @entry[:inhibit-osk]{Suggest to not show an onscreen keyboard, e. g for a
+      calculator that already has all the keys.}
+  @end{table}
+  Since 3.6
+  @see-symbol{gtk-input-purpose}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_entry_set_input_hints ()

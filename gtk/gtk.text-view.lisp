@@ -399,41 +399,33 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "accepts-tab" 'gtk-text-view) 't)
  "The @code{\"accepts-tab\"} property of type @code{:boolean}
-  (Read / Write)@br{}
+  (Read / Write) @br{}
   Whether Tab will result in a tab character being entered. @br{}
   Default value: @em{true}")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "buffer" 'gtk-text-view) 't)
  "The @code{\"buffer\"} property of type  @class{gtk-text-buffer}
-  (Read / Write)@br{}
+  (Read / Write) @br{}
   The buffer which is displayed.")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "cursor-visible"
                                                'gtk-text-view) 't)
  "The @code{\"cursor-visible\"} property of type @code{:boolean}
-  (Read / Write)@br{}
+  (Read / Write) @br{}
   If the insertion cursor is shown. @br{}
   Default value: @em{true}")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "editable" 'gtk-text-view) 't)
- "The @code{\"editable\"} property of type @code{:boolean} (Read / Write)@br{}
+ "The @code{\"editable\"} property of type @code{:boolean} (Read / Write) @br{}
   Whether the text can be modified by the user. @br{}
   Default value: @em{true}")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "im-module" 'gtk-text-view) 't)
- "The @code{\"im-module\"} property of type @code{:string} (Read / Write)@br{}
+ "The @code{\"im-module\"} property of type @code{:string} (Read / Write) @br{}
   Which IM (input method) module should be used for this entry. See
   @class{gtk-im-context}.
   Setting this to a non-@code{nil} value overrides the system-wide IM module
@@ -441,15 +433,11 @@
   Default value: @code{nil}@br{}
   Since 2.16")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "indent" 'gtk-text-view) 't)
- "The @code{\"indent\"} property of type @code{:int} (Read / Write)@br{}
+ "The @code{\"indent\"} property of type @code{:int} (Read / Write) @br{}
   Amount to indent the paragraph, in pixels. @br{}
   Default value: 0")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "input-hints" 'gtk-text-view) 't)
@@ -458,8 +446,6 @@
   Additional hints (beyond the \"input-purpose\" signal) that allow input
   methods to fine-tune their behaviour. @br{}
   Since 3.6")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "input-purpose"
@@ -472,77 +458,61 @@
   Default value: @code{:free-form} @br{}
   Since 3.6")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "justification"
                                                'gtk-text-view) 't)
  "The @code{\"justification\"} property of type @symbol{gtk-justification}
-  (Read / Write)@br{}
+  (Read / Write) @br{}
   Left, right, or center justification. @br{}
   Default value: @code{:left}")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "left-margin" 'gtk-text-view) 't)
- "The @code{\"left-margin\"} property of type @code{:int} (Read / Write)@br{}
+ "The @code{\"left-margin\"} property of type @code{:int} (Read / Write) @br{}
   Width of the left margin in pixels. @br{}
-  Allowed values: >= 0@br{}
+  Allowed values: >= 0 @br{}
   Default value: 0")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "overwrite" 'gtk-text-view) 't)
- "The @code{\"overwrite\"} property of type @code{:boolean} (Read / Write)@br{}
+ "The @code{\"overwrite\"} property of type @code{:boolean} (Read / Write) @br{}
   Whether entered text overwrites existing contents. @br{}
   Default value: @code{nil}")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "pixels-above-lines"
                                                'gtk-text-view) 't)
  "The @code{\"pixels-above-lines\"} property of type @code{:int}
-  (Read / Write)@br{}
+  (Read / Write) @br{}
   Pixels of blank space above paragraphs. @br{}
-  Allowed values: >= 0@br{}
+  Allowed values: >= 0 @br{}
   Default value: 0")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "pixels-below-lines"
                                                'gtk-text-view) 't)
  "The @code{\"pixels-below-lines\"} property of type @code{:int}
-  (Read / Write)@br{}
+  (Read / Write) @br{}
   Pixels of blank space below paragraphs. @br{}
-  Allowed values: >= 0@br{}
+  Allowed values: >= 0 @br{}
   Default value: 0")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "pixels-inside-wrap"
                                                'gtk-text-view) 't)
  "The @code{\"pixels-inside-wrap\"} property of type @code{:int}
-  (Read / Write)@br{}
+  (Read / Write) @br{}
   Pixels of blank space between wrapped lines in a paragraph. @br{}
-  Allowed values: >= 0@br{}
+  Allowed values: >= 0 @br{}
   Default value: 0")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "right-margin"
                                                'gtk-text-view) 't)
- "The @code{\"right-margin\"} property of type @code{:int} (Read / Write)@br{}
+ "The @code{\"right-margin\"} property of type @code{:int} (Read / Write) @br{}
   Width of the right margin in pixels. @br{}
-  Allowed values: >= 0@br{}
+  Allowed values: >= 0 @br{}
   Default value: 0")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "tabs" 'gtk-text-view) 't)
@@ -550,12 +520,10 @@
   (Read / Write) @br{}
   Custom tabs for this text.")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "wrap-mode" 'gtk-text-view) 't)
  "The @code{\"wrap-mode\"} property of type @symbol{gtk-wrap-mode}
-  (Read / Write)@br{}
+  (Read / Write) @br{}
   Whether to wrap lines never, at word boundaries, or at character
   boundaries. @br{}
   Default value: @code{:none}")
@@ -570,148 +538,163 @@
 (setf (gethash 'gtk-text-view-accepts-tab atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-view-accepts-tab 'function)
- "@version{2013-3-25}
+ "@version{2013-8-20}
   Accessor of the slot @code{\"accepts-tab\"} of the @class{gtk-text-view}
-  class.")
-
-;;; ----------------------------------------------------------------------------
+  class.
+  @see-class{gtk-text-view}
+  @see-function{gtk-text-view-get-accepts-tab}
+  @see-function{gtk-text-view-set-accepts-tab}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-view-buffer atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-view-buffer 'function)
- "@version{2013-3-25}
-  Accessor of the slot @code{\"buffer\"} of the @class{gtk-text-view} class.")
-
-;;; ----------------------------------------------------------------------------
+ "@version{2013-8-20}
+  Accessor of the slot @code{\"buffer\"} of the @class{gtk-text-view} class.
+  @see-class{gtk-text-view}
+  @see-function{gtk-text-view-get-buffer}
+  @see-function{gtk-text-view-set-buffer}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-view-cursor-visible atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-view-cursor-visible 'function)
- "@version{2013-3-25}
+ "@version{2013-8-20}
   Accessor of the slot @code{\"cursor-visible\"} of the @class{gtk-text-view}
-  class.")
-
-;;; ----------------------------------------------------------------------------
+  class.
+  @see-class{gtk-text-view}
+  @see-function{gtk-text-view-get-cursor-visible}
+  @see-function{gtk-text-view-set-cursor-visible}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-view-editable atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-view-editable 'function)
- "@version{2013-3-25}
-  Accessor of the slot @code{\"editable\"} of the @class{gtk-text-view} class.")
-
-;;; ----------------------------------------------------------------------------
+ "@version{2013-8-20}
+  Accessor of the slot @code{\"editable\"} of the @class{gtk-text-view} class.
+  @see-class{gtk-text-view}
+  @see-function{gtk-text-view-get-editable}
+  @see-function{gtk-text-view-set-editable}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-view-im-module atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-view-im-module 'function)
- "@version{2013-3-25}
+ "@version{2013-8-20}
   Accessor of the slot @code{\"im-module\"} of the @class{gtk-text-view}
-  class.")
-
-;;; ----------------------------------------------------------------------------
+  class.
+  @see-class{gtk-text-view}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-view-indent atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-view-indent 'function)
- "@version{2013-3-25}
-  Accessor of the slot @code{\"indent\"} of the @class{gtk-text-view} class.")
-
-;;; ----------------------------------------------------------------------------
+ "@version{2013-8-20}
+  Accessor of the slot @code{\"indent\"} of the @class{gtk-text-view} class.
+  @see-class{gtk-text-view}
+  @see-function{gtk-text-view-get-indent}
+  @see-function{gtk-text-view-set-indent}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-view-input-hints atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-view-input-hints 'function)
- "@version{2013-5-5}
+ "@version{2013-8-20}
   Accessor of the slot @code{\"input-hints\"} of the @class{gtk-text-view}
-  class.")
-
-;;; ----------------------------------------------------------------------------
+  class.
+  @see-class{gtk-text-view}
+  @see-function{gtk-text-view-get-input-hints}
+  @see-function{gtk-text-view-set-input-hints}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-view-input-purpose atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-view-input-purpose 'function)
- "@version{2013-5-5}
+ "@version{2013-8-20}
   Accessor of the slot @code{\"input-purpose\"} of the @class{gtk-text-view}
-  class.")
-
-;;; ----------------------------------------------------------------------------
+  class.
+  @see-class{gtk-text-view}
+  @see-symbol{gtk-input-purpose}
+  @see-function{gtk-text-view-get-input-purpose}
+  @see-function{gtk-text-view-set-input-purpose}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-view-justification atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-view-justification 'function)
- "@version{2013-3-25}
+ "@version{2013-8-20}
   Accessor of the slot @code{\"justification\"} of the @class{gtk-text-view}
-  class.")
-
-;;; ----------------------------------------------------------------------------
+  class.
+  @see-class{gtk-text-view}
+  @see-symbol{gtk-justification}
+  @see-function{gtk-text-view-get-justification}
+  @see-function{gtk-text-view-set-justification}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-view-left-margin atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-view-left-margin 'function)
- "@version{2013-3-25}
+ "@version{2013-8-20}
   Accessor of the slot @code{\"left-margin\"} of the @class{gtk-text-view}
-  class.")
-
-;;; ----------------------------------------------------------------------------
+  class.
+  @see-class{gtk-text-view}
+  @see-function{gtk-text-view-get-left-margin}
+  @see-function{gtk-text-view-set-left-margin}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-view-overwrite atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-view-overwrite 'function)
- "@version{2013-3-25}
+ "@version{2013-8-20}
   Accessor of the slot @code{\"overwrite\"} of the @class{gtk-text-view}
-  class.")
-
-;;; ----------------------------------------------------------------------------
+  class.
+  @see-class{gtk-text-view}
+  @see-function{gtk-text-view-get-overwrite}
+  @see-function{gtk-text-view-set-overwrite}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-view-pixels-above-lines atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-view-pixels-above-lines 'function)
- "@version{2013-3-25}
+ "@version{2013-8-20}
   Accessor of the slot @code{\"pixels-above-lines\"} of the
-  @class{gtk-text-view} class.")
-
-;;; ----------------------------------------------------------------------------
+  @class{gtk-text-view} class.
+  @see-class{gtk-text-view}
+  @see-function{gtk-text-view-get-pixels-above-lines}
+  @see-function{gtk-text-view-set-pixels-above-lines}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-view-pixels-below-lines atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-view-pixels-below-lines 'function)
- "@version{2013-3-25}
+ "@version{2013-8-20}
   Accessor of the slot @code{\"pixels-below-lines\"} of the
-  @class{gtk-text-view} class.")
-
-;;; ----------------------------------------------------------------------------
+  @class{gtk-text-view} class.
+  @see-class{gtk-text-view}
+  @see-function{gtk-text-view-get-pixels-below-lines}
+  @see-function{gtk-text-view-set-pixels-below-lines}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-view-pixels-inside-wrap atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-view-pixels-inside-wrap 'function)
- "@version{2013-3-25}
+ "@version{2013-8-20}
   Accessor of the slot @code{\"pixels-inside-wrap\"} of the
-  @class{gtk-text-view} class.")
-
-;;; ----------------------------------------------------------------------------
+  @class{gtk-text-view} class.
+  @see-class{gtk-text-view}
+  @see-function{gtk-text-view-get-pixels-inside-wrap}
+  @see-function{gtk-text-view-set-pixels-inside-wrap}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-view-right-margin atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-view-right-margin 'function)
- "@version{2013-3-25}
+ "@version{2013-8-20}
   Accessor of the slot @code{\"right-margin\"} of the @class{gtk-text-view}
-  class.")
-
-;;; ----------------------------------------------------------------------------
+  class.
+  @see-class{gtk-text-view}
+  @see-function{gtk-text-view-get-right-margin}
+  @see-function{gtk-text-view-set-right-margin}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-view-tabs atdoc:*function-name-alias*)
@@ -723,15 +706,17 @@
   @see-function{gtk-text-view-get-tabs}
   @see-function{gtk-text-view-set-tabs}")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-view-wrap-mode atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-view-wrap-mode 'function)
- "@version{2013-3-25}
+ "@version{2013-8-20}
   Accessor of the slot @code{\"wrap-mode\"} of the @class{gtk-text-view}
-  class.")
+  class.
+  @see-class{gtk-text-view}
+  @see-symbol{gtk-wrap-mode}
+  @see-function{gtk-text-view-get-wrap-mode}
+  @see-function{gtk-text-view-set-wrap-mode}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkTextWindowType
@@ -818,14 +803,19 @@
 
 (defun gtk-text-view-set-buffer (text-view buffer)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-5}
-  @argument[text-view]{a @class{gtk-text-view} object}
+ "@version{2013-8-20}
+  @argument[text-view]{a @class{gtk-text-view} widget}
   @argument[buffer]{a @class{gtk-text-buffer} object}
-  Sets @arg{buffer} as the buffer being displayed by @arg{text-view}. The
-  previous buffer displayed by the text view is unreferenced, and a reference is
-  added to @arg{buffer}. If you owned a reference to @arg{buffer} before passing
-  it to this function, you must remove that reference yourself;
-  @class{gtk-text-view} will not \"adopt\" it."
+  @begin{short}
+    Sets @arg{buffer} as the buffer being displayed by @arg{text-view}.
+  @end{short}
+  The previous buffer displayed by the text view is unreferenced, and a
+  reference is added to @arg{buffer}. If you owned a reference to @arg{buffer}
+  before passing it to this function, you must remove that reference yourself;
+  @class{gtk-text-view} will not \"adopt\" it.
+  @see-class{gtk-text-view}
+  @see-class{gtk-text-buffer}
+  @see-function{gtk-text-view-get-buffer}"
   (setf (gtk-text-view-buffer text-view) buffer))
 
 (export 'gtk-text-view-set-buffer)
@@ -838,12 +828,13 @@
 
 (defun gtk-text-view-get-buffer (text-view)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-6}
-  @argument[text-view]{a @class{gtk-text-view} object}
-  @return{A @class{gtk-text-buffer} object.}
+ "@version{2013-8-20}
+  @argument[text-view]{a @class{gtk-text-view} widget}
+  @return{A @class{gtk-text-buffer} widget.}
   Returns the @class{gtk-text-buffer} object being displayed by this text view.
-  The reference count on the buffer is not incremented; the caller of this
-  function will not own a new reference."
+  @see-class{gtk-text-view}
+  @see-class{gtk-text-buffer}
+  @see-function{gtk-text-view-set-buffer}"
   (gtk-text-view-buffer text-view))
 
 (export 'gtk-text-view-get-buffer)
@@ -1734,32 +1725,41 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_view_set_wrap_mode ()
-;;;
-;;; void gtk_text_view_set_wrap_mode (GtkTextView *text_view,
-;;;                                   GtkWrapMode wrap_mode);
-;;;
-;;; Sets the line wrapping for the view.
-;;;
-;;; text_view :
-;;;     a GtkTextView
-;;;
-;;; wrap_mode :
-;;;     a GtkWrapMode
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-text-view-set-wrap-mode))
+
+(defun gtk-text-view-set-wrap-mode (text-view wrap-mode)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-20}
+  @argument[text-view]{a @class{gtk-text-view} widget}
+  @argument[wrap-mode]{a @symbol{gtk-wrap-mode}}
+  Sets the line wrapping for the view.
+  @see-class{gtk-text-view}
+  @see-symbol{gtk-wrap-mode}
+  @see-function{gtk-text-view-get-wrap-mode}"
+  (setf (gtk-text-view-wrap-mode text-view) wrap-mode))
+
+(export 'gtk-text-view-set-wrap-mode)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_view_get_wrap_mode ()
-;;;
-;;; GtkWrapMode gtk_text_view_get_wrap_mode (GtkTextView *text_view);
-;;;
-;;; Gets the line wrapping for the view.
-;;;
-;;; text_view :
-;;;     a GtkTextView
-;;;
-;;; Returns :
-;;;     the line wrap setting
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-text-view-get-wrap-mode))
+
+(defun gtk-text-view-get-wrap-mode (text-view)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-20}
+  @argument[text-view]{a @class{gtk-text-view} widget}
+  @return{The line wrap setting of type @symbol{gtk-wrap-mode}.}
+  Gets the line wrapping for the view.
+  @see-class{gtk-text-view}
+  @see-symbol{gtk-wrap-mode}
+  @see-function{gtk-text-view-set-wrap-mode}"
+  (gtk-text-view-wrap-mode text-view))
+
+(export 'gtk-text-view-get-wrap-mode)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_view_set_editable ()
@@ -1769,14 +1769,15 @@
 
 (defun gtk-text-view-set-editable (text-view setting)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-30}
+ "@version{2013-8-20}
   @argument[text-view]{a @class{gtk-text-view} widget}
-  @argument[setting]{whether @arg{text-view} editable}
+  @argument[setting]{whether @arg{text-view} is editable}
   @begin{short}
     Sets the default editability of the @class{gtk-text-view}.
   @end{short}
   You can override this default setting with tags in the buffer, using the
   \"editable\" attribute of tags.
+  @see-class{gtk-text-view}
   @see-function{gtk-text-view-get-editable}"
   (setf (gtk-text-view-editable text-view) setting))
 
@@ -1790,13 +1791,14 @@
 
 (defun gtk-text-view-get-editable (text-view)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-30}
+ "@version{2013-8-20}
   @argument[text-view]{a @class{gtk-text-view} widget}
   @return{Whether text is editable by default.}
   @begin{short}
     Returns the default editability of the @class{gtk-text-view}.
   @end{short}
   Tags in the buffer may override this setting for some ranges of text.
+  @see-class{gtk-text-view}
   @see-function{gtk-text-view-set-editable}"
   (gtk-text-view-editable text-view))
 
@@ -1804,158 +1806,207 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_view_set_cursor_visible ()
-;;;
-;;; void gtk_text_view_set_cursor_visible (GtkTextView *text_view,
-;;;                                        gboolean setting);
-;;;
-;;; Toggles whether the insertion point is displayed. A buffer with no editable
-;;; text probably shouldn't have a visible cursor, so you may want to turn the
-;;; cursor off.
-;;;
-;;; text_view :
-;;;     a GtkTextView
-;;;
-;;; setting :
-;;;     whether to show the insertion cursor
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-text-view-set-cursor-visible))
+
+(defun gtk-text-view-set-cursor-visible (text-view setting)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-20}
+  @argument[text-view]{a @class{gtk-text-view} widget}
+  @argument[setting]{whether to show the insertion cursor}
+  @begin{short}
+    Toggles whether the insertion point is displayed.
+  @end{short}
+  A buffer with no editable text probably should not have a visible cursor, so
+  you may want to turn the cursor off.
+  @see-class{gtk-text-view}
+  @see-function{gtk-text-view-get-cursor-visible}"
+  (setf (gtk-text-view-cursor-visible text-view) setting))
+
+(export 'gtk-text-view-set-cursor-visible)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_view_get_cursor_visible ()
-;;;
-;;; gboolean gtk_text_view_get_cursor_visible (GtkTextView *text_view);
-;;;
-;;; Find out whether the cursor is being displayed.
-;;;
-;;; text_view :
-;;;     a GtkTextView
-;;;
-;;; Returns :
-;;;     whether the insertion mark is visible
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-text-view-get-cursor-visible))
+
+(defun gtk-text-view-get-cursor-visible (text-view)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-20}
+  @argument[text-view]{a @class{gtk-text-view} widget}
+  @return{Whether the insertion mark is visible.}
+  Find out whether the cursor is being displayed.
+  @see-class{gtk-text-view}
+  @see-function{gtk-text-view-set-cursor-visible}"
+  (gtk-text-view-cursor-visible text-view))
+
+(export 'gtk-text-view-get-cursor-visible)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_view_set_overwrite ()
-;;;
-;;; void gtk_text_view_set_overwrite (GtkTextView *text_view,
-;;;                                   gboolean overwrite);
-;;;
-;;; Changes the GtkTextView overwrite mode.
-;;;
-;;; text_view :
-;;;     a GtkTextView
-;;;
-;;; overwrite :
-;;;     TRUE to turn on overwrite mode, FALSE to turn it off
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-text-view-set-overwrite))
+
+(defun gtk-text-view-set-overwrite (text-view overwrite)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-20}
+  @argument[text-view]{a @class{gtk-text-view} widet}
+  @argument[overwrite]{@em{true} to turn on overwrite mode, @code{nil} to turn
+    it off}
+  @begin{short}
+    Changes the @class{gtk-text-view} overwrite mode.
+  @end{short}
+
+  Since 2.4
+  @see-class{gtk-text-view}
+  @see-function{gtk-text-view-get-overwrite}"
+  (setf (gtk-text-view-overwrite text-view) overwrite))
+
+(export 'gtk-text-view-set-overwrite)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_view_get_overwrite ()
-;;;
-;;; gboolean gtk_text_view_get_overwrite (GtkTextView *text_view);
-;;;
-;;; Returns whether the GtkTextView is in overwrite mode or not.
-;;;
-;;; text_view :
-;;;     a GtkTextView
-;;;
-;;; Returns :
-;;;     whether text_view is in overwrite mode or not.
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-text-view-get-overwrite))
+
+(defun gtk-text-view-get-overwrite (text-view)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-20}
+  @argument[text-view]{a @class{gtk-text-view} widget}
+  @return{Whether @arg{text-view} is in overwrite mode or not.}
+  @begin{short}
+    Returns whether the @class{gtk-text-view} is in overwrite mode or not.
+  @end{short}
+
+  Since 2.4
+  @see-class{gtk-text-view}
+  @see-function{gtk-text-view-set-overwrite}"
+  (gtk-text-view-overwrite text-view))
+
+(export 'gtk-text-view-get-overwrite)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_view_set_pixels_above_lines ()
-;;;
-;;; void gtk_text_view_set_pixels_above_lines (GtkTextView *text_view,
-;;;                                            gint pixels_above_lines);
-;;;
-;;; Sets the default number of blank pixels above paragraphs in text_view. Tags
-;;; in the buffer for text_view may override the defaults.
-;;;
-;;; text_view :
-;;;     a GtkTextView
-;;;
-;;; pixels_above_lines :
-;;;     pixels above paragraphs
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-text-view-set-pixels-above-lines))
+
+(defun gtk-text-view-set-pixels-above-lines (text-view pixels-above-lines)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-20}
+  @argument[text-view]{a @class{gtk-text-view} widget}
+  @argument[pixels-above-lines]{pixels above paragraphs}
+  @begin{short}
+    Sets the default number of blank pixels above paragraphs in @arg{text-view.}
+  @end{short}
+  Tags in the buffer for text_view may override the defaults.
+  @see-class{gtk-text-view}
+  @see-function{gtk-text-view-get-pixels-above-lines}"
+  (setf (gtk-text-view-pixels-above-lines text-view) pixels-above-lines))
+
+(export 'gtk-text-view-set-pixels-above-lines)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_view_get_pixels_above_lines ()
-;;;
-;;; gint gtk_text_view_get_pixels_above_lines (GtkTextView *text_view);
-;;;
-;;; Gets the default number of pixels to put above paragraphs.
-;;;
-;;; text_view :
-;;;     a GtkTextView
-;;;
-;;; Returns :
-;;;     default number of pixels above paragraphs
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-text-view-get-pixels-above-lines))
+
+(defun gtk-text-view-get-pixels-above-lines (text-view)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-20}
+  @argument[text-view]{a @class{gtk-text-view} widget}
+  @return{Default number of pixels above paragraphs.}
+  Gets the default number of pixels to put above paragraphs.
+  @see-class{gtk-text-view}
+  @see-function{gtk-text-view-set-pixels-above-lines}"
+  (gtk-text-view-pixels-above-lines text-view))
+
+(export 'gtk-text-view-get-pixels-above-lines)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_view_set_pixels_below_lines ()
-;;;
-;;; void gtk_text_view_set_pixels_below_lines (GtkTextView *text_view,
-;;;                                            gint pixels_below_lines);
-;;;
-;;; Sets the default number of pixels of blank space to put below paragraphs in
-;;; text_view. May be overridden by tags applied to text_view's buffer.
-;;;
-;;; text_view :
-;;;     a GtkTextView
-;;;
-;;; pixels_below_lines :
-;;;     pixels below paragraphs
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-text-view-set-pixels-below-lines))
+
+(defun gtk-text-view-set-pixels-below-lines (text-view pixels-below-lines)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-20}
+  @argument[text-view]{a @class{gtk-tex-view} widget}
+  @argument[pixels-below-lines]{pixels below paragraphs}
+  @begin{short}
+    Sets the default number of pixels of blank space to put below paragraphs in
+    @arg{text-view}.
+  @end{short}
+  May be overridden by tags applied to @arg{text-view}'s buffer.
+  @see-class{gtk-text-view}
+  @see-function{gtk-text-view-get-pixels-below-lines}"
+  (setf (gtk-text-view-pixels-below-lines text-view) pixels-below-lines))
+
+(export 'gtk-text-view-set-pixels-below-lines)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_view_get_pixels_below_lines ()
-;;;
-;;; gint gtk_text_view_get_pixels_below_lines (GtkTextView *text_view);
-;;;
-;;; Gets the value set by gtk_text_view_set_pixels_below_lines().
-;;;
-;;; text_view :
-;;;     a GtkTextView
-;;;
-;;; Returns :
-;;;     default number of blank pixels below paragraphs
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-text-view-get-pixels-below-lines))
+
+(defun gtk-text-view-get-pixels-below-lines (text-view)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-20}
+  @argument[text-view]{a @class{gtk-text-view} widget}
+  @return{Default number of blank pixels below paragraphs.}
+  Gets the value set by the function @fun{gtk-text-view-set-pixels-below-lines}.
+  @see-class{gtk-text-view}
+  @see-function{gtk-text-view-set-pixels-below-lines}"
+  (gtk-text-view-pixels-below-lines text-view))
+
+(export 'gtk-text-view-get-pixels-below-lines)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_view_set_pixels_inside_wrap ()
-;;;
-;;; void gtk_text_view_set_pixels_inside_wrap (GtkTextView *text_view,
-;;;                                            gint pixels_inside_wrap);
-;;;
-;;; Sets the default number of pixels of blank space to leave between
-;;; display/wrapped lines within a paragraph. May be overridden by tags in
-;;; text_view's buffer.
-;;;
-;;; text_view :
-;;;     a GtkTextView
-;;;
-;;; pixels_inside_wrap :
-;;;     default number of pixels between wrapped lines
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-text-view-set-pixels-inside-wrap))
+
+(defun gtk-text-view-set-pixels-inside-wrap (text-view pixels-inside-wrap)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-20}
+  @argument[text-view]{a @class{gtk-text-view} widget}
+  @argument[pixels-inside-wrap]{default number of pixels between wrapped lines}
+  @begin{short}
+    Sets the default number of pixels of blank space to leave between
+    display/wrapped lines within a paragraph.
+  @end{short}
+  May be overridden by tags in @arg{text-view}'s buffer.
+  @see-class{gtk-text-view}
+  @see-function{gtk-text-view-get-pixels-inside-wrap}"
+  (setf (gtk-text-view-pixels-inside-wrap text-view) pixels-inside-wrap))
+
+(export 'gtk-text-view-set-pixels-inside-wrap)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_view_get_pixels_inside_wrap ()
-;;;
-;;; gint gtk_text_view_get_pixels_inside_wrap (GtkTextView *text_view);
-;;;
-;;; Gets the value set by gtk_text_view_set_pixels_inside_wrap().
-;;;
-;;; text_view :
-;;;     a GtkTextView
-;;;
-;;; Returns :
-;;;     default number of pixels of blank space between wrapped lines
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-text-view-get-pixels-inside-wrap))
+
+(defun gtk-text-view-get-pixels-inside-wrap (text-view)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-20}
+  @argument[text-view]{a @class{gtk-text-view} widget}
+  @return{Default number of pixels of blank space between wrapped lines.}
+  Gets the value set by the function @fun{gtk-text-view-set-pixels-inside-wrap}.
+  @see-class{gtk-text-view}
+  @see-function{gtk-text-view-set-pixels-inside-wrap}"
+  (gtk-text-view-pixels-inside-wrap text-view))
+
+(export 'gtk-text-view-get-pixels-inside-wrap)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_view_set_justification ()
@@ -1965,11 +2016,16 @@
 
 (defun gtk-text-view-set-justification (text-view justification)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-10}
-  @argument[text-view]{a @class{gtk-text-view} object}
-  @argument[justification]{justification}
-  Sets the default justification of text in @arg{text-view}. Tags in the view's
-  buffer may override the default."
+ "@version{2013-8-20}
+  @argument[text-view]{a @class{gtk-text-view} widget}
+  @argument[justification]{justification of type @symbol{gtk-justification}}
+  @begin{short}
+    Sets the default justification of text in @arg{text-view}.
+  @end{short}
+  Tags in the view's buffer may override the default.
+  @see-class{gtk-text-view}
+  @see-symbol{gtk-justification}
+  @see-function{gtk-text-view-get-justification}"
   (setf (gtk-text-view-justification text-view) justification))
 
 (export 'gtk-text-view-set-justification)
@@ -1982,11 +2038,16 @@
 
 (defun gtk-text-view-get-justification (text-view)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-10}
-  @argument[text-view]{a @class{gtk-text-view} object}
-  @return{default justification}
-  Gets the default justification of paragraphs in @arg{text-view}. Tags in the
-  buffer may override the default."
+ "@version{2013-8-20}
+  @argument[text-view]{a @class{gtk-text-view} widget}
+  @return{The default justification of type @symbol{gtk-justification}.}
+  @begin{short}
+    Gets the default justification of paragraphs in @arg{text-view}.
+  @end{short}
+  Tags in the buffer may override the default.
+  @see-class{gtk-text-view}
+  @see-symbol{gtk-justification}
+  @see-function{gtk-text-view-set-justification}"
   (gtk-text-view-justification text-view))
 
 (export 'gtk-text-view-get-justification)
@@ -1999,11 +2060,15 @@
 
 (defun gtk-text-view-set-left-margin (text-view left-margin)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-10}
-  @argument[text-view]{a @class{gtk-text-view} object}
+ "@version{2013-8-20}
+  @argument[text-view]{a @class{gtk-text-view} widget}
   @argument[left-margin]{left margin in pixels}
-  Sets the default left margin for text in @arg{text-view}. Tags in the buffer
-  may override the default."
+  @begin{short}
+    Sets the default left margin for text in @arg{text-view}.
+  @end{short}
+  Tags in the buffer may override the default.
+  @see-class{gtk-text-view}
+  @see-function{gtk-text-view-get-left-margin}"
   (setf (gtk-text-view-left-margin text-view) left-margin))
 
 (export 'gtk-text-view-set-left-margin)
@@ -2016,11 +2081,15 @@
 
 (defun gtk-text-view-get-left-margin (text-view)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-10}
-  @argument[text-view]{a @class{gtk-text-view} object}
+ "@version{2013-8-20}
+  @argument[text-view]{a @class{gtk-text-view} widget}
   @return{left margin in pixels}
-  Gets the default left margin size of paragraphs in the @arg{text-view}. Tags
-  in the buffer may override the default."
+  @begin{short}
+    Gets the default left margin size of paragraphs in the @arg{text-view}.
+  @end{short}
+  Tags in the buffer may override the default.
+  @see-class{gtk-text-view}
+  @see-function{gtk-text-view-set-left-margin}"
   (gtk-text-view-left-margin text-view))
 
 (export 'gtk-text-view-get-left-margin)
@@ -2033,11 +2102,15 @@
 
 (defun gtk-text-view-set-right-margin (text-view right-margin)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-10}
-  @argument[text-view]{a @class{gtk-text-view} object}
+ "@version{2013-8-20}
+  @argument[text-view]{a @class{gtk-text-view} widget}
   @argument[right-margin]{right margin in pixels}
-  Sets the default right margin for text in @arg{text-view}. Tags in the buffer
-  may override the default."
+  @begin{short}
+    Sets the default right margin for text in @arg{text-view}.
+  @end{short}
+  Tags in the buffer may override the default.
+  @see-class{gtk-text-view}
+  @see-function{gtk-text-view-get-right-margin}"
   (setf (gtk-text-view-right-margin text-view) right-margin))
 
 (export 'gtk-text-view-set-right-margin)
@@ -2050,44 +2123,61 @@
 
 (defun gtk-text-view-get-right-margin (text-view)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-10}
-  @argument[text-view]{a @class{gtk-text-view} object}
+ "@version{2013-8-20}
+  @argument[text-view]{a @class{gtk-text-view} widget}
   @return{right margin in pixels}
-  Gets the default right margin for text in @arg{text-view}. Tags in the buffer
-  may override the default."
+  @begin{short}
+    Gets the default right margin for text in @arg{text-view}.
+  @end{short}
+  Tags in the buffer may override the default.
+  @see-class{gtk-text-view}
+  @see-function{gtk-text-view-set-right-margin}"
   (gtk-text-view-right-margin text-view))
 
 (export 'gtk-text-view-get-right-margin)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_view_set_indent ()
-;;;
-;;; void gtk_text_view_set_indent (GtkTextView *text_view, gint indent);
-;;;
-;;; Sets the default indentation for paragraphs in text_view. Tags in the buffer
-;;; may override the default.
-;;;
-;;; text_view :
-;;;     a GtkTextView
-;;;
-;;; indent :
-;;;     indentation in pixels
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-text-view-set-indent))
+
+(defun gtk-text-view-set-indent (text-view indent)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-20}
+  @argument[text-view]{a @class{gtk-text-view} widget}
+  @argument[indent]{indentation in pixels}
+  @begin{short}
+    Sets the default indentation for paragraphs in @arg{text-view}.
+  @end{short}
+  Tags in the buffer may override the default.
+  @see-class{gtk-text-view}
+  @see-function{gtk-text-view-get-indent}"
+  (setf (gtk-text-view-indent text-view) indent))
+
+(export 'gtk-text-view-set-indent)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_view_get_indent ()
-;;;
-;;; gint gtk_text_view_get_indent (GtkTextView *text_view);
-;;;
-;;; Gets the default indentation of paragraphs in text_view. Tags in the view's
-;;; buffer may override the default. The indentation may be negative.
-;;;
-;;; text_view :
-;;;     a GtkTextView
-;;;
-;;; Returns :
-;;;     number of pixels of indentation
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-text-view-get-indent))
+
+(defun gtk-text-view-get-indent (text-view)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-20}
+  @argument[text-view]{a @class{gtk-text-view} widget}
+  @return{Number of pixels of indentation.}
+  @begin{short}
+    Gets the default indentation of paragraphs in @arg{text-view}.
+  @end{short}
+  Tags in the view's buffer may override the default. The indentation may be
+  negative.
+  @see-class{gtk-text-view}
+  @see-function{gtk-text-view-set-indent}"
+  (gtk-text-view-indent text-view))
+
+(export 'gtk-text-view-get-indent)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_view_set_tabs ()
@@ -2096,11 +2186,13 @@
 (declaim (inline gtk-text-view-set-tabs))
 
 (defun gtk-text-view-set-tabs (text-view tabs)
- "@version{2013-8-10}
+ "@version{2013-8-20}
   @argument[text-view]{a @class{gtk-text-view} widget}
   @argument[tabs]{tabs as a @class{pango-tab-array} structure}
-  Sets the default tab stops for paragraphs in @arg{text-view}. Tags in the
-  buffer may override the default.
+  @begin{short}
+    Sets the default tab stops for paragraphs in @arg{text-view}.
+  @end{short}
+  Tags in the buffer may override the default.
   @see-class{gtk-text-view}
   @see-class{pango-tab-array}
   @see-function{gtk-text-view-get-tabs}"
@@ -2116,7 +2208,7 @@
 
 (defun gtk-text-view-get-tabs (text-view)
  #+cl-cffi-gtk-documentation
- "@version{2013-8-10}
+ "@version{2013-8-20}
   @argument[text-view]{a @class{gtk-text-view} widget}
   @begin{return}
     Copy of default tab array, or @code{nil} if \"standard\" tabs are used; must
@@ -2138,41 +2230,56 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_view_set_accepts_tab ()
-;;;
-;;; void gtk_text_view_set_accepts_tab (GtkTextView *text_view,
-;;;                                     gboolean accepts_tab);
-;;;
-;;; Sets the behavior of the text widget when the Tab key is pressed. If
-;;; accepts_tab is TRUE, a tab character is inserted. If accepts_tab is FALSE
-;;; the keyboard focus is moved to the next widget in the focus chain.
-;;;
-;;; text_view :
-;;;     A GtkTextView
-;;;
-;;; accepts_tab :
-;;;     TRUE if pressing the Tab key should insert a tab character, FALSE, if
-;;;     pressing the Tab key should move the keyboard focus.
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-text-view-set-accepts-tab))
+
+(defun gtk-text-view-set-accepts-tab (text-view accepts-tab)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-19}
+  @argument[text-view]{a @class{gtk-text-view} widget}
+  @argument[accepts-tab]{@em{True} if pressing the Tab key should insert a tab
+    character, @code{nil}, if pressing the Tab key should move the keyboard
+    focus.}
+  @begin{short}
+    Sets the behavior of the text widget when the Tab key is pressed.
+  @end{short}
+  If @arg{accepts-tab} is @em{true}, a tab character is inserted. If
+  @arg{accepts-tab} is @code{nil} the keyboard focus is moved to the next widget
+  in the focus chain.
+
+  Since 2.4
+  @see-class{gtk-text-view}
+  @see-function{gtk-text-view-get-accepts-tab}"
+  (setf (gtk-text-view-accepts-tab text-view) accepts-tab))
+
+(export 'gtk-text-view-set-accepts-tab)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_view_get_accepts_tab ()
-;;;
-;;; gboolean gtk_text_view_get_accepts_tab (GtkTextView *text_view);
-;;;
-;;; Returns whether pressing the Tab key inserts a tab characters. See
-;;; gtk_text_view_set_accepts_tab().
-;;;
-;;; text_view :
-;;;     A GtkTextView
-;;;
-;;; Returns :
-;;;     TRUE if pressing the Tab key inserts a tab character, FALSE if pressing
-;;;     the Tab key moves the keyboard focus.
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-text-view-get-accepts-tab))
+
+(defun gtk-text-view-get-accepts-tab (text-view)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-19}
+  @argument[text-view]{a @class{gtk-text-view} widget}
+  @begin{return}
+    @em{True} if pressing the Tab key inserts a tab character, @code{nil} if
+    pressing the Tab key moves the keyboard focus.
+  @end{return}
+  @begin{short}
+    Returns whether pressing the Tab key inserts a tab characters.
+  @end{short}
+  See the function @fun{gtk-text-view-set-accepts-tab}.
+
+  Since 2.4
+  @see-class{gtk-text-view}
+  @see-function{gtk-text-view-set-accepts-tab}"
+  (gtk-text-view-accepts-tab text-view))
+
+(export 'gtk-text-view-get-accepts-tab)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_view_get_default_attributes ()
@@ -2257,65 +2364,96 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_view_set_input_purpose ()
-;;;
-;;; void gtk_text_view_set_input_purpose (GtkTextView *text_view,
-;;;                                       GtkInputPurpose purpose);
-;;;
-;;; Sets the "input-purpose" property which can be used by on-screen keyboards
-;;;  and other input methods to adjust their behaviour.
-;;;
-;;; text_view :
-;;;     a GtkTextView
-;;;
-;;; purpose :
-;;;     the purpose
-;;;
-;;; Since 3.6
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-text-view-set-input-purpose))
+
+(defun gtk-text-view-set-input-purpose (text-view purpose)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-20}
+  @argument[text-view]{a @class{gtk-text-view} widget}
+  @argument[purpose]{the purpose of type @symbol{gtk-input-purpose}}
+  @begin{short}
+    Sets the @code{\"input-purpose\"} property which can be used by on-screen
+    keyboards and other input methods to adjust their behaviour.
+  @end{short}
+
+  Since 3.6
+  @see-class{gtk-text-view}
+  @see-symbol{gtk-input-purpose}
+  @see-function{gtk-text-view-get-input-purpose}"
+  (setf (gtk-text-view-input-purpose text-view) purpose))
+
+(export 'gtk-text-view-set-input-purpose)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_view_get_input_purpose ()
-;;;
-;;; GtkInputPurpose gtk_text_view_get_input_purpose (GtkTextView *text_view);
-;;;
-;;; Gets the value of the "input-purpose" property.
-;;;
-;;; text_view :
-;;;     a GtkTextView
-;;;
-;;; Since 3.6
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-text-view-get-input-purpose))
+
+(defun gtk-text-view-get-input-purpose (text-view)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-20}
+  @argument[text-view]{a @class{gtk-text-view} widget}
+  @begin{short}
+    Gets the value of the @code{\"input-purpose\"} property.
+  @end{short}
+
+  Since 3.6
+  @see-class{gtk-text-view}
+  @see-symbol{gtk-input-purpose}
+  @see-function{gtk-text-view-set-input-purpose}"
+  (gtk-text-view-input-purpose text-view))
+
+(export 'gtk-text-view-get-input-purpose)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_view_set_input_hints ()
-;;;
-;;; void gtk_text_view_set_input_hints (GtkTextView *text_view,
-;;;                                     GtkInputHints hints);
-;;;
-;;; Sets the "input-hints" property, which allows input methods to fine-tune
-;;; their behaviour.
-;;;
-;;; text_view :
-;;;     a GtkTextView
-;;;
-;;; hints :
-;;;     the hints
-;;;
-;;; Since 3.6
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-text-view-set-input-hints))
+
+(defun gtk-text-view-set-input-hints (text-view hints)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-20}
+  @argument[text-view]{a @class{gtk-text-view} widget}
+  @argument[hints]{the hints}
+  @begin{short}
+    Sets the @code{\"input-hints\"} property, which allows input methods to
+    fine-tune their behaviour.
+  @end{short}
+
+  Since 3.6
+  @see-class{gtk-text-view}
+  @see-symbol{gtk-input-hints}
+  @see-function{gtk-text-view-get-input-hints}"
+
+  (setf (gtk-text-view-input-hints text-view) hints))
+
+(export 'gtk-text-view-set-input-hints)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_view_get_input_hints ()
-;;;
-;;; GtkInputHints gtk_text_view_get_input_hints (GtkTextView *text_view);
-;;;
-;;; Gets the value of the "input-hints" property.
-;;;
-;;; text_view :
-;;;     a GtkTextView
-;;;
-;;; Since 3.6
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-text-view-get-input-hints))
+
+(defun gtk-text-view-get-input-hints (text-view)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-20}
+  @argument[text-view]{a @class{gtk-text-view} widget}
+  @begin{short}
+    Gets the value of the @code{\"input-hints\"} property.
+  @end{short}
+
+  Since 3.6
+  @see-class{gtk-text-view}
+  @see-symbol{gtk-text-view}
+  @see-function{gtk-text-view-set-input-hints}"
+  (gtk-text-view-input-hints text-view))
+
+(export 'gtk-text-view-get-input-hints)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GTK_TEXT_VIEW_PRIORITY_VALIDATE

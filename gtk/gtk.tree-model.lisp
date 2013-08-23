@@ -4,9 +4,10 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -1312,10 +1313,12 @@
 
 (defcfun ("gtk_tree_model_get_n_columns" gtk-tree-model-get-n-columns) :int
  #+cl-cffi-gtk-documentation
- "@version{2013-5-12}
+ "@version{2013-8-22}
   @argument[tree-model]{a @class{gtk-tree-model} object}
   @return{The number of columns.}
-  Returns the number of columns supported by @arg{tree-model}."
+  Returns the number of columns supported by @arg{tree-model}.
+  @see-class{gtk-tree-model}
+  @see-function{gtk-tree-model-get-column-type}"
   (tree-model (g-object gtk-tree-model)))
 
 (export 'gtk-tree-model-get-n-columns)
@@ -1327,11 +1330,13 @@
 (defcfun ("gtk_tree_model_get_column_type" gtk-tree-model-get-column-type)
     g-type
  #+cl-cffi-gtk-documentation
- "@version{2013-5-12}
+ "@version{2013-8-22}
   @argument[tree-model]{a @class{gtk-tree-model} object}
   @argument[index]{the column index}
   @return{The type of the column.}
-  Returns the type of the column."
+  Returns the type of the column.
+  @see-class{gtk-tree-model}
+  @see-function{gtk-tree-model-get-n-columns}"
   (tree-model (g-object gtk-tree-model))
   (index :int))
 
@@ -1799,22 +1804,23 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_model_row_changed ()
-;;;
-;;; void gtk_tree_model_row_changed (GtkTreeModel *tree_model,
-;;;                                  GtkTreePath *path,
-;;;                                  GtkTreeIter *iter);
-;;;
-;;; Emits the "row-changed" signal on tree_model.
-;;;
-;;; tree_model :
-;;;     a GtkTreeModel
-;;;
-;;; path :
-;;;     a GtkTreePath pointing to the changed row
-;;;
-;;; iter :
-;;;     a valid GtkTreeIter pointing to the changed row
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_tree_model_row_changed" gtk-tree-model-row-changed) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-22}
+  @argument[tree-model]{a @class{gtk-tree-model} object}
+  @argument[path]{a @class{gtk-tree-path} pointing to the changed row}
+  @argument[iter]{a valid @class{gtk-tree-iter} pointing to the changed row}
+  Emits the \"row-changed\" signal on @arg{tree-model}.
+  @see-class{gtk-tree-model}
+  @see-class{gtk-tree-path}
+  @see-class{gtk-tree-iter}"
+  (tree-model (g-object gtk-tree-model))
+  (path (g-boxed-foreign gtk-tree-path))
+  (iter (g-boxed-foreign gtk-tree-iter)))
+
+(export 'gtk-tree-model-row-changed)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_model_row_inserted ()

@@ -166,16 +166,23 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_area_box_new ()
-;;;
-;;; GtkCellArea * gtk_cell_area_box_new (void);
-;;;
-;;; Creates a new GtkCellAreaBox.
-;;;
-;;; Returns :
-;;; 	a newly created GtkCellAreaBox
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-cell-area-box-new))
+
+(defun gtk-cell-area-box-new ()
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-19}
+  @return{A newly created @class{gtk-cell-area-box}.}
+  @begin{short}
+    Creates a new @class{gtk-cell-area-box}.
+  @end{short}
+
+  Since 3.0
+  @see-class{gtk-cell-area-box}"
+  (make-instance 'gtk-cell-area-box))
+
+(export 'gtk-cell-area-box-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_area_box_pack_start ()

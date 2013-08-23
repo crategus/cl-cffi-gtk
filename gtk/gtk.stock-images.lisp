@@ -4,9 +4,10 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -524,7 +525,7 @@
 (defcfun ("gtk_icon_set_render_icon" gtk-icon-set-render-icon)
     (g-object gdk-pixbuf)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-6}
+ "@version{2013-8-21}
   @argument[icon-set]{a @class{gtk-icon-set} object}
   @argument[style]{a @class{gtk-style} object associated with @arg{widget},
     or @code{nil}}
@@ -544,13 +545,17 @@
     Use the function @fun{gtk-icon-set-render-icon-pixbuf} instead.
 
   @begin{short}
-    Renders an icon using the function @fun{gtk-style-render-icon}. In most
+    Renders an icon using the function @sym{gtk-style-render-icon}. In most
     cases, the function @fun{gtk-widget-render-icon} is better, since it
     automatically provides most of the arguments from the current widget
     settings. This function never returns @code{nil}; if the icon cannot be
-    rendered (perhaps because an image file fails to load), a default
+    rendered, perhaps because an image file fails to load, a default
     \"missing image\" icon will be returned instead.
   @end{short}
+  @see-class{gtk-icon-set}
+  @see-class{gtk-style}
+  @see-class{gdk-screen}
+  @see-function{gtk-widget-render-icon}
   @see-function{gtk-icon-set-render-icon-pixbuf}
   @see-function{gtk-style-render-icon}"
   (icon-set (g-boxed-foreign gtk-icon-set))

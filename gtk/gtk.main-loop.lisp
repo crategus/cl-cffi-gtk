@@ -107,7 +107,7 @@
 (defcfun ("gtk_get_default_language" gtk-get-default-language)
     (g-boxed-foreign pango-language)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-9}
+ "@version{2013-8-21}
   @return{The default language as a @class{pango-language} object.}
   @begin{short}
     Returns the @class{pango-language} object for the default language currently
@@ -124,8 +124,6 @@
 => #<PANGO-LANGUAGE {C7B3C51@}>
  (pango-language-to-string lang)
 => \"de-de\"
- (pango-language-get-sample-string lang)
-=> \"Zwölf Boxkämpfer jagen Viktor quer über den großen Sylter Deich.\"
     @end{pre}
   @end{dictionary}
   @see-class{pango-language}
@@ -343,7 +341,7 @@
 
 (defcfun ("gtk_events_pending" gtk-events-pending) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-3-9}
+ "@version{2013-8-21}
   @return{@em{True} if any events are pending, @code{nil} otherwise.}
   @short{Checks if any events are pending.}
 
@@ -359,7 +357,9 @@
 
  ;; ... computation continued
   @end{pre}
-  @end{dictionary}")
+  @end{dictionary}
+  @see-function{gtk-main-iteration}
+  @see-function{gtk-main-iteration-do}")
 
 (export 'gtk-events-pending)
 
@@ -371,7 +371,7 @@
 
 (defun gtk-main ()
  #+cl-cffi-gtk-documentation
- "@version{2013-7-30}
+ "@version{2013-8-21}
   @short{Runs the main loop until the function @fun{gtk-main-quit} is called.}
 
   You can nest calls to the function @sym{gtk-main}. In that case the function
@@ -381,11 +381,32 @@
   @subheading{Lisp Implementation}
     In the Lisp binding to GTK+ the function @sym{gtk-main} is not called
     directly but through the macro @fun{within-main-loop}. The macro
-    @fun{within-main-loop} does some additional bookkeeping, which is necessary
-    to run a Lisp program.
+    @fun{within-main-loop} does some additional bookkeeping, to run the Lisp
+    program in a separate thread.
+
+  @subheading{Example}
+    In this example an idle source is excecuted from the main loop. The
+    function @fun{gtk-main-quit} is called in the idle callback to quit the
+    main loop.
+    @begin{pre}
+(defun main-idle-cb ()
+  (format t \"~&Execute main-idle-cb in level ~A.~%\" (gtk-main-level))
+  ;; Quit the main loop.
+  (gtk-main-quit)
+  ;; Remove the idle source.
+  +g-source-remove+)
+
+(defun main ()
+  ;; Add an idle source to the main loop.
+  (g-idle-add #'main-idle-cb)
+  ;; Start the main loop.
+  ;; We return when gtk-main-quit is called in the idle callback.
+  (gtk-main))
+    @end{pre}
   @see-function{within-main-loop}
   @see-function{gtk-main-quit}"
-  (with-gdk-threads-lock (%gtk-main)))
+  (with-gdk-threads-lock
+    (%gtk-main)))
 
 (export 'gtk-main)
 
@@ -408,19 +429,21 @@
 
 (defcfun ("gtk_main_quit" gtk-main-quit) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-7-30}
+ "@version{2013-8-21}
   @begin{short}
     Makes the innermost invocation of the main loop return when it regains
     control.
   @end{short}
+  See the function @fun{gtk-main} for an example.
 
   @subheading{Lisp Implementation}
     In the Lisp binding to GTK+ the function @sym{gtk-main-quit} is not called,
     but the function @fun{leave-gtk-main}. The function @fun{leave-gtk-main}
-    does some additional bookkeeping, which is necessary to stop a Lisp program
-    safely.
-  @see-function{leave-gtk-main}
-  @see-function{gtk-main}")
+    does some additional bookkeeping, which is necessary to destroy the separate
+    thread for a Lisp program.
+  @see-function{gtk-main}
+  @see-function{within-main-loop}
+  @see-function{leave-gtk-main}")
 
 (export 'gtk-main-quit)
 
@@ -625,7 +648,7 @@
 
 (defcfun ("gtk_grab_add" gtk-grab-add) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-11}
+ "@version{2013-8-21}
   @argument[widget]{the widget that grabs keyboard and pointer events}
   @short{Makes @arg{widget} the current grabbed widget.}
   This means that interaction with other widgets in the same application is
@@ -634,7 +657,9 @@
 
   If @arg{widget} is not sensitive, it is not set as the current grabbed widget
   and this function does nothing.
-  @see-function{gtk-grab-remove}"
+  @see-function{gtk-grab-remove}
+  @see-function{gtk-grab-get-current}
+  @see-function{gtk-device-grab-add}"
   (widget (g-object gtk-widget)))
 
 (export 'gtk-grab-add)
@@ -645,10 +670,13 @@
 
 (defcfun ("gtk_grab_get_current" gtk-grab-get-current) (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-11}
+ "@version{2013-8-21}
   @return{The widget which currently has the grab or @code{nil} if no grab is
     active.}
-  Queries the current grab of the default window group.")
+  Queries the current grab of the default window group.
+  @see-function{gtk-grab-add}
+  @see-function{gtk-grab-remove}
+  @see-function{gtk-device-grab-add}")
 
 (export 'gtk-grab-get-current)
 
@@ -658,14 +686,15 @@
 
 (defcfun ("gtk_grab_remove" gtk-grab-remove) :void
  #+cl-cffi-gtk-documentation
- "@version{2012-3-11}
+ "@version{2012-8-21}
   @argument[widget]{the widget which gives up the grab}
   @short{Removes the grab from the given @arg{widget}.}
   You have to pair calls to the functions @fun{gtk-grab-add} and
   @sym{gtk-grab-remove}.
 
   If @arg{widget} does not have the grab, this function does nothing.
-  @see-function{gtk-grab-add}"
+  @see-function{gtk-grab-add}
+  @see-function{gtk-get-current-grab}"
   (widget g-object))
 
 (export 'gtk-grab-remove)
@@ -689,6 +718,8 @@
   unable to interact with @arg{widget} during the grab.
 
   Since 3.0
+  @see-function{gtk-grab-add}
+  @see-function{gtk-get-current-grab}
   @see-function{gtk-device-grab-remove}"
   (widget (g-object gtk-widget))
   (device (g-object gdk-device))
@@ -712,7 +743,8 @@
   @sym{gtk-device-grab-remove}.
 
   Since 3.0
-  @see-function{gtk-device-grab-add}"
+  @see-function{gtk-device-grab-add}
+  @see-function{gtk-get-current-grab}"
   (widget (g-object gtk-widget))
   (device (g-object gdk-device)))
 

@@ -4,9 +4,10 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -346,45 +347,48 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_clipboard_get_for_display ()
-;;;
-;;; GtkClipboard * gtk_clipboard_get_for_display (GdkDisplay *display,
-;;;                                               GdkAtom selection);
-;;;
-;;; Returns the clipboard object for the given selection. Cut/copy/paste menu
-;;; items and keyboard shortcuts should use the default clipboard, returned by
-;;; passing GDK_SELECTION_CLIPBOARD for selection. (GDK_NONE is supported as a
-;;; synonym for GDK_SELECTION_CLIPBOARD for backwards compatibility reasons.)
-;;; The currently-selected object or text should be provided on the clipboard
-;;; identified by GDK_SELECTION_PRIMARY. Cut/copy/paste menu items conceptually
-;;; copy the contents of the GDK_SELECTION_PRIMARY clipboard to the default
-;;; clipboard, i.e. they copy the selection to what the user sees as the
-;;; clipboard.
-;;;
-;;; (Passing GDK_NONE is the same as using gdk_atom_intern ("CLIPBOARD", FALSE).
-;;; See http://www.freedesktop.org/Standards/clipboards-spec for a detailed
-;;; discussion of the "CLIPBOARD" vs. "PRIMARY" selections under the X window
-;;; system. On Win32 the GDK_SELECTION_PRIMARY clipboard is essentially
-;;; ignored.)
-;;;
-;;; It's possible to have arbitrary named clipboards; if you do invent new
-;;; clipboards, you should prefix the selection name with an underscore (because
-;;; the ICCCM requires that nonstandard atoms are underscore-prefixed), and
-;;; namespace it as well. For example, if your application called "Foo" has a
-;;; special-purpose clipboard, you might call it "_FOO_SPECIAL_CLIPBOARD".
-;;;
-;;; display :
-;;;     the display for which the clipboard is to be retrieved or created
-;;;
-;;; selection :
-;;;     a GdkAtom which identifies the clipboard to use.
-;;;
-;;; Returns :
-;;;     the appropriate clipboard object. If no clipboard already exists, a new
-;;;     one will be created. Once a clipboard object has been created, it is
-;;;     persistent and, since it is owned by GTK+, must not be freed or unrefd.
-;;;
-;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_clipboard_get_for_display" gtk-clipboard-get-for-display)
+    (g-object gtk-clipboard)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-20}
+  @argument[display]{the display for which the clipboard is to be retrieved
+    or created}
+  @argument[selection]{a @symbol{gdk-atom} which identifies the clipboard to
+    use}
+  @begin{return}
+    The appropriate clipboard object. If no clipboard already exists, a new
+    one will be created. Once a clipboard object has been created, it is
+    persistent and, since it is owned by GTK+, must not be freed or unrefd.
+  @end{return}
+  @begin{short}
+    Returns the clipboard object for the given @arg{selection} of type
+    @symbol{gdk-atom}.
+  @end{short}
+  Cut/copy/paste menu items and keyboard shortcuts should use the default
+  clipboard, returned by @code{\"CLIPBOARD\"} for @arg{selection}.
+  @code{\"NONE\"} is supported as a synonym for @code{\"CLIPBOARD\"} for
+  backwards compatibility reasons. The currently-selected object or text should
+  be provided on the clipboard identified by @code{\"PRIMARY\"}.
+  Cut/copy/paste menu items conceptually copy the contents of the
+  @code{\"PRIMARY\"} clipboard to the default clipboard, i. e. they copy the
+  selection to what the user sees as the clipboard.
+
+  It is possible to have arbitrary named clipboards; if you do invent new
+  clipboards, you should prefix the selection name with an underscore, because
+  the ICCCM requires that nonstandard atoms are underscore-prefixed, and
+  namespace it as well. For example, if your application called \"Foo\" has a
+  special-purpose clipboard, you might call it \"_FOO_SPECIAL_CLIPBOARD\".
+
+  Since 2.2
+  @see-class{gtk-clipboard}
+  @see-symbol{gdk-atom}
+  @see-function{gtk-clipboard-get}"
+  (display (g-object gdk-display))
+  (selection gdk-atom-as-string))
+
+(export 'gtk-clipboard-get-for-display)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_clipboard_get_display ()

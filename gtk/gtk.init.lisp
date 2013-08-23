@@ -64,6 +64,9 @@
     (values *main-thread* *main-thread-level*))
 
   (defun join-gtk-main ()
+   #+cl-cffi-gtk-documentation
+   "@version{2013-8-20}
+    Wait until the GTK+ program terminates."
     (when *main-thread*
       (bt:join-thread *main-thread*)))
 

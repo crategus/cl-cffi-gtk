@@ -173,7 +173,7 @@
   The @class{gtk-cell-area} rendering cells. @br{}
   If no area is specified when creating the cell view with the function
   @fun{gtk-cell-view-new-with-context} a horizontally oriented
-  @fun{gtk-cell-area-box} will be used. @br{}
+  @class{gtk-cell-area-box} will be used. @br{}
   Since 3.0")
 
 #+cl-cffi-gtk-documentation

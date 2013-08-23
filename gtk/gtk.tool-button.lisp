@@ -4,9 +4,10 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -87,13 +88,13 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-tool-button 'type)
- "@version{2013-6-1}
+ "@version{2013-8-23}
   @begin{short}
     @sym{gtk-tool-button}'s are @class{gtk-tool-item}'s containing buttons.
   @end{short}
 
   Use the @fun{gtk-tool-button-new} function to create a new
-  @sym{gtk-tool-button}. Use the @fun{gtk-tool-button-new-with-stock} function
+  @sym{gtk-tool-button}. Use the function @fun{gtk-tool-button-new-with-stock}
   to create a @sym{gtk-tool-button} containing a stock item.
 
   The label of a @sym{gtk-tool-button} is determined by the properties
@@ -143,8 +144,8 @@
 (setf (documentation (atdoc:get-slot-from-name "icon-name" 'gtk-tool-button) 't)
  "The @code{\"icon-name\"} property of type @code{:string} (Read / Write) @br{}
   The name of the themed icon displayed on the item. This property only has an
-  effect if not overridden by @code{\"label\"}, @code{\"icon_widget\"} or
-  @code{\"stock_id\"} properties. @br{}
+  effect if not overridden by @code{\"label\"}, @code{\"icon-widget\"} or
+  @code{\"stock-id\"} properties. @br{}
   Default value: @code{nil}
   Since 2.8")
 
@@ -193,315 +194,418 @@
 (setf (gethash 'gtk-tool-button-icon-name atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tool-button-icon-name 'function)
- "@version{2013-3-27}
+ "@version{2013-8-23}
   Accessor of the slot @code{\"icon-name\"} of the @class{gtk-tool-button}
-  class.")
+  class.
+  @see-class{gtk-tool-button}
+  @see-function{gtk-tool-button-get-icon-name}
+  @see-function{gtk-tool-button-set-icon-name}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tool-button-icon-widget atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tool-button-icon-widget 'function)
- "@version{2013-3-27}
+ "@version{2013-8-23}
   Accessor of the slot @code{\"icon-widget\"} of the @class{gtk-tool-button}
-  class.")
+  class.
+  @see-class{gtk-tool-button}
+  @see-function{gtk-tool-button-get-icon-widget}
+  @see-function{gtk-tool-button-set-icon-widget}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tool-button-label atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tool-button-label 'function)
- "@version{2013-3-27}
-  Accessor of the slot @code{\"label\"} of the @class{gtk-tool-button}
-  class.")
+ "@version{2013-8-23}
+  Accessor of the slot @code{\"label\"} of the @class{gtk-tool-button} class.
+  @see-class{gtk-tool-button}
+  @see-function{gtk-tool-button-get-label}
+  @see-function{gtk-tool-button-set-label}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tool-button-label-widget atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tool-button-label-widget 'function)
- "@version{2013-3-27}
+ "@version{2013-8-23}
   Accessor of the slot @code{\"label-widget\"} of the @class{gtk-tool-button}
-  class.")
+  class.
+  @see-class{gtk-tool-button}
+  @see-function{gtk-tool-button-get-label-widget}
+  @see-function{gtk-tool-button-set-label-widget}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tool-button-stock-id atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tool-button-stock-id 'function)
- "@version{2013-3-27}
-  Accessor of the slot @code{\"stock-id\"} of the @class{gtk-tool-button}
-  class.")
+ "@version{2013-8-23}
+  Accessor of the slot @code{\"stock-id\"} of the @class{gtk-tool-button} class.
+  @see-class{gtk-tool-button}
+  @see-function{gtk-tool-button-get-stock-id}
+  @see-function{gtk-tool-button-set-stock-id}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tool-button-use-underline atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tool-button-use-underline 'function)
- "@version{2013-3-27}
+ "@version{2013-8-23}
   Accessor of the slot @code{\"use-underline\"} of the @class{gtk-tool-button}
-  class.")
+  class.
+  @see-class{gtk-tool-button}
+  @see-function{gtk-tool-button-get-use-underline}
+  @see-function{gtk-tool-button-set-use-underline}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_button_new ()
-;;;
-;;; GtkToolItem * gtk_tool_button_new (GtkWidget *icon_widget,
-;;;                                    const gchar *label);
-;;;
-;;; Creates a new GtkToolButton using icon_widget as contents and label as
-;;; label.
-;;;
-;;; label :
-;;;     a string that will be used as label, or NULL
-;;;
-;;; icon_widget :
-;;;     a widget that will be used as the button contents, or NULL
-;;;
-;;; Returns :
-;;;     A new GtkToolButton
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-tool-button-new (icon-widget label)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-23}
+  @argument[label]{a string that will be used as label, or @code{nil}}
+  @argument[icon-widget]{a widget that will be used as the button contents,
+    or @code{nil}}
+  @return{A new @class{gtk-tool-button} widget}
+  @begin{short}
+    Creates a new @class{gtk-tool-button} using @arg{icon-widget} as contents
+    and @arg{label} as label.
+  @end{short}
+
+  Since 2.4
+  @see-class{gtk-tool-button}
+  @see-function{gtk-tool-button-new-from-stock}"
+  (let ((tool-button (make-instance 'gtk-tool-button)))
+    (when icon-widget
+      (setf (gtk-tool-button-icon-widget tool-button) icon-widget))
+    (when label
+      (setf (gtk-tool-button-label tool-button) label))
+    tool-button))
+
+(export 'gtk-tool-button-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_button_new_from_stock ()
-;;;
-;;; GtkToolItem * gtk_tool_button_new_from_stock (const gchar *stock_id);
-;;;
-;;; Creates a new GtkToolButton containing the image and text from a stock item.
-;;; Some stock ids have preprocessor macros like GTK_STOCK_OK and
-;;; GTK_STOCK_APPLY.
-;;;
-;;; It is an error if stock_id is not a name of a stock item.
-;;;
-;;; stock_id :
-;;;     the name of the stock item
-;;;
-;;; Returns :
-;;;     A new GtkToolButton
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-tool-button-new-from-stock (stock-id)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-23}
+  @argument[stock-id]{the name of the stock item}
+  @return{A new @class{gtk-tool-button} widget.}
+  @begin{short}
+    Creates a new @class{gtk-tool-button} containing the image and text from a
+    stock item.
+  @end{short}
+
+  It is an error if @arg{stock-id} is not a name of a stock item.
+
+  Since 2.4
+  @see-class{gtk-tool-button}
+  @see-function{gtk-tool-button-new}"
+  (make-instance 'gtk-tool-button
+                 :stock-id stock-id))
+
+(export 'gtk-tool-button-new-from-stock)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_button_set_label ()
-;;;
-;;; void gtk_tool_button_set_label (GtkToolButton *button, const gchar *label);
-;;;
-;;; Sets label as the label used for the tool button. The "label" property only
-;;; has an effect if not overridden by a non-NULL "label_widget" property. If
-;;; both the "label_widget" and "label" properties are NULL, the label is
-;;; determined by the "stock_id" property. If the "stock_id" property is also
-;;; NULL, button will not have a label.
-;;;
-;;; button :
-;;;     a GtkToolButton
-;;;
-;;; label :
-;;;     a string that will be used as label, or NULL
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-tool-button-set-label))
+
+(defun gtk-tool-button-set-label (button label)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-23}
+  @argument[button]{a @class{gtk-tool-button} widget}
+  @argument[label]{a string that will be used as label, or @code{nil}}
+  @begin{short}
+    Sets @arg{label} as the label used for the tool button.
+  @end{short}
+  The @code{\"label\"} property only has an effect if not overridden by a
+  non-@code{nil} @code{\"label-widget\"} property. If both the
+  @code{\"label-widget\"} and @code{\"label\"} properties are @code{nil}, the
+  label is determined by the @code{\"stock-id\"} property. If the
+  @code{\"stock-id\"} property is also @code{nil}, @arg{button} will not have a
+  label.
+
+  Since 2.4
+  @see-class{gtk-tool-button}
+  @see-function{gtk-tool-button-get-label}"
+  (setf (gtk-tool-button-label button) label))
+
+(export 'gtk-tool-button-set-label)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_button_get_label ()
-;;;
-;;; const gchar * gtk_tool_button_get_label (GtkToolButton *button);
-;;;
-;;; Returns the label used by the tool button, or NULL if the tool button
-;;; doesn't have a label. or uses a the label from a stock item. The returned
-;;; string is owned by GTK+, and must not be modified or freed.
-;;;
-;;; button :
-;;;     a GtkToolButton
-;;;
-;;; Returns :
-;;;     The label, or NULL
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-tool-button-get-label))
+
+(defun gtk-tool-button-get-label (button)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-23}
+  @argument[button]{a @class{gtk-tool-button} widget}
+  @return{The label, or @code{nil}.}
+  @begin{short}
+    Returns the label used by the tool button, or @code{nil} if the tool button
+    does not have a label or uses a label from a stock item.
+  @end{short}
+
+  Since 2.4
+  @see-class{gtk-tool-button}
+  @see-function{gtk-tool-button-set-label}"
+  (gtk-tool-button-label button))
+
+(export 'gtk-tool-button-get-label)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_button_set_use_underline ()
-;;;
-;;; void gtk_tool_button_set_use_underline (GtkToolButton *button,
-;;;                                         gboolean use_underline);
-;;;
-;;; If set, an underline in the label property indicates that the next character
-;;; should be used for the mnemonic accelerator key in the overflow menu. For
-;;; example, if the label property is "_Open" and use_underline is TRUE, the
-;;; label on the tool button will be "Open" and the item on the overflow menu
-;;; will have an underlined 'O'.
-;;;
-;;; Labels shown on tool buttons never have mnemonics on them; this property
-;;; only affects the menu item on the overflow menu.
-;;;
-;;; button :
-;;;     a GtkToolButton
-;;;
-;;; use_underline :
-;;;     whether the button label has the form "_Open"
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-tool-button-set-use-underline))
+
+(defun gtk-tool-button-set-use-underline (button use-underline)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-23}
+  @argument[button]{a @class{gtk-tool-button} widget}
+  @argument[use-underline]{whether the button label has the form \"_Open\"}
+  @begin{short}
+    If set, an underline in the label property indicates that the next character
+    should be used for the mnemonic accelerator key in the overflow menu.
+  @end{short}
+  For example, if the label property is \"_Open\" and @arg{use-underline} is
+  @em{true}, the label on the tool button will be \"Open\" and the item on the
+  overflow menu will have an underlined 'O'.
+
+  Labels shown on tool buttons never have mnemonics on them; this property
+  only affects the menu item on the overflow menu.
+
+  Since 2.4
+  @see-class{gtk-tool-button}
+  @see-function{gtk-tool-button-get-use-underline}"
+  (setf (gtk-tool-button-use-underline button) use-underline))
+
+(export 'gtk-tool-button-set-use-underline)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_button_get_use_underline ()
-;;;
-;;; gboolean gtk_tool_button_get_use_underline (GtkToolButton *button);
-;;;
-;;; Returns whether underscores in the label property are used as mnemonics on
-;;; menu items on the overflow menu. See gtk_tool_button_set_use_underline().
-;;;
-;;; button :
-;;;     a GtkToolButton
-;;;
-;;; Returns :
-;;;     TRUE if underscores in the label property are used as mnemonics on menu
-;;;     items on the overflow menu.
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-tool-button-get-use-underline))
+
+(defun gtk-tool-button-get-use-underline (button)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-23}
+  @argument[button]{a @class{gtk-tool-button} widget}
+  @begin{return}
+    @em{True} if underscores in the label property are used as mnemonics on menu
+    items on the overflow menu.
+  @end{return}
+  @begin{short}
+    Returns whether underscores in the label property are used as mnemonics on
+    menu items on the overflow menu.
+  @end{short}
+  See the function @fun{gtk-tool-button-set-use-underline}.
+
+  Since 2.4
+  @see-class{gtk-tool-button}
+  @see-function{gtk-tool-button-set-use-underline}"
+  (gtk-tool-button-use-underline button))
+
+(export 'gtk-tool-button-get-use-underline)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_button_set_stock_id ()
-;;;
-;;; void gtk_tool_button_set_stock_id (GtkToolButton *button,
-;;;                                    const gchar *stock_id);
-;;;
-;;; Sets the name of the stock item. See gtk_tool_button_new_from_stock(). The
-;;; stock_id property only has an effect if not overridden by non-NULL "label"
-;;; and "icon_widget" properties.
-;;;
-;;; button :
-;;;     a GtkToolButton
-;;;
-;;; stock_id :
-;;;     a name of a stock item, or NULL
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-tool-button-set-stock-id))
+
+(defun gtk-tool-button-set-stock-id (button stock-id)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-23}
+  @argument[button]{a @class{gtk-tool-button} widget}
+  @argument[stock-id]{a name of a stock item, or @code{nil}}
+  @begin{short}
+    Sets the name of the stock item.
+  @end{short}
+  See the function @fun{gtk-tool-button-new-from-stock}. The @code{\"stock-id\"}
+  property only has an effect if not overridden by non-@code{nil}
+  @code{\"label\"} and @code{\"icon-widget\"} properties.
+
+  Since 2.4
+  @see-class{gtk-tool-button}
+  @see-function{gtk-tool-button-get-stock-id}"
+  (setf (gtk-tool-button-stock-id button) stock-id))
+
+(export 'gtk-tool-button-set-stock-id)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_button_get_stock_id ()
-;;;
-;;; const gchar * gtk_tool_button_get_stock_id (GtkToolButton *button);
-;;;
-;;; Returns the name of the stock item. See gtk_tool_button_set_stock_id(). The
-;;; returned string is owned by GTK+ and must not be freed or modifed.
-;;;
-;;; button :
-;;;     a GtkToolButton
-;;;
-;;; Returns :
-;;;     the name of the stock item for button.
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-tool-button-get-stock-id))
+
+(defun gtk-tool-button-get-stock-id (button)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-23}
+  @argument[button]{a @class{gtk-tool-button} widget}
+  @return{The name of the stock item for @arg{button}.}
+  @begin{short}
+    Returns the name of the stock item.
+  @end{short}
+  See the function @fun{gtk-tool-button-set-stock-id}.
+
+  Since 2.4
+  @see-class{gtk-tool-button}
+  @see-function{gtk-tool-button-set-stock-id}"
+  (gtk-tool-button-stock-id button))
+
+(export 'gtk-tool-button-get-stock-id)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_button_set_icon_name ()
-;;;
-;;; void gtk_tool_button_set_icon_name (GtkToolButton *button,
-;;;                                     const gchar *icon_name);
-;;;
-;;; Sets the icon for the tool button from a named themed icon. See the docs for
-;;; GtkIconTheme for more details. The "icon_name" property only has an effect
-;;; if not overridden by non-NULL "label", "icon_widget" and "stock_id"
-;;; properties.
-;;;
-;;; button :
-;;;     a GtkToolButton
-;;;
-;;; icon_name :
-;;;     the name of the themed icon
-;;;
-;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-tool-button-set-icon-name))
+
+(defun gtk-tool-button-set-icon-name (button icon-name)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-23}
+  @argument[button]{a @class{gtk-tool-button} widget}
+  @argument[icon-name]{the name of the themed icon}
+  @begin{short}
+    Sets the icon for the tool button from a named themed icon.
+  @end{short}
+  See the docs for @class{gtk-icon-theme} for more details. The
+  @code{\"icon-name\"} property only has an effect if not overridden by
+  non-@code{nil} @code{\"label\"}, @code{\"icon-widget\"} and
+  @code{\"stock-id\"} properties.
+
+  Since 2.8
+  @see-class{gtk-tool-button}
+  @see-function{gtk-tool-button-get-icon-name}"
+  (setf (gtk-tool-button-icon-name button) icon-name))
+
+(export 'gtk-tool-button-set-icon-name)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_button_get_icon_name ()
-;;;
-;;; const gchar * gtk_tool_button_get_icon_name (GtkToolButton *button);
-;;;
-;;; Returns the name of the themed icon for the tool button, see
-;;; gtk_tool_button_set_icon_name().
-;;;
-;;; button :
-;;;     a GtkToolButton
-;;;
-;;; Returns :
-;;;     the icon name or NULL if the tool button has no themed icon
-;;;
-;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-tool-button-get-icon-name))
+
+(defun gtk-tool-button-get-icon-name (button)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-23}
+  @argument[button]{a @class{gtk-tool-button} widget}
+  @return{The icon name or @code{nil} if the tool button has no themed icon.}
+  @begin{short}
+    Returns the name of the themed icon for the tool button.
+  @end{short}
+  See the function @fun{gtk-tool-button-set-icon-name}.
+
+  Since 2.8
+  @see-class{gtk-tool-button}
+  @see-function{gtk-tool-button-set-icon-name}"
+  (gtk-tool-button-icon-name button))
+
+(export 'gtk-tool-button-get-icon-name)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_button_set_icon_widget ()
-;;;
-;;; void gtk_tool_button_set_icon_widget (GtkToolButton *button,
-;;;                                       GtkWidget *icon_widget);
-;;;
-;;; Sets icon as the widget used as icon on button. If icon_widget is NULL the
-;;; icon is determined by the "stock_id" property. If the "stock_id" property is
-;;; also NULL, button will not have an icon.
-;;;
-;;; button :
-;;;     a GtkToolButton
-;;;
-;;; icon_widget :
-;;;     the widget used as icon, or NULL. [allow-none]
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-tool-button-set-icon-widget))
+
+(defun gtk-tool-button-set-icon-widget (button icon-widget)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-23}
+  @argument[button]{a @class{gtk-tool-button} widget}
+  @argument[icon-widget]{the widget used as icon, or @code{nil}}
+  @begin{short}
+    Sets icon as the widget used as icon on @arg{button}.
+  @end{short}
+  If @arg{icon-widget} is @code{nil} the icon is determined by the
+  @code{\"stock-id\"} property. If the @code{\"stock-id\"} property is also
+  @code{nil}, @arg{button} will not have an icon.
+
+  Since 2.4
+  @see-class{gtk-tool-button}
+  @see-function{gtk-tool-button-get-icon-widget}"
+  (setf (gtk-tool-button-icon-widget button) icon-widget))
+
+(export 'gtk-tool-button-set-icon-widget)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_button_get_icon_widget ()
-;;;
-;;; GtkWidget * gtk_tool_button_get_icon_widget (GtkToolButton *button);
-;;;
-;;; Return the widget used as icon widget on button. See
-;;; gtk_tool_button_set_icon_widget().
-;;;
-;;; button :
-;;;     a GtkToolButton
-;;;
-;;; Returns :
-;;;     The widget used as icon on button, or NULL
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-tool-button-get-icon-widget))
+
+(defun gtk-tool-button-get-icon-widget (button)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-23}
+  @argument[button]{a @class{gtk-tool-button} widget}
+  @return{The widget used as icon on @arg{button}, or @code{nil}.}
+  @begin{short}
+    Return the widget used as icon widget on @arg{button}.
+  @end{short}
+  See the function @fun{gtk-tool-button-set-icon-widget}.
+
+  Since 2.4
+  @see-class{gtk-tool-button}
+  @see-function{gtk-tool-button-set-icon-widget}"
+  (gtk-tool-button-icon-widget button))
+
+(export 'gtk-tool-button-get-icon-widget)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_button_set_label_widget ()
-;;;
-;;; void gtk_tool_button_set_label_widget (GtkToolButton *button,
-;;;                                        GtkWidget *label_widget);
-;;;
-;;; Sets label_widget as the widget that will be used as the label for button.
-;;; If label_widget is NULL the "label" property is used as label. If "label" is
-;;; also NULL, the label in the stock item determined by the "stock_id" property
-;;; is used as label. If "stock_id" is also NULL, button does not have a label.
-;;;
-;;; button :
-;;;     a GtkToolButton
-;;;
-;;; label_widget :
-;;;     the widget used as label, or NULL. [allow-none]
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-tool-button-set-label-widget))
+
+(defun gtk-tool-button-set-label-widget (button label-widget)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-23}
+  @argument[button]{a @class{gtk-tool-button} widget}
+  @argument[label-widget]{the widget used as label, or @code{nil}}
+  @begin{short}
+    Sets @arg{label-widget} as the widget that will be used as the label for
+    @arg{button}.
+  @end{short}
+  If @arg{label-widget} is @code{nil} the @code{\"label\"} property is used as
+  label. If @code{\"label\"} is also @code{nil}, the label in the stock item
+  determined by the @code{\"stock-id\"} property is used as label. If
+  @code{\"stock-id\"} is also @code{nil}, @arg{button} does not have a label.
+
+  Since 2.4
+  @see-class{gtk-tool-button}
+  @see-function{gtk-tool-button-get-label-widget}"
+  (setf (gtk-tool-button-label-widget button) label-widget))
+
+(export 'gtk-tool-button-get-label-widget)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_button_get_label_widget ()
-;;;
-;;; GtkWidget * gtk_tool_button_get_label_widget (GtkToolButton *button);
-;;;
-;;; Returns the widget used as label on button. See
-;;; gtk_tool_button_set_label_widget().
-;;;
-;;; button :
-;;;     a GtkToolButton
-;;;
-;;; Returns :
-;;;     The widget used as label on button, or NULL
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-tool-button-get-label-widget))
+
+(defun gtk-tool-button-get-label-widget (button)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-23}
+  @argument[button]{a @class{gtk-tool-button} widget}
+  @return{The widget used as label on @arg{button}, or @code{nil}.}
+  @begin{short}
+    Returns the widget used as label on @arg{button}.
+  @end{short}
+  See the function @fun{gtk-tool-button-set-label-widget}.
+
+  Since 2.4
+  @see-class{gtk-tool-button}
+  @see-function{gtk-tool-button-set-label-widget}"
+  (gtk-tool-button-label-widget button))
+
+(export 'gtk-tool-button-get-label-widget)
 
 ;;; --- End of file gtk.tool-button.lisp ---------------------------------------

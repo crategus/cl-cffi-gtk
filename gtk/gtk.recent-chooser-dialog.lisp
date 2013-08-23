@@ -79,7 +79,7 @@
     @sym{gtk-recent-chooser-dialog} is a dialog box suitable for displaying the
     recently used documents. This widgets works by putting a
     @class{gtk-recent-chooser-widget} inside a @class{gtk-dialog}. It exposes
-    the @class{gtk-recent-chooser-iface} interface, so you can use all the
+    the @class{gtk-recent-chooser} interface, so you can use all the
     @class{gtk-recent-chooser} functions on the recent chooser dialog as
     well as those for @class{gtk-dialog}.
   @end{short}

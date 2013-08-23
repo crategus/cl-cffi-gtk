@@ -286,7 +286,21 @@
 ;;; CairoContext represents a cairo-t, but we need a boxed type in GTK+.
 
 (define-g-boxed-opaque cairo-context "CairoContext"
-  :alloc (error "CairoContext can not be created from Lisp side"))
+  :alloc (error "CairoContext can not be created from Lisp side."))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'cairo-context atdoc:*class-name-alias*) "CStruct"
+      (documentation 'cairo-context 'type)
+ "@version{2013-8-20}
+  @begin{short}
+    @sym{cairo-context} represents the type @symbol{cairo-t} in GTK+.
+  @end{short}
+  See the documentation of @symbol{cairo-t} for more information.
+  @begin{pre}
+(define-g-boxed-opaque cairo-context \"CairoContext\"
+  :alloc (error \"CairoContext can not be created from Lisp side.\"))
+  @end{pre}
+  @see-symbol{cairo-t}")
 
 (export (boxed-related-symbols 'cairo-context))
 
@@ -2341,7 +2355,8 @@
   @see-function{gtk-widget-set-can-focus}")
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-widget-composite-child atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gtk-widget-composite-child atdoc:*function-name-alias*)
+      "Accessor"
       (documentation 'gtk-widget-composite-child 'function)
  "@version{2013-7-31}
   @begin{short}
@@ -2354,7 +2369,8 @@
   @see-function{gtk-widget-push-composite-child}")
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-widget-double-buffered atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gtk-widget-double-buffered atdoc:*function-name-alias*)
+      "Accessor"
       (documentation 'gtk-widget-double-buffered 'function)
  "@version{2012-7-31}
   @begin{short}
@@ -2448,7 +2464,8 @@
   @see-function{gtk-widget-set-has-tooltip}")
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-widget-height-request atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gtk-widget-height-request atdoc:*function-name-alias*)
+      "Accessor"
       (documentation 'gtk-widget-height-request 'function)
  "@version{2013-7-31}
   @begin{short}
@@ -2485,7 +2502,8 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-widget-is-focus atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-widget-is-focus 'function)
- "@argument[widget]{a @class{gtk-widget} object}
+ "@version{2013-8-20}
+  @argument[widget]{a @class{gtk-widget} object}
   @return{@em{True} if the @arg{widget} is the focus widget.}
   @begin{short}
     Determines if the @arg{widget} is the focus widget within its toplevel.
@@ -2624,7 +2642,8 @@
   @see-function{gtk-widget-set-parent}")
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-widget-receives-default atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gtk-widget-receives-default atdoc:*function-name-alias*)
+      "Accessor"
       (documentation 'gtk-widget-receives-default 'function)
  "@version{2013-8-1}
   @begin{short}
@@ -2665,7 +2684,8 @@
   @see-class{gtk-style-context}")
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-widget-tooltip-markup atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gtk-widget-tooltip-markup atdoc:*function-name-alias*)
+      "Accessor"
       (documentation 'gtk-widget-tooltip-markup 'function)
  "@version{2013-8-1}
   @begin{short}
@@ -6001,7 +6021,7 @@
            (parse-g-param-spec g-param-spec))
       (g-type-class-unref class))))
 
-(export 'gtk-widget-style-property-info)
+;(export 'gtk-widget-style-property-info)
 
 ;;; ----------------------------------------------------------------------------
 
@@ -6011,7 +6031,7 @@
                                                    property-name)))
     (param-spec-type property-info)))
 
-(export 'gtk-widget-style-property-type)
+;(export 'gtk-widget-style-property-type)
 
 ;;; ----------------------------------------------------------------------------
 
@@ -6029,7 +6049,7 @@
     (prog1 (%gtk-widget-style-get-property widget property-name gvalue)
       (g-value-unset gvalue))))
 
-(export 'gtk-widget-style-property-value)
+;(export 'gtk-widget-style-property-value)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_style_get_valist ()
@@ -6303,12 +6323,11 @@
 (defcfun ("gtk_widget_get_clipboard" gtk-widget-get-clipboard)
     (g-object gtk-clipboard)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-6}
-  @argument[widget]{a @class{gtk-widget} instance}
+ "@version{2013-8-20}
+  @argument[widget]{a @class{gtk-widget} object}
   @argument[selection]{a @symbol{gdk-atom} which identifies the clipboard to
-    use. @code{GDK_SELECTION_CLIPBOARD} gives the default clipboard. Another
-    common value is @code{GDK_SELECTION_PRIMARY}, which gives the primary X
-    selection.}
+    use. @code{\"CLIPBOARD\"} gives the default clipboard. Another common value
+    is @code{\"PRIMARY\"}, which gives the primary X selection.}
   @return{The appropriate clipboard object. If no clipboard already exists, a
     new one will be created. Once a clipboard object has been created, it is
     persistent for all time.}
@@ -6318,7 +6337,10 @@
   @arg{widget} must have a @class{gdk-display} associated with it, so must be
   attached to a toplevel window.
 
-  Since 2.2"
+  Since 2.2
+  @see-class{gtk-widget}
+  @see-class{gtk-clipboard}
+  @see-symbol{gdk-atom}"
   (widget (g-object gtk-widget))
   (selection gdk-atom-as-string))
 
