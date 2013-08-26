@@ -686,7 +686,7 @@
 
 (defcfun ("gtk_grab_remove" gtk-grab-remove) :void
  #+cl-cffi-gtk-documentation
- "@version{2012-8-21}
+ "@version{2012-8-25}
   @argument[widget]{the widget which gives up the grab}
   @short{Removes the grab from the given @arg{widget}.}
   You have to pair calls to the functions @fun{gtk-grab-add} and
@@ -694,7 +694,7 @@
 
   If @arg{widget} does not have the grab, this function does nothing.
   @see-function{gtk-grab-add}
-  @see-function{gtk-get-current-grab}"
+  @see-function{gtk-grab-get-current}"
   (widget g-object))
 
 (export 'gtk-grab-remove)
@@ -705,7 +705,7 @@
 
 (defcfun ("gtk_device_grab_add" gtk-device-grab-add) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-5}
+ "@version{2013-8-25}
   @argument[widget]{a @class{gtk-widget} object}
   @argument[device]{a @class{gdk-device} object to grab on}
   @argument[block-others]{@em{true} to prevent other devices to interact with
@@ -719,7 +719,7 @@
 
   Since 3.0
   @see-function{gtk-grab-add}
-  @see-function{gtk-get-current-grab}
+  @see-function{gtk-grab-get-current}
   @see-function{gtk-device-grab-remove}"
   (widget (g-object gtk-widget))
   (device (g-object gdk-device))
@@ -733,7 +733,7 @@
 
 (defcfun ("gtk_device_grab_remove" gtk-device-grab-remove) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-4-22}
+ "@version{2013-8-25}
   @argument[widget]{a @class{gtk-widget} object}
   @argument[device]{a @class{gdk-device} object}
   @begin{short}
@@ -744,7 +744,7 @@
 
   Since 3.0
   @see-function{gtk-device-grab-add}
-  @see-function{gtk-get-current-grab}"
+  @see-function{gtk-grab-get-current}"
   (widget (g-object gtk-widget))
   (device (g-object gdk-device)))
 
