@@ -159,7 +159,7 @@
 
   Since 2.24
   @see-class{gtk-combo-box-text}
-  @see-function{gtk-combo-text-new}"
+  @see-function{gtk-combo-box-text-new}"
   (make-instance 'gtk-combo-box-text
                  :has-entry t))
 
@@ -308,7 +308,7 @@
   with a position of 0.
 
   Since 2.24
-  @see-class{gtk-box-combo-text}
+  @see-class{gtk-combo-box-text}
   @see-function{gtk-combo-box-text-insert-text}
   @see-function{gtk-combo-box-text-append-text}"
   (combo-box (g-object gtk-combo-box-text))
@@ -337,7 +337,7 @@
   a @code{nil} ID string.
 
   Since 2.24
-  @see-class{gtk-combo-text}
+  @see-class{gtk-combo-box-text}
   @see-function{gtk-combo-box-text-insert}"
   (combo-box (g-object gtk-combo-box-text))
   (position :int)
@@ -359,7 +359,7 @@
   @end{short}
 
   Since 2.24
-  @see-class{gtk-combo-text}
+  @see-class{gtk-combo-box-text}
   @see-function{gtk-combo-box-text-remove-all}"
   (combo-box (g-object gtk-combo-box-text))
   (position :int))
@@ -380,8 +380,8 @@
 
   Since 3.0
   @see-class{gtk-combo-box-text}
-  @see-function{gtk-combo-text-remove}"
-  (combo-box (g-object gtk-combo-text)))
+  @see-function{gtk-combo-box-text-remove}"
+  (combo-box (g-object gtk-combo-box-text)))
 
 (export 'gtk-combo-box-text-remove-all)
 
@@ -405,7 +405,7 @@
   contents which will not necessarily be an item from the list.
 
   Since 2.24
-  @see-class{gtk-combo-text}"
+  @see-class{gtk-combo-box-text}"
   (combo-box (g-object gtk-combo-box-text)))
 
 (export 'gtk-combo-box-text-get-active-text)
