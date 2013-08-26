@@ -399,15 +399,16 @@
 
 (defcfun ("gdk_drop_finish" gdk-drop-finish) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-4-7}
-  @argument[context]{a @class{gtk-drag-context} object}
+ "@version{2013-8-25}
+  @argument[context]{a @class{gdk-drag-context} object}
   @argument[success]{@em{true} if the data was successfully received}
   @argument[time]{the timestamp for this operation}
   @begin{short}
     Ends the drag operation after a drop.
   @end{short}
 
-  This function is called by the drag destination."
+  This function is called by the drag destination.
+  @see-class{gdk-drag-context}"
   (context (g-object gdk-drag-context))
   (success :boolean)
   (time :uint32))
