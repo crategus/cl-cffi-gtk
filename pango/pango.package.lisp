@@ -92,8 +92,8 @@
     @begin[Glyph Storage]{subsection}
       Structures for storing information about glyphs.
 
-      @about-function{PANGO_SCALE}
-      @about-function{PANGO_PIXELS}
+      @about-variable{+pango-scale+}
+      @about-function{pango-pixels}
       @about-function{PANGO_PIXELS_FLOOR}
       @about-function{PANGO_PIXELS_CEIL}
       @about-function{PANGO_UNITS_ROUND}

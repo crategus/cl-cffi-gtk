@@ -141,32 +141,41 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; PANGO_SCALE
-;;;
-;;; #define PANGO_SCALE 1024
-;;;
-;;; The PANGO_SCALE macro represents the scale between dimensions used for Pango
-;;; distances and device units. (The definition of device units is dependent on
-;;; the output device; it will typically be pixels for a screen, and points for
-;;; a printer.) PANGO_SCALE is currently 1024, but this may be changed in the
-;;; future.
-;;;
-;;; When setting font sizes, device units are always considered to be points (as
-;;; in "12 point font"), rather than pixels.
 ;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash '+pango-scale+ atdoc:*variable-name-alias*) "Constant")
+
+(defconstant +pango-scale+ 1024
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-27}
+  @variable-value{1024}
+  @begin{short}
+    The @sym{+pange-scale+} constant represents the scale between dimensions
+    used for Pango distances and device units.
+  @end{short}
+  The definition of device units is dependent on the output device; it will
+  typically be pixels for a screen, and points for a printer.
+  @sym{+pango-scale+} is currently 1024, but this may be changed in the future.
+
+  When setting font sizes, device units are always considered to be points as
+  in \"12 point font\", rather than pixels.")
+
+(export '+pango-scale+)
 
 ;;; ----------------------------------------------------------------------------
 ;;; PANGO_PIXELS()
-;;;
-;;; #define PANGO_PIXELS(d) (((int)(d) + 512) >> 10)
-;;;
-;;; Converts a dimension to device units by rounding.
-;;;
-;;; d :
-;;;     a dimension in Pango units.
-;;;
-;;; Returns :
-;;;     rounded dimension in device units.
 ;;; ----------------------------------------------------------------------------
+
+(defun pango-pixels (d)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-27}
+  @argument[d]{a dimension in Pango units}
+  @return{Rounded dimension in device units.}
+  Converts a dimension to device units by rounding."
+  (ash (+ d 512) -10)) ; #define PANGO_PIXELS(d) (((int)(d) + 512) >> 10)
+
+(export 'pango-pixels)
 
 ;;; ----------------------------------------------------------------------------
 ;;; PANGO_PIXELS_FLOOR()
