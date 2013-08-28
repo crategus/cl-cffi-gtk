@@ -1401,7 +1401,7 @@
   @see-function{cairo-fill}
   @see-function{cairo-set-fill-rule}
   @see-function{cairo-save}
-  @see-function{cairo-restor}
+  @see-function{cairo-restore}
   @see-function{cairo-reset-clip}"
   (cr (:pointer (:struct cairo-t))))
 
