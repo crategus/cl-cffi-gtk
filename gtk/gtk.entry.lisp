@@ -2190,13 +2190,13 @@
   (x (:pointer :int))
   (y (:pointer :int)))
 
-(defun gtk-entry-get-layout-offset (entry)
+(defun gtk-entry-get-layout-offsets (entry)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-28}
+ "@version{2013-8-27}
   @argument[entry]{a @class{gtk-entry} widget}
   @begin{return}
-    @code{x} -- X offset of layout, or @code{nil}@br{}
-    @code{y} -- Y offset of layout, or @code{nil}
+    @code{x} -- x offset of layout, or @code{nil} @br{}
+    @code{y} -- y offset of layout, or @code{nil}
   @end{return}
   @begin{short}
     Obtains the position of the @class{pango-layout} used to render text in the
@@ -2212,12 +2212,19 @@
   Note that as the user scrolls around in the entry the offsets will change;
   you will need to connect to the \"notify::scroll-offset\" signal to track
   this. Remember when using the @class{pango-layout} functions you need to
-  convert to and from pixels using @code{PANGO_PIXELS()} or @code{PANGO_SCALE}.
+  convert to and from pixels using the function @fun{pango-pixels} or
+  the constant @var{+pango-scale+}.
 
   Keep in mind that the layout text may contain a preedit string, so the
   functions @fun{gtk-entry-layout-index-to-text-index} and
   @fun{gtk-entry-text-index-to-layout-index} are needed to convert byte indices
-  in the layout to byte indices in the entry contents."
+  in the layout to byte indices in the entry contents.
+  @see-class{gtk-entry}
+  @see-class{pango-layout}
+  @see-function{gtk-entry-layout-index-to-text-index}
+  @see-function{gtk-entry-text-index-to-layout-index}
+  @see-function{pango-pixels}
+  @see-variable{+pango-scale+}"
   (with-foreign-objects ((x :int) (y :int))
     (%gtk-entry-get-layout-offsets entry x y)
     (values (mem-ref x :int)

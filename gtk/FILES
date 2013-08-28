@@ -192,7 +192,7 @@ GTK+ Widgets and Objects
     gtk.file-chooser.lisp            - GtkFileChooser              - GTK+ 3.6.4&
     gtk.file-chooser-button.lisp     - GtkFileChooserButton        - GTK+ 3.6.4
     gtk.file-chooser-dialog.lisp     - GtkFileChooserDialog        - GTK+ 3.6.4
-    gtk.file-chooser-widget.lisp     - GtkFileChooserWidget        - GTK+ 3.6.4&
+    gtk.file-chooser-widget.lisp     - GtkFileChooserWidget        - GTK+ 3.6.4
     gtk.file-filter.lisp             - GtkFileFilter               - GTK+ 3.6.4&
 
     gtk.font-chooser.lisp            - GtkFontChooser              - GTK+ 3.6.4

@@ -2259,7 +2259,7 @@
   On Windows, this function always works, since there is no window manager
   policy involved.
   @see-class{gtk-window}
-  @see-function{gtk-window-show}
+  @see-function{gtk-widget-show}
   @see-function{gtk-window-get-decorated}"
   (setf (gtk-window-decorated window) setting))
 
@@ -2284,7 +2284,7 @@
   @end{short}
   Depending on the system, this function may not have any effect when called on
   a window that is already visible, so you should call it before calling
-  the function @fun{gtk-window-show}.
+  the function @fun{gtk-widget-show}.
 
   On Windows, this function always works, since there is no window manager
   policy involved.
@@ -2292,7 +2292,7 @@
   Since 2.10
   @see-class{gtk-window}
   @see-function{gtk-window-get-deletable}
-  @see-function{gtk-window-show}"
+  @see-function{gtk-widget-show}"
   (setf (gtk-window-deletable window) setting))
 
 (export 'gtk-window-set-deletable)

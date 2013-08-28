@@ -314,7 +314,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-requisition 'type)
- "@version{2013-4-11}
+ "@version{2013-8-27}
   @begin{short}
     A @sym{gtk-requisition} represents the desired size of a widget.
   @end{short}
@@ -337,23 +337,9 @@
 (export (boxed-related-symbols 'gtk-requisition))
 
 ;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-requisition-width atdoc:*function-name-alias*) "Accessor"
-      (documentation 'gtk-requisition-width 'function)
- "@version{2013-4-11}
-  Accessor of the slot @arg{width} of the @class{gtk-requisition} structure.
-  @see-class{gtk-requisition}")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-requisition-height atdoc:*function-name-alias*) "Accessor"
-      (documentation 'gtk-requisition-height 'function)
- "@version{2013-4-11}
-  Accessor of the slot @arg{height} of the @class{gtk-requisition} structure.
-  @see-class{gtk-requisition}")
-
+;;;
+;;; Constructors of GtkRequisition
+;;;
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
@@ -362,12 +348,30 @@
   Creates a @class{gtk-requisition} structure.
   @see-class{gtk-requisition}")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'copy-gtk-requisition 'function)
  "@version{2013-4-11}
   Copy constructor of a @class{gtk-requisition} structure.
+  @see-class{gtk-requisition}")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors of GtkRequistion
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-requisition-width atdoc:*function-name-alias*) "Accessor"
+      (documentation 'gtk-requisition-width 'function)
+ "@version{2013-8-27}
+  Accessor of the slot @arg{width} of the @class{gtk-requisition} structure.
+  @see-class{gtk-requisition}")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-requisition-height atdoc:*function-name-alias*) "Accessor"
+      (documentation 'gtk-requisition-height 'function)
+ "@version{2013-8-27}
+  Accessor of the slot @arg{height} of the @class{gtk-requisition} structure.
   @see-class{gtk-requisition}")
 
 ;;; ----------------------------------------------------------------------------
@@ -382,7 +386,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-allocation 'type)
- "@version{2013-4-11}
+ "@version{2013-8-27}
   @begin{short}
     A @sym{gtk-allocation} of a widget represents a region which has been
     allocated to the widget by its parent.
@@ -406,21 +410,29 @@
 (export (boxed-related-symbols 'gtk-allocation))
 
 ;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation 'make-gtk-allocation 'function)
- "@version{2013-4-11}
-  Creates a @class{gtk-allocation} structure.
-  @see-class{gtk-allocation}")
-
+;;;
+;;; Constructors for GtkAllocation
+;;;
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (documentation 'copy-gtk-allocation 'function)
- "@version{2013-4-11}
-  Copy constructor of a @class{gtk-allocation} structure.
-  @see-class{gtk-allocation}")
+(setf (documentation 'make-gtk-allocation 'function)
+ "@version{2013-8-27}
+  Creates a @class{gtk-allocation} structure.
+  @see-class{gtk-allocation}
+  @see-function{copy-gtk-allocation}")
 
+#+cl-cffi-gtk-documentation
+(setf (documentation 'copy-gtk-allocation 'function)
+ "@version{2013-8-27}
+  Copy constructor of a @class{gtk-allocation} structure.
+  @see-class{gtk-allocation}
+  @see-function{make-gtk-allocation}")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors for GtkAllocation
+;;;
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
@@ -430,8 +442,6 @@
   Accessor of the slot @code{x} of the @class{gtk-allocation} structure.
   @see-class{gtk-allocation}")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-allocation-y atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-allocation-y 'function)
@@ -439,16 +449,12 @@
   Accessor of the slot @code{y} of the @class{gtk-allocation} structure.
   @see-class{gtk-allocation}")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-allocation-width atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-allocation-width 'function)
  "@version{2013-4-11}
   Accessor of the slot @code{width} of the @class{gtk-allocation} structure.
   @see-class{gtk-allocation}")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-allocation-height atdoc:*function-name-alias*) "Accessor"
@@ -8179,19 +8185,16 @@
   (minimum-size :int)
   (natural-size :int))
 
-(export (boxed-related-symbols 'gtk-requested-size))
-
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-requested-size atdoc:*class-name-alias*) "Struct"
       (documentation 'gtk-requested-size 'type)
- "@version{2013-1-6}
+ "@version{2013-8-27}
   @begin{short}
     Represents a request of a screen object in a given orientation.
   @end{short}
   These are primarily used in container implementations when allocating a
-  natural size for children calling. See gtk_distribute_natural_allocation().
+  natural size for children calling. See the function
+  @fun{gtk-distribute-natural-allocation}.
   @begin{pre}
 (define-g-boxed-cstruct gtk-requested-size \"GtkRequestedSize\"
   (data :pointer)
@@ -8199,75 +8202,77 @@
   (natural-size :int))
   @end{pre}
   @begin[code]{table}
-    @entry[gpointer data]{A client pointer}
-    @entry[gint minimum_size]{The minimum size needed for allocation in a given
-      orientation}
-    @entry[gint natural_size]{The natural size for allocation in a given
-      orientation}
+    @entry[data]{A client pointer.}
+    @entry[minimum-size]{The minimum size needed for allocation in a given
+      orientation.}
+    @entry[natural-size]{The natural size for allocation in a given
+      orientation.}
   @end{table}
   @see-slot{gtk-requested-size-data}
   @see-slot{gtk-requested-size-minimum-size}
   @see-slot{gtk-requested-size-natural-size}
   @see-constructor{copy-gtk-requested-size}
-  @see-constructor{make-gtk-requested-size}")
+  @see-constructor{make-gtk-requested-size}
+  @see-function{gtk-distribute-natural-allocation}")
 
-;;; --- copy-gtk-requested-size ------------------------------------------------
+(export (boxed-related-symbols 'gtk-requested-size))
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Constructors for GtkRequestedSize
+;;;
+;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'copy-gtk-requested-size 'function)
- "@version{2013-2-25}
-  @argument[instance]{a @class{gtk-requested-size} struct}
-  @begin{short}
-    Copy constructor of a @class{gtk-requested-size} struct
-  @end{short}")
-
-;;; --- make-gtk-requested-size ------------------------------------------------
+ "@version{2013-8-27}
+  @argument[instance]{a @class{gtk-requested-size} structure}
+  Copy constructor of a @class{gtk-requested-size} structure.
+  @see-class{gtk-requested-size}
+  @see-function{make-gtk-requested-size}")
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'make-gtk-requested-size 'function)
- "@version{2013-2-25}
+ "@version{2013-8-27}
   @argument[data]{a client pointer}
   @argument[minimum-size]{The minimum size needed for allocation in a given
     orientation}
   @argument[natural-size]{The natural size for allocation in a given
     orientation}
-  @begin{short}
-    Creates a @class{gtk-requested-size} struct
-  @end{short}")
+  Creates a @class{gtk-requested-size} structure.
+  @see-class{gtk-requested-size}
+  @see-function{copy-gtk-requested-size}")
 
-;;; --- gtk-requested-size-data ------------------------------------------------
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors for GtkRequestedSize
+;;;
+;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-requested-size-data atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-requested-size-data 'function)
- "@version{2013-2-25}
-  @begin{short}
-    Accessor of the slot @code{data} of the @class{gtk-requested-size} struct.
-  @end{short}")
-
-;;; --- gtk-requested-size-minimum-size ----------------------------------------
+ "@version{2013-8-27}
+  Accessor of the slot @code{data} of the @class{gtk-requested-size} structure.
+  @see-class{gtk-requested-size}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-requested-size-minimum-size atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-requested-size-minimum-size 'function)
- "@version{2013-2-25}
-  @begin{short}
-    Accessor of the slot @code{minimum-size} of the @class{gtk-requested-size}
-    struct.
-  @end{short}")
-
-;;; --- gtk-requested-size-natural-size ----------------------------------------
+ "@version{2013-8-27}
+  Accessor of the slot @code{minimum-size} of the @class{gtk-requested-size}
+  structure.
+  @see-class{gtk-requested-size}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-requested-size-natural-size atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-requested-size-natural-size 'function)
- "@version{2013-2-25}
-  @begin{short}
-    Accessor of the slot @code{natural-size} of the @class{gtk-requested-size}
-    struct.
-  @end{short}")
+ "@version{2013-8-27}
+  Accessor of the slot @code{natural-size} of the @class{gtk-requested-size}
+  structure.
+  @see-class{gtk-requested-size}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_preferred_height ()

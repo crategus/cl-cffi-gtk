@@ -4,9 +4,10 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -190,6 +191,9 @@
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
+
+;; Search a better place
+(glib::at-init () (foreign-funcall "gtk_ui_manager_get_type" :int))
 
 ;;; ----------------------------------------------------------------------------
 ;;; GTK_STYLE_PROPERTY_BACKGROUND_COLOR
@@ -2356,12 +2360,11 @@ tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
   (bottom :int16 :initform 0))
 
 (glib::at-init () (foreign-funcall "gtk_border_get_type" :int))
-(glib::at-init () (foreign-funcall "gtk_ui_manager_get_type" :int))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-border atdoc:*class-name-alias*) "CStruct"
       (documentation 'gtk-border 'type)
- "@version{2013-4-18}
+ "@version{2013-8-27}
   @begin{short}
     A structure that specifies a border around a rectangular area that can be of
     different width on each side.
@@ -2390,23 +2393,26 @@ tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Constructors
+;;; Constructors for GtkBorder
 ;;;
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'make-gtk-border 'function)
- "@version{2013-4-18}
-  Creates and returns an structure of type @class{gtk-border}")
+ "@version{2013-8-27}
+  Creates and returns an structure of type @class{gtk-border}.
+  @see-class{gtk-border}
+  @see-function{copy-gtk-border}")
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'copy-gtk-border 'function)
- "@version{2013-4-18}
-  Copies and returns an structure of type @class{gtk-border}")
+ "@version{2013-8-27}
+  Copies and returns an structure of type @class{gtk-border}.
+  @see-class{gtk-border}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Accessors for the Slots
+;;; Accessors for GtkBorder
 ;;;
 ;;; ----------------------------------------------------------------------------
 
@@ -2414,29 +2420,33 @@ tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
 (setf (gethash 'gtk-border-left atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-border-left 'function)
- "@version{2013-5-25}
-  Accessor of the slot @code{\"left\"} of the @class{gtk-border} structure.")
+ "@version{2013-8-27}
+  Accessor of the slot @code{\"left\"} of the @class{gtk-border} structure.
+  @see-class{gtk-border}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-border-right atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-border-right 'function)
- "@version{2013-5-25}
-  Accessor of the slot @code{\"right\"} of the @class{gtk-border} structure.")
+ "@version{2013-8-27}
+  Accessor of the slot @code{\"right\"} of the @class{gtk-border} structure.
+  @see-class{gtk-border}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-border-top atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-border-top 'function)
- "@version{2013-5-25}
-  Accessor of the slot @code{\"top\"} of the @class{gtk-border} structure.")
+ "@version{2013-8-27}
+  Accessor of the slot @code{\"top\"} of the @class{gtk-border} structure.
+  @see-class{gtk-border}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-border-bottom atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-border-bottom 'function)
- "@version{2013-5-25}
-  Accessor of the slot @code{\"bottom\"} of the @class{gtk-border} structure.")
+ "@version{2013-8-27}
+  Accessor of the slot @code{\"bottom\"} of the @class{gtk-border} structure.
+  @see-class{gtk-border}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_border_new ()

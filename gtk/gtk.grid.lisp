@@ -1,9 +1,10 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.grid.lisp
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2012, 2013 Dieter Kaiser
 ;;;
@@ -78,8 +79,6 @@
    (row-spacing
     gtk-grid-row-spacing
     "row-spacing" "gint" t t)))
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-grid 'type)
@@ -216,6 +215,10 @@
   class.")
 
 ;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors of Child Properties
+;;;
+;;; ----------------------------------------------------------------------------
 
 (define-child-property "GtkGrid"
                        gtk-grid-child-height
@@ -234,48 +237,42 @@
                        "width" "gint" t t t)
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Child Properties
-;;;
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-grid-child-height atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-grid-child-height 'function)
- "@version{2013-5-17}
+ "@version{2013-8-28}
   Accessor of the child property @code{\"height\"} of the @class{gtk-grid}
-  class.")
-
-;;; ----------------------------------------------------------------------------
+  class.
+  @see-class{gtk-grid}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-grid-child-left-attach atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-grid-child-left-attach 'function)
- "@version{2013-5-17}
+ "@version{2013-8-28}
   Accessor of the child property @code{\"left-attach\"} of the
-  @class{gtk-grid} class.")
-
-;;; ----------------------------------------------------------------------------
+  @class{gtk-grid} class.
+  @see-class{gtk-grid}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-grid-child-top-attach atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-grid-child-top-attach 'function)
- "@version{2013-5-17}
+ "@version{2013-8-28}
   Accessor of the child property @code{\"top-attach\"} of the
-  @class{gtk-grid} class.")
-
-;;; ----------------------------------------------------------------------------
+  @class{gtk-grid} class.
+  @see-class{gtk-grid}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-grid-child-width atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-grid-child-width 'function)
- "@version{2013-5-17}
+ "@version{2013-8-28}
   Accessor of the child property @code{\"width\"} of the @class{gtk-grid}
-  class.")
+  class.
+  @see-class{gtk-grid}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_grid_new ()

@@ -4,9 +4,10 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -1506,10 +1507,10 @@
 ;;; gtk_icon_view_get_selected_items ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_icon_view_get_selected_items" gtk-icon-view-selected-items)
+(defcfun ("gtk_icon_view_get_selected_items" gtk-icon-view-get-selected-items)
     (g-list (g-boxed-foreign gtk-tree-path) :free-from-foreign t)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-20}
+ "@version{2013-8-28}
   @argument[icon-view]{a @class{gtk-icon-view} widget}
   @return{A list containing a @class{gtk-tree-path} for each selected row.}
   @begin{short}
@@ -1521,10 +1522,12 @@
   @fun{gtk-tree-row-reference-new}.
 
   Since 2.6
+  @see-class{gtk-icon-view}
+  @see-class{gtk-tree-path}
   @see-function{gtk-tree-row-reference-new}"
   (icon-view g-object))
 
-(export 'gtk-icon-view-selected-items)
+(export 'gtk-icon-view-get-selected-items)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_select_all ()

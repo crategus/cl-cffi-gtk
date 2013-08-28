@@ -107,7 +107,7 @@
   @end{pre}
   This function should register the @class{g-type} of the @sym{gtk-im-context}
   subclass which implements the input method by means of the function
-  @fun{g-type-module-register-type}. Note that the function
+  @code{g_type_module_register_type()}. Note that the function
   @fun{g-type-register-static} cannot be used as the type needs to be registered
   dynamically.
   @begin{pre}

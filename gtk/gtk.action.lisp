@@ -4,9 +4,10 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -779,7 +780,7 @@
 ;;; gtk_action_get_proxies ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_action_get_proxies" gtk-action-proxies)
+(defcfun ("gtk_action_get_proxies" gtk-action-get-proxies)
     (g-slist g-object :free-from-foreign nil)
  #+cl-cffi-gtk-documentation
  "@version{2013-6-2}
@@ -792,7 +793,7 @@
   @see-function{gtk-activatable-get-related-action}"
   (action g-object))
 
-(export 'gtk-action-proxies)
+(export 'gtk-action-get-proxies)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_action_connect_accelerator ()

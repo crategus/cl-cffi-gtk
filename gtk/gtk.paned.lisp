@@ -4,9 +4,10 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -95,8 +96,6 @@
    (position-set
     gtk-paned-position-set
     "position-set" "gboolean" t t)))
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-paned 'type)
@@ -339,6 +338,10 @@
   Accessor of the slot @code{\"position-set\"} of the @class{gtk-paned} class.")
 
 ;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors of Child Properties
+;;;
+;;; ----------------------------------------------------------------------------
 
 (define-child-property "GtkPaned"
                        gtk-paned-child-resize "resize" "gboolean" t t t)
@@ -347,28 +350,24 @@
                        gtk-paned-child-shrink "shrink" "gboolean" t t t)
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Child Properties
-;;;
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-paned-child-resize atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-paned-child-resize 'function)
- "@version{2013-2-13}
+ "@version{2013-8-28}
   Accessor of the child property @code{\"resize\"} of the @class{gtk-paned}
-    class.")
-
-;;; ----------------------------------------------------------------------------
+  class.
+  @see-class{gtk-paned}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-paned-child-shrink atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-paned-child-shrink 'function)
- "@version{2013-2-13}
+ "@version{2013-8-28}
   Accessor of the child property @code{\"shrink\"} of the @class{gtk-paned}
-    class.")
+  class.
+  @see-class{gtk-paned}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_paned_new ()
@@ -577,8 +576,6 @@
    :type-initializer "gtk_hpaned_get_type")
   nil)
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-hpaned 'type)
  "@version{2013-5-18}
@@ -591,6 +588,10 @@
   @sym{gtk-hpaned} has been deprecated, use @class{gtk-paned} instead.")
 
 ;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors of Child Properties
+;;;
+;;; ----------------------------------------------------------------------------
 
 (define-child-property "GtkHPaned"
                        gtk-hpaned-child-resize "resize" "gboolean" t t t)
@@ -599,32 +600,26 @@
                        gtk-hpaned-child-shrink "shrink" "gboolean" t t t)
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Child Properties
-;;;
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-hpaned-child-resize atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-hpaned-child-resize 'function)
- "@version{2013-3-7}
-  @begin{short}
-    Accessor of the child property @code{\"resize\"} of the @class{gtk-hpaned}
-    class.
-  @end{short}")
-
-;;; ----------------------------------------------------------------------------
+ "@version{2013-8-28}
+  Accessor of the child property @code{\"resize\"} of the @class{gtk-hpaned}
+  class.
+  @see-class{gtk-paned}
+  @see-class{gtk-hpaned}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-hpaned-child-shrink atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-hpaned-child-shrink 'function)
- "@version{2013-3-7}
-  @begin{short}
-    Accessor of the child property @code{\"shrink\"} of the @class{gtk-hpaned}
-    class.
-  @end{short}")
+ "@version{2013-8-28}
+  Accessor of the child property @code{\"shrink\"} of the @class{gtk-hpaned}
+  class.
+  @see-class{gtk-paned}
+  @see-class{gtk-hpaned}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_hpaned_new ()
@@ -671,8 +666,6 @@
    :type-initializer "gtk_vpaned_get_type")
   nil)
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-vpaned 'type)
  "@version{2013-5-18}
@@ -685,6 +678,10 @@
   @sym{gtk-vpaned} has been deprecated, use @class{gtk-paned} instead.")
 
 ;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors of Child Properties
+;;;
+;;; ----------------------------------------------------------------------------
 
 (define-child-property "GtkVPaned"
                        gtk-vpaned-child-resize "resize" "gboolean" t t t)
@@ -693,32 +690,26 @@
                        gtk-vpaned-child-shrink "shrink" "gboolean" t t t)
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Child Properties
-;;;
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-vpaned-child-resize atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-vpaned-child-resize 'function)
- "@version{2013-3-7}
-  @begin{short}
-    Accessor of the child property @code{\"resize\"} of the @class{gtk-vpaned}
-    class.
-  @end{short}")
-
-;;; ----------------------------------------------------------------------------
+ "@version{2013-8-28}
+  Accessor of the child property @code{\"resize\"} of the @class{gtk-vpaned}
+  class.
+  @see-class{gtk-paned}
+  @see-class{gtk-vpaned}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-vpaned-child-shrink atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-vpaned-child-shrink 'function)
- "@version{2013-3-7}
-  @begin{short}
-    Accessor of the child property @code{\"shrink\"} of the @class{gtk-vpaned}
-    class.
-  @end{short}")
+ "@version{2013-8-28}
+  Accessor of the child property @code{\"shrink\"} of the @class{gtk-vpaned}
+  class.
+  @see-class{gtk-paned}
+  @see-class{gtk-vpaned}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_vpaned_new ()

@@ -97,7 +97,7 @@
 
 (defun gtk-hsv-new ()
  #+cl-cffi-gtk-documentation
- "@version{2013-8-11}
+ "@version{2013-8-27}
   @return{A newly-created HSV color selector.}
   @begin{short}
     Creates a new HSV color selector.
@@ -107,7 +107,7 @@
   @see-class{gtk-hsv}"
   (make-instance 'gtk-hsv))
 
-(export 'gtk-hshv)
+(export 'gtk-hsv-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_hsv_set_color ()

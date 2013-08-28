@@ -4,9 +4,10 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -692,9 +693,10 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_entry_completion_get_completion_prefix"
-          gtk-entry-completion-completion-prefix) (:string :free-from-foreign t)
+           gtk-entry-completion-get-completion-prefix)
+    (:string :free-from-foreign t)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-28}
+ "@version{2013-8-27}
   @argument[completion]{a @class{gtk-entry-completion} object}
   @return{The prefix for the current completion.}
   @begin{short}
@@ -702,10 +704,11 @@
     @code{nil} if there is no completion ongoing.
   @end{short}
 
-  Since 2.12"
+  Since 2.12
+  @see-class{gtk-entry-completion}"
   (completion (g-object gtk-entry-completion)))
 
-(export 'gtk-entry-completion-completion-prefix)
+(export 'gtk-entry-completion-get-completion-prefix)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_entry_completion_insert_prefix ()

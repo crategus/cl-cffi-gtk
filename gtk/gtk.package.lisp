@@ -4,9 +4,10 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -167,6 +168,7 @@
       @about-function{gtk-get-binary-age}
       @about-function{gtk-get-interface-age}
       @about-function{gtk-check-version}
+      @about-function{cl-cffi-gtk-build-info}
       @about-variable{+gtk-major-version+}
       @about-variable{+gtk-minor-version+}
       @about-variable{+gtk-micro-version+}
@@ -384,6 +386,20 @@
       chunk of data along with the data type and other associated information.
 
       @about-struct{gtk-selection-data}
+      @about-function{make-gtk-selection-data}
+      @about-function{copy-gtk-selection-data}
+      @about-function{gtk-selection-data-selection}
+      @about-function{gtk-selection-data-target}
+      @about-function{make-gtk-target-entry}
+      @about-function{copy-gtk-target-entry}
+      @about-function{gtk-target-entry-target}
+      @about-function{gtk-target-entry-flags}
+      @about-function{gtk-target-entry-info}
+      @about-function{gtk-selection-data-type}
+      @about-function{gtk-selection-data-format}
+      @about-function{gtk-selection-data-data}
+      @about-function{gtk-selection-data-length}
+      @about-function{gtk-selection-data-display}
       @about-struct{gtk-target-entry}
       @about-class{gtk-target-list}
       @about-function{gtk-target-entry-new}
@@ -578,6 +594,12 @@
       @about-function{gtk-style-context-set-screen}
       @about-function{gtk-style-context-set-state}
       @about-struct{gtk-border}
+      @about-function{make-gtk-border}
+      @about-function{copy-gtk-border}
+      @about-function{gtk-border-left}
+      @about-function{gtk-border-right}
+      @about-function{gtk-border-top}
+      @about-function{gtk-border-bottom}
       @about-function{gtk-border-new}
       @about-function{gtk-border-copy}
       @about-function{gtk-border-free}
@@ -1078,6 +1100,12 @@
       A widget used to guide users through multi-step operations.
 
       @about-class{gtk-assistant}
+
+      @about-function{gtk-assistant-child-page-type}
+      @about-function{gtk-assistant-child-title}
+      @about-function{gtk-assistant-child-header-image}
+      @about-function{gtk-assistant-child-sidebar-image}
+      @about-function{gtk-assistant-child-complete}
       @about-function{gtk-assistant-new}
       @about-function{gtk-assistant-get-current-page}
       @about-function{gtk-assistant-set-current-page}
@@ -1429,7 +1457,7 @@
 
       @about-class{gtk-entry}
       @about-function{gtk-entry-new}
-      @about-function{gtk-entry-with-buffer}
+      @about-function{gtk-entry-new-with-buffer}
       @about-function{gtk-entry-get-buffer}
       @about-function{gtk-entry-set-buffer}
       @about-function{gtk-entry-set-text}
@@ -3458,7 +3486,7 @@ setup_tree (void)
       @about-function{gtk-action-set-gicon}
       @about-function{gtk-action-get-gicon}
       @about-function{gtk-action-set-icon-name}
-      @about-function{gtk-action-icon-name}
+      @about-function{gtk-action-get-icon-name}
       @about-function{gtk-action-set-visible-horizontal}
       @about-function{gtk-action-get-visible-horizontal}
       @about-function{gtk-action-set-visible-vertical}
@@ -3555,6 +3583,11 @@ setup_tree (void)
       A widget used to select a color.
 
       @about-class{gtk-color-selection}
+      @about-function{gtk-color-selection-child-expand}
+      @about-function{gtk-color-selection-child-fill}
+      @about-function{gtk-color-selection-child-padding}
+      @about-function{gtk-color-selection-child-pack-type}
+      @about-function{gtk-color-selection-child-position}
       @about-function{gtk-color-selection-new}
       @about-function{gtk-color-selection-set-has-opacity-control}
       @about-function{gtk-color-selection-get-has-opacity-control}
@@ -3669,6 +3702,11 @@ setup_tree (void)
       A button to launch a file selection dialog.
 
       @about-class{gtk-file-chooser-button}
+      @about-function{gtk-file-chooser-button-child-expand}
+      @about-function{gtk-file-chooser-button-child-fill}
+      @about-function{gtk-file-chooser-button-child-padding}
+      @about-function{gtk-file-chooser-button-child-pack-type}
+      @about-function{gtk-file-chooser-button-child-position}
       @about-function{gtk-file-chooser-button-new}
       @about-function{gtk-file-chooser-button-new-with-dialog}
       @about-function{gtk-file-chooser-button-get-title}
@@ -3689,6 +3727,11 @@ setup_tree (void)
       File chooser widget that can be embedded in other widgets.
 
       @about-class{gtk-file-chooser-widget}
+      @about-function{gtk-file-chooser-widget-child-expand}
+      @about-function{gtk-file-chooser-widget-child-fill}
+      @about-function{gtk-file-chooser-widget-child-padding}
+      @about-function{gtk-file-chooser-widget-child-pack-type}
+      @about-function{gtk-file-chooser-widget-child-position}
       @about-function{gtk-file-chooser-widget-new}
     @end{subsection}
     @begin[GtkFileFilter]{subsection}
@@ -3759,6 +3802,11 @@ setup_tree (void)
       Deprecated widget for selecting fonts.
 
       @about-class{gtk-font-selection}
+      @about-function{gtk-font-selection-child-expand}
+      @about-function{gtk-font-selection-child-fill}
+      @about-function{gtk-font-selection-child-padding}
+      @about-function{gtk-font-selection-child-pack-type}
+      @about-function{gtk-font-selection-child-position}
       @about-function{gtk-font-selection-new}
       @about-function{gtk-font-selection-get-font-name}
       @about-function{gtk-font-selection-set-font-name}
@@ -3792,6 +3840,10 @@ setup_tree (void)
       Pack widgets in a rows and columns.
 
       @about-class{gtk-grid}
+      @about-function{gtk-grid-child-height}
+      @about-function{gtk-grid-child-left-attach}
+      @about-function{gtk-grid-child-top-attach}
+      @about-function{gtk-grid-child-width}
       @about-function{gtk-grid-new}
       @about-function{gtk-grid-attach}
       @about-function{gtk-grid-attach-next-to}
@@ -3829,6 +3881,11 @@ setup_tree (void)
 
       @about-class{gtk-box}
       @about-function{gtk-box-new}
+      @about-function{gtk-box-child-expand}
+      @about-function{gtk-box-child-fill}
+      @about-function{gtk-box-child-padding}
+      @about-function{gtk-box-child-pack-type}
+      @about-function{gtk-box-child-position}
       @about-function{gtk-box-pack-start}
       @about-function{gtk-box-pack-end}
       @about-function{gtk-box-get-homogeneous}
@@ -3838,43 +3895,73 @@ setup_tree (void)
       @about-function{gtk-box-reorder-child}
       @about-function{gtk-box-query-child-packing}
       @about-function{gtk-box-set-child-packing}
+
+      @subheading{GtkHBox}
       A horizontal container box.
 
       @about-class{gtk-hbox}
       @about-function{gtk-hbox-new}
+      @about-function{gtk-hbox-child-expand}
+      @about-function{gtk-hbox-child-fill}
+      @about-function{gtk-hbox-child-padding}
+      @about-function{gtk-hbox-child-pack-type}
+      @about-function{gtk-hbox-child-position}
+
+      @subheading{GtkVBox}
       A vertical container box.
 
       @about-class{gtk-vbox}
       @about-function{gtk-vbox-new}
+      @about-function{gtk-vbox-child-expand}
+      @about-function{gtk-vbox-child-fill}
+      @about-function{gtk-vbox-child-padding}
+      @about-function{gtk-vbox-child-pack-type}
+      @about-function{gtk-vbox-child-position}
     @end{subsection}
     @begin[GtkButtonBox]{subsection}
       A container for arranging buttons
 
       @about-class{gtk-button-box}
+      @about-function{gtk-button-box-child-non-homogeneous}
+      @about-function{gtk-button-box-child-secondary}
       @about-function{gtk-button-box-new}
       @about-function{gtk-button-box-get-layout}
       @about-function{gtk-button-box-get-child-secondary}
-      @about-function{gtk-button-box-child-non-homogeneous}
+      @about-function{gtk-button-box-get-child-non-homogeneous}
       @about-function{gtk-button-box-set-layout}
       @about-function{gtk-button-box-set-child-secondary}
       @about-function{gtk-button-box-set-child-non-homogeneous}
-      @b{GtkHButtonBox}
 
+      @subheading{GtkHButtonBox}
       A container for arranging buttons horizontally
 
       @about-class{gtk-hbutton-box}
       @about-function{gtk-hbutton-box-new}
-      @b{GtkVButtonBox}
+      @about-function{gtk-hbutton-box-child-expand}
+      @about-function{gtk-hbutton-box-child-fill}
+      @about-function{gtk-hbutton-box-child-padding}
+      @about-function{gtk-hbutton-box-child-pack-type}
+      @about-function{gtk-hbutton-box-child-position}
+      @about-function{gtk-hbutton-box-child-secondary}
 
+      @subheading{GtkVButtonBox}
       A container for arranging buttons vertically
 
       @about-class{gtk-vbutton-box}
       @about-function{gtk-vbutton-box-new}
+      @about-function{gtk-vbutton-box-child-expand}
+      @about-function{gtk-vbutton-box-child-fill}
+      @about-function{gtk-vbutton-box-child-padding}
+      @about-function{gtk-vbutton-box-child-pack-type}
+      @about-function{gtk-vbutton-box-child-position}
+      @about-function{gtk-vbutton-box-child-secondary}
     @end{subsection}
     @begin[GtkFixed]{subsection}
       A container which allows you to position widgets at fixed coordinates.
 
       @about-class{gtk-fixed}
+      @about-function{gtk-fixed-child-x}
+      @about-function{gtk-fixed-child-y}
       @about-function{gtk-fixed-new}
       @about-function{gtk-fixed-put}
       @about-function{gtk-fixed-move}
@@ -3884,6 +3971,8 @@ setup_tree (void)
 
       @about-class{gtk-paned}
       @about-function{gtk-paned-new}
+      @about-function{gtk-paned-child-resize}
+      @about-function{gtk-paned-child-shrink}
       @about-function{gtk-paned-add1}
       @about-function{gtk-paned-add2}
       @about-function{gtk-paned-pack1}
@@ -3893,17 +3982,22 @@ setup_tree (void)
       @about-function{gtk-paned-set-position}
       @about-function{gtk-paned-get-position}
       @about-function{gtk-paned-get-handle-window}
-      @b{GtkHPaned}
 
+      @subheading{GtkHPaned}
       A container with two panes arranged horizontally.
 
       @about-class{gtk-hpaned}
       @about-function{gtk-hpaned-new}
-      @b{GtkVPaned}
+      @about-function{gtk-hpaned-child-resize}
+      @about-function{gtk-hpaned-child-shrink}
 
+      @subheading{GtkVPaned}
       A container with two panes arranged vertically.
+
       @about-class{gtk-vpaned}
       @about-function{gtk-vpaned-new}
+      @about-function{gtk-vpaned-child-resize}
+      @about-function{gtk-vpaned-child-shrink}
     @end{subsection}
     @begin[GtkLayout]{subsection}
       Infinite scrollable area containing child widgets and/or custom drawing.
@@ -4542,7 +4636,17 @@ setup_tree (void)
       @about-class{gtk-widget}
       @about-class{gtk-widget-class}
       @about-struct{gtk-requisition}
+      @about-function{make-gtk-requisition}
+      @about-function{copy-gtk-requisition}
+      @about-function{gtk-requisition-width}
+      @about-function{gtk-requisition-height}
       @about-struct{gtk-allocation}
+      @about-function{make-gtk-allocation}
+      @about-function{copy-gtk-allocation}
+      @about-function{gtk-allocation-x}
+      @about-function{gtk-allocation-y}
+      @about-function{gtk-allocation-width}
+      @about-function{gtk-allocation-height}
       @about-symbol{gtk-align}
       @about-symbol{gtk-widget-aux-info}
       @about-symbol{gtk-widget-help-type}
@@ -4739,6 +4843,11 @@ setup_tree (void)
       @about-function{gtk-requisition-free}
       @about-symbol{gtk-size-request-mode}
       @about-symbol{gtk-requested-size}
+      @about-function{copy-gtk-requested-size}
+      @about-function{make-gtk-requested-size}
+      @about-function{gtk-requested-size-data}
+      @about-function{gtk-requested-size-minimum-size}
+      @about-function{gtk-requested-size-natural-size}
       @about-function{gtk-widget-get-preferred-height}
       @about-function{gtk-widget-get-preferred-width}
       @about-function{gtk-widget-get-preferred-height-for-width}
@@ -5118,7 +5227,7 @@ setup_tree (void)
       @about-function{gtk-application-remove-window}
       @about-function{gtk-application-get-windows}
       @about-function{gtk-application-get-window-by-id}
-      @about-function{gtk-application-active-window}
+      @about-function{gtk-application-get-active-window}
       @about-function{gtk-application-inhibit}
       @about-function{gtk-application-uninhibit}
       @about-function{gtk-application-is-inhibited}

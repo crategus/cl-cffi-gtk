@@ -451,7 +451,9 @@
 ;;; GtkTreePath
 ;;; ----------------------------------------------------------------------------
 
-(defctype gtk-tree-path :pointer)
+;(defctype gtk-tree-path :pointer)
+
+(glib::at-init () (foreign-funcall "gtk_tree_path_get_type" :int))
 
 (define-g-boxed-opaque gtk-tree-path "GtkTreePath"
   :alloc (%gtk-tree-path-new))
@@ -472,8 +474,7 @@
 ;;; GtkTreeRowReference
 ;;; ----------------------------------------------------------------------------
 
-(glib::at-init ()
-  (gobject::type-initializer-call "gtk_tree_row_reference_get_type"))
+(glib::at-init () (foreign-funcall "gtk_tree_row_reference_get_type" :int))
 
 (define-g-boxed-opaque gtk-tree-row-reference "GtkTreeRowReference"
   :alloc (lambda () (error "")))

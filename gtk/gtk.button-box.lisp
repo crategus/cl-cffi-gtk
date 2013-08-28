@@ -4,9 +4,10 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -65,8 +66,6 @@
   ((layout-style
     gtk-button-box-layout-style
     "layout-style" "GtkButtonBoxStyle" t t)))
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-button-box 'type)
@@ -146,6 +145,10 @@
   class.")
 
 ;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors of Child Properties
+;;;
+;;; ----------------------------------------------------------------------------
 
 (define-child-property "GtkButtonBox"
                        gtk-button-box-child-non-homogeneous
@@ -156,33 +159,29 @@
                        "secondary" "gboolean" t t t)
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Child Properties
-;;;
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-button-box-child-non-homogeneous atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-button-box-child-non-homogeneous 'function)
- "@version{2013-5-18}
+ "@version{2013-8-27}
   The @code{\"non-homogeneous\"} child property of type @code{:boolean}
-  (Read / Write)@br{}
-  If @em{true}, the child will not be subject to homogeneous sizing.@br{}
-  Default value: @code{nil}")
-
-;;; ----------------------------------------------------------------------------
+  (Read / Write) @br{}
+  If @em{true}, the child will not be subject to homogeneous sizing. @br{}
+  Default value: @code{nil}
+  @see-class{gtk-button-box}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-button-box-child-secondary atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-button-box-child-secondary 'function)
- "@version{2013-5-18}
+ "@version{2013-8-27}
   The @codee{\"secondary\"} child property of type @code{:boolean}
-  (Read / Write)@br{}
+  (Read / Write) @br{}
   If @em{true}, the child appears in a secondary group of children, suitable
-  for, e. g., help buttons.@br{}
-  Default value: @code{nil}")
+  for, e. g., help buttons. @br{}
+  Default value: @code{nil}
+  @see-class{gtk-button-box}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_button_box_new ()
@@ -357,8 +356,6 @@
    :type-initializer "gtk_hbutton_box_get_type")
   nil)
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-hbutton-box 'type)
  "@version{2013-5-18}
@@ -387,6 +384,10 @@
   instead.")
 
 ;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors of Child Properties
+;;;
+;;; ----------------------------------------------------------------------------
 
 (define-child-property "GtkHButtonBox"
                        gtk-hbutton-box-child-expand
@@ -413,80 +414,66 @@
                        "secondary" "gboolean" t t t)
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Child Properties
-;;;
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-hbutton-box-child-expand atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-hbutton-box-child-expand 'function)
- "@version{2013-3-8}
-  @begin{short}
-    Accessor of the child property @code{\"expand\"} of the
-    @class{gtk-hbutton-box} class.
-  @end{short}")
-
-;;; ----------------------------------------------------------------------------
+ "@version{2013-8-28}
+  Accessor of the child property @code{\"expand\"} of the
+  @class{gtk-hbutton-box} class.
+  @see-class{gtk-button-box}
+  @see-class{gtk-hbutton-box}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-hbutton-box-child-fill atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-hbutton-box-child-fill 'function)
- "@version{2013-3-8}
-  @begin{short}
-    Accessor of the child property @code{\"fill\"} of the
-    @class{gtk-hbutton-box} class.
-  @end{short}")
-
-;;; ----------------------------------------------------------------------------
+ "@version{2013-8-28}
+  Accessor of the child property @code{\"fill\"} of the
+  @class{gtk-hbutton-box} class.
+  @see-class{gtk-button-box}
+  @see-class{gtk-hbutton-box}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-hbutton-box-child-padding atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-hbutton-box-child-padding 'function)
- "@version{2013-3-8}
-  @begin{short}
-    Accessor of the child property @code{\"padding\"} of the
-    @class{gtk-hbutton-box} class.
-  @end{short}")
-
-;;; ----------------------------------------------------------------------------
+ "@version{2013-8-28}
+  Accessor of the child property @code{\"padding\"} of the
+  @class{gtk-hbutton-box} class.
+  @see-class{gtk-button-box}
+  @see-class{gtk-hbutton-box}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-hbutton-box-child-pack-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-hbutton-box-child-pack-type 'function)
- "@version{2013-3-8}
-  @begin{short}
-    Accessor of the child property @code{\"pack-type\"} of the
-    @class{gtk-hbutton-box} class.
-  @end{short}")
-
-;;; ----------------------------------------------------------------------------
+ "@version{2013-8-28}
+  Accessor of the child property @code{\"pack-type\"} of the
+  @class{gtk-hbutton-box} class.
+  @see-class{gtk-button-box}
+  @see-class{gtk-hbutton-box}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-hbutton-box-child-position atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-hbutton-box-child-position 'function)
- "@version{2013-3-8}
-  @begin{short}
-    Accessor of the child property @code{\"position\"} of the
-    @class{gtk-hbutton-box} class.
-  @end{short}")
-
-;;; ----------------------------------------------------------------------------
+ "@version{2013-8-28}
+  Accessor of the child property @code{\"position\"} of the
+  @class{gtk-hbutton-box} class.
+  @see-class{gtk-button-box}
+  @see-class{gtk-hbutton-box}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-hbutton-box-child-secondary atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-hbutton-box-child-secondary 'function)
- "@version{2013-3-8}
-  @begin{short}
-    Accessor of the child property @code{\"secondary\"} of the
-    @class{gtk-hbutton-box} class.
-  @end{short}")
+ "@version{2013-8-28}
+  Accessor of the child property @code{\"secondary\"} of the
+  @class{gtk-hbutton-box} class.
+  @see-class{gtk-button-box}
+  @see-class{gtk-hbutton-box}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_hbutton_box_new ()
@@ -536,8 +523,6 @@
    :type-initializer "gtk_vbutton_box_get_type")
   nil)
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-vbutton-box 'type)
  "@version{2013-5-18}
@@ -566,6 +551,10 @@
   instead.")
 
 ;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors of Child Properties
+;;;
+;;; ----------------------------------------------------------------------------
 
 (define-child-property "GtkVButtonBox"
                        gtk-vbutton-box-child-expand
@@ -592,76 +581,66 @@
                        "secondary" "gboolean" t t t)
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Child Properties
-;;;
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-vbutton-box-child-expand atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-vbutton-box-child-expand 'function)
- "@version{2013-3-8}
-  @begin{short}
-    Accessor of the child property @code{\"expand\"} of the
-    @class{gtk-vbutton-box} class.
-  @end{short}")
-
-;;; ----------------------------------------------------------------------------
+ "@version{2013-8-28}
+  Accessor of the child property @code{\"expand\"} of the
+  @class{gtk-vbutton-box} class.
+  @see-class{gtk-button-box}
+  @see-class{gtk-vbutton-box}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-vbutton-box-child-fill atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-vbutton-box-child-fill 'function)
- "@version{2013-3-8}
-  @begin{short}
-    Accessor of the child property @code{\"fill\"} of the
-    @class{gtk-vbutton-box} class.
-  @end{short}")
-
-;;; ----------------------------------------------------------------------------
+ "@version{2013-8-28}
+  Accessor of the child property @code{\"fill\"} of the
+  @class{gtk-vbutton-box} class.
+  @see-class{gtk-button-box}
+  @see-class{gtk-vbutton-box}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-vbutton-box-child-padding atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-vbutton-box-child-padding 'function)
- "@version{2013-3-8}
-  @begin{short}
-    Accessor of the child property @code{\"padding\"} of the
-    @class{gtk-vbutton-box} class.
-  @end{short}")
-
-;;; ----------------------------------------------------------------------------
+ "@version{2013-8-28}
+  Accessor of the child property @code{\"padding\"} of the
+  @class{gtk-vbutton-box} class.
+  @see-class{gtk-button-box}
+  @see-class{gtk-vbutton-box}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-vbutton-box-child-pack-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-vbutton-box-child-pack-type 'function)
- "@version{2013-3-8}
-  @begin{short}
-    Accessor of the child property @code{\"pack-type\"} of the
-    @class{gtk-vbutton-box} class.
-  @end{short}")
-
-;;; ----------------------------------------------------------------------------
+ "@version{2013-8-28}
+  Accessor of the child property @code{\"pack-type\"} of the
+  @class{gtk-vbutton-box} class.
+  @see-class{gtk-button-box}
+  @see-class{gtk-vbutton-box}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-vbutton-box-child-position atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-vbutton-box-child-position 'function)
- "@version{2013-3-8}
+ "@version{2013-8-28}
   Accessor of the child property @code{\"position\"} of the
-  @class{gtk-vbutton-box} class.")
-
-;;; ----------------------------------------------------------------------------
+  @class{gtk-vbutton-box} class.
+  @see-class{gtk-button-box}
+  @see-class{gtk-vbutton-box}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-vbutton-box-child-secondary atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-vbutton-box-child-secondary 'function)
- "@version{2013-3-8}
+ "@version{2013-8-28}
   Accessor of the child property @code{\"secondary\"} of the
-  @class{gtk-vbutton-box} class.")
+  @class{gtk-vbutton-box} class.
+  @see-class{gtk-button-box}
+  @see-class{gtk-vbutton-box}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_vbutton_box_new ()

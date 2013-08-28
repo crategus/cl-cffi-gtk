@@ -4,9 +4,10 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -253,51 +254,56 @@
 (setf (gethash 'gtk-assistant-child-page-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-assistant-child-page-type 'function)
- "@version{2013-4-21}
+ "@version{2013-8-27}
   @argument[container]{a @class{gtk-assistant} widget}
   @argument[child]{a page of assistant}
   Accessor of the child property @code{\"page-type\"} of the
-  @class{gtk-assistant} class.")
+  @class{gtk-assistant} class.
+  @see-class{gtk-assistant}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-assistant-child-title atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-assistant-child-title 'function)
- "@version{2013-4-21}
+ "@version{2013-8-27}
   @argument[container]{a @class{gtk-assistant} widget}
   @argument[child]{a page of assistant}
   Accessor of the child property @code{\"title\"} of the
-  @class{gtk-assistant} class.")
+  @class{gtk-assistant} class.
+  @see-class{gtk-assistant}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-assistant-child-header-image atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-assistant-child-header-image 'function)
- "@version{2013-4-21}
+ "@version{2013-8-27}
   @argument[container]{a @class{gtk-assistant} widget}
   @argument[child]{a page of assistant}
   Accessor of the child property @code{\"header-image\"} of the
-  @class{gtk-assistant} class.")
+  @class{gtk-assistant} class.
+  @see-class{gtk-assistant}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-assistant-child-sidebar-image atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-assistant-child-sidebar-image 'function)
- "@version{2013-4-21}
+ "@version{2013-8-27}
   @argument[container]{a @class{gtk-assistant} widget}
   @argument[child]{a page of assistant}
   Accessor of the child property @code{\"sidebar-image\"} of the
-  @class{gtk-assistant} class.")
+  @class{gtk-assistant} class.
+  @see-class{gtk-assistant}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-assistant-child-complete atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-assistant-child-complete 'function)
- "@version{2013-4-21}
+ "@version{2013-8-27}
   @argument[container]{a @class{gtk-assistant} widget}
   @argument[child]{a page of assistant}
   Accessor of the child property @code{\"complete\"} of the
-  @class{gtk-assistant} class.")
+  @class{gtk-assistant} class.
+  @see-class{gtk-assistant}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_assistant_new ()

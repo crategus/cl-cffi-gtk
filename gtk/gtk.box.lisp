@@ -4,9 +4,10 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -74,8 +75,6 @@
    (spacing
     gtk-box-spacing
     "spacing" "gint" t t)))
-
-;;; --- gtk-box ----------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-box 'type)
@@ -197,26 +196,26 @@
 (setf (gethash 'gtk-box-homogeneous atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-box-homogeneous 'function)
- "@version{2013-1-20}
-  @begin{short}
-    Accessor of the slot @code{\"homogeneous\"} of the @class{gtk-box} class.
-  @end{short}
+ "@version{2013-8-28}
+  Accessor of the slot @code{\"homogeneous\"} of the @class{gtk-box} class.
+  @see-class{gtk-box}
   @see-function{gtk-box-get-homogeneous}
   @see-function{gtk-box-set-homogeneous}")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-box-spacing atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-box-spacing 'function)
- "@version{2013-1-20}
-  @begin{short}
-    Accessor of the slot @code{\"spacing\"} of the @class{gtk-box} class.
-  @end{short}
+ "@version{2013-8-28}
+  Accessor of the slot @code{\"spacing\"} of the @class{gtk-box} class.
+  @see-class{gtk-box}
   @see-function{gtk-box-get-spacing}
   @see-function{gtk-box-set-spacing}")
 
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors of Child Properties
+;;;
 ;;; ----------------------------------------------------------------------------
 
 (define-child-property "GtkBox"
@@ -240,50 +239,51 @@
                        "position" "gint" t t t)
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Child Properties
-;;;
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-box-child-expand atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-box-child-expand 'function)
- "@version{2013-2-13}
+ "@version{2013-8-27}
   Accessor of the child property @code{\"expand\"} of the @class{gtk-box}
-  class.")
+  class.
+  @see-class{gtk-box}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-box-child-fill atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-box-child-fill 'function)
- "@version{2013-2-13}
+ "@version{2013-8-27}
   Accessor of the child property @code{\"fill\"} of the @class{gtk-box}
-  class.")
+  class.
+  @see-class{gtk-box}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-box-child-padding atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-box-child-padding 'function)
- "@version{2013-2-13}
+ "@version{2013-8-27}
   Accessor of the child property @code{\"padding\"} of the @class{gtk-box}
-  class.")
+  class.
+  @see-class{gtk-box}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-box-child-pack-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-box-child-pack-type 'function)
- "@version{2013-2-13}
+ "@version{2013-8-27}
   Accessor of the child property @code{\"pack-type\"} of the @class{gtk-box}
-  class.")
+  class.
+  @see-class{gtk-box}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-box-child-position atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-box-child-position 'function)
- "@version{2013-2-13}
+ "@version{2013-8-27}
   Accessor of the child property @code{\"position\"} of the @class{gtk-box}
-  class.")
+  class.
+  @see-class{gtk-box}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_box_new ()
@@ -585,8 +585,6 @@
    :type-initializer "gtk_hbox_get_type")
   nil)
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-hbox 'type)
  "@version{2013-5-18}
@@ -611,6 +609,10 @@
   see Migrating from other containers to @class{gtk-grid}.")
 
 ;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors of Child Properties
+;;;
+;;; ----------------------------------------------------------------------------
 
 (define-child-property "GtkHBox"
                        gtk-hbox-child-expand
@@ -633,60 +635,55 @@
                        "position" "gint" t t t)
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Child Properties
-;;;
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-hbox-child-expand atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-hbox-child-expand 'function)
- "@version{2013-2-13}
-  @begin{short}
-    Accessor of the child property @code{\"expand\"} of the @class{gtk-hbox}
-    class.
-  @end{short}")
+ "@version{2013-8-28}
+  Accessor of the child property @code{\"expand\"} of the @class{gtk-hbox}
+  class.
+  @see-class{gtk-box}
+  @see-class{gtk-hbox}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-hbox-child-fill atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-hbox-child-fill 'function)
- "@version{2013-2-13}
-  @begin{short}
-    Accessor of the child property @code{\"fill\"} of the @class{gtk-hbox}
-    class.
-  @end{short}")
+ "@version{2013-8-28}
+  Accessor of the child property @code{\"fill\"} of the @class{gtk-hbox} class.
+  @see-class{gtk-box}
+  @see-class{gtk-hbox}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-hbox-child-padding atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-hbox-child-padding 'function)
- "@version{2013-2-13}
-  @begin{short}
-    Accessor of the child property @code{\"padding\"} of the @class{gtk-hbox}
-    class.
-  @end{short}")
+ "@version{2013-8-28}
+  Accessor of the child property @code{\"padding\"} of the @class{gtk-hbox}
+  class.
+  @see-class{gtk-box}
+  @see-class{gtk-hbox}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-hbox-child-pack-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-hbox-child-pack-type 'function)
- "@version{2013-2-13}
-  @begin{short}
-    Accessor of the child property @code{\"pack-type\"} of the @class{gtk-hbox}
-    class.
-  @end{short}")
+ "@version{2013-8-28}
+  Accessor of the child property @code{\"pack-type\"} of the @class{gtk-hbox}
+  class.
+  @see-class{gtk-box}
+  @see-class{gtk-hbox}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-hbox-child-position atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-hbox-child-position 'function)
- "@version{2013-2-13}
-  @begin{short}
-    Accessor of the child property @code{\"position\"} of the @class{gtk-hbox}
-    class.
-  @end{short}")
+ "@version{2013-8-28}
+  Accessor of the child property @code{\"position\"} of the @class{gtk-hbox}
+  class.
+  @see-class{gtk-box}
+  @see-class{gtk-hbox}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_hbox_new ()
@@ -752,8 +749,6 @@
    :type-initializer "gtk_vbox_get_type")
   nil)
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-vbox 'type)
  "@version{2013-5-18}
@@ -782,6 +777,10 @@
   @class{gtk-grid}.")
 
 ;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors of Child Properties
+;;;
+;;; ----------------------------------------------------------------------------
 
 (define-child-property "GtkVBox"
                        gtk-vbox-child-expand
@@ -804,60 +803,56 @@
                        "position" "gint" t t t)
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Child Properties
-;;;
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-vbox-child-expand atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-vbox-child-expand 'function)
- "@version{2013-2-13}
-  @begin{short}
-    Accessor of the child property @code{\"expand\"} of the @class{gtk-vbox}
-    class.
-  @end{short}")
+ "@version{2013-8-28}
+  Accessor of the child property @code{\"expand\"} of the @class{gtk-vbox}
+  class.
+  @see-class{gtk-box}
+  @see-class{gtk-vbox}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-vbox-child-fill atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-vbox-child-fill 'function)
- "@version{2013-2-13}
-  @begin{short}
-    Accessor of the child property @code{\"fill\"} of the @class{gtk-vbox}
-    class.
-  @end{short}")
+ "@version{2013-8-28}
+  Accessor of the child property @code{\"fill\"} of the @class{gtk-vbox}
+  class.
+  @see-class{gtk-box}
+  @see-class{gtk-vbox}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-vbox-child-padding atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-vbox-child-padding 'function)
- "@version{2013-2-13}
-  @begin{short}
-    Accessor of the child property @code{\"padding\"} of the @class{gtk-vbox}
-    class.
-  @end{short}")
+ "@version{2013-8-28}
+  Accessor of the child property @code{\"padding\"} of the @class{gtk-vbox}
+  class.
+  @see-class{gtk-box}
+  @see-class{gtk-vbox}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-vbox-child-pack-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-vbox-child-pack-type 'function)
- "@version{2013-2-13}
-  @begin{short}
-    Accessor of the child property @code{\"pack-type\"} of the @class{gtk-vbox}
-    class.
-  @end{short}")
+ "@version{2013-8-28}
+  Accessor of the child property @code{\"pack-type\"} of the @class{gtk-vbox}
+  class.
+  @see-class{gtk-box}
+  @see-class{gtk-vbox}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-vbox-child-position atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-vbox-child-position 'function)
- "@version{2013-2-13}
-  @begin{short}
-    Accessor of the child property @code{\"position\"} of the @class{gtk-vbox}
-    class.
-  @end{short}")
+ "@version{2013-8-28}
+  Accessor of the child property @code{\"position\"} of the @class{gtk-vbox}
+  class.
+  @see-class{gtk-box}
+  @see-class{gtk-vbox}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_vbox_new ()

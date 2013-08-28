@@ -4,9 +4,10 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;; 
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;; 
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -181,51 +182,46 @@
 (setf (gethash 'gtk-font-selection-child-expand atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-font-selection-child-expand 'function)
- "@version{2013-3-6}
-  @begin{short}
-    Accessor of the child property @code{\"expand\"} of the
-    @class{gtk-font-selection} class.
-  @end{short}")
+ "@version{2013-8-28}
+  Accessor of the child property @code{\"expand\"} of the
+  @class{gtk-font-selection} class.
+  @see-class{gtk-font-selection}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-font-selection-child-fill atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-font-selection-child-fill 'function)
- "@version{2013-3-6}
-  @begin{short}
-    Accessor of the child property @code{\"fill\"} of the
-    @class{gtk-font-selection} class.
-  @end{short}")
+ "@version{2013-8-28}
+  Accessor of the child property @code{\"fill\"} of the
+  @class{gtk-font-selection} class.
+  @see-class{gtk-font-selection}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-font-selection-child-padding atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-font-selection-child-padding 'function)
- "@version{2013-3-6}
-  @begin{short}
-    Accessor of the child property @code{\"padding\"} of the
-    @class{gtk-font-selection} class.
-  @end{short}")
+ "@version{2013-8-28}
+  Accessor of the child property @code{\"padding\"} of the
+  @class{gtk-font-selection} class.
+  @see-class{gtk-font-selection}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-font-selection-child-pack-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-font-selection-child-pack-type 'function)
- "@version{2013-3-6}
-  @begin{short}
-    Accessor of the child property @code{\"pack-type\"} of the
-    @class{gtk-font-selection} class.
-  @end{short}")
+ "@version{2013-8-28}
+  Accessor of the child property @code{\"pack-type\"} of the
+  @class{gtk-font-selection} class.
+  @see-class{gtk-font-selection}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-font-selection-child-position atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-font-selection-child-position 'function)
- "@version{2013-3-6}
-  @begin{short}
-    Accessor of the child property @code{\"position\"} of the
-    @class{gtk-font-selection} class.
-  @end{short}")
+ "@version{2013-8-28}
+  Accessor of the child property @code{\"position\"} of the
+  @class{gtk-font-selection} class.
+  @see-class{gtk-font-selection}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_font_selection_new ()
