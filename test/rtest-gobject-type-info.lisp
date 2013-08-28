@@ -36,6 +36,13 @@
   ;; +g-type-fundamental-max+
   (is (= (ash 255 2) +g-type-fundamental-max+)))
 
+;;;   g_type_gtype
+  
+(test g-type-gtype
+  (is (equal "GType" (gtype-name (g-type-gtype)))))
+
+;;;   GTypeFlags
+
 (test g-type-flags
   (is (= 4 (foreign-type-size 'g-type-flags)))
   (is (equal '(:abstract)
@@ -53,7 +60,9 @@
          (foreign-bitfield-value 'g-type-flags
                                  '(:abstract :value-abstract)))))
 
-(test g-type-info-g-type-fundamental-flags
+;;;   GTypeFundamentalFlags
+
+(test g-type-fundamental-flags
   (is (= 4 (foreign-type-size 'g-type-fundamental-flags)))
   (is (equal '(:classed)
              (foreign-bitfield-symbols 'g-type-fundamental-flags (ash 1 0))))
@@ -80,12 +89,25 @@
                                  '(:classed :instantiatable
                                    :derivable :deep-derivable)))))
 
+;;;   g_type_fundamental
+
+(test g-type-fundamental
+  (is (equal (gtype "GObject") (g-type-fundamental "GtkWidget")))
+  (is (equal (gtype "GObject") (g-type-fundamental "GtkContainer")))
+  (is (equal (gtype "GObject") (g-type-fundamental "GtkBox")))
+  (is (equal (gtype "GObject") (g-type-fundamental "GtkWindow")))
+  (is (equal (gtype "GInterface") (g-type-fundamental "GtkOrientable")))
+  (is (equal (gtype "GFlags") (g-type-fundamental "GtkAccelFlags")))
+  (is (equal (gtype "GEnum") (g-type-fundamental "GtkArrowPlacement")))
+  (is (equal (gtype "GBoxed") (g-type-fundamental "GdkRGBA")))
+  (is (equal (gtype "GBoxed") (g-type-fundamental "GtkTreePath"))))
+
+;;;   g_type_make_fundamental
+                                   
 (test g-type-make-fundamental
   (is (= (ash 256 2) (g-type-make-fundamental 256))))
   
-(test g-type-gtype
-  (is (equal "GType" (gtype-name (gtype (g-type-gtype)))))
-  (is (= 134838728 (gtype-id (gtype (g-type-gtype))))))
+;;;   g_type_is_abstract
 
 (test g-type-is-abstract
   (is-false (g-type-is-abstract +g-type-invalid+))
@@ -119,8 +141,9 @@
   (is-false (g-type-is-abstract "GtkAccelFlags"))
   (is-false (g-type-is-abstract "GtkArrowPlacement"))
   (is-false (g-type-is-abstract "GdkRGBA"))
-  (is-false (g-type-is-abstract "GtkTreePath"))
-)
+  (is-false (g-type-is-abstract "GtkTreePath")))
+
+;;;   g_type_is_dervied
 
 (test g-type-is-derived
   (is-false (g-type-is-derived +g-type-invalid+))
@@ -156,6 +179,8 @@
   (is-true  (g-type-is-derived "GdkRGBA"))
   (is-true  (g-type-is-derived "GtkTreePath")))
 
+;;;   g_type_is_fundamental
+  
 (test g-type-is-fundamental
   (is-true  (g-type-is-fundamental +g-type-invalid+))
   (is-true  (g-type-is-fundamental +g-type-none+))
@@ -190,6 +215,8 @@
   (is-false (g-type-is-fundamental "GdkRGBA"))
   (is-false (g-type-is-fundamental "GtkTreePath")))
 
+;;;   g_type_is_value_type
+  
 (test g-type-is-value-type
   (is-false (g-type-is-value-type +g-type-invalid+))
   (is-false (g-type-is-value-type +g-type-none+))
@@ -224,6 +251,8 @@
   (is-true  (g-type-is-value-type "GdkRGBA"))
   (is-true  (g-type-is-value-type "GtkTreePath")))
 
+;;;   g_type_has_value_table
+  
 (test g-type-has-value-table
 ;  (is-false (g-type-has-value-table +g-type-invalid+))
 ;  (is-false (g-type-has-value-table +g-type-none+))
@@ -258,6 +287,8 @@
   (is-true  (g-type-has-value-table "GdkRGBA"))
   (is-true  (g-type-has-value-table "GtkTreePath")))
 
+;;;   g_type_is_classed
+  
 (test g-type-is-classed
   (is-false (g-type-is-classed +g-type-invalid+))
   (is-false (g-type-is-classed +g-type-none+))
@@ -292,6 +323,8 @@
   (is-false (g-type-is-classed "GdkRGBA"))
   (is-false (g-type-is-classed "GtkTreePath")))
 
+;;;   g_type_is_instantiatable
+  
 (test g-type-is-instantiatable
   (is-false (g-type-is-instantiatable +g-type-invalid+))
   (is-false (g-type-is-instantiatable +g-type-none+))
@@ -326,6 +359,8 @@
   (is-false (g-type-is-instantiatable "GdkRGBA"))
   (is-false (g-type-is-instantiatable "GtkTreePath")))
 
+;;;   g_type_is_derivable
+  
 (test g-type-is-derivable
   (is-false (g-type-is-derivable +g-type-invalid+))
   (is-false (g-type-is-derivable +g-type-none+))
@@ -360,6 +395,8 @@
   (is-true  (g-type-is-derivable "GdkRGBA"))
   (is-true  (g-type-is-derivable "GtkTreePath")))
 
+;;;   g_type_is_deep_derivable
+  
 (test g-type-is-deep-derivable
   (is-false (g-type-is-deep-derivable +g-type-invalid+))
   (is-false (g-type-is-deep-derivable +g-type-none+))
@@ -394,6 +431,8 @@
   (is-false (g-type-is-deep-derivable "GdkRGBA"))
   (is-false (g-type-is-deep-derivable "GtkTreePath")))
 
+;;; g_type_is_interface
+  
 (test g-type-is-interface
   (is-false (g-type-is-interface +g-type-invalid+))
   (is-false (g-type-is-interface +g-type-none+))
@@ -428,7 +467,7 @@
   (is-false (g-type-is-interface "GdkRGBA"))
   (is-false (g-type-is-interface "GtkTreePath")))
 
-;;;     g-type-interface
+;;;   GTypeInterface
 
 (test g-type-interface
   (let ((interface (g-type-default-interface-ref "GtkOrientable")))
@@ -437,7 +476,7 @@
     (is-true (foreign-slot-value interface '(:struct g-type-interface) :type))
     (is-false (foreign-slot-value interface '(:struct g-type-interface) :instance-type))))
 
-;;;     g-type-class
+;;;   GTypeClass
 
 (test g-type-class
   (let ((class (g-type-class-ref "GtkButton")))
@@ -445,7 +484,7 @@
     (is (equal '(:type) (foreign-slot-names '(:struct g-type-class))))
     (is-true (foreign-slot-value class '(:struct g-type-class) :type))))
 
-;;;     g-type-instance
+;;;   GTypeInstance
 
 (test g-type-instance
   (let ((button (make-instance 'gtk-button)))
@@ -555,19 +594,6 @@
 
 (test g-type-fundamental-next
   (is (= 196 (g-type-fundamental-next))))
-
-;;;     g_type_fundamental
-
-(test g-type-fundamental
-  (is (equal (gtype "GObject") (g-type-fundamental "GtkWidget")))
-  (is (equal (gtype "GObject") (g-type-fundamental "GtkContainer")))
-  (is (equal (gtype "GObject") (g-type-fundamental "GtkBox")))
-  (is (equal (gtype "GObject") (g-type-fundamental "GtkWindow")))
-  (is (equal (gtype "GInterface") (g-type-fundamental "GtkOrientable")))
-  (is (equal (gtype "GFlags") (g-type-fundamental "GtkAccelFlags")))
-  (is (equal (gtype "GEnum") (g-type-fundamental "GtkArrowPlacement")))
-  (is (equal (gtype "GBoxed") (g-type-fundamental "GdkRGBA")))
-  (is (equal (gtype "GBoxed") (g-type-fundamental "GtkTreePath"))))
 
 ;;;     g_type_create_instance                   * not implemented *
 ;;;     g_type_free_instance                     * not implemented *
