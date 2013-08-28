@@ -4,10 +4,10 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation of this file has been copied from the
-;;; GObject Reference Manual Version 2.34.3. See <http://www.gtk.org>.
-;;; The API documentation of the Lisp binding is available at
-;;; <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GObject Reference Manual
+;;; Version 2.36.2 and modified to document the Lisp binding to the GObject
+;;; library. See <http://www.gtk.org>. The API documentation of the Lisp binding
+;;; is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -89,9 +89,7 @@
 
     The GType API is the foundation of the @em{GObject} system. It provides the
     facilities for registering and managing all fundamental data types,
-    user-defined object and interface types. Before using any GType or
-    @em{GObject} functions, @code{g_type_init()} must be called to initialize
-    the type system.
+    user-defined object and interface types.
 
     For type creation and registration purposes, all types fall into one of two
     categories: static or dynamic. Static types are never loaded or unloaded at
@@ -124,10 +122,10 @@
     to be a letter (a-z or A-Z) or an underscore '_'. Subsequent characters can
     be letters, numbers or any of '-_+'.
 
+    @about-class{g-type}
     @about-function{g-type-gtype}
     @about-symbol{g-type-flags}
     @about-symbol{g-type-fundamental-flags}
-    @about-class{g-type}
     @about-function{g-type-fundamental}
     @about-variable{g-type-fundamental-max}
     @about-function{g-type-make-fundamental}
