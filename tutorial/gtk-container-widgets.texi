@@ -657,7 +657,7 @@ you must first add the widget to a @xurl{gtk-viewport}, then add the
 ignore the presence of the viewport.
 
 The position of the scrollbars is controlled by the scroll adjustments.  See
-@curl{gtk-adjustment} for the fields in an adjustment - for
+@xurl{gtk-adjustment} for the fields in an adjustment - for
 @xurl{gtk-scrollbar}, used by @xurl{gtk-scrolled-window}, the "value" field
 represents the position of the scrollbar, which must be between the "lower"
 field and "upper - page-size".  The "page-size" field represents the size of the

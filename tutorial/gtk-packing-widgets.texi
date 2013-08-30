@@ -61,7 +61,7 @@ desired effect.
 To create a new box of the type @xurl{gtk-box}, the function @xurl{gtk-box-new}
 or the call @code{(make-instance 'gtk-box)} is used.  The first argument of the
 function @xurl{gtk-box-new} takes a keyword of the enumeration type
-@code{GtkOrientation}}, which is in the Lisp binding implemented as
+@code{GtkOrientation}, which is in the Lisp binding implemented as
 @xurl{gtk-orientation} with the values @code{:horizontal} or @code{:vertical} to
 determine a horizontal or a vertical box.  Because @xurl{gtk-box} implements
 the interface @xurl{gtk-orientable} an instance of @xurl{gtk-box} has the
