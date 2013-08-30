@@ -1645,7 +1645,10 @@
       @about-symbol{GTK_INPUT_ERROR}
     @end{subsection}
     @begin[GtkSearchEntry]{subsection}
-      not implemented
+      An entry which shows a search icon.
+
+      @about-class{gtk-search-entry}
+      @about-function{gtk-search-entry-new}
     @end{subsection}
     @begin[GtkEditable]{subsection}
       Interface for text-editing widgets.

@@ -188,6 +188,7 @@
    (:file "gtk.entry-completion")      ; GtkEntryCompletion
    (:file "gtk.scale")                 ; GtkScale, GtkHScale, GtkVScale
    (:file "gtk.spin-button")           ; GtkSpinButton
+   (:file "gtk.search-entry")          ; GtkSearchEntry
 
    ;; Menus, Combo Box, Toolbar
    (:file "gtk.menu-item")             ; Widget used for item in menus
