@@ -432,57 +432,13 @@
 ;;; APIs.
 ;;; ----------------------------------------------------------------------------
 
-;;; Lisp support to check the library version
-
-(defmacro push-library-version-features (library-name
-                                         major-version-var
-                                         minor-version-var
-                                         &body versions)
-  `(eval-when (:load-toplevel :execute)
-     ,@(iter (for (major minor) on versions by #'cddr)
-             (collect
-                 `(when (or (and (= ,major-version-var ,major)
-                                 (>= ,minor-version-var ,minor))
-                            (> ,major-version-var ,major))
-                    (pushnew ,(intern (format nil "~A-~A.~A"
-                                              (string library-name)
-                                              major minor)
-                                      (find-package :keyword))
-                             *features*))))))
-
-(define-condition foreign-library-minimum-version-mismatch (error)
-  ((library :initarg :library :reader .library)
-   (minimum-version :initarg :minimum-version :reader .minimum-version)
-   (actual-version :initarg :actual-version :reader .actual-version))
-  (:report (lambda (c s)
-             (format s
-                     "Library ~A has too old version: it is ~A but required ~
-                      to be at least ~A"
-                     (.library c)
-                     (.actual-version c)
-                     (.minimum-version c)))))
-
-(defun require-library-version (library min-major-version
-                                        min-minor-version
-                                        major-version
-                                        minor-version)
-  (unless (or (> major-version min-major-version)
-              (and (= major-version min-major-version)
-                   (>= minor-version min-minor-version)))
-    (restart-case
-        (error 'foreign-library-minimum-version-mismatch
-               :library library
-               :minimum-version (format nil "~A.~A"
-                                        min-major-version min-minor-version)
-               :actual-version (format nil "~A.~A"
-                                       major-version minor-version))
-      (ignore () :report "Ignore version requirement" nil))))
-
 (push-library-version-features glib
-  glib-major-version glib-micro-version
+  glib-major-version glib-minor-version
+  2 36
+  2 34
   2 32
-  2 34)
+  2 30)
 
-(require-library-version "GLib" 2 32 glib-major-version glib-minor-version)
+(require-library-version "GLib" 2 34 glib-major-version glib-minor-version)
 
 ;;; --- End of file glib.version.lisp ------------------------------------------
