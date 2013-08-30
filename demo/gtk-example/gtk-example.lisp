@@ -10,4 +10,5 @@
 (load "grab.lisp")
 (load "list-store.lisp")
 (load "message-dialog-new.lisp")
+(load "show-about-dialog.lisp")
 
