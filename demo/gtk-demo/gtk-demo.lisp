@@ -42,11 +42,14 @@
 (load "dialog-toplevel.lisp")
 (load "dialogs.lisp")
 (load "drawing.lisp")
+(load "entry-completion.lisp")
+(load "entry-buffer.lisp")
 (load "fixed.lisp")
 (load "frame.lisp")
 (load "grid-packing.lisp")
 (load "labels.lisp")
 (load "link-button.lisp")
+(load "search-entry.lisp")
 (load "selections-1.lisp")
 (load "simple-file-chooser.lisp")
 (load "simple-message.lisp")
@@ -200,6 +203,12 @@
                                 "Text Entry"
                                 "text-entry.lisp" "EXAMPLE-TEXT-ENTRY" 0)
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
+                                "Text Entry Buffer"
+                                "entry-buffer.lisp" "EXAMPLE-ENTRY-BUFFER" 0)
+      (gtk-tree-store-set model (gtk-tree-store-append model parent)
+                                "Text Entry Completion"
+                                "entry-completion.lisp" "EXAMPLE-ENTRY-COMPLETION" 0)
+      (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Scale Widgets"
                                 "scale-widgets.lisp" "EXAMPLE-SCALE-WIDGETS" 0)
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
@@ -237,6 +246,9 @@
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Menu"
                                 "menu.lisp" "EXAMPLE-MENU" 0)
+      (gtk-tree-store-set model (gtk-tree-store-append model parent)
+                                "Tool Palette"
+                                "tool-palette.lisp" "DEMO-TOOL-PALETTE" 0)
     )
     (let ((parent (gtk-tree-store-set model (gtk-tree-store-append model nil)
                                             "Selectors (Color/File/Font)")))
