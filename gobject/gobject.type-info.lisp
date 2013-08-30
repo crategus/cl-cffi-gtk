@@ -1922,6 +1922,12 @@
 
 ;; Not implemented because the function is deprecated.
 
+#-glib-2-36
+(defcfun ("g_type_init" %g-type-init) :void)
+
+#-glib-2-36
+(glib::at-init () (%g-type-init))
+
 ;;; ----------------------------------------------------------------------------
 ;;; enum GTypeDebugFlags
 ;;;
