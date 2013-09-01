@@ -1544,24 +1544,33 @@ tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_get_color ()
-;;;
-;;; void gtk_style_context_get_color (GtkStyleContext *context,
-;;;                                   GtkStateFlags state,
-;;;                                   GdkRGBA *color);
-;;;
-;;; Gets the foreground color for a given state.
-;;;
-;;; context :
-;;;     a GtkStyleContext
-;;;
-;;; state :
-;;;     state to retrieve the color for
-;;;
-;;; color :
-;;;     return value for the foreground color
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_style_context_get_color" %gtk-style-context-get-color) :void
+  (context (g-object gtk-style-context))
+  (state gtk-state-flags)
+  (color (g-boxed-foreign gdk-rgba)))
+
+(defun gtk-style-context-get-color (context state)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-9-1}
+  @argument[context]{a @class{gtk-style-context} object}
+  @argument[state]{state of type @symbol{gtk-state-flags} to retrieve the color
+    for}
+  @return{@code{color} -- value for the foreground color}
+  @begin{short}
+    Gets the foreground color for a given state.
+  @end{short}
+
+  Since 3.0
+  @see-class{gtk-style-context}
+  @see-symbol{gtk-state-flags}
+  @see-function{gtk-style-context-get-background-color}"
+  (let ((color (make-gdk-rgba)))
+    (%gtk-style-context-get-color context state color)
+    color))
+
+(export 'gtk-style-context-get-color)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_get_background_color ()
