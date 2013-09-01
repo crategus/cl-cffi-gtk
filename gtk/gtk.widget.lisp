@@ -8073,17 +8073,20 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_style_context ()
-;;;
-;;; GtkStyleContext * gtk_widget_get_style_context (GtkWidget *widget);
-;;;
-;;; Returns the style context associated to widget.
-;;;
-;;; widget :
-;;;     a GtkWidget
-;;;
-;;; Returns :
-;;;     a GtkStyleContext. This memory is owned by widget and must not be freed.
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_widget_get_style_context" gtk-widget-get-style-context)
+    (g-object gtk-style-context)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-9-1}
+  @argument[widget]{a @class{gtk-widget} object}
+  @return{A @class{gtk-style-context} object.}
+  Returns the style context associated to widget.
+  @see-class{gtk-widget}
+  @see-class{gtk-style-context}"
+  (widget (g-object gtk-widget)))
+
+(export 'gtk-widget-get-style-context)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_reset_style ()
