@@ -29,6 +29,8 @@
 
 (in-package :gtk-demo)
 
+(load "alignment.lisp")
+(load "aspect-frame.lisp")
 (load "application.lisp")
 (load "application-window.lisp")
 (load "assistant.lisp")
@@ -49,26 +51,25 @@
 (load "grid-packing.lisp")
 (load "labels.lisp")
 (load "link-button.lisp")
+(load "more-labels.lisp")
+(load "pixbuf-scale.lisp")
+(load "pixbufs.lisp")
+(load "progress-bar.lisp")
 (load "search-entry.lisp")
 (load "selections-1.lisp")
 (load "simple-file-chooser.lisp")
 (load "simple-message.lisp")
 (load "simple-text-view.lisp")
 (load "simple-window.lisp")
+(load "statusbar.lisp")
 (load "switch.lisp")
 (load "table-packing.lisp")
 (load "text-view-attributes.lisp")
 (load "toggle-buttons.lisp")
 (load "tool-palette.lisp")
 
-
-(load "more-labels.lisp")
-(load "progress-bar.lisp")
-(load "statusbar.lisp")
 (load "info-bar.lisp")
 (load "scale-widgets.lisp")
-(load "alignment.lisp")
-(load "aspect-frame.lisp")
 (load "paned-window.lisp")
 (load "scrolled-window.lisp")
 (load "button-box.lisp")
@@ -84,7 +85,6 @@
 (load "text-entry.lisp")
 (load "spin-button.lisp")
 (load "menu.lisp")
-(load "pixbufs.lisp")
 
 ;;; ----------------------------------------------------------------------------
 

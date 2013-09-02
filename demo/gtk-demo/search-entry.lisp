@@ -4,14 +4,6 @@
 
 
 #|
-
-static GtkWidget *window = NULL;
-static GtkWidget *menu = NULL;
-static GtkWidget *notebook = NULL;
-
-static guint search_progress_id = 0;
-static guint finish_search_id = 0;
-
 static void
 show_find_button (void)
 {
@@ -321,95 +313,105 @@ do_search_entry (GtkWidget *do_widget)
 }
 |#
 
-#|
-static void
-start_search (GtkButton *button,
-              GtkEntry  *entry)
-{
-  show_cancel_button ();
-  search_progress_id = g_timeout_add_seconds (1, (GSourceFunc)start_search_feedback, entry);
-  finish_search_id = g_timeout_add_seconds (15, (GSourceFunc)finish_search, button);
-}
-|#
 
-(defun start-search (button entry)
-  (declare (ignore button entry))
-)
+(defvar search-progress-id 0)
+(defvar finish-search-id 0)
 
-#|
-static void
-stop_search (GtkButton *button,
-             gpointer   data)
-{
-  g_source_remove (finish_search_id);
-  finish_search (button);
-}
-|#
-
-(defun stop-search (button)
-  (declare (ignore button))
-)
+(defun search-by-name (item entry)
+  (declare (ignore item))
+  (gtk-entry-set-icon-from-stock entry :primary "gtk-find")
+  (gtk-entry-set-icon-tooltip-text entry
+                                   :primary
+                                   (format nil
+                                           "Search by name~%~
+                                            Click here to change the search type"))
+  (gtk-entry-set-placeholder-text entry "name"))
 
 
-#|
-GtkWidget *
-do_search_entry (GtkWidget *do_widget)
-{
 
-      /* Set up the search icon */
-      search_by_name (NULL, GTK_ENTRY (entry));
+(defun create-search-menu (entry)
+  (let ((menu (make-instance 'gtk-menu)))
 
-      /* Set up the clear icon */
-      g_signal_connect (entry, "icon-press",
-                        G_CALLBACK (icon_press_cb), NULL);
-      g_signal_connect (entry, "activate",
-                        G_CALLBACK (activate_cb), NULL);
+    (let* ((image (gtk-image-new-from-stock "gtk-find" :menu))
+           (item (make-instance 'gtk-image-menu-item
+                               :use-underline t
+                               :label "Search by _name"
+                               :always-show-image t
+                               :image image)))
+      (g-signal-connect item "activate"
+         (lambda (item)
+           (declare (ignore item))
+           (gtk-entry-set-icon-from-stock entry :primary "gtk-find")
+           (gtk-entry-set-icon-tooltip-text entry
+                                            :primary
+                                            (format nil
+                                                    "Search by name~%~
+                                                     Click here to change the search type"))
+           (gtk-entry-set-placeholder-text entry "name")))
+      (gtk-menu-shell-append menu item))
 
-      /* Create the menu */
-      menu = create_search_menu (entry);
-      gtk_menu_attach_to_widget (GTK_MENU (menu), entry, NULL);
+    (let* ((image (gtk-image-new-from-stock "gtk-edit" :menu))
+           (item (make-instance 'gtk-image-menu-item
+                               :use-underline t
+                               :label "Search by _description"
+                               :always-show-image t
+                               :image image)))
+      (g-signal-connect item "activate"
+         (lambda (item)
+           (declare (ignore item))
+           (gtk-entry-set-icon-from-stock entry :primary "gtk-edit")
+           (gtk-entry-set-icon-tooltip-text entry
+                                            :primary
+                                            (format nil
+                                                    "Search by description~%~
+                                                     Click here to change the search type"))
+           (gtk-entry-set-placeholder-text entry "description")))
+      (gtk-menu-shell-append menu item))
 
-      /* add accessible alternatives for icon functionality */
-      g_signal_connect (entry, "populate-popup",
-                        G_CALLBACK (entry_populate_popup), NULL);
+    (let* ((image (gtk-image-new-from-stock "gtk-open" :menu))
+           (item (make-instance 'gtk-image-menu-item
+                               :use-underline t
+                               :label "Search by _file name"
+                               :always-show-image t
+                               :image image)))
 
-      /* Give the focus to the close button */
-      button = gtk_dialog_get_widget_for_response (GTK_DIALOG (window), GTK_RESPONSE_NONE);
-      gtk_widget_grab_focus (button);
-    }
+      (g-signal-connect item "activate"
+         (lambda (item)
+           (declare (ignore item))
+           (gtk-entry-set-icon-from-stock entry :primary "gtk-open")
+           (gtk-entry-set-icon-tooltip-text entry
+                                            :primary
+                                            (format nil
+                                                    "Search by file name~%~
+                                                     Click here to change the search type"))
+           (gtk-entry-set-placeholder-text entry "file name")))
+      (gtk-menu-shell-append menu item))
+    (gtk-widget-show-all menu)
+    menu))
 
-  if (!gtk_widget_get_visible (window))
-    gtk_widget_show_all (window);
-  else
-    {
-      gtk_widget_destroy (menu);
-      gtk_widget_destroy (window);
-      window = NULL;
-    }
-
-  return window;
-}
-|#
 
 (defun example-search-entry ()
   (within-main-loop
-    (let ((window (make-instance 'gtk-window
-                                 :type :toplevel
-                                 :title "Example Search Entry"
-                                 :border-width 12
-                                 :default-width 400))
-          (hbox (make-instance 'gtk-grid
-                               :orientation :horizontal))
-          (vbox (make-instance 'gtk-grid
-                               :orientation :vertical)))
+    (let* ((window (make-instance 'gtk-window
+                                  :type :toplevel
+                                  :title "Example Search Entry"
+                                  :border-width 12
+                                  :default-width 400))
+           ;; Create the search entry
+           (entry (make-instance 'gtk-search-entry))
+           ;; Create a search menu
+           (menu (create-search-menu entry))
+           (hbox (make-instance 'gtk-grid
+                                :orientation :horizontal))
+           (vbox (make-instance 'gtk-grid
+                                :orientation :vertical)))
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
                           (leave-gtk-main)))
 
       ;; Add the search entry to the horizontal grid
-      (gtk-container-add hbox
-                         (make-instance 'gtk-search-entry))
+      (gtk-container-add hbox entry)
 
       ;; Create the find and cancel buttons
       (let ((notebook (make-instance 'gtk-notebook
@@ -418,17 +420,47 @@ do_search_entry (GtkWidget *do_widget)
 
         ;; Create the find button
         (let ((button (gtk-button-new-with-label "Find")))
-          (g-signal-connect button "clicked" #'start-search)
+          (g-signal-connect button "clicked"
+             (lambda (button)
+               (gtk-notebook-set-current-page notebook 1)
+               (setf search-progress-id
+                     (g-timeout-add-seconds 1 #'start-search-feedback))
+               (setf finish-search-id
+                     (g-timeout-add-seconds 10 #'finish-search))))
           (gtk-notebook-append-page notebook button nil)
           (gtk-widget-show button))
 
         ;; Create the cancel button
         (let ((button (gtk-button-new-with-label "Cancel")))
-          (g-signal-connect button "clicked" #'stop-search)
+          (g-signal-connect button "clicked"
+             (lambda (button)
+               (g-source-remove finish-search-id)
+               (gtk-notebook-set-current-page notebook 0)))
           (gtk-notebook-append-page notebook button nil)
           (gtk-widget-show button))
 
         (gtk-container-add hbox notebook))
+
+      ;; Set up the search icon
+      (search-by-name nil entry)
+
+      ;; Set up the clear icon
+      (g-signal-connect entry "icon-press"
+         (lambda (entry position event)
+           (declare (ignore entry))
+           (when (eq position :primary)
+             (gtk-menu-popup menu
+                             :button (gdk-event-button-button event)
+                             :activate-time (gdk-event-button-time event)))))
+
+      (g-signal-connect entry "activate"
+         (lambda (entry button)
+           (when (eql 0 search-progress-id)
+             (start-search button entry))))
+
+      ;; Attach the menu to the entry
+      (gtk-menu-attach-to-widget menu entry (null-pointer))
+
 
       (gtk-container-add vbox hbox)
       (gtk-container-add window vbox)
