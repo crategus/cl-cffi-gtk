@@ -2693,27 +2693,33 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_entry_set_icon_from_stock ()
-;;;
-;;; void gtk_entry_set_icon_from_stock (GtkEntry *entry,
-;;;                                     GtkEntryIconPosition icon_pos,
-;;;                                     const gchar *stock_id);
-;;;
-;;; Sets the icon shown in the entry at the specified position from a stock
-;;; image.
-;;;
-;;; If stock_id is NULL, no icon will be shown in the specified position.
-;;;
-;;; entry :
-;;;     A GtkEntry
-;;;
-;;; icon_pos :
-;;;     Icon position
-;;;
-;;; stock_id :
-;;;     The name of the stock item, or NULL
-;;;
-;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-entry-set-icon-from-stock (entry icon-pos stock-id)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-31}
+  @argument[entry]{a @class{gtk-entry} widget}
+  @argument[icon-pos]{icon position of type @symbol{gtk-entry-icon-position}}
+  @arg{stock-id]{the name of the stock item, or @code{nil}}
+  @begin{short}
+    Sets the icon shown in the @arg{entry} at the specified position from a
+    stock image.
+  @end{short}
+
+  If @arg{stock-id} is @code{nil}, no icon will be shown in the specified
+  position.
+
+  Since 2.16
+  @see-class{gtk-entry}
+  @see-function{gtk-entry-get-icon-stock}"
+  (cond ((eq icon-pos :primary)
+         (setf (gtk-entry-primary-icon-stock entry) stock-id))
+        ((eq icon-pos :secondary)
+         (setf (gtk-entry-secondary-icon-stock entry) stock-id))
+        (t
+         (error "Unexpected icon position in GTK-ENTRY-SET-ICON-FROM-STOCK"))))
+
+(export 'gtk-entry-set-icon-from-stock)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_entry_set_icon_from_icon_name ()
