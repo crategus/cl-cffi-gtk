@@ -156,19 +156,24 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_cairo_set_source_rgba ()
-;;;
-;;; void gdk_cairo_set_source_rgba (cairo_t *cr, const GdkRGBA *rgba);
-;;;
-;;; Sets the specified GdkRGBA as the source color of cr.
-;;;
-;;; cr :
-;;;     a cairo context
-;;;
-;;; rgba :
-;;;     a GdkRGBA
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gdk_cairo_set_source_rgba" gdk-cairo-set-source-rgba) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-9-1}
+  @argument[cr]{a cairo context}
+  @argument[rgba]{a @class{gdk-rgba} structure}
+  @begin{short}
+    Sets the specified @class{gdk-rgba} as the source color of @arg{cr}.
+  @end{short}
+
+  Since 3.0
+  @see-symbol{cairo-t}
+  @see-class{gdk-rgba}"
+  (cr (:pointer (:struct cairo-t)))
+  (rgba (g-boxed-foreign gdk-rgba)))
+
+(export 'gdk-cairo-set-source-rgba)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_cairo_set_source_pixbuf ()
