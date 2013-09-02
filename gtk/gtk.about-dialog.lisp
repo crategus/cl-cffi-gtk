@@ -621,7 +621,6 @@
     Sets the @arg{name} to display in the @arg{about} dialog.
   @end{short}
   If this is not set, it defaults to @fun{g-get-application-name}.
-  @end{short}
 
   Since 2.12
   @see-class{gtk-about-dialog}
