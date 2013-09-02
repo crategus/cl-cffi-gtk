@@ -49,11 +49,11 @@
   @begin[The GdkPixbuf Structure]{section}
     Information that describes an image.
 
+    @about-class{gdk-pixbuf}
     @about-symbol{GdkPixbufError}
     @about-symbol{GDK_PIXBUF_ERROR}
     @about-symbol{gdk-colorspace}
     @about-symbol{gdk-pixbuf-alpha-mode}
-    @about-class{gdk-pixbuf}
     @about-function{gdk-pixbuf-get-colorspace}
     @about-function{gdk-pixbuf-get-n-channels}
     @about-function{gdk-pixbuf-get-has-alpha}
@@ -148,8 +148,8 @@
     common way to show an image with an alpha channel in image-viewing and
     editing software.
 
-    Since the full-featured functions (@fun{gdk-pixbuf-scale},
-    @fun{gdk-pixbuf-composite}, and @fun{gdk-pixbuf-composite-color}) are rather
+    Since the full-featured functions @fun{gdk-pixbuf-scale},
+    @fun{gdk-pixbuf-composite}, and @fun{gdk-pixbuf-composite-color} are rather
     complex to use and have many arguments, two simple convenience functions are
     provided, @fun{gdk-pixbuf-scale-simple} and
     @fun{gdk-pixbuf-composite-color-simple} which create a new pixbuf of a given
