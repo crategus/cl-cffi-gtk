@@ -4,9 +4,10 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -1034,24 +1035,26 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_attach_to_widget ()
-;;;
-;;; void gtk_menu_attach_to_widget (GtkMenu *menu,
-;;;                                 GtkWidget *attach_widget,
-;;;                                 GtkMenuDetachFunc detacher);
-;;;
-;;; Attaches the menu to the widget and provides a callback function that will
-;;; be invoked when the menu calls gtk_menu_detach() during its destruction.
-;;;
-;;; menu :
-;;;     a GtkMenu
-;;;
-;;; attach_widget :
-;;;     the GtkWidget that the menu will be attached to
-;;;
-;;; detacher :
-;;;     the user supplied callback function that will be called when the menu
-;;;     calls gtk_menu_detach()
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_menu_attach_to_widget" gtk-menu-attach-to-widget) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-31}
+  @argument[menu]{a @class{gtk-menu} widget}
+  @argument[attach-widget]{the @class{gtk-widget} that the menu will be
+    attached to}
+  @argument[detacher]{the user supplied callback function that will be called
+    when the menu calls the function @fun{gtk-menu-detach}}
+  Attaches the @arg{menu} to the widget and provides a callback function that will
+  be invoked when the menu calls the function @fun{gtk-menu-detach} during its
+  destruction.
+  @see-class{gtk-menu}
+  @see-fun{gtk-menu-detach}"
+  (menu (g-object gtk-menu))
+  (attach-widget (g-object gtk-widget))
+  (detacher :pointer))
+
+(export 'gtk-menu-attach-to-widget)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_detach ()
