@@ -501,17 +501,35 @@
                :INSTANCE-SIZE :N-PREALLOCS :INSTANCE-INIT-FN :VALUE-TABLE)
       (foreign-slot-names '(:struct g-type-info)))))
 
-;;;     GTypeFundamentalInfo
-;;;     GInterfaceInfo
-;;;     GTypeValueTable
+;;;   GTypeFundamentalInfo
 
-;;;     G_TYPE_FROM_INSTANCE
+(test g-type-fundamental-info
+  (is (= 4 (foreign-type-size '(:struct g-type-fundamental-info))))
+  (is (equal '(:TYPE-FLAGS)
+      (foreign-slot-names '(:struct g-type-fundamental-info)))))
+
+;;;   GInterfaceInfo
+
+(test g-interface-info
+  (is (= 12 (foreign-type-size '(:struct g-interface-info))))
+  (is (equal '(:INTERFACE-INIT :INTERFACE-FINALIZE :INTERFACE-DATA)
+      (foreign-slot-names '(:struct g-interface-info)))))
+
+;;;   GTypeValueTable
+
+(test g-type-value-table
+  (is (= 32 (foreign-type-size '(:struct g-type-value-table))))
+  (is (equal '(:VALUE-INIT :VALUE-FREE :VALUE-COPY :VALUE-PEEK-POINTER
+               :COLLECT-FORMAT :COLLECT-VALUE :LCOPY-FORMAT :LCOPY-VALUE)
+      (foreign-slot-names '(:struct g-type-value-table)))))
+
+;;; G_TYPE_FROM_INSTANCE
 
 (test g-type-from-instance
   (is (equal (gtype "GtkButton")
              (g-type-from-instance (make-instance 'gtk-button)))))
 
-;;;     G_TYPE_FROM_CLASS
+;;;   G_TYPE_FROM_CLASS
 
 (test g-type-from-class
   (is (equal (gtype "GtkWidget")
@@ -521,13 +539,18 @@
   (is (equal (gtype "GtkButton")
              (g-type-from-class (g-type-class-ref "GtkButton")))))
 
-;;;     G_TYPE_FROM_INTERFACE
+;;;   G_TYPE_FROM_INTERFACE
 
 (test g-type-from-interface
   (is (equal (gtype "GtkOrientable")
              (g-type-from-interface (g-type-default-interface-ref "GtkOrientable")))))
 
-;;;     G_TYPE_INSTANCE_GET_CLASS                * not implemented *
+;;;     G_TYPE_INSTANCE_GET_CLASS
+
+(test g-type-instance-get-class
+  (is (equal (gtype "GtkButton")
+             (g-type-from-class (g-type-instance-get-class (make-instance 'gtk-button))))))
+
 ;;;     G_TYPE_INSTANCE_GET_INTERFACE            * not implemented *
 ;;;     G_TYPE_INSTANCE_GET_PRIVATE              * not implemented *
 ;;;     G_TYPE_CLASS_GET_PRIVATE                 * not implemented *
@@ -542,7 +565,13 @@
     (is-true (g-type-check-instance-type button "GtkButton"))))
 
 ;;;     G_TYPE_CHECK_CLASS_CAST                  * not implemented *
-;;;     G_TYPE_CHECK_CLASS_TYPE
+
+;;;   G_TYPE_CHECK_CLASS_TYPE
+
+(test g-type-check-class-type
+  (is-true  (g-type-check-class-type (g-type-class-ref "GtkButton") "GObject"))
+  (is-false (g-type-check-class-type (g-type-class-ref "GtkButton") "GtkWindow")))
+
 ;;;     G_TYPE_CHECK_VALUE                       * not implemented *
 ;;;     G_TYPE_CHECK_VALUE_TYPE                  * not implemented *
 ;;;     G_TYPE_FLAG_RESERVED_ID_BIT              * not implemented *
@@ -552,9 +581,23 @@
 ;;;     GTypeDebugFlags                          * not implemented *
 ;;;
 ;;;     g_type_init_with_debug_flags             * not implemented *
-;;;     g_type_name
+
+;;;   g_type_name
+
+(test g-type-name
+  (is (equal "gdouble" (g-type-name +g-type-double+)))
+  (is (equal "GBoxed" (g-type-name +g-type-boxed+)))
+  (is (equal "GtkWidget" (g-type-name (gtype "GtkWidget")))))
+
 ;;;     g_type_qname
-;;;     g_type_from_name
+
+;;;   g_type_from_name
+
+(test g-type-from-name
+  (is (equal (gtype "gdouble") (g-type-from-name "gdouble")))
+  (is (equal (gtype "GBoxed") (g-type-from-name "GBoxed")))
+  (is (equal (gtype "GtkWidget") (g-type-from-name "GtkWidget"))))
+
 ;;;     g_type_parent
 ;;;     g_type_depth
 ;;;     g_type_next_base
@@ -717,10 +760,6 @@
   (is (equal name (g-type-name gtype)))
   (is (equal name (g-type-name id)))
   (is (equal name (g-type-name name)))
-  ;; g-type-qname
-  (is (equal name (g-type-qname gtype)))
-  (is (equal name (g-type-qname id)))
-  (is (equal name (g-type-qname name)))
   ;; g-type-from-name
   (is (equal gtype (g-type-from-name name)))
   ;; g-type-parent
@@ -853,10 +892,6 @@
     (is (equal name (g-type-name gtype)))
     (is (equal name (g-type-name id)))
     (is (equal name (g-type-name name)))
-    ;; g-type-qname
-    (is (equal name (g-type-qname gtype)))
-    (is (equal name (g-type-qname id)))
-    (is (equal name (g-type-qname name)))
     ;; g-type-from-name
     (is (equal gtype (g-type-from-name name)))
     ;; g-type-parent
