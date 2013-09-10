@@ -542,6 +542,10 @@
   class.")
 
 ;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors of Child Properties
+;;;
+;;; ----------------------------------------------------------------------------
 
 (define-child-property "GtkNotebook"
                        gtk-notebook-child-detachable
@@ -572,78 +576,69 @@
                        "tab-label" "gchararray" t t t)
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Child Properties
-;;;
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-notebook-child-detachable atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-notebook-child-detachable 'function)
- "@version{2013-3-17}
+ "@version{2013-9-10}
   Accessor of the child property @code{\"detachable\"} of the
-  @class{gtk-notebook} class.")
-
-;;; ----------------------------------------------------------------------------
+  @class{gtk-notebook} class.
+  @see-class{gtk-notebook}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-notebook-child-menu-label atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-notebook-child-menu-label 'function)
- "@version{2013-3-17}
+ "@version{2013-9-10}
   Accessor of the child property @code{\"menu-label\"} of the
-  @class{gtk-notebook} class.")
-
-;;; ----------------------------------------------------------------------------
+  @class{gtk-notebook} class.
+  @see-class{gtk-notebook}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-notebook-child-position atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-notebook-child-position 'function)
- "@version{2013-3-17}
+ "@version{2013-9-10}
   Accessor of the child property @code{\"position\"} of the
-  @class{gtk-notebook} class.")
-
-;;; ----------------------------------------------------------------------------
+  @class{gtk-notebook} class.
+  @see-class{gtk-notebook}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-notebook-child-reorderable atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-notebook-child-reorderable 'function)
- "@version{2013-3-17}
+ "@version{2013-9-10}
   Accessor of the child property @code{\"reorderable\"} of the
-  @class{gtk-notebook} class.")
-
-;;; ----------------------------------------------------------------------------
+  @class{gtk-notebook} class.
+  @see-class{gtk-notebook}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-notebook-child-tab-expand atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-notebook-child-tab-expand 'function)
- "@version{2013-3-17}
+ "@version{2013-9-10}
   Accessor of the child property @code{\"tab-expand\"} of the
-  @class{gtk-notebook} class.")
-
-;;; ----------------------------------------------------------------------------
+  @class{gtk-notebook} class.
+  @see-class{gtk-notebook}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-notebook-child-tab-fill atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-notebook-child-tab-fill 'function)
- "@version{2013-3-17}
+ "@version{2013-9-10}
   Accessor of the child property @code{\"tab-fill\"} of the
-  @class{gtk-notebook} class.")
-
-;;; ----------------------------------------------------------------------------
+  @class{gtk-notebook} class.
+  @see-class{gtk-notebook}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-notebook-child-tab-label atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-notebook-child-tab-label 'function)
- "@version{2013-3-17}
+ "@version{2013-9-10}
   Accessor of the child property @code{\"tab-label\"} of the
-  @class{gtk-notebook} class.")
+  @class{gtk-notebook} class.
+  @see-class{gtk-notebook}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_notebook_new ()
@@ -1051,34 +1046,36 @@
 ;;; gtk_notebook_get_nth_page ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_notebook_get_nth_page" gtk-notebook-nth-page) g-object
+(defcfun ("gtk_notebook_get_nth_page" gtk-notebook-get-nth-page) g-object
  #+cl-cffi-gtk-documentation
- "@version{2013-5-20}
-  @argument[notebook]{a @class{gtk-notebook} container}
+ "@version{2013-9-10}
+  @argument[notebook]{a @class{gtk-notebook} widget}
   @argument[page-num]{the index of a page in the notebook, or -1 to get the
     last page}
   @return{The child widget, or @code{nil} if @arg{page-num} is out of bounds.}
-  Returns the child widget contained in page number @arg{page-num}."
-  (notebook g-object)
+  Returns the child widget contained in page number @arg{page-num}.
+  @see-class{gtk-notebook}"
+  (notebook (g-object gtk-notebook))
   (page-num :int))
 
-(export 'gtk-notebook-nth-page)
+(export 'gtk-notebook-get-nth-page)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_notebook_get_n_pages ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_notebook_get_n_pages" gtk-notebook-n-pages) :int
+(defcfun ("gtk_notebook_get_n_pages" gtk-notebook-get-n-pages) :int
  #+cl-cffi-gtk-documentation
- "@version{2013-5-20}
-  @argument[notebook]{a @class{gtk-notebook} container}
+ "@version{2013-9-10}
+  @argument[notebook]{a @class{gtk-notebook} widget}
   @return{The number of pages in the notebook.}
   @short{Gets the number of pages in a notebook.}
 
-  Since 2.2"
-  (notebook g-object))
+  Since 2.2
+  @see-class{gtk-notebook}"
+  (notebook (g-object gtk-notebook)))
 
-(export 'gtk-notebook-n-pages)
+(export 'gtk-notebook-get-n-pages)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_notebook_get_tab_label ()

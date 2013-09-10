@@ -307,7 +307,16 @@
       @about-function{gtk-drag-source-add-uri-targets}
     @end{subsection}
     @begin[Stock items]{subsection}
-      not implemented
+      Prebuilt common menu/toolbar items and corresponding icons.
+
+      @about-class{gtk-stock-item}
+      @about-function{gtk-stock-add}
+      @about-function{gtk-stock-add-static}
+      @about-function{gtk-stock-item-copy}
+      @about-function{gtk-stock-item-free}
+      @about-function{gtk-stock-list-ids}
+      @about-function{gtk-stock-lookup}
+      @about-function{gtk-stock-set-translate-func}
     @end{subsection}
     @begin[GtkSettings]{subsection}
       Sharing settings between applications.
@@ -1385,7 +1394,7 @@
       @about-function{gtk-radio-button-new-with-label}
       @about-function{gtk-radio-button-new-with-label-from-widget}
       @about-function{gtk-radio-button-new-with-mnemonic}
-      @about-function{gtk-radio-button-with-mnemonic-from-widget}
+      @about-function{gtk-radio-button-new-with-mnemonic-from-widget}
       @about-function{gtk-radio-button-set-group}
       @about-function{gtk-radio-button-get-group}
       @about-function{gtk-radio-button-join-group}
@@ -3093,6 +3102,10 @@ setup_tree (void)
       A menu widget
 
       @about-class{gtk-menu}
+      @about-function{gtk-menu-child-left-attach}
+      @about-function{gtk-menu-child-right-attach}
+      @about-function{gtk-menu-child-top-attach}
+      @about-function{gtk-menu-child-bottom-attach}
       @about-function{gtk-menu-new}
       @about-function{gtk-menu-from-model}
       @about-function{gtk-menu-set-screen}
@@ -4006,6 +4019,8 @@ setup_tree (void)
       Infinite scrollable area containing child widgets and/or custom drawing.
 
       @about-class{gtk-layout}
+      @about-function{gtk-layout-child-x}
+      @about-function{gtk-layout-child-y}
       @about-function{gtk-layout-new}
       @about-function{gtk-layout-put}
       @about-function{gtk-layout-move}
@@ -4021,6 +4036,13 @@ setup_tree (void)
       A tabbed notebook container.
 
       @about-class{gtk-notebook}
+      @about-function{gtk-notebook-child-detachable}
+      @about-function{gtk-notebook-child-menu-label}
+      @about-function{gtk-notebook-child-position}
+      @about-function{gtk-notebook-child-reorderable}
+      @about-function{gtk-notebook-child-tab-expand}
+      @about-function{gtk-notebook-child-tab-fill}
+      @about-function{gtk-notebook-child-tab-label}
       @about-function{gtk-notebook-new}
       @about-function{gtk-notebook-append-page}
       @about-function{gtk-notebook-append-page-menu}
@@ -4070,6 +4092,14 @@ setup_tree (void)
       Pack widgets in regular patterns.
 
       @about-class{gtk-table}
+      @about-function{gtk-table-child-left-attach}
+      @about-function{gtk-table-child-right-attach}
+      @about-function{gtk-table-child-top-attach}
+      @about-function{gtk-table-child-bottom-attach}
+      @about-function{gtk-table-child-x-options}
+      @about-function{gtk-table-child-y-options}
+      @about-function{gtk-table-child-x-padding}
+      @about-function{gtk-table-child-y-padding}
       @about-function{gtk-table-new}
       @about-function{gtk-table-resize}
       @about-function{gtk-table-get-size}

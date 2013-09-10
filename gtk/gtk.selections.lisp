@@ -551,14 +551,12 @@
   @argument[list]{a @class{gtk-target-list} structure}
   @argument[info]{an ID that will be passed back to the application}
   @begin{short}
-    Appends the text targets supported by @class{gtk-selection} to the target
-    list.
+    Appends the text targets supported by a selection to the target list.
   @end{short}
   All targets are added with the same info.
 
   Since 2.6
-  @see-class{gtk-target-list}
-  @see-class{gtk-selection}"
+  @see-class{gtk-target-list}"
   (list (g-boxed-foreign gtk-target-list))
   (info :uint))
 
@@ -577,14 +575,12 @@
   @argument[writable]{whether to add only targets for which GTK+ knows how to
     convert a pixbuf into the format}
   @begin{short}
-    Appends the image targets supported by @class{gtk-selection} to the target
-    list.
+    Appends the image targets supported by a selection to the target list.
   @end{short}
   All targets are added with the same info.
 
   Since 2.6
-  @see-class{gtk-target-list}
-  @see-class{gtk-selection}"
+  @see-class{gtk-target-list}"
   (list (g-boxed-foreign gtk-target-list))
   (info :uint)
   (writeable :boolean))
@@ -602,14 +598,12 @@
   @argument[list]{a @class{gtk-target-list} structure}
   @argument[info]{an ID that will be passed back to the application}
   @begin{short}
-    Appends the URI targets supported by @class{gtk-selection} to the target
-    list.
+    Appends the URI targets supported by a selection to the target list.
   @end{short}
   All targets are added with the same info.
 
   Since 2.6
-  @see-class{gtk-target-list}
-  @see-class{gtk-selection}"
+  @see-class{gtk-target-list}"
   (list (g-boxed-foreign gtk-target-list))
   (info :uint))
 

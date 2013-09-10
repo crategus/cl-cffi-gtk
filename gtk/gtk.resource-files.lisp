@@ -318,7 +318,7 @@
         widgets.}
       @entry[base[state@] = color]{Sets the color used for the background of
         widgets displaying editable text. This color is used for the background
-        of, among others, @class{gtk-text}, @class{gtk-entry}, @code{GtkList},
+        of, among others, @code{GtkText}, @class{gtk-entry}, @code{GtkList},
         and @code{GtkCList}.}
       @entry[text[state@] = color]{Sets the color used for foreground of widgets
         using base for the background color.}
@@ -327,7 +327,7 @@
       @entry[ythickness = number]{Sets the @code{ythickness}, which is used for
         various vertical padding values in GTK+.}
       @entry[bg_pixmap[state@] = pixmap]{Sets a background pixmap to be used in
-        place of the bg color (or for @class{gtk-text}, in place of the base
+        place of the bg color (or for @code{GtkText}, in place of the base
         color. The special value @code{\"<parent>\"} may be used to indicate
         that the widget should use the same background pixmap as its parent.
         The special value  @code{\"<none>\"} may be used to indicate no

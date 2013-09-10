@@ -4,9 +4,10 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -243,77 +244,78 @@
 (setf (gethash 'gtk-message-dialog-buttons atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-message-dialog-buttons 'function)
- "@version{2013-4-16}
+ "@version{2013-9-10}
   Accessor of the slot @code{\"buttons\"} of the @class{gtk-message-dialog}
-  class.")
+  class.
+  @see-class{gtk-message-dialog}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-message-dialog-image atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-message-dialog-image 'function)
- "@version{2013-4-16}
+ "@version{2013-9-10}
   Accessor of the slot @code{\"image\"} of the @class{gtk-message-dialog}
-  class.")
+  class.
+  @see-class{gtk-message-dialog}
+  @see-function{gtk-message-dialog-get-image}
+  @see-function{gtk-message-dialog-set-image}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-message-dialog-message-area atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-message-dialog-message-area 'function)
- "@version{2013-4-16}
-  @begin{short}
-    Accessor of the slot @code{\"message-area\"} of the
-    @class{gtk-message-dialog} class.
-  @end{short}")
+ "@version{2013-9-10}
+  Accessor of the slot @code{\"message-area\"} of the
+  @class{gtk-message-dialog} class.
+  @see-class{gtk-message-dialog}
+  @see-function{gtk-message-dialog-get-message-area}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-message-dialog-message-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-message-dialog-message-type 'function)
- "@version{2013-4-16}
-  @begin{short}
-    Accessor of the slot @code{\"message-type\"} of the
-    @class{gtk-message-dialog} class.
-  @end{short}")
+ "@version{2013-9-10}
+  Accessor of the slot @code{\"message-type\"} of the
+  @class{gtk-message-dialog} class.
+  @see-class{gtk-message-dialog}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-message-dialog-secondary-text atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-message-dialog-secondary-text 'function)
- "@version{2013-4-16}
-  @begin{short}
-    Accessor of the slot @code{\"secondary-text\"} of the
-    @class{gtk-message-dialog} class.
-  @end{short}")
+ "@version{2013-9-10}
+  Accessor of the slot @code{\"secondary-text\"} of the
+  @class{gtk-message-dialog} class.
+  @see-class{gtk-message-dialog}
+  @see-function{gtk-message-dialog-format-secondary-text}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-message-dialog-secondary-use-markup
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-message-dialog-secondary-use-markup 'function)
- "@version{2013-4-16}
-  @begin{short}
-    Accessor of the slot @code{\"secondary-use-markup\"} of the
-    @class{gtk-message-dialog} class.
-  @end{short}")
+ "@version{2013-9-10}
+  Accessor of the slot @code{\"secondary-use-markup\"} of the
+  @class{gtk-message-dialog} class.
+  @see-class{gtk-message-dialog}
+  @see-function{gtk-message-dialog-format-secondary-markup}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-message-dialog-text atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-message-dialog-text 'function)
- "@version{2013-4-16}
-  @begin{short}
-    Accessor of the slot @code{\"text\"} of the @class{gtk-message-dialog} class.
-  @end{short}")
+ "@version{2013-9-10}
+  Accessor of the slot @code{\"text\"} of the @class{gtk-message-dialog} class.
+  @see-class{gtk-message-dialog}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-message-dialog-use-markup atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-message-dialog-use-markup 'function)
- "@version{2013-4-16}
-  @begin{short}
-    Accessor of the slot @code{\"use-markup\"} of the @class{gtk-message-dialog}
-    class.
-  @end{short}")
+ "@version{2013-9-10}
+  Accessor of the slot @code{\"use-markup\"} of the @class{gtk-message-dialog}
+  class.
+  @see-class{gtk-message-dialog}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkMessageType
@@ -331,7 +333,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-message-type atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-message-type atdoc:*external-symbols*)
- "@version{2013-7-3}
+ "@version{2013-9-10}
   @begin{short}
     The type of message being displayed in the dialog.
   @end{short}
@@ -351,7 +353,8 @@
     @entry[:question]{Question requiring a choice.}
     @entry[:error]{Fatal error message.}
     @entry[:other]{None of the above, does not get an icon.}
-  @end{table}")
+  @end{table}
+  @see-class{gtk-message-dialog}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkButtonsType
@@ -370,7 +373,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-buttons-type atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-buttons-type atdoc:*external-symbols*)
- "@version{2013-7-3}
+ "@version{2013-9-10}
   @begin{short}
     Prebuilt sets of buttons for the dialog. If none of these choices are
     appropriate, simply use @code{:none} and call the function
@@ -399,6 +402,7 @@
     @entry[:yes-no]{Yes and No buttons.}
     @entry[:ok-cancel]{OK and Cancel buttons.}
   @end{table}
+  @see-class{gtk-message-dialog}
   @see-function{gtk-dialog-add-buttons}")
 
 ;;; ----------------------------------------------------------------------------
@@ -407,13 +411,13 @@
 
 (defun gtk-message-dialog-new (parent flags type buttons message &rest args)
  #+cl-cffi-gtk-documentation
- "@version{2013-7-3}
+ "@version{2013-9-10}
   @argument[parent]{transient parent, or @code{nil} for none}
-  @argument[flags]{flags}
-  @argument[type]{type of message}
-  @arg[buttons]{set of buttons to use}
-  @argument[message-format]{format-style format string, or @code{nil}}
-  @argument[args]{the arguments for @arg{message-format}}
+  @argument[flags]{flags of type @symbol{gtk-dialog-flags}}
+  @argument[type]{type of message of type @symbol{gtk-message-type}}
+  @argument[buttons]{set of buttons to use of type @symbol{gtk-buttons-type}}
+  @argument[message]{format string, or @code{nil}}
+  @argument[args]{the arguments for @arg{message}}
   @return{A new @class{gtk-message-dialog} window.}
   @begin{short}
     Creates a new message dialog, which is a simple dialog with an icon
@@ -421,7 +425,13 @@
     want to see.
   @end{short}
   When the user clicks a button a \"response\" signal is emitted with response
-  IDs from @symbol{gtk-response-type}. See @class{gtk-dialog} for more details.
+  IDs from the @symbol{gtk-response-type} enumeration. See @class{gtk-dialog}
+  for more details.
+  @see-class{gtk-message-dialog}
+  @see-class{gtk-dialog}
+  @see-symbol{gtk-dialog-flags}
+  @see-symbol{gtk-message-type}
+  @see-symbol{gtk-buttons-type}  
   @see-symbol{gtk-response-type}"
   (let ((dialog (make-instance 'gtk-message-dialog
                                :message-type type
@@ -446,13 +456,13 @@
 (defun gtk-message-dialog-new-with-markup (parent flags type buttons message
                                            &rest args)
  #+cl-cffi-gtk-documentation
- "@version{2013-7-3}
+ "@version{2013-9-10}
   @argument[parent]{transient parent, or @code{nil} for none}
-  @argument[flags]{flags}
-  @argument[type]{type of message}
-  @arg[buttons]{set of buttons to use}
-  @argument[message-format]{format-style format string, or @code{nil}}
-  @argument[args]{the arguments for @arg{message-format}}
+  @argument[flags]{flags of type @symbol{gtk-dialog-type}}
+  @argument[type]{type of message of type @symbol{gtk-message-type}}
+  @argument[buttons]{set of buttons to use of type @symbol{gtk-buttons-type}}
+  @argument[message]{format string, or @code{nil}}
+  @argument[args]{the arguments for @arg{message}}
   @return{A new @class{gtk-message-dialog} window.}
   @begin{short}
     Creates a new message dialog, which is a simple dialog with an icon
@@ -460,15 +470,15 @@
     marked up with the Pango text markup language.
   @end{short}
   When the user clicks a button a \"response\" signal is emitted with response
-  IDs from @symbol{gtk-response-type}. See @class{gtk-dialog} for more details.
+  IDs from the @symbol{gtk-response-type} enumeration. See
+  @class{gtk-dialog} for more details.
 
-  Special XML characters in the @arg{message-format} arguments passed to this
-  function will automatically be escaped as necessary. Usually this is what you
-  want, but if you have an existing Pango markup string that you want to use
-  literally as the label, then you need to use the function
-  @fun{gtk-message-dialog-set-markup} instead, since you cannot pass the markup
-  string either as the format (it might contain '%' characters) or as a string
-  argument.
+  Special XML characters in the message arguments passed to this function will
+  automatically be escaped as necessary. Usually this is what you want, but if
+  you have an existing Pango markup string that you want to use literally as the
+  label, then you need to use the function @fun{gtk-message-dialog-set-markup}
+  instead, since you cannot pass the markup string either as the format, it
+  might contain '%' characters, or as a string argument.
   @begin{pre}
 (let ((dialog (gtk-message-dialog-new main-window
                                       :destroy-with-parent
@@ -478,7 +488,13 @@
   (gtk-message-dialog-set-markup dialog markup)
   ... )
   @end{pre}
-  Since 2.4"
+  Since 2.4
+  @see-class{gtk-message-dialog}
+  @see-symbol{gtk-dialog-type}
+  @see-symbol{gtk-message-type}
+  @see-symbol{gtk-buttons-type}
+  @see-symbol{gtk-response-type}
+  @see-function{gtk-message-dialog-set-markup}"
   (let ((dialog (make-instance 'gtk-message-dialog
                                :use-markup t
                                :message-type type
@@ -502,15 +518,16 @@
 
 (defun gtk-message-dialog-set-markup (dialog text)
  #+cl-cffi-gtk-documentation
- "@version{2013-7-3}
+ "@version{2013-9-10}
   @argument[dialog]{a @class{gtk-message-dialog} window}
-  @argument[text]{markup string (see Pango markup format)}
+  @argument[text]{markup string, see Pango markup format}
   @begin{short}
     Sets the text of the message @arg{dialog} to be @arg{text}, which is marked
     up with the Pango text markup language.
   @end{short}
 
-  Since 2.4"
+  Since 2.4
+  @see-class{gtk-message-dialog}"
   (setf (gtk-message-dialog-use-markup dialog) t
         (gtk-message-dialog-text dialog) text))
 
@@ -524,14 +541,16 @@
 
 (defun gtk-message-dialog-set-image (dialog image)
  #+cl-cffi-gtk-documentation
- "@version{2013-7-3}
+ "@version{2013-9-10}
   @argument[dialog]{a @class{gtk-message-dialog} window}
   @argument[image]{the image}
   @begin{short}
     Sets the @arg{dialog}'s image to @arg{image}.
   @end{short}
 
-  Since 2.10"
+  Since 2.10
+  @see-class{gtk-message-dialog}
+  @see-function{gtk-message-dialog-get-image}"
   (setf (gtk-message-dialog-image dialog) image))
 
 (export 'gtk-message-dialog-set-image)
@@ -544,12 +563,14 @@
 
 (defun gtk-message-dialog-get-image (dialog)
  #+cl-cffi-gtk-documentation
- "@version{2013-7-3}
+ "@version{2013-9-10}
   @argument[dialog]{a @class{gtk-message-dialog} window}
   @return{The @arg{dialog}'s image.}
   @short{Gets the @arg{dialog}'s image.}
 
-  Since 2.14"
+  Since 2.14
+  @see-class{gtk-message-dialog}
+  @see-function{gtk-message-dialog-set-image}"
   (gtk-message-dialog-image dialog))
 
 (export 'gtk-message-dialog-get-image)
@@ -562,19 +583,20 @@
 
 (defun gtk-message-dialog-format-secondary-text (dialog message &rest args)
  #+cl-cffi-gtk-documentation
- "@version{2013-7-3}
+ "@version{2013-9-10}
   @argument[dialog]{a @class{gtk-message-dialog} window}
-  @argument[message]{@code{format}-style format string, or @code{nil}}
-  @argument[args]{argumentes for @arg{message}}
+  @argument[message]{format string, or @code{nil}}
+  @argument[args]{arguments for @arg{message}}
   @begin{short}
     Sets the secondary text of the message dialog to be @arg{message} with
-    @code{format}-style and the arguments @arg{args}.
+    the arguments @arg{args}.
   @end{short}
 
   Note that setting a secondary text makes the primary text become bold,
   unless you have provided explicit markup.
 
   Since 2.6
+  @see-class{gtk-message-dialog}
   @see-function{gtk-message-dialog-format-secondary-markup}"
   (setf (gtk-message-dialog-secondary-text dialog)
         (apply #'format (cons nil (cons message args)))))
@@ -589,32 +611,27 @@
 
 (defun gtk-message-dialog-format-secondary-markup (dialog message &rest args)
  #+cl-cffi-gtk-documentation
- "@version{2013-7-3}
+ "@version{2013-9-10}
   @argument[dialog]{a @class{gtk-message-dialog} window}
-  @argument[message]{@code{format}-style markup string (see Pango markup
-    format), or @code{nil}}
+  @argument[message]{markup string, see Pango markup format, or @code{nil}}
   @argument[args]{arguments for @arg{message}}
   @begin{short}
     Sets the secondary text of the message dialog to be @arg{message} with
-    @code{format}-style, which is marked up with the Pango text markup language.
+    the arguments @arg{args}, which is marked up with the Pango text markup
+    language.
   @end{short}
 
   Note that setting a secondary text makes the primary text become bold,
   unless you have provided explicit markup.
 
-  Due to an oversight, this function does not escape special XML characters
-  like the function @fun{gtk-message-dialog-new-with-markup} does. Thus, if the
-  arguments may contain special XML characters, you should use
-  @code{g_markup_printf_escaped()} to escape it.
-  @begin{pre}
- gchar *msg;
+  Due to an oversight in the C implementation, this function does not escape
+  special XML characters like the function
+  @fun{gtk-message-dialog-new-with-markup} does.
 
- msg = g_markup_printf_escaped (message_format, ...);
- gtk_message_dialog_format_secondary_markup (message_dialog, \"%s\", msg);
- g_free (msg);
-  @end{pre}
   Since 2.6
-  @see-function{gtk-message-dialog-new-with-markup}"
+  @see-class{gtk-message-dialog}
+  @see-function{gtk-message-dialog-new-with-markup}
+  @see-function{gtk-message-dialog-format-secondary-text}"
   (setf (gtk-message-dialog-secondary-use-markup dialog) t
         (gtk-message-dialog-secondary-text dialog)
         (apply #'format (cons nil (cons message args)))))
@@ -628,7 +645,7 @@
 (defcfun ("gtk_message_dialog_get_message_area"
            gtk-message-dialog-get-message-area) (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-16}
+ "@version{2013-9-10}
   @argument[dialog]{a @class{gtk-message-dialog} window}
   @begin{return}
     A @class{gtk-box} widget with orientation @code{:vertical} corresponding to
@@ -639,11 +656,13 @@
     @arg{dialog}'s primary and secondary labels are packed.
   @end{short}
   You can add your own extra content to that box and it will appear below those
-  labels, on the right side of the @arg{dialog}'s image (or on the left for
-  right-to-left languages). See the function @fun{gtk-dialog-get-content-area}
+  labels, on the right side of the @arg{dialog}'s image, or on the left for
+  right-to-left languages. See the function @fun{gtk-dialog-get-content-area}
   for the corresponding function in the parent @class{gtk-dialog} class.
 
   Since 2.22
+  @see-class{gtk-message-dialog}
+  @see-class{gtk-dialog}
   @see-function{gtk-dialog-get-content-area}"
   (dialog (g-object gtk-message-dialog)))
 

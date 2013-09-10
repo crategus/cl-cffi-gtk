@@ -4,9 +4,10 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -271,7 +272,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_radio_button_new_with_mnemonic_from_widget"
-          gtk-radio-button-new-with-mnemonic-from-widget) (g-object gtk-widget)
+           gtk-radio-button-new-with-mnemonic-from-widget) (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
  "@version{2013-4-27}
   @argument[radio-group_member]{widget to get radio group from or @code{nil}}
@@ -281,6 +282,7 @@
   Creates a new @class{gtk-radio-button} widget containing a label. The label
   will be created using the function @fun{gtk-label-new-with-mnemonic}, so
   underscores in label indicate the mnemonic for the button.
+  @see-class{gtk-radio-button}
   @see-function{gtk-label-new-with-mnemonic}"
   (radio-group-member (g-object gtk-radio-button))
   (label :string))

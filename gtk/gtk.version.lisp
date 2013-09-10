@@ -4,9 +4,10 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -127,7 +128,7 @@
 
 (defcfun ("gtk_get_binary_age" gtk-get-binary-age) :int
  #+cl-cffi-gtk-documentation
- "@version{2013-2-17}
+ "@version{2013-9-2}
   @return{The binary age of the GTK+ library.}
   @begin{short}
     Returns the binary age as passed to @code{libtool} when building the GTK+
@@ -135,7 +136,8 @@
   @end{short}
   If @code{libtool} means nothing to you, do not worry about it.
 
-  Since 3.0")
+  Since 3.0
+  @see-variable{+gtk-binary-age+}")
 
 (export 'gtk-get-binary-age)
 
@@ -145,7 +147,7 @@
 
 (defcfun ("gtk_get_interface_age" gtk-get-interface-age) :int
  #+cl-cffi-gtk-documentation
- "@version{2013-2-17}
+ "@version{2013-9-2}
   @return{The interface age of the GTK+ library.}
   @begin{short}
     Returns the interface age as passed to @code{libtool} when building the GTK+
@@ -153,7 +155,8 @@
   @end{short}
   If @code{libtool} means nothing to you, do not worry about it.
 
-  Since 3.0")
+  Since 3.0
+  @see-variable{+gtk-interface-age+}")
 
 (export 'gtk-get-interface-age)
 
@@ -206,10 +209,11 @@
 
 (defconstant +gtk-major-version+ 3
  #+cl-cffi-gtk-documentation
- "@version{2013-4-22}
+ "@version{2013-9-2}
   Like the function @fun{gtk-get-major-version}, but from the Lisp sources used
   at application compile time, rather than from the library loaded at
-  application run time.")
+  application run time.
+  @see-function{gtk-get-major-version}")
 
 (export '+gtk-major-version+)
 
@@ -219,10 +223,11 @@
 
 (defconstant +gtk-minor-version+ 6
  #+cl-cffi-gtk-documentation
- "@version{2013-4-22}
+ "@version{2013-9-2}
   Like the function @fun{gtk-get-minor-version}, but from the Lisp sources used
   at application compile time, rather than from the library loaded at
-  application run time.")
+  application run time.
+  @see-function{gtk-get-minor-version}")
 
 (export '+gtk-minor-version+)
 
@@ -232,10 +237,11 @@
 
 (defconstant +gtk-micro-version+ 4
  #+cl-cffi-gtk-documentation
- "@version{2013-4-22}
+ "@version{2013-9-2}
   Like the function @fun{gtk-get-micro-version}, but from the Lisp sources used
   at application compile time, rather than from the library loaded at
-  application run time.")
+  application run time.
+  @see-function{gtk-get-micro-version}")
 
 (export '+gtk-micro-version+)
 
@@ -245,10 +251,11 @@
 
 (defconstant +gtk-binary-age+ 604
  #+cl-cffi-gtk-documentation
- "@version{2013-4-22}
+ "@version{2013-9-2}
   Like the function @fun{gtk-get-binary-age}, but from the Lisp sources used at
   application compile time, rather than from the library loaded at application
-  run time.")
+  run time.
+  @see-function{gtk-get-binary-age}")
 
 (export '+gtk-binary-age+)
 
@@ -258,10 +265,11 @@
 
 (defconstant +gtk-interface-age+ 4
  #+cl-cffi-gtk-documentation
- "@version{2013-4-22}
+ "@version{2013-9-2}
   Like the function @fun{gtk-get-interface-age}, but from the Lisp sources used
   at application compile time, rather than from the library loaded at
-  application run time.")
+  application run time.
+  @see-function{gtk-get-interface-age}")
 
 (export '+gtk-interface-age+)
 

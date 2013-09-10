@@ -4,9 +4,10 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -84,8 +85,6 @@
    (row-spacing
     gtk-table-row-spacing
     "row-spacing" "guint" t t)))
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-table 'type)
@@ -285,6 +284,10 @@
   @end{short}")
 
 ;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors of Child Properties
+;;;
+;;; ----------------------------------------------------------------------------
 
 (define-child-property "GtkTable"
                        gtk-table-child-left-attach
@@ -319,88 +322,78 @@
                        "y-padding" "guint" t t t)
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Child Properties
-;;;
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-table-child-left-attach atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-table-child-left-attach 'function)
- "@version{2013-3-30}
+ "@version{2013-9-10}
   Accessor of the child property @code{\"left-attach\"} of the @class{gtk-table}
-  class.")
-
-;;; ----------------------------------------------------------------------------
+  class.
+  @see-class{gtk-table}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-table-child-right-attach atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-table-child-right-attach 'function)
- "@version{2013-3-30}
+ "@version{2013-9-10}
   Accessor of the child property @code{\"right-attach\"} of the
-  @class{gtk-table} class.")
-
-;;; ----------------------------------------------------------------------------
+  @class{gtk-table} class.
+  @see-class{gtk-table}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-table-child-top-attach atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-table-child-top-attach 'function)
- "@version{2013-3-30}
+ "@version{2013-9-10}
   Accessor of the child property @code{\"top-attach\"} of the @class{gtk-table}
-  class.")
-
-;;; ----------------------------------------------------------------------------
+  class.
+  @see-class{gtk-table}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-table-child-bottom-attach atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-table-child-bottom-attach 'function)
- "@version{2013-3-30}
+ "@version{2013-9-10}
   Accessor of the child property @code{\"bottom-attach\"} of the
-  @class{gtk-table} class.")
-
-;;; ----------------------------------------------------------------------------
+  @class{gtk-table} class.
+  @see-class{gtk-table}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-table-child-x-options atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-table-child-x-options 'function)
- "@version{2013-3-30}
+ "@version{2013-9-10}
   Accessor of the child property @code{\"x-options\"} of the @class{gtk-table}
-  class.")
-
-;;; ----------------------------------------------------------------------------
+  class.
+  @see-class{gtk-table}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-table-child-y-options atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-table-child-y-options 'function)
- "@version{2013-3-30}
+ "@version{2013-9-10}
   Accessor of the child property @code{\"y-options\"} of the @class{gtk-table}
-  class.")
-
-;;; ----------------------------------------------------------------------------
+  class.
+  @see-class{gtk-table}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-table-child-x-padding atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-table-child-x-padding 'function)
- "@version{2013-3-30}
+ "@version{2013-9-10}
   Accessor of the child property @code{\"x-padding\"} of the @class{gtk-table}
-  class.")
-
-;;; ----------------------------------------------------------------------------
+  class.
+  @see-class{gtk-table}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-table-child-y-padding atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-table-child-y-padding 'function)
- "@version{2013-3-30}
+ "@version{2013-9-10}
   Accessor of the child property @code{\"y-padding\"} of the @class{gtk-table}
-  class.")
+  class.
+  @see-class{gtk-table}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_table_new ()

@@ -421,33 +421,37 @@
 (setf (gethash 'gtk-menu-child-left-attach atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-menu-child-left-attach 'function)
- "@version{2013-3-16}
+ "@version{2013-9-10}
   Accessor of the child property @code{\"left-attach\"} of the @class{gtk-menu}
-  class.")
+  class.
+  @see-class{gtk-menu}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-menu-child-right-attach atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-menu-child-right-attach 'function)
- "@version{2013-3-16}
+ "@version{2013-9-10}
   Accessor of the child property @code{\"right-attach\"} of the @class{gtk-menu}
-  class.")
+  class.
+  @see-class{gtk-menu}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-menu-child-top-attach atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-menu-child-top-attach 'function)
- "@version{2013-3-16}
+ "@version{2013-9-10}
   Accessor of the child property @code{\"top-attach\"} of the @class{gtk-menu}
-  class.")
+  class.
+  @see-class{gtk-menu}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-menu-child-bottom-attach atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-menu-child-bottom-attach 'function)
- "@version{2013-3-16}
+ "@version{2013-9-10}
   Accessor of the child property @code{\"bottom-attach\"} of the
-  @class{gtk-menu} class.")
+  @class{gtk-menu} class.
+  @see-class{gtk-menu}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_new ()
@@ -492,13 +496,15 @@
 
 (defcfun ("gtk_menu_set_screen" gtk-menu-set-screen) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-6-1}
+ "@version{2013-9-10}
   @argument[menu]{a @class{gtk-menu} widget}
   @argument[screen]{a @class{gdk-screen}, or @code{nil} if the screen should be
     determined by the widget the menu is attached to}
   @short{Sets the @class{gdk-screen} on which the menu will be displayed.}
 
-  Since 2.2"
+  Since 2.2
+  @see-class{gtk-menu}
+  @see-class{gdk-screen}"
   (menu (g-object gtk-menu))
   (screen (g-object gdk-screen)))
 
@@ -809,14 +815,17 @@
 
 (defcfun ("gtk_menu_set_title" gtk-menu-set-title) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-6-1}
+ "@version{2013-9-10}
   @argument[menu]{a @class{gtk-menu} widget}
   @argument[title]{a string containing the title for the menu}
   @short{Sets the title string for the menu.}
 
-  The title is displayed when the menu is shown as a tearoff menu. If title is
-  @code{nil}, the menu will see if it is attached to a parent menu item, and if
-  so it will try to use the same text as that menu item's label."
+  The title is displayed when the menu is shown as a tearoff menu. If
+  @arg{title} is @code{nil}, the menu will see if it is attached to a parent
+  menu item, and if so it will try to use the same text as that menu item's
+  label.
+  @see-class{gtk-menu}
+  @see-function{gtk-menu-set-title}"
   (menu (g-object gtk-menu))
   (title :string))
 
@@ -828,13 +837,14 @@
 
 (defcfun ("gtk_menu_get_title" gtk-menu-get-title) :string
  #+cl-cffi-gtk-documentation
- "@version{2013-6-1}
+ "@version{2013-9-10}
   @argument[menu]{a @class{gtk-menu} widget}
   @begin{return}
     The title of the menu, or @code{nil} if the menu has no title set on it.
-    This string is owned by GTK+ and should not be modified or freed.
   @end{return}
-  Returns the title of the menu. See the @fun{gtk-menu-set-title} function."
+  Returns the title of the menu. See the the function @fun{gtk-menu-set-title}.
+  @see-class{gtk-menu}
+  @see-function{gtk-menu-set-title}"
   (menu (g-object gtk-menu)))
 
 (export 'gtk-menu-get-title)

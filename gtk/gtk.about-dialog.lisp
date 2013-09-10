@@ -1296,7 +1296,7 @@
 
 (let ((about-dialog (null-pointer)))
   (defun gtk-show-about-dialog (parent &rest args)
-   #+cl-cffi-gtk-documenation
+   #+cl-cffi-gtk-documentation
    "@version{2013-8-30}
     @argument[parent]{transient parent, or @code{nil} for none}
     @argument[args]{pairs of property name and property value}

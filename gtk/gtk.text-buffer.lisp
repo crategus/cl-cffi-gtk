@@ -1313,12 +1313,12 @@
 ;;; gtk_text_buffer_get_selection_bound ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun (gtk-text-buffer-selection-bound "gtk_text_buffer_get_selection_bound")
-    (g-object gtk-text-mark)
+(defcfun ("gtk_text_buffer_get_selection_bound"
+           gtk-text-buffer-get-selection-bound) (g-object gtk-text-mark)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-5}
+ "@version{2013-9-10}
   @argument[buffer]{a @class{gtk-text-buffer} object}
-  @return{selection bound mark}
+  @return{Selection bound mark.}
   @begin{short}
     Returns the mark that represents the selection bound. Equivalent to calling
     the function @fun{gtk-text-buffer-get-mark} to get the mark named
@@ -1326,12 +1326,13 @@
     typing.
   @end{short}
 
-  The currently-selected text in buffer is the region between the
+  The currently selected text in buffer is the region between the
   \"selection_bound\" and \"insert\" marks. If \"selection_bound\" and
   \"insert\" are in the same place, then there is no current selection. The
   function @fun{gtk-text-buffer-get-selection-bounds} is another convenient
   function for handling the selection, if you just want to know whether there
   is a selection and what its bounds are.
+  @see-class{gtk-text-buffer}
   @see-function{gtk-text-buffer-get-mark}
   @see-function{gtk-text-buffer-get-selection-bounds}"
   (buffer (g-object gtk-text-buffer)))
@@ -2173,9 +2174,9 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_buffer_deserialize_get_can_create_tags"
-          gtk-text-buffer-deserialize-can-create-tags) :boolean
+           gtk-text-buffer-deserialize-get-can-create-tags) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-5-5}
+ "@version{2013-9-10}
   @argument[buffer]{a @class{gtk-text-buffer} object}
   @argument[format]{a @symbol{gdk-atom} representing a registered rich text
     format}
@@ -2186,11 +2187,13 @@
   @end{short}
 
   Since 2.10
+  @see-class{gtk-text-buffer}
+  @see-symbol{gdk-atom}
   @see-function{gtk-text-buffer-deserialize-set-can-create-tags}"
   (buffer (g-object gtk-text-buffer))
   (format gdk-atom-as-string))
 
-(export 'gtk-text-buffer-deserialize-can-create-tags)
+(export 'gtk-text-buffer-deserialize-get-can-create-tags)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_deserialize_set_can_create_tags ()

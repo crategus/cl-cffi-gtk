@@ -4,9 +4,10 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -72,8 +73,6 @@
     gtk-layout-width
     "width" "guint" t t)))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-layout 'type)
  "@version{2013-3-10}
@@ -111,18 +110,16 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "height" 'gtk-layout) 't)
- "The @code{\"height\"} property of type @code{guint} (Read / Write)@br{}
-  The height of the layout.@br{}
-  Allowed values: <= @code{G_MAXINT}@br{}
+ "The @code{\"height\"} property of type @code{:uint} (Read / Write) @br{}
+  The height of the layout. @br{}
+  Allowed values: <= @code{G_MAXINT} @br{}
   Default value: 100")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "width" 'gtk-layout) 't)
- "The @code{\"width\"} property of type @code{:uint} (Read / Write)@br{}
-  The width of the layout.@br{}
-  Allowed values: <= @code{G_MAXINT}@br{}
+ "The @code{\"width\"} property of type @code{:uint} (Read / Write) @br{}
+  The width of the layout. @br{}
+  Allowed values: <= @code{G_MAXINT} @br{}
   Default value: 100")
 
 ;;; ----------------------------------------------------------------------------
@@ -140,8 +137,6 @@
     Accessor of the slot @code{\"height\"} of the @class{gtk-layout} class.
   @end{short}")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-layout-width atdoc:*function-name-alias*)
       "Accessor"
@@ -151,6 +146,10 @@
     Accessor of the slot @code{\"width\"} of the @class{gtk-layout} class.
   @end{short}")
 
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors of Child Properties
+;;;
 ;;; ----------------------------------------------------------------------------
 
 (define-child-property "GtkLayout"
@@ -162,30 +161,22 @@
                        "y" "gint" t t t)
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Child Properties
-;;;
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-layout-child-x atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-layout-child-x 'function)
- "@version{2013-3-10}
-  @begin{short}
-    Accessor of the child property @code{\"x\"} of the @class{gtk-layout} class.
-  @end{short}")
-
-;;; ----------------------------------------------------------------------------
+ "@version{2013-9-10}
+  Accessor of the child property @code{\"x\"} of the @class{gtk-layout} class.
+  @see-class{gtk-layout}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-layout-child-y atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-layout-child-y 'function)
- "@version{2013-3-10}
-  @begin{short}
-    Accessor of the child property @code{\"y\"} of the @class{gtk-layout} class.
-  @end{short}")
+ "@version{2013-9-10}
+  Accessor of the child property @code{\"y\"} of the @class{gtk-layout} class.
+  @see-class{gtk-layout}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_layout_new ()

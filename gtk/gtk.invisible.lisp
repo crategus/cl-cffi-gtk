@@ -4,9 +4,10 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -61,7 +62,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-invisible 'type)
- "@version{2013-4-16}
+ "@version{2013-9-10}
   @begin{short}
     The @sym{gtk-invisible} widget is used internally in GTK+, and is probably
     not very useful for application developers.
@@ -69,7 +70,8 @@
 
   It is used for reliable pointer grabs and selection handling in the code for
   drag-and-drop.
-  @see-slot{gtk-invisible-screen}")
+  @see-slot{gtk-invisible-screen}
+  @see-class{gdk-screen}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -79,7 +81,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "screen" 'gtk-invisible) 't)
- "The @code{\"screen\"} property of type @class{gdk-screen} (Read / Write)@br{}
+ "The @code{\"screen\"} property of type @class{gdk-screen} (Read / Write) @br{}
   The screen where this window will be displayed.")
 
 ;;; ----------------------------------------------------------------------------
@@ -91,10 +93,11 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-invisible-screen atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-invisible-screen 'function)
- "@version{2013-7-1}
+ "@version{2013-9-10}
   Accessor of the slot @code{\"screen\"} of the @class{gtk-invisible} class.
   See the accessor functions @fun{gtk-invisible-get-screen} and
   @fun{gtk-invisible-set-screen} for more information.
+  @see-class{gtk-invisible}
   @see-function{gtk-invisible-get-screen}
   @see-function{gtk-invisible-set-screen}")
 
@@ -106,9 +109,10 @@
 
 (defun gtk-invisible-new ()
  #+cl-cffi-gtk-documentation
- "@version{2013-4-16}
+ "@version{2013-9-10}
   @return{A new @class{gtk-invisible} widget.}
-  Creates a new @class{gtk-invisible} widget."
+  Creates a new @class{gtk-invisible} widget.
+  @see-class{gtk-invisible}"
   (make-instance 'gtk-invisible))
 
 (export 'gtk-invisible-new)
@@ -121,7 +125,7 @@
 
 (defun gtk-invisible-new-for-screen (screen)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-16}
+ "@version{2013-9-10}
   @argument[screen]{a @class{gdk-screen} object which identifies on which the
     new @class{gtk-invisible} widget will be created}
   @return{A newly created @class{gtk-invisible} widget.}
@@ -129,7 +133,9 @@
     Creates a new @class{gtk-invisible} widget for a specified @arg{screen}.
   @end{short}
 
-  Since 2.2"
+  Since 2.2
+  @see-class{gtk-invisible}
+  @see-class{gdk-screen}"
   (make-instance 'gtk-invisible
                  :screen screen))
 
@@ -143,7 +149,7 @@
 
 (defun gtk-invisible-set-screen (invisible screen)
  #+cl-cffi-gtk-documentation
- "@version{2013-7-1}
+ "@version{2013-9-10}
   @argument[invisible]{a @class{gtk-invisible} widget}
   @argument[screen]{a @class{gdk-screen} object}
   @begin{short}
@@ -152,6 +158,8 @@
   @end{short}
 
   Since 2.2
+  @see-class{gtk-invisible}
+  @see-class{gdk-screen}
   @see-function{gtk-invisible-get-screen}"
   (setf (gtk-invisible-screen invisible) screen))
 
@@ -165,7 +173,7 @@
 
 (defun gtk-invisible-get-screen (invisible)
  #+cl-cffi-gtk-documentation
- "@version{2013-7-1}
+ "@version{2013-9-10}
   @argument[invisible]{a @class{gtk-invisible} widget}
   @return{The associated @class{gdk-screen} object.}
   @begin{short}
@@ -173,6 +181,8 @@
   @end{short}
 
   Since 2.2
+  @see-class{gtk-invisible}
+  @see-class{gdk-screen}
   @see-function{gtk-invisible-set-screen}"
   (gtk-invisible-screen invisible))
 
