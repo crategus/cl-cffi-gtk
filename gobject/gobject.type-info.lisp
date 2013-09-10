@@ -180,7 +180,6 @@
 (in-package :gobject)
 
 ;;; This constant is not exported.
-
 (defconstant +g-type-fundamental-shift+ 2)
 
 ;;; ----------------------------------------------------------------------------
@@ -1653,6 +1652,14 @@
   @end{short}
 
   This function should only be used in type implementations.
+  @begin[Example]{dictionary}
+    @begin{pre}
+ (g-type-instance-get-class (make-instance 'gtk-button))
+=> #.(SB-SYS:INT-SAP #X0813E608)
+ (g-type-from-class *)
+=> #<GTYPE :name \"GtkButton\" :id 134914160>
+    @end{pre}
+  @end{dictionary}
   @see-symbol{g-type-instance}
   @see-symbol{g-type-class}"
   (let ((ptr (if (pointerp instance) instance (pointer instance))))
@@ -1992,6 +1999,10 @@
 ;;; g_type_name ()
 ;;; ----------------------------------------------------------------------------
 
+;; TODO: The type +g-type-invalid+ is special handled in gtype-id. gtype-id
+;; returns nil and not an integer. Therefore this function does not accept
+;; +g-type-invalid+ as an argument like the C function.
+
 (defcfun ("g_type_name" %g-type-name) (:string :free-from-foreign nil)
   (type %g-type)) ; Use %g-type and not g-type
 
@@ -1999,16 +2010,27 @@
 
 (defun g-type-name (type)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-1}
+ "@version{2013-9-1}
   @argument[type]{type to return name for}
   @return{Static type name or @code{nil}.}
   @begin{short}
     Get the unique name that is assigned to a type ID.
   @end{short}
-  Note that this function (like all other GType API) cannot cope with invalid
-  type IDs. @var{+g-type-invalid+} may be passed to this function, as may
-  be any other validly registered type ID, but randomized type IDs should not be
-  passed in and will most likely lead to a crash."
+  Note that this function, like all other GType API, cannot cope with invalid
+  type IDs. Randomized type IDs should not be passed in and will most likely
+  lead to a crash.
+  @begin[Examples]{dictionary}
+    @begin{pre}
+ (g-type-name +g-type-double+)
+=> \"gdouble\"
+ (g-type-name +g-type-enum+)
+=> \"GEnum\"
+ (g-type-name (gtype \"GtkButton\"))
+=> \"GtkButton\"
+    @end{pre}
+  @end{dictionary}
+  @see-class{g-type}
+  @see-function{g-type-from-name}"
   (gtype-name (gtype type)))
 
 (export 'g-type-name)
@@ -2017,6 +2039,9 @@
 ;;; g_type_qname ()
 ;;; ----------------------------------------------------------------------------
 
+;; This function is not exported. In the Lisp binding there is no difference
+;; to the function g-type-name.
+
 (defcfun ("g_type_qname" g-type-qname) g-quark
  #+cl-cffi-gtk-documentation
  "@version{2013-4-1}
@@ -2024,8 +2049,6 @@
   @return{The @arg{type} names quark or 0.}
   Get the corresponding quark of the @arg{type} IDs name."
   (type g-type))
-
-(export 'g-type-qname)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_type_from_name ()
@@ -2039,7 +2062,7 @@
  "@version{2013-4-1}
   @argument[name]{type name to lookup}
   @return{Corresponding type ID for @arg{name} or 0.}
-  Lookup the type ID from a given type @arg{name}, returning 0 if no type has
+  Lookup the type ID from a given type name, returning 0 if no type has
   been registered under this @arg{name}. This is the preferred method to find
   out by name whether a specific type has been registered yet."
   (gtype name))
@@ -2057,7 +2080,21 @@
   @return{The parent type of @arg{type}.}
   Return the direct parent type of the passed in @arg{type}. If the passed in
   @arg{type} has no parent, i. e. is a fundamental type, @code{nil} is
-  returned."
+  returned.
+  @begin[Examples]{dictionary}
+    @begin{pre}
+ (g-type-parent \"GtkWindow\")
+=> #<GTYPE :name \"GtkBin\" :id 134929288>
+ (g-type-parent \"GtkContainer\")
+=> #<GTYPE :name \"GtkWidget\" :id 134921664>
+ (g-type-parent \"GObject\")
+=> NIL
+ (g-type-parent \"gdouble\")
+=> NIL
+    @end{pre}
+  @end{dictionary}
+  @see-class{g-type}
+  @see-function{g-type-children}"
   (type g-type))
 
 (export 'g-type-parent)
