@@ -11,13 +11,21 @@
 
 @menu
 * Overview::
-* Creating a model::
-* Creating the view component::
-* Simple example::
+* Model Renderer Column View::
+* GtkListStore and GtkTreeStore::
+* Creating a Tree View::
+* GtkTreeViewColumn and GtkCellRenderer::
+* Selections Double-Clicks and Context Menus::
+* Sorting::
+* Editable Cells::
+* Miscellaneous::
+* Drag and Drop::
+* Writing Custom Models::
+* Writing Custom Cell Renderers::
 @end menu
 
 @c -----------------------------------------------------------------------------
-@node Overview, Creating a model, Top, Top
+@node Overview, Model Renderer Column View, Top, Top
 @section Overview
 
 To create a tree or list in GTK+, use the @code{GtkTreeModel} interface in
@@ -44,7 +52,7 @@ consider how to render a boolean variable.  Should it render as a string of
 
 @c -----------------------------------------------------------------------------
 @node Creating a model, Creating the view component, Overview, Top
-@section Creating a model
+@subsection Creating a model
 
 GTK+ provides two simple models that can be used: the @code{GtkListStore} and
 the @code{GtkTreeStore}.  @code{GtkListStore} is used to model list widgets,
@@ -91,7 +99,7 @@ It can be used to set the data in any or all columns in a given row.
 
 @c -----------------------------------------------------------------------------
 @node Creating the view component, Simple example, Creating a model, Top
-@section Creating the view component
+@subsection Creating the view component
 
 While there are several different models to choose from, there is only one view
 widget to deal with.  It works with either the list or the tree store.  Setting
@@ -139,7 +147,7 @@ are added to it.
 
 @c -----------------------------------------------------------------------------
 @node Simple example, , Creating the view component, Top
-@section Simple example
+@subsection Simple example
 
 @ifnotinfo
 @float Figure, figure-simple-tree-view
@@ -196,3 +204,370 @@ are added to it.
       (gtk-container-add window view)
       (gtk-widget-show-all window))))
 @end verbatim
+
+@c -----------------------------------------------------------------------------
+@node Model Renderer Column View, GtkListStore and GtkTreeStore, Overview
+@section Model, Renderer, Column, View
+
+The most important concept underlying @xurl{gtk-tree-view} is that of complete
+separation between data and how that data is displayed on the screen.  This is
+commonly known as Model/View/Controller-design (MVC).  Data of various type
+(strings, numbers, images, etc.) is stored in a 'model'.  The 'view' is then
+told which data to display, where to display it, and how to display it.  One of
+the advantages of this approach is that you can have multiple views that display
+the same data (a directory tree for example) in different ways, or in the same
+way multiple times, with only one copy of the underlying data.  This avoids
+duplication of data and programming effort if the same data is re-used in
+different contexts.  Also, when the data in the model is updated, all views
+automatically get updated as well.
+
+So, while @xurl{gtk-tree-model} is used to store data, there are other
+components that determine which data is displayed in the @xurl{gtk-tree-view}
+and how it is displayed.  These components are @xurl{gtk-tree-view-column} and
+@xurl{gtk-cell-renderer}.  A @xurl{gtk-tree-view} is made up of tree view
+columns.  These are the columns that users perceive as columns. They have a
+clickable column header with a column title that can be hidden, and can be
+resized and sorted.  Tree view columns do not display any data, they are only
+used as a device to represent the user-side of the tree view (sorting etc.) and
+serve as packing widgets for the components that do the actual rendering of data
+onto the screen, namely the @xurl{gtk-cell-renderer} family of objects.  There
+are a number of different cell renderers that specialise in rendering certain
+data like strings, pixbufs, or toggle buttons.  More on this later.  Cell
+renderers are packed into tree view columns to display data.  A tree view column
+needs to contain at least one cell renderer, but can contain multiple cell
+renderers.  For example, if one wanted to display a 'Filename' column where each
+filename has a little icon on the left indicating the file type, one would pack
+a @xurl{gtk-cell-renderer-pixbuf} and a @xurl{gtk-cell-renderer-text} into one
+tree view column.  Packing renderers into a tree view column is similar to
+packing widgets into a @xurl{gtk-hbox}.
+
+@c -----------------------------------------------------------------------------
+@node GtkListStore and GtkTreeStore, Creating a Tree View, Model Renderer Column View
+@section GtkListStore and GtkTreeStore
+
+It is important to realise what @xurl{gtk-tree-model} is and what it is not. 
+@xurl{gtk-tree-model} is basically just an 'interface' to the data store,
+meaning that it is a standardised set of functions that allows a
+@xurl{gtk-tree-view} widget (and the application programmer) to query certain
+characteristics of a data store, for example how many rows there are, which rows
+have children, and how many children a particular row has.  It also provides
+functions to retrieve data from the data store, and tell the tree view what type
+of data is stored in the model.  Every data store must implement the
+@xurl{gtk-tree-model} interface and provide these functions.
+@xurl{gtk-tree-model} itself only provides a way to query a data store's
+characteristics and to retrieve existing data, it does not provide a way to
+remove or add rows to the store or put data into the store.  This is done using
+the specific store's functions.
+
+Gtk+ comes with two built-in data stores (models): @xurl{gtk-list-store} and
+@xurl{gtk-tree-store}.  As the names imply, @xurl{gtk-list-store} is used for
+simple lists of data items where items have no hierarchical parent-child
+relationships, and @xurl{gtk-tree-store} is used for tree-like data structures,
+where items can have parent-child relationships.  A list of files in a directory
+would be an example of a simple list structure, whereas a directory tree is an
+example for a tree structure.  A list is basically just a special case of a tree
+with none of the items having any children, so one could use a tree store to
+maintain a simple list of items as well. The only reason @xurl{gtk-list-store}
+exists is in order to provide an easier interface that does not need to cater
+for child-parent relationships, and because a simple list model can be optimised
+for the special case where no children exist, which makes it faster and more
+efficient.  @xurl{gtk-list-store} and @xurl{gtk-tree-store} should cater for
+most types of data an application developer might want to display in a
+@xurl{gtk-tree-view}.  However, it should be noted that @xurl{gtk-list-store}
+and @xurl{gtk-tree-store} have been designed with flexibility in mind.  If you
+plan to store a lot of data, or have a large number of rows, you should consider
+implementing your own custom model that stores and manipulates data your own way
+and implements the @xurl{gtk-tree-model} interface.  This will not only be more
+efficient, but probably also lead to saner code in the long run, and give you
+more control over your data.  See below for more details on how to implement
+custom models.  Tree model implementations like @xurl{gtk-list-store} and
+@xurl{gtk-tree-store} will take care of the view side for you once you have
+configured the @xurl{gtk-tree-view} to display what you want. If you change data
+in the store, the model will notify the tree view and your data display will be
+updated.  If you add or remove rows, the model will also notify the store, and
+your row will appear in or disappear from the view as well.
+
+@subsection How Data is Organised in a Store
+
+A model (data store) has model columns and rows.  While a tree view will display
+each row in the model as a row in the view, the model's columns are not to be
+confused with a view's columns.  A model column represents a certain data field
+of an item that has a fixed data type.  You need to know what kind of data you
+want to store when you create a list store or a tree store, as you can not add
+new fields later on.
+
+For example, we might want to display a list of files. We would create a list
+store with two fields: a field that stores the filename (i. e. a string) and a
+field that stores the file size (i. e. an unsigned integer).  The filename would
+be stored in column 0 of the model, and the file size would be stored in column
+1 of the model.  For each file we would add a row to the list store, and set the
+row's fields to the filename and the file size.
+
+The GLib type system (GType) is used to indicate what type of data is stored in
+a model column.  These are the most commonly used types:
+@itemize
+  @item "gboolean"
+  @item "gint", "guint"
+  @item "glong", "gulong", "gint64", "guint64"
+  @item "gfloat", "gdouble"
+  @item "gchararray"
+  @item "gpointer"
+  @item "GdkPixbuf"
+@end itemize
+
+You do not need to understand the type system, it will usually suffice to know
+the above types, so you can tell a list store or tree store what kind of data
+you want to store.  Advanced users can derive their own types from the
+fundamental GLib types.  For simple structures you could register a new boxed
+type for example, but that is usually not necessary. "gpointer" will often do as
+well, you will just need to take care of memory allocation and freeing yourself
+then.
+
+Storing GObject-derived types is a special case that is dealt with further
+below.
+
+Here is an example of how to create a list store:
+@verbatim
+ (let ((store (make-instance 'gtk-list-store
+                             :column-types '("gchararray" "guint"))))
+   ... )
+@end verbatim
+This creates a new list store with two columns.  Column 0 stores a string and
+column 1 stores an unsigned integer for each row.  At this point the model has
+no rows yet of course.  Before we start to add rows, let's have a look at the
+different ways used to refer to a particular row.
+
+@heading GtkTreeIter, GtkTreePath, GtkTreeRowReference
+
+There are different ways to refer to a specific row.  The two you will have to
+deal with are @xurl{gtk-tree-iter} and @xurl{gtk-tree-path}.
+
+@subheading GtkTreePath
+
+A @xurl{gtk-tree-path} is a comparatively straight-forward way to describe the
+logical position of a row in the model.  As a @xurl{gtk-tree-view} always
+displays all rows in a model, a tree path always describes the same row in both
+model and view.
+
+@ifnotinfo
+@float Figure, tree-path
+@caption{Tree Paths}
+@center @image{figures/tree-path, 201pt}
+@end float
+@end ifnotinfo
+
+The picture shows the tree path in string form next to the label.  Basically, it
+just counts the children from the imaginary root of the tree view.  An empty
+tree path string would specify that imaginary invisible root.  Now 'Songs' is
+the first child (from the root) and thus its tree path is just "0". 'Videos' is
+the second child from the root, and its tree path is "1".  'oggs' is the second
+child of the first item from the root, so its tree path is "0:1".  So you just
+count your way down from the root to the row in question, and you get your tree
+path.
+
+To clarify this, a tree path of "3:9:4:1" would basically mean in human language
+(attention - this is not what it really means!) something along the lines of: go
+to the 3rd top-level row.  Now go to the 9th child of that row. Proceed to the
+4th child of the previous row.  Then continue to the 1st child of that. Now you
+are at the row this tree path describes.  This is not what it means for Gtk+
+though.  While humans start counting at 1, computers usually start counting at
+0.  So the real meaning of the tree path "3:9:4:1" is:  Go to the 4th top-level
+row.  Then go to the 10th child of that row.  Pick the 5th child of that row.
+Then proceed to the 2nd child of the previous row. Now you are at the row this
+tree path describes.
+
+The implication of this way of refering to rows is as follows: if you insert or
+delete rows in the middle or if the rows are resorted, a tree path might
+suddenly refer to a completely different row than it refered to before the
+insertion/deletion/resorting.  This is important to keep in mind.  (See the
+section on @code{GtkTreeRowReferences} below for a tree path that keeps updating
+itself to make sure it always refers to the same row when the model changes).
+
+This effect becomes apparent if you imagine what would happen if we were to
+delete the row entitled 'funny clips' from the tree in the above picture. The
+row 'movie trailers' would suddenly be the first and only child of 'clips',
+and be described by the tree path that formerly belonged to 'funny clips', i. e.
+"1:0:0".
+
+You can get a new @xurl{gtk-tree-path} from a path in string form using the 
+function @xurl{gtk-tree-path-new-from-string}, and you can convert a given
+@xurl{gtk-tree-path} into its string notation with
+@xurl{gtk-tree-path-to-string}.  Usually you will rarely have to handle the
+string notation, it is described here merely to demonstrate the concept of tree
+paths.
+
+Instead of the string notation, @xurl{gtk-tree-path} uses an integer array
+internally.  You can get the depth (i. e. the nesting level) of a tree path with
+@xurl{gtk-tree-path-get-depth}.  A depth of 0 is the imaginary invisible root
+node of the tree view and model.  A depth of 1 means that the tree path
+describes a top-level row.  As lists are just trees without child nodes, all
+rows in a list always have tree paths of depth 1.
+@xurl{gtk-tree-path-get-indices} returns the internal integer array of a tree
+path.  You will rarely need to operate with those either.
+
+If you operate with tree paths, you are most likely to use a given tree path,
+and use functions like @xurl{gtk-tree-path-up}, @xurl{gtk-tree-path-down},
+@xurl{gtk-tree-path-next}, @xurl{gtk-tree-path-prev},
+@xurl{gtk-tree-path-is-ancestor}, or @xurl{gtk-tree-path-is-descendant}.  Note
+that this way you can construct and operate on tree paths that refer to rows
+that do not exist in model or view.  The only way to check whether a path
+is valid for a specific model (i. e. the row described by the path exists) is
+to convert the path into an iter using @xurl{gtk-tree-model-get-iter}.
+
+@xurl{gtk-tree-path} is an opaque structure, with its details hidden from the
+compiler.  If you need to make a copy of a tree path, use the function
+@xurl{gtk-tree-path-copy}.
+
+@subheading GtkTreeIter
+
+Another way to refer to a row in a list or tree is @xurl{gtk-tree-iter}.  A tree
+iter is just a structure that contains a couple of pointers that mean something
+to the model you are using. Tree iters are used internally by models, and they
+often contain a direct pointer to the internal data of the row in question.  You
+should never look at the content of a tree iter and you must not modify it
+directly either.  All tree models (and therefore also @xurl{gtk-list-store} and
+@xurl{gtk-tree-store}) must support the @xurl{gtk-tree-model} functions that
+operate on tree iters (e. g. get the tree iter for the first child of the row
+specified by a given tree iter, get the first row in the list/tree, get the n-th
+child of a given iter etc.). Some of these functions are:
+
+@table
+  @item @xurl{gtk-tree-model-get-iter-first}
+  Sets the given iter to the first top-level item in the list or tree.
+
+  @item @xurl{gtk-tree-model-iter-next}
+  Sets the given iter to the next item at the current level in a list or tree.
+
+  @item @xurl{gtk-tree-model-iter-children}
+  Sets the first given iter to the first child of the row referenced by the
+  second iter (not very useful for lists, mostly useful for trees).
+
+  @item @xurl{gtk-tree-model-iter-n-children}
+  Returns the number of children the row referenced by the provided iter
+  has.  If you pass @code{nil} instead of a pointer to an iter structure, this
+  function will return the number of top-level rows.  You can also use this
+  function to count the number of items in a list store.
+
+  @item @xurl{gtk-tree-model-iter-nth-child}
+  Sets the first iter to the n-th child of the row referenced by the second
+  iter.  If you pass @code{nil} instead of a pointer to an iter structure as the
+  second iter, you can get the first iter set to the n-th row of a list.
+
+  @item @xurl{gtk-tree-model-iter-parent}
+  Sets the first iter to the parent of the row referenced by the second iter
+  (does nothing for lists, only useful for trees).
+@end table
+
+Almost all of those functions return @emph{true} if the requested operation
+succeeded, and return @code{nil} otherwise.  There are more functions that
+operate on iters.  Check out the @xurl{gtk-tree-model} API reference for
+details.
+
+You might notice that there is no @code{gtk-tree-model-iter-prev}.  This is
+unlikely to be implemented for a variety of reasons.  It should be fairly simple
+to write a helper function that provides this functionality though once you have
+read this section.
+
+Tree iters are used to retrieve data from the store, and to put data into the
+store.  You also get a tree iter as result if you add a new row to the store
+using the functions @xurl{gtk-list-store-append} or
+@xurl{gtk-tree-store-append}.
+
+Tree iters are often only valid for a short time, and might become invalid if
+the store changes with some models.  It is therefore usually a bad idea to store
+tree iters, unless you really know what you are doing.  You can use
+@xurl{gtk-tree-model-get-flags} to get a model's flags, and check whether the
+@code{:iters-persist} flag is set (in which case a tree iter will be valid as
+long as a row exists), yet still it is not advisable to store iter structures
+unless you really mean to do that.  There is a better way to keep track of a row
+over time: @code{GtkTreeRowReference}.
+
+@subheading GtkTreeRowReference
+
+A @xurl{gtk-tree-row-reference} is basically an object that takes a tree path,
+and watches a model for changes.  If anything changes, like rows getting
+inserted or removed, or rows getting re-ordered, the tree row reference object
+will keep the given tree path up to date, so that it always points to the same
+row as before.  In case the given row is removed, the tree row reference will
+become invalid.
+
+A new tree row reference can be created with the function
+@xurl{gtk-tree-row-reference-new}, given a model and a tree path.  After that,
+the tree row reference will keep updating the path whenever the model changes.
+The current tree path of the row originally refered to when the tree row
+reference was created can be retrieved with the function
+@xurl{gtk-tree-row-reference-get-path}.  If the row has been deleted,
+@code{nil} will be returned instead of of a tree path.
+
+You can check whether the row referenced still exists with the function
+@xurl{gtk-tree-row-reference-valid}.
+
+For the curious: internally, the tree row reference connects to the tree model's
+"row-inserted", "row-deleted", and "rows-reordered" signals and updates its
+internal tree path whenever something happened to the model that affects the
+position of the referenced row.
+
+Note that using tree row references entails a small overhead.  This is hardly
+significant for 99.9 % of all applications out there, but when you have multiple
+thousands of rows and/or row references, this might be something to keep in mind
+(because whenever rows are inserted, removed, or reordered, a signal will be
+sent out and processed for each row reference).
+
+If you have read the tutorial only up to here so far, it is hard to explain
+really what tree row references are good for.  An example where tree row
+references come in handy can be found further below in the section on removing
+multiple rows in one go.
+
+In practice, a programmer can either use tree row references to keep track of
+rows over time, or store tree iters directly (if, and only if, the model has
+persistent iters).  Both @xurl{gtk-list-store} and @xurl{gtk-tree-store} have
+persistent iters, so storing iters is possible.  However, using tree row
+references is definitively the right way to do things, even though it comes with
+some overhead that might impact performance in case of trees that have a very
+large number of rows (in that case it might be preferable to write a custom
+model anyway though).  Especially beginners might find it easier to handle and
+store tree row references than iters, because tree row references are handled by
+pointer value, which you can easily add to a list or pointer array, while it is
+easy to store tree iters in a wrong way.
+
+
+
+
+
+@c -----------------------------------------------------------------------------
+@node Creating a Tree View, GtkTreeViewColumn and GtkCellRenderer, GtkListStore and GtkTreeStore
+@section Creating a Tree View
+
+@c -----------------------------------------------------------------------------
+@node GtkTreeViewColumn and GtkCellRenderer, Selections Double-Clicks and Centext Menus, Creating a Tree View
+@section GtkTreeViewColumn and GtkCellRenderer
+
+@c -----------------------------------------------------------------------------
+@node Selections Double-Clicks and Context Menus, Sorting, GtkTreeViewColumn and GtkCellRenderer
+@section Selections, Double-Clicks and Context Menus
+
+@c -----------------------------------------------------------------------------
+@node Sorting, Editable Cells, Selections Double-Clicks and Context Menus
+@section Sorting
+
+@c -----------------------------------------------------------------------------
+@node Editable Cells, Miscellaneous, Sorting
+@section Editable Cells
+
+@c -----------------------------------------------------------------------------
+@node Miscellaneous, Drag and Drop, Editable Cells
+@section Miscellaneous
+
+@c -----------------------------------------------------------------------------
+@node Drag and Drop, Writing Custom Models, Miscellaneous
+@section Drag and Drop
+
+@c -----------------------------------------------------------------------------
+@node Writing Custom Models, Writing Custom Cell Renderers, Drag and Drop
+@section Writing Custom Models
+
+@c -----------------------------------------------------------------------------
+@node Writing Custom Cell Renderers, , Writing Custom Models
+@section Writing Custom Cell Renderers
+
+

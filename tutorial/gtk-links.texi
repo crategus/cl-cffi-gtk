@@ -114,6 +114,18 @@
 
 @set gtk-cell-layout http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-cell-layout.html
 
+@c GtkCellRenderer
+
+@set gtk-cell-renderer http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-cell-renderer.html
+
+@c GtkCellRendererPixbuf
+
+@set gtk-cell-renderer-pixbuf http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-cell-renderer-pixbuf.html
+
+@c GtkCellRendererText
+
+@set gtk-cell-renderer-text http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-cell-renderer-text.html
+
 @c GtkCheckButton
 
 @set gtk-check-button http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-check-button.html
@@ -293,6 +305,11 @@
 @set gtk-layout-put http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-layout-put.html
 @set gtk-layout-move http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-layout-move.html
 @set gtk-layout-set-size http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-layout-set-size.html
+
+@c GtkListStore
+
+@set gtk-list-store http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-list-store.html
+@set gtk-list-store-append http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-list-store-append.html
 
 @c GtkMenuItem
 
@@ -548,9 +565,57 @@
 
 @set gtk-tool-item http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-tool-item.html
 
+@c GtkTreeIter
+
+@set gtk-tree-iter http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-tree-iter.html
+
+@c GtkTreeModel
+
+@set gtk-tree-model http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-tree-model.html
+@set gtk-tree-model-get-iter http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-model-get-iter.html
+@set gtk-tree-model-get-iter-first http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-model-get-iter-first.html
+@set gtk-tree-model-get-iter-next http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-model-get-iter-next.html
+@set gtk-tree-model-iter-next http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-model-iter-next.html
+@set gtk-tree-model-iter-children http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-model-iter-children.html
+@set gtk-tree-model-iter-n-children http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-model-iter-n-children.html
+@set gtk-tree-model-iter-nth-child http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-model-iter-nth-child.html
+@set gtk-tree-model-iter-parent http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-model-iter-parent.html
+@set gtk-tree-model-get-flags http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-model-get-flags.html
+
+@c GtkTreePath
+
+@set gtk-tree-path http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-tree-path.html
+@set gtk-tree-path-new-from-string http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-path-new-from-string.html
+@set gtk-tree-path-to-string http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-path-to-string.html
+@set gtk-tree-path-get-depth http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-path-get-depth.html
+@set gtk-tree-path-get-indices http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-path-get-indices.html
+@set gtk-tree-path-up http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-path-up.html
+@set gtk-tree-path-down http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-path-down.html
+@set gtk-tree-path-next http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-path-next.html
+@set gtk-tree-path-prev http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-path-prev.html
+@set gtk-tree-path-is-ancestor http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-path-is-ancestor.html
+@set gtk-tree-path-is-descendant http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-path-is-descendant.html
+@set gtk-tree-path-copy http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-path-copy.html
+
+@c GtkTreeRowReference
+
+@set gtk-tree-row-reference http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-tree-row-reference.html
+@set gtk-tree-row-reference-new http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-row-reference-new.html
+@set gtk-tree-row-reference-get-path http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-row-reference-get-path.html
+@set gtk-tree-row-reference-valid http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-row-reference-valid.html
+
+@c GtkTreeStore
+
+@set gtk-tree-store http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-tree-store.html
+@set gtk-tree-store-append http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-store-append.html
+
 @c GtkTreeView
 
 @set gtk-tree-view http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-tree-view.html
+
+@c GtkTreeViewColumn
+
+@set gtk-tree-view-column http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-tree-view-column.html
 
 @c GtkViewport
 

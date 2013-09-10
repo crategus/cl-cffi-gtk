@@ -2636,6 +2636,66 @@ happen.")
       (gtk-widget-show-all window))))
 
 ;;; ----------------------------------------------------------------------------
+
+;; Example Tree Path
+
+(defun create-and-fill-model-1 ()
+  (let ((model (make-instance 'gtk-tree-store
+                              :column-types '("gchararray"))))
+    (let ((parent (gtk-tree-store-set model
+                                      (gtk-tree-store-append model nil)
+                                      "Songs  0")))
+      (gtk-tree-store-set model
+                          (gtk-tree-store-append model parent)
+                          "mp3s  0:0")
+      (gtk-tree-store-set model
+                          (gtk-tree-store-append model parent)
+                          "oggs  0:1"))
+    (let ((parent (gtk-tree-store-set model
+                                      (gtk-tree-store-append model nil)
+                                      "Videos  1")))
+      (let ((parent1 (gtk-tree-store-set model
+                                         (gtk-tree-store-append model parent)
+                                         "Clips  1:0")))
+        (gtk-tree-store-set model
+                            (gtk-tree-store-append model parent1)
+                            "funny clips  1:0:0")
+        (gtk-tree-store-set model
+                            (gtk-tree-store-append model parent1)
+                            "movie trailers  1:0:1"))
+      (gtk-tree-store-set model
+                          (gtk-tree-store-append model parent)
+                          "movies  1:1"))
+    model))
+
+(defun create-view-and-model-1 ()
+  (let* ((model (create-and-fill-model-1))
+         (view (make-instance 'gtk-tree-view
+                              :model model)))
+    ;; Create renderer for the cells
+    (let* ((renderer (gtk-cell-renderer-text-new))
+           (column (gtk-tree-view-column-new-with-attributes "Name"
+                                                             renderer
+                                                             "text" 0)))
+      (gtk-tree-view-append-column view column))
+    view))
+
+(defun example-tree-path ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :title "Example Tree Path"
+                                 :type :toplevel
+                                 :default-width 300
+                                 :default-height 250))
+          (view (create-view-and-model-1)))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (leave-gtk-main)))
+      (gtk-container-add window view)
+      (gtk-widget-show-all window))))
+
+;;; ----------------------------------------------------------------------------
 ;;;
 ;;; Chapter 11. Selecting Colors, Files and Fonts
 ;;;

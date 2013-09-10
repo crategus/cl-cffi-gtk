@@ -160,9 +160,17 @@ Multiline Text Editor
 Tree and List Widgets
 * Tree and List Widgets::
 * Overview::
-* Creating a model::
-* Creating the view component::
-* Simple example::
+* Model Renderer Column View::
+* GtkListStore and GtkTreeStore::
+* Creating a Tree View::
+* GtkTreeViewColumn and GtkCellRenderer::
+* Selections Double-Clicks and Context Menus::
+* Sorting::
+* Editable Cells::
+* Miscellaneous::
+* Drag and Drop::
+* Writing Custom Models::
+* Writing Custom Cell Renderers::
 
 Selecting Colors, Files, and Fonts
 * Selecting Colors Files and Fonts::
