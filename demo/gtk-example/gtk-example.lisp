@@ -9,6 +9,7 @@
 (load "dialog.lisp")
 (load "grab.lisp")
 (load "list-store.lisp")
+(load "menu-builder.lisp")
 (load "message-dialog-new.lisp")
 (load "show-about-dialog.lisp")
 

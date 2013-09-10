@@ -34,8 +34,7 @@
       (g-signal-connect button "clicked"
                                (lambda (widget)
                                  (declare (ignore widget))
-                                 (gtk-dialog-response dialog 9)))
-    )
+                                 (gtk-dialog-response dialog 9))))
     ;; Change the order of the buttons
     (gtk-dialog-set-alternative-button-order dialog
                                              (list :yes :cancel :no))
@@ -126,4 +125,15 @@
         (gtk-widget-show-all dialog)))
     (join-gtk-main)
     (format t "Back from message dialog with response-id : ~A~%" response)))
+
+(defun example-dialog-ui ()
+  (within-main-loop
+    (let ((builder (make-instance 'gtk-builder)))
+      (gtk-builder-add-from-file builder "dialog.ui")
+      (let ((dialog (gtk-builder-get-object builder "dialog")))
+        (g-signal-connect dialog "destroy"
+                          (lambda (widget)
+                            (declare (ignore widget))
+                            (leave-gtk-main)))
+      (gtk-widget-show-all dialog)))))
 
