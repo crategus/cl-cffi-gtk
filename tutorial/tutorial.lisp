@@ -110,7 +110,7 @@
                         ;; Convert the symbol :accept to the number value.
                         (foreign-enum-value 'gtk-response-type :accept))
                ;; Get the file name and store it.
-               (setf file-name (gtk-file-chooser-filename dialog)))
+               (setf file-name (gtk-file-chooser-get-filename dialog)))
              ;; Destroy the dialog.
              (gtk-widget-destroy dialog)))
         ;; Show the dialog.
@@ -2896,7 +2896,7 @@ happen.")
              (gtk-dialog-add-button dialog "gtk-cancel" :cancel)
              (when (eq (gtk-dialog-run dialog) :accept)
                (format t "Saved to file ~A~%"
-                       (gtk-file-chooser-filename dialog)))
+                       (gtk-file-chooser-get-filename dialog)))
              (gtk-widget-destroy dialog))))
       (gtk-container-add window button)
       (gtk-widget-show-all window))))
