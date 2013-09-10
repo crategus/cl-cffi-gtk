@@ -4470,11 +4470,15 @@
 
 (defcfun ("gdk_window_get_events" gdk-window-get-events) gdk-event-mask
  #+cl-cffi-gtk-documentation
- "@version{2013-4-5}
-  @argument[window]{a GdkWindow}
-  @return{event mask for window}
-  Gets the event mask for window for all master input devices. See
-  gdk_window_set_events()."
+ "@version{2013-9-2}
+  @argument[window]{a @class{gdk-window} object}
+  @return{Event mask for @arg{window}.}
+  @begin{short}
+    Gets the event mask for window for all master input devices.
+  @end{short}
+  See the function @class{gdk-window-set-events}.
+  @see-class{gdk-window}
+  @see-function{gdk-window-set-events}"
   (window (g-object gdk-window)))
 
 (export 'gdk-window-get-events)
@@ -4485,14 +4489,19 @@
 
 (defcfun ("gdk_window_set_events" gdk-window-set-events) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-4-5}
-  @argument[window]{a GdkWindow}
-  @argument[event_mask]{event mask for window}
-  The event mask for a window determines which events will be reported for
-  that window from all master input devices. For example, an event mask
-  including GDK_BUTTON_PRESS_MASK means the window should report button press
-  events. The event mask is the bitwise OR of values from the GdkEventMask
-  enumeration."
+ "@version{2013-9-2}
+  @argument[window]{a @class{gdk-window} object}
+  @argument[event-mask]{event mask of type @symbol{gdk-event-mask} for window}
+  @begin{short}
+    The event mask for a window determines which events will be reported for
+    that window from all master input devices.
+  @end{short}
+  For example, an event mask including @code{:button-press-mask} means the
+  window should report button press events. The event mask is the bitwise OR of
+  values from the @symbol{gdk-event-mask} flags.
+  @see-class{gdk-window}
+  @see-symbol{gdk-event-mask}
+  @see-function{gdk-window-get-events}"
   (window (g-object gdk-window))
   (event-mask gdk-event-mask))
 
@@ -4504,21 +4513,23 @@
 
 (defcfun ("gdk_window_set_icon_name" gdk-window-set-icon-name) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-4-5}
-  @argument[window]{a toplevel GdkWindow}
+ "@version{2013-9-2}
+  @argument[window]{a toplevel @class{gdk-window} object}
   @argument[name]{name of window while iconified (minimized)}
   @begin{short}
     Windows may have a name used while minimized, distinct from the name they
-    display in their titlebar. Most of the time this is a bad idea from a user
-    interface standpoint. But you can set such a name with this function, if you
-    like.
+    display in their titlebar.
   @end{short}
+  Most of the time this is a bad idea from a user interface standpoint. But you
+  can set such a name with this function, if you like.
 
-  After calling this with a non-NULL name, calls to gdk_window_set_title()
-  will not update the icon title.
+  After calling this with a non-@code{nil} name, calls to the function
+  @fun{gdk-window-set-title} will not update the icon title.
 
-  Using NULL for name unsets the icon title; further calls to
-  gdk_window_set_title() will again update the icon title as well."
+  Using @code{nil} for name unsets the icon title; further calls to the function
+  @fun{gdk-window-set-title} will again update the icon title as well.
+  @see-class{gdk-window}
+  @see-function{gdk-window-set-title}"
   (window (g-object gdk-window))
   (name :string))
 
@@ -4530,16 +4541,22 @@
 
 (defcfun ("gdk_window_set_transient_for" gdk-window-set-transient-for) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-4-5}
-  @argument[window]{a toplevel GdkWindow}
-  @argument[parent]{another toplevel GdkWindow}
+ "@version{2013-9-2}
+  @argument[window]{a toplevel @class{gdk-window} object}
+  @argument[parent]{another toplevel @class{gdk-window} object}
   @begin{short}
-    Indicates to the window manager that window is a transient dialog associated
-    with the application window parent. This allows the window manager to do
-    things like center window on parent and keep window above parent.
+    Indicates to the window manager that @arg{window} is a transient dialog
+    associated with the application window parent.
   @end{short}
+  This allows the window manager to do things like center @arg{window} on
+  @arg{parent} and keep @arg{window} above @arg{parent}.
 
-  See gtk_window_set_transient_for() if you're using GtkWindow or GtkDialog."
+  See the function @fun{gtk-window-set-transient-for} if you are using
+  @class{gtk-window} or @class{gtk-dialog}.
+  @see-class{gdk-window}
+  @see-class{gtk-window}
+  @see-class{gtk-dialog}
+  @see-function{gtk-window-set-transient-for}"
   (window (g-object gdk-window))
   (parent (g-object gdk-window)))
 
@@ -4551,12 +4568,12 @@
 
 (defcfun ("gdk_window_set_role" gdk-window-set-role) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-4-5}
-  @argument[window]{a toplevel GdkWindow}
+ "@version{2013-9-2}
+  @argument[window]{a toplevel @class{gdk-window} object}
   @argument[role]{a string indicating its role}
   @begin{short}
-    When using GTK+, typically you should use gtk_window_set_role() instead of
-    this low-level function.
+    When using GTK+, typically you should use the function
+    @fun{gtk-window-set-role} instead of this low-level function.
   @end{short}
 
   The window manager and session manager use a window's role to distinguish it
@@ -4564,9 +4581,11 @@
   restarted after being saved in a previous session, all windows with the same
   title and role are treated as interchangeable. So if you have two windows
   with the same title that should be distinguished for session management
-  purposes, you should set the role on those windows. It doesn't matter what
+  purposes, you should set the role on those windows. It does not matter what
   string you use for the role, as long as you have a different role for each
-  non-interchangeable kind of window."
+  non-interchangeable kind of window.
+  @see-class{gdk-window}
+  @see-function{gtk-window-set-role}"
   (window (g-object gdk-window))
   (role :string))
 
@@ -4578,15 +4597,17 @@
 
 (defcfun ("gdk_window_set_startup_id" gdk-window-set-startup-id) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-4-5}
-  @argument[window]{a toplevel GdkWindow}
-  @argument[startup_id]{a string with startup-notification identifier}
+ "@version{2013-9-2}
+  @argument[window]{a toplevel @class{gdk-window} object}
+  @argument[startup-id]{a string with startup-notification identifier}
   @begin{short}
-    When using GTK+, typically you should use gtk_window_set_startup_id()
-    instead of this low-level function.
+    When using GTK+, typically you should use the function
+    @fun{gtk-window-set-startup-id} instead of this low-level function.
   @end{short}
 
-  Since 2.12"
+  Since 2.12
+  @see-class{gdk-window}
+  @see-function{gtk-window-set-startup-id}"
   (window (g-object gdk-window))
   (startup-id :string))
 
@@ -4598,21 +4619,24 @@
 
 (defcfun ("gdk_window_set_group" gdk-window-set-group) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-4-5}
-  @argument[window]{a toplevel GdkWindow}
-  @argument[leader]{group leader window, or NULL to restore the default group
-    leader window}
+ "@version{2013-9-2}
+  @argument[window]{a toplevel @class{gdk-window} object}
+  @argument[leader]{group leader window, or @code{nil} to restore the default
+    group leader window}
   @begin{short}
-    Sets the group leader window for window. By default, GDK sets the group
-    leader for all toplevel windows to a global window implicitly created by
-    GDK. With this function you can override this default.
+    Sets the group leader window for @arg{window}.
   @end{short}
+  By default, GDK sets the group leader for all toplevel windows to a global
+  window implicitly created by GDK. With this function you can override this
+  default.
 
   The group leader window allows the window manager to distinguish all windows
   that belong to a single application. It may for example allow users to
   minimize/unminimize all windows belonging to an application at once. You
   should only set a non-default group window if your application pretends to
-  be multiple applications."
+  be multiple applications.
+  @see-class{gdk-window}
+  @see-function{gdk-window-get-group}"
   (window (g-object gdk-window))
   (leader (g-object gdk-window)))
 
@@ -4654,12 +4678,10 @@
   (:minimize 32)
   (:maximize 64))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-wm-decoration atdoc:*symbol-name-alias*) "Flags"
       (gethash 'gdk-wm-decoration atdoc:*external-symbols*)
- "@version{2013-4-5}
+ "@version{2013-9-2}
   @begin{short}
     These are hints originally defined by the Motif toolkit. The window manager
     can use them when determining how to decorate the window. The hint must be
@@ -4678,14 +4700,15 @@
   (:maximize 64))
   @end{pre}
   @begin[code]{table}
-    @entry[:all]{all decorations should be applied.}
-    @entry[:border]{a frame should be drawn around the window.}
-    @entry[:resizeh]{the frame should have resize handles.}
-    @entry[:title]{a titlebar should be placed above the window.}
-    @entry[:menu]{a button for opening a menu should be included.}
-    @entry[:minimize]{a minimize button should be included.}
-    @entry[:maximize]{a maximize button should be included.}
-  @end{table}")
+    @entry[:all]{All decorations should be applied.}
+    @entry[:border]{A frame should be drawn around the window.}
+    @entry[:resizeh]{The frame should have resize handles.}
+    @entry[:title]{A titlebar should be placed above the window.}
+    @entry[:menu]{A button for opening a menu should be included.}
+    @entry[:minimize]{A minimize button should be included.}
+    @entry[:maximize]{A maximize button should be included.}
+  @end{table}
+  @see-class{gdk-window}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_set_decorations ()
@@ -4693,25 +4716,31 @@
 
 (defcfun ("gdk_window_set_decorations" gdk-window-set-decorations) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-4-5}
-  @argument[window]{a toplevel GdkWindow}
-  @argument[decorations]{decoration hint mask}
+ "@version{2013-9-2}
+  @argument[window]{a toplevel @class{gdk-window} object}
+  @argument[decorations]{decoration hint mask of type
+    @symbol{gdk-wm-decoration}}
   @begin{short}
     \"Decorations\" are the features the window manager adds to a toplevel
-    GdkWindow. This function sets the traditional Motif window manager hints
-    that tell the window manager which decorations you would like your window to
-    have. Usually you should use gtk_window_set_decorated() on a GtkWindow
-    instead of using the GDK function directly.
+    @class{gdk-window}. This function sets the traditional Motif window manager
+    hints that tell the window manager which decorations you would like your
+    window to have.
   @end{short}
+  Usually you should use the function @fun{gtk-window-set-decorated} on a
+  @class{gtk-window} instead of using the GDK function directly.
 
-  The decorations argument is the logical OR of the fields in the
-  GdkWMDecoration enumeration. If GDK_DECOR_ALL is included in the mask, the
-  other bits indicate which decorations should be turned off. If GDK_DECOR_ALL
+  The decorations argument is the logical OR of the values of the
+  @symbol{gdk-wm-decoration} flags. If @code{:all} is included in the mask, the
+  other bits indicate which decorations should be turned off. If @code{:all}
   is not included, then the other bits indicate which decorations should be
   turned on.
 
   Most window managers honor a decorations hint of 0 to disable all
-  decorations, but very few honor all possible combinations of bits."
+  decorations, but very few honor all possible combinations of bits.
+  @see-class{gdk-window}
+  @see-class{gtk-window}
+  @see-function{gdk-window-get-decorations}
+  @see-function{gtk-window-set-decorated}"
   (window (g-object gdk-window))
   (decorations gdk-wm-decoration))
 
@@ -4727,12 +4756,14 @@
 
 (defun gdk-window-get-decorations (window)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-5}
-  @argument[window]{The toplevel GdkWindow to get the decorations from}
-  @argument[decorations]{The window decorations will be written here.}
-  @return{TRUE if the window has decorations set, FALSE otherwise.}
-  Returns the decorations set on the GdkWindow with
-  gdk_window_set_decorations()."
+ "@version{2013-9-2}
+  @argument[window]{the toplevel @class{gdk-window} to get the decorations from}
+  @argument[decorations]{the window decorations will be written here}
+  @return{@em{True} if the window has decorations set, @code{nil} otherwise.}
+  Returns the decorations set on the @class{gdk-window} with the function
+  @fun{gdk-window-set-decorations}.
+  @see-class{gdk-window}
+  @see-function{gdk-window-set-decorations}"
   (with-foreign-object (decorations 'gdk-wm-decoration)
     (%gdk-window-get-decorations window decorations)
     (mem-ref decorations 'gdk-wm-decoration)))
@@ -4753,12 +4784,10 @@
   (:maximize 16)
   (:close 32))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-wm-function atdoc:*symbol-name-alias*) "Flags"
       (gethash 'gdk-wm-function atdoc:*external-symbols*)
- "@version{2013-4-5}
+ "@version{2013-9-2}
   @begin{short}
     These are hints originally defined by the Motif toolkit. The window manager
     can use them when determining the functions to offer for the window. The
@@ -4776,13 +4805,15 @@
   (:close 32))
   @end{pre}
   @begin[code]{table}
-    @entry[:all]{all functions should be offered.}
-    @entry[:resize]{the window should be resizable.}
-    @entry[:move]{the window should be movable.}
-    @entry[:minimize]{the window should be minimizable.}
-    @entry[:maximize]{the window should be maximizable.}
-    @entry[:close]{the window should be closable.}
-  @end{table}")
+    @entry[:all]{All functions should be offered.}
+    @entry[:resize]{The window should be resizable.}
+    @entry[:move]{The window should be movable.}
+    @entry[:minimize]{The window should be minimizable.}
+    @entry[:maximize]{The window should be maximizable.}
+    @entry[:close]{The window should be closable.}
+  @end{table}
+  @see-class{gdk-window}
+  @see-function{gdk-window-set-functions}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_set_functions ()
@@ -4790,8 +4821,8 @@
 
 (defcfun ("gdk_window_set_functions" gdk-window-set-functions) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-4-5}
-  @argument[window]{a toplevel GdkWindow}
+ "@version{2013-9-2}
+  @argument[window]{a toplevel @class{gdk-window} object}
   @argument[functions]{bitmask of operations to allow on window}
   @begin{short}
     Sets hints about the window management functions to make available via
@@ -4802,10 +4833,12 @@
   hint for this purpose. However, few window managers do anything reliable or
   interesting with this hint. Many ignore it entirely.
 
-  The functions argument is the logical OR of values from the GdkWMFunction
-  enumeration. If the bitmask includes GDK_FUNC_ALL, then the other bits
-  indicate which functions to disable; if it doesn't include GDK_FUNC_ALL, it
-  indicates which functions to enable."
+  The functions argument is the logical OR of values from the
+  @symbol{gdk-wm-function} flags. If the bitmask includes @code{:all}, then the
+  other bits indicate which functions to disable; if it does not include
+  @code{:all}, it indicates which functions to enable.
+  @see-class{gdk-window}
+  @see-symbol{gdk-wm-functions}"
   (window (g-object gdk-window))
   (functions gdk-wm-function))
 
@@ -4818,10 +4851,11 @@
 (defcfun ("gdk_get_default_root_window" gdk-get-default-root-window)
     (g-object gdk-window)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-5}
-  @return{the default root window}
-  Obtains the root window (parent all other windows are inside) for the
-  default display and screen.")
+ "@version{2013-9-2}
+  @return{The default root window.}
+  Obtains the root window, parent all other windows are inside, for the
+  default display and screen.
+  @see-class{gdk-window}")
 
 (export 'gdk-get-default-root-window)
 
@@ -4832,14 +4866,17 @@
 (defcfun ("gdk_window_get_support_multidevice"
            gdk-window-get-support-multidevice) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-5-4}
-  @argument[window]{a GdkWindow.}
-  @return{TRUE if the window handles multidevice features.}
+ "@version{2013-9-2}
+  @argument[window]{a @class{gdk-window} object}
+  @return{@em{True} if the window handles multidevice features.}
   @begin{short}
-    Returns TRUE if the window is aware of the existence of multiple devices.
+    Returns @em{true} if the window is aware of the existence of multiple
+    devices.
   @end{short}
 
-  Since 3.0"
+  Since 3.0
+  @see-class{gdk-window}
+  @see-function{gdk-window-set-support-multidevice}"
   (window (g-object gdk-window)))
 
 (export 'gdk-window-get-support-multidevice)
@@ -4851,17 +4888,20 @@
 (defcfun ("gdk_window_set_support_multidevice"
            gdk-window-set-support-multidevice) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-4-5}
-  @argument[window]{a GdkWindow.}
-  @argument[support_multidevice]{TRUE to enable multidevice support in window.}
+ "@version{2013-9-2}
+  @argument[window]{a @class{gdk-window} object}
+  @argument[support-multidevice]{@em{true} to enable multidevice support in
+    @arg{window}}
   @begin{short}
-    This function will enable multidevice features in window.
+    This function will enable multidevice features in @arg{window}.
   @end{short}
 
   Multidevice aware windows will need to handle properly multiple, per device
   enter/leave events, device grabs and grab ownerships.
 
-  Since 3.0"
+  Since 3.0
+  @see-class{gdk-window}
+  @see-function{gdk-window-get-support-multidevice}"
   (window (g-object gdk-window))
   (support-multidevice :boolean))
 
@@ -4874,22 +4914,26 @@
 (defcfun ("gdk_window_get_device_cursor" gdk-window-get-device-cursor)
     (g-object gdk-cursor)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-5}
-  @argument[window]{a GdkWindow.}
-  @argument[device]{a master, pointer GdkDevice.}
+ "@version{2013-9-2}
+  @argument[window]{a @class{gdk-window} object}
+  @argument[device]{a master @class{gdk-device} object}
   @begin{return}
-    a GdkCursor, or NULL. The returned object is owned by the GdkWindow and
-    should not be unreferenced directly. Use gdk_window_set_cursor() to
-    unset the cursor of the window.
+    A @class{gdk-cursor}, or @code{nil}. The returned object is owned by the
+    @class{gdk-window} and should not be unreferenced directly. Use the function
+    @fun{gdk-window-set-cursor} to unset the cursor of the window.
   @end{return}
   @begin{short}
-    Retrieves a GdkCursor pointer for the device currently set on the specified
-    GdkWindow, or NULL. If the return value is NULL then there is no custom
-    cursor set on the specified window, and it is using the cursor for its
-    parent window.
+    Retrieves a @class{gdk-cursor} pointer for the device currently set on the
+    specified @class{gdk-window}, or @code{nil}.
   @end{short}
+  If the return value is @code{nil} then there is no custom cursor set on the
+  specified window, and it is using the cursor for its parent window.
 
-  Since 3.0"
+  Since 3.0
+  @see-class{gdk-window}
+  @see-class{gdk-device}
+  @see-class{gdk-cursor}
+  @see-function{gdk-window-set-device-cursor}"
   (window (g-object gdk-window))
   (device (g-object gdk-device)))
 
@@ -4901,19 +4945,27 @@
 
 (defcfun ("gdk_window_set_device_cursor" gdk-window-set-device-cursor) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-4-5}
-  @argument[window]{a Gdkwindow}
-  @argument[device]{a master, pointer GdkDevice}
-  @argument[cursor]{a GdkCursor}
+ "@version{2013-9-2}
+  @argument[window]{a @class{gdk-window} object}
+  @argument[device]{a master @class{gdk-device} object}
+  @argument[cursor]{a @class{gdk-cursor} object}
   @begin{short}
-    Sets a specific GdkCursor for a given device when it gets inside window. Use
-    gdk_cursor_new_for_display() or gdk_cursor_new_from_pixbuf() to create the
-    cursor. To make the cursor invisible, use GDK_BLANK_CURSOR. Passing NULL for
-    the cursor argument to gdk_window_set_cursor() means that window will use
-    the cursor of its parent window. Most windows should use this default.
+    Sets a specific @class{gdk-cursor} for a given device when it gets inside
+    window.
   @end{short}
+  Use the functions @fun{gdk-cursor-new-for-display} or
+  @fun{gdk-cursor-new-from-pixbuf} to create the cursor. To make the cursor
+  invisible, use @code{:blank-cursor}. Passing @code{nil} for the cursor
+  argument to the function @sym{gdk-window-set-cursor} means that window will
+  use the cursor of its parent window. Most windows should use this default.
 
-  Since 3.0"
+  Since 3.0
+  @see-class{gdk-window}
+  @see-class{gdk-device}
+  @see-class{gdk-cursor}
+  @see-function{gdk-cursor-new-for-display}
+  @see-function{gdk-cursor-new-from-pixbuf}
+  @see-function{gdk-window-get-device-cursor}"
   (window (g-object gdk-window))
   (device (g-object gdk-device))
   (cursor (g-object gdk-cursor)))
@@ -4927,15 +4979,18 @@
 (defcfun ("gdk_window_get_device_events" gdk-window-get-device-events)
     gdk-event-mask
  #+cl-cffi-gtk-documentation
- "@version{2013-4-5}
-  @argument[window]{a GdkWindow.}
-  @argument[device]{a GdkDevice.}
+ "@version{2013-9-2}
+  @argument[window]{a @class{gdk-window} object}
+  @argument[device]{a @class{gdk-device} object}
   @return{device event mask for window}
   @begin{short}
     Returns the event mask for window corresponding to an specific device.
   @end{short}
 
-  Since 3.0"
+  Since 3.0
+  @see-class{gdk-window}
+  @see-class{gdk-device}
+  @see-function{gdk-window-set-device-events}"
   (window (g-object gdk-window))
   (device (g-object gdk-device)))
 
@@ -4947,19 +5002,23 @@
 
 (defcfun ("gdk_window_set_device_events" gdk-window-set-device-events) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-4-5}
-  @argument[window]{a GdkWindow}
-  @argument[device]{GdkDevice to enable events for.}
-  @argument[event_mask]{event mask for window}
+ "@version{2013-9-2}
+  @argument[window]{a @class{gdk-window} object}
+  @argument[device]{@class{gdk-device} object to enable events for}
+  @argument[event-mask]{event mask for @arg{window}}
   @begin{short}
-    Sets the event mask for a given device (Normally a floating device, not
-    attached to any visible pointer) to window. For example, an event mask
-    including GDK_BUTTON_PRESS_MASK means the window should report button press
-    events. The event mask is the bitwise OR of values from the GdkEventMask
-    enumeration.
+    Sets the event mask for a given device.
   @end{short}
+  Normally a floating device, not attached to any visible pointer to window.
+  For example, an event mask including @code{:button-press-mask} means the
+  window should report button press events. The event mask is the bitwise OR of
+  values from the @symbol{gdk-event-mask} flags.
 
-  Since 3.0"
+  Since 3.0
+  @see-class{gdk-window}
+  @see-class{gdk-device}
+  @see-symbol{gdk-event-mask}
+  @see-function{gdk-window-get-device-events}"
   (window (g-object gdk-window))
   (device (g-object gdk-device))
   (event-mask gdk-event-mask))
@@ -4973,12 +5032,15 @@
 (defcfun ("gdk_window_get_source_events" gdk-window-get-source-events)
     gdk-event-mask
  #+cl-cffi-gtk-documentation
- "@version{2013-4-5}
-  @argument[window]{a GdkWindow}
-  @argument[source]{a GdkInputSource to define the source class.}
-  @return{source event mask for window}
+ "@version{2013-9-2}
+  @argument[window]{a @class{gdk-window} object}
+  @argument[source]{a @symbol{gdk-input-source} to define the source class}
+  @return{Source event mask for @arg{window}.}
   Returns the event mask for window corresponding to the device class
-  specified by source."
+  specified by source.
+  @see-class{gdk-window}
+  @see-symbol{gdk-input-source}
+  @see-function{gdk-window-set-source-events}"
   (window (g-object gdk-window))
   (source gdk-input-source))
 
@@ -4991,17 +5053,21 @@
 (defcfun ("gdk_window_set_source_events" gdk-window-set-source-events) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-4-5}
-  @argument[window]{a GdkWindow}
-  @argument[source]{a GdkInputSource to define the source class.}
-  @argument[event_mask]{event mask for window}
+  @argument[window]{a @class{gdk-window} object}
+  @argument[source]{a @symbol{gdk-input-source} to define the source class}
+  @argument[event-mask]{event mask for @arg{window}}
   @begin{short}
-    Sets the event mask for any floating device (i.e. not attached to any
-    visible pointer) that has the source defined as source. This event mask will
-    be applied both to currently existing, newly added devices after this call,
-    and devices being attached/detached.
+    Sets the event mask for any floating device, i. e. not attached to any
+    visible pointer, that has the source defined as source.
   @end{short}
+  This event mask will be applied both to currently existing, newly added
+  devices after this call, and devices being attached/detached.
 
-  Since 3.0"
+  Since 3.0
+  @see-class{gdk-window}
+  @see-symbol{gdk-input-source}
+  @see-symbol{gdk-event-mask}
+  @see-function{gdk-window-get-source-events}"
   (window (g-object gdk-window))
   (source gdk-input-source)
   (event-mask gdk-event-mask))
@@ -5015,12 +5081,16 @@
 (defcfun ("gdk_offscreen_window_get_surface" gdk-offscreen-window-get-surface)
     (:pointer (:struct cairo-surface-t))
  #+cl-cffi-gtk-documentation
- "@version{2013-4-5}
-  @argument[window]{a GdkWindow}
-  @return{The offscreen surface, or NULL if not offscreen.}
-  Gets the offscreen surface that an offscreen window renders into. If you
-  need to keep this around over window resizes, you need to add a reference to
-  it."
+ "@version{2013-9-2}
+  @argument[window]{a @class{gdk-window} object}
+  @return{The offscreen surface, or @code{nil} if not offscreen.}
+  @begin{short}
+    Gets the offscreen surface that an offscreen window renders into.
+  @end{short}
+  If you need to keep this around over window resizes, you need to add a
+  reference to it.
+  @see-class{gdk-window}
+  @see-symbol{cairo-surface-t}"
   (window (g-object gdk-window)))
 
 (export 'gdk-offscreen-window-get-surface)
@@ -5032,18 +5102,21 @@
 (defcfun ("gdk_offscreen_window_set_embedder" gdk-offscreen-window-set-embedder)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2013-4-5}
-  @argument[window]{a GdkWindow}
-  @argument[embedder]{the GdkWindow that window gets embedded in}
+ "@version{2013-9-2}
+  @argument[window]{a @class{gdk-window} object}
+  @argument[embedder]{the @class{gdk-window} that window gets embedded in}
   @begin{short}
-    Sets window to be embedded in embedder.
+    Sets @arg{window} to be embedded in @arg{embedder}.
   @end{short}
 
   To fully embed an offscreen window, in addition to calling this function, it
-  is also necessary to handle the \"pick-embedded-child\" signal on the embedder
-  and the \"to-embedder\" and \"from-embedder\" signals on window.
+  is also necessary to handle the \"pick-embedded-child\" signal on the
+  @arg{embedder} and the \"to-embedder\" and \"from-embedder\" signals on
+  @arg{window}.
 
-  Since 2.18"
+  Since 2.18
+  @see-class{gdk-window}
+  @see-function{gdk-window-get-embedder}"
   (window (g-object gdk-window))
   (embedder (g-object gdk-window)))
 
@@ -5056,17 +5129,19 @@
 (defcfun ("gdk_offscreen_window_get_embedder" gdk-offscreen-window-get-embedder)
     (g-object gdk-window)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-5}
-  @argument[window]{a GdkWindow}
+ "@version{2013-9-2}
+  @argument[window]{a @class{gdk-window} object}
   @begin{return}
-    the embedding GdkWindow, or NULL if window is not an mbedded offscreen
-    window
+    The embedding @class{gdk-window}, or @code{nil} if @arg{window} is not an
+    embedded offscreen window.
   @end{return}
   @begin{short}
-    Gets the window that window is embedded in.
+    Gets the window that @arg{window} is embedded in.
   @end{short}
 
-  Since 2.18"
+  Since 2.18
+  @see-class{gdk-window}
+  @see-function{gdk-window-set-embedder}"
   (window (g-object gdk-window)))
 
 (export 'gdk-offscreen-window-get-embedder)
@@ -5077,15 +5152,17 @@
 
 (defcfun ("gdk_window_geometry_changed" gdk-window-geometry-changed) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-4-5}
-  @argument[window]{an embedded offscreen GdkWindow}
+ "@version{2013-9-2}
+  @argument[window]{an embedded offscreen @class{gdk-window} object}
   @begin{short}
     This function informs GDK that the geometry of an embedded offscreen window
-    has changed. This is necessary for GDK to keep track of which offscreen
-    window the pointer is in.
+    has changed.
   @end{short}
+  This is necessary for GDK to keep track of which offscreen window the pointer
+  is in.
 
-  Since 2.18"
+  Since 2.18
+  @see-class{gdk-window}"
   (window (g-object gdk-window)))
 
 (export 'gdk-window-geometry-changed)
@@ -5103,33 +5180,38 @@
 
 (defun gdk-window-coords-from-parent (window parent-x parent-y)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-5}
+ "@version{2013-9-2}
   @argument[window]{a child window}
-  @argument[parent_x]{X coordinate in parent's coordinate system}
-  @argument[parent_y]{Y coordinate in parent's coordinate system}
+  @argument[parent-x]{x coordinate in parent's coordinate system}
+  @argument[parent-y]{y coordinate in parent's coordinate system}
   @begin{return}
-    @code{x} -- X coordinate in child's coordinate system @br{}
-    @code{y} -- Y coordinate in child's coordinate system
+    @code{x} -- x coordinate in child's coordinate system @br{}
+    @code{y} -- y coordinate in child's coordinate system
   @end{return}
   @begin{short}
     Transforms window coordinates from a parent window to a child window, where
-    the parent window is the normal parent as returned by
-    gdk_window_get_parent() for normal windows, and the window's embedder as
-    returned by gdk_offscreen_window_get_embedder() for offscreen windows.
+    the parent window is the normal parent as returned by the function
+    @fun{gdk-window-get-parent} for normal windows, and the window's embedder as
+    returned by the function @fun{gdk-offscreen-window-get-embedder} for
+    offscreen windows.
   @end{short}
 
   For normal windows, calling this function is equivalent to subtracting the
-  return values of gdk_window_get_position() from the parent coordinates. For
-  offscreen windows however (which can be arbitrarily transformed), this
-  function calls the GdkWindow::from-embedder: signal to translate the
+  return values of the function @fun{gdk-window-get-position} from the parent
+  coordinates. For offscreen windows however, which can be arbitrarily
+  transformed, this function calls the \"from-embedder\" signal to translate the
   coordinates.
 
   You should always use this function when writing generic code that walks
   down a window hierarchy.
 
-  See also: gdk_window_coords_to_parent()
+  See also the function @fun{gdk-window-coords-to-parent}.
 
-  Since 2.22"
+  Since 2.22
+  @see-function{gdk-window}
+  @see-function{gdk-window-get-parent}
+  @see-function{gdk-offscreen-window-get-embedder}
+  @see-function{gdk-window-get-position}"
   (with-foreign-objects ((x :double) (y :double))
     (%gdk-window-coords-from-parent window parent-x parent-y x y)
     (values (mem-ref x :double)
@@ -5150,32 +5232,39 @@
 
 (defun gdk-window-coords-to-parent (window x y)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-5}
+ "@version{2013-9-2}
   @argument[window]{a child window}
-  @argument[x]{X coordinate in child's coordinate system}
-  @argument[y]{Y coordinate in child's coordinate system}
+  @argument[x]{x coordinate in child's coordinate system}
+  @argument[y]{y coordinate in child's coordinate system}
   @begin{return}
-    @code{parent_x} -- X coordinate in parent's coordinate system, or NULL @br{}
-    @code{parent_y} -- Y coordinate in parent's coordinate system, or NULL
+    @code{parent-x} -- x coordinate in parent's coordinate system,
+                       or @code{nil} @br{}
+    @code{parent-y} -- y coordinate in parent's coordinate system, or @code{nil}
   @end{return}
   @begin{short}
     Transforms window coordinates from a child window to its parent window,
-    where the parent window is the normal parent as returned by
-    gdk_window_get_parent() for normal windows, and the window's embedder as
-    returned by gdk_offscreen_window_get_embedder() for offscreen windows.
+    where the parent window is the normal parent as returned by the function
+    @fun{gdk-window-get-parent} for normal windows, and the window's embedder as
+    returned by the function @fun{gdk-offscreen-window-get-embedder} for
+    offscreen windows.
   @end{short}
 
   For normal windows, calling this function is equivalent to adding the return
-  values of gdk_window_get_position() to the child coordinates. For offscreen
-  windows however (which can be arbitrarily transformed), this function calls
-  the GdkWindow::to-embedder: signal to translate the coordinates.
+  values of the function @fun{gdk-window-get-position} to the child coordinates.
+  For offscreen windows however, which can be arbitrarily transformed, this
+  function calls the \"to-embedder\" signal to translate the coordinates.
 
   You should always use this function when writing generic code that walks up
   a window hierarchy.
 
-  See also: gdk_window_coords_from_parent()
+  See also the function @fun{gdk-window-coords-from-parent}.
 
-  Since 2.22"
+  Since 2.22
+  @see-class{gdk-window}
+  @see-function{gdk-window-get-parent}
+  @see-function{gdk-offscreen-window-get-embedder}
+  @see-function{gdk-window-get-position}
+  @see-function{gdk-window-coords-from-parent}"
   (with-foreign-objects ((parent-x :double) (parent-y :double))
     (%gdk-window-coords-to-parent window x y parent-x parent-y)
     (values (mem-ref parent-x :double)
@@ -5190,18 +5279,21 @@
 (defcfun ("gdk_window_get_effective_parent" gdk-window-get-effective-parent)
     (g-object gdk-window)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-5}
-  @argument[window]{a GdkWindow}
-  @return{effective parent of window}
+ "@version{2013-9-2}
+  @argument[window]{a @class{gdk-window} object}
+  @return{effective parent of @arg{window}}
   @begin{short}
-    Obtains the parent of window, as known to GDK. Works like
-    gdk_window_get_parent() for normal windows, but returns the window's
-    embedder for offscreen windows.
+    Obtains the parent of window, as known to GDK.
   @end{short}
+  Works like the function @fun{gdk-window-get-parent} for normal windows, but
+  returns the window's embedder for offscreen windows.
 
-  See also: gdk_offscreen_window_get_embedder()
+  See also the function @fun{gdk-offscreen-window-get-embedder}.
 
-  Since 2.22"
+  Since 2.22
+  @see-class{gdk-window}
+  @see-function{gdk-window-get-parent}
+  @see-function{gdk-offscreen-window-get-embedder}"
   (window (g-object gdk-window)))
 
 (export 'gdk-window-get-effective-parent)
@@ -5213,19 +5305,23 @@
 (defcfun ("gdk_window_get_effective_toplevel" gdk-window-get-effective-toplevel)
     (g-object gdk-window)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-5}
-  @argument[window]{a GdkWindow}
-  @return{the effective toplevel window containing window}
+ "@version{2013-9-2}
+  @argument[window]{a @class{gdk-window} object}
+  @return{The effective toplevel window containing window.}
   @begin{short}
-    Gets the toplevel window that's an ancestor of window.
+    Gets the toplevel window that is an ancestor of @arg{window}.
   @end{short}
 
-  Works like gdk_window_get_toplevel(), but treats an offscreen window's
-  embedder as its parent, using gdk_window_get_effective_parent().
+  Works like the function @fun{gdk-window-get-toplevel}, but treats an offscreen
+  window's embedder as its parent, using the function
+  @fun{gdk-window-get-effective-parent}.
 
   See also: gdk_offscreen_window_get_embedder()
 
-  Since 2.22"
+  Since 2.22
+  @see-class{gdk-window}
+  @see-function{gdk-window-get-toplevel}
+  @see-function{gdk-window-get-effective-parent}"
   (window (g-object gdk-window)))
 
 (export 'gdk-window-get-effective-toplevel)
