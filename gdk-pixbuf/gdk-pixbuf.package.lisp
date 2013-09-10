@@ -123,7 +123,7 @@
     efficient algorithm.
 
     As a special case, you can use the function
-    @fun{gdk-pixbuf-new-from-xpm_data} to create a pixbuf from inline XPM image
+    @fun{gdk-pixbuf-new-from-xpm-data} to create a pixbuf from inline XPM image
     data.
 
     You can also copy an existing pixbuf with the function
