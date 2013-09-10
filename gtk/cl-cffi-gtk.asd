@@ -288,7 +288,6 @@
    (:file "gtk.resource-files")        ; Routines for handling resource files
 
    ;; More definitions. The documentation is not completed.
-;   (:file "gtk.generated-classes")
 ;   (:file "gtk.selectors")
 ;   (:file "gtk.timer")
 
