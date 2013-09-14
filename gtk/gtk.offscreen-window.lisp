@@ -1,9 +1,10 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.offscreen-window.lisp
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2012, 2013 Dieter Kaiser
 ;;;
@@ -54,7 +55,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-offscreen-window 'type)
- "@version{2013-6-25}
+ "@version{2013-9-11}
   @begin{short}
     @sym{gtk-offscreen-window} is strictly intended to be used for obtaining
     snapshots of widgets that are not part of a normal widget hierarchy.
@@ -73,7 +74,10 @@
   @class{gtk-bin} that has no parent widget.
 
   When contained offscreen widgets are redrawn, @sym{gtk-offscreen-window} will
-  emit a \"damage-event\" signal.")
+  emit a \"damage-event\" signal.
+  @see-class{gtk-bin}
+  @see-class{gdk-pixbuf}
+  @see-symbol{cairo-surface-t}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_offscreen_window_new ()
@@ -90,7 +94,8 @@
     widgets without showing them on the screen.
   @end{short}
 
-  Since 2.20"
+  Since 2.20
+  @see-class{gtk-offscreen-window}"
   (make-instance 'gtk-offscreen-window))
 
 (export 'gtk-offscreen-window-new)
@@ -102,9 +107,9 @@
 (defcfun ("gtk_offscreen_window_get_surface" gtk-offscreen-window-get-surface)
     (:pointer (:struct cairo-surface-t))
  #+cl-cffi-gtk-documentation
- "@version{2013-6-25}
+ "@version{2013-9-11}
   @argument[offscreen]{the @class{gtk-offscreen-window} contained widget}
-  @return{A @symbol{cairo-surface-t} pointer to the @arg{offscreen} surface,
+  @return{A @symbol{cairo-surface-t} to the @arg{offscreen} surface,
     or a @code{null}-pointer.}
   @begin{short}
     Retrieves a snapshot of the contained widget in the form of a
@@ -113,6 +118,8 @@
   @end{short}
 
   Since 2.20
+  @see-class{gtk-offscreen-window}
+  @see-symbol{cairo-surface-t}
   @see-function{gtk-offscreen-window-get-pixbuf}"
   (offscreen (g-object gtk-offscreen-window)))
 
@@ -125,7 +132,7 @@
 (defcfun ("gtk_offscreen_window_get_pixbuf" gtk-offscreen-window-get-pixbuf)
     (g-object gdk-pixbuf)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-25}
+ "@version{2013-9-11}
   @argument[offscreen]{the @class{gtk-offscreen-window} contained widget}
   @return{A @class{gdk-pixbuf} object, or @code{nil}.}
   @begin{short}
@@ -134,6 +141,8 @@
   @end{short}
 
   Since 2.20
+  @see-class{gtk-offscreen-window}
+  @see-class{gdk-pixbuf}
   @see-function{gtk-offscreen-window-get-surface}"
   (offscreen (g-object gtk-offscreen-window)))
 

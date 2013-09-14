@@ -311,13 +311,14 @@
 
 (defun gtk-assistant-new ()
  #+cl-cffi-gtk-documentation
- "@version{2013-6-25}
+ "@version{2013-9-11}
   @return{A @class{gtk-assistant} widget.}
   @begin{short}
     Creates a new @class{gtk-assistant} widget.
   @end{short}
 
-  Since 2.10"
+  Since 2.10
+  @see-class{gtk-assistant}"
   (make-instance 'gtk-assistant))
 
 (export 'gtk-assistant-new)
@@ -328,7 +329,7 @@
 
 (defcfun ("gtk_assistant_get_current_page" gtk-assistant-get-current-page) :int
  #+cl-cffi-gtk-documentation
- "@version{2013-6-25}
+ "@version{2013-9-11}
   @argument[assistant]{a @class{gtk-assistant} widget}
   @return{The index starting from 0 of the current page in the @arg{assistant},
     or -1 if the @arg{assistant} has no pages, or no current page.}
@@ -337,6 +338,7 @@
   @end{short}
 
   Since 2.10
+  @see-class{gtk-assistant}
   @see-function{gtk-assistant-set-current-page}"
   (assistant (g-object gtk-assistant)))
 
@@ -348,7 +350,7 @@
 
 (defcfun ("gtk_assistant_set_current_page" gtk-assistant-set-current-page) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-6-25}
+ "@version{2013-9-11}
   @argument[assistant]{a @class{gtk-assistant} widget}
   @argument[page-num]{index of the page to switch to, starting from 0. If
     negative, the last page will be used. If greater than the number of pages in
@@ -361,6 +363,7 @@
   flow can be set with the function @fun{gtk-assistant-set-forward-page-func}.
 
   Since 2.10
+  @see-class{gtk-assistant}
   @see-function{gtk-assistant-get-current-page}
   @see-function{gtk-assistant-set-forward-page-func}"
   (assistant (g-object gtk-assistant))
@@ -374,14 +377,15 @@
 
 (defcfun ("gtk_assistant_get_n_pages" gtk-assistant-get-n-pages) :int
  #+cl-cffi-gtk-documentation
- "@version{2013-6-25}
+ "@version{2013-9-11}
   @argument[assistant]{a @class{gtk-assistant} widget}
   @return{The number of pages in the @arg{assistant}.}
   @begin{short}
     Returns the number of pages in the @arg{assistant}.
   @end{short}
 
-  Since 2.10"
+  Since 2.10
+  @see-class{gtk-assistant}"
   (assistant (g-object gtk-assistant)))
 
 (export 'gtk-assistant-get-n-pages)
@@ -393,7 +397,7 @@
 (defcfun ("gtk_assistant_get_nth_page" gtk-assistant-get-nth-page)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-25}
+ "@version{2013-9-11}
   @argument[assistant]{a @class{gtk-assistant} widget}
   @argument[page-num]{the index of a page in the @arg{assistant}, or -1 to get
     the last page}
@@ -402,7 +406,8 @@
     Returns the child widget contained in page number @arg{page-num}.
   @end{short}
 
-  Since 2.10"
+  Since 2.10
+  @see-class{gtk-assistant}"
   (assistant (g-object gtk-assistant))
   (page-num :int))
 
@@ -414,7 +419,7 @@
 
 (defcfun ("gtk_assistant_prepend_page" gtk-assistant-prepend-page) :int
  #+cl-cffi-gtk-documentation
- "@version{2013-6-25}
+ "@version{2013-9-11}
   @argument[assistant]{a @class{gtk-assistant} widget}
   @argument[page]{a @class{gtk-widget} object}
   @return{The index starting at 0 of the inserted @arg{page}.}
@@ -423,6 +428,7 @@
   @end{short}
 
   Since 2.10
+  @see-class{gtk-assistant}
   @see-function{gtk-assistant-append-page}
   @see-function{gtk-assistant-insert-page}
   @see-function{gtk-assistant-remove-page}"
@@ -437,7 +443,7 @@
 
 (defcfun ("gtk_assistant_append_page" gtk-assistant-append-page) :int
  #+cl-cffi-gtk-documentation
- "@version{2013-6-25}
+ "@version{2013-9-11}
   @argument[assistant]{a @class{gtk-assistant} widget}
   @argument[page]{a @class{gtk-widget} object}
   @return{The index starting at 0 of the inserted @arg{page}.}
@@ -446,6 +452,7 @@
   @end{short}
 
   Since 2.10
+  @see-class{gtk-assistant}
   @see-function{gtk-assistant-prepend-page}
   @see-function{gtk-assistant-insert-page}
   @see-function{gtk-assistant-remove-page}"
@@ -460,7 +467,7 @@
 
 (defcfun ("gtk_assistant_insert_page" gtk-assistant-insert-page) :int
  #+cl-cffi-gtk-documentation
- "@version{2013-6-25}
+ "@version{2013-9-11}
   @argument[assistant]{a @class{gtk-assistant} widget}
   @argument[page]{a @class{gtk-widget} object}
   @argument[position]{the index starting at 0 at which to insert the @arg{page},
@@ -471,6 +478,7 @@
   @end{short}
 
   Since 2.10
+  @see-class{gtk-assistant}
   @see-function{gtk-assistant-append-page}
   @see-function{gtk-assistant-prepend-page}
   @see-function{gtk-assistant-remove-page}"
@@ -486,7 +494,7 @@
 
 (defcfun ("gtk_assistant_remove_page" gtk-assistant-remove-page) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-6-25}
+ "@version{2013-9-11}
   @argument[assistant]{a @class{gtk-assistant} widget}
   @argument[page-num]{the index of a page in the @arg{assistant}, or -1 to
     remove the last page}
@@ -495,6 +503,7 @@
   @end{short}
 
   Since 3.2
+  @see-class{gtk-assistant}
   @see-function{gtk-assistant-append-page}
   @see-function{gtk-assistant-prepend-page}
   @see-function{gtk-assistant-insert-page}"
@@ -538,7 +547,7 @@
 
 (defun gtk-assistant-set-forward-page-func (assistant func)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-25}
+ "@version{2013-9-11}
   @argument[assistant]{a @class{gtk-assistant} widget}
   @argument[func]{a page forwarding function, or @code{nil} to use the default
     one}
@@ -551,7 +560,8 @@
   the @arg{assistant} to use the default forward function, which just goes to
   the next visible page.
 
-  Since 2.10"
+  Since 2.10
+  @see-class{gtk-assistant}"
   (if func
       (%gtk-assistant-set-forward-page-func
           assistant
@@ -582,10 +592,11 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-assistant-page-type atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-assistant-page-type atdoc:*external-symbols*)
- "@version{2013-6-25}
+ "@version{2013-9-11}
   @begin{short}
-    An enum for determining the page role inside the @class{gtk-assistant}.
-    It is used to handle buttons sensitivity and visibility.
+    An enumeration for determining the page role inside the
+    @class{gtk-assistant}. It is used to handle buttons sensitivity and
+    visibility.
   @end{short}
 
   Note that an assistant needs to end its page flow with a page of type
@@ -620,6 +631,7 @@
       buttons will be shown, and the application must add its own buttons
       through the function @fun{gtk-assistant-add-action-widget}.}
   @end{table}
+  @see-class{gtk-assistant}
   @see-function{gtk-assistant-commit}
   @see-function{gtk-assistant-add-action-widget}")
 
@@ -629,10 +641,11 @@
 
 (defcfun ("gtk_assistant_set_page_type" gtk-assistant-set-page-type) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-6-25}
+ "@version{2013-9-11}
   @argument[assistant]{a @class{gtk-assistant} widget}
   @argument[page]{a page of @arg{assistant}}
-  @argument[type]{the new type for @arg{page}}
+  @argument[type]{the new type for @arg{page} of type
+    @symbol{gtk-assistant-page-type}}
   @begin{short}
     Sets the page @arg{type} for @arg{page}.
   @end{short}
@@ -640,6 +653,8 @@
   The page @arg{type} determines the @arg{page} behavior in the @arg{assistant}.
 
   Since 2.10
+  @see-class{gtk-assistant}
+  @see-symbol{gtk-assistant-page-type}
   @see-function{gtk-assistant-get-page-type}"
   (assistant (g-object gtk-assistant))
   (page (g-object gtk-widget))
@@ -654,15 +669,17 @@
 (defcfun ("gtk_assistant_get_page_type" gtk-assistant-get-page-type)
     gtk-assistant-page-type
  #+cl-cffi-gtk-documentation
- "@version{2013-6-25}
+ "@version{2013-9-11}
   @argument[assistant]{a @class{gtk-assistant} widget}
   @argument[page]{a page of @arg{assistant}}
-  @return{The page type of @arg{page}.}
+  @return{The page type of @arg{page} of type @symbol{gtk-assistant-page-type}.}
   @begin{short}
     Gets the page type of @arg{page}.
   @end{short}
 
   Since 2.10
+  @see-class{gtk-assistant}
+  @see-symbol{gtk-assistant-page-type}
   @see-function{gtk-assistant-set-page-type}"
   (assistant (g-object gtk-assistant))
   (page (g-object gtk-widget)))
@@ -675,7 +692,7 @@
 
 (defcfun ("gtk_assistant_set_page_title" gtk-assistant-set-page-title) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-6-25}
+ "@version{2013-9-11}
   @argument[assistant]{a @class{gtk-assistant} widget}
   @argument[page]{a page of @arg{assistant}}
   @argument[title]{the new title for @arg{page}}
@@ -687,6 +704,7 @@
   @arg{page} is the current page.
 
   Since 2.10
+  @see-class{gtk-assistant}
   @see-function{gtk-assistant-get-page-title}"
   (assistant (g-object gtk-assistant))
   (page (g-object gtk-widget))
@@ -700,7 +718,7 @@
 
 (defcfun ("gtk_assistant_get_page_title" gtk-assistant-get-page-title) :string
  #+cl-cffi-gtk-documentation
- "@version{2013-6-25}
+ "@version{2013-9-11}
   @argument[assistant]{a @class{gtk-assistant} widget}
   @argument[page]{a page of @arg{assistant}}
   @return{The title for @arg{page}.}
@@ -709,6 +727,7 @@
   @end{short}
 
   Since 2.10
+  @see-class{gtk-assistant}
   @see-function{gtk-assistant-set-page-title}"
   (assistant (g-object gtk-assistant))
   (page (g-object gtk-widget)))
@@ -832,7 +851,7 @@
 (defcfun ("gtk_assistant_set_page_complete" gtk-assistant-set-page-complete)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2013-6-25}
+ "@version{2013-9-11}
   @argument[assistant]{a @class{gtk-assistant} widget}
   @argument[page]{a page of @arg{assistant}}
   @argument[complete]{the completeness status of the @arg{page}}
@@ -844,6 +863,7 @@
   the task.
 
   Since 2.10
+  @see-class{gtk-assistant}
   @see-function{gtk-assistant-get-page-complete}"
   (assistant (g-object gtk-assistant))
   (page (g-object gtk-widget))
@@ -858,7 +878,7 @@
 (defcfun ("gtk_assistant_get_page_complete" gtk-assistant-get-page-complete)
     :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-6-25}
+ "@version{2013-9-11}
   @argument[assistant]{a @class{gtk-assistant} widget}
   @argument[page]{a page of @arg{assistant}}
   @return{@em{True} if @arg{page} is complete.}
@@ -867,6 +887,7 @@
   @end{short}
 
   Since 2.10
+  @see-class{gtk-assistant}
   @see-function{gtk-assistant-set-page-complete}"
   (assistant (g-object gtk-assistant))
   (page (g-object gtk-widget)))
@@ -880,7 +901,7 @@
 (defcfun ("gtk_assistant_add_action_widget" gtk-assistant-add-action-widget)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2013-6-25}
+ "@version{2013-9-11}
   @argument[assistant]{a @class{gtk-assistant} widget}
   @argument[child]{a @class{gtk-widget} object}
   @begin{short}
@@ -888,9 +909,10 @@
   @end{short}
 
   Since 2.10
+  @see-class{gtk-assistant}
   @see-function{gtk-assistant-remove-action-widget}"
   (assistant (g-object gtk-assistant))
-  (widget (g-object gtk-widget)))
+  (child (g-object gtk-widget)))
 
 (export 'gtk-assistant-add-action-widget)
 
@@ -902,7 +924,7 @@
            gtk-assistant-remove-action-widget)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2013-6-25}
+ "@version{2013-9-11}
   @argument[assistant]{a @class{gtk-assistant} widget}
   @argument[child]{a @class{gtk-widget} object}
   @begin{short}
@@ -910,9 +932,10 @@
   @end{short}
 
   Since 2.10
+  @see-class{gtk-assistant}
   @see-function{gtk-assistant-add-action-widget}"
   (assistant (g-object gtk-assistant))
-  (widget (g-object gtk-widget)))
+  (child (g-object gtk-widget)))
 
 (export 'gtk-assistant-remove-action-widget)
 
@@ -923,7 +946,7 @@
 (defcfun ("gtk_assistant_update_buttons_state"
           gtk-assistant-update-buttons-state) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-6-25}
+ "@version{2013-9-11}
   @argument[assistant]{a @class{gtk-assistant} widget}
   @begin{short}
     Forces @arg{assistant} to recompute the buttons state.
@@ -937,7 +960,8 @@
   changing a value on the current page affects the future page flow of the
   assistant.
 
-  Since 2.10"
+  Since 2.10
+  @see-class{gtk-assistant}"
   (assistant (g-object gtk-assistant)))
 
 (export 'gtk-assistant-update-buttons-state)
@@ -948,7 +972,7 @@
 
 (defcfun ("gtk_assistant_commit" gtk-assistant-commit) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-6-25}
+ "@version{2013-9-11}
   @argument[assistant]{a @class{gtk-assistant} widget}
   @begin{short}
     Erases the visited page history so the back button is not shown on the
@@ -960,7 +984,8 @@
   progress page to track a long-running, unreversible operation after the user
   has clicked apply on a confirmation page.
 
-  Since 2.22"
+  Since 2.22
+  @see-class{gtk-assistant}"
   (assistant (g-object gtk-assistant)))
 
 (export 'gtk-assistant-commit)
@@ -971,7 +996,7 @@
 
 (defcfun ("gtk_assistant_next_page" gtk-assistant-next-page) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-6-25}
+ "@version{2013-9-11}
   @argument[assistant]{a @class{gtk-assistant} widget}
   @begin{short}
     Navigate to the next page.
@@ -979,10 +1004,12 @@
 
   It is a programming error to call this function when there is no next page.
 
-  This function is for use when creating pages of the type @code{:custom} of
+  This function is for use when creating pages with the value @code{:custom} of
   the @symbol{gtk-assistant-page-type} enumeration.
 
   Since 3.0
+  @see-class{gtk-assistant}
+  @see-symbol{gtk-assistant-page-type}
   @see-function{gtk-assistant-previous-page}"
   (assistant (g-object gtk-assistant)))
 
@@ -994,7 +1021,7 @@
 
 (defcfun ("gtk_assistant_previous_page" gtk-assistant-previous-page) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-6-25}
+ "@version{2013-9-11}
   @argument[assistant]{a @class{gtk-assistant} widget}
   @begin{short}
     Navigate to the previous visited page.
@@ -1003,10 +1030,12 @@
   It is a programming error to call this function when no previous page is
   available.
 
-  This function is for use when creating pages of the @code{:custom} of
+  This function is for use when creating pages with the value @code{:custom} of
   the @symbol{gtk-assistant-page-type} enumeration.
 
   Since 3.0
+  @see-class{gtk-assistant}
+  @see-symbol{gtk-assistant-page-type}
   @see-function{gtk-assistant-next-page}"
   (assistant (g-object gtk-assistant)))
 

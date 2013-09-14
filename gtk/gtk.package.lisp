@@ -1109,7 +1109,6 @@
       A widget used to guide users through multi-step operations.
 
       @about-class{gtk-assistant}
-
       @about-function{gtk-assistant-child-page-type}
       @about-function{gtk-assistant-child-title}
       @about-function{gtk-assistant-child-header-image}
