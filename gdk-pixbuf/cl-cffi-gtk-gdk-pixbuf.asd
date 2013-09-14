@@ -41,6 +41,8 @@
                (:file "gdk-pixbuf.scaling")   ; Scaling pixbufs
                (:file "gdk-pixbuf.utilities") ; Utility functions
                (:file "gdk-pixbuf.animation") ; Animated images
+               (:file "gdk-pixbuf.loader")    ; Progressive image loading
+               (:file "gdk-pixbuf.interface") ; Extending GdkPixBuf
               )
   :depends-on (:cl-cffi-gtk-gobject
                :cl-cffi-gtk-glib

@@ -23,9 +23,9 @@ Content from the GDK-Pixbuf 2.28.1 Reference Manual
 
   gdk-pixbuf.utilities.lisp - Utility functions                        - 2.28.0%
   gdk-pixbuf.animation.lisp - Animated images                          - 2.28.1%
+  gdk-pixbuf.loader.lisp    - Progressive image loading                - 2.28.1%
+  gdk-pixbuf.interface.lisp - Extending GdkPixBuf                      - 2.28.1%
 
-    GdkPixbufLoader - Application-driven progressive image loading.
-    Module Interface - Extending GdkPixBuf
     gdk-pixbuf Xlib initialization - Initializing the gdk-pixbuf Xlib library.
     Xlib Rendering - Rendering a pixbuf to an X drawable.
     X Drawables to Pixbufs - Getting parts of an X drawable's image data into a pixbuf.
