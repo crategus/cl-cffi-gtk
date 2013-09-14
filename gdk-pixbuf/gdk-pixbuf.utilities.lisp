@@ -172,22 +172,20 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pixbuf_fill ()
-;;;
-;;; void gdk_pixbuf_fill (GdkPixbuf *pixbuf, guint32 pixel);
-;;;
-;;; Clears a pixbuf to the given RGBA value, converting the RGBA value into the
-;;; pixbuf's pixel format. The alpha will be ignored if the pixbuf doesn't have
-;;; an alpha channel.
-;;;
-;;; pixbuf :
-;;;     a GdkPixbuf
-;;;
-;;; pixel :
-;;;     RGBA pixel to clear to (0xffffffff is opaque white, 0x00000000
-;;;     transparent black)
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_pixbuf_fill" gdk-pixbuf-fill) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-9-14}
+  @argument[pixbuf]{a @class{gdk-pixbuf} object}
+  @argument[pixel]{RGBA pixel to clear to, @code{#xffffffff} is opaque white,
+    @code{#x00000000} transparent black}
+  @begin{short}
+    Clears a @arg{pixbuf} to the given RGBA value, converting the RGBA value
+    into the @arg{pixbuf}'s pixel format.
+  @end{short}
+  The alpha will be ignored if the @arg{pixbuf} does not have an alpha channel.
+  @see-class{gdk-pixbuf}"
   (pixbuf (g-object gdk-pixbuf))
   (pixel :uint32))
 
