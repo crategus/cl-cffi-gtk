@@ -107,10 +107,12 @@
 
 (unexport 'gdk:gdk-atom-as-string :gdk)
 
-(unexport 'gdk:gdk-x11-device-manager-core :gdk)
-(unexport 'gdk:gdk-x11-device-manager-xi2 :gdk)
-(unexport 'gdk:gdk-x11-device-xi2 :gdk)
-(unexport 'gdk:gdk-x11-device-xi2-device-id :gdk)
+#-windows
+(progn
+  (unexport 'gdk:gdk-x11-device-manager-core :gdk)
+  (unexport 'gdk:gdk-x11-device-manager-xi2 :gdk)
+  (unexport 'gdk:gdk-x11-device-xi2 :gdk)
+  (unexport 'gdk:gdk-x11-device-xi2-device-id :gdk))
 
 (unexport 'gtk:atk-implementor-iface :gtk)
 (unexport 'gtk:ensure-gtk-main :gtk)
