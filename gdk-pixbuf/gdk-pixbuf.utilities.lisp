@@ -187,4 +187,10 @@
 ;;;     transparent black)
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gdk_pixbuf_fill" gdk-pixbuf-fill) :void
+  (pixbuf (g-object gdk-pixbuf))
+  (pixel :uint32))
+
+(export 'gdk-pixbuf-fill)
+
 ;;; --- End of file gdk-pixbuf.utilities.lisp ----------------------------------
