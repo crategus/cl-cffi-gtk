@@ -5,6 +5,11 @@
 @code{@url{@value{\nodename\}, @code{\nodename\}}}
 @end macro
 
+@c GtkAboutDialog
+
+@set gtk-about-dialog http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-about-dialog.html
+@set gtk-show-about-dialog http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-show-about-dialog.html
+
 @c GtkActionable
 
 @set gtk-actionable http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-actionable.html
@@ -66,13 +71,13 @@
 
 @c GtkBox
 
-@set gtk-box            http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-box.html
-@set gtk-box-new        http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-box-new.html
+@set gtk-box http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-box.html
+@set gtk-box-new http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-box-new.html
 @set gtk-box-pack-start http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-box-pack-start.html
-@set gtk-box-pack-end   http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-box-pack-end.html
+@set gtk-box-pack-end http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-box-pack-end.html
 
-@set gtk-hbox           http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-hbox.html
-@set gtk-vbox           http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-vbox.html
+@set gtk-hbox http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-hbox.html
+@set gtk-vbox http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-vbox.html
 
 @c GtkBuildable
 
@@ -96,6 +101,10 @@
 @set gtk-button-box-new http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-button-box-new.html
 @set gtk-button-box-get-layout http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-button-box-get-layout.html
 @set gtk-button-box-set-layout http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-button-box-set-layout.html
+
+@c GtkButtonsType
+
+@set gtk-buttons-type http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_sym_gtk-buttons-type.html
 
 @c GtkCalendar
 
@@ -174,6 +183,12 @@
 @c GtkDialog
 
 @set gtk-dialog http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-dialog.html
+@set gtk-dialog-new http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-dialog-new.html
+@set gtk-dialog-new-with-buttons http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-dialog-new-with-buttons.html
+@set gtk-dialog-get-content-area http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-dialog-get-content-area.html
+@set gtk-dialog-get-action-area http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-dialog-get-action-area.html
+@set gtk-dialog-add-button http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-dialog-add-button.html
+@set gtk-dialog-run http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-dialog-run.html
 
 @c GtkDrawingArea
 
@@ -261,7 +276,9 @@
 
 @c GtkImage
 
+@set gtk-image http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-image.html
 @set gtk-image-new-from-file http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-image-new-from-file.html
+@set gtk-image-new-from-pixbuf http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-image-new-from-pixbuf.html
 
 @c GtkInfoBar
 
@@ -318,6 +335,12 @@
 @c GtkMessageDialog
 
 @set gtk-message-dialog http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-message-dialog.html
+@set gtk-message-dialog-new http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-message-dialog-new.html
+@set gtk-message-dialog-new-with-markup http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-message-dialog-new-with-markup.html
+
+@c GtkMessageType
+
+@set gtk-message-type http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_sym_gtk-message-type.html
 
 @c GtkMenuBar
 
@@ -325,6 +348,7 @@
 
 @c GtkMisc
 
+@set gtk-misc http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-misc.html
 @set gtk-misc-set-alignment http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-misc-set-alignment.html
 
 @c GtkMountOperation
@@ -445,6 +469,10 @@
 @c GtkShadowType
 
 @set gtk-shadow-type http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_sym_gtk-shadow-type.html
+
+@c gtk_show_uri
+
+@set gtk-show-uri http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-show-uri.html
 
 @c GtkStatusbar
 
@@ -656,6 +684,14 @@
 
 @set gdk-pixbuf http://www.crategus.com/books/cl-cffi-gtk/pages/gdk-pixbuf_class_gdk-pixbuf.html
 @set gdk-pixbuf-new-from-file http://www.crategus.com/books/cl-cffi-gtk/pages/gdk-pixbuf_fun_gdk-pixbuf-new-from-file.html
+
+@c GdkPixbufLoader
+
+@set gdk-pixbuf-loader http://www.crategus.com/books/cl-cffi-gtk/pages/gdk-pixbuf_class_gdk-pixbuf-loader.html
+
+@c GdkPixbufAnimation
+
+@set gdk-pixbuf-animation http://www.crategus.com/books/cl-cffi-gtk/pages/gdk-pixbuf_class_gdk-pixbuf-animation.html
 
 @c GdkWindow
 

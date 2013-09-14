@@ -12,7 +12,7 @@
 @menu
 * Labels::
 @c * Accelerator Labels::
-@c * Images::
+* Images::
 * Progress Bars::
 * Statusbars::
 * Info Bars::
@@ -21,7 +21,7 @@
 @end menu
 
 @c -----------------------------------------------------------------------------
-@node Labels, Progress Bars, Top, Top
+@node Labels, Images, Top, Top
 @section Labels
 
 @findex GtkLabel
@@ -514,10 +514,267 @@ and @ref{example-more-labels}.
 
 @c -----------------------------------------------------------------------------
 @c @node Accelerator Labels, Images, Labels, Top
-@c @node Images, Progress Bars, Accelerator Labels, Top
 
 @c -----------------------------------------------------------------------------
-@node Progress Bars, Statusbars, Labels, Top
+@node Images, Progress Bars, Labels, Top
+@section Images
+
+@findex GtkImage
+
+@findex gtk-image
+@findex image, gtk-image
+
+@findex gtk-image-new-from-file
+@findex image-new-from-file, gtk-image-new-from-file
+
+@ifnotinfo
+@float Figure, figure images
+@caption{Images}
+@center @image{figures/images, 283pt}
+@end float
+@end ifnotinfo
+
+The @xurl{gtk-image} widget displays an image.  Various kinds of object can be
+displayed as an image; most typically, you would load a @xurl{gdk-pixbuf} object
+("pixel buffer") from a file, and then display that.  There is a convenience
+function to do this, @xurl{gtk-image-new-from-file}, used as follows:
+@verbatim
+ (let ((image (gtk-image-new-from-file "myfile.png")))
+   ... )
+@end verbatim
+If the file is not loaded successfully, the image will contain a "broken image"
+icon similar to that used in many web browsers.  If you want to handle errors in
+loading the file yourself, for example by displaying an error message, then load
+the image with the function @xurl{gdk-pixbuf-new-from-file}, then create the
+@xurl{gtk-image} with the function @xurl{gtk-image-new-from-pixbuf}.
+
+The image file may contain an animation, if so the @xurl{gtk-image} will display
+an animation of type @xurl{gdk-pixbuf-animation} instead of a static image.
+
+@xurl{gtk-image} is a subclass of @xurl{gtk-misc}, which implies that you can
+align it (center, left, right) and add padding to it, using gtk-misc methods.
+
+@xurl{gtk-image} is a "no window" widget (has no @xurl{gdk-window} of its own),
+so by default does not receive events.  If you want to receive events on the
+image, such as button clicks, place the image inside a @xurl{gtk-event-box},
+then connect to the event signals on the event box.
+
+@b{Example:} Handling button press events on a @xurl{gtk-image}.
+@example
+ (let ((event-box (make-instance 'gtk-event-box))
+       (image (gtk-image-new-from-file "myfile.png")))
+   (g-signal-connect event-box "button-press-event"
+      (lambda (event-box event)
+        (format t "Event Box ~A clicked at (~A, ~A)~%"
+                  event-box
+                  (gdk-event-button-x event)
+                  (gdk-event-button-y event))
+        ...
+
+        ;; Returning TRUE means we handled the event, so the signal
+        ;; emission should be stopped (do not call any further
+        ;; callbacks that may be connected). Return NIL
+        ;; to continue invoking callbacks.
+        t))
+   ... )
+@end example
+When handling events on the event box, keep in mind that coordinates in the
+image may be different from event box coordinates due to the alignment and
+padding settings on the image (see @xurl{gtk-misc}).  The simplest way to solve
+this is to set the alignment to 0.0 (left/top), and set the padding to zero.
+Then the origin of the image will be the same as the origin of the event box.
+
+@ref{example images} shows various images.  The code includes an example of
+parsing an image data file in small chunks with the @xurl{gdk-pixbuf-loader}
+class.  The image is reloaded when clicking the image.  This is an example for
+using a @xurl{gtk-event-box} to receive and process the "button-press" signal
+on an image.  The output of this example is in @ref{figure images}.
+
+@float Example, example images
+@caption{Images}
+@end float
+@verbatim
+(let ((load-timeout nil)
+      (pixbuf-loader nil)
+      (image-stream nil))
+
+(defun progressive-timeout (image)
+  (if image-stream
+      (let* ((buffer (make-array 512 :element-type '(unsigned-byte 8)))
+             (len (read-sequence buffer image-stream)))
+        (if (= 0 len)
+            ;; We have reached the end of the file.
+            (progn
+              (close image-stream)
+              (setf image-stream nil)
+              (gdk-pixbuf-loader-close pixbuf-loader)
+              (setf pixbuf-loader nil)
+              (return-from progressive-timeout +g-source-remove+))
+            ;; Load the buffer into GdkPixbufLoader
+            (gdk-pixbuf-loader-write pixbuf-loader buffer 512)))
+      (progn
+        ;; Create the image stream and the GdkPixbufLoader
+        (setf image-stream
+              (open "alphatest.png" :element-type '(unsigned-byte 8)))
+        (when pixbuf-loader
+          (gdk-pixbuf-loader-close pixbuf-loader)
+          (setf pixbuf-loader nil))
+        (setf pixbuf-loader (gdk-pixbuf-loader-new))
+        (g-signal-connect pixbuf-loader "area-prepared"
+           (lambda (loader)
+             (let ((pixbuf (gdk-pixbuf-loader-get-pixbuf loader)))
+               (gdk-pixbuf-fill pixbuf #xaaaaaaff)
+               (gtk-image-set-from-pixbuf image pixbuf))))
+        (g-signal-connect pixbuf-loader "area-updated"
+           (lambda (loader x y width height)
+             (declare (ignore loader x y width height))
+             ;; We know the pixbuf inside the GtkImage has changed, but the
+             ;; image itself does not know this; so queue a redraw. If we wanted
+             ;; to be really efficient, we could use a drawing area or something
+             ;; instead of a GtkImage, so we could control the exact position of
+             ;; the pixbuf on the display, then we could queue a draw for only
+             ;; the updated area of the image.
+             (gtk-widget-queue-draw image)))))
+  ;; Continue the GSource
+  +g-source-continue+)
+
+(defun demo-image ()
+  (within-main-loop
+    (let* ((window (make-instance 'gtk-window
+                                  :type :toplevel
+                                  :title "Example Images"
+                                  :border-width 12
+                                  :default-width 300))
+           (vgrid (make-instance 'gtk-grid
+                                 :orientation :vertical
+                                 :border-width 8)))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          ;; Destroy the load-timeout source
+                          (when load-timeout
+                            (g-source-remove load-timeout)
+                            (setf load-timeout nil))
+                          ;; Close the GdkPixbufLoader object
+                          (when pixbuf-loader
+                            (gdk-pixbuf-loader-close pixbuf-loader)
+                            (setf pixbuf-loader nil))
+                          ;; Close open input stream
+                          (when image-stream
+                            (close image-stream)
+                            (setf image-stream nil))
+                          (leave-gtk-main)))
+
+      ;; Image loaded from a file
+      (let* ((label (make-instance 'gtk-label
+                                   :margin-bottom 3
+                                   :use-markup t
+                                   :label
+                                   "<b>Image loaded from a file</b>"))
+             (frame (make-instance 'gtk-frame
+                                   :shadow-type :in))
+             (pixbuf (gdk-pixbuf-new-from-file "gtk-logo-old.png"))
+             (image (gtk-image-new-from-pixbuf pixbuf)))
+        (gtk-container-add vgrid label)
+        (gtk-container-add frame image)
+        (gtk-container-add vgrid frame))
+
+      ;; Animation loaded from a file
+      (let* ((label (make-instance 'gtk-label
+                                   :margin-top 9
+                                   :margin-bottom 6
+                                   :use-markup t
+                                   :label
+                                   "<b>Animation loaded from a file</b>"))
+             (frame (make-instance 'gtk-frame
+                                   :shadow-type :in))
+             (image (gtk-image-new-from-file "floppybuddy.gif")))
+        (gtk-container-add vgrid label)
+        (gtk-container-add frame image)
+        (gtk-container-add vgrid frame))
+
+      ;; Symbolic icon
+      (let* ((label (make-instance 'gtk-label
+                                   :margin-top 9
+                                   :margin-bottom 6
+                                   :use-markup t
+                                   :label
+                                   "<b>Symbolic themed icon</b>"))
+             (frame (make-instance 'gtk-frame
+                                   :shadow-type :in))
+             (gicon (g-themed-icon-new-with-default-fallbacks
+                        "battery-caution-charging-symbolic"))
+             (image (gtk-image-new-from-gicon gicon :dialog)))
+        (gtk-container-add vgrid label)
+        (gtk-container-add frame image)
+        (gtk-container-add vgrid frame))
+
+      ;; Progressive
+      (let* ((label (make-instance 'gtk-label
+                                   :margin-top 9
+                                   :margin-bottom 6
+                                   :use-markup t
+                                   :label
+                                   "<b>Progressive image loading</b>"))
+             (frame (make-instance 'gtk-frame
+                                   :shadow-type :in))
+             (event-box (make-instance 'gtk-event-box))
+             ;; Create an empty image for now; the progressive loader
+             ;; will create the pixbuf and fill it in.
+             (image (gtk-image-new-from-pixbuf nil)))
+
+        ;; start_progressive_loading
+        ;; This is obviously totally contrived (we slow down loading
+        ;; on purpose to show how incremental loading works).
+        ;; The real purpose of incremental loading is the case where
+        ;; you are reading data from a slow source such as the network.
+        ;; The timeout simply simulates a slow data source by inserting
+        ;; pauses in the reading process.
+        (setf load-timeout
+              (gdk-threads-add-timeout 100
+                                       (lambda ()
+                                         (progressive-timeout image))))
+
+        ;; Restart loading the image from the file
+        (g-signal-connect event-box "button-press-event"
+           (lambda (event-box event)
+             (format t "Event Box ~A clicked at (~A, ~A)~%"
+                       event-box
+                       (gdk-event-button-x event)
+                       (gdk-event-button-y event))
+             (setf load-timeout
+                   (gdk-threads-add-timeout 100
+                                            (lambda ()
+                                              (progressive-timeout image))))))
+        (gtk-container-add vgrid label)
+        (gtk-container-add event-box image)
+        (gtk-container-add frame event-box)
+        (gtk-container-add vgrid frame))
+
+      ;; Sensitivity control
+      (let ((button (make-instance 'gtk-toggle-button
+                                   :margin-top 12
+                                   :label "Insensitive")))
+        (g-signal-connect button "toggled"
+           (lambda (widget)
+             (let ((childs (gtk-container-get-children vgrid)))
+               (dolist (child childs)
+                 (unless (g-type-is-a (g-object-type child) "GtkToggleButton")
+                   (if (gtk-toggle-button-get-active button)
+                       (progn
+                         (gtk-widget-set-sensitive child nil)
+                         (gtk-button-set-label button "Sensitive"))
+                       (progn
+                         (gtk-widget-set-sensitive child t)
+                         (gtk-button-set-label button "Insensitve"))))))))
+        (gtk-container-add vgrid button))
+
+      (gtk-container-add window vgrid)
+      (gtk-widget-show-all window)))))
+@end verbatim
+
+@c -----------------------------------------------------------------------------
+@node Progress Bars, Statusbars, Images, Top
 @section Progress Bars
 
 @findex gtk-progress-bar-new

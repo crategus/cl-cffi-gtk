@@ -39,7 +39,7 @@ END-INFO-DIR-ENTRY
 @sp 2
 @center @copyright{} Dieter Kaiser
 @sp 1
-@center Version 0.0
+@center Version 1.0
 @page
 @vskip 0pt plus 1filll
 @end titlepage
@@ -53,17 +53,18 @@ END-INFO-DIR-ENTRY
 @end ifnottex
 
 @menu
-* Introduction::                Introduction to GTK+ 3 for Lisp
-* Getting Started::             First steps
-* Packing Widgets::             Packing widgets into boxes
-* Button Widgets::              All about buttons
-* Display Widgets::             Labels, Progress, Status, and Info Bars
+* Introduction::                     Introduction to GTK+ 3 for Lisp
+* Getting Started::                  First steps
+* Packing Widgets::                  Packing widgets into boxes
+* Button Widgets::                   All about buttons
+* Display Widgets::                  Labels, Progress, Status, and Info Bars
 * Adjustments::
 * Range Widgets::
 * Layout Widgets::
 * Multiline Text Editor::
 * Tree and List Widgets::
-* Selecting Colors Files and Fonts::
+* Dialogs::                          General, Message and About Dialogs
+* Selecting Colors Files and Fonts:: Choosing Colors, Files and Fonts
 * Miscellaneous Widgets::
 * Menu Widget::
 * Application Support::
@@ -113,6 +114,7 @@ Button Widgets
 
 Display Widgets
 * Labels::
+* Images::
 * Progress Bars::
 * Statusbars::
 * Info Bars::
@@ -171,6 +173,12 @@ Tree and List Widgets
 * Drag and Drop::
 * Writing Custom Models::
 * Writing Custom Cell Renderers::
+
+Dialogs
+* Dialogs::
+* General Dialog::
+* Message Dialog::
+* About Dialog::
 
 Selecting Colors, Files, and Fonts
 * Selecting Colors Files and Fonts::
@@ -238,11 +246,15 @@ Application Support
 @chapter Multiline Text Editor
 @include gtk-text-view.texi
 
-@node Tree and List Widgets, Selecting Colors Files and Fonts, Multiline Text Editor, Top
+@node Tree and List Widgets, Dialogs, Multiline Text Editor, Top
 @chapter Tree and List Widgets
 @include gtk-tree-and-list-widget.texi
 
-@node Selecting Colors Files and Fonts, Miscellaneous Widgets, Tree and List Widgets, Top
+@node Dialogs, Selection Colors Files and Fonts, Tree and List Widgets, Top
+@chapter Dialogs
+@include gtk-dialogs.texi
+
+@node Selecting Colors Files and Fonts, Miscellaneous Widgets, Dialogs, Top
 @chapter Selecting Colors, Files and Fonts
 @include gtk-selectors.texi
 

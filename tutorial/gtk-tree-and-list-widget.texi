@@ -431,7 +431,7 @@ operate on tree iters (e. g. get the tree iter for the first child of the row
 specified by a given tree iter, get the first row in the list/tree, get the n-th
 child of a given iter etc.). Some of these functions are:
 
-@table
+@table @code
   @item @xurl{gtk-tree-model-get-iter-first}
   Sets the given iter to the first top-level item in the list or tree.
 
