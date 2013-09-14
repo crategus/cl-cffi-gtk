@@ -235,6 +235,7 @@
                 \"gnome-dev-cdrom-audio\")))
   ... )
   @end{pre}
+  @see-class{g-themed-icon}
   @see-function{g-themed-icon-new}
   @see-function{g-themed-icon-new-from-names}"
   (make-instance 'g-themed-icon
