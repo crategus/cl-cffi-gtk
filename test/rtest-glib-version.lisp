@@ -3,11 +3,11 @@
 (in-suite glib-version)
   
 (test glib-check-version
-  (is (= 2 glib-major-version))
-  (is (= 36 glib-minor-version))
-  (is (= 0 glib-micro-version))
-  (is (= 3600 glib-binary-age))
-  (is (= 0 glib-interface-age))
+  (is-true (integerp glib-major-version))
+  (is-true (integerp glib-minor-version))
+  (is-true (integerp glib-micro-version))
+  (is-true (integerp glib-binary-age))
+  (is-true (integerp glib-interface-age))
   (is-false (glib-check-version 2 24 0))
   (is-false (glib-check-version 2 32 3))
   (is (equal "GLib version too old (micro mismatch)"

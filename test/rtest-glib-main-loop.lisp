@@ -7,7 +7,7 @@
 (let ((counter 0))
   (defun timeout-callback (loop)
     (incf counter)
-    (format t "timout-callback called ~d times~%" counter)
+;    (format t "timout-callback called ~d times~%" counter)
     (if (>= counter 10)
         (progn
           ;; Reset the counter

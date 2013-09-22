@@ -9,7 +9,10 @@
 
 (test g-application-name
   (when *first-run-application*
+    #-windows
     (is (equal "sbcl" (g-get-application-name)))
+    #+windows
+    (is (equal "sbcl.exe" (g-get-application-name)))
     (g-set-application-name "Application"))
   (is (equal "Application" (g-get-application-name)))
   (setf *first-run-application* nil))
@@ -21,7 +24,10 @@
 
 (test g-prgname
   (when *first-run-program*
+    #-windows
     (is (equal "sbcl" (g-get-prgname)))
+    #+windows
+    (is (equal "sbcl.exe" (g-get-prgname)))
     (g-set-prgname "Program"))
   (is (equal "Program" (g-get-prgname)))
   (setf *first-run-program* nil))
@@ -33,12 +39,22 @@
 
 ;;;   g_getenv
 
+#-windows
 (test g-getenv
   (is (equal "/home/dieter" (g-getenv "HOME"))))
+  
+#+windows
+(test g-getenv
+  (is-false (g-getenv "HOME")))
 
+#-windows
 (test g-getenv
   (is (equal ":0" (g-getenv "DISPLAY"))))
 
+#+windows
+(test g-getenv
+  (is-false (g-getenv "DISPLAY")))
+  
 ;;;     g_setenv
 ;;;     g_unsetenv
 ;;;     g_listenv
@@ -69,10 +85,15 @@
 
 ;;;     g_build_filename
 
+#-windows
 (test g-build-filename
   (is (equal "home/dieter/Lisp"
              (g-build-filename "home" "dieter" "Lisp"))))
-
+             
+#+windows
+(test g-build-filename
+  (is (equal "home\\dieter\\Lisp"
+             (g-build-filename "home" "dieter" "Lisp"))))
 ;;;     g_build_filenamev
 
 ;;;   g_build_path

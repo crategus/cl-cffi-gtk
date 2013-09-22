@@ -5,6 +5,8 @@
 (in-suite gdk-suite)
 
 (load "rtest-gdk-color.lisp")
+(load "rtest-gdk-display-manager.lisp")
+(load "rtest-gdk-events.lisp")
 (load "rtest-gdk-general.lisp")
 (load "rtest-gdk-visual.lisp")
 

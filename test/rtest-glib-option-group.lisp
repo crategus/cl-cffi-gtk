@@ -138,8 +138,8 @@
                  (foreign-slot-value entry-ptr '(:struct g-option-entry) 'glib::arg-data)
                  (progn
                    (cond ((member (fourth entry) '(:none :int :double :string :filename :string-array :filename-array :int64))
-                          (format t "~& in COND '(:int :double)~%")
-                          (format t "~& ~A and ~A~%" (fifth entry) (symbol-value (fifth entry)))
+;                          (format t "~& in COND '(:int :double)~%")
+;                          (format t "~& ~A and ~A~%" (fifth entry) (symbol-value (fifth entry)))
                           (symbol-value (fifth entry)))
                          (t (error "Case not handled for g-option-entry")))
                  )
@@ -152,7 +152,8 @@
       (let ((entry-ptr (mem-aptr entries-ptr '(:struct g-option-entry) n-entries)))
         (setf (foreign-slot-value entry-ptr '(:struct g-option-entry) 'glib::long-name) (null-pointer))
         (glib::%g-option-context-add-main-entries context entries-ptr "")
-        (format t "~&~A~%" (g-option-context-get-help context nil)))
+;        (format t "~&~A~%" (g-option-context-get-help context nil))
+        )
    
       (g-option-context-set-help-enabled context t)
       (let ((argv (list "prgname" "--long-name-1"
@@ -188,7 +189,7 @@
                   )))
 
     (g-option-context-add-main-entries context entries "")
-    (format t "~&~A~%" (g-option-context-get-help context nil))
+;    (format t "~&~A~%" (g-option-context-get-help context nil))
    
     (let ((argv (list "prgname" "--long-name-1"
                                 "--long-name-2" "a string"

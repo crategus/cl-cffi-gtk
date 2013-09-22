@@ -20,7 +20,10 @@
 
 (test gdk-get-program-class
   (if *first-run-program-class*
+      #-windows
       (is (equal "Sbcl" (gdk-get-program-class)))
+      #+windows
+      (is (equal "Sbcl.exe" (gdk-get-program-class)))
       (is (equal "Program class" (gdk-get-program-class)))))
 
 ;;;   gdk_set_program_class
@@ -33,30 +36,35 @@
 
 ;;;   gdk_get_display
 
+#-windows
 (test gdk-get-display
   (is (equal (g-getenv "DISPLAY") (gdk-get-display))))
+
+#+windows
+(test gdk-get-display
+  (is (equal "1\\WinSta0\\Default" (gdk-get-display))))
 
 ;;;   gdk_flush
 
 ;;;   gdk_screen_width
 
 (test gdk-screen-width
-  (is (= 1280 (gdk-screen-width))))
+  (is-true (integerp (gdk-screen-width))))
 
 ;;;   gdk_screen_height
 
 (test gdk-screen-height
-  (is (= 800 (gdk-screen-height))))
+  (is-true (integerp (gdk-screen-height))))
 
 ;;;   gdk_screen_width_mm
 
 (test gdk-screen-width-mm
-  (is (= 338 (gdk-screen-width-mm))))
+  (is-true (integerp (gdk-screen-width-mm))))
 
 ;;;   gdk_screen_height_mm
 
 (test gdk-screen-height-mm
-  (is (= 211 (gdk-screen-height-mm))))
+  (is-true (integerp (gdk-screen-height-mm))))
 
 ;;;   gdk_pointer_grab                           * deprecated *
 ;;;   gdk_pointer_ungrab                         * deprecated *
