@@ -68,7 +68,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'g-quark 'type)
- "@version{2013-6-1}
+ "@version{2013-9-15}
   @begin{short}
     A @sym{g-quark} is a non-zero integer which uniquely identifies a particular
     string. A @sym{g-quark} value of zero is associated to @code{nil}.
@@ -88,19 +88,10 @@
 
   To find the @sym{g-quark} corresponding to a given string, use the
   @fun{g-quark-try-string} function.
-
-  Another use for the string pool maintained for the quark functions is string
-  interning, using the functions @fun{g-intern-string} or
-  @fun{g-intern-static-string}. An interned string is a canonical representation
-  for a string. One important advantage of interned strings is that they can be
-  compared for equality by a simple pointer comparison, rather than using
-  @code{strcmp()}.
   @see-function{g-quark-from-string}
   @see-function{g-quark-from-static-string}
   @see-function{g-quark-to-string}
-  @see-function{g-quark-try-string}
-  @see-function{g-intern-string}
-  @see-function{g-intern-static-string}")
+  @see-function{g-quark-try-string}")
 
 (export 'g-quark)
 
