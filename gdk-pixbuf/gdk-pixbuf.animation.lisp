@@ -149,28 +149,35 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pixbuf_animation_new_from_file ()
-;;;
-;;; GdkPixbufAnimation * gdk_pixbuf_animation_new_from_file
-;;;                                                       (const char *filename,
-;;;                                                        GError **error);
-;;;
-;;; Creates a new animation by loading it from a file. The file format is
-;;; detected automatically. If the file's format does not support multi-frame
-;;; images, then an animation with a single frame will be created. Possible
-;;; errors are in the GDK_PIXBUF_ERROR and G_FILE_ERROR domains.
-;;;
-;;; filename :
-;;;     Name of file to load, in the GLib file name encoding
-;;;
-;;; error :
-;;;     return location for error
-;;;
-;;; Returns :
-;;;     A newly-created animation with a reference count of 1, or NULL if any of
-;;;     several error conditions ocurred: the file could not be opened, there
-;;;     was no loader for the file's format, there was not enough memory to
-;;;     allocate the image buffer, or the image file contained invalid data.
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gdk_pixbuf_animation_new_from_file"
+          %gdk-pixbuf-animation-new-from-file) (g-object gdk-pixbuf-animation)
+  (filename :string)
+  (error :pointer))
+
+(defun gdk-pixbuf-animation-new-from-file (filename)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-9-16}
+  @argument[filename]{name of file to load, in the GLib file name encoding}
+  @begin{return}
+    A newly created animation with a reference count of 1, or @code{nil} if any
+    of several error conditions ocurred: the file could not be opened, there
+    was no loader for the file's format, there was not enough memory to
+    allocate the image buffer, or the image file contained invalid data.
+  @end{return}
+  @begin{short}
+    Creates a new animation by loading it from a file.
+  @end{short}
+  The file format is detected automatically. If the file's format does not
+  support multi-frame images, then an animation with a single frame will be
+  created. Possible errors are in the @code{GDK_PIXBUF_ERROR} and
+  @code{G_FILE_ERROR} domains.
+  @see-class{gdk-pixbuf-animation}"
+  (with-g-error (err)
+    (%gdk-pixbuf-animation-new-from-file filename err)))
+
+(export 'gdk-pixbuf-animation-new-from-file)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pixbuf_animation_new_from_resource ()
