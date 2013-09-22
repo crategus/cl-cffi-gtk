@@ -708,7 +708,7 @@
       (let* ((type (g-boxed-foreign-info foreign-type))
              (description (decide-native-type type proxy)))
         (with-foreign-object
-            (native-struct (list :struct (generated-cunion-name
+            (native-struct (list :union (generated-cunion-name
                              (var-structure-name
                                (g-boxed-variant-cstruct-info-root type)))))
           (copy-slots-to-native proxy native-struct description)
