@@ -1936,8 +1936,8 @@
 
 (defun gtk-text-view-set-pixels-below-lines (text-view pixels-below-lines)
  #+cl-cffi-gtk-documentation
- "@version{2013-8-20}
-  @argument[text-view]{a @class{gtk-tex-view} widget}
+ "@version{2013-9-22}
+  @argument[text-view]{a @class{gtk-text-view} widget}
   @argument[pixels-below-lines]{pixels below paragraphs}
   @begin{short}
     Sets the default number of pixels of blank space to put below paragraphs in
