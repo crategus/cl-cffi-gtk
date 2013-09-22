@@ -4,7 +4,7 @@
 @c Language : English
 @c Author   : Dieter Kaiser
 @c Date     : 16.8.2013
-@c Revision : 16.8.2013
+@c Revision : 18.9.2013
 @c 
 @c Copyright (C) 2013 by Dieter Kaiser
 @c -----------------------------------------------------------------------------
@@ -15,16 +15,18 @@ the Lisp binding.  Numerous examples are taken from C code and translated to
 Lisp.
 
 
-@b{[1] GTK+ 2.0 Tutorial, Tony Gale, Ian Main & the GTK team}@*
-The GTK Tutorial is Copyright (C) 1997 Ian Main.@*
+[1] GTK+ 2.0 Tutorial, Tony Gale, Ian Main & the GTK team @*
+The GTK Tutorial is Copyright (C) 1997 Ian Main. @*
 Copyright (C) 1998-2002 Tony Gale.
 
-@b{[2] Multiline Text Editing Widget, Vijay Kumar B.} @*
+[2] Multiline Text Editing Widget, Vijay Kumar B. @*
 Copyright (C) 2005 Vijay Kumar B.
 
-@b{[3] GTK+ 3 Reference Manual} @*
-@b{[4] GDK 3 Reference Manual} @*
-@b{[5] GObject Reference Manual} @*
+[3] GTK+ 2.0 Tree View Tutorial by Tim-Philipp Mueller
+
+[4] GTK+ 3 Reference Manual @*
+[5] GDK 3 Reference Manual @*
+[6] GObject Reference Manual @*
 Copyright (C) 2005 - 2012 The GNOME Project, see http://www.gtk.org/
 
 Permission is granted to make and distribute verbatim copies of this manual pro-

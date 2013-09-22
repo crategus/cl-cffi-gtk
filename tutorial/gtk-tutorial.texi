@@ -162,10 +162,9 @@ Multiline Text Editor
 Tree and List Widgets
 * Tree and List Widgets::
 * Overview::
-* Model Renderer Column View::
 * GtkListStore and GtkTreeStore::
 * Creating a Tree View::
-* GtkTreeViewColumn and GtkCellRenderer::
+* Mapping Data to the Screen::
 * Selections Double-Clicks and Context Menus::
 * Sorting::
 * Editable Cells::

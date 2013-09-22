@@ -2637,6 +2637,35 @@ happen.")
 
 ;;; ----------------------------------------------------------------------------
 
+(defun example-tree-view-selection ()
+  (within-main-loop
+    (let* ((window (make-instance 'gtk-window
+                                  :title "Example Tree View selection"
+                                  :type :toplevel
+                                  :border-width 12
+                                  :default-width 300
+                                  :default-height 200))
+          (view (create-view-and-model))
+          ;; Get the selection of the view
+          (select (gtk-tree-view-get-selection view)))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (leave-gtk-main)))
+      ;; Setup the selection handler
+      (gtk-tree-selection-set-mode select :single)
+      (g-signal-connect select "changed"
+         (lambda (selection)
+           (let* ((model (gtk-tree-view-get-model view))
+                  (iter (gtk-tree-selection-get-selected selection))
+                  (name (gtk-tree-model-get-value model iter 0)))
+             (format t "You selected the name ~A.~%" name))))
+
+      (gtk-container-add window view)
+      (gtk-widget-show-all window))))
+
+;;; ----------------------------------------------------------------------------
+
 ;; Example Tree Path
 
 (defun create-and-fill-model-1 ()
@@ -2694,6 +2723,262 @@ happen.")
                           (leave-gtk-main)))
       (gtk-container-add window view)
       (gtk-widget-show-all window))))
+
+;;; ----------------------------------------------------------------------------
+
+;;; Example Row activated
+
+(defun create-view-and-model-2 ()
+  (let* ((model (create-and-fill-model))
+         (view (make-instance 'gtk-tree-view
+                              :model model)))
+    ;; Signal handler for the signal "row-activated"
+    (g-signal-connect view "row-activated"
+       (lambda (view path col)
+         (declare (ignore col))
+         (let* ((model (gtk-tree-view-get-model view))
+                (iter (gtk-tree-model-get-iter model path)))
+           (when iter
+             (format t "The row containing the name ~A has been double-clicked.~%"
+                       (gtk-tree-model-get-value model iter 0))))))
+
+    ;; Create renderers for the cells
+    (let* ((renderer (gtk-cell-renderer-text-new))
+           (column (gtk-tree-view-column-new-with-attributes "Name"
+                                                             renderer
+                                                             "text" 0)))
+      (gtk-tree-view-append-column view column))
+    (let* ((renderer (gtk-cell-renderer-text-new))
+           (column (gtk-tree-view-column-new-with-attributes "Age"
+                                                             renderer
+                                                             "text" 1)))
+      (gtk-tree-view-append-column view column))
+    view))
+
+(defun example-row-activated ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :title "Example Row Activated"
+                                 :type :toplevel
+                                 :border-width 12
+                                 :default-width 300
+                                 :default-height 200))
+          (view (create-view-and-model-2)))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (leave-gtk-main)))
+      (gtk-container-add window view)
+      (gtk-widget-show-all window))))
+
+;;; ----------------------------------------------------------------------------
+
+;;; Example Taverse List
+
+(defun example-traverse-list ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :title "Example Traverse List"
+                                 :type :toplevel
+                                 :border-width 12))
+          (button(make-instance 'gtk-button
+                                :margin-top 6
+                                :label "Clear Age"))
+          (view (create-view-and-model-2))
+          (vgrid (make-instance 'gtk-grid
+                                :orientation :vertical)))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (leave-gtk-main)))
+      ;; A signal handler which goes through every row in a list store
+      (g-signal-connect button "clicked"
+         (lambda (button)
+           (let ((model (gtk-tree-view-get-model view)))
+             (do ((iter (gtk-tree-model-get-iter-first model)
+                        (gtk-tree-model-iter-next model iter)))
+                 ((not iter))
+                 (gtk-list-store-set-value model iter 1 0)))))
+      ;; Put the widgets into the container
+      (gtk-container-add vgrid view)
+      (gtk-container-add vgrid button)
+      (gtk-container-add window vgrid)
+      (gtk-widget-show-all window))))
+
+;;; ----------------------------------------------------------------------------
+
+;;; Retrieving Row Data
+
+(defun foreach-func (model path iter)
+  (let ((first-name (gtk-tree-model-get-value model iter 0))
+        (last-name (gtk-tree-model-get-value model iter 1))
+        (age (gtk-tree-model-get-value model iter 2))
+        (tree-path (gtk-tree-path-to-string path)))
+    (format t "Row ~A: ~A ~A, age ~A~%" tree-path first-name last-name age)))
+
+(defun create-and-fill-and-dump-model ()
+  (let ((model (make-instance 'gtk-list-store
+                              :column-types
+                              '("gchararray" "gchararray" "guint"))))
+    ;; Fill the model with data
+    (gtk-list-store-set model (gtk-list-store-append model)
+                              "Klaus-Dieter" "Mustermann" 51)
+    (gtk-list-store-set model (gtk-list-store-append model)
+                              "Ulrike" "Langhals" 23)
+    (gtk-list-store-set model (gtk-list-store-append model)
+                              "Marius" "Kalinowski" 91)
+    ;; Now traverse the list
+    (gtk-tree-model-foreach model #'foreach-func)))
+
+
+
+;;; ----------------------------------------------------------------------------
+
+#|
+#include <gtk/gtk.h>
+
+enum
+{
+  COL_FIRST_NAME = 0,
+  COL_LAST_NAME,
+  NUM_COLS
+} ;
+
+static GtkTreeModel *
+create_and_fill_model (void)
+{
+  GtkTreeStore  *treestore;
+  GtkTreeIter    toplevel, child;
+
+  treestore = gtk_tree_store_new(NUM_COLS, G_TYPE_STRING, G_TYPE_STRING);
+
+  /* Append a top level row and leave it empty */
+  gtk_tree_store_append(treestore, &toplevel, NULL);
+
+  /* Append a second top level row, and fill it with some data */
+  gtk_tree_store_append(treestore, &toplevel, NULL);
+  gtk_tree_store_set(treestore, &toplevel,
+                     COL_FIRST_NAME, "Joe",
+                     COL_LAST_NAME, "Average",
+                     -1);
+
+  /* Append a child to the second top level row, and fill in some data */
+  gtk_tree_store_append(treestore, &child, &toplevel);
+  gtk_tree_store_set(treestore, &child,
+                     COL_FIRST_NAME, "Jane",
+                     COL_LAST_NAME, "Average",
+                     -1);
+
+  return GTK_TREE_MODEL(treestore);
+}
+
+static GtkWidget *
+create_view_and_model (void)
+{
+  GtkTreeViewColumn   *col;
+  GtkCellRenderer     *renderer;
+  GtkWidget           *view;
+  GtkTreeModel        *model;
+
+  view = gtk_tree_view_new();
+
+  /* --- Column #1 --- */
+
+  col = gtk_tree_view_column_new();
+
+  gtk_tree_view_column_set_title(col, "First Name");
+
+  /* pack tree view column into tree view */
+  gtk_tree_view_append_column(GTK_TREE_VIEW(view), col);
+
+  renderer = gtk_cell_renderer_text_new();
+
+  /* pack cell renderer into tree view column */
+  gtk_tree_view_column_pack_start(col, renderer, TRUE);
+
+  /* set 'text' property of the cell renderer */
+  g_object_set(renderer, "text", "Boooo!", NULL);
+
+
+  /* --- Column #2 --- */
+
+  col = gtk_tree_view_column_new();
+
+  gtk_tree_view_column_set_title(col, "Last Name");
+
+  /* pack tree view column into tree view */
+  gtk_tree_view_append_column(GTK_TREE_VIEW(view), col);
+
+  renderer = gtk_cell_renderer_text_new();
+
+  /* pack cell renderer into tree view column */
+  gtk_tree_view_column_pack_start(col, renderer, TRUE);
+
+  /* set 'cell-background' property of the cell renderer */
+  g_object_set(renderer,
+               "cell-background", "Orange",
+               "cell-background-set", TRUE,
+               NULL);
+
+  model = create_and_fill_model();
+
+  gtk_tree_view_set_model(GTK_TREE_VIEW(view), model);
+
+  g_object_unref(model); /* destroy model automatically with view */
+
+  gtk_tree_selection_set_mode(gtk_tree_view_get_selection(GTK_TREE_VIEW(view)),
+                              GTK_SELECTION_NONE);
+
+  return view;
+}
+|#
+
+;; Example Simple Tree View
+
+(defun create-and-fill-model ()
+  (let ((model (make-instance 'gtk-list-store
+                              :column-types '("gchararray" "guint"))))
+    (gtk-list-store-set model (gtk-list-store-append model)
+                              "Klaus-Dieter Mustermann" 51)
+    (gtk-list-store-set model (gtk-list-store-append model)
+                              "Ulrike Langhals" 23)
+    (gtk-list-store-set model (gtk-list-store-append model)
+                              "Marius Kalinowski" 91)
+    model))
+
+(defun create-view-and-model-3 ()
+  (let* ((model (create-and-fill-model))
+         (view (make-instance 'gtk-tree-view
+                              :model model)))
+    ;; Create renderers for the cells
+    (let* ((renderer (gtk-cell-renderer-text-new))
+           (column (gtk-tree-view-column-new-with-attributes "Name"
+                                                             renderer
+                                                             "text" 0)))
+      (gtk-tree-view-append-column view column))
+    (let* ((renderer (gtk-cell-renderer-text-new))
+           (column (gtk-tree-view-column-new-with-attributes "Age"
+                                                             renderer
+                                                             "text" 1)))
+      (gtk-tree-view-append-column view column))
+    view))
+
+(defun example-cell-renderer-properties ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :title "Example Cell Renderer Properties"
+                                 :type :toplevel
+                                 :border-width 12
+                                 :default-width 300
+                                 :default-height 200))
+          (view (create-view-and-model)))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (leave-gtk-main)))
+      (gtk-container-add window view)
+      (gtk-widget-show-all window))))
+
 
 ;;; ----------------------------------------------------------------------------
 ;;;

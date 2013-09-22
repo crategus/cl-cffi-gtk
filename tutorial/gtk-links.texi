@@ -135,6 +135,10 @@
 
 @set gtk-cell-renderer-text http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-cell-renderer-text.html
 
+@c GtkCellRendererToggle
+
+@set gtk-cell-renderer-toggle http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-cell-renderer-toggle.html
+
 @c GtkCheckButton
 
 @set gtk-check-button http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-check-button.html
@@ -327,6 +331,8 @@
 
 @set gtk-list-store http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-list-store.html
 @set gtk-list-store-append http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-list-store-append.html
+@set gtk-list-store-set http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-list-store-set.html
+@set gtk-list-store-set-value http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-list-store-set-value.html
 
 @c GtkMenuItem
 
@@ -609,6 +615,8 @@
 @set gtk-tree-model-iter-nth-child http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-model-iter-nth-child.html
 @set gtk-tree-model-iter-parent http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-model-iter-parent.html
 @set gtk-tree-model-get-flags http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-model-get-flags.html
+@set gtk-tree-model-get-path http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-model-get-path.html
+@set gtk-tree-model-foreach http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-model-foreach.html
 
 @c GtkTreePath
 
@@ -636,6 +644,8 @@
 
 @set gtk-tree-store http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-tree-store.html
 @set gtk-tree-store-append http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-store-append.html
+@set gtk-tree-store-set http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-store-set.html
+@set gtk-tree-store-set-value http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-store-set-value.html
 
 @c GtkTreeView
 
