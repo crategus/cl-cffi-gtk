@@ -215,36 +215,32 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pixbuf_new_subpixbuf ()
-;;;
-;;; GdkPixbuf * gdk_pixbuf_new_subpixbuf (GdkPixbuf *src_pixbuf,
-;;;                                       int src_x,
-;;;                                       int src_y,
-;;;                                       int width,
-;;;                                       int height);
-;;;
-;;; Creates a new pixbuf which represents a sub-region of src_pixbuf. The new
-;;; pixbuf shares its pixels with the original pixbuf, so writing to one affects
-;;; both. The new pixbuf holds a reference to src_pixbuf, so src_pixbuf will not
-;;; be finalized until the new pixbuf is finalized.
-;;;
-;;; src_pixbuf :
-;;;     a GdkPixbuf
-;;;
-;;; src_x :
-;;;     X coord in src_pixbuf
-;;;
-;;; src_y :
-;;;     Y coord in src_pixbuf
-;;;
-;;; width :
-;;;     width of region in src_pixbuf
-;;;
-;;; height :
-;;;     height of region in src_pixbuf
-;;;
-;;; Returns :
-;;;     a new pixbuf
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gdk_pixbuf_new_subpixbuf" gdk-pixbuf-new-subpixbuf)
+    (g-object gdk-pixbuf)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-9-16}
+  @argument[src-pixbuf]{a @class{gdk-pixbuf} object}
+  @argument[src-x]{x coord in @arg{src-pixbuf}}
+  @argument[src-y]{y coord in @arg{src-pixbuf}}
+  @argument[width]{width of region in @arg{src-pixbuf}}
+  @argument[height]{height of region in @arg{src-pixbuf}}
+  @return{A new pixbuf.}
+  @begin{short}
+    Creates a new pixbuf which represents a sub-region of @arg{src-pixbuf}.
+  @end{short}
+  The new pixbuf shares its pixels with the original pixbuf, so writing to one
+  affects both. The new pixbuf holds a reference to @arg{src-pixbuf}, so
+  @arg{src-pixbuf} will not be finalized until the new pixbuf is finalized.
+  @see-class{gdk-pixbuf}"
+  (src-pixbuf (g-object gdk-pixbuf))
+  (src-x :int)
+  (src-y :int)
+  (width :int)
+  (height :int))
+
+(export 'gdk-pixbuf-new-subpixbuf)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pixbuf_copy ()
