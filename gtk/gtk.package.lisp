@@ -44,7 +44,7 @@
 
 (defpackage :gtk
   (:use :cl :cl-user :cffi
-   :gobject :gdk :gdk-pixbuf :glib :gio :iter :pango :cairo)
+   :gobject :gdk :gdk-pixbuf :glib :gio :pango :cairo :iter :bordeaux-threads)
   (:export #:cl-cffi-gtk-build-info))
 
 (in-package :gtk)

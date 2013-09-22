@@ -4,9 +4,10 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -110,7 +111,7 @@
   @subheading{Note}
     The @class{gtk-plug} and @sym{gtk-socket} widgets are only available when
     GTK+ is compiled for the X11 platform and @code{GDK_WINDOWING_X11} is
-    defined. They can only be used on a @class{gdk-x11-display}. To use
+    defined. They can only be used on a @code{gdk-x11-display}. To use
     @class{gtk-plug} and @sym{gtk-socket}, you need to include the
     @code{gtk/gtkx.h} header.
   @begin[Signal Details]{dictionary}
@@ -190,19 +191,24 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_socket_get_plug_window ()
-;;;
-;;; GdkWindow * gtk_socket_get_plug_window (GtkSocket *socket_);
-;;;
-;;; Retrieves the window of the plug. Use this to check if the plug has been
-;;; created inside of the socket.
-;;;
-;;; socket_ :
-;;;     a GtkSocket.
-;;;
-;;; Returns :
-;;;     the window of the plug if available, or NULL
-;;;
-;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_socket_get_plug_window" gtk-socket-get-plug-window)
+    (g-object gdk-window)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-9-15}
+  @argument[socket]{a @class{gtk-socket} widget}
+  @return{The window of the plug if available, or @code{nil}.}
+  @begin{short}
+    Retrieves the window of the plug.
+  @end{short}
+  Use this to check if the plug has been created inside of the socket.
+
+  Since 2.14
+  @see-class{gtk-socket}
+  @see-class{gdk-window}"
+  (socket (g-object gtk-socket)))
+
+(export 'gtk-socket-get-plug-window)
 
 ;;; --- End of file gtk.socket.lisp --------------------------------------------

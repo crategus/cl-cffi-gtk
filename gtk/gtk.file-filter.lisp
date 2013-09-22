@@ -185,26 +185,6 @@
 (export 'gtk-file-filter-info)
 
 ;;; ----------------------------------------------------------------------------
-;;; GtkFileFilterFunc ()
-;;;
-;;; gboolean (*GtkFileFilterFunc) (const GtkFileFilterInfo *filter_info,
-;;;                                gpointer data);
-;;;
-;;; The type of function that is used with custom filters, see
-;;; gtk_file_filter_add_custom().
-;;;
-;;; filter_info :
-;;;     a GtkFileFilterInfo that is filled according to the needed flags passed
-;;;     to gtk_file_filter_add_custom()
-;;;
-;;; data :
-;;;     user data passed to gtk_file_filter_add_custom()
-;;;
-;;; Returns :
-;;;     TRUE if the file should be displayed
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
 ;;; gtk_file_filter_new ()
 ;;;
 ;;; GtkFileFilter * gtk_file_filter_new (void);
@@ -313,6 +293,26 @@
   (filter g-object))
 
 (export 'gtk-file-filter-add-pixbuf-formats)
+
+;;; ----------------------------------------------------------------------------
+;;; GtkFileFilterFunc ()
+;;;
+;;; gboolean (*GtkFileFilterFunc) (const GtkFileFilterInfo *filter_info,
+;;;                                gpointer data);
+;;;
+;;; The type of function that is used with custom filters, see
+;;; gtk_file_filter_add_custom().
+;;;
+;;; filter_info :
+;;;     a GtkFileFilterInfo that is filled according to the needed flags passed
+;;;     to gtk_file_filter_add_custom()
+;;;
+;;; data :
+;;;     user data passed to gtk_file_filter_add_custom()
+;;;
+;;; Returns :
+;;;     TRUE if the file should be displayed
+;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_filter_add_custom ()

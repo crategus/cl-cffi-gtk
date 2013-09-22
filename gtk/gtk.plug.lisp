@@ -4,9 +4,10 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -106,9 +107,9 @@
   widget in GTK+ or vice versa.
 
   @subheading{Note}
-    The @sym{gtk-plug} and @class{gtksocket} widgets are only available when
+    The @sym{gtk-plug} and @class{gtk-socket} widgets are only available when
     GTK+ is compiled for the X11 platform and @code{GDK_WINDOWING_X11} is
-    defined. They can only be used on a @class{gdk-x11-display}. To use
+    defined. They can only be used on a @code{gdk-x11-display}. To use
     @sym{gtk-plug} and @class{gtk-socket}, you need to include the
     @code{gtk/gtkx.h} header.
   @begin[Signal Details]{dictionary}

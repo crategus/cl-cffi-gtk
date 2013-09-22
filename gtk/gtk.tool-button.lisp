@@ -583,7 +583,7 @@
   @see-function{gtk-tool-button-get-label-widget}"
   (setf (gtk-tool-button-label-widget button) label-widget))
 
-(export 'gtk-tool-button-get-label-widget)
+(export 'gtk-tool-button-set-label-widget)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_button_get_label_widget ()

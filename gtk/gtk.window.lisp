@@ -262,6 +262,7 @@
     gtk-window-type-hint
     "type-hint" "GdkWindowTypeHint" t t)
    ;; "ubuntu-no-proxy" is not documented. Special for Ubuntu.
+   #-windows
    (ubuntu-no-proxy
     gtk-window-ubuntu-no-proxy
     "ubuntu-no-proxy" "gboolean" t nil)

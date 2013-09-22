@@ -112,8 +112,6 @@
   (:export t
    :type-initializer "gtk_tree_model_get_type"))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tree-model atdoc:*class-name-alias*) "Interface"
       (documentation 'gtk-tree-model 'type)
@@ -401,7 +399,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tree-iter atdoc:*class-name-alias*) "CStruct"
       (documentation 'gtk-tree-iter 'type)
- "@version{2013-6-21}
+ "@version{2013-9-18}
   @begin{short}
     The @sym{gtk-tree-iter} structure is the primary structure for accessing a
     @class{gtk-tree-model}. Models are expected to put a unique integer in the
@@ -420,7 +418,9 @@
     @entry[user-data]{Model specific data.}
     @entry[user-data-2]{Model specific data.}
     @entry[user-data-3]{Model specific data.}
-  @end{table}")
+  @end{table}
+  @see-class{gtk-tree-model}
+  @see-class{gtk-tree-path}")
 
 (export 'gtk-tree-iter)
 
@@ -430,8 +430,9 @@
 (setf (gethash 'gtk-tree-iter-stamp atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tree-iter-stamp 'function)
- "@version{2013-5-12}
-  Accessor of the slot @code{stamp} of the @class{gtk-tree-iter} structure.")
+ "@version{2013-9-18}
+  Accessor of the slot @code{stamp} of the @class{gtk-tree-iter} structure.
+  @see-class{gtk-tree-iter}")
 
 (export 'gtk-tree-iter-stamp)
 
@@ -441,17 +442,16 @@
 (setf (gethash 'gtk-tree-iter-user-data atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tree-iter-user-data 'function)
- "@version{2013-5-12}
+ "@version{2013-9-18}
   Accessor of the slot @code{user-data} of the @class{gtk-tree-iter}
-  structure.")
+  structure.
+  @see-class{gtk-tree-iter}")
 
 (export 'gtk-tree-iter-user-data)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkTreePath
 ;;; ----------------------------------------------------------------------------
-
-;(defctype gtk-tree-path :pointer)
 
 (glib::at-init () (foreign-funcall "gtk_tree_path_get_type" :int))
 
@@ -461,12 +461,14 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tree-path atdoc:*class-name-alias*) "CStruct"
       (documentation 'gtk-tree-path 'type)
- "@version{2013-5-12}
+ "@version{2013-9-18}
   @short{}
   @begin{pre}
 (define-g-boxed-opaque gtk-tree-path \"GtkTreePath\"
   :alloc (%gtk-tree-path-new))
-  @end{pre}")
+  @end{pre}
+  @see-class{gtk-tree-model}
+  @see-class{gtk-tree-iter}")
 
 (export 'gtk-tree-path)
 
@@ -482,17 +484,19 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tree-row-reference atdoc:*class-name-alias*) "CStruct"
       (documentation 'gtk-tree-row-reference 'type)
- "@version{2013-5-12}
+ "@version{2013-9-18}
   @begin{short}
     A @sym{gtk-tree-row-reference} tracks model changes so that it always refers
-    to the same row (a @class{gtk-tree-path} refers to a position, not a fixed
-    row). Create a new @sym{gtk-tree-row-reference} with the function
+    to the same row, a @class{gtk-tree-path} refers to a position, not a fixed
+    row. Create a new @sym{gtk-tree-row-reference} with the function
     @fun{gtk-tree-row-reference-new}.
   @end{short}
   @begin{pre}
 (define-g-boxed-opaque gtk-tree-row-reference \"GtkTreeRowReference\"
   :alloc (lambda () (error \"\")))
-  @end{pre}")
+  @end{pre}
+  @see-class{gtk-tree-path}
+  @see-function{gtk-tree-row-reference-new}")
 
 (export 'gtk-tree-row-reference)
 
@@ -527,7 +531,9 @@
   @begin[code]{table}
     @entry[:iters-persist]{Iterators survive all signals emitted by the tree.}
     @entry[:list-only]{The model is a list only, and never has children.}
-  @end{table}")
+  @end{table}
+  @see-class{gtk-tree-model}
+  @see-function{gtk-tree-model-get-flags}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkTreeModelIface
@@ -752,13 +758,14 @@
 
 (defcfun ("gtk_tree_path_to_string" gtk-tree-path-to-string) :string
  #+cl-cffi-gtk-documentation
- "@version{2013-5-12}
+ "@version{2013-9-18}
   @argument[path]{a @class{gtk-tree-path} object}
-  @return{A newly-allocated string.}
+  @return{A string.}
   @short{Generates a string representation of the path.}
 
   This string is a ':' separated list of numbers. For example, \"4:10:0:3\"
-  would be an acceptable return value for this string."
+  would be an acceptable return value for this string.
+  @see-class{gtk-tree-path}"
   (path (g-boxed-foreign gtk-tree-path)))
 
 (export 'gtk-tree-path-to-string)
@@ -1451,12 +1458,14 @@
 
 (defun gtk-tree-model-get-value (tree-model iter column)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-12}
+ "@version{2013-9-18}
   @argument[tree-model]{a @class{gtk-tree-model} object}
   @argument[iter]{the @class{gtk-tree-iter}}
   @argument[column]{the column to lookup the value at}
   @return{The value at @arg{column}.}
-  Initializes and sets value to that at @arg{column}."
+  Returns the value at @arg{column}.
+  @see-class{gtk-tree-model}
+  @see-class{gtk-tree-iter}"
   (with-foreign-object (v '(:struct g-value))
     (g-value-zero v)
     (%gtk-tree-model-get-value tree-model iter column v)
@@ -1600,7 +1609,7 @@
 
 (defun gtk-tree-model-iter-nth-child (tree-model parent n)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-12}
+ "@version{2013-9-18}
   @argument[tree-model]{a @class{gtk-tree-model} object}
   @argument[parent]{the @class{gtk-tree-iter} to get the child from, or
     @code{nil}}
@@ -1611,9 +1620,11 @@
   @end{short}
 
   The first index is 0. If @arg{n} is too big, or @arg{parent} has no children,
-  @arg{iter} is set to an invalid iterator and @code{nil} is returned.
-  @arg{parent} will remain a valid node after this function has been called. As
-  a special case, if @arg{parent} is @code{nil}, then the nth root node is set."
+  @code{nil} is returned. @arg{parent} will remain a valid node after this
+  function has been called. As a special case, if @arg{parent} is @code{nil},
+  then the nth root node is set.
+  @see-class{gtk-tree-model}
+  @see-class{gtk-tree-iter}"
   (let ((iter (make-gtk-tree-iter)))
     (when (%gtk-tree-model-iter-nth-child tree-model iter parent n)
       iter)))
@@ -1789,7 +1800,7 @@
 
 (defun gtk-tree-model-foreach (model func)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-12}
+ "@version{2013-9-18}
   @argument[model]{a @class{gtk-tree-model} object}
   @argument[func]{a function to be called on each row}
   @begin{short}
@@ -1797,7 +1808,8 @@
   @end{short}
 
   If @arg{func} returns @em{true}, then the tree ceases to be walked, and the
-   function @sym{gtk-tree-model-foreach} returns."
+  function @sym{gtk-tree-model-foreach} returns.
+  @see-class{gtk-tree-model}"
   (with-stable-pointer (ptr func)
     (%gtk-tree-model-foreach model (callback gtk-tree-model-foreach-cb) ptr)))
 
