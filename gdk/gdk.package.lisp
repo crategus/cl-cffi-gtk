@@ -466,6 +466,11 @@
   @begin[Events]{section}
     Functions for handling events from the window system.
 
+    In GTK+ applications the events are handled automatically in the function
+    @fun{gtk-main-do-event} and passed on to the appropriate widgets, so these
+    functions are rarely needed. Though some of the fields in the Event
+    Structures are useful.
+
     @about-symbol{gdk-event-type}
     @about-symbol{gdk-event-mask}
     @about-variable{+gdk-current-time+}
@@ -513,11 +518,12 @@
     @about-function{gdk-setting-get}
   @end{section}
   @begin[Event Structures]{section}
-    The event structs contain data specific to each type of event in GDK.
+    The event structures contain data specific to each type of event in GDK.
 
     @subheading{Note}
       A common mistake is to forget to set the event mask of a widget so that
-      the required events are received. See @fun{gtk-widget-set-events}.
+      the required events are received. See the function
+      @fun{gtk-widget-set-events}.
 
     @about-symbol{gdk-scroll-direction}
     @about-symbol{gdk-visibility-state}

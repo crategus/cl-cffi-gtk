@@ -129,23 +129,23 @@
 ;;; ----------------------------------------------------------------------------
 
 (define-g-enum "GdkScrollDirection" gdk-scroll-direction
-  ()
+  (:export t
+   :type-initializer "gdk_scroll_direction_get_type")
   (:up 0)
   (:down 1)
   (:left 2)
   (:right 3)
   (:smooth 4))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-scroll-direction atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gdk-scroll-direction atdoc:*external-symbols*)
- "@version{2013-1-12}
+ "@version{2013-9-20}
   @short{Specifies the direction for @class{gdk-event-scroll}.}
   @begin{pre}
 (define-g-enum \"GdkScrollDirection\" gdk-scroll-direction
-  ()
+  (:export t
+   :type-initializer \"gdk_scroll_direction_get_type\")
   (:up 0)
   (:down 1)
   (:left 2)
@@ -153,12 +153,13 @@
   (:smooth 4))
   @end{pre}
   @begin[code]{table}
-    @entry[:up]{the window is scrolled up.}
-    @entry[:down]{the window is scrolled down.}
-    @entry[:left]{the window is scrolled to the left.}
-    @entry[:right]{the window is scrolled to the right.}
-    @entry[:smooth]{the scrolling is determined by the delta values in
-      @class{gdk-event-scroll}. See @fun{gdk-event-get-scroll-deltas}.}
+    @entry[:up]{The window is scrolled up.}
+    @entry[:down]{The window is scrolled down.}
+    @entry[:left]{The window is scrolled to the left.}
+    @entry[:right]{The window is scrolled to the right.}
+    @entry[:smooth]{The scrolling is determined by the delta values in
+      @class{gdk-event-scroll}. See the function
+      @fun{gdk-event-get-scroll-deltas}.}
   @end{table}
   @see-class{gdk-event-scroll}
   @see-function{gdk-event-get-scroll-delta}")
@@ -168,32 +169,32 @@
 ;;; ----------------------------------------------------------------------------
 
 (define-g-enum "GdkVisibilityState" gdk-visibility-state
-  ()
+  (:export t
+   :type-initializer "gdk_visibility_state_get_type")
   (:unobscured 0)
   (:partial 1)
   (:fully-obscured 2))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-visibility-state atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gdk-visibility-state atdoc:*external-symbols*)
- "@version{2013-1-12}
+ "@version{2013-9-20}
   @begin{short}
     Specifies the visiblity status of a window for a
     @class{gdk-event-visibility}.
   @end{short}
   @begin{pre}
 (define-g-enum \"GdkVisibilityState\" gdk-visibility-state
-  ()
+  (:export t
+   :type-initializer \"gdk_visibility_state_get_type\")
   (:unobscured 0)
   (:partial 1)
   (:fully-obscured 2))
   @end{pre}
   @begin[code]{table}
-    @entry[:unobscured]{the window is completely visible.}
-    @entry[:partial]{the window is partially visible.}
-    @entry[:obscured]{the window is not visible at all.}
+    @entry[:unobscured]{The window is completely visible.}
+    @entry[:partial]{The window is partially visible.}
+    @entry[:obscured]{The window is not visible at all.}
   @end{table}
   @see-class{gdk-event-visibility}")
 
@@ -201,7 +202,9 @@
 ;;; enum GdkCrossingMode
 ;;; ----------------------------------------------------------------------------
 
-(defcenum gdk-crossing-mode
+(define-g-enum "GdkCrosssingMode" gdk-crossing-mode
+  (:export t
+   :type-initializer "gdk_crossing_mode_get_type")
   :normal
   :grab
   :ungrab
@@ -212,17 +215,15 @@
   :touch-end
   :device-switch)
 
-(export 'gdk-crossing-mode)
-
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-crossing-mode atdoc:*symbol-name-alias*) "CEnum"
+(setf (gethash 'gdk-crossing-mode atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gdk-crossing-mode atdoc:*external-symbols*)
- "@version{2013-1-2}
+ "@version{2013-9-20}
   @short{Specifies the crossing mode for @class{gdk-event-crossing}.}
   @begin{pre}
-(defcenum gdk-crossing-mode
+(define-g-enum \"GdkCrosssingMode\" gdk-crossing-mode
+  (:export t
+   :type-initializer \"gdk_crossing_mode_get_type\")
   :normal
   :grab
   :ungrab
@@ -234,18 +235,18 @@
   :device-switch)
   @end{pre}
   @begin[code]{table}
-    @entry[:normal]{crossing because of pointer motion.}
-    @entry[:grab]{crossing because a grab is activated.}
-    @entry[:ungrab]{crossing because a grab is deactivated.}
-    @entry[:gtk-grab]{crossing because a GTK+ grab is activated.}
-    @entry[:gtk-ungrab]{crossing because a GTK+ grab is deactivated.}
-    @entry[:state-changed]{crossing because a GTK+ widget changed state (e.g.
+    @entry[:normal]{Crossing because of pointer motion.}
+    @entry[:grab]{Crossing because a grab is activated.}
+    @entry[:ungrab]{Crossing because a grab is deactivated.}
+    @entry[:gtk-grab]{Crossing because a GTK+ grab is activated.}
+    @entry[:gtk-ungrab]{Crossing because a GTK+ grab is deactivated.}
+    @entry[:state-changed]{Crossing because a GTK+ widget changed state (e. g.
       sensitivity).}
-    @entry[:touch-begin]{crossing because a touch sequence has begun, this
+    @entry[:touch-begin]{Crossing because a touch sequence has begun, this
       event is synthetic as the pointer might have not left the window.}
-    @entry[:touch-end]{crossing because a touch sequence has ended, this event
+    @entry[:touch-end]{Crossing because a touch sequence has ended, this event
       is synthetic as the pointer might have not left the window.}
-    @entry[:device-switch]{crossing because of a device switch (i.e. a mouse
+    @entry[:device-switch]{crossing because of a device switch (i. e. a mouse
       taking control of the pointer after a touch device), this event is
       synthetic as the pointer didn't leave the window.}
   @end{table}
@@ -255,7 +256,9 @@
 ;;; enum GdkNotifyType
 ;;; ----------------------------------------------------------------------------
 
-(defcenum gdk-notify-type
+(define-g-enum "GdkNotifyType" gdk-notify-type
+  (:export t
+   :type-initializer "gdk_notify_type_get_type")
   (:ancestor 0)
   :virtual
   :inferior
@@ -263,20 +266,18 @@
   :nonlinear-virtual
   :unknown)
 
-(export 'gdk-notify-type)
-
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-notify-type atdoc:*symbol-name-alias*) "CEnum"
+(setf (gethash 'gdk-notify-type atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gdk-notify-type atdoc:*external-symbols*)
- "@version{2013-1-12}
+ "@version{2013-9-21}
   @short{Specifies the kind of crossing for @class{gdk-event-crossing}.}
 
-  See the X11 protocol specification of LeaveNotify for full details of
+  See the X11 protocol specification of @code{LeaveNotify} for full details of
   crossing event generation.
   @begin{pre}
-(defcenum gdk-notify-type
+(define-g-enum gdk-notify-type
+  (:export t
+   :type-initializer \"gdk_notify_type_get_type\")
   (:ancestor 0)
   :virtual
   :inferior
@@ -285,18 +286,18 @@
   :unknown)
   @end{pre}
   @begin[code]{table}
-    @entry[:ancestor]{the window is entered from an ancestor or left towards
+    @entry[:ancestor]{The window is entered from an ancestor or left towards
       an ancestor.}
-    @entry[:virtual]{the pointer moves between an ancestor and an inferior of
+    @entry[:virtual]{The pointer moves between an ancestor and an inferior of
       the window.}
-    @entry[:inferior]{the window is entered from an inferior or left towards
+    @entry[:inferior]{The window is entered from an inferior or left towards
       an inferior.}
-    @entry[:nonlinear]{the window is entered from or left towards a window
+    @entry[:nonlinear]{The window is entered from or left towards a window
       which is neither an ancestor nor an inferior.}
-    @entry[:nonlinear-virtual]{the pointer moves between two windows which are
+    @entry[:nonlinear-virtual]{The pointer moves between two windows which are
       not ancestors of each other and the window is part of the ancestor chain
       between one of these windows and their least common ancestor.}
-    @entry[:unknown]{an unknown type of enter/leave event occurred.}
+    @entry[:unknown]{An unknown type of enter/leave event occurred.}
   @end{table}
   @see-class{gdk-event-crossing}")
 
@@ -305,28 +306,28 @@
 ;;; ----------------------------------------------------------------------------
 
 (define-g-enum "GdkPropertyState" gdk-property-state
-  ()
+  (:export t
+   :type-initializer "gdk_property_state_get_type")
   :new-value
   :delete)
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-property-state atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gdk-property-state atdoc:*external-symbols*)
- "@version{2013-1-12}
+ "@version{2013-9-21}
   @begin{short}
     Specifies the type of a property change for a @class{gdk-event-property}.
   @end{short}
   @begin{pre}
 (define-g-enum \"GdkPropertyState\" gdk-property-state
-  ()
+  (:export t
+   :type-initializer \"gdk_property_state_get_type\")
   :new-value
   :delete)
   @end{pre}
   @begin[code]{table}
-    @entry[:new-value]{the property value was changed.}
-    @entry[:delete]{the property was deleted.}
+    @entry[:new-value]{The property value was changed.}
+    @entry[:delete]{The property was deleted.}
   @end{table}
   @see-class{gdk-event-property}")
 
@@ -346,12 +347,10 @@
   (:below 64)
   (:focused 128))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-window-state atdoc:*symbol-name-alias*) "Flags"
       (gethash 'gdk-window-state atdoc:*external-symbols*)
- "@version{2013-1-12}
+ "@version{2013-9-21}
   @short{Specifies the state of a toplevel window.}
   @begin{pre}
 (define-g-flags \"GdkWindowState\" gdk-window-state
@@ -367,48 +366,49 @@
   (:focused 128))
   @end{pre}
   @begin[code]{table}
-    @entry[:withdrawn]{the window is not shown.}
-    @entry[:iconified]{the window is minimized.}
-    @entry[:maximized]{the window is maximized.}
-    @entry[:sticky]{the window is sticky.}
-    @entry[:fullscreen]{the window is maximized without decorations.}
-    @entry[:above]{the window is kept above other windows.}
-    @entry[:below]{the window is kept below other windows.}
-    @entry[:focused]{the window is presented as focused (with active
+    @entry[:withdrawn]{The window is not shown.}
+    @entry[:iconified]{The window is minimized.}
+    @entry[:maximized]{The window is maximized.}
+    @entry[:sticky]{The window is sticky.}
+    @entry[:fullscreen]{The window is maximized without decorations.}
+    @entry[:above]{The window is kept above other windows.}
+    @entry[:below]{The window is kept below other windows.}
+    @entry[:focused]{The window is presented as focused (with active
       decorations).}
-  @end{table}")
+  @end{table}
+  @see-class{gdk-window}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GdkSettingAction
 ;;; ----------------------------------------------------------------------------
 
 (define-g-enum "GdkSettingAction" gdk-setting-action
-  ()
+  (:export t
+   :type-initializer "gdk_setting_action_get_type")
   (:new 0)
   (:changed 1)
   (:deleted 2))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-setting-action atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gdk-setting-action atdoc:*external-symbols*)
- "@version{2013-1-12}
+ "@version{2013-9-21}
   @begin{short}
     Specifies the kind of modification applied to a setting in a
     @class{gdk-event-setting}.
   @end{short}
   @begin{pre}
 (define-g-enum \"GdkSettingAction\" gdk-setting-action
-  ()
+  (:export t
+   :type-initializer \"gdk_setting_action_get_type\")
   (:new 0)
   (:changed 1)
   (:deleted 2))
   @end{pre}
   @begin[code]{table}
-    @entry[:new]{a setting was added.}
-    @entry[:changes]{a setting was changed.}
-    @entry[:deleted]{a setting was deleted.}
+    @entry[:new]{A setting was added.}
+    @entry[:changes]{A setting was changed.}
+    @entry[:deleted]{A setting was deleted.}
   @end{table}
   @see-class{gdk-event-setting}")
 
@@ -417,37 +417,39 @@
 ;;; ----------------------------------------------------------------------------
 
 (define-g-enum "GdkOwnerChange" gdk-owner-change
-  ()
+  (:export t
+   :type-initializer "gdk_owner_change_get_type")
   (:new-owner 0)
   (:destroy 1)
   (:close 2))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-owner-change atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gdk-owner-change atdoc:*external-symbols*)
- "@version{2013-1-12}
+ "@version{2013-9-21}
   @short{Specifies why a selection ownership was changed.}
   @begin{pre}
 (define-g-enum \"GdkOwnerChange\" gdk-owner-change
-  ()
+  (:export t
+   :type-initializer \"gdk_owner_change_get_type\")
   (:new-owner 0)
   (:destroy 1)
   (:close 2))
   @end{pre}
   @begin[code]{table}
-    @entry[:owner]{some other app claimed the ownership}
-    @entry[:destroy]{the window was destroyed}
-    @entry[:close]{the client was closed}
-  @end{table}")
+    @entry[:owner]{Some other app claimed the ownership.}
+    @entry[:destroy]{The window was destroyed.}
+    @entry[:close]{The client was closed.}
+  @end{table}
+  @see-class{gdk-event-owner-change}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GdkEventType
 ;;; ----------------------------------------------------------------------------
 
 (define-g-enum "GdkEventType" gdk-event-type
-  ()
+  (:export t
+   :type-initializer "gdk_event_type_get_type")
   (:nothing -1)
   (:delete 0)
   (:destroy 1)
@@ -455,7 +457,9 @@
   (:motion-notify 3)
   (:button-press 4)
   (:2button-press 5)
+  (:double-button-press 5) ; Alias for :2button-press
   (:3button-press 6)
+  (:triple-button-press 6) ; Alias for :3button-press
   (:button-release 7)
   (:key-press 8)
   (:key-release 9)
@@ -479,7 +483,7 @@
   (:drop-finished 27)
   (:client-event 28)
   (:visibility-notify 29)
-  (:no-expose 30)   ;; not documented
+  (:no-expose 30)          ; not documented
   (:scroll 31)
   (:window-state 32)
   (:setting 33)
@@ -491,12 +495,10 @@
   (:touch-end 39)
   (:touch-cancel 40))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-event-type atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gdk-event-type atdoc:*external-symbols*)
- "@version{2013-1-11}
+ "@version{2013-9-20}
   @short{Specifies the type of the event.}
 
   Do not confuse these events with the signals that GTK+ widgets emit.
@@ -504,7 +506,8 @@
   the events are often transformed or filtered along the way.
   @begin{pre}
 (define-g-enum \"GdkEventType\" gdk-event-type
-  ()
+  (:export t
+   :type-initializer \"gdk_event_type_get_type\")
   (:nothing -1)
   (:delete 0)
   (:destroy 1)
@@ -512,7 +515,9 @@
   (:motion-notify 3)
   (:button-press 4)
   (:2button-press 5)
+  (:double-button-press 5)
   (:3button-press 6)
+  (:triple-button-press 6)
   (:button-release 7)
   (:key-press 8)
   (:key-release 9)
@@ -549,74 +554,79 @@
   (:touch-cancel 40))
   @end{pre}
   @begin[code]{table}
-    @entry[:nothing]{a special code to indicate a null event.}
-    @entry[:delete]{the window manager has requested that the toplevel window
+    @entry[:nothing]{A special code to indicate a null event.}
+    @entry[:delete]{The window manager has requested that the toplevel window
       be hidden or destroyed, usually when the user clicks on a special icon
       in the title bar.}
-    @entry[:destroy]{the window has been destroyed.}
-    @entry[:expose]{all or part of the window has become visible and needs to
+    @entry[:destroy]{The window has been destroyed.}
+    @entry[:expose]{All or part of the window has become visible and needs to
       be redrawn.}
-    @entry[:motion-notify]{the pointer (usually a mouse) has moved.}
-    @entry[:button-press]{a mouse button has been pressed.}
-    @entry[:2button-press]{a mouse button has been double-clicked (clicked
-      twice within a short period of time). Note that each click also
-      generates a @code{:button-press} event.}
-    @entry[3button-press]{a mouse button has been clicked 3 times in a short
+    @entry[:motion-notify]{The pointer, usually a mouse, has moved.}
+    @entry[:button-press]{A mouse button has been pressed.}
+    @entry[:2button-press]{A mouse button has been double-clicked. Note that
+      each click also generates a @code{:button-press} event.}
+    @entry[:double-button-press]{Alias for @code{:2button-press}, added in 3.6.}
+    @entry[3button-press]{A mouse button has been clicked 3 times in a short
       period of time. Note that each click also generates a @code{:button-press}
       event.}
-    @entry[:button-release]{a mouse button has been released.}
-    @entry[:key-press]{a key has been pressed.}
-    @entry[:key-release]{a key has been released.}
-    @entry[:enter-notifiy]{the pointer has entered the window.}
-    @entry[:leave-notify]{the pointer has left the window.}
-    @entry[:focus-change]{the keyboard focus has entered or left the window.}
-    @entry[:configure]{the size, position or stacking order of the window has
-      changed. Note that GTK+ discards these events for @code{:child} windows.}
-    @entry[:map]{the window has been mapped.}
-    @entry[:unmap]{the window has been unmapped.}
-    @entry[:property-notify]{a property on the window has been changed or
+    @entry[:triple-button-press]{Alias for @code{:3button-press}, added in 3.6.}
+    @entry[:button-release]{A mouse button has been released.}
+    @entry[:key-press]{A key has been pressed.}
+    @entry[:key-release]{A key has been released.}
+    @entry[:enter-notifiy]{The pointer has entered the window.}
+    @entry[:leave-notify]{The pointer has left the window.}
+    @entry[:focus-change]{The keyboard focus has entered or left the window.}
+    @entry[:configure]{The size, position or stacking order of the window has
+      changed. Note that GTK+ discards these events for @code{:child} windows
+      of type @symbol{gdk-window-type}.}
+    @entry[:map]{The window has been mapped.}
+    @entry[:unmap]{The window has been unmapped.}
+    @entry[:property-notify]{A property on the window has been changed or
       deleted.}
-    @entry[:selection-clear]{the application has lost ownership of a
+    @entry[:selection-clear]{The application has lost ownership of a
       selection.}
-    @entry[:selection-request]{another application has requested a selection.}
-    @entry[:selection-notify]{a selection has been received.}
-    @entry[:proximity-in]{an input device has moved into contact with a
-      sensing surface (e.g. a touchscreen or graphics tablet).}
-    @entry[:proximity-out]{an input device has moved out of contact with a
+    @entry[:selection-request]{Another application has requested a selection.}
+    @entry[:selection-notify]{A selection has been received.}
+    @entry[:proximity-in]{An input device has moved into contact with a
+      sensing surface, e. g. a touchscreen or graphics tablet.}
+    @entry[:proximity-out]{An input device has moved out of contact with a
       sensing surface.}
-    @entry[:drag-enter]{the mouse has entered the window while a drag is in
+    @entry[:drag-enter]{The mouse has entered the window while a drag is in
       progress.}
-    @entry[:drag-leave]{the mouse has left the window while a drag is in
+    @entry[:drag-leave]{The mouse has left the window while a drag is in
       progress.}
-    @entry[:drag-motion]{the mouse has moved in the window while a drag is in
+    @entry[:drag-motion]{The mouse has moved in the window while a drag is in
       progress.}
-    @entry[:drag-status]{the status of the drag operation initiated by the
+    @entry[:drag-status]{The status of the drag operation initiated by the
       window has changed.}
-    @entry[:drop-start]{a drop operation onto the window has started.}
-    @entry[:drop-finished]{the drop operation initiated by the window has
+    @entry[:drop-start]{A drop operation onto the window has started.}
+    @entry[:drop-finished]{The drop operation initiated by the window has
       completed.}
-    @entry[:client-event]{a message has been received from another
+    @entry[:client-event]{A message has been received from another
       application.}
-    @entry[:visibility-notify]{the window visibility status has changed.}
-    @entry[:scroll]{the scroll wheel was turned}
-    @entry[:window-state]{the state of a window has changed. See
-      @symbol{gdk-window-state} for the possible window states}
-    @entry[:setting]{a setting has been modified.}
-    @entry[:owner-change]{the owner of a selection has changed. This event
-      type was added in 2.6}
-    @entry[:grab-broken]{a pointer or keyboard grab was broken. This event
+    @entry[:visibility-notify]{The window visibility status has changed.}
+    @entry[:scroll]{The scroll wheel was turned.}
+    @entry[:window-state]{The state of a window has changed. See
+      @symbol{gdk-window-state} for the possible window states.}
+    @entry[:setting]{A setting has been modified.}
+    @entry[:owner-change]{The owner of a selection has changed. This event
+      type was added in 2.6.}
+    @entry[:grab-broken]{A pointer or keyboard grab was broken. This event
       type was added in 2.8.}
-    @entry[:damage]{the content of the window has been changed. This event
+    @entry[:damage]{The content of the window has been changed. This event
       type was added in 2.14.}
     @entry[:touch-begin]{A new touch event sequence has just started. This
       event type was addedin 3.4.}
     @entry[:touch-update]{A touch event sequence has been updated. This event
       type was added in 3.4.}
-    @entry[:toch-end]{A touch event sequence has finished. This event type was
+    @entry[:touch-end]{A touch event sequence has finished. This event type was
       added in 3.4.}
     @entry[:touch-cancel]{A touch event sequence has been canceled. This event
       type was added in 3.4.}
-  @end{table}")
+  @end{table}
+  @see-class{gdk-event}
+  @see-symbol{gdk-window-type}
+  @see-symbol{gdk-window-state}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GdkModifierType
@@ -644,12 +654,10 @@
   (:release-mask #.(ash 1 30))
   (:modifier-mask #x5c001fff))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-modifier-type atdoc:*symbol-name-alias*) "Flags"
       (gethash 'gdk-modifier-type atdoc:*external-symbols*)
- "@version{2013-1-21}
+ "@version{2013-9-21}
   @begin{short}
     A set of bit-flags to indicate the state of modifier keys and mouse buttons
     in various event types.
@@ -691,33 +699,34 @@
   (:modifier-mask #x5c001fff))
   @end{pre}
   @begin[code]{table}
-    @entry[:shift-mask]{the Shift key.}
-    @entry[:lock-mask]{a Lock key (depending on the modifier mapping of the X
-      server this may either be CapsLock or ShiftLock).}
-    @entry[:control-mask]{the Control key.}
-    @entry[:mod1-mask]{the fourth modifier key (it depends on the modifier
+    @entry[:shift-mask]{The Shift key.}
+    @entry[:lock-mask]{A Lock key, depending on the modifier mapping of the X
+      server this may either be CapsLock or ShiftLock.}
+    @entry[:control-mask]{The Control key.}
+    @entry[:mod1-mask]{The fourth modifier key. It depends on the modifier
       mapping of the X server which key is interpreted as this modifier, but
-      normally it is the Alt key).}
-    @entry[:mod2-mask]{the fifth modifier key (it depends on the modifier
-      mapping of the X server which key is interpreted as this modifier).}
-    @entry[:mod3-mask]{the sixth modifier key (it depends on the modifier
-      mapping of the X server which key is interpreted as this modifier).}
-    @entry[:mod4-mask]{the seventh modifier key (it depends on the modifier
-      mapping of the X server which key is interpreted as this modifier).}
-    @entry[:mod5-mask]{the eighth modifier key (it depends on the modifier
-      mapping of the X server which key is interpreted as this modifier).}
-    @entry[:button1-mask]{the first mouse button.}
-    @entry[:button2-mask]{the second mouse button.}
-    @entry[:button3-mask]{the third mouse button.}
-    @entry[:button4-mask]{the fourth mouse button.}
-    @entry[:button5-mask]{the fifth mouse button.}
-    @entry[:super-mask]{the Super modifier. Since 2.10}
-    @entry[:hyper-mask]{the Hyper modifier. Since 2.10}
-    @entry[:meta-mask]{the Meta modifier. Since 2.10}
-    @entry[:release-mask]{not used in GDK itself. GTK+ uses it to differentiate
+      normally it is the Alt key.}
+    @entry[:mod2-mask]{The fifth modifier key. It depends on the modifier
+      mapping of the X server which key is interpreted as this modifier.}
+    @entry[:mod3-mask]{The sixth modifier key. It depends on the modifier
+      mapping of the X server which key is interpreted as this modifier.}
+    @entry[:mod4-mask]{The seventh modifier key. It depends on the modifier
+      mapping of the X server which key is interpreted as this modifier.}
+    @entry[:mod5-mask]{The eighth modifier key. It depends on the modifier
+      mapping of the X server which key is interpreted as this modifier.}
+    @entry[:button1-mask]{The first mouse button.}
+    @entry[:button2-mask]{The second mouse button.}
+    @entry[:button3-mask]{The third mouse button.}
+    @entry[:button4-mask]{The fourth mouse button.}
+    @entry[:button5-mask]{The fifth mouse button.}
+    @entry[:super-mask]{The Super modifier. Since 2.10}
+    @entry[:hyper-mask]{The Hyper modifier. Since 2.10}
+    @entry[:meta-mask]{The Meta modifier. Since 2.10}
+    @entry[:release-mask]{Not used in GDK itself. GTK+ uses it to differentiate
       between (keyval, modifiers) pairs from key press and release events.}
-    @entry[:modifier-mask]{a mask covering all modifier types.}
-  @end{table}")
+    @entry[:modifier-mask]{A mask covering all modifier types.}
+  @end{table}
+  @see-class{gdk-event}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GdkEventMask
@@ -750,8 +759,6 @@
   (:touch-mask #.(ash 1 22))
   (:smooth-scroll-mask #.(ash 1 23))
   (:all-events-mask 4194302))
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-event-mask atdoc:*symbol-name-alias*) "Flags"
@@ -872,6 +879,17 @@
   (window (g-object gdk-window))
   (send-event (:boolean :int8))
   (:variant type
+            ((:key-press :key-release) gdk-event-key
+             (time :uint32)
+             (state gdk-modifier-type)
+             (keyval :uint)
+             (length :int)
+             (string (:string :free-from-foreign nil
+                              :free-to-foreign nil))
+             (hardware-keycode :uint16)
+             (group :uint8)
+             (is-modifier :uint))
+
             ((:expose) gdk-event-expose
              (area gdk-rectangle :inline t)
              (region (:pointer (:struct cairo-region-t)))
@@ -893,7 +911,9 @@
 
             ((:button-press
               :2button-press
+              :double-button-press
               :3button-press
+              :triple-button-press
               :button-release) gdk-event-button
              (time :uint32)
              (x :double)
@@ -926,22 +946,11 @@
              (y :double)
              (state gdk-modifier-type)
              (direction gdk-scroll-direction)
-             (device (g-object device))
+             (device (g-object gdk-device))
              (x-root :double)
              (y-root :double)
              (delta-x :double)
              (delta-y :double))
-
-            ((:key-press :key-release) gdk-event-key
-             (time :uint32)
-             (state gdk-modifier-type)
-             (keyval :uint)
-             (length :int)
-             (string (:string :free-from-foreign nil
-                              :free-to-foreign nil))
-             (hardware-keycode :uint16)
-             (group :uint8)
-             (is-modifier :uint))
 
             ((:enter-notify :leave-notify) gdk-event-crossing
              (subwindow (g-object gdk-window))
@@ -1080,7 +1089,7 @@
   @};
   @end{pre}
   @see-constructor{make-gdk-event}
-  @see-scontructor{copy-gdk-event}
+  @see-constructor{copy-gdk-event}
   @see-slot{gdk-event-type}
   @see-slot{gdk-event-window}
   @see-slot{gdk-event-send-event}")

@@ -18,8 +18,8 @@ Content from the GDK 3.6.4 Reference Manual
   gdk.visual.lisp           - Visuals                - GDK 3.6.4
   gdk.cursor.lisp           - Cursors                - GDK 3.6.4
   gdk.window.lisp           - Windows                - GDK 3.6.4&
-  gdk.event.lisp            - Events                 - GDK 3.4.3*
-  gdk.event-structures.lisp - Event Structures       - GDK 3.4.3*
+  gdk.events.lisp           - Events                 - GDK 3.6.4&
+  gdk.event-structures.lisp - Event Structures       - GDK 3.6.4
   gdk.key-values.lisp       - Key Values             - GDK 3.4.3*
   gdk.selections.lisp       - Selections             - GDK 3.6.4
   gdk.drag-and-drop-lisp    - Drag And Drop          - GDK 3.6.4&

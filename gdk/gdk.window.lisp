@@ -139,7 +139,7 @@
 ;;;     gdk_window_set_background                          * deprecated *
 ;;;     gdk_window_set_background_rgba
 ;;;     gdk_window_set_background_pattern
-;;;     gdk_window_get_background_patter
+;;;     gdk_window_get_background_pattern
 ;;;
 ;;;     GDK_PARENT_RELATIVE
 ;;;
@@ -602,12 +602,12 @@
   (height-increment :int :initform 0)
   (min-aspect :double :initform 0.0d0)
   (max-aspect :double :initform 0.0d0)
-  (gravity gdk-gravity :initform :north-west))
+  (win-gravity gdk-gravity :initform :north-west))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-geometry atdoc:*class-name-alias*) "CStruct"
       (documentation 'gdk-geometry 'type)
- "@version{2013-8-23}
+ "@version{2013-9-16}
   @begin{short}
     The @sym{gdk-geometry} structure gives the window manager information about
     a window's geometry constraints. Normally you would set these on the GTK+
@@ -675,7 +675,7 @@
   (height-increment :int :initform 0)
   (min-aspect :double :initform 0.0d0)
   (max-aspect :double :initform 0.0d0)
-  (gravity gdk-gravity :initform :north-west))
+  (win-gravity gdk-gravity :initform :north-west))
   @end{pre}
   @begin[code]{table}
     @entry[min-width]{Minimum width of window or -1 to use requisition,
@@ -853,10 +853,10 @@
   @see-class{gdk-geometry}")
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-geometry-gravity atdoc:*function-name-alias*)
+(setf (gethash 'gdk-geometry-win-gravity atdoc:*function-name-alias*)
       "Accessor"
-      (documentation 'gdk-geometry-gravity 'function)
- "@version{2013-8-23}
+      (documentation 'gdk-geometry-win-gravity 'function)
+ "@version{2013-9-16}
   Accessor of the slot @code{gravity} of the @class{gdk-geometry} structure.
   @see-class{gdk-geometry}")
 

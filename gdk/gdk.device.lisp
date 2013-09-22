@@ -118,8 +118,6 @@
     gdk-device-type
     "type" "GdkDeviceType" t t)))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gdk-device 'type)
  "@version{2013-6-21}
@@ -1253,20 +1251,24 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_device_list_axes ()
-;;;
-;;; GList * gdk_device_list_axes (GdkDevice *device);
-;;;
-;;; Returns a GList of GdkAtoms, containing the labels for the axes that device
-;;; currently has.
-;;;
-;;; device :
-;;;     a pointer GdkDevice
-;;;
-;;; Returns :
-;;;     A GList of GdkAtoms, free with g_list_free().
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gdk_device_list_axes" gdk-device-list-axes)
+    (g-list gdk-atom-as-string)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-9-15}
+  @argument[device]{a @class{gdk-device} object}
+  @return{A list of strings.}
+  @begin{short}
+    Returns a of list of strings, containing the labels for the axes that device
+    currently has.
+  @end{short}
+
+  Since 3.0
+  @see-class{gdk-device}"
+  (device (g-object gdk-device)))
+
+(export 'gdk-device-list-axes)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_device_get_axis_value ()

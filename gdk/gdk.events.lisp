@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file is taken from the GDK 3 Reference Manual
-;;; Version 3.4.3 and modified to document the Lisp binding to the GDK library.
+;;; Version 3.6.4 and modified to document the Lisp binding to the GDK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -118,7 +118,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; GDK_PRIORITY_EVENTS
 ;;;
-;;; #define             GDK_PRIORITY_EVENTS
+;;; #define GDK_PRIORITY_EVENTS
 ;;;
 ;;; This is the priority that events from the X server are given in the GLib
 ;;; Main Loop.
@@ -141,25 +141,43 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; GDK_EVENT_PROPAGATE
-;;;
-;;; #define GDK_EVENT_PROPAGATE (FALSE)
-;;;
-;;; Use this macro as the return value for continuing the propagation of an
-;;; event handler.
-;;;
-;;; Since 3.4
 ;;; ----------------------------------------------------------------------------
+
+(defconstant +gdk-event-propagate+ nil
+ #+cl-cffi-gtk-documentation
+ "@version{2013-9-20}
+  @begin{short}
+    Use this value as the return value for continuing the propagation of an
+    event handler.
+  @end{short}
+
+  Since 3.4
+  @see-variable{+gdk-event-stop+}")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash '+gdk-event-propagate+ atdoc:*variable-name-alias*) "Constant")
+
+(export '+gdk-event-propagate+)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GDK_EVENT_STOP
-;;;
-;;; #define GDK_EVENT_STOP (TRUE)
-;;;
-;;; Use this macro as the return value for stopping the propagation of an event
-;;; handler.
-;;;
-;;; Since 3.4
 ;;; ----------------------------------------------------------------------------
+
+(defconstant +gdk-event-stop+ t
+ #+cl-cffi-gtk-documentation
+ "@version{2013-9-20}
+  @begin{short}
+    Use this value as the return value for stopping the propagation of an
+    event handler.
+  @end{short}
+
+  Since 3.4
+  @see-variable{+gdk-event-propagate+}")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash '+gdk-event-stop+ atdoc:*variable-name-alias*) "Constant")
+
+(export '+gdk-event-stop+)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GDK_BUTTON_PRIMARY
@@ -199,9 +217,11 @@
 
 (defcfun ("gdk_events_pending" gdk-events-pending) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-6-15}
+ "@version{2013-9-21}
   @return{@em{True} if any events are pending.}
-  Checks if any events are ready to be processed for any display.")
+  Checks if any events are ready to be processed for any display.
+  @see-class{gdk-event}
+  @see-function{gdk-event-peek}")
 
 (export 'gdk-events-pending)
 
@@ -211,7 +231,7 @@
 
 (defcfun ("gdk_event_peek" gdk-event-peek) (g-boxed-foreign gdk-event :return)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-15}
+ "@version{2013-9-21}
   @begin{return}
     A copy of the first @class{gdk-event} on some event queue, or @code{nil} if
     no events are in any queues.
@@ -221,6 +241,8 @@
     returns a copy of it.
   @end{short}
   See the function @fun{gdk-display-peek-event}.
+  @see-class{gdk-event}
+  @see-function{gdk-events-pending}
   @see-function{gdk-display-peek-event}")
 
 (export 'gdk-event-peek)
@@ -231,7 +253,7 @@
 
 (defcfun ("gdk_event_get" gdk-event-get) (g-boxed-foreign gdk-event :return)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-15}
+ "@version{2013-9-21}
   @begin{return}
     The next @class{gdk-event} to be processed, or @code{nil} if no events are
     pending.
@@ -241,6 +263,7 @@
     on, fetching events from the windowing system if necessary.
   @end{short}
   See the function @fun{gdk-display-get-event}.
+  @see-class{gdk-event}
   @see-function{gdk-display-get-event}")
 
 (export 'gdk-event-get)
@@ -251,7 +274,7 @@
 
 (defcfun ("gdk_event_put" gdk-event-put) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-6-15}
+ "@version{2013-9-21}
   @argument[event]{a @class{gdk-event} structure}
   @begin{short}
     Appends a copy of the given event onto the front of the event queue for
@@ -259,6 +282,7 @@
     @code{event->any.window} is @code{nil}.
   @end{short}
   See the function @fun{gdk-display-put-event}.
+  @see-class{gdk-event}
   @see-function{gdk-display-put-event}"
   (event (g-boxed-foreign gdk-event)))
 
@@ -266,36 +290,42 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_event_new ()
-;;;
-;;; GdkEvent * gdk_event_new (GdkEventType type);
-;;;
-;;; Creates a new event of the given type. All fields are set to 0.
-;;;
-;;; type :
-;;;     a GdkEventType
-;;;
-;;; Returns :
-;;;     a newly-allocated GdkEvent. The returned GdkEvent should be freed with
-;;;     gdk_event_free().
-;;;
-;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gdk_event_new" gdk-event-new) (g-boxed-foreign gdk-event)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-9-20}
+  @argument[type]{a @class{gdk-event-type}}
+  @return{A newly-allocated @class{gdk-event}.}
+  @begin{short}
+    Creates a new event of the given type. All fields are set to 0.
+  @end{short}
+
+  Since 2.2
+  @see-class{gdk-event}
+  @see-symbol{gdk-event-type}"
+  (type gdk-event-type))
+
+(export 'gdk-event-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_event_copy ()
-;;;
-;;; GdkEvent * gdk_event_copy (const GdkEvent *event);
-;;;
-;;; Copies a GdkEvent, copying or incrementing the reference count of the
-;;; resources associated with it (e.g. GdkWindow's and strings).
-;;;
-;;; event :
-;;;     a GdkEvent
-;;;
-;;; Returns :
-;;;     a copy of event. The returned GdkEvent should be freed with
-;;;     gdk_event_free().
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gdk-event-copy))
+
+(defun gdk-event-copy (event)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-9-20}
+  @argument[event]{a @class{gdk-event}}
+  @return{A copy of event.}
+  Copies a @class{gdk-event}, copying or incrementing the reference count of the
+  resources associated with it, e. g. @class{gdk-window}'s and strings.
+  @see-class{gdk-event}
+  @see-class{gdk-window}"
+  (copy-gdk-event event))
+
+(export 'gdk-event-copy)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_event_free ()
@@ -326,7 +356,8 @@
   @argument[event]{a @class{gdk-event} structure}
   @argument[axis-use]{the axis use to look for}
   @return{@code{value} -- the value found}
-  Extract the axis value for a particular axis use from an event structure."
+  Extract the axis value for a particular axis use from an event structure.
+  @see-class{gdk-event}"
   (with-foreign-object (value :double)
     (when (%gdk-event-get-axis event axis-use value)
       (mem-ref value :double))))
@@ -335,42 +366,54 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_event_get_button ()
-;;;
-;;; gboolean gdk_event_get_button (const GdkEvent *event, guint *button);
-;;;
-;;; Extract the button number from an event.
-;;;
-;;; event :
-;;;     a GdkEvent
-;;;
-;;; button :
-;;;     location to store mouse button number
-;;;
-;;; Returns :
-;;;     TRUE if the event delivered a button number
-;;;
-;;; Since 3.2
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gdk_event_get_button" %gdk-event-get-button) :boolean
+  (event (g-boxed-foreign gdk-event))
+  (button (:pointer :uint)))
+
+(defun gdk-event-get-button (event)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-9-21}
+  @argument[event]{a @class{gdk-event}}
+  @return{Mouse button number, or @code{nil} if the @arg{event} does not deliver
+    a button number.}
+  @short{Extract the button number from an event.}
+
+  Since 3.2
+  @see-class{gdk-event}
+  @see-function{gdk-event-get-click-count}"
+  (with-foreign-object (button :uint)
+    (when (%gdk-event-get-button event button)
+      (mem-ref button :uint))))
+
+(export 'gdk-event-get-button)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_event_get_click_count ()
-;;;
-;;; gboolean gdk_event_get_click_count (const GdkEvent *event,
-;;;                                     guint *click_count);
-;;;
-;;; Extracts the click count from an event.
-;;;
-;;; event :
-;;;     a GdkEvent
-;;;
-;;; click_count :
-;;;     location to store click count
-;;;
-;;; Returns :
-;;;     TRUE if the event delivered a click count
-;;;
-;;; Since 3.2
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gdk_event_get_click_count" %gdk-event-get-click-count) :boolean
+  (event (g-boxed-foreign gdk-event))
+  (click-count (:pointer :uint)))
+
+(defun gdk-event-get-click-count (event)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-9-21}
+  @argument[event]{a @class{gdk-event}}
+  @return{click count, or @code{nil} if the event does not delivered
+    a click count}
+  @begin{short}
+    Extracts the click count from an event.
+  @end{short}
+
+  Since 3.2
+  @see-class{gdk-event}"
+  (with-foreign-object (click-count :uint)
+    (when (%gdk-event-get-click-count event click-count)
+      (mem-ref click-count :uint))))
+
+(export 'gdk-event-get-click-count)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_event_get_coords ()
@@ -722,7 +765,19 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; gdk_event_handler_set ()
+;;; GdkEventFunc ()
+;;;
+;;; void (*GdkEventFunc) (GdkEvent *event, gpointer data);
+;;;
+;;; Specifies the type of function passed to gdk_event_handler_set() to handle
+;;; all GDK events.
+;;;
+;;; event :
+;;;     the GdkEvent to process.
+;;;
+;;; data :
+;;;     user data set when the event handler was installed with
+;;;     gdk_event_handler_set()
 ;;; ----------------------------------------------------------------------------
 
 (defcallback gdk-event-func-callback :void
@@ -730,6 +785,10 @@
   (restart-case
       (funcall (glib::get-stable-pointer-value user-data) event)
     (return-from-callback () nil)))
+
+;;; ----------------------------------------------------------------------------
+;;; gdk_event_handler_set ()
+;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_event_handler_set" %gdk-event-handler-set) :void
   (func :pointer)
@@ -745,31 +804,15 @@
   @end{short}
 
   Note that GTK+ uses this to install its own event handler, so it is usually
-  not useful for GTK+ applications. (Although an application can call this
+  not useful for GTK+ applications. Although an application can call this
   function then call the function @fun{gtk-main-do-event} to pass events to
-  GTK+.)
+  GTK+.
   @see-function{gtk-main-do-event}"
   (%gdk-event-handler-set (callback gdk-event-func-callback)
-                          (glib::allocate-stable-pointer func)
-                          (callback glib::stable-pointer-destroy-notify-cb)))
+                          (glib:allocate-stable-pointer func)
+                          (callback glib:stable-pointer-destroy-notify-cb)))
 
 (export 'gdk-event-handler-set)
-
-;;; ----------------------------------------------------------------------------
-;;; GdkEventFunc ()
-;;;
-;;; void (*GdkEventFunc) (GdkEvent *event, gpointer data);
-;;;
-;;; Specifies the type of function passed to gdk_event_handler_set() to handle
-;;; all GDK events.
-;;;
-;;; event :
-;;;     the GdkEvent to process.
-;;;
-;;; data :
-;;;     user data set when the event handler was installed with
-;;;     gdk_event_handler_set()
-;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_get_show_events ()
@@ -802,40 +845,50 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_event_set_screen ()
-;;;
-;;; void gdk_event_set_screen (GdkEvent *event, GdkScreen *screen);
-;;;
-;;; Sets the screen for event to screen. The event must have been allocated by
-;;; GTK+, for instance, by gdk_event_copy().
-;;;
-;;; event :
-;;;     a GdkEvent
-;;;
-;;; screen :
-;;;     a GdkScreen
-;;;
-;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gdk_event_set_screen" gdk-event-set-screen) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-9-21}
+  @argument[event]{a @class{gdk-event}}
+  @argument[screen]{a @class{gdk-screen} object}
+  @begin{short}
+    Sets the screen for @arg{event} to @arg{screen}.
+  @end{short}
+  The event must have been allocated by GTK+, for instance, by the function
+  @fun{gdk-event-copy}.
+
+  Since 2.2
+  @see-class{gdk-event}
+  @see-class{gdk-screen}"
+  (event (g-boxed-foreign gdk-event))
+  (screen (g-object gdk-screen)))
+
+(export 'gdk-event-set-screen)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_event_get_screen ()
-;;;
-;;; GdkScreen * gdk_event_get_screen (const GdkEvent *event);
-;;;
-;;; Returns the screen for the event. The screen is typically the screen for
-;;; event->any.window, but for events such as mouse events, it is the screen
-;;; where the pointer was when the event occurs - that is, the screen which has
-;;; the root window to which event->motion.x_root and event->motion.y_root are
-;;; relative.
-;;;
-;;; event :
-;;;     a GdkEvent
-;;;
-;;; Returns :
-;;;     the screen for the event
-;;;
-;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gdk_event_get_screen" gdk-event-get-screen) (g-object gdk-screen)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-9-21}
+  @argument[event]{a @class{gdk-event}}
+  @return{The screen for the event.}
+  @begin{short}
+    Returns the screen for the event.
+  @end{short}
+  The screen is typically the screen for event->any.window, but for events such
+  as mouse events, it is the screen where the pointer was when the event occurs
+  - that is, the screen which has the root window to which event->motion.x_root
+  and event->motion.y_root are relative.
+
+  Since 2.2
+  @see-class{gdk-event}
+  @see-class{gdk-screen}"
+  (event (g-boxed-foreign gdk-event)))
+
+(export 'gdk-event-get-screen)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_event_get_device ()
@@ -858,62 +911,82 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_event_set_device ()
-;;;
-;;; void gdk_event_set_device (GdkEvent *event, GdkDevice *device);
-;;;
-;;; Sets the device for event to device. The event must have been allocated by
-;;; GTK+, for instance, by gdk_event_copy().
-;;;
-;;; event :
-;;;     a GdkEvent
-;;;
-;;; device :
-;;;     a GdkDevice
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gdk_event_set_device" gdk-event-set-device) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-9-21}
+  @argument[event]{a @class{gdk-event}}
+  @argument[device]{a @class{gdk-device} object}
+  @begin{short}
+    Sets the device for @arg{event} to @arg{device}.
+  @end{short}
+  The event must have been allocated by GTK+, for instance, by the function
+  @fun{gdk-event-copy}.
+
+  Since 3.0
+  @see-class{gdk-event}
+  @see-class{gdk-device}"
+  (event (g-boxed-foreign gdk-event))
+  (device (g-object gdk-device)))
+
+(export 'gdk-event-set-device)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_event_get_source_device ()
-;;;
-;;; GdkDevice * gdk_event_get_source_device (const GdkEvent *event);
-;;;
-;;; This function returns the hardware (slave) GdkDevice that has triggered the
-;;; event, falling back to the virtual (master) device (as in
-;;; gdk_event_get_device()) if the event wasn't caused by interaction with a
-;;; hardware device. This may happen for example in synthesized crossing events
-;;; after a GdkWindow updates its geometry or a grab is acquired/released.
-;;;
-;;; If the event does not contain a device field, this function will return
-;;; NULL.
-;;;
-;;; event :
-;;;     a GdkEvent
-;;;
-;;; Returns :
-;;;     a GdkDevice, or NULL
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gdk_event_get_source_device" gdk-event-get-source-device)
+    (g-object gdk-device)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-9-21}
+  @argument[event]{a @class{gdk-event}}
+  @return{A @class{gdk-device}, or @code{nil}.}
+  @begin{short}
+    This function returns the hardware (slave) @class{gdk-device} that has
+    triggered the event, falling back to the virtual (master) device, as in
+    the function @fun{gdk-event-get-device}, if the event was not caused by
+    interaction with a hardware device.
+  @end{short}
+  This may happen for example in synthesized crossing events after a
+  @class{gdk-window} updates its geometry or a grab is acquired/released.
+
+  If the event does not contain a device field, this function will return
+  @code{nil}.
+
+  Since 3.0
+  @see-class{gdk-event}
+  @see-class{gdk-device}
+  @see-function{gdk-window}
+  @see-function{gdk-event-get-device}"
+  (event (g-boxed-foreign gdk-event)))
+
+(export 'gdk-event-get-source-device)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_event_set_source_device ()
-;;;
-;;; void gdk_event_set_source_device (GdkEvent *event, GdkDevice *device);
-;;;
-;;; Sets the slave device for event to device.
-;;;
-;;; The event must have been allocated by GTK+, for instance by
-;;; gdk_event_copy().
-;;;
-;;; event :
-;;;     a GdkEvent
-;;;
-;;; device :
-;;;     a GdkDevice
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gdk_event_set_source_device" gdk-event-set-source-device) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-9-21}
+  @argument[event]{a @class{gdk-event}}
+  @argument[device]{a @class{gdk-device} object}
+  @begin{short}
+    Sets the slave device for @arg{event} to @arg{device}.
+  @end{short}
+
+  The event must have been allocated by GTK+, for instance by the function
+  @fun{gdk-event-copy}.
+
+  Since 3.0
+  @see-class{gdk-event}
+  @see-class{gdk-device}
+  @see-function{gdk-event-copy}"
+  (event (g-boxed-foreign gdk-event))
+  (device (g-object gdk-device)))
+
+(export 'gdk-event-set-source-device)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_setting_get ()

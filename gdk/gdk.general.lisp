@@ -180,12 +180,10 @@
   @return{The display name, if specified explicitely, otherwise @code{nil}.}
   @begin{short}
     Gets the display name specified in the command line arguments passed to
-    the functions @fun{gdk-init} or @fun{gdk-parse-args}, if any.
+    the functions @code{gdk_init} or @code{gdk_parse_args}, if any.
   @end{short}
 
-  Since 2.2
-  @see-function{gdk-init}
-  @see-function{gdk-parse-args}")
+  Since 2.2")
 
 (export 'gdk-get-display-arg-name)
 
@@ -595,7 +593,7 @@
 
   This API exists on all platforms but only does anything on X.
 
-  You can use the function @fun{gdk-x11-display-error-trap-push} to ignore
+  You can use the function @code{gdk-x11-display-error-trap-push} to ignore
   errors on only a single display.
 
   @b{Example:} Trapping an X error
@@ -613,8 +611,7 @@
   @see-class{gdk-display}
   @see-class{gdk-display-manager}
   @see-function{gdk-error-trap-pop-ignored}
-  @see-function{gdk-error-trap-pop}
-  @see-function{gdk-x11-display-error-trap-push}")
+  @see-function{gdk-error-trap-pop}")
 
 (export 'gdk-error-trap-push)
 

@@ -247,12 +247,14 @@
 (defcfun ("gdk_display_get_default_screen" gdk-display-get-default-screen)
     (g-object gdk-screen)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-4}
+ "@version{2013-9-21}
   @argument[display]{a @class{gdk-display} object}
   @return{The default @class{gdk-screen} object for @arg{display}.}
   @short{Get the default @class{gdk-screen} object for @arg{display}.}
 
-  Since 2.2"
+  Since 2.2
+  @see-class{gdk-display}
+  @see-class{gdk-screen}"
   (display (g-object gdk-display)))
 
 (export 'gdk-display-get-default-screen)
