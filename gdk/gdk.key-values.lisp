@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file is taken from the GDK 3 Reference Manual
-;;; Version 3.4.3 and modified to document the Lisp binding to the GDK library.
+;;; Version 3.6.4 and modified to document the Lisp binding to the GDK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -56,13 +56,11 @@
 ;;;
 ;;;     gdk_keyval_name
 ;;;     gdk_keyval_from_name
-;;;
 ;;;     gdk_keyval_convert_case
 ;;;     gdk_keyval_to_upper
 ;;;     gdk_keyval_to_lower
 ;;;     gdk_keyval_is_upper
 ;;;     gdk_keyval_is_lower
-;;;
 ;;;     gdk_keyval_to_unicode
 ;;;     gdk_unicode_to_keyval
 ;;;
@@ -236,9 +234,43 @@
       indicates whether to use the \"1\" or the \"!\" symbol. The letter keys
       are considered to have a lowercase letter at level 0, and an uppercase
       letter at level 1, though only the uppercase letter is printed.}
-  @end{table}")
+  @end{table}
+  @see-constructor{copy-gdk-keymap-key}
+  @see-constructor{make-gdk-keymap-key}
+  @see-slot{gdk-keymap-key-keycode}
+  @see-slot{gdk-keymap-key-group}
+  @see-slot{gdk-keymap-key-level}")
 
-(export 'gdk-keymap-key)
+(export (boxed-related-symbols 'gdk-keymap-key))
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Constructors for GdkKeymapKey
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'copy-gdk-keymap-key 'function)
+ "@version{2013-9-26}
+  @argument[instance]{a @class{gdk-keymap-key} structure}
+  Copy constructor of a @class{gdk-keymap-key} structure.
+  @see-class{gdk-keymap-key}
+  @see-function{make-gdk-keymap-key}")
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'make-gdk-geometry 'function)
+ "@version{2013-9-26}
+  Creates a @class{gdk-keymap-key} structure.
+  @see-class{gdk-keymap-key}
+  @see-function{copy-gdk-geometry}")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors of the GdkKeymapKey structure
+;;;
+;;; ----------------------------------------------------------------------------
+
+
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_keymap_get_default ()
@@ -276,18 +308,21 @@
 
 (defcfun ("gdk_keymap_lookup_key" gdk-keymap-lookup-key) :uint
  #+cl-cffi-gtk-documentation
- "@version{2013-6-13}
-  @argument[keymap]{a @class{gdk-keymap}}
+ "@version{2013-9-26}
+  @argument[keymap]{a @class{gdk-keymap} object}
   @argument[key]{a @class{gdk-keymap-key} with keycode, group, and level
     initialized}
   @return{A keyval, or 0 if none was mapped to the given key.}
   @begin{short}
-    Looks up the keyval mapped to a keycode/group/level triplet. If no keyval is
-    bound to @arg{key}, returns 0.
+    Looks up the keyval mapped to a keycode/group/level triplet.
   @end{short}
-  For normal user input, you want to use the function
-  @fun{gdk-keymap-translate-keyboard-state} instead of this function, since the
-  effective group/level may not be the same as the current keyboard state."
+  If no keyval is bound to @arg{key}, returns 0. For normal user input, you want
+  to use the function @fun{gdk-keymap-translate-keyboard-state} instead of this
+  function, since the effective group/level may not be the same as the current
+  keyboard state.
+  @see-class{gdk-keymap}
+  @see-class{gdk-keymap-key}
+  @see-function{gdk-keymap-translate-keyboard-state}"
   (keymap (g-object gdk-keymap))
   (key (g-boxed-foreign gdk-keymap-key)))
 
@@ -566,8 +601,6 @@
 ;;; gdk_keymap_get_modifier_state ()
 ;;; ----------------------------------------------------------------------------
 
-;; The return value is of type gdk-modifer-type
-
 (defcfun ("gdk_keymap_get_modifier_state" gdk-keymap-get-modifier-state)
     gdk-modifier-type
  #+cl-cffi-gtk-documentation
@@ -639,33 +672,96 @@
 (export 'gdk-keymap-map-virtual-modifiers)
 
 ;;; ----------------------------------------------------------------------------
-;;; gdk_keymap_get_modifier_mask ()
-;;;
-;;; GdkModifierType gdk_keymap_get_modifier_mask (GdkKeymap *keymap,
-;;;                                               GdkModifierIntent intent);
-;;;
-;;; Returns the modifier mask the keymap's windowing system backend uses for a
-;;; particular purpose.
-;;;
-;;; Note that this function always returns real hardware modifiers, not virtual
-;;; ones (e.g. it will return GDK_MOD1_MASK rather than GDK_META_MASK if the
-;;; backend maps MOD1 to META), so there are use cases where the return value of
-;;; this function has to be transformed by gdk_keymap_add_virtual_modifiers() in
-;;; order to contain the expected result.
-;;;
-;;; keymap :
-;;;     a GdkKeymap
-;;;
-;;; intent :
-;;;     the use case for the modifier mask
-;;;
-;;; Returns :
-;;;     the modifier mask used for intent.
-;;;
-;;; Since 3.4
+;;; Enum GdkModifierIntent
 ;;; ----------------------------------------------------------------------------
 
-;; TODO: GdkModifierIntent is not documented in the GDK 3 Reference Manual
+(define-g-enum "GdkModifierIntent" gdk-modifier-intent
+  (:export t
+   :type-initializer "gdk_modifier_intent_get_type")
+  (:primary-accelerator 0)
+  (:context-menu 1)
+  (:extend-selection 2)
+  (:modify-selection 3)
+  (:no-text-input 4)
+  (:shift-group 5))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gdk-modifier-intent atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'gdk-modifier-intent atdoc:*external-symbols*)
+ "@version{2013-9-26}
+  @begin{short}
+    This enum is used with the functions @fun{gdk-keymap-get-modifier-mask} and
+    @fun{gdk-get-modifier-mask} in order to determine what modifiers the
+    currently used windowing system backend uses for particular
+    purposes.
+  @end{short}
+  For example, on X11/Windows, the Control key is used for invoking menu
+  shortcuts (accelerators), whereas on Apple computers it is the Command key,
+  which correspond to the values @code{:control-mask} and @code{:mod2-mask}
+  of the @symbol{gdk-modifier-type} enumeration, respectively.
+  @begin{pre}
+(define-g-enum \"GdkModifierIntent\" gdk-modifier-intent
+  (:export t
+   :type-initializer \"gdk_modifier_intent_get_type\")
+  (:primary-accelerator 0)
+  (:context-menu 1)
+  (:extend-selection 2)
+  (:modify-selection 3)
+  (:no-text-input 4)
+  (:shift-group 5))
+  @end{pre}
+  @begin[code]{table}
+    @entry[primary-accelerator]{The primary modifier used to invoke menu
+      accelerators.}
+    @entry[:context-menu]{The modifier used to invoke context menus. Note that
+      mouse button 3 always triggers context menus. When this modifier is not
+      0, it additionally triggers context menus when used with mouse button 1.}
+    @entry[:extend-selection]{The modifier used to extend selections using 
+      <modifier>-click or <modifier>-cursor-key.}
+    @entry[:modify-selection]{The modifier used to modify selections, which in
+      most cases means toggling the clicked item into or out of the selection.}
+    @entry[:no-text-input]{When any of these modifiers is pressed, the key event
+      cannot produce a symbol directly. This is meant to be used for input
+      methods, and for use cases like typeahead search.}
+    @entry[:shift-group]{The modifier that switches between keyboard groups
+      (AltGr on X11/Windows and Option/Alt on OS X).}
+  @end{table}
+  Since 3.4
+  @see-symbol{gdk-modifier-type}
+  @see-function{gdk-get-modifier-mask}
+  @see-function{gdk-keymap-get-modifier-mask}")
+
+;;; ----------------------------------------------------------------------------
+;;; gdk_keymap_get_modifier_mask ()
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("gdk_keymap_get_modifier_mask" gdk-keymap-get-modifier-mask)
+   gdk-modifier-type
+ #+cl-cffi-gtk-documentation
+ "@version{2013-9-26}
+  @argument[keymap]{a @class{gdk-keymap} object}
+  @argument[intent]{the use case for the modifier mask}
+  @return{The modifier mask used for @arg{intent}.}
+  @begin{short}
+    Returns the modifier mask the keymap's windowing system backend uses for a
+    particular purpose.
+  @end{short}
+
+  Note that this function always returns real hardware modifiers, not virtual
+  ones (e. g. it will return @code{:mod1-mask} rather than @code{:meta-mask} if
+  the backend maps @code{MOD1} to @code{META}), so there are use cases where
+  the return value of this function has to be transformed by the function
+  @fun{gdk-keymap-add-virtual-modifiers} in order to contain the expected
+  result.
+
+  Since 3.4
+  @see-class{gdk-keymap}
+  @see-symbol{gdk-modifier-type}
+  @see-function{gdk-keymap-add-virtual-modifiers}"
+  (keymap (g-object gdk-keymap))
+  (intent gdk-modifier-intent))
+
+(export 'gdk-keymap-get-modifier-mask)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_keyval_name ()

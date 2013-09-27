@@ -557,7 +557,7 @@
     @about-class{gdk-event-grab-broken}
   @end{section}
   @begin[Key Values]{section}
-    Functions for manipulating keyboard codes
+    Functions for manipulating keyboard codes.
 
     @about-class{gdk-keymap}
     @about-struct{gdk-keymap-key}
@@ -574,6 +574,7 @@
     @about-function{gdk-keymap-get-modifier-state}
     @about-function{gdk-keymap-add-virtual-modifiers}
     @about-function{gdk-keymap-map-virtual-modifiers}
+    @about-symbol{gdk-modifier-intent}
     @about-function{gdk-keymap-get-modifier-mask}
     @about-function{gdk-keyval-name}
     @about-function{gdk-keyval-from-name}

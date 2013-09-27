@@ -20,7 +20,7 @@ Content from the GDK 3.6.4 Reference Manual
   gdk.window.lisp           - Windows                - GDK 3.6.4&
   gdk.events.lisp           - Events                 - GDK 3.6.4&
   gdk.event-structures.lisp - Event Structures       - GDK 3.6.4
-  gdk.key-values.lisp       - Key Values             - GDK 3.4.3*
+  gdk.key-values.lisp       - Key Values             - GDK 3.6.4
   gdk.selections.lisp       - Selections             - GDK 3.6.4
   gdk.drag-and-drop-lisp    - Drag And Drop          - GDK 3.6.4&
   gdk.properties.lisp       - Properties and Atoms   - GDK 3.6.4&
