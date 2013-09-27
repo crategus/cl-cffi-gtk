@@ -761,7 +761,7 @@
     Creates a @class{gdk-geometry} structure.
   @end{short}
   @see-class{gdk-geometry}
-  @see-function{copy-geometry}
+  @see-function{copy-gdk-geometry}
   @see-function{gtk-window-set-gravity}")
 
 ;;; ----------------------------------------------------------------------------
