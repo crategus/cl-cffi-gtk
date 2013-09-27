@@ -701,185 +701,255 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_new ()
-;;;
-;;; GtkWidget * gtk_icon_view_new (void);
-;;;
-;;; Creates a new GtkIconView widget
-;;;
-;;; Returns :
-;;;     A newly created GtkIconView widget
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-icon-view-new))
+
+(defun gtk-icon-view-new ()
+ #+cl-cffi-gtk-documentation
+ "@version{2013-9-25}
+  @return{A newly created @class{gtk-icon-view} widget.}
+  @begin{short}
+    Creates a new @class{gtk-icon-view} widget.
+  @end{short}
+
+  Since 2.6
+  @see-class{gtk-icon-view}"
+  (make-instance 'gtk-icon-view))
+
+(export 'gtk-icon-view-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_new_with_area ()
-;;;
-;;; GtkWidget * gtk_icon_view_new_with_area (GtkCellArea *area);
-;;;
-;;; Creates a new GtkIconView widget using the specified area to layout cells
-;;; inside the icons.
-;;;
-;;; area :
-;;;     the GtkCellArea to use to layout cells
-;;;
-;;; Returns :
-;;;     A newly created GtkIconView widget
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-icon-view-new-with-area))
+
+(defun gtk-icon-view-new-with-area (area)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-9-25}
+  @argument[area]{the @class{gtk-cell-area} object to use to layout cells}
+  @return{A newly created @class{gtk-icon-view} widget.}
+  @begin{short}
+    Creates a new @class{gtk-icon-view} widget using the specified area to
+    layout cells inside the icons.
+  @end{short}
+
+  Since 3.0
+  @see-class{gtk-icon-view}
+  @see-class{gtk-cell-area}"
+  (make-instance 'gtk-icon-view
+                 :cell-area area))
+
+(export 'gtk-icon-view-new-with-area)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_new_with_model ()
-;;;
-;;; GtkWidget * gtk_icon_view_new_with_model (GtkTreeModel *model);
-;;;
-;;; Creates a new GtkIconView widget with the model model.
-;;;
-;;; model :
-;;;     The model.
-;;;
-;;; Returns :
-;;;     A newly created GtkIconView widget.
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-icon-view-new-with-model))
+
+(defun gtk-icon-view-new-with-model (model)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-9-25}
+  @argument[model]{the @class{gtk-tree-model}}
+  @return{A newly created @class{gtk-icon-view} widget.}
+  @begin{short}
+    Creates a new @class{gtk-icon-view} widget with the model model.
+  @end{short}
+
+  Since 2.6
+  @see-class{gtk-icon-view}
+  @see-class{gtk-tree-model}"
+  (make-instance 'gtk-icon-view
+                 :model model))
+
+(export 'gtk-icon-view)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_set_model ()
-;;;
-;;; void gtk_icon_view_set_model (GtkIconView *icon_view, GtkTreeModel *model);
-;;;
-;;; Sets the model for a GtkIconView. If the icon_view already has a model set,
-;;; it will remove it before setting the new model. If model is NULL, then it
-;;; will unset the old model.
-;;;
-;;; icon_view :
-;;;     A GtkIconView.
-;;;
-;;; model :
-;;;     The model.
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-icon-view-set-model))
+
+(defun gtk-icon-view-set-model (icon-view model)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-9-25}
+  @argument[icon-view]{a @class{gtk-icon-view} widget}
+  @argument[model]{the @class{gtk-tree-model} object}
+  @begin{short}
+    Sets the model for a @class{gtk-icon-view} widget.
+  @end{short}
+  If the @arg{icon-view} already has a model set, it will remove it before
+  setting the new model. If @arg{model} is @code{nil}, then it will unset the
+  old model.
+
+  Since 2.6
+  @see-class{gtk-icon-view}
+  @see-class{gtk-tree-model}
+  @see-function{gtk-icon-view-get-model}"
+  (setf (gtk-icon-view-model icon-view) model))
+
+(export 'gtk-icon-view-set-model)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_get_model ()
-;;;
-;;; GtkTreeModel * gtk_icon_view_get_model (GtkIconView *icon_view);
-;;;
-;;; Returns the model the GtkIconView is based on. Returns NULL if the model is
-;;; unset.
-;;;
-;;; icon_view :
-;;;     a GtkIconView
-;;;
-;;; Returns :
-;;;     A GtkTreeModel, or NULL if none is currently being used.
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-icon-view-get-model))
+
+(defun gtk-icon-view-get-model (icon-view)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-9-25}
+  @argument[icon-view]{a @class{gtk-icon-view} widget}
+  @return{A @class{gtk-tree-model} object, or @code{nil} if none is currently
+    being used.}
+  @begin{short}
+    Returns the model the @class{gtk-icon-view} is based on.
+  @end{short}
+  Returns @code{nil} if the model is unset.
+
+  Since 2.6
+  @see-class{gtk-icon-view}
+  @see-class{gtk-tree-model}
+  @see-function{gtk-icon-view-set-model}"
+  (gtk-icon-view-model icon-view))
+
+(export 'gtk-icon-view-get-model)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_set_text_column ()
-;;;
-;;; void gtk_icon_view_set_text_column (GtkIconView *icon_view, gint column);
-;;;
-;;; Sets the column with text for icon_view to be column. The text column must
-;;; be of type G_TYPE_STRING.
-;;;
-;;; icon_view :
-;;;     A GtkIconView.
-;;;
-;;; column :
-;;;     A column in the currently used model, or -1 to display no text
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-icon-view-set-text-column))
+
+(defun gtk-icon-view-set-text-column (icon-view column)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-9-25}
+  @argument[icon-view]{a @class{gtk-icon-view} widget}
+  @argument[column]{a column in the currently used model, or -1 to display
+    no text}
+  @begin{short}
+    Sets the column with text for @arg{icon-view} to be @arg{column}.
+  @end{short}
+  The text column must be of type @code{G_TYPE_STRING}.
+
+  Since 2.6
+  @see-class{gtk-icon-view}
+  @see-function{gtk-icon-view-get-text-column}"
+  (setf (gtk-icon-view-text-column icon-view) column))
+
+(export 'gtk-icon-view-set-text-column)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_get_text_column ()
-;;;
-;;; gint gtk_icon_view_get_text_column (GtkIconView *icon_view);
-;;;
-;;; Returns the column with text for icon_view.
-;;;
-;;; icon_view :
-;;;     A GtkIconView.
-;;;
-;;; Returns :
-;;;     the text column, or -1 if it's unset.
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-icon-view-get-text-column))
+
+(defun gtk-icon-view-get-text-column (icon-view)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-9-25}
+  @argument[icon-view]{a @class{gtk-icon-view} widget}
+  @return{The text column, or -1 if it is unset.}
+  @short{Returns the column with text for @arg{icon-view}.}
+
+  Since 2.6
+  @see-class{gtk-icon-view}
+  @see-function{gtk-icon-view-set-text-column}"
+  (gtk-icon-view-text-column icon-view))
+
+(export 'gtk-icon-view-get-text-column)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_set_markup_column ()
-;;;
-;;; void gtk_icon_view_set_markup_column (GtkIconView *icon_view, gint column);
-;;;
-;;; Sets the column with markup information for icon_view to be column. The
-;;; markup column must be of type G_TYPE_STRING. If the markup column is set to
-;;; something, it overrides the text column set by
-;;; gtk_icon_view_set_text_column().
-;;;
-;;; icon_view :
-;;;     A GtkIconView.
-;;;
-;;; column :
-;;;     A column in the currently used model, or -1 to display no text
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-icon-view-set-markup-column))
+
+(defun gtk-icon-view-set-markup-column (icon-view column)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-9-25}
+  @argument[icon-view]{a @class{gtk-icon-view} widget}
+  @argument[column]{a column in the currently used model, or -1 to display no
+    text}
+  @begin{short}
+    Sets the column with markup information for @arg{icon-view} to be column.
+  @end{short}
+  The markup column must be of type @code{G_TYPE_STRING}. If the markup column
+  is set to something, it overrides the text column set by the function
+  @fun{gtk-icon-view-set-text-column}.
+
+  Since 2.6
+  @see-class{gtk-icon-view}
+  @see-function{gtk-icon-view-set-text-column}
+  @see-function{gtk-icon-view-get-markup-column}"
+  (setf (gtk-icon-view-markup-column icon-view) column))
+
+(export 'gtk-icon-view-set-markup-column)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_get_markup_column ()
-;;;
-;;; gint gtk_icon_view_get_markup_column (GtkIconView *icon_view);
-;;;
-;;; Returns the column with markup text for icon_view.
-;;;
-;;; icon_view :
-;;;     A GtkIconView.
-;;;
-;;; Returns :
-;;;     the markup column, or -1 if it's unset.
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-icon-view-get-markup-column))
+
+(defun gtk-icon-view-get-markup-column (icon-view)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-9-25}
+  @argument[icon-view]{a @class{gtk-icon-view} widget}
+  @return{The markup column, or -1 if it is unset.}
+  @short{Returns the column with markup text for @arg{icon-view}.}
+
+  Since 2.6
+  @see-class{gtk-icon-view}
+  @see-function{gtk-icon-view-set-markup-column}"
+  (gtk-icon-view-markup-column icon-view))
+
+(export 'gtk-icon-view-get-markup-column)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_set_pixbuf_column ()
-;;;
-;;; void gtk_icon_view_set_pixbuf_column (GtkIconView *icon_view, gint column);
-;;;
-;;; Sets the column with pixbufs for icon_view to be column. The pixbuf column
-;;; must be of type GDK_TYPE_PIXBUF
-;;;
-;;; icon_view :
-;;;     A GtkIconView.
-;;;
-;;; column :
-;;;     A column in the currently used model, or -1 to disable
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-icon-view-set-pixbuf-column))
+
+(defun gtk-icon-view-set-pixbuf-column (icon-view column)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-9-25}
+  @argument[icon-view]{a @class{gtk-icon-view} widget}
+  @argument[column]{a column in the currently used model, or -1 to disable}
+  @begin{short}
+    Sets the column with pixbufs for @arg{icon-view} to be column.
+  @end{short}
+  The pixbuf column must be of type @code{GDK_TYPE_PIXBUF}.
+
+  Since 2.6
+  @see-class{gtk-icon-view}
+  @see-function{gtk-icon-view-get-pixbuf-column}"
+  (setf (gtk-icon-view-pixbuf-column icon-view) column))
+
+(export 'gtk-icon-view-set-pixbuf-column)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_get_pixbuf_column ()
-;;;
-;;; gint gtk_icon_view_get_pixbuf_column (GtkIconView *icon_view);
-;;;
-;;; Returns the column with pixbufs for icon_view.
-;;;
-;;; icon_view :
-;;;     A GtkIconView.
-;;;
-;;; Returns :
-;;;     the pixbuf column, or -1 if it's unset.
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-icon-view-get-pixbuf-column))
+
+(defun gtk-icon-view-get-pixbuf-column (icon-view)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-9-25}
+  @argument[icon-view]{a @class{gtk-icon-view} widget}
+  @return{The pixbuf column, or -1 if it is unset.}
+  @short{Returns the column with pixbufs for @arg{icon-view}.}
+
+  Since 2.6
+  @see-class{gtk-icon-view}
+  @see-function{gtk-icon-view-set-pixbuf-column}"
+  (gtk-icon-view-pixbuf-column icon-view))
+
+(export 'gtk-icon-view-get-pixbuf-column)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_get_path_at_pos ()
@@ -1072,7 +1142,7 @@
      (path (g-boxed-foreign gtk-tree-path))
      (data :pointer))
   (restart-case
-      (funcall (glib::get-stable-pointer-value data)
+      (funcall (glib:get-stable-pointer-value data)
                icon-view
                path)
     (return () nil)))
@@ -1146,106 +1216,140 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_set_item_orientation ()
-;;;
-;;; void gtk_icon_view_set_item_orientation (GtkIconView *icon_view,
-;;;                                          GtkOrientation orientation);
-;;;
-;;; Sets the ::item-orientation property which determines whether the labels are
-;;; drawn beside the icons instead of below.
-;;;
-;;; icon_view :
-;;;     a GtkIconView
-;;;
-;;; orientation :
-;;;     the relative position of texts and icons
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-icon-view-set-item-orientation))
+
+(defun gtk-icon-view-set-item-orientation (icon-view orientation)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-9-25}
+  @argument[icon-view]{a @class{gtk-icon-view} widget}
+  @argument[orientation]{the relative position of texts and icons}
+  @begin{short}
+    Sets the @code{\"item-orientation\"} property which determines whether the
+    labels are drawn beside the icons instead of below.
+  @end{short}
+
+  Since 2.6
+  @see-class{gtk-icon-view}
+  @see-symbol{gtk-orientation}
+  @see-function{gtk-icon-view-get-item-orientation}"
+  (setf (gtk-icon-view-item-orientation icon-view) orientation))
+
+(export 'gtk-icon-view-set-item-orientation)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_get_item_orientation ()
-;;;
-;;; GtkOrientation gtk_icon_view_get_item_orientation (GtkIconView *icon_view);
-;;;
-;;; Returns the value of the ::item-orientation property which determines
-;;; whether the labels are drawn beside the icons instead of below.
-;;;
-;;; icon_view :
-;;;     a GtkIconView
-;;;
-;;; Returns :
-;;;     the relative position of texts and icons
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-icon-view-get-item-orientation))
+
+(defun gtk-icon-view-get-item-orientation (icon-view)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-9-25}
+  @argument[icon-view]{a @class{gtk-icon-view} widget}
+  @return{The relative position of texts and icons.}
+  @begin{short}
+    Returns the value of the @code{\"item-orientation\"} property which
+    determines whether the labels are drawn beside the icons instead of below.
+  @end{short}
+
+  Since 2.6
+  @see-class{gtk-icon-view}
+  @see-function{gtk-icon-view-set-item-orientation}"
+  (gtk-icon-view-item-orientation icon-view))
+
+(export 'gtk-icon-view-get-item-orientation)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_set_columns ()
-;;;
-;;; void gtk_icon_view_set_columns (GtkIconView *icon_view, gint columns);
-;;;
-;;; Sets the ::columns property which determines in how many columns the icons
-;;; are arranged. If columns is -1, the number of columns will be chosen
-;;; automatically to fill the available area.
-;;;
-;;; icon_view :
-;;;     a GtkIconView
-;;;
-;;; columns :
-;;;     the number of columns
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-icon-view-set-colums))
+
+(defun gtk-icon-view-set-columns (icon-view columns)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-9-25}
+  @argument[icon-view]{a @class{gtk-icon-view} widget}
+  @argument[columns]{the number of columns}
+  @begin{short}
+    Sets the @code{\"columns\"} property which determines in how many columns
+    the icons are arranged.
+  @end{short}
+  If columns is -1, the number of columns will be chosen automatically to fill
+  the available area.
+
+  Since 2.6
+  @see-class{gtk-icon-view}
+  @see-function{gtk-icon-view-get-columns}"
+  (setf (gtk-icon-view-columns icon-view) columns))
+
+(export 'gtk-icon-view-set-columns)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_get_columns ()
-;;;
-;;; gint gtk_icon_view_get_columns (GtkIconView *icon_view);
-;;;
-;;; Returns the value of the ::columns property.
-;;;
-;;; icon_view :
-;;;     a GtkIconView
-;;;
-;;; Returns :
-;;;     the number of columns, or -1
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-icon-view-get-columns))
+
+(defun gtk-icon-view-get-columns (icon-view)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-9-25}
+  @argument[icon-view]{a @class{gtk-icon-view} widget}
+  @return{The number of columns, or -1.}
+  @short{Returns the value of the @code{\"columns\"} property.}
+
+  Since 2.6
+  @see-class{gtk-icon-view}
+  @see-function{gtk-icon-view-set-columns}"
+  (gkt-icon-view-columns icon-view))
+
+(export 'gtk-icon-view-get-columns)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_set_item_width ()
-;;;
-;;; void gtk_icon_view_set_item_width (GtkIconView *icon_view, gint item_width);
-;;;
-;;; Sets the ::item-width property which specifies the width to use for each
-;;; item. If it is set to -1, the icon view will automatically determine a
-;;; suitable item size.
-;;;
-;;; icon_view :
-;;;     a GtkIconView
-;;;
-;;; item_width :
-;;;     the width for each item
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-icon-view-set-item-width))
+
+(defun gtk-icon-view-set-item-width (icon-view item-width)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-9-25}
+  @argument[icon-view]{a @class{gtk-icon-view} widget}
+  @argument[item-width]{the width for each item}
+  @begin{short}
+    Sets the @code{\"item-width\"} property which specifies the width to use for
+    each item.
+  @end{short}
+  If it is set to -1, the icon view will automatically determine a suitable item
+  size.
+
+  Since 2.6
+  @see-class{gtk-icon-view}
+  @see-function{gtk-icon-view-get-item-width}"
+  (setf (gtk-icon-view-item-width icon-view) item-width))
+
+(export 'gtk-icon-view-set-item-width)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_get_item_width ()
-;;;
-;;; gint gtk_icon_view_get_item_width (GtkIconView *icon_view);
-;;;
-;;; Returns the value of the ::item-width property.
-;;;
-;;; icon_view :
-;;;     a GtkIconView
-;;;
-;;; Returns :
-;;;     the width of a single item, or -1
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-icon-view-get-item-width))
+
+(defun gtk-icon-view-get-item-width (icon-view)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-9-25}
+  @argument[icon-view]{a @class{gtk-icon-view} widget}
+  @return{The width of a single item, or -1.}
+  @short{Returns the value of the @code{\"item-width\"} property.}
+
+  Since 2.6
+  @see-class{gtk-icon-view}
+  @see-function{gtk-icon-view-set-item-width}"
+  (gtk-icon-view-item-width icon-view))
+
+(export 'gtk-icon-view-get-item-width)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_set_spacing ()
@@ -1564,20 +1668,24 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_item_activated ()
-;;;
-;;; void gtk_icon_view_item_activated (GtkIconView *icon_view,
-;;;                                    GtkTreePath *path);
-;;;
-;;; Activates the item determined by path.
-;;;
-;;; icon_view :
-;;;     A GtkIconView
-;;;
-;;; path :
-;;;     The GtkTreePath to be activated
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_icon_view_item_activated" gtk-icon-view-item-activated) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-9-25}
+  @argument[icon-view]{a @class{gtk-icon-view} widget}
+  @argument[path]{the @class{gtk-tree-path} object to be activated}
+  @begin{short}
+    Activates the item determined by path.
+  @end{short}
+
+  Since 2.6
+  @see-class{gtk-icon-view}
+  @see-class{gtk-tree-path}"
+  (icon-view (g-object gtk-icon-view))
+  (path (g-boxed-foreign gtk-tree-path)))
+
+(export 'gtk-icon-view-item-activated)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_scroll_to_path ()
