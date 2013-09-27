@@ -504,7 +504,7 @@
         @entry[context]{The @class{gtk-print-context} for the current
           operation.}
         @entry[page-nr]{The number of the currently printed page (0-based).}
-        @entry[setup]{The @symbol{gtk-page-setup}.}
+        @entry[setup]{The @sym{gtk-page-setup}.}
       @end{table}
       Since 2.10
 
@@ -550,7 +550,7 @@
       @begin[code]{table}
         @entry[preview]{The object on which the signal is emitted.}
         @entry[context]{The current @class{gtk-print-context}.}
-        @entry[page-setup]{The @symbol{gtk-page-setup} for the current page.}
+        @entry[page-setup]{The @sym{gtk-page-setup} for the current page.}
       @end{table}
 
     @subheading{The \"ready\" signal}
@@ -631,9 +631,9 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "default-page-setup"
                                                'gtk-print-operation) 't)
- "The @code{\"default-page-setup\"} property of type @symbol{gtk-page-setup}
+ "The @code{\"default-page-setup\"} property of type @class{gtk-page-setup}
   (Read / Write) @br{}
-  The @symbol{gtk-page-setup} used by default.
+  The @class{gtk-page-setup} used by default.
   This page setup will be used by the @fun{gtk-print-operation-run} function,
   but it can be overridden on a per-page basis by connecting to the
   \"request-page-setup\" signal. @br{}
