@@ -1859,7 +1859,7 @@
  (g-type-check-class-type (g-type-class-ref \"GtkButton\") \"GObject\")
 => T
  (g-type-check-class-type (g-type-class-ref \"GtkButton\") \"GtkWindow\")
-=> NIL    
+=> NIL
     @end{pre}
   @end{dictionary}
   @see-class{g-type}

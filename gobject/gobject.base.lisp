@@ -1613,12 +1613,6 @@
 ;;; GInitiallyUnowned implementation and should never be accessed directly.
 ;;; ----------------------------------------------------------------------------
 
-;(defctype %g-initially-unowned %g-object)
-
-;(export '%g-initially-unowned)
-
-;;; ----------------------------------------------------------------------------
-
 (defclass g-initially-unowned (g-object)
   ()
   (:metaclass gobject-class)
@@ -1722,17 +1716,18 @@
 
 (defcfun ("g_object_force_floating" g-object-force-floating) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-6-9}
+ "@version{2013-9-22}
   @argument[object]{a @class{g-object}}
   @begin{short}
     This function is intended for @class{g-object} implementations to re-enforce
     a floating object reference.
   @end{short}
-  Doing this is seldom required: all @sym{g-initially-unowned}'s are created
+  Doing this is seldom required: all @class{g-initially-unowned}'s are created
   with a floating reference which usually just needs to be sunken by calling
-  the @fun{g-object-ref-sink} function.
+  the function @fun{g-object-ref-sink}.
 
   Since 2.10
+  @see-class{g-object}
   @see-function{g-object-ref-sink}"
   (object :pointer))
 
