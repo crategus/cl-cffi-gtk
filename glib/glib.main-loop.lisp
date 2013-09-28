@@ -1559,7 +1559,7 @@
   The interval given is in terms of monotonic time, not wall clock time. See
   the function @fun{g-get-monotonic-time}.
   @see-function{g-source-attach}
-  @see-function{g-source-source-new-seconds}
+  @see-function{g-timeout-source-new-seconds}
   @see-function{g-get-monotonic-time}"
   (interval-milliseconds :int))
 
@@ -1589,7 +1589,7 @@
 
   Since 2.14
   @see-function{g-source-attach}
-  @see-function{g-source-source-new}
+  @see-function{g-timeout-source-new}
   @see-function{g-get-monotonic-time}"
   (interval-seconds :int))
 
