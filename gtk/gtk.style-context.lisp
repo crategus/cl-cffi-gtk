@@ -1230,33 +1230,37 @@ tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_add_provider ()
-;;;
-;;; void gtk_style_context_add_provider (GtkStyleContext *context,
-;;;                                      GtkStyleProvider *provider,
-;;;                                      guint priority);
-;;;
-;;; Adds a style provider to context, to be used in style construction.
-;;;
-;;; Note
-;;;
-;;; If both priorities are the same, A GtkStyleProvider added through this
-;;; function takes precedence over another added through
-;;; gtk_style_context_add_provider_for_screen().
-;;;
-;;; context :
-;;;     a GtkStyleContext
-;;;
-;;; provider :
-;;;     a GtkStyleProvider
-;;;
-;;; priority :
-;;;     the priority of the style provider. The lower it is, the earlier it will
-;;;     be used in the style construction. Typically this will be in the range
-;;;     between GTK_STYLE_PROVIDER_PRIORITY_FALLBACK and
-;;;     GTK_STYLE_PROVIDER_PRIORITY_USER
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_style_context_add_provider" gtk-style-context-add-provider) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-9-28}
+  @argument[context]{a @class{gtk-style-context} object}
+  @argument[provider]{a @class{gtk-style-provider} object}
+  @argument[priority]{the priority of the style provider. The lower it is, the
+    earlier it will be used in the style construction. Typically this will be in
+    the range between @var{+gtk-style-provider-priority-fallback} and
+    @var{+gtk-style-provider-priority-user+}.}
+  @begin{short}
+    Adds a style provider to @arg{context}, to be used in style construction.
+  @end{short}
+
+  @subheading{Note}
+    If both priorities are the same, a @class{gtk-style-provider} added through
+    this function takes precedence over another added through the function
+    @fun{gtk-style-context-add-provider-for-screen}.
+
+  Since 3.0
+  @see-class{gtk-style-context}
+  @see-class{gtk-style-provider}
+  @see-function{gtk-style-context-add-provider-for-screen}
+  @see-variable{+gtk-style-provider-priority-fallback+}
+  @see-variable{+gtk-style-provider-priority-user+}"
+  (context (g-object gtk-style-context))
+  (provider (g-object gtk-style-provider))
+  (priority :uint))
+
+(export 'gtk-style-context-add-provider)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_add_provider_for_screen ()
