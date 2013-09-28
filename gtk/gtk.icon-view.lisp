@@ -680,26 +680,6 @@
   @end{short}")
 
 ;;; ----------------------------------------------------------------------------
-;;; GtkIconViewForeachFunc ()
-;;;
-;;; void (*GtkIconViewForeachFunc) (GtkIconView *icon_view,
-;;;                                 GtkTreePath *path,
-;;;                                 gpointer data);
-;;;
-;;; A function used by gtk_icon_view_selected_foreach() to map all selected
-;;; rows. It will be called on every selected row in the view.
-;;;
-;;; icon_view :
-;;;     a GtkIconView
-;;;
-;;; path :
-;;;     The GtkTreePath of a selected row
-;;;
-;;; data :
-;;;     user data
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_new ()
 ;;; ----------------------------------------------------------------------------
 
@@ -1134,7 +1114,23 @@
 (export 'gtk-icon-view-get-cursor)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_icon_view_selected_foreach ()
+;;; GtkIconViewForeachFunc ()
+;;;
+;;; void (*GtkIconViewForeachFunc) (GtkIconView *icon_view,
+;;;                                 GtkTreePath *path,
+;;;                                 gpointer data);
+;;;
+;;; A function used by gtk_icon_view_selected_foreach() to map all selected
+;;; rows. It will be called on every selected row in the view.
+;;;
+;;; icon_view :
+;;;     a GtkIconView
+;;;
+;;; path :
+;;;     The GtkTreePath of a selected row
+;;;
+;;; data :
+;;;     user data
 ;;; ----------------------------------------------------------------------------
 
 (defcallback gtk-icon-view-foreach-func-callback :void
@@ -1146,6 +1142,10 @@
                icon-view
                path)
     (return () nil)))
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_icon_view_selected_foreach ()
+;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_icon_view_selected_foreach" %gtk-icon-view-selected-foreach)
     :void
@@ -1302,7 +1302,7 @@
   Since 2.6
   @see-class{gtk-icon-view}
   @see-function{gtk-icon-view-set-columns}"
-  (gkt-icon-view-columns icon-view))
+  (gtk-icon-view-columns icon-view))
 
 (export 'gtk-icon-view-get-columns)
 
@@ -1353,202 +1353,260 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_set_spacing ()
-;;;
-;;; void gtk_icon_view_set_spacing (GtkIconView *icon_view, gint spacing);
-;;;
-;;; Sets the ::spacing property which specifies the space which is inserted
-;;; between the cells (i.e. the icon and the text) of an item.
-;;;
-;;; icon_view :
-;;;     a GtkIconView
-;;;
-;;; spacing :
-;;;     the spacing
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-icon-view-set-spacing))
+
+(defun gtk-icon-view-set-spacing (icon-view spacing)
+ #+cl-cffi-gtk-documentation
+ "@version{2ß13-9-27}
+  @argument[icon-view]{a @class{gtk-icon-view} widget}
+  @argument[spacing]{the spacing}
+  @begin{short}
+    Sets the @code{\"spacing\"} property which specifies the space which is
+    inserted between the cells, i. e. the icon and the text, of an item.
+  @end{short}
+
+  Since 2.6
+  @see-class{gtk-icon-view}
+  @see-function{gtk-icon-view-get-spacing}"
+  (setf (gtk-icon-view-spacing icon-view) spacing))
+
+(export 'gtk-icon-view-set-spacing)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_get_spacing ()
-;;;
-;;; gint gtk_icon_view_get_spacing (GtkIconView *icon_view);
-;;;
-;;; Returns the value of the ::spacing property.
-;;;
-;;; icon_view :
-;;;     a GtkIconView
-;;;
-;;; Returns :
-;;;     the space between cells
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-icon-view-get-spacing))
+
+(defun gtk-icon-view-get-spacing (icon-view)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-9-27}
+  @argument[icon-view]{a @class{gtk-icon-view} widget}
+  @return{The space between cells.}
+  @begin{short}
+    Returns the value of the @code{\"spacing\"} property.
+  @end{short}
+
+  Since 2.6
+  @see-class{gtk-icon-view}
+  @see-function{gtk-icon-view-set-spacing}"
+  (gtk-icon-view-spacing icon-view))
+
+(export 'gtk-icon-view-get-spacing)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_set_row_spacing ()
-;;;
-;;; void gtk_icon_view_set_row_spacing (GtkIconView *icon_view,
-;;;                                     gint row_spacing);
-;;;
-;;; Sets the ::row-spacing property which specifies the space which is inserted
-;;; between the rows of the icon view.
-;;;
-;;; icon_view :
-;;;     a GtkIconView
-;;;
-;;; row_spacing :
-;;;     the row spacing
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-icon-view-set-row-spacing))
+
+(defun gtk-icon-view-set-row-spacing (icon-view row-spacing)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-9-27}
+  @argument[icon-view]{a @class{gtk-icon-view} widget}
+  @argument[row-spacing]{the row spacing}
+  @begin{short}
+    Sets the @code{\"row-spacing\"} property which specifies the space which
+    is inserted between the rows of the icon view.
+  @end{short}
+
+  Since 2.6
+  @see-class{gtk-icon-view}
+  @see-function{gtk-icon-view-get-row-spacing}"
+  (setf (gtk-icon-view-row-spacing icon-view) row-spacing))
+
+(export 'gtk-icon-view-set-row-spacing)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_get_row_spacing ()
-;;;
-;;; gint gtk_icon_view_get_row_spacing (GtkIconView *icon_view);
-;;;
-;;; Returns the value of the ::row-spacing property.
-;;;
-;;; icon_view :
-;;;     a GtkIconView
-;;;
-;;; Returns :
-;;;     the space between rows
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-icon-view-get-row-spacing))
+
+(defun gtk-icon-view-get-row-spacing (icon-view)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-9-27}
+  @argument[icon-view]{a @class{gtk-icon-view} widget}
+  @return{The space between rows.}
+  @begin{short}
+    Returns the value of the @code{\"row-spacing\"} property.
+  @end{short}
+
+  Since 2.6
+  @see-class{gtk-icon-view}
+  @see-function{gtk-icon-view-set-row-spacing}"
+  (gtk-icon-view-row-spacing icon-view))
+
+(export 'gtk-icon-view-get-row-spacing)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_set_column_spacing ()
-;;;
-;;; void gtk_icon_view_set_column_spacing (GtkIconView *icon_view,
-;;;                                        gint column_spacing);
-;;;
-;;; Sets the ::column-spacing property which specifies the space which is
-;;; inserted between the columns of the icon view.
-;;;
-;;; icon_view :
-;;;     a GtkIconView
-;;;
-;;; column_spacing :
-;;;     the column spacing
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-icon-view-set-column-spacing))
+
+(defun gtk-icon-view-set-column-spacing (icon-view column-spacing)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-9-27}
+  @argument[icon-view]{a @class{gtk-icon-view} widget}
+  @argument[column-spacing]{the column spacing}
+  @begin{short}
+    Sets the @code{\"column-spacing\"} property which specifies the space which
+    is inserted between the columns of the icon view.
+  @end{short}
+
+  Since 2.6
+  @see-class{gtk-icon-view}
+  @see-function{gtk-icon-view-get-column-spacing}"
+  (setf (gtk-icon-view-column-spacing icon-view) column-spacing))
+
+(export 'gtk-icon-view-set-column-spacing)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_get_column_spacing ()
-;;;
-;;; gint gtk_icon_view_get_column_spacing (GtkIconView *icon_view);
-;;;
-;;; Returns the value of the ::column-spacing property.
-;;;
-;;; icon_view :
-;;;     a GtkIconView
-;;;
-;;; Returns :
-;;;     the space between columns
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-icon-view-get-column-spacing))
+
+(defun gtk-icon-view-get-column-spacing (icon-view)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-9-27}
+  @argument[icon-view]{a @class{gtk-icon-view} widget}
+  @return{The space between columns.}
+  @begin{short}
+    Returns the value of the @code{\"column-spacing\"} property.
+  @end{short}
+
+  Since 2.6
+  @see-class{gtk-icon-view}
+  @see-function{gtk-icon-view-set-column-spacing}"
+  (gtk-icon-view-column-spacing icon-view))
+
+(export 'gtk-icon-view-get-column-spacing)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_set_margin ()
-;;;
-;;; void gtk_icon_view_set_margin (GtkIconView *icon_view, gint margin);
-;;;
-;;; Sets the ::margin property which specifies the space which is inserted at
-;;; the top, bottom, left and right of the icon view.
-;;;
-;;; icon_view :
-;;;     a GtkIconView
-;;;
-;;; margin :
-;;;     the margin
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-icon-view-set-margin))
+
+(defun gtk-icon-view-set-margin (icon-view margin)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-9-27}
+  @argument[icon-view]{a @class{gtk-icon-view} widget}
+  @argument[margin]{the margin}
+  @begin{short}
+    Sets the @code{\"margin\"} property which specifies the space which is
+    inserted at the top, bottom, left and right of the icon view.
+  @end{short}
+
+  Since 2.6
+  @see-class{gtk-icon-view}
+  @see-function{gtk-icon-view-get-margin}"
+  (setf (gtk-icon-view-margin icon-view) margin))
+
+(export 'gtk-icon-view-set-margin)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_get_margin ()
-;;;
-;;; gint gtk_icon_view_get_margin (GtkIconView *icon_view);
-;;;
-;;; Returns the value of the ::margin property.
-;;;
-;;; icon_view :
-;;;     a GtkIconView
-;;;
-;;; Returns :
-;;;     the space at the borders
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-icon-view-get-margin))
+
+(defun gtk-icon-view-get-margin (icon-view)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-9-27}
+  @argument[icon-view]{a @class{gtk-icon-view} widget}
+  @return{The space at the borders.}
+  @begin{short}
+    Returns the value of the @code{\"margin\"} property.
+  @end{short}
+
+  Since 2.6
+  @see-class{gtk-icon-view}
+  @see-function{gtk-icon-view-set-margin}"
+  (gtk-icon-view-margin icon-view))
+
+(export 'gtk-icon-view-get-margin)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_set_item_padding ()
-;;;
-;;; void gtk_icon_view_set_item_padding (GtkIconView *icon_view,
-;;;                                      gint item_padding);
-;;;
-;;; Sets the "item-padding" property which specifies the padding around each of
-;;; the icon view's items.
-;;;
-;;; icon_view :
-;;;     a GtkIconView
-;;;
-;;; item_padding :
-;;;     the item padding
-;;;
-;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-icon-view-set-item-padding))
+
+(defun gtk-icon-view-set-item-padding (icon-view item-padding)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-9-27}
+  @argument[icon-view]{a @class{gtk-icon-view} widget}
+  @argument[item-padding]{the item padding}
+  @begin{short}
+    Sets the @code{\"item-padding\"} property which specifies the padding around
+    each of the icon view's items.
+  @end{short}
+
+  Since 2.18
+  @see-class{gtk-icon-view}
+  @see-function{gtk-icon-view-get-item-padding}"
+  (setf (gtk-icon-view-item-padding icon-view) item-padding))
+
+(export 'gtk-icon-view-set-item-padding)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_get_item_padding ()
-;;;
-;;; gint gtk_icon_view_get_item_padding (GtkIconView *icon_view);
-;;;
-;;; Returns the value of the ::item-padding property.
-;;;
-;;; icon_view :
-;;;     a GtkIconView
-;;;
-;;; Returns :
-;;;     the padding around items
-;;;
-;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-icon-view-get-item-padding))
+
+(defun gtk-icon-view-get-item-padding (icon-view)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-9-27}
+  @argument[icon-view]{a @class{gtk-icon-view} widget}
+  @return{The padding around items.}
+  @begin{short}
+    Returns the value of the @code{\"item-padding\"} property.
+  @end{short}
+
+  Since 2.18
+  @see-class{gtk-icon-view}
+  @see-function{gtk-icon-view-set-item-padding}"
+  (gtk-icon-view-item-padding icon-view))
+
+(export 'gtk-icon-view-get-item-padding)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_get_cell_rect ()
-;;;
-;;; gboolean gtk_icon_view_get_cell_rect (GtkIconView *icon_view,
-;;;                                       GtkTreePath *path,
-;;;                                       GtkCellRenderer *cell,
-;;;                                       GdkRectangle *rect);
-;;;
-;;; Fills the bounding rectangle in widget coordinates for the cell specified by
-;;; path and cell. If cell is NULL the main cell area is used.
-;;;
-;;; This function is only valid if icon_view is realized.
-;;;
-;;; icon_view :
-;;;     a GtkIconView
-;;;
-;;; path :
-;;;     a GtkTreePath
-;;;
-;;; cell :
-;;;     a GtkCellRenderer or NULL
-;;;
-;;; rect :
-;;;     rectangle to fill with cell rect
-;;;
-;;; Returns :
-;;;     FALSE if there is no such item, TRUE otherwise.
-;;;
-;;; Since 3.6
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_icon_view_get_cell_rect" %gtk-icon-view-get-cell-rect) :boolean
+  (icon-view (g-object gtk-icon-view))
+  (path (g-boxed-foreign gtk-tree-path))
+  (cell (g-object gtk-cell-renderer))
+  (rect (g-boxed-foreign gdk-rectangle)))
+
+(defun gtk-icon-view-get-cell-rect (icon-view path cell)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-9-27}
+  @argument[icon-view]{a @class{gtk-icon-view} widget}
+  @argument[path]{a @class{gtk-tree-path}}
+  @argument[cell]{a @class{gtk-cell-renderer} or @code{nil}}
+  @return{rect -- rectangle with cell rect or @code{nil}}
+  @begin{short}
+    Fills the bounding rectangle in widget coordinates for the cell specified by
+    path and cell. If cell is @code{nil} the main cell area is used.
+  @end{short}
+
+  This function is only valid if @arg{icon-view} is realized.
+
+  Since 3.6
+  @see-class{gtk-icon-view}"
+  (let ((rect (make-gdk-rectangle)))
+    (when (%gtk-icon-view-get-cell-rect icon-view path cell rect)
+      rect)))
+
+(export 'gtk-icon-view-get-cell-rect)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_select_path ()
@@ -1893,87 +1951,108 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_set_tooltip_column ()
-;;;
-;;; void gtk_icon_view_set_tooltip_column (GtkIconView *icon_view, gint column);
-;;;
-;;; If you only plan to have simple (text-only) tooltips on full items, you can
-;;; use this function to have GtkIconView handle these automatically for you.
-;;; column should be set to the column in icon_view's model containing the
-;;; tooltip texts, or -1 to disable this feature.
-;;;
-;;; When enabled, "has-tooltip" will be set to TRUE and icon_view will connect a
-;;; "query-tooltip" signal handler.
-;;;
-;;; Note that the signal handler sets the text with gtk_tooltip_set_markup(), so
-;;; &, <, etc have to be escaped in the text.
-;;;
-;;; icon_view :
-;;;     a GtkIconView
-;;;
-;;; column :
-;;;     an integer, which is a valid column number for icon_view's model
-;;;
-;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-icon-view-set-tooltip-column))
+
+(defun gtk-icon-view-set-tooltip-column (icon-view column)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-9-27}
+  @argument[icon-view]{a @class{gtk-icon-view} widget}
+  @argument[column]{an integer, which is a valid column number for
+    @arg{icon-view}'s model}
+  @begin{short}
+    If you only plan to have simple (text-only) tooltips on full items, you can
+    use this function to have @class{gtk-icon-view} handle these automatically
+    for you.
+  @end{short}
+  @arg{column} should be set to the column in @arg{icon-view}'s model containing
+  the tooltip texts, or -1 to disable this feature.
+
+  When enabled, @code{\"has-tooltip\"} will be set to @em{true} and
+  @arg{icon-view} will connect a @code{\"query-tooltip\"} signal handler.
+
+  Note that the signal handler sets the text with the function
+  @fun{gtk-tooltip-set-markup}, so &, <, etc have to be escaped in the text.
+
+  Since 2.12
+  @see-class{gtk-icon-view}
+  @see-function{gtk-icon-view-get-tooltip-column}"
+  (setf (gtk-icon-view-tooltip-column icon-view) column))
+
+(export 'gtk-icon-view-set-tooltip-column)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_get_tooltip_column ()
-;;;
-;;; gint gtk_icon_view_get_tooltip_column (GtkIconView *icon_view);
-;;;
-;;; Returns the column of icon_view's model which is being used for displaying
-;;; tooltips on icon_view's rows.
-;;;
-;;; icon_view :
-;;;     a GtkIconView
-;;;
-;;; Returns :
-;;;     the index of the tooltip column that is currently being used, or -1 if
-;;;     this is disabled.
-;;;
-;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-icon-view-get-tooltip-column))
+
+(defun gtk-icon-view-get-tooltip-column (icon-view)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-9-27}
+  @argument[icon-view]{a @class{gtk-icon-view} widget}
+  @begin{return}
+    The index of the tooltip column that is currently being used, or -1 if
+    this is disabled.
+  @end{return}
+  @begin{short}
+    Returns the column of @arg{icon-view}'s model which is being used for
+    displaying tooltips on @arg{icon-view}'s rows.
+  @end{short}
+
+  Since 2.12
+  @see-class{gtk-icon-view}
+  @see-function{gtk-icon-view-set-tooltip-column}"
+  (gtk-icon-view-tooltip-column icon-view))
+
+(export 'gtk-icon-view-get-tooltip-column)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_get_item_row ()
-;;;
-;;; gint gtk_icon_view_get_item_row (GtkIconView *icon_view, GtkTreePath *path);
-;;;
-;;; Gets the row in which the item path is currently displayed. Row numbers
-;;; start at 0.
-;;;
-;;; icon_view :
-;;;     a GtkIconView
-;;;
-;;; path :
-;;;     the GtkTreePath of the item
-;;;
-;;; Returns :
-;;;     The row in which the item is displayed
-;;;
-;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_icon_view_get_item_row" gtk-icon-view-get-item-row) :int
+ #+cl-cffi-gtk-documentation
+ "@version{2013-9-27}
+  @argument[icon-view]{a @class{gtk-icon-view} widget}
+  @argument[path]{the @class{gtk-tree-path} of the item}
+  @return{The row in which the item is displayed.}
+  @begin{short}
+    Gets the row in which the item path is currently displayed.
+  @end{short}
+  Row numbers start at 0.
+
+  Since 2.22
+  @see-class{gtk-icon-view}
+  @see-function{gtk-icon-view-get-item-column}"
+  (icon-view (g-object gtk-icon-view))
+  (path (g-boxed-foreign gtk-tree-path)))
+
+(export 'gtk-icon-view-get-item-row)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_get_item_column ()
-;;;
-;;; gint gtk_icon_view_get_item_column (GtkIconView *icon_view,
-;;;                                     GtkTreePath *path);
-;;;
-;;; Gets the column in which the item path is currently displayed. Column
-;;; numbers start at 0.
-;;;
-;;; icon_view :
-;;;     a GtkIconView
-;;;
-;;; path :
-;;;     the GtkTreePath of the item
-;;;
-;;; Returns :
-;;;     The column in which the item is displayed
-;;;
-;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_icon_view_get_item_column" gtk-icon-view-get-item-column) :int
+ #+cl-cffi-gtk-documentation
+ "@version{2013-9-27}
+  @argument[icon-view]{a @class{gtk-icon-view} widget}
+  @argument[path]{the @class{gtk-tree-path} of the item}
+  @return{The column in which the item is displayed.}
+  @begin{short}
+    Gets the column in which the item path is currently displayed.
+  @end{short}
+  Column numbers start at 0.
+
+  Since 2.22
+  @see-class{gtk-icon-view}
+  @see-function{gtk-icon-view-get-item-row}"
+  (icon-view (g-object gtk-icon-view))
+  (path (g-boxed-foreign gtk-tree-path)))
+
+(export 'gtk-icon-view-get-item-column)
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkIconViewDropPosition
@@ -2012,231 +2091,305 @@
     @entry[:drop-right]{Dropped item is inserted to the right.}
     @entry[:drop-above]{Dropped item is inserted above.}
     @entry[:drop-below]{Dropped item is inserted below.}
-  @end{table}")
+  @end{table}
+  @see-class{gtk-icon-view}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_enable_model_drag_source ()
-;;;
-;;; void gtk_icon_view_enable_model_drag_source
-;;;                                          (GtkIconView *icon_view,
-;;;                                           GdkModifierType start_button_mask,
-;;;                                           const GtkTargetEntry *targets,
-;;;                                           gint n_targets,
-;;;                                           GdkDragAction actions);
-;;;
-;;; Turns icon_view into a drag source for automatic DND. Calling this method
-;;; sets "reorderable" to FALSE.
-;;;
-;;; icon_view :
-;;;     a GtkIconTreeView
-;;;
-;;; start_button_mask :
-;;;     Mask of allowed buttons to start drag
-;;;
-;;; targets :
-;;;     the table of targets that the drag will support
-;;;
-;;; n_targets :
-;;;     the number of items in targets
-;;;
-;;; actions :
-;;;     the bitmask of possible actions for a drag from this widget
-;;;
-;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_icon_view_enable_model_drag_source"
+          %gtk-icon-view-enable-model-drag-source) :void
+  (icon-view (g-object gtk-icon-view))
+  (start-button-mask gdk-modifier-type)
+  (targets :pointer)
+  (n-targets :int)
+  (actions gdk-drag-action))
+
+(defun gtk-icon-view-enable-model-drag-source (icon-view
+                                               start-button-mask
+                                               targets
+                                               actions)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-9-27}
+  @argument[icon-view]{a @class{gtk-icon-view} widget}
+  @argument[start-button-mask]{mask of allowed buttons to start drag}
+  @argument[targets]{the table of targets that the drag will support}
+  @argument[actions]{the bitmask of possible actions for a drag from this
+    widget}
+  @begin{short}
+    Turns @arg{icon-view} into a drag source for automatic DND.
+  @end{short}
+  Calling this method sets the property @code{\"reorderable\"} to @code{nil}.
+
+  Since 2.8
+  @see-class{gtk-icon-view}
+  @see-symbol{gdk-modifier-type}
+  @see-symbol{gdk-drag-action}"
+  (with-foreign-boxed-array (n-targets targets-ptr gtk-target-entry targets)
+    (%gtk-tree-view-enable-model-drag-source icon-view
+                                             start-button-mask
+                                             targets-ptr
+                                             n-targets
+                                             actions)))
+
+(export 'gtk-icon-view-enable-model-drag-source)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_enable_model_drag_dest ()
-;;;
-;;; void gtk_icon_view_enable_model_drag_dest (GtkIconView *icon_view,
-;;;                                            const GtkTargetEntry *targets,
-;;;                                            gint n_targets,
-;;;                                            GdkDragAction actions);
-;;;
-;;; Turns icon_view into a drop destination for automatic DND. Calling this
-;;; method sets "reorderable" to FALSE.
-;;;
-;;; icon_view :
-;;;     a GtkIconView
-;;;
-;;; targets :
-;;;     the table of targets that the drag will support
-;;;
-;;; n_targets :
-;;;     the number of items in targets
-;;;
-;;; actions :
-;;;     the bitmask of possible actions for a drag to this widget
-;;;
-;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_icon_view_enable_model_drag_dest"
+          %gtk-icon-view-enable-model-drag-dest) :void
+  (icon-view (g-object gtk-icon-view))
+  (targets :pointer)
+  (n-targets :int)
+  (actions gdk-drag-action))
+
+(defun gtk-icon-view-enable-model-drag-dest (icon-view targets actions)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-9-27}
+  @argument[icon-view]{a @class{gtk-icon-view} widget}
+  @argument[targets]{the table of targets that the drag will support}
+  @argument[actions]{the bitmask of possible actions for a drag to this widget}
+  @begin{short}
+    Turns @arg{icon-view} into a drop destination for automatic DND.
+  @end{short}
+  Calling this method sets the property @code{\"reorderable\"} to @code{nil}.
+
+  Since 2.8
+  @see-class{gtk-icon-view}
+  @see-symbol{gdk-drag-action}"
+  (with-foreign-boxed-array (n-targets targets-ptr gtk-target-entry targets)
+    (%gtk-icon-view-enable-model-drag-dest icon-view
+                                           targets-ptr
+                                           n-targets
+                                           actions)))
+
+(export 'gtk-icon-view-enable-model-drag-dest)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_unset_model_drag_source ()
-;;;
-;;; void gtk_icon_view_unset_model_drag_source (GtkIconView *icon_view);
-;;;
-;;; Undoes the effect of gtk_icon_view_enable_model_drag_source(). Calling this
-;;; method sets "reorderable" to FALSE.
-;;;
-;;; icon_view :
-;;;     a GtkIconView
-;;;
-;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_icon_view_unset_model_drag_source"
+           gtk-icon-view-unset-model-drag-source) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-9-27}
+  @argument[icon-view]{a @class{gtk-icon-view} widget}
+  @begin{short}
+    Undoes the effect of the function
+    @fun{gtk-icon-view-enable-model-drag-source}.
+  @end{short}
+  Calling this method sets @code{\"reorderable\"} to @code{nil}.
+
+  Since 2.8
+  @see-class{gtk-icon-view}
+  @see-function{gtk-icon-view-enable-model-drag-source}"
+  (icon-view (g-object gtk-icon-view)))
+
+(export 'gtk-icon-view-unset-model-drag-source)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_unset_model_drag_dest ()
-;;;
-;;; void gtk_icon_view_unset_model_drag_dest (GtkIconView *icon_view);
-;;;
-;;; Undoes the effect of gtk_icon_view_enable_model_drag_dest(). Calling this
-;;; method sets "reorderable" to FALSE.
-;;;
-;;; icon_view :
-;;;     a GtkIconView
-;;;
-;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_icon_view_unset_model_drag_dest"
+           gtk-icon-view-unset-model-drag-dest) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-9-27}
+  @argument[icon-view]{a @class{gtk-icon-view} widget}
+  @begin{short}
+    Undoes the effect of the function
+    @fun{gtk-icon-view-enable-model-drag-dest}.
+  @end{short}
+  Calling this method sets the property @code{\"reorderable\"} to @code{nil}.
+
+  Since 2.8
+  @see-class{gtk-icon-view}
+  @see-function{gtk-icon-view-enable-model-drag-dest}"
+  (icon-view (g-object gtk-icon-view)))
+
+(export 'gtk-icon-view-unset-model-drag-dest)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_set_reorderable ()
-;;;
-;;; void gtk_icon_view_set_reorderable (GtkIconView *icon_view,
-;;;                                     gboolean reorderable);
-;;;
-;;; This function is a convenience function to allow you to reorder models that
-;;; support the GtkTreeDragSourceIface and the GtkTreeDragDestIface. Both
-;;; GtkTreeStore and GtkListStore support these. If reorderable is TRUE, then
-;;; the user can reorder the model by dragging and dropping rows. The developer
-;;; can listen to these changes by connecting to the model's row_inserted and
-;;; row_deleted signals. The reordering is implemented by setting up the icon
-;;; view as a drag source and destination. Therefore, drag and drop can not be
-;;; used in a reorderable view for any other purpose.
-;;;
-;;; This function does not give you any degree of control over the order -- any
-;;; reordering is allowed. If more control is needed, you should probably handle
-;;; drag and drop manually.
-;;;
-;;; icon_view :
-;;;     A GtkIconView.
-;;;
-;;; reorderable :
-;;;     TRUE, if the list of items can be reordered.
-;;;
-;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-icon-view-set-reorderable))
+
+(defun gtk-icon-view-set-reorderable (icon-view reorderable)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-9-27}
+  @argument[icon-view]{a @class{gtk-icon-view} widget}
+  @argument[reorderable]{@em{true}, if the list of items can be reordered}
+  @begin{short}
+    This function is a convenience function to allow you to reorder models that
+    support the @code{GtkTreeDragSourceIface} and the
+    @code{GtkTreeDragDestIface}.
+  @end{short}
+  Both @class{gtk-tree-store} and @class{gtk-list-store} support these. If
+  @arg{reorderable} is @em{true}, then the user can reorder the model by
+  dragging and dropping rows. The developer can listen to these changes by
+  connecting to the model's \"row-inserted\" and \"row-deleted\" signals. The
+  reordering is implemented by setting up the icon view as a drag source and
+  destination. Therefore, drag and drop can not be used in a reorderable view
+  for any other purpose.
+
+  This function does not give you any degree of control over the order - any
+  reordering is allowed. If more control is needed, you should probably handle
+  drag and drop manually.
+
+  Since 2.8
+  @see-class{gtk-icon-view}
+  @see-class{gtk-tree-store}
+  @see-class{gtk-list-store}"
+  (setf (gtk-icon-view-reorderable icon-view) reorderable))
+
+(export 'gtk-icon-view-set-reorderable)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_get_reorderable ()
-;;;
-;;; gboolean gtk_icon_view_get_reorderable (GtkIconView *icon_view);
-;;;
-;;; Retrieves whether the user can reorder the list via drag-and-drop. See
-;;; gtk_icon_view_set_reorderable().
-;;;
-;;; icon_view :
-;;;     a GtkIconView
-;;;
-;;; Returns :
-;;;     TRUE if the list can be reordered.
-;;;
-;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-icon-view-get-reorderable))
+
+(defun gtk-icon-view-get-reorderable (icon-view)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-9-27}
+  @argument[icon-view]{a @class{gtk-icon-view} widget}
+  @return{@em{True} if the list can be reordered.}
+  @begin{short}
+    Retrieves whether the user can reorder the list via drag-and-drop.
+  @end{short}
+  See the function @fun{gtk-icon-view-set-reorderable}.
+
+  Since 2.8
+  @see-class{gtk-icon-view}
+  @see-function{gtk-icon-view-set-reorderable}"
+  (gtk-icon-view-reorderable icon-view))
+
+(export 'gtk-icon-view-get-reorderable)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_set_drag_dest_item ()
-;;;
-;;; void gtk_icon_view_set_drag_dest_item (GtkIconView *icon_view,
-;;;                                        GtkTreePath *path,
-;;;                                        GtkIconViewDropPosition pos);
-;;;
-;;; Sets the item that is highlighted for feedback.
-;;;
-;;; icon_view :
-;;;     a GtkIconView
-;;;
-;;; path :
-;;;     The path of the item to highlight, or NULL.
-;;;
-;;; pos :
-;;;     Specifies where to drop, relative to the item
-;;;
-;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_icon_view_set_drag_dest_item" gtk-icon-view-set-drag-dest-item)
+    :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-9-27}
+  @argument[icon-view]{a @class{gtk-icon-view} widget}
+  @argument[path]{the path of the item to highlight, or @code{nil}}
+  @argument[pos]{specifies where to drop, relative to the item}
+  @begin{short}
+    Sets the item that is highlighted for feedback.
+  @end{short}
+
+  Since 2.8
+  @see-class{gtk-icon-view}
+  @see-symbol{gtk-icon-view-drop-position}
+  @see-function{gtk-icon-view-get-drag-dest-item}"
+  (icon-view (g-object gtk-icon-view))
+  (path (g-boxed-foreign gtk-tree-path))
+  (pos gtk-icon-view-drop-position))
+
+(export 'gtk-icon-view-set-drag-dest-item)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_get_drag_dest_item ()
-;;;
-;;; void gtk_icon_view_get_drag_dest_item (GtkIconView *icon_view,
-;;;                                        GtkTreePath **path,
-;;;                                        GtkIconViewDropPosition *pos);
-;;;
-;;; Gets information about the item that is highlighted for feedback.
-;;;
-;;; icon_view :
-;;;     a GtkIconView
-;;;
-;;; path :
-;;;     Return location for the path of the highlighted item, or NULL.
-;;;
-;;; pos :
-;;;     Return location for the drop position, or NULL.
-;;;
-;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_icon_view_get_drag_dest_item" %gtk-icon-view-get-drag-dest-item)
+    :void
+  (icon-view (g-object gtk-icon-view))
+  (path :pointer)
+  (pos :pointer))
+
+(defun gtk-icon-view-get-drag-dest-item (icon-view)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-9-27}
+  @argument[icon-view]{a @class{gtk-icon-view} widget}
+  @begin{return}
+    @arg{path} -- the path of the highlighted item, or @code{nil} @br{}
+    @arg{pos} -- the drop position, or @code{nil}
+  @end{return}
+  @begin{short}
+    Gets information about the item that is highlighted for feedback.
+  @end{short}
+
+  Since 2.8
+  @see-class{gtk-icon-view}
+  @see-class{gtk-tree-path}
+  @see-symbol{gtk-icon-view-drop-position}
+  @see-function{gtk-icon-view-set-drag-dest-item}"
+  (with-foreign-objects ((path :pointer) (pos :pointer))
+    (%gtk-icon-view-get-drag-dest-item icon-view path pos)
+    (values (mem-ref path '(g-boxed-foreign gtk-tree-path :return))
+            (mem-ref pos 'gtk-icon-view-drop-position))))
+
+(export 'gtk-icon-view-get-drag-dest-item)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_get_dest_item_at_pos ()
-;;;
-;;; gboolean gtk_icon_view_get_dest_item_at_pos (GtkIconView *icon_view,
-;;;                                              gint drag_x,
-;;;                                              gint drag_y,
-;;;                                              GtkTreePath **path,
-;;;                                              GtkIconViewDropPosition *pos);
-;;;
-;;; Determines the destination item for a given position.
-;;;
-;;; icon_view :
-;;;     a GtkIconView
-;;;
-;;; drag_x :
-;;;     the position to determine the destination item for
-;;;
-;;; drag_y :
-;;;     the position to determine the destination item for
-;;;
-;;; path :
-;;;     Return location for the path of the item, or NULL.
-;;;
-;;; pos :
-;;;     Return location for the drop position, or NULL.
-;;;
-;;; Returns :
-;;;     whether there is an item at the given position.
-;;;
-;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_icon_view_get_dest_item_at_pos"
+          %gtk-icon-view-get-dest-item-at-pos) :boolean
+  (icon-view (g-object gtk-icon-view))
+  (drag-x :int)
+  (drag-y :int)
+  (path :pointer)
+  (pos :pointer))
+
+(defun gtk-icon-view-get-dest-item-at-pos (icon-view drag-x drag-y)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-9-27}
+  @argument[icon-view]{a @class{gtk-icon-view} widget}
+  @argument[drag-x]{the position to determine the destination item for}
+  @argument[drag-y]{the position to determine the destination item for}
+  @begin{return}
+    @arg{path} -- the path of the item, or @code{nil} @br{}
+    @arg{pos} -- the drop position, or @code{nil}
+  @end{return}
+  @begin{short}
+    Determines the destination item for a given position.
+  @end{short}
+
+  Since 2.8
+  @see-class{gtk-icon-view}
+  @see-class{gtk-tree-path}
+  @see-symbol{gtk-icon-view-drop-position}"
+  (with-foreign-objects ((path :pointer) (pos :pointer))
+    (when (%gtk-icon-view-get-dest-item-at-pos icon-view drag-x drag-y path pos)
+      (values (mem-ref path '(g-boxed-foreign gtk-tree-path :return))
+              (mem-ref pos 'gtk-icon-view-drop-position)))))
+
+(export 'gtk-icon-view-get-drag-dest-item)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_create_drag_icon ()
-;;;
-;;; cairo_surface_t * gtk_icon_view_create_drag_icon (GtkIconView *icon_view,
-;;;                                                   GtkTreePath *path);
-;;;
-;;; Creates a cairo_surface_t representation of the item at path. This image is
-;;; used for a drag icon.
-;;;
-;;; icon_view :
-;;;     a GtkIconView
-;;;
-;;; path :
-;;;     a GtkTreePath in icon_view
-;;;
-;;; Returns :
-;;;     a newly-allocated surface of the drag icon
-;;;
-;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_icon_view_create_drag_icon" gtk-icon-view-create-drag-icon)
+    (:pointer (:struct cairo-surface-t))
+ #+cl-cffi-gtk-documentation
+ "@version{2013-9-27}
+  @argument[icon-view]{a @class{gtk-icon-view} widget}
+  @argument[path]{a @class{gtk-tree-path} in @arg{icon-view}}
+  @return{A newly-allocated surface of the drag icon.}
+  @begin{short}
+    Creates a @symbol{cairo-surface-t} representation of the item at @arg{path}.
+  @end{short}
+  This image is used for a drag icon.
+
+  Since 2.8
+  @see-class{gtk-icon-view}
+  @see-class{gtk-tree-path}
+  @see-symbol{cairo-surface-t}"
+  (icon-view (g-object gtk-icon-view))
+  (path (g-boxed-foreign gtk-tree-path)))
+
+(export 'gtk-icon-view-create-drag-icon)
 
 ;;; --- End of file gtk.icon-view.lisp -----------------------------------------
