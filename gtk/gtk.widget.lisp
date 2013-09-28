@@ -8557,12 +8557,10 @@
   (:end 2)
   (:center 3))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-align atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-align atdoc:*external-symbols*)
- "@version{2013-3-17}
+ "@version{2013-9-28}
   @begin{short}
     Controls how a widget deals with extra space in a single (x or y) dimension.
   @end{short}
@@ -8591,7 +8589,10 @@
     @entry[:start]{Snap to left or top side, leaving space on right or bottom.}
     @entry[:end]{Snap to right or bottom side, leaving space on left or top.}
     @entry[:center]{Center natural width of widget inside the allocation.}
-  @end{table}")
+  @end{table}
+  @see-class{gtk-widget}
+  @see-function{gtk-widget-set-halign}
+  @see-function{gtk-widget-set-valign}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_halign ()
