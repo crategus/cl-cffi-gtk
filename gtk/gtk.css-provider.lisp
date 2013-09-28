@@ -1167,40 +1167,48 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_css_provider_load_from_path ()
-;;;
-;;; gboolean gtk_css_provider_load_from_path (GtkCssProvider *css_provider,
-;;;                                           const gchar *path,
-;;;                                           GError **error);
-;;;
-;;; Loads the data contained in path into css_provider, making it clear any
-;;; previously loaded information.
-;;;
-;;; css_provider :
-;;;     a GtkCssProvider
-;;;
-;;; path :
-;;;     the path of a filename to load, in the GLib filename encoding
-;;;
-;;; error :
-;;;     return location for a GError, or NULL
-;;;
-;;; Returns :
-;;;     TRUE. The return value is deprecated and FALSE will only be returned for
-;;;     backwards compatibility reasons if an error is not NULL and a loading
-;;;     error occured. To track errors while loading CSS, connect to the
-;;;     GtkCssProvider::parsing-error signal.
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_css_provider_load_from_path" %gtk-css-provider-load-from-path)
+    :boolean
+  (css-provider (g-object gtk-css-provider))
+  (path :string)
+  (error :pointer))
+
+(defun gtk-css-provider-load-from-path (css-provider path)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-9-28}
+  @argument[css-provider]{a @class{gtk-css-provider} object}
+  @argument[path]{the path of a filename to load, in the GLib filename encoding}
+  @begin{return}
+    @em{True}. The return value is deprecated and @code{nil} will only be
+    returned for backwards compatibility reasons if an error is not @code{nil}
+    and a loading error occured. To track errors while loading CSS, connect to
+    the \"parsing-error\" signal.
+  @end{return}
+  Loads the data contained in @arg{path} into @arg{css-provider}, making it
+  clear any previously loaded information.
+  @see-class{gtk-css-provider}"
+  (with-g-error (err)
+    (%gtk-css-provider-load-from-path css-provider path err)))
+
+(export 'gtk-css-provider-load-from-path)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_css_provider_new ()
-;;;
-;;; GtkCssProvider * gtk_css_provider_new (void);
-;;;
-;;; Returns a newly created GtkCssProvider.
-;;;
-;;; Returns :
-;;;     A new GtkCssProvider
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-css-provider-new))
+
+(defun gtk-css-provider-new ()
+ #+cl-cffi-gtk-documentation
+ "@version{2013-9-28}
+  @return{A new @class{gtk-css-provider} object}
+  Returns a newly created @class{gtk-css-provider} object.
+  @see-class{gtk-css-provider}"
+  (make-instance 'gtk-css-provider))
+
+(export 'gtk-css-provider-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_css_provider_to_string ()
