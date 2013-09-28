@@ -43,6 +43,8 @@
 (load "color-chooser-dialog.lisp")
 (load "combo-box.lisp")
 (load "combo-box-text.lisp")
+(load "css-accordion.lisp")
+(load "css-pixbufs.lisp")
 (load "dialog-alternative-order.lisp")
 (load "dialog-toplevel.lisp")
 (load "dialogs.lisp")
@@ -147,6 +149,15 @@
                                               "gchararray" ; Filename
                                               "gchararray" ; Function name
                                               "guint"))))
+    (let ((parent (gtk-tree-store-set model (gtk-tree-store-append model nil)
+                                            "Theming in GTK+" "" "" 0)))
+      (gtk-tree-store-set model (gtk-tree-store-append model parent)
+                                "CSS Accordion"
+                                "css-accordion.lisp" "DEMO-CSS-ACCORDION" 0)
+      (gtk-tree-store-set model (gtk-tree-store-append model parent)
+                                "CSS Pixbufs"
+                                "css-pixbufs.lisp" "DEMO-CSS-PIXBUFS" 0)
+    )
     (let ((parent (gtk-tree-store-set model (gtk-tree-store-append model nil)
                                             "Windows" "" "" 0)))
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
