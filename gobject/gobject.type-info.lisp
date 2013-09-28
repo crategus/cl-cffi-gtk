@@ -180,7 +180,8 @@
 (in-package :gobject)
 
 ;;; This constant is not exported.
-(defconstant +g-type-fundamental-shift+ 2)
+(eval-when (:execute :compile-toplevel :load-toplevel)
+  (defconstant +g-type-fundamental-shift+ 2))
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_INVALID

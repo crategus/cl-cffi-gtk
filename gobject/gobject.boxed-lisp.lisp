@@ -99,18 +99,6 @@
 
 ;;; ----------------------------------------------------------------------------
 
-;; Definition of generic functions to copy and to free a boxed object
-
-(defgeneric boxed-copy-fn (type-info native)
-  (:method (type-info native)
-           (g-boxed-copy (g-boxed-info-type type-info) native)))
-
-(defgeneric boxed-free-fn (type-info native)
-  (:method (type-info native)
-           (g-boxed-free (g-boxed-info-type type-info) native)))
-
-;;; ----------------------------------------------------------------------------
-
 (defgeneric cleanup-translated-object-for-callback (foreign-type
                                                     converted-object
                                                     native-object))
@@ -125,6 +113,18 @@
 (defstruct g-boxed-info
   name
   type)
+
+;;; ----------------------------------------------------------------------------
+
+;; Definition of generic functions to copy and to free a boxed object
+
+(defgeneric boxed-copy-fn (type-info native)
+  (:method (type-info native)
+           (g-boxed-copy (g-boxed-info-type type-info) native)))
+
+(defgeneric boxed-free-fn (type-info native)
+  (:method (type-info native)
+           (g-boxed-free (g-boxed-info-type type-info) native)))
 
 ;;; ----------------------------------------------------------------------------
 

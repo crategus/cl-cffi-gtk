@@ -570,8 +570,7 @@
     ((widget (g-object gtk-widget))
      (data :pointer))
   (restart-case
-      (funcall (glib::get-stable-pointer-value data)
-               widget)
+      (funcall (glib:get-stable-pointer-value data) widget)
     (return () nil)))
 
 (defcfun ("gtk_container_foreach" %gtk-container-foreach) :void
@@ -581,16 +580,17 @@
 
 (defun gtk-container-foreach (container func)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-25}
+ "@version{2013-9-28}
   @argument[container]{a @class{gtk-container} widget}
   @argument[func]{a Lisp function which is passed as a callback to the C
-    function @code{gtk_container_foreach()}}
+    function @sym{gtk-container-foreach}}
   @begin{short}
     Invokes @arg{func} on each non-internal child of @arg{container}.
   @end{short}
   See the function @fun{gtk-container-forall} for details on what constitutes an
   \"internal\" child. Most applications should use @sym{gtk-container-foreach},
   rather than @fun{gtk-container-forall}.
+  @see-class{gtk-container}
   @see-function{gtk-container-forall}"
   (with-stable-pointer (ptr func)
     (%gtk-container-foreach container
@@ -1007,13 +1007,13 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_container_forall" %gtk-container-forall) :void
-  (container g-object)
+  (container (g-object gtk-container))
   (callback :pointer)
   (data :pointer))
 
 (defun gtk-container-forall (container func)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-25}
+ "@version{2013-9-28}
   @argument[container]{a @class{gtk-container} widget}
   @argument[func]{a callback}
   @begin{short}
@@ -1024,6 +1024,7 @@
   but were added by the container implementation itself. Most applications
   should use the function @fun{gtk-container-foreach}, rather than
   the function @sym{gtk-container-forall}.
+  @see-class{gtk-container}
   @see-function{gtk-container-foreach}"
   (with-stable-pointer (ptr func)
     (%gtk-container-forall container
