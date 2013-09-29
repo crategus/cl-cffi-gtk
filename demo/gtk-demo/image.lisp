@@ -170,6 +170,7 @@
                                    :label "Insensitive")))
         (g-signal-connect button "toggled"
            (lambda (widget)
+             (declare (ignore widget))
              (let ((childs (gtk-container-get-children vgrid)))
                (dolist (child childs)
                  (unless (g-type-is-a (g-object-type child) "GtkToggleButton")

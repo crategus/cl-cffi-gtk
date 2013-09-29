@@ -21,7 +21,8 @@
            (area (make-instance 'gtk-drawing-area
                                 :width-request 300
                                 :height-request 300))
-           (pixbuf (gdk-pixbuf-new-from-file "background.jpg")))
+;           (pixbuf (gdk-pixbuf-new-from-file "background.jpg"))
+)
       ;; Signal handler for the window to handle the signal "destroy".
       (g-signal-connect window "destroy"
                         (lambda (widget)
