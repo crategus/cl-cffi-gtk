@@ -773,12 +773,15 @@
 
 (defcfun ("gtk_spin_button_spin" gtk-spin-button-spin) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-4-28}
+ "@version{2013-9-28}
   @argument[spin-button]{a @class{gtk-spin-button} widget}
-  @argument[direction]{a @class{gtk-spin-type} indicating the direction to spin}
+  @argument[direction]{a @symbol{gtk-spin-type} indicating the direction to
+    spin}
   @argument[increment]{step increment to apply in the specified direction}
   Increment or decrement a spin button's value in a specified direction by a
-  specified amount."
+  specified amount.
+  @see-class{gtk-spin-button}
+  @see-symbol{gtk-spin-type}"
   (spin-button (g-object gtk-spin-button))
   (direction gtk-spin-type)
   (increment :double))
