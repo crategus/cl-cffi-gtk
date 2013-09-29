@@ -27,6 +27,34 @@
 
 (in-package :gobject)
 
+;;; Garbage Collection for GBoxed objects
+
+(defvar *gboxed-gc-hooks-lock* (make-recursive-lock "gboxed-gc-hooks-lock"))
+(defvar *gboxed-gc-hooks* nil) ; pointers to objects to be freed
+
+(defun activate-gboxed-gc-hooks ()
+  (with-recursive-lock-held (*gboxed-gc-hooks-lock*)
+    (when *gboxed-gc-hooks*
+      (log-for :gc "activating gc hooks for boxeds: ~A~%" *gboxed-gc-hooks*)
+      (loop
+         for (pointer type) in *gboxed-gc-hooks*
+         do (boxed-free-fn type pointer))
+      (setf *gboxed-gc-hooks* nil))))
+
+;(defcallback gboxed-idle-gc-hook :boolean ((data :pointer))
+;  (declare (ignore data))
+;  (activate-gboxed-gc-hooks)
+;  nil)
+
+(defun register-gboxed-for-gc (type pointer)
+  (with-recursive-lock-held (*gboxed-gc-hooks-lock*)
+    (let ((locks-were-present (not (null *gboxed-gc-hooks*))))
+      (push (list pointer type) *gboxed-gc-hooks*)
+      (unless locks-were-present
+        (log-for :gc "adding gboxed idle-gc-hook to main loop~%")
+        (g-idle-add #'activate-gboxed-gc-hooks)))))
+;        (glib::%g-idle-add (callback gboxed-idle-gc-hook) (null-pointer))))))
+
 ;;; ----------------------------------------------------------------------------
 
 ;; Global Hash-Table to store the structure info for a gtype
@@ -72,11 +100,11 @@
 
 ;;; ----------------------------------------------------------------------------
 
-;; Define the general type g-boxed-foreign
+;; Define the base type g-boxed-foreign
 ;;
 ;; This type is specialized further to:
-;;    g-boxed-cstruct-foreign-type
 ;;    g-boxed-opaque-foreign-type
+;;    g-boxed-cstruct-foreign-type
 ;;    g-boxed-variant-cstruct-foreign-type
 
 (define-foreign-type g-boxed-foreign-type ()
@@ -93,15 +121,20 @@
 (define-parse-method g-boxed-foreign (name &rest options)
   (let ((info (get-g-boxed-foreign-info name)))
     (assert info nil "Unknown foreign GBoxed type ~A" name)
-    (make-foreign-type info :return-p (member :return options))))
+    (make-foreign-type info
+                       :return-p (member :return options))))
 
 (export 'g-boxed-foreign)
 
 ;;; ----------------------------------------------------------------------------
 
+;;; A generic function which is implemented by the derived classes
+
 (defgeneric cleanup-translated-object-for-callback (foreign-type
                                                     converted-object
                                                     native-object))
+
+;;; This method is not further implemented and always returns TRUE
 
 (defgeneric has-callback-cleanup (foreign-type))
 
@@ -126,6 +159,92 @@
   (:method (type-info native)
            (g-boxed-free (g-boxed-info-type type-info) native)))
 
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Imlementation of g-boxed-opaque-foreign-type
+;;;
+;;; ----------------------------------------------------------------------------
+
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (defstruct (g-boxed-opaque-wrapper-info (:include g-boxed-info))
+    alloc
+    free))
+
+(define-foreign-type boxed-opaque-foreign-type (g-boxed-foreign-type) ())
+
+(defclass g-boxed-opaque ()
+  ((pointer :initarg :pointer
+            :initform nil
+            :accessor g-boxed-opaque-pointer)))
+
+(defgeneric pointer (object))
+
+(defmethod pointer ((object g-boxed-opaque))
+  (g-boxed-opaque-pointer object))
+
+(defmethod make-foreign-type ((info g-boxed-opaque-wrapper-info) &key return-p)
+  (make-instance 'boxed-opaque-foreign-type
+                 :info info
+                 :return-p return-p))
+
+(defmethod translate-to-foreign (proxy (type boxed-opaque-foreign-type))
+  (if (null proxy)
+      (null-pointer)
+      (prog1
+        (g-boxed-opaque-pointer proxy)
+        (when (g-boxed-foreign-return-p type)
+          (tg:cancel-finalization proxy)
+          (setf (g-boxed-opaque-pointer proxy) nil)))))
+
+(defmethod free-translated-object
+    (native (type boxed-opaque-foreign-type) param)
+  (declare (ignore native type param)))
+
+(defun make-boxed-free-finalizer (type pointer)
+  (lambda () (register-gboxed-for-gc type pointer)))
+
+(defmethod translate-from-foreign
+    (native (foreign-type boxed-opaque-foreign-type))
+  (let* ((type (g-boxed-foreign-info foreign-type))
+         (proxy (make-instance (g-boxed-info-name type)
+                               :pointer native)))
+    proxy))
+
+(defmethod cleanup-translated-object-for-callback
+    ((type boxed-opaque-foreign-type) proxy native)
+  (declare (ignore native))
+  (tg:cancel-finalization proxy)
+  (setf (g-boxed-opaque-pointer proxy) nil))
+
+;;; ----------------------------------------------------------------------------
+
+(defmacro define-g-boxed-opaque (name
+                                 gtype
+                                 &key (alloc (error "Alloc must be specified")))
+  (let ((native-copy (gensym "NATIVE-COPY-"))
+        (instance (gensym "INSTANCE-")))
+    `(progn
+       (defclass ,name (g-boxed-opaque) ())
+       (defmethod initialize-instance
+                  :after ((,instance ,name) &key &allow-other-keys)
+         (unless (g-boxed-opaque-pointer ,instance)
+           (let ((,native-copy ,alloc))
+             (setf (g-boxed-opaque-pointer ,instance) ,native-copy)
+             (finalize ,instance
+                       (make-boxed-free-finalizer (get ',name
+                                                       'g-boxed-foreign-info)
+                                                  ,native-copy)))))
+       (eval-when (:compile-toplevel :load-toplevel :execute)
+         (setf (get ',name 'g-boxed-foreign-info)
+               (make-g-boxed-opaque-wrapper-info :name ',name
+                                                 :type ,gtype)
+               (gethash ,gtype *g-type-name->g-boxed-foreign-info*)
+               (get ',name 'g-boxed-foreign-info))))))
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Imlementation of g-boxed-cstruct-foreign-type
+;;;
 ;;; ----------------------------------------------------------------------------
 
 (defstruct cstruct-description
@@ -159,15 +278,11 @@
 (defstruct (cstruct-inline-slot-description (:include cstruct-slot-description))
   boxed-type-name)
 
+;;; ----------------------------------------------------------------------------
+
 (defmethod make-load-form ((object cstruct-inline-slot-description)
                            &optional environment)
   (make-load-form-saving-slots object :environment environment))
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Imlementation of g-boxed-cstruct-foreign-type
-;;;
-;;; ----------------------------------------------------------------------------
 
 (defclass boxed-cstruct-foreign-type (g-boxed-foreign-type) ())
 
@@ -361,113 +476,6 @@
                      proxy
                      native-structure
                      (g-boxed-cstruct-wrapper-info-cstruct-description info)))))
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Imlementation of g-boxed-opaque-foreign-type
-;;;
-;;; ----------------------------------------------------------------------------
-
-(eval-when (:compile-toplevel :load-toplevel :execute)
-  (defstruct (g-boxed-opaque-wrapper-info (:include g-boxed-info))
-    alloc free))
-
-(define-foreign-type boxed-opaque-foreign-type (g-boxed-foreign-type) ())
-
-(defclass g-boxed-opaque ()
-  ((pointer :initarg :pointer
-            :initform nil
-            :accessor g-boxed-opaque-pointer)))
-
-(defgeneric pointer (object))
-
-(defmethod pointer ((object g-boxed-opaque))
-  (g-boxed-opaque-pointer object))
-
-(defmethod make-foreign-type ((info g-boxed-opaque-wrapper-info) &key return-p)
-  (make-instance 'boxed-opaque-foreign-type
-                   :info info
-                   :return-p return-p))
-
-(defmethod translate-to-foreign (proxy (type boxed-opaque-foreign-type))
-  (if (null proxy)
-      (null-pointer)
-      (prog1 (g-boxed-opaque-pointer proxy)
-        (when (g-boxed-foreign-return-p type)
-          (tg:cancel-finalization proxy)
-          (setf (g-boxed-opaque-pointer proxy) nil)))))
-
-(defmethod free-translated-object
-    (native (type boxed-opaque-foreign-type) param)
-  (declare (ignore native type param)))
-
-(defvar *gboxed-gc-hooks-lock* (make-recursive-lock "gboxed-gc-hooks-lock"))
-(defvar *gboxed-gc-hooks* nil) ; pointers to objects to be freed
-
-(defun activate-gboxed-gc-hooks ()
-  (with-recursive-lock-held (*gboxed-gc-hooks-lock*)
-    (when *gboxed-gc-hooks*
-      (log-for :gc "activating gc hooks for boxeds: ~A~%" *gboxed-gc-hooks*)
-      (loop
-         for (pointer type) in *gboxed-gc-hooks*
-         do (boxed-free-fn type pointer))
-      (setf *gboxed-gc-hooks* nil))))
-
-;(defcallback gboxed-idle-gc-hook :boolean ((data :pointer))
-;  (declare (ignore data))
-;  (activate-gboxed-gc-hooks)
-;  nil)
-
-(defun register-gboxed-for-gc (type pointer)
-  (with-recursive-lock-held (*gboxed-gc-hooks-lock*)
-    (let ((locks-were-present (not (null *gboxed-gc-hooks*))))
-      (push (list pointer type) *gboxed-gc-hooks*)
-      (unless locks-were-present
-        (log-for :gc "adding gboxed idle-gc-hook to main loop~%")
-        (g-idle-add #'activate-gboxed-gc-hooks)))))
-;        (glib::%g-idle-add (callback gboxed-idle-gc-hook) (null-pointer))))))
-
-(defun make-boxed-free-finalizer (type pointer)
-  (lambda () (register-gboxed-for-gc type pointer)))
-
-(defmethod translate-from-foreign
-    (native (foreign-type boxed-opaque-foreign-type))
-  (let* ((type (g-boxed-foreign-info foreign-type))
-         (proxy (make-instance (g-boxed-info-name type)
-                               :pointer native)))
-    proxy))
-
-(defmethod cleanup-translated-object-for-callback
-    ((type boxed-opaque-foreign-type) proxy native)
-  (declare (ignore native))
-  (tg:cancel-finalization proxy)
-  (setf (g-boxed-opaque-pointer proxy) nil))
-
-
-;;; ----------------------------------------------------------------------------
-
-(defmacro define-g-boxed-opaque (name
-                                 gtype
-                                 &key (alloc (error "Alloc must be specified")))
-  (let ((native-copy (gensym "NATIVE-COPY-"))
-        (instance (gensym "INSTANCE-")))
-    `(progn
-       (defclass ,name (g-boxed-opaque) ())
-       (defmethod initialize-instance
-                  :after ((,instance ,name) &key &allow-other-keys)
-         (unless (g-boxed-opaque-pointer ,instance)
-           (let ((,native-copy ,alloc))
-             (setf (g-boxed-opaque-pointer ,instance) ,native-copy)
-             (finalize ,instance
-                       (make-boxed-free-finalizer (get ',name
-                                                       'g-boxed-foreign-info)
-                                                  ,native-copy)))))
-       (eval-when (:compile-toplevel :load-toplevel :execute)
-         (setf (get ',name 'g-boxed-foreign-info)
-               (make-g-boxed-opaque-wrapper-info :name ',name
-                                                 :type ,gtype)
-               (gethash ,gtype *g-type-name->g-boxed-foreign-info*)
-               (get ',name 'g-boxed-foreign-info))))))
 
 ;;; ----------------------------------------------------------------------------
 
