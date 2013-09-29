@@ -2365,7 +2365,7 @@
       (values (mem-ref path '(g-boxed-foreign gtk-tree-path :return))
               (mem-ref pos 'gtk-icon-view-drop-position)))))
 
-(export 'gtk-icon-view-get-drag-dest-item)
+(export 'gtk-icon-view-get-dest-item-at-pos)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_view_create_drag_icon ()
