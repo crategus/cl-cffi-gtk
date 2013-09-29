@@ -670,35 +670,33 @@
 
 (defun gtk-tree-view-column-new-with-attributes (title cell &rest attributes)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-16}
+ "@version{2013-9-28}
   @argument[title]{the title to set the header to}
   @argument[cell]{the @class{gtk-cell-renderer} object}
   @argument[attributes]{a list of attributes}
   @return{A newly created @class{gtk-tree-view-column} object.}
   @begin{short}
     Creates a new @class{gtk-tree-view-column} with a number of default values.
-    This is equivalent to calling the functions
-    @fun{gtk-tree-view-column-set-title}, @fun{gtk-tree-view-column-pack-start},
-    and @fun{gtk-tree-view-column-set-attributes} on the newly created
-    @class{gtk-tree-view-column} object.
   @end{short}
+  This is equivalent to calling the functions
+  @fun{gtk-tree-view-column-set-title}, @fun{gtk-tree-view-column-pack-start},
+  and @fun{gtk-tree-view-column-set-attributes} on the newly created
+  @class{gtk-tree-view-column} object.
 
   Here's a simple example:
   @begin{pre}
-   enum { TEXT_COLUMN, COLOR_COLUMN, N_COLUMNS @};
-   ...
-   {
-     GtkTreeViewColumn *column;
-     GtkCellRenderer   *renderer = gtk_cell_renderer_text_new ();
-
-     column = gtk_tree_view_column_new_with_attributes
-                                                 (\"Title\",
-                                                  renderer,
-                                                  \"text\", TEXT_COLUMN,
-                                                  \"foreground\", COLOR_COLUMN,
-                                                  NULL);
-   @}
-  @end{pre}"
+ (let* ((renderer (gtk-cell-renderer-text-new))
+        (column (gtk-tree-view-column-new-with-attributes \"Example\"
+                                                          renderer
+                                                          \"text\" 0
+                                                          \"foreground\" 1)))
+   ... )
+  @end{pre}
+  @see-class{gtk-tree-view-column}
+  @see-class{gtk-cell-renderer}
+  @see-function{gtk-tree-view-column-set-title}
+  @see-function{gtk-tree-view-column-pack-start}
+  @see-function{gtk-tree-view-column-set-attributes}"
   (let ((column (make-instance 'gtk-tree-view-column
                                :title title)))
     (gtk-tree-view-column-pack-start column cell :expand t)
@@ -720,14 +718,20 @@
 
 (defun gtk-tree-view-column-pack-start (tree-column cell &key (expand t))
  #+cl-cffi-gtk-documentation
- "@version{2013-5-16}
+ "@version{2013-9-28}
   @argument[tree-column]{a @class{gtk-tree-view-column} object}
   @argument[cell]{the @class{gtk-cell-renderer} object}
   @argument[expand]{@em{true} if cell is to be given extra space allocated to
     @arg{tree-column} object}
-  Packs the cell into the beginning of the column. If expand is @code{nil}, then
-  the cell is allocated no more space than it needs. Any unused space is
-  divided evenly between cells for which expand is @em{true}."
+  @begin{short}
+    Packs the cell into the beginning of the column.
+  @end{short}
+  If @arg{expand} is @code{nil}, then the cell is allocated no more space than
+  it needs. Any unused space is divided evenly between cells for which
+  @arg{expand} is @em{true}.
+  @see-class{gtk-tree-view-column}
+  @see-class{gtk-cell-renderer}
+  @see-function{gtk-tree-view-column-pack-end}"
   (%gtk-tree-view-column-pack-start tree-column cell expand))
 
 (export 'gtk-tree-view-column-pack-start)
@@ -775,17 +779,24 @@
 (defcfun ("gtk_tree_view_column_add_attribute"
            gtk-tree-view-column-add-attribute) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-5-26}
+ "@version{2013-9-28}
   @argument[tree-column]{a @class{gtk-tree-view-column} object}
   @argument[cell-renderer]{the @class{gtk-cell-renderer} object to set
     attributes on}
   @argument[attribute]{an attribute on the renderer}
   @argument[column]{the column position on the model to get the attribute from}
-  Adds an attribute mapping to the list in @arg{tree-column}. The column is the
-  column of the model to get a value from, and the attribute is the parameter
-  on @arg{cell-renderer} to be set from the value. So for example if column 2 of
-  the model contains strings, you could have the \"text\" attribute of a
-  @class{gtk-cell-renderer-text} get its values from column 2."
+  @begin{short}
+    Adds an attribute mapping to the list in @arg{tree-column}.
+  @end{short}
+  The @arg{column} is the column of the model to get a value from, and the
+  attribute is the parameter on @arg{cell-renderer} to be set from the value.
+  So for example if column 2 of the model contains strings, you could have the
+  \"text\" attribute of a @class{gtk-cell-renderer-text} get its values from
+  column 2.
+  @see-class{gtk-tree-view-column}
+  @see-class{gtk-cell-renderer}
+  @see-class{gtk-cell-renderer-text}
+  @see-function{gtk-tree-view-column-new-with-attributes}"
   (tree-column (g-object gtk-tree-view-column))
   (cell-renderer (g-object gtk-cell-renderer))
   (attribute :string)
