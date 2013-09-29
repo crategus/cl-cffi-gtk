@@ -1450,26 +1450,35 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_main_context_get_thread_default ()
-;;;
-;;; GMainContext * g_main_context_get_thread_default (void);
-;;;
-;;; Gets the thread-default GMainContext for this thread. Asynchronous
-;;; operations that want to be able to be run in contexts other than the default
-;;; one should call this method or g_main_context_ref_thread_default() to get a
-;;; GMainContext to add their GSources to. (Note that even in single-threaded
-;;; programs applications may sometimes want to temporarily push a non-default
-;;; context, so it is not safe to assume that this will always return NULL if
-;;; you are running in the default thread.)
-;;;
-;;; If you need to hold a reference on the context, use
-;;; g_main_context_ref_thread_default() instead.
-;;;
-;;; Returns :
-;;;     the thread-default GMainContext, or NULL if the thread-default context
-;;;     is the global default context
-;;;
-;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_main_context_get_thread_default" g-main-context-get-thread-default)
+    (:pointer (:struct g-main-context))
+ #+cl-cffi-gtk-documentation
+ "@version{2013-9-28}
+  @begin{return}
+    The thread default @type{g-main-context}, or @code{NULL} if the thread
+    default context is the global default context.
+  @end{return}
+  @begin{short}
+    Gets the thread default @type{g-main-context} for this thread.
+  @end{short}
+  Asynchronous operations that want to be able to be run in contexts other than
+  the default one should call this method or the function
+  @fun{g-main-context-ref-thread-default} to get a @type{g-main-context} to add
+  their @type{g-source}s to. Note that even in single-threaded
+  programs applications may sometimes want to temporarily push a non-default
+  context, so it is not safe to assume that this will always return @code{NULL}
+  if you are running in the default thread.
+
+  If you need to hold a reference on the context, use the function
+  @fun{g-main-context-ref-thread-default} instead.
+
+  Since 2.22
+  @see-type{g-main-context}
+  @see-function{g-main-context-ref-thread-default}")
+
+(export 'g-main-context-get-thread-default)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_main_context_ref_thread_default ()
