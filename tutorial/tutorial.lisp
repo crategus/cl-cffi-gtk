@@ -2830,47 +2830,71 @@ happen.")
     ;; Now traverse the list
     (gtk-tree-model-foreach model #'foreach-func)))
 
+;;; ----------------------------------------------------------------------------
 
+;; Example Cell Renderer Properties
+
+(defun create-and-fill-model-3 ()
+  (let ((model (make-instance 'gtk-tree-store
+                              :column-types '("gchararray" "gchararray"))))
+    ;; Append a top level row and leave it empty
+    (gtk-tree-store-append model nil)
+    ;; Append a second top level row, and fill it with some data
+    (let ((parent (gtk-tree-store-set model (gtk-tree-store-append model nil)
+                                            "Joe" "Average")))
+      ;; Append a child to the second top level row, and fill in some data
+      (gtk-tree-store-set model (gtk-tree-store-append model parent)
+                                "Jane" "Average"))
+    model))
+
+(defun create-view-and-model-3 ()
+  (let* ((model (create-and-fill-model-3))
+         (view (make-instance 'gtk-tree-view
+                              :model model)))
+  ;; Create the first column
+  (let* ((column (make-instance 'gtk-tree-view-column
+                                :title "First Name"))
+         (renderer (make-instance 'gtk-cell-renderer-text
+                                  :text "Booooo!")))
+    ;; pack tree view column into tree view
+    (gtk-tree-view-append-column view column)
+    ;; pack cell renderer into tree view column
+    (gtk-tree-view-column-pack-start column renderer))
+
+  ;; Create the second column
+  (let* ((column (make-instance 'gtk-tree-view-column
+                                :title "Last Name"))
+         (renderer (make-instance 'gtk-cell-renderer-text
+                                  :cell-background "Orange"
+                                  :cell-background-set t)))
+    ;; pack tree view column into tree view
+    (gtk-tree-view-append-column view column)
+    ;; pack cell renderer into tree view column
+    (gtk-tree-view-column-pack-start column renderer))
+  ;; No selection possible
+  (gtk-tree-selection-set-mode (gtk-tree-view-get-selection view) :none)
+  view))
+
+(defun example-cell-renderer-properties ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :title "Example Cell Renderer Properties"
+                                 :type :toplevel
+                                 :default-width 350
+                                 :default-height 200))
+          (view (create-view-and-model-3)))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (leave-gtk-main)))
+      (gtk-container-add window view)
+      (gtk-widget-show-all window))))
 
 ;;; ----------------------------------------------------------------------------
 
+;;; Example 
+
 #|
-#include <gtk/gtk.h>
-
-enum
-{
-  COL_FIRST_NAME = 0,
-  COL_LAST_NAME,
-  NUM_COLS
-} ;
-
-static GtkTreeModel *
-create_and_fill_model (void)
-{
-  GtkTreeStore  *treestore;
-  GtkTreeIter    toplevel, child;
-
-  treestore = gtk_tree_store_new(NUM_COLS, G_TYPE_STRING, G_TYPE_STRING);
-
-  /* Append a top level row and leave it empty */
-  gtk_tree_store_append(treestore, &toplevel, NULL);
-
-  /* Append a second top level row, and fill it with some data */
-  gtk_tree_store_append(treestore, &toplevel, NULL);
-  gtk_tree_store_set(treestore, &toplevel,
-                     COL_FIRST_NAME, "Joe",
-                     COL_LAST_NAME, "Average",
-                     -1);
-
-  /* Append a child to the second top level row, and fill in some data */
-  gtk_tree_store_append(treestore, &child, &toplevel);
-  gtk_tree_store_set(treestore, &child,
-                     COL_FIRST_NAME, "Jane",
-                     COL_LAST_NAME, "Average",
-                     -1);
-
-  return GTK_TREE_MODEL(treestore);
-}
 
 static GtkWidget *
 create_view_and_model (void)
@@ -2931,54 +2955,29 @@ create_view_and_model (void)
 
   return view;
 }
+
+int
+main (int argc, char **argv)
+{
+  GtkWidget *window;
+  GtkWidget *view;
+
+  gtk_init(&argc, &argv);
+
+  window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+  g_signal_connect(window, "delete_event", gtk_main_quit, NULL); /* dirty */
+
+  view = create_view_and_model();
+
+  gtk_container_add(GTK_CONTAINER(window), view);
+
+  gtk_widget_show_all(window);
+
+  gtk_main();
+
+  return 0;
+}
 |#
-
-;; Example Simple Tree View
-
-(defun create-and-fill-model ()
-  (let ((model (make-instance 'gtk-list-store
-                              :column-types '("gchararray" "guint"))))
-    (gtk-list-store-set model (gtk-list-store-append model)
-                              "Klaus-Dieter Mustermann" 51)
-    (gtk-list-store-set model (gtk-list-store-append model)
-                              "Ulrike Langhals" 23)
-    (gtk-list-store-set model (gtk-list-store-append model)
-                              "Marius Kalinowski" 91)
-    model))
-
-(defun create-view-and-model-3 ()
-  (let* ((model (create-and-fill-model))
-         (view (make-instance 'gtk-tree-view
-                              :model model)))
-    ;; Create renderers for the cells
-    (let* ((renderer (gtk-cell-renderer-text-new))
-           (column (gtk-tree-view-column-new-with-attributes "Name"
-                                                             renderer
-                                                             "text" 0)))
-      (gtk-tree-view-append-column view column))
-    (let* ((renderer (gtk-cell-renderer-text-new))
-           (column (gtk-tree-view-column-new-with-attributes "Age"
-                                                             renderer
-                                                             "text" 1)))
-      (gtk-tree-view-append-column view column))
-    view))
-
-(defun example-cell-renderer-properties ()
-  (within-main-loop
-    (let ((window (make-instance 'gtk-window
-                                 :title "Example Cell Renderer Properties"
-                                 :type :toplevel
-                                 :border-width 12
-                                 :default-width 300
-                                 :default-height 200))
-          (view (create-view-and-model)))
-      (g-signal-connect window "destroy"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (leave-gtk-main)))
-      (gtk-container-add window view)
-      (gtk-widget-show-all window))))
-
 
 ;;; ----------------------------------------------------------------------------
 ;;;

@@ -1113,138 +1113,79 @@ behaviour, and introduces some of the most commonly used properties of
 @xurl{gtk-cell-renderer-text}:
 
 @verbatim
-#include <gtk/gtk.h>
+(defun create-and-fill-model ()
+  (let ((model (make-instance 'gtk-tree-store
+                              :column-types '("gchararray" "gchararray"))))
+    ;; Append a top level row and leave it empty
+    (gtk-tree-store-append model nil)
+    ;; Append a second top level row, and fill it with some data
+    (let ((parent (gtk-tree-store-set model (gtk-tree-store-append model nil)
+                                            "Joe" "Average")))
+      ;; Append a child to the second top level row, and fill in some data
+      (gtk-tree-store-set model (gtk-tree-store-append model parent)
+                                "Jane" "Average"))
+    model))
 
-enum
-{
-  COL_FIRST_NAME = 0,
-  COL_LAST_NAME,
-  NUM_COLS
-} ;
+(defun create-view-and-model ()
+  (let* ((model (create-and-fill-model))
+         (view (make-instance 'gtk-tree-view
+                              :model model)))
+  ;; Create the first column
+  (let* ((column (make-instance 'gtk-tree-view-column
+                                :title "First Name"))
+         (renderer (make-instance 'gtk-cell-renderer-text
+                                  :text "Booooo!")))
+    ;; pack tree view column into tree view
+    (gtk-tree-view-append-column view column)
+    ;; pack cell renderer into tree view column
+    (gtk-tree-view-column-pack-start column renderer))
 
-static GtkTreeModel *
-create_and_fill_model (void)
-{
-  GtkTreeStore  *treestore;
-  GtkTreeIter    toplevel, child;
+  ;; Create the second column
+  (let* ((column (make-instance 'gtk-tree-view-column
+                                :title "Last Name"))
+         (renderer (make-instance 'gtk-cell-renderer-text
+                                  :cell-background "Orange"
+                                  :cell-background-set t)))
+    ;; pack tree view column into tree view
+    (gtk-tree-view-append-column view column)
+    ;; pack cell renderer into tree view column
+    (gtk-tree-view-column-pack-start column renderer))
+  ;; No selection possible
+  (gtk-tree-selection-set-mode (gtk-tree-view-get-selection view) :none)
+  view))
 
-  treestore = gtk_tree_store_new(NUM_COLS, G_TYPE_STRING, G_TYPE_STRING);
-
-  /* Append a top level row and leave it empty */
-  gtk_tree_store_append(treestore, &toplevel, NULL);
-
-  /* Append a second top level row, and fill it with some data */
-  gtk_tree_store_append(treestore, &toplevel, NULL);
-  gtk_tree_store_set(treestore, &toplevel,
-                     COL_FIRST_NAME, "Joe",
-                     COL_LAST_NAME, "Average",
-                     -1);
-
-  /* Append a child to the second top level row, and fill in some data */
-  gtk_tree_store_append(treestore, &child, &toplevel);
-  gtk_tree_store_set(treestore, &child,
-                     COL_FIRST_NAME, "Jane",
-                     COL_LAST_NAME, "Average",
-                     -1);
-
-  return GTK_TREE_MODEL(treestore);
-}
-
-static GtkWidget *
-create_view_and_model (void)
-{
-  GtkTreeViewColumn   *col;
-  GtkCellRenderer     *renderer;
-  GtkWidget           *view;
-  GtkTreeModel        *model;
-
-  view = gtk_tree_view_new();
-
-  /* --- Column #1 --- */
-
-  col = gtk_tree_view_column_new();
-
-  gtk_tree_view_column_set_title(col, "First Name");
-
-  /* pack tree view column into tree view */
-  gtk_tree_view_append_column(GTK_TREE_VIEW(view), col);
-
-  renderer = gtk_cell_renderer_text_new();
-
-  /* pack cell renderer into tree view column */
-  gtk_tree_view_column_pack_start(col, renderer, TRUE);
-
-  /* set 'text' property of the cell renderer */
-  g_object_set(renderer, "text", "Boooo!", NULL);
-
-
-  /* --- Column #2 --- */
-
-  col = gtk_tree_view_column_new();
-
-  gtk_tree_view_column_set_title(col, "Last Name");
-
-  /* pack tree view column into tree view */
-  gtk_tree_view_append_column(GTK_TREE_VIEW(view), col);
-
-  renderer = gtk_cell_renderer_text_new();
-
-  /* pack cell renderer into tree view column */
-  gtk_tree_view_column_pack_start(col, renderer, TRUE);
-
-  /* set 'cell-background' property of the cell renderer */
-  g_object_set(renderer,
-               "cell-background", "Orange",
-               "cell-background-set", TRUE,
-               NULL);
-
-  model = create_and_fill_model();
-
-  gtk_tree_view_set_model(GTK_TREE_VIEW(view), model);
-
-  g_object_unref(model); /* destroy model automatically with view */
-
-  gtk_tree_selection_set_mode(gtk_tree_view_get_selection(GTK_TREE_VIEW(view)),
-                              GTK_SELECTION_NONE);
-
-  return view;
-}
-
-int
-main (int argc, char **argv)
-{
-  GtkWidget *window;
-  GtkWidget *view;
-
-  gtk_init(&argc, &argv);
-
-  window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-  g_signal_connect(window, "delete_event", gtk_main_quit, NULL); /* dirty */
-
-  view = create_view_and_model();
-
-  gtk_container_add(GTK_CONTAINER(window), view);
-
-  gtk_widget_show_all(window);
-
-  gtk_main();
-
-  return 0;
-}
+(defun example-cell-renderer-properties ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :title "Example Cell Renderer Properties"
+                                 :type :toplevel
+                                 :default-width 350
+                                 :default-height 200))
+          (view (create-view-and-model-3)))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (leave-gtk-main)))
+      (gtk-container-add window view)
+      (gtk-widget-show-all window))))
 @end verbatim
 
 The above code should produce something looking like this:
 
-Figure 5-3. Persistent Cell Renderer Properties
+@ifnotinfo
+@float Figure, figure-renderer-properties
+@caption{Persistent Cell Renderer Properties}
+@center @image{figures/renderer-properties, 235pt}
+@end float
+@end ifnotinfo
 
 It looks like the tree view display is partly correct and partly incomplete.  On
-the one hand the tree view renders the correct number of rows (note how there is
-no orange on the right after row 3), and it displays the hierarchy correctly (on
-the left), but it does not display any of the data that we have stored in the
-model.  This is because we have made no connection between what the cell
-renderers should render and the data in the model.  We have simply set some cell
-renderer properties on start-up, and the cell renderers adhere to those set
-properties meticulously.
+the one hand the tree view renders the correct number of rows, and it displays
+the hierarchy correctly (on the left), but it does not display any of the data
+that we have stored in the model.  This is because we have made no connection
+between what the cell renderers should render and the data in the model.  We
+have simply set some cell renderer properties on start-up, and the cell
+renderers adhere to those set properties meticulously.
 
 There are two different ways to connect cell renderers to data in the model:
 attributes and cell data functions. 
@@ -1260,26 +1201,16 @@ that a property takes according to the API reference manual. Here is some code
 to look at:
 
 @verbatim
-   ...
-
-   col = gtk_tree_view_column_new();
-
-   renderer = gtk_cell_renderer_text_new();
-
-   gtk_tree_view_column_pack_start(col, renderer, TRUE);
-
-   gtk_tree_view_column_add_attribute(col, renderer, "text", COL_FIRST_NAME);
-
-   ...
+ (let* ((renderer (gtk-cell-renderer-text-new))
+        (column (gtk-tree-view-column-new-with-attributes "Example"
+                                                          renderer
+                                                          "text" 0)))
+   (gtk-tree-view-append-column view column)
+   ... )
 @end verbatim
 
 This means that the text cell renderer property "text" will be set to the string
-in model column @code{COL_FIRST_NAME} of each row to be drawn.  It is important
-to internalise the difference between the functions
-@xurl{gtk-tree-view-column-add-attribute} and @xurl{g-object-set}:
-@xurl{g-object-set} sets a property to a certain value, while
-@xurl{gtk-tree-view-column-add-attribute} sets a property to whatever is in the
-specified @code{_model column_ at} the time of rendering.
+in model column 0 of each row to be drawn.
 
 Again, when setting attributes it is very important that the data type stored in
 a model column is the same as the data type that a property requires as
@@ -1296,19 +1227,20 @@ other object is derived from.
 
 There are two more noteworthy things about @xurl{gtk-cell-renderer} properties:
 one is that sometimes there are different properties which do the same, but take
-different arguments, such as the "foreground" and "foreground-gdk" properties of
-@xurl{gtk-cell-renderer-text} (which specify the text colour). The "foreground"
-property take a colour in string form, such as "Orange" or "CornflowerBlue",
-whereas "foreground-gdk" takes a @xurl{gdk-color} argument.  It is up to you to
-decide which one to use - the effect will be the same.  The other thing worth
-mentioning is that most properties have a "foo-set" property taking a boolean
-value as argument, such as "foreground-set".  This is useful when you want to
-have a certain setting have an effect or not.  If you set the "foreground"
-property, but set "foreground-set" to @code{nil}, then your foreground color
-setting will be disregarded.  This is useful in cell data functions (see below),
-or, for example, if you want set the foreground colour to a certain value at
-start-up, but only want this to be in effect in some columns, but not in others
-(in which case you could just connect the "foreground-set" property to a model
+different arguments, such as the @code{"foreground"} and
+@code{"foreground-rgba"} properties of @xurl{gtk-cell-renderer-text} (which
+specify the text colour).  The @code{"foreground"} property take a colour in
+string form, such as "Orange" or "CornflowerBlue", whereas "foreground-rgba"
+takes a @xurl{gdk-rgba} argument.  It is up to you to decide which one to use -
+the effect will be the same.  The other thing worth mentioning is that most
+properties have a @code{"foo-set"} property taking a boolean value as argument,
+such as @code{"foreground-set"}.  This is useful when you want to have a certain
+setting have an effect or not.  If you set the @code{"foreground"} property, but
+set @code{"foreground-set"} to @code{nil}, then your foreground color setting
+will be disregarded.  This is useful in cell data functions (see below), or, for
+example, if you want set the foreground colour to a certain value at start-up,
+but only want this to be in effect in some columns, but not in others (in which
+case you could just connect the @code{"foreground-set"} property to a model
 column of type @code{G_TYPE_BOOLEAN} with the function
 @xurl{gtk-tree-view-column-add-attribute}.
 
