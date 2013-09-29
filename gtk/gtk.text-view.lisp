@@ -1608,8 +1608,6 @@
     :type-initializer "gtk_text_child_anchor_get_type")
   nil)
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-text-child-anchor 'type)
  "@version{2013-5-10}
@@ -1619,17 +1617,28 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_child_anchor_new ()
-;;;
-;;; GtkTextChildAnchor * gtk_text_child_anchor_new (void);
-;;;
-;;; Creates a new GtkTextChildAnchor. Usually you would then insert it into a
-;;; GtkTextBuffer with gtk_text_buffer_insert_child_anchor(). To perform the
-;;; creation and insertion in one step, use the convenience function
-;;; gtk_text_buffer_create_child_anchor().
-;;;
-;;; Returns :
-;;;     a new GtkTextChildAnchor
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-text-child-anchor-new))
+
+(defun gtk-text-child-anchor-new ()
+ #+cl-cffi-gtk-documentation
+ "@version{2013-9-28}
+  @return{A new @class{gtk-text-child-anchor} object}
+  @begin{short}
+    Creates a new @class{gtk-text-child-anchor} object.
+  @end{short}
+  Usually you would then insert it into a @class{gtk-text-buffer} with the
+  function @fun{gtk-text-buffer-insert-child-anchor}. To perform the
+  creation and insertion in one step, use the convenience function
+  @fun{gtk-text-buffer-create-child-anchor}.
+  @see-class{gtk-text-child-anchor}
+  @see-class{gtk-text-buffer}
+  @see-function{gtk-text-buffer-insert-child-anchor}
+  @see-function{gtk-text-buffer-create-child-anchor}"
+  (make-instance 'gtk-text-child-anchor))
+
+(export 'gtk-text-child-anchor-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_child_anchor_get_widgets ()
