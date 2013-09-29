@@ -1645,8 +1645,8 @@
 
 (defun g-type-instance-get-class (instance)
  #+cl-cffi-gtk-documentation
- "@version{2013-8-28}
-  @argument[instance]{the @class{g-type-instance} structure}
+ "@version{2013-9-29}
+  @argument[instance]{the @symbol{g-type-instance} structure}
   @return{The class structure of @arg{instance}.}
   @begin{short}
     Get the class structure of a given @arg{instance}.
