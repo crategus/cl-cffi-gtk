@@ -244,54 +244,74 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_status ()
-;;;
-;;; cairo_status_t cairo_status (cairo_t *cr);
-;;;
-;;; Checks whether an error has previously occurred for this context.
-;;;
-;;; cr :
-;;;     a cairo context
-;;;
-;;; Returns :
-;;;     the current status of this context, see cairo_status_t
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_status" cairo-status) cairo-status-t
+ #+cl-cffi-gtk-documentation
+ "@version{2013-10-5}
+  @argument[cr]{a cairo context}
+  @return{The current status of this context.}
+  @begin{short}
+    Checks whether an error has previously occurred for this context.
+  @end{short}
+  See the enumeration @symbol{cairo-status-t}.
+
+  Since 1.0
+  @see-symbol{cairo-t}
+  @see-symbol{cairo-status-t}"
+  (cr (:pointer (:struct cairo-t))))
+
+(export 'cairo-status)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_save ()
-;;;
-;;; void cairo_save (cairo_t *cr);
-;;;
-;;; Makes a copy of the current state of cr and saves it on an internal stack of
-;;; saved states for cr. When cairo_restore() is called, cr will be restored to
-;;; the saved state. Multiple calls to cairo_save() and cairo_restore() can be
-;;; nested; each call to cairo_restore() restores the state from the matching
-;;; paired cairo_save().
-;;;
-;;; It isn't necessary to clear all saved states before a cairo_t is freed. If
-;;; the reference count of a cairo_t drops to zero in response to a call to
-;;; cairo_destroy(), any saved states will be freed along with the cairo_t.
-;;;
-;;; cr :
-;;;     a cairo_t
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_save" cairo-save) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-10-5}
+  @argument[cr]{a @symbol{cairo-t}}
+  @begin{short}
+    Makes a copy of the current state of @arg{cr} and saves it on an internal
+    stack of saved states for @arg{cr}.
+  @end{short}
+  When the function @fun{cairo-restore} is called, @arg{cr} will be restored to
+  the saved state. Multiple calls to the functions @sym{cairo-save} and
+  @fun{cairo-restore} can be nested; each call to the function
+  @fun{cairo-restore} restores the state from the matching paired
+  @sym{cairo-save}.
+
+  It is not necessary to clear all saved states before a @symbol{cairo-t} is
+  freed. If the reference count of a @symbol{cairo-t} drops to zero in response
+  to a call to the function @fun{cairo-destroy}, any saved states will be freed
+  along with the @symbol{cairo-t}.
+
+  Since 1.0
+  @see-symbol{cairo-t}
+  @see-function{cairo-restore}"
+  (cr (:pointer (:struct cairo-t))))
+
+(export 'cairo-save)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_restore ()
-;;;
-;;; void cairo_restore (cairo_t *cr);
-;;;
-;;; Restores cr to the state saved by a preceding call to cairo_save() and
-;;; removes that state from the stack of saved states.
-;;;
-;;; cr :
-;;;     a cairo_t
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_restore" cairo-restore) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-10-5}
+  @argument[cr]{a @symbol{cairo-t}}
+  @begin{short}
+    Restores @arg{cr} to the state saved by a preceding call to the function
+    @fun{cairo-save} and removes that state from the stack of saved states.
+  @end{short}
+
+  Since 1.0
+  @see-symbol{cairo-t}
+  @see-function{cairo-save}"
+  (cr (:pointer (:struct cairo-t))))
+
+(export 'cairo-restore)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_get_target ()
