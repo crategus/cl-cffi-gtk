@@ -26,7 +26,9 @@ Rendering with Pango
   Win32 Fonts and Rendering - Functions for shape engines to manipulate Win32 fonts
   FreeType Fonts and Rendering - Functions for shape engines to manipulate FreeType fonts
   Xft Fonts and Rendering - Font handling and rendering with the Xft backend
-  Cairo Rendering - Rendering with the Cairo backend
+
+ pango.cairo-rendering - Rendering with the Cairo backend        - Pango 1.32.6%
+
   CoreText Fonts - Font handling with CoreText fonts
 
 Low Level Functionality

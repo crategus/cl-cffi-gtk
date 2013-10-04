@@ -42,10 +42,12 @@
                (:file "pango.bidirectional")
                (:file "pango.renderer")
                (:file "pango.context")
+               (:file "pango.cairo-render")
                (:file "pango.glyph")
               )
   :depends-on (:cl-cffi-gtk-glib
                :cl-cffi-gtk-gobject
+               :cl-cffi-gtk-cairo
                :iterate))
 
 ;;; --- End of file cl-cffi-gtk-pango.asd --------------------------------------
