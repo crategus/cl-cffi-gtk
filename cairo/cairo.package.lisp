@@ -187,6 +187,21 @@
     @about-function{cairo-region-xor}
     @about-function{cairo-region-xor-rectangle}
   @end{section}
+  @begin[Transformations]{section}
+    Manipulating the current transformation matrix.
+
+    @about-function{cairo-translate}
+    @about-function{cairo-scale}
+    @about-function{cairo-rotate}
+    @about-function{cairo-transform}
+    @about-function{cairo-set-matrix}
+    @about-function{cairo-get-matrix}
+    @about-function{cairo-identity-matrix}
+    @about-function{cairo-user-to-device}
+    @about-function{cairo-user-to-device-distance}
+    @about-function{cairo-device-to-user}
+    @about-function{cairo-device-to-user-distance}
+  @end{section}
   @begin[Fonts]{section}
     @begin[Font Options]{subsection}
       How a font should be rendered.

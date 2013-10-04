@@ -23,17 +23,18 @@
 
 (defsystem :cl-cffi-gtk-cairo
   :name :cl-cffi-gtk-cairo
-  :version "1.12.14"                          ; Version of the Cairo Library
+  :version "1.12.14"                           ; Version of the Cairo Library
   :author  "Dieter Kaiser"
   :license "LLGPL"
   :serial t
   :components ((:file "cairo.package")
                (:file "cairo.init")
                (:file "cairo.version")
-               (:file "cairo.status")         ; Decoding cairo's status
+               (:file "cairo.status")          ; Decoding cairo's status
                (:file "cairo.regions")
                (:file "cairo.surface")
                (:file "cairo.context")
+               (:file "cairo.transformations") ; Transformations
                (:file "cairo.paths")
                (:file "cairo.font-options")
               )

@@ -13,8 +13,8 @@ Drawing
   cairo_pattern_t - Sources for drawing
 
  cairo.regions.lisp - Representing a pixel-aligned area         - Cairo 1.12.2 *
+ cairo.transformations.lisp - Transformations                   - Cairo 1.12.14%
 
-  Transformations - Manipulating the current transformation matrix
   text - Rendering text and glyphs
   Raster Sources - Supplying arbitrary image data
 
