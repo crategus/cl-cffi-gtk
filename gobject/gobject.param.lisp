@@ -709,8 +709,10 @@
 (defparameter g-type-param-uchar
               (mem-aref g-param-spec-types 'g-type 1)
  #+cl-cffi-gtk-documentation
- "@version{2013-7-14}
-  The @class{g-type} of @class{g-param-spec-uchar}.")
+ "@version{2013-10-4}
+  The @class{g-type} of @symbol{g-param-spec-uchar}.
+  @see-class{g-type}
+  @see-symbol{g-param-spec-uchar}")
 
 (export 'g-type-param-uchar)
 
@@ -850,17 +852,15 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_PARAM_INT
-;;;
-;;; #define G_TYPE_PARAM_INT (g_param_spec_types[3])
-;;;
-;;; The GType of GParamSpecInt.
 ;;; ----------------------------------------------------------------------------
 
 (defparameter g-type-param-int
               (mem-aref g-param-spec-types 'g-type 3)
  #+cl-cffi-gtk-documentation
- "@version{2013-7-14}
-  The @class{g-type} of @class{g-param-spec-int}.")
+ "@version{2013-10-4}
+  The @class{g-type} of @symbol{g-param-spec-int}.
+  @see-class{g-type}
+  @see-symbol{g-param-spec-int}")
 
 (export 'g-type-param-int)
 
