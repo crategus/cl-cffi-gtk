@@ -665,7 +665,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
-  (register-object-type "GtkVScale" 'gtk-hscale)
+  (register-object-type "GtkVScale" 'gtk-vscale)
   (setf *lisp-name-exceptions*
         (append '(("GtkVScale" GTK-VSCALE)) *lisp-name-exceptions*)))
 
@@ -678,13 +678,11 @@
    :type-initializer "gtk_vscale_get_type")
   nil)
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-vscale 'type)
- "@version{2013-4-28}
+ "@version{2013-10-2}
   @subheading{Warning}
-    @sym{gtk-vscale} has been deprecated, use @class{gtk-vcale} instead.
+    @sym{gtk-vscale} has been deprecated, use @class{gtk-scale} instead.
 
   @begin{short}
     The @sym{gtk-vscale} widget is used to allow the user to select a value
@@ -693,7 +691,8 @@
   @end{short}
 
   The position to show the current value, and the number of decimal places
-  shown can be set using the parent @class{gtk-scale} class's functions.")
+  shown can be set using the parent @class{gtk-scale} class's functions.
+  @see-class{gtk-scale}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_vscale_new ()

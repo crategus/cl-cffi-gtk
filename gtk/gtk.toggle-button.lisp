@@ -304,12 +304,16 @@
 
 (defun gtk-toggle-button-get-active (toggle-button)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-27}
-  @argument[toggle-button]{a @class{gtk-togglebutton} widget}
+ "@version{2013-10-2}
+  @argument[toggle-button]{a @class{gtk-toggle-button} widget}
   @return{A boolean value.}
-  Queries a @class{gtk-toggle-button} widget and returns its current state.
+  @begin{short}
+    Queries a @class{gtk-toggle-button} widget and returns its current state.
+  @end{short}
   Returns @em{true} if the toggle button is pressed in and @code{nil} if it is
-  raised."
+  raised.
+  @see-class{gtk-toggle-button}
+  @see-function{gtk-toggle-button-set-active}"
   (gtk-toggle-button-active toggle-button))
 
 (export 'gtk-toggle-button-get-active)
@@ -322,12 +326,17 @@
 
 (defun gtk-toggle-button-set-active (toggle-button is-active)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-27}
+ "@version{2013-10-2}
   @argument[toggle-button]{a @class{gtk-toggle-button} widget}
   @argument[is-active]{@em{true} or @code{nil}}
-  Sets the status of the toggle button. Set to @em{true} if you want the
-  @class{gtk-toggle-button} to be 'pressed in', and @code{nil} to raise it.
-  This action causes the toggled signal to be emitted."
+  @begin{short}
+    Sets the status of the toggle button.
+  @end{short}
+  Set to @em{true} if you want the @class{gtk-toggle-button} to be 'pressed in',
+  and @code{nil} to raise it. This action causes the toggled signal to be
+  emitted.
+  @see-class{gtk-toggle-button}
+  @see-function{gtk-toggle-button-get-active}"
   (setf (gtk-toggle-button-active toggle-button) is-active))
 
 (export 'gtk-toggle-button-set-active)

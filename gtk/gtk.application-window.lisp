@@ -60,7 +60,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-application-window 'type)
- "@version{2013-8-11}
+ "@version{2013-10-2}
   @begin{short}
     @sym{gtk-application-window} is a @class{gtk-window} subclass that offers
     some extra functionality for better integration with @class{gtk-application}
@@ -93,8 +93,8 @@
   will display the application menu, but not the menubar.
 
   If the desktop environment does not display the menubar, then
-  @class{g-application-window} will automatically show a @class{gtk-menubar} for
-  it. See the @class{gtk-application} docs for some screenshots of how this
+  @class{g-application-window} will automatically show a @class{gtk-menu-bar}
+  for it. See the @class{gtk-application} docs for some screenshots of how this
   looks on different platforms. This behaviour can be overridden with the
   @code{\"show-menubar\"} property. If the desktop environment does not display
   the application menu, then it will automatically be included in the menubar.
@@ -140,7 +140,7 @@
   @see-class{g-action-map}
   @see-class{g-menu-model}
   @see-class{gtk-actionable}
-  @see-class{gtk-menubar}
+  @see-class{gtk-menu-bar}
   @see-class{gtk-builder}
   @see-class{g-menu-model}
   @see-function{gtk-application-set-app-menu}

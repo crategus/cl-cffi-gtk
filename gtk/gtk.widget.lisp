@@ -1342,8 +1342,8 @@
       @fun{gtk-widget-get-allocated-height}. Signal handlers connected to this
       signal can modify the cairo context passed as @arg{cr} in any way they
       like and do not need to restore it. The signal emission takes care of
-      calling @code{cairo_save()} before and @code{cairo_restore()} after
-      invoking the handler.
+      calling the functions @fun{cairo-save} before and @fun{cairo-restore}
+      after invoking the handler.
       @begin[code]{table}
         @entry[widget]{The object which received the signal.}
         @entry[cr]{The cairo context to draw to.}
@@ -5493,9 +5493,9 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_render_icon_pixbuf" gtk-widget-render-icon-pixbuf)
-    (g-object gkd-pixbuf)
+    (g-object gdk-pixbuf)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-14}
+ "@version{2013-10-2}
   @argument[widget]{a @class{gtk-widget} object}
   @argument[stock-id]{a stock ID}
   @argument[size]{a stock size, a size of @code{(GtkIconSize)-1} means render at
@@ -5513,7 +5513,10 @@
   of the application and should not be modified. The pixbuf should be freed
   after use with the function @fun{g-object-unref}.
 
-  Since 3.0"
+  Since 3.0
+  @see-class{gtk-widget}
+  @see-class{gdk-pixbuf}
+  @see-symbol{gtk-icon-size}"
   (widget (g-object gtk-widget))
   (stock-id :string)
   (size gtk-icon-size))

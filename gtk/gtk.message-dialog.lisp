@@ -431,7 +431,7 @@
   @see-class{gtk-dialog}
   @see-symbol{gtk-dialog-flags}
   @see-symbol{gtk-message-type}
-  @see-symbol{gtk-buttons-type}  
+  @see-symbol{gtk-buttons-type}
   @see-symbol{gtk-response-type}"
   (let ((dialog (make-instance 'gtk-message-dialog
                                :message-type type
@@ -456,9 +456,9 @@
 (defun gtk-message-dialog-new-with-markup (parent flags type buttons message
                                            &rest args)
  #+cl-cffi-gtk-documentation
- "@version{2013-9-10}
+ "@version{2013-10-2}
   @argument[parent]{transient parent, or @code{nil} for none}
-  @argument[flags]{flags of type @symbol{gtk-dialog-type}}
+  @argument[flags]{flags of type @symbol{gtk-dialog-flags}}
   @argument[type]{type of message of type @symbol{gtk-message-type}}
   @argument[buttons]{set of buttons to use of type @symbol{gtk-buttons-type}}
   @argument[message]{format string, or @code{nil}}
@@ -481,7 +481,7 @@
   might contain '%' characters, or as a string argument.
   @begin{pre}
 (let ((dialog (gtk-message-dialog-new main-window
-                                      :destroy-with-parent
+                                      '(:destroy-with-parent)
                                       :error
                                       close
                                       nil)))
@@ -490,7 +490,7 @@
   @end{pre}
   Since 2.4
   @see-class{gtk-message-dialog}
-  @see-symbol{gtk-dialog-type}
+  @see-symbol{gtk-dialog-flags}
   @see-symbol{gtk-message-type}
   @see-symbol{gtk-buttons-type}
   @see-symbol{gtk-response-type}

@@ -149,7 +149,7 @@
   You can use a dialog window as a toplevel window from Lisp code. The following
   code shows a complete example of a function which displays a message in a
   dialog window. In this case you have to connect to the \"response\" signal.
-  It is not possible to use the functions @fun{gtk-dialog-run} and 
+  It is not possible to use the functions @fun{gtk-dialog-run} and
   @fun{gtk-dialog-response}. In the Lisp binding your program will hang, when
   using this functions to run the dialog window and to get the response.
 
