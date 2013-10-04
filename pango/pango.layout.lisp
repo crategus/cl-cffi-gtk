@@ -222,6 +222,11 @@
 ;;;     should be freed with g_object_unref().
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("pango_layout_new" pango-layout-new) (g-object pango-layout)
+  (context (g-object pango-context)))
+
+(export 'pango-layout-new)
+
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_copy ()
 ;;;
@@ -434,6 +439,13 @@
 ;;;     the new PangoFontDescription, or NULL to unset the current font
 ;;;     description
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_layout_set_font_description" pango-layout-set-font-description)
+    :void
+  (layout (g-object pango-layout))
+  (desc (g-boxed-foreign pango-font-description)))
+
+(export 'pango-layout-set-font-description)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_get_font_description ()
@@ -1321,6 +1333,19 @@
 ;;; height :
 ;;;     location to store the logical height, or NULL
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_layout_get_size" %pango-layout-get-size) :void
+  (layout (g-object pango-layout))
+  (width (:pointer :int))
+  (height (:pointer :int)))
+
+(defun pango-layout-get-size (layout)
+  (with-foreign-objects ((width :int) (height :int))
+    (%pango-layout-get-size layout width height)
+    (values (mem-ref width :int)
+            (mem-ref height :int))))
+
+(export 'pango-layout-get-size)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_get_pixel_size ()
