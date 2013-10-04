@@ -921,8 +921,15 @@ contain an entry.
       (g-signal-connect combo-box "changed"
          (lambda (widget)
            (declare (ignore widget))
-           (show-message (format nil "You clicked on row ~A~%"
-                                 (gtk-combo-box-get-active combo-box)))))
+           (let ((dialog (gtk-message-dialog-new 
+                             window
+                             '(:destroy-with-parent)
+                             :info
+                             :close
+                             "You selected row ~A"
+                             (gtk-combo-box-get-active combo-box))))
+             (gtk-dialog-run dialog)
+             (gtk-widget-destroy dialog))))
       ;; Create renderers for the cells
       (let ((renderer (make-instance 'gtk-cell-renderer-text
                                      :text "A text")))

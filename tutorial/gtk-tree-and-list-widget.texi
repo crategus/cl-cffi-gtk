@@ -1188,7 +1188,7 @@ have simply set some cell renderer properties on start-up, and the cell
 renderers adhere to those set properties meticulously.
 
 There are two different ways to connect cell renderers to data in the model:
-attributes and cell data functions. 
+attributes and cell data functions.
 
 @c -----------------------------------------------------------------------------
 @subsection Attributes
@@ -1311,7 +1311,7 @@ for a particular cell renderer. Here is an example:
    ...
 @end verbatim
 
-for each row to be rendered by this particular cell renderer, the cell data
+For each row to be rendered by this particular cell renderer, the cell data
 function is going to be called, which then retrieves the float from the model,
 and turns it into a string where the float has only one digit after the
 colon/comma, and renders that with the text cell renderer.
