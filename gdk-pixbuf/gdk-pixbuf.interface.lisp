@@ -328,49 +328,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GdkPixbufModulePattern
-;;;
-;;; struct GdkPixbufModulePattern {
-;;;     char *prefix;
-;;;     char *mask;
-;;;     int relevance;
-;;; };
-;;;
-;;; The signature of a module is a set of prefixes. Prefixes are encoded as
-;;; pairs of ordinary strings, where the second string, called the mask, if not
-;;; NULL, must be of the same length as the first one and may contain ' ', '!',
-;;; 'x', 'z', and 'n' to indicate bytes that must be matched, not matched,
-;;; "don't-care"-bytes, zeros and non-zeros. Each prefix has an associated
-;;; integer that describes the relevance of the prefix, with 0 meaning a
-;;; mismatch and 100 a "perfect match".
-;;;
-;;; Starting with &gdk-pixbuf; 2.8, the first byte of the mask may be '*',
-;;; indicating an unanchored pattern that matches not only at the beginning, but
-;;; also in the middle. Versions prior to 2.8 will interpret the '*' like an
-;;; 'x'.
-;;;
-;;; The signature of a module is stored as an array of GdkPixbufModulePatterns.
-;;; The array is terminated by a pattern where the prefix is NULL.
-;;;
-;;; GdkPixbufModulePattern *signature[] = {
-;;;   { "abcdx", " !x z", 100 },
-;;;   { "bla", NULL,  90 },
-;;;   { NULL, NULL, 0 }
-;;; };
-;;;
-;;; The example matches e.g. "auud\0" with relevance 100, and "blau" with
-;;; relevance 90.
-;;;
-;;; char *prefix;
-;;;     the prefix for this pattern
-;;;
-;;; char *mask;
-;;;     mask containing bytes which modify how the prefix is matched against
-;;;     test data
-;;;
-;;; int relevance;
-;;;     relevance of this pattern
-;;;
-;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
 
 (defcstruct gdk-pixbuf-module-pattern
@@ -378,31 +335,57 @@
   (mask :string)
   (relevance :int))
 
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gdk-pixbuf-module-pattern atdoc:*type-name-alias*) "CStruct"
+      (documentation 'gdk-pixbuf-module-pattern 'type)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-10-4}
+  @begin{short}
+    The signature of a module is a set of prefixes. Prefixes are encoded as
+    pairs of ordinary strings, where the second string, called the mask, if not
+    @code{NULL}, must be of the same length as the first one and may contain
+    ' ', '!', 'x', 'z', and 'n' to indicate bytes that must be matched, not
+    matched, \"don't-care\"-bytes, zeros and non-zeros. Each prefix has an
+    associated integer that describes the relevance of the prefix, with 0
+    meaning a mismatch and 100 a \"perfect match\".
+  @end{short}
+
+  Starting with GdkPixbuf version 2.8, the first byte of the mask may be '*',
+  indicating an unanchored pattern that matches not only at the beginning, but
+  also in the middle. Versions prior to 2.8 will interpret the '*' like an
+  'x'.
+
+  The signature of a module is stored as an array of
+  @sym{gdk-pixbuf-module-pattern}s. The array is terminated by a pattern where
+  the prefix is @code{NULL}.
+  @begin{pre}
+ GdkPixbufModulePattern *signature[] = {
+   { \"abcdx\", \" !x z\", 100 @},
+   { \"bla\", NULL,  90 @},
+   { NULL, NULL, 0 @}
+ @};
+  @end{pre}
+  The example matches e. g. \"auud\0\" with relevance 100, and \"blau\" with
+  relevance 90.
+  @begin{pre}
+(defcstruct gdk-pixbuf-module-pattern
+  (prefix :string)
+  (mask :string)
+  (relevance :int))
+  @end{pre}
+  @begin[code]{table}
+    @entry[prefix]{The prefix for this pattern.}
+    @entry[mask]{Mask containing bytes which modify how the prefix is matched
+      against test data.}
+    @entry[relvance]{Relevance of this pattern.}
+  @end{table}
+  Since 2.2
+  @see-class{gdk-pixbuf}")
+
 (export 'gdk-pixbuf-module-pattern)
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GdkPixbufFormatFlags
-;;;
-;;; typedef enum {
-;;;   GDK_PIXBUF_FORMAT_WRITABLE = 1 << 0,
-;;;   GDK_PIXBUF_FORMAT_SCALABLE = 1 << 1,
-;;;   GDK_PIXBUF_FORMAT_THREADSAFE = 1 << 2
-;;; } GdkPixbufFormatFlags;
-;;;
-;;; Flags which allow a module to specify further details about the supported
-;;; operations.
-;;;
-;;; GDK_PIXBUF_FORMAT_WRITABLE
-;;;     the module can write out images in the format.
-;;;
-;;; GDK_PIXBUF_FORMAT_SCALABLE
-;;;     the image format is scalable
-;;;
-;;; GDK_PIXBUF_FORMAT_THREADSAFE
-;;;     the module is threadsafe. &gdk-pixbuf; ignores modules that are not
-;;;     marked as threadsafe. (Since 2.28).
-;;;
-;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
 
 (defbitfield gdk-pixbuf-format-flags
@@ -410,57 +393,34 @@
   (:scalable 2)
   (:threadsave 4))
 
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gdk-pixbuf-format-flags atdoc:*symbol-name-alias*) "Bitfield"
+      (gethash 'gdk-pixbuf-format-flags atdoc:*external-symbols*)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-10-4}
+  @begin{short}
+    Flags which allow a module to specify further details about the supported
+    operations.
+  @end{short}
+  @begin{pre}
+(defbitfield gdk-pixbuf-format-flags
+  (:writable 1)
+  (:scalable 2)
+  (:threadsave 4))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:writable]{The module can write out images in the format.}
+    @entry[:scalable]{The image format is scalable.}
+    @entry[:threadsave]{The module is threadsafe. @class{gdk-pixbuf} ignores
+      modules that are not marked as threadsafe. Since 2.28.}
+  @end{table}
+  Since 2.2
+  @see-class{gdk-pixbuf}")
+
 (export 'gdk-pixbuf-format-flags)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GdkPixbufFormat
-;;;
-;;; struct GdkPixbufFormat {
-;;;   gchar *name;
-;;;   GdkPixbufModulePattern *signature;
-;;;   gchar *domain;
-;;;   gchar *description;
-;;;   gchar **mime_types;
-;;;   gchar **extensions;
-;;;   guint32 flags;
-;;;   gboolean disabled;
-;;;   gchar *license;
-;;; };
-;;;
-;;; A GdkPixbufFormat contains information about the image format accepted by a
-;;; module. Only modules should access the fields directly, applications should
-;;; use the gdk_pixbuf_format_* functions.
-;;;
-;;; gchar *name;
-;;;     the name of the image format.
-;;;
-;;; GdkPixbufModulePattern *signature;
-;;;     the signature of the module.
-;;;
-;;; gchar *domain;
-;;;     the message domain for the description.
-;;;
-;;; gchar *description;
-;;;     a description of the image format.
-;;;
-;;; gchar **mime_types;
-;;;     a NULL-terminated array of MIME types for the image format.
-;;;
-;;; gchar **extensions;
-;;;     a NULL-terminated array of typical filename extensions for the image
-;;;     format.
-;;;
-;;; guint32 flags;
-;;;     a combination of GdkPixbufFormatFlags.
-;;;
-;;; gboolean disabled;
-;;;     a boolean determining whether the loader is disabled.
-;;;
-;;; gchar *license;
-;;;     a string containing license information, typically set to shorthands
-;;;     like "GPL", "LGPL", etc.
-;;;
-;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
 
 (define-g-boxed-cstruct gdk-pixbuf-format "GdkPixbufFormat"
@@ -474,7 +434,163 @@
   (disabled :boolean)
   (license :string))
 
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gdk-pixbuf-format atdoc:*class-name-alias*) "CStruct"
+      (documentation 'gdk-pixbuf-format 'type)
+ "@version{2013-10-4}
+  @begin{short}
+    A @sym{gdk-pixbuf-format} contains information about the image format
+    accepted by a module.
+  @end{short}
+  Only modules should access the fields directly, applications should use the
+  @code{gdk-pixbuf-format-*} functions.
+  @begin{pre}
+(define-g-boxed-cstruct gdk-pixbuf-format \"GdkPixbufFormat\"
+  (name   :string)
+  (signature (:struct gdk-pixbuf-module-pattern))
+  (domain :string)
+  (description :string)
+  (mime-types g-strv)
+  (extensions g-strv)
+  (flags gdk-pixbuf-format-flags)
+  (disabled :boolean)
+  (license :string))
+  @end{pre}
+  @begin[code]{table}
+    @entry[name]{The name of the image format.}
+    @entry[signature]{The signature of type @symbol{gdk-pixbuf-module-pattern}
+      of the module.}
+    @entry[domain]{The message domain for the description.}
+    @entry[description]{A description of the image format.}
+    @entry[mime-types]{A list of MIME types for the image format.}
+    @entry[extensions]{A list of typical filename extensions for the image
+      format.}
+    @entry[flags]{A combination of @symbol{gdk-pixbuf-format-flags}.}
+    @entry[disabled]{A boolean determining whether the loader is disabled.}
+    @entry[license]{A string containing license information, typically set to
+      shorthands like \"GPL\", \"LGPL\", etc.}
+  @end{table}
+  Since 2.2
+  @see-constructor{copy-gdk-pixbuf-format}
+  @see-constructor{make-gdk-pixbuf-format}
+  @see-slot{gdk-pixbuf-format-name}
+  @see-slot{gdk-pixbuf-format-signature}
+  @see-slot{gdk-pixbuf-format-domain}
+  @see-slot{gdk-pixbuf-format-description}
+  @see-slot{gdk-pixbuf-format-mime-types}
+  @see-slot{gdk-pixbuf-format-extensions}
+  @see-slot{gdk-pixbuf-format-flags}
+  @see-slot{gdk-pixbuf-format-disabled}
+  @see-slot{gdk-pixbuf-format-license}
+  @see-class{gdk-pixbuf}
+  @see-symbol{gdk-pixbuf-module-pattern}
+  @see-symbol{gdk-pixbuf-format-flags}")
+
 (export (boxed-related-symbols 'gdk-pixbuf-format))
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;;  Contstructors
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'copy-gdk-pixbuf-format 'function)
+ "@version{2013-10-4}
+  @argument[instance]{a @class{gdk-pixbuf-format} structure}
+  Copy constructor of a @class{gdk-pixbuf-format} structure.
+  @see-class{gdk-pixbuf-format}")
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'make-gdk-pixbuf-format 'function)
+ "@version{2013-10-4}
+  Creates a @class{gdk-pixbuf-format} structure.
+  @see-class{gdk-pixbuf-format}")
+
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Slot Accessors
+;;;
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gdk-pixbuf-format-name atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gdk-pixbuf-format-name 'function)
+ "@version{2013-10-4}
+  Accessor of the slot @code{name} of the @class{gdk-pixbuf-format} structure.
+  @see-class{gdk-pixbuf-format}")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gdk-pixbuf-format-signature atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gdk-pixbuf-format-signature 'function)
+ "@version{2013-10-4}
+  Accessor of the slot @code{signature} of the @class{gdk-pixbuf-format}
+  structure.
+  @see-class{gdk-pixbuf-format}")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gdk-pixbuf-format-domain atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gdk-pixbuf-format-domain 'function)
+ "@version{2013-10-4}
+  Accessor of the slot @code{domain} of the @class{gdk-pixbuf-format}
+  structure.
+  @see-class{gdk-pixbuf-format}")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gdk-pixbuf-format-description atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gdk-pixbuf-format-description 'function)
+ "@version{2013-10-4}
+  Accessor of the slot @code{description} of the @class{gdk-pixbuf-format}
+  structure.
+  @see-class{gdk-pixbuf-format}")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gdk-pixbuf-format-mime-types atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gdk-pixbuf-format-mime-types 'function)
+ "@version{2013-10-4}
+  Accessor of the slot @code{mime-types} of the @class{gdk-pixbuf-format}
+  structure.
+  @see-class{gdk-pixbuf-format}")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gdk-pixbuf-format-extensions atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gdk-pixbuf-format-extensions 'function)
+ "@version{2013-10-4}
+  Accessor of the slot @code{extensions} of the @class{gdk-pixbuf-format}
+  structure.
+  @see-class{gdk-pixbuf-format}")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gdk-pixbuf-format-flags atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gdk-pixbuf-format-flags 'function)
+ "@version{2013-10-4}
+  Accessor of the slot @code{flags} of the @class{gdk-pixbuf-format} structure.
+  @see-class{gdk-pixbuf-format}")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gdk-pixbuf-format-disabled atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gdk-pixbuf-format-disabled 'function)
+ "@version{2013-10-4}
+  Accessor of the slot @code{disabled} of the @class{gdk-pixbuf-format}
+  structure.
+  @see-class{gdk-pixbuf-format}")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gdk-pixbuf-format-license atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gdk-pixbuf-format-license 'function)
+ "@version{2013-10-4}
+  Accessor of the slot @code{license} of the @class{gdk-pixbuf-format}
+  structure.
+  @see-class{gdk-pixbuf-format}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; GdkPixbufModuleFillVtableFunc ()

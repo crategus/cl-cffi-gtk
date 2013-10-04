@@ -114,7 +114,7 @@
 (defcfun ("gdk_pixbuf_scale_simple" gdk-pixbuf-scale-simple)
     (g-object gdk-pixbuf)
  #+cl-cffi-gtk-documentation
- "@version{2013-9-1}
+ "@version{2013-10-2}
   @argument[src]{a @class{gdk-pixbuf} object}
   @argument[dest-width]{the width of destination image}
   @argument[dest-height]{the height of destination image}
@@ -139,7 +139,7 @@
   @fun{gdk-pixbuf-scale} and @fun{gdk-pixbuf-composite}.
   @see-class{gdk-pixbuf}
   @see-symbol{gdk-interp-type}
-  @see-function{gkd-pixbuf-new-subpixbuf}
+  @see-function{gdk-pixbuf-new-subpixbuf}
   @see-function{gdk-pixbuf-scale}
   @see-function{gdk-pixbuf-composite}"
   (src (g-object gdk-pixbuf))

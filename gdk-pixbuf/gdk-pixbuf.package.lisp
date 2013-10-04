@@ -250,6 +250,43 @@
     @about-function{gdk-pixbuf-simple-anim-add-frame}
     @about-function{gdk-pixbuf-simple-anim-set-loop}
     @about-function{gdk-pixbuf-simple-anim-get-loop}
+  @end{section}
+  @begin[GdkPixbufLoader]{section}
+    Application-driven progressive image loading.
+
+    @about-class{gdk-pixbuf-loader}
+    @about-function{gdk-pixbuf-loader-new}
+    @about-function{gdk-pixbuf-loader-new-with-type}
+    @about-function{gdk-pixbuf-loader-new-with-mime-type}
+    @about-function{gdk-pixbuf-loader-get-format}
+    @about-function{gdk-pixbuf-loader-write}
+    @about-function{gdk-pixbuf-loader-set-size}
+    @about-function{gdk-pixbuf-loader-get-pixbuf}
+    @about-function{gdk-pixbuf-loader-get-animation}
+    @about-function{gdk-pixbuf-loader-close}
+  @end{section}
+  @begin[Module Interface]{section}
+    Extending GdkPixBuf.
+
+    @about-function{gdk_pixbuf-set-option}
+    @about-function{gdk-pixbuf-get-formats}
+    @about-function{gdk-pixbuf-format-copy}
+    @about-function{gdk-pixbuf-format-free}
+    @about-function{gdk-pixbuf-format-get-name}
+    @about-function{gdk-pixbuf-format-get-description}
+    @about-function{gdk-pixbuf-format-get-mime-types}
+    @about-function{gdk-pixbuf-format-get-extensions}
+    @about-function{gdk-pixbuf-format-is-writable}
+    @about-function{gdk-pixbuf-format-is-scalable}
+    @about-function{gdk-pixbuf-format-is-disabled}
+    @about-function{gdk-pixbuf-format-set-disabled}
+    @about-function{gdk-pixbuf-format-get-license}
+    @about-struct{gdk-pixbuf-format}
+    @about-symbol{gdk-pixbuf-format-flags}
+    @about-type{gdk-pixbuf-module-pattern}
+    @about-symbol{gdk-pixbuf-module}
+    @about-symbol{gdk-pixbuf-animation-class}
+    @about-symbol{gdk-pixbuf-animation-iter-class}
   @end{section}")
 
 ;;; --- End of file gdk.pixbuf-package.lisp ------------------------------------
