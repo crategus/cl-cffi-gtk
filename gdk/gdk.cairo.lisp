@@ -54,9 +54,10 @@
            gdk-window-create-similar-surface)
     (:pointer (:struct cairo-surface-t))
  #+cl-cffi-gtk-documentation
- "@version{2013-4-5}
+ "@version{2013-10-3}
   @argument[window]{window to make new surface similar to}
-  @argument[content]{the content for the new surface}
+  @argument[content]{the content for the new surface of type
+   @symbol{cairo-content-t}}
   @argument[width]{width of the new surface}
   @argument[height]{height of the new surface}
   @begin{return}
@@ -67,16 +68,21 @@
   @end{return}
   @begin{short}
     Create a new surface that is as compatible as possible with the given
-    window. For example the new surface will have the same fallback resolution
-    and font options as window. Generally, the new surface will also use the
-    same backend as window, unless that is not possible for some reason. The
-    type of the returned surface may be examined with cairo_surface_get_type().
+    window.
   @end{short}
+  For example the new surface will have the same fallback resolution and font
+  options as window. Generally, the new surface will also use the same backend
+  as window, unless that is not possible for some reason. The type of the
+  returned surface may be examined with the function
+  @fun{cairo-surface-get-type}.
 
   Initially the surface contents are all 0 (transparent if contents have
   transparency, black otherwise.)
 
-  Since 2.22"
+  Since 2.22
+  @see-class{gdk-window}
+  @see-function{cairo-surface-destroy}
+  @see-function{cairo-surface-get-type}"
   (window (g-object gdk-window))
   (content cairo-content-t)
   (width :int)
