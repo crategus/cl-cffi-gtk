@@ -2346,9 +2346,9 @@
 
 (defcfun ("gdk_window_restack" gdk-window-restack) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-8-31}
+ "@version{2013-10-2}
   @argument[window]{a @class{gdk-window} object}
-  @argument[sibling]{a @class{gkd-window} that is a sibling of window,
+  @argument[sibling]{a @class{gdk-window} that is a sibling of window,
     or @code{nil}}
   @argument[above]{a boolean}
   @begin{short}
@@ -3072,8 +3072,8 @@
 
 (defcfun ("gdk_window_configure_finished" gdk-window-configure-finished) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-9-1}
-  @argument[window]{a toplevel @class{gkd-window} object}
+ "@version{2013-10-2}
+  @argument[window]{a toplevel @class{gdk-window} object}
   @begin{short}
     Signal to the window system that the application has finished handling
     Configure events it has received.
@@ -3448,8 +3448,8 @@
 (defcfun ("gdk_window_input_shape_combine_region"
            gdk-window-input-shape-combine-region) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-9-1}
-  @argument[window]{a @class{gkd-window} object}
+ "@version{2013-10-2}
+  @argument[window]{a @class{gdk-window} object}
   @argument[shape-region]{region of window to be non-transparent}
   @argument[offset-x]{x position of @arg{shape-region} in window coordinates}
   @argument[offset-y]{y position of @arg{shape-region} in window coordinates}
@@ -3912,8 +3912,8 @@
 
 (defcfun ("gdk_window_get_height" gdk-window-get-height) :int
  #+cl-cffi-gtk-documentation
- "@version{2013-9-1}
-  @argument[window]{a @class{gkd-window} object}
+ "@version{2013-10-2}
+  @argument[window]{a @class{gdk-window} object}
   @return{The height of window.}
   @begin{short}
     Returns the height of the given @arg{window}.
