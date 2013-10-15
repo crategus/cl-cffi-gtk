@@ -96,7 +96,6 @@
 ;;; GtkComboBox implements AtkImplementorIface, GtkBuildable, GtkCellLayout and
 ;;; GtkCellEditable.
 ;;;
-;;;
 ;;; Style Properties
 ;;;
 ;;;   "appears-as-list"          gboolean             : Read
@@ -1083,40 +1082,57 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_get_model ()
-;;;
-;;; GtkTreeModel * gtk_combo_box_get_model (GtkComboBox *combo_box);
-;;;
-;;; Returns the GtkTreeModel which is acting as data source for combo_box.
-;;;
-;;; combo_box :
-;;;     A GtkComboBox
-;;;
-;;; Returns :
-;;;     A GtkTreeModel which was passed during construction.
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-combo-box-get-model))
+
+(defun gtk-combo-box-get-model (combo-box)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-10-15}
+  @argument[combo-box]{a @class{gtk-combo-box} widget}
+  @return{A @class{gtk-tree-model} object which was passed during construction.}
+  @begin{short}
+    Returns the @class{gtk-tree-model} object which is acting as data source for
+    @arg{combo-box}.
+  @end{short}
+
+  Since 2.4
+  @see-class{gtk-combo-box}
+  @see-class{gtk-tree-model}
+  @see-function{gtk-combo-box-set-model}"
+  (gtk-combo-box-model combo-box))
+
+(export 'gtk-combo-box-model)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_set_model ()
-;;;
-;;; void gtk_combo_box_set_model (GtkComboBox *combo_box, GtkTreeModel *model);
-;;;
-;;; Sets the model used by combo_box to be model. Will unset a previously set
-;;; model (if applicable). If model is NULL, then it will unset the model.
-;;;
-;;; Note that this function does not clear the cell renderers, you have to call
-;;; gtk_cell_layout_clear() yourself if you need to set up different cell
-;;; renderers for the new model.
-;;;
-;;; combo_box :
-;;;     A GtkComboBox
-;;;
-;;; model :
-;;;     A GtkTreeModel.
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-combo-box-set-model))
+
+(defun gtk-combo-box-set-model (combo-box model)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-10-15}
+  @argument[combo-box]{a @class{gtk-combo-box} widget}
+  @argument[model]{a @class{gtk-tree-model} object}
+  @begin{short}
+    Sets the model used by @arg{combo-box} to be @arg{model}.
+  @end{short}
+  Will unset a previously set model (if applicable). If @arg{model} is
+  @code{nil}, then it will unset the model.
+
+  Note that this function does not clear the cell renderers, you have to call
+  the function @fun{gtk-cell-layout-clear} yourself if you need to set up
+  different cell renderers for the new model.
+
+  Since 2.4
+  @see-class{gtk-combo-box}
+  @see-class{gtk-tree-model}
+  @see-function{gtk-combo-box-get-model}
+  @see-function{gtk-cell-layout-clear}"
+  (setf (gtk-combo-box-model combo-box) model))
+
+(export 'gtk-combo-box-set-model)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_popup_for_device ()
