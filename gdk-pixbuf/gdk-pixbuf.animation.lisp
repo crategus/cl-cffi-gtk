@@ -98,16 +98,17 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gdk-pixbuf-animation 'type)
- "@version{2013-8-10}
+ "@version{2013-10-13}
   @begin{short}
-    The GdkPixBuf library provides a simple mechanism to load and represent
+    The GdkPixbuf library provides a simple mechanism to load and represent
     animations. An animation is conceptually a series of frames to be displayed
     over time. The animation may not be represented as a series of frames
     internally; for example, it may be stored as a sprite and instructions for
     moving the sprite around a background. To display an animation you do not
-    need to understand its representation, however; you just ask GdkPixBuf what
-    should be displayed at a given point in time.
+    need to understand its representation, however; you just ask
+    @class{gdk-pixbuf} what should be displayed at a given point in time.
   @end{short}
+  @see-class{gdk-pixbuf}
   @see-slot{gdk-pixbuf-animation-loop}")
 
 ;;; ----------------------------------------------------------------------------
@@ -118,7 +119,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "loop" 'gdk-pixbuf-animation) 't)
- "The @code{\"loop\"} property of type @code{gboolean} (Read / Write) @br{}
+ "The @code{\"loop\"} property of type @code{:boolean} (Read / Write) @br{}
   Whether the animation should loop when it reaches the end. @br{}
   Default value: @code{nil} @br{}
   Since 2.18")
@@ -431,22 +432,27 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pixbuf_animation_get_static_image ()
-;;;
-;;; GdkPixbuf * gdk_pixbuf_animation_get_static_image
-;;;                                              (GdkPixbufAnimation *animation)
-;;;
-;;; If an animation is really just a plain image (has only one frame), this
-;;; function returns that image. If the animation is an animation, this function
-;;; returns a reasonable thing to display as a static unanimated image, which
-;;; might be the first frame, or something more sophisticated. If an animation
-;;; hasn't loaded any frames yet, this function will return NULL.
-;;;
-;;; animation :
-;;;     a GdkPixbufAnimation
-;;;
-;;; Returns :
-;;;     unanimated image representing the animation. [transfer none]
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gdk_pixbuf_animation_get_static_image"
+           gdk-pixbuf-animation-get-static-image) (g-object gdk-pixbuf)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-10-13}
+  @argument[animation]{a @class{gdk-pixbuf-animation} object}
+  @return{Unanimated image representing the animation.}
+  @begin{short}
+    If an animation is really just a plain image, has only one frame, this
+    function returns that image.
+  @end{short}
+  If the animation is an animation, this function returns a reasonable thing to
+  display as a static unanimated image, which might be the first frame, or
+  something more sophisticated. If an animation has not loaded any frames yet,
+  this function will return @code{nil}.
+  @see-class{gdk-pixbuf}
+  @see-class{gdk-pixbuf-animation}"
+  (animation (g-object gdk-pixbuf-animation)))
+
+(export 'gdk-pixbuf-animation-get-static-image)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pixbuf_animation_iter_advance ()
