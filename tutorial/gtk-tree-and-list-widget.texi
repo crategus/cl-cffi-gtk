@@ -11,10 +11,9 @@
 
 @menu
 * Overview::
-* Model Renderer Column View::
 * GtkListStore and GtkTreeStore::
 * Creating a Tree View::
-* GtkTreeViewColumn and GtkCellRenderer::
+* Mapping Data to the Screen::
 * Selections Double-Clicks and Context Menus::
 * Sorting::
 * Editable Cells::
@@ -324,25 +323,19 @@ row's fields to the filename and the file size.
 The GLib type system (GType) is used to indicate what type of data is stored in
 a model column.  These are the most commonly used types:
 @itemize
-  @item "gboolean"
-  @item "gint", "guint"
-  @item "glong", "gulong", "gint64", "guint64"
-  @item "gfloat", "gdouble"
-  @item "gchararray"
-  @item "gpointer"
-  @item "GdkPixbuf"
+  @item @code{"gboolean"}
+  @item @code{"gint"}, @code{"guint"}
+  @item @code{"glong"}, @code{"gulong"}, @code{"gint64"}, @code{"guint64"}
+  @item @code{"gfloat"}, @code{"gdouble"}
+  @item @code{"gchararray"}
+  @item @code{"gpointer"}
+  @item @code{"GdkPixbuf"}
 @end itemize
 
 You do not need to understand the type system, it will usually suffice to know
 the above types, so you can tell a list store or tree store what kind of data
-you want to store.  Advanced users can derive their own types from the
-fundamental GLib types.  For simple structures you could register a new boxed
-type for example, but that is usually not necessary. "gpointer" will often do as
-well, you will just need to take care of memory allocation and freeing yourself
-then.
-
-Storing GObject-derived types is a special case that is dealt with further
-below.
+you want to store.  Storing GObject-derived types is a special case that is
+dealt with further below.
 
 Here is an example of how to create a list store:
 @verbatim
@@ -440,14 +433,14 @@ compiler.  If you need to make a copy of a tree path, use the function
 
 Another way to refer to a row in a list or tree is @xurl{gtk-tree-iter}.  A tree
 iter is just a structure that contains a couple of pointers that mean something
-to the model you are using. Tree iters are used internally by models, and they
+to the model you are using.  Tree iters are used internally by models, and they
 often contain a direct pointer to the internal data of the row in question.  You
 should never look at the content of a tree iter and you must not modify it
-directly either.  All tree models (and therefore also @xurl{gtk-list-store} and
-@xurl{gtk-tree-store}) must support the @xurl{gtk-tree-model} functions that
-operate on tree iters (e. g. get the tree iter for the first child of the row
+directly either.  All tree models, and therefore also @xurl{gtk-list-store} and
+@xurl{gtk-tree-store}, must support the @xurl{gtk-tree-model} functions that
+operate on tree iters, e. g. get the tree iter for the first child of the row
 specified by a given tree iter, get the first row in the list/tree, get the n-th
-child of a given iter etc.). Some of these functions are:
+child of a given iter etc.  Some of these functions are:
 
 @table @code
   @item @xurl{gtk-tree-model-get-iter-first}
@@ -458,7 +451,7 @@ child of a given iter etc.). Some of these functions are:
 
   @item @xurl{gtk-tree-model-iter-children}
   Sets the first given iter to the first child of the row referenced by the
-  second iter (not very useful for lists, mostly useful for trees).
+  second iter; not very useful for lists, mostly useful for trees.
 
   @item @xurl{gtk-tree-model-iter-n-children}
   Returns the number of children the row referenced by the provided iter
@@ -472,8 +465,8 @@ child of a given iter etc.). Some of these functions are:
   second iter, you can get the first iter set to the n-th row of a list.
 
   @item @xurl{gtk-tree-model-iter-parent}
-  Sets the first iter to the parent of the row referenced by the second iter
-  (does nothing for lists, only useful for trees).
+  Sets the first iter to the parent of the row referenced by the second iter;
+  does nothing for lists, only useful for trees.
 @end table
 
 Almost all of those functions return @emph{true} if the requested operation
@@ -527,9 +520,9 @@ position of the referenced row.
 
 Note that using tree row references entails a small overhead.  This is hardly
 significant for 99.9 % of all applications out there, but when you have multiple
-thousands of rows and/or row references, this might be something to keep in mind
-(because whenever rows are inserted, removed, or reordered, a signal will be
-sent out and processed for each row reference).
+thousands of rows and/or row references, this might be something to keep in
+mind, because whenever rows are inserted, removed, or reordered, a signal will
+be sent out and processed for each row reference.
 
 If you have read the tutorial only up to here so far, it is hard to explain
 really what tree row references are good for.  An example where tree row
@@ -537,13 +530,13 @@ references come in handy can be found further below in the section on removing
 multiple rows in one go.
 
 In practice, a programmer can either use tree row references to keep track of
-rows over time, or store tree iters directly (if, and only if, the model has
-persistent iters).  Both @xurl{gtk-list-store} and @xurl{gtk-tree-store} have
+rows over time, or store tree iters directly, if, and only if, the model has
+persistent iters.  Both @xurl{gtk-list-store} and @xurl{gtk-tree-store} have
 persistent iters, so storing iters is possible.  However, using tree row
 references is definitively the right way to do things, even though it comes with
 some overhead that might impact performance in case of trees that have a very
-large number of rows (in that case it might be preferable to write a custom
-model anyway though).  Especially beginners might find it easier to handle and
+large number of rows, in that case it might be preferable to write a custom
+model anyway though.  Especially beginners might find it easier to handle and
 store tree row references than iters, because tree row references are handled by
 pointer value, which you can easily add to a list or pointer array, while it is
 easy to store tree iters in a wrong way.
@@ -1064,7 +1057,7 @@ Different cell renderers exist for different purposes:
 
   @item @xurl{gtk-cell-editable}
   is a special cell that implements editable cells (i. e. @xurl{gtk-entry} or
-  @xurl{gtk-spinbutton} in a treeview).  This is not a cell renderer! If you
+  @xurl{gtk-spin-button} in a treeview).  This is not a cell renderer!  If you
   want to have editable text cells, use @xurl{gtk-cell-renderer-text} and make
   sure the "editable" property is set.  @xurl{gtk-cell-editable} is only used by
   implementations of editable cells and widgets that can be inside of editable

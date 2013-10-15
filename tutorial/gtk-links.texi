@@ -119,6 +119,10 @@
 @set gtk-calendar-get-date http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-calendar-get-date.html
 @set gtk-calendar-set-detail-func http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-calendar-set-detail-func.html
 
+@c GtkCellEditable
+
+@set gtk-cell-editable http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-cell-editable.html
+
 @c GtkCellLayout
 
 @set gtk-cell-layout http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-cell-layout.html
@@ -480,6 +484,10 @@
 
 @set gtk-show-uri http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-show-uri.html
 
+@c GtkSpinButton
+
+@set gtk-spin-button http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-spin-button.html
+
 @c GtkStatusbar
 
 @set gtk-statusbar http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-statusbar.html
@@ -606,6 +614,7 @@
 @c GtkTreeModel
 
 @set gtk-tree-model http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-tree-model.html
+@set gtk-tree-model-get http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-model-get.html
 @set gtk-tree-model-get-iter http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-model-get-iter.html
 @set gtk-tree-model-get-iter-first http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-model-get-iter-first.html
 @set gtk-tree-model-get-iter-next http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-model-get-iter-next.html
