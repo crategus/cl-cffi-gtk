@@ -427,11 +427,24 @@
 ;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("cairo_close_path" cairo-close-path) :void
+  (cr (:pointer (:struct cairo-t))))
+
+(export 'cairo-close-path)
+
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_arc ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("cairo_arc" cairo-arc) :void
+(defcfun ("cairo_arc" %cairo-arc) :void
+  (cr (:pointer (:struct cairo-t)))
+  (xc :double)
+  (yc :double)
+  (radius :double)
+  (angle1 :double)
+  (angle2 :double))
+
+(defun cairo-arc (cr xc yc radius angle1 angle2)
  #+cl-cffi-gtk-documentation
  "@version{2013-8-1}
   @argument[cr]{a cairo context}
@@ -479,12 +492,12 @@
   @see-symbol{cairo-t}
   @see-function{cairo-new-sub-path}
   @see-function{cairo-arc-negative}"
-  (cr (:pointer (:struct cairo-t)))
-  (xc :double)
-  (yc :double)
-  (radius :double)
-  (angle1 :double)
-  (angle2 :double))
+  (%cairo-arc cr
+              (coerce xc 'double-float)
+              (coerce yc 'double-float)
+              (coerce radius 'double-float)
+              (coerce angle1 'double-float)
+              (coerce angle2 'double-float)))
 
 (export 'cairo-arc)
 
@@ -573,24 +586,30 @@
 ;;; cairo_line_to ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("cairo_line_to" cairo-line-to) :void
- #+cl-cffi-gtk-documentation
- "@version{2013-3-3}
-  @argument[cr]{a cairo context}
-  @argument[x]{the X coordinate of the end of the new line}
-  @argument[y]{the Y coordinate of the end of the new line}
-  @begin{short}
-    Adds a line to the path from the current point to position (x, y) in
-    user-space coordinates. After this call the current point will be (x, y).
-  @end{short}
-
-  If there is no current point before the call to cairo_line_to() this
-  function will behave as cairo_move_to(cr, x, y).
-
-  Since 1.0"
+(defcfun ("cairo_line_to" %cairo-line-to) :void
   (cr (:pointer (:struct cairo-t)))
   (x :double)
   (y :double))
+
+(defun cairo-line-to (cr x y)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-10-13}
+  @argument[cr]{a cairo context}
+  @argument[x]{the x coordinate of the end of the new line}
+  @argument[y]{the y coordinate of the end of the new line}
+  @begin{short}
+    Adds a line to the path from the current point to position
+   (@arg{x}, @arg{y}) in user-space coordinates. After this call the current
+   point will be (@arg{x}, @arg{y}).
+  @end{short}
+
+  If there is no current point before the call to @sym{cairo-line-to} this
+  function will behave as @code{(cairo-move-to cr x y)}.
+
+  Since 1.0
+  @see-symbol{cairo-t}
+  @see-function{cairo-move-to}"
+  (%cairo-line-to cr (coerce x 'double-float) (coerce y 'double-float)))
 
 (export 'cairo-line-to)
 
@@ -598,20 +617,26 @@
 ;;; cairo_move_to ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("cairo_move_to" cairo-move-to) :void
- #+cl-cffi-gtk-documentation
- "@version{2013-3-3}
-  @argument[cr]{a cairo context}
-  @argument[x]{the X coordinate of the new position}
-  @argument[y]{the Y coordinate of the new position}
-  @begin{short}
-    Begin a new sub-path. After this call the current point will be (x, y).
-  @end{short}
-
-  Since 1.0"
+(defcfun ("cairo_move_to" %cairo-move-to) :void
   (cr (:pointer (:struct cairo-t)))
   (x :double)
   (y :double))
+
+(defun cairo-move-to (cr x y)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-10-13}
+  @argument[cr]{a cairo context}
+  @argument[x]{the x coordinate of the new position}
+  @argument[y]{the y coordinate of the new position}
+  @begin{short}
+    Begin a new sub-path. After this call the current point will be
+    (@arg{x}, @arg{y}).
+  @end{short}
+
+  Since 1.0
+  @see-symbol{cairo-t}
+  @see-function{cairo-line-to}"
+  (%cairo-move-to cr (coerce x 'double-float) (coerce y 'double-float)))
 
 (export 'cairo-move-to)
 
@@ -619,33 +644,44 @@
 ;;; cairo_rectangle ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("cairo_rectangle" cairo-rectangle) :void
- #+cl-cffi-gtk-documentation
- "@version{2013-3-3}
-  @argument[cr]{a cairo context}
-  @argument[x]{the X coordinate of the top left corner of the rectangle}
-  @argument[y]{the Y coordinate to the top left corner of the rectangle}
-  @argument[width]{the width of the rectangle}
-  @argument[height]{the height of the rectangle}
-  @begin{short}
-    Adds a closed sub-path rectangle of the given size to the current path at
-    position (x, y) in user-space coordinates.
-  @end{short}
-
-  This function is logically equivalent to:
-  @begin{pre}
-    cairo_move_to (cr, x, y);
-    cairo_rel_line_to (cr, width, 0);
-    cairo_rel_line_to (cr, 0, height);
-    cairo_rel_line_to (cr, -width, 0);
-    cairo_close_path (cr);
-  @end{pre}
-  Since 1.0"
+(defcfun ("cairo_rectangle" %cairo-rectangle) :void
   (cr (:pointer (:struct cairo-t)))
   (x :double)
   (y :double)
   (width :double)
   (height :double))
+
+(defun cairo-rectangle (cr x y width height)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-10-13}
+  @argument[cr]{a cairo context}
+  @argument[x]{the x coordinate of the top left corner of the rectangle}
+  @argument[y]{the y coordinate to the top left corner of the rectangle}
+  @argument[width]{the width of the rectangle}
+  @argument[height]{the height of the rectangle}
+  @begin{short}
+    Adds a closed sub-path rectangle of the given size to the current path at
+    position (@arg{x}, @arg{y}) in user-space coordinates.
+  @end{short}
+
+  This function is logically equivalent to:
+  @begin{pre}
+    (cairo-move-to cr x y)
+    (cairo-rel-line-to cr width 0)
+    (cairo-rel-line-to cr 0 height)
+    (cairo-rel-line-to cr -width 0)
+    (cairo-close-path cr)
+  @end{pre}
+  Since 1.0
+  @see-symbol{cairo-t}
+  @see-function{cairo-move-to}
+  @see-function{cairo-rel-line-to}
+  @see-function{cairo-close-path}"
+  (%cairo-rectangle cr
+                    (coerce x 'double-float)
+                    (coerce y 'double-float)
+                    (coerce width 'double-float)
+                    (coerce height 'double-float)))
 
 (export 'cairo-rectangle)
 
@@ -750,33 +786,68 @@
 ;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
 
+;;; void cairo_rel_curve_to (cairo_t *cr,
+;;;                          double dx1,
+;;;                          double dy1,
+;;;                          double dx2,
+;;;                          double dy2,
+;;;                          double dx3,
+;;;                          double dy3);
+
+(defcfun ("cairo_rel_curve_to" %cairo-rel-curve-to) :void
+  (cr (:pointer (:struct cairo-t)))
+  (dx1 :double)
+  (dy1 :double)
+  (dx2 :double)
+  (dy2 :double)
+  (dx3 :double)
+  (dy3 :double))
+
+(defun cairo-rel-curve-to (cr dx1 dy1 dx2 dy2 dx3 dy3)
+  (%cairo-rel-curve-to cr
+                       (coerce dx1 'double-float)
+                       (coerce dy1 'double-float)
+                       (coerce dx2 'double-float)
+                       (coerce dy2 'double-float)
+                       (coerce dx3 'double-float)
+                       (coerce dy3 'double-float)))
+
+(export 'cairo-rel-curve-to)
+
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_rel_line_to ()
-;;;
-;;; void cairo_rel_line_to (cairo_t *cr, double dx, double dy);
-;;;
-;;; Relative-coordinate version of cairo_line_to(). Adds a line to the path from
-;;; the current point to a point that is offset from the current point by
-;;; (dx, dy) in user space. After this call the current point will be offset by
-;;; (dx, dy).
-;;;
-;;; Given a current point of (x, y), cairo_rel_line_to(cr, dx, dy) is logically
-;;; equivalent to cairo_line_to(cr, x + dx, y + dy).
-;;;
-;;; It is an error to call this function with no current point. Doing so will
-;;; cause cr to shutdown with a status of CAIRO_STATUS_NO_CURRENT_POINT.
-;;;
-;;; cr :
-;;;     a cairo context
-;;;
-;;; dx :
-;;;     the X offset to the end of the new line
-;;;
-;;; dy :
-;;;     the Y offset to the end of the new line
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_rel_line_to" %cairo-rel-line-to) :void
+  (cr (:pointer (:struct cairo-t)))
+  (dx :double)
+  (dy :double))
+
+(defun cairo-rel-line-to (cr dx dy)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-10-14}
+  @argument[cr]{a cairo context}
+  @argument[dx]{the x offset to the end of the new line}
+  @argument[dy]{the y offset to the end of the new line}
+  @begin{short}
+    Relative-coordinate version of the function @fun{cairo-line-to}.
+  @end{short}
+  Adds a line to the path from the current point to a point that is offset from
+  the current point by (@arg{dx}, @arg{dy}) in user space. After this call the
+  current point will be offset by (@arg{dx}, @arg{dy}).
+
+  Given a current point of (x, y), @code{(cairo-rel-line-to cr dx dy)} is
+  logically equivalent to @code{(cairo-line-to cr (+ x dx) (+ y dy))}.
+
+  It is an error to call this function with no current point. Doing so will
+  cause @arg{cr} to shutdown with a status of @code{:no-current-point}.
+
+  Since 1.0
+  @see-symbol{cairo-t}
+  @see-function{cairo-line-to}"
+  (%cairo-rel-line-to cr (coerce dx 'double-float) (coerce dy 'double-float)))
+
+(export 'cairo-rel-line-to)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_rel_move_to ()

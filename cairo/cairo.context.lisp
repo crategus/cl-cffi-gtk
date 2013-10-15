@@ -487,7 +487,13 @@
 ;;; cairo_set_source_rgb ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("cairo_set_source_rgb" cairo-set-source-rgb) :void
+(defcfun ("cairo_set_source_rgb" %cairo-set-source-rgb) :void
+  (cr (:pointer (:struct cairo-t)))
+  (red :double)
+  (green :double)
+  (blue :double))
+
+(defun cairo-set-source-rgb (cr red green blue)
  #+cl-cffi-gtk-documentation
  "@version{2012-8-4}
   @argument[cr]{a cairo context}
@@ -509,10 +515,10 @@
 
   Since 1.0
   @see-symbol{cairo-t}"
-  (cr (:pointer (:struct cairo-t)))
-  (red :double)
-  (green :double)
-  (blue :double))
+  (%cairo-set-source-rgb cr
+                         (coerce red 'double-float)
+                         (coerce green 'double-float)
+                         (coerce blue 'double-float)))
 
 (export 'cairo-set-source-rgb)
 
@@ -553,6 +559,28 @@
 ;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
 
+;;; void cairo_set_source_rgba (cairo_t *cr,
+;;;                             double red,
+;;;                             double green,
+;;;                             double blue,
+;;;                             double alpha);
+
+(defcfun ("cairo_set_source_rgba" %cairo-set-source-rgba) :void
+  (cr (:pointer (:struct cairo-t)))
+  (red :double)
+  (green :double)
+  (blue :double)
+  (alpha :double))
+
+(defun cairo-set-source-rgba (cr red green blue alpha)
+  (%cairo-set-source-rgba cr
+                          (coerce red 'double-float)
+                          (coerce green 'double-float)
+                          (coerce blue 'double-float)
+                          (coerce alpha 'double-float)))
+
+(export 'cairo-set-source-rgba)
+
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_set_source ()
 ;;;
@@ -578,6 +606,12 @@
 ;;;
 ;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_set_source" cairo-set-source) :void
+  (cr (:pointer (:struct cairo-t)))
+  (source (:pointer (:struct cairo-pattern-t))))
+
+(export 'cairo-set-source)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_set_source_surface ()
@@ -1743,6 +1777,12 @@
 ;;;
 ;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_mask" cairo-mask) :void
+  (cr (:pointer (:struct cairo-t)))
+  (pattern (:pointer (:struct cairo-pattern-t))))
+
+(export 'cairo-mask)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_mask_surface ()

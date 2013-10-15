@@ -33,9 +33,12 @@
                (:file "cairo.status")          ; Decoding cairo's status
                (:file "cairo.regions")
                (:file "cairo.surface")
+               (:file "cairo.pattern")         ; Sources for drawing
                (:file "cairo.context")
                (:file "cairo.transformations") ; Transformations
                (:file "cairo.paths")
+               (:file "cairo.scaled-font")     ; Font face at particular size
+               (:file "cairo.text")            ; Rendering text and glyphs
                (:file "cairo.font-options")
               )
   :depends-on (:cffi
