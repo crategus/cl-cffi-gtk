@@ -56,6 +56,9 @@
 ;;; GdkRGBA
 ;;; ----------------------------------------------------------------------------
 
+(eval-when (:execute :load-toplevel :compile-toplevel)
+  (foreign-funcall "gdk_rgba_get_type" g-type))
+
 (define-g-boxed-cstruct gdk-rgba "GdkRGBA"
   (red :double :initform 0.0d0)
   (green :double :initform 0.0d0)
