@@ -599,15 +599,19 @@
 
 (defun gtk-tree-store-append (tree-store parent)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-14}
+ "@version{2013-10-15}
   @argument[tree-store]{a @class{gtk-tree-store} object}
   @argument[parent]{a valid @class{gtk-tree-iter} structure, or @code{nil}}
   @return{The @class{gtk-tree-iter} of the appended row.}
   Appends a new row to @arg{tree-store}. If @arg{parent} is non-@code{nil}, then
   it will append the new row after the last child of @arg{parent}, otherwise it
   will append a row to the top level. The row will be empty after this function
-  is called. To fill in values, you need to call @fun{gtk-tree-store-set} or
-  @fun{gtk-tree-store-set-value}."
+  is called. To fill in values, you need to call the functions
+  @fun{gtk-tree-store-set} or @fun{gtk-tree-store-set-value}.
+  @see-class{gtk-tree-store}
+  @see-class{gtk-tree-iter}
+  @see-function{gtk-tree-store-set}
+  @see-function{gtk-tree-store-set-value}"
   (let ((iter (make-gtk-tree-iter)))
     (%gtk-tree-store-append tree-store iter parent)
     iter))

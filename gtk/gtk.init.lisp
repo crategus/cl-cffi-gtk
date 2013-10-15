@@ -39,10 +39,6 @@
 
 ;;; ----------------------------------------------------------------------------
 
-;#+windows
-;(eval-when (:compile-toplevel :load-toplevel :execute)
-;  (setf *features* (remove :thread-support *features*)))
-
 #+thread-support
 (format t "THREAD-SUPPORT is available~%")
 
