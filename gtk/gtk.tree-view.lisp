@@ -997,11 +997,13 @@
 
 (defun gtk-tree-view-new-with-model (model)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-17}
+ "@version{2013-10-16}
   @argument[model]{the model}
   @return{A newly created @class{gtk-tree-view} widget.}
   Creates a new @class{gtk-tree-view} widget with the model initialized to
-  model."
+  model.
+  @see-class{gtk-tree-view}
+  @see-class{gtk-tree-model}"
   (make-instance 'gtk-tree-view
                  :model model))
 
@@ -1015,12 +1017,14 @@
 
 (defun gtk-tree-view-get-model (tree-view)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-17}
+ "@version{2013-10-16}
   @argument[tree-view]{a @class{gtk-tree-view} widget}
   @return{A @class{gtk-tree-model} object, or @code{nil} if none is currently
     being used.}
   Returns the model the @class{gtk-tree-view} widget is based on. Returns
-  @code{nil} if the model is unset."
+  @code{nil} if the model is unset.
+  @see-class{gtk-tree-view}
+  @see-function{gtk-tree-view-set-model}"
   (gtk-tree-view-model tree-view))
 
 (export 'gtk-tree-view-get-model)
@@ -1033,12 +1037,14 @@
 
 (defun gtk-tree-view-set-model (tree-view model)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-17}
+ "@version{2013-10-16}
   @argument[tree-view]{a @class{gtk-tree-node} object}
   @argument[model]{the model}
   Sets the model for a @class{gtk-tree-view}. If the @arg{tree-view} already has
   a model set, it will remove it before setting the new @arg{model}. If
-  @arg{model} is @code{nil}, then it will unset the old model."
+  @arg{model} is @code{nil}, then it will unset the old model.
+  @see-class{gtk-tree-view}
+  @see-function{gtk-tree-view-get-model}"
   (setf (gtk-tree-view-model tree-view) model))
 
 (export 'gtk-tree-view-set-model)
