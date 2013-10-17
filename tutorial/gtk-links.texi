@@ -337,6 +337,8 @@
 @set gtk-list-store-append http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-list-store-append.html
 @set gtk-list-store-set http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-list-store-set.html
 @set gtk-list-store-set-value http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-list-store-set-value.html
+@set gtk-list-store-remove http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-list-store-remove.html
+@set gtk-list-store-clear http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-list-store-clear.html
 
 @c GtkMenuItem
 
@@ -655,10 +657,16 @@
 @set gtk-tree-store-append http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-store-append.html
 @set gtk-tree-store-set http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-store-set.html
 @set gtk-tree-store-set-value http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-store-set-value.html
+@set gtk-tree-store-remove http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-store-remove.html
+@set gtk-tree-store-clear http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-store-clear.html
 
 @c GtkTreeView
 
 @set gtk-tree-view http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-tree-view.html
+@set gtk-tree-view-new-with-model http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-view-new-with-model.html
+@set gtk-tree-view-get-model http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-view-get-model.html
+@set gtk-tree-view-set-model http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-view-set-model.html
+@set gtk-tree-view-set-rules-hint http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-view-set-rules-hint.html
 
 @c GtkTreeViewColumn
 
