@@ -55,7 +55,7 @@
     (define-foreign-library gtk
       ((:and :unix (:not :darwin))
        (:or "libgtk-3.so.0" "libgtk-3.so"))
-      (:darwin (:or "libgtk-x11-2.0.0.dylib" "libgtk-x11-2.0.dylib"))
+      (:darwin (:or "libgtk-x11-3.0.0.dylib" "libgtk-x11-3.0.dylib"))
       (:windows (:or "libgtk-3-0.dll" "libgtk-win32-2.0-0.dll"))
       (t "libgtk-3-0")))
   (use-foreign-library gtk))

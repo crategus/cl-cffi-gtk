@@ -33,7 +33,7 @@
     (define-foreign-library gdk
       ((:and :unix (:not :darwin))
        (:or "libgdk-3.so.0" "libgdk-3.so"))
-      (:darwin (:or "libgdk-x11-2.0.0.dylib" "libgdk-x11-2.0.dylib"))
+      (:darwin (:or "libgdk-x11-3.0.0.dylib" "libgdk-x11-3.0.dylib"))
       (:windows "libgdk-3-0.dll")
       (t "libgdk-3-0"))
 
