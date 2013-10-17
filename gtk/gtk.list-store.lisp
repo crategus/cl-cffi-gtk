@@ -233,7 +233,7 @@
 
 (defun gtk-list-store-new (&rest column-types)
  #+cl-cffi-gtk-documentation
- "@version{2013-8-22}
+ "@version{2013-10-16}
   @argument[column-types]{all @class{g-type} types for the columns, from first
     to last}
   @return{A new @class{gtk-list-store} object.}
@@ -246,11 +246,11 @@
     The following example creates a new @sym{gtk-list-store} with three columnes,
     of type @code{int}, @code{string} and @class{gdk-pixbuf}.
     @begin{pre}
- (gtk-tree-store-new \"gint\" \"gchararray\" \"GdkPixbuf\")
+ (gtk-list-store-new \"gint\" \"gchararray\" \"GdkPixbuf\")
     @end{pre}
     Note that in the Lisp binding a second implementation is
     @begin{pre}
- (make-instance 'gtk-list-store 
+ (make-instance 'gtk-list-store
                 :column-types '(\"gint\" \"gchararray\" \"GdkPixbuf\"))
     @end{pre}
   @see-class{gtk-list-store}
@@ -277,7 +277,7 @@
 ;;;     a new GtkListStore Rename to: gtk_list_store_new
 ;;; ----------------------------------------------------------------------------
 
-;; Implementation not needed.
+;;; Implementation not needed.
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_list_store_set_column_types ()
