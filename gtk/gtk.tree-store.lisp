@@ -80,8 +80,6 @@
    :type-initializer "gtk_tree_store_get_type")
   nil)
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-tree-store 'type)
  "@version{2013-9-13}
@@ -129,26 +127,31 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_store_new ()
-;;;
-;;; GtkTreeStore * gtk_tree_store_new (gint n_columns, ...);
-;;;
-;;; Creates a new tree store as with n_columns columns each of the types passed
-;;; in. Note that only types derived from standard GObject fundamental types are
-;;; supported.
-;;;
-;;; As an example, gtk_tree_store_new (3, G_TYPE_INT, G_TYPE_STRING,
-;;; GDK_TYPE_PIXBUF); will create a new GtkTreeStore with three columns, of type
-;;; int, string and GdkPixbuf respectively.
-;;;
-;;; n_columns :
-;;;     number of columns in the tree store
-;;;
-;;; ... :
-;;;     all GType types for the columns, from first to last
-;;;
-;;; Returns :
-;;;     a new GtkTreeStore
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-tree-store-new))
+
+(defun gtk-tree-store-new (&rest column-types)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-10-16}
+  @argument[column-types]{all @class{g-type} types for the columns, from first
+    to last}
+  @return{A new @class{gtk-tree-store} object.}
+  @begin{short}
+    Creates a new tree store as with columns of the types passed in.
+  @end{short}
+  Note that only types derived from standard @code{GObject} fundamental types
+  are supported.
+
+  As an example,
+  @code{(gtk-tree-store-new \"gint\" \"gchararray\" \"GdkPixbuf\")}; will create
+  a new @class{gtk-tree-store} with three columns, of type @code{:int},
+  @code{:string} and @code{GdkPixbuf} respectively.
+  @see-class{gtk-tree-store}"
+  (make-instance 'gtk-tree-store
+                 :column-types column-types))
+
+(export 'gtk-tree-store-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_store_newv ()
@@ -510,7 +513,10 @@
             (for value in values)
             (for type = (gtk-tree-model-get-column-type tree-store i))
             (setf (mem-aref columns-ar :int i) i)
-            (set-g-value (mem-aptr v-ar '(:struct g-value) i) value type :zero-g-value t))
+            (set-g-value (mem-aptr v-ar '(:struct g-value) i)
+                         value
+                         type
+                         :zero-g-value t))
       (%gtk-tree-store-insert-with-valuesv tree-store
                                            iter
                                            parent
@@ -576,7 +582,7 @@
   If @arg{parent} is non-@code{nil}, then it will prepend the new row before the
   first child of parent, otherwise it will prepend a row to the top level.
   @arg{iter} will be changed to point to this new row. The row will be empty
-  after this function is called. To fill in values, you need to call the 
+  after this function is called. To fill in values, you need to call the
   functions @fun{gtk-tree-store-set} or @fun{gtk-tree-store-set-value}.
   @see-class{gtk-tree-store}
   @see-class{gtk-tree-iter}
@@ -624,13 +630,18 @@
 
 (defcfun ("gtk_tree_store_is_ancestor" gtk-tree-store-is-ancestor) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-3-27}
-  @argument[tree_store]{A GtkTreeStore}
-  @argument[iter]{A valid GtkTreeIter}
-  @argument[descendant]{A valid GtkTreeIter}
-  @return{TRUE, if iter is an ancestor of descendant}
-  Returns TRUE if iter is an ancestor of descendant. That is, iter is the
-  parent (or grandparent or great-grandparent) of descendant."
+ "@version{2013-10-16}
+  @argument[tree-store]{a @class{gtk-tree-store} object}
+  @argument[iter]{a valid @class{gtk-tree-iter}}
+  @argument[descendant]{a valid @class{gtk-tree-iter}}
+  @return{@em{True}, if @arg{iter} is an ancestor of @arg{descendant}.}
+  @begin{short}
+    Returns @em{true} if @arg{iter} is an ancestor of @arg{descendant}.
+  @end{short}
+  That is, @arg{iter} is the parent, or grandparent or great-grandparent,
+  of @arg{descendant}.
+  @see-class{gtk-tree-store}
+  @see-class{gtk-tree-iter}"
   (tree-store (g-object gtk-tree-store))
   (iter (g-boxed-foreign gtk-tree-iter))
   (descendant (g-boxed-foreign gtk-tree-iter)))
@@ -643,12 +654,17 @@
 
 (defcfun ("gtk_tree_store_iter_depth" gtk-tree-store-iter-depth) :int
  #+cl-cffi-gtk-documentation
- "@version{2013-3-27}
-  @argument[tree_store]{A GtkTreeStore}
-  @argument[iter]{A valid GtkTreeIter}
-  @return{The depth of iter}
-  Returns the depth of iter. This will be 0 for anything on the root level, 1
-  for anything down a level, etc."
+ "@version{2013-10-16}
+  @argument[tree-store]{a @class{gtk-tree-store} object}
+  @argument[iter]{a valid @class{gtk-tree-iter}}
+  @return{The depth of @arg{iter}.}
+  @begin{short}
+    Returns the depth of @arg{iter}.
+  @end{short}
+  This will be 0 for anything on the root level, 1 for anything down a level,
+  etc.
+  @see-class{gtk-tree-store}
+  @see-class{gtk-tree-iter}"
   (tree-store (g-object gtk-tree-store))
   (tree-iter (g-boxed-foreign gtk-tree-iter)))
 
@@ -660,9 +676,10 @@
 
 (defcfun ("gtk_tree_store_clear" gtk-tree-store-clear) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-27}
-  @argument[tree_store]{a GtkTreeStore}
-  Removes all rows from tree_store"
+ "@version{2013-10-16}
+  @argument[tree-store]{a @class{gtk-tree-store} object}
+  Removes all rows from @arg{tree-store}
+  @see-class{gtk-tree-store}"
   (tree-store (g-object gtk-tree-store)))
 
 (export 'gtk-tree-store-clear)
@@ -673,16 +690,22 @@
 
 (defcfun ("gtk_tree_store_iter_is_valid" gtk-tree-store-iter-is-valid) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-3-27}
-  @argument[tree_store]{A GtkTreeStore.}
-  @arguemnt[iter]{A GtkTreeIter.}
-  @return{TRUE if the iter is valid, FALSE if the iter is invalid.}
-  @subheading{WARNING}
+ "@version{2013-10-16}
+  @argument[tree-store]{a @class{gtk-tree-store} object}
+  @argument[iter]{a @class{gtk-tree-iter}}
+  @return{@em{True} if the @arg{iter} is valid, @code{nil} if the @arg{iter} is
+    invalid.}
+  @subheading{Warning}
     This function is slow. Only use it for debugging and/or testing purposes.
 
-  @short{Checks if the given iter is a valid iter for this GtkTreeStore.}
+  @begin{short}
+    Checks if the given @arg{iter} is a valid iter for this
+    @class{gtk-tree-store}.
+  @end{short}
 
-  Since 2.2"
+  Since 2.2
+  @see-class{gtk-tree-store}
+  @see-class{gtk-tree-iter}"
   (tree-store (g-object gtk-tree-store))
   (iter (g-boxed-foreign gtk-tree-iter)))
 
@@ -717,16 +740,18 @@
 
 (defcfun ("gtk_tree_store_swap" gtk-tree-store-swap) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-27}
-  @argument[tree_store]{A GtkTreeStore.}
-  @argument[a]{A GtkTreeIter.}
-  @argument[b]{Another GtkTreeIter.}
+ "@version{2013-10-16}
+  @argument[tree-store]{a @class{gtk-tree-store} object}
+  @argument[a]{a @class{gtk-tree-iter}}
+  @argument[b]{another @class{gtk-tree-iter}}
   @begin{short}
-    Swaps a and b in the same level of tree_store. Note that this function only
-    works with unsorted stores.
+    Swaps @arg{a} and @arg{b} in the same level of @arg{tree-store}.
   @end{short}
+  Note that this function only works with unsorted stores.
 
-  Since 2.2"
+  Since 2.2
+  @see-class{gtk-tree-store}
+  @see-class{gtk-tree-iter}"
   (tree-store (g-object gtk-tree-store))
   (a (g-boxed-foreign gtk-tree-iter))
   (b (g-boxed-foreign gtk-tree-iter)))
@@ -739,18 +764,21 @@
 
 (defcfun ("gtk_tree_store_move_before" gtk-tree-store-move-before) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-27}
-  @argument[tree_store]{A GtkTreeStore.}
-  @argument[iter]{A GtkTreeIter.}
-  @argument[position]{A GtkTreeIter or NULL.}
+ "@version{2013-10-16}
+  @argument[tree-store]{a @class{gtk-tree-store}}
+  @argument[iter]{a @class{gtk-tree-iter}}
+  @argument[position]{a @class{gtk-tree-iter} or @code{nil}}
   @begin{short}
-    Moves iter in tree_store to the position before position. iter and position
-    should be in the same level. Note that this function only works with
-    unsorted stores. If position is NULL, iter will be moved to the end of the
-    level.
+    Moves @arg{iter} in @arg{tree-store} to the position before @arg{position}.
   @end{short}
+  @arg{iter} and @arg{position} should be in the same level. Note that this
+  function only works with unsorted stores. If @arg{position} is @code{nil},
+  @arg{iter} will be moved to the end of the level.
 
-  Since 2.2"
+  Since 2.2
+  @see-class{gtk-tree-store}
+  @see-class{gtk-tree-iter}
+  @see-function{gtk-tree-store-move-after}"
   (tree-store (g-object gtk-tree-store))
   (iter (g-boxed-foreign gtk-tree-iter))
   (position (g-boxed-foreign gtk-tree-iter)))
@@ -763,18 +791,21 @@
 
 (defcfun ("gtk_tree_store_move_after" gtk-tree-store-move-after) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-5-13}
+ "@version{2013-10-16}
   @argument[tree-store]{a @class{gtk-tree-store} object}
   @argument[iter]{a @class{gtk-tree-iter} object}
   @argument[position]{a @class{gtk-tree-iter} object}
   @begin{short}
     Moves @arg{iter} in @arg{tree-store} to the position after @arg{position}.
-    @arg{iter} and @arg{position} should be in the same level. Note that this
-    function only works with unsorted stores. If @arg{position} is @code{nil},
-    @arg{iter} will be moved to the start of the level.
   @end{short}
+  @arg{iter} and @arg{position} should be in the same level. Note that this
+  function only works with unsorted stores. If @arg{position} is @code{nil},
+  @arg{iter} will be moved to the start of the level.
 
-  Since 2.2"
+  Since 2.2
+  @see-class{gtk-tree-store}
+  @see-class{gtk-tree-iter}
+  @see-function{gtk-tree-store-move-before}"
   (tree-store (g-object gtk-tree-store))
   (iter (g-boxed-foreign gtk-tree-iter))
   (position (g-boxed-foreign gtk-tree-iter)))
