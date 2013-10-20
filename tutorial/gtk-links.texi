@@ -667,10 +667,15 @@
 @set gtk-tree-view-get-model http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-view-get-model.html
 @set gtk-tree-view-set-model http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-view-set-model.html
 @set gtk-tree-view-set-rules-hint http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-view-set-rules-hint.html
+@set gtk-tree-view-set-headers-visible http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-view-set-headers-visible.html
+@set gtk-tree-view-set-headers-clickable http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-view-set-headers-clickable.html
+@set gtk-tree-view-set-expander-column http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-view-set-expander-column.html
 
 @c GtkTreeViewColumn
 
 @set gtk-tree-view-column http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-tree-view-column.html
+@set gtk-tree-view-column-set-cell-data-func http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-view-column-set-cell-data-func.html
+@set gtk-tree-view-column-add-attribute http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-view-column-add-attribute.html
 
 @c GtkViewport
 

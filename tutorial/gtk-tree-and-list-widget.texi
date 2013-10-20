@@ -4,9 +4,9 @@
 @c Language : English
 @c Author   : Dieter Kaiser
 @c Date     : 08.07.2012
-@c Revision : 08.07.2012
+@c Revision : 18.10.2013
 @c
-@c Copyright (C) 2012 by Dieter Kaiser
+@c Copyright (C) 2012, 2013 by Dieter Kaiser
 @c -----------------------------------------------------------------------------
 
 @menu
@@ -350,10 +350,10 @@ different ways used to refer to a particular row.
 
 @subsection Refering to Rows
 
+@subsubsection GtkTreePath
+
 There are different ways to refer to a specific row.  The two you will have to
 deal with are @xurl{gtk-tree-iter} and @xurl{gtk-tree-path}.
-
-@subsubsection GtkTreePath
 
 A @xurl{gtk-tree-path} is a comparatively straight-forward way to describe the
 logical position of a row in the model.  As a @xurl{gtk-tree-view} always
@@ -376,43 +376,26 @@ child of the first item from the root, so its tree path is "0:1".  So you just
 count your way down from the root to the row in question, and you get your tree
 path.
 
-To clarify this, a tree path of "3:9:4:1" would basically mean in human language
-(attention - this is not what it really means!) something along the lines of: go
-to the 3rd top-level row.  Now go to the 9th child of that row. Proceed to the
-4th child of the previous row.  Then continue to the 1st child of that. Now you
-are at the row this tree path describes.  This is not what it means for Gtk+
-though.  While humans start counting at 1, computers usually start counting at
-0.  So the real meaning of the tree path "3:9:4:1" is:  Go to the 4th top-level
-row.  Then go to the 10th child of that row.  Pick the 5th child of that row.
-Then proceed to the 2nd child of the previous row. Now you are at the row this
-tree path describes.
-
 The implication of this way of refering to rows is as follows: if you insert or
 delete rows in the middle or if the rows are resorted, a tree path might
 suddenly refer to a completely different row than it refered to before the
-insertion/deletion/resorting.  This is important to keep in mind.  (See the
+insertion/deletion/resorting.  This is important to keep in mind.  See the
 section on @code{GtkTreeRowReferences} below for a tree path that keeps updating
-itself to make sure it always refers to the same row when the model changes).
-
-This effect becomes apparent if you imagine what would happen if we were to
-delete the row entitled 'funny clips' from the tree in the above picture. The
-row 'movie trailers' would suddenly be the first and only child of 'clips',
-and be described by the tree path that formerly belonged to 'funny clips', i. e.
-"1:0:0".
+itself to make sure it always refers to the same row when the model changes.
 
 You can get a new @xurl{gtk-tree-path} from a path in string form using the 
 function @xurl{gtk-tree-path-new-from-string}, and you can convert a given
-@xurl{gtk-tree-path} into its string notation with
+@xurl{gtk-tree-path} into its string notation with the function
 @xurl{gtk-tree-path-to-string}.  Usually you will rarely have to handle the
 string notation, it is described here merely to demonstrate the concept of tree
 paths.
 
 Instead of the string notation, @xurl{gtk-tree-path} uses an integer array
-internally.  You can get the depth (i. e. the nesting level) of a tree path with
-@xurl{gtk-tree-path-get-depth}.  A depth of 0 is the imaginary invisible root
-node of the tree view and model.  A depth of 1 means that the tree path
-describes a top-level row.  As lists are just trees without child nodes, all
-rows in a list always have tree paths of depth 1.
+internally.  You can get the depth, i. e. the nesting level, of a tree path with
+the function @xurl{gtk-tree-path-get-depth}.  A depth of 0 is the imaginary
+invisible root node of the tree view and model.  A depth of 1 means that the
+tree path describes a top-level row.  As lists are just trees without child
+nodes, all rows in a list always have tree paths of depth 1.  The function
 @xurl{gtk-tree-path-get-indices} returns the internal integer array of a tree
 path.  You will rarely need to operate with those either.
 
@@ -422,8 +405,9 @@ and use functions like @xurl{gtk-tree-path-up}, @xurl{gtk-tree-path-down},
 @xurl{gtk-tree-path-is-ancestor}, or @xurl{gtk-tree-path-is-descendant}.  Note
 that this way you can construct and operate on tree paths that refer to rows
 that do not exist in model or view.  The only way to check whether a path
-is valid for a specific model (i. e. the row described by the path exists) is
-to convert the path into an iter using @xurl{gtk-tree-model-get-iter}.
+is valid for a specific model, i. e. the row described by the path exists, is
+to convert the path into an iter using the function
+@xurl{gtk-tree-model-get-iter}.
 
 @xurl{gtk-tree-path} is an opaque structure, with its details hidden from the
 compiler.  If you need to make a copy of a tree path, use the function
@@ -438,9 +422,7 @@ often contain a direct pointer to the internal data of the row in question.  You
 should never look at the content of a tree iter and you must not modify it
 directly either.  All tree models, and therefore also @xurl{gtk-list-store} and
 @xurl{gtk-tree-store}, must support the @xurl{gtk-tree-model} functions that
-operate on tree iters, e. g. get the tree iter for the first child of the row
-specified by a given tree iter, get the first row in the list/tree, get the n-th
-child of a given iter etc.  Some of these functions are:
+operate on tree iters.  Some of these functions are:
 
 @table @code
   @item @xurl{gtk-tree-model-get-iter-first}
@@ -455,14 +437,14 @@ child of a given iter etc.  Some of these functions are:
 
   @item @xurl{gtk-tree-model-iter-n-children}
   Returns the number of children the row referenced by the provided iter
-  has.  If you pass @code{nil} instead of a pointer to an iter structure, this
-  function will return the number of top-level rows.  You can also use this
+  has.  If you pass @code{nil} instead of iter structure, this function will
+  return the number of top-level rows.  You can also use this
   function to count the number of items in a list store.
 
   @item @xurl{gtk-tree-model-iter-nth-child}
   Sets the first iter to the n-th child of the row referenced by the second
-  iter.  If you pass @code{nil} instead of a pointer to an iter structure as the
-  second iter, you can get the first iter set to the n-th row of a list.
+  iter.  If you pass @code{nil} instead of an iter structure as the second iter,
+  you can get the first iter set to the n-th row of a list.
 
   @item @xurl{gtk-tree-model-iter-parent}
   Sets the first iter to the parent of the row referenced by the second iter;
@@ -486,10 +468,10 @@ using the functions @xurl{gtk-list-store-append} or
 
 Tree iters are often only valid for a short time, and might become invalid if
 the store changes with some models.  It is therefore usually a bad idea to store
-tree iters, unless you really know what you are doing.  You can use
+tree iters, unless you really know what you are doing.  You can use the function
 @xurl{gtk-tree-model-get-flags} to get a model's flags, and check whether the
-@code{:iters-persist} flag is set (in which case a tree iter will be valid as
-long as a row exists), yet still it is not advisable to store iter structures
+@code{:iters-persist} flag is set, in which case a tree iter will be valid as
+long as a row exists, yet still it is not advisable to store iter structures
 unless you really mean to do that.  There is a better way to keep track of a row
 over time: @code{GtkTreeRowReference}.
 
@@ -837,65 +819,30 @@ formerly valid tree iters in the foreach function, and thus lead to
 unpredictable results.
 
 Here is an example for an alternative approach to removing multiple rows in one
-go (here we want to remove all rows from the store that contain persons that
-have been born after 1980, but it could just as well be all selected rows or
-some other criterion):
+go. Here we want to remove all rows from the store that contain persons that
+are older than 30, but it could just as well be all selected rows or
+some other criterion:
 
 @verbatim
-/******************************************************************
-*
-* Removing multiple rows in one go
-*
-******************************************************************/
-
 ...
 
-gboolean
-foreach_func (GtkTreeModel *model,
-              GtkTreePath *path,
-              GtkTreeIter *iter,
-              GList **rowref_list)
-{
-  guint year_of_birth;
-  g_assert ( rowref_list != NULL );
-  gtk_tree_model_get (model, iter, COL_YEAR_BORN, &year_of_birth, -1);
-  if ( year_of_birth > 1980 )
-  {
-    GtkTreeRowReference *rowref;
-    rowref = gtk_tree_row_reference_new(model, path);
-    *rowref_list = g_list_append(*rowref_list, rowref);
-  }
-  return FALSE; /* do not stop walking the store, call us with next row */
-}
+(let ((rowref-list nil))
+  (defun foreach-func (model path iter)
+    (let ((age (gtk-tree-model-get-value model iter 2)))
+      (when (> age 30)
+        (let ((rowref (gtk-tree-row-reference-new model path)))
+          (setf rowref-list (cons rowref rowref-list))))
+      nil))
 
-void
-remove_people_born_after_1980 (void)
-{
-  GList *rr_list = NULL;
-  /* list of GtkTreeRowReferences to remove */
-  GList *node;
-  gtk_tree_model_foreach(GTK_TREE_MODEL(store),
-                         (GtkTreeModelForeachFunc) foreach_func,
-                         &rr_list);
-  for ( node = rr_list;
-  {
-    GtkTreePath *path;
-    node != NULL;
-    node = node->next )
-    path = gtk_tree_row_reference_get_path((GtkTreeRowReference*)node->data);
-    if (path)
-    {
-      GtkTreeIter iter;
-      if (gtk_tree_model_get_iter(GTK_TREE_MODEL(store), &iter, path))
-      {
-        gtk_list_store_remove(store, &iter);
-      }
-      /* FIXME/CHECK: Do we need to free the path here? */
-    }
-  }
-  g_list_foreach(rr_list, (GFunc) gtk_tree_row_reference_free, NULL);
-  g_list_free(rr_list);
-}
+  (defun remove-people-older-than (model)
+    (setf rowref-list nil)
+    (gtk-tree-model-foreach model #'foreach-func)
+    (dolist (rowref rowref-list)
+      (let ((path (gtk-tree-row-reference-get-path rowref)))
+      (when path
+        (let ((iter (gtk-tree-model-get-iter model path)))
+          (when iter
+            (gtk-list-store-remove model iter))))))))
 
 ...
 @end verbatim
@@ -914,8 +861,8 @@ we need to instruct it where to get the data to display from.  A new tree view
 is created with:
 
 @verbatim
-GtkWidget *view;
-view = gtk_tree_view_new();
+(let ((view (make-instance 'gtk-tree-view)))
+  ... )
 @end verbatim
 
 @subsection Connecting Tree View and Model
@@ -953,14 +900,11 @@ destroyed (which will be automatically destroyed when the window it is in is
 destroyed):
 
 @verbatim
-GtkListStore *liststore;
-GtkWidget
-*view;
-view = gtk_tree_view_new();
-liststore = gtk_list_store_new(1, G_TYPE_STRING);
-gtk_tree_view_set_model(GTK_TREE_VIEW(view), GTK_TREE_MODEL(liststore));
-g_object_unref(liststore);
-/* Now the model will be destroyed when the tree view is destroyed */
+(let* ((model (make-instance 'gtk-list-store
+                             :column-types '("gchararray")))
+       (view (make-instance 'gtk-tree-view
+                            :model model)))
+  ... )
 @end verbatim
 
 @subsection Tree View Look and Feel

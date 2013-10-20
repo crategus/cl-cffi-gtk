@@ -2,7 +2,7 @@
 ;;; tutorial.lisp
 ;;;
 ;;; Examples from the offical GTK+ 2.0 Tutorial translated to Lisp
-;;; and updated to GTK+ 3.4
+;;; and updated to GTK+ 3.6
 ;;;
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
 ;;;
@@ -2589,7 +2589,7 @@ happen.")
 ;;;
 ;;; ----------------------------------------------------------------------------
 
-;; Example Simple Tree View
+;; Chapter 10.1 Example A Simple Tree View
 
 (defun create-and-fill-model ()
   (let ((model (make-instance 'gtk-list-store
@@ -2835,58 +2835,40 @@ happen.")
 
 ;;; Removing multiple rows
 
-#|
-...
+(let ((rowref-list nil))
+  (defun foreach-func-1 (model path iter)
+    (let ((age (gtk-tree-model-get-value model iter 2)))
+      (when (> age 30)
+        (let ((rowref (gtk-tree-row-reference-new model path)))
+          (setf rowref-list (cons rowref rowref-list))))
+      nil))
 
-gboolean
-foreach_func (GtkTreeModel *model,
-              GtkTreePath *path,
-              GtkTreeIter *iter,
-              GList **rowref_list)
-{
-  guint year_of_birth;
-  g_assert ( rowref_list != NULL );
-  gtk_tree_model_get (model, iter, COL_YEAR_BORN, &year_of_birth, -1);
-  if ( year_of_birth > 1980 )
-  {
-    GtkTreeRowReference *rowref;
-    rowref = gtk_tree_row_reference_new(model, path);
-    *rowref_list = g_list_append(*rowref_list, rowref);
-  }
-  return FALSE; /* do not stop walking the store, call us with next row */
-}
+  (defun remove-people-older-than (model)
+    (setf rowref-list nil)
+    (gtk-tree-model-foreach model #'foreach-func-1)
+    (format t "rowrefs : ~A~%" rowref-list)
+    (dolist (rowref rowref-list)
+      (let ((path (gtk-tree-row-reference-get-path rowref)))
+      (when path
+        (let ((iter (gtk-tree-model-get-iter model path)))
+          (when iter
+            (gtk-list-store-remove model iter))))))))
 
-void
-remove_people_born_after_1980 (void)
-{
-  GList *rr_list = NULL;
-  /* list of GtkTreeRowReferences to remove */
-  GList *node;
-  gtk_tree_model_foreach(GTK_TREE_MODEL(store),
-                         (GtkTreeModelForeachFunc) foreach_func,
-                         &rr_list);
-  for ( node = rr_list;
-  {
-    GtkTreePath *path;
-    node != NULL;
-    node = node->next )
-    path = gtk_tree_row_reference_get_path((GtkTreeRowReference*)node->data);
-    if (path)
-    {
-      GtkTreeIter iter;
-      if (gtk_tree_model_get_iter(GTK_TREE_MODEL(store), &iter, path))
-      {
-        gtk_list_store_remove(store, &iter);
-      }
-      /* FIXME/CHECK: Do we need to free the path here? */
-    }
-  }
-  g_list_foreach(rr_list, (GFunc) gtk_tree_row_reference_free, NULL);
-  g_list_free(rr_list);
-}
-
-...
-|#
+(defun create-and-fill-and-dump-model-1 ()
+  (let ((model (make-instance 'gtk-list-store
+                              :column-types
+                              '("gchararray" "gchararray" "guint"))))
+    ;; Fill the model with data
+    (gtk-list-store-set model (gtk-list-store-append model)
+                              "Klaus-Dieter" "Mustermann" 51)
+    (gtk-list-store-set model (gtk-list-store-append model)
+                              "Ulrike" "Langhals" 23)
+    (gtk-list-store-set model (gtk-list-store-append model)
+                              "Marius" "Kalinowski" 91)
+    ;; Remove some entries
+    (remove-people-older-than model)
+    ;; Now traverse the list
+    (gtk-tree-model-foreach model #'foreach-func)))
 
 ;;; ----------------------------------------------------------------------------
 
