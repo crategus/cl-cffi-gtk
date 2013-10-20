@@ -4480,7 +4480,33 @@ setup_tree (void)
       @about-function{gtk-paper-size-to-key-file}
     @end{subsection}
     @begin[GtkPrinter]{subsection}
-      not implemented
+      Represents a printer.
+
+      @about-class{gtk-printer}
+      @about-class{gtk-print-backend}
+      @about-function{gtk-printer-new}
+      @about-function{gtk-printer-get-backend}
+      @about-function{gtk-printer-get-name}
+      @about-function{gtk-printer-get-state-message}
+      @about-function{gtk-printer-get-description}
+      @about-function{gtk-printer-get-location}
+      @about-function{gtk-printer-get-icon-name}
+      @about-function{gtk-printer-get-job-count}
+      @about-function{gtk-printer-is-active}
+      @about-function{gtk-printer-is-paused}
+      @about-function{gtk-printer-is-accepting-jobs}
+      @about-generic{gtk-printer-is-virtual}
+      @about-function{gtk-printer-is-default}
+      @about-generic{gtk-printer-accepts-ps}
+      @about-generic{gtk-printer-accepts-pdf}
+      @about-function{gtk-printer-list-papers}
+      @about-function{gtk-printer-compare}
+      @about-function{gtk-printer-has-details}
+      @about-function{gtk-printer-request-details}
+      @about-function{gtk-printer-get-capabilities}
+      @about-function{gtk-printer-get-default-page-size}
+      @about-function{gtk-printer-get-hard-margins}
+      @about-function{gtk-enumerate-printers}
     @end{subsection}
     @begin[GtkPrintJob]{subsection}
       not implemented

@@ -144,7 +144,7 @@ GTK+ Widgets and Objects
 
   Menus, Combo Box, Toolbar
 
-    gtk.combo-box.lisp               - GtkComboBox                 - GTK+ 3.6.4&
+    gtk.combo-box.lisp               - GtkComboBox                 - GTK+ 3.6.4
     gtk.combo-box-text.lisp          - GtkComboBoxText             - GTK+ 3.6.4
 
     gtk.menu.lisp                    - GtkMenu                     - GTK+ 3.6.4&
@@ -234,12 +234,12 @@ GTK+ Widgets and Objects
     gtk.print-settings.lisp          - GtkPrintSettings            - GTK+ 3.6.4%
     gtk.page-setup.lisp              - GtkPageSetup                - GTK+ 3.6.4%
     gtk.paper-size.lisp              - GtkPaperSize                - GTK+ 3.6.4%
+    gtk.printer.lisp                 - GtkPrinter                  - GTK+ 3.6.4
 
-    not implemented                  - GtkPrinter
     not implemented                  - GtkPrintJob
 
-    gtk.print-unix-dialog.lisp       - GtkPrintUnixDialog          - GTK+ 3.6.4%
-    gtk.page-setup-unix-dialog.lisp  - GtkPageSetupUnixDialog      - GTK+ 3.6.4%
+    gtk.print-unix-dialog.lisp       - GtkPrintUnixDialog          - GTK+ 3.6.4
+    gtk.page-setup-unix-dialog.lisp  - GtkPageSetupUnixDialog      - GTK+ 3.6.4
 
   Miscellaneous
 
