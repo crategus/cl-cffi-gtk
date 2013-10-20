@@ -31,6 +31,7 @@
                (:file "cairo.init")
                (:file "cairo.version")
                (:file "cairo.status")          ; Decoding cairo's status
+               (:file "cairo.types")           ; Generic data types
                (:file "cairo.regions")
                (:file "cairo.surface")
                (:file "cairo.pattern")         ; Sources for drawing

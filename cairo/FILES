@@ -51,7 +51,6 @@ Utilities
 
   cairo_matrix_t - Generic matrix operations
 
- cairo.status-lisp -  Error handling - Decoding cairo's status  - Cairo 1.12.14&
-
-  Types - Generic data types
+ cairo.status.lisp -  Error handling - Decoding cairo's status  - Cairo 1.12.14&
+ cairo.types.lisp - Generic data types                          - cairo 1.12.16
 

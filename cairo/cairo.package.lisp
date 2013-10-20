@@ -332,6 +332,13 @@
       @about-function{cairo-status-to-string}
       @about-function{cairo-debug-reset-static-data}
     @end{subsection}
+    @begin[Types]{subsection}
+      This section lists generic data types used in the cairo API.
+
+      @about-symbol{cairo-bool-t}
+      @about-symbol{cairo-user-data-key-t}
+      @about-symbol{cairo-rectangle-int-t}
+    @end{subsection}
     @begin[Version Information]{subsection}
       Cairo provides the ability to examine the version at either compile-time
       or run-time and in both a human-readable form as well as an encoded form
