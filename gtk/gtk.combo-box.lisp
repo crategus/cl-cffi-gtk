@@ -720,11 +720,12 @@
 
 (defun gtk-combo-box-new ()
  #+cl-cffi-gtk-documentation
- "@version{2013-5-31}
+ "@version{2013-10-17}
   @return{A new @class{gtk-combo-box} widget.}
   @short{Creates a new empty @class{gtk-combo-box} widget.}
 
-  Since 2.4"
+  Since 2.4
+  @see-class{gtk-combo-box}"
   (make-instance 'gtk-combo-box))
 
 (export 'gtk-combo-box-new)
@@ -737,9 +738,10 @@
 
 (defun gtk-combo-box-new-with-entry ()
  #+cl-cffi-gtk-documentation
- "@version{2013-5-31}
+ "@version{2013-10-17}
   @return{A new @class{gtk-combo-box} widget.}
-  Creates a new empty @class{gtk-combo-box} widget with an entry."
+  Creates a new empty @class{gtk-combo-box} widget with an entry.
+  @see-class{gtk-combo-box}"
   (make-instance 'gtk-combo-box
                  :has-entry t))
 
@@ -747,34 +749,48 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_new_with_model ()
-;;;
-;;; GtkWidget * gtk_combo_box_new_with_model (GtkTreeModel *model);
-;;;
-;;; Creates a new GtkComboBox with the model initialized to model.
-;;;
-;;; model :
-;;;     A GtkTreeModel.
-;;;
-;;; Returns :
-;;;     A new GtkComboBox.
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-combo-box-new-with-model))
+
+(defun gtk-combo-box-new-with-model (model)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-10-17}
+  @argument[model]{a @class{gtk-tree-model} object}
+  @return{A new @class{gtk-combo-box} widget.}
+  @begin{short}
+    Creates a new @class{gtk-combo-box} widget with the model initialized to
+    @arg{model}.
+  @end{short}
+
+  Since 2.4
+  @see-class{gtk-combo-box}
+  @see-class{gtk-tree-model}"
+  (make-instance 'gtk-combo-box
+                 :model model))
+
+(export 'gtk-combo-box-new-with-model)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_new_with_model_and_entry ()
-;;;
-;;; GtkWidget * gtk_combo_box_new_with_model_and_entry (GtkTreeModel *model);
-;;;
-;;; Creates a new empty GtkComboBox with an entry and with the model initialized
-;;; to model.
-;;;
-;;; model :
-;;;     A GtkTreeModel
-;;;
-;;; Returns :
-;;;     A new GtkComboBox
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-combo-box-new-with-model-and-entry))
+
+(defun gtk-combo-box-new-with-model-and-entry (model)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-10-17}
+  @argument[model]{a @class{gtk-tree-model} object}
+  @return{A new @class{gtk-combo-box} widget}
+  Creates a new empty @class{gtk-combo-box} widget with an entry and with the
+  model initialized to @arg{model}.
+  @see-class{gtk-combo-box}
+  @see-class{gtk-tree-model}"
+  (make-instance 'gtk-combo-box
+                 :model model
+                 :has-entry t))
+
+(export 'gtk-combo-box-new-with-model-and-entry)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_new_with_area ()
@@ -784,11 +800,12 @@
 
 (defun gtk-combo-box-new-with-area (area)
  #+cl-cffi-gtk-documentation
- "@version{2013-8-3}
+ "@version{2013-10-17}
   @argument[area]{the @class{gtk-cell-area} to use to layout cell renderers}
   @return{A new @class{gtk-combo-box} widget.}
   Creates a new empty @class{gtk-combo-box} using @arg{area} to layout cells.
-  @see-class{gtk-combo-box}"
+  @see-class{gtk-combo-box}
+  @see-class{gtk-cell-area}"
   (make-instance 'gtk-combo-box
                  :cell-area area))
 
@@ -796,19 +813,28 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_new_with_area_and_entry ()
-;;;
-;;; GtkWidget * gtk_combo_box_new_with_area_and_entry (GtkCellArea *area);
-;;;
-;;; Creates a new empty GtkComboBox with an entry.
-;;;
-;;; The new combo box will use area to layout cells.
-;;;
-;;; area :
-;;;     the GtkCellArea to use to layout cell renderers
-;;;
-;;; Returns :
-;;;     A new GtkComboBox.
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-combo-box-new-with-area-and-entry))
+
+(defun gtk-combo-box-new-with-area-and-entry (area)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-10-17}
+  @argument[area]{the @class{gtk-cell-area} object to use to layout cell
+    renderers}
+  @return{A new @class{gtk-combo-box} widget.}
+  @begin{short}
+    Creates a new empty @class{gtk-combo-box} widget with an entry.
+  @end{short}
+
+  The new combo box will use area to layout cells.
+  @see-class{gtk-combo-box}
+  @see-class{gtk-cell-area}"
+  (make-instance 'gtk-combo-box
+                 :cell-area area
+                 :has-entry t))
+
+(export 'gtk-combo-box-new-with-area-and-entry)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_get_wrap_width ()
@@ -1187,7 +1213,7 @@
   @see-function{gtk-combo-box-set-model}"
   (gtk-combo-box-model combo-box))
 
-(export 'gtk-combo-box-model)
+(export 'gtk-combo-box-get-model)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_set_model ()
@@ -1221,22 +1247,26 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_popup_for_device ()
-;;;
-;;; void gtk_combo_box_popup_for_device (GtkComboBox *combo_box,
-;;;                                      GdkDevice *device);
-;;;
-;;; Pops up the menu or dropdown list of combo_box, the popup window will be
-;;; grabbed so only device and its associated pointer/keyboard are the only
-;;; GdkDevices able to send events to it.
-;;;
-;;; combo_box :
-;;;     a GtkComboBox
-;;;
-;;; device :
-;;;     a GdkDevice
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_combo_box_popup_for_device" gtk-combo-box-popup-for-device) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-10-17}
+  @argument[combo-box]{a @class{gtk-combo-box} widget}
+  @argument[device]{a @class{gdk-device} object}
+  @begin{short}
+    Pops up the menu or dropdown list of @arg{combo-box}, the popup window will
+    be grabbed so only @arg{device} and its associated pointer/keyboard are the
+    only @class{gdk-device}s able to send events to it.
+  @end{short}
+
+  Since 3.0
+  @see-class{gtk-combo-box}
+  @see-class{gdk-device}"
+  (combo-box (g-object gtk-combo-box))
+  (device (g-object gdk-device)))
+
+(export 'gtk-combo-box-popup-for-device)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_popup ()
@@ -1302,20 +1332,21 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_get_row_separator_func ()
-;;;
-;;; GtkTreeViewRowSeparatorFunc gtk_combo_box_get_row_separator_func
-;;;                                                    (GtkComboBox *combo_box);
-;;;
-;;; Returns the current row separator function.
-;;;
-;;; combo_box :
-;;;     a GtkComboBox
-;;;
-;;; Returns :
-;;;     the current row separator function.
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_combo_box_get_row_separator_func"
+           gtk-combo-box-get-row-separator-func) :pointer
+ #+cl-cffi-gtk-documentation
+ "@version{2013-10-17}
+  @argument[combo-box]{a @class{gtk-combo-box} widget}
+  @return{The current row separator function.}
+  @short{Returns the current row separator function.}
+
+  Since 2.6
+  @see-class{gtk-combo-box}"
+  (combo-box (g-object gtk-combo-box)))
+
+(export 'gtk-combo-box-get-row-separator-func)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_set_row_separator_func ()
@@ -1391,37 +1422,46 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_set_title ()
-;;;
-;;; void gtk_combo_box_set_title (GtkComboBox *combo_box, const gchar *title);
-;;;
-;;; Sets the menu's title in tearoff mode.
-;;;
-;;; combo_box :
-;;;     a GtkComboBox
-;;;
-;;; title :
-;;;     a title for the menu in tearoff mode
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_combo_box_set_title" gtk-combo-box-set-title) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-10-17}
+  @argument[combo-box]{a @class{gtk-combo-box} widget}
+  @argument[title]{a title for the menu in tearoff mode}
+  @begin{short}
+    Sets the menu's title in tearoff mode.
+  @end{short}
+
+  Since 2.10
+  @see-class{gtk-combo-box}
+  @see-function{gtk-combo-box-get-title}"
+  (combo-box (g-object gtk-combo-box))
+  (title :string))
+
+(export 'gtk-combo-box-set-title)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_get_title ()
-;;;
-;;; const gchar * gtk_combo_box_get_title (GtkComboBox *combo_box);
-;;;
-;;; Gets the current title of the menu in tearoff mode. See
-;;; gtk_combo_box_set_add_tearoffs().
-;;;
-;;; combo_box :
-;;;     a GtkComboBox
-;;;
-;;; Returns :
-;;;     the menu's title in tearoff mode. This is an internal copy of the string
-;;;     which must not be freed.
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_combo_box_get_title" gtk-combo-box-get-title) :string
+ #+cl-cffi-gtk-documentation
+ "@version{2013-10-17}
+  @argument[combo-box]{a @class{gtk-combo-box} widget}
+  @return{The menu's title in tearoff mode.}
+  @begin{short}
+    Gets the current title of the menu in tearoff mode.
+  @end{short}
+  See the function @fun{gtk-combo-box-set-add-tearoffs}.
+
+  Since 2.10
+  @see-class{gtk-combo-box}
+  @see-function{gtk-combo-box-set-title}
+  @see-function{gtk-combo-box-set-add-tearoffs}"
+  (combo-box (g-object gtk-combo-box)))
+
+(export 'gtk-combo-box-get-title)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_combo_box_set_focus_on_click ()
