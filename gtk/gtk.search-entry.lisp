@@ -86,8 +86,10 @@
 ;;; gtk_search_entry_new ()
 ;;; ----------------------------------------------------------------------------
 
+#+gtk-3-6
 (declaim (inline gtk-search-entry-new))
 
+#+gtk-3-6
 (defun gtk-search-entry-new ()
  #+cl-cffi-gtk-documentation
  "@version{2013-8-30}
@@ -101,6 +103,7 @@
   @see-class{gtk-search-entry}"
   (make-instance 'gtk-search-entry))
 
+#+gtk-3-6
 (export 'gtk-search-entry-new)
 
 ;;; --- End of file gtk.search-entry.lisp --------------------------------------

@@ -121,6 +121,7 @@
    (max-width-chars
     gtk-cell-renderer-text-max-width-chars
     "max-width-chars" "gint" t t)
+   #+gtk-3-6
    (placeholder-text
     gtk-cell-renderer-text-placeholder-text
     "placeholder-text" "gchar" t t)
@@ -476,7 +477,7 @@
   Default value: -1 @br{}
   Since 3.0")
 
-#+cl-cffi-gtk-documentation
+#+(and gtk-3-6 cl-cffi-gtk-documentation)
 (setf (documentation (atdoc:get-slot-from-name "placeholder-text"
                                                'gtk-cell-renderer-text) 't)
  "The @code{\"placeholder-text\"} property of type @code{:string}

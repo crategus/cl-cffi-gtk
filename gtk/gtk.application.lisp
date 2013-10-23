@@ -695,6 +695,7 @@
 ;;; gtk_application_get_window_by_id ()
 ;;; ----------------------------------------------------------------------------
 
+#+gtk-3-6
 (defcfun ("gtk_application_get_window_by_id" gtk-application-get-window-by-id)
     (g-object gtk-window)
  #+cl-cffi-gtk-documentation
@@ -713,12 +714,14 @@
   (application (g-object gtk-application))
   (id :uint))
 
+  #+gtk-3-6
 (export 'gtk-application-get-window-by-id)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_application_get_active_window ()
 ;;; ----------------------------------------------------------------------------
 
+#+gtk-3-6
 (defcfun ("gtk_application_get_active_window" gtk-application-get-active-window)
     (g-object gtk-window)
  #+cl-cffi-gtk-documentation
@@ -738,6 +741,7 @@
   @see-class{gtk-application}"
   (application (g-object gtk-application)))
 
+#+gtk-3-6
 (export 'gtk-application-get-active-window)
 
 ;;; ----------------------------------------------------------------------------

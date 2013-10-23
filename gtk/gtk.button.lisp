@@ -84,7 +84,8 @@
                 "GtkActionable"
                 "GtkActivatable")
    :type-initializer "gtk_button_get_type")
-  ((always-show-image
+  (#+gtk-3-6
+   (always-show-image
     gtk-button-always-show-image
     "always-show-image" "gboolean" t t)
    (focus-on-click
@@ -263,7 +264,7 @@
 ;;;
 ;;; ----------------------------------------------------------------------------
 
-#+cl-cffi-gtk-documentation
+#+(and gtk-3-6 cl-cffi-gtk-documentation)
 (setf (documentation (atdoc:get-slot-from-name "always-show-image"
                                                'gtk-button) t)
  "The @code{\"always-show-image\"} property of type @code{:boolean}
@@ -1011,8 +1012,10 @@
 ;;; gtk_button_set_always_show_image ()
 ;;; ----------------------------------------------------------------------------
 
+#+gtk-3-6
 (declaim (inline gtk-button-set-always-show-image))
 
+#+gtk-3-6
 (defun gtk-button-set-always-show-image (button always-show)
  #+cl-cffi-gtk-documentation
  "@version{2013-4-26}
@@ -1030,12 +1033,14 @@
   Since 3.6"
   (setf (gtk-button-always-show-image button) always-show))
 
+#+gtk-3-6
 (export 'gtk-button-set-always-show-image)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_button_get_always_show_image ()
 ;;; ----------------------------------------------------------------------------
 
+#+gtk-3-6
 (defun gtk-button-get-always-show-image (button)
  #+cl-cffi-gtk-documentation
  "@version{2013-4-26}
@@ -1050,6 +1055,7 @@
   Since 3.6"
   (gtk-button-get-always-show-image button))
 
+#+gtk-3-6
 (export 'gtk-button-get-always-show-image)
 
 ;;; ----------------------------------------------------------------------------

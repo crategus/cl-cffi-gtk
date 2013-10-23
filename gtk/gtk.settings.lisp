@@ -202,6 +202,7 @@
    (gtk-modules
     gtk-settings-gtk-modules
     "gtk-modules" "gchararray" t t)
+   #+gtk-3-6
    (gtk-primary-button-warps-slider
     gtk-settings-gtk-primary-button-warps-slider
     "gtk-primary-button-warps-slider" "gboolean" t t)
@@ -979,7 +980,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
-#+cl-cffi-gtk-documentation
+#+(and gtk-3-6 cl-cffi-gtk-documentation)
 (setf (documentation (atdoc:get-slot-from-name "gtk-primary-button-warps-slider"
                                                'gtk-settings) t)
  "The @code{\"gtk-primary-button-warps-slider\"} property of type

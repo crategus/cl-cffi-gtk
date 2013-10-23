@@ -145,9 +145,11 @@
    (indent
     gtk-text-view-indent
     "indent" "gint" t t)
+   #+gtk-3-6 
    (input-hints
     gtk-text-view-input-hints
     "input-hints" "GtkInputHints" t t)
+   #+gtk-3-6
    (input-purpose
     gtk-text-view-input-purpose
     "input-purpose" "GtkInputPurpose" t t)
@@ -439,7 +441,7 @@
   Amount to indent the paragraph, in pixels. @br{}
   Default value: 0")
 
-#+cl-cffi-gtk-documentation
+#+(and gtk-3-6 cl-cffi-gtk-documentation)
 (setf (documentation (atdoc:get-slot-from-name "input-hints" 'gtk-text-view) 't)
  "The @code{\"input-hints\"} property of type @symbol{gtk-input-hints}
   (Read / Write) @br{}
@@ -447,7 +449,7 @@
   methods to fine-tune their behaviour. @br{}
   Since 3.6")
 
-#+cl-cffi-gtk-documentation
+#+(and gtk-3-6 cl-cffi-gtk-documentation)
 (setf (documentation (atdoc:get-slot-from-name "input-purpose"
                                                'gtk-text-view) 't)
  "The @code{\"input-purpose\"} property of type @symbol{gtk-input-purpose}
@@ -595,7 +597,7 @@
   @see-function{gtk-text-view-get-indent}
   @see-function{gtk-text-view-set-indent}")
 
-#+cl-cffi-gtk-documentation
+#+(and gtk-3-6 cl-cffi-gtk-documentation)
 (setf (gethash 'gtk-text-view-input-hints atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-view-input-hints 'function)
@@ -606,7 +608,7 @@
   @see-function{gtk-text-view-get-input-hints}
   @see-function{gtk-text-view-set-input-hints}")
 
-#+cl-cffi-gtk-documentation
+#+(and gtk-3-6 cl-cffi-gtk-documentation)
 (setf (gethash 'gtk-text-view-input-purpose atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-view-input-purpose 'function)
@@ -2375,8 +2377,10 @@
 ;;; gtk_text_view_set_input_purpose ()
 ;;; ----------------------------------------------------------------------------
 
+#+gtk-3-6
 (declaim (inline gtk-text-view-set-input-purpose))
 
+#+gtk-3-6
 (defun gtk-text-view-set-input-purpose (text-view purpose)
  #+cl-cffi-gtk-documentation
  "@version{2013-8-20}
@@ -2393,14 +2397,17 @@
   @see-function{gtk-text-view-get-input-purpose}"
   (setf (gtk-text-view-input-purpose text-view) purpose))
 
+#+gtk-3-6
 (export 'gtk-text-view-set-input-purpose)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_view_get_input_purpose ()
 ;;; ----------------------------------------------------------------------------
 
+#+gtk-3-6
 (declaim (inline gtk-text-view-get-input-purpose))
 
+#+gtk-3-6
 (defun gtk-text-view-get-input-purpose (text-view)
  #+cl-cffi-gtk-documentation
  "@version{2013-8-20}
@@ -2415,14 +2422,17 @@
   @see-function{gtk-text-view-set-input-purpose}"
   (gtk-text-view-input-purpose text-view))
 
+#+gtk-3-6
 (export 'gtk-text-view-get-input-purpose)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_view_set_input_hints ()
 ;;; ----------------------------------------------------------------------------
 
+#+gtk-3-6
 (declaim (inline gtk-text-view-set-input-hints))
 
+#+gtk-3-6
 (defun gtk-text-view-set-input-hints (text-view hints)
  #+cl-cffi-gtk-documentation
  "@version{2013-8-20}
@@ -2440,14 +2450,17 @@
 
   (setf (gtk-text-view-input-hints text-view) hints))
 
+#+gtk-3-6
 (export 'gtk-text-view-set-input-hints)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_view_get_input_hints ()
 ;;; ----------------------------------------------------------------------------
 
+#+gtk-3-6
 (declaim (inline gtk-text-view-get-input-hints))
 
+#+gtk-3-6
 (defun gtk-text-view-get-input-hints (text-view)
  #+cl-cffi-gtk-documentation
  "@version{2013-8-20}
@@ -2462,6 +2475,7 @@
   @see-function{gtk-text-view-set-input-hints}"
   (gtk-text-view-input-hints text-view))
 
+#+gtk-3-6
 (export 'gtk-text-view-get-input-hints)
 
 ;;; ----------------------------------------------------------------------------

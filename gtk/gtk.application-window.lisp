@@ -251,6 +251,7 @@
 ;;; gtk_application_window_get_id ()
 ;;; ----------------------------------------------------------------------------
 
+#+gtk-3-6
 (defcfun ("gtk_application_window_get_id" gtk-application-window-get-id) :uint
  #+cl-cffi-gtk-documentation
  "@version{2013-8-11}
@@ -269,6 +270,7 @@
   @see-class{gtk-application-window}"
   (window (g-object gtk-application-window)))
 
+#+gtk-3-6
 (export 'gtk-application-window-get-id)
 
 ;;; --- End of file gtk.application-window.lisp --------------------------------

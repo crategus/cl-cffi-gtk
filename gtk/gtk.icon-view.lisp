@@ -1580,12 +1580,14 @@
 ;;; gtk_icon_view_get_cell_rect ()
 ;;; ----------------------------------------------------------------------------
 
+#+gtk-3-6
 (defcfun ("gtk_icon_view_get_cell_rect" %gtk-icon-view-get-cell-rect) :boolean
   (icon-view (g-object gtk-icon-view))
   (path (g-boxed-foreign gtk-tree-path))
   (cell (g-object gtk-cell-renderer))
   (rect (g-boxed-foreign gdk-rectangle)))
 
+#+gtk-3-6
 (defun gtk-icon-view-get-cell-rect (icon-view path cell)
  #+cl-cffi-gtk-documentation
  "@version{2013-9-27}
@@ -1606,6 +1608,7 @@
     (when (%gtk-icon-view-get-cell-rect icon-view path cell rect)
       rect)))
 
+#+gtk-3-6
 (export 'gtk-icon-view-get-cell-rect)
 
 ;;; ----------------------------------------------------------------------------
