@@ -265,6 +265,7 @@
 ;;; gtk_accel_label_set_accel ()
 ;;; ----------------------------------------------------------------------------
 
+#+gtk-3-6
 (defcfun ("gtk_accel_label_set_accel" gtk-accel-label-set-accel) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-8-11}
@@ -288,6 +289,7 @@
   (accelerator-key :uint)
   (accelerator-mods gdk-modifier-type))
 
+#+gtk-3-6
 (export 'gtk-accel-label-set-accel)
 
 ;;; ----------------------------------------------------------------------------
