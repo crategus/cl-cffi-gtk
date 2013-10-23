@@ -439,6 +439,6 @@
   2 32
   2 30)
 
-(require-library-version "GLib" 2 34 glib-major-version glib-minor-version)
+(require-library-version "GLib" 2 32 glib-major-version glib-minor-version)
 
 ;;; --- End of file glib.version.lisp ------------------------------------------
