@@ -4509,7 +4509,39 @@ setup_tree (void)
       @about-function{gtk-enumerate-printers}
     @end{subsection}
     @begin[GtkPrintJob]{subsection}
-      not implemented
+      Represents a print job.
+
+      @about-class{gtk-print-job}
+      @about-function{gtk-print-job-new}
+      @about-function{gtk-print-job-get-settings}
+      @about-function{gtk-print-job-get-printer}
+      @about-function{gtk-print-job-get-title}
+      @about-function{gtk-print-job-get-status}
+      @about-function{gtk-print-job-set-source-file}
+      @about-function{gtk-print-job-get-surface}
+      @about-function{gtk-print-job-send}
+      @about-function{gtk-print-job-set-track-print-status}
+      @about-function{gtk-print-job-get-track-print-status}
+      @about-function{gtk-print-job-get-pages}
+      @about-function{gtk-print-job-set-pages}
+      @about-function{gtk-print-job-get-page-ranges}
+      @about-function{gtk-print-job-set-page-ranges}
+      @about-function{gtk-print-job-get-page-set}
+      @about-function{gtk-print-job-set-page-set}
+      @about-function{gtk-print-job-get-num-copies}
+      @about-function{gtk-print-job-set-num-copies}
+      @about-function{gtk-print-job-get-scale}
+      @about-function{gtk-print-job-set-scale}
+      @about-function{gtk-print-job-get-n-up}
+      @about-function{gtk-print-job-set-n-up}
+      @about-function{gtk-print-job-get-n-up-layout}
+      @about-function{gtk-print-job-set-n-up-layout}
+      @about-function{gtk-print-job-get-rotate}
+      @about-function{gtk-print-job-set-rotate}
+      @about-function{gtk-print-job-get-collate}
+      @about-function{gtk-print-job-set-collate}
+      @about-function{gtk-print-job-get-reverse}
+      @about-function{gtk-print-job-set-reverse}
     @end{subsection}
     @begin[GtkPrintUnixDialog]{subsection}
       A print dialog.
