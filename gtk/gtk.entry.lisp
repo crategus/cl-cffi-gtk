@@ -160,6 +160,7 @@
   ((activates-default
     gtk-entry-activates-default
     "activates-default" "gboolean" t t)
+   #+gtk-3-6
    (attributes
     gtk-entry-attributes
     "attributes" "PangoAttrlist" t t)
@@ -187,9 +188,11 @@
    (inner-border
     gtk-entry-inner-border
     "inner-border" "GtkBorder" t t)
+   #+gtk-3-6
    (input-hints
     gtk-entry-input-hints
     "input-hints" "GtkInputHints" t t)
+   #+gtk-3-6
    (input-purpose
     gtk-entry-input-purpose
     "input-purpose" "GtkInputPurpose" t t)
@@ -608,7 +611,7 @@
   dialog) when Enter is pressed. @br{}
   Default value: @code{nil}")
 
-#+cl-cffi-gtk-documentation
+#+(and gtk-3-6 cl-cffi-gtk-documentation)
 (setf (documentation (atdoc:get-slot-from-name "attributes" 'gtk-entry) t)
  "The @code{\"attributes\"} property of type @class{pango-attr-list}
   (Read / Write) @br{}
@@ -681,7 +684,7 @@
   Sets the text area's border between the text and the frame. @br{}
   Since 2.10")
 
-#+cl-cffi-gtk-documentation
+#+(and gtk-3-6 cl-cffi-gtk-documentation)
 (setf (documentation (atdoc:get-slot-from-name "input-hints" 'gtk-entry) t)
  "The @code{\"input-hints\"} property of type @symbol{gtk-input-hints}
   (Read / Write) @br{}
@@ -689,7 +692,7 @@
   input methods to fine-tune their behaviour. @br{}
   Since 3.6")
 
-#+cl-cffi-gtk-documentation
+#+(and gtk-3-6 cl-cffi-gtk-documentation)
 (setf (documentation (atdoc:get-slot-from-name "input-purpose" 'gtk-entry) t)
  "The @code{\"input-purpose\"} property of type @symbol{gtk-input-purpose}
   (Read / Write) @br{}
@@ -2284,8 +2287,10 @@
 ;;; gtk_entry_set_attributes ()
 ;;; ----------------------------------------------------------------------------
 
+#+gtk-3-6
 (declaim (inline gtk-entry-set-attributes))
 
+#+gtk-3-6
 (defun gtk-entry-set-attributes (entry attrs)
  #+cl-cffi-gtk-documentation
  "@version{2013-8-25}
@@ -2301,14 +2306,17 @@
   @see-function{gtk-entry-get-attributes}"
   (setf (gtk-entry-attributes entry) attrs))
 
+#+gtk-3-6
 (export 'gtk-entry-set-attributes)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_entry_get_attributes ()
 ;;; ----------------------------------------------------------------------------
 
+#+gtk-3-6
 (declaim (inline gtk-entry-get-attributes))
 
+#+gtk-3-6
 (defun gtk-entry-get-attributes (entry)
  #+cl-cffi-gtk-documentation
  "@version{2013-8-25}
@@ -2324,6 +2332,7 @@
   @see-function{gtk-entry-set-attributes}"
   (gtk-entry-attributes entry))
 
+#+gtk-3-6
 (export 'gtk-entry-get-attributes)
 
 ;;; ----------------------------------------------------------------------------
@@ -2750,28 +2759,33 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_entry_set_icon_from_gicon ()
-;;;
-;;; void gtk_entry_set_icon_from_gicon (GtkEntry *entry,
-;;;                                     GtkEntryIconPosition icon_pos,
-;;;                                     GIcon *icon);
-;;;
-;;; Sets the icon shown in the entry at the specified position from the current
-;;; icon theme. If the icon isn't known, a "broken image" icon will be
-;;; displayed instead.
-;;;
-;;; If icon is NULL, no icon will be shown in the specified position.
-;;;
-;;; entry :
-;;;     A GtkEntry
-;;;
-;;; icon_pos :
-;;;     The position at which to set the icon
-;;;
-;;; icon :
-;;;     The icon to set, or NULL
-;;;
-;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_entry_set_icon_from_gicon" gtk-entry-set-icon-from-gicon) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-10-20}
+  @argument[entry]{a @class{gtk-entry} widget}
+  @argument[icon-pos]{the position of type @symbol{gtk-entry-icon-position} at
+    which to set the icon}
+  @argument[icon]{the icon of type @class{g-icon} to set, or @code{nil}}
+  @begin{short}
+    Sets the icon shown in the entry at the specified position from the current
+    icon theme.
+  @end{short}
+  If the icon is not known, a \"broken image\" icon will be
+  displayed instead.
+
+  If @arg{icon} is @code{nil}, no icon will be shown in the specified position.
+
+  Since 2.16
+  @see-class{gtk-entry}
+  @see-class{g-icon}
+  @see-symbol{gtk-entry-icon-position}"
+  (entry (g-object gtk-entry))
+  (icon-pos gtk-entry-icon-position)
+  (icon (g-object g-icon)))
+
+(export 'gtk-entry-set-icon-from-gicon)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_entry_get_icon_storage_type ()
@@ -3152,59 +3166,70 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_entry_set_icon_drag_source ()
-;;;
-;;; void gtk_entry_set_icon_drag_source (GtkEntry *entry,
-;;;                                      GtkEntryIconPosition icon_pos,
-;;;                                      GtkTargetList *target_list,
-;;;                                      GdkDragAction actions);
-;;;
-;;; Sets up the icon at the given position so that GTK+ will start a drag
-;;; operation when the user clicks and drags the icon.
-;;;
-;;; To handle the drag operation, you need to connect to the usual
-;;; "drag-data-get" (or possibly "drag-data-delete") signal, and use
-;;; gtk_entry_get_current_icon_drag_source() in your signal handler to find out
-;;; if the drag was started from an icon.
-;;;
-;;; By default, GTK+ uses the icon as the drag icon. You can use the
-;;; "drag-begin" signal to set a different icon. Note that you have to use
-;;; g_signal_connect_after() to ensure that your signal handler gets executed
-;;; after the default handler.
-;;;
-;;; entry :
-;;;     a GtkIconEntry
-;;;
-;;; icon_pos :
-;;;     icon position
-;;;
-;;; target_list :
-;;;     the targets (data formats) in which the data can be provided
-;;;
-;;; actions :
-;;;     a bitmask of the allowed drag actions
-;;;
-;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_entry_set_icon_drag_source" gtk-entry-set-icon-drag-source) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-10-20}
+  @argument[entry]{a @class{gtk-entry} widget}
+  @argument[icon-pos]{icon position of type @symbol{gtk-entry-icon-position}}
+  @argument[target-list]{the targets of type @class{gtk-target-list} (data
+    formats) in which the data can be provided}
+  @argument[actions]{a bitmask of type @symbol{gdk-drag-action} of the allowed
+    drag actions}
+  @begin{short}
+    Sets up the icon at the given position so that GTK+ will start a drag
+    operation when the user clicks and drags the icon.
+  @end{short}
+
+  To handle the drag operation, you need to connect to the usual
+  \"drag-data-get\", or possibly \"drag-data-delete\", signal, and use the
+  function @fun{gtk-entry-get-current-icon-drag-source} in your signal handler
+  to find out if the drag was started from an icon.
+
+  By default, GTK+ uses the icon as the drag icon. You can use the
+  \"drag-begin\" signal to set a different icon. Note that you have to use the
+  function @fun{g-signal-connect-after} to ensure that your signal handler gets
+  executed after the default handler.
+
+  Since 2.16
+  @see-class{gtk-entry}
+  @see-class{gtk-target-list}
+  @see-symbol{gdk-drag-action}
+  @see-symbol{gtk-entry-icon-position}
+  @see-function{gtk-entry-get-current-icon-drag-source}
+  @see-function{g-signal-connect-after}"
+  (entry (g-object gtk-entry))
+  (icon-pos gtk-entry-icon-position)
+  (target-list (g-boxed-foreign gtk-target-list))
+  (actions gdk-drag-action))
+
+(export 'gtk-entry-set-icon-drag-source)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_entry_get_current_icon_drag_source ()
-;;;
-;;; gint gtk_entry_get_current_icon_drag_source (GtkEntry *entry);
-;;;
-;;; Returns the index of the icon which is the source of the current DND
-;;; operation, or -1.
-;;;
-;;; This function is meant to be used in a "drag-data-get" callback.
-;;;
-;;; entry :
-;;;     a GtkIconEntry
-;;;
-;;; Returns :
-;;;     index of the icon which is the source of the current DND operation, or
-;;;     -1.
-;;;
-;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_entry_get_current_icon_drag_source"
+           gtk-entry-get-current-icon-drag-source) :int
+ #+cl-cffi-gtk-documentation
+ "@version{2013-10-20}
+  @argument[entry]{a @class{gtk-entry} widget}
+  @begin{return}
+    Index of the icon which is the source of the current DND operation, or -1.
+  @end{return}
+  @begin{short}
+    Returns the index of the icon which is the source of the current DND
+    operation, or -1.
+  @end{short}
+
+  This function is meant to be used in a \"drag-data-get\" callback.
+
+  Since 2.16
+  @see-class{gtk-entry}"
+  (entry (g-object gtk-entry)))
+
+(export 'gtk-entry-get-current-icon-drag-source)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_entry_get_icon_area ()
@@ -3244,6 +3269,7 @@
 ;;; enum GtkInputPurpose
 ;;; ----------------------------------------------------------------------------
 
+#+gtk-3-6
 (define-g-enum "GtkInputPurpose" gtk-input-purpose
   (:export t
    :type-initializer "gtk_input_purpose_get_type")
@@ -3258,7 +3284,7 @@
   (:password 8)
   (:pin 9))
 
-#+cl-cffi-gtk-documentation
+#+(and gtk-3-6 cl-cffi-gtk-documentation)
 (setf (gethash 'gtk-input-purpose atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-input-purpose atdoc:*external-symbols*)
  "@version{2013-8-25}
@@ -3315,8 +3341,10 @@
 ;;; gtk_entry_set_input_purpose ()
 ;;; ----------------------------------------------------------------------------
 
+#+gtk-3-6
 (declaim (inline gtk-entry-set-input-purpose))
 
+#+gtk-3-6
 (defun gtk-entry-set-input-purpose (entry purpose)
  #+cl-cffi-gtk-documentation
  "@version{2013-8-25}
@@ -3332,14 +3360,17 @@
   @see-function{gtk-entry-get-input-purpose}"
   (setf (gtk-entry-input-purpose entry) purpose))
 
+#+gtk-3-6
 (export 'gtk-entry-set-input-purpose)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_entry_get_input_purpose ()
 ;;; ----------------------------------------------------------------------------
 
+#+gtk-3-6
 (declaim (inline gtk-entry-get-input-purpose))
 
+#+gtk-3-6
 (defun gtk-entry-get-input-purpose (entry)
  #+cl-cffi-gtk-documentation
  "@version{2013-8-25}
@@ -3353,12 +3384,14 @@
   @see-function{gtk-entry-set-input-purpose}"
   (gtk-entry-input-purpose entry))
 
+#+gtk-3-6
 (export 'gtk-entry-get-input-purpose)
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkInputHints
 ;;; ----------------------------------------------------------------------------
 
+#+gtk-3-6
 (define-g-flags "GtkInputHints" gtk-input-hints
   (:export t
    :type-initializer "gtk_input_hints_get_type")
@@ -3372,7 +3405,7 @@
   (:uppercase-sentences #.(ash 1 6))
   (:inhibit-osk #.(ash 1 7)))
 
-#+cl-cffi-gtk-documentation
+#+(and gtk-3-6 cl-cffi-gtk-documentation)
 (setf (gethash 'gtk-input-hints atdoc:*symbol-name-alias*) "Flags"
       (gethash 'gtk-input-hints atdoc:*external-symbols*)
  "@version{2013-8-20}
@@ -3422,8 +3455,10 @@
 ;;; gtk_entry_set_input_hints ()
 ;;; ----------------------------------------------------------------------------
 
+#+gtk-3-6
 (declaim (inline gtk-entry-set-input-hints))
 
+#+gtk-3-6
 (defun gtk-entry-set-input-hints (entry hints)
  #+cl-cffi-gtk-documentation
  "@version{2013-8-25}
@@ -3440,14 +3475,17 @@
   @see-function{gtk-entry-set-input-hints}"
   (setf (gtk-entry-input-hints entry) hints))
 
+#+gtk-3-6
 (export 'gtk-entry-set-input-hints)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_entry_get_input_hints ()
 ;;; ----------------------------------------------------------------------------
 
+#+gtk-3-6
 (declaim (inline gtk-entry-get-input-hints))
 
+#+gtk-3-6
 (defun gtk-entry-get-input-hints (entry)
  #+cl-cffi-gtk-documentation
  "@version{2013-8-25}
@@ -3461,6 +3499,7 @@
   @see-function{gtk-entry-set-input-hints}"
   (gtk-entry-input-hints entry))
 
+#+gtk-3-6
 (export 'gtk-entry-get-input-hints)
 
 ;;; --- End of file gtk.entry.lisp ---------------------------------------------
