@@ -4,9 +4,10 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -88,16 +89,16 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-toolbar 'type)
- "@version{2013-6-1}
+ "@version{2013-10-22}
   @begin{short}
-    A toolbar is created with a call to the @fun{gtk-toolbar-new} function.
+    A toolbar is created with a call to the function @fun{gtk-toolbar-new}.
   @end{short}
 
   A toolbar can contain instances of a subclass of @class{gtk-tool-item}. To add
-  a @class{gtk-tool-item} to the a toolbar, use the @fun{gtk-toolbar-insert}
-  function. To remove an item from the toolbar use the
-  @fun{gtk-container-remove} function. To add a button to the toolbar, add an
-  instance of @class{gtk-tool-button}.
+  a @class{gtk-tool-item} to the a toolbar, use the function
+  @fun{gtk-toolbar-insert}. To remove an item from the toolbar use the function
+  @fun{gtk-container-remove}. To add a button to the toolbar, add an instance of
+  @class{gtk-tool-button}.
 
   Toolbar items can be visually grouped by adding instances of
   @class{gtk-separator-tool-item} to the toolbar. If the @sym{gtk-toolbar} child
@@ -182,11 +183,11 @@
        display a popup menu.
        Application developers should handle this signal if they want to display
        a context menu on the toolbar. The context-menu should appear at the
-       coordinates given by x and y. The mouse button number is given by the
-       button parameter. If the menu was popped up using the keybaord, button
-       is -1.
+       coordinates given by @arg{x} and @arg{y}. The mouse button number is
+       given by the button parameter. If the menu was popped up using the
+       keybaord, button is -1.
        @begin[code]{table}
-         @entry[toolbar]{The @class{gtk-toolbar} which emitted the signal.}
+         @entry[toolbar]{The @sym{gtk-toolbar} which emitted the signal.}
          @entry[x]{The x coordinate of the point where the menu should appear.}
          @entry[y]{The y coordinate of the point where the menu should appear.}
          @entry[button]{The mouse button the user pressed, or -1.}
@@ -199,14 +200,24 @@
       @end{pre}
       Emitted when the style of the toolbar changes.
       @begin[code]{table}
-        @entry[toolbar]{The @class{gtk-toolbar} which emitted the signal.}
+        @entry[toolbar]{The @sym{gtk-toolbar} which emitted the signal.}
         @entry[style]{The new @symbol{gtk-toolbar-style} of the toolbar.}
       @end{table}
   @end{dictionary}
   @see-slot{gtk-toolbar-icon-size}
   @see-slot{gtk-toolbar-icon-size-set}
   @see-slot{gtk-toolbar-show-arrow}
-  @see-slot{gtk-toolbar-toolbar-style}")
+  @see-slot{gtk-toolbar-toolbar-style}
+  @see-class{gtk-tool-item}
+  @see-class{gtk-tool-button}
+  @see-class{gtk-separator-tool-item}
+  @see-symbol{gtk-relief-style}
+  @see-symbol{gtk-shadow-type}
+  @see-symbol{gtk-toolbar-space-style}
+  @see-symbol{gtk-orientation}
+  @see-function{gtk-toolbar-new}
+  @see-function{gtk-toolbar-insert}
+  @see-function{gtk-container-remove}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -258,29 +269,36 @@
 (setf (gethash 'gtk-toolbar-icon-size atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-toolbar-icon-size 'function)
- "@version{2013-3-26}
-  Accessor of the slot \"icon-size\" of the @class{gtk-toolbar} class.")
+ "@version{2013-10-22}
+  Accessor of the slot \"icon-size\" of the @class{gtk-toolbar} class.
+  @see-class{gtk-toolbar}
+  @see-function{gtk-toolbar-get-icon-size}
+  @see-function{gtk-toolbar-set-icon-size}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-toolbar-icon-size-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-toolbar-icon-size-set 'function)
- "@version{2013-3-26}
-  Accessor of the slot \"icon-size-set\" of the @class{gtk-toolbar} class.")
+ "@version{2013-10-22}
+  Accessor of the slot \"icon-size-set\" of the @class{gtk-toolbar} class.
+  @see-class{gtk-toolbar}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-toolbar-show-arrow atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-toolbar-show-arrow 'function)
- "@version{2013-3-26}
+ "@version{2013-10-22}
   Accessor of the slot \"show-arrow\" of the @class{gtk-toolbar} class.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-toolbar-toolbar-style atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-toolbar-toolbar-style 'function)
- "@version{2013-3-26}
-  Accessor of the slot \"toolbar-style\" of the @class{gtk-toolbar} class.")
+ "@version{2013-10-22}
+  Accessor of the slot \"toolbar-style\" of the @class{gtk-toolbar} class.
+  @see-class{gtk-toolbar}
+  @see-function{gtk-toolbar-get-style}
+  @see-function{gtk-toolbar-set-style}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -292,12 +310,6 @@
                        gtk-toolbar-child-expand
                        "expand" "gboolean" t t t)
 
-(define-child-property "GtkToolbar"
-                       gtk-toolbar-child-homogeneous
-                       "homogeneous" "gboolean" t t t)
-
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-toolbar-child-expand atdoc:*function-name-alias*)
       "Accessor"
@@ -305,6 +317,12 @@
  "@version{2013-3-26}
   Accessor of the child property @code{\"expand\"} of the @class{gtk-toolbar}
   class.")
+
+;;; ----------------------------------------------------------------------------
+
+(define-child-property "GtkToolbar"
+                       gtk-toolbar-child-homogeneous
+                       "homogeneous" "gboolean" t t t)
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-toolbar-child-homogeneous atdoc:*function-name-alias*)
@@ -327,7 +345,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-toolbar-space-style atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-toolbar-space-style atdoc:*external-symbols*)
- "@version{2013-6-1}
+ "@version{2013-10-21}
   @short{}
   @begin{pre}
 (define-g-enum \"GtkToolbarSpaceStyle\" gtk-toolbar-space-style
@@ -335,7 +353,8 @@
    :type-initializer \"gtk_toolbar_space_style_get_type\")
   (:empty 0)
   (:line 1))
-  @end{pre}")
+  @end{pre}
+  @see-class{gtk-toolbar}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_toolbar_new ()
@@ -345,9 +364,10 @@
 
 (defun gtk-toolbar-new ()
  #+cl-cffi-gtk-documentation
- "@version{2013-6-1}
-  @return{The newly-created toolbar.}
-  Creates a new toolbar."
+ "@version{2013-10-22}
+  @return{The newly created toolbar.}
+  Creates a new toolbar.
+  @see-class{gtk-toolbar}"
   (make-instance 'gtk-toolbar))
 
 (export 'gtk-toolbar-new)
@@ -358,18 +378,21 @@
 
 (defcfun ("gtk_toolbar_insert" gtk-toolbar-insert) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-6-1}
+ "@version{2013-10-22}
   @argument[toolbar]{a @class{gtk-toolbar} widget}
   @argument[item]{a @class{gtk-tool-item} widget}
   @argument[pos]{the position of the new item}
   @begin{short}
-    Insert a @class{gtk-tool-item} into the toolbar at position pos. If pos is
-    0 the item is prepended to the start of the toolbar. If pos is negative,
-    the item is appended to the end of the toolbar.
+    Insert a @class{gtk-tool-item} into the toolbar at position @arg{pos}.
   @end{short}
-  Since 2.4"
-  (toolbar g-object)
-  (item g-object)
+  If @arg{pos} is 0 the item is prepended to the start of the toolbar. If
+  @arg{pos} is negative, the item is appended to the end of the toolbar.
+
+  Since 2.4
+  @see-class{gtk-toolbar}
+  @see-class{gtk-tool-item}"
+  (toolbar (g-object gtk-toolbar))
+  (item (g-object gtk-tool-item))
   (pos :int))
 
 (export 'gtk-toolbar-insert)
@@ -380,18 +403,20 @@
 
 (defcfun ("gtk_toolbar_get_item_index" gtk-toolbar-item-index) :int
  #+cl-cffi-gtk-documentation
- "@version{2013-6-1}
+ "@version{2013-10-22}
   @argument[toolbar]{a @class{gtk-toolbar} widget}
   @argument[item]{a @class{gtk-tool-item} that is a child of toolbar}
   @return{The position of item on the toolbar.}
   @begin{short}
-    Returns the position of item on the toolbar, starting from 0. It is an error
-    if item is not a child of the toolbar.
+    Returns the position of @arg{item} on the toolbar, starting from 0.
   @end{short}
+  It is an error if @arg{item} is not a child of the toolbar.
 
-  Since 2.4"
-  (toolbar g-object)
-  (item g-object))
+  Since 2.4
+  @see-class{gtk-toolbar}
+  @see-class{gtk-tool-item}"
+  (toolbar (g-object gtk-toolbar))
+  (item (g-object gtk-tool-item)))
 
 (export 'gtk-toolbar-item-index)
 
@@ -401,13 +426,15 @@
 
 (defcfun ("gtk_toolbar_get_n_items" gtk-toolbar-get-n-items) :int
  #+cl-cffi-gtk-documentation
- "@version{2013-6-1}
+ "@version{2013-10-22}
   @argument[toolbar]{a @class{gtk-toolbar} widget}
   @return{The number of items on the toolbar.}
   @short{Returns the number of items on the toolbar.}
 
-  Since 2.4"
-  (toolbar g-object))
+  Since 2.4
+  @see-class{gtk-toolbar}
+  @see-class{gtk-tool-item}"
+  (toolbar (g-object gtk-toolbar)))
 
 (export 'gtk-toolbar-get-n-items)
 
@@ -417,7 +444,7 @@
 
 (defcfun ("gtk_toolbar_get_nth_item" gtk-toolbar-nth-item) g-object
  #+cl-cffi-gtk-documentation
- "@version{2013-6-1}
+ "@version{2013-10-22}
   @argument[toolbar]{a @class{gtk-toolbar} widget}
   @argument[n]{a position on the @argt{toolbar}}
   @return{The n'th @class{gtk-tool-item} on @arg{toolbar}, or @code{nil} if
@@ -427,8 +454,10 @@
     does not contain an n'th item.
   @end{short}
 
-  Since 2.4"
-  (toolbar g-object)
+  Since 2.4
+  @see-class{gtk-toolbar}
+  @see-class{gtk-tool-item}"
+  (toolbar (g-object gtk-toolbar))
   (n :int))
 
 (export 'gtk-toolbar-nth-item)
@@ -439,21 +468,23 @@
 
 (defcfun ("gtk_toolbar_get_drop_index" gtk-toolbar-get-drop-index) :int
  #+cl-cffi-gtk-documentation
- "@version{2013-6-1}
+ "@version{2013-10-22}
   @argument[toolbar]{a @class{gtk-toolbar} widget}
-  @argument[x]{x coordinate of a point on the @arg{toolbar}}
-  @argument[y]{y coordinate of a point on the @arg{toolbar}}
-  @return{The position corresponding to the point (x, y) on the @arg{toolbar}.}
+  @argument[x]{x coordinate of a point on the toolbar}
+  @argument[y]{y coordinate of a point on the toolbar}
+  @return{The position corresponding to the point (@arg{x}, @arg{y}) on the
+    toolbar.}
   @begin{short}
     Returns the position corresponding to the indicated point on @arg{toolbar}.
-    This is useful when dragging items to the @arg{toolbar}: this function
-    returns the position a new item should be inserted.
   @end{short}
+  This is useful when dragging items to the toolbar. This function
+  returns the position a new item should be inserted.
 
-  x and y are in toolbar coordinates.
+  @arg{x} and @arg{y} are in toolbar coordinates.
 
-  Since 2.4"
-  (toolbar g-object)
+  Since 2.4
+  @see-class{gtk-toolbar}"
+  (toolbar (g-object gtk-toolbar))
   (x :int)
   (y :int))
 
@@ -466,153 +497,204 @@
 (defcfun ("gtk_toolbar_set_drop_highlight_item"
           gtk-toolbar-set-drop-highlight-item) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-6-1}
+ "@version{2013-10-22}
   @argument[toolbar]{a @class{gtk-toolbar} widget}
   @argument[tool-item]{a @class{gtk-tool-item}, or @code{nil} to turn of
     highlighting}
   @argument[index]{a position on @arg{toolbar}}
   @begin{short}
     Highlights @arg{toolbar} to give an idea of what it would look like if item
-    was added to @arg{toolbar} at the position indicated by @arg{index}. If item
-    is @code{nil}, highlighting is turned off. In that case @arg{index} is
-    ignored.
+    was added to @arg{toolbar} at the position indicated by @arg{index}.
   @end{short}
+  If item is @code{nil}, highlighting is turned off. In that case @arg{index}
+  is ignored.
 
   The @arg{tool-item} passed to this function must not be part of any widget
   hierarchy. When an item is set as drop highlight item it can not added to
   any widget hierarchy or used as highlight item for another toolbar.
 
-  Since 2.4"
-  (toolbar g-object)
-  (tool-item g-object)
+  Since 2.4
+  @see-class{gtk-toolbar}
+  @see-class{gtk-tool-item}"
+  (toolbar (g-object gtk-toolbar))
+  (tool-item (g-object gtk-tool-item))
   (index :int))
 
 (export 'gtk-toolbar-set-drop-highlight-item)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_toolbar_set_show_arrow ()
-;;;
-;;; void gtk_toolbar_set_show_arrow (GtkToolbar *toolbar, gboolean show_arrow);
-;;;
-;;; Sets whether to show an overflow menu when toolbar doesn't have room for all
-;;; items on it. If TRUE, items that there are not room are available through an
-;;; overflow menu.
-;;;
-;;; toolbar :
-;;;     a GtkToolbar
-;;;
-;;; show_arrow :
-;;;     Whether to show an overflow menu
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-toolbar-set-show-arrow))
+
+(defun gtk-toolbar-set-show-arrow (toolbar show-arrow)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-10-22}
+  @argument[toolbar]{a @class{gtk-toolbar} widget}
+  @argument[show-arrow]{whether to show an overflow menu}
+  @begin{short}
+    Sets whether to show an overflow menu when toolbar does not have room for
+    all items on it.
+  @end{short}
+  If @em{true}, items that there are not room are available through an
+  overflow menu.
+
+  Since 2.4
+  @see-class{gtk-toolbar}
+  @see-function{gtk-toolbar-get-show-arrow}"
+  (setf (gtk-toolbar-show-arrow toolbar) show-arrow))
+
+(export 'gtk-toolbar-set-show-arrow)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_toolbar_unset_icon_size ()
-;;;
-;;; void gtk_toolbar_unset_icon_size (GtkToolbar *toolbar);
-;;;
-;;; Unsets toolbar icon size set with gtk_toolbar_set_icon_size(), so that user
-;;; preferences will be used to determine the icon size.
-;;;
-;;; toolbar :
-;;;     a GtkToolbar
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_toolbar_unset_icon_size" gtk-toolbar-unset-icon-size) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-10-22}
+  @argument[toolbar]{a @class{gtk-toolbar} widget}
+  Unsets @arg{toolbar} icon size set with the function
+  @fun{gtk-toolbar-set-icon-size}, so that user preferences will be used to
+  determine the icon size.
+  @see-class{gtk-toolbar}
+  @see-function{gtk-toolbar-set-icon-size}"
+  (toolbar (g-object gtk-toolbar)))
+
+(export 'gtk-toolbar-unset-icon-size)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_toolbar_get_show_arrow ()
-;;;
-;;; gboolean gtk_toolbar_get_show_arrow (GtkToolbar *toolbar);
-;;;
-;;; Returns whether the toolbar has an overflow menu. See
-;;; gtk_toolbar_set_show_arrow().
-;;;
-;;; toolbar :
-;;;     a GtkToolbar
-;;;
-;;; Returns :
-;;;     TRUE if the toolbar has an overflow menu.
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-toolbar-get-show-arrow))
+
+(defun gtk-toolbar-get-show-arrow (toolbar)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-10-22}
+  @argument[toolbar]{a @class{gtk-toolbar} widget}
+  @return{@em{True} if the toolbar has an overflow menu.}
+  @begin{short}
+    Returns whether the toolbar has an overflow menu.
+  @end{short}
+  See the function @fun{gtk-toolbar-set-show-arrow}.
+
+  Since 2.4
+  @see-class{gtk-toolbar}
+  @see-function{gtk-toolbar-set-show-arrow}"
+  (gtk-toolbar-show-arrow toolbar))
+
+(export 'gtk-toolbar-get-show-arrow)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_toolbar_get_style ()
-;;;
-;;; GtkToolbarStyle gtk_toolbar_get_style (GtkToolbar *toolbar);
-;;;
-;;; Retrieves whether the toolbar has text, icons, or both . See
-;;; gtk_toolbar_set_style().
-;;;
-;;; toolbar :
-;;;     a GtkToolbar
-;;;
-;;; Returns :
-;;;     the current style of toolbar
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-toolbar-get-style))
+
+(defun gtk-toolbar-get-style (toolbar)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-10-22}
+  @argument[toolbar]{a @class{gtk-toolbar} widget}
+  @return{The current style of @arg{toolbar}.}
+  @begin{short}
+    Retrieves whether the toolbar has text, icons, or both.
+  @end{short}
+  See the function @fun{gtk-toolbar-set-style}.
+  @see-class{gtk-toolbar}
+  @see-function{gtk-toolbar-set-style}"
+  (gtk-toolbar-toolbar-style toolbar))
+
+(export 'gtk-toolbar-get-style)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_toolbar_get_icon_size ()
-;;;
-;;; GtkIconSize gtk_toolbar_get_icon_size (GtkToolbar *toolbar);
-;;;
-;;; Retrieves the icon size for the toolbar. See gtk_toolbar_set_icon_size().
-;;;
-;;; toolbar :
-;;;     a GtkToolbar
-;;;
-;;; Returns :
-;;;     the current icon size for the icons on the toolbar
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-toolbar-get-icon-size))
+
+(defun gtk-toolbar-get-icon-size (toolbar)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-10-22}
+  @argument[toolbar]{a @class{gtk-toolbar} widget}
+  @return{The current icon size for the icons on the toolbar.}
+  @begin{short}
+    Retrieves the icon size for the toolbar.
+  @end{short}
+  See the function @fun{gtk-toolbar-set-icon-size}.
+  @see-class{gtk-toolbar}
+  @see-function{gtk-toolbar-set-icon-size}"
+  (gtk-toolbar-icon-size toolbar))
+
+(export 'gtk-toolbar-get-icon-size)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_toolbar_get_relief_style ()
-;;;
-;;; GtkReliefStyle gtk_toolbar_get_relief_style (GtkToolbar *toolbar);
-;;;
-;;; Returns the relief style of buttons on toolbar. See gtk_button_set_relief().
-;;;
-;;; toolbar :
-;;;     a GtkToolbar
-;;;
-;;; Returns :
-;;;     The relief style of buttons on toolbar.
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_toolbar_get_relief_style" gtk-toolbar-get-relief-style)
+    gtk-relief-style
+ #+cl-cffi-gtk-documentation
+ "@version{2013-10-22}
+  @argument[toolbar]{a @class{gtk-toolbar} widget}
+  @return{The relief style of buttons on @arg{toolbar}.}
+  @begin{short}
+    Returns the relief style of buttons on @arg{toolbar}.
+  @end{short}
+  See the function @fun{gtk-button-set-relief}.
+
+  Since 2.4
+  @see-class{gtk-toolbar}
+  @see-function{gtk-toolbar-set-relief-style}"
+  (toolbar (g-object gtk-toolbar)))
+
+(export 'gtk-toolbar-get-relief-style)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_toolbar_set_style ()
-;;;
-;;; void gtk_toolbar_set_style (GtkToolbar *toolbar, GtkToolbarStyle style);
-;;;
-;;; Alters the view of toolbar to display either icons only, text only, or both.
-;;;
-;;; toolbar :
-;;;     a GtkToolbar.
-;;;
-;;; style :
-;;;     the new style for toolbar.
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-toolbar-set-style))
+
+(defun gtk-toolbar-set-style (toolbar style)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-10-22}
+  @argument[toolbar]{a @class{gtk-toolbar} widget}
+  @argument[style]{the new style for @arg{toolbar}}
+  Alters the view of @arg{toolbar} to display either icons only, text only,
+  or both.
+  @see-class{gtk-toolbar}
+  @see-function{gtk-toolbar-get-style}"
+  (setf (gtk-toolbar-toolbar-style toolbar) style))
+
+(export 'gtk-toolbar-set-style)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_toolbar_set_icon_size ()
-;;;
-;;; void gtk_toolbar_set_icon_size (GtkToolbar *toolbar, GtkIconSize icon_size);
-;;;
-;;; This function sets the size of stock icons in the toolbar. You can call it
-;;; both before you add the icons and after they've been added. The size you set
-;;; will override user preferences for the default icon size.
-;;;
-;;; This should only be used for special-purpose toolbars, normal application
-;;; toolbars should respect the user preferences for the size of icons.
-;;;
-;;; toolbar :
-;;;     A GtkToolbar
-;;;
-;;; icon_size :
-;;;     The GtkIconSize that stock icons in the toolbar shall have.
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-toolbar-set-icon-size))
+
+(defun gtk-toolbar-set-icon-size (toolbar icon-size)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-10-22}
+  @argument[toolbar]{a @class{gtk-toolbar} widget}
+  @argument[icon-size]{the @symbol{gtk-icon-size} that stock icons in the
+    toolbar shall have}
+  @begin{short}
+    This function sets the size of stock icons in the toolbar.
+  @end{short}
+  You can call it both before you add the icons and after they have been added.
+  The size you set will override user preferences for the default icon size.
+
+  This should only be used for special-purpose toolbars, normal application
+  toolbars should respect the user preferences for the size of icons.
+  @see-class{gtk-toolbar}
+  @see-function{gtk-toolbar-set-icon-size}"
+  (setf (gtk-toolbar-icon-size toolbar) icon-size))
+
+(export 'gtk-toolbar-set-icon-size)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_toolbar_unset_style ()
@@ -620,12 +702,13 @@
 
 (defcfun ("gtk_toolbar_unset_style" gtk-toolbar-unset-style) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-6-1}
+ "@version{2013-10-22}
   @argument[toolbar]{a @class{gtk-toolbar} widget}
   Unsets a toolbar style set with the @fun{gtk-toolbar-set-style} function, so
   that user preferences will be used to determine the toolbar style.
+  @see-class{gtk-toolbar}
   @see-function{gtk-toolbar-set-style}"
-  (toolbar g-object))
+  (toolbar (g-object gtk-toolbar)))
 
 (export 'gtk-toolbar-unset-style)
 
