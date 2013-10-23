@@ -1374,14 +1374,29 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkPrintPages
-;;;
-;;; typedef enum {
-;;;   GTK_PRINT_PAGES_ALL,
-;;;   GTK_PRINT_PAGES_CURRENT,
-;;;   GTK_PRINT_PAGES_RANGES,
-;;;   GTK_PRINT_PAGES_SELECTION
-;;; } GtkPrintPages;
 ;;; ----------------------------------------------------------------------------
+
+(define-g-enum "GtkPrintPages" gtk-print-pages
+  (:export t
+   :type-initializer "gtk_print_pages_get_type")
+  (:all 0)
+  (:current 1)
+  (:ranges 2)
+  (:selection 3))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-print-pages atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'gtk-print-pages atdoc:*external-symbols*)
+ "@version{2013-10-21}
+  @begin{pre}
+(define-g-enum \"GtkPrintPages\" gtk-print-pages
+  (:export t
+   :type-initializer \"gtk_print_pages_get_type\")
+  (:all 0)
+  (:current 1)
+  (:ranges 2)
+  (:selection 3))
+  @end{pre}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; GTK_PRINT_SETTINGS_PRINT_PAGES
@@ -1435,7 +1450,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; GTK_PRINT_SETTINGS_PAGE_RANGES
 ;;;
-;;; #define GTK_PRINT_SETTINGS_PAGE_RANGES      "page-ranges"
+;;; #define GTK_PRINT_SETTINGS_PAGE_RANGES "page-ranges"
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1483,18 +1498,32 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkPageSet
-;;;
-;;; typedef enum {
-;;;   GTK_PAGE_SET_ALL,
-;;;   GTK_PAGE_SET_EVEN,
-;;;   GTK_PAGE_SET_ODD
-;;; } GtkPageSet;
 ;;; ----------------------------------------------------------------------------
+
+(define-g-enum "GtkPageSet" gtk-page-set
+  (:export t
+   :type-initializer "gtk_page_set_get_type")
+  (:all 0)
+  (:even 1)
+  (:odd 2))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-page-set atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'gtk-page-set atdoc:*external-symbols*)
+ "@version{2013-10-22}
+  @begin{pre}
+(define-g-enum \"GtkPageSet\" gtk-page-set
+  (:export t
+   :type-initializer \"gtk_page_set_get_type\")
+  (:all 0)
+  (:even 1)
+  (:odd 2))
+  @end{pre}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; GTK_PRINT_SETTINGS_PAGE_SET
 ;;;
-;;; #define GTK_PRINT_SETTINGS_PAGE_SET         "page-set"
+;;; #define GTK_PRINT_SETTINGS_PAGE_SET "page-set"
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
