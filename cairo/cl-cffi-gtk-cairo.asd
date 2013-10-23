@@ -34,6 +34,7 @@
                (:file "cairo.types")           ; Generic data types
                (:file "cairo.regions")
                (:file "cairo.surface")
+               (:file "cairo.image-surface")   ; Rendering to memory buffers
                (:file "cairo.pattern")         ; Sources for drawing
                (:file "cairo.context")
                (:file "cairo.transformations") ; Transformations

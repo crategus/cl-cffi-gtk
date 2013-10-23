@@ -32,9 +32,9 @@ Surfaces
 
   cairo_device_t - interface to underlying rendering system
 
- cario.surface.lisp - Base class for surfaces                   - Cairo 1.12.2 *
+ cairo.surface.lisp - Base class for surfaces                   - Cairo 1.12.2 *
+ cairo.image-surface.lisp - Rendering to memory buffers         - Cairo 1.12.16&
 
-  Image Surfaces - Rendering to memory buffers
   PDF Surfaces - Rendering PDF documents
   PNG Support - Reading and writing PNG images
   PostScript Surfaces - Rendering PostScript documents
