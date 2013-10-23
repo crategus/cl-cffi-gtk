@@ -157,7 +157,7 @@ GTK+ Widgets and Objects
     gtk.tearoff-menu-item.lisp       - GtkTearoffMenuItem          - GTK+ 3.6.4
 
     gtk.tool-shell.lisp              - GtkToolShell                - GTK+ 3.6.4&
-    gtk.toolbar.lisp                 - GtkToolbar                  - GTK+ 3.6.4&
+    gtk.toolbar.lisp                 - GtkToolbar                  - GTK+ 3.6.4
     gtk.tool-item.lisp               - GtkToolItem                 - GTK+ 3.6.4&
     gtk.tool-palette.lisp            - GtkToolPalette              - GTK+ 3.6.4&
     gtk.tool-item-group.lisp         - GtkToolItemGroup            - GTK+ 3.6.4&
@@ -235,9 +235,7 @@ GTK+ Widgets and Objects
     gtk.page-setup.lisp              - GtkPageSetup                - GTK+ 3.6.4%
     gtk.paper-size.lisp              - GtkPaperSize                - GTK+ 3.6.4%
     gtk.printer.lisp                 - GtkPrinter                  - GTK+ 3.6.4
-
-    not implemented                  - GtkPrintJob
-
+    gtk.print-job.lisp               - GtkPrintJob                 - GTK+ 3.8.6
     gtk.print-unix-dialog.lisp       - GtkPrintUnixDialog          - GTK+ 3.6.4
     gtk.page-setup-unix-dialog.lisp  - GtkPageSetupUnixDialog      - GTK+ 3.6.4
 

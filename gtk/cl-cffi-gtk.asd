@@ -272,12 +272,14 @@
    (:file "gtk.print-settings")        ; Stores print settings
    (:file "gtk.page-setup")            ; Stores page setup information
    (:file "gtk.paper-size")            ; Support for named paper sizes
-   ; GtkPrintJob — Represents a print job
    #-win32
    (:file "gtk.print-unix-dialog")     ; A print dialog
    #-win32
    (:file "gtk.page-setup-unix-dialog"); A page setup dialog
+   #-win32
    (:file "gtk.printer")               ; Represents a printer
+   #-win32
+   (:file "gtk.print-job")             ; Represents a print job
 
    ;; Application support
    (:file "gtk.application")           ; Application class
