@@ -134,7 +134,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-drag-action atdoc:*symbol-name-alias*) "Flags"
       (gethash 'gdk-drag-action atdoc:*external-symbols*)
- "@version{2013-6-30}
+ "@version{2013-10-20}
   @begin{short}
     Used in @class{gdk-drag-context} to indicate what the destination should do
     with the dropped data.
@@ -160,7 +160,8 @@
     @entry[:private]{Special action which tells the source that the destination
       will do something that the source does not understand.}
     @entry[:ask]{Ask the user what to do with the data.}
-  @end{table}")
+  @end{table}
+  @see-class{gdk-drag-context}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; GdkDragContext

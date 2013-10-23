@@ -690,10 +690,9 @@
       (gethash 'gdk-modifier-intent atdoc:*external-symbols*)
  "@version{2013-9-26}
   @begin{short}
-    This enum is used with the functions @fun{gdk-keymap-get-modifier-mask} and
-    @fun{gdk-get-modifier-mask} in order to determine what modifiers the
-    currently used windowing system backend uses for particular
-    purposes.
+    This enum is used with the functions @fun{gdk-keymap-get-modifier-mask} in
+    order to determine what modifiers the currently used windowing system
+    backend uses for particular purposes.
   @end{short}
   For example, on X11/Windows, the Control key is used for invoking menu
   shortcuts (accelerators), whereas on Apple computers it is the Command key,
@@ -728,7 +727,6 @@
   @end{table}
   Since 3.4
   @see-symbol{gdk-modifier-type}
-  @see-function{gdk-get-modifier-mask}
   @see-function{gdk-keymap-get-modifier-mask}")
 
 ;;; ----------------------------------------------------------------------------
