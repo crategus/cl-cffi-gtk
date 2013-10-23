@@ -1,10 +1,10 @@
 ;;; ----------------------------------------------------------------------------
 ;;; cairo.paths.lisp
 ;;;
-;;; The documentation has been copied from the Cairo Reference Manual
-;;; for Cairo 1.12.2. See <http://cairographics.org>.
-;;; The API documentation of the Lisp binding is available at
-;;; <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the Cairo Reference Manual
+;;; Version 1.12.2 and modified to document the Lisp binding to the Cairo
+;;; library. See <http://cairographics.org>. The API documentation of the Lisp
+;;; binding is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2012, 2013 Dieter Kaiser
 ;;;
@@ -503,42 +503,47 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_arc_negative ()
-;;;
-;;; void cairo_arc_negative (cairo_t *cr,
-;;;                          double xc,
-;;;                          double yc,
-;;;                          double radius,
-;;;                          double angle1,
-;;;                          double angle2);
-;;;
-;;; Adds a circular arc of the given radius to the current path. The arc is
-;;; centered at (xc, yc), begins at angle1 and proceeds in the direction of
-;;; decreasing angles to end at angle2. If angle2 is greater than angle1 it will
-;;; be progressively decreased by 2*M_PI until it is less than angle1.
-;;;
-;;; See cairo_arc() for more details. This function differs only in the
-;;; direction of the arc between the two angles.
-;;;
-;;; cr :
-;;;     a cairo context
-;;;
-;;; xc :
-;;;     X position of the center of the arc
-;;;
-;;; yc :
-;;;     Y position of the center of the arc
-;;;
-;;; radius :
-;;;     the radius of the arc
-;;;
-;;; angle1 :
-;;;     the start angle, in radians
-;;;
-;;; angle2 :
-;;;     the end angle, in radians
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_arc_negative" %cairo-arc-negative) :void
+  (cr (:pointer (:struct cairo-t)))
+  (xc :double)
+  (yc :double)
+  (radius :double)
+  (angle1 :double)
+  (angle2 :double))
+
+(defun cairo-arc-negative (cr xc yc radius angle1 angle2)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-10-20}
+  @argument[cr]{a cairo context}
+  @argument[xc]{x position of the center of the arc}
+  @argument[yc]{y position of the center of the arc}
+  @argument[radius]{the radius of the arc}
+  @argument[angle1]{the start angle, in radians}
+  @argument[angle2]{the end angle, in radians}
+  @begin{short}
+    Adds a circular arc of the given @arg{radius} to the current path.
+  @end{short}
+  The arc is centered at (@arg{xc}, @arg{yc}), begins at @arg{angle1} and
+  proceeds in the direction of decreasing angles to end at @arg{angle2}. If
+  @arg{angle2} is greater than @arg{angle1} it will be progressively decreased
+  by @code{2*PI} until it is less than @arg{angle1}.
+
+  See the function @fun{cairo-arc} for more details. This function differs only
+  in the direction of the arc between the two angles.
+
+  Since 1.0
+  @see-symbol{cairo-t}
+  @see-function{cairo-arc}"
+  (%cairo-arc-negative cr
+                       (coerce xc 'double-float)
+                       (coerce yc 'double-float)
+                       (coerce radius 'double-float)
+                       (coerce angle1 'double-float)
+                       (coerce angle2 'double-float)))
+
+(export 'cairo-arc-negative)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_curve_to ()
