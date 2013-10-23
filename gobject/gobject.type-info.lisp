@@ -3420,6 +3420,7 @@
 ;;; g_type_ensure ()
 ;;; ----------------------------------------------------------------------------
 
+#+glib-2-34
 (defcfun ("g_type_ensure" g-type-ensure) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-4-2}
@@ -3442,6 +3443,7 @@
   Since 2.34"
   (type g-type))
 
+#+glib-2-34
 (export 'g-type-ensure)
 
 ;;; ----------------------------------------------------------------------------
