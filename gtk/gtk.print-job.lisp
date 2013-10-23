@@ -677,200 +677,248 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_job_get_scale ()
-;;;
-;;; gdouble gtk_print_job_get_scale (GtkPrintJob *job);
-;;;
-;;; Gets the scale for this job (where 1.0 means unscaled).
-;;;
-;;; job :
-;;;     a GtkPrintJob
-;;;
-;;; Returns :
-;;;     the scale
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_job_get_scale" gtk-print-job-get-scale) :double
+ #+cl-cffi-gtk-documentation
+ "@version{2013-10-23}
+  @argument[job]{a @class{gtk-print-job} object}
+  @return{The scale.}
+  @begin{short}
+    Gets the scale for this job, where 1.0 means unscaled.
+  @end{short}
+
+  Since 3.0
+  @see-class{gtk-print-job}
+  @see-function{gtk-print-job-set-scale}"
+  (job (g-object gtk-print-job)))
+
+(export 'gtk-print-job-get-scale)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_job_set_scale ()
-;;;
-;;; void                gtk_print_job_set_scale             (GtkPrintJob *job,
-;;;                                                          gdouble scale);
-;;;
-;;; Sets the scale for this job (where 1.0 means unscaled).
-;;;
-;;; job :
-;;;     a GtkPrintJob
-;;;
-;;; scale :
-;;;     the scale
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_job_set_scale" gtk-print-job-set-scale) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-10-23}
+  @argument[job]{a @class{gtk-print-job} object}
+  @argument[scale]{the scale}
+  @begin{short}
+    Sets the scale for this job, where 1.0 means unscaled.
+  @end{short}
+
+  Since 3.0
+  @see-class{gtk-print-job}
+  @see-function{gtk-print-job-get-scale}"
+  (job (g-object gkt-print-job))
+  (scale :double))
+
+(export 'gtk-print-job-set-scale)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_job_get_n_up ()
-;;;
-;;; guint               gtk_print_job_get_n_up              (GtkPrintJob *job);
-;;;
-;;; Gets the n-up setting for this job.
-;;;
-;;; job :
-;;;     a GtkPrintJob
-;;;
-;;; Returns :
-;;;     the n-up setting
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_job_get_n_up" gtk-print-job-get-n-up) :uint
+ #+cl-cffi-gtk-documentation
+ "@version{2013-10-23}
+  @argument[job]{a @class{gtk-print-job} object}
+  @return{The n-up setting.}
+  @begin{short}
+    Gets the n-up setting for this job.
+  @end{short}
+
+  Since 3.0
+  @see-class{gtk-print-job}
+  @see-function{gtk-print-job-set-n-up}"
+  (job (g-object gtk-print-job)))
+
+(export 'gtk-print-job-get-n-up)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_job_set_n_up ()
-;;;
-;;; void                gtk_print_job_set_n_up              (GtkPrintJob *job,
-;;;                                                          guint n_up);
-;;;
-;;; Sets the n-up setting for this job.
-;;;
-;;; job :
-;;;     a GtkPrintJob
-;;;
-;;; n_up :
-;;;     the n-up value
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_job_set_n_up" gtk-print-job-set-n-up) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-10-23}
+  @argument[job]{a @class{gtk-print-job} object}
+  @argument[n-up]{the n-up value}
+  @begin{short}
+    Sets the n-up setting for this job.
+  @end{short}
+
+  Since 3.0
+  @see-class{gtk-print-job}
+  @see-function{gtk-print-job-get-n-up}"
+  (job (g-object gtk-print-job))
+  (n-up :uint))
+
+(export 'gtk-print-job-set-n-up)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_job_get_n_up_layout ()
-;;;
-;;; GtkNumberUpLayout   gtk_print_job_get_n_up_layout       (GtkPrintJob *job);
-;;;
-;;; Gets the n-up layout setting for this job.
-;;;
-;;; job :
-;;;     a GtkPrintJob
-;;;
-;;; Returns :
-;;;     the n-up layout
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_job_get_n_up_layout" gtk-print-job-get-n-up-layout)
+    gtk-number-up-layout
+ #+cl-cffi-gtk-documentation
+ "@version{2013-10-23}
+  @argument[job]{a @class{gtk-print-job} object}
+  @return{The n-up layout.}
+  @begin{short}
+    Gets the n-up layout setting for this job.
+  @end{short}
+
+  Since 3.0
+  @see-class{gtk-print-job}
+  @see-function{gtk-print-job-set-n-up-layout}"
+  (job (g-object gtk-print-job)))
+
+(export 'gtk-print-job-get-n-up-layout)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_job_set_n_up_layout ()
-;;;
-;;; void                gtk_print_job_set_n_up_layout       (GtkPrintJob *job,
-;;;                                                          GtkNumberUpLayout layout);
-;;;
-;;; Sets the n-up layout setting for this job.
-;;;
-;;; job :
-;;;     a GtkPrintJob
-;;;
-;;; layout :
-;;;     the n-up layout setting
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_job_set_n_up_layout" gtk-print-job-set-n-layout) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-10-23}
+  @argument[job]{a @class{gtk-print-job} object}
+  @argument[layout]{the n-up layout setting}
+  @begin{short}
+    Sets the n-up layout setting for this job.
+  @end{short}
+
+  Since 3.0
+  @see-class{gtk-print-job}
+  @see-function{gtk-print-job-get-n-up-layout}"
+  (job (g-object gtk-print-job))
+  (layout gtk-number-up-layout))
+
+(export 'gtk-print-job-set-n-up-layout)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_job_get_rotate ()
-;;;
-;;; gboolean            gtk_print_job_get_rotate            (GtkPrintJob *job);
-;;;
-;;; Gets whether the job is printed rotated.
-;;;
-;;; job :
-;;;     a GtkPrintJob
-;;;
-;;; Returns :
-;;;     whether the job is printed rotated
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_job_get_rotate" gtk-print-job-get-rotate) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-10-23}
+  @argument[job]{a @class{gtk-print-job} object}
+  @return{Whether the job is printed rotated.}
+  @begin{short}
+    Gets whether the job is printed rotated.
+  @end{short}
+
+  Since 3.0
+  @see-class{gtk-print-job}
+  @see-function{gtk-print-job-set-rotate}"
+  (job (g-object gtk-print-job)))
+
+(export 'gtk-print-job-get-rotate)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_job_set_rotate ()
-;;;
-;;; void                gtk_print_job_set_rotate            (GtkPrintJob *job,
-;;;                                                          gboolean rotate);
-;;;
-;;; Sets whether this job is printed rotated.
-;;;
-;;; job :
-;;;     a GtkPrintJob
-;;;
-;;; rotate :
-;;;     whether to print rotated
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_job_set_rotate" gtk-print-job-set-rotate) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-10-23}
+  @argument[job]{a @class{gtk-print-job} object}
+  @argument[rotate]{whether to print rotated}
+  @begin{short}
+    Sets whether this job is printed rotated.
+  @end{short}
+
+  Since 3.0
+  @see-class{gtk-print-job}
+  @see-function{gtk-print-job-get-rotate}"
+  (job (g-object gtk-print-job))
+  (rotate :boolean))
+
+(export 'gtk-print-job-set-rotate)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_job_get_collate ()
-;;;
-;;; gboolean            gtk_print_job_get_collate           (GtkPrintJob *job);
-;;;
-;;; Gets whether this job is printed collated.
-;;;
-;;; job :
-;;;     a GtkPrintJob
-;;;
-;;; Returns :
-;;;     whether the job is printed collated
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_job_get_collate" gtk-print-job-get-collate) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-10-23}
+  @argument[job]{a @class{gtk-print-job} object}
+  @return{Whether the job is printed collated.}
+  @begin{short}
+    Gets whether this job is printed collated.
+  @end{short}
+
+  Since 3.0
+  @see-class{gtk-print-job}
+  @see-function{gtk-print-job-set-collate}"
+  (job (g-object gtk-print-job)))
+
+(export 'gtk-print-job-get-collate)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_job_set_collate ()
-;;;
-;;; void                gtk_print_job_set_collate           (GtkPrintJob *job,
-;;;                                                          gboolean collate);
-;;;
-;;; Sets whether this job is printed collated.
-;;;
-;;; job :
-;;;     a GtkPrintJob
-;;;
-;;; collate :
-;;;     whether the job is printed collated
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_job_set_collate" gtk-print-job-set-collate) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-10-23}
+  @argument[job]{a @class{gtk-print-job} object}
+  @argument[collate]{whether the job is printed collated}
+  @begin{short}
+    Sets whether this job is printed collated.
+  @end{short}
+
+  Since 3.0
+  @see-class{gtk-print-job}
+  @see-function{gtk-print-job-get-collate}"
+  (job (g-object gtk-print-job))
+  (collate :boolean))
+
+(export 'gtk-print-job-set-collate)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_job_get_reverse ()
-;;;
-;;; gboolean            gtk_print_job_get_reverse           (GtkPrintJob *job);
-;;;
-;;; Gets whether this job is printed reversed.
-;;;
-;;; job :
-;;;     a GtkPrintJob
-;;;
-;;; Returns :
-;;;     whether the job is printed reversed.
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_job_get_reverse" gtk-print-job-get-reverse) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-10-23}
+  @argument[job]{a @class{gtk-print-job} object}
+  @return{Whether the job is printed reversed.}
+  @begin{short}
+    Gets whether this job is printed reversed.
+  @end{short}
+
+  Since 3.0
+  @see-class{gtk-print-job}
+  @see-function{gtk-print-job-set-reverse}"
+  (job (g-object gtk-print-job)))
+
+(export 'gtk-print-job-get-reverse)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_job_set_reverse ()
-;;;
-;;; void                gtk_print_job_set_reverse           (GtkPrintJob *job,
-;;;                                                          gboolean reverse);
-;;;
-;;; Sets whether this job is printed reversed.
-;;;
-;;; job :
-;;;     a GtkPrintJob
-;;;
-;;; reverse :
-;;;     whether the job is printed reversed
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_job_set_reverse" gtk-print-job-set-reverse) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-10-23}
+  @argument[job]{a @class{gtk-print-job} object}
+  @argument[reverse]{whether the job is printed reversed}
+  @begin{short}
+    Sets whether this job is printed reversed.
+  @end{short}
+
+  Since 3.0
+  @see-class{gtk-print-job}
+  @see-function{gtk-print-job-get-reverse}"
+  (job (g-object gtk-print-job)))
+
+(export 'gtk-print-job-set-reverse)
 
 ;;; --- End of file gtk.print-job.lisp -----------------------------------------

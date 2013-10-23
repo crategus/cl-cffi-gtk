@@ -235,7 +235,7 @@ GTK+ Widgets and Objects
     gtk.page-setup.lisp              - GtkPageSetup                - GTK+ 3.6.4%
     gtk.paper-size.lisp              - GtkPaperSize                - GTK+ 3.6.4%
     gtk.printer.lisp                 - GtkPrinter                  - GTK+ 3.6.4
-    gtk.print-job.lisp               - GtkPrintJob                 - GTK+ 3.8.6
+    gtk.print-job.lisp               - GtkPrintJob                 - GTK+ 3.8.6&
     gtk.print-unix-dialog.lisp       - GtkPrintUnixDialog          - GTK+ 3.6.4
     gtk.page-setup-unix-dialog.lisp  - GtkPageSetupUnixDialog      - GTK+ 3.6.4
 
