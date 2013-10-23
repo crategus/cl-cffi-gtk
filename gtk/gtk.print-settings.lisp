@@ -1108,44 +1108,41 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkNumberUpLayout
-;;;
-;;; typedef enum {
-;;;   GTK_NUMBER_UP_LAYOUT_LEFT_TO_RIGHT_TOP_TO_BOTTOM, /*< nick=lrtb >*/
-;;;   GTK_NUMBER_UP_LAYOUT_LEFT_TO_RIGHT_BOTTOM_TO_TOP, /*< nick=lrbt >*/
-;;;   GTK_NUMBER_UP_LAYOUT_RIGHT_TO_LEFT_TOP_TO_BOTTOM, /*< nick=rltb >*/
-;;;   GTK_NUMBER_UP_LAYOUT_RIGHT_TO_LEFT_BOTTOM_TO_TOP, /*< nick=rlbt >*/
-;;;   GTK_NUMBER_UP_LAYOUT_TOP_TO_BOTTOM_LEFT_TO_RIGHT, /*< nick=tblr >*/
-;;;   GTK_NUMBER_UP_LAYOUT_TOP_TO_BOTTOM_RIGHT_TO_LEFT, /*< nick=tbrl >*/
-;;;   GTK_NUMBER_UP_LAYOUT_BOTTOM_TO_TOP_LEFT_TO_RIGHT, /*< nick=btlr >*/
-;;;   GTK_NUMBER_UP_LAYOUT_BOTTOM_TO_TOP_RIGHT_TO_LEFT  /*< nick=btrl >*/
-;;; } GtkNumberUpLayout;
-;;;
-;;; Used to determine the layout of pages on a sheet when printing multiple
-;;; pages per sheet.
-;;;
-;;; GTK_NUMBER_UP_LAYOUT_LEFT_TO_RIGHT_TOP_TO_BOTTOM
-;;;
-;;;
-;;; GTK_NUMBER_UP_LAYOUT_LEFT_TO_RIGHT_BOTTOM_TO_TOP
-;;;
-;;;
-;;; GTK_NUMBER_UP_LAYOUT_RIGHT_TO_LEFT_TOP_TO_BOTTOM
-;;;
-;;;
-;;; GTK_NUMBER_UP_LAYOUT_RIGHT_TO_LEFT_BOTTOM_TO_TOP
-;;;
-;;;
-;;; GTK_NUMBER_UP_LAYOUT_TOP_TO_BOTTOM_LEFT_TO_RIGHT
-;;;
-;;;
-;;; GTK_NUMBER_UP_LAYOUT_TOP_TO_BOTTOM_RIGHT_TO_LEFT
-;;;
-;;;
-;;; GTK_NUMBER_UP_LAYOUT_BOTTOM_TO_TOP_LEFT_TO_RIGHT
-;;;
-;;;
-;;; GTK_NUMBER_UP_LAYOUT_BOTTOM_TO_TOP_RIGHT_TO_LEFT
 ;;; ----------------------------------------------------------------------------
+
+(define-g-enum "GtkNubmerUpLayout" gtk-number-up-layout
+  (:export t
+   :type-initializer "gtk_number_up_layout_get_type")
+  (:left-to-right-top-to-bottom 0)
+  (:left-to-right-bottom-to-top 1)
+  (:right-to-left-bottom-to-top 2)
+  (:right-to-left-top-to-bottom 3)
+  (:top-to-bottom-left-to-right 4)
+  (:top-to-bottom-right-to-left 5)
+  (:bottom-to-top-left-to-right 6)
+  (:bottom-to-top-right-to-left 7))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-number-up-layout atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'gtk-number-up-layout atdoc:*external-symbols*)
+ "@version{2013-10-23}
+  @begin{short}
+    Used to determine the layout of pages on a sheet when printing multiple
+    pages per sheet.
+  @end{short}
+  @begin{pre}
+(define-g-enum \"GtkNubmerUpLayout\" gtk-number-up-layout
+  (:export t
+   :type-initializer \"gtk_number_up_layout_get_type\")
+  (:left-to-right-top-to-bottom 0)
+  (:left-to-right-bottom-to-top 1)
+  (:right-to-left-bottom-to-top 2)
+  (:right-to-left-top-to-bottom 3)
+  (:top-to-bottom-left-to-right 4)
+  (:top-to-bottom-right-to-left 5)
+  (:bottom-to-top-left-to-right 6)
+  (:bottom-to-top-right-to-left 7))
+  @end{pre}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; GTK_PRINT_SETTINGS_NUMBER_UP_LAYOUT
