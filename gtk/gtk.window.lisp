@@ -1074,7 +1074,7 @@
   class.
   @see-class{gtk-window}
   @see-symbol{gtk-window-position}
-  @see-function{gtk-window-set-positon}")
+  @see-function{gtk-window-set-position}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_new ()

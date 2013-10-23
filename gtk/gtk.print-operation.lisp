@@ -977,7 +977,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-print-status atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-print-status atdoc:*external-symbols*)
- "@version{2013-5-30}
+ "@version{2013-10-21}
   @begin{short}
     The status gives a rough indication of the completion of a running print
     operation.
@@ -1011,7 +1011,8 @@
     @entry[:printing]{The printer is processing the print job.}
     @entry[:finished]{The printing has been completed successfully.}
     @entry[:finished-aborted]{The printing has been aborted.}
-  @end{table}")
+  @end{table}
+  @see-class{gtk-print-operation}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkPrintOperationAction

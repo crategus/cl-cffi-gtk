@@ -777,11 +777,11 @@
 (defcfun ("gtk_printer_get_default_page_size" gtk-printer-get-default-page-size)
     (g-object gtk-page-setup)
  #+cl-cffi-gtk-documentation
- "@version{2013-10-20}
+ "@version{2013-10-21}
   @argument[printer]{a @class{gtk-printer} object}
   @return{A newly allocated @class{gtk-page-setup} object with default page size
     of the printer.}
-  @return{Returns default page size of printer.}
+  @short{Returns default page size of printer.}
 
   Since 2.14
   @see-class{gtk-printer}
@@ -828,7 +828,7 @@
                          (bottom :double)
                          (left :double)
                          (right :double))
-    (when (%gtk-printer-get-hard-margings printer top bottom left right)
+    (when (%gtk-printer-get-hard-margins printer top bottom left right)
       (values top bottom left right))))
 
 (export 'gtk-printer-get-hard-margins)

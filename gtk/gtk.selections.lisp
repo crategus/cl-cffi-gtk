@@ -382,7 +382,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-target-list atdoc:*class-name-alias*) "CStruct"
       (documentation 'gtk-target-list 'type)
- "@version{2013-7-4}
+ "@version{2013-10-20}
   @begin{short}
     A @sym{gtk-target-list} structure is used to represent the same information
     as a table of @class{gtk-target-entry}, but in an efficient form. This
@@ -391,7 +391,8 @@
   @begin{pre}
 (define-g-boxed-opaque gtk-target-list \"GtkTargetList\"
   :alloc (%gtk-target-list-new (null-pointer) 0))
-  @end{pre}")
+  @end{pre}
+  @see-class{gtk-target-entry}")
 
 (export (boxed-related-symbols 'gtk-target-list))
 
