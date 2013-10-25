@@ -78,7 +78,8 @@
   @subheading{Note}
     An object only needs to implement this interface if it needs to extend the
     @class{gtk-builder} format or run any extra routines at deserialization
-    time.")
+    time.
+  @see-class{gtk-builder}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkBuildableIface
@@ -191,38 +192,47 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_buildable_set_name ()
-;;;
-;;; void gtk_buildable_set_name (GtkBuildable *buildable, const gchar *name);
-;;;
-;;; Sets the name of the buildable object.
-;;;
-;;; buildable :
-;;;     a GtkBuildable
-;;;
-;;; name :
-;;;     name to set
-;;;
-;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk-buildable_set_name" gtk-buildable-set-name) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-10-24}
+  @argument[buildable]{a @class{gtk-buildable} object}
+  @argument[name]{name to set}
+  @begin{short}
+    Sets the name of the buildable object.
+  @end{short}
+
+  Since 2.12
+  @see-class{gtk-buildable}
+  @see-function{gtk-buildable-set-name}"
+  (buildable (g-object gtk-buildable))
+  (name :string))
+
+(export 'gtk-buildable-set-name)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_buildable_get_name ()
-;;;
-;;; const gchar * gtk_buildable_get_name (GtkBuildable *buildable);
-;;;
-;;; Gets the name of the buildable object.
-;;;
-;;; GtkBuilder sets the name based on the the GtkBuilder UI definition used to
-;;; construct the buildable.
-;;;
-;;; buildable :
-;;;     a GtkBuildable
-;;;
-;;; Returns :
-;;;     the name set with gtk_buildable_set_name()
-;;;
-;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_buildable_get_name" gtk-buildable-get-name) :string
+ #+cl-cffi-gtk-documentation
+ "@version{2013-10-24}
+  @argument[buildable]{a @class{gtk-buildable} object}
+  @return{The name set with the function @fun{gtk-buildable-set-name}.}
+  @begin{short}
+    Gets the name of the buildable object.
+  @end{short}
+
+  @class{gtk-builder} sets the name based on the the @class{gtk-builder} UI
+  definition used to construct the buildable.
+
+  Since 2.12
+  @see-class{gtk-buildable}
+  @see-function{gtk-buildable-set-name}"
+  (buildable (g-object gtk-buildable)))
+
+(export 'gtk-buildable-get-name)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_buildable_add_child ()
