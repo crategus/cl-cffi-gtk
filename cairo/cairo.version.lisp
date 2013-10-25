@@ -49,12 +49,13 @@
 ;;; CAIRO_VERSION_MAJOR
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +cairo-version-major+ 1
- #+cl-cffi-gtk-documentation
- "@version{2013-3-2}
-  @begin{short}
-    The major component of the version of Cairo available at compile-time.
-  @end{short}")
+(eval-when (:load-toplevel :compile-toplevel :execute)
+  (defconstant +cairo-version-major+ 1
+   #+cl-cffi-gtk-documentation
+   "@version{2013-3-2}
+    @begin{short}
+      The major component of the version of Cairo available at compile-time.
+    @end{short}"))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash '+cairo-version-major+ atdoc:*variable-name-alias*) "Constant")
@@ -65,12 +66,13 @@
 ;;; CAIRO_VERSION_MINOR
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +cairo-version-minor+ 12
- #+cl-cffi-gtk-documentation
- "@version{2013-3-2}
-  @begin{short}
-    The minor component of the version of Cairo available at compile-time.
-  @end{short}")
+(eval-when (:load-toplevel :compile-toplevel :execute)
+  (defconstant +cairo-version-minor+ 12
+   #+cl-cffi-gtk-documentation
+   "@version{2013-3-2}
+    @begin{short}
+      The minor component of the version of Cairo available at compile-time.
+    @end{short}"))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash '+cairo-version-minor+ atdoc:*variable-name-alias*) "Constant")
@@ -81,12 +83,13 @@
 ;;; CAIRO_VERSION_MICRO
 ;;; ----------------------------------------------------------------------------
 
-(defconstant +cairo-version-micro+ 2
- #+cl-cffi-gtk-documentation
- "@version{2013-3-2}
-  @begin{short}
-    The micro component of the version of Cairo available at compile-time.
-  @end{short}")
+(eval-when (:load-toplevel :compile-toplevel :execute)
+  (defconstant +cairo-version-micro+ 2
+   #+cl-cffi-gtk-documentation
+   "@version{2013-3-2}
+    @begin{short}
+      The micro component of the version of Cairo available at compile-time.
+    @end{short}"))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash '+cairo-version-micro+ atdoc:*variable-name-alias*) "Constant")
