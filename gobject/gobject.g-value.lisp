@@ -70,6 +70,7 @@
 (defgeneric parse-g-value-for-type (gvalue-ptr gtype parse-kind))
 
 (defmethod parse-g-value-for-type :around (gvalue-ptr gtype parse-kind)
+  (declare (ignore g-value-ptr parse-kind))
   (assert (typep gtype '(or gtype nil)))
   (call-next-method))
 
