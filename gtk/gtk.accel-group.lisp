@@ -360,32 +360,44 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_accel_group_lock ()
-;;;
-;;; void gtk_accel_group_lock (GtkAccelGroup *accel_group);
-;;;
-;;; Locks the given accelerator group.
-;;;
-;;; Locking an acelerator group prevents the accelerators contained within it to
-;;; be changed during runtime. Refer to gtk_accel_map_change_entry() about
-;;; runtime accelerator changes.
-;;;
-;;; If called more than once, accel_group remains locked until
-;;; gtk_accel_group_unlock() has been called an equivalent number of times.
-;;;
-;;; accel_group :
-;;;     a GtkAccelGroup
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_accel_group_lock" gtk-accel-group-lock) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-10-24}
+  @argument[accel-group]{a @class{gtk-accel-group} object}
+  @begin{short}
+    Locks the given accelerator group.
+  @end{short}
+
+  Locking an acelerator group prevents the accelerators contained within it to
+  be changed during runtime. Refer to the function
+  @fun{gtk-accel-map-change-entry} about runtime accelerator changes.
+
+  If called more than once, @arg{accel-group} remains locked until the function
+  @fun{gtk-accel-group-unlock} has been called an equivalent number of times.
+  @see-class{gtk-accel-group}
+  @see-function{gtk-accel-group-unlock}
+  @see-function{gtk-accel-map-change-entry}"
+  (accel-group (g-object gtk-accel-group)))
+
+(export 'gtk-accel-group-lock)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_accel_group_unlock ()
-;;;
-;;; void gtk_accel_group_unlock (GtkAccelGroup *accel_group);
-;;;
-;;; Undoes the last call to gtk_accel_group_lock() on this accel_group.
-;;;
-;;; accel_group :
-;;;     a GtkAccelGroup
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_accel_group_unlock" gtk-accel-group-unlock) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-10-24}
+  @argument[accel-group]{a @class{gtk-accel-group} object}
+  Undoes the last call to the function @fun{gtk-accel-group-lock} on this
+  @arg{accel-group}.
+  @see-class{gtk-accel-group}
+  @see-function{gtk-accel-group-lock}"
+  (accel-group (g-object gtk-accel-group)))
+
+(export 'gtk-accel-group-unlock)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_accel_group_get_is_locked ()
