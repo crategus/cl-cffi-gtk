@@ -318,39 +318,50 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_item_set_tooltip_text ()
-;;;
-;;; void gtk_tool_item_set_tooltip_text (GtkToolItem *tool_item,
-;;;                                      const gchar *text);
-;;;
-;;; Sets the text to be displayed as tooltip on the item. See
-;;; gtk_widget_set_tooltip_text().
-;;;
-;;; tool_item :
-;;;     a GtkToolItem
-;;;
-;;; text :
-;;;     text to be used as tooltip for tool_item
-;;;
-;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_tool_item_set_tooltip_text" gtk-tool-item-set-tooltip-text) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-10-24}
+  @argument[tool-item]{a @class{gtk-tool-item} widget}
+  @argument[text]{text to be used as tooltip for @arg{tool-item}}
+  @begin{short}
+    Sets the text to be displayed as tooltip on the item.
+  @end{short}
+  See the function @fun{gtk-widget-set-tooltip-text}.
+
+  Since 2.12
+  @see-class{gtk-tool-item}
+  @see-function{gtk-widget-set-tooltip-text}
+  @see-function{gtk-tool-item-set-tooltip-markup}"
+  (tool-item (g-object gtk-tool-item))
+  (text :string))
+
+(export 'gtk-tool-item-set-tooltip-text)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_item_set_tooltip_markup ()
-;;;
-;;; void gtk_tool_item_set_tooltip_markup (GtkToolItem *tool_item,
-;;;                                        const gchar *markup);
-;;;
-;;; Sets the markup text to be displayed as tooltip on the item. See
-;;; gtk_widget_set_tooltip_markup().
-;;;
-;;; tool_item :
-;;;     a GtkToolItem
-;;;
-;;; markup :
-;;;     markup text to be used as tooltip for tool_item
-;;;
-;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_tool_item_set_tooltip_markup" gtk-tool-item-set-tooltip-markup)
+    :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-10-24}
+  @argument[tool-item]{a @class{gtk-tool-item} widget}
+  @argument[markup]{markup text to be used as tooltip for @arg{tool-item}}
+  @begin{short}
+    Sets the markup text to be displayed as tooltip on the item.
+  @end{short}
+  See the function @fun{gtk-widget-set-tooltip-markup}.
+
+  Since 2.12
+  @see-class{gtk-tool-item}
+  @see-function{gtk-widget-set-tooltip-markup}
+  @see-function{gtk-tool-item-set-tooltip-text}"
+  (tool-item (g-object gtk-tool-item))
+  (markup :string))
+
+(export 'gtk-tool-item-set-tooltip-markup)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_item_set_use_drag_window ()
