@@ -117,6 +117,7 @@
 
 (unexport 'gtk:atk-implementor-iface :gtk)
 (unexport 'gtk:ensure-gtk-main :gtk)
+#+ubuntu
 (unexport 'gtk:gtk-window-ubuntu-no-proxy :gtk)
 (unexport 'gtk:with-text-buffer-user-action :gtk)
 

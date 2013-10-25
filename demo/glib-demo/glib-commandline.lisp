@@ -29,6 +29,7 @@
 ;;;   { NULL }
 ;;; };
 
+#+sbcl
 (defun main()
   (let ((argv sb-ext:*posix-argv*)
         (entries '(("repeats" #\r (:in-main) :int repeats "Average over N repetitions" "N")

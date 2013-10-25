@@ -17,16 +17,15 @@
   (is (equal '()
              (alexandria:hash-table-alist gobject::*foreign-gobjects-strong*))))
 
+#+sbcl
 (test create-instance
   (let ((label (make-instance 'gtk-label)))
     (is-false gobject::*gobject-gc-hooks*)
     (is (equal (list label)
                (alexandria:hash-table-values gobject::*foreign-gobjects-weak*)))
    (is (equal '()
-              (alexandria:hash-table-alist gobject::*foreign-gobjects-strong*)))
-  )
-  (sb-ext:gc :full t)
-)
+              (alexandria:hash-table-alist gobject::*foreign-gobjects-strong*))))
+  (sb-ext:gc :full t))
 
-    
+
 
