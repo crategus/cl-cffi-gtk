@@ -165,10 +165,9 @@
 ;;;
 ;;; ----------------------------------------------------------------------------
 
-(eval-when (:compile-toplevel :load-toplevel :execute)
-  (defstruct (g-boxed-opaque-wrapper-info (:include g-boxed-info))
-    alloc
-    free))
+(defstruct (g-boxed-opaque-wrapper-info (:include g-boxed-info))
+  alloc
+  free)
 
 (define-foreign-type boxed-opaque-foreign-type (g-boxed-foreign-type) ())
 
@@ -256,9 +255,8 @@
 
 ;;; ----------------------------------------------------------------------------
 
-(eval-when (:load-toplevel :compile-toplevel :execute)
-  (defstruct (g-boxed-cstruct-wrapper-info (:include g-boxed-info))
-    cstruct-description))
+(defstruct (g-boxed-cstruct-wrapper-info (:include g-boxed-info))
+  cstruct-description)
 
 ;;; ----------------------------------------------------------------------------
 
