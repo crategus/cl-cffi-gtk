@@ -63,7 +63,7 @@
   nil)
 
 (setf (documentation 'gtk-tooltip 'type)
- "@version{2013-5-23}
+ "@version{2013-10-24}
   @short{Add tips to your widgets.}
 
   Basic tooltips can be realized simply by using the functions
@@ -110,7 +110,14 @@
       The semantics of the return value are exactly as before, return @em{true}
       to show the window, @code{nil} to not show it.
     @end{item}
-  @end{itemize}")
+  @end{itemize}
+  @see-class{gtk-tree-view}
+  @see-class{gtk-window}
+  @see-function{gtk-widget-set-tooltip-text}
+  @see-function{gtk-widget-set-tooltip-markup}
+  @see-function{gtk-widget-get-tooltip-window}
+  @see-function{gtk-widget-set-tooltip-window}
+  @see-function{gtk-tooltip-set-icon}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tooltip_set_markup ()
@@ -118,7 +125,7 @@
 
 (defcfun ("gtk_tooltip_set_markup" gtk-tooltip-set-markup) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-5-23}
+ "@version{2013-10-24}
   @argument[tooltip]{a @class{gtk-tooltip} object}
   @argument[markup]{a markup string (see Pango markup format) or @code{nil}}
   @begin{short}
@@ -128,6 +135,7 @@
   If @arg{markup} is @code{nil}, the label will be hidden.
 
   Since 2.12
+  @see-class{gtk-tooltip}
   @see-function{gtk-tooltip-set-text}"
   (tooltip (g-object gtk-tooltip))
   (markup :string))
@@ -140,7 +148,7 @@
 
 (defcfun ("gtk_tooltip_set_text" gtk-tooltip-set-text) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-5-23}
+ "@version{2013-10-24}
   @argument[tooltip]{a @class{gtk-tooltip} object}
   @argument[text]{a text string or @code{nil}}
   @begin{short}
@@ -150,6 +158,7 @@
   @fun{gtk-tooltip-set-markup}.
 
   Since 2.12
+  @see-class{gtk-tooltip}
   @see-function{gtk-tooltip-set-markup}"
   (tooltip (g-object gtk-tooltip))
   (text :string))
@@ -162,7 +171,7 @@
 
 (defcfun ("gtk_tooltip_set_icon" gtk-tooltip-set-icon) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-5-23}
+ "@version{2013-10-24}
   @argument[tooltip]{a @class{gtk-tooltip} object}
   @argument[pixbuf]{a @class{gdk-pixbuf} object, or @code{nil}}
   @begin{short}
@@ -170,7 +179,8 @@
     @arg{pixbuf}. If @arg{pixbuf} is @code{nil}, the image will be hidden.
   @end{short}
 
-  Since 2.12"
+  Since 2.12
+  @see-class{gtk-tooltip}"
   (tooltip (g-object gtk-tooltip))
   (pixbuf g-object))
 
@@ -183,7 +193,7 @@
 (defcfun ("gtk_tooltip_set_icon_from_stock" gtk-tooltip-set-icon-from-stock)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2013-5-23}
+ "@version{2013-10-24}
   @argument[tooltip]{a @class{gtk-tooltip} object}
   @argument[stock-id]{a stock id, or @code{nil}}
   @argument[icon-size]{a stock icon size}
@@ -194,7 +204,8 @@
     @code{nil}, the image will be hidden.
   @end{short}
 
-  Since 2.12"
+  Since 2.12
+  @see-class{gtk-tooltip}"
   (tooltip (g-object gtk-tooltip))
   (stock-id :string)
   (icon-size gtk-icon-size))
@@ -208,7 +219,7 @@
 (defcfun ("gtk_tooltip_set_icon_from_icon_name"
            gtk-tooltip-set-icon-from-icon-name) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-5-23}
+ "@version{2013-10-24}
   @argument[tooltip]{a @class{gtk-tooltip} object}
   @argument[icon-name]{an icon name, or @code{nil}}
   @argument[icon-size]{a stock icon size}
@@ -219,7 +230,8 @@
     @code{nil}, the image will be hidden.
   @end{short}
 
-  Since 2.14"
+  Since 2.14
+  @see-class{gtk-tooltip}"
   (tooltip (g-object gtk-tooltip))
   (icon-name :string)
   (icon-size gtk-icon-size))
@@ -259,7 +271,7 @@
 
 (defcfun ("gtk_tooltip_set_custom" gtk-tooltip-set-custom) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-5-23}
+ "@version{2013-10-24}
   @argument[tooltip]{a @class{gtk-tooltip} object}
   @argument[custom-widget]{a @class{gtk-widget}, or @code{nil} to unset the old
     custom widget}
@@ -272,6 +284,7 @@
   @end{short}
 
   Since 2.12
+  @see-class{gtk-tooltip}
   @see-function{gtk-tooltip-set-markup}
   @see-function{gtk-tooltip-set-icon}"
   (tooltip (g-object gtk-tooltip))
@@ -286,7 +299,7 @@
 (defcfun ("gtk_tooltip_trigger_tooltip_query" gtk-tooltip-trigger-tooltip-query)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2013-5-23}
+ "@version{2013-10-24}
   @argument[display]{a @class{gdk-display} object}
   @begin{short}
     Triggers a new tooltip query on @arg{display}, in order to update the
@@ -295,7 +308,8 @@
     key press.
   @end{short}
 
-  Since 2.12"
+  Since 2.12
+  @see-class{gtk-tooltip}"
   (display (g-object gdk-display)))
 
 (export 'gtk-tooltip-trigger-tooltip-query)
@@ -306,7 +320,7 @@
 
 (defcfun ("gtk_tooltip_set_tip_area" gtk-tooltip-set-tip-area) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-5-23}
+ "@version{2013-10-24}
   @argument[tooltip]{a @class{gtk-tooltip} object}
   @argument[rectangle]{a @class{gdk-rectangle} object}
   @begin{short}
@@ -321,6 +335,7 @@
   @fun{gtk-tree-view-set-tooltip-cell}.
 
   Since 2.12
+  @see-class{gtk-tooltip}
   @see-function{gtk-tree-view-set-tooltip-row}
   @see-function{gtk-tree-view-set-tooltip-cell}"
   (tooltip (g-object gtk-tooltip))
