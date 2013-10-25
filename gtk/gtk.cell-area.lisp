@@ -531,25 +531,32 @@
 (setf (gethash 'gtk-cell-area-edit-widget atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-area-edit-widget 'function)
- "@version{2013-6-17}
+ "@version{2013-10-24}
   Accessor of the slot @code{\"edit-widget\"} of the @class{gtk-cell-area}
-  class.")
+  class.
+  @see-class{gtk-cell-area}
+  @see-function{gtk-cell-area-get-edit-widget}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-area-edited-cell atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-area-edited-cell 'function)
- "@version{2013-6-17}
+ "@version{2013-10-24}
   Accessor of the slot @code{\"edited-cell\"} of the @class{gtk-cell-area}
-  class.")
+  class.
+  @see-class{gtk-cell-area}
+  @see-function{gtk-cell-area-get-edited-cell}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-area-focus-cell atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-area-focus-cell 'function)
- "@version{2013-6-17}
+ "@version{2013-10-24}
   Accessor of the slot @code{\"focus-cell\"} of the @class{gtk-cell-area}
-  class.")
+  class.
+  @see-class{gtk-cell-area}
+  @see-function{gtk-cell-area-get-focus-cell}
+  @see-function{gtk-cell-area-set-focus-cell}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkCellAreaClass
@@ -1780,6 +1787,13 @@
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-cell-area-set-focus-cell))
+
+(defun gtk-cell-area-set-focus-cell (area renderer)
+  (setf (gtk-cell-area-focus-cell area) renderer))
+
+(export 'gtk-cell-area-set-focus-cell)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_area_get_focus_cell ()
 ;;;
@@ -1795,6 +1809,13 @@
 ;;;
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-cell-area-get-focus-cell))
+
+(defun gtk-cell-area-get-focus-cell (area renderer)
+  (gtk-cell-area-focus-cell area))
+
+(export 'gtk-cell-area-get-focus-cell)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_area_add_focus_sibling ()
@@ -1917,19 +1938,26 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_area_get_edited_cell ()
-;;;
-;;; GtkCellRenderer * gtk_cell_area_get_edited_cell (GtkCellArea *area);
-;;;
-;;; Gets the GtkCellRenderer in area that is currently being edited.
-;;;
-;;; area :
-;;;     a GtkCellArea
-;;;
-;;; Returns :
-;;;     The currently edited GtkCellRenderer.
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-cell-area-get-edited-cell))
+
+(defun gtk-cell-area-get-edited-cell (area)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-10-24}
+  @argument[area]{a @class{gtk-cell-area} object}
+  @return{The currently edited @class{gtk-cell-renderer} object.}
+  @begin{short}
+    Gets the @class{gtk-cell-renderer} in @arg{area} that is currently being
+    edited.
+  @end{short}
+
+  Since 3.0
+  @see-class{gtk-cell-area}
+  @see-class{gtk-cell-renderer}"
+  (gtk-cell-area-edited-cell area))
+
+(export 'gtk-cell-area-get-edited-cell)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_area_get_edit_widget ()
@@ -1947,7 +1975,9 @@
     currently edited cell.
   @end{short}
 
-  Since 3.0"
+  Since 3.0
+  @see-class{gtk-cell-area}
+  @see-class{gtk-cell-editable}"
   (gtk-cell-area-edit-widget area))
 
 (export 'gtk-cell-area-get-edit-widget)
