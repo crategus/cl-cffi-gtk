@@ -724,9 +724,13 @@
                               arg-type
                               (class-property-type object-type arg-name))
          for parameter = (mem-aptr parameters '(:struct g-parameter) i)
-         do (setf (foreign-slot-value parameter '(:struct g-parameter) :name) arg-name)
-         do (set-g-value (foreign-slot-pointer parameter '(:struct g-parameter) :value)
-                         arg-value arg-g-type :zero-g-value t))
+         do (setf (foreign-slot-value parameter '(:struct g-parameter) :name)
+                  arg-name)
+         do (set-g-value (foreign-slot-pointer parameter
+                                               '(:struct g-parameter) :value)
+                         arg-value
+                         arg-g-type
+                         :zero-g-value t))
       (unwind-protect
            (g-object-newv object-type args-count parameters)
         (loop
