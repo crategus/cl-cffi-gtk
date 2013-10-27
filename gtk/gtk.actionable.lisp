@@ -237,11 +237,12 @@
     Gets the current target value of @arg{actionable}.
   @end{short}
 
-  See the @fun{gtk-actionable-set-target-value} function for more information.
+  See the @fun{gtk-actionable-set-action-target-value} function for more
+  information.
 
   Since 3.4
   @see-class{gtk-actionable}
-  @see-function{gtk-actionable-set-target-value}"
+  @see-function{gtk-actionable-set-action-target-value}"
   (gtk-actionable-action-target actionable))
 
 (export 'gtk-actionable-get-action-target-value)
