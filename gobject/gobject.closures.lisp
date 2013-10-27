@@ -585,7 +585,7 @@
   @begin{short}
     Sets a flag on the @arg{closure} to indicate that its calling environment
     has become invalid, and thus causes any future invocations of the
-    @fun{g-closure-invoke} function on this @arg{closure} to be ignored.
+    @code{g_closure_invoke()} function on this @arg{closure} to be ignored.
   @end{short}
   Also, invalidation notifiers installed on the @arg{closure} will be called at
   this point. Note that unless you are holding a reference to the closure
