@@ -780,12 +780,12 @@
 
     For these reason, the threading support has been deprecated in GTK+ 3.6.
     Instead of calling GTK+ directly from multiple threads, it is recommended to
-    use the functions @fun{g-idle-add}, @fun{g-main-context-invoke} and similar
-    functions to make these calls from the main thread instead. The main thread
-    is the thread which has called the function @code{gtk_init()} and is running
-    the GTK+ mainloop. GTK+ itself will continue to use the GDK lock internally
-    as long as the deprecated functionality is still available, and other
-    libraries should probably do the same.
+    use the functions @fun{g-idle-add}, @code{g_main_context_invoke()} and
+    similar functions to make these calls from the main thread instead. The main
+    thread is the thread which has called the function @code{gtk_init()} and is
+    running the GTK+ mainloop. GTK+ itself will continue to use the GDK lock
+    internally as long as the deprecated functionality is still available, and
+    other libraries should probably do the same.
 
     @about-function{gdk-threads-init}
     @about-function{gdk-threads-enter}
