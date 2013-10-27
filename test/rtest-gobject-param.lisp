@@ -300,6 +300,7 @@
       (is-false (foreign-slot-value parent-instance '(:struct g-param-spec) :owner-type))  
     )
 
+#|
     ;; TODO: The values of :minimum, :maximum, and :default-value change per run.
 
     ;; Check the field :minimum of GParamSpecChar
@@ -308,6 +309,7 @@
     (is (= 126 (foreign-slot-value param '(:struct g-param-spec-int) :maximum)))
     ;; Check the field :default-value of GParamSpecChar
     (is (= 18 (foreign-slot-value param '(:struct g-param-spec-int) :default-value)))
+|#
 ))
 
 ;;;     g_value_set_int

@@ -74,22 +74,32 @@
     (is (=  32 (foreign-slot-value query '(:struct g-type-query) :instance-size))))
 
   ;; Get the names of the class properties.
-  (is (equal '("name" "parent" "width-request" "height-request" "visible"
-               "sensitive" "app-paintable" "can-focus" "has-focus" "is-focus"
-               "can-default" "has-default" "receives-default" "composite-child"
-               "style" "events" "no-show-all" "has-tooltip" "tooltip-markup"
-               "tooltip-text" "window" "double-buffered" "halign" "valign"
-               "margin-left" "margin-right" "margin-top" "margin-bottom"
-               "margin" "hexpand" "vexpand" "hexpand-set" "vexpand-set" "expand"
-               "border-width" "resize-mode" "child" "type" "title" "role" "resizable" "modal"
-               "window-position" "default-width" "default-height" "destroy-with-parent"
-               "hide-titlebar-when-maximized" "icon" "icon-name" "screen" "type-hint"
-               "skip-taskbar-hint" "skip-pager-hint" "urgency-hint" "accept-focus"
-               "focus-on-map" "decorated" "deletable" "gravity" "transient-for" "attached-to"
-               "opacity" "has-resize-grip" "resize-grip-visible" "application"
-               "ubuntu-no-proxy" "is-active" "has-toplevel-focus" "startup-id"
-               "mnemonics-visible" "focus-visible")
-             (mapcar #'param-spec-name (g-object-class-list-properties "GtkDialog"))))
+  (is (equal '("accept-focus" "app-paintable" "application"
+                               "attached-to" "border-width" "can-default"
+                               "can-focus" "child" "composite-child"
+                               "decorated" "default-height" "default-width"
+                               "deletable" "destroy-with-parent"
+                               "double-buffered" "events" "expand"
+                               "focus-on-map" "focus-visible" "gravity"
+                               "halign" "has-default" "has-focus"
+                               "has-resize-grip" "has-tooltip"
+                               "has-toplevel-focus" "height-request" "hexpand"
+                               "hexpand-set" "hide-titlebar-when-maximized"
+                               "icon" "icon-name" "is-active" "is-focus"
+                               "margin" "margin-bottom" "margin-left"
+                               "margin-right" "margin-top" "mnemonics-visible"
+                               "modal" "name" "no-show-all" "opacity" "parent"
+                               "receives-default" "resizable"
+                               "resize-grip-visible" "resize-mode" "role"
+                               "screen" "sensitive" "skip-pager-hint"
+                               "skip-taskbar-hint" "startup-id" "style" "title"
+                               "tooltip-markup" "tooltip-text" "transient-for"
+                               "type" "type-hint" "urgency-hint" "valign"
+                               "vexpand" "vexpand-set" "visible"
+                               "width-request" "window" "window-position")
+             (stable-sort (mapcar #'param-spec-name
+                                  (g-object-class-list-properties "GtkDialog"))
+                          #'string-lessp)))
 
   ;; Get the names of the style properties.
   (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern"

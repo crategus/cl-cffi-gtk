@@ -17,6 +17,7 @@
 
 ;;;   gdk_keymap_lookup_key
 
+#+nil
 (test gdk-keymap-lookup-key
   (let ((keymap (gdk-keymap-get-default))
         (key (make-gdk-keymap-key :keycode 97 :group 0 :level 0)))

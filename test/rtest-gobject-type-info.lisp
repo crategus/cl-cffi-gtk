@@ -50,8 +50,9 @@
   (is (equal '(:value-abstract)
              (foreign-bitfield-symbols 'g-type-flags (ash 1 5))))
   (is (equal '(:abstract :value-abstract)
-             (foreign-bitfield-symbols 'g-type-flags
-                                       (+ (ash 1 4) (ash 1 5)))))
+             (stable-sort (foreign-bitfield-symbols 'g-type-flags
+                                                    (+ (ash 1 4) (ash 1 5)))
+                          #'string-lessp)))
   (is (= (ash 1 4)
          (foreign-bitfield-value 'g-type-flags '(:abstract))))
   (is (= (ash 1 5)
@@ -72,10 +73,11 @@
              (foreign-bitfield-symbols 'g-type-fundamental-flags (ash 1 2))))
   (is (equal '(:deep-derivable)
              (foreign-bitfield-symbols 'g-type-fundamental-flags (ash 1 3))))
-  (is (equal '(:classed :instantiatable :derivable :deep-derivable)
-             (foreign-bitfield-symbols 'g-type-fundamental-flags
-                                        (+ (ash 1 0) (ash 1 1)
-                                           (ash 1 2) (ash 1 3)))))
+  (is (equal '(:classed :deep-derivable :derivable :instantiatable)
+             (stable-sort (foreign-bitfield-symbols 'g-type-fundamental-flags
+                                                    (+ (ash 1 0) (ash 1 1)
+                                                    (ash 1 2) (ash 1 3)))
+                          #'string-lessp)))
   (is (= (ash 1 0)
          (foreign-bitfield-value 'g-type-fundamental-flags '(:classed))))
   (is (= (ash 1 1)
@@ -472,9 +474,13 @@
 (test g-type-interface
   (let ((interface (g-type-default-interface-ref "GtkOrientable")))
     (is (= 8 (foreign-type-size '(:struct g-type-interface))))
-    (is (equal '(:type :instance-type) (foreign-slot-names '(:struct g-type-interface))))
-    (is-true (foreign-slot-value interface '(:struct g-type-interface) :type))
-    (is-false (foreign-slot-value interface '(:struct g-type-interface) :instance-type))))
+    (is (equal '(:instance-type :type)
+               (stable-sort (foreign-slot-names '(:struct g-type-interface))
+                            #'string-lessp)))
+    (is-true (foreign-slot-value interface
+                                 '(:struct g-type-interface) :type))
+    (is-false (foreign-slot-value interface
+                                  '(:struct g-type-interface) :instance-type))))
 
 ;;;   GTypeClass
 
@@ -490,38 +496,42 @@
   (let ((button (make-instance 'gtk-button)))
     (is (= 4 (foreign-type-size '(:struct g-type-instance))))
     (is (equal '(:class) (foreign-slot-names '(:struct g-type-instance))))
-    (is-true (foreign-slot-value (pointer button) '(:struct g-type-instance) :class))))
+    (is-true (foreign-slot-value (pointer button)
+                                 '(:struct g-type-instance) :class))))
 
-;;;     g-type-info
+;;;   g-type-info
 
 (test g-type-info
   (is (= 36 (foreign-type-size '(:struct g-type-info))))
-  (is (equal '(:CLASS-SIZE :BASE-INIT-FN :BASE-FINALIZE-FN
-               :CLASS-INIT-FN :CLASS-FINALIZE-FN :CLASS-DATA
-               :INSTANCE-SIZE :N-PREALLOCS :INSTANCE-INIT-FN :VALUE-TABLE)
-      (foreign-slot-names '(:struct g-type-info)))))
+  (is (equal '(:BASE-FINALIZE-FN :BASE-INIT-FN :CLASS-DATA :CLASS-FINALIZE-FN
+               :CLASS-INIT-FN :CLASS-SIZE :INSTANCE-INIT-FN :INSTANCE-SIZE
+               :N-PREALLOCS :VALUE-TABLE)
+             (stable-sort (foreign-slot-names '(:struct g-type-info))
+                          #'string-lessp))))
 
 ;;;   GTypeFundamentalInfo
 
 (test g-type-fundamental-info
   (is (= 4 (foreign-type-size '(:struct g-type-fundamental-info))))
   (is (equal '(:TYPE-FLAGS)
-      (foreign-slot-names '(:struct g-type-fundamental-info)))))
+             (foreign-slot-names '(:struct g-type-fundamental-info)))))
 
 ;;;   GInterfaceInfo
 
 (test g-interface-info
   (is (= 12 (foreign-type-size '(:struct g-interface-info))))
-  (is (equal '(:INTERFACE-INIT :INTERFACE-FINALIZE :INTERFACE-DATA)
-      (foreign-slot-names '(:struct g-interface-info)))))
+  (is (equal '(:INTERFACE-DATA :INTERFACE-FINALIZE :INTERFACE-INIT)
+             (stable-sort (foreign-slot-names '(:struct g-interface-info))
+             #'string-lessp))))
 
 ;;;   GTypeValueTable
 
 (test g-type-value-table
   (is (= 32 (foreign-type-size '(:struct g-type-value-table))))
-  (is (equal '(:VALUE-INIT :VALUE-FREE :VALUE-COPY :VALUE-PEEK-POINTER
-               :COLLECT-FORMAT :COLLECT-VALUE :LCOPY-FORMAT :LCOPY-VALUE)
-      (foreign-slot-names '(:struct g-type-value-table)))))
+  (is (equal '(:COLLECT-FORMAT :COLLECT-VALUE :LCOPY-FORMAT :LCOPY-VALUE
+               :VALUE-COPY :VALUE-FREE :VALUE-INIT :VALUE-PEEK-POINTER)
+             (stable-sort (foreign-slot-names '(:struct g-type-value-table))
+                          #'string-lessp))))
 
 ;;; G_TYPE_FROM_INSTANCE
 

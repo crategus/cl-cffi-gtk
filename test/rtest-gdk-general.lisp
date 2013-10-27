@@ -20,8 +20,10 @@
 
 (test gdk-get-program-class
   (if *first-run-program-class*
-      #-windows
+      #+(and sbcl (not windows))
       (is (equal "Sbcl" (gdk-get-program-class)))
+      #+(and ccl (not windows))
+      (is (equal "Lx86cl" (gdk-get-program-class)))
       #+windows
       (is (equal "Sbcl.exe" (gdk-get-program-class)))
       (is (equal "Program class" (gdk-get-program-class)))))

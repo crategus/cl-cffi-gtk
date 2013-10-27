@@ -17,9 +17,9 @@
                  12
                  "gint"
                  :zero-g-value t)
-    (format t "~a~%~a~%"
-            (foreign-slot-value parameter '(:struct g-parameter) :name)
-            (foreign-slot-value parameter '(:struct g-parameter) :value))
+;    (format t "~a~%~a~%"
+;            (foreign-slot-value parameter '(:struct g-parameter) :name)
+;            (foreign-slot-value parameter '(:struct g-parameter) :value))
     (is (equal "name" (foreign-slot-value parameter '(:struct g-parameter) :name)))
     (is (= 12 (parse-g-value (foreign-slot-pointer parameter '(:struct g-parameter) :value))))
   ))
@@ -32,9 +32,9 @@
                  "text"
                  "gchararray"
                  :zero-g-value t)
-    (format t "~a~%~a~%"
-            (foreign-slot-value parameter '(:struct g-parameter) :name)
-            (foreign-slot-value parameter '(:struct g-parameter) :value))
+;    (format t "~a~%~a~%"
+;            (foreign-slot-value parameter '(:struct g-parameter) :name)
+;            (foreign-slot-value parameter '(:struct g-parameter) :value))
     (is (equal "name" (foreign-slot-value parameter '(:struct g-parameter) :name)))
     (is (equal "text" (parse-g-value (foreign-slot-pointer parameter '(:struct g-parameter) :value))))
   ))
@@ -59,9 +59,9 @@
                          arg-value
                          arg-g-type
                          :zero-g-value t)
-        do (format t "(~A, ~A)~%"
-                   (foreign-slot-value parameter '(:struct g-parameter) :name)
-                   (parse-g-value (foreign-slot-pointer parameter '(:struct g-parameter) :value)))
+;        do (format t "(~A, ~A)~%"
+;                   (foreign-slot-value parameter '(:struct g-parameter) :name)
+;                   (parse-g-value (foreign-slot-pointer parameter '(:struct g-parameter) :value)))
       )
       (loop
          for i from 0 below args-count
@@ -105,7 +105,7 @@
                "sensitive" "app-paintable" "can-focus" "has-focus" "is-focus"
                "can-default" "has-default" "receives-default" "composite-child"
                "style" "events" "no-show-all" "has-tooltip" "tooltip-markup"
-               "tooltip-text" "window" "double-buffered" "halign" "valign"
+               "tooltip-text" "window" "opacity" "double-buffered" "halign" "valign"
                "margin-left" "margin-right" "margin-top" "margin-bottom"
                "margin" "hexpand" "vexpand" "hexpand-set" "vexpand-set"
                "expand" "xalign" "yalign" "xpad" "ypad" "label" "attributes"

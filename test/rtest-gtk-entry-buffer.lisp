@@ -197,10 +197,14 @@
   (let ((buffer (gtk-entry-buffer-new "first second third")))
     (g-signal-connect buffer "inserted-text"
        (lambda (object position text n-chars)
+         (format t "~&in Signal 'inserted-text' for ~a~%" object)
          (is (eq buffer object))
          (is (= 6 position))
          (is (equal "text" text))
          (is (= 7 n-chars))
          t))
-    (gtk-entry-buffer-emit-inserted-text buffer 6 "text" 7)))
+    (format t "~&buffer = ~A~%" buffer)
+    (gtk-entry-buffer-emit-inserted-text buffer 6 "text" 7)
+)
+)
 

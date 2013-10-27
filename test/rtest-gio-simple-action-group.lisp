@@ -64,13 +64,15 @@ static GActionEntry win_entries[] = {
     ((simple (g-object g-simple-action))
      (parameter (:pointer (:struct g-variant))))
   (declare (ignore simple parameter))
-  (format t "activate-quit called~%"))
+;  (format t "activate-quit called~%")
+  )
 
 (defcallback activate-print-string :void
     ((simple (g-object g-simple-action))
      (parameter (:pointer (:struct g-variant))))
   (declare (ignore simple parameter))
-  (format t "activate-print-string~%"))
+;  (format t "activate-print-string~%")
+  )
 
 (defun create-action-group ()
   (let ((entries (list (list "quit"

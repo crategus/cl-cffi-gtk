@@ -2,7 +2,7 @@
 (def-suite gtk-main-loop :in gtk-suite)
 (in-suite gtk-main-loop)
 
-(defvar *verbose-gtk-main-loop* t)
+(defvar *verbose-gtk-main-loop* nil)
 
 ;;;   gtk_disable_setlocale                    * not exported *
 
@@ -28,8 +28,8 @@
 ;;;   gtk_main_level
 
 (defun main-idle-cb ()
-  (format t "~&Execute main-idle-cb in level ~A.~%"
-            (gtk-main-level))
+;  (format t "~&Execute main-idle-cb in level ~A.~%"
+;            (gtk-main-level))
   ;; Quit the main loop.
   (gtk-main-quit)
   ;; Remove the idle source.
@@ -53,8 +53,8 @@
   (defun main-timeout-callback ()
     (incf counter)
     (is (= 1 (gtk-main-level)))
-    (when *verbose-gtk-main-loop*
-      (format t "~&main-timeout-callback called ~d times~%" counter))
+;    (when *verbose-gtk-main-loop*
+;      (format t "~&main-timeout-callback called ~d times~%" counter))
     (is (= 1 (gtk-main-level)))
     (if (>= counter 3)
         (progn

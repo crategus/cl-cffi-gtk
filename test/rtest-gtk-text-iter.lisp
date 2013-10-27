@@ -160,6 +160,7 @@
 
 ;;;   gtk_text_iter_get_child_anchor
 
+#+nil
 (test gtk-text-iter-get-child-anchor
   (let* ((buffer (make-instance 'gtk-text-buffer
                                 :text
