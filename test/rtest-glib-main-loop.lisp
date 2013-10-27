@@ -44,7 +44,7 @@
     (sleep 1)
     (is-true (bt:thread-alive-p *main-thread*))
     (is (= 1 *main-thread-level*))
-    (is-true (pointerp *main-loop*))    
+    (is-true (pointerp *main-loop*))
     (is-true (g-main-loop-is-running *main-loop*))
     (is (= 0 (g-main-depth)))
 

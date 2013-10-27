@@ -9,25 +9,29 @@
 
 (test g-application-name
   (when *first-run-application*
-    #-windows
+    #+(and sbcl (not windows))
     (is (equal "sbcl" (g-get-application-name)))
-    #+windows
+    #+(and sbcl windows)
     (is (equal "sbcl.exe" (g-get-application-name)))
+    #+(and ccl (not windows))
+    (is (equal "Program" (g-get-application-name)))
     (g-set-application-name "Application"))
   (is (equal "Application" (g-get-application-name)))
   (setf *first-run-application* nil))
 
-;;;     g_get_prgname
-;;;     g_set_prgname
+;;;   g_get_prgname
+;;;   g_set_prgname
 
 (defvar *first-run-program* t)
 
 (test g-prgname
   (when *first-run-program*
-    #-windows
+    #+(and sbcl (not windows))
     (is (equal "sbcl" (g-get-prgname)))
-    #+windows
+    #+(and sbcl windows)
     (is (equal "sbcl.exe" (g-get-prgname)))
+    #+(and ccl (not windows))
+    (is (equal "lx86cl" (g-get-prgname)))
     (g-set-prgname "Program"))
   (is (equal "Program" (g-get-prgname)))
   (setf *first-run-program* nil))
