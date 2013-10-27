@@ -748,24 +748,30 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_image_new_from_animation ()
-;;;
-;;; GtkWidget * gtk_image_new_from_animation (GdkPixbufAnimation *animation);
-;;;
-;;; Creates a GtkImage displaying the given animation. The GtkImage does not
-;;; assume a reference to the animation; you still need to unref it if you own
-;;; references. GtkImage will add its own reference rather than adopting yours.
-;;;
-;;; Note that the animation frames are shown using a timeout with
-;;; G_PRIORITY_DEFAULT. When using animations to indicate busyness, keep in mind
-;;; that the animation will only be shown if the main loop is not busy with
-;;; something that has a higher priority.
-;;;
-;;; animation :
-;;;     an animation
-;;;
-;;; Returns :
-;;;     a new GtkImage widget
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_image_new_from_animation" gtk-image-new-from-animation) 
+    (g-object gtk-image)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-10-24}
+  @argument[animation]{an animation}
+  @return{A new @class{gtk-image} widget.}
+  @begin{short}
+    Creates a @class{gtk-image} displaying the given animation.
+  @end{short}
+  The @class{gtk-image} does not assume a reference to the animation; you still
+  need to unref it if you own references. @class{gtk-image} will add its own
+  reference rather than adopting yours.
+
+  Note that the animation frames are shown using a timeout with
+  @code{:default}. When using animations to indicate busyness, keep in mind
+  that the animation will only be shown if the main loop is not busy with
+  something that has a higher priority.
+  @see-class{gdk-pixbuf-animation}
+  @see-class{gtk-image}"
+  (animation (g-object gdk-pixbuf-animation)))
+
+(export 'gtk-image-new-from-animation)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_image_new_from_icon_name ()
@@ -822,65 +828,74 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_image_new_from_resource ()
-;;;
-;;; GtkWidget * gtk_image_new_from_resource (const gchar *resource_path);
-;;;
-;;; Creates a new GtkImage displaying the resource file resource_path. If the
-;;; file isn't found or can't be loaded, the resulting GtkImage will display a
-;;; "broken image" icon. This function never returns NULL, it always returns a
-;;; valid GtkImage widget.
-;;;
-;;; If the file contains an animation, the image will contain an animation.
-;;;
-;;; If you need to detect failures to load the file, use
-;;; gdk_pixbuf_new_from_file() to load the file yourself, then create the
-;;; GtkImage from the pixbuf. (Or for animations, use
-;;; gdk_pixbuf_animation_new_from_file()).
-;;;
-;;; The storage type (gtk_image_get_storage_type()) of the returned image is not
-;;; defined, it will be whatever is appropriate for displaying the file.
-;;;
-;;; resource_path :
-;;;     a resource path
-;;;
-;;; Returns :
-;;;     a new GtkImage
-;;;
-;;; Since 3.4
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_image-new_from_resource" gtk-image-new-from-resource)
+    (g-object gtk-image)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-10-24}
+  @argument[resource-path]{a resource path}
+  @return{A new @class{gtk-image} widget}
+  @begin{short}
+    Creates a new @class{gtk-image} displaying the resource file
+    @arg{resource-path}.
+  @end{short}
+  If the file is not found or can not be loaded, the resulting @class{gtk-image}
+  will display a \"broken image\" icon. This function never returns @code{nil},
+  it always returns a valid @class{gtk-image} widget.
+
+  If the file contains an animation, the image will contain an animation.
+
+  If you need to detect failures to load the file, use the function
+  @fun{gdk-pixbuf-new-from-file} to load the file yourself, then create the
+  @class{gtk-image} from the pixbuf. Or for animations, use the function
+  @fun{gdk-pixbuf-animation-new-from-file}.
+
+  The storage type (@code{gtk_image_get_storage_type()}) of the returned image
+  is not defined, it will be whatever is appropriate for displaying the file.
+
+  Since 3.4
+  @see-class{gtk-image}
+  @see-function{gdk-pixbuf-new-from-file}
+  @see-function{gdk-pixbuf-animation-new-from-file}"
+  (resource-path :string))
+
+(export 'gtk-image-new-from-resource)
+
 ;;; ----------------------------------------------------------------------------
-;;; gtk_image_set_from_file ()
-;;;
-;;; void gtk_image_set_from_file (GtkImage *image, const gchar *filename);
-;;;
-;;; See gtk_image_new_from_file() for details.
-;;;
-;;; image :
-;;;     a GtkImage
-;;;
-;;; filename :
-;;;     a filename or NULL
-;;; ----------------------------------------------------------------------------
+;;; gtk_image_set_from_file () ----------------------------------------------------------------------------
+
+(defcfun ("gtk_image_set_from_file" gtk-image-set-from-file) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-10-24}
+  @argument[image]{a @class{gtk-image} widget}
+  @argument[filename]{a filename or @code{nil}}
+  See the function @fun{gtk-image-new-from-file} for details.
+  @see-class{gtk-image}
+  @see-function{gtk-image-new-from-file}"
+  (image (g-object gtk-image))
+  (filename :string))
+
+(export 'gtk-image-set-from-file)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_image_set_from_icon_set ()
-;;;
-;;; void gtk_image_set_from_icon_set (GtkImage *image,
-;;;                                   GtkIconSet *icon_set,
-;;;                                   GtkIconSize size);
-;;;
-;;; See gtk_image_new_from_icon_set() for details.
-;;;
-;;; image :
-;;;     a GtkImage
-;;;
-;;; icon_set :
-;;;     a GtkIconSet
-;;;
-;;; size :
-;;;     a stock icon size
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk-image-set-from-icon-set" gtk-image-set-from-icon-set) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-10-24}
+  @argument[image]{a @class{gtk-image} widget}
+  @argument[icon-set]{a @class{gtk-icon-set} structure}
+  @argument[size]{a stock icon size}
+  See the function @fun{gtk-image-new-from-icon-set} for details.
+  @see-class{gtk-image}
+  @see-function{gtk-image-new-from-icon-set}"
+  (image (g-object gtk-image))
+  (icon-set (g-boxed-foreign gtk-icon-set))
+  (size gtk-icon-size))
+
+(export 'gtk-image-set-from-icon-set)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_image_set_from_pixbuf ()
@@ -902,22 +917,22 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_image_set_from_stock ()
-;;;
-;;; void gtk_image_set_from_stock (GtkImage *image,
-;;;                                const gchar *stock_id,
-;;;                                GtkIconSize size);
-;;;
-;;; See gtk_image_new_from_stock() for details.
-;;;
-;;; image :
-;;;     a GtkImage
-;;;
-;;; stock_id :
-;;;     a stock icon name
-;;;
-;;; size :
-;;;     a stock icon size
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_image_set_from_stock" gtk-image-set-from-stock) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-10-24}
+  @argument[image]{a @class{gtk-image} widget}
+  @argument[stock-id]{a stock icon name}
+  @argument[size]{a stock icon size}
+  See the function @fun{gtk-image-new-from-stock} for details.
+  @see-class{gtk-image}
+  @see-function{gtk-image-new-from-stock}"
+  (image (g-object gtk-image))
+  (stock-id :string)
+  (size gtk-icon-size))
+
+(export 'gtk-image-set-from-stock)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_image_set_from_animation ()
@@ -959,39 +974,45 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_image_set_from_gicon ()
-;;;
-;;; void gtk_image_set_from_gicon (GtkImage *image,
-;;;                                GIcon *icon,
-;;;                                GtkIconSize size);
-;;;
-;;; See gtk_image_new_from_gicon() for details.
-;;;
-;;; image :
-;;;     a GtkImage
-;;;
-;;; icon :
-;;;     an icon
-;;;
-;;; size :
-;;;     an icon size
-;;;
-;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_image_set_from_gicon" gtk-image-set-from-gicon) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-10-24}
+  @argument[image]{a @class{gtk-image} widget}
+  @argument[icon]{an icon}
+  @argument[size]{an icon size}
+  @begin{short}
+    See the funcion @fun{gtk-image-new-from-gicon} for details.
+  @end{short}
+
+  Since 2.14
+  @see-class{gtk-image}
+  @see-class{g-icon}
+  @see-symbol{gtk-icon-size}
+  @see-function{gtk-image-new-from-gicon}"
+  (image (g-object gtk-image))
+  (icon (g-object g-icon))
+  (size gtk-icon-size))
+
+(export 'gtk-image-set-from-gicon)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_image_set_from_resource ()
-;;;
-;;; void gtk_image_set_from_resource (GtkImage *image,
-;;;                                   const gchar *resource_path);
-;;;
-;;; See gtk_image_new_from_resource() for details.
-;;;
-;;; image :
-;;;     a GtkImage
-;;;
-;;; resource_path :
-;;;     a resource path or NULL
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_image_set_from_resource" gtk-image-set-from-resource) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-10-24}
+  @argument[image]{a @class{gtk-image} widget}
+  @argument[resource-path]{a resource path or @code{nil}}
+  See the function @fun{gtk-image-new-from-resource} for details.
+  @see-class{gtk-image}
+  @see-function{gtk-image-new-from-resource}"
+  (image (g-object gtk-image))
+  (resource-path :string))
+
+(export 'gtk-image-set-from-resource)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_image_clear ()
