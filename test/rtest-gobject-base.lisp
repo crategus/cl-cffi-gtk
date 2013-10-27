@@ -9,6 +9,76 @@
   (is (equal '(:name :value)
              (foreign-slot-names '(:struct g-parameter)))))
 
+(test g-parameter.1
+  (with-foreign-object (parameter '(:struct g-parameter))
+    (setf (foreign-slot-value parameter '(:struct g-parameter) :name)
+          "name")
+    (set-g-value (foreign-slot-pointer parameter '(:struct g-parameter) :value)
+                 12
+                 "gint"
+                 :zero-g-value t)
+    (format t "~a~%~a~%"
+            (foreign-slot-value parameter '(:struct g-parameter) :name)
+            (foreign-slot-value parameter '(:struct g-parameter) :value))
+    (is (equal "name" (foreign-slot-value parameter '(:struct g-parameter) :name)))
+    (is (= 12 (parse-g-value (foreign-slot-pointer parameter '(:struct g-parameter) :value))))
+  ))
+
+(test g-parameter.2
+  (with-foreign-object (parameter '(:struct g-parameter))
+    (setf (foreign-slot-value parameter '(:struct g-parameter) :name)
+          "name")
+    (set-g-value (foreign-slot-pointer parameter '(:struct g-parameter) :value)
+                 "text"
+                 "gchararray"
+                 :zero-g-value t)
+    (format t "~a~%~a~%"
+            (foreign-slot-value parameter '(:struct g-parameter) :name)
+            (foreign-slot-value parameter '(:struct g-parameter) :value))
+    (is (equal "name" (foreign-slot-value parameter '(:struct g-parameter) :name)))
+    (is (equal "text" (parse-g-value (foreign-slot-pointer parameter '(:struct g-parameter) :value))))
+  ))
+
+(test g-parameter.3
+  (let* ((args-names (list "title" "border-width"))
+         (args-values (list "text" 12))
+         (args-types (list "gchararray" "gint"))
+         (args-count (length args-names)))
+    (with-foreign-object (parameters '(:struct g-parameter) args-count)
+      (loop
+         for i from 0 below args-count
+         for arg-name in args-names
+         for arg-value in args-values
+         for arg-type in args-types
+         for arg-g-type = arg-type
+         for parameter = (mem-aptr parameters '(:struct g-parameter) i)
+         do (setf (foreign-slot-value parameter '(:struct g-parameter) :name)
+                  arg-name)
+         do (set-g-value (foreign-slot-pointer parameter
+                                               '(:struct g-parameter) :value)
+                         arg-value
+                         arg-g-type
+                         :zero-g-value t)
+        do (format t "(~A, ~A)~%"
+                   (foreign-slot-value parameter '(:struct g-parameter) :name)
+                   (parse-g-value (foreign-slot-pointer parameter '(:struct g-parameter) :value)))
+      )
+      (loop
+         for i from 0 below args-count
+         for arg-name in args-names
+         for arg-value in args-values
+         for parameter = (mem-aptr parameters '(:struct g-parameter) i)
+         do (is (equal arg-name (foreign-slot-value parameter '(:struct g-parameter) :name)))
+         do (is (equal arg-value
+                       (parse-g-value (foreign-slot-pointer parameter '(:struct g-parameter) :value))))
+         do (foreign-string-free (mem-ref (foreign-slot-pointer parameter
+                                                                '(:struct g-parameter)
+                                                                :name)
+                                          :pointer))
+         do (g-value-unset (foreign-slot-pointer parameter
+                                                 '(:struct g-parameter)
+                                                 :value))))))
+
 ;;;    GObject
 ;;;    GObjectClass
 ;;;    GObjectConstructParam
