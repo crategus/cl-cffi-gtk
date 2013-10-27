@@ -153,6 +153,8 @@
 ;;; struct GParameter
 ;;; ----------------------------------------------------------------------------
 
+;; Consider to make this structure internal
+
 (defcstruct g-parameter
   (:name (:string :free-from-foreign nil :free-to-foreign nil))
   (:value (:struct g-value))) ; A struct, not a pointer.
@@ -161,10 +163,10 @@
 (setf (gethash 'g-parameter atdoc:*symbol-name-alias*)
       "CStruct"
       (gethash 'g-parameter atdoc:*external-symbols*)
- "@version{2013-6-5}
+ "@version{2013-10-25}
   @begin{short}
-    The @sym{g-parameter} struct is an auxiliary structure used to hand
-    parameter name/value pairs to the @fun{g-object-newv} function.
+    The @sym{g-parameter} structure is an auxiliary structure used to hand
+    parameter name/value pairs to the function @fun{g-object-newv}.
   @end{short}
   @begin{pre}
 (defcstruct g-parameter
@@ -175,6 +177,7 @@
     @entry[:name]{The parameter name.}
     @entry[:value]{The parameter value.}
   @end{table}
+  @see-symbol{g-value}
   @see-function{g-object-newv}")
 
 (export 'g-parameter)
@@ -1525,7 +1528,7 @@
   to their default values."
   (object-type g-type)
   (n-parameter :uint)
-  (parameters (:pointer (:struct g-parameter))))
+  (parameters :pointer))
 
 (export 'g-object-newv)
 
