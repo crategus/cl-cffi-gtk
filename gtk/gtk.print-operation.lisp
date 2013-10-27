@@ -1029,7 +1029,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-print-operation-action atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-print-operation-action atdoc:*external-symbols*)
- "@version{2013-5-30}
+ "@version{2013-10-27}
   @begin{short}
     The action parameter to the @fun{gtk-print-operation-run} function
     determines what action the print operation should perform.
@@ -1048,9 +1048,11 @@
     @entry[:print]{Start to print without showing the print dialog, based on
       the current print settings.}
     @entry[:preview]{Show the print preview.}
-    @entry[:export]{Export to a file. This requires the export-filename property
-      to be set.}
-  @end{table}")
+    @entry[:export]{Export to a file. This requires the
+      @code{\"export-filename\"} property to be set.}
+  @end{table}
+  @see-class{gtk-print-operation}
+  @see-function{gtk-print-operation-run}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkPrintOperationResult
@@ -1067,7 +1069,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-print-operation-result atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-print-operation-result atdoc:*external-symbols*)
- "@version{2013-5-30}
+ "@version{2013-10-27}
   @begin{short}
     A value of this type is returned by the @fun{gtk-print-operation-run}
     function.
@@ -1088,7 +1090,9 @@
       should not be stored.}
     @entry[:in-progress]{The print operation is not complete yet. This value
       will only be returned when running asynchronously.}
-  @end{table}")
+  @end{table}
+  @see-class{gtk-print-operation}
+  @see-function{gtk-print-operation-run}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkPrintError
@@ -1477,90 +1481,91 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_operation_run ()
-;;;
-;;; GtkPrintOperationResult gtk_print_operation_run
-;;;                                             (GtkPrintOperation *op,
-;;;                                              GtkPrintOperationAction action,
-;;;                                              GtkWindow *parent,
-;;;                                              GError **error);
-;;;
-;;; Runs the print operation, by first letting the user modify print settings in
-;;; the print dialog, and then print the document.
-;;;
-;;; Normally that this function does not return until the rendering of all pages
-;;; is complete. You can connect to the "status-changed" signal on op to obtain
-;;; some information about the progress of the print operation. Furthermore, it
-;;; may use a recursive mainloop to show the print dialog.
-;;;
-;;; If you call gtk_print_operation_set_allow_async() or set the "allow-async"
-;;; property the operation will run asynchronously if this is supported on the
-;;; platform. The "done" signal will be emitted with the result of the operation
-;;; when the it is done (i.e. when the dialog is canceled, or when the print
-;;; succeeds or fails).
-;;;
-;;;   if (settings != NULL)
-;;;     gtk_print_operation_set_print_settings (print, settings);
-;;;
-;;;   if (page_setup != NULL)
-;;;     gtk_print_operation_set_default_page_setup (print, page_setup);
-;;;
-;;;   g_signal_connect (print, "begin-print",
-;;;                     G_CALLBACK (begin_print), &data);
-;;;   g_signal_connect (print, "draw-page",
-;;;                     G_CALLBACK (draw_page), &data);
-;;;
-;;;   res = gtk_print_operation_run (print,
-;;;                                  GTK_PRINT_OPERATION_ACTION_PRINT_DIALOG,
-;;;                                  parent,
-;;;                                  &error);
-;;;
-;;;   if (res == GTK_PRINT_OPERATION_RESULT_ERROR)
-;;;    {
-;;;      error_dialog = gtk_message_dialog_new (GTK_WINDOW (parent),
-;;;                                    GTK_DIALOG_DESTROY_WITH_PARENT,
-;;;                            GTK_MESSAGE_ERROR,
-;;;                            GTK_BUTTONS_CLOSE,
-;;;                            "Error printing file:\n%s",
-;;;                            error->message);
-;;;      g_signal_connect (error_dialog, "response",
-;;;                        G_CALLBACK (gtk_widget_destroy), NULL);
-;;;      gtk_widget_show (error_dialog);
-;;;      g_error_free (error);
-;;;    }
-;;;   else if (res == GTK_PRINT_OPERATION_RESULT_APPLY)
-;;;    {
-;;;      if (settings != NULL)
-;;;   g_object_unref (settings);
-;;;      settings =
-;;;               g_object_ref (gtk_print_operation_get_print_settings (print));
-;;;    }
-;;;
-;;; Note that gtk_print_operation_run() can only be called once on a given
-;;; GtkPrintOperation.
-;;;
-;;; op :
-;;;     a GtkPrintOperation
-;;;
-;;; action :
-;;;     the action to start
-;;;
-;;; parent :
-;;;     Transient parent of the dialog.
-;;;
-;;; error :
-;;;     Return location for errors, or NULL.
-;;;
-;;; Returns :
-;;;     the result of the print operation. A return value of
-;;;     GTK_PRINT_OPERATION_RESULT_APPLY indicates that the printing was
-;;;     completed successfully. In this case, it is a good idea to obtain the
-;;;     used print settings with gtk_print_operation_get_print_settings() and
-;;;     store them for reuse with the next print operation. A value of
-;;;     GTK_PRINT_OPERATION_RESULT_IN_PROGRESS means the operation is running
-;;;     asynchronously, and will emit the "done" signal when done.
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_operation_run" %gtk-print-operation-run)
+    gtk-print-operation-result
+  (op (g-object gtk-print-operation))
+  (action gtk-print-operation-action)
+  (parent (g-object gtk-window))
+  (error :pointer))
+
+(defun gtk-print-operation-run (op action parent)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-10-27}
+  @argument[op]{a @class{gtk-print-operation} object}
+  @argument[action]{the action to start}
+  @argument[parent]{transient parent of the dialog}
+  @begin{return}
+    The result of the print operation. A return value of @code{:apply} indicates
+    that the printing was completed successfully. In this case, it is a good
+    idea to obtain the used print settings with the function
+    @fun{gtk-print-operation-get-print-settings} and store them for reuse with
+    the next print operation. A value of @code{:in-progress} means the operation
+    is running asynchronously, and will emit the \"done\" signal when done.
+  @end{return}
+  @begin{short}
+    Runs the print operation, by first letting the user modify print settings in
+    the print dialog, and then print the document.
+  @end{short}
+
+  Normally that this function does not return until the rendering of all pages
+  is complete. You can connect to the \"status-changed\" signal on op to obtain
+  some information about the progress of the print operation. Furthermore, it
+  may use a recursive mainloop to show the print dialog.
+
+  If you call the function @fun{gtk-print-operation-set-allow-async} or set the
+  @code{\"allow-async\"} property the operation will run asynchronously if this
+  is supported on the platform. The \"done\" signal will be emitted with the
+  result of the operation when the it is done, i. e. when the dialog is
+  canceled, or when the print succeeds or fails.
+  @begin{pre}
+   if (settings != NULL)
+     gtk_print_operation_set_print_settings (print, settings);
+
+   if (page_setup != NULL)
+     gtk_print_operation_set_default_page_setup (print, page_setup);
+
+   g_signal_connect (print, \"begin-print\",
+                     G_CALLBACK (begin_print), &data);
+   g_signal_connect (print, \"draw-page\",
+                     G_CALLBACK (draw_page), &data);
+
+   res = gtk_print_operation_run (print,
+                                  GTK_PRINT_OPERATION_ACTION_PRINT_DIALOG,
+                                  parent,
+                                  &error);
+
+   if (res == GTK_PRINT_OPERATION_RESULT_ERROR)
+    {
+      error_dialog = gtk_message_dialog_new (GTK_WINDOW (parent),
+                                             GTK_DIALOG_DESTROY_WITH_PARENT,
+                                             GTK_MESSAGE_ERROR,
+                                             GTK_BUTTONS_CLOSE,
+                                             \"Error printing file:\n%s\",
+                                             error->message);
+      g_signal_connect (error_dialog, \"response\",
+                        G_CALLBACK (gtk_widget_destroy), NULL);
+      gtk_widget_show (error_dialog);
+      g_error_free (error);
+    @}
+   else if (res == GTK_PRINT_OPERATION_RESULT_APPLY)
+    {
+      if (settings != NULL)
+      g_object_unref (settings);
+      settings = g_object_ref (gtk_print_operation_get_print_settings (print));
+    @}
+  @end{pre}
+  Note that the function @sym{gtk-print-operation-run} can only be called once
+  on a given @class{gtk-print-pperation}.
+
+  Since 2.10
+  @see-class{gtk-print-operation}
+  @see-function{gtk-print-operation-set-allow-async}"
+  (with-g-error (err)
+    (%gtk-print-operation-run op action parent err)))
+
+(export 'gtk-print-operation-run)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_operation_cancel ()
