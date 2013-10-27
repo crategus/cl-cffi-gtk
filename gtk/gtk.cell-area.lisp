@@ -1768,51 +1768,48 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_area_set_focus_cell ()
-;;;
-;;; void gtk_cell_area_set_focus_cell (GtkCellArea *area,
-;;;                                    GtkCellRenderer *renderer);
-;;;
-;;; Explicitly sets the currently focused cell to renderer.
-;;;
-;;; This is generally called by implementations of GtkCellAreaClass.focus() or
-;;; GtkCellAreaClass.event(), however it can also be used to implement functions
-;;; such as gtk_tree_view_set_cursor_on_cell().
-;;;
-;;; area :
-;;;     a GtkCellArea
-;;;
-;;; renderer :
-;;;     the GtkCellRenderer to give focus to
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-cell-area-set-focus-cell))
 
 (defun gtk-cell-area-set-focus-cell (area renderer)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-10-24}
+  @argument[area]{a @class{gtk-cell-area} widget}
+  @argument[renderer]{the @class{gtk-cell-renderer} to give focus to}
+  @begin{short}
+    Explicitly sets the currently focused cell to renderer.
+  @end{short}
+
+  This is generally called by implementations of @code{GtkCellAreaClass.focus()}
+  or @code{GtkCellAreaClass.event()}, however it can also be used to implement
+  functions such as the function @fun{gtk-tree-view-set-cursor-on-cell}.
+
+  Since 3.0
+  @see-class{gtk-cell-area}
+  @see-function{gtk-tree-view-set-cursor-on-cell}"
   (setf (gtk-cell-area-focus-cell area) renderer))
 
 (export 'gtk-cell-area-set-focus-cell)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_area_get_focus_cell ()
-;;;
-;;; GtkCellRenderer * gtk_cell_area_get_focus_cell (GtkCellArea *area);
-;;;
-;;; Retrieves the currently focused cell for area
-;;;
-;;; area :
-;;;     a GtkCellArea
-;;;
-;;; Returns :
-;;;     the currently focused cell in area
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-cell-area-get-focus-cell))
 
-(defun gtk-cell-area-get-focus-cell (area renderer)
+(defun gtk-cell-area-get-focus-cell (area)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-10-24}
+  @argument[area]{a @class{gtk-cell-area} widget}
+  @return{The currently focused cell in @arg{area}.}
+  @begin{short}
+    Retrieves the currently focused cell for @arg{area}.
+  @end{short}
+
+  Since 3.0
+  @see-class{gtk-cell-area}
+  @see-function{gtk-cell-area-set-focus-cell}"
   (gtk-cell-area-focus-cell area))
 
 (export 'gtk-cell-area-get-focus-cell)
