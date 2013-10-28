@@ -370,7 +370,8 @@ NIL
                                      3 0
                                      3 2
                                      3 4
-                                     3 6)
+                                     3 6
+                                     3 8)
 
 (glib::require-library-version "GTK+" 3 4
                               (gtk-get-major-version)

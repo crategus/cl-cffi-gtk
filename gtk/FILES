@@ -257,7 +257,7 @@ GTK+ Widgets and Objects
 
   Abstract Base Classes
 
-    gtk.widget.lisp                  - GtkWidget                   - GTK+ 3.6.4&
+    gtk.widget.lisp                  - GtkWidget                   - GTK+ 3.8.6&
     gtk.container.lisp               - GtkContainer                - GTK+ 3.6.4&
     gtk.bin.lisp                     - GtkBin                      - GTK+ 3.6.4
     gtk.menu-shell.lisp              - GtkMenuShell                - GTK+ 3.6.4&

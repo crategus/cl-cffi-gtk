@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.8.6 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -61,6 +61,9 @@
 ;;;     gtk_widget_queue_draw
 ;;;     gtk_widget_queue_resize
 ;;;     gtk_widget_queue_resize_no_redraw
+;;;     gtk_widget_get_frame_clock
+;;;     gtk_widget_add_tick_callback
+;;;     gtk_widget_remove_tick_callback
 ;;;     gtk_widget_size_request                            * deprecated *
 ;;;     gtk_widget_get_child_requisition
 ;;;     gtk_widget_size_allocate
@@ -190,6 +193,8 @@
 ;;;     gtk_widget_set_has_tooltip
 ;;;     gtk_widget_trigger_tooltip_query
 ;;;     gtk_widget_get_window
+;;;     gtk_widget_register_window
+;;;     gtk_widget_unregister_window
 ;;;     gtk_cairo_should_draw_window
 ;;;     gtk_cairo_transform_to_window
 ;;;     gtk_widget_get_allocated_width
@@ -208,6 +213,7 @@
 ;;;     gtk_widget_is_sensitive
 ;;;     gtk_widget_get_state
 ;;;     gtk_widget_get_visible
+;;;     gtk_wisget_is_visible
 ;;;     gtk_widget_set_visible
 ;;;     gtk_widget_set_state_flags
 ;;;     gtk_widget_unset_state_flags
@@ -231,7 +237,9 @@
 ;;;     gtk_widget_get_requisition
 ;;;     gtk_widget_device_is_shadowed
 ;;;     gtk_widget_get_modifier_mask
-;;;
+;;;     gtk_widget_insert_action_group
+;;;     gtk_widget_get_opacity
+;;;     gtk_widget_set_opacity
 ;;;     gtk_widget_get_path
 ;;;     gtk_widget_get_style_context
 ;;;     gtk_widget_reset_style
@@ -552,6 +560,10 @@
    (no-show-all
     gtk-widget-no-show-all
     "no-show-all" "gboolean" t t)
+   #+gtk-3-8
+   (opacity
+    gtk-widget-opacity
+    "opacity" "gdouble" t t)
    (parent
     gtk-widget-parent
     "parent" "GtkContainer" t t)
@@ -591,7 +603,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-widget 'type)
- "@version{2013-7-31}
+ "@version{2013-10-27}
   @begin{short}
     Base class for all widgets.
 
@@ -1953,6 +1965,7 @@
   @see-slot{gtk-widget-margin-top}
   @see-slot{gtk-widget-name}
   @see-slot{gtk-widget-no-show-all}
+  @see-slot{gtk-widget-opacity}
   @see-slot{gtk-widget-parent}
   @see-slot{gtk-widget-receives-default}
   @see-slot{gtk-widget-sensitive}
@@ -2219,6 +2232,16 @@
   Whether the function @fun{gtk-widget-show-all} should not affect this
   widget. @br{}
   Default value: @code{nil}")
+
+#+(and gtk-3-8 cl-cffi-gtk-documentation)
+(setf (documentation (atdoc:get-slot-from-name "opacity" 'gtk-widget) 't)
+ "The @code{\"opacity\"} property of type @code{:double} (Read / Write) @br{}
+  The requested opacity of the widget. See the function
+  @fun{gtk-widget-set-opacity} for more details about window opacity. Before
+  version 3.8 this was only availible in @class{gtk-window}. @br{}
+  Allowed values: [0,1] @br{}
+  Default value: 1 @br{}
+  Since 3.8")
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "parent" 'gtk-widget) 't)
@@ -2634,6 +2657,15 @@
   @see-class{gtk-widget}
   @see-function{gtk-widget-get-no-show-all}
   @see-function{gtk-widget-set-no-show-all}")
+
+#+(and gtk-3-8 cl-cffi-gtk-documentation)
+(setf (gethash 'gtk-widget-opacity atdoc:*function-name-alias*) "Accessor"
+      (documentation 'gtk-widget-opacity 'function)
+ "@version{2013-10-27}
+  Accessor of the slot @code{\"opacity\"} of the @class{gtk-widget} class.
+  @see-class{gtk-widget}
+  @see-function{gtk-widget-get-opacity}
+  @see-function{gtk-widget-set-opacity}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-widget-parent atdoc:*function-name-alias*) "Accessor"
@@ -3587,6 +3619,131 @@
   (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-queue-resize-no-redraw)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_widget_get_frame_clock ()
+;;;
+;;; GdkFrameClock * gtk_widget_get_frame_clock (GtkWidget *widget);
+;;;
+;;; Obtains the frame clock for a widget. The frame clock is a global "ticker"
+;;; that can be used to drive animations and repaints. The most common reason to
+;;; get the frame clock is to call gdk_frame_clock_get_frame_time(), in order to
+;;; get a time to use for animating. For example you might record the start of
+;;; the animation with an initial value from gdk_frame_clock_get_frame_time(),
+;;; and then update the animation by calling gdk_frame_clock_get_frame_time()
+;;; again during each repaint.
+;;;
+;;; gdk_frame_clock_request_phase() will result in a new frame on the clock, but
+;;; won't necessarily repaint any widgets. To repaint a widget, you have to use
+;;; gtk_widget_queue_draw() which invalidates the widget (thus scheduling it to
+;;; receive a draw on the next frame). gtk_widget_queue_draw() will also end up
+;;; requesting a frame on the appropriate frame clock.
+;;;
+;;; A widget's frame clock will not change while the widget is mapped.
+;;; Reparenting a widget (which implies a temporary unmap) can change the
+;;; widget's frame clock.
+;;;
+;;; Unrealized widgets do not have a frame clock.
+;;;
+;;; widget :
+;;;     a GtkWidget
+;;;
+;;; Returns :
+;;;     a GdkFrameClock (or NULL if widget is unrealized). [transfer none]
+;;;
+;;; Since 3.8
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GtkTickCallback ()
+;;;
+;;; gboolean (*GtkTickCallback) (GtkWidget *widget,
+;;;                              GdkFrameClock *frame_clock,
+;;;                              gpointer user_data);
+;;;
+;;; Callback type for adding a function to update animations. See
+;;; gtk_widget_add_tick_callback().
+;;;
+;;; widget :
+;;;     the widget
+;;;
+;;; frame_clock :
+;;;     the frame clock for the widget (same as calling
+;;;     gtk_widget_get_frame_clock())
+;;;
+;;; user_data :
+;;;     user data passed to gtk_widget_add_tick_callback().
+;;;
+;;; Returns :
+;;;     G_SOURCE_CONTINUE if the tick callback should continue to be called,
+;;;     G_SOURCE_REMOVE if the tick callback should be removed.
+;;;
+;;; Since 3.8
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_widget_add_tick_callback ()
+;;;
+;;; guint gtk_widget_add_tick_callback (GtkWidget *widget,
+;;;                                     GtkTickCallback callback,
+;;;                                     gpointer user_data,
+;;;                                     GDestroyNotify notify);
+;;;
+;;; Queues a animation frame update and adds a callback to be called before each
+;;; frame. Until the tick callback is removed, it will be called frequently
+;;; (usually at the frame rate of the output device or as quickly as the
+;;; application an be repainted, whichever is slower). For this reason, is most
+;;; suitable for handling graphics that change every frame or every few frames.
+;;; The tick callback does not automatically imply a relayout or repaint. If you
+;;; want a repaint or relayout, and aren't changing widget properties that would
+;;; trigger that (for example, changing the text of a GtkLabel), then you will
+;;; have to call gtk_widget_queue_resize() or gtk_widget_queue_draw_area()
+;;; yourself.
+;;;
+;;; gdk_frame_clock_get_frame_time() should generally be used for timing
+;;; continuous animations and
+;;; gdk_frame_timings_get_predicted_presentation_time() if you are trying to
+;;; display isolated frames at particular times.
+;;;
+;;; This is a more convenient alternative to connecting directly to the "update"
+;;; signal of GdkFrameClock, since you don't have to worry about when a
+;;; GdkFrameClock is assigned to a widget.
+;;;
+;;; widget :
+;;;     a GtkWidget
+;;;
+;;; callback :
+;;;     function to call for updating animations
+;;;
+;;; user_data :
+;;;     data to pass to callback
+;;;
+;;; notify :
+;;;     function to call to free user_data when the callback is removed.
+;;;
+;;; Returns :
+;;;     an id for the connection of this callback. Remove the callback by
+;;;     passing it to gtk_widget_remove_tick_callback()
+;;;
+;;; Since 3.8
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_widget_remove_tick_callback ()
+;;;
+;;; void gtk_widget_remove_tick_callback (GtkWidget *widget, guint id);
+;;;
+;;; Removes a tick callback previously registered with
+;;; gtk_widget_add_tick_callback().
+;;;
+;;; widget :
+;;;     a GtkWidget
+;;;
+;;; id :
+;;;     an id returned by gtk_widget_add_tick_callback()
+;;;
+;;; Since 3.8
+;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk-widget-size-request
@@ -7099,6 +7256,47 @@
 (export 'gtk-widget-get-window)
 
 ;;; ----------------------------------------------------------------------------
+;;; gtk_widget_register_window ()
+;;;
+;;; void gtk_widget_register_window (GtkWidget *widget, GdkWindow *window);
+;;;
+;;; Registers a GdkWindow with the widget and sets it up so that the widget
+;;; recieves events for it. Call gtk_widget_unregister_window() when destroying
+;;; the window.
+;;;
+;;; Before 3.8 you needed to call gdk_window_set_user_data() directly to set
+;;; this up. This is now deprecated and you should use
+;;; gtk_widget_register_window() instead. Old code will keep working as is,
+;;; although some new features like transparency might not work perfectly.
+;;;
+;;; widget :
+;;;     a GtkWidget
+;;;
+;;; window :
+;;;     a GdkWindow
+;;;
+;;; Since 3.8
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_widget_unregister_window ()
+;;;
+;;; void gtk_widget_unregister_window (GtkWidget *widget, GdkWindow *window);
+;;;
+;;; Unregisters a GdkWindow from the widget that was previously set up with
+;;; gtk_widget_register_window(). You need to call this when the window is no
+;;; longer used by the widget, such as when you destroy it.
+;;;
+;;; widget :
+;;;     a GtkWidget
+;;;
+;;; window :
+;;;     a GdkWindow
+;;;
+;;; Since 3.8
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_cairo_should_draw_window ()
 ;;;
 ;;; gboolean gtk_cairo_should_draw_window (cairo_t *cr, GdkWindow *window);
@@ -7538,6 +7736,26 @@
   (gtk-widget-visible widget))
 
 (export 'gtk-widget-get-visible)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_widget_is_visible ()
+;;;
+;;; gboolean gtk_widget_is_visible (GtkWidget *widget);
+;;;
+;;; Determines whether the widget and all its parents are marked as visible.
+;;;
+;;; This function does not check if the widget is obscured in any way.
+;;;
+;;; See also gtk_widget_get_visible() and gtk_widget_set_visible()
+;;;
+;;; widget :
+;;;     a GtkWidget
+;;;
+;;; Returns :
+;;;     TRUE if the widget and all its parents are visible
+;;;
+;;; Since 3.8
+;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_set_visible ()
@@ -8058,6 +8276,73 @@
 ;;;
 ;;; Since 3.6
 ;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_widget_get_opacity ()
+;;; ----------------------------------------------------------------------------
+
+#+gtk-3-8
+(declaim (inline gtk-widget-get-opacity))
+
+#+gtk-3-8
+(defun gtk-widget-get-opacity (widget)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-10-27}
+  @argument[widget]{a @class{gtk-widget} object}
+  @return{The requested opacity for this widget.}
+  @begin{short}
+    Fetches the requested opacity for this widget.
+  @end{short}
+  See the function @fun{gtk-widget-set-opacity}.
+
+  Since 3.8
+  @see-class{gtk-widget}
+  @see-function{gtk-widget-set-opacity}"
+  (gtk-widget-opacity widget))
+
+#+gtk-3-8
+(export 'gtk-widget-get-opacity)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_widget_set_opacity ()
+;;; ----------------------------------------------------------------------------
+
+#+gtk-3-8
+(declaim (inline gtk-widget-set-opacity))
+
+#+gtk-3-8
+(defun gtk-widget-set-opacity (widget opacity)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-10-27}
+  @argument[widget]{a @class{gtk-widget} object}
+  @argument[opacity]{desired opacity, between 0 and 1}
+  @begin{short}
+    Request the widget to be rendered partially transparent, with opacity 0
+    being fully transparent and 1 fully opaque.
+  @end{short}
+  Opacity values are clamped to the [0,1] range. This works on both toplevel
+  widget, and child widgets, although there are some limitations:
+  @begin{itemize}
+    @begin{item}
+      For toplevel widgets this depends on the capabilities of the windowing
+      system. On X11 this has any effect only on X screens with a compositing
+      manager running. See the function @fun{gtk-widget-is-composited}. On
+      Windows it should work always, although setting a window's opacity after
+      the window has been shown causes it to flicker once on Windows.
+    @end{item}
+    @begin{item}
+      For child widgets it does not work if any affected widget has a native
+      window, or disables double buffering.
+    @end{item}
+  @end{itemize}
+  Since 3.8
+  @see-class{gtk-widget}
+  @see-function{gtk-widget-get-opacity}
+  @see-function{gtk-widget-is-composited}"
+  (setf (gtk-widget-opacity widget) opacity))
+
+#+gtk-3-8
+(export 'gtk-widget-set-opacity)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_path ()

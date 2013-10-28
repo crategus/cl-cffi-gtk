@@ -4761,6 +4761,9 @@ setup_tree (void)
       @about-function{gtk-widget-queue-draw}
       @about-function{gtk-widget-queue-resize}
       @about-function{gtk-widget-queue-resize-no-redraw}
+      @about{gtk-widget-get-frame-clock}
+      @about{gtk-widget-add-tick-callback}
+      @about{gtk-widget-remove-tick-callback}
       @about-function{gtk-widget-size-request}
       @about-function{gtk-widget-get-child-requisition}
       @about-function{gtk-widget-size-allocate}
@@ -4887,6 +4890,8 @@ setup_tree (void)
       @about-function{gtk-widget-set-has-tooltip}
       @about-function{gtk-widget-trigger-tooltip-query}
       @about-function{gtk-widget-get-window}
+      @about-function{gtk-widget-register-window}
+      @about-function{gtk-widget-unregister-window}
       @about-function{gtk-cairo-should-draw-window}
       @about-function{gtk-cairo-transform-to-window}
       @about-function{gtk-widget-get-allocated-width}
@@ -4905,6 +4910,7 @@ setup_tree (void)
       @about-function{gtk-widget-is-sensitive}
       @about-function{gtk-widget-get-state}
       @about-function{gtk-widget-get-visible}
+      @about-function{gtk-widget-is-visible}
       @about-function{gtk-widget-set-visible}
       @about-function{gtk-widget-set-state-flags}
       @about-function{gtk-widget-unset-state-flags}
@@ -4928,6 +4934,9 @@ setup_tree (void)
       @about-function{gtk-widget-get-requisition}
       @about-function{gtk-widget-device-is-shadowed}
       @about-function{gtk-widget-get-modifier-mask}
+      @about-function{gtk-widget-insert-action-group}
+      @about-function{gtk-widget-get-opacity}
+      @about-function{gtk-widget-set-opacity}
       @about-function{gtk-widget-get-path}
       @about-function{gtk-widget-get-style-context}
       @about-function{gtk-widget-reset-style}
