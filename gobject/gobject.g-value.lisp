@@ -267,9 +267,9 @@
 
 ;;; ----------------------------------------------------------------------------
 
-(defcstruct g-value
+(defcstruct (g-value :size 20)
   (:type g-type)
-  (:data (:union g-value-data) :count 2)) ; Not a pointer. Is this correct?
+  (:data (:union g-value-data) :offset 4 :count 2)) ; Not a pointer. Is this correct?
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-value atdoc:*symbol-name-alias*) "CStruct"

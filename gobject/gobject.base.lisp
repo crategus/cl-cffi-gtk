@@ -4,10 +4,10 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation of this file has been copied from the
-;;; GObject Reference Manual Version 2.36.2. See <http://www.gtk.org>.
-;;; The API documentation of the Lisp binding is available at
-;;; <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GObject Reference Manual
+;;; Version 2.36.2 and modified to document the Lisp binding to the GObject
+;;; library. See <http://www.gtk.org>. The API documentation of the Lisp binding
+;;; is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -155,9 +155,9 @@
 
 ;; Consider to make this structure internal
 
-(defcstruct g-parameter
+(defcstruct (g-parameter :size 24)
   (:name (:string :free-from-foreign nil :free-to-foreign nil))
-  (:value (:struct g-value))) ; A struct, not a pointer.
+  (:value (:struct g-value) :offset 4)) ; A struct, not a pointer.
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-parameter atdoc:*symbol-name-alias*)
@@ -747,6 +747,32 @@
                                                    '(:struct g-parameter)
                                                    :value)))))))
 
+#+nil
+(defun call-gobject-constructor (object-type args-names args-values
+                                 &optional args-types)
+  (unless args-types
+    (setf args-types
+          (mapcar (lambda (name)
+                    (class-property-type object-type name))
+                  args-names)))
+  (let ((object-ptr (g-object-newv object-type 0 (null-pointer)))
+        (args-count (length args-names)))
+    (loop
+      for i from 0 below args-count
+      for arg-name in args-names
+      for arg-value in args-values
+      for arg-type in args-types
+      for arg-g-type = (if arg-type
+                           arg-type
+                           (class-property-type object-type arg-name))
+      do (progn
+           (format t "object: ~A~%" object-ptr)
+           (format t "   arg-name : ~A~%" arg-name)
+           (format t "   arg-value: ~A~%" arg-value)
+           (format t "   arg-type : ~A~%" arg-g-type))
+      (set-gobject-property object-ptr arg-name arg-value arg-g-type))
+    object-ptr))
+
 ;;; ----------------------------------------------------------------------------
 ;;; struct GObjectClass
 ;;; ----------------------------------------------------------------------------
@@ -1273,6 +1299,7 @@
 => #S(GTYPE :NAME \"GtkButton\" :%ID 134906760)
     @end{pre}
   @end{dictionary}
+  @see-symbol{g-object-class}
   @see-symbol{g-param-spec}"
   (class (:pointer (:struct g-object-class)))
   (property-name :string))
@@ -1472,7 +1499,7 @@
 
 (defun g-object-new (object-type &rest args)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-5}
+ "@version{2013-10-27}
   @argument[object-type]{the type ID of the @class{g-object} subtype to
     instantiate}
   @argument[args]{pairs of the property name and value}
@@ -1499,6 +1526,7 @@
 => #<GTK-BUTTON {D947381@}>
     @end{pre}
   @end{dictionary}
+  @see-class{g-object}
   @see-symbol{g-param-flags}
   @see-function{g-object-newv}"
   (let ((lisp-type (gethash object-type *registered-object-types*)))
@@ -1512,7 +1540,7 @@
 
 (defcfun ("g_object_newv" g-object-newv) :pointer
  #+cl-cffi-gtk-documentation
- "@version{2013-6-5}
+ "@version{2013-10-27}
   @argument[object-type]{the type ID of the @class{g-object} subtype to
     instantiate}
   @argument[n-parameters]{the length of the parameters array}
@@ -1523,9 +1551,13 @@
     properties.
   @end{short}
 
-  Construction parameters (see @code{:construct} and @code{:construct-only} of
-  type @symbol{g-param-spec-flags}) which are not explicitly specified are set
-  to their default values."
+  Construction parameters, see @code{:construct} and @code{:construct-only} of
+  type @symbol{g-param-spec-flags}, which are not explicitly specified are set
+  to their default values.
+  @see-class{g-object}
+  @see-symbol{g-parameter}
+  @see-symbol{g-param-spec-flags}
+  @see-function{g-object-new}"
   (object-type g-type)
   (n-parameter :uint)
   (parameters :pointer))
