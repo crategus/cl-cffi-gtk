@@ -485,12 +485,12 @@
                (declare (ignorable prop-type))
                (when prop-reader
                  (collect `(defun ,prop-accessor (object)
-                             (get-gobject-property object ,prop-name))))
+                             (g-object-get-property object ,prop-name))))
                (when prop-writer
                  (collect `(defun (setf ,prop-accessor) (new-value object)
-                             (set-gobject-property object
-                                                   ,prop-name
-                                                   new-value))))))
+                             (g-object-set-property object
+                                                    ,prop-name
+                                                    new-value))))))
      ,name))
 
 ;;; --- End of file gobject.foreign-gobject-subclassing.lisp -------------------

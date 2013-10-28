@@ -747,32 +747,6 @@
                                                    '(:struct g-parameter)
                                                    :value)))))))
 
-#+nil
-(defun call-gobject-constructor (object-type args-names args-values
-                                 &optional args-types)
-  (unless args-types
-    (setf args-types
-          (mapcar (lambda (name)
-                    (class-property-type object-type name))
-                  args-names)))
-  (let ((object-ptr (g-object-newv object-type 0 (null-pointer)))
-        (args-count (length args-names)))
-    (loop
-      for i from 0 below args-count
-      for arg-name in args-names
-      for arg-value in args-values
-      for arg-type in args-types
-      for arg-g-type = (if arg-type
-                           arg-type
-                           (class-property-type object-type arg-name))
-      do (progn
-           (format t "object: ~A~%" object-ptr)
-           (format t "   arg-name : ~A~%" arg-name)
-           (format t "   arg-value: ~A~%" arg-value)
-           (format t "   arg-type : ~A~%" arg-g-type))
-      (set-gobject-property object-ptr arg-name arg-value arg-g-type))
-    object-ptr))
-
 ;;; ----------------------------------------------------------------------------
 ;;; struct GObjectClass
 ;;; ----------------------------------------------------------------------------
@@ -2655,14 +2629,16 @@
   (property-name :string)
   (value (:pointer (:struct g-value))))
 
-(defun set-gobject-property (object-ptr property-name new-value
-                                        &optional property-type)
+(defun g-object-set-property (object-ptr property-name new-value
+                                         &optional property-type)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-9}
+ "@version{2013-10-28}
   @argument[object]{a @class{g-object}}
   @argument[property-name]{the name of the property to set}
   @argument[value]{the value}
-  Sets a property on an object."
+  Sets a property on an object.
+  @see-class{g-object}
+  @see-function{g-object-get-property}"
   (unless property-type
     (setf property-type
           (class-property-type (g-type-from-instance object-ptr)
@@ -2674,6 +2650,8 @@
       (%g-object-set-property object-ptr property-name value)
       (g-value-unset value))))
 
+(export 'g-object-set-property)
+
 ;;; ----------------------------------------------------------------------------
 ;;; g_object_get_property ()
 ;;; ----------------------------------------------------------------------------
@@ -2683,7 +2661,7 @@
   (property-name :string)
   (value (:pointer (:struct g-value))))
 
-(defun get-gobject-property (object-ptr property-name &optional property-type)
+(defun g-object-get-property (object-ptr property-name &optional property-type)
  #+cl-cffi-gtk-documentation
  "@version{2013-6-9}
   @argument[object]{a @class{g-object}}
@@ -2696,20 +2674,24 @@
   Note that the @sym{g-object-get-property} is really intended for language
   bindings, the @fun{g-object-get} function is much more convenient for C
   programming.
-  @see-function{g-object-get}"
+  @see-class{g-object}
+  @see-function{g-object-get}
+  @see-function{g-object-set-property}"
   (restart-case
     (unless property-type
       (setf property-type
             (class-property-type (g-type-from-instance object-ptr)
                                  property-name
                                  :assert-readable t)))
-    (return-nil () (return-from get-gobject-property nil)))
+    (return-nil () (return-from g-object-get-property nil)))
   (with-foreign-object (value '(:struct g-value))
     (g-value-init value property-type)
     (%g-object-get-property object-ptr property-name value)
     (unwind-protect
       (parse-g-value value)
       (g-value-unset value))))
+
+(export 'g-object-get-property)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_object_new_valist ()

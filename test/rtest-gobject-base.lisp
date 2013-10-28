@@ -191,35 +191,33 @@
 ;;;    g_object_dup_qdata
 ;;;    g_object_replace-qdata
 
-;;;    g_object_set_property
+;;;   g_object_set_property
 
 (test g-object-set-property
   (let ((obj (make-instance 'gtk-label)))
-    (gobject::set-gobject-property (pointer obj) "angle" 1.0d0)
-    (is (= 1.0d0 (gobject::get-gobject-property (pointer obj) "angle")))
-    (gobject::set-gobject-property (pointer obj) "ellipsize" :start)
-    (is (eq :start (gobject::get-gobject-property (pointer obj) "ellipsize")))
-    (gobject::set-gobject-property (pointer obj) "justify" :fill)
-    (is (eq :fill (gobject::get-gobject-property (pointer obj) "justify")))
-    (gobject::set-gobject-property (pointer obj) "label" "label")
-    (is (equal "label" (gobject::get-gobject-property (pointer obj) "label")))
-    (gobject::set-gobject-property (pointer obj) "max-width-chars" 10)
-    (is (= 10 (gobject::get-gobject-property (pointer obj) "max-width-chars")))
-))
+    (g-object-set-property (pointer obj) "angle" 1.0d0)
+    (is (= 1.0d0 (g-object-get-property (pointer obj) "angle")))
+    (g-object-set-property (pointer obj) "ellipsize" :start)
+    (is (eq :start (g-object-get-property (pointer obj) "ellipsize")))
+    (g-object-set-property (pointer obj) "justify" :fill)
+    (is (eq :fill (g-object-get-property (pointer obj) "justify")))
+    (g-object-set-property (pointer obj) "label" "label")
+    (is (equal "label" (g-object-get-property (pointer obj) "label")))
+    (g-object-set-property (pointer obj) "max-width-chars" 10)
+    (is (= 10 (g-object-get-property (pointer obj) "max-width-chars")))))
 
 ;;;   g_object_get_property
 
 (test g-object-get-property
   (let ((obj (make-instance 'gtk-label :label "label")))
-    (is (= 0.0d0 (gobject::get-gobject-property (pointer obj) "angle")))
-    (is (eq 'pango-attr-list (type-of (gobject::get-gobject-property (pointer obj) "attributes"))))
-    (is (= 0 (gobject::get-gobject-property (pointer obj) "cursor-position")))
-    (is (eq :none (gobject::get-gobject-property (pointer obj) "ellipsize")))
-    (is (eq :left (gobject::get-gobject-property (pointer obj) "justify")))
-    (is (equal "label" (gobject::get-gobject-property (pointer obj) "label")))
-    (is (= -1 (gobject::get-gobject-property (pointer obj) "max-width-chars")))
-    (is (= 16777215 (gobject::get-gobject-property (pointer obj) "mnemonic-keyval")))
-))
+    (is (= 0.0d0 (g-object-get-property (pointer obj) "angle")))
+    (is (eq 'pango-attr-list (type-of (g-object-get-property (pointer obj) "attributes"))))
+    (is (= 0 (g-object-get-property (pointer obj) "cursor-position")))
+    (is (eq :none (g-object-get-property (pointer obj) "ellipsize")))
+    (is (eq :left (g-object-get-property (pointer obj) "justify")))
+    (is (equal "label" (g-object-get-property (pointer obj) "label")))
+    (is (= -1 (g-object-get-property (pointer obj) "max-width-chars")))
+    (is (= 16777215 (g-object-get-property (pointer obj) "mnemonic-keyval")))))
 
 ;;;    g_object_new_valist
 ;;;    g_object_set_valist
