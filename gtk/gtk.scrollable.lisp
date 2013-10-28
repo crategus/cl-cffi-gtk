@@ -60,15 +60,13 @@
    "hadjustment" "GtkAdjustment" t t)
   (hscroll-policy
    gtk-scrollable-hscroll-policy
-   "hsrcoll-policy" "GtkScrollablePolicy" t t)
+   "hscroll-policy" "GtkScrollablePolicy" t t)
   (vadjustment
    gtk-scrollable-vadjustment
    "vadjustment" "GtkAdjustment" t t)
   (vscroll-policy
    gtk-scrollable-policy
    "vscroll-policy" "GtkScrollablePolicy" t t))
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-scrollable atdoc:*class-name-alias*) "Interface"

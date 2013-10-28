@@ -194,7 +194,7 @@
 ;;; gtk_buildable_set_name ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk-buildable_set_name" gtk-buildable-set-name) :void
+(defcfun ("gtk_buildable_set_name" gtk-buildable-set-name) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-10-24}
   @argument[buildable]{a @class{gtk-buildable} object}

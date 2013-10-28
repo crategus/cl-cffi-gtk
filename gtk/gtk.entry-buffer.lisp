@@ -1,9 +1,10 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.entry-buffer.lisp
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2012, 2013 Dieter Kaiser
 ;;;
@@ -65,7 +66,7 @@
     "max-length" "gint" t t)
    (text
     gtk-entry-buffer-text
-    "text" "gchar" t t)))
+    "text" "gchararray" t t)))
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-entry-buffer 'type)
@@ -450,7 +451,7 @@
 (defcfun ("gtk_entry_buffer_emit_inserted_text"
            gtk-entry-buffer-emit-inserted-text) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-7-26}
+ "@version{2013-10-27}
   @argument[buffer]{a @class{gtk-entry-buffer} object}
   @argument[position]{position at which text was inserted}
   @argument[text]{text that was inserted}
@@ -461,7 +462,7 @@
 
   Since 2.18
   @see-class{gtk-entry-buffer}
-  @see-function{gtk-entry-buffer-emit-delete-text}"
+  @see-function{gtk-entry-buffer-emit-deleted-text}"
   (buffer (g-object gtk-entry-buffer))
   (position :uint)
   (text :string)

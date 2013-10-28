@@ -830,7 +830,7 @@
 ;;; gtk_image_new_from_resource ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_image-new_from_resource" gtk-image-new-from-resource)
+(defcfun ("gtk_image_new_from_resource" gtk-image-new-from-resource)
     (g-object gtk-image)
  #+cl-cffi-gtk-documentation
  "@version{2013-10-24}
@@ -882,7 +882,7 @@
 ;;; gtk_image_set_from_icon_set ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk-image-set-from-icon-set" gtk-image-set-from-icon-set) :void
+(defcfun ("gtk_image_set_from_icon_set" gtk-image-set-from-icon-set) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-10-24}
   @argument[image]{a @class{gtk-image} widget}
