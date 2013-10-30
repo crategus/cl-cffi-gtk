@@ -115,7 +115,7 @@
 
   @subheading{Default files}
     An application can cause GTK+ to parse a specific RC file by calling the
-    function @fun{gtk-rc-parse}. In addition to this, certain files will be
+    function @sym{gtk-rc-parse}. In addition to this, certain files will be
     read at the end of the function @code{gtk_init()}. Unless modified, the
     files looked for will be @code{<SYSCONFDIR>/gtk-2.0/gtkrc} and
     @code{.gtkrc-3.0} in the users home directory. @code{(<SYSCONFDIR>} defaults
@@ -123,8 +123,8 @@
     @code{--sysconfdir} options when configuring GTK+.)
 
     The set of these default files can be retrieved with the function
-    @fun{gtk-rc-get-default-files} and modified with the functions
-    @fun{gtk-rc-add-default-file} and @fun{gtk-rc-set-default-files}.
+    @sym{gtk-rc-get-default-files} and modified with the functions
+    @sym{gtk-rc-add-default-file} and @sym{gtk-rc-set-default-files}.
     Additionally, the @code{GTK2_RC_FILES} environment variable can be set to a
     @code{G_SEARCHPATH_SEPARATOR_S-separated} list of files in order to
     overwrite the set of default files at runtime.
@@ -201,7 +201,7 @@
 
   @subheading{Theme gtkrc files}
     Theme RC files are loaded first from under the @code{~/.themes/}, then from
-    the directory from the function @fun{gtk-rc-get-theme-dir}. The files looked
+    the directory from the function @sym{gtk-rc-get-theme-dir}. The files looked
     at will be @code{gtk-3.0/gtkrc}.
 
     When the application prefers dark themes (see the
