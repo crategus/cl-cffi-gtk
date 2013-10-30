@@ -446,7 +446,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; pango_cairo_context_set_font_options ()
 ;;;
-;;; void pango_cairo_context_set_font_options 
+;;; void pango_cairo_context_set_font_options
 ;;;                                        (PangoContext *context,
 ;;;                                         const cairo_font_options_t *options)
 ;;;
@@ -729,21 +729,26 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_cairo_show_layout_line ()
-;;;
-;;; void pango_cairo_show_layout_line (cairo_t *cr, PangoLayoutLine *line);
-;;;
-;;; Draws a PangoLayoutLine in the specified cairo context. The origin of the
-;;; glyphs (the left edge of the line) will be drawn at the current point of the
-;;; cairo context.
-;;;
-;;; cr :
-;;;     a Cairo context
-;;;
-;;; line :
-;;;     a PangoLayoutLine
-;;;
-;;; Since 1.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_cairo_show_layout_line" pango-cairo-show-layout-line) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-10-28}
+  @argument[cr]{a Cairo context}
+  @argument[line]{a @class{pango-layout-line} structure}
+  @begin{short}
+    Draws a @class{pango-layout-line} in the specified cairo context.
+  @end{short}
+  The origin of the glyphs, the left edge of the line, will be drawn at the
+  current point of the cairo context.
+
+  Since 1.10
+  @see-symbol{cairo-t}
+  @see-class{pango-layout-line}"
+  (cr (:pointer (:struct cairo-t)))
+  (line (g-boxed-foreign pango-layout-line)))
+
+(export 'pango-cairo-show-layout-line)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_cairo_show_layout ()
