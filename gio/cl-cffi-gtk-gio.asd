@@ -4,7 +4,7 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See http://common-lisp.net/project/cl-gtk2/
 ;;;
-;;; Copyright (C) 2012 Dieter Kaiser
+;;; Copyright (C) 2012, 2013 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -26,7 +26,7 @@
 
 (defsystem :cl-cffi-gtk-gio
   :name :cl-cffi-gtk-gio
-  :version "2.36.0"                  ; Version of GIO
+  :version "2.38.1"                  ; Version of GIO
   :author "Dieter Kaiser"
   :license "LLGPL"
   :serial t
@@ -46,6 +46,7 @@
    (:file "gio.simple-action-group") ; Simple GActionGroup implementation
    (:file "gio.application")         ; Core application class
    (:file "gio.menu-model")          ; Class representing the contents of a menu
+   (:file "gio.menu")                ; Simple implementation of GMenuModel
   )
   :depends-on (:cl-cffi-gtk-glib
                :cl-cffi-gtk-gobject))

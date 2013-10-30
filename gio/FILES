@@ -211,9 +211,9 @@ Application support
   GActionGroup exporter - Export GActionGroups on D-Bus
   GDBusActionGroup - A D-Bus GActionGroup implementation
 
-  gio.menu-model-lisp          - GMenuModel -                      - GIO 2.36.4%
+  gio.menu-model-lisp          - GMenuModel                        - GIO 2.36.4%
+  gio.menu.lisp                - GMenu                             - GIO 2.38.1%
 
-  GMenu - A simple implementation of GMenuModel
   GMenuModel exporter - Export GMenuModels on D-Bus
   GDBusMenuModel - A D-Bus GMenuModel implementation
 
