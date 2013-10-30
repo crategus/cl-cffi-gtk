@@ -131,25 +131,6 @@
     @end{pre}")
 
 ;;; ----------------------------------------------------------------------------
-;;; struct GtkRecentFilterInfo
-;;;
-;;; struct GtkRecentFilterInfo {
-;;;   GtkRecentFilterFlags contains;
-;;;
-;;;   const gchar *uri;
-;;;   const gchar *display_name;
-;;;   const gchar *mime_type;
-;;;   const gchar **applications;
-;;;   const gchar **groups;
-;;;
-;;;   gint age;
-;;; };
-;;;
-;;; A GtkRecentFilterInfo struct is used to pass information about the tested
-;;; file to gtk_recent_filter_filter().
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
 ;;; enum GtkRecentFilterFlags
 ;;; ----------------------------------------------------------------------------
 
@@ -168,7 +149,7 @@
       (gethash 'gtk-recent-filter-flags atdoc:*external-symbols*)
  "@version{2013-5-28}
   @begin{short}
-    These flags indicate what parts of a @class{gtk-recent-filter-info}
+    These flags indicate what parts of a @symbol{gtk-recent-filter-info}
     structure are filled or need to be filled.
   @end{short}
   @begin{pre}
@@ -194,24 +175,38 @@
   @end{table}")
 
 ;;; ----------------------------------------------------------------------------
-;;; GtkRecentFilterFunc ()
-;;;
-;;; gboolean (*GtkRecentFilterFunc) (const GtkRecentFilterInfo *filter_info,
-;;;                                  gpointer user_data);
-;;;
-;;; The type of function that is used with custom filters, see
-;;; gtk_recent_filter_add_custom().
-;;;
-;;; filter_info :
-;;;     a GtkRecentFilterInfo that is filled according to the needed flags
-;;;     passed to gtk_recent_filter_add_custom()
-;;;
-;;; user_data :
-;;;     user data passed to gtk_recent_filter_add_custom()
-;;;
-;;; Returns :
-;;;     TRUE if the file should be displayed
+;;; struct GtkRecentFilterInfo
 ;;; ----------------------------------------------------------------------------
+
+(defcstruct gtk-recent-filter-info
+  (contains gtk-recent-filter-flags)
+  (uri :string)
+  (display-name :string)
+  (mime-type :string)
+  (applications g-strv)
+  (groups g-strv))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-recent-filter-info atdoc:*symbol-name-alias*) "CStruct"
+      (gethash 'gtk-recent-filter-info atdoc:*external-symbols*)
+ "@version{2013-10-28}
+  @begin{short}
+    A @sym{gtk-recent-filter-info} structure is used to pass information about
+    the tested file to the function @fun{gtk-recent-filter-filter}.
+  @end{short}
+  @begin{pre}
+(defcstruct gtk-recent-filter-info
+  (contains gtk-recent-filter-flags)
+  (uri :string)
+  (display-name :string)
+  (mime-type :string)
+  (applications g-strv)
+  (groups g-strv))
+  @end{pre}
+  @see-class{gtk-recent-filter}
+  @see-function{gtk-recent-filter-filter}")
+
+(export 'gtk-recent-filter-info)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_filter_new ()
@@ -290,21 +285,24 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_filter_add_pattern ()
-;;;
-;;; void gtk_recent_filter_add_pattern (GtkRecentFilter *filter,
-;;;                                     const gchar *pattern);
-;;;
-;;; Adds a rule that allows resources based on a pattern matching their display
-;;; name.
-;;;
-;;; filter :
-;;;     a GtkRecentFilter
-;;;
-;;; pattern :
-;;;     a file pattern
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_recent_filter_add_pattern" gtk-recent-filter-add-pattern) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-10-28}
+  @argument[filter]{a @class{gtk-recent-filter} object}
+  @argument[pattern]{a file pattern}
+  @begin{short}
+    Adds a rule that allows resources based on a pattern matching their display
+    name.
+  @end{short}
+
+  Since 2.10
+  @see-class{gtk-recent-filter}"
+  (filter (g-object gtk-recent-filter))
+  (pattern :string))
+
+(export 'gtk-recent-filter-add-pattern)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_filter_add_pixbuf_formats ()
@@ -373,39 +371,70 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_recent_filter_add_custom ()
+;;; GtkRecentFilterFunc ()
 ;;;
-;;; void gtk_recent_filter_add_custom (GtkRecentFilter *filter,
-;;;                                    GtkRecentFilterFlags needed,
-;;;                                    GtkRecentFilterFunc func,
-;;;                                    gpointer data,
-;;;                                    GDestroyNotify data_destroy);
+;;; gboolean (*GtkRecentFilterFunc) (const GtkRecentFilterInfo *filter_info,
+;;;                                  gpointer user_data);
 ;;;
-;;; Adds a rule to a filter that allows resources based on a custom callback
-;;; function. The bitfield needed which is passed in provides information about
-;;; what sorts of information that the filter function needs; this allows GTK+
-;;; to avoid retrieving expensive information when it isn't needed by the
-;;; filter.
+;;; The type of function that is used with custom filters, see
+;;; gtk_recent_filter_add_custom().
 ;;;
-;;; filter :
-;;;     a GtkRecentFilter
+;;; filter_info :
+;;;     a GtkRecentFilterInfo that is filled according to the needed flags
+;;;     passed to gtk_recent_filter_add_custom()
 ;;;
-;;; needed :
-;;;     bitfield of flags indicating the information that the custom filter
-;;;     function needs.
+;;; user_data :
+;;;     user data passed to gtk_recent_filter_add_custom()
 ;;;
-;;; func :
-;;;     callback function; if the function returns TRUE, then the file will be
-;;;     displayed.
-;;;
-;;; data :
-;;;     data to pass to func
-;;;
-;;; data_destroy :
-;;;     function to call to free data when it is no longer needed.
-;;;
-;;; Since 2.10
+;;; Returns :
+;;;     TRUE if the file should be displayed
 ;;; ----------------------------------------------------------------------------
+
+(defcallback gtk-recent-filter-func-cb :boolean
+    ((filter-info (:pointer (:struct gtk-recent-filter-info)))
+     (data :pointer))
+  (funcall (glib:get-stable-pointer-value data) filter-info))
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_recent_filter_add_custom ()
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_recent_filter_add_custom" %gtk-recent-filter-add-custom)
+    :void
+  (filter (g-object gtk-recent-filter))
+  (needed gtk-recent-filter-flags)
+  (func :pointer)
+  (user-data :pointer)
+  (destroy :pointer))
+
+(defun gtk-recent-filter-add-custom (filter needed func)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-10-28}
+  @argument[filter]{a @class{gtk-recent-filter} object}
+  @argument[needed]{bitfield of flags of type @symbol{gtk-recent-filter-flags}
+    indicating the information that the custom filter function needs}
+  @argument[func]{callback function; if the function returns @em{true}, then the
+    file will be displayed}
+  @begin{short}
+    Adds a rule to a @arg{filter} that allows resources based on a custom
+    callback function.
+  @end{short}
+  The bitfield @arg{needed} which is passed in provides information about
+  what sorts of information that the filter function needs; this allows GTK+
+  to avoid retrieving expensive information when it is not needed by the
+  filter.
+
+  Since 2.10
+  @see-class{gtk-recent-filter}
+  @see-symbol{gtk-recent-filter-flags}"
+  (%gtk-recent-filter-add-custom
+                              filter
+                              needed
+                              (callback gtk-recent-filter-func-cb)
+                              (glib:allocate-stable-pointer func)
+                              (callback glib:stable-pointer-destroy-notify-cb)))
+
+(export 'gtk-recent-filter-add-custom)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_filter_get_needed ()

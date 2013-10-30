@@ -321,7 +321,7 @@
 (defcfun ("gtk_actionable_set_detailed_action_name"
            gtk-actionable-set-detailed-action-name) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-5-29}
+ "@version{2013-10-28}
   @argument[actionable]{a @class{gtk-actionable} widget}
   @argument[detailed-action-name]{the detailed action name}
   @begin{short}
@@ -330,13 +330,17 @@
   @end{short}
 
   This allows for the effect of both the functions
-  @fun{gtk-actionable-set-action-name} and @fun{gtk-actionable-set-target} in
-  the common case that the target is string-valued.
+  @fun{gtk-actionable-set-action-name} and
+  @fun{gtk-actionable-set-action-target} in the common case that the target is
+  string-valued.
 
   @arg{detailed-action-name} is a string of the form \"action::target\" where
   action is the action name and target is the string to use as the target.
 
-  Since 3.4"
+  Since 3.4
+  @see-class{gtk-actionable}
+  @see-function{gtk-actionable-set-action-name}
+  @see-function{gtk-actionable-set-action-target}"
   (actionable (g-object gtk-actionable))
   (detailed-action-name :string))
 

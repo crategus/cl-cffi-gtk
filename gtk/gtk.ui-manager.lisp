@@ -780,7 +780,7 @@
 ;;; gtk_ui_manager_get_widget ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_ui_manager_get_widget" gtk-ui-manager-widget) g-object
+(defcfun ("gtk_ui_manager_get_widget" gtk-ui-manager-get-widget) g-object
  #+cl-cffi-gtk-documentation
  "@version{2013-6-2}
   @argument[manager]{a @class{gtk-ui-manager} object}
@@ -800,16 +800,17 @@
   Note that the widget found by following a path that ends in a <menu> element
   is the menuitem to which the menu is attached, not the menu itmanager.
 
-  Also note that the widgets constructed by a ui manager are not tied to the
-  lifecycle of the ui manager. If you add the widgets returned by this
+  Also note that the widgets constructed by a UI manager are not tied to the
+  lifecycle of the UI manager. If you add the widgets returned by this
   function to some container or explicitly ref them, they will survive the
-  destruction of the ui manager.
+  destruction of the UI manager.
 
-  Since 2.4"
+  Since 2.4
+  @see-class{gtk-ui-manager}"
   (ui-manager g-object)
   (path :string))
 
-(export 'gtk-ui-manager-widget)
+(export 'gtk-ui-manager-get-widget)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_ui_manager_get_toplevels ()
