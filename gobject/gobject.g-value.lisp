@@ -267,9 +267,17 @@
 
 ;;; ----------------------------------------------------------------------------
 
-(defcstruct (g-value :size 20)
+;; The generalized calculation of the size and offset works for sbcl and ccl on
+;;  a 32-bit Linux. Check this for more system.
+
+(defcstruct (g-value :size
+                     ;; Generalized caluclation of the size of the structure
+                     #.(+ (foreign-type-size 'g-type)
+                          (* 2 (foreign-type-size '(:union g-value-data)))))
   (:type g-type)
-  (:data (:union g-value-data) :offset 4 :count 2)) ; Not a pointer. Is this correct?
+  (:data (:union g-value-data)
+         ;; Generalized calculation of the offset
+         :offset #.(foreign-type-size 'g-type) :count 2)) ; Not a pointer. Is this correct?
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-value atdoc:*symbol-name-alias*) "CStruct"

@@ -155,9 +155,13 @@
 
 ;; Consider to make this structure internal
 
-(defcstruct (g-parameter :size 24)
+;; The generalized calculation of the size and offset works for sbcl and ccl on
+;; a 32-bit Linux. Check this for more system.
+
+(defcstruct (g-parameter :size #.(+ (foreign-type-size :string)
+                                    (foreign-type-size '(:struct g-value))))
   (:name (:string :free-from-foreign nil :free-to-foreign nil))
-  (:value (:struct g-value) :offset 4)) ; A struct, not a pointer.
+  (:value (:struct g-value) :offset #.(foreign-type-size :string))) ; A struct, not a pointer.
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-parameter atdoc:*symbol-name-alias*)
