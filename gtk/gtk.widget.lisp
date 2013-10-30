@@ -39,8 +39,6 @@
 ;;;     GtkRequisition
 ;;;     GtkAllocation
 ;;;     GtkWidget
-;;;     GtkWidgetClass
-;;;     GtkSelectionData
 ;;;     GtkWidgetAuxInfo
 ;;;     GtkWidgetHelpType
 ;;;
@@ -65,7 +63,7 @@
 ;;;     gtk_widget_add_tick_callback
 ;;;     gtk_widget_remove_tick_callback
 ;;;     gtk_widget_size_request                            * deprecated *
-;;;     gtk_widget_get_child_requisition
+;;;     gtk_widget_get_child_requisition                   * deprecated *
 ;;;     gtk_widget_size_allocate
 ;;;     gtk_widget_add_accelerator
 ;;;     gtk_widget_remove_accelerator
@@ -81,7 +79,7 @@
 ;;;     gtk_widget_grab_default
 ;;;     gtk_widget_set_name
 ;;;     gtk_widget_get_name
-;;;     gtk_widget_set_state
+;;;     gtk_widget_set_state                               * deprecated *
 ;;;     gtk_widget_set_sensitive
 ;;;     gtk_widget_set_parent
 ;;;     gtk_widget_set_parent_window
@@ -98,15 +96,15 @@
 ;;;     gtk_widget_get_ancestor
 ;;;     gtk_widget_get_visual
 ;;;     gtk_widget_set_visual
-;;;     gtk_widget_get_pointer
+;;;     gtk_widget_get_pointer                             * deprecated *
 ;;;     gtk_widget_is_ancestor
 ;;;     gtk_widget_translate_coordinates
 ;;;     gtk_widget_hide_on_delete
 ;;;     gtk_widget_set_style                               * deprecated *
-;;;     gtk_widget_ensure_style
+;;;     gtk_widget_ensure_style                            * deprecated *
 ;;;     gtk_widget_get_style                               * deprecated *
-;;;     gtk_widget_reset_rc_styles
-;;;     gtk_widget_get_default_style
+;;;     gtk_widget_reset_rc_styles                         * deprecated *
+;;;     gtk_widget_get_default_style                       * deprecated *
 ;;;     gtk_widget_set_direction
 ;;;
 ;;;     GtkTextDirection
@@ -116,26 +114,26 @@
 ;;;     gtk_widget_get_default_direction
 ;;;     gtk_widget_shape_combine_region
 ;;;     gtk_widget_input_shape_combine_region
-;;;     gtk_widget_path
-;;;     gtk_widget_class_path
+;;;     gtk_widget_path                                    * deprecated *
+;;;     gtk_widget_class_path                              * deprecated *
 ;;;     gtk_widget_get_composite_name
 ;;;     gtk_widget_override_background_color
 ;;;     gtk_widget_override_color
 ;;;     gtk_widget_override_font
 ;;;     gtk_widget_override_symbolic_color
 ;;;     gtk_widget_override_cursor
-;;;     gtk_widget_modify_style
-;;;     gtk_widget_get_modifier_style
-;;;     gtk_widget_modify_fg
-;;;     gtk_widget_modify_bg
-;;;     gtk_widget_modify_text
-;;;     gtk_widget_modify_base
-;;;     gtk_widget_modify_font
-;;;     gtk_widget_modify_cursor
+;;;     gtk_widget_modify_style                            * deprecated *
+;;;     gtk_widget_get_modifier_style                      * deprecated *
+;;;     gtk_widget_modify_fg                               * deprecated *
+;;;     gtk_widget_modify_bg                               * deprecated *
+;;;     gtk_widget_modify_text                             * deprecated *
+;;;     gtk_widget_modify_base                             * deprecated *
+;;;     gtk_widget_modify_font                             * deprecated *
+;;;     gtk_widget_modify_cursor                           * deprecated *
 ;;;     gtk_widget_create_pango_context
 ;;;     gtk_widget_get_pango_context
 ;;;     gtk_widget_create_pango_layout
-;;;     gtk_widget_render_icon
+;;;     gtk_widget_render_icon                             * deprecated *
 ;;;     gtk_widget_render_icon_pixbuf
 ;;;     gtk_widget_pop_composite_child
 ;;;     gtk_widget_push_composite_child
@@ -156,7 +154,7 @@
 ;;;     gtk_widget_style_get
 ;;;     gtk_widget_style_get_property
 ;;;     gtk_widget_style_get_valist
-;;;     gtk_widget_style_attach
+;;;     gtk_widget_style_attach                            * deprecated *
 ;;;     gtk_widget_class_set_accessible_type
 ;;;     gtk_widget_class_set_accessible_role
 ;;;     gtk_widget_get_accessible
@@ -211,9 +209,9 @@
 ;;;     gtk_widget_set_has_window
 ;;;     gtk_widget_get_sensitive
 ;;;     gtk_widget_is_sensitive
-;;;     gtk_widget_get_state
+;;;     gtk_widget_get_state                               * deprecated *
 ;;;     gtk_widget_get_visible
-;;;     gtk_wisget_is_visible
+;;;     gtk_widget_is_visible
 ;;;     gtk_widget_set_visible
 ;;;     gtk_widget_set_state_flags
 ;;;     gtk_widget_unset_state_flags
@@ -222,7 +220,7 @@
 ;;;     gtk_widget_has_focus
 ;;;     gtk_widget_has_visible_focus
 ;;;     gtk_widget_has_grab
-;;;     gtk_widget_has_rc_style
+;;;     gtk_widget_has_rc_style                            * deprecated *
 ;;;     gtk_widget_is_drawable
 ;;;     gtk_widget_is_toplevel
 ;;;     gtk_widget_set_window
@@ -234,7 +232,7 @@
 ;;;     gtk_widget_get_realized
 ;;;     gtk_widget_set_mapped
 ;;;     gtk_widget_get_mapped
-;;;     gtk_widget_get_requisition
+;;;     gtk_widget_get_requisition                         * deprecated *
 ;;;     gtk_widget_device_is_shadowed
 ;;;     gtk_widget_get_modifier_mask
 ;;;     gtk_widget_insert_action_group
@@ -290,7 +288,6 @@
 
 ;;; ----------------------------------------------------------------------------
 
-;;; This definition is needed for GTK+.
 ;;; CairoContext represents a cairo-t, but we need a boxed type in GTK+.
 
 (define-g-boxed-opaque cairo-context "CairoContext"
@@ -321,13 +318,14 @@
   (height :int :initform 0))
 
 #+cl-cffi-gtk-documentation
-(setf (documentation 'gtk-requisition 'type)
- "@version{2013-8-27}
+(setf (gethash 'gtk-requisition atdoc:*class-name-alias*) "CStruct"
+      (documentation 'gtk-requisition 'type)
+ "@version{2013-10-29}
   @begin{short}
     A @sym{gtk-requisition} represents the desired size of a widget.
   @end{short}
-  See the section called \"Height-for-width Geometry Management\" for more
-  information.
+  See the section called \"Height-for-width Geometry Management\" in the
+  documentation of @class{gtk-widget} for more information.
   @begin{pre}
 (define-g-boxed-cstruct gtk-requisition \"GtkRequisition\"
   (width :int :initform 0)
@@ -340,7 +338,9 @@
   @see-slot{gtk-requisition-width}
   @see-slot{gtk-requisition-height}
   @see-constructor{make-gtk-requisition}
-  @see-constructor{copy-gtk-requisition}")
+  @see-constructor{copy-gtk-requisition}
+  @see-class{gtk-widget}
+  @see-function{gtk-widget-get-preferred-size}")
 
 (export (boxed-related-symbols 'gtk-requisition))
 
@@ -352,13 +352,16 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'make-gtk-requisition 'function)
- "@version{2013-4-11}
+ "@version{2013-10-29}
+  @argument[width]{the desired width}
+  @argument[height]{the desired height}
   Creates a @class{gtk-requisition} structure.
   @see-class{gtk-requisition}")
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'copy-gtk-requisition 'function)
- "@version{2013-4-11}
+ "@version{2013-10-29}
+  @argument[instance]{a @class{gtk-requisition} structure}
   Copy constructor of a @class{gtk-requisition} structure.
   @see-class{gtk-requisition}")
 
@@ -371,14 +374,16 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-requisition-width atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-requisition-width 'function)
- "@version{2013-8-27}
+ "@version{2013-10-29}
+  @argument[instance]{a @class{gtk-requisition} structure}
   Accessor of the slot @arg{width} of the @class{gtk-requisition} structure.
   @see-class{gtk-requisition}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-requisition-height atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-requisition-height 'function)
- "@version{2013-8-27}
+ "@version{2013-10-29}
+  @argument[instance]{a @class{gtk-requisition} structure}
   Accessor of the slot @arg{height} of the @class{gtk-requisition} structure.
   @see-class{gtk-requisition}")
 
@@ -386,6 +391,10 @@
 ;;; GtkAllocation
 ;;; ----------------------------------------------------------------------------
 
+;; Remove the implementation of GtkAllocation. In the C implementation it is
+;; a synonym for GdkRectangle
+
+#|
 (define-g-boxed-cstruct gtk-allocation "GtkAllocation"
   (x :int :initform 0)
   (y :int :initform 0)
@@ -417,12 +426,15 @@
 
 (export (boxed-related-symbols 'gtk-allocation))
 
+|#
+
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; Constructors for GtkAllocation
 ;;;
 ;;; ----------------------------------------------------------------------------
 
+#|
 #+cl-cffi-gtk-documentation
 (setf (documentation 'make-gtk-allocation 'function)
  "@version{2013-8-27}
@@ -436,6 +448,7 @@
   Copy constructor of a @class{gtk-allocation} structure.
   @see-class{gtk-allocation}
   @see-function{make-gtk-allocation}")
+|#
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -443,6 +456,7 @@
 ;;;
 ;;; ----------------------------------------------------------------------------
 
+#|
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-allocation-x atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-allocation-x 'function)
@@ -470,11 +484,15 @@
  "@version{2013-4-11}
   Accessor of the slot @code{height} of the @class{gtk-allocation} structure.
   @see-class{gtk-allocation}")
+|#
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkWidget
 ;;; ----------------------------------------------------------------------------
 
+;; This is not needed.
+
+#|
 (defcstruct %gtk-widget
   (:private-flags :uint16)
   (:state :uint8)
@@ -485,6 +503,7 @@
   (:allocation (:pointer (:struct gtk-allocation-cstruct)))
   (:window :pointer)
   (:parent :pointer))
+|#
 
 ;;; ----------------------------------------------------------------------------
 
@@ -605,8 +624,6 @@
 (setf (documentation 'gtk-widget 'type)
  "@version{2013-10-27}
   @begin{short}
-    Base class for all widgets.
-
     @sym{gtk-widget} is the base class all widgets in GTK+ derive from. It
     manages the widget lifecycle, states and style.
   @end{short}
@@ -657,10 +674,10 @@
     children. Each container widget, once allocated a size, will go on to first
     share the space in one orientation among its children and then request each
     child's height for its target allocated width or its width for allocated
-    height, depending. In this way a @sym{gtk-widget} will typically be requested
-    its size a number of times before actually being allocated a size. The size
-    a widget is finally allocated can of course differ from the size it has
-    requested. For this reason, @sym{gtk-widget} caches a small number of
+    height, depending. In this way a @sym{gtk-widget} will typically be
+    requested its size a number of times before actually being allocated a size.
+    The size a widget is finally allocated can of course differ from the size it
+    has requested. For this reason, @sym{gtk-widget} caches a small number of
     results to avoid re-querying for the same sizes in one allocation cycle.
 
     See @class{gtk-container}'s geometry management section to learn more about
@@ -2822,395 +2839,6 @@
   @see-function{gtk-widget-set-window}")
 
 ;;; ----------------------------------------------------------------------------
-;;; struct GtkWidgetClass
-;;;
-;;; struct GtkWidgetClass {
-;;;   GInitiallyUnownedClass parent_class;
-;;;
-;;;   guint activate_signal;
-;;;
-;;;   /* seldomly overidden */
-;;;   void (*dispatch_child_properties_changed) (GtkWidget   *widget,
-;;;                                              guint        n_pspecs,
-;;;                                              GParamSpec **pspecs);
-;;;
-;;;   /* basics */
-;;;   void (* destroy)             (GtkWidget        *widget);
-;;;   void (* show)                (GtkWidget        *widget);
-;;;   void (* show_all)            (GtkWidget        *widget);
-;;;   void (* hide)                (GtkWidget        *widget);
-;;;   void (* map)                 (GtkWidget        *widget);
-;;;   void (* unmap)               (GtkWidget        *widget);
-;;;   void (* realize)             (GtkWidget        *widget);
-;;;   void (* unrealize)           (GtkWidget        *widget);
-;;;   void (* size_allocate)       (GtkWidget        *widget,
-;;;                                 GtkAllocation    *allocation);
-;;;   void (* state_changed)       (GtkWidget        *widget,
-;;;                                 GtkStateType      previous_state);
-;;;   void (* state_flags_changed) (GtkWidget        *widget,
-;;;                                 GtkStateFlags     previous_state_flags);
-;;;   void (* parent_set)          (GtkWidget        *widget,
-;;;                                 GtkWidget        *previous_parent);
-;;;   void (* hierarchy_changed)   (GtkWidget        *widget,
-;;;                                 GtkWidget        *previous_toplevel);
-;;;   void (* style_set)           (GtkWidget        *widget,
-;;;                                 GtkStyle         *previous_style);
-;;;   void (* direction_changed)   (GtkWidget        *widget,
-;;;                                 GtkTextDirection  previous_direction);
-;;;   void (* grab_notify)         (GtkWidget        *widget,
-;;;                                 gboolean          was_grabbed);
-;;;   void (* child_notify)        (GtkWidget        *widget,
-;;;                                 GParamSpec       *pspec);
-;;;   gboolean (* draw)            (GtkWidget        *widget,
-;;;                                 cairo_t          *cr);
-;;;
-;;;   /* size requests */
-;;;   GtkSizeRequestMode (* get_request_mode)       (GtkWidget *widget);
-;;;
-;;;   void               (* get_preferred_height)   (GtkWidget *widget,
-;;;                                                  gint      *minimum_height,
-;;;                                                  gint      *natural_height);
-;;;   void               (* get_preferred_width_for_height)
-;;;                                                 (GtkWidget *widget,
-;;;                                                  gint       height,
-;;;                                                  gint      *minimum_width,
-;;;                                                  gint      *natural_width);
-;;;   void               (* get_preferred_width)    (GtkWidget *widget,
-;;;                                                  gint      *minimum_width,
-;;;                                                  gint      *natural_width);
-;;;   void               (* get_preferred_height_for_width)
-;;;                                                 (GtkWidget *widget,
-;;;                                                  gint       width,
-;;;                                                  gint      *minimum_height,
-;;;                                                  gint      *natural_height);
-;;;
-;;;   /* Mnemonics */
-;;;   gboolean (* mnemonic_activate)       (GtkWidget           *widget,
-;;;                                         gboolean             group_cycling);
-;;;
-;;;   /* explicit focus */
-;;;   void     (* grab_focus)              (GtkWidget           *widget);
-;;;   gboolean (* focus)                   (GtkWidget           *widget,
-;;;                                         GtkDirectionType     direction);
-;;;
-;;;   /* keyboard navigation */
-;;;   void     (* move_focus)              (GtkWidget           *widget,
-;;;                                         GtkDirectionType     direction);
-;;;   gboolean (* keynav_failed)           (GtkWidget           *widget,
-;;;                                         GtkDirectionType     direction);
-;;;
-;;;   /* events */
-;;;   gboolean (* event)                   (GtkWidget           *widget,
-;;;                                         GdkEvent            *event);
-;;;   gboolean (* button_press_event)      (GtkWidget           *widget,
-;;;                                         GdkEventButton      *event);
-;;;   gboolean (* button_release_event)    (GtkWidget           *widget,
-;;;                                         GdkEventButton      *event);
-;;;   gboolean (* scroll_event)            (GtkWidget           *widget,
-;;;                                         GdkEventScroll      *event);
-;;;   gboolean (* motion_notify_event)     (GtkWidget           *widget,
-;;;                                         GdkEventMotion      *event);
-;;;   gboolean (* delete_event)            (GtkWidget           *widget,
-;;;                                         GdkEventAny         *event);
-;;;   gboolean (* destroy_event)           (GtkWidget           *widget,
-;;;                                         GdkEventAny         *event);
-;;;   gboolean (* key_press_event)         (GtkWidget           *widget,
-;;;                                         GdkEventKey         *event);
-;;;   gboolean (* key_release_event)       (GtkWidget           *widget,
-;;;                                         GdkEventKey         *event);
-;;;   gboolean (* enter_notify_event)      (GtkWidget           *widget,
-;;;                                         GdkEventCrossing    *event);
-;;;   gboolean (* leave_notify_event)      (GtkWidget           *widget,
-;;;                                         GdkEventCrossing    *event);
-;;;   gboolean (* configure_event)         (GtkWidget           *widget,
-;;;                                         GdkEventConfigure   *event);
-;;;   gboolean (* focus_in_event)          (GtkWidget           *widget,
-;;;                                         GdkEventFocus       *event);
-;;;   gboolean (* focus_out_event)         (GtkWidget           *widget,
-;;;                                         GdkEventFocus       *event);
-;;;   gboolean (* map_event)               (GtkWidget           *widget,
-;;;                                         GdkEventAny         *event);
-;;;   gboolean (* unmap_event)             (GtkWidget           *widget,
-;;;                                         GdkEventAny         *event);
-;;;   gboolean (* property_notify_event)   (GtkWidget           *widget,
-;;;                                         GdkEventProperty    *event);
-;;;   gboolean (* selection_clear_event)   (GtkWidget           *widget,
-;;;                                         GdkEventSelection   *event);
-;;;   gboolean (* selection_request_event) (GtkWidget           *widget,
-;;;                                         GdkEventSelection   *event);
-;;;   gboolean (* selection_notify_event)  (GtkWidget           *widget,
-;;;                                         GdkEventSelection   *event);
-;;;   gboolean (* proximity_in_event)      (GtkWidget           *widget,
-;;;                                         GdkEventProximity   *event);
-;;;   gboolean (* proximity_out_event)     (GtkWidget           *widget,
-;;;                                         GdkEventProximity   *event);
-;;;   gboolean (* visibility_notify_event) (GtkWidget           *widget,
-;;;                                         GdkEventVisibility  *event);
-;;;   gboolean (* window_state_event)      (GtkWidget           *widget,
-;;;                                         GdkEventWindowState *event);
-;;;   gboolean (* damage_event)            (GtkWidget           *widget,
-;;;                                         GdkEventExpose      *event);
-;;;   gboolean (* grab_broken_event)       (GtkWidget           *widget,
-;;;                                         GdkEventGrabBroken  *event);
-;;;
-;;;   /* selection */
-;;;   void     (* selection_get)           (GtkWidget           *widget,
-;;;                                         GtkSelectionData    *selection_data,
-;;;                                         guint                info,
-;;;                                         guint                time_);
-;;;   void     (* selection_received)      (GtkWidget           *widget,
-;;;                                         GtkSelectionData    *selection_data,
-;;;                                         guint                time_);
-;;;
-;;;   /* Source side drag signals */
-;;;   void     (* drag_begin)              (GtkWidget           *widget,
-;;;                                         GdkDragContext      *context);
-;;;   void     (* drag_end)                (GtkWidget           *widget,
-;;;                                         GdkDragContext      *context);
-;;;   void     (* drag_data_get)           (GtkWidget           *widget,
-;;;                                         GdkDragContext      *context,
-;;;                                         GtkSelectionData    *selection_data,
-;;;                                         guint                info,
-;;;                                         guint                time_);
-;;;   void     (* drag_data_delete)        (GtkWidget           *widget,
-;;;                                         GdkDragContext      *context);
-;;;
-;;;   /* Target side drag signals */
-;;;   void     (* drag_leave)              (GtkWidget           *widget,
-;;;                                         GdkDragContext      *context,
-;;;                                         guint                time_);
-;;;   gboolean (* drag_motion)             (GtkWidget           *widget,
-;;;                                         GdkDragContext      *context,
-;;;                                         gint                 x,
-;;;                                         gint                 y,
-;;;                                         guint                time_);
-;;;   gboolean (* drag_drop)               (GtkWidget           *widget,
-;;;                                         GdkDragContext      *context,
-;;;                                         gint                 x,
-;;;                                         gint                 y,
-;;;                                         guint                time_);
-;;;   void     (* drag_data_received)      (GtkWidget           *widget,
-;;;                                         GdkDragContext      *context,
-;;;                                         gint                 x,
-;;;                                         gint                 y,
-;;;                                         GtkSelectionData    *selection_data,
-;;;                                         guint                info,
-;;;                                         guint                time_);
-;;;   gboolean (* drag_failed)             (GtkWidget           *widget,
-;;;                                         GdkDragContext      *context,
-;;;                                         GtkDragResult        result);
-;;;
-;;;   /* Signals used only for keybindings */
-;;;   gboolean (* popup_menu)              (GtkWidget           *widget);
-;;;
-;;;   /* If a widget has multiple tooltips/whatsthis, it should show the
-;;;    * one for the current focus location, or if that doesn't make
-;;;    * sense, should cycle through them showing each tip alongside
-;;;    * whatever piece of the widget it applies to.
-;;;    */
-;;;   gboolean (* show_help)               (GtkWidget           *widget,
-;;;                                         GtkWidgetHelpType    help_type);
-;;;
-;;;   /* accessibility support
-;;;    */
-;;;   AtkObject *  (* get_accessible)      (GtkWidget         *widget);
-;;;
-;;;   void         (* screen_changed)      (GtkWidget         *widget,
-;;;                                         GdkScreen         *previous_screen);
-;;;   gboolean     (* can_activate_accel)  (GtkWidget         *widget,
-;;;                                         guint              signal_id);
-;;;
-;;;   void         (* composited_changed)  (GtkWidget         *widget);
-;;;
-;;;   gboolean     (* query_tooltip)       (GtkWidget         *widget,
-;;;                                         gint               x,
-;;;                                         gint               y,
-;;;                                         gboolean           keyboard_tooltip,
-;;;                                         GtkTooltip        *tooltip);
-;;;
-;;;   void         (* compute_expand)     (GtkWidget          *widget,
-;;;                                        gboolean           *hexpand_p,
-;;;                                        gboolean           *vexpand_p);
-;;;
-;;;   void         (* adjust_size_request)    (GtkWidget      *widget,
-;;;                                            GtkOrientation  orientation,
-;;;                                            gint           *minimum_size,
-;;;                                            gint           *natural_size);
-;;;   void         (* adjust_size_allocation) (GtkWidget      *widget,
-;;;                                            GtkOrientation  orientation,
-;;;                                            gint           *minimum_size,
-;;;                                            gint           *natural_size,
-;;;                                            gint           *allocated_pos,
-;;;                                            gint           *allocated_size);
-;;;
-;;;   void         (* style_updated)          (GtkWidget      *widget);
-;;;
-;;;   gboolean     (* touch_event)            (GtkWidget      *widget,
-;;;                                            GdkEventTouch  *event);
-;;; };
-;;;
-;;; GInitiallyUnownedClass parent_class;
-;;;     The object class structure needs to be the first element in the widget
-;;;     class structure in order for the class mechanism to work correctly. This
-;;;     allows a GtkWidgetClass pointer to be cast to a GObjectClass pointer.
-;;;
-;;; guint activate_signal;
-;;;     The signal to emit when a widget of this class is activated,
-;;;     gtk_widget_activate() handles the emission. Implementation of this
-;;;     signal is optional.
-;;;
-;;; dispatch_child_properties_changed ()
-;;; destroy ()
-;;; show ()
-;;; show_all ()
-;;; hide ()
-;;; map ()
-;;; unmap ()
-;;; realize ()
-;;; unrealize ()
-;;; size_allocate ()
-;;; state_changed ()
-;;; state_flags_changed ()
-;;; parent_set ()
-;;; hierarchy_changed ()
-;;; style_set ()
-;;; direction_changed ()
-;;; grab_notify ()
-;;; child_notify ()
-;;; draw ()
-;;;
-;;; get_request_mode ()
-;;;     This allows a widget to tell its parent container whether it prefers to
-;;;     be allocated in GTK_SIZE_REQUEST_HEIGHT_FOR_WIDTH or
-;;;     GTK_SIZE_REQUEST_WIDTH_FOR_HEIGHT mode.
-;;;     GTK_SIZE_REQUEST_HEIGHT_FOR_WIDTH means the widget prefers to have
-;;;     GtkWidgetClass.get_preferred_width() called and then
-;;;     GtkWidgetClass.get_preferred_height_for_width().
-;;;     GTK_SIZE_REQUEST_CONSTANT_SIZE disables any height-for-width or
-;;;     width-for-height geometry management for a said widget and is the
-;;;     default return. It's important to note (as described below) that any
-;;;     widget which trades height-for-width or width-for-height must respond
-;;;     properly to both of the virtual methods
-;;;     GtkWidgetClass.get_preferred_height_for_width() and
-;;;     GtkWidgetClass.get_preferred_width_for_height() since it might be
-;;;     queried in either GtkSizeRequestMode by its parent container.
-;;;
-;;; get_preferred_height ()
-;;;     This is called by containers to obtain the minimum and natural height of
-;;;     a widget. A widget that does not actually trade any height for width or
-;;;     width for height only has to implement these two virtual methods
-;;;     (GtkWidgetClass.get_preferred_width() and
-;;;     GtkWidgetClass.get_preferred_height()).
-;;;
-;;; get_preferred_width_for_height ()
-;;;     This is analogous to GtkWidgetClass.get_preferred_height_for_width()
-;;;     except that it operates in the oposite orientation. It's rare that a
-;;;     widget actually does GTK_SIZE_REQUEST_WIDTH_FOR_HEIGHT requests but this
-;;;     can happen when, for example, a widget or container gets additional
-;;;     columns to compensate for a smaller allocated height.
-;;;
-;;; get_preferred_width ()
-;;;     This is called by containers to obtain the minimum and natural width of
-;;;     a widget. A widget will never be allocated a width less than its minimum
-;;;     and will only ever be allocated a width greater than the natural width
-;;;     once all of the said widget's siblings have received their natural
-;;;     widths. Furthermore, a widget will only ever be allocated a width
-;;;     greater than its natural width if it was configured to receive extra
-;;;     expand space from its parent container.
-;;;
-;;; get_preferred_height_for_width ()
-;;;     This is similar to GtkWidgetClass.get_preferred_height() except that it
-;;;     is passed a contextual width to request height for. By implementing this
-;;;     virtual method it is possible for a GtkLabel to tell its parent how much
-;;;     height would be required if the label were to be allocated a said width.
-;;;
-;;; mnemonic_activate ()
-;;; grab_focus ()
-;;; focus ()
-;;; move_focus ()
-;;; keynav_failed ()
-;;; event ()
-;;; button_press_event ()
-;;; button_release_event ()
-;;; scroll_event ()
-;;; motion_notify_event ()
-;;; delete_event ()
-;;; destroy_event ()
-;;; key_press_event ()
-;;; key_release_event ()
-;;; enter_notify_event ()
-;;; leave_notify_event ()
-;;; configure_event ()
-;;; focus_in_event ()
-;;; focus_out_event ()
-;;; map_event ()
-;;; unmap_event ()
-;;; property_notify_event ()
-;;; selection_clear_event ()
-;;; selection_request_event ()
-;;; selection_notify_event ()
-;;; proximity_in_event ()
-;;; proximity_out_event ()
-;;; visibility_notify_event ()
-;;; window_state_event ()
-;;; damage_event ()
-;;; grab_broken_event ()
-;;; selection_get ()
-;;; selection_received ()
-;;; drag_begin ()
-;;; drag_end ()
-;;; drag_data_get ()
-;;; drag_data_delete ()
-;;; drag_leave ()
-;;; drag_motion ()
-;;; drag_drop ()
-;;; drag_data_received ()
-;;; drag_failed ()
-;;; popup_menu ()
-;;; show_help ()
-;;; get_accessible ()
-;;; screen_changed ()
-;;; can_activate_accel ()
-;;; composited_changed ()
-;;; query_tooltip ()
-;;; compute_expand ()
-;;;
-;;; adjust_size_request ()
-;;;     Convert an initial size request from a widget's GtkSizeRequest virtual
-;;;     method implementations into a size request to be used by parent
-;;;     containers in laying out the widget. adjust_size_request adjusts from a
-;;;     child widget's original request to what a parent container should use
-;;;     for layout. The for_size argument will be -1 if the request should not
-;;;     be for a particular size in the opposing orientation, i.e. if the
-;;;     request is not height-for-width or width-for-height. If for_size is
-;;;     greater than -1, it is the proposed allocation in the opposing
-;;;     orientation that we need the request for. Implementations of
-;;;     adjust_size_request should chain up to the default implementation, which
-;;;     applies GtkWidget's margin properties and imposes any values from
-;;;     gtk_widget_set_size_request(). Chaining up should be last, after your
-;;;     subclass adjusts the request, so GtkWidget can apply constraints and add
-;;;     the margin properly.
-;;;
-;;; adjust_size_allocation ()
-;;;     Convert an initial size allocation assigned by a GtkContainer using
-;;;     gtk_widget_size_allocate(), into an actual size allocation to be used by
-;;;     the widget. adjust_size_allocation adjusts to a child widget's actual
-;;;     allocation from what a parent container computed for the child. The
-;;;     adjusted allocation must be entirely within the original allocation. In
-;;;     any custom implementation, chain up to the default GtkWidget
-;;;     implementation of this method, which applies the margin and alignment
-;;;     properties of GtkWidget. Chain up before performing your own adjustments
-;;;     so your own adjustments remove more allocation after the GtkWidget base
-;;;     class has already removed margin and alignment. The natural size passed
-;;;     in should be adjusted in the same way as the allocated size, which
-;;;     allows adjustments to perform alignments or other changes based on
-;;;     natural size.
-;;;
-;;; style_updated ()
-;;; touch_event ()
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
 ;;; GtkCallback ()
 ;;;
 ;;; void (*GtkCallback) (GtkWidget *widget, gpointer data);
@@ -3249,12 +2877,11 @@
   (:tooltip 0)
   (:whats-this 1))
 
-;;; --- gtk-widget-help-type ---------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-widget-help-type atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-widget-help-type atdoc:*external-symbols*)
- "@short{}
+ "@version{2013-10-29}
+  @short{}
   @begin{pre}
 (define-g-enum \"GtkWidgetHelpType\" gtk-widget-help-type
   (:export t
@@ -3265,29 +2892,28 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_new ()
-;;;
-;;; GtkWidget * gtk_widget_new (GType type,
-;;;                             const gchar *first_property_name,
-;;;                             ...);
-;;;
-;;; This is a convenience function for creating a widget and setting its
-;;; properties in one go. For example you might write:
-;;; gtk_widget_new (GTK_TYPE_LABEL, "label", "Hello World", "xalign", 0.0, NULL)
-;;; to create a left-aligned label. Equivalent to g_object_new(), but returns a
-;;; widget so you don't have to cast the object yourself.
-;;;
-;;; type :
-;;;     type ID of the widget to create
-;;;
-;;; first_property_name :
-;;;     name of first property to set
-;;;
-;;; ... :
-;;;     value of first property, followed by more properties, NULL-terminated
-;;;
-;;; Returns :
-;;;     a new GtkWidget of type widget_type
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-widget-new (widget-type &rest args)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-10-29}
+  @argument[widget-type]{the type of the widget to create}
+  @argument[args]{pairs of the property name and value}
+  @return{A new @class{gtk-widget} of type @arg{widget-type}.}
+  @begin{short}
+    This is a convenience function for creating a widget and setting its
+    properties in one go.
+  @end{short}
+  For example you might write:
+  @code{(gtk-widget-new \"GtkLabel\" \"label\" \"Hello World\" \"xalign\" 0.0)}
+  to create a left-aligned label. This function is equivalent to the function
+  @fun{g-object-new}.
+  @see-class{gtk-widget}
+  @see-function{g-object-new}"
+  (let ((lisp-type (gethash widget-type gobject::*registered-object-types*)))
+    (apply 'make-instance (cons lisp-type args))))
+
+(export 'gtk-widget-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_destroy ()
@@ -3452,7 +3078,7 @@
 (export 'gtk-widget-show-all)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk-widget-map
+;;; gtk_widget_map ()
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_map" gtk-widget-map) :void
@@ -3467,7 +3093,7 @@
 (export 'gtk-widget-map)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk-widget-unmap
+;;; gtk_widget_unmap ()
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_unmap" gtk-widget-unmap ) :void
@@ -3482,7 +3108,7 @@
 (export 'gtk-widget-unmap)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk-widget-realize
+;;; gtk_widget_realize ()
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_realize" gtk-widget-realize) :void
@@ -3513,7 +3139,7 @@
 (export 'gtk-widget-realize)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk-widget-unrealize
+;;; gtk_widget_unrealize ()
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_unrealize" gtk-widget-unrealize) :void
@@ -3562,7 +3188,7 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk-widget-queue-draw
+;;; gtk_widget_queue_draw ()
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_queue_draw" gtk-widget-queue-draw) :void
@@ -3577,7 +3203,7 @@
 (export 'gtk-widget-queue-draw)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk-widget-queue-resize
+;;; gtk_widget_queue_resize ()
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_queue_resize" gtk-widget-queue-resize) :void
@@ -3602,7 +3228,7 @@
 (export 'gtk-widget-queue-resize)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk-widget-queue-resize-no-redraw
+;;; gtk_widget_queue_resize_no_redraw ()
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_queue_resize_no_redraw" gtk-widget-queue-resize-no-redraw)
@@ -3746,34 +3372,40 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk-widget-size-request
+;;; gtk_widget_size_request ()
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_size_request" %gtk-widget-size-request) :void
-  (widget g-object)
+  (widget (g-object gtk-widget))
   (requisition (g-boxed-foreign gtk-requisition)))
 
 (defun gtk-widget-size-request (widget)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-4}
-  @argument[widget]{a @class{GtkWidget} instance}
-  @return{A @class{gtk-requisition} struct.}
-  @heading{Warning}
-  @begin{short}
+ "@version{2013-10-27}
+  @argument[widget]{a @class{gtk-widget} instance}
+  @return{A @class{gtk-requisition} structure.}
+  @subheading{Warning}
     @sym{gtk-widget-size-request} has been deprecated since version 3.0 and
-    should not be used in newly-written code.
+    should not be used in newly-written code. Use the function
+    @fun{gtk-widget-get-preferred-size} instead.
+
+  @begin{short}
+    This function is typically used when implementing a @class{gtk-container}
+    subclass and obtains the preferred size of a widget.
   @end{short}
-  Use @fun{gtk-widget-get-preferred-size} instead.@break{}
-  This function is typically used when implementing a @class{gtk-container}
-  subclass. Obtains the preferred size of a @arg{widget}. The container uses
-  this information to arrange its child widgets and decide what size allocations
-  to give them with @fun{gtk-widget-size-allocate}.@break{}
+  The container uses this information to arrange its child widgets and decide
+  what size allocations to give them with the function
+  @fun{gtk-widget-size-allocate}.
+
   You can also call this function from an application, with some caveats. Most
   notably, getting a size request requires the widget to be associated with a
   screen, because font information may be needed. Multihead-aware applications
-  should keep this in mind.@break{}
+  should keep this in mind.
+
   Also remember that the size request is not necessarily the size a widget
   will actually be allocated.
+  @see-class{gtk-widget}
+  @see-class{gtk-requistion}
   @see-function{gtk-widget-get-preferred-size}
   @see-function{gtk-widget-size-allocate}"
   (let ((requisition (make-gtk-requisition)))
@@ -3820,27 +3452,34 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_size_allocate ()
-;;;
-;;; void gtk_widget_size_allocate (GtkWidget *widget, GtkAllocation *allocation)
-;;;
-;;; This function is only used by GtkContainer subclasses, to assign a size and
-;;; position to their child widgets.
-;;;
-;;; In this function, the allocation may be adjusted. It will be forced to a 1x1
-;;; minimum size, and the adjust_size_allocation virtual method on the child
-;;; will be used to adjust the allocation. Standard adjustments include removing
-;;; the widget's margins, and applying the widget's "halign" and "valign"
-;;; properties.
-;;;
-;;; widget :
-;;;     a GtkWidget
-;;;
-;;; allocation :
-;;;     position and size to be allocated to widget
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_widget_size_allocate" gtk-widget-size-allocate) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-10-29}
+  @argument[widget]{a @class{gtk-widget} object}
+  @argument[allocation]{position and size to be allocated to widget as a
+    @class{gdk-rectangle} structure}
+  @begin{short}
+    This function is only used by @class{gtk-container} subclasses, to assign a
+    size and position to their child widgets.
+  @end{short}
+
+  In this function, the allocation may be adjusted. It will be forced to a 1 x 1
+  minimum size, and the @code{adjust_size_allocation} virtual method on the
+  child will be used to adjust the allocation. Standard adjustments include
+  removing the widget's margins, and applying the widget's \"halign\" and
+  \"valign\" properties.
+  @see-class{gtk-widget}
+  @see-class{gtk-container}
+  @see-class{gdk-rectangle}"
+  (widget (g-object gtk-widget))
+  (allocation (g-boxed-foreign gdk-rectangle)))
+
+(export 'gkt-widget-size-allocate)
+
 ;;; ----------------------------------------------------------------------------
-;;; gtk-widget-add-accelerator
+;;; gtk_widget_add_accelerator ()
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_add_accelerator" gtk-widget-add-accelerator) :void
@@ -3878,7 +3517,7 @@
 (export 'gtk-widget-add-accelerator)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk-widget-remove-accelerator
+;;; gtk_widget_remove_accelerator ()
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_remove_accelerator" gtk-widget-remove-accelerator) :void
@@ -3902,7 +3541,7 @@
 (export 'gtk-widget-remove-accelerator)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk-widget-set-accel-path
+;;; gtk_widget_set_accel_path ()
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_set_accel_path" gtk-widget-set-accel-path) :void
@@ -3992,7 +3631,7 @@
 (export 'gtk-widget-can-activate-accel)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk-widget-event
+;;; gtk_widget_event ()
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_event" gtk-widget-event) :boolean
@@ -7355,14 +6994,16 @@
 
 (defcfun ("gtk_widget_get_allocated_width" gtk-widget-get-allocated-width) :int
  #+cl-cffi-gtk-documentation
- "@version{2013-1-6}
-  @argument[widget]{the @arg{widget} to query}
-  @return{The width of the @arg{widget}.}
+ "@version{2013-10-29}
+  @argument[widget]{the widget to query}
+  @return{The width of the widget.}
   @begin{short}
     Returns the width that has currently been allocated to @arg{widget}.
   @end{short}
   This function is intended to be used when implementing handlers for the
-  \"draw\" function."
+  \"draw\" function.
+  @see-class{gtk-widget}
+  @see-function{gtk-widget-get-allocated-height}"
   (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-get-allocated-width)
@@ -7374,14 +7015,16 @@
 (defcfun ("gtk_widget_get_allocated_height" gtk-widget-get-allocated-height)
     :int
  #+cl-cffi-gtk-documentation
- "@version{2013-1-6}
-  @argument[widget]{the @arg{widget} to query}
-  @return{The height of the @arg{widget}.}
+ "@version{2013-10-29}
+  @argument[widget]{the widget to query}
+  @return{The height of the widget.}
   @begin{short}
     Returns the height that has currently been allocated to @arg{widget}.
   @end{short}
   This function is intended to be used when implementing handlers for the
-  \"draw\" function."
+  \"draw\" function.
+  @see-class{gtk-widget}
+  @see-function{gtk-widget-get-allocated-width}"
   (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-get-allocated-height)
@@ -7391,7 +7034,8 @@
 ;;; ----------------------------------------------------------------------------
 
 ;; With the type gtk-allocation we get an error.
-;; It works with the type gdk-rectangle.
+;; It works with the type gdk-rectangle. In the C implementation the
+;; new type GtkAllocation is a synonym for GdkRectangle
 
 (defcfun ("gtk_widget_get_allocation" %gtk-widget-get-allocation) :void
   (widget g-object)
@@ -7399,29 +7043,38 @@
 
 (defun gtk-widget-get-allocation (widget)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-6}
-  @argument[widget]{a @class{gtk-widget} instance}
-  @argument[allocation]{a pointer to a @class{gtk-allocation} structure to copy
-    to}
+ "@version{2013-10-29}
+  @argument[widget]{a @class{gtk-widget} object}
+  @return{A @class{gdk-rectangle} structure.}
   @begin{short}
     Retrieves the widget's allocation.
   @end{short}
 
   Note, when implementing a @class{gtk-container}: a widget's allocation will be
   its \"adjusted\" allocation, that is, the widget's parent container typically
-  calls @fun{gtk-widget-size-allocate} with an allocation, and that
-  allocation is then adjusted (to handle margin and alignment for example)
+  calls the function @fun{gtk-widget-size-allocate} with an allocation, and that
+  allocation is then adjusted, to handle margin and alignment for example,
   before assignment to the widget. @sym{gtk-widget-get-allocation} returns the
   adjusted allocation that was actually assigned to the widget. The adjusted
   allocation is guaranteed to be completely contained within the
   @fun{gtk-widget-size-allocate} allocation, however. So a @class{gtk-container}
   is guaranteed that its children stay inside the assigned bounds, but not that
   they have exactly the bounds the container assigned. There is no way to get
-  the original allocation assigned by @fun{gtk-widget-size-allocate}, since
-  it isn't stored; if a container implementation needs that information it will
-  have to track it itself.
+  the original allocation assigned by the function
+  @fun{gtk-widget-size-allocate}, since it is not stored; if a container
+  implementation needs that information it will have to track it itself.
 
-  Since 2.18"
+  @subheading{Note}
+    In the Lisp binding to GTK+ this function does not return an allocation
+    of type @code{GtkAllocation}, but the type is @class{gdk-recangle}. In the
+    C implementation @code{GtkAllocation} is a synonym for
+    @class{gdk-rectangle}.
+
+  Since 2.18
+  @see-class{gtk-widget}
+  @see-class{gtk-container}
+  @see-class{gdk-rectangle}
+  @see-function{gtk-widget-size-allocate}"
   (let ((allocation (make-gdk-rectangle)))
     (%gtk-widget-get-allocation widget allocation)
     allocation))
@@ -7434,23 +7087,26 @@
 
 (defcfun ("gtk_widget_set_allocation" gtk-widget-set-allocation) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-1-6}
-  @argument[widget]{a @class{gtk-widget} instance}
-  @argument[allocation]{a pointer to a @class{gtk-allocation} structure to copy
-    from}
+ "@version{2013-10-29}
+  @argument[widget]{a @class{gtk-widget} object}
+  @argument[allocation]{a @class{gdk-rectangle} structure}
   @begin{short}
     Sets the widget's allocation. This should not be used directly, but from
-    within a widget's size_allocate method.
+    within a widget's @code{size_allocate} method.
   @end{short}
 
-  The allocation set should be the \"adjusted\" or actual allocation. If you're
-  implementing a @class{gtk-container}, you want to use
-  @fun{gtk-widget-size-allocate} instead of @sym{gtk-widget-set-allocation}. The
-  @code{GtkWidgetClass::adjust_size_allocation} virtual method adjusts the
-  allocation inside @fun{gtk-widget-size-allocate} to create an adjusted
-  allocation.
+  The allocation set should be the \"adjusted\" or actual allocation. If you
+  are implementing a @class{gtk-container}, you want to use the function
+  @fun{gtk-widget-size-allocate} instead of @sym{gtk-widget-set-allocation}.
+  The @code{GtkWidgetClass::adjust_size_allocation} virtual method adjusts the
+  allocation inside the function @fun{gtk-widget-size-allocate} to create an
+  adjusted allocation.
 
-  Since 2.18"
+  Since 2.18
+  @see-class{gtk-widget}
+  @see-class{gtk-container}
+  @see-class{gdk-rectangle}
+  @see-function{gtk-widget-size-allocate}"
   (widget (g-object gtk-widget))
   (allocation (g-boxed-foreign gdk-rectangle)))
 
@@ -8443,12 +8099,10 @@
   (:width-for-height 1)
   (:constant-size 2))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-size-request-mode atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-size-request-mode atdoc:*external-symbols*)
- "@version{2013-1-6}
+ "@version{2013-10-29}
   @begin{short}
     Specifies a preference for height-for-width or width-for-height geometry
     management.
@@ -8462,10 +8116,12 @@
   (:constant-size 2))
   @end{pre}
   @begin{table}
-    @entry[:height-for-width]{Prefer height-for-width geometry management}
-    @entry[:width-for-height]{Prefer width-for-height geometry management}
-    @entry[:constant-size]{Dont trade height-for-width or width-for-height}
-  @end{table}")
+    @entry[:height-for-width]{Prefer height-for-width geometry management.}
+    @entry[:width-for-height]{Prefer width-for-height geometry management.}
+    @entry[:constant-size]{Dont trade height-for-width or width-for-height.}
+  @end{table}
+  @see-class{gtk-widget}
+  @see-function{gtk-widget-get-size-request-mode}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkRequestedSize
@@ -8577,24 +8233,26 @@
 
 (defun gtk-widget-get-preferred-height (widget)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-6}
-  @argument[widget]{a @class{gtk-widget} instance}
-  @return{@arg{minimum-height} -- the minimum height, or @code{nil}@br{}
+ "@version{2013-10-29}
+  @argument[widget]{a @class{gtk-widget} object}
+  @return{@arg{minimum-height} -- the minimum height, or @code{nil} @br{}
           @arg{natural-height} -- the natural height, or @code{nil}}
-  @short{Retrieves a @arg{widget}'s initial minimum and natural height.}
+  @short{Retrieves a widget's initial minimum and natural height.}
 
-  Since 3.0
-  @begin[note]{dictionary}
+  @subheading{note}
     This call is specific to width-for-height requests.
 
     The returned request will be modified by the
     @code{GtkWidgetClass::adjust_size_request} virtual method and by any
     @class{gtk-size-group}'s that have been applied. That is, the returned
     request is the one that should be used for layout, not necessarily the one
-    returned by the @arg{widget} itself.
-  @end{dictionary}
+    returned by the widget itself.
+
+  Since 3.0
+  @see-class{gtk-widget}
+  @see-class{gtk-size-group}
   @see-function{gtk-widget-get-preferred-width}
-  @see-class{gtk-size-group}"
+  @see-function{gtk-widget-get-preferred-size}"
   (with-foreign-objects ((minimum-height :int) (natural-height :int))
     (%gtk-widget-get-preferred-height widget minimum-height natural-height)
     (values (mem-ref minimum-height :int)
@@ -8614,13 +8272,20 @@
 
 (defun gtk-widget-get-preferred-width (widget)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-6}
-  @argument[widget]{a @class{gtk-widget} instance}
-  @return{@arg{minimum-width} -- the minimum width, or @code{nil}@br{}
+ "@version{2013-10-29}
+  @argument[widget]{a @class{gtk-widget} object}
+  @return{@arg{minimum-width} -- the minimum width, or @code{nil} @br{}
           @arg{natural-width} -- the natural width, or @code{nil}}
-  @short{Retrieves a @arg{widget}'s initial minimum and natural width.}
+  @short{Retrieves a widget's initial minimum and natural width.}
 
-  Since 3.0
+  @subheading{Note}
+    This call is specific to height-for-width requests.
+
+    The returned request will be modified by the
+    @code{GtkWidgetClass::adjust_size_request} virtual method and by any
+    @class{gtk-size-group}'s that have been applied. That is, the returned
+    request is the one that should be used for layout, not necessarily the one
+    returned by the widget itself.
   @begin[Example]{dictionary}
     @begin{pre}
  (setq widget (make-instance 'gtk-button :label \"Hello\"))
@@ -8636,17 +8301,11 @@
 => 123
     @end{pre}
   @end{dictionary}
-  @begin[Note]{dictionary}
-    This call is specific to height-for-width requests.
-
-    The returned request will be modified by the
-    @code{GtkWidgetClass::adjust_size_request} virtual method and by any
-    @class{gtk-size-group}'s that have been applied. That is, the returned
-    request is the one that should be used for layout, not necessarily the one
-    returned by the @arg{widget} itself.
-  @end{dictionary}
+  Since 3.0
+  @see-class{gtk-widget}
+  @see-class{gtk-size-group}
   @see-function{gtk-widget-get-preferred-height}
-  @see-class{gtk-size-group}"
+  @see-function{gtk-widget-get-preferred-size}"
   (with-foreign-objects ((minimum-width :int) (natural-width :int))
     (%gtk-widget-get-preferred-width widget minimum-width natural-width)
     (values (mem-ref minimum-width :int)
@@ -8659,8 +8318,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_get_preferred_height_for_width"
-          %gtk-widget-get-preferred-height-for-width)
-    :void
+          %gtk-widget-get-preferred-height-for-width) :void
   (widget (g-object gtk-widget))
   (width :int)
   (minium-height (:pointer :int))
@@ -8668,13 +8326,13 @@
 
 (defun gtk-widget-get-preferred-height-for-width (widget width)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-2}
-  @argument[widget]{a @class{gtk-widget} instance}
+ "@version{2013-10-29}
+  @argument[widget]{a @class{gtk-widget} object}
   @argument[width]{the width which is available for allocation}
-  @return{@code{minimum-height} -- the minimum height, or @code{nil}@br{}
-          @code{natural-height} -- the natural height, or @code{nil}@br{}}
+  @return{@code{minimum-height} -- the minimum height, or @code{nil} @br{}
+          @code{natural-height} -- the natural height, or @code{nil}}
   @begin{short}
-    Retrieves a @arg{widget}'s minimum and natural height if it would be given
+    Retrieves a widget's minimum and natural height if it would be given
     the specified @arg{width}.
   @end{short}
 
@@ -8684,7 +8342,10 @@
   is the one that should be used for layout, not necessarily the one returned by
   the @arg{widget} itself.
 
-  Since 3.0"
+  Since 3.0
+  @see-class{gtk-widget}
+  @see-class{gtk-size-group}
+  @see-function{gtk-widget-get-preferred-width-for-height}"
   (with-foreign-objects ((minimum-height :int) (natural-height :int))
     (%gtk-widget-get-preferred-height-for-width widget
                                                 width
@@ -8700,8 +8361,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_get_preferred_width_for_height"
-          %gtk-widget-get-preferred-width-for-height)
-    :void
+          %gtk-widget-get-preferred-width-for-height) :void
   (widget (g-object gtk-widget))
   (height :int)
   (minium-width (:pointer :int))
@@ -8709,13 +8369,13 @@
 
 (defun gtk-widget-get-preferred-width-for-height (widget height)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-2}
-  @argument[widget]{a @class{gtk-widget} instance}
+ "@version{2013-10-29}
+  @argument[widget]{a @class{gtk-widget} object}
   @argument[height]{the height which is available for allocation}
-  @return{@code{minimum-width} -- the minimum width, or @code{nil}@br{}
-          @code{natural-width} -- the natural width, or @code{nil}@br{}}
+  @return{@code{minimum-width} -- the minimum width, or @code{nil} @br{}
+          @code{natural-width} -- the natural width, or @code{nil}}
   @begin{short}
-    Retrieves a @arg{widget}'s minimum and natural width if it would be given
+    Retrieves a widget's minimum and natural width if it would be given
     the specified @arg{height}.
   @end{short}
 
@@ -8725,7 +8385,10 @@
   is the one that should be used for layout, not necessarily the one returned by
   the @arg{widget} itself.
 
-  Since 3.0"
+  Since 3.0
+  @see-class{gtk-widget}
+  @see-class{gtk-size-group}
+  @see-function{gtk-widget-get-preferred-height-for-width}"
   (with-foreign-objects ((minimum-width :int) (natural-width :int))
     (%gtk-widget-get-preferred-width-for-height widget
                                                 height
@@ -8743,20 +8406,22 @@
 (defcfun ("gtk_widget_get_request_mode" gtk-widget-get-request-mode)
     gtk-size-request-mode
  #+cl-cffi-gtk-documentation
- "@version{2013-1-6}
-  @argument[widget]{a @class{gtk-widget} instance}
-  @return{The @symbol{gtk-size-request-mode} preferred by widget.}
+ "@version{2013-10-29}
+  @argument[widget]{a @class{gtk-widget} object}
+  @return{The @symbol{gtk-size-request-mode} preferred by @arg{widget}.}
   @begin{short}
-    Gets whether the @arg{widget} prefers a height-for-width layout or a
+    Gets whether the widget prefers a height-for-width layout or a
     width-for-height layout.
   @end{short}
-  @begin[Note]{dictionary}
+  @subheading{Note}
     @class{gtk-bin} widgets generally propagate the preference of their child,
     container widgets need to request something either in context of their
     children or in context of their allocation capabilities.
-  @end{dictionary}
 
-  Since 3.0"
+  Since 3.0
+  @see-class{gtk-widget}
+  @see-class{gtk-bin}
+  @see-symbol{gtk-size-request-mode}"
   (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-get-request-mode)
@@ -8765,23 +8430,22 @@
 ;;; gtk_widget_get_preferred_size ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_widget_get_preferred_size" %gtk-widget-get-preferred-size)
-    :void
+(defcfun ("gtk_widget_get_preferred_size" %gtk-widget-get-preferred-size) :void
   (widget (g-object gtk-widget))
   (minium-size (g-boxed-foreign gtk-requisition))
   (natural-size (g-boxed-foreign gtk-requisition)))
 
 (defun gtk-widget-get-preferred-size (widget)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-1}
-  @argument[widget]{a @class{gtk-widget} instance}
+ "@version{2013-10-29}
+  @argument[widget]{a @class{gtk-widget} object}
   @begin{return}
-    @code{minimum-size} -- the minimum size, or @code{nil}@br{}
+    @code{minimum-size} -- the minimum size, or @code{nil} @br{}
     @code{natural-size} -- the natural size, or @code{nil}
   @end{return}
   @begin{short}
-    Retrieves the minimum and natural size of a @arg{widget}, taking into
-    account the @arg{widget}'s preference for height-for-width management.
+    Retrieves the minimum and natural size of a widget, taking into
+    account the widget's preference for height-for-width management.
   @end{short}
 
   This is used to retrieve a suitable size by container widgets which do not
@@ -8795,7 +8459,9 @@
     height for the natural width is generally smaller than the required height
     for the minimum width.
 
-  Since 3.0"
+  Since 3.0
+  @see-class{gtk-widget}
+  @see-class{gtk-requisition}"
  (let ((minimum-size (make-gtk-requisition))
        (natural-size (make-gtk-requisition)))
     (%gtk-widget-get-preferred-size widget minimum-size natural-size)

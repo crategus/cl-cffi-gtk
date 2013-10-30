@@ -4761,9 +4761,9 @@ setup_tree (void)
       @about-function{gtk-widget-queue-draw}
       @about-function{gtk-widget-queue-resize}
       @about-function{gtk-widget-queue-resize-no-redraw}
-      @about{gtk-widget-get-frame-clock}
-      @about{gtk-widget-add-tick-callback}
-      @about{gtk-widget-remove-tick-callback}
+      @about-function{gtk-widget-get-frame-clock}
+      @about-function{gtk-widget-add-tick-callback}
+      @about-function{gtk-widget-remove-tick-callback}
       @about-function{gtk-widget-size-request}
       @about-function{gtk-widget-get-child-requisition}
       @about-function{gtk-widget-size-allocate}
@@ -5246,7 +5246,7 @@ setup_tree (void)
       A filter for selecting a subset of recently used files.
 
       @about-class{gtk-recent-filter}
-      @about-class{gtk-recent-filter-info}
+      @about-symbol{gtk-recent-filter-info}
       @about-symbol{gtk-recent-filter-flags}
       @about-function{gtk-recent-filter-new}
       @about-function{gtk-recent-filter-get-name}
