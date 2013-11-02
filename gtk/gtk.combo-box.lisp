@@ -1610,7 +1610,7 @@
 
   Since 2.24
   @see-class{gtk-combo-box}
-  @see-function{gtk-combo-box-get-entry-column}"
+  @see-function{gtk-combo-box-get-entry-text-column}"
   (setf (gtk-combo-box-entry-text-column combo-box) text-column))
 
 (export 'gtk-combo-box-set-entry-text-column)
