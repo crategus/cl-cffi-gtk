@@ -787,10 +787,11 @@
     @fun{gtk-widget-style-get-property} or @fun{gtk-widget-style-get}
     to obtain the value of a style property.
 
-  @subheading{gtk-widget as gtk-buildable}
+  @subheading{GtkWidget as GtkBuildable}
     The @sym{gtk-widget} implementation of the @class{gtk-buildable} interface
     supports a custom @code{<accelerator>} element, which has attributes named
-    key, modifiers and signal and allows to specify accelerators.
+    @code{key}, @code{modifiers} and @code{signal} and allows to specify
+    accelerators.
 
     @b{Example:} A UI definition fragment specifying an accelerator
     @begin{pre}
@@ -801,13 +802,13 @@
     In addition to accelerators, @sym{gtk-widget} also support a custom
     @code{<accessible>} element, which supports actions and relations.
     Properties on the accessible implementation of an object can be set by
-    accessing the internal child @arg{\"accessible\"} of a @sym{gtk-widget}.
+    accessing the internal child @code{\"accessible\"} of a @sym{gtk-widget}.
 
     @b{Example:} A UI definition fragment specifying an accessible
     @begin{pre}
  <object class=\"GtkButton\" id=\"label1\"/>
    <property name=\"label\">I am a Label for a Button</property>
-  </object>
+ </object>
  <object class=\"GtkButton\" id=\"button1\">
    <accessibility>
      <action action_name=\"click\"
@@ -945,12 +946,11 @@
       The \"button-press-event\" signal will be emitted when a button
       typically from a mouse is pressed. To receive this signal, the
       @class{gdk-window} associated to the widget needs to enable the
-      @code{:button-press-mask} mask. This signal will be sent to the grab
-      widget if there is one.
+      @code{:button-press-mask} mask of type @symbol{gdk-event-mask}. This
+      signal will be sent to the grab widget if there is one.
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-widget} object which received the signal.}
-        @entry[event]{The @class{gdk-event-button} of type @class{gdk-event}
-          which triggered this signal.}
+        @entry[event]{The @class{gdk-event-button} which triggered this signal.}
         @entry[Returns]{@em{True} to stop other handlers from being invoked for
           the event, @code{nil} to propagate the event further.}
       @end{table}
@@ -961,12 +961,11 @@
       The \"button-release-event\" signal will be emitted when a button
       typically from a mouse is released. To receive this signal, the
       @class{gdk-window} associated to the widget needs to enable the
-      @code{:button-realease-mask} mask. This signal will be sent to the grab
-      widget if there is one.
+      @code{:button-realease-mask} mask of type @symbol{gdk-event-mask}. This
+      signal will be sent to the grab widget if there is one.
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-widget} object which received the signal.}
-        @entry[event]{The @class{gdk-event-button} of type @class{gdk-event}
-          which triggered this signal.}
+        @entry[event]{The @class{gdk-event-button} which triggered this signal.}
         @entry[Returns]{@em{True} to stop other handlers from being invoked for
           the event, @code{nil} to propagate the event further.}
       @end{table}
@@ -1017,8 +1016,8 @@
       new windows.
       @begin[code]{table}
         @entry[widget]{The @sym{gtk-widget} object which received the signal.}
-        @entry[event]{The @class{gdk-event-configure} of type @class{gdk-event}
-          which triggered this signal.}
+        @entry[event]{The @class{gdk-event-configure} which triggered this
+          signal.}
         @entry[Returns]{@em{True} to stop other handlers from being invoked for
           the event. @code{Nil} to propagate the event further.}
       @end{table}
@@ -1054,13 +1053,13 @@
     @end{table}
     @subheading{The \"destroy\" signal}
       @begin{pre}
- lambda (object)   :No Hooks
+ lambda (widget)   :No Hooks
       @end{pre}
       Signals that all holders of a reference to the widget should release the
       reference that they hold. May result in finalization of the widget if all
       references are released.
       @begin[code]{table}
-        @entry[object]{The object which received the signal.}
+        @entry[widget]{The object which received the signal.}
     @end{table}
     @subheading{The \"destroy-event\" signal}
       @begin{pre}
@@ -1101,7 +1100,7 @@
       to override what the default handler did.
       @begin[code]{table}
         @entry[widget]{The object which received the signal.}
-        @entry[drag-context]{The drag context.}
+        @entry[drag-context]{The drag context of type @class{gdk-drag-context}.}
       @end{table}
     @subheading{The \"drag-data-delete\" signal}
       @begin{pre}
@@ -1114,7 +1113,7 @@
       of the drag operation.
       @begin[code]{table}
         @entry[widget]{The object which received the signal.}
-        @entry[drag-context]{The drag context.}
+        @entry[drag-context]{The drag context of type @class{gdk-drag-context}.}
       @end{table}
     @subheading{The \"drag-data-get\" signal}
       @begin{pre}
@@ -1127,7 +1126,7 @@
       @fun{gtk-selection-data-set-text}.
       @begin[code]{table}
         @entry[widget]{The object which received the signal.}
-        @entry[drag-context]{The drag context.}
+        @entry[drag-context]{The drag context of type @class{gdk-drag-context}.}
         @entry[data]{The @class{gtk-selection-data} to be filled with the
           dragged data}
         @entry[info]{The info that has been registered with the target in the
@@ -1190,10 +1189,10 @@
       @end{pre}
       @begin[code]{table}
         @entry[widget]{The object which received the signal.}
-        @entry[drag-context]{The drag context.}
+        @entry[drag-context]{The drag context of type @class{gdk-drag-context}.}
         @entry[x]{Where the drop happened.}
         @entry[y]{Where the drop happened.}
-        @entry[data]{The received data.}
+        @entry[data]{The received data of type @class{gtk-selection-data}.}
         @entry[info]{The info that has been registered with the target in the
           @class{gtk-target-list}.}
         @entry[time]{The timestamp at which the data was received.}
@@ -1214,7 +1213,7 @@
       data for one or more of the supported targets.
       @begin[code]{table}
         @entry[widget]{The object which received the signal.}
-        @entry[drag-context]{The drag context.}
+        @entry[drag-context]{The drag context of type @class{gdk-drag-context}.}
         @entry[x]{The x coordinate of the current cursor position.}
         @entry[y]{The y coordinate of the current cursor position.}
         @entry[time]{The timestamp of the motion event.}
@@ -1229,7 +1228,7 @@
       done in the \"drag-begin\" signal handler.
       @begin[code]{table}
         @entry[widget]{The object which received the signal.}
-        @entry[drag-context]{The drag context.}
+        @entry[drag-context]{The drag context of type @class{gdk-drag-context}.}
       @end{table}
     @subheading{The \"drag-failed\" signal}
       @begin{pre}
@@ -1237,12 +1236,12 @@
       @end{pre}
       The \"drag-failed\" signal is emitted on the drag source when a drag has
       failed. The signal handler may hook custom code to handle a failed DND
-      operation based on the type of error, it returns @em{true} is the failure
+      operation based on the type of error, it returns @em{true} if the failure
       has been already handled, not showing the default
       \"drag operation failed\" animation, otherwise it returns @code{nil}.
       @begin[code]{table}
         @entry[widget]{The object which received the signal.}
-        @entry[drag-context]{The drag context.}
+        @entry[drag-context]{The drag context of type @class{gdk-drag-context}.}
         @entry[result]{The result of the drag operation.}
         @entry[Returns]{@em{True} if the failed drag operation has been already
           handled.}
@@ -1259,7 +1258,7 @@
       with the function @fun{gtk-drag-unhighlight}.
     @begin[code]{table}
       @entry[widget]{The object which received the signal.}
-      @entry[drag-context]{The drag context.}
+      @entry[drag-context]{The drag context of type @class{gdk-drag-context}.}
       @entry[time]{The timestamp of the motion event.}
     @end{table}
     @subheading{The \"drag-motion\" signal}
@@ -1354,7 +1353,7 @@
       @end{pre}
       @begin[code]{table}
         @entry[widget]{The object which received the signal.}
-        @entry[drag-context]{The drag context.}
+        @entry[drag-context]{The drag context of type @class{gdk-drag-context}.}
         @entry[x]{The x coordinate of the current cursor position.}
         @entry[y]{The y coordinate of the current cursor position.}
         @entry[time]{The timestamp of the motion event.}
@@ -1364,9 +1363,9 @@
       @begin{pre}
  lambda (widget cr)   : Run Last
       @end{pre}
-      This signal is emitted when a widget is supposed to render itself.
-      The widget's top left corner must be painted at the origin of the passed
-      in context and be sized to the values returned by the functions
+      This signal is emitted when a widget is supposed to render itself. The
+      widget's top left corner must be painted at the origin of the passed in
+      context and be sized to the values returned by the functions
       @fun{gtk-widget-get-allocated-width} and
       @fun{gtk-widget-get-allocated-height}. Signal handlers connected to this
       signal can modify the cairo context passed as @arg{cr} in any way they
@@ -1375,7 +1374,7 @@
       after invoking the handler.
       @begin[code]{table}
         @entry[widget]{The object which received the signal.}
-        @entry[cr]{The cairo context to draw to.}
+        @entry[cr]{The cairo context of type @class{cairo-context} to draw to.}
       @end{table}
       Since 3.0
 
@@ -1429,6 +1428,7 @@
       @end{pre}
       @begin[code]{table}
         @entry[widget]{The object which received the signal.}
+        @entry[direction]{The direction of type @symbol{gtk-direction-type}.}
         @entry[Returns]{@em{True} to stop other handlers from being invoked
           for the event. @code{Nil} to propagate the event further.}
       @end{table}
@@ -2102,7 +2102,7 @@
  "The @code{\"double-buffered\"} property of type @code{:boolean}
   (Read / Write) @br{}
   Whether the widget is double buffered. @br{}
-  Default value: @code{t} @br{}
+  Default value: @em{true} @br{}
   Since 2.18")
 
 #+cl-cffi-gtk-documentation
@@ -2145,8 +2145,8 @@
 (setf (documentation (atdoc:get-slot-from-name "has-tooltip" 'gtk-widget) 't)
  "The @code{\"has-tooltip\"} property of type @code{:boolean}
   (Read / Write) @br{}
-  Enables or disables the emission of @code{\"query-tooltip\"} on widget. A
-  value of @em{true} indicates that the widget can have a tooltip, in this
+  Enables or disables the emission of the \"query-tooltip\" signal on a widget.
+  A value of @em{true} indicates that the widget can have a tooltip, in this
   case the widget will be queried using the \"query-tooltip\" signal to
   determine whether it will provide a tooltip or not.
   Note that setting this property to @em{true} for the first time will change
@@ -2161,7 +2161,7 @@
  "The @code{\"height-request\"} property of type @code{:int} (Read / Write) @br{}
   Override for height request of the widget, or -1 if natural request
   should be used. @br{}
-  Allowed values: >= @code{G_MAXULONG} @br{}
+  Allowed values: >= -1 @br{}
   Default value: -1")
 
 #+cl-cffi-gtk-documentation
@@ -2348,7 +2348,7 @@
  "The @code{\"width-request\"} property of type @code{:int} (Read / Write) @br{}
   Override for width request of the widget, or -1 if natural request
   should be used. @br{}
-  Allowed values: >= @code{G_MAXULONG} @br{}
+  Allowed values: >= -1 @br{}
   Default value: -1")
 
 #+cl-cffi-gtk-documentation
