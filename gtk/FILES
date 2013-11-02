@@ -281,10 +281,10 @@ GTK+ Widgets and Objects
 
   Choosing from installed applications
 
-    not implemented                  - GtkAppChooser
-    not implemented                  - GtkAppChooserButton
-    not implemented                  - GtkAppChooserDialog
-    not implemented                  - GtkAppChooserWidget
+    gtk.app-chooser.lisp             - GtkAppChooser               - GTK+ 3.8.6
+    gtk.app-chooser-button.lisp      - GtkAppChooserButton         - GTK+ 3.8.6
+    gtk.app-chooser-dialog.lisp      - GtkAppChooserDialog         - GTK+ 3.8.6
+    gtk.app-chooser-widget.lisp      - GtkAppChooserWidget         - GTK+ 3.8.6
 
   Interface builder
 

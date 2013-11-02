@@ -5264,16 +5264,55 @@ setup_tree (void)
   @end{section}
   @begin[Choosing from installed applications]{section}
     @begin[GtkAppChooser]{subsection}
-      not implemented
+      Interface implemented by widgets for choosing an application.
+
+      @about-class{gtk-app-chooser}
+      @about-function{gtk-app-chooser-get-app-info}
+      @about-function{gtk-app-chooser-get-content-type}
+      @about-function{gtk-app-chooser-refresh}
     @end{subsection}
     @begin[GtkAppChooserButton]{subsection}
-      not implemented
+      A button to launch an application chooser dialog.
+
+      @about-class{gtk-app-chooser-button}
+      @about-function{gtk-app-chooser-button-new}
+      @about-function{gtk-app-chooser-button-append-custom-item}
+      @about-function{gtk-app-chooser-button-append-separator}
+      @about-function{gtk-app-chooser-button-set-active-custom-item}
+      @about-function{gtk-app-chooser-button-get-show-default-item}
+      @about-function{gtk-app-chooser-button-set-show-default-item}
+      @about-function{gtk-app-chooser-button-get-show-dialog-item}
+      @about-function{gtk-app-chooser-button-set-show-dialog-item}
+      @about-function{gtk-app-chooser-button-get-heading}
+      @about-function{gtk-app-chooser-button-set-heading}
     @end{subsection}
     @begin[GtkAppChooserDialog]{subsection}
-      not implemented
+      An application chooser dialog.
+
+      @about-class{gtk-app-chooser-dialog}
+      @about-function{gtk-app-chooser-dialog-new}
+      @about-function{gtk-app-chooser-dialog-new-for-content-type}
+      @about-function{gtk-app-chooser-dialog-get-widget}
+      @about-function{gtk-app-chooser-dialog-set-heading}
+      @about-function{gtk-app-chooser-dialog-get-heading}
     @end{subsection}
     @begin[GtkAppChooserWidget]{subsection}
-      not implemented
+      Application chooser widget that can be embedded in other widgets.
+
+      @about-class{gtk-app-chooser-widget}
+      @about-function{gtk-app-chooser-widget-new}
+      @about-function{gtk-app-chooser-widget-set-show-default}
+      @about-function{gtk-app-chooser-widget-get-show-default}
+      @about-function{gtk-app-chooser-widget-set-show-recommended}
+      @about-function{gtk-app-chooser-widget-get-show-recommended}
+      @about-function{gtk-app-chooser-widget-set-show-fallback}
+      @about-function{gtk-app-chooser-widget-get-show-fallback}
+      @about-function{gtk-app-chooser-widget-set-show-other}
+      @about-function{gtk-app-chooser-widget-get-show-other}
+      @about-function{gtk-app-chooser-widget-set-show-all}
+      @about-function{gtk-app-chooser-widget-get-show-all}
+      @about-function{gtk-app-chooser-widget-set-default-text}
+      @about-function{gtk-app-chooser-widget-get-default-text}
     @end{subsection}
   @end{section}
   @begin[Interface builder]{section}

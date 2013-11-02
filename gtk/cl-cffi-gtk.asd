@@ -266,6 +266,12 @@
    (:file "gtk.recent-chooser-widget") ; Displays recently used files
    (:file "gtk.recent-filter")         ; Selecting recently used files
 
+   ;; Choosing from installed applications
+   (:file "gtk.app-chooser")           ; Interface for choosing an application
+   (:file "gtk.app-chooser-button")    ; Button to launch an application
+   (:file "gtk.app-chooser-dialog")    ; Application chooser dialog
+   (:file "gtk.app-chooser-widget")    ; Application chooser widget
+
    ;; Printing
    (:file "gtk.print-operation")       ; High-level Printing API
    (:file "gtk.print-context")         ; Encapsulates context for drawing pages
