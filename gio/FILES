@@ -67,8 +67,7 @@ Streaming I/O
 
 File types and applications
 
-  GContentType - Platform-specific content typing
-
+  gio.content-type.lisp - Platform-specific content typing         - GIO 2.38.1&
   gio.app-info.lisp - GAppInfo                                     - GIO 2.36.1*
 
   GDesktopAppInfo - Application information from desktop files

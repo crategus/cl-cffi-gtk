@@ -34,6 +34,7 @@
   ((:file "gio.package")
    (:file "gio.init")
    ;; Application information and launch contexts
+   (:file "gio.content-type")        ; Platform-specific content typing
    (:file "gio.app-info")            ; Application information, launch contexts
    ;; Icons
    (:file "gio.icon")                ; Interface for icons
