@@ -243,8 +243,8 @@
 ;;; gtk_app_chooser_button_append_custom_item ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_app_chooser_append_custom_item"
-           gtk-app-chooser-append-custom-item) :void
+(defcfun ("gtk_app_chooser_button_append_custom_item"
+           gtk-app-chooser-button-append-custom-item) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-11-1}
   @argument[self]{a @class{gtk-app-chooser-button} widget}
@@ -268,7 +268,7 @@
   (label :string)
   (icon (g-object g-icon)))
 
-(export 'gtk-app-chooser-append-custom-item)
+(export 'gtk-app-chooser-button-append-custom-item)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_app_chooser_button_append_separator ()
