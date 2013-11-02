@@ -173,12 +173,18 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; GAppInfo
-;;;
-;;; typedef struct _GAppInfo GAppInfo;
-;;;
-;;; Information about an installed application and methods to launch it (with
-;;; file arguments).
 ;;; ----------------------------------------------------------------------------
+
+(define-g-interface "GAppInfo" g-app-info
+  (:export t
+   :type-initializer "g_app_info_get_type"))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'g-app-info atdoc:*class-name-alias*) "Interface"
+      (documentation 'g-app-info 'type)
+ "@version{2013-10-31}
+  Information about an installed application and methods to launch it with
+  file arguments.")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GAppInfoIface
