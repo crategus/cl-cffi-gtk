@@ -58,6 +58,7 @@
   ))
   (join-gtk-main))
 
+(load "rtest-gtk-app-chooser.lisp")
 (load "rtest-gtk-dialog.lisp")
 (load "rtest-gtk-entry-buffer.lisp")
 (load "rtest-gtk-frame.lisp")
