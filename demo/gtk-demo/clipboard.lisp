@@ -8,76 +8,6 @@
 ;;;; run.
 
 #|
-static GtkWidget *window = NULL;
-
-
-static GdkPixbuf *
-get_image_pixbuf (GtkImage *image)
-{
-  gchar *stock_id;
-  GtkIconSize size;
-
-  switch (gtk_image_get_storage_type (image))
-    {
-    case GTK_IMAGE_PIXBUF:
-      return g_object_ref (gtk_image_get_pixbuf (image));
-    case GTK_IMAGE_STOCK:
-      gtk_image_get_stock (image, &stock_id, &size);
-      return gtk_widget_render_icon_pixbuf (GTK_WIDGET (image),
-                                            stock_id, size);
-    default:
-      g_warning ("Image storage type %d not handled",
-                 gtk_image_get_storage_type (image));
-      return NULL;
-    }
-}
-
-static void
-drag_begin (GtkWidget      *widget,
-            GdkDragContext *context,
-            gpointer        data)
-{
-  GdkPixbuf *pixbuf;
-
-  pixbuf = get_image_pixbuf (GTK_IMAGE (data));
-  gtk_drag_set_icon_pixbuf (context, pixbuf, -2, -2);
-  g_object_unref (pixbuf);
-}
-
-void
-drag_data_get  (GtkWidget        *widget,
-                GdkDragContext   *context,
-                GtkSelectionData *selection_data,
-                guint             info,
-                guint             time,
-                gpointer          data)
-{
-  GdkPixbuf *pixbuf;
-
-  pixbuf = get_image_pixbuf (GTK_IMAGE (data));
-  gtk_selection_data_set_pixbuf (selection_data, pixbuf);
-  g_object_unref (pixbuf);
-}
-
-static void
-drag_data_received (GtkWidget        *widget,
-                    GdkDragContext   *context,
-                    gint              x,
-                    gint              y,
-                    GtkSelectionData *selection_data,
-                    guint             info,
-                    guint32           time,
-                    gpointer          data)
-{
-  GdkPixbuf *pixbuf;
-
-  if (gtk_selection_data_get_length (selection_data) > 0)
-    {
-      pixbuf = gtk_selection_data_get_pixbuf (selection_data);
-      gtk_image_set_from_pixbuf (GTK_IMAGE (data), pixbuf);
-      g_object_unref (pixbuf);
-    }
-}
 
 static void
 copy_image (GtkMenuItem *item,
@@ -136,25 +66,16 @@ button_press (GtkWidget      *widget,
   gtk_menu_popup (GTK_MENU (menu), NULL, NULL, NULL, NULL, 3, button->time);
   return TRUE;
 }
-
 |#
 
-#|
-void
-paste_received (GtkClipboard *clipboard,
-                const gchar  *text,
-                gpointer      user_data)
-{
-  GtkWidget *entry;
 
-  entry = GTK_WIDGET (user_data);
-
-  /* Set the entry text */
-  if(text)
-    gtk_entry_set_text (GTK_ENTRY (entry), text);
-}
-|#
-
+(defun get-image-pixbuf (image)
+  (ecase (gtk-image-get-storage-type image)
+    (:pixbuf (gtk-image-get-pixbuf image))
+    (:stock
+     (multiple-value-bind (stock-id size)
+         (gtk-image-get-stock image)
+       (gtk-widget-render-icon-pixbuf image stock-id size)))))
 
 (defun demo-clipboard ()
   (within-main-loop
@@ -212,18 +133,70 @@ paste_received (GtkClipboard *clipboard,
           vbox
           (gtk-label-new "Images can be transferred via the clipboard")
           :expand nil :fill nil :padding 4)
-      (let ((hbox (make-instance 'gtk-box :orientation :horizontal :border-width 8))
-            (image (gtk-image-new-from-stock "gtk-dialog-warning" :button))
-            (ebox (gtk-event-box-new))
-           )
-        (gtk-box-pack-start vbox hbox :expand nil :fill nil :padding 0)
+
+      (let ((hbox (make-instance 'gtk-box
+                                 :orientation :horizontal
+                                 :border-width 8)))
+
+      ;; Create the first image
+        (let ((image (gtk-image-new-from-stock "gtk-dialog-warning" :button))
+              (ebox (gtk-event-box-new)))
         (gtk-container-add ebox image)
         (gtk-container-add hbox ebox)
- 
-;        (gtk-drag-source-set ebox :button1-mask nil 0 :copy)
-;        (gtk-drag-source-add-image-targets ebox)
+
+        ;; Make ebox a drag source
+        (gtk-drag-source-set ebox '(:button1-mask) nil '(:copy))
+        (gtk-drag-source-add-image-targets ebox)
+
+        (g-signal-connect ebox "drag-begin"
+           (lambda (widget context)
+             (format t "DRAG-BEGIN for image1 ~A~%" context)
+             (let ((pixbuf (get-image-pixbuf image)))
+               ;; Sets pixbuf of image as the icon for a given drag
+               (gtk-drag-set-icon-pixbuf context pixbuf 0 0))))
+
+        (g-signal-connect ebox "drag-data-get"
+           (lambda (widget context selection-data info time)
+             (declare (ignore context info time))
+             (let ((pixbuf (get-image-pixbuf image)))
+               (if (gtk-selection-data-set-pixbuf selection-data pixbuf)
+                   (format t "DRAG-DATA-GET for image1 ~a~%" selection-data)))
+             nil))
+
+
+        )
+        ;; Create the second image
+        (let ((image (gtk-image-new-from-stock "gtk-stop" :button))
+              (ebox (gtk-event-box-new)))
+          (gtk-container-add ebox image)
+          (gtk-container-add hbox ebox)
+
+;          (gtk-drag-source-set ebox :button1-mask nil :copy)
+;          (gtk-drag-source-add-image-targets ebox)
+
+          ;; accept drops on ebox
+          (gtk-drag-dest-set ebox '(:drop :highlight :motion) nil '(:copy))
+          (gtk-drag-dest-add-image-targets ebox)
+
+          (g-signal-connect ebox "drag-data-received"
+             (lambda (widget context x y selection-data info time)
+               (declare (ignore widget context x y info time))
+               (format t "DRAG-DATA-RECEIVED ~a~%" selection-data)
+               (let ((pixbuf (gtk-selection-data-get-pixbuf selection-data)))
+                 (gtk-image-set-from-pixbuf image pixbuf))))
+
+;          (g-signal-connect ebox "drag-drop"
+;             (lambda (widget drag-context x y time)
+;               (let ((target (gtk-drag-dest-find-target widget drag-context)))
+;                 (format t "DRAG-DROP on image2 ~A~%" drag-context)
+;                 (format t " target = ~a~%" target)
+;                 (gtk-drag-get-data widget drag-context target time))
+;               nil))
+
+        )
+
+        (gtk-box-pack-start vbox hbox :expand nil :fill nil :padding 0)
       )
-      
 
 
       (gtk-container-add window vbox)

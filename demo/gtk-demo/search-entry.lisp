@@ -1,4 +1,5 @@
 ;;;; Search Entry
+;;;;
 ;;;; GtkEntry allows to display icons and progress information. This demo shows
 ;;;; how to use these features in a search entry.
 
@@ -422,6 +423,7 @@ do_search_entry (GtkWidget *do_widget)
         (let ((button (gtk-button-new-with-label "Find")))
           (g-signal-connect button "clicked"
              (lambda (button)
+               (declare (ignore button))
                (gtk-notebook-set-current-page notebook 1)
                (setf search-progress-id
                      (g-timeout-add-seconds 1 #'start-search-feedback))
@@ -434,6 +436,7 @@ do_search_entry (GtkWidget *do_widget)
         (let ((button (gtk-button-new-with-label "Cancel")))
           (g-signal-connect button "clicked"
              (lambda (button)
+               (declare (ignore button))
                (g-source-remove finish-search-id)
                (gtk-notebook-set-current-page notebook 0)))
           (gtk-notebook-append-page notebook button nil)
