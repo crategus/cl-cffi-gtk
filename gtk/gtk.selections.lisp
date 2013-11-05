@@ -933,44 +933,57 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_selection_data_set_pixbuf ()
-;;;
-;;; gboolean gtk_selection_data_set_pixbuf (GtkSelectionData *selection_data,
-;;;                                         GdkPixbuf *pixbuf);
-;;;
-;;; Sets the contents of the selection from a GdkPixbuf The pixbuf is converted
-;;; to the form determined by selection_data->target.
-;;;
-;;; selection_data :
-;;;     a GtkSelectionData
-;;;
-;;; pixbuf :
-;;;     a GdkPixbuf
-;;;
-;;; Returns :
-;;;     TRUE if the selection was successfully set, otherwise FALSE.
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_selection_data_set_pixbuf" gtk-selection-data-set-pixbuf)
+    :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-3}
+  @argument[selection-data]{a @class{gtk-selection-data} structure}
+  @argument[pixbuf]{a @class{gdk-pixbuf} object}
+  @begin{return}
+    @em{True} if the selection was successfully set, otherwise @code{nil}.
+  @end{return}
+  @begin{short}
+    Sets the contents of the selection from a @class{gdk-pixbuf}.
+  @end{short}
+  The pixbuf is converted to the form determined by the file @code{target}
+  of @arg{selection-data}.
+
+  Since 2.6
+  @see-class{gtk-selection-data}
+  @see-class{gdk-pixbuf}
+  @see-function{gtk-selection-data-get-pixbuf}"
+  (selection-data (g-boxed-foreign gtk-selection-data))
+  (pixbuf (g-object gdk-pixbuf)))
+
+(export 'gtk-selection-data-set-pixbuf)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_selection_data_get_pixbuf ()
-;;;
-;;; GdkPixbuf * gtk_selection_data_get_pixbuf
-;;;                                    (const GtkSelectionData *selection_data);
-;;;
-;;; Gets the contents of the selection data as a GdkPixbuf.
-;;;
-;;; selection_data :
-;;;     a GtkSelectionData
-;;;
-;;; Returns :
-;;;     if the selection data contained a recognized image type and it could be
-;;;     converted to a GdkPixbuf, a newly allocated pixbuf is returned,
-;;;     otherwise NULL. If the result is non-NULL it must be freed with
-;;;     g_object_unref().
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_selection_data_get_pixbuf" gtk-selection-data-get-pixbuf)
+    (g-object gdk-pixbuf)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-5}
+  @argument[selection-data]{a @class{gtk-selection-data} structure}
+  @begin{return}
+    If the selection data contained a recognized image type and it could be
+    converted to a @class{gdk-pixbuf}, a newly allocated pixbuf is returned,
+    otherwise @code{nil}.
+  @end{return}
+  @begin{short}
+    Gets the contents of the selection data as a @class{gdk-pixbuf}.
+  @end{short}
+
+  Since 2.6
+  @see-class{gtk-selection-data}
+  @see-class{gdk-pixbuf}
+  @see-function{gtk-selection-data-set-pixbuf}"
+  (selection-data (g-boxed-foreign gtk-selection-data)))
+
+(export 'gtk-selection-data-get-pixbuf)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_selection_data_set_uris ()

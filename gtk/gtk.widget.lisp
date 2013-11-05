@@ -490,23 +490,6 @@
 ;;; GtkWidget
 ;;; ----------------------------------------------------------------------------
 
-;; This is not needed.
-
-#|
-(defcstruct %gtk-widget
-  (:private-flags :uint16)
-  (:state :uint8)
-  (:saved-state :uint8)
-  (:name (:pointer :char))
-  (:style :pointer)
-  (:requisition (:pointer (:struct gtk-requisition-cstruct)))
-  (:allocation (:pointer (:struct gtk-allocation-cstruct)))
-  (:window :pointer)
-  (:parent :pointer))
-|#
-
-;;; ----------------------------------------------------------------------------
-
 (define-g-object-class "GtkWidget" gtk-widget
   (:superclass g-initially-unowned
    :export t
@@ -622,7 +605,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-widget 'type)
- "@version{2013-10-27}
+ "@version{2013-11-4}
   @begin{short}
     @sym{gtk-widget} is the base class all widgets in GTK+ derive from. It
     manages the widget lifecycle, states and style.
@@ -1121,9 +1104,9 @@
       @end{pre}
       The \"drag-data-get\" signal is emitted on the drag source when the drop
       site requests the data which is dragged. It is the responsibility of the
-      signal handler to fill data with the data in the format which is
-      indicated by info. See the functions @fun{gtk-selection-data-set} and
-      @fun{gtk-selection-data-set-text}.
+      signal handler to fill @arg{data} with the data in the format which is
+      indicated by @arg{info}. See the functions @fun{gtk-selection-data-set}
+      and @fun{gtk-selection-data-set-text}.
       @begin[code]{table}
         @entry[widget]{The object which received the signal.}
         @entry[drag-context]{The drag context of type @class{gdk-drag-context}.}
@@ -1528,7 +1511,7 @@
       @symbol{gdk-event-mask}. This signal will be sent to the grab widget if
       there is one.
       @begin[code]{table}
-        @endtry[widget]{The object which received the signal.}
+        @entry[widget]{The object which received the signal.}
         @entry[event]{The @class{gdk-event-key} which triggered this signal.}
         @entry[Returns]{@em{True} to stop other handlers from being invoked for
           the event. @code{Nil} to propagate the event further.}
@@ -1556,7 +1539,8 @@
       @fun{gtk-widget-keynav-failed} for details.
       @begin[code]{table}
         @entry[widget]{The object which received the signal.}
-        @entry[direction]{The direction of movement.}
+        @entry[direction]{The direction of type @symbol{gtk-direction-type} of
+          movement.}
         @entry[Returns]{@em{True} if stopping keyboard navigation is fine,
           @code{nil} if the emitting widget should try to handle the keyboard
           navigation attempt in its parent container(s).}
@@ -1631,6 +1615,7 @@
       @end{pre}
       @begin[code]{table}
         @entry[widget]{The object which received the signal.}
+        @entry[direction]{The direction of type @symbol{gtk-direction-type}.}
       @end{table}
     @subheading{The \"parent-set\" signal}
       @begin{pre}
@@ -1651,9 +1636,7 @@
       This usually happens through the standard key binding mechanism; by
       pressing a certain key while a widget is focused, the user can cause the
       widget to pop up a menu. For example, the @class{gtk-entry} widget creates
-      a menu with clipboard commands. See the section called
-      \"Implement GtkWidget::popup_menu\" for an example of how to use this
-      signal.
+      a menu with clipboard commands.
       @begin[code]{table}
         @entry[widget]{The object which received the signal.}
         @entry[Returns]{@em{True} if a menu was activated.}
@@ -1662,11 +1645,10 @@
       @begin{pre}
  lambda (widget event)   : Run Last
       @end{pre}
-      The @code{\"property-notify-event\"} signal will be emitted when a
-      property on the @arg{widget}'s window has been changed or deleted.
-      To receive this signal, the @class{gdk-window} associated to the widget
-      needs to enable the @code{:property-change-mask} mask of type
-      @symbol{gdk-event-mask}.
+      The \"property-notify-event\" signal will be emitted when a property on
+      the @arg{widget}'s window has been changed or deleted. To receive this
+      signal, the @class{gdk-window} associated to the widget needs to enable
+      the @code{:property-change-mask} mask of type @symbol{gdk-event-mask}.
       @begin[code]{table}
         @entry[widget]{The object which received the signal.}
         @entry[event]{The @class{gdk-event-property} which triggered this
@@ -1709,14 +1691,14 @@
  lambda (widget x y keyboard-mode tooltip)   : Run Last
      @end{pre}
      Emitted when the @code{\"has-tooltip\"} property is @em{true} and the
-     \"gtk-tooltip-timeout\" has expired with the cursor hovering \"above\"
-     widget; or emitted when widget got focus in keyboard mode. Using the given
-     coordinates, the signal handler should determine whether a tooltip should
-     be shown for widget. If this is the case @em{true} should be returned,
-     @code{nil} otherwise. Note that if @arg{keyboard-mode} is @em{true}, the
-     values of @arg{x} and @arg{y} are undefined and should not be used. The
-     signal handler is free to manipulate tooltip with the therefore destined
-     function calls.
+     @code{\"gtk-tooltip-timeout\"} property of the @class{gtk-settings} class
+     has expired with the cursor hovering \"above\" widget; or emitted when
+     widget got focus in keyboard mode. Using the given coordinates, the signal
+     handler should determine whether a tooltip should be shown for widget. If
+     this is the case @em{true} should be returned, @code{nil} otherwise. Note
+     that if @arg{keyboard-mode} is @em{true}, the values of @arg{x} and @arg{y}
+     are undefined and should not be used. The signal handler is free to
+     manipulate tooltip with the therefore destined function calls.
      @begin[code]{table}
        @entry[widget]{The object which received the signal.}
        @entry[x]{The x coordinate of the cursor position where the request has
@@ -1784,6 +1766,9 @@
       @end{pre}
       @begin[code]{table}
         @entry[widget]{The object which received the signal.}
+        @entry[data]{The @class{gtk-selection-data}.}
+        @entry[info]{The info that has been registered with the target.}
+        @entry[time]{The timestamp at which the data was requested.}
       @end{table}
     @subheading{The \"selection-notify-event\" signal}
       @begin{pre}
@@ -1791,7 +1776,7 @@
       @end{pre}
       @begin[code]{table}
         @entry[widget]{The object which received the signal.}
-        @entry[event]{ }
+        @entry[event]{The @class{gdk-event-selection}.}
         @entry[Returns]{@em{True} to stop other handlers from being invoked for
           the event. @code{Nil} to propagate the event further.}
       @end{table}
@@ -1801,6 +1786,8 @@
       @end{pre}
       @begin[code]{table}
         @entry[widget]{The object which received the signal.}
+        @entry[data]{The @class{gtk-selection-data}.}
+        @entry[time]{A timestamp.}
       @end{table}
     @subheading{The \"selection-request-event\" signal}
       @begin{pre}
@@ -1828,6 +1815,8 @@
       @end{pre}
       @begin[code]{table}
         @entry[widget]{The object which received the signal.}
+        @entry[help-type]{A value of the @symbol{gtk-widget-help-type}
+          enumeration.}
       @end{table}
     @subheading{The \"size-allocate\" signal}
       @begin{pre}
@@ -1898,6 +1887,10 @@
       @begin{pre}
  lambda (widget arg)   : Run Last
       @end{pre}
+      @begin[code]{table}
+        @entry[widget]{The object on which the signal is emitted.}
+        @entry[arg]{}
+      @end{table}
     @subheading{The \"unmap\" signal}
       @begin{pre}
  lambda (widget)   : Run First
@@ -2092,13 +2085,15 @@
   Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "composite-child" 'gtk-widget) 't)
+(setf (documentation (atdoc:get-slot-from-name "composite-child"
+                                               'gtk-widget) 't)
  "The @code{\"composite-child\"} property of type @code{:boolean} (Read) @br{}
   Whether the widget is part of a composite widget. @br{}
   Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "double-buffered" 'gtk-widget) 't)
+(setf (documentation (atdoc:get-slot-from-name "double-buffered"
+                                               'gtk-widget) 't)
  "The @code{\"double-buffered\"} property of type @code{:boolean}
   (Read / Write) @br{}
   Whether the widget is double buffered. @br{}
@@ -2158,7 +2153,8 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "height-request" 'gtk-widget) 't)
- "The @code{\"height-request\"} property of type @code{:int} (Read / Write) @br{}
+ "The @code{\"height-request\"} property of type @code{:int}
+  (Read / Write) @br{}
   Override for height request of the widget, or -1 if natural request
   should be used. @br{}
   Allowed values: >= -1 @br{}
@@ -2267,7 +2263,8 @@
   The parent widget of this widget. Must be a @class{gtk-container} widget.")
 
 #+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "receives-default" 'gtk-widget) 't)
+(setf (documentation (atdoc:get-slot-from-name "receives-default"
+                                               'gtk-widget) 't)
  "The @code{\"receives-default\"} property of type @code{:boolean}
   (Read / Write) @br{}
   If @em{true}, the widget will receive the default action when it is
@@ -2881,14 +2878,15 @@
 (setf (gethash 'gtk-widget-help-type atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-widget-help-type atdoc:*external-symbols*)
  "@version{2013-10-29}
-  @short{}
+  @short{Used in the \"show-help\" signal handler.}
   @begin{pre}
 (define-g-enum \"GtkWidgetHelpType\" gtk-widget-help-type
   (:export t
    :type-initializer \"gtk_widget_help_type_get_type\")
   (:tooltip 0)
   (:whats-this 1))
-  @end{pre}")
+  @end{pre}
+  @class{gtk-widget}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_new ()
@@ -2896,13 +2894,13 @@
 
 (defun gtk-widget-new (widget-type &rest args)
  #+cl-cffi-gtk-documentation
- "@version{2013-10-29}
+ "@version{2013-11-4}
   @argument[widget-type]{the type of the widget to create}
   @argument[args]{pairs of the property name and value}
   @return{A new @class{gtk-widget} of type @arg{widget-type}.}
   @begin{short}
-    This is a convenience function for creating a widget and setting its
-    properties in one go.
+    This is a function for creating a widget and setting its properties in one
+    go.
   @end{short}
   For example you might write:
   @code{(gtk-widget-new \"GtkLabel\" \"label\" \"Hello World\" \"xalign\" 0.0)}
@@ -4490,13 +4488,20 @@
   (:ltr 1)
   (:rtl 2))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-direction atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-text-direction atdoc:*external-symbols*)
- "@version{2012-12-23}
-  @short{}
+ "@version{2012-11-4}
+  @begin{short}
+    This direction controls the primary direction for widgets containing text,
+    and also the direction in which the children of a container are packed.
+  @end{short}
+  The ability to set the direction is present in order so that correct
+  localization into languages with right-to-left reading directions can be done.
+  Generally, applications will let the default reading direction present, except
+  for containers where the containers are arranged in an order that is
+  explicitely visual rather than logical, such as buttons for text
+  justification.
   @begin{pre}
 (define-g-enum \"GtkTextDirection\" gtk-text-direction
   (:export t
@@ -4504,7 +4509,9 @@
   (:none 0)
   (:ltr 1)
   (:rtl 2))
-  @end{pre}")
+  @end{pre}
+  @see-function{gtk-widget-get-direction}
+  @see-function{gtk-widget-set-direction}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_direction ()

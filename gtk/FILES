@@ -20,9 +20,6 @@ GTK+ Core Reference
 
     gtk.enumerations.lisp            - Standard Enumerations       - GTK+ 3.6.4
     gtk.selections.lisp              - Selections                  - GTK+ 3.6.4%
-
-    not implemented                  - Testing
-
     gtk.mount-operation.lisp         - Filesystem utilities        - GTK+ 3.6.4%
 
 Theming in GTK+

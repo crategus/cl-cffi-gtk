@@ -106,8 +106,8 @@
       (gethash 'gtk-dest-defaults atdoc:*external-symbols*)
  "@version{2013-4-17}
   @begin{short}
-    The @sym{gtk-dest-defaults} enumeration specifies the various types of
-    action that will be taken on behalf of the user for a drag destination site.
+    The @sym{gtk-dest-defaults} flags specifies the various types of action that
+    will be taken on behalf of the user for a drag destination site.
   @end{short}
   @begin{pre}
 (define-g-flags \"GtkDestDefaults\" gtk-dest-defaults
@@ -154,7 +154,8 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-7-4}
   @argument[widget]{a @class{gtk-widget} object}
-  @argument[flags]{which types of default drag behavior to use}
+  @argument[flags]{which types of type @symbol{gtk-dest-defaults} of default
+    drag behavior to use}
   @argument[targets]{a list of @class{gtk-target-entry}s indicating the drop
     types that this @arg{widget} will accept, or @code{nil}. Later you can
     access the list with the functions @fun{gtk-drag-dest-get-target-list} and
@@ -284,6 +285,17 @@
 ;;;     first target that the source offers and the dest can accept, or GDK_NONE
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_drag_dest_find_target" %gtk-drag-dest-find-target)
+    gdk-atom-as-string
+  (widget (g-object gtk-widget))
+  (context (g-object gdk-drag-context))
+  (target-list (g-boxed-foreign gtk-target-list)))
+
+(defun gtk-drag-dest-find-target (widget context)
+  (%gtk-drag-dest-find-target widget context nil))
+
+(export 'gtk-drag-dest-find-target)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_drag_dest_get_target_list ()
 ;;;
@@ -332,19 +344,29 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_drag_dest_add_image_targets ()
-;;;
-;;; void gtk_drag_dest_add_image_targets (GtkWidget *widget);
-;;;
-;;; Add the image targets supported by GtkSelection to the target list of the
-;;; drag destination. The targets are added with info = 0. If you need another
-;;; value, use gtk_target_list_add_image_targets() and
-;;; gtk_drag_dest_set_target_list().
-;;;
-;;; widget :
-;;;     a GtkWidget that's a drag destination
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_drag_dest_add_image_targets" gtk-drag-dest-add-image-targets)
+    :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-3}
+  @argument[widget]{a @class{gtk-widget} that is a drag destination}
+  @begin{short}
+    Add the image targets supported by @class{gtk-selection} to the target list
+    of the drag destination.
+  @end{short}
+  The targets are added with info = 0. If you need another value, use the
+  functions @fun{gtk-target-list-add-image-targets} and
+  @fun{gtk-drag-dest-set-target-list}.
+
+  Since 2.6
+  @see-class{gtk-widget}
+  @see-class{gtk-selection}
+  @see-function{gtk-target-list-add-image-targets}
+  @see-function{gtk-drag-dest-set-target-list}"
+  (widget (g-object gtk-widget)))
+
+(export 'gtk-drag-dest-add-image-targets)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_drag_dest_add_uri_targets ()
@@ -581,27 +603,25 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_drag_set_icon_pixbuf ()
-;;;
-;;; void gtk_drag_set_icon_pixbuf (GdkDragContext *context,
-;;;                                GdkPixbuf *pixbuf,
-;;;                                gint hot_x,
-;;;                                gint hot_y);
-;;;
-;;; Sets pixbuf as the icon for a given drag.
-;;;
-;;; context :
-;;;     the context for a drag. (This must be called with a context for the
-;;;     source side of a drag)
-;;;
-;;; pixbuf :
-;;;     the GdkPixbuf to use as the drag icon.
-;;;
-;;; hot_x :
-;;;     the X offset within widget of the hotspot.
-;;;
-;;; hot_y :
-;;;     the Y offset within widget of the hotspot.
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_drag_set_icon_pixbuf" gtk-drag-set-icon-pixbuf) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-3}
+  @argument[context]{the context of type @class{gdk-drag-context} for a drag,
+    this must be called with a context for the source side of a drag}
+  @argument[pixbuf]{the @class{gdk-pixbuf} to use as the drag icon}
+  @argument[hot-x]{the x offset within widget of the hotspot}
+  @argument[hot-y]{the y offset within widget of the hotspot}
+  @short{Sets @arg{pixbuf} as the icon for a given drag.}
+  @see-class{gdk-drag-context}
+  @see-class{gdk-pixbuf}"
+  (context (g-object gdk-drag-context))
+  (pixbuf (g-object gdk-pixbuf))
+  (hot-x :int)
+  (hot-y :int))
+
+(export 'gtk-drag-set-icon-pixbuf)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_drag_set_icon_stock ()
@@ -918,19 +938,29 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_drag_source_add_image_targets ()
-;;;
-;;; void gtk_drag_source_add_image_targets (GtkWidget *widget);
-;;;
-;;; Add the writable image targets supported by GtkSelection to the target list
-;;; of the drag source. The targets are added with info = 0. If you need another
-;;; value, use gtk_target_list_add_image_targets() and
-;;; gtk_drag_source_set_target_list().
-;;;
-;;; widget :
-;;;     a GtkWidget that's is a drag source
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_drag_source_add_image_targets" gtk-drag-source-add-image-targets)
+    :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-3}
+  @argument[widget]{a @class{gtk-widget} that is a drag source}
+  @begin{short}
+    Add the writable image targets supported by @class{gtk-selection} to the
+    target list of the drag source.
+  @end{short}
+  The targets are added with info = 0. If you need another value, use
+  the function @fun{gtk-target-list-add-image-targets} and
+  @fun{gtk-drag-source-set-target-list}.
+
+  Since 2.6
+  @see-class{gtk-widget}
+  @see-class{gtk-selection}
+  @see-function{gtk-target-list-add-image-targets}
+  @see-function{gtk-drag-source-set-target-list}"
+  (widget (g-object gtk-widget)))
+
+(export 'gtk-drag-source-add-image-targets)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_drag_source_add_uri_targets ()
