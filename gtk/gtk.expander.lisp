@@ -4,9 +4,10 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -116,8 +117,6 @@
     gtk-expander-use-underline
     "use-underline" "gboolean" t t)))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-expander 'type)
  "@version{2013-5-10}
@@ -184,15 +183,15 @@
     @end{pre}
   @begin[Style Property Details]{dictionary}
     @subheading{The \"expander-size\" style property}
-      @code{\"expander-size\"} of type @code{:int} (Read)@br{}
-      Size of the expander arrow.@br{}
-      Allowed values: >= 0@br{}
+      @code{\"expander-size\"} of type @code{:int} (Read) @br{}
+      Size of the expander arrow. @br{}
+      Allowed values: >= 0 @br{}
       Default value: 10
 
     @subheading{The \"expander-spacing\" style property}
-      @code{\"expander-spacing\"} of type @code{:int} (Read)@br{}
-      Spacing around expander arrow.@br{}
-      Allowed values: >= 0@br{}
+      @code{\"expander-spacing\"} of type @code{:int} (Read) @br{}
+      Spacing around expander arrow. @br{}
+      Allowed values: >= 0 @br{}
       Default value: 2
   @end{dictionary}
   @begin[Signal Details]{dictionary}
@@ -219,76 +218,62 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "expanded" 'gtk-expander) 't)
  "The @code{\"expanded\"} property of type @code{:boolean}
-  (Read / Write / Construct)@br{}
-  Whether the expander has been opened to reveal the child widget.@br{}
+  (Read / Write / Construct) @br{}
+  Whether the expander has been opened to reveal the child widget. @br{}
   Default value: @code{nil}")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "label" 'gtk-expander) 't)
  "The @code{\"label\"} property of type @code{:string}
-  (Read / Write / Construct)@br{}
-  Text of the expander's label.@br{}
+  (Read / Write / Construct) @br{}
+  Text of the expander's label. @br{}
   Default value: @code{nil}")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "label-fill" 'gtk-expander) 't)
  "The @code{\"label-fill\"} property of type @code{:boolean}
-  (Read / Write / Construct)@br{}
-  Whether the label widget should fill all available horizontal space.@br{}
+  (Read / Write / Construct) @br{}
+  Whether the label widget should fill all available horizontal space. @br{}
   Default value: @code{nil}")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "label-widget" 'gtk-expander) 't)
  "The @code{\"label-widget\"} property of type @code{gtk-widget}
-  (Read / Write)@br{}
+  (Read / Write) @br{}
   A widget to display in place of the usual expander label.")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "resize-toplevel"
                                                'gtk-expander) 't)
  "The @code{\"resize-toplevel\"} property of type @code{:boolean}
-  (Read / Write)@br{}
+  (Read / Write) @br{}
   When this property is @em{true}, the expander will resize the toplevel widget
-  containing the expander upon expanding and collapsing.@br{}
-  Default value: @code{nil}@br{}
+  containing the expander upon expanding and collapsing. @br{}
+  Default value: @code{nil} @br{}
   Since 3.2")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "spacing" 'gtk-expander) 't)
- "The @code{\"spacing\"} property of type @code{:int} (Read / Write)@br{}
-  Space to put between the label and the child.@br{}
-  Allowed values: >= 0@br{}
+ "The @code{\"spacing\"} property of type @code{:int} (Read / Write) @br{}
+  Space to put between the label and the child. @br{}
+  Allowed values: >= 0 @br{}
   Default value: 0")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "use-markup" 'gtk-expander) 't)
  "The @code{\"use-markup\"} property of type @code{:boolean}
-  (Read / Write / Construct)@br{}
+  (Read / Write / Construct) @br{}
   The text of the label includes XML markup. See the function
-  @fun{pango-parse-markup}.@br{}
+  @fun{pango-parse-markup}. @br{}
   Default value: @code{nil}")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "use-underline"
                                                'gtk-expander) 't)
  "The @code{\"use-underline\"} property of type @code{:boolean}
-  (Read / Write / Construct)@br{}
+  (Read / Write / Construct) @br{}
   If set, an underline in the text indicates the next character should be used
-  for the mnemonic accelerator key.@br{}
+  for the mnemonic accelerator key. @br{}
   Default value: @code{nil}")
 
 ;;; ----------------------------------------------------------------------------
@@ -301,92 +286,84 @@
 (setf (gethash 'gtk-expander-expanded atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-expander-expanded 'function)
- "@version{2013-3-3}
-  @begin{short}
-    Accessor of the slot @code{\"expanded\"} of the @class{gtk-expander} class.
-  @end{short}")
-
-;;; ----------------------------------------------------------------------------
+ "@version{2013-11-6}
+  Accessor of the slot @code{\"expanded\"} of the @class{gtk-expander} class.
+  @see-class{gtk-expander}
+  @see-function{gtk-expander-get-expanded}
+  @see-function{gtk-expander-set-expanded}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-expander-label atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-expander-label 'function)
- "@version{2013-3-3}
-  @begin{short}
-    Accessor of the slot @code{\"label\"} of the @class{gtk-expander} class.
-  @end{short}")
-
-;;; ----------------------------------------------------------------------------
+ "@version{2013-11-6}
+  Accessor of the slot @code{\"label\"} of the @class{gtk-expander} class.
+  @see-class{gtk-expander}
+  @see-function{gtk-expander-get-label}
+  @see-function{gtk-expander-set-label}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-expander-label-fill atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-expander-label-fill 'function)
- "@version{2013-3-3}
-  @begin{short}
-    Accessor of the slot @code{\"label-fill\"} of the @class{gtk-expander}
-    class.
-  @end{short}")
-
-;;; ----------------------------------------------------------------------------
+ "@version{2013-11-6}
+  Accessor of the slot @code{\"label-fill\"} of the @class{gtk-expander} class.
+  @see-class{gtk-expander}
+  @see-function{gtk-expander-get-label-fill}
+  @see-function{gtk-expander-set-label-fill}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-expander-label-widget atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-expander-label-widget 'function)
- "@version{2013-3-3}
-  @begin{short}
-    Accessor of the slot @code{\"label-widget\"} of the @class{gtk-expander}
-    class.
-  @end{short}")
-
-;;; ----------------------------------------------------------------------------
+ "@version{2013-11-6}
+  Accessor of the slot @code{\"label-widget\"} of the @class{gtk-expander}
+  class.
+  @see-class{gtk-expander}
+  @see-function{gtk-expander-get-label-widget}
+  @see-function{gtk-expander-set-label-widget}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-expander-resize-toplevel atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-expander-resize-toplevel 'function)
- "@version{2013-3-3}
-  @begin{short}
-    Accessor of the slot @code{\"resize-toplevel\"} of the @class{gtk-expander}
-    class.
-  @end{short}")
-
-;;; ----------------------------------------------------------------------------
+ "@version{2013-11-6}
+  Accessor of the slot @code{\"resize-toplevel\"} of the @class{gtk-expander}
+  class.
+  @see-class{gtk-expander}
+  @see-function{gtk-expander-get-resize-toplevel}
+  @see-function{gtk-expander-set-resize-toplevel}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-expander-spacing atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-expander-spacing 'function)
- "@version{2013-3-3}
-  @begin{short}
-    Accessor of the slot @code{\"spacing\"} of the @class{gtk-expander} class.
-  @end{short}")
-
-;;; ----------------------------------------------------------------------------
+ "@version{2013-11-6}
+  Accessor of the slot @code{\"spacing\"} of the @class{gtk-expander} class.
+  @see-class{gtk-expander}
+  @see-function{gtk-expander-get-spacing}
+  @see-function{gtk-expander-set-spacing}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-expander-use-markup atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-expander-use-markup 'function)
- "@version{2013-3-3}
-  @begin{short}
-    Accessor of the slot @code{\"use-markup\"} of the @class{gtk-expander}
-    class.
-  @end{short}")
-
-;;; ----------------------------------------------------------------------------
+ "@version{2013-11-6}
+  Accessor of the slot @code{\"use-markup\"} of the @class{gtk-expander} class.
+  @see-class{gtk-expander}
+  @see-function{gtk-expander-get-use-markup}
+  @see-function{gtk-expander-set-use-markup}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-expander-use-underline atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-expander-use-underline 'function)
- "@version{2013-3-3}
-  @begin{short}
-    Accessor of the slot @code{\"use-underline\"} of the @class{gtk-expander}
-    class.
-  @end{short}")
+ "@version{2013-11-6}
+  Accessor of the slot @code{\"use-underline\"} of the @class{gtk-expander}
+  class.
+  @see-class{gtk-expander}
+  @see-function{gtk-expander-get-use-underline}
+  @see-function{gtk-expander-set-use-underline}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_expander_new ()
@@ -396,14 +373,16 @@
 
 (defun gtk-expander-new (label)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-20}
+ "@version{2013-11-6}
   @argument[label]{the text of the label}
   @return{A new @class{gtk-expander} container.}
   @begin{short}
     Creates a new expander using @arg{label} as the text of the label.
   @end{short}
 
-  Since 2.4"
+  Since 2.4
+  @see-class{gtk-expander}
+  @see-function{gtk-expander-new-with-mnemonic}"
   (make-instance 'gtk-expander
                  :label label))
 
@@ -411,313 +390,427 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_expander_new_with_mnemonic ()
-;;; 
-;;; GtkWidget * gtk_expander_new_with_mnemonic (const gchar *label);
-;;; 
-;;; Creates a new expander using label as the text of the label. If characters
-;;; in label are preceded by an underscore, they are underlined. If you need a
-;;; literal underscore character in a label, use '__' (two underscores). The
-;;; first underlined character represents a keyboard accelerator called a
-;;; mnemonic. Pressing Alt and that key activates the button.
-;;; 
-;;; label :
-;;;     the text of the label with an underscore in front of the mnemonic
-;;;     character
-;;; 
-;;; Returns :
-;;;     a new GtkExpander widget.
-;;; 
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-expander-new-with-mnemonic))
+
+(defun gtk-expander-new-with-mnemonic (label)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-6}
+  @argument[label]{the text of the label with an underscore in front of the
+    mnemonic character}
+  @return{A new @class{gtk-expander} widget.}
+  @begin{short}
+    Creates a new expander using @arg{label} as the text of the label.
+  @end{short}
+  If characters in label are preceded by an underscore, they are underlined. If
+  you need a literal underscore character in a label, use two underscores '__'.
+  The first underlined character represents a keyboard accelerator called a
+  mnemonic. Pressing Alt and that key activates the button.
+
+  Since 2.4
+  @see-class{gtk-expander}
+  @see-function{gtk-expander-new}"
+  (make-instance 'gtk-expander
+                 :label label
+                 :use-underline t))
+
+(export 'gtk-expander-new-with-mnemonic)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_expander_set_expanded ()
-;;; 
-;;; void gtk_expander_set_expanded (GtkExpander *expander, gboolean expanded);
-;;; 
-;;; Sets the state of the expander. Set to TRUE, if you want the child widget to
-;;; be revealed, and FALSE if you want the child widget to be hidden.
-;;; 
-;;; expander :
-;;;     a GtkExpander
-;;; 
-;;; expanded :
-;;;     whether the child widget is revealed
-;;; 
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-expander-set-expanded))
+
+(defun gtk-expander-set-expanded (expander expanded)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-6}
+  @argument[expander]{a @class{gtk-expander} widget}
+  @argument[expanded]{whether the child widget is revealed}
+  @begin{short}
+    Sets the state of the expander.
+  @end{short}
+  Set to @em{true}, if you want the child widget to be revealed, and @code{nil}
+  if you want the child widget to be hidden.
+
+  Since 2.4
+  @see-class{gtk-expander}
+  @see-function{gtk-expander-get-expanded}"
+  (sef (gtk-expander-expanded expander) expanded))
+
+(export 'gtk-expander-set-expanded)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_expander_get_expanded ()
-;;; 
-;;; gboolean gtk_expander_get_expanded (GtkExpander *expander);
-;;; 
-;;; Queries a GtkExpander and returns its current state. Returns TRUE if the
-;;; child widget is revealed.
-;;; 
-;;; See gtk_expander_set_expanded().
-;;; 
-;;; expander :
-;;;     a GtkExpander
-;;; 
-;;; Returns :
-;;;     the current state of the expander
-;;; 
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-expander-get-expanded))
+
+(defun gtk-expander-get-expanded (expander)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-6}
+  @argument[expander]{a @class{gtk-expander} widget}
+  @return{The current state of the expander.}
+  @begin{short}
+    Queries a @class{gtk-expander} and returns its current state.
+  @end{short}
+  Returns @em{true} if the child widget is revealed.
+
+  See the function @class{gtk-expander-set-expanded}.
+
+  Since 2.4
+  @see-class{gtk-expander}
+  @class{gtk-expander-set-expanded}"
+  (gtk-expander-expanded expander))
+
+(export 'gtk-expander-get-expanded)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_expander_set_spacing ()
-;;; 
-;;; void gtk_expander_set_spacing (GtkExpander *expander, gint spacing);
-;;; 
-;;; Sets the spacing field of expander, which is the number of pixels to place
-;;; between expander and the child.
-;;; 
-;;; expander :
-;;;     a GtkExpander
-;;; 
-;;; spacing :
-;;;     distance between the expander and child in pixels
-;;; 
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-expander-set-spacing))
+
+(defun gtk-expander-set-spacing (expander spacing)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-6}
+  @argument[expander]{a @class{gtk-expander} widget}
+  @argument[spacing]{distance between the expander and child in pixels}
+  @begin{short}
+    Sets the spacing field of @arg{expander}, which is the number of pixels to
+    place between expander and the child.
+  @end{short}
+
+  Since 2.4
+  @see-class{gtk-expander}
+  @see-function{gtk-expander-get-spacing}"
+  (setf (gtk-expander-spacing expander) spacing))
+
+(export 'gtk-expander-set-spacing)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_expander_get_spacing ()
-;;; 
-;;; gint gtk_expander_get_spacing (GtkExpander *expander);
-;;; 
-;;; Gets the value set by gtk_expander_set_spacing().
-;;; 
-;;; expander :
-;;;     a GtkExpander
-;;; 
-;;; Returns :
-;;;     spacing between the expander and child
-;;; 
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-expander-get-spacing))
+
+(defun gtk-expander-get-spacing (expander)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-6}
+  @argument[expander]{a @class{gtk-expander} widget}
+  @return{Spacing between the expander and child.}
+  @begin{short}
+    Gets the value set by @fun{gtk-expander-set-spacing}.
+  @end{short}
+
+  Since 2.4
+  @see-class{gtk-expander}
+  @see-function{gtk-expander-set-spacing}"
+  (gtk-expander-spacing expander))
+
+(export 'gtk-expander-get-spacing)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_expander_set_label ()
-;;; 
-;;; void gtk_expander_set_label (GtkExpander *expander, const gchar *label);
-;;; 
-;;; Sets the text of the label of the expander to label.
-;;; 
-;;; This will also clear any previously set labels.
-;;; 
-;;; expander :
-;;;     a GtkExpander
-;;; 
-;;; label :
-;;;     a string
-;;; 
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-expander-set-label))
+
+(defun gtk-expander-set-label (expander label)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-6}
+  @argument[expander]{a @class{gtk-expander} widget}
+  @argument[label]{a string}
+  @begin{short}
+    Sets the text of the label of the expander to @arg{label}.
+  @end{short}
+
+  This will also clear any previously set labels.
+
+  Since 2.4
+  @see-class{gtk-expander}
+  @see-function{gtk-expander-get-label}"
+  (setf (gtk-expander-label expander) label))
+
+(export 'gtk-expander-set-label)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_expander_get_label ()
-;;; 
-;;; const gchar * gtk_expander_get_label (GtkExpander *expander);
-;;; 
-;;; Fetches the text from a label widget including any embedded underlines
-;;; indicating mnemonics and Pango markup, as set by gtk_expander_set_label().
-;;; If the label text has not been set the return value will be NULL. This will
-;;; be the case if you create an empty button with gtk_button_new() to use as a
-;;; container.
-;;; 
-;;; Note that this function behaved differently in versions prior to 2.14 and
-;;; used to return the label text stripped of embedded underlines indicating
-;;; mnemonics and Pango markup. This problem can be avoided by fetching the
-;;; label text directly from the label widget.
-;;; 
-;;; expander :
-;;;     a GtkExpander
-;;; 
-;;; Returns :
-;;;     The text of the label widget. This string is owned by the widget and
-;;;     must not be modified or freed.
-;;; 
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-expander-get-label))
+
+(defun gtk-expander-get-label (expander)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-6}
+  @argument[expander]{a @class{gtk-expander} widget}
+  @begin{return}
+    The text of the label widget. This string is owned by the widget and
+    must not be modified or freed.
+  @end{return}
+  @begin{short}
+    Fetches the text from a label widget including any embedded underlines
+    indicating mnemonics and Pango markup, as set by the function
+    @fun{gtk-expander-set-label}.
+  @end{short}
+  If the label text has not been set the return value will be @code{nil}. This
+  will be the case if you create an empty button with the function
+  @fun{gtk-button-new} to use as a container.
+
+  Note that this function behaved differently in versions prior to 2.14 and
+  used to return the label text stripped of embedded underlines indicating
+  mnemonics and Pango markup. This problem can be avoided by fetching the
+  label text directly from the label widget.
+
+  Since 2.4
+  @see-class{gtk-expander}
+  @see-function{gtk-expander-set-label}
+  @see-function{gtk-button-new}"
+  (gtk-expander-label expander))
+
+(export 'gtk-expander-get-label)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_expander_set_use_underline ()
-;;; 
-;;; void gtk_expander_set_use_underline (GtkExpander *expander,
-;;;                                      gboolean use_underline);
-;;; 
-;;; If true, an underline in the text of the expander label indicates the next
-;;; character should be used for the mnemonic accelerator key.
-;;; 
-;;; expander :
-;;;     a GtkExpander
-;;; 
-;;; use_underline :
-;;;     TRUE if underlines in the text indicate mnemonics
-;;; 
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-expander-set-use-underline))
+
+(defun gtk-expander-set-use-underline (expander use-underline)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-6}
+  @argument[expander]{a @class{gtk-expander} widget}
+  @argument[use-underline]{@em{true} if underlines in the text indicate
+    mnemonics}
+  @begin{short}
+    If @em{true}, an underline in the text of the expander label indicates the
+    next character should be used for the mnemonic accelerator key.
+  @end{short}
+
+  Since 2.4
+  @see-class{gtk-expander}
+  @see-function{gtk-expander-get-use-underline}"
+  (setf (gtk-expander-use-underline expander) use-underline))
+
+(export 'gtk-expander-set-use-underline)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_expander_get_use_underline ()
-;;; 
-;;; gboolean gtk_expander_get_use_underline (GtkExpander *expander);
-;;; 
-;;; Returns whether an embedded underline in the expander label indicates a
-;;; mnemonic. See gtk_expander_set_use_underline().
-;;; 
-;;; expander :
-;;;     a GtkExpander
-;;; 
-;;; Returns :
-;;;     TRUE if an embedded underline in the expander label indicates the
-;;;     mnemonic accelerator keys
-;;; 
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-expander-get-use-underline))
+
+(defun gtk-expander-get-use-underline (expander)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-6}
+  @argument[expander]{a @class{gtk-expander} widget}
+  @begin{return}
+    @em{True} if an embedded underline in the expander label indicates the
+    mnemonic accelerator keys.
+  @end{return}
+  @begin{short}
+    Returns whether an embedded underline in the expander label indicates a
+    mnemonic.
+  @end{short}
+  See the function @fun{gtk-expander-set-use-underline}.
+
+  Since 2.4
+  @see-class{gtk-expander}
+  @see-function{gtk-expander-set-use-underline}"
+  (gtk-expander-use-underline expander))
+
+(export 'gtk-expander-get-use-underline)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_expander_set_use_markup ()
-;;; 
-;;; void gtk_expander_set_use_markup (GtkExpander *expander,
-;;;                                   gboolean use_markup);
-;;; 
-;;; Sets whether the text of the label contains markup in Pango's text markup
-;;; language. See gtk_label_set_markup().
-;;; 
-;;; expander :
-;;;     a GtkExpander
-;;; 
-;;; use_markup :
-;;;     TRUE if the label's text should be parsed for markup
-;;; 
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-expander-set-use-markup))
+
+(defun gtk-expander-set-use-markup (expander use-markup)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-6}
+  @argument[expander]{a @class{gtk-expander} widget}
+  @argument[use-markup]{@em{true} if the label's text should be parsed for
+    markup}
+  @begin{short}
+    Sets whether the text of the label contains markup in Pango's text markup
+    language.
+  @end{short}
+  See the function @fun{gtk-label-set-markup}.
+
+  Since 2.4
+  @see-class{gtk-expander}
+  @see-function{gtk-expander-get-use-markup}
+  @see-function{gtk-label-set-markup}"
+  (setf (gtk-expander-use-markup expander) use-markup))
+
+(export 'gtk-expander-set-use-markup)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_expander_get_use_markup ()
-;;; 
-;;; gboolean gtk_expander_get_use_markup (GtkExpander *expander);
-;;; 
-;;; Returns whether the label's text is interpreted as marked up with the Pango
-;;; text markup language. See gtk_expander_set_use_markup().
-;;; 
-;;; expander :
-;;;     a GtkExpander
-;;; 
-;;; Returns :
-;;;     TRUE if the label's text will be parsed for markup
-;;; 
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-expander-get-use-markup))
+
+(defun gtk-expander-get-use-markup (expander)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-6}
+  @argument[expander]{a @class{gtk-expander} widget}
+  @return{@em{True} if the label's text will be parsed for markup.}
+  @begin{short}
+    Returns whether the label's text is interpreted as marked up with the Pango
+    text markup language.
+  @end{short}
+  See the function @fun{gtk-expander-set-use-markup}.
+
+  Since 2.4
+  @see-class{gtk-expander}
+  @see-function{gtk-expander-set-use-markup}"
+  (gtk-expander-use-markup expander))
+
+(export 'gtk-expander-get-use-markup)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_expander_set_label_widget ()
-;;; 
-;;; void gtk_expander_set_label_widget (GtkExpander *expander,
-;;;                                     GtkWidget *label_widget);
-;;; 
-;;; Set the label widget for the expander. This is the widget that will appear
-;;; embedded alongside the expander arrow.
-;;; 
-;;; expander :
-;;;     a GtkExpander
-;;; 
-;;; label_widget :
-;;;     the new label widget
-;;; 
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-expander-set-label-widget))
+
+(defun gtk-expander-set-label-widget (expander label-widget)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-6}
+  @argument[expander]{a @class{gtk-expander} widget}
+  @argument[label-widget]{the new label widget}
+  @begin{short}
+    Set the label widget for the expander.
+  @end{short}
+  This is the widget that will appear embedded alongside the expander arrow.
+
+  Since 2.4
+  @see-class{gtk-expander}
+  @see-function{gtk-expander-get-label-widget}"
+  (setf (gtk-expander-label-widget expander) label-widget))
+
+(export 'gtk-expander-set-label-widget)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_expander_get_label_widget ()
-;;; 
-;;; GtkWidget * gtk_expander_get_label_widget (GtkExpander *expander);
-;;; 
-;;; Retrieves the label widget for the frame. See
-;;; gtk_expander_set_label_widget().
-;;; 
-;;; expander :
-;;;     a GtkExpander
-;;; 
-;;; Returns :
-;;;     the label widget, or NULL if there is none
-;;; 
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-expander-get-label-widget))
+
+(defun gtk-expander-get-label-widget (expander)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-6}
+  @argument[expander]{a @class{gtk-expander} widget}
+  @return{The label widget, or @code{nil} if there is none.}
+  @begin{short}
+    Retrieves the label widget for the frame.
+  @end{short}
+  See the function @fun{gtk-expander-set-label-widget}.
+
+  Since 2.4
+  @see-class{gtk-expander}
+  @see-function{gtk-expander-set-label-widget}"
+  (gtk-expander-label-widget expander))
+
+(export 'gtk-expander-get-label-widget)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_expander_set_label_fill ()
-;;; 
-;;; void gtk_expander_set_label_fill (GtkExpander *expander,
-;;;                                   gboolean label_fill);
-;;; 
-;;; Sets whether the label widget should fill all available horizontal space
-;;; allocated to expander.
-;;; 
-;;; expander :
-;;;     a GtkExpander
-;;; 
-;;; label_fill :
-;;;     TRUE if the label should should fill all available horizontal space
-;;; 
-;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-expander-set-label-fill))
+
+(defun gtk-expander-set-label-fill (expander label-fill)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-6}
+  @argument[expander]{a @class{gtk-expander} widget}
+  @argument[label-fill]{@em{true} if the label should should fill all available
+    horizontal space}
+  @begin{short}
+    Sets whether the label widget should fill all available horizontal space
+    allocated to expander.
+  @end{short}
+
+  Since 2.22
+  @see-class{gtk-expander}
+  @see-function{gtk-expander-set-label-fill}"
+  (setf (gtk-expander-label-fill expander) label-fill))
+
+(export 'gtk-expander-set-label-fill)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_expander_get_label_fill ()
-;;; 
-;;; gboolean gtk_expander_get_label_fill (GtkExpander *expander);
-;;; 
-;;; Returns whether the label widget will fill all available horizontal space
-;;; allocated to expander.
-;;; 
-;;; expander :
-;;;     a GtkExpander
-;;; 
-;;; Returns :
-;;;     TRUE if the label widget will fill all available horizontal space
-;;; 
-;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-expander-get-label-fill))
+
+(defun gtk-expander-get-label-fill (expander)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-6}
+  @argument[expander]{a @class{gtk-expander} widget}
+  @begin{return}
+    @em{True} if the label widget will fill all available horizontal space.
+  @end{return}
+  @begin{short}
+    Returns whether the label widget will fill all available horizontal space
+    allocated to expander.
+  @end{short}
+
+  Since 2.22
+  @see-class{gtk-expander}
+  @see-function{gtk-expander-set-label-fill}"
+  (gtk-expander-label-fill expander))
+
+(export 'gtk-expander-get-label-fill)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_expander_set_resize_toplevel ()
-;;; 
-;;; void gtk_expander_set_resize_toplevel (GtkExpander *expander,
-;;;                                        gboolean resize_toplevel);
-;;; 
-;;; Sets whether the expander will resize the toplevel widget containing the
-;;; expander upon resizing and collpasing.
-;;; 
-;;; expander :
-;;;     a GtkExpander
-;;; 
-;;; resize_toplevel :
-;;;     whether to resize the toplevel
-;;; 
-;;; Since 3.2
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-expander-set-resize-toplevel))
+
+(defun gtk-expander-set-resize-toplevel (expander resize-toplevel)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-6}
+  @argument[expander]{a @class{gtk-expander} widget}
+  @argument[resize-toplevel]{whether to resize the toplevel}
+  @begin{short}
+    Sets whether the expander will resize the toplevel widget containing the
+    expander upon resizing and collpasing.
+  @end{short}
+
+  Since 3.2
+  @see-class{gtk-expander}
+  @see-function{gtk-expander-get-resize-toplevel}"
+  (setf (gtk-expander-resize-toplevel expander) resize-toplevel))
+
+(export 'gtk-expander-set-resize-toplevel)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_expander_get_resize_toplevel ()
-;;; 
-;;; gboolean gtk_expander_get_resize_toplevel (GtkExpander *expander);
-;;; 
-;;; Returns whether the expander will resize the toplevel widget containing the
-;;; expander upon resizing and collpasing.
-;;; 
-;;; expander :
-;;;     a GtkExpander
-;;; 
-;;; Returns :
-;;;     the "resize toplevel" setting.
-;;; 
-;;; Since 3.2
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-expander-get-resize-toplevel))
+
+(defun gtk-expander-get-resize-toplevel (expander)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-6}
+  @argument[expander]{a @class{gtk-expander} widget}
+  @return{The \"resize toplevel\" setting.}
+  @begin{short}
+    Returns whether the expander will resize the toplevel widget containing the
+    expander upon resizing and collpasing.
+  @end{short}
+
+  Since 3.2
+  @see-class{gtk-expander}
+  @see-function{gtk-expander-set-resize-toplevel}"
+  (gtk-expander-resize-toplevel expander))
+
+(export 'gtk-expander-get-resize-toplevel)
 
 ;;; --- End of file gtk.expander.lisp ------------------------------------------

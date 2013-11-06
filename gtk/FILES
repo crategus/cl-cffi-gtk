@@ -209,7 +209,7 @@ GTK+ Widgets and Objects
     gtk.layout.lisp                  - GtkLayout                   - GTK+ 3.6.4
     gtk.notebook.lisp                - GtkNotebook                 - GTK+ 3.6.4
     gtk.table.lisp                   - GtkTable                    - GTK+ 3.6.4
-    gtk.expander.lisp                - GtkExpander                 - GTK+ 3.6.4&
+    gtk.expander.lisp                - GtkExpander                 - GTK+ 3.6.4
     gtk.overlay.lisp                 - GtkOverlay                  - GTK+ 3.6.4
     gtk.orientable.lisp              - GtkOrientable               - GTK+ 3.6.4
 
