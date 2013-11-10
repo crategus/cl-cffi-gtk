@@ -84,7 +84,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-app-chooser-dialog 'type)
- "@version{2013-11-1}
+ "@version{2013-11-10}
   @begin{short}
     @sym{gtk-app-chooser-dialog} shows a @class{gtk-app-chooser-widget} inside
     a @class{gtk-dialog}.
@@ -98,8 +98,8 @@
 
   To set the heading that is shown above the @class{gtk-app-chooser-widget},
   use the function @fun{gtk-app-chooser-dialog-set-heading}.
-  @see-slot{gfile}
-  @see-slot{heading}
+  @see-slot{gtk-app-chooser-dialog-gfile}
+  @see-slot{gtk-app-chooser-dialog-heading}
   @see-class{gtk-dialog}
   @see-class{gtk-app-chooser}
   @see-function{gtk-app-chooser-dialog-get-widget}

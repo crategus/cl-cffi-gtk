@@ -437,7 +437,7 @@
   Since 2.4
   @see-class{gtk-expander}
   @see-function{gtk-expander-get-expanded}"
-  (sef (gtk-expander-expanded expander) expanded))
+  (setf (gtk-expander-expanded expander) expanded))
 
 (export 'gtk-expander-set-expanded)
 
