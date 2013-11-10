@@ -4,9 +4,10 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -291,7 +292,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "sort-type"
                                                'gtk-recent-chooser) 't)
- "The @code{\"sort-type\"} property of type @symbol{gtk-recentsort-type}
+ "The @code{\"sort-type\"} property of type @symbol{gtk-recent-sort-type}
   (Read / Write) @br{}
   Sorting order to be used when displaying the recently used resources. @br{}
   Default value: @code{:none} @br{}
@@ -722,7 +723,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-recent-sort-type atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-recent-sort-type atdoc:*external-symbols*)
- "@version{2013-5-26}
+ "@version{2013-11-10}
   @begin{short}
     Used to specify the sorting method to be applyed to the recently used
     resource list.
@@ -745,7 +746,9 @@
     @entry[:custom]{Sort the returned list using a custom sorting function
       passed using the function @fun{gtk-recent-manager-set-sort-func}.}
   @end{table}
-  Since 2.10")
+  Since 2.10
+  @see-class{gtk-recent-chooser}
+  @see-function{gtk-recent-manager-set-sort-func}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_chooser_set_sort_type ()
