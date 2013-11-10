@@ -3,6 +3,18 @@
 ;;;; This example shows a very simple window. The program creates a 200 x 200
 ;;;; pixel window. In this case the window has the default title "sbcl". The
 ;;;; window can be sized and moved.
+;;;;
+;;;; Classes
+;;;;
+;;;;     gtk-window
+;;;;
+;;;; Functions
+;;;;
+;;;;     gtk-window-new
+;;;;     gtk-widget-show-all
+;;;;     g-signal-connect
+;;;;     leave-gtk-main
+;;;;     within-main-loop
 
 (defun example-simple-window ()
   (within-main-loop
@@ -15,3 +27,4 @@
                           (leave-gtk-main)))
       ;; Show the window.
       (gtk-widget-show-all window))))
+

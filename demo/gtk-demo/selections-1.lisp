@@ -10,20 +10,16 @@
          (format t "Selection 'Targets' was not returned as atoms.~%"))
         (t
           (format t "All is fine: ~A~%" (gtk-selection-data-data selection-data))
-          (let ((n-atoms (/ (gtk-selection-data-length selection-data) (foreign-type-size 'gdk-atom))))
-            (with-foreign-object (atoms-ptr 'gdk-atom n-atoms)
-              (loop 
-                for i from 0 below n-atoms do
-                (format t "~A~%" (gdk-atom-name (mem-aref atoms-ptr 'gdk-atom i)))))))
+          (format t " targets = ~A~%" (gtk-selection-data-get-targets selection-data))))
 
-  ))
+  )
 
 
 (defun demo-selections-1 ()
   (within-main-loop
     (let (;; Create a toplevel window.
           (window (make-instance 'gtk-window
-                                 :title "Demo Retrieving Selections"
+                                 :title "Retrieving Selections"
                                  :type :toplevel
                                  :border-width 12))
           (button (make-instance 'gtk-button
@@ -33,14 +29,17 @@
                         (lambda (widget)
                           (declare (ignore widget))
                           (leave-gtk-main)))
+
+      ;; Signal hanlder for the button "Get Targets"
       (g-signal-connect button "clicked"
-                        (lambda (widget)
-                          (declare (ignore widget))
-                          (format t "Event 'clicked' for button~%")
-                          (gtk-selection-convert window
-                                                 "PRIMARY"
-                                                 "TARGETS"
-                                                 +gdk-current-time+)))
+         (lambda (widget)
+           (declare (ignore widget))
+           (format t "Event 'clicked' for button~%")
+           ;; Request the "TARGETS" target for the primary selection
+           (gtk-selection-convert window
+                                  "PRIMARY"
+                                  "TARGETS"
+                                  +gdk-current-time+)))
 
       (g-signal-connect window "selection-received" #'selection-received)
 

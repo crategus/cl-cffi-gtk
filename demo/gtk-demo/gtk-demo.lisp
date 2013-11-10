@@ -78,6 +78,7 @@
 (load "search-entry.lisp")
 (load "selections-1.lisp")
 (load "size-management.lisp")
+(load "simple-drag-and-drop.lisp")
 (load "simple-file-chooser.lisp")
 (load "simple-message.lisp")
 (load "simple-text-view.lisp")
