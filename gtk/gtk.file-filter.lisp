@@ -241,20 +241,23 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_filter_add_mime_type ()
-;;;
-;;; void gtk_file_filter_add_mime_type (GtkFileFilter *filter,
-;;;                                     const gchar *mime_type);
-;;;
-;;; Adds a rule allowing a given mime type to filter.
-;;;
-;;; filter :
-;;;     A GtkFileFilter
-;;;
-;;; mime_type :
-;;;     name of a MIME type
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_file_filter_add_mime_type" gtk-file-filter-add-mime-type) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-10}
+  @argument[filter]{a @class{gtk-file-filter} object}
+  @arg{mime-type]{name of a MIME type}
+  @begin{short}
+    Adds a rule allowing a given mime type to @arg{filter}.
+  @end{short}
+
+  Since 2.4
+  @see-class{gtk-file-filter}"
+  (filter (g-object gtk-file-filter))
+  (mime-type :string))
+
+(export 'gtk-file-filter-add-mime-type)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_filter_add_pattern ()
