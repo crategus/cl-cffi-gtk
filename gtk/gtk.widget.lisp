@@ -2919,24 +2919,24 @@
 
 (defcfun ("gtk_widget_destroy" gtk-widget-destroy) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-8-1}
+ "@version{2013-11-12}
   @argument[widget]{a @class{gtk-widget} object}
-  @short{Destroys a @arg{widget}.}
+  @short{Destroys a widget.}
 
-  When a @arg{widget} is destroyed, it will break any references it holds to
-  other objects. If the @arg{widget} is inside a container, the @arg{widget}
-  will be removed from the container. If the @arg{widget} is a toplevel, derived
-  from @class{gtk-window}), it will be removed from the list of toplevels, and
-  the reference GTK+ holds to it will be removed. Removing a @arg{widget} from
-  its container or the list of toplevels results in the @arg{widget} being
-  finalized, unless you have added additional references to the @arg{widget}
-  with the function @fun{g-object-ref}.
+  When a widget is destroyed, it will break any references it holds to other
+  objects. If the widget is inside a container, the widget will be removed from
+  the container. If the widget is a toplevel, derived from @class{gtk-window},
+  it will be removed from the list of toplevels, and the reference GTK+ holds
+  to it will be removed. Removing a widget from its container or the list of
+  toplevels results in the widget being finalized, unless you have added
+  additional references to the widget with the function @fun{g-object-ref}.
 
-  In most cases, only toplevel widgets (windows) require explicit destruction,
+  In most cases, only toplevel windows require explicit destruction,
   because when you destroy a toplevel its children will be destroyed as well.
   @see-class{gtk-widget}
   @see-class{gtk-window}
-  @see-function{g-object-ref}"
+  @see-function{g-object-ref}
+  @see-function{gtk-widget-in-destruction}"
   (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-destroy)
@@ -2947,11 +2947,13 @@
 
 (defcfun ("gtk_widget_in_destruction" gtk-widget-in-destruction) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2012-12-23}
-  @argument[widget]{a @class{gtk-widget} instance}
+ "@version{2013-11-12}
+  @argument[widget]{a @class{gtk-widget} object}
   @return{@em{True} if @arg{widget} is being destroyed.}
-  @short{Returns whether the @arg{widget} is currently being destroyed.}
-  This information can sometimes be used to avoid doing unnecessary work."
+  @short{Returns whether the widget is currently being destroyed.}
+  This information can sometimes be used to avoid doing unnecessary work.
+  @see-class{gtk-widget}
+  @see-function{gtk-widget-destroy}"
   (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-in-destruction)
@@ -2981,13 +2983,15 @@
 
 (defcfun ("gtk_widget_unparent" gtk-widget-unparent) :void
  #+cl-cffi-gtk-documentation
- "@version{2012-12-23}
-  @argument[widget]{a @class{gtk-widget} instance}
+ "@version{2013-11-12}
+  @argument[widget]{a @class{gtk-widget} object}
   @short{This function is only for use in widget implementations.}
   Should be called by implementations of the remove method on
   @class{gtk-container}, to dissociate a child from the container.
   @see-class{gtk-widget}
-  @see-class{gtk-container}"
+  @see-class{gtk-container}
+  @see-function{gtk-widget-reparent}
+  @see-function{gtk-widget-set-parent}"
   (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-unparent)
@@ -2998,18 +3002,18 @@
 
 (defcfun ("gtk_widget_show" gtk-widget-show) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-7-30}
+ "@version{2013-11-12}
   @argument[widget]{a @class{gtk-widget} object}
   @begin{short}
-    Flags a @arg{widget} to be displayed.
+    Flags a widget to be displayed.
   @end{short}
-  Any @arg{widget} that is not shown will not appear on the screen. If you want
-  to show all the widgets in a container, it is easier to call the function
+  Any widget that is not shown will not appear on the screen. If you want to
+  show all the widgets in a container, it is easier to call the function
   @fun{gtk-widget-show-all} on the container, instead of individually showing
   the widgets.
 
   Remember that you have to show the containers containing a widget, in
-  addition to the @arg{widget} itself, before it will appear onscreen.
+  addition to the widget itself, before it will appear onscreen.
 
   When a toplevel container is shown, it is immediately realized and mapped;
   other shown widgets are realized and mapped when their toplevel container is
@@ -3027,13 +3031,13 @@
 
 (defcfun ("gtk_widget_show_now" gtk-widget-show-now) :void
  #+cl-cffi-gtk-documentation
- "@version{2012-12-23}
-  @argument[widget]{a @class{gtk-widget} instance}
+ "@version{2013-11-12}
+  @argument[widget]{a @class{gtk-widget} object}
   @short{Shows a widget.}
-  If @arg{widget} is an unmapped toplevel widget (i. e. a @class{gtk-window}
-  that has not yet been shown), enter the main loop and wait for the window to
-  actually be mapped. Be careful; because the main loop is running, anything can
-  happen during this function.
+  If @arg{widget} is an unmapped toplevel widget, i. e. a @class{gtk-window}
+  that has not yet been shown, enter the main loop and wait for the window to
+  actually be mapped. Be careful; because the main loop is running, anything
+  can happen during this function.
   @see-class{gtk-widget}
   @see-class{gtk-window}"
   (widget (g-object gtk-widget)))
@@ -3046,10 +3050,11 @@
 
 (defcfun ("gtk_widget_hide" gtk-widget-hide) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-7-30}
+ "@version{2013-11-12}
   @argument[widget]{a @class{gtk-widget} object}
   Reverses the effects of the function @fun{gtk-widget-show}, causing the
-  @arg{widget} to be hidden, so it is invisible to the user.
+  widget to be hidden, so it is invisible to the user.
+  @see-class{gtk-widget}
   @see-function{gtk-widget-show}
   @see-function{gtk-widget-show-all}"
   (widget (g-object gtk-widget)))
@@ -3062,11 +3067,11 @@
 
 (defcfun ("gtk_widget_show_all" gtk-widget-show-all) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-7-30}
+ "@version{2013-11-12}
   @argument[widget]{a @class{gtk-widget} object}
   @begin{short}
-    Recursively shows a @arg{widget}, and any child widgets if the @arg{widget}
-    is a container.
+    Recursively shows a widget, and any child widgets if the widget is a
+    container.
   @end{short}
   @see-class{gtk-widget}
   @see-function{gtk-widget-show}
@@ -3081,11 +3086,12 @@
 
 (defcfun ("gtk_widget_map" gtk-widget-map) :void
  #+cl-cffi-gtk-documentation
- "@version{2012-12-23}
-  @argument[widget]{a @class{gtk-widget} instance}
+ "@version{2013-11-12}
+  @argument[widget]{a @class{gtk-widget} object}
   @short{This function is only for use in widget implementations.}
-  Causes a @arg{widget} to be mapped if it isn't already.
-  @see-class{gtk-widget}"
+  Causes a widget to be mapped if it is not already.
+  @see-class{gtk-widget}
+  @see-function{gtk-widget-unmap}"
   (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-map)
@@ -3096,11 +3102,12 @@
 
 (defcfun ("gtk_widget_unmap" gtk-widget-unmap ) :void
  #+cl-cffi-gtk-documentation
- "@version{2012-12-23}
-  @argument[widget]{a @class{gtk-widget} instance}
+ "@version{2013-11-12}
+  @argument[widget]{a @class{gtk-widget} object}
   @short{This function is only for use in widget implementations.}
-  Causes a @arg{widget} to be unmapped if it's currently mapped.
-  @see-class{gtk-widget}"
+  Causes a widget to be unmapped if it is currently mapped.
+  @see-class{gtk-widget}
+  @see-function{gtk-widget-map}"
   (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-unmap)
@@ -3111,26 +3118,27 @@
 
 (defcfun ("gtk_widget_realize" gtk-widget-realize) :void
  #+cl-cffi-gtk-documentation
- "@version{2012-12-23}
-  @argument[widget]{a @class{gtk-widget} instance}
+ "@version{2013-11-12}
+  @argument[widget]{a @class{gtk-widget} object}
   @begin{short}
-    Creates the GDK (windowing system) resources associated with a @arg{widget}.
+    Creates the GDK (windowing system) resources associated with a widget.
   @end{short}
   For example, @code{widget->window} will be created when a widget is realized.
   Normally realization happens implicitly; if you show a widget and all its
   parent containers, then the widget will be realized and mapped automatically.
 
-  Realizing a @arg{widget} requires all the widget's parent widgets to be
-  realized; calling @sym{gtk-widget-realize} realizes the widget's parents in
+  Realizing a widget requires all the widget's parent widgets to be realized;
+  calling the function @sym{gtk-widget-realize} realizes the widget's parents in
   addition to @arg{widget} itself. If a widget is not yet inside a toplevel
   window when you realize it, bad things will happen.
 
-  This function is primarily used in widget implementations, and isn't very
+  This function is primarily used in widget implementations, and is not very
   useful otherwise. Many times when you think you might need it, a better
   approach is to connect to a signal that will be called after the widget is
-  realized automatically, such as \"draw\". Or simply @fun{g-signal-connect} to
-  the \"realize\" signal.
+  realized automatically, such as the \"draw\" signal. Or simply use the
+  function @fun{g-signal-connect} with the \"realize\" signal.
   @see-class{gtk-widget}
+  @see-function{gtk-widget-unrealize}
   @see-function{g-signal-connect}"
   (width (g-object gtk-widget)))
 
@@ -3142,12 +3150,13 @@
 
 (defcfun ("gtk_widget_unrealize" gtk-widget-unrealize) :void
  #+cl-cffi-gtk-documentation
- "@version{2012-12-23}
-  @argument[widget]{a @class{gtk-widget} instance}
+ "@version{2013-11-12}
+  @argument[widget]{a @class{gtk-widget} object}
   @short{This function is only useful in widget implementations.}
-  Causes a @arg{widget} to be unrealized (frees all GDK resources associated
-  with the @arg{widget}, such as @code{widget->window}).
-  @see-class{gtk-widget}"
+  Causes a widget to be unrealized, frees all GDK resources associated
+  with the widget, such as @code{widget->window}.
+  @see-class{gtk-widget}
+  @see-function{gtk-widget-realize}"
   (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-unrealize)
@@ -3207,7 +3216,7 @@
 (defcfun ("gtk_widget_queue_resize" gtk-widget-queue-resize) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-2-4}
-  @argument[widget]{a @class{GtkWidget} instance}
+  @argument[widget]{a @class{gtk-widget} object}
   @begin{short}
     This function is only for use in widget implementations.
   @end{short}

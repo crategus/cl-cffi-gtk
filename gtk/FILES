@@ -19,7 +19,7 @@ GTK+ Core Reference
     not implemented                  - Bindings
 
     gtk.enumerations.lisp            - Standard Enumerations       - GTK+ 3.6.4
-    gtk.selections.lisp              - Selections                  - GTK+ 3.6.4%
+    gtk.selections.lisp              - Selections                  - GTK+ 3.8.6&
     gtk.mount-operation.lisp         - Filesystem utilities        - GTK+ 3.6.4%
 
 Theming in GTK+
@@ -68,7 +68,7 @@ GTK+ Widgets and Objects
     not implemented                  - GtkLevelBar
 
     gtk.info-bar.lisp                - GtkInfoBar                  - GTK+ 3.6.4
-    gtk.status-icon.lisp             - GtkStatusIcon               - GTK+ 3.6.4&
+    gtk.status-icon.lisp             - GtkStatusIcon               - GTK+ 3.8.6&
     gtk.spinner.lisp                 - GtkSpinner                  - GTK+ 3.6.4
 
   Buttons and Toggles

@@ -4,9 +4,10 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -76,25 +77,42 @@
 ;;;
 ;;; Description
 ;;;
-;;; GtkPaperSize handles paper sizes. It uses the standard called
-;;; "PWG 5101.1-2002 PWG: Standard for Media Standardized Names" to name the
-;;; paper sizes (and to get the data for the page sizes). In addition to
-;;; standard paper sizes, GtkPaperSize allows to construct custom paper sizes
-;;; with arbitrary dimensions.
-;;;
-;;; The GtkPaperSize object stores not only the dimensions (width and height)
-;;; of a paper size and its name, it also provides default print margins.
-;;;
-;;; Printing support has been added in GTK+ 2.10.
+
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkPaperSize
-;;;
-;;; typedef struct _GtkPaperSize GtkPaperSize;
 ;;; ----------------------------------------------------------------------------
+
+(glib::at-init () (foreign-funcall "gtk_paper_size_get_type" :int))
+
+(define-g-boxed-opaque gtk-paper-size "GtkPaperSize"
+  :alloc (%gtk-paper-size-new (null-pointer)))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-paper-size atdoc:*class-name-alias*) "CStruct"
+      (documentation 'gtk-paper-size 'type)
+ "@version{2013-11-12}
+  @begin{short}
+    @sym{gtk-paper-size} handles paper sizes. It uses the standard called
+    \"PWG 5101.1-2002 PWG: Standard for Media Standardized Names\" to name the
+    paper sizes and to get the data for the page sizes. In addition to
+    standard paper sizes, @symbol{gtk-paper-size} allows to construct custom
+    paper sizes with arbitrary dimensions.
+  @end{short}
+
+  The @symbol{gtk-paper-size} object stores not only the dimensions (width and
+  height) of a paper size and its name, it also provides default print margins.
+
+  Printing support has been added in GTK+ 2.10.
+  @begin{pre}
+(define-g-boxed-opaque gtk-paper-size \"GtkPaperSize\"
+  :alloc (%gtk-paper-size-new (null-pointer)))
+  @end{pre}")
+
+(export 'gtk-paper-size)
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkUnit
@@ -181,22 +199,31 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_paper_size_new ()
-;;;
-;;; GtkPaperSize * gtk_paper_size_new (const gchar *name);
-;;;
-;;; Creates a new GtkPaperSize object by parsing a PWG 5101.1-2002 paper name.
-;;;
-;;; If name is NULL, the default paper size is returned,
-;;; see gtk_paper_size_get_default().
-;;;
-;;; name :
-;;;     a paper size name, or NULL
-;;;
-;;; Returns :
-;;;     a new GtkPaperSize, use gtk_paper_size_free() to free it
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_paper_size_new" %gtk-paper-size-new) :pointer
+  (name :string))
+
+(defcfun ("gtk_paper_size_new" gtk-paper-size-new)
+    (g-boxed-foreign gtk-paper-size)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-12}
+  @argument[name]{a paper size name, or @code{nil}}
+  @return{A new @class{gtk-paper-size}.}
+  @begin{short}
+    Creates a new @class{gtk-paper-size} object by parsing a PWG 5101.1-2002
+    paper name.
+  @end{short}
+
+  If name is @code{nil}, the default paper size is returned, see the function
+  @fun{gtk-paper-size-get-default}.
+
+  Since 2.10
+  @see-class{gtk-paper-size}
+  @see-function{gtk-paper-size-get-default}"
+  (name :string))
+
+(export 'gtk-paper-size-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_paper_size_new_from_ppd ()
@@ -328,223 +355,265 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_paper_size_get_name ()
-;;;
-;;; const gchar * gtk_paper_size_get_name (GtkPaperSize *size);
-;;;
-;;; Gets the name of the GtkPaperSize.
-;;;
-;;; size :
-;;;     a GtkPaperSize object
-;;;
-;;; Returns :
-;;;     the name of size
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_paper_size_get_name" gtk-paper-size-get-name) :string
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-12}
+  @argument[size]{a @class{gtk-paper-size} object}
+  @return{The name of @arg{size}.}
+  @begin{short}
+    Gets the name of the @class{gtk-paper-size}.
+  @end{short}
+
+  Since 2.10
+  @see-class{gtk-paper-size}"
+  (size (g-boxed-foreign gtk-paper-size)))
+
+(export 'gtk-paper-size-get-name)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_paper_size_get_display_name ()
-;;;
-;;; const gchar * gtk_paper_size_get_display_name (GtkPaperSize *size);
-;;;
-;;; Gets the human-readable name of the GtkPaperSize.
-;;;
-;;; size :
-;;;     a GtkPaperSize object
-;;;
-;;; Returns :
-;;;     the human-readable name of size
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_paper_size_get_display_name" gtk-paper-size-get-display-name)
+    :string
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-12}
+  @argument[size]{a @class{gtk-paper-size} object}
+  @return{The human-readable name of size.}
+  @begin{short}
+    Gets the human-readable name of the @class{gtk-paper-size}.
+  @end{short}
+
+  Since 2.10
+  @see-class{gtk-paper-size}"
+  (size (g-boxed-foreign gtk-paper-size)))
+
+(export 'gtk-paper-size-get-display-name)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_paper_size_get_ppd_name ()
-;;;
-;;; const gchar * gtk_paper_size_get_ppd_name (GtkPaperSize *size);
-;;;
-;;; Gets the PPD name of the GtkPaperSize, which may be NULL.
-;;;
-;;; size :
-;;;     a GtkPaperSize object
-;;;
-;;; Returns :
-;;;     the PPD name of size
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_paper_size_get_ppd_name" gtk-paper-size-get-ppd-name) :string
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-12}
+  @argument[size]{a @class{gtk-paper-size} object}
+  @return{The PPD name of size.}
+  @begin{short}
+    Gets the PPD name of the @class{gtk-paper-size}, which may be @code{nil}.
+  @end{short}
+
+  Since 2.10
+  @see-class{gtk-paper-size}"
+  (size (g-boxed-foreign gtk-paper-size)))
+
+(export 'gtk-paper-size-get-ppd-name)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_paper_size_get_width ()
-;;;
-;;; gdouble gtk_paper_size_get_width (GtkPaperSize *size, GtkUnit unit);
-;;;
-;;; Gets the paper width of the GtkPaperSize, in units of unit.
-;;;
-;;; size :
-;;;     a GtkPaperSize object
-;;;
-;;; unit :
-;;;     the unit for the return value, not GTK_UNIT_NONE
-;;;
-;;; Returns :
-;;;     the paper width
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_paper_size_get_width" gtk-paper-size-get-width) :double
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-12}
+  @argument[size]{a @class{gtk-paper-size} object}
+  @argument[unit]{the unit for the return value, not @code{:none}}
+  @return{The paper width.}
+  @begin{short}
+    Gets the paper width of the @class{gtk-paper-size}, in units of @arg{unit}.
+  @end{short}
+
+  Since 2.10
+  @see-class{gtk-paper-size}
+  @see-symbol{gtk-unit}
+  @see-function{gtk-paper-size-get-height}"
+  (size (g-boxed-foreign gtk-paper-size))
+  (unit gtk-unit))
+
+(export 'gtk-paper-size-get-width)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_paper_size_get_height ()
-;;;
-;;; gdouble gtk_paper_size_get_height (GtkPaperSize *size, GtkUnit unit);
-;;;
-;;; Gets the paper height of the GtkPaperSize, in units of unit.
-;;;
-;;; size :
-;;;     a GtkPaperSize object
-;;;
-;;; unit :
-;;;     the unit for the return value, not GTK_UNIT_NONE
-;;;
-;;; Returns :
-;;;     the paper height
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_paper_size_get_height" gtk-paper-size-get-height) :double
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-12}
+  @argument[size]{a @class{gtk-paper-size} object}
+  @argument[unit]{the unit for the return value, not @code{:none}}
+  @return{The paper height.}
+  @begin{short}
+    Gets the paper height of the @class{gtk-paper-size}, in units of @arg{unit}.
+  @end{short}
+
+  Since 2.10
+  @see-class{gtk-paper-size}
+  @see-symbol{gtk-unit}"
+  (size (g-boxed-foreign gtk-paper-size))
+  (unit gtk-unit))
+
+(export 'gtk-paper-size-get-height)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_paper_size_is_custom ()
-;;;
-;;; gboolean gtk_paper_size_is_custom (GtkPaperSize *size);
-;;;
-;;; Returns TRUE if size is not a standard paper size.
-;;;
-;;; size :
-;;;     a GtkPaperSize object
-;;;
-;;; Returns :
-;;;     whether size is a custom paper size.
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_paper_size_is_custom" gtk-paper-size-is-custom) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-12}
+  @argument[size]{a @class{gtk-paper-size} object}
+  @return{Whether size is a custom paper size.}
+  @short{Returns @em{true} if @arg{size} is not a standard paper size.}
+  @see-class{gtk-paper-size}"
+  (size (g-boxed-foreign gtk-paper-size)))
+
+(export 'gtk-paper-size-is-custom)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_paper_size_set_size ()
-;;;
-;;; void gtk_paper_size_set_size (GtkPaperSize *size,
-;;;                               gdouble width,
-;;;                               gdouble height,
-;;;                               GtkUnit unit);
-;;;
-;;; Changes the dimensions of a size to width x height.
-;;;
-;;; size :
-;;;     a custom GtkPaperSize object
-;;;
-;;; width :
-;;;     the new width in units of unit
-;;;
-;;; height :
-;;;     the new height in units of unit
-;;;
-;;; unit :
-;;;     the unit for width and height
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_paper_size_set_size" gtk-paper-size-set-size) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-12}
+  @argument[size]{a custom @class{gtk-paper-size} object}
+  @argument[width]{the new width in units of unit}
+  @argument[height]{the new height in units of unit}
+  @argument[unit]{the unit for @arg{width} and @arg{height}}
+  @begin{short}
+    Changes the dimensions of a size to @arg{width} x @arg{height}.
+  @end{short}
+
+  Since 2.10
+  @see-class{gtk-paper-size}
+  @see-symbol{gtk-unit}"
+  (size (g-boxed-foreign gtk-paper-size))
+  (width :double)
+  (height :double)
+  (unit gtk-unit))
+
+(export 'gtk-paper-size-set-size)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_paper_size_get_default_top_margin ()
-;;;
-;;; gdouble gtk_paper_size_get_default_top_margin (GtkPaperSize *size,
-;;;                                                GtkUnit unit);
-;;;
-;;; Gets the default top margin for the GtkPaperSize.
-;;;
-;;; size :
-;;;     a GtkPaperSize object
-;;;
-;;; unit :
-;;;     the unit for the return value, not GTK_UNIT_NONE
-;;;
-;;; Returns :
-;;;     the default top margin
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_paper_size_get_default_top_margin"
+           gtk-paper-size-get-default-top-margin) :double
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-12}
+  @argument[size]{a @class{gtk-paper-size} object}
+  @argument[unit]{the unit of type @symbol{gtk-unit} for the return value,
+    not @code{:none}}
+  @return{The default top margin.}
+  @begin{short}
+    Gets the default top margin for the @class{gtk-paper-size}.
+  @end{short}
+
+  Since 2.10
+  @see-class{gtk-paper-size}
+  @see-symbol{gtk-unit}
+  @see-function{gtk-paper-size-get-default-bottom-margin}"
+  (size (g-boxed-foreign gtk-paper-size))
+  (unit gtk-unit))
+
+(export 'gtk-paper-size-get-default-top-margin)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_paper_size_get_default_bottom_margin ()
-;;;
-;;; gdouble gtk_paper_size_get_default_bottom_margin (GtkPaperSize *size,
-;;;                                                   GtkUnit unit);
-;;;
-;;; Gets the default bottom margin for the GtkPaperSize.
-;;;
-;;; size :
-;;;     a GtkPaperSize object
-;;;
-;;; unit :
-;;;     the unit for the return value, not GTK_UNIT_NONE
-;;;
-;;; Returns :
-;;;     the default bottom margin
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_paper_size_get_default_bottom_margin"
+           gtk-paper-size-get-default-bottom-margin) :double
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-12}
+  @argument[size]{a @class{gtk-paper-size} object}
+  @argument[unit]{the unit of type @symbol{gtk-unit} for the return value,
+    not @code{:none}}
+  @return{The default bottom margin.}
+  @begin{short}
+    Gets the default bottom margin for the @class{gtk-paper-size}.
+  @end{short}
+
+  Since 2.10
+  @see-class{gtk-paper-size}
+  @see-symbol{gtk-unit}
+  @see-function{gtk-paper-size-get-default-top-margin}"
+  (size (g-boxed-foreign gtk-paper-size))
+  (unit gtk-unit))
+
+(export 'gtk-paper-size-get-default-bottom-margin)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_paper_size_get_default_left_margin ()
-;;;
-;;; gdouble gtk_paper_size_get_default_left_margin (GtkPaperSize *size,
-;;;                                                 GtkUnit unit);
-;;;
-;;; Gets the default left margin for the GtkPaperSize.
-;;;
-;;; size :
-;;;     a GtkPaperSize object
-;;;
-;;; unit :
-;;;     the unit for the return value, not GTK_UNIT_NONE
-;;;
-;;; Returns :
-;;;     the default left margin
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_paper_size_get_default_left_margin"
+           gtk-paper-size-get-default-left-margin) :double
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-12}
+  @argument[size]{a @class{gtk-paper-size} object}
+  @argument[unit]{the unit of type @symbol{gtk-unit} for the return value,
+    not @code{:none}}
+  @return{The default left margin.}
+  @begin{short}
+    Gets the default left margin for the @class{gtk-paper-size}.
+  @end{short}
+
+  Since 2.10
+  @see-class{gtk-paper-size}
+  @see-symbol{gtk-unit}
+  @see-function{gtk-paper-size-get-default-right-margin}"
+  (size (g-boxed-foreign gtk-paper-size))
+  (unit gtk-unit))
+
+(export 'gtk-paper-size-get-default-left-margin)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_paper_size_get_default_right_margin ()
-;;;
-;;; gdouble gtk_paper_size_get_default_right_margin (GtkPaperSize *size,
-;;;                                                  GtkUnit unit);
-;;;
-;;; Gets the default right margin for the GtkPaperSize.
-;;;
-;;; size :
-;;;     a GtkPaperSize object
-;;;
-;;; unit :
-;;;     the unit for the return value, not GTK_UNIT_NONE
-;;;
-;;; Returns :
-;;;     the default right margin
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_paper_size_get_default_right_margin"
+           gtk-paper-size-get-default-right-margin) :double
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-12}
+  @argument[size]{a @class{gtk-paper-size} object}
+  @argument[unit]{the unit of type @symbol{gtk-unit} for the return value,
+    not @code{:none}}
+  @return{The default right margin.}
+  @begin{short}
+    Gets the default right margin for the @class{gtk-paper-size}.
+  @end{short}
+
+  Since 2.10
+  @see-class{gtk-paper-size}
+  @see-symbol{gtk-unit}
+  @see-function{gtk-paper-size-get-default-left-margin}"
+  (size (g-boxed-foreign gtk-paper-size))
+  (unit gtk-unit))
+
+(export 'gtk-paper-size-get-default-right-margin)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_paper_size_get_default ()
-;;;
-;;; const gchar * gtk_paper_size_get_default (void);
-;;;
-;;; Returns the name of the default paper size, which depends on the current
-;;; locale.
-;;;
-;;; Returns :
-;;;     The name of the default paper size. The string is owned by GTK+ and
-;;;     should not be modified.
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_paper_size_get_default" gtk-paper-size-get-default) :string
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-12}
+  @begin{return}
+    The name of the default paper size. The string is owned by GTK+ and
+    should not be modified.
+  @end{return}
+  @begin{short}
+    Returns the name of the default paper size, which depends on the current
+    locale.
+  @end{short}
+
+  Since 2.10
+  @see-class{gtk-paper-size}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_paper_size_new_from_key_file ()

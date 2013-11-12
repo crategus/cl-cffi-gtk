@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.8.6 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -37,7 +37,7 @@
 ;;; Synopsis
 ;;;
 ;;;     GtkSelectionData
-;;;     GtkTargetFlags  <-- gtk.selections.lisp
+;;;     GtkTargetFlags  <-- gtk.drag-and-drop.lisp
 ;;;     GtkTargetEntry
 ;;;     GtkTargetList
 ;;;
@@ -57,6 +57,7 @@
 ;;;     gtk_target_list_find
 ;;;     gtk_target_table_free
 ;;;     gtk_target_table_new_from_list
+;;;
 ;;;     gtk_selection_owner_set
 ;;;     gtk_selection_owner_set_for_display
 ;;;     gtk_selection_add_target
@@ -83,10 +84,12 @@
 ;;;     gtk_selection_data_get_display
 ;;;     gtk_selection_data_get_format
 ;;;     gtk_selection_data_get_target
+;;;
 ;;;     gtk_targets_include_image
 ;;;     gtk_targets_include_text
 ;;;     gtk_targets_include_uri
 ;;;     gtk_targets_include_rich_text
+;;;
 ;;;     gtk_selection_remove_all
 ;;;     gtk_selection_data_copy
 ;;;     gtk_selection_data_free
@@ -186,64 +189,71 @@
 (setf (gethash 'gtk-selection-data-selection atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-selection-data-selection 'function)
- "@version{2013-8-27}
+ "@version{2013-11-10}
   Accessor of the slot @code{selection} of the @class{gtk-selection-data}
   structure.
-  @see-class{gtk-selection-data}")
+  @see-class{gtk-selection-data}
+  @see-function{gtk-selection-data-get-selection}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-selection-data-target atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-selection-data-target 'function)
- "@version{2013-8-27}
+ "@version{2013-11-10}
   Accessor of the slot @code{target} of the @class{gtk-selection-data}
   structure.
-  @see-class{gtk-selection-data}")
+  @see-class{gtk-selection-data}
+  @see-function{gtk-selection-data-get-target}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-selection-data-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-selection-data-type 'function)
- "@version{2013-8-27}
+ "@version{2013-11-10}
   Accessor of the slot @code{type} of the @class{gtk-selection-data}
   structure.
-  @see-class{gtk-selection-data}")
+  @see-class{gtk-selection-data}
+  @see-function{gtk-selection-data-get-data-type}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-selection-data-format atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-selection-data-format 'function)
- "@version{2013-8-27}
+ "@version{2013-11-10}
   Accessor of the slot @code{format} of the @class{gtk-selection-data}
   structure.
-  @see-class{gtk-selection-data}")
+  @see-class{gtk-selection-data}
+  @see-function{gtk-selection-data-get-format}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-selection-data-data atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-selection-data-data 'function)
- "@version{2013-8-27}
+ "@version{2013-11-10}
   Accessor of the slot @code{data} of the @class{gtk-selection-data}
   structure.
-  @see-class{gtk-selection-data}")
+  @see-class{gtk-selection-data}
+  @see-class{gtk-selection-data-get-data}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-selection-data-length atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-selection-data-length 'function)
- "@version{2013-8-27}
+ "@version{2013-11-10}
   Accessor of the slot @code{length} of the @class{gtk-selection-data}
   structure.
-  @see-class{gtk-selection-data}")
+  @see-class{gtk-selection-data}
+  @see-function{gtk-selection-data-get-length}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-selection-data-display atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-selection-data-display 'function)
- "@version{2013-8-27}
+ "@version{2013-11-11}
   Accessor of the slot @code{display} of the @class{gtk-selection-data}
   structure.
-  @see-class{gtk-selection-data}")
+  @see-class{gtk-selection-data}
+  @see-function{gtk-selection-data-get-display}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkTargetFlags
@@ -724,79 +734,80 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_selection_owner_set ()
-;;;
-;;; gboolean gtk_selection_owner_set (GtkWidget *widget,
-;;;                                   GdkAtom selection,
-;;;                                   guint32 time_);
-;;;
-;;; Claims ownership of a given selection for a particular widget, or, if widget
-;;; is NULL, release ownership of the selection.
-;;;
-;;; widget :
-;;;     a GtkWidget, or NULL
-;;;
-;;; selection :
-;;;     an interned atom representing the selection to claim
-;;;
-;;; time_ :
-;;;     timestamp with which to claim the selection
-;;;
-;;; Returns :
-;;;     TRUE if the operation succeeded
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_selection_owner_set" gtk-selection-owner-set) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-10}
+  @argument[widget]{a @class{gtk-widget}, or @code{nil}}
+  @argument[selection]{an interned atom representing the selection to claim}
+  @argument[time]{timestamp with which to claim the selection}
+  @return{@em{True} if the operation succeeded.}
+  Claims ownership of a given selection for a particular widget, or, if
+  @arg{widget} is @code{nil}, release ownership of the selection.
+  @see-class{gtk-widget}
+  @see-symbol{gdk-atom}
+  @see-function{gtk-selection-owner-set-for-display}"
+  (widget (g-object gtk-widget))
+  (selection gdk-atom-as-string)
+  (time :uint))
+
+(export 'gtk-selection-owner-set)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_selection_owner_set_for_display ()
-;;;
-;;; gboolean gtk_selection_owner_set_for_display (GdkDisplay *display,
-;;;                                               GtkWidget *widget,
-;;;                                               GdkAtom selection,
-;;;                                               guint32 time_);
-;;;
-;;; Claim ownership of a given selection for a particular widget, or, if widget
-;;; is NULL, release ownership of the selection.
-;;;
-;;; display :
-;;;     the Gdkdisplay where the selection is set
-;;;
-;;; widget :
-;;;     new selection owner (a GdkWidget), or NULL
-;;;
-;;; selection :
-;;;     an interned atom representing the selection to claim.
-;;;
-;;; time_ :
-;;;     timestamp with which to claim the selection
-;;;
-;;; Returns :
-;;;     TRUE if the operation succeeded
-;;;
-;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_selection_owner_set_for_display"
+           gtk-selection-owner-set-for-display) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-10}
+  @argument[display]{the @class{gdk-display} where the selection is set}
+  @argument[widget]{new selection owner, a @class{gtk-widget}, or @code{nil}}
+  @argument[selection]{an interned atom representing the selection to claim}
+  @argument[time]{timestamp with which to claim the selection}
+  @return{@em{True} if the operation succeeded.}
+  @begin{short}
+    Claim ownership of a given selection for a particular widget, or, if widget
+    is @code{nil}, release ownership of the selection.
+  @end{short}
+
+  Since 2.2
+  @see-class{gdk-display}
+  @see-class{gtk-widget}
+  @see-symbol{gdk-atom}
+  @see-function{gtk-selection-owner-set}"
+  (display (g-object gdk-display))
+  (widget (g-object gtk-widget))
+  (selection gdk-atom-as-string)
+  (time :uint))
+
+(export 'gtk-selection-owner-set-for-display)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_selection_add_target ()
-;;;
-;;; void gtk_selection_add_target (GtkWidget *widget,
-;;;                                GdkAtom selection,
-;;;                                GdkAtom target,
-;;;                                guint info);
-;;;
-;;; Appends a specified target to the list of supported targets for a given
-;;; widget and selection.
-;;;
-;;; widget :
-;;;     a GtkTarget
-;;;
-;;; selection :
-;;;     the selection
-;;;
-;;; target :
-;;;     target to add.
-;;;
-;;; info :
-;;;     A unsigned integer which will be passed back to the application.
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_selection_add_target" gtk-selection-add-target) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-10}
+  @argument[widget]{a @class{gtk-widget} object}
+  @argument[selection]{the selection}
+  @argument[target]{target to add}
+  @argument[info]{a unsigned integer which will be passed back to the
+    application}
+  Appends a specified @arg{target} to the list of supported targets for a given
+  @arg{widget} and @arg{selection}.
+  @see-class{gtk-widget}
+  @see-symbol{gdk-atom}
+  @see-function{gtk-selection-add-targets}
+  @see-function{gtk-selection-get-targets}"
+  (widget (g-object gtk-widget))
+  (selection gdk-atom-as-string)
+  (target gdk-atom-as-string)
+  (info :uint))
+
+(export 'gtk-selection-add-target)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_selection_add_targets ()
@@ -824,17 +835,20 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_selection_clear_targets ()
-;;;
-;;; void gtk_selection_clear_targets (GtkWidget *widget, GdkAtom selection);
-;;;
-;;; Remove all targets registered for the given selection for the widget.
-;;;
-;;; widget :
-;;;     a GtkWidget
-;;;
-;;; selection :
-;;;     an atom representing a selection
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_selection_clear_targets" gtk-selection-clear-targets) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-10}
+  @argument[widget]{a @class{gtk-widget} object}
+  @argument[selection]{an atom representing a selection}
+  Remove all targets registered for the given @arg{selection} for the widget.
+  @see-class{gtk-widget}
+  @see-symbol{gdk-atom}"
+  (widget (g-object gtk-widget))
+  (selection gdk-atom-as-string))
+
+(export 'gtk-selection-clear-targets)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_selection_convert ()
@@ -842,10 +856,10 @@
 
 (defcfun ("gtk_selection_convert" gtk-selection-convert) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-7-21}
+ "@version{2013-11-9}
   @argument[widget]{the widget which acts as requestor}
   @argument[selection]{which selection to get}
-  @argument[target]{form of information desired, e. g., @code{STRING})}
+  @argument[target]{form of information desired, e. g., @code{STRING}}
   @argument[time]{time of request, usually of triggering event, in emergency,
     you could use @var{+gdk-current-time+}}
   @begin{return}
@@ -854,7 +868,8 @@
   @end{return}
   Requests the contents of a @arg{selection}. When received, a
   \"selection-received\" signal will be generated.
-  @see-class{gtk-selection-data}"
+  @see-class{gtk-selection-data}
+  @see-variable{+gdk-current-time+}"
   (widget (g-object gtk-widget))
   (selection gdk-atom-as-string)
   (target gdk-atom-as-string)
@@ -901,13 +916,15 @@
 
 (defun gtk-selection-data-set-text (selection-data str)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-17}
+ "@version{2013-11-9}
   @argument[selection-data]{a @class{gtk-selection-data} structure}
   @argument[str]{a UTF-8 string}
   @return{@em{True} if the selection was successfully set, otherwise
     @code{nil}.}
   Sets the contents of the selection from a UTF-8 encoded string. The string
-  is converted to the form determined by @code{selection_data->target}."
+  is converted to the form determined by @code{selection_data->target}.
+  @see-class{gtk-selection-data}
+  @see-function{gtk-selection-data-get-text}"
   (%gtk-selection-data-set-text selection-data str (length str)))
 
 (export 'gtk-selection-data-set-text)
@@ -918,15 +935,16 @@
 
 (defcfun ("gtk_selection_data_get_text" gtk-selection-data-get-text) :string
  #+cl-cffi-gtk-documentation
- "@version{2013-6-17}
+ "@version{2013-11-9}
   @argument[selection-data]{a @class{gtk-selection-data} structure}
   @begin{return}
     If the selection data contained a recognized text type and it could be
     converted to UTF-8, a newly allocated string containing the converted
-    text, otherwise @code{nil}. If the result is non-@code{nil} it must be
-    freed with @code{g_free()}.
+    text, otherwise @code{nil}.
   @end{return}
-  Gets the contents of the selection data as a UTF-8 string."
+  Gets the contents of the selection data as a UTF-8 string.
+  @see-class{gtk-selection-data}
+  @see-function{gtk-selection-data-set-text}"
   (selection-data (g-boxed-foreign gtk-selection-data)))
 
 (export 'gtk-selection-data-get-text)
@@ -1027,251 +1045,326 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_selection_data_get_targets ()
-;;;
-;;; gboolean gtk_selection_data_get_targets
-;;;                                     (const GtkSelectionData *selection_data,
-;;;                                      GdkAtom **targets,
-;;;                                      gint *n_atoms);
-;;;
-;;; Gets the contents of selection_data as an array of targets. This can be used
-;;; to interpret the results of getting the standard TARGETS target that is
-;;; always supplied for any selection.
-;;;
-;;; selection_data :
-;;;     a GtkSelectionData object
-;;;
-;;; targets :
-;;;     location to store an array of targets. The result stored here must be
-;;;     freed with g_free().
-;;;
-;;; n_atoms :
-;;;     location to store number of items in targets.
-;;;
-;;; Returns :
-;;;     TRUE if selection_data contains a valid array of targets, otherwise
-;;;     FALSE.
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_selection_data_get_targets" %gtk-selection-data-get-targets)
+    :boolean
+  (selection-data (g-boxed-foreign gtk-selection-data))
+  (targets (:pointer gdk-atom-as-string))
+  (n-atoms (:pointer :int)))
+
+(defun gtk-selection-data-get-targets (selection-data)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-10}
+  @argument[selection-data]{a @class{gtk-selection-data} structure}
+  @begin{return}
+    @code{targets} -- a listof targets. The result stored here must be
+                      freed with g_free(). @br{}
+  @end{return}
+  @begin{short}
+    Gets the contents of @arg{selection-data} as a list of targets.
+  @end{short}
+  This can be used to interpret the results of getting the standard
+  @code{\"TARGETS\"} target that is always supplied for any selection.
+  @see-class{gtk-selection-data}"
+  (with-foreign-objects ((targets-ptr :pointer) (n-atoms :int))
+    (when (%gtk-selection-data-get-targets selection-data targets-ptr n-atoms)
+      (let ((result nil))
+        (loop for i from 0 below (mem-ref n-atoms :int)
+              do (push (mem-aref targets-ptr 'gdk-atom-as-string i) result))
+        (nreverse result)))))
+
+(export 'gtk-selection-data-get-targets)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_selection_data_targets_include_image ()
-;;;
-;;; gboolean gtk_selection_data_targets_include_image
-;;;                                     (const GtkSelectionData *selection_data,
-;;;                                      gboolean writable);
-;;;
-;;; Given a GtkSelectionData object holding a list of targets, determines if any
-;;; of the targets in targets can be used to provide a GdkPixbuf.
-;;;
-;;; selection_data :
-;;;     a GtkSelectionData object
-;;;
-;;; writable :
-;;;     whether to accept only targets for which GTK+ knows how to convert a
-;;;     pixbuf into the format
-;;;
-;;; Returns :
-;;;     TRUE if selection_data holds a list of targets, and a suitable target
-;;;     for images is included, otherwise FALSE.
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_selection_data_targets_include_image"
+           gtk-selection-data-targets-include-image) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-12}
+  @argument[selection-data]{a @class{gtk-selection-data} structure}
+  @argument[writable]{whether to accept only targets for which GTK+ knows how
+    to convert a pixbuf into the format}
+  @begin{return}
+    @em{True} if @arg{selection-data} holds a list of targets, and a suitable
+    target for images is included, otherwise @code{nil}.
+  @end{return}
+  @begin{short}
+    Given a @class{gtk-selection-data} structure holding a list of targets,
+    determines if any of the targets in targets can be used to provide a
+    @class{gdk-pixbuf}.
+  @end{short}
+
+  Since 2.6
+  @see-class{gtk-selection-data}
+  @see-class{gdk-pixbuf}"
+  (selection-data (g-boxed-foreign gtk-selection-data))
+  (writeable :boolean))
+
+(export 'gtk-selection-data-targets-include-image)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_selection_data_targets_include_text ()
-;;;
-;;; gboolean gtk_selection_data_targets_include_text
-;;;                                    (const GtkSelectionData *selection_data);
-;;;
-;;; Given a GtkSelectionData object holding a list of targets, determines if any
-;;; of the targets in targets can be used to provide text.
-;;;
-;;; selection_data :
-;;;     a GtkSelectionData object
-;;;
-;;; Returns :
-;;;     TRUE if selection_data holds a list of targets, and a suitable target
-;;;     for text is included, otherwise FALSE.
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_selection_data_targets_include_text"
+           gtk-selection-data-targets-include-text) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-10}
+  @argument[selection-data]{a @class{gtk-selection-data} object}
+  @begin{return}
+    @em{True} if @arg{selection-data} holds a list of targets, and a suitable
+    target for text is included, otherwise @code{nil}.
+  @end{return}
+  @begin{short}
+    Given a @class{gtk-selection-data} object holding a list of targets,
+    determines if any of the targets in targets can be used to provide text.
+  @end{short}
+  @see-class{gtk-selection-data}"
+  (selection-data (g-boxed-foreign gtk-selection-data)))
+
+(export 'gtk-selection-data-targets-include-text)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_selection_data_targets_include_uri ()
-;;;
-;;; gboolean gtk_selection_data_targets_include_uri
-;;;                                    (const GtkSelectionData *selection_data);
-;;;
-;;; Given a GtkSelectionData object holding a list of targets, determines if any
-;;; of the targets in targets can be used to provide a list or URIs.
-;;;
-;;; selection_data :
-;;;     a GtkSelectionData object
-;;;
-;;; Returns :
-;;;     TRUE if selection_data holds a list of targets, and a suitable target
-;;;     for URI lists is included, otherwise FALSE.
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_selection_data_targets_include_uri"
+           gtk-selection-data-targets-include-uri) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-12}
+  @argument[selection-data]{a @class{gtk-selection-data} object}
+  @begin{return}
+    @em{True} if @arg{selection-data} holds a list of targets, and a suitable
+    target for URI lists is included, otherwise @code{nil}.
+  @end{return}
+  @begin{short}
+    Given a @class{gtk-selection-data} object holding a list of targets,
+    determines if any of the targets in targets can be used to provide a list
+    or URIs.
+  @end{short}
+
+  Since 2.10
+  @see-class{gtk-selection-data}"
+  (selection-data (g-boxed-foreign gtk-selection-data)))
+
+(export 'gtk-selection-data-targets-include-uri)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_selection_data_targets_include_rich_text ()
-;;;
-;;; gboolean gtk_selection_data_targets_include_rich_text
-;;;                                     (const GtkSelectionData *selection_data,
-;;;                                      GtkTextBuffer *buffer);
-;;;
-;;; Given a GtkSelectionData object holding a list of targets, determines if any
-;;; of the targets in targets can be used to provide rich text.
-;;;
-;;; selection_data :
-;;;     a GtkSelectionData object
-;;;
-;;; buffer :
-;;;     a GtkTextBuffer
-;;;
-;;; Returns :
-;;;     TRUE if selection_data holds a list of targets, and a suitable target
-;;;     for rich text is included, otherwise FALSE.
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_selection_data_targets_include_rich_text"
+           gtk-selection-data-targets-include-rich-text) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-12}
+  @argument[selection-data]{a @class{gtk-selection-data} object}
+  @argument[buffer]{a @class{gtk-text-buffer}}
+  @begin{return}
+    @em{True} if @arg{selection-data} holds a list of targets, and a suitable
+    target for rich text is included, otherwise @code{nil}.
+  @end{return}
+  @begin{short}
+    Given a @class{gtk-selection-data} object holding a list of targets,
+    determines if any of the targets in targets can be used to provide rich
+    text.
+  @end{short}
+
+  Since 2.10
+  @see-class{gtk-selection-data}
+  @see-class{gtk-text-buffer}"
+  (selection-data (g-boxed-foreign gtk-selection-data))
+  (buffer (g-object gtk-text-buffer)))
+
+(export 'gtk-selection-data-targets-include-rich-text)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_selection_data_get_selection ()
-;;;
-;;; GdkAtom gtk_selection_data_get_selection
-;;;                                    (const GtkSelectionData *selection_data);
-;;;
-;;; Retrieves the selection GdkAtom of the selection data.
-;;;
-;;; selection_data :
-;;;     a pointer to a GtkSelectionData structure.
-;;;
-;;; Returns :
-;;;     the selection GdkAtom of the selection data
-;;;
-;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-selection-data-get-selection))
+
+(defun gtk-selection-data-get-selection (selection-data)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-10}
+  @argument[selection-data]{a @class{gtk-selection-data} structure}
+  @return{The selection @symol{gdk-atom} of the selection data}
+  @begin{short}
+    Retrieves the selection @symbol{gdk-atom} of the selection data.
+  @end{short}
+
+  Since 2.16
+  @see-class{gtk-selection-data}
+  @see-symbol{gdk-atom}"
+  (gtk-selection-data-selection selection-data))
+
+(export 'gtk-selection-data-get-selection)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_selection_data_get_data ()
-;;;
-;;; const guchar * gtk_selection_data_get_data
-;;;                                    (const GtkSelectionData *selection_data);
-;;;
-;;; Retrieves the raw data of the selection.
-;;;
-;;; selection_data :
-;;;     a pointer to a GtkSelectionData structure.
-;;;
-;;; Returns :
-;;;     the raw data of the selection.
-;;;
-;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-selection-data-get-data))
+
+(defun gtk-selection-data-get-data (selection-data)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-10}
+  @argument[selection-data]{a @class{gtk-selection-data} structure}
+  @return{The raw data of the selection.}
+  @begin{short}
+    Retrieves the raw data of the selection.
+  @end{short}
+
+  Since 2.14
+  @see-class{gtk-selection-data}
+  @see-function{gtk-selection-data-get-data-with-length}"
+  (gtk-selection-data-data selection-data))
+
+(export 'gtk-selection-data-get-data)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_selection_data_get_length ()
-;;;
-;;; gint gtk_selection_data_get_length (const GtkSelectionData *selection_data);
-;;;
-;;; Retrieves the length of the raw data of the selection.
-;;;
-;;; selection_data :
-;;;     a pointer to a GtkSelectionData structure.
-;;;
-;;; Returns :
-;;;     the length of the data of the selection.
-;;;
-;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-selection-data-get-length))
+
+(defun gtk-selection-data-get-length (selection-data)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-10}
+  @argument[selection-data]{a @class{gtk-selection-data} structure}
+  @return{The length of the data of the selection.}
+  @begin{short}
+    Retrieves the length of the raw data of the selection.
+  @end{short}
+
+  Since 2.14
+  @see-class{gtk-selection-data}
+  @see-function{gtk-selection-data-get-data-with-length}"
+  (gtk-selection-data-length selection-data))
+
+(export 'gtk-selection-data-get-length)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_selection_data_get_data_with_length ()
-;;;
-;;; const guchar * gtk_selection_data_get_data_with_length
-;;;                                     (const GtkSelectionData *selection_data,
-;;;                                      gint *length);
-;;;
-;;; Retrieves the raw data of the selection along with its length.
-;;;
-;;; selection_data :
-;;;     a pointer to a GtkSelectionData structure
-;;;
-;;; length :
-;;;     return location for length of the data segment
-;;;
-;;; Returns :
-;;;     the raw data of the selection Rename to: gtk_selection_data_get_data.
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_selection_data_get_data_with_length"
+          %gtk-selection-data-get-data-with-length) :pointer
+  (selection-data (g-boxed-foreign gtk-selection-data))
+  (length (:pointer :int)))
+
+(defun gtk-selection-data-get-data-with-length (selection-data)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-10}
+  @argument[selection-data]{a @class{gtk-selection-data} structure}
+  @begin{return}
+    @code{length} -- length of the data segment @br{}
+    @code{data} -- the raw data of the selection, see the function
+                   @fun{gtk-selection-data-get-data}
+  @end{return}
+  @begin{short}
+    Retrieves the raw data of the selection along with its length.
+  @end{short}
+
+  Since 3.0
+  @see-class{gtk-selection-data}
+  @see-function{gtk-selection-data-get-data}"
+  (with-foreign-object (length-ptr :int)
+    (let ((data (%gtk-selection-data-get-data-with-length selection-data
+                                                          length-ptr)))
+      (let ((length (mem-ref length-ptr :int)))
+        (if (> length 0)
+            (values length data)
+            (values length nil))))))
+
+(export 'gtk-selection-data-get-data-with-length)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_selection_data_get_data_type ()
-;;;
-;;; GdkAtom gtk_selection_data_get_data_type
-;;;                                    (const GtkSelectionData *selection_data);
-;;;
-;;; Retrieves the data type of the selection.
-;;;
-;;; selection_data :
-;;;     a pointer to a GtkSelectionData structure.
-;;;
-;;; Returns :
-;;;     the data type of the selection
-;;;
-;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-selection-data-get-data-type))
+
+(defun gtk-selection-data-get-data-type (selection-data)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-10}
+  @argument[selection-data]{a @class{gtk-selection-data} structure}
+  @return{The data type of the selection.}
+  @begin{short}
+    Retrieves the data type of the selection.
+  @end{short}
+
+  Since 2.14
+  @see-class{gtk-selection-data}"
+  (gtk-selection-data-type selection-data))
+
+(export 'gtk-selection-data-get-data-type)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_selection_data_get_display ()
-;;;
-;;; GdkDisplay * gtk_selection_data_get_display
-;;;                                    (const GtkSelectionData *selection_data);
-;;;
-;;; Retrieves the display of the selection.
-;;;
-;;; selection_data :
-;;;     a pointer to a GtkSelectionData structure.
-;;;
-;;; Returns :
-;;;     the display of the selection
-;;;
-;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-selection-data-get-display))
+
+(defun gtk-selection-data-get-display (selection-data)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-10}
+  @argument[selection-data]{a @class{gtk-selection-data} structure}
+  @return{The display of the selection.}
+  @begin{short}
+    Retrieves the display of the selection.
+  @end{short}
+
+  Since 2.14
+  @see-class{gtk-selection-data}
+  @see-class{gdk-display}"
+  (gtk-selection-data-display selection-data))
+
+(export 'gtk-selection-data-get-display)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_selection_data_get_format ()
-;;;
-;;; gint gtk_selection_data_get_format (const GtkSelectionData *selection_data);
-;;;
-;;; Retrieves the format of the selection.
-;;;
-;;; selection_data :
-;;;     a pointer to a GtkSelectionData structure.
-;;;
-;;; Returns :
-;;;     the format of the selection.
-;;;
-;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-selection-data-get-format))
+
+(defun gtk-selection-data-get-format (selection-data)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-10}
+  @argument[selection-data]{a @class{gtk-selection-data} structure}
+  @return{The format of the selection.}
+  @begin{short}
+    Retrieves the format of the selection.
+  @end{short}
+
+  Since 2.14
+  @see-class{gtk-selection-data}"
+  (gtk-selection-data-format selection-data))
+
+(export 'gtk-selection-data-get-format)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_selection_data_get_target ()
-;;;
-;;; GdkAtom gtk_selection_data_get_target
-;;;                                    (const GtkSelectionData *selection_data);
-;;;
-;;; Retrieves the target of the selection.
-;;;
-;;; selection_data :
-;;;     a pointer to a GtkSelectionData structure.
-;;;
-;;; Returns :
-;;;     the target of the selection
-;;;
-;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-selection-data-get-target))
+
+(defun gtk-selection-data-get-target (selection-data)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-10}
+  @argument[selection-data]{a @class{gtk-selection-data} structure}
+  @return{The target of the selection.}
+  @begin{short}
+    Retrieves the target of the selection.
+  @end{short}
+
+  Since 2.14
+  @see-class{gtk-selection-data}"
+  (gtk-selection-data-target selection-data))
+
+(export 'gtk-selection-data-get-target)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_targets_include_image ()
