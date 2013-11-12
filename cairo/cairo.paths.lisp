@@ -397,37 +397,41 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_close_path ()
-;;;
-;;; void cairo_close_path (cairo_t *cr);
-;;;
-;;; Adds a line segment to the path from the current point to the beginning of
-;;; the current sub-path, (the most recent point passed to cairo_move_to()), and
-;;; closes this sub-path. After this call the current point will be at the
-;;; joined endpoint of the sub-path.
-;;;
-;;; The behavior of cairo_close_path() is distinct from simply calling
-;;; cairo_line_to() with the equivalent coordinate in the case of stroking. When
-;;; a closed sub-path is stroked, there are no caps on the ends of the sub-path.
-;;; Instead, there is a line join connecting the final and initial segments of
-;;; the sub-path.
-;;;
-;;; If there is no current point before the call to cairo_close_path(), this
-;;; function will have no effect.
-;;;
-;;; Note: As of cairo version 1.2.4 any call to cairo_close_path() will place an
-;;; explicit MOVE_TO element into the path immediately after the CLOSE_PATH
-;;; element, (which can be seen in cairo_copy_path() for example). This can
-;;; simplify path processing in some cases as it may not be necessary to save
-;;; the "last move_to point" during processing as the MOVE_TO immediately after
-;;; the CLOSE_PATH will provide that point.
-;;;
-;;; cr :
-;;;     a cairo context
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("cairo_close_path" cairo-close-path) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-11}
+  @argument[cr]{a cairo context}
+  @begin{short}
+    Adds a line segment to the path from the current point to the beginning of
+    the current sub-path, the most recent point passed to the function
+    @fun{cairo-move-to}, and closes this sub-path. After this call the current
+    point will be at the joined endpoint of the sub-path.
+  @end{short}
+
+  The behavior of the funcion @sym{cairo-close-path} is distinct from simply
+  calling the function @fun{cairo-line-to} with the equivalent coordinate in the
+  case of stroking. When a closed sub-path is stroked, there are no caps on the
+  ends of the sub-path. Instead, there is a line join connecting the final and
+  initial segments of the sub-path.
+
+  If there is no current point before the call to the function
+  @sym{cairo-close-path}, this function will have no effect.
+
+  Note: As of cairo version 1.2.4 any call to the function
+  @sym{cairo-close-path} will place an explicit @code{MOVE_TO} element into the
+  path immediately after the @code{CLOSE_PATH} element, which can be seen in
+  the function @fun{cairo-copy-path} for example. This can simplify path
+  processing in some cases as it may not be necessary to save the
+  \"last move_to point\" during processing as the @code{MOVE_TO} immediately
+  after the @code{CLOSE_PATH} will provide that point.
+
+  Since 1.0
+  @see-symbol{cairo-t}
+  @see-function{cairo-move-to}
+  @see-function{cairo-line-to}
+  @see-function{cairo-copy-path}"
   (cr (:pointer (:struct cairo-t))))
 
 (export 'cairo-close-path)

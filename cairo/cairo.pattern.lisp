@@ -1271,63 +1271,75 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum cairo_extend_t
-;;;
-;;; typedef enum {
-;;;     CAIRO_EXTEND_NONE,
-;;;     CAIRO_EXTEND_REPEAT,
-;;;     CAIRO_EXTEND_REFLECT,
-;;;     CAIRO_EXTEND_PAD
-;;; } cairo_extend_t;
-;;;
-;;; cairo_extend_t is used to describe how pattern color/alpha will be
-;;; determined for areas "outside" the pattern's natural area, (for example,
-;;; outside the surface bounds or outside the gradient geometry).
-;;;
-;;; Mesh patterns are not affected by the extend mode.
-;;;
-;;; The default extend mode is CAIRO_EXTEND_NONE for surface patterns and
-;;; CAIRO_EXTEND_PAD for gradient patterns.
-;;;
-;;; New entries may be added in future versions.
-;;;
-;;; CAIRO_EXTEND_NONE
-;;;     pixels outside of the source pattern are fully transparent (Since 1.0)
-;;;
-;;; CAIRO_EXTEND_REPEAT
-;;;     the pattern is tiled by repeating (Since 1.0)
-;;;
-;;; CAIRO_EXTEND_REFLECT
-;;;     the pattern is tiled by reflecting at the edges (Since 1.0; but only
-;;;     implemented for surface patterns since 1.6)
-;;;
-;;; CAIRO_EXTEND_PAD
-;;;     pixels outside of the pattern copy the closest pixel from the source
-;;;     (Since 1.2; but only implemented for surface patterns since 1.6)
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defcenum cairo-extend-t
+  :none
+  :repeat
+  :reflect
+  :pad)
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'cairo-extend-t atdoc:*symbol-name-alias*) "CEnum"
+      (gethash 'cairo-extend-t atdoc:*external-symbols*)
+ "@version{2013-11-11}
+  @begin{short}
+    @sym{cairo-extend-t} is used to describe how pattern color/alpha will be
+    determined for areas \"outside\" the pattern's natural area, for example,
+    outside the surface bounds or outside the gradient geometry.
+  @end{short}
+
+  Mesh patterns are not affected by the extend mode.
+
+  The default extend mode is @code{:none} for surface patterns and @code{:pad}
+  for gradient patterns.
+
+  New entries may be added in future versions.
+  @begin{pre}
+(defcenum cairo-extend-t
+  :none
+  :repeat
+  :reflect
+  :pad)
+  @end{pre}
+  @begin[code]{table}
+    @entry[:none]{Pixels outside of the source pattern are fully transparent.
+      Since 1.0}
+    @entry[:repeat]{The pattern is tiled by repeating. Since 1.0}
+    @entry[:reflect]{The pattern is tiled by reflecting at the edges. Since 1.0;
+      but only implemented for surface patterns since 1.6.}
+    @entry[:pad]{Pixels outside of the pattern copy the closest pixel from the
+      source. Since 1.2; but only implemented for surface patterns since 1.6.}
+  @end{table}
+  Since 1.0
+  @symbol{cairo-pattern-t}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_pattern_set_extend ()
-;;;
-;;; void cairo_pattern_set_extend (cairo_pattern_t *pattern,
-;;;                                cairo_extend_t extend);
-;;;
-;;; Sets the mode to be used for drawing outside the area of a pattern. See
-;;; cairo_extend_t for details on the semantics of each extend strategy.
-;;;
-;;; The default extend mode is CAIRO_EXTEND_NONE for surface patterns and
-;;; CAIRO_EXTEND_PAD for gradient patterns.
-;;;
-;;; pattern :
-;;;     a cairo_pattern_t
-;;;
-;;; extend :
-;;;     a cairo_extend_t describing how the area outside of the pattern will be
-;;;     drawn
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_pattern_set_extend" cairo-pattern-set-extend) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-11}
+  @argument[pattern]{a @symbol{cairo-pattern-t}}
+  @argument[extend]{a @symbol{cairo-extend-t} describing how the area outside of
+    the pattern will be drawn}
+  @begin{short}
+    Sets the mode to be used for drawing outside the area of a pattern.
+  @end{short}
+  See @symbol{cairo-extend-t} for details on the semantics of each extend
+  strategy.
+
+  The default extend mode is @code{:none} for surface patterns and @code{:pad}
+  for gradient patterns.
+
+  Since 1.0
+  @see-symbol{cairo-pattern-t}
+  @see-symbol{cairo-extend-t}"
+  (pattern (:pointer (:struct cairo-pattern-t)))
+  (extend cairo-extend-t))
+
+(export 'cairo-pattern-set-extend)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_pattern_get_extend ()

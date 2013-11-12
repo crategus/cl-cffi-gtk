@@ -41,6 +41,7 @@
 ;;;
 ;;;     cairo_surface_t
 ;;;     cairo_content_t
+;;;     cairo_format_t     <--- cairo.image-surface.lisp
 ;;;
 ;;;     cairo_surface_create_similar
 ;;;     cairo_surface_create_similar_image
@@ -263,6 +264,63 @@
 (export 'cairo-content-t)
 
 ;;; ----------------------------------------------------------------------------
+;;; enum cairo_format_t
+;;; ----------------------------------------------------------------------------
+
+(defcenum cairo-format-t
+  (:invalid -1)
+  (:argb32 0)
+  (:rgb24 1)
+  (:a8 2)
+  (:a1 3)
+  (:rgb16-565 4)
+  (:rgb30 5))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'cairo-format-t atdoc:*symbol-name-alias*) "CEnum"
+      (gethash 'cairo-format-t atdoc:*external-symbols*)
+ "@version{2013-10-20}
+  @begin{short}
+    @sym{cairo-format-t} is used to identify the memory format of image data.
+  @end{short}
+
+  New entries may be added in future versions.
+  @begin{pre}
+(defcenum cairo-format-t
+  (:invalid -1)
+  (:argb32 0)
+  (:rgb24 1)
+  (:a8 2)
+  (:a1 3)
+  (:rgb16-565 4)
+  (:rgb30 5))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:invalid]{No such format exists or is supported.}
+    @entry{:argb32]{Each pixel is a 32-bit quantity, with alpha in the upper
+      8 bits, then red, then green, then blue. The 32-bit quantities are stored
+      native-endian. Pre-multiplied alpha is used. That is, 50% transparent
+      red is 0x80800000, not 0x80ff0000. Since 1.0.}
+    @entry[:rgb24]{Each pixel is a 32-bit quantity, with the upper 8 bits
+      unused. Red, Green, and Blue are stored in the remaining 24 bits in that
+      order. Since 1.0.}
+    @entry[:a8]{Each pixel is a 8-bit quantity holding an alpha value.
+      Since 1.0.}
+    @entry[:a1]{Each pixel is a 1-bit quantity holding an alpha value. Pixels
+      are packed together into 32-bit quantities. The ordering of the bits
+      matches the endianess of the platform. On a big-endian machine, the first
+      pixel is in the uppermost bit, on a little-endian machine the first pixel
+      is in the least-significant bit. Since 1.0.}
+    @entry[:rgb16-565]{Each pixel is a 16-bit quantity with red in the upper 5
+      bits, then green in the middle 6 bits, and blue in the lower 5 bits.
+      Since 1.2.}
+    @entry[:rgb30]{Like @code{:rgb24} but with 10bpc. Since 1.12.}
+  @end{table}
+  Since 1.0")
+
+(export 'cairo-format-t)
+
+;;; ----------------------------------------------------------------------------
 ;;; cairo_surface_create_similar ()
 ;;; ----------------------------------------------------------------------------
 
@@ -311,94 +369,99 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_surface_create_similar_image ()
-;;;
-;;; cairo_surface_t * cairo_surface_create_similar_image
-;;;                                                     (cairo_surface_t *other,
-;;;                                                      cairo_format_t format,
-;;;                                                      int width,
-;;;                                                      int height);
-;;;
-;;; Create a new image surface that is as compatible as possible for uploading
-;;; to and the use in conjunction with an existing surface. However, this
-;;; surface can still be used like any normal image surface.
-;;;
-;;; Initially the surface contents are all 0 (transparent if contents have
-;;; transparency, black otherwise.)
-;;;
-;;; Use cairo_surface_create_similar() if you don't need an image surface.
-;;;
-;;; other :
-;;;     an existing surface used to select the preference of the new surface
-;;;
-;;; format :
-;;;     the format for the new surface
-;;;
-;;; width :
-;;;     width of the new surface, (in device-space units)
-;;;
-;;; height :
-;;;     height of the new surface (in device-space units)
-;;;
-;;; Returns :
-;;;     a pointer to the newly allocated image surface. The caller owns the
-;;;     surface and should call cairo_surface_destroy() when done with it. This
-;;;     function always returns a valid pointer, but it will return a pointer to
-;;;     a "nil" surface if other is already in an error state or any other error
-;;;     occurs.
-;;;
-;;; Since 1.12
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_surface_create_similar_image"
+           cairo-surface-create-similar-image)
+    (:pointer (:struct cairo-surface-t))
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-11}
+  @argument[other]{an existing surface used to select the preference of the new
+    surface}
+  @argument[format]{the format of type @symbol{cairo-format-t} for the new
+    surface}
+  @argument[width]{width of the new surface, in device-space units}
+  @argument[height]{height of the new surface, in device-space units}
+  @begin{return}
+    A pointer to the newly allocated image surface. The caller owns the
+    surface and should call the function @fun{cairo-surface-destroy} when done
+    with it. This function always returns a valid pointer, but it will return a
+    pointer to a \"nil\" surface if other is already in an error state or any
+    other error occurs.
+  @end{return}
+  @begin{short}
+    Create a new image surface that is as compatible as possible for uploading
+    to and the use in conjunction with an existing surface.
+  @end{short}
+  However, this surface can still be used like any normal image surface.
+
+  Initially the surface contents are all 0, transparent if contents have
+  transparency, black otherwise.
+
+  Use the function @fun{cairo-surface-create-similar} if you do not need an
+  image surface.
+
+  Since 1.12
+  @see-symbol{cairo-surface-t}
+  @see-symbol{cairo-format-t}
+  @see-function{cairo-surface-destroy}
+  @see-function{cairo-surface-create-similar}"
+  (other (:pointer (:struct cairo-surface-t)))
+  (format cairo-format-t)
+  (width :int)
+  (height :int))
+
+(export 'cairo-surface-create-similar-image)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_surface_create_for_rectangle ()
-;;;
-;;; cairo_surface_t * cairo_surface_create_for_rectangle
-;;;                                                    (cairo_surface_t *target,
-;;;                                                     double x,
-;;;                                                     double y,
-;;;                                                     double width,
-;;;                                                     double height);
-;;;
-;;; Create a new surface that is a rectangle within the target surface. All
-;;; operations drawn to this surface are then clipped and translated onto the
-;;; target surface. Nothing drawn via this sub-surface outside of its bounds is
-;;; drawn onto the target surface, making this a useful method for passing
-;;; constrained child surfaces to library routines that draw directly onto the
-;;; parent surface, i.e. with no further backend allocations, double buffering
-;;; or copies.
-;;;
-;;; Note
-;;;
-;;; The semantics of subsurfaces have not been finalized yet unless the
-;;; rectangle is in full device units, is contained within the extents of the
-;;; target surface, and the target or subsurface's device transforms are not
-;;; changed.
-;;;
-;;; target :
-;;;     an existing surface for which the sub-surface will point to
-;;;
-;;; x :
-;;;     the x-origin of the sub-surface from the top-left of the target surface
-;;;     (in device-space units)
-;;;
-;;; y :
-;;;     the y-origin of the sub-surface from the top-left of the target surface
-;;;     (in device-space units)
-;;;
-;;; width :
-;;;     width of the sub-surface (in device-space units)
-;;;
-;;; height :
-;;;     height of the sub-surface (in device-space units)
-;;;
-;;; Returns :
-;;;     a pointer to the newly allocated surface. The caller owns the surface
-;;;     and should call cairo_surface_destroy() when done with it. This function
-;;;     always returns a valid pointer, but it will return a pointer to a "nil"
-;;;     surface if other is already in an error state or any other error occurs.
-;;;
-;;; Since 1.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_surface_create_for_rectangle"
+           cairo-surface-create-for-rectangle)
+    (:pointer (:struct cairo-surface-t))
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-11}
+  @argument[target]{an existing surface for which the sub-surface will point to}
+  @argument[x]{the x-origin of the sub-surface from the top-left of the target
+    surface, in device-space units}
+  @argument[y]{the y-origin of the sub-surface from the top-left of the target
+    surface, in device-space units}
+  @argument[width]{width of the sub-surface, in device-space units}
+  @argument[height]{height of the sub-surface, in device-space units}
+  @begin{return}
+    A pointer to the newly allocated surface. The caller owns the surface
+    and should call the function @fun{cairo-surface-destroy} when done with it.
+    This function always returns a valid pointer, but it will return a pointer
+    to a \"nil\" surface if other is already in an error state or any other
+    error occurs.
+  @end{return}
+  @begin{short}
+    Create a new surface that is a rectangle within the target surface.
+  @end{short}
+  All operations drawn to this surface are then clipped and translated onto the
+  target surface. Nothing drawn via this sub-surface outside of its bounds is
+  drawn onto the target surface, making this a useful method for passing
+  constrained child surfaces to library routines that draw directly onto the
+  parent surface, i. e. with no further backend allocations, double buffering
+  or copies.
+
+  @subheading{Note}
+    The semantics of subsurfaces have not been finalized yet unless the
+    rectangle is in full device units, is contained within the extents of the
+    target surface, and the target or subsurface's device transforms are not
+    changed.
+
+  Since 1.10
+  @see-symbol{cairo-surface-t}
+  @see-function{cairo-surface-destroy}"
+  (target (:pointer (:struct cairo-surface-t)))
+  (x :double)
+  (y :double)
+  (width :double)
+  (height :double))
+
+(export 'cairo-surface-create-for-rectangle)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_surface_reference ()

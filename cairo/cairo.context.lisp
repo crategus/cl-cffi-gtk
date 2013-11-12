@@ -408,27 +408,41 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_pop_group ()
-;;;
-;;; cairo_pattern_t * cairo_pop_group (cairo_t *cr);
-;;;
-;;; Terminates the redirection begun by a call to cairo_push_group() or
-;;; cairo_push_group_with_content() and returns a new pattern containing the
-;;; results of all drawing operations performed to the group.
-;;;
-;;; The cairo_pop_group() function calls cairo_restore(), (balancing a call to
-;;; cairo_save() by the push_group function), so that any changes to the
-;;; graphics state will not be visible outside the group.
-;;;
-;;; cr :
-;;;     a cairo context
-;;;
-;;; Returns :
-;;;     a newly created (surface) pattern containing the results of all drawing
-;;;     operations performed to the group. The caller owns the returned object
-;;;     and should call cairo_pattern_destroy() when finished with it.
-;;;
-;;; Since 1.2
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_pop_group" cairo-pop-group)
+    (:pointer (:struct cairo-pattern-t))
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-11}
+  @argument[cr]{a cairo context}
+  @begin{return}
+    A newly created (surface) pattern containing the results of all drawing
+    operations performed to the group. The caller owns the returned object
+    and should call the function @fun{cairo-pattern-destroy} when finished with
+    it.
+  @end{return}
+  @begin{short}
+    Terminates the redirection begun by a call to the function
+    @fun{cairo-push-group} or @fun{cairo-push-group-with-content} and returns a
+    new pattern containing the results of all drawing operations performed to
+    the group.
+  @end{short}
+
+  The @sym{cairo-pop-group} function calls the function @fun{cairo-restore},
+  balancing a call to the function @fun{cairo-save} by the @code{push-group}
+  function, so that any changes to the graphics state will not be visible
+  outside the group.
+
+  Since 1.2
+  @see-symbol{cairo-t}
+  @see-function{cairo-pattern-destroy}
+  @see-function{cairo-push-group}
+  @see-function{cairo-push-group-with-content}
+  @see-function{cairo-restore}
+  @see-function{cairo-save}"
+  (cr (:pointer (:struct cairo-pattern-t))))
+
+(export 'cairo-pop-group)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_pop_group_to_source ()
@@ -524,46 +538,7 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_set_source_rgba ()
-;;;
-;;; void cairo_set_source_rgba (cairo_t *cr,
-;;;                             double red,
-;;;                             double green,
-;;;                             double blue,
-;;;                             double alpha);
-;;;
-;;; Sets the source pattern within cr to a translucent color. This color will
-;;; then be used for any subsequent drawing operation until a new source pattern
-;;; is set.
-;;;
-;;; The color and alpha components are floating point numbers in the range 0 to
-;;; 1. If the values passed in are outside that range, they will be clamped.
-;;;
-;;; The default source pattern is opaque black, (that is, it is equivalent to
-;;; cairo_set_source_rgba(cr, 0.0, 0.0, 0.0, 1.0)).
-;;;
-;;; cr :
-;;;     a cairo context
-;;;
-;;; red :
-;;;     red component of color
-;;;
-;;; green :
-;;;     green component of color
-;;;
-;;; blue :
-;;;     blue component of color
-;;;
-;;; alpha :
-;;;     alpha component of color
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
-
-;;; void cairo_set_source_rgba (cairo_t *cr,
-;;;                             double red,
-;;;                             double green,
-;;;                             double blue,
-;;;                             double alpha);
 
 (defcfun ("cairo_set_source_rgba" %cairo-set-source-rgba) :void
   (cr (:pointer (:struct cairo-t)))
@@ -573,6 +548,28 @@
   (alpha :double))
 
 (defun cairo-set-source-rgba (cr red green blue alpha)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-12}
+  @argument[cr]{a cairo context}
+  @argument[red]{red component of color}
+  @argument[green]{green component of color}
+  @argument[blue]{blue component of color}
+  @argument[alpha]{alpha component of color}
+  @begin{short}
+    Sets the source pattern within @arg{cr} to a translucent color.
+  @end{short}
+  This color will then be used for any subsequent drawing operation until a new
+  source pattern is set.
+
+  The color and alpha components are floating point numbers in the range 0 to
+  1. If the values passed in are outside that range, they will be clamped.
+
+  The default source pattern is opaque black, that is, it is equivalent to
+  @code{(cairo-set-source-rgba cr 0.0 0.0 0.0 1.0)}.
+
+  Since 1.0
+  @see-symbol{cairo-t}
+  @see-function{cairo-set-source-rgba}"
   (%cairo-set-source-rgba cr
                           (coerce red 'double-float)
                           (coerce green 'double-float)
@@ -583,31 +580,34 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_set_source ()
-;;;
-;;; void cairo_set_source (cairo_t *cr, cairo_pattern_t *source);
-;;;
-;;; Sets the source pattern within cr to source. This pattern will then be used
-;;; for any subsequent drawing operation until a new source pattern is set.
-;;;
-;;; Note: The pattern's transformation matrix will be locked to the user space
-;;; in effect at the time of cairo_set_source(). This means that further
-;;; modifications of the current transformation matrix will not affect the
-;;; source pattern. See cairo_pattern_set_matrix().
-;;;
-;;; The default source pattern is a solid pattern that is opaque black, (that
-;;; is, it is equivalent to cairo_set_source_rgb(cr, 0.0, 0.0, 0.0)).
-;;;
-;;; cr :
-;;;     a cairo context
-;;;
-;;; source :
-;;;     a cairo_pattern_t to be used as the source for subsequent drawing
-;;;     operations.
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("cairo_set_source" cairo-set-source) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-12}
+  @argument[cr]{a cairo context}
+  @argument[source]{a @symbol{cairo-pattern-t} to be used as the source for
+    subsequent drawing operations}
+  @begin{short}
+    Sets the source pattern within @arg{cr} to @arg{source}.
+  @end{short}
+  This pattern will then be used for any subsequent drawing operation until a
+  new source pattern is set.
+
+  @subheading{Note}
+    The pattern's transformation matrix will be locked to the user space
+    in effect at the time of @fun{cairo-set-source}. This means that further
+    modifications of the current transformation matrix will not affect the
+    source pattern. See the function @fun{cairo-pattern-set-matrix}.
+
+  The default source pattern is a solid pattern that is opaque black, that
+  is, it is equivalent to @code{(cairo-set-source-rgb cr 0.0 0.0 0.0)}.
+
+  Since 1.0
+  @see-symbol{cairo-pattern-t}
+  @see-function{cairo-set-source}
+  @see-function{cairo-set-source-rgb}
+  @see-function{cairo-pattern-set-matrix}"
   (cr (:pointer (:struct cairo-t)))
   (source (:pointer (:struct cairo-pattern-t))))
 
@@ -936,54 +936,72 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum cairo_line_cap_t
-;;;
-;;; typedef enum {
-;;;     CAIRO_LINE_CAP_BUTT,
-;;;     CAIRO_LINE_CAP_ROUND,
-;;;     CAIRO_LINE_CAP_SQUARE
-;;; } cairo_line_cap_t;
-;;;
-;;; Specifies how to render the endpoints of the path when stroking.
-;;;
-;;; The default line cap style is CAIRO_LINE_CAP_BUTT.
-;;;
-;;; CAIRO_LINE_CAP_BUTT
-;;;     start(stop) the line exactly at the start(end) point (Since 1.0)
-;;;
-;;; CAIRO_LINE_CAP_ROUND
-;;;     use a round ending, the center of the circle is the end point
-;;;     (Since 1.0)
-;;;
-;;; CAIRO_LINE_CAP_SQUARE
-;;;     use squared ending, the center of the square is the end point
-;;;     (Since 1.0)
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defcenum cairo-line-cap-t
+  :butt
+  :round
+  :square)
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'cairo-line-cap-t atdoc:*symbol-name-alias*) "CEnum"
+      (gethash 'cairo-line-cap-t atdoc:*external-symbols*)
+ "@version{2013-11-12}
+  @begin{short}
+    Specifies how to render the endpoints of the path when stroking.
+  @end{short}
+
+  The default line cap style is @code{:butt}.
+  @begin{pre}
+(defcenum cairo-line-cap-t
+  :butt
+  :round
+  :square)
+  @end{pre}
+  @begin[code]{table}
+    @entry[:butt]{Start (stop) the line exactly at the start (end) point.
+      Since 1.0}
+    @entry[:round]{Use a round ending, the center of the circle is the end
+      point. Since 1.0}
+    @entry[:square]{Use squared ending, the center of the square is the end
+      point. Since 1.0}
+  @end{table}
+  Since 1.0
+  @see-function{cairo-get-line-cap}
+  @see-function{cairo-set-line-cap}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_set_line_cap ()
-;;;
-;;; void cairo_set_line_cap (cairo_t *cr, cairo_line_cap_t line_cap);
-;;;
-;;; Sets the current line cap style within the cairo context. See
-;;; cairo_line_cap_t for details about how the available line cap styles are
-;;; drawn.
-;;;
-;;; As with the other stroke parameters, the current line cap style is examined
-;;; by cairo_stroke(), cairo_stroke_extents(), and cairo_stroke_to_path(), but
-;;; does not have any effect during path construction.
-;;;
-;;; The default line cap style is CAIRO_LINE_CAP_BUTT.
-;;;
-;;; cr :
-;;;     a cairo context
-;;;
-;;; line_cap :
-;;;     a line cap style
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_set_line_cap" cairo-set-line-cap) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-12}
+  @argument[cr]{a cairo context}
+  @argument[line-cap]{a line cap style}
+  @begin{short}
+    Sets the current line cap style within the cairo context.
+  @end{short}
+  See the @symbol{cairo-line-cap-t} enumeration for details about how the
+  available line cap styles are drawn.
+
+  As with the other stroke parameters, the current line cap style is examined
+  by the functions @fun{cairo-stroke}, @fun{cairo-stroke-extents}, and
+  @fun{cairo-stroke-to-path}, but does not have any effect during path
+  construction.
+
+  The default line cap style is @code{:butt}.
+
+  Since 1.0
+  @see-symbol{cairo-t}
+  @see-symbol{cairo-line-cap-t}
+  @see-function{cairo-stroke}
+  @see-function{cairo-stroke-extents}
+  @see-function{cairo-stroke-to-path}"
+  (cr (:pointer (:struct cairo-t)))
+  (line-cap cairo-line-cap-t))
+
+(export 'cairo-set-line-cap)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_get_line_cap ()
@@ -1003,54 +1021,73 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum cairo_line_join_t
-;;;
-;;; typedef enum {
-;;;     CAIRO_LINE_JOIN_MITER,
-;;;     CAIRO_LINE_JOIN_ROUND,
-;;;     CAIRO_LINE_JOIN_BEVEL
-;;; } cairo_line_join_t;
-;;;
-;;; Specifies how to render the junction of two lines when stroking.
-;;;
-;;; The default line join style is CAIRO_LINE_JOIN_MITER.
-;;;
-;;; CAIRO_LINE_JOIN_MITER
-;;;     use a sharp (angled) corner, see cairo_set_miter_limit() (Since 1.0)
-;;;
-;;; CAIRO_LINE_JOIN_ROUND
-;;;     use a rounded join, the center of the circle is the joint point
-;;;     (Since 1.0)
-;;;
-;;; CAIRO_LINE_JOIN_BEVEL
-;;;     use a cut-off join, the join is cut off at half the line width from the
-;;;     joint point (Since 1.0)
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defcenum cairo-line-join-t
+  :miter
+  :round
+  :bevel)
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'cairo-line-join-t atdoc:*symbol-name-alias*) "CEnum"
+      (gethash 'cairo-line-join-t atdoc:*external-symbols*)
+ "@version{2013-11-12}
+  @begin{short}
+    Specifies how to render the junction of two lines when stroking.
+  @end{short}
+
+  The default line join style is @code{:miter}.
+  @begin{pre}
+(defcenum cairo-line-join-t
+  :miter
+  :round
+  :bevel)
+  @end{pre}
+  @begin[code]{table}
+    @entry[:miter]{Use a sharp (angled) corner, see the function
+      @fun{cairo-set-miter-limit}. Since 1.0}
+    @entry[:round]{Use a rounded join, the center of the circle is the joint
+      point. Since 1.0}
+    @entry[:bevel]{Use a cut-off join, the join is cut off at half the line
+      width from the joint point. Since 1.0}
+  @end{table}
+  Since 1.0
+  @see-function{cairo-set-miter-limit}
+  @see-function{cairo-get-line-join}
+  @see-function{cairo-set-line-join}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_set_line_join ()
-;;;
-;;; void cairo_set_line_join (cairo_t *cr, cairo_line_join_t line_join);
-;;;
-;;; Sets the current line join style within the cairo context. See
-;;; cairo_line_join_t for details about how the available line join styles are
-;;; drawn.
-;;;
-;;; As with the other stroke parameters, the current line join style is examined
-;;; by cairo_stroke(), cairo_stroke_extents(), and cairo_stroke_to_path(), but
-;;; does not have any effect during path construction.
-;;;
-;;; The default line join style is CAIRO_LINE_JOIN_MITER.
-;;;
-;;; cr :
-;;;     a cairo context
-;;;
-;;; line_join :
-;;;     a line join style
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_set_line_join" cairo-set-line-join) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-12}
+  @argument[cr]{a cairo context}
+  @argument[line-join]{a line join style of type @symbol{cairo-line-join-t}}
+  @begin{short}
+    Sets the current line join style within the cairo context.
+  @end{short}
+  See the @symbol{cairo-line-join-t} enumeration for details about how the
+  available line join styles are drawn.
+
+  As with the other stroke parameters, the current line join style is examined
+  by the functions @fun{cairo-stroke}, @fun{cairo-stroke-extents}, and
+  @fun{cairo-stroke-to-path}, but does not have any effect during path
+  construction.
+
+  The default line join style is @code{:miter}.
+
+  Since 1.0
+  @see-symbol{cairo-t}
+  @see-symbol{cairo-line-join-t}
+  @see-function{cairo-stroke}
+  @see-function{cairo-stroke-extents}
+  @see-function{cairo-stroke-to-path}"
+  (cr (:pointer (:struct cairo-t)))
+  (line-join cairo-line-join-t))
+
+(export 'cairo-set-line-join)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_get_line_join ()
@@ -1762,23 +1799,23 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_mask ()
-;;;
-;;; void cairo_mask (cairo_t *cr, cairo_pattern_t *pattern);
-;;;
-;;; A drawing operator that paints the current source using the alpha channel of
-;;; pattern as a mask. (Opaque areas of pattern are painted with the source,
-;;; transparent areas are not painted.)
-;;;
-;;; cr :
-;;;     a cairo context
-;;;
-;;; pattern :
-;;;     a cairo_pattern_t
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("cairo_mask" cairo-mask) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-12}
+  @argument[cr]{a cairo context}
+  @argument[pattern]{a @symbol{cairo-pattern-t}}
+  @begin{short}
+    A drawing operator that paints the current source using the alpha channel of
+    pattern as a mask.
+  @end{short}
+  Opaque areas of pattern are painted with the source, transparent areas are not
+  painted.
+
+  Since 1.0
+  @see-symbol{cairo-t}
+  @see-symbol{cairo-pattern-t}"
   (cr (:pointer (:struct cairo-t)))
   (pattern (:pointer (:struct cairo-pattern-t))))
 
@@ -1911,21 +1948,32 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_stroke_preserve ()
-;;;
-;;; void cairo_stroke_preserve (cairo_t *cr);
-;;;
-;;; A drawing operator that strokes the current path according to the current
-;;; line width, line join, line cap, and dash settings. Unlike cairo_stroke(),
-;;; cairo_stroke_preserve() preserves the path within the cairo context.
-;;;
-;;; See cairo_set_line_width(), cairo_set_line_join(), cairo_set_line_cap(),
-;;; cairo_set_dash(), and cairo_stroke_preserve().
-;;;
-;;; cr :
-;;;     a cairo context
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_stroke_preserve" cairo-stroke-preserve) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-11}
+  @argument[cr]{a cairo context}
+  @begin{short}
+    A drawing operator that strokes the current path according to the current
+    line width, line join, line cap, and dash settings.
+  @end{short}
+  Unlike the function @fun{cairo-stroke}, @sym{cairo-stroke-preserve} preserves
+  the path within the cairo context.
+
+  See the functions @fun{cairo-set-line-width}, @fun{cairo-set-line-join},
+  @fun{cairo-set-line-cap}, and @fun{cairo-set-dash}.
+
+  Since 1.0
+  @see-symbol{cairo-t}
+  @see-function{cairo-stroke}
+  @see-function{cairo-set-line-width}
+  @see-function{cairo-set-line-join}
+  @see-function{cairo-set-line-cap}
+  @see-function{cairo-set-dash}"
+  (cr (:pointer (:struct cairo-t))))
+
+(export 'cairo-stroke-preserve)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_stroke_extents ()
