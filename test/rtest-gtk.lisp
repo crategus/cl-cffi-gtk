@@ -64,6 +64,7 @@
 (load "rtest-gtk-frame.lisp")
 (load "rtest-gtk-list-store.lisp")
 (load "rtest-gtk-main-loop.lisp")
+(load "rtest-gtk-selections.lisp")
 (load "rtest-gtk-text-buffer.lisp")
 (load "rtest-gtk-text-iter.lisp")
 (load "rtest-gtk-tool-palette.lisp")

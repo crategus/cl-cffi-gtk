@@ -9,5 +9,6 @@
 (load "rtest-gdk-events.lisp")
 (load "rtest-gdk-general.lisp")
 (load "rtest-gdk-key-values.lisp")
+(load "rtest-gdk-selections.lisp")
 (load "rtest-gdk-visual.lisp")
 
