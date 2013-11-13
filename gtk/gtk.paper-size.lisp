@@ -227,131 +227,148 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_paper_size_new_from_ppd ()
-;;;
-;;; GtkPaperSize * gtk_paper_size_new_from_ppd (const gchar *ppd_name,
-;;;                                             const gchar *ppd_display_name,
-;;;                                             gdouble width,
-;;;                                             gdouble height);
-;;;
-;;; Creates a new GtkPaperSize object by using PPD information.
-;;;
-;;; If ppd_name is not a recognized PPD paper name, ppd_display_name, width and
-;;; height are used to construct a custom GtkPaperSize object.
-;;;
-;;; ppd_name :
-;;;     a PPD paper name
-;;;
-;;; ppd_display_name :
-;;;     the corresponding human-readable name
-;;;
-;;; width :
-;;;     the paper width, in points
-;;;
-;;; height :
-;;;     the paper height in points
-;;;
-;;; Returns :
-;;;     a new GtkPaperSize, use gtk_paper_size_free() to free it
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_paper_size_new_from_ppd" gtk-paper-size-new-from-ppd)
+    (g-boxed-foreign gtk-paper-size)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-13}
+  @argument[ppd-name]{a PPD paper name}
+  @argument[ppd-display-name]{the corresponding human-readable name}
+  @argument[width]{the paper width, in points}
+  @argument[height]{the paper height in points}
+  @begin{return}
+    A new @class{gtk-paper-size}.
+  @end{return}
+  @begin{short}
+    Creates a new @class{gtk-paper-size} object by using PPD information.
+  @end{short}
+
+  If @arg{ppd-name} is not a recognized PPD paper name, @arg{ppd-display-name},
+  @arg{width} and @arg{height} are used to construct a custom
+  @class{gtk-paper-size} object.
+
+  Since 2.10
+  @see-class{gtk-paper-size}"
+  (ppd-name :string)
+  (ppd-display-name :string)
+  (width :double)
+  (height :double))
+
+(export 'gtk-paper-size-new-from-ppd)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_paper_size_new_custom ()
-;;;
-;;; GtkPaperSize * gtk_paper_size_new_custom (const gchar *name,
-;;;                                           const gchar *display_name,
-;;;                                           gdouble width,
-;;;                                           gdouble height,
-;;;                                           GtkUnit unit);
-;;;
-;;; Creates a new GtkPaperSize object with the given parameters.
-;;;
-;;; name :
-;;;     the paper name
-;;;
-;;; display_name :
-;;;     the human-readable name
-;;;
-;;; width :
-;;;     the paper width, in units of unit
-;;;
-;;; height :
-;;;     the paper height, in units of unit
-;;;
-;;; unit :
-;;;     the unit for width and height. not GTK_UNIT_NONE.
-;;;
-;;; Returns :
-;;;     a new GtkPaperSize object, use gtk_paper_size_free() to free it
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_paper_size_new_custom" gtk-paper-size-new-custom)
+    (g-boxed-foreign gtk-paper-size)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-12}
+  @argument[name]{the paper name}
+  @argument[display-name]{the human-readable name}
+  @argument[width]{the paper width, in units of unit}
+  @argument[height]{the paper height, in units of unit}
+  @argument[unit]{the unit for @arg{width} and @arg{height}, not @code{:none}}
+  @return{A new @class{gtk-paper-size} object.}
+  @begin{short}
+    Creates a new @class{gtk-paper-size} object with the given parameters.
+  @end{short}
+
+  Since 2.10
+  @see-class{gtk-paper-size}
+  @see-symbol{gtk-unit}"
+  (name :string)
+  (display-name :string)
+  (width :double)
+  (height :double)
+  (unit gtk-unit))
+
+(export 'gtk-paper-size-new-custom)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_paper_size_copy ()
-;;;
-;;; GtkPaperSize * gtk_paper_size_copy (GtkPaperSize *other);
-;;;
-;;; Copies an existing GtkPaperSize.
-;;;
-;;; other :
-;;;     a GtkPaperSize
-;;;
-;;; Returns :
-;;;     a copy of other
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_paper_size_copy" gtk-paper-size-copy)
+    (g-boxed-foreign gtk-paper-size)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-13}
+  @argument[other]{a @class{gtk-paper-size} object}
+  @return{A copy of @arg{other}.}
+  @begin{short}
+    Copies an existing @class{gtk-paper-size}.
+  @end{short}
+
+  Since 2.10
+  @see-class{gtk-paper-size}"
+  (other (g-boxed-foreign gtk-paper-size)))
+
+(export 'gtk-paper-size-copy)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_paper_size_free ()
-;;;
-;;; void gtk_paper_size_free (GtkPaperSize *size);
-;;;
-;;; Free the given GtkPaperSize object.
-;;;
-;;; size :
-;;;     a GtkPaperSize
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_paper_size_free" gtk-paper-size-free) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-13}
+  @argument[size]{a @class{gtk-paper-size} object}
+  @begin{short}
+    Free the given @class{gtk-paper-size} object.
+  @end{short}
+
+  Since 2.10
+  @see-class{gtk-paper-size}"
+  (size (g-boxed-foreign gtk-paper-size)))
+
+(export 'gtk-paper-size-free)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_paper_size_is_equal ()
-;;;
-;;; gboolean gtk_paper_size_is_equal (GtkPaperSize *size1, GtkPaperSize *size2);
-;;;
-;;; Compares two GtkPaperSize objects.
-;;;
-;;; size1 :
-;;;     a GtkPaperSize object
-;;;
-;;; size2 :
-;;;     another GtkPaperSize object
-;;;
-;;; Returns :
-;;;     TRUE, if size1 and size2 represent the same paper size
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_paper_size_is_equal" gtk-paper-size-is-equal) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-12}
+  @argument[size1]{a @class{gtk-paper-size} object}
+  @argument[size2]{another @class{gtk-paper-size} object}
+  @begin{return}
+    @em{True}, if @arg{size1} and @arg{size2} represent the same paper size.
+  @end{return}
+  @begin{short}
+    Compares two @class{gtk-paper-size} objects.
+  @end{short}
+
+  Since 2.10
+  @see-class{gtk-paper-size}"
+  (size1 (g-boxed-foreign gtk-paper-size))
+  (size2 (g-boxed-foreign gtk-paper-size)))
+
+(export 'gtk-paper-size-is-equal)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_paper_size_get_paper_sizes ()
-;;;
-;;; GList * gtk_paper_size_get_paper_sizes (gboolean include_custom);
-;;;
-;;; Creates a list of known paper sizes.
-;;;
-;;; include_custom :
-;;;     whether to include custom paper sizes as defined in the page setup
-;;;     dialog
-;;;
-;;; Returns :
-;;;     A newly allocated list of newly allocated GtkPaperSize objects.
-;;;
-;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_paper_size_get_paper_sizes" gtk-paper-size-get-paper-sizes)
+    (g-list (g-boxed-foreign gtk-paper-size))
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-13}
+  @argument[include-custom]{whether to include custom paper sizes as defined in
+    the page setup dialog}
+  @begin{return}
+    A newly allocated list of newly allocated @class{gtk-paper-size} objects.
+  @end{return}
+  @begin{short}
+    Creates a list of known paper sizes.
+  @end{short}
+
+  Since 2.12
+  @see-class{gtk-paper-size}"
+  (include-custom :boolean))
+
+(export 'gtk-paper-size-get-paper-sizes)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_paper_size_get_name ()
@@ -479,11 +496,11 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-11-12}
   @argument[size]{a custom @class{gtk-paper-size} object}
-  @argument[width]{the new width in units of unit}
-  @argument[height]{the new height in units of unit}
+  @argument[width]{the new width in units of @arg{unit}}
+  @argument[height]{the new height in units of @arg{unit}}
   @argument[unit]{the unit for @arg{width} and @arg{height}}
   @begin{short}
-    Changes the dimensions of a size to @arg{width} x @arg{height}.
+    Changes the dimensions of a paper size to @arg{width} x @arg{height}.
   @end{short}
 
   Since 2.10
@@ -615,51 +632,62 @@
   Since 2.10
   @see-class{gtk-paper-size}")
 
+(export 'gtk-paper-size-get-default)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_paper_size_new_from_key_file ()
-;;;
-;;; GtkPaperSize * gtk_paper_size_new_from_key_file (GKeyFile *key_file,
-;;;                                                  const gchar *group_name,
-;;;                                                  GError **error);
-;;;
-;;; Reads a paper size from the group group_name in the key file key_file.
-;;;
-;;; key_file :
-;;;     the GKeyFile to retrieve the papersize from
-;;;
-;;; group_name :
-;;;     the name ofthe group in the key file to read, or NULL to read the first
-;;;     group
-;;;
-;;; error :
-;;;     return location for an error, or NULL. [allow-none]
-;;;
-;;; Returns :
-;;;     A new GtkPaperSize object with the restored paper size, or NULL if an
-;;;     error occurred.
-;;;
-;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_paper_size_new_from_key_file" %gtk-paper-size-new-from-key-file)
+    (g-boxed-foreign gtk-paper-size)
+  (key-file (:pointer (:struct g-key-file)))
+  (group-name :string)
+  (error :pointer))
+
+(defun gtk-paper-size-new-from-key-file (key-file group-name)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-13}
+  @argument[key-file]{the @class{g-key-file} to retrieve the paper size from}
+  @argument[group-name]{the name of the group in the key file to read, or nil to
+    read the first group}
+  @begin{return}
+    A new @class{gtk-paper-size} object with the restored paper size, or
+    @code{nil} if an error occurred.
+  @end{return}
+  @begin{short}
+    Reads a paper size from the group @arg{group-name} in the key file
+    @arg{key-file}.
+  @end{short}
+
+  Since 2.12
+  @see-class{gtk-paper-size}
+  @see-symbol{g-key-file}"
+  (with-g-error (err)
+    (%gtk-paper-size-new-from-key-file key-file group-name err)))
+
+(export 'gtk-paper-size-new-from-key-file)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_paper_size_to_key_file ()
-;;;
-;;; void gtk_paper_size_to_key_file (GtkPaperSize *size,
-;;;                                  GKeyFile *key_file,
-;;;                                  const gchar *group_name);
-;;;
-;;; This function adds the paper size from size to key_file.
-;;;
-;;; size :
-;;;     a GtkPaperSize
-;;;
-;;; key_file :
-;;;     the GKeyFile to save the paper size to
-;;;
-;;; group_name :
-;;;     the group to add the settings to in key_file
-;;;
-;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_paper_size_to_key_file" gtk-paper-size-to-key-file) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-13}
+  @argument[size]{a @class{gtk-paper-size} object}
+  @argument[key-file]{the @symbol{g-key-file}] to save the paper size to}
+  @argument[group-name]{the group to add the settings to in @arg{key-file}}
+  @begin{short}
+    This function adds the paper size from size to @arg{key-file}.
+  @end{short}
+
+  Since 2.12
+  @see-class{gtk-paper-size}
+  @see-symbol{g-key-file}"
+  (size (g-boxed-foreign gtk-paper-size))
+  (key-file (:pointer (:struct g-key-file)))
+  (group-name :string))
+
+(export 'gtk-paper-size-to-key-file)
 
 ;;; --- End of file gtk.paper-size.lisp ----------------------------------------
