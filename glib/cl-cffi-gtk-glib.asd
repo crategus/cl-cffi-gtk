@@ -27,7 +27,7 @@
 
 (defsystem :cl-cffi-gtk-glib
   :name :cl-cffi-gtk-glib
-  :version "2.36.0"                          ; Version of the GLib Library
+  :version "2.28.1"                          ; Version of the GLib Library
   :author "Dieter Kaiser"
   :license "LLGPL"
   :serial t
@@ -43,6 +43,7 @@
                (:file "glib.main-loop")      ; The Main Event Loop
                (:file "glib.utils")          ; Miscellaneous Utility Functions
                (:file "glib.option-group")   ; Parses commandline options
+               (:file "glib.key-value")      ; parses .ini-like config files
               )
   :depends-on (:cffi
                :iterate

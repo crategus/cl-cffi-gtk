@@ -85,7 +85,9 @@ GLib Utilities
     Regular expression syntax  - syntax and semantics of regular expressions
                                  supported by GRegex
     Simple XML Subset Parser   - parses a subset of XML
-    Key-value file parser      - parses .ini-like config files
+
+  glib.key-value.lisp          - parses .ini-like config files    - Glib 2.38.2&
+
     Bookmark file parser       - parses files containing bookmarks
     Testing                    - a test framework
     UNIX-specific utilities
