@@ -65,6 +65,7 @@
 (load "rtest-gtk-list-store.lisp")
 (load "rtest-gtk-main-loop.lisp")
 (load "rtest-gtk-paper-size.lisp")
+(load "rtest-gtk-print-settings.lisp")
 (load "rtest-gtk-selections.lisp")
 (load "rtest-gtk-text-buffer.lisp")
 (load "rtest-gtk-text-iter.lisp")
