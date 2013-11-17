@@ -917,8 +917,6 @@
     gtk-style-context-screen
     "screen" "GdkScreen" t t)))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-style-context 'type)
  "@version{2013-3-15}
@@ -1264,36 +1262,42 @@ tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_add_provider_for_screen ()
-;;;
-;;; void gtk_style_context_add_provider_for_screen (GdkScreen *screen,
-;;;                                                 GtkStyleProvider *provider,
-;;;                                                 guint priority);
-;;;
-;;; Adds a global style provider to screen, which will be used in style
-;;; construction for all GtkStyleContexts under screen.
-;;;
-;;; GTK+ uses this to make styling information from GtkSettings available.
-;;;
-;;; Note
-;;;
-;;; If both priorities are the same, A GtkStyleProvider added through
-;;; gtk_style_context_add_provider() takes precedence over another added through
-;;; this function.
-;;;
-;;; screen :
-;;;     a GdkScreen
-;;;
-;;; provider :
-;;;     a GtkStyleProvider
-;;;
-;;; priority :
-;;;     the priority of the style provider. The lower it is, the earlier it will
-;;;     be used in the style construction. Typically this will be in the range
-;;;     between GTK_STYLE_PROVIDER_PRIORITY_FALLBACK and
-;;;     GTK_STYLE_PROVIDER_PRIORITY_USER
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_style_context_add_provider_for_screen"
+           gtk-style-context-add-provider-for-screen) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-16}
+  @argument[screen]{a @class{gdk-screen} object}
+  @argument[provider]{a @class{gtk-style-provider} object}
+  @argument[priority]{The priority of the style provider. The lower it is, the
+    earlier it will be used in the style construction. Typically this will be in
+    the range between @code{GTK_STYLE_PROVIDER_PRIORITY_FALLBACK} and
+    @code{GTK_STYLE_PROVIDER_PRIORITY_USER}.}
+  @begin{short}
+    Adds a global style provider to screen, which will be used in style
+    construction for all @class{gtk-style-context}s under screen.
+  @end{short}
+
+  GTK+ uses this to make styling information from @class{gtk-settings}
+  available.
+
+  @subheading{Note}
+    If both priorities are the same, a @class{gtk-style-provider} added through
+    the function @fun{gtk-style-context-add-provider} takes precedence over
+    another added through this function.
+
+  Since 3.0
+  @see-class{gdk-screen}
+  @see-class{gtk-style-context}
+  @see-class{gtk-style-provider}
+  @see-class{gtk-settings}
+  @see-function{gtk-style-context-add-provider}"
+  (screen (g-object gdk-screen))
+  (provider (g-object gtk-style-provider))
+  (priority :uint))
+
+(export 'gtk-style-context-add-provider-for-screen)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_get ()
