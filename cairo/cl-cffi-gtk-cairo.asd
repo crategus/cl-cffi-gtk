@@ -33,6 +33,7 @@
                (:file "cairo.status")          ; Decoding cairo's status
                (:file "cairo.types")           ; Generic data types
                (:file "cairo.regions")
+               (:file "cairo.device")          ; interface to rendering system
                (:file "cairo.surface")
                (:file "cairo.image-surface")   ; Rendering to memory buffers
                (:file "cairo.pattern")         ; Sources for drawing

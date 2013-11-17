@@ -30,8 +30,7 @@ Fonts
 
 Surfaces
 
-  cairo_device_t - interface to underlying rendering system
-
+ cairo.device.lisp - interface to underlying rendering system   - Cairo 1.12.16&
  cairo.surface.lisp - Base class for surfaces                   - Cairo 1.12.2 *
  cairo.image-surface.lisp - Rendering to memory buffers         - Cairo 1.12.16&
 
