@@ -375,25 +375,32 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_new_sub_path ()
-;;;
-;;; void cairo_new_sub_path (cairo_t *cr);
-;;;
-;;; Begin a new sub-path. Note that the existing path is not affected. After
-;;; this call there will be no current point.
-;;;
-;;; In many cases, this call is not needed since new sub-paths are frequently
-;;; started with cairo_move_to().
-;;;
-;;; A call to cairo_new_sub_path() is particularly useful when beginning a new
-;;; sub-path with one of the cairo_arc() calls. This makes things easier as it
-;;; is no longer necessary to manually compute the arc's initial coordinates for
-;;; a call to cairo_move_to().
-;;;
-;;; cr :
-;;;     a cairo context
-;;;
-;;; Since 1.2
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_new_sub_path" cairo-new-sub-path) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-16}
+  @argument[cr]{a cairo context}
+  @begin{short}
+    Begin a new sub-path.
+  @end{short}
+  Note that the existing path is not affected. After this call there will be no
+  current point.
+
+  In many cases, this call is not needed since new sub-paths are frequently
+  started with the function @fun{cairo-move-to}.
+
+  A call to @sym{cairo-new-sub-path} is particularly useful when beginning a new
+  sub-path with one of the @code{cairo-arc} calls. This makes things easier as
+  it is no longer necessary to manually compute the arc's initial coordinates
+  for a call to the function @fun{cairo-move-to}.
+
+  Since 1.2
+  @see-symbol{cairo-t}
+  @see-function{cairo-move-to}"
+  (cr (:pointer (:struct cairo-t))))
+
+(export 'cairo-new-sub-path)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_close_path ()

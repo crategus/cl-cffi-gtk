@@ -180,23 +180,31 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_region_copy ()
-;;;
-;;; cairo_region_t * cairo_region_copy (const cairo_region_t *original);
-;;;
-;;; Allocates a new region object copying the area from original.
-;;;
-;;; original :
-;;;     a cairo_region_t
-;;;
-;;; Returns :
-;;;     A newly allocated cairo_region_t. Free with cairo_region_destroy().
-;;;     This function always returns a valid pointer; if memory cannot be
-;;;     allocated, then a special error object is returned where all operations
-;;;     on the object do nothing. You can check for this with
-;;;    cairo_region_status().
-;;;
-;;; Since 1.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_region_copy" cairo-region-copy)
+    (:pointer (:struct cairo-region-t))
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-14}
+  @argument[original]{a @symbol{cairo-region-t}}
+  @begin{return}
+    A newly allocated @symbol{cairo-region-t}. Free with the function
+    @fun{cairo-region-destroy}. This function always returns a valid pointer;
+    if memory cannot be allocated, then a special error object is returned where
+    all operations on the object do nothing. You can check for this with the
+    function @fun{cairo-region-status}.
+  @end{return}
+  @begin{short}
+    Allocates a new region object copying the area from original.
+  @end{short}
+
+  Since 1.10
+  @see-symbol{cairo-region-t}
+  @see-function{cairo-region-destroy}
+  @see-function{cairo-region-status}"
+  (original (:pointer (:struct cairo-region-t))))
+
+(export 'cairo-region-copy)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_region_reference ()

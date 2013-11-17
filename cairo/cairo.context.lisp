@@ -337,49 +337,58 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_push_group ()
-;;;
-;;; void cairo_push_group (cairo_t *cr);
-;;;
-;;; Temporarily redirects drawing to an intermediate surface known as a group.
-;;; The redirection lasts until the group is completed by a call to
-;;; cairo_pop_group() or cairo_pop_group_to_source(). These calls provide the
-;;; result of any drawing to the group as a pattern, (either as an explicit
-;;; object, or set as the source pattern).
-;;;
-;;; This group functionality can be convenient for performing intermediate
-;;; compositing. One common use of a group is to render objects as opaque within
-;;; the group, (so that they occlude each other), and then blend the result with
-;;; translucence onto the destination.
-;;;
-;;; Groups can be nested arbitrarily deep by making balanced calls to
-;;; cairo_push_group()/cairo_pop_group(). Each call pushes/pops the new target
-;;; group onto/from a stack.
-;;;
-;;; The cairo_push_group() function calls cairo_save() so that any changes to
-;;; the graphics state will not be visible outside the group, (the pop_group
-;;; functions call cairo_restore()).
-;;;
-;;; By default the intermediate group will have a content type of
-;;; CAIRO_CONTENT_COLOR_ALPHA. Other content types can be chosen for the group
-;;; by using cairo_push_group_with_content() instead.
-;;;
-;;; As an example, here is how one might fill and stroke a path with
-;;; translucence, but without any portion of the fill being visible under the
-;;; stroke:
-;;;
-;;; cairo_push_group (cr);
-;;; cairo_set_source (cr, fill_pattern);
-;;; cairo_fill_preserve (cr);
-;;; cairo_set_source (cr, stroke_pattern);
-;;; cairo_stroke (cr);
-;;; cairo_pop_group_to_source (cr);
-;;; cairo_paint_with_alpha (cr, alpha);
-;;;
-;;; cr :
-;;;     a cairo context
-;;;
-;;; Since 1.2
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_push_group" cairo-push-group) :void
+ #+cl-cffi-gtk-documentation
+"@version{2013-11-14}
+  @argument[cr]{a cairo context}
+  @begin{short}
+    Temporarily redirects drawing to an intermediate surface known as a group.
+  @end{short}
+  The redirection lasts until the group is completed by a call to the functions
+  @fun{cairo-pop-group} or @fun{cairo-pop-group-to-source}. These calls provide
+  the result of any drawing to the group as a pattern, either as an explicit
+  object, or set as the source pattern.
+
+  This group functionality can be convenient for performing intermediate
+  compositing. One common use of a group is to render objects as opaque within
+  the group, so that they occlude each other, and then blend the result with
+  translucence onto the destination.
+
+  Groups can be nested arbitrarily deep by making balanced calls to
+  the functions @sym{cairo-push-group}/@fun{cairo-pop-group}. Each call
+  pushes/pops the new target group onto/from a stack.
+
+  The @sym{cairo-push-group} function calls cairo_save() so that any changes to
+  the graphics state will not be visible outside the group, the @code{pop-group}
+  functions call @fun{cairo-restore}.
+
+  By default the intermediate group will have a content type of
+  @code{:color-alpha}. Other content types can be chosen for the group by using
+  the function @fun{cairo-push-group-with-content} instead.
+
+  As an example, here is how one might fill and stroke a path with translucence,
+  but without any portion of the fill being visible under the stroke:
+  @begin{pre}
+ cairo_push_group (cr);
+ cairo_set_source (cr, fill_pattern);
+ cairo_fill_preserve (cr);
+ cairo_set_source (cr, stroke_pattern);
+ cairo_stroke (cr);
+ cairo_pop_group_to_source (cr);
+ cairo_paint_with_alpha (cr, alpha);
+  @end{pre}
+
+  Since 1.2
+  @see-symbol{cairo-t}
+  @see-function{cairo-pop-group}
+  @see-function{cairo-pop-group-to-source}
+  @see-function{cairo-restore}
+  @see-function{cairo-push-group-with-content}"
+  (cr (:pointer (:struct cairo-t))))
+
+(export 'cairo-push-group)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_push_group_with_content ()
@@ -862,61 +871,80 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum cairo_fill_rule_t
-;;;
-;;; typedef enum {
-;;;     CAIRO_FILL_RULE_WINDING,
-;;;     CAIRO_FILL_RULE_EVEN_ODD
-;;; } cairo_fill_rule_t;
-;;;
-;;; cairo_fill_rule_t is used to select how paths are filled. For both fill
-;;; rules, whether or not a point is included in the fill is determined by
-;;; taking a ray from that point to infinity and looking at intersections with
-;;; the path. The ray can be in any direction, as long as it doesn't pass
-;;; through the end point of a segment or have a tricky intersection such as
-;;; intersecting tangent to the path. (Note that filling is not actually
-;;; implemented in this way. This is just a description of the rule that is
-;;; applied.)
-;;;
-;;; The default fill rule is CAIRO_FILL_RULE_WINDING.
-;;;
-;;; New entries may be added in future versions.
-;;;
-;;; CAIRO_FILL_RULE_WINDING
-;;;     If the path crosses the ray from left-to-right, counts +1. If the path
-;;;     crosses the ray from right to left, counts -1. (Left and right are
-;;;     determined from the perspective of looking along the ray from the
-;;;     starting point.) If the total count is non-zero, the point will be
-;;;     filled. (Since 1.0)
-;;;
-;;; CAIRO_FILL_RULE_EVEN_ODD
-;;;     Counts the total number of intersections, without regard to the
-;;;     orientation of the contour. If the total number of intersections is odd,
-;;;     the point will be filled. (Since 1.0)
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defcenum cairo-fill-rule-t
+  :winding
+  :even-odd)
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'cairo-fill-rule-t atdoc:*symbol-name-alias*) "CEnum"
+      (gethash 'cairo-fill-rule-t atdoc:*external-symbols*)
+ "@version{2013-11-16}
+  @begin{short}
+    @sym{cairo-fill-rule-t} is used to select how paths are filled.
+  @end{short}
+  For both fill rules, whether or not a point is included in the fill is
+  determined by taking a ray from that point to infinity and looking at
+  intersections with the path. The ray can be in any direction, as long as it
+  does not pass through the end point of a segment or have a tricky intersection
+  such as intersecting tangent to the path. Note that filling is not actually
+  implemented in this way. This is just a description of the rule that is
+  applied.
+
+  The default fill rule is @code{:winding}.
+
+  New entries may be added in future versions.
+  @begin{pre}
+(defcenum cairo-fill-rule-t
+  :winding
+  :even-odd)
+  @end{pre}
+  @begin[code]{table}
+    @entry[:winding]{If the path crosses the ray from left-to-right, counts +1.
+      If the path crosses the ray from right to left, counts -1. Left and right
+      are determined from the perspective of looking along the ray from the
+      starting point. If the total count is non-zero, the point will be
+      filled. Since 1.0}
+    @entry[:even-odd]{Counts the total number of intersections, without regard
+      to the orientation of the contour. If the total number of intersections
+      is odd, the point will be filled. Since 1.0}
+  @end{table}
+  Since 1.0
+  @see-function{cairo-get-fill-rule}
+  @see-function{cairo-set-fille-rule}")
+
+(export 'cairo-fill-rule-t)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_set_fill_rule ()
-;;;
-;;; void cairo_set_fill_rule (cairo_t *cr, cairo_fill_rule_t fill_rule);
-;;;
-;;; Set the current fill rule within the cairo context. The fill rule is used to
-;;; determine which regions are inside or outside a complex (potentially
-;;; self-intersecting) path. The current fill rule affects both cairo_fill() and
-;;; cairo_clip(). See cairo_fill_rule_t for details on the semantics of each
-;;; available fill rule.
-;;;
-;;; The default fill rule is CAIRO_FILL_RULE_WINDING.
-;;;
-;;; cr :
-;;;     a cairo_t
-;;;
-;;; fill_rule :
-;;;     a fill rule, specified as a cairo_fill_rule_t
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_set_fill_rule" cairo-set-fill-rule) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-16}
+  @argument[cr]{a @symbol{cairo-t}}
+  @argument[fill-rule]{a fill rule, specified as a @symbol{cairo-fill-rule-t}}
+  @begin{short}
+    Set the current fill rule within the cairo context.
+  @end{short}
+  The fill rule is used to determine which regions are inside or outside a
+  complex, potentially self-intersecting, path. The current fill rule affects
+  both the functions @fun{cairo-fill} and @fun{cairo-clip}. See
+  @symbol{cairo-fill-rule-t} for details on the semantics of each available
+  fill rule.
+
+  The default fill rule is @code{:winding}.
+
+  Since 1.0
+  @see-symbol{cairo-t}
+  @see-symbol{cairo-fill-rule-t}
+  @see-function{cairo-fill}
+  @see-function{cairo-clip}"
+  (cr (:pointer (:struct cairo-t)))
+  (fill-rule cairo-fill-rule-t))
+
+(export 'cairo-fill-rule-t)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_get_fill_rule ()
@@ -970,6 +998,8 @@
   @see-function{cairo-get-line-cap}
   @see-function{cairo-set-line-cap}")
 
+(export 'cairo-line-cap-t)
+
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_set_line_cap ()
 ;;; ----------------------------------------------------------------------------
@@ -986,9 +1016,8 @@
   available line cap styles are drawn.
 
   As with the other stroke parameters, the current line cap style is examined
-  by the functions @fun{cairo-stroke}, @fun{cairo-stroke-extents}, and
-  @fun{cairo-stroke-to-path}, but does not have any effect during path
-  construction.
+  by the functions @fun{cairo-stroke} and @fun{cairo-stroke-extents}, but does
+  not have any effect during path construction.
 
   The default line cap style is @code{:butt}.
 
@@ -996,8 +1025,7 @@
   @see-symbol{cairo-t}
   @see-symbol{cairo-line-cap-t}
   @see-function{cairo-stroke}
-  @see-function{cairo-stroke-extents}
-  @see-function{cairo-stroke-to-path}"
+  @see-function{cairo-stroke-extents}"
   (cr (:pointer (:struct cairo-t)))
   (line-cap cairo-line-cap-t))
 
@@ -1072,9 +1100,8 @@
   available line join styles are drawn.
 
   As with the other stroke parameters, the current line join style is examined
-  by the functions @fun{cairo-stroke}, @fun{cairo-stroke-extents}, and
-  @fun{cairo-stroke-to-path}, but does not have any effect during path
-  construction.
+  by the functions @fun{cairo-stroke} and @fun{cairo-stroke-extents}, but does
+  not have any effect during path construction.
 
   The default line join style is @code{:miter}.
 
@@ -1082,8 +1109,7 @@
   @see-symbol{cairo-t}
   @see-symbol{cairo-line-join-t}
   @see-function{cairo-stroke}
-  @see-function{cairo-stroke-extents}
-  @see-function{cairo-stroke-to-path}"
+  @see-function{cairo-stroke-extents}"
   (cr (:pointer (:struct cairo-t)))
   (line-join cairo-line-join-t))
 
@@ -1135,17 +1161,15 @@
   ignore this note.
 
   As with the other stroke parameters, the current line width is examined by
-  the functions @fun{cairo-stroke}, @fun{cairo-stroke-extents}, and
-  @fun{cairo-stroke-to-path}, but does not have any effect during path
-  construction.
+  the functions @fun{cairo-stroke} and @fun{cairo-stroke-extents}, but does not
+  have any effect during path construction.
 
   The default line width value is 2.0.
 
   Since 1.0
   @see-symbol{cairo-t}
   @see-function{cairo-stroke}
-  @see-function{cairo-stroke-extents}
-  @see-function{cairo-stroke-to-path}"
+  @see-function{cairo-stroke-extents}"
   (%cairo-set-line-width cr (coerce width 'double-float)))
 
 (export 'cairo-set-line-width)

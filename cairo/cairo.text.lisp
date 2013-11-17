@@ -151,6 +151,8 @@
   @see-symbol{cairo-font-weight-t}
   @see-function{cairo-select-font-face}")
 
+(export 'cairo-font-slant-t)
+
 ;;; ----------------------------------------------------------------------------
 ;;; enum cairo_font_weight_t
 ;;; ----------------------------------------------------------------------------
@@ -176,6 +178,8 @@
   Since 1.0
   @see-symbol{cairo-font-slant-t}
   @see-function{cairo-select-font-face}")
+
+(export 'cairo-font-weight-t)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_text_cluster_t

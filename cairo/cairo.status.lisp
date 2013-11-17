@@ -238,19 +238,22 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_status_to_string ()
-;;;
-;;; const char * cairo_status_to_string (cairo_status_t status);
-;;;
-;;; Provides a human-readable description of a cairo_status_t.
-;;;
-;;; status :
-;;;     a cairo status
-;;;
-;;; Returns :
-;;;     a string representation of the status
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_status_to_string" cairo-status-to-string) :string
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-16}
+  @argument[status]{a cairo status}
+  @return{A string representation of the status.}
+  @begin{short}
+    Provides a human-readable description of a @symbol{cairo-status-t}.
+  @end{short}
+
+  Since 1.0
+  @see-symbol{cairo-status-t}"
+  (status cairo-status-t))
+
+(export 'cairo-status-to-string)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_debug_reset_static_data ()

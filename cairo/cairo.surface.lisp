@@ -511,21 +511,27 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_surface_status ()
-;;;
-;;; cairo_status_t cairo_surface_status (cairo_surface_t *surface);
-;;;
-;;; Checks whether an error has previously occurred for this surface.
-;;;
-;;; surface :
-;;;     a cairo_surface_t
-;;;
-;;; Returns :
-;;;     CAIRO_STATUS_SUCCESS, CAIRO_STATUS_NULL_POINTER, CAIRO_STATUS_NO_MEMORY,
-;;;     CAIRO_STATUS_READ_ERROR, CAIRO_STATUS_INVALID_CONTENT,
-;;;     CAIRO_STATUS_INVALID_FORMAT, or CAIRO_STATUS_INVALID_VISUAL.
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_surface_status" cairo-surface-status) cairo-status-t
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-14}
+  @argument[surface]{a @symbol{cairo-surface-t}}
+  @begin{return}
+    @code{:success}, @code{:null-pointer}, @code{:no-memory},
+    @code{:read-error}, @code{:invalid-content}, @code{:invalid-format}, or
+    @code{:invalid-visual}.
+  @end{return}
+  @begin{short}
+    Checks whether an error has previously occurred for this surface.
+  @end{short}
+
+  Since 1.0
+  @see-symbol{cairo-surface-t}
+  @see-symbol{cairo-status-t}"
+  (surface (:pointer (:struct cairo-surface-t))))
+
+(export 'cairo-surface-status)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_surface_finish ()
