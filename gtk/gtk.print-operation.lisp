@@ -158,7 +158,8 @@
 (define-g-interface \"GtkPrintOperationPreview\" gtk-print-operation-preview
   (:export t
    :type-initializer \"gtk_print_operation_preview_get_type\"))
-  @end{pre}")
+  @end{pre}
+  @see-class{gtk-print-operation}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkPrintOperation
@@ -812,150 +813,191 @@
 (setf (gethash 'gtk-print-operation-allow-async atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-print-operation-allow-async 'function)
- "@version{2013-5-30}
+ "@version{2013-11-15}
   Accessor of the slot @code{\"allow-async\"} of the
-  @class{gtk-print-operation} class.")
+  @class{gtk-print-operation} class.
+  @see-class{gtk-print-operation}
+  @see-function{gtk-print-operation-get-allow-async}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-print-operation-current-page atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-print-operation-current-page 'function)
- "@version{2013-5-30}
+ "@version{2013-11-15}
   Accessor of the slot @code{\"current-page\"} of the
-  @class{gtk-print-operation} class.")
+  @class{gtk-print-operation} class.
+  @see-class{gtk-print-operation}
+  @see-function{gtk-print-operation-set-current-page}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-print-operation-custom-tab-label
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-print-operation-custom-tab-label 'function)
- "@version{2013-5-30}
+ "@version{2013-11-15}
   Accessor of the slot @code{\"custom-tab-label\"} of the
-  @class{gtk-print-operation} class.")
+  @class{gtk-print-operation} class.
+  @see-class{gtk-print-operation}
+  @see-function{gtk-print-operation-set-custom-tab-label}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-print-operation-default-page-setup
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-print-operation-default-page-setup 'function)
- "@version{2013-5-30}
+ "@version{2013-11-15}
   Accessor of the slot @code{\"default-page-setup\"} of the
-  @class{gtk-print-operation} class.")
+  @class{gtk-print-operation} class.
+  @see-class{gtk-print-operation}
+  @see-function{gtk-print-operation-get-default-page-setup}
+  @see-function{gtk-print-operation-set-default-page-setup}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-print-operation-embed-page-setup
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-print-operation-embed-page-setup 'function)
- "@version{2013-5-30}
+ "@version{2013-11-15}
   Accessor of the slot @code{\"embed-page-setup\"} of the
-  @class{gtk-print-operation} class.")
+  @class{gtk-print-operation} class.
+  @see-class{gtk-print-operation}
+  @see-function{gtk-print-operation-get-embed-page-setup}
+  @see-function{gtk-print-operation-set-embed-page-setup}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-print-operation-export-filename atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-print-operation-export-filename 'function)
- "@version{2013-5-30}
+ "@version{2013-11-15}
   Accessor of the slot @code{\"export-filename\"} of the
-  @class{gtk-print-operation} class.")
+  @class{gtk-print-operation} class.
+  @see-class{gtk-print-operation}
+  @see-function{gtk-print-operation-set-export-filename}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-print-operation-has-selection atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-print-operation-has-selection 'function)
- "@version{2013-5-30}
+ "@version{2013-11-15}
   Accessor of the slot @code{\"has-selection\"} of the
-  @class{gtk-print-operation} class.")
+  @class{gtk-print-operation} class.
+  @see-class{gtk-print-operation}
+  @see-function{gtk-print-operation-get-has-selection}
+  @see-function{gtk-print-operation-set-has-selection}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-print-operation-job-name atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-print-operation-job-name 'function)
- "@version{2013-5-30}
-  Accessor of the slot @code{\"job-name\"} of the
-  @class{gtk-print-operation} class.")
+ "@version{2013-11-15}
+  Accessor of the slot @code{\"job-name\"} of the @class{gtk-print-operation}
+  class.
+  @see-class{gtk-print-operation}
+  @see-function{gtk-print-operation-set-job-name}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-print-operation-n-pages atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-print-operation-n-pages 'function)
- "@version{2013-5-30}
-  Accessor of the slot @code{\"n-pages\"} of the
-  @class{gtk-print-operation} class.")
+ "@version{2013-11-15}
+  Accessor of the slot @code{\"n-pages\"} of the @class{gtk-print-operation}
+  class.
+  @see-class{gtk-print-operation}
+  @see-function{gtk-print-operation-set-n-pages}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-print-operation-n-pages-to-print atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-print-operation-n-pages-to-print 'function)
- "@version{2013-5-30}
+ "@version{2013-11-15}
   Accessor of the slot @code{\"n-pages-to-print\"} of the
-  @class{gtk-print-operation} class.")
+  @class{gtk-print-operation} class.
+  @see-class{gtk-print-operation}
+  @see-function{gtk-print-operation-get-n-pages-to-print}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-print-operation-print-settings atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-print-operation-print-settings 'function)
- "@version{2013-5-30}
+ "@version{2013-11-15}
   Accessor of the slot @code{\"print-settings\"} of the
-  @class{gtk-print-operation} class.")
+  @class{gtk-print-operation} class.
+  @see-class{gtk-print-operation}
+  @see-function{gtk-print-operation-get-print-settings}
+  @see-function{gtk-print-operation-set-print-settings}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-print-operation-show-progress atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-print-operation-show-progress 'function)
- "@version{2013-5-30}
+ "@version{2013-11-15}
   Accessor of the slot @code{\"show-progress\"} of the
-  @class{gtk-print-operation} class.")
+  @class{gtk-print-operation} class.
+  @see-class{gtk-print-operation}
+  @see-function{gtk-print-operation-set-show-progress}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-print-operation-status atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-print-operation-status 'function)
- "@version{2013-5-30}
-  Accessor of the slot @code{\"status\"} of the
-  @class{gtk-print-operation} class.")
+ "@version{2013-11-15}
+  Accessor of the slot @code{\"status\"} of the @class{gtk-print-operation}
+  class.
+  @see-class{gtk-print-operation}
+  @see-function{gtk-print-operation-get-status}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-print-operation-status-string atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-print-operation-status-string 'function)
- "@version{2013-5-30}
+ "@version{2013-11-15}
   Accessor of the slot @code{\"status-string\"} of the
-  @class{gtk-print-operation} class.")
+  @class{gtk-print-operation} class.
+  @see-class{gtk-print-operation}
+  @see-function{gtk-print-operation-get-status-string}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-print-operation-support-selection
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-print-operation-support-selection 'function)
- "@version{2013-5-30}
+ "@version{2013-11-15}
   Accessor of the slot @code{\"support-selection\"} of the
-  @class{gtk-print-operation} class.")
+  @class{gtk-print-operation} class.
+  @see-class{gtk-print-operation}
+  @see-function{gtk-print-operation-get-support-selection}
+  @see-function{gtk-print-operation-set-support-selection}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-print-operation-track-print-status
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-print-operation-track-print-status 'function)
- "@version{2013-5-30}
+ "@version{2013-11-15}
   Accessor of the slot @code{\"track-print-status\"} of the
-  @class{gtk-print-operation} class.")
+  @class{gtk-print-operation} class.
+  @see-class{gtk-print-operation}
+  @see-function{gtk-print-operation-set-track-print-status}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-print-operation-unit atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-print-operation-unit 'function)
- "@version{2013-5-30}
-  Accessor of the slot @code{\"unit\"} of the
-  @class{gtk-print-operation} class.")
+ "@version{2013-11-15}
+  Accessor of the slot @code{\"unit\"} of the @class{gtk-print-operation}
+  class.
+  @see-class{gtk-print-operation}
+  @see-function{gtk-print-operation-set-unit}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-print-operation-use-full-page atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-print-operation-use-full-page 'function)
- "@version{2013-5-30}
+ "@version{2013-11-15}
   Accessor of the slot @code{\"use-full-page\"} of the
-  @class{gtk-print-operation} class.")
+  @class{gtk-print-operation} class.
+  @see-class{gtk-print-operation}
+  @see-function{gtk-print-operation-set-use-full-page}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkPrintStatus
@@ -1141,35 +1183,47 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_operation_new ()
-;;;
-;;; GtkPrintOperation * gtk_print_operation_new (void);
-;;;
-;;; Creates a new GtkPrintOperation.
-;;;
-;;; Returns :
-;;;     a new GtkPrintOperation
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-print-operation-new))
+
+(defun gtk-print-operation-new ()
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-15}
+  @return{A new @class{gtk-print-operation} object}
+  @begin{short}
+    Creates a new @class{gtk-print-operation} object.
+  @end{short}
+
+  Since 2.10
+  @see-class{gtk-print-operation}"
+  (make-instance 'gtk-print-operation))
+
+(export 'gtk-print-operation)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_operation_set_allow_async ()
-;;;
-;;; void gtk_print_operation_set_allow_async (GtkPrintOperation *op,
-;;;                                           gboolean allow_async);
-;;;
-;;; Sets whether the gtk_print_operation_run() may return before the print
-;;; operation is completed. Note that some platforms may not allow asynchronous
-;;; operation.
-;;;
-;;; op :
-;;;     a GtkPrintOperation
-;;;
-;;; allow_async :
-;;;     TRUE to allow asynchronous operation
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-print-operation-set-allow-async))
+
+(defun gtk-print-operation-set-allow-async (op allow-async)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-15}
+  @argument[op]{a @class{gtk-print-operation} object}
+  @argument[allow-async]{@em{true} to allow asynchronous operation}
+  @begin{short}
+    Sets whether the function @fun{gtk-print-operation-run} may return before
+    the print operation is completed.
+  @end{short}
+  Note that some platforms may not allow asynchronous operation.
+
+  Since 2.10
+  @see-class{gtk-print-operation}
+  @see-function{gtk-print-operation-run}"
+  (setf (gtk-print-operation-allow-async op) allow-async))
+
+(export 'gtk-print-operation-set-allow-async)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_operation_get_error ()
@@ -1192,292 +1246,365 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_operation_set_default_page_setup ()
-;;;
-;;; void gtk_print_operation_set_default_page_setup
-;;;                                          (GtkPrintOperation *op,
-;;;                                           GtkPageSetup *default_page_setup);
-;;;
-;;; Makes default_page_setup the default page setup for op.
-;;;
-;;; This page setup will be used by gtk_print_operation_run(), but it can be
-;;; overridden on a per-page basis by connecting to the "request-page-setup"
-;;; signal.
-;;;
-;;; op :
-;;;     a GtkPrintOperation
-;;;
-;;; default_page_setup :
-;;;     a GtkPageSetup, or NULL
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-print-operation-set-default-page-setup))
+
+(defun gtk-print-operation-set-default-page-setup (op default-page-setup)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-15}
+  @argument[op]{a @class{gtk-print-operation} object}
+  @argument[default-page-setup]{a @class{gtk-page-setup}, or @code{nil}}
+  @begin{short}
+    Makes @arg{default-page-setup} the default page setup for op.
+  @end{short}
+
+  This page setup will be used by the function @fun{gtk-print-operation-run},
+  but it can be overridden on a per-page basis by connecting to the
+  \"request-page-setup\" signal.
+
+  Since 2.10
+  @see-class{gtk-print-operation}
+  @see-function{gtk-print-operation-run}
+  @see-function{gtk-print-operatrion-get-default-page-setup}"
+  (setf (gtk-print-operation-default-page-setup op) default-page-setup))
+
+(export 'gtk-print-operation-set-default-page-setup)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_operation_get_default_page_setup ()
-;;;
-;;; GtkPageSetup * gtk_print_operation_get_default_page_setup
-;;;                                                     (GtkPrintOperation *op);
-;;;
-;;; Returns the default page setup, see
-;;; gtk_print_operation_set_default_page_setup().
-;;;
-;;; op :
-;;;     a GtkPrintOperation
-;;;
-;;; Returns :
-;;;     the default page setup
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-print-operation-get-default-page-setup))
+
+(defun gtk-print-operation-get-default-page-setup (op)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-15}
+  @argument[op]{a @class{gtk-print-operation} object}
+  @return{The default page setup.}
+  @begin{short}
+    Returns the default page setup.
+  @end{short}
+  See the function @fun{gtk-print-operation-set-default-page-setup}.
+
+  Since 2.10
+  @see-class{gtk-print-operation}
+  @see-function{gtk-print-operation-set-default-page-setup}"
+  (gtk-print-operation-default-page-setup op))
+
+(export 'gtk-print-operation-get-default-page-setup)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_operation_set_print_settings ()
-;;;
-;;; void gtk_print_operation_set_print_settings
-;;;                                          (GtkPrintOperation *op,
-;;;                                           GtkPrintSettings *print_settings);
-;;;
-;;; Sets the print settings for op. This is typically used to re-establish print
-;;; settings from a previous print operation, see gtk_print_operation_run().
-;;;
-;;; op :
-;;;     a GtkPrintOperation
-;;;
-;;; print_settings :
-;;;     GtkPrintSettings
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-print-operation-set-print-settings))
+
+(defun gtk-print-operation-set-print-settings (op print-settings)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-15}
+  @argument[op]{a @class{gtk-print-operation} object}
+  @argument[print-settings]{@class{gtk-print-settings} object}
+  @begin{short}
+    Sets the print settings for op. This is typically used to re-establish print
+    settings from a previous print operation.
+  @end{short}
+  See the functionn @fun{gtk-print-operation-run}.
+
+  Since 2.10
+  @see-class{gtk-print-operation}
+  @see-function{gtk-print-operation-run}
+  @see-function{gtk-print-operation-get-print-settings}"
+  (setf (gtk-print-operation-print-settings op) print-settings))
+
+(export 'gtk-print-operation-set-print-settings)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_operation_get_print_settings ()
-;;;
-;;; GtkPrintSettings * gtk_print_operation_get_print_settings
-;;;                                                     (GtkPrintOperation *op);
-;;;
-;;; Returns the current print settings.
-;;;
-;;; Note that the return value is NULL until either
-;;; gtk_print_operation_set_print_settings() or gtk_print_operation_run() have
-;;; been called.
-;;;
-;;; op :
-;;;     a GtkPrintOperation
-;;;
-;;; Returns :
-;;;     the current print settings of op
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-print-operation-get-print-settings))
+
+(defun gtk-print-operation-get-print-settings (op)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-15}
+  @argument[op]{a @class{gtk-print-operation} object}
+  @return{The current print settings of @arg{op}.}
+  @begin{short}
+    Returns the current print settings.
+  @end{short}
+
+  Note that the return value is @code{nil} until either the function
+  @fun{gtk-print-operation-set-print-settings} or the function
+  @fun{gtk-print-operation-run} have been called.
+
+  Since 2.10
+  @see-class{gtk-print-operation}
+  @see-function{gtk-print-operation-run}
+  @see-function{gtk-print-operation-set-print-settings}"
+  (gtk-print-operation-print-settings op))
+
+(export 'gtk-print-operation-get-print-settings)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_operation_set_job_name ()
-;;;
-;;; void gtk_print_operation_set_job_name (GtkPrintOperation *op,
-;;;                                        const gchar *job_name);
-;;;
-;;; Sets the name of the print job. The name is used to identify the job (e.g.
-;;; in monitoring applications like eggcups).
-;;;
-;;; If you don't set a job name, GTK+ picks a default one by numbering
-;;; successive print jobs.
-;;;
-;;; op :
-;;;     a GtkPrintOperation
-;;;
-;;; job_name :
-;;;     a string that identifies the print job
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-print-operation-set-job-name))
+
+(defun gtk-print-operation-set-job-name (op job-name)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-15}
+  @argument[op]{a @class{gtk-print-operation} object}
+  @argument[job-name]{a string that identifies the print job}
+  @begin{short}
+    Sets the name of the print job.
+  @end{short}
+  The name is used to identify the job, e. g. in monitoring applications like
+  eggcups.
+
+  If you do not set a job name, GTK+ picks a default one by numbering
+  successive print jobs.
+
+  Since 2.10
+  @see-class{gtk-print-operation}"
+  (setf (gtk-print-operation-job-name op) job-name))
+
+(export 'gtk-print-operation-set-job-name)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_operation_set_n_pages ()
-;;;
-;;; void gtk_print_operation_set_n_pages (GtkPrintOperation *op, gint n_pages);
-;;;
-;;; Sets the number of pages in the document.
-;;;
-;;; This must be set to a positive number before the rendering starts. It may be
-;;; set in a "begin-print" signal hander.
-;;;
-;;; Note that the page numbers passed to the "request-page-setup" and
-;;; "draw-page" signals are 0-based, i.e. if the user chooses to print all
-;;; pages, the last ::draw-page signal will be for page n_pages - 1.
-;;;
-;;; op :
-;;;     a GtkPrintOperation
-;;;
-;;; n_pages :
-;;;     the number of pages
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-print-operation-set-n-pages))
+
+(defun gtk-print-operation-set-n-pages (op n-pages)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-15}
+  @argument[op]{a @class{gtk-print-operation} object}
+  @argument[n-pages]{the number of pages}
+  @begin{short}
+    Sets the number of pages in the document.
+  @end{short}
+
+  This must be set to a positive number before the rendering starts. It may be
+  set in a \"begin-print\" signal hander.
+
+  Note that the page numbers passed to the \"request-page-setup\" and
+  \"draw-page\" signals are 0-based, i. e. if the user chooses to print all
+  pages, the last \"draw-page\" signal will be for page @arg{n-pages} - 1.
+
+  Since 2.10
+  @see-class{gtk-print-operation}"
+  (setf (gtk-print-operation-n-pages op) n-pages))
+
+(export 'gtk-print-operation-set-n-pages)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_operation_get_n_pages_to_print ()
-;;;
-;;; gint gtk_print_operation_get_n_pages_to_print (GtkPrintOperation *op);
-;;;
-;;; Returns the number of pages that will be printed.
-;;;
-;;; Note that this value is set during print preparation phase
-;;; (GTK_PRINT_STATUS_PREPARING), so this function should never be called before
-;;; the data generation phase (GTK_PRINT_STATUS_GENERATING_DATA). You can
-;;; connect to the "status-changed" signal and call
-;;; gtk_print_operation_get_n_pages_to_print() when print status is
-;;; GTK_PRINT_STATUS_GENERATING_DATA. This is typically used to track the
-;;; progress of print operation.
-;;;
-;;; op :
-;;;     a GtkPrintOperation
-;;;
-;;; Returns :
-;;;     the number of pages that will be printed
-;;;
-;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-print-operation-get-n-pages-to-print))
+
+(defun gtk-print-operation-get-n-pages-to-print (op)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-15}
+  @argument[op]{a @class{gtk-print-operation} object}
+  @return{The number of pages that will be printed.}
+  @begin{short}
+    Returns the number of pages that will be printed.
+  @end{short}
+
+  Note that this value is set during print preparation phase @code{:preparing},
+  so this function should never be called before the data generation phase
+  @code{:generating-data}. You can connect to the \"status-changed\" signal and
+  call the function @sym{gtk-print-operation-get-n-pages-to-print} when print
+  status is @code{:generating-data}. This is typically used to track the
+  progress of print operation.
+
+  Since 2.18
+  @see-class{gtk-print-operation}
+  @see-symbol{gtk-print-status}"
+  (gtk-print-operation-n-pages-to-print op))
+
+(export 'gtk-print-operation-get-n-pages-to-print)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_operation_set_current_page ()
-;;;
-;;; void gtk_print_operation_set_current_page (GtkPrintOperation *op,
-;;;                                            gint current_page);
-;;;
-;;; Sets the current page.
-;;;
-;;; If this is called before gtk_print_operation_run(), the user will be able to
-;;; select to print only the current page.
-;;;
-;;; Note that this only makes sense for pre-paginated documents.
-;;;
-;;; op :
-;;;     a GtkPrintOperation
-;;;
-;;; current_page :
-;;;     the current page, 0-based
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-print-operation-set-current-page))
+
+(defun gtk-print-operation-set-current-page (op current-page)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-15}
+  @argument[op]{a @class{gtk-print-operation} object}
+  @argument[current-page]{the current page, 0-based}
+  @begin{short}
+    Sets the current page.
+  @end{short}
+
+  If this is called before the function @fun{gtk-print-operation-run}, the user
+  will be able to select to print only the current page.
+
+  Note that this only makes sense for pre-paginated documents.
+
+  Since 2.10
+  @see-class{gtk-print-operation}
+  @see-function{gtk-print-operation-run}"
+  (setf (gtk-print-operation-current-page op) current-page))
+
+(export 'gtk-print-operation-set-current-page)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_operation_set_use_full_page ()
-;;;
-;;; void gtk_print_operation_set_use_full_page (GtkPrintOperation *op,
-;;;                                             gboolean full_page);
-;;;
-;;; If full_page is TRUE, the transformation for the cairo context obtained from
-;;; GtkPrintContext puts the origin at the top left corner of the page (which
-;;; may not be the top left corner of the sheet, depending on page orientation
-;;; and the number of pages per sheet). Otherwise, the origin is at the top left
-;;; corner of the imageable area (i.e. inside the margins).
-;;;
-;;; op :
-;;;     a GtkPrintOperation
-;;;
-;;; full_page :
-;;;     TRUE to set up the GtkPrintContext for the full page
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-print-operation-set-use-full-page))
+
+(defun gtk-print-operation-set-use-full-page (op full-page)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-15}
+  @argument[op]{a @class{gtk-print-operation} object}
+  @argument[full-page]{@em{true} to set up the @class{gtk-print-context} for
+    the full page}
+  @begin{short}
+    If @arg{full-page} is @em{true}, the transformation for the cairo context
+    obtained from @class{gtk-print-context} puts the origin at the top left
+    corner of the page, which may not be the top left corner of the sheet,
+    depending on page orientation and the number of pages per sheet.
+  @end{short}
+  Otherwise, the origin is at the top left corner of the imageable area, i. e.
+  inside the margins.
+
+  Since 2.10
+  @see-class{gtk-print-operation}"
+  (setf (gtk-print-operation-use-full-page op) full-page))
+
+(export 'gtk-print-operation-set-use-full-page)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_operation_set_unit ()
-;;;
-;;; void gtk_print_operation_set_unit (GtkPrintOperation *op, GtkUnit unit);
-;;;
-;;; Sets up the transformation for the cairo context obtained from
-;;; GtkPrintContext in such a way that distances are measured in units of unit.
-;;;
-;;; op :
-;;;     a GtkPrintOperation
-;;;
-;;; unit :
-;;;     the unit to use
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-print-operation-set-unit))
+
+(defun gtk-print-operation-set-unit (op unit)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-15}
+  @argument[op]{a @class{gtk-print-operation} object}
+  @argument[unit]{the unit to use}
+  @begin{short}
+    Sets up the transformation for the cairo context obtained from
+    @class{gtk-print-context} in such a way that distances are measured in units
+    of @arg{unit}.
+  @end{short}
+
+  Since 2.10
+  @see-class{gtk-print-operation}
+  @see-class{gtk-print-context}
+  @see-symbol{gtk-unit}"
+  (setf (gtk-print-operation-unit op) unit))
+
+(export 'gtk-print-operation-set-unit)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_operation_set_export_filename ()
-;;;
-;;; void gtk_print_operation_set_export_filename (GtkPrintOperation *op,
-;;;                                               const gchar *filename);
-;;;
-;;; Sets up the GtkPrintOperation to generate a file instead of showing the
-;;; print dialog. The indended use of this function is for implementing "Export
-;;; to PDF" actions. Currently, PDF is the only supported format.
-;;;
-;;; "Print to PDF" support is independent of this and is done by letting the
-;;; user pick the "Print to PDF" item from the list of printers in the print
-;;; dialog.
-;;;
-;;; op :
-;;;     a GtkPrintOperation
-;;;
-;;; filename :
-;;;     the filename for the exported file
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-print-operation-set-export-filename))
+
+(defun gtk-print-operation-set-export-filename (op filename)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-15}
+  @argument[op]{a @class{gtk-print-operation} object}
+  @argument[filename]{the filename for the exported file}
+  @begin{short}
+    Sets up the @class{gtk-print-operation} to generate a file instead of
+    showing the print dialog.
+  @end{short}
+  The indended use of this function is for implementing \"Export to PDF\"
+  actions. Currently, PDF is the only supported format.
+
+  \"Print to PDF\" support is independent of this and is done by letting the
+  user pick the \"Print to PDF\" item from the list of printers in the print
+  dialog.
+
+  Since 2.10
+  @see-class{gtk-print-operation}"
+  (setf (gtk-print-operation-export-filename op) filename))
+
+(export 'gtk-print-operation-set-export-filename)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_operation_set_show_progress ()
-;;;
-;;; void gtk_print_operation_set_show_progress (GtkPrintOperation *op,
-;;;                                             gboolean show_progress);
-;;;
-;;; If show_progress is TRUE, the print operation will show a progress dialog
-;;; during the print operation.
-;;;
-;;; op :
-;;;     a GtkPrintOperation
-;;;
-;;; show_progress :
-;;;     TRUE to show a progress dialog
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-print-operation-set-show-progress))
+
+(defun gtk-print-operation-set-show-progress (op show-progress)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-15}
+  @argument[op]{a @class{gtk-print-operation} object}
+  @argument[show-progress]{@em{true} to show a progress dialog}
+  @begin{short}
+    If @arg{show-progress} is @em{true}, the print operation will show a
+    progress dialog during the print operation.
+  @end{short}
+
+  Since 2.10
+  @see-class{gtk-print-operation}"
+  (setf (gtk-print-operation-show-progress op) show-progress))
+
+(export 'gtk-print-operation-set-show-progress)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_operation_set_track_print_status ()
-;;;
-;;; void gtk_print_operation_set_track_print_status (GtkPrintOperation *op,
-;;;                                                  gboolean track_status);
-;;;
-;;; If track_status is TRUE, the print operation will try to continue report on
-;;; the status of the print job in the printer queues and printer. This can
-;;; allow your application to show things like "out of paper" issues, and when
-;;; the print job actually reaches the printer.
-;;;
-;;; This function is often implemented using some form of polling, so it should
-;;; not be enabled unless needed.
-;;;
-;;; op :
-;;;     a GtkPrintOperation
-;;;
-;;; track_status :
-;;;     TRUE to track status after printing
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-print-operation-set-track-print-status))
+
+(defun gtk-print-operation-set-track-print-status (op track-status)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-15}
+  @argument[op]{a @class{gtk-print-operation} object}
+  @argument[track-status]{@em{true} to track status after printing}
+  @begin{short}
+    If @arg{track-status} is @em{true}, the print operation will try to continue
+    report on the status of the print job in the printer queues and printer.
+  @end{short}
+  This can allow your application to show things like \"out of paper\" issues,
+  and when the print job actually reaches the printer.
+
+  This function is often implemented using some form of polling, so it should
+  not be enabled unless needed.
+
+  Since 2.10
+  @see-class{gtk-print-operation}"
+  (setf (gtk-print-operation-track-print-status op) track-status))
+
+(export 'gtk-print-operation-set-track-print-status)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_operation_set_custom_tab_label ()
-;;;
-;;; void gtk_print_operation_set_custom_tab_label (GtkPrintOperation *op,
-;;;                                                const gchar *label);
-;;;
-;;; Sets the label for the tab holding custom widgets.
-;;;
-;;; op :
-;;;     a GtkPrintOperation
-;;;
-;;; label :
-;;;     the label to use, or NULL to use the default label
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-print-operation-set-custom-tab-label))
+
+(defun gtk-print-operation-set-custom-tab-label (op label)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-15}
+  @argument[op]{a @class{gtk-print-operation} object}
+  @argument[label]{the label to use, or @code{nil} to use the default label}
+  @begin{short}
+    Sets the label for the tab holding custom widgets.
+  @end{short}
+
+  Since 2.10
+  @see-class{gtk-print-operation}"
+  (setf (gtk-print-operation-custom-tab-label op) label))
+
+(export 'gtk-print-operation-set-custom-tab-label)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_operation_run ()
@@ -1619,41 +1746,53 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_operation_get_status ()
-;;;
-;;; GtkPrintStatus gtk_print_operation_get_status (GtkPrintOperation *op);
-;;;
-;;; Returns the status of the print operation. Also see
-;;; gtk_print_operation_get_status_string().
-;;;
-;;; op :
-;;;     a GtkPrintOperation
-;;;
-;;; Returns :
-;;;     the status of the print operation
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-print-operation-get-status))
+
+(defun gtk-print-operatorion-get-status (op)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-15}
+  @argument[op]{a @class{gtk-print-operation} object}
+  @return{The status of the print operation.}
+  @begin{short}
+    Returns the status of the print operation.
+  @end{short}
+  Also see the function @fun{gtk-print-operation-get-status-string}.
+
+  Since 2.10
+  @see-class{gtk-print-operation}
+  @see-function{gtk-print-operation-get-status-string}"
+  (gtk-print-operation-status op))
+
+(export 'gtk-print-operation-get-status)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_operation_get_status_string ()
-;;;
-;;; const gchar * gtk_print_operation_get_status_string (GtkPrintOperation *op);
-;;;
-;;; Returns a string representation of the status of the print operation. The
-;;; string is translated and suitable for displaying the print status e.g. in a
-;;; GtkStatusbar.
-;;;
-;;; Use gtk_print_operation_get_status() to obtain a status value that is
-;;; suitable for programmatic use.
-;;;
-;;; op :
-;;;     a GtkPrintOperation
-;;;
-;;; Returns :
-;;;     a string representation of the status of the print operation
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-print-operation-get-status-string))
+
+(defun gtk-print-operation-get-status-string (op)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-15}
+  @argument[op]{a @class{gtk-print-operation} object}
+  @return{A string representation of the status of the print operation.}
+  @begin{short}
+    Returns a string representation of the status of the print operation.
+  @end{short}
+  The string is translated and suitable for displaying the print status e. g.
+  in a @class{gtk-statusbar}.
+
+  Use the function @fun{gtk-print-operation-get-status} to obtain a status value
+  that is suitable for programmatic use.
+
+  Since 2.10
+  @see-class{gtk-print-operation}
+  @see-function{gtk-print-operation-get-status}"
+  (gtk-print-operation-status-string op))
+
+(export 'gtk-print-operation-get-status-string)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_operation_is_finished ()
@@ -1679,136 +1818,178 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_operation_set_support_selection ()
-;;;
-;;; void gtk_print_operation_set_support_selection (GtkPrintOperation *op,
-;;;                                                 gboolean support_selection);
-;;;
-;;; Sets whether selection is supported by GtkPrintOperation.
-;;;
-;;; op :
-;;;     a GtkPrintOperation
-;;;
-;;; support_selection :
-;;;     TRUE to support selection
-;;;
-;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-print-operation-set-support-selection))
+
+(defun gtk-print-operation-set-support-selection (op support-selection)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-15}
+  @argument[op]{a @class{gtk-print-operation} object}
+  @argument[support-selection]{@em{true} to support selection}
+  @begin{short}
+    Sets whether selection is supported by @class{gtk-print-operation}.
+  @end{short}
+
+  Since 2.18
+  @see-class{gtk-print-operation}
+  @see-function{gtk-print-operation-get-support-selection}"
+  (setf (gtk-print-operation-support-selection op) support-selection))
+
+(export 'gtk-print-operation-set-support-selection)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_operation_get_support_selection ()
-;;;
-;;; gboolean gtk_print_operation_get_support_selection (GtkPrintOperation *op);
-;;;
-;;; Gets the value of "support-selection" property.
-;;;
-;;; op :
-;;;     a GtkPrintOperation
-;;;
-;;; Returns :
-;;;     whether the application supports print of selection
-;;;
-;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-print-operation-get-support-selection))
+
+(defun gtk-print-operation-get-support-selection (op)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-15}
+  @argument[op]{a @class{gtk-print-operation} object}
+  @return{Whether the application supports print of selection.}
+  @begin{short}
+    Gets the value of the @code{\"support-selection\"} property.
+  @end{short}
+
+  Since 2.18
+  @see-class{gtk-print-operation}
+  @see-function{gtk-print-operation-set-support-selection}"
+  (gtk-print-operation-support-selection op))
+
+(export 'gtk-print-operation-get-support-selection)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_operation_set_has_selection ()
-;;;
-;;; void gtk_print_operation_set_has_selection (GtkPrintOperation *op,
-;;;                                             gboolean has_selection);
-;;;
-;;; Sets whether there is a selection to print.
-;;;
-;;; Application has to set number of pages to which the selection will draw by
-;;; gtk_print_operation_set_n_pages() in a callback of "begin-print".
-;;;
-;;; op :
-;;;     a GtkPrintOperation
-;;;
-;;; has_selection :
-;;;     TRUE indicates that a selection exists
-;;;
-;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-print-operation-set-has-selection))
+
+(defun gtk-print-operation-set-has-selection (op has-selection)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-15}
+  @argument[op]{a @class{gtk-print-operation} object}
+  @argument[has-selection]{@em{true} indicates that a selection exists}
+  @begin{short}
+    Sets whether there is a selection to print.
+  @end{short}
+
+  Application has to set number of pages to which the selection will draw by
+  the function @fun{gtk-print-operation-set-n-pages} in a callback of
+  @code{\"begin-print\"}.
+
+  Since 2.18
+  @see-class{gtk-print-operation}
+  @see-function{gtk-print-operation-get-has-selection}
+  @see-function{gtk-print-operation-set-n-pages}"
+  (setf (gtk-print-operation-has-selection op) has-selection))
+
+(export 'gtk-print-operation-set-has-selection)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_operation_get_has_selection ()
-;;;
-;;; gboolean gtk_print_operation_get_has_selection (GtkPrintOperation *op);
-;;;
-;;; Gets the value of "has-selection" property.
-;;;
-;;; op :
-;;;     a GtkPrintOperation
-;;;
-;;; Returns :
-;;;     whether there is a selection
-;;;
-;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-print-operation-get-has-selection))
+
+(defun gtk-print-operation-get-has-selection (op)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-15}
+  @argument[op]{a @class{gtk-print-operation} object}
+  @return{Whether there is a selection.}
+  @begin{short}
+    Gets the value of the @code{\"has-selection\"} property.
+  @end{short}
+
+  Since 2.18
+  @see-class{gtk-print-operation}
+  @see-function{gtk-print-operation-set-has-selection}"
+  (gtk-print-operation-has-selection op))
+
+(export 'gtk-print-operation-get-has-selection)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_operation_set_embed_page_setup ()
-;;;
-;;; void gtk_print_operation_set_embed_page_setup (GtkPrintOperation *op,
-;;;                                                gboolean embed);
-;;;
-;;; Embed page size combo box and orientation combo box into page setup page.
-;;; Selected page setup is stored as default page setup in GtkPrintOperation.
-;;;
-;;; op :
-;;;     a GtkPrintOperation
-;;;
-;;; embed :
-;;;     TRUE to embed page setup selection in the GtkPrintDialog
-;;;
-;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-print-operation-set-embed-page-setup))
+
+(defun gtk-print-operation-set-embed-page-setup (op embed)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-15}
+  @argument[op]{a @class{gtk-print-operation} object}
+  @argument[embed]{@em{true} to embed page setup selection in the
+    @class{gtk-print-dialog}}
+  @begin{short}
+    Embed page size combo box and orientation combo box into page setup page.
+  @end{short}
+  Selected page setup is stored as default page setup in
+  @class{gtk-print-operation}.
+
+  Since 2.18
+  @class{gtk-print-operation}
+  @class{gtk-print-dialog}
+  @see-function{gtk-print-operation-get-embed-page-setup}"
+  (setf (gtk-print-operation-embed-page-setup op) embed))
+
+(export 'gtk-print-operation-set-embed-page-setup)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_operation_get_embed_page_setup ()
-;;;
-;;; gboolean gtk_print_operation_get_embed_page_setup (GtkPrintOperation *op);
-;;;
-;;; Gets the value of "embed-page-setup" property.
-;;;
-;;; op :
-;;;     a GtkPrintOperation
-;;;
-;;; Returns :
-;;;     whether page setup selection combos are embedded
-;;;
-;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-print-operation-get-embed-page-setup))
+
+(defun gtk-print-operation-get-embed-page-setup (op)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-15}
+  @argument[op]{a @class{gtk-print-operation} object}
+  @return{Whether page setup selection combos are embedded.}
+  @begin{short}
+    Gets the value of @code{\"embed-page-setup\"} property.
+  @end{short}
+
+  Since 2.18
+  @see-class{gtk-print-operation}
+  @see-function{gtk-print-operation-set-embed-page-setup}"
+  (gtk-print-operation-embed-page-setup op))
+
+(export 'gtk-print-operation-get-embed-page-setup)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_run_page_setup_dialog ()
-;;;
-;;; GtkPageSetup * gtk_print_run_page_setup_dialog (GtkWindow *parent,
-;;;                                                 GtkPageSetup *page_setup,
-;;;                                                 GtkPrintSettings *settings);
-;;;
-;;; Runs a page setup dialog, letting the user modify the values from
-;;; page_setup. If the user cancels the dialog, the returned GtkPageSetup is
-;;; identical to the passed in page_setup, otherwise it contains the
-;;; modifications done in the dialog.
-;;;
-;;; Note that this function may use a recursive mainloop to show the page setup
-;;; dialog. See gtk_print_run_page_setup_dialog_async() if this is a problem.
-;;;
-;;; parent :
-;;;     transient parent
-;;;
-;;; page_setup :
-;;;     an existing GtkPageSetup
-;;;
-;;; settings :
-;;;     a GtkPrintSettings
-;;;
-;;; Returns :
-;;;     a new GtkPageSetup
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_run_page_setup_dialog" gtk-print-run-page-setup-dialog)
+    (g-object gtk-page-setup)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-17}
+  @argument[parent]{transient parent}
+  @argument[page-setup]{an existing @class{gtk-page-setup} object}
+  @argument[settings]{a @class{gtk-print-settings} object}
+  @return{A new @class{gtk-page-setup} object.}
+  @begin{short}
+    Runs a page setup dialog, letting the user modify the values from
+    @arg{page-setup}.
+  @end{short}
+  If the user cancels the dialog, the returned @class{gtk-page-setup} object is
+  identical to the passed in @arg{page-setup}, otherwise it contains the
+  modifications done in the dialog.
+
+  Note that this function may use a recursive mainloop to show the page setup
+  dialog. See the function @fun{gtk-print-run-page-setup-dialog-async} if this
+  is a problem.
+
+  Since 2.10
+  @see-class{gtk-page-setup}
+  @see-class{gtk-print-settings}
+  @see-function{gtk-print-run-page-setup-dialog-async}"
+  (parent (g-object gtk-window))
+  (page-setup (g-object gtk-page-setup))
+  (settings (g-object gtk-print-settings)))
+
+(export 'gtk-print-run-page-setup-dialog)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkPageSetupDoneFunc ()

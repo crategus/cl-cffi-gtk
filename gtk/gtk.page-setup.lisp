@@ -4,9 +4,10 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.8.6 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -80,7 +81,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-page-setup 'type)
- "@version{2013-3-28}
+ "@version{2013-11-17}
   @begin{short}
     A @sym{gtk-page-setup} object stores the page size, orientation and margins.
     The idea is that you can get one of these from the page setup dialog and
@@ -122,52 +123,65 @@
      page_setup = new_page_setup;
    @}
   @end{pre}
-  Printing support was added in GTK+ 2.10.")
+  Printing support was added in GTK+ 2.10.
+  @see-class{gtk-print-operation}
+  @see-class{gtk-print-settings}
+  @see-function{gtk-page-setup-new}
+  @see-function{gtk-print-run-page-setup-dialog}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_page_setup_new ()
-;;;
-;;; GtkPageSetup * gtk_page_setup_new (void);
-;;;
-;;; Creates a new GtkPageSetup.
-;;;
-;;; Returns :
-;;;     a new GtkPageSetup.
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-page-setup-new))
+
+(defun gtk-page-setup-new ()
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-17}
+  @return{A new @class{gtk-page-setup} object.}
+  @short{Creates a new @class{gtk-page-setup} object.}
+
+  Since 2.10
+  @see-class{gtk-page-setup}"
+  (make-instance 'gtk-page-setup))
+
+(export 'gtk-page-setup-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_page_setup_copy ()
-;;;
-;;; GtkPageSetup * gtk_page_setup_copy (GtkPageSetup *other);
-;;;
-;;; Copies a GtkPageSetup.
-;;;
-;;; other :
-;;;     the GtkPageSetup to copy
-;;;
-;;; Returns :
-;;;     a copy of other
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_page_setup_copy" gtk-page-setup-copy) (g-object gtk-page-setup)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-17}
+  @argument[other]{the @class{gtk-page-setup} object to copy}
+  @return{A copy of @arg{other}.}
+  @short{Copies a @class{gtk-page-setup} object.}
+
+  Since 2.10
+  @see-class{gtk-page-setup}"
+  (other (g-object gtk-page-setup)))
+
+(export 'gtk-page-setup-copy)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_page_setup_get_orientation ()
-;;;
-;;; GtkPageOrientation gtk_page_setup_get_orientation (GtkPageSetup *setup);
-;;;
-;;; Gets the page orientation of the GtkPageSetup.
-;;;
-;;; setup :
-;;;     a GtkPageSetup
-;;;
-;;; Returns :
-;;;     the page orientation
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_page_setup_get_orientation" gtk-page-setup-get-orientation)
+    gtk-page-orientation
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-17}
+  @argument[setup]{a @class{gtk-page-setup} object}
+  @return{The page orientation.}
+  @short{Gets the page orientation of the @class{gtk-page-setup} object.}
+
+  Since 2.10
+  @see-class{gtk-page-setup}
+  @see-symbol{gtk-page-orientation}"
+  (setup (g-object gtk-page-setup)))
+
+(export 'gtk-page-setup-get-orientation)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_page_setup_set_orientation ()

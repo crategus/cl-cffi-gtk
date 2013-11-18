@@ -4,9 +4,10 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -62,11 +63,12 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tool-shell atdoc:*class-name-alias*) "Interface"
       (documentation 'gtk-tool-shell 'type)
- "@version{2013-6-1}
+ "@version{2013-11-16}
   @begin{short}
     The @sym{gtk-tool-shell} interface allows container widgets to provide
     additional information when embedding @class{gtk-tool-item} widgets.
-  @end{short}")
+  @end{short}
+  @see-class{gtk-tool-item}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkToolShellIface
@@ -115,127 +117,167 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_shell_get_ellipsize_mode ()
-;;;
-;;; PangoEllipsizeMode gtk_tool_shell_get_ellipsize_mode (GtkToolShell *shell);
-;;;
-;;; Retrieves the current ellipsize mode for the tool shell. Tool items must not
-;;; call this function directly, but rely on gtk_tool_item_get_ellipsize_mode()
-;;; instead.
-;;;
-;;; shell :
-;;;     a GtkToolShell
-;;;
-;;; Returns :
-;;;     the current ellipsize mode of shell
-;;;
-;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_tool_shell_get_ellipsize_mode" gtk-tool-shell-get-ellipsize-mode)
+    pango-ellipsize-mode
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-16}
+  @argument[shell]{a @class{gtk-tool-shell} object}
+  @return{The current ellipsize mode of @arg{shell}.}
+  @begin{short}
+    Retrieves the current ellipsize mode for the tool shell.
+  @end{short}
+  Tool items must not call this function directly, but rely on the function
+  @fun{gtk-tool-item-get-ellipsize-mode} instead.
+
+  Since 2.20
+  @see-class{gtk-tool-shell}
+  @see-symbol{pango-ellipsize-mode}
+  @see-function{gtk-tool-item-get-ellipsize-mode}"
+  (shell (g-object gtk-tool-shell)))
+
+(export 'gtk-tool-shell-get-ellipsize-mode)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_shell_get_icon_size ()
-;;;
-;;; GtkIconSize gtk_tool_shell_get_icon_size (GtkToolShell *shell);
-;;;
-;;; Retrieves the icon size for the tool shell. Tool items must not call this
-;;; function directly, but rely on gtk_tool_item_get_icon_size() instead.
-;;;
-;;; shell :
-;;;     a GtkToolShell
-;;;
-;;; Returns :
-;;;     the current size for icons of shell. [type int]
-;;;
-;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_tool_shell_get_icon_size" gtk-tool-shell-get-icon-size)
+    gtk-icon-size
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-17}
+  @argument[shell]{a @class{gtk-tool-shell} object}
+  @return{The current size for icons of shell.}
+  @begin{short}
+    Retrieves the icon size for the tool shell.
+  @end{short}
+  Tool items must not call this function directly, but rely on the function
+  @fun{gtk-tool-item-get-icon-size} instead.
+
+  Since 2.14
+  @see-class{gtk-tool-shell}
+  @see-function{gtk-tool-item-get-icon-size}"
+  (shell (g-object gtk-tool-shell)))
+
+(export 'gtk-tool-shell-get-icon-size)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_shell_get_orientation ()
-;;;
-;;; GtkOrientation gtk_tool_shell_get_orientation (GtkToolShell *shell);
-;;;
-;;; Retrieves the current orientation for the tool shell. Tool items must not
-;;; call this function directly, but rely on gtk_tool_item_get_orientation()
-;;; instead.
-;;;
-;;; shell :
-;;;     a GtkToolShell
-;;;
-;;; Returns :
-;;;     the current orientation of shell
-;;;
-;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_tool_shell_get_orientation" gtk-tool-shell-get-orientation)
+    gtk-orientation
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-17}
+  @argument[shell]{a @class{gtk-tool-shell} object}
+  @return{The current orientation of @arg{shell}.}
+  @begin{short}
+    Retrieves the current orientation for the tool shell.
+  @end{short}
+  Tool items must not call this function directly, but rely on the function
+  @fun{gtk-tool-item-get-orientation} instead.
+
+  Since 2.14
+  @see-class{gtk-tool-shell}
+  @see-function{gtk-tool-item-get-orientation}"
+  (shell (g-object gtk-tool-shell)))
+
+(export 'gtk-tool-shell-get-orientation)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_shell_get_relief_style ()
-;;;
-;;; GtkReliefStyle gtk_tool_shell_get_relief_style (GtkToolShell *shell);
-;;;
-;;; Returns the relief style of buttons on shell. Tool items must not call this
-;;; function directly, but rely on gtk_tool_item_get_relief_style() instead.
-;;;
-;;; shell :
-;;;     a GtkToolShell
-;;;
-;;; Returns :
-;;;     The relief style of buttons on shell.
-;;;
-;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_tool_shell_get_relief_style" gtk-tool-shell-get-relief-style)
+    gtk-relief-style
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-17}
+  @argument[shell]{a @class{gtk-tool-shell} object}
+  @return{The relief style of buttons on shell.}
+  @begin{short}
+    Returns the relief style of buttons on @arg{shell}.
+  @end{short}
+  Tool items must not call this function directly, but rely on the function
+  @fun{gtk-tool-item-get-relief-style} instead.
+
+  Since 2.14
+  @see-class{gtk-tool-shell-get-relief-style}
+  @see-symbol{gtk-relief-style}
+  @see-function{gtk-tool-item-get-relief-style}"
+  (shell (g-object gtk-tool-shell)))
+
+(export 'gtk-tool-shell-get-relief-style)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_shell_get_style ()
-;;;
-;;; GtkToolbarStyle gtk_tool_shell_get_style (GtkToolShell *shell);
-;;;
-;;; Retrieves whether the tool shell has text, icons, or both. Tool items must
-;;; not call this function directly, but rely on
-;;; gtk_tool_item_get_toolbar_style() instead.
-;;;
-;;; shell :
-;;;     a GtkToolShell
-;;;
-;;; Returns :
-;;;     the current style of shell
-;;;
-;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_tool_shell_get_style" gtk-tool-shell-get-style)
+    gtk-toolbar-style
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-17}
+  @argument[shell]{a @class{gtk-tool-shell} object}
+  @return{The current style of shell.}
+  @begin{short}
+    Retrieves whether the tool shell has text, icons, or both.
+  @end{short}
+  Tool items must not call this function directly, but rely on the function
+  @fun{gtk-tool-item-get-toolbar-style} instead.
+
+  Since 2.14
+  @see-class{gtk-tool-shell}
+  @see-function{gtk-tool-item-get-toolbar-style}"
+  (shell (g-object gtk-tool-shell)))
+
+(export 'gtk-tool-shell-get-style)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_shell_get_text_alignment ()
-;;;
-;;; gfloat gtk_tool_shell_get_text_alignment (GtkToolShell *shell);
-;;;
-;;; Retrieves the current text alignment for the tool shell. Tool items must not
-;;; call this function directly, but rely on gtk_tool_item_get_text_alignment()
-;;; instead.
-;;;
-;;; shell :
-;;;     a GtkToolShell
-;;;
-;;; Returns :
-;;;     the current text alignment of shell
-;;;
-;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_tool_shell_get_text_alignment" gtk-tool-shell-get-text-alignment)
+    :float
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-17}
+  @argument[shell]{a @class{gtk-tool-shell} object}
+  @return{The current text alignment of @arg{shell}.}
+  @begin{short}
+    Retrieves the current text alignment for the tool shell.
+  @end{short}
+  Tool items must not call this function directly, but rely on the function
+  @fun{gtk-tool-item-get-text-alignment} instead.
+
+  Since 2.20
+  @see-class{gtk-tool-shell}
+  @see-function{gtk-tool-item-get-text-alignment}"
+  (shell (g-object gtk-tool-shell)))
+
+(export 'gtk-tool-shell-get-text-alignment)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_shell_get_text_orientation ()
-;;;
-;;; GtkOrientation gtk_tool_shell_get_text_orientation (GtkToolShell *shell);
-;;;
-;;; Retrieves the current text orientation for the tool shell. Tool items must
-;;; not call this function directly, but rely on
-;;; gtk_tool_item_get_text_orientation() instead.
-;;;
-;;; shell :
-;;;     a GtkToolShell
-;;;
-;;; Returns :
-;;;     the current text orientation of shell
-;;;
-;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_tool_shell_get_text_orientation"
+           gtk-tool-shell-get-text-orientation) gtk-orientation
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-17}
+  @argument[shell]{a @class{gtk-tool-shell} object}
+  @return{The current text orientation of @arg{shell}.}
+  @begin{short}
+    Retrieves the current text orientation for the tool shell.
+  @end{short}
+  Tool items must not call this function directly, but rely on the function
+  @fun{gtk-tool-item-get-text-orientation} instead.
+
+  Since 2.20
+  @see-class{gtk-tool-shell}
+  @see-symbol{gtk-orientation}
+  @see-function{gtk-tool-item-get-text-orientation}"
+  (shell (g-object gtk-tool-shell)))
+
+(export 'gtk-tool-shell-get-text-orientation)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_shell_rebuild_menu ()
@@ -262,20 +304,25 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_shell_get_text_size_group ()
-;;;
-;;; GtkSizeGroup * gtk_tool_shell_get_text_size_group (GtkToolShell *shell);
-;;;
-;;; Retrieves the current text size group for the tool shell. Tool items must
-;;; not call this function directly, but rely on
-;;; gtk_tool_item_get_text_size_group() instead.
-;;;
-;;; shell :
-;;;     a GtkToolShell
-;;;
-;;; Returns :
-;;;     the current text size group of shell
-;;;
-;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_tool_shell_get_text_size_group" gtk-tool-shell-get-text-size-group)
+    (g-object gtk-size-group)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-17}
+  @argument[shell]{a @class{gtk-tool-shell} object}
+  @return{The current text size group of shell.}
+  @begin{short}
+    Retrieves the current text size group for the tool shell.
+  @end{short}
+  Tool items must not call this function directly, but rely on the function
+  @fun{gtk-tool-item-get-text-size-group} instead.
+
+  Since 2.20
+  @see-class{gtk-tool-shell}
+  @see-function{gtk-tool-item-get-text-size-group}"
+  (shell (g-object gtk-tool-shell)))
+
+(export 'gtk-tool-shell-get-text-size-group)
 
 ;;; --- End of file gtk.tool-shell.lisp ----------------------------------------

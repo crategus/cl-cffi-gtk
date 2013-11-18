@@ -141,65 +141,77 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_context_get_cairo_context ()
-;;;
-;;; cairo_t * gtk_print_context_get_cairo_context (GtkPrintContext *context);
-;;;
-;;; Obtains the cairo context that is associated with the GtkPrintContext.
-;;;
-;;; context :
-;;;     a GtkPrintContext
-;;;
-;;; Returns :
-;;;     the cairo context of context
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_context_get_cairo_context"
+           gtk-print-context-get-cairo-context) (:pointer (:struct cairo-t))
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-15}
+  @argument[context]{a @class{gtk-print-context} object}
+  @return{The cairo context of @arg{context}.}
+  @begin{short}
+    Obtains the cairo context that is associated with the
+    @class{gtk-print-context}.
+  @end{short}
+
+  Since 2.10
+  @see-class{gtk-print-context}
+  @see-symbol{cairo-t}"
+  (context (g-object gtk-print-context)))
+
+(export 'gtk-print-context-get-cairo-context)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_context_set_cairo_context ()
-;;;
-;;; void gtk_print_context_set_cairo_context (GtkPrintContext *context,
-;;;                                           cairo_t *cr,
-;;;                                           double dpi_x,
-;;;                                           double dpi_y);
-;;;
-;;; Sets a new cairo context on a print context.
-;;;
-;;; This function is intended to be used when implementing an internal print
-;;; preview, it is not needed for printing, since GTK+ itself creates a suitable
-;;; cairo context in that case.
-;;;
-;;; context :
-;;;     a GtkPrintContext
-;;;
-;;; cr :
-;;;     the cairo context
-;;;
-;;; dpi_x :
-;;;     the horizontal resolution to use with cr
-;;;
-;;; dpi_y :
-;;;     the vertical resolution to use with cr
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_context_set_cairo_context"
+           gtk-print-context-set-cairo-context) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-15}
+  @argument[context]{a @class{gtk-print-context} object}
+  @argument[cr]{the cairo context}
+  @argument[dpi-x]{the horizontal resolution to use with @arg{cr}}
+  @argument[dpi-y]{the vertical resolution to use with @arg{cr}}
+  @begin{short}
+    Sets a new cairo context on a print context.
+  @end{short}
+
+  This function is intended to be used when implementing an internal print
+  preview, it is not needed for printing, since GTK+ itself creates a suitable
+  cairo context in that case.
+
+  Since 2.10
+  @see-class{gtk-print-context}
+  @see-symbol{cairo-t}"
+  (context (g-object gtk-print-context))
+  (cr (:pointer (:struct cairo-t)))
+  (dpi-x :double)
+  (dip-y :double))
+
+(export 'gtk-print-context-set-cairo-context)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_context_get_page_setup ()
-;;;
-;;; GtkPageSetup * gtk_print_context_get_page_setup (GtkPrintContext *context);
-;;;
-;;; Obtains the GtkPageSetup that determines the page dimensions of the
-;;; GtkPrintContext.
-;;;
-;;; context :
-;;;     a GtkPrintContext
-;;;
-;;; Returns :
-;;;     the page setup of context
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_context_get_page_setup" gtk-print-context-get-page-setup)
+    (g-object gtk-page-setup)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-16}
+  @argument[context]{a @class{gtk-print-context} object}
+  @return{The page setup of context.}
+  @begin{short}
+    Obtains the @class{gtk-page-setup} that determines the page dimensions of
+    the @class{gtk-print-context}.
+  @end{short}
+
+  Since 2.10
+  @see-class{gtk-print-context}
+  @see-class{gtk-page-setup}"
+  (context (g-object gtk-print-context)))
+
+(export 'gtk-print-context-get-page-setup)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_context_get_width ()

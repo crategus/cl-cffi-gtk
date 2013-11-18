@@ -1,9 +1,10 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.tool-item-group.lisp
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.8.6 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2012, 2013 Dieter Kaiser
 ;;;
@@ -86,11 +87,11 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-tool-item-group 'type)
- "@version{2013-6-1}
+ "@version{2013-11-17}
   @begin{short}
     A @sym{gtk-tool-item-group} is used together with @class{gtk-tool-palette}
-    to add @class{gtk-tool-item}'s to a palette like container with different
-    categories and drag and drop support.
+    to add @class{gtk-tool-item} widgets to a palette like container with
+    different categories and drag and drop support.
   @end{short}
   @begin[Child Property Details]{dictionary}
     @subheading{The \"expand\" child property}
@@ -147,7 +148,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "collapsed"
                                                'gtk-tool-item-group) 't)
- "The @code{\"collapsed\"} property of type @code{:boolean} (Read / Write)@br{}
+ "The @code{\"collapsed\"} property of type @code{:boolean} (Read / Write) @br{}
   Whether the group has been collapsed and items are hidden. @br{}
   Default value: @code{nil}")
 
@@ -155,7 +156,7 @@
 (setf (documentation (atdoc:get-slot-from-name "ellipsize"
                                                'gtk-tool-item-group) 't)
  "The @code{\"ellipsize\"} property of type @symbol{pango-ellipsize-mode}
-  (Read / Write)@br{}
+  (Read / Write) @br{}
   Ellipsize for item group headers. @br{}
   Default value: @code{:none}")
 
@@ -163,14 +164,14 @@
 (setf (documentation (atdoc:get-slot-from-name "header-relief"
                                                'gtk-tool-item-group) 't)
  "The @code{\"header-relief\"} property of type @symbol{gtk-relief-style}
-  (Read / Write)@br{}
+  (Read / Write) @br{}
   Relief of the group header button. @br{}
-  Default value: @code{:normal}@br{}")
+  Default value: @code{:normal}")
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "label"
                                                'gtk-tool-item-group) 't)
- "The @code{\"label\"} property of type @code{:string} (Read / Write)@br{}
+ "The @code{\"label\"} property of type @code{:string} (Read / Write) @br{}
   The human-readable title of this item group. @br{}
   Default value: \"\"")
 
@@ -178,7 +179,7 @@
 (setf (documentation (atdoc:get-slot-from-name "label-widget"
                                                'gtk-tool-item-group) 't)
  "The @code{\"label-widget\"} property of type @class{gtk-widget}
-  (Read / Write)@br{}
+  (Read / Write) @br{}
   A widget to display in place of the usual label.")
 
 ;;; ----------------------------------------------------------------------------
@@ -191,41 +192,56 @@
 (setf (gethash 'gtk-tool-item-group-collapsed atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tool-item-group-collapsed 'function)
- "@version{2013-3-27}
+ "@version{2013-11-17}
   Accessor of the slot @code{\"collapsed\"} of the @class{gtk-tool-item-group}
-  class.")
+  class.
+  @see-class{gtk-tool-item-group}
+  @see-function{gtk-tool-item-group-get-collapsed}
+  @see-function{gtk-tool-item-group-set-collpased}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tool-item-group-ellipsize atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tool-item-group-ellipsize 'function)
- "@version{2013-3-27}
+ "@version{2013-11-17}
   Accessor of the slot @code{\"ellipsize\"} of the @class{gtk-tool-item-group}
-  class.")
+  class.
+  @see-class{gtk-tool-item-group}
+  @see-function{gtk-tool-item-group-get-ellipsize}
+  @see-function{gtk-tool-item-group-set-ellipsize}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tool-item-group-header-relief atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tool-item-group-header-relief 'function)
- "@version{2013-3-27}
+ "@version{2013-11-17}
   Accessor of the slot @code{\"header-relief\"} of the
-  @class{gtk-tool-item-group} class.")
+  @class{gtk-tool-item-group} class.
+  @see-class{gtk-tool-item-group}
+  @see-function{gtk-tool-item-group-get-header-relief}
+  @see-function{gtk-tool-item-group-set-header-relief}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tool-item-group-label atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tool-item-group-label 'function)
- "@version{2013-3-27}
+ "@version{2013-11-17}
   Accessor of the slot @code{\"label\"} of the @class{gtk-tool-item-group}
-  class.")
+  class.
+  @see-class{gtk-tool-item-group}
+  @see-function{gtk-tool-item-group-get-label}
+  @see-function{gtk-tool-item-group-set-label}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tool-item-group-label-widget atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tool-item-group-label-widget 'function)
- "@version{2013-3-27}
+ "@version{2013-11-17}
   Accessor of the slot @code{\"label-widget\"} of the
-  @class{gtk-tool-item-group} class.")
+  @class{gtk-tool-item-group} class.
+  @see-class{gtk-tool-item-group}
+  @see-function{gtk-tool-item-group-get-label-widget}
+  @see-function{gtk-tool-item-group-set-label-widget}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -237,79 +253,97 @@
                        gtk-tool-item-group-child-expand
                        "expand" "gboolean" t t t)
 
-(define-child-property "GtkToolItemGroup"
-                       gtk-tool-item-group-child-fill
-                       "fill" "gboolean" t t t)
-
-(define-child-property "GtkToolItemGroup"
-                       gtk-tool-item-group-child-homogeneous
-                       "homogeneous" "gboolean" t t t)
-
-(define-child-property "GtkToolItemGroup"
-                       gtk-tool-item-group-child-new-row
-                       "new-row" "gboolean" t t t)
-
-(define-child-property "GtkToolItemGroup"
-                       gtk-tool-item-group-child-position
-                       "position" "gint" t t t)
-
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tool-item-group-child-expand atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tool-item-group-child-expand 'function)
- "@version{2013-3-27}
+ "@version{2013-11-17}
   Accessor of the child property @code{\"expand\"} of the
-  @class{gtk-tool-item-group} class.")
+  @class{gtk-tool-item-group} class.
+  @see-class{gtk-tool-item-group}")
+
+;;; ----------------------------------------------------------------------------
+
+(define-child-property "GtkToolItemGroup"
+                       gtk-tool-item-group-child-fill
+                       "fill" "gboolean" t t t)
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tool-item-group-child-fill atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tool-item-group-child-fill 'function)
- "@version{2013-3-27}
+ "@version{2013-11-17}
   Accessor of the child property @code{\"fill\"} of the
-  @class{gtk-tool-item-group} class.")
+  @class{gtk-tool-item-group} class.
+  @see-class{gtk-tool-item-group}")
+
+;;; ----------------------------------------------------------------------------
+
+(define-child-property "GtkToolItemGroup"
+                       gtk-tool-item-group-child-homogeneous
+                       "homogeneous" "gboolean" t t t)
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-tool-item-group-child-homogeneous atdoc:*function-name-alias*)
+(setf (gethash 'gtk-tool-item-group-child-homogeneous
+               atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tool-item-group-child-homogeneous 'function)
- "@version{2013-3-27}
+ "@version{2013-11-17}
   Accessor of the child property @code{\"homogeneous\"} of the
-  @class{gtk-tool-item-group} class.")
+  @class{gtk-tool-item-group} class.
+  @see-class{gtk-tool-item-group}")
+
+;;; ----------------------------------------------------------------------------
+
+(define-child-property "GtkToolItemGroup"
+                       gtk-tool-item-group-child-new-row
+                       "new-row" "gboolean" t t t)
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tool-item-group-child-new-row atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tool-item-group-child-new-row 'function)
- "@version{2013-3-27}
+ "@version{2013-11-17}
   Accessor of the child property @code{\"new-row\"} of the
-  @class{gtk-tool-item-group} class.")
+  @class{gtk-tool-item-group} class.
+  @see-class{gtk-tool-item-group}")
+
+;;; ----------------------------------------------------------------------------
+
+(define-child-property "GtkToolItemGroup"
+                       gtk-tool-item-group-child-position
+                       "position" "gint" t t t)
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tool-item-group-child-position atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tool-item-group-child-position 'function)
- "@version{2013-3-27}
+ "@version{2013-11-17}
   Accessor of the child property @code{\"position\"} of the
-  @class{gtk-tool-item-group} class.")
+  @class{gtk-tool-item-group} class.
+  @see-class{gtk-tool-item-group}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_item_group_get_collapsed ()
-;;;
-;;; gboolean gtk_tool_item_group_get_collapsed (GtkToolItemGroup *group);
-;;;
-;;; Gets whether group is collapsed or expanded.
-;;;
-;;; group :
-;;;     a GtkToolItemGroup
-;;;
-;;; Returns :
-;;;     TRUE if group is collapsed, FALSE if it is expanded
-;;;
-;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-tool-item-group-get-collapsed))
+
+(defun gtk-tool-item-group-get-collapsed (group)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-17}
+  @argument[group]{a @class{gtk-tool-item-group} widget}
+  @return{@em{True} if @arg{group} is collapsed, @code{nil} if it is expanded.}
+  @begin{short}
+    Gets whether @arg{group} is collapsed or expanded.
+  @end{short}
+
+  Since 2.20
+  @see-class{gtk-tool-item-group}
+  @see-function{gtk-tool-item-group-set-collapsed}"
+  (gtk-tool-item-group-collapsed group))
+
+(export 'gtk-tool-item-group-get-collapsed)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_item_group_get_drop_item ()
@@ -334,20 +368,24 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_item_group_get_ellipsize ()
-;;;
-;;; PangoEllipsizeMode gtk_tool_item_group_get_ellipsize
-;;;                                                   (GtkToolItemGroup *group);
-;;;
-;;; Gets the ellipsization mode of group.
-;;;
-;;; group :
-;;;     a GtkToolItemGroup
-;;;
-;;; Returns :
-;;;     the PangoEllipsizeMode of group
-;;;
-;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-tool-item-group-get-ellipsize))
+
+(defun gtk-tool-item-group-get-ellipsize (group)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-17}
+  @argument[group]{a @class{gtk-tool-item-group} widget}
+  @return{The @symbol{pango-ellipsize-mode} of @arg{group}.}
+  @short{Gets the ellipsization mode of @arg{group}.}
+
+  Since 2.20
+  @see-class{gtk-tool-item-group}
+  @see-symbol{pango-ellipsize-mode}
+  @see-function{gtk-tool-item-group-get-ellispsize}"
+  (gtk-tool-item-group-ellipsize group))
+
+(export 'gtk-tool-item-group-get-ellipsize)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_item_group_get_item_position ()
@@ -375,90 +413,119 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_item_group_get_n_items ()
-;;;
-;;; guint gtk_tool_item_group_get_n_items (GtkToolItemGroup *group);
-;;;
-;;; Gets the number of tool items in group.
-;;;
-;;; group :
-;;;     a GtkToolItemGroup
-;;;
-;;; Returns :
-;;;     the number of tool items in group
-;;;
-;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_tool_item_group_get_n_items" gtk-tool-item-group-get-n-items)
+    :uint
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-17}
+  @argument[group]{a @class{gtk-tool-item-group} widget}
+  @return{The number of tool items in @arg{group}.}
+  @begin{short}
+    Gets the number of tool items in @arg{group}.
+  @end{short}
+
+  Since 2.20
+  @see-class{gtk-tool-item-group}"
+  (group (g-object gtk-tool-item-group)))
+
+(export 'gtk-tool-item-group-get-n-items)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_item_group_get_label ()
-;;;
-;;; const gchar * gtk_tool_item_group_get_label (GtkToolItemGroup *group);
-;;;
-;;; Gets the label of group.
-;;;
-;;; group :
-;;;     a GtkToolItemGroup
-;;;
-;;; Returns :
-;;;     the label of group. The label is an internal string of group and must
-;;;     not be modified. Note that NULL is returned if a custom label has been
-;;;     set with gtk_tool_item_group_set_label_widget()
-;;;
-;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-tool-item-group-get-label))
+
+(defun gtk-tool-item-group-get-label (group)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-17}
+  @argument[group]{a @class{gtk-tool-item-group} widget}
+  @begin{return}
+    The label of @arg{group}. The label is an internal string of group and must
+    not be modified. Note that @code{nil} is returned if a custom label has been
+    set with the function @fun{gtk-tool-item-group-set-label-widget}.
+  @end{return}
+  @begin{short}
+    Gets the label of group.
+  @end{short}
+
+  Since 2.20
+  @see-class{gtk-tool-item-group}
+  @see-function{gtk-tool-item-group-set-label}
+  @see-function{gtk-tool-item-group-set-label-widget}"
+  (gtk-tool-item-group-label group))
+
+(export 'gtk-tool-item-group-get-label)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_item_group_get_label_widget ()
-;;;
-;;; GtkWidget * gtk_tool_item_group_get_label_widget (GtkToolItemGroup *group);
-;;;
-;;; Gets the label widget of group. See gtk_tool_item_group_set_label_widget().
-;;;
-;;; group :
-;;;     a GtkToolItemGroup
-;;;
-;;; Returns :
-;;;     the label widget of group
-;;;
-;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-tool-item-group-get-label-widget))
+
+(defun gtk-tool-item-group-get-label-widget (group)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-17}
+  @argument[group]{a @class{gtk-tool-item-group} widget}
+  @return{The label widget of @arg{group}.}
+  @begin{short}
+    Gets the label widget of @arg{group}.
+  @end{short}
+  See the function @fun{gtk-tool-item-group-set-label-widget}.
+
+  Since 2.20
+  @see-class{gtk-tool-item-group}
+  @see-function{gtk-tool-item-group-set-label-widget}"
+  (gtk-tool-item-group-label-widget group))
+
+(export 'gtk-tool-item-group-get-label-widget)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_item_group_get_nth_item ()
-;;;
-;;; GtkToolItem * gtk_tool_item_group_get_nth_item (GtkToolItemGroup *group,
-;;;                                                 guint index);
-;;;
-;;; Gets the tool item at index in group.
-;;;
-;;; group :
-;;;     a GtkToolItemGroup
-;;;
-;;; index :
-;;;     the index
-;;;
-;;; Returns :
-;;;     the GtkToolItem at index
-;;;
-;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_tool_item_group_get_nth_item" gtk-tool-item-group-get-nth-item)
+    (g-object gtk-tool-item)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-17}
+  @argument[group]{a @class{gtk-tool-item-group} widget}
+  @argument[index]{the index}
+  @return{The @class{gtk-tool-item} object at @arg{index}.}
+  @begin{short}
+    Gets the tool item at @arg{index} in @arg{group}.
+  @end{short}
+
+  Since 2.20
+  @see-class{gtk-tool-item-group}
+  @see-class{gtk-tool-item}"
+  (group (g-object gtk-tool-item-group))
+  (index :uint))
+
+(export 'gtk-tool-item-group-get-nth-item)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_item_group_get_header_relief ()
-;;;
-;;; GtkReliefStyle gtk_tool_item_group_get_header_relief
-;;;                                                   (GtkToolItemGroup *group);
-;;;
-;;; Gets the relief mode of the header button of group.
-;;;
-;;; group :
-;;;     a GtkToolItemGroup
-;;;
-;;; Returns :
-;;;     the GtkReliefStyle
-;;;
-;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-tool-item-group-get-header-relief))
+
+(defun gtk-tool-item-get-header-relief (group)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-17}
+  @argument[group]{a @class{gtk-tool-item-group} widget}
+  @return{The @symbol{gtk-relief-style}.}
+  @begin{short}
+    Gets the relief mode of the header button of @arg{group}.
+  @end{short}
+
+  Since 2.20
+  @see-class{gtk-tool-item-group}
+  @see-symbol{gtk-relief-style}
+  @see-function{gtk-tool-item-group-set-header-relief}"
+  (gtk-tool-item-header-relief group))
+
+(export 'gtk-tool-item-get-header-relief)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_item_group_insert ()
@@ -486,53 +553,70 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_item_group_new ()
-;;;
-;;; GtkWidget * gtk_tool_item_group_new (const gchar *label);
-;;;
-;;; Creates a new tool item group with label label.
-;;;
-;;; label :
-;;;     the label of the new group
-;;;
-;;; Returns :
-;;;     a new GtkToolItemGroup.
-;;;
-;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-tool-item-group-new))
+
+(defun gtk-tool-item-group-new (label)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-17}
+  @argument[label]{the label of the new group}
+  @return{A new @class{gtk-tool-item-group} widget.}
+  @begin{short}
+    Creates a new tool item group with label @arg{label}.
+  @end{short}
+
+  Since 2.20
+  @see-class{gtk-tool-item-group}"
+  (make-instance 'gtk-tool-item-group
+                 :label label))
+
+(export 'gtk-tool-item-group-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_item_group_set_collapsed ()
-;;;
-;;; void gtk_tool_item_group_set_collapsed (GtkToolItemGroup *group,
-;;;                                         gboolean collapsed);
-;;;
-;;; Sets whether the group should be collapsed or expanded.
-;;;
-;;; group :
-;;;     a GtkToolItemGroup
-;;;
-;;; collapsed :
-;;;     whether the group should be collapsed or expanded
-;;;
-;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-tool-item-group-set-collapsed))
+
+(defun gtk-tool-item-group-set-collapsed (group collapsed)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-17}
+  @argument[group]{a @class{gtk-tool-item-group} widget}
+  @argument[collapsed]{whether the group should be collapsed or expanded}
+  @begin{short}
+    Sets whether the group should be collapsed or expanded.
+  @end{short}
+
+  Since 2.20
+  @see-class{gtk-tool-item-group}
+  @see-function{gtk-tool-item-group-get-collapsed}"
+  (setf (gtk-tool-item-group-collapsed group) collapsed))
+
+(export 'gtk-tool-item-group-set-collapsed)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_item_group_set_ellipsize ()
-;;;
-;;; void gtk_tool_item_group_set_ellipsize (GtkToolItemGroup *group,
-;;;                                         PangoEllipsizeMode ellipsize);
-;;;
-;;; Sets the ellipsization mode which should be used by labels in group.
-;;;
-;;; group :
-;;;     a GtkToolItemGroup
-;;;
-;;; ellipsize :
-;;;     the PangoEllipsizeMode labels in group should use
-;;;
-;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-tool-item-group-set-ellipsize))
+
+(defun gtk-tool-item-group-set-ellipsize (group ellipsize)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-17}
+  @argument[group]{a @class{gtk-tool-ttem-group} widget}
+  @argument[ellipsize]{the @symbol{pango-ellipsize-mode} labels in @arg{group}}
+  @begin{short}
+    Sets the ellipsization mode which should be used by labels in @arg{group}.
+  @end{short}
+
+  Since 2.20
+  @see-class{gtk-tool-item-group}
+  @see-symbol{pango-ellipsize-mode}
+  @see-function{gtk-tool-item-group-get-ellipsize}"
+  (setf (gtk-tool-item-group-ellipsize group) ellipsize))
+
+(export 'gtk-tool-item-group-set-ellipsize)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_item_group_set_item_position ()
@@ -562,56 +646,74 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_item_group_set_label ()
-;;;
-;;; void gtk_tool_item_group_set_label (GtkToolItemGroup *group,
-;;;                                     const gchar *label);
-;;;
-;;; Sets the label of the tool item group. The label is displayed in the header
-;;; of the group.
-;;;
-;;; group :
-;;;     a GtkToolItemGroup
-;;;
-;;; label :
-;;;     the new human-readable label of of the group
-;;;
-;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-tool-item-group-set-label))
+
+(defun gtk-tool-item-group-set-label (group label)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-17}
+  @argument[group]{a @class{gtk-tool-item-group} widget}
+  @argument[label]{the new human-readable label of of the group}
+  @begin{short}
+    Sets the label of the tool item group.
+  @end{short}
+  The label is displayed in the header of the group.
+
+  Since 2.20
+  @see-class{gtk-tool-item-group}
+  @see-function{gtk-tool-item-group-get-label}"
+  (setf (gtk-tool-item-group-label group) label))
+
+(export 'gtk-tool-item-group-set-label)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_item_group_set_label_widget ()
-;;;
-;;; void gtk_tool_item_group_set_label_widget (GtkToolItemGroup *group,
-;;;                                            GtkWidget *label_widget);
-;;;
-;;; Sets the label of the tool item group. The label widget is displayed in the
-;;; header of the group, in place of the usual label.
-;;;
-;;; group :
-;;;     a GtkToolItemGroup
-;;;
-;;; label_widget :
-;;;     the widget to be displayed in place of the usual label
-;;;
-;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-tool-item-group-set-label-widget))
+
+(defun gtk-tool-item-group-set-label-widget (group label-widget)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-17}
+  @argument[group]{a @class{gtk-tool-item-group} widget}
+  @argument[label-widget]{the widget to be displayed in place of the usual
+    label}
+  @begin{short}
+    Sets the label of the tool item group.
+  @end{short}
+  The label widget is displayed in the header of the group, in place of the
+  usual label.
+
+  Since 2.20
+  @see-class{gtk-tool-item-group}
+  @see-function{gtk-tool-item-group-get-label-widger}"
+  (setf (gtk-tool-item-group-label-widget group) label-widget))
+
+(export 'gtk-tool-item-group-set-label-widget)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_item_group_set_header_relief ()
-;;;
-;;; void gtk_tool_item_group_set_header_relief (GtkToolItemGroup *group,
-;;;                                             GtkReliefStyle style);
-;;;
-;;; Set the button relief of the group header. See gtk_button_set_relief() for
-;;; details.
-;;;
-;;; group :
-;;;     a GtkToolItemGroup
-;;;
-;;; style :
-;;;     the GtkReliefStyle
-;;;
-;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-tool-item-group-set-header-relief))
+
+(defun gtk-tool-item-group-set-header-relief (group style)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-17}
+  @argument[group]{a @class{gtk-tool-item-group} widget}
+  @argument[style]{the @symbol{gtk-relief-style}}
+  @begin{short}
+    Set the button relief of the group header.
+  @end{short}
+  See the function @fun{gtk-button-set-relief} for details.
+
+  Since 2.20
+  @see-class{gtk-tool-item-group}
+  @see-symbol{gtk-relief-style}
+  @see-function{gtk-tool-item-group-get-header-relief}"
+  (setf (gtk-tool-item-group-header-relief group) style))
+
+(export 'gtk-tool-item-group-set-header-relief)
 
 ;;; --- End of file gtk.tool-item-group.lisp -----------------------------------

@@ -275,9 +275,9 @@
    ;; Printing
    (:file "gtk.print-operation")       ; High-level Printing API
    (:file "gtk.print-context")         ; Encapsulates context for drawing pages
+   (:file "gtk.paper-size")            ; Support for named paper sizes
    (:file "gtk.print-settings")        ; Stores print settings
    (:file "gtk.page-setup")            ; Stores page setup information
-   (:file "gtk.paper-size")            ; Support for named paper sizes
    #-win32
    (:file "gtk.print-unix-dialog")     ; A print dialog
    #-win32

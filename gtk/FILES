@@ -153,11 +153,11 @@ GTK+ Widgets and Objects
     gtk.separator-menu-item.lisp     - GtkSeparatorMenuItem        - GTK+ 3.6.4
     gtk.tearoff-menu-item.lisp       - GtkTearoffMenuItem          - GTK+ 3.6.4
 
-    gtk.tool-shell.lisp              - GtkToolShell                - GTK+ 3.6.4&
+    gtk.tool-shell.lisp              - GtkToolShell                - GTK+ 3.6.4
     gtk.toolbar.lisp                 - GtkToolbar                  - GTK+ 3.6.4
-    gtk.tool-item.lisp               - GtkToolItem                 - GTK+ 3.6.4&
-    gtk.tool-palette.lisp            - GtkToolPalette              - GTK+ 3.6.4&
-    gtk.tool-item-group.lisp         - GtkToolItemGroup            - GTK+ 3.6.4&
+    gtk.tool-item.lisp               - GtkToolItem                 - GTK+ 3.6.4
+    gtk.tool-palette.lisp            - GtkToolPalette              - GTK+ 3.8.6
+    gtk.tool-item-group.lisp         - GtkToolItemGroup            - GTK+ 3.8.6
     gtk.separator-tool-item.lisp     - GtkSeparatorToolItem        - GTK+ 3.6.4
     gtk.tool-button.lisp             - GtkToolButton               - GTK+ 3.6.4
     gtk.menu-tool-button.lisp        - GtkMenuToolButton           - GTK+ 3.6.4
@@ -226,10 +226,10 @@ GTK+ Widgets and Objects
 
   Printing
 
-    gtk.print-operation.lisp         - GtkPrintOperation           - GTK+ 3.6.4%
+    gtk.print-operation.lisp         - GtkPrintOperation           - GTK+ 3.6.4&
     gtk.print-context.lisp           - GtkPrintContext             - GTK+ 3.6.4%
-    gtk.print-settings.lisp          - GtkPrintSettings            - GTK+ 3.6.4%
-    gtk.page-setup.lisp              - GtkPageSetup                - GTK+ 3.6.4%
+    gtk.print-settings.lisp          - GtkPrintSettings            - GTK+ 3.8.6&
+    gtk.page-setup.lisp              - GtkPageSetup                - GTK+ 3.8.6&
     gtk.paper-size.lisp              - GtkPaperSize                - GTK+ 3.6.4
     gtk.printer.lisp                 - GtkPrinter                  - GTK+ 3.6.4
     gtk.print-job.lisp               - GtkPrintJob                 - GTK+ 3.8.6&

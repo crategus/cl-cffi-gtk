@@ -4,9 +4,10 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.8.6 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -88,7 +89,7 @@
 ;;;     GTK_PRINT_SETTINGS_REVERSE
 ;;;     gtk_print_settings_get_reverse
 ;;;     gtk_print_settings_set_reverse
-
+;;;
 ;;;     GtkPrintDuplex
 ;;;
 ;;;     GTK_PRINT_SETTINGS_DUPLEX
@@ -122,7 +123,7 @@
 ;;;
 ;;;     GTK_PRINT_SETTINGS_RESOLUTION_X
 ;;;     gtk_print_settings_get_resolution_x
-
+;;;
 ;;;     GTK_PRINT_SETTINGS_RESOLUTION_Y
 ;;;     gtk_print_settings_get_resolution_y
 ;;;
@@ -183,11 +184,6 @@
 ;;;     gtk_print_settings_load_key_file
 ;;;     gtk_print_settings_to_file
 ;;;     gtk_print_settings_to_key_file
-;;;
-;;; Object Hierarchy
-;;;
-;;;   GObject
-;;;    +----GtkPrintSettings
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -222,118 +218,126 @@
   Printing support was added in GTK+ 2.10.")
 
 ;;; ----------------------------------------------------------------------------
+;;; gtk_print_settings_new ()
+;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-print-settings-new))
+
+(defun gtk-print-settings-new ()
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-17}
+  @return{A new @class{gtk-print-settings} object.}
+  @short{Creates a new @class{gtk-print-settings} object.}
+
+  Since 2.10
+  @see-class{gtk-print-settings}"
+  (make-instance 'gtk-print-settings))
+
+(export 'gtk-print-settings-new)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_print_settings_copy ()
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_settings_copy" gtk-print-settings-copy)
+    (g-object gtk-print-settings)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-17}
+  @argument[other]{a @class{gtk-print-settings} object}
+  @return{A newly allocated copy of @arg{other}.}
+  @short{Copies a @class{gtk-print-settings} object.}
+
+  Since 2.10
+  @see-class{gtk-print-settins}"
+  (other (g-object gtk-print-settings)))
+
+(export 'gtk-print-settings-copy)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_print_settings_has_key ()
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_settings_has_key" gtk-print-settings-has-key) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-17}
+  @argument[settings]{a @class{gtk-print-settings} object}
+  @argument[key]{a key}
+  @return{@em{True}, if @arg{key} has a value.}
+  @short{Returns @em{true}, if a value is associated with @arg{key}.}
+
+  Since 2.10
+  @see-class{gtk-print-settings}"
+  (settings (g-object gtk-print-settings))
+  (key :string))
+
+(export 'gtk-print-settings-has-key)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_print_settings_get ()
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_settings_get" gtk-print-settings-get) :string
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-17}
+  @argument[settings]{a @class{gtk-print-settings} object}
+  @argument[key]{a key}
+  @return{The string value for @arg{key}.}
+  @short{Looks up the string value associated with @arg{key}.}
+
+  Since 2.10
+  @see-class{gtk-print-settings}"
+  (settings (g-object gtk-print-settings))
+  (key :string))
+
+(export 'gtk-print-settings-get)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_print_settings_set ()
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_settings_set" gtk-print-settings-set) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-17}
+  @argument[settings]{a @class{gtk-print-settings} object}
+  @argument[key]{a key}
+  @argument[value]{a string value, or @code{nil}}
+  @short{Associates value with @arg{key}.}
+
+  Since 2.10
+  @see-class{gtk-print-settings}"
+  (settings (g-object gtk-print-settings))
+  (key :string)
+  (value :string))
+
+(export 'gtk-print-settings-set)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_print_settings_unset ()
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_settings_unset" gtk-print-settings-unset) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-17}
+  @argument[settings]{a @class{gtk-print-settings} object}
+  @argument[key]{a key}
+  @begin{short}
+    Removes any value associated with @arg{key}.
+  @end{short}
+  This has the same effect as setting the value to @code{nil}.
+
+  Since 2.10
+  @see-class{gtk-print-settings}"
+  (settings (g-object gtk-print-settings))
+  (key :string))
+
+(export 'gtk-print-settings-unset)
+
+;;; ----------------------------------------------------------------------------
 ;;; GtkPrintSettingsFunc ()
 ;;;
 ;;; void (*GtkPrintSettingsFunc) (const gchar *key,
 ;;;                               const gchar *value,
 ;;;                               gpointer user_data);
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_print_settings_new ()
-;;;
-;;; GtkPrintSettings * gtk_print_settings_new (void);
-;;;
-;;; Creates a new GtkPrintSettings object.
-;;;
-;;; Returns :
-;;;     a new GtkPrintSettings object
-;;;
-;;; Since 2.10
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_print_settings_copy ()
-;;;
-;;; GtkPrintSettings * gtk_print_settings_copy (GtkPrintSettings *other);
-;;;
-;;; Copies a GtkPrintSettings object.
-;;;
-;;; other :
-;;;     a GtkPrintSettings
-;;;
-;;; Returns :
-;;;     a newly allocated copy of other
-;;;
-;;; Since 2.10
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_print_settings_has_key ()
-;;;
-;;; gboolean gtk_print_settings_has_key (GtkPrintSettings *settings,
-;;;                                      const gchar *key);
-;;;
-;;; Returns TRUE, if a value is associated with key.
-;;;
-;;; settings :
-;;;     a GtkPrintSettings
-;;;
-;;; key :
-;;;     a key
-;;;
-;;; Returns :
-;;;     TRUE, if key has a value
-;;;
-;;; Since 2.10
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_print_settings_get ()
-;;;
-;;; const gchar * gtk_print_settings_get (GtkPrintSettings *settings,
-;;;                                       const gchar *key);
-;;;
-;;; Looks up the string value associated with key.
-;;;
-;;; settings :
-;;;     a GtkPrintSettings
-;;;
-;;; key :
-;;;     a key
-;;;
-;;; Returns :
-;;;     the string value for key
-;;;
-;;; Since 2.10
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_print_settings_set ()
-;;;
-;;; void gtk_print_settings_set (GtkPrintSettings *settings,
-;;;                              const gchar *key,
-;;;                              const gchar *value);
-;;;
-;;; Associates value with key.
-;;;
-;;; settings :
-;;;     a GtkPrintSettings
-;;;
-;;; key :
-;;;     a key
-;;;
-;;; value :
-;;;     a string value, or NULL
-;;;
-;;; Since 2.10
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_print_settings_unset ()
-;;;
-;;; void gtk_print_settings_unset (GtkPrintSettings *settings, const gchar *key)
-;;;
-;;; Removes any value associated with key. This has the same effect as setting
-;;; the value to NULL.
-;;;
-;;; settings :
-;;;     a GtkPrintSettings
-;;;
-;;; key :
-;;;     a key
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -359,231 +363,238 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_settings_get_bool ()
-;;;
-;;; gboolean gtk_print_settings_get_bool (GtkPrintSettings *settings,
-;;;                                       const gchar *key);
-;;;
-;;; Returns the boolean represented by the value that is associated with key.
-;;;
-;;; The string "true" represents TRUE, any other string FALSE.
-;;;
-;;; settings :
-;;;     a GtkPrintSettings
-;;;
-;;; key :
-;;;     a key
-;;;
-;;; Returns :
-;;;     TRUE, if key maps to a true value.
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_settings_get_bool" gtk-print-settings-get-bool) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-17}
+  @argument[settings]{a @class{gtk-print-settings} object}
+  @argument[key]{a key}
+  @return{@em{True}, if @arg{key} maps to a true value.}
+  @begin{short}
+    Returns the boolean represented by the value that is associated with
+    @arg{key}.
+  @end{short}
+
+  The string \"true\" represents @em{true}, any other string @code{nil}.
+
+  Since 2.10
+  @see-class{gtk-print-settings}"
+  (settings (g-object gtk-print-settings))
+  (key :string))
+
+(export 'gtk-print-settings-get-bool)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_settings_set_bool ()
-;;;
-;;; void gtk_print_settings_set_bool (GtkPrintSettings *settings,
-;;;                                   const gchar *key,
-;;;                                   gboolean value);
-;;;
-;;; Sets key to a boolean value.
-;;;
-;;; settings :
-;;;     a GtkPrintSettings
-;;;
-;;; key :
-;;;     a key
-;;;
-;;; value :
-;;;     a boolean
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_settings_set_bool" gtk-print-settings-set-bool) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-17}
+  @argument[settings]{a @class{gtk-print-settings} object}
+  @argument[key]{a key}
+  @argument[value]{a boolean}
+  @short{Sets @arg{key} to a boolean value.}
+
+  Since 2.10
+  @see-class{gtk-print-settings}"
+  (settings (g-object gtk-print-settings))
+  (key :string)
+  (value :boolean))
+
+(export 'gtk-print-settings-set-bool)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_settings_get_double ()
-;;;
-;;; gdouble gtk_print_settings_get_double (GtkPrintSettings *settings,
-;;;                                        const gchar *key);
-;;;
-;;; Returns the double value associated with key, or 0.
-;;;
-;;; settings :
-;;;     a GtkPrintSettings
-;;;
-;;; key :
-;;;     a key
-;;;
-;;; Returns :
-;;;     the double value of key
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_settings_get_double" gtk-print-settings-get-double) :double
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-17}
+  @argument[settings]{a @class{gtk-print-settings} object}
+  @argument[key]{a key}
+  @return{The double value of @arg{key}.}
+  @short{Returns the double value associated with @arg{key}, or 0.}
+
+  Since 2.10
+  @see-class{gtk-print-settings}
+  @see-function{gtk-print-settings-set-double}
+  @see-function{gtk-print-settings-get-double-with-default}"
+  (settings (g-object gtk-print-settings))
+  (key :string))
+
+(export 'gtk-print-settings-get-double)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_settings_get_double_with_default ()
-;;;
-;;; gdouble gtk_print_settings_get_double_with_default
-;;;                                                 (GtkPrintSettings *settings,
-;;;                                                          const gchar *key,
-;;;                                                          gdouble def);
-;;;
-;;; Returns the floating point number represented by the value that is
-;;; associated with key, or default_val if the value does not represent a
-;;; floating point number.
-;;;
-;;; Floating point numbers are parsed with g_ascii_strtod().
-;;;
-;;; settings :
-;;;     a GtkPrintSettings
-;;;
-;;; key :
-;;;     a key
-;;;
-;;; def :
-;;;     the default value
-;;;
-;;; Returns :
-;;;     the floating point number associated with key
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_settings_get_double_with_default"
+           gtk-print-settings-get-double-with-default) :double
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-17}
+  @argument[settings]{a @class{gtk-print-settings} object}
+  @argument[key]{a key}
+  @argument[default]{the default value}
+  @return{The floating point number associated with @arg{key}.}
+  @begin{short}
+    Returns the floating point number represented by the value that is
+    associated with @arg{key}, or @arg{default} if the value does not represent
+    a floating point number.
+  @end{short}
+
+  Floating point numbers are parsed with @code{g_ascii_strtod()}.
+
+  Since 2.10
+  @see-class{gtk-print-settings}"
+  (settings (g-object gtk-print-settings))
+  (key :string)
+  (default :double))
+
+(export 'gtk-print-settings-get-double-with-default)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_settings_set_double ()
-;;;
-;;; void gtk_print_settings_set_double (GtkPrintSettings *settings,
-;;;                                     const gchar *key,
-;;;                                     gdouble value);
-;;;
-;;; Sets key to a double value.
-;;;
-;;; settings :
-;;;     a GtkPrintSettings
-;;;
-;;; key :
-;;;     a key
-;;;
-;;; value :
-;;;     a double value
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_settings_set_double" gtk-print-settings-set-double) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-17}
+  @argument[settings]{a @class{gtk-print-settings} object}
+  @argument[key]{a key}
+  @argument[value]{a double value}
+  @short{Sets key to a double value.}
+
+  Since 2.10
+  @see-class{gtk-print-settings}
+  @see-function{gtk-print-settings-get-double}
+  @see-function{gtk-print-settings-get-double-with-default}"
+  (settings (g-object gtk-print-settings))
+  (key :string)
+  (value :double))
+
+(export 'gtk-print-settings-set-double)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_settings_get_length ()
-;;;
-;;; gdouble gtk_print_settings_get_length (GtkPrintSettings *settings,
-;;;                                        const gchar *key,
-;;;                                        GtkUnit unit);
-;;;
-;;; Returns the value associated with key, interpreted as a length. The returned
-;;; value is converted to units.
-;;;
-;;; settings :
-;;;     a GtkPrintSettings
-;;;
-;;; key :
-;;;     a key
-;;;
-;;; unit :
-;;;     the unit of the return value
-;;;
-;;; Returns :
-;;;     the length value of key, converted to unit
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_settings_get_length" gtk-print-settings-get-length) :double
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-17}
+  @argument[settings]{a @class{gtk-print-settings} object}
+  @argument[key]{a key}
+  @argument[unit]{the unit of the return value}
+  @return{The length value of @arg{key}, converted to @arg{unit}.}
+  @begin{return}
+    Returns the value associated with @arg{key}, interpreted as a length.
+  @end{return}
+  The returned value is converted to @arg{unit}.
+
+  Since 2.10
+  @see-class{gtk-print-settings}
+  @see-symbol{gtk-unit}
+  @see-class{gtk-print-settings-set-length}"
+  (settings (g-object gtk-print-settings))
+  (key :string)
+  (unit gtk-unit))
+
+(export 'gtk-print-settings-get-length)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_settings_set_length ()
-;;;
-;;; void gtk_print_settings_set_length (GtkPrintSettings *settings,
-;;;                                     const gchar *key,
-;;;                                     gdouble value,
-;;;                                     GtkUnit unit);
-;;;
-;;; Associates a length in units of unit with key.
-;;;
-;;; settings :
-;;;     a GtkPrintSettings
-;;;
-;;; key :
-;;;     a key
-;;;
-;;; value :
-;;;     a length
-;;;
-;;; unit :
-;;;     the unit of length
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_settings_set_length" gtk-print-settings-set-length) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-17}
+  @argument[settings]{a @class{gtk-print-settings} object}
+  @argument[key]{a key}
+  @argument[value]{a length}
+  @argument[unit]{the unit of length}
+  @short{Associates a length in units of @arg{unit} with @arg{key}.}
+
+  Since 2.10
+  @see-class{gtk-print-settings}
+  @see-symbol{gtk-unit}
+  @see-function{gtk-print-settings-get-length}"
+  (settings (g-object gtk-print-settings))
+  (key :string)
+  (value :double)
+  (unit gtk-unit))
+
+(export 'gtk-print-settings-set-length)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_settings_get_int ()
-;;;
-;;; gint gtk_print_settings_get_int (GtkPrintSettings *settings,
-;;;                                  const gchar *key);
-;;;
-;;; Returns the integer value of key, or 0.
-;;;
-;;; settings :
-;;;     a GtkPrintSettings
-;;;
-;;; key :
-;;;     a key
-;;;
-;;; Returns :
-;;;     the integer value of key
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_settings_get_int" gtk-print-settings-get-int) :int
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-17}
+  @argument[settings]{a @class{gtk-print-settings} object}
+  @argument[key]{a key}
+  @return{The integer value of @arg{key}.}
+  @short{Returns the integer value of @arg{key}, or 0.}
+
+  Since 2.10
+  @see-class{gtk-print-settings}
+  @see-class{gtk-print-settings-set-int}
+  @see-class{gtk-print-settings-get-int-with-default}"
+  (settings (g-object gtk-print-settings))
+  (key :string))
+
+(export 'gtk-print-settings-get-int)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_settings_get_int_with_default ()
-;;;
-;;; gint gtk_print_settings_get_int_with_default (GtkPrintSettings *settings,
-;;;                                               const gchar *key,
-;;;                                               gint def);
-;;;
-;;; Returns the value of key, interpreted as an integer, or the default value.
-;;;
-;;; settings :
-;;;     a GtkPrintSettings
-;;;
-;;; key :
-;;;     a key
-;;;
-;;; def :
-;;;     the default value
-;;;
-;;; Returns :
-;;;     the integer value of key
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_settings_get_int_with_default"
+           gtk-print-settings-get-int-with-default) :int
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-17}
+  @argument[settings]{a @class{gtk-print-settings} object}
+  @argument[key]{a key}
+  @argument[default]{the default value}
+  @return{the integer value of @arg{key}}
+  @begin{short}
+    Returns the value of @arg{key}, interpreted as an integer, or the default
+    value.
+  @end{short}
+
+  Since 2.10
+  @see-class{gtk-print-settings}
+  @see-function{gtk-print-settings-get-int}
+  @see-function{gtk-print-settings-set-int}"
+  (settings (g-object gtk-print-settings))
+  (key :string)
+  (default :int))
+
+(export 'gtk-print-settings-get-int-with-default)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_settings_set_int ()
-;;;
-;;; void gtk_print_settings_set_int (GtkPrintSettings *settings,
-;;;                                  const gchar *key,
-;;;                                  gint value);
-;;;
-;;; Sets key to an integer value.
-;;;
-;;; settings :
-;;;     a GtkPrintSettings
-;;;
-;;; key :
-;;;     a key
-;;;
-;;; value :
-;;;     an integer
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_settings_set_int" gtk-print-settings-set-int) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-17}
+  @argument[settings]{a @class{gtk-print-settings} object}
+  @argument[key]{a key}
+  @argument[value]{an integer}
+  @short{Sets key to an integer value.}
+
+  Since 2.10
+  @see-class{gtk-print-settings}
+  @see-function{gtk-print-settings-get-int}
+  @see-function{gtk-print-settings-get-int-with-default}"
+  (settings (g-object gtk-print-settings))
+  (key :string)
+  (value :int))
+
+(export 'gtk-print-settings-set-int)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GTK_PRINT_SETTINGS_PRINTER
@@ -593,47 +604,75 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_settings_get_printer ()
-;;;
-;;; const gchar * gtk_print_settings_get_printer (GtkPrintSettings *settings);
-;;;
-;;; Convenience function to obtain the value of GTK_PRINT_SETTINGS_PRINTER.
-;;;
-;;; settings :
-;;;     a GtkPrintSettings
-;;;
-;;; Returns :
-;;;     the printer name
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_settings_get_printer" gtk-print-settings-get-printer)
+    :string
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-17}
+  @argument[settings]{a @class{gtk-print-settings} object}
+  @return{The printer name.}
+  @begin{short}
+    Convenience function to obtain the value of \"printer\".
+  @end{short}
+
+  Since 2.10
+  @see-class{gtk-print-settings}
+  @see-function{gtk-print-settings-set-printer}"
+  (settings (g-object gtk-print-settings)))
+
+(export 'gtk-print-settings-get-printer)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_settings_set_printer ()
-;;;
-;;; void gtk_print_settings_set_printer (GtkPrintSettings *settings,
-;;;                                      const gchar *printer);
-;;;
-;;; Convenience function to set GTK_PRINT_SETTINGS_PRINTER to printer.
-;;;
-;;; settings :
-;;;     a GtkPrintSettings
-;;;
-;;; printer :
-;;;     the printer name
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_settings_set_printer" gtk-print-settings-set-printer) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-17}
+  @argument[settings]{a @class{gtk-print-settings} object}
+  @argument[printer]{the printer name}
+  @begin{short}
+    Convenience function to set \"printer\" to @arg{printer}.
+  @end{short}
+
+  Since 2.10
+  @see-class{gtk-print-settings}
+  @see-function{gtk-print-settings-get-printer}"
+  (settings (g-object gtk-print-settings))
+  (printer :string))
+
+(export 'gtk-print-settings-set-printer)
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkPageOrientation
-;;;
-;;; typedef enum {
-;;;   GTK_PAGE_ORIENTATION_PORTRAIT,
-;;;   GTK_PAGE_ORIENTATION_LANDSCAPE,
-;;;   GTK_PAGE_ORIENTATION_REVERSE_PORTRAIT,
-;;;   GTK_PAGE_ORIENTATION_REVERSE_LANDSCAPE
-;;; } GtkPageOrientation;
 ;;; ----------------------------------------------------------------------------
+
+(define-g-enum "GtkPageOrienation" gtk-page-orientation
+  (:export t
+   :type-initializer "gtk_page_orientation_get_type")
+  :portrait
+  :landscape
+  :reverse-portrait
+  :reverse-landscape)
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-page-orientation atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'gtk-page-orientation atdoc:*external-symbols*)
+ "@version{2013-11-17}
+  @short{}
+  @begin{pre}
+(define-g-enum \"GtkPageOrienation\" gtk-page-orientation
+  (:export t
+   :type-initializer \"gtk_page_orientation_get_type\")
+  :portrait
+  :landscape
+  :reverse-portrait
+  :reverse-landscape)
+  @end{pre}
+  @see-class{gtk-print-settings}
+  @see-function{gtk-print-settings-get-orientation}
+  @see-function{gtk-print-settings-set-orientation}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; GTK_PRINT_SETTINGS_ORIENTATION
@@ -643,38 +682,47 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_settings_get_orientation ()
-;;;
-;;; GtkPageOrientation gtk_print_settings_get_orientation
-;;;                                                (GtkPrintSettings *settings);
-;;;
-;;; Get the value of GTK_PRINT_SETTINGS_ORIENTATION, converted to a
-;;; GtkPageOrientation.
-;;;
-;;; settings :
-;;;     a GtkPrintSettings
-;;;
-;;; Returns :
-;;;     the orientation
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_settings_get_orientation"
+           gtk-print-settings-get-orientation) gtk-page-orientation
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-17}
+  @argument[settings]{a @class{gtk-print-settings} object}
+  @return{The orientation.}
+  @begin{short}
+    Get the value of \"orientation\", converted to a
+    @symbol{gtk-page-orientation}.
+  @end{short}
+
+  Since 2.10
+  @see-class{gtk-print-settings}
+  @see-symbol{gtk-page-orientation}
+  @see-function{gtk-print-settings-set-orientation}"
+  (settings (g-object gtk-print-settings)))
+
+(export 'gtk-print-settings-get-orientation)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_settings_set_orientation ()
-;;;
-;;; void gtk_print_settings_set_orientation (GtkPrintSettings *settings,
-;;;                                          GtkPageOrientation orientation);
-;;;
-;;; Sets the value of GTK_PRINT_SETTINGS_ORIENTATION.
-;;;
-;;; settings :
-;;;     a GtkPrintSettings
-;;;
-;;; orientation :
-;;;     a page orientation
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_settings_set_orientation"
+           gtk-print-settings-set-orientation) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-17}
+  @argument[settings]{a @class{gtk-print-settings} object}
+  @argument[orientation]{a page orientation}
+  @short{Sets the value of \"orientation\".}
+
+  Since 2.10
+  @see-class{gtk-print-settings}
+  @see-symbol{gtk-page-orientation}
+  @see-function{gtk-print-settings-get-orientation}"
+  (settings (g-object gtk-print-settings))
+  (orientation gtk-page-orientation))
+
+(export 'gtk-print-settings-set-orientation)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GTK_PRINT_SETTINGS_PAPER_FORMAT
@@ -684,39 +732,48 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_settings_get_paper_size ()
-;;;
-;;; GtkPaperSize * gtk_print_settings_get_paper_size
-;;;                                                (GtkPrintSettings *settings);
-;;;
-;;; Gets the value of GTK_PRINT_SETTINGS_PAPER_FORMAT, converted to a
-;;; GtkPaperSize.
-;;;
-;;; settings :
-;;;     a GtkPrintSettings
-;;;
-;;; Returns :
-;;;     the paper size
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_settings_get_paper_size" gtk-print-settings-get-paper-size)
+    (g-boxed-foreign gtk-paper-size)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-17}
+  @argument[settings]{a @class{gtk-print-settings} object}
+  @return{The paper size.}
+  @begin{short}
+    Gets the value of \"paper-format\", converted to a @symbol{gtk-paper-size}.
+  @end{short}
+
+  Since 2.10
+  @see-class{gtk-print-settings}
+  @see-class{gtk-paper-size}
+  @see-function{gtk-print-settings-set-paper-size}"
+  (settings (g-object gtk-print-settings)))
+
+(export 'gtk-print-settings-get-paper-size)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_settings_set_paper_size ()
-;;;
-;;; void gtk_print_settings_set_paper_size (GtkPrintSettings *settings,
-;;;                                         GtkPaperSize *paper_size);
-;;;
-;;; Sets the value of GTK_PRINT_SETTINGS_PAPER_FORMAT,
-;;; GTK_PRINT_SETTINGS_PAPER_WIDTH and GTK_PRINT_SETTINGS_PAPER_HEIGHT.
-;;;
-;;; settings :
-;;;     a GtkPrintSettings
-;;;
-;;; paper_size :
-;;;     a paper size
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_settings_set_paper_size" gtk-print-settings-set-paper-size)
+    :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-17}
+  @argument[settings]{a @class{gtk-print-settings} object}
+  @argument[paper-size]{a paper size}
+  @begin{short}
+    Sets the value of \"paper-format\", \"paper-width\", and \"paper-height\".
+  @end{short}
+
+  Since 2.10
+  @see-class{gtk-print-settings}
+  @see-class{gtk-paper-size}
+  @see-function{gtk-print-settings-get-paper-size}"
+  (settings (g-object gtk-print-settings))
+  (paper-size (g-boxed-foreign gtk-paper-size)))
+
+(export 'gtk-print-settings-set-paper-size)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GTK_PRINT_SETTINGS_PAPER_WIDTH
@@ -726,44 +783,50 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_settings_get_paper_width ()
-;;;
-;;; gdouble gtk_print_settings_get_paper_width (GtkPrintSettings *settings,
-;;;                                             GtkUnit unit);
-;;;
-;;; Gets the value of GTK_PRINT_SETTINGS_PAPER_WIDTH, converted to unit.
-;;;
-;;; settings :
-;;;     a GtkPrintSettings
-;;;
-;;; unit :
-;;;     the unit for the return value
-;;;
-;;; Returns :
-;;;     the paper width, in units of unit
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_settings_get_paper_width"
+           gtk-print-settings-get-paper-width) :double
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-17}
+  @argument[settings]{a @class{gtk-print-settings} object}
+  @argument[unit]{the unit for the return value}
+  @return{The paper width, in units of @arg{unit}.}
+  @begin{short}
+    Gets the value of \"paper-width\" converted to @arg{unit}.
+  @end{short}
+
+  Since 2.10
+  @see-class{gtk-print-settings}
+  @see-symbol{gtk-unit}
+  @see-function{gtk-print-settings-set-paper-width}"
+  (settings (g-object gtk-print-settings))
+  (unit gtk-unit))
+
+(export 'gtk-print-settings-get-paper-width)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_settings_set_paper_width ()
-;;;
-;;; void gtk_print_settings_set_paper_width (GtkPrintSettings *settings,
-;;;                                          gdouble width,
-;;;                                          GtkUnit unit);
-;;;
-;;; Sets the value of GTK_PRINT_SETTINGS_PAPER_WIDTH.
-;;;
-;;; settings :
-;;;     a GtkPrintSettings
-;;;
-;;; width :
-;;;     the paper width
-;;;
-;;; unit :
-;;;     the units of width
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_settings_set_paper_width"
+           gtk-print-settings-set-paper-width) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-17}
+  @argument[settings]{a @class{gtk-print-settings} object}
+  @argument[width]{the paper width}
+  @argument[unit]{the units of width}
+  @short{Sets the value of \"paper-width\".}
+
+  Since 2.10
+  @see-class{gtk-print-settings}
+  @see-symbol{gtk-unit}
+  @see-function{gtk-print-settings-get-paper-width}"
+  (settings (g-object gtk-print-settings))
+  (width :double)
+  (unit gtk-unit))
+
+(export 'gtk-print-settings-set-paper-width)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GTK_PRINT_SETTINGS_PAPER_HEIGHT
@@ -773,44 +836,48 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_settings_get_paper_height ()
-;;;
-;;; gdouble gtk_print_settings_get_paper_height (GtkPrintSettings *settings,
-;;;                                              GtkUnit unit);
-;;;
-;;; Gets the value of GTK_PRINT_SETTINGS_PAPER_HEIGHT, converted to unit.
-;;;
-;;; settings :
-;;;     a GtkPrintSettings
-;;;
-;;; unit :
-;;;     the unit for the return value
-;;;
-;;; Returns :
-;;;     the paper height, in units of unit
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_settings_get_paper_height"
+           gtk-print-settings-get-paper-height) :double
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-17}
+  @argument[settings]{a @class{gtk-print-settings} object}
+  @argument[unit]{the unit for the return value}
+  @return{The paper height, in units of @arg{unit}.}
+  @short{Gets the value of \"paper-height\", converted to @arg{unit}.}
+
+  Since 2.10
+  @see-class{gtk-print-settings}
+  @see-symbol{gtk-unit}
+  @see-function{gtk-print-settings-set-paper-height}"
+  (settings (g-object gtk-print-settings))
+  (unit gtk-unit))
+
+(export 'gtk-print-settings-get-paper-height)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_settings_set_paper_height ()
-;;;
-;;; void gtk_print_settings_set_paper_height (GtkPrintSettings *settings,
-;;;                                           gdouble height,
-;;;                                           GtkUnit unit);
-;;;
-;;; Sets the value of GTK_PRINT_SETTINGS_PAPER_HEIGHT.
-;;;
-;;; settings :
-;;;     a GtkPrintSettings
-;;;
-;;; height :
-;;;     the paper height
-;;;
-;;; unit :
-;;;     the units of height
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_settings_set_paper_height"
+           gtk-print-settings-set-paper-height) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-17}
+  @argument[settings]{a @class{gtk-print-settings} object}
+  @argument[height]{the paper height}
+  @argument[unit]{the units of height}
+  @short{Sets the value of \"paper-height\".}
+
+  Since 2.10
+  @see-class{gtk-print-settings}
+  @see-symbol{gtk-unit}
+  @see-function{gtk-print-settings-get-paper-height}"
+  (settings (g-object gtk-print-settings))
+  (height :double)
+  (unit gtk-unit))
+
+(export 'gtk-print-settings-set-paper-height)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GTK_PRINT_SETTINGS_USE_COLOR
@@ -820,36 +887,42 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_settings_get_use_color ()
-;;;
-;;; gboolean gtk_print_settings_get_use_color (GtkPrintSettings *settings);
-;;;
-;;; Gets the value of GTK_PRINT_SETTINGS_USE_COLOR.
-;;;
-;;; settings :
-;;;     a GtkPrintSettings
-;;;
-;;; Returns :
-;;;     whether to use color
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_settings_get_use_color" gtk-print-settings-get-use-color)
+    :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-17}
+  @argument[settings]{a @class{gtk-print-settings} object}
+  @return{Whether to use color.}
+  @short{Gets the value of \"use-color\".}
+
+  Since 2.10
+  @see-class{gtk-print-settings}
+  @see-function{gtk-print-settings-set-use-color}"
+  (settings (g-object gtk-print-settings)))
+
+(export 'gtk-print-settings-get-use-color)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_settings_set_use_color ()
-;;;
-;;; void gtk_print_settings_set_use_color (GtkPrintSettings *settings,
-;;;                                        gboolean use_color);
-;;;
-;;; Sets the value of GTK_PRINT_SETTINGS_USE_COLOR.
-;;;
-;;; settings :
-;;;     a GtkPrintSettings
-;;;
-;;; use_color :
-;;;     whether to use color
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_settings_set_use_color" gtk-print-settings-set-use-color)
+    :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-17}
+  @argument[settings]{a @class{gt-print-settings} object}
+  @argument[use-color]{whether to use color}
+  @short{Sets the value of \"use-color\".}
+
+  Since 2.10
+  @see-class{gtk-print-settings}
+  @see-function{gtk-print-settings-get-use-color}"
+  (settings (g-object gtk-print-settings))
+  (use-color :boolean))
+
+(export 'gtk-print-settings-set-use-color)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GTK_PRINT_SETTINGS_COLLATE
