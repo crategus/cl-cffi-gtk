@@ -510,7 +510,7 @@
 
 (declaim (inline gtk-tool-item-group-get-header-relief))
 
-(defun gtk-tool-item-get-header-relief (group)
+(defun gtk-tool-item-group-get-header-relief (group)
  #+cl-cffi-gtk-documentation
  "@version{2013-11-17}
   @argument[group]{a @class{gtk-tool-item-group} widget}
@@ -523,9 +523,9 @@
   @see-class{gtk-tool-item-group}
   @see-symbol{gtk-relief-style}
   @see-function{gtk-tool-item-group-set-header-relief}"
-  (gtk-tool-item-header-relief group))
+  (gtk-tool-item-group-header-relief group))
 
-(export 'gtk-tool-item-get-header-relief)
+(export 'gtk-tool-item-group-get-header-relief)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_item_group_insert ()
