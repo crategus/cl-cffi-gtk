@@ -32,6 +32,7 @@
 
         (g-signal-connect drag-source "drag-begin"
            (lambda (widget context)
+             (declare (ignore widget))
              (format t "DRAG-BEGIN for drag-source ~A~%" context)
              (let ((pixbuf (get-image-pixbuf image)))
                ;; Sets pixbuf of image as the icon for a given drag
@@ -39,11 +40,12 @@
 
         (g-signal-connect drag-source "drag-data-get"
            (lambda (widget context selection-data info time)
-             (declare (ignore context info time))
+             (declare (ignore widget info time))
+             (format t "~&DRAG-DATA-GET context = ~A~%" context)
              (let ((pixbuf (get-image-pixbuf image)))
                (if (gtk-selection-data-set-pixbuf selection-data pixbuf)
-                   (format t "DRAG-DATA-GET for drag-source ~a~%" selection-data)))
-             nil))
+                   (format t "     ~a~%" selection-data)))
+             t))
 
         ;; Create a button as the drag destination
         (let ((drag-dest (make-instance 'gtk-button
@@ -51,16 +53,27 @@
                                         :label "Drop the image on the Button")))
           (gtk-container-add hgrid drag-dest)
 
+          (gtk-widget-add-events drag-dest '(:all-events-mask))
+
           ;; accept drops on drag-dest
-          (gtk-drag-dest-set drag-dest '(:all) nil '(:copy))
+          (gtk-drag-dest-set drag-dest '(:motion :highlight) nil '(:copy))
           (gtk-drag-dest-add-image-targets drag-dest)
+
+          (g-signal-connect drag-dest "drag-drop"
+             (lambda (widget drag-context x y time)
+               (declare (ignore x y))
+               (format t "~&DRAG-DROP context = ~A~%" drag-context)
+               (gtk-drag-get-data widget drag-context "image/png" time)
+ ))
 
           (g-signal-connect drag-dest "drag-data-received"
             (lambda (widget context x y selection-data info time)
-              (declare (ignore widget context x y info time))
-              (format t "DRAG-DATA-RECEIVED ~a~%" selection-data)
+              (declare (ignore context x y info time))
+              (format t "~&DRAG-DATA-RECEIVED context = ~A~%" context)
+              (format t "     ~a~%" selection-data)
               (let* ((pixbuf (gtk-selection-data-get-pixbuf selection-data))
                      (image (gtk-image-new-from-pixbuf pixbuf)))
+                (format t "pixbuf = ~A~%" pixbuf)
                 (gtk-button-set-image widget image)))))
         (gtk-container-add window hgrid))
       (gtk-widget-show-all window))))
