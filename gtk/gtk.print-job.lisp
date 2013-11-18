@@ -339,7 +339,7 @@
 ;;; gtk_print_job_get_status ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_print_job_get_status" gtk-print-status-get-status)
+(defcfun ("gtk_print_job_get_status" gtk-print-job-get-status)
     gtk-print-status
  #+cl-cffi-gtk-documentation
  "@version{2013-10-21}

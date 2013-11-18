@@ -426,7 +426,7 @@
   @see-function{gtk-app-chooser-button-set-heading}"
   (gtk-app-chooser-button-heading self))
 
-(export 'gtk-app-chooser-button-heading)
+(export 'gtk-app-chooser-button-get-heading)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_app_chooser_button_set_heading ()

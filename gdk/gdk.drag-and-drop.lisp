@@ -89,7 +89,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-drag-protocol atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gdk-drag-protocol atdoc:*external-symbols*)
- "@version{2013-6-30}
+ "@version{2013-11-16}
   @begin{short}
     Used in @class{gdk-drag-context} to indicate the protocol according to
     which DND is done.
@@ -110,12 +110,13 @@
     @entry[:none]{No protocol.}
     @entry[:motif]{The Motif DND protocol.}
     @entry[:xdnd]{The Xdnd protocol.}
-    @entry{:rootwin]{An extension to the Xdnd protocol for unclaimed root
+    @entry[:rootwin]{An extension to the Xdnd protocol for unclaimed root
       window drops.}
     @entry[:win32-dropfiles]{The simple @code{WM_DROPFILES} protocol.}
     @entry[:ole2]{The complex OLE2 DND protocol (not implemented).}
     @entry[:local]{Intra-application DND.}
-  @end{table}")
+  @end{table}
+  @see-class{gdk-drag-context}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GdkDragAction
