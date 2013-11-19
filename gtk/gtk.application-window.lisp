@@ -93,7 +93,7 @@
   will display the application menu, but not the menubar.
 
   If the desktop environment does not display the menubar, then
-  @class{g-application-window} will automatically show a @class{gtk-menu-bar}
+  @sym{gtk-application-window} will automatically show a @class{gtk-menu-bar}
   for it. See the @class{gtk-application} docs for some screenshots of how this
   looks on different platforms. This behaviour can be overridden with the
   @code{\"show-menubar\"} property. If the desktop environment does not display

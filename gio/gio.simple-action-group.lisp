@@ -33,7 +33,7 @@
 ;;; Synopsis
 ;;;
 ;;;     GSimpleActionGroup
-;;;     
+;;;
 ;;;     g_simple_action_group_new
 ;;;     g_simple_action_group_lookup
 ;;;     g_simple_action_group_insert
@@ -176,10 +176,10 @@
 
 (defun g-simple-action-group-add-entries (simple entries)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-1}
+ "@version{2013-11-18}
   @argument[simple]{a @class{g-simple-action-group} object}
   @argument[entries]{a pointer to the first item in an array of
-    @class{g-action-entry} structs}
+    @sym{g-action-entry} structs}
   @begin{short}
     A convenience function for creating multiple @class{g-simple-action}
     instances and adding them to the action group.

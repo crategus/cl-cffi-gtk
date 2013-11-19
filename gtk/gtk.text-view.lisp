@@ -145,7 +145,7 @@
    (indent
     gtk-text-view-indent
     "indent" "gint" t t)
-   #+gtk-3-6 
+   #+gtk-3-6
    (input-hints
     gtk-text-view-input-hints
     "input-hints" "GtkInputHints" t t)
@@ -1323,7 +1323,7 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-5-10}
   @argument[text-view]{a @class{gtk-text-view} object}
-  @argument[win]{a @class{gtk-text-window-type} except @code{:private}}
+  @argument[win]{a @symbol{gtk-text-window-type} except @code{:private}}
   @argument[window-x]{window x coordinate}
   @argument[window-y]{window y coordinate}
   @begin{return}
