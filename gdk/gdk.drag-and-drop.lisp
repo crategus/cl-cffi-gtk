@@ -49,10 +49,11 @@
 ;;;     gdk_drag_begin_for_device
 ;;;     gdk_drag_motion
 ;;;     gdk_drop_finish
-;;;
 ;;;     gdk_drag_status
 ;;;     gdk_drag_drop_succeeded
+;;;
 ;;;     gdk_window_get_drag_protocol
+;;;
 ;;;     gdk_drag_context_get_actions
 ;;;     gdk_drag_context_get_suggested_action
 ;;;     gdk_drag_context_get_selected_action
@@ -62,11 +63,6 @@
 ;;;     gdk_drag_context_get_source_window
 ;;;     gdk_drag_context_get_dest_window
 ;;;     gdk_drag_context_get_protocol
-;;;
-;;; Object Hierarchy
-;;;
-;;;   GObject
-;;;    +----GdkDragContext
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gdk)
@@ -612,18 +608,23 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_drag_context_get_protocol ()
-;;;
-;;; GdkDragProtocol gdk_drag_context_get_protocol (GdkDragContext *context);
-;;;
-;;; Returns the drag protocol thats used by this context.
-;;;
-;;; context :
-;;;     a GdkDragContext
-;;;
-;;; Returns :
-;;;     the drag protocol
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gdk_drag_context_get_protocol" gdk-drag-context-get-protocol)
+    gdk-drag-protocol
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-19}
+  @argument[context]{a @class{gdk-drag-context} object}
+  @return{The drag protocol of type @symbol{gdk-drag-protocol}.}
+  @begin{short}
+    Returns the drag protocol thats used by this context.
+  @end{short}
+
+  Since 3.0
+  @see-class{gdk-drag-context}
+  @symbol{gdk-drag-protocol}"
+  (context (g-object gdk-drag-context)))
+
+(export 'gdk-drag-context-get-protocol)
 
 ;;; --- End of file gdk.drag-and-drop.lisp -------------------------------------
