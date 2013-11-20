@@ -44,6 +44,7 @@
 ;;;     gtk_target_entry_new
 ;;;     gtk_target_entry_copy
 ;;;     gtk_target_entry_free
+;;;
 ;;;     gtk_target_list_new
 ;;;     gtk_target_list_ref
 ;;;     gtk_target_list_unref
@@ -55,6 +56,7 @@
 ;;;     gtk_target_list_add_rich_text_targets
 ;;;     gtk_target_list_remove
 ;;;     gtk_target_list_find
+;;;
 ;;;     gtk_target_table_free
 ;;;     gtk_target_table_new_from_list
 ;;;
@@ -64,6 +66,7 @@
 ;;;     gtk_selection_add_targets
 ;;;     gtk_selection_clear_targets
 ;;;     gtk_selection_convert
+;;;
 ;;;     gtk_selection_data_set
 ;;;     gtk_selection_data_set_text
 ;;;     gtk_selection_data_get_text
@@ -414,14 +417,15 @@
 
 (defun gtk-target-entry-new (target flags info)
  #+cl-cffi-gtk-documentation
- "@version{2013-7-4}
+ "@version{2013-11-19}
   @argument[target]{string identifier for target}
   @argument[flags]{set of flags of type @symbol{gtk-target-flags}}
   @argument[info]{an ID that will be passed back to the application}
   @begin{return}
     A new @class{gtk-target-entry} structure.
   @end{return}
-  Makes a new @class{gtk-target-entry} structure."
+  Makes a new @class{gtk-target-entry} structure.
+  @see-class{gtk-target-entry}"
   (make-gtk-target-entry :target target :flags flags :info info))
 
 (export 'gtk-target-entry-new)
@@ -434,27 +438,33 @@
 
 (defun gtk-target-entry-copy (target)
  #+cl-cffi-gtk-documentation
- "@version{2013-7-4}
+ "@version{2013-11-19}
   @argument[target]{a @class{gtk-target-entry} structure}
   @begin{return}
     A copy of @arg{target}.
   @end{return}
-  Makes a copy of a @class{gtk-target-entry} structure and its data."
+  Makes a copy of a @class{gtk-target-entry} structure and its data.
+  @see-class{gtk-target-entry}"
   (copy-gtk-target-entry target))
 
 (export 'gtk-target-entry-copy)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_target_entry_free ()
-;;;
-;;; void gtk_target_entry_free (GtkTargetEntry *data);
-;;;
-;;; Frees a GtkTargetEntry structure returned from gtk_target_entry_new() or
-;;; gtk_target_entry_copy().
-;;;
-;;; data :
-;;;     a pointer to a GtkTargetEntry structure.
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_target_entry_free" gtk-target-entry-free) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-19}
+  @argument[data]{a @class{gtk-target-entry} structure}
+  Frees a @class{gtk-target-entry} structure returned from the functions
+  @fun{gtk-target-entry-new} or @fun{gtk-target-entry-copy}.
+  @see-class{gtk-target-entry}
+  @see-function{gtk-target-entry-new}
+  @see-function{gtk-target-entry-copy}"
+  (data (g-boxed-foreign gtk-target-entry)))
+
+(export 'gtk-target-entry-free)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_target_list_new ()
@@ -520,9 +530,9 @@
   @argument[info]{an ID that will be passed back to the application}
   Appends another target to a @class{gtk-target-list}.
   @see-class{gtk-target-list}
-  @symbol{gtk-target-flags}"
+  @see-symbol{gtk-target-flags}"
   (list (g-boxed-foreign gtk-target-list))
-  (target gdk-atom)
+  (target gdk-atom-as-string)
   (flags gtk-target-flags)
   (info :uint))
 
@@ -712,25 +722,39 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_target_table_new_from_list ()
-;;;
-;;; GtkTargetEntry * gtk_target_table_new_from_list (GtkTargetList *list,
-;;;                                                  gint *n_targets);
-;;;
-;;; This function creates an GtkTargetEntry array that contains the same targets
-;;; as the passed list. The returned table is newly allocated and should be
-;;; freed using gtk_target_table_free() when no longer needed.
-;;;
-;;; list :
-;;;     a GtkTargetList
-;;;
-;;; n_targets :
-;;;     return location for the number ot targets in the table
-;;;
-;;; Returns :
-;;;     the new table
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_target_table_new_from_list" %gtk-target-table-new-from-list)
+    :pointer
+  (target-list (g-boxed-foreign gtk-target-list))
+  (n-targets (:pointer :int)))
+
+(defun gtk-target-table-new-from-list (target-list)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-20}
+  @argument[target-list]{a @class{gtk-target-list}}
+  @return{A list of @class{gtk-target-entry} structures.}
+  @begin{short}
+    This function creates a @class{gtk-target-entry} list that contains the same
+    targets as the passed list.
+  @end{short}
+
+  Since 2.10
+  @see-class{gtk-target-list}
+  @see-class{gtk-target-entry}"
+  (with-foreign-object (n-targets :int)
+    (let* ((targets (%gtk-target-table-new-from-list target-list n-targets))
+           (n-targets (mem-ref n-targets :int))
+           (type-size (foreign-type-size '(:struct gtk-target-entry-cstruct))))
+      (prog1
+        (iter (for i from 0 below n-targets)
+              (for target =
+                   (convert-from-foreign (inc-pointer targets (* i type-size ))
+                                         '(g-boxed-foreign gtk-target-entry)))
+              (collect target))
+        (g-free targets)))))
+
+(export 'gtk-target-table-new-from-list)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_selection_owner_set ()
@@ -800,8 +824,7 @@
   @arg{widget} and @arg{selection}.
   @see-class{gtk-widget}
   @see-symbol{gdk-atom}
-  @see-function{gtk-selection-add-targets}
-  @see-function{gtk-selection-get-targets}"
+  @see-function{gtk-selection-add-targets}"
   (widget (g-object gtk-widget))
   (selection gdk-atom-as-string)
   (target gdk-atom-as-string)
@@ -864,7 +887,7 @@
     you could use @var{+gdk-current-time+}}
   @begin{return}
     @em{True} if requested succeeded. @code{Nil} if we could not process
-    request. E.g., there was already a request in process for this widget.
+    request. E. g., there was already a request in process for this widget.
   @end{return}
   Requests the contents of a @arg{selection}. When received, a
   \"selection-received\" signal will be generated.
@@ -1059,7 +1082,7 @@
   @argument[selection-data]{a @class{gtk-selection-data} structure}
   @begin{return}
     @code{targets} -- a listof targets. The result stored here must be
-                      freed with g_free(). @br{}
+                      freed with g_free().
   @end{return}
   @begin{short}
     Gets the contents of @arg{selection-data} as a list of targets.
