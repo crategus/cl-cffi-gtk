@@ -358,7 +358,7 @@
   servers this value will not be correct.
   @see-function{gdk-screen-height}
   @see-function{gdk-screen-width}
-  @see-function{gtk-screen-width-mm}")
+  @see-function{gdk-screen-width-mm}")
 
 (export 'gdk-screen-height-mm)
 
