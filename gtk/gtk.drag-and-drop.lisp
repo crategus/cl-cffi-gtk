@@ -860,81 +860,116 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_drag_source_set_icon_gicon ()
-;;;
-;;; void gtk_drag_source_set_icon_gicon (GtkWidget *widget, GIcon *icon);
-;;;
-;;; Sets the icon that will be used for drags from a particular source to icon.
-;;; See the docs for GtkIconTheme for more details.
-;;;
-;;; widget :
-;;;     a GtkWidget
-;;;
-;;; icon :
-;;;     A GIcon
-;;;
-;;; Since 3.2
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_drag_source_set_icon_gicon" gtk-drag-source-set-icon-gicon) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-20}
+  @argument[widget]{a @class{gtk-widget} object}
+  @argument[icon]{a @class{g-icon} object}
+  @begin{short}
+    Sets the icon that will be used for drags from a particular source to
+    @arg{icon}.
+  @end{short}
+  See the docs for @class{gtk-icon-theme} for more details.
+
+  Since 3.2
+  @see-class{gtk-widget}
+  @see-class{g-icon}
+  @see-class{gtk-icon-theme}"
+  (widget (g-object gtk-widget))
+  (icon (g-object g-icon)))
+  
+(export 'gtk-drag-source-set-icon-gicon)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_drag_source_unset ()
-;;;
-;;; void gtk_drag_source_unset (GtkWidget *widget);
-;;;
-;;; Undoes the effects of gtk_drag_source_set().
-;;;
-;;; widget :
-;;;     a GtkWidget
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_drag_source_unset" gtk-drag-source-unset) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-20}
+  @argument[widget]{a @class{gtk-widget} object}
+  Undoes the effects of the function @fun{gtk-drag-source-set}.
+  @see-class{gtk-widget}
+  @see-function{gtk-drag-source-set}"
+  (widget (g-object gtk-widget)))
+
+(export 'gtk-drag-source-unset)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_drag_source_set_target_list ()
-;;;
-;;; void gtk_drag_source_set_target_list (GtkWidget *widget,
-;;;                                       GtkTargetList *target_list);
-;;;
-;;; Changes the target types that this widget offers for drag-and-drop. The
-;;; widget must first be made into a drag source with gtk_drag_source_set().
-;;;
-;;; widget :
-;;;     a GtkWidget that's a drag source
-;;;
-;;; target_list :
-;;;     list of draggable targets, or NULL for none
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_drag_source_set_target_list" gtk-drag-source-set-target-list)
+    :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-20}
+  @argument[widget]{a @class{gtk-widget} that is a drag source}
+  @argument[target-list]{list of draggable targets, or @code{nil} for none}
+  @begin{short}
+    Changes the target types that this widget offers for drag-and-drop.
+  @end{short}
+  The widget must first be made into a drag source with the function
+  @fun{gtk-drag-source-set}.
+
+  Since 2.4
+  @see-class{gtk-widget}
+  @see-class{gtk-target-list}
+  @see-function{gtk-drag-source-set}
+  @see-function{gtk-drag-source-get-target-list}"
+  (widget (g-object gtk-widget))
+  (target-list (g-boxed-foreign gtk-target-list)))
+  
+(export 'gtk-drag-source-set-target-list)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_drag_source_get_target_list ()
-;;;
-;;; GtkTargetList * gtk_drag_source_get_target_list (GtkWidget *widget);
-;;;
-;;; Gets the list of targets this widget can provide for drag-and-drop.
-;;;
-;;; widget :
-;;;     a GtkWidget
-;;;
-;;; Returns :
-;;;     the GtkTargetList, or NULL if none
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_drag_source_get_target_list" gtk-drag-source-get-target-list)
+    (g-boxed-foreign gtk-target-list)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-20}
+  @argument[widget]{a @class{gtk-widget} object}
+  @return{The @class{gtk-target-list}, or @code{nil} if none.}
+  @begin{short}
+    Gets the list of targets this widget can provide for drag-and-drop.
+  @end{short}
+
+  Since 2.4
+  @see-class{gtk-widget}
+  @see-class{gtk-target-list}
+  @see-function{gtk-drag-source-set-target-list}"
+  (widget (g-object gtk-widget)))
+  
+(export 'gtk-drag-source-get-target-list)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_drag_source_add_text_targets ()
-;;;
-;;; void gtk_drag_source_add_text_targets (GtkWidget *widget);
-;;;
-;;; Add the text targets supported by GtkSelection to the target list of the
-;;; drag source. The targets are added with info = 0. If you need another value,
-;;; use gtk_target_list_add_text_targets() and
-;;; gtk_drag_source_set_target_list().
-;;;
-;;; widget :
-;;;     a GtkWidget that's is a drag source
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_drag_source_add_text_targets" gtk-drag-source-add-text-targets)
+    :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-20}
+  @argument[widget]{a @class{gtk-widget} that is a drag source}
+  @begin{short}
+    Add the text targets supported by @class{gtk-selection} to the target list
+    of the drag source.
+  @end{short}
+  The targets are added with info = 0. If you need another value, use the
+  functions @fun{gtk-target-list-add-text-targets} and
+  @fun{gtk-drag-source-set-target-list}.
+
+  Since 2.6
+  @see-class{gtk-widget}
+  @see-class{gtk-selection}
+  @see-function{gtk-target-list-add-text-targets}
+  @see-function{gtk-drag-source-set-target-list}"
+  (widget (g-object gtk-widget)))
+  
+(export 'gtk-drag-source-add-text-targets)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_drag_source_add_image_targets ()
@@ -964,17 +999,28 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_drag_source_add_uri_targets ()
-;;;
-;;; void gtk_drag_source_add_uri_targets (GtkWidget *widget);
-;;;
-;;; Add the URI targets supported by GtkSelection to the target list of the drag
-;;; source. The targets are added with info = 0. If you need another value, use
-;;; gtk_target_list_add_uri_targets() and gtk_drag_source_set_target_list().
-;;;
-;;; widget :
-;;;     a GtkWidget that's is a drag source
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_drag_source_add_uri_targets" gtk-drag-source-add-uri-targets)
+    :void
+ #+cl-cffi-gtk-documenation
+ "@version{2013-11-20}
+  @argument[widget]{a @class{gtk-widget} that is a drag source}
+  @begin{short}
+    Add the URI targets supported by @class{gtk-selection} to the target list of
+    the drag source.
+  @end{short}
+  The targets are added with info = 0. If you need another value, use the
+  functions @fun{gtk-target-list-add-uri-targets} and
+  @fun{gtk-drag-source-set-target-list}.
+
+  Since 2.6
+  @see-class{gtk-widget}
+  @see-class{gtk-selection}
+  @see-function{gtk-target-list-add-uri-targets}
+  @see-function{gtk-drag-source-set-target-list}"
+  (widget (g-object gtk-widget)))
+
+(export 'gtk-drag-source-add-uri-targets)
 
 ;;; --- End of file gtk.drag-and-drop.lisp -------------------------------------
