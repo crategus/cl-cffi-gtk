@@ -614,7 +614,6 @@
 
   Since 1.0
   @see-symbol{cairo-pattern-t}
-  @see-function{cairo-set-source}
   @see-function{cairo-set-source-rgb}
   @see-function{cairo-pattern-set-matrix}"
   (cr (:pointer (:struct cairo-t)))
@@ -667,20 +666,27 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_get_source ()
-;;;
-;;; cairo_pattern_t * cairo_get_source (cairo_t *cr);
-;;;
-;;; Gets the current source pattern for cr.
-;;;
-;;; cr :
-;;;     a cairo context
-;;;
-;;; Returns :
-;;;     the current source pattern. This object is owned by cairo. To keep a
-;;;     reference to it, you must call cairo_pattern_reference().
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_get_source" cairo-get-source)
+    (:pointer (:struct cairo-pattern-t))
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-20}
+  @argument[cr]{a cairo context}
+  @begin{return}
+    The current source pattern. This object is owned by cairo. To keep a
+    reference to it, you must call the function @fun{cairo-pattern-reference}.
+  @end{return}
+  @begin{short}
+    Gets the current source pattern for @arg{cr}.
+  @end{short}
+
+  Since 1.0
+  @see-symbol{cairo-pattern-t}
+  @see-function{cairo-pattern-reference}"
+  (cr (:pointer (:struct cairo-t))))
+
+(export 'cairo-get-source)
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum cairo_antialias_t
@@ -1083,6 +1089,8 @@
   @see-function{cairo-set-miter-limit}
   @see-function{cairo-get-line-join}
   @see-function{cairo-set-line-join}")
+
+(export 'cairo-line-join-t)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_set_line_join ()
@@ -1736,21 +1744,28 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_fill_preserve ()
-;;;
-;;; void cairo_fill_preserve (cairo_t *cr);
-;;;
-;;; A drawing operator that fills the current path according to the current fill
-;;; rule, (each sub-path is implicitly closed before being filled). Unlike
-;;; cairo_fill(), cairo_fill_preserve() preserves the path within the cairo
-;;; context.
-;;;
-;;; See cairo_set_fill_rule() and cairo_fill().
-;;;
-;;; cr :
-;;;     a cairo context
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_fill_preserve" cairo-fill-preserve) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-19}
+  @argument[cr]{a cairo context}
+  @begin{short}
+    A drawing operator that fills the current path according to the current fill
+    rule, each sub-path is implicitly closed before being filled.
+  @end{short}
+  Unlike the function @fun{cairo-fill}, @sym{cairo-fill-preserve} preserves the
+  path within the cairo context.
+
+  See the function @fun{cairo-set-fill-rule} and @fun{cairo-fill}.
+
+  Since 1.0
+  @see-symbol{cairo-t}
+  @see-function{cairo-fill}
+  @see-function{cairo-set-fill-rule}"
+  (cr (:pointer (:struct cairo-t))))
+
+(export 'cairo-fill-preserve)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_fill_extents ()
@@ -2110,20 +2125,25 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_get_reference_count ()
-;;;
-;;; unsigned int cairo_get_reference_count (cairo_t *cr);
-;;;
-;;; Returns the current reference count of cr.
-;;;
-;;; cr :
-;;;     a cairo_t
-;;;
-;;; Returns :
-;;;     the current reference count of cr. If the object is a nil object, 0 will
-;;;     be returned.
-;;;
-;;; Since 1.4
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_get_reference_count" cairo-get-reference-count) :uint
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-18}
+  @argument[cr]{a @symbol{cairo-t}}
+  @begin{return}
+    The current reference count of @arg{cr}. If the object is a @code{nil}
+    object, 0 will be returned.
+  @end{return}
+  @begin{short}
+    Returns the current reference count of @arg{cr}.
+  @end{short}
+
+  Since 1.4
+  @see-symbol{cairo-t}"
+  (cr (:pointer (:struct cairo-t))))
+
+(export 'cairo-get-reference-count)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_set_user_data ()

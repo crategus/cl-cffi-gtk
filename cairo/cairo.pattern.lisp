@@ -314,34 +314,38 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_pattern_create_rgb ()
-;;;
-;;; cairo_pattern_t * cairo_pattern_create_rgb (double red,
-;;;                                             double green,
-;;;                                             double blue);
-;;;
-;;; Creates a new cairo_pattern_t corresponding to an opaque color. The color
-;;; components are floating point numbers in the range 0 to 1. If the values
-;;; passed in are outside that range, they will be clamped.
-;;;
-;;; red :
-;;;     red component of the color
-;;;
-;;; green :
-;;;     green component of the color
-;;;
-;;; blue :
-;;;     blue component of the color
-;;;
-;;; Returns :
-;;;     the newly created cairo_pattern_t if successful, or an error pattern in
-;;;     case of no memory. The caller owns the returned object and should call
-;;;     cairo_pattern_destroy() when finished with it. This function will always
-;;;     return a valid pointer, but if an error occurred the pattern status will
-;;;     be set to an error. To inspect the status of a pattern use
-;;;     cairo_pattern_status().
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_pattern_create_rgb" cairo-pattern-create-rgb)
+    (:pointer (:struct cairo-pattern-t))
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-20}
+  @argument[red]{red component of the color}
+  @argument[green]{green component of the color}
+  @argument[blue]{blue component of the color}
+  @begin{return}
+    The newly created @sym{cairo-pattern-t} if successful, or an error pattern
+    in case of no memory. The caller owns the returned object and should call
+    the function @fun{cairo-pattern-destroy} when finished with it. This
+    function will always return a valid pointer, but if an error occurred the
+    pattern status will be set to an error. To inspect the status of a pattern
+    use the function @fun{cairo-pattern-status}.
+  @end{return}
+  @begin{short}
+    Creates a new @sym{cairo-pattern-t} corresponding to an opaque color.
+  @end{short}
+  The color components are floating point numbers in the range 0 to 1. If the
+  values passed in are outside that range, they will be clamped.
+
+  Since 1.0
+  @see-symbol{cairo-pattern-t}
+  @see-function{cairo-pattern-destroy}
+  @see-fun{cairo-pattern-status}"
+  (red :double)
+  (green :double)
+  (blue :double))
+
+(export 'cairo-pattern-create-rgb)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_pattern_create_rgba ()
@@ -794,51 +798,68 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_mesh_pattern_begin_patch ()
-;;;
-;;; void cairo_mesh_pattern_begin_patch (cairo_pattern_t *pattern);
-;;;
-;;; Begin a patch in a mesh pattern.
-;;;
-;;; After calling this function, the patch shape should be defined with
-;;; cairo_mesh_pattern_move_to(), cairo_mesh_pattern_line_to() and
-;;; cairo_mesh_pattern_curve_to().
-;;;
-;;; After defining the patch, cairo_mesh_pattern_end_patch() must be called
-;;; before using pattern as a source or mask.
-;;;
-;;; Note: If pattern is not a mesh pattern then pattern will be put into an
-;;; error status with a status of CAIRO_STATUS_PATTERN_TYPE_MISMATCH. If pattern
-;;; already has a current patch, it will be put into an error status with a
-;;; status of CAIRO_STATUS_INVALID_MESH_CONSTRUCTION.
-;;;
-;;; pattern :
-;;;     a cairo_pattern_t
-;;;
-;;; Since 1.12
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_mesh_pattern_begin_patch" cairo-mesh-pattern-begin-patch) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-18}
+  @argument[pattern]{a @symbol{cairo-pattern-t}}
+  @begin{short}
+    Begin a patch in a mesh pattern.
+  @end{short}
+
+  After calling this function, the patch shape should be defined with the
+  functions @fun{cairo-mesh-pattern-move-to}, @fun{cairo-mesh-pattern-line-to}
+  and @fun{cairo-mesh-pattern-curve-to}.
+
+  After defining the patch, @fun{cairo-mesh-pattern-end-patch} must be called
+  before using pattern as a source or mask.
+
+  @subheadin{Note}
+  If pattern is not a mesh pattern then pattern will be put into an error status
+  with a status of @code{:pattern-type-mismatch}. If pattern already has a
+  current patch, it will be put into an error status with a status of
+  @code{:invalid-mesh-contstruction}.
+
+  Since 1.12
+  @see-symbol{cairo-pattern-t}
+  @see-symbol{cairo-status-t}
+  @see-function{cairo-mesh-pattern-move-to}
+  @see-function{cairo-mesh-pattern-line-to}
+  @see-function{cairo-mesh-pattern-curve-to}"
+  (pattern (:pointer (:struct cairo-pattern-t))))
+
+(export 'cairo-mesh-patern-begin-patch)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_mesh_pattern_end_patch ()
-;;;
-;;; void cairo_mesh_pattern_end_patch (cairo_pattern_t *pattern);
-;;;
-;;; Indicates the end of the current patch in a mesh pattern.
-;;;
-;;; If the current patch has less than 4 sides, it is closed with a straight
-;;; line from the current point to the first point of the patch as if
-;;; cairo_mesh_pattern_line_to() was used.
-;;;
-;;; Note: If pattern is not a mesh pattern then pattern will be put into an
-;;; error status with a status of CAIRO_STATUS_PATTERN_TYPE_MISMATCH. If pattern
-;;; has no current patch or the current patch has no current point, pattern will
-;;; be put into an error status with a status of
-;;; CAIRO_STATUS_INVALID_MESH_CONSTRUCTION.
-;;;
-;;; pattern :
-;;;     a cairo_pattern_t
-;;;
-;;; Since 1.12
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_mesh_pattern_end_patch" cairo-mesh-pattern-end-patch) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-18}
+  @argument[pattern]{a @symbol{cairo-pattern-t}}
+  @begin{short}
+    Indicates the end of the current patch in a mesh pattern.
+  @end{short}
+
+  If the current patch has less than 4 sides, it is closed with a straight
+  line from the current point to the first point of the patch as if the function
+  @fun{cairo-mesh-pattern-line-to} was used.
+
+  @subheading{Note}
+  If pattern is not a mesh pattern then pattern will be put into an error status
+  with a status of @code{:pattern-type-mismatch}. If pattern has no current
+  patch or the current patch has no current point, pattern will be put into an
+  error status with a status of @code{:invalid-mesh-construction}.
+
+  Since 1.12
+  @see-symbol{cairo-pattern-t}
+  @see-symbol{cairo-status-t}
+  @see-function{cairo-mesh-pattern-line-to}"
+  (patten cairo-pattern-t))
+
+(export 'cairo-mesh-pattern-end-patch)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_mesh_pattern_move_to ()
@@ -1218,23 +1239,30 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_pattern_reference ()
-;;;
-;;; cairo_pattern_t * cairo_pattern_reference (cairo_pattern_t *pattern);
-;;;
-;;; Increases the reference count on pattern by one. This prevents pattern from
-;;; being destroyed until a matching call to cairo_pattern_destroy() is made.
-;;;
-;;; The number of references to a cairo_pattern_t can be get using
-;;; cairo_pattern_get_reference_count().
-;;;
-;;; pattern :
-;;;     a cairo_pattern_t
-;;;
-;;; Returns :
-;;;     the referenced cairo_pattern_t.
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_pattern_reference" cairo-pattern-reference)
+    (:pointer (:struct cairo-pattern-t))
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-20}
+  @argument[pattern]{a @symbol{cairo-pattern-t}}
+  @return{The referenced @symbol{cairo-pattern-t}.}
+  @begin{short}
+    Increases the reference count on @arg{pattern} by one.
+  @end{short}
+  This prevents pattern from being destroyed until a matching call to
+  the function @fun{cairo-pattern-destroy} is made.
+
+  The number of references to a @symbol{cairo-pattern-t} can be get using the
+  function @fun{cairo-pattern-get-reference-count}.
+
+  Since 1.0
+  @see-symbol{cairo-pattern-t}
+  @see-function{cairo-pattern-destroy}
+  @see-function{cairo-pattern-get-reference-count}"
+  (pattern (:pointer (:struct cairo-pattern-t))))
+
+(export 'cairo-pattern-reference)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_pattern_destroy ()
@@ -1313,6 +1341,8 @@
   @end{table}
   Since 1.0
   @symbol{cairo-pattern-t}")
+
+(export 'cairo-extend-t)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_pattern_set_extend ()
@@ -1522,7 +1552,7 @@
 ;;;
 ;;; Most cairo_pattern_t functions can be called with a pattern of any type,
 ;;; (though trying to change the extend or filter for a solid pattern will have
-;;; no effect). A notable exception is cairo_pattern_add_color_stop_rgb() and 
+;;; no effect). A notable exception is cairo_pattern_add_color_stop_rgb() and
 ;;; cairo_pattern_add_color_stop_rgba() which must only be called with gradient
 ;;; patterns (either LINEAR or RADIAL). Otherwise the pattern will be shutdown
 ;;; and put into an error state.

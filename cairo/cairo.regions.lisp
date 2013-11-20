@@ -208,20 +208,26 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_region_reference ()
-;;;
-;;; cairo_region_t * cairo_region_reference (cairo_region_t *region);
-;;;
-;;; Increases the reference count on region by one. This prevents region from
-;;; being destroyed until a matching call to cairo_region_destroy() is made.
-;;;
-;;; region :
-;;;     a cairo_region_t
-;;;
-;;; Returns :
-;;;     the referenced cairo_region_t.
-;;;
-;;; Since 1.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_region_reference" cairo-region-reference)
+    (:pointer (:struct cairo-region-t))
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-20}
+  @argument[region]{a @symbol{cairo-region-t}}
+  @return{The referenced @symbol{cairo-region-t}.}
+  @begin{short}
+    Increases the reference count on region by one.
+  @end{short}
+  This prevents region from being destroyed until a matching call to
+  the function @fun{cairo-region-destroy} is made.
+
+  Since 1.10
+  @see-symbol{cairo-region-t}
+  @see-function{cairo-region-destroy}"
+  (region (:pointer (:struct cairo-region-t))))
+
+(export 'cairo-region-reference)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_region_destroy ()
@@ -248,19 +254,23 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_region_status ()
-;;;
-;;; cairo_status_t cairo_region_status (const cairo_region_t *region);
-;;;
-;;; Checks whether an error has previous occurred for this region object.
-;;;
-;;; region :
-;;;     a cairo_region_t
-;;;
-;;; Returns :
-;;;     CAIRO_STATUS_SUCCESS or CAIRO_STATUS_NO_MEMORY
-;;;
-;;; Since 1.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_region_status" cairo-region-status) cairo-status-t
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-18}
+  @argument[region]{a @symbol{cairo-region-t}}
+  @return{@code{:success} or @code{:no-memory}}
+  @begin{short}
+    Checks whether an error has previous occurred for this region object.
+  @end{short}
+
+  Since 1.10
+  @see-symbol{cairo-region-t}
+  @see-symbol{cairo-status-t}"
+  (region (:pointer (:struct cairo-region-t))))
+
+(export 'cairo-region-status)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_region_get_extents ()
@@ -529,23 +539,26 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_region_union ()
-;;;
-;;; cairo_status_t cairo_region_union (cairo_region_t *dst,
-;;;                                    const cairo_region_t *other);
-;;;
-;;; Computes the union of dst with other and places the result in dst
-;;;
-;;; dst :
-;;;     a cairo_region_t
-;;;
-;;; other :
-;;;     another cairo_region_t
-;;;
-;;; Returns :
-;;;     CAIRO_STATUS_SUCCESS or CAIRO_STATUS_NO_MEMORY
-;;;
-;;; Since 1.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_region_union" cairo-region-union) cairo-status-t
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-20}
+  @argument[dst]{a @symbol{cairo-region-t}}
+  @argument[other]{another @symbol{cairo-region-t}}
+  @return{@code{:success} or @code{:no-memory}}
+  @begin{short}
+    Computes the union of @arg{dst} with @arg{other} and places the result in
+    @arg{dst}.
+  @end{short}
+
+  Since 1.10
+  @see-symbol{cairo-region-t}
+  @see-symbol{cairo-status-t}"
+  (dest (:pointer (:struct cairo-region-t)))
+  (other (:pointer (:struct cairo-region-t))))
+
+(export 'cairo-region-union)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_region_union_rectangle ()
