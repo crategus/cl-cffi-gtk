@@ -44,26 +44,221 @@
     (is (eql 0 (gtk-selection-data-length selection)))
     (is-false (gtk-selection-data-display selection))))
 
-;;;     GtkTargetFlags  <-- gtk.drag-and-drop.lisp
-;;;     GtkTargetEntry
-;;;     GtkTargetList
+;;;   GtkTargetFlags  <-- gtk.drag-and-drop.lisp
+;;;   GtkTargetEntry
+;;;   GtkTargetList
 
-;;;     gtk_target_entry_new
-;;;     gtk_target_entry_copy
-;;;     gtk_target_entry_free
-;;;     gtk_target_list_new
-;;;     gtk_target_list_ref
-;;;     gtk_target_list_unref
-;;;     gtk_target_list_add
-;;;     gtk_target_list_add_table
-;;;     gtk_target_list_add_text_targets
-;;;     gtk_target_list_add_image_targets
-;;;     gtk_target_list_add_uri_targets
-;;;     gtk_target_list_add_rich_text_targets
-;;;     gtk_target_list_remove
-;;;     gtk_target_list_find
-;;;     gtk_target_table_free
-;;;     gtk_target_table_new_from_list
+;;;   gtk_target_entry_new
+
+(test gtk-target-entry-new
+  (let ((target-entry (gtk-target-entry-new "BITMAP" :same-app 0)))
+    (is (equal "BITMAP" (gtk-target-entry-target target-entry)))
+    (is (eql :same-app (gtk-target-entry-flags target-entry)))
+    (is (= 0 (gtk-target-entry-info target-entry)))))
+
+;;;   gtk_target_entry_copy
+
+(test gtk-target-entry-copy
+  (let* ((target-entry (gtk-target-entry-new "BITMAP" :same-app 0))
+         (target-copy (gtk-target-entry-copy target-entry)))
+    (is (equal "BITMAP" (gtk-target-entry-target target-copy)))
+    (is (eql :same-app (gtk-target-entry-flags target-copy)))
+    (is (= 0 (gtk-target-entry-info target-copy)))))
+
+;;;   gtk_target_entry_free
+
+;;;   gtk_target_list_new
+
+(test gtk-target-list-new
+  (let ((target-list
+         (gtk-target-list-new (list (gtk-target-entry-new "text/html" 0 0)
+                                    (gtk-target-entry-new "STRING" 0 1)
+                                    (gtk-target-entry-new "number" 0 2)
+                                    (gtk-target-entry-new "image/jpeg" 0 3)
+                                    (gtk-target-entry-new "text/uri-list" 0 4)))))
+    (is (= 0 (gtk-target-list-find target-list "text/html")))
+    (is (= 1 (gtk-target-list-find target-list "STRING")))
+    (is (= 2 (gtk-target-list-find target-list "number")))
+    (is (= 3 (gtk-target-list-find target-list "image/jpeg")))
+    (is (= 4 (gtk-target-list-find target-list "text/uri-list")))
+
+    (is-false (gtk-target-list-find target-list "xxx"))))
+
+;;;   gtk_target_list_ref
+;;;   gtk_target_list_unref
+
+;;;   gtk_target_list_add
+
+(test gtk-target-list-add
+  (let ((target-list (gtk-target-list-new)))
+    (gtk-target-list-add target-list "text/html" 0 0)
+    (gtk-target-list-add target-list "STRING" 0 1)
+    (gtk-target-list-add target-list "number" 0 2)
+    (gtk-target-list-add target-list "image/jpeg" 0 3)
+    (gtk-target-list-add target-list "text/uri-list" 0 4)
+
+    (is (= 0 (gtk-target-list-find target-list "text/html")))
+    (is (= 1 (gtk-target-list-find target-list "STRING")))
+    (is (= 2 (gtk-target-list-find target-list "number")))
+    (is (= 3 (gtk-target-list-find target-list "image/jpeg")))
+    (is (= 4 (gtk-target-list-find target-list "text/uri-list")))
+
+    (is-false (gtk-target-list-find target-list "xxx"))))
+
+;;;   gtk_target_list_add_table
+
+(test gtk-target-list-add-table
+  (let ((target-list (gtk-target-list-new)))
+    (gtk-target-list-add-table target-list
+                               (list (gtk-target-entry-new "text/html" 0 0)
+                                     (gtk-target-entry-new "STRING" 0 1)
+                                     (gtk-target-entry-new "number" 0 2)
+                                     (gtk-target-entry-new "image/jpeg" 0 3)
+                                     (gtk-target-entry-new "text/uri-list" 0 4)))
+    (is (= 0 (gtk-target-list-find target-list "text/html")))
+    (is (= 1 (gtk-target-list-find target-list "STRING")))
+    (is (= 2 (gtk-target-list-find target-list "number")))
+    (is (= 3 (gtk-target-list-find target-list "image/jpeg")))
+    (is (= 4 (gtk-target-list-find target-list "text/uri-list")))
+
+    (is-false (gtk-target-list-find target-list "xxx"))))
+
+;;;   gtk_target_list_add_text_targets
+
+(test gtk-target-list-add-text-targets
+  (let ((target-list (gtk-target-list-new)))
+    (gtk-target-list-add-text-targets target-list 0)
+    (is (equal '("UTF8_STRING"
+                 "COMPOUND_TEXT"
+                 "TEXT"
+                 "STRING"
+                 "text/plain;charset=utf-8"
+                 "text/plain")
+               (mapcar #'gtk-target-entry-target
+                       (gtk-target-table-new-from-list target-list))))))
+
+;;;   gtk_target_list_add_image_targets
+
+(test gtk-target-list-add-image-targets.1
+  (let ((target-list (gtk-target-list-new)))
+    (gtk-target-list-add-image-targets target-list 0 t)
+    (is (equal '("image/png"
+                 "image/jpeg"
+                 "image/x-icon"
+                 "image/x-ico"
+                 "image/x-win-bitmap"
+                 "image/tiff"
+                 "image/bmp"
+                 "image/x-bmp"
+                 "image/x-MS-bmp")
+               (mapcar #'gtk-target-entry-target
+                       (gtk-target-table-new-from-list target-list))))))
+
+(test gtk-target-list-add-image-targets.2
+  (let ((target-list (gtk-target-list-new)))
+    (gtk-target-list-add-image-targets target-list 0 nil)
+    (is (equal '("image/png"
+                 "image/x-gdkpixdata"
+                 "image/jpeg"
+                 "image/vnd.wap.wbmp"
+                 "image/x-tga"
+                 "image/x-pcx"
+                 "image/x-xpixmap"
+                 "image/svg+xml"
+                 "image/svg"
+                 "image/svg-xml"
+                 "image/vnd.adobe.svg+xml"
+                 "text/xml-svg"
+                 "image/svg+xml-compressed"
+                 "image/x-xbitmap"
+                 "image/x-cmu-raster"
+                 "image/x-sun-raster"
+                 "image/x-quicktime"
+                 "image/qtif"
+                 "image/jp2"
+                 "image/jpeg2000"
+                 "image/jpx"
+                 "image/x-icns"
+                 "image/x-wmf"
+                 "image/gif"
+                 "image/x-icon"
+                 "image/x-ico"
+                 "image/x-win-bitmap"
+                 "image/x-portable-anymap"
+                 "image/x-portable-bitmap"
+                 "image/x-portable-graymap"
+                 "image/x-portable-pixmap"
+                 "application/x-navi-animation"
+                 "image/tiff"
+                 "image/bmp"
+                 "image/x-bmp"
+                 "image/x-MS-bmp")
+               (mapcar #'gtk-target-entry-target
+                       (gtk-target-table-new-from-list target-list))))))
+
+;;;   gtk_target_list_add_uri_targets
+
+(test gtk-target-list-add-uri-targets
+  (let ((target-list (gtk-target-list-new)))
+    (gtk-target-list-add-uri-targets target-list 0)
+    (is (equal '("text/uri-list")
+               (mapcar #'gtk-target-entry-target
+                       (gtk-target-table-new-from-list target-list))))))
+
+;;;   gtk_target_list_add_rich_text_targets
+
+(test gtk-target-list-add-rich-text-targets.1
+  (let ((target-list (gtk-target-list-new))
+        (buffer (make-instance 'gtk-text-buffer)))
+    (gtk-target-list-add-rich-text-targets target-list 0 nil buffer)
+    (is (equal '("application/x-gtk-text-buffer-rich-text")
+               (mapcar #'gtk-target-entry-target
+                       (gtk-target-table-new-from-list target-list))))))
+
+(test gtk-target-list-add-rich-text-targets.2
+  (let ((target-list (gtk-target-list-new))
+        (buffer (make-instance 'gtk-text-buffer)))
+    (gtk-target-list-add-rich-text-targets target-list 0 t buffer)
+    (is (equal '()
+               (mapcar #'gtk-target-entry-target
+                       (gtk-target-table-new-from-list target-list))))))
+
+;;;   gtk_target_list_remove
+;;;   gtk_target_list_find
+
+(test gtk-target-list-find
+  (let ((target-list (gtk-target-list-new)))
+    (gtk-target-list-add target-list "text/html" 0 1)
+    (is (= 1 (gtk-target-list-find target-list "text/html")))
+    (gtk-target-list-remove target-list "text/html")
+    (is-false (gtk-target-list-find target-list "text/html"))))
+
+;;;   gtk_target_table_free
+
+;;;   gtk_target_table_new_from_list
+
+(test gtk-target-table-new-from-list
+  (let ((target-list (gtk-target-list-new)))
+
+    (gtk-target-list-add target-list "text/html" 0 0)
+    (is (equal '("text/html")
+               (mapcar #'gtk-target-entry-target
+                       (gtk-target-table-new-from-list target-list))))
+
+    (gtk-target-list-remove target-list "text/html")
+    (is (equal '()
+               (mapcar #'gtk-target-entry-target
+                       (gtk-target-table-new-from-list target-list))))
+
+    (gtk-target-list-add-text-targets target-list 0)
+    (is (equal '("UTF8_STRING"
+                 "COMPOUND_TEXT"
+                 "TEXT"
+                 "STRING"
+                 "text/plain;charset=utf-8"
+                 "text/plain")
+               (mapcar #'gtk-target-entry-target
+                       (gtk-target-table-new-from-list target-list))))))
 
 ;;;   gtk_selection_owner_set
 
@@ -72,7 +267,7 @@
     ;; Realize the toplevel widget to create a gdk-window
     (gtk-widget-realize widget)
     (let ((window (gtk-widget-get-window widget)))
-      ;; Check the presence of a gkd-window
+      ;; Check the presence of a gdk-window
       (is (eq 'gdk-window (type-of window)))
       (is-true (gtk-selection-owner-set widget
                                         "PRIMARY"
@@ -83,7 +278,7 @@
     ;; Realize the toplevel widget to create a gdk-window
     (gtk-widget-realize widget)
     (let ((window (gtk-widget-get-window widget)))
-      ;; Check the presence of a gkd-window
+      ;; Check the presence of a gdk-window
       (is (eq 'gdk-window (type-of window)))
       (is-true (gtk-selection-owner-set widget
                                         "SECONDARY"
@@ -94,7 +289,7 @@
     ;; Realize the toplevel widget to create a gdk-window
     (gtk-widget-realize widget)
     (let ((window (gtk-widget-get-window widget)))
-      ;; Check the presence of a gkd-window
+      ;; Check the presence of a gdk-window
       (is (eq 'gdk-window (type-of window)))
       (is-true (gtk-selection-owner-set widget
                                         "CLIPBOARD"
@@ -128,8 +323,7 @@
       (is-true (gtk-selection-owner-set-for-display display
                                                     nil
                                                     "PRIMARY"
-                                                    +gdk-current-time+))
-)))
+                                                    +gdk-current-time+)))))
 
 ;;;   gtk_selection_add_target
 
@@ -138,13 +332,13 @@
     ;; Realize the toplevel widget to create a gdk-window
     (gtk-widget-realize widget)
     (let ((window (gtk-widget-get-window widget)))
-      ;; Check the presence of a gkd-window
+      ;; Check the presence of a gdk-window
       (is (eq 'gdk-window (type-of window)))
 
-      (gtk-selection-add-target widget "PRIMARY" "STRING" 0)
+      (gtk-selection-add-target widget "PRIMARY" "TEXT" 0)
 )))
 
-;;;     gtk_selection_add_targets
+;;;   gtk_selection_add_targets
 
 ;;;   gtk_selection_clear_targets
 
@@ -166,33 +360,29 @@
 
 ))
 
-
 ;;;   gtk_selection_convert
 
 (test gtk-selection-convert
-  (let ((window (make-instance 'gtk-window :type :toplevel))
-        (button (make-instance 'gtk-button)))
-
-    (gtk-container-add window button)
+  (let ((window (make-instance 'gtk-window :type :toplevel)))
     (gtk-widget-realize window)
 
-    (g-signal-connect button "selection-received"
+    (g-signal-connect window "selection-received"
        (lambda (widget selection-data time)
          (format t "~&Signal SELECTION-RECEIVED for ~A~%" widget)
          (format t "  selection = ~A~%" selection-data)
-         (format t "  time      = ~A~%" time)
-         (format t "targets = ~A~%" (gtk-selection-data-get-targets selection-data))
+         (format t "    targets = ~A~%" (gtk-selection-data-get-targets selection-data))
     ))
     
-;    (gtk-selection-add-target widget "PRIMARY" "STRING" 0)
-    (gtk-selection-convert button "CLIPBOARD" "TARGETS" +gdk-current-time+)
+    (gtk-selection-add-target window "CLIPBOARD" "STRING" 0)
+    (gtk-selection-convert window "CLIPBOARD" "TARGETS" +gdk-current-time+)
 
 ))
 
-;;;     gtk_selection_data_set
+;;;   gtk_selection_data_set
 
 ;;;   gtk_selection_data_set_text
 
+#+nil
 (test gtk-selection-data-set-text
   (let ((window (make-instance 'gtk-window :type :toplevel)))
 
@@ -243,6 +433,7 @@
 
 ;;;   gtk_selection_data_targets_include_image
 
+#+nil
 (test gtk-selection-data-targets-include-image
   (let ((window (make-instance 'gtk-window :type :toplevel)))
     (gtk-widget-realize window)
@@ -254,6 +445,7 @@
 
 ;;;   gtk_selection_data_targets_include_text
 
+#+nil
 (test gtk-selection-data-targets-include-text
   (let ((window (make-instance 'gtk-window :type :toplevel)))
 
@@ -267,8 +459,8 @@
 
     (gtk-selection-convert window "CLIPBOARD" "TEXT" +gdk-current-time+)))
 
-;;;     gtk_selection_data_targets_include_uri
-;;;     gtk_selection_data_targets_include_rich_text
+;;;   gtk_selection_data_targets_include_uri
+;;;   gtk_selection_data_targets_include_rich_text
 
 ;;;   gtk_selection_data_get_selection
 ;;;   gtk_selection_data_get_data
@@ -279,6 +471,7 @@
 ;;;   gtk_selection_data_get_format
 ;;;   gtk_selection_data_get_target
 
+#+nil
 (test gtk-selection-data-get
   (let ((window (make-instance 'gtk-window :type :toplevel)))
 
