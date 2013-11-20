@@ -932,36 +932,41 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_settings_get_collate ()
-;;;
-;;; gboolean gtk_print_settings_get_collate (GtkPrintSettings *settings);
-;;;
-;;; Gets the value of GTK_PRINT_SETTINGS_COLLATE.
-;;;
-;;; settings :
-;;;     a GtkPrintSettings
-;;;
-;;; Returns :
-;;;     whether to collate the printed pages
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_settings_get_collate" gtk-print-settings-get-collate)
+    :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-20}
+  @argument[settings]{a @class{gtk-print-settings} object}
+  @return{Whether to collate the printed pages.}
+  @short{Gets the value of \"collate\".}
+
+  Since 2.10
+  @see-class{gtk-print-settings}
+  @see-function{gtk-print-settings-set-collate}"
+  (settings (g-object gtk-print-settings)))
+
+(export 'gtk-print-settings-get-collate)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_settings_set_collate ()
-;;;
-;;; void gtk_print_settings_set_collate (GtkPrintSettings *settings,
-;;;                                      gboolean collate);
-;;;
-;;; Sets the value of GTK_PRINT_SETTINGS_COLLATE.
-;;;
-;;; settings :
-;;;     a GtkPrintSettings
-;;;
-;;; collate :
-;;;     whether to collate the output
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_settings_set_collate" gtk-print-settings-set-collate) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-20}
+  @argument[settings]{a @class{gtk-print-settings} object}
+  @argument[collate]{whether to collate the output}
+  @short{Sets the value of \"collate\".}
+
+  Since 2.10
+  @see-class{gtk-print-settings}
+  @see-function{gtk-print-settings-get-collate}"
+  (settings (g-object gtk-print-settings))
+  (collate :boolean))
+
+(export 'gtk-print-settings-set-collate)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GTK_PRINT_SETTINGS_REVERSE
