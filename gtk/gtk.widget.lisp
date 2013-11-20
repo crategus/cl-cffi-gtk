@@ -3163,36 +3163,50 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_draw ()
-;;;
-;;; void gtk_widget_draw (GtkWidget *widget, cairo_t *cr);
-;;;
-;;; Draws widget to cr. The top left corner of the widget will be drawn to the
-;;; currently set origin point of cr.
-;;;
-;;; You should pass a cairo context as cr argument that is in an original state.
-;;; Otherwise the resulting drawing is undefined. For example changing the
-;;; operator using cairo_set_operator() or the line width using
-;;; cairo_set_line_width() might have unwanted side effects. You may however
-;;; change the context's transform matrix - like with cairo_scale(),
-;;; cairo_translate() or cairo_set_matrix() and clip region with cairo_clip()
-;;; prior to calling this function. Also, it is fine to modify the context with
-;;; cairo_save() and cairo_push_group() prior to calling this function.
-;;;
-;;; Note
-;;;
-;;; Special purpose widgets may contain special code for rendering to the screen
-;;; and might appear differently on screen and when rendered using
-;;; gtk_widget_draw().
-;;;
-;;; widget :
-;;;     the widget to draw. It must be drawable (see gtk_widget_is_drawable())
-;;;     and a size must have been allocated.
-;;;
-;;; cr :
-;;;     a cairo context to draw to
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_widget_draw" gtk-widget-draw) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-18}
+  @argument[widget]{the widget to draw. It must be drawable, see the function
+    @fun{gtk-widget-is-drawable}, and a size must have been allocated.}
+  @argument[cr]{a cairo context to draw to}
+  @begin{short}
+    Draws @arg{widget} to @arg{cr}. The top left corner of the widget will be
+    drawn to the currently set origin point of @arg{cr}.
+  @end{short}
+
+  You should pass a cairo context as @arg{cr} argument that is in an original
+  state. Otherwise the resulting drawing is undefined. For example changing the
+  operator using the function @fun{cairo-set-operator} or the line width using
+  the function @fun{cairo-set-line-width} might have unwanted side effects. You
+  may however change the context's transform matrix - like with the functions
+  @fun{cairo-scale}, @fun{cairo-translate} or @fun{cairo-set-matrix} and clip
+  region with the function @fun{cairo-clip} prior to calling this function.
+  Also, it is fine to modify the context with the functions @fun{cairo-save}
+  and @fun{cairo-push-group} prior to calling this function.
+
+  @subheading{Note}
+  Special purpose widgets may contain special code for rendering to the screen
+  and might appear differently on screen and when rendered using the function
+  @sym{gtk-widget-draw}.
+
+  Since 3.0
+  @see-class{gtk-widget}
+  @see-symbol{cairo-t}
+  @see-function{gtk-widget-is-drawable}
+  @see-function{cairo-set-operator}
+  @see-function{cairo-set-line-width}
+  @see-function{cairo-scale}
+  @see-function{cairo-translate}
+  @see-function{cairo-set-matrix}
+  @see-function{cairo-clip}
+  @see-function{cairo-save}
+  @see-function{cairo-push-group}"
+  (widget (g-object gtk-widget))
+  (cr (:pointer (:struct cairo-t))))
+
+(export 'gtk-widget-draw)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_queue_draw ()
@@ -3200,10 +3214,11 @@
 
 (defcfun ("gtk_widget_queue_draw" gtk-widget-queue-draw) :void
 #+cl-cffi-gtk-documentation
- "@version{2013-6-30}
+ "@version{2013-11-18}
   @argument[widget]{a @class{gtk-widget} object}
   Equivalent to calling the function @fun{gtk-widget-queue-draw-area} for the
-  entire area of a @arg{widget}.
+  entire area of a widget.
+  @see-class{gtk-widget}
   @see-function{gtk-widget-queue-draw-area}"
   (widget (g-object gtk-widget)))
 
@@ -3215,21 +3230,22 @@
 
 (defcfun ("gtk_widget_queue_resize" gtk-widget-queue-resize) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-2-4}
+ "@version{2013-11-18}
   @argument[widget]{a @class{gtk-widget} object}
   @begin{short}
     This function is only for use in widget implementations.
   @end{short}
-  Flags a @arg{widget} to have its size renegotiated; should be called when a
-  widget for some reason has a new size request. For example, when you change
-  the text in a @class{gtk-label}, @class{gtk-label} queues a resize to ensure
-  there's enough space for the new text.
-  @begin[Note]{dictionary}
-    You cannot call @sym{gtk-widget-queue-resize} on a widget from inside its
-    implementation of the @code{GtkWidgetClass::size_allocate} virtual method.
-    Calls to @sym{gtk-widget-queue-resize} from inside
-    @code{GtkWidgetClass::size_allocate} will be silently ignored.
-  @end{dictionary}"
+  Flags a widget to have its size renegotiated; should be called when a widget
+  for some reason has a new size request. For example, when you change the text
+  in a @class{gtk-label}, @class{gtk-label} queues a resize to ensure there is
+  enough space for the new text.
+
+  @subheading{Note}
+  You cannot call the function @sym{gtk-widget-queue-resize} on a widget from
+  inside its implementation of the @code{GtkWidgetClass::size_allocate} virtual
+  method. Calls to the function @sym{gtk-widget-queue-resize} from inside
+  @code{GtkWidgetClass::size_allocate} will be silently ignored.
+  @see-class{gtk-widget}"
   (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-queue-resize)
@@ -3241,13 +3257,12 @@
 (defcfun ("gtk_widget_queue_resize_no_redraw" gtk-widget-queue-resize-no-redraw)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2013-2-4}
-  @argument[widget]{a @class{GtkWidget} instance}
-  @begin{short}
-    This function works like @fun{gtk-widget-queue-resize}, except that the
-    widget is not invalidated.
-  @end{short}
+ "@version{2013-11-18}
+  @argument[widget]{a @class{gtk-widget} object}
+  This function works like the function @fun{gtk-widget-queue-resize}, except
+  that the widget is not invalidated.
   Since 2.4.
+  @see-class{gtk-widget}
   @see-function{gtk-widget-queue-resize}"
   (widget (g-object gtk-widget)))
 
@@ -3388,12 +3403,12 @@
 
 (defun gtk-widget-size-request (widget)
  #+cl-cffi-gtk-documentation
- "@version{2013-10-27}
-  @argument[widget]{a @class{gtk-widget} instance}
+ "@version{2013-11-18}
+  @argument[widget]{a @class{gtk-widget} object}
   @return{A @class{gtk-requisition} structure.}
   @subheading{Warning}
-    @sym{gtk-widget-size-request} has been deprecated since version 3.0 and
-    should not be used in newly-written code. Use the function
+    The function @sym{gtk-widget-size-request} has been deprecated since version
+    3.0 and should not be used in newly-written code. Use the function
     @fun{gtk-widget-get-preferred-size} instead.
 
   @begin{short}
@@ -3463,7 +3478,7 @@
 
 (defcfun ("gtk_widget_size_allocate" gtk-widget-size-allocate) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-10-29}
+ "@version{2013-11-18}
   @argument[widget]{a @class{gtk-widget} object}
   @argument[allocation]{position and size to be allocated to widget as a
     @class{gdk-rectangle} structure}
@@ -3473,17 +3488,17 @@
   @end{short}
 
   In this function, the allocation may be adjusted. It will be forced to a 1 x 1
-  minimum size, and the @code{adjust_size_allocation} virtual method on the
+  minimum size, and the @code{adjust_size_allocation()} virtual method on the
   child will be used to adjust the allocation. Standard adjustments include
-  removing the widget's margins, and applying the widget's \"halign\" and
-  \"valign\" properties.
+  removing the widget's margins, and applying the widget's @code{\"halign\"}
+  and @code{\"valign\"} properties.
   @see-class{gtk-widget}
   @see-class{gtk-container}
   @see-class{gdk-rectangle}"
   (widget (g-object gtk-widget))
   (allocation (g-boxed-foreign gdk-rectangle)))
 
-(export 'gkt-widget-size-allocate)
+(export 'gtk-widget-size-allocate)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_add_accelerator ()
@@ -3491,32 +3506,39 @@
 
 (defcfun ("gtk_widget_add_accelerator" gtk-widget-add-accelerator) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-2-4}
+ "@version{2013-11-18}
   @argument[widget]{widget to install an accelerator on}
   @argument[accel-signal]{widget signal to emit on accelerator activation}
   @argument[accel-group]{accel group for this @arg{widget}, added to its
     toplevel}
   @argument[accel-key]{GDK keyval of the accelerator}
-  @argument[accel-mods]{modifier key combination of the accelerator}
-  @argument[accel-flags]{flag accelerators, e.g. @code{:visible}}
+  @argument[accel-mods]{modifier key combination of type
+    @symbol{gdk-modifier-type} of the accelerator}
+  @argument[accel-flags]{flag accelerators of type @symbol{gtk-accel-flags},
+    e. g. @code{:visible}}
   @begin{short}
     Installs an accelerator for this widget in @arg{accel-group} that causes
     @arg{accel-signal} to be emitted if the accelerator is activated.
   @end{short}
-  The @arg{accel-group} needs to be added to the widget's toplevel via
-  @fun{gtk-window-add-accel-group}, and the signal must be of type
+  The @arg{accel-group} needs to be added to the widget's toplevel via the
+  function @fun{gtk-window-add-accel-group}, and the signal must be of type
   @code{G_RUN_ACTION}. Accelerators added through this function are not user
   changeable during runtime. If you want to support accelerators that can be
-  changed by the user, use @fun{gtk-accel-map-add-entry} and
+  changed by the user, use the functions @fun{gtk-accel-map-add-entry} and
   @fun{gtk-widget-set-accel-path} or @fun{gtk-menu-item-set-accel-path}
   instead.
+  @see-class{gtk-widget}
+  @see-class{gtk-accel-group}
+  @see-symbol{gdk-modifier-type}
+  @see-symbol{gtk-accel-flags}
+  @see-function{gtk-widget-remove-accelerator}
   @see-function{gtk-window-add-accel-group}
   @see-function{gtk-accel-map-add-entry}
   @see-function{gtk-widget-set-accel-path}
   @see-function{gtk-menu-item-set-accel-path}"
-  (widget g-object)
+  (widget (g-object gtk-widget))
   (accel-signal :string)
-  (accel-group g-object)
+  (accel-group (g-object gtk-accel-group))
   (accel-key :uint)
   (accel-mods gdk-modifier-type)
   (accel-flags gtk-accel-flags))
@@ -3529,19 +3551,23 @@
 
 (defcfun ("gtk_widget_remove_accelerator" gtk-widget-remove-accelerator) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-2-4}
-  @argument[widget]{@arg{widget} to remove an accelerator from}
+ "@version{2013-11-18}
+  @argument[widget]{widget to remove an accelerator from}
   @argument[accel-group]{accel group for this @arg{widget}}
   @argument[accel-key]{GDK keyval of the accelerator}
-  @argument[accel-mods]{modifier key combination of the accelerator}
+  @argument[accel-mods]{modifier key combination of type
+    @symbol{gdk-modifier-type} of the accelerator}
   @return{Whether an accelerator was installed and could be removed.}
   @begin{short}
-    Removes an accelerator from @arg{widget}, previously installed with
-    @fun{gtk-widget-add-accelerator}.
+    Removes an accelerator from @arg{widget}, previously installed with the
+    function @fun{gtk-widget-add-accelerator}.
   @end{short}
+  @see-class{gtk-widget}
+  @see-class{gtk-accel-group}
+  @see-symbol{gdk-modifier-type}
   @see-function{gtk-widget-add-accelerator}"
-  (widget g-object)
-  (accel-group g-object)
+  (widget (g-object gtk-widget))
+  (accel-group (g-object gtk-accel-group))
   (accel-key :uint)
   (accel-mods gdk-modifier-type))
 
@@ -3553,39 +3579,38 @@
 
 (defcfun ("gtk_widget_set_accel_path" gtk-widget-set-accel-path) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-2-4}
-  @argument[widget]{a @class{gtk-widget} instance}
+ "@version{2013-11-18}
+  @argument[widget]{a @class{gtk-widget} object}
   @argument[accel-path]{path used to look up the accelerator}
   @argument[accel-group]{a @class{gtk-accel-group}}
   @begin{short}
     Given an accelerator group, @arg{accel-group}, and an accelerator path,
     @arg{accel-path}, sets up an accelerator in @arg{accel-group} so whenever
-    the key binding that is defined for @arg{accel-path} is pressed, widget will
-    be activated.
+    the key binding that is defined for @arg{accel-path} is pressed,
+    @arg{widget} will be activated.
   @end{short}
-  This removes any accelerators (for any accelerator group) installed by
-  previous calls to @sym{gtk-widget-set-accel-path}. Associating accelerators
-  with paths allows them to be modified by the user and the modifications to be
-  saved for future use. (See @fun{gtk-accel-map-save}.)
+  This removes any accelerators, for any accelerator group, installed by
+  previous calls to the function @sym{gtk-widget-set-accel-path}. Associating
+  accelerators with paths allows them to be modified by the user and the
+  modifications to be saved for future use. See the function
+  @fun{gtk-accel-map-save}.
 
   This function is a low level function that would most likely be used by a
   menu creation system like @class{gtk-ui-manager}. If you use
   @class{gtk-ui-manager}, setting up accelerator paths will be done
   automatically.
 
-  Even when you you aren't using @class{gtk-ui-manager}, if you only want to set
-  up accelerators on menu items @fun{gtk-menu-item-set-accel-path} provides a
-  somewhat more convenient interface.
-
-  Note that @arg{accel-path} string will be stored in a @type{g-quark}.
-  Therefore, if you pass a static string, you can save some memory by interning
-  it first with @code{g_intern_static_string()}.
+  Even when you you are not using @class{gtk-ui-manager}, if you only want to
+  set up accelerators on menu items @fun{gtk-menu-item-set-accel-path} provides
+  a somewhat more convenient interface.
+  @see-class{gtk-widget}
+  @see-class{gtk-accel-group}
   @see-function{gtk-accel-map-save}
   @see-class{gtk-ui-manager}
   @see-function{gtk-menu-item-set-accel-path}"
-  (widget g-object)
+  (widget (g-object gtk-widget))
   (accel-path :string)
-  (accel-group g-object))
+  (accel-group (g-object gtk-accel-group)))
 
 (export 'gtk-widget-set-accel-path)
 
@@ -3613,27 +3638,29 @@
 
 (defcfun ("gtk_widget_can_activate_accel" %gtk-widget-can-activate-accel)
     :boolean
-  (widget g-object)
+  (widget (g-object gtk-widget))
   (signal-id :uint))
 
-(defun gtk-widget-can-activate-accel (widget signal)
+(defun gtk-widget-can-activate-accel (widget signal-id)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-4}
-  @argument[widget]{a @class{gtk-widget} instance}
-  @argument[signal]{the ID or the name of a signal installed on @arg{widget}}
+ "@version{2013-11-18}
+  @argument[widget]{a @class{gtk-widget} object}
+  @argument[signal-id]{the ID or the name of a signal installed on @arg{widget}}
   @return{@em{True} if the accelerator can be activated.}
   @begin{short}
     Determines whether an accelerator that activates the signal identified by
     @arg{signal-id} can currently be activated.
   @end{short}
-  This is done by emitting the \"can-activate-accel\" signal on widget; if the
-  signal isn't overridden by a handler or in a derived widget, then the default
-  check is that the widget must be sensitive, and the widget and all its
-  ancestors mapped.@break{}
-  Since 2.4"
-  (when (stringp signal)
-    (setf signal (g-signal-lookup signal (g-type-from-instance widget))))
-  (%gtk-widget-can-activate-accel widget signal))
+  This is done by emitting the \"can-activate-accel\" signal on @arg{widget};
+  if the signal is not overridden by a handler or in a derived widget, then the
+  default check is that the widget must be sensitive, and the widget and all
+  its ancestors mapped.
+
+  Since 2.4
+  @see-class{gtk-widget}"
+  (when (stringp signal-id)
+    (setf signal-id (g-signal-lookup signal-id (g-type-from-instance widget))))
+  (%gtk-widget-can-activate-accel widget signal-id))
 
 (export 'gtk-widget-can-activate-accel)
 
@@ -3643,20 +3670,24 @@
 
 (defcfun ("gtk_widget_event" gtk-widget-event) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-2-4}
-  @argument[widget]{a @class{gtk-widget} instance}
+ "@version{2013-11-18}
+  @argument[widget]{a @class{gtk-widget} object}
   @argument[event]{a @class{gdk-event}}
-  @return{Return from the event signal emission (@em{true} if the event was
-    handled).}
+  @begin{return}
+    Return from the event signal emission, @em{true} if the event was handled.
+  @end{return}
   @begin{short}
     Rarely used function. This function is used to emit the event signals on a
-    widget (those signals should never be emitted without using this function to
-    do so).
+    widget, those signals should never be emitted without using this function
+    to do so.
   @end{short}
-  If you want to synthesize an event though, don't use this function;
-  instead, use @fun{gtk-main-do-event} so the event will behave as if it were in
-  the event queue. Don't synthesize expose events; instead, use
-  @fun{gdk-window-invalidate-rect} to invalidate a region of the window.
+  If you want to synthesize an event though, do not use this function; instead,
+  use the function @fun{gtk-main-do-event} so the event will behave as if it
+  were in the event queue. Do not synthesize expose events; instead, use the
+  function @fun{gdk-window-invalidate-rect} to invalidate a region of the
+  window.
+  @see-class{gtk-widget}
+  @see-class{gdk-event}
   @see-function{gtk-main-do-event}
   @see-function{gdk-window-invalidate-rect}"
   (widget (g-object gtk-widget))
@@ -3670,15 +3701,17 @@
 
 (defcfun ("gtk_widget_activate" gtk-widget-activate) :boolean
  #+cl-cffi-gtk-documentation
- "@argument[widget]{a @class{gtk-widget} instance that's activatable}
-  @return{@em{True} if the @arg{widget} was activatable.}
+ "@version{2013-11-18}
+  @argument[widget]{a @class{gtk-widget} object that is activatable}
+  @return{@em{True} if the widget was activatable.}
   @begin{short}
-    For widgets that can be \"activated\" (buttons, menu items, etc.) this
+    For widgets that can be \"activated\", buttons, menu items, etc., this
     function activates them.
   @end{short}
   Activation is what happens when you press Enter on a widget during key
-  navigation. If @arg{widget} isn't activatable, the function returns
-  @code{nil}."
+  navigation. If @arg{widget} is not activatable, the function returns
+  @code{nil}.
+  @see-class{gtk-widget}"
   (widget g-object))
 
 (export 'gtk-widget-activate)
@@ -3689,14 +3722,18 @@
 
 (defcfun ("gtk_widget_reparent" gtk-widget-reparent) :void
  #+cl-cffi-gtk-documentation
- "@argument[widget]{a @class{gtk-widget} instance}
+ "@version{2013-11-18}
+  @argument[widget]{a @class{gtk-widget} object}
   @argument[new-parent]{a @class{gtk-container} to move the widget into}
   @begin{short}
     Moves a widget from one @class{gtk-container} to another, handling reference
     count issues to avoid destroying the widget.
-  @end{short}"
-  (widget g-object)
-  (new-parent g-object))
+  @end{short}
+  @see-class{gtk-widget}
+  @see-class{gtk-container}
+  @see-function{gtk-widget-unparent}"
+  (widget (g-object gtk-widget))
+  (new-parent (g-object gtk-widget)))
 
 (export 'gtk-widget-reparent)
 
@@ -3705,19 +3742,21 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_intersect" %gtk-widget-intersect) :boolean
-  (widget g-object)
+  (widget (g-object gtk-widget))
   (area (g-boxed-foreign gdk-rectangle))
   (intersection (g-boxed-foreign gdk-rectangle)))
 
 (defun gtk-widget-intersect (widget area)
  #+cl-cffi-gtk-documentation
- "@argument[widget]{a @class{gtk-widget} object}
-  @argument[area]{a rectangle}
-  @return{Returns the intersection as a rectangle, if there was an intersection
-    or @code{nil}.}
-  Computes the intersection of a @arg{widget}'s area and @arg{area}, and
+ "@version{2013-11-18}
+  @argument[widget]{a @class{gtk-widget} object}
+  @argument[area]{a rectangle of type @class{gdk-rectangle}}
+  @return{Returns the intersection as a rectangle of type @class{gdk-rectangle},
+    if there was an intersection or @code{nil}.}
+  Computes the intersection of a widgets area and @arg{area}, and
   returns the intersection as a rectangle of type @class{gdk-rectangle} if
   there was an intersection.
+  @see-class{gtk-widget}
   @see-class{gdk-rectangle}"
   (let ((intersection (make-gdk-rectangle)))
     (when (%gtk-widget-intersect widget area intersection)
@@ -3737,21 +3776,26 @@
 
 (defcfun ("gtk_widget_grab_focus" gtk-widget-grab-focus) :void
  #+cl-cffi-gtk-documentation
- "@argument[widget]{a @class{gtk-widget} instance}
+ "@version{2013-11-18}
+  @argument[widget]{a @class{gtk-widget} object}
   @begin{short}
     Causes @arg{widget} to have the keyboard focus for the @class{gtk-window}
-    instance it's inside. @arg{widget} must be a focusable widget, such as a
-    @class{gtk-entry}; something like @class{gtk-frame} won't work.
+    instance it is inside. @arg{widget} must be a focusable widget, such as a
+    @class{gtk-entry}; something like @class{gtk-frame} will not work.
   @end{short}
 
-  More precisely, it must have the @code{:can-focus} flag set. Use
-  @fun{gtk-widget-set-can-focus} to modify that flag.
+  More precisely, it must have the @code{\"can-focus\"} property set. Use the
+  function @fun{gtk-widget-set-can-focus} to modify that flag.
 
-  The @arg{widget} also needs to be realized and mapped. This is indicated by
-  the related signals. Grabbing the focus immediately after creating the
-  @arg{widget} will likely fail and cause critical warnings.
+  The widget also needs to be realized and mapped. This is indicated by the
+  related signals. Grabbing the focus immediately after creating the widget
+  will likely fail and cause critical warnings.
+  @see-class{gtk-widget}
+  @see-class{gtk-window}
+  @see-class{gtk-entry}
+  @see-class{gtk-frame}
   @see-function{gtk-widget-set-can-focus}"
-  (widget g-object))
+  (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-grab-focus)
 
@@ -3761,8 +3805,8 @@
 
 (defcfun ("gtk_widget_grab_default" gtk-widget-grab-default) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-7-31}
-  @argument[widget]{a @class{gtk-widget} widget}
+ "@version{2013-11-18}
+  @argument[widget]{a @class{gtk-widget} object}
   @begin{short}
     Causes @arg{widget} to become the default widget.
   @end{short}
@@ -3780,7 +3824,7 @@
   @see-class{gtk-entry}
   @see-function{gtk-widget-activate}
   @see-function{gtk-widget-set-can-default}"
-  (widget g-object))
+  (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-grab-default)
 
@@ -3792,13 +3836,13 @@
 
 (defun gtk-widget-set-name (widget name)
  #+cl-cffi-gtk-documentation
- "@version{2013-8-1}
+ "@version{2013-11-18}
   @argument[widget]{a @class{gtk-widget} object}
-  @argument[name]{name for the @arg{widget}}
+  @argument[name]{name for the widget}
   @begin{short}
-    Widgets can be named, which allows you to refer to them from a CSS file. You
-    can apply a style to widgets with a particular name in the CSS file. See the
-    documentation for the CSS syntax on the same page as the docs for
+    Widgets can be named, which allows you to refer to them from a CSS file.
+    You can apply a style to widgets with a particular name in the CSS file.
+    See the documentation for the CSS syntax on the same page as the docs for
     @class{gtk-style-context}.
   @end{short}
 
@@ -3821,13 +3865,14 @@
 
 (defun gtk-widget-get-name (widget)
  #+cl-cffi-gtk-documentation
- "@version{2013-8-1}
+ "@version{2013-11-18}
   @argument[widget]{a @class{gtk-widget} object}
-  @return{Name of the @arg{widget}.}
+  @return{Name of the widget.}
   @begin{short}
-    Retrieves the name of a @arg{widget}.
+    Retrieves the name of a widget.
   @end{short}
-  See @fun{gtk-widget-set-name} for the significance of widget names.
+  See the function @fun{gtk-widget-set-name} for the significance of widget
+  names.
   @see-class{gtk-widget}
   @see-function{gtk-widget-set-name}"
   (gtk-widget-name widget))
@@ -3840,18 +3885,21 @@
 
 (defcfun ("gtk_widget_set_state" gtk-widget-set-state) :void
  #+cl-cffi-gtk-documentation
- "@version{2012-12-20}
-  @argument[widget]{a @class{gtk-widget}}
-  @argument[state]{new state for @arg{widget}}
+ "@version{2013-11-18}
+  @argument[widget]{a @class{gtk-widget} object}
+  @argument[state]{new state of type @symbol{gtk-state-type} for @arg{widget}}
   @subheading{Warning}
   @begin{short}
-    @sym{gtk-widget-set-state} is deprecated and should not be used in
-    newly-written code. Use @fun{gtk-widget-set-state-flags} instead.
+    The function @sym{gtk-widget-set-state} is deprecated and should not be used
+    in newly-written code. Use the function @fun{gtk-widget-set-state-flags}
+    instead.
   @end{short}
 
   This function is for use in widget implementations. Sets the state of a
-  widget (insensitive, prelighted, etc.) Usually you should set the state
-  using wrapper functions such as @fun{gtk-widget-set-sensitive}.
+  widget, insensitive, prelighted, etc. Usually you should set the state
+  using wrapper functions such as the function @fun{gtk-widget-set-sensitive}.
+  @see-class{gtk-widget}
+  @see-symbol{gtk-state-type}
   @see-function{gtk-widget-set-state-flags}
   @see-function{gtk-widget-set-sensitive}"
   (widget (g-object gtk-widget))
@@ -3867,11 +3915,11 @@
 
 (defun gtk-widget-set-sensitive (widget sensitive)
  #+cl-cffi-gtk-documentation
- "@version{2013-8-1}
+ "@version{2013-11-18}
   @argument[widget]{a @class{gtk-widget} object}
-  @argument[sensitive]{@em{true} to make the @arg{widget} sensitive}
+  @argument[sensitive]{@em{true} to make the widget sensitive}
   @begin{short}
-    Sets the sensitivity of a @arg{widget}.
+    Sets the sensitivity of a widget.
   @end{short}
   A widget is sensitive if the user can interact with it. Insensitive widgets
   are \"grayed out\" and the user cannot interact with them. Insensitive widgets
@@ -3892,7 +3940,7 @@
 
 (defun gtk-widget-set-parent (widget parent)
  #+cl-cffi-gtk-documentation
- "@version{2013-8-1}
+ "@version{2013-11-18}
   @argumen[widget]{a @class{gtk-widget} object}
   @argument[parent]{parent container}
   @begin{short}
@@ -3916,7 +3964,7 @@
 
 (defcfun ("gtk_widget_set_parent_window" gtk-widget-set-parent-window) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-8-1}
+ "@version{2013-11-18}
   @argument[widget]{a @class{gtk-widget} object}
   @argument[parent-window]{the new parent window}
   @short{Sets a non default parent window for @arg{widget}.}
@@ -3925,8 +3973,8 @@
   the window is a toplevel window or can be embedded into other widgets.
 
   @subheading{Note}
-    For @class{gtk-window} classes, this needs to be called before the window is
-    realized.
+    For @class{gtk-window} classes, this needs to be called before the window
+    is realized.
   @see-class{gtk-widget}
   @see-function{gtk-widget-get-parent-window}"
   (widget (g-object gtk-window))
