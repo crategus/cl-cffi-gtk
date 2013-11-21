@@ -12,7 +12,7 @@ GTK+ Core Reference
     gtk.accel-group.lisp             - Accelerator Groups          - GTK+ 3.6.4&
     gtk.accel-map.lisp               - Accelerator Maps            - GTK+ 3.6.4&
     gtk.clipboard.lisp               - GtkClipboard                - GTK+ 3.6.4&
-    gtk.drag-and-drop.lisp           - Drag and Drop handling      - GTK+ 3.6.4&
+    gtk.drag-and-drop.lisp           - Drag and Drop handling      - GTK+ 3.8.6
     gtk.stock-item.lisp              - Stock Items                 - GTK+ 3.4.3*
     gtk.setting.lisp                 - GtkSettings                 - GTK+ 3.6.4&
 

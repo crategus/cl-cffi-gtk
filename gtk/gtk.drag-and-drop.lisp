@@ -74,17 +74,6 @@
 ;;;     gtk_drag_source_add_text_targets
 ;;;     gtk_drag_source_add_image_targets
 ;;;     gtk_drag_source_add_uri_targets
-;;;
-;;; Description
-;;;
-;;; GTK+ has a rich set of functions for doing inter-process communication via
-;;; the drag-and-drop metaphor. GTK+ can do drag-and-drop (DND) via multiple
-;;; protocols. The currently supported protocols are the Xdnd and Motif
-;;; protocols.
-;;;
-;;; As well as the functions listed here, applications may need to use some
-;;; facilities provided for Selections. Also, the Drag and Drop API makes use of
-;;; signals in the GtkWidget class.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -221,68 +210,51 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_drag_dest_set_proxy ()
-;;;
-;;; void gtk_drag_dest_set_proxy (GtkWidget *widget,
-;;;                               GdkWindow *proxy_window,
-;;;                               GdkDragProtocol protocol,
-;;;                               gboolean use_coordinates);
-;;;
-;;; Sets this widget as a proxy for drops to another window.
-;;;
-;;; widget :
-;;;     a GtkWidget
-;;;
-;;; proxy_window :
-;;;     the window to which to forward drag events
-;;;
-;;; protocol :
-;;;     the drag protocol which the proxy_window accepts (You can use
-;;;     gdk_drag_get_protocol() to determine this)
-;;;
-;;; use_coordinates :
-;;;     If TRUE, send the same coordinates to the destination, because it is an
-;;;     embedded subwindow.
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_drag_dest_set_proxy" gtk-drag-dest-set-proxy) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-21}
+  @argument[widget]{a @class{gtk-widget} object}
+  @argument[proxy-window]{the window to which to forward drag events}
+  @argument[protocol]{the drag protocol of type @symbol{gdk-drag-protocol} which
+    the @arg{proxy-window} accepts, you can use the function
+    @fun{gdk-drag-get-protocol} to determine this.}
+  @argument[use-coordinates]{if @emph{true}, send the same coordinates to the
+    destination, because it is an embedded subwindow}
+  Sets this widget as a proxy for drops to another window.
+  @see-class{gtk-widget}
+  @see-class{gdk-window}
+  @see-symbol{gdk-drag-protocol}
+  @see-function{gdk-drag-get-protocol}"
+  (widget (g-object gtk-widget))
+  (proxy-window (g-object gdk-window))
+  (protocol gdk-drag-protocol)
+  (use-coordinates :boolean))
+  
+(export 'gtk-drag-dest-set-proxy)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_drag_dest_unset ()
-;;;
-;;; void gtk_drag_dest_unset (GtkWidget *widget);
-;;;
-;;; Clears information about a drop destination set with gtk_drag_dest_set().
-;;; The widget will no longer receive notification of drags.
-;;;
-;;; widget :
-;;;     a GtkWidget
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_drag_dest_unset" gtk-drag-dest-unset) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-21}
+  @argument[widget]{a @class{gtk-widget} object}
+  @begin{short}
+    Clears information about a drop destination set with the function
+    @fun{gtk-drag-dest-set}.
+  @end{short}
+  The widget will no longer receive notification of drags.
+  @see-class{gtk-widget}
+  @see-function{gtk-drag-dest-set}"
+  (widget (g-object gtk-widget)))
+  
+(export 'gtk-drag-dest-unset)
+  
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_drag_dest_find_target ()
-;;;
-;;; GdkAtom gtk_drag_dest_find_target (GtkWidget *widget,
-;;;                                    GdkDragContext *context,
-;;;                                    GtkTargetList *target_list);
-;;;
-;;; Looks for a match between the supported targets of context and the
-;;; dest_target_list, returning the first matching target, otherwise returning
-;;; GDK_NONE. dest_target_list should usually be the return value from
-;;; gtk_drag_dest_get_target_list(), but some widgets may have different valid
-;;; targets for different parts of the widget; in that case, they will have to
-;;; implement a drag_motion handler that passes the correct target list to this
-;;; function.
-;;;
-;;; widget :
-;;;     drag destination widget
-;;;
-;;; context :
-;;;     drag context
-;;;
-;;; target_list :
-;;;     list of droppable targets, or NULL to use gtk_drag_dest_get_target_list
-;;;     (widget)
-;;;
-;;; Returns :
-;;;     first target that the source offers and the dest can accept, or GDK_NONE
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_drag_dest_find_target" %gtk-drag-dest-find-target)
@@ -291,56 +263,97 @@
   (context (g-object gdk-drag-context))
   (target-list (g-boxed-foreign gtk-target-list)))
 
-(defun gtk-drag-dest-find-target (widget context)
-  (%gtk-drag-dest-find-target widget context nil))
+(defun gtk-drag-dest-find-target (widget context &optional (target-list nil))
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-21}
+  @argument[widget]{drag destination widget}
+  @argument[context]{drag context}
+  @argument[target-list]{list of droppable targets, or @code{nil} to use the
+    function @fun{gtk-drag-dest-get-target-list}}
+  @begin{return}
+    First target that the source offers and the dest can accept,
+    or @code{:none}.
+  @end{return}
+  @begin{short}
+    Looks for a match between the supported targets of context and the
+    @arg{target-list}, returning the first matching target, otherwise returning
+    @code{:none}.
+  @end{short}
+  @arg{target-list} should usually be the return value from the function
+  @fun{gtk-drag-dest-get-target-list}, but some widgets may have different valid
+  targets for different parts of the widget; in that case, they will have to
+  implement a \"drag-motion\" handler that passes the correct target list to
+  this function.
+  @see-class{gtk-widget}
+  @see-class{gdk-drag-context}
+  @see-class{gtk-target-list}
+  @see-function{gtk-drag-dest-get-target-list}"
+  (%gtk-drag-dest-find-target widget context target-list))
 
 (export 'gtk-drag-dest-find-target)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_drag_dest_get_target_list ()
-;;;
-;;; GtkTargetList * gtk_drag_dest_get_target_list (GtkWidget *widget);
-;;;
-;;; Returns the list of targets this widget can accept from drag-and-drop.
-;;;
-;;; widget :
-;;;     a GtkWidget
-;;;
-;;; Returns :
-;;;     the GtkTargetList, or NULL if none
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_drag_dest_get_target_list" gtk-drag-dest-get-target-list)
+    (g-boxed-foreign gtk-target-list)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-21}
+  @argument[widget]{a @class{gtk-widget} object}
+  @return{The @class{gtk-target-list}, or @code{nil} if none.}
+  Returns the list of targets this widget can accept from drag-and-drop.
+  @see-class{gtk-widget}
+  @see-class{gtk-target-list}"
+  (widget (g-object gtk-widget)))
+  
+(export 'gtk-drag-dest-get-target-list)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_drag_dest_set_target_list ()
-;;;
-;;; void gtk_drag_dest_set_target_list (GtkWidget *widget,
-;;;                                     GtkTargetList *target_list);
-;;;
-;;; Sets the target types that this widget can accept from drag-and-drop. The
-;;; widget must first be made into a drag destination with gtk_drag_dest_set().
-;;;
-;;; widget :
-;;;     a GtkWidget that's a drag destination
-;;;
-;;; target_list :
-;;;     list of droppable targets, or NULL for none
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_drag_dest_set_target_list" gtk-drag-dest-set-target-list) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-21}
+  @argument[widget]{a @class{gtk-widget} that is a drag destination}
+  @argument[target-list]{list of droppable targets, or @code{nil} for none}
+  @begin{short}
+    Sets the target types that this widget can accept from drag-and-drop.
+  @end{short}
+  The widget must first be made into a drag destination with the function
+  @fun{gtk-drag-dest-set}.
+  @see-class{gtk-widget}
+  @see-class{gtk-target-list}
+  @see-function{gtk-drag-dest-set}"
+  (widget (g-object gtk-widget))
+  (target-list (g-boxed-foreign gtk-target-list)))
+  
+(export 'gtk-drag-dest-set-target-list)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_drag_dest_add_text_targets ()
-;;;
-;;; void gtk_drag_dest_add_text_targets (GtkWidget *widget);
-;;;
-;;; Add the text targets supported by GtkSelection to the target list of the
-;;; drag destination. The targets are added with info = 0. If you need another
-;;; value, use gtk_target_list_add_text_targets() and
-;;; gtk_drag_dest_set_target_list().
-;;;
-;;; widget :
-;;;     a GtkWidget that's a drag destination
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_drag_dest_add_text_targets" gtk-drag-dest-add-text-targets) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-21}
+  @argument[widget]{a @class{gtk-widget} that is a drag destination}
+  @begin{short}
+    Add the text targets supported by the selection to the target list of the
+    drag destination.
+  @end{short}
+  The targets are added with info = 0. If you need another value, use the
+  functions @fun{gtk-target-list-add-text-targets} and
+  @fun{gtk-drag-dest-set-target-list}.
+
+  Since 2.6
+  @see-class{gtk-widget}
+  @see-function{gtk-target-list-add-text-targets}
+  @see-function{gtk-drag-dest-set-target-list}"
+  (widget (g-object gtk-widget)))
+  
+(export 'gtk-drag-dest-add-text-targets)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_drag_dest_add_image_targets ()
@@ -370,56 +383,72 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_drag_dest_add_uri_targets ()
-;;;
-;;; void gtk_drag_dest_add_uri_targets (GtkWidget *widget);
-;;;
-;;; Add the URI targets supported by GtkSelection to the target list of the drag
-;;; destination. The targets are added with info = 0. If you need another value,
-;;; use gtk_target_list_add_uri_targets() and gtk_drag_dest_set_target_list().
-;;;
-;;; widget :
-;;;     a GtkWidget that's a drag destination
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_drag_dest_add_uri_targets" gtk-drag-dest-add-uri-targets) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-21}
+  @argument[widget]{a @class{gtk-widget} that is a drag destination}
+  @begin{short}
+    Add the URI targets supported by the selection to the target list of the
+    drag destination.
+  @end{short}
+  The targets are added with info = 0. If you need another value, use the
+  functions @fun{gtk-target-list-add-uri-targets} and
+  @fun{gtk-drag-dest-set-target-list}.
+
+  Since 2.6
+  @see-class{gtk-widget}
+  @see-function{gtk-target-list-add-uri-targets}
+  @see-function{gtk-drag-dest-set-target-list}"
+  (widget (g-object gtk-widget)))
+
+(export 'gtk-drag-dest-add-uri-targets)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_drag_dest_set_track_motion ()
-;;;
-;;; void gtk_drag_dest_set_track_motion (GtkWidget *widget,
-;;;                                      gboolean track_motion);
-;;;
-;;; Tells the widget to emit "drag-motion" and "drag-leave" events regardless of
-;;; the targets and the GTK_DEST_DEFAULT_MOTION flag.
-;;;
-;;; This may be used when a widget wants to do generic actions regardless of the
-;;; targets that the source offers.
-;;;
-;;; widget :
-;;;     a GtkWidget that's a drag destination
-;;;
-;;; track_motion :
-;;;     whether to accept all targets
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_drag_dest_set_track_motion" gtk-drag-dest-set-track-motion) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-21}
+  @argument[widget]{a @class{gtk-widget} that is a drag destination}
+  @argument[track-motion]{whether to accept all targets}
+  @begin{short}
+    Tells the widget to emit \"drag-motion\" and \"drag-leave\" events
+    regardless of the targets and the @code{:motion} flag.
+  @end{short}
+
+  This may be used when a widget wants to do generic actions regardless of the
+  targets that the source offers.
+
+  Since 2.10
+  @see-class{gtk-widget}"
+  (widget (g-object gtk-widget))
+  (track-motion :boolean))
+
+(export 'gtk-drag-dest-set-track-motion)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_drag_dest_get_track_motion ()
-;;;
-;;; gboolean gtk_drag_dest_get_track_motion (GtkWidget *widget);
-;;;
-;;; Returns whether the widget has been configured to always emit "drag-motion"
-;;; signals.
-;;;
-;;; widget :
-;;;     a GtkWidget that's a drag destination
-;;;
-;;; Returns :
-;;;     TRUE if the widget always emits "drag-motion" events
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_drag_dest_get_track_motion" gtk-drag-dest-get-track-motion)
+    :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-21}
+  @argument[widget]{a @class{gtk-widget} that is a drag destination}
+  @return{@em{True} if the widget always emits \"drag-motion\" events.}
+  @begin{short}
+    Returns whether the widget has been configured to always emit
+    \"drag-motion\" signals.
+  @end{short}
+
+  Since 2.10
+  @see-class{gtk-widget}"
+  (widget (g-object gtk-widget)))
+
+(export 'gtk-drag-dest-get-track-motion)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_drag_finish ()
@@ -522,84 +551,93 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_drag_begin ()
-;;;
-;;; GdkDragContext * gtk_drag_begin (GtkWidget *widget,
-;;;                                  GtkTargetList *targets,
-;;;                                  GdkDragAction actions,
-;;;                                  gint button,
-;;;                                  GdkEvent *event);
-;;;
-;;; Initiates a drag on the source side. The function only needs to be used when
-;;; the application is starting drags itself, and is not needed when
-;;; gtk_drag_source_set() is used.
-;;;
-;;; The event is used to retrieve the timestamp that will be used internally to
-;;; grab the pointer. If event is NULL, then GDK_CURRENT_TIME will be used.
-;;; However, you should try to pass a real event in all cases, since that can be
-;;; used by GTK+ to get information about the start position of the drag, for
-;;; example if the event is a GDK_MOTION_NOTIFY.
-;;;
-;;; Generally there are three cases when you want to start a drag by hand by
-;;; calling this function:
-;;;
-;;; 1. During a "button-press-event" handler, if you want to start a drag
-;;;    immediately when the user presses the mouse button. Pass the event that
-;;;    you have in your "button-press-event" handler.
-;;;
-;;; 2. During a "motion-notify-event" handler, if you want to start a drag when
-;;;    the mouse moves past a certain threshold distance after a button-press.
-;;;    Pass the event that you have in your "motion-notify-event" handler.
-;;;
-;;; 3. During a timeout handler, if you want to start a drag after the mouse
-;;;    button is held down for some time. Try to save the last event that you
-;;;    got from the mouse, using gdk_event_copy(), and pass it to this function
-;;;    (remember to free the event with gdk_event_free() when you are done). If
-;;;    you can really not pass a real event, pass NULL instead.
-;;;
-;;; widget :
-;;;     the source widget.
-;;;
-;;; targets :
-;;;     The targets (data formats) in which the source can provide the data.
-;;;
-;;; actions :
-;;;     A bitmask of the allowed drag actions for this drag.
-;;;
-;;; button :
-;;;     The button the user clicked to start the drag.
-;;;
-;;; event :
-;;;     The event that triggered the start of the drag.
-;;;
-;;; Returns :
-;;;     the context for this drag
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_drag_begin" gtk-drag-begin) (g-object gdk-drag-context)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-21}
+  @argument[widget]{the source widget}
+  @argument[targets]{the targets (data formats) in which the source can provide
+    the data}
+  @argument[actions]{a bitmask of the allowed drag actions for this drag}
+  @argument[button]{the button the user clicked to start the drag}
+  @argument[event]{the event that triggered the start of the drag}
+  @return{The context for this drag.}
+  @begin{short}
+    Initiates a drag on the source side.
+  @end{short}
+  The function only needs to be used when the application is starting drags
+  itself, and is not needed when the function @fun{gtk-drag-source-set} is used.
+
+  The event is used to retrieve the timestamp that will be used internally to
+  grab the pointer. If event is @code{nil}, then @var{+gdk-current-time+} will
+  be used. However, you should try to pass a real event in all cases, since that
+  can be used by GTK+ to get information about the start position of the drag,
+  for example if the event is a @code{:motion-notify}.
+
+  Generally there are three cases when you want to start a drag by hand by
+  calling this function:
+  @begin{enumeration}
+    @begin{entry}
+      During a \"button-press-event\" handler, if you want to start a drag
+      immediately when the user presses the mouse button. Pass the event that
+      you have in your \"button-press-event\" handler.
+    @end{entry}
+    @begin{entry}
+      During a \"motion-notify-event\" handler, if you want to start a drag when
+      the mouse moves past a certain threshold distance after a button-press.
+      Pass the event that you have in your \"motion-notify-event\" handler.
+    @end{entry}
+    @begin{entry}
+      During a timeout handler, if you want to start a drag after the mouse
+      button is held down for some time. Try to save the last event that you
+      got from the mouse, using the function @fun{gdk-event-copy}, and pass it
+      to this function, remember to free the event with the function
+      @fun{gdk-event-free} when you are done. If you can really not pass a real
+      event, pass @code{nil} instead.
+    @end{entry}
+  @end{enumeration}
+  @see-class{gtk-widget}
+  @see-class{gtk-target-list}
+  @see-symbol{gdk-drag-action}
+  @see-class{gdk-event}
+  @see-function{gtk-drag-source-set}
+  @see-function{gdk-event-copy}
+  @see-function{gdk-event-free}
+  @see-variable{+gdk-current-time+}"
+  (widget (g-object gtk-widget))
+  (targets (g-boxed-foreign gtk-target-list))
+  (actions gdk-drag-action)
+  (button :int)
+  (event (g-boxed-foreign gdk-event)))
+
+(export 'gtk-drag-begin)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_drag_set_icon_widget ()
-;;;
-;;; void gtk_drag_set_icon_widget (GdkDragContext *context,
-;;;                                GtkWidget *widget,
-;;;                                gint hot_x,
-;;;                                gint hot_y);
-;;;
-;;; Changes the icon for a widget to a given widget. GTK+ will not destroy the
-;;; icon, so if you don't want it to persist, you should connect to the
-;;; "drag-end" signal and destroy it yourself.
-;;;
-;;; context :
-;;;     the context for a drag. (This must be called with a context for the
-;;;     source side of a drag)
-;;;
-;;; widget :
-;;;     a toplevel window to use as an icon.
-;;;
-;;; hot_x :
-;;;     the X offset within widget of the hotspot.
-;;;
-;;; hot_y :
-;;;     the Y offset within widget of the hotspot.
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_drag_set_icon_widget" gtk-drag-set-icon-widget) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-21}
+  @argument[context]{the context for a drag, this must be called with a context
+    for the source side of a drag}
+  @argument[widget]{a toplevel window to use as an icon}
+  @argument[hot-x]{the x offset within widget of the hotspot}
+  @argument[hot-y]{the y offset within widget of the hotspot}
+  @begin{short}
+    Changes the icon for a widget to a given widget.
+  @end{short}
+  GTK+ will not destroy the icon, so if you do not want it to persist, you
+  should connect to the \"drag-end\" signal and destroy it yourself.
+  @see-class{gdk-drag-context}
+  @see-class{gtk-widget}"
+  (context (g-object gdk-drag-context))
+  (widget (g-object gtk-widget))
+  (hot-x :int)
+  (hot-y :int))
+
+(export 'gtk-drag-set-icon-widget)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_drag_set_icon_pixbuf ()
@@ -625,149 +663,149 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_drag_set_icon_stock ()
-;;;
-;;; void gtk_drag_set_icon_stock (GdkDragContext *context,
-;;;                               const gchar *stock_id,
-;;;                               gint hot_x,
-;;;                               gint hot_y);
-;;;
-;;; Sets the icon for a given drag from a stock ID.
-;;;
-;;; context :
-;;;     the context for a drag. (This must be called with a context for the
-;;;     source side of a drag)
-;;;
-;;; stock_id :
-;;;     the ID of the stock icon to use for the drag.
-;;;
-;;; hot_x :
-;;;     the X offset within the icon of the hotspot.
-;;;
-;;; hot_y :
-;;;     the Y offset within the icon of the hotspot.
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_drag_set_icon_stock" gtk-drag-set-icon-stock) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-21}
+  @argument[context]{the context for a drag. This must be called with a context
+    for the source side of a drag.}
+  @argument[stock-id]{the ID of the stock icon to use for the drag}
+  @argument[hot-x]{the x offset within the icon of the hotspot}
+  @argument[hot-y]{the y offset within the icon of the hotspot}
+  Sets the icon for a given drag from a stock ID.
+  @see-class{gdk-drag-context}"  
+  (context (g-object gdk-drag-context))
+  (stock-id :string)
+  (hot-x :int)
+  (hot-y :int))
+
+(export 'gtk-drag-set-icon-stock)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_drag_set_icon_surface ()
-;;;
-;;; void gtk_drag_set_icon_surface (GdkDragContext *context,
-;;;                                 cairo_surface_t *surface);
-;;;
-;;; Sets surface as the icon for a given drag. GTK+ retains references for the
-;;; arguments, and will release them when they are no longer needed.
-;;;
-;;; To position the surface relative to the mouse, use
-;;; cairo_surface_set_device_offset() on surface. The mouse cursor will be
-;;; positioned at the (0,0) coordinate of the surface.
-;;;
-;;; context :
-;;;     the context for a drag. (This must be called with a context for the
-;;;     source side of a drag)
-;;;
-;;; surface :
-;;;     the surface to use as icon
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_drag_set_icon_surface" gtk-drag-set-icon-surface) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-21}
+  @argument[context]{the context for a drag. This must be called with a context
+    for the source side of a drag.}
+  @argument[surface]{the surface to use as icon}
+  @begin{short}
+    Sets @arg{surface} as the icon for a given drag.
+  @end{short}
+  GTK+ retains references for the arguments, and will release them when they are
+  no longer needed.
+
+  To position the surface relative to the mouse, use the function
+  @fun{cairo-surface-set-device-offset} on surface. The mouse cursor will be
+  positioned at the (0,0) coordinate of the surface.
+  @see-class{gdk-drag-context}
+  @see-symbol{cairo-surface-t}
+  @see-function{cairo-surface-set-device-offset}"
+  (context (g-object gdk-drag-context))
+  (surface (:pointer (:struct cairo-surface-t))))
+
+(export 'gtk-drag-set-icon-surface)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_drag_set_icon_name ()
-;;;
-;;; void gtk_drag_set_icon_name (GdkDragContext *context,
-;;;                              const gchar *icon_name,
-;;;                              gint hot_x,
-;;;                              gint hot_y);
-;;;
-;;; Sets the icon for a given drag from a named themed icon. See the docs for
-;;; GtkIconTheme for more details. Note that the size of the icon depends on the
-;;; icon theme (the icon is loaded at the symbolic size GTK_ICON_SIZE_DND), thus
-;;; hot_x and hot_y have to be used with care.
-;;;
-;;; context :
-;;;     the context for a drag. (This must be called with a context for the
-;;;     source side of a drag)
-;;;
-;;; icon_name :
-;;;     name of icon to use
-;;;
-;;; hot_x :
-;;;     the X offset of the hotspot within the icon
-;;;
-;;; hot_y :
-;;;     the Y offset of the hotspot within the icon
-;;;
-;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_drag_set_icon_name" gtk-drag-set-icon-name) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-21}
+  @argument[context]{the context for a drag. This must be called with a context
+    for the source side of a drag.}
+  @argument[icon-name]{name of icon to use}
+  @argument[hot-x]{the x offset of the hotspot within the icon}
+  @argument[hot-y]{the y offset of the hotspot within the icon}
+  @begin{short}
+    Sets the icon for a given drag from a named themed icon.
+  @end{short}
+  See the docs for @class{gtk-icon-theme} for more details. Note that the size
+  of the icon depends on the icon theme, the icon is loaded at the symbolic size
+  @code{:dnd}, thus @arg{hot-x} and @arg{hot-y} have to be used with care.
+
+  Since 2.8
+  @see-class{gdk-drag-context}
+  @see-class{gtk-icon-theme}"
+  (context (g-object gdk-drag-context))
+  (icon-name :string)
+  (hot-x :int)
+  (hot-y :int))
+
+(export 'gtk-drag-set-icon-name)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_drag_set_icon_gicon ()
-;;;
-;;; void gtk_drag_set_icon_gicon (GdkDragContext *context,
-;;;                               GIcon *icon,
-;;;                               gint hot_x,
-;;;                               gint hot_y);
-;;;
-;;; Sets the icon for a given drag from the given icon. See the documentation
-;;; for gtk_drag_set_icon_name() for more details about using icons in drag and
-;;; drop.
-;;;
-;;; context :
-;;;     the context for a drag. (This must be called with a context for the
-;;;     source side of a drag)
-;;;
-;;; icon :
-;;;     a GIcon
-;;;
-;;; hot_x :
-;;;     the X offset of the hotspot within the icon
-;;;
-;;; hot_y :
-;;;     the Y offset of the hotspot within the icon
-;;;
-;;; Since 3.2
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_drag_set_icon_gicon" gtk-drag-set-icon-gicon) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-21}
+  @argument[context]{the context for a drag. This must be called with a context
+    for the source side of a drag.}
+  @argument[icon]{a @class{g-icon} object}
+  @argument[hot-x]{the x offset of the hotspot within the icon}
+  @argument[hot-y]{the y offset of the hotspot within the icon}
+  @begin{short}
+    Sets the icon for a given drag from the given icon.
+  @end{short}
+  See the documentation for the function @fun{gtk-drag-set-icon-name} for more
+  details about using icons in drag and drop.
+
+  Since 3.2
+  @see-class{gdk-drag-context}
+  @see-class{g-icon}
+  @see-function{gtk-drag-set-icon-name}"
+  (context (g-object gdk-drag-context))
+  (icon (g-object g-icon))
+  (hot-x :int)
+  (hot-y :int))
+  
+(export 'gtk-drag-set-icon-gicon)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_drag_set_icon_default ()
-;;;
-;;; void gtk_drag_set_icon_default (GdkDragContext *context);
-;;;
-;;; Sets the icon for a particular drag to the default icon.
-;;;
-;;; context :
-;;;     the context for a drag. (This must be called with a context for the
-;;;     source side of a drag)
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_drag_set_icon_default" gtk-drag-set-icon-default) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-21}
+  @argument[context]{the context for a drag. This must be called with a context
+    for the source side of a drag.}
+  Sets the icon for a particular drag to the default icon.
+  @see-class{gdk-drag-context}"
+  (context (g-object gdk-drag-context)))
+  
+(export 'gtk-drag-set-icon-default)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_drag_check_threshold ()
-;;;
-;;; gboolean gtk_drag_check_threshold (GtkWidget *widget,
-;;;                                    gint start_x,
-;;;                                    gint start_y,
-;;;                                    gint current_x,
-;;;                                    gint current_y);
-;;;
-;;; Checks to see if a mouse drag starting at (start_x, start_y) and ending at
-;;; (current_x, current_y) has passed the GTK+ drag threshold, and thus should
-;;; trigger the beginning of a drag-and-drop operation.
-;;;
-;;; widget :
-;;;     a GtkWidget
-;;;
-;;; start_x :
-;;;     X coordinate of start of drag
-;;;
-;;; start_y :
-;;;     Y coordinate of start of drag
-;;;
-;;; current_x :
-;;;     current X coordinate
-;;;
-;;; current_y :
-;;;     current Y coordinate
-;;;
-;;; Returns :
-;;;     TRUE if the drag threshold has been passed.
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_drag_check_threshold" gtk-drag-check-threshold) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-21}
+  @argument[widget]{a @class{gtk-widget} object}
+  @argument[start-x]{x coordinate of start of drag}
+  @argument[start-y]{y coordinate of start of drag}
+  @argument[current-x]{current x coordinate}
+  @argument[current-y]{current y coordinate}
+  @return{@emph{True} if the drag threshold has been passed.}
+  Checks to see if a mouse drag starting at (@arg{start-x}, @arg{start-y}) an
+  ending at (@arg{current-x}, @arg{current-y}) has passed the GTK+ drag
+  threshold, and thus should trigger the beginning of a drag-and-drop operation.
+  @see-class{gtk-widget}"
+  (widget (g-object gtk-widget))
+  (start-x :int)
+  (start-y :int)
+  (current-x :int)
+  (current-y :int))
+  
+(export 'gtk-drag-check-threshold)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_drag_source_set ()
@@ -826,37 +864,43 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_drag_source_set_icon_stock ()
-;;;
-;;; void gtk_drag_source_set_icon_stock (GtkWidget *widget,
-;;;                                      const gchar *stock_id);
-;;;
-;;; Sets the icon that will be used for drags from a particular source to a
-;;; stock icon.
-;;;
-;;; widget :
-;;;     a GtkWidget
-;;;
-;;; stock_id :
-;;;     the ID of the stock icon to use
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_drag_source_set_icon_stock" gtk-drag-source-set-icon-stock) :void
+ #+cl-cffi-gtk-documenation
+ "@version{2013-11-21}
+  @argument[widget]{a @class{gtk-widget} object}
+  @argument[stock-id]{the ID of the stock icon to use}
+  Sets the icon that will be used for drags from a particular source to a
+  stock icon.
+  @see-class{gtk-widget}"
+  (widget (g-object gtk-widget))
+  (stock-id :string))
+  
+(export 'gtk-drag-source-set-icon-stock)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_drag_source_set_icon_name ()
-;;;
-;;; void gtk_drag_source_set_icon_name (GtkWidget *widget,
-;;;                                     const gchar *icon_name);
-;;;
-;;; Sets the icon that will be used for drags from a particular source to a
-;;; themed icon. See the docs for GtkIconTheme for more details.
-;;;
-;;; widget :
-;;;     a GtkWidget
-;;;
-;;; icon_name :
-;;;     name of icon to use
-;;;
-;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_drag_source_set_icon_name" gtk-drag-source-set-icon-name) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-21}
+  @argument[widget]{a @class{gtk-widget} object}
+  @argument[icon_name]{name of icon to use}
+  @begin{short}
+    Sets the icon that will be used for drags from a particular source to a
+    themed icon.
+  @end{short}
+  See the docs for @class{gtk-icon-theme} for more details.
+
+  Since 2.8
+  @see-class{gtk-widget}
+  @see-class{gtk-icon-theme}"
+  (widget (g-object gtk-widget))
+  (icon-name :string))
+  
+(export 'gtk-drag-source-set-icon-name)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_drag_source_set_icon_gicon ()
