@@ -96,28 +96,6 @@
 ;;;     gtk_selection_remove_all
 ;;;     gtk_selection_data_copy
 ;;;     gtk_selection_data_free
-;;;
-;;; Object Hierarchy
-;;;
-;;;   GBoxed
-;;;    +----GtkSelectionData
-;;;
-;;;   GBoxed
-;;;    +----GtkTargetList
-;;;
-;;; Description
-;;;
-;;; The selection mechanism provides the basis for different types of
-;;; communication between processes. In particular, drag and drop and
-;;; GtkClipboard work via selections. You will very seldom or never need to use
-;;; most of the functions in this section directly; GtkClipboard provides a
-;;; nicer interface to the same functionality.
-;;;
-;;; Some of the datatypes defined this section are used in the GtkClipboard and
-;;; drag-and-drop API's as well. The GtkTargetEntry structure and GtkTargetList
-;;; objects represent lists of data types that are supported when sending or
-;;; receiving data. The GtkSelectionData object is used to store a chunk of data
-;;; along with the data type and other associated information.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -493,29 +471,36 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_target_list_ref ()
-;;;
-;;; GtkTargetList * gtk_target_list_ref (GtkTargetList *list);
-;;;
-;;; Increases the reference count of a GtkTargetList by one.
-;;;
-;;; list :
-;;;     a GtkTargetList
-;;;
-;;; Returns :
-;;;     the passed in GtkTargetList.
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_target_list_ref" gtk-target-list-ref)
+    (g-boxed-foreign gtk-target-list)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-21}
+  @argument[target-list]{a @class{gtk-target-list}}
+  @return{The passed in @class{gtk-target-list}.}
+  Increases the reference count of a @class{gtk-target-list} by one.
+  @see-class{gtk-target-list}"
+  (target-list (g-boxed-foreign gtk-target-list)))
+
+(export 'gtk-target-list-ref)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_target_list_unref ()
-;;;
-;;; void gtk_target_list_unref (GtkTargetList *list);
-;;;
-;;; Decreases the reference count of a GtkTargetList by one. If the resulting
-;;; reference count is zero, frees the list.
-;;;
-;;; list :
-;;;     a GtkTargetList
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_target_list-unref" gtk-target-list-unref) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-21}
+  @argument[list]{a @class{gtk-target-list}}
+  @begin{short}
+    Decreases the reference count of a @class{gtk-target-list} by one.
+  @end{short}
+  If the resulting reference count is zero, frees the list.
+  @see-class{gtk-target-list-unref}"
+  (target-list (g-boxed-foreign gtk-target-list)))
+
+(export 'gtk-target-list-unref)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_target_list_add ()
@@ -834,27 +819,29 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_selection_add_targets ()
-;;;
-;;; void gtk_selection_add_targets (GtkWidget *widget,
-;;;                                 GdkAtom selection,
-;;;                                 const GtkTargetEntry *targets,
-;;;                                 guint ntargets);
-;;;
-;;; Prepends a table of targets to the list of supported targets for a given
-;;; widget and selection.
-;;;
-;;; widget :
-;;;     a GtkWidget
-;;;
-;;; selection :
-;;;     the selection
-;;;
-;;; targets :
-;;;     a table of targets to add
-;;;
-;;; ntargets :
-;;;     number of entries in targets
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_selection_add_targets" %gtk-selection-add-targets) :void
+  (widget (g-object gtk-widget))
+  (selection gdk-atom-as-string)
+  (targets :pointer)
+  (n-targets :uint))
+
+(defun gtk-selection-add-targets (widget selection targets)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-21}
+  @argument[widget]{a @class{gtk-widget} object}
+  @argument[selection]{the selection}
+  @argument[targets]{a list of targets to add}
+  Prepends a table of targets to the list of supported targets for a given
+  widget and selection.
+  @see-class{gtk-widget}
+  @see-class{gtk-target-entry}"
+  (when targets
+    (with-foreign-boxed-array (n-targets targets-ptr gtk-target-entry targets)
+      (%gtk-selection-add-targets widget selection targets-ptr n-targets))))
+
+(export 'gtk-selection-add-targets)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_selection_clear_targets ()
@@ -1028,43 +1015,50 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_selection_data_set_uris ()
-;;;
-;;; gboolean gtk_selection_data_set_uris (GtkSelectionData *selection_data,
-;;;                                       gchar **uris);
-;;;
-;;; Sets the contents of the selection from a list of URIs. The string is
-;;; converted to the form determined by selection_data->target.
-;;;
-;;; selection_data :
-;;;     a GtkSelectionData
-;;;
-;;; uris :
-;;;     a NULL-terminated array of strings holding URIs
-;;;
-;;; Returns :
-;;;     TRUE if the selection was successfully set, otherwise FALSE.
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_selection_data_set_uris" gtk-selection-data-set-uris) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-21}
+  @argument[selection-data]{a @class{gtk-selection-data}}
+  @argument[uris]{a list of strings holding URIs}
+  @begin{return}
+    @em{True} if the selection was successfully set, otherwise @code{nil}.
+  @end{return}
+  @begin{short}
+    Sets the contents of the selection from a list of URIs.
+  @end{short}
+  The string is converted to the form determined by
+  @code{selection_data->target}.
+
+  Since 2.6
+  @see-class{gtk-selection-data}"
+  (selection-data (g-boxed-foreign gtk-selection-data))
+  (uris g-strv))
+
+(export 'gtk-selection-data-set-uris)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_selection_data_get_uris ()
-;;;
-;;; gchar ** gtk_selection_data_get_uris
-;;;                                    (const GtkSelectionData *selection_data);
-;;;
-;;; Gets the contents of the selection data as array of URIs.
-;;;
-;;; selection_data :
-;;;     a GtkSelectionData
-;;;
-;;; Returns :
-;;;     if the selection data contains a list of URIs, a newly allocated
-;;;     NULL-terminated string array containing the URIs, otherwise NULL. If the
-;;;     result is non-NULL it must be freed with g_strfreev().
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_selection_data_get_uris" gtk-selection-data-get-uris) g-strv
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-21}
+  @argument[selection-data]{a @class{gtk-selection-data}}
+  @begin{return}
+    If the selection data contains a list of URIs, a list of strings containing
+    the URIs, otherwise @code{nil}.
+  @end{return}
+  @begin{short}
+    Gets the contents of the selection data as a list of URIs.
+  @end{short}
+
+  Since 2.6
+  @see-class{gtk-selection-data}"
+  (selection-data (g-boxed-foreign gtk-selection-data)))
+
+(export 'gtk-selection-data-get-uris)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_selection_data_get_targets ()
