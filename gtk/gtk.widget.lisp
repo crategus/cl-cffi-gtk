@@ -4007,11 +4007,11 @@
 
 (defun gtk-widget-set-events (widget events)
  #+cl-cffi-gtk-documentation
- "@version{2013-7-17}
+ "@version{2013-11-22}
   @argument[widget]{a @class{gtk-widget} object}
-  @argument[events]{event mask}
+  @argument[events]{event mask of type @symbol{gdk-event-mask}}
   @begin{short}
-    Sets the event mask (see @symbol{gdk-event-mask}) for @arg{widget}.
+    Sets the event mask for @arg{widget}.
   @end{short}
   The event mask determines which events a widget will receive. Keep in mind
   that different widgets have different default event masks, and by changing
@@ -4022,6 +4022,7 @@
   with @code{:no-window} widgets; to get events on those widgets, place them
   inside a @class{gtk-event-box} and receive events on the event box.
   @see-symbol{gdk-event-mask}
+  @see-class{gtk-widget}
   @see-function{gtk-widget-get-events}
   @see-function{gtk-widget-add-events}
   @see-class{gtk-event-box}"
@@ -4059,14 +4060,15 @@
 
 (defun gtk-widget-add-events (widget events)
  #+cl-cffi-gtk-documentation
- "@version{2013-7-17}
+ "@version{2013-11-22}
   @argument[widget]{a @class{gtk-widget} object}
-  @argument[events]{an event mask, see @symbol{gdk-event-mask}}
+  @argument[events]{an event mask of type @symbol{gdk-event-mask}}
   @begin{short}
     Adds the events in the bitfield @arg{events} to the event mask for
     @arg{widget}.
   @end{short}
   See @fun{gtk-widget-set-events} for details.
+  @see-class{gtk-widget}
   @see-symbol{gdk-event-mask}
   @see-function{gtk-widget-set-events}
   @see-function{gtk-widget-get-events}"
@@ -4202,10 +4204,10 @@
 (defcfun ("gtk_widget_get_toplevel" gtk-widget-get-toplevel)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2012-12-29}
-  @argument[widget]{a @class{gtk-widget} instance}
-  @return{the topmost ancestor of @arg{widget}, or @arg{widget} itself if
-    there's no ancestor}
+ "@version{2013-11-22}
+  @argument[widget]{a @class{gtk-widget} object}
+  @return{The topmost ancestor of @arg{widget}, or @arg{widget} itself if
+    there is no ancestor}
   @begin{short}
     This function returns the topmost widget in the container hierarchy
     @arg{widget} is a part of.
@@ -4214,24 +4216,25 @@
   widget. No reference will be added to the returned widget; it should not be
   unreferenced.
 
-  Note the difference in behavior vs. @fun{gtk-widget-get-ancestor};
-  @code{(gtk-widget-get-ancestor widget :window)} would return @code{nil} if
-  @arg{widget} wasn't inside a toplevel window, and if the window was inside a
-  @sym{gtk-window} derived widget which was in turn inside the toplevel
-  @class{gtk-window}. While the second case may seem unlikely, it actually
-  happens when a @class{gtk-plug} is embedded inside a @class{gtk-socket} within
-  the same application.
+  Note the difference in behavior vs. the function
+  @fun{gtk-widget-get-ancestor}; @code{(gtk-widget-get-ancestor widget :window)}
+  would return @code{nil} if @arg{widget} was not inside a toplevel window, and
+  if the window was inside a @sym{gtk-window} derived widget which was in turn
+  inside the toplevel @class{gtk-window}. While the second case may seem
+  unlikely, it actually happens when a @class{gtk-plug} is embedded inside a
+  @class{gtk-socket} within the same application.
 
-  To reliably find the toplevel @class{gtk-window}, use
+  To reliably find the toplevel @class{gtk-window}, use the function
   @sym{gtk-widget-get-toplevel} and check if the @code{:toplevel} flags is set
   on the result.
   @begin{pre}
- GtkWidget *toplevel = gtk_widget_get_toplevel (widget);
- if (gtk_widget_is_toplevel (toplevel))
-   {
-     /* Perform action on toplevel. */
-   @}
+ (let ((toplevel (gtk-widget-get-toplevel widget)))
+   (when (gtk-widget-is-toplevel toplevel)
+     ;; Perform action on toplevel
+     ... ))
   @end{pre}
+  @see-class{gtk-widget}
+  @see-function{gtk-widget-is-toplevel}
   @see-function{gtk-widget-get-ancestor}"
   (widget (g-object gtk-widget)))
 
@@ -4244,21 +4247,23 @@
 (defcfun ("gtk_widget_get_ancestor" gtk-widget-get-ancestor)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2012-12-29}
-  @argument[widget]{a @class{gtk-widget} instance}
+ "@version{2013-11-22}
+  @argument[widget]{a @class{gtk-widget} object}
   @argument[widget-type]{ancestor type}
-  @return{the ancestor widget, or @arg{nil} if not found}
+  @return{The ancestor widget, or @arg{nil} if not found.}
   @begin{short}
     Gets the first ancestor of @arg{widget} with type @arg{widget-type}.
   @end{short}
-  For example, @code{(gtk-widget-get-ancestor widget :box)} gets the first
-  @class{gtk-box} that's an ancestor of @arg{widget}. No reference will be added
-  to the returned widget; it should not be unreferenced. See note about checking
-  for a toplevel @class{gtk-window} in the docs for
+  For example, @code{(gtk-widget-get-ancestor widget \"GtkBbox\")} gets the
+  first @class{gtk-box} that is an ancestor of @arg{widget}. No reference will
+  be added to the returned widget; it should not be unreferenced. See note about
+  checking for a toplevel @class{gtk-window} in the docs for
   @fun{gtk-widget-get-toplevel}.
 
-  Note that unlike @fun{gtk-widget-is-ancestor}, @sym{gtk-widget-get-ancestor}
-  considers @arg{widget} to be an ancestor of itself.
+  Note that unlike the function @fun{gtk-widget-is-ancestor},
+  @sym{gtk-widget-get-ancestor} considers @arg{widget} to be an ancestor of
+  itself.
+  @see-class{gtk-widget}
   @see-function{gtk-widget-get-toplevel}
   @see-function{gtk-widget-is-ancestor}"
   (widget (g-object gtk-widget))
@@ -4272,10 +4277,13 @@
 
 (defcfun ("gtk_widget_get_visual" gtk-widget-get-visual) (g-object gdk-visual)
  #+cl-cffi-gtk-documentation
- "@version{2012-12-29}
-  @argument[widget]{a @class{gtk-widget} instance}
+ "@version{2013-11-22}
+  @argument[widget]{a @class{gtk-widget} object}
   @return{The visual for @arg{widget}.}
-  @short{Gets the visual that will be used to render @arg{widget}.}"
+  @short{Gets the visual that will be used to render @arg{widget}.}
+  @see-class{gtk-widget}
+  @see-class{gdk-visual}
+  @see-function{gtk-widget-set-visual}"
   (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-get-visual)
@@ -4286,19 +4294,24 @@
 
 (defcfun ("gtk_widget_set_visual" gtk-widget-set-visual) :void
  #+cl-cffi-gtk-documentation
- "@version{2012-12-29}
-  @argument[widget]{a @arg{gtk-widget} instance}
+ "@version{2013-11-22}
+  @argument[widget]{a @arg{gtk-widget} object}
   @argument[visual]{visual to be used or @code{nil} to unset a previous one}
   @begin{short}
     Sets the @arg{visual} that should be used for by @arg{widget} and its
     children for creating @class{gdk-window}'s.
   @end{short}
-  The @arg{visual} must be on the same @class{gdk-screen} as returned by
-  @fun{gtk-widget-get-screen}, so handling the \"screen-changed\" signal is
-  necessary.
+  The @arg{visual} must be on the same @class{gdk-screen} as returned by the
+  function @fun{gtk-widget-get-screen}, so handling the \"screen-changed\"
+  signal is necessary.
 
-  Setting a new @arg{visual} will not cause widget to recreate its windows, so
-  you should call this function before widget is realized.
+  Setting a new @arg{visual} will not cause @arg{widget} to recreate its
+  windows, so you should call this function before @arg{widget} is realized.
+  @see-class{gtk-widget}
+  @see-class{gdk-window}
+  @see-class{gdk-screen}
+  @see-class{gdk-visual}
+  @see-function{gtk-widget-get-visual}
   @see-function{gtk-widget-get-screen}"
   (widget (g-object gtk-widget))
   (visual (g-object gdk-visual)))
@@ -4310,7 +4323,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_get_pointer" %gtk-widget-get-pointer) :void
-  (widget g-object)
+  (widget (g-object gtk-widget))
   (x (:pointer :int))
   (y (:pointer :int)))
 
@@ -4318,20 +4331,23 @@
  #+cl-cffi-gtk-documentation
  "@version{2012-12-29}
   @argument[widget]{a @class{gtk-widget} instance}
-  @argument[x]{return location for the X coordinate, or @code{nil}}
-  @argument[y]{return location for the Y coordinate, or @code{nil}}
+  @begin{return}
+    @code{x} -- x coordinate, or @code{nil} @br{}
+    @code{y} -- y coordinate, or @code{nil}
+  @end{return}
+  @subheading{Warning}
+    The function @sym{gtk-widget-get-pointer} has been deprecated since version
+    3.4 and should not be used in newly-written code. Use the function
+    @fun{gdk-window-get-device-position} instead.
+
   @begin{short}
     Obtains the location of the mouse pointer in widget coordinates.
   @end{short}
   Widget coordinates are a bit odd; for historical reasons, they are defined as
-  widget->window coordinates for widgets that are not @code{:no-window} widgets,
-  and are relative to widget->allocation.x, widget->allocation.y for widgets
-  that are @code{:no-window} widgets.
-  @begin[Warning]{dictionary}
-    @sym{gtk-widget-get-pointer} has been deprecated since version 3.4 and
-    should not be used in newly-written code. Use
-    @fun{gdk-window-get-device-position} instead.
-  @end{dictionary}
+  @code{widget->window} coordinates for widgets that are not @code{:no-window}
+  widgets, and are relative to @code{widget->allocation.x},
+  @code{widget->allocation.y} for widgets that are @code{:no-window} widgets.
+  @see-class{gtk-widget}
   @see-function{gdk-window-get-device-position}"
   (with-foreign-objects ((x :int) (y :int))
     (%gtk-widget-get-pointer widget x y)
@@ -4346,17 +4362,17 @@
 
 (defcfun ("gtk_widget_is_ancestor" gtk-widget-is-ancestor) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2012-12-29}
-  @argument[widget]{a @class{gtk-widget} instance}
-  @argument[ancestor]{another @class{gtk-widget} instance}
+ "@version{2013-11-22}
+  @argument[widget]{a @class{gtk-widget} object}
+  @argument[ancestor]{another @class{gtk-widget} object}
   @return{@em{True} if @arg{ancestor} contains @arg{widget} as a child,
     grandchild, great grandchild, etc.}
-  @begin{short}
-    Determines whether @arg{widget} is somewhere inside @arg{ancestor}, possibly
-    with intermediate containers.
-  @end{short}"
-  (widget g-object)
-  (container g-object))
+  Determines whether @arg{widget} is somewhere inside @arg{ancestor}, possibly
+  with intermediate containers.
+  @see-class{gtk-widget}
+  @see-function{gtk-widget-get-ancestor}"
+  (widget (g-object gtk-widget))
+  (container (g-object gtk-widget)))
 
 (export 'gtk-widget-is-ancestor)
 
@@ -4375,25 +4391,28 @@
 
 (defun gtk-widget-translate-coordinates (src-widget dst-widget src-x src-y)
  #+cl-cffi-gtk-documentation
- "@version{2012-12-29}
-  @argument[src-widget]{a @class{gtk-widget} instance}
-  @argument[dest-widget]{a @class{gtk-widget} instance}
-  @argument[src-x]{X position relative to @arg{src-widget}}
-  @argument[src-y]{Y position relative to @arg{src-widget}}
-  @return{@code{nil} if either widget was not realized, or there was no common
-    ancestor. Otherwise the X poistion and the Y position relative to
-    @arg{dest-widget}}
+ "@version{2013-11-22}
+  @argument[src-widget]{a @class{gtk-widget} object}
+  @argument[dest-widget]{a @class{gtk-widget} object}
+  @argument[src-x]{x position relative to @arg{src-widget}}
+  @argument[src-y]{y position relative to @arg{src-widget}}
+  @return{@code{Nil} if either widget was not realized, or there was no common
+    ancestor. Otherwise the x position and the y position relative to
+    @arg{dest-widget}.}
   @begin{short}
     Translate coordinates relative to @arg{src-widget}'s allocation to
     coordinates relative to @arg{dest-widget}'s allocations.
   @end{short}
   In order to perform this operation, both widgets must be realized, and must
-  share a common toplevel."
+  share a common toplevel.
+  @see-class{gtk-widget}"
   (with-foreign-objects ((dst-x :int) (dst-y :int))
     (%gtk-widget-translate-coordinates src-widget
                                        dst-widget
-                                       src-x src-y
-                                       dst-x dst-y)
+                                       src-x
+                                       src-y
+                                       dst-x
+                                       dst-y)
     (values (mem-ref dst-x :int)
             (mem-ref dst-y :int))))
 
@@ -4405,7 +4424,7 @@
 
 (defcfun ("gtk_widget_hide_on_delete" gtk-widget-hide-on-delete) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-6-30}
+ "@version{2013-11-22}
   @argument[widget]{a @class{gtk-widget} object}
   @return{@em{True}.}
   @begin{short}
@@ -4417,6 +4436,8 @@
   that clicking the close button for a window (on the window frame, top right
   corner usually) will hide but not destroy the window. By default, GTK+
   destroys windows when the \"delete-event\" signal is received.
+  @see-class{gtk-widget}
+  @see-class{gtk-window}
   @see-function{gtk-widget-hide}"
   (widget (g-object gtk-widget)))
 
@@ -4449,20 +4470,21 @@
 
 (defcfun ("gtk_widget_ensure_style" gtk-widget-ensure-style) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-1-6}
-  @argument[widget]{a @class{gtk-widget} instance}
+ "@version{2013-11-22}
+  @argument[widget]{a @class{gtk-widget} object}
+  @subheading{Warning}
+    The function @sym{gtk-widget-ensure-style} has been deprecated since
+    version 3.0 and should not be used in newly-written code.
+    Use @class{gtk-style-context} instead.
+
   @short{Ensures that @arg{widget} has a style.}
 
   Not a very useful function; most of the time, if you want the style, the
   widget is realized, and realized widgets are guaranteed to have a style
   already.
-  @begin[Warning]{dictionary}
-    @sym{gtk-widget-ensure-style} has been deprecated since version 3.0 and
-    should not be used in newly-written code. Use @class{gtk-style-context}
-    instead.
-  @end{dictionary}
+  @see-class{gtk-widget}
   @see-class{gtk-style-context}"
-  (widget g-object))
+  (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-ensure-style)
 
@@ -4491,8 +4513,14 @@
 
 (defcfun ("gtk_widget_reset_rc_styles" gtk-widget-reset-rc-styles) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-1-6}
-  @argument[widget]{a @class{gtk-widget} instance}
+ "@version{2013-11-22}
+  @argument[widget]{a @class{gtk-widget} object}
+  @subheading{Warning}
+    The function @sym{gtk-widget-reset-rc-styles} has been deprecated since
+    version 3.0 and should not be used in newly-written code. Use
+    @class{gtk-style-context} instead, and the function
+    @fun{gtk-widget-reset-style}.
+
   @begin{short}
     Reset the styles of @arg{widget} and all descendents, so when they are
     looked up again, they get the correct values for the currently loaded RC
@@ -4500,14 +4528,10 @@
   @end{short}
 
   This function is not useful for applications.
-  @begin[Warning]{dictionary}
-    @sym{gtk-widget-reset-rc-styles} has been deprecated since version 3.0 and
-    should not be used in newly-written code. Use @class{gtk-style-context}
-    instead, and @fun{gtk-widget-reset-style}.
-  @end{dictionary}
+  @see-class{gtk-widget}
   @see-class{gtk-style-context}
   @see-function{gtk-widget-reset-style}"
-  (widget g-object))
+  (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-reset-rc-styles)
 
@@ -4518,16 +4542,20 @@
 (defcfun ("gtk_widget_get_default_style" gtk-widget-default-style)
     (g-object gtk-style)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-6}
-  @return{The default style. This @class{gtk-style} object is owned by GTK+ and
-    should not be modified or freed.}
+ "@version{2013-11-22}
+  @begin{return}
+    The default style. This @class{gtk-style} object is owned by GTK+ and
+    should not be modified or freed.
+  @end{return}
+  @subheading{Warning}
+    The function @sym{gtk-widget-get-default-style} has been deprecated since
+    version 3.0 and should not be used in newly-written code. Use
+    @class{gtk-style-context} instead, and the function
+    @fun{gtk-css-provider-get-default} to obtain a @class{gtk-style-provider}
+    with the default widget style information.
+
   @short{Returns the default style used by all widgets initially.}
-  @begin[Warning]{dictionary}
-    @sym{gtk-widget-get-default-style} has been deprecated since version 3.0 and
-    should not be used in newly-written code. Use @class{gtk-style-context}
-    instead, and @fun{gtk-css-provider-get-default} to obtain a
-    @class{gtk-style-provider} with the default widget style information.
-  @end{dictionary}
+  @see-class{gtk-widget}
   @see-class{gtk-style-context}
   @see-class{gtk-style-provider}
   @see-function{gtk-css-provider-get-default}")
@@ -4577,11 +4605,14 @@
 (defcfun ("gtk_widget_get_direction" gtk-widget-get-direction)
     gtk-text-direction
  #+cl-cffi-gtk-documentation
- "@version{2013-1-6}
-  @argument[widget]{a @class{gtk-widget} instance}
-  @return{The reading direction for the @arg{widget}.}
-  @short{Gets the reading direction for a particular @arg{widget}.}
-  See @fun{gtk-widget-set-direction}.
+ "@version{2013-11-22}
+  @argument[widget]{a @class{gtk-widget} object}
+  @return{The reading direction of type @symbol{gtk-text-direction} for
+    the widget.}
+  @short{Gets the reading direction for a particular widget.}
+  See the function @fun{gtk-widget-set-direction}.
+  @see-class{gtk-widget}
+  @see-symbol{gtk-text-direction}
   @see-function{gtk-widget-set-direction}"
   (widget (g-object gtk-widget)))
 
@@ -4593,11 +4624,11 @@
 
 (defcfun ("gtk_widget_set_direction" gtk-widget-set-direction) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-6-25}
+ "@version{2013-11-22}
   @argument[widget]{a @class{gtk-widget} object}
-  @argument[dir]{the new direction}
+  @argument[direction]{the new direction of type @symbol{gtk-text-direction}}
   @begin{short}
-    Sets the reading direction on a particular @arg{widget}.
+    Sets the reading direction on a particular widget.
   @end{short}
   This direction controls the primary direction for widgets containing text, and
   also the direction in which the children of a container are packed. The
@@ -4605,14 +4636,16 @@
   into languages with right-to-left reading directions can be done. Generally,
   applications will let the default reading direction present, except for
   containers where the containers are arranged in an order that is explicitely
-  visual rather than logical (such as buttons for text justification).
+  visual rather than logical, such as buttons for text justification.
 
   If the direction is set to the value @code{:none} of the
   @symbol{gtk-text-direction} enumeration, then the value set by the function
   @fun{gtk-widget-set-default-direction} will be used.
+  @see-class{gtk-widget}
+  @see-symbol{gtk-text-direction}
   @see-function{gtk-widget-set-default-direction}"
   (widget (g-object gtk-widget))
-  (dir gtk-text-direction))
+  (direction gtk-text-direction))
 
 (export 'gtk-widget-set-direction)
 
@@ -4623,12 +4656,12 @@
 (defcfun ("gtk_widget_set_default_direction" gtk-widget-set-default-direction)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2013-1-6}
-  @argument[dir]{the new default direction. This cannot be @code{:none}.}
-  @begin{short}
-    Sets the default reading direction for widgets where the direction has not
-    been explicitly set by @fun{gtk-widget-set-direction}.
-  @end{short}
+ "@version{2013-11-22}
+  @argument[dir]{the new default direction of type @symbol{gtk-text-direction}.
+    This cannot be @code{:none}.}
+  Sets the default reading direction for widgets where the direction has not
+  been explicitly set by the fucntion @fun{gtk-widget-set-direction}.
+  @see-symbol{gtk-text-direction}
   @see-function{gtk-widget-set-direction}"
   (direction gtk-text-direction))
 
@@ -4641,12 +4674,14 @@
 (defcfun ("gtk_widget_get_default_direction" gtk-widget-get-default-direction)
     gtk-text-direction
  #+cl-cffi-gtk-documentation
- "@version{2013-1-6}
+ "@version{2013-11-22}
   @return{The current default direction.}
   @begin{short}
-    Obtains the current default reading direction.
+    Obtains the current default reading direction of type
+    @symbol{gtk-text-direction}.
   @end{short}
-  See @fun{gtk-widget-set-default-direction}.
+  See the function @fun{gtk-widget-set-default-direction}.
+  @see-symbol{gtk-text-direction}
   @see-function{gtk-widget-set-default-direction}")
 
 (export 'gtk-widget-get-default-direction)
