@@ -1726,7 +1726,7 @@
   @see-class{gtk-window}
   @see-function{gdk-window-iconify}
   @see-function{gtk-window-deiconify}
-  @see-function{gtk-window-presen}"
+  @see-function{gtk-window-present}"
   (window (g-object gdk-window)))
 
 (export 'gdk-window-deiconify)
@@ -4476,7 +4476,7 @@
   @begin{short}
     Gets the event mask for window for all master input devices.
   @end{short}
-  See the function @class{gdk-window-set-events}.
+  See the function @fun{gdk-window-set-events}.
   @see-class{gdk-window}
   @see-function{gdk-window-set-events}"
   (window (g-object gdk-window)))

@@ -489,7 +489,7 @@
 ;;; gtk_target_list_unref ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_target_list-unref" gtk-target-list-unref) :void
+(defcfun ("gtk_target_list_unref" gtk-target-list-unref) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-11-21}
   @argument[list]{a @class{gtk-target-list}}
