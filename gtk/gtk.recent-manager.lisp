@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.8.6. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -79,20 +79,6 @@
 ;;;     gtk_recent_info_is_local
 ;;;     gtk_recent_info_exists
 ;;;     gtk_recent_info_match
-;;;
-;;; Object Hierarchy
-;;;
-;;;   GObject
-;;;    +----GtkRecentManager
-;;;
-;;; Properties
-;;;
-;;;   "filename"                 gchar*               : Read / Write / Construct
-;;;   "size"                     gint                 : Read
-;;;
-;;; Signals
-;;;
-;;;   "changed"                                       : Run First
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -167,7 +153,7 @@
   @fun{gtk-recent-manager-get-items}, which returns a list of
   @class{gtk-recent-info} structures.
 
-  A @class{gtk-recent-manager} is the model used to populate the contents of
+  A @sym{gtk-recent-manager} is the model used to populate the contents of
   one, or more @class{gtk-recent-chooser} implementations.
 
   @subheading{Note}
@@ -225,31 +211,46 @@
 (setf (gethash 'gtk-recent-manager-filename atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-recent-manager-filename 'function)
- "@version{2013-5-26}
+ "@version{2013-11-22}
   Accessor of the slot @code{\"filename\"} of the @class{gtk-recent-manager}
-  class.")
+  class.
+  @see-class{gtk-recent-manager}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-recent-manager-size atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-recent-manager-size 'function)
- "@version{2013-5-26}
+ "@version{2013-11-22}
   Accessor of the slot @code{\"size\"} of the @class{gtk-recent-manager}
-  class.")
+  class.
+  @see-class{gtk-recent-manager}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkRecentInfo
-;;;
-;;; typedef struct _GtkRecentInfo GtkRecentInfo;
-;;;
-;;; GtkRecentInfo is an opaque data structure whose members can only be accessed
-;;; using the provided API.
-;;;
-;;; GtkRecentInfo constains all the meta-data associated with an entry in the
-;;; recently used files list.
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(define-g-boxed-opaque gtk-recent-info "GtkRecentInfo"
+  :alloc (error "GtkRecentInfo can not be created from Lisp side."))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-recent-info atdoc:*class-name-alias*) "CStruct"
+      (documentation 'gtk-recent-info 'type)
+ "@version{2013-11-22}
+  @begin{short}
+    @sym{gtk-recent-info} constains all the meta-data associated with an entry
+    in the recently used files list.
+  @end{short}
+
+  @sym{gtk-recent-info} is an opaque data structure whose members can only be
+  accessed using the provided API.
+  @begin{pre}
+(define-g-boxed-opaque gtk-recent-info \"GtkRecentInfo\"
+  :alloc (error \"GtkRecentInfo can not be created from Lisp side.\"))
+  @end{pre}
+  Since 2.10
+  @see-class{gtk-recent-manager}")
+
+(export (boxed-related-symbols 'gtk-recent-info))
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkRecentData
@@ -327,7 +328,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-recent-manager-error atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-recent-manager-error atdoc:*external-symbols*)
- "@version{2013-5-26}
+ "@version{2013-11-22}
   @short{Error codes for @class{gtk-recent-manager} operations.}
   Since 2.10
   @begin{pre}
@@ -351,68 +352,87 @@
     @entry[:read]{Failure while reading the recently used resources file.}
     @entry[:write]{Failure while writing the recently used resources file.}
     @entry[:unknown]{Unspecified error.}
-  @end{table}")
+  @end{table}
+  @see-class{gtk-recent-manager}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_manager_new ()
-;;;
-;;; GtkRecentManager * gtk_recent_manager_new (void);
-;;;
-;;; Creates a new recent manager object. Recent manager objects are used to
-;;; handle the list of recently used resources. A GtkRecentManager object
-;;; monitors the recently used resources list, and emits the "changed" signal
-;;; each time something inside the list changes.
-;;;
-;;; GtkRecentManager objects are expensive: be sure to create them only when
-;;; needed. You should use gtk_recent_manager_get_default() instead.
-;;;
-;;; Returns :
-;;;     A newly created GtkRecentManager object.
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-recent-manager-new))
+
+(defun gtk-recent-manager-new ()
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-22}
+  @return{A newly created @class{gtk-recent-manager} object.}
+  @begin{short}
+    Creates a new recent manager object.
+  @end{short}
+  Recent manager objects are used to handle the list of recently used resources.
+  A @class{gtk-recent-manager} object monitors the recently used resources list,
+  and emits the \"changed\" signal each time something inside the list changes.
+
+  @class{gtk-recent-manager} objects are expensive: be sure to create them only
+  when needed. You should use the function @fun{gtk-recent-manager-get-default}
+  instead.
+
+  Since 2.10
+  @see-class{gtk-recent-manager}
+  @see-function{gtk-recent-manager-get-default}"
+  (make-instance 'gtk-recent-manager))
+
+(export 'gtk-recent-manager-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_manager_get_default ()
-;;;
-;;; GtkRecentManager * gtk_recent_manager_get_default (void);
-;;;
-;;; Gets a unique instance of GtkRecentManager, that you can share in your
-;;; application without caring about memory management.
-;;;
-;;; Returns :
-;;;     A unique GtkRecentManager. Do not ref or unref it.
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_recent_manager_get_default" gtk-recent-manager-get-default)
+    (g-object gtk-recent-manager)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-22}
+  @return{A unique @class{gtk-recent-manager}. Do not ref or unref it.}
+  @begin{short}
+    Gets a unique instance of @class{gtk-recent-manager}, that you can share in
+    your application without caring about memory management.
+  @end{short}
+
+  Since 2.10
+  @see-class{gtk-recent-manager}")
+  
+(export 'gtk-recent-manager-get-default)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_manager_add_item ()
-;;;
-;;; gboolean gtk_recent_manager_add_item (GtkRecentManager *manager,
-;;;                                       const gchar *uri);
-;;;
-;;; Adds a new resource, pointed by uri, into the recently used resources list.
-;;;
-;;; This function automatically retrieves some of the needed metadata and
-;;; setting other metadata to common default values; it then feeds the data to
-;;; gtk_recent_manager_add_full().
-;;;
-;;; See gtk_recent_manager_add_full() if you want to explicitly define the
-;;; metadata for the resource pointed by uri.
-;;;
-;;; manager :
-;;;     a GtkRecentManager
-;;;
-;;; uri :
-;;;     a valid URI
-;;;
-;;; Returns :
-;;;     TRUE if the new item was successfully added to the recently used
-;;;     resources list
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_recent_manager_add_item" gtk-recent-manager-add-item) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-22}
+  @argument[manager]{a @class{gtk-recent-manager} object}
+  @argument[uri]{a valid URI}
+  @begin{return}
+    @em{True} if the new item was successfully added to the recently used
+    resources list.
+  @end{return}
+  @begin{short}
+    Adds a new resource, pointed by uri, into the recently used resources list.
+  @end{short}
+
+  This function automatically retrieves some of the needed metadata and
+  setting other metadata to common default values; it then feeds the data to
+  the function @fun{gtk-recent-manager-add-full}.
+
+  See the function @fun{gtk-recent-manager-add-full} if you want to explicitly
+  define the metadata for the resource pointed by uri.
+
+  Since 2.10
+  @see-class{gtk-recent-manager}
+  @see-function{gtk-recent-manager-add-full}"
+  (manager (g-object gtk-recent-manager))
+  (uri :string))
+
+(export 'gtk-recent-manager-add-item)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_manager_add_full ()
@@ -457,630 +477,753 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_manager_remove_item ()
-;;;
-;;; gboolean gtk_recent_manager_remove_item (GtkRecentManager *manager,
-;;;                                          const gchar *uri,
-;;;                                          GError **error);
-;;;
-;;; Removes a resource pointed by uri from the recently used resources list
-;;; handled by a recent manager.
-;;;
-;;; manager :
-;;;     a GtkRecentManager
-;;;
-;;; uri :
-;;;     the URI of the item you wish to remove
-;;;
-;;; error :
-;;;     return location for a GError, or NULL
-;;;
-;;; Returns :
-;;;     TRUE if the item pointed by uri has been successfully removed by the
-;;;     recently used resources list, and FALSE otherwise.
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_recent_manager_remove_item" %gtk-recent-manager-remove-item)
+    :boolean
+  (manager (g-object gtk-recent-manager))
+  (uri :string)
+  (error :pointer))
+
+(defun gtk-recent-manager-remove-item (manager uri)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-22}
+  @argument[manager]{a @class{gtk-recent-manager} object}
+  @argument[uri]{the URI of the item you wish to remove}
+  @begin{return}
+    @em{True} if the item pointed by @arg{uri} has been successfully removed by
+    the recently used resources list, and @code{nil} otherwise.
+  @end{return}
+  @begin{short}
+    Removes a resource pointed by @arg{uri} from the recently used resources
+    list handled by a recent manager.
+  @end{short}
+
+  Since 2.10
+  @see-class{gtk-recent-manager}
+  @see-function{gtk-recent-manager-add-item}"
+  (with-g-error (err)
+    (%gtk-recent-manager-remove-item manager uri err)))
+
+(export 'gtk-recent-manager-remove-item)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_manager_lookup_item ()
-;;;
-;;; GtkRecentInfo * gtk_recent_manager_lookup_item (GtkRecentManager *manager,
-;;;                                                 const gchar *uri,
-;;;                                                 GError **error);
-;;;
-;;; Searches for a URI inside the recently used resources list, and returns a
-;;; structure containing informations about the resource like its MIME type, or
-;;; its display name.
-;;;
-;;; manager :
-;;;     a GtkRecentManager
-;;;
-;;; uri :
-;;;     a URI
-;;;
-;;; error :
-;;;     a return location for a GError, or NULL
-;;;
-;;; Returns :
-;;;     a GtkRecentInfo structure containing information about the resource
-;;;     pointed by uri, or NULL if the URI was not registered in the recently
-;;;     used resources list. Free with gtk_recent_info_unref().
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_recent_manager_lookup_item" %gtk-recent-manager-lookup-item)
+    (g-boxed-foreign gtk-recent-info)
+  (manager (g-object gtk-recent-manager-lookup-item))
+  (uri :string)
+  (error :pointer))
+
+(defun gtk-recent-manager-lookup-item (manager uri)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-22}
+  @argument[manager]{a @class{gtk-recent-manager} object}
+  @argument[uri]{a URI}
+  @begin{return}
+    A @class{gtk-recent-info} structure containing information about the
+    resource pointed by @arg{uri}, or @code{nil} if the URI was not registered
+    in the recently used resources list. Free with the function
+    @fun{gtk-recent-info-unref}.
+  @end{return}
+  @begin{short}
+    Searches for a URI inside the recently used resources list, and returns a
+    structure containing informations about the resource like its MIME type, or
+    its display name.
+  @end{short}
+
+  Since 2.10
+  @see-class{gtk-recent-manager}
+  @see-class{gtk-recent-info}
+  @see-function{gtk-recent-info-unref}"
+  (with-g-error (err)
+    (%gtk-recent-manager-lookup-item manager uri err)))
+
+(export 'gtk-recent-manager-lookup-item)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_manager_has_item ()
-;;;
-;;; gboolean gtk_recent_manager_has_item (GtkRecentManager *manager,
-;;;                                       const gchar *uri);
-;;;
-;;; Checks whether there is a recently used resource registered with uri inside
-;;; the recent manager.
-;;;
-;;; manager :
-;;;     a GtkRecentManager
-;;;
-;;; uri :
-;;;     a URI
-;;;
-;;; Returns :
-;;;     TRUE if the resource was found, FALSE otherwise.
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_recent_manager_has_item" gtk-recent-manager-has-item) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-22}
+  @argument[manager]{a @class{gtk-recent-manager} object}
+  @argument[uri]{a URI}
+  @return{@em{True} if the resource was found, @code{nil} otherwise.}
+  @begin{short}
+    Checks whether there is a recently used resource registered with @arg{uri}
+    inside the recent manager.
+  @end{short}
+
+  Since 2.10
+  @see-class{gtk-recent-manager}
+  @see-function{gtk-recent-manager-add-item}"
+  (manager (g-object gtk-recent-manager))
+  (uri :string))
+
+(export 'gtk-recent-manager-has-item)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_manager_move_item ()
-;;;
-;;; gboolean gtk_recent_manager_move_item (GtkRecentManager *manager,
-;;;                                        const gchar *uri,
-;;;                                        const gchar *new_uri,
-;;;                                        GError **error);
-;;;
-;;; Changes the location of a recently used resource from uri to new_uri.
-;;;
-;;; Please note that this function will not affect the resource pointed by the
-;;; URIs, but only the URI used in the recently used resources list.
-;;;
-;;; manager :
-;;;     a GtkRecentManager
-;;;
-;;; uri :
-;;;     the URI of a recently used resource
-;;;
-;;; new_uri :
-;;;     the new URI of the recently used resource, or NULL to remove the item
-;;;     pointed by uri in the list
-;;;
-;;; error :
-;;;     a return location for a GError, or NULL
-;;;
-;;; Returns :
-;;;     TRUE on success.
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_recent_manager_move_item" %gtk-recent-manager-move-item) :boolean
+  (manager (g-object gtk-recent-manager))
+  (uri :string)
+  (new-uri :string)
+  (error :pointer))
+
+(defun gtk-recent-manager-move-item (manager uri new-uri)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-22}
+  @argument[manager]{a @class{gtk-recent-manager} object}
+  @argument[uri]{the URI of a recently used resource}
+  @argument[new-uri]{the new URI of the recently used resource, or @code{nil} to
+    remove the item pointed by @arg{uri} in the list}
+  @return{@em{True} on success.}
+  @begin{short}
+    Changes the location of a recently used resource from @arg{uri}
+    to @arg{new-uri}.
+  @end{short}
+
+  Please note that this function will not affect the resource pointed by the
+  URIs, but only the URI used in the recently used resources list.
+
+  Since 2.10
+  @see-class{gtk-recent-manager}"
+  (with-g-error (err)
+    (%gtk-recent-manager-move-item manager uri new-uri err)))
+
+(export 'gtk-recent-manager-move-item)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_manager_get_items ()
-;;;
-;;; GList * gtk_recent_manager_get_items (GtkRecentManager *manager);
-;;;
-;;; Gets the list of recently used resources.
-;;;
-;;; manager :
-;;;     a GtkRecentManager
-;;;
-;;; Returns :
-;;;     a list of newly allocated GtkRecentInfo objects. Use
-;;;     gtk_recent_info_unref() on each item inside the list, and then free the
-;;;     list itself using g_list_free()
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_recent_manager_get_items" gtk-recent-manager-get-items)
+    (g-list (g-boxed-foreign gtk-recent-info :free-from-foreign t))
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-22}
+  @argument[manager]{a @class{gtk-recent-manager} object}
+  @begin{return}
+    A list of newly allocated @class{gtk-recent-info} objects.
+  @end{return}
+  @begin{short}
+    Gets the list of recently used resources.
+  @end{short}
+
+  Since 2.10
+  @see-class{gtk-recent-manager}
+  @see-class{gtk-recent-info}"
+  (manager (g-object gtk-recent-manager)))
+
+(export 'gtk-recent-manager-get-items)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_manager_purge_items ()
-;;;
-;;; gint gtk_recent_manager_purge_items (GtkRecentManager *manager,
-;;;                                      GError **error);
-;;;
-;;; Purges every item from the recently used resources list.
-;;;
-;;; manager :
-;;;     a GtkRecentManager
-;;;
-;;; error :
-;;;     a return location for a GError, or NULL
-;;;
-;;; Returns :
-;;;     the number of items that have been removed from the recently used
-;;;     resources list.
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_recent_manager_purge_items" %gtk-recent-manager-purge-items) :int
+  (manager (g-object gtk-recent-manager))
+  (error :pointer))
+
+(defun gtk-recent-manager-purge-items (manager)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-22}
+  @argument[manager]{a @class{gtk-recent-manager} object}
+  @begin{return}
+    The number of items that have been removed from the recently used
+    resources list.
+  @end{return}
+  @begin{short}
+    Purges every item from the recently used resources list.
+  @end{short}
+
+  Since 2.10
+  @see-class{gtk-recent-manager}"
+  (with-g-error (err)
+    (%gtk-recent-manager-purge-items manager err)))
+
+(export 'gtk-recent-manager-purge-items)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_info_ref ()
-;;;
-;;; GtkRecentInfo * gtk_recent_info_ref (GtkRecentInfo *info);
-;;;
-;;; Increases the reference count of recent_info by one.
-;;;
-;;; info :
-;;;     a GtkRecentInfo
-;;;
-;;; Returns :
-;;;     the recent info object with its reference count increased by one.
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_recent_info" gtk-recent-info) (g-boxed-foreign gtk-recent-info)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-22}
+  @argument[info]{a @class{gtk-recent-info} structure}
+  @return{The recent info object with its reference count increased by one.}
+  @begin{short}
+    Increases the reference count of @arg{info} by one.
+  @end{short}
+
+  Since 2.10
+  @see-class{gtk-recent-info}
+  @see-function{gtk-recent-info-unref}"
+  (info (g-boxed-foreign gtk-recent-info)))
+
+(export 'gtk-recent-info-ref)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_info_unref ()
-;;;
-;;; void gtk_recent_info_unref (GtkRecentInfo *info);
-;;;
-;;; Decreases the reference count of info by one. If the reference count reaches
-;;; zero, info is deallocated, and the memory freed.
-;;;
-;;; info :
-;;;     a GtkRecentInfo
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_recent_info_unref" gtk-recent-info-unref) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-22}
+  @argument[info]{a @class{gtk-recent-info} structure}
+  @begin{short}
+    Decreases the reference count of info by one.
+  @end{short}
+  If the reference count reaches zero, info is deallocated, and the memory
+  freed.
+
+  Since 2.10
+  @see-class{gtk-recent-info}
+  @see-class{gtk-recent-info-ref}"
+  (info (g-boxed-foreign gtk-recent-info)))
+
+(export 'gtk-recent-info-unref)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_info_get_uri ()
-;;;
-;;; const gchar * gtk_recent_info_get_uri (GtkRecentInfo *info);
-;;;
-;;; Gets the URI of the resource.
-;;;
-;;; info :
-;;;     a GtkRecentInfo
-;;;
-;;; Returns :
-;;;     the URI of the resource. The returned string is owned by the recent
-;;;     manager, and should not be freed.
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_recent_info_get_uri" gtk-recent-info-get-uri)
+    (:string :free-from-foreign nil)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-22}
+  @argument[info]{a @class{gtk-recent-info} structure}
+  @return{The URI of the resource.}
+  @short{Gets the URI of the resource.}
+
+  Since 2.10
+  @see-class{gtk-recent-info}"
+  (info (g-boxed-foreign gtk-recent-info)))
+
+(export 'gtk-recent-info-get-uri)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_info_get_display_name ()
-;;;
-;;; const gchar * gtk_recent_info_get_display_name (GtkRecentInfo *info);
-;;;
-;;; Gets the name of the resource. If none has been defined, the basename of the
-;;; resource is obtained.
-;;;
-;;; info :
-;;;     a GtkRecentInfo
-;;;
-;;; Returns :
-;;;     the display name of the resource. The returned string is owned by the
-;;;     recent manager, and should not be freed.
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_recent_info_get_display_name" gtk-recent-info-get-display-name)
+    (:string :free-from-foreign nil)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-22}
+  @argument[info]{a @class{gtk-recent-info} structure}
+  @return{The display name of the resource.}
+  @begin{short}
+    Gets the name of the resource. If none has been defined, the basename of the
+    resource is obtained.
+  @end{short}
+
+  Since 2.10
+  @see-class{gtk-recent-info}"
+  (info (g-boxed-foreign gtk-recent-info)))
+
+(export 'gtk-recent-info-get-display-name)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_info_get_description ()
-;;;
-;;; const gchar * gtk_recent_info_get_description (GtkRecentInfo *info);
-;;;
-;;; Gets the (short) description of the resource.
-;;;
-;;; info :
-;;;     a GtkRecentInfo
-;;;
-;;; Returns :
-;;;     the description of the resource. The returned string is owned by the
-;;;     recent manager, and should not be freed.
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_recent_info_get_description" gtk-recent-info-get-description)
+    (:string :free-from-foreign nil)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-22}
+  @argument[info]{a @class{gtk-recent-info} structure}
+  @return{The description of the resource.}
+  @begin{short}
+    Gets the (short) description of the resource.
+  @end{short}
+
+  Since 2.10
+  @see-class{gtk-recent-info}"
+  (info (g-boxed-foreign gtk-recent-info)))
+
+(export 'gtk-recent-info-get-description)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_info_get_mime_type ()
-;;;
-;;; const gchar * gtk_recent_info_get_mime_type (GtkRecentInfo *info);
-;;;
-;;; Gets the MIME type of the resource.
-;;;
-;;; info :
-;;;     a GtkRecentInfo
-;;;
-;;; Returns :
-;;;     the MIME type of the resource. The returned string is owned by the
-;;;     recent manager, and should not be freed.
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_recent_info_get_mime_type" gtk-recent-info-get-mime-type)
+    (:string :free-from-foreign nil)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-22}
+  @argument[info]{a @class{gtk-recent-info} structure}
+  @return{The MIME type of the resource.}
+  @short{Gets the MIME type of the resource.}
+
+  Since 2.10
+  @see-class{gtk-recent-info}"
+  (info (g-boxed-foreign gtk-recent-info)))
+
+(export 'gtk-recent-info-get-mime-type)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_info_get_added ()
-;;;
-;;; time_t gtk_recent_info_get_added (GtkRecentInfo *info);
-;;;
-;;; Gets the timestamp (seconds from system's Epoch) when the resource was added
-;;; to the recently used resources list.
-;;;
-;;; info :
-;;;     a GtkRecentInfo
-;;;
-;;; Returns :
-;;;     the number of seconds elapsed from system's Epoch when the resource was
-;;;     added to the list, or -1 on failure.
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_recent_info_get_added" gtk-recent-info-get-added) :long
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-22}
+  @argument[info]{a @class{gtk-recent-info} structure}
+  @begin{return}
+    The number of seconds elapsed from system's Epoch when the resource was
+    added to the list, or -1 on failure.
+  @end{return}
+  @begin{short}
+    Gets the timestamp, seconds from system's Epoch, when the resource was added
+    to the recently used resources list.
+  @end{short}
+
+  Since 2.10
+  @see-class{gtk-recent-info}"
+  (info (g-boxed-foreign gtk-recent-info)))
+
+(export 'gtk-recent-info-get-added)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_info_get_modified ()
-;;;
-;;; time_t gtk_recent_info_get_modified (GtkRecentInfo *info);
-;;;
-;;; Gets the timestamp (seconds from system's Epoch) when the resource was last
-;;; modified.
-;;;
-;;; info :
-;;;     a GtkRecentInfo
-;;;
-;;; Returns :
-;;;     the number of seconds elapsed from system's Epoch when the resource was
-;;;     last modified, or -1 on failure.
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_recent_info_get_modified" gtk-recent-info-get-modified) :long
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-22}
+  @argument[info]{a @class{gtk-recent-info} structure}
+  @begin{return}
+    The number of seconds elapsed from system's Epoch when the resource was
+    last modified, or -1 on failure.
+  @end{return}
+  @begin{short}
+    Gets the timestamp, seconds from system's Epoch, when the resource was last
+    modified.
+  @end{short}
+
+  Since 2.10
+  @see-class{gtk-recent-info}"
+  (info (g-boxed-foreign gtk-recent-info)))
+
+(export 'gtk-recent-info-get-modified)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_info_get_visited ()
-;;;
-;;; time_t gtk_recent_info_get_visited (GtkRecentInfo *info);
-;;;
-;;; Gets the timestamp (seconds from system's Epoch) when the resource was last
-;;; visited.
-;;;
-;;; info :
-;;;     a GtkRecentInfo
-;;;
-;;; Returns :
-;;;     the number of seconds elapsed from system's Epoch when the resource was
-;;;     last visited, or -1 on failure.
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_recent_info_get_visited" gtk-recent-info-get-visited) :long
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-22}
+  @argument[info]{a @class{gtk-recent-info} structure}
+  @begin{return}
+    The number of seconds elapsed from system's Epoch when the resource was
+    last visited, or -1 on failure.
+  @end{return}
+  @begin{short}
+    Gets the timestamp, seconds from system's Epoch, when the resource was last
+    visited.
+  @end{short}
+
+  Since 2.10
+  @see-class{gtk-recent-info}"
+  (info (g-boxed-foreign gtk-recent-info)))
+
+(export 'gtk-recent-info-get-visisted)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_info_get_private_hint ()
-;;;
-;;; gboolean gtk_recent_info_get_private_hint (GtkRecentInfo *info);
-;;;
-;;; Gets the value of the "private" flag. Resources in the recently used list
-;;; that have this flag set to TRUE should only be displayed by the applications
-;;; that have registered them.
-;;;
-;;; info :
-;;;     a GtkRecentInfo
-;;;
-;;; Returns :
-;;;     TRUE if the private flag was found, FALSE otherwise.
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_recent_info_get_private_hint" gtk-recent-info-get-private-hint)
+    :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-22}
+  @argument[info]{a @class{gtk-recent-info} structure}
+  @return{@em{True} if the private flag was found, @code{nil} otherwise.}
+  @begin{short}
+    Gets the value of the \"private\" flag.
+  @end{short}
+  Resources in the recently used list that have this flag set to @em{true}
+  should only be displayed by the applications that have registered them.
+
+  Since 2.10
+  @see-class{gtk-recent-info}"
+  (info (g-boxed-foreign gtk-recent-info)))
+
+(export 'gtk-recent-info-get-private-hint)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_info_get_application_info ()
-;;;
-;;; gboolean gtk_recent_info_get_application_info (GtkRecentInfo *info,
-;;;                                                const gchar *app_name,
-;;;                                                const gchar **app_exec,
-;;;                                                guint *count,
-;;;                                                time_t *time_);
-;;;
-;;; Gets the data regarding the application that has registered the resource
-;;; pointed by info.
-;;;
-;;; If the command line contains any escape characters defined inside the
-;;; storage specification, they will be expanded.
-;;;
-;;; info :
-;;;     a GtkRecentInfo
-;;;
-;;; app_name :
-;;;     the name of the application that has registered this item
-;;;
-;;; app_exec :
-;;;     return location for the string containing the command line
-;;;
-;;; count :
-;;;     return location for the number of times this item was registered
-;;;
-;;; time_ :
-;;;     return location for the timestamp this item was last registered for this
-;;;     application
-;;;
-;;; Returns :
-;;;     TRUE if an application with app_name has registered this resource inside
-;;;     the recently used list, or FALSE otherwise. The app_exec string is owned
-;;;     by the GtkRecentInfo and should not be modified or freed
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_recent_info_get_application_info"
+          %gtk-recent-info-get-application-info) :boolean
+  (info (g-boxed-foreign gtk-recent-info))
+  (app-name :string)
+  (app-exec (:pointer (:string :free-from-foreign nil)))
+  (count (:pointer :int))
+  (time (:pointer :long)))
+
+(defun gtk-recent-info-get-application-info (info app-name)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-23}
+  @argument[info]{a @class{gtk-recent-info} structure}
+  @argument[app-name]{the name of the application that has registered this item}
+  @begin{return}
+    @code{app-exec} -- the string containing the command line @br{}
+    @code{count} -- the number of times this item was registered @br{}
+    @code{time} -- the timestamp this item was last registered for this
+                   application
+  @end{return}
+  @begin{short}
+    Gets the data regarding the application that has registered the resource
+    pointed by info.
+  @end{short}
+
+  If the command line contains any escape characters defined inside the
+  storage specification, they will be expanded.
+
+  Since 2.10
+  @see-class{gtk-recent-info}"
+  (with-foreign-objects ((app-exec :string) (count :uint) (time :long))
+    (%gtk-recent-info-get-application-info info app-name app-exec count time)
+    (values (mem-ref app-exec :string)
+            (mem-ref count :uint)
+            (mem-ref time :long))))
+
+(export 'gtk-recent-info-get-application-info)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_info_get_applications ()
-;;;
-;;; gchar ** gtk_recent_info_get_applications (GtkRecentInfo *info,
-;;;                                            gsize *length);
-;;;
-;;; Retrieves the list of applications that have registered this resource.
-;;;
-;;; info :
-;;;     a GtkRecentInfo
-;;;
-;;; length :
-;;;     return location for the length of the returned list
-;;;
-;;; Returns :
-;;;     a newly allocated NULL-terminated array of strings. Use g_strfreev() to
-;;;     free it
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_recent_info_get_applications" %gtk-recent-info-get-applications)
+    g-strv
+  (info (g-boxed-foreign gtk-recent-info))
+  (length (:pointer g-size)))
+
+(defun gtk-recent-info-get-applications (info)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-22}
+  @argument[info]{a @class{gtk-recent-info} structure}
+  @return{A list of strings.}
+  @begin{short}
+    Retrieves the list of applications that have registered this resource.
+  @end{short}
+
+  Since 2.10
+  @see-class{gtk-recent-info}"
+  (with-foreign-object (length 'g-size)
+    (%gtk-recent-info-get-applications info length)))
+
+(export 'gtk-recent-info-get-applications)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_info_last_application ()
-;;;
-;;; gchar * gtk_recent_info_last_application (GtkRecentInfo *info);
-;;;
-;;; Gets the name of the last application that have registered the recently used
-;;; resource represented by info.
-;;;
-;;; info :
-;;;     a GtkRecentInfo
-;;;
-;;; Returns :
-;;;     an application name. Use g_free() to free it.
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_recent_info_last_application" gtk-recent-info-last-application)
+    (:string :free-from-foreign t)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-22}
+  @argument[info]{a @class{gtk-recent-info} structure}
+  @return{An application name.}
+  @begin{short}
+    Gets the name of the last application that have registered the recently used
+    resource represented by info.
+  @end{short}
+
+  Since 2.10
+  @see-class{gtk-recent-manager}"
+  (info (g-boxed-foreign gtk-recent-info)))
+
+(export 'gtk-recent-info-last-application)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_info_has_application ()
-;;;
-;;; gboolean gtk_recent_info_has_application (GtkRecentInfo *info,
-;;;                                           const gchar *app_name);
-;;;
-;;; Checks whether an application registered this resource using app_name.
-;;;
-;;; info :
-;;;     a GtkRecentInfo
-;;;
-;;; app_name :
-;;;     a string containing an application name
-;;;
-;;; Returns :
-;;;     TRUE if an application with name app_name was found, FALSE otherwise.
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_recent_info_has_application" gtk-recent-info-has-application)
+    :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-22}
+  @argument[info]{a @class{gtk-recent-info} structure}
+  @argument[app-name]{a string containing an application name}
+  @return{@em{True} if an application with name @arg{app-name} was found,
+    @code{nil} otherwise.}
+  @begin{short}
+    Checks whether an application registered this resource using @arg{app-name}.
+  @end{short}
+
+  Since 2.10
+  @see-class{gtk-recent-manager}"
+  (info (g-boxed-foreign gtk-recent-info))
+  (app-name :string))
+
+(export 'gtk-recent-info-has-application)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_info_create_app_info ()
-;;;
-;;; GAppInfo * gtk_recent_info_create_app_info (GtkRecentInfo *info,
-;;;                                             const gchar *app_name,
-;;;                                             GError **error);
-;;;
-;;; Creates a GAppInfo for the specified GtkRecentInfo
-;;;
-;;; info :
-;;;     a GtkRecentInfo
-;;;
-;;; app_name :
-;;;     the name of the application that should be mapped to a GAppInfo; if NULL
-;;;     is used then the default application for the MIME type is used
-;;;
-;;; error :
-;;;     return location for a GError, or NULL
-;;;
-;;; Returns :
-;;;     the newly created GAppInfo, or NULL. In case of error, error will be set
-;;;     either with a GTK_RECENT_MANAGER_ERROR or a G_IO_ERROR
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_recent_info_create_app_info" %gtk-recent-info-create-app-info)
+    (g-object g-app-info)
+  (info (g-boxed-foreign gtk-recent-info))
+  (app-name :string)
+  (error :pointer))
+
+(defun gtk-recent-info-create-app-info (info app-name)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-22}
+  @argument[info]{a @class{gtk-recent-info} structure}
+  @argument[app-name]{the name of the application that should be mapped to a
+    @class{g-app-info}; if @code{nil} is used then the default application for
+    the MIME type is used}
+  @begin{return}
+    The newly created @class{g-app-info}, or @code{nil}. In case of error, error
+    will be set either with a @code{GTK_RECENT_MANAGER_ERROR} or a
+    @code{G_IO_ERROR}.
+  @end{return}
+  Creates a @class{g-app-info} for the specified @class{gtk-recent-info}.
+  @see-class{gtk-recent-info}
+  @see-class{g-app-info}"
+  (with-g-error (err)
+    (%gtk-recent-info-create-app-info info app-name err)))
+
+(export 'gtk-recent-info-create-app-info)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_info_get_groups ()
-;;;
-;;; gchar ** gtk_recent_info_get_groups (GtkRecentInfo *info, gsize *length);
-;;;
-;;; Returns all groups registered for the recently used item info. The array of
-;;; returned group names will be NULL terminated, so length might optionally be
-;;; NULL.
-;;;
-;;; info :
-;;;     a GtkRecentInfo
-;;;
-;;; length :
-;;;     return location for the number of groups returned
-;;;
-;;; Returns :
-;;;     a newly allocated NULL terminated array of strings. Use g_strfreev() to
-;;;     free it
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_recent_info_get_groups" %gtk-recent-info-get-groups) g-strv
+  (info (g-boxed-foreign gtk-recent-info))
+  (length (:pointer g-size)))
+
+(defun gtk-recent-info-get-groups (info)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-22}
+  @argument[info]{a @class{gtk-recent-info} structure}
+  @return{A list of strings.}
+  @begin{short}
+    Returns all groups registered for the recently used item info.
+  @end{short}
+
+  Since 2.10
+  @see-class{gtk-recent-info}"
+  (with-foreign-object (length 'g-size)
+    (%gtk-recent-info-get-groups info length)))
+
+(export 'gtk-recent-info-get-groups)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_info_has_group ()
-;;;
-;;; gboolean gtk_recent_info_has_group (GtkRecentInfo *info,
-;;;                                     const gchar *group_name);
-;;;
-;;; Checks whether group_name appears inside the groups registered for the
-;;; recently used item info.
-;;;
-;;; info :
-;;;     a GtkRecentInfo
-;;;
-;;; group_name :
-;;;     name of a group
-;;;
-;;; Returns :
-;;;     TRUE if the group was found.
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_recent_info_has_group" gtk-recent-info-has-group) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-22}
+  @argument[info]{a @class{gtk-recent-info} structure}
+  @argument[group-name]{name of a group}
+  @return{@em{True} if the group was found.}
+  @begin{short}
+    Checks whether @arg{group-name} appears inside the groups registered for
+    the recently used item info.
+  @end{short}
+
+  Since 2.10
+  @see-class{gtk-recent-info}"
+  (info (g-boxed-foreign gtk-recent-info))
+  (group-name :string))
+
+(export 'gtk-recent-info-has-group)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_info_get_icon ()
-;;;
-;;; GdkPixbuf * gtk_recent_info_get_icon (GtkRecentInfo *info, gint size);
-;;;
-;;; Retrieves the icon of size size associated to the resource MIME type.
-;;;
-;;; info :
-;;;     a GtkRecentInfo
-;;;
-;;; size :
-;;;     the size of the icon in pixels
-;;;
-;;; Returns :
-;;;     a GdkPixbuf containing the icon, or NULL. Use g_object_unref() when
-;;;     finished using the icon
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_recent_info_get_icon" gtk-recent-info-get-icon)
+    (g-object gdk-pixbuf)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-22}
+  @argument[info]{a @class{gtk-recent-info} structure}
+  @argument[size]{the size of the icon in pixels}
+  @begin{return}
+    A @class{gdk-pixbuf} containing the icon, or @code{nil}.
+  @end{return}
+  @begin{short}
+    Retrieves the icon of size @arg{size} associated to the resource MIME type.
+  @end{short}
+
+  Since 2.10
+  @see-class{gtk-recent-info}
+  @see-class{gdk-pixbuf}"
+  (info (g-boxed-foreign gtk-recent-info))
+  (size :int))
+
+(export 'gtk-recent-info-get-icon)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_info_get_gicon ()
-;;;
-;;; GIcon * gtk_recent_info_get_gicon (GtkRecentInfo *info);
-;;;
-;;; Retrieves the icon associated to the resource MIME type.
-;;;
-;;; info :
-;;;     a GtkRecentInfo
-;;;
-;;; Returns :
-;;;     a GIcon containing the icon, or NULL. Use g_object_unref() when finished
-;;;     using the icon
-;;;
-;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_recent_info_get_gicon" gtk-recent-info-get-gicon)
+    (g-object g-icon)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-22}
+  @argument[info]{a @class{gtk-recent-info} structure}
+  @return{A @class{g-icon} containing the icon, or @code{nil}.}
+  @begin{short}
+    Retrieves the icon associated to the resource MIME type.
+  @end{short}
+
+  Since 2.22
+  @see-class{gtk-recent-info}
+  @see-class{g-icon}"
+  (info (g-boxed-foreign gtk-recent-info)))
+
+(export 'gtk-recent-info-get-gicon)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_info_get_short_name ()
-;;;
-;;; gchar * gtk_recent_info_get_short_name (GtkRecentInfo *info);
-;;;
-;;; Computes a valid UTF-8 string that can be used as the name of the item in a
-;;; menu or list. For example, calling this function on an item that refers to
-;;; "file:///foo/bar.txt" will yield "bar.txt".
-;;;
-;;; info :
-;;;     an GtkRecentInfo
-;;;
-;;; Returns :
-;;;     A newly-allocated string in UTF-8 encoding; free it with g_free().
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_recent_info_get_short_name" gtk-recent-info-get-short-name)
+    (:string :free-from-foreign t)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-22}
+  @argument[info]{a @class{gtk-recent-info} structure}
+  @return{A string in UTF-8 encoding.}
+  @begin{short}
+    Computes a valid UTF-8 string that can be used as the name of the item in a
+    menu or list. For example, calling this function on an item that refers to
+    \"file:///foo/bar.txt\" will yield \"bar.txt\".
+  @end{short}
+
+  Since 2.10
+  @see-class{gtk-recent-info}"
+  (info (g-boxed-foreign gtk-recent-info)))
+
+(export 'gtk-recent-info-get-short-name)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_info_get_uri_display ()
-;;;
-;;; gchar * gtk_recent_info_get_uri_display (GtkRecentInfo *info);
-;;;
-;;; Gets a displayable version of the resource's URI. If the resource is local,
-;;; it returns a local path; if the resource is not local, it returns the UTF-8
-;;; encoded content of gtk_recent_info_get_uri().
-;;;
-;;; info :
-;;;     a GtkRecentInfo
-;;;
-;;; Returns :
-;;;     a newly allocated UTF-8 string containing the resource's URI or NULL.
-;;;     Use g_free() when done using it.
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_recent_info_get_uri_display" gtk-recent-info-get-uri-display)
+    (:string :free-from-foreign t)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-22}
+  @argument[info]{a @class{gtk-recent-info} structure}
+  @begin{return}
+    A UTF-8 string containing the resource's URI or @code{nil}.
+  @end{return}
+  @begin{short}
+    Gets a displayable version of the resource's URI.
+  @end{short}
+  If the resource is local, it returns a local path; if the resource is not
+  local, it returns the UTF-8 encoded content of the function
+  @fun{gtk-recent-info-get-uri}.
+
+  Since 2.10
+  @see-class{gtk-recent-info}
+  @see-function{gtk-recent-info-get-uri}"
+  (info (g-boxed-foreign gtk-recent-info)))
+
+(export 'gtk-recent-info-get-uri-display)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_info_get_age ()
-;;;
-;;; gint gtk_recent_info_get_age (GtkRecentInfo *info);
-;;;
-;;; Gets the number of days elapsed since the last update of the resource
-;;; pointed by info.
-;;;
-;;; info :
-;;;     a GtkRecentInfo
-;;;
-;;; Returns :
-;;;     a positive integer containing the number of days elapsed since the time
-;;;     this resource was last modified.
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_recent_info_get_age" gtk-recent-info-get-age) :int
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-23}
+  @argument[info]{a @class{gtk-recent-info} structure}
+  @begin{return}
+    A positive integer containing the number of days elapsed since the time
+    this resource was last modified.
+  @end{return}
+  @begin{short}
+    Gets the number of days elapsed since the last update of the resource
+    pointed by info.
+  @end{short}
+
+  Since 2.10
+  @see-class{gtk-recent-info}"
+  (info (g-boxed-foreign gtk-recent-info)))
+
+(export 'gtk-recent-info-get-age)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_info_is_local ()
-;;;
-;;; gboolean gtk_recent_info_is_local (GtkRecentInfo *info);
-;;;
-;;; Checks whether the resource is local or not by looking at the scheme of its
-;;; URI.
-;;;
-;;; info :
-;;;     a GtkRecentInfo
-;;;
-;;; Returns :
-;;;     TRUE if the resource is local.
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_recent_info_is_local" gtk-recent-info-is-local) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-22}
+  @argument[info]{a @class{gtk-recent-info} structure}
+  @return{@em{True} if the resource is local.}
+  @begin{short}
+    Checks whether the resource is local or not by looking at the scheme of its
+    URI.
+  @end{short}
+
+  Since 2.10
+  @see-class{gtk-recent-manager}"
+  (info (g-boxed-foreign gtk-recent-info)))
+
+(export 'gtk-recent-info-is-local)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_info_exists ()
-;;;
-;;; gboolean gtk_recent_info_exists (GtkRecentInfo *info);
-;;;
-;;; Checks whether the resource pointed by info still exists. At the moment this
-;;; check is done only on resources pointing to local files.
-;;;
-;;; info :
-;;;     a GtkRecentInfo
-;;;
-;;; Returns :
-;;;     TRUE if the resource exists
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_recent_info_exists" gtk-recent-info-exists) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-23}
+  @argument[info]{a @class{gtk-recent-info} structure}
+  @return{@em{True} if the resource exists.}
+  @begin{short}
+    Checks whether the resource pointed by info still exists.
+  @end{short}
+  At the moment this check is done only on resources pointing to local files.
+
+  Since 2.10
+  @see-class{gtk-recent-manager}"
+  (info (g-boxed-foreign gtk-recent-info)))
+
+(export 'gtk-recent-info-exists)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_info_match ()
-;;;
-;;; gboolean gtk_recent_info_match (GtkRecentInfo *info_a,
-;;;                                 GtkRecentInfo *info_b);
-;;;
-;;; Checks whether two GtkRecentInfo structures point to the same resource.
-;;;
-;;; info_a :
-;;;     a GtkRecentInfo
-;;;
-;;; info_b :
-;;;     a GtkRecentInfo
-;;;
-;;; Returns :
-;;;     TRUE if both GtkRecentInfo structures point to se same resource, FALSE
-;;;     otherwise.
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_recent_info_match" gtk-recent-info-match) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-23}
+  @argument[info-a]{a @class{gtk-recent-info}}
+  @argument[info-b]{a @class{gtk-recent-info}}
+  @begin{return}
+    @em{True} if both @class{gtk-recent-info} structures point to se same
+    resource, @code{nil} otherwise.
+  @end{return}
+  @begin{short}
+    Checks whether two @class{gtk-recent-info} structures point to the same
+    resource.
+  @end{short}
+
+  Since 2.10
+  @see-class{gtk-recent-info}"
+  (info-a (g-boxed-foreign gtk-recent-info))
+  (info-b (g-boxed-foreign gtk-recent-info)))
+
+(export 'gtk-recent-info-match)
 
 ;;; --- End of file gtk.recent-manager.lisp ------------------------------------

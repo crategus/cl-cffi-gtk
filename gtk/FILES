@@ -269,7 +269,7 @@ GTK+ Widgets and Objects
 
   Recently Used Documents
 
-    gtk.recent-manager-lisp          - GtkRecentManager            - GTK+ 3.6.4%
+    gtk.recent-manager-lisp          - GtkRecentManager            - GTK+ 3.8.6&
     gtk.recent-chooser.lisp          - GtkRecentChooser            - GTK+ 3.6.4&
     gtk.recent-chooser-dialog.lisp   - GtkRecentChooserDialog      - GTK+ 3.6.4&
     gtk.recent-chooser-menu.lisp     - GtkRecentChooserMenu        - GTK+ 3.6.4&
