@@ -7494,23 +7494,31 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_is_visible ()
-;;;
-;;; gboolean gtk_widget_is_visible (GtkWidget *widget);
-;;;
-;;; Determines whether the widget and all its parents are marked as visible.
-;;;
-;;; This function does not check if the widget is obscured in any way.
-;;;
-;;; See also gtk_widget_get_visible() and gtk_widget_set_visible()
-;;;
-;;; widget :
-;;;     a GtkWidget
-;;;
-;;; Returns :
-;;;     TRUE if the widget and all its parents are visible
-;;;
-;;; Since 3.8
 ;;; ----------------------------------------------------------------------------
+
+#+gtk-3-8
+(defcfun ("gtk_widget_is_visible" gtk-widget-is-visible) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-24}
+  @argument[widget]{a @class{gtk-widget} object}
+  @return{@em{True} if the widget and all its parents are visible.}
+  @begin{short}
+    Determines whether the widget and all its parents are marked as visible.
+  @end{short}
+
+  This function does not check if the widget is obscured in any way.
+
+  See also the functions @fun{gtk-widget-get-visible} and
+  @fun{gtk-widget-set-visible}.
+
+  Since 3.8
+  @see-class{gtk-widget}
+  @see-function{gtk-widget-get-visible}
+  @see-function{gtk-widget-set-visible}"
+  (widget (g-object gtk-widget)))
+
+#+gtk-3-8
+(export 'gtk-widget-is-visible)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_set_visible ()
