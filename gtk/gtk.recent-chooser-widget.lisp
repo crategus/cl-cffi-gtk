@@ -4,9 +4,10 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.8.6 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -39,20 +40,6 @@
 ;;;
 ;;;     gtk_recent_chooser_widget_new
 ;;;     gtk_recent_chooser_widget_new_for_manager
-;;;
-;;; Object Hierarchy
-;;;
-;;;   GObject
-;;;    +----GInitiallyUnowned
-;;;          +----GtkWidget
-;;;                +----GtkContainer
-;;;                      +----GtkBox
-;;;                            +----GtkRecentChooserWidget
-;;;
-;;; Implemented Interfaces
-;;;
-;;; GtkRecentChooserWidget implements AtkImplementorIface, GtkBuildable,
-;;; GtkOrientable and GtkRecentChooser.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -123,36 +110,52 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_chooser_widget_new ()
-;;;
-;;; GtkWidget * gtk_recent_chooser_widget_new (void);
-;;;
-;;; Creates a new GtkRecentChooserWidget object. This is an embeddable widget
-;;; used to access the recently used resources list.
-;;;
-;;; Returns :
-;;;     a new GtkRecentChooserWidget
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-recent-chooser-widget-new))
+
+(defun gtk-recent-chooser-widget-new ()
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-23}
+  @return{A new @class{gtk-recent-chooser-widget}.}
+  @begin{short}
+    Creates a new @class{gtk-recent-chooser-widget} object.
+  @end{short}
+  This is an embeddable widget used to access the recently used resources list.
+
+  Since 2.10
+  @see-class{gtk-recent-chooser-widget}
+  @see-function{gtk-recent-chooser-widget-new-for-manager}"
+  (make-instance 'gtk-recent-chooser))
+
+(export 'gtk-recent-chooser-widget-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_chooser_widget_new_for_manager ()
-;;;
-;;; GtkWidget * gtk_recent_chooser_widget_new_for_manager
-;;;                                                 (GtkRecentManager *manager);
-;;;
-;;; Creates a new GtkRecentChooserWidget with a specified recent manager.
-;;;
-;;; This is useful if you have implemented your own recent manager, or if you
-;;; have a customized instance of a GtkRecentManager object.
-;;;
-;;; manager :
-;;;     a GtkRecentManager
-;;;
-;;; Returns :
-;;;     a new GtkRecentChooserWidget
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-recent-chooser-widget-new-for-manager))
+
+(defun gtk-recent-chooser-widget-new-for-manager (manager)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-23}
+  @argument[manager]{a @class{gtk-recent-manager} object}
+  @return{A new @class{gtk-recent-chooser-widget} widget.}
+  @begin{short}
+    Creates a new @class{gtk-recent-chooser-widget} widget with a specified
+    recent manager.
+  @end{short}
+
+  This is useful if you have implemented your own recent manager, or if you
+  have a customized instance of a @class{gtk-recent-manager} object.
+
+  Since 2.10
+  @see-class{gtk-recent-chooser-widget}
+  @see-class{gtk-recent-manager}
+  @see-function{gtk-recent-chooser-widget-new}"
+  (make-instance 'gtk-recent-chooser-widget
+                 :recent-manager manager))
+
+(export 'gtk-recent-chooser-widget-new-for-manager)
 
 ;;; --- End of file gtk.recent-chooser-widget.lisp -----------------------------

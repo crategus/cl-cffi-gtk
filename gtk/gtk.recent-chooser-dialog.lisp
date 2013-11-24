@@ -4,9 +4,10 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.8.6 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -39,22 +40,6 @@
 ;;;
 ;;;     gtk_recent_chooser_dialog_new
 ;;;     gtk_recent_chooser_dialog_new_for_manager
-;;;
-;;; Object Hierarchy
-;;;
-;;;   GObject
-;;;    +----GInitiallyUnowned
-;;;          +----GtkWidget
-;;;                +----GtkContainer
-;;;                      +----GtkBin
-;;;                            +----GtkWindow
-;;;                                  +----GtkDialog
-;;;                                        +----GtkRecentChooserDialog
-;;;
-;;; Implemented Interfaces
-;;;
-;;; GtkRecentChooserDialog implements AtkImplementorIface, GtkBuildable and
-;;; GtkRecentChooser.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -117,69 +102,73 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_chooser_dialog_new ()
-;;;
-;;; GtkWidget * gtk_recent_chooser_dialog_new (const gchar *title,
-;;;                                            GtkWindow *parent,
-;;;                                            const gchar *first_button_text,
-;;;                                            ...);
-;;;
-;;; Creates a new GtkRecentChooserDialog. This function is analogous to
-;;; gtk_dialog_new_with_buttons().
-;;;
-;;; title :
-;;;     Title of the dialog, or NULL.
-;;;
-;;; parent :
-;;;     Transient parent of the dialog, or NULL,.
-;;;
-;;; first_button_text :
-;;;     stock ID or text to go in the first button, or NULL
-;;;
-;;; ... :
-;;;     response ID for the first button, then additional (button, id) pairs,
-;;;     ending with NULL
-;;;
-;;; Returns :
-;;;     a new GtkRecentChooserDialog
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-recent-chooser-dialog-new (title parent &rest buttons)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-23}
+  @argument[title]{title of the dialog, or @code{nil}}
+  @argument[parent]{transient parent of the dialog, or @code{nil}}
+  @argument[buttons]{pairs with a button text or stock ID and the response ID
+    for the button of type @symbol{gtk-response-type}}
+  @return{A new @class{gtk-recent-chooser-dialog} object.}
+  @begin{short}
+    Creates a new @class{gtk-recent-chooser-dialog}.
+  @end{short}
+  This function is analogous to the function @fun{gtk-dialog-new-with-buttons}.
+
+  Since 2.10
+  @see-class{gtk-recent-chooser-dialog}
+  @see-function{gtk-dialog-new-with-buttons}
+  @see-function{gtk-recent-chooser-dialog-new-with-buttons}"
+  (let ((dialog (make-instance 'gtk-recent-chooser-dialog)))
+    (when title
+      (gtk-window-set-title dialog title))
+    (when parent
+      (gtk-window-set-transient-for dialog parent))
+    (when buttons
+      (apply #'gtk-dialog-add-buttons (cons dialog buttons)))
+    dialog))
+
+(export 'gtk-recent-chooser-dialog-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_chooser_dialog_new_for_manager ()
-;;;
-;;; GtkWidget * gtk_recent_chooser_dialog_new_for_manager
-;;;                                             (const gchar *title,
-;;;                                              GtkWindow *parent,
-;;;                                              GtkRecentManager *manager,
-;;;                                              const gchar *first_button_text,
-;;;                                              ...);
-;;;
-;;; Creates a new GtkRecentChooserDialog with a specified recent manager.
-;;;
-;;; This is useful if you have implemented your own recent manager, or if you
-;;; have a customized instance of a GtkRecentManager object.
-;;;
-;;; title :
-;;;     Title of the dialog, or NULL
-;;;
-;;; parent :
-;;;     Transient parent of the dialog, or NULL,
-;;;
-;;; manager :
-;;;     a GtkRecentManager
-;;;
-;;; first_button_text :
-;;;     stock ID or text to go in the first button, or NULL
-;;;
-;;; ... :
-;;;     response ID for the first button, then additional (button, id) pairs,
-;;;     ending with NULL
-;;;
-;;; Returns :
-;;;     a new GtkRecentChooserDialog
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defun gtk-recent-chooser-dialog-new-for-manager (title parent manager
+                                                  &rest buttons)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-23}
+  @argument[title]{title of the dialog, or @code{nil}}
+  @argument[parent]{transient parent of the dialog, or @code{nil}}
+  @argument[manager]{a @class{gtk-recent-manager} object}
+  @argument[buttons]{pairs with a button text or stock ID and the response ID
+    for the button of type @symbol{gtk-response-type}}
+  @return{A new @class{gtk-recent-chooser-dialog} object.}
+  @begin{short}
+    Creates a new @class{gtk-recent-chooser-dialog} with a specified recent
+    manager.
+  @end{short}
+
+  This is useful if you have implemented your own recent manager, or if you
+  have a customized instance of a @class{gtk-recent-manager} object.
+
+  Since 2.10
+  @see-class{gtk-recent-chooser-dialog}
+  @see-class{gtk-recent-manager}
+  @see-function{gtk-recent-chooser-dialog-new}"
+  (let ((dialog (make-instance 'gtk-recent-chooser-dialog)))
+    (when title
+      (gtk-window-set-title dialog title))
+    (when parent
+      (gtk-window-set-transient-for dialog parent))
+    (when manager
+      (setf (gtk-recent-chooser-recent-manager dialog) manager))
+    (when buttons
+      (apply #'gtk-dialog-add-buttons (cons dialog buttons)))
+    dialog))
+
+(export 'gtk-recent-chooser-dialog-new-for-manager)
 
 ;;; --- End of file gkt.recent-chooser-dialog.lisp -----------------------------

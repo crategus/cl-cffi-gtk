@@ -4,9 +4,10 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.8.6 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -41,25 +42,6 @@
 ;;;     gtk_recent_chooser_menu_new_for_manager
 ;;;     gtk_recent_chooser_menu_get_show_numbers
 ;;;     gtk_recent_chooser_menu_set_show_numbers
-;;;
-;;; Object Hierarchy
-;;;
-;;;   GObject
-;;;    +----GInitiallyUnowned
-;;;          +----GtkWidget
-;;;                +----GtkContainer
-;;;                      +----GtkMenuShell
-;;;                            +----GtkMenu
-;;;                                  +----GtkRecentChooserMenu
-;;;
-;;; Implemented Interfaces
-;;;
-;;; GtkRecentChooserMenu implements AtkImplementorIface, GtkBuildable,
-;;; GtkRecentChooser and GtkActivatable.
-;;;
-;;; Properties
-;;;
-;;;   "show-numbers"             gboolean              : Read / Write
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -137,9 +119,12 @@
 (setf (gethash 'gtk-recent-choose-menu-show-numbers atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-recent-chooser-menu-show-numbers 'function)
- "@version{2013-5-28}
+ "@version{2013-11-23}
   Accessor of the slot @code{\"show-numbers\"} of the
-  @class{gtk-recent-chooser-menu} class.")
+  @class{gtk-recent-chooser-menu} class.
+  @see-class{gtk-recent-chooser-menu}
+  @see-function{gtk-recent-chooser-menu-get-show-numbers}
+  @see-function{gtk-recent-chooser-menu-set-show-numbers}")
 
 ;;; ----------------------------------------------------------------------------
 
@@ -166,84 +151,114 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_chooser_menu_new ()
-;;;
-;;; GtkWidget * gtk_recent_chooser_menu_new (void);
-;;;
-;;; Creates a new GtkRecentChooserMenu widget.
-;;;
-;;; This kind of widget shows the list of recently used resources as a menu,
-;;; each item as a menu item. Each item inside the menu might have an icon,
-;;; representing its MIME type, and a number, for mnemonic access.
-;;;
-;;; This widget implements the GtkRecentChooser interface.
-;;;
-;;; This widget creates its own GtkRecentManager object. See the
-;;; gtk_recent_chooser_menu_new_for_manager() function to know how to create a
-;;; GtkRecentChooserMenu widget bound to another GtkRecentManager object.
-;;;
-;;; Returns :
-;;;     a new GtkRecentChooserMenu
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-recent-chooser-menu-new))
+
+(defun gtk-recent-chooser-menu-new ()
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-23}
+  @return{A new @class{gtk-recent-chooser-menu} widget}
+  @begin{short}
+    Creates a new @class{gtk-recent-chooser-menu} widget.
+  @end{short}
+
+  This kind of widget shows the list of recently used resources as a menu,
+  each item as a menu item. Each item inside the menu might have an icon,
+  representing its MIME type, and a number, for mnemonic access.
+
+  This widget implements the @class{gtk-recent-chooser} interface.
+
+  This widget creates its own @class{gtk-recent-manager} object. See the
+  @fun{gtk-recent-chooser-menu-new-for-manager} function to know how to create
+  a @class{gtk-recent-chooser-menu} widget bound to another
+  @class{gtk-recent-manager} object.
+
+  Since 2.10
+  @see-class{gtk-recent-chooser-menu}
+  @see-class{gtk-recent-chooser}
+  @see-class{gtk-recent-manager}
+  @see-function{gtk-recent-chooser-menu-new-for-manager}"
+  (make-instance 'gtk-recent-chooser-menu))
+
+(export 'gtk-recent-chooser-menu-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_chooser_menu_new_for_manager ()
-;;;
-;;; GtkWidget * gtk_recent_chooser_menu_new_for_manager
-;;;                                                 (GtkRecentManager *manager);
-;;;
-;;; Creates a new GtkRecentChooserMenu widget using manager as the underlying
-;;; recently used resources manager.
-;;;
-;;; This is useful if you have implemented your own recent manager, or if you
-;;; have a customized instance of a GtkRecentManager object or if you wish to
-;;; share a common GtkRecentManager object among multiple GtkRecentChooser
-;;; widgets.
-;;;
-;;; manager :
-;;;     a GtkRecentManager
-;;;
-;;; Returns :
-;;;     a new GtkRecentChooserMenu, bound to manager.
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-recent-chooser-menu-new-for-manager))
+
+(defun gtk-recent-chooser-menu-new-for-manager (manager)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-23}
+  @argument[manager]{a @class{gtk-recent-manager} object}
+  @return{A new @class{gtk-recent-chooser-menu}, bound to @arg{manager}.}
+  @begin{short}
+    Creates a new @class{gtk-recent-chooser-menu} widget using @arg{manager} as
+    the underlying recently used resources manager.
+  @end{short}
+
+  This is useful if you have implemented your own recent manager, or if you
+  have a customized instance of a @class{gtk-recent-manager} object or if you
+  wish to share a common @class{gtk-recent-manager} object among multiple
+  @class{gtk-recent-chooser} widgets.
+
+  Since 2.10
+  @see-class{gtk-recent-chooser-menu}
+  @see-class{gtk-recent-manager}
+  @see-function{gtk-recent-chooser-menu-new}"
+  (make-instance 'gtk-recent-chooser-menu
+                 :recent-manager manager))
+
+(export 'gtk-recent-chooser-menu-new-for-manager)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_chooser_menu_get_show_numbers ()
-;;;
-;;; gboolean gtk_recent_chooser_menu_get_show_numbers
-;;;                                                (GtkRecentChooserMenu *menu);
-;;;
-;;; Returns the value set by gtk_recent_chooser_menu_set_show_numbers().
-;;;
-;;; menu :
-;;;     a GtkRecentChooserMenu
-;;;
-;;; Returns :
-;;;     TRUE if numbers should be shown.
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-recent-chooser-menu-get-show-numbers))
+
+(defun gtk-recent-chooser-menu-get-show-numbers (menu)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-23}
+  @argument[menu]{a @class{gtk-recent-chooser-menu} widget}
+  @return{@em{True} if numbers should be shown.}
+  @begin{short}
+    Returns the value set by the function
+    @fun{gtk-recent-chooser-menu-set-show-numbers}.
+  @end{short}
+
+  Since 2.10
+  @see-class{gtk-recent-chooser-menu}
+  @see-function{gtk-recent-chooser-menu-set-show-numbers}"
+  (gtk-recent-chooser-menu-show-numbers menu))
+
+(export 'gtk-recent-chooser-menu-get-show-numbers)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_chooser_menu_set_show_numbers ()
-;;;
-;;; void gtk_recent_chooser_menu_set_show_numbers (GtkRecentChooserMenu *menu,
-;;;                                                gboolean show_numbers);
-;;;
-;;; Sets whether a number should be added to the items of menu. The numbers are
-;;; shown to provide a unique character for a mnemonic to be used inside ten
-;;; menu item's label. Only the first the items get a number to avoid clashes.
-;;;
-;;; menu :
-;;;     a GtkRecentChooserMenu
-;;;
-;;; show_numbers :
-;;;     whether to show numbers
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-recent-chooser-menu-set-show-numbers))
+
+(defun gtk-recent-chooser-menu-set-show-numbers (menu show-numbers)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-23}
+  @argument[menu]{a @class{gtk-recent-chooser-menu} widget}
+  @argument[show-numbers]{whether to show numbers}
+  @begin{short}
+    Sets whether a number should be added to the items of menu.
+  @end{short}
+  The numbers are shown to provide a unique character for a mnemonic to be used
+  inside ten menu item's label. Only the first the items get a number to avoid
+  clashes.
+
+  Since 2.10
+  @see-class{gtk-recent-chooser-menu}
+  @see-function{gtk-recent-chooser-menu-get-show-numbers}"
+  (setf (gtk-recent-chooser-menu-show-numbers menu) show-numbers))
+
+(export 'gtk-recent-chooser-menu-set-show-numbers)
 
 ;;; --- End of file gtk.recent-chooser-menu.lisp -------------------------------
