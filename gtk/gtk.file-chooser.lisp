@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.8.7 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -102,14 +102,6 @@
 ;;;     gtk_file_chooser_set_current_folder_file
 ;;;     gtk_file_chooser_set_file
 ;;;     gtk_file_chooser_unselect_file
-;;;
-;;; Signals
-;;;
-;;;   "confirm-overwrite"                               : Run Last
-;;;   "current-folder-changed"                          : Run Last
-;;;   "file-activated"                                  : Run Last
-;;;   "selection-changed"                               : Run Last
-;;;   "update-preview"                                  : Run Last
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -868,7 +860,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-file-chooser-action atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-file-chooser-action atdoc:*external-symbols*)
- "@version{2013-6-18}
+ "@version{2013-11-24}
   @begin{short}
     Describes whether a @class{gtk-file-chooser} interface is being used to open
     existing files or to save to a possibly new file.
@@ -891,7 +883,8 @@
       file chooser will let the user pick an existing folder.}
     @entry[:create-folder]{Indicates a mode for creating a new folder. The file
       chooser will let the user name an existing or new folder.}
-  @end{table}")
+  @end{table}
+  @see-class{gtk-file-chooser}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkFileChooserConfirmation
@@ -907,7 +900,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-file-chooser-confirmation atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-file-chooser-confirmation atdoc:*external-symbols*)
- "@version{2013-6-18}
+ "@version{2013-11-24}
   @begin{short}
     Used as a return value of handlers for the \"confirm-overwrite\" signal of a
     @class{gtk-file-chooser} interface. This value determines whether the file
@@ -930,7 +923,8 @@
     @entry[:select-again]{The file chooser will continue running, so as to let
       the user select another file name.}
   @end{table}
-  Since 2.8")
+  Since 2.8
+  @class{gtk-file-chooser}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; GTK_FILE_CHOOSER_ERROR
@@ -955,7 +949,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-file-chooser-error atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-file-chooser-error atdoc:*external-symbols*)
- "@version{2013-6-18}
+ "@version{2013-11-24}
   @begin{short}
     These identify the various errors that can occur while calling
     @sym{gtk-file-chooser} interface functions.
@@ -976,7 +970,8 @@
       bookmark.}
     @entry[:incomplete-hostname]{Indicates an incomplete hostname, e. g.
       \"http://foo\" without a slash after that.}
-  @end{table}")
+  @end{table}
+  @class{gtk-file-chooser}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_set_action ()
@@ -1397,328 +1392,401 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_select_filename ()
-;;;
-;;; gboolean gtk_file_chooser_select_filename (GtkFileChooser *chooser,
-;;;                                            const char *filename);
-;;;
-;;; Selects a filename. If the file name isn't in the current folder of chooser,
-;;; then the current folder of chooser will be changed to the folder containing
-;;; filename.
-;;;
-;;; chooser :
-;;;     a GtkFileChooser
-;;;
-;;; filename :
-;;;     the filename to select
-;;;
-;;; Returns :
-;;;     Not useful. See also: gtk_file_chooser_set_filename()
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_file_chooser_select_filename" gtk-file-chooser-select-filename)
+    :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-24}
+  @argument[chooser]{a @class{gtk-file-chooser} object}
+  @argument[filename]{the filename to select}
+  @begin{return}
+    Not useful. See also the function @fun{gtk-file-chooser-set-filename}.
+  @end{return}
+  @begin{short}
+    Selects a filename.
+  @end{short}
+  If the file name is not in the current folder of chooser, then the current
+  folder of chooser will be changed to the folder containing filename.
+
+  Since 2.4
+  @see-class{gtk-file-chooser}
+  @see-function{gtk-file-chooser-set-filename}
+  @see-function{gtk-file-chooser-unselect-filename}"
+  (chooser (g-object gtk-file-chooser))
+  (filename :string))
+
+(export 'gtk-file-chooser-select-filename)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_unselect_filename ()
-;;;
-;;; void gtk_file_chooser_unselect_filename (GtkFileChooser *chooser,
-;;;                                          const char *filename);
-;;;
-;;; Unselects a currently selected filename. If the filename is not in the
-;;; current directory, does not exist, or is otherwise not currently selected,
-;;; does nothing.
-;;;
-;;; chooser :
-;;;     a GtkFileChooser
-;;;
-;;; filename :
-;;;     the filename to unselect
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_file_chooser_unselect_filename"
+           gtk-file-chooser-unselect-filename) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-24}
+  @argument[chooser]{a @class{gtk-file-chooser} object}
+  @argument[filename]{the filename to unselect}
+  @begin{short}
+    Unselects a currently selected filename.
+  @end{short}
+  If the filename is not in the current directory, does not exist, or is
+  otherwise not currently selected, does nothing.
+
+  Since 2.4
+  @see-class{gtk-file-chooser}
+  @see-function{gtk-file-chooser-select-filename}"
+  (chooser (g-object gtk-file-chooser))
+  (filenname :string))
+
+(export 'gtk-file-chooser-unselect-filename)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_select_all ()
-;;;
-;;; void gtk_file_chooser_select_all (GtkFileChooser *chooser);
-;;;
-;;; Selects all the files in the current folder of a file chooser.
-;;;
-;;; chooser :
-;;;     a GtkFileChooser
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_file_chooser_select_all" gtk-file-chooser-select-all) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-24}
+  @argument[chooser]{a @class{gtk-file-chooser} object}
+  @begin{short}
+    Selects all the files in the current folder of a file chooser.
+  @end{short}
+
+  Since 2.4
+  @see-class{gtk-file-chooser}
+  @see-function{gtk-file-chooser-unselect-all}"
+  (chooser (g-object gtk-file-chooser)))
+
+(export 'gtk-file-chooser-select-all)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_unselect_all ()
-;;;
-;;; void gtk_file_chooser_unselect_all (GtkFileChooser *chooser);
-;;;
-;;; Unselects all the files in the current folder of a file chooser.
-;;;
-;;; chooser :
-;;;     a GtkFileChooser
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_file_chooser_unselect_all" gtk-file-chooser-unselect-all) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-24}
+  @argument[chooser]{a @class{gtk-file-chooser} object}
+  @begin{short}
+    Unselects all the files in the current folder of a file chooser.
+  @end{short}
+
+  Since 2.4
+  @see-class{gtk-file-chooser}
+  @see-function{gtk-file-chooser-select-all}"
+  (chooser (g-object gtk-file-chooser)))
+
+(export 'gtk-file-chooser-unselect-all)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_get_filenames ()
-;;;
-;;; GSList * gtk_file_chooser_get_filenames (GtkFileChooser *chooser);
-;;;
-;;; Lists all the selected files and subfolders in the current folder of
-;;; chooser. The returned names are full absolute paths. If files in the current
-;;; folder cannot be represented as local filenames they will be ignored. (See
-;;; gtk_file_chooser_get_uris())
-;;;
-;;; chooser :
-;;;     a GtkFileChooser
-;;;
-;;; Returns :
-;;;     a GSList containing the filenames of all selected files and subfolders
-;;;     in the current folder. Free the returned list with g_slist_free(), and
-;;;     the filenames with g_free()
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_file_chooser_get_filenames" gtk-file-chooser-get-filenames)
+    (g-slist :string)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-24}
+  @argument[chooser]{a @class{gtk-file-chooser} object}
+  @begin{return}
+    A list containing the filenames of all selected files and subfolders
+    in the current folder
+  @end{return}
+  @begin{short}
+    Lists all the selected files and subfolders in the current folder of
+    @arg{chooser}.
+  @end{short}
+  The returned names are full absolute paths. If files in the current folder
+  cannot be represented as local filenames they will be ignored. See the
+  function @fun{gtk-file-chooser-get-uris}.
+
+  Since 2.4
+  @see-class{gtk-file-chooser}
+  @see-function{gtk-file-chooser-get-uris}"
+  (chooser (g-object gtk-file-chooser)))
+
+(export 'gtk-file-chooser-get-filenames)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_set_current_folder ()
-;;;
-;;; gboolean gtk_file_chooser_set_current_folder (GtkFileChooser *chooser,
-;;;                                               const gchar *filename);
-;;;
-;;; Sets the current folder for chooser from a local filename. The user will be
-;;; shown the full contents of the current folder, plus user interface elements
-;;; for navigating to other folders.
-;;;
-;;; In general, you should not use this function. See the section on setting up
-;;; a file chooser dialog for the rationale behind this.
-;;;
-;;; chooser :
-;;;     a GtkFileChooser
-;;;
-;;; filename :
-;;;     the full path of the new current folder
-;;;
-;;; Returns :
-;;;     Not useful.
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_file_chooser_set_current_folder"
+           gtk-file-chooser-set-current-folder) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-24}
+  @argument[chooser]{a @class{gtk-file-chooser} object}
+  @argument[filename]{the full path of the new current folder}
+  @return{Not useful.}
+  @begin{short}
+    Sets the current folder for chooser from a local filename.
+  @end{short}
+  The user will be shown the full contents of the current folder, plus user
+  interface elements for navigating to other folders.
+
+  In general, you should not use this function. See the section on setting up
+  a file chooser dialog for the rationale behind this.
+
+  Since 2.4
+  @see-class{gtk-file-chooser}
+  @see-function{gtk-file-chooser-get-current-folder}"
+  (chooser (g-object gtk-file-chooser))
+  (filename :string))
+
+(export 'gtk-file-chooser-set-current-folder)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_get_current_folder ()
-;;;
-;;; gchar * gtk_file_chooser_get_current_folder (GtkFileChooser *chooser);
-;;;
-;;; Gets the current folder of chooser as a local filename. See
-;;; gtk_file_chooser_set_current_folder().
-;;;
-;;; Note that this is the folder that the file chooser is currently displaying
-;;; (e.g. "/home/username/Documents"), which is not the same as the
-;;; currently-selected folder if the chooser is in
-;;; GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER mode (e.g.
-;;; "/home/username/Documents/selected-folder/". To get the currently-selected
-;;; folder in that mode, use gtk_file_chooser_get_uri() as the usual way to get
-;;; the selection.
-;;;
-;;; chooser :
-;;;     a GtkFileChooser
-;;;
-;;; Returns :
-;;;     the full path of the current folder, or NULL if the current path cannot
-;;;     be represented as a local filename. Free with g_free(). This function
-;;;     will also return NULL if the file chooser was unable to load the last
-;;;     folder that was requested from it; for example, as would be for calling
-;;;     gtk_file_chooser_set_current_folder() on a nonexistent folder.
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_file_chooser_get_current_folder"
+           gtk-file-chooser-get-current-folder) :string
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-24}
+  @argument[chooser]{a @class{gtk-file-chooser} object}
+  @begin{return}
+    The full path of the current folder, or @code{nil} if the current path
+    cannot be represented as a local filename. This function will also return
+    @code{nil} if the file chooser was unable to load the last folder that was
+    requested from it; for example, as would be for calling the function
+    @fun{gtk-file-chooser-set-current-folder} on a nonexistent folder.
+  @end{return}
+  @begin{short}
+    Gets the current folder of chooser as a local filename.
+  @end{short}
+  See the function @fun{gtk-file-chooser-set-current-folder}.
+
+  Note that this is the folder that the file chooser is currently displaying,
+  e. g. \"/home/username/Documents\", which is not the same as the
+  currently-selected folder if the chooser is in @code{:select-folder} mode,
+  e. g. \"/home/username/Documents/selected-folder/\". To get the
+  currently-selected folder in that mode, use the function
+  @fun{gtk-file-chooser-get-uri} as the usual way to get the selection.
+
+  Since 2.4
+  @see-class{gtk-file-chooser}
+  @see-function{gtk-file-chooser-get-uri}
+  @see-function{gtk-file-chooser-set-current-folder}"
+  (chooser (g-object gtk-file-chooser)))
+
+(export 'gtk-file-chooser-get-current-folder)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_get_uri ()
-;;;
-;;; gchar * gtk_file_chooser_get_uri (GtkFileChooser *chooser);
-;;;
-;;; Gets the URI for the currently selected file in the file selector. If
-;;; multiple files are selected, one of the filenames will be returned at
-;;; random.
-;;;
-;;; If the file chooser is in folder mode, this function returns the selected
-;;; folder.
-;;;
-;;; chooser :
-;;;     a GtkFileChooser
-;;;
-;;; Returns :
-;;;     The currently selected URI, or NULL if no file is selected. Free with
-;;;     g_free()
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_file_chooser_get_uri" gtk-file-chooser-get-uri) :string
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-24}
+  @argument[chooser]{a @class{gtk-file-chooser} object}
+  @begin{return}
+    The currently selected URI, or @code{nil} if no file is selected.
+  @end{return}
+  @begin{short}
+    Gets the URI for the currently selected file in the file selector.
+  @end{short}
+  If multiple files are selected, one of the filenames will be returned at
+  random.
+
+  If the file chooser is in folder mode, this function returns the selected
+  folder.
+
+  Since 2.4
+  @see-class{gtk-file-chooser}
+  @see-function{gtk-file-chooser-set-uri}"
+  (chooser (g-object gtk-file-chooser)))
+
+(export 'gtk-file-chooser-get-uri)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_set_uri ()
-;;;
-;;; gboolean gtk_file_chooser_set_uri (GtkFileChooser *chooser, const char *uri)
-;;;
-;;; Sets the file referred to by uri as the current file for the file chooser,
-;;; by changing to the URI's parent folder and actually selecting the URI in the
-;;; list. If the chooser is GTK_FILE_CHOOSER_ACTION_SAVE mode, the URI's base
-;;; name will also appear in the dialog's file name entry.
-;;;
-;;; Note that the URI must exist, or nothing will be done except for the
-;;; directory change.
-;;;
-;;; You should use this function only when implementing a File/Save As... dialog
-;;; for which you already have a file name to which the user may save. For
-;;; example, whenthe user opens an existing file and then does File/Save As...
-;;; on it to save a copy or a modified version. If you don't have a file name
-;;; already - for example, if the user just created a new file and is saving it
-;;; for the first time, do not call this function. Instead, use something
-;;; similar to this:
-;;;
-;;;   if (document_is_new)
-;;;     {
-;;;       /* the user just created a new document */
-;;;       gtk_file_chooser_set_current_name (chooser, "Untitled document");
-;;;     }
-;;;   else
-;;;     {
-;;;       /* the user edited an existing document */
-;;;       gtk_file_chooser_set_uri (chooser, existing_uri);
-;;;     }
-;;;
-;;; In the first case, the file chooser will present the user with useful
-;;; suggestions as to where to save his new file. In the second case, the file's
-;;; existing location is already known, so the file chooser will use it.
-;;;
-;;; chooser :
-;;;     a GtkFileChooser
-;;;
-;;; uri :
-;;;     the URI to set as current
-;;;
-;;; Returns :
-;;;     Not useful.
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_file_chooser_set_uri" gtk-file-chooser-set-uri) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-24}
+  @argument[chooser]{a @class{gtk-file-chooser} object}
+  @argument[uri]{the URI to set as current}
+  @return{Not useful.}
+  @begin{short}
+    Sets the file referred to by uri as the current file for the file chooser,
+    by changing to the URI's parent folder and actually selecting the URI in
+    the list.
+  @end{short}
+  If the chooser is in @code{:save} mode, the URI's base name will also appear
+  in the dialog's file name entry.
+
+  Note that the URI must exist, or nothing will be done except for the
+  directory change.
+
+  You should use this function only when implementing a File/Save As... dialog
+  for which you already have a file name to which the user may save. For
+  example, whenthe user opens an existing file and then does File/Save As...
+  on it to save a copy or a modified version. If you do not have a file name
+  already - for example, if the user just created a new file and is saving it
+  for the first time, do not call this function. Instead, use something
+  similar to this:
+  @begin{pre}
+   if (document_is_new)
+     {
+       /* the user just created a new document */
+       gtk_file_chooser_set_current_name (chooser, \"Untitled document\");
+     @}
+   else
+     {
+       /* the user edited an existing document */
+       gtk_file_chooser_set_uri (chooser, existing_uri);
+     @}
+  @end{pre}
+  In the first case, the file chooser will present the user with useful
+  suggestions as to where to save his new file. In the second case, the file's
+  existing location is already known, so the file chooser will use it.
+
+  Since 2.4
+  @see-class{gtk-file-chooser}
+  @see-function{gtk-file-chooser-get-uri}"
+  (chooser (g-object gtk-file-chooser))
+  (uri :string))
+
+(export 'gtk-file-chooser-set-uri)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_select_uri ()
-;;;
-;;; gboolean gtk_file_chooser_select_uri (GtkFileChooser *chooser,
-;;;                                       const char *uri);
-;;;
-;;; Selects the file to by uri. If the URI doesn't refer to a file in the
-;;; current folder of chooser, then the current folder of chooser will be
-;;; changed to the folder containing filename.
-;;;
-;;; chooser :
-;;;     a GtkFileChooser
-;;;
-;;; uri :
-;;;     the URI to select
-;;;
-;;; Returns :
-;;;     Not useful.
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_file_chooser_select_uri" gtk-file-chooser-select-uri) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-24}
+  @argument[chooser]{a @class{gtk-file-chooser} object}
+  @argument[uri]{the URI to select}
+  @return{Not useful.}
+  @begin{short}
+    Selects the file to by @arg{uri}.
+  @end{short}
+  If the URI does not refer to a file in the current folder of @arg{chooser},
+  then the current folder of chooser will be changed to the folder containing
+  filename.
+
+  Since 2.4
+  @see-class{gtk-file-chooser}
+  @see-function{gtk-file-chooser-unselect-uri}"
+  (chooser (g-object gtk-file-chooser))
+  (uri :string))
+
+(export 'gtk-file-chooser-select-uri)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_unselect_uri ()
-;;;
-;;; void gtk_file_chooser_unselect_uri (GtkFileChooser *chooser,
-;;;                                     const char *uri);
-;;;
-;;; Unselects the file referred to by uri. If the file is not in the current
-;;; directory, does not exist, or is otherwise not currently selected, does
-;;; nothing.
-;;;
-;;; chooser :
-;;;     a GtkFileChooser
-;;;
-;;; uri :
-;;;     the URI to unselect
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_file_chooser_unselect_uri" gtk-file-chooser-unselect-uri) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-24}
+  @argument[chooser]{a @class{gtk-file-chooser} object}
+  @argument[uri]{the URI to unselect}
+  @begin{short}
+    Unselects the file referred to by @arg{uri}.
+  @end{short}
+  If the file is not in the current directory, does not exist, or is otherwise
+  not currently selected, does nothing.
+
+  Since 2.4
+  @see-class{gtk-file-chooser}
+  @see-function{gtk-file-chooser-select-uri}"
+  (chooser (g-object gtk-file-chooser))
+  (uri :string))
+
+(export 'gtk-file-chooser-unselect-uri)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_get_uris ()
-;;;
-;;; GSList * gtk_file_chooser_get_uris (GtkFileChooser *chooser);
-;;;
-;;; Lists all the selected files and subfolders in the current folder of
-;;; chooser. The returned names are full absolute URIs.
-;;;
-;;; chooser :
-;;;     a GtkFileChooser
-;;;
-;;; Returns :
-;;;     a GSList containing the URIs of all selected files and subfolders in the
-;;;     current folder. Free the returned list with g_slist_free(), and the
-;;;     filenames with g_free().
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_file_chooser_get_uris" gtk-file-chooser-get-uris)
+    (g-slist :string)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-24}
+  @argument[chooser]{a @class{gtk-file-chooser} object}
+  @begin{return}
+    A list containing the URIs of all selected files and subfolders in the
+    current folder.
+  @end{return}
+  @begin{short}
+    Lists all the selected files and subfolders in the current folder of
+    @arg{chooser}. The returned names are full absolute URIs.
+  @end{short}
+
+  Since 2.4
+  @see-class{gtk-file-chooser}"
+  (chooser (g-object gtk-file-chooser)))
+
+(export 'gtk-file-chooser-get-uris)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_set_current_folder_uri ()
-;;;
-;;; gboolean gtk_file_chooser_set_current_folder_uri (GtkFileChooser *chooser,
-;;;                                                   const gchar *uri);
-;;;
-;;; Sets the current folder for chooser from an URI. The user will be shown the
-;;; full contents of the current folder, plus user interface elements for
-;;; navigating to other folders.
-;;;
-;;; In general, you should not use this function. See the section on setting up
-;;; a file chooser dialog for the rationale behind this.
-;;;
-;;; chooser :
-;;;     a GtkFileChooser
-;;;
-;;; uri :
-;;;     the URI for the new current folder
-;;;
-;;; Returns :
-;;;     TRUE if the folder could be changed successfully, FALSE otherwise.
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_file_chooser_set_current_folder_uri"
+           gtk-file-chooser-set-current-folder-uri) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-24}
+  @argument[chooser]{a @class{gtk-file-chooser} object}
+  @argument[uri]{the URI for the new current folder}
+  @begin{return}
+    @em{true} if the folder could be changed successfully, @code{nil} otherwise.
+  @end{return}
+  @begin{short}
+    Sets the current folder for chooser from an URI.
+  @end{short}
+  The user will be shown the full contents of the current folder, plus user
+  interface elements for navigating to other folders.
+
+  In general, you should not use this function. See the section on setting up
+  a file chooser dialog for the rationale behind this.
+
+  Since 2.4
+  @see-class{gtk-file-chooser}
+  @see-function{gtk-file-chooser-get-current-folde-uri}"
+  (chooser (g-object gtk-file-chooser))
+  (uri :string))
+
+(export 'gtk-file-chooser-set-current-folder-uri)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_get_current_folder_uri ()
-;;;
-;;; gchar * gtk_file_chooser_get_current_folder_uri (GtkFileChooser *chooser);
-;;;
-;;; Gets the current folder of chooser as an URI. See
-;;; gtk_file_chooser_set_current_folder_uri().
-;;;
-;;; Note that this is the folder that the file chooser is currently displaying
-;;; (e.g. "file:///home/username/Documents"), which is not the same as the
-;;; currently-selected folder if the chooser is in
-;;; GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER mode (e.g.
-;;; "file:///home/username/Documents/selected-folder/". To get the
-;;; currently-selected folder in that mode, use gtk_file_chooser_get_uri() as
-;;; the usual way to get the selection.
-;;;
-;;; chooser :
-;;;     a GtkFileChooser
-;;;
-;;; Returns :
-;;;     the URI for the current folder. Free with g_free(). This function will
-;;;     also return NULL if the file chooser was unable to load the last folder
-;;;     that was requested from it; for example, as would be for calling
-;;;     gtk_file_chooser_set_current_folder_uri() on a nonexistent folder.
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_file_chooser_get_current_folder_uri"
+           gtk-file-chooser-get-current-folder-uri) :string
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-24}
+  @argument[chooser]{a @class{gtk-file-chooser} object}
+  @begin{return}
+    The URI for the current folder. This function will also return @code{nil}
+    if the file chooser was unable to load the last folder that was requested
+    from it; for example, as would be for calling the function
+    @fun{gtk-file-chooser-set-current-folder-uri} on a nonexistent folder.
+  @end{return}
+  @begin{short}
+    Gets the current folder of @arg{chooser} as an URI.
+  @end{short}
+  See the function @fun{gtk-file-chooser-set-current-folder-uri}.
+
+  Note that this is the folder that the file chooser is currently displaying,
+  e. g. \"file:///home/username/Documents\", which is not the same as the
+  currently-selected folder if the chooser is in @code{:select-folder}, e. g.
+  \"file:///home/username/Documents/selected-folder/\". To get the
+  currently-selected folder in that mode, use the function
+  @fun{gtk-file-chooser-get-uri} as the usual way to get the selection.
+
+  Since 2.4
+  @see-class{gtk-file-chooser}
+  @see-function{gtk-file-chooser-get-uri}
+  @see-function{gtk-file-chooser-set-current-folder-uri}"
+  (chooser (g-object gtk-file-chooser)))
+
+(export 'gtk-file-chooser-get-current-folder-uri)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_set_preview_widget ()
@@ -1916,21 +1984,27 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_get_preview_uri ()
-;;;
-;;; char * gtk_file_chooser_get_preview_uri (GtkFileChooser *chooser);
-;;;
-;;; Gets the URI that should be previewed in a custom preview widget. See
-;;; gtk_file_chooser_set_preview_widget().
-;;;
-;;; chooser :
-;;;     a GtkFileChooser
-;;;
-;;; Returns :
-;;;     the URI for the file to preview, or NULL if no file is selected. Free
-;;;     with g_free().
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_file_chooser_get_preview_uri" gtk-file-chooser-get-preview-uri)
+    :string
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-24}
+  @argument[chooser]{a @class{gtk-file-chooser} object}
+  @begin{return}
+    The URI for the file to preview, or @code{nil} if no file is selected.
+  @end{return}
+  @begin{short}
+    Gets the URI that should be previewed in a custom preview widget.
+  @end{short}
+  See the function @fun{gtk-file-chooser-set-preview-widget}.
+
+  Since 2.4
+  @see-class{gtk-file-chooser}
+  @see-function{gtk-file-chooser-get-preview-widget}"
+  (chooser (g-object gtk-file-chooser)))
+
+(export 'gtk-file-chooser-get-preview-uri)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_set_extra_widget ()
@@ -1979,60 +2053,76 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_add_filter ()
-;;;
-;;; void gtk_file_chooser_add_filter (GtkFileChooser *chooser,
-;;;                                   GtkFileFilter *filter);
-;;;
-;;; Adds filter to the list of filters that the user can select between. When a
-;;; filter is selected, only files that are passed by that filter are displayed.
-;;;
-;;; Note that the chooser takes ownership of the filter, so you have to ref and
-;;; sink it if you want to keep a reference.
-;;;
-;;; chooser :
-;;;     a GtkFileChooser
-;;;
-;;; filter :
-;;;     a GtkFileFilter
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_file_chooser_add_filter" gtk-file-chooser-add-filter) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-24}
+  @argument[chooser]{a @class{gtk-file-chooser} object}
+  @argument[filter]{a @class{gtk-file-filter} object}
+  @begin{short}
+    Adds filter to the list of filters that the user can select between.
+  @end{short}
+  When a filter is selected, only files that are passed by that filter are
+  displayed.
+
+  Note that the chooser takes ownership of the filter, so you have to ref and
+  sink it if you want to keep a reference.
+
+  Since 2.4
+  @see-class{gtk-file-chooser}
+  @see-function{gtk-file-chooser-remove-filter}"
+  (chooser (g-object gtk-file-chooser))
+  (filter (g-object gtk-file-filter)))
+
+(export 'gtk-file-chooser-add-filter)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_remove_filter ()
-;;;
-;;; void gtk_file_chooser_remove_filter (GtkFileChooser *chooser,
-;;;                                      GtkFileFilter *filter);
-;;;
-;;; Removes filter from the list of filters that the user can select between.
-;;;
-;;; chooser :
-;;;     a GtkFileChooser
-;;;
-;;; filter :
-;;;     a GtkFileFilter
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_file_chooser_remove_filter" gtk-file-chooser-remove-filter) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-24}
+  @argument[chooser]{a @class{gtk-file-chooser} object}
+  @argument[filter]{a @class{gtk-file-filter} object}
+  @begin{short}
+    Removes filter from the list of filters that the user can select between.
+  @end{short}
+
+  Since 2.4
+  @see-class{gtk-file-chooser}
+  @see-function{gtk-file-chooser-add-filter}"
+  (chooser (g-object gtk-file-chooser))
+  (filter (g-object gtk-file-filter)))
+
+(export 'gtk-file-chooser-remove-filter)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_list_filters ()
-;;;
-;;; GSList * gtk_file_chooser_list_filters (GtkFileChooser *chooser);
-;;;
-;;; Lists the current set of user-selectable filters; see
-;;; gtk_file_chooser_add_filter(), gtk_file_chooser_remove_filter().
-;;;
-;;; chooser :
-;;;     a GtkFileChooser
-;;;
-;;; Returns :
-;;;     a GSList containing the current set of user selectable filters. The
-;;;     contents of the list are owned by GTK+, but you must free the list
-;;;     itself with g_slist_free() when you are done with it.
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_file_chooser_list_filters" gtk-file-chooser-list-filters)
+    (g-slist (g-object gtk-file-filter))
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-24}
+  @argument[chooser]{a @class{gtk-file-chooser} object}
+  @begin{return}
+    A list containing the current set of user selectable filters.
+  @end{return}
+  @begin{short}
+    Lists the current set of user-selectable filters.
+  @end{short}
+  See the functions @fun{gtk-file-chooser-add-filter} and
+  @fun{gtk-file-chooser-remove-filter}.
+
+  Since 2.4
+  @see-class{gtk-file-chooser}
+  @see-function{gtk-file-chooser-add-filter}
+  @see-function{gtk-file-chooser-remove-filter}"
+  (chooser (g-object gtk-file-chooser)))
+
+(export 'gtk-file-chooser-list-filters)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_set_filter ()
@@ -2088,150 +2178,184 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_add_shortcut_folder ()
-;;;
-;;; gboolean gtk_file_chooser_add_shortcut_folder (GtkFileChooser *chooser,
-;;;                                                const char *folder,
-;;;                                                GError **error);
-;;;
-;;; Adds a folder to be displayed with the shortcut folders in a file chooser.
-;;; Note that shortcut folders do not get saved, as they are provided by the
-;;; application. For example, you can use this to add a
-;;; "/usr/share/mydrawprogram/Clipart" folder to the volume list.
-;;;
-;;; chooser :
-;;;     a GtkFileChooser
-;;;
-;;; folder :
-;;;     filename of the folder to add
-;;;
-;;; error :
-;;;     location to store error, or NULL
-;;;
-;;; Returns :
-;;;     TRUE if the folder could be added successfully, FALSE otherwise. In the
-;;;     latter case, the error will be set as appropriate.
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_file_chooser_add_shortcut_folder"
+          %gtk-file-chooser-add-shortcut-folder) :boolean
+  (chooser (g-object gtk-file-chooser))
+  (folder :string)
+  (error :pointer))
+
+(defun gtk-file-chooser-add-shortcut-folder (chooser folder)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-24}
+  @argument[chooser]{a @class{gtk-file-chooser} object}
+  @argument[folder]{filename of the folder to add}
+  @begin{return}
+    @em{True} if the folder could be added successfully, @code{nil} otherwise.
+    In the latter case, the error will be set as appropriate.
+  @end{return}
+  @begin{short}
+    Adds a folder to be displayed with the shortcut folders in a file chooser.
+  @end{short}
+  Note that shortcut folders do not get saved, as they are provided by the
+  application. For example, you can use this to add a
+  \"/usr/share/mydrawprogram/Clipart\" folder to the volume list.
+
+  Since 2.4
+  @see-class{gtk-file-chooser}
+  @see-function{gtk-file-chooser-remove-shortcut-folder}"
+  (with-g-error (err)
+    (%gtk-file-chooser-add-shortcut-folder chooser folder err)))
+
+(export 'gtk-file-chooser-add-shortcut-folder)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_remove_shortcut_folder ()
-;;;
-;;; gboolean gtk_file_chooser_remove_shortcut_folder (GtkFileChooser *chooser,
-;;;                                                   const char *folder,
-;;;                                                   GError **error);
-;;;
-;;; Removes a folder from a file chooser's list of shortcut folders.
-;;;
-;;; chooser :
-;;;     a GtkFileChooser
-;;;
-;;; folder :
-;;;     filename of the folder to remove
-;;;
-;;; error :
-;;;     location to store error, or NULL
-;;;
-;;; Returns :
-;;;     TRUE if the operation succeeds, FALSE otherwise. In the latter case, the
-;;;     error will be set as appropriate. See also:
-;;;     gtk_file_chooser_add_shortcut_folder()
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_file_chooser_remove_shortcut_folder"
+          %gtk-file-chooser-remove-shortcut-folder) :boolean
+  (chooser (g-object gtk-file-chooser))
+  (folder :string)
+  (error :pointer))
+
+(defun gtk-file-chooser-remove-shortcut-folder (chooser folder)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-24}
+  @argument[chooser]{a @class{gtk-file-chooser} object}
+  @argument[folder]{filename of the folder to remove}
+  @begin{return}
+    @em{True} if the operation succeeds, @code{nil} otherwise. In the latter
+    case, the error will be set as appropriate. See also the function
+    @fun{gtk-file-chooser-add-shortcut-folder}.
+  @end{return}
+  @begin{short}
+    Removes a folder from a file chooser's list of shortcut folders.
+  @end{short}
+
+  Since 2.4
+  @see-class{gtk-file-chooser}
+  @see-function{gtk-file-chooser-add-shortcut-folder}"
+  (with-g-error (err)
+    (%gtk-file-chooser-remove-shortcut-folder chooser folder err)))
+
+(export 'gtk-file-chooser-remove-shortcut-folder)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_list_shortcut_folders ()
-;;;
-;;; GSList * gtk_file_chooser_list_shortcut_folders (GtkFileChooser *chooser);
-;;;
-;;; Queries the list of shortcut folders in the file chooser, as set by
-;;; gtk_file_chooser_add_shortcut_folder().
-;;;
-;;; chooser :
-;;;     a GtkFileChooser
-;;;
-;;; Returns :
-;;;     A list of folder filenames, or NULL if there are no shortcut folders.
-;;;     Free the returned list with g_slist_free(), and the filenames with
-;;;     g_free().
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_file_chooser_list_shortcut_folders"
+           gtk-file-chooser-list-shortcut-folders) (g-slist :string)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-24}
+  @argument[chooser]{a @class{gtk-file-chooser} object}
+  @begin{return}
+    A list of folder filenames, or @code{nil} if there are no shortcut folders.
+  @end{return}
+  @begin{short}
+    Queries the list of shortcut folders in the file chooser, as set by the
+    function @fun{gtk-file-chooser-add-shortcut-folder}.
+  @end{short}
+
+  Since 2.4
+  @see-class{gtk-file-chooser}
+  @see-function{gtk-file-chooser-add-shortcut-folder}"
+  (chooser (g-object gtk-file-chooser)))
+
+(export 'gtk-file-chooser-list-shortcut-folders)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_add_shortcut_folder_uri ()
-;;;
-;;; gboolean gtk_file_chooser_add_shortcut_folder_uri (GtkFileChooser *chooser,
-;;;                                                    const char *uri,
-;;;                                                    GError **error);
-;;;
-;;; Adds a folder URI to be displayed with the shortcut folders in a file
-;;; chooser. Note that shortcut folders do not get saved, as they are provided
-;;; by the application. For example, you can use this to add a
-;;; "file:///usr/share/mydrawprogram/Clipart" folder to the volume list.
-;;;
-;;; chooser :
-;;;     a GtkFileChooser
-;;;
-;;; uri :
-;;;     URI of the folder to add
-;;;
-;;; error :
-;;;     location to store error, or NULL
-;;;
-;;; Returns :
-;;;     TRUE if the folder could be added successfully, FALSE otherwise. In the
-;;;     latter case, the error will be set as appropriate.
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_file_chooser_add_shortcut_folder_uri"
+          %gtk-file-chooser-add-shortcut-folder-uri) :boolean
+  (chooser (g-object gtk-file-chooser))
+  (uri :string)
+  (error :pointer))
+
+(defun gtk-file-chooser-add-shortcut-folder-uri (chooser uri)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-24}
+  @argument[chooser]{a @class{gtk-file-chooser} object}
+  @argument[uri]{URI of the folder to add}
+  @begin{return}
+    @em{True} if the folder could be added successfully, @code{nil} otherwise.
+    In the latter case, the error will be set as appropriate.
+  @end{return}
+  @begin{short}
+    Adds a folder URI to be displayed with the shortcut folders in a file
+    chooser.
+  @end{short}
+  Note that shortcut folders do not get saved, as they are provided by the
+  application. For example, you can use this to add a
+  \"file:///usr/share/mydrawprogram/Clipart\" folder to the volume list.
+
+  Since 2.4
+  @see-class{gtk-file-chooser}
+  @see-function{gtk-file-chooser-remove-shortcut-folder}"
+  (with-g-error (err)
+    (%gtk-file-chooser-add-shortcut-folder-uri chooser uri err)))
+
+(export 'gtk-file-chooser-add-shortcut-folder-uri)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_remove_shortcut_folder_uri ()
-;;;
-;;; gboolean gtk_file_chooser_remove_shortcut_folder_uri
-;;;                                                    (GtkFileChooser *chooser,
-;;;                                                     const char *uri,
-;;;                                                     GError **error);
-;;;
-;;; Removes a folder URI from a file chooser's list of shortcut folders.
-;;;
-;;; chooser :
-;;;     a GtkFileChooser
-;;;
-;;; uri :
-;;;     URI of the folder to remove
-;;;
-;;; error :
-;;;     location to store error, or NULL
-;;;
-;;; Returns :
-;;;     TRUE if the operation succeeds, FALSE otherwise. In the latter case, the
-;;;     error will be set as appropriate. See also:
-;;;     gtk_file_chooser_add_shortcut_folder_uri()
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_file_chooser_remove_shortcut_folder_uri"
+          %gtk-file-chooser-remove-shortcut-folder-uri) :boolean
+  (chooser (g-object gtk-file-chooser))
+  (uri :string)
+  (error :pointer))
+
+(defun gtk-file-chooser-remove-shortcut-folder-uri (chooser uri)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-24}
+  @argument[chooser]{a @class{gtk-file-chooser} object}
+  @argument[uri]{URI of the folder to remove}
+  @begin{return}
+    @em{True} if the operation succeeds, @code{nil} otherwise. In the latter
+    case, the error will be set as appropriate. See also the function
+    @fun{gtk-file-chooser-add-shortcut-folder-uri}.
+  @end{return}
+  @begin{short}
+    Removes a folder URI from a file chooser's list of shortcut folders.
+  @end{short}
+
+  Since 2.4
+  @see-class{gtk-file-chooser}
+  @see-function{gtk-file-chooser-add-shortcut-folder-uri}"
+  (with-g-error (err)
+    (%gtk-file-chooser-remove-shortcut-folder-uri chooser uri err)))
+
+(export 'gtk-file-chooser-remove-shortcut-folder-uri)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_list_shortcut_folder_uris ()
-;;;
-;;; GSList * gtk_file_chooser_list_shortcut_folder_uris
-;;;                                                   (GtkFileChooser *chooser);
-;;;
-;;; Queries the list of shortcut folders in the file chooser, as set by
-;;; gtk_file_chooser_add_shortcut_folder_uri().
-;;;
-;;; chooser :
-;;;     a GtkFileChooser
-;;;
-;;; Returns :
-;;;     A list of folder URIs, or NULL if there are no shortcut folders. Free
-;;;     the returned list with g_slist_free(), and the URIs with g_free().
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_file_chooser_list_shortcut_folder_uris"
+           gtk-file-chooser-list-shortcut-folder-uris) (g-slist :string)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-24}
+  @argument[chooser]{a @class{gtk-file-chooser} object}
+  @begin{return}
+    A list of folder URIs, or @code{nil} if there are no shortcut folders.
+  @end{return}
+  @begin{short}
+    Queries the list of shortcut folders in the file chooser, as set by the
+    function @fun{gtk-file-chooser-add-shortcut-folder-uri}.
+  @end{short}
+
+  Since 2.4
+  @see-class{gtk-file-chooser}
+  @see-function{gtk-file-chooser-add-shortcut-folder-uri}"
+  (chooser (g-object gtk-file-chooser)))
+
+(export 'gtk-file-chooser-list-shortcut-folder-uris)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_get_current_folder_file ()

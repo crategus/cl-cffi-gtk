@@ -4,9 +4,10 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.8.7 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -75,63 +76,43 @@
   In the simplest of cases, you can the following code to use
   @sym{gtk-file-chooser-dialog} to select a file for opening:
   @begin{pre}
-   GtkWidget *dialog;
+(defun create-file-chooser-dialog-open (window)
+  (let ((dialog (gtk-file-chooser-dialog-new \"Open File\"
+                                             window
+                                             :open
+                                             \"gtk-cancel\" :cancel
+                                             \"gtk-open\" :accept)))
+    (if (eql (gtk-dialog-run dialog)
+             (foreign-enum-value 'gtk-response-type :accept))
+      (let ((filename (gtk-file-chooser-get-filename dialog)))
+        ...
+      ))
 
-   dialog = gtk_file_chooser_dialog_new
-                                      (\"Open File\",
-                                       parent_window,
-                                       GTK_FILE_CHOOSER_ACTION_OPEN,
-                                       GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                       GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
-                                       NULL);
-
-   if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_ACCEPT)
-     {
-       char *filename;
-
-       filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
-       open_file (filename);
-       g_free (filename);
-     @}
-
-   gtk_widget_destroy (dialog);
+    (gtk-widget-destroy dialog)))
   @end{pre}
   To use a dialog for saving, you can use this:
   @begin{pre}
-   GtkWidget *dialog;
+(defun create-file-chooser-dialog-save (window filename)
+  (let ((dialog (gtk-file-chooser-dialog-new \"Save File\"
+                                             window
+                                             :save
+                                             \"gtk-cancel\" :cancel
+                                             \"gtk-save\" :accept)))
+    (gtk-file-chooser-set-do-overwrite-confirmation dialog t)
+    (if filename
+        (gtk-file-chooser-set-filename dialog filename)
+        (gtk-file-chooser-set-current-name dialog \"Untitled document\"))
+    (if (eql (gtk-dialog-run dialog)
+             (foreign-enum-value 'gtk-response-type :accept))
+      (let ((filename (gtk-file-chooser-get-filename dialog)))
+        ...
+      ))
 
-   dialog = gtk_file_chooser_dialog_new
-                                      (\"Save File\",
-                                       parent_window,
-                                       GTK_FILE_CHOOSER_ACTION_SAVE,
-                                       GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                       GTK_STOCK_SAVE, GTK_RESPONSE_ACCEPT,
-                                       NULL);
-   gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (dialog),
-                                                   TRUE);
-
-   if (user_edited_a_new_document)
-     gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (dialog),
-                                        \"Untitled document\");
-   else
-     gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (dialog),
-                                    filename_for_existing_document);
-
-   if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_ACCEPT)
-     {
-       char *filename;
-
-       filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
-       save_to_file (filename);
-       g_free (filename);
-     @}
-
-   gtk_widget_destroy (dialog);
+    (gtk-widget-destroy dialog)))
   @end{pre}
-
   @subheading{Setting up a file chooser dialog}
     There are various cases in which you may need to use a
-    @class{gtk-file-chooser-dialog}:
+    @sym{gtk-file-chooser-dialog}:
     @begin{itemize}
       @begin{item}
         To select a file for opening, as for a File/Open command. Use
@@ -151,7 +132,6 @@
         To choose a folder instead of a file. Use @code{:select-folder}.
       @end{item}
     @end{itemize}
-
   @subheading{Note}
     Old versions of the file chooser's documentation suggested using the
     function @fun{gtk-file-chooser-set-current-folder} in various situations,
@@ -168,14 +148,12 @@
     @code{:cancel}. For example, you could call the function
     @fun{gtk-file-chooser-dialog-new} as follows:
     @begin{pre}
-   GtkWidget *dialog;
-
-   dialog = gtk_file_chooser_dialog_new (\"Open File\",
-                                         parent_window,
-                                         GTK_FILE_CHOOSER_ACTION_OPEN,
-                                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                         GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
-                                         NULL);
+ (let ((dialog (gtk-file-chooser-dialog-new \"Open File\"
+                                            parent-window
+                                            :open
+                                            \"gtk-cancel\" :cancel
+                                            \"gtk-open\" :accept)))
+   ... )
     @end{pre}
     This will create buttons for \"Cancel\" and \"Open\" that use stock response
     identifiers from @symbol{gtk-response-type}. For most dialog boxes you can
@@ -196,7 +174,13 @@
 
   @subheading{Note}
     To summarize, make sure you use a stock response code when you use
-    @class{gtk-file-chooser-dialog} to ensure proper operation.")
+    @sym{gtk-file-chooser-dialog} to ensure proper operation.
+  @see-class{gtk-dialog}
+  @see-class{gtk-file-chooser}
+  @see-class{gtk-file-chooser-widget}
+  @see-function{gtk-file-chooser-set-current-name}
+  @see-function{gtk-file-chooser-set-filename}
+  @see-function{gtk-file-chooser-dialog-new}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_dialog_new ()
@@ -204,14 +188,12 @@
 
 (defun gtk-file-chooser-dialog-new (title parent action &rest buttons)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-18}
+ "@version{2013-11-24}
   @argument[title]{title of the dialog, or @code{nil}}
-  @argument[parent]{Transient parent of the dialog, or @code{nil}}
+  @argument[parent]{transient parent of the dialog, or @code{nil}}
   @argument[action]{open or save mode for the dialog}
-  @argument[first-button-text]{stock ID or text to go in the first button,
-    or @code{nil}}
-  @argument[...]{response ID for the first button, then additional (button, id)
-    pairs}
+  @argument[buttons]{pairs with a button text or stock ID and the response ID
+    for the button of type @symbol{gtk-response-type}}
   @return{A new @class{gtk-file-chooser-dialog} widget.}
   @begin{short}
     Creates a new @class{gtk-file-chooser-dialog} widget. This function is
@@ -219,12 +201,15 @@
   @end{short}
 
   Since 2.4
+  @see-class{gtk-file-chooser-dialog}
   @see-function{gtk-dialog-new-with-buttons}"
   (let ((dialog (make-instance 'gtk-file-chooser-dialog
                                :title title
-                               :parent parent
                                :action action)))
-    (apply #'gtk-dialog-add-buttons (cons dialog buttons))
+    (when parent
+      (gtk-window-set-transient-for dialog parent))
+    (when buttons
+      (apply #'gtk-dialog-add-buttons (cons dialog buttons)))
     dialog))
 
 (export 'gtk-file-chooser-dialog-new)
