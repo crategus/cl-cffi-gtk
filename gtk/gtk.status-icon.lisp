@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.8.6 and modified to document the Lisp binding to the GDK library.
+;;; Version 3.8.6 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -597,196 +597,249 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_status_icon_new ()
-;;;
-;;; GtkStatusIcon * gtk_status_icon_new (void);
-;;;
-;;; Creates an empty status icon object.
-;;;
-;;; Returns :
-;;;     a new GtkStatusIcon
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-status-icon-new))
+
+(defun gtk-status-icon-new ()
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-24}
+  @return{A new @class{gtk-status-icon} widget.}
+  @short{Creates an empty status icon object.}
+
+  Since 2.10
+  @see-class{gtk-status-icon}"
+  (make-instance 'gtk-status-icon))
+
+(export 'gtk-status-icon)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_status_icon_new_from_pixbuf ()
-;;;
-;;; GtkStatusIcon * gtk_status_icon_new_from_pixbuf (GdkPixbuf *pixbuf);
-;;;
-;;; Creates a status icon displaying pixbuf.
-;;;
-;;; The image will be scaled down to fit in the available space in the
-;;; notification area, if necessary.
-;;;
-;;; pixbuf :
-;;;     a GdkPixbuf
-;;;
-;;; Returns :
-;;;     a new GtkStatusIcon
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_status_icon_new_from_pixbuf" gtk-status-icon-new-from-pixbuf)
+    (g-object gtk-status-icon)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-24}
+  @argument[pixbuf]{a @class{gdk-pixbuf} object}
+  @return{A new @class{gtk-status-icon} widget.}
+  @begin{short}
+    Creates a status icon displaying @arg{pixbuf}.
+  @end{short}
+
+  The image will be scaled down to fit in the available space in the
+  notification area, if necessary.
+
+  Since 2.10
+  @see-class{gtk-status-icon}"
+  (pixbuf (g-object gdk-pixbuf)))
+
+(export 'gtk-status-icon-new-from-pixbuf)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_status_icon_new_from_file ()
-;;;
-;;; GtkStatusIcon * gtk_status_icon_new_from_file (const gchar *filename);
-;;;
-;;; Creates a status icon displaying the file filename.
-;;;
-;;; The image will be scaled down to fit in the available space in the
-;;; notification area, if necessary.
-;;;
-;;; filename :
-;;;     a filename
-;;;
-;;; Returns :
-;;;     a new GtkStatusIcon
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_status_icon_new_from_file" gtk-status-icon-new-from-file)
+    (g-object gtk-status-icon)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-24}
+  @argument[filename]{a filename}
+  @return{A new @class{gtk-status-icon} widget.}
+  @begin{short}
+    Creates a status icon displaying the file @arg{filename}.
+  @end{short}
+
+  The image will be scaled down to fit in the available space in the
+  notification area, if necessary.
+
+  Since 2.10
+  @see-class{gtk-status-icon}"
+  (filename :string))
+
+(export 'gtk-status-icon-new-from-file)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_status_icon_new_from_stock ()
-;;;
-;;; GtkStatusIcon * gtk_status_icon_new_from_stock (const gchar *stock_id);
-;;;
-;;; Creates a status icon displaying a stock icon. Sample stock icon names are
-;;; GTK_STOCK_OPEN, GTK_STOCK_QUIT. You can register your own stock icon names,
-;;; see gtk_icon_factory_add_default() and gtk_icon_factory_add().
-;;;
-;;; stock_id :
-;;;     a stock icon id
-;;;
-;;; Returns :
-;;;     a new GtkStatusIcon
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_status_icon_new_from_stock" gtk-status-icon-new-from-stock)
+    (g-object gtk-status-icon)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-24}
+  @argument[stock-id]{a stock icon ID}
+  @return{A new @class{gtk-status-icon} widget.}
+  @begin{short}
+    Creates a status icon displaying a stock icon.
+  @end{short}
+  Sample stock icon names are \"gtk-open\", \"gtk-quit\". You can register your
+  own stock icon names, see the functions @fun{gtk-icon-factory-add-default}
+  and @fun{gtk-icon-factory-add}.
+
+  Since 2.10
+  @see-class{gtk-status-icon}
+  @see-function{gtk-icon-factory-add-default}
+  @see-function{gtk-icon-factory-add}"
+  (stock-id :string))
+
+(export 'gtk-status-icon-new-from-stock)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_status_icon_new_from_icon_name ()
-;;;
-;;; GtkStatusIcon * gtk_status_icon_new_from_icon_name (const gchar *icon_name);
-;;;
-;;; Creates a status icon displaying an icon from the current icon theme. If the
-;;; current icon theme is changed, the icon will be updated appropriately.
-;;;
-;;; icon_name :
-;;;     an icon name
-;;;
-;;; Returns :
-;;;     a new GtkStatusIcon
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_status_icon_new_from_icon_name"
+           gtk-status-icon-new-from-icon-name) (g-object gtk-status-icon)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-24}
+  @argument[icon-name]{an icon name}
+  @return{A new @class{gtk-status-icon} widget}
+  @begin{short}
+    Creates a status icon displaying an icon from the current icon theme.
+  @end{short}
+  If the current icon theme is changed, the icon will be updated appropriately.
+
+  Since 2.10
+  @see-class{gtk-status-icon}"
+  (icon-name :string))
+
+(export 'gtk-status-icon-new-from-icon-name)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_status_icon_new_from_gicon ()
-;;;
-;;; GtkStatusIcon * gtk_status_icon_new_from_gicon (GIcon *icon);
-;;;
-;;; Creates a status icon displaying a GIcon. If the icon is a themed icon, it
-;;; will be updated when the theme changes.
-;;;
-;;; icon :
-;;;     a GIcon
-;;;
-;;; Returns :
-;;;     a new GtkStatusIcon
-;;;
-;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_status_icon_new_from_gicon" gtk-status-icon-new-from-gicon)
+    (g-object gtk-status-icon)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-24}
+  @argument[icon]{a @class{g-icon} object}
+  @return{A new @class{gtk-status-icon} widget.}
+  @begin{short}
+    Creates a status icon displaying a @class{g-icon} object.
+  @end{short}
+  If the icon is a themed icon, it will be updated when the theme changes.
+
+  Since 2.14
+  @see-class{gtk-status-icon}
+  @see-class{g-icon}"
+  (icon (g-object g-icon)))
+
+(export 'gtk-status-icon-new-from-gicon)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_status_icon_set_from_pixbuf ()
-;;;
-;;; void gtk_status_icon_set_from_pixbuf (GtkStatusIcon *status_icon,
-;;;                                       GdkPixbuf *pixbuf);
-;;;
-;;; Makes status_icon display pixbuf. See gtk_status_icon_new_from_pixbuf() for
-;;; details.
-;;;
-;;; status_icon :
-;;;     a GtkStatusIcon
-;;;
-;;; pixbuf :
-;;;     a GdkPixbuf or NULL
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_status_icon_set_from_pixbuf" gtk-status-icon-set-from-pixbuf)
+    :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-24}
+  @argument[status-icon]{a @class{gtk-status-icon} widget}
+  @argument[pixbuf]{a @class{gdk-pixbuf} or @code{nil}}
+  @begin{short}
+    Makes @arg{status-icon} display @arg{pixbuf}.
+  @end{short}
+  See the function @fun{gtk-status-icon-new-from-pixbuf} for details.
+
+  Since 2.10
+  @see-class{gtk-status-icon}
+  @see-class{gdk-pixbuf}
+  @see-function{gtk-status-icon-new-from-pixbuf}"
+  (status-icon (g-object gtk-status-icon))
+  (pixbuf (g-object gdk-pixbuf)))
+
+(export 'gtk-status-icon-set-from-pixbuf)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_status_icon_set_from_file ()
-;;;
-;;; void gtk_status_icon_set_from_file (GtkStatusIcon *status_icon,
-;;;                                     const gchar *filename);
-;;;
-;;; Makes status_icon display the file filename. See
-;;; gtk_status_icon_new_from_file() for details.
-;;;
-;;; status_icon :
-;;;     a GtkStatusIcon
-;;;
-;;; filename :
-;;;     a filename
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_status_icon_set_from_file" gtk-status-icon-set-from-file) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-24}
+  @argument[status-icon]{a @class{gtk-status-icon} widget}
+  @argument[filename]{a filename}
+  @begin{short}
+    Makes @arg{status-icon} display the file filename.
+  @end{short}
+  See the function @fun{gtk-status-icon-new-from-file} for details.
+
+  Since 2.10
+  @see-class{gtk-status-icon}
+  @see-function{gtk-status-icon-new-from-file}"
+  (status-icon (g-object gtk-status-icon))
+  (filename :string))
+
+(export 'gtk-status-icon-set-from-file)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_status_icon_set_from_stock ()
-;;;
-;;; void gtk_status_icon_set_from_stock (GtkStatusIcon *status_icon,
-;;;                                      const gchar *stock_id);
-;;;
-;;; Makes status_icon display the stock icon with the id stock_id. See
-;;; gtk_status_icon_new_from_stock() for details.
-;;;
-;;; status_icon :
-;;;     a GtkStatusIcon
-;;;
-;;; stock_id :
-;;;     a stock icon id
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_status_icon_set_from_stock" gtk-status-icon-set-from-stock) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-24}
+  @argument[status-icon]{a @class{gtk-status-icon} widget}
+  @argument[stock-id]{a stock icon ID}
+  @begin{short}
+    Makes @arg{status-icon} display the stock icon with the ID @arg{stock-id.}
+  @end{short}
+  See the function @fun{gtk-status-icon-new-from-stock} for details.
+
+  Since 2.10
+  @see-class{gtk-status-icon}
+  @see-function{gtk-status-icon-new-from-stock}"
+  (status-icon (g-object gtk-status-icon))
+  (stock-id :string))
+
+(export 'gtk-status-icon-set-from-stock)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_status_icon_set_from_icon_name ()
-;;;
-;;; void gtk_status_icon_set_from_icon_name (GtkStatusIcon *status_icon,
-;;;                                          const gchar *icon_name);
-;;;
-;;; Makes status_icon display the icon named icon_name from the current icon
-;;; theme. See gtk_status_icon_new_from_icon_name() for details.
-;;;
-;;; status_icon :
-;;;     a GtkStatusIcon
-;;;
-;;; icon_name :
-;;;     an icon name
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_status_icon_set_from_icon_name"
+           gtk-status-icon-set-from-icon-name) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-24}
+  @argument[status-icon]{a @class{gtk-status-icon} widget}
+  @argument[icon-name]{an icon name}
+  @begin{short}
+    Makes @arg{status-icon} display the icon named @arg{icon-name} from the
+    current icon theme.
+  @end{short}
+  See the function @fun{gtk-status-icon-new-from-icon-name} for details.
+
+  Since 2.10
+  @see-class{gtk-status-icon}
+  @see-function{gtk-status-icon-new-from-icon-name}"
+  (status-icon (g-object gtk-status-icon))
+  (icon-name :string))
+
+(export 'gtk-status-icon-set-from-icon-name)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_status_icon_set_from_gicon ()
-;;;
-;;; void gtk_status_icon_set_from_gicon (GtkStatusIcon *status_icon,
-;;;                                      GIcon *icon);
-;;;
-;;; Makes status_icon display the GIcon. See gtk_status_icon_new_from_gicon()
-;;; for details.
-;;;
-;;; status_icon :
-;;;     a GtkStatusIcon
-;;;
-;;; icon :
-;;;     a GIcon
-;;;
-;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_status_icon_set_from_gicon" gtk-status-icon-set-from-gicon) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-24}
+  @argument[status-icon]{a @class{gtk-status-icon} widget}
+  @argument[icon]{a @class{g-icon} object}
+  @begin{short}
+    Makes @arg{status-icon} display the @class{g-icon}.
+  @end{short}
+  See the function @fun{gtk-status-icon-new-from-gicon} for details.
+
+  Since 2.14
+  @see-class{gtk-status-icon}
+  @see-function{gtk-status-icon-new-from-gicon}"
+  (status-icon (g-object gtk-status-icon))
+  (icon (g-object g-icon)))
+
+(export 'gtk-status-icon-set-from-gicon)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_status_icon_get_storage_type ()
@@ -1211,22 +1264,25 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_status_icon_set_name ()
-;;;
-;;; void gtk_status_icon_set_name (GtkStatusIcon *status_icon,
-;;;                                const gchar *name);
-;;;
-;;; Sets the name of this tray icon. This should be a string identifying this
-;;; icon. It may be used for sorting the icons in the tray and will not be
-;;; shown to the user.
-;;;
-;;; status_icon :
-;;;     a GtkStatusIcon
-;;;
-;;; name :
-;;;     the name
-;;;
-;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_status_icon_set_name" gtk-status-icon-set-name) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-24}
+  @argument[status-icon]{a @class{gtk-status-icon} widget}
+  @argument[name]{the name}
+  @begin{short}
+    Sets the name of this tray icon.
+  @end{short}
+  This should be a string identifying this icon. It may be used for sorting the
+  icons in the tray and will not be shown to the user.
+
+  Since 2.20
+  @see-class{gtk-status-icon}"
+  (status-icon (g-object gtk-status-icon))
+  (name :string))
+
+(export 'gtk-status-icon-set-name)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_status_icon_set_visible ()
