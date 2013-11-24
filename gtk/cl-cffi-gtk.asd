@@ -72,7 +72,6 @@
    (:file "gtk.activatable")           ; Interface for activatable widgets
    (:file "gtk.scrollable")            ; Interface for scrollable widgets
    (:file "gtk.actionable")            ; Interface for widgets that have actions
-   (:file "gtk.recent-chooser")        ; Displaying recently used files
 
    ;; Theming in Gtk+
    (:file "gtk.stock-images")          ; Manipulating stock icons
@@ -212,14 +211,6 @@
    (:file "gtk.radio-tool-button")     ; GtkRadioToolButton
    (:file "gtk.menu-tool-button")      ; GtkMenuToolButton
 
-   ;; Action-based menus and toolbars
-   (:file "gtk.ui-manager")            ; Constructing menus and toolbars
-   (:file "gtk.action-group")          ; Group of actions
-   (:file "gtk.action")                ; GtkAction
-   (:file "gtk.toggle-action")         ; GtkToggleAction
-   (:file "gtk.radio-action")          ; GtkRadioAction
-   (:file "gtk.recent-action")         ; List of recently used files
-
    ;; Selectors
    (:file "gtk.color-chooser")         ; Interface for choosing colors
    (:file "gtk.color-button")          ; Launch a color selection dialog
@@ -261,10 +252,19 @@
 
    ;; Recently Used Documents
    (:file "gtk.recent-manager")        ; Managing recently used files
+   (:file "gtk.recent-chooser")        ; Displaying recently used files
    (:file "gtk.recent-chooser-dialog") ; Displays recently used files
    (:file "gtk.recent-chooser-menu")   ; Displays recently used files in a menu
    (:file "gtk.recent-chooser-widget") ; Displays recently used files
    (:file "gtk.recent-filter")         ; Selecting recently used files
+
+   ;; Action-based menus and toolbars
+   (:file "gtk.ui-manager")            ; Constructing menus and toolbars
+   (:file "gtk.action-group")          ; Group of actions
+   (:file "gtk.action")                ; GtkAction
+   (:file "gtk.toggle-action")         ; GtkToggleAction
+   (:file "gtk.radio-action")          ; GtkRadioAction
+   (:file "gtk.recent-action")         ; List of recently used files
 
    ;; Choosing from installed applications
    (:file "gtk.app-chooser")           ; Interface for choosing an application
