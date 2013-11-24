@@ -1466,12 +1466,7 @@
     that window in @arg{win-x}, @arg{win-y}. Returns @code{nil} if the window
     under the mouse pointer is not known to GDK.
   @end{short}
-
-  @subheading{Note}
-    For multihead-aware widgets or applications use the function
-    @fun{gdk-display-get-window-at-pointer} instead.
   @see-class{gdk-window}
-  @fun{gdk-display-get-window-at-pointer}
   @fun{gdk-device-get-window-at-position}"
   (with-foreign-objects ((x :int) (y :int))
     (let ((window (%gdk-window-at-pointer x y)))
