@@ -653,7 +653,8 @@
 ;;; gtk_recent_info_ref ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_recent_info" gtk-recent-info) (g-boxed-foreign gtk-recent-info)
+(defcfun ("gtk_recent_info_ref" gtk-recent-info-ref)
+    (g-boxed-foreign gtk-recent-info)
  #+cl-cffi-gtk-documentation
  "@version{2013-11-22}
   @argument[info]{a @class{gtk-recent-info} structure}
