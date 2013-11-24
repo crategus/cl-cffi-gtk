@@ -23,10 +23,11 @@
                         (foreign-enum-value 'gtk-response-type :accept))
                ;; Get the file name and store it.
                (setf file-name (gtk-file-chooser-get-filename dialog)))
+               (if file-name
+                   (format t "Get the file ~A~%" file-name)
+                   (format t "The retrieval of a filename failed.~%"))
              ;; Destroy the dialog.
              (gtk-widget-destroy dialog)))
         ;; Show the dialog.
-        (gtk-widget-show dialog)))
-    (when file-name
-      (format t "~A~%" file-name))))
+        (gtk-widget-show dialog)))))
 
