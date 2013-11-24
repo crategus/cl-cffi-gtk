@@ -184,9 +184,9 @@ GTK+ Widgets and Objects
     gtk.color-selection-dialog.lisp  - GtkColorSelectionDialog(**) - GTK+ 3.6.4&
     gtk.hsv.lisp                     - GtkHSV (**)                 - GTK+ 3.6.4
 
-    gtk.file-chooser.lisp            - GtkFileChooser              - GTK+ 3.6.4&
+    gtk.file-chooser.lisp            - GtkFileChooser              - GTK+ 3.8.7&
     gtk.file-chooser-button.lisp     - GtkFileChooserButton        - GTK+ 3.6.4
-    gtk.file-chooser-dialog.lisp     - GtkFileChooserDialog        - GTK+ 3.6.4
+    gtk.file-chooser-dialog.lisp     - GtkFileChooserDialog        - GTK+ 3.8.7
     gtk.file-chooser-widget.lisp     - GtkFileChooserWidget        - GTK+ 3.6.4
     gtk.file-filter.lisp             - GtkFileFilter               - GTK+ 3.6.4&
 
@@ -270,11 +270,11 @@ GTK+ Widgets and Objects
   Recently Used Documents
 
     gtk.recent-manager-lisp          - GtkRecentManager            - GTK+ 3.8.6&
-    gtk.recent-chooser.lisp          - GtkRecentChooser            - GTK+ 3.6.4&
-    gtk.recent-chooser-dialog.lisp   - GtkRecentChooserDialog      - GTK+ 3.6.4&
-    gtk.recent-chooser-menu.lisp     - GtkRecentChooserMenu        - GTK+ 3.6.4&
-    gtk.recent-chooser-widget.lisp   - GtkRecentChooserWidget      - GTK+ 3.6.4&
-    gtk.recent-filter.lisp           - GtkRecentFilter             - GTK+ 3.6.4%
+    gtk.recent-chooser.lisp          - GtkRecentChooser            - GTK+ 3.8.6
+    gtk.recent-chooser-dialog.lisp   - GtkRecentChooserDialog      - GTK+ 3.8.6
+    gtk.recent-chooser-menu.lisp     - GtkRecentChooserMenu        - GTK+ 3.8.6
+    gtk.recent-chooser-widget.lisp   - GtkRecentChooserWidget      - GTK+ 3.8.6
+    gtk.recent-filter.lisp           - GtkRecentFilter             - GTK+ 3.6.4&
 
   Choosing from installed applications
 
