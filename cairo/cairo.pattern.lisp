@@ -417,25 +417,33 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_pattern_create_for_surface ()
-;;;
-;;; cairo_pattern_t * cairo_pattern_create_for_surface
-;;;                                                   (cairo_surface_t *surface)
-;;;
-;;; Create a new cairo_pattern_t for the given surface.
-;;;
-;;; surface :
-;;;     the surface
-;;;
-;;; Returns :
-;;;     the newly created cairo_pattern_t if successful, or an error pattern in
-;;;     case of no memory. The caller owns the returned object and should call
-;;;     cairo_pattern_destroy() when finished with it. This function will always
-;;;     return a valid pointer, but if an error occurred the pattern status will
-;;;     be set to an error. To inspect the status of a pattern use
-;;;     cairo_pattern_status().
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_pattern_create_for_surface" cairo-pattern-create-for-surface)
+    (:pointer (:struct cairo-pattern-t))
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-24}
+  @argument[surface]{the surface}
+  @begin{return}
+    The newly created @symbol{cairo-pattern-t} if successful, or an error
+    pattern in case of no memory. The caller owns the returned object and should
+    call the function @fun{cairo-pattern-destroy} when finished with it. This
+    function will always return a valid pointer, but if an error occurred the
+    pattern status will be set to an error. To inspect the status of a pattern
+    use the function @fun{cairo-pattern-status}.
+  @end{return}
+  @begin{short}
+    Create a new @symbol{cairo-pattern-t} for the given surface.
+  @end{short}
+
+  Since 1.0
+  @see-symbol{cairo-pattern-t}
+  @see-symbol{cairo-surface-t}
+  @see-function{cairo-pattern-destroy}
+  @see-function{cairo-pattern-status}"
+  (surface (:pointer (:struct cairo-surface-t))))
+
+(export 'cairo-pattern-create-for-surface)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_pattern_get_surface ()
