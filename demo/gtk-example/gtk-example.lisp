@@ -7,6 +7,7 @@
 (in-package :gtk-example)
 
 (load "dialog.lisp")
+(load "file-chooser-dialog.lisp")
 (load "grab.lisp")
 (load "list-store.lisp")
 (load "menu-builder.lisp")
