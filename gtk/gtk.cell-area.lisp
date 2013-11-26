@@ -1,9 +1,10 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.cell-area.lisp
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2012, 2013 Dieter Kaiser
 ;;;
@@ -758,54 +759,6 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; GtkCellCallback ()
-;;;
-;;; gboolean (*GtkCellCallback) (GtkCellRenderer *renderer, gpointer data);
-;;;
-;;; The type of the callback functions used for iterating over the cell
-;;; renderers of a GtkCellArea, see gtk_cell_area_foreach().
-;;;
-;;; renderer :
-;;;     the cell renderer to operate on
-;;;
-;;; data :
-;;;     user-supplied data
-;;;
-;;; Returns :
-;;;     TRUE to stop iterating over cells.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; GtkCellAllocCallback ()
-;;;
-;;; gboolean (*GtkCellAllocCallback) (GtkCellRenderer *renderer,
-;;;                                   const GdkRectangle *cell_area,
-;;;                                   const GdkRectangle *cell_background,
-;;;                                   gpointer data);
-;;;
-;;; The type of the callback functions used for iterating over the cell
-;;; renderers and their allocated areas inside a GtkCellArea, see
-;;; gtk_cell_area_foreach_alloc().
-;;;
-;;; renderer :
-;;;     the cell renderer to operate on
-;;;
-;;; cell_area :
-;;;     the area allocated to renderer inside the rectangle provided to
-;;;     gtk_cell_area_foreach_alloc().
-;;;
-;;; cell_background :
-;;;     the background area for renderer inside the background area provided to
-;;;     gtk_cell_area_foreach_alloc().
-;;;
-;;; data :
-;;;     user-supplied data
-;;;
-;;; Returns :
-;;;     TRUE to stop iterating over cells.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
 ;;; GTK_CELL_AREA_WARN_INVALID_CELL_PROPERTY_ID()
 ;;;
 ;;; #define GTK_CELL_AREA_WARN_INVALID_CELL_PROPERTY_ID(object,
@@ -879,6 +832,24 @@
 (export 'gtk-cell-area-has-renderer)
 
 ;;; ----------------------------------------------------------------------------
+;;; GtkCellCallback ()
+;;;
+;;; gboolean (*GtkCellCallback) (GtkCellRenderer *renderer, gpointer data);
+;;;
+;;; The type of the callback functions used for iterating over the cell
+;;; renderers of a GtkCellArea, see gtk_cell_area_foreach().
+;;;
+;;; renderer :
+;;;     the cell renderer to operate on
+;;;
+;;; data :
+;;;     user-supplied data
+;;;
+;;; Returns :
+;;;     TRUE to stop iterating over cells.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_area_foreach ()
 ;;;
 ;;; void gtk_cell_area_foreach (GtkCellArea *area,
@@ -897,6 +868,36 @@
 ;;;     user provided data pointer
 ;;;
 ;;; Since 3.0
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GtkCellAllocCallback ()
+;;;
+;;; gboolean (*GtkCellAllocCallback) (GtkCellRenderer *renderer,
+;;;                                   const GdkRectangle *cell_area,
+;;;                                   const GdkRectangle *cell_background,
+;;;                                   gpointer data);
+;;;
+;;; The type of the callback functions used for iterating over the cell
+;;; renderers and their allocated areas inside a GtkCellArea, see
+;;; gtk_cell_area_foreach_alloc().
+;;;
+;;; renderer :
+;;;     the cell renderer to operate on
+;;;
+;;; cell_area :
+;;;     the area allocated to renderer inside the rectangle provided to
+;;;     gtk_cell_area_foreach_alloc().
+;;;
+;;; cell_background :
+;;;     the background area for renderer inside the background area provided to
+;;;     gtk_cell_area_foreach_alloc().
+;;;
+;;; data :
+;;;     user-supplied data
+;;;
+;;; Returns :
+;;;     TRUE to stop iterating over cells.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -939,39 +940,38 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_area_event ()
-;;;
-;;; gint gtk_cell_area_event (GtkCellArea *area,
-;;;                           GtkCellAreaContext *context,
-;;;                           GtkWidget *widget,
-;;;                           GdkEvent *event,
-;;;                           const GdkRectangle *cell_area,
-;;;                           GtkCellRendererState flags);
-;;;
-;;; Delegates event handling to a GtkCellArea.
-;;;
-;;; area :
-;;;     a GtkCellArea
-;;;
-;;; context :
-;;;     the GtkCellAreaContext for this row of data.
-;;;
-;;; widget :
-;;;     the GtkWidget that area is rendering to
-;;;
-;;; event :
-;;;     the GdkEvent to handle
-;;;
-;;; cell_area :
-;;;     the widget relative coordinates for area
-;;;
-;;; flags :
-;;;     the GtkCellRendererState for area in this row.
-;;;
-;;; Returns :
-;;;     TRUE if the event was handled by area.
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_cell_area_event" gtk-cell-area-event) :int
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-26}
+  @argument[area]{a @class{gtk-cell-area} object}
+  @argument[context]{the @class{gtk-cell-area-context} for this row of data}
+  @argument[widget]{the @class{gtk-widget} that @arg{area} is rendering to}
+  @argument[event]{the @class{gdk-event} to handle}
+  @argument[cell-area]{the widget relative coordinates for @arg{area}}
+  @argument[flags]{the @symbol{gtk-cell-renderer-state} for @arg{area} in this
+    row}
+  @return{@em{True} if the event was handled by @arg{area}.}
+  @begin{short}
+    Delegates event handling to a @class{gtk-cell-area}.
+  @end{short}
+
+  Since 3.0
+  @see-class{gtk-cell-area}
+  @see-class{gtk-cell-area-context}
+  @see-class{gtk-widget}
+  @see-class{gdk-rectangle}
+  @see-symbol{gdk-event}
+  @see-symbol{gtk-cell-renderer-state}"
+  (area (g-object gtk-cell-area))
+  (context (g-object gtk-cell-area-context))
+  (widget (g-object gtk-widget))
+  (event (g-boxed-foreign gdk-event))
+  (cell-area (g-boxed-foreign gdk-rectangle))
+  (flags gtk-cell-renderer-state))
+
+(export 'gtk-cell-area-event)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_area_render ()
@@ -1705,42 +1705,42 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_area_activate ()
-;;;
-;;; gboolean gtk_cell_area_activate (GtkCellArea *area,
-;;;                                  GtkCellAreaContext *context,
-;;;                                  GtkWidget *widget,
-;;;                                  const GdkRectangle *cell_area,
-;;;                                  GtkCellRendererState flags,
-;;;                                  gboolean edit_only);
-;;;
-;;; Activates area, usually by activating the currently focused cell, however
-;;; some subclasses which embed widgets in the area can also activate a widget
-;;; if it currently has the focus.
-;;;
-;;; area :
-;;;     a GtkCellArea
-;;;
-;;; context :
-;;;     the GtkCellAreaContext in context with the current row data
-;;;
-;;; widget :
-;;;     the GtkWidget that area is rendering on
-;;;
-;;; cell_area :
-;;;     the size and location of area relative to widget's allocation
-;;;
-;;; flags :
-;;;     the GtkCellRendererState flags for area for this row of data.
-;;;
-;;; edit_only :
-;;;     if TRUE then only cell renderers that are
-;;;     GTK_CELL_RENDERER_MODE_EDITABLE will be activated.
-;;;
-;;; Returns :
-;;;     Whether area was successfully activated.
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_cell_area_activate" gtk-cell-area-activate) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-26}
+  @argument[area]{a @class{gtk-cell-area} object}
+  @argument[context]{the @class{gtk-cell-area-context} in context with the
+    current row data}
+  @argument[widget]{the @class{gtk-widget} that @arg{area} is rendering on}
+  @argument[cell-area]{the size and location of @arg{area} relative to widget's
+    allocation}
+  @argument[flags]{the @symbol{gtk-cell-renderer-state} flags for area for this
+    row of data}
+  @argument[edit-only]{if @em{true} then only cell renderers that are
+    @code{:editable} will be activated}
+  @return{Whether @arg{area} was successfully activated.}
+  @begin{short}
+    Activates @arg{area}, usually by activating the currently focused cell,
+    however some subclasses which embed widgets in the area can also activate a
+    widget if it currently has the focus.
+  @end{short}
+
+  Since 3.0
+  @see-class{gtk-cell-area}
+  @see-class{gtk-cell-area-context}
+  @see-class{gtk-widget}
+  @see-class{gdk-rectangle}
+  @see-symbol{gtk-cell-renderer-state}"
+  (area (g-object gtk-cell-area))
+  (context (g-object gtk-cell-area-context))
+  (widget (g-object gtk-widget))
+  (cell-area (g-boxed-foreign gdk-rectangle))
+  (flags gtk-cell-renderer-state)
+  (edit-only :boolean))
+
+(export 'gtk-cell-area-activate)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_area_focus ()
@@ -1981,42 +1981,41 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_area_activate_cell ()
-;;;
-;;; gboolean gtk_cell_area_activate_cell (GtkCellArea *area,
-;;;                                       GtkWidget *widget,
-;;;                                       GtkCellRenderer *renderer,
-;;;                                       GdkEvent *event,
-;;;                                       const GdkRectangle *cell_area,
-;;;                                       GtkCellRendererState flags);
-;;;
-;;; This is used by GtkCellArea subclasses when handling events to activate
-;;; cells, the base GtkCellArea class activates cells for keyboard events for
-;;; free in its own GtkCellArea->activate() implementation.
-;;;
-;;; area :
-;;;     a GtkCellArea
-;;;
-;;; widget :
-;;;     the GtkWidget that area is rendering onto
-;;;
-;;; renderer :
-;;;     the GtkCellRenderer in area to activate
-;;;
-;;; event :
-;;;     the GdkEvent for which cell activation should occur
-;;;
-;;; cell_area :
-;;;     the GdkRectangle in widget relative coordinates of renderer for the
-;;;     current row.
-;;;
-;;; flags :
-;;;     the GtkCellRendererState for renderer
-;;;
-;;; Returns :
-;;;     whether cell activation was successful
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_cell_area_activate_cell" gtk-cell-area-activate-cell) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-26}
+  @argument[area]{a @class{gtk-cell-area} object}
+  @argument[widget]{the @class{gtk-widget} that @arg{area} is rendering onto}
+  @argument[renderer]{the @class{gtk-cell-renderer} in @arg{area} to activate}
+  @argument[event]{the @class{gdk-event} for which cell activation should occur}
+  @argument[cell-area]{the @class{gdk-rectangle} in @arg{widget} relative
+    coordinates of @arg{renderer} for the current row.}
+  @argument[flags]{the @symbol{gtk-cell-renderer-state} for @arg{renderer}}
+  @return{Whether cell activation was successful.}
+  @begin{short}
+    This is used by @class{gtk-cell-area} subclasses when handling events to
+    activate cells, the base @class{gtk-cell-area} class activates cells for
+    keyboard events for free in its own @code{GtkCellArea->activate()}
+    implementation.
+  @end{short}
+
+  Since 3.0
+  @see-class{gtk-cell-area}
+  @see-class{gtk-widget}
+  @see-class{gtk-cell-renderer}
+  @see-class{gdk-event}
+  @see-class{gdk-rectangle}
+  @see-symbol{gtk-cell-renderer-state}"
+  (area (g-object gtk-cell-area))
+  (widget (g-object gtk-widget))
+  (renderer (g-object gtk-cell-renderer))
+  (event (g-boxed-foreign gdk-event))
+  (cell-area (g-boxed-foreign gdk-rectangle))
+  (flags gtk-cell-renderer-state))
+
+(export 'gtk-cell-renderer-activate-cell)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_area_stop_editing ()
