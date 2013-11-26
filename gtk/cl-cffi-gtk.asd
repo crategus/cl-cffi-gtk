@@ -164,9 +164,6 @@
    (:file "gtk.tree-store")            ; Tree-like data structure
    (:file "gtk.tree-selection")        ; Selection object for GtkTreeView
    (:file "gtk.cell-editable")         ; GtkCellEditable
-   (:file "gtk.cell-area")             ; Laying out GtkCellRenderers
-   (:file "gtk.cell-area-box")         ; GtkCellAreaBox
-   (:file "gtk.cell-area-context")     ; gtkCellAreaContext
    (:file "gtk.cell-renderer")         ; Object for rendering a cell
    (:file "gtk.cell-renderer-text")    ; Renders text in a cell
    (:file "gtk.cell-renderer-pixbuf")  ; Renders a pixbuf in a cell
@@ -176,6 +173,9 @@
    (:file "gtk.cell-renderer-spin")    ; Renders a spin button in a cell
    (:file "gtk.cell-renderer-toggle")  ; Renders a toggle button in a cell
    (:file "gtk.cell-renderer-spinner") ; Renders a spinning animation in a cell
+   (:file "gtk.cell-area")             ; Laying out GtkCellRenderers
+   (:file "gtk.cell-area-box")         ; GtkCellAreaBox
+   (:file "gtk.cell-area-context")     ; gtkCellAreaContext
    (:file "gtk.cell-view")             ; Displaying a single row
    (:file "gtk.icon-view")             ; List of icons in a grid
    (:file "gtk.list-store")            ; List-like data structure
