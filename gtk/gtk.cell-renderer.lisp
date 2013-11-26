@@ -87,7 +87,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-renderer-state atdoc:*symbol-name-alias*) "Flags"
       (gethash 'gtk-cell-renderer-state atdoc:*external-symbols*)
- "@version{2013-6-22}
+ "@version{2013-11-26}
   @short{Tells how a cell is to be rendererd.}
   @begin{pre}
 (define-g-flags \"GtkCellRendererState\" gtk-cell-renderer-state
@@ -110,7 +110,8 @@
     @entry[:focused]{The cell is in the focus row.}
     @entry[:expandable]{The cell is in a row that can be expanded. Since 3.4}
     @entry[:expanded]{The cell is in a row that is expanded. Since 3.4}
-  @end{table}")
+  @end{table}
+  @see-class{gtk-cell-renderer}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkCellRendererMode
