@@ -4760,6 +4760,8 @@
 ;;;     location to store allocated reverse path string, or NULL
 ;;; ----------------------------------------------------------------------------
 
+;; TODO: This function does not implement the argument path_reversed.
+
 (defcfun ("gtk_widget_path" %gtk-widget-path) :void
   (widget g-object)
   (path-length (:pointer :uint))
@@ -4768,33 +4770,34 @@
 
 (defun gtk-widget-path (widget &key (path-type :name))
  #+cl-cffi-gtk-documentation
- "@version{2013-1-6}
-  @argument[widget]{a @class{gtk-widget} instance}
+ "@version{2013-11-25}
+  @argument[widget]{a @class{gtk-widget} object}
   @argument[path-type]{@code{:name} or @code{:class}, the default value is
     @code{:name}}
   @return{Returns the path string, or @code{nil}}
+  @subheading{Warning}
+    The function @sym{gtk-widget-path} has been deprecated since version 3.0 and
+    should not be used in newly-written code. Use the function
+    @fun{gtk-widget-get-path} instead.
+
   @begin{short}
     Obtains the full path to @arg{widget}.
   @end{short}
   The path is simply the name of a widget and all its parents in the container
   hierarchy, separated by periods. The name of a widget comes from
   @fun{gtk-widget-get-name}. Paths are used to apply styles to a widget in gtkrc
-  configuration files. Widget names are the type of the widget by default (e.g.
+  configuration files. Widget names are the type of the widget by default (e. g.
   \"GtkButton\") or can be set to an application-specific value with
   @fun{gtk-widget-set-name}. By setting the name of a widget, you allow users or
   theme authors to apply styles to that specific widget in their gtkrc file.
-  @code{path_reversed_p} fills in the path in reverse order, i.e. starting with
-  widget's name instead of starting with the name of widget's outermost
-  ancestor.
 
-  With the a value of @code{:class} for the argument @arg{path-type} always
+  With a value of @code{:class} for the argument @arg{path-type} always
   uses the name of a widget's type, never uses a custom name set with
   @fun{gtk-widget-set-name}.
-  @begin[Warning]{dictionary}
-    @sym{gtk-widget-path} has been deprecated since version 3.0 and should not
-    be used in newly-written code. Use @fun{gtk-widget-get-path} instead
-  @end{dictionary}
-  @see-function{gtk-widget-get-path}"
+  @see-class{gtk-widget}
+  @see-function{gtk-widget-get-path}
+  @see-function{gtk-widget-get-name}
+  @see-function{gtk-widget-set-name}"
   (assert (typep path-type '(member :name :class)))
   (with-foreign-object (path :pointer)
     (ecase path-type
@@ -4851,11 +4854,12 @@
 
 (defcfun ("gtk_widget_get_composite_name" gtk-widget-get-composite-name) :string
  #+cl-cffi-gtk-documentation
- "@version{2013-6-17}
+ "@version{2013-11-25}
   @argument[widget]{a @class{gtk-widget} object}
   @return{The composite name of @arg{widget}, or @code{nil} if @arg{widget} is
     not a composite child.}
-  Obtains the composite name of a @arg{widget}.
+  Obtains the composite name of a widget.
+  @see-class{gtk-widget}
   @see-function{gtk-widget-set-composite-name}"
   (widget (g-object gtk-widget)))
 
@@ -4868,17 +4872,20 @@
 (defcfun ("gtk_widget_override_background_color"
            gtk-widget-override-background-color) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-6-17}
+ "@version{2013-11-25}
   @argument[widget]{a @class{gtk-widget} object}
-  @argument[state]{the state for which to set the background color}
-  @argument[color]{the color to assign, or @code{nil} to undo the effect of
-    previous calls to @sym{gtk-widget-override-background-color}}
-  @short{Sets the background color to use for a @arg{widget}.}
+  @argument[state]{the state of type @symbol{gtk-state-flags} for which to set
+    the background color}
+  @argument[color]{the color of type @class{gdk-rgba} to assign, or @code{nil}
+    to undo the effect of previous calls to the function
+    @sym{gtk-widget-override-background-color}}
+  @short{Sets the background color to use for a widget.}
 
   All other style values are left untouched. See the function
   @fun{gtk-widget-override-color}.
 
   Since 3.0
+  @see-class{gtk-widget}
   @see-function{gtk-widget-override-color}"
   (widget (g-object gtk-widget))
   (state gtk-state-flags)
@@ -4892,37 +4899,42 @@
 
 (defcfun ("gtk_widget_override_color" gtk-widget-override-color) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-1-6}
-  @argument[widget]{a @class{gtk-widget} instance}
-  @argument[state]{the state for which to set the color}
-  @argument[color]{the color to assign, or @code{nil} to undo the effect of
-    previous calls to @sym{gtk-widget-override-color}}
-  @short{Sets the color to use for a @arg{widget}.}
+ "@version{2013-11-25}
+  @argument[widget]{a @class{gtk-widget} object}
+  @argument[state]{the state of type @symbol{gtk-state-flags} for which to set
+    the color}
+  @argument[color]{the color of type @symbol{gdk-rgba} to assign, or @code{nil}
+    to undo the effect of previous calls to the function
+    @sym{gtk-widget-override-color}}
+  @short{Sets the color to use for a widget.}
   All other style values are left untouched.
 
-  Since 3.0
-  @begin[Notes]{dictionary}
+  @subheading{Notes}
     @begin{itemize}
       @begin{item}
         This API is mostly meant as a quick way for applications to change a
         widget appearance. If you are developing a widgets library and intend
         this change to be themeable, it is better done by setting meaningful CSS
-        classes and regions in your widget/container implementation through
-        @fun{gtk-style-context-add-class} and
-        @fun{gtk-style-context-add-region}.@br{}
+        classes and regions in your widget/container implementation through the
+        functions @fun{gtk-style-context-add-class} and
+        @fun{gtk-style-context-add-region}.
         This way, your widget library can install a @class{gtk-css-provider}
-        with the @code{GTK_STYLE_PROVIDER_PRIORITY_FALLBACK} priority in order
+        with the @var{+gtk-style-provider-priority-fallback+} priority in order
         to provide a default styling for those widgets that need so, and this
         theming may fully overridden by the user's theme.
       @end{item}
       @begin{item}
-        Note that for complex widgets this may bring in undesired results (such
-        as uniform background color everywhere), in these cases it is better to
+        Note that for complex widgets this may bring in undesired results, such
+        as uniform background color everywhere, in these cases it is better to
         fully style such widgets through a @class{gtk-css-provider}
-        with the @code{GTK_STYLE_PROVIDER_PRIORITY_APPLICATION} priority.
+        with the @var{+gtk-style-provider-priority-application+} priority.
       @end{item}
     @end{itemize}
-  @end{dictionary}
+  Since 3.0
+  @see-class{gtk-widget}
+  @see-class{gdk-rgba}
+  @see-class{gtk-css-provider}
+  @see-symbol{gdk-rgba}
   @see-function{gtk-style-context-add-class}
   @see-function{gtk-style-context-add-region}"
   (widget (g-object gtk-widget))
@@ -4937,15 +4949,17 @@
 
 (defcfun ("gtk_widget_override_font" gtk-widget-override-font) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-1-6}
-  @argument[widget]{a @class{gtk-widget} instance}
+ "@version{2013-11-25}
+  @argument[widget]{a @class{gtk-widget} object}
   @argument[font-desc]{the font description to use, or @code{nil} to undo the
-    effect of previous calls to @sym{gtk-widget-override-font}}
-  @short{Sets the font to use for a @arg{widget}.}
-  All other style values are left untouched. See
+    effect of previous calls to the function @sym{gtk-widget-override-font}}
+  @short{Sets the font to use for a widget.}
+  All other style values are left untouched. See the function
   @fun{gtk-widget-override-color}.
 
   Since 3.0
+  @see-class{gtk-widget}
+  @see-class{pango-font-description}
   @see-function{gtk-widget-override-color}"
   (widget (g-object gtk-widget))
   (font-desc (g-boxed-foreign pango-font-description)))
@@ -5082,20 +5096,24 @@
 
 (defcfun ("gtk_widget_modify_fg" gtk-widget-modify-fg) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-1-6}
-  @argument[widget]{a @class{gtk-widget} instance}
-  @argument[state]{the state for which to set the foreground color}
-  @argument[color]{the color to assign (does not need to be allocated), or
-    @code{nil} to undo the effect of previous calls to of
-    @sym{gtk-widget-modify-fg}}
-  @short{Sets the foreground color for a @arg{widget} in a particular state.}
+ "@version{2013-11-25}
+  @argument[widget]{a @class{gtk-widget} object}
+  @argument[state]{the state of type @symbol{gtk-state-type} for which to set
+    the foreground color}
+  @argument[color]{the color of type @symbol{gdk-color} to assign, does not need
+    to be allocated, or @code{nil} to undo the effect of previous calls to the
+    function @sym{gtk-widget-modify-fg}}
+  @subheading{Warning}
+    The function @sym{gtk-widget-modify-fg} has been deprecated since version
+    3.0 and should not be used in newly-written code. Use the function
+    @fun{gtk-widget-override-color} instead.
+
+  @short{Sets the foreground color for a widget in a particular state.}
 
   All other style values are left untouched.
-  @begin[Warning]{dictionary}
-    @sym{gtk-widget-modify-fg} has been deprecated since version 3.0 and should
-    not be used in newly-written code. Use @fun{gtk-widget-override-color}
-    instead.
-  @end{dictionary}
+  @see-class{gtk-widget}
+  @see-class{gdk-color}
+  @see-symbol{gtk-state-type}
   @see-function{gtk-widget-override-color}"
   (widget (g-object gtk-widget))
   (state gtk-state-type)
@@ -5109,30 +5127,34 @@
 
 (defcfun ("gtk_widget_modify_bg" gtk-widget-modify-bg) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-1-6}
-  @argument[widget]{a @class{gtk-widget} instance}
-  @argument[state]{the state for which to set the background color}
-  @argument[color]{the color to assign (does not need to be allocated), or
-    @code{nil} to undo the effect of previous calls to of
-    @sym{gtk-widget-modify-bg}}
+ "@version{2013-11-25}
+  @argument[widget]{a @class{gtk-widget} object}
+  @argument[state]{the state of type @symbol{gtk-state-type} for which to set
+    the background color}
+  @argument[color]{the color of type @symbol{gdk-color} to assign, does not need
+    to be allocated), or @code{nil} to undo the effect of previous calls of the
+    function @sym{gtk-widget-modify-bg}}
+  @subheading{Warning}
+    The function @sym{gtk-widget-modify-bg} has been deprecated since version
+    3.0 and should not be used in newly-written code. Use the function
+    @fun{gtk-widget-override-background-color} instead.
+
   @short{Sets the background color for a @arg{widget} in a particular state.}
 
   All other style values are left untouched.
-  @begin[Warning]{dictionary}
-    @sym{gtk-widget-modify-bg} has been deprecated since version 3.0 and should
-    not be used in newly-written code. Use
-    @fun{gtk-widget-override-background-color} instead.
-  @end{dictionary}
-  @begin[Note]{dictionary}
-    Note that \"no window\" widgets (which have the @code{:no-window} flag set)
+
+  @subheading{Note}
+    Note that \"no window\" widgets, which have the @code{:no-window} flag set,
     draw on their parent container's window and thus may not draw any background
-    themselves. This is the case for e.g. @class{gtk-label}.
+    themselves. This is the case for e. g. @class{gtk-label}.
 
     To modify the background of such widgets, you have to set the background
     color on their parent; if you want to set the background of a rectangular
     area around a label, try placing the label in a @class{gtk-event-box} widget
     and setting the background color on that.
-  @end{dictionary}
+  @see-class{gtk-widget}
+  @see-class{gdk-color}
+  @see-symbol{gtk-state-type}
   @see-function{gtk-widget-override-background-color}"
   (widget (g-object gtk-widget))
   (state gtk-state-type)
@@ -5146,22 +5168,28 @@
 
 (defcfun ("gtk_widget_modify_text" gtk-widget-modify-text) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-1-6}
-  @argument[widget]{a @class{gtk-widget} instance}
-  @argument[state]{the state for which to set the text color}
-  @argument[color]{the color to assign (does not need to be allocated), or
-    @code{nil} to undo the effect of previous calls to of
-    @sym{gtk-widget-modify-text}}
-  @short{Sets the text color for a @arg{widget} in a particular state.}
+ "@version{2013-11-25}
+  @argument[widget]{a @class{gtk-widget} object}
+  @argument[state]{the state of type @symbol{gtk-state-type} for which to set
+    the text color}
+  @argument[color]{the color of type @class{{gdk-color} to assign, does not need
+    to be allocated, or @code{nil} to undo the effect of previous calls of
+     the function @sym{gtk-widget-modify-text}}
+  @subheading{Warning}
+    The function @sym{gtk-widget-modify-text} has been deprecated since version
+    3.0 and should not be used in newly-written code. Use the function
+    @fun{gtk-widget-override-color} instead.
+
+  @short{Sets the text color for a widget in a particular state.}
 
   All other style values are left untouched. The text color is the foreground
-  color used along with the base color (see @fun{gtk-widget-modify-base}) for
-  widgets such as @class{gtk-entry} and @class{gtk-text-view}.
-  @begin[Warning]{dictionary}
-    @sym{gtk-widget-modify-text} has been deprecated since version 3.0 and
-    should not be used in newly-written code. Use
-    @fun{gtk-widget-override-color} instead
-  @end{dictionary}
+  color used along with the base color, see the function
+  @fun{gtk-widget-modify-base}, for widgets such as @class{gtk-entry} and
+  @class{gtk-text-view}.
+  @see-class{gtk-widget}
+  @see-class{gdk-color}
+  @see-symbol{gtk-state-type}
+  @see-function{gtk-widget-modify-base}
   @see-function{gtk-widget-override-color}"
   (widget (g-object gtk-widget))
   (state gtk-state-type)
@@ -5175,33 +5203,38 @@
 
 (defcfun ("gtk_widget_modify_base" gtk-widget-modify-base) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-1-6}
-  @argument[widget]{a @class{gtk-widget} instance}
-  @argument[state]{the state for which to set the base color}
-  @argument[color]{the color to assign (does not need to be allocated), or
-    @code{nil} to undo the effect of previous calls to of
-    @ym{gtk-widget-modify-base}}
+ "@version{2013-11-25}
+  @argument[widget]{a @class{gtk-widget} object}
+  @argument[state]{the state of type @symbol{gtk-state-type} for which to set
+    the base color}
+  @argument[color]{the color of type @symbol{gdk-color} to assign, does not need
+    to be allocated, or @code{nil} to undo the effect of previous calls to the
+    function @sym{gtk-widget-modify-base}}
+  @subheading{Warning}
+    The function @sym{gtk-widget-modify-base} has been deprecated since version
+    3.0 and should not be used in newly-written code. Use the function
+    @fun{gtk-widget-override-background-color} instead.
+
   @begin{short}
-    Sets the base color for a @arg{widget} in a particular state.
+    Sets the base color for a widget in a particular state.
   @end{short}
   All other style values are left untouched. The base color is the background
-  color used along with the text color (see @fun{gtk-widget-modify-text}) for
-  widgets such as @class{gtk-entry} and @class{gtk-text-view}.
-  @begin[Warning]{dictionary}
-    @sym{gtk-widget-modify-base} has been deprecated since version 3.0 and
-    should not be used in newly-written code. Use
-    @fun{gtk-widget-override-background-color} instead.
-  @end{dictionary}
-  @begin[Note]{dictionary}
-    Note that \"no window\" widgets (which have the @code{:no-window} flag set)
+  color used along with the text color, see the function
+  @fun{gtk-widget-modify-text}, for widgets such as @class{gtk-entry} and
+  @class{gtk-text-view}.
+
+  @subheading{Note}
+    Note that \"no window\" widgets, which have the @code{:no-window} flag set,
     draw on their parent container's window and thus may not draw any background
-    themselves. This is the case for e.g. @class{gtk-label}.
+    themselves. This is the case for e. g. @class{gtk-label}.
 
     To modify the background of such widgets, you have to set the base color on
     their parent; if you want to set the background of a rectangular area around
     a label, try placing the label in a @class{gtk-event-box} widget and setting
     the base color on that.
-  @end{dictionary}
+  @see-class{gtk-widget}
+  @see-class{gdk-color}
+  @see-symbol{gtk-state-type}
   @see-function{gtk-widget-modify-text}
   @see-function{gtk-widget-override-background-color}"
   (widget (g-object gtk-widget))
@@ -7036,56 +7069,66 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_cairo_should_draw_window ()
-;;;
-;;; gboolean gtk_cairo_should_draw_window (cairo_t *cr, GdkWindow *window);
-;;;
-;;; This function is supposed to be called in "draw" implementations for widgets
-;;; that support multiple windows. cr must be untransformed from invoking of the
-;;; draw function. This function will return TRUE if the contents of the given
-;;; window are supposed to be drawn and FALSE otherwise. Note that when the
-;;; drawing was not initiated by the windowing system this function will return
-;;; TRUE for all windows, so you need to draw the bottommost window first. Also,
-;;; do not use "else if" statements to check which window should be drawn.
-;;;
-;;; cr :
-;;;     a cairo context
-;;;
-;;; window :
-;;;     the window to check. window may not be an input-only window.
-;;;
-;;; Returns :
-;;;     TRUE if window should be drawn
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_cairo_should_draw_window" gtk-cairo-should-draw-window) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-26}
+  @argument[cr]{a cairo context}
+  @argument[window]{the window to check, @arg{window} may not be an input-only
+    window}
+  @return{@em{True} if @arg{window} should be drawn.}
+  @begin{short}
+    This function is supposed to be called in \"draw\" implementations for
+    widgets that support multiple windows.
+  @end{short}
+  @arg{cr} must be untransformed from invoking of the draw function. This
+  function will return @em{true} if the contents of the given window are
+  supposed to be drawn and @code{nil} otherwise. Note that when the drawing was
+  not initiated by the windowing system this function will return @em{true} for
+  all windows, so you need to draw the bottommost window first. Also, do not
+  use \"else if\" statements to check which window should be drawn.
+
+  Since 3.0
+  @see-class{gtk-widget}
+  @see-class{gdk-window}
+  @see-symbol{cairo-t}"
+  (cr (:pointer (:struct cairo-t)))
+  (window (g-object gdk-window)))
+
+(export 'gtk-cairo-should-draw-window)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_cairo_transform_to_window ()
-;;;
-;;; void gtk_cairo_transform_to_window (cairo_t *cr,
-;;;                                     GtkWidget *widget,
-;;;                                     GdkWindow *window);
-;;;
-;;; Transforms the given cairo context cr that from widget-relative coordinates
-;;; to window-relative coordinates. If the widget's window is not an ancestor of
-;;; window, no modification will be applied.
-;;;
-;;; This is the inverse to the transformation GTK applies when preparing an
-;;; expose event to be emitted with the "draw" signal. It is intended to help
-;;; porting multiwindow widgets from GTK+ 2 to the rendering architecture of
-;;; GTK+ 3.
-;;;
-;;; cr :
-;;;     the cairo context to transform
-;;;
-;;; widget :
-;;;     the widget the context is currently centered for
-;;;
-;;; window :
-;;;     the window to transform the context to
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_cairo_transform_to_window" gtk-cairo-transform-to-window) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-26}
+  @argument[cr]{the cairo context to transform}
+  @argument[widget]{the widget the context is currently centered for}
+  @argument[window]{the window to transform the context to}
+  @begin{short}
+    Transforms the given cairo context @arg{cr} from widget-relative coordinates
+    to window-relative coordinates.
+  @end{short}
+  If the widget's window is not an ancestor of @arg{window}, no modification
+  will be applied.
+
+  This is the inverse to the transformation GTK applies when preparing an
+  expose event to be emitted with the \"draw\" signal. It is intended to help
+  porting multiwindow widgets from GTK+ 2 to the rendering architecture of
+  GTK+ 3.
+
+  Since 3.0
+  @see-class{gtk-widget}
+  @see-class{gdk-window}
+  @see-symbol{cairo-t}"
+  (cr (:pointer (:struct cairo-t)))
+  (widget (g-object gtk-widget))
+  (window (g-object gdk-window)))
+
+(export 'gtk-cairo-transform-to-window)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_allocated_width ()
