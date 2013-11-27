@@ -2123,24 +2123,29 @@ tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_set_path ()
-;;;
-;;; void gtk_style_context_set_path (GtkStyleContext *context,
-;;;                                  GtkWidgetPath *path);
-;;;
-;;; Sets the GtkWidgetPath used for style matching. As a consequence, the style
-;;; will be regenerated to match the new given path.
-;;;
-;;; If you are using a GtkStyleContext returned from
-;;; gtk_widget_get_style_context(), you do not need to call this yourself.
-;;;
-;;; context :
-;;;     a GtkStyleContext
-;;;
-;;; path :
-;;;     a GtkWidgetPath
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_style_context_set_path" gtk-style-context-set-path) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-27}
+  @argument[context]{a @class{gtk-style-context} object}
+  @argument[path]{a @class{gtk-widget-path} structure}
+  @begin{short}
+    Sets the @class{gtk-widget-path} used for style matching. As a consequence,
+    the style will be regenerated to match the new given path.
+  @end{short}
+
+  If you are using a @class{gtk-style-context} returned from the function
+  @fun{gtk-widget-get-style-context}, you do not need to call this yourself.
+
+  Since 3.0
+  @see-class{gtk-style-context}
+  @see-class{gtk-widget-path}
+  @see-function{gtk-widget-get-style-context}"
+  (context (g-object gtk-style-context))
+  (object (g-boxed-foreign gtk-widget-path)))
+
+(export 'gtk-widget-path)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_add_class ()
