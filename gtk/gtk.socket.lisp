@@ -134,60 +134,80 @@
         @entry[socket]{The object which received the signal.}
         @entry[Returns]{@em{True} to stop other handlers from being invoked.}
       @end{table}
-  @end{dictionary}")
+  @end{dictionary}
+  @see-class{gtk-plug}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_socket_new ()
-;;;
-;;; GtkWidget * gtk_socket_new (void);
-;;;
-;;; Create a new empty GtkSocket.
-;;;
-;;; Returns :
-;;;     the new GtkSocket.
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-socket-new))
+
+(defun gtk-socket-new ()
+ #+cl-cffi-gtk-documentation
+ "@version{2014-11-27}
+  @return{The new @class{gtk-socket}.}
+  Create a new empty @class{gtk-socket}.
+  @see-class{gtk-socket}")
+
+(export 'gtk-socket)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_socket_add_id ()
-;;;
-;;; void gtk_socket_add_id (GtkSocket *socket_, Window window);
-;;;
-;;; Adds an XEMBED client, such as a GtkPlug, to the GtkSocket. The client may
-;;; be in the same process or in a different process.
-;;;
-;;; To embed a GtkPlug in a GtkSocket, you can either create the GtkPlug with
-;;; gtk_plug_new (0), call gtk_plug_get_id() to get the window ID of the plug,
-;;; and then pass that to the gtk_socket_add_id(), or you can call
-;;; gtk_socket_get_id() to get the window ID for the socket, and call
-;;; gtk_plug_new() passing in that ID.
-;;;
-;;; The GtkSocket must have already be added into a toplevel window before you
-;;; can make this call.
-;;;
-;;; socket_ :
-;;;     a GtkSocket
-;;;
-;;; window :
-;;;     the Window of a client participating in the XEMBED protocol.
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_socket_add_id" gtk-socket-add-id) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-27}
+  @argument[socket]{a @class{gtk-socket} widget}
+  @argument[window]{the Window of a client participating in the XEMBED protocol}
+  @begin{short}
+    Adds an XEMBED client, such as a @class{gtk-plug}, to the
+    @class{gtk-socket}.
+  @end{short}
+  The client may be in the same process or in a different process.
+
+  To embed a @class{gtk-plug} in a @class{gtk-socket}, you can either create the
+  @class{gtk-plug} with @code{gtk-plug-new 0)}, call the function
+  @fun{gtk-plug-get-id} to get the window ID of the plug, and then pass that to
+  the function @sym{gtk-socket-add-id}, or you can call the function
+  @fun{gtk-socket-get-id} to get the window ID for the socket, and call the
+  function @fun{gtk-plug-new} passing in that ID.
+
+  The @class{gtk-socket} must have already be added into a toplevel window
+  before you can make this call.
+  @see-class{gtk-socket}
+  @see-class{gtk-plug}
+  @see-function{gtk-plug-new}
+  @see-function{gtk-plug-get-id}
+  @see-function{gtk-socekt-get-id}"
+  (socket (g-object gtk-socket))
+  (window :pointer))
+
+(export 'gtk-socket-add-id)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_socket_get_id ()
-;;;
-;;; Window gtk_socket_get_id (GtkSocket *socket_);
-;;;
-;;; Gets the window ID of a GtkSocket widget, which can then be used to create a
-;;; client embedded inside the socket, for instance with gtk_plug_new().
-;;;
-;;; The GtkSocket must have already be added into a toplevel window before you
-;;; can make this call.
-;;;
-;;; socket_ :
-;;;     a GtkSocket.
-;;;
-;;; Returns :
-;;;     the window ID for the socket
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_socket_get_id" gtk-socket-get-id) :pointer
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-27}
+  @argument[socket]{a @class{gtk-socket}}
+  @return{The window ID for the socket.}
+  @begin{short}
+    Gets the window ID of a @class{gtk-socket} widget, which can then be used
+    to create a client embedded inside the socket, for instance with the
+    function @fun{gtk-plug-new}.
+  @end{short}
+
+  The @class{gtk-socket} must have already be added into a toplevel window
+  before you can make this call.
+  @see-class{gtk-socket}
+  @see-function{gtk-plug-new}"
+  (socket (g-object gtk-socket)))
+
+(export 'gtk-socket-get-id)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_socket_get_plug_window ()
