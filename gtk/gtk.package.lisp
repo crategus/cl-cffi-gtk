@@ -676,7 +676,34 @@
       not implemented
     @end{subsection}
     @begin[GtkThemingEngine]{subsection}
-      not implemented
+      Theming renderers
+
+      @about-class{GtkThemingEngineClass}
+      @about-class{gtk-theming-engine}
+      @about-function{gtk-theming-engine-get}
+      @about-function{gtk-theming-engine-get-direction}
+      @about-function{gtk-theming-engine-get-junction-sides}
+      @about-function{gtk-theming-engine-get-path}
+      @about-function{gtk-theming-engine-get-property}
+      @about-function{gtk-theming-engine-get-screen}
+      @about-function{gtk-theming-engine-get-state}
+      @about-function{gtk-theming-engine-get-style}
+      @about-function{gtk-theming-engine-get-style-property}
+      @about-function{gtk-theming-engine-get-style-valist}
+      @about-function{gtk-theming-engine-get-valist}
+      @about-function{gtk-theming-engine-get-color}
+      @about-function{gtk-theming-engine-get-background-color}
+      @about-function{gtk-theming-engine-get-border-color}
+      @about-function{gtk-theming-engine-get-border}
+      @about-function{gtk-theming-engine-get-padding}
+      @about-function{gtk-theming-engine-get-margin}
+      @about-function{gtk-theming-engine-get-font}
+      @about-function{gtk-theming-engine-has-class}
+      @about-function{gtk-theming-engine-has-region}
+      @about-function{gtk-theming-engine-lookup-color}
+      @about-function{gtk-theming-engine-state-is-running}
+      @about-function{gtk-theming-engine-load}
+      @about-function{gtk-theming-engine-register-property}
     @end{subsection}
     @begin[GtkWidgetPath]{subsection}
       Widget path abstraction.

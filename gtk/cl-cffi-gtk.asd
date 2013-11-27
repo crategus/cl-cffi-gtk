@@ -75,12 +75,13 @@
 
    ;; Theming in Gtk+
    (:file "gtk.stock-images")          ; Manipulating stock icons
+   (:file "gtk.widget-path")           ; Widget path abstraction
    (:file "gtk.style-context")         ; Rendering UI elements
    (:file "gtk.style-provider")        ; Interface to provide style information
+   (:file "gtk.theming-engine")        ; Theming renderers
    (:file "gtk.css-provider")          ; CSS-like styling for widgets
    (:file "gtk.icon-theme")            ; Looking up icons by name
    (:file "gtk.style")                 ; Functions for drawing widget parts
-   (:file "gtk.widget-path")           ; Widget path abstraction
 
    ;; Abstract Base Classes
    (:file "gtk.widget")                ; Base class for all widgets
