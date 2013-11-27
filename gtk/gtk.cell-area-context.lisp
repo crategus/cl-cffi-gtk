@@ -383,7 +383,7 @@
   @see-class{gtk-cell-area}
   @see-function{gtk-cell-area-context-reset}"
   (with-foreign-objects ((minimum-width :int) (natural-width :int))
-    (%gtk-cell-area-context-get-preferred-width widget
+    (%gtk-cell-area-context-get-preferred-width context
                                                 minimum-width
                                                 natural-width)
     (values (mem-ref minimum-width :int)
@@ -423,7 +423,7 @@
   @see-class{gtk-cell-area}
   @see-function{gtk-cell-area-context-reset}"
   (with-foreign-objects ((minimum-height :int) (natural-height :int))
-    (%gtk-cell-area-context-get-preferred-height widget
+    (%gtk-cell-area-context-get-preferred-height context
                                                  minimum-height
                                                  natural-height)
     (values (mem-ref minimum-height :int)
@@ -465,7 +465,7 @@
   @see-class{gtk-cell-area}
   @see-function{gtk-cell-area-context-reset}"
   (with-foreign-objects ((minimum-height :int) (natural-height :int))
-    (%gtk-cell-area-context-get-preferred-height-for-width widget
+    (%gtk-cell-area-context-get-preferred-height-for-width context
                                                            width
                                                            minimum-height
                                                            natural-height)
@@ -507,13 +507,13 @@
   @see-class{gtk-cell-area-context}
   @see-class{gtk-cell-area}
   @see-function{gtk-cell-area-context-reset}"
-  (with-foreign-objects ((minimum-height :int) (natural-height :int))
-    (%gtk-cell-area-context-get-preferred-height-for-width widget
-                                                           width
-                                                           minimum-height
-                                                           natural-height)
-    (values (mem-ref minimum-height :int)
-            (mem-ref natural-height :int))))
+  (with-foreign-objects ((minimum-width :int) (natural-width :int))
+    (%gtk-cell-area-context-get-preferred-height-for-width context
+                                                           height
+                                                           minimum-width
+                                                           natural-width)
+    (values (mem-ref minimum-width :int)
+            (mem-ref natural-width :int))))
 
 (export 'gtk-cell-area-context-get-preferred-height-for-width)
 
@@ -548,8 +548,8 @@
   @see-function{gtk-cell-area-context-reset}"
   (with-foreign-objects ((width :int) (height :int))
     (%gtk-cell-area-context-get-allocation context width height)
-    (values (mem-ref width)
-            (mem-ref height))))
+    (values (mem-ref width :int)
+            (mem-ref height :int))))
 
 (export 'gtk-cell-area-context-get-allocation)
 
