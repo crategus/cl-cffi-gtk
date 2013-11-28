@@ -3712,7 +3712,7 @@
   navigation. If @arg{widget} is not activatable, the function returns
   @code{nil}.
   @see-class{gtk-widget}"
-  (widget g-object))
+  (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-activate)
 
@@ -4763,7 +4763,7 @@
 ;; TODO: This function does not implement the argument path_reversed.
 
 (defcfun ("gtk_widget_path" %gtk-widget-path) :void
-  (widget g-object)
+  (widget (g-object gtk-widget))
   (path-length (:pointer :uint))
   (path (:pointer (:pointer :char)))
   (path-reversed (:pointer (:pointer :char))))
@@ -4843,7 +4843,7 @@
 ;;; Implemented only for use of gtk-widget-path and not exported
 
 (defcfun ("gtk_widget_class_path" %gtk-widget-class-path) :void
-  (widget g-object)
+  (widget (g-object gtk-widget))
   (path-length (:pointer :uint))
   (path (:pointer (:pointer :char)))
   (path-reversed (:pointer (:pointer :char))))
@@ -5249,18 +5249,19 @@
 
 (defcfun ("gtk_widget_modify_font" gtk-widget-modify-font) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-6-9}
+ "@version{2013-11-28}
   @argument[widget]{a @class{gtk-widget} object}
   @argument[font-desc]{the font description to use, or @code{nil} to undo the
     effect of previous calls to the function @sym{gtk-widget-modify-font}}
   @subheading{Warning}
-    @sym{gtk-widget-modify-font} has been deprecated since version 3.0 and
-    should not be used in newly written code. Use the
-    @fun{gtk-widget-override-font} function instead.
+    The function @sym{gtk-widget-modify-font} has been deprecated since version
+    3.0 and should not be used in newly written code. Use the function
+    @fun{gtk-widget-override-font} instead.
 
   @short{Sets the font to use for a widget.}
 
   All other style values are left untouched.
+  @see-class{gtk-widget}
   @see-function{gtk-widget-override-font}"
   (widget (g-object gtk-widget))
   (font-desc (g-boxed-foreign pango-font-description)))
@@ -5273,27 +5274,30 @@
 
 (defcfun ("gtk_widget_modify_cursor" gtk-widget-modify-cursor) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-1-6}
-  @argument[widget]{a @class{gtk-widget} instance}
-  @argument[primary]{the color to use for primary cursor (does not need to be
-    allocated), or @code{nil} to undo the effect of previous calls to of
-    @sym{gtk-widget-modify-cursor}.}
-  @argument[secondary]{the color to use for secondary cursor (does not need to
-    be allocated), or @code{nil} to undo the effect of previous calls to of
-    @sym{gtk-widget-modify-cursor}.}
+ "@version{2013-11-28}
+  @argument[widget]{a @class{gtk-widget} object}
+  @argument[primary]{the color to use for primary cursor, does not need to be
+    allocated, or @code{nil} to undo the effect of previous calls to of the
+    function @sym{gtk-widget-modify-cursor}.}
+  @argument[secondary]{the color to use for secondary cursor, does not need to
+    be allocated, or @code{nil} to undo the effect of previous calls to of the
+    function @sym{gtk-widget-modify-cursor}.}
+  @subheading{Warning}
+    The function @sym{gtk-widget-modify-cursor} is deprecated since version 3.0
+    and should not be used in newly-written code. Use the function
+    @fun{gtk-widget-override-cursor} instead.
+  
   @begin{short}
-    Sets the cursor color to use in a widget, overriding the \"cursor-color\"
-    and \"secondary-cursor-color\" style properties.
+    Sets the cursor color to use in a widget, overriding the
+    @code{\"cursor-color\"} and @code{\"secondary-cursor-color\"} style
+    properties.
   @end{short}
 
   All other style values are left untouched.
 
   Since 2.12
-  @begin[Warning]{dictionary}
-    @sym{gtk-widget-modify-cursor} is deprecated since version 3.0 and should
-    not be used in newly-written code. Use @fun{gtk-widget-override-cursor}
-    instead.
-  @end{dictionary}
+  @see-class{gtk-widget}
+  @see-class{gdk-color}
   @see-function{gtk-widget-override-cursor}"
   (widget (g-object gtk-widget))
   (primary (g-boxed-foreign gdk-color))
@@ -5306,18 +5310,20 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_create_pango_context" gtk-widget-create-pango-context)
-    (g-object :already-referenced)
+    (g-object pango-context :already-referenced)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-6}
-  @argument[widget]{a @class{gtk-widget} instance}
+ "@version{2013-11-28}
+  @argument[widget]{a @class{gtk-widget} object}
   @return{The new @class{pango-context}.}
   @begin{short}
     Creates a new @class{pango-context} with the appropriate font map, font
-    description, and base direction for drawing text for this @arg{widget}.
+    description, and base direction for drawing text for this widget.
   @end{short}
-  See also @fun{gtk-widget-get-pango-context}.
+  See also the function @fun{gtk-widget-get-pango-context}.
+  @see-class{gtk-widget}
+  @see-class{pango-context}
   @see-function{gtk-widget-get-pango-context}"
-  (widget g-object))
+  (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-create-pango-context)
 
@@ -5326,24 +5332,27 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_get_pango_context" gtk-widget-get-pango-context)
-    g-object
+    (g-object pango-context)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-6}
-  @argument[widget]{a @class{gtk-widget} instance}
-  @return{The @class{pango-context} for the @arg{widget}.}
+ "@version{2013-11-28}
+  @argument[widget]{a @class{gtk-widget} object}
+  @return{The @class{pango-context} for the widget.}
   @begin{short}
     Gets a @class{pango-context} with the appropriate font map, font
-    description, and base direction for this @arg{widget}.
+    description, and base direction for this widget.
   @end{short}
-  Unlike the context returned by @fun{gtk-widget-create-pango-context}, this
-  context is owned by the widget (it can be used until the screen for the widget
-  changes or the widget is removed from its toplevel), and will be updated to
-  match any changes to the widget's attributes.
+  Unlike the context returned by the function
+  @fun{gtk-widget-create-pango-context}, this context is owned by the widget, it
+  can be used until the screen for the widget changes or the widget is removed
+  from its toplevel, and will be updated to match any changes to the widget's
+  attributes.
 
   If you create and keep a @class{pango-layout} using this context, you must
-  deal with changes to the context by calling
+  deal with changes to the context by calling the function
   @fun{pango-layout-context-changed} on the layout in response to the
   \"style-updated\" and \"direction-changed\" signals for the widget.
+  @see-class{gtk-widget}
+  @see-class{pango-layout}
   @see-function{gtk-widget-create-pango-context}
   @see-function{pango-layout-context-changed}"
   (widget (g-object gtk-widget)))
@@ -5357,19 +5366,21 @@
 (defcfun ("gtk_widget_create_pango_layout" gtk-widget-create-pango-layout)
     (g-object pango-layout :already-referenced)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-6}
-  @argument[widget]{a @class{gtk-widget} instance}
-  @argument[text]{text to set on the layout (can be @code{nil})}
-  @return{the new @class{pango-layout}}
+ "@version{2013-11-28}
+  @argument[widget]{a @class{gtk-widget} object}
+  @argument[text]{text to set on the layout, can be @code{nil}}
+  @return{The new @class{pango-layout}.}
   @begin{short}
     Creates a new @class{pango-layout} with the appropriate font map, font
-    description, and base direction for drawing text for this @arg{widget}.
+    description, and base direction for drawing text for this widget.
   @end{short}
 
   If you keep a @class{pango-layout} created in this way around, in order to
-  notify the layout of changes to the base direction or font of this
-  @arg{widget}, you must call @fun{pango-layout-context-changed} in response to
+  notify the layout of changes to the base direction or font of this widget,
+  you must call the function @fun{pango-layout-context-changed} in response to
   the \"style-updated\" and \"direction-changed\" signals for the widget.
+  @see-class{gtk-widget}
+  @see-class{pango-layout}
   @see-function{pango-layout-context-changed}"
   (widget (g-object gtk-widget))
   (text :string))
@@ -5382,34 +5393,39 @@
 
 (defcfun ("gtk_widget_render_icon" gtk-widget-render-icon) g-object
  #+cl-cffi-gtk-documentation
- "@version{2013-1-6}
-  @argument[widget]{a @class{gtk-widget} instance}
+ "@version{2013-11-28}
+  @argument[widget]{a @class{gtk-widget} object}
   @argument[stock-id]{a stock ID}
-  @argument[size]{a stock size. A size of @code{(GtkIconSize)-1} means render at
-    the size of the source and don't scale (if there are multiple source sizes,
-    GTK+ picks one of the available sizes)}
+  @argument[size]{a stock size of type @symbol{gtk-icon-size}, a size of
+    @code{(GtkIconSize)-1} means render at the size of the source and do not
+    scale, if there are multiple source sizes, GTK+ picks one of the available
+    sizes}
   @argument[detail]{render detail to pass to theme engine}
-  @return{A new pixbuf, or @code{nil} if the stock ID wasn't known}
+  @return{A new pixbuf, or @code{nil} if the stock ID was not known.}
+  @subheading{Warning}
+    The function @sym{gtk-widget-render-icon} has been deprecated since version
+    3.0 and should not be used in newly-written code. Use the function
+    @fun{gtk-widget-render-icon-pixbuf} instead.
+  
   @begin{short}
     A convenience function that uses the theme settings for widget to look up
     @arg{stock-id} and render it to a pixbuf.
   @end{short}
-  @arg{stock-id} should be a stock icon ID such as @code{GTK_STOCK_OPEN} or
-  @code{GTK_STOCK_OK}. @arg{size} should be a size such as
-  @code{GTK_ICON_SIZE_MENU}. @arg{detail} should be a string that identifies the
-  widget or code doing the rendering, so that theme engines can special-case
-  rendering for that widget or code.
+  @arg{stock-id} should be a stock icon ID such as @code{\"gtk-open\"} or
+  @code{\"gtk-ok\"}. @arg{size} should be a size such as @code{:menu}.
+  @arg{detail} should be a string that identifies the widget or code doing the
+  rendering, so that theme engines can special-case rendering for that widget
+  or code.
 
   The pixels in the returned @class{gdk-pixbuf} are shared with the rest of the
   application and should not be modified. The pixbuf should be freed after use
-  with @fun{g-object-unref}.
-  @begin[Warning]{dictionary}
-    @sym{gtk-widget-render-icon} has been deprecated since version 3.0 and
-    should not be used in newly-written code. Use
-    @fun{gtk-widget-render-icon-pixbuf} instead.
-  @end{dictionary}
-  @see-function{gtk-widget-render-icon-pixbuf}"
-  (widget g-object)
+  with the function @fun{g-object-unref}.
+  @see-class{gtk-widget}
+  @see-class{gdk-pixbuf}
+  @see-symbol{gtk-icon-size}
+  @see-function{gtk-widget-render-icon-pixbuf}
+  @see-function{g-object-unref}"
+  (widget (g-object gtk-widget))
   (stock-id :string)
   (size gtk-icon-size)
   (detail :string))
@@ -5423,18 +5439,19 @@
 (defcfun ("gtk_widget_render_icon_pixbuf" gtk-widget-render-icon-pixbuf)
     (g-object gdk-pixbuf)
  #+cl-cffi-gtk-documentation
- "@version{2013-10-2}
+ "@version{2013-11-28}
   @argument[widget]{a @class{gtk-widget} object}
   @argument[stock-id]{a stock ID}
-  @argument[size]{a stock size, a size of @code{(GtkIconSize)-1} means render at
-    the size of the source and do not scale (if there are multiple source sizes,
-    GTK+ picks one of the available sizes)}
+  @argument[size]{a stock size of type @symbol{gtk-icon-size}, a size of
+    @code{(GtkIconSize)-1} means render at the size of the source and do not
+    scale, if there are multiple source sizes, GTK+ picks one of the available
+    sizes}
   @return{A new pixbuf, or @code{nil} if the stock ID was not known.}
   @begin{short}
     A convenience function that uses the theme engine and style settings for
-    widget to look up @arg{stock-id} and render it to a pixbuf. @arg{stock-id}
-    should be a stock icon ID such as @code{\"gtk-open\"} or @code{\"gtk-ok\"}.
-    @arg{size} should be a size such as @code{:menu}.
+    @arg{widget} to look up @arg{stock-id} and render it to a pixbuf.
+    @arg{stock-id} should be a stock icon ID such as @code{\"gtk-open\"} or
+    @code{\"gtk-ok\"}. @arg{size} should be a size such as @code{:menu}.
   @end{short}
 
   The pixels in the returned @class{gdk-pixbuf} object are shared with the rest
@@ -5444,7 +5461,8 @@
   Since 3.0
   @see-class{gtk-widget}
   @see-class{gdk-pixbuf}
-  @see-symbol{gtk-icon-size}"
+  @see-symbol{gtk-icon-size}
+  @see-function{g-object-unref}"
   (widget (g-object gtk-widget))
   (stock-id :string)
   (size gtk-icon-size))
@@ -6144,7 +6162,7 @@
   current focus location.
   @see-function{gtk-widget-grab-focus}
   @see-function{gtk-container-set-focus-chain}"
-  (widget g-object)
+  (widget (g-object gtk-widget))
   (direction gtk-direction-type))
 
 (export 'gtk-widget-child-focus)
@@ -6190,7 +6208,7 @@
   This is the analogue of @fun{g-object-freeze-notify} for child properties.
   @see-function{gtk-widget-thaw-child-notify}
   @see-function{g-object-freeze-notify}"
-  (widget g-object))
+  (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-freeze-child-notify)
 
@@ -6249,7 +6267,7 @@
   Note that this function can only be called when the @class{gtk-widget} is
   attached to a toplevel, since the settings object is specific to a particular
   @class{gdk-screen}."
-  (widget g-object))
+  (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-get-settings)
 
@@ -6304,7 +6322,7 @@
   unrealized.
 
   Since 2.2"
-  (widget g-object))
+  (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-get-display)
 
@@ -6329,7 +6347,7 @@
   should free those resources when the widget is unrealized.
 
   Since 2.2"
-  (widget g-object))
+  (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-get-root-window)
 
@@ -6354,7 +6372,7 @@
   unrealized.
 
   Since 2.2"
-  (widget g-object))
+  (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-get-screen)
 
@@ -6376,7 +6394,7 @@
   hierarchy with a toplevel window at the top.
 
   Since 2.2"
-  (widget g-object))
+  (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-has-screen)
 
@@ -6542,7 +6560,7 @@
   This causes all queued \"child-notify\" signals on @arg{widget} to be
   emitted.
   @see-function{gtk-widget-freeze-child-notify}"
-  (widget g-object))
+  (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-thaw-child-notify)
 
@@ -6654,7 +6672,7 @@
   connection to the \"destroy\" signal or a weak notifier.
 
   Since 2.4"
-  (widget g-object)
+  (widget (g-object gtk-widget))
   (label g-object))
 
 (export 'gtk-widget-add-mnemonic-label)
@@ -6679,7 +6697,7 @@
   Since 2.4
   @see-function{gtk-widget-list-mnemonic-labels}
   @see-function{gtk-widget-add-mnemoic-label}"
-  (widget g-object)
+  (widget (g-object gtk-widget))
   (label g-object))
 
 (export 'gtk-widget-remove-mnemonic-label)
@@ -6707,7 +6725,7 @@
   Since 2.10
   @see-class{gtk-widget}
   @see-function{gdk-window-set-composited}"
-  (widget g-object))
+  (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-is-composited)
 
@@ -7000,7 +7018,7 @@
 
   Since 2.12
   @see-function{gtk-tooltip-trigger-tooltip-query}"
-  (widget g-object))
+  (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-trigger-tooltip-query)
 
@@ -7180,7 +7198,7 @@
 ;; new type GtkAllocation is a synonym for GdkRectangle
 
 (defcfun ("gtk_widget_get_allocation" %gtk-widget-get-allocation) :void
-  (widget g-object)
+  (widget (g-object gtk-widget))
   (allocation (g-boxed-foreign gdk-rectangle)))
 
 (defun gtk-widget-get-allocation (widget)
