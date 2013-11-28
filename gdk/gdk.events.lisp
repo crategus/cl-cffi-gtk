@@ -295,7 +295,7 @@
 (defcfun ("gdk_event_new" gdk-event-new) (g-boxed-foreign gdk-event)
  #+cl-cffi-gtk-documentation
  "@version{2013-9-20}
-  @argument[type]{a @class{gdk-event-type}}
+  @argument[type]{a @symbol{gdk-event-type}}
   @return{A newly-allocated @class{gdk-event}.}
   @begin{short}
     Creates a new event of the given type. All fields are set to 0.
@@ -957,7 +957,7 @@
   Since 3.0
   @see-class{gdk-event}
   @see-class{gdk-device}
-  @see-function{gdk-window}
+  @see-class{gdk-window}
   @see-function{gdk-event-get-device}"
   (event (g-boxed-foreign gdk-event)))
 

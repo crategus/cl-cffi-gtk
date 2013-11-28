@@ -422,7 +422,7 @@
 
   Since 2.22
   @see-class{gdk-visual}
-  @see-function{gdk-visuel-get-red-pixel-details}
+  @see-function{gdk-visual-get-red-pixel-details}
   @see-function{gdk-visual-get-blue-pixel-details}"
   (with-foreign-objects ((mask :uint32) (shift :int) (precision :int))
     (%gdk-visual-get-green-pixel-details visual mask shift precision)
