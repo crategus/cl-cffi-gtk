@@ -170,7 +170,7 @@ GTK+ Widgets and Objects
     gtk.action-group.lisp            - GtkActionGroup              - GTK+ 3.6.4&
     gtk.action.lisp                  - GtkAction                   - GTK+ 3.6.4&
     gtk.toggle-action.lisp           - GtkToggleAction             - GTK+ 3.6.4&
-    gtk.radio-action.lisp            - GtkRadioAction              - GTK+ 3.6.4&
+    gtk.radio-action.lisp            - GtkRadioAction              - GTK+ 3.6.4
     gtk.recent-action.lisp           - GtkRecentAction             - GTK+ 3.6.4&
     gtk.activatable.lisp             - GtkActivatable              - GTK+ 3.6.4&
 
