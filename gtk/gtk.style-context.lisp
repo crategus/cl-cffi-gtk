@@ -1150,26 +1150,22 @@ tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
 (setf (documentation (atdoc:get-slot-from-name "direction"
                                                'gtk-style-context) 't)
  "The @code{\"direction\"} property of type @symbol{gtk-text-direction}
-  (Read / Write)@br{}
-  Text direction.@br{}
+  (Read / Write) @br{}
+  Text direction. @br{}
   Default value: @code{:ltr}")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "parent" 'gtk-style-context) 't)
  "The @code{\"parent\"} property of type @class{gtk-style-context}
-  (Read / Write)@br{}
+  (Read / Write) @br{}
   Sets or gets the style context's parent.
-  See the function @fun{gtk-style-context-set-parent} for details.@br{}
+  See the function @fun{gtk-style-context-set-parent} for details. @br{}
   Since 3.4")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "screen" 'gtk-style-context) 't)
  "The @code{\"screen\"} property of type @class{gdk-screen}
-  (Read / Write)@br{}
+  (Read / Write) @br{}
   The associated @class{gdk-screen} object.")
 
 ;;; ----------------------------------------------------------------------------
@@ -1182,29 +1178,34 @@ tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
 (setf (gethash 'gtk-style-context-direction atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-style-context-direction 'function)
- "@version{2013-3-15}
+ "@version{2013-11-28}
   Accessor of the slot @code{\"direction\"} of the @class{gtk-style-context}
-  class.")
-
-;;; ----------------------------------------------------------------------------
+  class.
+  @see-class{gtk-style-context}
+  @see-function{gtk-style-context-get-direction}
+  @see-function{gtk-style-context-set-direction}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-style-context-parent atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-style-context-parent 'function)
- "@version{2013-3-15}
+ "@version{2013-11-28}
   Accessor of the slot @code{\"parent\"} of the @class{gtk-style-context}
-  class.")
-
-;;; ----------------------------------------------------------------------------
+  class.
+  @see-class{gtk-style-context}
+  @see-function{gtk-style-context-get-parent}
+  @see-function{gtk-style-context-set-parent}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-style-context-screen atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-style-context-screen 'function)
- "@version{2013-3-15}
+ "@version{2013-11-28}
   Accessor of the slot @code{\"screen\"} of the @class{gtk-style-context}
-  class.")
+  class.
+  @see-class{gtk-style-context}
+  @see-function{gtk-style-context-get-screen}
+  @see-function{gtk-style-context-set-screen}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_new ()
@@ -1322,19 +1323,24 @@ tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_get_direction ()
-;;;
-;;; GtkTextDirection gtk_style_context_get_direction (GtkStyleContext *context);
-;;;
-;;; Returns the widget direction used for rendering.
-;;;
-;;; context :
-;;;     a GtkStyleContext
-;;;
-;;; Returns :
-;;;     the widget direction
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-style-context-get-direction))
+
+(defun gtk-style-context-get-direction (context)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-28}
+  @argument[context]{a @class{gtk-style-context} object}
+  @return{The widget direction of type @symbol{gtk-text-direction}.}
+  @short{Returns the widget direction used for rendering.}
+
+  Since 3.0
+  @see-class{gtk-style-context}
+  @see-symbol{gtk-text-direction}
+  @see-function{gtk-style-context-set-direction}"
+  (gtk-style-context-direction context))
+
+(export 'gtk-style-context-get-direction)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_get_junction_sides ()
@@ -1355,20 +1361,27 @@ tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_get_parent ()
-;;;
-;;; GtkStyleContext * gtk_style_context_get_parent (GtkStyleContext *context);
-;;;
-;;; Gets the parent context set via gtk_style_context_set_parent(). See that
-;;; function for details.
-;;;
-;;; context :
-;;;     a GtkStyleContext
-;;;
-;;; Returns :
-;;;     the parent context or NULL
-;;;
-;;; Since 3.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-style-context-get-parent))
+
+(defun gtk-style-context-get-parent (context)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-28}
+  @argument[context]{a @class{gtk-style-context} object}
+  @return{The parent context or @code{nil}.}
+  @begin{short}
+    Gets the parent context set via the function
+    @fun{gtk-style-context-set-parent}.
+  @end{short}
+  See that function for details.
+
+  Since 3.4
+  @see-class{gtk-style-context}
+  @see-function{gtk-style-context-set-parent}"
+  (gtk-style-context-get-parent context))
+
+(export 'gtk-style-context-get-parent)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_get_path ()
@@ -1416,17 +1429,21 @@ tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_get_screen ()
-;;;
-;;; GdkScreen * gtk_style_context_get_screen (GtkStyleContext *context);
-;;;
-;;; Returns the GdkScreen to which context is attached.
-;;;
-;;; context :
-;;;     a GtkStyleContext
-;;;
-;;; Returns :
-;;;     a GdkScreen
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-style-context-get-screen))
+
+(defun gtk-style-context-get-screen (context)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-28}
+  @argument[context]{a @class{gtk-style-context} object}
+  @return{A @class{gdk-screen} object.}
+  Returns the @class{gdk-screen} object to which @arg{context} is attached.
+  @see-class{gtk-style-context}
+  @see-function{gtk-style-context-set-screen}"
+  (gtk-style-context-screen context))
+
+(export 'gtk-style-context-get-screen)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_get_state ()
@@ -1713,19 +1730,25 @@ tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_invalidate ()
-;;;
-;;; void gtk_style_context_invalidate (GtkStyleContext *context);
-;;;
-;;; Invalidates context style information, so it will be reconstructed again.
-;;;
-;;; If you're using a GtkStyleContext returned from
-;;; gtk_widget_get_style_context(), you do not need to call this yourself.
-;;;
-;;; context :
-;;;     a GtkStyleContext.
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_style_context_invalidate" gtk-style-context-invalidate) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-26}
+  @argument[context]{a @class{gtk-style-context} object}
+  @begin{short}
+    Invalidates context style information, so it will be reconstructed again.
+  @end{short}
+
+  If you are using a @class{gtk-style-context} returned from the function
+  @fun{gtk-widget-get-style-context}, you do not need to call this yourself.
+
+  Since 3.0
+  @see-class{gtk-widget}
+  @see-function{gtk-widget-get-style-context}"
+  (context (g-object gtk-style-context)))
+
+(export 'gtk-style-context-invalidate)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_state_is_running ()
@@ -1781,126 +1804,142 @@ tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_lookup_icon_set ()
-;;;
-;;; GtkIconSet * gtk_style_context_lookup_icon_set (GtkStyleContext *context,
-;;;                                                 const gchar *stock_id);
-;;;
-;;; Looks up stock_id in the icon factories associated to context and the
-;;; default icon factory, returning an icon set if found, otherwise NULL.
-;;;
-;;; context :
-;;;     a GtkStyleContext
-;;;
-;;; stock_id :
-;;;     an icon name
-;;;
-;;; Returns :
-;;;     The looked up GtkIconSet, or NULL.
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_style_context_lookup_icon_set" gtk-style-lookup-icon-set)
+    (g-boxed-foreign gtk-icon-set)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-28}
+  @argument[context]{a @class{gtk-style-context} object}
+  @argument[stock-id]{an icon name}
+  @return{The looked up @class{gtk-icon-set}, or @code{nil}.}
+  Looks up @arg{stock-id} in the icon factories associated to context and the
+  default icon factory, returning an icon set if found, otherwise @code{nil}.
+  @see-class{gtk-style-context}
+  @see-class{gtk-icon-set}"
+  (context (g-object gtk-style-context))
+  (stock-id :string))
+
+(export 'gtk-style-context-lookup-icon-set)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_notify_state_change ()
-;;;
-;;; void gtk_style_context_notify_state_change (GtkStyleContext *context,
-;;;                                             GdkWindow *window,
-;;;                                             gpointer region_id,
-;;;                                             GtkStateType state,
-;;;                                             gboolean state_value);
-;;;
-;;; Notifies a state change on context, so if the current style makes use of
-;;; transition animations, one will be started so all rendered elements under
-;;; region_id are animated for state state being set to value state_value.
-;;;
-;;; The window parameter is used in order to invalidate the rendered area as the
-;;; animation runs, so make sure it is the same window that is being rendered on
-;;; by the gtk_render_*() functions.
-;;;
-;;; If region_id is NULL, all rendered elements using context will be affected
-;;; by this state transition.
-;;;
-;;; As a practical example, a GtkButton notifying a state transition on the
-;;; prelight state:
-;;;
-;;;   gtk_style_context_notify_state_change (context,
-;;;                                          gtk_widget_get_window (widget),
-;;;                                          NULL,
-;;;                                          GTK_STATE_PRELIGHT,
-;;;                                          button->in_button);
-;;;
-;;; Can be handled in the CSS file like this:
-;;;
-;;;   GtkButton {
-;;;       background-color: #f00
-;;;   }
-;;;
-;;;   GtkButton:hover {
-;;;       background-color: #fff;
-;;;       transition: 200ms linear
-;;;   }
-;;;
-;;; This combination will animate the button background from red to white if a
-;;; pointer enters the button, and back to red if the pointer leaves the button.
-;;;
-;;; Note that state is used when finding the transition parameters, which is why
-;;; the style places the transition under the :hover pseudo-class.
-;;;
-;;; context :
-;;;     a GtkStyleContext
-;;;
-;;; window :
-;;;     a GdkWindow
-;;;
-;;; region_id :
-;;;     animatable region to notify on, or NULL. See
-;;;     gtk_style_context_push_animatable_region().
-;;;
-;;; state :
-;;;     state to trigger transition for
-;;;
-;;; state_value :
-;;;     TRUE if state is the state we are changing to, FALSE if we are changing
-;;;     away from it
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_style_context_notify_state_change"
+           gtk-style-context-notify-state-change) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-28}
+  @argument[context]{a @class{gtk-style-context} object}
+  @argument[window]{a @class{gdk-window} object}
+  @argument[region-id]{animatable region to notify on, or @code{nil}, see the
+    function @fun{gtk-style-context-push-animatable-region}}
+  @argument[state]{state to trigger transition for}
+  @argument[state-value]{@em{true} if state is the state we are changing to,
+    @code{nil} if we are changing away from it}
+  @begin{short}
+    Notifies a state change on @arg{context}, so if the current style makes use
+    of transition animations, one will be started so all rendered elements under
+    @arg{region-id} are animated for state state being set to value
+    @arg{state-value}.
+  @end{short}
+ 
+  The window parameter is used in order to invalidate the rendered area as the
+  animation runs, so make sure it is the same window that is being rendered on
+  by the @sym{gtk-render-*} functions.
+
+  If @arg{region-id} is @code{nil}, all rendered elements using context will be
+  affected by this state transition.
+
+  As a practical example, a @class{gtk-button} notifying a state transition on
+  the prelight state:
+  @begin{pre}
+   gtk_style_context_notify_state_change (context,
+                                          gtk_widget_get_window (widget),
+                                          NULL,
+                                          GTK_STATE_PRELIGHT,
+                                          button->in_button);
+  @end{pre}
+  Can be handled in the CSS file like this:
+  @begin{pre}
+   GtkButton {
+       background-color: #f00
+   @}
+
+   GtkButton:hover {
+       background-color: #fff;
+       transition: 200ms linear
+   @}
+  @end{pre}
+  This combination will animate the button background from red to white if a
+  pointer enters the button, and back to red if the pointer leaves the button.
+
+  Note that state is used when finding the transition parameters, which is why
+  the style places the transition under the @code{:hover} pseudo-class.
+
+  Since 3.0
+  @see-class{gtk-style-context}
+  @see-class{gdk-window}
+  @see-symbol{gtk-state-type}
+  @see-function{gtk-style-context-push-animatable-region}"
+  (context (g-object gtk-style-context))
+  (window (g-object gdk-window))
+  (region-id :pointer)
+  (state gtk-state-type)
+  (state-value :boolean))
+
+(export 'gtk-style-context-notify-state-change)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_pop_animatable_region ()
-;;;
-;;; void gtk_style_context_pop_animatable_region (GtkStyleContext *context);
-;;;
-;;; Pops an animatable region from context. See
-;;; gtk_style_context_push_animatable_region().
-;;;
-;;; context :
-;;;     a GtkStyleContext
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_style_context_pop_animatable_region"
+           gtk-style-context-pop-animatable-region) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-28}
+  @argument[context]{a @class{gtk-style-context} object}
+  @begin{short}
+    Pops an animatable region from context.
+  @end{short}
+  See the function @fun{gtk-style-context-push-animatable-region}.
+
+  Since 3.0
+  @see-class{gtk-style-context}
+  @see-function{gtk-style-context-push-animatable-region}"
+  (context (g-object gtk-style-context)))
+
+(export 'gtk-style-context-pop-animatable-region)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_push_animatable_region ()
-;;;
-;;; void gtk_style_context_push_animatable_region (GtkStyleContext *context,
-;;;                                                gpointer region_id);
-;;;
-;;; Pushes an animatable region, so all further gtk_render_*() calls between
-;;; this call and the following gtk_style_context_pop_animatable_region() will
-;;; potentially show transition animations for this region if
-;;; gtk_style_context_notify_state_change() is called for a given state, and the
-;;; current theme/style defines transition animations for state changes.
-;;;
-;;; The region_id used must be unique in context so the theming engine can
-;;; uniquely identify rendered elements subject to a state transition.
-;;;
-;;; context :
-;;;     a GtkStyleContext
-;;;
-;;; region_id :
-;;;     unique identifier for the animatable region
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_style_context_push_animatable_region"
+           gtk-style-context-push-animatable-region) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-28}
+  @argument[context]{a @class{gtk-style-context} object}
+  @argument[region-id]{unique identifier for the animatable region}
+  @begin{short}
+    Pushes an animatable region, so all further @sym{gtk-render-*} calls between
+    this call and the following @fun{gtk-style-context-pop-animatable-region}
+    will potentially show transition animations for this region if the function
+    @fun{gtk-style-context-notify-state-change} is called for a given state, and
+    the current theme/style defines transition animations for state changes.
+  @end{short}
+
+  The @arg{region-id} used must be unique in context so the theming engine can
+  uniquely identify rendered elements subject to a state transition.
+
+  Since 3.0
+  @see-class{gtk-style-context}
+  @see-function{gtk-style-context-pop-animatable-region}
+  @see-function{gtk-style-context-notify-state-change}"
+  (context (g-object gtk-style-context))
+  (region-id :pointer))
+
+(export 'gtk-style-context-push-animatable-region)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_cancel_animations ()
@@ -2057,23 +2096,30 @@ tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_set_direction ()
-;;;
-;;; void gtk_style_context_set_direction (GtkStyleContext *context,
-;;;                                       GtkTextDirection direction);
-;;;
-;;; Sets the reading direction for rendering purposes.
-;;;
-;;; If you are using a GtkStyleContext returned from
-;;; gtk_widget_get_style_context(), you do not need to call this yourself.
-;;;
-;;; context :
-;;;     a GtkStyleContext
-;;;
-;;; direction :
-;;;     the new direction.
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-style-context-set-direction))
+
+(defun gtk-style-context-set-direction (context direction)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-28}
+  @argument[context]{a @class{gtk-style-context} object}
+  @argument[direction]{the new direction of type @symbol{gtk-text-direction}}
+  @begin{short}
+    Sets the reading direction for rendering purposes.
+  @end{short}
+
+  If you are using a @class{gtk-style-context} returned from the function
+  @fun{gtk-widget-get-style-context}, you do not need to call this yourself.
+
+  Since 3.0
+  @see-class{gtk-style-context}
+  @see-symbol{gtk-text-direction}
+  @see-function{gtk-style-context-get-direction}
+  @see-function{gtk-widget-get-style-context}"
+  (setf (gtk-style-contex-direction context) direction))
+
+(export 'gtk-style-context-set-direction)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_set_junction_sides ()
@@ -2101,25 +2147,30 @@ tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_set_parent ()
-;;;
-;;; void gtk_style_context_set_parent (GtkStyleContext *context,
-;;;                                    GtkStyleContext *parent);
-;;;
-;;; Sets the parent style context for context. The parent style context is used
-;;; to implement inheritance of properties.
-;;;
-;;; If you are using a GtkStyleContext returned from
-;;; gtk_widget_get_style_context(), the parent will be set for you.
-;;;
-;;; context :
-;;;     a GtkStyleContext
-;;;
-;;; parent :
-;;;     the new parent or NULL
-;;;
-;;; Since 3.4
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-style-context-set-parent))
+
+(defun gtk-style-context-set-parent (context parent)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-28}
+  @argument[context]{a @class{gtk-style-context} object}
+  @argument[parent]{the new parent or @code{nil}}
+  @begin{short}
+    Sets the parent style context for context.
+  @end{short}
+  The parent style context is used to implement inheritance of properties.
+
+  If you are using a @class{gtk-style-context} returned from the function
+  @fun{gtk-widget-get-style-context}, the parent will be set for you.
+
+  Since 3.4
+  @see-class{gtk-style-context}
+  @see-function{gtk-style-context-get-parent}
+  @see-function{gtk-widget-get-style-context}"
+  (setf (gtk-style-context-parent context) parent))
+
+(export 'gtk-style-context-set-parent)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_set_path ()
@@ -2145,7 +2196,7 @@ tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
   (context (g-object gtk-style-context))
   (object (g-boxed-foreign gtk-widget-path)))
 
-(export 'gtk-widget-path)
+(export 'gtk-style-context-set-path)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_add_class ()
@@ -2332,26 +2383,33 @@ tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_set_screen ()
-;;;
-;;; void gtk_style_context_set_screen (GtkStyleContext *context,
-;;;                                    GdkScreen *screen);
-;;;
-;;; Attaches context to the given screen.
-;;;
-;;; The screen is used to add style information from 'global' style providers,
-;;; such as the screens GtkSettings instance.
-;;;
-;;; If you are using a GtkStyleContext returned from
-;;; gtk_widget_get_style_context(), you do not need to call this yourself.
-;;;
-;;; context :
-;;;     a GtkStyleContext
-;;;
-;;; screen :
-;;;     a GdkScreen
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-style-context-set-screen))
+
+(defun gtk-style-context-set-screen (context screen)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-28}
+  @argument[context]{a @class{gtk-style-context} object}
+  @argument[screen]{a @class{gdk-screen} object}
+  @begin{short}
+    Attaches @arg{context} to the given @arg{screen}.
+  @end{short}
+
+  The screen is used to add style information from 'global' style providers,
+  such as the screens @class{gtk-settings} instance.
+
+  If you are using a @class{gtk-style-context} returned from the function
+  @fun{gtk-widget-get-style-context}, you do not need to call this yourself.
+
+  Since 3.0
+  @see-class{gtk-style-context}
+  @see-class{gdk-screen}
+  @see-class{gtk-settings}
+  @see-function{gtk-widget-get-style-context}"
+  (setf (gtk-style-context-screen context) screen))
+
+(export 'gtk-style-context-set-screen)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_set_state ()

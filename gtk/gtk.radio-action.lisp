@@ -4,9 +4,10 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -68,7 +69,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-radio-action 'type)
- "@version{2013-6-2}
+ "@version{2013-11-28}
   @begin{short}
     A @sym{gtk-radio-action} is similar to @class{gtk-radio-menu-item}. A number
     of radio actions can be linked together so that only one may be active at
@@ -83,15 +84,18 @@
       the active member is changed. The signal gets emitted after the
       \"activate\" signals for the previous and current active members.
       @begin[code]{table}
-        @entry[action]{the action on which the signal is emitted}
-        @entry[current]{the member of actions group which has just been
-          activated}
+        @entry[action]{The action on which the signal is emitted.}
+        @entry[current]{The member of actions group which has just been
+          activated.}
       @end{table}
       Since 2.4
   @end{dictionary}
   @see-slot{gtk-radio-action-current-value}
   @see-slot{gtk-radio-action-group}
-  @see-slot{gtk-radio-action-value}")
+  @see-slot{gtk-radio-action-value}
+  @see-class{gtk-radio-menu-item}
+  @see-class{gtk-radio-action-entry}
+  @see-function{gtk-radio-action-get-current-value}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -135,60 +139,69 @@
 (setf (gethash 'gtk-radio-action-current-value atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-radio-action-current-value 'function)
- "@version{2013-3-17}
+ "@version{2013-11-28}
   Accessor of the slot @code{\"current-value\"} of the @class{gtk-radio-action}
-  class.")
+  class.
+  @see-class{gtk-radio-action}
+  @see-function{gtk-radio-action-get-current-value}
+  @see-function{gtk-radio-action-set-current-value}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-radio-action-group atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-radio-action-group 'function)
- "@version{2013-3-17}
+ "@version{2013-11-28}
   Accessor of the slot @code{\"group\"} of the @class{gtk-radio-action}
-  class.")
+  class.
+  @see-class{gtk-radio-action}
+  @see-function{gtk-radio-action-get-group}
+  @see-function{gtk-radio-action-set-group}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-radio-action-value atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-radio-action-value 'function)
- "@version{2013-3-17}
+ "@version{2013-11-28}
   Accessor of the slot @code{\"value\"} of the @class{gtk-radio-action}
-  class.")
+  class.
+  @see-class{gtk-radio-action}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_radio_action_new ()
-;;;
-;;; GtkRadioAction * gtk_radio_action_new (const gchar *name,
-;;;                                        const gchar *label,
-;;;                                        const gchar *tooltip,
-;;;                                        const gchar *stock_id,
-;;;                                        gint value);
-;;;
-;;; Creates a new GtkRadioAction object. To add the action to a GtkActionGroup
-;;; and set the accelerator for the action, call
-;;; gtk_action_group_add_action_with_accel().
-;;;
-;;; name :
-;;;     A unique name for the action
-;;;
-;;; label :
-;;;     The label displayed in menu items and on buttons, or NULL.
-;;;
-;;; tooltip :
-;;;     A tooltip for this action, or NULL.
-;;;
-;;; stock_id :
-;;;     The stock icon to display in widgets representing this action, or NULL.
-;;;
-;;; value :
-;;;     The value which gtk_radio_action_get_current_value() should return if
-;;;     this action is selected.
-;;;
-;;; Returns :
-;;;     a new GtkRadioAction
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_radio_action_new" gtk-radio-action-new)
+    (g-object gtk-radio-action)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-28}
+  @argument[name]{a unique name for the action}
+  @argument[label]{the label displayed in menu items and on buttons,
+    or @code{nil}}
+  @argument[tooltip]{a tooltip for this action, or @code{nil}}
+  @argument[stock-id]{the stock icon to display in widgets representing this
+    action, or @code{nil}}
+  @argument[value]{the value which the function
+    @fun{gtk-radio-action-get-current-value} should return if this action is
+    selected.}
+  @return{A new @class{gtk-radio-action} object}
+  @begin{short}
+    Creates a new @class{gtk-radio-action} object.
+  @end{short}
+  To add the action to a @class{gtk-action-group} and set the accelerator for
+  the action, call the function @fun{gtk-action-group-add-action-with-accel}.
+
+  Since 2.4
+  @see-class{gtk-radio-action}
+  @see-class{gtk-action-group}
+  @see-function{gtk-radio-action-get-current-value}
+  @see-function{gtk-action-group-add-action-with-accel}"
+  (name :string)
+  (label :string)
+  (tooltip :string)
+  (stock-id :string)
+  (value :int))
+
+(export 'gtk-radio-action-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_radio_action_get_group ()
@@ -197,13 +210,13 @@
 (defcfun ("gtk_radio_action_get_group" gtk-radio-action-get-group)
     (g-slist (g-object gtk-radio-action) :free-from-foreign nil)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-2}
+ "@version{2013-11-28}
   @argument[action]{the action object}
   @return{The list representing the radio group for this object.}
   @begin{short}
-    Returns the list representing the radio group for this object. Note that the
-    returned list is only valid until the next change to the group.
+    Returns the list representing the radio group for this object.
   @end{short}
+  Note that the returned list is only valid until the next change to the group.
 
   A common way to set up a group of radio group is the following:
   @begin{pre}
@@ -218,94 +231,119 @@
         group = gtk_radio_action_get_group (action);
      @}
   @end{pre}
-  Since 2.4"
+  Since 2.4
+  @see-class{gtk-radio-action}
+  @see-function{gtk-radio-action-set-group}"
   (action (g-object gtk-radio-action)))
 
 (export 'gtk-radio-action-get-group)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_radio_action_set_group ()
-;;;
-;;; void gtk_radio_action_set_group (GtkRadioAction *action, GSList *group);
-;;;
-;;; Sets the radio group for the radio action object.
-;;;
-;;; action :
-;;;     the action object
-;;;
-;;; group :
-;;;     a list representing a radio group. [element-type GtkRadioAction]
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-radio-action-set-group))
+
+(defun gtk-radio-action-set-group (action group)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-28}
+  @argument[action]{the action object}
+  @argument[group]{a list representing a radio group}
+  @begin{short}
+    Sets the radio group for the radio action object.
+  @end{short}
+
+  Since 2.4
+  @see-class{gtk-radio-action}
+  @see-function{gtk-radio-action-get-group}"
+  (setf (gtk-radio-action-group action) group))
+
+(export 'gtk-radio-action-set-group)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_radio_action_join_group ()
-;;;
-;;; void gtk_radio_action_join_group (GtkRadioAction *action,
-;;;                                   GtkRadioAction *group_source);
-;;;
-;;; Joins a radio action object to the group of another radio action object.
-;;;
-;;; Use this in language bindings instead of the gtk_radio_action_get_group()
-;;; and gtk_radio_action_set_group() methods
-;;;
-;;; A common way to set up a group of radio actions is the following:
-;;;
-;;;   GtkRadioAction *action;
-;;;   GtkRadioAction *last_action;
-;;;
-;;;   while (/* more actions to add */)
-;;;     {
-;;;        action = gtk_radio_action_new (...);
-;;;
-;;;        gtk_radio_action_join_group (action, last_action);
-;;;        last_action = action;
-;;;     }
-;;;
-;;; action :
-;;;     the action object
-;;;
-;;; group_source :
-;;;     a radio action object whos group we are joining, or NULL to remove the
-;;;     radio action from its group
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_radio_action_join_group" gtk-radio-action-join-group) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-28}
+  @argument[action]{the action object}
+  @argument[group-source]{a radio action object whos group we are joining, or
+    @code{nil} to remove the radio action from its group}
+  @begin{short}
+    Joins a radio action object to the group of another radio action object.
+  @end{short}
+
+  Use this in language bindings instead of the the functions
+  @fun{gtk-radio-action-get-group} and @fun{gtk-radio-action-set-group}.
+
+  A common way to set up a group of radio actions is the following:
+  @begin{pre}
+   GtkRadioAction *action;
+   GtkRadioAction *last_action;
+
+   while (/* more actions to add */)
+     {
+        action = gtk_radio_action_new (...);
+
+        gtk_radio_action_join_group (action, last_action);
+        last_action = action;
+     @}
+  @end{pre}
+
+  Since 3.0
+  @see-class{gtk-radio-action}
+  @see-function{gtk-radio-action-get-group}
+  @see-function{gtk-radio-action-set-group}"
+  (action (g-object gtk-radio-action))
+  (group-source (g-slist (g-object radio-acttion))))
+
+(export 'gtk-radio-action-join-group)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_radio_action_get_current_value ()
-;;;
-;;; gint gtk_radio_action_get_current_value (GtkRadioAction *action);
-;;;
-;;; Obtains the value property of the currently active member of the group to
-;;; which action belongs.
-;;;
-;;; action :
-;;;     a GtkRadioAction
-;;;
-;;; Returns :
-;;;     The value of the currently active group member
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-radio-action-get-current-value))
+
+(defun gtk-radio-action-get-current-value (action)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-28}
+  @argument[action]{a @class{gtk-radio-action} object}
+  @return{The value of the currently active group member.}
+  @begin{short}
+    Obtains the value property of the currently active member of the group to
+    which @arg{action} belongs.
+  @end{short}
+
+  Since 2.4
+  @see-class{gtk-radio-action}
+  @see-function{gtk-radio-action-set-current-value}"
+  (gtk-radio-action-get-current-value action))
+
+(export 'gtk-radio-action-get-current-value)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_radio_action_set_current_value ()
-;;;
-;;; void gtk_radio_action_set_current_value (GtkRadioAction *action,
-;;;                                          gint current_value);
-;;;
-;;; Sets the currently active group member to the member with value property
-;;; current_value.
-;;;
-;;; action :
-;;;     a GtkRadioAction
-;;;
-;;; current_value :
-;;;     the new value
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-radio-action-set-current-value))
+
+(defun gtk-radio-action-set-current-value (context current-value)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-28}
+  @argument[action]{a @class{gtk-radio-action} object}
+  @argument[current-value]{the new value}
+  @begin{short}
+    Sets the currently active group member to the member with value property
+    @arg{current-value}.
+  @end{short}
+
+  Since 2.10
+  @see-class{gtk-radio-action}
+  @see-function{gtk-radio-action-get-current-value}"
+  (setf (gtk-radio-action-current-value context) current-value))
+
+(export 'gtk-radio-action-set-current-value)
 
 ;;; --- End of file gtk.radio-action.lisp --------------------------------------
