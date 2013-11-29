@@ -5286,7 +5286,7 @@
     The function @sym{gtk-widget-modify-cursor} is deprecated since version 3.0
     and should not be used in newly-written code. Use the function
     @fun{gtk-widget-override-cursor} instead.
-  
+
   @begin{short}
     Sets the cursor color to use in a widget, overriding the
     @code{\"cursor-color\"} and @code{\"secondary-cursor-color\"} style
@@ -5406,7 +5406,7 @@
     The function @sym{gtk-widget-render-icon} has been deprecated since version
     3.0 and should not be used in newly-written code. Use the function
     @fun{gtk-widget-render-icon-pixbuf} instead.
-  
+
   @begin{short}
     A convenience function that uses the theme settings for widget to look up
     @arg{stock-id} and render it to a pixbuf.
@@ -5493,10 +5493,10 @@
 (defcfun ("gtk_widget_push_composite_child" gtk-widget-push-composite-child)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2013-7-31}
+ "@version{2013-11-29}
   @begin{short}
     Makes all newly-created widgets as composite children until the
-    corresponding the function @fun{gtk-widget-pop-composite-child} call.
+    corresponding function @fun{gtk-widget-pop-composite-child} call.
   @end{short}
 
   A composite child is a child that is an implementation detail of the container
@@ -5529,7 +5529,7 @@
 
 (defcfun ("gtk_widget_queue_draw_area" gtk-widget-queue-draw-area) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-6-30}
+ "@version{2013-11-29}
   @argument[widget]{a @class{gtk-widget} object}
   @argument[x]{x coordinate of upper-left corner of rectangle to redraw}
   @argument[y]{y coordinate of upper-left corner of rectangle to redraw}
@@ -5546,6 +5546,7 @@
   coordinates for widgets that are not @code{:no-window} widgets, and are
   relative to @code{widget->allocation.x}, @code{widget->allocation.y} for
   widgets that are @code{:no-window} widgets.
+  @see-class{gtk-widget}
   @see-function{gtk-widget-queue-draw-region}"
   (widget (g-object gtk-widget))
   (x :int)
@@ -5561,16 +5562,16 @@
 
 (defcfun ("gtk_widget_queue_draw_region" gtk-widget-queue-draw-region) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-6-30}
-  @argument[widget]{a @class{gtk-widget} widget}
+ "@version{2013-11-29}
+  @argument[widget]{a @class{gtk-widget} object}
   @argument[region]{region of type @symbol{cairo-region-t} to draw}
   @begin{short}
     Invalidates the rectangular area of @arg{widget} defined by @arg{region} by
     calling the function @fun{gdk-window-invalidate-region} on the
-    @arg{widget}'s window and all its child windows.
+    widget's window and all its child windows.
   @end{short}
-  Once the main loop becomes idle (after the current batch of events has been
-  processed, roughly), the window will receive expose events for the union of
+  Once the main loop becomes idle, after the current batch of events has been
+  processed, roughly, the window will receive expose events for the union of
   all regions that have been invalidated.
 
   Normally you would only use this function in widget implementations. You
@@ -5578,6 +5579,8 @@
   portion thereof.
 
   Since 3.0
+  @see-class{gtk-widget}
+  @see-symbol{cairo-region-t}
   @see-function{gdk-window-invalidate-region}"
   (widget (g-object gtk-widget))
   (region (:pointer (:struct cairo-region-t))))
@@ -5592,17 +5595,17 @@
 
 (defun gtk-widget-set-app-paintable (widget app-paintable)
  #+cl-cffi-gtk-documentation
- "@version{2013-7-31}
+ "@version{2013-11-29}
   @argument[widget]{a @class{gtk-widget} object}
   @argument[app-paintable]{@em{true} if the application will paint on the
-    @arg{widget}}
+    widget}
   @begin{short}
     Sets whether the application intends to draw on the widget in a \"draw\"
     handler.
   @end{short}
 
-  This is a hint to the @arg{widget} and does not affect the behavior of the
-  GTK+ core; many widgets ignore this flag entirely. For widgets that do pay
+  This is a hint to the widget and does not affect the behavior of the GTK+
+  core; many widgets ignore this flag entirely. For widgets that do pay
   attention to the flag, such as @class{gtk-event-box} and @class{gtk-window},
   the effect is to suppress default themed drawing of the widget's background.
   Children of the widget will still be drawn. The application is then entirely
@@ -5625,9 +5628,9 @@
 
 (defun gtk-widget-set-double-buffered (widget double-buffered)
  #+cl-cffi-gtk-documentation
- "@version{2013-7-31}
+ "@version{2013-11-29}
   @argument[widget]{a @class{gtk-widget} object}
-  @argument[double-buffered]{@em{true} to double-buffer a @arg{widget}}
+  @argument[double-buffered]{@em{true} to double-buffer a widget}
   @begin{short}
     Widgets are double buffered by default; you can use this function to turn
     off the buffering.
@@ -5664,8 +5667,8 @@
 (defcfun ("gtk_widget_set_redraw_on_allocate" gtk-widget-set-redraw-on-allocate)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2013-1-6}
-  @argument[widget]{a @class{gtk-widget} instance}
+ "@version{2013-11-29}
+  @argument[widget]{a @class{gtk-widget} object}
   @argument[redraw-on-allocate]{if @em{true}, the entire widget will be redrawn
     when it is allocated to a new size. Otherwise, only the new portion of the
     widget will be redrawn.}
@@ -5679,11 +5682,13 @@
 
   Note that for @code{:no-window} widgets setting this flag to @code{nil} turns
   off all allocation on resizing: the widget will not even redraw if its
-  position changes; this is to allow containers that don't draw anything to
+  position changes; this is to allow containers that do not draw anything to
   avoid excess invalidations. If you set this flag on a @code{:no-window}
-  widget that does draw on widget->window, you are responsible for invalidating
-  both the old and new allocation of the widget when the widget is moved and
-  responsible for invalidating regions newly when the widget increases size."
+  widget that does draw on @code{widget->window}, you are responsible for
+  invalidating both the old and new allocation of the widget when the widget is
+  moved and responsible for invalidating regions newly when the widget increases
+  size.
+  @see-class{gtk-widget}"
   (widget (g-object gtk-widget))
   (redraw-on-allocate :boolean))
 
@@ -5695,14 +5700,15 @@
 
 (defcfun ("gtk_widget_set_composite_name" gtk-widget-set-composite-name) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-6-17}
+ "@version{2013-11-29}
   @argument[widget]{a @class{gtk-widget} object}
   @argument[name]{the name to set}
   @begin{short}
     Sets a widgets composite name.
   @end{short}
-  The @arg{widget} must be a composite child of its parent; see the function
+  The widget must be a composite child of its parent; see the function
   @fun{gtk-widget-push-composite-child}.
+  @see-class{gtk-widget}
   @see-function{gtk-widget-push-composite-child}
   @see-function{gtk-widget-get-composite-name}"
   (widget (g-object gtk-widget))
@@ -5716,15 +5722,17 @@
 
 (defcfun ("gtk_widget_mnemonic_activate" gtk-widget-mnemonic-activate) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-1-6}
-  @argument[widget]{a @class{gtk-widget} instance}
-  @arguemnt[group-cycling]{@em{true} if there are other widgets with the same
+ "@version{2013-11-29}
+  @argument[widget]{a @class{gtk-widget} object}
+  @argument[group-cycling]{@em{true} if there are other widgets with the same
     mnemonic}
   @return{@em{True} if the signal has been handled.}
   @short{Emits the \"mnemonic-activate\" signal.}
 
-  The default handler for this signal activates the widget if group_cycling is
-  @code{nil}, and just grabs the focus if @arg{group-cycling} is @em{true}."
+  The default handler for this signal activates the widget if
+  @arg{group-cycling} is @code{nil}, and just grabs the focus if
+  @arg{group-cycling} is @em{true}.
+  @see-class{gtk-widget}"
   (widget (g-object gtk-widget))
   (group-cycling :boolean))
 
@@ -5771,17 +5779,19 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_class_find_style_property"
-          gtk-widget-class-find-style-property)
+           gtk-widget-class-find-style-property)
     (:pointer (:struct g-param-spec))
  #+cl-cffi-gtk-documentation
- "@version{2013-1-6}
+ "@version{2013-11-29}
   @argument[class]{a pointer to a C widget class structure}
   @argument[property-name]{the name of the style property to find}
   @return{The @symbol{g-param-spec} of the style property or @code{nil} if
     @arg{class} has no style property with that name.}
   @short{Finds a style property of a widget class by name.}
 
-  Since 2.2"
+  Since 2.2
+  @see-class{gtk-widget}
+  @see-symbol{g-param-spec}"
   (class :pointer)
   (property-name :string))
 
@@ -5799,12 +5809,14 @@
 
 (defun gtk-widget-class-list-style-properties (type)
  #+cl-cffi-gtk-documentation
- "@version{2013-7-4}
+ "@version{2013-11-29}
   @argument[type]{a widget class name}
   @return{A list of @symbol{g-param-spec}.}
   @short{Returns all style properties of a widget class.}
 
-  Since 2.2"
+  Since 2.2
+  @see-class{gtk-widget}
+  @see-symbol{g-param-spec}"
   (setf type (gtype type))
   (let ((class (g-type-class-ref type)))
     (unwind-protect
