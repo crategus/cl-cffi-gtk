@@ -63,17 +63,6 @@
 ;;;     gdk_keyval_is_lower
 ;;;     gdk_keyval_to_unicode
 ;;;     gdk_unicode_to_keyval
-;;;
-;;; Object Hierarchy
-;;;
-;;;   GObject
-;;;    +----GdkKeymap
-;;;
-;;; Signals
-;;;
-;;;   "direction-changed"                              : Run Last
-;;;   "keys-changed"                                   : Run Last
-;;;   "state-changed"                                  : Run Last
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gdk)
@@ -258,8 +247,8 @@
   @see-function{make-gdk-keymap-key}")
 
 #+cl-cffi-gtk-documentation
-(setf (documentation 'make-gdk-geometry 'function)
- "@version{2013-9-26}
+(setf (documentation 'make-gdk-keymap-key 'function)
+ "@version{2013-11-29}
   Creates a @class{gdk-keymap-key} structure.
   @see-class{gdk-keymap-key}
   @see-function{copy-gdk-geometry}")
@@ -270,7 +259,29 @@
 ;;;
 ;;; ----------------------------------------------------------------------------
 
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gdk-keymap-key-keycode atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gdk-keymap-key-keycode 'function)
+ "@version{2013-11-29}
+  Accessor of the slot @code{keycode} of the @class{gdk-keymap} structure.
+  @see-class{gdk-keymap-key}")
 
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gdk-keymap-key-group atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gdk-keymap-key-group 'function)
+ "@version{2013-11-29}
+  Accessor of the slot @code{group} of the @class{gdk-keymap} structure.
+  @see-class{gdk-keymap-key}")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gdk-keymap-key-level atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gdk-keymap-key-level 'function)
+ "@version{2013-11-29}
+  Accessor of the slot @code{level} of the @class{gdk-keymap} structure.
+  @see-class{gdk-keymap-key}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_keymap_get_default ()
