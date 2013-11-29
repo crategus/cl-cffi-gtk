@@ -533,25 +533,48 @@
 ;;; };
 ;;; ----------------------------------------------------------------------------
 
+(defcstruct gtk-accel-key
+  (accel-key :uint)
+  (accel-mods gdk-modifier-type)
+  (accel-flags :uint))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-accel-key atdoc:*symbol-name-alias*) "CStruct"
+      (gethash 'gtk-accel-key atdoc:*external-symbols*)
+ "@version{2013-11-29}
+  @short{}
+  @begin{pre}
+(defcstruct gtk-accel-key
+  (accel-key :uint)
+  (accel-mods gdk-modifier-type)
+  (accel-flags :uint))
+  @end{pre}
+  @see-class{gtk-accel-group}")
+
+(export 'gtk-accel-key)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_accelerator_valid ()
-;;;
-;;; gboolean gtk_accelerator_valid (guint keyval, GdkModifierType modifiers);
-;;;
-;;; Determines whether a given keyval and modifier mask constitute a valid
-;;; keyboard accelerator. For example, the GDK_KEY_a keyval plus
-;;; GDK_CONTROL_MASK is valid - this is a "Ctrl+a" accelerator. But, you can't,
-;;; for instance, use the GDK_KEY_Control_L keyval as an accelerator.
-;;;
-;;; keyval :
-;;;     a GDK keyval
-;;;
-;;; modifiers :
-;;;     modifier mask
-;;;
-;;; Returns :
-;;;     TRUE if the accelerator is valid
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_accelerator_valid" gtk-accelerator-valid) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-29}
+  @argument[keyval]{a GDK keyval}
+  @argument[modifiers]{modifier mask}
+  @return{@em{True} if the accelerator is valid.}
+  @begin{short}
+    Determines whether a given @arg{keyval} and modifier mask constitute a valid
+    keyboard accelerator.
+  @end{short}
+  For example, the @code{GDK_KEY_a} keyval plus @code{GDK_CONTROL_MASK} is valid
+  - this is a \"Ctrl+a\" accelerator. But, you cannot, for instance, use the
+  @code{GDK_KEY_Control_L} keyval as an accelerator.
+  @see-symbol{gdk-modifier-type}"
+  (keyval :uint)
+  (modifiers gdk-modifier-type))
+
+(export 'gtk-accelerator-valid)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_accelerator_parse ()
@@ -595,6 +618,7 @@
 => (:SHIFT-MASK :MOD1-MASK)
     @end{pre}
   @end{dictionary}
+  @see-symbol{gdk-modifier-type}
   @see-function{gdk-keyval-from-name}"
   (with-foreign-objects ((accelerator-key :uint)
                          (accelerator-mods 'gdk-modifier-type))
