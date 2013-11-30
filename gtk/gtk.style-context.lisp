@@ -2117,7 +2117,7 @@ tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
   @see-symbol{gtk-text-direction}
   @see-function{gtk-style-context-get-direction}
   @see-function{gtk-widget-get-style-context}"
-  (setf (gtk-style-contex-direction context) direction))
+  (setf (gtk-style-context-direction context) direction))
 
 (export 'gtk-style-context-set-direction)
 
