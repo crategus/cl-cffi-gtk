@@ -4,9 +4,10 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -66,11 +67,9 @@
    :type-initializer "gtk_accel_map_get_type")
   nil)
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-accel-map 'type)
- "@version{2013-4-17}
+ "@version{2013-11-29}
   @begin{short}
     Accelerator maps are used to define runtime configurable accelerators.
   @end{short}
@@ -115,9 +114,7 @@
   @subheading{Saving and loading accelerator maps}
     Accelerator maps can be saved to and loaded from some external resource. For
     simple saving and loading from file, the functions @fun{gtk-accel-map-save}
-    and @fun{gtk-accel-map-load} are provided. Saving and loading can also be
-    done by providing a file descriptor to the functions
-    @fun{gtk-accel-map-save-fd} and @fun{gtk-accel-map-load-fd}.
+    and @fun{gtk-accel-map-load} are provided.
 
   @subheading{Monitoring changes}
     A @sym{gtk-accel-map} object is only useful for monitoring changes of
@@ -143,7 +140,145 @@
       @entry[accel-mods]{The modifier mask of type @symbol{gdk-modifier-type}
         for the new accelerator.}
     @end{table}
-  @end{dictionary}")
+  @end{dictionary}
+  @see-class{gtk-ui-manager}
+  @see-symbol{gdk-modifier-type}
+  @see-function{gtk-accel-map-get}
+  @see-function{gtk-accel-map-add-entry}
+  @see-function{gtk-accel-map-lookup-entry}
+  @see-function{gtk-accel-map-change-entry}
+  @see-function{gtk-accel-map-lock-path}
+  @see-function{gtk-accel-map-unlock-path}
+  @see-function{gtk-accel-map-save}
+  @see-function{gtk-accel-map-load}")
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_accel_map_add_entry ()
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_accel_map_add_entry" gtk-accel-map-add-entry) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-29}
+  @argument[accel-path]{valid accelerator path}
+  @argument[accel-key]{the accelerator key}
+  @argument[accel-mods]{the accelerator modifiers}
+  @begin{short}
+    Registers a new accelerator with the global accelerator map.
+  @end{short}
+  This function should only be called once per @arg{accel-path} with the
+  canonical @arg{accel-key} and @arg{accel-mods} for this path. To change the
+  accelerator during runtime programatically, use the function
+  @fun{gtk-accel-map-change-entry}.
+  @see-class{gtk-accl-map}
+  @see-symbol{gdk-modifier-type}
+  @see-function{gtk-accel-map-change-entry}"
+  (accel-path :string)
+  (accel-key :uint)
+  (accel-mods gdk-modifier-type))
+
+(export 'gtk-accel-map-add-entry)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_accel_map_lookup_entry ()
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_accel_map_lookup_entry" %gtk-accel-map-lookup-entry) :boolean
+  (accel-path :string)
+  (key (:pointer (:struct gtk-accel-key))))
+
+(defun gtk-accel-map-lookup-entry (accel-path)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-29}
+  @argument[accel-path]{a valid accelerator path}
+  @begin{return}
+    @code{accel-key} -- the accelerator key @br{}
+    @code{accel-mods} -- the accelerator modifiers @br{}
+    @code{addel-flags} -- the accelerator flags @br{}
+    if @arg{accel-path} is known, @code{nil} otherwise
+  @end{return}
+  Looks up the accelerator entry for @arg{accel-path}.
+  @see-class{gtk-accel-map}
+  @see-function{gtk-accel-map-add-entry}
+  @see-function{gtk-accel-map-change-entry}"
+  (with-foreign-object (key '(:struct gtk-accel-key))
+    (when (%gtk-accel-map-lookup-entry accel-path key)
+      (values (foreign-slot-value key '(:struct gtk-accel-key) 'accel-key)
+              (foreign-slot-value key '(:struct gtk-accel-key) 'accel-mods)
+              (foreign-slot-value key '(:struct gtk-accel-key) 'accel-flags)))))
+
+(export 'gtk-accel-map-lookup-entry)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_accel_map_change_entry ()
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_accel_map_change_entry" gtk-accel-map-change-entry) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-29}
+  @argument[accel-path]{a valid accelerator path}
+  @argument[accel-key]{the new accelerator key}
+  @argument[accel-mods]{the new accelerator modifiers}
+  @argument[replace]{@em{true} if other accelerators may be deleted upon
+    conflicts}
+  @begin{return}
+    @em{True} if the accelerator could be changed, @code{nil} otherwise.
+  @end{return}
+  @begin{short}
+    Changes the @arg{accel-key} and @arg{accel-mods} currently associated with
+    @arg{accel-path}.
+  @end{short}
+  Due to conflicts with other accelerators, a change may not always be
+  possible, @arg{replace} indicates whether other accelerators may be deleted
+  to resolve such conflicts. A change will only occur if all conflicts could be
+  resolved, which might not be the case if conflicting accelerators are
+  locked. Successful changes are indicated by a @em{true} return value.
+  @see-class{gtk-accel-map}
+  @see-symbol{gdk-modifier-mask}
+  @see-function{gtk-accel-map-add-entry}"
+  (accel-path :string)
+  (accel-key :uint)
+  (accel-mods gdk-modifier-type)
+  (replace :boolean))
+
+(export 'gtk-accel-map-change-entry)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_accel_map_load ()
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_accel_map_load" gtk-accel-map-load) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-29}
+  @argument[filename]{a file containing accelerator specifications, in the GLib
+    file name encoding}
+  Parses a file previously saved with the function @fun{gtk-accel-map-save}
+  for accelerator specifications, and propagates them accordingly.
+  @see-class{gtk-accel-map}
+  @see-function{gtk-accel-map-save}"
+  (filename :string))
+
+(export 'gtk-accel-map-load)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_accel_map_save ()
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_accel_map_save" gtk-accel-map-save) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-29}
+  @argument[filename]{the name of the file to contain accelerator
+    specifications, in the GLib file name encoding}
+  @begin{short}
+    Saves current accelerator specifications, accelerator path, key and
+    modifiers, to @arg{filename}.
+  @end{short}
+  The file is written in a format suitable to be read back in by the function
+  @fun{gtk-accel-map-load}.
+  @see-class{gtk-accel-map}
+  @see-function{gtk-accel-map-load}"
+  (filename :string))
+
+(export 'gtk-accel-map-save)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkAccelMapForeach ()
@@ -170,112 +305,6 @@
 ;;; changed :
 ;;;     Changed flag of the accelerator (if TRUE, accelerator has changed during
 ;;;     runtime and would need to be saved during an accelerator dump)
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_accel_map_add_entry ()
-;;;
-;;; void gtk_accel_map_add_entry (const gchar *accel_path,
-;;;                               guint accel_key,
-;;;                               GdkModifierType accel_mods);
-;;;
-;;; Registers a new accelerator with the global accelerator map. This function
-;;; should only be called once per accel_path with the canonical accel_key and
-;;; accel_mods for this path. To change the accelerator during runtime
-;;; programatically, use gtk_accel_map_change_entry().
-;;;
-;;; Note that accel_path string will be stored in a GQuark. Therefore, if you
-;;; pass a static string, you can save some memory by interning it first with
-;;; g_intern_static_string().
-;;;
-;;; accel_path :
-;;;     valid accelerator path
-;;;
-;;; accel_key :
-;;;     the accelerator key
-;;;
-;;; accel_mods :
-;;;     the accelerator modifiers
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_accel_map_lookup_entry ()
-;;;
-;;; gboolean gtk_accel_map_lookup_entry (const gchar *accel_path,
-;;;                                      GtkAccelKey *key);
-;;;
-;;; Looks up the accelerator entry for accel_path and fills in key.
-;;;
-;;; accel_path :
-;;;     a valid accelerator path
-;;;
-;;; key :
-;;;     the accelerator key to be filled in (optional)
-;;;
-;;; Returns :
-;;;     TRUE if accel_path is known, FALSE otherwise
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_accel_map_change_entry ()
-;;;
-;;; gboolean gtk_accel_map_change_entry (const gchar *accel_path,
-;;;                                      guint accel_key,
-;;;                                      GdkModifierType accel_mods,
-;;;                                      gboolean replace);
-;;;
-;;; Changes the accel_key and accel_mods currently associated with accel_path.
-;;; Due to conflicts with other accelerators, a change may not always be
-;;; possible, replace indicates whether other accelerators may be deleted to
-;;; resolve such conflicts. A change will only occur if all conflicts could be
-;;; resolved (which might not be the case if conflicting accelerators are
-;;; locked). Successful changes are indicated by a TRUE return value.
-;;;
-;;; Note that accel_path string will be stored in a GQuark. Therefore, if you
-;;; pass a static string, you can save some memory by interning it first with
-;;; g_intern_static_string().
-;;;
-;;; accel_path :
-;;;     a valid accelerator path
-;;;
-;;; accel_key :
-;;;     the new accelerator key
-;;;
-;;; accel_mods :
-;;;     the new accelerator modifiers
-;;;
-;;; replace :
-;;;     TRUE if other accelerators may be deleted upon conflicts
-;;;
-;;; Returns :
-;;;     TRUE if the accelerator could be changed, FALSE otherwise
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_accel_map_load ()
-;;;
-;;; void gtk_accel_map_load (const gchar *file_name);
-;;;
-;;; Parses a file previously saved with gtk_accel_map_save() for accelerator
-;;; specifications, and propagates them accordingly.
-;;;
-;;; file_name :
-;;;     a file containing accelerator specifications, in the GLib file name
-;;;     encoding
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_accel_map_save ()
-;;;
-;;; void gtk_accel_map_save (const gchar *file_name);
-;;;
-;;; Saves current accelerator specifications (accelerator path, key and
-;;; modifiers) to file_name. The file is written in a format suitable to be read
-;;; back in by gtk_accel_map_load().
-;;;
-;;; file_name :
-;;;     the name of the file to contain accelerator specifications, in the GLib
-;;;     file name encoding
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -391,43 +420,61 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_accel_map_lock_path ()
-;;;
-;;; void gtk_accel_map_lock_path (const gchar *accel_path);
-;;;
-;;; Locks the given accelerator path. If the accelerator map doesn't yet contain
-;;; an entry for accel_path, a new one is created.
-;;;
-;;; Locking an accelerator path prevents its accelerator from being changed
-;;; during runtime. A locked accelerator path can be unlocked by
-;;; gtk_accel_map_unlock_path(). Refer to gtk_accel_map_change_entry() for
-;;; information about runtime accelerator changes.
-;;;
-;;; If called more than once, accel_path remains locked until
-;;; gtk_accel_map_unlock_path() has been called an equivalent number of times.
-;;;
-;;; Note that locking of individual accelerator paths is independent from
-;;; locking the GtkAccelGroup containing them. For runtime accelerator changes
-;;; to be possible both the accelerator path and its GtkAccelGroup have to be
-;;; unlocked.
-;;;
-;;; accel_path :
-;;;     a valid accelerator path
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_accel_map_lock_path" gtk-accel-map-lock-path) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-29}
+  @argument[accel-path]{a valid accelerator path}
+  @begin{short}
+    Locks the given accelerator path.
+  @end{short}
+  If the accelerator map does not yet contain an entry for @arg{accel-path}, a
+  new one is created.
+
+  Locking an accelerator path prevents its accelerator from being changed
+  during runtime. A locked accelerator path can be unlocked by the function
+  @fun{gtk-accel-map-unlock-path}. Refer to the function
+  @fun{gtk-accel-map-change-entry} for information about runtime accelerator
+  changes.
+
+  If called more than once, @arg{accel-path} remains locked until the function
+  @fun{gtk-accel-map-unlock-path} has been called an equivalent number of times.
+
+  Note that locking of individual accelerator paths is independent from
+  locking the @class{gtk-accel-group} containing them. For runtime accelerator
+  changes to be possible both the accelerator path and its
+  @class{gtk-accel-group} have to be unlocked.
+
+  Since 2.4
+  @see-class{gtk-accel-map}
+  @see-class{gtk-accel-group}
+  @see-function{gtk-accel-map-unlock-path}
+  @see-function{gtk-accel-map-change-entry}"
+  (accel-path :string))
+
+(export 'gtk-accel-map-lock-path)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_accel_map_unlock_path ()
-;;;
-;;; void gtk_accel_map_unlock_path (const gchar *accel_path);
-;;;
-;;; Undoes the last call to gtk_accel_map_lock_path() on this accel_path. Refer
-;;; to gtk_accel_map_lock_path() for information about accelerator path locking.
-;;;
-;;; accel_path :
-;;;     a valid accelerator path
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_accel_map_unlock_path" gtk-accel-map-unlock-path) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-29}
+  @argument[accel-path]{a valid accelerator path}
+  @begin{short}
+    Undoes the last call to the function @fun{gtk-accel-map-lock-path} on this
+    @arg{accel-path}.
+  @end{short}
+  Refer to the function @fun{gtk-accel-map-lock-path} for information about
+  accelerator path locking.
+
+  Since 2.4
+  @see-class{gtk-accel-map}
+  @see-function{gtk-accel-map-lock-path}"
+  (accel-path :string))
+
+(export 'gtk-accel-map-unlock-path)
 
 ;;; --- End of file gtk.accel-map.lisp -----------------------------------------
