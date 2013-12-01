@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.8.8 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -118,29 +118,6 @@
 ;;;
 ;;;     gtk_entry_set_input_hints
 ;;;     gtk_entry_get_input_hints
-;;;
-;;; Style Properties
-;;;
-;;;   "icon-prelight"             gboolean            : Read
-;;;   "inner-border"              GtkBorder*          : Read
-;;;   "invisible-char"            guint               : Read
-;;;   "progress-border"           GtkBorder*          : Read
-;;;
-;;; Signals
-;;;
-;;;   "activate"                                      : Action
-;;;   "backspace"                                     : Action
-;;;   "copy-clipboard"                                : Action
-;;;   "cut-clipboard"                                 : Action
-;;;   "delete-from-cursor"                            : Action
-;;;   "icon-press"                                    : Run Last
-;;;   "icon-release"                                  : Run Last
-;;;   "insert-at-cursor"                              : Action
-;;;   "move-cursor"                                   : Action
-;;;   "paste-clipboard"                               : Action
-;;;   "populate-popup"                                : Run Last
-;;;   "preedit-changed"                               : Action
-;;;   "toggle-overwrite"                              : Action
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -211,6 +188,10 @@
    (placeholder-text
     gtk-entry-placeholder-text
     "placeholder-text" "gchar" t t)
+   #+gtk-3-8
+   (populate-all
+    gtk-entry-populate-all
+    "populate-all" "gboolean" t t)
    (primary-icon-activatable
     gtk-entry-primary-icon-activatable
     "primary-icon-activatable" "gboolean" t t)
@@ -521,6 +502,10 @@
       of the entry.
       If you need to add items to the context menu, connect to this signal and
       append your menuitems to the menu.
+      If the @code{\"populate-all\"} property is @em{true}, this signal will
+      also be emitted to populate touch popups. In this case, widget will be a
+      different container, e. g. a @class{gtk-toolbar}. The signal handler
+      should not make assumptions about the type of widget.
       @begin[code]{table}
         @entry[entry]{The entry on which the signal is emitted.}
         @entry[menu]{The menu that is being populated.}
@@ -750,6 +735,13 @@
   unfocused. @br{}
   Default value: @code{nil} @br{}
   Since 3.2")
+
+#+(and gtk-3-8 cl-cffi-gtk-documentation)
+(setf (documentation (atdoc:get-slot-from-name "populate-all" 'gtk-entry) 't)
+ "If @code{\"populate-all\"} is @em{true}, the \"populate-popup\" signal is also
+  emitted for touch popups. @br{}
+  Default value: @code{nil} @br{}
+  Since 3.8")
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "primary-icon-activatable"
@@ -1707,7 +1699,7 @@
   font, but it can be changed with the function
   @fun{gtk-entry-set-invisible-char}.
   @see-class{gtk-entry}
-  @see-function{gtk-entry-set-visiblity}
+  @see-function{gtk-entry-set-visibility}
   @see-function{gtk-entry-set-invisible-char}"
   (setf (gtk-entry-visibility entry) visible))
 
@@ -2603,47 +2595,58 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_entry_im_context_filter_keypress ()
-;;;
-;;; gboolean gtk_entry_im_context_filter_keypress (GtkEntry *entry,
-;;;                                                GdkEventKey *event);
-;;;
-;;; Allow the GtkEntry input method to internally handle key press and release
-;;; events. If this function returns TRUE, then no further processing should be
-;;; done for this key event. See gtk_im_context_filter_keypress().
-;;;
-;;; Note that you are expected to call this function from your handler when
-;;; overriding key event handling. This is needed in the case when you need to
-;;; insert your own key handling between the input method and the default key
-;;; event handling of the GtkEntry. See gtk_text_view_reset_im_context() for an
-;;; example of use.
-;;;
-;;; entry :
-;;;     a GtkEntry
-;;;
-;;; event :
-;;;     the key event
-;;;
-;;; Returns :
-;;;     TRUE if the input method handled the key event.
-;;;
-;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_entry_im_context_filter_keypress"
+           gtk-entry-im-context-filter-keypress) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-30}
+  @argument[entry]{a @class{gtk-entry} widget}
+  @argument[event]{the key event}
+  @return{@em{True} if the input method handled the key event.}
+  @begin{short}
+    Allow the @class{gtk-entry} input method to internally handle key press and
+    release events.
+  @end{short}
+  If this function returns @em{true}, then no further processing should be
+  done for this key event. See the function
+  @fun{gtk-im-context-filter-keypress}.
+
+  Note that you are expected to call this function from your handler when
+  overriding key event handling. This is needed in the case when you need to
+  insert your own key handling between the input method and the default key
+  event handling of the @class{gtk-entry}. See the function
+  @fun{gtk-text-view-reset-im-context} for an example of use.
+
+  Since 2.22
+  @see-class{gtk-entry}
+  @see-class{gdk-event-key}
+  @see-function{gtk-im-context-filter-keypress}"
+  (entry (g-object gtk-entry))
+  (event (g-boxed-foreign gdk-event)))
+
+(export 'gtk-entry-im-context-filter-keypress)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_entry_reset_im_context ()
-;;;
-;;; void gtk_entry_reset_im_context (GtkEntry *entry);
-;;;
-;;; Reset the input method context of the entry if needed.
-;;;
-;;; This can be necessary in the case where modifying the buffer would confuse
-;;; on-going input method behavior.
-;;;
-;;; entry :
-;;;     a GtkEntry
-;;;
-;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_entry_reset_im_context" gtk-entry-reset-im-context) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-30}
+  @argument[entry]{a @class{gtk-entry} widget}
+  @begin{short}
+    Reset the input method context of the entry if needed.
+  @end{short}
+
+  This can be necessary in the case where modifying the buffer would confuse
+  on-going input method behavior.
+
+  Since 2.22
+  @see-class{gtk-entry}"
+  (entry (g-object gtk-entry)))
+
+(export 'gtk-entry-reset-im-context)
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkEntryIconPosition
@@ -2679,26 +2682,30 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_entry_set_icon_from_pixbuf ()
-;;;
-;;; void gtk_entry_set_icon_from_pixbuf (GtkEntry *entry,
-;;;                                      GtkEntryIconPosition icon_pos,
-;;;                                      GdkPixbuf *pixbuf);
-;;;
-;;; Sets the icon shown in the specified position using a pixbuf.
-;;;
-;;; If pixbuf is NULL, no icon will be shown in the specified position.
-;;;
-;;; entry :
-;;;     a GtkEntry
-;;;
-;;; icon_pos :
-;;;     Icon position
-;;;
-;;; pixbuf :
-;;;     A GdkPixbuf, or NULL
-;;;
-;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_entry_set_icon_from_pixbuf" gtk-entry-set-icon-from-pixbuf) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-30}
+  @argument[entry]{a @class{gtk-entry} widget}
+  @argument[icon-pos]{icon position of type @symbol{gtk-entry-icon-position}}
+  @argument[pixbuf]{a @class{gdk-pixbuf}, or @code{nil}}
+  @begin{short}
+    Sets the icon shown in the specified position using a pixbuf.
+  @end{short}
+
+  If @arg{pixbuf} is @code{nil}, no icon will be shown in the specified
+  position.
+
+  Since 2.16
+  @see-class{gtk-entry}
+  @see-class{gdk-pixbuf}
+  @see-symbol{gtk-entry-icon-position}"
+  (entry (g-object gtk-entry))
+  (icon-pos gtk-entry-icon-position)
+  (pixbuf (g-object gdk-pixbuf)))
+
+(export 'gtk-entry-set-icon-from-pixbuf)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_entry_set_icon_from_stock ()
@@ -2732,30 +2739,34 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_entry_set_icon_from_icon_name ()
-;;;
-;;; void gtk_entry_set_icon_from_icon_name (GtkEntry *entry,
-;;;                                         GtkEntryIconPosition icon_pos,
-;;;                                         const gchar *icon_name);
-;;;
-;;; Sets the icon shown in the entry at the specified position from the current
-;;; icon theme.
-;;;
-;;; If the icon name isn't known, a "broken image" icon will be displayed
-;;; instead.
-;;;
-;;; If icon_name is NULL, no icon will be shown in the specified position.
-;;;
-;;; entry :
-;;;     A GtkEntry
-;;;
-;;; icon_pos :
-;;;     The position at which to set the icon
-;;;
-;;; icon_name :
-;;;     An icon name, or NULL
-;;;
-;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_entry_set_icon_from_icon_name" gtk-entry-set-icon-from-icon-name)
+    :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-30}
+  @argument[entry]{a @class{gtk-entry} widget}
+  @argument[icon-pos]{the position at which to set the icon}
+  @argument[icon-name]{An icon name, or @code{nil}}
+  @begin{short}
+    Sets the icon shown in the entry at the specified position from the current
+    icon theme.
+  @end{short}
+
+  If the icon name is not known, a \"broken image\" icon will be displayed
+  instead.
+
+  If @arg{icon-name} is @code{nil}, no icon will be shown in the specified
+  position.
+
+  Since 2.16
+  @see-class{gtk-entry}
+  @see-symbol{gtk-entry-icon-position}"
+  (entry (g-object gtk-entry))
+  (icon-pos gtk-entry-icon-position)
+  (icon-name :string))
+
+(export 'gtk-entry-set-icon-from-icon-name)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_entry_set_icon_from_gicon ()
