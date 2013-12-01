@@ -726,7 +726,7 @@
     @entry[:context-menu]{The modifier used to invoke context menus. Note that
       mouse button 3 always triggers context menus. When this modifier is not
       0, it additionally triggers context menus when used with mouse button 1.}
-    @entry[:extend-selection]{The modifier used to extend selections using 
+    @entry[:extend-selection]{The modifier used to extend selections using
       <modifier>-click or <modifier>-cursor-key.}
     @entry[:modify-selection]{The modifier used to modify selections, which in
       most cases means toggling the clicked item into or out of the selection.}

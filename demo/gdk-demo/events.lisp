@@ -61,7 +61,7 @@
          (gtk-label-set-text event-button-axes
                              (format nil "~A" (gdk-event-button-axes event)))
          (gtk-label-set-text event-button-state
-                             (format nil "~A" 
+                             (format nil "~A"
                                      (foreign-bitfield-symbols 'gdk-modifier-type
                                                                (gdk-event-button-state event))))
          (gtk-label-set-text event-button-button
@@ -146,7 +146,7 @@
         (gtk-widget-set-events area
                                (append (gtk-widget-get-events area)
                                        '(:all-events-mask)))
-    
+
         (gtk-container-add vgrid (make-instance 'gtk-label
                                                 :xalign 0.0
                                                 :use-markup t
@@ -399,7 +399,7 @@
           (gtk-notebook-add-page notebook page nil))
 
         (gtk-container-add vgrid notebook)
-        
+
         (gtk-container-add frame area)
         (gtk-container-add hgrid frame)
         (gtk-container-add hgrid vgrid)
