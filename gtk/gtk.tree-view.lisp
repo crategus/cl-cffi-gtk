@@ -2586,42 +2586,58 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_view_set_drag_dest_row ()
-;;;
-;;; void gtk_tree_view_set_drag_dest_row (GtkTreeView *tree_view,
-;;;                                       GtkTreePath *path,
-;;;                                       GtkTreeViewDropPosition pos);
-;;;
-;;; Sets the row that is highlighted for feedback. If path is NULL, an existing
-;;; highlight is removed.
-;;;
-;;; tree_view :
-;;;     a GtkTreeView
-;;;
-;;; path :
-;;;     The path of the row to highlight, or NULL.
-;;;
-;;; pos :
-;;;     Specifies whether to drop before, after or into the row
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_tree_view_set_drag_dest_row" gtk-tree-view-set-drag-dest-row)
+    :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-1}
+  @argument[tree-view]{a @class{gtk-tree-view} widget}
+  @argument[path]{the path of the row to highlight, or @code{nil}}
+  @argument[pos]{specifies whether to drop before, after or into the row}
+  @begin{short}
+    Sets the row that is highlighted for feedback.
+  @end{short}
+  If @arg{path} is @code{nil}, an existing highlight is removed.
+  @see-class{gtk-tree-view}
+  @see-class{gtk-tree-path}
+  @see-symbol{gtk-tree-view-drop-position}
+  @see-function{gtk-tree-view-get-drag-dest-row}"
+  (tree-view (g-object gtk-tree-view))
+  (path (g-boxed-foreign gtk-tree-path))
+  (pos gtk-tree-view-drop-position))
+
+(export 'gtk-tree-view-set-drag-dest-row)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_view_get_drag_dest_row ()
-;;;
-;;; void gtk_tree_view_get_drag_dest_row (GtkTreeView *tree_view,
-;;;                                       GtkTreePath **path,
-;;;                                       GtkTreeViewDropPosition *pos);
-;;;
-;;; Gets information about the row that is highlighted for feedback.
-;;;
-;;; tree_view :
-;;;     a GtkTreeView
-;;;
-;;; path :
-;;;     Return location for the path of the highlighted row, or NULL.
-;;;
-;;; pos :
-;;;     Return location for the drop position, or NULL.
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_tree_view_get_drag_dest_row" %gtk-tree-view-get-drag-dest-row)
+    :void
+  (tree-view (g-object gtk-tree-view))
+  (path :pointer)
+  (pos :pointer))
+
+(defun gtk-tree-view-get-drag-dest-row (tree-view)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-1}
+  @argument[tree-view]{a @class{gtk-tree-view} widget}
+  @begin{return}
+    @code{path} -- the path of the highlighted row, or @code{nil} @br{}
+    @code{pos} -- the drop position, or @code{nil}
+  @end{return}
+  Gets information about the row that is highlighted for feedback.
+  @see-class{gtk-tree-view}
+  @see-class{gtk-tree-path}
+  @see-symbol{gtk-tree-view-drop-position}
+  @see-function{gtk-tree-view-set-drag-dest-row}"
+  (with-foreign-objects ((path :pointer) (pos :pointer))
+    (%gtk-tree-view-get-drag-dest-row tree-view path pos)
+    (values (mem-ref path '(g-boxed-foreign gtk-tree-path :return))
+            (mem-ref pos 'gtk-tree-view-drop-position))))
+
+(export 'gtk-tree-view-get-drag-dest-row)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_view_get_dest_row_at_pos ()
