@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.8.8. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
@@ -69,7 +69,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-menu-bar 'type)
- "@version{2013-6-1}
+ "@version{2013-12-1}
   @begin{short}
     The @sym{gtk-menu-bar} is a subclass of @class{gtk-menu-shell} which
     contains one or more items of type @class{gtk-menu-item}. The result is a
@@ -78,6 +78,11 @@
   @begin[Style Property Details]{dictionary}
     @subheading{The \"internal-padding\" style property}
       @code{\"internal-padding\"} of type @code{:int} (Read) @br{}
+      @b{Warning:} @code{\"internal-padding\"} has been deprecated since version
+      3.8 and should not be used in newly-written code. Use the standard padding
+      CSS property, through objects like @class{gtk-style-context} and
+      @class{gtk-css-provider}; the value of this style property is ignored.
+      @br{}
       Amount of border space between the menubar shadow and the menu items.
       @br{}
       Allowed values: >= 0 @br{}
@@ -127,17 +132,23 @@
 (setf (gethash 'gtk-menu-bar-child-pack-direction atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-menu-bar-child-pack-direction 'function)
- "@version{2013-3-16}
+ "@version{2013-12-1}
   Accessor of the slot @code{\"child-pack-direction\"} of the
-  @class{gtk-menu-bar} class.")
+  @class{gtk-menu-bar} class.
+  @see-class{gtk-menu-bar}
+  @see-function{gtk-menu-bar-get-child-pack-direction}
+  @see-function{gtk-menu-bar-set-child-pack-direction}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-menu-bar-pack-direction atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-menu-bar-pack-direction 'function)
- "@version{2013-3-16}
+ "@version{2013-12-1}
   Accessor of the slot @code{\"pack-direction\"} of the @class{gtk-menu-bar}
-  class.")
+  class.
+  @see-class{gtk-menu-bar}
+  @see-class{gtk-menu-bar-get-pack-direction}
+  @see-class{gtk-menu-bar-set-pack-direction}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_bar_new ()
@@ -156,24 +167,31 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_bar_new_from_model ()
-;;;
-;;; GtkWidget * gtk_menu_bar_new_from_model (GMenuModel *model);
-;;;
-;;; Creates a new GtkMenuBar and populates it with menu items and submenus
-;;; according to model.
-;;;
-;;; The created menu items are connected to actions found in the
-;;; GtkApplicationWindow to which the menu bar belongs - typically by means of
-;;; being contained within the GtkApplicationWindows widget hierarchy.
-;;;
-;;; model :
-;;;     a GMenuModel
-;;;
-;;; Returns :
-;;;     a new GtkMenuBar
-;;;
-;;; Since 3.4
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_menu_bar_new_from_model" gtk-menu-bar-new-from-model)
+    (g-object gtk-menu-bar)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-1}
+  @argument[model]{a @class{g-menu-model} object}
+  @return{A new @class{gtk-menu-bar} widget.}
+  @begin{short}
+    Creates a new @class{gtk-menu-bar} and populates it with menu items and
+    submenus according to model.
+  @end{short}
+
+  The created menu items are connected to actions found in the
+  @class{gtk-application-window} to which the menu bar belongs - typically by
+  means of being contained within the @class{gtk-application-window} widgets
+  hierarchy.
+
+  Since 3.4
+  @see-class{gtk-menu-bar}
+  @see-class{g-menu-model}
+  @see-class{gtk-application-window}"
+  (model (g-object g-menu-model)))
+
+(export 'gtk-menu-bar-new-from-model)
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkPackDirection
