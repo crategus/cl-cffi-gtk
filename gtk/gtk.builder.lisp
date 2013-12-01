@@ -739,39 +739,49 @@
 
 (defcfun ("gtk_builder_get_object" gtk-builder-get-object) g-object
  #+cl-cffi-gtk-documentation
- "@version{2013-5-28}
+ "@version{2013-12-1}
   @argument[builder]{a @class{gtk-builder} object}
   @argument[name]{name of object to get}
   @return{the object named name or @code{nil} if it could not be found in the
     object tree}
   @begin{short}
-    Gets the object named @arg{name}. Note that this function does not increment
-    the reference count of the returned object.
+    Gets the object named @arg{name}.
   @end{short}
+  Note that this function does not increment the reference count of the
+  returned object.
 
-  Since 2.12"
-  (builder g-object)
+  Since 2.12
+  @see-class{gtk-builder}
+  @see-function{gtk-builder-get-objects}"
+  (builder (g-object gtk-builder))
   (name :string))
 
 (export 'gtk-builder-get-object)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_builder_get_objects ()
-;;;
-;;; GSList * gtk_builder_get_objects (GtkBuilder *builder);
-;;;
-;;; Gets all objects that have been constructed by builder. Note that this
-;;; function does not increment the reference counts of the returned objects.
-;;;
-;;; builder :
-;;;     a GtkBuilder
-;;;
-;;; Returns :
-;;;     a newly-allocated GSList containing all the objects constructed by the
-;;;     GtkBuilder instance. It should be freed by g_slist_free()
-;;;
-;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_builder_get_objects" gtk-builder-get-objects) (g-slist g-object)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-1}
+  @argument[builder]{a @class{gtk-builder} object}
+  @begin{return}
+    A list containing all the objects constructed by the @class{gtk-builder}
+    instance.
+  @end{return}
+  @begin{short}
+    Gets all objects that have been constructed by @arg{builder}.
+  @end{short}
+  Note that this function does not increment the reference counts of the
+  returned objects.
+
+  Since 2.12
+  @see-class{gtk-builder}
+  @see-function{gtk-builder-get-object}"
+  (builder (g-object gtk-builder)))
+
+(export 'gtk-builder-get-objects)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_builder_connect_signals ()
@@ -868,37 +878,46 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_builder_set_translation_domain ()
-;;;
-;;; void gtk_builder_set_translation_domain (GtkBuilder *builder,
-;;;                                          const gchar *domain);
-;;;
-;;; Sets the translation domain of builder. See "translation-domain".
-;;;
-;;; builder :
-;;;     a GtkBuilder
-;;;
-;;; domain :
-;;;     the translation domain or NULL
-;;;
-;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-builder-set-translation-domain))
+
+(defun gtk-builder-set-translation-domain (builder domain)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-1}
+  @argument[builder]{a @class{gtk-builder} object}
+  @argument[domain]{the translation domain or @code{nil}}
+  @short{Sets the translation domain of @arg{builder}.}
+  See the @code{\"translation-domain\"} property.
+
+  Since 2.12
+  @see-class{gtk-builder}
+  @see-function{gtk-builder-get-translation-domain}"
+  (setf (gtk-builder-translation-domain builder) domain))
+
+(export 'gtk-builder-set-translation-domain)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_builder_get_translation_domain ()
-;;;
-;;; const gchar * gtk_builder_get_translation_domain (GtkBuilder *builder);
-;;;
-;;; Gets the translation domain of builder.
-;;;
-;;; builder :
-;;;     a GtkBuilder
-;;;
-;;; Returns :
-;;;     the translation domain. This string is owned by the builder object and
-;;;     must not be modified or freed.
-;;;
-;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-builder-get-translation-domain))
+
+(defun gtk-builder-get-translation-domain (builder)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-1}
+  @argument[builder]{a @class{gtk-guilder} object}
+  @begin{return}
+    The translation domain.
+  @end{return}
+  @short{Gets the translation domain of @arg{builder}.}
+
+  Since 2.12
+  @see-class{gtk-builder}
+  @see-function{gtk-builder-set-translation-domain}"
+  (gtk-builder-translation-domain builder))
+
+(export 'gtk-builder-get-translation-domain)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_builder_get_type_from_name ()
