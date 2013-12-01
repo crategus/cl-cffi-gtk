@@ -87,11 +87,11 @@ GTK+ Widgets and Objects
 
   Numeric/Text Data Entry
 
-    gtk.entry.lisp                   - GtkEntry                    - GTK+ 3.6.4&
+    gtk.entry.lisp                   - GtkEntry                    - GTK+ 3.8.8
     gtk.entry-buffer.lisp            - GtkEntryBuffer              - GTK+ 3.6.4
-    gtk.entry-completion.lisp        - GtkEntryCompletion          - GTK+ 3.6.4&
+    gtk.entry-completion.lisp        - GtkEntryCompletion          - GTK+ 3.8.8
     gtk.scale.lisp                   - GtkScale, ...               - GTK+ 3.6.4
-    gtk.spin-button.lisp             - GtkSpinButton               - GTK+ 3.6.4&
+    gtk.spin-button.lisp             - GtkSpinButton               - GTK+ 3.8.8
     gtk.search-entry.lisp            - GtkSearchEntry              - GTK+ 3.6.4
     gtk.editable.lisp                - GtkEditable                 - GTK+ 3.6.4
 
@@ -144,8 +144,8 @@ GTK+ Widgets and Objects
     gtk.combo-box.lisp               - GtkComboBox                 - GTK+ 3.6.4
     gtk.combo-box-text.lisp          - GtkComboBoxText             - GTK+ 3.6.4
 
-    gtk.menu.lisp                    - GtkMenu                     - GTK+ 3.6.4&
-    gtk.menu-bar.lisp                - GtkMenuBar                  - GTK+ 3.6.4&
+    gtk.menu.lisp                    - GtkMenu                     - GTK+ 3.8.8
+    gtk.menu-bar.lisp                - GtkMenuBar                  - GTK+ 3.8.8
     gtk.menu-item.lisp               - GtkMenuItem                 - GTK+ 3.6.4&
     gtk.image-menu-item.lisp         - GtkImageMenuItem            - GTK+ 3.6.4&
     gtk.radio-menu-item.lisp         - GtkRadioMenuItem            - GTK+ 3.6.4&
