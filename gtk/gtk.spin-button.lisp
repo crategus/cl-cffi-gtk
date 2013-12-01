@@ -4,9 +4,10 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.8.8 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -64,31 +65,6 @@
 ;;;     gtk_spin_button_get_value
 ;;;     gtk_spin_button_get_wrap
 ;;;     GTK_INPUT_ERROR
-;;;
-;;; Object Hierarchy
-;;;
-;;;   GObject
-;;;    +----GInitiallyUnowned
-;;;          +----GtkWidget
-;;;                +----GtkEntry
-;;;                      +----GtkSpinButton
-;;;
-;;; Implemented Interfaces
-;;;
-;;; GtkSpinButton implements AtkImplementorIface, GtkBuildable, GtkEditable,
-;;; GtkCellEditable, and GtkOrientable.
-;;;
-;;; Style Properties
-;;;
-;;;   "shadow-type"           GtkShadowType              : Read
-;;;
-;;; Signals
-;;;
-;;;   "change-value"                                     : Action
-;;;   "input"                                            : Run Last
-;;;   "output"                                           : Run Last
-;;;   "value-changed"                                    : Run Last
-;;;   "wrapped"                                          : Run Last
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -130,8 +106,6 @@
    (wrap
     gtk-spin-button-wrap
     "wrap" "gboolean" t t)))
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-spin-button 'type)
@@ -302,71 +276,57 @@
 (setf (documentation (atdoc:get-slot-from-name "adjustment"
                                                'gtk-spin-button) 't)
  "The @code{\"adjustment\"} property of type @class{gtk-adjustment}
-  (Read / Write)@br{}
+  (Read / Write) @br{}
   The adjustment that holds the value of the spin button.")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "climb-rate"
                                                'gtk-spin-button) 't)
- "The @code{\"climb-rate\"} property of type @code{:double} (Read / Write)@br{}
+ "The @code{\"climb-rate\"} property of type @code{:double} (Read / Write) @br{}
   The acceleration rate when you hold down a button. @br{}
-  Allowed values: >= 0@br{}
+  Allowed values: >= 0 @br{}
   Default value: 0")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "digits" 'gtk-spin-button) 't)
- "The @code{\"digits\"} property of type @code{:uint} (Read / Write)@br{}
+ "The @code{\"digits\"} property of type @code{:uint} (Read / Write) @br{}
   The number of decimal places to display. @br{}
-  Allowed values: <= 20@br{}
+  Allowed values: <= 20 @br{}
   Default value: 0")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "numeric" 'gtk-spin-button) 't)
- "The @code{\"numeric\"} property of type @code{:boolean} (Read / Write)@br{}
+ "The @code{\"numeric\"} property of type @code{:boolean} (Read / Write) @br{}
   Whether non-numeric characters should be ignored. @br{}
   Default value: @code{nil}")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "snap-to-ticks"
                                                'gtk-spin-button) 't)
  "The @code{\"snap-to-ticks\"} property of type @code{:boolean}
-  (Read / Write)@br{}
+  (Read / Write) @br{}
   Whether erroneous values are automatically changed to a spin button's
   nearest step increment. @br{}
   Default value: @code{nil}")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "update-policy"
                                                'gtk-spin-button) 't)
  "The @code{\"update-policy\"} property of type
-  @symbol{gtk-spin-button-update-policy} (Read / Write)@br{}
+  @symbol{gtk-spin-button-update-policy} (Read / Write) @br{}
   Whether the spin button should update always, or only when the value is
   legal. @br{}
   Default value: @code{:always}")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "value" 'gtk-spin-button) 't)
- "The @code{\"value\"} property of type @code{:double} (Read / Write)@br{}
+ "The @code{\"value\"} property of type @code{:double} (Read / Write) @br{}
   Reads the current value, or sets a new value. @br{}
   Default value: 0")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "wrap" 'gtk-spin-button) 't)
- "The @code{\"wrap\"} property of type @code{:boolean} (Read / Write)@br{}
+ "The @code{\"wrap\"} property of type @code{:boolean} (Read / Write) @br{}
   Whether a spin button should wrap upon reaching its limits. @br{}
   Default value: @code{nil}")
 
@@ -380,79 +340,83 @@
 (setf (gethash 'gtk-spin-button-adjustment atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-spin-button-adjustment 'function)
- "@version{2013-3-23}
+ "@version{2013-11-30}
   Accessor of the slot @code{\"adjustment\"} of the @class{gtk-spin-button}
-  class.")
-
-;;; ----------------------------------------------------------------------------
+  class.
+  @see-class{gtk-spin-button}
+  @see-function{gtk-spin-button-get-adjustment}
+  @see-function{gtk-spin-button-set-adjustment}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-spin-button-climb-rate atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-spin-button-climb-rate 'function)
- "@version{2013-3-23}
+ "@version{2013-11-30}
   Accessor of the slot @code{\"climb-rate\"} of the @class{gtk-spin-button}
-  class.")
-
-;;; ----------------------------------------------------------------------------
+  class.
+  @see-class{gtk-spin-button}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-spin-button-digits atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-spin-button-digits 'function)
- "@version{2013-3-23}
-  Accessor of the slot @code{\"digits\"} of the @class{gtk-spin-button}
-  class.")
-
-;;; ----------------------------------------------------------------------------
+ "@version{2013-11-30}
+  Accessor of the slot @code{\"digits\"} of the @class{gtk-spin-button} class.
+  @see-class{gtk-spin-button}
+  @see-function{gtk-spin-button-get-digits}
+  @see-function{gtk-spin-button-set-digits}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-spin-button-numeric atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-spin-button-numeric 'function)
- "@version{2013-3-23}
-  Accessor of the slot @code{\"numeric\"} of the @class{gtk-spin-button}
-  class.")
-
-;;; ----------------------------------------------------------------------------
+ "@version{2013-11-30}
+  Accessor of the slot @code{\"numeric\"} of the @class{gtk-spin-button} class.
+  @see-class{gtk-spin-button}
+  @see-function{gtk-spin-button-get-numeric}
+  @see-function{gtk-spin-button-set-numeric}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-spin-button-snap-to-ticks atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-spin-button-snap-to-ticks 'function)
- "@version{2013-3-23}
+ "@version{2013-11-30}
   Accessor of the slot @code{\"snap-to-ticks\"} of the @class{gtk-spin-button}
-  class.")
-
-;;; ----------------------------------------------------------------------------
+  class.
+  @see-class{gtk-spin-button}
+  @see-function{gtk-spin-button-get-snap-to-ticks}
+  @see-function{gtk-spin-button-set-snap-to-ticks}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-spin-button-update-policy atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-spin-button-update-policy 'function)
- "@version{2013-3-23}
+ "@version{2013-11-30}
   Accessor of the slot @code{\"update-policy\"} of the @class{gtk-spin-button}
-  class.")
-
-;;; ----------------------------------------------------------------------------
+  class.
+  @see-class{gtk-spin-button}
+  @see-function{gtk-spin-button-get-update-policy}
+  @see-function{gtk-spin-button-set-update-policy}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-spin-button-value atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-spin-button-value 'function)
- "@version{2013-3-23}
-  Accessor of the slot @code{\"value\"} of the @class{gtk-spin-button}
-  class.")
-
-;;; ----------------------------------------------------------------------------
+ "@version{2013-11-30}
+  Accessor of the slot @code{\"value\"} of the @class{gtk-spin-button} class.
+  @see-class{gtk-spin-button}
+  @see-function{gtk-spin-button-get-value}
+  @see-function{gtk-spin-button-set-value}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-spin-button-wrap atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-spin-button-wrap 'function)
- "@version{2013-3-23}
-  Accessor of the slot @code{\"wrap\"} of the @class{gtk-spin-button}
-  class.")
+ "@version{2013-11-30}
+  Accessor of the slot @code{\"wrap\"} of the @class{gtk-spin-button} class.
+  @see-class{gtk-spin-button}
+  @see-function{gtk-spin-button-get-wrap}
+  @see-function{gtk-spin-button-set-wrap}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkSpinButtonUpdatePolicy
@@ -463,8 +427,6 @@
    :type-initializer "gtk_spin_button_update_policy_get_type")
   (:always 0)
   (:if-valid 1))
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-spin-button-update-policy atdoc:*symbol-name-alias*) "Enum"
@@ -506,8 +468,6 @@
   (:end 5)
   (:user-defined 6))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-spin-type atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-spin-type atdoc:*external-symbols*)
@@ -541,109 +501,120 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_spin_button_configure ()
-;;;
-;;; void gtk_spin_button_configure (GtkSpinButton *spin_button,
-;;;                                 GtkAdjustment *adjustment,
-;;;                                 gdouble climb_rate,
-;;;                                 guint digits);
-;;;
-;;; Changes the properties of an existing spin button. The adjustment, climb
-;;; rate, and number of decimal places are all changed accordingly, after this
-;;; function call.
-;;;
-;;; spin_button :
-;;;     a GtkSpinButton
-;;;
-;;; adjustment :
-;;;     a GtkAdjustment
-;;;
-;;; climb_rate :
-;;;     the new climb rate
-;;;
-;;; digits :
-;;;     the number of decimal places to display in the spin button
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_spin_button_configure" gtk-spin-button-configure) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-30}
+  @argument[spin-button]{a @class{gtk-spin-button} widget}
+  @argument[adjustment]{a @class{gtk-adjustment}}
+  @argument[climb-rate]{the new climb rate}
+  @argument[digits]{the number of decimal places to display in the spin button}
+  @begin{short}
+    Changes the properties of an existing spin button.
+  @end{short}
+  The adjustment, climb rate, and number of decimal places are all changed
+  accordingly, after this function call.
+  @see-class{gtk-spin-button}"
+  (spin-button (g-object gtk-spin-button))
+  (adjustment (g-object gtk-adjustment))
+  (climb-rate :double)
+  (digits :uint))
+
+(export 'gtk-spin-button-configure)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_spin_button_new ()
-;;;
-;;; GtkWidget * gtk_spin_button_new (GtkAdjustment *adjustment,
-;;;                                  gdouble climb_rate,
-;;;                                  guint digits);
-;;;
-;;; Creates a new GtkSpinButton.
-;;;
-;;; adjustment :
-;;;     the GtkAdjustment object that this spin button should use, or NULL
-;;;
-;;; climb_rate :
-;;;     specifies how much the spin button changes when an arrow is clicked on
-;;;
-;;; digits :
-;;;     the number of decimal places to display
-;;;
-;;; Returns :
-;;;     The new spin button as a GtkWidget
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-spin-button-new))
+
+(defun gtk-spin-button-new (adjustment climb-rate digits)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-30}
+  @argument[adjustment]{the @class{gtk-adjustment} object that this spin button
+    should use, or @code{nil}}
+  @argument[climb-rate]{specifies how much the spin button changes when an
+    arrow is clicked on}
+  @argument[digits]{the number of decimal places to display}
+  @return{The new spin button.}
+  Creates a new @class{gtk-spin-button}.
+  @see-class{gtk-spin-button}
+  @see-class{gtk-adjustment}"
+  (make-instance 'gtk-spin-button
+                 :adjustment adjustment
+                 :climb-rate climb-rate
+                 :digits digits))
+
+(export 'gtk-spin-button-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_spin_button_new_with_range ()
-;;;
-;;; GtkWidget * gtk_spin_button_new_with_range (gdouble min,
-;;;                                             gdouble max,
-;;;                                             gdouble step);
-;;;
-;;; This is a convenience constructor that allows creation of a numeric
-;;; GtkSpinButton without manually creating an adjustment. The value is
-;;; initially set to the minimum value and a page increment of 10 * step is the
-;;; default. The precision of the spin button is equivalent to the precision of
-;;; step.
-;;;
-;;; Note that the way in which the precision is derived works best if step is a
-;;; power of ten. If the resulting precision is not suitable for your needs, use
-;;; gtk_spin_button_set_digits() to correct it.
-;;;
-;;; min :
-;;;     Minimum allowable value
-;;;
-;;; max :
-;;;     Maximum allowable value
-;;;
-;;; step :
-;;;     Increment added or subtracted by spinning the widget
-;;;
-;;; Returns :
-;;;     The new spin button as a GtkWidget
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_spin_button_new_with_range" gtk-spin-button-new-with-range)
+    (g-object gtk-spin-button)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-30}
+  @argument[min]{minimum allowable value}
+  @argument[max]{maximum allowable value}
+  @argument[step]{increment added or subtracted by spinning the widget}
+  @return{The new spin button.}
+  @begin{short}
+    This is a convenience constructor that allows creation of a numeric
+    @class{gtk-spin-button} without manually creating an adjustment.
+  @end{short}
+  The value is initially set to the minimum value and a page increment of
+  10 * @arg{step} is the default. The precision of the spin button is equivalent
+  to the precision of @arg{step}.
+
+  Note that the way in which the precision is derived works best if step is a
+  power of ten. If the resulting precision is not suitable for your needs, use
+  the function @fun{gtk-spin-button-set-digits} to correct it.
+  @see-function{gtk-spin-button}
+  @see-function{gtk-spin-button-set-digits}"
+  (min :double)
+  (max :double)
+  (step :double))
+
+(export 'gtk-spin-button-new-with-range)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_spin_button_set_adjustment ()
-;;;
-;;; void gtk_spin_button_set_adjustment (GtkSpinButton *spin_button,
-;;;                                      GtkAdjustment *adjustment);
-;;;
-;;; Replaces the GtkAdjustment associated with spin_button.
-;;;
-;;; spin_button :
-;;;     a GtkSpinButton
-;;;
-;;; adjustment :
-;;;     a GtkAdjustment to replace the existing adjustment
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-spin-button-set-adjustment))
+
+(defun gtk-spin-button-set-adjustment (spin-button adjustment)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-30}
+  @argument[spin-button]{a @class{gtk-spin-button} widget}
+  @argument[adjustment]{a @class{gtk-adjustment} to replace the existing
+    adjustment}
+  Replaces the @class{gtk-adjustment} associated with @arg{spin-button}.
+  @see-class{gtk-spin-button}
+  @see-function{gtk-spin-button-get-adjustment}"
+  (setf (gtk-spin-button-adjustment spin-button) adjustment))
+
+(export 'gtk-spin-button-set-adjustment)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_spin_button_get_adjustment ()
-;;;
-;;; GtkAdjustment * gtk_spin_button_get_adjustment (GtkSpinButton *spin_button);
-;;;
-;;; Get the adjustment associated with a GtkSpinButton
-;;;
-;;; spin_button :
-;;;     a GtkSpinButton
-;;;
-;;; Returns :
-;;;     the GtkAdjustment of spin_button
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-spin-button-get-adjustment))
+
+(defun gtk-spin-button-get-adjustment (spin-button)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-30}
+  @argument[spin-button]{a @class{gtk-spin-button} widget}
+  @return{The @class{gtk-adjustment} of @arg{spin-button}.}
+  Get the adjustment associated with a @class{gtk-spin-button}.
+  @see-class{gtk-spin-button}
+  @see-function{gtk-spin-button-set-adjustment}"
+  (gtk-spin-button-adjustment spin-button))
+
+(export 'gtk-spin-button-get-adjustment)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_spin_button_set_digits ()
@@ -653,57 +624,64 @@
 
 (defun gtk-spin-button-set-digits (spin-button digits)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-28}
+ "@version{2013-11-30}
   @argument[spin-button]{a @class{gtk-spin-button} widget}
   @argument[digits]{the number of digits after the decimal point to be displayed
     for the spin button's value}
   Set the precision to be displayed by @arg{spin-button}. Up to 20 digit
-  precision is allowed."
+  precision is allowed.
+  @see-class{gtk-spin-button}
+  @see-function{gtk-spin-button-get-digits}"
   (setf (gtk-spin-button-digits spin-button) digits))
 
 (export 'gtk-spin-button-set-digits)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_spin_button_set_increments ()
-;;;
-;;; void gtk_spin_button_set_increments (GtkSpinButton *spin_button,
-;;;                                      gdouble step,
-;;;                                      gdouble page);
-;;;
-;;; Sets the step and page increments for spin_button. This affects how quickly
-;;; the value changes when the spin button's arrows are activated.
-;;;
-;;; spin_button :
-;;;     a GtkSpinButton
-;;;
-;;; step :
-;;;     increment applied for a button 1 press.
-;;;
-;;; page :
-;;;     increment applied for a button 2 press.
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_spin_button_set_increments" gtk-spin-button-set-increments) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-30}
+  @argument[spin-button]{a @class{gtk-spin-button} widget}
+  @argument[step]{increment applied for a button 1 press}
+  @argument[page]{increment applied for a button 2 press}
+  @begin{short}
+    Sets the step and page increments for @arg{spin-button}.
+  @end{short}
+  This affects how quickly the value changes when the spin button's arrows are
+  activated.
+  @see-class{gtk-spin-button}
+  @see-function{gtk-spin-button-get-increments}"
+  (spin-button (g-object gtk-spin-button))
+  (step :double)
+  (page :double))
+
+(export 'gtk-spin-button-set-increments)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_spin_button_set_range ()
-;;;
-;;; void gtk_spin_button_set_range (GtkSpinButton *spin_button,
-;;;                                 gdouble min,
-;;;                                 gdouble max);
-;;;
-;;; Sets the minimum and maximum allowable values for spin_button.
-;;;
-;;; If the current value is outside this range, it will be adjusted to fit
-;;; within the range, otherwise it will remain unchanged.
-;;;
-;;; spin_button :
-;;;     a GtkSpinButton
-;;;
-;;; min :
-;;;     minimum allowable value
-;;;
-;;; max :
-;;;     maximum allowable value
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_spin_button_set_range" gtk-spin-button-set-range) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-30}
+  @argument[spin-button]{a @class{gtk-spin-button} widget}
+  @argument[min]{minimum allowable value}
+  @argument[max]{maximum allowable value}
+  @begin{short}
+    Sets the minimum and maximum allowable values for @arg{spin-button}.
+  @end{short}
+
+  If the current value is outside this range, it will be adjusted to fit
+  within the range, otherwise it will remain unchanged.
+  @see-class{gtk-spin-button}
+  @see-function{gtk-spin-button-get-range}"
+  (spin-button (g-object gtk-spin-button))
+  (min :double)
+  (max :double))
+
+(export 'gtk-spin-button-set-range)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_spin_button_get_value_as_int ()
@@ -711,27 +689,34 @@
 
 (defun gtk-spin-button-get-value-as-int (spin-button)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-28}
+ "@version{2013-11-30}
   @argument[spin-button]{a @class{gtk-spin-button} widget}
   @return{The value of @arg{spin-button}.}
-  Get the value @arg{spin-button} represented as an integer."
+  Get the value @arg{spin-button} represented as an integer.
+  @see-class{gtk-spin-button}
+  @see-function{gtk-spin-button-get-value}"
   (truncate (gtk-spin-button-value spin-button)))
 
 (export 'gtk-spin-button-get-value-as-int)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_spin_button_set_value ()
-;;;
-;;; void gtk_spin_button_set_value (GtkSpinButton *spin_button, gdouble value);
-;;;
-;;; Sets the value of spin_button.
-;;;
-;;; spin_button :
-;;;     a GtkSpinButton
-;;;
-;;; value :
-;;;     the new value
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-spin-button-get-value))
+
+(defun gtk-spin-button-set-value (spin-button value)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-30}
+  @argument[spin-button]{a @class{gtk-spin-button} widget}
+  @argument[value]{the new value}
+  Sets the value of @arg{spin-button}.
+  @see-class{gtk-spin-button}
+  @see-function{gtk-spin-button-get-value}
+  @see-function{gtk-spin-button-get-value-as-int}"
+  (setf (gtk-spin-button-value spin-button) value))
+
+(export 'gtk-spin-button-set-value)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_spin_button_set_update_policy ()
@@ -741,11 +726,16 @@
 
 (defun gtk-spin-button-set-update-policy (spin-button policy)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-20}
-  @argument[spin-button]{a @class{gtk-spin-button} object}
+ "@version{2013-11-30}
+  @argument[spin-button]{a @class{gtk-spin-button} widget}
   @argument[policy]{a @symbol{gtk-spin-button-update-policy} value}
-  Sets the update behavior of a spin button. This determines wether the spin
-  button is always updated or only when a valid value is set."
+  @begin{short}
+    Sets the update behavior of a spin button.
+  @end{short}
+  This determines wether the spin button is always updated or only when a valid
+  value is set.
+  @see-class{gtk-spin-button}
+  @see-function{gtk-spin-button-get-upadate-policy}"
   (setf (gtk-spin-button-update-policy spin-button) policy))
 
 (export 'gtk-spin-button-set-update-policy)
@@ -758,11 +748,13 @@
 
 (defun gtk-spin-button-set-numeric (spin-button numeric)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-28}
+ "@version{2013-11-30}
   @argument[spin-button]{a @class{gtk-spin-button} widget}
   @argument[numeric]{flag indicating if only numeric entry is allowed}
   Sets the flag that determines if non-numeric text can be typed into the spin
-  button."
+  button.
+  @see-class{gtk-spin-button}
+  @see-function{gtk-spin-button-get-numeric}"
   (setf (gtk-spin-button-numeric spin-button) numeric))
 
 (export 'gtk-spin-button-set-numeric)
@@ -790,18 +782,22 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_spin_button_set_wrap ()
-;;;
-;;; void gtk_spin_button_set_wrap (GtkSpinButton *spin_button, gboolean wrap);
-;;;
-;;; Sets the flag that determines if a spin button value wraps around to the
-;;; opposite limit when the upper or lower limit of the range is exceeded.
-;;;
-;;; spin_button :
-;;;     a GtkSpinButton
-;;;
-;;; wrap :
-;;;     a flag indicating if wrapping behavior is performed
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-spin-button-set-wrap))
+
+(defun gtk-spin-button-set-wrap (spin-button wrap)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-30}
+  @argument[spin-button]{a @class{gtk-spin-button} widget}
+  @argument[wrap]{a flag indicating if wrapping behavior is performed}
+  Sets the flag that determines if a spin button value wraps around to the
+  opposite limit when the upper or lower limit of the range is exceeded.
+  @see-class{gtk-spin-button}
+  @see-function{gtk-spin-button-get-wrap}"
+  (setf (gtk-spin-button-wrap spin-button) wrap))
+
+(export 'gtk-spin-button-set-wrap)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_spin_button_set_snap_to_ticks ()
@@ -811,12 +807,14 @@
 
 (defun gtk-spin-button-set-snap-to-ticks (spin-button snap-to-ticks)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-28}
+ "@version{2013-11-30}
   @argument[spin-button]{a @class{gtk-spin-button} widget}
   @argument[snap-to-ticks]{a flag indicating if invalid values should be
     corrected}
   Sets the policy as to whether values are corrected to the nearest step
-  increment when a spin button is activated after providing an invalid value."
+  increment when a spin button is activated after providing an invalid value.
+  @see-class{gtk-spin-button}
+  @see-function{gtk-spin-button-get-snap-to-ticks}"
   (setf (gtk-spin-button-snap-to-ticks spin-button) snap-to-ticks))
 
 (export 'gtk-spin-button-set-snap-to-ticks)
@@ -836,37 +834,53 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_spin_button_get_digits ()
-;;;
-;;; guint gtk_spin_button_get_digits (GtkSpinButton *spin_button);
-;;;
-;;; Fetches the precision of spin_button. See gtk_spin_button_set_digits().
-;;;
-;;; spin_button :
-;;;     a GtkSpinButton
-;;;
-;;; Returns :
-;;;     the current precision
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-spin-button-get-digits))
+
+(defun gtk-spin-button-get-digits (spin-button)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-30}
+  @argument[spin-button]{a @class{gtk-spin-button} widget}
+  @return{The current precision.}
+  @short{Fetches the precision of @arg{spin-button}.}
+  See the function @fun{gtk-spin-button-set-digits}.
+  @see-class{gtk-spin-button}
+  @see-function{gtk-spin-button-set-digits}"
+  (gtk-spin-button-get-digits spin-button))
+
+(export 'gtk-spin-button-get-digits)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_spin_button_get_increments ()
-;;;
-;;; void gtk_spin_button_get_increments (GtkSpinButton *spin_button,
-;;;                                      gdouble *step,
-;;;                                      gdouble *page);
-;;;
-;;; Gets the current step and page the increments used by spin_button. See
-;;; gtk_spin_button_set_increments().
-;;;
-;;; spin_button :
-;;;     a GtkSpinButton
-;;;
-;;; step :
-;;;     location to store step increment, or NULL
-;;;
-;;; page :
-;;;     location to store page increment, or NULL
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_spin_button_get_increments" %gtk-spin-button-get-increments)
+    :void
+  (spin-button (g-object gtk-spin-button))
+  (step (:pointer :double))
+  (page (:pointer :double)))
+
+(defun gtk-spin-button-get-increments (spin-button)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-30}
+  @argument[spin-button]{a @class{gtk-spin-button} widget}
+  @begin{return}
+    @code{step} -- step increment, or @code{nil} @br{}
+    @code{page} -- page increment, or @code{nil}
+  @end{return}
+  @begin{short}
+    Gets the current step and page the increments used by @arg{spin-button}.
+  @end{short}
+  See the function @fun{gtk-spin-button-set-increments}.
+  @see-class{gtk-spin-button}
+  @see-function{gtk-spin-button-set-increments}"
+  (with-foreign-objects ((min :double) (max :double))
+    (%gtk-spin-button-get-increments spin-button min max)
+    (values (mem-ref min :double)
+            (mem-ref max :double))))
+
+(export 'gtk-spin-button-get-increments)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_spin_button_get_numeric ()
@@ -876,11 +890,14 @@
 
 (defun gtk-spin-button-get-numeric (spin-button)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-28}
+ "@version{2013-11-30}
   @argument[spin-button]{a @class{gtk-spin-button} widget}
   @return{@em{True} if only numeric text can be entered.}
-  Returns whether non-numeric text can be typed into the spin button.
+  @begin{short}
+    Returns whether non-numeric text can be typed into the spin button.
+  @end{short}
   See the function @fun{gtk-spin-button-set-numeric}.
+  @see-class{gtk-spin-button}
   @see-function{gtk-spin-button-set-numeric}"
   (gtk-spin-button-numeric spin-button))
 
@@ -888,22 +905,31 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_spin_button_get_range ()
-;;;
-;;; void gtk_spin_button_get_range (GtkSpinButton *spin_button,
-;;;                                 gdouble *min,
-;;;                                 gdouble *max);
-;;;
-;;; Gets the range allowed for spin_button. See gtk_spin_button_set_range().
-;;;
-;;; spin_button :
-;;;     a GtkSpinButton
-;;;
-;;; min :
-;;;     location to store minimum allowed value, or NULL
-;;;
-;;; max :
-;;;     location to store maximum allowed value, or NULL
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_spin_button_get_range" %gtk-spin-button-get-range) :void
+  (spin-button (g-object gtk-spin-button))
+  (min (:pointer :double))
+  (max (:pointer :double)))
+
+(defun gtk-spin-button-get-range (spin-button)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-30}
+  @argument[spin-button]{a @class{gtk-spin-button} widget}
+  @begin{return}
+    @code{min} -- minimum allowed value, or @code{nil} @br{}
+    @code{max} -- maximum allowed value, or @code{nil}
+  @end{return}
+  @short{Gets the range allowed for @arg{spin-button}.}
+  See the function @fun{gtk-spin-button-set-range}.
+  @see-class{gtk-spin-button}
+  @see-function{gtk-spin-button-set-range}"
+  (with-foreign-objects ((min :double) (max :double))
+    (%gtk-spin-button-get-range spin-button min max)
+    (values (mem-ref min :double)
+            (mem-ref max :double))))
+
+(export 'gtk-spin-button-get-range)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_spin_button_get_snap_to_ticks ()
@@ -913,11 +939,14 @@
 
 (defun gtk-spin-button-get-snap-to-ticks (spin-button)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-28}
+ "@version{2013-11-30}
   @argument[spin-button]{a @class{gtk-spin-button} widget}
   @return{@em{True} if values are snapped to the nearest step.}
-  Returns whether the values are corrected to the nearest step. See the
-  function @fun{gtk-spin-button-set-snap-to-ticks}.
+  @begin{short}
+    Returns whether the values are corrected to the nearest step.
+  @end{short}
+  See the function @fun{gtk-spin-button-set-snap-to-ticks}.
+  @see-class{gtk-spint-button}
   @see-function{gtk-spin-button-set-snap-to-ticks}"
   (gtk-spin-button-snap-to-ticks spin-button))
 
@@ -931,11 +960,12 @@
 
 (defun gtk-spin-button-get-update-policy (spin-button)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-20}
-  @argument[spin-button]{a @class{gtk-spin-button} object}
+ "@version{2013-11-30}
+  @argument[spin-button]{a @class{gtk-spin-button} widget}
   @return{The current update policy.}
-  Gets the update behavior of a spin button. See the function
-  @fun{gtk-spin-button-set-update-policy}.
+  @short{Gets the update behavior of a spin button.}
+  See the function @fun{gtk-spin-button-set-update-policy}.
+  @see-class{gtk-spin-button}
   @see-function{gtk-spin-button-set-update-policy}"
   (gtk-spin-button-update-policy spin-button))
 
@@ -949,29 +979,38 @@
 
 (defun gtk-spin-button-get-value (spin-button)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-28}
+ "@version{2013-11-30}
   @argument[spin-button]{a @class{gtk-spin-button} widget}
   @return{The value of @arg{spin-button}.}
-  Get the value in the @arg{spin-button}."
+  Get the value in the @arg{spin-button}.
+  @see-class{gtk-spin-button}
+  @see-function{gtk-spin-button-get-value-as-int}
+  @see-function{gtk-spin-button-set-value}"
   (gtk-spin-button-value spin-button))
 
 (export 'gtk-spin-button-get-value)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_spin_button_get_wrap ()
-;;;
-;;; gboolean gtk_spin_button_get_wrap (GtkSpinButton *spin_button);
-;;;
-;;; Returns whether the spin button's value wraps around to the opposite limit
-;;; when the upper or lower limit of the range is exceeded. See
-;;; gtk_spin_button_set_wrap().
-;;;
-;;; spin_button :
-;;;     a GtkSpinButton
-;;;
-;;; Returns :
-;;;     TRUE if the spin button wraps around
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-spin-button-get-wrap))
+
+(defun gtk-spin-button-get-wrap (spin-button)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-11-30}
+  @argument[spin-button]{a @class{gtk-spin-button} widget}
+  @return{@em{True} if the spin button wraps around.}
+  @begin{short}
+    Returns whether the spin button's value wraps around to the opposite limit
+    when the upper or lower limit of the range is exceeded.
+  @end{short}
+  See the function @fun{gtk-spin-button-set-wrap}.
+  @see-class{gtk-spin-button}
+  @see-function{gtk-spin-button-set-wrap}"
+  (gtk-spin-button-wrap spin-button))
+
+(export 'gtk-spin-button-get-wrap)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GTK_INPUT_ERROR
