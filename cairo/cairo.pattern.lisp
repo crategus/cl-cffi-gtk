@@ -1274,18 +1274,24 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_pattern_destroy ()
-;;;
-;;; void cairo_pattern_destroy (cairo_pattern_t *pattern);
-;;;
-;;; Decreases the reference count on pattern by one. If the result is zero,
-;;; then pattern and all associated resources are freed. See
-;;; cairo_pattern_reference().
-;;;
-;;; pattern :
-;;;     a cairo_pattern_t
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_pattern_destroy" cairo-pattern-destroy) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-2}
+  @argument[pattern]{a @symbol{cairo-pattern-t}}
+  @begin{short}
+    Decreases the reference count on pattern by one.
+  @end{short}
+  If the result is zero, then pattern and all associated resources are freed.
+  See the function @fun{cairo-pattern-reference}.
+
+  Since 1.0
+  @see-symbol{cairo-pattern-t}
+  @see-function{cairo-pattern-reference}"
+  (pattern (:pointer (:struct cairo-pattern-t))))
+
+(export 'cairo-pattern-destroy)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_pattern_status ()
@@ -1483,42 +1489,47 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_pattern_set_matrix ()
-;;;
-;;; void cairo_pattern_set_matrix (cairo_pattern_t *pattern,
-;;;                                const cairo_matrix_t *matrix);
-;;;
-;;; Sets the pattern's transformation matrix to matrix. This matrix is a
-;;; transformation from user space to pattern space.
-;;;
-;;; When a pattern is first created it always has the identity matrix for its
-;;; transformation matrix, which means that pattern space is initially identical
-;;; to user space.
-;;;
-;;; Important: Please note that the direction of this transformation matrix is
-;;; from user space to pattern space. This means that if you imagine the flow
-;;; from a pattern to user space (and on to device space), then coordinates in
-;;; that flow will be transformed by the inverse of the pattern matrix.
-;;;
-;;; For example, if you want to make a pattern appear twice as large as it does
-;;; by default the correct code to use is:
-;;;
-;;; cairo_matrix_init_scale (&matrix, 0.5, 0.5);
-;;; cairo_pattern_set_matrix (pattern, &matrix);
-;;;
-;;; Meanwhile, using values of 2.0 rather than 0.5 in the code above would cause
-;;; the pattern to appear at half of its default size.
-;;;
-;;; Also, please note the discussion of the user-space locking semantics of
-;;; cairo_set_source().
-;;;
-;;; pattern :
-;;;     a cairo_pattern_t
-;;;
-;;; matrix :
-;;;     a cairo_matrix_t
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_pattern_set_matrix" cairo-pattern-set-matrix) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-2}
+  @argument[pattern]{a @symbol{cairo-pattern-t}}
+  @argument[matrix]{a @symbol{cairo-matrix-t}}
+  @begin{short}
+    Sets the pattern's transformation matrix to @arg{matrix}. This matrix is a
+    transformation from user space to pattern space.
+  @end{short}
+
+  When a pattern is first created it always has the identity matrix for its
+  transformation matrix, which means that pattern space is initially identical
+  to user space.
+
+  Important: Please note that the direction of this transformation matrix is
+  from user space to pattern space. This means that if you imagine the flow
+  from a pattern to user space, and on to device space, then coordinates in
+  that flow will be transformed by the inverse of the pattern matrix.
+
+  For example, if you want to make a pattern appear twice as large as it does
+  by default the correct code to use is:
+  @begin{pre}
+ cairo_matrix_init_scale (&matrix, 0.5, 0.5);
+ cairo_pattern_set_matrix (pattern, &matrix);
+  @end{pre}
+  Meanwhile, using values of 2.0 rather than 0.5 in the code above would cause
+  the pattern to appear at half of its default size.
+
+  Also, please note the discussion of the user-space locking semantics of the
+  function @fun{cairo-set-source}.
+
+  Since 1.0
+  @see-symbol{cairo-pattern-t}
+  @see-symbol{cairo-matrix-t}
+  @see-function{cairo-set-source}"
+  (pattern (:pointer (:struct cairo-pattern-t)))
+  (matrix (:pointer (:struct cairo-matrix-t))))
+
+(export 'cairo-pattern-set-matrix)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_pattern_get_matrix ()

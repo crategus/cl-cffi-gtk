@@ -29,9 +29,12 @@
   :serial t
   :components ((:file "cairo.package")
                (:file "cairo.init")
+               ;; Utilities
                (:file "cairo.version")
+               (:file "cairo.matrix")          ; Generic matrix operations
                (:file "cairo.status")          ; Decoding cairo's status
                (:file "cairo.types")           ; Generic data types
+
                (:file "cairo.regions")
                (:file "cairo.device")          ; interface to rendering system
                (:file "cairo.surface")

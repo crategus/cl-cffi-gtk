@@ -68,23 +68,31 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_scaled_font_t
-;;;
-;;; typedef struct _cairo_scaled_font cairo_scaled_font_t;
-;;;
-;;; A cairo_scaled_font_t is a font scaled to a particular size and device
-;;; resolution. A cairo_scaled_font_t is most useful for low-level font usage
-;;; where a library or application wants to cache a reference to a scaled font
-;;; to speed up the computation of metrics.
-;;;
-;;; There are various types of scaled fonts, depending on the font backend they
-;;; use. The type of a scaled font can be queried using
-;;; cairo_scaled_font_get_type().
-;;;
-;;; Memory management of cairo_scaled_font_t is done with
-;;; cairo_scaled_font_reference() and cairo_scaled_font_destroy().
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defcstruct cairo-scaled-font-t)
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'cairo-scaled-font-t atdoc:*symbol-name-alias*) "CStruct"
+      (gethash 'cairo-scaled-font-t atdoc:*external-symbols*)
+ "@version{2013-12-2}
+  @begin{short}
+    A @sym{cairo-scaled-font-t} is a font scaled to a particular size and device
+    resolution. A @sym{cairo-scaled-font-t} is most useful for low-level font
+    usage where a library or application wants to cache a reference to a scaled
+    font to speed up the computation of metrics.
+  @end{short}
+
+  There are various types of scaled fonts, depending on the font backend they
+  use. The type of a scaled font can be queried using the function
+  @fun{cairo-scaled-font-get-type}.
+
+  Memory management of @sym{cairo-scaled-font-t} is done with the functions
+  @fun{cairo-scaled-font-reference} and @fun{cairo-scaled-font-destroy}.
+
+  Since 1.0
+  @see-function{cairo-scaled-font-get-type}
+  @see-function{cairo-scaled-font-destroy}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_scaled_font_create ()
@@ -329,36 +337,42 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_scaled_font_text_extents ()
-;;;
-;;; void cairo_scaled_font_text_extents (cairo_scaled_font_t *scaled_font,
-;;;                                      const char *utf8,
-;;;                                      cairo_text_extents_t *extents);
-;;;
-;;; Gets the extents for a string of text. The extents describe a user-space
-;;; rectangle that encloses the "inked" portion of the text drawn at the origin
-;;; (0,0) (as it would be drawn by cairo_show_text() if the cairo graphics state
-;;; were set to the same font_face, font_matrix, ctm, and font_options as
-;;; scaled_font). Additionally, the x_advance and y_advance values indicate the
-;;; amount by which the current point would be advanced by cairo_show_text().
-;;;
-;;; Note that whitespace characters do not directly contribute to the size of
-;;; the rectangle (extents.width and extents.height). They do contribute
-;;; indirectly by changing the position of non-whitespace characters. In
-;;; particular, trailing whitespace characters are likely to not affect the size
-;;; of the rectangle, though they will affect the x_advance and y_advance
-;;; values.
-;;;
-;;; scaled_font :
-;;;     a cairo_scaled_font_t
-;;;
-;;; utf8 :
-;;;     a NUL-terminated string of text, encoded in UTF-8
-;;;
-;;; extents :
-;;;     a cairo_text_extents_t which to store the retrieved extents.
-;;;
-;;; Since 1.2
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_scaled_font_text_extents" cairo-scaled-font-text-extents) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-2}
+  @argument[scaled-font]{a @symbol{cairo-scaled-font-t}}
+  @argument[utf8]{a string of text, encoded in UTF-8}
+  @argument[extents]{a @symbol{cairo-text-extents-t} which to store the
+    retrieved extents}
+  @begin{short}
+    Gets the extents for a string of text.
+  @end{short}
+  The extents describe a user-space rectangle that encloses the \"inked\"
+  portion of the text drawn at the origin (0,0), as it would be drawn by
+  the function @fun{cairo-show-text} if the cairo graphics state were set to the
+  same @code{font-face}, @code{font-matrix}, @code{ctm}, and
+  @code{font-options} as @arg{scaled-font}. Additionally, the @code{x-advance}
+  and @code{y-advance} values indicate the amount by which the current point
+  would be advanced by the function @fun{cairo-show-text}.
+
+  Note that whitespace characters do not directly contribute to the size of
+  the rectangle (@code{extents.width} and @code{extents.height}). They do
+  contribute indirectly by changing the position of non-whitespace characters.
+  In particular, trailing whitespace characters are likely to not affect the
+  size of the rectangle, though they will affect the @code{x-advance} and
+  @code{y-advance} values.
+
+  Since 1.2
+  @see-symbol{cairo-scaled-font-t}
+  @see-symbol{cairo-text-extents-t}
+  @see-function{cairo-show-text}"
+  (scaled-font (:pointer (:struct cairo-scaled-font-t)))
+  (utf8 :string)
+  (extents (:pointer (:struct cairo-text-extents-t))))
+
+(export 'cairo-scaled-font-text-extents)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_scaled_font_glyph_extents ()

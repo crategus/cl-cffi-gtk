@@ -162,20 +162,25 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_set_matrix ()
-;;;
-;;; void cairo_set_matrix (cairo_t *cr, const cairo_matrix_t *matrix);
-;;;
-;;; Modifies the current transformation matrix (CTM) by setting it equal to
-;;; matrix.
-;;;
-;;; cr :
-;;;     a cairo context
-;;;
-;;; matrix :
-;;;     a transformation matrix from user space to device space
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_set_matrix" cairo-set-matrix) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-2}
+  @argument[cr]{a cairo context}
+  @argument[matrix]{a transformation matrix from user space to device space}
+  @begin{short}
+    Modifies the current transformation matrix (CTM) by setting it equal to
+    @arg{matrix}.
+  @end{short}
+
+  Since 1.0
+  @see-class{cairo-t}
+  @see-class{cairo-matrix-t}"
+  (cr (:pointer (:struct cairo-t)))
+  (matrix (:pointer (:struct cairo-matrix-t))))
+
+(export 'cairo-set-matrix)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_get_matrix ()

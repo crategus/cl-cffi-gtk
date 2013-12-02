@@ -1616,24 +1616,33 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_reset_clip ()
-;;;
-;;; void cairo_reset_clip (cairo_t *cr);
-;;;
-;;; Reset the current clip region to its original, unrestricted state. That is,
-;;; set the clip region to an infinitely large shape containing the target
-;;; surface. Equivalently, if infinity is too hard to grasp, one can imagine the
-;;; clip region being reset to the exact bounds of the target surface.
-;;;
-;;; Note that code meant to be reusable should not call cairo_reset_clip() as it
-;;; will cause results unexpected by higher-level code which calls cairo_clip().
-;;; Consider using cairo_save() and cairo_restore() around cairo_clip() as a
-;;; more robust means of temporarily restricting the clip region.
-;;;
-;;; cr :
-;;;     a cairo context
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_reset_clip" cairo-reset-clip) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-2}
+  @argument[cr]{a cairo context}
+  @begin{short}
+    Reset the current clip region to its original, unrestricted state.
+  @end{short}
+  That is, set the clip region to an infinitely large shape containing the
+  target surface. Equivalently, if infinity is too hard to grasp, one can
+  imagine the clip region being reset to the exact bounds of the target surface.
+
+  Note that code meant to be reusable should not call the function
+  @sym{cairo-reset-clip} as it will cause results unexpected by higher-level
+  code which calls the function @fun{cairo-clip}. Consider using the functions
+  @fun{cairo-save} and @fun{cairo-restore} around the function @fun{cairo-clip}
+  as a more robust means of temporarily restricting the clip region.
+
+  Since 1.0
+  @see-symbol{cairo-t}
+  @see-function{cairo-clip}
+  @see-function{cairo-save}
+  @see-function{cairo-restore}"
+  (cr (:pointer (:struct cairo-t))))
+
+(export 'cairo-reset-clip)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_rectangle_t
@@ -2016,49 +2025,54 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_stroke_extents ()
-;;;
-;;; void cairo_stroke_extents (cairo_t *cr,
-;;;                            double *x1,
-;;;                            double *y1,
-;;;                            double *x2,
-;;;                            double *y2);
-;;;
-;;; Computes a bounding box in user coordinates covering the area that would be
-;;; affected, (the "inked" area), by a cairo_stroke() operation given the
-;;; current path and stroke parameters. If the current path is empty, returns an
-;;; empty rectangle ((0,0), (0,0)). Surface dimensions and clipping are not
-;;; taken into account.
-;;;
-;;; Note that if the line width is set to exactly zero, then
-;;; cairo_stroke_extents() will return an empty rectangle. Contrast with
-;;; cairo_path_extents() which can be used to compute the non-empty bounds as
-;;; the line width approaches zero.
-;;;
-;;; Note that cairo_stroke_extents() must necessarily do more work to compute
-;;; the precise inked areas in light of the stroke parameters, so
-;;; cairo_path_extents() may be more desirable for sake of performance if
-;;; non-inked path extents are desired.
-;;;
-;;; See cairo_stroke(), cairo_set_line_width(), cairo_set_line_join(),
-;;; cairo_set_line_cap(), cairo_set_dash(), and cairo_stroke_preserve().
-;;;
-;;; cr :
-;;;     a cairo context
-;;;
-;;; x1 :
-;;;     left of the resulting extents
-;;;
-;;; y1 :
-;;;     top of the resulting extents
-;;;
-;;; x2 :
-;;;     right of the resulting extents
-;;;
-;;; y2 :
-;;;     bottom of the resulting extents
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_stroke_extents" cairo-stroke-extents) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-2}
+  @argument[cr]{a cairo context}
+  @argument[x1]{left of the resulting extents}
+  @argument[y1]{top of the resulting extents}
+  @argument[x2]{right of the resulting extents}
+  @argument[y2]{bottom of the resulting extents}
+  @begin{short}
+    Computes a bounding box in user coordinates covering the area that would be
+    affected, the \"inked\" area, by a @fun{cairo-stroke} operation given the
+    current path and stroke parameters.
+  @end{short}
+  If the current path is empty, returns an empty rectangle ((0,0), (0,0)).
+  Surface dimensions and clipping are not taken into account.
+
+  Note that if the line width is set to exactly zero, then the function
+  @sym{cairo-stroke-extents} will return an empty rectangle. Contrast with the
+  function @fun{cairo-path-extents} which can be used to compute the non-empty
+  bounds as the line width approaches zero.
+
+  Note that @sym{cairo-stroke-extents} must necessarily do more work to compute
+  the precise inked areas in light of the stroke parameters, so the function
+  @fun{cairo-path-extents} may be more desirable for sake of performance if
+  non-inked path extents are desired.
+
+  See the functions @fun{cairo-stroke}, @fun{cairo-set-line-width},
+  @fun{cairo-set-line-join}, @fun{cairo-set-line-cap}, @fun{cairo-set-dash},
+  and @fun{cairo-stroke-preserve}.
+
+  Since 1.0
+  @see-class{cairo-t}
+  @see-funcion{cairo-stroke}
+  @see-function{cairo-path-extents}
+  @see-function{cairo-set-line-width}
+  @see-function{cairo-set-line-join}
+  @see-function{cairo-set-line-cap}
+  @see-function{cairo-set-dash}
+  @see-function{cairo-stroke-preserve}"
+  (cr (:pointer (:struct cairo-t)))
+  (x1 :double)
+  (y1 :double)
+  (x2 :double)
+  (y2 :double))
+
+(export 'cairo-stroke-extents)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_in_stroke ()
