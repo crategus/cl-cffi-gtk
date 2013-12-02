@@ -4,9 +4,10 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -188,6 +189,27 @@
   @class{gtk-tree-model-filter} class.")
 
 ;;; ----------------------------------------------------------------------------
+;;; gtk_tree_model_filter_new ()
+;;;
+;;; GtkTreeModel * gtk_tree_model_filter_new (GtkTreeModel *child_model,
+;;;                                           GtkTreePath *root);
+;;;
+;;; Creates a new GtkTreeModel, with child_model as the child_model and root as
+;;; the virtual root.
+;;;
+;;; child_model :
+;;;     A GtkTreeModel.
+;;;
+;;; root :
+;;;     A GtkTreePath or NULL.
+;;;
+;;; Returns :
+;;;     A new GtkTreeModel.
+;;;
+;;; Since 2.4
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; GtkTreeModelFilterVisibleFunc ()
 ;;;
 ;;; gboolean (*GtkTreeModelFilterVisibleFunc) (GtkTreeModel *model,
@@ -210,73 +232,19 @@
 ;;;     Whether the row indicated by iter is visible.
 ;;; ----------------------------------------------------------------------------
 
-;;; ----------------------------------------------------------------------------
-;;; GtkTreeModelFilterModifyFunc ()
-;;;
-;;; void (*GtkTreeModelFilterModifyFunc) (GtkTreeModel *model,
-;;;                                       GtkTreeIter *iter,
-;;;                                       GValue *value,
-;;;                                       gint column,
-;;;                                       gpointer data);
-;;;
-;;; A function which calculates display values from raw values in the model. It
-;;; must fill value with the display value for the column column in the row
-;;; indicated by iter.
-;;;
-;;; Since this function is called for each data access, it's not a particularly
-;;; efficient operation.
-;;;
-;;; model :
-;;;     the GtkTreeModelFilter
-;;;
-;;; iter :
-;;;     a GtkTreeIter pointing to the row whose display values are determined
-;;;
-;;; value :
-;;;     A GValue which is already initialized for with the correct type for the
-;;;     column column.
-;;;
-;;; column :
-;;;     the column whose display value is determined
-;;;
-;;; data :
-;;;     user data given to gtk_tree_model_filter_set_modify_func()
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tree_model_filter_new ()
-;;;
-;;; GtkTreeModel * gtk_tree_model_filter_new (GtkTreeModel *child_model,
-;;;                                           GtkTreePath *root);
-;;;
-;;; Creates a new GtkTreeModel, with child_model as the child_model and root as
-;;; the virtual root.
-;;;
-;;; child_model :
-;;;     A GtkTreeModel.
-;;;
-;;; root :
-;;;     A GtkTreePath or NULL.
-;;;
-;;; Returns :
-;;;     A new GtkTreeModel.
-;;;
-;;; Since 2.4
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tree_model_filter_set_visible_func ()
-;;; ----------------------------------------------------------------------------
-
 (defcallback gtk-tree-model-filter-visible-func-callback :boolean
     ((tree-model g-object)
      (iter (g-boxed-foreign gtk-tree-iter))
      (data :pointer))
-  (let ((fn (glib::get-stable-pointer-value data)))
+  (let ((fn (glib:get-stable-pointer-value data)))
     (restart-case
         (funcall fn tree-model iter)
       (return-true () t)
       (return-false () nil))))
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_tree_model_filter_set_visible_func ()
+;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_tree_model_filter_set_visible_func"
           %gtk-tree-model-filter-set-visible-func) :void
@@ -327,10 +295,43 @@
   (%gtk-tree-model-filter-set-visible-func
       tree-model-filter
       (callback gtk-tree-model-filter-visible-func-callback)
-      (glib::allocate-stable-pointer func)
-      (callback glib::stable-pointer-destroy-notify-cb)))
+      (glib:allocate-stable-pointer func)
+      (callback glib:stable-pointer-destroy-notify-cb)))
 
 (export 'gtk-tree-model-filter-set-visible-func)
+
+;;; ----------------------------------------------------------------------------
+;;; GtkTreeModelFilterModifyFunc ()
+;;;
+;;; void (*GtkTreeModelFilterModifyFunc) (GtkTreeModel *model,
+;;;                                       GtkTreeIter *iter,
+;;;                                       GValue *value,
+;;;                                       gint column,
+;;;                                       gpointer data);
+;;;
+;;; A function which calculates display values from raw values in the model. It
+;;; must fill value with the display value for the column column in the row
+;;; indicated by iter.
+;;;
+;;; Since this function is called for each data access, it's not a particularly
+;;; efficient operation.
+;;;
+;;; model :
+;;;     the GtkTreeModelFilter
+;;;
+;;; iter :
+;;;     a GtkTreeIter pointing to the row whose display values are determined
+;;;
+;;; value :
+;;;     A GValue which is already initialized for with the correct type for the
+;;;     column column.
+;;;
+;;; column :
+;;;     the column whose display value is determined
+;;;
+;;; data :
+;;;     user data given to gtk_tree_model_filter_set_modify_func()
+;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_model_filter_set_modify_func ()
@@ -397,19 +398,24 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_model_filter_get_model ()
-;;;
-;;; GtkTreeModel * gtk_tree_model_filter_get_model (GtkTreeModelFilter *filter);
-;;;
-;;; Returns a pointer to the child model of filter.
-;;;
-;;; filter :
-;;;     A GtkTreeModelFilter.
-;;;
-;;; Returns :
-;;;     A pointer to a GtkTreeModel.
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_tree_model_filter_get_model" gtk-tree-model-filter-get-model)
+    (g-object gtk-tree-model)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-2}
+  @argument[filter]{a @class{gtk-tree-model-filter} object}
+  @return{A pointer to a @class{gtk-tree-model}.}
+  @begin{short}
+    Returns a pointer to the child model of @arg{filter}.
+  @end{short}
+
+  Since 2.4
+  @see-class{gtk-tree-model-filter-get-model}
+  @see-class{gtk-tree-model}"
+  (filter (g-object gtk-tree-model-filter)))
+
+(export 'gtk-tree-model-filter-get-model)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_model_filter_convert_child_iter_to_iter ()
