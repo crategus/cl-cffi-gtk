@@ -4,9 +4,10 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -81,63 +82,6 @@
 ;;;     gtk_print_operation_preview_end_preview
 ;;;     gtk_print_operation_preview_is_selected
 ;;;     gtk_print_operation_preview_render_page
-;;;
-;;; Object Hierarchy
-;;;
-;;;   GObject
-;;;    +----GtkPrintOperation
-;;;
-;;;   GInterface
-;;;    +----GtkPrintOperationPreview
-;;;
-;;; Prerequisites
-;;;
-;;; GtkPrintOperationPreview requires GObject.
-;;;
-;;; Implemented Interfaces
-;;;
-;;; GtkPrintOperation implements GtkPrintOperationPreview.
-;;;
-;;; Known Implementations
-;;;
-;;; GtkPrintOperationPreview is implemented by GtkPrintOperation.
-;;;
-;;; Properties
-;;;
-;;;   "allow-async"              gboolean              : Read / Write
-;;;   "current-page"             gint                  : Read / Write
-;;;   "custom-tab-label"         gchar*                : Read / Write
-;;;   "default-page-setup"       GtkPageSetup*         : Read / Write
-;;;   "embed-page-setup"         gboolean              : Read / Write
-;;;   "export-filename"          gchar*                : Read / Write
-;;;   "has-selection"            gboolean              : Read / Write
-;;;   "job-name"                 gchar*                : Read / Write
-;;;   "n-pages"                  gint                  : Read / Write
-;;;   "n-pages-to-print"         gint                  : Read
-;;;   "print-settings"           GtkPrintSettings*     : Read / Write
-;;;   "show-progress"            gboolean              : Read / Write
-;;;   "status"                   GtkPrintStatus        : Read
-;;;   "status-string"            gchar*                : Read
-;;;   "support-selection"        gboolean              : Read / Write
-;;;   "track-print-status"       gboolean              : Read / Write
-;;;   "unit"                     GtkUnit               : Read / Write
-;;;   "use-full-page"            gboolean              : Read / Write
-;;;
-;;; Signals
-;;;
-;;;   "begin-print"                                    : Run Last
-;;;   "create-custom-widget"                           : Run Last
-;;;   "custom-widget-apply"                            : Run Last
-;;;   "done"                                           : Run Last
-;;;   "draw-page"                                      : Run Last
-;;;   "end-print"                                      : Run Last
-;;;   "paginate"                                       : Run Last
-;;;   "preview"                                        : Run Last
-;;;   "request-page-setup"                             : Run Last
-;;;   "status-changed"                                 : Run Last
-;;;   "update-custom-widget"                           : Run Last
-;;;   "got-page-size"                                  : Run Last
-;;;   "ready"                                          : Run Last
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -722,10 +666,9 @@
                                                'gtk-print-operation) 't)
  "The @code{\"print-settings\"} property of type @symbol{gtk-print-settings}
   (Read / Write) @br{}
-  The @symbol{gtk-print-settings} used for initializing the dialog.
-  Setting this property is typically used to re-establish print settings from
-  a previous print operation, see the @fun{gtk-print-operation-run} function.
-  @br{}
+  The @sym{gtk-print-settings} used for initializing the dialog. Setting this
+  property is typically used to re-establish print settings from a previous
+  print operation, see the @fun{gtk-print-operation-run} function. @br{}
   Since 2.10")
 
 #+cl-cffi-gtk-documentation
@@ -2046,19 +1989,23 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_operation_preview_end_preview ()
-;;;
-;;; void gtk_print_operation_preview_end_preview
-;;;                                         (GtkPrintOperationPreview *preview);
-;;;
-;;; Ends a preview.
-;;;
-;;; This function must be called to finish a custom print preview.
-;;;
-;;; preview :
-;;;     a GtkPrintOperationPreview
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_operation_preview_end_preview"
+           gtk-print-operation-preview-end-preview) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-2}
+  @argument[preview]{a @class{gtk-print-operation-preview} object}
+  @short{Ends a preview.}
+
+  This function must be called to finish a custom print preview.
+
+  Since 2.10
+  @see-class{gtk-print-operation}
+  @see-class{gtk-print-operation-preview}"
+  (preview (g-object gtk-print-operation-preview)))
+
+(export 'gtk-print-operation-preview-end-preview)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_operation_preview_is_selected ()
