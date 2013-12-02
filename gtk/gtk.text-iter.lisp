@@ -1607,7 +1607,7 @@
   @see-function{gtk-text-iter-forward-cursor-position}"
   (iter (g-boxed-foreign gtk-text-iter)))
 
-(export 'gtk-text-iter-backward-cusor-position)
+(export 'gtk-text-iter-backward-cursor-position)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_iter_forward_cursor_positions ()
