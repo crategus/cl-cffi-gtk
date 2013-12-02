@@ -6268,17 +6268,22 @@
 ;;; gtk_widget_get_settings ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_widget_get_settings" gtk-widget-get-settings) g-object
+(defcfun ("gtk_widget_get_settings" gtk-widget-get-settings)
+    (g-object gtk-settings)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-6}
-  @argument[widget]{a @class{gtk-widget} instance}
-  @return{The relevant @class{gtk-setting}'s object.}
-  @short{Gets the settings object holding the settings used for this
-    @arg{widget}.}
+ "@version{2013-12-2}
+  @argument[widget]{a @class{gtk-widget} object}
+  @return{The relevant @class{gtk-settings} object.}
+  @begin{short}
+    Gets the settings object holding the settings used for this widget.
+  @end{short}
 
   Note that this function can only be called when the @class{gtk-widget} is
   attached to a toplevel, since the settings object is specific to a particular
-  @class{gdk-screen}."
+  @class{gdk-screen}.
+  @see-class{gtk-widget}
+  @see-class{gtk-settings}
+  @see-class{gdk-screen}"
   (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-get-settings)
@@ -6696,19 +6701,22 @@
 (defcfun ("gtk_widget_remove_mnemonic_label" gtk-widget-remove-mnemonic-label)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2013-1-6}
-  @argument[widget]{a @class{gtk-widget} instance}
-  @argument[label]{a @class{gtk-widget} instance that was previously set as a
-    mnemnic label for widget with @fun{gtk-widget-add-mnemonic-label}.}
+ "@version{2013-12-2}
+  @argument[widget]{a @class{gtk-widget} object}
+  @argument[label]{a @class{gtk-widget} object that was previously set as a
+    mnemnic label for widget with the function
+    @fun{gtk-widget-add-mnemonic-label}.}
   @begin{short}
-    Removes a widget from the list of mnemonic labels for this @arg{widget}.
+    Removes a widget from the list of mnemonic labels for this widget.
   @end{short}
-  (See @fun{gtk-widget-list-mnemonic-labels}). The widget must have previously
-  been added to the list with @fun{gtk-widget-add-mnemonic-label}.
+  See the function @fun{gtk-widget-list-mnemonic-labels}. The widget must have
+  previously been added to the list with the function
+  @fun{gtk-widget-add-mnemonic-label}.
 
   Since 2.4
-  @see-function{gtk-widget-list-mnemonic-labels}
-  @see-function{gtk-widget-add-mnemoic-label}"
+  @see-class{gtk-widget}
+  @see-function{gtk-widget-add-mnemonic-label}
+  @see-function{gtk-widget-list-mnemonic-labels}"
   (widget (g-object gtk-widget))
   (label g-object))
 
@@ -9266,31 +9274,35 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_compute_expand ()
-;;;
-;;; gboolean gtk_widget_compute_expand (GtkWidget *widget,
-;;;                                     GtkOrientation orientation);
-;;;
-;;; Computes whether a container should give this widget extra space when
-;;; possible. Containers should check this, rather than looking at
-;;; gtk_widget_get_hexpand() or gtk_widget_get_vexpand().
-;;;
-;;; This function already checks whether the widget is visible, so visibility
-;;; does not need to be checked separately. Non-visible widgets are not
-;;; expanded.
-;;;
-;;; The computed expand value uses either the expand setting explicitly set on
-;;; the widget itself, or, if none has been explicitly set, the widget may
-;;; expand if some of its children do.
-;;;
-;;; widget :
-;;;     the widget
-;;;
-;;; orientation :
-;;;     expand direction
-;;;
-;;; Returns :
-;;;     whether widget tree rooted here should be expanded
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_widget_compute_expend" gtk-widget-compute-expand) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-2}
+  @argument[widget]{the widget}
+  @argument[orientation]{expand direction}
+  @return{Whether @arg{widget} tree rooted here should be expanded.}
+  @begin{short}
+    Computes whether a container should give this widget extra space when
+    possible.
+  @end{short}
+  Containers should check this, rather than looking at the functions
+  @fun{gtk-widget-get-hexpand} or @fun{gtk-widget-get-vexpand}.
+
+  This function already checks whether the widget is visible, so visibility
+  does not need to be checked separately. Non-visible widgets are not
+  expanded.
+
+  The computed expand value uses either the expand setting explicitly set on
+  the widget itself, or, if none has been explicitly set, the widget may
+  expand if some of its children do.
+  @see-class{gtk-widget}
+  @see-symbol{gtk-orientation}
+  @see-function{gtk-widget-get-hexpand}
+  @see-function{gtk-widget-get-vexpand}"
+  (widget (g-object gtk-widget))
+  (orientation gtk-orientation))
+
+(export 'gtk-widget-compute-expand)
 
 ;;; --- End of file gtk.widget.lisp --------------------------------------------
