@@ -83,11 +83,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; GMenu
-;;;
-;;; typedef struct _GMenu GMenu;
-;;;
-;;; GMenu is an opaque structure type. You must access it using the functions
-;;; below.
 ;;; ----------------------------------------------------------------------------
 
 (define-g-object-class "GMenu" g-menu
@@ -298,30 +293,32 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_menu_insert_section ()
-;;;
-;;; void g_menu_insert_section (GMenu *menu,
-;;;                             gint position,
-;;;                             const gchar *label,
-;;;                             GMenuModel *section);
-;;;
-;;; Convenience function for inserting a section menu item into menu. Combine
-;;; g_menu_item_new_section() and g_menu_insert_item() for a more flexible
-;;; alternative.
-;;;
-;;; menu :
-;;;     a GMenu
-;;;
-;;; position :
-;;;     the position at which to insert the item
-;;;
-;;; label :
-;;;     the section label, or NULL. [allow-none]
-;;;
-;;; section :
-;;;     a GMenuModel with the items of the section
-;;;
-;;; Since 2.32
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_menu_insert_section" g-menu-insert-section) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-5}
+  @argument[menu]{a @class{g-menu} object}
+  @argument[position]{the position at which to insert the item}
+  @argument[label]{the section label, or @code{nil}}
+  @argument[section]{a @class{g-menu-model} with the items of the section}
+  @begin{short}
+    Convenience function for inserting a section menu item into menu.
+  @end{short}
+  Combine the functions @fun{g-menu-item-new-section} and
+  @fun{g-menu-insert-item} for a more flexible alternative.
+
+  Since 2.32
+  @see-class{g-menu}
+  @see-class{g-menu-model}
+  @see-function{g-menu-item-new-section}
+  @see-function{g-menu-insert-item}"
+  (menu (g-object g-menu))
+  (position :int)
+  (label :string)
+  (section (g-object g-menu-model)))
+
+(export 'g-menu-insert-action)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_menu_prepend_section ()
