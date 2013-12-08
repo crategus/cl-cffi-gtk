@@ -392,28 +392,37 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_push_group_with_content ()
-;;;
-;;; void cairo_push_group_with_content (cairo_t *cr, cairo_content_t content);
-;;;
-;;; Temporarily redirects drawing to an intermediate surface known as a group.
-;;; The redirection lasts until the group is completed by a call to
-;;; cairo_pop_group() or cairo_pop_group_to_source(). These calls provide the
-;;; result of any drawing to the group as a pattern, (either as an explicit
-;;; object, or set as the source pattern).
-;;;
-;;; The group will have a content type of content. The ability to control this
-;;; content type is the only distinction between this function and
-;;; cairo_push_group() which you should see for a more detailed description of
-;;; group rendering.
-;;;
-;;; cr :
-;;;     a cairo context
-;;;
-;;; content :
-;;;     a cairo_content_t indicating the type of group that will be created
-;;;
-;;; Since 1.2
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_push_group_with_content" cairo-push-group-with-content) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-7}
+  @argument[cr]{a cairo context}
+  @argument[content]{a @symbol{cairo-content-t} indicating the type of group
+    that will be created}
+  @begin{short}
+    Temporarily redirects drawing to an intermediate surface known as a group.
+  @end{short}
+  The redirection lasts until the group is completed by a call to the functions
+  @fun{cairo-pop-group} or @fun{cairo-pop-group-to-source}. These calls provide
+  the result of any drawing to the group as a pattern, either as an explicit
+  object, or set as the source pattern.
+
+  The group will have a content type of @arg{content}. The ability to control
+  this content type is the only distinction between this function and the
+  function @fun{cairo-push-group} which you should see for a more detailed
+  description of group rendering.
+
+  Since 1.2
+  @see-symbol{cairo-t}
+  @see-symbol{cairo-content-t}
+  @see-function{cairo-pop-group}
+  @see-function{cairo-push-group}
+  @see-function{cairo-pop-group-to-source}"
+  (cr (:pointer (:struct cairo-t)))
+  (content cairo-content-t))
+
+(export 'cairo-push-group-with-content)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_pop_group ()
@@ -455,31 +464,41 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_pop_group_to_source ()
-;;;
-;;; void cairo_pop_group_to_source (cairo_t *cr);
-;;;
-;;; Terminates the redirection begun by a call to cairo_push_group() or
-;;; cairo_push_group_with_content() and installs the resulting pattern as the
-;;; source pattern in the given cairo context.
-;;;
-;;; The behavior of this function is equivalent to the sequence of operations:
-;;;
-;;; cairo_pattern_t *group = cairo_pop_group (cr);
-;;; cairo_set_source (cr, group);
-;;; cairo_pattern_destroy (group);
-;;;
-;;; but is more convenient as their is no need for a variable to store the
-;;; short-lived pointer to the pattern.
-;;;
-;;; The cairo_pop_group() function calls cairo_restore(), (balancing a call to
-;;; cairo_save() by the push_group function), so that any changes to the
-;;; graphics state will not be visible outside the group.
-;;;
-;;; cr :
-;;;     a cairo context
-;;;
-;;; Since 1.2
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_pop_group_to_source" cairo-pop-group-to-source) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-5}
+  @argument[cr]{a cairo context}
+  @begin{short}
+    Terminates the redirection begun by a call to the functions
+    @fun{cairo-push-group} or @fun{cairo-push-group-with-content} and installs
+    the resulting pattern as the source pattern in the given cairo context.
+  @end{short}
+  The behavior of this function is equivalent to the sequence of operations:
+  @begin{pre}
+ cairo_pattern_t *group = cairo_pop_group (cr);
+ cairo_set_source (cr, group);
+ cairo_pattern_destroy (group);
+  @end{pre}
+  but is more convenient as their is no need for a variable to store the
+  short-lived pointer to the pattern.
+
+  The function @fun{cairo-pop-group} calls the function @fun{cairo-restore},
+  balancing a call to the function @fun{cairo-save} by the @code{push-group}
+  function, so that any changes to the graphics state will not be visible
+  outside the group.
+
+  Since 1.2
+  @see-symbol{cairo-t}
+  @see-function{cairo-push-group}
+  @see-function{cairo-push-group-with-content}
+  @see-function{cairo-pop-group}
+  @see-function{cairo-save}
+  @see-function{cairo-restore}"
+  (cr (:pointer (:struct cairo-t))))
+
+(export 'cairo-pop-group-to-source)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_get_group_target ()
@@ -950,23 +969,29 @@
   (cr (:pointer (:struct cairo-t)))
   (fill-rule cairo-fill-rule-t))
 
-(export 'cairo-fill-rule-t)
+(export 'cairo-fill-rule)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_get_fill_rule ()
-;;;
-;;; cairo_fill_rule_t cairo_get_fill_rule (cairo_t *cr);
-;;;
-;;; Gets the current fill rule, as set by cairo_set_fill_rule().
-;;;
-;;; cr :
-;;;     a cairo context
-;;;
-;;; Returns :
-;;;     the current fill rule.
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_get_fill_rule" cairo-get-fill-rule) cairo-fill-rule-t
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-6}
+  @argument[cr]{a cairo context}
+  @return{The current fill rule.}
+  @begin{short}
+    Gets the current fill rule, as set by the function
+    @fun{cairo-set-fill-rule}.
+  @end{short}
+
+  Since 1.0
+  @see-symbol{cairo-t}
+  @see-symbol{cairo-fill-rule-t}
+  @see-function{cairo-set-fill-rule}"
+  (cr (:pointer (:struct cairo-t))))
+
+(export 'cairo-get-fill-rule)
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum cairo_line_cap_t

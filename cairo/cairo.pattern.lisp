@@ -182,50 +182,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_pattern_add_color_stop_rgba ()
-;;;
-;;; void cairo_pattern_add_color_stop_rgba (cairo_pattern_t *pattern,
-;;;                                         double offset,
-;;;                                         double red,
-;;;                                         double green,
-;;;                                         double blue,
-;;;                                         double alpha);
-;;;
-;;; Adds a translucent color stop to a gradient pattern. The offset specifies
-;;; the location along the gradient's control vector. For example, a linear
-;;; gradient's control vector is from (x0,y0) to (x1,y1) while a radial
-;;; gradient's control vector is from any point on the start circle to the
-;;; corresponding point on the end circle.
-;;;
-;;; The color is specified in the same way as in cairo_set_source_rgba().
-;;;
-;;; If two (or more) stops are specified with identical offset values, they will
-;;; be sorted according to the order in which the stops are added, (stops added
-;;; earlier will compare less than stops added later). This can be useful for
-;;; reliably making sharp color transitions instead of the typical blend.
-;;;
-;;; Note: If the pattern is not a gradient pattern, (eg. a linear or radial
-;;; pattern), then the pattern will be put into an error status with a status of
-;;; CAIRO_STATUS_PATTERN_TYPE_MISMATCH.
-;;;
-;;; pattern :
-;;;     a cairo_pattern_t
-;;;
-;;; offset :
-;;;     an offset in the range [0.0 .. 1.0]
-;;;
-;;; red :
-;;;     red component of color
-;;;
-;;; green :
-;;;     green component of color
-;;;
-;;; blue :
-;;;     blue component of color
-;;;
-;;; alpha :
-;;;     alpha component of color
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("cairo_pattern_add_color_stop_rgba"
@@ -238,6 +194,38 @@
   (alpha :double))
 
 (defun cairo-pattern-add-color-stop-rgba (pattern offset red green blue alpha)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-4}
+  @argument[pattern]{a @symbol{cairo-pattern-t}}
+  @argument[offset]{an offset in the range [0.0 .. 1.0]}
+  @argument[red]{red component of color}
+  @argument[green]{green component of color}
+  @argument[blue]{blue component of color}
+  @argument[alpha]{alpha component of color}
+  @begin{short}
+    Adds a translucent color stop to a gradient pattern. The offset specifies
+    the location along the gradient's control vector.
+  @end{short}
+  For example, a linear gradient's control vector is from (x0,y0) to (x1,y1)
+  while a radial gradient's control vector is from any point on the start circle
+  to the corresponding point on the end circle.
+
+  The color is specified in the same way as in the function
+  @fun{cairo-set-source-rgba}.
+
+  If two or more stops are specified with identical offset values, they will
+  be sorted according to the order in which the stops are added, stops added
+  earlier will compare less than stops added later. This can be useful for
+  reliably making sharp color transitions instead of the typical blend.
+
+  @subheading{Note}
+  If the pattern is not a gradient pattern, e. g. a linear or radial pattern,
+  then the pattern will be put into an error status with a status of
+  @code{:pattern-type-mismatch}.
+
+  Since 1.0
+  @see-symbol{cairo-pattern-t}
+  @see-function{cairo-set-source-rgba}"
   (%cairo-pattern-add-color-stop-rgba pattern
                                       (coerce offset 'double-float)
                                       (coerce red 'double-float)
@@ -470,42 +458,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_pattern_create_linear ()
-;;;
-;;; cairo_pattern_t * cairo_pattern_create_linear (double x0,
-;;;                                                double y0,
-;;;                                                double x1,
-;;;                                                double y1);
-;;;
-;;; Create a new linear gradient cairo_pattern_t along the line defined by
-;;; (x0, y0) and (x1, y1). Before using the gradient pattern, a number of color
-;;; stops should be defined using cairo_pattern_add_color_stop_rgb() or
-;;; cairo_pattern_add_color_stop_rgba().
-;;;
-;;; Note: The coordinates here are in pattern space. For a new pattern, pattern
-;;; space is identical to user space, but the relationship between the spaces
-;;; can be changed with cairo_pattern_set_matrix().
-;;;
-;;; x0 :
-;;;     x coordinate of the start point
-;;;
-;;; y0 :
-;;;     y coordinate of the start point
-;;;
-;;; x1 :
-;;;     x coordinate of the end point
-;;;
-;;; y1 :
-;;;     y coordinate of the end point
-;;;
-;;; Returns :
-;;;     the newly created cairo_pattern_t if successful, or an error pattern in
-;;;     case of no memory. The caller owns the returned object and should call
-;;;     cairo_pattern_destroy() when finished with it. This function will always
-;;;     return a valid pointer, but if an error occurred the pattern status will
-;;;     be set to an error. To inspect the status of a pattern use
-;;;     cairo_pattern_status().
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("cairo_pattern_create_linear" %cairo-pattern-create-linear)
@@ -516,6 +468,38 @@
   (y1 :double))
 
 (defun cairo-pattern-create-linear (x0 y0 x1 y1)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-4}
+  @argument[x0]{x coordinate of the start point}
+  @argument[y0]{y coordinate of the start point}
+  @argument[x1]{x coordinate of the end point}
+  @argument[y1]{y coordinate of the end point}
+  @begin{return}
+    The newly created @symbol{cairo-pattern-t} if successful, or an error
+    pattern in case of no memory. The caller owns the returned object and should
+    call the function @fun{cairo-pattern-destroy} when finished with it. This
+    function will always return a valid pointer, but if an error occurred the
+    pattern status will be set to an error. To inspect the status of a pattern
+    use the function @fun{cairo-pattern-status}.
+  @end{return}
+  @begin{short}
+    Create a new linear gradient @symbol{cairo-pattern-t} along the line defined
+    by (@arg{x0}, @arg{y0}) and (@arg{x1}, @arg{y1}). Before using the gradient
+    pattern, a number of color stops should be defined using the functions
+    @fun{cairo-pattern-add-color-stop-rgb} or
+    @fun{cairo-pattern-add-color-stop-rgba}.
+  @end{short}
+
+  @subheading{Note}
+    The coordinates here are in pattern space. For a new pattern, pattern
+    space is identical to user space, but the relationship between the spaces
+    can be changed with the function @fun{cairo-pattern-set-matrix}.
+
+  Since 1.0
+  @see-symbol{cairo-pattern-t}
+  @see-function{cairo-pattern-destroy}
+  @see-function{cairo-pattern-status}
+  @see-function{cairo-pattern-set-matrix}"
   (%cairo-pattern-create-linear (coerce x0 'double-float)
                                 (coerce y0 'double-float)
                                 (coerce x1 'double-float)
@@ -558,50 +542,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_pattern_create_radial ()
-;;;
-;;; cairo_pattern_t * cairo_pattern_create_radial (double cx0,
-;;;                                                double cy0,
-;;;                                                double radius0,
-;;;                                                double cx1,
-;;;                                                double cy1,
-;;;                                                double radius1);
-;;;
-;;; Creates a new radial gradient cairo_pattern_t between the two circles
-;;; defined by (cx0, cy0, radius0) and (cx1, cy1, radius1). Before using the
-;;; gradient pattern, a number of color stops should be defined using
-;;; cairo_pattern_add_color_stop_rgb() or cairo_pattern_add_color_stop_rgba().
-;;;
-;;; Note: The coordinates here are in pattern space. For a new pattern, pattern
-;;; space is identical to user space, but the relationship between the spaces
-;;; can be changed with cairo_pattern_set_matrix().
-;;;
-;;; cx0 :
-;;;     x coordinate for the center of the start circle
-;;;
-;;; cy0 :
-;;;     y coordinate for the center of the start circle
-;;;
-;;; radius0 :
-;;;     radius of the start circle
-;;;
-;;; cx1 :
-;;;     x coordinate for the center of the end circle
-;;;
-;;; cy1 :
-;;;     y coordinate for the center of the end circle
-;;;
-;;; radius1 :
-;;;     radius of the end circle
-;;;
-;;; Returns :
-;;;     the newly created cairo_pattern_t if successful, or an error pattern in
-;;;     case of no memory. The caller owns the returned object and should call
-;;;     cairo_pattern_destroy() when finished with it. This function will always
-;;;     return a valid pointer, but if an error occurred the pattern status will
-;;;     be set to an error. To inspect the status of a pattern use
-;;;     cairo_pattern_status().
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("cairo_pattern_create_radial" %cairo-pattern-create-radial)
@@ -614,6 +554,42 @@
   (radius1 :double))
 
 (defun cairo-pattern-create-radial (cx0 cy0 radius0 cx1 cy1 radius1)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-4}
+  @argument[cx0]{x coordinate for the center of the start circle}
+  @argument[cy0]{y coordinate for the center of the start circle}
+  @argument[radius0]{radius of the start circle}
+  @argument[cx1]{x coordinate for the center of the end circle}
+  @argument[cy1]{y coordinate for the center of the end circle}
+  @argument[radius1]{radius of the end circle}
+  @begin{return}
+    The newly created @symbol{cairo-pattern-t} if successful, or an error
+    pattern in case of no memory. The caller owns the returned object and should
+    call the function @fun{cairo-pattern-destroy} when finished with it. This
+    function will always return a valid pointer, but if an error occurred the
+    pattern status will be set to an error. To inspect the status of a pattern
+    use the function @fun{cairo-pattern-status}.
+  @end{return}
+  @begin{short}
+    Creates a new radial gradient @symbol{cairo-pattern-t} between the two
+    circles defined by (@arg{cx0}, @arg{cy0}, @arg{radius0}) and (@arg{cx1},
+    @arg{cy1}, @arg{radius1}). Before using the gradient pattern, a number of
+    color stops should be defined using the functions
+    @fun{cairo-pattern-add-color-stop-rgb} or
+    @fun{cairo-pattern-add-color-stop-rgba}.
+  @end{short}
+
+  @subheading{Note}
+    The coordinates here are in pattern space. For a new pattern, pattern
+    space is identical to user space, but the relationship between the spaces
+    can be changed with the function @fun{cairo-pattern-set-matrix}.
+
+  Since 1.0
+  @see-symbol{cairo-pattern-t}
+  @see-function{cairo-pattern-destroy}
+  @see-function{cairo-pattern-status}
+  @see-function{cairo-pattern-add-color-stop-rgb}
+  @see-function{cairo-pattern-add-color-stop-rgba}"
   (%cairo-pattern-create-radial (coerce cx0 'double-float)
                                 (coerce cy0 'double-float)
                                 (coerce radius0 'double-float)
@@ -900,36 +876,40 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_mesh_pattern_line_to ()
-;;;
-;;; void cairo_mesh_pattern_line_to (cairo_pattern_t *pattern,
-;;;                                  double x,
-;;;                                  double y);
-;;;
-;;; Adds a line to the current patch from the current point to position (x, y)
-;;; in pattern-space coordinates.
-;;;
-;;; If there is no current point before the call to cairo_mesh_pattern_line_to()
-;;; this function will behave as cairo_mesh_pattern_move_to(pattern, x, y).
-;;;
-;;; After this call the current point will be (x, y).
-;;;
-;;; Note: If pattern is not a mesh pattern then pattern will be put into an
-;;; error status with a status of CAIRO_STATUS_PATTERN_TYPE_MISMATCH. If pattern
-;;; has no current patch or the current patch already has 4 sides, pattern will
-;;; be put into an error status with a status of
-;;; CAIRO_STATUS_INVALID_MESH_CONSTRUCTION.
-;;;
-;;; pattern :
-;;;     a cairo_pattern_t
-;;;
-;;; x :
-;;;     the X coordinate of the end of the new line
-;;;
-;;; y :
-;;;     the Y coordinate of the end of the new line
-;;;
-;;; Since 1.12
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_mesh_pattern_line_to" cairo-mesh-pattern-line-to) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-5}
+  @argument[pattern]{a @symbol{cairo-pattern-t}}
+  @argument[x]{the x coordinate of the end of the new line}
+  @argument[y]{the y coordinate of the end of the new line}
+  @begin{short}
+    Adds a line to the current patch from the current point to position
+    (@arg{x}, @arg{y}) in pattern-space coordinates.
+  @end{short}
+
+  If there is no current point before the call to the function
+  @sym{cairo-mesh-pattern-line-to} this function will behave as
+  @code{(cairo-mesh-pattern-move-to pattern x y)}.
+
+  After this call the current point will be (@arg{x}, @arg{y}).
+
+  @subheading{Note}
+    If pattern is not a mesh pattern then pattern will be put into an
+    error status with a status of @code{:pattern-type-mismatch}. If
+    @arg{pattern} has no current patch or the current patch already has 4 sides,
+    pattern will be put into an error status with a status of
+    @code{:invalid-mesh-construction}.
+
+  Since 1.12
+  @see-symbol{cairo-pattern-t}
+  @see-function{cairo-mesh-pattern-move-to}"
+  (pattern (:pointer (:struct cairo-pattern-t)))
+  (x :double)
+  (y :double))
+
+(export 'cairo-mesh-pattern-line-to)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_mesh_pattern_curve_to ()
@@ -1295,21 +1275,26 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_pattern_status ()
-;;;
-;;; cairo_status_t cairo_pattern_status (cairo_pattern_t *pattern);
-;;;
-;;; Checks whether an error has previously occurred for this pattern.
-;;;
-;;; pattern :
-;;;     a cairo_pattern_t
-;;;
-;;; Returns :
-;;;     CAIRO_STATUS_SUCCESS, CAIRO_STATUS_NO_MEMORY,
-;;;     CAIRO_STATUS_INVALID_MATRIX, CAIRO_STATUS_PATTERN_TYPE_MISMATCH, or
-;;;     CAIRO_STATUS_INVALID_MESH_CONSTRUCTION.
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_pattern_status" cairo-pattern-status) cairo-status-t
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-5}
+  @argument[pattern]{a @symbol{cairo-pattern-t}}
+  @begin{return}
+    @code{:success}, @code{:no-memory}, @code{:invalid-matrix},
+    @code{:pattern-type-mismatch}, or @code{:invalid-mesh-construction}
+  @end{return}
+  @begin{short}
+    Checks whether an error has previously occurred for this pattern.
+  @end{short}
+
+  Since 1.0
+  @see-symbol{cairo-pattern-t}
+  @see-symbol{cairo-status-t}"
+  (pattern (:pointer (:struct cairo-pattern-t))))
+
+(export 'cairo-pattern-status)
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum cairo_extend_t

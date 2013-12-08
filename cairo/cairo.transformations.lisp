@@ -46,7 +46,7 @@
 ;;;
 ;;; Description
 ;;;
-;;; The current transformation matrix, ctm, is a two-dimensional affine
+;;; The current transformation matrix, CTM, is a two-dimensional affine
 ;;; transformation that maps all coordinates and other drawing instruments from
 ;;; the user space into the surface's canonical coordinate system, also known as
 ;;; the device space.
@@ -124,9 +124,9 @@
 
 (defun cairo-rotate (cr angle)
  #+cl-cffi-gtk-documentation
- "@version{2013-10-5}
+ "@version{2013-12-7}
   @argument[cr]{a cairo context}
-  @argument[angle]{angle (in radians) by which the user-space axes will be
+  @argument[angle]{angle in radians by which the user-space axes will be
     rotated}
   @begin{short}
     Modifies the current transformation matrix (CTM) by rotating the user-space

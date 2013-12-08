@@ -952,20 +952,26 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_surface_get_reference_count ()
-;;;
-;;; unsigned int cairo_surface_get_reference_count (cairo_surface_t *surface);
-;;;
-;;; Returns the current reference count of surface.
-;;;
-;;; surface :
-;;;     a cairo_surface_t
-;;;
-;;; Returns :
-;;;     the current reference count of surface. If the object is a nil object,
-;;;     0 will be returned.
-;;;
-;;; Since 1.4
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_surface_get_reference_count" cairo-surface-get-reference-count)
+    :uint
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-7}
+  @argument[surface]{a @symbol{cairo-surface-t}}
+  @begin{return}
+    The current reference count of @arg{surface}. If the object is a nil object,
+    0 will be returned.
+  @end{return}
+  @begin{short}
+    Returns the current reference count of @arg{surface}.
+  @end{short}
+
+  Since 1.4
+  @see-symbol{cairo-surface-t}"
+  (surface (:pointer (:struct cairo-surface-t))))
+
+(export 'cairo-surface-get-reference-count)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_surface_set_user_data ()
