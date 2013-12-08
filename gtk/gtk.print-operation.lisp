@@ -313,9 +313,9 @@
       @begin{pre}
  lambda (operation context page-nr)   : Run Last
       @end{pre}
-      Emitted for every page that is printed. The signal handler must render the
-      @arg{page-nr}'s page onto the cairo context obtained from context using
-      the @fun{gtk-print-context-get-cairo-context} function.
+      Emitted for every page that is printed. The signal handler must render
+      the @arg{page-nr}'s page onto the cairo context obtained from context
+      using the @fun{gtk-print-context-get-cairo-context} function.
       @begin{pre}
    static void
    draw_page (GtkPrintOperation *operation,
@@ -391,12 +391,12 @@
       starts. It keeps getting emitted until a connected signal handler returns
       @em{true}.
       The \"paginate\" signal is intended to be used for paginating a document
-      in small chunks, to avoid blocking the user interface for a long time. The
-      signal handler should update the number of pages using the
+      in small chunks, to avoid blocking the user interface for a long time.
+      The signal handler should update the number of pages using the
       @fun{gtk-print-operation-set-n-pages} function, and return @em{true} if
       the document has been completely paginated.
-      If you do not need to do pagination in chunks, you can simply do it all in
-      the \"begin-print\" handler, and set the number of pages from there.
+      If you do not need to do pagination in chunks, you can simply do it all
+      in the \"begin-print\" handler, and set the number of pages from there.
       @begin[code]{table}
         @entry[operation]{The @sym{gtk-print-operation} on which the signal
           was emitted.}
@@ -411,12 +411,12 @@
  lambda (operation preview context parent)   : Run Last
       @end{pre}
       Gets emitted when a preview is requested from the native dialog.
-      The default handler for this signal uses an external viewer application to
-      preview.
+      The default handler for this signal uses an external viewer application
+      to preview.
       To implement a custom print preview, an application must return @em{true}
-      from its handler for this signal. In order to use the provided context for
-      the preview implementation, it must be given a suitable cairo context with
-      the @fun{gtk-print-context-set-cairo-context} function.
+      from its handler for this signal. In order to use the provided context
+      for the preview implementation, it must be given a suitable cairo context
+      with the @fun{gtk-print-context-set-cairo-context} function.
       The custom preview implementation can use the functions
       @fun{gtk-print-operation-preview-is-selected} and
       @fun{gtk-print-operation-preview-render-page} to find pages which are
@@ -849,7 +849,8 @@
   @see-function{gtk-print-operation-set-n-pages}")
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-print-operation-n-pages-to-print atdoc:*function-name-alias*)
+(setf (gethash 'gtk-print-operation-n-pages-to-print
+               atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-print-operation-n-pages-to-print 'function)
  "@version{2013-11-15}
@@ -1142,7 +1143,7 @@
   @see-class{gtk-print-operation}"
   (make-instance 'gtk-print-operation))
 
-(export 'gtk-print-operation)
+(export 'gtk-print-operation-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_operation_set_allow_async ()
@@ -1639,53 +1640,72 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_operation_cancel ()
-;;;
-;;; void gtk_print_operation_cancel (GtkPrintOperation *op);
-;;;
-;;; Cancels a running print operation. This function may be called from a
-;;; "begin-print", "paginate" or "draw-page" signal handler to stop the
-;;; currently running print operation.
-;;;
-;;; op :
-;;;     a GtkPrintOperation
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_operation_cancel" gtk-print-operation-cancel) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-3}
+  @argument[op]{a @class{gtk-print-operation} object}
+  @begin{short}
+    Cancels a running print operation.
+  @end{short}
+  This function may be called from a \"begin-print\", \"paginate\" or
+  \"draw-page\" signal handler to stop the currently running print operation.
+
+  Since 2.10
+  @see-class{gtk-print-operation}"
+  (op (g-object gtk-print-operation)))
+
+(export 'gtk-print-operation-cancel)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_operation_draw_page_finish ()
-;;;
-;;; void gtk_print_operation_draw_page_finish (GtkPrintOperation *op);
-;;;
-;;; Signalize that drawing of particular page is complete.
-;;;
-;;; It is called after completion of page drawing (e.g. drawing in another
-;;; thread). If gtk_print_operation_set_defer_drawing() was called before, then
-;;; this function has to be called by application. In another case it is called
-;;; by the library itself.
-;;;
-;;; op :
-;;;     a GtkPrintOperation
-;;;
-;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_operation_draw_page_finish"
+           gtk-print-operation-draw-page-finish) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-3}
+  @argument[op]{a @class{gtk-print-operation} object}
+  @begin{short}
+    Signalize that drawing of particular page is complete.
+  @end{short}
+
+  It is called after completion of page drawing, e. g. drawing in another
+  thread. If the function @fun{gtk-print-operation-set-defer-drawing} was called
+  before, then this function has to be called by application. In another case it
+  is called by the library itself.
+
+  Since 2.16
+  @see-class{gtk-print-operation}
+  @fun{gtk-print-operation-set-defer-drawing}"
+  (op (g-object gtk-print-operation)))
+
+(export 'gtk-print-operation)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_operation_set_defer_drawing ()
-;;;
-;;; void gtk_print_operation_set_defer_drawing (GtkPrintOperation *op);
-;;;
-;;; Sets up the GtkPrintOperation to wait for calling of
-;;; gtk_print_operation_draw_page_finish() from application. It can be used for
-;;; drawing page in another thread.
-;;;
-;;; This function must be called in the callback of "draw-page" signal.
-;;;
-;;; op :
-;;;     a GtkPrintOperation
-;;;
-;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_operation_set_defer_drawing"
+           gtk-print-operation-set-defer-drawing) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-3}
+  @argument[op]{a @class{gtk-print-operation} object}
+  @begin{short}
+    Sets up the @class{gtk-print-operation} to wait for calling of the function
+    @fun{gtk-print-operation-draw-page-finish} from application. It can be used
+    for drawing page in another thread.
+  @end{short}
+
+  This function must be called in the callback of \"draw-page\" signal.
+
+  Since 2.16
+  @see-class{gtk-print-operation}
+  @see-function{gtk-print-operation-draw-page-finish}"
+  (op (g-object gtk-print-operation)))
+
+(export 'gtk-print-operation-set-defer-drawing)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_operation_get_status ()
@@ -1739,25 +1759,30 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_operation_is_finished ()
-;;;
-;;; gboolean gtk_print_operation_is_finished (GtkPrintOperation *op);
-;;;
-;;; A convenience function to find out if the print operation is finished,
-;;; either successfully (GTK_PRINT_STATUS_FINISHED) or unsuccessfully
-;;; (GTK_PRINT_STATUS_FINISHED_ABORTED).
-;;;
-;;; Note: when you enable print status tracking the print operation can be in a
-;;; non-finished state even after done has been called, as the operation status
-;;; then tracks the print job status on the printer.
-;;;
-;;; op :
-;;;     a GtkPrintOperation
-;;;
-;;; Returns :
-;;;     TRUE, if the print operation is finished.
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_operation_is_finished" gtk-print-operation-is-finished)
+    :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-3}
+  @argument[op]{a @class{gtk-print-operation} object}
+  @return{@em{True}, if the print operation is finished.}
+  @begin{short}
+    A convenience function to find out if the print operation is finished,
+    either successfully (@code{:finished}) or unsuccessfully
+    (@code{:finished-aborted}).
+  @end{short}
+
+  @subheading{Note}
+    When you enable print status tracking the print operation can be in a
+    non-finished state even after done has been called, as the operation status
+    then tracks the print job status on the printer.
+
+  Since 2.10
+  @see-class{gtk-print-operation}"
+  (op (g-object gtk-print-operation)))
+
+(export 'gtk-print-operation)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_operation_set_support_selection ()
@@ -1937,7 +1962,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; GtkPageSetupDoneFunc ()
 ;;;
-;;; void (*GtkPageSetupDoneFunc) (GtkPageSetup *page_setup, gpointer data);
+;;; void (*GtkPageSetupDoneFunc) (GtkPageSetup *page_setup, gpointer data)
 ;;;
 ;;; The type of function that is passed to
 ;;; gtk_print_run_page_setup_dialog_async().
@@ -1953,39 +1978,51 @@
 ;;;     gtk_print_run_page_setup_dialog_async()
 ;;; ----------------------------------------------------------------------------
 
+(defcallback gtk-page-setup-done-func-cb :void
+    ((page-setup (g-object gtk-page-setup))
+     (data :pointer))
+  (let ((fn (glib:get-stable-pointer-value data)))
+    (funcall fn page-setup)))
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_run_page_setup_dialog_async ()
-;;;
-;;; void gtk_print_run_page_setup_dialog_async (GtkWindow *parent,
-;;;                                             GtkPageSetup *page_setup,
-;;;                                             GtkPrintSettings *settings,
-;;;                                             GtkPageSetupDoneFunc done_cb,
-;;;                                             gpointer data);
-;;;
-;;; Runs a page setup dialog, letting the user modify the values from
-;;; page_setup.
-;;;
-;;; In contrast to gtk_print_run_page_setup_dialog(), this function returns
-;;; after showing the page setup dialog on platforms that support this, and
-;;; calls done_cb from a signal handler for the ::response signal of the dialog.
-;;;
-;;; parent :
-;;;     transient parent, or NULL
-;;;
-;;; page_setup :
-;;;     an existing GtkPageSetup, or NULL
-;;;
-;;; settings :
-;;;     a GtkPrintSettings
-;;;
-;;; done_cb :
-;;;     a function to call when the user saves the modified page setup
-;;;
-;;; data :
-;;;     user data to pass to done_cb
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_run_page_setup_dialog_async"
+          %gtk-print-run-page-setup-dialog-async) :void
+  (parent (g-object gtk-window))
+  (page-setup (g-object gtk-page-setup))
+  (settings (g-object gtk-print-settings))
+  (done-cb :pointer)
+  (data :pointer))
+
+(defun gtk-print-run-page-setup-dialog-async (parent page-setup settings done-cb)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-5-16}
+  @argument[parent]{transient parent, or @code{nil}}
+  @argument[page-setup]{an existing @class{gtk-page-setup}, or @code{nil}}
+  @argument[settings]{a @class{gtk-print-settings} object}
+  @argument[done-cb]{a function to call when the user saves the modified page
+    setup}
+  @begin{short}
+    Runs a page setup dialog, letting the user modify the values from
+    @arg{page-setup}.
+  @end{short}
+
+  In contrast to the function @fun{gtk-print-run-page-setup-dialog}, this
+  function returns after showing the page setup dialog on platforms that support
+  this, and calls @arg{done-cb} from a signal handler for the \"response\"
+  signal of the dialog.
+
+  Since 2.10"
+  (with-stable-pointer (ptr done-cb)
+    (%gtk-print-run-page-setup-dialog-async
+                                          parent
+                                          page-setup
+                                          (callback gtk-page-setup-done-func-cb)
+                                          ptr)))
+
+(export 'gtk-print-run-page-setup-dialag-async)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_operation_preview_end_preview ()
@@ -2009,49 +2046,54 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_operation_preview_is_selected ()
-;;;
-;;; gboolean gtk_print_operation_preview_is_selected
-;;;                                          (GtkPrintOperationPreview *preview,
-;;;                                           gint page_nr);
-;;;
-;;; Returns whether the given page is included in the set of pages that have
-;;; been selected for printing.
-;;;
-;;; preview :
-;;;     a GtkPrintOperationPreview
-;;;
-;;; page_nr :
-;;;     a page number
-;;;
-;;; Returns :
-;;;     TRUE if the page has been selected for printing
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_operation_preview_is_selected"
+           gtk-print-operation-preview-is-selected)
+    :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-3}
+  @argument[preview]{a @class{gtk-print-operation-preview} object}
+  @argument[page-nr]{a page number}
+  @return{@em{True} if the page has been selected for printing.}
+  @begin{short}
+    Returns whether the given page is included in the set of pages that have
+    been selected for printing.
+  @end{short}
+
+  Since 2.10
+  @see-class{gtk-print-operation-preview}"
+  (preview (g-object gtk-print-operation-preview))
+  (page-nr :int))
+
+(export 'gtk-print-operation-preview-is-selected)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_operation_preview_render_page ()
-;;;
-;;; void gtk_print_operation_preview_render_page
-;;;                                          (GtkPrintOperationPreview *preview,
-;;;                                           gint page_nr);
-;;;
-;;; Renders a page to the preview, using the print context that was passed to
-;;; the "preview" handler together with preview.
-;;;
-;;; A custom iprint preview should use this function in its ::expose handler to
-;;; render the currently selected page.
-;;;
-;;; Note that this function requires a suitable cairo context to be associated
-;;; with the print context.
-;;;
-;;; preview :
-;;;     a GtkPrintOperationPreview
-;;;
-;;; page_nr :
-;;;     the page to render
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_operation_preview_render_page"
+           gtk-print-operation-preview-render-page) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-3}
+  @argument[preview]{a @class{gtk-print-operation-preview} object}
+  @argument[page-nr]{the page to render}
+  @begin{short}
+    Renders a page to the preview, using the print context that was passed to
+    the \"preview\" handler together with preview.
+  @end{short}
+
+  A custom print preview should use this function in its \"expose\" handler to
+  render the currently selected page.
+
+  Note that this function requires a suitable cairo context to be associated
+  with the print context.
+
+  Since 2.10
+  @see-class{gtk-print-operation-preview-render-page}"
+  (preview (g-object gtk-print-operation-preview))
+  (page-nr :int))
+
+(export 'gtk-print-operation-preview-render-page)
 
 ;;; --- End of file gtk.print-operation.lisp -----------------------------------

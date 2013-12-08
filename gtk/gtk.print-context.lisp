@@ -48,11 +48,6 @@
 ;;;     gtk_print_context_create_pango_context
 ;;;     gtk_print_context_create_pango_layout
 ;;;     gtk_print_context_get_hard_margins
-;;;
-;;; Object Hierarchy
-;;;
-;;;   GObject
-;;;    +----GtkPrintContext
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -215,149 +210,183 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_context_get_width ()
-;;;
-;;; gdouble gtk_print_context_get_width (GtkPrintContext *context);
-;;;
-;;; Obtains the width of the GtkPrintContext, in pixels.
-;;;
-;;; context :
-;;;     a GtkPrintContext
-;;;
-;;; Returns :
-;;;     the width of context
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_context_get_width" gtk-print-context-get-width) :double
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-3}
+  @argument[context]{a @class{gtk-print-context} object}
+  @return{The width of @arg{context}.}
+  @begin{short}
+    Obtains the width of the @class{gtk-print-context}, in pixels.
+  @end{short}
+
+  Since 2.10
+  @see-class{gtk-print-context}
+  @see-function{gtk-print-context-get-height}"
+  (context (g-object gtk-print-context)))
+
+(export 'gtk-print-context-get-width)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_context_get_height ()
-;;;
-;;; gdouble gtk_print_context_get_height (GtkPrintContext *context);
-;;;
-;;; Obtains the height of the GtkPrintContext, in pixels.
-;;;
-;;; context :
-;;;     a GtkPrintContext
-;;;
-;;; Returns :
-;;;     the height of context
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_context_get_height" gtk-print-context-get-height) :double
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-3}
+  @argument[context]{a @class{gtk-print-context} object}
+  @return{The height of @arg{context}.}
+  @begin{short}
+    Obtains the height of the @class{gtk-print-context}, in pixels.
+  @end{short}
+
+  Since 2.10
+  @see-class{gtk-print-context}
+  @see-function{gtk-print-context-get-width}"
+  (context (g-object gtk-print-context)))
+
+(export 'gtk-print-context-get-height)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_context_get_dpi_x ()
-;;;
-;;; gdouble gtk_print_context_get_dpi_x (GtkPrintContext *context);
-;;;
-;;; Obtains the horizontal resolution of the GtkPrintContext, in dots per inch.
-;;;
-;;; context :
-;;;     a GtkPrintContext
-;;;
-;;; Returns :
-;;;     the horizontal resolution of context
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_context_get_dpi_x" gtk-print-context-get-dpi-x) :double
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-3}
+  @argument[context]{a @class{gtk-print-context} object}
+  @return{The horizontal resolution of @arg{context}.}
+  @begin{short}
+    Obtains the horizontal resolution of the @class{gtk-print-context} object,
+    in dots per inch.
+  @end{short}
+
+  Since 2.10
+  @see-class{gtk-print-context}
+  @see-function{gtk-print-context-get-dpi-y}"
+  (context (g-object gtk-print-context)))
+
+(export 'gtk-print-context-get-dpi-x)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_context_get_dpi_y ()
-;;;
-;;; gdouble gtk_print_context_get_dpi_y (GtkPrintContext *context);
-;;;
-;;; Obtains the vertical resolution of the GtkPrintContext, in dots per inch.
-;;;
-;;; context :
-;;;     a GtkPrintContext
-;;;
-;;; Returns :
-;;;     the vertical resolution of context
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_context_get_dpi_y" gtk-print-context-get-dpi-y) :double
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-3}
+  @argument[context]{a @class{gtk-print-context} object}
+  @return{The vertical resolution of @arg{context}.}
+  @begin{short}
+    Obtains the vertical resolution of the @class{gtk-print-context}, in dots
+    per inch.
+  @end{short}
+
+  Since 2.10
+  @see-class{gtk-print-context}"
+  (context (g-object gtk-print-context)))
+
+(export 'gtk-print-context-get-dpi-y)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_context_get_pango_fontmap ()
-;;;
-;;; PangoFontMap * gtk_print_context_get_pango_fontmap
-;;;                                                  (GtkPrintContext *context);
-;;;
-;;; Returns a PangoFontMap that is suitable for use with the GtkPrintContext.
-;;;
-;;; context :
-;;;     a GtkPrintContext
-;;;
-;;; Returns :
-;;;     the font map of context
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_context_get_pango_fontmap"
+           gtk-print-context-get-pango-fontmap) (g-object pango-font-map)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-3}
+  @argument[context]{a @class{gtk-print-context} object}
+  @return{The font map of @arg{context}.}
+  @begin{short}
+    Returns a @class{pango-font-map} that is suitable for use with the
+    @class{gtk-print-context} object.
+  @end{short}
+
+  Since 2.10
+  @see-class{gtk-print-context}
+  @see-class{pango-font-map}"
+  (context (g-object gtk-print-context)))
+
+(export 'gtk-print-context-get-pango-fontmap)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_context_create_pango_context ()
-;;;
-;;; PangoContext * gtk_print_context_create_pango_context
-;;;                                                  (GtkPrintContext *context);
-;;;
-;;; Creates a new PangoContext that can be used with the GtkPrintContext.
-;;;
-;;; context :
-;;;     a GtkPrintContext
-;;;
-;;; Returns :
-;;;     a new Pango context for context
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_context_create_pango_context"
+           gtk-print-context-create-pango-context) (g-object pango-context)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-3}
+  @argument[context]{a @class{gtk-print-context} object}
+  @return{A new Pango context for @arg{context}.}
+  @begin{short}
+    Creates a new @class{pango-context} object that can be used with the
+    @class{gtk-print-context}.
+  @end{short}
+
+  Since 2.10
+  @see-class{gtk-print-context}
+  @see-class{pango-context}"
+  (context (g-object gtk-print-context)))
+
+(export 'gtk-print-context-create-pango-context)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_context_create_pango_layout ()
-;;;
-;;; PangoLayout * gtk_print_context_create_pango_layout
-;;;                                                  (GtkPrintContext *context);
-;;;
-;;; Creates a new PangoLayout that is suitable for use with the GtkPrintContext.
-;;;
-;;; context :
-;;;     a GtkPrintContext
-;;;
-;;; Returns :
-;;;     a new Pango layout for context
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_context_create_pango_layout"
+           gtk-print-context-create-pango-layout) (g-object pango-layout)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-3}
+  @argument[context]{a @class{gtk-print-context} object}
+  @return{A new Pango layout for @arg{context}.}
+  @begin{short}
+    Creates a new @class{pango-layout} that is suitable for use with the
+    @class{gtk-print-context} object.
+  @end{short}
+
+  Since 2.10
+  @see-class{gtk-print-context}
+  @see-class{pango-layout}"
+  (context (g-object gtk-print-context)))
+
+(export 'gtk-print-context-create-pango-layout)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_context_get_hard_margins ()
-;;;
-;;; gboolean gtk_print_context_get_hard_margins (GtkPrintContext *context,
-;;;                                              gdouble *top,
-;;;                                              gdouble *bottom,
-;;;                                              gdouble *left,
-;;;                                              gdouble *right);
-;;;
-;;; Obtains the hardware printer margins of the GtkPrintContext, in units.
-;;;
-;;; context :
-;;;     a GtkPrintContext
-;;;
-;;; top :
-;;;     top hardware printer margin
-;;;
-;;; bottom :
-;;;     bottom hardware printer margin
-;;;
-;;; left :
-;;;     left hardware printer margin
-;;;
-;;; right :
-;;;     right hardware printer margin
-;;;
-;;; Returns :
-;;;     TRUE if the hard margins were retrieved
-;;;
-;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_context_get_hard_margins"
+          %gtk-print-context-get-hard-margins) :boolean
+  (context (g-object gtk-print-context))
+  (top (:pointer :int))
+  (bottom (:pointer :int))
+  (left (:pointer :int))
+  (right (:pointer :int)))
+
+(defun gtk-print-context-get-hard-margins (context)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-3}
+  @argument[context]{a @class{gtk-print-context} object}
+  @begin{return}
+    @code{top} -- top hardware printer margin @br{}
+    @code{bottom} -- bottom hardware printer margin @br{}
+    @code{left} -- left hardware printer margin @br{}
+    @code{right} -- right hardware printer margin
+  @end{return}
+  @begin{short}
+    Obtains the hardware printer margins of the @class{gtk-print-context},
+    in units.
+  @end{short}
+
+  Since 2.20
+  @see-class{gtk-print-context}"
+  (with-foreign-objects ((top :int) (bottom :int) (left :int) (right :int))
+    (%gtk-print-context-get-hard-margins context top bottom left right)))
+
+(export 'gtk-print-context-get-hard-margins)
 
 ;;; --- End of file gtk.print-context.lisp -------------------------------------

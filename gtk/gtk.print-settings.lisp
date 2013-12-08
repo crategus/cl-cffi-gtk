@@ -741,7 +741,7 @@
   @argument[settings]{a @class{gtk-print-settings} object}
   @return{The paper size.}
   @begin{short}
-    Gets the value of \"paper-format\", converted to a @symbol{gtk-paper-size}.
+    Gets the value of \"paper-format\", converted to a @class{gtk-paper-size}.
   @end{short}
 
   Since 2.10
@@ -976,48 +976,70 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_settings_get_reverse ()
-;;;
-;;; gboolean gtk_print_settings_get_reverse (GtkPrintSettings *settings);
-;;;
-;;; Gets the value of GTK_PRINT_SETTINGS_REVERSE.
-;;;
-;;; settings :
-;;;     a GtkPrintSettings
-;;;
-;;; Returns :
-;;;     whether to reverse the order of the printed pages
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_settings_get_reverse" gtk-print-settings-get-reverse)
+    :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-3}
+  @argument[settings]{a @class{gtk-print-settings} object}
+  @return{Whether to reverse the order of the printed pages.}
+  @begin{short}
+    Gets the value of \"reverse\".
+  @end{short}
+
+  Since 2.10
+  @see-class{gtk-print-settings}
+  @see-function{gtk-print-settings-set-reverse}"
+  (settings (g-object gtk-print-settings)))
+
+(export 'gtk-print-settings-get-reverse)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_settings_set_reverse ()
-;;;
-;;; void gtk_print_settings_set_reverse (GtkPrintSettings *settings,
-;;;                                      gboolean reverse);
-;;;
-;;; Sets the value of GTK_PRINT_SETTINGS_REVERSE.
-;;;
-;;; settings :
-;;;     a GtkPrintSettings
-;;;
-;;; reverse :
-;;;     whether to reverse the output
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_settings_set_reverse" gtk-print-settings-set-reverse)
+    :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-3}
+  @argument[settings]{a @class{gtk-print-settings} object}
+  @argument[reverse]{whether to reverse the output}
+  @short{Sets the value of \"reserve\".}
+
+  Since 2.10
+  @see-class{gtk-print-settings}
+  @see-function{gtk-print-settings-get-reverse}"
+  (settings (g-object gtk-print-settings))
+  (reverse :boolean))
+
+(export 'gtk-print-settings-set-reverse)
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkPrintDuplex
-;;;
-;;; typedef enum {
-;;;   GTK_PRINT_DUPLEX_SIMPLEX,
-;;;   GTK_PRINT_DUPLEX_HORIZONTAL,
-;;;   GTK_PRINT_DUPLEX_VERTICAL
-;;; } GtkPrintDuplex;
-;;;
-;;; GTK_PRINT_SETTINGS_DUPLEX
 ;;; ----------------------------------------------------------------------------
+
+(define-g-enum "GtkPrintDuplex" gtk-print-duplex
+  (:export t
+   :type-initializer "gtk_print_duplex_get_type")
+  :simplex
+  :horizontal
+  :vertical)
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-print-duplex atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'gtk-print-duplex atdoc:*external-symbols*)
+ "@version{2013-12-3}
+  @short{}
+  @begin{pre}
+(define-g-enum \"GtkPrintDuplex\" gtk-print-duplex
+  (:export t
+   :type-initializer \"gtk_print_duplex_get_type\")
+  :simplex
+  :horizontal
+  :vertical)
+  @end{pre}
+  @see-class{gtk-print-settings}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; #define GTK_PRINT_SETTINGS_DUPLEX           "duplex"
@@ -1026,46 +1048,70 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; GtkPrintDuplex gtk_print_settings_get_duplex (GtkPrintSettings *settings);
-;;;
-;;; Gets the value of GTK_PRINT_SETTINGS_DUPLEX.
-;;;
-;;; settings :
-;;;     a GtkPrintSettings
-;;;
-;;; Returns :
-;;;     whether to print the output in duplex.
-;;;
-;;; Since 2.10
+;;; GtkPrintDuplex gtk_print_settings_get_duplex ()
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_settings_get_duplex" gtk-print-settings-get-duplex)
+    gtk-print-duplex
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-3}
+  @argument[settings]{a @class{gtk-print-settings} object}
+  @return{Whether to print the output in duplex.}
+  @short{Gets the value of \"duplex\".}
+
+  Since 2.10
+  @see-class{gtk-print-settings}
+  @see-function{gtk-print-settings-set-duplex}"
+  (settings (g-object gtk-print-settings)))
+
+(export 'gtk-print-settings-get-duplex)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_settings_set_duplex ()
-;;;
-;;; void gtk_print_settings_set_duplex (GtkPrintSettings *settings,
-;;;                                     GtkPrintDuplex duplex);
-;;;
-;;; Sets the value of GTK_PRINT_SETTINGS_DUPLEX.
-;;;
-;;; settings :
-;;;     a GtkPrintSettings
-;;;
-;;; duplex :
-;;;     a GtkPrintDuplex value
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_settings_set_duplex" gtk-print-settings-set-duplex) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-3}
+  @argument[settings]{a @class{gtk-print-settings} object}
+  @argument[duplex]{a @class{gtk-print-duplex} value}
+  @short{Sets the value of \"duplex\".}
+
+  Since 2.10
+  @see-class{gtk-print-settings}
+  @see-function{gtk-print-settings-get-duplex}"
+  (settings (g-object gtk-print-settings))
+  (duplex gtk-print-duplex))
+
+(export 'gtk-print-settings-set-duplex)
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkPrintQuality
-;;;
-;;; typedef enum {
-;;;   GTK_PRINT_QUALITY_LOW,
-;;;   GTK_PRINT_QUALITY_NORMAL,
-;;;   GTK_PRINT_QUALITY_HIGH,
-;;;   GTK_PRINT_QUALITY_DRAFT
-;;; } GtkPrintQuality;
 ;;; ----------------------------------------------------------------------------
+
+(define-g-enum "GtkPrintQuality" gtk-print-quality
+  (:export t
+   :type-initializer "gtk_print_quality_get_type")
+  :low
+  :normal
+  :high
+  :draft)
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-print-quality atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'gtk-print-quality atdoc:*external-symbols*)
+ "@version{2013-12-3}
+  @short{}
+  @begin{pre}
+(define-g-enum \"GtkPrintQuality\" gtk-print-quality
+  (:export t
+   :type-initializer \"gtk_print_quality_get_type\")
+  :low
+  :normal
+  :high
+  :draft)
+  @end{pre}
+  @see-class{gtk-print-settings}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; GTK_PRINT_SETTINGS_QUALITY
@@ -1075,36 +1121,41 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_settings_get_quality ()
-;;;
-;;; GtkPrintQuality gtk_print_settings_get_quality (GtkPrintSettings *settings);
-;;;
-;;; Gets the value of GTK_PRINT_SETTINGS_QUALITY.
-;;;
-;;; settings :
-;;;     a GtkPrintSettings
-;;;
-;;; Returns :
-;;;     the print quality
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_settings_get_quality" gtk-print-settings-get-quality)
+    gtk-print-quality
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-3}
+  @argument[settings]{a @class{gtk-print-settings} object}
+  @return{The print quality.}
+  @short{Gets the value of \"quality\".}
+
+  Since 2.10
+  @see-class{gtk-print-settings}
+  @see-function{gtk-print-settings-set-quality}"
+  (settings (g-object gtk-print-settings)))
+
+(export 'gtk-print-settings-get-quality)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_settings_set_quality ()
-;;;
-;;; void gtk_print_settings_set_quality (GtkPrintSettings *settings,
-;;;                                      GtkPrintQuality quality);
-;;;
-;;; Sets the value of GTK_PRINT_SETTINGS_QUALITY.
-;;;
-;;; settings :
-;;;     a GtkPrintSettings
-;;;
-;;; quality :
-;;;     a GtkPrintQuality value
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_settings_set_quality" gtk-print-settings-set-quality) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-3}
+  @argument[settings]{a @class{gtk-print-settings} object}
+  @argument[quality]{a @class{gtk-print-quality} value}
+  @short{Sets the value of \"quality\".}
+
+  Since 2.10
+  @see-class{gtk-print-settings}
+  @see-function{gtk-print-settings-get-quality}"
+  (settings (g-object gtk-print-settings))
+  (quality gtk-print-quality))
+
+(export 'gtk-print-settings-set-quality)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GTK_PRINT_SETTINGS_N_COPIES
@@ -1114,36 +1165,41 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_settings_get_n_copies ()
-;;;
-;;; gint gtk_print_settings_get_n_copies (GtkPrintSettings *settings);
-;;;
-;;; Gets the value of GTK_PRINT_SETTINGS_N_COPIES.
-;;;
-;;; settings :
-;;;     a GtkPrintSettings
-;;;
-;;; Returns :
-;;;     the number of copies to print
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_settings_get_n_copies" gtk-print-copies-get-n-copies) :int
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-3}
+  @argument[settings]{a @class{gtk-print-settings} object}
+  @return{The number of copies to print.}
+  @short{Gets the value of \"n-copies\".}
+
+  Since 2.10
+  @see-class{gtk-print-settings}
+  @see-function{gtk-print-settings-get-n-copies}"
+  (settings (g-object gtk-print-settings)))
+
+(export 'gtk-print-settings-n-copies)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_settings_set_n_copies ()
-;;;
-;;; void gtk_print_settings_set_n_copies (GtkPrintSettings *settings,
-;;;                                       gint num_copies);
-;;;
-;;; Sets the value of GTK_PRINT_SETTINGS_N_COPIES.
-;;;
-;;; settings :
-;;;     a GtkPrintSettings
-;;;
-;;; num_copies :
-;;;     the number of copies
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_settings_set_n_copies" gtk-print-settings-set-n-copies)
+    :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-3}
+  @argument[settings]{a @class{gtk-print-settings} object}
+  @argument[n-copies]{the number of copies}
+  @return{Sets the value of \"n-copies\".}
+
+  Since 2.10
+  @see-class{gtk-print-settings}
+  @see-function{gtk-print-settings-get-n-copies}"
+  (settings (g-object gtk-print-settings))
+  (n-copies :int))
+
+(export 'gtk-print-settings-set-n-copies)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GTK_PRINT_SETTINGS_NUMBER_UP
@@ -1153,36 +1209,42 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_settings_get_number_up ()
-;;;
-;;; gint gtk_print_settings_get_number_up (GtkPrintSettings *settings);
-;;;
-;;; Gets the value of GTK_PRINT_SETTINGS_NUMBER_UP.
-;;;
-;;; settings :
-;;;     a GtkPrintSettings
-;;;
-;;; Returns :
-;;;     the number of pages per sheet
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_settings_get_number_up" gtk-print-settings-get-number-up)
+    :int
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-3}
+  @argument[settings]{a @class{gtk-print-settings} object}
+  @return{The number of pages per sheet.}
+  @short{Gets the value of \"number-up\".}
+
+  Since 2.10
+  @see-class{gtk-print-settings}
+  @see-function{gtk-print-settings-set-number-up}"
+  (settings (g-object gtk-print-settings)))
+
+(export 'gtk-print-settings-get-number-up)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_settings_set_number_up ()
-;;;
-;;; void gtk_print_settings_set_number_up (GtkPrintSettings *settings,
-;;;                                        gint number_up);
-;;;
-;;; Sets the value of GTK_PRINT_SETTINGS_NUMBER_UP.
-;;;
-;;; settings :
-;;;     a GtkPrintSettings
-;;;
-;;; number_up :
-;;;     the number of pages per sheet
-;;;
-;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_settings_set_number_up" gtk-print-settings-set-number-up)
+    :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-3}
+  @argument[settings]{a @class{gtk-print-settings} object}
+  @argument[number-up]{the number of pages per sheet}
+  @short{Sets the value of \"number-up\".}
+
+  Since 2.10
+  @see-class{gtk-print-settings}
+  @see-function{gtk-print-settings-get-number-up}"
+  (settings (g-object gtk-print-settings))
+  (number-up :int))
+
+(export 'gtk-print-settings-set-number-up)
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkNumberUpLayout
@@ -1220,7 +1282,10 @@
   (:top-to-bottom-right-to-left 5)
   (:bottom-to-top-left-to-right 6)
   (:bottom-to-top-right-to-left 7))
-  @end{pre}")
+  @end{pre}
+  @see-class{gtk-print-settings}
+  @see-function{gtk-print-settings-get-number-up-layout}
+  @see-function{gtk-print-settings-set-number-up-layout}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; GTK_PRINT_SETTINGS_NUMBER_UP_LAYOUT
@@ -1471,7 +1536,10 @@
   (:current 1)
   (:ranges 2)
   (:selection 3))
-  @end{pre}")
+  @end{pre}
+  @see-class{gtk-print-settings}
+  @see-function{gtk-print-settings-get-print-pages}
+  @see-function{gtk-print-settings-set-print-pages}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; GTK_PRINT_SETTINGS_PRINT_PAGES
