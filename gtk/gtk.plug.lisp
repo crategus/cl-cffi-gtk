@@ -205,19 +205,25 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_plug_new ()
-;;;
-;;; GtkWidget * gtk_plug_new (Window socket_id);
-;;;
-;;; Creates a new plug widget inside the GtkSocket identified by socket_id. If
-;;; socket_id is 0, the plug is left "unplugged" and can later be plugged into a
-;;; GtkSocket by gtk_socket_add_id().
-;;;
-;;; socket_id :
-;;;     the window ID of the socket, or 0.
-;;;
-;;; Returns :
-;;;     the new GtkPlug widget.
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_plug_new" gtk-plug-new) (g-object gtk-plug)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-6}
+  @argument[socket-id]{the window ID of the socket, or 0}
+  @return{The new @class{gtk-plug} widget.}
+  @begin{short}
+    Creates a new plug widget inside the @class{gtk-socket} identified by
+    @arg{socket-id}.
+  @end{short}
+  If @arg{socket-id} is 0, the plug is left \"unplugged\" and can later be
+  plugged into a @class{gtk-socket} by the function @fun{gtk-socket-add-id}.
+  @see-class{gtk-plug}
+  @see-class{gtk-socket}
+  @see-function{gtk-socket-add-id}"
+  (socket-id :pointer))
+
+(export 'gtk-plug-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_plug_new_for_display ()

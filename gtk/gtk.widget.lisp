@@ -5840,21 +5840,23 @@
 (defcfun ("gtk_widget_region_intersect" gtk-widget-region-intersect)
     (:pointer (:struct cairo-region-t))
  #+cl-cffi-gtk-documentation
- "@version{2013-1-6}
-  @argument[widget]{a @class{gtk-widget} instance}
-  @argument{region]{a @symbol{cairo-region-t}, in the same coordinate system as
-    widget->allocation. That is, relative to widget->window for
-    @code{:no-window} widgets; relative to the parent window of widget->window
-    for widgets with their own window.}
+ "@version{2013-12-6}
+  @argument[widget]{a @class{gtk-widget} object}
+  @argument[region]{a @symbol{cairo-region-t}, in the same coordinate system as
+    @code{widget->allocation}. That is, relative to @code{widget->window} for
+    @code{:no-window} widgets; relative to the parent window of
+    @code{widget->window} for widgets with their own window.}
   @return{A newly allocated region holding the intersection of @arg{widget} and
     @arg{region}. The coordinates of the return value are relative to
-    widget->window for @code{:no-window} widgets, and relative to the parent
-    window of widget->window for widgets with their own window.}
+    @code{widget->window} for @code{:no-window} widgets, and relative to the
+    parent window of @code{widget->window} for widgets with their own window.}
   @begin{short}
-    Computes the intersection of a @arg{widget}'s area and @arg{region},
+    Computes the intersection of a widget's area and @arg{region},
     returning the intersection.
   @end{short}
   The result may be empty, use @fun{cairo-region-is-empty} to check.
+  @see-class{gtk-widget}
+  @see-symbol{cairo-region-t}
   @see-function{cairo-region-is-empty}"
   (widget (g-object gtk-widget))
   (region (:pointer (:struct cairo-region-t))))
@@ -5959,11 +5961,12 @@
 
 (defun gtk-widget-style-get-property (widget property-name)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-6}
-  @argument[widget]{a @class{gtk-widget} instance}
+ "@version{2013-12-6}
+  @argument[widget]{a @class{gtk-widget} object}
   @argument[property-name]{the name of a style property}
   @return{The style property value.}
-  @short{Gets the value of a style property of @arg{widget}.}"
+  @short{Gets the value of a style property of @arg{widget}.}
+  @see-class{gtk-widget}"
   (let ((property-type (gtype (gtk-widget-style-property-type widget
                                                               property-name))))
   (with-foreign-object (value '(:struct g-value))
@@ -6121,9 +6124,9 @@
 
 (defcfun ("gtk_widget_get_accessible" gtk-widget-get-accessible) g-object
  #+cl-cffi-gtk-documentation
- "@version{2013-1-6}
-  @argument[widget]{a @class{gtk-widget} instance}
-  @return{the @code{AtkObject} associated with widget}
+ "@version{2013-12-6}
+  @argument[widget]{a @class{gtk-widget} object}
+  @return{The @code{AtkObject} associated with widget.}
   @begin{short}
     Returns the accessible object that describes the widget to an assistive
     technology.
@@ -6136,7 +6139,8 @@
   an implementation is defined.
 
   The documentation of the ATK library contains more information about
-  accessible objects and their uses."
+  accessible objects and their uses.
+  @see-class{gtk-widget}"
   (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-get-accessible)
@@ -6147,31 +6151,33 @@
 
 (defcfun ("gtk_widget_child_focus" gtk-widget-child-focus) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-1-6}
-  @argument[widget]{a @class{gtk-widget} instance}
-  @argument[direction]{direction of focus movement}
+ "@version{2013-12-6}
+  @argument[widget]{a @class{gtk-widget} object}
+  @argument[direction]{direction of type @symbol{gtk-direction-type} of focus
+    movement}
   @return{@em{True} if focus ended up inside widget.}
   @begin{short}
-    This function is used by custom widget implementations; if you're writing an
-    app, you'd use @fun{gtk-widget-grab-focus} to move the focus to a particular
-    widget, and @fun{gtk-container-set-focus-chain} to change the focus tab
-    order.
+    This function is used by custom widget implementations; if you are writing
+    an app, you would use the function @fun{gtk-widget-grab-focus} to move the
+    focus to a particular widget, and the function
+    @fun{gtk-container-set-focus-chain} to change the focus tab order.
   @end{short}
   So you may want to investigate those functions instead.
 
-  @sym{gtk-widget-child-focus} is called by containers as the user moves around
-  the window using keyboard shortcuts. @arg{direction} indicates what kind of
-  motion is taking place (up, down, left, right, tab forward, tab backward).
-  @sym{gtk-widget-child-focus} emits the \"focus\" signal; widgets override the
-  default handler for this signal in order to implement appropriate focus
-  behavior.
+  The function @sym{gtk-widget-child-focus} is called by containers as the user
+  moves around the window using keyboard shortcuts. @arg{direction} indicates
+  what kind of motion is taking place (up, down, left, right, tab forward, tab
+  backward). The function @sym{gtk-widget-child-focus} emits the \"focus\"
+  signal; widgets override the default handler for this signal in order to
+  implement appropriate focus behavior.
 
-  The default ::focus handler for a widget should return @em{true} if moving in
-  direction left the focus on a focusable location inside that widget, and
+  The default \"focus\" handler for a widget should return @em{true} if moving
+  in direction left the focus on a focusable location inside that widget, and
   @code{nil} if moving in direction moved the focus outside the widget. If
-  returning @em{true}, widgets normally call @fun{gtk-widget-grab-focus} to
-  place the focus accordingly; if returning @code{nil}, they don't modify the
-  current focus location.
+  returning @em{true}, widgets normally call the function
+  @fun{gtk-widget-grab-focus} to place the focus accordingly; if returning
+  @code{nil}, they do not modify the current focus location.
+  @see-class{gtk-widget}
   @see-function{gtk-widget-grab-focus}
   @see-function{gtk-container-set-focus-chain}"
   (widget (g-object gtk-widget))
@@ -6185,8 +6191,8 @@
 
 (defcfun ("gtk_widget_child_notify" gtk-widget-child-notify) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-4-3}
-  @argument[widget]{a @class{gtk-widget} instance}
+ "@version{2013-12-6}
+  @argument[widget]{a @class{gtk-widget} object}
   @argument[child-property]{the name of a child property installed on the class
     of @arg{widget}'s parent}
   @begin{short}
@@ -6194,8 +6200,9 @@
     on @arg{widget}.
   @end{short}
 
-  This is the analogue of @fun{g-object-notify} for child properties.
-  Also see @fun{gtk-container-child-notify}.
+  This is the analogue of the function @fun{g-object-notify} for child
+  properties. Also see the function @fun{gtk-container-child-notify}.
+  @see-class{gtk-widget}
   @see-function{g-object-notify}
   @see-function{gtk-container-child-notify}"
   (widget (g-object gtk-widget))
@@ -6209,15 +6216,17 @@
 
 (defcfun ("gtk_widget_freeze_child_notify" gtk-widget-freeze-child-notify) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-1-6}
-  @argument[widget]{a @class{gtk-widget} instance}
+ "@version{2013-12-6}
+  @argument[widget]{a @class{gtk-widget} object}
   @begin{short}
-    Stops emission of \"child-notify\" signals on widget.
+    Stops emission of \"child-notify\" signals on @arg{widget}.
   @end{short}
-  The signals are queued until @fun{gtk-widget-thaw-child-notify} is called on
-  widget.
+  The signals are queued until the function @fun{gtk-widget-thaw-child-notify}
+  is called on @arg{widget}.
 
-  This is the analogue of @fun{g-object-freeze-notify} for child properties.
+  This is the analogue of the function @fun{g-object-freeze-notify} for child
+  properties.
+  @see-class{gtk-widget}
   @see-function{gtk-widget-thaw-child-notify}
   @see-function{g-object-freeze-notify}"
   (widget (g-object gtk-widget)))
@@ -6230,17 +6239,18 @@
 
 (defcfun ("gtk_widget_get_child_visible" gtk-widget-get-child-visible) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-1-6}
-  @argument[widget]{a @class{gtk-widget} instance}
+ "@version{2013-12-6}
+  @argument[widget]{a @class{gtk-widget} object}
   @return{@em{True} if the widget is mapped with the parent.}
   @begin{short}
-    Gets the value set with @fun{gtk-widget-set-child-visible}.
+    Gets the value set with the function @fun{gtk-widget-set-child-visible}.
   @end{short}
   If you feel a need to use this function, your code probably needs
   reorganization.
 
   This function is only useful for container implementations and never should
   be called by an application.
+  @see-class{gtk-widget}
   @see-function{gtk-widget-set-child-visible}"
   (widget (g-object gtk-widget)))
 
@@ -6295,7 +6305,7 @@
 (defcfun ("gtk_widget_get_clipboard" gtk-widget-get-clipboard)
     (g-object gtk-clipboard)
  #+cl-cffi-gtk-documentation
- "@version{2013-8-20}
+ "@version{2013-12-6}
   @argument[widget]{a @class{gtk-widget} object}
   @argument[selection]{a @symbol{gdk-atom} which identifies the clipboard to
     use. @code{\"CLIPBOARD\"} gives the default clipboard. Another common value
@@ -6304,7 +6314,8 @@
     new one will be created. Once a clipboard object has been created, it is
     persistent for all time.}
   @begin{short}
-    Returns the clipboard object for the given selection to be used with widget.
+    Returns the clipboard object for the given selection to be used with
+    @arg{widget}.
   @end{short}
   @arg{widget} must have a @class{gdk-display} associated with it, so must be
   attached to a toplevel window.
@@ -6312,6 +6323,7 @@
   Since 2.2
   @see-class{gtk-widget}
   @see-class{gtk-clipboard}
+  @see-class{gdk-display}
   @see-symbol{gdk-atom}"
   (widget (g-object gtk-widget))
   (selection gdk-atom-as-string))
@@ -6322,14 +6334,15 @@
 ;;; gtk_widget_get_display ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_widget_get_display" gtk-widget-get-display) g-object
+(defcfun ("gtk_widget_get_display" gtk-widget-get-display)
+    (g-object gdk-display)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-6}
-  @argument[widget]{a @class{gtk-widget} instance}
-  @return{The @class{gdk-display} for the toplevel for this @arg{widget}.}
+ "@version{2013-12-6}
+  @argument[widget]{a @class{gtk-widget} object}
+  @return{The @class{gdk-display} for the toplevel for this widget.}
   @begin{short}
     Get the @class{gdk-display} for the toplevel window associated with this
-    @arg{widget}.
+    widget.
   @end{short}
   This function can only be called after the widget has been added to a widget
   hierarchy with a @class{gtk-window} at the top.
@@ -6338,7 +6351,10 @@
   has been realized, and you should free those resources when the widget is
   unrealized.
 
-  Since 2.2"
+  Since 2.2
+  @see-class{gtk-widget}
+  @see-class{gtk-window}
+  @see-class{gdk-display}"
   (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-get-display)
@@ -6347,11 +6363,12 @@
 ;;; gtk_widget_get_root_window ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_widget_get_root_window" gtk-widget-get-root-window) g-object
+(defcfun ("gtk_widget_get_root_window" gtk-widget-get-root-window)
+    (g-object gdk-window)
  #+cl-cffi-gtk-documentation
- "@version{2013-1-6}
-  @argument[widget]{a @class{gtk-widget} instance}
-  @return{The @class{gdk-window} root window for the toplevel for this widget}
+ "@version{2013-12-6}
+  @argument[widget]{a @class{gtk-widget} object}
+  @return{The @class{gdk-window} root window for the toplevel for this widget.}
   @begin{short}
     Get the root window where this widget is located.
   @end{short}
@@ -6363,7 +6380,9 @@
   create display specific resources when a widget has been realized, and you
   should free those resources when the widget is unrealized.
 
-  Since 2.2"
+  Since 2.2
+  @see-class{gtk-widget}
+  @see-class{gdk-window}"
   (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-get-root-window)
@@ -6374,9 +6393,9 @@
 
 (defcfun ("gtk_widget_get_screen" gtk-widget-get-screen) g-object
  #+cl-cffi-gtk-documentation
- "@version{2013-1-6}
-  @argument[widget]{a @class{gtk-widget} instance}
-  @return{The @class{gdk-screen} for the toplevel for this @arg{widget}.}
+ "@version{2013-12-6}
+  @argument[widget]{a @class{gtk-widget} object}
+  @return{The @class{gdk-screen} for the toplevel for this widget.}
   @begin{short}
     Get the @class{gdk-screen} from the toplevel window associated with this
     widget.
@@ -6388,7 +6407,10 @@
   has been realized, and you should free those resources when the widget is
   unrealized.
 
-  Since 2.2"
+  Since 2.2
+  @see-class{gtk-widget}
+  @see-class{gtk-window}
+  @see-class{gdk-screen}"
   (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-get-screen)
@@ -6449,30 +6471,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_set_child_visible ()
-;;;
-;;; void gtk_widget_set_child_visible (GtkWidget *widget, gboolean is_visible);
-;;;
-;;; Sets whether widget should be mapped along with its when its parent is
-;;; mapped and widget has been shown with gtk_widget_show().
-;;;
-;;; The child visibility can be set for widget before it is added to a container
-;;; with gtk_widget_set_parent(), to avoid mapping children unnecessary before
-;;; immediately unmapping them. However it will be reset to its default state of
-;;; TRUE when the widget is removed from a container.
-;;;
-;;; Note that changing the child visibility of a widget does not queue a resize
-;;; on the widget. Most of the time, the size of a widget is computed from all
-;;; visible children, whether or not they are mapped. If this is not the case,
-;;; the container can queue a resize itself.
-;;;
-;;; This function is only useful for container implementations and never should
-;;; be called by an application.
-;;;
-;;; widget :
-;;;     a GtkWidget
-;;;
-;;; is_visible :
-;;;     if TRUE, widget should be mapped along with its parent.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_set_child_visible" gtk-widget-set-child-visible) :void
@@ -9276,7 +9274,7 @@
 ;;; gtk_widget_compute_expand ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_widget_compute_expend" gtk-widget-compute-expand) :boolean
+(defcfun ("gtk_widget_compute_expand" gtk-widget-compute-expand) :boolean
  #+cl-cffi-gtk-documentation
  "@version{2013-12-2}
   @argument[widget]{the widget}

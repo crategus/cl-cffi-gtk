@@ -199,7 +199,7 @@ GTK+ Widgets and Objects
 
   Layout Containers
 
-    gtk.grid.lisp                    - GtkGrid                     - GTK+ 3.6.4
+    gtk.grid.lisp                    - GtkGrid                     - GTK+ 3.8.8
     gtk.alignment.lisp               - GtkAlignment                - GTK+ 3.6.4
     gtk.aspect-frame.lisp            - GtkAspectFrame              - GTK+ 3.6.4
     gtk.box.lisp                     - GtkBox, GtkHBox, GtkVbox    - GTK+ 3.6.4
@@ -226,8 +226,8 @@ GTK+ Widgets and Objects
 
   Printing
 
-    gtk.print-operation.lisp         - GtkPrintOperation           - GTK+ 3.6.4&
-    gtk.print-context.lisp           - GtkPrintContext             - GTK+ 3.6.4%
+    gtk.print-operation.lisp         - GtkPrintOperation           - GTK+ 3.6.4
+    gtk.print-context.lisp           - GtkPrintContext             - GTK+ 3.6.4
     gtk.print-settings.lisp          - GtkPrintSettings            - GTK+ 3.8.6&
     gtk.page-setup.lisp              - GtkPageSetup                - GTK+ 3.8.6&
     gtk.paper-size.lisp              - GtkPaperSize                - GTK+ 3.6.4
