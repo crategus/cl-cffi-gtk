@@ -550,25 +550,29 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_context_set_base_dir ()
-;;;
-;;; void pango_context_set_base_dir (PangoContext *context,
-;;;                                  PangoDirection direction);
-;;;
-;;; Sets the base direction for the context.
-;;;
-;;; The base direction is used in applying the Unicode bidirectional algorithm;
-;;; if the direction is PANGO_DIRECTION_LTR or PANGO_DIRECTION_RTL, then the
-;;; value will be used as the paragraph direction in the Unicode bidirectional
-;;; algorithm. A value of PANGO_DIRECTION_WEAK_LTR or PANGO_DIRECTION_WEAK_RTL
-;;; is used only for paragraphs that do not contain any strong characters
-;;; themselves.
-;;;
-;;; context :
-;;;     a PangoContext
-;;;
-;;; direction :
-;;;     the new base direction
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_context_set_base_dir" pango-context-set-base-dir) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-7}
+  @argument[context]{a @class{pango-context}}
+  @argument[direction]{the new base direction}
+  @begin{short}
+    Sets the base direction for the context.
+  @end{short}
+
+  The base direction is used in applying the Unicode bidirectional algorithm;
+  if the direction is @code{:ltr} or @code{:rtl}, then the value will be used as
+  the paragraph direction in the Unicode bidirectional algorithm. A value of
+  @code{:weak-ltr} or @code{:weak-rtl} is used only for paragraphs that do not
+  contain any strong characters themselves.
+  @see-class{pango-context}
+  @see-symbol{pango-direction}
+  @see-function{pango-context-get-base-dir}"
+  (context (g-object pango-context))
+  (direction pango-direction))
+
+(export 'pango-context-set-base-dir)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_context_get_base_gravity ()
