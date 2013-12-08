@@ -5111,7 +5111,7 @@
 
   Since 2.18
   @see-class{gdk-window}
-  @see-function{gdk-window-get-embedder}"
+  @see-function{gdk-offscreen-window-get-embedder}"
   (window (g-object gdk-window))
   (embedder (g-object gdk-window)))
 
@@ -5136,7 +5136,7 @@
 
   Since 2.18
   @see-class{gdk-window}
-  @see-function{gdk-window-set-embedder}"
+  @see-function{gdk-offscreen-window-set-embedder}"
   (window (g-object gdk-window)))
 
 (export 'gdk-offscreen-window-get-embedder)
