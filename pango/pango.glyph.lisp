@@ -159,7 +159,8 @@
   @sym{+pango-scale+} is currently 1024, but this may be changed in the future.
 
   When setting font sizes, device units are always considered to be points as
-  in \"12 point font\", rather than pixels.")
+  in \"12 point font\", rather than pixels.
+  @see-function{pango-pixels}")
 
 (export '+pango-scale+)
 
@@ -172,7 +173,8 @@
  "@version{2013-8-27}
   @argument[d]{a dimension in Pango units}
   @return{Rounded dimension in device units.}
-  Converts a dimension to device units by rounding."
+  Converts a dimension to device units by rounding.
+  @see-variable{+pango-scale}"
   (ash (+ d 512) -10)) ; #define PANGO_PIXELS(d) (((int)(d) + 512) >> 10)
 
 (export 'pango-pixels)
