@@ -799,8 +799,6 @@
     @about-function{gdk-threads-add-timeout-seconds-full}
   @end{section}
   @begin[Pango Interaction]{section}
-    Using Pango in GDK
-
     Pango is the text layout system used by GDK and GTK+. The functions and
     types in this section are used to obtain clip regions for
     @class{pango-layout}'s, and to get @class{pango-context}'s that can be
@@ -814,79 +812,85 @@
     @fun{gdk-pango-context-get-for-screen}. Once you have a
     @class{pango-layout} object, you can set the text and attributes of it with
     Pango functions like @fun{pango-layout-set-text} and get its size with
-    @fun{pango-layout-get-size}. (Note that Pango uses a fixed point system
-    internally, so converting between Pango units and pixels using
-    @code{PANGO_SCALE} or the @code{PANGO_PIXELS()} macro.)
+    @fun{pango-layout-get-size}. Note that Pango uses a fixed point system
+    internally, so converting between Pango units and pixels using the constant
+    @var{+pango-scale+} or the function @fun{pango-pixels}.
 
     Rendering a Pango layout is done most simply with the function
     @fun{pango-cairo-show-layout}; you can also draw pieces of the layout with
     the function @fun{pango-cairo-show-layout-line}.
 
-    @b{Example:} Draw transformed text with Pango and cairo
+    @b{Example:} Draw transformed text with Pango and Cairo
+    @image[pango-cairo]{}
     @begin{pre}
- #define RADIUS 100
- #define N_WORDS 10
- #define FONT \"Sans Bold 18\"
+(defun demo-pango ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :type :toplevel
+                                 :title \"Demo Using Pango with Cairo\"
+                                 :border-width 12
+                                 :default-width 400
+                                 :default-height 400))
+          (circle 100)
+          (n-words 12)
+          (font \"Sans Bold 16\"))
+      (g-signal-connect window \"destroy\"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (leave-gtk-main)))
+      ;; Signals used to handle the backing surface
+      (g-signal-connect window \"draw\"
+         (lambda (widget cr)
+           (let* ((cr (pointer cr))
+                  ;; Get the GdkWindow for the widget
+                  (window (gtk-widget-get-window widget))
+                  (width (gdk-window-get-width window))
+                  (height (gdk-window-get-height window))
+                  (radius (- (/ (min width height) 2) 20)))
+             ;; Set up a transformation matrix so that the user space
+             ;; coordinates for where we are drawing are [-RADIUS, RADIUS],
+             ;; [-RADIUS, RADIUS] We first center, then change the scale
+             (cairo-translate cr
+                              (+ radius (/ (- width (* 2 radius)) 2))
+                              (+ radius (/ (- height (* 2 radius)) 2)))
+             (cairo-scale cr (/ radius circle) (/ radius circle))
 
-   PangoContext *context;
-   PangoLayout *layout;
-   PangoFontDescription *desc;
+           ;; Clear surface
+           (cairo-set-source-rgb cr 1 1 1)
+           (cairo-paint cr)
 
-   double radius;
-   int width, height;
-   int i;
+           ;; Create a PangoLayout, set the font and text
+           (let* ((screen (gdk-window-get-screen window))
+                  (context (gdk-pango-context-get-for-screen screen))
+                  (layout (pango-layout-new context))
+                  (desc (pango-font-description-from-string font)))
+             (pango-layout-set-text layout \"Text\")
+             (pango-layout-set-font-description layout desc)
 
-   /* Set up a transformation matrix so that the user space coordinates for
-    * where we are drawing are [-RADIUS, RADIUS], [-RADIUS, RADIUS]
-    * We first center, then change the scale */
+             ;; Draw the layout n-words times in a circle
+             (do* ((i 0 (+ i 1))
+                   (angle 0 (/ (* 360 i) n-words))
+                   ;; Gradient from red to blue
+                   (red (/ (+ 1 (cos (* (/ pi 180) (- angle 60)))) 2)
+                        (/ (+ 1 (cos (* (/ pi 180) (- angle 60)))) 2)))
+                  ((>= i n-words))
+               (cairo-save cr)
+               (cairo-set-source-rgb cr red 0 (- 1 red))
+               (cairo-rotate cr (/ (* angle pi) 180))
 
-   width = gdk_window_get_width (window);
-   height = gdk_window_get_height (window);
-   radius = MIN (width, height) / 2.;
+               ;; Inform Pango to re-layout the text with the new
+               ;; transformation matrix
+               (pango-cairo-update-layout cr layout)
 
-   cairo_translate (cr,
-                    radius + (width - 2 * radius) / 2,
-                    radius + (height - 2 * radius) / 2);
-                    cairo_scale (cr, radius / RADIUS, radius / RADIUS);
-
-   /* Create a PangoLayout, set the font and text */
-   context = gdk_pango_context_get_for_screen (screen);
-   layout = pango_layout_new (context);
-   pango_layout_set_text (layout, \"Text\", -1);
-   desc = pango_font_description_from_string (FONT);
-   pango_layout_set_font_description (layout, desc);
-   pango_font_description_free (desc);
-
-   /* Draw the layout N_WORDS times in a circle */
-   for (i = 0; i < N_WORDS; i++)
-     {
-       double red, green, blue;
-       double angle = 2 * G_PI * i / n_words;
-
-       cairo_save (cr);
-
-       /* Gradient from red at angle == 60 to blue at angle == 300 */
-       red = (1 + cos (angle - 60)) / 2;
-       green = 0;
-       blue = 1 - red;
-
-       cairo_set_source_rgb (cr, red, green, blue);
-       cairo_rotate (cr, angle);
-
-       /* Inform Pango to re-layout the text with the new transformation
-          matrix */
-       pango_cairo_update_layout (cr, layout);
-
-       pango_layout_get_size (layout, &width, &height);
-
-       cairo_move_to (cr, - width / 2 / PANGO_SCALE, - DEFAULT_TEXT_RADIUS);
-       pango_cairo_show_layout (cr, layout);
-
-       cairo_restore (cr);
-     @}
-
-   g_object_unref (layout);
-   g_object_unref (context);
+               (multiple-value-bind (width height)
+                   (pango-layout-get-size layout)
+                 (declare (ignore height))
+                 (cairo-move-to cr (- (/ width 2 +pango-scale+)) (- circle)))
+               (pango-cairo-show-layout cr layout)
+               (cairo-restore cr)))
+           (cairo-destroy cr)
+           t)))
+      (gtk-widget-show-all window))))
     @end{pre}
     @about-function{gdk-pango-layout-get-clip-region}
     @about-function{gdk-pango-layout-line-get-clip-region}
@@ -894,15 +898,15 @@
     @about-function{gdk-pango-context-get-for-screen}
   @end{section}
   @begin[Cairo Interaction]{section}
-    Functions to support using cairo.
+    Functions to support using Cairo.
 
     Cairo is a graphics library that supports vector graphics and image
     compositing that can be used with GDK. GTK+ does all of its drawing using
     cairo.
 
-    GDK does not wrap the cairo API, instead it allows to create cairo contexts
+    GDK does not wrap the Cairo API, instead it allows to create Cairo contexts
     which can be used to draw on @class{gdk-window}'s. Additional functions
-    allow use @class{gdk-rectangle}'s with cairo and to use @class{gdk-color}'s,
+    allow use @class{gdk-rectangle}'s with Cairo and to use @class{gdk-color}'s,
     @class{gdk-rgba}'s, @class{gdk-pixbuf}'s and @class{gdk-window}'s as sources
     for drawing operations.
 
