@@ -1806,10 +1806,10 @@ tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
 ;;; gtk_style_context_lookup_icon_set ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_style_context_lookup_icon_set" gtk-style-lookup-icon-set)
+(defcfun ("gtk_style_context_lookup_icon_set" gtk-style-context-lookup-icon-set)
     (g-boxed-foreign gtk-icon-set)
  #+cl-cffi-gtk-documentation
- "@version{2013-11-28}
+ "@version{2013-12-5}
   @argument[context]{a @class{gtk-style-context} object}
   @argument[stock-id]{an icon name}
   @return{The looked up @class{gtk-icon-set}, or @code{nil}.}
@@ -1843,7 +1843,7 @@ tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
     @arg{region-id} are animated for state state being set to value
     @arg{state-value}.
   @end{short}
- 
+
   The window parameter is used in order to invalidate the rendered area as the
   animation runs, so make sure it is the same window that is being rendered on
   by the @sym{gtk-render-*} functions.

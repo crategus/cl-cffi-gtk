@@ -962,7 +962,7 @@
   @see-class{gtk-cell-area-context}
   @see-class{gtk-widget}
   @see-class{gdk-rectangle}
-  @see-symbol{gdk-event}
+  @see-class{gdk-event}
   @see-symbol{gtk-cell-renderer-state}"
   (area (g-object gtk-cell-area))
   (context (g-object gtk-cell-area-context))

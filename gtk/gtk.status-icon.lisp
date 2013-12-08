@@ -611,7 +611,7 @@
   @see-class{gtk-status-icon}"
   (make-instance 'gtk-status-icon))
 
-(export 'gtk-status-icon)
+(export 'gtk-status-icon-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_status_icon_new_from_pixbuf ()
@@ -893,7 +893,7 @@
   @see-function{gtk-status-icon-get-storage-type}"
   (gtk-status-icon-pixbuf status-icon))
 
-(export 'gtk-status-icon-get-pixubf)
+(export 'gtk-status-icon-get-pixbuf)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_status_icon_get_stock ()

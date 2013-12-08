@@ -99,7 +99,7 @@
     @sym{gtk-paper-size} handles paper sizes. It uses the standard called
     \"PWG 5101.1-2002 PWG: Standard for Media Standardized Names\" to name the
     paper sizes and to get the data for the page sizes. In addition to
-    standard paper sizes, @symbol{gtk-paper-size} allows to construct custom
+    standard paper sizes, @class{gtk-paper-size} allows to construct custom
     paper sizes with arbitrary dimensions.
   @end{short}
 

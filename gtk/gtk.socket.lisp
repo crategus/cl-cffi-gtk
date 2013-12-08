@@ -150,7 +150,7 @@
   Create a new empty @class{gtk-socket}.
   @see-class{gtk-socket}")
 
-(export 'gtk-socket)
+(export 'gtk-socket-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_socket_add_id ()

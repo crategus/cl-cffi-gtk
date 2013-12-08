@@ -779,7 +779,8 @@
 ;;; gtk_ui_manager_get_widget ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_ui_manager_get_widget" gtk-ui-manager-get-widget) g-object
+(defcfun ("gtk_ui_manager_get_widget" gtk-ui-manager-get-widget)
+    (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
  "@version{2013-6-2}
   @argument[manager]{a @class{gtk-ui-manager} object}
@@ -806,7 +807,7 @@
 
   Since 2.4
   @see-class{gtk-ui-manager}"
-  (ui-manager g-object)
+  (ui-manager (g-object gtk-widget))
   (path :string))
 
 (export 'gtk-ui-manager-get-widget)

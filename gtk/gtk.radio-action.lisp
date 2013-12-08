@@ -94,7 +94,6 @@
   @see-slot{gtk-radio-action-group}
   @see-slot{gtk-radio-action-value}
   @see-class{gtk-radio-menu-item}
-  @see-class{gtk-radio-action-entry}
   @see-function{gtk-radio-action-get-current-value}")
 
 ;;; ----------------------------------------------------------------------------
@@ -123,9 +122,9 @@
  "The @code{\"value\"} property of type @code{:int} (Read / Write) @br{}
   The value is an arbitrary integer which can be used as a convenient way to
   determine which action in the group is currently active in an \"activate\" or
-  \"changed\" signal handler. See the @fun{gtk-radio-action-get-current-value}
-  function and @class{gtk-radio-action-entry} for convenient ways to get and
-  set this property. @br{}
+  \"changed\" signal handler. See the function
+  @fun{gtk-radio-action-get-current-value} and @symbol{gtk-radio-action-entry}
+  for convenient ways to get and set this property. @br{}
   Default value: 0 @br{}
   Since 2.4")
 
