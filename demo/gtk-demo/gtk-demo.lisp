@@ -61,6 +61,7 @@
 (load "fixed.lisp")
 (load "font-button.lisp")
 (load "frame.lisp")
+(load "grid.lisp")
 (load "grid-packing.lisp")
 (load "image.lisp")
 (load "info-bar.lisp")
