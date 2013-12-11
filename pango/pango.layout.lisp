@@ -4,9 +4,10 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the Pango Reference Manual
-;;; for Pango 1.30.0. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the Pango Reference Manual
+;;; Version 1.30.0 and modified to document the Lisp binding to the Pango
+;;; library. See <http://www.gtk.org>. The API documentation of the Lisp binding
+;;; is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -134,34 +135,6 @@
 ;;;     pango_layout_line_index_to_x
 ;;;     pango_layout_line_x_to_index
 ;;;     pango_layout_line_get_x_ranges
-;;;
-;;; Object Hierarchy
-;;;
-;;;   GObject
-;;;    +----PangoLayout
-;;;
-;;;   GBoxed
-;;;    +----PangoLayoutIter
-;;;
-;;;   GEnum
-;;;    +----PangoWrapMode
-;;;
-;;;   GEnum
-;;;    +----PangoEllipsizeMode
-;;;
-;;;   GEnum
-;;;    +----PangoAlignment
-;;;
-;;;   GBoxed
-;;;    +----PangoLayoutLine
-;;;
-;;; Description
-;;;
-;;; While complete access to the layout capabilities of Pango is provided using
-;;; the detailed interfaces for itemization and shaping, using that
-;;; functionality directly involves writing a fairly large amount of code. The
-;;; objects and functions in this section provide a high-level driver for
-;;; formatting entire paragraphs of text at once.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :pango)
@@ -179,7 +152,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'pango-layout 'type)
- "@version{2013-6-30}
+ "@version{2013-12-8}
   @begin{short}
     The @sym{pango-layout} structure represents an entire paragraph of text. It
     is initialized with a @class{pango-context}, UTF-8 string and set of
@@ -193,36 +166,52 @@
   @sym{pango-layout}. It is possible, as well, to ignore the 2-D setup, and
   simply treat the results of a @sym{pango-layout} as a list of lines.
 
-  The @sym{pango-layout} structure is opaque, and has no user-visible fields.")
+  The @sym{pango-layout} structure is opaque, and has no user-visible fields.
+  @see-class{pango-context}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; PangoLayoutIter
-;;;
-;;; typedef struct _PangoLayoutIter PangoLayoutIter;
-;;;
-;;; A PangoLayoutIter structure can be used to iterate over the visual extents
-;;; of a PangoLayout.
-;;;
-;;; The PangoLayoutIter structure is opaque, and has no user-visible fields.
 ;;; ----------------------------------------------------------------------------
+
+(define-g-boxed-opaque pango-layout-iter "PangoLayoutIter"
+  :alloc (error "Use Pango to create PANGO-LAYOUT-ITER"))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'pango-layout-iter atdoc:*class-name-alias*) "CStruct"
+      (documentation 'pango-layout-iter 'type)
+ "@version{2013-12-8}
+  @begin{short}
+    A @asym{pango-layout-iter} structure can be used to iterate over the visual
+    extents of a @class{pango-layout} object.
+  @end{short}
+
+  The @sym{pango-layout-iter} structure is opaque, and has no user-visible
+  fields.
+  @begin{pre}
+(define-g-boxed-opaque pango-layout-iter \"PangoLayoutIter\"
+  :alloc (error \"Use Pango to create PANGO-LAYOUT-ITER\"))
+  @end{pre}
+  @see-class{pango-layout}")
+
+(export 'pango-layout-iter)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_new ()
-;;;
-;;; PangoLayout * pango_layout_new (PangoContext *context);
-;;;
-;;; Create a new PangoLayout object with attributes initialized to default
-;;; values for a particular PangoContext.
-;;;
-;;; context :
-;;;     a PangoContext
-;;;
-;;; Returns :
-;;;     the newly allocated PangoLayout, with a reference count of one, which
-;;;     should be freed with g_object_unref().
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("pango_layout_new" pango-layout-new) (g-object pango-layout)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-8}
+  @argument[context]{a @class{pango-context} object}
+  @begin{short}
+    The newly allocated @class{pango-layout}, with a reference count of one,
+    which should be freed with the function @fun{g-object-unref}.
+  @end{short}
+  Create a new @class{pango-layout} object with attributes initialized to
+  default values for a particular @class{pango-context}.
+  @see-class{pango-layout}
+  @see-class{pango-context}
+  @see-function{g-object-unref}"
   (context (g-object pango-context)))
 
 (export 'pango-layout-new)
@@ -425,23 +414,23 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_set_font_description ()
-;;;
-;;; void pango_layout_set_font_description (PangoLayout *layout,
-;;;                                         const PangoFontDescription *desc);
-;;;
-;;; Sets the default font description for the layout. If no font description is
-;;; set on the layout, the font description from the layout's context is used.
-;;;
-;;; layout :
-;;;     a PangoLayout
-;;;
-;;; desc :
-;;;     the new PangoFontDescription, or NULL to unset the current font
-;;;     description
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("pango_layout_set_font_description" pango-layout-set-font-description)
     :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-8}
+  @argument[layout]{a @class{pango-layout} object}
+  @argument[desc]{the new @class{pango-font-description}, or @code{nil} to unset
+    the current font description}
+  @begin{short}
+    Sets the default font description for the layout.
+  @end{short}
+  If no font description is set on the layout, the font description from the
+  layout's context is used.
+  @see-class{pango-layout}
+  @see-class{pango-font-description}
+  @see-function{pango-layout-get-font-description}"
   (layout (g-object pango-layout))
   (desc (g-boxed-foreign pango-font-description)))
 
@@ -637,6 +626,8 @@
       character boundaries if there is not enough space for a full word.}
   @end{table}")
 
+(export 'pango-wrap-mode)
+
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_set_ellipsize ()
 ;;;
@@ -738,6 +729,8 @@
     @entry[:middle]{Omit characters in the middle of the text.}
     @entry[:end]{Omit characters at the end of the text.}
   @end{table}")
+
+(export 'pango-ellipsize-mode)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_set_indent ()
@@ -1317,21 +1310,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_get_size ()
-;;;
-;;; void pango_layout_get_size (PangoLayout *layout, int *width, int *height);
-;;;
-;;; Determines the logical width and height of a PangoLayout in Pango units
-;;; (device units scaled by PANGO_SCALE). This is simply a convenience function
-;;; around pango_layout_get_extents().
-;;;
-;;; layout :
-;;;     a PangoLayout
-;;;
-;;; width :
-;;;     location to store the logical width, or NULL
-;;;
-;;; height :
-;;;     location to store the logical height, or NULL
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("pango_layout_get_size" %pango-layout-get-size) :void
@@ -1340,6 +1318,22 @@
   (height (:pointer :int)))
 
 (defun pango-layout-get-size (layout)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-8}
+  @argument[layout]{a @class{pango-layout} object}
+  @begin{return}
+    @code{width} -- the logical width, or @code{nil} @br{}
+    @code{height} -- the logical height, or @code{nil}
+  @end{return}
+  @begin{short}
+    Determines the logical width and height of a @class{pango-layout} in Pango
+    units, device units scaled by the constand @var{+pango-scale+}.
+  @end{short}
+  This is simply a convenience function around the function
+  @fun{pango-layout-get-extents}.
+  @see-class{pango-layout}
+  @see-function{pango-layout-get-extents}
+  @see-variable{+pango-scale+}"
   (with-foreign-objects ((width :int) (height :int))
     (%pango-layout-get-size layout width height)
     (values (mem-ref width :int)

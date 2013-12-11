@@ -351,9 +351,9 @@
 
       While complete access to the layout capabilities of Pango is provided
       using the detailed interfaces for itemization and shaping, using that
-      functionality directly involves writing a fairly large amount of code. The
-      objects and functions in this section provide a high-level driver for
-      formatting entire paragraphs of text at once.
+      functionality directly involves writing a fairly large amount of code.
+      The objects and functions in this section provide a high-level driver
+      for formatting entire paragraphs of text at once.
 
       @about-class{pango-layout}
       @about-class{pango-layout-iter}
