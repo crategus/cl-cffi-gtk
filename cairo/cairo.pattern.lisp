@@ -1604,20 +1604,24 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_pattern_get_reference_count ()
-;;;
-;;; unsigned int cairo_pattern_get_reference_count (cairo_pattern_t *pattern);
-;;;
-;;; Returns the current reference count of pattern.
-;;;
-;;; pattern :
-;;;     a cairo_pattern_t
-;;;
-;;; Returns :
-;;;     the current reference count of pattern. If the object is a nil object,
-;;;     0 will be returned.
-;;;
-;;; Since 1.4
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_pattern_get_reference_count" cairo-pattern-get-reference-count)
+    :uint
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-9}
+  @argument[pattern]{a @symbol{cairo-pattern-t}}
+  @begin{return}
+    The current reference count of pattern. If the object is a nil object, 0
+    will be returned.
+  @end{return}
+  @short{Returns the current reference count of pattern.}
+
+  Since 1.4
+  @see-symbol{cairo-pattern-t}"
+  (pattern (:pointer (:struct cairo-pattern-t))))
+
+(export 'cairo-pattern-get-reference-count)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_pattern_set_user_data ()
