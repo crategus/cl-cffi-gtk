@@ -399,7 +399,7 @@
 
   Since 2.10
   @see-class{gtk-recent-manager}")
-  
+
 (export 'gtk-recent-manager-get-default)
 
 ;;; ----------------------------------------------------------------------------
@@ -820,7 +820,7 @@
 
 (defcfun ("gtk_recent_info_get_visited" gtk-recent-info-get-visited) :long
  #+cl-cffi-gtk-documentation
- "@version{2013-11-22}
+ "@version{2013-12-10}
   @argument[info]{a @class{gtk-recent-info} structure}
   @begin{return}
     The number of seconds elapsed from system's Epoch when the resource was
@@ -835,7 +835,7 @@
   @see-class{gtk-recent-info}"
   (info (g-boxed-foreign gtk-recent-info)))
 
-(export 'gtk-recent-info-get-visisted)
+(export 'gtk-recent-info-get-visited)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_info_get_private_hint ()

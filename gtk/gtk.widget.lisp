@@ -4899,11 +4899,11 @@
 
 (defcfun ("gtk_widget_override_color" gtk-widget-override-color) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-11-25}
+ "@version{2013-12-9}
   @argument[widget]{a @class{gtk-widget} object}
   @argument[state]{the state of type @symbol{gtk-state-flags} for which to set
     the color}
-  @argument[color]{the color of type @symbol{gdk-rgba} to assign, or @code{nil}
+  @argument[color]{the color of type @class{gdk-rgba} to assign, or @code{nil}
     to undo the effect of previous calls to the function
     @sym{gtk-widget-override-color}}
   @short{Sets the color to use for a widget.}
@@ -4934,7 +4934,7 @@
   @see-class{gtk-widget}
   @see-class{gdk-rgba}
   @see-class{gtk-css-provider}
-  @see-symbol{gdk-rgba}
+  @see-class{gdk-rgba}
   @see-function{gtk-style-context-add-class}
   @see-function{gtk-style-context-add-region}"
   (widget (g-object gtk-widget))

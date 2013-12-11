@@ -2015,12 +2015,13 @@
   signal of the dialog.
 
   Since 2.10"
-  (with-stable-pointer (ptr done-cb)
+  (with-stable-pointer (done-cb-ptr done-cb)
     (%gtk-print-run-page-setup-dialog-async
                                           parent
                                           page-setup
+                                          settings
                                           (callback gtk-page-setup-done-func-cb)
-                                          ptr)))
+                                          done-cb-ptr)))
 
 (export 'gtk-print-run-page-setup-dialag-async)
 

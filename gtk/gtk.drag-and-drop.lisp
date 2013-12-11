@@ -231,7 +231,7 @@
   (proxy-window (g-object gdk-window))
   (protocol gdk-drag-protocol)
   (use-coordinates :boolean))
-  
+
 (export 'gtk-drag-dest-set-proxy)
 
 ;;; ----------------------------------------------------------------------------
@@ -250,9 +250,9 @@
   @see-class{gtk-widget}
   @see-function{gtk-drag-dest-set}"
   (widget (g-object gtk-widget)))
-  
+
 (export 'gtk-drag-dest-unset)
-  
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_drag_dest_find_target ()
 ;;; ----------------------------------------------------------------------------
@@ -306,7 +306,7 @@
   @see-class{gtk-widget}
   @see-class{gtk-target-list}"
   (widget (g-object gtk-widget)))
-  
+
 (export 'gtk-drag-dest-get-target-list)
 
 ;;; ----------------------------------------------------------------------------
@@ -328,7 +328,7 @@
   @see-function{gtk-drag-dest-set}"
   (widget (g-object gtk-widget))
   (target-list (g-boxed-foreign gtk-target-list)))
-  
+
 (export 'gtk-drag-dest-set-target-list)
 
 ;;; ----------------------------------------------------------------------------
@@ -352,7 +352,7 @@
   @see-function{gtk-target-list-add-text-targets}
   @see-function{gtk-drag-dest-set-target-list}"
   (widget (g-object gtk-widget)))
-  
+
 (export 'gtk-drag-dest-add-text-targets)
 
 ;;; ----------------------------------------------------------------------------
@@ -365,7 +365,7 @@
  "@version{2013-11-3}
   @argument[widget]{a @class{gtk-widget} that is a drag destination}
   @begin{short}
-    Add the image targets supported by @class{gtk-selection} to the target list
+    Add the image targets supported by GtkSelection to the target list
     of the drag destination.
   @end{short}
   The targets are added with info = 0. If you need another value, use the
@@ -374,7 +374,6 @@
 
   Since 2.6
   @see-class{gtk-widget}
-  @see-class{gtk-selection}
   @see-function{gtk-target-list-add-image-targets}
   @see-function{gtk-drag-dest-set-target-list}"
   (widget (g-object gtk-widget)))
@@ -674,7 +673,7 @@
   @argument[hot-x]{the x offset within the icon of the hotspot}
   @argument[hot-y]{the y offset within the icon of the hotspot}
   Sets the icon for a given drag from a stock ID.
-  @see-class{gdk-drag-context}"  
+  @see-class{gdk-drag-context}"
   (context (g-object gdk-drag-context))
   (stock-id :string)
   (hot-x :int)
@@ -764,7 +763,7 @@
   (icon (g-object g-icon))
   (hot-x :int)
   (hot-y :int))
-  
+
 (export 'gtk-drag-set-icon-gicon)
 
 ;;; ----------------------------------------------------------------------------
@@ -779,7 +778,7 @@
   Sets the icon for a particular drag to the default icon.
   @see-class{gdk-drag-context}"
   (context (g-object gdk-drag-context)))
-  
+
 (export 'gtk-drag-set-icon-default)
 
 ;;; ----------------------------------------------------------------------------
@@ -804,7 +803,7 @@
   (start-y :int)
   (current-x :int)
   (current-y :int))
-  
+
 (export 'gtk-drag-check-threshold)
 
 ;;; ----------------------------------------------------------------------------
@@ -876,7 +875,7 @@
   @see-class{gtk-widget}"
   (widget (g-object gtk-widget))
   (stock-id :string))
-  
+
 (export 'gtk-drag-source-set-icon-stock)
 
 ;;; ----------------------------------------------------------------------------
@@ -899,7 +898,7 @@
   @see-class{gtk-icon-theme}"
   (widget (g-object gtk-widget))
   (icon-name :string))
-  
+
 (export 'gtk-drag-source-set-icon-name)
 
 ;;; ----------------------------------------------------------------------------
@@ -923,7 +922,7 @@
   @see-class{gtk-icon-theme}"
   (widget (g-object gtk-widget))
   (icon (g-object g-icon)))
-  
+
 (export 'gtk-drag-source-set-icon-gicon)
 
 ;;; ----------------------------------------------------------------------------
@@ -964,7 +963,7 @@
   @see-function{gtk-drag-source-get-target-list}"
   (widget (g-object gtk-widget))
   (target-list (g-boxed-foreign gtk-target-list)))
-  
+
 (export 'gtk-drag-source-set-target-list)
 
 ;;; ----------------------------------------------------------------------------
@@ -986,7 +985,7 @@
   @see-class{gtk-target-list}
   @see-function{gtk-drag-source-set-target-list}"
   (widget (g-object gtk-widget)))
-  
+
 (export 'gtk-drag-source-get-target-list)
 
 ;;; ----------------------------------------------------------------------------
@@ -999,7 +998,7 @@
  "@version{2013-11-20}
   @argument[widget]{a @class{gtk-widget} that is a drag source}
   @begin{short}
-    Add the text targets supported by @class{gtk-selection} to the target list
+    Add the text targets supported by GtkSelection to the target list
     of the drag source.
   @end{short}
   The targets are added with info = 0. If you need another value, use the
@@ -1008,11 +1007,10 @@
 
   Since 2.6
   @see-class{gtk-widget}
-  @see-class{gtk-selection}
   @see-function{gtk-target-list-add-text-targets}
   @see-function{gtk-drag-source-set-target-list}"
   (widget (g-object gtk-widget)))
-  
+
 (export 'gtk-drag-source-add-text-targets)
 
 ;;; ----------------------------------------------------------------------------
@@ -1025,7 +1023,7 @@
  "@version{2013-11-3}
   @argument[widget]{a @class{gtk-widget} that is a drag source}
   @begin{short}
-    Add the writable image targets supported by @class{gtk-selection} to the
+    Add the writable image targets supported by GtkSelection to the
     target list of the drag source.
   @end{short}
   The targets are added with info = 0. If you need another value, use
@@ -1034,7 +1032,6 @@
 
   Since 2.6
   @see-class{gtk-widget}
-  @see-class{gtk-selection}
   @see-function{gtk-target-list-add-image-targets}
   @see-function{gtk-drag-source-set-target-list}"
   (widget (g-object gtk-widget)))
@@ -1051,7 +1048,7 @@
  "@version{2013-11-20}
   @argument[widget]{a @class{gtk-widget} that is a drag source}
   @begin{short}
-    Add the URI targets supported by @class{gtk-selection} to the target list of
+    Add the URI targets supported by GtkSelection to the target list of
     the drag source.
   @end{short}
   The targets are added with info = 0. If you need another value, use the
@@ -1060,7 +1057,6 @@
 
   Since 2.6
   @see-class{gtk-widget}
-  @see-class{gtk-selection}
   @see-function{gtk-target-list-add-uri-targets}
   @see-function{gtk-drag-source-set-target-list}"
   (widget (g-object gtk-widget)))

@@ -4833,7 +4833,7 @@
   other bits indicate which functions to disable; if it does not include
   @code{:all}, it indicates which functions to enable.
   @see-class{gdk-window}
-  @see-symbol{gdk-wm-functions}"
+  @see-symbol{gdk-wm-function}"
   (window (g-object gdk-window))
   (functions gdk-wm-function))
 

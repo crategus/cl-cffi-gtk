@@ -284,7 +284,7 @@
   @end{short}
 
   Since 3.0
-  @see-class{gtk-app-chooser-button-append-separator}"
+  @see-class{gtk-app-chooser-button}"
   (self (g-object gtk-app-chooser-button)))
 
 (export 'gtk-app-chooser-button-append-separator)
