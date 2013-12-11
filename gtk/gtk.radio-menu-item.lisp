@@ -4,9 +4,10 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.8.8 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -123,9 +124,12 @@
 (setf (gethash 'gtk-radio-menu-item-group atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-radio-menu-item-group 'function)
- "@version{2013-6-1}
+ "@version{2013-12-8}
   Accessor of the slot @code{\"group\"} of the @class{gtk-radio-menu-item}
-  class.")
+  class.
+  @see-class{gtk-radio-menu-item}
+  @see-function{gtk-radio-menu-item-get-group}
+  @see-function{gtk-radio-menu-item-set-group}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_radio_menu_item_new ()
@@ -140,6 +144,12 @@
 ;;; Returns :
 ;;;     a new GtkRadioMenuItem
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_radio_menu_item_new" gtk-radio-menu-item-new)
+    (g-object gtk-radio-menu-item)
+  (group (g-slist (g-object gtk-radio-button))))
+
+(export 'gtk-radio-menu-item-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_radio_menu_item_new_with_label ()
@@ -158,6 +168,13 @@
 ;;; Returns :
 ;;;     A new GtkRadioMenuItem.
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_radio_menu_item_new_with_label"
+           gtk-radio-menu-item-new-with-label) (g-object gtk-radio-menu-item)
+  (group (g-slist (g-object gtk-radio-menu-item)))
+  (label :string))
+
+(export 'gtk-radio-menu-item-new-with-label)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_radio_menu_item_new_with_mnemonic ()
@@ -180,6 +197,13 @@
 ;;;     a new GtkRadioMenuItem
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_radio_menu_item_new_with_mnemonic"
+           gtk-radio-menu-item-new-with-mnemonic) (g-object gtk-radio-menu-item)
+  (group (g-slist (g-object gtk-radio-menu-item)))
+  (label :string))
+
+(export 'gtk-radio-menu-item-new-with-mnemonic)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_radio_menu_item_new_from_widget ()
 ;;;
@@ -195,6 +219,12 @@
 ;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_radio_menu_item_new_from_widget"
+           gtk-radio-menu-item-new-from-widget) (g-object gtk-radio-menu-item)
+  (group (g-object gtk-radio-menu-item)))
+
+(export 'gtk-radio-menu-item-new-from-widget)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_radio_menu_item_new_with_label_from_widget ()
@@ -217,6 +247,14 @@
 ;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_radio_menu_item_new_with_label_from_widget"
+           gtk-radio-menu-item-new-with-label-from-widget)
+    (g-object gtk-radio-menu-item)
+  (group (g-object gtk-radio-menu-item))
+  (label :string))
+
+(export 'gtk-radio-menu-item-new-with-label-from-widget)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_radio_menu_item_new_with_mnemonic_from_widget ()
@@ -244,6 +282,14 @@
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_radio_menu_item_new_with_mnemonic_from_widget"
+           gtk-radio-menu-item-new-with-mnemonic-from-widget)
+    (g-object gtk-radio-menu-item)
+  (group (g-object gtk-radio-menu-item))
+  (label :string))
+
+(export 'gtk-radio-menu-item-new-with-mnemonic-from-widget)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_radio_menu_item_set_group ()
 ;;;
@@ -259,6 +305,13 @@
 ;;;     the new group
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-radio-menu-item-set-group))
+
+(defun gtk-radio-menu-item-set-group (radio-menu-item group)
+  (setf (gtk-radio-menu-item-group radio-menu-item) group))
+
+(export 'gtk-radio-menu-item-set-group)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_radio_menu_item_get_group ()
 ;;;
@@ -273,5 +326,11 @@
 ;;; Returns :
 ;;;     the group of radio_menu_item
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_radio_menu_item_get_group" gtk-radio-menu-item-get-group)
+    (g-slist (g-object gtk-radio-menu-item))
+  (radio-menu-item (g-object gtk-radio-menu-item)))
+
+(export 'gtk-radio-menu-item-get-group)
 
 ;;; --- End of file gtk.radio-menu-item.lisp -----------------------------------

@@ -73,7 +73,7 @@ GTK+ Widgets and Objects
 
   Buttons and Toggles
 
-    gtk.button.lisp                  - GtkButton                   - GTK+ 3.6.4
+    gtk.button.lisp                  - GtkButton                   - GTK+ 3.8.8
     gtk.check-button.lisp            - GtkCheckButton              - GTK+ 3.6.4
     gtk.radio-button.lisp            - GtkRadioButton              - GTK+ 3.6.4
     gtk.toggle-button.lisp           - GtkToggleButton             - GTK+ 3.6.4
@@ -146,9 +146,9 @@ GTK+ Widgets and Objects
 
     gtk.menu.lisp                    - GtkMenu                     - GTK+ 3.8.8
     gtk.menu-bar.lisp                - GtkMenuBar                  - GTK+ 3.8.8
-    gtk.menu-item.lisp               - GtkMenuItem                 - GTK+ 3.6.4&
-    gtk.image-menu-item.lisp         - GtkImageMenuItem            - GTK+ 3.6.4&
-    gtk.radio-menu-item.lisp         - GtkRadioMenuItem            - GTK+ 3.6.4&
+    gtk.menu-item.lisp               - GtkMenuItem                 - GTK+ 3.8.8
+    gtk.image-menu-item.lisp         - GtkImageMenuItem            - GTK+ 3.8.8
+    gtk.radio-menu-item.lisp         - GtkRadioMenuItem            - GTK+ 3.8.8
     gtk.check-menu-item.lisp         - GtkCheckMenuItem            - GTK+ 3.6.4
     gtk.separator-menu-item.lisp     - GtkSeparatorMenuItem        - GTK+ 3.6.4
     gtk.tearoff-menu-item.lisp       - GtkTearoffMenuItem          - GTK+ 3.6.4
@@ -168,11 +168,11 @@ GTK+ Widgets and Objects
 
     gtk.ui-manager.lisp              - GtkUIManager                - GTK+ 3.6.4&
     gtk.action-group.lisp            - GtkActionGroup              - GTK+ 3.6.4&
-    gtk.action.lisp                  - GtkAction                   - GTK+ 3.6.4&
-    gtk.toggle-action.lisp           - GtkToggleAction             - GTK+ 3.6.4&
+    gtk.action.lisp                  - GtkAction                   - GTK+ 3.8.8
+    gtk.toggle-action.lisp           - GtkToggleAction             - GTK+ 3.8.8
     gtk.radio-action.lisp            - GtkRadioAction              - GTK+ 3.6.4
-    gtk.recent-action.lisp           - GtkRecentAction             - GTK+ 3.6.4&
-    gtk.activatable.lisp             - GtkActivatable              - GTK+ 3.6.4&
+    gtk.recent-action.lisp           - GtkRecentAction             - GTK+ 3.8.8
+    gtk.activatable.lisp             - GtkActivatable              - GTK+ 3.8.8
 
   Selectors (Color/File/Font)
 

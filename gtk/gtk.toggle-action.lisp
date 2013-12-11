@@ -4,9 +4,10 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.8.8 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -118,17 +119,23 @@
 (setf (gethash 'gtk-toggle-action-active atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-toggle-action-active 'function)
- "@version{2013-3-25}
+ "@version{2013-12-10}
   Accessor of the slot @code{\"active\"} of the @class{gtk-toggle-action}
-  class.")
+  class.
+  @see-class{gtk-toggle-action}
+  @see-function{gtk-toggle-action-get-active}
+  @see-function{gtk-toggle-action-set-active}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-toggle-action-draw-as-radio atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-toggle-action-draw-as-radio 'function)
- "@version{2013-3-25}
+ "@version{2013-12-10}
   Accessor of the slot @code{\"draw-as-radio\"} of the @class{gtk-toggle-action}
-  class.")
+  class.
+  @see-class{gtk-toggle-action}
+  @see-function{gtk-toggle-action-get-draw-as-radio}
+  @see-function{gtk-toggle-action-set-draw-as-radio}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_toggle_action_new ()
@@ -160,6 +167,15 @@
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_toggle_action_new" gtk-toggle-action-new)
+    (g-object gtk-toggle-action)
+  (name :string)
+  (label :string)
+  (tooltip :string)
+  (stock-id :string))
+
+(export 'gtk-toggle-action-new)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_toggle_action_toggled ()
 ;;;
@@ -172,6 +188,11 @@
 ;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_toggle_action_toggled" gtk-toggle-action-toggled) :void
+  (action (g-object gtk-toggle-action)))
+
+(export 'gtk-toggle-action-toggled)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_toggle_action_set_active ()
@@ -190,6 +211,13 @@
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-toggle-action-set-active))
+
+(defun gtk-toggle-action-set-active (action is-active)
+  (setf (gtk-toggle-action-active action) is-active))
+
+(export 'gtk-toggle-action-set-active)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_toggle_action_get_active ()
 ;;;
@@ -205,6 +233,13 @@
 ;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-toggle-action-get-active))
+
+(defun gtk-toggle-action-get-active (action)
+  (gtk-toggle-action-active action))
+
+(export 'gtk-toggle-action-get-active)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_toggle_action_set_draw_as_radio ()
@@ -223,6 +258,13 @@
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-toggle-action-set-draw-as-radio))
+
+(defun gtk-toggle-action-set-draw-as-radio (action draw-as-radio)
+  (setf (gtk-toggle-action-draw-as-radio action) draw-as-radio))
+
+(export 'gtk-toggle-action-set-draw-as-radio)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_toggle_action_get_draw_as_radio ()
 ;;;
@@ -238,5 +280,12 @@
 ;;;
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-toggle-action-get-draw-as-radio))
+
+(defun gtk-toggle-action-get-draw-as-radio (action)
+  (gtk-toggle-action-active action))
+
+(export 'gtk-toggle-action-get-draw-as-radio)
 
 ;;; --- End of file gtk.toggle-action.lisp -------------------------------------

@@ -4,9 +4,10 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.8.8 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -41,20 +42,6 @@
 ;;;     gtk_recent_action_new_for_manager
 ;;;     gtk_recent_action_get_show_numbers
 ;;;     gtk_recent_action_set_show_numbers
-;;;
-;;; Object Hierarchy
-;;;
-;;;   GObject
-;;;    +----GtkAction
-;;;          +----GtkRecentAction
-;;;
-;;; Implemented Interfaces
-;;;
-;;; GtkRecentAction implements GtkBuildable and GtkRecentChooser.
-;;;
-;;; Properties
-;;;
-;;;   "show-numbers"             gboolean              : Read / Write
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -145,6 +132,14 @@
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_recent_action_new" gtk-recent-action-new) (g-object gtk-action)
+  (name :string)
+  (label :string)
+  (tooltip :string)
+  (stock-id :string))
+
+(export 'gtk-recent-action-new)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_action_new_for_manager ()
 ;;;
@@ -179,6 +174,16 @@
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_recent_action_new_for_manager"
+           gtk-recent-action-new-for-manager) (g-object gtk-action)
+  (name :string)
+  (label :string)
+  (tooltip :string)
+  (stock-id :string)
+  (manager (g-object gtk-recent-manager)))
+
+(export 'gtk-recent-action-new-for-manager)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_action_get_show_numbers ()
 ;;;
@@ -194,6 +199,13 @@
 ;;;
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-recent-action-get-show-numbers))
+
+(defun gtk-recent-action-get-show-numbers (action)
+  (gtk-recent-action-show-numbers action))
+
+(export 'gtk-recent-action-get-show-numbers)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_action_set_show_numbers ()
@@ -214,5 +226,12 @@
 ;;;
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-recent-action-set-show-numbers))
+
+(defun gtk-recent-action-set-show-numbers (action show-numbers)
+  (setf (gtk-recent-action-show-numbers action) show-numbers))
+
+(export 'gtk-recent-action-set-show-numbers)
 
 ;;; --- End of file gtk.recent-action.lisp -------------------------------------

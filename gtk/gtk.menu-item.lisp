@@ -4,9 +4,10 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.8.8 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -128,6 +129,11 @@
 
     @subheading{The \"horizontal-padding\" style property}
       @code{\"horizontal-padding\"} of type @code{:int} (Read) @br{}
+      @b{Warning:} @code{\"horizontal-padding\"} has been deprecated since
+      version 3.8 and should not be used in newly-written code. Use the standard
+      padding CSS property, through objects like @class{gtk-style-context} and
+      @class{gtk-css-provider}; the value of this style property is ignored.
+      @br{}
       Padding to left and right of the menu item. @br{}
       Allowed values: >= 0 @br{}
       Default value: 3
@@ -250,41 +256,56 @@
 (setf (gethash 'gtk-menu-item-accel-path atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-menu-item-accel-path 'function)
- "@version{2013-3-16}
+ "@version{2013-12-8}
   Accessor of the slot @code{\"accel-path\"} of the @class{gtk-menu-item}
-  class.")
+  class.
+  @see-class{gtk-menu-item}
+  @see-function{gtk-menu-item-get-accel-path}
+  @see-function{gtk-menu-item-set-accel-path}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-menu-item-label atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-menu-item-label 'function)
- "@version{2013-3-16}
+ "@version{2013-12-8}
   Accessor of the slot @code{\"label\"} of the @class{gtk-menu-item}
-  class.")
+  class.
+  @see-class{gtk-menu-item}
+  @see-function{gtk-menu-item-get-label}
+  @see-function{gtk-menu-item-set-label}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-menu-item-right-justified atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-menu-item-right-justified 'function)
- "@version{2013-3-16}
+ "@version{2013-12-8}
   Accessor of the slot @code{\"right-justified\"} of the @class{gtk-menu-item}
-  class.")
+  class.
+  @see-class{gtk-menu-item}
+  @see-function{gtk-menu-item-get-right-justified}
+  @see-function{gtk-menu-item-set-right-justified}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-menu-item-submenu atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-menu-item-submenu 'function)
- "@version{2013-3-16}
+ "@version{2013-12-8}
   Accessor of the slot @code{\"submenu\"} of the @class{gtk-menu-item}
-  class.")
+  class.
+  @see-class{gtk-menu-item}
+  @see-function{gtk-menu-item-get-submenu}
+  @see-function{gtk-menu-item-set-submenu}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-menu-item-use-underline atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-menu-item-use-underline 'function)
- "@version{2013-3-16}
+ "@version{2013-12-8}
   Accessor of the slot @code{\"use-underline\"} of the @class{gtk-menu-item}
-  class.")
+  class.
+  @see-class{gtk-menu-item}
+  @see-function{gtk-menu-item-get-use-underline}
+  @see-function{gtk-menu-item-set-use-underline}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_item_new ()
@@ -294,9 +315,10 @@
 
 (defun gtk-menu-item-new ()
  #+cl-cffi-gtk-documentation
- "@version{2013-6-1}
+ "@version{2013-12-8}
   @return{The newly created @class{gtk-menu-item} widget.}
-  Creates a new @class{gtk-menu-item} widget."
+  Creates a new @class{gtk-menu-item} widget.
+  @see-class{gtk-menu-item}"
   (make-instance 'gtk-menu-item))
 
 (export 'gtk-menu-item-new)
@@ -309,10 +331,12 @@
 
 (defun gtk-menu-item-new-with-label (label)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-1}
+ "@version{2013-12-8}
   @argument[label]{the text for the label}
   @return{The newly created @class{gtk-menu-item} widget.}
-  Creates a new @class{gtk-menu-item} whose child is a @class{gtk-label}."
+  Creates a new @class{gtk-menu-item} whose child is a @class{gtk-label}.
+  @see-class{gtk-menu-item}
+  @see-function{gtk-menu-item-new-with-mnemonic}"
   (make-instance 'gtk-menu-item
                  :label label))
 
@@ -320,69 +344,90 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_item_new_with_mnemonic ()
-;;;
-;;; GtkWidget * gtk_menu_item_new_with_mnemonic (const gchar *label);
-;;;
-;;; Creates a new GtkMenuItem containing a label.
-;;;
-;;; The label will be created using gtk_label_new_with_mnemonic(), so
-;;; underscores in label indicate the mnemonic for the menu item.
-;;;
-;;; label :
-;;;     The text of the button, with an underscore in front of the mnemonic
-;;;     character
-;;;
-;;; Returns :
-;;;     a new GtkMenuItem
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_menu_item_new_with_mnemonic" gtk-menu-item-new-with-mnemonic)
+   (g-object gtk-menu-item)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-8}
+  @argument[label]{the text of the button, with an underscore in front of the
+    mnemonic character}
+  @return{A new @class{gtk-menu-item} widget.}
+  @begin{short}
+    Creates a new @class{gtk-menu-item} widget containing a label.
+  @end{short}
+
+  The label will be created using the function
+  @fun{gtk-label-new-with-mnemonic}, so underscores in label indicate the
+  mnemonic for the menu item.
+  @see-class{gtk-menu-item}
+  @see-function{gtk-menu-item-new-with-label}
+  @see-function{gtk-label-new-with-mnemonic}"
+  (label :string))
+
+(export 'gtk-menu-item-new-with-mnemonic)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_item_set_right_justified ()
-;;;
-;;; void gtk_menu_item_set_right_justified (GtkMenuItem *menu_item,
-;;;                                         gboolean right_justified);
-;;;
-;;; Warning
-;;;
-;;; gtk_menu_item_set_right_justified has been deprecated since version 3.2 and
-;;; should not be used in newly-written code. If you insist on using it, use
-;;; gtk_widget_set_hexpand() and gtk_widget_set_halign().
-;;;
-;;; Sets whether the menu item appears justified at the right side of a menu
-;;; bar. This was traditionally done for "Help" menu items, but is now
-;;; considered a bad idea. (If the widget layout is reversed for a right-to-left
-;;; language like Hebrew or Arabic, right-justified-menu-items appear at the
-;;; left.)
-;;;
-;;; menu_item :
-;;;     a GtkMenuItem.
-;;;
-;;; right_justified :
-;;;     if TRUE the menu item will appear at the far right if added to a menu
-;;;     bar
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-menu-item-set-right-justified))
+
+(defun gtk-menu-item-set-right-justified (menu-item right-justified)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-8}
+  @argument[menu-item]{a @class{gtk-menu-item} widget}
+  @argument[right-justified]{if @em{true} the menu item will appear at the far
+    right if added to a menu bar}
+  @subheading{Warning}
+    The function @sym{gtk-menu-item-set-right-justified} has been deprecated
+    since version 3.2 and should not be used in newly-written code. If you
+    insist on using it, use the functions @fun{gtk-widget-set-hexpand} and
+    @fun{gtk-widget-set-halign}.
+
+  @begin{short}
+    Sets whether the menu item appears justified at the right side of a
+    menu bar.
+  @end{short}
+  This was traditionally done for \"Help\" menu items, but is now considered a
+  bad idea. If the widget layout is reversed for a right-to-left
+  language like Hebrew or Arabic, right-justified-menu-items appear at the left.
+  @see-class{gtk-menu-item}
+  @see-function{gtk-menu-item-get-right-justified}
+  @see-function{gtk-widget-set-hexpand}
+  @see-function{gtk-widget-set-halign}"
+  (setf (gtk-menu-item-right-justified menu-item) right-justified))
+
+(export 'gtk-menu-item-set-right-justified)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_item_get_right_justified ()
-;;;
-;;; gboolean gtk_menu_item_get_right_justified (GtkMenuItem *menu_item);
-;;;
-;;; Warning
-;;;
-;;; gtk_menu_item_get_right_justified has been deprecated since version 3.2 and
-;;; should not be used in newly-written code. See
-;;; gtk_menu_item_set_right_justified()
-;;;
-;;; Gets whether the menu item appears justified at the right side of the menu
-;;; bar.
-;;;
-;;; menu_item :
-;;;     a GtkMenuItem
-;;;
-;;; Returns :
-;;;     TRUE if the menu item will appear at the far right if added to a menu
-;;;     bar.
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-menu-item-get-right-justified))
+
+(defun gtk-menu-item-get-right-justified (menu-item)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-8}
+  @argument[menu-item]{a @class{gtk-menu-item} widget}
+  @begin{return}
+    @em{True} if the menu item will appear at the far right if added to a menu
+    bar.
+  @end{return}
+  @subheading{Warning}
+    The function @sym{gtk-menu-item-get-right-justified} has been deprecated
+    since version 3.2 and should not be used in newly-written code. See the
+    function @fun{gtk-menu-item-set-right-justified}.
+
+  @begin{short}
+    Gets whether the menu item appears justified at the right side of the menu
+    bar.
+  @end{short}
+  @see-class{gtk-menu-item}
+  @see-function{gtk-menu-item-set-right-justified}"
+  (gtk-menu-item-right-justified menu-item))
+
+(export 'gtk-menu-item-get-right-justified)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_item_get_label ()
@@ -401,6 +446,13 @@
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-menu-item-get-label))
+
+(defun gtk-menu-item-get-label (menu-item)
+  (gtk-menu-item-label menu-item))
+
+(export 'gtk-menu-item-get-label)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_item_set_label ()
 ;;;
@@ -416,6 +468,13 @@
 ;;;
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-menu-item-set-label))
+
+(defun gtk-menu-item-set-label (menu-item label)
+  (setf (gtk-menu-item-label menu-item) label))
+
+(export 'gtk-menu-item-set-label)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_item_get_use_underline ()
@@ -435,6 +494,13 @@
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-menu-item-get-use-underline))
+
+(defun gtk-menu-item-get-use-underline (menu-item)
+  (gtk-menu-item-use-underline menu-item))
+
+(export 'gtk-menu-item-get-use-underline)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_item_set_use_underline ()
 ;;;
@@ -453,6 +519,13 @@
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-menu-item-set-use-underline))
+
+(defun gtk-menu-item-set-use-underline (menu-item use-underline)
+  (setf (gtk-menu-item-use-underline menu-item) use-underline))
+
+(export 'gtk-menu-item-set-use-underline)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_item_set_submenu ()
 ;;; ----------------------------------------------------------------------------
@@ -461,11 +534,13 @@
 
 (defun gtk-menu-item-set-submenu (menu-item submenu)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-1}
+ "@version{2013-12-8}
   @argument[menu-item]{a @class{gtk-menu-item} widget}
   @argument[submenu]{the submenu, or @code{nil}}
   Sets or replaces the menu item's submenu, or removes it when a @code{nil}
-  submenu is passed."
+  submenu is passed.
+  @class{gtk-menu-item}
+  @see-function{gtk-menu-item-get-submenu}"
   (setf (gtk-menu-item-submenu menu-item) submenu))
 
 (export 'gtk-menu-item-set-submenu)
@@ -478,13 +553,14 @@
 
 (defun gtk-menu-item-get-submenu (menu-item)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-1}
+ "@version{2013-12-8}
   @argument[menu-item]{a @class{gtk-menu-item} widget}
   @return{submenu for this menu item, or @code{nil} if none}
   @begin{short}
     Gets the submenu underneath this menu item, if any.
   @end{short}
   See the @fun{gtk-menu-item-set-submenu} function.
+  @see-class{gtk-menu-item}
   @see-function{gtk-menu-item-set-submenu}"
   (gtk-menu-item-submenu menu-item))
 
@@ -523,6 +599,13 @@
 ;;;     NULL to unset the current path
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-menu-item-set-accel-path))
+
+(defun gtk-menu-item-set-accel-path (menu-item accel-path)
+  (setf (gtk-menu-item-accel-path menu-item) accel-path))
+
+(export 'gtk-menu-item-set-accel-path)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_item_get_accel_path ()
 ;;;
@@ -542,6 +625,13 @@
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-menu-item-get-accel-path))
+
+(defun gtk-menu-item-get-accel-path (menu-item)
+  (gtk-menu-item-accel-path menu-item))
+
+(export 'gtk-menu-item-get-accel-path)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_item_select ()
 ;;;
@@ -553,6 +643,11 @@
 ;;; menu_item :
 ;;;     the menu item
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_menu_item_select" gtk-menu-item-select) :void
+  (menu-item (g-object gtk-menu-item)))
+
+(export 'gtk-menu-item-select)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_item_deselect ()
@@ -566,6 +661,11 @@
 ;;;     the menu item
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_menu_item_deselect" gtk-menu-item-deselect) :void
+  (menu-item (g-object gtk-menu-item)))
+
+(export 'gtk-menu-item-deselect)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_item_activate ()
 ;;;
@@ -576,6 +676,11 @@
 ;;; menu_item :
 ;;;     the menu item
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_menu_item_activate" gtk-menu-item-activate) :void
+  (menu-item (g-object gtk-menu-item)))
+
+(export 'gtk-menu-item-activate)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_item_toggle_size_request ()
@@ -592,6 +697,13 @@
 ;;;     the requisition to use as signal data.
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_menu_item_toggle_size_request" gtk-menu-item-toggle-size-request)
+    :void
+  (menu-item (g-object gtk-menu-item))
+  (requisition :int))
+
+(export 'gtk-menu-item-toggle-size-request)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_item_toggle_size_allocate ()
 ;;;
@@ -606,6 +718,12 @@
 ;;; allocation :
 ;;;     the allocation to use as signal data.
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_menu_item_toggle_size_allocate"
+           gtk-menu-item-toggle-size-allocate) :void
+  (menu-item (g-object gtk-menu-item)))
+
+(export 'gtk-menu-item-toggle-size-allocate)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_item_get_reserve_indicator ()
@@ -623,6 +741,12 @@
 ;;;
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_menu_item_get_reserve_indicator"
+           gtk-menu-item-get-reserve-indicator) :boolean
+  (menu-item (g-object gtk-menu-item)))
+
+(export 'gtk-menu-item-get-reserve-indicator)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_item_set_reserve_indicator ()
@@ -644,5 +768,11 @@
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_menu_item_set_reserve_indicator"
+           gtk-menu-item-set-reserve-indicator) :void
+  (menu-item (g-object gtk-menu-item))
+  (reserve :boolean))
+
+(export 'gtk-menu-item-set-reserve-indicator)
 
 ;;; --- End of file gtk.menu-item.lisp -----------------------------------------

@@ -4,9 +4,10 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.8.8 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -116,11 +117,9 @@
     gtk-button-yalign
     "yalign" "gfloat" t t)))
 
-;;; --- gtk-button -------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-button 'type)
- "@version{2013-4-25}
+ "@version{2013-12-9}
   @short{A widget that emits a signal when clicked on.}
 
   The @sym{gtk-button} widget is generally used to trigger a callback function
@@ -132,26 +131,26 @@
   child is the @class{gtk-label}.
   @begin[Style Property Details]{dictionary}
     @subheading{The \"child-displacement-x\" style property}
-      @code{\"child-displacement-x\"} of type @code{:int} (Read)@br{}
+      @code{\"child-displacement-x\"} of type @code{:int} (Read) @br{}
       How far in the x direction to move the child when the button is
-      depressed.@br{}
+      depressed. @br{}
       Default value: 0
 
     @subheading{The \"child-displacement-y\" style property}
-      @code{\"child-displacement-y\"} of type @code{:int} (Read)@br{}
+      @code{\"child-displacement-y\"} of type @code{:int} (Read) @br{}
       How far in the y direction to move the child when the button is
-      depressed.@br{}
+      depressed. @br{}
     Default value: 0
 
     @subheading{The \"default-border\" style property}
-      @code{\"default-border\"} of type @class{gtk-border} (Read)@br{}
+      @code{\"default-border\"} of type @class{gtk-border} (Read) @br{}
       The @code{\"default-border\"} style property defines the extra space to
       add around a button that can become the default widget of its window. For
       more information about default widgets, see the function
       @fun{gtk-widget-grab-default}.
 
     @subheading{The \"default-outside-border\" style property}
-      @code{\"default-outside-border\"} of type @class{gtk-border} (Read)@br{}
+      @code{\"default-outside-border\"} of type @class{gtk-border} (Read) @br{}
       The @code{\"default-outside-border\"} style property defines the extra
       outside space to add around a button that can become the default widget of
       its window. Extra outside space is always drawn outside the button border.
@@ -159,26 +158,26 @@
       @fun{gtk-widget-grab-default}.
 
     @subheading{The \"displace-focus\" style property}
-      @code{\"displace-focus\"} of type @code{:boolean} (Read)@br{}
-      Whether the @code{child-displacement-x} / @code{child-displacement-y}
-      properties should also affect the focus rectangle.@br{}
-      Default value: @code{nil}@br{}
+      @code{\"displace-focus\"} of type @code{:boolean} (Read) @br{}
+      Whether the @code{child-displacement-x} or @code{child-displacement-y}
+      properties should also affect the focus rectangle. @br{}
+      Default value: @code{nil} @br{}
       Since 2.6
 
     @subheading{The \"image-spacing\" style property}
-      @code{\"image-spacing\"} of type @code{:int} (Read)@br{}
-      Spacing in pixels between the image and label.@br{}
+      @code{\"image-spacing\"} of type @code{:int} (Read) @br{}
+      Spacing in pixels between the image and label. @br{}
       Allowed values: >= 0 @br{}
       Default value: 2
 
     @subheading{The \"inner-border\" style property}
-      @code{\"inner-border\"} of type @class{gtk-border} (Read)@br{}
+      @code{\"inner-border\"} of type @class{gtk-border} (Read) @br{}
       @b{Warning:}
-      The @code{\"inner-border\"} style property has been deprecated since
-      version 3.4 and should not be used in newly written code. Use the standard
-      border and padding CSS properties; the value of this style property is
-      ignored.@br{}
-      Sets the border between the button edges and child.@br{}
+        The @code{\"inner-border\"} style property has been deprecated since
+        version 3.4 and should not be used in newly written code. Use the
+        standard border and padding CSS properties; the value of this style
+        property is ignored. @br{}
+      Sets the border between the button edges and child. @br{}
       Since 2.10
   @end{dictionary}
   @begin[Signal Details]{dictionary}
@@ -206,8 +205,9 @@
       @end{pre}
       @b{Warning:}
       The \"enter\" signal has been deprecated since version 2.8 and should not
-      be used in newly written code. Use the \"enter-notify-event\" signal.@br{}
-      Emitted when the pointer enters the button.@br{}
+      be used in newly written code. Use the \"enter-notify-event\"
+      signal. @br{}
+      Emitted when the pointer enters the button.
       @begin[code]{table}
         @entry[button]{The object that received the signal.}
       @end{table}
@@ -217,7 +217,8 @@
       @end{pre}
       @b{Warning:}
       The \"leave\" signal has been deprecated since version 2.8 and should not
-      be used in newly written code. Use the \"leave-notify-event\" signal.@br{}
+      be used in newly written code. Use the \"leave-notify-event\"
+      signal. @br{}
       Emitted when the pointer leaves the button.
       @begin[code]{table}
         @entry[button]{The object that received the signal.}
@@ -229,7 +230,7 @@
       @b{Warning:}
       The \"pressed\" signal has been deprecated since version 2.8 and should
       not be used in newly-written code. Use the \"button-press-event\"
-      signal.@br{}
+      signal. @br{}
       Emitted when the button is pressed.
       @begin[code]{table}
         @entry[button]{The object that received the signal.}
@@ -241,7 +242,7 @@
       @b{Warning:}
       The \"released\" has been deprecated since version 2.8 and should
       not be used in newly written code. Use the \"button-release-event\"
-      signal.@br{}
+      signal. @br{}
       Emitted when the button is released.
       @begin[code]{table}
         @entry[button]{The object that received the signal.}
@@ -256,7 +257,13 @@
   @see-slot{gtk-button-use-stock}
   @see-slot{gtk-button-use-underline}
   @see-slot{gtk-button-xalign}
-  @see-slot{gtk-button-yalign}")
+  @see-slot{gtk-button-yalign}
+  @see-class{gtk-widget}
+  @see-class{gtk-label}
+  @see-class{gtk-border}
+  @see-symbol{gtk-position-type}
+  @see-symbol{gtk-relief-style}
+  @see-function{gtk-widget-grab-default}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -268,102 +275,84 @@
 (setf (documentation (atdoc:get-slot-from-name "always-show-image"
                                                'gtk-button) t)
  "The @code{\"always-show-image\"} property of type @code{:boolean}
-  (Read / Write / Construct)@br{}
+  (Read / Write / Construct) @br{}
   If @em{true}, the button will ignore the @code{\"gtk-button-images\"} setting
-  and always show the image, if available.
+  of type @class{gtk-settings} and always show the image, if available.
   Use this property if the button would be useless or hard to use without the
   image. @br{}
   Default value: @code{nil} @br{}
   Since 3.6")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "focus-on-click" 'gtk-button) 't)
  "The @code{\"focus-on-click\"} property of type @code{:boolean}
-  (Read / Write)@br{}
-  Whether the button grabs focus when it is clicked with the mouse.@br{}
+  (Read / Write) @br{}
+  Whether the button grabs focus when it is clicked with the mouse. @br{}
   Default value: @em{true}")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "image" 'gtk-button) 't)
- "The @code{\"image\"} property of type @class{gtk-widget} (Read / Write)@br{}
-  The child widget to appear next to the button text.@br{}
+ "The @code{\"image\"} property of type @class{gtk-widget} (Read / Write) @br{}
+  The child widget to appear next to the button text. @br{}
   Since 2.6")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "image-position" 'gtk-button) 't)
  "The @code{\"image-position\"} property of type @symbol{gtk-position-type}
-  (Read / Write)@br{}
-  The position of the image relative to the text inside the button.@br{}
-  Default value: @code{:left}@br{}
+  (Read / Write) @br{}
+  The position of the image relative to the text inside the button. @br{}
+  Default value: @code{:left} @br{}
   Since 2.10")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "label" 'gtk-button) 't)
  "The @code{\"label\"} property of type @code{:string}
-  (Read / Write / Construct)@br{}
+  (Read / Write / Construct) @br{}
   Text of the label widget inside the button, if the button contains a
-  label widget.@br{}
+  label widget. @br{}
   Default value: @code{nil}")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "relief" 'gtk-button) 't)
  "The @code{\"relief\"} property of type @symbol{gtk-relief-style}
-  (Read / Write)@br{}
-  The border relief style.@br{}
+  (Read / Write) @br{}
+  The border relief style. @br{}
   Default value: @code{:normal}")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "use-stock" 'gtk-button) 't)
  "The @code{\"use-stock\"} property of type @code{:boolean}
-  (Read / Write / Construct)@br{}
+  (Read / Write / Construct) @br{}
   If set, the label is used to pick a stock item instead of being
-  displayed.@br{}
+  displayed. @br{}
   Default value: @code{nil}")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "use-underline" 'gtk-button) 't)
  "The @code{\"use-underline\"} property of type @code{:boolean}
-  (Read / Write / Construct)@br{}
+  (Read / Write / Construct) @br{}
   If set, an underline in the text indicates the next character should be used
   for the mnemonic accelerator key. @br{}
   Default value: @code{nil}")
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "xalign" 'gtk-button) 't)
- "The @code{\"xalign\"} property of type @code{:float} (Read / Write)@br{}
+ "The @code{\"xalign\"} property of type @code{:float} (Read / Write) @br{}
   If the child of the button is a @class{gtk-misc} or @class{gtk-alignment},
   this property can be used to control its horizontal alignment. The value 0.0
-  is left aligned, 1.0 is right aligned.@br{}
-  Allowed values: [0,1]@br{}
-  Default value: 0.5@br{}
+  is left aligned, 1.0 is right aligned. @br{}
+  Allowed values: [0,1] @br{}
+  Default value: 0.5 @br{}
   Since 2.4")
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "yalign" 'gtk-button) 't)
- "The @code{\"yalign\"} property of type @code{:float} (Read / Write)@br{}
+ "The @code{\"yalign\"} property of type @code{:float} (Read / Write) @br{}
   If the child of the button is a @class{gtk-misc} or @class{gtk-alignment},
   this property can be used to control its vertical alignment. The value 0.0 is
-  top aligned, 1.0 is bottom aligned.@br{}
-  Allowed values: [0,1]@br{}
-  Default value: 0.5@br{}
+  top aligned, 1.0 is bottom aligned. @br{}
+  Allowed values: [0,1] @br{}
+  Default value: 0.5 @br{}
   Since 2.4")
 
 ;;; ----------------------------------------------------------------------------
@@ -372,132 +361,99 @@
 ;;;
 ;;; ----------------------------------------------------------------------------
 
-;;; --- gtk-button-always-show-image -------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-button-always-show-image atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-button-always-show-image 'function)
- "@version{2013-5-23}
+ "@version{2013-12-9}
   Accessor of the slot @arg{\"always-show-image\"} of the @class{gtk-button}
   class.
-  @see-function{gtk-button-set-always-show-image}
-  @see-function{gtk-button-get-always-show-image}")
-
-;;; --- gtk-button-focus-on-click ----------------------------------------------
+  @see-class{gtk-button}
+  @see-function{gtk-button-get-always-show-image}
+  @see-function{gtk-button-set-always-show-image}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-button-focus-on-click atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-button-focus-on-click 'function)
- "@version{2013-1-18}
-  @begin{short}
-    Accessor of the slot @arg{\"focus-on-click\"} of the @class{gtk-button}
-    class.
-  @end{short}
-  @see-function{gtk-button-set-focus-on-click}
-  @see-function{gtk-button-get-focus-on-click}")
-
-;;; --- gtk-button-image -------------------------------------------------------
+ "@version{2013-12-9}
+  Accessor of the slot @arg{\"focus-on-click\"} of the @class{gtk-button} class.
+  @see-class{gtk-button}
+  @see-function{gtk-button-get-focus-on-click}
+  @see-function{gtk-button-set-focus-on-click}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-button-image atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-button-image 'function)
- "@version{2013-1-18}
-  @begin{short}
-    Accessor of the slot @arg{\"image\"} of the @class{gtk-button} class.
-  @end{short}
-  @see-function{gtk-button-set-image}
-  @see-function{gtk-button-get-image}")
-
-;;; --- gtk-button-image-position ----------------------------------------------
+ "@version{2013-12-9}
+  Accessor of the slot @arg{\"image\"} of the @class{gtk-button} class.
+  @see-class{gtk-button}
+  @see-function{gtk-button-get-image}
+  @see-function{gtk-button-set-image}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-button-image-position atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-button-image-position 'function)
- "@version{2013-1-18}
-  @begin{short}
-    Accessor of the slot @arg{\"image-position\"} of the @class{gtk-button}
-    class.
-  @end{short}
+ "@version{2013-12-9}
+  Accessor of the slot @arg{\"image-position\"} of the @class{gtk-button} class.
+  @see-class{gtk-button}
   @see-function{gtk-button-set-image-position}
   @see-function{gtk-button-get-image-position}")
-
-;;; --- gtk-button-label -------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-button-label atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-button-label 'function)
- "@version{2013-1-18}
-  @begin{short}
-    Accessor of the slot @arg{\"label\"} of the @class{gtk-button} class.
-  @end{short}
-  @see-function{gtk-button-set-label}
-  @see-function{gtk-button-get-label}")
-
-;;; --- gtk-button-relief ------------------------------------------------------
+ "@version{2013-12-9}
+  Accessor of the slot @arg{\"label\"} of the @class{gtk-button} class.
+  @see-class{gtk-button}
+  @see-function{gtk-button-get-label}
+  @see-function{gtk-button-set-label}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-button-relief atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-button-relief 'function)
- "@version{2013-1-18}
-  @begin{short}
-    Accessor of the slot @arg{\"relief\"} of the @class{gtk-button} class.
-  @end{short}
-  @see-function{gtk-button-set-relief}
-  @see-function{gtk-button-get-relief}")
-
-;;; --- gtk-button-use-stock ---------------------------------------------------
+ "@version{2013-12-9}
+  Accessor of the slot @arg{\"relief\"} of the @class{gtk-button} class.
+  @see-class{gtk-button}
+  @see-function{gtk-button-get-relief}
+  @see-function{gtk-button-set-relief}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-button-use-stock atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-button-use-stock 'function)
- "@version{2013-1-18}
-  @begin{short}
-    Accessor of the slot @arg{\"use-stock\"} of the @class{gtk-button} class.
-  @end{short}
-  @see-function{gtk-button-set-use-stock}
-  @see-function{gtk-button-get-use-stock}")
-
-;;; --- gtk-button-use-underline -----------------------------------------------
+ "@version{2013-12-9}
+  Accessor of the slot @arg{\"use-stock\"} of the @class{gtk-button} class.
+  @see-class{gtk-button}
+  @see-function{gtk-button-get-use-stock}
+  @see-function{gtk-button-set-use-stock}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-button-use-underline atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-button-use-underline 'function)
- "@version{2013-1-18}
-  @begin{short}
-    Accessor of the slot @arg{\"use-underline\"} of the @class{gtk-button}
-    class.
-  @end{short}
-  @see-function{gtk-button-set-use-underline}
-  @see-function{gtk-button-get-use-underline}")
-
-;;; --- gtk-button-xalign ------------------------------------------------------
+ "@version{2013-12-9}
+  Accessor of the slot @arg{\"use-underline\"} of the @class{gtk-button} class.
+  @see-class{gtk-button}
+  @see-function{gtk-button-get-use-underline}
+  @see-function{gtk-button-set-use-underline}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-button-xalign atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-button-xalign 'function)
- "@version{2013-1-18}
-  @begin{short}
-    Accessor of the slot @code{\"xalign\"} of the @class{gtk-button}
-    class.
-  @end{short}
-  @see-function{gtk-button-set-alignment}
-  @see-function{gtk-button-get-alignment}")
-
-;;; --- gtk-button-yalign ------------------------------------------------------
+ "@version{2013-12-9}
+  Accessor of the slot @code{\"xalign\"} of the @class{gtk-button} class.
+  @see-class{gtk-button}
+  @see-function{gtk-button-get-alignment}
+  @see-function{gtk-button-set-alignment}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-button-yalign atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-button-yalign 'function)
- "@version{2013-1-18}
-  @begin{short}
-    Accessor of the slot @code{\"yalign\"} of the @class{gtk-button}
-    class.
-  @end{short}
-  @see-function{gtk-button-set-alignment}
-  @see-function{gtk-button-get-alignment}")
+ "@version{2013-12-9}
+  Accessor of the slot @code{\"yalign\"} of the @class{gtk-button} class.
+  @see-class{gtk-button}
+  @see-function{gtk-button-get-alignment}
+  @see-function{gtk-button-set-alignment}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_button_new ()
@@ -507,13 +463,17 @@
 
 (defun gtk-button-new ()
  #+cl-cffi-gtk-documentation
- "@version{2013-4-26}
+ "@version{2013-12-9}
   @return{The newly created @class{gtk-button} widget.}
   @begin{short}
     Creates a new @class{gtk-button} widget.
   @end{short}
   To add a child widget to the button, use the function
   @fun{gtk-container-add}.
+  @see-class{gtk-button}
+  @see-function{gtk-button-new-with-label}
+  @see-function{gtk-button-new-with-mnemonic}
+  @see-function{gtk-button-new-from-stock}
   @see-function{gtk-container-add}"
   (make-instance 'gtk-button))
 
@@ -527,12 +487,18 @@
 
 (defun gtk-button-new-with-label (label)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-26}
+ "@version{2013-12-9}
   @argument[label]{the text you want the @class{gtk-label} widget to hold}
   @return{The newly created @class{gtk-button} widget.}
   Creates a @class{gtk-button} widget with a @class{gtk-label} child widget
-  containing the given text in @arg{label}."
-  (make-instance 'gtk-button :label label))
+  containing the given text in @arg{label}.
+  @see-class{gtk-button}
+  @see-class{gtk-label}
+  @see-function{gtk-button-new}
+  @see-function{gtk-button-new-with-mnemonic}
+  @see-function{gtk-button-new-from-stock}"
+  (make-instance 'gtk-button
+                 :label label))
 
 (export 'gtk-button-new-with-label)
 
@@ -540,22 +506,28 @@
 ;;; gtk_button_new_with_mnemonic ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_button_new_with_mnemonic" gtk-button-new-with-mnemonic)
-    (g-object gtk-widget)
+(declaim (inline gtk-button-new-with-mnemonic))
+
+(defun gtk-button-new-with-mnemonic (label)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-26}
+ "@version{2013-12-9}
   @argument[label]{the text of the button, with an underscore in front of the
     mnemonic character}
-  @return{a new @class{gtk-button} widget}
+  @return{A new @class{gtk-button} widget.}
   @begin{short}
     Creates a new @class{gtk-button} widget containing a label.
   @end{short}
-  If characters in label are preceded by an underscore, they are underlined. If
-  you need a literal underscore character in a label, use '__'
-  (two underscores). The first underlined character represents a keyboard
-  accelerator called a mnemonic. Pressing Alt and that key activates the
-  button."
-  (label :string))
+  If characters in label are preceded by an underscore, they are underlined.
+  If you need a literal underscore character in a label, use '__' (two
+  underscores). The first underlined character represents a keyboard accelerator
+  called a mnemonic. Pressing Alt and that key activates the button.
+  @see-class{gtk-button}
+  @see-function{gtk-button-new}
+  @see-function{gtk-button-new-with-label}
+  @see-function{gtk-button-new-from-stock}"
+  (make-instance 'gtk-button
+                 :label label
+                 :use-underline t))
 
 (export 'gtk-button-new-with-mnemonic)
 
@@ -563,12 +535,13 @@
 ;;; gtk_button_new_from_stock ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_button_new_from_stock" gtk-button-new-from-stock)
-    (g-object gtk-widget)
+(declaim (inline gtk-button-new-from-stock))
+
+(defun gtk-button-new-from-stock (stock-id)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-26}
+ "@version{2013-12-9}
   @argument[stock-id]{the name of the stock item}
-  @return{a new @class{gtk-button} widget}
+  @return{A new @class{gtk-button} widget.}
   @begin{short}
     Creates a new @class{gtk-button} widget containing the image and text from
     a stock item.
@@ -576,8 +549,14 @@
 
   If @arg{stock-id} is unknown, then it will be treated as a mnemonic label
   as for the function @fun{gtk-button-new-with-mnemonic}.
+  @see-class{gtk-button}
+  @see-function{gtk-button-new}
+  @see-function{gtk-button-new-with-label}
   @see-function{gtk-button-new-with-mnemonic}"
-  (stock-id :string))
+  (make-instance 'gtk-button
+                 :label stock-id
+                 :use-underline t
+                 :use-stock t))
 
 (export 'gtk-button-new-from-stock)
 
@@ -623,10 +602,11 @@
 
 (defcfun ("gtk_button_clicked" gtk-button-clicked) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-4-26}
+ "@version{2013-12-9}
   @argument[button]{the @class{gtk-button} widget you want to send the signal
     to}
-  Emits a \"clicked\" signal to the given @class{gtk-button} widget."
+  Emits a \"clicked\" signal to the given @class{gtk-button} widget.
+  @see-class{gtk-button}"
   (button (g-object gtk-button)))
 
 (export 'gtk-button-clicked)
@@ -673,18 +653,21 @@
 
 (declaim (inline gtk-button-set-relief))
 
-(defun gtk-button-set-relief (button newstyle)
+(defun gtk-button-set-relief (button relief-style)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-26}
-  @argument[button]{The @class{gtk-button} widget you want to set relief
-    styles of.}
-  @argument[newstyle]{the @symbol{gtk-relief-style} as described above}
+ "@version{2013-12-9}
+  @argument[button]{the @class{gtk-button} widget you want to set relief
+    styles of}
+  @argument[relief-style]{the @symbol{gtk-relief-style} as described above}
   @begin{short}
     Sets the relief style of the edges of the given @class{gtk-button} widget.
   @end{short}
   Three styles exist, @code{:normal}, @code{:half}, @code{:none}. The default
-  style is, as one can guess, @code{:normal}."
-  (setf (gtk-button-relief button) newstyle))
+  style is @code{:normal}.
+  @see-class{gtk-button}
+  @see-symbol{gtk-relief-style}
+  @see-function{gtk-button-get-relief}"
+  (setf (gtk-button-relief button) relief-style))
 
 (export 'gtk-button-set-relief)
 
@@ -696,11 +679,14 @@
 
 (defun gtk-button-get-relief (button)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-26}
+ "@version{2013-12-9}
   @argument[button]{the @class{gtk-button} widget you want the
     @symbol{gtk-relief-style} from}
   @return{The current @symbol{gtk-relief-style}.}
-  Returns the current relief style of the given @class{gtk-button} widget."
+  Returns the current relief style of the given @class{gtk-button} widget.
+  @see-class{gtk-button}
+  @see-symbol{gtk-relief-style}
+  @see-function{gtk-button-set-relief}"
   (gtk-button-relief button))
 
 (export 'gtk-button-get-relief)
@@ -713,17 +699,17 @@
 
 (defun gtk-button-get-label (button)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-24}
+ "@version{2013-12-9}
   @argument[button]{a @class{gtk-button} widget}
-  @return{The text of the label widget. This string is owned by the widget and
-    must not be modified or freed.}
+  @return{The text of the label widget.}
   @begin{short}
-    Fetches the text from the label of the @arg{button}, as set by the function
+    Fetches the text from the label of the button, as set by the function
     @fun{gtk-button-set-label}.
   @end{short}
   If the label text has not been set the return value will be @code{nil}. This
   will be the case if you create an empty button with the function
   @fun{gtk-button-new} to use as a container.
+  @see-class{gtk-button}
   @see-function{gtk-button-set-label}
   @see-function{gtk-button-new}"
   (gtk-button-label button))
@@ -738,16 +724,18 @@
 
 (defun gtk-button-set-label (button label)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-24}
+ "@version{2013-12-9}
   @argument[button]{a @class{gtk-button} widget}
   @argument[label]{a string}
   @begin{short}
-    Sets the text of the label of the @arg{button} to @arg{label}.
+    Sets the text of the label of the button to @arg{label}.
   @end{short}
   This text is also used to select the stock item if the function
   @fun{gtk-button-set-use-stock} is used.
 
   This will also clear any previously set labels.
+  @see-class{gtk-button}
+  @see-function{gtk-button-get-label}
   @see-function{gtk-button-set-use-stock}"
   (setf (gtk-button-label button) label))
 
@@ -761,11 +749,13 @@
 
 (defun gtk-button-get-use-stock (button)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-26}
+ "@version{2013-12-9}
   @argument[button]{a @class{gtk-button} widget}
-  @return{@em{True} if the @arg{button} label is used to select a stock item
+  @return{@em{True} if the button label is used to select a stock item
     instead of being used directly as the label text.}
-  Returns whether the @arg{button} label is a stock item."
+  Returns whether the button label is a stock item.
+  @see-class{gtk-button}
+  @see-function{gtk-button-set-use-stock}"
   (gtk-button-use-stock button))
 
 (export 'gtk-button-get-use-stock)
@@ -778,12 +768,13 @@
 
 (defun gtk-button-set-use-stock (button use-stock)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-26}
+ "@version{2013-12-9}
   @argument[button]{a @class{gtk-button} widget}
-  @argument[use-stock]{@em{true} if the @argument{button} should use a stock
-    item}
-  If @em{true}, the label set on the @arg{button} is used as a stock id to
-  select the stock item for the @arg{button}."
+  @argument[use-stock]{@em{true} if the button should use a stock item}
+  If @em{true}, the label set on the button is used as a stock ID to
+  select the stock item for the button.
+  @see-class{gtk-button}
+  @see-function{gtk-button-get-use-stock}"
   (setf (gtk-button-use-stock button) use-stock))
 
 (export 'gtk-button-set-use-stock)
@@ -796,12 +787,13 @@
 
 (defun gtk-button-get-use-underline (button)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-26}
+ "@version{2013-12-9}
   @argument[button]{a @class{gtk-button} widget}
-  @return{@em{True} if an embedded underline in the @arg{button} label indicates
+  @return{@em{True} if an embedded underline in the button label indicates
     the mnemonic accelerator keys.}
-  Returns whether an embedded underline in the @arg{button} label indicates a
+  Returns whether an embedded underline in the button label indicates a
   mnemonic.
+  @see-class{gtk-button}
   See @fun{gtk-button-set-use-underline}."
   (gtk-button-use-underline button))
 
@@ -815,12 +807,14 @@
 
 (defun gtk-button-set-use-underline (button use-underline)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-26}
+ "@version{2013-12-9}
   @argument[button]{a @class{gtk-button} widget}
   @argument[use-underline]{@em{true} if underlines in the text indicate
     mnemonics}
-  If @em{true}, an underline in the text of the @arg{button} label indicates the
-  next character should be used for the mnemonic accelerator key."
+  If @em{true}, an underline in the text of the button label indicates the
+  next character should be used for the mnemonic accelerator key.
+  @see-class{gtk-button}
+  @see-function{gtk-button-get-use-underline}"
   (setf (gtk-button-use-underline button) use-underline))
 
 (export 'gtk-button-set-use-underline)
@@ -833,19 +827,20 @@
 
 (defun gtk-button-set-focus-on-click (button focus-on-click)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-26}
+ "@version{2013-12-9}
   @argument[button]{a @class{gtk-button} widget}
-  @argument[focus-on-click]{whether the @arg{button} grabs focus when clicked
-    with the mouse}
+  @argument[focus-on-click]{whether the button grabs focus when clicked with
+    the mouse}
   @begin{short}
-    Sets whether the @arg{button} will grab focus when it is clicked with the
-    mouse.
+    Sets whether the button will grab focus when it is clicked with the mouse.
   @end{short}
   Making mouse clicks not grab focus is useful in places like toolbars where
   you do not want the keyboard focus removed from the main area of the
   application.
 
-  Since 2.4"
+  Since 2.4
+  @see-class{gtk-button}
+  @see-function{gtk-button-get-focus-on-click}"
   (setf (gtk-button-focus-on-click button) focus-on-click))
 
 (export 'gtk-button-set-focus-on-click)
@@ -858,17 +853,17 @@
 
 (defun gtk-button-get-focus-on-click (button)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-26}
+ "@version{2013-12-9}
   @argument[button]{a @class{gtk-button} widget}
   @return{@em{True} if the @arg{button} grabs focus when it is clicked with the
     mouse.}
   @begin{short}
-    Returns whether the @arg{button} grabs focus when it is clicked with the
-    mouse.
+    Returns whether the button grabs focus when it is clicked with the mouse.
   @end{short}
   See the function @fun{gtk-button-set-focus-on-click}.
 
   Since 2.4
+  @see-class{gtk-button}
   @see-function{gtk-button-set-focus-on-click}."
   (gtk-button-focus-on-click button))
 
@@ -882,7 +877,7 @@
 
 (defun gtk-button-set-alignment (button xalign yalign)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-26}
+ "@version{2013-12-9}
   @argument[button]{a @class{gtk-button} widget}
   @argument[xalign]{the horizontal position of the child, the value 0.0 is left
     aligned, 1.0 is right aligned}
@@ -894,7 +889,11 @@
   This property has no effect unless the child is a @class{gtk-misc} or a
   @class{gtk-alignment}.
 
-  Since 2.4"
+  Since 2.4
+  @see-class{gtk-button}
+  @see-class{gtk-misc}
+  @see-class{gtk-alignment}
+  @see-function{gtk-button-get-alignment}"
   (setf (gtk-button-xalign button) xalign
         (gtk-button-yalign button) yalign))
 
@@ -908,14 +907,16 @@
 
 (defun gtk-button-get-alignment (button)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-26}
+ "@version{2013-12-9}
   @argument[button]{a @class{gtk-button} widget}
-  @return{Return location for horizontal and vertical alignment.}
+  @return{Return horizontal and vertical alignment.}
   @begin{short}
-    Gets the alignment of the child in the @arg{button}.
+    Gets the alignment of the child in the button.
   @end{short}
 
-  Since 2.4"
+  Since 2.4
+  @see-class{gtk-button}
+  @see-function{gtk-button-set-alignment}"
   (values (gtk-button-xalign button)
           (gtk-button-yalign button)))
 
@@ -929,7 +930,7 @@
 
 (defun gtk-button-set-image (button image)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-26}
+ "@version{2013-12-9}
   @argument[button]{a @class{gtk-button} widget}
   @argument[image]{a widget to set as the image for the button}
   @begin{short}
@@ -939,7 +940,10 @@
   image will be displayed or not, you do not have to call the function
   @fun{gtk-widget-show} on image yourself.
 
-  Since 2.6"
+  Since 2.6
+  @see-class{gtk-button}
+  @see-function{gtk-widget-show}
+  @see-function{gtk-button-get-image}"
   (setf (gtk-button-image button) image))
 
 (export 'gtk-button-set-image)
@@ -952,9 +956,9 @@
 
 (defun gtk-button-get-image (button)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-26}
+ "@version{2013-12-9}
   @argument[button]{a @class{gtk-button} widget}
-  @return{a @class{gtk-widget} or @code{nil} in case there is no image.}
+  @return{A @class{gtk-widget} or @code{nil} in case there is no image.}
   @begin{short}
     Gets the widget that is currently set as the image of button.
   @end{short}
@@ -962,6 +966,7 @@
  or constructed by the function @fun{gtk-button-new-from-stock}.
 
   Since 2.6
+  @see-class{gtk-button}
   @see-function{gtk-button-set-image}
   @see-function{gtk-button-new-from-stock}"
   (gtk-button-image button))
@@ -976,14 +981,16 @@
 
 (defun gtk-button-set-image-position (button position)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-26}
+ "@version{2013-12-9}
   @argument[button]{a @class{gtk-button} widget}
   @argument[position]{the position}
   @begin{short}
-    Sets the position of the image relative to the text inside the @arg{button}.
+    Sets the position of the image relative to the text inside the button.
   @end{short}
 
-  Since 2.10"
+  Since 2.10
+  @see-class{gtk-button}
+  @see-function{gtk-button-get-image-position}"
   (setf (gtk-button-image-position button) position))
 
 (export 'gtk-button-set-image-position)
@@ -996,14 +1003,16 @@
 
 (defun gtk-button-get-image-position (button)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-26}
+ "@version{2013-12-9}
   @argument[button]{a @class{gtk-button} widget}
   @return{The position.}
   @begin{short}
-    Gets the position of the image relative to the text inside the @arg{button}.
+    Gets the position of the image relative to the text inside the button.
   @end{short}
 
-  Since 2.10"
+  Since 2.10
+  @see-class{gtk-button}
+  @see-function{gtk-button-set-image-position}"
   (gtk-button-image-position button))
 
 (export 'gtk-button-get-image-position)
@@ -1018,19 +1027,20 @@
 #+gtk-3-6
 (defun gtk-button-set-always-show-image (button always-show)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-26}
+ "@version{2013-12-9}
   @argument[button]{a @class{gtk-button} widget}
-  @argument[always-show]{@em{true} if the @arg{button} should always show the
-    image}
+  @argument[always-show]{@em{true} if the button should always show the image}
   @begin{short}
-    If @em{true}, the @arg{button} will ignore the \"gtk-button-images\" setting
+    If @em{true}, the button will ignore the \"gtk-button-images\" setting
     and always show the image, if available.
   @end{short}
 
-  Use this property if the @arg{button} would be useless or hard to use without
+  Use this property if the button would be useless or hard to use without
   the image.
 
-  Since 3.6"
+  Since 3.6
+  @see-class{gtk-button}
+  @see-function{gtk-button-get-always-show-image}"
   (setf (gtk-button-always-show-image button) always-show))
 
 #+gtk-3-6
@@ -1043,16 +1053,17 @@
 #+gtk-3-6
 (defun gtk-button-get-always-show-image (button)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-26}
+ "@version{2013-12-9}
   @argument[button]{a @class{gtk-button} widget}
-  @return{@em{True} if the @arg{button} will always show the image.}
+  @return{@em{True} if the button will always show the image.}
   @begin{short}
-    Returns whether the @arg{button} will ignore the
-    @code{\"gtk-button-images\"} setting and always show the image, if
-    available.
+    Returns whether the button will ignore the @code{\"gtk-button-images\"}
+    setting and always show the image, if available.
   @end{short}
 
-  Since 3.6"
+  Since 3.6
+  @see-class{gtk-button}
+  @see-function{gtk-button-set-always-show-image}"
   (gtk-button-get-always-show-image button))
 
 #+gtk-3-6
@@ -1065,16 +1076,16 @@
 (defcfun ("gtk_button_get_event_window" gtk-button-get-event-window)
     (g-object gdk-window)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-26}
+ "@version{2013-12-9}
   @argument[button]{a @class{gtk-button} widget}
   @return{Button's event window.}
   @begin{short}
-    Returns the @arg{button}'s event window if it is realized, @code{nil}
-    otherwise.
+    Returns the button's event window if it is realized, @code{nil} otherwise.
   @end{short}
   This function should be rarely needed.
 
-  Since 2.22"
+  Since 2.22
+  @see-class{gtk-button}"
   (button (g-object gtk-button)))
 
 (export 'gtk-button-get-event-window)

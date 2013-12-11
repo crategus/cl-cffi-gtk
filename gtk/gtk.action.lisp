@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.8.8 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -406,104 +406,111 @@
 (setf (gethash 'gtk-action-is-important atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-is-important 'function)
- "@version{2013-2-9}
-  @begin{short}
-    Accessor of the slot @code{\"is-important\"} of the @class{gtk-action}
-    class.
-  @end{short}")
+ "@version{2013-12-10}
+  Accessor of the slot @code{\"is-important\"} of the @class{gtk-action} class.
+  @see-class{gtk-action}
+  @see-function{gtk-action-get-is-important}
+  @see-function{gtk-action-set-is-important}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-label atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-label 'function)
- "@version{2013-2-9}
-  @begin{short}
-    Accessor of the slot @code{\"label\"} of the @class{gtk-action} class.
-  @end{short}")
+ "@version{2013-12-10}
+  Accessor of the slot @code{\"label\"} of the @class{gtk-action} class.
+  @see-class{gtk-action}
+  @see-function{gtk-action-get-label}
+  @see-function{gtk-action-set-label}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-name atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-name 'function)
- "@version{2013-2-9}
-  @begin{short}
-    Accessor of the slot @code{\"name\"} of the @class{gtk-action} class.
-  @end{short}")
+ "@version{2013-12-10}
+  Accessor of the slot @code{\"name\"} of the @class{gtk-action} class.
+  @see-class{gtk-action}
+  @see-function{gtk-action-get-name}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-sensitive atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-sensitive 'function)
- "@version{2013-2-9}
-  @begin{short}
-    Accessor of the slot @code{\"senstive\"} of the @class{gtk-action} class.
-  @end{short}")
+ "@version{2013-12-10}
+  Accessor of the slot @code{\"sensitive\"} of the @class{gtk-action} class.
+  @see-class{gtk-action}
+  @see-function{gtk-action-get-sensitive}
+  @see-function{gtk-action-set-sensitive}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-short-label atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-short-label 'function)
- "@version{2013-2-9}
-  @begin{short}
-    Accessor of the slot @code{\"short-label\"} of the @class{gtk-action} class.
-  @end{short}")
+ "@version{2013-12-10}
+  Accessor of the slot @code{\"short-label\"} of the @class{gtk-action} class.
+  @see-class{gtk-action}
+  @see-function{gtk-action-get-short-label}
+  @see-function{gtk-action-set-short-label}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-stock-id atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-stock-id 'function)
- "@version{2013-2-9}
-  @begin{short}
-    Accessor of the slot @code{\"stock-id\"} of the @class{gtk-action} class.
-  @end{short}")
+ "@version{2013-12-10}
+  Accessor of the slot @code{\"stock-id\"} of the @class{gtk-action} class.
+  @see-class{gtk-action}
+  @see-function{gtk-action-get-stock-id}
+  @see-function{gtk-action-set-stock-id}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-tooltip atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-tooltip 'function)
- "@version{2013-2-9}
-  @begin{short}
-    Accessor of the slot @code{\"tooltip\"} of the @class{gtk-action} class.
-  @end{short}")
+ "@version{2013-12-10}
+  Accessor of the slot @code{\"tooltip\"} of the @class{gtk-action} class.
+  @see-class{gtk-action}
+  @see-function{gtk-action-get-tooltip}
+  @see-function{gtk-action-set-tooltip}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-visible atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-visible 'function)
- "@version{2013-2-9}
-  @begin{short}
-    Accessor of the slot @code{\"visible\"} of the @class{gtk-action} class.
-  @end{short}")
+ "@version{2013-12-10}
+  Accessor of the slot @code{\"visible\"} of the @class{gtk-action} class.
+  @see-class{gtk-action}
+  @see-function{gtk-action-get-visible}
+  @see-function{gtk-action-set-visible}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-visible-horizontal atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-visible-horizontal 'function)
- "@version{2013-2-9}
-  @begin{short}
+ "@version{2013-12-10}
     Accessor of the slot @code{\"visible-horizontal\"} of the @class{gtk-action}
     class.
-  @end{short}")
+  @see-class{gtk-action}
+  @see-function{gtk-action-get-visible-horizontal}
+  @see-function{gtk-action-set-visible-horizontal}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-visible-overflown atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-visible-overflown 'function)
- "@version{2013-2-9}
-  @begin{short}
-    Accessor of the slot @code{\"visible-overflown\"} of the @class{gtk-action}
-    class.
-  @end{short}")
+ "@version{2013-12-10}
+  Accessor of the slot @code{\"visible-overflown\"} of the @class{gtk-action}
+  class.
+  @see-class{gtk-action}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-visible-vertical atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-visible-vertical 'function)
- "@version{2013-2-9}
-  @begin{short}
-    Accessor of the slot @code{\"visible-vertical\"} of the @class{gtk-action}
-    class.
-  @end{short}")
+ "@version{2013-12-10}
+  Accessor of the slot @code{\"visible-vertical\"} of the @class{gtk-action}
+  class.
+  @see-class{gtk-action}
+  @see-function{gtk-action-get-visible-vertical}
+  @see-function{gtk-action-set-visible-vertical}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_action_new ()
@@ -513,7 +520,7 @@
 
 (defun gtk-action-new (name &optional (label nil) (tooltip nil) (stock-id nil))
  #+cl-cffi-gtk-documentation
- "@version{2013-6-9}
+ "@version{2013-12-10}
   @argument[name]{a unique name for the action}
   @argument[label]{the label displayed in menu items and on buttons,
     or @code{nil}}
@@ -525,11 +532,13 @@
     Creates a new @class{gtk-action} object.
   @end{short}
   To add the action to a @class{gtk-action-group} and set the accelerator for
-  the action, call the @fun{gtk-action-group-add-action-with-accel} function.
+  the action, call the function @fun{gtk-action-group-add-action-with-accel}.
   See the section called \"UI Definitions\" for information on allowed action
   names.
 
   Since 2.4
+  @see-class{gtk-action}
+  @see-class{gtk-action-group}
   @see-function{gtk-action-group-add-action-with-accel}"
   (make-instance 'gtk-action
                  :name name
@@ -547,12 +556,13 @@
 
 (defun gtk-action-get-name (action)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-2}
+ "@version{2013-12-10}
   @argument[action]{the action object}
   @return{The name of the action.}
   @short{Returns the name of the action.}
 
-  Since 2.4"
+  Since 2.4
+  @see-class{gtk-action}"
   (gtk-action-name action))
 
 (export 'gtk-action-get-name)
@@ -563,12 +573,16 @@
 
 (defcfun ("gtk_action_is_sensitive" gtk-action-is-sensitive) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-6-2}
+ "@version{2013-12-10}
   @argument[action]{the action object}
   @return{@arg{True} if the action and its associated action group are both
     sensitive.}
-  @short{Returns whether the action is effectively sensitive.} @break{}
-  Since 2.4."
+  @short{Returns whether the action is effectively sensitive.}
+
+  Since 2.4.
+  @see-class{gtk-action}
+  @see-function{gtk-action-get-sensitive}
+  @see-function{gtk-action-set-sensitive}"
   (action g-object))
 
 (export 'gtk-action-is-sensitive)
@@ -581,17 +595,19 @@
 
 (defun gtk-action-get-sensitive (action)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-20}
+ "@version{2013-12-10}
   @argument[action]{the action object}
   @return{@em{True} if the @arg{action} itself is sensitive.}
   @begin{short}
-    Returns whether the @arg{action} itself is sensitive. Note that this does
+    Returns whether the action itself is sensitive. Note that this does
     not necessarily mean effective sensitivity. See the function
     @fun{gtk-action-is-sensitive} for that.
   @end{short}
 
   Since 2.4
-  @fun{gtk-action-is-sensitive}"
+  @see-class{gtk-action}
+  @see-function{gtk-action-is-sensitive}
+  @see-function{gtk-action-set-sensitive}"
   (gtk-action-sensitive action))
 
 (export 'gtk-action-get-sensitive)
@@ -604,17 +620,19 @@
 
 (defun gtk-action-set-sensitive (action sensitive)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-20}
+ "@version{2013-12-10}
   @argument[action]{the action object}
-  @argument[sensitive]{@em{true} to make the @arg{action} sensitive}
+  @argument[sensitive]{@em{true} to make the action sensitive}
   @begin{short}
-    Sets the @code{\"sensitive\"} property of the @arg{action} to sensitive.
+    Sets the @code{\"sensitive\"} property of the action to sensitive.
   @end{short}
   Note that this does not necessarily mean effective sensitivity. See the
   function @fun{gtk-action-is-sensitive} for that.
 
   Since 2.6
-  @see-function{gtk-action-is-sensitive}"
+  @see-class{gtk-action}
+  @see-function{gtk-action-is-sensitive}
+  @see-function{gtk-action-get-sensitive}"
   (setf (gtk-action-sensitive action) sensitive))
 
 (export 'gtk-action-set-sensitive)
@@ -699,7 +717,7 @@
 
   Since 2.4
   @see-class{gtk-action}"
-  (action (g-object gtk-acktion)))
+  (action (g-object gtk-action)))
 
 (export 'gtk-action-activate)
 
@@ -707,18 +725,22 @@
 ;;; gtk_action_create_icon ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_action_create_icon" gtk-action-create-icon) g-object
+(defcfun ("gtk_action_create_icon" gtk-action-create-icon) (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-2}
+ "@version{2013-12-10}
   @argument[action]{the action object}
-  @argument[icon-size]{the size of the icon that should be created}
+  @argument[icon-size]{the size of type @symbol{gtk-icon-size} of the icon that
+    should be created}
   @return{A widget that displays the icon for this action.}
   @begin{short}
     This function is intended for use by action implementations to create icons
     displayed in the proxy widgets.
   @end{short}
 
-  Since 2.4"
+  Since 2.4
+  @see-class{gtk-action}
+  @see-class{gtk-widget}
+  @see-symbol{gtk-icon-size}"
   (action g-object)
   (icon-size gtk-icon-size))
 
@@ -989,6 +1011,12 @@
 ;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_action_get_accel_closure" gtk-action-get-accel-closure)
+    (:pointer (:struct g-closure))
+  (action (g-object gtk-action)))
+
+(export 'gtk-action-get-accel-closure)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_action_set_accel_group ()
 ;;; ----------------------------------------------------------------------------
@@ -1025,6 +1053,13 @@
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-action-set-label))
+
+(defun gtk-action-set-label (action label)
+  (setf (gtk-action-label action) label))
+
+(export 'gtk-action-set-label)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_action_get_label ()
 ;;;
@@ -1040,6 +1075,13 @@
 ;;;
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-action-get-label))
+
+(defun gtk-action-get-label (action)
+  (gtk-action-label action))
+
+(export 'gtk-action-get-label)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_action_set_short_label ()
@@ -1058,6 +1100,13 @@
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-action-set-short-label))
+
+(defun gtk-action-set-short-label (action short-label)
+  (setf (gtk-action-short-label action) short-label))
+
+(export 'gtk-action-set-short-label)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_action_get_short_label ()
 ;;;
@@ -1073,6 +1122,13 @@
 ;;;
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-action-get-short-label))
+
+(defun gtk-action-get-short-label (action)
+  (gtk-action-short-label action))
+
+(export 'gtk-action-get-short-label)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_action_set_tooltip ()
@@ -1090,6 +1146,13 @@
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-action-set-tooltip))
+
+(defun gtk-action-set-tooltip (action tooltip)
+  (setf (gtk-action-tooltip action) tooltip))
+
+(export 'gtk-action-set-tooltip)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_action_get_tooltip ()
 ;;;
@@ -1105,6 +1168,13 @@
 ;;;
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-action-get-tooltip))
+
+(defun gtk-action-get-tooltip (action)
+  (gtk-action-tooltip action))
+
+(export 'gtk-action-get-tooltip)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_action_set_stock_id ()
@@ -1122,6 +1192,13 @@
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-action-set-stock-id))
+
+(defun gtk-action-set-stock-id (action stock-id)
+  (setf (gtk-action-stock-id action) stock-id))
+
+(export 'gtk-action-set-stock-id)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_action_get_stock_id ()
 ;;;
@@ -1137,6 +1214,13 @@
 ;;;
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-action-get-stock-id))
+
+(defun gtk-action-get-stock-id (action)
+  (gtk-action-stock-id action))
+
+(export 'gtk-action-get-stock-id)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_action_set_gicon ()
@@ -1190,7 +1274,7 @@
 
 (defun gtk-action-set-icon-name (action icon-name)
  #+cl-cffi-gtk-documentation
- "@version{2ß13-8-11}
+ "@version{2013-8-11}
   @argument[action]{a @class{gtk-action} object}
   @argument[icon-name]{the icon name to set}
   @begin{short}
@@ -1243,6 +1327,13 @@
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-action-set-visible-horizontal))
+
+(defun gtk-action-set-visible-horizontal (action visible-horizontal)
+  (setf (gtk-action-visible-horizontal action) visible-horizontal))
+
+(export 'gtk-action-set-visible-horizontal)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_action_get_visible_horizontal ()
 ;;;
@@ -1258,6 +1349,13 @@
 ;;;
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-action-get-visible-horizontal))
+
+(defun gtk-action-get-visible-horizontal (action)
+  (gtk-action-visible-horizontal action))
+
+(export 'gtk-action-get-visible-horizontal)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_action_set_visible_vertical ()
@@ -1276,6 +1374,13 @@
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-action-set-visible-vertical))
+
+(defun gtk-action-set-visible-vertical (action visible-vertical)
+  (setf (gtk-action-visible-vertical action) visible-vertical))
+
+(export 'gtk-action-set-visible-vertical)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_action_get_visible_vertical ()
 ;;;
@@ -1291,6 +1396,13 @@
 ;;;
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-action-get-visible-vertical))
+
+(defun gtk-action-get-visible-vertical (action)
+  (gtk-action-visible-vertical action))
+
+(export 'gtk-action-get-visible-vertical)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_action_set_is_important ()
@@ -1309,6 +1421,13 @@
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-action-set-is-important))
+
+(defun gtk-action-set-is-important (action is-important)
+  (setf (gtk-action-is-important action) is-important))
+
+(export 'gtk-action-set-is-important)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_action_get_is_important ()
 ;;;
@@ -1324,5 +1443,12 @@
 ;;;
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-action-get-is-important))
+
+(defun gtk-action-get-is-important (action)
+  (gtk-action-is-important action))
+
+(export 'gtk-action-get-is-important)
 
 ;;; --- End of file gtk.action.lisp --------------------------------------------

@@ -4,9 +4,10 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.8.8 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -143,33 +144,44 @@
 (setf (gethash 'gtk-image-menu-item-accel-group atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-image-menu-item-accel-group 'function)
- "@version{2013-3-27}
+ "@version{2013-12-8}
   Accessor of the slot @code{\"accel-group\"} of the
-  @class{gtk-image-menu-item} class.")
+  @class{gtk-image-menu-item} class.
+  @see-class{gtk-image-menu-item}
+  @see-function{gtk-image-menu-item-set-accel-group}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-image-menu-item-always-show-image atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-image-menu-item-always-show-image 'function)
- "@version{2013-3-27}
+ "@version{2013-12-8}
   Accessor of the slot @code{\"always-show-image\"} of the
-  @class{gtk-image-menu-item} class.")
+  @class{gtk-image-menu-item} class.
+  @see-class{gtk-image-menu-item}
+  @see-function{gtk-image-menu-item-get-always-show-image}
+  @see-function{gtk-image-menu-item-set-always-show-image}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-image-menu-item-image atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-image-menu-item-image 'function)
- "@version{2013-3-27}
+ "@version{2013-12-8}
   Accessor of the slot @code{\"image\"} of the
-  @class{gtk-image-menu-item} class.")
+  @class{gtk-image-menu-item} class.
+  @see-class{gtk-image-menu-item}
+  @see-function{gtk-image-menu-item-get-image}
+  @see-function{gtk-image-menu-item-set-image}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-image-menu-item-use-stock atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-image-menu-item-use-stock 'function)
- "@version{2013-3-27}
+ "@version{2013-12-8}
   Accessor of the slot @code{\"use-stock\"} of the
-  @class{gtk-image-menu-item} class.")
+  @class{gtk-image-menu-item} class.
+  @see-class{gtk-image-menu-item}
+  @see-function{gtk-image-menu-item-get-use-stock}
+  @see-function{gtk-image-menu-item-set-use-stock}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_image_menu_item_set_image ()
@@ -187,6 +199,13 @@
 ;;;     a widget to set as the image for the menu item
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-image-menu-item-set-image))
+
+(defun gtk-image-menu-item-set-image (image-menu-item image)
+  (setf (gtk-image-menu-item-image image-menu-item) image))
+
+(export 'gtk-image-menu-item-set-image)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_image_menu_item_get_image ()
 ;;;
@@ -203,6 +222,13 @@
 ;;;     the widget set as image of image_menu_item
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-image-menu-item-get-image))
+
+(defun gtk-image-menu-item-get-image (image-menu-item)
+  (gtk-image-menu-item-image image-menu-item))
+
+(export 'gtk-image-menu-item-get-image)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_image_menu_item_new ()
 ;;;
@@ -213,6 +239,13 @@
 ;;; Returns :
 ;;;     a new GtkImageMenuItem
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-image-menu-item-new))
+
+(defun gtk-image-menu-item-new ()
+  (make-instance 'gtk-image-menu-item))
+
+(export 'gtk-image-menu-item-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_image_menu_item_new_from_stock ()
@@ -240,6 +273,13 @@
 ;;;     a new GtkImageMenuItem.
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_image_menu_item_new_from_stock"
+           gtk-image-menu-item-new-from-stock) (g-object gtk-image-menu-item)
+  (stock-id :string)
+  (accel-group (g-object gtk-accel-group)))
+
+(export 'gtk-image-menu-item-new-from-stock)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_image_menu_item_new_with_label ()
 ;;;
@@ -253,6 +293,12 @@
 ;;; Returns :
 ;;;     a new GtkImageMenuItem.
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_image_menu_item_new_with_label"
+           gtk-image-menu-item-new-with-label) (g-object gtk-image-menu-item)
+  (label :string))
+
+(export 'gtk-image-menu-item-new-with-label)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_image_menu_item_new_with_mnemonic ()
@@ -270,6 +316,12 @@
 ;;; Returns :
 ;;;     a new GtkImageMenuItem
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_image_menu_item_new_with_mnemonic"
+           gtk-image-menu-item-new-with-mnemonic) (g-object gtk-image-menu-item)
+  (label :string))
+
+(export 'gtk-image-menu-item-new-with-mnemonic)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_image_menu_item_get_use_stock ()
@@ -290,6 +342,13 @@
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-image-menu-item-get-use-stock))
+
+(defun gtk-image-menu-item-get-use-stock (image-menu-item)
+  (gtk-image-menu-item-use-stock image-menu-item))
+
+(export 'gtk-image-menu-item-get-use-stock)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_image_menu_item_set_use_stock ()
 ;;;
@@ -308,6 +367,13 @@
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-image-menu-item-set-use-stock))
+
+(defun gtk-image-menu-item-set-use-stock (image-menu-item use-stock)
+  (setf (gtk-image-menu-item-use-stock image-menu-item) use-stock))
+
+(export 'gtk-image-menu-item-set-use-stock)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_image_menu_item_get_always_show_image ()
 ;;;
@@ -325,6 +391,13 @@
 ;;;
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-image-menu-item-get-always-show-image))
+
+(defun gtk-image-menu-item-get-always-show-image (image-menu-item)
+  (gtk-image-menu-item-always-show-image image-menu-item))
+
+(export 'gtk-image-menu-item-get-always-show-image)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_image_menu_item_set_always_show_image ()
@@ -348,6 +421,13 @@
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-image-menu-item-set-always-show-image))
+
+(defun gtk-image-menu-item-set-always-show-image (image-menu-item always-show)
+  (setf (gtk-image-menu-item-always-show-image image-menu-item) always-show))
+
+(export 'gtk-image-menu-item-set-always-show-image)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_image_menu_item_set_accel_group ()
 ;;;
@@ -370,5 +450,12 @@
 ;;;
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-image-menu-item-set-accel-group))
+
+(defun gtk-image-menu-item-set-accel-group (menu-item accel-group)
+  (setf (gtk-image-menu-item-accel-group menu-item) accel-group))
+
+(export 'gtk-image-menu-item-set-accel-group)
 
 ;;; --- End of file gtk.image-menu-item.lisp -----------------------------------

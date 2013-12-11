@@ -4,9 +4,10 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.8.8 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2013 Dieter Kaiser
@@ -360,18 +361,24 @@ use-action-appearance property ...
 (setf (gethash 'gtk-activatable-related-action atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-activatable-related-action 'function)
- "@version{2013-3-29}
+ "@version{2013-12-8}
   Accessor of the slot @code{\"related-action\"} of the @class{gtk-activatable}
-  class.")
+  class.
+  @see-class{gtk-activatable}
+  @see-function{gtk-activatable-get-related-action}
+  @see-function{gtk-activatable-set-related-action}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-activatable-use-action-appearance
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-activatable-use-action-appearance 'function)
- "@version{2013-3-29}
+ "@version{2013-12-8}
   Accessor of the slot @code{\"use-action-appearance\"} of the
-  @class{gtk-activatable} class.")
+  @class{gtk-activatable} class.
+  @see-class{gtk-activatable}
+  @see-function{gtk-activatable-get-use-action-appearance}
+  @see-function{gtk-activatable-set-use-action-appearance}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkActivatableIface
@@ -455,7 +462,9 @@ use-action-appearance property ...
   @return{The related @class{gtk-action} object if one is set.}
   @short{Gets the related @class{gtk-action} object for @arg{activatable}.}
 
-  Since 2.16"
+  Since 2.16
+  @see-class{gtk-activatable}
+  @see-function{gtk-activatable-set-related-action}"
   (gtk-activatable-related-action activatable))
 
 (export 'gtk-activatable-get-related-action)
@@ -477,6 +486,13 @@ use-action-appearance property ...
 ;;;
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-activatable-get-use-action-appearance))
+
+(defun gtk-activatable-get-use-action-appearance (activatable)
+  (gtk-activatable-use-action-appearance activatable))
+
+(export 'gtk-activatable-get-use-action-appearance)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_activatable_sync_action_properties ()
@@ -522,6 +538,13 @@ use-action-appearance property ...
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-activatable-set-related-action))
+
+(defun gtk-activatable-set-related-action (activatable action)
+  (setf (gtk-activatable-related-action activatable) action))
+
+(export 'gtk-activatable-set-related-action)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_activatable_set_use_action_appearance ()
 ;;;
@@ -545,5 +568,12 @@ use-action-appearance property ...
 ;;;
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-activatable-set-use-action-appearance))
+
+(defun gtk-activatable-set-use-action-appearance (activatable use-appearance)
+  (setf (gtk-activatable-use-action-appearance activatable) use-appearance))
+
+(export 'gtk-activatable-set-use-action-appearance)
 
 ;;; --- End of file gtk.activatable.lisp ---------------------------------------
