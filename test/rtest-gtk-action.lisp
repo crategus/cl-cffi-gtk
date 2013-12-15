@@ -197,12 +197,47 @@
 
 ;;;   gtk_action_create_menu_item
 
+(test gtk-action-create-menu-item
+  (let ((action (gtk-action-new "action")))
+    (is (eq 'gtk-image-menu-item
+            (type-of (gtk-action-create-menu-item action))))))
 
+;;;   gtk_action_create_tool_item
 
-;;;    gtk_action_create_tool_item
-;;;    gtk_action_create_menu
-;;;    gtk_action_get_proxies
-;;;    gtk_action_connect_accelerator
+(test gtk-action-create-tool-item
+  (let ((action (gtk-action-new "action")))
+    (is (eq 'gtk-tool-button
+            (type-of (gtk-action-create-tool-item action))))))
+
+;;;   gtk_action_create_menu
+
+(test gtk-action-create-menu
+  (let ((action (gtk-action-new "action")))
+    ;; Create an test for an result not nil
+    (is-false (gtk-action-create-menu action))))
+
+;;;   gtk_action_get_proxies
+
+(test gtk-action-get-proxies
+  (let ((action (gtk-action-new "action")))
+    (is-false (gtk-action-get-proxies action))
+    ;; Add a too item to list of proxies
+    (gtk-action-create-tool-item action)
+    (is (eq 'gtk-tool-button (type-of (first (gtk-action-get-proxies action)))))
+    ;; Add a menu item to the proxies
+    (gtk-action-create-menu-item action)
+    (is (eq 'gtk-image-menu-item
+            (type-of (first (gtk-action-get-proxies action)))))))
+
+;;;   gtk_action_connect_accelerator
+
+(test gtk-action-connect-accelerator
+  (let ((accel-group (gtk-accel-group-new))
+        (action (gtk-action-new "action")))
+    (gtk-action-set-accel-path action "<test>/File/Exit")
+    (gtk-action-set-accel-group action accel-group)
+    (gtk-action-connect-accelerator action)))
+
 ;;;    gtk_action_disconnect_accelerator
 ;;;    gtk_action_block_activate
 ;;;    gtk_action_unblock_activate
@@ -230,4 +265,3 @@
 ;;;    gtk_action_get_visible_vertical
 ;;;    gtk_action_set_is_important
 ;;;    gtk_action_get_is_important
-
