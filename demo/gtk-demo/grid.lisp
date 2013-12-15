@@ -88,21 +88,7 @@
 
         (g-signal-connect toggle "toggled"
            (lambda (widget)
-#|
-             (if (gtk-toggle-button-get-active widget)
-                 
-                 (let ((image (gtk-image-new-from-stock "gtk-home" :button)))
-                   ;; Store the actual Label Widget.
-                   (setf label-widget (gtk-frame-get-label-widget frame))
-                   (gtk-widget-set-sensitive entry nil)
-                   (gtk-frame-set-label-widget frame image)
-                   (gtk-widget-show image))
-                   ;; Restore the saved Label Widget.
-                   (progn
-                     (gtk-widget-set-sensitive entry t)
-                     (gtk-frame-set-label-widget frame label-widget)))
-        ))
-|#
+
 
         (gtk-container-add action
                            (make-instance 'gtk-label
@@ -111,34 +97,10 @@
                                           :margin-top 12
                                           :label
                                           "<b>Insert Grid Lines</b>"))
-        (gtk-container-add action toggle))
+        (gtk-container-add action toggle))))
 
 
-#|
 
-      ;; Change the Shadow Type
-      (let ((combo (make-instance 'gtk-combo-box-text)))
-        (gtk-combo-box-text-append-text combo "NONE")
-        (gtk-combo-box-text-append-text combo "IN")
-        (gtk-combo-box-text-append-text combo "OUT")
-        (gtk-combo-box-text-append-text combo "ETCHED-IN")
-        (gtk-combo-box-text-append-text combo "ETCHED-OUT")
-        (gtk-combo-box-set-active combo 3)
-        (g-signal-connect combo "changed"
-           (lambda (combobox)
-             (let ((text (gtk-combo-box-text-get-active-text combobox)))
-               (gtk-frame-set-shadow-type frame (intern text :keyword)))))
-
-        (gtk-container-add action
-                           (make-instance 'gtk-label
-                                          :use-markup t
-                                          :xalign 0.0
-                                          :margin-top 12
-                                          :label
-                                          "<b>Shadow Type</b>"))
-        (gtk-container-add action combo))
-
-|#
 
       ;; A Quit button
       (let ((button (make-instance 'gtk-button
