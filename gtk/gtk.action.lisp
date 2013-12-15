@@ -583,7 +583,7 @@
   @see-class{gtk-action}
   @see-function{gtk-action-get-sensitive}
   @see-function{gtk-action-set-sensitive}"
-  (action g-object))
+  (action (g-object gtk-action)))
 
 (export 'gtk-action-is-sensitive)
 
@@ -643,14 +643,17 @@
 
 (defcfun ("gtk_action_is_visible" gtk-action-is-visible) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-6-20}
+ "@version{2013-12-15}
   @argument[action]{the action object}
-  @return{@arg{True} if the @arg{action} and its associated action group are
+  @return{@arg{True} if the action and its associated action group are
     both visible.}
-  @short{Returns whether the @arg{action} is effectively visible.}
+  @short{Returns whether the action is effectively visible.}
 
-  Since 2.4"
-  (action g-object))
+  Since 2.4
+  @see-class{gtk-action}
+  @see-function{gtk-action-get-visible}
+  @see-function{gtk-action-set-visible}"
+  (action (g-object gtk-action)))
 
 (export 'gtk-action-is-visible)
 
@@ -662,16 +665,18 @@
 
 (defun gtk-action-get-visible (action)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-20}
+ "@version{2013-12-15}
   @argument[action]{the action object}
-  @return{@em{True} if the @arg{action} itself is visible.}
+  @return{@em{True} if the action itself is visible.}
   @begin{short}
-    Returns whether the @arg{action} itself is visible.
+    Returns whether the action itself is visible.
   @end{short}
   Note that this does not necessarily mean effective visibility.
   See the function @fun{gtk-action-is-sensitive} for that.
 
   Since 2.4
+  @see-class{gtk-action}
+  @see-function{gtk-action-set-visible}
   @see-function{gtk-action-is-sensitive}"
   (gtk-action-visible action))
 
@@ -685,16 +690,18 @@
 
 (defun gtk-action-set-visible (action visible)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-20}
+ "@version{2013-12-15}
   @argument[action]{the action object}
-  @argument[visible]{@em{true} to make the @arg{action} visible}
+  @argument[visible]{@em{true} to make the action visible}
   @begin{short}
-    Sets the @code{\"visible\"} property of the @arg{action} to visible.
+    Sets the @code{\"visible\"} property of the action to visible.
   @end{short}
   Note that this does not necessarily mean effective visibility.
   See the function @fun{gtk-action-is-visible} for that.
 
   Since 2.6
+  @see-class{gtk-action}
+  @see-function{gtk-action-get-visible}
   @see-function{gtk-action-is-visible}"
   (setf (gtk-action-visible action) visible))
 
@@ -741,7 +748,7 @@
   @see-class{gtk-action}
   @see-class{gtk-widget}
   @see-symbol{gtk-icon-size}"
-  (action g-object)
+  (action (g-object gtk-action))
   (icon-size gtk-icon-size))
 
 (export 'gtk-action-create-icon)
@@ -750,15 +757,18 @@
 ;;; gtk_action_create_menu_item ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_action_create_menu_item" gtk-action-create-menu-item) g-object
+(defcfun ("gtk_action_create_menu_item" gtk-action-create-menu-item)
+    (g-object gtk-image-menu-item)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-2}
+ "@version{2013-12-11}
   @argument[action]{the action object}
   @return{A menu item connected to the action.}
   @short{Creates a menu item widget that proxies for the given action.}
 
-  Since 2.4"
-  (action g-object))
+  Since 2.4
+  @see-class{gtk-action}
+  @see-class{gtk-image-menu-item}"
+  (action (g-object gtk-action)))
 
 (export 'gtk-action-create-menu-item)
 
@@ -766,15 +776,18 @@
 ;;; gtk_action_create_tool_item ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_action_create_tool_item" gtk-action-create-tool-item) g-object
+(defcfun ("gtk_action_create_tool_item" gtk-action-create-tool-item)
+    (g-object gtk-tool-button)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-2}
+ "@version{2013-12-11}
   @argument[action]{the action object}
   @return{A toolbar item connected to the action.}
   @short{Creates a toolbar item widget that proxies for the given action.}
 
-  Since 2.4"
-  (action g-object))
+  Since 2.4
+  @see-class{gtk-action}
+  @see-class{gtk-tool-button}"
+  (action (g-object gtk-action)))
 
 (export 'gtk-action-create-tool-item)
 
@@ -784,17 +797,19 @@
 
 (defcfun ("gtk_action_create_menu" gtk-action-create-menu) g-object
  #+cl-cffi-gtk-documentation
- "@version{2013-5-2}
+ "@version{2013-12-11}
   @argument[action]{a @class{gtk-action} object}
-  @return{The menu item provided by the action, or @code{nil}.}
+  @return{The menu item provided by the action, or @code{NULL}.}
   @begin{short}
     If action provides a @class{gtk-menu} widget as a submenu for the menu item
     or the toolbar item it creates, this function returns an instance of that
     menu.
   @end{short}
 
-  Since 2.12"
-  (action g-object))
+  Since 2.12
+  @see-class{gtk-action}
+  @see-class{gtk-menu}"
+  (action (g-object gtk-action)))
 
 (export 'gtk-action-create-menu)
 
@@ -805,15 +820,16 @@
 (defcfun ("gtk_action_get_proxies" gtk-action-get-proxies)
     (g-slist g-object :free-from-foreign nil)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-2}
+ "@version{2013-12-11}
   @argument[action]{the action object}
   @return{A list of proxy widgets.}
   @short{Returns the proxy widgets for an action.}
-  See also the @fun{gtk-activatable-get-related-action} funcion.
+  See also the function @fun{gtk-activatable-get-related-action}.
 
   Since 2.4
+  @see-class{gtk-action}
   @see-function{gtk-activatable-get-related-action}"
-  (action g-object))
+  (action (g-object gtk-action)))
 
 (export 'gtk-action-get-proxies)
 
@@ -823,7 +839,7 @@
 
 (defcfun ("gtk_action_connect_accelerator" gtk-action-connect-accelerator) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-6-2}
+ "@version{2013-12-11}
   @argument[action]{a @class{gtk-action} object}
   @begin{short}
     Installs the accelerator for action if action has an accel path and group.
@@ -833,15 +849,15 @@
 
   Since multiple proxies may independently trigger the installation of the
   accelerator, the action counts the number of times this function has been
-  called and doesn't remove the accelerator until the
-  @fun{gtk-action-disconnect-accelerator} function has been called as many
-  times.
+  called and does not remove the accelerator until the function
+  @fun{gtk-action-disconnect-accelerator} has been called as many times.
 
   Since 2.4
+  @see-class{gtk-action}
   @see-function{gtk-action-set-accel-path}
   @see-function{gtk-action-set-accel-group}
   @see-function{gtk-action-disconnect-accelerator}"
-  (action g-object))
+  (action (g-object gtk-action)))
 
 (export 'gtk-action-connect-accelerator)
 
@@ -852,16 +868,17 @@
 (defcfun ("gtk_action_disconnect_accelerator" gtk-action-disconnect-accelerator)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2013-6-2}
+ "@version{2013-12-11}
   @argument[action]{a @class{gtk-action} object}
   @begin{short}
-    Undoes the effect of one call to the @fun{gtk-action-connect-accelerator}
-    function.
+    Undoes the effect of one call to the function
+    @fun{gtk-action-connect-accelerator}.
   @end{short}
 
   Since 2.4
+  @see-class{gtk-action}
   @see-function{gtk-action-connect-accelerator}"
-  (action g-object))
+  (action (g-object gtk-action)))
 
 (export 'gtk-action-disconnect-accelerator)
 
@@ -871,16 +888,17 @@
 
 (defcfun ("gtk_action_block_activate" gtk-action-block-activate) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-6-2}
+ "@version{2013-12-11}
   @argument[action]{a @class{gtk-action} object}
   @short{Disable activation signals from the action.}
 
   This is needed when updating the state of your proxy @class{gtk-activatable}
-  widget could result in calling the @fun{gtk-action-activate} function, this
+  widget could result in calling the function @fun{gtk-action-activate}, this
   is a convenience function to avoid recursing in those cases (updating toggle
   state for instance).
 
   Since 2.16
+  @see-class{gtk-action}
   @see-function{gtk-action-activate}"
   (action (g-object gtk-action)))
 
@@ -892,11 +910,13 @@
 
 (defcfun ("gtk_action_unblock_activate" gtk-action-unblock-activate) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-6-2}
+ "@version{2013-12-11}
   @argument[action]{a @class{gtk-action} object}
   @short{Reenable activation signals from the action.}
 
-  Since 2.16"
+  Since 2.16
+  @see-class{gtk-action}
+  @see-function{gtk-action-block-activate}"
   (action (g-object gtk-action)))
 
 (export 'gtk-action-unblock-activate)
@@ -959,12 +979,14 @@
 
 (defcfun ("gtk_action_get_accel_path" gtk-action-get-accel-path) :string
  #+cl-cffi-gtk-documentation
- "@version{2013-6-2}
+ "@version{2013-12-15}
   @argument[action]{the action object}
   @return{The accel path for this action, or @code{nil} if none is set.}
   @short{Returns the accel path for this action.}
 
-  Since 2.6"
+  Since 2.6
+  @see-class{gtk-action}
+  @see-function{gtk-action-set-accel-path}"
   (action (g-object gtk-action)))
 
 (export 'gtk-action-get-accel-path)
@@ -975,20 +997,18 @@
 
 (defcfun ("gtk_action_set_accel_path" gtk-action-set-accel-path) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-6-2}
+ "@version{2013-12-11}
   @argument[action]{the action object}
   @argument[accel-path]{the accelerator path}
   @begin{short}
-    Sets the accel path for this action. All proxy widgets associated with the
-    action will have this accel path, so that their accelerators are consistent.
+    Sets the accel path for this action.
   @end{short}
-
-  Note that @arg{accel-path} string will be stored in a @type{g-quark}.
-  Therefore, if you pass a static string, you can save some memory by interning
-  it first with the @fun{g-intern-static-string} function.
+  All proxy widgets associated with the action will have this accel path, so
+  that their accelerators are consistent.
 
   Since 2.4
-  @see-function{g-intern-static-string}"
+  @see-class{gtk-action}
+  @see-function{gtk-action-get-accel-path}"
   (action (g-object gtk-action))
   (accel-path :string))
 
@@ -996,23 +1016,21 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_action_get_accel_closure ()
-;;;
-;;; GClosure * gtk_action_get_accel_closure (GtkAction *action);
-;;;
-;;; Returns the accel closure for this action.
-;;;
-;;; action :
-;;;     the action object
-;;;
-;;; Returns :
-;;;     the accel closure for this action. The returned closure is owned by GTK+
-;;;     and must not be unreffed or modified.
-;;;
-;;; Since 2.8
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_action_get_accel_closure" gtk-action-get-accel-closure)
     (:pointer (:struct g-closure))
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-15}
+  @argument[action]{the action object}
+  @begin{return}
+    The accel closure for this action. The returned closure is owned by GTK+
+    and must not be unreffed or modified.
+  @end{return}
+  @short{Returns the accel closure for this action.}
+
+  Since 2.8
+  @see-class{gtk-action}"
   (action (g-object gtk-action)))
 
 (export 'gtk-action-get-accel-closure)
@@ -1023,7 +1041,7 @@
 
 (defcfun ("gtk_action_set_accel_group" gtk-action-set-accel-group) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-6-2}
+ "@version{2013-12-11}
   @argument[action]{the action object}
   @argument[accel-group]{a @class{gtk-accel-group} or @code{nil}}
   @begin{short}
@@ -1031,7 +1049,9 @@
     will be installed.
   @end{short}
 
-  Since 2.4"
+  Since 2.4
+  @see-class{gtk-action}
+  @see-class{gtk-accel-group}"
   (action (g-object gtk-action))
   (accel-group (g-object gtk-accel-group)))
 
@@ -1039,185 +1059,160 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_action_set_label ()
-;;;
-;;; void gtk_action_set_label (GtkAction *action, const gchar *label);
-;;;
-;;; Sets the label of action.
-;;;
-;;; action :
-;;;     a GtkAction
-;;;
-;;; label :
-;;;     the label text to set
-;;;
-;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-action-set-label))
 
 (defun gtk-action-set-label (action label)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-15}
+  @argument[action]{a @class{gtk-action} object}
+  @argument[label]{the label text to set}
+  @short{Sets the label of @arg{action}.}
+
+  Since 2.16
+  @see-class{gtk-action}
+  @see-function{gtk-action-get-label}"
   (setf (gtk-action-label action) label))
 
 (export 'gtk-action-set-label)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_action_get_label ()
-;;;
-;;; const gchar * gtk_action_get_label (GtkAction *action);
-;;;
-;;; Gets the label text of action.
-;;;
-;;; action :
-;;;     a GtkAction
-;;;
-;;; Returns :
-;;;     the label text
-;;;
-;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-action-get-label))
 
 (defun gtk-action-get-label (action)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-15}
+  @argument[action]{a @class{gtk-action} object}
+  @return{The label text.}
+  @short{Gets the label text of @arg{action}.}
+
+  Since 2.16
+  @see-class{gtk-action}
+  @see-function{gtk-action-set-label}"
   (gtk-action-label action))
 
 (export 'gtk-action-get-label)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_action_set_short_label ()
-;;;
-;;; void gtk_action_set_short_label (GtkAction *action,
-;;;                                  const gchar *short_label);
-;;;
-;;; Sets a shorter label text on action.
-;;;
-;;; action :
-;;;     a GtkAction
-;;;
-;;; short_label :
-;;;     the label text to set
-;;;
-;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-action-set-short-label))
 
 (defun gtk-action-set-short-label (action short-label)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-15}
+  @argument[action]{a @class{gtk-action} object}
+  @argument[short-label]{the label text to set}
+  @short{Sets a shorter label text on @arg{action}.}
+
+  Since 2.16
+  @see-class{gtk-action}
+  @see-function{gtk-action-get-short-label}"
   (setf (gtk-action-short-label action) short-label))
 
 (export 'gtk-action-set-short-label)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_action_get_short_label ()
-;;;
-;;; const gchar * gtk_action_get_short_label (GtkAction *action);
-;;;
-;;; Gets the short label text of action.
-;;;
-;;; action :
-;;;     a GtkAction
-;;;
-;;; Returns :
-;;;     the short label text.
-;;;
-;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-action-get-short-label))
 
 (defun gtk-action-get-short-label (action)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-15}
+  @argument[action]{a @class{gtk-action} object}
+  @return{The short label text.}
+  @short{Gets the short label text of @arg{action}.}
+
+  Since 2.16
+  @see-class{gtk-action}
+  @see-function{gtk-action-set-short-label}"
   (gtk-action-short-label action))
 
 (export 'gtk-action-get-short-label)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_action_set_tooltip ()
-;;;
-;;; void gtk_action_set_tooltip (GtkAction *action, const gchar *tooltip);
-;;;
-;;; Sets the tooltip text on action
-;;;
-;;; action :
-;;;     a GtkAction
-;;;
-;;; tooltip :
-;;;     the tooltip text
-;;;
-;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-action-set-tooltip))
 
 (defun gtk-action-set-tooltip (action tooltip)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-15}
+  @argument[action]{a @class{gtk-action} object}
+  @argument[tooltip]{the tooltip text}
+  @short{Sets the tooltip text on @arg{action}.}
+
+  Since 2.16
+  @see-class{gtk-action}
+  @see-function{gtk-action-get-tooltip}"
   (setf (gtk-action-tooltip action) tooltip))
 
 (export 'gtk-action-set-tooltip)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_action_get_tooltip ()
-;;;
-;;; const gchar * gtk_action_get_tooltip (GtkAction *action);
-;;;
-;;; Gets the tooltip text of action.
-;;;
-;;; action :
-;;;     a GtkAction
-;;;
-;;; Returns :
-;;;     the tooltip text
-;;;
-;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-action-get-tooltip))
 
 (defun gtk-action-get-tooltip (action)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-15}
+  @argument[action]{a @class{gtk-action} object}
+  @return{The tooltip text.}
+  @short{Gets the tooltip text of @arg{action}.}
+
+  Since 2.16
+  @see-class{gtk-action}
+  @see-function{gtk-action-set-tooltip}"
   (gtk-action-tooltip action))
 
 (export 'gtk-action-get-tooltip)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_action_set_stock_id ()
-;;;
-;;; void gtk_action_set_stock_id (GtkAction *action, const gchar *stock_id);
-;;;
-;;; Sets the stock id on action
-;;;
-;;; action :
-;;;     a GtkAction
-;;;
-;;; stock_id :
-;;;     the stock id
-;;;
-;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-action-set-stock-id))
 
 (defun gtk-action-set-stock-id (action stock-id)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-15}
+  @argument[action]{a @class{gtk-action} object}
+  @argument[stock-id]{the stock ID}
+  @short{Sets the stock ID on @arg{action}.}
+
+  Since 2.16
+  @see-class{gtk-action}
+  @see-function{gtk-action-get-stock-id}"
   (setf (gtk-action-stock-id action) stock-id))
 
 (export 'gtk-action-set-stock-id)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_action_get_stock_id ()
-;;;
-;;; const gchar * gtk_action_get_stock_id (GtkAction *action);
-;;;
-;;; Gets the stock id of action.
-;;;
-;;; action :
-;;;     a GtkAction
-;;;
-;;; Returns :
-;;;     the stock id
-;;;
-;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-action-get-stock-id))
 
 (defun gtk-action-get-stock-id (action)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-15}
+  @argument[action]{a @class{gtk-action} object}
+  @return{The stock ID.}
+  @short{Gets the stock ID of @arg{action}.}
+
+  Since 2.16
+  @see-class{gtk-action}
+  @see-function{gtk-action-set-stock-id}"
   (gtk-action-stock-id action))
 
 (export 'gtk-action-get-stock-id)
@@ -1274,12 +1269,10 @@
 
 (defun gtk-action-set-icon-name (action icon-name)
  #+cl-cffi-gtk-documentation
- "@version{2013-8-11}
+ "@version{2013-12-15}
   @argument[action]{a @class{gtk-action} object}
   @argument[icon-name]{the icon name to set}
-  @begin{short}
-    Sets the icon name on @arg{action}.
-  @end{short}
+  @short{Sets the icon name on @arg{action}.}
 
   Since 2.16
   @see-class{gtk-action}
@@ -1296,12 +1289,10 @@
 
 (defun gtk-action-get-icon-name (action)
  #+cl-cffi-gtk-documentation
- "@version{2013-8-11}
+ "@version{2013-12-15}
   @argument[action]{a @class{gtk-action} object}
   @return{The icon name.}
-  @begin{short}
-    Gets the icon name of @arg{action}.
-  @end{short}
+  @short{Gets the icon name of @arg{action}.}
 
   Since 2.16
   @see-class{gtk-action}
@@ -1312,141 +1303,123 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_action_set_visible_horizontal ()
-;;;
-;;; void gtk_action_set_visible_horizontal (GtkAction *action,
-;;;                                         gboolean visible_horizontal);
-;;;
-;;; Sets whether action is visible when horizontal
-;;;
-;;; action :
-;;;     a GtkAction
-;;;
-;;; visible_horizontal :
-;;;     whether the action is visible horizontally
-;;;
-;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-action-set-visible-horizontal))
 
 (defun gtk-action-set-visible-horizontal (action visible-horizontal)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-15}
+  @argument[action]{a @class{gtk-action} object}
+  @argument[visible-horizontal]{whether the action is visible horizontally}
+  @short{Sets whether @arg{action} is visible when horizontal.}
+
+  Since 2.16
+  @see-class{gtk-action}
+  @see-function{gtk-action-get-visible-horizontal}"
   (setf (gtk-action-visible-horizontal action) visible-horizontal))
 
 (export 'gtk-action-set-visible-horizontal)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_action_get_visible_horizontal ()
-;;;
-;;; gboolean gtk_action_get_visible_horizontal (GtkAction *action);
-;;;
-;;; Checks whether action is visible when horizontal
-;;;
-;;; action :
-;;;     a GtkAction
-;;;
-;;; Returns :
-;;;     whether action is visible when horizontal
-;;;
-;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-action-get-visible-horizontal))
 
 (defun gtk-action-get-visible-horizontal (action)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-15}
+  @argument[action]{a @class{gtk-action} object}
+  @return{Whether @arg{action} is visible when horizontal.}
+  @short{Checks whether @arg{action} is visible when horizontal.}
+
+  Since 2.16
+  @see-class{gtk-action}
+  @see-function{gtk-action-set-visible-horizontal}"
   (gtk-action-visible-horizontal action))
 
 (export 'gtk-action-get-visible-horizontal)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_action_set_visible_vertical ()
-;;;
-;;; void gtk_action_set_visible_vertical (GtkAction *action,
-;;;                                       gboolean visible_vertical);
-;;;
-;;; Sets whether action is visible when vertical
-;;;
-;;; action :
-;;;     a GtkAction
-;;;
-;;; visible_vertical :
-;;;     whether the action is visible vertically
-;;;
-;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-action-set-visible-vertical))
 
 (defun gtk-action-set-visible-vertical (action visible-vertical)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-15}
+  @argument[action]{a @class{gtk-action} object}
+  @argument[visible-vertical]{whether the action is visible vertically}
+  @short{Sets whether @arg{action} is visible when vertical.}
+
+  Since 2.16
+  @see-class{gtk-action}
+  @see-function{gtk-action-get-visible-vertical}"
   (setf (gtk-action-visible-vertical action) visible-vertical))
 
 (export 'gtk-action-set-visible-vertical)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_action_get_visible_vertical ()
-;;;
-;;; gboolean gtk_action_get_visible_vertical (GtkAction *action);
-;;;
-;;; Checks whether action is visible when horizontal
-;;;
-;;; action :
-;;;     a GtkAction
-;;;
-;;; Returns :
-;;;     whether action is visible when horizontal
-;;;
-;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-action-get-visible-vertical))
 
 (defun gtk-action-get-visible-vertical (action)
+ #+cl-cffi-gtk-documentation
+ "@version{2014-12-15}
+  @argument[action]{a @class{gtk-action} object}
+  @return{Whether @arg{action} is visible when horizontal.}
+  @short{Checks whether @arg{action} is visible when horizontal.}
+
+  Since 2.16
+  @see-class{gtk-action}
+  @see-function{gtk-action-set-visible-vertical}"
   (gtk-action-visible-vertical action))
 
 (export 'gtk-action-get-visible-vertical)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_action_set_is_important ()
-;;;
-;;; void gtk_action_set_is_important (GtkAction *action, gboolean is_important);
-;;;
-;;; Sets whether the action is important, this attribute is used primarily by
-;;; toolbar items to decide whether to show a label or not.
-;;;
-;;; action :
-;;;     the action object
-;;;
-;;; is_important :
-;;;     TRUE to make the action important
-;;;
-;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-action-set-is-important))
 
 (defun gtk-action-set-is-important (action is-important)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-15}
+  @argument[action]{the action object}
+  @argument[is-important]{@em{true} to make the action important}
+  @begin{short}
+    Sets whether the action is important, this attribute is used primarily by
+    toolbar items to decide whether to show a label or not.
+  @end{short}
+
+  Since 2.16
+  @see-class{gtk-action}
+  @see-function{gtk-action-get-is-important}"
   (setf (gtk-action-is-important action) is-important))
 
 (export 'gtk-action-set-is-important)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_action_get_is_important ()
-;;;
-;;; gboolean gtk_action_get_is_important (GtkAction *action);
-;;;
-;;; Checks whether action is important or not
-;;;
-;;; action :
-;;;     a GtkAction
-;;;
-;;; Returns :
-;;;     whether action is important
-;;;
-;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-action-get-is-important))
 
 (defun gtk-action-get-is-important (action)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-15}
+  @argument[action]{a @class{gtk-action} object}
+  @return{Whether @arg{action} is important.}
+  @short{Checks whether @arg{action} is important or not.}
+
+  Since 2.16
+  @see-class{gtk-action}
+  @see-function{gtk-action-set-is-important}"
   (gtk-action-is-important action))
 
 (export 'gtk-action-get-is-important)

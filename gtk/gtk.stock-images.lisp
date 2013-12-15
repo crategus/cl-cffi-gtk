@@ -321,7 +321,7 @@
   @end{short}
   @see-function{gtk-style-lookup-icon-set}
   @see-function{gtk-image-new-from-stock}"
-  (factory (g-object icon-factory)))
+  (factory (g-object gtk-icon-factory)))
 
 (export 'gtk-icon-factory-add-default)
 

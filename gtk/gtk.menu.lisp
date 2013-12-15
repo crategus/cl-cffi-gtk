@@ -729,15 +729,15 @@
   @see-class{gdk-device}
   @see-class{gtk-widget}
   @see-function{gtk-get-current-event-time}"
-  (%gtk-menu-popup menu
-                   device
-                   parent-menu-shell
-                   parent-menu-item
-                   (callback gtk-menu-position-func-cb)
-                   (glib:allocate-stable-pointer func)
-                   (callback glib:stable-pointer-destroy-notify-cb)
-                   button
-                   activate-time))
+  (%gtk-menu-popup-for-device menu
+                              device
+                              parent-menu-shell
+                              parent-menu-item
+                              (callback gtk-menu-position-func-cb)
+                              (glib:allocate-stable-pointer func)
+                              (callback glib:stable-pointer-destroy-notify-cb)
+                              button
+                              activate-time))
 
 (export 'gtk-menu-popup-for-device)
 

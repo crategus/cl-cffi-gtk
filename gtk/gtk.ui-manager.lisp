@@ -225,6 +225,8 @@
                                                   (ui-d-var item)
                                                   child-var props))))))
        ,@body)))
+       
+(export 'let-ui)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkUIManager
@@ -775,6 +777,12 @@
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_ui_manager_get_accel_group" gtk-ui-manager-get-accel-group)
+    (g-object gtk-accel-group)
+  (manager (g-object gtk-ui-manager)))
+
+(export 'gtk-ui-manager-get-accel-group)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_ui_manager_get_widget ()
 ;;; ----------------------------------------------------------------------------
@@ -807,7 +815,7 @@
 
   Since 2.4
   @see-class{gtk-ui-manager}"
-  (ui-manager (g-object gtk-widget))
+  (ui-manager (g-object gtk-ui-manager))
   (path :string))
 
 (export 'gtk-ui-manager-get-widget)
@@ -831,7 +839,7 @@
   @end{short}
 
   Since 2.4"
-  (ui-manager g-object)
+  (ui-manager (g-object gtk-ui-manager))
   (types gtk-ui-manager-item-type))
 
 (export 'gtk-ui-manager-toplevels)
@@ -857,7 +865,7 @@
 
   Since 2.4
   @see-function{gtk-ui-manager-get-widget}"
-  (ui-manager g-object)
+  (ui-manager (g-object gtk-ui-manager))
   (path :string))
 
 (export 'gtk-ui-manager-action)
@@ -896,7 +904,7 @@
 (defcfun ("gtk_ui_manager_add_ui_from_string"
           %gtk-ui-manager-add-ui-from-string)
     :uint
-  (ui-manager g-object)
+  (ui-manager (g-object gtk-ui-manager))
   (buffer :string)
   (length g-ssize)
   (error :pointer))
@@ -928,7 +936,7 @@
 
 (defcfun ("gtk_ui_manager_add_ui_from_file" %gtk-ui-manager-add-ui-from-file)
     :uint
-  (ui-manager g-object)
+  (ui-manager (g-object gtk-ui-manager))
   (file-name :string)
   (error :pointer))
 
@@ -968,7 +976,7 @@
   @end{short}
 
   Since 2.4"
-  (ui-manager g-object))
+  (ui-manager (g-object gtk-ui-manager)))
 
 (export 'gtk-ui-manager-new-merge-id)
 
@@ -1002,7 +1010,7 @@
   inserted before or after this item, depending on top.
 
   Since 2.4"
-  (ui-manager g-object)
+  (ui-manager (g-object gtk-ui-manager))
   (merge-id :uint)
   (path :string)
   (name :string)
@@ -1050,13 +1058,20 @@
 ;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
+(declaim (inline gtk-ui-manager-get-ui))
+
+(defun gtk-ui-manager-get-ui (manager)
+  (gtk-ui-manager-ui manager))
+
+(export 'gtk-ui-manager-get-ui)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_ui_manager_ensure_update ()
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_ui_manager_ensure_update" gtk-ui-manager-ensure-update) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-6-2}
+ "@version{2013-12-15}
   @argument[manager]{a @class{gtk-ui-manager} object}
   @begin{short}
     Makes sure that all pending updates to the UI have been completed.
@@ -1075,8 +1090,9 @@
    gtk_ui_manager_ensure_update (merge);
    gtk_widget_show (window);
   @end{pre}
-  Since 2.4"
-  (ui-manager g-object))
+  Since 2.4
+  @see-class{gtk-ui-manager}"
+  (ui-manager (g-object gtk-ui-manager)))
 
 (export 'gtk-ui-manager-ensure-update)
 

@@ -421,7 +421,7 @@ use-action-appearance property ...
 (defcfun ("gtk_activatable_do_set_related_action"
            gtk-activatable-do-set-related-action) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-4-7}
+ "@version{2013-12-15}
   @argument[activatable]{a @class{gtk-activatable} object}
   @argument[action]{the @class{gtk-action} object to set}
   @begin{short}
@@ -429,9 +429,9 @@ use-action-appearance property ...
     implementors.
   @end{short}
 
-  When implementing @class{gtk-activatable} interface you must call this when
-  handling changes of the @code{\"related-action\"} property, and you must also
-  use this to break references in @code{GObject->dispose()}.
+  When implementing the @class{gtk-activatable} interface you must call this
+  when handling changes of the @code{\"related-action\"} property, and you must
+  also use this to break references in @code{GObject->dispose()}.
 
   This function adds a reference to the currently set related action for you,
   it also makes sure the @code{GtkActivatable->update()} method is called when
@@ -443,7 +443,10 @@ use-action-appearance property ...
     @class{gtk-action} object property, since this function uses
     @fun{gtk-activatable-get-related-action} to retrieve the previous action.
 
-  Since 2.16"
+  Since 2.16
+  @see-class{gtk-activatable}
+  @see-class{gtk-action}
+  @see-function{gtk-activatable-get-related-action}"
   (activatable (g-object gtk-activatable))
   (action (g-object gtk-action)))
 
@@ -457,7 +460,7 @@ use-action-appearance property ...
 
 (defun gtk-activatable-get-related-action (activatable)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-7}
+ "@version{2013-12-15}
   @argument[activatable]{a @class{gtk-activatable} object}
   @return{The related @class{gtk-action} object if one is set.}
   @short{Gets the related @class{gtk-action} object for @arg{activatable}.}
@@ -471,25 +474,22 @@ use-action-appearance property ...
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_activatable_get_use_action_appearance ()
-;;;
-;;; gboolean gtk_activatable_get_use_action_appearance
-;;;                                               (GtkActivatable *activatable);
-;;;
-;;; Gets whether this activatable should reset its layout and appearance when
-;;; setting the related action or when the action changes appearance.
-;;;
-;;; activatable :
-;;;     a GtkActivatable
-;;;
-;;; Returns :
-;;;     whether activatable uses its actions appearance.
-;;;
-;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-activatable-get-use-action-appearance))
 
 (defun gtk-activatable-get-use-action-appearance (activatable)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-15}
+  @argument[activatable]{a @class{gtk-activatable} object}
+  @return{Whether @arg{activatable} uses its actions appearance.}
+  @begin{short}
+    Gets whether this activatable should reset its layout and appearance when
+    setting the related action or when the action changes appearance.
+  @end{short}
+
+  Since 2.16
+  @see-class{gtk-activatable}"
   (gtk-activatable-use-action-appearance activatable))
 
 (export 'gtk-activatable-get-use-action-appearance)
@@ -501,7 +501,7 @@ use-action-appearance property ...
 (defcfun ("gtk_activatable_sync_action_properties"
            gtk-activatable-sync-action-properties) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-29}
+ "@version{2013-12-15}
   @argument[activatable]{a @class{gtk-activatable} object}
   @argument[action]{the related @class{gtk-action} or @code{nil}}
   @begin{short}
@@ -510,7 +510,9 @@ use-action-appearance property ...
     by the implementing class when @code{\"use-action-appearance\"} changes.
   @end{short}
 
-  Since 2.16"
+  Since 2.16
+  @see-class{gtk-activatable}
+  @see-class{gtk-action}"
   (activatable (g-object gtk-activatable))
   (action (g-object gtk-action)))
 
@@ -518,60 +520,57 @@ use-action-appearance property ...
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_activatable_set_related_action ()
-;;;
-;;; void gtk_activatable_set_related_action (GtkActivatable *activatable,
-;;;                                          GtkAction *action);
-;;;
-;;; Sets the related action on the activatable object.
-;;;
-;;; Note
-;;;
-;;; GtkActivatable implementors need to handle the "related-action" property and
-;;; call gtk_activatable_do_set_related_action() when it changes.
-;;;
-;;; activatable :
-;;;     a GtkActivatable
-;;;
-;;; action :
-;;;     the GtkAction to set
-;;;
-;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-activatable-set-related-action))
 
 (defun gtk-activatable-set-related-action (activatable action)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-15}
+  @argument[activatable]{a @class{gtk-activatable} object}
+  @argument[action]{the @class{gtk-action} object to set}
+  @begin{short}
+    Sets the related action on the activatable object.
+  @end{short}
+
+  @subheading{Note}
+    @class{gtk-activatable} implementors need to handle the
+    @code{\"related-action\"} property and call the function
+    @fun{gtk-activatable-do-set-related-action} when it changes.
+
+  Since 2.16
+  @see-class{gtk-activatable}
+  @see-class{gtk-action}
+  @see-fun{gtk-activatable-do-set-related-action}"
   (setf (gtk-activatable-related-action activatable) action))
 
 (export 'gtk-activatable-set-related-action)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_activatable_set_use_action_appearance ()
-;;;
-;;; void gtk_activatable_set_use_action_appearance (GtkActivatable *activatable,
-;;;                                                 gboolean use_appearance);
-;;;
-;;; Sets whether this activatable should reset its layout and appearance when
-;;; setting the related action or when the action changes appearance
-;;;
-;;; Note
-;;;
-;;; GtkActivatable implementors need to handle the "use-action-appearance"
-;;; property and call gtk_activatable_sync_action_properties() to update
-;;; activatable if needed.
-;;;
-;;; activatable :
-;;;     a GtkActivatable
-;;;
-;;; use_appearance :
-;;;     whether to use the actions appearance
-;;;
-;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-activatable-set-use-action-appearance))
 
 (defun gtk-activatable-set-use-action-appearance (activatable use-appearance)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-15}
+  @argument[activatable]{a @class{gtk-activatable} object}
+  @argument[use-appearance]{whether to use the actions appearance}
+  @begin{short}
+    Sets whether this activatable should reset its layout and appearance when
+    setting the related action or when the action changes appearance
+  @end{short}
+
+  @subheading{Note}
+    @class{gtk-activatable} implementors need to handle the
+    @code{\"use-action-appearance\"} property and call the function
+    @fun{gtk-activatable-sync-action-properties} to update @arg{activatable}
+    if needed.
+
+  Since 2.16
+  @see-class{gtk-activatable}
+  @see-function{gtk-activatable-sync-action-properties}"
   (setf (gtk-activatable-use-action-appearance activatable) use-appearance))
 
 (export 'gtk-activatable-set-use-action-appearance)

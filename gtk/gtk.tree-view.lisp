@@ -1866,14 +1866,16 @@
 
 (defcfun ("gtk_tree_view_expand_row" gtk-tree-view-expand-row) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-5-31}
+ "@version{2013-12-14}
   @argument[tree-view]{a @class{gtk-tree-view} widget}
   @argument[path]{path to a row}
   @argument[open-all]{whether to recursively expand, or just expand immediate
     children}
   @return{@em{True} if the row existed and had children.}
-  Opens the row so its children are visible."
-  (tree-view g-object)
+  Opens the row so its children are visible.
+  @see-class{gtk-tree-view}
+  @see-class{gtk-tree-path}"
+  (tree-view (g-object gtk-tree-view))
   (path (g-boxed-foreign gtk-tree-path))
   (open-all :boolean))
 
@@ -2645,7 +2647,7 @@
 
 (defcfun ("gtk_tree_view_get_dest_row_at_pos"
           %gtk-tree-view-get-dest-row-at-pos) :boolean
-  (tree_view (g-object tree-view))
+  (tree_view (g-object gtk-tree-view))
   (drag-x :int)
   (drag-y :int)
   (path :pointer)

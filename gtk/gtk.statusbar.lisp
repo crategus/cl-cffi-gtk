@@ -173,20 +173,21 @@
   (context-id :uint)
   (text :string))
 
-(defun gtk-statusbar-push (statusbar context text)
+(defun gtk-statusbar-push (statusbar context-id text)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-23}
+ "@version{2013-12-15}
   @argument[statusbar]{a @class{gtk-statusbar} widget}
-  @argument[context-id]{the message's context id, as returned by the function
+  @argument[context-id]{the message's context ID, as returned by the function
     @fun{gtk-statusbar-get-context-id}}
   @argument[text]{the message to add to the @arg{statusbar}}
-  @return{A message id that can be used with the function
+  @return{A message ID that can be used with the function
     @fun{gtk-statusbar-remove}.}
   Pushes a new message onto a statusbar's stack.
-  @see-function{gtk-statusbar-get-context-id}
-  @see-function{gtk-statusbar-remove}"
+  @see-class{gtk-statusbar}
+  @see-function{gtk-statusbar-remove}
+  @see-function{gtk-statusbar-get-context-id}"
   (%gtk-statusbar-push statusbar
-                       (gtk-statusbar-get-context-id statusbar context)
+                       context-id
                        text))
 
 (export 'gtk-statusbar-push)
@@ -199,20 +200,22 @@
   (statusbar (g-object gtk-statusbar))
   (context-id :uint))
 
-(defun gtk-statusbar-pop (statusbar context)
+(defun gtk-statusbar-pop (statusbar context-id)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-23}
+ "@version{2013-12-15}
   @argument[statusbar]{a @class{gtk-statusbar} widget}
   @argument[context-id]{a context identifier}
   @begin{short}
     Removes the first message in the @class{gtk-statusbar}'s stack with the
-    given context id.
+    given context ID.
   @end{short}
 
   Note that this may not change the displayed message, if the message at the
-  top of the stack has a different context id."
+  top of the stack has a different context ID.
+  @see-class{gtk-statusbar}
+  @see-function{gtk-statusbar-push}"
   (%gtk-statusbar-pop statusbar
-                      (gtk-statusbar-get-context-id statusbar context)))
+                      context-id))
 
 (export 'gtk-statusbar-pop)
 

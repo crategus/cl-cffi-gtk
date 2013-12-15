@@ -1411,20 +1411,26 @@
 (defcfun ("gtk_tree_model_get_iter_from_string"
           %gtk-tree-model-get-iter-from-string)
     :boolean
-  (tree-model g-object)
+  (tree-model (g-object gtk-tree-model))
   (iter (g-boxed-foreign gtk-tree-iter))
   (path-string :string))
 
 (defun gtk-tree-model-get-iter-from-string (tree-model path-string)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-12}
+ "@version{2013-12-15}
   @argument[tree-model]{a @class{gtk-tree-model} object}
-  @argument[iter]{an uninitialized @class{gtk-tree-iter} object}
   @argument[path-string]{a string representation of a @class{gtk-tree-path}
     object}
-  @return{@em{True}, if iter was set.}
-  Sets iter to a valid iterator pointing to @arg{path-string}, if it exists.
-  Otherwise, iter is left invalid and @code{nil} is returned."
+  @begin{return}
+    @code{iter} -- the @class{gtk-tree-iter} object
+  @end{return}
+  @begin{short}
+    Returns @arg{iter} a valid iterator pointing to @arg{path-string}, if it
+    exists.
+  @end{short}
+  Otherwise, @code{nil} is returned.
+  @see-class{gtk-tree-model}
+  @see-class{gtk-tree-iter}"
   (let ((iter (make-gtk-tree-iter)))
     (if (%gtk-tree-model-get-iter-from-string tree-model iter path-string)
         iter

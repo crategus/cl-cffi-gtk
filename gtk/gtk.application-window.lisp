@@ -60,7 +60,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-application-window 'type)
- "@version{2013-10-2}
+ "@version{2013-12-14}
   @begin{short}
     @sym{gtk-application-window} is a @class{gtk-window} subclass that offers
     some extra functionality for better integration with @class{gtk-application}
@@ -101,7 +101,7 @@
 
   @b{Example:} A @class{gtk-application-window} with a menubar
   @begin{pre}
- ;; Intitialize the the menubar
+ ;; Intitialize the menubar
  (let ((builder (make-instance 'gtk-builder)))
    ;; Read the menus from a string
    (gtk-builder-add-from-string
