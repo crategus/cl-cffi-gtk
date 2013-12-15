@@ -44,6 +44,7 @@
                (:file "glib.utils")          ; Miscellaneous Utility Functions
                (:file "glib.option-group")   ; Parses commandline options
                (:file "glib.key-value")      ; parses .ini-like config files
+               (:file "glib.random")         ; Pseudo-random number generator
               )
   :depends-on (:cffi
                :iterate
