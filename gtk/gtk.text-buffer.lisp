@@ -246,7 +246,7 @@
       @begin[code]{table}
         @entry[buffer]{The object which received the signal.}
         @entry[location]{Position to insert @arg{anchor} in @arg{buffer}.}
-        @entry[anchor]{The @class{gtk-textchild-anchor} to be inserted.}
+        @entry[anchor]{The @class{gtk-text-child-anchor} to be inserted.}
       @end{table}
     @subheading{The \"insert-pixbuf\" signal}
       @begin{pre}
