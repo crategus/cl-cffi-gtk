@@ -1310,6 +1310,12 @@
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_print_settings_get_number_up_layout"
+           gtk-print-settings-get-number-up-layout) gtk-number-up-layout
+  (settings (g-object gtk-print-settings)))
+
+(export 'gtk-print-settings-get-number-up-layout)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_settings_set_number_up_layout ()
 ;;;
@@ -1327,6 +1333,13 @@
 ;;;
 ;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_settings_set_number_up_layout"
+           gtk-print-settings-set-number-up-layout) :void
+  (settings (g-object gtk-print-settings))
+  (number-up-layout gtk-number-up-layout))
+
+(export 'gtk-print-settings-set-number-up-layout)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GTK_PRINT_SETTINGS_RESOLUTION
@@ -1350,6 +1363,12 @@
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_print_settings_get_resolution" gtk-print-settings-get-resolution)
+    :int
+  (settings (g-object gtk-print-settings)))
+
+(export 'gtk-print-settings-get-resolution)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_settings_set_resolution ()
 ;;;
@@ -1367,6 +1386,13 @@
 ;;;
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_settings_set_resolution" gtk-print-settings-set-resolution)
+    :void
+  (settings (g-object gtk-print-settings))
+  (resolution :int))
+
+(export 'gtk-print-settings-set-resolution)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_settings_set_resolution_xy ()
@@ -1390,6 +1416,14 @@
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_print_settings_set_resolution_xy"
+           gtk-print-settings-set-resolution-xy) :void
+  (settings (g-object gtk-print-settings))
+  (resolution-x :int)
+  (resolution-y :int))
+
+(export 'gtk-print-settings-set-resolution-xy)
+
 ;;; ----------------------------------------------------------------------------
 ;;; GTK_PRINT_SETTINGS_RESOLUTION_X
 ;;;
@@ -1411,6 +1445,12 @@
 ;;;
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_settings_get_resolution_x"
+           gtk-print-settings-get-resolution-x) :int
+  (settings (g-object gtk-print-settings)))
+
+(export 'gtk-print-settings-get-resolution-x)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GTK_PRINT_SETTINGS_RESOLUTION_Y
@@ -1434,6 +1474,12 @@
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_print_settings_get_resolution_y"
+           gtk-print-settings-get-resolution-y) :int
+  (settings (g-object gtk-print-settings)))
+
+(export 'gtk-print-settings-get-resolution-y)
+
 ;;; ----------------------------------------------------------------------------
 ;;; GTK_PRINT_SETTINGS_PRINTER_LPI
 ;;;
@@ -1456,6 +1502,12 @@
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_print_settings_get_printer_lpi"
+           gtk-print-settings-get-printer-lpi) :double
+  (settings (g-object gtk-print-settings)))
+
+(export 'gtk-print-settings-get-printer-lpi)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_settings_set_printer_lpi ()
 ;;;
@@ -1472,6 +1524,13 @@
 ;;;
 ;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_settings_set_printer_lpi"
+           gtk-print-settings-set-printer-lpi) :void
+  (settings (g-object gtk-print-settings))
+  (lpi :double))
+
+(export 'gtk-print-settings-set-printer-lpi)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GTK_PRINT_SETTINGS_SCALE
@@ -1495,6 +1554,11 @@
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_print_settings_get_scale" gtk-print-settings-get-scale) :double
+  (settings (g-object gtk-print-settings)))
+
+(export 'gtk-print-settings-get-scale)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_settings_set_scale ()
 ;;;
@@ -1511,6 +1575,12 @@
 ;;;
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_settings_set_scale" gtk-print-settings-set-scale) :void
+  (settings (g-object gtk-print-settings))
+  (scale :double))
+
+(export 'gtk-print-settings-set-scale)
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkPrintPages
@@ -1564,6 +1634,12 @@
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_print_settings_get_print_pages"
+           gtk-print-settings-get-print-pages) gtk-print-pages
+  (settings (g-object gtk-print-pages)))
+
+(export 'gtk-print-settings-get-print-pages)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_settings_set_print_pages ()
 ;;;
@@ -1580,6 +1656,13 @@
 ;;;
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_settings_set_print_pages"
+           gtk-print-settings-set-print-pages) :void
+  (settings (g-object gtk-print-settings))
+  (pages gtk-print-pages))
+
+(export 'gtk-print-settings-set-print-pages)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkPageRange
@@ -1685,6 +1768,12 @@
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_print_settings_get_page_set" gtk-print-settings-get-page-set)
+    gtk-page-set
+  (settings (g-object gtk-print-settings)))
+
+(export 'gtk-print-settings-get-page-set)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_settings_set_page_set ()
 ;;;
@@ -1701,6 +1790,13 @@
 ;;;
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_settings_set_page_set" gtk-print-settings-set-page-set)
+    :void
+  (settings (g-object gtk-print-settings))
+  (page-set gtk-page-set))
+
+(export 'gtk-print-settings-set-page-set)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GTK_PRINT_SETTINGS_DEFAULT_SOURCE
@@ -1725,6 +1821,12 @@
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_print_settings_get_default_source"
+           gtk-print-settings-get-default-source) :string
+  (settings (g-object gtk-print-settings)))
+
+(export 'gtk-print-settings-get-default-source)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_settings_set_default_source ()
 ;;;
@@ -1741,6 +1843,13 @@
 ;;;
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_settings_set_default_source"
+           gtk-print-settings-set-default-source) :void
+  (settings (g-object gtk-print-settings))
+  (source :string))
+
+(export 'gtk-print-settings-set-default-source)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GTK_PRINT_SETTINGS_MEDIA_TYPE
@@ -1766,6 +1875,12 @@
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_print_settings_get_media_type"
+           gtk-print-settings-get-media-type) :string
+  (settings (g-object gtk-print-settings)))
+
+(export 'gtk-print-settings-get-media-type)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_settings_set_media_type ()
 ;;;
@@ -1784,6 +1899,13 @@
 ;;;
 ;;; Since 2.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_print_settings_set_media_type"
+           gtk-print-settings-set-media-type) :void
+  (settings (g-object gtk-print-settings))
+  (media-type :string))
+
+(export 'gtk-print-settings-set-media-type)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GTK_PRINT_SETTINGS_DITHER

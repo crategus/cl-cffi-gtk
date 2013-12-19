@@ -1317,9 +1317,9 @@
 (defcfun ("gtk_text_buffer_get_selection_bound"
            gtk-text-buffer-get-selection-bound) (g-object gtk-text-mark)
  #+cl-cffi-gtk-documentation
- "@version{2013-9-10}
+ "@version{2013-12-17}
   @argument[buffer]{a @class{gtk-text-buffer} object}
-  @return{Selection bound mark.}
+  @return{Selection bound mark of type @class{gtk-text-mark}.}
   @begin{short}
     Returns the mark that represents the selection bound. Equivalent to calling
     the function @fun{gtk-text-buffer-get-mark} to get the mark named
@@ -1334,11 +1334,12 @@
   function for handling the selection, if you just want to know whether there
   is a selection and what its bounds are.
   @see-class{gtk-text-buffer}
+  @see-class{gtk-text-mark}
   @see-function{gtk-text-buffer-get-mark}
   @see-function{gtk-text-buffer-get-selection-bounds}"
   (buffer (g-object gtk-text-buffer)))
 
-(export 'gtk-text-buffer-selection-bound)
+(export 'gtk-text-buffer-get-selection-bound)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_get_has_selection ()

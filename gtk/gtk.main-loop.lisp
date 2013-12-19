@@ -905,12 +905,14 @@
 
 (defcfun ("gtk_get_event_widget" gtk-get-event-widget) g-object
  #+cl-cffi-gtk-documentation
- "@version{2013-3-11}
+ "@version{2013-12-17}
   @argument[event]{a @class{gdk-event} event}
   @return{The widget that originally received @arg{event}, or @code{nil}.}
-  If @arg{event} is @code{nil} or the @arg{event} was not associated with any
-  widget, returns @code{nil}, otherwise returns the widget that received the
-  @arg{event} originally."
+  If @arg{event} is @code{nil} or @arg{event} was not associated with any
+  widget, returns @code{nil}, otherwise returns the widget that received
+  @arg{event} originally.
+  @see-class{gdk-event}
+  @see-function{gtk-progate-event}"
   (event (g-boxed-foreign gdk-event)))
 
 (export 'gtk-get-event-widget)

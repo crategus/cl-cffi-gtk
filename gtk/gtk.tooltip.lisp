@@ -245,12 +245,12 @@
 (defcfun ("gtk_tooltip_set_icon_from_gicon" gtk-tooltip-set-icon-from-gicon)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2013-8-11}
+ "@version{2013-12-17}
   @argument[tooltip]{a @class{gtk-tooltip} widget}
   @argument[gicon]{a @class{g-icon} representing the icon, or @code{nil}}
   @argument[size]{a stock icon size of type @symbol{gtk-icon-size}}
   @begin{short}
-    Sets the icon of the @arg{tooltip}, which is in front of the text, to be the
+    Sets the icon of @arg{tooltip}, which is in front of the text, to be the
     icon indicated by @arg{gicon} with the size indicated by @arg{size}. If
     @arg{gicon} is @code{nil}, the image will be hidden.
   @end{short}
@@ -263,7 +263,7 @@
   (gicon (g-object g-icon))
   (size gtk-icon-size))
 
-(export 'gtk-tooltip-icon-from-gicon)
+(export 'gtk-tooltip-set-icon-from-gicon)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tooltip_set_custom ()

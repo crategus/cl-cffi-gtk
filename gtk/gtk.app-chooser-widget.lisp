@@ -547,7 +547,7 @@
 
   Since 3.0
   @see-class{gtk-app-chooser-widget}
-  @see-function{gtk-app-chooser-set-show-all}"
+  @see-function{gtk-app-chooser-widget-set-show-all}"
   (gtk-app-chooser-widget-show-all self))
 
 (export 'gtk-app-chooser-widget-get-show-all)

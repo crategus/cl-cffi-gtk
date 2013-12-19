@@ -1707,14 +1707,15 @@
 (defcfun ("gtk_tree_view_column_queue_resize"
            gtk-tree-view-column-queue-resize) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-5-16}
+ "@version{2013-12-17}
   @argument[tree-column]{a @class{gtk-tree-view-column} object}
   @begin{short}
     Flags the column, and the cell renderers added to this column, to have their
     sizes renegotiated.
   @end{short}
 
-  Since 2.8"
+  Since 2.8
+  @see-class{gtk-tree-view-column-queue-resize}"
   (tree-column (g-object gtk-tree-view-column)))
 
 (export 'gtk-tree-view-column-queue-resize)

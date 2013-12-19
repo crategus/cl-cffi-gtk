@@ -2187,14 +2187,14 @@
 
 (defun gtk-entry-get-layout-offsets (entry)
  #+cl-cffi-gtk-documentation
- "@version{2013-8-27}
+ "@version{2013-12-17}
   @argument[entry]{a @class{gtk-entry} widget}
   @begin{return}
     @code{x} -- x offset of layout, or @code{nil} @br{}
     @code{y} -- y offset of layout, or @code{nil}
   @end{return}
   @begin{short}
-    Obtains the position of the @class{pango-layout} used to render text in the
+    Obtains the position of the @class{pango-layout} used to render text in
     @arg{entry}, in widget coordinates.
   @end{short}
   Useful if you want to line up the text in an entry with some other text, e. g.
@@ -2225,7 +2225,7 @@
     (values (mem-ref x :int)
             (mem-ref y :int))))
 
-(export 'gtk-entry-get-layout-offset)
+(export 'gtk-entry-get-layout-offsets)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_entry_layout_index_to_text_index ()

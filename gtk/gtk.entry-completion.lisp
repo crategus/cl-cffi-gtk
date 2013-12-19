@@ -1030,8 +1030,8 @@
 
 (defun gtk-entry-completion-set-popup-set-width (completion popup-set-width)
  #+cl-cffi-gtk-documentation
- "@version{2013-11-30}
-  @argument[completion]{a @class{gk-entry-completion} object}
+ "@version{2013-12-17}
+  @argument[completion]{a @class{gtk-entry-completion} object}
   @argument[popup-set-width]{@em{true} to make the width of the popup the same
     as the entry}
   @begin{short}

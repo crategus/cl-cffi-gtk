@@ -158,10 +158,11 @@
 
 (defcfun ("gtk_accel_map_add_entry" gtk-accel-map-add-entry) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-11-29}
-  @argument[accel-path]{valid accelerator path}
-  @argument[accel-key]{the accelerator key}
-  @argument[accel-mods]{the accelerator modifiers}
+ "@version{2013-12-19}
+  @argument[accel-path]{valid accelerator path of type @code{:string}}
+  @argument[accel-key]{the accelerator key of type @code{:uint}}
+  @argument[accel-mods]{the accelerator modifiers of type
+    @symbol{gdk-modifier-type}}
   @begin{short}
     Registers a new accelerator with the global accelerator map.
   @end{short}
@@ -169,7 +170,7 @@
   canonical @arg{accel-key} and @arg{accel-mods} for this path. To change the
   accelerator during runtime programatically, use the function
   @fun{gtk-accel-map-change-entry}.
-  @see-class{gtk-accl-map}
+  @see-class{gtk-accel-map}
   @see-symbol{gdk-modifier-type}
   @see-function{gtk-accel-map-change-entry}"
   (accel-path :string)
@@ -188,12 +189,13 @@
 
 (defun gtk-accel-map-lookup-entry (accel-path)
  #+cl-cffi-gtk-documentation
- "@version{2013-11-29}
-  @argument[accel-path]{a valid accelerator path}
+ "@version{2013-12-19}
+  @argument[accel-path]{a valid accelerator path of @code{:string}}
   @begin{return}
-    @code{accel-key} -- the accelerator key @br{}
-    @code{accel-mods} -- the accelerator modifiers @br{}
-    @code{addel-flags} -- the accelerator flags @br{}
+    @code{accel-key} -- the accelerator key of type @code{:uint} @br{}
+    @code{accel-mods} -- the accelerator modifiers @symbol{gdk-modifier-type}
+    @br{}
+    @code{accel-flags} -- the accelerator flags of type @code{:uint} @br{}
     if @arg{accel-path} is known, @code{nil} otherwise
   @end{return}
   Looks up the accelerator entry for @arg{accel-path}.
@@ -214,10 +216,11 @@
 
 (defcfun ("gtk_accel_map_change_entry" gtk-accel-map-change-entry) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-11-29}
-  @argument[accel-path]{a valid accelerator path}
-  @argument[accel-key]{the new accelerator key}
-  @argument[accel-mods]{the new accelerator modifiers}
+ "@version{2013-12-19}
+  @argument[accel-path]{a valid accelerator path of type @code{:string}}
+  @argument[accel-key]{the new accelerator key of type @code{:uint}}
+  @argument[accel-mods]{the new accelerator modifiers of type
+    @symbol{gdk-modifier-type}}
   @argument[replace]{@em{true} if other accelerators may be deleted upon
     conflicts}
   @begin{return}
@@ -405,16 +408,17 @@
 
 (defcfun ("gtk_accel_map_get" gtk-accel-map-get) (g-object gtk-accel-map)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-17}
+ "@version{2013-12-19}
   @return{The global @class{gtk-accel-map} object.}
   @begin{short}
-    Gets the singleton global @class{gtk-accel-map} object. This object is
-    useful only for notification of changes to the accelerator map via the
-    \"changed\" signal; it is not a parameter to the other accelerator map
-    functions.
+    Gets the singleton global @class{gtk-accel-map} object.
   @end{short}
+  This object is useful only for notification of changes to the accelerator map
+  via the \"changed\" signal; it is not a parameter to the other accelerator
+  map functions.
 
-  Since 2.4")
+  Since 2.4
+  @see-class{gtk-accel-map}")
 
 (export 'gtk-accel-map-get)
 
@@ -424,8 +428,8 @@
 
 (defcfun ("gtk_accel_map_lock_path" gtk-accel-map-lock-path) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-11-29}
-  @argument[accel-path]{a valid accelerator path}
+ "@version{2013-12-19}
+  @argument[accel-path]{a valid accelerator path of type @code{:string}}
   @begin{short}
     Locks the given accelerator path.
   @end{short}
@@ -461,8 +465,8 @@
 
 (defcfun ("gtk_accel_map_unlock_path" gtk-accel-map-unlock-path) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-11-29}
-  @argument[accel-path]{a valid accelerator path}
+ "@version{2013-12-19}
+  @argument[accel-path]{a valid accelerator path of type @code{:string}}
   @begin{short}
     Undoes the last call to the function @fun{gtk-accel-map-lock-path} on this
     @arg{accel-path}.

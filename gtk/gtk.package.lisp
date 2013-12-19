@@ -86,7 +86,7 @@
 
       Before using GTK+, it needs to be initialized; initialization connects to
       the window system display, and parses some standard command line
-      arguments. In the C library the @code{gtk_init()} macro initializes GTK+.
+      arguments. In the C library the macro @code{gtk_init()} initializes GTK+.
       In the Lisp binding to GTK+, GTK+ is initialized, when loading the
       @code{cl-cffi-gtk} library. Therefore, no functions are exported, which
       initialize GTK+.
@@ -97,12 +97,12 @@
       \"wakes up\" and delivers an event to GTK+. GTK+ forwards the event to one
       or more widgets.
 
-      In the C library the main loop is executed with @code{gtk_main()}. In the
-      Lisp binding this function is implemented as @fun{gtk-main}, but in
-      general it is not used. The @code{gtk_main()} function is replaced with
-      the @fun{within-main-loop} macro, which does all necessary work to run the
-      main loop. See the example for a typical main function in the Lisp
-      binding.
+      In the C library the main loop is executed with the function
+      @code{gtk_main()}. In the Lisp binding this function is implemented as
+      the function @fun{gtk-main}, but in general it is not used. The function
+      @code{gtk_main()} is replaced with the macro @fun{within-main-loop}, which
+      does all necessary work to run the main loop. See the example for a
+      typical main function in the Lisp binding.
 
       When widgets receive an event, they frequently emit one or more signals.
       Signals notify your program that \"something interesting happened\" by
@@ -122,7 +122,7 @@
     (let (;; Create the main window.
           (window (gtk-window-new :toplevel)))
 
-      ;; Set up our GUI elements
+      ;; Set up the GUI elements
       ...
 
       ;; Show the application window.

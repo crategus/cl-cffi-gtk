@@ -7,7 +7,7 @@ Content from the GTK+ 3.6.4 Reference Manual
 
 GTK+ Core Reference
 
-    gtk.main-loop.lisp               - Main loop and Events        - GTK+ 3.6.4&
+    gtk.main-loop.lisp               - Main loop and Events        - GTK+ 3.8.8&
     gtk.version.lisp                 - Version Information         - GTK+ 3.6.4
     gtk.accel-group.lisp             - Accelerator Groups          - GTK+ 3.6.4&
     gtk.accel-map.lisp               - Accelerator Maps            - GTK+ 3.6.4&
@@ -170,7 +170,7 @@ GTK+ Widgets and Objects
     gtk.action-group.lisp            - GtkActionGroup              - GTK+ 3.6.4&
     gtk.action.lisp                  - GtkAction                   - GTK+ 3.8.8
     gtk.toggle-action.lisp           - GtkToggleAction             - GTK+ 3.8.8
-    gtk.radio-action.lisp            - GtkRadioAction              - GTK+ 3.6.4
+    gtk.radio-action.lisp            - GtkRadioAction              - GTK+ 3.8.8
     gtk.recent-action.lisp           - GtkRecentAction             - GTK+ 3.8.8
     gtk.activatable.lisp             - GtkActivatable              - GTK+ 3.8.8
 
@@ -181,10 +181,10 @@ GTK+ Widgets and Objects
     gtk.color-chooser-widget.lisp    - GtkColorChooserWidget       - GTK+ 3.6.4
     gtk.color-chooser-dialog.lisp    - GtkColorChooserDialog       - GTK+ 3.6.4
     gtk.color-selection.lisp         - GtkColorSelection (**)      - GTK+ 3.6.4&
-    gtk.color-selection-dialog.lisp  - GtkColorSelectionDialog(**) - GTK+ 3.6.4&
+    gtk.color-selection-dialog.lisp  - GtkColorSelectionDialog(**) - GTK+ 3.6.4
     gtk.hsv.lisp                     - GtkHSV (**)                 - GTK+ 3.6.4
 
-    gtk.file-chooser.lisp            - GtkFileChooser              - GTK+ 3.8.7&
+    gtk.file-chooser.lisp            - GtkFileChooser              - GTK+ 3.8.8&
     gtk.file-chooser-button.lisp     - GtkFileChooserButton        - GTK+ 3.6.4
     gtk.file-chooser-dialog.lisp     - GtkFileChooserDialog        - GTK+ 3.8.7
     gtk.file-chooser-widget.lisp     - GtkFileChooserWidget        - GTK+ 3.6.4

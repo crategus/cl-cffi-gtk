@@ -173,18 +173,20 @@
 (setf (gethash 'gtk-accel-group-is-locked atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-accel-group-is-locked 'function)
- "@version{2013-7-6}
+ "@version{2013-12-18}
   Accessor of the slot @code{\"is-locked\"} of the @class{gtk-accel-group}
   class.
+  @see-class{gtk-accel-group}
   @see-function{gtk-accel-group-get-is-locked}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-accel-group-modifier-mask atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-accel-group-modifier-mask 'function)
- "@version{2013-7-6}
+ "@version{2013-12-18}
   Accessor of the slot @code{\"modifier-mask\"} of the @class{gtk-accel-group}
   class.
+  @see-class{gtk-accel-group}
   @see-function{gtk-accel-group-get-modifier-mask}")
 
 ;;; ----------------------------------------------------------------------------
