@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file is taken from the GDK 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GDK library.
+;;; Version 3.8.8 and modified to document the Lisp binding to the GDK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -44,13 +44,6 @@
 ;;;     gdk_color_equal
 ;;;     gdk_color_hash
 ;;;     gdk_color_to_string
-;;;
-;;; Description
-;;;
-;;; A GdkColor represents a color.
-;;;
-;;; When working with cairo, it is often more convenient to use a GdkRGBA
-;;; instead.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gdk)
@@ -67,13 +60,13 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gdk-color 'type)
- "@version{2013-6-4}
-  @short{A @sym{gdk-color} represents a color.}
+ "@version{2013-12-25}
+  @short{A @sym{gdk-color} structure represents a color.}
 
   The @sym{gdk-color} structure is used to describe a color, similar to the
   XColor structure used in the X11 drawing API.
   When working with cairo, it is often more convenient to use a @class{gdk-rgba}
-  instead.
+  structure instead.
   @begin{pre}
 (define-g-boxed-cstruct gdk-color \"GdkColor\"
   (pixel :uint32 :initform 0)
@@ -85,7 +78,7 @@
     @entry[pixel]{For allocated colors, the pixel value used to draw this
       color on the screen. Not used anymore.}
     @entry[red]{The red component of the color. This is a value between
-      @code{0} and @code{65535}, with @code{65535} indicating full intensity.}
+      0 and 65535, with 65535 indicating full intensity.}
     @entry[green]{The green component of the color.}
     @entry[blue]{The blue component of the color.}
   @end{table}
@@ -94,74 +87,79 @@
   @see-slot{gdk-color-pixel}
   @see-slot{gdk-color-red}
   @see-slot{gdk-color-green}
-  @see-slot{gdk-color-blue}")
+  @see-slot{gdk-color-blue}
+  @see-class{gdk-rgba}")
 
 (export (boxed-related-symbols 'gdk-color))
 
-;;; --- copy-gdk-color ---------------------------------------------------------
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Constructors for GdkColor structure
+;;;
+;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'copy-gdk-color 'function)
- "@version{2013-6-15}
+ "@version{2013-12-25}
   @argument[instance]{a @class{gdk-color} structure}
-  Copy constructor of a @class{gdk-color} structure.")
-
-;;; --- make-gdk-color ---------------------------------------------------------
+  Copy constructor of a @class{gdk-color} structure.
+  @see-class{gdk-color}")
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'make-gdk-color 'function)
- "@version{2013-6-15}
+ "@version{2013-12-25}
   @argument[pixel]{For allocated colors, the pixel value used to draw this
       color on the screen. Not used anymore.}
   @argument[red]{The red component of the color. This is a value between
-      @code{0} and @code{65535}, with @code{65535} indicating full intensity.}
+      0 and 65535, with 65535 indicating full intensity.}
   @argument[green]{The green component of the color.}
   @argument[blue]{The blue component of the color.}
-  Creates a @class{gdk-color} structure.")
+  Creates a @class{gdk-color} structure.
+  @see-class{gdk-color}")
 
-;;; --- gdk-color-pixel --------------------------------------------------------
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors of the GdkColor structure
+;;;
+;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-color-pixel atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-color-pixel 'function)
- "@version{2013-2-2}
-  @begin{short}
-    Accessor of the slot \"pixel\" of the @class{gdk-color} struct.
-  @end{short}")
-
-;;; --- gdk-color-red --------------------------------------------------------
+ "@version{2013-12-25}
+  Accessor of the slot \"pixel\" of the @class{gdk-color} structure.
+  @see-class{gdk-color}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-color-red atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-color-red 'function)
- "@version{2013-2-2}
-  @begin{short}
-    Accessor of the slot \"redl\" of the @class{gdk-color} struct.
-  @end{short}")
-
-;;; --- gdk-color-green --------------------------------------------------------
+ "@version{2013-12-25}
+  Accessor of the slot \"redl\" of the @class{gdk-color} structure.
+  @see-class{gdk-color}
+  @see-function{gdk-color-green}
+  @see-function{gdk-color-blue}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-color-green atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-color-green 'function)
- "@version{2013-2-2}
-  @begin{short}
-    Accessor of the slot \"green\" of the @class{gdk-color} struct.
-  @end{short}")
-
-;;; --- gdk-color-blue ---------------------------------------------------------
+ "@version{2013-12-25}
+  Accessor of the slot \"green\" of the @class{gdk-color} structure.
+  @see-class{gdk-color}
+  @see-function{gdk-color-red}
+  @see-function{gdk-color-blue}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-color-blue atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-color-blue 'function)
- "@version{2013-2-2}
-  @begin{short}
-    Accessor of the slot \"blue\" of the @class{gdk-color} struct.
-  @end{short}")
+ "@version{2013-12-25}
+  Accessor of the slot \"blue\" of the @class{gdk-color} structure.
+  @see-class{gdk-color}
+  @see-function{gdk-color-red}
+  @see-function{gdk-color-green}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_color_copy ()
@@ -171,12 +169,11 @@
 
 (defun gdk-color-copy (color)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-2}
-  @argument[color]{a @class{gdk-color} struct}
-  @return{a copy of @arg{color}}
-  @begin{short}
-    Makes a copy of a color structure.
-  @end{short}"
+ "@version{2013-12-25}
+  @argument[color]{a @class{gdk-color} structure}
+  @return{A copy of @arg{color}.}
+  Makes a copy of a color structure.
+  @see-class{gdk-color}"
   (copy-gdk-color color))
 
 (export 'gdk-color-copy)
@@ -204,20 +201,22 @@
 
 (defun gdk-color-parse (color-spec)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-2}
+ "@version{2013-12-25}
   @argument[spec]{the string specifying the color}
-  @return{The @class{gdk-color} color or @code{nil} if the parsing did not
+  @return{The @class{gdk-color} structure or @code{nil} if the parsing did not
     succeed.}
   @begin{short}
     Parses a textual specification of a color and fill in the red, green, and
     blue fields of a @class{gdk-color} structure.
   @end{short}
 
-  The string can either one of a large set of standard names (taken from the
-  X11 rgb.txt file), or it can be a hex value in the form '#rgb' '#rrggbb'
+  The string can either one of a large set of standard names taken from the
+  X11 rgb.txt file, or it can be a hex value in the form '#rgb' '#rrggbb'
   '#rrrgggbbb' or '#rrrrggggbbbb' where 'r', 'g' and 'b' are hex digits of the
-  red, green, and blue components of the color, respectively. (White in the
-  four forms is '#fff', '#ffffff', '#fffffffff' and '#ffffffffffff')."
+  red, green, and blue components of the color, respectively. White in the
+  four forms is '#fff', '#ffffff', '#fffffffff' and '#ffffffffffff'.
+  @see-class{gdk-color}
+  @see-function{gdk-color-to-string}"
   (let ((color (make-gdk-color)))
     (when (%gdk-color-parse color-spec color)
       color)))
@@ -230,13 +229,12 @@
 
 (defcfun ("gdk_color_equal" gdk-color-equal) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-2-2}
-  @argument[color1]{a @class{gdk-color}}
-  @argument[color2]{another @class{gdk-color}}
-  @return{@arg{true} if the two colors compare equal}
-  @begin{short}
-    Compares two colors.
-  @end{short}"
+ "@version{2013-12-25}
+  @argument[color1]{a @class{gdk-color} structure}
+  @argument[color2]{another @class{gdk-color} structure}
+  @return{@arg{True} if the two colors compare equal.}
+  Compares two colors.
+  @see-class{gdk-color}"
   (color1 (g-boxed-foreign gdk-color))
   (color2 (g-boxed-foreign gdk-color)))
 
@@ -248,13 +246,12 @@
 
 (defcfun ("gdk_color_hash" gdk-color-hash) :uint
  #+cl-cffi-gtk-documentation
- "@version{2013-2-2}
-  @argument[color]{a @class{gdk-color}}
+ "@version{2013-12-25}
+  @argument[color]{a @class{gdk-color} structure}
   @return{The hash function applied to color.}
-  @begin{short}
-    A hash function suitable for using for a hash table that stores
-    @class{gdk-color}'s.
-  @end{short}"
+  A hash function suitable for using for a hash table that stores
+  @class{gdk-color}'s.
+  @see-class{gdk-color}"
   (color (g-boxed-foreign gdk-color)))
 
 (export 'gdk-color-hash)
@@ -266,18 +263,20 @@
 (defcfun ("gdk_color_to_string" gdk-color-to-string)
     (g-string :free-from-foreign t)
  #+cl-cffi-gtk-documentation
- "@version{2013-2-2}
-  @argument[color]{a @class{gdk-color}}
+ "@version{2013-12-25}
+  @argument[color]{a @class{gdk-color} structure}
   @return{A newly-allocated text string.}
   @begin{short}
-    Returns a textual specification of color in the hexadecimal form
+    Returns a textual specification of @arg{color} in the hexadecimal form
     #rrrrggggbbbb, where r, g and b are hex digits representing the red, green
     and blue components respectively.
   @end{short}
 
-  The returned string can be parsed by @fun{gdk-color-parse}.
+  The returned string can be parsed by the function @fun{gdk-color-parse}.
 
-  Since 2.12"
+  Since 2.12
+  @see-class{gdk-color}
+  @see-function{gdk-color-parse}"
   (color (g-boxed-foreign gdk-color)))
 
 (export 'gdk-color-to-string)

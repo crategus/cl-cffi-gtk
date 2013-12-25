@@ -13,7 +13,7 @@ Content from the GDK 3.6.4 Reference Manual
   gdk.device.lisp           - GdkDevice              - GDK 3.6.4&
   gdk.rectangle.lisp        - Points and Rectangles  - GDK 3.6.4
   gdk.pixbuf.lisp           - Pixbufs                - GDK 3.6.4
-  gdk.color.lisp            - Colors                 - GDK 3.6.4
+  gdk.color.lisp            - Colors                 - GDK 3.8.8
   gdk.rgba.lisp             - RGBA Colors            - GDK 3.6.4
   gdk.visual.lisp           - Visuals                - GDK 3.6.4
   gdk.cursor.lisp           - Cursors                - GDK 3.6.4
