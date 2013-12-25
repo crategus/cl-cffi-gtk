@@ -55,9 +55,10 @@
 
   ;; Check the children
   (is (equal '("GtkMessageDialog" "GtkAboutDialog" "GtkColorChooserDialog"
-               "GtkColorSelectionDialog" "GtkFileChooserDialog" "GtkFontChooserDialog"
-               "GtkFontSelectionDialog" "GtkRecentChooserDialog" "GtkPrintUnixDialog"
-               "GtkPageSetupUnixDialog")
+               "GtkColorSelectionDialog" "GtkFileChooserDialog"
+               "GtkFontChooserDialog" "GtkFontSelectionDialog"
+               "GtkRecentChooserDialog" "GtkAppChooserDialog"
+               "GtkPrintUnixDialog" "GtkPageSetupUnixDialog")
              (mapcar #'gtype-name (g-type-children "GtkDialog"))))
   ;; Check the interfaces
   (is (equal '("AtkImplementorIface" "GtkBuildable")

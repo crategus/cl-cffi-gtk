@@ -13,25 +13,23 @@
   (multiple-value-bind (key mods)
       ;; Lookup the accelerator
       (gtk-accel-map-lookup-entry "<Test>/Edit/Look")
-    (is (= (char-code #\s) key))
+    (is (= (char-code #\l) key))
     (is (equal '(:control-mask) mods))))
 
 ;;;   gtk_accel_map_change_entry
 
 (test gtk-accel-map-change-entry
-  ;; Add an accelerator
-  (gtk-accel-map-add-entry "<Test>/Edit/Change" (char-code #\c) '(:control-mask))
-  (multiple-value-bind (key mods)
-      (gtk-accel-map-lookup-entry "<Test>/Edit/Change")
-    (is (= (char-code #\c) key))
-    (is (equal '(:control-mask) mods)))
+  (if (not (gtk-accel-map-lookup-entry "<Test>/Edit/Change"))
+      ;; Add an accelerator for <Test>/Edit/Change
+      (gtk-accel-map-add-entry "<Test>/Edit/Change"
+                               (char-code #\s) '(:control-mask)))
   ;; Change the accelerator
   (gtk-accel-map-change-entry "<Test>/Edit/Change"
                               (char-code #\C)
                               '(:control-mask)
                               t)
   (multiple-value-bind (key mods)
-      (gtk-accel-map-lookup-entry "<Test>/Edit/Save")
+      (gtk-accel-map-lookup-entry "<Test>/Edit/Change")
     (is (= (char-code #\C) key))
     (is (equal '(:control-mask) mods))))
 

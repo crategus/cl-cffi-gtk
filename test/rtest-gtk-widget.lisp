@@ -59,7 +59,8 @@
     (is (equal '() (gtk-widget-get-events eventbox)))
     (gtk-widget-set-events eventbox '(:button-press-mask))
     (is (equal '(:button-press-mask) (gtk-widget-get-events eventbox)))
-    (gtk-widget-add-events eventbox '(:pointer-motion-mask :button-release-mask))
+    (gtk-widget-add-events eventbox
+                           '(:pointer-motion-mask :button-release-mask))
     (is (equal '(:pointer-motion-mask :button-press-mask :button-release-mask)
                (gtk-widget-get-events eventbox)))))
 
@@ -120,15 +121,74 @@
 ;;;     gtk_widget_set_redraw_on_allocate
 ;;;     gtk_widget_set_composite_name
 ;;;     gtk_widget_mnemonic_activate
+
 ;;;     gtk_widget_class_install_style_property
 ;;;     gtk_widget_class_install_style_property_parser
-;;;     gtk_widget_class_find_style_property
-;;;     gtk_widget_class_list_style_properties
+
+;;;   gtk_widget_class_find_style_property
+
+(test gtk-widget-class-find-style-property.1
+  (is (equal "cursor-aspect-ratio"
+             (param-spec-name
+               (gtk-widget-class-find-style-property "GtkFrame"
+                                                     "cursor-aspect-ratio")))))
+
+(test gtk-widget-class-find-style-property.2
+  (is (equal "cursor-color"
+             (param-spec-name
+               (gtk-widget-class-find-style-property "GtkFrame"
+                                                     "cursor-color")))))
+
+(test gtk-widget-class-find-style-property.3
+  (is (equal "focus-line-pattern"
+             (param-spec-name
+               (gtk-widget-class-find-style-property "GtkFrame"
+                                                     "focus-line-pattern")))))
+
+;;;   gtk_widget_class_list_style_properties
+
+(test gtk-widget-class-list-style-properties
+  ;; Get the names of the style properties of GtkFrame.
+  (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern"
+               "focus-line-width" "focus-padding" "interior-focus" "link-color"
+               "scroll-arrow-hlength" "scroll-arrow-vlength"
+               "secondary-cursor-color" "separator-height" "separator-width"
+               "text-handle-height" "text-handle-width" "visited-link-color"
+               "wide-separators" "window-dragging")
+             (mapcar #'param-spec-name
+                     (gtk-widget-class-list-style-properties "GtkFrame")))))
+
 ;;;     gtk_widget_region_intersect
 ;;;     gtk_widget_send_expose
 ;;;     gtk_widget_send_focus_change
 ;;;     gtk_widget_style_get
-;;;     gtk_widget_style_get_property
+
+;;;   gtk_widget_style_get_property
+
+(test gtk-widget-style-get-property
+  (let ((widget (make-instance 'gtk-frame)))
+    (is (= 0.04 (gtk-widget-style-get-property widget "cursor-aspect-ratio")))
+    (is-false (gtk-widget-style-get-property widget "cursor-color"))
+    (is (equal ""
+               (gtk-widget-style-get-property widget "focus-line-pattern")))
+    (is (= 1 (gtk-widget-style-get-property widget "focus-line-width")))
+    (is (= 0 (gtk-widget-style-get-property widget "focus-padding")))
+    (is-true (gtk-widget-style-get-property widget "interior-focus"))
+    (is (eq 'gdk-color
+            (type-of (gtk-widget-style-get-property widget "link-color"))))
+    (is (= 16 (gtk-widget-style-get-property widget "scroll-arrow-hlength")))
+    (is (= 16 (gtk-widget-style-get-property widget "scroll-arrow-vlength")))
+    (is-false (gtk-widget-style-get-property widget "secondary-cursor-color"))
+    (is (=  2 (gtk-widget-style-get-property widget "separator-height")))
+    (is (=  2 (gtk-widget-style-get-property widget "separator-width")))
+    (is (= 20 (gtk-widget-style-get-property widget "text-handle-height")))
+    (is (= 16 (gtk-widget-style-get-property widget "text-handle-width")))
+    (is (eq 'gdk-color
+            (type-of (gtk-widget-style-get-property widget
+                                                    "visited-link-color"))))
+    (is-false  (gtk-widget-style-get-property widget "wide-separators"))
+    (is-false (gtk-widget-style-get-property widget "window-dragging"))))
+
 ;;;     gtk_widget_style_get_valist
 ;;;     gtk_widget_style_attach
 ;;;     gtk_widget_class_set_accessible_type

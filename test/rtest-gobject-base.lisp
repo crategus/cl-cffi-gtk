@@ -208,15 +208,37 @@
 
 ;;;   g_object_get_property
 
-(test g-object-get-property
+(test g-object-get-property.1
   (let ((obj (make-instance 'gtk-label :label "label")))
-    (is (= 0.0d0 (g-object-get-property (pointer obj) "angle")))
-    (is (eq 'pango-attr-list (type-of (g-object-get-property (pointer obj) "attributes"))))
-    (is (= 0 (g-object-get-property (pointer obj) "cursor-position")))
-    (is (eq :none (g-object-get-property (pointer obj) "ellipsize")))
-    (is (eq :left (g-object-get-property (pointer obj) "justify")))
-    (is (equal "label" (g-object-get-property (pointer obj) "label")))
-    (is (= -1 (g-object-get-property (pointer obj) "max-width-chars")))
+    (is (= 0.0d0 (g-object-get-property (pointer obj) "angle")))))
+
+;; FIXME: This test causes a critical warning.
+;(test g-object-get-property.2
+;  (let ((obj (make-instance 'gtk-label :label "label")))
+;    (is (eq 'pango-attr-list (type-of (g-object-get-property (pointer obj) "attributes"))))))
+
+(test g-object-get-property.3
+  (let ((obj (make-instance 'gtk-label :label "label")))
+    (is (= 0 (g-object-get-property (pointer obj) "cursor-position")))))
+
+(test g-object-get-property.4
+  (let ((obj (make-instance 'gtk-label :label "label")))
+    (is (eq :none (g-object-get-property (pointer obj) "ellipsize")))))
+
+(test g-object-get-property.5
+  (let ((obj (make-instance 'gtk-label :label "label")))
+    (is (eq :left (g-object-get-property (pointer obj) "justify")))))
+
+(test g-object-get-property.6
+  (let ((obj (make-instance 'gtk-label :label "label")))
+    (is (equal "label" (g-object-get-property (pointer obj) "label")))))
+
+(test g-object-get-property.7
+  (let ((obj (make-instance 'gtk-label :label "label")))
+    (is (= -1 (g-object-get-property (pointer obj) "max-width-chars")))))
+
+(test g-object-get-property.8
+  (let ((obj (make-instance 'gtk-label :label "label")))
     (is (= 16777215 (g-object-get-property (pointer obj) "mnemonic-keyval")))))
 
 ;;;    g_object_new_valist

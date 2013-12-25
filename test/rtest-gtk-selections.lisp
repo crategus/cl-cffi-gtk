@@ -347,12 +347,12 @@
 
     (g-signal-connect widget "selection-received"
        (lambda (widget selection-data time)
-         (declare (ignore time))
-         (format t "~&Signal SELECTION-RECEIVED for ~A~%" widget)
-         (format t "  selection = ~A~%" selection-data)
-         (format t "targets = ~A~%" (gtk-selection-data-get-targets selection-data))
+         (declare (ignorable widget selection-data time))
+;         (format t "~&Signal SELECTION-RECEIVED for ~A~%" widget)
+;         (format t "  selection = ~A~%" selection-data)
+;         (format t "targets = ~A~%" (gtk-selection-data-get-targets selection-data))
     ))
-    
+
     (gtk-widget-realize widget)
     (gtk-selection-owner-set widget "CLIPBOARD" +gdk-current-time+)
     (gtk-selection-clear-targets widget "CLIPBOARD")
@@ -368,11 +368,12 @@
 
     (g-signal-connect window "selection-received"
        (lambda (widget selection-data time)
-         (format t "~&Signal SELECTION-RECEIVED for ~A~%" widget)
-         (format t "  selection = ~A~%" selection-data)
-         (format t "    targets = ~A~%" (gtk-selection-data-get-targets selection-data))
+          (declare (ignorable widget selection-data time))
+;         (format t "~&Signal SELECTION-RECEIVED for ~A~%" widget)
+;         (format t "  selection = ~A~%" selection-data)
+;         (format t "    targets = ~A~%" (gtk-selection-data-get-targets selection-data))
     ))
-    
+
     (gtk-selection-add-target window "CLIPBOARD" "STRING" 0)
     (gtk-selection-convert window "CLIPBOARD" "TARGETS" +gdk-current-time+)
 
