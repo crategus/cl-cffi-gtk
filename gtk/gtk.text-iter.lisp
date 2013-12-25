@@ -1801,7 +1801,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_text_iter_forward_visible_word_end"
-           gtk-text-iter-forwad-visible-word-end) :boolean
+           gtk-text-iter-forward-visible-word-end) :boolean
  #+cl-cffi-gtk-documentation
  "@version{2013-8-2}
   @argument[iter]{a @class{gtk-text-iter}}

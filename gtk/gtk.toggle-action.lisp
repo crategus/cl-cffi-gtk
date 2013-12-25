@@ -284,7 +284,7 @@
 (declaim (inline gtk-toggle-action-get-draw-as-radio))
 
 (defun gtk-toggle-action-get-draw-as-radio (action)
-  (gtk-toggle-action-active action))
+  (gtk-toggle-action-draw-as-radio action))
 
 (export 'gtk-toggle-action-get-draw-as-radio)
 

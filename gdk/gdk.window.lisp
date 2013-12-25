@@ -1167,7 +1167,7 @@
       (documentation 'gdk-window-attr-width 'function)
  "@version{2013-8-23}
   Accessor of the slot @code{width} of the @class{gdk-window-attr} structure.
-  @see-class{gtk-window-attr}")
+  @see-class{gdk-window-attr}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-window-attr-height atdoc:*function-name-alias*)

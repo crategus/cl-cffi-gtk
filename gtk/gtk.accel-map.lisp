@@ -236,7 +236,7 @@
   resolved, which might not be the case if conflicting accelerators are
   locked. Successful changes are indicated by a @em{true} return value.
   @see-class{gtk-accel-map}
-  @see-symbol{gdk-modifier-mask}
+  @see-symbol{gdk-modifier-type}
   @see-function{gtk-accel-map-add-entry}"
   (accel-path :string)
   (accel-key :uint)

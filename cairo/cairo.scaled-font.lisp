@@ -94,6 +94,8 @@
   @see-function{cairo-scaled-font-get-type}
   @see-function{cairo-scaled-font-destroy}")
 
+(export 'cairo-scaled-font-t)
+
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_scaled_font_create ()
 ;;;

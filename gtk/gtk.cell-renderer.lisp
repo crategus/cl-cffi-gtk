@@ -883,7 +883,7 @@
 (defcfun ("gtk_cell_renderer_stop_editing" gtk-cell-renderer-stop-editing) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-11-29}
-  @argument[cell]{a @class{gtk-cell-denderer} object}
+  @argument[cell]{a @class{gtk-cell-renderer} object}
   @argument[canceled]{@em{true} if the editing has been canceled}
   @begin{short}
     Informs the cell renderer that the editing is stopped.

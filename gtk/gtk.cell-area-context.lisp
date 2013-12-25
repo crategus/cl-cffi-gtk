@@ -305,7 +305,7 @@
   @class{gtk-tree-view} when \"fixed-height-mode\" is enabled.
 
   Since 3.0
-  @see-class{gtk-cell-area-contect}
+  @see-class{gtk-cell-area-context}
   @see-class{gtk-tree-model}
   @see-class{gtk-tree-view}"
   (context (g-object gtk-cell-area-context))

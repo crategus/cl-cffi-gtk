@@ -180,7 +180,7 @@
   @see-class{gtk-plug}
   @see-function{gtk-plug-new}
   @see-function{gtk-plug-get-id}
-  @see-function{gtk-socekt-get-id}"
+  @see-function{gtk-socket-get-id}"
   (socket (g-object gtk-socket))
   (window :pointer))
 
