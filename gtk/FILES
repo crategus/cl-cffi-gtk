@@ -1,4 +1,4 @@
-Content from the GTK+ 3.6.4 Reference Manual
+Content from the GTK+ 3.8.8 Reference Manual
 
     *   - needs update
     %   - not fully implemented
@@ -15,9 +15,7 @@ GTK+ Core Reference
     gtk.drag-and-drop.lisp           - Drag and Drop handling      - GTK+ 3.8.6
     gtk.stock-item.lisp              - Stock Items                 - GTK+ 3.4.3*
     gtk.setting.lisp                 - GtkSettings                 - GTK+ 3.6.4&
-
-    not implemented                  - Bindings
-
+    gtk.bindings.lisp                - Bindings                    - GTK+ 3.8.8%
     gtk.enumerations.lisp            - Standard Enumerations       - GTK+ 3.6.4
     gtk.selections.lisp              - Selections                  - GTK+ 3.8.6&
     gtk.mount-operation.lisp         - Filesystem utilities        - GTK+ 3.6.4%
@@ -27,9 +25,7 @@ Theming in GTK+
     gtk.style-context.lisp           - GtkStyleContext             - GTK+ 3.6.4%
     gtk.css-provider.lisp            - GtkCssProvider              - GTK+ 3.6.4%
     gtk.style-provider.lisp          - GtkStyleProvider            - GTK+ 3.6.4%
-
-    not implemented                  - GtkStyleProperties
-
+    gtk.style-properties.lisp        - GtkStyleProperties          - GTK+ 3.8.8%
     gtk.theming-engine.lisp          - GtkThemingEngine            - GTK+ 3.8.8&
     gtk.widget-path.lisp             - GtkWidgetPath               - GTK+ 3.6.4%
 

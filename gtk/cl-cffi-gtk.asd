@@ -41,7 +41,7 @@
 (defsystem :cl-cffi-gtk
   :default-component-class gtk-source-file
   :name :cl-cffi-gtk
-  :version "3.6.4"                     ; Version of the library
+  :version "3.8.8"                     ; Version of the library
   :author "Dieter Kaiser"
   :license "LLGPL"
   :serial t
@@ -60,6 +60,7 @@
    (:file "gtk.stock-item")            ; Stock Items
    (:file "gtk.clipboard")             ; Storing data on clipboards
    (:file "gtk.settings")              ; Sharing settings
+   (:file "gtk.bindings")              ; Key bindings for individual widgets
    (:file "gtk.mount-operation")       ; Filesystem utilities
 
    ;; Interface builder
@@ -78,6 +79,7 @@
    (:file "gtk.widget-path")           ; Widget path abstraction
    (:file "gtk.style-context")         ; Rendering UI elements
    (:file "gtk.style-provider")        ; Interface to provide style information
+   (:file "gtk.style-properties")      ; Store for style property information
    (:file "gtk.theming-engine")        ; Theming renderers
    (:file "gtk.css-provider")          ; CSS-like styling for widgets
    (:file "gtk.icon-theme")            ; Looking up icons by name
