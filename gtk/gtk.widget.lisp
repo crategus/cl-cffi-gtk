@@ -5740,19 +5740,25 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_class_install_style_property ()
-;;;
-;;; void gtk_widget_class_install_style_property (GtkWidgetClass *klass,
-;;;                                               GParamSpec *pspec);
-;;;
-;;; Installs a style property on a widget class. The parser for the style
-;;; property is determined by the value type of pspec.
-;;;
-;;; klass :
-;;;     a GtkWidgetClass
-;;;
-;;; pspec :
-;;;     the GParamSpec for the property
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_widget_class_install_style_property"
+           gtk-widget-class-install-style-property) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-23}
+  @argument[class]{a pointer to a C widget class structure}
+  @argument[pspec]{the @symbol{g-param-spec} for the property}
+  @begin{short}
+    Installs a style property on a widget class.
+  @end{short}
+  The parser for the style property is determined by the value type of
+  @arg{pspec}.
+  @see-class{gtk-widget}
+  @see-symbol{g-param-spec}"
+  (class :pointer)
+  (pspec (:pointer (:struct g-param-spec))))
+
+(export 'gtk-widget-class-install-style-property)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_class_install_style_property_parser ()
@@ -5779,11 +5785,15 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_class_find_style_property"
-           gtk-widget-class-find-style-property)
+          %gtk-widget-class-find-style-property)
     (:pointer (:struct g-param-spec))
+  (class :pointer)
+  (property-name :string))
+
+(defun gtk-widget-class-find-style-property (type property-name)
  #+cl-cffi-gtk-documentation
- "@version{2013-11-29}
-  @argument[class]{a pointer to a C widget class structure}
+ "@version{2013-12-23}
+  @argument[class]{a widget class name}
   @argument[property-name]{the name of the style property to find}
   @return{The @symbol{g-param-spec} of the style property or @code{nil} if
     @arg{class} has no style property with that name.}
@@ -5791,9 +5801,14 @@
 
   Since 2.2
   @see-class{gtk-widget}
-  @see-symbol{g-param-spec}"
-  (class :pointer)
-  (property-name :string))
+  @see-symbol{g-param-spec}
+  @see-function{gtk-widget-class-list-style-properties}"
+  (let ((class (g-type-class-ref type)))
+    (unwind-protect
+      (let ((pspec (%gtk-widget-class-find-style-property class
+                                                          property-name)))
+           (parse-g-param-spec pspec))
+      (g-type-class-unref class))))
 
 (export 'gtk-widget-class-find-style-property)
 
@@ -5816,7 +5831,8 @@
 
   Since 2.2
   @see-class{gtk-widget}
-  @see-symbol{g-param-spec}"
+  @see-symbol{g-param-spec}
+  @see-function{gtk-widget-class-find-style-property}"
   (setf type (gtype type))
   (let ((class (g-type-class-ref type)))
     (unwind-protect
@@ -5957,8 +5973,6 @@
   (property-name :string)
   (value (:pointer (:struct g-value))))
 
-;; TODO: Check the implementation. We have to pass a pointer for widget.
-
 (defun gtk-widget-style-get-property (widget property-name)
  #+cl-cffi-gtk-documentation
  "@version{2013-12-6}
@@ -5967,17 +5981,18 @@
   @return{The style property value.}
   @short{Gets the value of a style property of @arg{widget}.}
   @see-class{gtk-widget}"
-  (let ((property-type (gtype (gtk-widget-style-property-type widget
-                                                              property-name))))
-  (with-foreign-object (value '(:struct g-value))
-    ;; TODO: Check the implementation of g-value-zero and g-value-init
-    ;;       This can be simplified.
-    (g-value-zero value)
-    (g-value-init value property-type)
-    (prog2
-      (%gtk-widget-style-get-property widget property-name value)
-      (parse-g-value value)
-      (g-value-unset value)))))
+  (let ((type (param-spec-type
+                (gtk-widget-class-find-style-property (g-type-from-instance widget)
+                                                      property-name))))
+    (with-foreign-object (value '(:struct g-value))
+      ;; TODO: Check the implementation of g-value-zero and g-value-init
+      ;;       This can be simplified.
+      (g-value-zero value)
+      (g-value-init value type)
+      (prog2
+        (%gtk-widget-style-get-property widget property-name value)
+        (parse-g-value value)
+        (g-value-unset value)))))
 
 (export 'gtk-widget-style-get-property)
 
@@ -5986,9 +6001,9 @@
 (defun gtk-widget-style-property-info (type property-name)
   (let ((class (g-type-class-ref type)))
     (unwind-protect
-      (let ((g-param-spec (gtk-widget-class-find-style-property class
-                                                                property-name)))
-           (parse-g-param-spec g-param-spec))
+      (let ((pspec (%gtk-widget-class-find-style-property class
+                                                          property-name)))
+           (parse-g-param-spec pspec))
       (g-type-class-unref class))))
 
 ;(export 'gtk-widget-style-property-info)
