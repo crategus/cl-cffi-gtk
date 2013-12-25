@@ -803,10 +803,12 @@
 
 (defun gtk-icon-source-get-filename (source)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-6}
-  @argument[source]{a @class{gtk-icon-source} object}
+ "@version{2013-12-21}
+  @argument[source]{a @class{gtk-icon-source} structure}
   @return{The image filename.}
-  Retrieves the @arg{source} filename, or @code{nil} if none is set."
+  Retrieves the @arg{source} filename, or @code{nil} if none is set.
+  @see-class{gtk-icon-source}
+  @see-function{gtk-icon-source-get-filename}"
   (gtk-icon-source-filename source))
 
 (export 'gtk-icon-source-get-filename)
@@ -1000,11 +1002,17 @@
 
 (defun gtk-icon-source-set-filename (source filename)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-6}
-  @argument[source]{a @class{gtk-icon-source} object}
+ "@version{2013-12-21}
+  @argument[source]{a @class{gtk-icon-source} structure}
   @argument[filename]{image file to use}
-  Sets the name of an image file to use as a base image when creating icon
-  variants for @class{gtk-icon-set} object. The filename must be absolute."
+  @begin{short}
+    Sets the name of an image file to use as a base image when creating icon
+    variants for @class{gtk-icon-set} object.
+  @end{short}
+  The filename must be absolute.
+  @see-class{gtk-icon-source}
+  @see-class{gtk-icon-set}
+  @see-function{gtk-icon-source-get-filename}"
   (setf (gtk-icon-source-filename source) filename))
 
 (export 'gtk-icon-source-set-filename)
