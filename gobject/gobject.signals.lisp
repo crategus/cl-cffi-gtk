@@ -1761,6 +1761,13 @@
 ;;;     the detail which the signal was emitted with.
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("g_signal_stop_emission" g-signal-stop-emission) :void
+  (instance :pointer)
+  (signal-id :uint)
+  (detail g-quark))
+
+(export 'gtk-signal-stop-emission)
+
 ;;; ----------------------------------------------------------------------------
 ;;; g_signal_stop_emission_by_name ()
 ;;;
