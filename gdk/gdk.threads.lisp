@@ -689,7 +689,7 @@
 
 (defun gdk-threads-add-timeout-seconds-full (priority interval func)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-17}
+ "@version{2013-12-28}
   @argument[priority]{the priority of the timeout source. Typically this will be
     in the range between @var{g-priority-default-idle} and
     @var{g-priority-high-idle}.}
@@ -700,7 +700,7 @@
     A variant of the function @fun{gdk-threads-add-timeout-full} with
     second-granularity.
   @end{short}
-  See the function @fun{g-timeout-add-seconds-full} for a discussion of why it
+  See the function @fun{g-timeout-add-seconds} for a discussion of why it
   is a good idea to use this function if you do not need finer granularity.
 
   Since 2.14"
