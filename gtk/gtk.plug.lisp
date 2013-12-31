@@ -259,6 +259,11 @@
 ;;;     the window ID for the plug
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_plug_get_id" gtk-plug-get-id) :pointer
+  (plug (g-object gtk-plug)))
+
+(export 'gtk-plug-get-id)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_plug_get_embedded ()
 ;;;
