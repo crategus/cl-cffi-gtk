@@ -209,6 +209,20 @@
 ;;;     TRUE if the sort column is not one of the special sort column ids.
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_tree_sortable_get_sort_column_id"
+          %gtk-tree-sortable-get-sort-column-id) :boolean
+  (sortable (g-object gtk-tree-sortable))
+  (sort-column-id (:pointer :int))
+  (order (:pointer gtk-sort-type)))
+
+(defun gtk-tree-sortable-get-sort-column-id (sortable)
+  (with-foreign-objects ((sort-column-id :int) (order 'gtk-sort-type))
+    (%gtk-tree-sortable-get-sort-column-id sortable sort-column-id order)
+    (values (mem-ref sort-column-id :int)
+            (mem-ref order 'gtk-sort-type))))
+
+(export 'gtk-tree-sortable-get-sort-column-id)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_sortable_set_sort_column_id ()
 ;;;
