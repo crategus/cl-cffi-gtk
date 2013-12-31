@@ -438,22 +438,29 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_get_font_description ()
-;;;
-;;; const PangoFontDescription * pango_layout_get_font_description
-;;;                                                        (PangoLayout *layout)
-;;;
-;;; Gets the font description for the layout, if any.
-;;;
-;;; layout :
-;;;     a PangoLayout
-;;;
-;;; Returns :
-;;;     a pointer to the layout's font description, or NULL if the font
-;;;     description from the layout's context is inherited. This value is owned
-;;;     by the layout and must not be modified or freed.
-;;;
-;;; Since 1.8
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("pango_layout_get_font_description" pango-layout-get-font-description)
+    (g-boxed-foreign pango-font-description)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-28}
+  @argument[layout]{a @class{pango-layout} object}
+  @begin{return}
+    A pointer to the layout's font description, or @code{NULL} if the font
+    description from the layout's context is inherited. This value is owned
+    by the layout and must not be modified or freed.
+  @end{return}
+  @begin{short}
+    Gets the font description for the layout, if any.
+  @end{short}
+
+  Since 1.8
+  @see-class{pango-layout}
+  @see-class{pango-font-description}
+  @see-function{pango-layout-set-font-description}"
+  (layout (g-object pango-layout)))
+
+(export 'pango-layout-get-font-description)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_layout_set_width ()
