@@ -166,7 +166,7 @@
 
 (defcfun ("cairo_set_matrix" cairo-set-matrix) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-12-2}
+ "@version{2013-12-28}
   @argument[cr]{a cairo context}
   @argument[matrix]{a transformation matrix from user space to device space}
   @begin{short}
@@ -175,8 +175,9 @@
   @end{short}
 
   Since 1.0
-  @see-class{cairo-t}
-  @see-class{cairo-matrix-t}"
+  @see-symbol{cairo-t}
+  @see-symbol{cairo-matrix-t}
+  @see-function{cairo-get-matrix}"
   (cr (:pointer (:struct cairo-t)))
   (matrix (:pointer (:struct cairo-matrix-t))))
 

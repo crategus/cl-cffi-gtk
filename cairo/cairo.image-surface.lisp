@@ -104,8 +104,9 @@
 (defcfun ("cairo_image_surface_create" cairo-image-surface-create)
     (:pointer (:struct cairo-surface-t))
  #+cl-cffi-gtk-documentation
- "@version{2013-10-20}
-  @argument[format]{format of pixels in the surface to create}
+ "@version{2013-12-28}
+  @argument[format]{format of pixels of type @symbol{cairo-format-t} in the
+    surface to create}
   @argument[width]{width of the surface, in pixels}
   @argument[height]{height of the surface, in pixels}
   @begin{return}
@@ -123,6 +124,7 @@
   bits within a pixel, but not belonging to the given format are undefined.
 
   Since 1.0
+  @see-symbol{cario-surface-t}
   @see-symbol{cairo-format-t}
   @see-function{cairo-surface-destroy}
   @see-function{cairo-surface-status}"

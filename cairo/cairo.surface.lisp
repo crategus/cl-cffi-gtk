@@ -279,7 +279,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'cairo-format-t atdoc:*symbol-name-alias*) "CEnum"
       (gethash 'cairo-format-t atdoc:*external-symbols*)
- "@version{2013-10-20}
+ "@version{2013-12-28}
   @begin{short}
     @sym{cairo-format-t} is used to identify the memory format of image data.
   @end{short}
@@ -297,9 +297,9 @@
   @end{pre}
   @begin[code]{table}
     @entry[:invalid]{No such format exists or is supported.}
-    @entry{:argb32]{Each pixel is a 32-bit quantity, with alpha in the upper
+    @entry[:argb32]{Each pixel is a 32-bit quantity, with alpha in the upper
       8 bits, then red, then green, then blue. The 32-bit quantities are stored
-      native-endian. Pre-multiplied alpha is used. That is, 50% transparent
+      native-endian. Pre-multiplied alpha is used. That is, 50 % transparent
       red is 0x80800000, not 0x80ff0000. Since 1.0.}
     @entry[:rgb24]{Each pixel is a 32-bit quantity, with the upper 8 bits
       unused. Red, Green, and Blue are stored in the remaining 24 bits in that
@@ -314,9 +314,10 @@
     @entry[:rgb16-565]{Each pixel is a 16-bit quantity with red in the upper 5
       bits, then green in the middle 6 bits, and blue in the lower 5 bits.
       Since 1.2.}
-    @entry[:rgb30]{Like @code{:rgb24} but with 10bpc. Since 1.12.}
+    @entry[:rgb30]{Like @code{:rgb24} but with 10 bpc. Since 1.12.}
   @end{table}
-  Since 1.0")
+  Since 1.0
+  @see-symbol{cairo-surface-t}")
 
 (export 'cairo-format-t)
 

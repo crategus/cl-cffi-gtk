@@ -299,7 +299,7 @@
       @about-function{cairo-scaled-font-status}
       @about-symbol{cairo-font-extents-t}
       @about-function{cairo-scaled-font-extents}
-      @about-symbol{cairo-text-extents-t}
+      @about-type{cairo-text-extents-t}
       @about-function{cairo-scaled-font-text-extents}
       @about-function{cairo-scaled-font-glyph-extents}
       @about-function{cairo-scaled-font-text-to-glyphs}

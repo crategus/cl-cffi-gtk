@@ -229,69 +229,66 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_select_font_face ()
-;;;
-;;; void cairo_select_font_face (cairo_t *cr,
-;;;                              const char *family,
-;;;                              cairo_font_slant_t slant,
-;;;                              cairo_font_weight_t weight);
-;;;
-;;; Note: The cairo_select_font_face() function call is part of what the cairo
-;;; designers call the "toy" text API. It is convenient for short demos and
-;;; simple programs, but it is not expected to be adequate for serious
-;;; text-using applications.
-;;;
-;;; Selects a family and style of font from a simplified description as a family
-;;; name, slant and weight. Cairo provides no operation to list available family
-;;; names on the system (this is a "toy", remember), but the standard CSS2
-;;; generic family names, ("serif", "sans-serif", "cursive", "fantasy",
-;;; "monospace"), are likely to work as expected.
-;;;
-;;; If family starts with the string "cairo:", or if no native font backends are
-;;; compiled in, cairo will use an internal font family. The internal font
-;;; family recognizes many modifiers in the family string, most notably, it
-;;; recognizes the string "monospace". That is, the family name
-;;; "cairo:monospace" will use the monospace version of the internal font
-;;; family.
-;;;
-;;; For "real" font selection, see the font-backend-specific font_face_create
-;;; functions for the font backend you are using. (For example, if you are using
-;;; the freetype-based cairo-ft font backend, see
-;;; cairo_ft_font_face_create_for_ft_face() or
-;;; cairo_ft_font_face_create_for_pattern().) The resulting font face could then
-;;; be used with cairo_scaled_font_create() and cairo_set_scaled_font().
-;;;
-;;; Similarly, when using the "real" font support, you can call directly into
-;;; the underlying font system, (such as fontconfig or freetype), for operations
-;;; such as listing available fonts, etc.
-;;;
-;;; It is expected that most applications will need to use a more comprehensive
-;;; font handling and text layout library, (for example, pango), in conjunction
-;;; with cairo.
-;;;
-;;; If text is drawn without a call to cairo_select_font_face(), (nor
-;;; cairo_set_font_face() nor cairo_set_scaled_font()), the default family is
-;;; platform-specific, but is essentially "sans-serif". Default slant is
-;;; CAIRO_FONT_SLANT_NORMAL, and default weight is CAIRO_FONT_WEIGHT_NORMAL.
-;;;
-;;; This function is equivalent to a call to cairo_toy_font_face_create()
-;;; followed by cairo_set_font_face().
-;;;
-;;; cr :
-;;;     a cairo_t
-;;;
-;;; family :
-;;;     a font family name, encoded in UTF-8
-;;;
-;;; slant :
-;;;     the slant for the font
-;;;
-;;; weight :
-;;;     the weight for the font
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("cairo_select_font_face" cairo-select-font-face) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-28}
+  @argument[cr]{a @symbol{cairo-t}}
+  @argument[family]{a font family name, encoded in UTF-8}
+  @argument[slant]{the slant for the font}
+  @argument[weight]{the weight for the font}
+  @subheading{Note:}
+    The @sym{cairo-select-font-face} function call is part of what the cairo
+    designers call the \"toy\" text API. It is convenient for short demos
+    and simple programs, but it is not expected to be adequate for serious
+    text-using applications.
+
+  @begin{short}
+    Selects a family and style of font from a simplified description as a family
+    name, slant and weight.
+  @end{short}
+  Cairo provides no operation to list available family names on the system (this
+  is a \"toy\", remember), but the standard CSS2 generic family names,
+  (\"serif\", \"sans-serif\", \"cursive\", \"fantasy\", \"monospace\"), are
+  likely to work as expected.
+
+  If family starts with the string \"cairo:\", or if no native font backends are
+  compiled in, cairo will use an internal font family. The internal font family
+  recognizes many modifiers in the family string, most notably, it recognizes
+  the string \"monospace\". That is, the family name \"cairo:monospace\" will
+  use the monospace version of the internal font family.
+
+  For \"real\" font selection, see the font-backend-specific
+  @code{font-face-create} functions for the font backend you are using. (For
+  example, if you are using the freetype-based @code{cairo-ft} font backend, see
+  the functions @fun{cairo-ft-font-face-create-for-ft-face} or
+  @fun{cairo-ft-font-face-create-for-pattern}.) The resulting font face could
+  then be used with the functions @fun{cairo-scaled-font-create} and
+  @fun{cairo-set-scaled-font}.
+
+  Similarly, when using the \"real\" font support, you can call directly into
+  the underlying font system, (such as fontconfig or freetype), for operations
+  such as listing available fonts, etc.
+
+  It is expected that most applications will need to use a more comprehensive
+  font handling and text layout library, (for example, pango), in conjunction
+  with cairo.
+
+  If text is drawn without a call to the function @sym{cairo-select-font-face},
+  (nor the function @fun{cairo-set-font-face} nor the function
+  @fun{cairo-set-scaled-font}), the default family is platform-specific, but is
+  essentially \"sans-serif\". Default slant is @code{:normal}, and default
+  weight is @code{:normal}.
+
+  This function is equivalent to a call to the function
+  @fun{cairo-toy-font-face-create} followed by the function
+  @fun{cairo-set-font-face}.
+
+  Since 1.0
+  @see-symbol{cairo-t}
+  @see-symbol{cairo-font-slant-t}
+  @see-symbol{cairo-font-weight-t}"
   (cr (:pointer (:struct cairo-t)))
   (family :string)
   (slant cairo-font-slant-t)
@@ -301,29 +298,28 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_set_font_size ()
-;;;
-;;; void cairo_set_font_size (cairo_t *cr, double size);
-;;;
-;;; Sets the current font matrix to a scale by a factor of size, replacing any
-;;; font matrix previously set with cairo_set_font_size() or
-;;; cairo_set_font_matrix(). This results in a font size of size user space
-;;; units. (More precisely, this matrix will result in the font's em-square
-;;; being a size by size square in user space.)
-;;;
-;;; If text is drawn without a call to cairo_set_font_size(), (nor
-;;; cairo_set_font_matrix() nor cairo_set_scaled_font()), the default font size
-;;; is 10.0.
-;;;
-;;; cr :
-;;;     a cairo_t
-;;;
-;;; size :
-;;;     the new font size, in user space units
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("cairo_set_font_size" cairo-set-font-size) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-28}
+  @argument[cr]{a @symbol{cairo-t}}
+  @argument[size]{the new font size, in user space units}
+  @begin{short}
+    Sets the current font matrix to a scale by a factor of size, replacing any
+    font matrix previously set with the functions @sym{cairo-set-font-size} or
+    @fun{cairo-set-font-matrix}.
+  @end{short}
+  This results in a font size of size user space units. (More precisely, this
+  matrix will result in the font's em-square being a size by size square in user
+  space.)
+
+  If text is drawn without a call to the function @sym{cairo-set-font-size},
+  (nor the function @fun{cairo-set-font-matrix} nor the function
+  @fun{cairo-set-scaled-font}), the default font size is 10.0.
+
+  Since 1.0
+  @see-symbol{cairo-t}"
   (cr (:pointer (:struct cairo-t)))
   (size :double))
 
@@ -492,40 +488,39 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_show_text ()
-;;;
-;;; void cairo_show_text (cairo_t *cr, const char *utf8);
-;;;
-;;; A drawing operator that generates the shape from a string of UTF-8
-;;; characters, rendered according to the current font_face, font_size
-;;; (font_matrix), and font_options.
-;;;
-;;; This function first computes a set of glyphs for the string of text. The
-;;; first glyph is placed so that its origin is at the current point. The origin
-;;; of each subsequent glyph is offset from that of the previous glyph by the
-;;; advance values of the previous glyph.
-;;;
-;;; After this call the current point is moved to the origin of where the next
-;;; glyph would be placed in this same progression. That is, the current point
-;;; will be at the origin of the final glyph offset by its advance values. This
-;;; allows for easy display of a single logical string with multiple calls to
-;;; cairo_show_text().
-;;;
-;;; Note: The cairo_show_text() function call is part of what the cairo
-;;; designers call the "toy" text API. It is convenient for short demos and
-;;; simple programs, but it is not expected to be adequate for serious
-;;; text-using applications. See cairo_show_glyphs() for the "real" text display
-;;; API in cairo.
-;;;
-;;; cr :
-;;;     a cairo context
-;;;
-;;; utf8 :
-;;;     a NUL-terminated string of text encoded in UTF-8, or NULL
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("cairo_show_text" cairo-show-text) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-28}
+  @argument[cr]{a cairo context}
+  @argument[utf8]{a string of text encoded in UTF-8, or @code{NULL}}
+  @begin{short}
+    A drawing operator that generates the shape from a string of UTF-8
+    characters, rendered according to the current @code{font_face}, 
+    @code{font_size} (@code{font_matrix}), and @code{font_options}.
+  @end{short}
+
+  This function first computes a set of glyphs for the string of text. The
+  first glyph is placed so that its origin is at the current point. The origin
+  of each subsequent glyph is offset from that of the previous glyph by the
+  advance values of the previous glyph.
+
+  After this call the current point is moved to the origin of where the next
+  glyph would be placed in this same progression. That is, the current point
+  will be at the origin of the final glyph offset by its advance values. This
+  allows for easy display of a single logical string with multiple calls to
+  the function @sym{cairo-show-text}.
+
+  @subheading{Note:}
+    The @sym{cairo-show-text} function call is part of what the cairo
+    designers call the \"toy\" text API. It is convenient for short demos and
+    simple programs, but it is not expected to be adequate for serious
+    text-using applications. See the function @fun{cairo-show-glyphs} for the
+    \"real\" text display API in cairo.
+
+  Since 1.0
+  @see-symbol{cairo-t}"
   (cr (:pointer (:struct cairo-t)))
   (utf8 :string))
 
@@ -629,34 +624,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_text_extents ()
-;;;
-;;; void cairo_text_extents (cairo_t *cr,
-;;;                          const char *utf8,
-;;;                          cairo_text_extents_t *extents);
-;;;
-;;; Gets the extents for a string of text. The extents describe a user-space
-;;; rectangle that encloses the "inked" portion of the text, (as it would be
-;;; drawn by cairo_show_text()). Additionally, the x_advance and y_advance
-;;; values indicate the amount by which the current point would be advanced by
-;;; cairo_show_text().
-;;;
-;;; Note that whitespace characters do not directly contribute to the size of
-;;; the rectangle (extents.width and extents.height). They do contribute
-;;; indirectly by changing the position of non-whitespace characters. In
-;;; particular, trailing whitespace characters are likely to not affect the size
-;;; of the rectangle, though they will affect the x_advance and y_advance
-;;; values.
-;;;
-;;; cr :
-;;;     a cairo_t
-;;;
-;;; utf8 :
-;;;     a NUL-terminated string of text encoded in UTF-8, or NULL
-;;;
-;;; extents :
-;;;     a cairo_text_extents_t object into which the results will be stored
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("cairo_text_extents" %cairo-text-extents) :void
@@ -665,6 +632,32 @@
   (extents (:pointer (:struct cairo-text-extents-t))))
 
 (defun cairo-text-extents (cr utf8)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-28}
+  @argument[cr]{a @symbol{cairo-t}}
+  @argument[utf8]{a @code{NUL}-terminated string of text encoded in UTF-8, or
+    @code{NULL}}
+  @argument[extents]{a @symbol{cairo-text-extents-t} object into which the
+    results will be stored}
+  @begin{short}
+    Gets the extents for a string of text.
+  @end{short}
+  The extents describe a user-space rectangle that encloses the \"inked\"
+  portion of the text, (as it would be drawn by the function
+  @fun{cairo-show-text}). Additionally, the @code{x_advance} and
+  @code{y_advance} values indicate the amount by which the current point would
+  be advanced by the function @fun{cairo-show-text}.
+
+  Note that whitespace characters do not directly contribute to the size of
+  the rectangle (@code{extents.width} and @code{extents.height}). They do
+  contribute indirectly by changing the position of non-whitespace characters.
+  In particular, trailing whitespace characters are likely to not affect the
+  size of the rectangle, though they will affect the @code{x_advance} and
+  @code{y_advance} values.
+
+  Since 1.0
+  @see-symbol{cairo-t}
+  @see-symbol{cairo-text-extents-t}"
   (with-foreign-object (extents '(:struct cairo-text-extents-t))
     (%cairo-text-extents cr utf8 extents)
     extents))

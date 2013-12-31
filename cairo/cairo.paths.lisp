@@ -756,59 +756,7 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_rel_curve_to ()
-;;;
-;;; void cairo_rel_curve_to (cairo_t *cr,
-;;;                          double dx1,
-;;;                          double dy1,
-;;;                          double dx2,
-;;;                          double dy2,
-;;;                          double dx3,
-;;;                          double dy3);
-;;;
-;;; Relative-coordinate version of cairo_curve_to(). All offsets are relative to
-;;; the current point. Adds a cubic Bézier spline to the path from the current
-;;; point to a point offset from the current point by (dx3, dy3), using points
-;;; offset by (dx1, dy1) and (dx2, dy2) as the control points. After this call
-;;; the current point will be offset by (dx3, dy3).
-;;;
-;;; Given a current point of (x, y),
-;;; cairo_rel_curve_to(cr, dx1, dy1, dx2, dy2, dx3, dy3) is logically equivalent
-;;; to cairo_curve_to(cr, x+dx1, y+dy1, x+dx2, y+dy2, x+dx3, y+dy3).
-;;;
-;;; It is an error to call this function with no current point. Doing so will
-;;; cause cr to shutdown with a status of CAIRO_STATUS_NO_CURRENT_POINT.
-;;;
-;;; cr :
-;;;     a cairo context
-;;;
-;;; dx1 :
-;;;     the X offset to the first control point
-;;;
-;;; dy1 :
-;;;     the Y offset to the first control point
-;;;
-;;; dx2 :
-;;;     the X offset to the second control point
-;;;
-;;; dy2 :
-;;;     the Y offset to the second control point
-;;;
-;;; dx3 :
-;;;     the X offset to the end of the curve
-;;;
-;;; dy3 :
-;;;     the Y offset to the end of the curve
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
-
-;;; void cairo_rel_curve_to (cairo_t *cr,
-;;;                          double dx1,
-;;;                          double dy1,
-;;;                          double dx2,
-;;;                          double dy2,
-;;;                          double dx3,
-;;;                          double dy3);
 
 (defcfun ("cairo_rel_curve_to" %cairo-rel-curve-to) :void
   (cr (:pointer (:struct cairo-t)))
@@ -820,6 +768,34 @@
   (dy3 :double))
 
 (defun cairo-rel-curve-to (cr dx1 dy1 dx2 dy2 dx3 dy3)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-28}
+  @argument[cr]{a cairo context}
+  @argument[dx1]{the x offset to the first control point}
+  @argument[dy1]{the y offset to the first control point}
+  @argument[dx2]{the x offset to the second control point}
+  @argument[dy2]{the Y offset to the second control point}
+  @argument[dx3]{the x offset to the end of the curve}
+  @argument[dy3]{the y offset to the end of the curve}
+  @begin{short}
+    Relative-coordinate version of the function @fun{cairo-curve-to}.
+  @end{short}
+  All offsets are relative to the current point. Adds a cubic Bézier spline to
+  the path from the current point to a point offset from the current point by
+  (@arg{dx3}, @arg{dy3}), using points offset by (@arg{dx1}, @arg{dy1}) and
+  (@arg{dx2}, @arg{dy2}) as the control points. After this call the current
+  point will be offset by (@arg{dx3}, @arg{dy3}).
+
+  Given a current point of (@arg{x}, @arg{y}),
+  @code{cairo-rel-curve-to cr dx1 dy1 dx2 dy2 dx3 dy3)} is logically equivalent
+  to @code{cairo-curve-to cr x+dx1 y+dy1 x+dx2 y+dy2 x+dx3 y+dy3)}.
+
+  It is an error to call this function with no current point. Doing so will
+  cause @arg{cr} to shutdown with a status of @code{:no-current-point}.
+
+  Since 1.0
+  @see-symbol{cairo-t}
+  @see-function{cairo-curve-to}"
   (%cairo-rel-curve-to cr
                        (coerce dx1 'double-float)
                        (coerce dy1 'double-float)

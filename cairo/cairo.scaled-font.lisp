@@ -346,7 +346,7 @@
  "@version{2013-12-2}
   @argument[scaled-font]{a @symbol{cairo-scaled-font-t}}
   @argument[utf8]{a string of text, encoded in UTF-8}
-  @argument[extents]{a @symbol{cairo-text-extents-t} which to store the
+  @argument[extents]{a @type{cairo-text-extents-t} which to store the
     retrieved extents}
   @begin{short}
     Gets the extents for a string of text.
@@ -368,7 +368,7 @@
 
   Since 1.2
   @see-symbol{cairo-scaled-font-t}
-  @see-symbol{cairo-text-extents-t}
+  @see-type{cairo-text-extents-t}
   @see-function{cairo-show-text}"
   (scaled-font (:pointer (:struct cairo-scaled-font-t)))
   (utf8 :string)
