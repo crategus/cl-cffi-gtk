@@ -2636,14 +2636,14 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_object_set_property" %g-object-set-property) :void
-  (object :pointer)
+  (object g-object)
   (property-name :string)
   (value (:pointer (:struct g-value))))
 
-(defun g-object-set-property (object-ptr property-name new-value
+(defun g-object-set-property (object property-name new-value
                                          &optional property-type)
  #+cl-cffi-gtk-documentation
- "@version{2013-10-28}
+ "@version{2013-12-30}
   @argument[object]{a @class{g-object}}
   @argument[property-name]{the name of the property to set}
   @argument[value]{the value}
@@ -2652,13 +2652,13 @@
   @see-function{g-object-get-property}"
   (unless property-type
     (setf property-type
-          (class-property-type (g-type-from-instance object-ptr)
+          (class-property-type (g-type-from-instance object)
                                property-name
                                :assert-writable t)))
   (with-foreign-object (value '(:struct g-value))
     (set-g-value value new-value property-type :zero-g-value t)
     (unwind-protect
-      (%g-object-set-property object-ptr property-name value)
+      (%g-object-set-property object property-name value)
       (g-value-unset value))))
 
 (export 'g-object-set-property)
@@ -2668,36 +2668,29 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_object_get_property" %g-object-get-property) :void
-  (object :pointer)
+  (object g-object)
   (property-name :string)
   (value (:pointer (:struct g-value))))
 
-(defun g-object-get-property (object-ptr property-name &optional property-type)
+(defun g-object-get-property (object property-name &optional property-type)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-9}
+ "@version{2013-12-30}
   @argument[object]{a @class{g-object}}
   @argument[property-name]{the name of the property to get}
   @return{The property value.}
-  @begin{short}
-    Gets a property of an @arg{object}.
-  @end{short}
-
-  Note that the @sym{g-object-get-property} is really intended for language
-  bindings, the @fun{g-object-get} function is much more convenient for C
-  programming.
+  @short{Gets a property of an object.}
   @see-class{g-object}
-  @see-function{g-object-get}
   @see-function{g-object-set-property}"
   (restart-case
     (unless property-type
       (setf property-type
-            (class-property-type (g-type-from-instance object-ptr)
+            (class-property-type (g-type-from-instance object)
                                  property-name
                                  :assert-readable t)))
     (return-nil () (return-from g-object-get-property nil)))
   (with-foreign-object (value '(:struct g-value))
     (g-value-init value property-type)
-    (%g-object-get-property object-ptr property-name value)
+    (%g-object-get-property object property-name value)
     (unwind-protect
       (parse-g-value value)
       (g-value-unset value))))
