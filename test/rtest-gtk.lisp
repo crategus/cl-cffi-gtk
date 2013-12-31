@@ -60,6 +60,7 @@
 
 (load "rtest-gtk-accel-map.lisp")
 (load "rtest-gtk-action.lisp")
+(load "rtest-gtk-action-group.lisp")
 (load "rtest-gtk-app-chooser.lisp")
 (load "rtest-gtk-dialog.lisp")
 (load "rtest-gtk-entry-buffer.lisp")

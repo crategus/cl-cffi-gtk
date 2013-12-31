@@ -4,4 +4,5 @@
 (def-suite cairo-suite :in gtk-testsuite)
 (in-suite cairo-suite)
 
+(load "rtest-cairo-context.lisp")
 

@@ -193,7 +193,7 @@
 
 ;;;   g_object_set_property
 
-(test g-object-set-property
+(test g-object-set-property.1
   (let ((obj (make-instance 'gtk-label)))
     (g-object-set-property (pointer obj) "angle" 1.0d0)
     (is (= 1.0d0 (g-object-get-property (pointer obj) "angle")))
@@ -205,6 +205,19 @@
     (is (equal "label" (g-object-get-property (pointer obj) "label")))
     (g-object-set-property (pointer obj) "max-width-chars" 10)
     (is (= 10 (g-object-get-property (pointer obj) "max-width-chars")))))
+
+(test g-object-set-property.2
+  (let ((obj (make-instance 'gtk-label)))
+    (g-object-set-property obj "angle" 1.0d0)
+    (is (= 1.0d0 (g-object-get-property obj "angle")))
+    (g-object-set-property obj "ellipsize" :start)
+    (is (eq :start (g-object-get-property obj "ellipsize")))
+    (g-object-set-property obj "justify" :fill)
+    (is (eq :fill (g-object-get-property obj "justify")))
+    (g-object-set-property obj "label" "label")
+    (is (equal "label" (g-object-get-property obj "label")))
+    (g-object-set-property obj "max-width-chars" 10)
+    (is (= 10 (g-object-get-property obj "max-width-chars")))))
 
 ;;;   g_object_get_property
 
