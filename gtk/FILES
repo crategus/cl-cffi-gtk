@@ -163,7 +163,7 @@ GTK+ Widgets and Objects
   Action-based menus and toolbars
 
     gtk.ui-manager.lisp              - GtkUIManager                - GTK+ 3.6.4&
-    gtk.action-group.lisp            - GtkActionGroup              - GTK+ 3.6.4&
+    gtk.action-group.lisp            - GtkActionGroup              - GTK+ 3.8.8&
     gtk.action.lisp                  - GtkAction                   - GTK+ 3.8.8
     gtk.toggle-action.lisp           - GtkToggleAction             - GTK+ 3.8.8
     gtk.radio-action.lisp            - GtkRadioAction              - GTK+ 3.8.8
