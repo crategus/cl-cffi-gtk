@@ -532,14 +532,14 @@
     Creates a new @class{gtk-action} object.
   @end{short}
   To add the action to a @class{gtk-action-group} and set the accelerator for
-  the action, call the function @fun{gtk-action-group-add-action-with-accel}.
+  the action, call the function @fun{gtk-action-group-add-action}.
   See the section called \"UI Definitions\" for information on allowed action
   names.
 
   Since 2.4
   @see-class{gtk-action}
   @see-class{gtk-action-group}
-  @see-function{gtk-action-group-add-action-with-accel}"
+  @see-function{gtk-action-group-add-action}"
   (make-instance 'gtk-action
                  :name name
                  :label (if label label (null-pointer))

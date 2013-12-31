@@ -479,7 +479,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_cell_area_context_get_preferred_width_for_height"
-          %gtk-cell-area-context-get-preferred-width-for_height) :void
+          %gtk-cell-area-context-get-preferred-width-for-height) :void
   (context (g-object gtk-cell-area-context))
   (height :int)
   (minium-width (:pointer :int))
@@ -515,7 +515,7 @@
     (values (mem-ref minimum-width :int)
             (mem-ref natural-width :int))))
 
-(export 'gtk-cell-area-context-get-preferred-height-for-width)
+(export 'gtk-cell-area-context-get-preferred-width-for-height)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_area_context_get_allocation ()

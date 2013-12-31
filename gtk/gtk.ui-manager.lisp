@@ -911,12 +911,12 @@
 
 (defun gtk-ui-manager-add-ui-from-string (ui-manager buffer)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-2}
+ "@version{2013-12-30}
   @argument[manager]{a @class{gtk-ui-manager} object}
   @argument[buffer]{the string to parse}
   @begin{return}
     The merge ID for the merged UI. The merge ID can be used to unmerge the
-    UI with the @fun{gtk-ui-manager-remove-ui} function. If an error occurred,
+    UI with the function @fun{gtk-ui-manager-remove-ui}. If an error occurred,
     the return value is 0.
   @end{return}
   @begin{short}

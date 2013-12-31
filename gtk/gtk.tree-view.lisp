@@ -213,7 +213,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-tree-view 'type)
- "@version{2013-7-4}
+ "@version{2013-12-29}
   @begin{short}
     Widget that displays any object that implements the @class{gtk-tree-model}
     interface.
@@ -274,39 +274,39 @@
     @end{pre}
   @begin[Style Property Details]{dictionary}
     @subheading{The \"allow-rules\" style property}
-      @code{\"allow-rules\"} of type @code{:boolean} (Read)@br{}
+      @code{\"allow-rules\"} of type @code{:boolean} (Read) @br{}
       Allow drawing of alternating color rows. @br{}
       Default value: @em{true}
 
     @subheading{The \"even-row-color\" style property}
-      @code{\"even-row-color\"} of type @code{gdk-color} (Read)@br{}
+      @code{\"even-row-color\"} of type @class{gdk-color} (Read) @br{}
       Color to use for even rows.
 
     @subheading{The \"expander-size\" style property}
-      @code{\"expander-size\"} of type @code{:int} (Read)@br{}
+      @code{\"expander-size\"} of type @code{:int} (Read) @br{}
       Size of the expander arrow. @br{}
-      Allowed values: >= 0@br{}
+      Allowed values: >= 0 @br{}
       Default value: 14
 
     @subheading{The \"grid-line-pattern\" style property}
-      @code{\"grid-line-pattern\"} of type @code{:string} (Read)@br{}
+      @code{\"grid-line-pattern\"} of type @code{:string} (Read) @br{}
       Dash pattern used to draw the tree view grid lines. @br{}
       Default value: \"\001\001\"
 
     @subheading{The \"grid-line-width\" style property}
-      @code{\"grid-line-width\"} of type @code{:int} (Read)@br{}
+      @code{\"grid-line-width\"} of type @code{:int} (Read) @br{}
       Width, in pixels, of the tree view grid lines. @br{}
       Allowed values: >= 0 @br{}
       Default value: 1
 
     @subheading{The \"horizontal-separator\" style property}
-      @code{\"horizontal-separator\"} of tpye @code{:int} (Read)@br{}
+      @code{\"horizontal-separator\"} of tpye @code{:int} (Read) @br{}
       Horizontal space between cells. Must be an even number. @br{}
-      Allowed values: >= 0@br{}
+      Allowed values: >= 0 @br{}
       Default value: 2
 
     @subheading{The \"indent-expanders\" style property}
-      @code{\"indent-expanders\"} of type @code{:boolean} (Read)@br{}
+      @code{\"indent-expanders\"} of type @code{:boolean} (Read) @br{}
       Make the expanders indented. @br{}
       Default value: @em{true}
 
@@ -315,20 +315,20 @@
       Color to use for odd rows.
 
     @subheading{The \"tree-line-pattern\" style property}
-      @code{\"tree-line-pattern\"} of type @code{:string} (Read)@br{}
+      @code{\"tree-line-pattern\"} of type @code{:string} (Read) @br{}
       Dash pattern used to draw the tree view lines. @br{}
       Default value: \"\001\001\"
 
     @subheading{The \"tree-line-width\" style property}
-      @code{\"tree-line-width\"} of type @code{:int} (Read)@br{}
+      @code{\"tree-line-width\"} of type @code{:int} (Read) @br{}
       Width, in pixels, of the tree view lines. @br{}
-      Allowed values: >= 0@br{}
+      Allowed values: >= 0 @br{}
       Default value: 1
 
     @subheading{The \"vertical-separator\" style property}
-      @code{\"vertical-separator\"} of type @code{:int} (Read)@br{}
+      @code{\"vertical-separator\"} of type @code{:int} (Read) @br{}
       Vertical space between cells. Must be an even number. @br{}
-      Allowed values: >= 0@br{}
+      Allowed values: >= 0 @br{}
       Default value: 2
   @end{dictionary}
   @begin[Signal Details]{dictionary}

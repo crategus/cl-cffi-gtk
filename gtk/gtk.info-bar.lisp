@@ -301,20 +301,23 @@
 (defcfun ("gtk_info_bar_add_button" gtk-info-bar-add-button)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-23}
+ "@version{2013-12-30}
   @argument[info-bar]{a @class{gtk-info-bar} widget}
   @argument[button-text]{text of button, or stock ID}
   @argument[response-id]{response ID for the button}
   @return{The @class{gtk-button} widget that was added.}
   @begin{short}
-    Adds a button with the given text (or a stock button, if @arg{button-text}
-    is a stock ID) and sets things up so that clicking the button will emit the
+    Adds a button with the given text, or a stock button, if @arg{button-text}
+    is a stock ID, and sets things up so that clicking the button will emit the
     \"response\" signal with the given @arg{response-id}.
   @end{short}
   The button is appended to the end of the info bars's action area. The button
-  widget is returned, but usually you don't need it.
+  widget is returned, but usually you do not need it.
 
-  Since 2.18"
+  Since 2.18
+  @see-class{gtk-info-bar}
+  @see-class{gtk-button}
+  @see-function{gtk-info-bar-add-buttons}"
   (info-bar (g-object gtk-info-bar))
   (button-text :string)
   (response-id :int))

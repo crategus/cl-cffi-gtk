@@ -89,10 +89,10 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-message-dialog 'type)
- "@version{2013-7-3}
+ "@version{2013-12-30}
   @begin{short}
     A @sym{gtk-message-dialog} window presents a dialog with an image
-    representing the type of message (Error, Question, etc.) alongside some
+    representing the type of message, Error, Question, etc., alongside some
     message text.
   @end{short}
   It is simply a convenience widget; you could construct the equivalent of a
@@ -112,7 +112,7 @@
   @b{Example:} A modal dialog.
   @begin{pre}
 (let ((dialog (gtk-message-dialog-new main-window
-                                      :destroy-with-parent
+                                      '(:destroy-with-parent)
                                       :error
                                       :close
                                       \"Error loading file ~s\"
@@ -125,7 +125,7 @@
   @b{Example:} A non-modal dialog.
   @begin{pre}
 (let ((dialog (gtk-message-dialog-new main-window
-                                      :destroy-with-parent
+                                      '(:destroy-with-parent)
                                       :error
                                       :close
                                       \"Error loading file ~s\"
@@ -155,7 +155,10 @@
   @see-slot{gtk-message-dialog-secondary-text}
   @see-slot{gtk-message-dialog-secondary-use-markup}
   @see-slot{gtk-message-dialog-text}
-  @see-slot{gtk-message-dialog-use-markup}")
+  @see-slot{gtk-message-dialog-use-markup}
+  @see-class{gtk-dialog}
+  @see-symbol{gtk-dialog-flags}
+  @see-function{gtk-dialog-run}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -181,8 +184,8 @@
 (setf (documentation (atdoc:get-slot-from-name "message-area"
                                                'gtk-message-dialog) 't)
  "The @code{\"message-area\"} property of type @class{gtk-widget} (Read) @br{}
-  The @class{gtk-box} widget of orientation @code{:vertical} that corresponds to
-  the message area of this dialog. See the function
+  The @class{gtk-box} widget of orientation @code{:vertical} that corresponds
+  to the message area of this dialog. See the function
   @fun{gtk-message-dialog-get-message-area} for a detailed description of this
   area. @br{}
   Since 2.22")

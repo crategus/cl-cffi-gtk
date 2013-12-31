@@ -187,13 +187,13 @@
     Creates a new @class{gtk-radio-action} object.
   @end{short}
   To add the action to a @class{gtk-action-group} and set the accelerator for
-  the action, call the function @fun{gtk-action-group-add-action-with-accel}.
+  the action, call the function @fun{gtk-action-group-add-action}.
 
   Since 2.4
   @see-class{gtk-radio-action}
   @see-class{gtk-action-group}
   @see-function{gtk-radio-action-get-current-value}
-  @see-function{gtk-action-group-add-action-with-accel}"
+  @see-function{gtk-action-group-add-action}"
   (name :string)
   (label :string)
   (tooltip :string)
@@ -295,7 +295,7 @@
   @see-function{gtk-radio-action-get-group}
   @see-function{gtk-radio-action-set-group}"
   (action (g-object gtk-radio-action))
-  (group-source (g-slist (g-object radio-acttion))))
+  (group-source (g-object gtk-radio-action)))
 
 (export 'gtk-radio-action-join-group)
 
@@ -318,7 +318,7 @@
   Since 2.4
   @see-class{gtk-radio-action}
   @see-function{gtk-radio-action-set-current-value}"
-  (gtk-radio-action-get-current-value action))
+  (gtk-radio-action-current-value action))
 
 (export 'gtk-radio-action-get-current-value)
 

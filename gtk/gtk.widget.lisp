@@ -5127,11 +5127,11 @@
 
 (defcfun ("gtk_widget_modify_bg" gtk-widget-modify-bg) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-11-25}
+ "@version{2013-12-29}
   @argument[widget]{a @class{gtk-widget} object}
   @argument[state]{the state of type @symbol{gtk-state-type} for which to set
     the background color}
-  @argument[color]{the color of type @symbol{gdk-color} to assign, does not need
+  @argument[color]{the color of type @class{gdk-color} to assign, does not need
     to be allocated), or @code{nil} to undo the effect of previous calls of the
     function @sym{gtk-widget-modify-bg}}
   @subheading{Warning}
@@ -5168,11 +5168,11 @@
 
 (defcfun ("gtk_widget_modify_text" gtk-widget-modify-text) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-11-25}
+ "@version{2013-12-29}
   @argument[widget]{a @class{gtk-widget} object}
   @argument[state]{the state of type @symbol{gtk-state-type} for which to set
     the text color}
-  @argument[color]{the color of type @class{{gdk-color} to assign, does not need
+  @argument[color]{the color of type @class{gdk-color} to assign, does not need
     to be allocated, or @code{nil} to undo the effect of previous calls of
      the function @sym{gtk-widget-modify-text}}
   @subheading{Warning}
@@ -5203,11 +5203,11 @@
 
 (defcfun ("gtk_widget_modify_base" gtk-widget-modify-base) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-11-25}
+ "@version{2013-12-29}
   @argument[widget]{a @class{gtk-widget} object}
   @argument[state]{the state of type @symbol{gtk-state-type} for which to set
     the base color}
-  @argument[color]{the color of type @symbol{gdk-color} to assign, does not need
+  @argument[color]{the color of type @class{gdk-color} to assign, does not need
     to be allocated, or @code{nil} to undo the effect of previous calls to the
     function @sym{gtk-widget-modify-base}}
   @subheading{Warning}
@@ -8757,11 +8757,12 @@
 
 (defun gtk-widget-get-halign (widget)
  #+cl-cffi-gtk-documentation
- "@version{2013-7-31}
+ "@version{2013-12-30}
   @argument[widget]{a @class{gtk-widget} object}
-  @return{The horizontal alignment of widget.}
+  @return{The horizontal alignment of type @symbol{gtk-align} of @arg{widget}.}
   @short{Gets the value of the \"halign\" property.}
   @see-class{gtk-widget}
+  @see-symbol{gtk-align}
   @see-function{gtk-widget-set-halign}"
   (gtk-widget-halign widget))
 
@@ -8775,13 +8776,15 @@
 
 (defun gtk-widget-set-halign (widget align)
  #+cl-cffi-gtk-documentation
- "@version{2013-7-31}
+ "@version{2013-12-30}
   @argument[widget]{a @class{gtk-widget} object}
-  @argument[align]{the horizontal alignment}
+  @argument[align]{the horizontal alignment of type @symbol{gtk-align}}
   @begin{short}
-    Sets the horizontal alignment of widget. See the @code{\"halign\"} property.
+    Sets the horizontal alignment of @arg{widget}.
   @end{short}
+  See the @code{\"halign\"} property.
   @see-class{gtk-widget}
+  @see-symbol{gtk-align}
   @see-function{gtk-widget-get-halign}"
   (setf (gtk-widget-halign widget) align))
 
@@ -9053,7 +9056,7 @@
   generally receive the extra space. For example, a list or scrollable area or
   document in your window would often be set to expand.
 
-  Containers should use the function @fun{gtk-widget-compute_expand} rather than
+  Containers should use the function @fun{gtk-widget-compute-expand} rather than
   this function, to see whether a widget, or any of its children, has the expand
   flag set. If any child of a widget wants to expand, the parent may ask to
   expand also.
@@ -9063,7 +9066,7 @@
   expand.
   @see-class{gtk-widget}
   @see-function{gtk-widget-set-hexpand}
-  @fun{gtk-widget-compute_expand}"
+  @fun{gtk-widget-compute-expand}"
   (gtk-widget-hexpand widget))
 
 (export 'gtk-widget-get-hexpand)

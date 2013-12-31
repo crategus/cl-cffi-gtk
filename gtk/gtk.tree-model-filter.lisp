@@ -411,7 +411,7 @@
   @end{short}
 
   Since 2.4
-  @see-class{gtk-tree-model-filter-get-model}
+  @see-class{gtk-tree-model-filter}
   @see-class{gtk-tree-model}"
   (filter (g-object gtk-tree-model-filter)))
 
