@@ -161,8 +161,9 @@
 
 (defcfun ("cairo_create" cairo-create) (:pointer (:struct cairo-t))
  #+cl-cffi-gtk-documentation
- "@version{2013-8-4}
-  @argument[target]{target surface for the context}
+ "@version{2013-12-28}
+  @argument[target]{target surface of type @symbol{cairo-surface-t} for the
+    context}
   @begin{return}
     A newly allocated @symbol{cairo-t} with a reference count of 1. The initial
     reference count should be released with the function @fun{cairo-destroy}
@@ -187,6 +188,7 @@
 
   Since 1.0
   @see-symbol{cairo-t}
+  @see-symbol{cairo-surface-t}
   @see-symbol{cairo-mime-surface-t}
   @see-function{cairo-status}
   @see-function{cairo-image-surface-create}
@@ -315,25 +317,35 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_get_target ()
-;;;
-;;; cairo_surface_t * cairo_get_target (cairo_t *cr);
-;;;
-;;; Gets the target surface for the cairo context as passed to cairo_create().
-;;;
-;;; This function will always return a valid pointer, but the result can be a
-;;; "nil" surface if cr is already in an error state, (ie.
-;;; cairo_status() != CAIRO_STATUS_SUCCESS). A nil surface is indicated by
-;;; cairo_surface_status() != CAIRO_STATUS_SUCCESS.
-;;;
-;;; cr :
-;;;     a cairo context
-;;;
-;;; Returns :
-;;;     the target surface. This object is owned by cairo. To keep a reference
-;;;     to it, you must call cairo_surface_reference().
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_get_target" cairo-get-target)
+    (:pointer (:struct cairo-surface-t))
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-28}
+  @argument[cr]{a cairo context}
+  @begin{return}
+    The target surface. This object is owned by cairo. To keep a reference
+    to it, you must call the function @fun{cairo-surface-reference}.
+  @end{return}
+  @begin{short}
+    Gets the target surface for the cairo context as passed to the function
+    @fun{cairo-create}.
+  @end{short}
+
+  This function will always return a valid pointer, but the result can be a
+  \"nil\" surface if @arg{cr} is already in an error state, (i. e.
+  @code{(cairo-status) != :success}). A nil surface is indicated by
+  @code{(cairo-surface-status) != :success}.
+
+  Since 1.0
+  @see-symbol{cairo-t}
+  @see-symbol{cairo-surface-t}
+  @see-function{cairo-create}
+  @see-function{cairo-surface-reference}"
+  (cr (:pointer (:struct cairo-t))))
+
+(export 'cairo-get-target)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_push_group ()
@@ -2054,7 +2066,7 @@
 
 (defcfun ("cairo_stroke_extents" cairo-stroke-extents) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-12-2}
+ "@version{2013-12-28}
   @argument[cr]{a cairo context}
   @argument[x1]{left of the resulting extents}
   @argument[y1]{top of the resulting extents}
@@ -2083,7 +2095,7 @@
   and @fun{cairo-stroke-preserve}.
 
   Since 1.0
-  @see-class{cairo-t}
+  @see-symbol{cairo-t}
   @see-funcion{cairo-stroke}
   @see-function{cairo-path-extents}
   @see-function{cairo-set-line-width}
