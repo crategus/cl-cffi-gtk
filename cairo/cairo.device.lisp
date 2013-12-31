@@ -332,20 +332,26 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_device_get_reference_count ()
-;;;
-;;; unsigned int cairo_device_get_reference_count (cairo_device_t *device);
-;;;
-;;; Returns the current reference count of device.
-;;;
-;;; device :
-;;;     a cairo_device_t
-;;;
-;;; Returns :
-;;;     the current reference count of device. If the object is a nil object,
-;;;     0 will be returned.
-;;;
-;;; Since 1.10
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_device_get_reference_count" cairo-device-get-reference-count)
+    :uint
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-28}
+  @argument[device]{a @symbol{cairo-device-t}}
+  @begin{return}
+    The current reference count of device. If the object is a nil object,
+    0 will be returned.
+  @end{return}
+  @begin{short}
+    Returns the current reference count of device.
+  @end{short}
+
+  Since 1.10
+  @see-symbol{cairo-device-t}"
+  (device (:pointer (:struct cairo-device-t))))
+
+(export 'cairo-device-get-reference-count)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_device_set_user_data ()
