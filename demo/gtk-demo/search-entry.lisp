@@ -314,6 +314,15 @@ do_search_entry (GtkWidget *do_widget)
 }
 |#
 
+(defun start-search (button entry)
+  (declare (ignore button entry))
+)
+
+(defun finish-search ()
+)
+
+(defun start-search-feedback ()
+)
 
 (defvar search-progress-id 0)
 (defvar finish-search-id 0)

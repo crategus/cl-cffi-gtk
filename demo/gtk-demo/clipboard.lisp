@@ -150,6 +150,7 @@ button_press (GtkWidget      *widget,
 
         (g-signal-connect ebox "drag-begin"
            (lambda (widget context)
+             (declare (ignore widget))
              (format t "DRAG-BEGIN for image1 ~A~%" context)
              (let ((pixbuf (get-image-pixbuf image)))
                ;; Sets pixbuf of image as the icon for a given drag
@@ -157,7 +158,7 @@ button_press (GtkWidget      *widget,
 
         (g-signal-connect ebox "drag-data-get"
            (lambda (widget context selection-data info time)
-             (declare (ignore context info time))
+             (declare (ignore widget context info time))
              (let ((pixbuf (get-image-pixbuf image)))
                (if (gtk-selection-data-set-pixbuf selection-data pixbuf)
                    (format t "DRAG-DATA-GET for image1 ~a~%" selection-data)))

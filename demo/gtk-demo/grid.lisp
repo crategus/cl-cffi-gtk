@@ -86,10 +86,6 @@
       ;; Insert Grid lines
       (let ((toggle (gtk-check-button-new-with-label "Grid Lines")))
 
-        (g-signal-connect toggle "toggled"
-           (lambda (widget)
-
-
         (gtk-container-add action
                            (make-instance 'gtk-label
                                           :use-markup t
@@ -97,7 +93,7 @@
                                           :margin-top 12
                                           :label
                                           "<b>Insert Grid Lines</b>"))
-        (gtk-container-add action toggle))))
+        (gtk-container-add action toggle))
 
 
 

@@ -208,8 +208,10 @@ drag_data_delete_handl
       ;; call gtk_drag_get_data which will emit "drag-data-get" on the source.
       (g-signal-connect well-dest "drag-drop"
          (lambda (widget context x y time)
+           (declare (ignore context x y time))
            (let ((name (gtk-widget-get-name widget))
                  (is-valid-drop t))
+             (declare (ignorable is-valid-drop))
              (format t "DRAG-DROP for ~A~%" name)
 
                
@@ -270,12 +272,14 @@ drag_drop_handl
       ;; Emitted when DnD begins. This is often used to present custom graphics.
       (g-signal-connect coin-source "drag-begin"
          (lambda (widget context)
+           (declare (ignore context))
            (let ((name (gtk-widget-get-name widget)))
              (format t "DRAG-BEGIN for ~A~%" name))))
 
       ;; Emitted when DnD ends. This is used to clean up any leftover data.
       (g-signal-connect coin-source "drag-end"
          (lambda (widget context)
+           (declare (ignore context))
            (let ((name (gtk-widget-get-name widget)))
              (format t "DRAG-END for ~A~%" name))))
 
@@ -291,12 +295,13 @@ drag_drop_handl
       ;; data in blocks of 8, 16, or 32 bit units.
       (g-signal-connect coin-source "drag-data-get"
          (lambda (widget context selection-data target-type time)
+           (declare (ignore context selection-data time))
            (format t "DRAG-DATA-GET~%")
            (let ((name (gtk-widget-get-name widget))
                  (string-data "This is data from the source.")
                  (integer-data 42))
              (format t "DRAG-DATA-GET ~A~%" name)
-             (format t "  Sending:~%")
+             (format t "  Sending: ~A~%" string-data)
              (ecase target-type
                (target-int32
                 (format t "  integer: ~A~%" integer-data))))))

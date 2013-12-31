@@ -68,7 +68,7 @@
 
           (g-signal-connect drag-dest "drag-data-received"
             (lambda (widget context x y selection-data info time)
-              (declare (ignore context x y info time))
+              (declare (ignore x y info time))
               (format t "~&DRAG-DATA-RECEIVED context = ~A~%" context)
               (format t "     ~a~%" selection-data)
               (let* ((pixbuf (gtk-selection-data-get-pixbuf selection-data))
