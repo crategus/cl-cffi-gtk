@@ -43,6 +43,29 @@
   GObject. It also means not cloning the POSIX API, but providing higher-level,
   document-centric interfaces.
   @begin[Files types and applications]{section}
+    @begin[GContentType]{subsection}
+      Platform-specific content typing.
+
+      A content type is a platform specific string that defines the type of a
+      file. On UNIX it is a mime type like \"text/plain\" or \"image/png\". On
+      Win32 it is an extension string like \".doc\", \".txt\" or a perceived
+      string like \"audio\". Such strings can be looked up in the registry at
+      @code{HKEY_CLASSES_ROOT}.
+
+      @about-function{g-content-type-equals}
+      @about-function{g-content-type-is-a}
+      @about-function{g-content-type-is-unknown}
+      @about-function{g-content-type-get-description}
+      @about-function{g-content-type-get-mime-type}
+      @about-function{g-content-type-get-icon}
+      @about-function{g-content-type-get-symbolic-icon}
+      @about-function{g-content-type-get-generic-icon-name}
+      @about-function{g-content-type-can-be-executable}
+      @about-function{g-content-type-from-mime-type}
+      @about-function{g-content-type-guess}
+      @about-function{g-content-type-guess-for-tree}
+      @about-function{g-content-types-get-registered}
+    @end{subsection}
     @begin[GAppInfo]{subsection}
       Application information and launch contexts.
 

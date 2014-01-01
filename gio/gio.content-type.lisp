@@ -107,75 +107,71 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_content_type_get_description ()
-;;;
-;;; gchar * g_content_type_get_description (const gchar *type);
-;;;
-;;; Gets the human readable description of the content type.
-;;;
-;;; type :
-;;;     a content type string
-;;;
-;;; Returns :
-;;;     a short description of the content type type. Free the returned string
-;;;     with g_free()
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_content_type_get_description" g-content-type-get-description)
     (:string :free-from-foreign t)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-31}
+  @argument[type]{a content type string}
+  @begin{return}
+    A short description of the content type type.
+  @end{return}
+  Gets the human readable description of the content type."
   (type :string))
 
 (export 'g-content-type-get-description)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_content_type_get_mime_type ()
-;;;
-;;; gchar * g_content_type_get_mime_type (const gchar *type);
-;;;
-;;; Gets the mime type for the content type, if one is registered.
-;;;
-;;; type :
-;;;     a content type string
-;;;
-;;; Returns :
-;;;     the registered mime type for the given type, or NULL if unknown.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_content_type_get_mime_type" g-content-type-get-mime-type) :string
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-31}
+  @argument[type]{a content type string}
+  @begin{return}
+    The registered mime type for the given type, or @code{nil} if unknown.
+  @end{return}
+  Gets the mime type for the content type, if one is registered."
   (type :string))
 
 (export 'g-content-type-get-mime-type)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_content_type_get_icon ()
-;;;
-;;; GIcon * g_content_type_get_icon (const gchar *type);
-;;;
-;;; Gets the icon for a content type.
-;;;
-;;; type :
-;;;     a content type string
-;;;
-;;; Returns :
-;;;     GIcon corresponding to the content type. Free the returned object with
-;;;     g_object_unref().
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_content_type_get_icon" g-content-type-get-icon) (g-object g-icon)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-31}
+  @argument[type]{a content type string}
+  @begin{return}
+    @class{g-icon} corresponding to the content type.
+  @end{return}
+  Gets the icon for a content type."
+  (type :string))
+
+(export 'g-content-type-get-icon)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_content_type_get_symbolic_icon ()
-;;;
-;;; GIcon * g_content_type_get_symbolic_icon (const gchar *type);
-;;;
-;;; Gets the symbolic icon for a content type.
-;;;
-;;; type :
-;;;     a content type string
-;;;
-;;; Returns :
-;;;     symbolic GIcon corresponding to the content type. Free the returned
-;;;     object with g_object_unref(). [transfer full]
-;;;
-;;; Since 2.34
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_content_type_get_symbolic_icon" g-content-type-get-symbolic-icon)
+    (g-object g-icon)
+ #+cl-cffi-gtk-documentation
+ "@version{2013-12-31}
+  @argument[type]{a content type string}
+  @begin{return}
+    Symbolic @class{g-icon} corresponding to the content type.
+  @end{return}
+  @short{Gets the symbolic icon for a content type.}
+
+  Since 2.34"
+  (type :string))
+
+(export 'g-content-type-get-symbolic-icon)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_content_type_get_generic_icon_name ()
@@ -195,6 +191,12 @@
 ;;;
 ;;; Since 2.34
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_content_type_get_generic_icon_name"
+           g-content-type-get-generic-icon-name) :string
+  (type :string))
+
+(export 'g-content-type-get-generic-icon-name)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_content_type_can_be_executable ()
