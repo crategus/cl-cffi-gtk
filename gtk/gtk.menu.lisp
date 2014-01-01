@@ -10,7 +10,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -869,7 +869,7 @@
 
 (defun gtk-menu-set-accel-path (menu accel-path)
  #+cl-cffi-gtk-documentation
- "@version{2013-12-1}
+ "@version{2014-1-1}
   @argument[menu]{a valid @class{gtk-menu} widget}
   @argument[accel-path]{a valid accelerator path}
   @begin{short}
@@ -877,7 +877,7 @@
     immediate children, its menu items, can be constructed.
   @end{short}
   The main purpose of this function is to spare the programmer the inconvenience
-  of having to call the function @sym{gtk-menu-item-set-accel-path} on each menu
+  of having to call the function @fun{gtk-menu-item-set-accel-path} on each menu
   item that should support runtime user changable accelerators. Instead, by just
   calling the function @sym{gtk-menu-set-accel-path} on their parent, each menu
   item of this menu, that contains a label describing its purpose, automatically
@@ -894,8 +894,8 @@
   @fun{gtk-accel-map-add-entry}.
   @see-class{gtk-menu}
   @see-function{gtk-menu-item-get-accel-path}
-  @see-function{gtk-accel-map-add-entry}
-  @see-function{g-intern-static-string}"
+  @see-function{gtk-menu-item-set-accel-path}
+  @see-function{gtk-accel-map-add-entry}"
   (setf (gtk-menu-accel-path menu) accel-path))
 
 (export 'gtk-menu-set-accel-path)
