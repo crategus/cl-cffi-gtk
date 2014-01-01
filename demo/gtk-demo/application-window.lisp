@@ -17,7 +17,7 @@
                                          '(:destroy-with-parent :modal)
                                          :info
                                          :close
-                                         "You activated action: ~A of type ~A"
+                                         "You activated action ~S of type ~S."
                                          name type)))
     (cond ((string= name "DarkTheme")
            (let ((value (gtk-toggle-action-get-active action))
@@ -42,37 +42,31 @@
         (type (g-object-type-name current))
         (active (gtk-toggle-action-get-active current))
         (value (gtk-radio-action-get-current-value current)))
-    (format t "in activate-radio-action  ~A ~A ~A ~A~%" name type active value)
     (when active
       (gtk-label-set-text (app-message *app*)
-                          (format nil "You activated radio action: ~A of type ~A.~% ~
-                                       Current value ~A"
-                                      name type value))
+                          (format nil
+                                  "You activated radio action ~S of type ~S.~% ~
+                                   Current value ~D."
+                                   name type value))
       (gtk-info-bar-set-message-type (app-infobar *app*) value)
       (gtk-widget-show (app-infobar *app*)))))
 
 (defun activate-about (action)
   (declare (ignore action))
   (gtk-show-about-dialog (app-window *app*)
-                         :program-name "GTK+ Code Demos in Lisp"
-                         :version (format nil "Running against GTK+ ~A.~A.~A"
+                         :program-name "GTK+ Lisp Code Demos"
+                         :version (format nil "Running against GTK+ ~D.~D.~D"
                                               (gtk-get-major-version)
                                               (gtk-get-minor-version)
                                               (gtk-get-micro-version))
-                         :copyright "(C) 1997-2009 The GTK+ Team"
+                         :copyright "(C) 2014 Dieter Kaiser"
                          :license-type :lgpl-2-1
                          :website "http://www.gtk.org"
-                         :comments "Program to demonstrate GTK+ functions."
-                         :authors '("Peter Mattis"
-                                    "Spencer Kimball"
-                                    "Josh MacDonald"
-                                    "and many more...")
-                         :documenters '("Owen Taylor"
-                                        "Tony Gale"
-                                        "Matthias Clasen <mclasen@redhat.com>"
-                                        "and many more...")
+                         :comments "Program to demonstrate GTK+ Lisp functions."
+;                         :authors '("Dieter Kaiser")
+;                         :documenters '("Dieter Kaiser")
                          :logo (gdk-pixbuf-new-from-file "gtk-logo-old.png")
-                         :title "About GTK+ Code Demos"))
+                         :title "About GTK+ Lisp Code Demos"))
 
 (defvar *entries*
         (list
@@ -131,27 +125,27 @@
 
 (defvar *color-entries*
         (list
-          (list "Red" nil                      ; name, stock id
-                "_Red" "<control>R"            ; label, accelerator
-                "Blood" 0)                     ; tooltip, value
-          (list "Green" nil                    ; name, stock id
-                "_Green" "<control>G"          ; label, accelerator
-                "Grass" 1)                     ; tooltip, value
-          (list "Blue" nil                     ; name, stock id
-                "_Blue" "<control>B"           ; label, accelerator
-                "Sky" 2)))                     ; tooltip, value
+          (list "Red" nil                             ; name, stock id
+                "_Red" "<control>R"                   ; label, accelerator
+                "Blood" 0)                            ; tooltip, value
+          (list "Green" nil                           ; name, stock id
+                "_Green" "<control>G"                 ; label, accelerator
+                "Grass" 1)                            ; tooltip, value
+          (list "Blue" nil                            ; name, stock id
+                "_Blue" "<control>B"                  ; label, accelerator
+                "Sky" 2)))                            ; tooltip, value
 
 (defvar *shape-entries*
         (list
-          (list "Square" nil                   ; name, stock id
-                "_Square" "<control>S"         ; label, accelerator
-                "Square" 0)                    ; tooltip, value
-          (list "Rectangle" nil                ; name, stock id
-                "_Rectangle" "<control>R"      ; label, accelerator
-                "Rectangle" 1)                 ; tooltip, value
-          (list "Oval" nil                     ; name, stock id
-                "_Oval" "<control>O"           ; label, accelerator
-                "Egg" 2)))                     ; tooltip, value
+          (list "Square" nil                          ; name, stock id
+                "_Square" "<control>S"                ; label, accelerator
+                "Square" 0)                           ; tooltip, value
+          (list "Rectangle" nil                       ; name, stock id
+                "_Rectangle" "<control>R"             ; label, accelerator
+                "Rectangle" 1)                        ; tooltip, value
+          (list "Oval" nil                            ; name, stock id
+                "_Oval" "<control>O"                  ; label, accelerator
+                "Egg" 2)))                            ; tooltip, value
 
 (defvar *ui-info*
 "<ui>
@@ -184,11 +178,7 @@
      </menu>
    </menubar>
    <toolbar name='ToolBar'>
-     <toolitem action='Open'>
-       <menu action='OpenMenu'>
-         <menuitem action='File1'/>
-       </menu>
-     </toolitem>
+     <toolitem action='Open'/>
      <toolitem action='Quit'/>
      <separator action='Sep1'/>
      <toolitem action='Logo'/>
@@ -197,24 +187,30 @@
 
 (defun update-statusbar (buffer statusbar)
   (let* ((count (gtk-text-buffer-get-char-count buffer))
-         (iter (gtk-text-buffer-get-iter-at-mark buffer
-                                                 (gtk-text-buffer-get-insert buffer)))
+         (iter (gtk-text-buffer-get-iter-at-mark
+                   buffer
+                   (gtk-text-buffer-get-insert buffer)))
          (row (gtk-text-iter-get-line iter))
          (col (gtk-text-iter-get-line-offset iter))
-         (msg (format nil "row ~A,  col ~A --- ~A chars in document"
-                          row col count)))
+         (msg (format nil "Row: ~A Col: ~A | Chars: ~A" row col count)))
     (gtk-statusbar-pop statusbar 0)
     (gtk-statusbar-push statusbar 0 msg)))
 
+(defun register-stock-icons ()
+  (let* ((factory (make-instance 'gtk-icon-factory))
+         (pixbuf (gdk-pixbuf-new-from-file "gtk-logo-old.png"))
+         (icon-set (gtk-icon-set-new-from-pixbuf pixbuf)))
+    (gtk-icon-factory-add-default factory)
+    (gtk-icon-factory-add factory "demo-gtk-logo" icon-set)))
+
 (defun demo-application-window ()
   (within-main-loop
-    (let* (;; Create the toplevel window.
-           (window (make-instance 'gtk-window
+    (let* ((window (make-instance 'gtk-window
                                    :type :toplevel
-                                   :title "Application Window"
+                                   :title "Demo Application Window"
                                    :icon-name "document-open"
-                                   :default-width 250
-                                   :default-height 200))
+                                   :default-width 300
+                                   :default-height 250))
            (table (make-instance 'gtk-grid))
            (action-group (make-instance 'gtk-action-group
                                         :name "AppWwindowActions"))
@@ -235,7 +231,8 @@
                                    :no-show-all t
                                    :halign :fill))
            (message (make-instance 'gtk-label)))
-      ;; Save global widgets
+      (register-stock-icons)
+      ;; Store global widgets
       (setf (app-window  *app*) window
             (app-message *app*) message
             (app-infobar *app*) infobar)
@@ -264,10 +261,10 @@
 
       (gtk-ui-manager-insert-action-group ui-info action-group 0)
 
-      (gtk-window-add-accel-group window (gtk-ui-manager-get-accel-group ui-info))
+      (gtk-window-add-accel-group window
+        (gtk-ui-manager-get-accel-group ui-info))
 
       (let ((ui-id (gtk-ui-manager-add-ui-from-string ui-info *ui-info*)))
-        (format t "~%uid-id = ~A~%" ui-id)
         (when (= 0 ui-id)
           (error "building menus failed")))
 
@@ -281,7 +278,7 @@
         (gtk-widget-set-halign bar :fill)
         (gtk-grid-attach table bar 0 1 1 1))
 
-      ;; Create Infobar
+      ;; Add infobar
       (gtk-widget-show message)
       (gtk-box-pack-start (gtk-info-bar-get-content-area infobar) message)
       (gtk-info-bar-add-button infobar "gtk-ok" -5)
@@ -291,12 +288,12 @@
                           (gtk-widget-hide infobar)))
       (gtk-grid-attach table infobar 0 2 1 1)
 
-      ;; Create document
+      ;; Add text view
       (gtk-grid-attach table scrolled 0 3 1 1)
       (gtk-widget-grab-focus contents)
       (gtk-container-add scrolled contents)
 
-      ;; Create statusbar
+      ;; Add statusbar
       (gtk-grid-attach table statusbar 0 4 1 1)
 
       ;; Show text widget info in the statusbar

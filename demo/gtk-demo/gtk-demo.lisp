@@ -1,7 +1,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk-demo.lisp
 ;;;
-;;; Copyright (C) 2013 Dieter Kaiser
+;;; Copyright (C) 2013, 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -171,13 +171,18 @@
                                 "simple-window.lisp" "EXAMPLE-SIMPLE-WINDOW" 0)
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Simple Message"
-                                "simple-message.lisp" "EXAMPLE-SIMPLE-MESSAGE" 0)
+                                "simple-message.lisp"
+                                "EXAMPLE-SIMPLE-MESSAGE" 0)
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Dialogs"
                                 "dialogs.lisp" "EXAMPLE-DIALOG" 0)
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Assistant"
                                 "assistant.lisp" "DEMO-ASSISTANT" 0)
+      (gtk-tree-store-set model (gtk-tree-store-append model parent)
+                                "Application Window"
+                                "application-window.lisp"
+                                "DEMO-APPLICATION-WINDOW" 0)
     )
     (let ((parent (gtk-tree-store-set model (gtk-tree-store-append model nil)
                                             "Display Widgets")))
@@ -210,7 +215,8 @@
                                 "buttons.lisp" "EXAMPLE-BUTTONS" 0)
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Toggle Buttons"
-                                "toggle-buttons.lisp" "EXAMPLE-TOGGLE-BUTTONS" 0)
+                                "toggle-buttons.lisp"
+                                "EXAMPLE-TOGGLE-BUTTONS" 0)
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Link Button"
                                 "link-button.lisp" "EXAMPLE-LINK-BUTTON" 0)
@@ -228,7 +234,8 @@
                                 "entry-buffer.lisp" "EXAMPLE-ENTRY-BUFFER" 0)
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Text Entry Completion"
-                                "entry-completion.lisp" "EXAMPLE-ENTRY-COMPLETION" 0)
+                                "entry-completion.lisp"
+                                "EXAMPLE-ENTRY-COMPLETION" 0)
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Scale Widgets"
                                 "scale-widgets.lisp" "EXAMPLE-SCALE-WIDGETS" 0)
