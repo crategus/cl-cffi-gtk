@@ -10,7 +10,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,7 +32,7 @@
 ;;;
 ;;; GtkMenuItem
 ;;;
-;;; The widget used for item in menus
+;;; The widget used for item in menus.
 ;;;
 ;;; Synopsis
 ;;;
@@ -90,20 +90,20 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-menu-item 'type)
- "@version{2013-6-1}
+ "@version{2014-1-1}
   @begin{short}
     The @sym{gtk-menu-item} widget and the derived widgets are the only valid
     childs for menus. Their function is to correctly handle highlighting,
     alignment, events and submenus.
   @end{short}
 
-  As it derives from @class{gtk-bin} it can hold any valid child widget, altough
-  only a few are really useful.
+  As it derives from @class{gtk-bin} it can hold any valid child widget,
+  although only a few are really useful.
 
   @subheading{GtkMenuItem as GtkBuildable}
     The @sym{gtk-menu-item} implementation of the @class{gtk-buildable}
-    interface supports adding a submenu by specifying \"submenu\" as the
-    \"type\" attribute of a <child> element.
+    interface supports adding a submenu by specifying @code{\"submenu\"} as the
+    @code{\"type\"} attribute of a @code{<child>} element.
 
     @b{Example:} A UI definition fragment with submenus
     @begin{pre}
@@ -130,10 +130,10 @@
     @subheading{The \"horizontal-padding\" style property}
       @code{\"horizontal-padding\"} of type @code{:int} (Read) @br{}
       @b{Warning:} @code{\"horizontal-padding\"} has been deprecated since
-      version 3.8 and should not be used in newly-written code. Use the standard
-      padding CSS property, through objects like @class{gtk-style-context} and
-      @class{gtk-css-provider}; the value of this style property is ignored.
-      @br{}
+      version 3.8 and should not be used in newly-written code. Use the
+      standard padding CSS property, through objects like
+      @class{gtk-style-context} and @class{gtk-css-provider}; the value of this
+      style property is ignored. @br{}
       Padding to left and right of the menu item. @br{}
       Allowed values: >= 0 @br{}
       Default value: 3
@@ -179,24 +179,42 @@
       @begin{pre}
  lambda (menuitem)   : Run First
       @end{pre}
+      @begin[code]{table}
+        @entry[menuitem]{The object which received the signal.}
+      @end{table}
     @subheading{The \"select\" signal}
       @begin{pre}
  lambda (menuitem)   : Run First
       @end{pre}
+      @begin[code]{table}
+        @entry[menuitem]{The object which received the signal.}
+      @end{table}
     @subheading{The \"toggle-size-allocate\" signal}
       @begin{pre}
- lambda (menuitem arg1)   : Run First
+ lambda (menuitem arg)   : Run First
       @end{pre}
+      @begin[code]{table}
+        @entry[menuitem]{The object which received the signal.}
+        @entry[arg]{Not documented.}
+      @end{table}
     @subheading{The \"toggle-size-request\" signal}
       @begin{pre}
- lambda (menuitem arg1)   : Run First
+ lambda (menuitem arg)   : Run First
       @end{pre}
+      @begin[code]{table}
+        @entry[menuitem]{The object which received the signal.}
+        @entry[arg]{Not documented.}
+      @end{table}
   @end{dictionary}
   @see-slot{gtk-menu-item-accel-path}
   @see-slot{gtk-menu-item-label}
   @see-slot{gtk-menu-item-right-justified}
   @see-slot{gtk-menu-item-submenu}
-  @see-slot{gtk-menu-item-use-underline}")
+  @see-slot{gtk-menu-item-use-underline}
+  @see-class{gtk-bin}
+  @see-class{gtk-buildable}
+  @see-class{gtk-style-context}
+  @see-class{gtk-css-provider}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -431,97 +449,89 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_item_get_label ()
-;;;
-;;; const gchar * gtk_menu_item_get_label (GtkMenuItem *menu_item);
-;;;
-;;; Sets text on the menu_item label
-;;;
-;;; menu_item :
-;;;     a GtkMenuItem
-;;;
-;;; Returns :
-;;;     The text in the menu_item label. This is the internal string used by the
-;;;     label, and must not be modified.
-;;;
-;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-menu-item-get-label))
 
 (defun gtk-menu-item-get-label (menu-item)
+ #+cl-cffi-gtk-documentation
+ "@version{2014-1-1}
+  @argument[menu-item]{a @class{gtk-menu-item} widget}
+  @return{The text in the @arg{menu-item} label.}
+  @short{Sets text on the @arg{menu-item} label.}
+
+  Since 2.16
+  @see-class{gtk-menu-item}
+  @see-function{gtk-menu-item-set-label}"
   (gtk-menu-item-label menu-item))
 
 (export 'gtk-menu-item-get-label)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_item_set_label ()
-;;;
-;;; void gtk_menu_item_set_label (GtkMenuItem *menu_item, const gchar *label);
-;;;
-;;; Sets text on the menu_item label
-;;;
-;;; menu_item :
-;;;     a GtkMenuItem
-;;;
-;;; label :
-;;;     the text you want to set
-;;;
-;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-menu-item-set-label))
 
 (defun gtk-menu-item-set-label (menu-item label)
+ #+cl-cffi-gtk-documentation
+ "@version{2014-1-1}
+  @argument[menu-item]{a @class{gtk-menu-item} widget}
+  @argument[label]{the text you want to set}
+  @short{Sets text on the @arg{menu-item} label.}
+
+  Since 2.16
+  @see-class{gtk-menu-item}
+  @see-function{gtk-menu-item-get-label}"
   (setf (gtk-menu-item-label menu-item) label))
 
 (export 'gtk-menu-item-set-label)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_item_get_use_underline ()
-;;;
-;;; gboolean gtk_menu_item_get_use_underline (GtkMenuItem *menu_item);
-;;;
-;;; Checks if an underline in the text indicates the next character should be
-;;; used for the mnemonic accelerator key.
-;;;
-;;; menu_item :
-;;;     a GtkMenuItem
-;;;
-;;; Returns :
-;;;     TRUE if an embedded underline in the label indicates the mnemonic
-;;;     accelerator key.
-;;;
-;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-menu-item-get-use-underline))
 
 (defun gtk-menu-item-get-use-underline (menu-item)
+ #+cl-cffi-gtk-documentation
+ "@version{2014-1-1}
+  @argument[menu-item]{a @class{gtk-menu-item} widget}
+  @begin{return}
+    @em{True} if an embedded underline in the label indicates the mnemonic
+    accelerator key.
+  @end{return}
+  @begin{short}
+    Checks if an underline in the text indicates the next character should be
+    used for the mnemonic accelerator key.
+  @end{short}
+
+  Since 2.16
+  @see-class{gtk-menu-item}
+  @see-function{gtk-menu-item-set-use-underline}"
   (gtk-menu-item-use-underline menu-item))
 
 (export 'gtk-menu-item-get-use-underline)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_item_set_use_underline ()
-;;;
-;;; void gtk_menu_item_set_use_underline (GtkMenuItem *menu_item,
-;;;                                       gboolean setting);
-;;;
-;;; If true, an underline in the text indicates the next character should be
-;;; used for the mnemonic accelerator key.
-;;;
-;;; menu_item :
-;;;     a GtkMenuItem
-;;;
-;;; setting :
-;;;     TRUE if underlines in the text indicate mnemonics
-;;;
-;;; Since 2.16
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-menu-item-set-use-underline))
 
 (defun gtk-menu-item-set-use-underline (menu-item use-underline)
+ #+cl-cffi-gtk-documentation
+ "@version{2014-1-1}
+  @argument[menu-item]{a @class{gtk-menu-item} widget}
+  @argument[setting]{@em{true} if underlines in the text indicate mnemonics}
+  @begin{short}
+    If true, an underline in the text indicates the next character should be
+    used for the mnemonic accelerator key.
+  @end{short}
+
+  Since 2.16
+  @see-class{gtk-menu-item}
+  @see-function{gtk-menu-item-get-use-underline}"
   (setf (gtk-menu-item-use-underline menu-item) use-underline))
 
 (export 'gtk-menu-item-set-use-underline)
@@ -568,137 +578,129 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_item_set_accel_path ()
-;;;
-;;; void gtk_menu_item_set_accel_path (GtkMenuItem *menu_item,
-;;;                                    const gchar *accel_path);
-;;;
-;;; Set the accelerator path on menu_item, through which runtime changes of the
-;;; menu item's accelerator caused by the user can be identified and saved to
-;;; persistent storage (see gtk_accel_map_save() on this). To set up a default
-;;; accelerator for this menu item, call gtk_accel_map_add_entry() with the same
-;;; accel_path. See also gtk_accel_map_add_entry() on the specifics of
-;;; accelerator paths, and gtk_menu_set_accel_path() for a more convenient
-;;; variant of this function.
-;;;
-;;; This function is basically a convenience wrapper that handles calling
-;;; gtk_widget_set_accel_path() with the appropriate accelerator group for the
-;;; menu item.
-;;;
-;;; Note that you do need to set an accelerator on the parent menu with
-;;; gtk_menu_set_accel_group() for this to work.
-;;;
-;;; Note that accel_path string will be stored in a GQuark. Therefore, if you
-;;; pass a static string, you can save some memory by interning it first with
-;;; g_intern_static_string().
-;;;
-;;; menu_item :
-;;;     a valid GtkMenuItem
-;;;
-;;; accel_path :
-;;;     accelerator path, corresponding to this menu item's functionality, or
-;;;     NULL to unset the current path
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-menu-item-set-accel-path))
 
 (defun gtk-menu-item-set-accel-path (menu-item accel-path)
+ #+cl-cffi-gtk-documentation
+ "@version{2014-1-1}
+  @argument[menu-item]{a valid @class{gtk-menu-item} widget}
+  @argument[accel-path]{accelerator path, corresponding to this menu item's
+    functionality, or @code{nil} to unset the current path}
+  @begin{short}
+    Set the accelerator path on @arg{menu-item}, through which runtime changes
+    of the menu item's accelerator caused by the user can be identified and
+    saved to persistent storage, see the function @fun{gtk-accel-map-save} on
+    this.
+  @end{short}
+  To set up a default accelerator for this menu item, call the function
+  @fun{gtk-accel-map-add-entry} with the same @arg{accel-path}. See also
+  the function @fun{gtk-accel-map-add-entry} on the specifics of accelerator
+  paths, and the function @fun{gtk-menu-set-accel-path} for a more convenient
+  variant of this function.
+
+  This function is basically a convenience wrapper that handles calling
+  the function @sym{gtk-widget-set-accel-path} with the appropriate accelerator
+  group for the menu item.
+
+  Note that you do need to set an accelerator on the parent menu with the
+  function @fun{gtk-menu-set-accel-group} for this to work.
+  @see-class{gtk-menu-item}
+  @see-function{gtk-accel-map-save}
+  @see-function{gtk-accel-map-add-entry}
+  @see-function{gtk-menu-set-accel-path}
+  @see-function{gtk-widget-set-accel-path}
+  @see-function{gtk-menu-set-accel-group}
+  @see-function{gtk-menu-item-get-accel-path}"
   (setf (gtk-menu-item-accel-path menu-item) accel-path))
 
 (export 'gtk-menu-item-set-accel-path)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_item_get_accel_path ()
-;;;
-;;; const gchar * gtk_menu_item_get_accel_path (GtkMenuItem *menu_item);
-;;;
-;;; Retrieve the accelerator path that was previously set on menu_item.
-;;;
-;;; See gtk_menu_item_set_accel_path() for details.
-;;;
-;;; menu_item :
-;;;     a valid GtkMenuItem
-;;;
-;;; Returns :
-;;;     the accelerator path corresponding to this menu item's functionality, or
-;;;     NULL if not set
-;;;
-;;; Since 2.14
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-menu-item-get-accel-path))
 
 (defun gtk-menu-item-get-accel-path (menu-item)
+ #+cl-cffi-gtk-documentation
+ "@version{2014-1-1}
+  @argument[menu-item]{a valid @class{gtk-menu-item} widget}
+  @begin{return}
+    The accelerator path corresponding to this menu item's functionality, or
+    @code{nil} if not set.
+  @end{return}
+  @begin{short}
+    Retrieve the accelerator path that was previously set on @arg{menu-item}.
+  @end{short}
+
+  See the function @fun{gtk-menu-item-set-accel-path} for details.
+
+  Since 2.14
+  @see-class{gtk-menu-item}
+  @see-function{gtk-menu-item-set-accel-path}"
   (gtk-menu-item-accel-path menu-item))
 
 (export 'gtk-menu-item-get-accel-path)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_item_select ()
-;;;
-;;; void gtk_menu_item_select (GtkMenuItem *menu_item);
-;;;
-;;; Emits the "select" signal on the given item. Behaves exactly like
-;;; gtk_item_select.
-;;;
-;;; menu_item :
-;;;     the menu item
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_menu_item_select" gtk-menu-item-select) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2014-1-1}
+  @argument[menu-item]{a @class{gtk-menu-item} widget}
+  Emits the \"select\" signal on the given menu item.
+  @see-class{gtk-menu-item}
+  @see-function{gtk-menu-item-deselect}"
   (menu-item (g-object gtk-menu-item)))
 
 (export 'gtk-menu-item-select)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_item_deselect ()
-;;;
-;;; void gtk_menu_item_deselect (GtkMenuItem *menu_item);
-;;;
-;;; Emits the "deselect" signal on the given item. Behaves exactly like
-;;; gtk_item_deselect.
-;;;
-;;; menu_item :
-;;;     the menu item
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_menu_item_deselect" gtk-menu-item-deselect) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2014-1-1}
+  @argument[menu-item]{a @class{gtk-menu-item} widget}
+  Emits the \"deselect\" signal on the given menu item.
+  @see-class{gtk-menu-item}
+  @see-function{gtk-menu-item-select}"
   (menu-item (g-object gtk-menu-item)))
 
 (export 'gtk-menu-item-deselect)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_item_activate ()
-;;;
-;;; void gtk_menu_item_activate (GtkMenuItem *menu_item);
-;;;
-;;; Emits the "activate" signal on the given item
-;;;
-;;; menu_item :
-;;;     the menu item
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_menu_item_activate" gtk-menu-item-activate) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2014-1-1}
+  @argument[menu-item]{a @class{gtk-menu-item} widget}
+  Emits the \"activate\" signal on the given menu item.
+  @see-class{gtk-menu-item}"
   (menu-item (g-object gtk-menu-item)))
 
 (export 'gtk-menu-item-activate)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_item_toggle_size_request ()
-;;;
-;;; void gtk_menu_item_toggle_size_request (GtkMenuItem *menu_item,
-;;;                                         gint *requisition);
-;;;
-;;; Emits the "toggle-size-request" signal on the given item.
-;;;
-;;; menu_item :
-;;;     the menu item
-;;;
-;;; requisition :
-;;;     the requisition to use as signal data.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_menu_item_toggle_size_request" gtk-menu-item-toggle-size-request)
     :void
+ #+cl-cffi-gtk-documentation
+ "@version{2014-1-1}
+  @argument[menu-item]{a @class{gtk-menu-item} widget}
+  @argument[requisition]{the requisition to use as signal data}
+  Emits the \"toggle-size-request\" signal on the given menu item.
+  @see-class{gtk-menu-item}
+  @see-function{gtk-menu-item-toggle-size-allocate}"
   (menu-item (g-object gtk-menu-item))
   (requisition :int))
 
@@ -706,70 +708,66 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_item_toggle_size_allocate ()
-;;;
-;;; void gtk_menu_item_toggle_size_allocate (GtkMenuItem *menu_item,
-;;;                                          gint allocation);
-;;;
-;;; Emits the "toggle-size-allocate" signal on the given item.
-;;;
-;;; menu_item :
-;;;     the menu item.
-;;;
-;;; allocation :
-;;;     the allocation to use as signal data.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_menu_item_toggle_size_allocate"
            gtk-menu-item-toggle-size-allocate) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2014-1-1}
+  @argument[menu-item]{a @class{gtk-menu-item} widget}
+  @argument[allocation]{the allocation to use as signal data}
+  Emits the \"toggle-size-allocate\" signal on the given item.
+  @see-class{gtk-menu-item}
+  @see-function{gtk-menu-item-toggle-size-request}"
   (menu-item (g-object gtk-menu-item)))
 
 (export 'gtk-menu-item-toggle-size-allocate)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_item_get_reserve_indicator ()
-;;;
-;;; gboolean gtk_menu_item_get_reserve_indicator (GtkMenuItem *menu_item);
-;;;
-;;; Returns whether the menu_item reserves space for the submenu indicator,
-;;; regardless if it has a submenu or not.
-;;;
-;;; menu_item :
-;;;     a GtkMenuItem
-;;;
-;;; Returns :
-;;;     TRUE if menu_item always reserves space for the submenu indicator
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_menu_item_get_reserve_indicator"
            gtk-menu-item-get-reserve-indicator) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2014-1-1}
+  @argument[menu-item]{a @class{gtk-menu-item} widget}
+  @begin{return}
+    @em{True} if @arg{menu-item} always reserves space for the submenu
+    indicator.
+  @end{return}
+  @begin{short}
+    Returns whether the @arg{menu-item} reserves space for the submenu
+    indicator, regardless if it has a submenu or not.
+  @end{short}
+
+  Since 3.0
+  @see-class{gtk-menu-item}
+  @see-function{gtk-menu-item-set-reverse-indicator}"
   (menu-item (g-object gtk-menu-item)))
 
 (export 'gtk-menu-item-get-reserve-indicator)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_item_set_reserve_indicator ()
-;;;
-;;; void gtk_menu_item_set_reserve_indicator (GtkMenuItem *menu_item,
-;;;                                           gboolean reserve);
-;;;
-;;; Sets whether the menu_item should reserve space for the submenu indicator,
-;;; regardless if it actually has a submenu or not.
-;;;
-;;; There should be little need for applications to call this functions.
-;;;
-;;; menu_item :
-;;;     a GtkMenuItem
-;;;
-;;; reserve :
-;;;     the new value
-;;;
-;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_menu_item_set_reserve_indicator"
            gtk-menu-item-set-reserve-indicator) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2014-1-1}
+  @argument[menu-item]{a @class{gtk-menu-item} widget}
+  @argument[reserve]{the new value}
+  @begin{short}
+    Sets whether the @arg{menu-item} should reserve space for the submenu
+    indicator, regardless if it actually has a submenu or not.
+  @end{short}
+
+  There should be little need for applications to call this functions.
+
+  Since 3.0
+  @see-class{gtk-menu-item}
+  @see-function{gtk-menu-item-get-reserve-indicator}"
   (menu-item (g-object gtk-menu-item))
   (reserve :boolean))
 
