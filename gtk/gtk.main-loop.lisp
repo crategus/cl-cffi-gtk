@@ -10,7 +10,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -212,7 +212,7 @@
   @see-function{%gtk-init-check}"
   (%gtk-init-check (foreign-alloc :int :initial-element 0)
                    (foreign-alloc :string :initial-contents '("/usr/bin/sbcl")))
-  #+ (and sbcl (not win32))
+  #+(and sbcl (not win32))
   (sb-unix::enable-interrupt sb-unix:sigpipe #'sb-unix::sigpipe-handler)
   #+nil(with-foreign-objects ((argc :int)
                          (argv '(:pointer :string) 1))
