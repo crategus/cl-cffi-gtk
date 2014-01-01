@@ -601,7 +601,7 @@
   variant of this function.
 
   This function is basically a convenience wrapper that handles calling
-  the function @sym{gtk-widget-set-accel-path} with the appropriate accelerator
+  the function @fun{gtk-widget-set-accel-path} with the appropriate accelerator
   group for the menu item.
 
   Note that you do need to set an accelerator on the parent menu with the
