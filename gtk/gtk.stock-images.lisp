@@ -10,7 +10,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -131,8 +131,6 @@
    :interfaces ("GtkBuildable")
    :type-initializer "gtk_icon_factory_get_type")
   nil)
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-icon-factory 'type)
@@ -488,21 +486,28 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_set_new_from_pixbuf ()
-;;;
-;;; GtkIconSet * gtk_icon_set_new_from_pixbuf (GdkPixbuf *pixbuf);
-;;;
-;;; Creates a new GtkIconSet with pixbuf as the default/fallback source image.
-;;; If you don't add any additional GtkIconSource to the icon set, all variants
-;;; of the icon will be created from pixbuf, using scaling, pixelation, etc. as
-;;; required to adjust the icon size or make the icon look
-;;; insensitive/prelighted.
-;;;
-;;; pixbuf :
-;;;     a GdkPixbuf
-;;;
-;;; Returns :
-;;;     a new GtkIconSet
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_icon_set_new_from_pixbuf" gtk-icon-set-new-from-pixbuf)
+    (g-boxed-foreign gtk-icon-set)
+ #+cl-cffi-gtk-documentation
+ "@version{2014-1-1}
+  @argument[pixbuf]{a @class{gdk-pixbuf} object}
+  @return{A new @class{gtk-icon-set}.}
+  @begin{short}
+    Creates a new @class{gtk-icon-set} with @arg{pixbuf} as the
+    default/fallback source image.
+  @end{short}
+  If you do not add any additional @class{gtk-icon-source} to the icon set, all
+  variants of the icon will be created from @arg{pixbuf}, using scaling,
+  pixelation, etc. as required to adjust the icon size or make the icon look
+  insensitive/prelighted.
+  @see-class{gtk-icon-set}
+  @see-class{gdk-pixbuf}
+  @see-class{gtk-icon-source}"
+  (pixbuf (g-object gdk-pixbuf)))
+
+(export 'gtk-icon-set-new-from-pixbuf)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_set_ref ()
