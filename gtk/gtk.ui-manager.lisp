@@ -309,30 +309,30 @@
 
     @b{Example:} A UI definition
     @begin{pre}
-   <span style=\"color: red\"><ui>
-     <span style=\"color: red\"><menubar>
-       <span style=\"color: red\"><menu>
-         <span style=\"color: red\"><menuitem></menuitem></span>
-         <span style=\"color: red\"><placeholder></placeholder></span>
-       </menu></span>
-       <span style=\"color: red\"><menu>
-         <span style=\"color: red\"><menuitem></menuitem></span>
-         <span style=\"color: red\"><menuitem></menuitem></span>
-         <span style=\"color: red\"><menuitem></menuitem></span>
-         <span style=\"color: red\"><menuitem></menuitem></span>
-       </menu></span>
-     </menubar></span>
-     <span style=\"color: red\"><toolbar>
-       <span style=\"color: red\"><placeholder>
-         <span style=\"color: red\"><separator></separator></span>
-         <span style=\"color: red\"><toolitem></toolitem></span>
-         <span style=\"color: red\"><toolitem></toolitem></span>
-         <span style=\"color: red\"><toolitem></toolitem></span>
-         <span style=\"color: red\"><toolitem></toolitem></span>
-         <span style=\"color: red\"><separator></separator></span>
-       </placeholder></span>
-     </toolbar></span>
-   </ui></span>
+   <ui>
+     <menubar>
+       <menu>
+         <menuitem></menuitem>
+         <placeholder></placeholder>
+       </menu>
+       <menu>
+         <menuitem></menuitem>
+         <menuitem></menuitem>
+         <menuitem></menuitem>
+         <menuitem></menuitem>
+       </menu>
+     </menubar>
+     <toolbar>
+       <placeholder>
+         <separator></separator>
+         <toolitem></toolitem>
+         <toolitem></toolitem>
+         <toolitem></toolitem>
+         <toolitem></toolitem>
+         <separator></separator>
+       </placeholder>
+     </toolbar>
+   </ui>
     @end{pre}
     The constructed widget hierarchy is very similar to the element tree of the
     XML, with the exception that placeholders are merged into their parents. The
