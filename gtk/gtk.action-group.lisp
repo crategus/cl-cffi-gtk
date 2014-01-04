@@ -437,8 +437,10 @@
 ;;; gtk_action_group_get_accel_group ()
 ;;; ----------------------------------------------------------------------------
 
+#+gtk-3-6
 (declaim (inline gtk-action-group-get-accel-group))
 
+#+gtk-3-6
 (defun gtk-action-group-get-accel-group (action-group)
  "@version{2013-12-29}
   @argument[action-group]{a @class{gtk-action-group} object}
@@ -454,14 +456,17 @@
   @see-function{gtk-action-group-set-accel-group}"
   (gtk-action-group-accel-group action-group))
 
+#+gtk-3-6
 (export 'gtk-action-group-get-accel-group)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_action_group_set_accel_group ()
 ;;; ----------------------------------------------------------------------------
 
+#+gtk-3-6
 (declaim (inline gtk-action-group-set-accel-group))
 
+#+gtk-3-6
 (defun gtk-action-group-set-accel-group (action-group accel-group)
  #+cl-cffi-gtk-documentation
  "@version{2013-12-29}
@@ -478,6 +483,7 @@
   @see-function{gtk-action-group-get-accel-group}"
   (setf (gtk-action-group-accel-group action-group) accel-group))
 
+#+gtk-3-6
 (export 'gtk-action-group-set-accel-group)
 
 ;;; ----------------------------------------------------------------------------
