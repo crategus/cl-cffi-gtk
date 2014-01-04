@@ -14,11 +14,12 @@
   (let* ((name (gtk-action-get-name action))
          (type (g-object-type-name action))
          (dialog (gtk-message-dialog-new (app-window *app*)
-                                         '(:destroy-with-parent :modal)
+                                         '(:destroy-with-parent)
                                          :info
                                          :close
                                          "You activated action ~S of type ~S."
-                                         name type)))
+                                         name
+                                         type)))
     (cond ((string= name "DarkTheme")
            (let ((value (gtk-toggle-action-get-active action))
                  (settings (gtk-settings-get-default)))
@@ -30,11 +31,13 @@
              (gtk-window-set-hide-titlebar-when-maximized (app-window *app*)
                                                           value)))
           (t
-           (g-signal-connect dialog "response"
-                                    (lambda (dialog response-id)
-                                      (declare (ignore response-id))
-                                      (gtk-widget-destroy dialog)))
-           (gtk-widget-show dialog)))))
+;           (g-signal-connect dialog "response"
+;                                    (lambda (dialog response-id)
+;                                      (declare (ignore response-id))
+;                                      (gtk-widget-destroy dialog)))
+           (let ((response (gtk-dialog-run dialog)))
+             (gtk-widget-destroy dialog)
+             response)))))
 
 (defun activate-radio-action (action current)
   (declare (ignore action))
@@ -79,7 +82,8 @@
           (list "New" "gtk-new"                       ; name, stock id
                 "_New" "<control>N"                   ; label, accelerator
                 "Create a new file"                   ; tooltip
-                #'activate-action)
+                (lambda (action)
+                  (activate-action action)))
           (list "File1" nil                           ; name, stock id
                 "File1" nil                           ; label, accelerator
                 "Open first file"                     ; tooltip
@@ -231,6 +235,10 @@
                                    :no-show-all t
                                    :halign :fill))
            (message (make-instance 'gtk-label)))
+      (setf (gtk-settings-gtk-shell-shows-app-menu (gtk-settings-get-default))
+            nil)
+      (setf (gtk-settings-gtk-shell-shows-menubar (gtk-settings-get-default))
+            nil)
       (register-stock-icons)
       ;; Store global widgets
       (setf (app-window  *app*) window
