@@ -6,7 +6,7 @@
 ;;; library. See <http://www.gtk.org>. The API documentation of the Lisp binding
 ;;; is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2013 Dieter Kaiser
+;;; Copyright (C) 2013, 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -42,18 +42,6 @@
 ;;;     gdk_pixbuf_loader_get_pixbuf
 ;;;     gdk_pixbuf_loader_get_animation
 ;;;     gdk_pixbuf_loader_close
-;;;
-;;; Object Hierarchy
-;;;
-;;;   GObject
-;;;    +----GdkPixbufLoader
-;;;
-;;; Signals
-;;;
-;;;   "area-prepared"                                  : Run Last
-;;;   "area-updated"                                   : Run Last
-;;;   "closed"                                         : Run Last
-;;;   "size-prepared"                                  : Run Last
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gdk-pixbuf)
@@ -112,6 +100,61 @@
     @class{gdk-pixbuf-animation} object and the function
     @fun{gdk-pixbuf-animation-get-iter} to get an
     @class{gdk-pixbuf-animation-iter} for displaying it.
+  @begin[Signal Details]{dictionary}
+    @subheading{The \"area-prepared\" signal}
+      @begin{pre}
+        lambda (loader)   : Run Last
+      @end{pre}
+      This signal is emitted when the pixbuf loader has allocated the pixbuf
+      in the desired size. After this signal is emitted, applications can call
+      the function @fun{gdk-pixbuf-loader-get-pixbuf} to fetch the
+      partially-loaded pixbuf.
+      @begin[code]{table}
+        @entry[loader]{The object which received the signal.}
+      @end{table}
+
+    @subheading{The \"area-updated\" signal}
+      @begin{pre}
+        lambda (loader x y width height)   : Run Last
+      @end{pre}
+      This signal is emitted when a significant area of the image being loaded
+      has been updated. Normally it means that a complete scanline has been read
+      in, but it could be a different area as well. Applications can use this
+      signal to know when to repaint areas of an image that is being loaded.
+      @begin[code]{table}
+        @entry[loader]{The object which received the signal.}
+        @entry[x]{x offset of upper-left corner of the updated area.}
+        @entry[y]{y offset of upper-left corner of the updated area.}
+        @entry[width]{Width of updated area.}
+        @entry[height]{Height of updated area.}
+      @end{table}
+
+    @subheading{The \"closed\" signal}
+      @begin{pre}
+        lambda (loader)   : Run Last
+      @end{pre}
+      This signal is emitted when the function @fun{gdk-pixbuf-loader-close} is
+      called. It can be used by different parts of an application to receive
+      notification when an image loader is closed by the code that drives it.
+      @begin[code]{table}
+        @entry[loader]{The object which received the signal.}
+      @end{table}
+
+    @subheading{The \"size-prepared\" signal}
+      @begin{pre}
+        lambda (loader width height)   : Run Last
+      @end{pre}
+      This signal is emitted when the pixbuf loader has been fed the initial
+      amount of data that is required to figure out the size of the image that
+      it will create. Applications can call the function
+      @fun{gdk-pixbuf-loader-set-size} in response to this signal to set the
+      desired size to which the image should be scaled.
+      @begin[code}{table}
+        @entry[loader]{The object which received the signal.}
+        @entry[width]{The original width of the image.}
+        @entry[height]{The original height of the image.}
+      @end{table}
+  @end{dictionary}
   @see-class{gdk-pixbuf-animation}
   @see-class{gdk-pixbuf-animation-iter}
   @see-function{gdk-pixbuf-new-from-file}
@@ -220,33 +263,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pixbuf_loader_write ()
-;;;
-;;; gboolean gdk_pixbuf_loader_write (GdkPixbufLoader *loader,
-;;;                                   const guchar *buf,
-;;;                                   gsize count,
-;;;                                   GError **error);
-;;;
-;;; This will cause a pixbuf loader to parse the next count bytes of an image.
-;;; It will return TRUE if the data was loaded successfully, and FALSE if an
-;;; error occurred. In the latter case, the loader will be closed, and will not
-;;; accept further writes. If FALSE is returned, error will be set to an error
-;;; from the GDK_PIXBUF_ERROR or G_FILE_ERROR domains.
-;;;
-;;; loader :
-;;;     A pixbuf loader.
-;;;
-;;; buf :
-;;;     Pointer to image data
-;;;
-;;; count :
-;;;     Length of the buf buffer in bytes.
-;;;
-;;; error :
-;;;     return location for errors
-;;;
-;;; Returns :
-;;;     TRUE if the write was successful, or FALSE if the loader cannot parse
-;;;     the buffer.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_pixbuf_loader_write" %gdk-pixbuf-loader-write) :boolean
@@ -256,6 +272,23 @@
   (error :pointer))
 
 (defun gdk-pixbuf-loader-write (loader buffer count)
+ #+cl-cffi-gtk-documentation
+ "@version{2014-1-2}
+  @argument[loader]{a pixbuf loader}
+  @argument[buf]{buffer for image data}
+  @argument[count]{length of the @arg{buf} buffer in bytes.
+  @begin{return}
+    @em{True} if the write was successful, or @code{nil} if the loader cannot
+    parse the buffer.
+  @end{return}
+  @begin{short}
+    This will cause a pixbuf loader to parse the next count bytes of an image.
+  @end{short}
+  It will return @em{true} if the data was loaded successfully, and @code{nil}
+  if an error occurred. In the latter case, the loader will be closed, and will
+  not accept further writes. If @code{nil} is returned, error will be set to an
+  error from the @code{GDK_PIXBUF_ERROR} or @code{G_FILE_ERROR domains}.
+  @see-class{gdk-pixbuf-loader}"
   (with-g-error (err)
     (let ((buf (foreign-alloc :uchar :initial-contents buffer)))
       (%gdk-pixbuf-loader-write loader buf count err))))
@@ -345,31 +378,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pixbuf_loader_close ()
-;;;
-;;; gboolean gdk_pixbuf_loader_close (GdkPixbufLoader *loader,
-;;;                                   GError **error);
-;;;
-;;; Informs a pixbuf loader that no further writes with
-;;; gdk_pixbuf_loader_write() will occur, so that it can free its internal
-;;; loading structures. Also, tries to parse any data that hasn't yet been
-;;; parsed; if the remaining data is partial or corrupt, an error will be
-;;; returned. If FALSE is returned, error will be set to an error from the
-;;; GDK_PIXBUF_ERROR or G_FILE_ERROR domains. If you're just cancelling a load
-;;; rather than expecting it to be finished, passing NULL for error to ignore it
-;;; is reasonable.
-;;;
-;;; Remember that this does not unref the loader, so if you plan not to use it
-;;; anymore, please g_object_unref() it.
-;;;
-;;; loader :
-;;;     A pixbuf loader.
-;;;
-;;; error :
-;;;     return location for a GError, or NULL to ignore errors
-;;;
-;;; Returns :
-;;;     TRUE if all image data written so far was successfully passed out via
-;;;     the update_area signal.
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_pixbuf_loader_close" %gdk-pixbuf-loader-close) :boolean
@@ -377,104 +385,27 @@
   (error :pointer))
 
 (defun gdk-pixbuf-loader-close (loader)
+ #+cl-cffi-gtk-documentation
+ "@version{2014-1-2}
+  @argument[loader]{a pixbuf loader}
+  @begin{return}
+    @em{True} if all image data written so far was successfully passed out via
+    the \"update-area\" signal.
+  @end{return}
+  @begin{short}
+    Informs a pixbuf loader that no further writes with the function
+    @fun{gdk-pixbuf-loader-write} will occur, so that it can free its internal
+    loading structures.
+  @end{short}
+  Also, tries to parse any data that has not yet been parsed; if the remaining
+  data is partial or corrupt, an error will be returned. If @code{nil} is
+  returned, error will be set to an error from the @code{GDK_PIXBUF_ERROR} or
+  @code{G_FILE_ERROR} domains.
+  @see-class{gdk-pixbuf-loader}
+  @see-function{gdk-pixbuf-loader-write}"
   (with-g-error (err)
     (%gdk-pixbuf-loader-close loader err)))
 
 (export 'gdk-pixbuf-loader-close)
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Signal Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "area-prepared" signal
-;;;
-;;; void user_function (GdkPixbufLoader *loader,
-;;;                     gpointer         user_data)      : Run Last
-;;;
-;;; This signal is emitted when the pixbuf loader has allocated the pixbuf in
-;;; the desired size. After this signal is emitted, applications can call
-;;; gdk_pixbuf_loader_get_pixbuf() to fetch the partially-loaded pixbuf.
-;;;
-;;; loader :
-;;;     the object which received the signal.
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "area-updated" signal
-;;;
-;;; void user_function (GdkPixbufLoader *loader,
-;;;                     gint             x,
-;;;                     gint             y,
-;;;                     gint             width,
-;;;                     gint             height,
-;;;                     gpointer         user_data)      : Run Last
-;;;
-;;; This signal is emitted when a significant area of the image being loaded has
-;;; been updated. Normally it means that a complete scanline has been read in,
-;;; but it could be a different area as well. Applications can use this signal
-;;; to know when to repaint areas of an image that is being loaded.
-;;;
-;;; loader :
-;;;     the object which received the signal.
-;;;
-;;; x :
-;;;     X offset of upper-left corner of the updated area.
-;;;
-;;; y :
-;;;     Y offset of upper-left corner of the updated area.
-;;;
-;;; width :
-;;;     Width of updated area.
-;;;
-;;; height :
-;;;     Height of updated area.
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "closed" signal
-;;;
-;;; void user_function (GdkPixbufLoader *loader,
-;;;                     gpointer         user_data)      : Run Last
-;;;
-;;; This signal is emitted when gdk_pixbuf_loader_close() is called. It can be
-;;; used by different parts of an application to receive notification when an
-;;; image loader is closed by the code that drives it.
-;;;
-;;; loader :
-;;;     the object which received the signal.
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;;
-;;; ----------------------------------------------------------------------------
-;;; The "size-prepared" signal
-;;;
-;;; void user_function (GdkPixbufLoader *loader,
-;;;                     gint             width,
-;;;                     gint             height,
-;;;                     gpointer         user_data)      : Run Last
-;;;
-;;; This signal is emitted when the pixbuf loader has been fed the initial
-;;; amount of data that is required to figure out the size of the image that it
-;;; will create. Applications can call gdk_pixbuf_loader_set_size() in response
-;;; to this signal to set the desired size to which the image should be scaled.
-;;;
-;;; loader :
-;;;     the object which received the signal.
-;;;
-;;; width :
-;;;     the original width of the image
-;;;
-;;; height :
-;;;     the original height of the image
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
-;;; ----------------------------------------------------------------------------
 
 ;;; --- End of file gdk-pixbuf.loader.lisp -------------------------------------
