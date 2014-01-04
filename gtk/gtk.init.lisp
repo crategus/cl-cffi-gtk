@@ -63,7 +63,7 @@
       (unless *main-thread*
         (setf *main-thread*
               (bt:make-thread (lambda ()
-                                (gtk-main))
+                                (%gtk-main))
                               :name "cl-cffi-gtk main thread")
               *main-thread-level* 0))
       (incf *main-thread-level*))
