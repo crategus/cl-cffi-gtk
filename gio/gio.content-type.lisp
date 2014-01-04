@@ -6,7 +6,7 @@
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2013 Dieter Kaiser
+;;; Copyright (C) 2013, 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -175,25 +175,22 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_content_type_get_generic_icon_name ()
-;;;
-;;; gchar * g_content_type_get_generic_icon_name (const gchar *type);
-;;;
-;;; Gets the generic icon name for a content type.
-;;;
-;;; See the shared-mime-info specification for more on the generic icon name.
-;;;
-;;; type :
-;;;     a content type string
-;;;
-;;; Returns :
-;;;     the registered generic icon name for the given type, or NULL if unknown.
-;;;     Free with g_free(). [allow-none]
-;;;
-;;; Since 2.34
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_content_type_get_generic_icon_name"
            g-content-type-get-generic-icon-name) :string
+ #+cl-cffi-gtk-documentation
+ "@version{2014-1-2}
+  @argument[type]{a content type string}
+  @begin{return}
+    The registered generic icon name for the given type, or @code{nil} if
+    unknown.
+  @end{return}
+  @short{Gets the generic icon name for a content type.}
+
+  See the shared-mime-info specification for more on the generic icon name.
+
+  Since 2.34"
   (type :string))
 
 (export 'g-content-type-get-generic-icon-name)
