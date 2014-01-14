@@ -149,7 +149,7 @@
       it will create. Applications can call the function
       @fun{gdk-pixbuf-loader-set-size} in response to this signal to set the
       desired size to which the image should be scaled.
-      @begin[code}{table}
+      @begin[code]{table}
         @entry[loader]{The object which received the signal.}
         @entry[width]{The original width of the image.}
         @entry[height]{The original height of the image.}
@@ -276,7 +276,7 @@
  "@version{2014-1-2}
   @argument[loader]{a pixbuf loader}
   @argument[buf]{buffer for image data}
-  @argument[count]{length of the @arg{buf} buffer in bytes.
+  @argument[count]{length of the @arg{buf} buffer in bytes.}
   @begin{return}
     @em{True} if the write was successful, or @code{nil} if the loader cannot
     parse the buffer.
