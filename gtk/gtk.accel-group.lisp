@@ -5,12 +5,12 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.8.8 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -86,7 +86,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-accel-group 'type)
- "@version{2013-7-6}
+ "@version{2014-1-8}
   @begin{short}
     A @sym{gtk-accel-group} object represents a group of keyboard accelerators,
     typically attached to a toplevel @class{gtk-window} widget with the function
@@ -110,7 +110,7 @@
       @end{pre}
       The \"accel-activate\" signal is an implementation detail of
       @sym{gtk-accel-group} and not meant to be used by applications.
-      @begin[arg]{table}
+      @begin[code]{table}
         @entry[accel-group]{The @sym{gtk-accel-group} object which received the
           signal.}
         @entry[acceleratable]{The @class{g-object} on which the accelerator was
@@ -129,7 +129,7 @@
       Widgets like @class{gtk-accel-label} which display an associated
       accelerator should connect to this signal, and rebuild their visual
       representation if the @arg{accel-closure} is theirs.
-      @begin[arg]{table}
+      @begin[code]{table}
         @entry[accel-group]{The @sym{gtk-accel-group} object which received the
           signal.}
         @entry[keyval]{The accelerator keyval of type @code{:uint}.}
@@ -140,7 +140,13 @@
       @end{table}
   @end{dictionary}
   @see-slot{gtk-accel-group-is-locked}
-  @see-slot{gtk-accel-group-modifier-mask}")
+  @see-slot{gtk-accel-group-modifier-mask}
+  @see-class{gtk-window}
+  @see-class{gtk-ui-manager}
+  @see-symbol{gdk-modifier-type}
+  @see-function{gtk-accel-map-change-entry}
+  @see-function{gtk-window-add-accel-group}
+  @see-function{gtk-label-new-with-menmonic}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -174,11 +180,13 @@
 (setf (gethash 'gtk-accel-group-is-locked atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-accel-group-is-locked 'function)
- "@version{2013-12-18}
+ "@version{2014-1-8}
   Accessor of the slot @code{\"is-locked\"} of the @class{gtk-accel-group}
   class.
   @see-class{gtk-accel-group}
-  @see-function{gtk-accel-group-get-is-locked}")
+  @see-function{gtk-accel-group-get-is-locked}
+  @see-function{gtk-accel-group-lock}
+  @see-function{gtk-accel-group-unlock}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-accel-group-modifier-mask atdoc:*function-name-alias*)
@@ -349,11 +357,15 @@
   @argument[accel-quark]{the quark for the accelerator name}
   @argument[acceleratable]{the @class{g-object}, usually a @class{gtk-window}
     widget, on which to activate the accelerator}
-  @argument[accel-key]{accelerator keyval from a key event}
-  @argument[accel-mods]{keyboard state mask from a key event}
+  @argument[accel-key]{accelerator keyval of type @code{:uint} from a key event}
+  @argument[accel-mods]{keyboard state mask of type @symbol{gdk-modifier-type}
+    from a key event}
   @return{@em{True} if an accelerator was activated and handled this keypress.}
   Finds the first accelerator in @arg{accel-group} that matches @arg{accel-key}
-  and @arg{accel-mods}, and activates it."
+  and @arg{accel-mods}, and activates it.
+  @see-class{gtk-accel-group}
+  @see-class{gtk-window}
+  @see-symbol{gdk-modifier-type}"
   (accel-group (g-object gtk-accel-group))
   (accel-quark g-quark)
   (acceleratable g-object)
