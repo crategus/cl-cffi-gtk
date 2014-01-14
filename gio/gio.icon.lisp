@@ -1,5 +1,5 @@
 ;;; ----------------------------------------------------------------------------
-;;; gio.g-icon.lisp
+;;; gio.icon.lisp
 ;;;
 ;;; The documentation has been copied from the GIO Reference Manual
 ;;; for GIO 2.36.3. The latest version of this documentation can be found
