@@ -31,10 +31,6 @@
              (gtk-window-set-hide-titlebar-when-maximized (app-window *app*)
                                                           value)))
           (t
-;           (g-signal-connect dialog "response"
-;                                    (lambda (dialog response-id)
-;                                      (declare (ignore response-id))
-;                                      (gtk-widget-destroy dialog)))
            (let ((response (gtk-dialog-run dialog)))
              (gtk-widget-destroy dialog)
              response)))))
@@ -66,8 +62,6 @@
                          :license-type :lgpl-2-1
                          :website "http://www.gtk.org"
                          :comments "Program to demonstrate GTK+ Lisp functions."
-;                         :authors '("Dieter Kaiser")
-;                         :documenters '("Dieter Kaiser")
                          :logo (gdk-pixbuf-new-from-file "gtk-logo-old.png")
                          :title "About GTK+ Lisp Code Demos"))
 
@@ -217,7 +211,7 @@
                                    :default-height 250))
            (table (make-instance 'gtk-grid))
            (action-group (make-instance 'gtk-action-group
-                                        :name "AppWwindowActions"))
+                                        :name "AppWindowActions"))
            (ui-info (make-instance 'gtk-ui-manager))
            (scrolled (make-instance 'gtk-scrolled-window
                                     :hscrollbar-policy :automatic
