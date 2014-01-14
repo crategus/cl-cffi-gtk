@@ -20,6 +20,7 @@
 
 ;;;   g_param_spec_boolean
 
+#-ccl
 (test g-param-spec-boolean
   (with-foreign-object (param '(:struct g-param-spec-boolean))
     ;; Create a GParamSpecBoolean
@@ -35,32 +36,43 @@
     (with-foreign-object (parent-instance '(:struct g-param-spec))
       ;; Get the pointer to the parent-instance of type GParamSpec
       (setf parent-instance
-            (foreign-slot-pointer param '(:struct g-param-spec-boolean) :parent-instance))
+            (foreign-slot-pointer param
+                                  '(:struct g-param-spec-boolean)
+                                  :parent-instance))
       ;; Do we have a foreign pointer to a type-instance
-      (is-true (pointerp (foreign-slot-pointer parent-instance '(:struct g-param-spec) :type-instance)))
+      (is-true (pointerp (foreign-slot-pointer parent-instance
+                                               '(:struct g-param-spec)
+                                               :type-instance)))
       (with-foreign-object (type-instance '(:struct g-type-instance))
         (setf type-instance
-              (foreign-slot-value parent-instance '(:struct g-param-spec) :type-instance))
+              (foreign-slot-value parent-instance
+                                  '(:struct g-param-spec)
+                                  :type-instance))
         (is-true (pointerp type-instance))
         (with-foreign-object (class '(:struct g-type-class))
-          (setf class (foreign-slot-pointer type-instance '(:struct g-type-instance) :class))
+          (setf class (foreign-slot-pointer type-instance
+                                            '(:struct g-type-instance)
+                                            :class))
           (is-true (pointerp class))
           (is (equal (gtype "GParamBoolean")
-                     (foreign-slot-value class '(:struct g-type-class) :type)))
-        )
-      )
+                     (foreign-slot-value class
+                                         '(:struct g-type-class) :type)))))
       ;; Read the fields of the structure GParamSpec
       (is (equal "myBoolean"
-                 (foreign-slot-value parent-instance '(:struct g-param-spec) :name)))
+                 (foreign-slot-value parent-instance
+                                     '(:struct g-param-spec) :name)))
       (is (equal '(:readable :writable)
-                 (foreign-slot-value parent-instance '(:struct g-param-spec) :flags)))
+                 (foreign-slot-value parent-instance
+                                     '(:struct g-param-spec) :flags)))
       (is (equal (gtype "gboolean")
-                 (foreign-slot-value parent-instance '(:struct g-param-spec) :value-type)))
-      (is-false (foreign-slot-value parent-instance '(:struct g-param-spec) :owner-type))                          
-    )
+                 (foreign-slot-value parent-instance
+                                     '(:struct g-param-spec) :value-type)))
+      (is-false (foreign-slot-value parent-instance
+                                    '(:struct g-param-spec) :owner-type)))
     ;; Check the field :default-value of GParamSpecBoolean
-    (is (eq t (foreign-slot-value param '(:struct g-param-spec-boolean) :default-value)))
-))
+    (is (eq t (foreign-slot-value param
+                                  '(:struct g-param-spec-boolean)
+                                  :default-value)))))
 
 ;;;   g_value_set_boolean
 ;;;   g_value_get_boolean
@@ -91,6 +103,7 @@
 
 ;;;   g_param_spec_char
 
+#-ccl
 (test g-param-spec-char
   (with-foreign-object (param '(:struct g-param-spec-char))
     ;; Create a GParamSpecChar
@@ -181,6 +194,7 @@
 
 ;;;     g_param_spec_uchar
 
+#-ccl
 (test g-param-spec-uchar
   (with-foreign-object (param '(:struct g-param-spec-uchar))
     ;; Create a GParamSpecUChar
@@ -260,6 +274,7 @@
 
 ;;;   g_param_spec_int
 
+#-ccl
 (test g-param-spec-int
   (with-foreign-object (param '(:struct g-param-spec-int))
     ;; Create a GParamSpecInt

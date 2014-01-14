@@ -58,6 +58,7 @@
   ))
   (join-gtk-main))
 
+(load "rtest-gtk-accel-group.lisp")
 (load "rtest-gtk-accel-map.lisp")
 (load "rtest-gtk-action.lisp")
 (load "rtest-gtk-action-group.lisp")

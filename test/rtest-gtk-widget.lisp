@@ -61,8 +61,9 @@
     (is (equal '(:button-press-mask) (gtk-widget-get-events eventbox)))
     (gtk-widget-add-events eventbox
                            '(:pointer-motion-mask :button-release-mask))
-    (is (equal '(:pointer-motion-mask :button-press-mask :button-release-mask)
-               (gtk-widget-get-events eventbox)))))
+    (is (equal '(:BUTTON-PRESS-MASK :BUTTON-RELEASE-MASK :POINTER-MOTION-MASK)
+               (stable-sort (gtk-widget-get-events eventbox)
+                            #'string< :key #'symbol-name)))))
 
 ;;;     gtk_widget_set_device_events
 ;;;     gtk_widget_get_device_events

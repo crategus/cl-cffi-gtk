@@ -5,10 +5,7 @@
 ;;;     GValue
 
 (test g-value
-  #-ccl
   (is (= 20 (foreign-type-size '(:struct g-value))))
-  #+ccl
-  (is (= 24 (foreign-type-size '(:struct g-value))))
   (is (equal '(:data :type)
               (stable-sort (foreign-slot-names '(:struct g-value))
                            #'string-lessp))))

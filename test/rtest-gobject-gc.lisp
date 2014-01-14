@@ -3,7 +3,7 @@
 (in-suite gobject-gc)
 
 (test registered-object-types
-  (is (= 234
+  (is (= 236
          (length (alexandria:hash-table-alist gobject::*registered-object-types*)))))
 
 #+nil
