@@ -136,6 +136,26 @@
       @about-function{g-themed-icon-append-name}
       @about-function{g-themed-icon-get-names}
     @end{subsection}
+    @begin[GEmblemedIcon]{subsection}
+      An implementation of GIcon for icons with emblems.
+
+      @about-class{g-emblemed-icon}
+      @about-function{g-emblemed-icon-new}
+      @about-function{g-emblemed-icon-get-icon}
+      @about-function{g-emblemed-icon-get-emblems}
+      @about-function{g-emblemed-icon-add-emblem}
+      @about-function{g-emblemed-icon-clear-emblems}
+    @end{subsection}
+    @begin[GEmblem]{subsection}
+      An object for emblems.
+
+      @about-class{g-emblem}
+      @about-symbol{g-emblem-origin}
+      @about-function{g-emblem-new}
+      @about-function{g-emblem-new-with-origin}
+      @about-function{g-emblem-get-icon}
+      @about-function{g-emblem-get-origin}
+    @end{subsection}
   @end{section}
   @begin[Application support]{section}
     @begin[GApplication]{subsection}

@@ -87,10 +87,9 @@ Icons
   GFileIcon - Icons pointing to an image file
   GLoadableIcon - Loadable Icons
 
-  gio.themed-icon.lisp - GThemedIcon                               - GIO 2.36.3*
-
-  GEmblemedIcon - Icon with emblems
-  GEmblem - An object for emblems
+  gio.themed-icon.lisp    - GThemedIcon                            - GIO 2.36.3*
+  gio.emblemed-icon.lisp  - Icon with emblems                      - GIO 2.38.2&
+  gio.emblem.lisp         - An object for emblems                  - GIO 2.38.2&
 
 Failable Initialization
 
