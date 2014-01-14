@@ -348,7 +348,7 @@
   @see-function{gdk-threads-enter}
   @see-function{gdk-threads-leave}")
 
-(glib::at-init () (gdk-threads-init))
+;(glib::at-init () (gdk-threads-init))
 
 (export 'gdk-threads-init)
 
