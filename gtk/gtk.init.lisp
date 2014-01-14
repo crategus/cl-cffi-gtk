@@ -63,7 +63,18 @@
       (unless *main-thread*
         (setf *main-thread*
               (bt:make-thread (lambda ()
-                                (%gtk-main))
+                                ;; On Windows it is necessary to use the
+                                ;; version gtk-main which puts the C function
+                                ;; %gtk-main between gdk-thread-enter und
+                                ;; gdk-thread-leave
+                                (gdk-threads-init)
+                                (gdk-threads-enter)
+                                (unwind-protect
+                                    (progn
+;                                      (%gtk-init)
+                                      (%gtk-main))
+                                  (gdk-threads-leave)
+                                  ))
                               :name "cl-cffi-gtk main thread")
               *main-thread-level* 0))
       (incf *main-thread-level*))
