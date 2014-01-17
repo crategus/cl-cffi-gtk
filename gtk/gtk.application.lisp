@@ -977,7 +977,7 @@
 
 (defun gtk-application-set-menubar (application menubar)
  #+cl-cffi-gtk-documentation
- "@version{2013-8-8}
+ "@version{2014-1-16}
   @argument[application]{a @class{gtk-application} object}
   @argument[menubar]{a @class{g-menu-model}, or @code{nil}}
   @begin{short}
@@ -1002,7 +1002,7 @@
 
   Since 3.4
   @see-class{gtk-application}
-  @see-class{gtk-menu-model}
+  @see-class{g-menu-model}
   @see-class{g-action-map}
   @see-function{gtk-application-get-menubar}"
   (setf (gtk-application-menubar application) menubar))

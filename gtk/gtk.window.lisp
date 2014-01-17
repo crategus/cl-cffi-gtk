@@ -1169,7 +1169,7 @@
 
 (defun gtk-window-set-resizable (window resizable)
  #+cl-cffi-gtk-documentation
- "@version{2013-7-30}
+ "@version{2014-1-16}
   @argument[window]{a @class{gtk-window} widget}
   @argument[resizable]{@em{true} if the user can resize this @arg{window}}
   Sets whether the user can resize a window. Windows are user resizable by
@@ -1186,9 +1186,9 @@
 
 (declaim (inline gtk-window-get-resizable))
 
-(defun gtk-window-get-resizable (window)
+(defun gtk-window-get-resizeable (window)
  #+cl-cffi-gtk-documentation
- "@version{2013-7-30}
+ "@version{2014-1-16}
   @argument[window]{a @class{gtk-window} widget}
   @return{@em{True} if the user can resize the @arg{window}.}
   Gets the value set by the function @fun{gtk-window-set-resizable}.
@@ -1196,7 +1196,7 @@
   @see-function{gtk-window-set-resizable}"
   (gtk-window-resizable window))
 
-(export 'gtk-window-get-resizable)
+(export 'gtk-window-get-resizeable)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_add_accel_group ()

@@ -905,8 +905,8 @@
 
 (defun gtk-builder-get-translation-domain (builder)
  #+cl-cffi-gtk-documentation
- "@version{2013-12-1}
-  @argument[builder]{a @class{gtk-guilder} object}
+ "@version{2014-1-16}
+  @argument[builder]{a @class{gtk-builder} object}
   @begin{return}
     The translation domain.
   @end{return}
