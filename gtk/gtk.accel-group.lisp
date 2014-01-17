@@ -59,9 +59,9 @@
 ;;;     gtk_accelerator_parse
 ;;;     gtk_accelerator_name
 ;;;     gtk_accelerator_get_label
-;;;     gtk_accelerator_parse_with_keycode
-;;;     gtk_accelerator_name_with_keycode
-;;;     gtk_accelerator_get_label_with_keycode
+;;;     gtk_accelerator_parse_with_keycode       * not implemented *
+;;;     gtk_accelerator_name_with_keycode        * not implemented *
+;;;     gtk_accelerator_get_label_with_keycode   * not implemented *
 ;;;     gtk_accelerator_set_default_mod_mask
 ;;;     gtk_accelerator_get_default_mod_mask
 ;;; ----------------------------------------------------------------------------
@@ -667,6 +667,12 @@
 ;;;     a newly-allocated accelerator name
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_accelerator_name" gtk-accelerator-name) :string
+  (accelerator-key :uint)
+  (accelerator-mods gdk-modifier-type))
+  
+(export 'gtk-accelerator-name)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_accelerator_get_label ()
 ;;;
@@ -687,6 +693,12 @@
 ;;;
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_accelerator_get_label" gtk-accelerator-get-label) :string
+  (accelerator-key :uint)
+  (accelerator-mods gdk-modifier-type))
+  
+(export 'gtk-accelerator-get-label)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_accelerator_parse_with_keycode ()
@@ -772,6 +784,9 @@
 ;;; accelerator_key :
 ;;;     accelerator keyval
 ;;;
+;;; keycode:
+;;;     accelerator keycode
+;;;
 ;;; accelerator_mods :
 ;;;     accelerator modifier mask
 ;;;
@@ -783,33 +798,51 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_accelerator_set_default_mod_mask ()
-;;;
-;;; void gtk_accelerator_set_default_mod_mask
-;;;                                          (GdkModifierType default_mod_mask);
-;;;
-;;; Sets the modifiers that will be considered significant for keyboard
-;;; accelerators. The default mod mask is GDK_CONTROL_MASK | GDK_SHIFT_MASK |
-;;; GDK_MOD1_MASK | GDK_SUPER_MASK | GDK_HYPER_MASK | GDK_META_MASK, that is,
-;;; Control, Shift, Alt, Super, Hyper and Meta. Other modifiers will by default
-;;; be ignored by GtkAccelGroup. You must include at least the three modifiers
-;;; Control, Shift and Alt in any value you pass to this function.
-;;;
-;;; The default mod mask should be changed on application startup, before using
-;;; any accelerator groups.
-;;;
-;;; default_mod_mask :
-;;;     accelerator modifier mask
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_accelerator_set_default_mod_mask"
+          %gtk-accelerator-set-default-mod-mask) :void
+  (default-mod-mask gdk-modifier-type))
+
+(defun gtk-accelerator-set-default-mod-mask (default-mod-mask)
+ #+cl-cffi-gtk-documentation
+ "@version{2014-1-16}
+  @argument[default-mod-mask]{accelerator modifier mask of type
+    @symbol{gdk-modifier-type}}
+  @begin{short}
+    Sets the modifiers that will be considered significant for keyboard
+    accelerators.
+  @end{short}
+  The default mod mask is @code{'(:control-mask :shift-mask :mod1-mask
+  :super-mask :hyper-mask :meta-mask)}, that is, Control, Shift, Alt, Super,
+  Hyper and Meta. Other modifiers will by default be ignored by
+  @class{gtk-accel-group}. You must include at least the three modifiers
+  Control, Shift and Alt in any value you pass to this function.
+
+  The default mod mask should be changed on application startup, before using
+  any accelerator groups.
+  @see-class{gtk-accel-group}
+  @see-symbol{gdk-modifier-type}
+  @see-function{gtk-accelerator-get-default-mod-mask}"
+  (%gtk-accelerator-set-default-mod-mask default-mod-mask)
+  default-mod-mask)
+
+(export 'gtk-accelerator-set-default-mod-mask)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_accelerator_get_default_mod_mask ()
-;;;
-;;; GdkModifierType gtk_accelerator_get_default_mod_mask (void);
-;;;
-;;; Gets the value set by gtk_accelerator_set_default_mod_mask().
-;;;
-;;; Returns :
-;;;     the default accelerator modifier mask
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_accelerator_get_default_mod_mask"
+           gtk-accelerator-get-default-mod-mask) gdk-modifier-type
+ #+cl-cffi-gtk-documentation
+ "@version{2014-1-16}
+  @return{The default accelerator modifier mask.}
+  Gets the value set by the function @fun{gtk-accelerator-set-default-mod-mask}.
+  @see-class{gtk-accel-group}
+  @see-symbol{gdk-modifier-type}
+  @see-function{gtk-accelerator-set-default-mod-mask}")
+
+(export 'gtk-accelerator-get-default-mod-mask)
 
 ;;; --- End of file gtk.accel-group.lisp ---------------------------------------
