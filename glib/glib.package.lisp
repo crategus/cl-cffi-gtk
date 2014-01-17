@@ -51,28 +51,15 @@
     Variables and functions to check the GLib version.
 
     GLib provides version information, primarily useful in configure checks for
-    builds that have a configure script. Applications will not typically use the
-    features described here.
+    builds that have a configure script. Applications will not typically use
+    the features described here.
 
-    @about-symbol{glib-major-version}
-    @about-symbol{glib-minor-version}
-    @about-symbol{glib-micro-version}
-    @about-symbol{glib-binary-age}
-    @about-symbol{glib-interface-age}
+    @about-symbol{+glib-major-version+}
+    @about-symbol{+glib-minor-version+}
+    @about-symbol{+glib-micro-version+}
+    @about-symbol{+glib-binary-age+}
+    @about-symbol{+glib-interface-age+}
     @about-function{glib-check-version}
-    @about-variable{+glib-major-version+}
-    @about-variable{+glib-minor-version+}
-    @about-variable{+glib-micro-version+}
-    @about-symbol{GLIB_CHECK_VERSION}
-    @about-symbol{GLIB_VERSION_2_26}
-    @about-symbol{GLIB_VERSION_2_28}
-    @about-symbol{GLIB_VERSION_2_30}
-    @about-symbol{GLIB_VERSION_2_32}
-    @about-symbol{GLIB_VERSION_2_34}
-    @about-symbol{GLIB_VERSION_2_36}
-    @about-symbol{GLIB_VERSION_MIN_REQUIRED}
-    @about-symbol{GLIB_VERSION_MAX_ALLOWED}
-    @about-symbol{GLIB_DISABLE_DEPRECATION_WARNINGS}
   @end{section}
   @begin[Miscellaneous]{section}
     Documentation of several type definitions and functions, which are
