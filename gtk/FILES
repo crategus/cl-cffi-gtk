@@ -188,7 +188,7 @@ GTK+ Widgets and Objects
   Layout Containers
 
     gtk.grid.lisp                    - GtkGrid                     - GTK+ 3.8.8
-    gtk.alignment.lisp               - GtkAlignment                - GTK+ 3.6.4
+    gtk.alignment.lisp               - GtkAlignment                - GTK+ 3.8.8
     gtk.aspect-frame.lisp            - GtkAspectFrame              - GTK+ 3.6.4
     gtk.box.lisp                     - GtkBox, GtkHBox, GtkVbox    - GTK+ 3.6.4
     gtk.button-box.lisp              - GtkButtonBox, ...           - GTK+ 3.6.4
