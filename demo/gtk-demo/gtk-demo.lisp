@@ -315,7 +315,7 @@
                                 "button-box.lisp" "EXAMPLE-BUTTON-BOX" 0)
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Alignment"
-                                "alignment.lisp" "EXAMPLE-ALIGNMENT" 0)
+                                "alignment.lisp" "DEMO-ALIGNMENT" 0)
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Fixed Container"
                                 "fixed.lisp" "EXAMPLE-FIXED" 0)
