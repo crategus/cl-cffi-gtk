@@ -8,7 +8,7 @@ Content from the GTK+ 3.8.8 Reference Manual
 GTK+ Core Reference
 
     gtk.main-loop.lisp               - Main loop and Events        - GTK+ 3.8.8&
-    gtk.version.lisp                 - Version Information         - GTK+ 3.6.4
+    gtk.version.lisp                 - Version Information         - GTK+ 3.8.8
     gtk.accel-group.lisp             - Accelerator Groups          - GTK+ 3.8.8&
     gtk.accel-map.lisp               - Accelerator Maps            - GTK+ 3.6.4&
     gtk.clipboard.lisp               - GtkClipboard                - GTK+ 3.6.4&
