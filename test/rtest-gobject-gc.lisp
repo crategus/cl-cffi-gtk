@@ -2,8 +2,14 @@
 (def-suite gobject-gc :in gobject-suite)
 (in-suite gobject-gc)
 
+#-windows
 (test registered-object-types
   (is (= 236
+         (length (alexandria:hash-table-alist gobject::*registered-object-types*)))))
+
+#+windows
+(test registered-object-types
+  (is (= 226
          (length (alexandria:hash-table-alist gobject::*registered-object-types*)))))
 
 #+nil

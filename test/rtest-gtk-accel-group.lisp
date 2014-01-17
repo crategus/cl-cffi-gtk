@@ -60,18 +60,19 @@
                 #'activate-action)))
 
 (test gtk-accel-group-activate
- (let ((window (make-instance 'gtk-window))
+ (let ((window (make-instance 'gtk-window
+                              :type :toplevel))
        (action-group (make-instance 'gtk-action-group
                                     :name "AppWindowActions"))
        (ui-info (make-instance 'gtk-ui-manager)))
-
+    (gtk-widget-realize window)
     (gtk-action-group-add-actions action-group *entries*)
     (gtk-ui-manager-insert-action-group ui-info action-group 0)
     (gtk-window-add-accel-group window (gtk-ui-manager-get-accel-group ui-info))
     (let ((accel-group (gtk-ui-manager-get-accel-group ui-info)))
       (is (eql 'gtk-accel-group (type-of accel-group)))
 ; This does not work as expected.
-;      (is-true (gtk-accel-group-activate accel-group "<Control>q" window 113 '(:control-mask)))
+      (is-true (gtk-accel-group-activate accel-group "<Control>q" window 113 '(:control-mask)))
 
 )
 ))
@@ -89,14 +90,51 @@
 ;;;     gtk_accel_group_find
 ;;;
 ;;;     GtkAccelKey
-;;;
-;;;     gtk_accelerator_valid
-;;;     gtk_accelerator_parse
-;;;     gtk_accelerator_name
-;;;     gtk_accelerator_get_label
-;;;     gtk_accelerator_parse_with_keycode
-;;;     gtk_accelerator_name_with_keycode
-;;;     gtk_accelerator_get_label_with_keycode
-;;;     gtk_accelerator_set_default_mod_mask
-;;;     gtk_accelerator_get_default_mod_mask
+
+;;;   gtk_accelerator_valid
+
+(test gtk-accelerator-valid
+  (is-true (gtk-accelerator-valid 113 '(:control-mask))))
+             
+;;;   gtk_accelerator_parse
+
+(test gtk-accelerator-parse
+  (is (eql 113 (gtk-accelerator-parse "<ctrl>q"))))
+
+;;;   gtk_accelerator_name
+
+(test gtk-accelerator-name
+  (is (equal "<Primary>q"
+             (gtk-accelerator-name 113 '(:control-mask)))))
+
+;;;   gtk_accelerator_get_label
+
+(test gtk-accelerator-get-label
+  (is (equal "Strg+Q"
+             (gtk-accelerator-get-label 113 '(:control-mask)))))
+
+;;;   gtk_accelerator_parse_with_keycode
+;;;   gtk_accelerator_name_with_keycode
+;;;   gtk_accelerator_get_label_with_keycode
+
+;;;   gtk_accelerator_set_default_mod_mask
+;;;   gtk_accelerator_get_default_mod_mask
+
+(test gtk-accelerator-get-default-mod-mask
+  (is (equal '(:SHIFT-MASK
+               :CONTROL-MASK :MOD1-MASK :SUPER-MASK :HYPER-MASK :META-MASK)
+             (gtk-accelerator-get-default-mod-mask)))
+  (is (equal '(:control-mask :shift-mask :mod1-mask)
+             (gtk-accelerator-set-default-mod-mask '(:control-mask
+                                                     :shift-mask :mod1-mask))))
+  (is (equal '(:SHIFT-MASK :CONTROL-MASK :MOD1-MASK)
+             (gtk-accelerator-get-default-mod-mask)))
+  (is (equal '(:SHIFT-MASK
+               :CONTROL-MASK :MOD1-MASK :SUPER-MASK :HYPER-MASK :META-MASK)
+             (gtk-accelerator-set-default-mod-mask '(:SHIFT-MASK
+                                                     :CONTROL-MASK
+                                                     :MOD1-MASK
+                                                     :SUPER-MASK
+                                                     :HYPER-MASK
+                                                     :META-MASK)))))
 

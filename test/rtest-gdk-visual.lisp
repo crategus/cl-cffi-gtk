@@ -9,25 +9,25 @@
 ;;;   gdk_query_depths
 
 (test gdk-query-depths
-  (is (equal '(32 24) (gdk-query-depths))))
+  (is-true (listp (gdk-query-depths))))
 
 ;;;   gdk_query_visual_types
 
 (test gdk-query-visual-types
-  (is (equal '(:DIRECT-COLOR :TRUE-COLOR) (gdk-query-visual-types))))
+  (is-true (listp (gdk-query-visual-types))))
 
 ;;;   gdk_list_visuals
 
 (test gdk-list-visuals
   (let ((visuals (gdk-list-visuals)))
-    (is (= 12 (length visuals)))
+    (is (> (length visuals) 0))
     (is (eq 'gdk-visual (type-of (first visuals))))))
 
 ;;;   gdk_visual_get_bits_per_rgb
 
 (test gdk-visual-get-bits-per-rgb
   (let ((visual (gdk-visual-get-system)))
-    (is (= 8 (gdk-visual-get-bits-per-rgb visual)))))
+    (is-true (integerp (gdk-visual-get-bits-per-rgb visual)))))
 
 ;;;   gdk_visual_get_blue_pixel_details
 
@@ -81,17 +81,23 @@
 
 (test gdk-visual-get-visual-type
   (let ((visual (gdk-visual-get-system)))
-    (is (eq :true-color (gdk-visual-get-visual-type visual)))))
+    (is (member (gdk-visual-get-visual-type visual)
+                '(:static-gray 
+                  :grayscale
+                  :static-color :pseudo-color :true-color :direct-color)))))
 
 ;;;   gdk_visual_get_best_depth
 
 (test gdk-visual-get-best-depth
-  (is (= 32 (gdk-visual-get-best-depth))))
+  (is-true (integerp (gdk-visual-get-best-depth))))
 
 ;;;   gdk_visual_get_best_type
 
 (test gdk-visual-get-best-type
-  (is (eq :direct-color (gdk-visual-get-best-type))))
+  (is (member (gdk-visual-get-best-type)
+              '(:static-gray 
+                :grayscale
+                :static-color :pseudo-color :true-color :direct-color))))
 
 ;;;   gdk_visual_get_system
 

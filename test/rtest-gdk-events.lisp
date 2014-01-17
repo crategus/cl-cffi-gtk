@@ -247,7 +247,10 @@
          (device (gdk-device-manager-get-client-pointer device-manager)))
     (is-false (gdk-event-get-device event))
     (gdk-event-set-device event device)
-    (is (eq 'GDK-X11-DEVICE-XI2 (type-of (gdk-event-get-device event))))))
+    #-windows
+    (is (eq 'GDK-X11-DEVICE-XI2 (type-of (gdk-event-get-device event))))
+    #+windows
+    (is (eq 'GDK-DEVICE (type-of (gdk-event-get-device event))))))
 
 ;;;     gdk_event_get_source_device
 ;;;     gdk_event_set_source_device

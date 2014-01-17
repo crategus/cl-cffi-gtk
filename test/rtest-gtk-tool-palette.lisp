@@ -120,6 +120,7 @@
                          "toolbar-style" "GtkToolbarStyle" T T)))
              (get-g-type-definition "GtkToolPalette"))))
 
+#+nil             
 (test gtk-frame-properties
   (let ((widget (make-instance 'gtk-frame)))
     (is-false (gtk-frame-label widget))
@@ -129,6 +130,7 @@
     (is (eq :etched-in (gtk-frame-shadow-type widget)))
   ))
 
+#+nil
 (test gtk-frame-style-properties
   (let ((widget (make-instance 'gtk-frame)))
     (is (= 0.04 (gtk-widget-style-get-property widget "cursor-aspect-ratio")))

@@ -54,12 +54,20 @@
   (is-true  (g-type-is-a "GtkDialog" "GtkWindow"))
 
   ;; Check the children
+  #-windows
   (is (equal '("GtkMessageDialog" "GtkAboutDialog" "GtkColorChooserDialog"
                "GtkColorSelectionDialog" "GtkFileChooserDialog"
                "GtkFontChooserDialog" "GtkFontSelectionDialog"
                "GtkRecentChooserDialog" "GtkAppChooserDialog"
                "GtkPrintUnixDialog" "GtkPageSetupUnixDialog")
              (mapcar #'gtype-name (g-type-children "GtkDialog"))))
+  #+windows
+  (is (equal '("GtkMessageDialog" "GtkAboutDialog" "GtkColorChooserDialog"
+               "GtkColorSelectionDialog" "GtkFileChooserDialog"
+               "GtkFontChooserDialog" "GtkFontSelectionDialog"
+               "GtkRecentChooserDialog" "GtkAppChooserDialog")
+             (mapcar #'gtype-name (g-type-children "GtkDialog"))))
+             
   ;; Check the interfaces
   (is (equal '("AtkImplementorIface" "GtkBuildable")
              (mapcar #'gtype-name (g-type-interfaces "GtkDialog"))))
@@ -132,21 +140,21 @@
     (is-false (gtk-widget-style-get-property widget "cursor-color"))
     (is (equal "" (gtk-widget-style-get-property widget "focus-line-pattern")))
     (is (= 1 (gtk-widget-style-get-property widget "focus-line-width")))
-    (is (= 0 (gtk-widget-style-get-property widget "focus-padding")))
+    (is-true (integerp (gtk-widget-style-get-property widget "focus-padding")))
     (is-true (gtk-widget-style-get-property widget "interior-focus"))
     (is (eq 'gdk-color (type-of (gtk-widget-style-get-property widget "link-color"))))
     (is (= 16 (gtk-widget-style-get-property widget "scroll-arrow-hlength")))
     (is (= 16 (gtk-widget-style-get-property widget "scroll-arrow-vlength")))
     (is-false (gtk-widget-style-get-property widget "secondary-cursor-color"))
-    (is (=  2 (gtk-widget-style-get-property widget "separator-height")))
-    (is (=  2 (gtk-widget-style-get-property widget "separator-width")))
+    (is-true (integerp (gtk-widget-style-get-property widget "separator-height")))
+    (is-true (integerp (gtk-widget-style-get-property widget "separator-width")))
     (is (= 20 (gtk-widget-style-get-property widget "text-handle-height")))
     (is (= 16 (gtk-widget-style-get-property widget "text-handle-width")))
     (is (eq 'gdk-color (type-of (gtk-widget-style-get-property widget "visited-link-color"))))
     (is-false  (gtk-widget-style-get-property widget "wide-separators"))
     (is-false (gtk-widget-style-get-property widget "window-dragging"))
-    (is (= 0 (gtk-widget-style-get-property widget "resize-grip-height")))
-    (is (= 0 (gtk-widget-style-get-property widget "resize-grip-width")))
+    (is-true (integerp (gtk-widget-style-get-property widget "resize-grip-height")))
+    (is-true (integerp (gtk-widget-style-get-property widget "resize-grip-width")))
     (is (= 5 (gtk-widget-style-get-property widget "action-area-border")))
     (is (= 6 (gtk-widget-style-get-property widget "button-spacing")))
     (is (= 2 (gtk-widget-style-get-property widget "content-area-border")))
