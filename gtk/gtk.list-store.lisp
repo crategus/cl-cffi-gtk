@@ -717,7 +717,7 @@
 
 (defun gtk-list-store-append (list-store)
  #+cl-cffi-gtk-documentation
- "@version{2013-8-22}
+ "@version{2014-1-22}
   @argument[list-store]{a @class{gtk-list-store} object}
   @return{@code{iter} -- a @class{gtk-tree-iter} to the appended row}
   @begin{short}
@@ -725,7 +725,7 @@
   @end{short}
   @arg{iter} will point to this new row. The row will be empty after this
   function is called. To fill in values, you need to call the functions
-  @fun{gtk-list-store-set} or @class{gtk-list-store-set-value}.
+  @fun{gtk-list-store-set} or @fun{gtk-list-store-set-value}.
   @see-class{gtk-list-store}
   @see-class{gtk-tree-iter}
   @see-function{gtk-list-store-set}

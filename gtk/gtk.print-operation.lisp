@@ -1563,7 +1563,7 @@
 
 (defun gtk-print-operation-run (op action parent)
  #+cl-cffi-gtk-documentation
- "@version{2013-10-27}
+ "@version{2014-1-22}
   @argument[op]{a @class{gtk-print-operation} object}
   @argument[action]{the action to start}
   @argument[parent]{transient parent of the dialog}
@@ -1586,10 +1586,10 @@
   may use a recursive mainloop to show the print dialog.
 
   If you call the function @fun{gtk-print-operation-set-allow-async} or set the
-  @code{\"allow-async\"} property the operation will run asynchronously if this
-  is supported on the platform. The \"done\" signal will be emitted with the
-  result of the operation when the it is done, i. e. when the dialog is
-  canceled, or when the print succeeds or fails.
+  @slot[gtk-print-operation]{allow-async} property the operation will run
+  asynchronously if this is supported on the platform. The \"done\" signal will
+  be emitted with the result of the operation when the it is done, i. e. when
+  the dialog is canceled, or when the print succeeds or fails.
   @begin{pre}
    if (settings != NULL)
      gtk_print_operation_set_print_settings (print, settings);
@@ -1628,7 +1628,7 @@
     @}
   @end{pre}
   Note that the function @sym{gtk-print-operation-run} can only be called once
-  on a given @class{gtk-print-pperation}.
+  on a given @class{gtk-print-operation}.
 
   Since 2.10
   @see-class{gtk-print-operation}

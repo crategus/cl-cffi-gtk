@@ -2802,10 +2802,10 @@
 ;;; gtk_entry_get_icon_storage_type ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_entry_get_icon_storage_type" gtk-entry-get-storage-type)
+(defcfun ("gtk_entry_get_icon_storage_type" gtk-entry-get-icon-storage-type)
     gtk-image-type
  #+cl-cffi-gtk-documentation
- "@version{2013-8-26}
+ "@version{2014-1-22}
   @argument[entry]{a @class{gtk-entry} widget}
   @argument[icon-pos]{icon position of type @symbol{gtk-entry-icon-position}}
   @return{Image representation of type @symbol{gtk-image-type} being used.}

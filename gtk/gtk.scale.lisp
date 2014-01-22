@@ -618,11 +618,11 @@
 
 (defun gtk-hscale-new-with-range (min max step)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-28}
+ "@version{2014-1-22}
   @argument[min]{minimum value}
   @argument[max]{maximum value}
   @argument[step]{step increment (tick size) used with keyboard shortcuts}
-  @return{A new @class{gthk-hscale} widget.}
+  @return{A new @class{gtk-hscale} widget.}
   @subheading{Warning}
     @sym{gtk-hscale-new-with-range} has been deprecated since version 3.2 and
     should not be used in newly written code. Use the function
@@ -637,7 +637,10 @@
 
   Note that the way in which the precision is derived works best if @arg{step}
   is a power of ten. If the resulting precision is not suitable for your needs,
-  use  the function @fun{gtk-scale-set-digits} to correct it."
+  use  the function @fun{gtk-scale-set-digits} to correct it.
+  @see-class{gtk-hscale}
+  @see-function{gtk-scale-new-with-range}
+  @see-function{gtk-scale-set-digits}"
   (make-instance 'gtk-scale
                  :orientation :horizontal
                  :adjustment (make-instance 'gtk-adjustment

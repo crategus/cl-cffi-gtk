@@ -10,7 +10,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -3093,14 +3093,14 @@
 
 (defcfun ("gdk_window_set_user_data" gdk-window-set-user-data) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-9-1}
+ "@version{2014-1-22}
   @argument[window]{a @class{gdk-window} object}
   @argument[user-data]{user data}
   @begin{short}
     For most purposes this function is deprecated in favor of the function
     @fun{g-object-set-data}.
   @end{short}
-  However, for historical reasons GTK+ stores the @class{gkt-widget} that owns a
+  However, for historical reasons GTK+ stores the @class{gtk-widget} that owns a
   @class{gdk-window} as user data on the @class{gdk-window}. So, custom widget
   implementations should use this function for that. If GTK+ receives an event
   for a @class{gdk-window}, and the user data for the window is non-@code{NULL},
@@ -3578,27 +3578,27 @@
 
 (defcfun ("gdk_window_set_background" gdk-window-set-background) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-9-1}
+ "@version{2014-1-22}
   @argument[window]{a @class{gdk-window} object}
-  @arg[color]{a @class{gdk-color} structure}
-  @subheading{Warning}
-    The function @sym{gdk-window-set-background} has been deprecated since
-    version 3.4 and should not be used in newly written code. Use the function
-    @fun{gdk-window-set-background-rgba} instead.
-
+  @argument[color]{a @class{gdk-color} structure}
   @begin{short}
     Sets the background color of window.
   @end{short}
   However, when using GTK+, set the background of a widget with the function
   @fun{gtk-widget-modify-bg}, if you are implementing an application, or the
-  function @fun{gtk-style-set-background}, if you are implementing a custom
-  widget.
+  function @fun{gtk-style-context-set-background}, if you are implementing a
+  custom widget.
 
   See also the function @fun{gdk-window-set-background-pattern}.
+  @begin[Warning]{dictionary}
+    The function @sym{gdk-window-set-background} has been deprecated since
+    version 3.4 and should not be used in newly written code. Use the function
+    @fun{gdk-window-set-background-rgba} instead.
+  @end{dictionary}
   @see-class{gdk-window}
-  @see-function{gdk-window-set-background-rgba}
   @see-function{gtk-widget-modify-bg}
-  @see-function{gtk-style-set-background}
+  @see-function{gdk-window-set-background-rgba}
+  @see-function{gtk-style-context-set-background}
   @see-function{gdk-window-set-background-pattern}"
   (window (g-object gdk-window))
   (color (g-boxed-foreign gdk-color)))
