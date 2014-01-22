@@ -4,12 +4,13 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.8.8 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -110,6 +111,10 @@
   @see-slot{gtk-frame-label-xalign}
   @see-slot{gtk-frame-label-yalign}
   @see-slot{gtk-frame-shadow-type}
+  @see-class{gtk-bin}
+  @see-class{gtk-widget}
+  @see-class{gtk-buildable}
+  @see-symbol{gtk-shadow-type}
   @see-function{gtk-frame-set-label-align}")
 
 ;;; ----------------------------------------------------------------------------
@@ -162,32 +167,43 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-frame-label atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-frame-label 'function)
- "@version{2013-5-20}
-  Accessor of the slot @code{\"label\"} of the @class{gtk-frame} class.")
+ "@version{2014-1-19}
+  Accessor of the slot @slot[gtk-frame]{label} of the @class{gtk-frame} class.
+  @see-class{gtk-frame}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-frame-label-widget atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-frame-label-widget 'function)
- "@version{2013-5-20}
-  Accessor of the slot @code{\"label-widget\"} of the @class{gtk-frame} class.")
+ "@version{2014-1-19}
+  Accessor of the slot @slot[gtk-frame]{label-widget} of the @class{gtk-frame}
+  class.
+  @see-class{gtk-frame}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-frame-label-xalign atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-frame-label-xalign 'function)
- "@version{2013-5-20}
-  Accessor of the slot @code{\"label-xalign\"} of the @class{gtk-frame} class.")
+ "@version{2014-1-19}
+  Accessor of the slot @slot[gtk-frame]{label-xalign} of the @class{gtk-frame}
+  class.
+  @see-class{gtk-frame}
+  @see-function{gtk-frame-label-yalign}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-frame-label-yalign atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-frame-label-yalign 'function)
- "@version{2013-5-20}
-  Accessor of the slot @code{\"label-yalign\"} of the @class{gtk-frame} class.")
+ "@version{2014-1-19}
+  Accessor of the slot @slot[gtk-frame]{label-yalign} of the @class{gtk-frame}
+  class.
+  @see-class{gtk-frame}
+  @see-function{gtk-frame-xalign}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-frame-shadow-type atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-frame-shadow-type 'function)
- "@version{2013-5-20}
-  Accessor of the slot @code{\"shadow-type\"} of the @class{gtk-frame} class.")
+ "@version{2014-1-19}
+  Accessor of the slot @slot[gtk-frame]{shadow-type} of the @class{gtk-frame}
+  class.
+  @see-class{gtk-frame}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_frame_new ()
@@ -197,12 +213,14 @@
 
 (defun gtk-frame-new (label)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-20}
+ "@version{2014-1-19}
   @argument[label]{the text to use as the label of the frame}
   @return{A new @class{gtk-frame} container.}
-  Creates a new @class{gtk-frame} container, with optional label @arg{label}. If
-  @arg{label} is @code{nil}, the label is omitted."
-  (make-instance 'gtk-frame :label label))
+  Creates a new @class{gtk-frame} container, with optional label @arg{label}.
+  If @arg{label} is @code{nil}, the label is omitted.
+  @see-class{gtk-frame}"
+  (make-instance 'gtk-frame
+                 :label label))
 
 (export 'gtk-frame-new)
 
@@ -214,11 +232,13 @@
 
 (defun gtk-frame-set-label (frame label)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-20}
+ "@version{2014-1-19}
   @argument[frame]{a @class{gtk-frame} container}
-  @argument[label]{the text to use as the label of the @arg{frame}}
-  Sets the text of the @arg{label}. If @arg{label} is @code{nil}, the current
-  label is removed."
+  @argument[label]{the text to use as the label of the frame}
+  Sets the text of the label. If @arg{label} is @code{nil}, the current
+  label is removed.
+  @see-class{gtk-frame}
+  @see-function{gtk-frame-get-label}"
   (setf (gtk-frame-label frame) label))
 
 (export 'gtk-frame-set-label)
@@ -231,11 +251,13 @@
 
 (defun gtk-frame-set-label-widget (frame label-widget)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-20}
+ "@version{2014-1-19}
   @argument[frame]{a @class{gtk-frame} container}
   @argument[label-widget]{the new label widget}
-  Sets the label widget for the @arg{frame}. This is the widget that will appear
-  embedded in the top edge of the @arg{frame} as a title."
+  Sets the label widget for the frame. This is the widget that will appear
+  embedded in the top edge of the frame as a title.
+  @see-class{gtk-frame}
+  @see-function{gtk-frame-get-label-widget}"
   (setf (gtk-frame-label-widget frame) label-widget))
 
 (export 'gtk-frame-set-label-widget)
@@ -248,16 +270,18 @@
 
 (defun gtk-frame-set-label-align (frame xalign yalign)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-20}
+ "@version{2014-1-19}
   @argument[frame]{a @class{gtk-frame} container}
-  @argument[xalign]{the position of the label along the top edge of the widget.
-    A value of 0.0 represents left alignment; 1.0 represents right alignment.}
-  @argument[yalign]{The y alignment of the label. A value of 0.0 aligns under
-    the frame; 1.0 aligns above the frame. If the values are exactly 0.0 or 1.0
-    the gap in the frame won't be painted because the label will be completely
-    above or below the frame.}
-  Sets the alignment of the @arg{frame} container's label. The default values
-  for a newly created @arg{frame} are 0.0 and 0.5."
+  @argument[xalign]{the position of the label along the top edge of the widget,
+    a value of 0.0 represents left alignment; 1.0 represents right alignment}
+  @argument[yalign]{the y alignment of the label, a value of 0.0 aligns under
+    the frame; 1.0 aligns above the frame, if the values are exactly 0.0 or 1.0
+    the gap in the frame will not be painted because the label will be
+    completely above or below the frame}
+  Sets the alignment of the frame container's label. The default values
+  for a newly created frame are 0.0 and 0.5.
+  @see-class{gtk-frame}
+  @see-function{gtk-frame-get-label-align}"
   (setf (gtk-frame-label-xalign frame) xalign
         (gtk-frame-label-yalign frame) yalign))
 
@@ -271,10 +295,13 @@
 
 (defun gtk-frame-set-shadow-type (frame type)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-20}
+ "@version{2014-1-19}
   @argument[frame]{a @class{gtk-frame} container}
   @argument[type]{the new @symbol{gtk-shadow-type}}
-  Sets the shadow type for @arg{frame}."
+  Sets the shadow type for @arg{frame}.
+  @see-class{gtk-frame}
+  @see-symbol{gtk-shadow-type}
+  @see-function{gtk-frame-get-shadow-type}"
   (setf (gtk-frame-shadow-type frame) type))
 
 (export 'gtk-frame-set-shadow-type)
@@ -287,16 +314,20 @@
 
 (defun gtk-frame-get-label (frame)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-20}
+ "@version{2014-1-19}
   @argument[frame]{a @class{gtk-frame} container}
   @return{The text in the label, or @code{nil} if there was no label widget or
     the label widget was not a @class{gtk-label}.}
   @begin{short}
-    If the @arg{frame}'s label widget is a @class{gtk-label}, returns the text
+    If the frame's label widget is a @class{gtk-label}, returns the text
     in the label widget.
   @end{short}
   The frame will have a @class{gtk-label} for the label widget if a
-  non-@code{nil} argument was passed to @fun{gtk-frame-new}."
+  non-@code{nil} argument was passed to @fun{gtk-frame-new}.
+  @see-class{gtk-frame}
+  @see-class{gtk-label}
+  @see-function{gtk-frame-new}
+  @see-function{gtk-frame-set-label}"
   (gtk-frame-label frame))
 
 (export 'gtk-frame-get-label)
@@ -309,16 +340,17 @@
 
 (defun gtk-frame-get-label-align (frame)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-20}
+ "@version{2014-1-19}
   @argument[frame]{a @class{gtk-frame} container}
   @begin{return}
     @code{xalign} -- x alignment of @arg{frame}'s label, or @code{nil} @br{}
     @code{yalign} -- y alignment of @arg{frame}'s label, or @code{nil}
   @end{return}
   @begin{short}
-    Retrieves the x and y alignment of the @arg{frame}'s label.
+    Retrieves the x and y alignment of the frame's label.
   @end{short}
   See the function @fun{gtk-frame-set-label-align}.
+  @see-class{gtk-frame}
   @see-function{gtk-frame-set-label-align}"
   (values (gtk-frame-label-xalign frame)
           (gtk-frame-label-yalign frame)))
@@ -333,11 +365,12 @@
 
 (defun gtk-frame-get-label-widget (frame)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-20}
+ "@version{2014-1-19}
   @argument[frame]{a @class{gtk-frame} container}
   @return{The label widget, or @code{nil} if there is none.}
-  Retrieves the label widget for the @arg{frame}.
+  Retrieves the label widget for the frame.
   See the function @fun{gtk-frame-set-label-widget}.
+  @see-class{gtk-frame}
   @see-function{gtk-frame-set-label-widget}"
   (gtk-frame-label-widget frame))
 
@@ -351,11 +384,12 @@
 
 (defun gtk-frame-get-shadow-type (frame)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-20}
+ "@version{2014-1-19}
   @argument[frame]{a @class{gtk-frame} container}
-  @return{The current shadow type of the @arg{frame}.}
+  @return{The current shadow type of the frame.}
   Retrieves the shadow type of the @arg{frame}.
   See the function @fun{gtk-frame-set-shadow-type}.
+  @see-class{gtk-frame}
   @see-function{gtk-frame-set-shadow-type}"
   (gtk-frame-shadow-type frame))
 

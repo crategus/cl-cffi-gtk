@@ -203,7 +203,7 @@ GTK+ Widgets and Objects
 
   Ornaments
 
-    gtk.frame.lisp                   - GtkFrame                    - GTK+ 3.6.4
+    gtk.frame.lisp                   - GtkFrame                    - GTK+ 3.8.8
     gtk.separator.lisp               - GtkSeparator, ...           - GTK+ 3.6.4
 
   Scrolling
