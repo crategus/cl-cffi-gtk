@@ -536,25 +536,27 @@
     @about-symbol{gdk-event-type}
     @about-symbol{gdk-modifier-type}
     @about-symbol{gdk-event-mask}
-    @about-class{gdk-event}
-    @about-class{gdk-event-any}
-    @about-class{gdk-event-expose}
-    @about-class{gdk-event-visibility}
-    @about-class{gdk-event-motion}
-    @about-class{gdk-event-touch}
-    @about-class{gdk-event-scroll}
-    @about-class{gdk-event-key}
-    @about-class{gdk-event-crossing}
-    @about-class{gdk-event-focus}
-    @about-class{gdk-event-configure}
-    @about-class{gdk-event-property}
-    @about-class{gdk-event-selection}
-    @about-class{gdk-event-owner-change}
-    @about-class{gdk-event-proximity}
-    @about-class{gdk-event-dnd}
-    @about-class{gdk-event-window-state}
-    @about-class{gdk-event-setting}
-    @about-class{gdk-event-grab-broken}
+    @about-struct{gdk-event}
+    @about-struct{gdk-event-any}
+    @about-struct{gdk-event-key}
+    @about-struct{gdk-event-button}
+
+    @about-struct{gdk-event-expose}
+    @about-struct{gdk-event-visibility}
+    @about-struct{gdk-event-motion}
+    @about-struct{gdk-event-touch}
+    @about-struct{gdk-event-scroll}
+    @about-struct{gdk-event-crossing}
+    @about-struct{gdk-event-focus}
+    @about-struct{gdk-event-configure}
+    @about-struct{gdk-event-property}
+    @about-struct{gdk-event-selection}
+    @about-struct{gdk-event-owner-change}
+    @about-struct{gdk-event-proximity}
+    @about-struct{gdk-event-dnd}
+    @about-struct{gdk-event-window-state}
+    @about-struct{gdk-event-setting}
+    @about-struct{gdk-event-grab-broken}
   @end{section}
   @begin[Key Values]{section}
     Functions for manipulating keyboard codes.
