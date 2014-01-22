@@ -444,14 +444,14 @@
   @begin{short}
     A wrapper for the common usage of the function
     @fun{gdk-threads-add-idle-full} assigning the default priority,
-    @var{g-priority-default-idle}.
+    @var{+g-priority-default-idle+}.
   @end{short}
 
   See the function @fun{gdk-threads-add-idle-full}.
 
   Since 2.12
   @see-function{gdk-threads-add-idle-full}"
-  (%gdk-threads-add-idle-full g-priority-default-idle
+  (%gdk-threads-add-idle-full +g-priority-default-idle+
                              (callback source-func-cb)
                              (glib::allocate-stable-pointer func)
                              (callback glib::stable-pointer-destroy-notify-cb)))
@@ -478,8 +478,8 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-6-17}
   @argument[priority]{the priority of the idle source. Typically this will be in
-    the range between @var{g-priority-default-idle} and
-    @var{g-priority-high-idle}.}
+    the range between @var{+g-priority-default-idle+} and
+    @var{+g-priority-high-idle+}.}
   @argument[func]{function to call}
   @return{The ID (greater than 0) of the event source.}
   @begin{short}
@@ -549,7 +549,7 @@
   @begin{short}
     A wrapper for the common usage of the function
     @fun{gdk-threads-add-timeout-full} assigning the default priority,
-    @var{g-priority-default}.
+    @var{+g-priority-default+}.
   @end{short}
 
   See the function @fun{gdk-threads-add-timeout-full}.
@@ -557,7 +557,7 @@
   Since 2.12
   @see-function{gdk-threads-add-timeout-full}"
   (%gdk-threads-add-timeout-full
-                             g-priority-default
+                             +g-priority-default+
                              interval
                              (callback source-func-cb)
                              (glib::allocate-stable-pointer func)
@@ -582,8 +582,8 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-6-17}
   @argument[priority]{the priority of the timeout source. Typically this will
-    be in the range between @var{g-priority-default-idle} and
-    @var{g-priority-high-idle}.}
+    be in the range between @var{+g-priority-default-idle+} and
+    @var{+g-priority-high-idle+}.}
   @argument[interval]{the time between calls to the function, in milliseconds
     (1/1000ths of a second)}
   @argument[func]{function to call}
@@ -657,7 +657,7 @@
   @begin{short}
     A wrapper for the common usage of the function
     @fun{gdk-threads-add-timeout-seconds-full} assigning the default priority,
-    @var{g-priority-default}.
+    @var{+g-priority-default+}.
   @end{short}
 
   For details, see the function @fun{gdk-threads-add-timeout-full}.
@@ -665,7 +665,7 @@
   Since 2.14
   @see-function{gdk-threads-add-timeout-full}"
   (%gdk-threads-add-timeout-seconds-full
-                             g-priority-default
+                             +g-priority-default+
                              interval
                              (callback source-func-cb)
                              (glib::allocate-stable-pointer func)
@@ -691,8 +691,8 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-12-28}
   @argument[priority]{the priority of the timeout source. Typically this will be
-    in the range between @var{g-priority-default-idle} and
-    @var{g-priority-high-idle}.}
+    in the range between @var{+g-priority-default-idle+} and
+    @var{+g-priority-high-idle+}.}
   @argument[interval]{the time between calls to the function, in seconds}
   @argument[func]{function to call}
   @return{The ID (greater than 0) of the event source.}

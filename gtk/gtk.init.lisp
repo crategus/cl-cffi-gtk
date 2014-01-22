@@ -131,7 +131,7 @@
              nil)
     (return-from-callback () nil)))
 
-(defun call-from-gtk-main-loop (func &key (priority g-priority-default-idle))
+(defun call-from-gtk-main-loop (func &key (priority +g-priority-default-idle+))
   (glib::%g-idle-add-full priority
                           (callback call-from-main-loop-callback)
                           (glib:allocate-stable-pointer func)

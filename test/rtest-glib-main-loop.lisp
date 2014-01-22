@@ -66,8 +66,7 @@
     (is-false (bt:thread-alive-p *main-thread*))
     (is (= 0 *main-thread-level*))
     (is-true (pointerp *main-loop*))
-    (is-false (g-main-loop-is-running *main-loop*))
-)
+    (is-false (g-main-loop-is-running *main-loop*)))
 
 ;;;   GMainContext
 
@@ -113,27 +112,27 @@
 ;;;   G_PRIORITY_HIGH
 
 (test g-priority-high
-  (is (= -100 g-priority-high)))
+  (is (= -100 +g-priority-high+)))
 
 ;;;   G_PRIORITY_DEFAULT
 
 (test g-priority-default
-  (is (= 0 g-priority-default)))
+  (is (= 0 +g-priority-default+)))
 
 ;;;   G_PRIORITY_HIGH_IDLE
 
 (test g-priority-high-idle
-  (is (= 100 g-priority-high-idle)))
+  (is (= 100 +g-priority-high-idle+)))
 
 ;;;   G_PRIORITY_DEFAULT_IDLE
 
 (test g-priority-default-idle
-  (is (= 200 g-priority-default-idle)))
+  (is (= 200 +g-priority-default-idle+)))
 
 ;;;   G_PRIORITY_LOW
 
 (test g-priority-low
-  (is (= 300 g-priority-low)))
+  (is (= 300 +g-priority-low+)))
 
 ;;;   G_SOURCE_CONTINUE
 
