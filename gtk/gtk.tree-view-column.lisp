@@ -1099,15 +1099,19 @@
 
 (defun gtk-tree-view-column-set-fixed-width (tree-column fixed-width)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-16}
+ "@version{2014-1-20}
   @argument[tree-column]{a @class{gtk-tree-view-column} object}
   @argument[fixed-width]{the size to set @arg{tree-column} to, must be greater
     than 0}
-  Sets the size of the column in pixels. This is meaningful only if the sizing
-  type is @code{:fixed}. The size of the column is clamped to the
-  min/max width for the column. Please note that the min/max width of the
-  column does not actually affect the @code{\"fixed_width\"} property of the
-  widget, just the actual size when displayed."
+  @begin{short}
+    Sets the size of the column in pixels.
+  @end{short}
+  This is meaningful only if the sizing type is @code{:fixed}. The size of the
+  column is clamped to the min/max width for the column. Please note that the
+  min/max width of the column does not actually affect the
+  @slot[gtk-tree-view-column]{fixed-width} property of the widget, just the
+  actual size when displayed.
+  @see-class{gtk-tree-view-column}"
   (setf (gtk-tree-view-column-fixed-width tree-column) fixed-width))
 
 (export 'gtk-tree-view-column-set-fixed-width)
