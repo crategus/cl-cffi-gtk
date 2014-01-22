@@ -10,7 +10,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -158,74 +158,6 @@
 ;;;     g_source_remove
 ;;;     g_source_remove_by_funcs_user_data
 ;;;     g_source_remove_by_user_data
-;;;
-;;; Description
-;;;
-;;; The main event loop manages all the available sources of events for GLib and
-;;; GTK+ applications. These events can come from any number of different types
-;;; of sources such as file descriptors (plain files, pipes or sockets) and
-;;; timeouts. New types of event sources can also be added using
-;;; g_source_attach().
-;;;
-;;; To allow multiple independent sets of sources to be handled in different
-;;; threads, each source is associated with a GMainContext. A GMainContext can
-;;; only be running in a single thread, but sources can be added to it and
-;;; removed from it from other threads.
-;;;
-;;; Each event source is assigned a priority. The default priority,
-;;; G_PRIORITY_DEFAULT, is 0. Values less than 0 denote higher priorities.
-;;; Values greater than 0 denote lower priorities. Events from high priority
-;;; sources are always processed before events from lower priority sources.
-;;;
-;;; Idle functions can also be added, and assigned a priority. These will be run
-;;; whenever no events with a higher priority are ready to be processed.
-;;;
-;;; The GMainLoop data type represents a main event loop. A GMainLoop is created
-;;; with g_main_loop_new(). After adding the initial event sources,
-;;; g_main_loop_run() is called. This continuously checks for new events from
-;;; each of the event sources and dispatches them. Finally, the processing of an
-;;; event from one of the sources leads to a call to g_main_loop_quit() to exit
-;;; the main loop, and g_main_loop_run() returns.
-;;;
-;;; It is possible to create new instances of GMainLoop recursively. This is
-;;; often used in GTK+ applications when showing modal dialog boxes. Note that
-;;; event sources are associated with a particular GMainContext, and will be
-;;; checked and dispatched for all main loops associated with that GMainContext.
-;;;
-;;; GTK+ contains wrappers of some of these functions, e.g. gtk_main(),
-;;; gtk_main_quit() and gtk_events_pending().
-;;;
-;;; Creating new source types
-;;;
-;;; One of the unusual features of the GMainLoop functionality is that new types
-;;; of event source can be created and used in addition to the builtin type of
-;;; event source. A new event source type is used for handling GDK events. A new
-;;; source type is created by deriving from the GSource structure. The derived
-;;; type of source is represented by a structure that has the GSource structure
-;;; as a first element, and other elements specific to the new source type. To
-;;; create an instance of the new source type, call g_source_new() passing in
-;;; the size of the derived structure and a table of functions. These
-;;; GSourceFuncs determine the behavior of the new source type.
-;;;
-;;; New source types basically interact with the main context in two ways. Their
-;;; prepare function in GSourceFuncs can set a timeout to determine the maximum
-;;; amount of time that the main loop will sleep before checking the source
-;;; again. In addition, or as well, the source can add file descriptors to the
-;;; set that the main context checks using g_source_add_poll().
-;;;
-;;; Customizing the main loop iteration
-;;;
-;;; Single iterations of a GMainContext can be run with
-;;; g_main_context_iteration(). In some cases, more detailed control of exactly
-;;; how the details of the main loop work is desired, for instance, when
-;;; integrating the GMainLoop with an external main loop. In such cases, you can
-;;; call the component functions of g_main_context_iteration() directly. These
-;;; functions are g_main_context_prepare(), g_main_context_query(),
-;;; g_main_context_check() and g_main_context_dispatch().
-;;;
-;;; On Unix, the GLib mainloop is incompatible with fork(). Any program using
-;;; the mainloop must either exec() or exit() from the child without returning
-;;; to the mainloop.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :glib)
@@ -239,9 +171,10 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-main-loop atdoc:*type-name-alias*) "CStruct"
       (documentation 'g-main-loop 'type)
- "@version{2013-7-21}
+ "@version{2014-1-22}
   The @sym{g-main-loop} structure is an opaque data type representing the main
-  event loop of a GLib or GTK+ application.")
+  event loop of a GLib or GTK+ application.
+  @see-function{g-main-loop-new}")
 
 (export 'g-main-loop)
 
@@ -254,9 +187,11 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-main-context atdoc:*type-name-alias*) "CStruct"
       (documentation 'g-main-context 'type)
- "@version{2013-7-21}
+ "@version{2014-1-22}
   The @sym{g-main-context} structure is an opaque data type representing a
-  set of sources to be handled in a main loop.")
+  set of sources to be handled in a main loop.
+  @see-type{g-main-loop}
+  @see-function{g-main-context-new}")
 
 (export 'g-main-context)
 
@@ -272,7 +207,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-poll-fd atdoc:*type-name-alias*) "CStruct"
       (documentation 'g-poll-fd 'type)
- "@version{2013-7-21}
+ "@version{2014-1-22}
   @begin{short}
     Represents a file descriptor, which events to poll for, and which events
     occurred.
@@ -284,12 +219,12 @@
   (revent :ushort))
   @end{pre}
   @begin[code]{table}
-    @entry[fd]{the file descriptor to poll (or a @code{HANDLE} on Win32)}
-    @entry[events]{a bitwise combination from @code{GIOCondition},
+    @entry[fd]{The file descriptor to poll (or a @code{HANDLE} on Win32).}
+    @entry[events]{A bitwise combination from @code{GIOCondition},
       specifying which events should be polled for. Typically for reading from a
       file descriptor you would use @code{G_IO_IN | G_IO_HUP | G_IO_ERR}, and
       for writing you would use @code{G_IO_OUT | G_IO_ERR}.}
-    @entry[revents]{a bitwise combination of flags from
+    @entry[revents]{A bitwise combination of flags from
       @code{GIOCondition}, returned from the @code{poll()} function to indicate
       which events occurred.}
   @end{table}")
@@ -319,9 +254,10 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-source atdoc:*type-name-alias*) "CStruct"
       (documentation 'g-source 'type)
- "@version{2013-7-21}
+ "@version{2014-1-22}
   The @sym{g-source} structure is an opaque data type representing an event
-  source.")
+  source.
+  @see-function{g-source-new}")
 
 (export 'g-source)
 
@@ -341,7 +277,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-source-funcs atdoc:*type-name-alias*) "CStruct"
       (documentation 'g-source-funcs 'type)
- "@version{2013-7-21}
+ "@version{2014-1-22}
   @begin{short}
     The @sym{g-source-funcs} structure contains a table of functions used to
     handle event sources in a generic manner.
@@ -402,6 +338,7 @@
       Called when the source is finalized.
     @end{entry}
   @end{table}
+  @see-type{g-source}
   @see-function{g-source-set-callback}")
 
 (export 'g-source-funcs)
@@ -412,12 +349,12 @@
 
 (defcfun ("g_main_loop_new" g-main-loop-new) (:pointer (:struct g-main-loop))
  #+cl-cffi-gtk-documentation
- "@version{2013-7-20}
-  @argument[context]{a @type{g-main-context}, if a @code{null}-pointer, the
-    default context will be used}
-  @argument[is-running]{set to @em{true} to indicate that the loop is running.
-    This is not very important since calling @fun{g-main-loop-run} will set this
-    to @em{true} anyway.}
+ "@version{2014-1-22}
+  @argument[context]{a @type{g-main-context} structure, if a
+    @code{null}-pointer, the default context will be used}
+  @argument[is-running]{set to @em{true} to indicate that the loop is running;
+    this is not very important since calling the function @fun{g-main-loop-run}
+    will set this to @em{true} anyway}
   @return{A new @type{g-main-loop} structure.}
   @short{Creates a new @type{g-main-loop} structure.}
   @begin[Example]{dictionary}
@@ -431,6 +368,7 @@
     @end{pre}
   @end{dictionary}
   @see-type{g-main-loop}
+  @see-type{g-main-context}
   @see-function{g-main-loop-run}
   @see-function{g-main-loop-quit}"
   (context (:pointer (:struct g-main-context)))
@@ -444,10 +382,12 @@
 
 (defcfun ("g_main_loop_ref" g-main-loop-ref) (:pointer (:struct g-main-loop))
  #+cl-cffi-gtk-documentation
- "@version{2013-7-20}
-  @argument[loop]{a @type{g-main-loop}}
+ "@version{2014-1-22}
+  @argument[loop]{a @type{g-main-loop} structure}
   @return{The argument @arg{loop}.}
-  @short{Increases the reference count on a @type{g-main-loop} object by one.}
+  @begin{short}
+    Increases the reference count on a @type{g-main-loop} structure by one.
+  @end{short}
   @see-type{g-main-loop}
   @see-function{g-main-loop-unref}"
   (loop (:pointer (:struct g-main-loop))))
@@ -460,9 +400,11 @@
 
 (defcfun ("g_main_loop_unref" g-main-loop-unref) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-7-20}
-  @argument[loop]{a @type{g-main-loop}}
-  @short{Decreases the reference count on a @type{g-main-loop} object by one.}
+ "@version{2014-1-22}
+  @argument[loop]{a @type{g-main-loop} structure}
+  @begin{short}
+    Decreases the reference count on a @type{g-main-loop} structure by one.
+  @end{short}
   If the result is zero, free the @arg{loop} and free all associated memory.
   @see-type{g-main-loop}
   @see-function{g-main-loop-ref}"
@@ -476,14 +418,14 @@
 
 (defcfun ("g_main_loop_run" g-main-loop-run) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-7-20}
-  @argument[loop]{a @type{g-main-loop}}
+ "@version{2014-1-22}
+  @argument[loop]{a @type{g-main-loop} structure}
   @begin{short}
-    Runs a main @arg{loop} until @fun{g-main-loop-quit} is called on the
-    @arg{loop}.
+    Runs a main loop until the function @fun{g-main-loop-quit} is called on the
+    loop.
   @end{short}
-  If this is called for the thread of the @arg{loop}'s @type{g-main-context}, it
-  will process events from the @arg{loop}, otherwise it will simply wait.
+  If this is called for the thread of the loop's @type{g-main-context}, it
+  will process events from the loop, otherwise it will simply wait.
   @see-type{g-main-loop}
   @see-type{g-main-context}
   @see-function{g-main-loop-quit}"
@@ -497,11 +439,10 @@
 
 (defcfun ("g_main_loop_quit" g-main-loop-quit) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-7-20}
-  @argument[loop]{a @type{g-main-loop}}
+ "@version{2014-1-22}
+  @argument[loop]{a @type{g-main-loop} structure}
   @short{Stops a @type{g-main-loop} from running.}
-  Any calls to the function @fun{g-main-loop-run} for the @arg{loop} will
-  return.
+  Any calls to the function @fun{g-main-loop-run} for the loop will return.
 
   Note that sources that have already been dispatched when the function
   @sym{g-main-loop-quit} is called will still be executed.
@@ -517,11 +458,11 @@
 
 (defcfun ("g_main_loop_is_running" g-main-loop-is-running) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-7-20}
-  @argument[loop]{a @type{g-main-loop}}
-  @return{@em{True} if the main @arg{loop} is currently being run.}
+ "@version{2014-1-22}
+  @argument[loop]{a @type{g-main-loop} structure}
+  @return{@em{True} if the main loop is currently being run.}
   @begin{short}
-    Checks to see if the main @arg{loop} is currently being run via
+    Checks to see if the main loop is currently being run via the function
     @fun{g-main-loop-run}.
   @end{short}
   @see-type{g-main-loop}
@@ -538,8 +479,8 @@
 (defcfun ("g_main_loop_get_context" g-main-loop-get-context)
     (:pointer (:struct g-main-context))
  #+cl-cffi-gtk-documentation
- "@version{2013-7-21}
-  @argument[loop]{a @type{g-main-loop}}
+ "@version{2014-1-22}
+  @argument[loop]{a @type{g-main-loop} structure}
   @return{The @type{g-main-context} of @arg{loop}.}
   @short{Returns the @type{g-main-context} of @arg{loop}.}
   @see-type{g-main-loop}
@@ -640,93 +581,102 @@
 ;;; G_PRIORITY_HIGH
 ;;; ----------------------------------------------------------------------------
 
-(defconstant g-priority-high -100
+(defconstant +g-priority-high+ -100
  #+cl-cffi-gtk-documentation
- "@version{2013-7-21}
+ "@version{2014-1-22}
   @variable-value{-100}
   @short{Use this for high priority event sources.}
-  It is not used within GLib or GTK+.")
+  It is not used within GLib or GTK+.
+  @see-variable{+g-priority-default+}
+  @see-variable{+g-priority-low+}")
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'g-priority-high atdoc:*variable-name-alias*) "Constant")
+(setf (gethash '+g-priority-high+ atdoc:*variable-name-alias*) "Constant")
 
-(export 'g-priority-high)
+(export '+g-priority-high+)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_PRIORITY_DEFAULT
 ;;; ----------------------------------------------------------------------------
 
-(defconstant g-priority-default 0
+(defconstant +g-priority-default+ 0
  #+cl-cffi-gtk-documentation
- "@version{2013-7-21}
+ "@version{2014-1-22}
   @variable-value{0}
   @short{Use this for default priority event sources.}
 
   In GLib this priority is used when adding timeout functions with the function
   @fun{g-timeout-add}. In GDK this priority is used for events from the X
   server.
+  @see-variable{+g-priority-high+}
+  @see-variable{+g-priority-low+}
   @see-function{g-timeout-add}")
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'g-priority-default atdoc:*variable-name-alias*) "Constant")
+(setf (gethash '+g-priority-default+ atdoc:*variable-name-alias*) "Constant")
 
-(export 'g-priority-default)
+(export '+g-priority-default+)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_PRIORITY_HIGH_IDLE
 ;;; ----------------------------------------------------------------------------
 
-(defconstant g-priority-high-idle 100
+(defconstant +g-priority-high-idle+ 100
  #+cl-cffi-gtk-documentation
- "@version{2013-7-21}
+ "@version{2014-1-22}
   @variable-value{100}
   @short{Use this for high priority idle functions.}
 
-  GTK+ uses @code{@sym{g-priority-high-idle} + 10} for resizing operations,
-  and @code{@sym{g-priority-high-idle} + 20} for redrawing operations. This
+  GTK+ uses @code{@sym{+g-priority-high-idle+} + 10} for resizing operations,
+  and @code{@sym{+g-priority-high-idle+} + 20} for redrawing operations. This
   is done to ensure that any pending resizes are processed before any pending
-  redraws, so that widgets are not redrawn twice unnecessarily.")
+  redraws, so that widgets are not redrawn twice unnecessarily.
+  @see-variable{+g-priority-default-idle+}")
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'g-priority-high-idle atdoc:*variable-name-alias*) "Constant")
+(setf (gethash '+g-priority-high-idle+ atdoc:*variable-name-alias*) "Constant")
 
-(export 'g-priority-high-idle)
+(export '+g-priority-high-idle+)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_PRIORITY_DEFAULT_IDLE
 ;;; ----------------------------------------------------------------------------
 
-(defconstant g-priority-default-idle 200
+(defconstant +g-priority-default-idle+ 200
  #+cl-cffi-gtk-documentation
- "@version{2013-7-21}
+ "@version{2014-1-22}
   @variable-value{200}
   @short{Use this for default priority idle functions.}
 
   In GLib this priority is used when adding idle functions with the function
   @fun{g-idle-add}.
+  @see-variable{+g-priority-high-idle+}
   @see-function{g-idle-add}")
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'g-priority-default-idle atdoc:*variable-name-alias*) "Constant")
+(setf (gethash '+g-priority-default-idle+ atdoc:*variable-name-alias*)
+      "Constant")
 
-(export 'g-priority-default-idle)
+(export '+g-priority-default-idle+)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_PRIORITY_LOW
 ;;; ----------------------------------------------------------------------------
 
-(defconstant g-priority-low 300
+(defconstant +g-priority-low+ 300
  #+cl-cffi-gtk-documentation
- "@version{2013-7-21}
+ "@version{2014-1-22}
   @variable-value{300}
   @short{Use this for very low priority background tasks.}
 
-  It is not used within GLib or GTK+.")
+  It is not used within GLib or GTK+.
+  @see-variable{+g-priority-default+}
+  @see-variable{+g-priority-high+}")
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'g-priority-low atdoc:*variable-name-alias*) "Constant")
+(setf (gethash '+g-priority-low+ atdoc:*variable-name-alias*) "Constant")
 
-(export 'g-priority-low)
+(export '+g-priority-low+)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_SOURCE_CONTINUE
@@ -734,7 +684,7 @@
 
 (defconstant +g-source-continue+ t
  #+cl-cffi-gtk-documentation
- "@version{2013-7-20}
+ "@version{2014-1-22}
   @variable-value{t}
   @begin{short}
     Use this constant as the return value of a @code{GSourceFunc} to leave the
@@ -742,6 +692,7 @@
   @end{short}
 
   Since 2.28
+  @see-type{g-source}
   @see-variable{+g-source-remove+}")
 
 #+cl-cffi-gtk-documentation
@@ -755,7 +706,7 @@
 
 (defconstant +g-source-remove+ nil
  #+cl-cffi-gtk-documentation
- "@version{2013-7-20}
+ "@version{2014-1-22}
   @variable-value{nil}
   @begin{short}
     Use this constant as the return value of a @code{GSourceFunc} to remove
@@ -763,6 +714,7 @@
   @end{short}
 
   Since 2.28
+  @see-type{g-source}
   @see-variable{+g-source-continue+}")
 
 #+cl-cffi-gtk-documentation
@@ -777,7 +729,7 @@
 (defcfun ("g_main_context_new" g-main-context-new)
     (:pointer (:struct g-main-context))
  #+cl-cffi-gtk-documentation
- "@version{2013-7-21}
+ "@version{2014-1-22}
   @return{The new @type{g-main-context} structure.}
   @short{Creates a new @sym{g-main-context} structure.}
   @see-type{g-main-context}")
@@ -791,10 +743,10 @@
 (defcfun ("g_main_context_ref" g-main-context-ref)
     (:pointer (:struct g-main-context))
  #+cl-cffi-gtk-documentation
- "@version{2012-7-21}
-  @argument[context]{a @type{g-main-context} object}
-  @return{The @arg{context} that was passed in (since 2.6).}
-  Increases the reference count on a @type{g-main-context} object by one.
+ "@version{2014-1-22}
+  @argument[context]{a @type{g-main-context} structure}
+  @return{The @arg{context} that was passed in. Since 2.6.}
+  Increases the reference count on a @type{g-main-context} structure by one.
   @see-type{g-main-context}
   @see-function{g-main-context-unref}"
   (context (:pointer (:struct g-main-context))))
@@ -807,10 +759,10 @@
 
 (defcfun ("g_main_context_unref" g-main-context-unref) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-7-21}
-  @argument[context]{a @type{g-main-context} object}
-  Decreases the reference count on a @type{g-main-context} object by one. If
-  the result is zero, free the @arg{context} and free all associated memory.
+ "@version{2014-1-22}
+  @argument[context]{a @type{g-main-context} structure}
+  Decreases the reference count on a @type{g-main-context} structure by one.
+  If the result is zero, free the context and free all associated memory.
   @see-type{g-main-context}
   @see-function{g-main-context-ref}"
   (context (:pointer (:struct g-main-context))))
@@ -1482,22 +1434,33 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_main_context_ref_thread_default ()
-;;;
-;;; GMainContext * g_main_context_ref_thread_default (void);
-;;;
-;;; Gets the thread-default GMainContext for this thread, as with
-;;; g_main_context_get_thread_default(), but also adds a reference to it with
-;;; g_main_context_ref(). In addition, unlike
-;;; g_main_context_get_thread_default(), if the thread-default context is the
-;;; global default context, this will return that GMainContext (with a ref added
-;;; to it) rather than returning NULL.
-;;;
-;;; Returns :
-;;;     the thread-default GMainContext. Unref with g_main_context_unref() when
-;;;     you are done with it
-;;;
-;;; Since 2.32
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_main_context_ref_thread_default" g-main-context-ref-thread-default)
+    (:pointer (:struct g-main-context))
+ #+cl-cffi-gtk-documentation
+ "@version{2014-1-22}
+  @begin{return}
+    The thread-default @symbol{g-main-context}. Unref with the function
+    @fun{g-main-context-unref} when you are done with it
+  @end{return}
+  @begin{short}
+    Gets the thread-default @symbol{g-main-context} for this thread, as with
+    the function @fun{g-main-context-get-thread-default}, but also adds a
+    reference to it with the function @fun{g-main-context-ref}.
+  @end{short}
+  In addition, unlike the function @fun{g-main-context-get-thread-default}, if
+  the thread-default context is the global default context, this will return
+  that @symbol{g-main-context}, with a ref added to it, rather than returning
+  @code{NULL}.
+
+  Since 2.32
+  @see-symbol{g-main-context}
+  @see-function{g-main-context-ref}
+  @see-function{g-main-context-unref}
+  @see-function{g-main-context-get-thread-default}")
+
+(export 'g-main-context-ref-thread-default)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_main_context_push_thread_default ()
@@ -1608,18 +1571,19 @@
 ;;; g_timeout_add ()
 ;;; ----------------------------------------------------------------------------
 
-(defun g-timeout-add (interval func &key (priority g-priority-default))
+(defun g-timeout-add (interval func &key (priority +g-priority-default+))
  #+cl-cffi-gtk-documentation
  "@version{2013-7-20}
   @argument[interval]{the time between calls to the function, in milliseconds
     (1/1000ths of asecond)}
   @argument[function]{function to call}
   @argument[priority]{the priority of the timeout source. Typically this will be
-    in the range between @var{g-priority-default} and @var{g-priority-high}.}
+    in the range between @var{+g-priority-default+} and
+    @var{+g-priority-high+}.}
   @return{The ID greater than 0 of the event source.}
   @begin{short}
     Sets a function to be called at regular intervals, with the @arg{priority}.
-    The default value is @var{g-priority-default}.
+    The default value is @var{+g-priority-default+}.
   @end{short}
   The function is called repeatedly until it returns @code{nil}, at which point
   the timeout is automatically destroyed and the function will not be called
@@ -1671,7 +1635,8 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-7-20}
   @argument[priority]{the priority of the timeout source. Typically this will be
-    in the range between @var{g-priority-default} and @var{g-priority-high}.}
+    in the range between @var{+g-priority-default+} and
+    @var{+g-priority-high+}.}
   @argument[interval]{the time between calls to the function, in milliseconds
     (1/1000ths of a second)}
   @argument[function]{function to call}
@@ -1710,17 +1675,18 @@
 ;;; ----------------------------------------------------------------------------
 
 (defun g-timeout-add-seconds (interval func
-                              &key (priority g-priority-default))
+                              &key (priority +g-priority-default+))
  #+cl-cffi-gtk-documentation
  "@version{2013-7-20}
   @argument[interval]{the time between calls to the function, in seconds}
   @argument[function]{function to call}
   @argument[priority]{the priority of the timeout source. Typically this will be
-    in the range between @var{g-priority-default} and @var{g-priority-high}.}
+    in the range between @var{+g-priority-default+} and
+    @var{+g-priority-high+}.}
   @return{The ID greater than 0 of the event source.}
   @begin{short}
     Sets a function to be called at regular intervals with the @arg{priority}.
-    The default value is @var{g-priority-default}.
+    The default value is @var{+g-priority-default+}.
   @end{short}
   The function is called repeatedly until it returns @code{nil}, at which point
   the timeout is automatically destroyed and the function will not be called
@@ -1762,7 +1728,8 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-01-17}
   @argument[priority]{the priority of the timeout source. Typically this will be
-    in the range between @var{g-priority-default} and @var{g-priority-high}.}
+    in the range between @var{+g-priority-default+} and
+    @var{+g-priority-high+}.}
   @argument[interval]{the time between calls to the function, in seconds}
   @argument[function]{function to call}
   @argument[data]{data to pass to function}
@@ -1827,8 +1794,8 @@
   The source will not initially be associated with any @type{g-main-context} and
   must be added to one with the function @fun{g-source-attach} before it will be
   executed. Note that the default priority for idle sources is
-  @variable{g-priority-default-idle}, as compared to other sources which have a
-  default priority of @variable{g-priority-default}.
+  @variable{+g-priority-default-idle+}, as compared to other sources which have a
+  default priority of @variable{+g-priority-default+}.
   @see-function{g-source-attach}")
 
 (export 'g-idle-source-new)
@@ -1837,21 +1804,21 @@
 ;;; g_idle_add ()
 ;;; ----------------------------------------------------------------------------
 
-(defun g-idle-add (func &key (priority g-priority-default))
+(defun g-idle-add (func &key (priority +g-priority-default+))
  #+cl-cffi-gtk-documentation
  "@version{2013-7-20}
   @argument[function]{function to call}
   @argument[priority]{the priority of the idle source. Typically this will be in
-    the range between @var{g-priority-default-idle} and
-    @var{g-priority-high-idle}.}
+    the range between @var{+g-priority-default-idle+} and
+    @var{+g-priority-high-idle+}.}
   @return{The ID greater than 0 of the event source.}
   @begin{short}
     Adds a @arg{function} to be called whenever there are no higher priority
     events pending to the default main loop.
   @end{short}
-  The @arg{function} is given the @arg{priorit}, which defaults to
-  @arg{g-priority-default-idle}. If the @arg{function} returns @code{nil} it is
-  automatically removed from the list of event sources and will not be called
+  The @arg{function} is given the @arg{priority}, which defaults to
+  @arg{+g-priority-default-idle+}. If the @arg{function} returns @code{nil} it
+  is automatically removed from the list of event sources and will not be called
   again.
 
   This internally creates a main loop source using the function
