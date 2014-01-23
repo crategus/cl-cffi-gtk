@@ -186,7 +186,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'cairo-surface-t atdoc:*symbol-name-alias*) "CStruct"
       (gethash 'cairo-surface-t atdoc:*external-symbols*)
- "@version{2013-10-20}
+ "@version{2014-1-23}
   @begin{short}
     A @sym{cairo-surface-t} structure represents an image, either as the
     destination of a drawing operation or as source when drawing onto another
@@ -206,8 +206,8 @@
   @fun{cairo-image-surface-create} and @fun{cairo-surface-create-similar}.
   Alternatively, if the user passes in a reference to some backing storage and
   asks cairo to wrap that in a @sym{cairo-surface-t} structure, then the
-  contents are not modified; for example, the functions
-  @fun{cairo-image-surface-create-for-data} and @fun{cairo-xlib-surface-create}.
+  contents are not modified; for example, the function
+  @fun{cairo-image-surface-create-for-data}.
 
   Memory management of a @sym{cairo-surface-t} structure is done with the
   functions @fun{cairo-surface-reference} and @fun{cairo-surface-destroy}.
@@ -218,7 +218,6 @@
   @see-function{cairo-surface-create-similar}
   @see-function{cairo-surface-get-type}
   @see-function{cairo-image-surface-create-for-data}
-  @see-function{cairo-xlib-surface-create}
   @see-function{cairo-surface-reference}
   @see-function{cairo-surface-destroy}")
 
@@ -692,33 +691,37 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_surface_set_device_offset ()
-;;;
-;;; void cairo_surface_set_device_offset (cairo_surface_t *surface,
-;;;                                       double x_offset,
-;;;                                       double y_offset);
-;;;
-;;; Sets an offset that is added to the device coordinates determined by the CTM
-;;; when drawing to surface. One use case for this function is when we want to
-;;; create a cairo_surface_t that redirects drawing for a portion of an onscreen
-;;; surface to an offscreen surface in a way that is completely invisible to the
-;;; user of the cairo API. Setting a transformation via cairo_translate() isn't
-;;; sufficient to do this, since functions like cairo_device_to_user() will
-;;; expose the hidden offset.
-;;;
-;;; Note that the offset affects drawing to the surface as well as using the
-;;; surface in a source pattern.
-;;;
-;;; surface :
-;;;     a cairo_surface_t
-;;;
-;;; x_offset :
-;;;     the offset in the X direction, in device units
-;;;
-;;; y_offset :
-;;;     the offset in the Y direction, in device units
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_surface_set_device_offset" cairo-surface-set-device) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-1-23}
+  @argument[surface]{a @symbol{cairo-surface-t}}
+  @argument[x-offset]{the offset in the x direction, in device units}
+  @argument[y-offset]{the offset in the y direction, in device units}
+  @begin{short}
+    Sets an offset that is added to the device coordinates determined by the
+    CTM when drawing to surface.
+  @end{short}
+  One use case for this function is when we want to create a
+  @symbol{cairo-surface-t} that redirects drawing for a portion of an onscreen
+  surface to an offscreen surface in a way that is completely invisible to the
+  user of the cairo API. Setting a transformation via the function
+  @fun{cairo-translate} is not sufficient to do this, since functions like
+  the function @fun{cairo-device-to-user} will expose the hidden offset.
+
+  Note that the offset affects drawing to the surface as well as using the
+  surface in a source pattern.
+
+  Since 1.0
+  @see-symbol{cairo-surface-t}
+  @see-function{cario-translate}
+  @see-function{cairo-device-to-user}"
+  (surface (:pointer (:struct cairo-surface-t)))
+  (x-offset :double)
+  (y-offset :double))
+
+(export 'cairo-surface-set-device-offset)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_surface_get_device_offset ()
