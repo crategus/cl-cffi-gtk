@@ -1274,8 +1274,8 @@
   To create an implementation of a @sym{pango-font}, the rendering-system
   specific code should allocate a larger structure that contains a nested
   @sym{pango-font}, fill in the klass member of the nested @sym{pango-font} with
-  a pointer to a appropriate @class{pango-font-class}, then call the function
-  @fun{pango-font-init} on the structure.
+  a pointer to a appropriate @code{PangoFontClass}, then call the function
+  @code{pango_font_init ()} on the structure.
 
   The @sym{pango-font} structure contains one member which the implementation
   fills in.")
