@@ -10,7 +10,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -329,9 +329,9 @@
 (setf (gethash 'gtk-recent-chooser-show-icons atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-recent-chooser-show-icons 'function)
- "@version{2013-11-23}
-  Accessor of the slot @code{\"show-icons\"} of the @class{gtk-recent-chooser}
-  class.
+ "@version{2014-1-23}
+  Accessor of the slot @slot[gtk-recent-chooser]{show-icons} of the
+  @class{gtk-recent-chooser} class.
   @see-class{gtk-recent-chooser}
   @see-function{gtk-recent-chooser-get-show-icons}
   @see-function{gtk-recent-chooser-set-show-icons}")
@@ -563,11 +563,11 @@
 ;;; gtk_recent_chooser_set_show_icons ()
 ;;; ----------------------------------------------------------------------------
 
-(declaim (inline gtk-recent-chooser-set-show-icon))
+(declaim (inline gtk-recent-chooser-set-show-icons))
 
-(defun gtk-recent-chooser-set-show-icon (chooser show-icons)
+(defun gtk-recent-chooser-set-show-icons (chooser show-icons)
  #+cl-cffi-gtk-documentation
- "@version{2013-11-23}
+ "@version{2014-1-23}
   @argument[chooser]{a @class{gtk-recent-chooser} object}
   @argument[show-icons]{whether to show an icon near the resource}
   @begin{short}
@@ -580,7 +580,7 @@
   @see-function{gtk-recent-chooser-get-show-icons}"
   (setf (gtk-recent-chooser-show-icons chooser) show-icons))
 
-(export 'gtk-recent-chooser-set-show-icon)
+(export 'gtk-recent-chooser-set-show-icons)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_chooser_get_show_icons ()

@@ -2413,6 +2413,8 @@ setup_tree (void)
 
       @about-class{gtk-tree-model}
       @about-struct{gtk-tree-iter}
+      @about-function{gtk-tree-iter-stamp}
+      @about-function{gtk-tree-iter-user-data}
       @about-class{gtk-tree-path}
       @about-class{gtk-tree-row-reference}
       @about-symbol{gtk-tree-model-iface}
@@ -2832,6 +2834,10 @@ setup_tree (void)
       An abstract class for laying out @class{gtk-cell-renderer}'s.
 
       @about-class{gtk-cell-area}
+      @about-function{gtk-cell-area-box-child-align}
+      @about-function{gtk-cell-area-box-child-expand}
+      @about-function{gtk-cell-area-box-child-fixed-size}
+      @about-function{gtk-cell-area-box-child-pack-type}
       @about-class{gtk-cell-area-class}
       @about-symbol{GTK-CELL-AREA-WARN-INVALID-CELL-PROPERTY-ID}
       @about-function{gtk-cell-area-add}
@@ -3136,7 +3142,7 @@ setup_tree (void)
       @about-function{gtk-menu-child-top-attach}
       @about-function{gtk-menu-child-bottom-attach}
       @about-function{gtk-menu-new}
-      @about-function{gtk-menu-from-model}
+      @about-function{gtk-menu-new-from-model}
       @about-function{gtk-menu-set-screen}
       @about-function{gtk-menu-reorder-child}
       @about-function{gtk-menu-attach}
@@ -3276,6 +3282,8 @@ setup_tree (void)
       Create bars of buttons and other widgets.
 
       @about-class{gtk-toolbar}
+      @about-function{gtk-toolbar-child-expand}
+      @about-function{gtk-toolbar-child-homogeneous}
       @about-class{gtk-toolbar-space-style}
       @about-function{gtk-toolbar-new}
       @about-function{gtk-toolbar-insert}
@@ -3332,6 +3340,8 @@ setup_tree (void)
 
       @about-class{gtk-tool-palette}
       @about-function{gtk-tool-palette-new}
+      @about-function{gtk-tool-palette-child-exclusive}
+      @about-function{gtk-tool-palette-child-expand}
       @about-function{gtk-tool-palette-get-exclusive}
       @about-function{gtk-tool-palette-set-exclusive}
       @about-function{gtk-tool-palette-get-expand}
@@ -3359,6 +3369,11 @@ setup_tree (void)
       A sub container used in a tool palette.
 
       @about-class{gtk-tool-item-group}
+      @about-function{gtk-tool-item-group-child-expand}
+      @about-function{gtk-tool-item-group-child-fill}
+      @about-function{gtk-tool-item-group-child-homogeneous}
+      @about-function{gtk-tool-item-group-child-new-row}
+      @about-function{gtk-tool-item-group-child-position}
       @about-function{gtk-tool-item-group-get-collapsed}
       @about-function{gtk-tool-item-group-get-drop-item}
       @about-function{gtk-tool-item-group-get-ellipsize}
@@ -4502,7 +4517,7 @@ setup_tree (void)
       @about-function{gtk-paper-size-get-default-bottom-margin}
       @about-function{gtk-paper-size-get-default-left-margin}
       @about-function{gtk-paper-size-get-default-right-margin}
-      @about-function{gtk-paper-size-get-defaultþ}
+      @about-function{gtk-paper-size-get-default}
       @about-function{gtk-paper-size-new-from-key-file}
       @about-function{gtk-paper-size-to-key-file}
     @end{subsection}
@@ -5267,7 +5282,7 @@ setup_tree (void)
 
       @about-class{gtk-recent-chooser-widget}
       @about-function{gtk-recent-chooser-widget-new}
-      @about-function{gtk-recent-chooser-widget-for-manager}
+      @about-function{gtk-recent-chooser-widget-new-for-manager}
     @end{subsection}
     @begin[GtkRecentFilter]{subsection}
       A filter for selecting a subset of recently used files.

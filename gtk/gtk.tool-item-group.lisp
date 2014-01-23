@@ -6,7 +6,7 @@
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012, 2013 Dieter Kaiser
+;;; Copyright (C) 2012, 2013, 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -262,8 +262,6 @@
   @class{gtk-tool-item-group} class.
   @see-class{gtk-tool-item-group}")
 
-;;; ----------------------------------------------------------------------------
-
 (define-child-property "GtkToolItemGroup"
                        gtk-tool-item-group-child-fill
                        "fill" "gboolean" t t t)
@@ -276,8 +274,6 @@
   Accessor of the child property @code{\"fill\"} of the
   @class{gtk-tool-item-group} class.
   @see-class{gtk-tool-item-group}")
-
-;;; ----------------------------------------------------------------------------
 
 (define-child-property "GtkToolItemGroup"
                        gtk-tool-item-group-child-homogeneous
@@ -293,8 +289,6 @@
   @class{gtk-tool-item-group} class.
   @see-class{gtk-tool-item-group}")
 
-;;; ----------------------------------------------------------------------------
-
 (define-child-property "GtkToolItemGroup"
                        gtk-tool-item-group-child-new-row
                        "new-row" "gboolean" t t t)
@@ -307,8 +301,6 @@
   Accessor of the child property @code{\"new-row\"} of the
   @class{gtk-tool-item-group} class.
   @see-class{gtk-tool-item-group}")
-
-;;; ----------------------------------------------------------------------------
 
 (define-child-property "GtkToolItemGroup"
                        gtk-tool-item-group-child-position

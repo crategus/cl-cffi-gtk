@@ -6,7 +6,7 @@
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012, 2013 Dieter Kaiser
+;;; Copyright (C) 2012, 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -168,9 +168,7 @@
   @class{gtk-cell-area-box} class.
   @see-class{gtk-cell-area-box}")
 
-;;; ----------------------------------------------------------------------------
-
-(define-child-property "GtkCellAreaBox"
+  (define-child-property "GtkCellAreaBox"
                        gtk-cell-area-box-child-expand
                        "expand" "gboolean" t t t)
 
@@ -182,8 +180,6 @@
   Accessor of the child property @code{\"expand\"} of the
   @class{gtk-cell-area-box} class.
   @see-class{gtk-cell-area-box}")
-
-;;; ----------------------------------------------------------------------------
 
 (define-child-property "GtkCellAreaBox"
                        gtk-cell-area-box-child-fixed-size
@@ -197,8 +193,6 @@
   Accessor of the child property @code{\"fixed-size\"} of the
   @class{gtk-cell-area-box} class.
   @see-class{gtk-cell-area-box}")
-
-;;; ----------------------------------------------------------------------------
 
 (define-child-property "GtkCellAreaBox"
                        gtk-cell-area-box-child-pack-type

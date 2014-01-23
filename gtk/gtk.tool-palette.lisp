@@ -6,7 +6,7 @@
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012, 2013 Dieter Kaiser
+;;; Copyright (C) 2012, 2013, 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -279,8 +279,6 @@
   @see-class{gtk-tool-palette}
   @see-function{gtk-tool-palette-get-exclusive}
   @see-function{gtk-tool-palette-set-exclusive}")
-
-;;; ----------------------------------------------------------------------------
 
 (define-child-property "GtkToolPalette"
                        gtk-tool-palette-child-expand

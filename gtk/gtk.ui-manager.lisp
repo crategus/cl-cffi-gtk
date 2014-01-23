@@ -4,12 +4,13 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -746,20 +747,19 @@
 ;;; gtk_ui_manager_get_action_groups ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_ui_manager_get_action_groups" gtk-ui-manager-action-groups)
+(defcfun ("gtk_ui_manager_get_action_groups" gtk-ui-manager-get-action-groups)
     (g-list g-object :free-from-foreign nil)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-2}
+ "@version{2014-1-23}
   @argument[manager]{a @class{gtk-ui-manager} object}
-  @begin{return}
-    A list of action groups.
-  @end{return}
-  @short{Returns the list of action groups associated with manager.}
+  @return{A list of action groups.}
+  @short{Returns the list of action groups associated with @arg{manager}.}
 
-  Since 2.4"
-  (ui-manager g-object))
+  Since 2.4
+  @see-class{gtk-ui-manager}"
+  (ui-manager (g-object gtk-ui-manager)))
 
-(export 'gtk-ui-manager-action-groups)
+(export 'gtk-ui-manager-get-action-groups)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_ui_manager_get_accel_group ()
@@ -824,51 +824,55 @@
 ;;; gtk_ui_manager_get_toplevels ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_ui_manager_get_toplevels" gtk-ui-manager-toplevels)
+(defcfun ("gtk_ui_manager_get_toplevels" gtk-ui-manager-get-toplevels)
     (g-slist g-object :free-from-foreign t)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-2}
+ "@version{2014-1-23}
   @argument[manager]{a @class{gtk-ui-manager} object}
-  @argument[types]{specifies the types of toplevel widgets to include. Allowed
+  @argument[types]{specifies the types of type
+    @symbol{gtk-ui-manager-item-types} of toplevel widgets to include; allowed
     types are @code{:menubar}, @code{:toolbar} and @code{:popup}}
   @begin{return}
-    A newly-allocated list of all toplevel widgets of the requested types.
+    A newly allocated list of all toplevel widgets of the requested types.
   @end{return}
   @begin{short}
     Obtains a list of all toplevel widgets of the requested types.
   @end{short}
 
-  Since 2.4"
+  Since 2.4
+  @see-class{gtk-ui-manager}
+  @see-symbol{gtk-ui-manger-item-type}"
   (ui-manager (g-object gtk-ui-manager))
   (types gtk-ui-manager-item-type))
 
-(export 'gtk-ui-manager-toplevels)
+(export 'gtk-ui-manager-get-toplevels)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_ui_manager_get_action ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_ui_manager_get_action" gtk-ui-manager-action) g-object
+(defcfun ("gtk_ui_manager_get_action" gtk-ui-manager-get-action) g-object
  #+cl-cffi-gtk-documentation
- "@version{2013-6-2}
+ "@version{2014-1-23}
   @argument[manager]{a @class{gtk-ui-manager} object}
   @argument[path]{a path}
   @begin{return}
-    The action whose proxy widget is found by following the @arg{path},
-    or @code{nil} if no widget was found.
+    The action whose proxy widget is found by following the path, or @code{nil}
+    if no widget was found.
   @end{return}
   @begin{short}
-    Looks up an action by following a @arg{path}.
+    Looks up an action by following a path.
   @end{short}
-  See the @fun{gtk-ui-manager-get-widget} function for more information about
+  See the function @fun{gtk-ui-manager-get-widget} for more information about
   paths.
 
   Since 2.4
+  @see-class{gtk-ui-manager}
   @see-function{gtk-ui-manager-get-widget}"
   (ui-manager (g-object gtk-ui-manager))
   (path :string))
 
-(export 'gtk-ui-manager-action)
+(export 'gtk-ui-manager-get-action)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_ui_manager_add_ui_from_resource ()

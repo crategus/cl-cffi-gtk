@@ -10,7 +10,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -314,11 +314,10 @@
 (setf (gethash 'gtk-toolbar-child-expand atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-toolbar-child-expand 'function)
- "@version{2013-3-26}
+ "@version{2014-1-23}
   Accessor of the child property @code{\"expand\"} of the @class{gtk-toolbar}
-  class.")
-
-;;; ----------------------------------------------------------------------------
+  class.
+  @see-class{gtk-toolbar}")
 
 (define-child-property "GtkToolbar"
                        gtk-toolbar-child-homogeneous
@@ -328,9 +327,10 @@
 (setf (gethash 'gtk-toolbar-child-homogeneous atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-toolbar-child-homogeneous 'function)
- "@version{2013-3-26}
+ "@version{2014-1-23}
   Accessor of the child property @code{\"homogeneous\"} of the
-  @class{gtk-toolbar} class.")
+  @class{gtk-toolbar} class.
+  @see-class{gtk-toolbar}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkToolbarSpaceStyle
@@ -401,9 +401,9 @@
 ;;; gtk_toolbar_get_item_index ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_toolbar_get_item_index" gtk-toolbar-item-index) :int
+(defcfun ("gtk_toolbar_get_item_index" gtk-toolbar-get-item-index) :int
  #+cl-cffi-gtk-documentation
- "@version{2013-10-22}
+ "@version{2014-1-23}
   @argument[toolbar]{a @class{gtk-toolbar} widget}
   @argument[item]{a @class{gtk-tool-item} that is a child of toolbar}
   @return{The position of item on the toolbar.}
@@ -418,7 +418,7 @@
   (toolbar (g-object gtk-toolbar))
   (item (g-object gtk-tool-item)))
 
-(export 'gtk-toolbar-item-index)
+(export 'gtk-toolbar-get-item-index)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_toolbar_get_n_items ()
@@ -442,16 +442,16 @@
 ;;; gtk_toolbar_get_nth_item ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_toolbar_get_nth_item" gtk-toolbar-nth-item) g-object
+(defcfun ("gtk_toolbar_get_nth_item" gtk-toolbar-get-nth-item) g-object
  #+cl-cffi-gtk-documentation
- "@version{2013-10-22}
+ "@version{2014-1-23}
   @argument[toolbar]{a @class{gtk-toolbar} widget}
-  @argument[n]{a position on the @argt{toolbar}}
+  @argument[n]{a position on the toolbar}
   @return{The n'th @class{gtk-tool-item} on @arg{toolbar}, or @code{nil} if
     there is not an n'th item.}
   @begin{short}
-    Returns the n'th item on @arg{toolbar}, or @code{nil} if the @arg{toolbar}
-    does not contain an n'th item.
+    Returns the n'th item on @arg{toolbar}, or @code{nil} if the toolbar does
+    not contain an n'th item.
   @end{short}
 
   Since 2.4
@@ -460,7 +460,7 @@
   (toolbar (g-object gtk-toolbar))
   (n :int))
 
-(export 'gtk-toolbar-nth-item)
+(export 'gtk-toolbar-get-nth-item)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_toolbar_get_drop_index ()

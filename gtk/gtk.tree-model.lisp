@@ -10,7 +10,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -424,7 +424,11 @@
 
 (export 'gtk-tree-iter)
 
-;;; --- gtk-tree-iter-stamp ----------------------------------------------------
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Accessors of slots of the GtkTreeIter structure
+;;;
+;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tree-iter-stamp atdoc:*function-name-alias*)
@@ -435,8 +439,6 @@
   @see-class{gtk-tree-iter}")
 
 (export 'gtk-tree-iter-stamp)
-
-;;; --- gtk-tree-iter-user-data ------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tree-iter-user-data atdoc:*function-name-alias*)

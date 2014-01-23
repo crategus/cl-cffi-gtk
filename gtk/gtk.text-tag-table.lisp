@@ -4,12 +4,13 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -57,8 +58,6 @@
    :interfaces nil
    :type-initializer "gtk_text_tag_table_get_type")
   nil)
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-text-tag-table 'type)
@@ -218,14 +217,15 @@
 ;;; gtk_text_tag_table_get_size ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_text_tag_table_get_size" gtk-text-tag-table-size) :int
+(defcfun ("gtk_text_tag_table_get_size" gtk-text-tag-table-get-size) :int
  #+cl-cffi-gtk-documentation
- "@version{2013-5-5}
+ "@version{2014-1-23}
   @argument[table]{a @class{gtk-text-tag-table} object}
   @return{Number of tags in @arg{table}.}
-  Returns the size of the @arg{table} (number of tags)."
+  Returns the size of the number of tags.
+  @see-class{gtk-text-tag-table}"
   (table (g-object gtk-text-tag-table)))
 
-(export 'gtk-text-tag-table-size)
+(export 'gtk-text-tag-table-get-size)
 
 ;;; --- End of file gtk.text-tag-table.lisp ------------------------------------

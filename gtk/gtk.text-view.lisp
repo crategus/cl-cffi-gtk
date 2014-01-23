@@ -10,7 +10,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -1037,19 +1037,22 @@
   (text-view (g-object gtk-text-view))
   (visible-rect (g-boxed-foreign gdk-rectangle)))
 
-(defun gtk-text-view-visible-rect (text-view)
+(defun gtk-text-view-get-visible-rect (text-view)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-10}
-  @argument[text-view]{a @class{gtk-text-view} object}
+ "@version{2014-1-23}
+  @argument[text-view]{a @class{gtk-text-view} widget}
   @return{The current visible region.}
-  The currently-visible region of the buffer, in buffer coordinates. Convert to
-  window coordinates with  @fun{gtk-text-view-buffer-to-window-coords}.
+  The currently visible region of the buffer, in buffer coordinates. Convert to
+  window coordinates with the function
+  @fun{gtk-text-view-buffer-to-window-coords}.
+  @see-class{gtk-text-view}
+  @see-class{gdk-rectangle}
   @see-function{gtk-text-view-buffer-to-window-coords}"
   (let ((rect (make-gdk-rectangle :x 0 :y 0 :width 0 :height 0)))
     (%gtk-text-view-get-visible-rect text-view rect)
     rect))
 
-(export 'gtk-text-view-visible-rect)
+(export 'gtk-text-view-get-visible-rect)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_view_get_iter_location ()

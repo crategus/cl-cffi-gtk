@@ -10,7 +10,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -617,12 +617,12 @@
 ;;; gtk_paper_size_get_default ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_paper_size_get_default" gtk-paper-size-get-default) :string
+(defcfun ("gtk_paper_size_get_default" gtk-paper-size-get-default)
+    (:string :free-from-foreign nil)
  #+cl-cffi-gtk-documentation
- "@version{2013-11-12}
+ "@version{2014-1-23}
   @begin{return}
-    The name of the default paper size. The string is owned by GTK+ and
-    should not be modified.
+    The name of the default paper size.
   @end{return}
   @begin{short}
     Returns the name of the default paper size, which depends on the current

@@ -512,7 +512,7 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-12-1}
   @argument[model]{a @class{g-menu-model} object}
-  @return{A new @class{gtk-menu} widget}
+  @return{A new @class{gtk-menu} widget.}
   @begin{short}
     Creates a @class{gtk-menu} and populates it with menu items and submenus
     according to @arg{model}.
