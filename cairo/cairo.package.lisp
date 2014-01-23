@@ -42,7 +42,7 @@
 
   @begin[Drawing]{section}
     @begin[The Cairo drawing context]{subsection}
-      @symbol{cairo-t} is the main object used when drawing with Cairo. To
+      A @symbol{cairo-t} is the main object used when drawing with Cairo. To
       draw with Cairo, you create a @symbol{cairo-t}, set the target surface,
       and drawing options for the @symbol{cairo-t}, create shapes with functions
       like @fun{cairo-move-to} and @fun{cairo-line-to}, and then draw shapes

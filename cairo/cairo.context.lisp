@@ -6,7 +6,7 @@
 ;;; library. See <http://cairographics.org>. The API documentation of the Lisp
 ;;; binding is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012, 2013 Dieter Kaiser
+;;; Copyright (C) 2012, 2013, 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -113,17 +113,6 @@
 ;;;     cairo_get_reference_count
 ;;;     cairo_set_user_data
 ;;;     cairo_get_user_data
-;;;
-;;; Description
-;;;
-;;; cairo_t is the main object used when drawing with cairo. To draw with cairo,
-;;; you create a cairo_t, set the target surface, and drawing options for the
-;;; cairo_t, create shapes with functions like cairo_move_to() and
-;;; cairo_line_to(), and then draw shapes with cairo_stroke() or cairo_fill().
-;;;
-;;; cairo_t's can be pushed to a stack via cairo_save(). They may then safely be
-;;; changed, without losing the current state. Use cairo_restore() to restore to
-;;; the saved state.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :cairo)
@@ -161,26 +150,27 @@
 
 (defcfun ("cairo_create" cairo-create) (:pointer (:struct cairo-t))
  #+cl-cffi-gtk-documentation
- "@version{2013-12-28}
+ "@version{2014-1-23}
   @argument[target]{target surface of type @symbol{cairo-surface-t} for the
     context}
   @begin{return}
-    A newly allocated @symbol{cairo-t} with a reference count of 1. The initial
-    reference count should be released with the function @fun{cairo-destroy}
-    when you are done using the @symbol{cairo-t}. This function never returns
-    @code{NULL}. If memory cannot be allocated, a special @symbol{cairo-t}
-    object will be returned on which the function @fun{cairo-status} returns
-    @code{:no-memory}. If you attempt to target a surface which does not support
-    writing, such as @symbol{cairo-mime-surface-t}, then a @code{:write-error}
-    will be raised. You can use this object normally, but no drawing will be
-    done.
+    A newly allocated @symbol{cairo-t} with a reference count of 1.
   @end{return}
   @begin{short}
     Creates a new @symbol{cairo-t} with all graphics state parameters set to
-    default values and with target as a target surface.
+    default values and with @arg{target} as a target surface.
   @end{short}
   The target surface should be constructed with a backend-specific function such
-  as @fun{cairo-image-surface-create}, or any other variant.
+  as the function @fun{cairo-image-surface-create}, or any other variant.
+
+  The initial reference count should be released with the function
+  @fun{cairo-destroy} when you are done using the @symbol{cairo-t}. This
+  function never returns @code{NULL}. If memory cannot be allocated, a special
+  @symbol{cairo-t} object will be returned on which the function
+  @fun{cairo-status} returns @code{:no-memory}. If you attempt to target a
+  surface which does not support writing, such as @symbol{cairo-mime-surface-t},
+  then a @code{:write-error} will be raised. You can use this object normally,
+  but no drawing will be done.
 
   This function references target, so you can immediately call the function
   @fun{cairo-surface-destroy} on it if you do not need to maintain a separate
@@ -250,9 +240,9 @@
 
 (defcfun ("cairo_status" cairo-status) cairo-status-t
  #+cl-cffi-gtk-documentation
- "@version{2013-10-5}
+ "@version{2014-1-23}
   @argument[cr]{a cairo context}
-  @return{The current status of this context.}
+  @return{The current status of type @symbol{cairo-status-t} of this context.}
   @begin{short}
     Checks whether an error has previously occurred for this context.
   @end{short}
@@ -322,21 +312,21 @@
 (defcfun ("cairo_get_target" cairo-get-target)
     (:pointer (:struct cairo-surface-t))
  #+cl-cffi-gtk-documentation
- "@version{2013-12-28}
+ "@version{2014-1-23}
   @argument[cr]{a cairo context}
   @begin{return}
-    The target surface. This object is owned by cairo. To keep a reference
-    to it, you must call the function @fun{cairo-surface-reference}.
+    The target surface of type @see-symbol{cairo-surface-t}. This object is
+    owned by cairo.
   @end{return}
   @begin{short}
     Gets the target surface for the cairo context as passed to the function
     @fun{cairo-create}.
   @end{short}
+  To keep a reference to it, you must call the function
+  @fun{cairo-surface-reference}.
 
   This function will always return a valid pointer, but the result can be a
-  \"nil\" surface if @arg{cr} is already in an error state, (i. e.
-  @code{(cairo-status) != :success}). A nil surface is indicated by
-  @code{(cairo-surface-status) != :success}.
+  @code{nil} surface if @arg{cr} is already in an error state.
 
   Since 1.0
   @see-symbol{cairo-t}
@@ -353,7 +343,7 @@
 
 (defcfun ("cairo_push_group" cairo-push-group) :void
  #+cl-cffi-gtk-documentation
-"@version{2013-11-14}
+"@version{2014-1-23}
   @argument[cr]{a cairo context}
   @begin{short}
     Temporarily redirects drawing to an intermediate surface known as a group.
@@ -369,34 +359,38 @@
   translucence onto the destination.
 
   Groups can be nested arbitrarily deep by making balanced calls to
-  the functions @sym{cairo-push-group}/@fun{cairo-pop-group}. Each call
-  pushes/pops the new target group onto/from a stack.
+  the functions @sym{cairo-push-group}and @fun{cairo-pop-group}. Each call
+  pushes and pops the new target group onto and from a stack.
 
-  The @sym{cairo-push-group} function calls cairo_save() so that any changes to
-  the graphics state will not be visible outside the group, the @code{pop-group}
-  functions call @fun{cairo-restore}.
+  The function @sym{cairo-push-group} calls the function @fun{cairo-save} so
+  that any changes to the graphics state will not be visible outside the group,
+  the pop group functions call the function @fun{cairo-restore}.
 
   By default the intermediate group will have a content type of
-  @code{:color-alpha}. Other content types can be chosen for the group by using
-  the function @fun{cairo-push-group-with-content} instead.
+  @code{:color-alpha} of type @symbol{cairo-content-t}. Other content types can
+  be chosen for the group by using the function
+  @fun{cairo-push-group-with-content} instead.
 
-  As an example, here is how one might fill and stroke a path with translucence,
-  but without any portion of the fill being visible under the stroke:
-  @begin{pre}
- cairo_push_group (cr);
- cairo_set_source (cr, fill_pattern);
- cairo_fill_preserve (cr);
- cairo_set_source (cr, stroke_pattern);
- cairo_stroke (cr);
- cairo_pop_group_to_source (cr);
- cairo_paint_with_alpha (cr, alpha);
-  @end{pre}
-
+  @begin[Example]{dictionary}
+    As an example, here is how one might fill and stroke a path with
+    translucence, but without any portion of the fill being visible under the
+    stroke:
+    @begin{pre}
+ (cairo-push-group cr)
+ (cairo-set-source cr fill-pattern)
+ (cairo-fill-preserve cr)
+ (cairo-set-source cr stroke-pattern)
+ (cairo-stroke cr)
+ (cairo-pop-group-to-source cr)
+ (cairo-paint-with-alpha cr alpha)
+    @end{pre}
+  @end{dictionary}
   Since 1.2
   @see-symbol{cairo-t}
+  @see-symbol{cairo-content-t}
+  @see-function{cairo-restore}
   @see-function{cairo-pop-group}
   @see-function{cairo-pop-group-to-source}
-  @see-function{cairo-restore}
   @see-function{cairo-push-group-with-content}"
   (cr (:pointer (:struct cairo-t))))
 
@@ -408,7 +402,7 @@
 
 (defcfun ("cairo_push_group_with_content" cairo-push-group-with-content) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-12-7}
+ "@version{2014-1-23}
   @argument[cr]{a cairo context}
   @argument[content]{a @symbol{cairo-content-t} indicating the type of group
     that will be created}
@@ -443,7 +437,7 @@
 (defcfun ("cairo_pop_group" cairo-pop-group)
     (:pointer (:struct cairo-pattern-t))
  #+cl-cffi-gtk-documentation
- "@version{2013-11-11}
+ "@version{2014-1-23}
   @argument[cr]{a cairo context}
   @begin{return}
     A newly created (surface) pattern containing the results of all drawing
@@ -452,16 +446,16 @@
     it.
   @end{return}
   @begin{short}
-    Terminates the redirection begun by a call to the function
+    Terminates the redirection begun by a call to the functions
     @fun{cairo-push-group} or @fun{cairo-push-group-with-content} and returns a
     new pattern containing the results of all drawing operations performed to
     the group.
   @end{short}
 
-  The @sym{cairo-pop-group} function calls the function @fun{cairo-restore},
-  balancing a call to the function @fun{cairo-save} by the @code{push-group}
-  function, so that any changes to the graphics state will not be visible
-  outside the group.
+  The function @sym{cairo-pop-group} calls the function @fun{cairo-restore},
+  balancing a call to the function @fun{cairo-save} by the push group function,
+  so that any changes to the graphics state will not be visible outside the
+  group.
 
   Since 1.2
   @see-symbol{cairo-t}
@@ -489,15 +483,15 @@
   @end{short}
   The behavior of this function is equivalent to the sequence of operations:
   @begin{pre}
- cairo_pattern_t *group = cairo_pop_group (cr);
- cairo_set_source (cr, group);
- cairo_pattern_destroy (group);
+ (let ((group (cairo-pop-group cr)))
+   (cairo-set-source cr group)
+   (cairo-pattern-destroy group))
   @end{pre}
   but is more convenient as their is no need for a variable to store the
-  short-lived pointer to the pattern.
+  pattern.
 
   The function @fun{cairo-pop-group} calls the function @fun{cairo-restore},
-  balancing a call to the function @fun{cairo-save} by the @code{push-group}
+  balancing a call to the function @fun{cairo-save} by the push group
   function, so that any changes to the graphics state will not be visible
   outside the group.
 
@@ -549,7 +543,7 @@
 
 (defun cairo-set-source-rgb (cr red green blue)
  #+cl-cffi-gtk-documentation
- "@version{2012-8-4}
+ "@version{2014-1-23}
   @argument[cr]{a cairo context}
   @argument[red]{red component of color}
   @argument[green]{green component of color}
@@ -568,7 +562,8 @@
   @code{(cairo-set-source-rgb cr 0.0 0.0 0.0)}.
 
   Since 1.0
-  @see-symbol{cairo-t}"
+  @see-symbol{cairo-t}
+  @see-function{cairo-set-source-rgba}"
   (%cairo-set-source-rgb cr
                          (coerce red 'double-float)
                          (coerce green 'double-float)
@@ -589,7 +584,7 @@
 
 (defun cairo-set-source-rgba (cr red green blue alpha)
  #+cl-cffi-gtk-documentation
- "@version{2013-11-12}
+ "@version{2014-1-23}
   @argument[cr]{a cairo context}
   @argument[red]{red component of color}
   @argument[green]{green component of color}
@@ -601,15 +596,15 @@
   This color will then be used for any subsequent drawing operation until a new
   source pattern is set.
 
-  The color and alpha components are floating point numbers in the range 0 to
-  1. If the values passed in are outside that range, they will be clamped.
+  The color and alpha components are floating point numbers in the range 0.0 to
+  1.0. If the values passed in are outside that range, they will be clamped.
 
   The default source pattern is opaque black, that is, it is equivalent to
   @code{(cairo-set-source-rgba cr 0.0 0.0 0.0 1.0)}.
 
   Since 1.0
   @see-symbol{cairo-t}
-  @see-function{cairo-set-source-rgba}"
+  @see-function{cairo-set-source-rgb}"
   (%cairo-set-source-rgba cr
                           (coerce red 'double-float)
                           (coerce green 'double-float)
@@ -624,7 +619,7 @@
 
 (defcfun ("cairo_set_source" cairo-set-source) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-11-12}
+ "@version{2014-1-23}
   @argument[cr]{a cairo context}
   @argument[source]{a @symbol{cairo-pattern-t} to be used as the source for
     subsequent drawing operations}
@@ -634,16 +629,17 @@
   This pattern will then be used for any subsequent drawing operation until a
   new source pattern is set.
 
-  @subheading{Note}
-    The pattern's transformation matrix will be locked to the user space
-    in effect at the time of @fun{cairo-set-source}. This means that further
-    modifications of the current transformation matrix will not affect the
-    source pattern. See the function @fun{cairo-pattern-set-matrix}.
-
   The default source pattern is a solid pattern that is opaque black, that
   is, it is equivalent to @code{(cairo-set-source-rgb cr 0.0 0.0 0.0)}.
+  @begin[Note]{dictionary}
+    The pattern's transformation matrix will be locked to the user space
+    in effect at the time of @sym{cairo-set-source}. This means that further
+    modifications of the current transformation matrix will not affect the
+    source pattern. See the function @fun{cairo-pattern-set-matrix}.
+  @end{dictionary}
 
   Since 1.0
+  @see-symbol{cairo-t}
   @see-symbol{cairo-pattern-t}
   @see-function{cairo-set-source-rgb}
   @see-function{cairo-pattern-set-matrix}"
@@ -658,14 +654,15 @@
 
 (defcfun ("cairo_set_source_surface" cairo-set-source-surface) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-8-4}
+ "@version{2014-1-23}
   @argument[cr]{a cairo context}
-  @argument[surface]{a surface to be used to set the source pattern}
+  @argument[surface]{a surface of type @symbol{cairo-surface-t} to be used to
+    set the source pattern}
   @argument[x]{user-space x coordinate for surface origin}
   @argument[y]{user-space y coordinate for surface origin}
   @begin{short}
-    This is a convenience function for creating a pattern from surface and
-    setting it as the source in @arg{cr} with the function
+    This is a convenience function for creating a pattern from @arg{surface}
+    and setting it as the source in @arg{cr} with the function
     @fun{cairo-set-source}.
   @end{short}
 
@@ -684,6 +681,7 @@
 
   Since 1.0
   @see-symbol{cairo-t}
+  @see-symbol{cairo-surface-t}
   @see-function{cairo-set-source}
   @see-function{cairo-get-source}
   @see-function{cairo-pattern-create-for-surface}
@@ -702,17 +700,20 @@
 (defcfun ("cairo_get_source" cairo-get-source)
     (:pointer (:struct cairo-pattern-t))
  #+cl-cffi-gtk-documentation
- "@version{2013-11-20}
+ "@version{2014-1-23}
   @argument[cr]{a cairo context}
   @begin{return}
-    The current source pattern. This object is owned by cairo. To keep a
-    reference to it, you must call the function @fun{cairo-pattern-reference}.
+    The current source pattern.
   @end{return}
   @begin{short}
     Gets the current source pattern for @arg{cr}.
   @end{short}
 
+  This object is owned by cairo. To keep a reference to it, you must call the
+  function @fun{cairo-pattern-reference}.
+
   Since 1.0
+  @see-symbol{cairo-t}
   @see-symbol{cairo-pattern-t}
   @see-function{cairo-pattern-reference}"
   (cr (:pointer (:struct cairo-t))))
@@ -917,9 +918,10 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'cairo-fill-rule-t atdoc:*symbol-name-alias*) "CEnum"
       (gethash 'cairo-fill-rule-t atdoc:*external-symbols*)
- "@version{2013-11-16}
+ "@version{2014-1-23}
   @begin{short}
-    @sym{cairo-fill-rule-t} is used to select how paths are filled.
+    The @sym{cairo-fill-rule-t} enumeration is used to select how paths are
+    filled.
   @end{short}
   For both fill rules, whether or not a point is included in the fill is
   determined by taking a ray from that point to infinity and looking at
@@ -981,7 +983,7 @@
   (cr (:pointer (:struct cairo-t)))
   (fill-rule cairo-fill-rule-t))
 
-(export 'cairo-fill-rule)
+(export 'cairo-set-fill-rule)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_get_fill_rule ()
