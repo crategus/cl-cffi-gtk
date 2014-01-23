@@ -297,30 +297,31 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pixbuf_loader_set_size ()
-;;;
-;;; void gdk_pixbuf_loader_set_size (GdkPixbufLoader *loader,
-;;;                                  int width,
-;;;                                  int height);
-;;;
-;;; Causes the image to be scaled while it is loaded. The desired image size can
-;;; be determined relative to the original size of the image by calling
-;;; gdk_pixbuf_loader_set_size() from a signal handler for the ::size-prepared
-;;; signal.
-;;;
-;;; Attempts to set the desired image size are ignored after the emission of the
-;;; ::size-prepared signal.
-;;;
-;;; loader :
-;;;     A pixbuf loader.
-;;;
-;;; width :
-;;;     The desired width of the image being loaded.
-;;;
-;;; height :
-;;;     The desired height of the image being loaded.
-;;;
-;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gdk_pixbuf_loader_set_size" gdk-pixbuf-loader-set-size) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2014-1-23}
+  @argument[loader]{a pixbuf loader}
+  @argument[width]{the desired width of the image being loaded}
+  @argument[height]{the desired height of the image being loaded}
+  @begin{short}
+    Causes the image to be scaled while it is loaded.
+  @end{short}
+  The desired image size can be determined relative to the original size of the
+  image by calling the function @sym{gdk-pixbuf-loader-set-size} from a signal
+  handler for the \"size-prepared\" signal.
+
+  Attempts to set the desired image size are ignored after the emission of the
+  \"size-prepared\" signal.
+
+  Since 2.2
+  @see-class{gdk-pixbuf-loader}"
+  (loader (g-object gdk-pixbuf-loader))
+  (width :int)
+  (height :int))
+
+(export 'gdk-pixbuf-loader-set-size)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pixbuf_loader_get_pixbuf ()
@@ -358,23 +359,30 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pixbuf_loader_get_animation ()
-;;;
-;;; GdkPixbufAnimation * gdk_pixbuf_loader_get_animation
-;;;                                                   (GdkPixbufLoader *loader);
-;;;
-;;; Queries the GdkPixbufAnimation that a pixbuf loader is currently creating.
-;;; In general it only makes sense to call this function after the
-;;; "area-prepared" signal has been emitted by the loader. If the loader doesn't
-;;; have enough bytes yet (hasn't emitted the "area-prepared" signal) this
-;;; function will return NULL.
-;;;
-;;; loader :
-;;;     A pixbuf loader
-;;;
-;;; Returns :
-;;;     The GdkPixbufAnimation that the loader is loading, or NULL if not enough
-;;;     data has been read to determine the information.
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gdk_pixbuf_loader_get_animation" gdk-pixbuf-loader-get-animation)
+    (g-object gdk-pixbuf-animation)
+ #+cl-cffi-gtk-documentation
+ "@version{2014-1-23}
+  @argument[loader]{a pixbuf loader}
+  @begin{return}
+    The @class{gdk-pixbuf-animation} that the loader is loading, or @code{nil}
+    if not enough data has been read to determine the information.
+  @end{return}
+  @begin{short}
+    Queries the @class{gdk-pixbuf-animation} that a pixbuf loader is currently
+    creating.
+  @end{short}
+  In general it only makes sense to call this function after the
+  \"area-prepared\" signal has been emitted by the loader. If the loader does
+  not have enough bytes yet, has not emitted the \"area-prepared\" signal, this
+  function will return @code{nil}.
+  @see-class{gdk-pixbuf-loader}
+  @see-class{gdk-pixbuf-animation}"
+  (load (g-object gdk-pixbuf-loader)))
+
+(export 'gdk-pixbuf-load-get-animation)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pixbuf_loader_close ()
