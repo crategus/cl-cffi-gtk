@@ -4,12 +4,13 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.8.8. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.8.8 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -158,9 +159,11 @@
 
 (defun gtk-menu-bar-new ()
  #+cl-cffi-gtk-documentation
- "@version{2013-6-1}
-  @return{The new menu bar, as a @class{gtk-widget} widget.}
-  Creates a new @class{gtk-menu-bar} widget."
+ "@version{2014-1-26}
+  @return{The new menu bar.}
+  Creates a new @class{gtk-menu-bar} widget.
+  @see-class{gtk-menu-bar}
+  @see-function{gtk-menu-new-from-model}"
   (make-instance 'gtk-menu-bar))
 
 (export 'gtk-menu-bar-new)

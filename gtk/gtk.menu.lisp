@@ -768,8 +768,8 @@
     popup, or @code{nil}}
   @argument[position-func]{a user supplied function used to position the menu,
     or @code{nil}}
-  @argument[button]{the mouse button which was pressed to initiate the event.}
-  @argument[activate-time]{the time at which the activation event occurred.}
+  @argument[button]{the mouse button which was pressed to initiate the event}
+  @argument[activate-time]{the time at which the activation event occurred}
   @begin{short}
     Displays a menu and makes it available for selection.
   @end{short}
@@ -790,7 +790,6 @@
   this needs to be the timestamp of the user event, such as a mouse click or
   key press, that caused the initiation of the popup. Only if no such event is
   available, the @fun{gtk-get-current-event-time} function can be used instead.
-  @see-function{gtk-get-current-event-time}
   @see-class{gtk-menu}
   @see-class{gtk-widget}
   @see-function{gtk-get-current-event-time}"

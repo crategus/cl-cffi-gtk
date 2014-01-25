@@ -307,9 +307,9 @@
 (setf (gethash 'gtk-menu-item-submenu atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-menu-item-submenu 'function)
- "@version{2013-12-8}
-  Accessor of the slot @code{\"submenu\"} of the @class{gtk-menu-item}
-  class.
+ "@version{2014-1-26}
+  Accessor of the slot @slot[gtk-menu-item]{submenu} of the
+  @class{gtk-menu-item} class.
   @see-class{gtk-menu-item}
   @see-function{gtk-menu-item-get-submenu}
   @see-function{gtk-menu-item-set-submenu}")
@@ -544,12 +544,12 @@
 
 (defun gtk-menu-item-set-submenu (menu-item submenu)
  #+cl-cffi-gtk-documentation
- "@version{2013-12-8}
+ "@version{2014-1-26}
   @argument[menu-item]{a @class{gtk-menu-item} widget}
   @argument[submenu]{the submenu, or @code{nil}}
   Sets or replaces the menu item's submenu, or removes it when a @code{nil}
   submenu is passed.
-  @class{gtk-menu-item}
+  @see-class{gtk-menu-item}
   @see-function{gtk-menu-item-get-submenu}"
   (setf (gtk-menu-item-submenu menu-item) submenu))
 

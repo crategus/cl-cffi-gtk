@@ -4,12 +4,13 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -53,31 +54,6 @@
 ;;;     gtk_menu_shell_bind_model
 ;;;
 ;;;     GtkMenuDirectionType
-;;;
-;;; Object Hierarchy
-;;;
-;;;   GObject
-;;;    +----GInitiallyUnowned
-;;;          +----GtkWidget
-;;;                +----GtkContainer
-;;;                      +----GtkMenuShell
-;;;                            +----GtkMenuBar
-;;;                            +----GtkMenu
-;;;
-;;; Implemented Interfaces
-;;;
-;;; GtkMenuShell implements AtkImplementorIface and GtkBuildable.
-;;;
-;;; Signals
-;;;
-;;;   "activate-current"                               : Action
-;;;   "cancel"                                         : Action
-;;;   "cycle-focus"                                    : Action
-;;;   "deactivate"                                     : Run First
-;;;   "insert"                                         : Run First
-;;;   "move-current"                                   : Action
-;;;   "move-selected"                                  : Run Last
-;;;   "selection-done"                                 : Run First
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -95,8 +71,6 @@
   ((take-focus
     gtk-menu-shell-take-focus
     "take-focus" "gboolean" t t)))
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-menu-shell 'type)
@@ -236,10 +210,13 @@
 
 (defcfun ("gtk_menu_shell_append" gtk-menu-shell-append) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-5-26}
+ "@version{2014-1-26}
   @argument[menu-shell]{a @class{gtk-menu-shell} widget}
   @argument[child]{the @class{gtk-menu-item} to add}
-  Adds a new @class{gtk-menu-item} to the end of the menu shell's item list."
+  Adds a new @class{gtk-menu-item} to the end of the menu shell's item list.
+  @see-class{gtk-menu-shell}
+  @see-function{gtk-menu-shell-prepend}
+  @see-function{gtk-menu-shell-insert}"
   (menu-shell (g-object gtk-menu-shell))
   (child (g-object gtk-widget)))
 
@@ -251,13 +228,16 @@
 
 (defcfun ("gtk_menu_shell_prepend" gtk-menu-shell-prepend) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-5-26}
+ "@version{2014-1-26}
   @argument[menu-shell]{a @class{gtk-menu-shell} widget}
   @argument[child]{the @class{gtk-menu-item} to add}
   Adds a new @class{gtk-menu-item} to the beginning of the menu shell's item
-  list."
-  (menu-shell g-object)
-  (child g-object))
+  list.
+  @see-class{gtk-menu-shell}
+  @see-function{gtk-menu-shell-append}
+  @see-function{gtk-menu-shell-insert}"
+  (menu-shell (g-object gtk-menu-shell))
+  (child (g-object gtk-widget)))
 
 (export 'gtk-menu-shell-prepend)
 
@@ -267,15 +247,18 @@
 
 (defcfun ("gtk_menu_shell_insert" gtk-menu-shell-insert) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-5-26}
+ "@version{2014-1-26}
   @argument[menu-shell]{a @class{gtk-menu-shell} widget}
   @argument[child]{the @class{gtk-menu-item} to add}
-  @argument[position]{the position in the item list where child is added.
-    Positions are numbered from 0 to n-1.}
+  @argument[position]{the position in the item list where child is added,
+    positions are numbered from 0 to n-1}
   Adds a new @class{gtk-menu-item} to the menu shell's item list at the position
-  indicated by position."
-  (menu-shell g-object)
-  (child g-object)
+  indicated by position.
+  @see-class{gtk-menu-shell}
+  @see-function{gtk-menu-shell-append}
+  @see-function{gtk-menu-shell-prepend}"
+  (menu-shell (g-object gtk-menu-shell))
+  (child (g-object gtk-widget))
   (position :int))
 
 (export 'gtk-menu-shell-insert)
