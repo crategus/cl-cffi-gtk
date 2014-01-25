@@ -23,7 +23,7 @@ END-INFO-DIR-ENTRY
 @end format
 @end ifinfo
 
-@ifinfo 
+@ifinfo
 @macro var {expr}
 <\expr\>
 @end macro
@@ -66,7 +66,7 @@ END-INFO-DIR-ENTRY
 * Dialogs::                          General, Message and About Dialogs
 * Selecting Colors Files and Fonts:: Choosing Colors, Files and Fonts
 * Miscellaneous Widgets::
-* Menu Widget::
+* Menus and Toolbars::               Creation of Menus and Toolbars
 * Application Support::
 
 Appendix
@@ -190,18 +190,20 @@ Miscellaneous Widgets
 * Arrows::
 * Calendar::
 * Event Box::
-* Dialogs::
-* General Dialog::
-* Message Dialog::
-* About Dialog::
 * Text Entries::
 * Spin Buttons::
 * Combo Box::
 * General Combo Box::
 * Combo Box Text::
 
-Menu Widgets
-* Menu Widget::
+Menus and Toolbars
+* Menus and Toolbars::
+* Menus::
+* Principles of Menus::
+* Creating Menus by Hand::
+* Pop-Up Menus for Widgets::
+* Toolbars::
+* GtkUIManager::
 
 Application Support
 * Application Class::
@@ -257,15 +259,15 @@ Application Support
 @chapter Selecting Colors, Files and Fonts
 @include gtk-selectors.texi
 
-@node Miscellaneous Widgets, Menu Widget, Selecting Colors Files and Fonts, Top
+@node Miscellaneous Widgets, Menus and Toolbars, Selecting Colors Files and Fonts, Top
 @chapter Miscellaneous Widgets
 @include gtk-misc-widgets.texi
 
-@node Menu Widget, Application Support, Miscellaneous Widgets, Top
-@chapter Menu Widget
+@node Menus and Toolbars, Application Support, Miscellaneous Widgets, Top
+@chapter Menus and Toolbars
 @include gtk-menu-widget.texi
 
-@node Application Support, Reference of Widgets, Menu Widget, Top
+@node Application Support, Reference of Widgets, Menus and Toolbars, Top
 @chapter Application Support
 @include gtk-application.texi
 

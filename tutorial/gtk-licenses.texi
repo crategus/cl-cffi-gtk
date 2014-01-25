@@ -5,7 +5,7 @@
 @c Author   : Dieter Kaiser
 @c Date     : 16.8.2013
 @c Revision : 18.9.2013
-@c 
+@c
 @c Copyright (C) 2013 by Dieter Kaiser
 @c -----------------------------------------------------------------------------
 
@@ -28,6 +28,9 @@ Copyright (C) 2005 Vijay Kumar B.
 [5] GDK 3 Reference Manual @*
 [6] GObject Reference Manual @*
 Copyright (C) 2005 - 2012 The GNOME Project, see http://www.gtk.org/
+
+[7] Menus and Toolbars, Stewart Weiss,
+@url{http://www.compsci.hunter.cuny.edu/~sweiss/course_materials/csci493.70/lecture_notes/GTK_menus.pdf}
 
 Permission is granted to make and distribute verbatim copies of this manual pro-
 vided the copyright notice and this permission notice are preserved on all copies.

@@ -150,6 +150,10 @@
 @set gtk-check-button-new-with-label http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-check-button-new-with-label.html
 @set gtk-check-button-new-with-mnemonic http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-check-button-new-with-mnemonic.html
 
+@c GtkCheckMenuItem
+
+@set gtk-check-menu-item http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-check-menu-item.html
+
 @c GtkColorButton
 
 @set gtk-color-button http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-color-button.html
@@ -288,6 +292,10 @@
 @set gtk-image-new-from-file http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-image-new-from-file.html
 @set gtk-image-new-from-pixbuf http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-image-new-from-pixbuf.html
 
+@c GtkImageMenuItem
+
+@set gtk-image-menu-item http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-image-menu-item.html
+
 @c GtkInfoBar
 
 @set gtk-info-bar http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-info-bar.html
@@ -340,9 +348,32 @@
 @set gtk-list-store-remove http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-list-store-remove.html
 @set gtk-list-store-clear http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-list-store-clear.html
 
+@c GtkMenu
+
+@set gtk-menu http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-menu.html
+@set gtk-menu-new http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-menu-new.html
+@set gtk-menu-popup http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-menu-popup.html
+
+@c GtkMenuBar
+
+@set gtk-menu-bar http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-menu-bar.html
+@set gtk-menu-bar-new http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-menu-bar-new.html
+
 @c GtkMenuItem
 
 @set gtk-menu-item http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-menu-item.html
+@set gtk-menu-item-new http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-menu-item-new.html
+@set gtk-menu-item-new-with-label http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-menu-item-new-with-label.html
+@set gtk-menu-item-new-with-mnemonic http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-menu-item-new-with-mnemonic.html
+@set gtk-menu-item-set-submenu http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-menu-item-set-submenu.html
+@set gtk-menu-item-set-label http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-menu-item-set-label.html
+
+@c GtkMenuShell
+
+@set gtk-menu-shell http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-menu-shell.html
+@set gtk-menu-shell-append http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-menu-shell-append.html
+@set gtk-menu-shell-prepend http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-menu-shell-prepend.html
+@set gtk-menu-shell-insert http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-menu-shell-insert.html
 
 @c GtkMessageDialog
 
@@ -353,10 +384,6 @@
 @c GtkMessageType
 
 @set gtk-message-type http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_sym_gtk-message-type.html
-
-@c GtkMenuBar
-
-@set gtk-menu-bar http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-menu-bar.html
 
 @c GtkMisc
 
@@ -474,6 +501,11 @@
 @set gtk-separator http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-separator.html
 @set gtk-separator-new http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-separator-new.html
 
+@c GtkSeparatorMenuItem
+
+@set gtk-separator-menu-item http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-separator-menu-item.html
+@set gtk-separator-menu-item-new http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-separator-menu-item-new.html
+
 @c GtkSeparatorToolItem
 
 @set gtk-separator-tool-item http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-separator-tool-item.html
@@ -493,7 +525,7 @@
 @c GtkStatusbar
 
 @set gtk-statusbar http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-statusbar.html
-@set gtk-statusbar-new http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-statusbar-new.html                
+@set gtk-statusbar-new http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-statusbar-new.html
 @set gtk-statusbar-get-context-id http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-statusbar-get-context-id.html
 @set gtk-statusbar-push http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-statusbar-push.html
 @set gtk-statusbar-pop http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-statusbar-pop.html
