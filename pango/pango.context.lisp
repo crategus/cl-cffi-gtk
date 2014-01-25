@@ -4,12 +4,13 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the Pango Reference Manual
-;;; for Pango 1.32.6. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the Pango Reference Manual
+;;; for Pango 1.32.6 and modified to document the Lisp binding to the Pango
+;;; library. See <http://www.gtk.org>. The API documentation of the Lisp
+;;; binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -78,24 +79,10 @@
 ;;;     pango_find_paragraph_boundary
 ;;;     pango_default_break
 ;;;
-;;;     PangoLogAttr;
+;;;     PangoLogAttr
 ;;;
 ;;;     pango_shape
 ;;;     pango_shape_full
-;;;
-;;; Object Hierarchy
-;;;
-;;;   GObject
-;;;    +----PangoContext
-;;;
-;;;   GBoxed
-;;;    +----PangoItem
-;;;
-;;; Description
-;;;
-;;; The Pango rendering pipeline takes a string of Unicode characters and
-;;; converts it into glyphs. The functions described in this section accomplish
-;;; various steps of this process.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :pango)
@@ -115,7 +102,8 @@
 (setf (documentation 'pango-context 'type)
  "@version{2013-6-29}
   The @sym{pango-context} object stores global information used to control the
-  itemization process.")
+  itemization process.
+  @see-function{pango-context-new}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct PangoItem
@@ -374,25 +362,35 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_context_new ()
-;;;
-;;; PangoContext * pango_context_new (void);
-;;;
-;;; Creates a new PangoContext initialized to default values.
-;;;
-;;; This function is not particularly useful as it should always be followed by
-;;; a pango_context_set_font_map() call, and the function
-;;; pango_font_map_create_context() does these two steps together and hence
-;;; users are recommended to use that.
-;;;
-;;; If you are using Pango as part of a higher-level system, that system may
-;;; have it's own way of create a PangoContext. For instance, the GTK+ toolkit
-;;; has, among others, gdk_pango_context_get_for_screen(), and
-;;; gtk_widget_get_pango_context(). Use those instead.
-;;;
-;;; Returns :
-;;;     the newly allocated PangoContext, which should be freed with
-;;;     g_object_unref().
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline pango-context-new))
+
+(defun pango-context-new ()
+ #+cl-cffi-gtk-documentation
+ "@version{2014-1-24}
+  @return{The newly allocated @class{pango-context}.}
+  @begin{short}
+    Creates a new @class{pango-context} initialized to default values.
+  @end{short}
+
+  This function is not particularly useful as it should always be followed by
+  a @fun{pango-context-set-font-map} call, and the function
+  @fun{pango-font-map-create-context} does these two steps together and hence
+  users are recommended to use that.
+
+  If you are using Pango as part of a higher-level system, that system may
+  have it's own way of create a @class{pango-context}. For instance, the GTK+
+  toolkit has, among others, the functions
+  @fun{gdk-pango-context-get-for-screen}, and
+  @fun{gtk-widget-get-pango-context}. Use those instead.
+  @see-class{pango-context}
+  @see-function{pango-context-set-font-map}
+  @see-function{gdk-pango-context-get-for-screen}
+  @see-function{gtk-widget-get-pango-context}"
+  (make-instance 'pango-context))
+  
+(export 'pango-context-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; pango_context_changed ()
@@ -554,9 +552,9 @@
 
 (defcfun ("pango_context_set_base_dir" pango-context-set-base-dir) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-12-7}
+ "@version{2014-1-24}
   @argument[context]{a @class{pango-context}}
-  @argument[direction]{the new base direction}
+  @argument[direction]{the new base direction of type @symbol{pango-direction}}
   @begin{short}
     Sets the base direction for the context.
   @end{short}
@@ -1021,7 +1019,7 @@
     @entry[is-line-break]{If set, can break line in front of character.}
     @entry[is-mandatory-break]{If set, must break line in front of character.}
     @entry[is-char-break]{If set, can break here when doing character wrapping.}
-    @entry[is-white}{Is whitespace character.}
+    @entry[is-white]{Is whitespace character.}
     @entry[is-cursor-position]{If set, cursor can appear in front of character.
       I. e. this is a grapheme boundary, or the first character in the text.
       This flag implements Unicode's Grapheme Cluster Boundaries semantics.}
@@ -1032,12 +1030,12 @@
     @entry[is-sentence-boundary]{Is a sentence boundary. There are two ways to
       divide sentences. The first assigns all inter-sentence
       whitespace/control/format chars to some sentence, so all chars are in some
-      sentence; is_sentence_boundary denotes the boundaries there. The second
-      way does not assign between-sentence spaces, etc. to any sentence, so
+      sentence; @code{is-sentence-boundary} denotes the boundaries there. The
+      second way does not assign between-sentence spaces, etc. to any sentence, so
       @code{is-sentence_start}/@code{is-sentence-end} mark the boundaries of
       those sentences.}
     @entry[is-sentence-start]{Is first character in a sentence.}
-    @entry[is-sentence-end}{Is first char after a sentence. Note that in
+    @entry[is-sentence-end]{Is first char after a sentence. Note that in
       degenerate cases, you could have both @code{is-sentence-start} and
       @code{is-sentence-end} set for some character, e. g. no space after a
       period, so the next sentence starts right away.}

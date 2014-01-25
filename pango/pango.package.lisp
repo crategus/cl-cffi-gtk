@@ -46,6 +46,10 @@
   @begin[Basic Pango Interfaces]{section}
     @begin[Rendering]{subsection}
       Functions to run the rendering pipeline.
+      
+      The Pango rendering pipeline takes a string of Unicode characters and
+      converts it into glyphs. The functions described in this section
+      accomplish various steps of this process.
 
       @about-class{pango-context}
       @about-class{pango-item}
