@@ -961,8 +961,8 @@
 
 (defcfun ("cairo_set_fill_rule" cairo-set-fill-rule) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-11-16}
-  @argument[cr]{a @symbol{cairo-t}}
+ "@version{2014-1-24}
+  @argument[cr]{a cairo context}
   @argument[fill-rule]{a fill rule, specified as a @symbol{cairo-fill-rule-t}}
   @begin{short}
     Set the current fill rule within the cairo context.
@@ -979,7 +979,8 @@
   @see-symbol{cairo-t}
   @see-symbol{cairo-fill-rule-t}
   @see-function{cairo-fill}
-  @see-function{cairo-clip}"
+  @see-function{cairo-clip}
+  @see-function{cairo-get-fill-rule}"
   (cr (:pointer (:struct cairo-t)))
   (fill-rule cairo-fill-rule-t))
 
@@ -991,9 +992,9 @@
 
 (defcfun ("cairo_get_fill_rule" cairo-get-fill-rule) cairo-fill-rule-t
  #+cl-cffi-gtk-documentation
- "@version{2013-12-6}
+ "@version{2014-1-24}
   @argument[cr]{a cairo context}
-  @return{The current fill rule.}
+  @return{The current fill rule of type @symbol{cairo-fill-rule-t}.}
   @begin{short}
     Gets the current fill rule, as set by the function
     @fun{cairo-set-fill-rule}.
@@ -1051,9 +1052,9 @@
 
 (defcfun ("cairo_set_line_cap" cairo-set-line-cap) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-11-12}
+ "@version{2014-1-24}
   @argument[cr]{a cairo context}
-  @argument[line-cap]{a line cap style}
+  @argument[line-cap]{a line cap style of type @symbol{cairo-line-cap-t}}
   @begin{short}
     Sets the current line cap style within the cairo context.
   @end{short}
@@ -1070,7 +1071,8 @@
   @see-symbol{cairo-t}
   @see-symbol{cairo-line-cap-t}
   @see-function{cairo-stroke}
-  @see-function{cairo-stroke-extents}"
+  @see-function{cairo-stroke-extents}
+  @see-function{cairo-get-line-cap}"
   (cr (:pointer (:struct cairo-t)))
   (line-cap cairo-line-cap-t))
 
@@ -1078,19 +1080,25 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_get_line_cap ()
-;;;
-;;; cairo_line_cap_t cairo_get_line_cap (cairo_t *cr);
-;;;
-;;; Gets the current line cap style, as set by cairo_set_line_cap().
-;;;
-;;; cr :
-;;;     a cairo context
-;;;
-;;; Returns :
-;;;     the current line cap style.
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_get_line_cap" cairo-get-line-cap) cairo-line-cap-t
+ #+cl-cffi-gtk-documentation
+ "@version{2014-1-24}
+  @argument[cr]{a cairo context}
+  @return{The current line cap style of type @symbol{cairo-line-cap-t}.}
+  @begin{short}
+    Gets the current line cap style, as set by the function
+    @fun{cairo-set-line-cap}.
+  @end{short}
+
+  Since 1.0
+  @see-symbol{cairo-t}
+  @see-symbol{cairo-line-cap-t}
+  @see-function{cairo-set-line-cap}"
+  (cr (:pointer (:struct cairo-t))))
+
+(export 'cairo-get-line-cap)
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum cairo_line_join_t
@@ -1156,7 +1164,8 @@
   @see-symbol{cairo-t}
   @see-symbol{cairo-line-join-t}
   @see-function{cairo-stroke}
-  @see-function{cairo-stroke-extents}"
+  @see-function{cairo-stroke-extents}
+  @see-function{cairo-get-line-join}"
   (cr (:pointer (:struct cairo-t)))
   (line-join cairo-line-join-t))
 
@@ -1164,19 +1173,25 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_get_line_join ()
-;;;
-;;; cairo_line_join_t cairo_get_line_join (cairo_t *cr);
-;;;
-;;; Gets the current line join style, as set by cairo_set_line_join().
-;;;
-;;; cr :
-;;;     a cairo context
-;;;
-;;; Returns :
-;;;     the current line join style.
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_get_line_join" cairo-get-line-join) cairo-line-join-t
+ #+cl-cffi-gtk-documentation
+ "@version{2014-1-24}
+  @argument[cr]{a cairo context}
+  @return{The current line join style of type @symbol{cairo-line-join-t}.}
+  @begin{short}
+    Gets the current line join style, as set by the function
+    @fun{cairo-set-line-join}.
+  @end{short}
+
+  Since 1.0
+  @see-symbol{cairo-t}
+  @see-symbol{cairo-line-join-t}
+  @see-function{cairo-set-line-join}"
+  (cr (:pointer (:struct cairo-t))))
+
+(export 'cairo-get-line-join)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_set_line_width ()
@@ -1188,24 +1203,15 @@
 
 (defun cairo-set-line-width (cr width)
  #+cl-cffi-gtk-documentation
- "@version{2013-8-4}
-  @argument[cr]{a @symbol{cairo-t}}
+ "@version{2014-1-24}
+  @argument[cr]{a cairo context}
   @argument[width]{a line width}
   @begin{short}
-    Sets the current line width within the cairo context. The line width value
-    specifies the diameter of a pen that is circular in user space, though
-    device-space pen may be an ellipse in general due to scaling/shear/rotation
-    of the Coordinate Transformation Matrix (CTM).
+    Sets the current line width within the cairo context.
   @end{short}
-
-  @b{Note:} When the description above refers to user space and CTM it refers to
-  the user space and CTM in effect at the time of the stroking operation, not
-  the user space and CTM in effect at the time of the call to the function
-  @sym{cairo-set-line-width}. The simplest usage makes both of these spaces
-  identical. That is, if there is no change to the CTM between a call to the
-  function @sym{cairo-set-line-width} and the stroking operation, then one can
-  just pass user-space values to the function @sym{cairo-set-line-width} and
-  ignore this note.
+  The line width value specifies the diameter of a pen that is circular in user
+  space, though device-space pen may be an ellipse in general due to
+  scaling/shear/rotation of the Coordinate Transformation Matrix (CTM).
 
   As with the other stroke parameters, the current line width is examined by
   the functions @fun{cairo-stroke} and @fun{cairo-stroke-extents}, but does not
@@ -1213,32 +1219,48 @@
 
   The default line width value is 2.0.
 
+  @begin[Note]{dictionary}
+    When the description above refers to user space and CTM it refers to
+    the user space and CTM in effect at the time of the stroking operation, not
+    the user space and CTM in effect at the time of the call to the function
+    @sym{cairo-set-line-width}. The simplest usage makes both of these spaces
+    identical. That is, if there is no change to the CTM between a call to the
+    function @sym{cairo-set-line-width} and the stroking operation, then one
+    can just pass user-space values to the function @sym{cairo-set-line-width}
+    and ignore this note.
+  @end{dictionary}
+
   Since 1.0
   @see-symbol{cairo-t}
   @see-function{cairo-stroke}
-  @see-function{cairo-stroke-extents}"
+  @see-function{cairo-stroke-extents}
+  @see-function{cairo-get-line-width}"
   (%cairo-set-line-width cr (coerce width 'double-float)))
 
 (export 'cairo-set-line-width)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_get_line_width ()
-;;;
-;;; double cairo_get_line_width (cairo_t *cr);
-;;;
-;;; This function returns the current line width value exactly as set by
-;;; cairo_set_line_width(). Note that the value is unchanged even if the CTM has
-;;; changed between the calls to cairo_set_line_width() and
-;;; cairo_get_line_width().
-;;;
-;;; cr :
-;;;     a cairo context
-;;;
-;;; Returns :
-;;;     the current line width.
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_get_line_width" cairo-get-line-width) :double
+ #+cl-cffi-gtk-documentation
+ "@version{2014-1-24}
+  @argument[cr]{a cairo context}
+  @return{The current line width.}
+  @begin{short}
+    This function returns the current line width value exactly as set by
+    the function @fun{cairo-set-line-width}.
+  @end{short}
+  Note that the value is unchanged even if the CTM has changed between the calls
+  to the functions @fun{cairo-set-line-width} and @sym{cairo-get-line-width}.
+
+  Since 1.0
+  @see-symbol{cairo-t}
+  @see-function{cairo-set-line-width}"
+  (cr (:pointer (:struct cairo-t))))
+
+(export 'cairo-get-line-width)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_set_miter_limit ()
@@ -1329,10 +1351,10 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'cairo-operator-t atdoc:*symbol-name-alias*) "CEnum"
       (gethash 'cairo-operator-t atdoc:*external-symbols*)
- "@version{2013-8-4}
+ "@version{2014-1-24}
   @begin{short}
-    @sym{cairo-operator-t} is used to set the compositing operator for all cairo
-   drawing operations.
+    A @sym{cairo-operator-t} enumeration is used to set the compositing
+    operator for all cairo drawing operations.
   @end{short}
 
   The default operator is @code{:over}.
@@ -1477,10 +1499,11 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-8-4}
   @argument[cr]{a cairo context}
-  @return{The current compositing operator.}
+  @return{The current compositing operator of type @symbol{cairo-operator-t}.}
   @begin{short}
     Gets the current compositing operator for a cairo context.
   @end{short}
+
   Since 1.0
   @see-symbol{cairo-t}
   @see-symbol{cairo-operator-t}
@@ -1796,16 +1819,16 @@
 
 (defcfun ("cairo_fill_preserve" cairo-fill-preserve) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-11-19}
+ "@version{2014-1-24}
   @argument[cr]{a cairo context}
   @begin{short}
-    A drawing operator that fills the current path according to the current fill
-    rule, each sub-path is implicitly closed before being filled.
+    A drawing operator that fills the current path according to the current
+    fill rule, each sub-path is implicitly closed before being filled.
   @end{short}
   Unlike the function @fun{cairo-fill}, @sym{cairo-fill-preserve} preserves the
   path within the cairo context.
 
-  See the function @fun{cairo-set-fill-rule} and @fun{cairo-fill}.
+  See the functions @fun{cairo-set-fill-rule} and @fun{cairo-fill}.
 
   Since 1.0
   @see-symbol{cairo-t}
@@ -1890,15 +1913,15 @@
 
 (defcfun ("cairo_mask" cairo-mask) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-11-12}
+ "@version{2014-1-24}
   @argument[cr]{a cairo context}
   @argument[pattern]{a @symbol{cairo-pattern-t}}
   @begin{short}
     A drawing operator that paints the current source using the alpha channel of
-    pattern as a mask.
+    @arg{pattern} as a mask.
   @end{short}
-  Opaque areas of pattern are painted with the source, transparent areas are not
-  painted.
+  Opaque areas of @arg{pattern} are painted with the source, transparent areas
+  are not painted.
 
   Since 1.0
   @see-symbol{cairo-t}
@@ -1960,15 +1983,15 @@
 
 (defcfun ("cairo_paint_with_alpha" cairo-paint-with-alpha) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-8-4}
+ "@version{2014-1-24}
   @argument[cr]{a cairo context}
   @argument[alpha]{alpha value, between 0 (transparent) and 1 (opaque)}
   @begin{short}
     A drawing operator that paints the current source everywhere within the
-    current clip region using a mask of constant alpha value alpha. The effect
-    is similar to the function @fun{cairo-paint}, but the drawing is faded out
-    using the alpha value.
+    current clip region using a mask of constant alpha value @arg{alpha}.
   @end{short}
+  The effect is similar to the function @fun{cairo-paint}, but the drawing is
+  faded out using the alpha value.
 
   Since 1.0
   @see-symbol{cairo-t}
@@ -1984,7 +2007,7 @@
 
 (defcfun ("cairo_stroke" cairo-stroke) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-8-4}
+ "@version{2014-1-24}
   @argument[cr]{a cairo context}
   @begin{short}
     A drawing operator that strokes the current path according to the current
@@ -1995,28 +2018,30 @@
   @fun{cairo-set-line-cap}, @fun{cairo-set-dash}, and
   @fun{cairo-stroke-preserve}.
 
-  @b{Note:} Degenerate segments and sub-paths are treated specially and provide
-  a useful result. These can result in two different situations:
-  @begin{enumerate}
-    @begin{item}
-      Zero-length \"on\" segments set in the function @fun{cairo-set-dash}. If
-      the cap style of type @symbol{cairo-line-cap-t} is @code{:round} or
-      @code{:square} then these segments will be drawn as circular dots or
-      squares respectively. In the case of @code{:square}, the orientation of
-      the squares is determined by the direction of the underlying path.
-    @end{item}
-    @begin{item}
-      A sub-path created by the function @fun{cairo-move-to} followed by either
-      a call to the function @fun{cairo-close-path} or one or more calls to the
-      function @fun{cairo-line-to} to the same coordinate as the the function
-      @fun{cairo-move-to}. If the cap style is @code{:round} then these
-      sub-paths will be drawn as circular dots. Note that in the case of
-      @code{:square} a degenerate sub-path will not be drawn at all, since the
-      correct orientation is indeterminate.
-    @end{item}
-  @end{enumerate}
-  In no case will a cap style of @code{:butt} cause anything to be drawn in the
-  case of either degenerate segments or sub-paths.
+  @begin[Note]{dictionary}
+    Degenerate segments and sub-paths are treated specially and provide
+    a useful result. These can result in two different situations:
+    @begin{enumerate}
+      @begin{item}
+        Zero-length \"on\" segments set in the function @fun{cairo-set-dash}.
+        If the cap style of type @symbol{cairo-line-cap-t} is @code{:round} or
+        @code{:square} then these segments will be drawn as circular dots or
+        squares respectively. In the case of @code{:square}, the orientation of
+        the squares is determined by the direction of the underlying path.
+      @end{item}
+      @begin{item}
+        A sub-path created by the function @fun{cairo-move-to} followed by
+        either a call to the function @fun{cairo-close-path} or one or more
+        calls to the function @fun{cairo-line-to} to the same coordinate as the
+        the function @fun{cairo-move-to}. If the cap style is @code{:round}
+        then these sub-paths will be drawn as circular dots. Note that in the
+        case of @code{:square} a degenerate sub-path will not be drawn at all,
+        since the correct orientation is indeterminate.
+      @end{item}
+    @end{enumerate}
+    In no case will a cap style of @code{:butt} cause anything to be drawn in
+    the case of either degenerate segments or sub-paths.
+  @end{dictionary}
 
   Since 1.0
   @see-symbol{cairo-t}
@@ -2087,10 +2112,10 @@
   function @fun{cairo-path-extents} which can be used to compute the non-empty
   bounds as the line width approaches zero.
 
-  Note that @sym{cairo-stroke-extents} must necessarily do more work to compute
-  the precise inked areas in light of the stroke parameters, so the function
-  @fun{cairo-path-extents} may be more desirable for sake of performance if
-  non-inked path extents are desired.
+  Note that the function @sym{cairo-stroke-extents} must necessarily do more
+  work to compute the precise inked areas in light of the stroke parameters, so
+  the function @fun{cairo-path-extents} may be more desirable for sake of
+  performance if non-inked path extents are desired.
 
   See the functions @fun{cairo-stroke}, @fun{cairo-set-line-width},
   @fun{cairo-set-line-join}, @fun{cairo-set-line-cap}, @fun{cairo-set-dash},
