@@ -10,7 +10,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -516,12 +516,12 @@
 (setf (gethash 'gtk-status-icon-screen atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-status-icon-screen 'function)
- "@version{2013-11-6}
-  Accessor of the slot @code{\"screen\"} of the @class{gtk-status-icon}
-  class.
+ "@version{2014-1-25}
+  Accessor of the slot @slot[gtk-status-icon]{screen} of the
+  @class{gtk-status-icon} class.
   @see-class{gtk-status-icon}
   @see-function{gtk-status-icon-get-screen}
-  @see-function{gtk-status-icon-set-sceen}")
+  @see-function{gtk-status-icon-set-screen}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-status-icon-size atdoc:*function-name-alias*)
