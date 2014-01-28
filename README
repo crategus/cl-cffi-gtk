@@ -1,9 +1,7 @@
 cl-cffi-gtk is a Lisp binding to GTK+ 3 (GIMP Toolkit) which is a library
-for creating graphical user interfaces.
-
-cl-cffi-gtk is licensed using the LGPL which has been adopted with a preamble
-that clarifies the terms for use with Lisp programs and is referred as the
-LLGPL.
+for creating graphical user interfaces. cl-cffi-gtk is licensed using the LGPL
+which has been adopted with a preamble that clarifies the terms for use with
+Lisp programs and is referred as the LLGPL.
 
 This work is based on the cl-gtk2 library which has been developed by
 Kalyanov Dmitry and already is a fairly complete Lisp binding to GTK+.
@@ -25,6 +23,6 @@ Linux system (Ubuntu). Futhermore, the library is tested with Clozure Common
 Lisp 1.9 and CLISP 2.49 on Linux. The minium version requirements are GTK+ 3.4
 and GLIB 2.32.
 
-The library compiles and runs under Windows 7, but when moving a application
+The library compiles and runs under Windows 7, but when moving an application
 window the application will freeze. This bug is not solved at this time.
 
