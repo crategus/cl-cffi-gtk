@@ -89,22 +89,22 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-toolbar 'type)
- "@version{2013-10-22}
+ "@version{2014-1-26}
   @begin{short}
     A toolbar is created with a call to the function @fun{gtk-toolbar-new}.
   @end{short}
 
-  A toolbar can contain instances of a subclass of @class{gtk-tool-item}. To add
-  a @class{gtk-tool-item} to the a toolbar, use the function
+  A toolbar can contain instances of a subclass of @class{gtk-tool-item}.
+  To add a @class{gtk-tool-item} to the a toolbar, use the function
   @fun{gtk-toolbar-insert}. To remove an item from the toolbar use the function
-  @fun{gtk-container-remove}. To add a button to the toolbar, add an instance of
-  @class{gtk-tool-button}.
+  @fun{gtk-container-remove}. To add a button to the toolbar, add an instance
+  of @class{gtk-tool-button}.
 
   Toolbar items can be visually grouped by adding instances of
   @class{gtk-separator-tool-item} to the toolbar. If the @sym{gtk-toolbar} child
-  property @code{\"expand\"} is @em{true} and the property @code{\"draw\"} is
-  set to @code{nil}, the effect is to force all following items to the end of
-  the toolbar.
+  property @code{\"expand\"} is @em{true} and the property
+  @slot[gtk-separator-tool-item]{draw} is set to @code{nil}, the effect is to
+  force all following items to the end of the toolbar.
 
   Creating a context menu for the toolbar can be done by connecting to the
   \"popup-context-menu\" signal.

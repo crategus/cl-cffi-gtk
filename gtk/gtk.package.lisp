@@ -5,12 +5,12 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.8.9 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -673,7 +673,23 @@
       @about-function{gtk-style-provider-get-style-property}
     @end{subsection}
     @begin[GtkStyleProperties]{subsection}
-      not implemented
+      Store for style property information
+
+      @about-class{gtk-style-properties}
+      @about-function{gtk-style-properties-clear}
+      @about-function{gtk-style-properties-get}
+      @about-function{gtk-style-properties-get-property}
+      @about-function{gtk-style-properties-get-valist}
+      @about-function{gtk-style-properties-lookup-color}
+      @about-function{gtk-style-properties-lookup-property}
+      @about-function{gtk-style-properties-map-color}
+      @about-function{gtk-style-properties-merge}
+      @about-function{gtk-style-properties-new}
+      @about-function{gtk-style-properties-register-property}
+      @about-function{gtk-style-properties-set}
+      @about-function{gtk-style-properties-set-property}
+      @about-function{gtk-style-properties-set-valist}
+      @about-function{gtk-style-properties-unset-property}
     @end{subsection}
     @begin[GtkThemingEngine]{subsection}
       Theming renderers
@@ -743,12 +759,6 @@
       @about-function{gtk-widget-path-new}
       @about-function{gtk-widget-path-prepend-type}
       @about-function{gtk-widget-path-to-string}
-    @end{subsection}
-    @begin[GtkSymbolicColor]{subsection}
-      not implemented
-    @end{subsection}
-    @begin[GtkGradient]{subsection}
-      not implemented
     @end{subsection}
     @begin[GtkIconTheme]{subsection}
       Looking up icons by name
@@ -844,79 +854,26 @@
       @about-function{gtk-icon-source-set-state-wildcarded}
     @end{subsection}
     @begin[GtkNumerableIcon]{subsection}
-      not implemented
-    @end{subsection}
-    @begin[Resource Files]{subsection}
-      Deprecated routines for handling resource files.
+      A @class{g-icon} that allows numbered emblems.
 
-      @about-class{gtk-rc-style}
-      @about-symbol{gtk-rc-flags}
-      @about-symbol{gtk-rc-token-type}
-      @about-function{gtk-rc-scanner-new}
-      @about-function{gtk-rc-get-style}
-      @about-function{gtk-rc-get-style-by-paths}
-      @about-function{gtk-rc-parse}
-      @about-function{gtk-rc-parse-string}
-      @about-function{gtk-rc-reparse-all}
-      @about-function{gtk-rc-reparse-all-for-settings}
-      @about-function{gtk-rc-reset-styles}
-      @about-function{gtk-rc-add-default-file}
-      @about-function{gtk-rc-get-default-files}
-      @about-function{gtk-rc-set-default-files}
-      @about-function{gtk-rc-parse-color}
-      @about-function{gtk-rc-parse-color-full}
-      @about-function{gtk-rc-parse-state}
-      @about-function{gtk-rc-parse-priority}
-      @about-function{gtk-rc-find-module-in-path}
-      @about-function{gtk-rc-find-pixmap-in-path}
-      @about-function{gtk-rc-get-module-dir}
-      @about-function{gtk-rc-get-im-module-path}
-      @about-function{gtk-rc-get-im-module-file}
-      @about-function{gtk-rc-get-theme-dir}
-      @about-function{gtk-rc-style-new}
-      @about-function{gtk-rc-style-copy}
-    @end{subsection}
-    @begin[GtkStyle]{subsection}
-      Functions for drawing widget parts
-
-      @about-class{gtk-style}
-      @about-function{gtk-style-new}
-      @about-function{gtk-style-copy}
-      @about-function{gtk-style-attach}
-      @about-function{gtk-style-detach}
-      @about-function{gtk-style-set-background}
-      @about-function{gtk-style-apply-default-background}
-      @about-function{gtk-style-apply-default-pixmap}
-      @about-function{gtk-style-lookup-color}
-      @about-function{gtk-style-lookup-icon-set}
-      @about-function{gtk-style-render-icon}
-      @about-function{gtk-style-get-style-property}
-      @about-function{gtk-style-get-valist}
-      @about-function{gtk-style-get}
-      @about-function{gtk-paint-arrow}
-      @about-function{gtk-paint-box}
-      @about-function{gtk-paint-box-gap}
-      @about-function{gtk-paint-check}
-      @about-function{gtk-paint-diamond}
-      @about-function{gtk-paint-extension}
-      @about-function{gtk-paint-flat-box}
-      @about-function{gtk-paint-focus}
-      @about-function{gtk-paint-handle}
-      @about-function{gtk-paint-hline}
-      @about-function{gtk-paint-option}
-      @about-function{gtk-paint-polygon}
-      @about-function{gtk-paint-shadow}
-      @about-function{gtk-paint-shadow-gap}
-      @about-function{gtk-paint-slider}
-      @about-function{gtk-paint-spinner}
-      @about-function{gtk-paint-string}
-      @about-function{gtk-paint-tab}
-      @about-function{gtk-paint-vline}
-      @about-function{gtk-paint-expander}
-      @about-function{gtk-paint-layout}
-      @about-function{gtk-paint-resize-grip}
-      @about-function{gtk-draw-insertion-cursor}
-      @about-symbol{gtk-rc-property}
+      @about-class{gtk-numerable-icon}
+      @about-function{gtk-numerable-icon-new}
+      @about-function{gtk-numerable-icon-new-with-style-context}
+      @about-generic{gtk-numerable-icon-background-icon}
+      @about-generic{gtk-numerable-icon-background-icon-name}
+      @about-generic{gtk-numerable-icon-count}
+      @about-generic{gtk-numerable-icon-label}
+      @about-generic{gtk-numerable-icon-style-context}
+      @about-function{gtk-numerable-icon-get-background-gicon}
+      @about-function{gtk-numerable-icon-set-background-gicon}
+      @about-function{gtk-numerable-icon-get-background-icon-name}
+      @about-function{gtk-numerable-icon-set-background-icon-name}
+      @about-function{gtk-numerable-icon-get-count}
+      @about-function{gtk-numerable-icon-set-count}
+      @about-function{gtk-numerable-icon-get-label}
+      @about-function{gtk-numerable-icon-set-label}
+      @about-function{gtk-numerable-icon-get-style-context}
+      @about-function{gtk-numerable-icon-set-style-context}
     @end{subsection}
   @end{section}
   @begin[Windows]{section}
@@ -1307,6 +1264,9 @@
       @about-function{gtk-statusbar-remove-all}
       @about-function{gtk-statusbar-get-message-area}
     @end{subsection}
+    @begin[GtkLevelBar]{subsection}
+      not implemented
+    @end{subsection}
     @begin[GtkInfoBar]{subsection}
       Report important messages to the user.
 
@@ -1635,20 +1595,6 @@
       @about-function{gtk-scale-get-layout-offsets}
       @about-function{gtk-scale-add-mark}
       @about-function{gtk-scale-clear-marks}
-    @end{subsection}
-    @begin[GtkHScale]{subsection}
-      A horizontal slider widget for selecting a value from a range.
-
-      @about-class{gtk-hscale}
-      @about-function{gtk-hscale-new}
-      @about-function{gtk-hscale-new-with-range}
-    @end{subsection}
-    @begin[GtkVScale]{subsection}
-      A vertical slider widget for selecting a value from a range.
-
-      @about-class{gtk-vscale}
-      @about-function{gtk-vscale-new}
-      @about-function{gtk-vscale-new-with-range}
     @end{subsection}
     @begin[GtkSpinButton]{subsection}
       Retrieve an integer or floating-point number from the user.
@@ -3257,12 +3203,6 @@ setup_tree (void)
       @about-class{gtk-separator-menu-item}
       @about-function{gtk-separator-menu-item-new}
     @end{subsection}
-    @begin[GtkTearoffMenuItem]{subsection}
-      A menu item used to tear off and reattach its menu.
-
-      @about-class{gtk-tearoff-menu-item}
-      @about-function{gtk-tearoff-menu-item-new}
-    @end{subsection}
     @begin[GtkToolShell]{subsection}
       Interface for containers containing GtkToolItem widgets.
 
@@ -3639,57 +3579,6 @@ setup_tree (void)
       @about-class{gtk-color-chooser-dialog}
       @about-function{gtk-color-chooser-dialog-new}
     @end{subsection}
-    @begin[GtkColorSelection]{subsection}
-      A widget used to select a color.
-
-      @about-class{gtk-color-selection}
-      @about-function{gtk-color-selection-child-expand}
-      @about-function{gtk-color-selection-child-fill}
-      @about-function{gtk-color-selection-child-padding}
-      @about-function{gtk-color-selection-child-pack-type}
-      @about-function{gtk-color-selection-child-position}
-      @about-function{gtk-color-selection-new}
-      @about-function{gtk-color-selection-set-has-opacity-control}
-      @about-function{gtk-color-selection-get-has-opacity-control}
-      @about-function{gtk-color-selection-set-has-palette}
-      @about-function{gtk-color-selection-get-has-palette}
-      @about-function{gtk-color-selection-get-current-alpha}
-      @about-function{gtk-color-selection-set-current-alpha}
-      @about-function{gtk-color-selection-get-current-color}
-      @about-function{gtk-color-selection-set-current-color}
-      @about-function{gtk-color-selection-get-previous-alpha}
-      @about-function{gtk-color-selection-set-previous-alpha}
-      @about-function{gtk-color-selection-get-previous-color}
-      @about-function{gtk-color-selection-set-previous-color}
-      @about-function{gtk-color-selection-get-current-rgba}
-      @about-function{gtk-color-selection-set-current-rgba}
-      @about-function{gtk-color-selection-get-previous-rgba}
-      @about-function{gtk-color-selection-set-previous-rgba}
-      @about-function{gtk-color-selection-is-adjusting}
-      @about-function{gtk-color-selection-palette-from-string}
-      @about-function{gtk-color-selection-palette-to-string}
-      @about-function{gtk-color-selection-set-change-palette-with-screen-hook}
-    @end{subsection}
-    @begin[GtkColorSelectionDialog]{subsection}
-      Deprecated dialog box for selecting a color.
-
-      @about-class{gtk-color-selection-dialog}
-      @about-function{gtk-color-selection-dialog-new}
-      @about-function{gtk-color-selection-dialog-get-color-selection}
-    @end{subsection}
-    @begin[GtkHSV]{subsection}
-      A \"color wheel\" widget.
-
-      @about-class{gtk-hsv}
-      @about-function{gtk-hsv-new}
-      @about-function{gtk-hsv-set-color}
-      @about-function{gtk-hsv-get-color}
-      @about-function{gtk-hsv-set-metrics}
-      @about-function{gtk-hsv-get-metrics}
-      @about-function{gtk-hsv-is-adjusting}
-      @about-function{gtk-hsv-to-rgb}
-      @about-function{gtk-rgb-to-hsv}
-    @end{subsection}
     @begin[GtkFileChooser]{subsection}
       File chooser interface used by @class{gtk-file-chooser-widget} and
       @class{gtk-file-chooser-dialog}.
@@ -3858,42 +3747,6 @@ setup_tree (void)
       @about-class{gtk-font-chooser-dialog}
       @about-function{gtk-font-chooser-dialog-new}
     @end{subsection}
-    @begin[GtkFontSelection]{subsection}
-      Deprecated widget for selecting fonts.
-
-      @about-class{gtk-font-selection}
-      @about-function{gtk-font-selection-child-expand}
-      @about-function{gtk-font-selection-child-fill}
-      @about-function{gtk-font-selection-child-padding}
-      @about-function{gtk-font-selection-child-pack-type}
-      @about-function{gtk-font-selection-child-position}
-      @about-function{gtk-font-selection-new}
-      @about-function{gtk-font-selection-get-font-name}
-      @about-function{gtk-font-selection-set-font-name}
-      @about-function{gtk-font-selection-get-preview-text}
-      @about-function{gtk-font-selection-set-preview-text}
-      @about-function{gtk-font-selection-get-face}
-      @about-function{gtk-font-selection-get-face-list}
-      @about-function{gtk-font-selection-get-family}
-      @about-function{gtk-font-selection-get-size}
-      @about-function{gtk-font-selection-get-family-list}
-      @about-function{gtk-font-selection-get-preview-entry}
-      @about-function{gtk-font-selection-get-size-entry}
-      @about-function{gtk-font-selection-get-size-list}
-    @end{subsection}
-    @begin[GtkFontSelectionDialog]{subsection}
-      Deprecated dialog box for selecting fonts.
-
-      @about-class{gtk-font-selection-dialog}
-      @about-function{gtk-font-selection-dialog-new}
-      @about-function{gtk-font-selection-dialog-get-font-name}
-      @about-function{gtk-font-selection-dialog-set-font-name}
-      @about-function{gtk-font-selection-dialog-get-preview-text}
-      @about-function{gtk-font-selection-dialog-set-preview-text}
-      @about-function{gtk-font-selection-dialog-get-cancel-button}
-      @about-function{gtk-font-selection-dialog-get-ok-button}
-      @about-function{gtk-font-selection-dialog-get-font-selection}
-    @end{subsection}
   @end{section}
   @begin[Layout Containers]{section}
     @begin[GtkGrid]{subsection}
@@ -3955,28 +3808,6 @@ setup_tree (void)
       @about-function{gtk-box-reorder-child}
       @about-function{gtk-box-query-child-packing}
       @about-function{gtk-box-set-child-packing}
-
-      @subheading{GtkHBox}
-      A horizontal container box.
-
-      @about-class{gtk-hbox}
-      @about-function{gtk-hbox-new}
-      @about-function{gtk-hbox-child-expand}
-      @about-function{gtk-hbox-child-fill}
-      @about-function{gtk-hbox-child-padding}
-      @about-function{gtk-hbox-child-pack-type}
-      @about-function{gtk-hbox-child-position}
-
-      @subheading{GtkVBox}
-      A vertical container box.
-
-      @about-class{gtk-vbox}
-      @about-function{gtk-vbox-new}
-      @about-function{gtk-vbox-child-expand}
-      @about-function{gtk-vbox-child-fill}
-      @about-function{gtk-vbox-child-padding}
-      @about-function{gtk-vbox-child-pack-type}
-      @about-function{gtk-vbox-child-position}
     @end{subsection}
     @begin[GtkButtonBox]{subsection}
       A container for arranging buttons
@@ -3991,30 +3822,6 @@ setup_tree (void)
       @about-function{gtk-button-box-set-layout}
       @about-function{gtk-button-box-set-child-secondary}
       @about-function{gtk-button-box-set-child-non-homogeneous}
-
-      @subheading{GtkHButtonBox}
-      A container for arranging buttons horizontally
-
-      @about-class{gtk-hbutton-box}
-      @about-function{gtk-hbutton-box-new}
-      @about-function{gtk-hbutton-box-child-expand}
-      @about-function{gtk-hbutton-box-child-fill}
-      @about-function{gtk-hbutton-box-child-padding}
-      @about-function{gtk-hbutton-box-child-pack-type}
-      @about-function{gtk-hbutton-box-child-position}
-      @about-function{gtk-hbutton-box-child-secondary}
-
-      @subheading{GtkVButtonBox}
-      A container for arranging buttons vertically
-
-      @about-class{gtk-vbutton-box}
-      @about-function{gtk-vbutton-box-new}
-      @about-function{gtk-vbutton-box-child-expand}
-      @about-function{gtk-vbutton-box-child-fill}
-      @about-function{gtk-vbutton-box-child-padding}
-      @about-function{gtk-vbutton-box-child-pack-type}
-      @about-function{gtk-vbutton-box-child-position}
-      @about-function{gtk-vbutton-box-child-secondary}
     @end{subsection}
     @begin[GtkFixed]{subsection}
       A container which allows you to position widgets at fixed coordinates.
@@ -4042,22 +3849,6 @@ setup_tree (void)
       @about-function{gtk-paned-set-position}
       @about-function{gtk-paned-get-position}
       @about-function{gtk-paned-get-handle-window}
-
-      @subheading{GtkHPaned}
-      A container with two panes arranged horizontally.
-
-      @about-class{gtk-hpaned}
-      @about-function{gtk-hpaned-new}
-      @about-function{gtk-hpaned-child-resize}
-      @about-function{gtk-hpaned-child-shrink}
-
-      @subheading{GtkVPaned}
-      A container with two panes arranged vertically.
-
-      @about-class{gtk-vpaned}
-      @about-function{gtk-vpaned-new}
-      @about-function{gtk-vpaned-child-resize}
-      @about-function{gtk-vpaned-child-shrink}
     @end{subsection}
     @begin[GtkLayout]{subsection}
       Infinite scrollable area containing child widgets and/or custom drawing.
@@ -4132,34 +3923,6 @@ setup_tree (void)
       @about-function{gtk-notebook-set-action-widget}
       @about-function{gtk-notebook-get-action-widget}
     @end{subsection}
-    @begin[GtkTable]{subsection}
-      Pack widgets in regular patterns.
-
-      @about-class{gtk-table}
-      @about-function{gtk-table-child-left-attach}
-      @about-function{gtk-table-child-right-attach}
-      @about-function{gtk-table-child-top-attach}
-      @about-function{gtk-table-child-bottom-attach}
-      @about-function{gtk-table-child-x-options}
-      @about-function{gtk-table-child-y-options}
-      @about-function{gtk-table-child-x-padding}
-      @about-function{gtk-table-child-y-padding}
-      @about-function{gtk-table-new}
-      @about-function{gtk-table-resize}
-      @about-function{gtk-table-get-size}
-      @about-function{gtk-table-attach}
-      @about-function{gtk-table-attach-defaults}
-      @about-function{gtk-table-set-row-spacing}
-      @about-function{gtk-table-set-col-spacing}
-      @about-function{gtk-table-set-row-spacings}
-      @about-function{gtk-table-set-col-spacings}
-      @about-function{gtk-table-set-homogeneous}
-      @about-function{gtk-table-get-default-row-spacing}
-      @about-function{gtk-table-get-homogeneous}
-      @about-function{gtk-table-get-row-spacing}
-      @about-function{gtk-table-get-col-spacing}
-      @about-function{gtk-table-get-default-col-spacing}
-    @end{subsection}
     @begin[GtkExpander]{subsection}
       A container which can hide its child.
 
@@ -4218,10 +3981,6 @@ setup_tree (void)
 
       @about-class{gtk-separator}
       @about-function{gtk-separator-new}
-      @about-class{gtk-hseparator}
-      @about-function{gtk-hseparator-new}
-      @about-class{gtk-vseparator}
-      @about-function{gtk-vseparator-new}
     @end{subsection}
   @end{section}
   @begin[Scrolling]{section}
@@ -4230,10 +3989,6 @@ setup_tree (void)
 
       @about-class{gtk-scrollbar}
       @about-function{gtk-scrollbar-new}
-      @about-class{gtk-hscrollbar}
-      @about-function{gtk-hscrollbar-new}
-      @about-class{gtk-vscrollbar}
-      @about-function{gtk-vscrollbar-new}
     @end{subsection}
     @begin[GtkScrolledWindow]{subsection}
       Adds scrollbars to its child widget.
@@ -5441,6 +5196,299 @@ setup_tree (void)
       @about-function{gtk-actionable-set-action-target-value}
       @about-function{gtk-actionable-set-action-target}
       @about-function{gtk-actionable-set-detailed-action-name}
+    @end{subsection}
+  @end{section}
+  @begin[Deprecated]{section}
+    @begin[GtkSymbolicColor]{subsection}
+      not implemented
+    @end{subsection}
+    @begin[GtkGradient]{subsection}
+      not implemented
+    @end{subsection}
+    @begin[Resource Files]{subsection}
+      Deprecated routines for handling resource files.
+
+      @about-class{gtk-rc-style}
+      @about-symbol{gtk-rc-flags}
+      @about-symbol{gtk-rc-token-type}
+      @about-function{gtk-rc-scanner-new}
+      @about-function{gtk-rc-get-style}
+      @about-function{gtk-rc-get-style-by-paths}
+      @about-function{gtk-rc-parse}
+      @about-function{gtk-rc-parse-string}
+      @about-function{gtk-rc-reparse-all}
+      @about-function{gtk-rc-reparse-all-for-settings}
+      @about-function{gtk-rc-reset-styles}
+      @about-function{gtk-rc-add-default-file}
+      @about-function{gtk-rc-get-default-files}
+      @about-function{gtk-rc-set-default-files}
+      @about-function{gtk-rc-parse-color}
+      @about-function{gtk-rc-parse-color-full}
+      @about-function{gtk-rc-parse-state}
+      @about-function{gtk-rc-parse-priority}
+      @about-function{gtk-rc-find-module-in-path}
+      @about-function{gtk-rc-find-pixmap-in-path}
+      @about-function{gtk-rc-get-module-dir}
+      @about-function{gtk-rc-get-im-module-path}
+      @about-function{gtk-rc-get-im-module-file}
+      @about-function{gtk-rc-get-theme-dir}
+      @about-function{gtk-rc-style-new}
+      @about-function{gtk-rc-style-copy}
+    @end{subsection}
+    @begin[GtkStyle]{subsection}
+      Functions for drawing widget parts
+
+      @about-class{gtk-style}
+      @about-function{gtk-style-new}
+      @about-function{gtk-style-copy}
+      @about-function{gtk-style-attach}
+      @about-function{gtk-style-detach}
+      @about-function{gtk-style-set-background}
+      @about-function{gtk-style-apply-default-background}
+      @about-function{gtk-style-apply-default-pixmap}
+      @about-function{gtk-style-lookup-color}
+      @about-function{gtk-style-lookup-icon-set}
+      @about-function{gtk-style-render-icon}
+      @about-function{gtk-style-get-style-property}
+      @about-function{gtk-style-get-valist}
+      @about-function{gtk-style-get}
+      @about-function{gtk-paint-arrow}
+      @about-function{gtk-paint-box}
+      @about-function{gtk-paint-box-gap}
+      @about-function{gtk-paint-check}
+      @about-function{gtk-paint-diamond}
+      @about-function{gtk-paint-extension}
+      @about-function{gtk-paint-flat-box}
+      @about-function{gtk-paint-focus}
+      @about-function{gtk-paint-handle}
+      @about-function{gtk-paint-hline}
+      @about-function{gtk-paint-option}
+      @about-function{gtk-paint-polygon}
+      @about-function{gtk-paint-shadow}
+      @about-function{gtk-paint-shadow-gap}
+      @about-function{gtk-paint-slider}
+      @about-function{gtk-paint-spinner}
+      @about-function{gtk-paint-string}
+      @about-function{gtk-paint-tab}
+      @about-function{gtk-paint-vline}
+      @about-function{gtk-paint-expander}
+      @about-function{gtk-paint-layout}
+      @about-function{gtk-paint-resize-grip}
+      @about-function{gtk-draw-insertion-cursor}
+      @about-symbol{gtk-rc-property}
+    @end{subsection}
+    @begin[GtkHScale]{subsection}
+      A horizontal slider widget for selecting a value from a range.
+
+      @about-class{gtk-hscale}
+      @about-function{gtk-hscale-new}
+      @about-function{gtk-hscale-new-with-range}
+    @end{subsection}
+    @begin[GtkVScale]{subsection}
+      A vertical slider widget for selecting a value from a range.
+
+      @about-class{gtk-vscale}
+      @about-function{gtk-vscale-new}
+      @about-function{gtk-vscale-new-with-range}
+    @end{subsection}
+    @begin[GtkTearoffMenuItem]{subsection}
+      A menu item used to tear off and reattach its menu.
+
+      @about-class{gtk-tearoff-menu-item}
+      @about-function{gtk-tearoff-menu-item-new}
+    @end{subsection}
+    @begin[GtkColorSelection]{subsection}
+      A widget used to select a color.
+
+      @about-class{gtk-color-selection}
+      @about-function{gtk-color-selection-child-expand}
+      @about-function{gtk-color-selection-child-fill}
+      @about-function{gtk-color-selection-child-padding}
+      @about-function{gtk-color-selection-child-pack-type}
+      @about-function{gtk-color-selection-child-position}
+      @about-function{gtk-color-selection-new}
+      @about-function{gtk-color-selection-set-has-opacity-control}
+      @about-function{gtk-color-selection-get-has-opacity-control}
+      @about-function{gtk-color-selection-set-has-palette}
+      @about-function{gtk-color-selection-get-has-palette}
+      @about-function{gtk-color-selection-get-current-alpha}
+      @about-function{gtk-color-selection-set-current-alpha}
+      @about-function{gtk-color-selection-get-current-color}
+      @about-function{gtk-color-selection-set-current-color}
+      @about-function{gtk-color-selection-get-previous-alpha}
+      @about-function{gtk-color-selection-set-previous-alpha}
+      @about-function{gtk-color-selection-get-previous-color}
+      @about-function{gtk-color-selection-set-previous-color}
+      @about-function{gtk-color-selection-get-current-rgba}
+      @about-function{gtk-color-selection-set-current-rgba}
+      @about-function{gtk-color-selection-get-previous-rgba}
+      @about-function{gtk-color-selection-set-previous-rgba}
+      @about-function{gtk-color-selection-is-adjusting}
+      @about-function{gtk-color-selection-palette-from-string}
+      @about-function{gtk-color-selection-palette-to-string}
+      @about-function{gtk-color-selection-set-change-palette-with-screen-hook}
+    @end{subsection}
+    @begin[GtkColorSelectionDialog]{subsection}
+      Deprecated dialog box for selecting a color.
+
+      @about-class{gtk-color-selection-dialog}
+      @about-function{gtk-color-selection-dialog-new}
+      @about-function{gtk-color-selection-dialog-get-color-selection}
+    @end{subsection}
+    @begin[GtkHSV]{subsection}
+      A \"color wheel\" widget.
+
+      @about-class{gtk-hsv}
+      @about-function{gtk-hsv-new}
+      @about-function{gtk-hsv-set-color}
+      @about-function{gtk-hsv-get-color}
+      @about-function{gtk-hsv-set-metrics}
+      @about-function{gtk-hsv-get-metrics}
+      @about-function{gtk-hsv-is-adjusting}
+      @about-function{gtk-hsv-to-rgb}
+      @about-function{gtk-rgb-to-hsv}
+    @end{subsection}
+    @begin[GtkFontSelection]{subsection}
+      Deprecated widget for selecting fonts.
+
+      @about-class{gtk-font-selection}
+      @about-function{gtk-font-selection-child-expand}
+      @about-function{gtk-font-selection-child-fill}
+      @about-function{gtk-font-selection-child-padding}
+      @about-function{gtk-font-selection-child-pack-type}
+      @about-function{gtk-font-selection-child-position}
+      @about-function{gtk-font-selection-new}
+      @about-function{gtk-font-selection-get-font-name}
+      @about-function{gtk-font-selection-set-font-name}
+      @about-function{gtk-font-selection-get-preview-text}
+      @about-function{gtk-font-selection-set-preview-text}
+      @about-function{gtk-font-selection-get-face}
+      @about-function{gtk-font-selection-get-face-list}
+      @about-function{gtk-font-selection-get-family}
+      @about-function{gtk-font-selection-get-size}
+      @about-function{gtk-font-selection-get-family-list}
+      @about-function{gtk-font-selection-get-preview-entry}
+      @about-function{gtk-font-selection-get-size-entry}
+      @about-function{gtk-font-selection-get-size-list}
+    @end{subsection}
+    @begin[GtkFontSelectionDialog]{subsection}
+      Deprecated dialog box for selecting fonts.
+
+      @about-class{gtk-font-selection-dialog}
+      @about-function{gtk-font-selection-dialog-new}
+      @about-function{gtk-font-selection-dialog-get-font-name}
+      @about-function{gtk-font-selection-dialog-set-font-name}
+      @about-function{gtk-font-selection-dialog-get-preview-text}
+      @about-function{gtk-font-selection-dialog-set-preview-text}
+      @about-function{gtk-font-selection-dialog-get-cancel-button}
+      @about-function{gtk-font-selection-dialog-get-ok-button}
+      @about-function{gtk-font-selection-dialog-get-font-selection}
+    @end{subsection}
+    @begin[GtkHBox]{subsection}
+      A horizontal container box.
+
+      @about-class{gtk-hbox}
+      @about-function{gtk-hbox-new}
+      @about-function{gtk-hbox-child-expand}
+      @about-function{gtk-hbox-child-fill}
+      @about-function{gtk-hbox-child-padding}
+      @about-function{gtk-hbox-child-pack-type}
+      @about-function{gtk-hbox-child-position}
+    @end{subsection}
+    @begin[GtkVBox]{subsection}
+      A vertical container box.
+
+      @about-class{gtk-vbox}
+      @about-function{gtk-vbox-new}
+      @about-function{gtk-vbox-child-expand}
+      @about-function{gtk-vbox-child-fill}
+      @about-function{gtk-vbox-child-padding}
+      @about-function{gtk-vbox-child-pack-type}
+      @about-function{gtk-vbox-child-position}
+    @end{subsection}
+    @begin[GtkHButtonBox]{subsection}
+      A container for arranging buttons horizontally
+
+      @about-class{gtk-hbutton-box}
+      @about-function{gtk-hbutton-box-new}
+      @about-function{gtk-hbutton-box-child-expand}
+      @about-function{gtk-hbutton-box-child-fill}
+      @about-function{gtk-hbutton-box-child-padding}
+      @about-function{gtk-hbutton-box-child-pack-type}
+      @about-function{gtk-hbutton-box-child-position}
+      @about-function{gtk-hbutton-box-child-secondary}
+    @end{subsection}
+    @begin[GtkVButtonBox]{subsection}
+      A container for arranging buttons vertically
+
+      @about-class{gtk-vbutton-box}
+      @about-function{gtk-vbutton-box-new}
+      @about-function{gtk-vbutton-box-child-expand}
+      @about-function{gtk-vbutton-box-child-fill}
+      @about-function{gtk-vbutton-box-child-padding}
+      @about-function{gtk-vbutton-box-child-pack-type}
+      @about-function{gtk-vbutton-box-child-position}
+      @about-function{gtk-vbutton-box-child-secondary}
+    @end{subsection}
+    @begin[GtkHPaned]{subsection}
+      A container with two panes arranged horizontally.
+
+      @about-class{gtk-hpaned}
+      @about-function{gtk-hpaned-new}
+      @about-function{gtk-hpaned-child-resize}
+      @about-function{gtk-hpaned-child-shrink}
+    @end{subsection}
+    @begin[GtkVPaned]{subsection}
+      A container with two panes arranged vertically.
+
+      @about-class{gtk-vpaned}
+      @about-function{gtk-vpaned-new}
+      @about-function{gtk-vpaned-child-resize}
+      @about-function{gtk-vpaned-child-shrink}
+    @end{subsection}
+    @begin[GtkTable]{subsection}
+      Pack widgets in regular patterns.
+
+      @about-class{gtk-table}
+      @about-function{gtk-table-child-left-attach}
+      @about-function{gtk-table-child-right-attach}
+      @about-function{gtk-table-child-top-attach}
+      @about-function{gtk-table-child-bottom-attach}
+      @about-function{gtk-table-child-x-options}
+      @about-function{gtk-table-child-y-options}
+      @about-function{gtk-table-child-x-padding}
+      @about-function{gtk-table-child-y-padding}
+      @about-function{gtk-table-new}
+      @about-function{gtk-table-resize}
+      @about-function{gtk-table-get-size}
+      @about-function{gtk-table-attach}
+      @about-function{gtk-table-attach-defaults}
+      @about-function{gtk-table-set-row-spacing}
+      @about-function{gtk-table-set-col-spacing}
+      @about-function{gtk-table-set-row-spacings}
+      @about-function{gtk-table-set-col-spacings}
+      @about-function{gtk-table-set-homogeneous}
+      @about-function{gtk-table-get-default-row-spacing}
+      @about-function{gtk-table-get-homogeneous}
+      @about-function{gtk-table-get-row-spacing}
+      @about-function{gtk-table-get-col-spacing}
+      @about-function{gtk-table-get-default-col-spacing}
+    @end{subsection}
+    @begin[GtkHSeparator]{subsection}
+      @about-class{gtk-hseparator}
+      @about-function{gtk-hseparator-new}
+    @end{subsection}
+    @begin[GtkVSeparator]{subsection}
+      @about-class{gtk-vseparator}
+      @about-function{gtk-vseparator-new}
+    @end{subsection}
+    @begin[GtkHScrollbar]{subsection}
+      @about-class{gtk-hscrollbar}
+      @about-function{gtk-hscrollbar-new}
+    @end{subsection}
+    @begin[GtkVScrollbar]{subsection}
+      @about-class{gtk-vscrollbar}
+      @about-function{gtk-vscrollbar-new}
     @end{subsection}
   @end{section}")
 

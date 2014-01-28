@@ -361,11 +361,12 @@
 (setf (gethash 'gtk-about-dialog-artists atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-about-dialog-artists 'function)
- "@version{2013-8-30}
-  Accessor of the slot @code{\"artists\"} of the @class{gtk-about-dialog} class.
+ "@version{2014-1-26}
+  Accessor of the slot @slot[gtk-about-dialog]{artists} of the
+  @class{gtk-about-dialog} class.
   @see-class{gtk-about-dialog}
   @see-function{gtk-about-dialog-get-artists}
-  @see-function{gtk-ablut-dialog-set-artists}")
+  @see-function{gtk-about-dialog-set-artists}")
 
   #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-about-dialog-authors atdoc:*function-name-alias*)
@@ -624,7 +625,7 @@
 
   Since 2.12
   @see-class{gtk-about-dialog}
-  @see-function{gtk-about-dialog-get-program-name}  
+  @see-function{gtk-about-dialog-get-program-name}
   @see-function{g-get-application-name}"
   (setf (gtk-about-dialog-program-name about) name))
 
@@ -1334,7 +1335,7 @@
               (g-object-set-data parent "gtk-about-dialog" (pointer dialog)))
             (setf about-dialog dialog)))
       (gtk-window-present dialog))))
-      
+
 (export 'gtk-show-about-dialog)
 
 ;;; --- End of file gtk.about-dialog.lisp --------------------------------------

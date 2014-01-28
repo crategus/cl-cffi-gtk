@@ -1,4 +1,4 @@
-Content from the GTK+ 3.8.8 Reference Manual
+Content from the GTK+ 3.8.9 Reference Manual
 
     *   - needs update
     %   - not fully implemented
@@ -30,7 +30,7 @@ Theming in GTK+
     gtk.widget-path.lisp             - GtkWidgetPath               - GTK+ 3.6.4%
     gtk.icon-theme.lisp              - GtkIconTheme                - GTK+ 3.6.4%
     gtk.stock-images.lisp            - Themeable Stock Images      - GTK+ 3.6.4%
-    gtk.numerable-icon.lisp          - GtkNumerableIcon            - GTK+ 3.8.8%
+    gtk.numerable-icon.lisp          - GtkNumerableIcon            - GTK+ 3.8.8
 
 GTK+ Widgets and Objects
 
@@ -139,7 +139,6 @@ GTK+ Widgets and Objects
     gtk.radio-menu-item.lisp         - GtkRadioMenuItem            - GTK+ 3.8.8
     gtk.check-menu-item.lisp         - GtkCheckMenuItem            - GTK+ 3.6.4
     gtk.separator-menu-item.lisp     - GtkSeparatorMenuItem        - GTK+ 3.6.4
-    gtk.tearoff-menu-item.lisp       - GtkTearoffMenuItem          - GTK+ 3.6.4
 
     gtk.tool-shell.lisp              - GtkToolShell                - GTK+ 3.6.4
     gtk.toolbar.lisp                 - GtkToolbar                  - GTK+ 3.6.4
@@ -154,7 +153,7 @@ GTK+ Widgets and Objects
 
   Action-based menus and toolbars
 
-    gtk.ui-manager.lisp              - GtkUIManager                - GTK+ 3.6.4&
+    gtk.ui-manager.lisp              - GtkUIManager                - GTK+ 3.8.8
     gtk.action-group.lisp            - GtkActionGroup              - GTK+ 3.8.8&
     gtk.action.lisp                  - GtkAction                   - GTK+ 3.8.8
     gtk.toggle-action.lisp           - GtkToggleAction             - GTK+ 3.8.8
@@ -168,9 +167,6 @@ GTK+ Widgets and Objects
     gtk.color-button.lisp            - GtkColorButton              - GTK+ 3.6.4
     gtk.color-chooser-widget.lisp    - GtkColorChooserWidget       - GTK+ 3.6.4
     gtk.color-chooser-dialog.lisp    - GtkColorChooserDialog       - GTK+ 3.6.4
-    gtk.color-selection.lisp         - GtkColorSelection (**)      - GTK+ 3.6.4&
-    gtk.color-selection-dialog.lisp  - GtkColorSelectionDialog(**) - GTK+ 3.6.4
-    gtk.hsv.lisp                     - GtkHSV (**)                 - GTK+ 3.6.4
 
     gtk.file-chooser.lisp            - GtkFileChooser              - GTK+ 3.8.8&
     gtk.file-chooser-button.lisp     - GtkFileChooserButton        - GTK+ 3.6.4
@@ -182,8 +178,6 @@ GTK+ Widgets and Objects
     gtk.font-button.lisp             - GtkFontButton               - GTK+ 3.6.4
     gtk.font-chooser-widget.lisp     - GtkFontChooserWidget        - GTK+ 3.6.4
     gtk.font-chooser-dialog.lisp     - GtkFontChooserDialog        - GTK+ 3.6.4
-    gtk.font-selection.lisp          - GtkFontSelection (**)       - GTK+ 3.6.4
-    gtk.font-selection-dialog.lisp   - GtkFontSelectionDialog (**) - GTK+ 3.6.4&
 
   Layout Containers
 
@@ -196,7 +190,6 @@ GTK+ Widgets and Objects
     gtk.paned.lisp                   - GtkPaned, ...               - GTK+ 3.6.4
     gtk.layout.lisp                  - GtkLayout                   - GTK+ 3.6.4
     gtk.notebook.lisp                - GtkNotebook                 - GTK+ 3.6.4
-    gtk.table.lisp                   - GtkTable                    - GTK+ 3.6.4
     gtk.expander.lisp                - GtkExpander                 - GTK+ 3.6.4
     gtk.overlay.lisp                 - GtkOverlay                  - GTK+ 3.6.4
     gtk.orientable.lisp              - GtkOrientable               - GTK+ 3.6.4
@@ -288,5 +281,10 @@ GTK+ Widgets and Objects
     not implemented                  - GtkGradient
     gtk.resource-files.lisp          - Resource Files (**)         - GTK+ 3.6.4%
     gtk.style.lisp                   - GtkStyle (**)               - GTK+ 3.6.4%
-
-
+    gtk.tearoff-menu-item.lisp       - GtkTearoffMenuItem          - GTK+ 3.6.4
+    gtk.color-selection.lisp         - GtkColorSelection (**)      - GTK+ 3.6.4&
+    gtk.color-selection-dialog.lisp  - GtkColorSelectionDialog(**) - GTK+ 3.6.4
+    gtk.hsv.lisp                     - GtkHSV (**)                 - GTK+ 3.6.4
+    gtk.font-selection.lisp          - GtkFontSelection (**)       - GTK+ 3.6.4
+    gtk.font-selection-dialog.lisp   - GtkFontSelectionDialog (**) - GTK+ 3.6.4&
+    gtk.table.lisp                   - GtkTable                    - GTK+ 3.6.4
