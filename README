@@ -12,15 +12,19 @@ The focus of this work is to document the library more complete and to
 do the implementation as consistent as possible. Most informations about GTK+
 can be gained by reading the C documentation. Therefore, the C documentation
 from http://www.gtk.org is included into the Lisp files to document the Lisp
-binding to the GTK+ library. This documentation is also available online at
+binding to the GTK+ library. This documentation is available online at
 http://www.crategus.com/books/cl-cffi-gtk/
-
-At this time, the library is developed and tested with SBCL 1.1.9 and
-GTK+ 3.6.4 on a Linux system. Furthermore, the following libraries GLIB 2.36.0,
-Pango 1.32.5, and Cairo 1.12.4 are loaded.
 
 Examples of the usage are included in a gtk-demo and tutorial examples. Start
 with the tutorial available online at
 http://www.crategus.com/books/cl-gtk/gtk-tutorial.html to learn how to use the
 library.
+
+At this time, the library is developed and tested with SBCL 1.1.9 on a
+Linux system (Ubuntu). Futhermore, the library is tested with Clozure Common
+Lisp 1.9 and CLISP 2.49 on Linux. The minium version requirements are GTK+ 3.4
+and GLIB 2.32.
+
+The library compiles and runs under Windows 7, but when moving a application
+window the application will freeze. This bug is not solved at this time.
 
