@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.8.8 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -226,7 +226,7 @@
                                                   (ui-d-var item)
                                                   child-var props))))))
        ,@body)))
-       
+
 (export 'let-ui)
 
 ;;; ----------------------------------------------------------------------------
@@ -246,11 +246,11 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-ui-manager 'type)
- "@version{2013-6-2}
+ "@version{2014-1-26}
   @begin{short}
-    A @sym{gtk-ui-manager} constructs a user interface (menus and toolbars) from
-    one or more UI definitions, which reference actions from one or more action
-    groups.
+    A @sym{gtk-ui-manager} constructs a user interface, menus and toolbars,
+    from one or more UI definitions, which reference actions from one or more
+    action groups.
   @end{short}
 
   @subheading{UI Definitions}
@@ -261,40 +261,40 @@
     Do not confuse the @sym{gtk-ui-manager} UI Definitions described here with
     the similarly named @class{gtk-builder} UI Definitions.
     @begin{pre}
-   <!ELEMENT ui          (menubar|toolbar|popup|accelerator)* >
-   <!ELEMENT menubar     (menuitem|separator|placeholder|menu)* >
-   <!ELEMENT menu        (menuitem|separator|placeholder|menu)* >
-   <!ELEMENT popup       (menuitem|separator|placeholder|menu)* >
-   <!ELEMENT toolbar     (toolitem|separator|placeholder)* >
-   <!ELEMENT placeholder (menuitem|toolitem|separator|placeholder|menu)* >
-   <!ELEMENT menuitem     EMPTY >
-   <!ELEMENT toolitem     (menu?) >
-   <!ELEMENT separator    EMPTY >
-   <!ELEMENT accelerator  EMPTY >
-   <!ATTLIST menubar      name                      #IMPLIED
-                          action                    #IMPLIED >
-   <!ATTLIST toolbar      name                      #IMPLIED
-                          action                    #IMPLIED >
-   <!ATTLIST popup        name                      #IMPLIED
-                          action                    #IMPLIED
-                          accelerators (true|false) #IMPLIED >
-   <!ATTLIST placeholder  name                      #IMPLIED
-                          action                    #IMPLIED >
-   <!ATTLIST separator    name                      #IMPLIED
-                          action                    #IMPLIED
-                          expand       (true|false) #IMPLIED >
-   <!ATTLIST menu         name                      #IMPLIED
-                          action                    #REQUIRED
-                          position     (top|bot)    #IMPLIED >
-   <!ATTLIST menuitem     name                      #IMPLIED
-                          action                    #REQUIRED
-                          position     (top|bot)    #IMPLIED
-                          always-show-image (true|false) #IMPLIED >
-   <!ATTLIST toolitem     name                      #IMPLIED
-                          action                    #REQUIRED
-                          position     (top|bot)    #IMPLIED >
-   <!ATTLIST accelerator  name                      #IMPLIED
-                          action                    #REQUIRED >
+<!ELEMENT ui          (menubar|toolbar|popup|accelerator)* >
+<!ELEMENT menubar     (menuitem|separator|placeholder|menu)* >
+<!ELEMENT menu        (menuitem|separator|placeholder|menu)* >
+<!ELEMENT popup       (menuitem|separator|placeholder|menu)* >
+<!ELEMENT toolbar     (toolitem|separator|placeholder)* >
+<!ELEMENT placeholder (menuitem|toolitem|separator|placeholder|menu)* >
+<!ELEMENT menuitem     EMPTY >
+<!ELEMENT toolitem     (menu?) >
+<!ELEMENT separator    EMPTY >
+<!ELEMENT accelerator  EMPTY >
+<!ATTLIST menubar      name                      #IMPLIED
+                        action                    #IMPLIED >
+<!ATTLIST toolbar      name                      #IMPLIED
+                        action                    #IMPLIED >
+<!ATTLIST popup        name                      #IMPLIED
+                        action                    #IMPLIED
+                        accelerators (true|false) #IMPLIED >
+<!ATTLIST placeholder  name                      #IMPLIED
+                        action                    #IMPLIED >
+<!ATTLIST separator    name                      #IMPLIED
+                        action                    #IMPLIED
+                        expand       (true|false) #IMPLIED >
+<!ATTLIST menu         name                      #IMPLIED
+                        action                    #REQUIRED
+                        position     (top|bot)    #IMPLIED >
+<!ATTLIST menuitem     name                      #IMPLIED
+                        action                    #REQUIRED
+                        position     (top|bot)    #IMPLIED
+                        always-show-image (true|false) #IMPLIED >
+<!ATTLIST toolitem     name                      #IMPLIED
+                        action                    #REQUIRED
+                        position     (top|bot)    #IMPLIED >
+<!ATTLIST accelerator  name                      #IMPLIED
+                        action                    #REQUIRED >
     @end{pre}
     There are some additional restrictions beyond those specified in the DTD,
     e. g. every toolitem must have a toolbar in its anchestry and every menuitem
@@ -310,30 +310,30 @@
 
     @b{Example:} A UI definition
     @begin{pre}
-   <ui>
-     <menubar>
-       <menu>
-         <menuitem></menuitem>
-         <placeholder></placeholder>
-       </menu>
-       <menu>
-         <menuitem></menuitem>
-         <menuitem></menuitem>
-         <menuitem></menuitem>
-         <menuitem></menuitem>
-       </menu>
-     </menubar>
-     <toolbar>
-       <placeholder>
-         <separator></separator>
-         <toolitem></toolitem>
-         <toolitem></toolitem>
-         <toolitem></toolitem>
-         <toolitem></toolitem>
-         <separator></separator>
-       </placeholder>
-     </toolbar>
-   </ui>
+<ui>
+    <menubar>
+    <menu>
+        <menuitem></menuitem>
+        <placeholder></placeholder>
+    </menu>
+    <menu>
+        <menuitem></menuitem>
+        <menuitem></menuitem>
+        <menuitem></menuitem>
+        <menuitem></menuitem>
+    </menu>
+    </menubar>
+    <toolbar>
+    <placeholder>
+        <separator></separator>
+        <toolitem></toolitem>
+        <toolitem></toolitem>
+        <toolitem></toolitem>
+        <toolitem></toolitem>
+        <separator></separator>
+    </placeholder>
+    </toolbar>
+</ui>
     @end{pre}
     The constructed widget hierarchy is very similar to the element tree of the
     XML, with the exception that placeholders are merged into their parents. The
@@ -371,8 +371,8 @@
   @subheading{Accelerators}
     Every action has an accelerator path. Accelerators are installed together
     with menuitem proxies, but they can also be explicitly added with
-    <accelerator> elements in the UI definition. This makes it possible to have
-    accelerators for actions even if they have no visible proxies.
+    <accelerator> elements in the UI definition. This makes it possible
+    to have accelerators for actions even if they have no visible proxies.
 
   @subheading{Smart Separators}
     The separators created by @sym{gtk-ui-manager} are \"smart\", i. e. they
@@ -399,8 +399,8 @@
         Add an insensitive \"Empty\" item.
       @end{item}
     @end{itemize}
-    The behaviour is chosen based on the @code{\"hide-if-empty\"} property of
-    the action to which the submenu is associated.
+    The behaviour is chosen based on the @slot[gtk-action]{hide-if-empty}
+    property of the action to which the submenu is associated.
 
   @subheading{GtkUIManager as GtkBuildable}
     The @sym{gtk-ui-manager} implementation of the @class{gtk-buildable}
@@ -417,33 +417,33 @@
 
     @b{Example:} An embedded @sym{gtk-ui-manager} UI definition
     @begin{pre}
-   <object class=\"GtkUIManager\" id=\"uiman\">
-     <child>
-       <object class=\"GtkActionGroup\" id=\"actiongroup\">
-         <child>
-           <object class=\"GtkAction\" id=\"file\">
-             <property name=\"label\">_File</property>
-           </object>
-         </child>
-       </object>
-     </child>
-     <ui>
-       <menubar name=\"menubar1\">
-         <menu action=\"file\">
-         </menu>
-       </menubar>
-     </ui>
-   </object>
-   <object class=\"GtkWindow\" id=\"main-window\">
-     <child>
-       <object class=\"GtkMenuBar\" id=\"menubar1\" constructor=\"uiman\"/>
-     </child>
-   </object>
+<object class=\"GtkUIManager\" id=\"uiman\">
+    <child>
+    <object class=\"GtkActionGroup\" id=\"actiongroup\">
+        <child>
+        <object class=\"GtkAction\" id=\"file\">
+            <property name=\"label\">_File</property>
+        </object>
+        </child>
+    </object>
+    </child>
+    <ui>
+    <menubar name=\"menubar1\">
+        <menu action=\"file\">
+        </menu>
+    </menubar>
+    </ui>
+</object>
+<object class=\"GtkWindow\" id=\"main-window\">
+    <child>
+    <object class=\"GtkMenuBar\" id=\"menubar1\" constructor=\"uiman\"/>
+    </child>
+</object>
     @end{pre}
   @begin[Signal Details]{dictionary}
     @subheading{The \"actions-changed\" signal}
       @begin{pre}
- lambda (mangager)   : No Recursion
+lambda (manager)   : No Recursion
       @end{pre}
       The \"actions-changed\" signal is emitted whenever the set of actions
       changes.
@@ -454,7 +454,7 @@
 
     @subheading{The \"add-widget\" signal}
       @begin{pre}
- lambda (manager widget)   : No Recursion
+lambda (manager widget)   : No Recursion
       @end{pre}
       The \"add-widget\" signal is emitted for each generated menubar and
       toolbar. It is not emitted for generated popup menus, which can be
@@ -467,7 +467,7 @@
 
     @subheading{The \"connect-proxy\" signal}
       @begin{pre}
- lambda (manager action proxy)   : No Recursion
+lambda (manager action proxy)   : No Recursion
       @end{pre}
       The \"connect-proxy\" signal is emitted after connecting a proxy to an
       action in the group.
@@ -483,7 +483,7 @@
 
     @subheading{The \"disconnect-proxy\" signal}
       @begin{pre}
- lambda (manager action proxy)   : No Recursion
+lambda (manager action proxy)   : No Recursion
       @end{pre}
       The \"disconnect-proxy\" signal is emitted after disconnecting a proxy
       from an action in the group.
@@ -496,7 +496,7 @@
 
     @subheading{The \"post-activate\" signal}
       @begin{pre}
- lambda (manager action)   : No Recursion
+lambda (manager action)   : No Recursion
       @end{pre}
       The \"post-activate\" signal is emitted just after the action is
       activated.
@@ -510,12 +510,11 @@
 
     @subheading{The \"pre-activate\" signal}
       @begin{pre}
- lambda (manager action)   : No Recursion
+lambda (manager action)   : No Recursion
       @end{pre}
       The \"pre-activate\" signal is emitted just before the action is
-      activated.
-      This is intended for applications to get notification just before any
-      action is activated.
+      activated. This is intended for applications to get notification just
+      before any action is activated.
       @begin[code]{table}
         @entry[manager]{The ui manager.}
         @entry[action]{The action.}
@@ -523,7 +522,19 @@
       Since 2.4
   @end{dictionary}
   @see-slot{gtk-ui-manager-add-tearoffs}
-  @see-slot{gtk-ui-manager-ui}")
+  @see-slot{gtk-ui-manager-ui}
+  @see-class{gtk-builder}
+  @see-class{gtk-buildable}
+  @see-class{gtk-menu-bar}
+  @see-class{gtk-toolbar}
+  @see-class{gtk-menu}
+  @see-class{gtk-menu-item}
+  @see-class{gtk-tool-item}
+  @see-class{gtk-menu-tool-button}
+  @see-class{gtk-separator-menu-item}
+  @see-class{gtk-separator-tool-item}
+  @see-class{gtk-action-group}
+  @see-function{gtk-ui-manager-get-widget}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -536,15 +547,14 @@
                                                'gtk-ui-manager) 't)
  "The @code{\"add-tearoffs\"} property of type @code{:boolean}
   (Read / Write) @br{}
-  @subheading{Warning}
-    The @code{\"add-tearoffs\"} property has been deprecated since version 3.4
-    and should not be used in newly-written code. Tearoff menus are deprecated
-    and should not be used in newly written code.
+  @b{Warning:}
+  The @code{\"add-tearoffs\"} property has been deprecated since version 3.4
+  and should not be used in newly-written code. Tearoff menus are deprecated
+  and should not be used in newly written code.
 
   The \"add-tearoffs\" property controls whether generated menus have tearoff
-  menu items.
-  Note that this only affects regular menus. Generated popup menus never have
-  tearoff menu items. @br{}
+  menu items. Note that this only affects regular menus. Generated popup menus
+  never have tearoff menu items. @br{}
   Default value: @code{nil} @br{}
   Since 2.4")
 
@@ -564,15 +574,22 @@
 (setf (gethash 'gtk-ui-manager-add-tearoffs atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-ui-manager-add-tearoffs 'function)
- "@version{2013-3-27}
-  Accessor of the slot \"add-tearoffs\" of the @class{gtk-ui-manager} class.")
+ "@version{2014-1-26}
+  Accessor of the slot @slot[gtk-ui-manager]{add-tearoffs} of the
+  @class{gtk-ui-manager} class.
+  @see-class{gtk-ui-manager}
+  @see-function{gtk-ui-manager-get-add-tearoffs}
+  @see-function{gtk-ui-manager-set-add-tearoffs}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-ui-manager-ui atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-ui-manager-ui 'function)
- "@version{2013-3-27}
-  Accessor of the slot \"ui\" of the @class{gtk-ui-manager} class.")
+ "@version{2014-1-26}
+  Accessor of the slot @slot[gtk-ui-manager]{ui} of the
+  @class{gtk-ui-manager} class.
+  @see-class{gtk-ui-manager}
+  @see-function{gtk-ui-manager-get-ui}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkUIManagerItemType
@@ -596,7 +613,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-ui-manager-item-type atdoc:*symbol-name-alias*) "Flags"
       (gethash 'gtk-ui-manager-item-type atdoc:*external-symbols*)
- "@version{2013-6-2}
+ "@version{2014-1-26}
   @begin{short}
     These enumeration values are used by the @fun{gtk-ui-manager-add-ui}
     function to determine what UI element to create.
@@ -630,70 +647,87 @@
     @entry[:accelerator]{Install an accelerator.}
     @entry[:popup-with-accels]{Same as @code{:popup}, but the actions'
       accelerators are shown.}
-  @end{table}")
+  @end{table}
+  @see-class{gtk-ui-manager}
+  @see-function{gtk-ui-manager-add-ui}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_ui_manager_new ()
-;;;
-;;; GtkUIManager * gtk_ui_manager_new (void);
-;;;
-;;; Creates a new ui manager object.
-;;;
-;;; Returns :
-;;;     a new ui manager object.
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-ui-manager-new))
+
+(defun gtk-ui-manager-new ()
+ #+cl-cffi-gtk-documentation
+ "@version{2014-1-26}
+  @return{A new ui manager object.}
+  @short{Creates a new ui manager object.}
+
+  Since 2.4
+  @see-class{gtk-ui-manager}"
+  (make-instance 'gtk-ui-manager))
+
+(export 'gtk-ui-manager-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_ui_manager_set_add_tearoffs ()
-;;;
-;;; void gtk_ui_manager_set_add_tearoffs (GtkUIManager *manager,
-;;;                                       gboolean add_tearoffs);
-;;;
-;;; Warning
-;;;
-;;; gtk_ui_manager_set_add_tearoffs has been deprecated since version 3.4 and
-;;; should not be used in newly-written code. Tearoff menus are deprecated and
-;;; should not be used in newly written code.
-;;;
-;;; Sets the "add_tearoffs" property, which controls whether menus generated by
-;;; this GtkUIManager will have tearoff menu items.
-;;;
-;;; Note that this only affects regular menus. Generated popup menus never have
-;;; tearoff menu items.
-;;;
-;;; manager :
-;;;     a GtkUIManager
-;;;
-;;; add_tearoffs :
-;;;     whether tearoff menu items are added
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-ui-manager-set-add-tearoffs))
+
+(defun gtk-ui-manager-set-add-tearoffs (manager add-tearoffs)
+ #+cl-cffi-gtk-documentation
+ "@version{2014-1-26}
+  @argument[manager]{a @class{gtk-ui-manager}}
+  @argument[add-tearoffs]{whether tearoff menu items are added}
+  @begin{short}
+    Sets the @slot[gtk-ui-manager]{add-tearoffs} property, which controls
+    whether menus generated by this @class{gtk-ui-manager} will have tearoff
+    menu items.
+  @end{short}
+
+  Note that this only affects regular menus. Generated popup menus never have
+  tearoff menu items.
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-ui-manager-set-add-tearoffs} has been deprecated since
+    version 3.4 and should not be used in newly written code. Tearoff menus are
+    deprecated and should not be used in newly written code.
+  @end{dictionary}
+
+  Since 2.4
+  @see-class{gtk-ui-manager}
+  @see-function{gtk-ui-manager-get-add-tearoffs}"
+  (setf (gtk-ui-manager-add-tearoffs manager) add-tearoffs))
+
+(export 'gtk-ui-manager-set-add-tearoffs)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_ui_manager_get_add_tearoffs ()
-;;;
-;;; gboolean gtk_ui_manager_get_add_tearoffs (GtkUIManager *manager);
-;;;
-;;; Warning
-;;;
-;;; gtk_ui_manager_get_add_tearoffs has been deprecated since version 3.4 and
-;;; should not be used in newly-written code. Tearoff menus are deprecated and
-;;; should not be used in newly written code.
-;;;
-;;; Returns whether menus generated by this GtkUIManager will have tearoff menu
-;;; items.
-;;;
-;;; manager :
-;;;     a GtkUIManager
-;;;
-;;; Returns :
-;;;     whether tearoff menu items are added
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-ui-manager-get-add-tearoffs))
+
+(defun gtk-ui-manager-get-add-tearoffs (manager)
+ #+cl-cffi-gtk-documentation
+ "@version{2014-1-26}
+  @argument[manager]{a @class{gtk-ui-manager} object}
+  @return{Whether tearoff menu items are added.}
+  @begin{short}
+    Returns whether menus generated by this @class{gtk-ui-manager} will have
+    tearoff menu items.
+  @end{short}
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-ui-manager-get-add-tearoffs} has been deprecated since
+    version 3.4 and should not be used in newly-written code. Tearoff menus are
+    deprecated and should not be used in newly written code.
+  @end{dictionary}
+
+  Since 2.4
+  @see-class{gtk-ui-manager}
+  @see-function{gtk-ui-manager-set-add-tearoffs}"
+  (gtk-ui-manager-add-tearoffs manager))
+
+(export 'gtk-ui-manager-get-add-tearoffs)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_ui_manager_insert_action_group ()
@@ -702,22 +736,24 @@
 (defcfun ("gtk_ui_manager_insert_action_group"
           gtk-ui-manager-insert-action-group) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-6-2}
+ "@version{2014-1-26}
   @argument[manager]{a @class{gtk-ui-manager} object}
   @argument[action-group]{the action group to be inserted}
   @argument[pos]{the position at which the group will be inserted}
   @begin{short}
     Inserts an action group into the list of action groups associated with
-    manager. Actions in earlier groups hide actions with the same name in later
-    groups.
+    manager.
   @end{short}
+  Actions in earlier groups hide actions with the same name in later groups.
 
   If @arg{pos} is larger than the number of action groups in manager, or
   negative, @arg{action-group} will be inserted at the end of the internal list.
 
-  Since 2.4"
-  (ui-manager g-object)
-  (action-group g-object)
+  Since 2.4
+  @see-class{gtk-ui-manager}
+  @see-class{gtk-action-group}"
+  (manager (g-object gtk-ui-manager))
+  (action-group (g-object gtk-action-group))
   (pos :int))
 
 (export 'gtk-ui-manager-insert-action-group)
@@ -729,7 +765,7 @@
 (defcfun ("gtk_ui_manager_remove_action_group"
           gtk-ui-manager-remove-action-group) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-6-2}
+ "@version{2014-1-26}
   @argument[manager]{a @class{gtk-ui-manager} object}
   @argument[action-group]{the action group to be removed}
   @begin{short}
@@ -737,9 +773,11 @@
     manager.
   @end{short}
 
-  Since 2.4"
-  (ui-manager g-object)
-  (action-group g-object))
+  Since 2.4
+  @see-class{gtk-ui-manager}
+  @see-class{gtk-action-group}"
+  (manager (g-object gtk-ui-manager))
+  (action-group (g-object gtk-action-group)))
 
 (export 'gtk-ui-manager-remove-action-group)
 
@@ -763,22 +801,19 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_ui_manager_get_accel_group ()
-;;;
-;;; GtkAccelGroup * gtk_ui_manager_get_accel_group (GtkUIManager *manager);
-;;;
-;;; Returns the GtkAccelGroup associated with manager.
-;;;
-;;; manager :
-;;;     a GtkUIManager object
-;;;
-;;; Returns :
-;;;     the GtkAccelGroup
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_ui_manager_get_accel_group" gtk-ui-manager-get-accel-group)
     (g-object gtk-accel-group)
+ #+cl-cffi-gtk-documentation
+ "@version{2014-1-26}
+  @argument[manager]{a @class{gtk-ui-manager} object}
+  @return{The @class{gtk-accel-group}.}
+  @short{Returns the @class{gtk-accel-group} associated with @arg{manager}.}
+
+  Since 2.4
+  @see-class{gtk-ui-manager}
+  @see-class{gtk-accel-group}"
   (manager (g-object gtk-ui-manager)))
 
 (export 'gtk-ui-manager-get-accel-group)
@@ -790,28 +825,28 @@
 (defcfun ("gtk_ui_manager_get_widget" gtk-ui-manager-get-widget)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-2}
+ "@version{2014-1-26}
   @argument[manager]{a @class{gtk-ui-manager} object}
   @argument[path]{a path}
   @begin{return}
-    The widget found by following the @arg{path}, or @code{nil} if no widget
-    was found.
+    The widget found by following the path, or @code{nil} if no widget was
+    found.
   @end{return}
   @begin{short}
-    Looks up a widget by following a @arg{path}. The @arg{path} consists of the
-    names specified in the XML description of the UI. separated by '/'. Elements
-    which do not have a name or action attribute in the XML (e. g. <popup>) can
-    be addressed by their XML element name (e. g. \"popup\"). The root element
-    (\"/ui\") can be omitted in the @arg{path}.
+    Looks up a widget by following a path.
   @end{short}
+  The path consists of the names specified in the XML description of the UI
+  separated by '/'. Elements which do not have a name or action attribute
+  in the XML (e. g. <popup>) can be addressed by their XML element name (e. g.
+  \"popup\"). The root element (\"/ui\") can be omitted in the path.
 
   Note that the widget found by following a path that ends in a <menu> element
-  is the menuitem to which the menu is attached, not the menu itmanager.
+  is the menuitem to which the menu is attached, not the menu itself.
 
   Also note that the widgets constructed by a UI manager are not tied to the
   lifecycle of the UI manager. If you add the widgets returned by this
-  function to some container or explicitly ref them, they will survive the
-  destruction of the UI manager.
+  function to some container or explicitly reference them, they will survive
+  the destruction of the UI manager.
 
   Since 2.4
   @see-class{gtk-ui-manager}"
@@ -876,30 +911,38 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_ui_manager_add_ui_from_resource ()
-;;;
-;;; guint gtk_ui_manager_add_ui_from_resource (GtkUIManager *manager,
-;;;                                            const gchar *resource_path,
-;;;                                            GError **error);
-;;;
-;;; Parses a resource file containing a UI definition and merges it with the
-;;; current contents of manager.
-;;;
-;;; manager :
-;;;     a GtkUIManager object
-;;;
-;;; resource_path :
-;;;     the resource path of the file to parse
-;;;
-;;; error :
-;;;     return location for an error
-;;;
-;;; Returns :
-;;;     The merge id for the merged UI. The merge id can be used to unmerge the
-;;;     UI with gtk_ui_manager_remove_ui(). If an error occurred, the return
-;;;     value is 0.
-;;;
-;;; Since 3.4
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_ui_manager_add_ui_from_resource"
+          %gtk-ui-manager-add-ui-from-resource) :uint
+  (manager (g-object gtk-ui-manager))
+  (resource-path :string)
+  (error :pointer))
+
+(defun gtk-ui-manager-add-ui-from-resource (manager resource-path)
+ #+cl-cffi-gtk-documentation
+ "@version{2014-1-26}
+  @argument[manager]{a @class{gtk-ui-manager} object}
+  @argument[resource-path]{the resource path of the file to parse}
+  @begin{return}
+    The merge ID for the merged UI. The merge ID can be used to unmerge the
+    UI with the function @fun{gtk-ui-manager-remove-ui}. If an error occurred,
+    the return value is 0.
+  @end{return}
+  @begin{short}
+    Parses a resource file containing a UI definition and merges it with the
+    current contents of manager.
+  @end{short}
+
+  Since 3.4
+  @see-class{gtk-ui-manager}
+  @see-function{gtk-ui-manager-remove-ui}
+  @see-function{gtk-ui-manager-add-ui-from-file}
+  @see-function{gtk-ui-manager-add-ui-from-string}"
+  (with-g-error (err)
+    (%gtk-ui-manager-add-ui-from-resource manager resource-path err)))
+
+(export 'gtk-ui-manager-add-ui-from-resource)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_ui_manager_add_ui_from_string ()
@@ -915,7 +958,7 @@
 
 (defun gtk-ui-manager-add-ui-from-string (ui-manager buffer)
  #+cl-cffi-gtk-documentation
- "@version{2013-12-30}
+ "@version{2014-1-26}
   @argument[manager]{a @class{gtk-ui-manager} object}
   @argument[buffer]{the string to parse}
   @begin{return}
@@ -928,7 +971,9 @@
     contents of manager. An enclosing <ui> element is added if it is missing.
   @end{short}
 
-  Since 2.4"
+  Since 2.4
+  @see-class{gtk-ui-manager}
+  @see-function{gtk-ui-manager-remove-ui}"
   (with-g-error (err)
     (%gtk-ui-manager-add-ui-from-string ui-manager buffer -1 err)))
 
@@ -946,7 +991,7 @@
 
 (defun gtk-ui-manager-add-ui-from-file (ui-manager filename)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-2}
+ "@version{2014-1-26}
   @argument[manager]{a @class{gtk-ui-manager} object}
   @argument[filename]{the name of the file to parse}
   @begin{return}
@@ -959,7 +1004,9 @@
     contents of manager.
   @end{short}
 
-  Since 2.4"
+  Since 2.4
+  @see-class{gtk-ui-manager}
+  @see-function{gtk-ui-manager-remove-ui}"
   (with-g-error (err)
     (%gtk-ui-manager-add-ui-from-file ui-manager filename err)))
 
@@ -971,15 +1018,17 @@
 
 (defcfun ("gtk_ui_manager_new_merge_id" gtk-ui-manager-new-merge-id) :uint
  #+cl-cffi-gtk-documentation
- "@version{2013-6-2}
+ "@version{2014-1-26}
   @argument[manager]{a @class{gtk-ui-manager} object}
   @return{An unused merge ID.}
   @begin{short}
-    Returns an unused merge ID, suitable for use with the
-    @fun{gtk-ui-manager-add-ui} function.
+    Returns an unused merge ID, suitable for use with the function
+    @fun{gtk-ui-manager-add-ui}.
   @end{short}
 
-  Since 2.4"
+  Since 2.4
+  @see-class{gtk-ui-manager}
+  @see-function{gtk-ui-manager-add-ui}"
   (ui-manager (g-object gtk-ui-manager)))
 
 (export 'gtk-ui-manager-new-merge-id)
@@ -990,7 +1039,7 @@
 
 (defcfun ("gtk_ui_manager_add_ui" gtk-ui-manager-add-ui) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-6-2}
+ "@version{2014-1-26}
   @argument[manager]{a @class{gtk-ui-manager} object}
   @argument[merge-id]{the merge ID for the merged UI, see the
     @fun{gtk-ui-manager-new-merge-id} function}
@@ -998,7 +1047,8 @@
   @argument[name]{the name for the added UI element}
   @argument[action]{the name of the action to be proxied, or @code{nil} to add
     a separator}
-  @argument[type]{the type of UI element to add}
+  @argument[type]{the type of type @symbol{gtk-ui-manager-item-type} of UI
+    element to add}
   @argument[top]{if @em{true}, the UI element is added before its siblings,
     otherwise it is added after its siblings}
   @begin{short}
@@ -1013,7 +1063,10 @@
   If @arg{path} points to a menuitem or toolitem, the new element will be
   inserted before or after this item, depending on top.
 
-  Since 2.4"
+  Since 2.4
+  @see-class{gtk-ui-manager}
+  @see-symbol{gtk-ui-manager-item-type}
+  @see-function{gtk-ui-manager-new-merge-id}"
   (ui-manager (g-object gtk-ui-manager))
   (merge-id :uint)
   (path :string)
@@ -1030,7 +1083,7 @@
 
 (defcfun ("gtk_ui_manager_remove_ui" gtk-ui-manager-remove-ui) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-6-2}
+ "@version{2014-1-26}
   @argument[manager]{a @class{gtk-ui-manager} object}
   @argument[merge-id]{a merge ID as returned by the
     @fun{gtk-ui-manager-add-ui-from-string} function}
@@ -1039,6 +1092,7 @@
   @end{short}
 
   Since 2.4
+  @see-class{gtk-ui-manager}
   @see-function{gtk-ui-manager-add-ui-from-string}"
   (ui-manager g-object)
   (merge-id :uint))
@@ -1047,24 +1101,21 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_ui_manager_get_ui ()
-;;;
-;;; gchar * gtk_ui_manager_get_ui (GtkUIManager *manager);
-;;;
-;;; Creates a UI definition of the merged UI.
-;;;
-;;; manager :
-;;;     a GtkUIManager
-;;;
-;;; Returns :
-;;;     A newly allocated string containing an XML representation of the merged
-;;;     UI.
-;;;
-;;; Since 2.4
 ;;; ----------------------------------------------------------------------------
 
 (declaim (inline gtk-ui-manager-get-ui))
 
 (defun gtk-ui-manager-get-ui (manager)
+ #+cl-cffi-gtk-documentation
+ "@version{2014-1-26}
+  @argument[manager]{a @class{gtk-ui-manager}}
+  @begin{return}
+    A newly allocated string containing an XML representation of the merged UI.
+  @end{return}
+  @short{Creates a UI definition of the merged UI.}
+
+  Since 2.4
+  @see-class{gtk-ui-manager}"
   (gtk-ui-manager-ui manager))
 
 (export 'gtk-ui-manager-get-ui)
@@ -1075,7 +1126,7 @@
 
 (defcfun ("gtk_ui_manager_ensure_update" gtk-ui-manager-ensure-update) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-12-15}
+ "@version{2014-1-26}
   @argument[manager]{a @class{gtk-ui-manager} object}
   @begin{short}
     Makes sure that all pending updates to the UI have been completed.
@@ -1085,15 +1136,16 @@
   UI in an idle function. A typical example where this function is useful is to
   enforce that the menubar and toolbar have been added to the main window before
   showing it:
-  @begin{pre}
-   gtk_container_add (GTK_CONTAINER (window), vbox);
-   g_signal_connect (merge, \"add-widget\",
-                     G_CALLBACK (add_widget), vbox);
-   gtk_ui_manager_add_ui_from_file (merge, \"my-menus\");
-   gtk_ui_manager_add_ui_from_file (merge, \"my-toolbars\");
-   gtk_ui_manager_ensure_update (merge);
-   gtk_widget_show (window);
-  @end{pre}
+  @begin[Example]{dictionary}
+    @begin{pre}
+(gtk-container-add window vbox)
+(g-signal-connect merge \"add-widget\" #'add-widget)
+(gtk-ui-manager-add-ui-from-file merge \"my-menus\")
+(gtk-ui-manager-add-ui-from-file merge \"my-toolbars\")
+(gtk-ui-manager-ensure-update merge)
+(gtk-widget-show window)
+    @end{pre}
+  @end{dictionary}
   Since 2.4
   @see-class{gtk-ui-manager}"
   (ui-manager (g-object gtk-ui-manager)))
