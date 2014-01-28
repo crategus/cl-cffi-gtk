@@ -84,6 +84,7 @@
    (:file "gtk.css-provider")          ; CSS-like styling for widgets
    (:file "gtk.icon-theme")            ; Looking up icons by name
    (:file "gtk.style")                 ; Functions for drawing widget parts
+   (:file "gtk.numerable-icon")        ; A GIcon that allows numbered emblems
 
    ;; Abstract Base Classes
    (:file "gtk.widget")                ; Base class for all widgets
@@ -117,19 +118,19 @@
    (:file "gtk.scrolled-window")       ; Adds scrollbars
 
    ;; Windows
+   (:file "gtk.window")                ; GtkWindow
    (:file "gtk.dialog")                ; GtkDialog
    (:file "gtk.invisible")             ; GtkInvisible
    (:file "gtk.message-dialog")        ; GtkMessageDialog
-   (:file "gtk.window")                ; GtkWindow
    (:file "gtk.window-group")          ; GtkWindowGroup
    (:file "gtk.about-dialog")          ; GtkAboutDialog
    (:file "gtk.assistant")             ; GtkAssistant
    (:file "gtk.offscreen-window")      ; GtkOffscreenWindow
 
    ;; Display Widgets
+   (:file "gtk.label")                 ; GtkLabel
    (:file "gtk.accel-label")           ; GtkAccelLabel
    (:file "gtk.image")                 ; GtkImage
-   (:file "gtk.label")                 ; GtkLabel
    (:file "gtk.progress-bar")          ; GtkProgessBar
    (:file "gtk.statusbar")             ; GTKStatusbar
    (:file "gtk.info-bar")              ; GtkInfoBar
@@ -196,8 +197,8 @@
    (:file "gtk.menu-item")             ; Widget used for item in menus
    (:file "gtk.menu")                  ; Menu widget
    (:file "gtk.menu-bar")              ; Subclass for GtkMenuItem widgets
-   (:file "gtk.radio-menu-item")       ; Choice from multiple check menu items
    (:file "gtk.check-menu-item")       ; Menu item with a check box
+   (:file "gtk.radio-menu-item")       ; Choice from multiple check menu items
    (:file "gtk.image-menu-item")       ; Menu item with an icon
    (:file "gtk.separator-menu-item")   ; Separator used in menus
    (:file "gtk.tearoff-menu-item")     ; Menu item used to tear off and reattach
