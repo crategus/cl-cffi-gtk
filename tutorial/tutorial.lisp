@@ -3940,7 +3940,7 @@ happen.")
                                  :default-width 425
                                  :default-height 250
                                  :title "Example Menus by Hand"))
-          ;; A vbox to put a menu and a button in
+          ;; A vbox to put a menu in
           (vbox (gtk-box-new :vertical 0)))
       ;; Create a menu bar and the menu items for the menu bar
       (let ((menu-bar (gtk-menu-bar-new))
@@ -4004,6 +4004,102 @@ happen.")
                           (leave-gtk-main)))
       (gtk-container-add window vbox)
       (gtk-widget-show-all window))))
+
+;;; ----------------------------------------------------------------------------
+
+(defun example-menu-popup ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :type :toplevel
+                                 :default-width 250
+                                 :default-height 150
+                                 :title "Example Popup Menu"))
+          (button (gtk-button-new-with-label "Click me")))
+      ;; Create pop-up menu for button
+      (let ((popup-menu (gtk-menu-new))
+            (big-item (gtk-menu-item-new-with-label "Larger"))
+            (small-item (gtk-menu-item-new-with-label "Smaller")))
+        (gtk-menu-shell-append popup-menu big-item)
+        (gtk-menu-shell-append popup-menu small-item)
+        (gtk-widget-show-all popup-menu)
+        ;; Signal handler to pop up the menu
+        (g-signal-connect button "button-press-event"
+           (lambda (widget event)
+             (declare (ignore widget))
+             (gtk-menu-popup popup-menu
+                             :button (gdk-event-button-button event)
+                             :activate-time (gdk-event-button-time event))
+             t)))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (leave-gtk-main)))
+      (gtk-container-add window button)
+      (gtk-widget-show-all window))))
+
+;;; ----------------------------------------------------------------------------
+
+(defun example-toolbar-by-hand ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :type :toplevel
+                                 :default-width 250
+                                 :default-height 150
+                                 :title "Example Toolbar"))
+          ;; A vbox to put a menu and a button in
+          (vbox (gtk-box-new :vertical 0)))
+      (let ((toolbar (gtk-toolbar-new))
+            (new-button (gtk-tool-button-new-from-stock "gtk-new"))
+            (open-button (gtk-tool-button-new-from-stock "gtk-open"))
+            (save-button (gtk-tool-button-new-from-stock "gtk-save"))
+            (quit-button (gtk-tool-button-new-from-stock "gtk-quit"))
+            (separator (make-instance 'gtk-separator-tool-item
+                                      :draw nil)))
+        (gtk-toolbar-insert toolbar new-button -1)
+        (gtk-toolbar-insert toolbar open-button -1)
+        (gtk-toolbar-insert toolbar save-button -1)
+        (gtk-toolbar-insert toolbar separator -1)
+        (gtk-toolbar-insert toolbar quit-button -1)
+        (gtk-tool-item-set-expand separator t)
+        (gtk-box-pack-start vbox toolbar :fill nil :expand nil :padding 3)
+        ;; Connect a signal handler to the quit button
+        (g-signal-connect quit-button "clicked"
+                          (lambda (widget)
+                            (declare (ignore widget))
+                            (gtk-widget-destroy window))))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (leave-gtk-main)))
+      (gtk-container-add window vbox)
+      (gtk-widget-show-all window))))
+      
+;;; ----------------------------------------------------------------------------
+
+;; GtkUIManager
+
+(defparameter ui-constant
+ "<ui>
+    <menubar name='MainMenu'>
+      <menu action='FileMenu'>
+        <placeholder name='OpenClose'/>
+        <separator/>
+        <menuitem action='Exit'/>
+      </menu>
+      <menu action='ViewMenu'>
+        <menuitem action='ZoomIn'/>
+        <menuitem action='ZoomOut'/>
+        <separator/>
+        <menuitem action='FullScreen'/>
+        <separator/>
+        <menuitemaction='JustifyLeft'/>
+        <menuitemaction='JustifyCenter'/>
+        <menuitemaction='JustifyRight'/>
+      </menu>
+    </menubar>
+  </ui>")
+  
+
 
 ;;; ----------------------------------------------------------------------------
 

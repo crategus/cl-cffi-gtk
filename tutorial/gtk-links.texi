@@ -10,9 +10,34 @@
 @set gtk-about-dialog http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-about-dialog.html
 @set gtk-show-about-dialog http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-show-about-dialog.html
 
+@c GtkAccelGroup
+
+@set gtk-accel-group http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-accel-group.html
+
+@set gtk-accelerator-parse http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-accelerator-parse.html
+
+@c GtkAccelLabel
+
+@c GtkAccelMap
+
+@c GtkAction
+
+@set gtk-action http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-action.html
+@set gtk-action-get-name http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-action-get-name.html
+
 @c GtkActionable
 
 @set gtk-actionable http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-actionable.html
+
+@c GtkActionGroup
+
+@set gtk-action-group http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-action-group.html
+@set gtk-action-group-new http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-action-group-new.html
+@set gtk-action-group-add-action http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-action-group-add-action.html
+@set gtk-action-group-add-actions http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-action-group-add-actions.html
+@set gtk-action-group-add-toggle-actions http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-action-group-add-toggle-actions.html
+@set gtk-action-group-add-radio-actions http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-action-group-add-radio-actions.html
+@set gtk-action-group-set-translation-domain http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-action-group-set-translation-domain.html
 
 @c GtkAdjustment
 
@@ -23,7 +48,7 @@
 
 @c GtkAlignment
 
-@set gtk-alignment     http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-alignment.html
+@set gtk-alignment http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-alignment.html
 @set gtk-alignment-new http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-alignment-new.html
 @set gtk-alignment-set http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-alignment-set.html
 @set gtk-alignment-set-padding http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-alignment-set-padding.html
@@ -190,7 +215,11 @@
 
 @c GtkContainer
 
+@set gtk-container http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-container.html
 @set gtk-container-remove http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-container-remove.html
+@set gtk-container-border-width http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-container-border-width.html
+@set gtk-container-set-border-width http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-container-set-border-width.html
+@set gtk-container-add http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-container-add.html
 
 @c GtkDialog
 
@@ -375,6 +404,10 @@
 @set gtk-menu-shell-prepend http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-menu-shell-prepend.html
 @set gtk-menu-shell-insert http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-menu-shell-insert.html
 
+@c GtkMenuToolButton
+
+@set gtk-menu-tool-button http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-menu-tool-button.html
+
 @c GtkMessageDialog
 
 @set gtk-message-dialog http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-message-dialog.html
@@ -440,6 +473,10 @@
 @set gtk-progress-bar-set-text http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-progress-bar-set-text.html
 @set gtk-progress-bar-set-inverted http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-progress-bar-set-inverted.html
 
+@c GtkRadioAction
+
+@set gtk-radio-action http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-radio-action.html
+
 @c GtkRadioButton
 
 @set gtk-radio-button http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-radio-button.html
@@ -451,11 +488,19 @@
 @set gtk-radio-button-new-with-label-from-widget http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-radio-button-new-with-label-from-widget.html
 @set gtk-radio-button-new-with-mnemonic-from-widget http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-radio-button-new-with-mnemonic-from-widget.html
 
+@c GtkRadioToolButton
+
+@set gtk-radio-tool-button http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-radio-tool-button.html
+
 @c GtkRange
 
 @set gtk-range http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-range.html
 @set gtk-range-get-adjustment http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-range-get-adjustment.html
 @set gtk-range-set-adjustment http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-range-set-adjustment.html
+
+@c GtkRecentAction
+
+@set gtk-recent-action http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-recent-action.html
 
 @c GtkResponseType
 
@@ -509,6 +554,7 @@
 @c GtkSeparatorToolItem
 
 @set gtk-separator-tool-item http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-separator-tool-item.html
+@set gtk-separator-tool-item-new http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-separator-tool-item-new.html
 
 @c GtkShadowType
 
@@ -618,6 +664,10 @@
 @set gtk-text-view-window-to-buffer-coords http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-view-window-to-buffer-coords.html
 @set gtk-text-view-set-editable http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-text-view-set-editable.html
 
+@c GtkToogleAction
+
+@set gtk-toggle-action http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-toggle-action.html
+
 @c GtkToggleButton
 
 @set gtk-toggle-button http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-toggle-button.html
@@ -626,6 +676,10 @@
 @set gtk-toggle-button-new-with-mnemonic http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-toggle-button-new-with-mnemonic.html
 @set gtk-toggle-button-get-active http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-toggle-button-get-active.html
 @set gtk-toggle-button-set-active http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-toggle-button-set-active.html
+
+@c GtkToggleToolButton
+
+@set gtk-toggle-tool-button http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-toggle-tool-button.html
 
 @c GtkToolbar
 
@@ -636,10 +690,13 @@
 @c GtkToolButton
 
 @set gtk-tool-button http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-tool-button.html
+@set gtk-tool-button-new http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tool-button-new.html
+@set gtk-tool-button-new-from-stock http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tool-button-new-from-stock.html
 
 @c GtkToolItem
 
 @set gtk-tool-item http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-tool-item.html
+@set gtk-tool-item-new http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tool-item-new.html
 
 @c GtkTreeIter
 
@@ -709,6 +766,25 @@
 @set gtk-tree-view-column-set-cell-data-func http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-view-column-set-cell-data-func.html
 @set gtk-tree-view-column-add-attribute http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-tree-view-column-add-attribute.html
 
+@c GtkUIManager
+
+@set gtk-ui-manager http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-ui-manager.html
+@set gtk-ui-manager-new http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-ui-manager-new.html
+@set gtk-ui-manager-insert-action-group http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-ui-manager-insert-action-group.html
+@set gtk-ui-manager-remove-action-group http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-ui-manager-remove-action-group.html
+@set gtk-ui-manager-get-accel-group http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-ui-manager-get-accel-group.html
+@set gtk-ui-manager-add-ui-from-file http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-ui-manager-add-ui-from-file.html
+@set gtk-ui-manager-add-ui-from-string http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-ui-manager-add-ui-from-string.html
+@set gtk-ui-manager-get-widget http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-ui-manager-get-widget.html
+@set gtk-ui-manager-set-add-tearoffs http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-ui-manager-set-add-tearoffs.html
+@set gtk-ui-manager-remove-ui http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-ui-manager-remove-ui.html
+@set gtk-ui-manager-add-ui http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-ui-manager-add-ui.html
+@set gtk-ui-manager-new-merge-id http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-ui-manager-new-merge-id.html
+
+@c GtkUIManagerItemType
+
+@set gtk-ui-manager-item-type http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_sym_gtk-ui-manager-item-type.html
+
 @c GtkViewport
 
 @set gtk-viewport http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-viewport.html
@@ -717,10 +793,38 @@
 
 @c GtkWidget
 
+@set gtk-widget http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-widget.html
+@set gtk-widget-get-name http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-widget-get-name.html
 @set gtk-widget-queue-draw http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-widget-queue-draw.html
 @set gtk-widget-get-allocation http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-widget-get-allocation.html
 @set gtk-widget-override-font http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-widget-override-font.html
 @set gtk-widget-set-tooltip-text http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-widget-set-tooltip-text.html
+@set gtk-widget-destroy http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-widget-destroy.html
+@set gtk-widget-show-all http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-widget-show-all.html
+
+
+@c GtkWindow
+
+@set gtk-window http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-window.html
+@set gtk-window-new http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-window-new.html
+@set gtk-window-set-title http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-window-set-title.html
+@set gtk-window-set-default-size http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-window-set-default-size.html
+@set gtk-window-add-accel-group http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-window-add-accel-group.html
+@set gtk-window-default-width http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-window-default-width.html
+@set gtk-window-default-height http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-window-default-height.html
+
+@c GtkWindowType
+
+@set gtk-window-type http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_sym_gtk-window-type.html
+
+@c More Functions
+
+@set cl-cffi-gtk-build-info http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_cl-cffi-gtk-build-info.html
+@set within-main-loop http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_within-main-loop.html
+@set gtk-main http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-main.html
+@set g-signal-connect http://www.crategus.com/books/cl-cffi-gtk/pages/gobject_fun_g-signal-connect.html
+@set gtk-main-quit http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-main-quit.html
+@set leave-gtk-main http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_leave-gtk-main.html
 
 @c -----------------------------------------------------------------------------
 

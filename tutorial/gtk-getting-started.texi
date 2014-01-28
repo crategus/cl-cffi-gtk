@@ -27,13 +27,13 @@ install it.  The latest version is available from the repository at
 @url{http://github.com/crategus/cl-cffi-gtk}.  The @code{cl-cffi-gtk} library
 is ASDF installable and can be loaded with the command
 @code{(asdf:load-system :cl-cffi-gtk)} from the Lisp prompt.  The library is
-developed with the Lisp SBCL 1.1.9 on a Linux system and GTK+ 3.6.
+developed with the Lisp SBCL 1.1.9 on a Linux system and GTK+ 3.8.  Furthermore,
+the library runs successfully with Clozure Common Lisp 1.9 and CLISP 2.49 on
+Linux. The minimum version requirements are GTK+ 3.4 and GLIB 2.32.
 
-At this time (July 2013) there is no GTK+ 3 library for Windows available at
-@url{http://www.gtk.org}.  The current maintained version is GTK+ 2.24.  The
-repository at @url{http://github.com/crategus/cl-cffi-gtk} has a branch
-@code{gtk-2-24} which is tested with SBCL 1.0.54 and GTK+ 2.24 on Windows, but
-might be not complet and free of bugs.
+The library compiles and the demos run with Windows 7, too, but when moving
+the application window the application will freeze. This bug has not been solved
+at this time (January 2014).
 
 GTK+ depends on the libraries GLib, GObject, GDK, GDK-Pixbuf, GIO, Pango, and
 Cairo. These libraries can be loaded separately with the following commands:
@@ -86,7 +86,6 @@ The @code{cl-cffi-gtk} library depends further on the following libraries:
 @end table
 
 @findex cl-cffi-gtk-build-info
-@set cl-cffi-gtk-build-info http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_cl-cffi-gtk-build-info.html
 
 Information about the installation can be obtained with the function
 @xurl{cl-cffi-gtk-build-info}.  This is an example for the output, when calling
@@ -173,15 +172,6 @@ int main (int argc, char *argv[])
 @findex signal-connect, g-signal-connect
 @findex main-quit, gtk-main-quit
 
-@set within-main-loop http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_within-main-loop.html
-@set gtk-window-new http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-window-new.html
-@set gtk-widget-show http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-widget-show.html
-@set gtk-widget-show-all http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-widget-show-all.html
-@set gtk-main http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-main.html
-@set g-signal-connect http://www.crategus.com/books/cl-cffi-gtk/pages/gobject_fun_g-signal-connect.html
-@set gtk-main-quit http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-main-quit.html
-@set leave-gtk-main http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_leave-gtk-main.html
-
 @float Example, example-simple-window
 @caption{A Simple Window in the programing language Lisp}
 @end float
@@ -265,11 +255,6 @@ child widgets.
 @findex window, gtk-window
 @findex make-instance
 
-@set gtk-window http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-window.html
-@set gtk-widget http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-widget.html
-@set gtk-bin http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-bin.html
-@set gtk-container http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-container.html
-
 @ref{figure-getting-started} and @ref{example-getting-started} show a second
 implementation of the simple program discussed in @ref{A Simple Window}.
 The second implementation uses the fact, that all GTK+ widgets are internally
@@ -306,8 +291,6 @@ in @ref{figure-getting-started}.
 @findex window-type, gtk-window-type
 @findex :toplevel
 @findex :popup
-
-@set gtk-window-type http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_sym_gtk-window-type.html
 
 The keyword @code{:toplevel} is one of the values of the enumeration type
 @code{GtkWindowType} in C.  In the Lisp binding this enumeration is implemented
@@ -353,9 +336,6 @@ is internally implemented in the Lisp binding simply as:
 @findex window-set-title, gtk-window-set-title
 @findex window-set-default-size, gtk-window-set-default-size
 
-@set gtk-window-set-title http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-window-set-title.html
-@set gtk-window-set-default-size http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-window-set-default-size.html
-
 To set the title of the window or to change the default width of a window the
 C library knows accessor functions to set the corresponding values.  In C the
 title of the window is set with the function @code{gtk_window_set_title()}.
@@ -379,9 +359,6 @@ provided to allow the user to translate a C program more easy to Lisp.
 @findex window-default-height, gtk-window-default-height
 @findex window-set-default-size, gtk-window-set-default-size
 @findex window-get-default-size, gtk-window-get-default-size
-
-@set gtk-window-default-width http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-window-default-width.html
-@set gtk-window-default-height http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-window-default-height.html
 
 At last, in Lisp it is possible to use the accessors of the slots to get or
 set the value of a widget property.  The properties @code{default-width} and
@@ -554,9 +531,6 @@ follows in @ref{Introduction to Signals and Callbacks}.
 @findex container-border-width, gtk-container-border-width
 @findex container-set-border-width, gtk-container-set-border-width
 
-@set gtk-container-border-width http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-container-border-width.html
-@set gtk-container-set-border-width http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-container-set-border-width.html
-
 In @ref{example-hello-world} a border with a width of 12 is added to the window
 setting the property @code{border-width} when creating the window with the
 function @code{make-instance}.  The C implementation uses the function
@@ -624,9 +598,6 @@ widgets.
 @findex widget-destroy, gtk-widget-destroy
 @findex main-quit, gtk-main-quit
 @findex container-add, gtk-container-add
-
-@set gtk-widget-destroy http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-widget-destroy.html
-@set gtk-container-add http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-container-add.html
 
 Three more functions are introduced in @ref{example-hello-world}.  The function
 @xurl{gtk-widget-destroy} takes as an argument any widget and destroys it.  In

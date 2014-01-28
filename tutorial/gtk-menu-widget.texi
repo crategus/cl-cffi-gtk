@@ -51,7 +51,7 @@ GTK+ knows several classes related to the creation of menus:
         A @xurl{gtk-menu} is most commonly dropped down by activating a
         @xurl{gtk-menu-item} in a @xurl{gtk-menu-bar} or popped up by activating
         a @xurl{gtk-menu-item} in another @xurl{gtk-menu}.
-        Applications can display a @xurl{gtk-menu} as a popup menu by calling
+        Applications can display a @xurl{gtk-menu} as a pop-up menu by calling
         the function @xurl{gtk-menu-popup}.
   @item @xurl{gtk-menu-item}
         The @xurl{gtk-menu-item} widget and the derived widgets are the only
@@ -376,14 +376,944 @@ It includes all code snippets shown above. The output is shown in
 @node Pop-Up Menus for Widgets, , Creating Menus by Hand, Top
 @subsection Pop-Up Menus for Widgets
 
+@ifnotinfo
+@float Figure, figure-menu-popup
+@caption{Creating a Pop-Up Menu}
+@center @image{figures/menu-popup, 168pt}
+@end float
+@end ifnotinfo
 
+The same techniques for creating menus rooted in a menubar applies to the
+creation of pop-up menus for other widgets.  For example, if you wanted to
+create a button, which when the mouse button is pressed on it, would pop up a
+menu instead of taking some action, you would first create the menu using the
+instructions above.  Then you would connect a mouse button press event signal
+to a callback that popped up the menu, using the function
+@xurl{g-signal-connect}.  To illustrate, we begin by creating a small pop-up
+menu and packing two menu items into it.
+@example
+(let ((popup-menu (gtk-menu-new))
+      (big-item (gtk-menu-item-new-with-label "Larger"))
+      (small-item (gtk-menu-item-new-with-label "Smaller")))
+  (gtk-menu-shell-append popup-menu big-item)
+  (gtk-menu-shell-append popup-menu small-item)
+  ... )
+@end example
+Next we connect a callback to the "button-press-event" signal.  The callback
+will be responsible for popping up the menu.  To pop up a menu, we need the
+function @xurl{gtk-menu-popup}.  This function displays a menu and makes it
+available for selection.  It exists precisely for the purpose of displaying
+context sensitive menus.
+
+The first argument of the function is the menu to pop-up.  All other arguments
+are keyword arguments with the keywords @code{:parent-menu-shell},
+@code{:parent-menu-item}, @code{:position-func}, @code{:position-func},
+@code{:button}, and @code{:activate-time}.  For normal use you can accept the
+default values for most of the arguments.
+
+The @code{:button} parameter should be the mouse button pressed to initiate the
+menu popup.  If the menu popup was initiated by something other than a mouse
+press, such as a mouse button release or a key-press, button should be 0.
+
+The API documentation states that the @code{:activate-time} parameter is used
+to  conflict-resolve initiation of concurrent requests for mouse/keyboard grab
+requests.  To function properly, this needs to be the time stamp of the user
+event that caused the initiation of the popup.
+
+Putting this together, the callback should be:
+@example
+(g-signal-connect button "button-press-event"
+   (lambda (widget event)
+     (declare (ignore widget))
+     (gtk-menu-popup popup-menu
+                     :button (gdk-event-button-button event)
+                     :activate-time (gdk-event-button-time event))
+     t))
+@end example
+
+The following code shows a complete example for creating a pop-up menu.
+It includes the code shown above.  The output is shown in
+@ref{figure-menu-popup}.
+
+@float Example, example-menu-popup
+@caption{Creating Pop-Up Menus}
+@end float
+@verbatim
+(defun example-menu-popup ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :type :toplevel
+                                 :default-width 250
+                                 :default-height 150
+                                 :title "Example Popup Menu"))
+          (button (gtk-button-new-with-label "Click me")))
+      ;; Create pop-up menu for button
+      (let ((popup-menu (gtk-menu-new))
+            (big-item (gtk-menu-item-new-with-label "Larger"))
+            (small-item (gtk-menu-item-new-with-label "Smaller")))
+        (gtk-menu-shell-append popup-menu big-item)
+        (gtk-menu-shell-append popup-menu small-item)
+        (gtk-widget-show-all popup-menu)
+        ;; Signal handler to pop up the menu
+        (g-signal-connect button "button-press-event"
+           (lambda (widget event)
+             (gtk-menu-popup popup-menu
+                             :button (gdk-event-button-button event)
+                             :activate-time (gdk-event-button-time event))
+             t)))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (leave-gtk-main)))
+      (gtk-container-add window button)
+      (gtk-widget-show-all window))))
+@end verbatim
 
 @c -----------------------------------------------------------------------------
 @node Toolbars, GtkUIManager, Menus, Top
 @section Toolbars
 
+@ifnotinfo
+@float Figure, figure-toolbar-by-hand
+@caption{Creating a Toolbar}
+@center @image{figures/toolbar-by-hand, 168pt}
+@end float
+@end ifnotinfo
+
+Toolbars provide quick access to commonly used actions.  They are containers
+that should be populated with instances of the @xurl{gtk-tool-item} class.
+Usually you will insert toolbar buttons into a toolbar.  Toolbar buttons belong
+to the @xurl{gtk-tool-button} class, which is a sub class of
+@xurl{gtk-tool-item}.  There are also two subclasses of the tool button class:
+@xurl{gtk-menu-tool-button} and @xurl{gtk-toggle-tool-button}, which has a
+subclass @xurl{gtk-radio-tool-button}.
+
+A toolbar is created with only a single function @xurl{gtk-toolbar-new}.  Once
+it is created, tool items can be inserted into it, using the function
+@xurl{gtk-toolbar-insert}.
+
+This inserts the tool item at position @code{pos}.  If @code{pos} is 0 the
+item is prepended to the start of the toolbar. If @coce{pos} is negative, the
+item is appended to the end of the toolbar.  Therefore, if items are inserted
+successively into a toolbar passing -1 as @code{pos}, they will appear in the
+toolbar in left to right order.
+
+Although tool items can be created with the function @xurl{gtk-tool-item-new};
+we will have little use for this function, as we will be putting only buttons
+and separators into our toolbars.  Each of these has its own specialized
+constructors.  To create a toolbar button, you can use any of two different
+methods: @xurl{gtk-tool-button-new} or @xurl{gtk-tool-button-new-from-stock}.
+
+The first method requires that you supply a custom icon and label; the second
+lets you pick a stock ID.  You can use any stock item from the documentation.
+As we have not yet covered how to create icons, we will stay with the second
+method in the examples that follow.  The following code fragment creates a
+toolbar and a few toolbar buttons using stock items and puts them into a toolbar.
+
+@example
+(let ((toolbar (gtk-toolbar-new))
+      (new-button (gtk-tool-button-new-from-stock "gtk-new"))
+      (open-button (gtk-tool-button-new-from-stock "gtk-open"))
+      (save-button (gtk-tool-button-new-from-stock "gtk-save"))
+      (quit-button (gtk-tool-button-new-from-stock "gtk-quit"))
+      (separator (make-instance 'gtk-separator-tool-item
+                                :draw nil)))
+  (gtk-toolbar-insert toolbar new-button -1)
+  (gtk-toolbar-insert toolbar open-button -1)
+  (gtk-toolbar-insert toolbar save-button -1)
+  (gtk-toolbar-insert toolbar separator -1)
+  (gtk-toolbar-insert toolbar quit-button -1)
+  ... )
+@end example
+You can create separator items using the function
+@xurl{gtk-separator-tool-item-new}.  This creates a vertical separator in
+horizontal toolbar.  If for some reason you want the buttons to the right of the
+separator to be grouped at the far end of the toolbar, you can use the separator
+like a "spring" to push them to that end by setting its "expand" property to
+@emp{true} and its "draw" property to @code{nil}, using the sequence
+@example
+(let (...
+      (separator (gtk-separator-tool-item-new))
+      ...)
+  (gtk-separator-tool-item-set-draw separator nil)
+  (gtk-tool-item-set-expand separator t)
+  ... )
+@end example
+The "expand" property is inherited from @xurl{gtk-tool-item} whereas the "draw"
+property is specific to the separator.  Because "draw" is a property of the
+@xurl{gtk-separator-tool-item} class, we can save one function call, when using
+the function @code{make-instance} to create a @xurl{gtk-separator-tool-item}
+widget.
+@example
+(let (...
+      (separator (make-instance 'gtk-separator-tool-item
+                                :draw nil))
+      ...)
+  (gtk-tool-item-set-expand separator t)
+  ... )
+@end example
+Toolbar buttons are buttons, not items, and therefore they emit a "clicked"
+signal.  To respond to button clicks, connect a callback to the button as if it
+were an ordinary button, such as
+@example
+(g-signal-connect quit-button "clicked"
+                  (lambda (widget)
+                    (declare (ignore widget))
+                    (gtk-widget-destroy window)))
+@end example
+A complete program showing how to create a simple toolbar using this manual
+method is shown in the following example. The output is shown in
+@ref{figure-toolbar-by-hand}.
+
+@float Example, example-toolbar-by-hand
+@caption{Creating a Toolbar}
+@end float
+@verbatim
+(defun example-toolbar-by-hand ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :type :toplevel
+                                 :default-width 250
+                                 :default-height 150
+                                 :title "Example Toolbar"))
+          ;; A vbox to put a menu and a button in
+          (vbox (gtk-box-new :vertical 0)))
+      (let ((toolbar (gtk-toolbar-new))
+            (new-button (gtk-tool-button-new-from-stock "gtk-new"))
+            (open-button (gtk-tool-button-new-from-stock "gtk-open"))
+            (save-button (gtk-tool-button-new-from-stock "gtk-save"))
+            (quit-button (gtk-tool-button-new-from-stock "gtk-quit"))
+            (separator (make-instance 'gtk-separator-tool-item
+                                      :draw nil)))
+        (gtk-toolbar-insert toolbar new-button -1)
+        (gtk-toolbar-insert toolbar open-button -1)
+        (gtk-toolbar-insert toolbar save-button -1)
+        (gtk-toolbar-insert toolbar separator -1)
+        (gtk-toolbar-insert toolbar quit-button -1)
+        (gtk-tool-item-set-expand separator t)
+        (gtk-box-pack-start vbox toolbar :fill nil :expand nil :padding 3)
+        ;; Connect a signal handler to the quit button
+        (g-signal-connect quit-button "clicked"
+                          (lambda (widget)
+                            (declare (ignore widget))
+                            (gtk-widget-destroy window))))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (leave-gtk-main)))
+      (gtk-container-add window vbox)
+      (gtk-widget-show-all window))))
+@end verbatim
+
 @c -----------------------------------------------------------------------------
 @node GtkUIManager, , Toolbars, Top
 @section GtkUIManager
 
+A @xurl{gtk-ui-manager} is an object that can dynamically construct a user
+interface consisting of menus and toolbars from a UI description.  A UI
+description is a specification of what menu and toolbar widgets should be
+present in an application and is described in an XML format. A
+@xurl{gtk-ui-manager} makes it possible to change menus and toolbars dynamically
+using what is called UI merging.
+
+@c -----------------------------------------------------------------------------
+@node Actions, UI Definitions, Top, Top
+@subsection Actions
+
+The principal objects manipulated by a @xurl{gtk-ui-manager} are actions, which
+are instances of the @xurl{gtk-action} class.  Actions represent operations that
+the user can perform.  Associated with an action are
+@itemize @bullet
+  @item a callback function
+  @item its name
+  @item a label
+  @item an accelerator
+  @item a flag indicating whether the label is a stock ID
+  @item a tooltip
+  @item a toolbar label
+  @item a flag indicating whether it is sensitive
+  @item a flag indicating whether it is visible
+@end itemize
+The callback function is the function that is executed when the action is
+activated.  The action name is how it is referred to, not what appears in a menu
+item or toolbar button, which is its label.  Actions can have associated
+keyboard accelerators and tooltips.  Their visibility and sensitivity can be
+controlled as well.  The idea is that you can create actions that the
+@xurl{gtk-ui-manager} can bind to proxies such as menu items and toolbar
+buttons.
+
+The @xurl{gtk-action} class has methods to create icons, menu items and toolbar
+items representing itself, as well as get and set methods for accessing and
+changing its properties.
+
+The @xurl{gtk-action} class also has two subclasses: @xurl{gtk-toggle-action}
+and @xurl{gtk-recent-action}.  The @xurl{gtk-toggle-action} class has a
+@xurl{gtk-radio-action} subclass.  These correspond to toggle buttons and radio
+buttons respectively.
+
+@c -----------------------------------------------------------------------------
+@node UI Definitions, Actions Groups, Actions, Top
+@subsection UI Definitions
+
+You can specify the set user interface action elements in your application with
+an XML description called a UI definition.  A UI definition is a textual
+description that represents the actions and the widgets that will be associated
+with them.  It must b e bracketed by the pair of tags @code{<ui>} and
+@code{</ui>}.  Within these tags you describe your user interface in a
+hierarchical way, by defining menubars, which would contain menus, which in turn
+contain menus and menu items, toolbars, which would contain tool items, and
+pop-up menus, which can contain menus and menu items.  The set of tags that can
+be used in these UI definitions, with their descriptions and attributes, is
+
+
+@multitable @columnfractions .30 .30 .25 .15
+  @headitem Tag @tab Description @tab Attributes @tab Closing Tag
+  @itemx @code{<menubar>}
+    @tab @xurl{gtk-menu-bar}
+    @tab name, action
+    @tab yes
+  @itemx @code{<toolbar>}
+    @tab @xurl{gtk-toolbar}
+    @tab name, action
+    @tab yes
+  @itemx @code{<popup>}
+    @tab toplevel @xurl{gtk-menu}
+    @tab name, action, accelerators
+    @tab yes
+  @itemx @code{<menu>}
+    @tab @xurl{gtk-menu} attached to a menu item
+    @tab name, action, position
+    @tab yes
+  @itemx @code{<menuitem>}
+    @tab @xurl{gtk-menu-item} subclass, the exact type depends on the action
+    @tab name, action, position, always-show-image
+    @tab no
+  @itemx @code{<toolitem>}
+    @tab @xurl{gtk-tool-item} subclass, the exact type depends on the action
+    @tab name, action, position
+    @tab no
+  @itemx @code{<separator>}
+    @tab @xurl{gtk-separator-menu-item} or @xurl{gtk-separator-tool-item}
+    @tab name, action, expand
+    @tab no
+  @itemx @code{<accelerator>}
+    @tab keyboard accelerator
+    @tab name, action
+    @tab no
+  @itemx @code{<placeholder>}
+    @tab placeholder for dynamically adding an item
+    @tab name, action
+    @tab yes
+@end multitable
+
+@subheading Example
+
+The following example shows a UI definition of a menubar and its submenus.
+@example
+<ui>
+  <menubar name='MainMenu'>
+    <menu name='File' action='FileMenu'>
+      <menuitem name='Open'action='Open' always-show-image='true'/>
+      <menuitem name='Close' action='Close' always-show-image='true'/>
+      <separator/>
+      <menuitem name='Exit' action='Exit'/>
+    </menu>
+    <menu action='ViewMenu'>
+      <menuitem name='ZoomIn' action='ZoomIn'/>
+      <menuitem name='ZoomOut' action='ZoomOut'/>
+      <separator/>
+      <menuitem name='FullScreen' action='FullScreen'/>
+      <separator/>
+      <menuitem name='JustifyLeft' action='JustifyLeft'/>
+      <menuitem name='JustifyCenter' action='JustifyCenter'/>
+      <menuitem name='JustifyRight' action='JustifyRight'/>
+      <menu action='IndentMenu'>
+        <menuitem action='Indent'/>
+        <menuitem action='Unindent'/>
+      </menu>
+    </menu>
+  </menubar>
+</ui>
+@end example
+
+@subheading Notes
+
+@itemize @bullet
+  @item Some tags must have a closing tag and some do not. Those with no closing
+        tag are @code{<menuitem>}, @code{<toolitem>}, @code{<separator>}, and
+        @code{<accelerator>}. A tag that does not have a closing tag must have a
+        forward slash preceding its right bracket: @code{/>}.  All other tags
+        can have content.
+  @item All attribute values are plain text strings.
+  @item All UI elements have a name and action attribute. The name is optional;
+        if a name is not specified, the action is used as its own name. If for
+        some reason, neither the name nor the action attribute are specified,
+        the name of the element is used when referring to it. The name and
+        action attributes must not contain "/" characters after parsing, nor
+        double quotes.
+  @item Menus, menu items, and toolitems have a position attribute with two
+        possible values: "top" and "bottom". If this attribute is missing, its
+        default value of "bottom" is used. This attribute determines where the
+        element is placed relative to its siblings. If position="top" then when
+        it is added to the parent container, it will be placed before its
+        siblings, meaning to the left in a horizontal container or above the
+        siblings in a vertical container. If it is "bottom" then it will be
+        placed to the right of the siblings or below them in horizontal and
+        vertical containers respectively.
+  @item The elements are added to the UI interface in the order in which they
+        appear in the XML string. In the above example, the JustifyLeft action
+        precedes the JustifyCenter action, so the former will appear above the
+        latter. If however, the UI was defined as follows:
+        @verbatim
+   <menuitem name='JustifyLeft' action='JustifyLeft' position='top'/>
+   <menuitem name='JustifyCenter action='JustifyCenter' position='top'/>
+   <menuitem name='JustifyRight' action='JustifyRight' position='top'/>
+        @end verbatim
+        then they would appear in the order
+        @verbatim
+   JustifyRight
+   JustifyCenter
+   JustifyLeft
+        @end verbatim
+        because each time the element is inserted, the position='top' attribute
+        forces it to be above its siblings. The 'top' attribute converts the
+        packing into a stack push operation in effect.
+  @item Menu items have a "always-show-image" attribute with two possible
+        values: "true" and "false". If this attribute is true, then menu item
+        icons will always be visible, overriding any user settings in the
+        desktop environment.
+  @item Separators can have an expand attribute, with the value "true" or
+        "false". If it is set to "true" then the separator will expand to take
+        up extra space in the parent container and become invisible. Otherwise
+        it is drawn as a thin line, depending on the user's theme.
+  @item Submenus are created in a different way using the XML than they are when
+        constructing these programmatically. Remember that submenus are attached
+        to menu items, which are contained in the parent menu. Here, a
+        @code{<menu>} element can be a direct child of a parent @code{<menu>}
+        element. In the example above, the menu whose action is 'IndentMenu' is
+        a child of the 'ViewMenu'.
+  @item Placeholders are merged into their parent containers invisibly. If a
+        placeholder has child elements X, Y, and Z, these will be at the same
+        level of the tree as the placeholder itself. An example later will
+        illustrate the utility of this feature.
+  @item Finally, observe the hierarchy implicit in the UI definition. As a
+        matter of style, you should indent these using standard rules of
+        indentation, to make them easier to read.
+@end itemize
+
+We can create a to olbar definition in a similar way:
+@example
+<ui>
+  <toolbar name='ToolBar' action="ToolBarAction">
+    <placeholder name="ExtraToolItems">
+      <separator/>
+      <toolitem name="ZoomIn"action="ZoomIn"/>
+      <toolitem name="ZoomOut"action="ZoomOut"/>
+      <separator/>
+      <toolitem name='FullScreen' action='FullScreen'/>
+      <separator/>
+      <toolitem name='JustifyLeft' action='JustifyLeft'/>
+      <toolitem name='JustifyCenter' action='JustifyCenter'/>
+      <toolitem name='JustifyRight' action='JustifyRight'/>
+    </placeholder>
+  </toolbar>
+</ui>
+@end example
+Notice that the tool items have the same action names as some of the menu items.
+This is how you can create multiple proxies for the same action. When the
+@xurl{gtk-ui-manager} loads these descriptions, and you take the appropriate
+steps in your program, they will be connected to the same callback functions.
+
+Notice also that there is a placeholder in the toolbar defined above. We can use
+that placeholder to dynamically add more tool items in that position. It does
+not occupy space in the toolbar widget; it just marks a position to be accessed,
+so there is no downside to putting these placeholders into the UI definition.
+
+@c -----------------------------------------------------------------------------
+@node Actions Groups, Creating the UI, UI Definitions, Top
+@subsection Actions Groups
+
+Actions are organized into action groups. An action group is essentially a map
+from names to @xurl{gtk-action} objects. Action groups are the easiest means for
+adding actions to a UI manager object.
+
+In general, related actions should be placed into a single group. More
+precisely, since the UI manager can add and remove actions as groups, if the
+interface is supposed to change dynamically, then all actions that should be
+available in the same state of the application should be in the same group. It
+is typical that multiple action groups are defined for a particular user
+interface. Most nontrivial applications will make use of multiple groups. For
+example, in an application that can play media files, when a media file is open,
+the playback actions (play, pause, rewind, etc.) would be in a group that could
+be added and removed as needed.
+
+@c -----------------------------------------------------------------------------
+@node Creating the UI, UI Merging, Actions Groups, Top
+@subsection Creating the UI
+
+The basic steps in creating the UI are to
+@enumerate
+  @item Define the UI in an XML format, either in a separate file or in a
+        constant string within the source code.
+  @item Create the actions and action groups.
+  @item Create a UI manager.
+  @item Add the action groups to the UI manager.
+  @item Extract the accelerators from the UI manager and add them to the
+        top-level window.
+  @item Add the UI definition to the UI manager from the file or string.
+  @item Get the menubar and toolbar widgets from the UI manager and pack them
+        into the window.
+  @item Create the callbacks referenced in the action objects created in step 2.
+@end enumerate
+We will next describe how to program each of steps 2 through 7.
+
+@subheading Creating Actions and Action Groups
+
+The function to create an action group is @xurl{gtk-action-group-new}. The name
+argument can be used by various methods for accessing this particular action
+group. It should reflect what this particular group's purpose or common feature
+is. Actions are added to an action group in one of two ways.  You can add them
+one at a time with the function @xurl{gtk-action-group-add-action}, or as a list
+of related actions with the function @xurl{gtk-action-group-add-actions}.
+
+The problem with the first method is that it is tedious to add actions one by
+one, and that this method does not provide a means to add the accelerators for
+the actions without additional steps. Even if there is just a single action in
+the group, it is more convenient to use the second function. To use the function
+@xurl{gtk-action-group-add-actions}, you first have to create a list of action
+entries, which looks like the following example:
+@example
+(list
+  (list <name> <stock-id> <label> <accelerator> <tooltip> <callback>)
+  ... )
+@end example
+The members of the list have the following meanings:
+@table @code
+  @item name
+        The name of the action.
+  @item stock-id
+        The stock ID for the action, or the name of an icon from the icon theme.
+  @item label
+        The label for the action. This field should typically be marked for
+        translation, see the function
+        @xurl{gtk-action-group-set-translation-domain}. If label is @code{nil},
+        the label of the stock item with ID @code{stock-id} is used.
+  @item accelerator
+        The accelerator for the action, in the format understood by the function
+        @xurl{gtk-accelerator-parse}.
+  @item tooltip
+        The tooltip for the action. This field should typically be marked for
+        translation, see the function
+        @xurl{gtk-action-group-set-translation-domain}.
+  @item callback
+        The function to call when the action is activated.
+@end table
+
+The @code{name} must match the name of the action to which it corresponds in the
+UI  definition. The @code{stock-id} can be @code{nil}, as can the @code{label}.
+The @code{accelerator} syntax is very flexible. You can specify control keys,
+function keys and even ordinary characters, for example, using "<Control>a",
+"Ctrl>a","<ctrl>a", or "<Shift><Alt>F1", "<Release>z", or "minus", to name a
+few. If you use a stock item, it is not necessary to supply an accelerator,
+unless you want to override the default one. The @code{tooltip} is a string that
+will appear when the cursor hovers over the proxy for this action entry.
+
+Below is an example of a declaration of a small list of action entries.
+@example
+(defvar file-entries
+        (list (list "FileMenu"
+                    nil
+                    "_File")
+              (list "Open"
+                    "gtk-open"
+                    "_Open"
+                    "<control>O"
+                    "Open a file"
+                    #'on-open-file)
+              (list "Close"
+                    "gtk-close"
+                    "_Close"
+                    "<control>W"
+                    "Close a file" #'on-close-file)
+              (list "Exit"
+                    "gtk-quit"
+                    "E_xit" "<control>Q"
+                    "Exit the program"
+                    #'(lambda (widget)
+                        (declare (ignore widget))
+                        (gtk-widget-destroy toplevel-window)))))
+@end example
+Notice that the FileMenu action does not have a tooltip nor a callback. The
+Open, Close, and Exit actions have both a mnemonic label and an accelerator.
+Having defined this list, it can be added to a group as follows:
+@example
+(let ((action-group (gtk-action-group-new "common-actions")))
+  (gtk-action-group-add-actions action-group file-entries)
+  ... )
+@end example
+Multiple action entry lists can be added to a single action group. In fact, you
+probably will need to do this, because toggle actions and radio actions must be
+defined differently. A @xurl{gtk-toggle-action} entry contains all of the
+members of a @xurl{gtk-action} entry, as well as an additional boolean flag
+@code{is-active}.
+
+The @code{is-active} flag indicates whether or not the action is active or
+inactive. To add toggle action entries to an action group you need to use the
+function @xurl{gtk-action-group-add-toggle-actions} designed for that purpose.
+
+The function differs from @xurl{gtk-action-group-add-actions} only in that it
+expects a list of @xurl{gtk-toggle-action} entries. To illustrate, we could
+define a list with a single toggle action entry:
+@example
+(defvar toggle-entries
+        (list (list "FullScreen"
+                    "gtk-fullscreen"
+                    "_FullScreen"
+                    "F11"
+                    "Switch between full screen and windowed mode"
+                    #'on-full-screen
+                    nil)))
+@end example
+and add it to the same group as above with
+@example
+(gtk-action-group-add-toggle-actions common-actions toggle-entries)
+@end example
+GTK+ defines radio action entries separately. Usually you use radio buttons when
+there are three or more alternatives. If there are just two, a toggle is the
+cleaner interface element. Because radio actions can have more than two values,
+the list's last element is an integer instead of a boolean.
+
+Unlike ordinary actions and toggle actions, which can have different callbacks
+for each action, radio action entries do not specify a callback function.
+Furthermore, the last member of this structure is the value that that particular
+radio action has. If for example, there are three radio actions for how text is
+to b e aligned, left, right, or centered, then one would have the value 0, the
+next, 1, and the third, 2. An example of a list of radio action entries is
+below.
+@example
+(defvar radio-entries
+        (list (list "JustifyLeft"
+                    "gtk-justify-left"
+                    "_Left"
+                    nil
+                    "Left justify text"
+                    0)
+              (list "JustifyCenter"
+                    "gtk-justify-center"
+                    "_Center"
+                    nil
+                    "Center the text"
+                    1)
+              (list "JustifyRight"
+                    "gtk-justify-right"
+                    "_Right"
+                    nil
+                    "Right justify the text"
+                    2)))
+@end example
+
+Because radio action entries do not have a callback function as a member, the
+function @xurl{gtk-action-group-add-radio-actions} to add radio actions to an
+action group specifies a single callback to be used for all of the actions in
+the array of radio actions being added. This is the callback that will be called
+in response to the "changed" signal.
+
+Also, this function has another parameter that specifies the value that should
+be active initially. It is either one of the values in the individual radio
+action entries, or -1 to indicate that none should b e active to start. We could
+add the radio_entries action list to our group with the call
+@example
+(gtk-action-group-add-radio-actions action-group
+                                    radio-entries
+                                    0
+                                    #'on-change)
+@end example
+specifying that the JustifyLeft action is the initial value.
+
+@subheading Creating the UIManager and Adding the Action Groups
+
+A @xurl{gtk-ui-manager} is created with the function @xurl{gtk-ui-manager-new}.
+This creates a UI manager object that can then be used for creating and managing
+the application's user interface. It is now ready to be populated with the
+action groups that you already defined. To insert an action group into the UI
+manager, use the function @xurl{gtk-ui-manager-insert-action-group}.
+
+The first argument is the object returned by the call to create the UI manager.
+The second is the group to be inserted. The @code{pos} argument specifies the
+position in the list of action groups managed by this UI manager. Action groups
+that are earlier in this list will be accessed before those that are later in
+this list. A consequence of this is that, if an action with the same name, e. g.
+"Open", is in two different groups, the entry in the group with smaller
+position will hide the one in the group with larger position. For example, if
+an "Open" action is in groups named @code{action-group1} and
+@code{action-group2}, and @code{action-group1} is inserted at position 1, and
+@code{action-group2} is at position 2, then the entry for the "Open" action in
+@code{action-group1} will be used by the UI manager when its proxy is activated.
+If it has a different callback or label or accelerator, these will be associated
+with this action, not the one in @code{action-group2}. You can use this feature
+if you need to change the semantics of a menu item or toolbar button, but not
+the menu item or button itself.
+
+While we are on the subject of inserting actions, we might as well look at how
+you can remove an action group, if you have need to do that dynamically. That
+function is @xurl{gtk-ui-manager-remove-action-group}. This searches the list of
+action groups in the UI manager and deletes the one which is passed to it.
+
+@subheading Extracting Accelerators and adding them to the Top-Level Window
+
+Accelerators are key combinations that provide quick access to the actions in a
+window. They are usually associated with the top-level window so that
+key-presses while that window has focus can be handled by the top-level window's
+"key-press-event" handler, which can propagate it through the chain of widgets.
+The problem is that the accelerators are stored within the UI manager, not the
+top-level window, when you insert the action groups into it. The UI manager
+aggregates the accelerators into its private data as action groups are added to
+it. However it provides a method of extracting them. The set of accelerators can
+be extracted into a @xurl{gtk-accel-group} object that can be added into a
+top-level window. The function that does this is
+@xurl{gtk-ui-manager-get-accel-group}. The function that adds this group into a
+top-level window is @xurl{gtk-window-add-accel-group}. The following
+code-snippet will extract the accelerators and add them to the top-level window:
+@example
+(let ((accel-group (gtk-ui-manager-get-accel-group ui-manager)))
+  (gtk-window-add-accel-group window accel-group)
+  ... )
+@end example
+
+@subheading Loading the UI Definition
+
+If the UI definition is in a separate file, it can be loaded using the function
+@xurl{gtk-ui-manager-add-ui-from-file}. The first argument is the UI manager
+object, the second, a filename passed as a UTF-8 string. If this function is
+successful, it will return a positive integer called a merge-id. Merge-ids will
+be explained in the next section. If the function fails, for one reason or
+another, the return value will be zero.  Therefore it is a good idea to check
+the return value of the function. The following code fragment tests both conditions
+and terminates the program with an error message if there is an error:
+@example
+(let ((merge-id (gtk-ui-manager-add-ui-from-file ui-manager "menu-1.xml")))
+  (when (eql 0 merge-id)
+    (error-message "Could not load UI Manager definition"))
+  ... )
+@end example
+The function @code{error-message} displays a message dialog with a suitable
+message.
+
+An alternative to storing the UI definition in a file in the source code tree is
+to store the UI definition as a string within a source code file itself. If the
+UI definition is in a string, then it can be added with the function
+@xurl{gtk-ui-manager-add-ui-from-string}.
+
+The buffer argument is the name of the string containing the UI definition.
+The return value is also either a positive integer on success, in which case it
+is a valid merge-id, or zero on failure. The following listing shows how to
+define a UI definition in a string.
+@example
+(defparameter ui-constant
+  "<ui>
+     <menubar name='MainMenu'>
+       <menu action='FileMenu'>
+         <placeholder name='FilePlace'/>
+         <separator/>
+         <menuitem action='Exit'/>"
+       </menu>"
+       <menu action='ViewMenu'>"
+         <menuitem action='ZoomIn'/>"
+         <menuitem action='ZoomOut'/>"
+         <separator/>"
+         <menuitem action='FullScreen'/>"
+         <separator/>"
+       </menu>"
+     </menubar>"
+   </ui>")
+@end example
+This would then be added to the UI manager with the fragment
+@example
+(let ((merge-id (gtk-ui-manager-add-ui-from-string ui-manager ui-constant)))
+  (when (eql 0 merge-id)
+    (error-message "Could not load UI Manager definition"))
+  ... )
+@end example
+
+@subheading Getting the Widgets
+
+The last step is to retrieve the widgets that the UI manager created when the
+UI definition was loaded into it, and pack those widgets into the window where
+you want them to be. This is where the names of the UI definition elements come
+into play. The UI manager can find a widget for you when you give it the
+absolute pathname of the element that you want to construct. The absolute
+pathname is a string starting with a forward slash '/', much like a file's
+absolute pathname, with a sequence of the ancestor elements in the XML tree of
+that element.
+
+Elements which do not have a name or action attribute in the XML (e. g.
+@code{<popup>}) can be addressed by their XML element name (e. g. "popup"). The
+root element ("/ui") can be omitted in the path.
+
+As an example, the absolute pathname of the FileMenu in the UI definition above
+is "/MainMenu/FileMenu".
+
+The function @xurl{gtk-ui-manager-get-widget} finds the widget that the UI
+manager constructed, whose name matches the pathname that you give it. If
+you give it the name of a menubar, you get a menubar widget with its entire
+subtree. If you give it the name of a menu, you get the menu item to which the
+menu is attached, not the menu.
+
+If our UI definition had a menubar and toolbar at the top level named "MainMenu"
+and "MainToolBar" respectively, we could get them from the UI manager using
+@example
+(let ((menubar (gtk-ui-manget-get-widget ui-manager "/MainMenu"))
+      (toolbar (gtk-ui-manager-get-widget ui-manager "/MainToolBar")))
+  ... )
+@end example
+
+We could then pack these into a @xurl{gtk-box} one below the other in our main
+window, and we would be finished, except of course for defining all of the
+required callback functions.
+
+@b{Note.}
+The widgets that are constructed by a UI manager are not tied to the life-cycle
+of that UI manager. It does acquire a reference to them, but when you add the
+widgets returned by this function to a container or if you explicitly ref them,
+they will survive the destruction of the UI manager. (Read the notes on memory
+management in GTK if you are unfamiliar with these concepts.)
+
+Lastly, you can tell the UI manager to create tear-off menus if you want, using
+the function @xurl{gtk-ui-manager-set-add-tearoffs}.  By passing @emph{true},
+all menus (except popup menus) will have the tear-off property.
+
+@c -----------------------------------------------------------------------------
+@node UI Merging, Controlling Position of Merged Elements, Creating the UI, Top
+@subsection UI Merging
+
+One of the most powerful features of the UI manager is its ability to
+dynamically change the menus and toolbars by overlaying or inserting menu items
+or toolbar items over others and removing them later. This feature is called
+UI merging. The ability to merge elements is based on the use of the pathnames
+to the UI elements defined in the UI definition, and merge-ids.
+
+A merge-id is an unsigned integer value that is associated with a particular UI
+definition inside the UI manager. The functions that add UI definitions into the
+UI manager, such as @xurl{gtk-ui-manager-add-ui-from-string} and
+@xurl{gtk-ui-manager-add-ui-from-file}, return a merge-id that can be used at a
+later time, for example, to remove that particular UI definition. The function
+that removes a UI definition is @xurl{gtk-ui-manager-remove-ui}.
+
+This is given the merge-id of the UI definition to be removed. For example, if
+I create a UI with the call
+@example
+(let ((merge-id (gtk-ui-manager-add-ui-from-string ui_manager ui_toolbar)))
+  ... )
+@end example
+and I later want to remove the toolbar from the window, I would call
+@example
+(gtk-ui-manager-remove-ui ui-manger merge-id)
+@end example
+In order to add an element such as a toolbar in one part of the code, and later
+remove it in a callback function, you would need to make the merge-id either a
+shared variable, or attach it as a property to a widget that the callback is
+passed.
+
+There is a third function @xurl{gtk-ui-manager-add-ui} for adding a new element
+to the user interface. The parameters have the following meanings:
+@table @code
+  @item self
+        a @xurl{gtk-ui-manager}
+  @item merge-id
+        the merge-id for the merged UI
+  @item path
+        a path
+  @item name
+        the name for the added UI element
+  @item action
+        the name of the action to b e proxied, or @code{nil} to add a separator
+  @item type
+        the type of UI element to add
+  @item top
+        if @emph{true}, the UI element is added before its siblings, otherwise
+        it is added after its siblings.
+@end table
+This function can add a single element to the UI, such as a menu item, a toolbar
+item, a menu, or a menubar. It cannot add an entire UI definition such as the
+ones contained in the strings defined above. Furthermore, it cannot be used to
+insert an element in a place where such an element cannot be inserted. For
+example, you cannot insert a toolbar inside a menu, or a menu inside a menu, but
+you can insert a menu item in a menu, or a menu in a menubar.
+
+In order to use this function, you need a merge-id to give to it. It will assign
+associate the new UI element to this merge-id so that it can be removed at a
+later time. New merge-ids are created with the function
+@xurl{gtk-ui-manager-new-merge-id}.  The third parameter is the absolute path
+name to the position at which you want to add the new UI element. For example,
+if you want to insert a new menu item at the top of the File menu, the path
+would be "/MainMenu/FileMenu". The fourth parameter is a name that you want this
+item to have for future access and the fifth is the name for the action, which
+must exist already, that should b e connected to this element.
+
+The type must be a member of the @xurl{gtk-ui-manager-item-type}, which has the
+following values
+@verbatim
+:auto
+:menubar
+:menu
+:toolbar
+:placeholder
+:popup
+:menuitem
+:toolitem
+:separator
+:accelerator
+@end verbatim
+Their meanings should be self-explanatory, except for the first. You can use
+@code{:auto} as the type to let GTK decide the type of the element that can be
+inserted at the indicated path. Lastly, if you want the element to be above the
+element that is currently in that position, you set top to @emph{true},
+otherwise @code{nil}.
+
+As an example, suppose that I want to add a Print menu item in my File menu just
+below the Open menu item. I could use the following code fragment, assuming that
+I have already defined an action named Print:
+@example
+(let ((merge-id (gtk-ui-manager-new-merge-id ui-manager)))
+  (gtk-ui-manager-add-ui ui-manager
+                         merge-id
+                         "/MainMenu/FileMenu/Open"
+                         "Print"
+                         "Print"
+                         :menu-item
+                         nil)
+    ... )
+@end example
+This will insert the Print menu item into the proper position.
+
+Assuming that  your menu is to be changed dynamically, these steps will not be
+enough to make the menu elements appear dynamically. The UI manager does not
+handle the task of packing new toolbars or menubars into their places in the
+window. However, it does emit the "add-widget" signal for each generated menubar
+and toolbar. Your application can respond to this signal with a callback
+function that can pack the UI element into the appropriate position. Therefore,
+two additional steps are needed by a program that adds and removes menubars or
+toolbars:
+@itemize @bullet
+  @item Create a callback function to pack these widgets into the parent
+        container, and
+  @item Connect the "add-widget" signal emitted by the UI manager to this
+        callback.
+@end itemize
+The callback for this signal has the prototype
+@example
+lambda (merge widget)
+@end example
+The first parameter is the UI manager emitting the signal, the second is the
+widget that has been added. For example
+@example
+(g-signal-connect ui-manager "add-widget"
+   (lambda (merge widget)
+     (declare (ignore merge))
+     (gtk-box-pack-start menu-box widget :fill nil :expand nil)
+     (gtk-widget-show widget)))
+@end example
+This will pack the menubar or toolbar after any other widgets in the parent,
+assuming that menu-box is a @xurl{gtk-box} of some kind that the menu or toolbar
+should be packed into. It must show the widget to realize it.
 
