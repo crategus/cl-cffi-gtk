@@ -519,7 +519,7 @@
   result will be that the floating reference is converted to a hard reference
   and an additional reference on top of that one is added. It is best to avoid
   this situation.
-  @see-symbol{g-variant}
+  @see-type{g-variant}
   @see-function{g-variant-ref-sink}"
   (value (:pointer (:struct g-variant))))
 

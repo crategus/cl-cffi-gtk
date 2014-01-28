@@ -145,7 +145,7 @@
   works in terms of messages and therefore individual type strings appear
   nowhere in its interface. Instead, \"signatures\" are a concatenation of the
   strings of the type of each argument in a message. @type{g-variant} deals
-  with single values directly so @sym{g-variant} type strings always describe
+  with single values directly so @type{g-variant} type strings always describe
   the type of exactly one value. This means that a D-Bus signature string is
   generally not a valid @type{g-variant} type string -- except in the case
   that it is the signature of a message containing exactly one argument.

@@ -88,13 +88,13 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-tool-button 'type)
- "@version{2013-8-23}
+ "@version{2014-1-26}
   @begin{short}
     @sym{gtk-tool-button}'s are @class{gtk-tool-item}'s containing buttons.
   @end{short}
 
-  Use the @fun{gtk-tool-button-new} function to create a new
-  @sym{gtk-tool-button}. Use the function @fun{gtk-tool-button-new-with-stock}
+  Use the function @fun{gtk-tool-button-new} to create a new
+  @sym{gtk-tool-button}. Use the function @fun{gtk-tool-button-new-from-stock}
   to create a @sym{gtk-tool-button} containing a stock item.
 
   The label of a @sym{gtk-tool-button} is determined by the properties

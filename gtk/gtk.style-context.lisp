@@ -1233,12 +1233,12 @@ tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
 
 (defcfun ("gtk_style_context_add_provider" gtk-style-context-add-provider) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-9-28}
+ "@version{2014-1-26}
   @argument[context]{a @class{gtk-style-context} object}
   @argument[provider]{a @class{gtk-style-provider} object}
   @argument[priority]{the priority of the style provider. The lower it is, the
     earlier it will be used in the style construction. Typically this will be in
-    the range between @var{+gtk-style-provider-priority-fallback} and
+    the range between @var{+gtk-style-provider-priority-fallback+} and
     @var{+gtk-style-provider-priority-user+}.}
   @begin{short}
     Adds a style provider to @arg{context}, to be used in style construction.
