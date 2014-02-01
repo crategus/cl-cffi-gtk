@@ -206,4 +206,15 @@
 
 (export 'cairo-version-string)
 
+
+(glib::push-library-version-features cairo
+  (truncate (/ (cairo-version) 10000))
+  (- (truncate (/ (cairo-version) 100)) (* 100 (truncate (/ (cairo-version) 10000))))
+  1 12
+  1 10)
+
+(glib::require-library-version "Cairo" 1 10
+                         (truncate (/ (cairo-version) 10000))
+                         (- (truncate (/ (cairo-version) 100)) (* 100 (truncate (/ (cairo-version) 10000)))))
+
 ;;; --- End of file cairo.version.lisp -----------------------------------------
