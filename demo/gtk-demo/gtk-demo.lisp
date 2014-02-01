@@ -70,6 +70,7 @@
 (load "menu.lisp")
 (load "more-labels.lisp")
 (load "notebook.lisp")
+(load "numerable-icon.lisp")
 (load "paned-window.lisp")
 (load "pixbuf-scale.lisp")
 (load "pixbufs.lisp")
@@ -163,6 +164,9 @@
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "CSS Pixbufs"
                                 "css-pixbufs.lisp" "DEMO-CSS-PIXBUFS" 0)
+      (gtk-tree-store-set model (gtk-tree-store-append model parent)
+                                "Numerable Icons"
+                                "numerable-icon.lisp" "DEMO-NUMERABLE-ICON" 0)
     )
     (let ((parent (gtk-tree-store-set model (gtk-tree-store-append model nil)
                                             "Windows" "" "" 0)))
