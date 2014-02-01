@@ -540,7 +540,6 @@
     @about-struct{gdk-event-any}
     @about-struct{gdk-event-key}
     @about-struct{gdk-event-button}
-
     @about-struct{gdk-event-expose}
     @about-struct{gdk-event-visibility}
     @about-struct{gdk-event-motion}
