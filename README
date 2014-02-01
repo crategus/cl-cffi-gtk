@@ -18,6 +18,9 @@ with the tutorial available online at
 http://www.crategus.com/books/cl-gtk/gtk-tutorial.html to learn how to use the
 library.
 
+Look at the wiki at http://github.com/crategus/cl-cffi-gtk/wiki for news
+about the development of the library.
+
 At this time, the library is developed and tested with SBCL 1.1.9 on a
 Linux system (Ubuntu). Futhermore, the library is tested with Clozure Common
 Lisp 1.9 and CLISP 2.49 on Linux. The minium version requirements are GTK+ 3.4
