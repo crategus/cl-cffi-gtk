@@ -10,7 +10,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -208,8 +208,6 @@
    (tooltip-column
     gtk-tree-view-tooltip-column
     "tooltip-column" "gint" t t)))
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-tree-view 'type)
@@ -1038,8 +1036,8 @@
 
 (defun gtk-tree-view-set-model (tree-view model)
  #+cl-cffi-gtk-documentation
- "@version{2013-10-16}
-  @argument[tree-view]{a @class{gtk-tree-node} object}
+ "@version{2014-1-29}
+  @argument[tree-view]{a @class{gtk-tree-view} object}
   @argument[model]{the model}
   Sets the model for a @class{gtk-tree-view}. If the @arg{tree-view} already has
   a model set, it will remove it before setting the new @arg{model}. If

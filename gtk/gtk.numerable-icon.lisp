@@ -82,7 +82,7 @@
     @sym{gtk-numerable-icon} is a subclass of @class{g-emblemed-icon} that
     can show a number or short string as an emblem.
   @end{short}
-  The number can be overlayed on top of anotheremblem, if desired.
+  The number can be overlayed on top of another emblem, if desired.
 
   It supports theming by taking font and color information from a provided
   @class{gtk-style-context}; see the function
@@ -221,7 +221,7 @@
   @see-class{gtk-numerable-icon}
   @see-class{g-icon}"
   (make-instance 'gtk-numerable-icon
-                 :background-icon base-icon))
+                 :gicon base-icon))
 
 (export 'gtk-numerable-icon-new)
 

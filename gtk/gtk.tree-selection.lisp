@@ -357,13 +357,17 @@
 
 (defun gtk-tree-selection-get-selected (selection)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-12}
+ "@version{2014-1-30}
   @argument[selection]{a @class{gtk-tree-selection} object}
-  @return{The @class{gtk-iter} object of the selected node, or @code{nil} if
-    there is no selected node.}
+  @begin{return}
+    The @class{gtk-tree-iter} object of the selected node, or @code{nil}
+    if there is no selected node.
+  @end{return}
   Sets iter to the currently selected node if @arg{selection} is set to
   @code{:single} or @code{:browse}. This function will not work if you use
-  selection is @code{:multiple}."
+  selection is @code{:multiple}.
+  @see-class{gtk-tree-selection}
+  @see-class{gtk-tree-iter}"
   (let ((iter (make-instance 'gtk-tree-iter)))
     (when (%gtk-tree-selection-get-selected selection (null-pointer) iter)
       iter)))
