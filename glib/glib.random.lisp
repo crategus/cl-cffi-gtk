@@ -9,7 +9,7 @@
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2013 Dieter Kaiser
+;;; Copyright (C) 2013, 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -323,14 +323,15 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_random_int ()
-;;; 
-;;; guint32 g_random_int (void);
-;;; 
-;;; Return a random guint32 equally distributed over the range [0..2^32-1].
-;;; 
-;;; Returns :
-;;;     A random number.
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_random_int" g-random-int) :uint32
+ #+cl-cffi-gtk-documentation
+ "@version{2014-1-29}
+  @return{A random number.}
+  Return a random @code{:uint32} equally distributed over the range
+  [0 ... 2^32-1].
+  @see-function{g-random-int-range}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_random_int_range ()
