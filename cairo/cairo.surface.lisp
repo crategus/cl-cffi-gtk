@@ -371,6 +371,7 @@
 ;;; cairo_surface_create_similar_image ()
 ;;; ----------------------------------------------------------------------------
 
+#+cairo-1-12
 (defcfun ("cairo_surface_create_similar_image"
            cairo-surface-create-similar-image)
     (:pointer (:struct cairo-surface-t))
@@ -411,6 +412,7 @@
   (width :int)
   (height :int))
 
+#+cairo-1-12
 (export 'cairo-surface-create-similar-image)
 
 ;;; ----------------------------------------------------------------------------

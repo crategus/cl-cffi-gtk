@@ -6,7 +6,7 @@
 ;;; library. See <http://cairographics.org>. The API documentation of the Lisp
 ;;; binding is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2013 Dieter Kaiser
+;;; Copyright (C) 2013, 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -784,6 +784,7 @@
 ;;; cairo_mesh_pattern_begin_patch ()
 ;;; ----------------------------------------------------------------------------
 
+#+cairo-1-12
 (defcfun ("cairo_mesh_pattern_begin_patch" cairo-mesh-pattern-begin-patch) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-11-18}
@@ -813,12 +814,14 @@
   @see-function{cairo-mesh-pattern-curve-to}"
   (pattern (:pointer (:struct cairo-pattern-t))))
 
+  #+cairo-1-12
 (export 'cairo-mesh-patern-begin-patch)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_mesh_pattern_end_patch ()
 ;;; ----------------------------------------------------------------------------
 
+#+cairo-1-12
 (defcfun ("cairo_mesh_pattern_end_patch" cairo-mesh-pattern-end-patch) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-11-18}
@@ -843,6 +846,7 @@
   @see-function{cairo-mesh-pattern-line-to}"
   (patten cairo-pattern-t))
 
+#+cairo-1-12
 (export 'cairo-mesh-pattern-end-patch)
 
 ;;; ----------------------------------------------------------------------------
@@ -878,6 +882,7 @@
 ;;; cairo_mesh_pattern_line_to ()
 ;;; ----------------------------------------------------------------------------
 
+#+cairo-1-12
 (defcfun ("cairo_mesh_pattern_line_to" cairo-mesh-pattern-line-to) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-12-5}
@@ -909,6 +914,7 @@
   (x :double)
   (y :double))
 
+#+cairo-1-12
 (export 'cairo-mesh-pattern-line-to)
 
 ;;; ----------------------------------------------------------------------------
