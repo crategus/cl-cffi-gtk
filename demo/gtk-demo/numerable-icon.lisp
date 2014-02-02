@@ -14,7 +14,7 @@
     (let (;; Create a toplevel window
           (window (make-instance 'gtk-window
                                  :type :toplevel
-                                 :title "Demo Numerable Icon"
+                                 :title "Demo Numerable Icons"
                                  :border-width 12))
           ;; Create a grid for the numerable icons
           (grid (make-instance 'gtk-grid
