@@ -6,7 +6,7 @@
 ;;; library. See <http://cairographics.org>. The API documentation of the Lisp
 ;;; binding is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2013 Dieter Kaiser
+;;; Copyright (C) 2013, 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -43,13 +43,6 @@
 ;;;     cairo_user_to_device_distance
 ;;;     cairo_device_to_user
 ;;;     cairo_device_to_user_distance
-;;;
-;;; Description
-;;;
-;;; The current transformation matrix, CTM, is a two-dimensional affine
-;;; transformation that maps all coordinates and other drawing instruments from
-;;; the user space into the surface's canonical coordinate system, also known as
-;;; the device space.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :cairo)
@@ -144,21 +137,27 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_transform ()
-;;;
-;;; void cairo_transform (cairo_t *cr, const cairo_matrix_t *matrix);
-;;;
-;;; Modifies the current transformation matrix (CTM) by applying matrix as an
-;;; additional transformation. The new transformation of user space takes place
-;;; after any existing transformation.
-;;;
-;;; cr :
-;;;     a cairo context
-;;;
-;;; matrix :
-;;;     a transformation to be applied to the user-space axes
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_transform" cairo-transform) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2014-2-2}
+  @argument[cr]{a cairo context}
+  @argument[matrix]{a transformation to be applied to the user-space axes}
+  @begin{short}
+    Modifies the current transformation matrix (CTM) by applying matrix as an
+    additional transformation.
+  @end{short}
+  The new transformation of user space takes place after any existing
+  transformation.
+
+  Since 1.0
+  @see-symbol{cairo-t}
+  @see-symbol{cairo-matrix-t}"
+  (cr (:pointer (:struct cairo-t)))
+  (matrix (:pointer (:struct cairo-matrix-t))))
+
+(export 'cairo-transform)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_set_matrix ()
@@ -234,6 +233,23 @@
 ;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("cairo_user_to_device" %cairo-user-to-device) :void
+  (cr (:pointer (:struct cairo-t)))
+  (x (:pointer :double))
+  (y (:pointer :double)))
+
+(defun cairo-user-to-device (cr x y)
+  (with-foreign-objects ((x-new :double) (y-new :double))
+    (setf (mem-ref x-new :double)
+          (coerce x 'double-float)
+          (mem-ref y-new :double)
+          (coerce y 'double-float))
+    (%cairo-user-to-device cr x-new y-new)
+    (values (mem-ref x-new :double)
+            (mem-ref y-new :double))))
+
+(export 'cairo-user-to-device)
+
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_user_to_device_distance ()
 ;;;
@@ -255,6 +271,23 @@
 ;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("cairo_user_to_device_distance" %cairo-user-to-device-distance) :void
+  (cr (:pointer (:struct cairo-t)))
+  (dx (:pointer :double))
+  (dy (:pointer :double)))
+
+(defun cairo-user-to-device-distance (cr dx dy)
+  (with-foreign-objects ((dx-new :double) (dy-new :double))
+    (setf (mem-ref dx-new :double)
+          (coerce dx 'double-float)
+          (mem-ref dy-new :double)
+          (coerce dy 'double-float))
+    (%cairo-user-to-device-distance cr dx-new dy-new)
+    (values (mem-ref dx-new :double)
+            (mem-ref dy-new :double))))
+
+(export 'cairo-user-to-device-distance)
+
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_device_to_user ()
 ;;;
@@ -274,6 +307,23 @@
 ;;;
 ;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_device_to_user" %cairo-device-to-user) :void
+  (cr (:pointer (:struct cairo-t)))
+  (x (:pointer :double))
+  (y (:pointer :double)))
+
+(defun cairo-device-to-user (cr x y)
+  (with-foreign-objects ((x-new :double) (y-new :double))
+    (setf (mem-ref x-new :double)
+          (coerce x 'double-float)
+          (mem-ref y-new :double)
+          (coerce y 'double-float))
+    (%cairo-device-to-user cr x-new y-new)
+    (values (mem-ref x-new :double)
+            (mem-ref y-new :double))))
+
+(export 'cairo-device-to-user)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_device_to_user_distance ()
@@ -295,5 +345,22 @@
 ;;;
 ;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_device_to_user_distance" %cairo-device-to-user-distance) :void
+  (cr (:pointer (:struct cairo-t)))
+  (dx (:pointer :double))
+  (dy (:pointer :double)))
+
+(defun cairo-device-to-user-distance (cr dx dy)
+  (with-foreign-objects ((dx-new :double) (dy-new :double))
+    (setf (mem-ref dx-new :double)
+          (coerce dx 'double-float)
+          (mem-ref dy-new :double)
+          (coerce dy 'double-float))
+    (%cairo-device-to-user-distance cr dx-new dy-new)
+    (values (mem-ref dx-new :double)
+            (mem-ref dy-new :double))))
+
+(export 'cairo-device-to-user-distance)
 
 ;;; --- End of file cairo.transformations.lisp ---------------------------------

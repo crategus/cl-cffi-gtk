@@ -1,12 +1,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; cairo.font-options.lisp
 ;;;
-;;; The documentation has been copied from the Cairo Reference Manual
-;;; for Cairo 1.12.14. See <http://cairographics.org>.
-;;; The API documentation of the Lisp binding is available at
-;;; <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the Cairo Reference Manual
+;;; Version 1.12.14 and modified to document the Lisp binding to the Cairo
+;;; library. See <http://cairographics.org>. The API documentation of the Lisp
+;;; binding is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2013 Dieter Kaiser
+;;; Copyright (C) 2013, 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -58,13 +58,6 @@
 ;;;
 ;;;     cairo_font_options_set_hint_metrics
 ;;;     cairo_font_options_get_hint_metrics
-;;;
-;;; Description
-;;;
-;;; The font options specify how fonts should be rendered. Most of the time the
-;;; font options implied by a surface are just right and do not need any
-;;; changes, but for pixel-based targets tweaking font options may result in
-;;; superior output on a particular display.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :cairo)
@@ -79,16 +72,16 @@
 (setf (gethash 'cairo-font-options-t atdoc:*symbol-name-alias*) "CStruct"
       (gethash 'cairo-font-options-t atdoc:*external-symbols*)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-29}
+ "@version{2014-2-2}
   @begin{short}
     An opaque structure holding all options that are used when rendering fonts.
   @end{short}
 
- Individual features of a @sym{cairo-font-options-t} can be set or accessed
- using functions named @code{cairo-font-options-set-feature-name} and
- @code{cairo-font-options-get-feature-name}, like the functions
- @fun{cairo-font-options-set-antialias} and
- @fun{cairo-font-options-get-antialias}.
+  Individual features of a @sym{cairo-font-options-t} can be set or accessed
+  using functions named @code{cairo-font-options-set-feature-name} and
+  @code{cairo-font-options-get-feature-name}, like the functions
+  @fun{cairo-font-options-set-antialias} and
+  @fun{cairo-font-options-get-antialias}.
 
   New features may be added to a @sym{cairo-font-options-t} in the future.
   For this reason, the functions @fun{cairo-font-options-copy},
@@ -96,7 +89,11 @@
   @fun{cairo-font-options-hash} should be used to copy, check for equality,
   merge, or compute a hash value of @sym{cairo-font-options-t} structures.
 
-  Since 1.0")
+  Since 1.0
+  @see-function{cairo-font-options-set-antialias}
+  @see-function{cairo-font-options-get-antialias}
+  @see-function{cairo-font-options-copy}
+  @see-function{cairo-font-options-hash}")
 
 (export 'cairo-font-options-t)
 

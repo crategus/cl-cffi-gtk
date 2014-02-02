@@ -186,58 +186,67 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_font_extents_t
-;;;
-;;; typedef struct {
-;;;     double ascent;
-;;;     double descent;
-;;;     double height;
-;;;     double max_x_advance;
-;;;     double max_y_advance;
-;;; } cairo_font_extents_t;
-;;;
-;;; The cairo_font_extents_t structure stores metric information for a font.
-;;; Values are given in the current user-space coordinate system.
-;;;
-;;; Because font metrics are in user-space coordinates, they are mostly, but not
-;;; entirely, independent of the current transformation matrix. If you call
-;;; cairo_scale(cr, 2.0, 2.0), text will be drawn twice as big, but the reported
-;;; text extents will not be doubled. They will change slightly due to hinting
-;;; (so you can't assume that metrics are independent of the transformation
-;;; matrix), but otherwise will remain unchanged.
-;;;
-;;; double ascent;
-;;;     the distance that the font extends above the baseline. Note that this is
-;;;     not always exactly equal to the maximum of the extents of all the glyphs
-;;;     in the font, but rather is picked to express the font designer's intent
-;;;     as to how the font should align with elements above it.
-;;;
-;;; double descent;
-;;;     the distance that the font extends below the baseline. This value is
-;;;     positive for typical fonts that include portions below the baseline.
-;;;     Note that this is not always exactly equal to the maximum of the extents
-;;;     of all the glyphs in the font, but rather is picked to express the font
-;;;     designer's intent as to how the font should align with elements below
-;;;     it.
-;;;
-;;; double height;
-;;;     the recommended vertical distance between baselines when setting
-;;;     consecutive lines of text with the font. This is greater than
-;;;     ascent+descent by a quantity known as the line spacing or external
-;;;     leading. When space is at a premium, most fonts can be set with only a
-;;;     distance of ascent+descent between lines.
-;;;
-;;; double max_x_advance;
-;;;     the maximum distance in the X direction that the origin is advanced for
-;;;     any glyph in the font.
-;;;
-;;; double max_y_advance;
-;;;     the maximum distance in the Y direction that the origin is advanced for
-;;;     any glyph in the font. This will be zero for normal fonts used for
-;;;     horizontal writing. (The scripts of East Asia are sometimes written
-;;;     vertically.)
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defcstruct cairo-font-extents-t
+  (ascent :double)
+  (descent :double)
+  (height :double)
+  (max-x-advance :double)
+  (may-y-advance :double))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'cairo-font-extents-t atdoc:*symbol-name-alias*) "CStruct"
+      (gethash 'cairo-font-extents-t atdoc:*external-symbols*)
+ "@version{2014-2-2}
+  @begin{short}
+    The @sym{cairo-font-extents-t} structure stores metric information for a
+    font. Values are given in the current user-space coordinate system.
+  @end{short}
+
+  Because font metrics are in user-space coordinates, they are mostly, but not
+  entirely, independent of the current transformation matrix. If you call
+  @code{(cairo-scale cr 2.0 2.0)}, text will be drawn twice as big, but the
+  reported text extents will not be doubled. They will change slightly due to
+  hinting (so you can not assume that metrics are independent of the
+  transformation matrix), but otherwise will remain unchanged.
+  @begin{pre}
+(defcstruct cario-font-extents-t
+  (ascent :double)
+  (descent :double)
+  (height :double)
+  (max-x-advance :double)
+  (may-y-advance :double))
+  @end{pre}
+  @begin[code]{table}
+    @entry[ascent]{The distance that the font extends above the baseline. Note
+      that this is not always exactly equal to the maximum of the extents of all
+      the glyphs in the font, but rather is picked to express the font
+      designer's intent as to how the font should align with elements above it.}
+    @entry[descent]{The distance that the font extends below the baseline. This
+      value is positive for typical fonts that include portions below the
+      baseline. Note that this is not always exactly equal to the maximum of the
+      extents of all the glyphs in the font, but rather is picked to express the
+      font designer's intent as to how the font should align with elements below
+      it.}
+    @entry[height]{The recommended vertical distance between baselines when
+      setting consecutive lines of text with the font. This is greater than
+      @code{ascent} + @code{descent} by a quantity known as the line spacing or
+      external leading. When space is at a premium, most fonts can be set with
+      only a distance of ascent+descent between lines.}
+    @entry[max-x-advance]{The maximum distance in the x direction that the
+      origin is advanced for any glyph in the font.}
+    @entry[max-y-advance]{The maximum distance in the y direction that the
+      origin is advanced for any glyph in the font. This will be zero for normal
+      fonts used for horizontal writing. (The scripts of East Asia are sometimes
+      written vertically.)}
+  @end{table}
+
+  Since 1.0
+  @see-function{cairo-scale}
+  @see-function{cairo-font-extents}")
+
+(export 'cairo-font-extents-t)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_scaled_font_extents ()

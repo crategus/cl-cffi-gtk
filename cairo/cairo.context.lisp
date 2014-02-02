@@ -1933,30 +1933,39 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_mask_surface ()
-;;;
-;;; void cairo_mask_surface (cairo_t *cr,
-;;;                          cairo_surface_t *surface,
-;;;                          double surface_x,
-;;;                          double surface_y);
-;;;
-;;; A drawing operator that paints the current source using the alpha channel of
-;;; surface as a mask. (Opaque areas of surface are painted with the source,
-;;; transparent areas are not painted.)
-;;;
-;;; cr :
-;;;     a cairo context
-;;;
-;;; surface :
-;;;     a cairo_surface_t
-;;;
-;;; surface_x :
-;;;     X coordinate at which to place the origin of surface
-;;;
-;;; surface_y :
-;;;     Y coordinate at which to place the origin of surface
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_mask_surface" %cairo-mask-surface) :void
+  (cr (:pointer (:struct cairo-t)))
+  (surface (:pointer (:struct cairo-surface-t)))
+  (surface-x :double)
+  (surface-y :double))
+
+(defun cairo-mask-surface (cr surface surface-x surface-y)
+ #+cl-cffi-gtk-documentation
+ "@version{2014-2-1}
+  @argument[cr]{a cairo context}
+  @argument[surface]{a @symbol{cairo-surface-t}}
+  @argument[surface-x]{x coordinate at which to place the origin of
+    @arg{surface}}
+  @argument[surface-y]{y coordinate at which to place the origin of
+    @arg{surface}}
+  @begin{short}
+    A drawing operator that paints the current source using the alpha channel of
+    @arg{surface} as a mask.
+  @end{short}
+  Opaque areas of @arg{surface} are painted with the source, transparent areas
+  are not painted.
+
+  Since 1.0
+  @see-symbol{cairo-t}
+  @see-symbol{cairo-surface-t}"
+  (%cairo-mask-surface cr
+                       surface
+                       (coerce surface-x 'double-float)
+                       (coerce surface-y 'double-float)))
+
+(export 'cairo-mask-surface)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_paint ()

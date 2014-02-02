@@ -6,7 +6,7 @@
 ;;; library. See <http://cairographics.org>. The API documentation of the Lisp
 ;;; binding is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012, 2013 Dieter Kaiser
+;;; Copyright (C) 2012, 2013, 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -558,45 +558,50 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_curve_to ()
-;;;
-;;; void cairo_curve_to (cairo_t *cr,
-;;;                      double x1,
-;;;                      double y1,
-;;;                      double x2,
-;;;                      double y2,
-;;;                      double x3,
-;;;                      double y3);
-;;;
-;;; Adds a cubic Bézier spline to the path from the current point to position
-;;; (x3, y3) in user-space coordinates, using (x1, y1) and (x2, y2) as the
-;;; control points. After this call the current point will be (x3, y3).
-;;;
-;;; If there is no current point before the call to cairo_curve_to() this
-;;; function will behave as if preceded by a call to cairo_move_to(cr, x1, y1).
-;;;
-;;; cr :
-;;;     a cairo context
-;;;
-;;; x1 :
-;;;     the X coordinate of the first control point
-;;;
-;;; y1 :
-;;;     the Y coordinate of the first control point
-;;;
-;;; x2 :
-;;;     the X coordinate of the second control point
-;;;
-;;; y2 :
-;;;     the Y coordinate of the second control point
-;;;
-;;; x3 :
-;;;     the X coordinate of the end of the curve
-;;;
-;;; y3 :
-;;;     the Y coordinate of the end of the curve
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_curve_to" %cairo-curve-to) :void
+  (cr (:pointer (:struct cairo-t)))
+  (x1 :double)
+  (y1 :double)
+  (x2 :double)
+  (y2 :double)
+  (x3 :double)
+  (y3 :double))
+
+(defun cairo-curve-to (cr x1 y1 x2 y2 x3 y3)
+ #+cl-cffi-gtk-documentation
+ "@version{2014-2-1}
+  @argument[cr]{a cairo context}
+  @argument[x1]{the x coordinate of the first control point}
+  @argument[y1]{the y coordinate of the first control point}
+  @argument[x2]{the x coordinate of the second control point}
+  @argument[y2]{the y coordinate of the second control point}
+  @argument[x3]{the x coordinate of the third control point}
+  @argument[y3]{the x coordinate of the third control point}
+  @begin{short}
+    Adds a cubic Bezier spline to the path from the current point to position
+    (@arg{x3}, @arg{y3}) in user-space coordinates, using (@arg{x1}, @arg{y1})
+    and (@arg{x2}, @arg{y2}) as the control points.
+  @end{short}
+  After this call the current point will be (@arg{x3}, @arg{y3}).
+
+  If there is no current point before the call to the function
+  @sym{cairo-curve-to} this function will behave as if preceded by a call to
+  @code{(cairo-move-to cr x1 y1)}.
+
+  Since 1.0
+  @see-class{cairo-t}
+  @see-function{cairo-move-to}"
+  (%cairo-curve-to cr
+                   (coerce x1 'double-float)
+                   (coerce y1 'double-float)
+                   (coerce x2 'double-float)
+                   (coerce y2 'double-float)
+                   (coerce x3 'double-float)
+                   (coerce y3 'double-float)))
+
+(export 'cairo-curve-to)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_line_to ()
@@ -725,34 +730,45 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_text_path ()
-;;;
-;;; void cairo_text_path (cairo_t *cr, const char *utf8);
-;;;
-;;; Adds closed paths for text to the current path. The generated path if
-;;; filled, achieves an effect similar to that of cairo_show_text().
-;;;
-;;; Text conversion and positioning is done similar to cairo_show_text().
-;;;
-;;; Like cairo_show_text(), After this call the current point is moved to the
-;;; origin of where the next glyph would be placed in this same progression.
-;;; That is, the current point will be at the origin of the final glyph offset
-;;; by its advance values. This allows for chaining multiple calls to to
-;;; cairo_text_path() without having to set current point in between.
-;;;
-;;; Note: The cairo_text_path() function call is part of what the cairo
-;;; designers call the "toy" text API. It is convenient for short demos and
-;;; simple programs, but it is not expected to be adequate for serious
-;;; text-using applications. See cairo_glyph_path() for the "real" text path API
-;;; in cairo.
-;;;
-;;; cr :
-;;;     a cairo context
-;;;
-;;; utf8 :
-;;;     a NUL-terminated string of text encoded in UTF-8, or NULL
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_text_path" cairo-text-path) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2014-2-2}
+  @argument[cr]{a cairo context}
+  @argument[utf8]{A string of text encoded in UTF-8, or @code{nil}}
+  @begin{short}
+    Adds closed paths for text to the current path.
+  @end{short}
+  The generated path if filled, achieves an effect similar to that of the
+  function @fun{cairo-show-text}.
+
+  Text conversion and positioning is done similar to the function
+  @fun{cairo-show-text}.
+
+  Like the function @fun{cairo-show-text}, after this call the current point is
+  moved to the origin of where the next glyph would be placed in this same
+  progression. That is, the current point will be at the origin of the final
+  glyph offset by its advance values. This allows for chaining multiple calls
+  to to the function @fun{cairo-text-path} without having to set current point
+  in between.
+
+  @begin[Note]{dictionary}
+    The function @sym{cairo-text-path} function call is part of what the cairo
+    designers call the \"toy\" text API. It is convenient for short demos and
+    simple programs, but it is not expected to be adequate for serious
+    text-using applications. See the function @fun{cairo-glyph-path} for the
+    \"real\" text path API in cairo.
+  @end{dictionary}
+
+  Since 1.0
+  @see-symbol{cario-t}
+  @see-function{cairo-show-text}
+  @see-function{cairo-glyph-path}"
+  (cr (:pointer (:struct cairo-t)))
+  (uft8 :string))
+
+(export 'cairo-text-path)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_rel_curve_to ()
@@ -843,29 +859,36 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_rel_move_to ()
-;;;
-;;; void cairo_rel_move_to (cairo_t *cr, double dx, double dy);
-;;;
-;;; Begin a new sub-path. After this call the current point will offset by
-;;; (x, y).
-;;;
-;;; Given a current point of (x, y), cairo_rel_move_to(cr, dx, dy) is logically
-;;; equivalent to cairo_move_to(cr, x + dx, y + dy).
-;;;
-;;; It is an error to call this function with no current point. Doing so will
-;;; cause cr to shutdown with a status of CAIRO_STATUS_NO_CURRENT_POINT.
-;;;
-;;; cr :
-;;;     a cairo context
-;;;
-;;; dx :
-;;;     the X offset
-;;;
-;;; dy :
-;;;     the Y offset
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_rel_move_to" %cairo-rel-move-to) :void
+  (cr (:pointer (:struct cairo-t)))
+  (dx :double)
+  (dy :double))
+
+(defun cairo-rel-move-to (cr dx dy)
+ #+cl-cffi-gtk-documentation
+ "@version{2014-2-1}
+  @argument[cr]{a cairo context}
+  @argument[dx]{the x offset}
+  @argument[dy]{the y offset}
+  @begin{short}
+    Begin a new sub-path. After this call the current point will offset by
+    (x, y).
+  @end{short}
+
+  Given a current point of (x, y), @code{(cairo-rel-move-to cr dx dy)} is
+  logically equivalent to @code{(cairo-move-to cr (+ x dx) (+ y dy))}.
+
+  It is an error to call this function with no current point. Doing so will
+  cause @arg{cr} to shutdown with a status of @code{:no-current-point}.
+
+  Since 1.0
+  @see-class{cairo-t}
+  @see-function{cairo-move-to}"
+  (%cairo-rel-move-to cr (coerce dx 'double-float) (coerce dy 'double-float)))
+
+(export 'cairo-rel-move-to)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_path_extents ()

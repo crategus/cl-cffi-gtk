@@ -300,9 +300,13 @@
 ;;; cairo_set_font_size ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("cairo_set_font_size" cairo-set-font-size) :void
+(defcfun ("cairo_set_font_size" %cairo-set-font-size) :void
+  (cr (:pointer (:struct cairo-t)))
+  (size :double))
+
+(defun cairo-set-font-size (cr size)
  #+cl-cffi-gtk-documentation
- "@version{2013-12-28}
+ "@version{2014-2-1}
   @argument[cr]{a @symbol{cairo-t}}
   @argument[size]{the new font size, in user space units}
   @begin{short}
@@ -310,18 +314,19 @@
     font matrix previously set with the functions @sym{cairo-set-font-size} or
     @fun{cairo-set-font-matrix}.
   @end{short}
-  This results in a font size of size user space units. (More precisely, this
-  matrix will result in the font's em-square being a size by size square in user
-  space.)
+  This results in a font size of size user space units. More precisely, this
+  matrix will result in the font's em-square being a size by size square in
+  user space.
 
   If text is drawn without a call to the function @sym{cairo-set-font-size},
-  (nor the function @fun{cairo-set-font-matrix} nor the function
-  @fun{cairo-set-scaled-font}), the default font size is 10.0.
+  nor the function @fun{cairo-set-font-matrix} nor the function
+  @fun{cairo-set-scaled-font}, the default font size is 10.0.
 
   Since 1.0
-  @see-symbol{cairo-t}"
-  (cr (:pointer (:struct cairo-t)))
-  (size :double))
+  @see-symbol{cairo-t}
+  @see-function{cairo-set-font-matrix}
+  @see-function{cairo-set-scaled-font}"
+  (%cairo-set-font-size cr (coerce size 'double-float)))
 
 (export 'cairo-set-font-size)
 
@@ -364,42 +369,62 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_set_font_options ()
-;;;
-;;; void cairo_set_font_options (cairo_t *cr,
-;;;                              const cairo_font_options_t *options);
-;;;
-;;; Sets a set of custom font rendering options for the cairo_t. Rendering
-;;; options are derived by merging these options with the options derived from
-;;; underlying surface; if the value in options has a default value (like
-;;; CAIRO_ANTIALIAS_DEFAULT), then the value from the surface is used.
-;;;
-;;; cr :
-;;;     a cairo_t
-;;;
-;;; options :
-;;;     font options to use
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_set_font_options" cairo-set-font-options) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2014-2-2}
+  @argument[cr]{a cairo context}
+  @argument[options]{font options of type @symbol{cairo-font-options-t} to use}
+  @begin{short}
+    Sets a set of custom font rendering options for the @symbol{cairo-t}.
+  @end{short}
+  Rendering options are derived by merging these @arg{options} with the options
+  derived from underlying surface; if the value in options has a default value
+  (like @code{CAIRO_ANTIALIAS_DEFAULT}), then the value from the surface is
+  used.
+
+  Since 1.0
+  @see-symbol{cairo-t}
+  @see-symbol{cairo-font-options-t}"
+  (cr (:pointer (:struct cairo-t)))
+  (options (:pointer (:struct cairo-font-options-t))))
+
+(export 'cairo-set-font-options)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_get_font_options ()
-;;;
-;;; void cairo_get_font_options (cairo_t *cr, cairo_font_options_t *options);
-;;;
-;;; Retrieves font rendering options set via cairo_set_font_options. Note that
-;;; the returned options do not include any options derived from the underlying
-;;; surface; they are literally the options passed to cairo_set_font_options().
-;;;
-;;; cr :
-;;;     a cairo_t
-;;;
-;;; options :
-;;;     a cairo_font_options_t object into which to store the retrieved options.
-;;;     All existing values are overwritten
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_get_font_options" %cairo-get-font-options) :void
+  (cr (:pointer (:struct cairo-t)))
+  (options (:pointer (:struct cairo-font-options-t))))
+
+(defun cairo-get-font-options (cr)
+ #+cl-cffi-gtk-documentation
+ "@version{2014-2-2}
+  @argument[cr]{a cairo context}
+  @begin{return}
+    A @symbol{cairo-font-options-t} object into which to store the retrieved
+    options. All existing values are overwritten.
+  @end{return}
+  @begin{short}
+    Retrieves font rendering options set via the function
+    @fun{cairo-set-font-options}.
+  @end{short}
+  Note that the returned options do not include any options derived from the
+  underlying surface; they are literally the options passed to the function
+  @fun{cairo-set-font-options}.
+
+  Since 1.0
+  @see-symbol{cairo-t}
+  @see-symbol{cairo-font-options-t}
+  @see-function{cairo-set-font-options}"
+  (with-foreign-object (options '(:struct cairo-font-options-t))
+    (%cairo-get-font-options cr options)
+    options))
+
+(export 'cairo-get-font-options)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_set_font_face ()
@@ -497,7 +522,7 @@
   @argument[utf8]{a string of text encoded in UTF-8, or @code{NULL}}
   @begin{short}
     A drawing operator that generates the shape from a string of UTF-8
-    characters, rendered according to the current @code{font_face}, 
+    characters, rendered according to the current @code{font_face},
     @code{font_size} (@code{font_matrix}), and @code{font_options}.
   @end{short}
 
@@ -608,19 +633,31 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_font_extents ()
-;;;
-;;; void cairo_font_extents (cairo_t *cr, cairo_font_extents_t *extents);
-;;;
-;;; Gets the font extents for the currently selected font.
-;;;
-;;; cr :
-;;;     a cairo_t
-;;;
-;;; extents :
-;;;     a cairo_font_extents_t object into which the results will be stored.
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_font_extents" %cairo-font-extents) :void
+  (cr (:pointer (:struct cairo-t)))
+  (extents (:pointer (:struct cairo-font-extents-t))))
+
+(defun cairo-font-extents (cr)
+ #+cl-cffi-gtk-documentation
+ "@version{2014-2-2}
+  @argument[cr]{a cairo context}
+  @begin{return}
+    The @symbol{cairo-font-extents-t} object.
+  @end{return}
+  @begin{short}
+    Gets the font extents for the currently selected font.
+  @end{short}
+
+  Since 1.0
+  @see-symbol{cairo-t}
+  @see-symbol{cairo-font-extents-t}"
+  (with-foreign-object (extents '(:struct cairo-font-extents-t))
+    (%cairo-font-extents cr extents)
+    extents))
+
+(export 'cairo-font-extents)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_text_extents ()

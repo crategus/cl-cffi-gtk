@@ -104,17 +104,14 @@
 (defcfun ("cairo_image_surface_create" cairo-image-surface-create)
     (:pointer (:struct cairo-surface-t))
  #+cl-cffi-gtk-documentation
- "@version{2013-12-28}
+ "@version{2014-2-2}
   @argument[format]{format of pixels of type @symbol{cairo-format-t} in the
     surface to create}
   @argument[width]{width of the surface, in pixels}
   @argument[height]{height of the surface, in pixels}
   @begin{return}
     A pointer to the newly created surface. The caller owns the surface and
-    should call the function @fun{cairo-surface-destroy} when done with it. This
-    function always returns a valid pointer, but it will return a pointer to a
-    \"nil\" surface if an error such as out of memory occurs. You can use the
-    function @fun{cairo-surface-status} to check for this.
+    should call the function @fun{cairo-surface-destroy} when done with it.
   @end{return}
   @begin{short}
     Creates an image surface of the specified format and dimensions.
@@ -123,8 +120,12 @@
   each color or alpha channel belonging to format will be 0. The contents of
   bits within a pixel, but not belonging to the given format are undefined.
 
+  This function always returns a valid pointer, but it will return a pointer to
+  a \"nil\" surface if an error such as out of memory occurs. You can use the
+  function @fun{cairo-surface-status} to check for this.
+
   Since 1.0
-  @see-symbol{cario-surface-t}
+  @see-symbol{cairo-surface-t}
   @see-symbol{cairo-format-t}
   @see-function{cairo-surface-destroy}
   @see-function{cairo-surface-status}"

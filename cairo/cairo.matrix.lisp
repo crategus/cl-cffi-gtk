@@ -77,9 +77,9 @@
   (y0 :double))
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'cairo-t atdoc:*symbol-name-alias*) "CStruct"
-      (gethash 'cairo-t atdoc:*external-symbols*)
- "@version{2013-12-2}
+(setf (gethash 'cairo-matrix-t atdoc:*symbol-name-alias*) "CStruct"
+      (gethash 'cairo-matrix-t atdoc:*external-symbols*)
+ "@version{2014-2-1}
   @begin{short}
     A @sym{cairo-matrix-t} holds an affine transformation, such as a scale,
     rotation, shear, or a combination of those.

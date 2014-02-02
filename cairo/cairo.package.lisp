@@ -236,6 +236,11 @@
     @begin[Transformations]{subsection}
       Manipulating the current transformation matrix.
 
+      The current transformation matrix, CTM, is a two-dimensional affine
+      transformation that maps all coordinates and other drawing instruments
+      from the user space into the surface's canonical coordinate system, also
+      known as the device space.
+
       @about-function{cairo-translate}
       @about-function{cairo-scale}
       @about-function{cairo-rotate}
@@ -456,7 +461,23 @@
       Rendering PDF documents
     @end{subsection}
     @begin[PNG Support]{subsection}
-      Reading and writing PNG images
+      Reading and writing PNG images.
+
+      The PNG functions allow reading PNG images into image surfaces, and
+      writing any surface to a PNG file.
+
+      It is a toy API. It only offers very simple support for reading and
+      writing PNG files, which is sufficient for testing and demonstration
+      purposes. Applications which need more control over the generated PNG file
+      should access the pixel data directly, using the function
+      @fun{cairo-image-surface-get-data} or a backend-specific access function,
+      and process it with another library, e. g. @class{gdk-pixbuf} or libpng.
+
+      @symbol{CAIRO_HAS_PNG_FUNCTIONS}
+      @see-function{cairo-image-surface-create-from-png}
+      @see-function{cairo-image-surface-create-from-png-stream}
+      @see-function{cairo-surface-write-to-png}
+      @see-function{cairo-surface-write-to-png-stream}
     @end{subsection}
     @begin[PostScript Surfaces]{subsection}
       Rendering PostScript documents
