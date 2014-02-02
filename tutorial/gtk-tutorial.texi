@@ -213,6 +213,7 @@ GTK+ and Cairo
 * Working with Transforms::
 * Where to Go Next::
 * Tips and Tricks::
+* Writing a Widget Using Cairo and GTK::
 
 Application Support
 * Application Class::

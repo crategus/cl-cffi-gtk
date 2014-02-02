@@ -878,6 +878,8 @@
 
 @set g-filename-to-utf8 http://www.crategus.com/books/cl-cffi-gtk/pages/glib_fun_g-filename-to-utf8.html
 
+@set g-timeout-add http://www.crategus.com/books/cl-cffi-gtk/pages/glib_fun_g-timeout-add.html
+
 @c -----------------------------------------------------------------------------
 
 @c GIO
