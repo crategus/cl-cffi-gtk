@@ -35,7 +35,9 @@ Surfaces
  cairo.image-surface.lisp - Rendering to memory buffers         - Cairo 1.12.16&
 
   PDF Surfaces - Rendering PDF documents
-  PNG Support - Reading and writing PNG images
+
+ cairo.png-surface.lisp - Reading and writing PNG images        - Cairo 1.12.16&
+
   PostScript Surfaces - Rendering PostScript documents
   Recording Surfaces - Records all drawing operations
   Win32 Surfaces - Microsoft Windows surface support

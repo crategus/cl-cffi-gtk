@@ -1,7 +1,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; cl-cffi-gtk-cairo.asd
 ;;;
-;;; Copyright (C) 2012, 2013 Dieter Kaiser
+;;; Copyright (C) 2012, 2013, 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -39,13 +39,14 @@
                (:file "cairo.device")          ; interface to rendering system
                (:file "cairo.surface")
                (:file "cairo.image-surface")   ; Rendering to memory buffers
+               (:file "cairo.png-surface")     ; Reading and writing PNG images
                (:file "cairo.pattern")         ; Sources for drawing
                (:file "cairo.context")
                (:file "cairo.transformations") ; Transformations
                (:file "cairo.paths")
                (:file "cairo.scaled-font")     ; Font face at particular size
+               (:file "cairo.font-options")    ; How a font should be rendered
                (:file "cairo.text")            ; Rendering text and glyphs
-               (:file "cairo.font-options")
               )
   :depends-on (:cffi
                :cl-cffi-gtk-glib
