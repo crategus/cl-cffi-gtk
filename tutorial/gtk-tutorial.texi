@@ -68,9 +68,9 @@ END-INFO-DIR-ENTRY
 * Miscellaneous Widgets::
 * Menus and Toolbars::               Creation of Menus and Toolbars
 * Application Support::
+* GTK+ and Cairo::                   Using Cairo for drawing in GTK+
 
 Appendix
-* Reference of Widgets::
 * Tables::
 * Figures::
 * Examples::
@@ -205,6 +205,15 @@ Menus and Toolbars
 * Toolbars::
 * GtkUIManager::
 
+GTK+ and Cairo
+* GTK+ and Cairo::
+* Cairo Drawing Model::
+* Drawing with Cairo::
+* Understanding Text::
+* Working with Transforms::
+* Where to Go Next::
+* Tips and Tricks::
+
 Application Support
 * Application Class::
 * Application Window::
@@ -271,11 +280,11 @@ Application Support
 @chapter Application Support
 @include gtk-application.texi
 
-@node Reference of Widgets, Tables, Application Support, Top
-@appendix Reference of Widgets
-@include gtk-reference.texi
+@node GTK+ and Cairo, Tables, Application Support, Top
+@chapter GTK+ and Cairo
+@include gtk-cairo.texi
 
-@node Tables, Figures, Reference of Widgets, Top
+@node Tables, Figures, GTK+ and Cairo, Top
 @appendix Tables
 @listoffloats Table
 

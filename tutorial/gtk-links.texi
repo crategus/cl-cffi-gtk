@@ -801,7 +801,7 @@
 @set gtk-widget-set-tooltip-text http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-widget-set-tooltip-text.html
 @set gtk-widget-destroy http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-widget-destroy.html
 @set gtk-widget-show-all http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-widget-show-all.html
-
+@set gtk-widget-show http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-widget-show.html
 
 @c GtkWindow
 
@@ -905,5 +905,73 @@
 @c PangoAttrList
 
 @set pango-attr-list http://www.crategus.com/books/cl-cffi-gtk/pages/pango_class_pango-attr-list.html
+
+@c -----------------------------------------------------------------------------
+
+@c Cairo
+
+@set cairo-t http://www.crategus.com/books/cl-cffi-gtk/pages/cairo_sym_cairo-t.html
+@set cairo-surface-t http://www.crategus.com/books/cl-cffi-gtk/pages/cairo_sym_cairo-surface-t.html
+
+@set cairo-create http://www.crategus.com/books/cl-cffi-gtk/pages/cairo_fun_cairo-create.html
+@set cairo-image-surface-create http://www.crategus.com/books/cl-cffi-gtk/pages/cairo_fun_cairo-image-surface-create.html
+@set cairo-stroke http://www.crategus.com/books/cl-cffi-gtk/pages/cairo_fun_cairo-stroke.html
+@set cairo-fill http://www.crategus.com/books/cl-cffi-gtk/pages/cairo_fun_cairo-fill.html
+@set cairo-show-text http://www.crategus.com/books/cl-cffi-gtk/pages/cairo_fun_cairo-show-text.html
+@set cairo-text-path http://www.crategus.com/books/cl-cffi-gtk/pages/cairo_fun_cairo-text-path.html
+@set cairo-paint http://www.crategus.com/books/cl-cffi-gtk/pages/cairo_fun_cairo-paint.html
+@set cairo-paint-with-alpha http://www.crategus.com/books/cl-cffi-gtk/pages/cairo_fun_cairo-paint-with-alpha.html
+
+@set cairo-mask http://www.crategus.com/books/cl-cffi-gtk/pages/cairo_fun_cairo-mask.html
+@set cairo-mask-surface http://www.crategus.com/books/cl-cffi-gtk/pages/cairo_fun_cairo-mask-surface.html
+@set cairo-set-source-rgb http://www.crategus.com/books/cl-cffi-gtk/pages/cairo_fun_cairo-set-source-rgb.html
+@set cairo-set-source-rgba http://www.crategus.com/books/cl-cffi-gtk/pages/cairo_fun_cairo-set-source-rgba.html
+
+@set cairo-pattern-add-color-stop-rgb http://www.crategus.com/books/cl-cffi-gtk/pages/cairo_fun_cairo-pattern-add-color-stop-rgb.html
+@set cairo-pattern-add-color-stop-rgba http://www.crategus.com/books/cl-cffi-gtk/pages/cairo_fun_cairo-pattern-add-color-stop-rgba.html
+
+@set cairo-pattern-set-extend http://www.crategus.com/books/cl-cffi-gtk/pages/cairo_fun_cairo-pattern-set-extend.html
+
+@set cairo-pop-group http://www.crategus.com/books/cl-cffi-gtk/pages/cairo_fun_cairo-pop-group.html
+@set cairo-push-group http://www.crategus.com/books/cl-cffi-gtk/pages/cairo_fun_cairo-push-group.html
+@set cairo-pop-group-to-source http://www.crategus.com/books/cl-cffi-gtk/pages/cairo_fun_cairo-pop-group-to-source.html
+@set cairo-set-source http://www.crategus.com/books/cl-cffi-gtk/pages/cairo_fun_cairo-set-source.html
+
+@set cairo-image-surface-create-from-png http://www.crategus.com/books/cl-cffi-gtk/pages/cairo_fun_cairo-image-surface-create-from-png.html
+
+@set cairo-stroke-preserve http://www.crategus.com/books/cl-cffi-gtk/pages/cairo_fun_cairo-stroke-preserve.html
+@set cairo-fill-preserve http://www.crategus.com/books/cl-cffi-gtk/pages/cairo_fun_cairo-fill-preserve.html
+
+@set cairo-move-to http://www.crategus.com/books/cl-cffi-gtk/pages/cairo_fun_cairo-move-to.html
+@set cairo-rel-move-to http://www.crategus.com/books/cl-cffi-gtk/pages/cairo_fun_cairo-rel-move-to.html
+@set cairo-line-to http://www.crategus.com/books/cl-cffi-gtk/pages/cairo_fun_cairo-line-to.html
+@set cairo-rel-line-to http://www.crategus.com/books/cl-cffi-gtk/pages/cairo_fun_cairo-rel-line-to.html
+@set cairo-curve-to http://www.crategus.com/books/cl-cffi-gtk/pages/cairo_fun_cairo-curve-to.html
+@set cairo-rel-curve-to http://www.crategus.com/books/cl-cffi-gtk/pages/cairo_fun_cairo-rel-curve-to.html
+
+@set cairo-arc http://www.crategus.com/books/cl-cffi-gtk/pages/cairo_fun_cairo-arc.html
+@set cairo-arc-negative http://www.crategus.com/books/cl-cffi-gtk/pages/cairo_fun_cairo-arc-negative.html
+
+@set cairo-text-path http://www.crategus.com/books/cl-cffi-gtk/pages/cairo_fun_cairo-text-path.html
+@set cairo-font-extents http://www.crategus.com/books/cl-cffi-gtk/pages/cairo_fun_cairo-font-extents.html
+@set cairo-text-extents http://www.crategus.com/books/cl-cffi-gtk/pages/cairo_fun_cairo-text-extents.html
+
+@set cairo-select-font-face http://www.crategus.com/books/cl-cffi-gtk/pages/cairo_fun_cairo-select-font-face.html
+@set cairo-set-font-size http://www.crategus.com/books/cl-cffi-gtk/pages/cairo_fun_cairo-set-font-size.html
+
+@set cairo-font-options-t http://www.crategus.com/books/cl-cffi-gtk/pages/cairo_sym_cairo-font-options-t.html
+@set cairo-get-font-options http://www.crategus.com/books/cl-cffi-gtk/pages/cairo_fun_cairo-get-font-options.html
+@set cairo-set-font-options http://www.crategus.com/books/cl-cffi-gtk/pages/cairo_fun_cairo-set-font-options.html
+
+@set cairo-scale http://www.crategus.com/books/cl-cffi-gtk/pages/cairo_fun_cairo-scale.html
+@set cairo-translate http://www.crategus.com/books/cl-cffi-gtk/pages/cairo_fun_cairo-translate.html
+@set cairo-transform http://www.crategus.com/books/cl-cffi-gtk/pages/cairo_fun_cairo-transform.html
+
+@set cairo-matrix-t http://www.crategus.com/books/cl-cffi-gtk/pages/cairo_sym_cairo-matrix-t.html
+
+@set cairo-user-to-device http://www.crategus.com/books/cl-cffi-gtk/pages/cairo_fun_cairo-user-to-device.html
+@set cairo-user-to-device-distance http://www.crategus.com/books/cl-cffi-gtk/pages/cairo_fun_cairo-user-to-device-distance.html
+@set cairo-device-to-user http://www.crategus.com/books/cl-cffi-gtk/pages/cairo_fun_cairo-device-to-user.html
+@set cairo-device-to-user-distance http://www.crategus.com/books/cl-cffi-gtk/pages/cairo_fun_cairo-device-to-user-distance.html
 
 
