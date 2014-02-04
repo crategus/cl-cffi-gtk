@@ -18,8 +18,7 @@ Drawing
 
 Fonts
 
-  cairo_font_face_t - Base class for font faces
-
+ cairo.font-face.lisp - Base class for font faces               - Cairo 1.12.16%
  cairo.scaled-font - Font face at particular size and options   - Cairo 1.12.14%
  cairo.font-options.lisp - How a font should be rendered        - Cairo 1.12.14%
 

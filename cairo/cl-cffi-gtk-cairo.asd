@@ -44,8 +44,11 @@
                (:file "cairo.context")
                (:file "cairo.transformations") ; Transformations
                (:file "cairo.paths")
-               (:file "cairo.scaled-font")     ; Font face at particular size
+
+               ;; Fonts
+               (:file "cairo.font-face")       ; Base class for font faces
                (:file "cairo.font-options")    ; How a font should be rendered
+               (:file "cairo.scaled-font")     ; Font face at particular size
                (:file "cairo.text")            ; Rendering text and glyphs
               )
   :depends-on (:cffi
