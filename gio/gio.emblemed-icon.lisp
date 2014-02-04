@@ -94,7 +94,7 @@
  "@version{2014-1-5}
   Accessor of the slot @code{\"gicon\"} of the @class{g-emblemed-icon} class.
   @see-class{g-emblemed-icon}
-  @see-function{g-emblemed-icon-get-gicon}")
+  @see-function{g-emblemed-icon-get-icon}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_emblemed_icon_new ()
@@ -117,19 +117,23 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_emblemed_icon_get_icon ()
-;;;
-;;; GIcon * g_emblemed_icon_get_icon (GEmblemedIcon *emblemed);
-;;;
-;;; Gets the main icon for emblemed.
-;;;
-;;; emblemed :
-;;;     a GEmblemedIcon
-;;;
-;;; Returns :
-;;;     a GIcon that is owned by emblemed.
-;;;
-;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
+
+(declaim (inline g-emblemed-icon-get-icon))
+
+(defun g-emblemed-icon-get-icon (emblemed)
+ #+cl-cffi-gtk-documentation
+ "@version{2014-2-2}
+  @argument[emblemed]{a @class{g-emblemed-icon}}
+  @return{A @class{g-icon} that is owned by @arg{emblemed}.}
+  @short{Gets the main icon for @arg{emblemed}.}
+
+  Since 2.18
+  @see-class{g-emblemed-icon}
+  @see-class{g-icon}"
+  (g-emblemed-icon-gicon emblemed))
+
+(export 'g-emblemed-icon-get-icon)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_emblemed_icon_get_emblems ()
@@ -149,19 +153,22 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_emblemed_icon_add_emblem ()
-;;;
-;;; void g_emblemed_icon_add_emblem (GEmblemedIcon *emblemed, GEmblem *emblem)
-;;;
-;;; Adds emblem to the GList of GEmblem s.
-;;;
-;;; emblemed :
-;;;     a GEmblemedIcon
-;;;
-;;; emblem :
-;;;     a GEmblem
-;;;
-;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_emblemed_icon_add_emblem" g-emblemed-icon-add-emblem) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2014-2-2}
+  @argument[emblemed]{a @class{g-emblemed-icon}}
+  @argument[emblem]{a @class{g-emblem}}
+  @short{Adds @arg{emblem} to the list of @class{g-emblem}'s.}
+
+  Since 2.18
+  @see-class{g-emblemed-icon}
+  @see-class{g-embleme}"
+  (emblemed (g-object g-emblemed-icon))
+  (emblem (g-object g-emblem)))
+
+(export 'g-emblemed-icon-add-emblem)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_emblemed_icon_clear_emblems ()
