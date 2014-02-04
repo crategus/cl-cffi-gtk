@@ -30,7 +30,7 @@
 (push :cl-cffi-gtk-documentation *features*)
 
 (asdf:load-system :atdoc)
-(asdf:load-system :cl-cffi-gtk :force t)
+(asdf:load-system :cl-cffi-gtk)
 
 (defpackage :atdoc-gtk
   (:use :gtk :gdk :gdk-pixbuf :gobject :glib :gio :pango :cairo :common-lisp)
