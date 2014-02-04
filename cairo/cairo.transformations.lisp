@@ -215,22 +215,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_user_to_device ()
-;;;
-;;; void cairo_user_to_device (cairo_t *cr, double *x, double *y);
-;;;
-;;; Transform a coordinate from user space to device space by multiplying the
-;;; given point by the current transformation matrix (CTM).
-;;;
-;;; cr :
-;;;     a cairo context
-;;;
-;;; x :
-;;;     X value of coordinate (in/out parameter)
-;;;
-;;; y :
-;;;     Y value of coordinate (in/out parameter)
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("cairo_user_to_device" %cairo-user-to-device) :void
@@ -239,6 +223,21 @@
   (y (:pointer :double)))
 
 (defun cairo-user-to-device (cr x y)
+ #+cl-cffi-gtk-documentation
+ "@version{2014-2-4}
+  @argument[cr]{a cairo context}
+  @begin{return}
+    @code{x} -- x value of coordinate (in/out parameter) @br{}
+    @code{y} -- y value of coordinate (in/out parameter)
+  @end{return}
+  @begin{short}
+    Transform a coordinate from user space to device space by multiplying the
+    given point by the current transformation matrix (CTM).
+  @end{short}
+
+  Since 1.0
+  @see-symbol{cairo-t}
+  @see-function{cairo-device-to-user}"
   (with-foreign-objects ((x-new :double) (y-new :double))
     (setf (mem-ref x-new :double)
           (coerce x 'double-float)
@@ -252,23 +251,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_user_to_device_distance ()
-;;;
-;;; void cairo_user_to_device_distance (cairo_t *cr, double *dx, double *dy);
-;;;
-;;; Transform a distance vector from user space to device space. This function
-;;; is similar to cairo_user_to_device() except that the translation components
-;;; of the CTM will be ignored when transforming (dx,dy).
-;;;
-;;; cr :
-;;;     a cairo context
-;;;
-;;; dx :
-;;;     X component of a distance vector (in/out parameter)
-;;;
-;;; dy :
-;;;     Y component of a distance vector (in/out parameter)
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("cairo_user_to_device_distance" %cairo-user-to-device-distance) :void
@@ -277,6 +259,23 @@
   (dy (:pointer :double)))
 
 (defun cairo-user-to-device-distance (cr dx dy)
+ #+cl-cffi-gtk-documentation
+ "@version{2014-2-4}
+  @argument[cr]{a cairo context}
+  @begin{return}
+    @code{dx} -- x component of a distance vector (in/out parameter) @br{}
+    @code{dy} -- y component of a distance vector (in/out parameter)
+  @end{return}
+  @begin{short}
+    Transform a distance vector from user space to device space.
+  @end{short}
+  This function is similar to the function @fun{cairo-user-to-device} except
+  that the translation components of the CTM will be ignored when transforming
+  (@code{dx}, @code{dy}).
+
+  Since 1.0
+  @see-symbol{cairo-t}
+  @see-function{cairo-user-to-device}"
   (with-foreign-objects ((dx-new :double) (dy-new :double))
     (setf (mem-ref dx-new :double)
           (coerce dx 'double-float)
@@ -290,22 +289,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_device_to_user ()
-;;;
-;;; void cairo_device_to_user (cairo_t *cr, double *x, double *y);
-;;;
-;;; Transform a coordinate from device space to user space by multiplying the
-;;; given point by the inverse of the current transformation matrix (CTM).
-;;;
-;;; cr :
-;;;     a cairo
-;;;
-;;; x :
-;;;     X value of coordinate (in/out parameter)
-;;;
-;;; y :
-;;;     Y value of coordinate (in/out parameter)
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("cairo_device_to_user" %cairo-device-to-user) :void
@@ -314,6 +297,21 @@
   (y (:pointer :double)))
 
 (defun cairo-device-to-user (cr x y)
+ #+cl-cffi-gtk-documentation
+ "@version{2014-2-4}
+  @argument[cr]{a cairo context}
+  @begin{return}
+    @code{x} -- x value of coordinate (in/out parameter) @br{}
+    @code{y} -- y value of coordinate (in/out parameter)
+  @end{return}
+  @begin{short}
+    Transform a coordinate from device space to user space by multiplying the
+    given point by the inverse of the current transformation matrix (CTM).
+  @end{short}
+
+  Since 1.0
+  @see-symbol{cairo-t}
+  @see-function{cairo-user-to-device}"
   (with-foreign-objects ((x-new :double) (y-new :double))
     (setf (mem-ref x-new :double)
           (coerce x 'double-float)
@@ -327,23 +325,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_device_to_user_distance ()
-;;;
-;;; void cairo_device_to_user_distance (cairo_t *cr, double *dx, double *dy);
-;;;
-;;; Transform a distance vector from device space to user space. This function
-;;; is similar to cairo_device_to_user() except that the translation components
-;;; of the inverse CTM will be ignored when transforming (dx,dy).
-;;;
-;;; cr :
-;;;     a cairo context
-;;;
-;;; dx :
-;;;     X component of a distance vector (in/out parameter)
-;;;
-;;; dy :
-;;;     Y component of a distance vector (in/out parameter)
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("cairo_device_to_user_distance" %cairo-device-to-user-distance) :void
@@ -352,6 +333,23 @@
   (dy (:pointer :double)))
 
 (defun cairo-device-to-user-distance (cr dx dy)
+ #+cl-cffi-gtk-documentation
+ "@version{2014-2-4}
+  @argument[cr]{a cairo context}
+  @begin{return}
+    @code{dx} -- x component of a distance vector (in/out parameter) @br{}
+    @code{dy} -- y component of a distance vector (in/out parameter)
+  @end{return}
+  @begin{short}
+    Transform a distance vector from device space to user space.
+  @end{short}
+  This function is similar to the function @fun{cairo-device-to-user} except
+  that the translation components of the inverse CTM will be ignored when
+  transforming (@code{dx},@code{dy}).
+
+  Since 1.0
+  @see-symbol{cairo-t}
+  @see-function{cairo-device-to-user}"
   (with-foreign-objects ((dx-new :double) (dy-new :double))
     (setf (mem-ref dx-new :double)
           (coerce dx 'double-float)

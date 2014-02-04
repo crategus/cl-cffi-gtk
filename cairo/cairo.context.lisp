@@ -825,87 +825,127 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_set_dash ()
-;;;
-;;; void cairo_set_dash (cairo_t *cr,
-;;;                      const double *dashes,
-;;;                      int num_dashes,
-;;;                      double offset);
-;;;
-;;; Sets the dash pattern to be used by cairo_stroke(). A dash pattern is
-;;; specified by dashes, an array of positive values. Each value provides the
-;;; length of alternate "on" and "off" portions of the stroke. The offset
-;;; specifies an offset into the pattern at which the stroke begins.
-;;;
-;;; Each "on" segment will have caps applied as if the segment were a separate
-;;; sub-path. In particular, it is valid to use an "on" length of 0.0 with
-;;; CAIRO_LINE_CAP_ROUND or CAIRO_LINE_CAP_SQUARE in order to distributed dots
-;;; or squares along a path.
-;;;
-;;; Note: The length values are in user-space units as evaluated at the time of
-;;; stroking. This is not necessarily the same as the user space at the time of
-;;; cairo_set_dash().
-;;;
-;;; If num_dashes is 0 dashing is disabled.
-;;;
-;;; If num_dashes is 1 a symmetric pattern is assumed with alternating on and
-;;; off portions of the size specified by the single value in dashes.
-;;;
-;;; If any value in dashes is negative, or if all values are 0, then cr will be
-;;; put into an error state with a status of CAIRO_STATUS_INVALID_DASH.
-;;;
-;;; cr :
-;;;     a cairo context
-;;;
-;;; dashes :
-;;;     an array specifying alternate lengths of on and off stroke portions
-;;;
-;;; num_dashes :
-;;;     the length of the dashes array
-;;;
-;;; offset :
-;;;     an offset into the dash pattern at which the stroke should start
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_set_dash" %cairo-set-dash) :void
+  (cr (:pointer (:struct cairo-t)))
+  (dashes (:pointer :double))
+  (num-dashes :int)
+  (offset :double))
+
+(defun cairo-set-dash (cr dashes offset)
+ #+cl-cffi-gtk-documentation
+ "@version{2014-2-4}
+  @argument[cr]{a cairo context}
+  @argument[dashes]{a list specifying alternate lengths of on and off stroke
+    portions}
+  @argument[offset]{an offset into the dash pattern at which the stroke should
+    start}
+  @begin{short}
+    Sets the dash pattern to be used by the function @fun{cairo-stroke}.
+  @end{short}
+  A dash pattern is specified by dashes, a list of positive values. Each value
+  provides the length of alternate \"on\" and \"off\" portions of the stroke.
+  The offset specifies an offset into the pattern at which the stroke begins.
+
+  Each \"on\" segment will have caps applied as if the segment were a separate
+  sub-path. In particular, it is valid to use an \"on\" length of 0.0 with
+  @code{:round} or @code{:square} in order to distributed dots or squares along
+  a path.
+
+  If @arg{dashes} is an empty list dashing is disabled.
+
+  If @arg{dashes} has one list element a symmetric pattern is assumed with
+  alternating on and off portions of the size specified by the single value in
+  @arg{dashes}.
+
+  If any value in @arg{dashes} is negative, or if all values are 0, then
+  @symbol{cr} will be put into an error state with a status of
+  @code{:invalid-dash}.
+
+  @begin[Note]{dictionary}
+    The length values are in user-space units as evaluated at the time of
+    stroking. This is not necessarily the same as the user space at the time of
+    the @dym{cairo-set-dash}.
+  @end{dictionary}
+  Since 1.0
+  @see-symbol{cairo-t}
+  @see-function{cairo-stroke}"
+  (let ((num-dashes (length dashes)))
+    (with-foreign-object (dashes-array :double num-dashes)
+      (let ((i 0))
+        (map nil
+             (lambda (x)
+               (setf (mem-aref dashes-array :double i) (coerce x 'double-float))
+               (incf i))
+             dashes))
+      (%cairo-set-dash cr
+                       dashes-array
+                       num-dashes
+                       (coerce offset 'double-float)))))
+
+(export 'cairo-set-dash)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_get_dash_count ()
-;;;
-;;; int cairo_get_dash_count (cairo_t *cr);
-;;;
-;;; This function returns the length of the dash array in cr (0 if dashing is
-;;; not currently in effect).
-;;;
-;;; See also cairo_set_dash() and cairo_get_dash().
-;;;
-;;; cr :
-;;;     a cairo_t
-;;;
-;;; Returns :
-;;;     the length of the dash array, or 0 if no dash array set.
-;;;
-;;; Since 1.4
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_get_dash_count" cairo-get-dash-count) :int
+ #+cl-cffi-gtk-documentation
+ "@version{2014-2-4}
+  @argument[cr]{a cairo context}
+  @begin{return}
+    The length of the dash array, or 0 if no dash array set.
+  @end{return}
+  @begin{short}
+    This function returns the length of the dash array in @arg{cr}, 0 if
+    dashing is not currently in effect.
+  @end{short}
+
+  See also the functions @fun{cairo-set-dash} and @fun{cairo-get-dash}.
+
+  Since 1.4
+  @see-symbol{cairo-t}
+  @see-function{cairo-get-dash}
+  @see-function{cairo-set-dash}"
+  (cr (:pointer (:struct cairo-t))))
+  
+(export 'cairo-get-dash-count)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_get_dash ()
-;;;
-;;; void cairo_get_dash (cairo_t *cr, double *dashes, double *offset);
-;;;
-;;; Gets the current dash array. If not NULL, dashes should be big enough to
-;;; hold at least the number of values returned by cairo_get_dash_count().
-;;;
-;;; cr :
-;;;     a cairo_t
-;;;
-;;; dashes :
-;;;     return value for the dash array, or NULL
-;;;
-;;; offset :
-;;;     return value for the current dash offset, or NULL
-;;;
-;;; Since 1.4
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_get_dash" %cairo-get-dash) :void
+  (cr (:pointer (:struct cairo-t)))
+  (dashes (:pointer :double))
+  (offset (:pointer :double)))
+  
+(defun cairo-get-dash (cr)
+ #+cl-cffi-gtk-documentation
+ "@version{2014-2-4}
+  @argument[cr]{a cairo context}
+  @begin{return}
+    @code{dashes} -- return value for the dash array, or @code{nil} @br{}
+    @code{offset} -- return value for the current dash offset, or @code{nil}
+  @end{return}
+  @begin{short}
+    Gets the current dash list.
+  @end{short}
+
+  Since 1.4
+  @see-symbol{cairo-t}
+  @see-function{cairo-set-dash}"
+  (let ((count (cairo-get-dash-count cr))
+        (dashes '()))
+    (with-foreign-objects ((dash-array :double count) (offset :double))
+      (%cairo-get-dash cr dash-array offset)
+      (dotimes (i count)
+        (push (mem-aref dash-array :double i) dashes))
+      (values (nreverse dashes)
+              (mem-ref offset :double)))))
+              
+(export 'cairo-get-dash)
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum cairo_fill_rule_t

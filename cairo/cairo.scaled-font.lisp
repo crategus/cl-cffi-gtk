@@ -6,7 +6,7 @@
 ;;; library. See <http://cairographics.org>. The API documentation of the Lisp
 ;;; binding is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2013 Dieter Kaiser
+;;; Copyright (C) 2013, 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -98,37 +98,42 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_scaled_font_create ()
-;;;
-;;; cairo_scaled_font_t * cairo_scaled_font_create
-;;;                                        (cairo_font_face_t *font_face,
-;;;                                         const cairo_matrix_t *font_matrix,
-;;;                                         const cairo_matrix_t *ctm,
-;;;                                         const cairo_font_options_t *options)
-;;;
-;;; Creates a cairo_scaled_font_t object from a font face and matrices that
-;;; describe the size of the font and the environment in which it will be used.
-;;;
-;;; font_face :
-;;;     a cairo_font_face_t
-;;;
-;;; font_matrix :
-;;;     font space to user space transformation matrix for the font. In the
-;;;     simplest case of a N point font, this matrix is just a scale by N, but
-;;;     it can also be used to shear the font or stretch it unequally along the
-;;;     two axes. See cairo_set_font_matrix().
-;;;
-;;; ctm :
-;;;     user to device transformation matrix with which the font will be used.
-;;;
-;;; options :
-;;;     options to use when getting metrics for the font and rendering with it.
-;;;
-;;; Returns :
-;;;     a newly created cairo_scaled_font_t. Destroy with
-;;;     cairo_scaled_font_destroy()
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_scaled_font_create" cairo-scaled-font-create)
+    (:pointer (:struct cairo-scaled-font-t))
+ #+cl-cffi-gtk-documentation
+ "@version{2014-2-4}
+  @argument[font-face]{a @symbol{cairo-font-face-t}}
+  @argument[font-matrix]{font space to user space transformation matrix for the
+   font. In the simplest case of a N point font, this matrix is just a scale by
+   N, but it can also be used to shear the font or stretch it unequally along
+   the two axes. See the function @fun{cairo-set-font-matrix}.}
+  @argument[ctm]{user to device transformation matrix with which the font will
+    be used}
+  @argument[options]{options to use when getting metrics for the font and
+    rendering with it}
+  @begin{return}
+    A newly created @symbol{cairo-scaled-font-t}. Destroy with the function
+    @fun{cairo-scaled-font-destroy}.
+  @end{return}
+  @begin{short}
+    Creates a @symbol{cairo-scaled-font-t} object from a font face and matrices
+    that describe the size of the font and the environment in which it will be
+    used.
+  @end{short}
+
+  Since 1.0
+  @see-symbol{cairo-font-face-t}
+  @see-symbol{cairo-matrix-t}
+  @see-symbol{cairo-font-options-t}
+  @see-function{cairo-set-font-matrix}"
+  (font-face (:pointer (:struct cairo-font-face-t)))
+  (font-matrix (:pointer (:struct cairo-matrix-t)))
+  (ctm (:pointer (:struct cairo-matrix-t)))
+  (options (:pointer (:struct cairo-font-options-t))))
+
+(export 'cairo-scaled-font-create)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_scaled_font_reference ()

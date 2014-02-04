@@ -6,7 +6,7 @@
 ;;; library. See <http://cairographics.org>. The API documentation of the Lisp
 ;;; binding is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2013 Dieter Kaiser
+;;; Copyright (C) 2013, 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -25,8 +25,6 @@
 ;;; General Public License.  If not, see <http://www.gnu.org/licenses/>
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; text
 ;;;
 ;;; Rendering text and glyphs
 ;;;
@@ -428,21 +426,28 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_set_font_face ()
-;;;
-;;; void cairo_set_font_face (cairo_t *cr, cairo_font_face_t *font_face);
-;;;
-;;; Replaces the current cairo_font_face_t object in the cairo_t with font_face.
-;;; The replaced font face in the cairo_t will be destroyed if there are no
-;;; other references to it.
-;;;
-;;; cr :
-;;;     a cairo_t
-;;;
-;;; font_face :
-;;;     a cairo_font_face_t, or NULL to restore to the default font
-;;;
-;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_set_font_face" cairo-set-font-face) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2014-2-4}
+  @argument[cr]{a cairo context}
+  @argument[font-face]{a @symbol{cairo-font-face-t}, or @code{nil} to restore
+    to the default font}
+  @begin{short}
+    Replaces the current @symbol{cairo-font-face-t} object in the
+    @symbol{cairo-t} with @arg{font-face}.
+  @end{short}
+  The replaced font face in the @symbol{cairo-t} will be destroyed if there are
+  no other references to it.
+
+  Since 1.0
+  @see-symbol{cairo-t}
+  @see-symbol{cairo-font-face-t}"
+  (cr (:pointer (:struct cairo-t)))
+  (font-face (:pointer (:struct cairo-font-face-t))))
+
+(export 'cairo-set-font-face)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_get_font_face ()
@@ -469,24 +474,29 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_set_scaled_font ()
-;;;
-;;; void cairo_set_scaled_font (cairo_t *cr,
-;;;                             const cairo_scaled_font_t *scaled_font);
-;;;
-;;; Replaces the current font face, font matrix, and font options in the cairo_t
-;;; with those of the cairo_scaled_font_t. Except for some translation, the
-;;; current CTM of the cairo_t should be the same as that of the
-;;; cairo_scaled_font_t, which can be accessed using
-;;; cairo_scaled_font_get_ctm().
-;;;
-;;; cr :
-;;;     a cairo_t
-;;;
-;;; scaled_font :
-;;;     a cairo_scaled_font_t
-;;;
-;;; Since 1.2
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_set_scaled_font" cairo-set-scaled-font) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2014-2-4}
+  @argument[cr]{a cairo context}
+  @argument[scaled-font]{a @symbol{cairo-scaled-font-t}}
+  @begin{short}
+    Replaces the current font face, font matrix, and font options in the
+    @symbol{cairo-t} with those of the @symbol{cairo-scaled-font-t}.
+  @end{short}
+  Except for some translation, the current CTM of the @symbol{cairo-t} should
+  be the same as that of the @symbol{cairo-scaled-font-t}, which can be
+  accessed using the function @fun{cairo-scaled-font-get-ctm}.
+
+  Since 1.2
+  @see-symbol{cairo-t}
+  @see-symbol{cairo-scaled-font-t}
+  @see-function{cairo-scaled-font-get-ctm}"
+  (cr (:pointer (:struct cairo-t)))
+  (scaled-font (:pointer (:struct cairo-scaled-font-t))))
+
+(export 'cairo-set-scaled-font)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_get_scaled_font ()

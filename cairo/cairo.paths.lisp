@@ -408,14 +408,15 @@
 
 (defcfun ("cairo_close_path" cairo-close-path) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-11-11}
+ "@version{2014-2-2}
   @argument[cr]{a cairo context}
   @begin{short}
     Adds a line segment to the path from the current point to the beginning of
     the current sub-path, the most recent point passed to the function
-    @fun{cairo-move-to}, and closes this sub-path. After this call the current
-    point will be at the joined endpoint of the sub-path.
+    @fun{cairo-move-to}, and closes this sub-path.
   @end{short}
+  After this call the current point will be at the joined endpoint of the
+  sub-path.
 
   The behavior of the funcion @sym{cairo-close-path} is distinct from simply
   calling the function @fun{cairo-line-to} with the equivalent coordinate in the
@@ -426,13 +427,15 @@
   If there is no current point before the call to the function
   @sym{cairo-close-path}, this function will have no effect.
 
-  Note: As of cairo version 1.2.4 any call to the function
-  @sym{cairo-close-path} will place an explicit @code{MOVE_TO} element into the
-  path immediately after the @code{CLOSE_PATH} element, which can be seen in
-  the function @fun{cairo-copy-path} for example. This can simplify path
-  processing in some cases as it may not be necessary to save the
-  \"last move_to point\" during processing as the @code{MOVE_TO} immediately
-  after the @code{CLOSE_PATH} will provide that point.
+  @begin[Note]{dictionary}
+    As of cairo version 1.2.4 any call to the function
+    @sym{cairo-close-path} will place an explicit @code{MOVE_TO} element into
+    the path immediately after the @code{CLOSE_PATH} element, which can be seen
+    in the function @fun{cairo-copy-path} for example. This can simplify path
+    processing in some cases as it may not be necessary to save the
+    \"last @code{MOVE_TO} point\" during processing as the @code{MOVE_TO}
+    immediately after the @code{CLOSE_PATH} will provide that point.
+  @end{dictionary}
 
   Since 1.0
   @see-symbol{cairo-t}
@@ -457,7 +460,7 @@
 
 (defun cairo-arc (cr xc yc radius angle1 angle2)
  #+cl-cffi-gtk-documentation
- "@version{2013-8-1}
+ "@version{2014-2-2}
   @argument[cr]{a cairo context}
   @argument[xc]{x position of the center of the arc}
   @argument[yc]{y position of the center of the arc}
@@ -470,35 +473,36 @@
   The arc is centered at @code{(@arg{xc}, @arg{yc})}, begins at @arg{angle1} and
   proceeds in the direction of increasing angles to end at @arg{angle2}. If
   @arg{angle2} is less than @arg{angle1} it will be progressively increased by
-  @code{2*PI} until it is greater than @arg{angle1}.
+  2*PI until it is greater than @arg{angle1}.
 
   If there is a current point, an initial line segment will be added to the
   path to connect the current point to the beginning of the arc. If this
   initial line is undesired, it can be avoided by calling the function
   @fun{cairo-new-sub-path} before calling the function @sym{cairo-arc}.
 
-  Angles are measured in radians. An angle of 0.0 is in the direction of the
-  positive x axis (in user space). An angle of @code{PI/2.0} radians (90
-  degrees) is in the direction of the positive y axis (in user space). Angles
-  increase in the direction from the positive x axis toward the positive y axis.
-  So with the default transformation matrix, angles increase in a clockwise
-  direction.
+  Angles are measured in radians. An angle of 0 is in the direction of the
+  positive x axis (in user space). An angle of PI/2 radians (90 degrees) is in
+  the direction of the positive y axis (in user space). Angles increase in the
+  direction from the positive x axis toward the positive y axis. So with the
+  default transformation matrix, angles increase in a clockwise direction.
 
   This function gives the arc in the direction of increasing angles; see the
   function @fun{cairo-arc-negative} to get the arc in the direction of
   decreasing angles.
 
-  The arc is circular in user space. To achieve an elliptical arc, you can
-  scale the current transformation matrix by different amounts in the x and y
-  directions. For example, to draw an ellipse in the box given by @arg{x},
-  @arg{y}, @arg{width}, @arg{height}:
-  @begin{pre}
- cairo_save (cr);
- cairo_translate (cr, x + width / 2., y + height / 2.);
- cairo_scale (cr, width / 2., height / 2.);
- cairo_arc (cr, 0., 0., 1., 0., 2 * M_PI);
- cairo_restore (cr);
-  @end{pre}
+  @begin[Example]{dictionary}
+    The arc is circular in user space. To achieve an elliptical arc, you can
+    scale the current transformation matrix by different amounts in the x and y
+    directions. For example, to draw an ellipse in the box given by @arg{x},
+    @arg{y}, @arg{width}, @arg{height}:
+    @begin{pre}
+(cairo-save cr)
+(cairo-translate cr (+ x (/ width 2)) (+ y (/ height 2)))
+(cairo-scale cr (/ width 2) (/ height 2))
+(cairo-arc cr 0 0 1 0 (* 2 pi))
+(cairo-restore cr)
+    @end{pre}
+  @end{dictionary}
   Since 1.0
   @see-symbol{cairo-t}
   @see-function{cairo-new-sub-path}
@@ -674,7 +678,7 @@
 
 (defun cairo-rectangle (cr x y width height)
  #+cl-cffi-gtk-documentation
- "@version{2013-10-13}
+ "@version{2014-2-2}
   @argument[cr]{a cairo context}
   @argument[x]{the x coordinate of the top left corner of the rectangle}
   @argument[y]{the y coordinate to the top left corner of the rectangle}
@@ -687,11 +691,11 @@
 
   This function is logically equivalent to:
   @begin{pre}
-    (cairo-move-to cr x y)
-    (cairo-rel-line-to cr width 0)
-    (cairo-rel-line-to cr 0 height)
-    (cairo-rel-line-to cr -width 0)
-    (cairo-close-path cr)
+(cairo-move-to cr x y)
+(cairo-rel-line-to cr width 0)
+(cairo-rel-line-to cr 0 height)
+(cairo-rel-line-to cr (- width) 0)
+(cairo-close-path cr)
   @end{pre}
   Since 1.0
   @see-symbol{cairo-t}
@@ -785,12 +789,12 @@
 
 (defun cairo-rel-curve-to (cr dx1 dy1 dx2 dy2 dx3 dy3)
  #+cl-cffi-gtk-documentation
- "@version{2013-12-28}
+ "@version{2014-2-2}
   @argument[cr]{a cairo context}
   @argument[dx1]{the x offset to the first control point}
   @argument[dy1]{the y offset to the first control point}
   @argument[dx2]{the x offset to the second control point}
-  @argument[dy2]{the Y offset to the second control point}
+  @argument[dy2]{the y offset to the second control point}
   @argument[dx3]{the x offset to the end of the curve}
   @argument[dy3]{the y offset to the end of the curve}
   @begin{short}
@@ -803,8 +807,10 @@
   point will be offset by (@arg{dx3}, @arg{dy3}).
 
   Given a current point of (@arg{x}, @arg{y}),
-  @code{cairo-rel-curve-to cr dx1 dy1 dx2 dy2 dx3 dy3)} is logically equivalent
-  to @code{cairo-curve-to cr x+dx1 y+dy1 x+dx2 y+dy2 x+dx3 y+dy3)}.
+  @code{(cairo-rel-curve-to cr dx1 dy1 dx2 dy2 dx3 dy3)}
+  is logically equivalent to
+  @code{(cairo-curve-to cr (+ x dx1) (+ y dy1) (+ x dx2) (+ y dy2) (+ x dx3)
+  (+ y dy3))}.
 
   It is an error to call this function with no current point. Doing so will
   cause @arg{cr} to shutdown with a status of @code{:no-current-point}.
