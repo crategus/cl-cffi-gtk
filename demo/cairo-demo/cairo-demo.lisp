@@ -340,3 +340,55 @@
            t)))
         (gtk-widget-show-all window))))
 
+;;; --- Cairo Examples ---------------------------------------------------------
+
+(defun demo-cairo-dash ()
+  (within-main-loop
+    (let ((window (make-instance 'gtk-window
+                                 :type :toplevel
+                                 :title "Demo Cairo Stroke"
+                                 :border-width 12
+                                 :default-width 400
+                                 :default-height 400)))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (leave-gtk-main)))
+      ;; Signals used to handle the backing surface
+      (g-signal-connect window "draw"
+         (lambda (widget cr)
+           (let ((cr (pointer cr))
+                 ;; Get the GdkWindow for the widget
+                 (window (gtk-widget-get-window widget)))
+           ;; Clear surface
+           (cairo-set-source-rgb cr 1.0 1.0 1.0)
+           (cairo-paint cr)
+           ;; Example is in 1.0 x 1.0 coordinate space
+           (cairo-scale cr
+                        (gdk-window-get-width window)
+                        (gdk-window-get-height window))
+           ;; Drawing code goes here
+           (let* ((scale 500)
+                  (dashes (list (/ 50.0 scale)
+                                (/ 10.0 scale)
+                                (/ 10.0 scale)
+                                (/ 10.0 scale)))
+                  (offset (/ -50.0 scale)))
+             (cairo-set-source-rgb cr 0.0 0.0 0.0)
+             (cairo-set-dash cr dashes offset)
+             (cairo-set-line-width cr (/ 10.0 scale))
+             (cairo-move-to cr (/ 128.0 scale) (/ 25.6 scale))
+             (cairo-line-to cr (/ 230.4 scale) (/ 230.4 scale))
+             (cairo-rel-line-to cr (/ -102.4 scale) 0.0)
+             (cairo-curve-to cr (/ 51.2 scale)
+                                (/ 230.4 scale)
+                                (/ 51.2 scale)
+                                (/ 128.0 scale)
+                                (/ 128.0 scale)
+                                (/ 128.0 scale))
+              (cairo-stroke cr))
+           ;; Destroy the Cario context
+           (cairo-destroy cr)
+           t)))
+      (gtk-widget-show-all window))))
+
