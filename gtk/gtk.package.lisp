@@ -1265,7 +1265,32 @@
       @about-function{gtk-statusbar-get-message-area}
     @end{subsection}
     @begin[GtkLevelBar]{subsection}
-      not implemented
+      A bar that can used as a level indicator.
+
+      @about-symbol{GTK_LEVEL_BAR_OFFSET_LOW}
+      @about-symbol{GTK_LEVEL_BAR_OFFSET_HIGH}
+      @about-symbol{gtk-level-bar-mode}
+      @about-class{{gtk-level-bar}
+      @about-generic{gtk-level-bar-inverted}
+      @about-generic{gtk-level-bar-max-value}
+      @about-generic{gtk-level-bar-min-value}
+      @about-generic{gtk-level-bar-mode}
+      @about-generic{gtk-level-bar-value}
+      @about-function{gtk-level-bar-new}
+      @about-function{gtk-level-bar-new-for-interval}
+      @about-function{gtk-level-bar-set-mode}
+      @about-function{gtk-level-bar-get-mode}
+      @about-function{gtk-level-bar-set-value}
+      @about-function{gtk-level-bar-get-value}
+      @about-function{gtk-level-bar-set-min-value}
+      @about-function{gtk-level-bar-get-min-value}
+      @about-function{gtk-level-bar-set-max-value}
+      @about-function{gtk-level-bar-get-max-value}
+      @about-function{gtk-level-bar-set-inverted}
+      @about-function{gtk-level-bar-get-inverted}
+      @about-function{gtk-level-bar-add-offset-value}
+      @about-function{gtk-level-bar-remove-offset-value}
+      @about-function{gtk-level-bar-get-offset-value}
     @end{subsection}
     @begin[GtkInfoBar]{subsection}
       Report important messages to the user.

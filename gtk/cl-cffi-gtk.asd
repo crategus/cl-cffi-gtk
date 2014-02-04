@@ -133,6 +133,7 @@
    (:file "gtk.image")                 ; GtkImage
    (:file "gtk.progress-bar")          ; GtkProgessBar
    (:file "gtk.statusbar")             ; GTKStatusbar
+   (:file "gtk.level-bar")             ; GtkLevelBar
    (:file "gtk.info-bar")              ; GtkInfoBar
    (:file "gtk.status-icon")           ; GtkStatusIcon
    (:file "gtk.spinner")               ; GtkSpinner
