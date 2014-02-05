@@ -3425,14 +3425,17 @@
 
 (defcfun ("gtk_window_set_default_icon" gtk-window-set-default-icon) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-29}
-  @argument[icon]{the icon}
+ "@version{2014-2-5}
+  @argument[icon]{the icon of type @class{gdk-pixbuf}}
   @begin{short}
     Sets an icon to be used as fallback for windows that have not had
     @fun{gtk-window-set-icon} called on them from a pixbuf.
   @end{short}
 
-  Since 2.4"
+  Since 2.4
+  @see-class{gtk-window}
+  @see-class{gdk-pixbuf}
+  @see-function{gtk-window-set-icon}"
   (icon (g-object gdk-pixbuf)))
 
 (export 'gtk-window-set-default-icon)
