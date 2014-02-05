@@ -30,16 +30,16 @@
 
 (in-package #:cl-cffi-gtk-system)
 
-(defclass gtk-source-file (cl-source-file) ())
+;(defclass gtk-source-file (cl-source-file) ())
 
-#+sbcl
-(defmethod perform :around ((o compile-op) (s gtk-source-file))
-  (handler-bind ((sb-ext:compiler-note #'muffle-warning))
-    (let ((*compile-print* nil))
-      (call-next-method))))
+;#+sbcl
+;(defmethod perform :around ((o compile-op) (s gtk-source-file))
+;  (handler-bind ((sb-ext:compiler-note #'muffle-warning))
+;    (let ((*compile-print* nil))
+;      (call-next-method))))
 
 (defsystem :cl-cffi-gtk
-  :default-component-class gtk-source-file
+;  :default-component-class gtk-source-file
   :name :cl-cffi-gtk
   :version "3.8.8"                     ; Version of the library
   :author "Dieter Kaiser"
@@ -300,12 +300,7 @@
 ;   (:file "gtk.style")                 ; Functions for drawing widget parts
    (:file "gtk.resource-files")        ; Routines for handling resource files
 
-   ;; More definitions. The documentation is not completed.
-;   (:file "gtk.selectors")
-;   (:file "gtk.timer")
-
    ;; Lisp
-;   (:file "gtk.high-level")
    (:file "gtk.init")
 )
   :depends-on (:cl-cffi-gtk-glib
