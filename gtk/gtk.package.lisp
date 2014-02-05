@@ -33,8 +33,8 @@
 (in-package :cl-user)
 
 ;; Muffle compiler-notes globally
-#+sbcl
-(declaim (sb-ext:muffle-conditions sb-ext:compiler-note))
+;#+sbcl
+;(declaim (sb-ext:muffle-conditions sb-ext:compiler-note))
 
 (defvar *cl-cffi-gtk-build-time* (multiple-value-list (get-decoded-time)))
 (defvar *cl-cffi-gtk-version* "1.0.0")
@@ -1059,36 +1059,21 @@
       @about-class{gtk-about-dialog}
       @about-symbol{gtk-license}
       @about-function{gtk-about-dialog-new}
-      @about-function{gtk-about-dialog-get-program-name}
-      @about-function{gtk-about-dialog-set-program-name}
-      @about-function{gtk-about-dialog-get-version}
-      @about-function{gtk-about-dialog-set-version}
-      @about-function{gtk-about-dialog-get-copyright}
-      @about-function{gtk-about-dialog-set-copyright}
-      @about-function{gtk-about-dialog-get-comments}
-      @about-function{gtk-about-dialog-set-comments}
-      @about-function{gtk-about-dialog-get-license}
-      @about-function{gtk-about-dialog-set-license}
-      @about-function{gtk-about-dialog-get-wrap-license}
-      @about-function{gtk-about-dialog-set-wrap-license}
-      @about-function{gtk-about-dialog-get-license-type}
-      @about-function{gtk-about-dialog-set-license-type}
-      @about-function{gtk-about-dialog-get-website}
-      @about-function{gtk-about-dialog-set-website}
-      @about-function{gtk-about-dialog-get-website-label}
-      @about-function{gtk-about-dialog-set-website-label}
-      @about-function{gtk-about-dialog-get-authors}
-      @about-function{gtk-about-dialog-set-authors}
-      @about-function{gtk-about-dialog-get-artists}
-      @about-function{gtk-about-dialog-set-artists}
-      @about-function{gtk-about-dialog-get-documenters}
-      @about-function{gtk-about-dialog-set-documenters}
-      @about-function{gtk-about-dialog-get-translator-credits}
-      @about-function{gtk-about-dialog-set-translator-credits}
-      @about-function{gtk-about-dialog-get-logo}
-      @about-function{gtk-about-dialog-set-logo}
-      @about-function{gtk-about-dialog-get-logo-icon-name}
-      @about-function{gtk-about-dialog-set-logo-icon-name}
+      @about-generic{gtk-about-dialog-artists}
+      @about-generic{gtk-about-dialog-authors}
+      @about-generic{gtk-about-dialog-comments}
+      @about-generic{gtk-about-dialog-copyright}
+      @about-generic{gtk-about-dialog-documenters}
+      @about-generic{gtk-about-dialog-license}
+      @about-generic{gtk-about-dialog-license-type}
+      @about-generic{gtk-about-dialog-logo}
+      @about-generic{gtk-about-dialog-logo-icon-name}
+      @about-generic{gtk-about-dialog-program-name}
+      @about-generic{gtk-about-dialog-translator-credits}
+      @about-generic{gtk-about-dialog-version}
+      @about-generic{gtk-about-dialog-website}
+      @about-generic{gtk-about-dialog-website-label}
+      @about-generic{gtk-about-dialog-wrap-license}
       @about-function{gtk-about-dialog-add-credit-section}
       @about-function{gtk-show-about-dialog}
     @end{subsection}
