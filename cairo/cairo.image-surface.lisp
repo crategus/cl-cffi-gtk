@@ -236,7 +236,7 @@
 
 (defcfun ("cairo_image_surface_get_width" cairo-image-surface-get-width) :int
  #+cl-cffi-gtk-documentation
- "@version{2013-12-7}
+ "@version{2014-2-7}
   @argument[surface]{a @symbol{cairo-surface-t}}
   @return{The width of the surface in pixels.}
   @begin{short}
@@ -244,7 +244,7 @@
   @end{short}
 
   Since 1.0
-  @see-symbol{cairo-image-t}
+  @see-symbol{cairo-surface-t}
   @see-function{cairo-image-surface-get-height}"
   (surface (:pointer (:struct cairo-surface-t))))
 
