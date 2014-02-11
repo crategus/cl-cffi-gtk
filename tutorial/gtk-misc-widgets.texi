@@ -5,7 +5,7 @@
 @c Author   : Dieter Kaiser
 @c Date     : 15.02.2012
 @c Revision : 11.09.2013
-@c 
+@c
 @c Copyright (C) 2012, 2013 by Dieter Kaiser
 @c -----------------------------------------------------------------------------
 
@@ -68,12 +68,12 @@ The amount of space used by the arrow is controlled by the style property
 @code{arrow-scaling}.  The style property @code{arrow-scaling} takes values of
 type @code{double} in a range of @code{[0,1]}.  The default value is @code{0.7}.
 
-@findex gtk-widget-set-tooltip-text
-@findex widget-set-tooltip-text, gtk-widget-set-tooltip-text
+@findex gtk-widget-tooltip-text
+@findex widget-tooltip-text, gtk-widget-tooltip-text
 
 @ref{example-arrows} shows a brief example to illustrate the use of arrows in
 buttons.  In addition, this example introduces the function
-@xurl{gtk-widget-set-tooltip-text}, which attaches a tooltip to the button
+@xurl{gtk-widget-tooltip-text}, which attaches a tooltip to the button
 widget.  The tooltip pops up, when the mouse is over the button.
 
 @float Example, example-arrows
@@ -94,10 +94,8 @@ widget.  The tooltip pops up, when the mouse is over the button.
                                       :arrow-type arrow-type
                                       :shadow-type shadow-type))
     ;; Add a tooltip to the button
-    (gtk-widget-set-tooltip-text button
-                                 (format nil
-                                         "Arrow of type ~A"
-                                         (symbol-name arrow-type)))
+    (setf (gtk-widget-tooltip-text button)
+          (format nil "Arrow of type ~A" (symbol-name arrow-type)))
     button))
 
 (defun example-arrows ()
@@ -269,15 +267,15 @@ clipping.
 
 @findex gtk-event-box-new
 @findex event-box-new, gtk-event-box-new
-@findex gtk-widget-set-events
-@findex widget-set-events, gtk-widget-set-events
+@findex gtk-widget-events
+@findex widget-events, gtk-widget-events
 @findex gtk-widget-realize
 @findex widget-realize, gtk-widget-realize
 
 To create a new @code{GtkEventBox} widget, use the call
 @code{(make-instance 'gtk-event-box)} or the function @code{gtk-event-box-new}.
 A child widget can then be added to this @code{GtkEventBox} with the function
-@xurl{gtk-container-add}.  With the function @code{gtk-widget-set-events} the
+@xurl{gtk-container-add}.  With the function @code{gtk-widget-events} the
 events are set for the event box which can be connected to a signal handler.
 To create the resources associated with an event box, the function
 @code{gtk-widget-realize} has to be called explicitly for the @code{GtkEventBox}
@@ -342,7 +340,7 @@ mouse pointer is than associated to the @code{GdkWindow} with the function
                           (declare (ignore widget))
                           (leave-gtk-main)))
       ;; Set the events for the event box
-      (gtk-widget-set-events eventbox :button-press-mask)
+      (setf (gtk-widget-events eventbox) :button-press-mask)
       ;; Connect a signal to the eventbox
       (g-signal-connect eventbox "button-press-event"
                         (lambda (widget event)
@@ -921,7 +919,7 @@ contain an entry.
       (g-signal-connect combo-box "changed"
          (lambda (widget)
            (declare (ignore widget))
-           (let ((dialog (gtk-message-dialog-new 
+           (let ((dialog (gtk-message-dialog-new
                              window
                              '(:destroy-with-parent)
                              :info

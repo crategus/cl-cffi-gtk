@@ -32,7 +32,7 @@ used in a large number of software projects, including the GNU Network Object
 Model Environment (GNOME) project.  GTK+ is built on top of GDK (GIMP Drawing
 Kit) which is basically a wrapper around the low-level functions for accessing
 the underlying windowing functions (Xlib in the case of the X windows system),
-and gdk-pixbuf, a library for client-side image manipulation.
+and GdkPixbuf, a library for client-side image manipulation.
 
 GTK+ is essentially an object oriented application programmers interface (API).
 Although written completely in C, GTK+ is implemented using the idea of classes
@@ -41,8 +41,8 @@ and callback functions (pointers to functions).
 A third component is called GLib which contains replacements for standard
 calls, as well as additional functions for handling linked lists, etc.  The
 replacement functions are used to increase the portability of GTK+, as some
-of the functions implemented here are not available or are non standard on other
-Unixes such as g_strerror().  Some also contain enhancements to the libc
+of the functions implemented here are not available or are non standard on
+other Unixes such as g_strerror().  Some also contain enhancements to the libc
 versions, such as g_malloc() that has enhanced debugging utilities.
 
 In version 2.0, GLib has picked up the type system which forms the foundation
@@ -56,7 +56,6 @@ multiple output devices, and the GIO library, which is a modern easy-to-use
 VFS API including abstractions for files, drives, volumes, stream IO, as well
 as network programming and DBus communication.
 
-This tutorial describes the Lisp interface to GTK+.  It is based on the official
-GTK+ 2.0 Tutorial of the C implementation and the examples and the documentation
-for GTK+ 3.
+This tutorial describes the Lisp interface to GTK+.  It inclucdes a lot of
+material and code from different resources. See @ref{Licenses}.
 

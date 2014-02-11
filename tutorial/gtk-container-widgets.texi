@@ -559,7 +559,7 @@ shown in @ref{example-paned-window}
                         (lambda (widget)
                           (declare (ignore widget))
                           (leave-gtk-main)))
-      (gtk-widget-set-size-request window 300 250)
+      (setf (gtk-widget-size-request window) '(300 250))
       (gtk-container-add window paned)
       (gtk-paned-add1 paned frame1)
       (gtk-paned-add2 paned frame2)
@@ -703,7 +703,7 @@ when a scroll bar will be visible.}
 @ref{example-scrolled-window} is a simple example that packs a table with 100
 toggle buttons into a scrolled window.  Try playing with resizing the window.
 You will notice how the scrollbars react.  You may also wish to use the
-@code{gtk-widget-set-size-request} call to set the default size of the window or
+@code{gtk-widget-size-request} call to set the default size of the window or
 other widgets.
 
 @float Example, example-scrolled-window

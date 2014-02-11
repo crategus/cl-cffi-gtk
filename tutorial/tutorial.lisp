@@ -162,7 +162,7 @@
                         (lambda (widget event)
                           (declare (ignore widget event))
                           (format t "Delete Event Occured.~%")
-                          t))
+                          +gdk-event-stop+))
       ;; Put the button into the window.
       (gtk-container-add window button)
       ;; Show the window and the button.
@@ -181,16 +181,16 @@
                         (lambda (widget)
                           (declare (ignore widget))
                           (leave-gtk-main)))
-      (gtk-window-set-title window "Hello Buttons")
-      (gtk-window-set-default-size window 250 75)
-      (gtk-container-set-border-width window 12)
-      (setq button (gtk-button-new-with-label "Button 1"))
+      (setf (gtk-window-title window) "Hello Buttons")
+      (setf (gtk-window-default-size window) '(250 75))
+      (setf (gtk-container-border-width window) 12)
+      (setf button (gtk-button-new-with-label "Button 1"))
       (g-signal-connect button "clicked"
                         (lambda (widget)
                           (declare (ignore widget))
                           (format t "Button 1 was pressed.~%")))
       (gtk-box-pack-start box button :expand t :fill t :padding 0)
-      (setq button (gtk-button-new-with-label "Button 2"))
+      (setf button (gtk-button-new-with-label "Button 2"))
       (g-signal-connect button "clicked"
                         (lambda (widget)
                           (declare (ignore widget))
@@ -240,8 +240,7 @@
     (within-main-loop
       (let ((window (make-instance 'gtk-window
                                    :type :toplevel
-                                   :title "Example Drawing"
-                                   :border-width 12))
+                                   :title "Example Drawing"))
             (frame (make-instance 'gtk-frame
                                   :shadow-type :in))
             (area (make-instance 'gtk-drawing-area
@@ -255,27 +254,29 @@
         (g-signal-connect area "draw"
            (lambda (widget cr)
              (declare (ignore widget))
-             (cairo-set-source-surface (pointer cr) surface 0.0d0 0.0d0)
-             (cairo-paint (pointer cr))
-             nil))
+             (let ((cr (pointer cr)))
+               (cairo-set-source-surface cr surface 0.0 0.0)
+               (cairo-paint cr)
+               (cairo-destroy cr)
+               +gdk-event-propagate+)))
         (g-signal-connect area "configure-event"
            (lambda (widget event)
              (declare (ignore event))
              (when surface
                (cairo-surface-destroy surface))
-             (setq surface
+             (setf surface
                    (gdk-window-create-similar-surface
-                                   (gtk-widget-get-window widget)
+                                   (gtk-widget-window widget)
                                    :color
                                    (gtk-widget-get-allocated-width widget)
                                    (gtk-widget-get-allocated-height widget)))
              ;; Clear surface
              (let ((cr (cairo-create surface)))
-               (cairo-set-source-rgb cr 1.0d0 1.0d0 1.0d0)
+               (cairo-set-source-rgb cr 1.0 1.0 1.0)
                (cairo-paint cr)
                (cairo-destroy cr))
              (format t "leave event 'configure-event'~%")
-             t))
+             +gdk-event-stop+))
         ;; Event signals
         (g-signal-connect area "motion-notify-event"
            (lambda (widget event)
@@ -284,16 +285,16 @@
                (let ((cr (cairo-create surface))
                      (x (gdk-event-motion-x event))
                      (y (gdk-event-motion-y event)))
-                 (cairo-rectangle cr (- x 3.0d0) (- y 3.0d0) 6.0d0 6.0d0)
+                 (cairo-rectangle cr (- x 3.0) (- y 3.0) 6.0 6.0)
                  (cairo-fill cr)
                  (cairo-destroy cr)
                  (gtk-widget-queue-draw-area widget
-                                             (truncate (- x 3.0d0))
-                                             (truncate (- y 3.0d0))
+                                             (truncate (- x 3.0))
+                                             (truncate (- y 3.0))
                                              6
                                              6)))
              ;; We have handled the event, stop processing
-             t))
+             +gdk-event-stop+))
         (g-signal-connect area "button-press-event"
            (lambda (widget event)
              (format t "BUTTON-PRESS-EVENT ~A~%" event)
@@ -301,24 +302,23 @@
                  (let ((cr (cairo-create surface))
                        (x (gdk-event-button-x event))
                        (y (gdk-event-button-y event)))
-                   (cairo-rectangle cr (- x 3.0d0) (- y 3.0d0) 6.0d0 6.0d0)
+                   (cairo-rectangle cr (- x 3.0) (- y 3.0) 6.0 6.0)
                    (cairo-fill cr)
                    (cairo-destroy cr)
                    (gtk-widget-queue-draw-area widget
-                                               (truncate (- x 3.0d0))
-                                               (truncate (- y 3.0d0))
+                                               (truncate (- x 3.0))
+                                               (truncate (- y 3.0))
                                                6
                                                6))
                  ;; Clear surface
                  (let ((cr (cairo-create surface)))
-                   (cairo-set-source-rgb cr 1.0d0 1.0d0 1.0d0)
+                   (cairo-set-source-rgb cr 1.0 1.0 1.0)
                    (cairo-paint cr)
                    (cairo-destroy cr)
                    (gtk-widget-queue-draw widget)))))
-        (gtk-widget-set-events area
-                               (append (gtk-widget-get-events area)
-                                       '(:button-press-mask
-                                         :pointer-motion-mask)))
+        (gtk-widget-add-events area
+                               '(:button-press-mask
+                                 :pointer-motion-mask))
         (gtk-container-add frame area)
         (gtk-container-add window frame)
         (gtk-widget-show-all window)))))
@@ -1770,7 +1770,7 @@
                         (lambda (widget)
                           (declare (ignore widget))
                           (leave-gtk-main)))
-      (gtk-widget-set-size-request window 300 250)
+      (setf (gtk-widget-size-request window) '(300 250))
       (gtk-container-add window paned)
       (gtk-paned-add1 paned frame1)
       (gtk-paned-add2 paned frame2)
@@ -3007,7 +3007,7 @@ happen.")
                             (declare (ignore widget))
                             (leave-gtk-main)))
         (gtk-widget-override-background-color area :normal color)
-        (gtk-widget-set-events area :button-press-mask)
+        (setf (gtk-widget-events area) :button-press-mask)
         (g-signal-connect area "event"
                           (lambda (widget event)
                             (drawing-area-event widget event area)))
@@ -3056,7 +3056,7 @@ happen.")
                             (declare (ignore widget))
                             (leave-gtk-main)))
         (gtk-widget-modify-bg area :normal color)
-        (gtk-widget-set-events area :button-press-mask)
+        (setf (gtk-widget-events area) :button-press-mask)
         (g-signal-connect area "event"
                           (lambda (widget event)
                             (drawing-area-event widget event area)))
@@ -3226,10 +3226,8 @@ happen.")
                                       :arrow-type arrow-type
                                       :shadow-type shadow-type))
     ;; Add a tooltip to the button
-    (gtk-widget-set-tooltip-text button
-                                 (format nil
-                                         "Arrow of type ~A"
-                                         (symbol-name arrow-type)))
+    (setf (gtk-widget-tooltip-text button)
+          (format nil "Arrow of type ~A" (symbol-name arrow-type)))
     button))
 
 (defun example-arrows ()
@@ -3321,7 +3319,7 @@ happen.")
                           (declare (ignore widget))
                           (leave-gtk-main)))
       ;; Set the events for the event box
-      (gtk-widget-set-events eventbox :button-press-mask)
+      (setf (gtk-widget-events eventbox) :button-press-mask)
       ;; Connect a signal to the eventbox
       (g-signal-connect eventbox "button-press-event"
                         (lambda (widget event)
@@ -3366,7 +3364,7 @@ happen.")
                                :title "Dialog Window"
                                :has-separator t)))
     ;; Add a border width to the vbox of the content area
-    (gtk-container-set-border-width (gtk-dialog-get-content-area dialog) 12)
+    (setf (gtk-container-border-width (gtk-dialog-get-content-area dialog)) 12)
     ;; Add a label widget with text to the content area
     (let ((vbox (make-instance 'gtk-box
                                :orientation :vertical
@@ -4073,7 +4071,7 @@ happen.")
                           (leave-gtk-main)))
       (gtk-container-add window vbox)
       (gtk-widget-show-all window))))
-      
+
 ;;; ----------------------------------------------------------------------------
 
 ;; GtkUIManager
@@ -4098,7 +4096,7 @@ happen.")
       </menu>
     </menubar>
   </ui>")
-  
+
 
 
 ;;; ----------------------------------------------------------------------------

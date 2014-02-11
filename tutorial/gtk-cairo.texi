@@ -178,7 +178,7 @@ produce the output:
          (lambda (widget cr)
            (let ((cr (pointer cr))
                  ;; Get the GdkWindow for the widget
-                 (window (gtk-widget-get-window widget)))
+                 (window (gtk-widget-window widget)))
            ;; Clear surface
            (cairo-set-source-rgb cr 1.0 1.0 1.0)
            (cairo-paint cr)
@@ -768,7 +768,7 @@ redrawing of the widget.  The "draw" signal handler draws the clock into the
      (lambda (widget cr)
        (let ((cr (pointer cr))
              ;; Get the GdkWindow for the widget
-             (window (gtk-widget-get-window widget)))
+             (window (gtk-widget-window widget)))
        ;; Clear surface
        (cairo-set-source-rgb cr 1.0 1.0 1.0)
        (cairo-paint cr)

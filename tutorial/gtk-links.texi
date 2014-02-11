@@ -218,7 +218,6 @@
 @set gtk-container http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-container.html
 @set gtk-container-remove http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-container-remove.html
 @set gtk-container-border-width http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-container-border-width.html
-@set gtk-container-set-border-width http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-container-set-border-width.html
 @set gtk-container-add http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-container-add.html
 
 @c GtkDialog
@@ -438,7 +437,7 @@
 @c GtkOrientable
 
 @set gtk-orientable http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-orientable.html
-@set gtk-orientable-set-orientation http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-orientable-set-orientation.html
+@set gtk-orientable-orientation http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-orientable-orientation.html
 
 @c GtkOrientation
 
@@ -794,11 +793,11 @@
 @c GtkWidget
 
 @set gtk-widget http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-widget.html
-@set gtk-widget-get-name http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-widget-get-name.html
+@set gtk-widget-name http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-widget-name.html
 @set gtk-widget-queue-draw http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-widget-queue-draw.html
 @set gtk-widget-get-allocation http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-widget-get-allocation.html
 @set gtk-widget-override-font http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-widget-override-font.html
-@set gtk-widget-set-tooltip-text http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-widget-set-tooltip-text.html
+@set gtk-widget-tooltip-text http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-widget-tooltip-text.html
 @set gtk-widget-destroy http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-widget-destroy.html
 @set gtk-widget-show-all http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-widget-show-all.html
 @set gtk-widget-show http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-widget-show.html
@@ -807,8 +806,8 @@
 
 @set gtk-window http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-window.html
 @set gtk-window-new http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-window-new.html
-@set gtk-window-set-title http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-window-set-title.html
-@set gtk-window-set-default-size http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-window-set-default-size.html
+@set gtk-window-title http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-window-title.html
+@set gtk-window-default-size http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-window-default-size.html
 @set gtk-window-add-accel-group http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-window-add-accel-group.html
 @set gtk-window-default-width http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-window-default-width.html
 @set gtk-window-default-height http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-window-default-height.html
