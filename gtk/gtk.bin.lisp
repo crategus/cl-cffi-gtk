@@ -81,7 +81,7 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-5-25}
   @argument[bin]{a @class{gtk-bin} widget}
-  @return{Pointer to the child of the @class{gtk-bin}.}
+  @return{The child of the @class{gtk-bin}.}
   @begin{short}
     Gets the child of the @class{gtk-bin}, or @code{nil} if the @arg{bin}
     contains no child widget.

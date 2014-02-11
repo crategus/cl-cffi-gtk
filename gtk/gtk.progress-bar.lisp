@@ -181,7 +181,7 @@
   Note that setting this property to a value other than @code{:none} has the
   side-effect that the progress bar requests only enough space to display the
   ellipsis (\"...\"). Another means to set a progress bar's width is the
-  function @fun{gtk-widget-set-size-request}.@br{}
+  function @fun{gtk-widget-size-request}.@br{}
   Default value: @code{:none}@br{}
   Since 2.6")
 

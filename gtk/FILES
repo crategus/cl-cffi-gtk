@@ -39,7 +39,7 @@ GTK+ Widgets and Objects
     gtk.dialog.lisp                  - GtkDialog                   - GTK+ 3.6.4
     gtk.invisible.lisp               - GtkInvisible                - GTK+ 3.6.4
     gtk.message-dialog.lisp          - GtkMessageDialog            - GTK+ 3.6.4
-    gtk.window.lisp                  - GtkWindow                   - GTK+ 3.6.4
+    gtk.window.lisp                  - GtkWindow                   - GTK+ 3.8.9
     gtk.window-group.lisp            - GtkWindowGroup              - GTK+ 3.6.4
     gtk.about-dialog.lisp            - GtkAboutDialog              - GTK+ 3.6.4
     gtk.assistant.lisp               - GtkAssistant                - GTK+ 3.6.4
@@ -182,7 +182,7 @@ GTK+ Widgets and Objects
     gtk.grid.lisp                    - GtkGrid                     - GTK+ 3.8.8
     gtk.alignment.lisp               - GtkAlignment                - GTK+ 3.8.8
     gtk.aspect-frame.lisp            - GtkAspectFrame              - GTK+ 3.6.4
-    gtk.box.lisp                     - GtkBox, GtkHBox, GtkVbox    - GTK+ 3.6.4
+    gtk.box.lisp                     - GtkBox, GtkHBox, GtkVbox    - GTK+ 3.8.9
     gtk.button-box.lisp              - GtkButtonBox, ...           - GTK+ 3.6.4
     gtk.fixed.lisp                   - GtkFixed                    - GTK+ 3.6.4
     gtk.paned.lisp                   - GtkPaned, ...               - GTK+ 3.6.4
@@ -190,7 +190,7 @@ GTK+ Widgets and Objects
     gtk.notebook.lisp                - GtkNotebook                 - GTK+ 3.6.4
     gtk.expander.lisp                - GtkExpander                 - GTK+ 3.6.4
     gtk.overlay.lisp                 - GtkOverlay                  - GTK+ 3.6.4
-    gtk.orientable.lisp              - GtkOrientable               - GTK+ 3.6.4
+    gtk.orientable.lisp              - GtkOrientable               - GTK+ 3.8.9
 
   Ornaments
 
@@ -234,7 +234,7 @@ GTK+ Widgets and Objects
   Abstract Base Classes
 
     gtk.widget.lisp                  - GtkWidget                   - GTK+ 3.8.6&
-    gtk.container.lisp               - GtkContainer                - GTK+ 3.6.4&
+    gtk.container.lisp               - GtkContainer                - GTK+ 3.8.9&
     gtk.bin.lisp                     - GtkBin                      - GTK+ 3.6.4
     gtk.menu-shell.lisp              - GtkMenuShell                - GTK+ 3.6.4&
     gtk.misc.lisp                    - GtkMisc                     - GTK+ 3.6.4

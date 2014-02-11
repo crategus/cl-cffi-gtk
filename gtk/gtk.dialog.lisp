@@ -100,7 +100,7 @@
 
   A modal dialog, that is, one which freezes the rest of the application
   from user input, can be created by calling the function
-  @fun{gtk-window-set-modal} on the dialog. When using the function
+  @fun{gtk-window-modal} on the dialog. When using the function
   @fun{gtk-dialog-new-with-buttons} you can also pass the @code{:modal} flag of
   type @symbol{gtk-dialog-flags} to make a dialog modal.
 
@@ -300,13 +300,13 @@
   @end{pre}
   @begin[code]{table}
     @entry[:modal]{Make the constructed dialog modal,
-      see the function @fun{gtk-window-set-modal}.}
+      see the function @fun{gtk-window-modal}.}
     @entry[:destroy-with-parent]{Destroy the dialog when its parent is
-      destroyed, see the function @fun{gtk-window-set-destroy-with-parent}.}
+      destroyed, see the function @fun{gtk-window-destroy-with-parent}.}
   @end{table}
   @see-class{gtk-dialog}
-  @see-function{gtk-window-set-modal}
-  @see-function{gtk-window-set-destroy-with-parent}")
+  @see-function{gtk-window-modal}
+  @see-function{gtk-window-destroy-with-parent}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkResponseType
@@ -398,7 +398,7 @@
 
 (defun gtk-dialog-new-with-buttons (title parent flags &rest buttons)
  #+cl-cffi-gtk-documentation
- "@version{2013-9-9}
+ "@version{2014-2-7}
   @argument[title]{title of the dialog, or @code{nil}}
   @argument[parent]{transient parent of the dialog, or @code{nil}}
   @argument[flags]{a list of flags of type @symbol{gtk-dialog-flags}}
@@ -408,8 +408,8 @@
   @begin{short}
     Creates a new @class{gtk-dialog} window with title @arg{title}, or
     @code{nil} for the default title, see the function
-    @fun{gtk-window-set-title}, and transient parent @arg{parent}, or @code{nil}
-    for none, see the function @fun{gtk-window-set-transient-for}.
+    @fun{gtk-window-title}, and transient parent @arg{parent}, or @code{nil}
+    for none, see the function @fun{gtk-window-transient-for}.
   @end{short}
   The @arg{flags} argument can be used to make the dialog modal with the flag
   @code{:modal} of type @symbol{gtk-dialog-flags} and/or to have it destroyed
@@ -442,19 +442,19 @@
   @see-class{gtk-dialog}
   @see-symbol{gtk-dialog-flags}
   @see-symbol{gtk-response-type}
-  @see-function{gtk-window-set-title}
-  @see-function{gtk-window-set-transient-for}"
+  @see-function{gtk-window-title}
+  @see-function{gtk-window-transient-for}"
   (let ((dialog (make-instance 'gtk-dialog)))
-    (if title
-        (gtk-window-set-title dialog title))
-    (if parent
-        (gtk-window-set-transient-for dialog parent))
-    (if (member :modal flags)
-        (gtk-window-set-modal dialog t))
-    (if (member :destroy-with-parent flags)
-        (gtk-window-set-destroy-with-parent dialog t))
-    (if buttons
-        (apply #'gtk-dialog-add-buttons (cons dialog buttons)))
+    (when title
+      (setf (gtk-window-title dialog) title))
+    (when parent
+      (setf (gtk-window-transient-for dialog) parent))
+    (when (member :modal flags)
+      (setf (gtk-window-modal dialog) t))
+    (when (member :destroy-with-parent flags)
+      (setf (gtk-window-destroy-with-parent dialog) t))
+    (when buttons
+     (apply #'gtk-dialog-add-buttons (cons dialog buttons)))
     dialog))
 
 (export 'gtk-dialog-new-with-buttons)
@@ -661,12 +661,12 @@
   @argument[dialog]{a @class{gtk-dialog} window}
   @argument[response-id]{a response ID of type @symbol{gtk-response-type}}
   @argument[setting]{@em{true} for sensitive}
-  Calls the function @fun{gtk-widget-set-sensitive} for each widget in the
+  Calls the function @fun{gtk-widget-sensitive} for each widget in the
   @arg{dialog}'s action area with the given @arg{response-id}. A convenient way
   to sensitize/desensitize dialog buttons.
   @see-class{gtk-dialog}
   @see-symbol{gtk-response-type}
-  @see-function{gtk-widget-set-sensitive}"
+  @see-function{gtk-widget-sensitive}"
   (dialog (g-object gtk-dialog))
   (response gtk-response-type)
   (setting :boolean))

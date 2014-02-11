@@ -443,11 +443,11 @@
         (setf (gtk-message-dialog-text dialog)
         (apply #'format (cons nil (cons message args)))))
     (if parent
-        (gtk-window-set-transient-for dialog parent))
+        (setf (gtk-window-transient-for dialog) parent))
     (if (member :modal flags)
-        (gtk-window-set-modal dialog t))
+        (setf (gtk-window-modal dialog) t))
     (if (member :destroy-with-parent flags)
-        (gtk-window-set-destroy-with-parent dialog t))
+        (setf (gtk-window-destroy-with-parent dialog) t))
     dialog))
 
 (export 'gtk-message-dialog-new)
@@ -506,11 +506,11 @@
         (setf (gtk-message-dialog-text dialog)
         (apply #'format (cons nil (cons message args)))))
     (if parent
-        (gtk-window-set-transient-for dialog parent))
+        (setf (gtk-window-transient-for dialog) parent))
     (if (member :modal flags)
-        (gtk-window-set-modal dialog t))
+        (setf (gtk-window-modal dialog) t))
     (if (member :destroy-with-parent flags)
-        (gtk-window-set-destroy-with-parent dialog t))
+        (setf (gtk-window-destroy-with-parent dialog) t))
     dialog))
 
 (export 'gtk-message-dialog-new-with-markup)

@@ -877,6 +877,142 @@
     @end{subsection}
   @end{section}
   @begin[Windows]{section}
+    @begin[GtkWindow]{subsection}
+      Toplevel which can contain other widgets.
+
+      @about-class{gtk-window}
+      @about-generic{gtk-window-accept-focus}
+      @about-generic{gtk-window-application}
+      @about-generic{gtk-window-attached-to}
+      @about-generic{gtk-window-decorated}
+      @about-generic{gtk-window-default-height}
+      @about-generic{gtk-window-default-width}
+      @about-generic{gtk-window-deletable}
+      @about-generic{gtk-window-destroy-with-parent}
+      @about-generic{gtk-window-focus-on-map}
+      @about-generic{gtk-window-focus-visible}
+      @about-generic{gtk-window-gravity}
+      @about-generic{gtk-window-has-resize-grip}
+      @about-generic{gtk-window-has-toplevel-focus}
+      @about-generic{gtk-window-hide-titlebar-when-maximized}
+      @about-generic{gtk-window-icon}
+      @about-generic{gtk-window-icon-name}
+      @about-generic{gtk-window-is-active}
+      @about-generic{gtk-window-mnemonics-visible}
+      @about-generic{gtk-window-modal}
+      @about-generic{gtk-window-opacity}
+      @about-generic{gtk-window-resizable}
+      @about-generic{gtk-window-resize-grip-visible}
+      @about-generic{gtk-window-role}
+      @about-generic{gtk-window-screen}
+      @about-generic{gtk-window-skip-pager-hint}
+      @about-generic{gtk-window-skip-taskbar-hint}
+      @about-generic{gtk-window-startup-id}
+      @about-generic{gtk-window-title}
+      @about-generic{gtk-window-transient-for}
+      @about-generic{gtk-window-type}
+      @about-generic{gtk-window-type-hint}
+      @about-generic{gtk-window-urgency-hint}
+      @about-generic{gtk-window-window-position}
+      @about-function{gtk-window-new}
+      @about-function{gtk-window-set-wmclass}
+      @about-function{gtk-window-set-resizable}
+      @about-function{gtk-window-get-resizable}
+      @about-function{gtk-window-add-accel-group}
+      @about-function{gtk-window-remove-accel-group}
+      @about-function{gtk-window-activate-focus}
+      @about-function{gtk-window-activate-default}
+      @about-function{gtk-window-set-default-geometry}
+      @about-function{gtk-window-set-geometry-hints}
+      @about-function{gtk-window-set-gravity}
+      @about-function{gtk-window-get-gravity}
+      @about-function{gtk-window-set-position}
+      @about-function{gtk-window-hide-titlebar-when-maximized}
+      @about-function{gtk-window-set-screen}
+      @about-function{gtk-window-get-screen}
+      @about-function{gtk-window-is-active}
+      @about-function{gtk-window-has-toplevel-focus}
+      @about-function{gtk-window-list-toplevels}
+      @about-function{gtk-window-add-mnemonic}
+      @about-function{gtk-window-remove-mnemonic}
+      @about-function{gtk-window-mnemonic-activate}
+      @about-function{gtk-window-activate-key}
+      @about-function{gtk-window-propagate-key-event}
+      @about-function{gtk-window-get-focus}
+      @about-function{gtk-window-set-focus}
+      @about-function{gtk-window-get-default-widget}
+      @about-function{gtk-window-set-default}
+      @about-function{gtk-window-present}
+      @about-function{gtk-window-present-with-time}
+      @about-function{gtk-window-iconify}
+      @about-function{gtk-window-deiconify}
+      @about-function{gtk-window-stick}
+      @about-function{gtk-window-unstick}
+      @about-function{gtk-window-maximize}
+      @about-function{gtk-window-unmaximize}
+      @about-function{gtk-window-fullscreen}
+      @about-function{gtk-window-unfullscreen}
+      @about-function{gtk-window-set-keep-above}
+      @about-function{gtk-window-set-keep-below}
+      @about-function{gtk-window-begin-resize-drag}
+      @about-function{gtk-window-begin-move-drag}
+      @about-function{gtk-window-set-deletable}
+      @about-function{gtk-window-set-mnemonic-modifier}
+      @about-function{gtk-window-set-type-hint}
+      @about-function{gtk-window-set-skip-taskbar-hint}
+      @about-function{gtk-window-set-skip-pager-hint}
+      @about-function{gtk-window-set-urgency-hint}
+      @about-function{gtk-window-set-focus-on-map}
+      @about-function{gtk-window-set-startup-id}
+      @about-function{gtk-window-set-role}
+      @about-function{gtk-window-get-deletable}
+      @about-function{gtk-window-get-default-icon-list}
+      @about-function{gtk-window-get-default-icon-name}
+      @about-generic{gtk-window-default-size}
+      @about-function{gtk-window-get-hide-titlebar-when-maximized}
+      @about-function{gtk-window-get-icon}
+      @about-function{gtk-window-get-icon-list}
+      @about-function{gtk-window-get-icon-name}
+      @about-function{gtk-window-get-mnemonic-modifier}
+      @about-function{gtk-window-get-modal}
+      @about-function{gtk-window-get-position}
+      @about-function{gtk-window-get-role}
+      @about-function{gtk-window-get-size}
+      @about-function{gtk-window-get-transient-for}
+      @about-function{gtk-window-get-type-hint}
+      @about-function{gtk-window-get-skip-taskbar-hint}
+      @about-function{gtk-window-get-skip-pager-hint}
+      @about-function{gtk-window-get-urgency-hint}
+      @about-function{gtk-window-get-focus-on-map}
+      @about-function{gtk-window-get-group}
+      @about-function{gtk-window-has-group}
+      @about-function{gtk-window-get-window-type}
+      @about-function{gtk-window-move}
+      @about-function{gtk-window-parse-geometry}
+      @about-function{gtk-window-reshow-with-initial-size}
+      @about-function{gtk-window-resize}
+      @about-function{gtk-window-resize-to-geometry}
+      @about-function{gtk-window-set-default-icon-list}
+      @about-function{gtk-window-set-default-icon}
+      @about-function{gtk-window-set-default-icon-from-file}
+      @about-function{gtk-window-set-default-icon-name}
+      @about-function{gtk-window-set-icon}
+      @about-function{gtk-window-set-icon-list}
+      @about-function{gtk-window-set-icon-from-file}
+      @about-function{gtk-window-set-icon-name}
+      @about-function{gtk-window-set-auto-startup-notification}
+      @about-function{gtk-window-get-opacity}
+      @about-function{gtk-window-set-opacity}
+      @about-function{gtk-window-get-mnemonics-visible}
+      @about-function{gtk-window-set-mnemonics-visible}
+      @about-function{gtk-window-get-focus-visible}
+      @about-function{gtk-window-set-focus-visible}
+      @about-function{gtk-window-set-has-resize-grip}
+      @about-function{gtk-window-get-has-resize-grip}
+      @about-function{gtk-window-resize-grip-is-visible}
+      @about-function{gtk-window-get-resize-grip-area}
+      @about-function{gtk-window-set-has-user-ref-count}
+    @end{subsection}
     @begin[GtkDialog]{subsection}
       Create popup windows.
 
@@ -923,124 +1059,6 @@
       @about-function{gtk-message-dialog-format-secondary-text}
       @about-function{gtk-message-dialog-format-secondary-markup}
       @about-function{gtk-message-dialog-get-message-area}
-    @end{subsection}
-    @begin[GtkWindow]{subsection}
-      Toplevel which can contain other widgets.
-
-      @about-class{gtk-window}
-      @about-function{gtk-window-new}
-      @about-function{gtk-window-set-title}
-      @about-function{gtk-window-set-wmclass}
-      @about-function{gtk-window-set-resizable}
-      @about-function{gtk-window-get-resizable}
-      @about-function{gtk-window-add-accel-group}
-      @about-function{gtk-window-remove-accel-group}
-      @about-function{gtk-window-activate-focus}
-      @about-function{gtk-window-activate-default}
-      @about-function{gtk-window-set-modal}
-      @about-function{gtk-window-set-default-size}
-      @about-function{gtk-window-set-default-geometry}
-      @about-function{gtk-window-set-geometry-hints}
-      @about-function{gtk-window-set-gravity}
-      @about-function{gtk-window-get-gravity}
-      @about-function{gtk-window-set-position}
-      @about-function{gtk-window-set-transient-for}
-      @about-function{gtk-window-set-attached-to}
-      @about-function{gtk-window-set-destroy-with-parent}
-      @about-function{gtk-window-set-hide-titlebar-when-maximized}
-      @about-function{gtk-window-set-screen}
-      @about-function{gtk-window-get-screen}
-      @about-function{gtk-window-is-active}
-      @about-function{gtk-window-has-toplevel-focus}
-      @about-function{gtk-window-list-toplevels}
-      @about-function{gtk-window-add-mnemonic}
-      @about-function{gtk-window-remove-mnemonic}
-      @about-function{gtk-window-mnemonic-activate}
-      @about-function{gtk-window-activate-key}
-      @about-function{gtk-window-propagate-key-event}
-      @about-function{gtk-window-get-focus}
-      @about-function{gtk-window-set-focus}
-      @about-function{gtk-window-get-default-widget}
-      @about-function{gtk-window-set-default}
-      @about-function{gtk-window-present}
-      @about-function{gtk-window-present-with-time}
-      @about-function{gtk-window-iconify}
-      @about-function{gtk-window-deiconify}
-      @about-function{gtk-window-stick}
-      @about-function{gtk-window-unstick}
-      @about-function{gtk-window-maximize}
-      @about-function{gtk-window-unmaximize}
-      @about-function{gtk-window-fullscreen}
-      @about-function{gtk-window-unfullscreen}
-      @about-function{gtk-window-set-keep-above}
-      @about-function{gtk-window-set-keep-below}
-      @about-function{gtk-window-begin-resize-drag}
-      @about-function{gtk-window-begin-move-drag}
-      @about-function{gtk-window-set-decorated}
-      @about-function{gtk-window-set-deletable}
-      @about-function{gtk-window-set-mnemonic-modifier}
-      @about-function{gtk-window-set-type-hint}
-      @about-function{gtk-window-set-skip-taskbar-hint}
-      @about-function{gtk-window-set-skip-pager-hint}
-      @about-function{gtk-window-set-urgency-hint}
-      @about-function{gtk-window-set-accept-focus}
-      @about-function{gtk-window-set-focus-on-map}
-      @about-function{gtk-window-set-startup-id}
-      @about-function{gtk-window-set-role}
-      @about-function{gtk-window-get-decorated}
-      @about-function{gtk-window-get-deletable}
-      @about-function{gtk-window-get-default-icon-list}
-      @about-function{gtk-window-get-default-icon-name}
-      @about-function{gtk-window-get-default-size}
-      @about-function{gtk-window-get-destroy-with-parent}
-      @about-function{gtk-window-get-hide-titlebar-when-maximized}
-      @about-function{gtk-window-get-icon}
-      @about-function{gtk-window-get-icon-list}
-      @about-function{gtk-window-get-icon-name}
-      @about-function{gtk-window-get-mnemonic-modifier}
-      @about-function{gtk-window-get-modal}
-      @about-function{gtk-window-get-position}
-      @about-function{gtk-window-get-role}
-      @about-function{gtk-window-get-size}
-      @about-function{gtk-window-get-title}
-      @about-function{gtk-window-get-transient-for}
-      @about-function{gtk-window-get-attached-to}
-      @about-function{gtk-window-get-type-hint}
-      @about-function{gtk-window-get-skip-taskbar-hint}
-      @about-function{gtk-window-get-skip-pager-hint}
-      @about-function{gtk-window-get-urgency-hint}
-      @about-function{gtk-window-get-accept-focus}
-      @about-function{gtk-window-get-focus-on-map}
-      @about-function{gtk-window-get-group}
-      @about-function{gtk-window-has-group}
-      @about-function{gtk-window-get-window-type}
-      @about-function{gtk-window-move}
-      @about-function{gtk-window-parse-geometry}
-      @about-function{gtk-window-reshow-with-initial-size}
-      @about-function{gtk-window-resize}
-      @about-function{gtk-window-resize-to-geometry}
-      @about-function{gtk-window-set-default-icon-list}
-      @about-function{gtk-window-set-default-icon}
-      @about-function{gtk-window-set-default-icon-from-file}
-      @about-function{gtk-window-set-default-icon-name}
-      @about-function{gtk-window-set-icon}
-      @about-function{gtk-window-set-icon-list}
-      @about-function{gtk-window-set-icon-from-file}
-      @about-function{gtk-window-set-icon-name}
-      @about-function{gtk-window-set-auto-startup-notification}
-      @about-function{gtk-window-get-opacity}
-      @about-function{gtk-window-set-opacity}
-      @about-function{gtk-window-get-mnemonics-visible}
-      @about-function{gtk-window-set-mnemonics-visible}
-      @about-function{gtk-window-get-focus-visible}
-      @about-function{gtk-window-set-focus-visible}
-      @about-function{gtk-window-set-has-resize-grip}
-      @about-function{gtk-window-get-has-resize-grip}
-      @about-function{gtk-window-resize-grip-is-visible}
-      @about-function{gtk-window-get-resize-grip-area}
-      @about-function{gtk-window-get-application}
-      @about-function{gtk-window-set-application}
-      @about-function{gtk-window-set-has-user-ref-count}
     @end{subsection}
     @begin[GtkWindowGroup]{subsection}
       Limit the effect of grabs.
@@ -3967,8 +3985,7 @@ setup_tree (void)
       An interface for flippable widgets.
 
       @about-class{gtk-orientable}
-      @about-function{gtk-orientable-get-orientation}
-      @about-function{gtk-orientable-set-orientation}
+      @about-generic{gtk-orientable-orientation}
     @end{subsection}
   @end{section}
   @begin[Ornaments]{section}
@@ -4535,6 +4552,41 @@ setup_tree (void)
 
       @about-class{gtk-widget}
       @about-class{gtk-widget-class}
+      @about-generic{gtk-widget-app-paintable}
+      @about-generic{gtk-widget-can-default}
+      @about-generic{gtk-widget-can-focus}
+      @about-generic{gtk-widget-composite-child}
+      @about-generic{gtk-widget-double-buffered}
+      @about-generic{gtk-widget-events}
+      @about-generic{gtk-widget-expand}
+      @about-generic{gtk-widget-halign}
+      @about-generic{gtk-widget-has-default}
+      @about-generic{gtk-widget-has-focus}
+      @about-generic{gtk-widget-has-tooltip}
+      @about-generic{gtk-widget-height-request}
+      @about-generic{gtk-widget-hexpand}
+      @about-generic{gtk-widget-hexpand-set}
+      @about-generic{gtk-widget-is-focus}
+      @about-generic{gtk-widget-margin}
+      @about-generic{gtk-widget-margin-bottom}
+      @about-generic{gtk-widget-margin-left}
+      @about-generic{gtk-widget-margin-right}
+      @about-generic{gtk-widget-margin-top}
+      @about-generic{gtk-widget-name}
+      @about-generic{gtk-widget-no-show-all}
+      @about-generic{gtk-widget-opacity}
+      @about-generic{gtk-widget-parent}
+      @about-generic{gtk-widget-receives-default}
+      @about-generic{gtk-widget-sensitive}
+      @about-generic{gtk-widget-style}
+      @about-generic{gtk-widget-tooltip-markup}
+      @about-generic{gtk-widget-tooltip-text}
+      @about-generic{gtk-widget-valign}
+      @about-generic{gtk-widget-vexpand}
+      @about-generic{gtk-widget-vexpand-set}
+      @about-generic{gtk-widget-visible}
+      @about-generic{gtk-widget-width-request}
+      @about-generic{gtk-widget-window}
       @about-struct{gtk-requisition}
       @about-function{make-gtk-requisition}
       @about-function{copy-gtk-requisition}
@@ -4586,15 +4638,10 @@ setup_tree (void)
       @about-function{gtk-widget-is-focus}
       @about-function{gtk-widget-grab-focus}
       @about-function{gtk-widget-grab-default}
-      @about-function{gtk-widget-set-name}
-      @about-function{gtk-widget-get-name}
       @about-function{gtk-widget-set-state}
-      @about-function{gtk-widget-set-sensitive}
       @about-function{gtk-widget-set-parent}
       @about-function{gtk-widget-set-parent-window}
       @about-function{gtk-widget-get-parent-window}
-      @about-function{gtk-widget-set-events}
-      @about-function{gtk-widget-get-events}
       @about-function{gtk-widget-add-events}
       @about-function{gtk-widget-set-device-events}
       @about-function{gtk-widget-get-device-events}
@@ -4668,7 +4715,6 @@ setup_tree (void)
       @about-function{gtk-widget-child-notify}
       @about-function{gtk-widget-freeze-child-notify}
       @about-function{gtk-widget-get-child-visible}
-      @about-function{gtk-widget-get-parent}
       @about-function{gtk-widget-get-settings}
       @about-function{gtk-widget-get-clipboard}
       @about-function{gtk-widget-get-display}
@@ -4677,7 +4723,6 @@ setup_tree (void)
       @about-function{gtk-widget-has-screen}
       @about-function{gtk-widget-get-size-request}
       @about-function{gtk-widget-set-child-visible}
-      @about-function{gtk-widget-set-size-request}
       @about-function{gtk-widget-thaw-child-notify}
       @about-function{gtk-widget-set-no-show-all}
       @about-function{gtk-widget-get-no-show-all}
@@ -4689,8 +4734,6 @@ setup_tree (void)
       @about-function{gtk-widget-keynav-failed}
       @about-function{gtk-widget-get-tooltip-markup}
       @about-function{gtk-widget-set-tooltip-markup}
-      @about-function{gtk-widget-get-tooltip-text}
-      @about-function{gtk-widget-set-tooltip-text}
       @about-function{gtk-widget-get-tooltip-window}
       @about-function{gtk-widget-set-tooltip-window}
       @about-function{gtk-widget-get-has-tooltip}
@@ -4713,7 +4756,6 @@ setup_tree (void)
       @about-function{gtk-widget-get-double-buffered}
       @about-function{gtk-widget-get-has-window}
       @about-function{gtk-widget-set-has-window}
-      @about-function{gtk-widget-get-sensitive}
       @about-function{gtk-widget-is-sensitive}
       @about-function{gtk-widget-get-state}
       @about-function{gtk-widget-get-visible}
@@ -4764,8 +4806,6 @@ setup_tree (void)
       @about-function{gtk-widget-get-request-mode}
       @about-function{gtk-widget-get-preferred-size}
       @about-function{gtk-distribute-natural-allocation}
-      @about-function{gtk-widget-get-halign}
-      @about-function{gtk-widget-set-halign}
       @about-function{gtk-widget-get-valign}
       @about-function{gtk-widget-set-valign}
       @about-function{gtk-widget-get-margin-left}
@@ -4791,6 +4831,9 @@ setup_tree (void)
       Base class for widgets which contain other widgets.
 
       @about-class{gtk-container}
+      @about-generic{gtk-container-border-width}
+      @about-generic{gtk-container-child}
+      @about-generic{gtk-container-resize-mode}
       @about-function{GTK_IS_RESIZE_CONTAINER}
       @about-function{GTK_CONTAINER_WARN_INVALID_CHILD_PROPERTY_ID}
       @about-function{gtk-container-add}
@@ -4819,8 +4862,6 @@ setup_tree (void)
       @about-function{gtk-container-child-set-valist}
       @about-function{gtk-container-child-notify}
       @about-function{gtk-container-forall}
-      @about-function{gtk-container-get-border-width}
-      @about-function{gtk-container-set-border-width}
       @about-function{gtk-container-propagate-draw}
       @about-function{gtk-container-get-focus-chain}
       @about-function{gtk-container-set-focus-chain}

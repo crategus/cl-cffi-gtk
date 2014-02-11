@@ -1119,9 +1119,9 @@
     @entry[:mouse]{Windows should be placed at the current mouse position.}
     @entry[:center-always]{Keep window centered as it changes size, etc.}
     @entry[:center-on-parent]{Center the window on its transient parent
-      (see @fun{gtk-window-set-transient-for}).}
+      (see @fun{gtk-window-transient-for}).}
   @end{table}
-  @see-function{gtk-window-set-transient-for}")
+  @see-function{gtk-window-transient-for}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkWindowType
@@ -1142,17 +1142,17 @@
   @end{short}
   A @class{gtk-window} widget can be one of the types @code{:toplevel} or
   @code{:popup}. Most things you would consider a \"window\" should have type
-  @code{:toplevel}; windows with this type are managed by the window manager and
-  have a frame by default. Call the function @fun{gtk-window-set-decorated} to
+  @code{:toplevel}; windows with this type are managed by the window manager
+  and have a frame by default. Call the function @fun{gtk-window-decorated} to
   toggle the frame. Windows with type @code{:popup} are ignored by the window
   manager; window manager keybindings will not work on them, the window manager
-  will not decorate the window with a frame, many GTK+ features that rely on the
-  window manager will not work (e. g. resize grips and
+  will not decorate the window with a frame, many GTK+ features that rely on
+  the window manager will not work (e. g. resize grips and
   maximization/minimization). The type @code{:popup} is used to implement
-  widgets such as @class{gtk-menu} or tooltips that you normally do not think of
-  as windows per se. Nearly all windows should be of type @code{:toplevel}. In
-  particular, do not use the type @code{:popup} just to turn off the window
-  borders; use the function @fun{gtk-window-set-decorated} for that.
+  widgets such as @class{gtk-menu} or tooltips that you normally do not think
+  of as windows per se. Nearly all windows should be of type @code{:toplevel}.
+  In particular, do not use the type @code{:popup} just to turn off the window
+  borders; use the function @fun{gtk-window-decorated} for that.
   @begin{pre}
 (define-g-enum \"GtkWindowType\" gtk-window-type
   (:export t
@@ -1166,7 +1166,7 @@
   @end{table}
   @see-class{gtk-window}
   @see-class{gtk-menu}
-  @see-function{gtk-window-set-decorated}")
+  @see-function{gtk-window-decorated}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkSortType

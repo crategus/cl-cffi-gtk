@@ -719,10 +719,10 @@
   @end{short}
 
   The generic function @sym{gtk-about-dialog-wrap-license} returns whether the
-  license text in about is automatically wrapped.
+  license text in the about dialog is automatically wrapped.
 
   The generic function @sym{(setf gtk-about-dialog-wrap-license)} sets whether
-  the license text in about is automatically wrapped.
+  the license text in the about dialog is automatically wrapped.
 
   Since 2.8
   @see-class{gtk-about-dialog}")
@@ -859,9 +859,9 @@
                (gtk-widget-hide widget)))
         (if parent
             (progn
-              (gtk-window-set-modal dialog t)
-              (gtk-window-set-transient-for dialog parent)
-              (gtk-window-set-destroy-with-parent dialog t)
+              (setf (gtk-window-modal dialog) t)
+              (setf (gtk-window-transient-for dialog) parent)
+              (setf (gtk-window-destroy-with-parent dialog) t)
               (g-object-set-data parent "gtk-about-dialog" (pointer dialog)))
             (setf about-dialog dialog)))
       (gtk-window-present dialog))))

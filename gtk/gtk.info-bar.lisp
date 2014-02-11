@@ -361,7 +361,7 @@
   @argument[response-id]{a response ID}
   @argument[setting]{@arg{true} for sensitive}
   @begin{short}
-    Calls @code{(@fun{gtk-widget-set-sensitive} widget @arg{setting})} for each
+    Calls @code{(@fun{gtk-widget-sensitive} widget @arg{setting})} for each
     widget in the info bars's action area with the given @arg{response-id}.
   @end{short}
   A convenient way to sensitize/desensitize dialog buttons.

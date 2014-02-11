@@ -123,9 +123,9 @@
   @see-function{gtk-recent-chooser-dialog-new-with-buttons}"
   (let ((dialog (make-instance 'gtk-recent-chooser-dialog)))
     (when title
-      (gtk-window-set-title dialog title))
+      (setf (gtk-window-title dialog) title))
     (when parent
-      (gtk-window-set-transient-for dialog parent))
+      (setf (gtk-window-transient-for dialog) parent))
     (when buttons
       (apply #'gtk-dialog-add-buttons (cons dialog buttons)))
     dialog))
@@ -160,9 +160,9 @@
   @see-function{gtk-recent-chooser-dialog-new}"
   (let ((dialog (make-instance 'gtk-recent-chooser-dialog)))
     (when title
-      (gtk-window-set-title dialog title))
+      (setf (gtk-window-title dialog) title))
     (when parent
-      (gtk-window-set-transient-for dialog parent))
+      (setf (gtk-window-transient-for dialog) parent))
     (when manager
       (setf (gtk-recent-chooser-recent-manager dialog) manager))
     (when buttons

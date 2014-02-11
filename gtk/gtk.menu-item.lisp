@@ -401,7 +401,7 @@
     The function @sym{gtk-menu-item-set-right-justified} has been deprecated
     since version 3.2 and should not be used in newly-written code. If you
     insist on using it, use the functions @fun{gtk-widget-set-hexpand} and
-    @fun{gtk-widget-set-halign}.
+    @fun{gtk-widget-halign}.
 
   @begin{short}
     Sets whether the menu item appears justified at the right side of a
@@ -413,7 +413,7 @@
   @see-class{gtk-menu-item}
   @see-function{gtk-menu-item-get-right-justified}
   @see-function{gtk-widget-set-hexpand}
-  @see-function{gtk-widget-set-halign}"
+  @see-function{gtk-widget-halign}"
   (setf (gtk-menu-item-right-justified menu-item) right-justified))
 
 (export 'gtk-menu-item-set-right-justified)

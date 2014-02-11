@@ -434,7 +434,7 @@
   \"...\". In particular, this means that ellipsizing labels do not work well
   in notebook tabs, unless the tab's @code{\"tab-expand\"} property is set to
   @arg{true}. Other ways to set a label's width are the functions
-  @fun{gtk-widget-set-size-request} and @fun{gtk-label-set-width-chars}. @br{}
+  @fun{gtk-widget-size-request} and @fun{gtk-label-set-width-chars}. @br{}
   Default value: @code{:none} @br{}
   Since 2.6")
 
@@ -1008,8 +1008,8 @@
   its parent container's width, because GTK+ widgets conceptually cannot make
   their requisition depend on the parent container's size. For a label that
   wraps at a specific position, set the label's width using
-  @fun{gtk-widget-set-size-request}.
-  @see-function{gtk-widget-set-size-request}"
+  @fun{gtk-widget-size-request}.
+  @see-function{gtk-widget-size-request}"
   (label (g-object gtk-label))
   (wrap :boolean))
 

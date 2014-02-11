@@ -254,7 +254,7 @@
       Prior to 2.20, @sym{gtk-builder} was setting the \"name\" property of
       constructed widgets to the \"id\" attribute. In GTK+ 2.20 or newer, you
       have to use the function @fun{gtk-buildable-get-name} instead of the
-      function @fun{gtk-widget-get-name} to obtain the \"id\", or set the
+      function @fun{gtk-widget-name} to obtain the \"id\", or set the
       \"name\" property in your UI definition.
 
   Setting properties of objects is pretty straightforward with the <property>

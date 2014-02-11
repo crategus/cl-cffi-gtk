@@ -207,7 +207,7 @@
                                :title title
                                :action action)))
     (when parent
-      (gtk-window-set-transient-for dialog parent))
+      (setf (gtk-window-transient-for dialog) parent))
     (when buttons
       (apply #'gtk-dialog-add-buttons (cons dialog buttons)))
     dialog))

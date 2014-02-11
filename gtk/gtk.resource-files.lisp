@@ -366,7 +366,7 @@
         instance, the selected items in a list widget, and the selection in an
         editable widget.}
       @entry[INSENSITIVE]{A color used for the background of widgets that have
-        been set insensitive with the function @fun{gtk-widget-set-sensitive}.}
+        been set insensitive with the function @fun{gtk-widget-sensitive}.}
     @end{table}
     Colors can be specified as a string containing a color name (GTK+ knows
     all names from the X color database @code{/usr/lib/X11/rgb.txt}), in one of
