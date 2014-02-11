@@ -652,7 +652,13 @@
 ;;; cairo_set_source_surface ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("cairo_set_source_surface" cairo-set-source-surface) :void
+(defcfun ("cairo_set_source_surface" %cairo-set-source-surface) :void
+  (cr (:pointer (:struct cairo-t)))
+  (surface (:pointer (:struct cairo-surface-t)))
+  (x :double)
+  (y :double))
+
+(defun cairo-set-source-surface (cr surface x y)
  #+cl-cffi-gtk-documentation
  "@version{2014-1-23}
   @argument[cr]{a cairo context}
@@ -686,10 +692,10 @@
   @see-function{cairo-get-source}
   @see-function{cairo-pattern-create-for-surface}
   @see-function{cairo-pattern-set-extend}"
-  (cr (:pointer (:struct cairo-t)))
-  (surface (:pointer (:struct cairo-surface-t)))
-  (x :double)
-  (y :double))
+  (%cairo-set-source-surface cr
+                             surface
+                             (coerce x 'double-float)
+                             (coerce y 'double-float)))
 
 (export 'cairo-set-source-surface)
 
@@ -835,7 +841,7 @@
 
 (defun cairo-set-dash (cr dashes offset)
  #+cl-cffi-gtk-documentation
- "@version{2014-2-4}
+ "@version{2014-2-8}
   @argument[cr]{a cairo context}
   @argument[dashes]{a list specifying alternate lengths of on and off stroke
     portions}
@@ -860,7 +866,7 @@
   @arg{dashes}.
 
   If any value in @arg{dashes} is negative, or if all values are 0, then
-  @symbol{cr} will be put into an error state with a status of
+  @arg{cr} will be put into an error state with a status of
   @code{:invalid-dash}.
 
   @begin[Note]{dictionary}
@@ -909,7 +915,7 @@
   @see-function{cairo-get-dash}
   @see-function{cairo-set-dash}"
   (cr (:pointer (:struct cairo-t))))
-  
+
 (export 'cairo-get-dash-count)
 
 ;;; ----------------------------------------------------------------------------
@@ -920,7 +926,7 @@
   (cr (:pointer (:struct cairo-t)))
   (dashes (:pointer :double))
   (offset (:pointer :double)))
-  
+
 (defun cairo-get-dash (cr)
  #+cl-cffi-gtk-documentation
  "@version{2014-2-4}
@@ -944,7 +950,7 @@
         (push (mem-aref dash-array :double i) dashes))
       (values (nreverse dashes)
               (mem-ref offset :double)))))
-              
+
 (export 'cairo-get-dash)
 
 ;;; ----------------------------------------------------------------------------
