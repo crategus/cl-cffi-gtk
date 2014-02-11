@@ -30,7 +30,7 @@
                (cairo-surface-destroy surface))
              (setq surface
                    (gdk-window-create-similar-surface
-                                   (gtk-widget-get-window widget)
+                                   (gtk-widget-window widget)
                                    :color
                                    (gtk-widget-get-allocated-width widget)
                                    (gtk-widget-get-allocated-height widget)))
@@ -80,10 +80,9 @@
                    (cairo-paint cr)
                    (cairo-destroy cr)
                    (gtk-widget-queue-draw widget)))))
-        (gtk-widget-set-events area
-                               (append (gtk-widget-get-events area)
-                                       '(:button-press-mask
-                                         :pointer-motion-mask)))
+        (setf (gtk-widget-events area)
+              (append (gtk-widget-events area)
+                      '(:button-press-mask :pointer-motion-mask)))
         (gtk-container-add frame area)
         (gtk-container-add window frame)
         (gtk-widget-show-all window)))))

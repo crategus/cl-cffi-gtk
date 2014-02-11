@@ -28,8 +28,8 @@
                                     value)))
           ((string= name "HideTitlebar")
            (let ((value (gtk-toggle-action-get-active action)))
-             (gtk-window-set-hide-titlebar-when-maximized (app-window *app*)
-                                                          value)))
+             (setf (gtk-window-hide-titlebar-when-maximized (app-window *app*))
+                   value)))
           (t
            (let ((response (gtk-dialog-run dialog)))
              (gtk-widget-destroy dialog)
@@ -272,12 +272,12 @@
 
       (let ((bar (gtk-ui-manager-get-widget ui-info "/MenuBar")))
         (gtk-widget-show bar)
-        (gtk-widget-set-halign bar :fill)
+        (setf (gtk-widget-halign bar) :fill)
         (gtk-grid-attach table bar 0 0 1 1))
 
       (let ((bar (gtk-ui-manager-get-widget ui-info "/ToolBar")))
         (gtk-widget-show bar)
-        (gtk-widget-set-halign bar :fill)
+        (setf (gtk-widget-halign bar) :fill)
         (gtk-grid-attach table bar 0 1 1 1))
 
       ;; Add infobar

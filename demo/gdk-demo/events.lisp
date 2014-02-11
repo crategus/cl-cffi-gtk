@@ -143,9 +143,9 @@
                             (declare (ignore widget))
                             (leave-gtk-main)))
 
-        (gtk-widget-set-events area
-                               (append (gtk-widget-get-events area)
-                                       '(:all-events-mask)))
+        (setf (gtk-widget-events area)
+              (append (gtk-widget-events area)
+                      '(:all-events-mask)))
 
         (gtk-container-add vgrid (make-instance 'gtk-label
                                                 :xalign 0.0

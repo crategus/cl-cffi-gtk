@@ -97,10 +97,10 @@
           (declare (ignore page))
           (let ((current-page (gtk-assistant-get-current-page assistant))
                 (n-pages (gtk-assistant-get-n-pages assistant)))
-            (gtk-window-set-title assistant
-                                  (format nil "Sample assistant (~A of ~A)"
-                                              (+ current-page 1)
-                                              n-pages))
+            (setf (gtk-window-title assistant)
+                  (format nil "Sample assistant (~A of ~A)"
+                              (+ current-page 1)
+                              n-pages))
             ;; The fourth page (counting from zero) is the progress page. The
             ;; user clicked Apply to get here so we tell the assistant to
             ;; commit, which means the changes up to this point are permanent

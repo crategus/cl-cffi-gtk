@@ -24,7 +24,7 @@
                                :title "Dialog Window"
                                :has-separator t)))
     ;; Add a border width to the vbox of the content area
-    (gtk-container-set-border-width (gtk-dialog-get-content-area dialog) 12)
+    (setf (gtk-container-border-width (gtk-dialog-get-content-area dialog)) 12)
     ;; Add a label widget with text to the content area
     (let ((vbox (make-instance 'gtk-box
                                :orientation :vertical

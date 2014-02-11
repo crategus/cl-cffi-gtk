@@ -176,10 +176,10 @@
                  (unless (g-type-is-a (g-object-type child) "GtkToggleButton")
                    (if (gtk-toggle-button-get-active button)
                        (progn
-                         (gtk-widget-set-sensitive child nil)
+                         (setf (gtk-widget-sensitive child) nil)
                          (gtk-button-set-label button "Sensitive"))
                        (progn
-                         (gtk-widget-set-sensitive child t)
+                         (setf (gtk-widget-sensitive child) t)
                          (gtk-button-set-label button "Insensitve"))))))))
         (gtk-container-add vgrid button))
 

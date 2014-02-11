@@ -27,7 +27,7 @@
       ;; Set our event box to have a fully-transparent background
       ;; drawn on it. Currently there is no way to simply tell GTK+
       ;; that "transparency" is the background colour for a widget.
-      (gtk-widget-set-app-paintable event t)
+      (setf (gtk-widget-app-paintable event) t)
       (g-signal-connect event "draw"
          ;; The expose event handler for the event box.
          ;; This function simply draws a transparency onto a widget on the area

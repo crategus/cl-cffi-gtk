@@ -9,7 +9,7 @@
         (group-empty (make-instance 'gtk-tool-item-group
                                     :label "For Drag and drop"))
         (stock-ids (gtk-stock-list-ids)))
-  
+
     (dolist (id stock-ids)
       (let ((item (make-instance 'gtk-tool-button
                                  :stock-id id
@@ -60,7 +60,7 @@
 |#
 
 (defun palette-drop-item (drag-item drop-group x y)
-  (let ((drag-group (gtk-widget-get-parent drag-item))
+  (let ((drag-group (gtk-widget-parent drag-item))
         (drop-item (gtk-tool-item-group-get-drop-item drop-group x y))
         (drop-position -1))
     (format t "PALETTE-DROP-ITEM~%")
@@ -117,7 +117,7 @@
             (format t "   child-props = ~A~%"
                       (gtk-container-child-get drop-group drag-item
                                                "homogeneous" "expand" "fill" "new-row"))
-                                               
+
           )
         )
         (gtk-tool-item-group-set-item-position drop-group drag-item drop-position))
@@ -170,16 +170,16 @@
 
       ;; Orientation combo box
       (let ((combo (make-instance 'gtk-combo-box-text)))
-      
+
         (g-signal-connect combo "changed"
            (lambda (combobox)
              (let* ((text (gtk-combo-box-text-get-active-text combobox))
-                    (orientation (cdr (assoc text 
+                    (orientation (cdr (assoc text
                                              '(("Vertical" . :vertical)
                                                ("Horizontal" . :horizontal))
                                              :test #'equal))))
                (format t "Signal CHANGED text = ~A, orientation = ~A~%" text orientation)
-               (gtk-orientable-set-orientation palette orientation)
+               (setf (gtk-orientable-orientation palette) orientation)
                (if (eq orientation :horizontal)
                    (gtk-scrolled-window-set-policy scroller :automatic :never)
                    (gtk-scrolled-window-set-policy scroller :never :automatic))
@@ -203,7 +203,7 @@
         (g-signal-connect combo "changed"
            (lambda (combobox)
              (let* ((text (gtk-combo-box-text-get-active-text combobox))
-                    (style (cdr (assoc text 
+                    (style (cdr (assoc text
                                              '(("Icons" . :icons)
                                                ("Text" . :text)
                                                ("Both" . :both)
@@ -238,7 +238,7 @@
         (g-signal-connect combo "changed"
            (lambda (combobox)
              (let* ((text (gtk-combo-box-text-get-active-text combobox))
-                    (size (cdr (assoc text 
+                    (size (cdr (assoc text
                                       '(("Menu" . :menu)
                                         ("Small Toolbar" . :small-toolbar)
                                         ("Large Toolbar" . :large-toolbar)
@@ -311,7 +311,7 @@
                               (not (g-type-is-a (g-object-type drag-palette)
                                                 "GtkToolPalette")))
                    do (setf drag-palette
-                            (gtk-widget-get-parent drag-palette)))
+                            (gtk-widget-parent drag-palette)))
 
              (format t "   drag-palette = ~A~%" drag-palette)
 
@@ -320,8 +320,8 @@
                      (drop-group (gtk-tool-palette-get-drop-group widget x y)))
                  (format t "   drag-item    = ~A~%" drag-item)
                  (format t "   drop-group   = ~A~%" drop-group)
-                  
-                 (cond 
+
+                 (cond
                    ((g-type-is-a (g-object-type drag-item) "GtkToolItemGroup")
                     (format t "PALETTE DROP GROUP~%"))
                    ((and (g-type-is-a (g-object-type drag-item) "GtkToolItem")
@@ -335,8 +335,8 @@
                          ))
                    (t
                     (format t "NO VALID DRAG~%")))
-                        
-                                     
+
+
 
 
                )

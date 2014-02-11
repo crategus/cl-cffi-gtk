@@ -14,7 +14,7 @@
                         (lambda (widget)
                           (declare (ignore widget))
                           (leave-gtk-main)))
-      (gtk-widget-set-size-request window 300 250)
+      (setf (gtk-widget-size-request window) '(300 250))
       (gtk-container-add window paned)
       (gtk-paned-add1 paned frame1)
       (gtk-paned-add2 paned frame2)

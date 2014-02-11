@@ -146,12 +146,12 @@
                  (let ((image (gtk-image-new-from-stock "gtk-home" :button)))
                    ;; Store the actual Label Widget.
                    (setf label-widget (gtk-frame-get-label-widget frame))
-                   (gtk-widget-set-sensitive entry nil)
+                   (setf (gtk-widget-sensitive entry) nil)
                    (gtk-frame-set-label-widget frame image)
                    (gtk-widget-show image))
                    ;; Restore the saved Label Widget.
                    (progn
-                     (gtk-widget-set-sensitive entry t)
+                     (setf (gtk-widget-sensitive entry) t)
                      (gtk-frame-set-label-widget frame label-widget)))))
         (gtk-container-add action
                            (make-instance 'gtk-label

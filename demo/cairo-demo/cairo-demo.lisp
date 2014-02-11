@@ -23,7 +23,7 @@
          (lambda (widget cr)
            (let ((cr (pointer cr))
                  ;; Get the GdkWindow for the widget
-                 (window (gtk-widget-get-window widget)))
+                 (window (gtk-widget-window widget)))
            ;; Clear surface
            (cairo-set-source-rgb cr 1.0 1.0 1.0)
            (cairo-paint cr)
@@ -58,7 +58,7 @@
          (lambda (widget cr)
            (let ((cr (pointer cr))
                  ;; Get the GdkWindow for the widget
-                 (window (gtk-widget-get-window widget)))
+                 (window (gtk-widget-window widget)))
            ;; Clear surface
            (cairo-set-source-rgb cr 1.0 1.0 1.0)
            (cairo-paint cr)
@@ -92,7 +92,7 @@
          (lambda (widget cr)
            (let ((cr (pointer cr))
                  ;; Get the GdkWindow for the widget
-                 (window (gtk-widget-get-window widget)))
+                 (window (gtk-widget-window widget)))
            ;; Clear surface
            (cairo-set-source-rgb cr 1.0 1.0 1.0)
            (cairo-paint cr)
@@ -135,7 +135,7 @@
          (lambda (widget cr)
            (let ((cr (pointer cr))
                  ;; Get the GdkWindow for the widget
-                 (window (gtk-widget-get-window widget)))
+                 (window (gtk-widget-window widget)))
            ;; Clear surface
            (cairo-set-source-rgb cr 1.0 1.0 1.0)
            (cairo-paint cr)
@@ -168,7 +168,7 @@
          (lambda (widget cr)
            (let ((cr (pointer cr))
                  ;; Get the GdkWindow for the widget
-                 (window (gtk-widget-get-window widget)))
+                 (window (gtk-widget-window widget)))
            ;; Clear surface
            (cairo-set-source-rgb cr 1.0 1.0 1.0)
            (cairo-paint cr)
@@ -209,7 +209,7 @@
          (lambda (widget cr)
            (let ((cr (pointer cr))
                  ;; Get the GdkWindow for the widget
-                 (window (gtk-widget-get-window widget)))
+                 (window (gtk-widget-window widget)))
            ;; Clear surface
            (cairo-set-source-rgb cr 1.0 1.0 1.0)
            (cairo-paint cr)
@@ -259,7 +259,7 @@
          (lambda (widget cr)
            (let ((cr (pointer cr))
                  ;; Get the GdkWindow for the widget
-                 (window (gtk-widget-get-window widget)))
+                 (window (gtk-widget-window widget)))
            ;; Clear surface
            (cairo-set-source-rgb cr 1.0 1.0 1.0)
            (cairo-paint cr)
@@ -312,7 +312,7 @@
       (g-signal-connect window "draw"
          (lambda (widget cr)
            (let (;; Get the GdkWindow for the widget
-                 (window (gtk-widget-get-window widget)))
+                 (window (gtk-widget-window widget)))
            ;; Clear surface
            (cairo-set-source-rgb (pointer cr) 1.0d0 1.0d0 1.0d0)
            (cairo-paint (pointer cr))
@@ -359,7 +359,7 @@
          (lambda (widget cr)
            (let ((cr (pointer cr))
                  ;; Get the GdkWindow for the widget
-                 (window (gtk-widget-get-window widget)))
+                 (window (gtk-widget-window widget)))
            ;; Clear surface
            (cairo-set-source-rgb cr 1.0 1.0 1.0)
            (cairo-paint cr)

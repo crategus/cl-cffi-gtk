@@ -14,10 +14,8 @@
                                       :arrow-type arrow-type
                                       :shadow-type shadow-type))
     ;; Add a tooltip to the button
-    (gtk-widget-set-tooltip-text button
-                                 (format nil
-                                         "Arrow of type ~A"
-                                         (symbol-name arrow-type)))
+    (setf (gtk-widget-tooltip-text button)
+          (format nil "Arrow of type ~A" (symbol-name arrow-type)))
     button))
 
 (defun example-arrows ()

@@ -119,7 +119,7 @@
                (cairo-surface-destroy surface))
              (setq surface
                    (gdk-window-create-similar-surface
-                                   (gtk-widget-get-window widget)
+                                   (gtk-widget-window widget)
                                    :color
                                    (gtk-widget-get-allocated-width widget)
                                    (gtk-widget-get-allocated-height widget)))
@@ -133,7 +133,7 @@
         ;; Load the background and the images.
         (load-pixbufs)
 
-        (gtk-widget-set-size-request window back-width back-height)
+        (setf (gtk-widget-size-request window) (list back-width back-height))
         (setf frame (gdk-pixbuf-new :rgb nil 8 back-width back-height))
 
         (gtk-container-add window area)

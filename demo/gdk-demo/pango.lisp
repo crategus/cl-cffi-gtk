@@ -25,7 +25,7 @@
          (lambda (widget cr)
            (let* ((cr (pointer cr))
                   ;; Get the GdkWindow for the widget
-                  (window (gtk-widget-get-window widget))
+                  (window (gtk-widget-window widget))
                   (width (gdk-window-get-width window))
                   (height (gdk-window-get-height window))
                   (radius (- (/ (min width height) 2) 20)))

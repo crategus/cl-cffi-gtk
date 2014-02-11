@@ -43,7 +43,7 @@
                             (declare (ignore widget))
                             (leave-gtk-main)))
         (gtk-widget-override-background-color area :normal color)
-        (gtk-widget-set-events area :button-press-mask)
+        (setf (gtk-widget-events area) :button-press-mask)
         (g-signal-connect area "event"
                           (lambda (widget event)
                             (drawing-area-event widget event area)))

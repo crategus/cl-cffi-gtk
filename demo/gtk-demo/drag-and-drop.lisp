@@ -209,12 +209,12 @@ drag_data_delete_handl
       (g-signal-connect well-dest "drag-drop"
          (lambda (widget context x y time)
            (declare (ignore context x y time))
-           (let ((name (gtk-widget-get-name widget))
+           (let ((name (gtk-widget-name widget))
                  (is-valid-drop t))
              (declare (ignorable is-valid-drop))
              (format t "DRAG-DROP for ~A~%" name)
 
-               
+
            t)))
 
 #|
@@ -273,14 +273,14 @@ drag_drop_handl
       (g-signal-connect coin-source "drag-begin"
          (lambda (widget context)
            (declare (ignore context))
-           (let ((name (gtk-widget-get-name widget)))
+           (let ((name (gtk-widget-name widget)))
              (format t "DRAG-BEGIN for ~A~%" name))))
 
       ;; Emitted when DnD ends. This is used to clean up any leftover data.
       (g-signal-connect coin-source "drag-end"
          (lambda (widget context)
            (declare (ignore context))
-           (let ((name (gtk-widget-get-name widget)))
+           (let ((name (gtk-widget-name widget)))
              (format t "DRAG-END for ~A~%" name))))
 
       ;; Emitted when the destination requests data from the source via
@@ -297,7 +297,7 @@ drag_drop_handl
          (lambda (widget context selection-data target-type time)
            (declare (ignore context selection-data time))
            (format t "DRAG-DATA-GET~%")
-           (let ((name (gtk-widget-get-name widget))
+           (let ((name (gtk-widget-name widget))
                  (string-data "This is data from the source.")
                  (integer-data 42))
              (format t "DRAG-DATA-GET ~A~%" name)

@@ -16,7 +16,7 @@
                           (declare (ignore widget))
                           (leave-gtk-main)))
       ;; Set the events for the event box
-      (gtk-widget-set-events eventbox :button-press-mask)
+      (setf (gtk-widget-events eventbox) :button-press-mask)
       ;; Connect a signal to the eventbox
       (g-signal-connect eventbox "button-press-event"
                         (lambda (widget event)
