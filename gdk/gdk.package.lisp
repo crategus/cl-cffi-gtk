@@ -523,7 +523,7 @@
     @subheading{Note}
       A common mistake is to forget to set the event mask of a widget so that
       the required events are received. See the function
-      @fun{gtk-widget-set-events}.
+      @fun{gtk-widget-events}.
 
     @about-symbol{gdk-scroll-direction}
     @about-symbol{gdk-visibility-state}
@@ -844,7 +844,7 @@
          (lambda (widget cr)
            (let* ((cr (pointer cr))
                   ;; Get the GdkWindow for the widget
-                  (window (gtk-widget-get-window widget))
+                  (window (gtk-widget-window widget))
                   (width (gdk-window-get-width window))
                   (height (gdk-window-get-height window))
                   (radius (- (/ (min width height) 2) 20)))

@@ -4546,12 +4546,12 @@
   This allows the window manager to do things like center @arg{window} on
   @arg{parent} and keep @arg{window} above @arg{parent}.
 
-  See the function @fun{gtk-window-set-transient-for} if you are using
+  See the function @fun{gtk-window-transient-for} if you are using
   @class{gtk-window} or @class{gtk-dialog}.
   @see-class{gdk-window}
   @see-class{gtk-window}
   @see-class{gtk-dialog}
-  @see-function{gtk-window-set-transient-for}"
+  @see-function{gtk-window-transient-for}"
   (window (g-object gdk-window))
   (parent (g-object gdk-window)))
 
