@@ -5,6 +5,250 @@
 ;;;     GtkRequisition
 ;;;     GtkAllocation
 ;;;     GtkWidget
+
+;;;   gtk-widget-app-paintable
+
+(test gtk-widget-app-paintable.1
+  (let ((widget (make-instance 'gtk-label)))
+    ;; The default value is false.
+    (is-false (gtk-widget-app-paintable widget))
+    (is-true (setf (gtk-widget-app-paintable widget) t))
+    (is-true (gtk-widget-app-paintable widget))))
+
+(test gtk-widget-app-paintable.2
+  (let ((widget (make-instance 'gtk-label :app-paintable t)))
+    ;; The value is set to true.
+    (is-true (gtk-widget-app-paintable widget))
+    (is-false (setf (gtk-widget-app-paintable widget) nil))
+    (is-false (gtk-widget-app-paintable widget))))
+
+;;;   gtk-widget-can-default
+
+(test gtk-widget-can-default.1
+  (let ((widget (make-instance 'gtk-button)))
+    ;; The default value is false.
+    (is-false (gtk-widget-can-default widget))
+    (is-true (setf (gtk-widget-can-default widget) t))
+    (is-true (gtk-widget-can-default widget))))
+
+(test gtk-widget-can-default.2
+  (let ((widget (make-instance 'gtk-button :can-default t)))
+    ;; The value is set to true.
+    (is-true (gtk-widget-can-default widget))
+    (is-false (setf (gtk-widget-can-default widget) nil))
+    (is-false (gtk-widget-can-default widget))))
+
+;;;   gtk-widget-can-focus
+
+(test gtk-widget-can-focus.1
+  (let ((widget (make-instance 'gtk-button)))
+    ;; The default value is true? The documentation says false!
+    (is-true (gtk-widget-can-focus widget))
+    (is-false (setf (gtk-widget-can-focus widget) nil))
+    (is-false (gtk-widget-can-focus widget))))
+
+(test gtk-widget-can-focus.2
+  (let ((widget (make-instance 'gtk-button :can-focus nil)))
+    ;; The value is set false.
+    (is-false (gtk-widget-can-focus widget))
+    (is-true (setf (gtk-widget-can-focus widget) t))
+    (is-true (gtk-widget-can-focus widget))))
+
+;;;   gtk-widget-composite-child
+
+(test gtk-widget-composite-child
+  (let ((widget (make-instance 'gtk-button)))
+    ;; The default value is false.
+    (is-false (gtk-widget-composite-child widget))
+    ;; "composite-child" is not writable.
+    (signals (error) (setf (gtk-widget-composite-child widget) t))))
+
+;;;   gtk-widget-double-buffered
+
+(test gtk-widget-double-buffered.1
+  (let ((widget (make-instance 'gtk-button)))
+    ;; The default value is true.
+    (is-true (gtk-widget-double-buffered widget))
+    (is-false (setf (gtk-widget-double-buffered widget) nil))
+    (is-false (gtk-widget-double-buffered widget))))
+
+(test gtk-widget-double-buffered.2
+  (let ((widget (make-instance 'gtk-button :double-buffered nil)))
+    ;; The value is set false.
+    (is-false (gtk-widget-double-buffered widget))
+    (is-true (setf (gtk-widget-double-buffered widget) t))
+    (is-true (gtk-widget-double-buffered widget))))
+
+;;;   gtk-widget-events
+
+(test gtk-widget-events.1
+  (let ((widget (make-instance 'gtk-event-box)))
+    ;; The default value is false.
+    (is-false (gtk-widget-events widget))
+    (is (equal '(:button-press-mask)
+               (setf (gtk-widget-events widget) '(:button-press-mask))))
+    (is (equal '(:button-press-mask) (gtk-widget-events widget)))))
+
+(test gtk-widget-events.2
+  (let ((widget (make-instance 'gtk-event-box :events '(:button-press-mask))))
+    ;; The value is set '(:button-press-mask).
+    (is (equal '(:button-press-mask) (gtk-widget-events widget)))))
+
+;;;   gtk-widget-expand
+
+(test gtk-widget-expand.1
+  (let ((widget (make-instance 'gtk-button)))
+    ;; The default value is false.
+    (is-false (gtk-widget-expand widget))
+    ;; These are default values.
+    (is-false (gtk-widget-hexpand widget))
+    (is-false (gtk-widget-hexpand-set widget))
+    (is-false (gtk-widget-vexpand widget))
+    (is-false (gtk-widget-vexpand-set widget))
+    ;; Setting "expand"
+    (is-true (setf (gtk-widget-expand widget) t))
+    ;; These values change to true.
+    (is-true (gtk-widget-hexpand widget))
+    (is-true (gtk-widget-hexpand-set widget))
+    (is-true (gtk-widget-vexpand widget))
+    (is-true (gtk-widget-vexpand-set widget))))
+
+(test gtk-widget-expand.2
+  (let ((widget (make-instance 'gtk-button :expand t)))
+    ;; The value is set true.
+    (is-true (setf (gtk-widget-expand widget) t))
+    ;; These values change to true.
+    (is-true (gtk-widget-hexpand widget))
+    (is-true (gtk-widget-hexpand-set widget))
+    (is-true (gtk-widget-vexpand widget))
+    (is-true (gtk-widget-vexpand-set widget))))
+
+;;;   gtk-widget-halign
+
+(test gtk-widget-halign.1
+  (let ((widget (make-instance 'gtk-button)))
+    ;; The default value is :fill.
+    (is (eql :fill (gtk-widget-halign widget)))
+    (is (eql :start (setf (gtk-widget-halign widget) :start)))
+    (is (eql :start (gtk-widget-halign widget)))))
+
+(test gtk-widget-halign.2
+  (let ((widget (make-instance 'gtk-button :halign :end)))
+    ;; The value is set :end.
+    (is (eql :end (gtk-widget-halign widget)))
+    (is (eql :center (setf (gtk-widget-halign widget) :center)))
+    (is (eql :center (gtk-widget-halign widget)))))
+
+;;;   gtk-widget-has-default
+
+(test gtk-widget-has-default
+  (let ((window (make-instance 'gtk-window :type :toplevel))
+        (button (make-instance 'gtk-button :can-default t)))
+    (gtk-container-add window button)
+    ;; The default value is false.
+    (is-false (gtk-widget-has-default button))
+    (is-true (gtk-widget-can-default button))
+    ;; Grab focus on button and check "has-default"
+    (gtk-widget-grab-focus button)
+    (is-true (gtk-widget-has-default button))))
+
+;;;   gtk-widget-has-focus
+
+;; Implement a test which gives a widget the focus.
+
+(test gtk-widget-has-focus
+  (let ((window (make-instance 'gtk-window :type :toplevel))
+        (button (make-instance 'gtk-button :can-default t
+                                           :can-focus t)))
+    (gtk-container-add window button)
+    ;; The default value is false.
+    (is-false (gtk-widget-has-focus button))
+    (is-true (gtk-widget-can-default button))
+    (is-true (gtk-widget-can-focus button))
+    (gtk-widget-grab-focus button)
+    ;; This dos not return the expected true value.
+    (is-false (gtk-widget-has-focus button))))
+
+;;;   gtk-widget-has-tooltip
+
+(test gtk-widget-has-tooltip.1
+  (let ((widget (make-instance 'gtk-button)))
+    ;; The default value is false.
+    (is-false (gtk-widget-has-tooltip widget))
+    ;; Set a tooltip text.
+    (is (equal "Tooltip" (setf (gtk-widget-tooltip-text widget) "Tooltip")))
+    (is-true (gtk-widget-has-tooltip widget))))
+
+(test gtk-widget-has-tooltip.2
+  (let ((widget (make-instance 'gtk-button :tooltip-text "Tooltip")))
+    ;; The value is set true.
+    (is-true (gtk-widget-has-tooltip widget))
+    (is (equal "Tooltip" (gtk-widget-tooltip-text widget)))))
+
+;;;   gtk-widget-height-request
+
+(test gtk-widget-height-request
+  (let ((widget (make-instance 'gtk-button)))
+    (is (eql -1 (gtk-widget-height-request widget)))
+    (is (eql 10 (setf (gtk-widget-height-request widget) 10)))
+    (is (eql 10 (gtk-widget-height-request widget)))))
+
+#|
+  @see-slot{gtk-widget-height-request}
+  @see-slot{gtk-widget-hexpand}
+  @see-slot{gtk-widget-hexpand-set}
+  @see-slot{gtk-widget-is-focus}
+  @see-slot{gtk-widget-margin}
+  @see-slot{gtk-widget-margin-bottom}
+  @see-slot{gtk-widget-margin-left}
+  @see-slot{gtk-widget-margin-right}
+  @see-slot{gtk-widget-margin-top}
+  @see-slot{gtk-widget-name}
+  @see-slot{gtk-widget-no-show-all}
+  @see-slot{gtk-widget-opacity}
+  @see-slot{gtk-widget-parent}
+  @see-slot{gtk-widget-receives-default}
+  @see-slot{gtk-widget-sensitive}
+  @see-slot{gtk-widget-style}
+  @see-slot{gtk-widget-tooltip-markup}
+  @see-slot{gtk-widget-tooltip-text}
+|#
+
+;;;   gtk-widget-valign
+
+(test gtk-widget-valign.1
+  (let ((widget (make-instance 'gtk-button)))
+    ;; The default value is :fill.
+    (is (eql :fill (gtk-widget-valign widget)))
+    (is (eql :start (setf (gtk-widget-valign widget) :start)))
+    (is (eql :start (gtk-widget-valign widget)))))
+
+(test gtk-widget-valign.2
+  (let ((widget (make-instance 'gtk-button :valign :end)))
+    ;; The value is set :end.
+    (is (eql :end (gtk-widget-valign widget)))
+    (is (eql :center (setf (gtk-widget-valign widget) :center)))
+    (is (eql :center (gtk-widget-valign widget)))))
+
+#|
+  @see-slot{gtk-widget-vexpand}
+  @see-slot{gtk-widget-vexpand-set}
+  @see-slot{gtk-widget-visible}
+|#
+
+;;;   gtk-widget-width-request
+  
+(test gtk-widget-width-request
+  (let ((widget (make-instance 'gtk-button)))
+    (is (eql -1 (gtk-widget-width-request widget)))
+    (is (eql 10 (setf (gtk-widget-width-request widget) 10)))
+    (is (eql 10 (gtk-widget-width-request widget)))))
+
+#|
+  @see-slot{gtk-widget-window}
+|#
+
+
 ;;;     GtkWidgetClass
 ;;;     GtkSelectionData
 ;;;     GtkWidgetAuxInfo
@@ -54,15 +298,15 @@
 ;;;   gtk_widget_get_events
 ;;;   gtk_widget_add_events
 
-(test gtk-widget-events
+(test gtk-widget-add-events
   (let ((eventbox (make-instance 'gtk-event-box)))
-    (is (equal '() (gtk-widget-get-events eventbox)))
-    (gtk-widget-set-events eventbox '(:button-press-mask))
-    (is (equal '(:button-press-mask) (gtk-widget-get-events eventbox)))
+    (is (equal '() (gtk-widget-events eventbox)))
+    (setf (gtk-widget-events eventbox) '(:button-press-mask))
+    (is (equal '(:button-press-mask) (gtk-widget-events eventbox)))
     (gtk-widget-add-events eventbox
                            '(:pointer-motion-mask :button-release-mask))
     (is (equal '(:BUTTON-PRESS-MASK :BUTTON-RELEASE-MASK :POINTER-MOTION-MASK)
-               (stable-sort (gtk-widget-get-events eventbox)
+               (stable-sort (gtk-widget-events eventbox)
                             #'string< :key #'symbol-name)))))
 
 ;;;     gtk_widget_set_device_events

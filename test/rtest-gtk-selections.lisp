@@ -266,7 +266,7 @@
   (let ((widget (make-instance 'gtk-window :type :toplevel)))
     ;; Realize the toplevel widget to create a gdk-window
     (gtk-widget-realize widget)
-    (let ((window (gtk-widget-get-window widget)))
+    (let ((window (gtk-widget-window widget)))
       ;; Check the presence of a gdk-window
       (is (eq 'gdk-window (type-of window)))
       (is-true (gtk-selection-owner-set widget
@@ -277,7 +277,7 @@
   (let ((widget (make-instance 'gtk-window :type :toplevel)))
     ;; Realize the toplevel widget to create a gdk-window
     (gtk-widget-realize widget)
-    (let ((window (gtk-widget-get-window widget)))
+    (let ((window (gtk-widget-window widget)))
       ;; Check the presence of a gdk-window
       (is (eq 'gdk-window (type-of window)))
       (is-true (gtk-selection-owner-set widget
@@ -288,7 +288,7 @@
   (let ((widget (make-instance 'gtk-window :type :toplevel)))
     ;; Realize the toplevel widget to create a gdk-window
     (gtk-widget-realize widget)
-    (let ((window (gtk-widget-get-window widget)))
+    (let ((window (gtk-widget-window widget)))
       ;; Check the presence of a gdk-window
       (is (eq 'gdk-window (type-of window)))
       (is-true (gtk-selection-owner-set widget
@@ -302,7 +302,7 @@
         (widget (make-instance 'gtk-window :type :toplevel)))
     ;; Realize the toplevel widget to create a gdk-window
     (gtk-widget-realize widget)
-    (let ((window (gtk-widget-get-window widget)))
+    (let ((window (gtk-widget-window widget)))
       ;; Check the presence of a gdk-window
       (is (eq 'gdk-window (type-of window)))
 
@@ -331,7 +331,7 @@
   (let ((widget (make-instance 'gtk-window :type :toplevel)))
     ;; Realize the toplevel widget to create a gdk-window
     (gtk-widget-realize widget)
-    (let ((window (gtk-widget-get-window widget)))
+    (let ((window (gtk-widget-window widget)))
       ;; Check the presence of a gdk-window
       (is (eq 'gdk-window (type-of window)))
 

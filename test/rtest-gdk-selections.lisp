@@ -37,7 +37,7 @@
   (let ((widget (make-instance 'gtk-window :type :toplevel)))
     ;; Realize the toplevel widget to create a gdk-window
     (gtk-widget-realize widget)
-    (let ((window (gtk-widget-get-window widget)))
+    (let ((window (gtk-widget-window widget)))
       (is (eq 'gdk-window (type-of window)))
       (is-true (gdk-selection-owner-set window
                                         "PRIMARY"
@@ -48,7 +48,7 @@
   (let ((widget (make-instance 'gtk-window :type :toplevel)))
     ;; Realize the toplevel widget to create a gdk-window
     (gtk-widget-realize widget)
-    (let ((window (gtk-widget-get-window widget)))
+    (let ((window (gtk-widget-window widget)))
       (is (eq 'gdk-window (type-of window)))
       (is-true (gdk-selection-owner-set window
                                         "SECONDARY"
@@ -59,7 +59,7 @@
   (let ((widget (make-instance 'gtk-window :type :toplevel)))
     ;; Realize the toplevel widget to create a gdk-window
     (gtk-widget-realize widget)
-    (let ((window (gtk-widget-get-window widget)))
+    (let ((window (gtk-widget-window widget)))
       (is (eq 'gdk-window (type-of window)))
       (is-true (gdk-selection-owner-set window
                                         "CLIPBOARD"
@@ -73,7 +73,7 @@
         (widget (make-instance 'gtk-window :type :toplevel)))
     ;; Realize the toplevel widget to create a gdk-window
     (gtk-widget-realize widget)
-    (let ((window (gtk-widget-get-window widget)))
+    (let ((window (gtk-widget-window widget)))
       (is (eq 'gdk-window (type-of window)))
       (is-true (gdk-selection-owner-set-for-display display
                                                     window
@@ -87,7 +87,7 @@
   (let ((widget (make-instance 'gtk-window :type :toplevel)))
     ;; Realize the toplevel widget to create a gdk-window
     (gtk-widget-realize widget)
-    (let ((window (gtk-widget-get-window widget)))
+    (let ((window (gtk-widget-window widget)))
       (is (eq 'gdk-window (type-of window)))
       (is-true (gdk-selection-owner-set window
                                         "PRIMARY"
@@ -103,7 +103,7 @@
         (widget (make-instance 'gtk-window :type :toplevel)))
     ;; Realize the toplevel widget to create a gdk-window
     (gtk-widget-realize widget)
-    (let ((window (gtk-widget-get-window widget)))
+    (let ((window (gtk-widget-window widget)))
       (is (eq 'gdk-window (type-of window)))
       (is-true (gdk-selection-owner-set window
                                         "PRIMARY"
@@ -127,7 +127,7 @@
   (let ((widget (make-instance 'gtk-window :type :toplevel)))
     ;; Realize the toplevel widget to create a gdk-window
     (gtk-widget-realize widget)
-    (let ((window (gtk-widget-get-window widget)))
+    (let ((window (gtk-widget-window widget)))
       (is (eq 'gdk-window (type-of window)))
       (gdk-selection-convert window "PRIMARY" "STRING" +gdk-current-time+))))
 
