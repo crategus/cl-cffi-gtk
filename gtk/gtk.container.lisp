@@ -5,12 +5,12 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GDK library.
+;;; Version 3.8.9 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -67,8 +67,8 @@
 ;;;     gtk_container_child_set_valist
 ;;;     gtk_container_child_notify
 ;;;     gtk_container_forall
-;;;     gtk_container_get_border_width
-;;;     gtk_container_set_border_width
+;;;     gtk_container_get_border_width      -> gtk-container-border-width
+;;;     gtk_container_set_border_width      -> (setf gtk-container-border-width)
 ;;;     gtk_container_propagate_draw
 ;;;     gtk_container_get_focus_chain
 ;;;     gtk_container_set_focus_chain
@@ -333,9 +333,11 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Property Details
+;;; Property and Accessor Details
 ;;;
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-container-border-width ---------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "border-width"
@@ -346,9 +348,53 @@
   Default value: 0")
 
 #+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-container-border-width atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-container-border-width 'function)
+ "@version{2014-2-6}
+  @argument[object]{a @class{gtk-container} widget}
+  @syntax[]{(gtk-container-border-width object) => border-width}
+  @syntax[]{(setf gtk-container-border-width object) border-width)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-container]{border-width} of the
+    @class{gtk-container} class.
+  @end{short}
+
+  The generic function @sym{gtk-container-border-width} retrieves the border
+  width of the container.
+
+  The generic function @sym{(setf gtk-container-border-width)} sets the border
+  width of the container.
+
+  The border width of a container is the amount of space to leave around the
+  outside of the container. Valid values are in the range 0 - 65535 pixels. The
+  only exception to this is @class{gtk-window}; because toplevel windows cannot
+  leave space outside, they leave the space inside. The border is added on all
+  sides of the container. To add space to only one side, one approach is to
+  create a @class{gtk-alignment} widget, call the function
+  @fun{gtk-widget-size-request} to give it a size, and place it on the side
+  of the container as a spacer.
+  @see-class{gtk-widget}
+  @see-class{gtk-window}
+  @see-class{gtk-alignment}
+  @see-function{gtk-widget-size-request}")
+
+;;; --- gtk-container-child ----------------------------------------------------
+
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "child" 'gtk-container) 't)
  "The @code{\"child\"} property of type @class{gtk-widget} (Write) @br{}
   Can be used to add a new child to the container.")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-container-child atdoc:*function-name-alias*) "Accessor"
+      (documentation 'gtk-container-child 'function)
+ "@version{2013-8-1}
+  Accessor of the slot @slot[gtk-container]{child} of the @class{gtk-container}
+  class.
+  @see-class{gtk-container}")
+
+;;; --- gtk-container-resize-mode ----------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "resize-mode" 'gtk-container) 't)
@@ -357,46 +403,29 @@
   Specify how resize events are handled. @br{}
   Default value: @code{:parent}")
 
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-container-border-width atdoc:*function-name-alias*) "Accessor"
-      (documentation 'gtk-container-border-width 'function)
- "@version{2013-8-1}
-  @begin{short}
-    Accessor of the slot @code{\"border-width\"} of the @class{gtk-container}
-    class.
-  @end{short}
-  See the function @fun{gtk-container-set-border-width} for details.
-  @see-class{gtk-container}
-  @see-function{gtk-container-get-border-width}
-  @see-function{gtk-container-set-border-width}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-container-child atdoc:*function-name-alias*) "Accessor"
-      (documentation 'gtk-container-child 'function)
- "@version{2013-8-1}
-  @begin{short}
-    Accessor of the slot @code{\"child\"} of the @class{gtk-container} class.
-  @end{short}
-  @see-class{gtk-container}")
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-container-resize-mode atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-container-resize-mode 'function)
- "@version{2013-8-1}
+ "@version{2014-2-11}
+  @argument[object]{a @class{gtk-container} widget}
+  @syntax[]{(gtk-container-resize-mode object) => resize-mode}
+  @syntax[]{(setf gtk-container-resize-mode object) resize-mode)}
   @begin{short}
-    Accessor of the slot @code{\"resize-mode\"} of the @class{gtk-container}
-    class.
+    Accessor of the slot @slot[gtk-container]{resize-mode} of the
+    @class{gtk-container} class.
   @end{short}
-  See the function @fun{gtk-container-set-resize-mode} for details.
-  @see-class{gtk-container}
-  @see-function{gtk-container-get-resize-mode}
-  @see-function{gtk-container-set-resize-mode}")
+
+  The generic function @sym{gtk-container-resize-mode} returns the current
+  resize mode of type @symbol{gtk-resize-mode}.
+
+  The generic function @sym{(setf gtk-container-resize-mode)} sets the resize
+  mode for the container.
+
+  The resize mode of a container determines whether a resize request will be
+  passed to the container's parent, queued for later execution or executed
+  immediately.
+
+  @see-class{gtk-container}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; GTK_IS_RESIZE_CONTAINER()
@@ -505,49 +534,6 @@
 ;;;     a NULL-terminated list of property names and values, starting with
 ;;;     first_prop_name
 ;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_container_get_resize_mode ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-container-get-resize-mode))
-
-(defun gtk-container-get-resize-mode (container)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-1}
-  @argument[container]{a @class{gtk-container} widget}
-  @return{The current resize mode of type @symbol{gtk-resize-mode}.}
-  @short{Returns the resize mode for the @arg{container}.}
-  See the function @fun{gtk-container-set-resize-mode}.
-  @see-class{gtk-container}
-  @see-symbol{gtk-resize-mode}
-  @see-function{gtk-container-set-resize-mode}"
-  (gtk-container-resize-mode container))
-
-(export 'gtk-container-get-resize-mode)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_container_set_resize_mode ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-container-set-resize-mode))
-
-(defun gtk-container-set-resize-mode (container resize-mode)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-1}
-  @argument[container]{a @class{gtk-container} widget}
-  @argument[resize-mode]{the new resize mode of type @symbol{gtk-resize-mode}}
-  @short{Sets the resize mode for the @arg{container}.}
-
-  The resize mode of a container determines whether a resize request will be
-  passed to the container's parent, queued for later execution or executed
-  immediately.
-  @see-class{gtk-container}
-  @see-symbol{gtk-resize-mode}
-  @see-function{gtk-container-get-resize-mode}"
-  (setf (gtk-container-resize-mode container) resize-mode))
-
-(export 'gtk-container-set-resize-mode)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_container_check_resize ()
@@ -1032,55 +1018,6 @@
                            ptr)))
 
 (export 'gtk-container-forall)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_container_get_border_width ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-container-get-border-width))
-
-(defun gtk-container-get-border-width (container)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-1}
-  @argument[container]{a @class{gtk-container} widget}
-  @return{The current border width.}
-  @short{Retrieves the border width of the @arg{container}.}
-  See the function @fun{gtk-container-set-border-width}.
-  @see-class{gtk-container}
-  @see-function{gtk-container-set-border-width}"
-  (gtk-container-border-width container))
-
-(export 'gtk-container-get-border-width)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_container_set_border_width ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-container-set-border-width))
-
-(defun gtk-container-set-border-width (container border-width)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-1}
-  @argument[container]{a @class{gtk-container} widget}
-  @argument[border-width]{amount of blank space to leave outside the container.
-    Valid values are in the range 0 - 65535 pixels.}
-  @short{Sets the border width of the @arg{container}.}
-
-  The border width of a container is the amount of space to leave around the
-  outside of the container. The only exception to this is @class{gtk-window};
-  because toplevel windows cannot leave space outside, they leave the space
-  inside. The border is added on all sides of the container. To add space to
-  only one side, one approach is to create a @class{gtk-alignment} widget, call
-  the function @fun{gtk-widget-set-size-request} to give it a size, and place it
-  on the side of the container as a spacer.
-  @see-class{gtk-widget}
-  @see-class{gtk-window}
-  @see-class{gtk-alignment}
-  @see-function{gtk-container-get-border-width}
-  @see-function{gtk-widget-set-size-request}"
-  (setf (gtk-container-border-width container) border-width))
-
-(export 'gtk-container-set-border-width)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_container_propagate_draw ()

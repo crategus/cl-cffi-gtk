@@ -10,7 +10,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -190,7 +190,7 @@
 ;;;     gtk_widget_get_has_tooltip
 ;;;     gtk_widget_set_has_tooltip
 ;;;     gtk_widget_trigger_tooltip_query
-;;;     gtk_widget_get_window
+;;;     gtk_widget_get_window                    -> gtk-widget-window
 ;;;     gtk_widget_register_window
 ;;;     gtk_widget_unregister_window
 ;;;     gtk_cairo_should_draw_window
@@ -223,7 +223,7 @@
 ;;;     gtk_widget_has_rc_style                            * deprecated *
 ;;;     gtk_widget_is_drawable
 ;;;     gtk_widget_is_toplevel
-;;;     gtk_widget_set_window
+;;;     gtk_widget_set_window                    -> (setf gtk-widget-window)
 ;;;     gtk_widget_set_receives_default
 ;;;     gtk_widget_get_receives_default
 ;;;     gtk_widget_set_support_multidevice
@@ -651,7 +651,7 @@
 
     After the toplevel window has initially requested its size in both
     dimensions it can go on to allocate itself a reasonable size or a size
-    previously specified with the function @fun{gtk-window-set-default-size}.
+    previously specified with the function @fun{gtk-window-default-size}.
     During the recursive allocation process it is important to note that request
     cycles will be recursively executed while container widgets allocate their
     children. Each container widget, once allocated a size, will go on to first
@@ -2034,11 +2034,10 @@
   @see-function{gtk-widget-get-state-flags}
   @see-function{gtk-widget-modify-base}
   @see-function{gtk-widget-override-color}
-  @see-function{gtk-window-set-default-size}
+  @see-function{gtk-window-default-size}
   @see-function{gtk-window-set-geometry-hints}
   @see-function{gtk-widget-set-hexpand}
   @see-function{gtk-widget-get-hexpand-set}
-  @see-function{gtk-widget-set-size-request}
   @see-function{gtk-widget-show-all}
   @see-function{gtk-widget-set-vexpand}
   @see-function{gtk-widget-get-vexpand-set}
@@ -2059,9 +2058,11 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Property Details
+;;; Property and Accessor Details
 ;;;
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-widget-app-paintable -----------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "app-paintable" 'gtk-widget) 't)
@@ -2071,11 +2072,74 @@
   Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-widget-app-paintable atdoc:*function-name-alias*) "Accessor"
+      (documentation 'gtk-widget-app-paintable 'function)
+ "@version{2014-2-7}
+  @argument[object]{a @class{gtk-widget} object}
+  @syntax[]{(gtk-widget-app-paintable object) => app-paintable}
+  @syntax[]{(setf (gtk-widget-app-paintable object) app-paintable)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-widget]{app-paintable} of the
+    @class{gtk-widget} class.
+  @end{short}
+
+  The generic function @sym{gtk-widget-app-paintable} returns @em{True} if the
+  widget will paint on the widget. It determines whether the application intends
+  to draw on the widget in an \"draw\" handler.
+
+  The generic function @sym{(setf gtk-widget-app-paintable)} sets whether the
+  application intends to draw on the widget in a \"draw\" handler.
+
+  This is a hint to the widget and does not affect the behavior of the GTK+
+  core; many widgets ignore this flag entirely. For widgets that do pay
+  attention to the flag, such as @class{gtk-event-box} and @class{gtk-window},
+  the effect is to suppress default themed drawing of the widget's background.
+  Children of the widget will still be drawn. The application is then entirely
+  responsible for drawing the widget background.
+
+  Note that the background is still drawn when the widget is mapped.
+
+  Since 2.18
+  @see-class{gtk-widget}
+  @see-class{gtk-window}
+  @see-class{gtk-event-box}")
+
+;;; --- gtk-widget-can-default -------------------------------------------------
+
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "can-default" 'gtk-widget) 't)
  "The @code{\"can-default\"} property of type @code{:boolean}
   (Read / Write) @br{}
   Whether the widget can be the default widget. @br{}
   Default value: @code{nil}")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-widget-can-default atdoc:*function-name-alias*) "Accessor"
+      (documentation 'gtk-widget-can-default 'function)
+ "@version{2014-2-7}
+  @argument[object]{a @class{gtk-widget} object}
+  @syntax[]{(gtk-widget-can-default object) => can-default}
+  @syntax[]{(setf gtk-widget-can-default object) can-default)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-widget]{can-default} of the
+    @class{gtk-widget} class.
+  @end{short}
+
+  The generic function @sym{gtk-widget-can-default} returns @em{true} if the
+  widget can be a default widget, @code{nil} otherwise. It determines
+  whether the widget can be a default widget.
+
+  The generic function @sym{(setf gtk-widget-can-default)} specifies whether
+  the widget can be a default widget.
+
+  See the function @fun{gtk-widget-grab-default} for details about the meaning
+  of \"default\".
+
+  Since 2.18
+  @see-class{gtk-widget}
+  @see-function{gtk-widget-grab-default}")
+
+;;; --- gtk-widget-can-focus ---------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "can-focus" 'gtk-widget) 't)
@@ -2085,11 +2149,56 @@
   Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-widget-can-focus atdoc:*function-name-alias*) "Accessor"
+      (documentation 'gtk-widget-can-focus 'function)
+ "@version{2014-2-7}
+  @argument[object]{a @class{gtk-widget} object}
+  @syntax[]{(gtk-widget-can-focus object) => can-focus}
+  @syntax[]{(setf (gtk-widget-can-focus object) can-focus)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-widget]{can-focus} of the @class{gtk-widget}
+    class.
+  @end{short}
+
+  The generic function @sym{gtk-widget-can-focus} returns @em{true} if the
+  widget can own the input focus, @code{nil} otherwise. It determines whether
+  the widget can own the input focus.
+
+  The generic function @sym{(setf gtk-widget-can-focus)} specifies whether
+  the widget can own the input focus. See the function
+  @fun{gtk-widget-grab-focus} for actually setting the input focus on a widget.
+
+  Since 2.18
+  @see-class{gtk-widget}
+  @see-function{gtk-widget-grab-focus}")
+
+;;; --- gtk-widget-composite-child ---------------------------------------------
+
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "composite-child"
                                                'gtk-widget) 't)
  "The @code{\"composite-child\"} property of type @code{:boolean} (Read) @br{}
   Whether the widget is part of a composite widget. @br{}
   Default value: @code{nil}")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-widget-composite-child atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-widget-composite-child 'function)
+ "@version{2014-2-7}
+  @argument[object]{a @class{gtk-widget} object}
+  @syntax[]{(gtk-widget-composite-child object) => composite-child}
+  @begin{short}
+    Accessor of the slot @slot[gtk-widget]{composite-child} of the
+    @class{gtk-widget} class.
+  @end{short}
+  See the slot description for @slot[gtk-widget]{composite-child} for more
+  information.
+  @see-class{gtk-widget}
+  @see-function{gtk-widget-pop-composite-child}
+  @see-function{gtk-widget-push-composite-child}")
+
+;;; --- gtk-widget-double-buffered ---------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "double-buffered"
@@ -2101,12 +2210,91 @@
   Since 2.18")
 
 #+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-widget-double-buffered atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-widget-double-buffered 'function)
+ "@version{2014-2-7}
+  @argument[object]{a @class{gtk-widget} object}
+  @syntax[]{(gtk-widget-double-buffered object) => double-buffered}
+  @syntax[]{(setf (gtk-widget-double-buffered object) double-buffered)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-widget]{double-buffered} of the
+    @class{gtk-widget} class.
+  @end{short}
+
+  The generic function @sym{gtk-widget-double-buffered} returns @em{true} if
+  the widget is double buffered.
+
+  Widgets are double buffered by default; you can use the generic function
+  @sym{(setf gtk-widget-double-buffered)} to turn off the buffering.
+
+  \"Double buffered\" simply means that the functions
+  @fun{gdk-window-begin-paint-region} and @fun{gdk-window-end-paint} are called
+  automatically around expose events sent to the widget. The function
+  @fun{gdk-window-begin-paint-region} diverts all drawing to a widget's window
+  to an offscreen buffer, and the function @fun{gdk-window-end-paint} draws the
+  buffer to the screen. The result is that users see the window update in one
+  smooth step, and do not see individual graphics primitives being rendered.
+
+  In very simple terms, double buffered widgets do not flicker, so you would
+  only use this function to turn off double buffering if you had special needs
+  and really knew what you were doing.
+  @begin[Note]{dictionary}
+    If you turn off double-buffering, you have to handle expose events,
+    since even the clearing to the background color or pixmap will not happen
+    automatically as it is done in in the functions
+    @fun{gdk-window-begin-paint-region} function.
+  @end{dictionary}
+
+  Since 2.18
+  @see-class{gtk-widget}
+  @see-function{gdk-window-begin-paint-region}
+  @see-function{gdk-window-end-paint}")
+
+;;; --- gtk-widget-events ------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "events" 'gtk-widget) 't)
  "The @code{\"events\"} property of type @symbol{gdk-event-mask}
   (Read / Write) @br{}
   The event mask that decides what kind of @class{gdk-event} this widget
   gets. @br{}
   Default value: @code{:structure-mask}")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-widget-events atdoc:*function-name-alias*) "Accessor"
+      (documentation 'gtk-widget-events 'function)
+ "@version{2014-2-8}
+  @argument[object]{a @class{gtk-widget} object}
+  @syntax[]{(gtk-widget-events object) => events}
+  @syntax[]{(setf (gtk-widget-events object) events)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-widget]{events} of the @class{gtk-widget}
+    class.
+  @end{short}
+
+  The generic function @sym{gtk-widget-events} returns the event mask for the
+  widget. The event mask is a bitfield containing flags from the
+  @symbol{gdk-event-mask} flags. These are the events that the widget will
+  receive.
+
+  The generic function @sym{(setf gtk-widget-events)} sets the event mask for
+  @arg{widget}.
+
+  The event mask determines which events a widget will receive. Keep in mind
+  that different widgets have different default event masks, and by changing
+  the event mask you may disrupt a widget's functionality, so be careful. This
+  function must be called while a widget is unrealized. Consider the function
+  @fun{gtk-widget-add-events} for widgets that are already realized, or if
+  you want to preserve the existing event mask. This function can not be used
+  with @code{:no-window} widgets; to get events on those widgets, place them
+  inside a @class{gtk-event-box} and receive events on the event box.
+  @see-class{gtk-widget}
+  @see-class{gtk-event-box}
+  @see-symbol{gdk-event-mask}
+  @see-function{gtk-widget-add-events}")
+
+;;; --- gtk-widget-expand ------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "expand" 'gtk-widget) 't)
@@ -2117,11 +2305,50 @@
   Since 3.0")
 
 #+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-widget-expand atdoc:*function-name-alias*) "Accessor"
+      (documentation 'gtk-widget-expand 'function)
+ "@version{2014-2-8}
+  @argument[object]{a @class{gtk-widget} object}
+  @syntax[]{(gtk-widget-expand object) => expand}
+  @syntax[]{(setf (gtk-widget-expand object) expand)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-widget]{expand} of the @class{gtk-widget}
+    class.
+  @end{short}
+  See the slot description for @slot[gtk-widget]{expand} for more information.
+  @see-class{gtk-widget}")
+
+;;; --- gtk-widget-halign ------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "halign" 'gtk-widget) 't)
  "The @code{\"halign\"} property of type @symbol{gtk-align} (Read / Write) @br{}
   How to distribute horizontal space if widget gets extra space. @br{}
   Default value: @code{:fill} @br{}
   Since 3.0")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-widget-halign atdoc:*function-name-alias*) "Accessor"
+      (documentation 'gtk-widget-halign 'function)
+ "@version{2014-2-8}
+  @argument[object]{a @class{gtk-widget} object}
+  @syntax[]{(gtk-widget-halign object) => align}
+  @syntax[]{(setf (gtk-widget-halign object) align)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-widget]{halign} of the @class{gtk-widget}
+    class.
+  @end{short}
+
+  The generic function @sym{gtk-widget-halign} returns the horizontal alignment
+  of type @symbol{gtk-align} of @arg{widget}.
+
+  The generic function @sym{(setf gtk-widget-halign)} sets the horizontal
+  alignment of @arg{widget}.
+  @see-class{gtk-widget}
+  @see-symbol{gtk-align}
+  @see-function{gtk-widget-valign}")
+
+;;; --- gtk-widget-has-default -------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "has-default" 'gtk-widget) 't)
@@ -2131,10 +2358,58 @@
   Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-widget-has-default atdoc:*function-name-alias*) "Accessor"
+      (documentation 'gtk-widget-has-default 'function)
+ "@version{2014-2-8}
+  @argument[object]{a @class{gtk-widget} object}
+  @syntax[]{(gtk-widget-has-default object) => has-default}
+  @syntax[]{(setf (gtk-widget-has-default object) has-default)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-widget]{has-default} of the
+    @class{gtk-widget} class.
+  @end{short}
+
+  The generic function @sym{gtk-widget-has-default} returns @em{true} if
+  @arg{widget} is the current default widget within its toplevel, @code{nil}
+  otherwise.
+
+  See the function @fun{gtk-widget-can-default}.
+
+  Since 2.18
+  @see-class{gtk-widget}
+  @see-function{gtk-widget-can-default}")
+
+;;; --- gtk-widget-has-focus ---------------------------------------------------
+
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "has-focus" 'gtk-widget) 't)
  "The @code{\"has-focus\"} property of type @code{:boolean} (Read / Write) @br{}
   Whether the widget has the input focus. @br{}
   Default value: @code{nil}")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-widget-has-focus atdoc:*function-name-alias*) "Accessor"
+      (documentation 'gtk-widget-has-focus 'function)
+ "@version{2014-2-8}
+  @argument[object]{a @class{gtk-widget} object}
+  @syntax[]{(gtk-widget-has-focus object) => has-focus}
+  @syntax[]{(setf (gtk-widget-has-focus object) has-focus)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-widget]{has-focus} of the
+    @class{gtk-widget} class.
+  @end{short}
+
+  The generic function @sym{gtk-widget-has-focus} returns @em{true} if the
+  @arg{widget} has the global input focus.
+
+  See the function @fun{gtk-widget-is-focus} for the difference between having
+  the global input focus, and only having the focus within a toplevel.
+
+  Since 2.18
+  @see-class{gtk-widget}
+  @see-function{gtk-widget-is-focus}")
+
+;;; --- gtk-widget-has-tooltip -------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "has-tooltip" 'gtk-widget) 't)
@@ -2152,6 +2427,31 @@
   Since 2.12")
 
 #+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-widget-has-tooltip atdoc:*function-name-alias*) "Accessor"
+      (documentation 'gtk-widget-has-tooltip 'function)
+ "@version{2014-2-8}
+  @argument[object]{a @class{gtk-widget} object}
+  @syntax[]{(gtk-widget-has-tooltip object) => has-tooltip}
+  @syntax[]{(setf (gtk-widget-has-tooltip object) has-tooltip)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-widget]{has-tooltip} of the
+    @class{gtk-widget} class.
+  @end{short}
+
+  The generic function @sym{gtk-widget-has-tooltip} returns the current value
+  of the @slot[gtk-widget]{has-tooltip} property on @arg{widget}.
+
+  The generic function @sym{(setf gtk-widget-has-tooltip)} sets the
+  @slot[gtk-widget]{has-tooltip} property on widget to @arg{has-tooltip}.
+
+  See the @slot[gtk-widget]{has-tooltip} property for more information.
+
+  Since 2.12
+  @see-class{gtk-widget}")
+
+;;; --- gtk-widget-height-request ----------------------------------------------
+
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "height-request" 'gtk-widget) 't)
  "The @code{\"height-request\"} property of type @code{:int}
   (Read / Write) @br{}
@@ -2161,12 +2461,86 @@
   Default value: -1")
 
 #+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-widget-height-request atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-widget-height-request 'function)
+ "@version{2014-2-8}
+  @argument[object]{a @class{gtk-widget} object}
+  @begin{short}
+    Accessor of the slot @slot[gtk-widget]{height-request} of the
+    @class{gtk-widget} class.
+  @end{short}
+  See the function @fun{gtk-widget-size-request} for details.
+  @see-class{gtk-widget}
+  @see-function{gtk-widget-width-request}
+  @see-function{gtk-widget-size-request}")
+
+;;; --- gtk-widget-hexpand -----------------------------------------------------
+
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "hexpand" 'gtk-widget) 't)
  "The @code{\"hexpand\"} property of type @code{:boolean} (Read / Write) @br{}
   Whether to expand horizontally.
   See the function @fun{gtk-widget-set-hexpand}. @br{}
   Default value: @code{nil} @br{}
   Since 3.0")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-widget-hexpand atdoc:*function-name-alias*) "Accessor"
+      (documentation 'gtk-widget-hexpand 'function)
+ "@version{2014-2-8}
+  @argument[object]{a @class{gtk-widget} object}
+  @syntax[]{(gtk-widget-hexpand object) => expand}
+  @syntax[]{(setf (gtk-widget-hexpand object) expand)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-widget]{hexpand} of the @class{gtk-widget}
+    class.
+  @end{short}
+
+  The generic function @sym{gtk-widget-hexpand} gets whether the widget would
+  like any available extra horizontal space.
+
+  When a user resizes a @class{gtk-window}, widgets with expand = @em{true}
+  generally receive the extra space. For example, a list or scrollable area or
+  document in your window would often be set to expand.
+
+  Containers should use the function @fun{gtk-widget-compute-expand} rather than
+  this function, to see whether a widget, or any of its children, has the expand
+  flag set. If any child of a widget wants to expand, the parent may ask to
+  expand also.
+
+  This function only looks at the widget's own @slot[gtk-widget]{hexpand} flag,
+  rather than computing whether the entire widget tree rooted at this widget
+  wants to expand.
+
+  The generic function @sym{(setf gtk-widget-hexpand)} sets whether the widget
+  would like any available extra horizontal space. Call this function to set the
+  expand flag if you would like your widget to become larger horizontally when
+  the window has extra room.
+
+  By default, widgets automatically expand if any of their children want to
+  expand. To see if a widget will automatically expand given its current
+  children and state, call the function @fun{gtk-widget-compute-expand}. A
+  container can decide how the expandability of children affects the expansion
+  of the container by overriding the @code{compute_expand} virtual method on
+  @class{gtk-widget}.
+
+  Setting @slot[gtk-widget]{hexpand} explicitly with this function will
+  override the automatic expand behavior.
+
+  This function forces the widget to expand or not to expand, regardless of
+  children. The override occurs because the function
+  @sym{gtk-widget-hexpand} sets the @slot[gtk-widget]{hexpand-set} property,
+  see the function @fun{gtk-widget-hexpand-set}, which causes the widget's
+  @slot[gtk-widget]{hexpand} value to be used, rather than looking at children
+  and widget state.
+  @see-class{gtk-widget}
+  @see-function{gtk-widget-expand}
+  @see-function{gtk-widget-vexpand}
+  @see-function{gtk-widget-hexpand-set}
+  @see-function{gtk-widget-compute-expand}")
+
+;;; --- gtk-widget-hexpand-set -------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "hexpand-set" 'gtk-widget) 't)
@@ -2178,10 +2552,58 @@
   Since 3.0")
 
 #+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-widget-hexpand-set atdoc:*function-name-alias*) "Accessor"
+      (documentation 'gtk-widget-hexpand-set 'function)
+ "@version{2014-2-8}
+  @argument[object]{a @class{gtk-widget} object}
+  @begin{short}
+    Accessor of the slot @slot[gtk-widget]{hexpand-set} of the
+    @class{gtk-widget} class.
+  @end{short}
+
+  The generic function @sym{gtk-widget-hexpand-set} gets whether the generic
+  function @sym{(setf gtk-widget-set-hexpand)} has been used to explicitly set
+  the expand flag on this widget.
+
+  If @slot[gtk-widget]{hexpand} is set, then it overrides any computed expand
+  value based on child widgets. If @slot[gtk-widget]{hexpand} is not set, then
+  the expand value depends on whether any children of the widget would like to
+  expand.
+
+  There are few reasons to use this function, but it is here for completeness
+  and consistency.
+
+  The @slot[gtk-widget]{hexpand-set} property will be set automatically when you
+  call the function @fun{gtk-widget-hexpand} to set @slot[gtk-widget]{hexpand},
+  so the most likely reason to use this function would be to unset an explicit
+  expand flag.
+  @see-class{gtk-widget}
+  @see-function{gtk-widget-hexpand}")
+
+;;; --- gtk-widget-is-focus ----------------------------------------------------
+
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "is-focus" 'gtk-widget) 't)
  "The @code{\"is-focus\"} property of type @code{:boolean} (Read / Write) @br{}
   Whether the widget is the focus widget within the toplevel. @br{}
   Default value: @code{nil}")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-widget-is-focus atdoc:*function-name-alias*) "Accessor"
+      (documentation 'gtk-widget-is-focus 'function)
+ "@version{2014-2-8}
+  @argument[widget]{a @class{gtk-widget} object}
+  @return{@em{True} if the @arg{widget} is the focus widget.}
+  @begin{short}
+    Determines if the @arg{widget} is the focus widget within its toplevel.
+  @end{short}
+  This does not mean that the @slot[gtk-widget]{has-focus} flag is necessarily
+  set; @slot[gtk-widget]{has-focus} will only be set if the toplevel widget
+  additionally has the global input focus.
+  @see-class{gtk-widget}
+  @see-function{gtk-widget-has-focus}")
+
+;;; --- gtk-widget-margin ------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "margin" 'gtk-widget) 't)
@@ -2193,50 +2615,193 @@
   Since 3.0")
 
 #+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-widget-margin atdoc:*function-name-alias*) "Accessor"
+      (documentation 'gtk-widget-margin 'function)
+ "@version{2014-2-8}
+  @argument[object]{a @class{gtk-widget} object}
+  @begin{short}
+    Accessor of the slot @slot[gtk-widget]{margin} of the @class{gtk-widget}
+    class.
+  @end{short}
+  @see-class{gtk-widget}
+  @see-function{gtk-widget-margin-left}
+  @see-function{gtk-widget-margin-right}
+  @see-function{gtk-widget-margin-top}
+  @see-function{gtk-widget-margin-bottom}")
+
+;;; --- gtk-widget-margin-bottom -----------------------------------------------
+
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "margin-bottom" 'gtk-widget) 't)
  "The @code{\"margin-bottom\"} property of type @code{:int} (Read / Write) @br{}
   Margin on bottom side of widget. This property adds margin outside of the
   widget's normal size request, the margin will be added in addition to the size
-  from the function @fun{gtk-widget-set-size-request} for example. @br{}
+  from the function @fun{gtk-widget-size-request} for example. @br{}
   Allowed values: [0,32767] @br{}
   Default value: 0 @br{}
   Since 3.0")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-widget-margin-bottom atdoc:*function-name-alias*) "Accessor"
+      (documentation 'gtk-widget-margin-bottom 'function)
+ "@version{2014-2-8}
+  @argument[object]{a @class{gtk-widget} object}
+  @syntax[]{(gtk-widget-margin-bottom object) => margin}
+  @syntax[]{(setf (gtk-widget-margin-bottom object) margin)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-widget]{margin-bottom} of the
+    @class{gtk-widget} class.
+  @end{short}
+
+  The generic function @sym{gtk-widget-margin-bottom} gets the bottom maring
+  of the widget.
+
+  The generic function @sym{(setf gtk-widget-margin-bottom)} sets the bottom
+  margin of the widget. See the @slot[gtk-widget]{margin-bottom} property.
+
+  Since 3.0
+  @see-class{gtk-widget}
+  @see-function{gtk-widget-margin}")
+
+;;; --- gtk-widget-margin-left -------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "margin-left" 'gtk-widget) 't)
  "The @code{\"margin-left\"} property of type @code{:int} (Read / Write) @br{}
   Margin on left side of widget. This property adds margin outside of the
   widget's normal size request, the margin will be added in addition to the size
-  from the function @fun{gtk-widget-set-size-request} for example. @br{}
+  from the function @fun{gtk-widget-size-request} for example. @br{}
   Allowed values: [0,32767] @br{}
   Default value: 0 @br{}
   Since 3.0")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-widget-margin-left atdoc:*function-name-alias*) "Accessor"
+      (documentation 'gtk-widget-margin-left 'function)
+ "@version{2014-2-8}
+  @argument[object]{a @class{gtk-widget} object}
+  @syntax[]{(gtk-widget-margin-left object) => margin}
+  @syntax[]{(setf (gtk-widget-margin-left object) margin)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-widget]{margin-left} of the
+    @class{gtk-widget} class.
+  @end{short}
+
+  The generic function @sym{gtk-widget-margin-left} returns the left margin of
+  the widget.
+
+  The generic function @sym{(setf gtk-widget-margin-left)} sets the left margin
+  of the widget. See the @slot[gtk-widget]{margin-left} property.
+
+  Since 3.0
+  @see-class{gtk-widget}
+  @see-function{gtk-widget-margin}")
+
+;;; --- gtk-widget-margin-right ------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "margin-right" 'gtk-widget) 't)
  "The @code{\"margin-right\"} property of type @code{:int} (Read / Write) @br{}
   Margin on right side of widget. This property adds margin outside of the
-  widget's normal size request, the margin will be added in addition to the size
-  from the function @fun{gtk-widget-set-size-request} for example. @br{}
+  widget's normal size request, the margin will be added in addition to the
+  size from the function @fun{gtk-widget-size-request} for example. @br{}
   Allowed values: [0,32767] @br{}
   Default value: 0 @br{}
   Since 3.0")
 
 #+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-widget-margin-right atdoc:*function-name-alias*) "Accessor"
+      (documentation 'gtk-widget-margin-right 'function)
+ "@version{2014-2-8}
+  @argument[object]{a @class{gtk-widget} object}
+  @syntax[]{(gtk-widget-margin-right object) => margin}
+  @syntax[]{(setf (gtk-widget-margin-right object) margin)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-widget]{margin-right} of the
+    @class{gtk-widget} class.
+  @end{short}
+
+  The generic function @sym{gtk-widget-margin-right} returns the right margin
+  of the widget.
+
+  The generic function @sym{(setf gtk-widget-margin-right)} sets the right
+  margin of the widget. See the @slot[gtk-widget]{margin-right} property.
+
+  Since 3.0
+  @see-class{gtk-widget}
+  @see-function{gtk-widget-margin}")
+
+;;; --- gtk-widget-margin-top --------------------------------------------------
+
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "margin-top" 'gtk-widget) 't)
  "The @code{\"margin-top\"} property of type @code{:int} (Read / Write) @br{}
   Margin on top side of widget. This property adds margin outside of the
-  widget's normal size request, the margin will be added in addition to the size
-  from the function @fun{gtk-widget-set-size-request} for example. @br{}
+  widget's normal size request, the margin will be added in addition to the
+  size from the function @fun{gtk-widget-size-request} for example. @br{}
   Allowed values: [0,32767] @br{}
   Default value: 0 @br{}
   Since 3.0")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-widget-margin-top atdoc:*function-name-alias*) "Accessor"
+      (documentation 'gtk-widget-margin-top 'function)
+ "@version{2014-2-8}
+  @argument[object]{a @class{gtk-widget} object}
+  @syntax[]{(gtk-widget-margin-top object) => margin}
+  @syntax[]{(setf (gtk-widget-margin-top object) margin)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-widget]{margin-top} of the @class{gtk-widget}
+    class.
+  @end{short}
+
+  The generic function @sym{gtk-widget-margin-top} returns the top margin of
+  widget.
+
+  The generic function @sym{(setf gtk-widget-margin-top)} sets the top margin
+  of widget. See the @slot[gtk-widget]{margin-top} property.
+
+  Since 3.0
+  @see-class{gtk-widget}
+  @see-function{gtk-widget-margin}")
+
+;;; --- gtk-widget-name --------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "name" 'gtk-widget) 't)
  "The @code{\"name\"} property of type @code{:string} (Read / Write) @br{}
   The name of the widget. @br{}
   Default value: @code{nil}")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-widget-name atdoc:*function-name-alias*) "Accessor"
+      (documentation 'gtk-widget-name 'function)
+ "@version{2014-2-9}
+  @argument[object]{a @class{gtk-widget} object}
+  @syntax[]{(gtk-widget-name object) => name}
+  @syntax[]{(setf (gtk-widget-name object) name)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-widget]{name} of the @class{gtk-widget}
+    class.
+  @end{short}
+
+  The generic function @sym{gtk-widget-name} retrieves the name of a widget.
+
+  The generic function @sym{(setf gtk-widget-name)} sets the name of a widget.
+
+  Widgets can be named, which allows you to refer to them from a CSS file.
+  You can apply a style to widgets with a particular name in the CSS file.
+  See the documentation for the CSS syntax on the same page as the docs for
+  @class{gtk-style-context}.
+
+  Note that the CSS syntax has certain special characters to delimit and
+  represent elements in a selector (period, #, >, *...), so using these will
+  make your widget impossible to match by name. Any combination of
+  alphanumeric symbols, dashes and underscores will suffice.
+  @see-class{gtk-widget}
+  @see-class{gtk-style-context}")
+
+;;; --- gtk-widget-no-show-all -------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "no-show-all" 'gtk-widget) 't)
@@ -2246,21 +2811,119 @@
   widget. @br{}
   Default value: @code{nil}")
 
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-widget-no-show-all atdoc:*function-name-alias*) "Accessor"
+      (documentation 'gtk-widget-no-show-all 'function)
+ "@version{2014-2-9}
+  @argument[object]{a @class{gtk-widget} object}
+  @syntax[]{(gtk-widget-no-show-all object) => no-show-all}
+  @syntax[]{(setf (gtk-widget-no-show-all object) no-show-all)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-widget]{no-show-all} of the
+    @class{gtk-widget} class.
+  @end{short}
+
+  The generic function @sym{gtk-widget-no-show-all} returns the current value
+  of the @slot[gtk-widget]{no-show-all} property, which determines whether calls
+  to the function @fun{gtk-widget-show-all} will affect this widget.
+
+  The generic function @sym{(setf gtk-widget-no-show-all)} sets the
+  @slot[gtk-widget]{no-show-all} property, which determines whether calls to
+  the function @fun{gtk-widget-show-all} will affect this widget.
+
+  This is mostly for use in constructing widget hierarchies with externally
+  controlled visibility, see @class{gtk-ui-manager}.
+
+  Since 2.4
+  @see-class{gtk-widget}
+  @see-class{gtk-ui-manager}
+  @see-function{gtk-widget-show-all}")
+
+;;; --- gtk-widget-opacity -----------------------------------------------------
+
 #+(and gtk-3-8 cl-cffi-gtk-documentation)
 (setf (documentation (atdoc:get-slot-from-name "opacity" 'gtk-widget) 't)
  "The @code{\"opacity\"} property of type @code{:double} (Read / Write) @br{}
   The requested opacity of the widget. See the function
   @fun{gtk-widget-set-opacity} for more details about window opacity. Before
-  version 3.8 this was only availible in @class{gtk-window}. @br{}
+  version 3.8 this was only available in @class{gtk-window}. @br{}
   Allowed values: [0,1] @br{}
   Default value: 1 @br{}
   Since 3.8")
+
+#+(and gtk-3-8 cl-cffi-gtk-documentation)
+(setf (gethash 'gtk-widget-opacity atdoc:*function-name-alias*) "Accessor"
+      (documentation 'gtk-widget-opacity 'function)
+ "@version{2014-2-9}
+  @argument[object]{a @class{gtk-widget} object}
+  @syntax[]{(gtk-widget-opacity object) => opacity}
+  @syntax[]{(setf (gtk-widget-opacity object) opacity)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-widget]{opacity} of the @class{gtk-widget}
+    class.
+  @end{short}
+
+  The generic function @sym{gtk-widget-opacity} fetches the requested opacity
+  for this widget.
+
+  The generic function @sym{(setf gtk-widget-opacity)} request the widget to be
+  rendered partially transparent, with opacity 0 being fully transparent and 1
+  fully opaque.
+
+  Opacity values are clamped to the [0,1] range. This works on both toplevel
+  widget, and child widgets, although there are some limitations:
+  @begin{itemize}
+    @begin{item}
+      For toplevel widgets this depends on the capabilities of the windowing
+      system. On X11 this has any effect only on X screens with a compositing
+      manager running. See the function @fun{gtk-widget-is-composited}. On
+      Windows it should work always, although setting a window's opacity after
+      the window has been shown causes it to flicker once on Windows.
+    @end{item}
+    @begin{item}
+      For child widgets it does not work if any affected widget has a native
+      window, or disables double buffering.
+    @end{item}
+  @end{itemize}
+  Since 3.8
+  @see-class{gtk-widget}
+  @see-function{gtk-widget-is-composited}")
+
+;;; --- gtk-widget-parent ------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "parent" 'gtk-widget) 't)
  "The @code{\"parent\"} property of type @class{gtk-container}
   (Read / Write) @br{}
   The parent widget of this widget. Must be a @class{gtk-container} widget.")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-widget-parent atdoc:*function-name-alias*) "Accessor"
+      (documentation 'gtk-widget-parent 'function)
+ "@version{2014-2-9}
+  @argument[object]{a @class{gtk-widget} object}
+  @syntax[]{(gtk-widget-parent object) => parent}
+  @syntax[]{(setf (gtk-widget-parent object) parent)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-widget]{parent} of the @class{gtk-widget}
+    class.
+  @end{short}
+
+  The generic function @sym{gtk-widget-parent} returns the parent container of
+  @arg{widget}.
+
+  The generic function @sym{(setf gtk-widget-parent)} sets the container as the
+  parent of @arg{widget}, and takes care of some details such as updating the
+  state and style of the child to reflect its new location. The opposite
+  function is @fun{gtk-widget-unparent}.
+
+  This function is useful only when implementing subclasses of
+  @class{gtk-container}.
+  @see-class{gtk-widget}
+  @see-class{gtk-container}
+  @see-function{gtk-widget-unparent}")
+
+;;; --- gtk-widget-receives-default --------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "receives-default"
@@ -2272,16 +2935,99 @@
   Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-widget-receives-default atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-widget-receives-default 'function)
+ "@version{2014-2-9}
+  @argument[object]{a @class{gtk-widget} object}
+  @syntax[]{(gtk-widget-receives-default object) => receives-default}
+  @syntax[]{(setf (gtk-widget-receives-default object) receives-default)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-widget]{receives-default} of the
+    @class{gtk-widget} class.
+  @end{short}
+
+  The generic function @sym{gtk-widget-receives-default} determines whether
+  @arg{widget} is alyways treated as default widget within its toplevel when it
+  has the focus, even if another widget is the default.
+
+  The generic function @sym{(setf gtk-widget-receives-default)} specifies
+  whether @arg{widget} will be treated as the default widget within
+  its toplevel when it has the focus, even if another widget is the default.
+
+  See the function @fun{gtk-widget-grab-default} for details about the meaning
+  of \"default\".
+
+  Since 2.18
+  @see-class{gtk-widget}
+  @see-function{gtk-widget-grab-default}")
+
+;;; --- gtk-widget-sensitive ---------------------------------------------------
+
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "sensitive" 'gtk-widget) 't)
  "The @code{\"sensitive\"} property of type @code{:boolean} (Read / Write) @br{}
   Whether the widget responds to input. @br{}
   Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-widget-sensitive atdoc:*function-name-alias*) "Accessor"
+      (documentation 'gtk-widget-sensitive 'function)
+ "@version{2014-2-9}
+  @argument[object]{a @class{gtk-widget} object}
+  @syntax[]{(gtk-widget-sensitive object) => sensitive}
+  @syntax[]{(setf (gtk-widget-sensitive object) sensitive)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-widget]{sensitive} of the @class{gtk-widget}
+    class.
+  @end{short}
+
+  The generic function @sym{gtk-widget-sensitive} returns the widget's
+  sensitivity, in the sense of returning the value that has been set using the
+  generic function @sym{(setf gtk-widget-sensitive)}.
+
+  The effective sensitivity of a widget is however determined by both its own
+  and its parent widget's sensitivity. See the function
+  @fun{gtk-widget-is-sensitive}.
+
+  A widget is sensitive if the user can interact with it. Insensitive widgets
+  are \"grayed out\" and the user cannot interact with them. Insensitive widgets
+  are known as \"inactive\", \"disabled\", or \"ghosted\" in some other
+  toolkits.
+  @see-class{gtk-widget}
+  @see-function{gtk-widget-is-sensitive}")
+
+;;; --- gtk-widget-style -------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "style" 'gtk-widget) 't)
  "The @code{\"style\"} property of type @class{gtk-style} (Read / Write) @br{}
   The style of the widget, which contains information about how it will look
   (colors etc).")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-widget-style atdoc:*function-name-alias*) "Accessor"
+      (documentation 'gtk-widget-style 'function)
+ "@version{2014-2-9}
+  @argument[object]{a @class{gtk-widget} object}
+  @syntax[]{(gtk-widget-style object) => style}
+  @syntax[]{(setf (gtk-widget-style object) style)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-widget]{style} of the @class{gtk-widget}
+    class.
+  @end{short}
+
+  Used to access the @code{GtkStyle} for a widget. Since GTK+ 3 this function
+  does nothing, the passed in style is ignored.
+
+  @begin[Warning]{dictionary}
+    @sym{gtk-widget-style} has been deprecated since version 3.0 and should not
+    be used in newly-written code. Use @class{gtk-style-context} instead.
+  @end{dictionary}
+  @see-class{gtk-widget}
+  @see-class{gtk-style-context}")
+
+;;; --- gtk-widget-tooltip-markup ----------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "tooltip-markup" 'gtk-widget) 't)
@@ -2298,6 +3044,38 @@
   Since 2.12")
 
 #+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-widget-tooltip-markup atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-widget-tooltip-markup 'function)
+ "@version{2014-2-9}
+  @argument[object]{a @class{gtk-widget} object}
+  @syntax[]{(gtk-widget-tooltip-markup object) => markup}
+  @syntax[]{(setf (gtk-widget-tooltip-markup object) markup)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-widget]{tooltip-markup} of the
+    @class{gtk-widget} class.
+  @end{short}
+
+  The generic function @sym{gtk-widget-tooltip-markup} gets the contents of the
+  tooltip for @arg{widget}.
+
+  The generic function @sym{(setf gtk-widget-tooltip-markup} sets @arg{markup}
+  as the contents of the tooltip, which is marked up with the Pango text markup
+  language.
+
+  This function will take care of setting @slot[gtk-widget]{has-tooltip} to
+  @em{true} and of the default handler for the \"query-tooltip\" signal.
+
+  See also the @slot[gtk-widget]{tooltip-markup} property and the function
+  @fun{gtk-tooltip-set-markup}.
+
+  Since 2.12
+  @see-class{gtk-widget}
+  @see-function{gtk-tooltip-set-markup}")
+
+;;; --- gtk-widget-tooltip-text ------------------------------------------------
+
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "tooltip-text" 'gtk-widget) 't)
  "The @code{\"tooltip-text\"} property of type @code{:string}
   (Read / Write) @br{}
@@ -2311,11 +3089,63 @@
   Since 2.12")
 
 #+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-widget-tooltip-text atdoc:*function-name-alias*) "Accessor"
+      (documentation 'gtk-widget-tooltip-text 'function)
+ "@version{2014-2-9}
+  @argument[object]{a @class{gtk-widget} object}
+  @syntax[]{(gtk-widget-tooltip-text object) => text}
+  @syntax[]{(setf (gtk-widget-tooltip-text object) text)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-widget]{tooltip-text} of the
+    @class{gtk-widget} class.
+  @end{short}
+
+  The generic function @sym{gtk-widget-tooltip-text} gets the contents of the
+  tooltip for @arg{widget}.
+
+  The generic function @sym{(sef gtk-widget-tooltip-text)} sets @arg{text} as
+  the contents of the tooltip. This function will take care of setting
+  @slot[gtk-widget]{has-tooltip} to @em{true} and of the default handler for
+  the \"query-tooltip\" signal.
+
+  See also the @slot[gtk-widget]{tooltip-text} property and the function
+  @fun{gtk-tooltip-set-text}.
+
+  Since 2.12
+  @see-class{gtk-widget}
+  @see-function{gtk-tooltip-set-text}")
+
+;;; --- gtk-widget-valign ------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "valign" 'gtk-widget) 't)
  "The @code{\"valign\"} property of type @symbol{gtk-align} (Read / Write) @br{}
   How to distribute vertical space if widget gets extra space. @br{}
   Default value: @code{:fill} @br{}
   Since 3.0")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-widget-valign atdoc:*function-name-alias*) "Accessor"
+      (documentation 'gtk-widget-valign 'function)
+ "@version{2014-2-9}
+  @argument[object]{a @class{gtk-widget} object}
+  @syntax[]{(gtk-widget-valign object) => align}
+  @syntax[]{(setf (gtk-widget-valign object) align)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-widget]{valign} of the @class{gtk-widget}
+    class.
+  @end{short}
+
+  The generic function @sym{gtk-widget-valign} gets the value of the
+  @slot[gtk-widget]{valign} property.
+
+  The generic function @sym{(setf gtk-widget-valign)} sets the vertical
+  alignment of widget. See the @slot[gtk-widget]{valign} property.
+
+  @see-class{gtk-widget}
+  @see-function{gtk-widget-halign}")
+
+;;; --- gtk-widget-vexpand -----------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "vexpand" 'gtk-widget) 't)
@@ -2324,6 +3154,30 @@
   @br{}
   Default value: @code{nil} @br{}
   Since 3.0")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-widget-vexpand atdoc:*function-name-alias*) "Accessor"
+      (documentation 'gtk-widget-vexpand 'function)
+ "@version{2014-2-8}
+  @argument[object]{a @class{gtk-widget} object}
+  @syntax[]{(gtk-widget-vexpand object) => expand}
+  @syntax[]{(setf (gtk-widget-vexpand object) expand)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-widget]{vexpand} of the
+    @class{gtk-widget} class.
+  @end{short}
+
+  The generic function @sym{gtk-widget-vexpand} gets whether the widget would
+  like any available extra vertical space.
+
+  The generic function @sym{(setf gtk-widget-vexpand)} sets whether the widget
+  would like any available extra vertical space.
+
+  See the function @fun{gtk-widget-hexpand} for more detail.
+  @see-class{gtk-widget}
+  @see-function{gtk-widget-hexpand}")
+
+;;; --- gtk-widget-vexpand-set -------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "vexpand-set" 'gtk-widget) 't)
@@ -2335,10 +3189,66 @@
   Since 3.0")
 
 #+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-widget-vexpand-set atdoc:*function-name-alias*) "Accessor"
+      (documentation 'gtk-widget-vexpand-set 'function)
+ "@version{2014-2-8}
+  @argument[object]{a @class{gtk-widget} object}
+  @syntax[]{(gtk-widget-vexpand-set object) => set}
+  @syntax[]{(setf (gtk-widget-vexpand-set object) set)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-widget]{vexpand-set} of the
+    @class{gtk-widget} class.
+  @end{short}
+
+  The generic function @sym{gtk-widget-vexpand-set} gets whether the generic
+  function @sym{(setf gtk-widget-vexpand)} has been used to explicitly set the
+  expand flag on this widget.
+
+  The generic function @sym{(setf gtk-widget-vexpand-set)} sets whether the
+  @slot[gtk-widget]{vexpand} property will be used.
+
+  See the function @fun{gtk-widget-hexpand-set} for more detail.
+  @see-class{gtk-widget}
+  @see-function{gtk-widget-vexpand}
+  @see-function{gtk-widget-hexpand-set}")
+
+;;; --- gtk-widget-visible -----------------------------------------------------
+
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "visible" 'gtk-widget) 't)
  "The @code{\"visible\"} property of type @code{:boolean} (Read / Write) @br{}
   Whether the widget is visible. @br{}
   Default value: @code{nil}")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-widget-visible atdoc:*function-name-alias*) "Accessor"
+      (documentation 'gtk-widget-visible 'function)
+ "@version{2013-8-1}
+  @argument[object]{a @class{gtk-widget} object}
+  @syntax[]{(gtk-widget-visible object) => visible}
+  @syntax[]{(setf (gtk-widget-visible object) visible)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-widget]{visible} of the @class{gtk-widget}
+    class.
+  @end{short}
+
+  The generic function @sym{gtk-widget-visible} determines whether the widget
+  is visible. Note that this does not take into account whether the widget's
+  parent is also visible or the widget is obscured in any way.
+
+  The generic function @sym{(setf gtk-widget-visible)} sets the visibility
+  state of @arg{widget}.
+
+  This function simply calls the functions @fun{gtk-widget-show} or
+  @fun{gtk-widget-hide} but is nicer to use when the visibility of the widget
+  depends on some condition.
+
+  Since 2.18
+  @see-class{gtk-widget}
+  @see-function{gtk-widget-show}
+  @see-function{gtk-widget-hide}")
+
+;;; --- gtk-widget-width-request -----------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "width-request" 'gtk-widget) 't)
@@ -2349,491 +3259,61 @@
   Default value: -1")
 
 #+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-widget-width-request atdoc:*function-name-alias*) "Accessor"
+      (documentation 'gtk-widget-width-request 'function)
+ "@version{2014-2-8}
+  @argument[object]{a @class{gtk-widget} object}
+  @begin{short}
+    Accessor of the slot @slot[gtk-widget]{width-request} of the
+    @class{gtk-widget} class.
+  @end{short}
+  See the function @fun{gtk-widget-size-request} for details.
+  @see-class{gtk-widget}
+  @see-function{gtk-widget-height-request}
+  @see-function{gtk-widget-size-request}")
+
+;;; --- gtk-widget-window ------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "window" 'gtk-widget) 't)
  "The @code{\"window\"} property of type @class{gdk-window} (Read) @br{}
   The widget's window if it is realized, @code{nil} otherwise. @br{}
   Since 2.14")
 
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-widget-app-paintable atdoc:*function-name-alias*) "Accessor"
-      (documentation 'gtk-widget-app-paintable 'function)
- "@version{2013-7-31}
-  @begin{short}
-    Accessor of the slot @code{\"app-paintable\"} of the @class{gtk-widget}
-    class.
-  @end{short}
-  See the function @fun{gtk-widget-set-app-paintable} for more information.
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-get-app-paintable}
-  @see-function{gtk-widget-set-app-paintable}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-widget-can-default atdoc:*function-name-alias*) "Accessor"
-      (documentation 'gtk-widget-can-default 'function)
- "@version{2012-7-31}
-  @begin{short}
-    Accessor of the slot @code{\"can-default\"} of the @class{gtk-widget} class.
-  @end{short}
-  See the function @fun{gtk-widget-set-can-default} for more information.
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-get-can-default}
-  @see-function{gtk-widget-set-can-default}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-widget-can-focus atdoc:*function-name-alias*) "Accessor"
-      (documentation 'gtk-widget-can-focus 'function)
- "@version{2017-7-31}
-  @begin{short}
-    Accessor of the slot @code{\"can-focus\"} of the @class{gtk-widget} class.
-  @end{short}
-  See the function @fun{gtk-widget-set-can-focus} for more information.
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-get-can-focus}
-  @see-function{gtk-widget-set-can-focus}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-widget-composite-child atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-widget-composite-child 'function)
- "@version{2013-7-31}
-  @begin{short}
-    Accessor of the slot @code{\"composite-child\"} of the @class{gtk-widget}
-    class.
-  @end{short}
-  See the slot description for @code{\"composite-child\"} for more information.
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-pop-composite-child}
-  @see-function{gtk-widget-push-composite-child}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-widget-double-buffered atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-widget-double-buffered 'function)
- "@version{2012-7-31}
-  @begin{short}
-    Accessor of the slot @code{\"double-buffered\"} of the @class{gtk-widget}
-    class.
-  @end{short}
-  See the function @fun{gtk-widget-set-double-buffered} for details.
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-get-double-buffered}
-  @see-function{gtk-widget-set-double-buffered}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-widget-events atdoc:*function-name-alias*) "Accessor"
-      (documentation 'gtk-widget-events 'function)
- "@version{2013-7-31}
-  @begin{short}
-    Accessor of the slot @code{\"events\"} of the @class{gtk-widget} class.
-  @end{short}
-  See the function @fun{gtk-widget-set-events} for details.
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-get-events}
-  @see-function{gtk-widget-set-events}
-  @see-function{gtk-widget-add-events}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-widget-expand atdoc:*function-name-alias*) "Accessor"
-      (documentation 'gtk-widget-expand 'function)
- "@version{2013-7-31}
-  @begin{short}
-    Accessor of the slot @code{\"expand\"} of the @class{gtk-widget} class.
-  @end{short}
-  See the slot description for @code{\"expand\"} for more information.
-  @see-class{gtk-widget}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-widget-halign atdoc:*function-name-alias*) "Accessor"
-      (documentation 'gtk-widget-halign 'function)
- "@version{2013-7-31}
-  @begin{short}
-    Accessor of the slot @code{\"halign\"} of the @class{gtk-widget} class.
-  @end{short}
-  See the function @fun{gtk-widget-set-halign} for details.
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-get-halign}
-  @see-function{gtk-widget-set-halign}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-widget-has-default atdoc:*function-name-alias*) "Accessor"
-      (documentation 'gtk-widget-has-default 'function)
- "@version{2013-7-31}
-  @argument[widget]{a @class{gtk-widget} object}
-  @return{@em{True} if @arg{widget} is the current default widget within its
-    toplevel, @code{nil} otherwise.}
-  @begin{short}
-    Determines whether @arg{widget} is the current default widget within its
-    toplevel.
-  @end{short}
-  See the function @fun{gtk-widget-set-can-default}.
-
-  Since 2.18
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-set-can-default}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-widget-has-focus atdoc:*function-name-alias*) "Accessor"
-      (documentation 'gtk-widget-has-focus 'function)
- "@version{2013-7-31}
-  @argument[widget]{a @class{gtk-widget} object}
-  @return{@em{True} if the @arg{widget} has the global input focus.}
-  @begin{short}
-    Determines if the @arg{widget} has the global input focus.
-  @end{short}
-  See the function @fun{gtk-widget-is-focus} for the difference between having
-  the global input focus, and only having the focus within a toplevel.
-
-  Since 2.18
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-is-focus}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-widget-has-tooltip atdoc:*function-name-alias*) "Accessor"
-      (documentation 'gtk-widget-has-tooltip 'function)
- "@version{2013-7-31}
-  @begin{short}
-    Accessor of the slot @code{\"has-tooltip\"} of the @class{gtk-widget} class.
-  @end{short}
-
-  See the function @fun{gtk-widget-set-has-tooltip} for details.
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-get-has-tooltip}
-  @see-function{gtk-widget-set-has-tooltip}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-widget-height-request atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-widget-height-request 'function)
- "@version{2013-7-31}
-  @begin{short}
-    Accessor of the slot @code{\"height-request\"} of the @class{gtk-widget}
-    class.
-  @end{short}
-  See the function @fun{gtk-widget-set-size-request} for details.
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-get-size-request}
-  @see-function{gtk-widget-set-size-request}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-widget-hexpand atdoc:*function-name-alias*) "Accessor"
-      (documentation 'gtk-widget-hexpand 'function)
- "@version{2013-7-31}
-  @begin{short}
-    Accessor of the slot @code{\"hexpand\"} of the @class{gtk-widget} class.
-  @end{short}
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-get-hexpand}
-  @see-function{gtk-widget-set-hexpand}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-widget-hexpand-set atdoc:*function-name-alias*) "Accessor"
-      (documentation 'gtk-widget-hexpand-set 'function)
- "@version{2013-7-31}
-  @begin{short}
-    Accessor of the slot @code{\"hexpand-set\"} of the @class{gtk-widget} class.
-  @end{short}
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-get-hexpand-set}
-  @see-function{gtk-widget-set-hexpand-set}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-widget-is-focus atdoc:*function-name-alias*) "Accessor"
-      (documentation 'gtk-widget-is-focus 'function)
- "@version{2013-8-20}
-  @argument[widget]{a @class{gtk-widget} object}
-  @return{@em{True} if the @arg{widget} is the focus widget.}
-  @begin{short}
-    Determines if the @arg{widget} is the focus widget within its toplevel.
-  @end{short}
-  This does not mean that the @code{\"has-focus\"} flag is necessarily set;
-  @code{\"has-focus\"} will only be set if the toplevel widget additionally has
-  the global input focus.)
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-has-focus}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-widget-margin atdoc:*function-name-alias*) "Accessor"
-      (documentation 'gtk-widget-margin 'function)
- "@version{2013-8-1}
-  @begin{short}
-    Accessor of the slot @code{\"margin\"} of the @class{gtk-widget} class.
-  @end{short}
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-get-margin-left}
-  @see-function{gtk-widget-set-margin-left}
-  @see-function{gtk-widget-get-margin-right}
-  @see-function{gtk-widget-set-margin-right}
-  @see-function{gtk-widget-get-margin-top}
-  @see-function{gtk-widget-set-margin-top}
-  @see-function{gtk-widget-get-margin-bottom}
-  @see-function{gtk-widget-set-margin-bottom}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-widget-margin-left atdoc:*function-name-alias*) "Accessor"
-      (documentation 'gtk-widget-margin-left 'function)
- "@version{2013-8-1}
-  @begin{short}
-    Accessor of the slot @code{\"margin-left\"} of the @class{gtk-widget} class.
-  @end{short}
-  See the function @fun{gtk-widget-set-margin-left} for details.
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-get-margin-left}
-  @see-function{gtk-widget-set-margin-left}
-  @see-function{gtk-widget-get-margin-right}
-  @see-function{gtk-widget-set-margin-right}
-  @see-function{gtk-widget-get-margin-top}
-  @see-function{gtk-widget-set-margin-top}
-  @see-function{gtk-widget-get-margin-bottom}
-  @see-function{gtk-widget-set-margin-bottom}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-widget-margin-right atdoc:*function-name-alias*) "Accessor"
-      (documentation 'gtk-widget-margin-right 'function)
- "@version{2013-8-1}
-  @begin{short}
-    Accessor of the slot @code{\"margin-right\"} of the @class{gtk-widget}
-    class.
-  @end{short}
-  See the function @fun{gtk-widget-set-margin-right} for details.
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-get-margin-left}
-  @see-function{gtk-widget-set-margin-left}
-  @see-function{gtk-widget-get-margin-right}
-  @see-function{gtk-widget-set-margin-right}
-  @see-function{gtk-widget-get-margin-top}
-  @see-function{gtk-widget-set-margin-top}
-  @see-function{gtk-widget-get-margin-bottom}
-  @see-function{gtk-widget-set-margin-bottom}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-widget-margin-top atdoc:*function-name-alias*) "Accessor"
-      (documentation 'gtk-widget-margin-top 'function)
- "@version{2013-8-1}
-  @begin{short}
-    Accessor of the slot @code{\"margin-top\"} of the @class{gtk-widget} class.
-  @end{short}
-  See the function @fun{gtk-widget-set-margin-top} for details.
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-get-margin-left}
-  @see-function{gtk-widget-set-margin-left}
-  @see-function{gtk-widget-get-margin-right}
-  @see-function{gtk-widget-set-margin-right}
-  @see-function{gtk-widget-get-margin-top}
-  @see-function{gtk-widget-set-margin-top}
-  @see-function{gtk-widget-get-margin-bottom}
-  @see-function{gtk-widget-set-margin-bottom}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-widget-margin-bottom atdoc:*function-name-alias*) "Accessor"
-      (documentation 'gtk-widget-margin-bottom 'function)
- "@version{2013-8-1}
-  @begin{short}
-    Accessor of the slot @code{\"margin-bottom\"} of the @class{gtk-widget}
-    class.
-  @end{short}
-  See the function @fun{gtk-widget-set-margin-bottom} for details.
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-get-margin-left}
-  @see-function{gtk-widget-set-margin-left}
-  @see-function{gtk-widget-get-margin-right}
-  @see-function{gtk-widget-set-margin-right}
-  @see-function{gtk-widget-get-margin-top}
-  @see-function{gtk-widget-set-margin-top}
-  @see-function{gtk-widget-get-margin-bottom}
-  @see-function{gtk-widget-set-margin-bottom}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-widget-name atdoc:*function-name-alias*) "Accessor"
-      (documentation 'gtk-widget-name 'function)
- "@version{2013-8-1}
-  @begin{short}
-    Accessor of the slot @code{\"name\"} of the @class{gtk-widget} class.
-  @end{short}
-  See the function @fun{gtk-widget-set-name} for details.
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-get-name}
-  @see-function{gtk-widget-set-name}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-widget-no-show-all atdoc:*function-name-alias*) "Accessor"
-      (documentation 'gtk-widget-no-show-all 'function)
- "@version{2013-8-1}
-  @begin{short}
-    Accessor of the slot @code{\"no-show-all\"} of the @class{gtk-widget} class.
-  @end{short}
-  See the function @fun{gtk-widget-set-no-show-all} for details.
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-get-no-show-all}
-  @see-function{gtk-widget-set-no-show-all}")
-
-#+(and gtk-3-8 cl-cffi-gtk-documentation)
-(setf (gethash 'gtk-widget-opacity atdoc:*function-name-alias*) "Accessor"
-      (documentation 'gtk-widget-opacity 'function)
- "@version{2013-10-27}
-  Accessor of the slot @code{\"opacity\"} of the @class{gtk-widget} class.
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-get-opacity}
-  @see-function{gtk-widget-set-opacity}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-widget-parent atdoc:*function-name-alias*) "Accessor"
-      (documentation 'gtk-widget-parent 'function)
- "@version{2013-8-1}
-  @begin{short}
-    Accessor of the slot @code{\"parent\"} of the @class{gtk-widget} class.
-  @end{short}
-  See the function @fun{gtk-widget-set-parent} for details.
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-get-parent}
-  @see-function{gtk-widget-set-parent}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-widget-receives-default atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-widget-receives-default 'function)
- "@version{2013-8-1}
-  @begin{short}
-    Accessor of the slot @code{\"receives-default\"} of the @class{gtk-widget}
-    class.
-  @end{short}
-  See the function @fun{gtk-widget-set-receives-default} for details.
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-get-receives-default}
-  @see-function{gtk-widget-set-receives-default}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-widget-sensitive atdoc:*function-name-alias*) "Accessor"
-      (documentation 'gtk-widget-sensitive 'function)
- "@version{2013-8-1}
-  @begin{short}
-    Accessor of the slot @code{\"sensitive\"} of the @class{gtk-widget} class.
-  @end{short}
-  See the function @fun{gtk-widget-set-sensitive} for details.
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-is-sensitive}
-  @see-function{gtk-widget-get-sensitive}
-  @see-function{gtk-widget-set-sensitive}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-widget-style atdoc:*function-name-alias*) "Accessor"
-      (documentation 'gtk-widget-style 'function)
- "@version{2013-8-1}
-  @begin{short}
-    Accessor of the slot @code{\"style\"} of the @class{gtk-widget} class.
-  @end{short}
-
-  @subheading{Warning}
-    The functions @sym{gtk-widget-get-style} and @sym{gtk-widget-set-style} have
-    been deprecated since version 3.0 and should not be used in newly written
-    code. Use @class{gtk-style-context} instead.
-  @see-class{gtk-widget}
-  @see-class{gtk-style-context}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-widget-tooltip-markup atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-widget-tooltip-markup 'function)
- "@version{2013-8-1}
-  @begin{short}
-    Accessor of the slot @code{\"tooltip-markup\"} of the @class{gtk-widget}
-    class.
-  @end{short}
-  See the function @fun{gtk-widget-set-tooltip-markup} for details.
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-get-tooltip-markup}
-  @see-function{gtk-widget-set-tooltip-markup}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-widget-tooltip-text atdoc:*function-name-alias*) "Accessor"
-      (documentation 'gtk-widget-tooltip-text 'function)
- "@version{2013-8-1}
-  @begin{short}
-    Accessor of the slot @code{\"tooltip-text\"} of the @class{gtk-widget}
-    class.
-  @end{short}
-  See the function @fun{gtk-widget-set-tooltip-text} for details.
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-get-tooltip-text}
-  @see-function{gtk-widget-set-tooltip-text}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-widget-valign atdoc:*function-name-alias*) "Accessor"
-      (documentation 'gtk-widget-valign 'function)
- "@version{2013-8-1}
-  @begin{short}
-    Accessor of the slot @code{\"valign\"} of the @class{gtk-widget} class.
-  @end{short}
-  See the function @fun{gtk-widget-set-valign} for details.
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-get-valign}
-  @see-function{gtk-widget-set-valign}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-widget-vexpand atdoc:*function-name-alias*) "Accessor"
-      (documentation 'gtk-widget-vexpand 'function)
- "@version{2013-8-1}
-  @begin{short}
-    Accessor of the slot @code{\"vexpand\"} of the @class{gtk-widget} class.
-  @end{short}
-  See the function @fun{gtk-widget-set-vexpand} for details.
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-get-vexpand}
-  @see-function{gtk-widget-set-vexpand}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-widget-vexpand-set atdoc:*function-name-alias*) "Accessor"
-      (documentation 'gtk-widget-vexpand-set 'function)
- "@version{2013-8-1}
-  @begin{short}
-    Accessor of the slot @code{\"vexpand-set\"} of the @class{gtk-widget} class.
-  @end{short}
-  See the function @fun{gtk-widget-set-vexpand-set} for details.
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-get-vexpand-set}
-  @see-function{gtk-widget-set-vexpand-set}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-widget-visible atdoc:*function-name-alias*) "Accessor"
-      (documentation 'gtk-widget-visible 'function)
- "@version{2013-8-1}
-  @begin{short}
-    Accessor of the slot @code{\"visible\"} of the @class{gtk-widget} class.
-  @end{short}
-  See the function @fun{gtk-widget-set-visible} for details.
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-get-visible}
-  @see-function{gtk-widget-set-visible}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-widget-width-request atdoc:*function-name-alias*) "Accessor"
-      (documentation 'gtk-widget-width-request 'function)
- "@version{2013-7-31}
-  @begin{short}
-    Accessor of the slot @code{\"width-request\"} of the @class{gtk-widget}
-    class.
-  @end{short}
-  See the function @fun{gtk-widget-set-size-request} for details.
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-get-size-request}
-  @see-function{gtk-widget-set-size-request}")
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-widget-window atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-widget-window 'function)
- "@version{2013-8-1}
+ "@version{2014-2-7}
+  @argument[object]{a @class{gtk-widget} object}
+  @syntax[]{(gtk-widget-window object) => window}
+  @syntax[]{(setf (gtk-widget-window object) window)}
   @begin{short}
-    Accessor of the slot @code{\"window\"} of the @class{gtk-widget} class.
+    Accessor of the slot @slot[gtk-widget]{window} of the @class{gtk-widget}
+    class.
   @end{short}
-  See the function @fun{gtk-widget-get-window} for details.
+
+  The generic function @sym{gtk-widget-window} returns the widget's window
+  of type @class{gdk-window} if it is realized, @code{nil} otherwise.
+
+  The generic function @sym{(setf gtk-widget-window)} sets a widget's window.
+
+  This function should only be used in a widget's \"realize\" implementation.
+  The window passed is usually either new window created with the function
+  @fun{gdk-window-new}, or the window of its parent widget as returned by the
+  function @fun{gtk-widget-get-parent-window}.
+
+  Widgets must indicate whether they will create their own @class{gdk-window}
+  by calling the function @fun{gtk-widget-set-has-window}. This is usually done
+  in the widget's @code{init()} function.
+
+  @begin[Note]{dictionary}
+    This function does not add any reference to window.
+  @end{dictionary}
+  Since 2.18
   @see-class{gtk-widget}
-  @see-function{gtk-widget-get-window}
-  @see-function{gtk-widget-set-window}")
+  @see-class{gdk-window}
+  @see-function{gtk-widget-get-parent-window}
+  @see-function{gtk-widget-set-has-window}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkCallback ()
@@ -3397,6 +3877,7 @@
 ;;; gtk_widget_size_request ()
 ;;; ----------------------------------------------------------------------------
 
+#|
 (defcfun ("gtk_widget_size_request" %gtk-widget-size-request) :void
   (widget (g-object gtk-widget))
   (requisition (g-boxed-foreign gtk-requisition)))
@@ -3435,6 +3916,7 @@
     requisition))
 
 (export 'gtk-widget-size-request)
+|#
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_child_requisition ()
@@ -3765,18 +4247,12 @@
 (export 'gtk-widget-intersect)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_widget_is_focus ()
-;;; ----------------------------------------------------------------------------
-
-;; This function is already defined as the accessor of the slot "is-focus".
-
-;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_grab_focus ()
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_widget_grab_focus" gtk-widget-grab-focus) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-11-18}
+ "@version{2014-2-7}
   @argument[widget]{a @class{gtk-widget} object}
   @begin{short}
     Causes @arg{widget} to have the keyboard focus for the @class{gtk-window}
@@ -3784,8 +4260,8 @@
     @class{gtk-entry}; something like @class{gtk-frame} will not work.
   @end{short}
 
-  More precisely, it must have the @code{\"can-focus\"} property set. Use the
-  function @fun{gtk-widget-set-can-focus} to modify that flag.
+  More precisely, it must have the @slot[gtk-widget]{can-focus} property set.
+  Use the function @fun{gtk-widget-can-focus} to modify that flag.
 
   The widget also needs to be realized and mapped. This is indicated by the
   related signals. Grabbing the focus immediately after creating the widget
@@ -3794,7 +4270,7 @@
   @see-class{gtk-window}
   @see-class{gtk-entry}
   @see-class{gtk-frame}
-  @see-function{gtk-widget-set-can-focus}"
+  @see-function{gtk-widget-can-focus}"
   (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-grab-focus)
@@ -3805,79 +4281,28 @@
 
 (defcfun ("gtk_widget_grab_default" gtk-widget-grab-default) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-11-18}
+ "@version{2014-2-7}
   @argument[widget]{a @class{gtk-widget} object}
   @begin{short}
     Causes @arg{widget} to become the default widget.
   @end{short}
   @arg{widget} must be able to be a default widget; typically you would ensure
-  this yourself by calling the function @fun{gtk-widget-set-can-default} with a
+  this yourself by calling the function @fun{gtk-widget-can-default} with a
   @em{true} value.
 
   The default widget is activated when the user presses Enter in a window.
   Default widgets must be activatable, that is, the function
   @fun{gtk-widget-activate} should affect them. Note that @class{gtk-entry}
-  widgets require the @code{\"activates-default\"} property set to @em{true}
-  before they activate the default widget when Enter is pressed and the
-  @class{gtk-entry} is focused.
+  widgets require the @slot[gtk-widget]{activates-default} property set to
+  @em{true} before they activate the default widget when Enter is pressed and
+  the @class{gtk-entry} is focused.
   @see-class{gtk-widget}
   @see-class{gtk-entry}
   @see-function{gtk-widget-activate}
-  @see-function{gtk-widget-set-can-default}"
+  @see-function{gtk-widget-can-default}"
   (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-grab-default)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_widget_set_name ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-widget-set-name))
-
-(defun gtk-widget-set-name (widget name)
- #+cl-cffi-gtk-documentation
- "@version{2013-11-18}
-  @argument[widget]{a @class{gtk-widget} object}
-  @argument[name]{name for the widget}
-  @begin{short}
-    Widgets can be named, which allows you to refer to them from a CSS file.
-    You can apply a style to widgets with a particular name in the CSS file.
-    See the documentation for the CSS syntax on the same page as the docs for
-    @class{gtk-style-context}.
-  @end{short}
-
-  Note that the CSS syntax has certain special characters to delimit and
-  represent elements in a selector (period, #, >, *...), so using these will
-  make your widget impossible to match by name. Any combination of
-  alphanumeric symbols, dashes and underscores will suffice.
-  @see-class{gtk-widget}
-  @see-class{gtk-style-context}
-  @see-function{gtk-widget-get-name}"
-  (setf (gtk-widget-name widget) name))
-
-(export 'gtk-widget-set-name)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_widget_get_name ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-widget-get-name))
-
-(defun gtk-widget-get-name (widget)
- #+cl-cffi-gtk-documentation
- "@version{2013-11-18}
-  @argument[widget]{a @class{gtk-widget} object}
-  @return{Name of the widget.}
-  @begin{short}
-    Retrieves the name of a widget.
-  @end{short}
-  See the function @fun{gtk-widget-set-name} for the significance of widget
-  names.
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-set-name}"
-  (gtk-widget-name widget))
-
-(export 'gtk-widget-get-name)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_set_state ()
@@ -3897,66 +4322,15 @@
 
   This function is for use in widget implementations. Sets the state of a
   widget, insensitive, prelighted, etc. Usually you should set the state
-  using wrapper functions such as the function @fun{gtk-widget-set-sensitive}.
+  using wrapper functions such as the function @fun{gtk-widget-sensitive}.
   @see-class{gtk-widget}
   @see-symbol{gtk-state-type}
   @see-function{gtk-widget-set-state-flags}
-  @see-function{gtk-widget-set-sensitive}"
+  @see-function{gtk-widget-sensitive}"
   (widget (g-object gtk-widget))
   (state gtk-state-type))
 
 (export 'gtk-widget-set-state)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_widget_set_sensitive ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-widget-set-sensitive))
-
-(defun gtk-widget-set-sensitive (widget sensitive)
- #+cl-cffi-gtk-documentation
- "@version{2013-11-18}
-  @argument[widget]{a @class{gtk-widget} object}
-  @argument[sensitive]{@em{true} to make the widget sensitive}
-  @begin{short}
-    Sets the sensitivity of a widget.
-  @end{short}
-  A widget is sensitive if the user can interact with it. Insensitive widgets
-  are \"grayed out\" and the user cannot interact with them. Insensitive widgets
-  are known as \"inactive\", \"disabled\", or \"ghosted\" in some other
-  toolkits.
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-get-sensitive}
-  @see-function{gtk-widget-is-sensitive}"
-  (setf (gtk-widget-sensitive widget) sensitive))
-
-(export 'gtk-widget-set-sensitive)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_widget_set_parent ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-widget-set-parent))
-
-(defun gtk-widget-set-parent (widget parent)
- #+cl-cffi-gtk-documentation
- "@version{2013-11-18}
-  @argumen[widget]{a @class{gtk-widget} object}
-  @argument[parent]{parent container}
-  @begin{short}
-    This function is useful only when implementing subclasses of
-    @class{gtk-container}.
-  @end{short}
-  Sets the container as the parent of @arg{widget}, and takes care of some
-  details such as updating the state and style of the child to reflect its new
-  location. The opposite function is @fun{gtk-widget-unparent}.
-  @see-class{gtk-widget}
-  @see-class{gtk-container}
-  @see-function{gtk-widget-get-parent}
-  @see-function{gtk-widget-unparent}"
-  (setf (gtk-widget-parent widget) parent))
-
-(export 'gtk-widget-set-parent)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_set_parent_window ()
@@ -4000,78 +4374,22 @@
 (export 'gtk-widget-get-parent-window)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_widget_set_events ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-widget-set-events))
-
-(defun gtk-widget-set-events (widget events)
- #+cl-cffi-gtk-documentation
- "@version{2013-11-22}
-  @argument[widget]{a @class{gtk-widget} object}
-  @argument[events]{event mask of type @symbol{gdk-event-mask}}
-  @begin{short}
-    Sets the event mask for @arg{widget}.
-  @end{short}
-  The event mask determines which events a widget will receive. Keep in mind
-  that different widgets have different default event masks, and by changing
-  the event mask you may disrupt a widget's functionality, so be careful. This
-  function must be called while a widget is unrealized. Consider the function
-  @fun{gtk-widget-add-events} for widgets that are already realized, or if
-  you want to preserve the existing event mask. This function can not be used
-  with @code{:no-window} widgets; to get events on those widgets, place them
-  inside a @class{gtk-event-box} and receive events on the event box.
-  @see-symbol{gdk-event-mask}
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-get-events}
-  @see-function{gtk-widget-add-events}
-  @see-class{gtk-event-box}"
-  (setf (gtk-widget-events widget) events))
-
-(export 'gtk-widget-set-events)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_widget_get_events ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-widget-get-events))
-
-(defun gtk-widget-get-events (widget)
- #+cl-cffi-gtk-documentation
- "@version{2013-7-31}
-  @argument[widget]{a @class{gtk-widget} object}
-  @return{Event mask from @symbol{gdk-event-mask} flags for @arg{widget}}
-  @begin{short}
-    Returns the event mask for the widget. The event mask is a bitfield
-    containing flags from the @symbol{gdk-event-mask} flags.
-  @end{short}
-  These are the events that the widget will receive.
-  @see-class{gtk-widget}
-  @see-symbol{gdk-event-mask}
-  @see-function{gtk-widget-set-events}
-  @see-function{gtk-widget-add-events}"
-  (gtk-widget-events widget))
-
-(export 'gtk-widget-get-events)
-
-;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_add_events ()
 ;;; ----------------------------------------------------------------------------
 
 (defun gtk-widget-add-events (widget events)
  #+cl-cffi-gtk-documentation
- "@version{2013-11-22}
+ "@version{2014-2-7}
   @argument[widget]{a @class{gtk-widget} object}
   @argument[events]{an event mask of type @symbol{gdk-event-mask}}
   @begin{short}
     Adds the events in the bitfield @arg{events} to the event mask for
     @arg{widget}.
   @end{short}
-  See @fun{gtk-widget-set-events} for details.
+  See @fun{gtk-widget-events} for details.
   @see-class{gtk-widget}
   @see-symbol{gdk-event-mask}
-  @see-function{gtk-widget-set-events}
-  @see-function{gtk-widget-get-events}"
+  @see-function{gtk-widget-events}"
   (setf (gtk-widget-events widget)
         (append (gtk-widget-events widget) events)))
 
@@ -4444,27 +4762,6 @@
 (export 'gtk-widget-hide-on-delete)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_widget_set_style ()
-;;;
-;;; void gtk_widget_set_style (GtkWidget *widget, GtkStyle *style);
-;;;
-;;; Warning
-;;;
-;;; gtk_widget_set_style has been deprecated since version 3.0 and should not be
-;;; used in newly-written code. Use GtkStyleContext instead.
-;;;
-;;; Used to set the GtkStyle for a widget (widget->style). Since GTK 3, this
-;;; function does nothing, the passed in style is ignored.
-;;;
-;;; widget :
-;;;     a GtkWidget
-;;;
-;;; style :
-;;;     a GtkStyle, or NULL to remove the effect of a previous call to
-;;;     gtk_widget_set_style() and go back to the default style
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_ensure_style ()
 ;;; ----------------------------------------------------------------------------
 
@@ -4487,25 +4784,6 @@
   (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-ensure-style)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_widget_get_style ()
-;;;
-;;; GtkStyle * gtk_widget_get_style (GtkWidget *widget);
-;;;
-;;; Warning
-;;;
-;;; gtk_widget_get_style has been deprecated since version 3.0 and should not
-;;; be used in newly-written code. Use GtkStyleContext instead
-;;;
-;;; Simply an accessor function that returns widget->style.
-;;;
-;;; widget :
-;;;     a GtkWidget
-;;;
-;;; Returns :
-;;;     the widget's GtkStyle
-;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_reset_rc_styles ()
@@ -4785,7 +5063,7 @@
   @end{short}
   The path is simply the name of a widget and all its parents in the container
   hierarchy, separated by periods. The name of a widget comes from
-  @fun{gtk-widget-get-name}. Paths are used to apply styles to a widget in gtkrc
+  @fun{gtk-widget-name}. Paths are used to apply styles to a widget in gtkrc
   configuration files. Widget names are the type of the widget by default (e. g.
   \"GtkButton\") or can be set to an application-specific value with
   @fun{gtk-widget-set-name}. By setting the name of a widget, you allow users or
@@ -4796,8 +5074,7 @@
   @fun{gtk-widget-set-name}.
   @see-class{gtk-widget}
   @see-function{gtk-widget-get-path}
-  @see-function{gtk-widget-get-name}
-  @see-function{gtk-widget-set-name}"
+  @see-function{gtk-widget-name}"
   (assert (typep path-type '(member :name :class)))
   (with-foreign-object (path :pointer)
     (ecase path-type
@@ -5588,79 +5865,6 @@
 (export 'gtk-widget-queue-draw-region)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_widget_set_app_paintable ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-widget-set-app-paintable))
-
-(defun gtk-widget-set-app-paintable (widget app-paintable)
- #+cl-cffi-gtk-documentation
- "@version{2013-11-29}
-  @argument[widget]{a @class{gtk-widget} object}
-  @argument[app-paintable]{@em{true} if the application will paint on the
-    widget}
-  @begin{short}
-    Sets whether the application intends to draw on the widget in a \"draw\"
-    handler.
-  @end{short}
-
-  This is a hint to the widget and does not affect the behavior of the GTK+
-  core; many widgets ignore this flag entirely. For widgets that do pay
-  attention to the flag, such as @class{gtk-event-box} and @class{gtk-window},
-  the effect is to suppress default themed drawing of the widget's background.
-  Children of the widget will still be drawn. The application is then entirely
-  responsible for drawing the widget background.
-
-  Note that the background is still drawn when the widget is mapped.
-  @see-class{gtk-widget}
-  @see-class{gtk-window}
-  @see-class{gtk-event-box}
-  @see-function{gtk-widget-get-app-paintable}"
-  (setf (gtk-widget-app-paintable widget) app-paintable))
-
-(export 'gtk-widget-set-app-paintable)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_widget_set_double_buffered ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-widget-set-double-buffered))
-
-(defun gtk-widget-set-double-buffered (widget double-buffered)
- #+cl-cffi-gtk-documentation
- "@version{2013-11-29}
-  @argument[widget]{a @class{gtk-widget} object}
-  @argument[double-buffered]{@em{true} to double-buffer a widget}
-  @begin{short}
-    Widgets are double buffered by default; you can use this function to turn
-    off the buffering.
-  @end{short}
-  \"Double buffered\" simply means that the functions
-  @fun{gdk-window-begin-paint-region} and @fun{gdk-window-end-paint} are called
-  automatically around expose events sent to the widget. The function
-  @fun{gdk-window-begin-paint-region} diverts all drawing to a widget's window
-  to an offscreen buffer, and the function @fun{gdk-window-end-paint} draws the
-  buffer to the screen. The result is that users see the window update in one
-  smooth step, and do not see individual graphics primitives being rendered.
-
-  In very simple terms, double buffered widgets do not flicker, so you would
-  only use this function to turn off double buffering if you had special needs
-  and really knew what you were doing.
-
-  @subheading{Note}
-    If you turn off double-buffering, you have to handle expose events,
-    since even the clearing to the background color or pixmap will not happen
-    automatically as it is done in in the functions
-    @fun{gdk-window-begin-paint-region} function.
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-get-double-buffered}
-  @see-function{gdk-window-begin-paint-region}
-  @see-function{gdk-window-end-paint}"
-  (setf (gtk-widget-double-buffered widget) double-buffered))
-
-(export 'gtk-widget-set-double-buffered)
-
-;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_set_redraw_on_allocate ()
 ;;; ----------------------------------------------------------------------------
 
@@ -6272,24 +6476,6 @@
 (export 'gtk-widget-get-child-visible)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_widget_get_parent ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-widget-get-parent))
-
-(defun gtk-widget-get-parent (widget)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-1}
-  @argument[widget]{a @class{gtk-widget} object}
-  @return{The parent container of @arg{widget}, or @code{nil}.}
-  Returns the parent container of @arg{widget}.
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-set-parent}"
-  (gtk-widget-parent widget))
-
-(export 'gtk-widget-get-parent)
-
-;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_settings ()
 ;;; ----------------------------------------------------------------------------
 
@@ -6456,33 +6642,68 @@
 ;;; gtk_widget_get_size_request ()
 ;;; ----------------------------------------------------------------------------
 
-(declaim (inline gtk-widget-get-size-request))
+(defgeneric gtk-widget-size-request (widget)
+  (:method ((widget gtk-widget))
+    (values (gtk-widget-width-request widget)
+            (gtk-widget-height-request widget))))
 
-(defun gtk-widget-get-size-request (widget)
- #+cl-cffi-gtk-documentation
- "@version{2013-7-31}
-  @argument[widget]{a @class{gtk-widget} object}
-  @begin{return}
-    @code{width} -- width, or @code{nil} @br{}
-    @code{height} -- height, or @code{nil}
-  @end{return}
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-widget-size-request 'function)
+ "@version{2014-2-8}
+  @argument[object]{a @class{gtk-widget} object}
+  @syntax[]{(gtk-widget-size-request object) => width, height}
+  @syntax[]{(setf (gtk-widget-size-request object) (list width height))}
   @begin{short}
-    Gets the size request that was explicitly set for the widget using the
-    function @fun{gtk-widget-set-size-request}.
+    The generic function @sym{gtk-widget-size-request} gets the size request
+    that was explicitly set for the widget using the generic function
+    @sym{(setf gtk-widget-size-request)}.
   @end{short}
+
   A value of -1 stored in @arg{width} or @arg{height} indicates that that
   dimension has not been set explicitly and the natural requisition of the
-  @arg{widget} will be used instead. See the function
-  @fun{gtk-widget-set-size-request}. To get the size a widget will actually
-  request, call the function @fun{gtk-widget-get-preferred-size} instead of
-  this function.
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-set-size-request}
-  @see-function{gtk-widget-get-preferred-size}"
-  (values (gtk-widget-width-request widget)
-          (gtk-widget-height-request widget)))
+  widget will be used instead. To get the size a widget will actually request,
+  call the function @fun{gtk-widget-get-preferred-size} instead of this
+  function.
 
-(export 'gtk-widget-get-size-request)
+  The generic function @sym{(setf gtk-widget-size-request)} sets the minimum
+  size of a widget. That is, the widget's size request will be @arg{width} by
+  @arg{height}. You can use this function to force a widget to be either larger
+  or smaller than it normally would be.
+
+  In most cases, the function @fun{gtk-window-default-size} is a better
+  choice for toplevel windows than this function; setting the default size will
+  still allow users to shrink the window. Setting the size request will force
+  them to leave the window at least as large as the size request. When dealing
+  with window sizes, the function @fun{gtk-window-set-geometry-hints} can be a
+  useful function as well.
+
+  Note the inherent danger of setting any fixed size - themes, translations
+  into other languages, different fonts, and user action can all change the
+  appropriate size for a given widget. So, it is basically impossible to
+  hardcode a size that will always be correct.
+
+  The size request of a widget is the smallest size a widget can accept while
+  still functioning well and drawing itself correctly. However in some strange
+  cases a widget may be allocated less than its requested size, and in many
+  cases a widget may be allocated more space than it requested.
+
+  If the size request in a given direction is -1 (unset), then the \"natural\"
+  size request of the widget will be used instead.
+
+  Widgets cannot actually be allocated a size less than 1 by 1, but you can
+  pass 0,0 to this function to mean \"as small as possible\".
+
+  The size request set here does not include any margin from the
+  @class{gtk-widget} properties @slot[gtk-widget]{margin-left},
+  @slot[gtk-widget]{margin-right}, @slot[gtk-widget]{margin-top}, and
+  @slot[gtk-widget]{margin-bottom}, but it does include pretty much all other
+  padding or border properties set by any subclass of @class{gtk-widget}.
+  @see-class{gtk-widget}
+  @see-function{gtk-widget-get-preferred-size}
+  @see-function{gtk-window-default-size}
+  @see-function{gtk-window-set-geometry-hints}")
+
+(export 'gtk-widget-size-request)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_set_child_visible ()
@@ -6522,58 +6743,11 @@
 ;;; gtk_widget_set_size_request ()
 ;;; ----------------------------------------------------------------------------
 
-(declaim (inline gtk-widget-set-size-request))
-
-(defun gtk-widget-set-size-request (widget width height)
- #+cl-cffi-gtk-documentation
- "@version{2013-7-31}
-  @argument[widget]{a @class{gtk-widget} object}
-  @argument[width]{width @arg{widget} should request, or -1 to unset}
-  @argument[height]{height @arg{widget} should request, or -1 to unset}
-  @begin{short}
-    Sets the minimum size of a @arg{widget}.
-  @end{short}
-  That is, the @arg{widget}'s size request will be @arg{width} by @arg{height}.
-  You can use this function to force a @arg{widget} to be either larger or
-  smaller than it normally would be.
-
-  In most cases, the function @fun{gtk-window-set-default-size} is a better
-  choice for toplevel windows than this function; setting the default size will
-  still allow users to shrink the window. Setting the size request will force
-  them to leave the window at least as large as the size request. When dealing
-  with window sizes, the function @fun{gtk-window-set-geometry-hints} can be a
-  useful function as well.
-
-  Note the inherent danger of setting any fixed size - themes, translations
-  into other languages, different fonts, and user action can all change the
-  appropriate size for a given @arg{widget}. So, it is basically impossible to
-  hardcode a size that will always be correct.
-
-  The size request of a @arg{widget} is the smallest size a @arg{widget} can
-  accept while still functioning well and drawing itself correctly. However in
-  some strange cases a @arg{widget} may be allocated less than its requested
-  size, and in many cases a @arg{widget} may be allocated more space than it
-  requested.
-
-  If the size request in a given direction is -1 (unset), then the \"natural\"
-  size request of the @arg{widget} will be used instead.
-
-  Widgets cannot actually be allocated a size less than 1 by 1, but you can
-  pass 0,0 to this function to mean \"as small as possible\".
-
-  The size request set here does not include any margin from the
-  @class{gtk-widget} properties @code{\"margin-left\"}, @code{\"margin-right\"},
-  @code{\"margin-top\"}, and @code{\"margin-bottom\"}, but it does include
-  pretty much all other padding or border properties set by any subclass of
-  @class{gtk-widget}.
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-get-size-request}
-  @see-function{gtk-window-set-default-size}
-  @see-function{gtk-window-set-geometry-hints}"
-  (setf (gtk-widget-width-request widget) width)
-  (setf (gtk-widget-height-request widget) height))
-
-(export 'gtk-widget-set-size-request)
+(defgeneric (setf gtk-widget-size-request) (size widget)
+  (:method (size (widget gtk-widget))
+    (destructuring-bind (width height) size
+      (values (setf (gtk-widget-width-request widget) width)
+              (setf (gtk-widget-height-request widget) height)))))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_thaw_child_notify ()
@@ -6593,59 +6767,6 @@
   (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-thaw-child-notify)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_widget_set_no_show_all ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-widget-set-no-show-all))
-
-(defun gtk-widget-set-no-show-all (widget no-show-all)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-1}
-  @argument[widget]{a @class{gtk-widget} object}
-  @argument[no-show-all]{the new value for the @code{\"no-show-all\"} property}
-  @begin{short}
-    Sets the @code{\"no-show-all\"} property, which determines whether calls to
-    the function @fun{gtk-widget-show-all} will affect this widget.
-  @end{short}
-
-  This is mostly for use in constructing widget hierarchies with externally
-  controlled visibility, see @class{gtk-ui-manager}.
-
-  Since 2.4
-  @see-class{gtk-widget}
-  @see-class{gtk-ui-manager}
-  @see-function{gtk-widget-get-no-show-all}
-  @see-function{gtk-widget-show-all}"
-  (setf (gtk-widget-no-show-all widget) no-show-all))
-
-(export 'gtk-widget-set-no-show-all)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_widget_get_no_show_all ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-widget-get-no-show-all))
-
-(defun gtk-widget-get-no-show-all (widget)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-1}
-  @argument[widget]{a @class{gtk-widget} object}
-  @return{The current value of the @code{\"no-show-all\"} property.}
-  @begin{short}
-    Returns the current value of the @code{\"no-show-all\"} property, which
-    determines whether calls to the function @fun{gtk-widget-show-all} will
-    affect this widget.
-  @end{short}
-
-  Since 2.4
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-show-all}
-  @see-function{gtk-widget-set-no-show-all}"
-  (gtk-widget-no-show-all widget))
-
-(export 'gtk-widget-get-no-show-all)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_list_mnemonic_labels ()
@@ -6840,106 +6961,6 @@
 (export 'gtk-widget-keynav-failed)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_widget_get_tooltip_markup ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-widget-get-tooltip-markup))
-
-(defun gtk-widget-get-tooltip-markup (widget)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-1}
-  @argument[widget]{a @class{gtk-widget} object}
-  @return{The tooltip text, or @code{nil}.}
-  @short{Gets the contents of the tooltip for @arg{widget}.}
-
-  Since 2.12
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-set-tooltip-markup}"
-  (gtk-widget-tooltip-markup widget))
-
-(export 'gtk-widget-get-tooltip-markup)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_widget_set_tooltip_markup ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-widget-set-tooltip-markup))
-
-(defun gtk-widget-set-tooltip-markup (widget markup)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-1}
-  @argument[widget]{a @class{gtk-widget} object}
-  @argument[markup]{the contents of the tooltip for @arg{widget}, or @code{nil}}
-  @begin{short}
-    Sets @arg{markup} as the contents of the tooltip, which is marked up with
-    the Pango text markup language.
-  @end{short}
-
-  This function will take care of setting @code{\"has-tooltip\"} to @em{true}
-  and of the default handler for the \"query-tooltip\" signal.
-
-  See also the @code{\"tooltip-markup\"} property and the function
-  @fun{gtk-tooltip-set-markup}.
-
-  Since 2.12
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-get-tooltip-markup}
-  @see-function{gtk-tooltip-set-markup}"
-  (setf (gtk-widget-tooltip-markup widget) markup))
-
-(export 'gtk-widget-set-tooltip-markup)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_widget_get_tooltip_text ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-get-tooltip-text))
-
-(defun gtk-widget-get-tooltip-text (widget)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-1}
-  @argument[widget]{a @class{gtk-widget} object}
-  @return{The tooltip text, or @code{nil}.}
-  @begin{short}
-    Gets the contents of the tooltip for @arg{widget}.
-  @end{short}
-
-  Since 2.12
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-set-tooltip-text}"
-  (gtk-widget-tooltip-text widget))
-
-(export 'gtk-widget-get-tooltip-text)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_widget_set_tooltip_text ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-widget-set-tooltip-text))
-
-(defun gtk-widget-set-tooltip-text (widget text)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-1}
-  @argument[widget]{a @class{gtk-widget} object}
-  @argument[text]{the contents of the tooltip for @arg{widget}}
-  @begin{short}
-    Sets @arg{text} as the contents of the tooltip.
-  @end{short}
-  This function will take care of setting @code{\"has-tooltip\"} to @em{true}
-  and of the default handler for the \"query-tooltip\" signal.
-
-  See also the @code{\"tooltip-text\"} property and the function
-  @fun{gtk-tooltip-set-text}.
-
-  Since 2.12
-  @see-class{gtk-widget}
-  @see-function{gtk-tooltip-set-text}
-  @see-function{gtk-widget-get-tooltip-text}"
-  (setf (gtk-widget-tooltip-text widget) text))
-
-(export 'gtk-widget-set-tooltip-text)
-
-;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_tooltip_window ()
 ;;; ----------------------------------------------------------------------------
 
@@ -7054,28 +7075,6 @@
   (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-trigger-tooltip-query)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_widget_get_window ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-widget-get-window))
-
-(defun gtk-widget-get-window (widget)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-1}
-  @argument[widget]{a @class{gtk-widget} object}
-  @return{@arg{widget}'s window}
-  @begin{short}
-    Returns the @arg{widget}'s window if it is realized, @code{nil} otherwise
-  @end{short}
-
-  Since 2.14
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-set-window}"
-  (gtk-widget-window widget))
-
-(export 'gtk-widget-get-window)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_register_window ()
@@ -7306,143 +7305,6 @@
 (export 'gtk-widget-set-allocation)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_widget_get_app_paintable ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-widget-get-app-paintable))
-
-(defun gtk-widget-get-app-paintable (widget)
- #+cl-cffi-gtk-documentation
- "@version{2013-7-31}
-  @argument[widget]{a @class{gtk-widget} object}
-  @return{@em{True} if the @arg{widget} is app paintable.}
-  @begin{short}
-    Determines whether the application intends to draw on the widget in an
-    \"draw\" handler.
-  @end{short}
-  See the function @fun{gtk-widget-set-app-paintable}
-
-  Since 2.18
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-set-app-paintable}"
-  (gtk-widget-app-paintable widget))
-
-(export 'gtk-widget-get-app-paintable)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_widget_get_can_default ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-widget-get-can-default))
-
-(defun gtk-widget-get-can-default (widget)
- #+cl-cffi-gtk-documentation
- "@version{2012-7-31}
-  @argument[widget]{a @class{gtk-widget} object}
-  @return{@em{True} if @arg{widget} can be a default widget, @code{nil.}
-    otherwise.}
-  @short{Determines whether @arg{widget} can be a default widget.}
-  See the function @fun{gtk-widget-set-can-default}.
-
-  Since 2.18
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-set-can-default}"
-  (gtk-widget-can-default widget))
-
-(export 'gtk-widget-get-can-default)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_widget_set_can_default ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-widget-set-can-default))
-
-(defun gtk-widget-set-can-default (widget can-default)
- #+cl-cffi-gtk-documentation
- "@version{2013-7-31}
-  @argument[widget]{a @class{gtk-widget} object}
-  @argument[can-default]{whether or not @arg{widget} can be a default widget.}
-  @begin{short}
-    Specifies whether @arg{widget} can be a default widget.
-  @end{short}
-  See the function @fun{gtk-widget-grab-default} for details about the meaning of
-  \"default\".
-
-  Since 2.18
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-grab-default}
-  @see-function{gtk-widget-get-can-default}"
-  (setf (gtk-widget-can-default widget) can-default))
-
-(export 'gtk-widget-set-can-default)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_widget_get_can_focus ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-widget-get-can-focus))
-
-(defun gtk-widget-get-can-focus (widget)
- #+cl-cffi-gtk-documentation
- "@version{2013-7-31}
-  @argument[widget]{a @class{gtk-widget} object}
-  @return{@em{True} if @arg{widget} can own the input focus, @code{nil}
-    otherwise.}
-  @short{Determines whether @arg{widget} can own the input focus.}
-  See @fun{gtk-widget-set-can-focus}.
-
-  Since 2.18
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-set-can-focus}"
-  (gtk-widget-can-focus widget))
-
-(export 'gtk-widget-get-can-focus)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_widget_set_can_focus ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-widget-set-can-focus))
-
-(defun gtk-widget-set-can-focus (widget can-focus)
- #+cl-cffi-gtk-documentation
- "@version{2013-7-31}
-  @argument[widget]{a @class{gtk-widget} object}
-  @argument[can-focus]{whether or not @arg{widget} can own the input focus}
-  @short{Specifies whether @arg{widget} can own the input focus.}
-  See the function @fun{gtk-widget-grab-focus} for actually setting the input
-  focus on a widget.
-
-  Since 2.18
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-get-can-focus}
-  @see-function{gtk-widget-grab-focus}"
-  (setf (gtk-widget-can-focus widget) can-focus))
-
-(export 'gtk-widget-set-can-focus)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_widget_get_double_buffered ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-widget-get-double-buffered))
-
-(defun gtk-widget-get-double-buffered (widget)
- #+cl-cffi-gtk-documentation
- "@version{2013-7-31}
-  @argument[widget]{a @class{gtk-widget} object}
-  @return{@em{True} if the @arg{widget} is double buffered.}
-  @short{Determines whether the @arg{widget} is double buffered.}
-  See the function @fun{gtk-widget-set-double-buffered}.
-
-  Since 2.18
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-set-double-buffered}"
-  (gtk-widget-double-buffered widget))
-
-(export 'gtk-widget-get-double-buffered)
-
-;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_has_window ()
 ;;; ----------------------------------------------------------------------------
 
@@ -7467,55 +7329,30 @@
 
 (defcfun ("gtk_widget_set_has_window" gtk-widget-set-has-window) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-1-6}
-  @argument[widget]{a @class{gtk-widget} instance}
-  @argument[has-window]{whether or not @arg{widget} has a window.}
+ "@version{2014-2-7}
+  @argument[widget]{a @class{gtk-widget} object}
+  @argument[has-window]{whether or not @arg{widget} has a window}
   @begin{short}
     Specifies whether @arg{widget} has a @class{gdk-window} of its own.
   @end{short}
-  Note that all realized widgets have a non-NULL \"window\" pointer
-  (@fun{gtk-widget-get-window} never returns a @code{NULL} window when a widget
-  is realized), but for many of them it's actually the @class{gdk-window} of one
-  of its parent widgets. Widgets that do not create a window for themselves in
-  \"realize\" must announce this by calling this function with
+  Note that all realized widgets have a non-@code{NULL} \"window\" pointer,
+  @fun{gtk-widget-window} never returns a @code{NULL} window when a widget
+  is realized, but for many of them it is actually the @class{gdk-window} of
+  one of its parent widgets. Widgets that do not create a window for themselves
+  in \"realize\" must announce this by calling this function with
   @code{has-window = nil}.
 
   This function should only be called by widget implementations, and they
   should call it in their @code{init()} function.
 
-  Since 2.18"
+  Since 2.18
+  @see-class{gtk-widget}
+  @see-class{gdk-window}
+  @see-function{gtk-widget-window}"
   (widget (g-object gtk-widget))
   (has-window :boolean))
 
 (export 'gtk-widget-set-has-window)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_widget_get_sensitive ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-widget-get-sensitive))
-
-(defun gtk-widget-get-sensitive (widget)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-1}
-  @argument[widget]{a @class{gtk-widget} object}
-  @return{@em{True} if the @arg{widget} is sensitive.}
-  @begin{short}
-    Returns the @arg{widget}'s sensitivity, in the sense of returning the value
-    that has been set using the function @fun{gtk-widget-set-sensitive}.
-  @end{short}
-
-  The effective sensitivity of a widget is however determined by both its own
-  and its parent widget's sensitivity. See the function
-  @fun{gtk-widget-is-sensitive}.
-
-  Since 2.18
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-set-sensitive}
-  @see-function{gtk-widget-is-sensitive}"
-  (gtk-widget-sensitive widget))
-
-(export 'gtk-widget-get-sensitive)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_is_sensitive ()
@@ -7533,8 +7370,7 @@
 
   Since 2.18
   @see-class{gtk-widget}
-  @see-function{gtk-widget-get-sensitive}
-  @see-function{gtk-widget-set-sensitive}"
+  @see-function{gtk-widget-sensitive}"
   (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-is-sensitive)
@@ -7559,32 +7395,6 @@
 ;;;
 ;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_widget_get_visible ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-widget-get-visible))
-
-(defun gtk-widget-get-visible (widget)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-1}
-  @argument[widget]{a @class{gtk-widget} object}
-  @return{@em{True} if the @arg{widget} is visible.}
-  @begin{short}
-    Determines whether the @arg{widget} is visible.
-  @end{short}
-  Note that this does not take into account whether the widget's parent is also
-  visible or the widget is obscured in any way.
-
-  See the function @fun{gtk-widget-set-visible}.
-
-  Since 2.18
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-set-visible}"
-  (gtk-widget-visible widget))
-
-(export 'gtk-widget-get-visible)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_is_visible ()
@@ -7613,36 +7423,6 @@
 
 #+gtk-3-8
 (export 'gtk-widget-is-visible)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_widget_set_visible ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-widget-set-visible))
-
-(defun gtk-widget-set-visible (widget visible)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-1}
-  @argument[widget]{a @class{gtk-widget} object}
-  @argument[visible]{whether the @arg{widget} should be shown or not}
-  @begin{short}
-    Sets the visibility state of @arg{widget}.
-  @end{short}
-  Note that setting this to @em{true} does not mean the widget is actually
-  viewable, see the function @fun{gtk-widget-get-visible}.
-
-  This function simply calls the functions @fun{gtk-widget-show} or
-  @fun{gtk-widget-hide} but is nicer to use when the visibility of the widget
-  depends on some condition.
-
-  Since 2.18
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-show}
-  @see-function{gtk-widget-hide}
-  @see-function{gtk-widget-get-visible}"
-  (setf (gtk-widget-visible widget) visible))
-
-(export 'gtk-widget-set-visible)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_set_state_flags ()
@@ -7713,18 +7493,6 @@
   (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-get-state-flags)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_widget_has_default ()
-;;; ----------------------------------------------------------------------------
-
-;; Is implemented as the accessor of the property "has-default"
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_widget_has_focus ()
-;;; ----------------------------------------------------------------------------
-
-;; Is implemented as the accessor of the property "has-focus"
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_has_visible_focus ()
@@ -7826,96 +7594,6 @@
   (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-is-toplevel)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_widget_set_window ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-widget-set-window))
-
-(defun gtk-widget-set-window (widget window)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-1}
-  @argument[widget]{a @class{gtk-widget} object}
-  @argument[window]{a @class{gdk-window} object}
-  @begin{short}
-    Sets a @arg{widget}'s @arg{window}.
-  @end{short}
-  This function should only be used in a widget's \"realize\" implementation.
-  The window passed is usually either new window created with the function
-  @fun{gdk-window-new}, or the window of its parent widget as returned by the
-  function @fun{gtk-widget-get-parent-window}.
-
-  Widgets must indicate whether they will create their own @class{gdk-window} by
-  calling the function @fun{gtk-widget-set-has-window}. This is usually done in
-  the widget's @code{init()} function.
-
-  @begin[Note]{dictionary}
-    This function does not add any reference to window.
-  @end{dictionary}
-  Since 2.18
-  @see-class{gtk-widget}
-  @see-class{gtk-window}
-  @see-function{gtk-widget-get-window}
-  @see-function{gtk-widget-get-parent-window}
-  @see-function{gtk-widget-set-has-window}"
-  (setf (gtk-widget-window widget) window))
-
-(export 'gtk-widget-set-window)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_widget_set_receives_default ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-widget-set-receives-default))
-
-(defun gtk-widget-set-receives-default (widget receives-default)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-1}
-  @argument[widget]{a @class{gtk-widget} object}
-  @argument[receives-default]{whether or not @arg{widget} can be a default
-    widget.}
-  @begin{short}
-    Specifies whether @arg{widget} will be treated as the default widget within
-    its toplevel when it has the focus, even if another widget is the default.
-  @end{short}
-
-  See the function @fun{gtk-widget-grab-default} for details about the meaning
-  of \"default\".
-
-  Since 2.18
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-get-receives-default}
-  @see-function{gtk-widget-grab-default}"
-  (setf (gtk-widget-receives-default widget) receives-default))
-
-(export 'gtk-widget-set-receives-default)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_widget_get_receives_default ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-widget-get-receives-default))
-
-(defun gtk-widget-get-receives-default (widget)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-1}
-  @argument[widget]{a @class{gtk-widget} object}
-  @return{@em{True} if @arg{widget} acts as default widget when focussed,
-    @code{nil} otherwise.}
-  @begin{short}
-    Determines whether @arg{widget} is alyways treated as default widget withing
-    its toplevel when it has the focus, even if another widget is the default.
-  @end{short}
-
-  See the function @fun{gtk-widget-set-receives-default}.
-
-  Since 2.18
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-set-receives-default}"
-  (gtk-widget-receives-default widget))
-
-(export 'gtk-widget-get-receives-default)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_set_support_multidevice ()
@@ -8133,73 +7811,6 @@
 ;;;
 ;;; Since 3.6
 ;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_widget_get_opacity ()
-;;; ----------------------------------------------------------------------------
-
-#+gtk-3-8
-(declaim (inline gtk-widget-get-opacity))
-
-#+gtk-3-8
-(defun gtk-widget-get-opacity (widget)
- #+cl-cffi-gtk-documentation
- "@version{2013-10-27}
-  @argument[widget]{a @class{gtk-widget} object}
-  @return{The requested opacity for this widget.}
-  @begin{short}
-    Fetches the requested opacity for this widget.
-  @end{short}
-  See the function @fun{gtk-widget-set-opacity}.
-
-  Since 3.8
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-set-opacity}"
-  (gtk-widget-opacity widget))
-
-#+gtk-3-8
-(export 'gtk-widget-get-opacity)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_widget_set_opacity ()
-;;; ----------------------------------------------------------------------------
-
-#+gtk-3-8
-(declaim (inline gtk-widget-set-opacity))
-
-#+gtk-3-8
-(defun gtk-widget-set-opacity (widget opacity)
- #+cl-cffi-gtk-documentation
- "@version{2013-10-27}
-  @argument[widget]{a @class{gtk-widget} object}
-  @argument[opacity]{desired opacity, between 0 and 1}
-  @begin{short}
-    Request the widget to be rendered partially transparent, with opacity 0
-    being fully transparent and 1 fully opaque.
-  @end{short}
-  Opacity values are clamped to the [0,1] range. This works on both toplevel
-  widget, and child widgets, although there are some limitations:
-  @begin{itemize}
-    @begin{item}
-      For toplevel widgets this depends on the capabilities of the windowing
-      system. On X11 this has any effect only on X screens with a compositing
-      manager running. See the function @fun{gtk-widget-is-composited}. On
-      Windows it should work always, although setting a window's opacity after
-      the window has been shown causes it to flicker once on Windows.
-    @end{item}
-    @begin{item}
-      For child widgets it does not work if any affected widget has a native
-      window, or disables double buffering.
-    @end{item}
-  @end{itemize}
-  Since 3.8
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-get-opacity}
-  @see-function{gtk-widget-is-composited}"
-  (setf (gtk-widget-opacity widget) opacity))
-
-#+gtk-3-8
-(export 'gtk-widget-set-opacity)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_path ()
@@ -8746,547 +8357,30 @@
     @entry[:center]{Center natural width of widget inside the allocation.}
   @end{table}
   @see-class{gtk-widget}
-  @see-function{gtk-widget-set-halign}
-  @see-function{gtk-widget-set-valign}")
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_widget_get_halign ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-widget-get-halign))
-
-(defun gtk-widget-get-halign (widget)
- #+cl-cffi-gtk-documentation
- "@version{2013-12-30}
-  @argument[widget]{a @class{gtk-widget} object}
-  @return{The horizontal alignment of type @symbol{gtk-align} of @arg{widget}.}
-  @short{Gets the value of the \"halign\" property.}
-  @see-class{gtk-widget}
-  @see-symbol{gtk-align}
-  @see-function{gtk-widget-set-halign}"
-  (gtk-widget-halign widget))
-
-(export 'gtk-widget-get-halign)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_widget_set_halign ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-widget-set-halign))
-
-(defun gtk-widget-set-halign (widget align)
- #+cl-cffi-gtk-documentation
- "@version{2013-12-30}
-  @argument[widget]{a @class{gtk-widget} object}
-  @argument[align]{the horizontal alignment of type @symbol{gtk-align}}
-  @begin{short}
-    Sets the horizontal alignment of @arg{widget}.
-  @end{short}
-  See the @code{\"halign\"} property.
-  @see-class{gtk-widget}
-  @see-symbol{gtk-align}
-  @see-function{gtk-widget-get-halign}"
-  (setf (gtk-widget-halign widget) align))
-
-(export 'gtk-widget-set-halign)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_widget_get_valign ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-widget-get-valign))
-
-(defun gtk-widget-get-valign (widget)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-1}
-  @argument[widget]{a @class{gtk-widget} object}
-  @return{The vertical alignment of widget.}
-  @begin{short}
-    Gets the value of the @code{\"valign\"} property.
-  @end{short}
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-set-valign}"
-  (gtk-widget-valign widget))
-
-(export 'gtk-widget-get-valign)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_widget_set_valign ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-widget-set-valign))
-
-(defun gtk-widget-set-valign (widget align)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-1}
-  @argument[widget]{a @class{gtk-widget} object}
-  @argument[align]{the vertical alignment}
-  @begin{short}
-    Sets the vertical alignment of widget. See the @code{\"valign\"} property.
-  @end{short}
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-get-valign}"
-  (setf (gtk-widget-valign widget) align))
-
-(export 'gtk-widget-set-valign)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_widget_get_margin_left ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-widget-get-margin-left))
-
-(defun gtk-widget-get-margin-left (widget)
- #+cl-cffi-gtk-documentation
- "@version{2013-7-15}
-  @argument[widget]{a @class{gtk-widget} object}
-  @return{The left margin of widget.}
-  @short{Gets the value of the @code{\"margin-left\"} property.}
-
-  Since 3.0
-  @see-function{gtk-widget-set-margin-left}
-  @see-function{gtk-widget-get-margin-right}
-  @see-function{gtk-widget-set-margin-right}
-  @see-function{gtk-widget-get-margin-top}
-  @see-function{gtk-widget-set-margin-top}
-  @see-function{gtk-widget-get-margin-bottom}
-  @see-function{gtk-widget-set-margin-bottom}"
-  (gtk-widget-margin-left widget))
-
-(export 'gtk-widget-get-margin-left)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_widget_set_margin_left ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-widget-set-margin-left))
-
-(defun gtk-widget-set-margin-left (widget margin)
- #+cl-cffi-gtk-documentation
- "@version{2013-7-15}
-  @argument[widget]{a @class{gtk-widget} object}
-  @argument[margin]{the left margin}
-  @begin{short}
-    Sets the left margin of widget. See the @code{\"margin-left\"} property.
-  @end{short}
-
-  Since 3.0
-  @see-function{gtk-widget-get-margin-left}
-  @see-function{gtk-widget-get-margin-right}
-  @see-function{gtk-widget-set-margin-right}
-  @see-function{gtk-widget-get-margin-top}
-  @see-function{gtk-widget-set-margin-top}
-  @see-function{gtk-widget-get-margin-bottom}
-  @see-function{gtk-widget-set-margin-bottom}"
-  (setf (gtk-widget-margin-left widget) margin))
-
-(export 'gtk-widget-set-margin-left)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_widget_get_margin_right ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-widget-get-margin-right))
-
-(defun gtk-widget-get-margin-right (widget)
- #+cl-cffi-gtk-documentation
- "@version{2013-7-15}
-  @argument[widget]{a @class{gtk-widget} object}
-  @return{The right margin of widget.}
-  @short{Gets the value of the @code{\"margin-right\"} property.}
-
-  Since 3.0
-  @see-function{gtk-widget-get-margin-left}
-  @see-function{gtk-widget-set-margin-left}
-  @see-function{gtk-widget-set-margin-right}
-  @see-function{gtk-widget-get-margin-top}
-  @see-function{gtk-widget-set-margin-top}
-  @see-function{gtk-widget-get-margin-bottom}
-  @see-function{gtk-widget-set-margin-bottom}"
-  (gtk-widget-margin-right widget))
-
-(export 'gtk-widget-get-margin-right)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_widget_set_margin_right ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-widget-set-margin-right))
-
-(defun gtk-widget-set-margin-right (widget margin)
- #+cl-cffi-gtk-documentation
- "@version{2013-7-15}
-  @argument[widget]{a @class{gtk-widget} object}
-  @argument[margin]{the right margin}
-  @begin{short}
-    Sets the right margin of widget. See the @code{\"margin-right\"} property.
-  @end{short}
-
-  Since 3.0
-  @see-function{gtk-widget-get-margin-left}
-  @see-function{gtk-widget-set-margin-left}
-  @see-function{gtk-widget-get-margin-right}
-  @see-function{gtk-widget-get-margin-top}
-  @see-function{gtk-widget-set-margin-top}
-  @see-function{gtk-widget-get-margin-bottom}
-  @see-function{gtk-widget-set-margin-bottom}"
-  (setf (gtk-widget-margin-right widget) margin))
-
-(export 'gtk-widget-set-margin-right)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_widget_get_margin_top ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-widget-get-margin-top))
-
-(defun gtk-widget-get-margin-top (widget)
- #+cl-cffi-gtk-documentation
- "@version{2013-7-15}
-  @argument[widget]{a @class{gtk-widget} object}
-  @return{The top margin of widget.}
-  @short{Gets the value of the @code{\"margin-top\"} property.}
-
-  Since 3.0
-  @see-function{gtk-widget-get-margin-left}
-  @see-function{gtk-widget-set-margin-left}
-  @see-function{gtk-widget-get-margin-right}
-  @see-function{gtk-widget-set-margin-right}
-  @see-function{gtk-widget-set-margin-top}
-  @see-function{gtk-widget-get-margin-bottom}
-  @see-function{gtk-widget-set-margin-bottom}"
-  (gtk-widget-margin-top widget))
-
-(export 'gtk-widget-get-margin-top)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_widget_set_margin_top ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-widget-set-margin-top))
-
-(defun gtk-widget-set-margin-top (widget margin)
- #+cl-cffi-gtk-documentation
- "@version{2013-7-15}
-  @argument[widget]{a @class{gtk-widget} object}
-  @argument[margin]{the top margin}
-  @begin{short}
-    Sets the top margin of widget. See the @code{\"margin-top\"} property.
-  @end{short}
-
-  Since 3.0
-  @see-function{gtk-widget-get-margin-left}
-  @see-function{gtk-widget-set-margin-left}
-  @see-function{gtk-widget-get-margin-right}
-  @see-function{gtk-widget-set-margin-right}
-  @see-function{gtk-widget-get-margin-top}
-  @see-function{gtk-widget-get-margin-bottom}
-  @see-function{gtk-widget-set-margin-bottom}"
-  (setf (gtk-widget-margin-top widget) margin))
-
-(export 'gtk-widget-set-margin-top)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_widget_get_margin_bottom ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-widget-get-margin-bottom))
-
-(defun gtk-widget-get-margin-bottom (widget)
- #+cl-cffi-gtk-documentation
- "@version{2013-7-15}
-  @argument[widget]{a @class{gtk-widget} object}
-  @return{The bottom margin of widget.}
-  @short{Gets the value of the @code{\"margin-bottom\"} property.}
-
-  Since 3.0
-  @see-function{gtk-widget-get-margin-left}
-  @see-function{gtk-widget-set-margin-left}
-  @see-function{gtk-widget-get-margin-right}
-  @see-function{gtk-widget-set-margin-right}
-  @see-function{gtk-widget-get-margin-top}
-  @see-function{gtk-widget-set-margin-top}
-  @see-function{gtk-widget-set-margin-bottom}"
-  (gtk-widget-margin-bottom widget))
-
-(export 'gtk-widget-get-margin-bottom)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_widget_set_margin_bottom ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-widget-set-margin-bottom))
-
-(defun gtk-widget-set-margin-bottom (widget margin)
- #+cl-cffi-gtk-documentation
- "@version{2013-7-15}
-  @argument[widget]{a @class{gtk-widget} object}
-  @argument[margin]{the bottom margin}
-  @begin{short}
-    Sets the bottom margin of widget. See the @code{\"margin-bottom\"} property.
-  @end{short}
-
-  Since 3.0
-  @see-function{gtk-widget-get-margin-left}
-  @see-function{gtk-widget-set-margin-left}
-  @see-function{gtk-widget-get-margin-right}
-  @see-function{gtk-widget-set-margin-right}
-  @see-function{gtk-widget-get-margin-top}
-  @see-function{gtk-widget-set-margin-top}
-  @see-function{gtk-widget-get-margin-bottom}"
-  (setf (gtk-widget-margin-top widget) margin))
-
-(export 'gtk-widget-set-margin-bottom)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_widget_get_hexpand ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-widget-get-hexpand))
-
-(defun gtk-widget-get-hexpand (widget)
- #+cl-cffi-gtk-documentation
- "@version{2013-7-31}
-  @argument[widget]{a @class{gtk-widget} object}
-  @return{Whether the @code{\"hexpand\"} flag is set.}
-  @begin{short}
-    Gets whether the widget would like any available extra horizontal space.
-  @end{short}
-  When a user resizes a @class{gtk-window}, widgets with expand = @em{true}
-  generally receive the extra space. For example, a list or scrollable area or
-  document in your window would often be set to expand.
-
-  Containers should use the function @fun{gtk-widget-compute-expand} rather than
-  this function, to see whether a widget, or any of its children, has the expand
-  flag set. If any child of a widget wants to expand, the parent may ask to
-  expand also.
-
-  This function only looks at the widget's own @code{\"hexpand\"} flag, rather
-  than computing whether the entire widget tree rooted at this widget wants to
-  expand.
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-set-hexpand}
-  @fun{gtk-widget-compute-expand}"
-  (gtk-widget-hexpand widget))
-
-(export 'gtk-widget-get-hexpand)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_widget_set_hexpand ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-widget-set-hexpand))
-
-(defun gtk-widget-set-hexpand (widget expand)
- #+cl-cffi-gtk-documentation
- "@version{2013-7-31}
-  @argument[widget]{a @class{gtk-widget} object}
-  @argument[expand]{whether to expand}
-  @begin{short}
-    Sets whether the @arg{widget} would like any available extra horizontal
-    space.
-  @end{short}
-  When a user resizes a @class{gtk-window}, widgets with expand = @em{true}
-  generally receive the extra space. For example, a list or scrollable area or
-  document in your window would often be set to expand.
-
-  Call this function to set the expand flag if you would like your widget to
-  become larger horizontally when the window has extra room.
-
-  By default, widgets automatically expand if any of their children want to
-  expand. To see if a widget will automatically expand given its current
-  children and state, call the function @fun{gtk-widget-compute-expand}. A
-  container can decide how the expandability of children affects the expansion
-  of the container by overriding the @code{compute_expand} virtual method on
-  @class{gtk-widget}.
-
-  Setting @code{\"hexpand\"} explicitly with this function will override the
-  automatic expand behavior.
-
-  This function forces the widget to expand or not to expand, regardless of
-  children. The override occurs because the function
-  @sym{gtk-widget-set-hexpand} sets the @code{\"hexpand-set\"} property, see
-  the function @fun{gtk-widget-set-hexpand-set}, which causes the widget's
-  @code{\"hexpand\"} value to be used, rather than looking at children and
-  widget state.
-  @see-class{gtk-window}
-  @see-function{gtk-widget-get-hexpand}
-  @see-function{gtk-widget-set-hexpand-set}
-  @see-function{gtk-widget-compute-expand}"
-  (setf (gtk-widget-hexpand widget) expand))
-
-(export 'gtk-widget-set-hexpand)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_widget_get_hexpand_set ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-widget-get-hexpand-set))
-
-(defun gtk-widget-get-hexpand-set (widget)
- #+cl-cffi-gtk-documentation
- "@version{2013-7-31}
-  @argument[widget]{a @class{gtk-widget} object}
-  @return{Whether @code{\"hexpand\"} has been explicitly set.}
-  @begin{short}
-    Gets whether the function @fun{gtk-widget-set-hexpand} has been used to
-    explicitly set the expand flag on this @arg{widget}.
-  @end{short}
-
-  If @code{\"hexpand\"} is set, then it overrides any computed expand value
-  based on child widgets. If @code{\"hexpand\"} is not set, then the expand
-  value depends on whether any children of the widget would like to expand.
-
-  There are few reasons to use this function, but it is here for completeness
-  and consistency.
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-set-hexpand}
-  @see-function{gtk-widget-set-hexpand-set}"
-  (gtk-widget-hexpand-set widget))
-
-(export 'gtk-widget-get-hexpand-set)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_widget_set_hexpand_set ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-widget-set-hexpand-set))
-
-(defun gtk-widget-set-hexpand-set (widget set)
- #+cl-cffi-gtk-documentation
- "@version{2013-7-31}
-  @argument[widget]{a @class{gtk-widget} object}
-  @argument[set]{value for the @code{\"hexpand-set\"} property}
-  @begin{short}
-    Sets whether the @code{\"hexpand\"} flag, see the function
-    @fun{gtk-widget-get-hexpand}, will be used.
-  @end{short}
-
-  The @code{\"hexpand-set\"} property will be set automatically when you call
-  the function @fun{gtk-widget-set-hexpand} to set @code{\"hexpand\"}, so the
-  most likely reason to use this function would be to unset an explicit expand
-  flag.
-
-  If @code{\"hexpand\"} is set, then it overrides any computed expand value
-  based on child widgets. If @code{\"hexpand\"} is not set, then the expand
-  value depends on whether any children of the widget would like to expand.
-
-  There are few reasons to use this function, but it is here for completeness
-  and consistency.
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-get-hexpand}
-  @see-function{gtk-widget-set-hexpand}
-  @see-function{gtk-widget-get-hexpand-set}"
-  (setf (gtk-widget-hexpand-set widget) set))
-
-(export 'gtk-widget-set-hexpand-set)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_widget_get_vexpand ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-widget-get-vexpand))
-
-(defun gtk-widget-get-vexpand (widget)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-1}
-  @argument[widget]{a @class{gtk-widget} object}
-  @return{Whether the @code{\"vexpand\"} flag is set.}
-  @begin{short}
-    Gets whether the @arg{widget} would like any available extra vertical space.
-  @end{short}
-  See the function @fun{gtk-widget-get-hexpand} for more detail.
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-set-vexpand}
-  @see-function{gtk-widget-get-hexpand}"
-  (gtk-widget-vexpand widget))
-
-(export 'gtk-widget-get-vexpand)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_widget_set_vexpand ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-widget-set-vexpand))
-
-(defun gtk-widget-set-vexpand (widget expand)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-1}
-  @argument[widget]{a @class{gtk-widget} object}
-  @argument[expand]{whether to expand}
-  @begin{short}
-    Sets whether the @arg{widget} would like any available extra vertical space.
-  @end{short}
-  See the function @fun{gtk-widget-set-hexpand} for more detail.
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-get-vexpand}
-  @see-function{gtk-widget-set-hexpand}"
-  (setf (gtk-widget-vexpand widget) expand))
-
-(export 'gtk-widget-set-vexpand)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_widget_get_vexpand_set ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-widget-get-vexpand-set))
-
-(defun gtk-widget-get-vexpand-set (widget)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-1}
-  @argument[widget]{a @class{gtk-widget} object}
-  @return{Whether vexpand has been explicitly set.}
-  @begin{short}
-    Gets whether the function @fun{gtk-widget-set-vexpand} has been used to
-    explicitly set the expand flag on this @arg{widget}.
-  @end{short}
-
-  See the function @fun{gtk-widget-get-hexpand-set} for more detail.
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-set-vexpand}
-  @see-function{gtk-widget-get-hexpand-set}"
-  (gtk-widget-vexpand-set widget))
-
-(export 'gtk-widget-get-vexpand-set)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_widget_set_vexpand_set ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-widget-set-vexpand-set))
-
-(defun gtk-widget-set-vexpand-set (widget set)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-1}
-  @argument[widget]{a @class{gtk-widget} object}
-  @argument[set]{value for @code{\"vexpand-set\"} property}
-  @begin{short}
-    Sets whether the @code{\"vexpand\"} flag, see the function
-    @fun{gtk-widget-get-vexpand}, will be used.
-  @end{short}
-
-  See the function @fun{gtk-widget-set-hexpand-set} for more detail.
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-get-vexpand}
-  @see-function{gtk-widget-get-vexpand-set}
-  @see-function{gtk-widget-set-hexpand-set}"
-  (setf (gtk-widget-vexpand-set widget) set))
-
-(export 'gtk-widget-set-vexpand-set)
+  @see-function{gtk-widget-halign}
+  @see-function{gtk-widget-valign}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_queue_compute_expand ()
-;;;
-;;; void gtk_widget_queue_compute_expand (GtkWidget *widget);
-;;;
-;;; Mark widget as needing to recompute its expand flags. Call this function
-;;; when setting legacy expand child properties on the child of a container.
-;;;
-;;; See gtk_widget_compute_expand().
-;;;
-;;; widget :
-;;;     a GtkWidget
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_widget_queue_compute_expand" gtk-widget-queue-compute-expand)
+    :void
+ #+cl-cffi-gtk-documentation
+ "@version{2014-2-8}
+  @argument[widget]{a @class{gtk-widget} object}
+  @begin{short}
+    Mark @arg{widget} as needing to recompute its expand flags.
+  @end{short}
+  Call this function when setting legacy expand child properties on the child
+  of a container.
+
+  See the function @fun{gtk-widget-compute-expand}.
+  @see-class{gtk-widget}
+  @see-function{gtk-widget-comput-expand}"
+  (widget (g-object gtk-widget)))
+
+(export 'gtk-widget-queue-compute-expand)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_compute_expand ()
@@ -9294,16 +8388,16 @@
 
 (defcfun ("gtk_widget_compute_expand" gtk-widget-compute-expand) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-12-2}
-  @argument[widget]{the widget}
-  @argument[orientation]{expand direction}
+ "@version{2014-2-8}
+  @argument[widget]{a @class{gtk-widget} object}
+  @argument[orientation]{expand direction of type @symbol{gtk-orientation}}
   @return{Whether @arg{widget} tree rooted here should be expanded.}
   @begin{short}
     Computes whether a container should give this widget extra space when
     possible.
   @end{short}
   Containers should check this, rather than looking at the functions
-  @fun{gtk-widget-get-hexpand} or @fun{gtk-widget-get-vexpand}.
+  @fun{gtk-widget-hexpand} or @fun{gtk-widget-vexpand}.
 
   This function already checks whether the widget is visible, so visibility
   does not need to be checked separately. Non-visible widgets are not
@@ -9314,8 +8408,8 @@
   expand if some of its children do.
   @see-class{gtk-widget}
   @see-symbol{gtk-orientation}
-  @see-function{gtk-widget-get-hexpand}
-  @see-function{gtk-widget-get-vexpand}"
+  @see-function{gtk-widget-hexpand}
+  @see-function{gtk-widget-vexpand}"
   (widget (g-object gtk-widget))
   (orientation gtk-orientation))
 

@@ -4,12 +4,14 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.8.9 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
+
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -54,8 +56,6 @@
    gtk-orientable-orientation
    "orientation" "GtkOrientation" t t))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-orientable atdoc:*class-name-alias*) "Interface"
       (documentation 'gtk-orientable 'type)
@@ -75,67 +75,41 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Property Details
+;;; Property and Accessor Details
 ;;;
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-orientable-orientation ---------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "orientation"
                                                'gtk-orientable) 't)
  "The @code{\"orientation\"} property of type @symbol{gtk-orientation}
-  (Read / Write)@br{}
-  The orientation of the orientable.@br{}
+  (Read / Write) @br{}
+  The orientation of the orientable. @br{}
   Default value: @code{:horizontal}
   Since 2.16")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-orientable-orientation atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-orientable-orientation 'function)
- "@version{2013-3-30}
-  Accessor of the slot @arg{\"orientation\"} of the @class{gtk-orientable}
-  interface.")
+ "@version{2014-2-9}
+  @argument[object]{a @class{gtk-orientable} widet}
+  @syntax[]{(gtk-orientable-orientation object) >= orientation}
+  @syntax[]{(setf gtk-orientable-orientation object) orientation)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-orientable]{orientation} of the
+    @class{gtk-orientable} interface.
+  @end{short}
 
-;;; ----------------------------------------------------------------------------
-;;; gtk_orientable_get_orientation ()
-;;; ----------------------------------------------------------------------------
+  The generic function @sym{gtk-orientable-orientation} returns the orientation
+  of the orientable.
 
-(declaim (inline gtk-orientable-get-orientation))
+  The generic function @sym{(setf gtk-orientable-orientation)} sets the
+  orientation of the orientable.
 
-(defun gtk-orientable-get-orientation (orientable)
- #+cl-cffi-gtk-documentation
- "@version{2013-3-30}
-  @argument[orientable]{a @class{gtk-orientable} instance}
-  @return{The orientation of the @arg{orientable}.}
-  @short{Retrieves the orientation of the @arg{orientable}.}
-
-  Since 2.16"
-  (gtk-orientable-orientation orientable))
-
-(export 'gtk-orientable-get-orientation)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_orientable_set_orientation ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-orientable-set-orientation))
-
-(defun gtk-orientable-set-orientation (orientable orientation)
- #+cl-cffi-gtk-documentation
- "@version{2013-3-30}
-  @argument[orientable]{a @class{gtk-orientable} instance}
-  @argument[orientation]{the @arg{orientable}'s new @arg{orientation}}
-  @short{Sets the @arg{orientation} of the @arg{orientable}.}
-
-  Since 2.16"
-  (setf (gtk-orientable-orientation orientable) orientation))
-
-(export 'gtk-orientable-set-orientation)
+  Since 2.16
+  @see-class{gtk-orientable}")
 
 ;;; --- End of file gtk.orientable.lisp ----------------------------------------
