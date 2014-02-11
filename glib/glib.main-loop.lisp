@@ -1278,7 +1278,7 @@
   checks all over your code, since there are doubtless many, many things that
   the user could do. Instead, you can use the following techniques:
   @begin{itemize}
-    @item{Use the function @fun{gtk-widget-set-sensitive} or modal dialogs to
+    @item{Use the function @fun{gtk-widget-sensitive} or modal dialogs to
       prevent the user from interacting with elements while the main loop is
       recursing.}
     @item{Avoid main loop recursion in situations where you cannot handle
