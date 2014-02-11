@@ -231,51 +231,45 @@
 
 (defcfun ("cairo_select_font_face" cairo-select-font-face) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-12-28}
-  @argument[cr]{a @symbol{cairo-t}}
+ "@version{2014-2-7}
+  @argument[cr]{a Cairo context}
   @argument[family]{a font family name, encoded in UTF-8}
   @argument[slant]{the slant for the font}
   @argument[weight]{the weight for the font}
-  @subheading{Note:}
-    The @sym{cairo-select-font-face} function call is part of what the cairo
-    designers call the \"toy\" text API. It is convenient for short demos
-    and simple programs, but it is not expected to be adequate for serious
-    text-using applications.
-
   @begin{short}
     Selects a family and style of font from a simplified description as a family
     name, slant and weight.
   @end{short}
-  Cairo provides no operation to list available family names on the system (this
-  is a \"toy\", remember), but the standard CSS2 generic family names,
-  (\"serif\", \"sans-serif\", \"cursive\", \"fantasy\", \"monospace\"), are
+  Cairo provides no operation to list available family names on the system, this
+  is a \"toy\", remember, but the standard CSS2 generic family names,
+  \"serif\", \"sans-serif\", \"cursive\", \"fantasy\", \"monospace\", are
   likely to work as expected.
 
   If family starts with the string \"cairo:\", or if no native font backends are
-  compiled in, cairo will use an internal font family. The internal font family
+  compiled in, Cairo will use an internal font family. The internal font family
   recognizes many modifiers in the family string, most notably, it recognizes
   the string \"monospace\". That is, the family name \"cairo:monospace\" will
   use the monospace version of the internal font family.
 
   For \"real\" font selection, see the font-backend-specific
-  @code{font-face-create} functions for the font backend you are using. (For
+  @code{font-face-create} functions for the font backend you are using. For
   example, if you are using the freetype-based @code{cairo-ft} font backend, see
-  the functions @fun{cairo-ft-font-face-create-for-ft-face} or
-  @fun{cairo-ft-font-face-create-for-pattern}.) The resulting font face could
+  the functions @code{cairo-ft-font-face-create-for-ft-face} or
+  @code{cairo-ft-font-face-create-for-pattern}. The resulting font face could
   then be used with the functions @fun{cairo-scaled-font-create} and
   @fun{cairo-set-scaled-font}.
 
   Similarly, when using the \"real\" font support, you can call directly into
-  the underlying font system, (such as fontconfig or freetype), for operations
+  the underlying font system, such as fontconfig or freetype, for operations
   such as listing available fonts, etc.
 
   It is expected that most applications will need to use a more comprehensive
-  font handling and text layout library, (for example, pango), in conjunction
-  with cairo.
+  font handling and text layout library, for example Pango, in conjunction
+  with Cairo.
 
   If text is drawn without a call to the function @sym{cairo-select-font-face},
-  (nor the function @fun{cairo-set-font-face} nor the function
-  @fun{cairo-set-scaled-font}), the default family is platform-specific, but is
+  nor the function @fun{cairo-set-font-face} nor the function
+  @fun{cairo-set-scaled-font}, the default family is platform-specific, but is
   essentially \"sans-serif\". Default slant is @code{:normal}, and default
   weight is @code{:normal}.
 
@@ -283,10 +277,18 @@
   @fun{cairo-toy-font-face-create} followed by the function
   @fun{cairo-set-font-face}.
 
+  @begin[Note]{dictionary}
+    The @sym{cairo-select-font-face} function call is part of what the cairo
+    designers call the \"toy\" text API. It is convenient for short demos
+    and simple programs, but it is not expected to be adequate for serious
+    text-using applications.
+  @end{dictionary}
   Since 1.0
   @see-symbol{cairo-t}
   @see-symbol{cairo-font-slant-t}
-  @see-symbol{cairo-font-weight-t}"
+  @see-symbol{cairo-font-weight-t}
+  @see-function{cairo-toy-font-face-create}
+  @see-function{cairo-set-font-face}"
   (cr (:pointer (:struct cairo-t)))
   (family :string)
   (slant cairo-font-slant-t)
