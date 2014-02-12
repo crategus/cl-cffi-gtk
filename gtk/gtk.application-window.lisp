@@ -2,11 +2,11 @@
 ;;; gtk.application-window.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.8.9 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2013 Dieter Kaiser
+;;; Copyright (C) 2013, 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -165,22 +165,29 @@
   the desktop shell is showing the menus or not. @br{}
   Default value: @code{true}")
 
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-application-window-show-menubar atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-application-window-show-menubar 'function)
- "@version{2013-5-29}
-  Accessor of the slot @code{\"show-menubar\"} of the
-  @class{gtk-application-window} class.
-  @see-class{gtk-application-window}
-  @see-function{gtk-application-window-get-show-menubar}
-  @see-function{gtk-application-window-set-show-menubar}")
+ "@version{2014-2-12}
+  @argument[window]{a @class{gtk-application-window} widget}
+  @argument[show-menubar]{whether to show a menubar when needed}
+  @syntax[]{(gtk-application-window-show-menubar object) => show-menubar}
+  @syntax[]{(setf (gtk-application-window-show-menubar object) show-menbar)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-application-window]{show-menubar} of the
+    @class{gtk-application-window} class.
+  @end{short}
+
+  The generic function @sym{gtk-application-window-show-menubar} returns whether
+  the window will display a menubar for the app menu and menubar as needed.
+
+  The generic function @sym{(setf gtk-application-window-show-menubar)} sets
+  whether the window will display a menubar for the app menu and menubar as
+  needed.
+
+  Since 3.4
+  @see-class{gtk-application-window}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_application_window_new ()
@@ -200,52 +207,6 @@
   (application (g-object gtk-application)))
 
 (export 'gtk-application-window-new)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_application_window_set_show_menubar ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-application-window-set-show-menubar))
-
-(defun gtk-application-window-set-show-menubar (window show-menubar)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-11}
-  @argument[window]{a @class{gtk-application-window} widget}
-  @argument[show-menubar]{whether to show a menubar when needed}
-  @begin{short}
-    Sets whether the @arg{window} will display a menubar for the app menu and
-    menubar as needed.
-  @end{short}
-
-  Since 3.4
-  @see-class{gtk-application-window}
-  @see-function{gtk-application-window-get-show-menubar}"
-  (setf (gtk-application-window-show-menubar window) show-menubar))
-
-(export 'gtk-application-window-set-show-menubar)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_application_window_get_show_menubar ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-application-window-get-show-menubar))
-
-(defun gtk-application-window-get-show-menubar (window)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-11}
-  @argument[window]{a @class{gtk-application-window} widget}
-  @return{@em{True} if @arg{window} will display a menubar when needed.}
-  @begin{short}
-    Returns whether the @arg{window} will display a menubar for the app menu and
-    menubar as needed.
-  @end{short}
-
-  Since 3.4
-  @see-class{gtk-application-window}
-  @see-function{gtk-application-window-set-show-menubar}"
-  (gtk-application-window-show-menubar window))
-
-(export 'gtk-application-window-get-show-menubar)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_application_window_get_id ()

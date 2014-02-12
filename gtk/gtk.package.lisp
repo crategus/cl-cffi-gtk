@@ -1040,10 +1040,9 @@
       A widget which is not displayed.
 
       @about-class{gtk-invisible}
+      @about-generic{gtk-invisible-screen}
       @about-function{gtk-invisible-new}
       @about-function{gtk-invisible-new-for-screen}
-      @about-function{gtk-invisible-set-screen}
-      @about-function{gtk-invisible-get-screen}
     @end{subsection}
     @begin[GtkMessageDialog]{subsection}
       A convenient message window.
@@ -4964,13 +4963,13 @@ setup_tree (void)
       Toplevel for embedding into other processes.
 
       @about-class{gtk-plug}
+      @about-generic{gtk-plug-embedded}
+      @about-generic{gtk-plug-socket-window}
       @about-function{gtk-plug-construct}
       @about-function{gtk-plug-construct-for-display}
       @about-function{gtk-plug-new}
       @about-function{gtk-plug-new-for-display}
       @about-function{gtk-plug-get-id}
-      @about-function{gtk-plug-get-embedded}
-      @about-function{gtk-plug-get-socket-window}
     @end{subsection}
     @begin[GtkSocket]{subsection}
       Container for widgets from other processes.
@@ -5231,9 +5230,8 @@ setup_tree (void)
       @class{gtk-window} subclass with @class{gtk-application} support.
 
       @about-class{gtk-application-window}
+      @about-generic{gtk-application-window-show-menubar}
       @about-function{gtk-application-window-new}
-      @about-function{gtk-application-window-set-show-menubar}
-      @about-function{gtk-application-window-get-show-menubar}
       @about-function{gtk-application-window-get-id}
     @end{subsection}
     @begin[GtkActionable]{subsection}

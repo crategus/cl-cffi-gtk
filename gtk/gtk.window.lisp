@@ -428,6 +428,7 @@
       (documentation 'gtk-window-accept-focus 'function)
  "@version{2014-2-9}
   @argument[object]{a @class{gtk-window} widget}
+  @argument[setting]{@em{true} to let this window receive input focus}
   @syntax[]{(gtk-window-accept-focus object) => accept-focus}
   @syntax[]{(setf (gtk-window-accept-focus object) accept-focus)}
   @begin{short}
@@ -465,6 +466,7 @@
       (documentation 'gtk-window-application 'function)
  "@version{2014-2-9}
   @argument[object]{a @class{gtk-window} widget}
+  @argument[application]{a @class{gtk-application}, or @code{nil}}
   @syntax[]{(gtk-window-application object) => application}
   @syntax[]{(setf (gtk-window-application object) application)}
   @begin{short}
@@ -478,8 +480,7 @@
   The generic function @sym{(setf gtk-window-application)} sets or unsets the
   @class{gtk-application} associated with the window.
 
-  The @arg{application} will be kept alive for at least as long as the
-  window is open.
+  The application will be kept alive for at least as long as the window is open.
 
   Since 3.0
   @see-class{gtk-window}
@@ -504,6 +505,7 @@
       (documentation 'gtk-window-attached-to 'function)
  "@version{2014-2-9}
   @argument[object]{a @class{gtk-window} widget}
+  @argument[attach-widget]{a @class{gtk-widget}, or @code{nil}}
   @syntax[]{(gtk-window-attached-to object) => attach-widget}
   @syntax[]{(setf (gtk-window-attached-to object) attach-widget)}
   @begin{short}
@@ -515,10 +517,10 @@
   the window is attached, or @code{nil} if the window is not attached to any
   widget.
 
-  The generic function @sym{(setf gkt-window-attached-to)} marks @arg{window}
+  The generic function @sym{(setf gkt-window-attached-to)} marks the window
   as attached to @arg{attach-widget}. This creates a logical binding between
   the window and the widget it belongs to, which is used by GTK+ to propagate
-  information such as styling or accessibility to window as if it was a
+  information such as styling or accessibility to the window as if it was a
   children of @arg{attach-widget}.
 
   Examples of places where specifying this relation is useful are for instance
@@ -556,6 +558,7 @@
       (documentation 'gtk-window-decorated 'function)
  "@version{2014-2-9}
   @argument[object]{a @class{gtk-window} widget}
+  @argument[setting]{@em{true} to decorate the window}
   @syntax[]{(gtk-window-decorated object) => setting}
   @syntax[]{(setf (gtk-window-decorated object) setting)}
   @begin{short}
@@ -569,11 +572,11 @@
 
   By default, windows are decorated with a title bar, resize controls, etc.
   Some window managers allow GTK+ to disable these decorations, creating a
-  borderless window. If you set the decorated property to @code{nil} using this
-  function, GTK+ will do its best to convince the window manager not to decorate
-  the window. Depending on the system, this function may not have any effect
-  when called on a window that is already visible, so you should call it before
-  calling the function @fun{gtk-widget-show}.
+  borderless window. If you set the @slot[gtk-window]{decorated} property to
+  @code{nil} using this function, GTK+ will do its best to convince the window
+  manager not to decorate the window. Depending on the system, this function may
+  not have any effect when called on a window that is already visible, so you
+  should call it before calling the function @fun{gtk-widget-show}.
 
   On Windows, this function always works, since there is no window manager
   policy involved.
@@ -635,6 +638,7 @@
       (documentation 'gtk-window-deletable 'function)
  "@version{2014-2-9}
   @argument[object]{a @class{gtk-window} widget}
+  @argument[setting]{@em{true} to decorate the window as deletable}
   @syntax[]{(gtk-window-deletable object) => setting}
   @syntax[]{(setf (gtk-window-deletable object) setting)}
   @begin{short}
@@ -647,9 +651,9 @@
   @sym{(setf gtk-window-deletable)}.
 
   By default, windows have a close button in the window frame. Some window
-  managers allow GTK+ to disable this button. If you set the deletable property
-  to @code{nil} using this function, GTK+ will do its best to convince the
-  window manager not to show a close button.
+  managers allow GTK+ to disable this button. If you set the
+  @slot[gtk-window]{deletable} property to @code{nil} using this function, GTK+
+  will do its best to convince the window manager not to show a close button.
 
   Depending on the system, this function may not have any effect when called on
   a window that is already visible, so you should call it before calling
@@ -678,6 +682,7 @@
       (documentation 'gtk-window-destroy-with-parent 'function)
  "@version{2014-2-9}
   @argument[object]{a @class{gtk-window} widget}
+  @argument[setting]{whether to destroy window with its transient parent}
   @syntax[]{(gtk-window-destroy-with-parent object) => setting}
   @syntax[]{(setf (gtk-window-destroy-with-parent object) setting)}
   @begin{short}
@@ -713,6 +718,7 @@
       (documentation 'gtk-window-focus-on-map 'function)
  "@version{2013-7-30}
   @argument[object]{a @class{gtk-window} widget}
+  @argument[setting]{@em{true} to let this window receive input focus on map}
   @syntax[]{(gtk-window-focus-on-map object) => setting}
   @syntax[]{(setf (gtk-window-focus-on-map object) setting)}
   @begin{short}
@@ -748,6 +754,7 @@
       (documentation 'gtk-window-focus-visible 'function)
  "@version{2014-2-9}
   @argument[object]{a @class{gtk-window} widget}
+  @argument[setting]{the new value}
   @syntax[]{(gtk-window-focus-visible object) => setting}
   @syntax[]{(setf (gtk-window-focus-visible object) setting)}
   @begin{short}
@@ -782,6 +789,7 @@
       (documentation 'gtk-window-gravity 'function)
  "@version{2014-2-9}
   @argument[object]{a @class{gtk-window} widget}
+  @argument[gravity]{window gravity}
   @syntax[]{(gtk-window-gravity object) => gravity}
   @syntax[]{(setf (gtk-window-gravity object) gravity)}
   @begin{short}
@@ -790,7 +798,7 @@
   @end{short}
 
   The generic function @sym{gtk-window-gravity} gets the value set by the
-  generic function @sym{(setf gtk-window-gravity)} for @arg{window}.
+  generic function @sym{(setf gtk-window-gravity)} for the window.
 
   Window gravity defines the meaning of coordinates passed to the function
   @fun{gtk-window-move}. See the function @fun{gtk-window-move} and the
@@ -822,6 +830,7 @@
       (documentation 'gtk-window-has-resize-grip 'function)
  "@version{2014-2-9}
   @argument[object]{a @class{gtk-window} widget}
+  @argument[value]{@em{true} to allow a resize grip}
   @syntax[]{(gtk-window-has-resize-grip object) => value}
   @syntax[]{(setf (gtk-window-has-resize-grip object) value)}
   @begin{short}
@@ -890,6 +899,7 @@
       (documentation 'gtk-window-hide-titlebar-when-maximized 'function)
  "@version{2014-2-9}
   @argument[object]{a @class{gtk-window} widget}
+  @argument[setting]{whether to hide the titlebar when window is maximized}
   @syntax[]{(gtk-window-hide-titlebar-when-maximized object) => setting}
   @syntax[]{(setf (gtk-window-hide-titlebar-when-maximized object) setting)}
   @begin{short}
@@ -926,6 +936,7 @@
       (documentation 'gtk-window-icon 'function)
  "@version{2013-7-30}
   @argument[object]{a @class{gtk-window} widget}
+  @argument[icon]{icon image, or @code{nil}}
   @syntax[]{(gtk-window-icon object) => icon}
   @syntax[]{(setf (gtk-window-icon object) icon)}
   @begin{short}
@@ -976,6 +987,7 @@
       (documentation 'gtk-window-icon-name 'function)
  "@version{2014-2-9}
   @argument[object]{a @class{gtk-window} widget}
+  @argument[name]{the name of the themed icon}
   @syntax[]{(gtk-window-icon-name object) => icon-name}
   @syntax[]{(setf (gtk-window-icon-name object) icon-name)}
   @begin{short}
@@ -1044,6 +1056,7 @@
       (documentation 'gtk-window-mnemonics-visible 'function)
  "@version{2014-2-9}
   @argument[object]{a @class{gtk-window} widget}
+  @argument[setting]{the new value}
   @syntax[]{(gtk-window-mnemonics-visible object) => setting}
   @syntax[]{(setf (gtk-window-mnemonics-visible object) setting)}
   @begin{short}
@@ -1075,6 +1088,7 @@
       (documentation 'gtk-window-modal 'function)
  "@version{2014-2-9}
   @argument[object]{a @class{gtk-window} widget}
+  @argument[modal]{whether the window is modal}
   @syntax[]{(gtk-window-modal object) => setting}
   @syntax[]{(setf (gtk-window-modal object) setting)}
   @begin{short}
@@ -1112,6 +1126,7 @@
       (documentation 'gtk-window-opacity 'function)
  "@version{2014-2-9}
   @argument[object]{a @class{gtk-window} widget}
+  @argument[opacity]{desired opacity, between 0 and 1}
   @syntax[]{(gtk-window-opacity object) => opacity}
   @syntax[]{(setf (gtk-window-opacity object) opacity)}
   @begin{short}
@@ -1126,9 +1141,9 @@
   system to make window partially transparent, with @arg{opacity} 0 being fully
   transparent and 1 fully opaque.
 
-  Values of the @arg{opacity} parameter are clamped to the [0,1] range. On X11
-  this has any effect only on X screens with a compositing manager running. See
-  the function @fun{gtk-widget-is-composited}. On Windows it should work always.
+  Values of the opacity parameter are clamped to the [0,1] range. On X11 this
+  has any effect only on X screens with a compositing manager running. See the
+  function @fun{gtk-widget-is-composited}. On Windows it should work always.
 
   Note that setting a window's opacity after the window has been shown causes
   it to flicker once on Windows.
@@ -1155,6 +1170,7 @@
       (documentation 'gtk-window-resizable 'function)
  "@version{2014-2-9}
   @argument[object]{a @class{gtk-window} widget}
+  @argument[resizable]{@em{true} if the user can resize this window}
   @syntax[]{(gtk-window-resizable object) => resizable}
   @syntax[]{(setf (gtk-window-resizable object) resizable)}
   @begin{short}
@@ -1204,6 +1220,8 @@
       (documentation 'gtk-window-role 'function)
  "@version{2014-2-9}
   @argument[object]{a @class{gtk-window} widget}
+  @argument[role]{unique identifier for the window to be used when restoring a
+    session}
   @syntax[]{(gtk-window-role object) => role}
   @syntax[]{(setf (gtk-window-role object) role)}
   @begin{short}
@@ -1242,6 +1260,7 @@
       (documentation 'gtk-window-screen 'function)
  "@version{2014-2-9}
   @argument[object]{a @class{gtk-window} widget}
+  @argument[screen]{a @class{gdk-screen}}
   @syntax[]{(gtk-window-screen object) => screen}
   @syntax[]{(setf (gtk-window-screen object) screen)}
   @begin{short}
@@ -1250,11 +1269,11 @@
   @end{short}
 
   The generic function @sym{gtk-window-screen} returns the @class{gdk-screen}
-  associated with @arg{window}.
+  associated with window.
 
   The generic function @sym{(setf gtk-window-screen)} sets the
   @class{gdk-screen} where the window is displayed; if the window is already
-  mapped, it will be unmapped, and then remapped on the new @arg{screen}.
+  mapped, it will be unmapped, and then remapped on the new screen.
 
   Since 2.2
   @see-class{gtk-window}
@@ -1276,6 +1295,7 @@
       (documentation 'gtk-window-skip-pager-hint 'function)
  "@version{2014-2-9}
   @argument[object]{a @class{gtk-window} widget}
+  @argument[setting]{@em{true} to keep this window from appearing in the pager}
   @syntax[]{(gtk-window-skip-pager-hint object) => setting}
   @syntax[]{(setf (gtk-window-skip-pager-hint object) setting)}
   @begin{short}
@@ -1311,6 +1331,8 @@
       (documentation 'gtk-window-skip-taskbar-hint 'function)
  "@version{2014-2-9}
   @argument[object]{a @class{gtk-window} widget}
+  @argument[setting]{@em{true} to keep this window from appearing in the task
+    bar}
   @syntax[]{(gtk-window-skip-taskbar-hint object) => setting}
   @syntax[]{(setf (gtk-window-skip-taskbar-hint object) setting)}
   @begin{short}
@@ -1352,7 +1374,7 @@
   The generic function @sym{(setf gtk-window-start-up-id} sets a string with
   startup notification identifier.
 
-  Startup notification identifiers are used by desktop environment to track
+  Startup notification identifiers are used by the desktop environment to track
   application startup, to provide user feedback and other features. This
   function changes the corresponding property on the underlying
   @class{gdk-window}. Normally, startup identifier is managed automatically and
@@ -1381,6 +1403,7 @@
       (documentation 'gtk-window-title 'function)
  "@version{2014-2-6}
   @argument[object]{a @class{gtk-window} widget}
+  @argument[title]{title of the window}
   @syntax[]{(gtk-window-title object) => title}
   @syntax[]{(setf gtk-window-title object) title)}
   @begin{short}
@@ -1417,6 +1440,7 @@
       (documentation 'gtk-window-transient-for 'function)
  "@version{2014-2-10}
   @argument[object]{a @class{gtk-window} widget}
+  @argument[parent]{parent window, or @code{nil}}
   @syntax[]{(gtk-window-transient-for object) => parent}
   @syntax[]{(setf gtk-window-transient-for object) parent)}
   @begin{short}
@@ -1478,6 +1502,7 @@
       (documentation 'gtk-window-type-hint 'function)
  "@version{2014-2-10}
   @argument[object]{a @class{gtk-window} widget}
+  @argument[hint]{the window type}
   @syntax[]{(gtk-window-type-hint) => hint}
   @syntax[]{(setf gtk-window-type-hint object) hint)}
   @begin{short}
@@ -1516,6 +1541,7 @@
       (documentation 'gtk-window-urgency-hint 'function)
  "@version{2013-7-30}
   @argument[object]{a @class{gtk-window} widget}
+  @argument[setting]{@em{true} to mark this window as urgent}
   @syntax[]{(gtk-window-urgency-hint object) => setting}
   @syntax[]{(setf gtk-window-urgency-hint object) setting)}
   @begin{short}
@@ -1548,6 +1574,7 @@
       (documentation 'gtk-window-window-position 'function)
  "@version{2014-2-10}
   @argument[object]{a @class{gtk-window} widget}
+  @argument[position]{a position constraint}
   @syntax[]{(gtk-window-window-position object) => position}
   @syntax[]{(setf gtk-window-window-position object) position)}
   @begin{short}

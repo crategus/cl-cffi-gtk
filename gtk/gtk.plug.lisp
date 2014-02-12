@@ -5,12 +5,12 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.8.9 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -45,29 +45,6 @@
 ;;;     gtk_plug_get_id
 ;;;     gtk_plug_get_embedded
 ;;;     gtk_plug_get_socket_window
-;;;
-;;; Object Hierarchy
-;;;
-;;;   GObject
-;;;    +----GInitiallyUnowned
-;;;          +----GtkWidget
-;;;                +----GtkContainer
-;;;                      +----GtkBin
-;;;                            +----GtkWindow
-;;;                                  +----GtkPlug
-;;;
-;;; Implemented Interfaces
-;;;
-;;; GtkPlug implements AtkImplementorIface and GtkBuildable.
-;;;
-;;; Properties
-;;;
-;;;   "embedded"                 gboolean              : Read
-;;;   "socket-window"            GdkWindow*            : Read
-;;;
-;;; Signals
-;;;
-;;;   "embedded"                                       : Run Last
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -127,9 +104,11 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Property Details
+;;; Property and Accessor Details
 ;;;
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-plug-embedded ------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "embedded" 'gtk-plug) 't)
@@ -139,30 +118,46 @@
   Since 2.12")
 
 #+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-plug-embedded atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-plug-embedded 'function)
+ "@version{2014-2-12}
+  @argument[object]{a @class{gtk-plug}}
+  @return{@em{True} if the plug is embedded in a socket.}
+  @begin{short}
+    Accessor of the slot @slot[gtk-plug]{embedded} of the @class{gtk-plug}
+    class.
+  @end{short}
+
+  Determines whether the plug is embedded in a socket.
+
+  Since 2.14
+  @see-class{gtk-plug}")
+
+;;; --- gtk-plug-socket-window -------------------------------------------------
+
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "socket-window" 'gtk-plug) 't)
  "The @code{\"socket-window\"} property of type @class{gdk-window} (Read) @br{}
   The window of the socket the plug is embedded in. @br{}
   Since 2.14")
 
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-plug-embedded atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-plug-embedded 'function)
- "@version{2013-5-26}
-  Accessor of the slot @code{\"embedded\"} of the @class{gtk-plug} class.")
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-plug-socket-window atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-plug-socket-window 'function)
- "@version{2013-5-26}
-  Accessor of the slot @code{\"socket-window\"} of the @class{gtk-plug} class.")
+ "@version{2014-2-12}
+  @argument[plug]{a @class{gtk-plug}}
+  @return{the window of the socket, or @code{nil}}
+  @begin{short}
+    Accessor of the slot @slot[gtk-plug]{socket-window} of the @class{gtk-plug}
+    class.
+  @end{short}
+
+  Retrieves the socket the plug is embedded in.
+
+  Since 2.14
+  @see-class{gtk-plug}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_plug_construct ()
@@ -246,54 +241,20 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_plug_get_id ()
-;;;
-;;; Window gtk_plug_get_id (GtkPlug *plug);
-;;;
-;;; Gets the window ID of a GtkPlug widget, which can then be used to embed this
-;;; window inside another window, for instance with gtk_socket_add_id().
-;;;
-;;; plug :
-;;;     a GtkPlug.
-;;;
-;;; Returns :
-;;;     the window ID for the plug
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_plug_get_id" gtk-plug-get-id) :pointer
+ #+cl-cffi-gtk-documentation
+ "@version{2014-2-12}
+  @argument[plug]{a @class{gtk-plug}}
+  @return{the window ID for the plug}
+  Gets the window ID of a @class{gtk-plug} widget, which can then be used to
+  embed this window inside another window, for instance with the function
+  @fun{gtk-socket-add-id}.
+  @see-class{gtk-plug}
+  @see-function{gtk-socket-add-id}"
   (plug (g-object gtk-plug)))
 
 (export 'gtk-plug-get-id)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_plug_get_embedded ()
-;;;
-;;; gboolean gtk_plug_get_embedded (GtkPlug *plug);
-;;;
-;;; Determines whether the plug is embedded in a socket.
-;;;
-;;; plug :
-;;;     a GtkPlug
-;;;
-;;; Returns :
-;;;     TRUE if the plug is embedded in a socket
-;;;
-;;; Since 2.14
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_plug_get_socket_window ()
-;;;
-;;; GdkWindow * gtk_plug_get_socket_window (GtkPlug *plug);
-;;;
-;;; Retrieves the socket the plug is embedded in.
-;;;
-;;; plug :
-;;;     a GtkPlug
-;;;
-;;; Returns :
-;;;     the window of the socket, or NULL. [transfer none]
-;;;
-;;; Since 2.14
-;;; ----------------------------------------------------------------------------
 
 ;;; --- End of file gtk.plug.lisp ----------------------------------------------

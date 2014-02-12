@@ -37,8 +37,8 @@ GTK+ Widgets and Objects
   Windows
 
     gtk.dialog.lisp                  - GtkDialog                   - GTK+ 3.6.4
-    gtk.invisible.lisp               - GtkInvisible                - GTK+ 3.6.4
-    gtk.message-dialog.lisp          - GtkMessageDialog            - GTK+ 3.6.4
+    gtk.invisible.lisp               - GtkInvisible                - GTK+ 3.8.9
+    gtk.message-dialog.lisp          - GtkMessageDialog            - GTK+ 3.8.9
     gtk.window.lisp                  - GtkWindow                   - GTK+ 3.8.9
     gtk.window-group.lisp            - GtkWindowGroup              - GTK+ 3.6.4
     gtk.about-dialog.lisp            - GtkAboutDialog              - GTK+ 3.6.4
@@ -243,7 +243,7 @@ GTK+ Widgets and Objects
 
   Cross-process Embedding
 
-    gtk.plug.lisp                    - GtkPlug                     - GTK+ 3.6.4&
+    gtk.plug.lisp                    - GtkPlug                     - GTK+ 3.8.9&
     gtk.socket.lisp                  - GtkSocket                   - GTK+ 3.6.4
 
   Recently Used Documents
@@ -270,7 +270,7 @@ GTK+ Widgets and Objects
   Application support
 
     gtk.application.lisp             - GtkApplication              - GTK+ 3.6.4
-    gtk.application-window.lisp      - GtkApplicationWindow        - GTK+ 3.6.4
+    gtk.application-window.lisp      - GtkApplicationWindow        - GTK+ 3.8.9
     gtk.actionable.lisp              - GtkActionable               - GTK+ 3.6.4&
 
   Deprecated

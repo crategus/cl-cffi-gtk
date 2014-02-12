@@ -5,12 +5,12 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.8.9 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -166,6 +166,8 @@
 ;;;
 ;;; ----------------------------------------------------------------------------
 
+;;; --- gtk-message-dialog-buttons ---------------------------------------------
+
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "buttons"
                                                'gtk-message-dialog) 't)
@@ -175,10 +177,44 @@
   Default value: @code{:none}")
 
 #+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-message-dialog-buttons atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-message-dialog-buttons 'function)
+ "@version{2013-9-10}
+  Accessor of the slot @code{\"buttons\"} of the @class{gtk-message-dialog}
+  class.
+  @see-class{gtk-message-dialog}")
+
+;;; --- gtk-message-dialog-image -----------------------------------------------
+
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "image" 'gtk-message-dialog) 't)
  "The @code{\"image\"} property of type @class{gtk-widget} (Read / Write) @br{}
   The image for this dialog. @br{}
   Since 2.10")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-message-dialog-image atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-message-dialog-image 'function)
+ "@version{2014-2-12}
+  @argument[object]{a @class{gtk-message-dialog} window}
+  @argument[image]{the image}
+  @begin{short}
+    Accessor of the slot @slot[gtk-message-dialog]{image} of the
+    @class{gtk-message-dialog} class.
+  @end{short}
+
+  The generic function @sym{gtk-message-dialog-image} returns the dialog's
+  image.
+
+  The generic function @sym{(setf (gtk-message-dialog-image object) image)}
+  sets the dialog's image to @arg{image}.
+
+  Since 2.14
+  @see-class{gtk-message-dialog}")
+
+;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "message-area"
@@ -191,6 +227,18 @@
   Since 2.22")
 
 #+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-message-dialog-message-area atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-message-dialog-message-area 'function)
+ "@version{2013-9-10}
+  Accessor of the slot @code{\"message-area\"} of the
+  @class{gtk-message-dialog} class.
+  @see-class{gtk-message-dialog}
+  @see-function{gtk-message-dialog-get-message-area}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "message-type"
                                                'gtk-message-dialog) 't)
  "The @code{\"message-type\"} property of type @symbol{gtk-message-type}
@@ -201,6 +249,17 @@
   Default value: @code{:info}")
 
 #+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-message-dialog-message-type atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-message-dialog-message-type 'function)
+ "@version{2013-9-10}
+  Accessor of the slot @code{\"message-type\"} of the
+  @class{gtk-message-dialog} class.
+  @see-class{gtk-message-dialog}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "secondary-text"
                                                'gtk-message-dialog) 't)
  "The @code{\"secondary-text\"} property of type @code{:string}
@@ -208,6 +267,18 @@
   The secondary text of the message dialog. @br{}
   Default value: @code{nil} @br{}
   Since 2.10")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-message-dialog-secondary-text atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-message-dialog-secondary-text 'function)
+ "@version{2013-9-10}
+  Accessor of the slot @code{\"secondary-text\"} of the
+  @class{gtk-message-dialog} class.
+  @see-class{gtk-message-dialog}
+  @see-function{gtk-message-dialog-format-secondary-text}")
+
+;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "secondary-use-markup"
@@ -220,79 +291,6 @@
   Since 2.10")
 
 #+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "text" 'gtk-message-dialog) 't)
- "The @code{\"text\"} property of type @code{:string} (Read / Write)@br{}
-  The primary text of the message dialog. If the dialog has a secondary text,
-  this will appear as the title. @br{}
-  Default value: \"\" @br{}
-  Since 2.10")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "use-markup"
-                                               'gtk-message-dialog) 't)
- "The @code{\"use-markup\"} property of type @code{:boolean}
-  (Read / Write)@br{}
-  @em{True} if the primary text of the dialog includes Pango markup. See
-  the function @fun{pango-parse-markup}. @br{}
-  Default value: @code{nil} @br{}
-  Since 2.10")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-message-dialog-buttons atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-message-dialog-buttons 'function)
- "@version{2013-9-10}
-  Accessor of the slot @code{\"buttons\"} of the @class{gtk-message-dialog}
-  class.
-  @see-class{gtk-message-dialog}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-message-dialog-image atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-message-dialog-image 'function)
- "@version{2013-9-10}
-  Accessor of the slot @code{\"image\"} of the @class{gtk-message-dialog}
-  class.
-  @see-class{gtk-message-dialog}
-  @see-function{gtk-message-dialog-get-image}
-  @see-function{gtk-message-dialog-set-image}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-message-dialog-message-area atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-message-dialog-message-area 'function)
- "@version{2013-9-10}
-  Accessor of the slot @code{\"message-area\"} of the
-  @class{gtk-message-dialog} class.
-  @see-class{gtk-message-dialog}
-  @see-function{gtk-message-dialog-get-message-area}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-message-dialog-message-type atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-message-dialog-message-type 'function)
- "@version{2013-9-10}
-  Accessor of the slot @code{\"message-type\"} of the
-  @class{gtk-message-dialog} class.
-  @see-class{gtk-message-dialog}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-message-dialog-secondary-text atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-message-dialog-secondary-text 'function)
- "@version{2013-9-10}
-  Accessor of the slot @code{\"secondary-text\"} of the
-  @class{gtk-message-dialog} class.
-  @see-class{gtk-message-dialog}
-  @see-function{gtk-message-dialog-format-secondary-text}")
-
-#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-message-dialog-secondary-use-markup
                atdoc:*function-name-alias*)
       "Accessor"
@@ -303,6 +301,16 @@
   @see-class{gtk-message-dialog}
   @see-function{gtk-message-dialog-format-secondary-markup}")
 
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "text" 'gtk-message-dialog) 't)
+ "The @code{\"text\"} property of type @code{:string} (Read / Write)@br{}
+  The primary text of the message dialog. If the dialog has a secondary text,
+  this will appear as the title. @br{}
+  Default value: \"\" @br{}
+  Since 2.10")
+
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-message-dialog-text atdoc:*function-name-alias*)
       "Accessor"
@@ -310,6 +318,18 @@
  "@version{2013-9-10}
   Accessor of the slot @code{\"text\"} of the @class{gtk-message-dialog} class.
   @see-class{gtk-message-dialog}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "use-markup"
+                                               'gtk-message-dialog) 't)
+ "The @code{\"use-markup\"} property of type @code{:boolean}
+  (Read / Write)@br{}
+  @em{True} if the primary text of the dialog includes Pango markup. See
+  the function @fun{pango-parse-markup}. @br{}
+  Default value: @code{nil} @br{}
+  Since 2.10")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-message-dialog-use-markup atdoc:*function-name-alias*)
@@ -535,48 +555,6 @@
         (gtk-message-dialog-text dialog) text))
 
 (export 'gtk-message-dialog-set-markup)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_message_dialog_set_image ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-message-dialog-set-image))
-
-(defun gtk-message-dialog-set-image (dialog image)
- #+cl-cffi-gtk-documentation
- "@version{2013-9-10}
-  @argument[dialog]{a @class{gtk-message-dialog} window}
-  @argument[image]{the image}
-  @begin{short}
-    Sets the @arg{dialog}'s image to @arg{image}.
-  @end{short}
-
-  Since 2.10
-  @see-class{gtk-message-dialog}
-  @see-function{gtk-message-dialog-get-image}"
-  (setf (gtk-message-dialog-image dialog) image))
-
-(export 'gtk-message-dialog-set-image)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_message_dialog_get_image ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-message-dialog-get-image))
-
-(defun gtk-message-dialog-get-image (dialog)
- #+cl-cffi-gtk-documentation
- "@version{2013-9-10}
-  @argument[dialog]{a @class{gtk-message-dialog} window}
-  @return{The @arg{dialog}'s image.}
-  @short{Gets the @arg{dialog}'s image.}
-
-  Since 2.14
-  @see-class{gtk-message-dialog}
-  @see-function{gtk-message-dialog-set-image}"
-  (gtk-message-dialog-image dialog))
-
-(export 'gtk-message-dialog-get-image)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_message_dialog_format_secondary_text ()
