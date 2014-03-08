@@ -697,7 +697,7 @@
     @entry[min-aspect]{Minimum width/height ratio.}
     @entry[max-aspect]{Maximum width/height ratio.}
     @entry[win-gravity]{Window gravity, see the function
-      @fun{gtk-window-set-gravity}.}
+      @fun{gtk-window-gravity}.}
   @end{table}
   @see-constructor{make-gdk-geometry}
   @see-constructor{copy-gdk-geometry}
@@ -716,7 +716,7 @@
   @see-class{gtk-window}
   @see-function{gdk-window-set-geometry-hints}
   @see-function{gtk-window-set-geometry-hints}
-  @see-function{gtk-window-set-gravity}")
+  @see-function{gtk-window-gravity}")
 
 (export (boxed-related-symbols 'gdk-geometry))
 
@@ -756,13 +756,13 @@
     @argument[min-aspect]{minimum width/height ratio}
     @argument[max-aspect]{maximum width/height ratio}
     @argument[win-gravity]{window gravity, see the function
-      @fun{gtk-window-set-gravity}}
+      @fun{gtk-window-gravity}}
   @begin{short}
     Creates a @class{gdk-geometry} structure.
   @end{short}
   @see-class{gdk-geometry}
   @see-function{copy-gdk-geometry}
-  @see-function{gtk-window-set-gravity}")
+  @see-function{gtk-window-gravity}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
