@@ -37,6 +37,7 @@
 (load "application.lisp")
 (load "application-window.lisp")
 (load "assistant.lisp")
+(load "box.lisp")
 (load "box-packing.lisp")
 (load "button.lisp")
 (load "button-box.lisp")

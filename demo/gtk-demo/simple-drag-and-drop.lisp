@@ -74,7 +74,7 @@
               (let* ((pixbuf (gtk-selection-data-get-pixbuf selection-data))
                      (image (gtk-image-new-from-pixbuf pixbuf)))
                 (format t "pixbuf = ~A~%" pixbuf)
-                (gtk-button-set-image widget image)))))
+                (setf (gtk-button-image widget) image)))))
         (gtk-container-add window hgrid))
       (gtk-widget-show-all window))))
 

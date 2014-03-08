@@ -66,12 +66,12 @@
                                    :wrap t)))
         (g-signal-connect x-spin "value-changed"
            (lambda (spin)
-             (gtk-grid-set-column-spacing grid
-                                          (gtk-spin-button-get-value-as-int spin))))
+             (setf (gtk-grid-column-spacing grid)
+                   (gtk-spin-button-get-value-as-int spin))))
         (g-signal-connect y-spin "value-changed"
            (lambda (spin)
-             (gtk-grid-set-row-spacing grid
-                                       (gtk-spin-button-get-value-as-int spin))))
+             (setf (gtk-grid-row-spacing grid)
+                   (gtk-spin-button-get-value-as-int spin))))
         (gtk-container-add action
                            (make-instance 'gtk-label
                                           :use-markup t
