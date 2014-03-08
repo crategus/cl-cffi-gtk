@@ -391,100 +391,8 @@
 ;;; GtkAllocation
 ;;; ----------------------------------------------------------------------------
 
-;; Remove the implementation of GtkAllocation. In the C implementation it is
-;; a synonym for GdkRectangle
-
-#|
-(define-g-boxed-cstruct gtk-allocation "GtkAllocation"
-  (x :int :initform 0)
-  (y :int :initform 0)
-  (width :int :initform 0)
-  (height :int :initform 0))
-
-#+cl-cffi-gtk-documentation
-(setf (documentation 'gtk-allocation 'type)
- "@version{2013-8-27}
-  @begin{short}
-    A @sym{gtk-allocation} of a widget represents a region which has been
-    allocated to the widget by its parent.
-  @end{short}
-  It is a subregion of its parents allocation. See the section called
-  \"Height-for-width Geometry Management\" for more information.
-  @begin{pre}
-(define-g-boxed-cstruct gtk-allocation \"GtkAllocation\"
-  (x :int :initform 0)
-  (y :int :initform 0)
-  (width :int :initform 0)
-  (height :int :initform 0))
-  @end{pre}
-  @see-slot{gtk-allocation-x}
-  @see-slot{gtk-allocation-y}
-  @see-slot{gtk-allocation-width}
-  @see-slot{gtk-allocation-height}
-  @see-constructor{make-gtk-allocation}
-  @see-constructor{copy-gtk-allociation}")
-
-(export (boxed-related-symbols 'gtk-allocation))
-
-|#
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Constructors for GtkAllocation
-;;;
-;;; ----------------------------------------------------------------------------
-
-#|
-#+cl-cffi-gtk-documentation
-(setf (documentation 'make-gtk-allocation 'function)
- "@version{2013-8-27}
-  Creates a @class{gtk-allocation} structure.
-  @see-class{gtk-allocation}
-  @see-function{copy-gtk-allocation}")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation 'copy-gtk-allocation 'function)
- "@version{2013-8-27}
-  Copy constructor of a @class{gtk-allocation} structure.
-  @see-class{gtk-allocation}
-  @see-function{make-gtk-allocation}")
-|#
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors for GtkAllocation
-;;;
-;;; ----------------------------------------------------------------------------
-
-#|
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-allocation-x atdoc:*function-name-alias*) "Accessor"
-      (documentation 'gtk-allocation-x 'function)
- "@version{2013-4-11}
-  Accessor of the slot @code{x} of the @class{gtk-allocation} structure.
-  @see-class{gtk-allocation}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-allocation-y atdoc:*function-name-alias*) "Accessor"
-      (documentation 'gtk-allocation-y 'function)
- "@version{2013-4-11}
-  Accessor of the slot @code{y} of the @class{gtk-allocation} structure.
-  @see-class{gtk-allocation}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-allocation-width atdoc:*function-name-alias*) "Accessor"
-      (documentation 'gtk-allocation-width 'function)
- "@version{2013-4-11}
-  Accessor of the slot @code{width} of the @class{gtk-allocation} structure.
-  @see-class{gtk-allocation}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-allocation-height atdoc:*function-name-alias*) "Accessor"
-      (documentation 'gtk-allocation-height 'function)
- "@version{2013-4-11}
-  Accessor of the slot @code{height} of the @class{gtk-allocation} structure.
-  @see-class{gtk-allocation}")
-|#
+;;; GtkAllocation is not implemented. In the C implementation it is a synonym
+;;; for GdkRectangle
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkWidget
@@ -2116,10 +2024,10 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-widget-can-default atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-widget-can-default 'function)
- "@version{2014-2-7}
+ "@version{2014-2-25}
   @argument[object]{a @class{gtk-widget} object}
   @syntax[]{(gtk-widget-can-default object) => can-default}
-  @syntax[]{(setf gtk-widget-can-default object) can-default)}
+  @syntax[]{(setf (gtk-widget-can-default object) can-default)}
   @begin{short}
     Accessor of the slot @slot[gtk-widget]{can-default} of the
     @class{gtk-widget} class.
@@ -2554,8 +2462,11 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-widget-hexpand-set atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-widget-hexpand-set 'function)
- "@version{2014-2-8}
+ "@version{2014-2-25}
   @argument[object]{a @class{gtk-widget} object}
+  @argument[set]{value for the @slot[gtk-widget]{hexpand-set} property}
+  @syntax[]{(gtk-widget-hexpand-set object) => set}
+  @syntax[]{(setf (gtk-widget-hexpand-set object) set)}
   @begin{short}
     Accessor of the slot @slot[gtk-widget]{hexpand-set} of the
     @class{gtk-widget} class.
@@ -2844,8 +2755,8 @@
 #+(and gtk-3-8 cl-cffi-gtk-documentation)
 (setf (documentation (atdoc:get-slot-from-name "opacity" 'gtk-widget) 't)
  "The @code{\"opacity\"} property of type @code{:double} (Read / Write) @br{}
-  The requested opacity of the widget. See the function
-  @fun{gtk-widget-set-opacity} for more details about window opacity. Before
+  The requested opacity of the widget. See the generic function
+  @fun{gtk-widget-opacity} for more details about window opacity. Before
   version 3.8 this was only available in @class{gtk-window}. @br{}
   Allowed values: [0,1] @br{}
   Default value: 1 @br{}
@@ -3463,7 +3374,7 @@
 
 (defcfun ("gtk_widget_unparent" gtk-widget-unparent) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-11-12}
+ "@version{2014-3-7}
   @argument[widget]{a @class{gtk-widget} object}
   @short{This function is only for use in widget implementations.}
   Should be called by implementations of the remove method on
@@ -3471,7 +3382,7 @@
   @see-class{gtk-widget}
   @see-class{gtk-container}
   @see-function{gtk-widget-reparent}
-  @see-function{gtk-widget-set-parent}"
+  @see-function{gtk-widget-parent}"
   (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-unparent)
@@ -5373,21 +5284,21 @@
 
 (defcfun ("gtk_widget_modify_fg" gtk-widget-modify-fg) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-11-25}
+ "@version{2014-2-16}
   @argument[widget]{a @class{gtk-widget} object}
   @argument[state]{the state of type @symbol{gtk-state-type} for which to set
     the foreground color}
-  @argument[color]{the color of type @symbol{gdk-color} to assign, does not need
+  @argument[color]{the color of type @class{gdk-color} to assign, does not need
     to be allocated, or @code{nil} to undo the effect of previous calls to the
     function @sym{gtk-widget-modify-fg}}
-  @subheading{Warning}
+  @short{Sets the foreground color for a widget in a particular state.}
+  All other style values are left untouched.
+
+  @begin[Warning]{dictionary}
     The function @sym{gtk-widget-modify-fg} has been deprecated since version
     3.0 and should not be used in newly-written code. Use the function
     @fun{gtk-widget-override-color} instead.
-
-  @short{Sets the foreground color for a widget in a particular state.}
-
-  All other style values are left untouched.
+  @end{dictionary}
   @see-class{gtk-widget}
   @see-class{gdk-color}
   @see-symbol{gtk-state-type}
@@ -6711,19 +6622,19 @@
 
 (defcfun ("gtk_widget_set_child_visible" gtk-widget-set-child-visible) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-1-6}
-  @argument[widget]{a @class{gtk-widget} instance}
+ "@version{2014-3-7}
+  @argument[widget]{a @class{gtk-widget} object}
   @argument[is-visible]{if @em{true}, @arg{widget} should be mapped along with
     its parent.}
   @begin{short}
-    Sets whether @arg{widget} should be mapped along with its when its parent is
-    mapped and widget has been shown with @fun{gtk-widget-show}.
+    Sets whether @arg{widget} should be mapped along with its when its parent
+    is mapped and widget has been shown with the function @fun{gtk-widget-show}.
   @end{short}
 
   The child visibility can be set for widget before it is added to a container
-  with @fun{gtk-widget-set-parent}, to avoid mapping children unnecessary before
-  immediately unmapping them. However it will be reset to its default state of
-  @em{true} when the widget is removed from a container.
+  with the generic function @fun{gtk-widget-parent}, to avoid mapping children
+  unnecessary before immediately unmapping them. However it will be reset to its
+  default state of @em{true} when the widget is removed from a container.
 
   Note that changing the child visibility of a widget does not queue a resize
   on the widget. Most of the time, the size of a widget is computed from all
@@ -6733,7 +6644,7 @@
   This function is only useful for container implementations and never should
   be called by an application.
   @see-function{gtk-widget-show}
-  @see-function{gtk-widget-set-parent}"
+  @see-function{gtk-widget-parent}"
   (widget (g-object gtk-widget))
   (is-visible :boolean))
 
@@ -7412,13 +7323,11 @@
 
   This function does not check if the widget is obscured in any way.
 
-  See also the functions @fun{gtk-widget-get-visible} and
-  @fun{gtk-widget-set-visible}.
+  See also the function @fun{gtk-widget-visible}.
 
   Since 3.8
   @see-class{gtk-widget}
-  @see-function{gtk-widget-get-visible}
-  @see-function{gtk-widget-set-visible}"
+  @see-function{gtk-widget-visible}"
   (widget (g-object gtk-widget)))
 
 #+gtk-3-8

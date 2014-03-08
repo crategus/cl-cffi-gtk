@@ -352,7 +352,7 @@
 
 (defun gtk-box-pack-start (box child &key (expand t) (fill t) (padding 0))
  #+cl-cffi-gtk-documentation
- "@version{2013-7-15}
+ "@version{2014-2-21}
   @argument[box]{a @class{gtk-box} container}
   @argument[child]{the @class{gtk-widget} to be added to @arg{box}}
   @argument[expand]{@arg{true} if the new @arg{child} is to be given extra space
@@ -360,27 +360,28 @@
     children that use this option. The default value is @em{true}.}
   @argument[fill]{@arg{true} if space given to @arg{child} by the expand option
     is actually allocated to @arg{child}, rather than just padding it. This
-    parameter has no effect if @arg{expand} is set to @code{nil}. A @arg{child}
-    is always allocated the full height of a horizontal @class{gtk-box} and the
+    parameter has no effect if @arg{expand} is set to @code{nil}. A child is
+    always allocated the full height of a horizontal @class{gtk-box} and the
     full width of a vertical @class{gtk-box}. This option affects the other
     dimension. The default value is @em{true}.}
   @argument[padding]{extra space in pixels to put between this @arg{child} and
     its neighbors, over and above the global amount specified by
-    @arg{\"spacing\"} property. If @arg{child} is a widget at one of the
+    @slot[gtk-box]{spacing} property. If @arg{child} is a widget at one of the
     reference ends of @arg{box}, then padding pixels are also put between
     @arg{child} and the reference edge of @arg{box}. The default value is 0.}
   @begin{short}
     Adds @arg{child} to @arg{box}, packed with reference to the start of
     @arg{box}.
   @end{short}
-  The @arg{child} is packed after any other child packed with reference to the
+  The child is packed after any other child packed with reference to the
   start of @arg{box}.
-
-  @subheading{Note:}
+  @begin[Note]{dictionary}
     In the Lisp binding the arguments @arg{expand}, @arg{fill}, and
     @arg{padding} are keyword arguments, which have default values. The default
     value of the arguments @arg{expand} and @arg{fill} is @em{true}. The default
     value of the argument @arg{padding} is 0.
+  @end{dictionary}
+  @see-class{gtk-box}
   @see-function{gtk-box-pack-end}"
   (%gtk-box-pack-start box child expand fill padding))
 
@@ -399,7 +400,7 @@
 
 (defun gtk-box-pack-end (box child &key (expand t) (fill t) (padding 0))
  #+cl-cffi-gtk-documentation
- "@version{2013-5-18}
+ "@version{2014-2-21}
   @argument[box]{a @class{gtk-box} container}
   @argument[child]{the @class{gtk-widget} to be added to @arg{box}}
   @argument[expand]{@arg{true} if the new @arg{child} is to be given extra space
@@ -412,8 +413,8 @@
     full width of a vertical @class{gtk-box} container. This option affects the
     other dimension.}
   @argument[padding]{extra space in pixels to put between this @arg{child} and
-    its neighbors, over and above the global amount specified by
-    @arg{\"spacing\"} property. If @arg{child} is a widget at one of the
+    its neighbors, over and above the global amount specified by the
+    @slot[gtk-box]{spacing} property. If @arg{child} is a widget at one of the
     reference ends of @arg{box}, then padding pixels are also put between
     @arg{child} and the reference edge of @arg{box}.}
   @begin{short}
@@ -422,6 +423,7 @@
   @end{short}
   The @arg{child} is packed after (away from end of) any other child packed with
   reference to the end of @arg{box}.
+  @see-class{gtk-box}
   @see-function{gtk-box-pack-start}"
   (%gtk-box-pack-end box child expand fill padding))
 
@@ -433,7 +435,7 @@
 
 (defcfun ("gtk_box_reorder_child" gtk-box-reorder-child) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-5-18}
+ "@version{2014-2-22}
   @argument[box]{a @class{gtk-box} container}
   @argument[child]{the @class{gtk-widget} to move}
   @argument[position]{the new position for @arg{child} in the list of children
@@ -446,12 +448,13 @@
   packed @code{:start} as well as widgets packed @code{:end}, in the order that
   these widgets were added to @arg{box}.
 
-  A widget's position in the @arg{box} children list determines where the widget
-  is packed into @arg{box}. A child widget at some position in the list will be
+  A widget's position in the box children list determines where the widget is
+  packed into @arg{box}. A child widget at some position in the list will be
   packed just after all other widgets of the same packing type that appear
-  earlier in the list."
-  (box g-object)
-  (child g-object)
+  earlier in the list.
+  @see-class{gtk-box}"
+  (box (g-object gtk-box))
+  (child (g-object gtk-widget))
   (position :int))
 
 (export 'gtk-box-reorder-child)
@@ -464,16 +467,17 @@
 
 (defun gtk-box-query-child-packing (box child)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-18}
+ "@version{2014-2-22}
   @argument[box]{a @class{gtk-box} container}
-  @argument[child]{the @class{gtk-widget} of the @arg{child} to query}
-  @return{@code{expand} -- @code{\"expand\"} child property@br{}
-          @code{fill} -- @code{\"fill\"} child property@br{}
-          @code{padding} -- @code{\"padding\"} child property@br{}
+  @argument[child]{the @class{gtk-widget} of the child to query}
+  @return{@code{expand} -- @code{\"expand\"} child property @br{}
+          @code{fill} -- @code{\"fill\"} child property @br{}
+          @code{padding} -- @code{\"padding\"} child property @br{}
           @code{pack-type} -- @code{\"pack-type\"} child property}
   @begin{short}
     Obtains information about how @arg{child} is packed into @arg{box}.
   @end{short}
+  @see-class{gtk-box}
   @see-function{gtk-box-set-child-packing}"
   (values (gtk-box-child-expand box child)
           (gtk-box-child-fill box child)
@@ -490,9 +494,9 @@
 
 (defun gtk-box-set-child-packing (box child expand fill padding pack-type)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-18}
+ "@version{2014-2-22}
   @argument[box]{a @class{gtk-box} container}
-  @argument[child]{the @class{gtk-widget} of the @arg{child} to set}
+  @argument[child]{the @class{gtk-widget} of the child to set}
   @argument[expand]{the new value of the @code{\"expand\"} child property}
   @argument[fill]{the new value of the @code{\"fill\"} child property}
   @argument[padding]{the new value of the @code{\"padding\"} child property}
@@ -500,6 +504,7 @@
   @begin{short}
     Sets the way @arg{child} is packed into @arg{box}.
   @end{short}
+  @see-class{gtk-box}
   @see-function{gtk-box-query-child-packing}"
   (setf (gtk-box-child-expand box child) expand
         (gtk-box-child-fill box child) fill
@@ -540,7 +545,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-hbox 'type)
- "@version{2013-5-18}
+ "@version{2014-2-22}
   @begin{short}
     @sym{gtk-hbox} is a container that organizes child widgets into a single
     row.
@@ -551,15 +556,20 @@
 
   All children are allocated the same height.
 
-  @sym{gtk-hbox} has been deprecated. You can use @class{gtk-box} instead, which
-  is a very quick and easy change. If you have derived your own classes from
-  @sym{gtk-hbox}, you can simply change the inheritance to derive directly from
-  @class{gtk-box}. No further changes are needed, since the default value of the
-  @code{\"orientation\"} property is @code{:horizontal}. If you want your code
-  to be future-proof, the recommendation is to switch to @class{gtk-grid}, since
-  @class{gtk-box} is going to be deprecated in favor of the more flexible grid
-  widget eventually. For more information about migrating to @class{gtk-grid},
-  see Migrating from other containers to @class{gtk-grid}.")
+  @begin[Warning]{dictionary}
+    @sym{gtk-hbox} has been deprecated. You can use @class{gtk-box} instead,
+    which is a very quick and easy change. If you have derived your own classes
+    from @sym{gtk-hbox}, you can simply change the inheritance to derive
+    directly from @class{gtk-box}. No further changes are needed, since the
+    default value of the @slot[gtk-orientable]{orientation} property is
+    @code{:horizontal}. If you want your code to be future-proof, the
+    recommendation is to switch to @class{gtk-grid}, since @class{gtk-box} is
+    going to be deprecated in favor of the more flexible grid widget eventually.
+    For more information about migrating to @class{gtk-grid}, see Migrating
+    from other containers to @class{gtk-grid}.
+  @end{dictionary}
+  @see-class{gtk-box}
+  @see-class{gtk-grid}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -571,24 +581,6 @@
                        gtk-hbox-child-expand
                        "expand" "gboolean" t t t)
 
-(define-child-property "GtkHBox"
-                       gtk-hbox-child-fill
-                       "fill" "gboolean" t t t)
-
-(define-child-property "GtkHBox"
-                       gtk-hbox-child-padding
-                       "padding" "guint" t t t)
-
-(define-child-property "GtkHBox"
-                       gtk-hbox-child-pack-type
-                       "pack-type" "GtkPackType" t t t)
-
-(define-child-property "GtkHBox"
-                       gtk-hbox-child-position
-                       "position" "gint" t t t)
-
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-hbox-child-expand atdoc:*function-name-alias*)
       "Accessor"
@@ -599,6 +591,12 @@
   @see-class{gtk-box}
   @see-class{gtk-hbox}")
 
+;;; ----------------------------------------------------------------------------
+
+(define-child-property "GtkHBox"
+                       gtk-hbox-child-fill
+                       "fill" "gboolean" t t t)
+
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-hbox-child-fill atdoc:*function-name-alias*)
       "Accessor"
@@ -607,6 +605,12 @@
   Accessor of the child property @code{\"fill\"} of the @class{gtk-hbox} class.
   @see-class{gtk-box}
   @see-class{gtk-hbox}")
+
+;;; ----------------------------------------------------------------------------
+
+(define-child-property "GtkHBox"
+                       gtk-hbox-child-padding
+                       "padding" "guint" t t t)
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-hbox-child-padding atdoc:*function-name-alias*)
@@ -618,6 +622,12 @@
   @see-class{gtk-box}
   @see-class{gtk-hbox}")
 
+;;; ----------------------------------------------------------------------------
+
+(define-child-property "GtkHBox"
+                       gtk-hbox-child-pack-type
+                       "pack-type" "GtkPackType" t t t)
+
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-hbox-child-pack-type atdoc:*function-name-alias*)
       "Accessor"
@@ -627,6 +637,12 @@
   class.
   @see-class{gtk-box}
   @see-class{gtk-hbox}")
+
+;;; ----------------------------------------------------------------------------
+
+(define-child-property "GtkHBox"
+                       gtk-hbox-child-position
+                       "position" "gint" t t t)
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-hbox-child-position atdoc:*function-name-alias*)
@@ -647,24 +663,24 @@
 
 (defun gtk-hbox-new (homogeneous spacing)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-18}
+ "@version{2014-2-22}
   @argument[homogeneous]{@arg{true} if all children are to be given equal space
     allotments}
   @argument[spacing]{the number of pixels to place by default between children}
   @return{A new @class{gtk-hbox} container.}
   @short{Creates a new @class{gtk-hbox} container.}
 
-  @subheading{Warning}
+  @begin[Warning]{dictionary}
     The function @sym{gtk-hbox-new} has been deprecated since version 3.2 and
     should not be used in newly-written code. You can use the function
     @fun{gtk-box-new} with @code{:horizontal} instead, which is a quick and easy
     change. But the recommendation is to switch to @class{gtk-grid}, since
     @class{gtk-box} is going to go away eventually. See Migrating from other
     containers to.
+  @end{dictionary}
+  @see-class{gtk-box}
   @class{gtk-grid}.
-  @see-function{gtk-box-new}
-  @see-class{gtk-grid}
-  @see-class{gtk-box}"
+  @see-function{gtk-box-new}"
   (make-instance 'gtk-box
                  :orientation :horizontal
                  :homogeneous homogeneous
@@ -704,7 +720,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-vbox 'type)
- "@version{2013-5-18}
+ "@version{2014-2-22}
   @begin{short}
     A @sym{gtk-vbox} is a container that organizes child widgets into a single
     column.
@@ -715,19 +731,24 @@
 
   All children are allocated the same width.
 
-  @sym{gtk-vbox} has been deprecated. You can use @class{gtk-box} instead, which
-  is a very quick and easy change. If you have derived your own classes from
-  @sym{gtk-vbox}, you can simply change the inheritance to derive directly from
-  @class{gtk-box}, and set the @code{\"orientation\"} property to
-  @code{:vertical} in your instance init function, with a call like:
-  @begin{pre}
+  @begin[Warning]{dictionary}
+    @sym{gtk-vbox} has been deprecated. You can use @class{gtk-box} instead,
+    which is a very quick and easy change. If you have derived your own classes
+    from @sym{gtk-vbox}, you can simply change the inheritance to derive
+    directly from @class{gtk-box}, and set the
+    @slot[gtk-orientable]{orientation} property to @code{:vertical} in your
+    instance init function, with a call like:
+    @begin{pre}
  (setf (gtk-orientable-orientation object) :vertical)
-  @end{pre}
-  If you want your code to be future-proof, the recommendation is to switch
-  to @class{gtk-grid}, since @class{gtk-box} is going to be deprecated in favor
-  of the more flexible grid widget eventually. For more information about
-  migrating to @class{gtk-grid}, see Migrating from other containers to
-  @class{gtk-grid}.")
+    @end{pre}
+    If you want your code to be future-proof, the recommendation is to switch
+    to @class{gtk-grid}, since @class{gtk-box} is going to be deprecated in
+    favor of the more flexible grid widget eventually. For more information
+    about migrating to @class{gtk-grid}, see Migrating from other containers to
+    @class{gtk-grid}.
+  @end{dictionary}
+  @see-class{gtk-box}
+  @see-class{gtk-grid}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -739,24 +760,6 @@
                        gtk-vbox-child-expand
                        "expand" "gboolean" t t t)
 
-(define-child-property "GtkVBox"
-                       gtk-vbox-child-fill
-                       "fill" "gboolean" t t t)
-
-(define-child-property "GtkVBox"
-                       gtk-vbox-child-padding
-                       "padding" "guint" t t t)
-
-(define-child-property "GtkVBox"
-                       gtk-vbox-child-pack-type
-                       "pack-type" "GtkPackType" t t t)
-
-(define-child-property "GtkVBox"
-                       gtk-vbox-child-position
-                       "position" "gint" t t t)
-
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-vbox-child-expand atdoc:*function-name-alias*)
       "Accessor"
@@ -766,6 +769,12 @@
   class.
   @see-class{gtk-box}
   @see-class{gtk-vbox}")
+
+;;; ----------------------------------------------------------------------------
+
+(define-child-property "GtkVBox"
+                       gtk-vbox-child-fill
+                       "fill" "gboolean" t t t)
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-vbox-child-fill atdoc:*function-name-alias*)
@@ -777,6 +786,12 @@
   @see-class{gtk-box}
   @see-class{gtk-vbox}")
 
+;;; ----------------------------------------------------------------------------
+
+(define-child-property "GtkVBox"
+                       gtk-vbox-child-padding
+                       "padding" "guint" t t t)
+
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-vbox-child-padding atdoc:*function-name-alias*)
       "Accessor"
@@ -787,6 +802,12 @@
   @see-class{gtk-box}
   @see-class{gtk-vbox}")
 
+;;; ----------------------------------------------------------------------------
+
+(define-child-property "GtkVBox"
+                       gtk-vbox-child-pack-type
+                       "pack-type" "GtkPackType" t t t)
+
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-vbox-child-pack-type atdoc:*function-name-alias*)
       "Accessor"
@@ -796,6 +817,12 @@
   class.
   @see-class{gtk-box}
   @see-class{gtk-vbox}")
+
+;;; ----------------------------------------------------------------------------
+
+(define-child-property "GtkVBox"
+                       gtk-vbox-child-position
+                       "position" "gint" t t t)
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-vbox-child-position atdoc:*function-name-alias*)
@@ -818,7 +845,7 @@
 
 (defun gtk-vbox-new (homogeneous spacing)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-18}
+ "@version{2014-2-22}
   @begin{short}
     A @sym{gtk-vbox} is a container that organizes child widgets into a single
     column.
@@ -829,19 +856,24 @@
 
   All children are allocated the same width.
 
-  @sym{gtk-vbox} has been deprecated. You can use @class{gtk-box} instead, which
-  is a very quick and easy change. If you have derived your own classes from
-  @sym{gtk-vbox}, you can simply change the inheritance to derive directly from
-  @class{gtk-box}, and set the @code{\"orientation\"} property to
-  @code{:vertical} in your instance init function, with a call like:
-  @begin{pre}
+  @begin[Warning]{dictionary}
+    @sym{gtk-vbox} has been deprecated. You can use @class{gtk-box} instead,
+    which is a very quick and easy change. If you have derived your own classes
+    from @sym{gtk-vbox}, you can simply change the inheritance to derive
+    directly from @class{gtk-box}, and set the
+    @slot[gtk-orientable]{orientation} property to @code{:vertical} in your
+    instance init function, with a call like:
+    @begin{pre}
  (setf (gtk-orientable-orientation object) :vertical)
-  @end{pre}
-  If you want your code to be future-proof, the recommendation is to switch
-  to @class{gtk-grid}, since @class{gtk-box} is going to be deprecated in favor
-  of the more flexible grid widget eventually. For more information about
-  migrating to @class{gtk-grid}, see Migrating from other containers to
-  @class{gtk-grid}."
+    @end{pre}
+    If you want your code to be future-proof, the recommendation is to switch
+    to @class{gtk-grid}, since @class{gtk-box} is going to be deprecated in
+    favor of the more flexible grid widget eventually. For more information
+    about migrating to @class{gtk-grid}, see Migrating from other containers to
+    @class{gtk-grid}.
+  @end{dictionary}
+  @see-class{gtk-box}
+  @see-class{gtk-grid}"
   (make-instance 'gtk-box
                  :orientation :vertical
                  :homogeneous homogeneous

@@ -140,6 +140,8 @@
 ;;;
 ;;; ----------------------------------------------------------------------------
 
+;;; --- gtk-grid-column-homogeneous --------------------------------------------
+
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "column-homogeneous"
                                                'gtk-grid) 't)
@@ -147,6 +149,29 @@
   (Read / Write) @br{}
   If @em{true}, the columns are all the same width. @br{}
   Default value: @code{nil}")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-grid-column-homogeneous atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-grid-column-homogeneous 'function)
+ "@version{2014-2-21}
+  @argument[object]{a @class{gtk-grid} container}
+  @argument[homogeneous]{@em{true} to make columns homogeneous}
+  @syntax[]{(gtk-grid-column-homogeneous object) => homogenous}
+  @syntax[]{(setf (gtk-grid-column-homogeneous object) homogenous)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-grid]{column-homogeneous} of the
+    @class{gtk-grid} class.
+  @end{short}
+
+  The generic function @sym{gtk-grid-column-homogeneous} returns whether all
+  columns of @arg{grid} have the same width.
+
+  The generic function @sym{(setf gtk-grid-column-homogeneous)} sets whether
+  all columns of @arg{grid} will have the same width.
+  @see-class{gtk-grid}")
+
+;;; --- gtk-grid-column-spacing ------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "column-spacing" 'gtk-grid) 't)
@@ -157,11 +182,57 @@
   Default value: 0")
 
 #+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-grid-column-spacing atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-grid-column-spacing 'function)
+ "@version{2014-2-21}
+  @argument[object]{a @class{gtk-grid} container}
+  @argument[spacing]{the amount of space to insert between columns}
+  @syntax[]{(gtk-grid-column-spacing object) => spacing}
+  @syntax[]{(setf (gtk-grid-column-spacing object) spacing)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-grid]{column-spacing} of the @class{gtk-grid}
+    class.
+  @end{short}
+
+  The generic function @sym{gtk-grid-column-spacing} returns the amount of space
+  between the columns of @arg{grid}.
+
+  The generic function @sym{(setf gtk-grid-column-spacing} sets the amount of
+  space between columns of @arg{grid}.
+  @see-class{gtk-grid}")
+
+;;; --- gtk-grid-row-homogeneous -----------------------------------------------
+
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "row-homogeneous" 'gtk-grid) 't)
  "The @code{\"row-homogeneous\"} property of type @code{:boolean}
   (Read / Write) @br{}
   If @em{true}, the rows are all the same height. @br{}
   Default value: @code{nil}")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-grid-row-homogeneous atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-grid-row-homogeneous 'function)
+ "@version{2014-2-26}
+  @argument[grid]{a @class{gtk-grid} container}
+  @argument[homogeneous]{@em{true} to make rows homogeneous}
+  @syntax[]{(gtk-grid-row-homogeneous object) => homogeneous}
+  @syntax[]{(setf (gtk-grid-row-homogeneous object) homogeneous)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-grid]{row-homogeneous} of the
+    @class{gtk-grid} class.
+  @end{short}
+
+  The generic function @sym{gtk-grid-row-homogeneous} returns whether all rows
+  of @arg{grid} have the same height.
+
+  The generic function @sym{(setf gtk-grid-row-homogeneous} sets whether all
+  rows of @arg{grid} will have the same height.
+  @see-class{gtk-grid}")
+
+;;; --- gtk-grid-row-spacing ---------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "row-spacing" 'gtk-grid) 't)
@@ -170,55 +241,26 @@
   Allowed values: [0, 32767] @br{}
   Default value: 0")
 
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-grid-column-homogeneous atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-grid-column-homogeneous 'function)
- "@version{2013-12-7}
-  Accessor of the slot @code{\"column-homogeneous\"} of the @class{gtk-grid}
-  class.
-  @see-class{gtk-grid}
-  @see-function{gtk-grid-get-column-homogeneous}
-  @see-function{gtk-grid-set-column-homogeneous}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-grid-column-spacing atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-grid-column-spacing 'function)
- "@version{2013-12-7}
-  Accessor of the slot @code{\"column-spacing\"} of the @class{gtk-grid}
-  class.
-  @see-class{gtk-grid}
-  @see-function{gtk-grid-get-column-spacing}
-  @see-function{gtk-grid-set-column-spacing}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-grid-row-homogeneous atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-grid-row-homogeneous 'function)
- "@version{2013-12-7}
-  Accessor of the slot @code{\"row-homogeneous\"} of the @class{gtk-grid}
-  class.
-  @see-class{gtk-grid}
-  @see-function{gtk-grid-get-row-homogeneous}
-  @see-function{gtk-grid-set-row-homogeneous}")
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-grid-row-spacing atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-grid-row-spacing 'function)
- "@version{2013-12-7}
-  Accessor of the slot @code{\"row-spacing\"} of the @class{gtk-grid}
-  class.
-  @see-class{gtk-grid}
-  @see-function{gtk-grid-get-row-spacing}
-  @see-function{gtk-grid-set-row-spacing}")
+ "@version{2014-2-26}
+  @argument[grid]{a @class{gtk-grid} container}
+  @argument[spacing]{the amount of space to insert between rows}
+  @syntax[]{(gtk-grid-row-spacing object) => spacing}
+  @syntax[]{(setf (gtk-grid-row-spacing object) spacing)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-grid]{row-spacing} of the @class{gtk-grid}
+    class.
+  @end{short}
+
+  The generic function @sym{gtk-grid-row-spacing} returns the amount of space
+  between the rows of @arg{grid}.
+
+  The generic function @sym{(setf gtk-grid-row-spacing} sets the amount of
+  space between rows of @arg{grid}.
+  @see-class{gtk-grid}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -470,149 +512,5 @@
   (side gtk-position-type))
 
 (export 'gtk-grid-insert-next-to)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_grid_set_row_homogeneous ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-grid-set-row-homogeneous))
-
-(defun gtk-grid-set-row-homogeneous (grid homogeneous)
- #+cl-cffi-gtk-documentation
- "@version{2013-12-7}
-  @argument[grid]{a @class{gtk-grid} container}
-  @argument[homogeneous]{@em{true} to make rows homogeneous}
-  Sets whether all rows of @arg{grid} will have the same height.
-  @see-class{gtk-grid}
-  @see-function{gtk-grid-get-row-homogeneous}"
-  (setf (gtk-grid-row-homogeneous grid) homogeneous))
-
-(export 'gtk-grid-set-row-homogeneous)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_grid_get_row_homogeneous ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-grid-get-row-homogeneous))
-
-(defun gtk-grid-get-row-homogeneous (grid)
- #+cl-cffi-gtk-documentation
- "@version{2013-12-7}
-  @argument[grid]{a @class{gtk-grid} container}
-  @return{Whether all rows of @arg{grid} have the same height.}
-  Returns whether all rows of @arg{grid} have the same height.
-  @see-class{gtk-grid}
-  @see-function{gtk-grid-set-row-homogeneous}"
-  (gtk-grid-row-homogeneous grid))
-
-(export 'gtk-grid-get-row-homogeneous)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_grid_set_row_spacing ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-grid-set-row-spacing))
-
-(defun gtk-grid-set-row-spacing (grid spacing)
- #+cl-cffi-gtk-documentation
- "@version{2013-12-7}
-  @argument[grid]{a @class{gtk-grid} container}
-  @argument[spacing]{the amount of space to insert between rows}
-  Sets the amount of space between rows of @arg{grid}.
-  @see-class{gtk-grid}
-  @see-function{gtk-grid-get-row-spacing}"
-  (setf (gtk-grid-row-spacing grid) spacing))
-
-(export 'gtk-grid-set-row-spacing)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_grid_get_row_spacing ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-grid-get-row-spacing))
-
-(defun gtk-grid-get-row-spacing (grid)
- #+cl-cffi-gtk-documentation
- "@version{2013-12-7}
-  @argument[grid]{a @class{gtk-grid} container}
-  @return{The row spacing of @arg{grid}.}
-  Returns the amount of space between the rows of @arg{grid}.
-  @see-class{gtk-grid}
-  @see-function{gtk-grid-set-row-spacing}"
-  (gtk-grid-row-spacing grid))
-
-(export 'gtk-grid-get-row-spacing)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_grid_set_column_homogeneous ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-grid-set-column-homogeneous))
-
-(defun gtk-grid-set-column-homogeneous (grid homogeneous)
- #+cl-cffi-gtk-documentation
- "@version{2013-12-7}
-  @argument[grid]{a @class{gtk-grid} container}
-  @arg[homogeneous]{@em{true} to make columns homogeneous}
-  Sets whether all columns of @arg{grid} will have the same width.
-  @see-class{gtk-grid}
-  @see-function{gtk-grid-get-column-homogeneous}"
-  (setf (gtk-grid-column-homogeneous grid) homogeneous))
-
-(export 'gtk-grid-set-column-homogeneous)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_grid_get_column_homogeneous ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-grid-get-column-homogeneous))
-
-(defun gtk-grid-get-column-homogeneous (grid)
- #+cl-cffi-gtk-documentation
- "@version{2013-12-7}
-  @argument[grid]{a @class{gtk-grid} container}
-  @return{Whether all columns of @arg{grid} have the same width.}
-  Returns whether all columns of @arg{grid} have the same width.
-  @see-class{gtk-grid}
-  @see-function{gtk-grid-set-column-homogeneous}"
-  (gtk-grid-column-homogeneous grid))
-
-(export 'gtk-grid-get-column-homogeneous)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_grid_set_column_spacing ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-grid-set-column-spacing))
-
-(defun gtk-grid-set-column-spacing (grid spacing)
- #+cl-cffi-gtk-documentation
- "@version{2013-12-7}
-  @argument[grid]{a @class{gtk-grid} container}
-  @argument[spacing]{the amount of space to insert between columns}
-  Sets the amount of space between columns of @arg{grid}.
-  @see-class{gtk-grid}
-  @see-function{gtk-grid-get-column-spacing}"
-  (setf (gtk-grid-column-spacing grid) spacing))
-
-(export 'gtk-grid-set-column-spacing)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_grid_get_column_spacing ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-grid-get-column-spacing))
-
-(defun gtk-grid-get-column-spacing (grid)
- #+cl-cffi-gtk-documentation
- "@version{2013-12-7}
-  @argument[grid]{a @class{gtk-grid} container}
-  @return{The column spacing of @arg{grid}.}
-  Returns the amount of space between the columns of @arg{grid}.
-  @see-class{gtk-grid}
-  @see-function{gtk-grid-set-column-spacing}"
-  (gtk-grid-column-spacing grid))
-
-(export 'gtk-grid-get-column-spacing)
 
 ;;; --- End of file gtk.grid.lisp ----------------------------------------------

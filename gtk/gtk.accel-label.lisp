@@ -4,11 +4,13 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See http://www.gtk.org.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.8.9 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -126,47 +128,68 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Property Details
+;;; Property and Accessor Details
 ;;;
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-accel-label-accel-closure ------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "accel-closure"
                                                'gtk-accel-label) 't)
- "@version{2013-1-13}
-  The @arg{\"accel-closure\"} property of type @symbol{g-closure}
-  (Read / Write)@br{}
+ "The @code{\"accel-closure\"} property of type @symbol{g-closure}
+  (Read / Write) @br{}
   The closure to be monitored for accelerator changes.")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "accel-widget"
-                                               'gtk-accel-label) 't)
- "@version{2013-1-13}
-  The @arg{\"accel-widget\"} property of type @class{gtk-widget}
-  (Read / Write)@br{}
-  The widget to be monitored for accelerator changes.")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-accel-label-accel-closure atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-accel-label-accel-closure 'function)
- "@version{2013-4-22}
-  Accessor of the slot @code{\"accel-closure\"} of the @class{gtk-accel-label}
-  class.")
+ "@version{2014-3-7}
+  @argument[label]{a @class{gtk-accel-label} widget}
+  @argument[closure]{the closure to monitor for accelerator changes}
+  @begin{short}
+    Accessor of the slot @slot[gtk-accel-label]{accel-closure} of the
+    @class{gtk-accel-label} class.
+  @end{short}
+
+  The generic function @sym{(setf gtk-accel-label-accel-closure} sets the
+  closure to be monitored by this accelerator label.
+
+  The closure must be connected to an accelerator group; see the function
+  @fun{gtk-accel-group-connect}.
+  @see-class{gtk-accel-label}
+  @see-function{gtk-accel-group-connect}")
+
+;;; --- gtk-accel-label-accel-widget -------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "accel-widget"
+                                               'gtk-accel-label) 't)
+ "The @code{\"accel-widget\"} property of type @class{gtk-widget}
+  (Read / Write) @br{}
+  The widget to be monitored for accelerator changes.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-accel-label-accel-widget atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-accel-label-accel-widget 'function)
  "@version{2013-4-22}
-  Accessor of the slot @code{\"accel-widget\"} of the @class{gtk-accel-label}
-  class.")
+  @argument[label]{a @class{gtk-accel-label} widget}
+  @argument[widget]{the widget to be monitored}
+  @syntax[]{(gtk-accel-label-accel-widget object) => widget}
+  @syntax[]{(setf (gtk-accel-label-accel-widget object) widget)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-accel-label]{accel-widget} of the
+    @class{gtk-accel-label} class.
+  @end{short}
+
+  The generic function @sym{gtk-accel-label-accel-widget} returns the object
+  monitored by the accelerator label, or @code{nil}.
+
+  The generic functions @sym{(setf gtk-accel-label-accel-widget)} sets the
+  widget to be monitored by this accelerator label.
+  @see-class{gtk-accel-label}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_accel_label_new ()
@@ -184,63 +207,6 @@
                  :label string))
 
 (export 'gtk-accel-label-new)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_accel_label_set_accel_closure ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-accel-label-set-accel-closure))
-
-(defun gtk-accel-label-set-accel-closure (label closure)
- #+cl-cffi-gtk-documentation
- "@version{2013-4-22}
-  @argument[label]{a @class{gtk-accel-label} widget}
-  @argument[closure]{the closure to monitor for accelerator changes}
-  @begin{short}
-    Sets the @arg{closure} to be monitored by this accelerator @arg{label}.
-  @end{short}
-  The @arg{closure} must be connected to an accelerator group;
-  see the function @fun{gtk-accel-group-connect}.
-  @see-function{gtk-accel-group-connect}"
-  (setf (gtk-accel-label-accel-closure label) closure))
-
-(export 'gtk-accel-label-set-accel-closure)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_accel_label_get_accel_widget ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-accel-label-get-accel-widget))
-
-(defun gtk-accel-label-get-accel-widget (label)
- #+cl-cffi-gtk-documentation
- "@version{2013-4-22}
-  @argument[label]{a @class{gtk-accel-label} widget}
-  @return{The object monitored by the accelerator @arg{label}, or @code{nil}.}
-  @begin{short}
-    Fetches the widget monitored by this accelerator @arg{label}.
-  @end{short}
-  See the function @fun{gtk-accel-label-set-accel-widget}.
-  @see-function{gtk-accel-label-set-accel-widget}"
-  (gtk-accel-label-accel-widget label))
-
-(export 'gtk-accel-label-get-accel-widget)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_accel_label_set_accel_widget ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-accel-label-set-accel-widget))
-
-(defun gtk-accel-label-set-accel-widget (label widget)
- #+cl-cffi-gtk-documentation
- "@version{2013-4-22}
-  @argument[label]{a @class{gtk-accel-label} widget}
-  @argument[widget]{the widget to be monitored}
-  Sets the @arg{widget} to be monitored by this accelerator @arg{label}."
-  (setf (gtk-accel-label-accel-widget label) widget))
-
-(export 'gtk-accel-label-set-accel-widget)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_accel_label_get_accel_width ()

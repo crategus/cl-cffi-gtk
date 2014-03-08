@@ -5,12 +5,12 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.8.8 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.8.9 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -267,21 +267,52 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Property Details
+;;; Property and Accessor Details
 ;;;
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-button-always-show-image -------------------------------------------
 
 #+(and gtk-3-6 cl-cffi-gtk-documentation)
 (setf (documentation (atdoc:get-slot-from-name "always-show-image"
                                                'gtk-button) t)
  "The @code{\"always-show-image\"} property of type @code{:boolean}
   (Read / Write / Construct) @br{}
-  If @em{true}, the button will ignore the @code{\"gtk-button-images\"} setting
-  of type @class{gtk-settings} and always show the image, if available.
-  Use this property if the button would be useless or hard to use without the
-  image. @br{}
+  If @em{true}, the button will ignore the
+  @slot[gtk-settings]{gtk-button-images} setting of type @class{gtk-settings}
+  and always show the image, if available. Use this property if the button
+  would be useless or hard to use without the image. @br{}
   Default value: @code{nil} @br{}
   Since 3.6")
+
+#+(and gtk-3-6 cl-cffi-gtk-documentation)
+(setf (gethash 'gtk-button-always-show-image atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-button-always-show-image 'function)
+ "@version{2014-2-27}
+  @argument[button]{a @class{gtk-button} widget}
+  @argument[always-show]{@em{true} if the button should always show the image}
+  @syntax[]{(gtk-button-always-show-image object) => always-show}
+  @syntax[]{(setf (gtk-button-always-show-image object) always-show)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-button]{always-show-image} of the
+    @class{gtk-button} class.
+  @end{short}
+
+  The generic function @sym{gtk-button-always-show-image} returns whether the
+  button will ignore the @slot[gtk-settings]{gtk-button-images} setting and
+  always show the image, if available.
+
+  The generic function @sym{(setf gtk-button-always-show-image)} sets the
+  property @slot[gtk-button]{always-show-image}.
+
+  Use this property if the button would be useless or hard to use without
+  the image.
+
+  Since 3.6
+  @see-class{gtk-button}")
+
+;;; --- gtk-button-focus-on-click ----------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "focus-on-click" 'gtk-button) 't)
@@ -291,10 +322,71 @@
   Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-button-focus-on-click atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-button-focus-on-click 'function)
+ "@version{2014-2-27}
+  @argument[button]{a @class{gtk-button} widget}
+  @argument[focus-on-click]{whether the button grabs focus when clicked with
+    the mouse}
+  @syntax[]{(gtk-button-focus-on-click object) => focus-on-click}
+  @syntax[]{(setf (gtk-button-focus-on-click object) focus-on-click)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-button]{focus-on-click} of the
+    @class{gtk-button} class.
+  @end{short}
+
+  The generic function @sym{gtk-button-focus-on-click} returns whether the
+  button grabs focus when it is clicked with the mouse.
+
+  The generic function @sym{(setf gtk-button-focus-on-click} sets whether the
+  button will grab focus when it is clicked with the mouse. Making mouse clicks
+  not grab focus is useful in places like toolbars where you do not want the
+  keyboard focus removed from the main area of the application.
+
+  Since 2.4
+  @see-class{gtk-button}")
+
+;;; --- gtk-button-image -------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "image" 'gtk-button) 't)
  "The @code{\"image\"} property of type @class{gtk-widget} (Read / Write) @br{}
   The child widget to appear next to the button text. @br{}
   Since 2.6")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-button-image atdoc:*function-name-alias*) "Accessor"
+      (documentation 'gtk-button-image 'function)
+ "@version{2013-12-9}
+  @argument[button]{a @class{gtk-button} widget}
+  @argument[image]{a widget to set as the image for the button}
+  @syntax[]{(gtk-button-image object) => image}
+  @syntax[]{(setf (gtk-button-image object) image)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-button]{image} of the @class{gtk-button}
+    class.
+  @end{short}
+
+  @return{A @class{gtk-widget} or @code{nil} in case there is no image.}
+
+  The generic function @sym{gtk-button-image} gets the widget that is currently
+  set as the image of button. This may have been explicitly set by the generic
+  function @sym{(setf gtk-button-image)} or constructed by the function
+  @fun{gtk-button-new-from-stock}.
+
+  The generic function @sym{(setf gtk-button-image)} sets the image of button
+  to the given widget. Note that it depends on the
+  @slot[gtk-settings]{gtk-button-images} setting whether the image will be
+  displayed or not, you do not have to call the function @fun{gtk-widget-show}
+  on image yourself.
+
+  Since 2.6
+  @see-class{gtk-button}
+  @see-function{gtk-widget-show}
+  @see-function{gtk-button-new-from-stock}")
+
+;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "image-position" 'gtk-button) 't)
@@ -360,36 +452,6 @@
 ;;; Accessors
 ;;;
 ;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-button-always-show-image atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-button-always-show-image 'function)
- "@version{2013-12-9}
-  Accessor of the slot @arg{\"always-show-image\"} of the @class{gtk-button}
-  class.
-  @see-class{gtk-button}
-  @see-function{gtk-button-get-always-show-image}
-  @see-function{gtk-button-set-always-show-image}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-button-focus-on-click atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-button-focus-on-click 'function)
- "@version{2013-12-9}
-  Accessor of the slot @arg{\"focus-on-click\"} of the @class{gtk-button} class.
-  @see-class{gtk-button}
-  @see-function{gtk-button-get-focus-on-click}
-  @see-function{gtk-button-set-focus-on-click}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-button-image atdoc:*function-name-alias*) "Accessor"
-      (documentation 'gtk-button-image 'function)
- "@version{2013-12-9}
-  Accessor of the slot @arg{\"image\"} of the @class{gtk-button} class.
-  @see-class{gtk-button}
-  @see-function{gtk-button-get-image}
-  @see-function{gtk-button-set-image}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-button-image-position atdoc:*function-name-alias*)
@@ -820,56 +882,6 @@
 (export 'gtk-button-set-use-underline)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_button_set_focus_on_click ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-button-set-focus-on-click))
-
-(defun gtk-button-set-focus-on-click (button focus-on-click)
- #+cl-cffi-gtk-documentation
- "@version{2013-12-9}
-  @argument[button]{a @class{gtk-button} widget}
-  @argument[focus-on-click]{whether the button grabs focus when clicked with
-    the mouse}
-  @begin{short}
-    Sets whether the button will grab focus when it is clicked with the mouse.
-  @end{short}
-  Making mouse clicks not grab focus is useful in places like toolbars where
-  you do not want the keyboard focus removed from the main area of the
-  application.
-
-  Since 2.4
-  @see-class{gtk-button}
-  @see-function{gtk-button-get-focus-on-click}"
-  (setf (gtk-button-focus-on-click button) focus-on-click))
-
-(export 'gtk-button-set-focus-on-click)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_button_get_focus_on_click ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-button-get-focus-on-click))
-
-(defun gtk-button-get-focus-on-click (button)
- #+cl-cffi-gtk-documentation
- "@version{2013-12-9}
-  @argument[button]{a @class{gtk-button} widget}
-  @return{@em{True} if the @arg{button} grabs focus when it is clicked with the
-    mouse.}
-  @begin{short}
-    Returns whether the button grabs focus when it is clicked with the mouse.
-  @end{short}
-  See the function @fun{gtk-button-set-focus-on-click}.
-
-  Since 2.4
-  @see-class{gtk-button}
-  @see-function{gtk-button-set-focus-on-click}."
-  (gtk-button-focus-on-click button))
-
-(export 'gtk-button-get-focus-on-click)
-
-;;; ----------------------------------------------------------------------------
 ;;; gtk_button_set_alignment ()
 ;;; ----------------------------------------------------------------------------
 
@@ -923,57 +935,6 @@
 (export 'gtk-button-get-alignment)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_button_set_image ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-button-set-image))
-
-(defun gtk-button-set-image (button image)
- #+cl-cffi-gtk-documentation
- "@version{2013-12-9}
-  @argument[button]{a @class{gtk-button} widget}
-  @argument[image]{a widget to set as the image for the button}
-  @begin{short}
-    Set the image of button to the given widget.
-  @end{short}
-  Note that it depends on the @code{\"gtk-button-images\"} setting whether the
-  image will be displayed or not, you do not have to call the function
-  @fun{gtk-widget-show} on image yourself.
-
-  Since 2.6
-  @see-class{gtk-button}
-  @see-function{gtk-widget-show}
-  @see-function{gtk-button-get-image}"
-  (setf (gtk-button-image button) image))
-
-(export 'gtk-button-set-image)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_button_get_image ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-button-get-image))
-
-(defun gtk-button-get-image (button)
- #+cl-cffi-gtk-documentation
- "@version{2013-12-9}
-  @argument[button]{a @class{gtk-button} widget}
-  @return{A @class{gtk-widget} or @code{nil} in case there is no image.}
-  @begin{short}
-    Gets the widget that is currently set as the image of button.
-  @end{short}
- This may have been explicitly set by the function @fun{gtk-button-set-image}
- or constructed by the function @fun{gtk-button-new-from-stock}.
-
-  Since 2.6
-  @see-class{gtk-button}
-  @see-function{gtk-button-set-image}
-  @see-function{gtk-button-new-from-stock}"
-  (gtk-button-image button))
-
-(export 'gtk-button-get-image)
-
-;;; ----------------------------------------------------------------------------
 ;;; gtk_button_set_image_position ()
 ;;; ----------------------------------------------------------------------------
 
@@ -1016,58 +977,6 @@
   (gtk-button-image-position button))
 
 (export 'gtk-button-get-image-position)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_button_set_always_show_image ()
-;;; ----------------------------------------------------------------------------
-
-#+gtk-3-6
-(declaim (inline gtk-button-set-always-show-image))
-
-#+gtk-3-6
-(defun gtk-button-set-always-show-image (button always-show)
- #+cl-cffi-gtk-documentation
- "@version{2013-12-9}
-  @argument[button]{a @class{gtk-button} widget}
-  @argument[always-show]{@em{true} if the button should always show the image}
-  @begin{short}
-    If @em{true}, the button will ignore the \"gtk-button-images\" setting
-    and always show the image, if available.
-  @end{short}
-
-  Use this property if the button would be useless or hard to use without
-  the image.
-
-  Since 3.6
-  @see-class{gtk-button}
-  @see-function{gtk-button-get-always-show-image}"
-  (setf (gtk-button-always-show-image button) always-show))
-
-#+gtk-3-6
-(export 'gtk-button-set-always-show-image)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_button_get_always_show_image ()
-;;; ----------------------------------------------------------------------------
-
-#+gtk-3-6
-(defun gtk-button-get-always-show-image (button)
- #+cl-cffi-gtk-documentation
- "@version{2013-12-9}
-  @argument[button]{a @class{gtk-button} widget}
-  @return{@em{True} if the button will always show the image.}
-  @begin{short}
-    Returns whether the button will ignore the @code{\"gtk-button-images\"}
-    setting and always show the image, if available.
-  @end{short}
-
-  Since 3.6
-  @see-class{gtk-button}
-  @see-function{gtk-button-set-always-show-image}"
-  (gtk-button-get-always-show-image button))
-
-#+gtk-3-6
-(export 'gtk-button-get-always-show-image)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_button_get_event_window ()

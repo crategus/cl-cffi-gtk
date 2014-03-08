@@ -94,10 +94,10 @@
 (setf (gethash 'gtk-orientable-orientation atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-orientable-orientation 'function)
- "@version{2014-2-9}
+ "@version{2014-2-21}
   @argument[object]{a @class{gtk-orientable} widet}
   @syntax[]{(gtk-orientable-orientation object) >= orientation}
-  @syntax[]{(setf gtk-orientable-orientation object) orientation)}
+  @syntax[]{(setf (gtk-orientable-orientation object) orientation)}
   @begin{short}
     Accessor of the slot @slot[gtk-orientable]{orientation} of the
     @class{gtk-orientable} interface.

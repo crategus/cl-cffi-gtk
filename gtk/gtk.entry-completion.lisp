@@ -172,7 +172,7 @@
       default behaviour is to replace the contents of the entry with the
       contents of the text column in the row pointed to by iter.
       Note that model is the model that was passed to the function
-      @fun{gtk-entry-completion-set-model}.
+      @fun{gtk-entry-completion-model}.
       @begin[code]{table}
         @entry[widget]{The object which received the signal.}
         @entry[model]{The @class{gtk-tree-model} containing the matches.}
@@ -207,7 +207,7 @@
       is to replace the contents of the entry with the contents of the text
       column in the row pointed to by iter.
       Note that model is the model that was passed to the function
-      @fun{gtk-entry-completion-set-model}.
+      @fun{gtk-entry-completion-model}.
       @begin[code]{table}
         @entry[widget]{The object which received the signal.}
         @entry[model]{The @class{gtk-tree-model} containing the matches.}
@@ -285,12 +285,43 @@
   Allowed values: >= 0 @br{}
   Default value: 1")
 
+;;; --- gtk-entry-completion-model ---------------------------------------------
+
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "model"
                                                'gtk-entry-completion) 't)
  "The @code{\"model\"} property of type @class{gtk-tree-model}
   (Read / Write) @br{}
   The model to find matches in.")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-entry-completion-model atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-entry-completion-model 'function)
+ "@version{2014-2-16}
+  @argument[object]{a @class{gtk-entry-completion} object}
+  @argument[model]{the @class{gtk-tree-model} object}
+  @syntax[]{(gtk-entry-completion-model object) => model}
+  @syntax[]{(setf (gtk-entry-completion-model object) model)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-entry-completion]{model} of the
+    @class{gtk-entry-completion} class.
+  @end{short}
+
+  The generic function @sym{gtk-entry-completion-model} returns the
+  @class{gtk-tree-model}, or @code{nil} if none is currently being used.
+
+
+  The generic function @sym{setf gtk-entry-completion-model)} sets the model
+  for a @class{gtk-entry-completion}. If the entry completion already has a
+  model set, it will remove it before setting the new model. If @arg{model} is
+  @code{nil}, then it will unset the model.
+
+  Since 2.4
+  @see-class{gtk-entry-completion}
+  @see-class{gtk-tree-model}")
+
+;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "popup-completion"
@@ -383,17 +414,6 @@
   @see-class{gtk-entry-completion}
   @see-function{gtk-entry-completion-get-minimum-key-length}
   @see-function{gtk-entry-completion-set-minimum-key-length}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-entry-completion-model atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-entry-completion-model 'function)
- "@version{2013-11-30}
-  Accessor of the slot @code{\"model\"} of the
-  @class{gtk-entry-completion} class.
-  @see-class{gtk-entry-completion}
-  @see-class{gtk-entry-completion-get-model}
-  @see-class{gtk-entry-completion-set-model}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-entry-completion-popup-completion
@@ -506,54 +526,6 @@
   (completion (g-object gtk-entry-completion)))
 
 (export 'gtk-entry-completion-get-entry)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_entry_completion_set_model ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-entry-completion-set-model))
-
-(defun gtk-entry-completion-set-model (completion model)
- #+cl-cffi-gtk-documentation
- "@version{2013-11-30}
-  @argument[completion]{a @class{gtk-entry-completion} object}
-  @argument[model]{the @class{gtk-tree-model} object}
-  @begin{short}
-    Sets the model for a @class{gtk-entry-completion}.
-  @end{short}
-  If @arg{completion} already has a model set, it will remove it before setting
-  the new model. If @arg{model} is @code{nil}, then it will unset the model.
-
-  Since 2.4
-  @see-class{gtk-entry-completion}
-  @see-class{gtk-tree-model}
-  @see-function{gtk-entry-completion-get-model}"
-  (setf (gtk-entry-completion-model completion) model))
-
-(export 'gtk-entry-completion-set-model)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_entry_completion_get_model ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-entry-completion-get-model))
-
-(defun gtk-entry-completion-get-model (completion)
- #+cl-cffi-gtk-documentation
- "@version{2013-11-30}
-  @argument[completion]{a @class{gtk-entry-completion} object}
-  @begin{return}
-    A @class{gtk-tree-model}, or @code{nil} if none is currently being used.
-  @end{return}
-  @short{Returns @code{nil} if the model is unset.}
-
-  Since 2.4
-  @see-class{gtk-entry-completion}
-  @see-class{gtk-tree-model}
-  @see-function{gtk-entry-completion-set-model}"
-  (gtk-entry-completion-model completion))
-
-(export 'gtk-entry-completion-set-model)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkEntryCompletionMatchFunc ()

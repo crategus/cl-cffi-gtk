@@ -1405,7 +1405,7 @@
   @argument[object]{a @class{gtk-window} widget}
   @argument[title]{title of the window}
   @syntax[]{(gtk-window-title object) => title}
-  @syntax[]{(setf gtk-window-title object) title)}
+  @syntax[]{(setf (gtk-window-title object) title)}
   @begin{short}
     Accessor of the slot @slot[gtk-window]{title} of the @class{gtk-window}
     class.
@@ -1442,7 +1442,7 @@
   @argument[object]{a @class{gtk-window} widget}
   @argument[parent]{parent window, or @code{nil}}
   @syntax[]{(gtk-window-transient-for object) => parent}
-  @syntax[]{(setf gtk-window-transient-for object) parent)}
+  @syntax[]{(setf (gtk-window-transient-for object) parent)}
   @begin{short}
     Accessor of the slot @slot[gtk-window]{transient-for} of the
     @class{gtk-window} class.
@@ -1482,9 +1482,7 @@
       (documentation 'gtk-window-type 'function)
  "@version{2014-2-10}
   Accessor of the slot @slot[gtk-window]{type} of the @class{gtk-window} class.
-  @see-class{gtk-window}
-  @see-symbol{gtk-window-type}
-  @see-function{gtk-window-new}")
+  @see-class{gtk-window}")
 
 ;;; --- gtk-window-type-hint ---------------------------------------------------
 
@@ -1504,14 +1502,14 @@
   @argument[object]{a @class{gtk-window} widget}
   @argument[hint]{the window type}
   @syntax[]{(gtk-window-type-hint) => hint}
-  @syntax[]{(setf gtk-window-type-hint object) hint)}
+  @syntax[]{(setf (gtk-window-type-hint object) hint)}
   @begin{short}
     Accessor of the slot @slot[gtk-window]{type-hint} of the @class{gtk-window}
     class.
   @end{short}
 
   The generic function @sym{gtk-window-type-hint} returns the type hint for
-  @arg{window}.
+  the window.
 
   The generic function @sym{(setf gtk-window-type-hint)} returns the window
   type of type @symbol{gdk-window-type-hint}. By setting the type hint for the
@@ -1524,7 +1522,7 @@
   functions in GTK+ will sometimes call the generic function
   @sym{gtk-window-type-hint} on your behalf.
   @see-class{gtk-window}
-  @see-symbol{gdk-window-type-hint}")
+  @see-function{gtk-dialog-new-with-button}")
 
 ;;; --- gtk-window-urgency-hint ------------------------------------------------
 
@@ -1543,7 +1541,7 @@
   @argument[object]{a @class{gtk-window} widget}
   @argument[setting]{@em{true} to mark this window as urgent}
   @syntax[]{(gtk-window-urgency-hint object) => setting}
-  @syntax[]{(setf gtk-window-urgency-hint object) setting)}
+  @syntax[]{(setf (gtk-window-urgency-hint object) setting)}
   @begin{short}
     Accessor of the slot @slot[gtk-window]{urgency-hint} of the
     @class{gtk-window} class.
@@ -1576,7 +1574,7 @@
   @argument[object]{a @class{gtk-window} widget}
   @argument[position]{a position constraint}
   @syntax[]{(gtk-window-window-position object) => position}
-  @syntax[]{(setf gtk-window-window-position object) position)}
+  @syntax[]{(setf (gtk-window-window-position object) position)}
   @begin{short}
     Accessor of the slot @slot[gtk-window]{window-position} of the
     @class{gtk-window} class.
@@ -1584,11 +1582,10 @@
 
   The generic function @sym{(setf gtk-window-window-position)} sets a position
   contraint of type @symbol{gtk-window-position} for this window. If the old or
-  new constraint is @code{:center-always} of the @symbol{gtk-window-position},
-  this will also cause the window to be repositioned to satisfy the new
-  constraint.
-  @see-class{gtk-window}
-  @see-symbol{gtk-window-position}")
+  new constraint is the value @code{:center-always} of the
+  @symbol{gtk-window-position} enumeration, this will also cause the window to
+  be repositioned to satisfy the new constraint.
+  @see-class{gtk-window}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_new ()
@@ -1598,8 +1595,8 @@
 
 (defun gtk-window-new (type)
  #+cl-cffi-gtk-documentation
- "@version{2013-7-30}
-  @argument[type]{type of window, a value of the @symbol{gtk-window-type}
+ "@version{2014-2-13}
+  @argument[type]{type of the window, a value of the @symbol{gtk-window-type}
     enumeration}
   @return{A new @class{gtk-window} widget.}
   @begin{short}
@@ -1607,8 +1604,8 @@
     can contain other widgets.
   @end{short}
   Nearly always, the type of the window should be @code{:toplevel} from the
-  @symbol{gtk-window-type} enumeration. If you are implementing something like a
-  popup menu from scratch, which is a bad idea, just use the
+  @symbol{gtk-window-type} enumeration. If you are implementing something like
+  a popup menu from scratch, which is a bad idea, just use the
   @class{gtk-menu} class, you might use the type @code{:popup}. The type
   @code{:popup} is not for dialogs, though in some other toolkits dialogs are
   called \"popups\". In GTK+, the type @code{:popup} means a pop-up menu or
@@ -1655,12 +1652,13 @@
 
 (defcfun ("gtk_window_add_accel_group" gtk-window-add-accel-group) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-29}
-  @argument[window]{@arg{window} to attach accelerator group to}
+ "@version{2014-2-13}
+  @argument[window]{the window to attach accelerator group to}
   @argument[accel-group]{a @class{gtk-accel-group} object}
-  Associate @arg{accel-group} with @arg{window}, such that calling
+  Associate @arg{accel-group} with @arg{window}, such that calling the function
   @fun{gtk-accel-group-activate} on @arg{window} will activate accelerators
   in @arg{accel-group}.
+  @see-class{gtk-window}
   @see-function{gtk-accel-group-activate}"
   (window (g-object gtk-window))
   (accel-group (g-object gtk-accel-group)))
@@ -1673,10 +1671,11 @@
 
 (defcfun ("gtk_window_remove_accel_group" gtk-window-remove-accel-group) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-29}
+ "@version{2014-2-13}
   @argument[window]{a @class{gtk-window} widget}
   @argument[accel-group]{a @class{gtk-accel-group} object}
-  Reverses the effects of @fun{gtk-window-add-accel-group}.
+  Reverses the effects of the function @fun{gtk-window-add-accel-group}.
+  @see-class{gtk-window}
   @see-function{gtk-window-add-accel-group}"
   (window (g-object gtk-window))
   (accel-group (g-object gtk-accel-group)))
@@ -1689,10 +1688,12 @@
 
 (defcfun ("gtk_window_activate_focus" gtk-window-activate-focus) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-3-29}
+ "@version{2014-2-13}
   @argument[window]{a @class{gtk-window} widget}
   @return{@em{True} if a widget got activated.}
-  Activates the current focused widget within the window."
+  Activates the current focused widget within the window.
+  @see-class{gtk-window}
+  @see-function{gtk-window-activate-default}"
   (window (g-object gtk-window)))
 
 (export 'gtk-window-activate-focus)
@@ -1703,13 +1704,15 @@
 
 (defcfun ("gtk_window_activate_default" gtk-window-activate-default) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-3-29}
+ "@version{2014-2-13}
   @argument[window]{a @class{gtk-window} widget}
   @return{@em{True} if a widget got activated.}
-  Activates the default widget for the @arg{window}, unless the current
-  focused widget has been configured to receive the default action (see
-  @fun{gtk-widget-set-receives-default}), in which case the focused widget is
+  Activates the default widget for the window, unless the current focused widget
+  has been configured to receive the default action, see the function
+  @fun{gtk-widget-set-receives-default}, in which case the focused widget is
   activated.
+  @see-class{gtk-window}
+  @see-function{gtk-window-activate-focus}
   @see-function{gtk-widget-set-receives-default}"
   (window (g-object gtk-window)))
 
@@ -1732,20 +1735,21 @@
 (defcfun ("gtk_window_set_default_geometry" gtk-window-set-default-geometry)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-29}
+ "@version{2014-2-13}
   @argument[window]{a @class{gtk-window} widget}
   @argument[width]{width in resize increments, or -1 to unset the default width}
   @argument[height]{height in resize increments, or -1 to unset the default
     height}
   @begin{short}
-    Like @fun{gtk-window-default-size}, but @arg{width} and @arg{height} are
-    interpreted in terms of the base size and increment set
-    with @fun{gtk-window-set-geometry-hints}.
+    Like the function @fun{gtk-window-default-size}, but @arg{width} and
+    @arg{height} are interpreted in terms of the base size and increment set
+    with the function @fun{gtk-window-set-geometry-hints}.
   @end{short}
 
   Since 3.0
-  @see-function{gtk-window-set-geometry-hints}
-  @see-function{gtk-window-default-size}"
+  @see-class{gtk-window}
+  @see-function{gtk-window-default-size}
+  @see-function{gtk-window-set-geometry-hints}"
   (window (g-object gtk-window))
   (width :int)
   (height :int))
@@ -1762,15 +1766,16 @@
   @argument[window]{a @class{gtk-window} widget}
   @argument[geometry-widget]{widget the geometry hints will be applied to or
     @code{nil}}
-  @argument[geometry]{struct containing geometry information or @code{nil}}
-  @argument[geometry-mask]{mask indicating which struct fields should be paid
-    attention to}
+  @argument[geometry]{structure containing geometry information or @code{nil}}
+  @argument[geometry-mask]{mask indicating which structure fields should be
+    paid attention to}
   @begin{short}
     This function sets up hints about how a window can be resized by the user.
   @end{short}
   You can set a minimum and maximum size; allowed resize increments (e. g. for
   xterm, you can only resize by the size of a character); aspect ratios; and
-  more. See the @class{gdk-geometry} struct.
+  more. See the @class{gdk-geometry} structure.
+  @see-class{gtk-window}
   @see-class{gdk-geometry}"
   (window (g-object gtk-window))
   (geometry-widget (g-object gtk-widget))
@@ -1811,16 +1816,13 @@
 (defcfun ("gtk_window_list_toplevels" gtk-window-list-toplevels)
     (g-list (g-object gtk-window) :free-from-foreign t)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-29}
+ "@version{2014-2-13}
   @return{List of toplevel widgets.}
   @begin{short}
     Returns a list of all existing toplevel windows.
   @end{short}
-  The widgets in the list are not individually referenced. If you want to
-  iterate through the list and perform actions involving callbacks that might
-  destroy the widgets, you must call
-  @code{g_list_foreach (result, (GFunc)g_object_ref, NULL)}
-  first, and then unref all the widgets afterwards.")
+  The widgets in the list are not individually referenced.
+  @see-class{gtk-window}")
 
 (export 'gtk-window-list-toplevels)
 
@@ -1830,13 +1832,14 @@
 
 (defcfun ("gtk_window_add_mnemonic" gtk-window-add-mnemonic) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-29}
+ "@version{2014-2-13}
   @argument[window]{a @class{gtk-window} widget}
   @argument[keyval]{the mnemonic}
   @argument[target]{the widget that gets activated by the mnemonic}
-  @begin{short}
-    Adds a mnemonic to this @arg{window}.
-  @end{short}"
+  Adds a mnemonic to this window.
+  @see-class{gtk-window}
+  @see-function{gtk-window-remove-mnemonic}
+  @see-function{gtk-window-activate-mnemonic}"
   (window (g-object gtk-window))
   (keyval :uint)
   (target (g-object gtk-widget)))
@@ -1849,13 +1852,13 @@
 
 (defcfun ("gtk_window_remove_mnemonic" gtk-window-remove-mnemonic) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-29}
+ "@version{2014-2-13}
   @argument[window]{a @class{gtk-window} widget}
   @argument[keyval]{the mnemonic}
   @argument[target]{the widget that gets activated by the mnemonic}
-  @begin{short}
-    Removes a mnemonic from this @arg{window}.
-  @end{short}"
+  Removes a mnemonic from this window.
+  @see-class{gtk-window}
+  @see-function{gtk-window-add-mnemonic}"
   (window (g-object gtk-window))
   (keyval :uint)
   (target (g-object gtk-widget)))
@@ -1868,14 +1871,14 @@
 
 (defcfun ("gtk_window_mnemonic_activate" gtk-window-mnemonic-activate) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-3-29}
+ "@version{2014-2-13}
   @argument[window]{a @class{gtk-window} widget}
   @argument[keyval]{the mnemonic}
   @argument[modifier]{the modifiers}
   @return{@em{True} if the activation is done.}
-  @begin{short}
-    Activates the targets associated with the mnemonic.
-  @end{short}"
+  Activates the targets associated with the mnemonic.
+  @see-class{gtk-window}
+  @see-function{gtk-window-add-mnemonic}"
   (window (g-object gtk-window))
   (keyval :uint)
   (modifier gdk-modifier-type))

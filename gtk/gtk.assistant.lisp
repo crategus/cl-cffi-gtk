@@ -5,12 +5,12 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.8.9 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -232,24 +232,6 @@
   gtk-assistant-child-page-type
   "page-type" "GtkAssistantPageType" t t t)
 
-(define-child-property "GtkAssistant"
-  gtk-assistant-child-title
-  "title" "gchararray" t t t)
-
-(define-child-property "GtkAssistant"
-  gtk-assistant-child-header-image
-  "header-image" "GdkPixbuf" t t t)
-
-(define-child-property "GtkAssistant"
-  gtk-assistant-child-sidebar-image
-  "sidebar-image" "GdkPixbuf" t t t)
-
-(define-child-property "GtkAssistant"
-  gtk-assistant-child-complete
-  "complete" "gboolean" t t t)
-
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-assistant-child-page-type atdoc:*function-name-alias*)
       "Accessor"
@@ -260,6 +242,12 @@
   Accessor of the child property @code{\"page-type\"} of the
   @class{gtk-assistant} class.
   @see-class{gtk-assistant}")
+
+;;; ----------------------------------------------------------------------------
+
+(define-child-property "GtkAssistant"
+  gtk-assistant-child-title
+  "title" "gchararray" t t t)
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-assistant-child-title atdoc:*function-name-alias*)
@@ -272,6 +260,12 @@
   @class{gtk-assistant} class.
   @see-class{gtk-assistant}")
 
+;;; ----------------------------------------------------------------------------
+
+(define-child-property "GtkAssistant"
+  gtk-assistant-child-header-image
+  "header-image" "GdkPixbuf" t t t)
+
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-assistant-child-header-image atdoc:*function-name-alias*)
       "Accessor"
@@ -283,6 +277,12 @@
   @class{gtk-assistant} class.
   @see-class{gtk-assistant}")
 
+;;; ----------------------------------------------------------------------------
+
+(define-child-property "GtkAssistant"
+  gtk-assistant-child-sidebar-image
+  "sidebar-image" "GdkPixbuf" t t t)
+
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-assistant-child-sidebar-image atdoc:*function-name-alias*)
       "Accessor"
@@ -293,6 +293,12 @@
   Accessor of the child property @code{\"sidebar-image\"} of the
   @class{gtk-assistant} class.
   @see-class{gtk-assistant}")
+
+;;; ----------------------------------------------------------------------------
+
+(define-child-property "GtkAssistant"
+  gtk-assistant-child-complete
+  "complete" "gboolean" t t t)
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-assistant-child-complete atdoc:*function-name-alias*)

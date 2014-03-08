@@ -394,20 +394,51 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Property Details
+;;; Property and Accessor Details
 ;;;
 ;;; ----------------------------------------------------------------------------
 
+;;; --- gtk-label-angle --------------------------------------------------------
+
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "angle" 'gtk-label) 't)
- "The @code{\"angle\"} property of type @code{:double} (Read / Write)@br{}
+ "The @code{\"angle\"} property of type @code{:double} (Read / Write) @br{}
   The angle that the baseline of the label makes with the horizontal, in
   degrees, measured counterclockwise. An angle of 90 reads from
   bottom to top, an angle of 270, from top to bottom. Ignored if the
-  label is selectable, wrapped, or ellipsized.@br{}
-  Allowed values: [0,360]@br{}
-  Default value: 0@br{}
+  label is selectable, wrapped, or ellipsized. @br{}
+  Allowed values: [0,360] @br{}
+  Default value: 0 @br{}
   Since 2.6")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-label-angle atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-label-angle 'function)
+ "@version{2014-3-7}
+  @argument[object]{a @class{gtk-label} widget}
+  @argument[angle]{the angle that the baseline of the label makes with the
+    horizontal, in degrees, measured counterclockwise}
+  @syntax[]{(gtk-label-angle object) => angle}
+  @syntax[]{(setf (gtk-label-angle object) angle)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-label]{angle} of the @class{gtk-label} class.
+  @end{short}
+
+  The generic function @sym{gtk-label-angle} sets the angle of rotation for the
+  label.
+
+  The generic function @sym{(setf gtk-label-angle)} sets the angle of rotation
+  for the @arg{label}. 
+
+  An angle of 90 reads from from bottom to top, an angle of 270, from top to
+  bottom. The angle setting for the label is ignored if the label is selectable,
+  wrapped, or ellipsized.
+
+  Since 2.6
+  @see-class{gtk-label}")
+
+;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "attributes" 'gtk-label) 't)
@@ -574,15 +605,6 @@
 ;;;
 ;;; ----------------------------------------------------------------------------
 
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-label-angle atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-label-angle 'function)
- "@version{2013-3-9}
-  @begin{short}
-    Accessor of the slot @code{\"angle\"} of the @class{gtk-label}
-    class.
-  @end{short}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-label-attributes atdoc:*function-name-alias*)
@@ -1561,26 +1583,6 @@
 (export 'gtk-label-get-single-line-mode)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_label_get_angle ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-label-get-angle))
-
-(defun gtk-label-get-angle (label)
- #+cl-cffi-gtk-documentation
- "@version{2013-4-14}
-  @argument[label]{a @class{gtk-label} widget}
-  @return{The angle of rotation for the @arg{label}.}
-  @short{Gets the angle of rotation for the @arg{label}.}
-  See the function @fun{gtk-label-set-angle}.
-
-  Since 2.6
-  @see-function{gtk-label-set-angle}"
-  (gtk-label-angle label))
-
-(export 'gtk-label-get-angle)
-
-;;; ----------------------------------------------------------------------------
 ;;; gtk_label_set_label ()
 ;;; ----------------------------------------------------------------------------
 
@@ -1660,30 +1662,6 @@
   (setf (gtk-label-single-line-mode label) single-line-mode))
 
 (export 'gtk-label-set-single-line-mode)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_label_set_angle ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-label-set-angle))
-
-(defun gtk-label-set-angle (label angle)
- #+cl-cffi-gtk-documentation
- "@version{2013-4-14}
-  @argument[label]{a @class{gtk-label} widget}
-  @argument[angle]{the angle that the baseline of the @arg{label} makes with the
-    horizontal, in degrees, measured counterclockwise}
-  @begin{short}
-    Sets the angle of rotation for the @arg{label}.
-  @end{short}
-  An angle of 90 reads from from bottom to top, an angle of 270, from top to
-  bottom. The angle setting for the label is ignored if the label is selectable,
-  wrapped, or ellipsized.
-
-  Since 2.6"
-  (setf (gtk-label-angle label) angle))
-
-(export 'gtk-label-set-angle)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_label_get_current_uri ()

@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.8.9 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -205,9 +205,11 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Property Details
+;;; Property and Accessor Details
 ;;;
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-about-dialog-artists -----------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "artists" 'gtk-about-dialog) 't)
@@ -216,148 +218,6 @@
   string may contain email addresses and URLs, which will be displayed as links,
   see the introduction for more details. @br{}
   Since 2.6")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "authors" 'gtk-about-dialog) 't)
- "The @code{\"authors\"} property of type @type{g-strv} (Read / Write) @br{}
-  The authors of the program, as a list of strings. Each string may contain
-  email addresses and URLs, which will be displayed as links, see the
-  introduction for more details. @br{}
-  Since 2.6")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "comments" 'gtk-about-dialog) 't)
- "The @code{\"comments\"} property of type @code{:string} (Read / Write) @br{}
-  Comments about the program. This string is displayed in a label in the main
-  dialog, thus it should be a short explanation of the main purpose of the
-  program, not a detailed list of features. @br{}
-  Default value: @code{nil} @br{}
-  Since 2.6")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "copyright"
-                                               'gtk-about-dialog) 't)
- "The @code{\"copyright\"} property of type @code{:string} (Read / Write) @br{}
-  Copyright information for the program. @br{}
-  Default value: @code{nil} @br{}
-  Since 2.6")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "documenters"
-                                               'gtk-about-dialog) 't)
- "The @code{\"documenters\"} property of type @type{g-strv}
-  (Read / Write) @br{}
-  The people documenting the program, as a list of strings. Each string may
-  contain email addresses and URLs, which will be displayed as links. @br{}
-  Since 2.6")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "license" 'gtk-about-dialog) 't)
- "The @code{\"license\"} property of type @code{:string} (Read / Write) @br{}
-  The license of the program. This string is displayed in a text view in a
-  secondary dialog, therefore it is fine to use a long multi-paragraph text.
-  Note that the text is only wrapped in the text view if the
-  @code{\"wrap-license\"} property is set to @em{true}; otherwise the text
-  itself must contain the intended linebreaks. When setting this property to a
-  non-@code{nil} value, the @code{\"license-type\"} property is set to the value
-  @code{:custom} of the @symbol{gtk-license} enumeration as a side effect. @br{}
-  Default value: @code{nil} @br{}
-  Since 2.6")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "license-type"
-                                               'gtk-about-dialog) 't)
- "The @code{\"license-type\"} property of type @symbol{gtk-license}
-  (Read / Write) @br{}
-  The license of the program, as a value of the @symbol{gtk-license}
-  enumeration. The @sym{gtk-about-dialog} will automatically fill out a standard
-  disclaimer and link the user to the appropriate online resource for the
-  license text. If @code{:unknown} is used, the link used will be the same
-  specified in the @code{\"website\"} property. If @code{:custom} is used, the
-  current contents of the @code{\"license\"} property are used. For any other
-  @symbol{gtk-license} value, the contents of the @code{\"license\"} property
-  are also set by this property as a side effect. @br{}
-  Default value: @code{:unkown} @br{}
-  Since 3.0")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "logo" 'gtk-about-dialog) 't)
- "The @code{\"logo\"} property of type @class{gdk-pixbuf} (Read / Write) @br{}
-  A logo for the about box. If this is not set, it defaults to
-  @fun{gtk-window-get-default-icon-list} @br{}
-  Since 2.6")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "logo-icon-name"
-                                               'gtk-about-dialog) 't)
- "The @code{\"logo-icon-name\"} property of type @code{:string}
-  (Read / Write) @br{}
-  A named icon to use as the logo for the about box. This property overrides
-  the @code{\"logo\"} property. @br{}
-  Default value: @code{nil} @br{}
-  Since 2.6")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "program-name"
-                                               'gtk-about-dialog) 't)
- "The @code{\"program-name\"} property of type @code{:string}
-  (Read / Write) @br{}
-  The name of the program. If this is not set, it defaults to the function
-  @fun{g-get-application-name}. @br{}
-  Default value: @code{nil} @br{}
-  Since 2.12")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "translator-credits"
-                                               'gtk-about-dialog) 't)
- "The @code{\"translator-credits\"} property of type @code{:string}
-  (Read / Write) @br{}
-  Credits to the translators. This string should be marked as translatable.
-  The string may contain email addresses and URLs, which will be displayed as
-  links, see the introduction for more details. @br{}
-  Default value: @code{nil} @br{}
-  Since 2.6")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "version" 'gtk-about-dialog) 't)
- "The @code{\"version\"} property of type @code{:string} (Read / Write) @br{}
-  The version of the program. @br{}
-  Default value: @code{nil} @br{}
-  Since 2.6")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "website" 'gtk-about-dialog) 't)
- "The @code{\"website\"} property of type @code{:string} (Read / Write) @br{}
-  The URL for the link to the website of the program. This should be a string
-  starting with \"http://\". @br{}
-  Default value: @code{nil} @br{}
-  Since 2.6")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "website-label"
-                                               'gtk-about-dialog) 't)
- "The @code{\"website-label\"} property of type @code{:string}
-  (Read / Write) @br{}
-  The label for the link to the website of the program. @br{}
-  Default value: @code{nil} @br{}
-  Since 2.6")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "wrap-license"
-                                               'gtk-about-dialog) 't)
- "The @code{\"wrap-license\"} property of type @code{:boolean}
-  (Read / Write) @br{}
-  Whether to wrap the text in the license dialog. @br{}
-  Default value: @code{nil} @br{}
-  Since 2.8")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
-
-;;; --- gtk-about-dialog-artists -----------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-about-dialog-artists atdoc:*function-name-alias*)
@@ -381,6 +241,14 @@
   @see-class{gtk-about-dialog}")
 
 ;;; --- gtk-about-dialog-authors -----------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "authors" 'gtk-about-dialog) 't)
+ "The @code{\"authors\"} property of type @type{g-strv} (Read / Write) @br{}
+  The authors of the program, as a list of strings. Each string may contain
+  email addresses and URLs, which will be displayed as links, see the
+  introduction for more details. @br{}
+  Since 2.6")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-about-dialog-authors atdoc:*function-name-alias*)
@@ -415,6 +283,15 @@
 ;;; --- gtk-about-dialog-comments ----------------------------------------------
 
 #+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "comments" 'gtk-about-dialog) 't)
+ "The @code{\"comments\"} property of type @code{:string} (Read / Write) @br{}
+  Comments about the program. This string is displayed in a label in the main
+  dialog, thus it should be a short explanation of the main purpose of the
+  program, not a detailed list of features. @br{}
+  Default value: @code{nil} @br{}
+  Since 2.6")
+
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-about-dialog-comments atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-about-dialog-comments 'function)
@@ -437,6 +314,14 @@
 ;;; --- gtk-about-dialog-copyright ---------------------------------------------
 
 #+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "copyright"
+                                               'gtk-about-dialog) 't)
+ "The @code{\"copyright\"} property of type @code{:string} (Read / Write) @br{}
+  Copyright information for the program. @br{}
+  Default value: @code{nil} @br{}
+  Since 2.6")
+
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-about-dialog-copyright atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-about-dialog-copyright 'function)
@@ -457,6 +342,15 @@
   @see-class{gtk-about-dialog}")
 
 ;;; --- gtk-about-dialog-documenters -------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "documenters"
+                                               'gtk-about-dialog) 't)
+ "The @code{\"documenters\"} property of type @type{g-strv}
+  (Read / Write) @br{}
+  The people documenting the program, as a list of strings. Each string may
+  contain email addresses and URLs, which will be displayed as links. @br{}
+  Since 2.6")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-about-dialog-documenters atdoc:*function-name-alias*)
@@ -482,6 +376,19 @@
 ;;; --- gtk-about-dialog-license -----------------------------------------------
 
 #+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "license" 'gtk-about-dialog) 't)
+ "The @code{\"license\"} property of type @code{:string} (Read / Write) @br{}
+  The license of the program. This string is displayed in a text view in a
+  secondary dialog, therefore it is fine to use a long multi-paragraph text.
+  Note that the text is only wrapped in the text view if the
+  @code{\"wrap-license\"} property is set to @em{true}; otherwise the text
+  itself must contain the intended linebreaks. When setting this property to a
+  non-@code{nil} value, the @code{\"license-type\"} property is set to the value
+  @code{:custom} of the @symbol{gtk-license} enumeration as a side effect. @br{}
+  Default value: @code{nil} @br{}
+  Since 2.6")
+
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-about-dialog-license atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-about-dialog-license 'function)
@@ -503,6 +410,22 @@
   @see-class{gtk-about-dialog}")
 
 ;;; --- gtk-about-dialog-license-type ------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "license-type"
+                                               'gtk-about-dialog) 't)
+ "The @code{\"license-type\"} property of type @symbol{gtk-license}
+  (Read / Write) @br{}
+  The license of the program, as a value of the @symbol{gtk-license}
+  enumeration. The @sym{gtk-about-dialog} will automatically fill out a standard
+  disclaimer and link the user to the appropriate online resource for the
+  license text. If @code{:unknown} is used, the link used will be the same
+  specified in the @code{\"website\"} property. If @code{:custom} is used, the
+  current contents of the @code{\"license\"} property are used. For any other
+  @symbol{gtk-license} value, the contents of the @code{\"license\"} property
+  are also set by this property as a side effect. @br{}
+  Default value: @code{:unkown} @br{}
+  Since 3.0")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-about-dialog-license-type atdoc:*function-name-alias*)
@@ -531,6 +454,13 @@
 ;;; --- gtk-about-dialog-logo --------------------------------------------------
 
 #+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "logo" 'gtk-about-dialog) 't)
+ "The @code{\"logo\"} property of type @class{gdk-pixbuf} (Read / Write) @br{}
+  A logo for the about box. If this is not set, it defaults to
+  @fun{gtk-window-get-default-icon-list} @br{}
+  Since 2.6")
+
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-about-dialog-logo atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-about-dialog-logo 'function)
@@ -554,6 +484,16 @@
   @see-function{gtk-window-set-default-icon}")
 
 ;;; --- gtk-about-dialog-logo-icon-name ----------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "logo-icon-name"
+                                               'gtk-about-dialog) 't)
+ "The @code{\"logo-icon-name\"} property of type @code{:string}
+  (Read / Write) @br{}
+  A named icon to use as the logo for the about box. This property overrides
+  the @code{\"logo\"} property. @br{}
+  Default value: @code{nil} @br{}
+  Since 2.6")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-about-dialog-logo-icon-name atdoc:*function-name-alias*)
@@ -581,6 +521,16 @@
 ;;; --- gtk-about-dialog-program-name ------------------------------------------
 
 #+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "program-name"
+                                               'gtk-about-dialog) 't)
+ "The @code{\"program-name\"} property of type @code{:string}
+  (Read / Write) @br{}
+  The name of the program. If this is not set, it defaults to the function
+  @fun{g-get-application-name}. @br{}
+  Default value: @code{nil} @br{}
+  Since 2.12")
+
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-about-dialog-program-name atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-about-dialog-program-name 'function)
@@ -603,6 +553,17 @@
   @see-function{g-get-application-name}")
 
 ;;; --- gtk-about-dialog-translator-credits ------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "translator-credits"
+                                               'gtk-about-dialog) 't)
+ "The @code{\"translator-credits\"} property of type @code{:string}
+  (Read / Write) @br{}
+  Credits to the translators. This string should be marked as translatable.
+  The string may contain email addresses and URLs, which will be displayed as
+  links, see the introduction for more details. @br{}
+  Default value: @code{nil} @br{}
+  Since 2.6")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-about-dialog-translator-credits atdoc:*function-name-alias*)
@@ -642,6 +603,13 @@
 ;;; --- gtk-about-dialog-version -----------------------------------------------
 
 #+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "version" 'gtk-about-dialog) 't)
+ "The @code{\"version\"} property of type @code{:string} (Read / Write) @br{}
+  The version of the program. @br{}
+  Default value: @code{nil} @br{}
+  Since 2.6")
+
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-about-dialog-version atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-about-dialog-version 'function)
@@ -662,6 +630,14 @@
   @see-class{gtk-about-dialog}")
 
 ;;; --- gtk-about-dialog-website -----------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "website" 'gtk-about-dialog) 't)
+ "The @code{\"website\"} property of type @code{:string} (Read / Write) @br{}
+  The URL for the link to the website of the program. This should be a string
+  starting with \"http://\". @br{}
+  Default value: @code{nil} @br{}
+  Since 2.6")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-about-dialog-website atdoc:*function-name-alias*)
@@ -686,6 +662,15 @@
 ;;; --- gtk-about-dialog-website-label -----------------------------------------
 
 #+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "website-label"
+                                               'gtk-about-dialog) 't)
+ "The @code{\"website-label\"} property of type @code{:string}
+  (Read / Write) @br{}
+  The label for the link to the website of the program. @br{}
+  Default value: @code{nil} @br{}
+  Since 2.6")
+
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-about-dialog-website-label atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-about-dialog-website-label 'function)
@@ -706,6 +691,15 @@
   @see-class{gtk-about-dialog}")
 
 ;;; --- gtk-about-dialog-wrap-license ------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "wrap-license"
+                                               'gtk-about-dialog) 't)
+ "The @code{\"wrap-license\"} property of type @code{:boolean}
+  (Read / Write) @br{}
+  Whether to wrap the text in the license dialog. @br{}
+  Default value: @code{nil} @br{}
+  Since 2.8")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-about-dialog-wrap-license atdoc:*function-name-alias*)
@@ -796,7 +790,6 @@
   (make-instance 'gtk-about-dialog))
 
 (export 'gtk-about-dialog-new)
-
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_about_dialog_add_credit_section ()

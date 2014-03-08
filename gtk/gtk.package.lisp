@@ -183,6 +183,8 @@
       widget.
 
       @about-class{gtk-accel-group}
+      @about-generic{gtk-accel-group-modifier-mask}
+      @about-generic{gtk-accel-group-is-locked}
       @about-function{gtk-accel-group-new}
       @about-function{gtk-accel-group-connect}
       @about-function{gtk-accel-group-connect-by-path}
@@ -191,9 +193,7 @@
       @about-function{gtk-accel-group-activate}
       @about-function{gtk-accel-group-lock}
       @about-function{gtk-accel-group-unlock}
-      @about-function{gtk-accel-group-get-is-locked}
       @about-function{gtk-accel-group-from-accel-closure}
-      @about-function{gtk-accel-group-get-modifier-mask}
       @about-function{gtk-accel-groups-activate}
       @about-function{gtk-accel-groups-from-object}
       @about-function{gtk-accel-group-find}
@@ -924,8 +924,6 @@
       @about-function{gtk-window-activate-default}
       @about-function{gtk-window-set-default-geometry}
       @about-function{gtk-window-set-geometry-hints}
-      @about-function{gtk-window-set-gravity}
-      @about-function{gtk-window-get-gravity}
       @about-function{gtk-window-set-position}
       @about-function{gtk-window-hide-titlebar-when-maximized}
       @about-function{gtk-window-set-screen}
@@ -1075,7 +1073,6 @@
 
       @about-class{gtk-about-dialog}
       @about-symbol{gtk-license}
-      @about-function{gtk-about-dialog-new}
       @about-generic{gtk-about-dialog-artists}
       @about-generic{gtk-about-dialog-authors}
       @about-generic{gtk-about-dialog-comments}
@@ -1091,6 +1088,7 @@
       @about-generic{gtk-about-dialog-website}
       @about-generic{gtk-about-dialog-website-label}
       @about-generic{gtk-about-dialog-wrap-license}
+      @about-function{gtk-about-dialog-new}
       @about-function{gtk-about-dialog-add-credit-section}
       @about-function{gtk-show-about-dialog}
     @end{subsection}
@@ -1145,10 +1143,9 @@
       A label which displays an accelerator key on the right of the text.
 
       @about-class{gtk-accel-label}
+      @about-generic{gtk-accel-label-accel-closure}
+      @about-generic{gtk-accel-label-accel-widget}
       @about-function{gtk-accel-label-new}
-      @about-function{gtk-accel-label-set-accel-closure}
-      @about-function{gtk-accel-label-get-accel-widget}
-      @about-function{gtk-accel-label-set-accel-widget}
       @about-function{gtk-accel-label-get-accel-width}
       @about-function{gtk-accel-label-set-accel}
       @about-function{gtk-accel-label-refetch}
@@ -1364,6 +1361,16 @@
       A widget that emits a signal when clicked on.
 
       @about-class{gtk-button}
+      @about-generic{gtk-button-always-show-image}
+      @about-generic{gtk-button-focus-on-click}
+      @about-generic{gtk-button-image}
+      @about-generic{gtk-button-image-position}
+      @about-generic{gtk-button-label}
+      @about-generic{gtk-button-relief}
+      @about-generic{gtk-button-use-stock}
+      @about-generic{gtk-button-use-underline}
+      @about-generic{gtk-button-xalign}
+      @about-generic{gtk-button-yalign}
       @about-function{gtk-button-new}
       @about-function{gtk-button-new-with-label}
       @about-function{gtk-button-new-with-mnemonic}
@@ -1385,8 +1392,6 @@
       @about-function{gtk-button-get-focus-on-click}
       @about-function{gtk-button-set-alignment}
       @about-function{gtk-button-get-alignment}
-      @about-function{gtk-button-set-image}
-      @about-function{gtk-button-get-image}
       @about-function{gtk-button-set-image-position}
       @about-function{gtk-button-get-image-position}
       @about-function{gtk-button-set-always-show-image}
@@ -1576,11 +1581,18 @@
       Completion functionality for GtkEntry.
 
       @about-class{gtk-entry-completion}
+      @about-generic{gtk-entry-completion-cell-area}
+      @about-generic{gtk-entry-completion-inline-completion}
+      @about-generic{gtk-entry-completion-inline-selection}
+      @about-generic{gtk-entry-completion-minimum-key-length}
+      @about-generic{gtk-entry-completion-model}
+      @about-generic{gtk-entry-completion-popup-completion}
+      @about-generic{gtk-entry-completion-popup-set-width}
+      @about-generic{gtk-entry-completion-popup-single-match}
+      @about-generic{gtk-entry-completion-text-column}
       @about-function{gtk-entry-completion-new}
       @about-function{gtk-entry-completion-new-with-area}
       @about-function{gtk-entry-completion-get-entry}
-      @about-function{gtk-entry-completion-set-model}
-      @about-function{gtk-entry-completion-get-model}
       @about-function{gtk-entry-completion-set-match-func}
       @about-function{gtk-entry-completion-set-minimum-key-length}
       @about-function{gtk-entry-completion-get-minimum-key-length}
@@ -4591,13 +4603,6 @@ setup_tree (void)
       @about-function{copy-gtk-requisition}
       @about-function{gtk-requisition-width}
       @about-function{gtk-requisition-height}
-      @about-struct{gtk-allocation}
-      @about-function{make-gtk-allocation}
-      @about-function{copy-gtk-allocation}
-      @about-function{gtk-allocation-x}
-      @about-function{gtk-allocation-y}
-      @about-function{gtk-allocation-width}
-      @about-function{gtk-allocation-height}
       @about-symbol{gtk-align}
       @about-symbol{gtk-widget-aux-info}
       @about-symbol{gtk-widget-help-type}
@@ -4638,7 +4643,6 @@ setup_tree (void)
       @about-function{gtk-widget-grab-focus}
       @about-function{gtk-widget-grab-default}
       @about-function{gtk-widget-set-state}
-      @about-function{gtk-widget-set-parent}
       @about-function{gtk-widget-set-parent-window}
       @about-function{gtk-widget-get-parent-window}
       @about-function{gtk-widget-add-events}
@@ -4720,7 +4724,7 @@ setup_tree (void)
       @about-function{gtk-widget-get-root-window}
       @about-function{gtk-widget-get-screen}
       @about-function{gtk-widget-has-screen}
-      @about-function{gtk-widget-get-size-request}
+      @about-generic{gtk-widget-size-request}
       @about-function{gtk-widget-set-child-visible}
       @about-function{gtk-widget-thaw-child-notify}
       @about-function{gtk-widget-set-no-show-all}
@@ -4748,8 +4752,6 @@ setup_tree (void)
       @about-function{gtk-widget-get-allocation}
       @about-function{gtk-widget-set-allocation}
       @about-function{gtk-widget-get-app-paintable}
-      @about-function{gtk-widget-get-can-default}
-      @about-function{gtk-widget-set-can-default}
       @about-function{gtk-widget-get-can-focus}
       @about-function{gtk-widget-set-can-focus}
       @about-function{gtk-widget-get-double-buffered}
@@ -4757,7 +4759,6 @@ setup_tree (void)
       @about-function{gtk-widget-set-has-window}
       @about-function{gtk-widget-is-sensitive}
       @about-function{gtk-widget-get-state}
-      @about-function{gtk-widget-get-visible}
       @about-function{gtk-widget-is-visible}
       @about-function{gtk-widget-set-visible}
       @about-function{gtk-widget-set-state-flags}
@@ -4771,8 +4772,6 @@ setup_tree (void)
       @about-function{gtk-widget-is-drawable}
       @about-function{gtk-widget-is-toplevel}
       @about-function{gtk-widget-set-window}
-      @about-function{gtk-widget-set-receives-default}
-      @about-function{gtk-widget-get-receives-default}
       @about-function{gtk-widget-set-support-multidevice}
       @about-function{gtk-widget-get-support-multidevice}
       @about-function{gtk-widget-set-realized}
@@ -4783,8 +4782,6 @@ setup_tree (void)
       @about-function{gtk-widget-device-is-shadowed}
       @about-function{gtk-widget-get-modifier-mask}
       @about-function{gtk-widget-insert-action-group}
-      @about-function{gtk-widget-get-opacity}
-      @about-function{gtk-widget-set-opacity}
       @about-function{gtk-widget-get-path}
       @about-function{gtk-widget-get-style-context}
       @about-function{gtk-widget-reset-style}
@@ -4817,8 +4814,6 @@ setup_tree (void)
       @about-function{gtk-widget-set-margin-bottom}
       @about-function{gtk-widget-get-hexpand}
       @about-function{gtk-widget-set-hexpand}
-      @about-function{gtk-widget-get-hexpand-set}
-      @about-function{gtk-widget-set-hexpand-set}
       @about-function{gtk-widget-get-vexpand}
       @about-function{gtk-widget-set-vexpand}
       @about-function{gtk-widget-get-vexpand-set}
