@@ -54,10 +54,6 @@
 @set gtk-alignment-set-padding http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-alignment-set-padding.html
 @set gtk-alignment-get-padding http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-alignment-get-padding.html
 
-@c GtkAllocation
-
-@set gtk-allocation http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-allocation.html
-
 @c GtkApplication
 
 @set gtk-application http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-application.html
@@ -98,6 +94,8 @@
 
 @set gtk-box http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-box.html
 @set gtk-box-new http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-box-new.html
+@set gtk-box-homogeneous http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-box-homogeneous.html
+@set gtk-box-spacing http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-box-spacing.html
 @set gtk-box-pack-start http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-box-pack-start.html
 @set gtk-box-pack-end http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-box-pack-end.html
 
@@ -835,6 +833,7 @@
 
 @c GdkRectangle
 
+@set gdk-rectangle http://www.crategus.com/books/cl-cffi-gtk/pages/gdk_class_gdk-rectangle.html
 @set gdk-rectangle-height http://www.crategus.com/books/cl-cffi-gtk/pages/gdk_fun_gdk-rectangle-height.html
 @set gdk-rectangle-width http://www.crategus.com/books/cl-cffi-gtk/pages/gdk_fun_gdk-rectangle-width.html
 

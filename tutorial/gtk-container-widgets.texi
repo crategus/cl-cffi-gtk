@@ -227,9 +227,9 @@ If you know none of these things are an issue for your application, and
 prefer the simplicity of @xurl{gtk-fixed}, by all means use the widget. But you
 should be aware of the tradeoffs.
 
-@findex GtkAllocation
-@findex gtk-allocation
-@findex allocation, gtk-allocation
+@findex GdkRectangle
+@findex gdk-rectangle
+@findex rectangle, gdk-rectangle
 
 @findex gdk-rectangle-width
 @findex gdk-rectangle-height
@@ -241,7 +241,7 @@ The following example illustrates how to use a fixed container.  In this example
 three buttons are put into the fixed widget at random positions.  A click on
 a button moves the button to a new random position. To retrieve the size of
 the fixed widget the function @xurl{gtk-widget-get-allocation} is used, which
-returns a rectangle of type @xurl{gtk-allocation}.  The width and the height of
+returns a rectangle of type @xurl{gdk-rectangle}.  The width and the height of
 the fixed widget are then get with the functions @xurl{gdk-rectangle-width} and
 @xurl{gdk-rectangle-height}.
 

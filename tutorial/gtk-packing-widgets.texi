@@ -4,9 +4,9 @@
 @c Language : English
 @c Author   : Dieter Kaiser
 @c Date     : 06.02.2012
-@c Revision : 01.08.2013
+@c Revision : 21.02.2014
 @c 
-@c Copyright (C) 2012, 2013 by Dieter Kaiser
+@c Copyright (C) 2012, 2013, 2014 by Dieter Kaiser
 @c -----------------------------------------------------------------------------
 
 @menu
@@ -25,16 +25,16 @@
 When creating an application, it is necessary to put more than one widget inside
 a window.  The first Hello world example only used one button so it could simply
 use the function @xurl{gtk-container-add} to "pack" the button into the window.
-But when you want to put more than one widget into a window, how do you control
-where that widget is positioned? This is where packing comes in.
+But when more than one widget must be put into a window packing comes in.
 
-Most packing is done by creating boxes.  These are invisible widget containers
-that can pack widgets into, which come in two forms, a horizontal box, and a
-vertical box.  When packing widgets into a horizontal box, the objects are
-inserted horizontally from left to right or right to left depending on the call
-used.  In a vertical box, widgets are packed from top to bottom or vice versa.
-You may use any combination of boxes inside or beside other boxes to create the
-desired effect.
+Packing is done by creating boxes or grids. Grids are more general and powerful
+than boxes.  Grids are explained later in this tutorial.  Boxes are invisible
+widget containers that can pack widgets into, which come in two forms, a
+horizontal box, and a vertical box.  When packing widgets into a horizontal box,
+the objects are inserted horizontally from left to right or right to left
+depending on the call used.  In a vertical box, widgets are packed from top to
+bottom or vice versa.  You may use any combination of boxes inside or beside
+other boxes to create the desired effect.
 
 @findex GtkBox
 
@@ -62,36 +62,54 @@ To create a new box of the type @xurl{gtk-box}, the function @xurl{gtk-box-new}
 or the call @code{(make-instance 'gtk-box)} is used.  The first argument of the
 function @xurl{gtk-box-new} takes a keyword of the enumeration type
 @code{GtkOrientation}, which is in the Lisp binding implemented as
-@xurl{gtk-orientation} with the values @code{:horizontal} or @code{:vertical} to
-determine a horizontal or a vertical box.  Because @xurl{gtk-box} implements
+@xurl{gtk-orientation} with the values @code{:horizontal} or @code{:vertical}
+to determine a horizontal or a vertical box.  Because @xurl{gtk-box} implements
 the interface @xurl{gtk-orientable} an instance of @xurl{gtk-box} has the
-property @code{orientiation} of type @xurl{gtk-orientation}, which can be set by
-a call of @code{make-instance}.
+property @code{"orientiation"} of type @xurl{gtk-orientation}.
+
+@cartouche
+@multitable @columnfractions 0.4 0.6
+@headitem Function @tab Description
+@item @xurl{gtk-box-new}
+@tab Creates a new @xurl{gtk-box} container.
+@item @xurl{gtk-box-homogeneous}
+@tab  Accessor of the @code{"homogeneous"} property
+@item @xurl{gtk-box-spacing}
+@tab  Accessor of the @code{"spacing"} property
+@item @xurl{gtk-box-pack-start}
+@tab Adds a child to the box, packed with reference to the start of box.
+@item @xurl{gtk-box-pack-end}
+@tab Adds a child to the box, packed with reference to the end of box.
+@end multitable
+@float Table, table-gtk-box
+@caption{Functions for the @xurl{gtk-box} class.}
+@end float
+@end cartouche
 
 The following examples show two equivalent ways to create an instance of a
-horizontal box.  The second argument of the function @xurl{gtk-box-new} is the
-value of the property @code{spacing}, which is described in
-@ref{Details of Boxes}.
+horizontal box.  The first argument of the function @xurl{gtk-box-new} takes the
+value of the property @code{"orientation"}.  The second argument is the value of
+the property @code{"spacing"}, which is described in @ref{Details of Boxes}.
 @verbatim
   (let ((box (gtk-box-new :horizontal 3)))
-    [...] )
+    ... )
 @end verbatim
 or
 @verbatim
   (let ((box (make-instance 'gtk-box
                             :orientation :horizontal
                             :spacing 3)))
-    [...] )
+    ... )
 @end verbatim
 
-The @xurl{gtk-box-pack-start} and @xurl{gtk-box-pack-end} functions are used to
-place widgets inside of boxes.  The @xurl{gtk-box-pack-start} function starts at
-the top and works its way down in a vertical box, and packs left to right in a
-horizontal box.  The function @xurl{gtk-box-pack-end} does the opposite,
-packing from bottom to top in a vertical box, and right to left in a horizontal
-box.  The widgets, which are packed into a box, can be containers, which are
-composed of other widgets.  Using the functions for packing widgets in boxes
-allows to right justify or left justify the widgets.  The functions can be
+The functions @xurl{gtk-box-pack-start} and @xurl{gtk-box-pack-end} are used to
+place widgets inside of boxes.  The function @xurl{gtk-box-pack-start} function 
+starts at the top and works its way down in a vertical box, and packs left to 
+right in a horizontal box.  The function @xurl{gtk-box-pack-end} does the 
+opposite, packing from bottom to top in a vertical box, and right to left in a 
+horizontal box.  The widgets, which are packed into a box, can be containers, 
+which are composed of other widgets.  Using the functions for packing widgets in
+boxes allows to right justify or left justify the widgets.  The functions can be
 mixed in any way to achieve the desired effect.  Most of the examples in this
 tutorial use the function @xurl{gtk-box-pack-start}.  In the following example
 a vertical box is created. Then two label widgets are packed into the box with
@@ -101,7 +119,7 @@ the function @xurl{gtk-box-pack-start}.
   (let ((box (gtk-box-new :vertical 3)))
     (gtk-box-pack-start box (gtk-label-new "LABEL 1"))
     (gtk-box-pack-start box (gtk-label-new "LABEL 2"))
-    [...] )
+    ... )
 @end verbatim
 
 By using boxes, GTK+ knows where to place the widgets so GTK+ can do automatic
@@ -110,14 +128,14 @@ widgets should be packed into boxes.  This method of packing boxes gives the
 user quite a bit of flexibility when placing widgets.
 
 @noindent
-@emph{Note:}
+@b{Note}
 
 The classes @xurl{gtk-hbox} for horizontal and @xurl{gtk-vbox} for vertical
-boxes are deprecated, but still present in GTK+ 3.6, which is the version used
-in this tutorial.  In this tutorial these classes are not used. In addition a
-single-row or single-column @xurl{gtk-grid} provides exactly the same
-functionality as @xurl{gtk-box}.  See @ref{Packing Using Grids} for examples to
-replace @xurl{gtk-box} with @xurl{gtk-grid}.
+boxes are deprecated, but still present in GTK+ 3.  In this tutorial these 
+classes are not used.  In addition a single-row or single-column @xurl{gtk-grid}
+provides exactly the same functionality as @xurl{gtk-box}.  See 
+@ref{Packing Using Grids} for examples to replace @xurl{gtk-box} with 
+@xurl{gtk-grid}.
 
 @c -----------------------------------------------------------------------------
 @node Details of Boxes, Packing Using Tables, Packing Boxes, Top
@@ -131,17 +149,20 @@ styles are available.
 @findex homogeneous
 @findex spacing
 
-Boxes have the properties @code{homogeneous} and @code{spacing}.  The property
-@code{homogeneous} controls whether each widget in the box has the same width
-in a horizontal box or the same height in a vertical box.  The property
-@code{spacing} controls the amount of space between children in the box.  A
-complete example for creating a box is therefore
+Boxes have the properties @code{"homogeneous"} and @code{"spacing"}.  The
+generic functions @xurl{gtk-box-homogeneous} and @xurl{gtk-box-spacing} are
+used to write and read the properties.  The property @code{"homogeneous"} 
+controls whether each widget in the box has the same width in a horizontal box 
+or the same height in a vertical box.  The property @code{"spacing"} controls 
+the amount of space between children in the box.  A complete example for 
+creating a box is therefore
+
 @verbatim
   (let ((box (make-instance 'gtk-box
                             :orientation :vertical
                             :spacing 3
                             :homogeneous t)))
-    [...] )
+    ... )
 @end verbatim
 
 @ifnotinfo
@@ -168,7 +189,7 @@ the Lisp binding to GTK+ these arguments are defined as the keyword arguments
 @emph{true}, and @code{:padding} with a default value of @code{0}.  The keyword
 arguments can be omitted, when the default values should not be changed.
 
-The keyword argument @code{:expand} with a value @code{T} to the functions
+The keyword argument @code{:expand} with a value @emph{true} to the functions
 @xurl{gtk-box-pack-start} and @xurl{gtk-box-pack-end} controls whether the
 widgets are laid out in the box to fill in all the extra space in the box so
 the box is expanded to fill the area allotted to it; or with a value @code{nil}
@@ -183,8 +204,8 @@ the objects themselves, or with a value @code{nil} as extra padding in the box
 around these objects.  It only has an effect if the keyword argument
 @code{expand} is also @emph{true}.
 
-The difference between spacing (set when the box is created) and padding
-(set when elements are packed) is, that spacing is added between objects, and
+The difference between spacing, set when the box is created, and padding,
+set when elements are packed, is, that spacing is added between objects, and
 padding is added on either side of a child widget.
 
 The code for @ref{figure-box-packing} is shown in @ref{example-box-packing}.
