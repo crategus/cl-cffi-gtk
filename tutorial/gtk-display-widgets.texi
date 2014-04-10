@@ -779,8 +779,8 @@ on an image.  The output of this example is in @ref{figure images}.
 
 @findex gtk-progress-bar-new
 @findex progress-bar-new, gtk-progress-bar-new
-@findex gtk-progress-bar-set-fraction
-@findex progress-bar-set-fraction, gtk-progress-bar-set-fraction
+@findex gtk-progress-bar-fraction
+@findex progress-bar-fraction, gtk-progress-bar-fraction
 
 @ifnotinfo
 @float Figure, figure-progress-bar
@@ -794,7 +794,7 @@ to show the status of an operation.  They are pretty easy to use, as you will
 see with the code below.  But first lets start out with the function
 @xurl{gtk-progress-bar-new} to create a new progress bar.  Now that the progress
 bar has been created we can use it and set the fraction with the function
-@xurl{gtk-progress-bar-set-fraction}, which has two arguments.  The first
+@xurl{gtk-progress-bar-fraction}, which has two arguments.  The first
 argument is the progress bar you wish to operate on, and the second argument is
 the amount "completed", meaning the amount the progress bar has been filled from
 0 - 100%.  This is passed to the function as a real number ranging from 0 to 1.
@@ -804,7 +804,7 @@ A progress bar may be set to one of a number of orientations using the function
 orientation and may take one of the values of @code{:horizontal} or
 @code{:vertical} of the @xurl{gtk-orientation} enumeration.  Progress bars
 normally grow from top to bottom or left to right. With the function
-@xurl{gtk-progress-bar-set-inverted} can be set to grrow in the opposite
+@xurl{gtk-progress-bar-inverted} can be set to grrow in the opposite
 direction.
 
 As well as indicating the amount of progress that has occurred, the progress bar
@@ -815,14 +815,14 @@ made.  The step size of the activity indicator is set using the function
 @xurl{gtk-progress-bar-set-pulse-step}.
 
 The progress bar can also display a configurable text string within its trough,
-using the function @xurl{gtk-progress-bar-set-text}.  You can turn off the
-display of the string by calling @xurl{gtk-progress-bar-set-text} again with
+using the function @xurl{gtk-progress-bar-text}.  You can turn off the
+display of the string by calling @xurl{gtk-progress-bar-text} again with
 @code{NIL} as second argument.  The current text setting of a progress bar can
-be retrieved with the function @xurl{gtk-progress-bar-get-text}.
+be retrieved with the function @xurl{gtk-progress-bar-text}.
 
 Progress Bars are usually used with timeouts or other such functions (see
 section on Timeouts, I/O and Idle Functions) to give the illusion of
-multitasking.  All will employ the @xurl{gtk-progress-bar-set-fraction} or
+multitasking.  All will employ the @xurl{gtk-progress-bar-fraction} or
 @xurl{gtk-progress-bar-pulse} functions in the same manner.
 
 @ref{example-progress-bar} shows an example of the progress bar, updated using
@@ -841,10 +841,10 @@ of this example is in @ref{figure-progress-bar}.
 (defun progress-bar-timeout (pdata)
   (if (pbar-data-mode pdata)
       (gtk-progress-bar-pulse (pbar-data-pbar pdata))
-      (let ((val (+ (gtk-progress-bar-get-fraction (pbar-data-pbar pdata))
+      (let ((val (+ (gtk-progress-bar-fraction (pbar-data-pbar pdata))
                     0.01)))
         (when (> val 1.0) (setq val 0.0))
-        (gtk-progress-bar-set-fraction (pbar-data-pbar pdata) val)))
+        (setf (gtk-progress-bar-fraction (pbar-data-pbar pdata)) val)))
   t)
 
 (defun example-progress-bar ()
@@ -877,15 +877,13 @@ of this example is in @ref{figure-progress-bar}.
         (g-signal-connect check "clicked"
            (lambda (widget)
              (declare (ignore widget))
-             (let ((text (gtk-progress-bar-get-text (pbar-data-pbar pdata))))
+             (let ((text (gtk-progress-bar-text (pbar-data-pbar pdata))))
                (if (or (null text) (zerop (length text)))
-                   (gtk-progress-bar-set-text (pbar-data-pbar pdata)
-                                              "Some text")
-                   (gtk-progress-bar-set-text (pbar-data-pbar pdata)
-                                              ""))
-               (gtk-progress-bar-set-show-text
-                                     (pbar-data-pbar pdata)
-                                     (gtk-toggle-button-get-active check)))))
+                   (setf (gtk-progress-bar-text (pbar-data-pbar pdata))
+                         "Some text")
+                   (setf (gtk-progress-bar-text (pbar-data-pbar pdata)) ""))
+               (setf (gtk-progress-bar-show-text (pbar-data-pbar pdata))
+                     (gtk-toggle-button-get-active check)))))
         (gtk-table-attach table check 0 1 0 1))
       (let ((check (gtk-check-button-new-with-label "Activity mode")))
         (g-signal-connect check "clicked"
@@ -895,16 +893,15 @@ of this example is in @ref{figure-progress-bar}.
                    (not (pbar-data-mode pdata)))
              (if (pbar-data-mode pdata)
                  (gtk-progress-bar-pulse (pbar-data-pbar pdata))
-                 (gtk-progress-bar-set-fraction (pbar-data-pbar pdata)
-                                                0.0))))
+                 (setf (gtk-progress-bar-fraction (pbar-data-pbar pdata))
+                       0.0))))
         (gtk-table-attach table check 0 1 1 2))
       (let ((check (gtk-check-button-new-with-label "Inverted")))
         (g-signal-connect check "clicked"
            (lambda (widget)
              (declare (ignore widget))
-             (gtk-progress-bar-set-inverted
-                                      (pbar-data-pbar pdata)
-                                      (gtk-toggle-button-get-active check))))
+             (setf (gtk-progress-bar-set-inverted (pbar-data-pbar pdata))
+                   (gtk-toggle-button-get-active check))))
         (gtk-table-attach table check 0 1 2 3))
       (let ((button (gtk-button-new-with-label "Close")))
         (g-signal-connect button "clicked"
@@ -1018,7 +1015,7 @@ the main content area of a @xurl{gtk-info-bar}, use the function
 
 Similar to @xurl{gtk-message-dialog}, the contents of a @xurl{gtk-info-bar} can
 by classified as error message, warning, informational message, etc, by using
-@xurl{gtk-info-bar-set-message-type}.  GTK+ uses the message type to determine
+@xurl{gtk-info-bar-message-type}.  GTK+ uses the message type to determine
 the background color of the message area.
 
 @float Example, example-info-bar
@@ -1059,7 +1056,7 @@ the background color of the message area.
       (gtk-grid-attach grid info-bar 0 2 1 1)
       ;; Show the info bar
       (gtk-label-set-text message "An Info Message in the content area.")
-      (gtk-info-bar-set-message-type info-bar :info)
+      (setf (gtk-info-bar-set-message-type info-bar) :info)
       (gtk-widget-show info-bar)
       ;; Add the container grid to the window and show all
       (gtk-container-add window grid)

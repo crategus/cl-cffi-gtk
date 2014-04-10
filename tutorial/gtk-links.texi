@@ -329,7 +329,7 @@
 @set gtk-info-bar-new-with-buttons http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-info-bar-new-with-buttons.html
 @set gtk-info-bar-set-response-sensitive http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-info-bar-set-response-sensitive.html
 @set gtk-info-bar-get-content-area http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-info-bar-get-content-area.html
-@set gtk-info-bar-set-message-type http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-info-bar-set-message-type.html
+@set gtk-info-bar-message-type http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-info-bar-message-type.html
 
 @c GtkLinkButton
 
@@ -463,12 +463,11 @@
 
 @set gtk-progress-bar http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-progress-bar.html
 @set gtk-progress-bar-new http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-progress-bar-new.html
-@set gtk-progress-bar-set-fraction http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-progress-bar-set-fraction.html
+@set gtk-progress-bar-fraction http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-progress-bar-fraction.html
 @set gtk-progress-bar-pulse http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-progress-bar-pulse.html
 @set gtk-progress-bar-set-pulse-step http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-progress-bar-set-pulse-step.html
-@set gtk-progress-bar-get-text http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-progress-bar-get-text.html
-@set gtk-progress-bar-set-text http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-progress-bar-set-text.html
-@set gtk-progress-bar-set-inverted http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-progress-bar-set-inverted.html
+@set gtk-progress-bar-text http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-progress-bar-text.html
+@set gtk-progress-bar-inverted http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-progress-bar-inverted.html
 
 @c GtkRadioAction
 

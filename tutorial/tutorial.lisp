@@ -898,8 +898,8 @@
          (lambda (widget param)
            (declare (ignore param))
            (if (gtk-switch-get-active widget)
-               (gtk-label-set-label label "The Switch is ON")
-               (gtk-label-set-label label "The Switch is OFF"))))
+               (setf (gtk-label-set-label label) "The Switch is ON")
+               (setf (gtk-label-set-label label) "The Switch is OFF"))))
       (gtk-container-add grid switch)
       (gtk-container-add grid label)
       (gtk-container-add window grid)
@@ -1139,10 +1139,10 @@
 (defun progress-bar-timeout (pdata)
   (if (pbar-data-mode pdata)
       (gtk-progress-bar-pulse (pbar-data-pbar pdata))
-      (let ((val (+ (gtk-progress-bar-get-fraction (pbar-data-pbar pdata))
+      (let ((val (+ (gtk-progress-bar-fraction (pbar-data-pbar pdata))
                     0.01)))
         (when (> val 1.0) (setq val 0.0))
-        (gtk-progress-bar-set-fraction (pbar-data-pbar pdata) val)))
+        (setf (gtk-progress-bar-fraction (pbar-data-pbar pdata)) val)))
   t)
 
 (defun example-progress-bar ()
@@ -1175,15 +1175,13 @@
         (g-signal-connect check "clicked"
            (lambda (widget)
              (declare (ignore widget))
-             (let ((text (gtk-progress-bar-get-text (pbar-data-pbar pdata))))
+             (let ((text (gtk-progress-bar-text (pbar-data-pbar pdata))))
                (if (or (null text) (zerop (length text)))
-                   (gtk-progress-bar-set-text (pbar-data-pbar pdata)
-                                              "Some text")
-                   (gtk-progress-bar-set-text (pbar-data-pbar pdata)
-                                              ""))
-               (gtk-progress-bar-set-show-text
-                                     (pbar-data-pbar pdata)
-                                     (gtk-toggle-button-get-active check)))))
+                   (setf (gtk-progress-bar-text (pbar-data-pbar pdata))
+                         "Some text")
+                   (setf (gtk-progress-bar-text (pbar-data-pbar pdata)) ""))
+               (setf (gtk-progress-bar-show-text (pbar-data-pbar pdata))
+                     (gtk-toggle-button-get-active check)))))
         (gtk-table-attach table check 0 1 0 1))
       (let ((check (gtk-check-button-new-with-label "Activity mode")))
         (g-signal-connect check "clicked"
@@ -1193,16 +1191,15 @@
                    (not (pbar-data-mode pdata)))
              (if (pbar-data-mode pdata)
                  (gtk-progress-bar-pulse (pbar-data-pbar pdata))
-                 (gtk-progress-bar-set-fraction (pbar-data-pbar pdata)
-                                                0.0))))
+                 (setf (gtk-progress-bar-fraction (pbar-data-pbar pdata))
+                       0.0))))
         (gtk-table-attach table check 0 1 1 2))
       (let ((check (gtk-check-button-new-with-label "Inverted")))
         (g-signal-connect check "clicked"
            (lambda (widget)
              (declare (ignore widget))
-             (gtk-progress-bar-set-inverted
-                                      (pbar-data-pbar pdata)
-                                      (gtk-toggle-button-get-active check))))
+             (setf (gtk-progress-bar-inverted (pbar-data-pbar pdata))
+                   (gtk-toggle-button-get-active check))))
         (gtk-table-attach table check 0 1 2 3))
       (let ((button (gtk-button-new-with-label "Close")))
         (g-signal-connect button "clicked"
@@ -1290,7 +1287,7 @@
       (gtk-grid-attach grid info-bar 0 2 1 1)
       ;; Show the info bar
       (gtk-label-set-text message "An Info Message in the content area.")
-      (gtk-info-bar-set-message-type info-bar :info)
+      (setf (gtk-info-bar-set-message-type info-bar) :info)
       (gtk-widget-show info-bar)
       ;; Add the container grid to the window and show all
       (gtk-container-add window grid)
@@ -4276,9 +4273,8 @@ happen.")
   (g-signal-connect (custom-window-button window) "clicked"
      (lambda (widget)
        (declare (ignore widget))
-       (gtk-label-set-label (custom-window-label window)
-                            (format nil "Internal run time is ~A"
-                                        (get-internal-run-time))))))
+       (setf (gtk-label-label (custom-window-label window))
+             (format nil "Internal run time is ~A" (get-internal-run-time))))))
 
 (defun example-custom-window ()
   (within-main-loop
