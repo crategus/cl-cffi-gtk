@@ -169,7 +169,7 @@
   (:name (:string :free-from-foreign nil :free-to-foreign nil))
   (:value (:struct g-value))) ; A struct, not a pointer.
 
-  
+
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-parameter atdoc:*symbol-name-alias*)
       "CStruct"
@@ -284,8 +284,8 @@
     (lambda (widget param)
       (declare (ignore param))
       (if (gtk-switch-get-active widget)
-          (gtk-label-set-label label \"The Switch is ON\")
-          (gtk-label-set-label label \"The Switch is OFF\"))))
+          (setf (gtk-label-label label) \"The Switch is ON\")
+          (setf (gtk-label-label label) \"The Switch is OFF\"))))
     @end{pre}
     It is important to note that you must use canonical parameter names as
     detail strings for the notify signal.
