@@ -1156,12 +1156,10 @@
       @about-class{gtk-image}
       @about-symbol{gtk-image-type}
       @about-function{gtk-image-get-icon-set}
-      @about-function{gtk-image-get-pixbuf}
       @about-function{gtk-image-get-stock}
       @about-function{gtk-image-get-animation}
       @about-function{gtk-image-get-icon-name}
       @about-function{gtk-image-get-gicon}
-      @about-function{gtk-image-get-storage-type}
       @about-function{gtk-image-new-from-file}
       @about-function{gtk-image-new-from-icon-set}
       @about-function{gtk-image-new-from-pixbuf}
@@ -1223,7 +1221,6 @@
       @about-function{gtk-label-get-use-underline}
       @about-function{gtk-label-get-single-line-mode}
       @about-function{gtk-label-get-angle}
-      @about-function{gtk-label-set-label}
       @about-function{gtk-label-set-use-markup}
       @about-function{gtk-label-set-use-underline}
       @about-function{gtk-label-set-single-line-mode}
@@ -1238,14 +1235,8 @@
       @about-class{gtk-progress-bar}
       @about-function{gtk-progress-bar-new}
       @about-function{gtk-progress-bar-pulse}
-      @about-function{gtk-progress-bar-set-fraction}
-      @about-function{gtk-progress-bar-get-fraction}
-      @about-function{gtk-progress-bar-set-inverted}
       @about-function{gtk-progress-bar-get-inverted}
-      @about-function{gtk-progress-bar-set-show-text}
       @about-function{gtk-progress-bar-get-show-text}
-      @about-function{gtk-progress-bar-set-text}
-      @about-function{gtk-progress-bar-get-text}
       @about-function{gtk-progress-bar-set-ellipsize}
       @about-function{gtk-progress-bar-get-ellipsize}
       @about-function{gtk-progress-bar-set-pulse-step}
@@ -1303,7 +1294,6 @@
       @about-function{gtk-info-bar-set-response-sensitive}
       @about-function{gtk-info-bar-set-default-response}
       @about-function{gtk-info-bar-response}
-      @about-function{gtk-info-bar-set-message-type}
       @about-function{gtk-info-bar-get-message-type}
       @about-function{gtk-info-bar-get-action-area}
       @about-function{gtk-info-bar-get-content-area}
@@ -3803,14 +3793,6 @@ setup_tree (void)
       @about-function{gtk-grid-insert-row}
       @about-function{gtk-grid-insert-column}
       @about-function{gtk-grid-insert-next-to}
-      @about-function{gtk-grid-set-row-homogeneous}
-      @about-function{gtk-grid-get-row-homogeneous}
-      @about-function{gtk-grid-set-row-spacing}
-      @about-function{gtk-grid-get-row-spacing}
-      @about-function{gtk-grid-set-column-homogeneous}
-      @about-function{gtk-grid-get-column-homogeneous}
-      @about-function{gtk-grid-set-column-spacing}
-      @about-function{gtk-grid-get-column-spacing}
     @end{subsection}
     @begin[GtkAlignment]{subsection}
       A widget which controls the alignment and size of its child.
@@ -4727,8 +4709,6 @@ setup_tree (void)
       @about-generic{gtk-widget-size-request}
       @about-function{gtk-widget-set-child-visible}
       @about-function{gtk-widget-thaw-child-notify}
-      @about-function{gtk-widget-set-no-show-all}
-      @about-function{gtk-widget-get-no-show-all}
       @about-function{gtk-widget-list-mnemonic-labels}
       @about-function{gtk-widget-add-mnemonic-label}
       @about-function{gtk-widget-remove-mnemonic-label}

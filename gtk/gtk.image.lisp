@@ -500,11 +500,11 @@
     Describes the image data representation used by a @class{gtk-image}.
   @end{short}
   If you want to get the image from the widget, you can only get the
-  currently stored representation. e. g. if the @fun{gtk-image-get-storage-type}
-  returns @code{:pixbuf}, then you can call the function
-  @fun{gtk-image-get-pixbuf} but not @fun{gtk-image-get-stock}. For empty
-  images, you can request any storage type (call any of the \"get\" functions),
-  but they will all return @code{nil} values.
+  currently stored representation. e. g. if the generic function
+  @fun{gtk-image-storage-type} returns @code{:pixbuf}, then you can call the
+  function @fun{gtk-image-pixbuf} but not @fun{gtk-image-get-stock}. For
+  empty images, you can request any storage type (call any of the \"get\"
+  functions), but they will all return @code{nil} values.
   @begin{pre}
 (define-g-enum \"GtkImageType\" gtk-image-type
   (:export t
@@ -546,8 +546,8 @@
   @end{return}
   Gets the icon set and size being displayed by the @class{gtk-image}. The
   storage type of the image must be @code{:empty} or @code{:icon-set} (see
-  the function @fun{gtk-image-get-storage-type}).
-  @see-function{gtk-image-get-storage-type}"
+  the generic function @fun{gtk-image-storage-type}).
+  @see-function{gtk-image-storage-type}"
   (values (gtk-image-icon-set image)
           (gtk-image-icon-size image)))
 
@@ -573,12 +573,13 @@
     widget.
   @end{short}
   The @symbol{gtk-image-type} storage type of the image must be @code{:empty} or
-  @code{:stock}, see the @fun{gtk-image-get-storage-type}). The returned string
-  is owned by the @class{gtk-image} widget and should not be freed.
+  @code{:stock}, see the generic function @fun{gtk-image-storage-type}). The
+  returned string is owned by the @class{gtk-image} widget and should not be
+  freed.
   @see-class{gtk-image}
   @see-symbol{gtk-icon-size}
   @see-symbol{gtk-image-type}
-  @see-function{gtk-image-get-storage-type}"
+  @see-function{gtk-image-storage-type}"
   (values (gtk-image-stock image)
           (gtk-image-icon-size image)))
 
@@ -599,12 +600,13 @@
     @class{gtk-image} widget.
   @end{short}
   The @symbol{gtk-image-type} storage type of the image must be @code{:empty}
-  or @code{:animation}, see the function @fun{gtk-image-get-storage-type}. The
-  caller of this function does not own a reference to the returned animation.
+  or @code{:animation}, see the generic function @fun{gtk-image-storage-type}.
+  The caller of this function does not own a reference to the returned
+  animation.
   @see-class{gtk-image}
   @see-class{gdk-pixbuf-animation}
   @see-symbol{gtk-image-type}
-  @see-function{gtk-image-get-storage-type}"
+  @see-function{gtk-image-storage-type}"
   (image (g-object gtk-image)))
 
 (export 'gtk-image-get-animation)
@@ -626,8 +628,8 @@
   @begin{short}
     Gets the icon name and size being displayed by the @class{gtk-image} object.
     The storage type of the image must be @code{:empty} or @code{:icon-name}
-    (see the function @fun{gtk-image-get-storage-type}). The returned string is
-    owned by the @class{gtk-image} object and should not be freed.
+    (see the generic function @fun{gtk-image-storage-type}). The returned string
+    is owned by the @class{gtk-image} object and should not be freed.
   @end{short}
 
   Since 2.6"
@@ -653,15 +655,15 @@
   @begin{short}
     Gets the @class{g-icon} object and @arg{size} being displayed by the
     @class{gtk-image} object. The storage type of the image must be
-    @code{:empty} or @code{:gicon} (see the function
-    @fun{gtk-image-get-storage-type}). The caller of this function does not own
+    @code{:empty} or @code{:gicon} (see the generic function
+    @fun{gtk-image-storage-type}). The caller of this function does not own
     a reference to the returned @class{g-icon} object.
   @end{short}
 
   Since 2.14
   @see-class{gtk-image}
   @see-class{g-icon}
-  @see-function{gtk-image-get-storage-type}"
+  @see-function{gtk-image-storage-type}"
   (values (gtk-image-gicon image)
           (gtk-image-icon-size image)))
 
@@ -691,8 +693,8 @@
   @class{gtk-image} object from the pixbuf. (Or for animations, use the function
   @fun{gdk-pixbuf-animation-new-from-file}).
 
-  The storage type (see the function @fun{gtk-image-get-storage-type}) of the
-  returned image is not defined, it will be whatever is appropriate for
+  The storage type (see the generic function @fun{gtk-image-storage-type}) of
+  the returned image is not defined, it will be whatever is appropriate for
   displaying the file."
   (filename :string))
 
@@ -780,7 +782,7 @@
 ;;; gtk_image_new_from_animation ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_image_new_from_animation" gtk-image-new-from-animation) 
+(defcfun ("gtk_image_new_from_animation" gtk-image-new-from-animation)
     (g-object gtk-image)
  #+cl-cffi-gtk-documentation
  "@version{2013-10-24}
@@ -893,7 +895,7 @@
 (export 'gtk-image-new-from-resource)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_image_set_from_file () 
+;;; gtk_image_set_from_file ()
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_image_set_from_file" gtk-image-set-from-file) :void

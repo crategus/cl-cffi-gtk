@@ -749,19 +749,24 @@
 
 (defun gtk-table-get-homogeneous (table)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-30}
+ "@version{2014-3-9}
   @argument[table]{a @class{gtk-table} widget}
   @return{@em{True} if the cells are all constrained to the same size}
   @begin{short}
     Returns whether the table cells are all constrained to the same width and
-    height. See @fun{gtk-table-set-homogeneous}.
+    height. See the function @fun{gtk-table-set-homogeneous}.
   @end{short}
 
-  @subheading{Warning}
-    @sym{gtk-table-get-homogeneous} has been deprecated since version 3.4 and
-    should not be used in newly written code. Use
-    @fun{gtk-grid-get-row-homogeneous} and @fun{gtk-grid-get-column-homogeneous}
-    with @class{gtk-grid}."
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-table-get-homogeneous} has been deprecated since
+    version 3.4 and should not be used in newly written code. Use the functions
+    @fun{gtk-grid-row-homogeneous} and @fun{gtk-grid-column-homogeneous}
+    with the @class{gtk-grid} class.
+  @end{dictionary}
+  @see-class{gtk-table}
+  @see-class{gtk-grid}
+  @see-function{gtk-grid-row-homogenous}
+  @see-function{gtk-grid-column-homogenous}"
   (gtk-table-homogeneous table))
 
 (export 'gtk-table-get-homogeneous)

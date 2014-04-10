@@ -53,37 +53,6 @@
 ;;;     gtk_level_bar_add_offset_value
 ;;;     gtk_level_bar_remove_offset_value
 ;;;     gtk_level_bar_get_offset_value
-;;;
-;;; Object Hierarchy
-;;;
-;;;   GObject
-;;;    +----GInitiallyUnowned
-;;;          +----GtkWidget
-;;;                +----GtkLevelBar
-;;;
-;;; Implemented Interfaces
-;;;
-;;; GtkLevelBar implements AtkImplementorIface, GtkBuildable and GtkOrientable.
-;;;
-;;; Properties
-;;;
-;;;   "inverted"                 gboolean              : Read / Write
-;;;   "max-value"                gdouble               : Read / Write
-;;;   "min-value"                gdouble               : Read / Write
-;;;   "mode"                     GtkLevelBarMode       : Read / Write
-;;;   "value"                    gdouble               : Read / Write
-;;;
-;;; Style Properties
-;;;
-;;;   "min-block-height"         gint                  : Read / Write
-;;;   "min-block-width"          gint                  : Read / Write
-;;;
-;;; Signals
-;;;
-;;;   "offset-changed"                                 : Has Details
-;;;
-;;; Description
-;;;
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -271,9 +240,11 @@ lambda (levelbar name)   : Has Details
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Property Details
+;;; Property and Accessor Details
 ;;;
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-level-bar-inverted -------------------------------------------------
 
 #+(and gtk-3-8 cl-cffi-gtk-documentation)
 (setf (documentation (atdoc:get-slot-from-name "inverted" 'gtk-level-bar) 't)
@@ -282,6 +253,31 @@ lambda (levelbar name)   : Has Details
   bars grow in the opposite direction. @br{}
   Default value: @code{nil} @br{}
   Since 3.8")
+
+#+(and gtk-3-8 cl-cffi-gtk-documentation)
+(setf (gethash 'gtk-level-bar-inverted atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-level-bar-inverted 'function)
+ "@version{2014-3-21}
+  @argument[object]{a @class{gtk-level-bar} widget}
+  @argument[inverted]{@em{true} to invert the level bar}
+  @syntax[]{(gtk-level-bar-inverted object) => inverted}
+  @syntax[]{(setf (gtk-level-bar-inverted object) inverted)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-level-bar]{inverted} of the
+    @class{gtk-level-bar} class.
+  @end{short}
+
+  The generic function @sym{gtk-level-bar-inverted} returns @em{true} if the
+  level bar is inverted.
+
+  The generic function @sym{(setf gtk-level-bar-inverted)} sets the value of
+  the @slot[gtk-level-bar]{inverted} property.
+
+  Since 3.8
+  @see-class{gtk-level-bar}")
+
+;;; --- gtk-level-bar-max-value ------------------------------------------------
 
 #+(and gtk-3-6 cl-cffi-gtk-documentation)
 (setf (documentation (atdoc:get-slot-from-name "max-value" 'gtk-level-bar) 't)
@@ -293,6 +289,31 @@ lambda (levelbar name)   : Has Details
   Since 3.6")
 
 #+(and gtk-3-6 cl-cffi-gtk-documentation)
+(setf (gethash 'gtk-level-bar-max-value atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-level-bar-max-value 'function)
+ "@version{2014-3-21}
+  @argument[object]{a @class{gtk-level-bar} widget}
+  @argument[value]{a positive value}
+  @syntax[]{(gtk-level-bar-max-value object) => value)}
+  @syntax[]{(setf (gtk-level-bar-max-value object) value)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-level-bar]{max-value} of the
+    @class{gtk-level-bar} class.
+  @end{short}
+
+  The generic function @sym{gtk-level-bar-max-value} returns the value of the
+  @slot[gtk-level-bar]{max-value} property.
+
+  The generic function @sym{(setf gtk-level-bar-value)} sets the value of the
+  @slot[gtk-level-bar]{max-value} property.
+
+  Since 3.6
+  @see-class{gtk-level-bar}")
+
+;;; --- gtk-level-bar-min-value ------------------------------------------------
+
+#+(and gtk-3-6 cl-cffi-gtk-documentation)
 (setf (documentation (atdoc:get-slot-from-name "min-value" 'gtk-level-bar) 't)
  "The @code{\"min-value\"} property of type @code{:double} (Read / Write) @br{}
   The @code{\"min-value\"} property determines the minimum value of the interval
@@ -300,6 +321,31 @@ lambda (levelbar name)   : Has Details
   Allowed values: >= 0 @br{}
   Default value: 0 @br{}
   Since 3.6")
+
+#+(and gtk-3-6 cl-cffi-gtk-documentation)
+(setf (gethash 'gtk-level-bar-min-value atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-level-bar-min-value 'function)
+ "@version{2014-2-3}
+  @argument[object]{a @class{gtk-level-bar} widget}
+  @argument[value]{a positive value}
+  @syntax[]{(gtk-level-bar-min-value object) => value}
+  @syntax[]{(setf (gtk-level-bar-min-value object) value)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-level-bar]{min-value} of the
+    @class{gtk-level-bar} class.
+  @end{short}
+
+  The generic function @sym{gtk-level-bar-min-value} returns the value of the
+  @slot[gtk-level-bar]{min-value} property.
+
+  The generic function @sym{(setf gtk-level-bar-min-value)} sets the value of
+  the @slot[gtk-level-bar]{min-value} property.
+
+  Since 3.6
+  @see-class{gtk-level-bar}")
+
+;;; --- gtk-level-bar-mode -----------------------------------------------------
 
 #+(and gtk-3-6 cl-cffi-gtk-documentation)
 (setf (documentation (atdoc:get-slot-from-name "mode" 'gtk-level-bar) 't)
@@ -316,6 +362,32 @@ lambda (levelbar name)   : Has Details
   Since 3.6")
 
 #+(and gtk-3-6 cl-cffi-gtk-documentation)
+(setf (gethash 'gtk-level-bar-mode atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-level-bar-mode 'function)
+ "@version{2014-3-21}
+  @argument[object]{a @class{gtk-level-bar}}
+  @argument[mode]{a @symbol{gtk-level-bar-mode}}
+  @syntax[]{(gtk-level-bar-mode object) => mode}
+  @syntax[]{(setf (gtk-level-bar-mode object) mode)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-level-bar]{mode} of the
+    @class{gtk-level-bar} class.
+  @end{short}
+
+  The generic function @sym{gtk-level-bar-mode} returns the value of type
+  @symbol{gtk-level-bar-mode} of the @slot[gtk-level-bar]{mode} property.
+
+  The generic function @sym{(setf gtk-level-bar-mode)} sets the value of the
+  @slot[gtk-level-bar]{mode} property.
+
+  Since 3.6
+  @see-class{gtk-level-bar}
+  @see-symbol{gtk-level-bar-mode}")
+
+;;; --- gtk-level-bar-value ----------------------------------------------------
+
+#+(and gtk-3-6 cl-cffi-gtk-documentation)
 (setf (documentation (atdoc:get-slot-from-name "value" 'gtk-level-bar) 't)
  "The @code{\"value\"} property of type @code{:double} (Read / Write) @br{}
   The @code{\"value\"} property determines the currently filled value of the
@@ -324,66 +396,30 @@ lambda (levelbar name)   : Has Details
   Default value: 0 @br{}
   Since 3.6")
 
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
-
-#+(and gtk-3-8 cl-cffi-gtk-documentation)
-(setf (gethash 'gtk-level-bar-inverted atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-level-bar-inverted 'function)
- "@version{2014-2-3}
-  Accessor of the slot @slot[gtk-level-bar]{inverted} of the
-  @class{gtk-level-bar} class.
-  @see-class{gtk-level-bar}
-  @see-function{gtk-level-bar-get-inverted}
-  @see-function{gtk-level-bar-set-inverted}")
-
-#+(and gtk-3-6 cl-cffi-gtk-documentation)
-(setf (gethash 'gtk-level-bar-max-value atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-level-bar-max-value 'function)
- "@version{2014-2-3}
-  Accessor of the slot @slot[gtk-level-bar]{max-value} of the
-  @class{gtk-level-bar} class.
-  @see-class{gtk-level-bar}
-  @see-function{gtk-level-bar-get-max-value}
-  @see-function{gtk-level-bar-set-max-value}")
-
-#+(and gtk-3-6 cl-cffi-gtk-documentation)
-(setf (gethash 'gtk-level-bar-min-value atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-level-bar-min-value 'function)
- "@version{2014-2-3}
-  Accessor of the slot @slot[gtk-level-bar]{min-value} of the
-  @class{gtk-level-bar} class.
-  @see-class{gtk-level-bar}
-  @see-function{gtk-level-bar-get-min-value}
-  @see-function{gtk-level-bar-set-min-value}")
-
-#+(and gtk-3-6 cl-cffi-gtk-documentation)
-(setf (gethash 'gtk-level-bar-mode atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-level-bar-mode 'function)
- "@version{2014-2-3}
-  Accessor of the slot @slot[gtk-level-bar]{mode} of the
-  @class{gtk-level-bar} class.
-  @see-class{gtk-level-bar}
-  @see-function{gtk-level-bar-get-mode}
-  @see-function{gtk-level-bar-set-mode}")
-
 #+(and gtk-3-6 cl-cffi-gtk-documentation)
 (setf (gethash 'gtk-level-bar-value atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-level-bar-value 'function)
- "@version{2014-2-3}
-  Accessor of the slot @slot[gtk-level-bar]{value} of the
-  @class{gtk-level-bar} class.
-  @see-class{gtk-level-bar}
-  @see-function{gtk-level-bar-get-value}
-  @see-function{gtk-level-bar-set-value}")
+ "@version{2014-3-21}
+  @argument[object]{a @class{gtk-level-bar} widget}
+  @argument[value]{a value in the interval between
+    @slot[gtk-level-bar]{min-value} and @slot[gtk-level-bar]{max-value}}
+  @syntax[]{(gtk-level-bar-value object) >= value}
+  @syntax[]{(setf (gtk-level-bar-value object) value)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-level-bar]{value} of the
+    @class{gtk-level-bar} class.
+  @end{short}
+
+  The generic function @sym{gtk-level-bar-value} gets the value of the level
+  bar in the interval between @slot[gtk-level-bar]{min-value} and
+  @slot[gtk-level-bar]{max-value}.
+
+  The generic function @sym{(setf gtk-level-bar-value)} sets the value of the
+  @slot[gtk-level-bar]{value} property.
+
+  Since 3.6
+  @see-class{gtk-level-bar}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_level_bar_new ()
@@ -437,298 +473,28 @@ lambda (levelbar name)   : Has Details
 (export 'gtk-level-bar-new-for-interval)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_level_bar_set_mode ()
-;;; ----------------------------------------------------------------------------
-
-#+gtk-3-6
-(declaim (inline gtk-level-bar-set-mode))
-
-#+gtk-3-6
-(defun gtk-level-bar-set-mode (level-bar mode)
- #+cl-cffi-gtk-documentation
- "@version{2014-2-3}
-  @argument[level-bar]{a @class{gtk-level-bar}}
-  @argument[mode]{a @symbol{gtk-level-bar-mode}}
-  @begin{short}
-    Sets the value of the @slot[gtk-level-bar]{mode} property.
-  @end{short}
-
-  Since 3.6
-  @see-class{gtk-level-bar}
-  @see-symbol{gtk-level-bar-mode}
-  @see-function{gtk-level-bar-get-mode}"
-  (setf (gtk-level-bar-mode level-bar) mode))
-
-#+gtk-3-6
-(export 'gtk-level-bar-set-mode)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_level_bar_get_mode ()
-;;; ----------------------------------------------------------------------------
-
-#+gtk-3-6
-(declaim (inline gtk-level-bar-get-mode))
-
-#+gtk-3-6
-(defun gtk-level-bar-get-mode (level-bar)
- #+cl-cffi-gtk-documentation
- "@version{2014-2-3}
-  @argument[level-bar]{a @class{gtk-level-bar}}
-  @return{A @symbol{gtk-level-bar-mode}.}
-  @begin{short}
-    Returns the value of the @slot[gtk-level-bar]{mode} property.
-  @end{short}
-
-  Since 3.6
-  @see-class{gtk-level-bar}
-  @see-symbol{gtk-level-bar-mode}
-  @see-function{gtk-level-bar-set-mode}"
-  (gtk-level-bar-mode level-bar))
-
-#+gtk-3-6
-(export 'gtk-level-bar-get-mode)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_level_bar_set_value ()
-;;; ----------------------------------------------------------------------------
-
-#+gtk-3-6
-(declaim (inline gtk-level-bar-set-value))
-
-#+gtk-3-6
-(defun gtk-level-bar-set-value (level-bar value)
- #+cl-cffi-gtk-documentation
- "@version{2014-2-3}
-  @argument[level-bar]{a @class{gtk-level-bar}}
-  @argument[value]{a value in the interval between
-    @slot[gtk-level-bar]{min-value} and @slot[gtk-level-bar]{max-value}}
-  @begin{short}
-    Sets the value of the @slot[gtk-level-bar]{value} property.
-  @end{short}
-
-  Since 3.6
-  @see-class{gtk-level-bar}
-  @see-function{gtk-level-bar-get-value}"
-  (setf (gtk-level-bar-value level-bar) value))
-
-#+gtk-3-6
-(export 'gtk-level-bar-set-value)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_level_bar_get_value ()
-;;; ----------------------------------------------------------------------------
-
-#+gtk-3-6
-(declaim (inline gtk-level-bar-get-value))
-
-#+gtk-3-6
-(defun gtk-level-bar-get-value (level-bar)
- #+cl-cffi-gtk-documentation
- "@version{2014-2-3}
-  @argument[level-bar]{a @class{gtk-level-bar}}
-  @begin{return}
-    A value in the interval between @slot[gtk-level-bar]{min-value} and
-    @slot[gtk-level-bar]{max-value}.
-  @end{return}
-  @begin{short}
-    Returns the value of the @slot[gtk-level-bar]{value} property.
-  @end{short}
-
-  Since 3.6
-  @see-class{gtk-level-bar}
-  @see-function{gtk-level-bar-set-value}"
-  (gtk-level-bar-value level-bar))
-
-#+gtk-3-6
-(export 'gtk-level-bar-get-value)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_level_bar_set_min_value ()
-;;;
-;;; void                gtk_level_bar_set_min_value         (GtkLevelBar *self,
-;;;                                                          gdouble value);
-;;;
-;;; Sets the value of the "min-value" property.
-;;;
-;;; self :
-;;;     a GtkLevelBar
-;;;
-;;; value :
-;;;     a positive value
-;;;
-;;; Since 3.6
-;;; ----------------------------------------------------------------------------
-
-#+gtk-3-6
-(declaim (inline gtk-level-bar-set-min-value))
-
-#+gtk-3-6
-(defun gtk-level-bar-set-min-value (level-bar min-value)
-  (setf (gtk-level-bar-min-value level-bar) min-value))
-
-#+gtk-3-6
-(export 'gtk-level-bar-set-min-value)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_level_bar_get_min_value ()
-;;;
-;;; gdouble             gtk_level_bar_get_min_value         (GtkLevelBar *self);
-;;;
-;;; Returns the value of the "min-value" property.
-;;;
-;;; self :
-;;;     a GtkLevelBar
-;;;
-;;; Returns :
-;;;     a positive value
-;;;
-;;; Since 3.6
-;;; ----------------------------------------------------------------------------
-
-#+gtk-3-6
-(declaim (inline gtk-level-bar-get-min-value))
-
-#+gtk-3-6
-(defun gtk-level-bar-get-min-value (level-bar)
-  (gtk-level-bar-min-value level-bar))
-
-#+gtk-3-6
-(export 'gtk-level-bar-get-min-value)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_level_bar_set_max_value ()
-;;;
-;;; void                gtk_level_bar_set_max_value         (GtkLevelBar *self,
-;;;                                                          gdouble value);
-;;;
-;;; Sets the value of the "max-value" property.
-;;;
-;;; self :
-;;;     a GtkLevelBar
-;;;
-;;; value :
-;;;     a positive value
-;;;
-;;; Since 3.6
-;;; ----------------------------------------------------------------------------
-
-#+gtk-3-6
-(declaim (inline gtk-level-bar-set-max-value))
-
-#+gtk-3-6
-(defun gtk-level-bar-set-max-value (level-bar max-value)
-  (setf (gtk-level-bar-max-value level-bar) max-value))
-
-#+gtk-3-6
-(export 'gtk-level-bar-set-max-value)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_level_bar_get_max_value ()
-;;;
-;;; gdouble             gtk_level_bar_get_max_value         (GtkLevelBar *self);
-;;;
-;;; Returns the value of the "max-value" property.
-;;;
-;;; self :
-;;;     a GtkLevelBar
-;;;
-;;; Returns :
-;;;     a positive value
-;;;
-;;; Since 3.6
-;;; ----------------------------------------------------------------------------
-
-#+gtk-3-6
-(declaim (inline gtk-level-bar-get-max-value))
-
-#+gtk-3-6
-(defun gtk-level-bar-get-max-value (level-bar)
-  (gtk-level-bar-max-value level-bar))
-
-#+gtk-3-6
-(export 'gtk-level-bar-get-max-value)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_level_bar_set_inverted ()
-;;;
-;;; void                gtk_level_bar_set_inverted          (GtkLevelBar *self,
-;;;                                                          gboolean inverted);
-;;;
-;;; Sets the value of the "inverted" property.
-;;;
-;;; self :
-;;;     a GtkLevelBar
-;;;
-;;; inverted :
-;;;     TRUE to invert the level bar
-;;;
-;;; Since 3.8
-;;; ----------------------------------------------------------------------------
-
-#+gtk-3-8
-(declaim (inline gtk-level-bar-set-inverted))
-
-#+gtk-3-8
-(defun gtk-level-bar-set-inverted (level-bar inverted)
-  (setf (gtk-level-bar-inverted level-bar) inverted))
-
-#+gtk-3-8
-(export 'gtk-level-bar-set-inverted)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_level_bar_get_inverted ()
-;;;
-;;; gboolean            gtk_level_bar_get_inverted          (GtkLevelBar *self);
-;;;
-;;; Return the value of the "inverted" property.
-;;;
-;;; self :
-;;;     a GtkLevelBar
-;;;
-;;; Returns :
-;;;     TRUE if the level bar is inverted
-;;;
-;;; Since 3.8
-;;; ----------------------------------------------------------------------------
-
-#+gtk-3-8
-(declaim (inline gtk-level-bar-get-inverted))
-
-#+gtk-3-8
-(defun gtk-level-bar-get-inverted (level-bar)
-  (gtk-level-bar-inverted level-bar))
-
-#+gtk-3-8
-(export 'gtk-level-bar-get-inverted)
-
-;;; ----------------------------------------------------------------------------
 ;;; gtk_level_bar_add_offset_value ()
-;;;
-;;; void                gtk_level_bar_add_offset_value      (GtkLevelBar *self,
-;;;                                                          const gchar *name,
-;;;                                                          gdouble value);
-;;;
-;;; Adds a new offset marker on self at the position specified by value. When
-;;; the bar value is in the interval topped by value (or between value and
-;;; "max-value" in case the offset is the last one on the bar) a style class
-;;; named level-name will be applied when rendering the level bar fill. If
-;;; another offset marker named name exists, its value will be replaced by
-;;; value.
-;;;
-;;; self :
-;;;     a GtkLevelBar
-;;;
-;;; name :
-;;;     the name of the new offset
-;;;
-;;; value :
-;;;     the value for the new offset
-;;;
-;;; Since 3.6
 ;;; ----------------------------------------------------------------------------
 
 #+gtk-3-6
 (defcfun ("gtk_level_bar_add_offset_value" gtk-level-bar-add-offset-value) :void
+ "@version{2014-3-21}
+  @argument[level-bar]{a @class{gtk-level-bar} widget}
+  @argument[name[{the name of the new offset}
+  @argument[value]{the value for the new offset}
+  @begin{short}
+    Adds a new offset marker on the level bar at the position specified by
+    @arg{value}.
+  @end{short}
+  When the level bar value is in the interval topped by @arg{value}, or between
+  @arg{value} and @slot[gtk-level-bar]{max-value} in case the offset is the last
+  one on the bar, a style class named @arg{level-name} will be applied when
+  rendering the level bar fill. If another offset marker named @arg{name}
+  exists, its value will be replaced by @arg{value}.
+
+  Since 3.6
+  @see-class{gtk-level-bar}
+  @see-function{gtk-level-bar-remove-offset-value}"
   (level-bar (g-object gtk-level-bar))
   (name :string)
   (value :double))
@@ -738,25 +504,22 @@ lambda (levelbar name)   : Has Details
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_level_bar_remove_offset_value ()
-;;;
-;;; void                gtk_level_bar_remove_offset_value   (GtkLevelBar *self,
-;;;                                                          const gchar *name);
-;;;
-;;; Removes an offset marker previously added with
-;;; gtk_level_bar_add_offset_value().
-;;;
-;;; self :
-;;;     a GtkLevelBar
-;;;
-;;; name :
-;;;     the name of an offset in the bar. [allow-none]
-;;;
-;;; Since 3.6
 ;;; ----------------------------------------------------------------------------
 
 #+gtk-3-6
 (defcfun ("gtk_level_bar_remove_offset_value" gtk-level-bar-remove-offset-value)
     :void
+ "@version{2014-3-21}
+  @argument[object]{a @class{gtk-level-bar} widget}
+  @argument[name]{the name of an offset in the bar}
+  @begin{short}
+    Removes an offset marker previously added with the function
+    @fun{gtk-level-bar-add-offset-value}.
+  @end{short}
+
+  Since 3.6
+  @see-class{gtk-level-bar}
+  @see-function{gtk-level-bar-add-offset-value}"
   (level-bar (g-object gtk-level-bar))
   (name :string))
 
@@ -765,27 +528,6 @@ lambda (levelbar name)   : Has Details
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_level_bar_get_offset_value ()
-;;;
-;;; gboolean            gtk_level_bar_get_offset_value      (GtkLevelBar *self,
-;;;                                                          const gchar *name,
-;;;                                                          gdouble *value);
-;;;
-;;; Fetches the value specified for the offset marker name in self, returning
-;;; TRUE in case an offset named name was found.
-;;;
-;;; self :
-;;;     a GtkLevelBar
-;;;
-;;; name :
-;;;     the name of an offset in the bar. [allow-none]
-;;;
-;;; value :
-;;;     location where to store the value. [out]
-;;;
-;;; Returns :
-;;;     TRUE if the specified offset is found
-;;;
-;;; Since 3.6
 ;;; ----------------------------------------------------------------------------
 
 #+gtk-3-6
@@ -797,6 +539,17 @@ lambda (levelbar name)   : Has Details
 
 #+gtk-3-6
 (defun gtk-level-bar-get-offset-value (level-bar name)
+ "@version{2014-3-21}
+  @argument[level-bar]{a @class{gtk-level-bar} widget}
+  @argument[name]{the name of an offset in the level bar}
+  @return{@em{True} if the specified offset is found.}
+  @begin{short}
+    Fetches the value specified for the offset marker name in the level bar,
+    returning @em{true} in case an offset named name was found.
+  @end{short}
+
+  Since 3.6
+  @see-class{gtk-level-bar}"
   (with-foreign-object (value :double)
     (%gtk-level-bar-get-offset-value level-bar name value)
     (mem-ref value :double)))

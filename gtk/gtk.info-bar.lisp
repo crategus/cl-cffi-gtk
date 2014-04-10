@@ -1,11 +1,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.info-bar.lisp
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.8.9 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012, 2013 Dieter Kaiser
+;;; Copyright (C) 2012, 2013, 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -23,7 +24,6 @@
 ;;; License along with this program and the preamble to the Gnu Lesser
 ;;; General Public License.  If not, see <http://www.gnu.org/licenses/>
 ;;; and <http://opensource.franz.com/preamble.html>.
-;;;
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; GtkInfoBar
@@ -65,11 +65,9 @@
     gtk-message-type
     "message-type" "GtkMessageType" t t)))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-info-bar 'type)
- "@version{2013-4-23}
+ "@version{2014-3-25}
   @begin{short}
     @sym{gtk-info-bar} is a widget that can be used to show messages to the user
     without showing a dialog. It is often temporarily shown at the top or bottom
@@ -88,8 +86,8 @@
 
   Similar to @class{gtk-message-dialog}, the contents of a @sym{gtk-info-bar}
   can by classified as error message, warning, informational message, etc, by
-  using the function @fun{gtk-info-bar-set-message-type}. GTK+ uses the message
-  type to determine the background color of the message area.
+  using the generic function @fun{gtk-info-bar-message-type}. GTK+ uses the
+  message type to determine the background color of the message area.
 
   @b{Example:} Simple @sym{gtk-info-bar} usage.
   @begin{pre}
@@ -129,33 +127,45 @@
     action area).
   @begin[Style Property Details]{dictionary}
     @subheading{The \"action-area-border\" style property}
-      @code{\"action-area-border\"} of type @code{:int} (Read)@br{}
+      @code{\"action-area-border\"} of type @code{:int} (Read) @br{}
       Width of the border around the action area of the info bar. @br{}
-      Allowed values: >= 0@br{}
-      Default value: 5@br{}
+      @code{\"action-area-border\"} has been deprecated since version 3.6 and
+      should not be used in newly-written code. Use the function
+      @fun{gtk-container-set-border-width}. @br{}
+      Allowed values: >= 0 @br{}
+      Default value: 5 @br{}
       Since 2.18
 
     @subheading{The \"button-spacing\" style property}
-      @code{\"button-spacing\"} of type @code{:int} (Read)@br{}
+      @code{\"button-spacing\"} of type @code{:int} (Read) @br{}
       Spacing between buttons in the action area of the info bar. @br{}
-      Allowed values: >= 0@br{}
-      Default value: 6@br{}
+      @code{\"button-spacing\"} has been deprecated since version 3.6 and should
+      not be used in newly-written code. Use the function
+      @fun{gtk-box-set-spacing}. @br{}
+      Allowed values: >= 0 @br{}
+      Default value: 6 @br{}
       Since 2.18
 
     @subheading{The \"content-area-border\" style property}
-      @code{\"content-area-border\"} of type @code{:int} (Read)@br{}
+      @code{\"content-area-border\"} of type @code{:int} (Read) @br{}
       The width of the border around the content content area of the info
       bar. @br{}
-      Allowed values: >= 0@br{}
-      Default value: 8@br{}
+      @code{\"content-area-border\"} has been deprecated since version 3.6 and
+      should not be used in newly-written code. Use the function
+      @fun{gtk-container-set-border-width}. @br{}
+      Allowed values: >= 0 @br{}
+      Default value: 8 @br{}
       Since 2.18
 
     @subheading{The \"content-area-spacing\" style property}
-      @code{\"content-area-spacing\"} of type @code{:int} (Read)@br{}
+      @code{\"content-area-spacing\"} of type @code{:int} (Read) @br{}
       The default spacing used between elements of the content area of the info
       bar. @br{}
-      Allowed values: >= 0@br{}
-      Default value: 16@br{}
+      @code{\"content-area-spacing\"} has been deprecated since version 3.6 and
+      should not be used in newly-written code. Use the function
+      @fun{gtk-box-set-spacing}. @br{}
+      Allowed values: >= 0 @br{}
+      Default value: 16 @br{}
       Since 2.18
   @end{dictionary}
   @begin[Signal Details]{dictionary}
@@ -188,7 +198,7 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Property Details
+;;; Property and Accessor Details
 ;;;
 ;;; ----------------------------------------------------------------------------
 
@@ -213,19 +223,29 @@
   Default value: @code{:info}@br{}
   Since 2.18")
 
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-info-bar-message-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-info-bar-message-type 'function)
- "@version{2013-2-3}
-  Accessor of the slot @code{\"message-type\"} of the @class{gtk-info-bar}
-  class.")
+ "@version{2014-3-25}
+  @argument[object]{a @class{gtk-info-bar} widget}
+  @argument[message-type]{a @symbol{gtk-message-type}}
+  @syntax[]{(gtk-info-bar-message-type object) => message-type}
+  @syntax[]{(setf (gtk-info-bar-message-type object) message-type)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-info-bar]{message-type} of the
+    @class{gtk-info-bar} class.
+  @end{short}
+
+  The generic function @sym{gtk-info-bar-message-type} returns the message type
+  of the message area.
+
+  The generic function @sym{(setf gtk-info-bar-message-type)} sets the message
+  type of the message area. GTK+ uses this type to determine what color to use
+  when drawing the message area.
+
+  Since 2.18
+  @see-class{gtk-info-bar}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk-info-bar-new
@@ -416,47 +436,6 @@
   (response-id :int))
 
 (export 'gtk-info-bar-response)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk-info-bar-set-message-type
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-info-bar-set-message-type))
-
-(defun gtk-info-bar-set-message-type (info-bar message-type)
- #+cl-cffi-gtk-documentation
- "@version{2013-4-23}
-  @argument[info-bar]{a @class{gtk-info-bar} widget}
-  @argument[message-type]{a @symbol{gtk-message-type}}
-  @begin{short}
-    Sets the message type of the message area. GTK+ uses this type to determine
-    what color to use when drawing the message area.
-  @end{short}
-
-  Since 2.18"
-  (setf (gtk-info-bar-message-type info-bar) message-type))
-
-(export 'gtk-info-bar-set-message-type)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk-info-bar-get-message-type
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-info-bar-get-message-type))
-
-(defun gtk-info-bar-get-message-type (info-bar)
- #+cl-cffi-gtk-documentation
- "@version{2013-4-23}
-  @argument[info-bar]{a @class{gtk-info-bar} widget}
-  @return{The message type of the message area.}
-  @begin{short}
-    Returns the message type of the message area.
-  @end{short}
-
-  Since 2.18"
-  (gtk-info-bar-message-type info-bar))
-
-(export 'gtk-info-bar-get-message-type)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk-info-bar-get-action-area
