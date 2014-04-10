@@ -8,10 +8,10 @@
       (progress-bar nil))
 
   (defun apply-changes-gradually ()
-    (let ((fraction (+ 0.025d0 (gtk-progress-bar-get-fraction progress-bar)))
+    (let ((fraction (+ 0.025d0 (gtk-progress-bar-fraction progress-bar)))
           (return-value nil))
       (cond ((< fraction 1.0d0)
-             (gtk-progress-bar-set-fraction progress-bar fraction)
+             (setf (gtk-progress-bar-fraction progress-bar) fraction)
              (setf return-value t))
             (t
              (gtk-widget-destroy assistant)

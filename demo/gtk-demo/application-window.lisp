@@ -47,7 +47,7 @@
                                   "You activated radio action ~S of type ~S.~% ~
                                    Current value ~D."
                                    name type value))
-      (gtk-info-bar-set-message-type (app-infobar *app*) value)
+      (setf (gtk-info-bar-message-type (app-infobar *app*)) value)
       (gtk-widget-show (app-infobar *app*)))))
 
 (defun activate-about (action)

@@ -34,7 +34,7 @@
       (gtk-grid-attach grid info-bar 0 2 1 1)
       ;; Show the info bar
       (gtk-label-set-text message "An Info Message in the content area.")
-      (gtk-info-bar-set-message-type info-bar :info)
+      (setf (gtk-info-bar-message-type info-bar) :info)
       (gtk-widget-show info-bar)
       ;; Add the container grid to the window and show all
       (gtk-container-add window grid)

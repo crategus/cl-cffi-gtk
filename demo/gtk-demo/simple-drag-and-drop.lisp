@@ -1,8 +1,8 @@
 ;;;; Simple Drag and Drop
 
 (defun get-image-pixbuf (image)
-  (ecase (gtk-image-get-storage-type image)
-    (:pixbuf (gtk-image-get-pixbuf image))
+  (ecase (gtk-image-storage-type image)
+    (:pixbuf (gtk-image-pixbuf image))
     (:stock (multiple-value-bind (stock-id size)
                 (gtk-image-get-stock image)
               (gtk-widget-render-icon-pixbuf image stock-id size)))))
