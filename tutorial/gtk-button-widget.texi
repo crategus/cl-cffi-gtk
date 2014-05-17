@@ -197,14 +197,12 @@ both a label and an image the global setting of the property
 @findex gtk-toggle-button-new
 @findex gtk-toggle-button-new-with-label
 @findex gtk-toggle-button-new-with-mnemonic
-@findex gtk-toggle-button-get-active
-@findex gtk-toggle-button-set-active
+@findex gtk-toggle-button-active
 
 @findex toggle-button-new, gtk-toggle-button-new
 @findex toggle-button-new-with-label, gtk-toggle-button-new-with-label
 @findex toggle-button-new-with-mnemonic, gtk-toggle-button-new-with-mnemonic
-@findex toggle-button-get-active, gtk-toggle-button-get-active
-@findex toggle-button-set-active, gtk-toggle-button-set-active
+@findex toggle-button-active, gtk-toggle-button-active
 
 Toggle buttons are derived from normal buttons and are very similar, except
 toggle buttons always are in one of two states, alternated by a click.  Toggle
@@ -223,7 +221,7 @@ additionally parses the label for '_'-prefixed mnemonic characters.
 To retrieve the state of the toggle widget, including radio and check buttons,
 a construct as shown in the example below is used.  This tests the state of the
 toggle button, by accessing the active field of the toggle widget's structure
-with the function @xurl{gtk-toggle-button-get-active}.  The signal of interest
+with the function @xurl{gtk-toggle-button-active}.  The signal of interest
 to us emitted by toggle buttons (the toggle button check button, and radio
 button widgets) is the "toggled" signal.  To check the state of these buttons,
 set up a signal handler to catch the toggled signal, and access the property
@@ -233,7 +231,7 @@ something like:
 @example
 (g-signal-connect button "toggled"
    (lambda (widget)
-     (if (gtk-toggle-button-get-active widget)
+     (if (gtk-toggle-button-active widget)
          (progn
            ;; If control reaches here, the toggle button is down
          )
@@ -242,24 +240,21 @@ something like:
          ))))
 @end example
 
-@findex gtk-toggle-button-set-active
-@findex gtk-toggle-button-get-active
-
-@findex toggle-button-set-active, gtk-toggle-button-set-active
-@findex toggle-button-get-active, gtk-toggle-button-get-active
+@findex gtk-toggle-button-active
+@findex toggle-button-active, gtk-toggle-button-active
 
 To force the state of a toggle button, and its children, the radio and check
-buttons, use this function @xurl{gtk-toggle-button-set-active}.  This function
+buttons, use this function @xurl{gtk-toggle-button-active}.  This function
 can be used to set the state of the toggle button, and its children the radio
 and check buttons.  Passing in your created button as the first argument, and a
 @code{T} or @code{NIL} for the second state argument to specify whether it
 should be down (depressed) or up (released).  Default is up, or @code{NIL}.
 
-Note that when you use the @xurl{gtk-toggle-button-set-active} function, and the
+Note that when you use the @xurl{gtk-toggle-button-active} function, and the
 state is actually changed, it causes the "clicked" and "toggled" signals to be
 emitted from the button.  The current state of the toggle button as a boolean
-@code{T} or @code{NIL} value is returned from the function
-@xurl{gtk-toggle-button-get-active}.
+@code{T} or @code{NIL} value is returned from the generic function
+@xurl{gtk-toggle-button-active}.
 
 In @ref{example-table-packing-2} the usage of toggle buttons is shown.
 
@@ -365,7 +360,7 @@ already a part of.  These functions are:
 @end ifnotinfo
 
 It is also a good idea to explicitly set which button should be the default
-depressed button with the function @xurl{gtk-toggle-button-set-active}.  This is
+depressed button with the function @xurl{gtk-toggle-button-active}.  This is
 described in the section on toggle buttons, and works in exactly the same way.
 Once the radio buttons are grouped together, only one of the group may be active
 at a time.  If the user clicks on one radio button, and then on another, the
@@ -402,7 +397,7 @@ becoming active).
               (gtk-radio-button-new-with-label
                                           (gtk-radio-button-get-group button)
                                           "Radio Button 2"))
-        (gtk-toggle-button-set-active button t)
+        (setf (gtk-toggle-button-active button) t)
         (gtk-box-pack-start vbox button)
         (setq button
               (gtk-radio-button-new-with-mnemonic

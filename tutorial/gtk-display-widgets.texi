@@ -221,12 +221,12 @@ width, if specified, and @code{max-width-chars} is used as the natural width.
 Even if @code{max-width-chars} specified, wrapping labels will be rewrapped to
 use all of the available width.
 
-@findex gtk-label-set-pattern
-@findex label-set-pattern, gtk-label-set-pattern
+@findex gtk-label-pattern
+@findex label-pattern, gtk-label-pattern
 
 If you want your label underlined, then you can set a pattern on the label with
-the function @xurl{gtk-label-set-pattern}.  The pattern argument indicates how
-the underlining should look.  It consists of a string of underscore and space
+the function @xurl{gtk-label-pattern}.  The pattern argument indicates how the
+underlining should look.  It consists of a string of underscore and space
 characters.  An underscore indicates that the corresponding character in the
 label should be underlined.  For example, the string "__ __" would underline the
 first two characters and eight and ninth characters.
@@ -760,13 +760,13 @@ on an image.  The output of this example is in @ref{figure images}.
              (let ((childs (gtk-container-get-children vgrid)))
                (dolist (child childs)
                  (unless (g-type-is-a (g-object-type child) "GtkToggleButton")
-                   (if (gtk-toggle-button-get-active button)
+                   (if (gtk-toggle-button-active button)
                        (progn
                          (setf (gtk-widget-sensitive child) nil)
-                         (gtk-button-set-label button "Sensitive"))
+                         (setf (gtk-button-label button) "Sensitive"))
                        (progn
                          (setf (gtk-widget-sensitive child) t)
-                         (gtk-button-set-label button "Insensitve"))))))))
+                         (setf (gtk-button-label button) "Insensitve"))))))))
         (gtk-container-add vgrid button))
 
       (gtk-container-add window vgrid)
@@ -883,7 +883,7 @@ of this example is in @ref{figure-progress-bar}.
                          "Some text")
                    (setf (gtk-progress-bar-text (pbar-data-pbar pdata)) ""))
                (setf (gtk-progress-bar-show-text (pbar-data-pbar pdata))
-                     (gtk-toggle-button-get-active check)))))
+                     (gtk-toggle-button-active check)))))
         (gtk-table-attach table check 0 1 0 1))
       (let ((check (gtk-check-button-new-with-label "Activity mode")))
         (g-signal-connect check "clicked"
@@ -901,7 +901,7 @@ of this example is in @ref{figure-progress-bar}.
            (lambda (widget)
              (declare (ignore widget))
              (setf (gtk-progress-bar-set-inverted (pbar-data-pbar pdata))
-                   (gtk-toggle-button-get-active check))))
+                   (gtk-toggle-button-active check))))
         (gtk-table-attach table check 0 1 2 3))
       (let ((button (gtk-button-new-with-label "Close")))
         (g-signal-connect button "clicked"
@@ -1056,7 +1056,7 @@ the background color of the message area.
       (gtk-grid-attach grid info-bar 0 2 1 1)
       ;; Show the info bar
       (gtk-label-set-text message "An Info Message in the content area.")
-      (setf (gtk-info-bar-set-message-type info-bar) :info)
+      (setf (gtk-info-bar-message-type info-bar) :info)
       (gtk-widget-show info-bar)
       ;; Add the container grid to the window and show all
       (gtk-container-add window grid)

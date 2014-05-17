@@ -440,16 +440,16 @@ for every character entered or removed.
              (declare (ignore widget))
              (gtk-editable-set-editable
                                       entry
-                                      (gtk-toggle-button-get-active check))))
+                                      (gtk-toggle-button-active check))))
         (gtk-box-pack-start hbox check))
       (let ((check (gtk-check-button-new-with-label "Visible")))
-        (gtk-toggle-button-set-active check t)
+        (setf (gtk-toggle-button-active check) t)
         (g-signal-connect check "toggled"
            (lambda (widget)
              (declare (ignore widget))
              (gtk-entry-set-visibility
                                       entry
-                                      (gtk-toggle-button-get-active check))))
+                                      (gtk-toggle-button-active check))))
         (gtk-box-pack-start hbox check))
       (gtk-box-pack-start vbox hbox)
       (let ((button (gtk-button-new-from-stock "gtk-close")))
@@ -764,7 +764,7 @@ function @code{gtk-spin-button-update}.
              (lambda (widget)
                (gtk-spin-button-set-snap-to-ticks
                                      spinner1
-                                     (gtk-toggle-button-get-active widget))))
+                                     (gtk-toggle-button-active widget))))
           (gtk-box-pack-start vbox2 check))
         (let ((check (make-instance 'gtk-check-button
                                     :label "Numeric only input mode"
@@ -773,7 +773,7 @@ function @code{gtk-spin-button-update}.
              (lambda (widget)
                (gtk-spin-button-set-numeric
                                      spinner1
-                                     (gtk-toggle-button-get-active widget))))
+                                     (gtk-toggle-button-active widget))))
           (gtk-box-pack-start vbox2 check))
         (gtk-container-add frame2 vbox2)
         (setq hbox (make-instance 'gtk-hbox))

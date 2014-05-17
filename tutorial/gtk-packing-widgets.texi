@@ -5,7 +5,7 @@
 @c Author   : Dieter Kaiser
 @c Date     : 06.02.2012
 @c Revision : 21.02.2014
-@c 
+@c
 @c Copyright (C) 2012, 2013, 2014 by Dieter Kaiser
 @c -----------------------------------------------------------------------------
 
@@ -103,11 +103,11 @@ or
 @end verbatim
 
 The functions @xurl{gtk-box-pack-start} and @xurl{gtk-box-pack-end} are used to
-place widgets inside of boxes.  The function @xurl{gtk-box-pack-start} function 
-starts at the top and works its way down in a vertical box, and packs left to 
-right in a horizontal box.  The function @xurl{gtk-box-pack-end} does the 
-opposite, packing from bottom to top in a vertical box, and right to left in a 
-horizontal box.  The widgets, which are packed into a box, can be containers, 
+place widgets inside of boxes.  The function @xurl{gtk-box-pack-start} function
+starts at the top and works its way down in a vertical box, and packs left to
+right in a horizontal box.  The function @xurl{gtk-box-pack-end} does the
+opposite, packing from bottom to top in a vertical box, and right to left in a
+horizontal box.  The widgets, which are packed into a box, can be containers,
 which are composed of other widgets.  Using the functions for packing widgets in
 boxes allows to right justify or left justify the widgets.  The functions can be
 mixed in any way to achieve the desired effect.  Most of the examples in this
@@ -131,10 +131,10 @@ user quite a bit of flexibility when placing widgets.
 @b{Note}
 
 The classes @xurl{gtk-hbox} for horizontal and @xurl{gtk-vbox} for vertical
-boxes are deprecated, but still present in GTK+ 3.  In this tutorial these 
+boxes are deprecated, but still present in GTK+ 3.  In this tutorial these
 classes are not used.  In addition a single-row or single-column @xurl{gtk-grid}
-provides exactly the same functionality as @xurl{gtk-box}.  See 
-@ref{Packing Using Grids} for examples to replace @xurl{gtk-box} with 
+provides exactly the same functionality as @xurl{gtk-box}.  See
+@ref{Packing Using Grids} for examples to replace @xurl{gtk-box} with
 @xurl{gtk-grid}.
 
 @c -----------------------------------------------------------------------------
@@ -151,10 +151,10 @@ styles are available.
 
 Boxes have the properties @code{"homogeneous"} and @code{"spacing"}.  The
 generic functions @xurl{gtk-box-homogeneous} and @xurl{gtk-box-spacing} are
-used to write and read the properties.  The property @code{"homogeneous"} 
-controls whether each widget in the box has the same width in a horizontal box 
-or the same height in a vertical box.  The property @code{"spacing"} controls 
-the amount of space between children in the box.  A complete example for 
+used to write and read the properties.  The property @code{"homogeneous"}
+controls whether each widget in the box has the same width in a horizontal box
+or the same height in a vertical box.  The property @code{"spacing"} controls
+the amount of space between children in the box.  A complete example for
 creating a box is therefore
 
 @verbatim
@@ -605,22 +605,22 @@ described in @ref{Toggle Buttons} later in this tutorial.  The code of
                           (leave-gtk-main)))
       (g-signal-connect button1 "toggled"
          (lambda (widget)
-           (if (gtk-toggle-button-get-active widget)
+           (if (gtk-toggle-button-active widget)
                (progn
                  (gtk-table-set-row-spacings table 12)
-                 (gtk-button-set-label widget "Less Row Spacing"))
+                 (setf (gtk-button-label widget) "Less Row Spacing"))
                (progn
                  (gtk-table-set-row-spacings table 0)
-                 (gtk-button-set-label widget "More Row Spacing")))))
+                 (setf (gtk-button-label widget) "More Row Spacing")))))
       (g-signal-connect button2 "toggled"
          (lambda (widget)
-           (if (gtk-toggle-button-get-active widget)
+           (if (gtk-toggle-button-active widget)
                (progn
                  (gtk-table-set-col-spacings table 12)
-                 (gtk-button-set-label widget "Less Col Spacing"))
+                 (setf (gtk-button-label widget) "Less Col Spacing"))
                (progn
                  (gtk-table-set-col-spacings table 0)
-                 (gtk-button-set-label widget "More Col Spacing")))))
+                 (setf (gtk-button-label widget) "More Col Spacing")))))
       (g-signal-connect quit "clicked"
                         (lambda (widget)
                           (declare (ignore widget))
@@ -724,7 +724,7 @@ the same effect as setting @code{fill} to @i{true}, a value of @code{:center}
 has the same effect as setting @code{fill} to @code{nil}.
 
 Expansion and alignment with @xurl{gtk-box}:
-@verbatim  
+@verbatim
   (let ((box (gtk-box-new :horizontal 0)))
     (gtk-box-pack-start box (gtk-label-new "ONE") t nil 0)
     (gtk-box-pack-start box (gtk-label-new "TWO") t t 0)

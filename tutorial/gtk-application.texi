@@ -4,12 +4,12 @@
 @c Language : English
 @c Author   : Dieter Kaiser
 @c Date     : 31.07.2012
-@c Revision : 31.07.2012
-@c 
-@c Copyright (C) 2012 by Dieter Kaiser
+@c Revision : 22.04.2014
+@c
+@c Copyright (C) 2012, 2013, 2014 by Dieter Kaiser
 @c -----------------------------------------------------------------------------
 
-@menu 
+@menu
 * Application Class::
 * Application Window::
 * Simple Application::
@@ -44,8 +44,8 @@ shell integration by exporting actions and menus and manages a list of toplevel
 windows whose life-cycle is automatically tied to the life-cycle of your
 application.
 
-While @xurl{gtk-application} works fine with plain @xurl{gtk-window}s, it is
-recommended to use it together with @xurl{gtk-application-window}.
+While @xurl{gtk-application} works fine with plain @xurl{gtk-window} widgets, it
+is recommended to use it together with @xurl{gtk-application-window}.
 
 When GDK threads are enabled, @xurl{gtk-application} will acquire the GDK lock
 when invoking actions that arrive from other processes.  The GDK lock is not
@@ -68,25 +68,25 @@ with @xurl{gtk-application-window} and to the 'activate' and 'open'
 @findex g-action-map
 @findex action-map, g-action-map
 
-@findex gtk-application-set-app-menu
-@findex application-set-app-menu, gtk-application-set-app-menu
+@findex gtk-application-app-menu
+@findex application-app-menu, gtk-application-app-menu
 
-@findex gtk-application-set-menubar
-@findex application-set-menubar, gtk-application-set-menubar
+@findex gtk-application-menubar
+@findex application-menubar, gtk-application-menubar
 
-To set an application menu for a @xurl{gtk-application}, use the function
-@xurl{gtk-application-set-app-menu}.  The @xurl{g-menu-model} that this function
-expects is usually constructed using @xurl{gtk-builder}, as seen in 
+To set an application menu for a @xurl{gtk-application}, use the generic
+function @xurl{gtk-application-app-menu}.  The @xurl{g-menu-model} that this
+function expects is usually constructed using @xurl{gtk-builder}, as seen in
 @ref{example-application}.  To specify a menubar that will be shown by
-@xurl{gtk-application-window}s, use @xurl{gtk-application-set-menubar}.  Use the
-base @xurl{g-action-map} interface to add actions, to respond to the user
-selecting these menu items.
+@xurl{gtk-application-window} widgets, use the generic function
+@xurl{gtk-application-menubar}.  Use the base @xurl{g-action-map} interface to
+add actions, to respond to the user selecting these menu items.
 
 GTK+ displays these menus as expected, depending on the platform the application
 is running on.
 
 @xurl{gtk-application} optionally registers with a session manager of the users
-session, if you set the "register-session" property, and offers various
+session, if you set the @xurl{register-session} property, and offers various
 functionality related to the session life-cycle.
 
 @findex gtk-application-inhibit
@@ -122,12 +122,11 @@ session while inhibitors are present.
 @xurl{gtk-application-window} is a @xurl{gtk-window} subclass that offers some
 extra functionality for better integration with @xurl{gtk-application} features.
 Notably, it can handle both the application menu as well as the menubar. See the
-function @xurl{gtk-application-set-app-menu} and
-@xurl{gtk-application-set-menubar}.
+functions @xurl{gtk-application-app-menu} and @xurl{gtk-application-menubar}.
 
-This class implements the @xurl{g-action-group} and @xurl{g-action-map} interfaces,
-to let you add window-specific actions that will be exported by the associated
-@xurl{gtk-application}, together with its application-wide actions.
+This class implements the @xurl{g-action-group} and @xurl{g-action-map}
+interfaces, to let you add window-specific actions that will be exported by the
+associated @xurl{gtk-application}, together with its application-wide actions.
 Window-specific actions are prefixed with the "win." prefix and application-wide
 actions are prefixed with the "app." prefix.  Actions must be addressed with the
 prefixed name when referring to them from a @xurl{g-menu-model}.
@@ -140,12 +139,12 @@ As with @xurl{gtk-application}, the GDK lock will be acquired when processing
 actions arriving from other processes and should therefore be held when
 activating actions locally if GDK threads are enabled.
 
-The settings "gtk-shell-shows-app-menu" and "gtk-shell-shows-menubar" tell GTK+
-whether the desktop environment is showing the application menu and menubar
-models outside the application as part of the desktop shell.  For instance, on
-OS X, both menus will be displayed remotely; on Windows neither will be.
-gnome-shell (starting with version 3.4) will display the application menu, but
-not the menubar.
+The settings @xurl{gtk-shell-shows-app-menu} and @xurl{gtk-shell-shows-menubar}
+tell GTK+ whether the desktop environment is showing the application menu and
+menubar models outside the application as part of the desktop shell.  For
+instance, on OS X, both menus will be displayed remotely; on Windows neither
+will be.  gnome-shell (starting with version 3.4) will display the application
+menu, but not the menubar.
 
 @findex GtkMenuBar
 @findex gtk-menu-bar
@@ -155,7 +154,7 @@ If the desktop environment does not display the menubar, then
 @xurl{gtk-application-window} will automatically show a @xurl{gtk-menu-bar} for
 it. See the @xurl{gtk-application} docs for some screenshots of how this looks
 on different platforms.  This behaviour can be overridden with the
-@code{"show-menubar"} property.  If the desktop environment does not display the
+@xurl{show-menubar} property.  If the desktop environment does not display the
 application menu, then it will automatically be included in the menubar.
 
 The XML format understood by @xurl{gtk-builder} for @xurl{g-menu-model} consists
@@ -211,7 +210,7 @@ of this, the @xurl{gtk-builder} must have been given the gettext domain to use.
       ;; Connect signal "destroy" to the application window
       (g-signal-connect window "destroy"
                         (lambda (widget)
-                          (declare (ignore widget))                          
+                          (declare (ignore widget))
                           (leave-gtk-main)
                           (if (zerop gtk::*main-thread-level*)
                               (g-application-quit application))))
@@ -226,7 +225,7 @@ of this, the @xurl{gtk-builder} must have been given the gettext domain to use.
                            (g-object-get-data window "bloatpad-text"))))
                (gtk-text-buffer-copy-clipboard
                                   (gtk-text-view-get-buffer view)
-                                  (gtk-widget-get-clipboard view 
+                                  (gtk-widget-get-clipboard view
                                                             "CLIPBOARD"))))))
 
       ;; Add action "paste" to the application window
@@ -265,7 +264,7 @@ of this, the @xurl{gtk-builder} must have been given the gettext domain to use.
 
       ;; Add action "justify" to the application window
       (let ((action (g-simple-action-new-stateful
-                                             "justify" 
+                                             "justify"
                                              (g-variant-type-new "s")
                                              (g-variant-new-string "left"))))
         (g-action-map-add-action window action)
@@ -450,13 +449,11 @@ of this, the @xurl{gtk-builder} must have been given the gettext domain to use.
     ;; Read the menus from a string
     (gtk-builder-add-from-string builder *menu*)
     ;; Set the application menu
-    (gtk-application-set-app-menu application
-                                  (gtk-builder-get-object builder
-                                                          "app-menu"))
+    (setf (gtk-application-app-menu application)
+          (gtk-builder-get-object builder "app-menu"))
     ;; Set the menubar
-    (gtk-application-set-menubar application
-                                 (gtk-builder-get-object builder
-                                                         "menubar"))))
+    (setf (gtk-application-menubar application)
+          (gtk-builder-get-object builder "menubar"))))
 
 (defun bloat-pad-open (application)
   (declare (ignore application))

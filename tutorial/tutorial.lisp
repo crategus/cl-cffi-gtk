@@ -499,22 +499,22 @@
                           (leave-gtk-main)))
       (g-signal-connect button1 "toggled"
          (lambda (widget)
-           (if (gtk-toggle-button-get-active widget)
+           (if (gtk-toggle-button-active widget)
                (progn
                  (gtk-table-set-row-spacings table 12)
-                 (gtk-button-set-label widget "Less Row Spacing"))
+                 (setf (gtk-button-label widget) "Less Row Spacing"))
                (progn
                  (gtk-table-set-row-spacings table 0)
-                 (gtk-button-set-label widget "More Row Spacing")))))
+                 (setf (gtk-button-label widget) "More Row Spacing")))))
       (g-signal-connect button2 "toggled"
          (lambda (widget)
-           (if (gtk-toggle-button-get-active widget)
+           (if (gtk-toggle-button-active widget)
                (progn
                  (gtk-table-set-col-spacings table 12)
-                 (gtk-button-set-label widget "Less Col Spacing"))
+                 (setf (gtk-button-label widget) "Less Col Spacing"))
                (progn
                  (gtk-table-set-col-spacings table 0)
-                 (gtk-button-set-label widget "More Col Spacing")))))
+                 (setf (gtk-button-label widget) "More Col Spacing")))))
       (g-signal-connect quit "clicked"
                         (lambda (widget)
                           (declare (ignore widget))
@@ -787,7 +787,7 @@
               (gtk-radio-button-new-with-label
                                           (gtk-radio-button-get-group button)
                                           "Radio Button 2"))
-        (gtk-toggle-button-set-active button t)
+        (setf (gtk-toggle-button-active button) t)
         (gtk-box-pack-start vbox button)
         (setq button
               (gtk-radio-button-new-with-mnemonic
@@ -1181,7 +1181,7 @@
                          "Some text")
                    (setf (gtk-progress-bar-text (pbar-data-pbar pdata)) ""))
                (setf (gtk-progress-bar-show-text (pbar-data-pbar pdata))
-                     (gtk-toggle-button-get-active check)))))
+                     (gtk-toggle-button-active check)))))
         (gtk-table-attach table check 0 1 0 1))
       (let ((check (gtk-check-button-new-with-label "Activity mode")))
         (g-signal-connect check "clicked"
@@ -1199,7 +1199,7 @@
            (lambda (widget)
              (declare (ignore widget))
              (setf (gtk-progress-bar-inverted (pbar-data-pbar pdata))
-                   (gtk-toggle-button-get-active check))))
+                   (gtk-toggle-button-active check))))
         (gtk-table-attach table check 0 1 2 3))
       (let ((button (gtk-button-new-with-label "Close")))
         (g-signal-connect button "clicked"
@@ -1287,7 +1287,7 @@
       (gtk-grid-attach grid info-bar 0 2 1 1)
       ;; Show the info bar
       (gtk-label-set-text message "An Info Message in the content area.")
-      (setf (gtk-info-bar-set-message-type info-bar) :info)
+      (setf (gtk-info-bar-message-type info-bar) :info)
       (gtk-widget-show info-bar)
       ;; Add the container grid to the window and show all
       (gtk-container-add window grid)
@@ -1410,10 +1410,10 @@
            (lambda (widget)
              (gtk-scale-set-draw-value
                                      hscale
-                                     (gtk-toggle-button-get-active widget))
+                                     (gtk-toggle-button-active widget))
              (gtk-scale-set-draw-value
                                      vscale
-                                     (gtk-toggle-button-get-active widget))))
+                                     (gtk-toggle-button-active widget))))
         (gtk-box-pack-start box button)
         (gtk-box-pack-start box1 box))
       ;; A ComboBox to change the position of the value.
@@ -3510,15 +3510,15 @@ happen.")
            (lambda (widget)
              (declare (ignore widget))
              (gtk-editable-set-editable entry
-                                        (gtk-toggle-button-get-active check))))
+                                        (gtk-toggle-button-active check))))
         (gtk-box-pack-start hbox check))
       (let ((check (gtk-check-button-new-with-label "Visible")))
-        (gtk-toggle-button-set-active check t)
+        (setf (gtk-toggle-button-active check) t)
         (g-signal-connect check "toggled"
            (lambda (widget)
              (declare (ignore widget))
              (gtk-entry-set-visibility entry
-                                       (gtk-toggle-button-get-active check))))
+                                       (gtk-toggle-button-active check))))
         (gtk-box-pack-start hbox check))
       (gtk-box-pack-start vbox hbox)
       (let ((button (gtk-button-new-from-stock "gtk-close")))
@@ -3686,7 +3686,7 @@ happen.")
              (lambda (widget)
                (gtk-spin-button-set-snap-to-ticks
                                      spinner1
-                                     (gtk-toggle-button-get-active widget))))
+                                     (gtk-toggle-button-active widget))))
           (gtk-box-pack-start vbox2 check))
         (let ((check (make-instance 'gtk-check-button
                                     :label "Numeric only input mode"
@@ -3695,7 +3695,7 @@ happen.")
              (lambda (widget)
                (gtk-spin-button-set-numeric
                                      spinner1
-                                     (gtk-toggle-button-get-active widget))))
+                                     (gtk-toggle-button-active widget))))
           (gtk-box-pack-start vbox2 check))
         (gtk-container-add frame2 vbox2)
         (setq hbox (make-instance 'gtk-hbox))
@@ -4555,13 +4555,11 @@ happen.")
     ;; Read the menus from a string
     (gtk-builder-add-from-string builder *menu*)
     ;; Set the application menu
-    (gtk-application-set-app-menu application
-                                  (gtk-builder-get-object builder
-                                                          "app-menu"))
+    (setf (gtk-application-app-menu application)
+          (gtk-builder-get-object builder "app-menu"))
     ;; Set the menubar
-    (gtk-application-set-menubar application
-                                 (gtk-builder-get-object builder
-                                                         "menubar"))))
+    (setf (gtk-application-menubar application)
+          (gtk-builder-get-object builder "menubar"))))
 
 (defun bloat-pad-open (application)
   (declare (ignore application))

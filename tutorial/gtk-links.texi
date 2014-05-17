@@ -57,13 +57,16 @@
 @c GtkApplication
 
 @set gtk-application http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-application.html
-@set gtk-application-set-app-menu http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-application-set-app-menu.html
-@set gtk-application-set-menubar http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-application-set-menubar.html
+@set gtk-application-app-menu http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-application-app-menu.html
+@set gtk-application-menubar http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-application-menubar.html
 @set gtk-application-inhibit http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-application-inhibit.html
+@set register-session http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-application.html#gtk_slot_gtk-application-register-session
 
 @c GtkApplicationWindow
 
 @set gtk-application-window http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-application-window.html
+
+@set show-menubar http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-application-window.html#gtk_slot_gtk-application-window-show-menubar
 
 @c GtkArrow
 
@@ -354,7 +357,7 @@
 @set gtk-label-set-selectable http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-label-set-selectable.html
 @set gtk-label-set-line-wrap http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-label-set-line-wrap.html
 @set gtk-label-set-justify http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-label-set-justify.html
-@set gtk-label-set-pattern http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-label-set-pattern.html
+@set gtk-label-pattern http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-label-pattern.html
 @set gtk-label-get-current-uri http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-label-get-current-uri.html
 
 @c GtkLayout
@@ -552,6 +555,11 @@
 @set gtk-separator-tool-item http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-separator-tool-item.html
 @set gtk-separator-tool-item-new http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-separator-tool-item-new.html
 
+@c GtkSettings
+
+@set gtk-shell-shows-app-menu http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-settings.html#gtk_slot_gtk-settings-gtk-shell-shows-app-menu
+@set gtk-shell-shows-menubar http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-settings.html#gtk_slot_gtk-settings-gtk-shell-shows-menubar
+
 @c GtkShadowType
 
 @set gtk-shadow-type http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_sym_gtk-shadow-type.html
@@ -670,8 +678,7 @@
 @set gtk-toggle-button-new http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-toggle-button-new.html
 @set gtk-toggle-button-new-with-label http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-toggle-button-new-with-label.html
 @set gtk-toggle-button-new-with-mnemonic http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-toggle-button-new-with-mnemonic.html
-@set gtk-toggle-button-get-active http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-toggle-button-get-active.html
-@set gtk-toggle-button-set-active http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-toggle-button-set-active.html
+@set gtk-toggle-button-active http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-toggle-button-active.html
 
 @c GtkToggleToolButton
 
