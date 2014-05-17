@@ -54,19 +54,19 @@ GTK+ Widgets and Objects
     gtk.statusbar.lisp               - GtkStatusbar                - GTK+ 3.8.9
     gtk.level-bar.lisp               - GtkLevelBar                 - GTK+ 3.8.9
     gtk.info-bar.lisp                - GtkInfoBar                  - GTK+ 3.8.9
-    gtk.status-icon.lisp             - GtkStatusIcon               - GTK+ 3.8.6*
-    gtk.spinner.lisp                 - GtkSpinner                  - GTK+ 3.6.4*
+    gtk.status-icon.lisp             - GtkStatusIcon               - GTK+ 3.8.9&
+    gtk.spinner.lisp                 - GtkSpinner                  - GTK+ 3.8.9
 
   Buttons and Toggles
 
-    gtk.button.lisp                  - GtkButton                   - GTK+ 3.8.8*
-    gtk.check-button.lisp            - GtkCheckButton              - GTK+ 3.6.4*
-    gtk.radio-button.lisp            - GtkRadioButton              - GTK+ 3.6.4*
-    gtk.toggle-button.lisp           - GtkToggleButton             - GTK+ 3.6.4*
-    gtk.link-button.lisp             - GtkLinkButton               - GTK+ 3.6.4*
-    gtk.scale-button.lisp            - GtkScaleButton              - GTK+ 3.6.4*
-    gtk.volume-button.lisp           - GtkVolumeButton             - GTK+ 3.6.4*
-    gtk.switch.lisp                  - GtkSwitch                   - GTK+ 3.6.4*
+    gtk.button.lisp                  - GtkButton                   - GTK+ 3.8.9
+    gtk.check-button.lisp            - GtkCheckButton              - GTK+ 3.8.9
+    gtk.radio-button.lisp            - GtkRadioButton              - GTK+ 3.8.9*
+    gtk.toggle-button.lisp           - GtkToggleButton             - GTK+ 3.8.9
+    gtk.link-button.lisp             - GtkLinkButton               - GTK+ 3.3.9
+    gtk.scale-button.lisp            - GtkScaleButton              - GTK+ 3.8.9
+    gtk.volume-button.lisp           - GtkVolumeButton             - GTK+ 3.8.9
+    gtk.switch.lisp                  - GtkSwitch                   - GTK+ 3.8.9
 
     not implemented                  - GtkLockButton
     not implemented                  - GtkMenuButton
@@ -269,8 +269,8 @@ GTK+ Widgets and Objects
 
   Application support
 
-    gtk.application.lisp             - GtkApplication              - GTK+ 3.6.4*
-    gtk.application-window.lisp      - GtkApplicationWindow        - GTK+ 3.8.9*
+    gtk.application.lisp             - GtkApplication              - GTK+ 3.8.9
+    gtk.application-window.lisp      - GtkApplicationWindow        - GTK+ 3.8.9
     gtk.actionable.lisp              - GtkActionable               - GTK+ 3.6.4*
 
   Deprecated
@@ -287,3 +287,4 @@ GTK+ Widgets and Objects
     gtk.font-selection.lisp          - GtkFontSelection (**)       - GTK+ 3.6.4*
     gtk.font-selection-dialog.lisp   - GtkFontSelectionDialog (**) - GTK+ 3.6.4*
     gtk.table.lisp                   - GtkTable                    - GTK+ 3.6.4*
+
