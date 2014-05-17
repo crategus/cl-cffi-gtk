@@ -5,12 +5,12 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.8.9 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,7 +32,7 @@
 ;;;
 ;;; GtkRadioButton
 ;;;
-;;; GtkRadioButton — A choice from multiple check buttons
+;;; A choice from multiple check buttons
 ;;;
 ;;;     GtkRadioButton
 ;;;
@@ -64,8 +64,6 @@
   ((group
     gtk-radio-button-group
     "group" "GtkRadioButton" nil t)))
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-radio-button 'type)
@@ -131,7 +129,7 @@
   @end{pre}
   When an unselected button in the group is clicked the clicked button
   receives the \"toggled\" signal, as does the previously selected button.
-  Inside the \"toggled\" handler, @fun{gtk-toggle-button-get-active} can be used
+  Inside the \"toggled\" handler, @fun{gtk-toggle-button-active} can be used
   to determine if the button has been selected or deselected.
   @begin[Signal Details]{dictionary}
     @subheading{The \"group-changed\" signal}
@@ -154,7 +152,7 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Property Details
+;;; Property and Accessor Details
 ;;;
 ;;; ----------------------------------------------------------------------------
 
@@ -162,12 +160,6 @@
 (setf (documentation (atdoc:get-slot-from-name "group" 'gtk-radio-button) 't)
  "The @code{\"group\"} property of type @sym{gtk-radio-button} (Write)@br{}
   Sets a new group for a radio button.")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-radio-button-group atdoc:*function-name-alias*) "Accessor"
@@ -293,6 +285,9 @@
 ;;; gtk_radio_button_set_group ()
 ;;; ----------------------------------------------------------------------------
 
+;;; TODO: Check the implementation of gtk-radio-button-set-group and
+;;; gtk-radio-button-get-group. How can this be combined in a generic function?
+
 (declaim (inline gtk-radio-button-set-group))
 
 (defun gtk-radio-button-set-group (radio-button group)
@@ -313,6 +308,9 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_radio_button_get_group ()
 ;;; ----------------------------------------------------------------------------
+
+;;; TODO: Check the implementation of gtk-radio-button-set-group and
+;;; gtk-radio-button-get-group. How can this be combined in a generic function?
 
 (defcfun ("gtk_radio_button_get_group" gtk-radio-button-get-group)
     (g-slist (g-object gtk-radio-button))

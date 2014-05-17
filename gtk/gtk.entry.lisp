@@ -583,9 +583,11 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Property Details
+;;; Property and Accessor Details
 ;;;
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-entry-activates-default --------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "activates-default"
@@ -596,6 +598,38 @@
   dialog) when Enter is pressed. @br{}
   Default value: @code{nil}")
 
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-entry-activates-default atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-entry-activates-default 'function)
+ "@version{2014-4-19}
+  @argument[object]{a @class{gtk-entry} widget}
+  @argument[setting]{@em{true} to activate window's default widget on Enter
+    keypress}
+  @syntax[]{(gtk-entry-activates-default object) => setting}
+  @syntax[]{(setf (gtk-entry-activates-default object) setting)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-entry]{activates-default} of the
+    @class{gtk-entry} class.
+  @end{short}
+
+  The generic function @sym{gtk-entry-activates-default} retrieves the value
+  set by the generic function @sym{(setf gtk-entry-activates-default)}.
+
+  If @arg{setting} is @em{true}, pressing Enter in the entry will activate the
+  default widget for the window containing the entry.
+
+  This usually means that the dialog box containing the entry will be closed,
+  since the default widget is usually one of the dialog buttons.
+
+  For experts: if @arg{setting} is @em{true}, the entry calls the function
+  @fun{gtk-window-activate-default} on the window containing the entry,
+  in the default handler for the \"activate\" signal.
+  @see-class{gtk-entry}
+  @see-function{gtk-window-activate-default}")
+
+;;; --- gtk-entry-attributes ---------------------------------------------------
+
 #+(and gtk-3-6 cl-cffi-gtk-documentation)
 (setf (documentation (atdoc:get-slot-from-name "attributes" 'gtk-entry) t)
  "The @code{\"attributes\"} property of type @class{pango-attr-list}
@@ -604,11 +638,63 @@
   This is mainly useful to change the size or weight of the text. @br{}
   Since 3.6")
 
+#+(and gtk-3-6 cl-cffi-gtk-documentation)
+(setf (gethash 'gtk-entry-attributes atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-entry-attributes 'function)
+ "@version{2014-4-19}
+  @argument[object]{a @class{gtk-entry} widget}
+  @argument[attrs]{a @class{pango-attr-list}}
+  @syntax[]{(gtk-entry-attributes object) => attrs}
+  @syntax[]{(setf (gtk-entry-attribures object) attrs)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-entry]{attributes} of the @class{gtk-entry}
+    class.
+  @end{short}
+
+  The generic function @sym{gtk-entry-attributes} gets the attribute list that
+  was set on the entry using the generic function
+  @sym{(setf gtk-entry-attributes)}, if any.
+
+  The generic function @sym{(setf gtk-entry-attribues)} sets a
+  @class{pango-attr-list}; the attributes in the list are applied to the entry
+  text.
+
+  Since 3.6
+  @see-class{gtk-entry}")
+
+;;; --- gtk-entry-buffer -------------------------------------------------------
+
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "buffer" 'gtk-entry) 't)
  "The @code{\"buffer\"} property of type @class{gtk-entry-buffer}
   (Read / Write / Construct) @br{}
   Text buffer object which actually stores entry text.")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-entry-buffer atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-entry-buffer 'function)
+ "@version{2014-4-20}
+  @argument[object]{a @class{gtk-entry} widget}
+  @argument[buffer]{a @class{gtk-entry-buffer} object}
+  @syntax[]{(gtk-entry-buffer object) => buffer}
+  @syntax[]{(setf (gtk-entry-buffer object) buffer)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-entry]{buffer} of the @class{gtk-entry}
+    class.
+  @end{short}
+
+  The generic function @sym{gtk-entry-buffer} gets the @class{gtk-entry-buffer}
+  object which holds the text for this widget.
+
+  The generic function @sym{(setf gtk-entry-buffer)} sets the
+  @class{gtk-entry-buffer} object which holds the text for this widget.
+
+  Since 2.18
+  @see-class{gtk-entry}")
+
+;;; --- gtk-entry-caps-lock-warning --------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "caps-lock-warning"
@@ -622,11 +708,52 @@
   Since 2.16")
 
 #+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-entry-caps-lock-warning atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-entry-caps-lock-warning 'function)
+ "@version{2014-4-20}
+  Accessor of the slot @slot[gtk-entry]{caps-lock-warning} of the
+  @class{gtk-entry} class.
+  @see-class{gtk-entry}")
+
+;;; --- gtk-entry-completion ---------------------------------------------------
+
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "completion" 'gtk-entry) 't)
  "The @code{\"completion\"} property of type @class{gtk-entry-completion}
   (Read / Write) @br{}
   The auxiliary completion object to use with the entry. @br{}
   Since 3.2")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-entry-completion atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-entry-completion 'function)
+ "@version{2014-4-20}
+  @argument[object]{a @class{gtk-entry} widget}
+  @argument[completion]{the @class{gtk-entry-completion} or @code{nil}}
+  @syntax[]{(gtk-entry-completion object) => completion}
+  @syntax[]{(setf (gtk-entry-completion object) completion)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-entry]{completion} of the @class{gtk-entry}
+    class.
+  @end{short}
+
+  The generic function @sym{gtk-entry-completion} returns the auxiliary
+  completion object currently in use by the entry.
+
+  The generic function @sym{(setf gtk-entry-completion} sets @arg{completion}
+  to be the auxiliary completion object to use with the entry.
+
+  All further configuration of the completion mechanism is done on
+  @arg{completion} using the @class{gtk-entry-completion} API. Completion is
+  disabled if @arg{completion} is set to @code{nil}.
+
+  Since 2.4
+  @see-class{gtk-entry}
+  @see-class{gtk-entry-completion}")
+
+;;; --- gtk-entry-cursor-position ----------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "cursor-position" 'gtk-entry) 't)
@@ -636,16 +763,42 @@
   Default value: 0")
 
 #+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-entry-cursor-position atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-entry-cursor-position 'function)
+ "@version{2014-4-20}
+  Accessor of the slot @slot[gtk-entry]{cursor-position} of the
+  @class{gtk-entry} class.
+  @see-class{gtk-entry}")
+
+;;; --- gtk-entry-editable -----------------------------------------------------
+
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "editable" 'gtk-entry) 't)
  "The @code{\"editable\"} property of type @code{:boolean} (Read / Write) @br{}
   Whether the entry contents can be edited. @br{}
   Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-entry-editable atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-entry-editable 'function)
+ "@version{2014-4-20}
+  Accessor of the slot @slot[gtk-entry]{editable} of the @class{gtk-entry}
+  class.
+  @see-class{gtk-entry}")
+
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "has-frame" 'gtk-entry) 't)
  "The @code{\"has-frame\"} property of type @code{:boolean} (Read / Write) @br{}
   @code{Nil} removes outside bevel from entry. @br{}
   Default value: @em{true}")
+
+
+
+;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "im-module" 'gtk-entry) 't)
@@ -1022,74 +1175,6 @@
 ;;; Accessors of Properties
 ;;;
 ;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-entry-activates-default atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-entry-activates-default 'function)
- "@version{2013-8-25}
-  Accessor of the slot @code{\"activates-default\"} of the @class{gtk-entry}
-  class.
-  @see-class{gtk-entry}
-  @see-function{gtk-entry-get-activates-default}
-  @see-function{gtk-entry-set-activates-default}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-entry-attributes atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-entry-attributes 'function)
- "@version{2013-8-25}
-  Accessor of the slot @code{\"attributes\"} of the @class{gtk-entry} class.
-  @see-class{gtk-entry}
-  @see-function{gtk-entry-get-attributes}
-  @see-function{gtk-entry-set-attributes}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-entry-buffer atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-entry-buffer 'function)
- "@version{2013-8-25}
-  Accessor of the slot @code{\"buffer\"} of the @class{gtk-entry} class.
-  @see-class{gtk-entry}
-  @see-function{gtk-entry-get-buffer}
-  @see-function{gtk-entry-set-buffer}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-entry-caps-lock-warning atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-entry-caps-lock-warning 'function)
- "@version{2013-8-25}
-  Accessor of the slot @code{\"caps-lock-warning\"} of the @class{gtk-entry}
-  class.
-  @see-class{gtk-entry}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-entry-completion atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-entry-completion 'function)
- "@version{2013-8-25}
-  Accessor of the slot @code{\"completion\"} of the @class{gtk-entry} class.
-  @see-class{gtk-entry}
-  @see-class{gtk-entry-completion}
-  @see-function{gtk-entry-get-completion}
-  @see-function{gtk-entry-set-completion}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-entry-cursor-position atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-entry-cursor-position 'function)
- "@version{2013-8-25}
-  Accessor of the slot @code{\"cursor-position\"} of the @class{gtk-entry}
-  class.
-  @see-class{gtk-entry}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-entry-editable atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-entry-editable 'function)
- "@version{2013-8-25}
-  Accessor of the slot @code{\"editable\"} of the @class{gtk-entry} class.
-  @see-class{gtk-entry}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-entry-has-frame atdoc:*function-name-alias*)
@@ -1525,52 +1610,6 @@
 (export 'gtk-entry-new-with-buffer)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_entry_get_buffer ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-entry-get-buffer))
-
-(defun gtk-entry-get-buffer (entry)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-25}
-  @argument[entry]{a @class{gtk-entry} widget}
-  @return{A @class{gtk-entry-buffer} object.}
-  @begin{short}
-    Get the @class{gtk-entry-buffer} object which holds the text for this
-    widget.
-  @end{short}
-
-  Since 2.18
-  @see-class{gtk-entry}
-  @see-function{gtk-entry-set-buffer}"
-  (gtk-entry-buffer entry))
-
-(export 'gtk-entry-get-buffer)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_entry_set_buffer ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-entry-set-buffer))
-
-(defun gtk-entry-set-buffer (entry buffer)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-25}
-  @argument[entry]{a @class{gtk-entry} widget}
-  @argument[buffer]{a @class{gtk-entry-buffer} object}
-  @begin{short}
-    Set the @class{gtk-entry-buffer} object which holds the text for this
-    widget.
-  @end{short}
-
-  Since 2.18
-  @see-class{gtk-entry}
-  @see-function{gtk-entry-get-buffer}"
-  (setf (gtk-entry-buffer entry) buffer))
-
-(export 'gtk-entry-set-buffer)
-
-;;; ----------------------------------------------------------------------------
 ;;; gtk_entry_set_text ()
 ;;; ----------------------------------------------------------------------------
 
@@ -1785,24 +1824,6 @@
 (export 'gtk-entry-set-max-length)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_entry_get_activates_default ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-entry-get-activates-default))
-
-(defun gtk-entry-get-activates-default (entry)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-25}
-  @argument[entry]{a @class{gtk-entry} widget}
-  @return{@em{True} if the @arg{entry} will activate the default widget.}
-  Retrieves the value set by the function @fun{gtk-entry-set-activates-default}.
-  @see-class{gtk-entry}
-  @see-function{gtk-entry-set-activates-default}"
-  (gtk-entry-activates-default entry))
-
-(export 'gtk-entry-get-activates-default)
-
-;;; ----------------------------------------------------------------------------
 ;;; gtk_entry_get_has_frame ()
 ;;; ----------------------------------------------------------------------------
 
@@ -1870,35 +1891,6 @@
   (gtk-entry-width-chars entry))
 
 (export 'gtk-entry-get-width-chars)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_entry_set_activates_default ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-entry-set-activates-default))
-
-(defun gtk-entry-set-activates-default (entry setting)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-25}
-  @argument[entry]{a @class{gtk-entry} widget}
-  @argument[setting]{@em{true} to activate window's default widget on Enter
-    keypress}
-  @begin{short}
-    If @arg{setting} is @em{true}, pressing Enter in the @arg{entry} will
-    activate the default widget for the window containing the @arg{entry}.
-  @end{short}
-  This usually means that the dialog box containing the @arg{entry} will be
-  closed, since the default widget is usually one of the dialog buttons.
-
-  For experts: if @arg{setting} is @em{true}, the @arg{entry} calls the function
-  @fun{gtk-window-activate-default} on the window containing the @arg{entry},
-  in the default handler for the \"activate\" signal.
-  @see-class{gtk-entry}
-  @see-function{gtk-window-activate-default}
-  @see-function{gtk-entry-get-activates-default}"
-  (setf (gtk-entry-activates-default entry) setting))
-
-(export 'gtk-entry-set-activates-default)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_entry_set_has_frame ()
@@ -2276,58 +2268,6 @@
 (export 'gtk-entry-text-index-to-layout-index)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_entry_set_attributes ()
-;;; ----------------------------------------------------------------------------
-
-#+gtk-3-6
-(declaim (inline gtk-entry-set-attributes))
-
-#+gtk-3-6
-(defun gtk-entry-set-attributes (entry attrs)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-25}
-  @argument[entry]{a @class{gtk-entry} widget}
-  @argument[attrs]{a @class{pango-attr-list}}
-  @begin{short}
-    Sets a @class{pango-attr-list}; the attributes in the list are applied to
-    the entry text.
-  @end{short}
-
-  Since 3.6
-  @see-class{gtk-entry}
-  @see-function{gtk-entry-get-attributes}"
-  (setf (gtk-entry-attributes entry) attrs))
-
-#+gtk-3-6
-(export 'gtk-entry-set-attributes)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_entry_get_attributes ()
-;;; ----------------------------------------------------------------------------
-
-#+gtk-3-6
-(declaim (inline gtk-entry-get-attributes))
-
-#+gtk-3-6
-(defun gtk-entry-get-attributes (entry)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-25}
-  @argument[entry]{a @class{gtk-entry} widget}
-  @return{The attribute list, or @code{nil} if none was set.}
-  @begin{short}
-    Gets the attribute list that was set on the entry using the function
-    @fun{gtk-entry-set-attributes}, if any.
-  @end{short}
-
-  Since 3.6
-  @see-class{gtk-entry}
-  @see-function{gtk-entry-set-attributes}"
-  (gtk-entry-attributes entry))
-
-#+gtk-3-6
-(export 'gtk-entry-get-attributes)
-
-;;; ----------------------------------------------------------------------------
 ;;; gtk_entry_get_max_length ()
 ;;; ----------------------------------------------------------------------------
 
@@ -2374,56 +2314,6 @@
   (gtk-entry-visibility entry))
 
 (export 'gtk-entry-get-visibility)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_entry_set_completion ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-entry-set-completion))
-
-(defun gtk-entry-set-completion (entry completion)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-25}
-  @argument[entry]{a @class{gtk-entry} widget}
-  @argument[completion]{the @class{gtk-entry-completion} or @code{nil}}
-  @begin{short}
-    Sets @arg{completion} to be the auxiliary completion object to use with
-    @arg{entry}.
-  @end{short}
-  All further configuration of the completion mechanism is done on
-  @arg{completion} using the @class{gtk-entry-completion} API. Completion is
-  disabled if @arg{completion} is set to @code{nil}.
-
-  Since 2.4
-  @see-class{gtk-entry}
-  @see-class{gtk-entry-completion}
-  @see-function{gtk-entry-get-completion}"
-  (setf (gtk-entry-completion entry) completion))
-
-(export 'gtk-entry-set-completion)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_entry_get_completion ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-entry-get-completion))
-
-(defun gtk-entry-get-completion (entry)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-25}
-  @argument[entry]{a @class{gtk-entry} widget}
-  @return{The auxiliary completion object currently in use by @arg{entry}.}
-  @begin{short}
-    Returns the auxiliary completion object currently in use by @arg{entry}.
-  @end{short}
-
-  Since 2.4
-  @see-class{gtk-entry}
-  @see-class{gtk-entry-completion}
-  @see-function{get-entry-set-completion}"
-  (gtk-entry-completion entry))
-
-(export 'gtk-entry-get-completion)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_entry_set_cursor_hadjustment ()

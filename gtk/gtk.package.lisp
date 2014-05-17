@@ -172,7 +172,6 @@
       @about-function{gtk-get-interface-age}
       @about-function{gtk-check-version}
       @about-function{cl-cffi-gtk-build-info}
-      @about-variable{+gtk-major-version+}
       @about-variable{+gtk-minor-version+}
       @about-variable{+gtk-micro-version+}
       @about-variable{+gtk-binary-age+}
@@ -1055,7 +1054,6 @@
       @about-function{gtk-message-dialog-get-image}
       @about-function{gtk-message-dialog-format-secondary-text}
       @about-function{gtk-message-dialog-format-secondary-markup}
-      @about-function{gtk-message-dialog-get-message-area}
     @end{subsection}
     @begin[GtkWindowGroup]{subsection}
       Limit the effect of grabs.
@@ -1178,7 +1176,6 @@
       @about-function{gtk-image-set-from-resource}
       @about-function{gtk-image-clear}
       @about-function{gtk-image-new}
-      @about-function{gtk-image-set-pixel-size}
       @about-function{gtk-image-get-pixel-size}
     @end{subsection}
     @begin[GtkLabel]{subsection}
@@ -1190,7 +1187,6 @@
       @about-function{gtk-label-set-attributes}
       @about-function{gtk-label-set-markup}
       @about-function{gtk-label-set-markup-with-mnemonic}
-      @about-function{gtk-label-set-pattern}
       @about-function{gtk-label-set-justify}
       @about-function{gtk-label-set-ellipsize}
       @about-function{gtk-label-set-width-chars}
@@ -1372,8 +1368,6 @@
       @about-function{gtk-button-leave}
       @about-function{gtk-button-set-relief}
       @about-function{gtk-button-get-relief}
-      @about-function{gtk-button-get-label}
-      @about-function{gtk-button-set-label}
       @about-function{gtk-button-get-use-stock}
       @about-function{gtk-button-set-use-stock}
       @about-function{gtk-button-get-use-underline}
@@ -1420,8 +1414,6 @@
       @about-function{gtk-toggle-button-set-mode}
       @about-function{gtk-toggle-button-get-mode}
       @about-function{gtk-toggle-button-toggled}
-      @about-function{gtk-toggle-button-get-active}
-      @about-function{gtk-toggle-button-set-active}
       @about-function{gtk-toggle-button-get-inconsistent}
       @about-function{gtk-toggle-button-set-inconsistent}
     @end{subsection}
@@ -3822,8 +3814,6 @@ setup_tree (void)
       @about-function{gtk-box-child-position}
       @about-function{gtk-box-pack-start}
       @about-function{gtk-box-pack-end}
-      @about-function{gtk-box-get-homogeneous}
-      @about-function{gtk-box-set-homogeneous}
       @about-function{gtk-box-get-spacing}
       @about-function{gtk-box-set-spacing}
       @about-function{gtk-box-reorder-child}
@@ -5194,10 +5184,6 @@ setup_tree (void)
       @about-function{gtk-application-inhibit}
       @about-function{gtk-application-uninhibit}
       @about-function{gtk-application-is-inhibited}
-      @about-function{gtk-application-get-app-menu}
-      @about-function{gtk-application-set-app-menu}
-      @about-function{gtk-application-get-menubar}
-      @about-function{gtk-application-set-menubar}
       @about-function{gtk-application-add-accelerator}
       @about-function{gtk-application-remove-accelerator}
     @end{subsection}

@@ -65,8 +65,8 @@
     @sym{gtk-application-window} is a @class{gtk-window} subclass that offers
     some extra functionality for better integration with @class{gtk-application}
     features. Notably, it can handle both the application menu as well as the
-    menubar. See the functions @fun{gtk-application-set-app-menu} and
-    @fun{gtk-application-set-menubar}.
+    menubar. See the functions @fun{gtk-application-app-menu} and
+    @fun{gtk-application-menubar}.
   @end{short}
 
   This class implements the @class{g-action-group} and @class{g-action-map}
@@ -85,19 +85,20 @@
   actions arriving from other processes and should therefore be held when
   activating actions locally if GDK threads are enabled.
 
-  The settings @code{\"gtk-shell-shows-app-menu\"} and
-  @code{\"gtk-shell-shows-menubar\"} tell GTK+ whether the desktop environment
-  is showing the application menu and menubar models outside the application as
-  part of the desktop shell. For instance, on OS X, both menus will be displayed
-  remotely; on Windows neither will be. gnome-shell, starting with version 3.4,
-  will display the application menu, but not the menubar.
+  The settings @slot[gtk-settings]{gtk-shell-shows-app-menu} and
+  @slot[gtk-settings]{gtk-shell-shows-menubar} tell GTK+ whether the desktop
+  environment is showing the application menu and menubar models outside the
+  application as part of the desktop shell. For instance, on OS X, both menus
+  will be displayed remotely; on Windows neither will be. gnome-shell, starting
+  with version 3.4, will display the application menu, but not the menubar.
 
   If the desktop environment does not display the menubar, then
   @sym{gtk-application-window} will automatically show a @class{gtk-menu-bar}
   for it. See the @class{gtk-application} docs for some screenshots of how this
   looks on different platforms. This behaviour can be overridden with the
-  @code{\"show-menubar\"} property. If the desktop environment does not display
-  the application menu, then it will automatically be included in the menubar.
+  @slot[gtk-application-window]{show-menubar} property. If the desktop
+  environment does not display the application menu, then it will automatically
+  be included in the menubar.
 
   @b{Example:} A @class{gtk-application-window} with a menubar
   @begin{pre}
@@ -116,9 +117,8 @@
                    </menu> ~
                  </interface>\"))
    ;; Set the menubar
-   (gtk-application-set-menubar application
-                                (gtk-builder-get-object builder
-                                                        \"menubar\"))
+   (setf (gtk-application-menubar application)
+         (gtk-builder-get-object builder \"menubar\"))
    ... )
   @end{pre}
   The XML format understood by @class{gtk-builder} for @class{g-menu-model}
@@ -143,8 +143,8 @@
   @see-class{gtk-menu-bar}
   @see-class{gtk-builder}
   @see-class{g-menu-model}
-  @see-function{gtk-application-set-app-menu}
-  @see-function{gtk-application-set-menubar}")
+  @see-function{gtk-application-app-menu}
+  @see-function{gtk-application-menubar}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -159,8 +159,7 @@
   (Read / Write / Construct) @br{}
   If this property is @em{true}, the window will display a menubar that includes
   the app menu and menubar, unless these are shown by the desktop shell. See the
-  functions @fun{gtk-application-set-app-menu} and
-  @fun{gtk-application-set-menubar}.
+  functions @fun{gtk-application-app-menu} and @fun{gtk-application-menubar}.
   If @code{nil}, the window will not display a menubar, regardless of whether
   the desktop shell is showing the menus or not. @br{}
   Default value: @code{true}")
@@ -173,7 +172,7 @@
   @argument[window]{a @class{gtk-application-window} widget}
   @argument[show-menubar]{whether to show a menubar when needed}
   @syntax[]{(gtk-application-window-show-menubar object) => show-menubar}
-  @syntax[]{(setf (gtk-application-window-show-menubar object) show-menbar)}
+  @syntax[]{(setf (gtk-application-window-show-menubar object) show-menubar)}
   @begin{short}
     Accessor of the slot @slot[gtk-application-window]{show-menubar} of the
     @class{gtk-application-window} class.

@@ -1,11 +1,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.switch.lisp
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.8.9 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -36,30 +37,6 @@
 ;;;     gtk_switch_new
 ;;;     gtk_switch_set_active
 ;;;     gtk_switch_get_active
-;;;
-;;; Object Hierarchy
-;;;
-;;;   GObject
-;;;    +----GInitiallyUnowned
-;;;          +----GtkWidget
-;;;                +----GtkSwitch
-;;;
-;;; Implemented Interfaces
-;;;
-;;; GtkSwitch implements AtkImplementorIface, GtkBuildable, GtkActionable and
-;;; GtkActivatable.
-;;;
-;;; Properties
-;;;
-;;;   "active"                   gboolean              : Read / Write
-;;;
-;;; Style Properties
-;;;
-;;;   "slider-width"             gint                  : Read
-;;;
-;;; Signals
-;;;
-;;;   "activate"                                       : Action
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -79,8 +56,6 @@
   ((active
     gtk-switch-active
     "active" "gboolean" t t)))
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-switch 'type)
@@ -113,28 +88,39 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Property Details
+;;; Property and Accessor Details
 ;;;
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "active" 'gtk-switch) 't)
- "The @code{\"active\"} property of type @code{:boolean} (Read / Write)@br{}
+ "The @code{\"active\"} property of type @code{:boolean} (Read / Write) @br{}
   Whether the @sym{gtk-switch} widget is in its on or off state. @br{}
   Default value: @code{nil}")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-switch-active atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-switch-active 'function)
- "@version{2013-4-27}
-  Accessor of the slot @code{\"active\"} of the @class{gtk-switch} class.")
+ "@version{2014-4-19}
+  @argument[object]{a @class{gtk-switch} widget}
+  @argument[is-active]{@em{true} if the switch should be active,
+    and @code{nil} otherwise}
+  @syntax[]{(gtk-switch-active object) => is-active)}
+  @syntax[]{(setf (gtk-switch-active object) is-active)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-switch]{active} of the @class{gtk-switch}
+    class.
+  @end{short}
+
+  The generic function @sym{gtk-switch-active} gets whether the
+  @class{gtk-switch} is in its \"on\" or \"off\" state.
+
+  The generic function @sym{(setf gtk-switch-active)} changes the state of
+  the switch to the desired one.
+
+  Since 3.0
+  @see-class{gtk-switch}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_switch_new ()
@@ -144,55 +130,14 @@
 
 (defun gtk-switch-new ()
  #+cl-cffi-gtk-documentation
- "@version{2013-4-27}
+ "@version{2014-4-19}
   @return{The newly created @class{gtk-switch} widget.}
   @short{Creates a new @class{gtk-switch} widget.}
 
-  Since 3.0"
+  Since 3.0
+  @see-class{gtk-switch}"
   (make-instance 'gtk-switch))
 
 (export 'gtk-switch-new)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_switch_set_active ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-switch-set-active))
-
-(defun gtk-switch-set-active (switch is-active)
- #+cl-cffi-gtk-documentation
- "@version{2013-4-27}
-  @argument[switch]{a @class{gtk-switch} widget}
-  @argument[is-active]{@em{true} if @arg{switch} should be active,
-    and @code{nil} otherwise}
-  @begin{short}
-    Changes the state of @arg{switch} to the desired one.
-  @end{short}
-
-  Since 3.0"
-  (setf (gtk-switch-active switch) is-active))
-
-(export 'gtk-switch-set-active)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_switch_get_active ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-switch-get-active))
-
-(defun gtk-switch-get-active (switch)
- "@version{2013-4-27}
-  @argument[switch]{a @class{gtk-switch} widget}
-  @begin{return}
-    @em{True} if the @class{gtk-switch} is active, and @code{nil} otherwise.
-  @end{return}
-  @begin{short}
-    Gets whether the @class{gtk-switch} is in its \"on\" or \"off\" state.
-  @end{short}
-
-  Since 3.0"
-  (gtk-switch-active switch))
-
-(export 'gtk-switch-get-active)
 
 ;;; --- End of file gtk.switch.lisp --------------------------------------------

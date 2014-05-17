@@ -2,11 +2,11 @@
 ;;; gtk.application.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.8.9 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2013 Dieter Kaiser
+;;; Copyright (C) 2013, 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -108,12 +108,12 @@
   with @class{gtk-application-window} and to the 'activate' and 'open'
   @class{g-application} methods.
 
-  To set an application menu for a @sym{gtk-application}, use the function
-  @fun{gtk-application-set-app-menu}. The @class{g-menu-model} that this
+  To set an application menu for a @sym{gtk-application}, use the generic
+  function @fun{gtk-application-app-menu}. The @class{g-menu-model} that this
   function expects is usually constructed using @class{gtk-builder}, as seen in
   the following example. To specify a menubar that will be shown by
-  @class{gtk-application-window}'s, use the function
-  @fun{gtk-application-set-menubar}. Use the base @class{g-action-map} interface
+  @class{gtk-application-window} widgets, use the generic function
+  @fun{gtk-application-menubar}. Use the base @class{g-action-map} interface
   to add actions, to respond to the user selecting these menu items.
 
   GTK+ displays these menus as expected, depending on the platform the
@@ -397,13 +397,11 @@
     ;; Read the menus from a string
     (gtk-builder-add-from-string builder *menu*)
     ;; Set the application menu
-    (gtk-application-set-app-menu application
-                                  (gtk-builder-get-object builder
-                                                          \"app-menu\"))
+    (setf (gtk-application-app-menu application)
+          (gtk-builder-get-object builder \"app-menu\"))
     ;; Set the menubar
-    (gtk-application-set-menubar application
-                                 (gtk-builder-get-object builder
-                                                         \"menubar\"))))
+    (setf (gtk-application-menubar application)
+          (gtk-builder-get-object builder \"menubar\"))))
 
 (defun bloat-pad-open (application)
   (declare (ignore application))
@@ -485,9 +483,11 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Property Details
+;;; Property and Accessor Details
 ;;;
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-application-active-window ------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "active-window"
@@ -496,10 +496,64 @@
   The window which most recently had focus.")
 
 #+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-application-active-window atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-application-active-window 'function)
+ "@version{2014-4-20}
+  Accessor of the slot @slot[gtk-application]{active-window} of the
+  @class{gtk-application} class.
+  @see-class{gtk-application}
+  @see-function{gtk-application-get-active-window}")
+
+;;; --- gtk-application-app-menu -----------------------------------------------
+
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "app-menu" 'gtk-application) 't)
  "The @code{\"app-menu\"} property of type @class{g-menu-model}
   (Read / Write) @br{}
   The @class{g-menu-model} for the application menu.")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-application-app-menu atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-application-app-menu 'function)
+ "@version{2014-4-20}
+  @argument[object]{a @class{gtk-application} object}
+  @argument[app-menu]{a @class{g-menu-model}, or @code{nil}}
+  @syntax[]{(gtk-application-app-menu object) => app-menu}
+  @syntax[]{(setf (gtk-application-app-menu object) app-menu)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-application]{app-menu} of the
+    @class{gtk-application} class.
+  @end{short}
+
+  The generic function @sym{gtk-application-app-menu} returns the menu model
+  that has been set with the generic function
+  @sym{(setf gtk-application-app-menu)}.
+
+  The generic function @sym{(setf gtk-application-app-menu)} sets or unsets the
+  application menu for the application.
+
+  This can only be done in the primary instance of the application, after it
+  has been registered. \"startup\" is a good place to call this.
+
+  The application menu is a single menu containing items that typically impact
+  the application as a whole, rather than acting on a specific window or
+  document. For example, you would expect to see \"Preferences\" or \"Quit\" in
+  an application menu, but not \"Save\" or \"Print\".
+
+  If supported, the application menu will be rendered by the desktop
+  environment.
+
+  Use the base @class{g-action-map} interface to add actions, to respond to the
+  user selecting these menu items.
+
+  Since 3.4
+  @see-class{gtk-application}
+  @see-class{g-menu-model}
+  @see-class{g-action-map}")
+
+;;; --- gtk-application-menubar ------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "menubar" 'gtk-application) 't)
@@ -508,58 +562,64 @@
   The @class{g-menu-model} for the menubar.")
 
 #+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "register-session"
-                                               'gtk-application) 't)
- "The @code{\"register-session\"} property of type @code{:boolean}
-  (Read / Write)@br{}
-  Set this property to @em{true} to register with the session manager. @br{}
-  Default value: @code{nil} @br{}
-  Since 3.4")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-application-active-window atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-application-active-window 'function)
- "@version{2013-8-8}
-  Accessor of the slot @code{\"active-window\"} of the @class{gtk-application}
-  class.
-  @see-class{gtk-application}
-  @see-function{gtk-application-get-active-window}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-application-app-menu atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-application-app-menu 'function)
- "@version{2013-8-8}
-  Accessor of the slot @code{\"app-menu\"} of the @class{gtk-application}
-  class.
-  @see-class{gtk-application}
-  @see-function{gtk-application-get-app-menu}
-  @see-function{gtk-application-set-app-menu}")
-
-#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-application-menubar atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-application-menubar 'function)
- "@version{2013-8-8}
-  Accessor of the slot @code{\"menubar\"} of the @class{gtk-application}
-  class.
+ "@version{2014-4-20}
+  @argument[object]{a @class{gtk-application} object}
+  @argument[menubar]{a @class{g-menu-model}, or @code{nil}}
+  @syntax[]{(gtk-application-menubar object) => menubar}
+  @syntax[]{(setf (gtk-application-menubar object) menubar)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-application]{menubar} of the
+    @class{gtk-application} class.
+  @end{short}
+
+  The generic function @sym{gtk-application-menubar} returns the menu model that
+  has been set with the generic function
+  @sym{(setf gtk-application-menubar)}.
+
+  The generic function @sym{(setf gtk-application-menubar)} sets or unsets the
+  menubar for windows of the application.
+
+  This is a menubar in the traditional sense.
+
+  This can only be done in the primary instance of the application, after it
+  has been registered. \"startup\" is a good place to call this.
+
+  Depending on the desktop environment, this may appear at the top of each
+  window, or at the top of the screen. In some environments, if both the
+  application menu and the menubar are set, the application menu will be
+  presented as if it were the first item of the menubar. Other environments
+  treat the two as completely separate - for example, the application menu
+  may be rendered by the desktop shell while the menubar, if set, remains in
+  each individual window.
+
+  Use the base @class{g-action-map} interface to add actions, to respond to the
+  user selecting these menu items.
+
+  Since 3.4
   @see-class{gtk-application}
-  @see-function{gtk-application-get-menubar}
-  @see-function{gtk-application-set-menubar}")
+  @see-class{g-menu-model}
+  @see-class{g-action-map}")
+
+;;; --- gtk-application-register-session ---------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "register-session"
+                                               'gtk-application) 't)
+ "The @code{\"register-session\"} property of type @code{:boolean}
+  (Read / Write) @br{}
+  Set this property to @em{true} to register with the session manager. @br{}
+  Default value: @code{nil} @br{}
+  Since 3.4")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-application-register-session atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-application-register-session 'function)
- "@version{2013-8-8}
-  Accessor of the slot @code{\"register-session\"} of the
+ "@version{2014-4-20}
+  Accessor of the slot @slot[gtk-application]{register-session} of the
   @class{gtk-application} class.
   @see-class{gtk-application}")
 
@@ -886,130 +946,6 @@
 (export 'gtk-application-is-inhibited)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_application_get_app_menu ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-application-get-app-menu))
-
-(defun gtk-application-get-app-menu (application)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-8}
-  @argument[application]{a @class{gtk-application} object}
-  @return{The application menu of @arg{application}.}
-  @begin{short}
-    Returns the menu model that has been set with the function
-    @fun{gtk-application-set-app-menu}.
-  @end{short}
-
-  Since 3.4
-  @see-class{gtk-application}
-  @see-function{gtk-application-set-app-menu}"
-  (gtk-application-app-menu application))
-
-(export 'gtk-application-get-app-menu)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_application_set_app_menu ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-application-set-app-menu))
-
-(defun gtk-application-set-app-menu (application app-menu)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-8}
-  @argument[application]{a @class{gtk-application} object}
-  @argument[app-menu]{a @class{g-menu-model}, or @code{nil}}
-  @begin{short}
-    Sets or unsets the application menu for @arg{application}.
-  @end{short}
-
-  This can only be done in the primary instance of the application, after it
-  has been registered. \"startup\" is a good place to call this.
-
-  The application menu is a single menu containing items that typically impact
-  the application as a whole, rather than acting on a specific window or
-  document. For example, you would expect to see \"Preferences\" or \"Quit\" in
-  an application menu, but not \"Save\" or \"Print\".
-
-  If supported, the application menu will be rendered by the desktop
-  environment.
-
-  Use the base @class{g-action-map} interface to add actions, to respond to the
-  user selecting these menu items.
-
-  Since 3.4
-  @see-class{gtk-application}
-  @see-class{g-menu-model}
-  @see-class{g-action-map}
-  @see-function{gtk-application-get-app-menu}"
-  (setf (gtk-application-app-menu application) app-menu))
-
-(export 'gtk-application-set-app-menu)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_application_get_menubar ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-application-get-menubar))
-
-(defun gtk-application-get-menubar (application)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-8}
-  @argument[application]{a @class{gtk-application} object}
-  @return{The menubar for windows of @arg{application}.}
-  @begin{short}
-    Returns the menu model that has been set with the function
-    @fun{gtk-application-set-menubar}.
-  @end{short}
-
-  Since 3.4
-  @see-class{gtk-application}
-  @see-function{gtk-application-set-menubar}"
-  (gtk-application-menubar application))
-
-(export 'gtk-application-get-menubar)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_application_set_menubar ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-application-set-menubar))
-
-(defun gtk-application-set-menubar (application menubar)
- #+cl-cffi-gtk-documentation
- "@version{2014-1-16}
-  @argument[application]{a @class{gtk-application} object}
-  @argument[menubar]{a @class{g-menu-model}, or @code{nil}}
-  @begin{short}
-    Sets or unsets the menubar for windows of @arg{application}.
-  @end{short}
-
-  This is a menubar in the traditional sense.
-
-  This can only be done in the primary instance of the application, after it
-  has been registered. \"startup\" is a good place to call this.
-
-  Depending on the desktop environment, this may appear at the top of each
-  window, or at the top of the screen. In some environments, if both the
-  application menu and the menubar are set, the application menu will be
-  presented as if it were the first item of the menubar. Other environments
-  treat the two as completely separate - for example, the application menu
-  may be rendered by the desktop shell while the menubar, if set, remains in
-  each individual window.
-
-  Use the base @class{g-action-map} interface to add actions, to respond to the
-  user selecting these menu items.
-
-  Since 3.4
-  @see-class{gtk-application}
-  @see-class{g-menu-model}
-  @see-class{g-action-map}
-  @see-function{gtk-application-get-menubar}"
-  (setf (gtk-application-menubar application) menubar))
-
-(export 'gtk-application-set-menubar)
-
-;;; ----------------------------------------------------------------------------
 ;;; gtk_application_add_accelerator ()
 ;;; ----------------------------------------------------------------------------
 
@@ -1036,15 +972,15 @@
 
   @class{gtk-application} also extracts accelerators out of 'accel' attributes
   in the @class{g-menu-model}s passed to the functions
-  @fun{gtk-application-set-app-menu} and @fun{gtk-application-set-menubar},
+  @fun{gtk-application-app-menu} and @fun{gtk-application-menubar},
   which is usually more convenient than calling this function for each
   accelerator.
 
   Since 3.4
   @see-class{gtk-application}
   @see-function{gtk-accelerator-parse}
-  @see-function{gtk-application-set-app-menu}
-  @see-function{gtk-application-set-menubar}
+  @see-function{gtk-application-app-menu}
+  @see-function{gtk-application-menubar}
   @see-function{gtk-application-remove-accelerator}"
   (application (g-object gtk-application))
   (accelerator :string)

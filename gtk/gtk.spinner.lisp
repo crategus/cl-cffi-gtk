@@ -1,11 +1,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.spinner.lisp
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.8.9 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012, 2013 Dieter Kaiser
+;;; Copyright (C) 2012, 2013, 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -41,11 +42,9 @@
     gtk-spinner-active
     "active" "gboolean" t t)))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-spinner 'type)
- "@version{2013-4-24}
+ "@version{2014-4-12}
   @begin{short}
     A @sym{gtk-spinner} widget displays an icon size spinning animation. It is
     often used as an alternative to a @class{gtk-progress-bar} widget for
@@ -54,10 +53,12 @@
 
   To start the animation, use the function @fun{gtk-spinner-start}, to stop it
   use the function @fun{gtk-spinner-stop}.
-  @see-slot{gtk-spinner-active}")
+  @see-slot{gtk-spinner-active}
+  @see-class{gtk-cell-renderer-spinner}
+  @see-class{gtk-progress-bar}")
 
 ;;; ----------------------------------------------------------------------------
-;;; Property Details
+;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
@@ -66,17 +67,12 @@
   Whether the spinner is active.@br{}
   Default value: @code{nil}")
 
-;;; ----------------------------------------------------------------------------
-;;; Accessors of Properties
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-spinner-active atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-spinner-active 'function)
- "@version{2013-2-4}
-  @begin{short}
-    Accessor of the slot \"active\" of the @class{gtk-spinner} class.
-  @end{short}")
+ "@version{2014-4-12}
+  Accessor of the slot @slot[gtk-spinner]{active} of the @class{gtk-spinner}
+  class.")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk-spinner-new

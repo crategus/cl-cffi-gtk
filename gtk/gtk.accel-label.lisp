@@ -79,12 +79,12 @@
   The accelerator key to display is not set explicitly. Instead, the
   @sym{gtk-accel-label} displays the accelerators which have been added to a
   particular widget. This widget is set by calling the function
-  @fun{gtk-accel-label-set-accel-widget}.
+  @fun{gtk-accel-label-accel-widget}.
 
   For example, a @class{gtk-menu-item} widget may have an accelerator added to
   emit the \"activate\" signal when the \"Ctl+S\" key combination is pressed. A
   @sym{gtk-accel-label} is created and added to the @class{gtk-menu-item}, and
-  the function @fun{gtk-accel-label-set-accel-widget} is called with the
+  the function @fun{gtk-accel-label-accel-widget} is called with the
   @class{gtk-menu-item} as the second argument. The @sym{gtk-accel-label} will
   now display \"Ctl+S\" after its label.
 
@@ -92,7 +92,7 @@
   @fun{gtk-menu-item-new-with-label} (or one of the similar functions for
   @class{gtk-check-menu-item} and @class{gtk-radio-menu-item}) automatically
   adds a @sym{gtk-accel-label} to the @class{gtk-menu-item} and calls the
-  function @fun{gtk-accel-label-set-accel-widget} to set it up for you.
+  function @fun{gtk-accel-label-accel-widget} to set it up for you.
 
   A @sym{gtk-accel-label} will only display accelerators which have
   @code{:visible} set, see @symbol{gtk-accel-flags}. A @sym{gtk-accel-label} can

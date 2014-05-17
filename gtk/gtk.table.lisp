@@ -682,8 +682,8 @@
 
   @subheading{Warning}
     @sym{gtk-table-set-col-spacings} has been deprecated since version 3.4 and
-    should not be used in newly-written code. Use
-    @fun{gtk-grid-set-column-spacing} with @class{gtk-grid}."
+    should not be used in newly-written code. Use the function
+    @fun{gtk-grid-column-spacing} with @class{gtk-grid}."
   (setf (gtk-table-column-spacing table) spacing))
 
 (export 'gtk-table-set-col-spacings)

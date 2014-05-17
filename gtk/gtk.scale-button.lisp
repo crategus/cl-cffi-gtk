@@ -4,12 +4,13 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.8.9 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -46,17 +47,6 @@
 ;;;     gtk_scale_button_get_popup
 ;;;     gtk_scale_button_get_plus_button
 ;;;     gtk_scale_button_get_minus_button
-;;;
-;;; Object Hierarchy
-;;;
-;;;   GObject
-;;;    +----GInitiallyUnowned
-;;;          +----GtkWidget
-;;;                +----GtkContainer
-;;;                      +----GtkBin
-;;;                            +----GtkButton
-;;;                                  +----GtkScaleButton
-;;;                                        +----GtkVolumeButton
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -87,16 +77,14 @@
     gtk-scale-button-value
     "value" "gdouble" t t)))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-scale-button 'type)
  "@version{2013-4-12}
   @begin{short}
     @sym{gtk-scale-button} provides a button which pops up a scale widget. This
     kind of widget is commonly used for volume controls in multimedia
-    applications, and GTK+ provides a @class{gtk-volume-button} subclass that is
-    tailored for this use case.
+    applications, and GTK+ provides a @class{gtk-volume-button} subclass that
+    is tailored for this use case.
   @end{short}
   @begin[Signal Details]{dictionary}
     @subheading{The \"popdown\" signal}
@@ -141,23 +129,50 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Property Details
+;;; Property and Accessor Details
 ;;;
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-scale-button-adjustment --------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "adjustment"
                                                'gtk-scale-button) 't)
  "The @code{\"adjustment\"} property of type @class{gtk-adjustment}
-  (Read / Write)@br{}
+  (Read / Write) @br{}
   The @class{gtk-adjustment} object that contains the current value of this
   scale button object.")
 
-;;; ----------------------------------------------------------------------------
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-scale-button-adjustment atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-scale-button-adjustment 'function)
+ "@version{2014-4-19}
+  @argument[object]{a @class{gtk-scale-button} widget}
+  @argument[adjustment]{a @class{gtk-adjustment} object}
+  @syntax[]{(gtk-scale-button-adjustment object object) => adjustment}
+  @syntax[]{(setf (gtk-scale-button-adjustment object) adjustment)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-scale-button]{adjustment} of the
+    @class{gtk-scale-button} class.
+  @end{short}
+
+  The generic function @sym{gtk-scale-button-adjustment} gets the
+  @class{gtk-adjustment} object associated with the @class{gtk-scale-button}'s
+  scale.
+
+  The generic function @sym{(setf gtk-scale-button-adjustment)} sets the
+  @class{gtk-adjustment} object to be used as a model for the 
+  @class{gtk-scale-button}'s scale.
+
+  Since 2.12
+  @see-class{gtk-scale-button}")
+
+;;; --- gtk-scale-button-icons -------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "icons" 'gtk-scale-button) 't)
- "The @code{\"icons\"} property of type @type{g-strv} (Read / Write)@br{}
+ "The @code{\"icons\"} property of type @type{g-strv} (Read / Write) @br{}
   The names of the icons to be used by the scale button. The first item in
   the list will be used in the button when the current value is the lowest
   value, the second item for the highest value. All the subsequent icons will
@@ -170,66 +185,75 @@
   reflects the current value of the scale better for the users. @br{}
   Since 2.12")
 
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "size" 'gtk-scale-button) 't)
- "The @code{\"size\"} property of type @symbol{gtk-icon-size}
-  (Read / Write)@br{}
-  The icon size. @br{}
-  Default value: @code{:small-toolbar}")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "value" 'gtk-scale-button) 't)
- "The @code{\"value\"} property of type @code{:double} (Read / Write)@br{}
-  The value of the scale. @br{}
-  Default value: 0")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-scale-button-adjustment atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-scale-button-adjustment 'function)
- "@version{2013-3-21}
-  Accessor of the slot @code{\"adjustment\"} of the @class{gtk-scale-button}
-  class.")
-
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-scale-button-icons atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-scale-button-icons 'function)
- "@version{2013-3-21}
-  Accessor of the slot @code{\"icons\"} of the @class{gtk-scale-button}
-  class.")
+ "@version{2014-4-19}
+  @argument[object]{a @class{gtk-scale-button} widget}
+  @argument[icons]{a list of icon names}
+  @begin{short}
+    Accessor of the slot @slot[gtk-scale-button]{icons} of the
+    @class{gtk-scale-button} class.
+  @end{short}
 
-;;; ----------------------------------------------------------------------------
+  The generic function @sym{(setf gtk-scale-button-icons} sets the icons to be
+  used by the scale button. For details, see the @slot[gtk-scale-button]{icons}
+  property.
+
+  Since 2.12
+  @see-class{gtk-scale-button}")
+
+;;; --- gtk-scale-button-size --------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "size" 'gtk-scale-button) 't)
+ "The @code{\"size\"} property of type @symbol{gtk-icon-size}
+  (Read / Write) @br{}
+  The icon size. @br{}
+  Default value: @code{:small-toolbar}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-scale-button-size atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-scale-button-size 'function)
- "@version{2013-3-21}
-  Accessor of the slot @code{\"size\"} of the @class{gtk-scale-button}
-  class.")
+ "@version{2014-4-19}
+  Accessor of the slot @slot[gtk-scale-button]{size} of the
+  @class{gtk-scale-button} class.
+  @see-class{gtk-scale-button}")
 
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-scale-button-value -------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "value" 'gtk-scale-button) 't)
+ "The @code{\"value\"} property of type @code{:double} (Read / Write) @br{}
+  The value of the scale. @br{}
+  Default value: 0")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-scale-button-value atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-scale-button-value 'function)
- "@version{2013-3-21}
-  Accessor of the slot @code{\"value\"} of the @class{gtk-scale-button}
-  class.")
+ "@version{2014-4-19}
+  @argument[object]{a @class{gtk-scale-button} widget}
+  @argument[value]{new value of the scale button}
+  @syntax[]{(gtk-scale-button-value object) => value}
+  @syntax[]{(setf (gtk-scale-button-value object) value)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-scale-button]{value} of the
+    @class{gtk-scale-button} class.
+  @end{short}
+
+  The generic function @sym{gtk-scale-button-value} gets the current value of
+  the scale button.
+
+  The generic function @sym{(setf gtk-scale-button-value)} sets the current
+  value of the scale; if the value is outside the minimum or maximum range
+  values, it will be clamped to fit inside them. The scale button emits the
+  \"value-changed\" signal if the value changes.
+
+  Since 2.12
+  @see-class{gtk-scale-button}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_scale_button_new ()
@@ -264,113 +288,6 @@
                                             :step-increment step)))
 
 (export 'gtk-scale-button-new)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_scale_button_set_adjustment ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-scale-button-set-adjustment))
-
-(defun gtk-scale-button-set-adjustment (button adjustment)
- #+cl-cffi-gtk-documentation
- "@version{2013-4-12}
-  @argument[button]{a @class{gtk-scale-button} widget}
-  @argument[adjustment]{a @class{gtk-adjustment} object}
-  @begin{short}
-    Sets the @class{gtk-adjustment} object to be used as a model for the
-    @class{gtk-scale-button}'s scale.
-    See the function @fun{gtk-range-set-adjustment} for details.
-  @end{short}
-
-  Since 2.12
-  @see-function{gtk-range-set-adjustment}"
-  (setf (gtk-scale-button-adjustment button) adjustment))
-
-(export 'gtk-scale-button-set-adjustment)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_scale_button_set_icons ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-scale-button-set-icons))
-
-(defun gtk-scale-button-set-icons (button icons)
- #+cl-cffi-gtk-documentation
- "@version{2013-4-12}
-  @argument[button]{a @class{gtk-scale-button} widget}
-  @argument[icons]{a list of icon names}
-  @begin{short}
-    Sets the icons to be used by the scale button. For details, see the
-    \"icons\" property.
-  @end{short}
-
-  Since 2.12"
-  (setf (gtk-scale-button-icons button) icons))
-
-(export 'gtk-scale-button-set-icons)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_scale_button_set_value ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-scale-button-set-value))
-
-(defun gtk-scale-button-set-value (button value)
- #+cl-cffi-gtk-documentation
- "@version{2013-4-12}
-  @argument[button]{a @class{gtk-scale-button} widget}
-  @argument[value]{new value of the scale button}
-  @begin{short}
-    Sets the current @arg{value} of the scale; if the @arg{value} is outside the
-    minimum or maximum range values, it will be clamped to fit inside them. The
-    scale button emits the \"value-changed\" signal if the value changes.
-  @end{short}
-
-  Since 2.12"
-  (setf (gtk-scale-button-value button) value))
-
-(export 'gtk-scale-button-set-value)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_scale_button_get_adjustment ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-scale-button-get-adjustment))
-
-(defun gtk-scale-button-get-adjustment (button)
- #+cl-cffi-gtk-documentation
- "@version{2013-4-12}
-  @argument[button]{a @class{gtk-scale-button} widget}
-  @return{The adjustment associated with the scale.}
-  @begin{short}
-    Gets the @class{gtk-adjustment} object associated with the
-    @class{gtk-scale-button}'s scale.
-    See the function @fun{gtk-range-get-adjustment} for details.
-  @end{short}
-
-  Since 2.12
-  @see-function{gtk-range-get-adjustment}"
-  (gtk-scale-button-adjustment button))
-
-(export 'gtk-scale-button-get-adjustment)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_scale_button_get_value ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-scale-button-get-value))
-
-(defun gtk-scale-button-get-value (button)
- #+cl-cffi-gtk-documentation
- "@version{2013-4-12}
-  @argument[button]{a @class{gtk-scale-button} widget}
-  @return{Current value of the scale button.}
-  @short{Gets the current value of the scale button.}
-
-  Since 2.12"
-  (gtk-scale-button-value button))
-
-(export 'gtk-scale-button-get-value)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_scale_button_get_popup ()

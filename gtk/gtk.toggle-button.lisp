@@ -5,12 +5,12 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.8.9 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -28,6 +28,22 @@
 ;;; License along with this program and the preamble to the Gnu Lesser
 ;;; General Public License.  If not, see <http://www.gnu.org/licenses/>
 ;;; and <http://opensource.franz.com/preamble.html>.
+;;; ----------------------------------------------------------------------------
+;;;
+;;; GtkToggleButton
+;;;
+;;; Create buttons which retain their state
+;;;
+;;; Synopsis
+;;;
+;;;     GtkToggleButton
+;;;
+;;;     gtk_toggle_button_new
+;;;     gtk_toggle_button_new_with_label
+;;;     gtk_toggle_button_new_with_mnemonic
+;;;     gtk_toggle_button_set_mode
+;;;     gtk_toggle_button_get_mode
+;;;     gtk_toggle_button_toggled
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -70,8 +86,8 @@
   See @class{gtk-button} for more information.
 
   The state of a @sym{gtk-toggle-button} can be set specifically using the
-  function @fun{gtk-toggle-button-set-active}, and retrieved using the function
-  @fun{gtk-toggle-button-get-active}.
+  generic function @fun{gtk-toggle-button-active}, and retrieved using the
+  generic function @fun{gtk-toggle-button-active}.
 
   To simply switch the state of a toggle button, use the function
   @fun{gtk-toggle-button-toggled}.
@@ -124,60 +140,96 @@
 ;;;
 ;;; ----------------------------------------------------------------------------
 
+;;; --- gtk-toggle-button-active -----------------------------------------------
+
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "active" 'gtk-toggle-button) 't)
-"The @code{\"active\"} property of type @code{:boolean} (Read / Write)@br{}
-  If the toggle button should be pressed in.@br{}
+"The @code{\"active\"} property of type @code{:boolean} (Read / Write) @br{}
+  If the toggle button should be pressed in. @br{}
   Default value: @code{nil}")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "draw-indicator"
-                                               'gtk-toggle-button) 't)
- "The @code{\"draw-indicator\"} property of type @code{:boolean}
-  (Read / Write)@br{}
-  If the toggle part of the button is displayed.@br{}
-  Default value: @code{nil}")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "inconsistent"
-                                               'gtk-toggle-button) 't)
- "The ´@code{\"inconsistent\"} property of type @code{:boolean}
-  (Read / Write)@br{}
-  If the toggle button is in an \"in between\" state.@br{}
-  Default value: @code{nil}")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors
-;;;
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-toggle-button-active atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-toggle-button-active 'function)
- "@version{2013-4-27}
-  Accessor of the slot \"active\" of the @class{gtk-toggle-button} class.")
+ "@version{2014-4-14}
+  @argument[object]{a @class{gtk-toggle-button} widget}
+  @argument[is-active]{@em{true} or @code{nil}}
+  @syntax[]{(gtk-toggle-button-active object) => is-active}
+  @syntax[]{(setf (gtk-toggle-button-active object) is-active)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-toggle-button]{active} of the
+    @class{gtk-toggle-button} class.
+  @end{short}
+
+  The generic function @sym{gtk-toggle-button-active} queries a
+  @class{gtk-toggle-button} widget and returns its current state.
+
+  Returns @em{true} if the toggle button is pressed in and @code{nil} if it is
+  raised.
+
+  The generic function @sym{(setf gtk-toggle-button-active)} sets the status of
+  the toggle button.
+
+  Set to @em{true} if you want the @class{gtk-toggle-button} to be 'pressed in',
+  and @code{nil} to raise it. This action causes the toggled signal to be
+  emitted.
+  @see-class{gtk-toggle-button}")
+
+;;; --- gtk-toggle-button-draw-indicator ---------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "draw-indicator"
+                                               'gtk-toggle-button) 't)
+ "The @code{\"draw-indicator\"} property of type @code{:boolean}
+  (Read / Write) @br{}
+  If the toggle part of the button is displayed. @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-toggle-button-draw-indicator atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-toggle-button-draw-indicator 'function)
- "@version{2013-4-27}
-  Accessor of the slot \"draw-indicator\" of the @class{gtk-toggle-button}
-  class.")
+ "@version{2014-4-14}
+  Accessor of the slot @slot[gtk-toggle-button]{draw-indicator} of the
+  @class{gtk-toggle-button} class.")
+
+;;; --- gtk-toggle-button-inconsistent -----------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "inconsistent"
+                                               'gtk-toggle-button) 't)
+ "The ´@code{\"inconsistent\"} property of type @code{:boolean}
+  (Read / Write) @br{}
+  If the toggle button is in an \"in between\" state. @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-toggle-button-inconsistent atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-toggle-button-inconsistent 'function)
- "@version{2013-4-27}
-  Accessor of the slot \"inconsistent\" of the @class{gtk-toggle-button}
-  class.")
+ "@version{2014-4-14}
+  @argument[object]{a @class{gtk-toggle-button} widget}
+  @argument[setting]{@em{true} if state is inconsistent}
+  @syntax[]{(gtk-toggle-button object) => setting}
+  @syntax[]{(setf (gtk-toggle-button object) setting)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-toggle-button]{inconsistent} of the
+    @class{gtk-toggle-button} class.
+  @end{short}
+
+  The generic function @sym{gtk-toggle-button-inconsistent}  gets the value set
+  by the generic function @sym{(setf gtk-toggle-button-inconsistent)}.
+
+  If the user has selected a range of elements, such as some text or
+  spreadsheet cells, that are affected by a toggle button, and the current
+  values in that range are inconsistent, you may want to display the toggle in
+  an \"in between\" state. This function turns on \"in between\" display.
+  Normally you would turn off the inconsistent state again if the user toggles
+  the toggle button. This has to be done manually, the generic function
+  @sym{(setf gtk-toggle-button-inconsistent)} only affects visual appearance,
+  it does not affect the semantics of the button.
+  @see-class{gtk-toggle-button}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk-toggle-button-new
@@ -295,91 +347,5 @@
   (toggle-button (g-object gtk-toggle-button)))
 
 (export 'gtk-toggle-button-toggled)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_toggle_button_get_active ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-toggle-button-get-active))
-
-(defun gtk-toggle-button-get-active (toggle-button)
- #+cl-cffi-gtk-documentation
- "@version{2013-10-2}
-  @argument[toggle-button]{a @class{gtk-toggle-button} widget}
-  @return{A boolean value.}
-  @begin{short}
-    Queries a @class{gtk-toggle-button} widget and returns its current state.
-  @end{short}
-  Returns @em{true} if the toggle button is pressed in and @code{nil} if it is
-  raised.
-  @see-class{gtk-toggle-button}
-  @see-function{gtk-toggle-button-set-active}"
-  (gtk-toggle-button-active toggle-button))
-
-(export 'gtk-toggle-button-get-active)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_toggle_button_set_active ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-toggle-button-set-active))
-
-(defun gtk-toggle-button-set-active (toggle-button is-active)
- #+cl-cffi-gtk-documentation
- "@version{2013-10-2}
-  @argument[toggle-button]{a @class{gtk-toggle-button} widget}
-  @argument[is-active]{@em{true} or @code{nil}}
-  @begin{short}
-    Sets the status of the toggle button.
-  @end{short}
-  Set to @em{true} if you want the @class{gtk-toggle-button} to be 'pressed in',
-  and @code{nil} to raise it. This action causes the toggled signal to be
-  emitted.
-  @see-class{gtk-toggle-button}
-  @see-function{gtk-toggle-button-get-active}"
-  (setf (gtk-toggle-button-active toggle-button) is-active))
-
-(export 'gtk-toggle-button-set-active)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_toggle_button_get_inconsistent ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-toggle-button-get-inconsistent))
-
-(defun gtk-toggle-button-get-inconsistent (toggle-button)
- #+cl-cffi-gtk-documentation
- "@version{2013-4-27}
-  @argument[toggle-button]{a @class{gtk-toggle-button} widget}
-  @return{@em{True} if the button is displayed as inconsistent, @code{nil}
-    otherwise.}
-  Gets the value set by the function @fun{gtk-toggle-button-set-inconsistent}.
-  @see-function{gtk-toggle-button-set-inconsistent}"
-  (gtk-toggle-button-inconsistent toggle-button))
-
-(export 'gtk-toggle-button-get-inconsistent)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_toggle_button_set_inconsistent ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-toggle-button-set-inconsistent))
-
-(defun gtk-toggle-button-set-inconsistent (toggle-button setting)
- #+cl-cffi-gtk-documentation
- "@version{2013-4-27}
-  @argument[toggle-button]{a @class{gtk-toggle-button} widget}
-  @argument[setting]{@em{true} if state is inconsistent}
-  If the user has selected a range of elements (such as some text or
-  spreadsheet cells) that are affected by a toggle button, and the current
-  values in that range are inconsistent, you may want to display the toggle in
-  an \"in between\" state. This function turns on \"in between\" display.
-  Normally you would turn off the inconsistent state again if the user toggles
-  the toggle button. This has to be done manually, the function
-  @sym{gtk-toggle-button-set-inconsistent} only affects visual appearance, it
-  does not affect the semantics of the button."
-  (setf (gtk-toggle-button-inconsistent toggle-button) setting))
-
-(export 'gtk-toggle-button-set-inconsistent)
 
 ;;; --- End of file gtk.toggle-button.lisp -------------------------------------

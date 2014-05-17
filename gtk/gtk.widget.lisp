@@ -4976,13 +4976,14 @@
   hierarchy, separated by periods. The name of a widget comes from
   @fun{gtk-widget-name}. Paths are used to apply styles to a widget in gtkrc
   configuration files. Widget names are the type of the widget by default (e. g.
-  \"GtkButton\") or can be set to an application-specific value with
-  @fun{gtk-widget-set-name}. By setting the name of a widget, you allow users or
-  theme authors to apply styles to that specific widget in their gtkrc file.
+  \"GtkButton\") or can be set to an application-specific value with the
+  generic function @fun{gtk-widget-name}. By setting the name of a widget, you
+  allow users or theme authors to apply styles to that specific widget in their
+  gtkrc file.
 
   With a value of @code{:class} for the argument @arg{path-type} always
-  uses the name of a widget's type, never uses a custom name set with
-  @fun{gtk-widget-set-name}.
+  uses the name of a widget's type, never uses a custom name set with the
+  generic function @fun{gtk-widget-name}.
   @see-class{gtk-widget}
   @see-function{gtk-widget-get-path}
   @see-function{gtk-widget-name}"
@@ -6911,10 +6912,10 @@
   @arg{custom-window} is @arg{nil}, the default tooltip window will be used.
 
   If the custom window should have the default theming it needs to have the
-  name \"gtk-tooltip\", see @fun{gtk-widget-set-name}.
+  name \"gtk-tooltip\", see the generic function @fun{gtk-widget-name}.
 
   Since 2.12
-  @see-function{gtk-widget-set-name}"
+  @see-function{gtk-widget-name}"
   (widget (g-object gtk-window))
   (custom-window (g-object gtk-window)))
 

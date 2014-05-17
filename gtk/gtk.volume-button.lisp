@@ -4,12 +4,13 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.8.9 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -38,17 +39,6 @@
 ;;;     GtkVolumeButton
 ;;;
 ;;;     gtk_volume_button_new
-;;;
-;;; Object Hierarchy
-;;;
-;;;   GObject
-;;;    +----GInitiallyUnowned
-;;;          +----GtkWidget
-;;;                +----GtkContainer
-;;;                      +----GtkBin
-;;;                            +----GtkButton
-;;;                                  +----GtkScaleButton
-;;;                                        +----GtkVolumeButton
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -70,8 +60,6 @@
     gtk-volume-button-use-symbolic
     "use-symbolic" "gboolean" t t)))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-volume-button 'type)
  "@version{2013-4-27}
@@ -84,7 +72,7 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Property Details
+;;; Property and Accessor Details
 ;;;
 ;;; ----------------------------------------------------------------------------
 
@@ -92,26 +80,21 @@
 (setf (documentation (atdoc:get-slot-from-name "use-symbolic"
                                                'gtk-volume-button) 't)
  "The @code{\"use-symbolic\"} property of type @code{:boolean}
-  (Read / Write)@br{}
+  (Read / Write) @br{}
   Whether to use symbolic icons as the icons. Note that if the symbolic icons
   are not available in your installed theme, then the normal (potentially
   colorful) icons will be used. @br{}
-  Default value: @code{nil}@br{}
+  Default value: @code{nil} @br{}
   Since 3.0")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-volume-button-use-symbolic atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-volume-button-use-symbolic 'function)
- "@version{2013-4-27}
-  Accessor of the slot @code{\"use-symbolic\"} of the @class{gtk-volume-button}
-  class.")
+ "@version{2014-4-19}
+  Accessor of the slot @slot[gtk-volume-button]{use-symbolic} of the
+  @class{gtk-volume-button} class.
+  @see-class{gtk-volume-button}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_volume_button_new ()
@@ -121,7 +104,7 @@
 
 (defun gtk-volume-button-new ()
  #+cl-cffi-gtk-documentation
- "@version{2013-4-27}
+ "@version{2014-4-19}
   @return{A new @class{gtk-volume-button} widget.}
   @begin{short}
     Creates a @class{gtk-volume-button}, with a range between 0.0 and 1.0, with
@@ -129,7 +112,9 @@
     functions from @class{gtk-scale-button}.
   @end{short}
 
-  Since 2.12"
+  Since 2.12
+  @see-class{gtk-volume-button}
+  @see-class{gtk-scale-button}"
   (make-instance 'gtk-volume-button))
 
 (export 'gtk-volume-button-new)

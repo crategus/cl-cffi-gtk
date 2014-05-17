@@ -158,7 +158,7 @@
     @subheading{The \"position\" child property}
       @code{\"position\"} of type @code{:int} (Read / Write) @br{}
       The index of the child in the parent. @br{}
-      Allowed values: >= @code{G_MAXULONG}@br{}
+      Allowed values: <= @code{G_MAXULONG} @br{}
       Default value: 0
   @end{dictionary}
   @see-slot{gtk-box-homogeneous}

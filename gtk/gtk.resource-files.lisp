@@ -154,8 +154,8 @@
     class path and the class hierarchy. Both the widget path and the class
     path consist of a \".\" separated list of all the parents of the widget
     and the widget itself from outermost to innermost. The difference is
-    that in the widget path, the name assigned by the function
-    @fun{gtk-widget-set-name} is used if present, otherwise the class name of
+    that in the widget path, the name assigned by the generic function
+    @fun{gtk-widget-name} is used if present, otherwise the class name of
     the widget, while for the class path, the class name is always used.
 
     Since GTK+ 2.10, widget_class paths can also contain @code{<classname>}

@@ -848,7 +848,7 @@
              (let ((button-box (gtk-dialog-get-action-area widget)))
                (dolist (button (gtk-container-get-children button-box))
                  (when (g-type-check-instance-type button "GtkToggleButton")
-                   (gtk-toggle-button-set-active button nil))))
+                   (setf (gtk-toggle-button-active button) nil))))
                (gtk-widget-hide widget)))
         (if parent
             (progn

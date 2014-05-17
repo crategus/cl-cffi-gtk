@@ -130,8 +130,8 @@
       @code{\"action-area-border\"} of type @code{:int} (Read) @br{}
       Width of the border around the action area of the info bar. @br{}
       @code{\"action-area-border\"} has been deprecated since version 3.6 and
-      should not be used in newly-written code. Use the function
-      @fun{gtk-container-set-border-width}. @br{}
+      should not be used in newly-written code. Use the generic function
+      @fun{gtk-container-border-width}. @br{}
       Allowed values: >= 0 @br{}
       Default value: 5 @br{}
       Since 2.18
@@ -151,8 +151,8 @@
       The width of the border around the content content area of the info
       bar. @br{}
       @code{\"content-area-border\"} has been deprecated since version 3.6 and
-      should not be used in newly-written code. Use the function
-      @fun{gtk-container-set-border-width}. @br{}
+      should not be used in newly-written code. Use the generic function
+      @fun{gtk-container-border-width}. @br{}
       Allowed values: >= 0 @br{}
       Default value: 8 @br{}
       Since 2.18

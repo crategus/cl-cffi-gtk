@@ -4,12 +4,13 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.8.9 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -31,7 +32,7 @@
 ;;;
 ;;; GtkLinkButton
 ;;;
-;;; GtkLinkButton — Create buttons bound to a URL
+;;; Create buttons bound to a URL
 ;;;
 ;;; Synopsis
 ;;;
@@ -39,20 +40,6 @@
 ;;;
 ;;;     gtk_link_button_new
 ;;;     gtk_link_button_new_with_label
-;;;     gtk_link_button_get_uri
-;;;     gtk_link_button_set_uri
-;;;     gtk_link_button_get_visited
-;;;     gtk_link_button_set_visited
-;;;
-;;; Object Hierarchy
-;;;
-;;;  GObject
-;;;   +----GInitiallyUnowned
-;;;         +----GtkWidget
-;;;               +----GtkContainer
-;;;                     +----GtkBin
-;;;                           +----GtkButton
-;;;                                 +----GtkLinkButton
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -75,8 +62,6 @@
    (visited
     gtk-link-button-visited
     "visited" "gboolean" t t)))
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-link-button 'type)
@@ -119,48 +104,77 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Property Details
+;;; Property and Accessor Details
 ;;;
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-link-button-uri ----------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "uri" 'gtk-link-button) 't)
- "The @code{\"uri\"} property of type @code{:string} (Read / Write)@br{}
-  The URI bound to this button.@br{}
-  Default value: @code{nil}@br{}
+ "The @code{\"uri\"} property of type @code{:string} (Read / Write) @br{}
+  The URI bound to this button. @br{}
+  Default value: @code{nil} @br{}
   Since 2.10")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "visited" 'gtk-link-button) 't)
- "The @code{\"visited\"} property of type @code{:boolean} (Read / Write)@br{}
-  The \"visited\" state of this button. A visited link is drawn in a different
-  color.@br{}
-  Default value: @code{nil}@br{}
-  Since 2.14")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors
-;;;
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-link-button-uri atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-link-button-uri 'function)
- "@version{2013-2-4}
+ "@version{2014-4-14}
+  @argument[object]{a @class{gtk-link-button} widget}
+  @argument[uri]{A valid URI.}
+  @syntax[]{(gtk-link-button-uri object) => uri}
+  @syntax[]{(setf (gtk-link-button-uri object) uri)}
   @begin{short}
-    Accessor of the slot \"uri\" of the @class{gtk-link-button} class.
-  @end{short}")
+    Accessor of the slot @slot[gtk-link-button]{uri} of the
+    @class{gtk-link-button} class.
+  @end{short}
+
+  The generic function @sym{gtk-link-button-uri} retrieves the URI set using
+  the generic function @sym{(setf gtk-link-button-set-uri)}.
+
+  The generic function @sym{gtk-link-button-uri} sets @arg{uri} as the URI
+  where the @class{gtk-link-button} points.
+
+  As a side-effect this unsets the visited state of the button.
+
+  Since 2.10
+  @see-class{gtk-link-button}")
+
+;;; --- gtk-link-button-visited ------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "visited" 'gtk-link-button) 't)
+ "The @code{\"visited\"} property of type @code{:boolean} (Read / Write) @br{}
+  The @code{\"visited\"} state of this button. A visited link is drawn in a
+  different color. @br{}
+  Default value: @code{nil} @br{}
+  Since 2.14")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-link-button-visited atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-link-button-visited 'function)
- "@version{2013-2-4}
+ "@version{2014-4-14}
+  @argument[object]{a @class{gtk-link-button} widget}
+  @argument[visited]{the new \"visited\" state}
+  @syntax[]{(gtk-link-button-visited object) => visited}
+  @syntax[]{(setf (gtk-link-button-visited object) visited)}
   @begin{short}
-    Accessor of the slot \"visited\" of the @class{gtk-link-button} class.
-  @end{short}")
+    Accessor of the slot @slot[gtk-link-button]{visited} of the
+    @class{gtk-link-button} class.
+  @end{short}
+
+  The generic function @sym{gtk-link-button-visited} retrieves the \"visited\"
+  state of the URI where the @class{gtk-link-button} points.
+
+  The button becomes visited when it is clicked. If the URI is changed on the
+  button, the visited state is unset again.
+
+  The generic function @sym{(setf gtk-link-button-visited)} sets the \"visited\"
+  state of the URI where the @class{gtk-link-button} points.
+
+  Since 2.14
+  @see-class{gtk-link-button}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk-link-button-new
@@ -206,97 +220,5 @@
                  :label label))
 
 (export 'gtk-link-button-new-with-label)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk-link-button-get-uri
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-link-button-get-uri))
-
-(defun gtk-link-button-get-uri (link-button)
- #+cl-cffi-gtk-documentation
- "@version{2013-4-27}
-  @argument[link-button]{a @class{gtk-link-button} widget}
-  @return{A valid URI.}
-  @begin{short}
-    Retrieves the URI set using the function @fun{gtk-link-button-set-uri}.
-  @end{short}
-
-  Since 2.10"
-  (gtk-link-button-uri link-button))
-
-(export 'gtk-link-button-get-uri)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk-link-button-set-uri
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-link-button-set-uri))
-
-(defun gtk-link-button-set-uri (link-button uri)
- #+cl-cffi-gtk-documentation
- "@version{2013-2-4}
-  @argument[link-button]{a @class{gtk-link-button} widget}
-  @argument[uri]{A valid URI.}
-  @begin{short}
-    Sets uri as the URI where the @class{gtk-link-button} points.
-  @end{short}
-  As a side-effect this unsets the visited state of the button.
-
-  Since 2.10"
-  (setf (gtk-link-button-uri link-button) uri))
-
-(export 'gtk-link-button-set-uri)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk-link-button-get-visited
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-link-button-get-visited))
-
-(defun gtk-link-button-get-visited (link-button)
- #+cl-cffi-gtk-documentation
- "@version{2013-4-27}
-  @argument[link-button]{a @class{gtk-link-button} widget}
-  @return{@em{True} if the link has been visited, @code{nil} otherwise.}
-  @begin{short}
-    Retrieves the \"visited\" state of the URI where the @class{gtk-link-button}
-    points.
-  @end{short}
-  The button becomes visited when it is clicked. If the URI is changed on the
-  button, the visited state is unset again.
-
-  The state may also be changed using the function
-  @fun{gtk-link-button-set-visited}.
-
-  Since 2.14
-  @see-function{gtk-link-button-set-visited}"
-  (gtk-link-button-visited link-button))
-
-(export 'gtk-link-button-get-visited)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk-link-button-set-visited
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-link-button-set-visited))
-
-(defun gtk-link-button-set-visited (link-button visited)
- #+cl-cffi-gtk-documentation
- "@version{2013-4-27}
-  @argument[link-button]{a @class{gtk-link-button} widget}
-  @argument[visited]{the new \"visited\" state}
-  @begin{short}
-    Sets the \"visited\" state of the URI where the @class{gtk-link-button}
-    points.
-  @end{short}
-
-  See the function @fun{gtk-link-button-get-visited} for more details.
-
-  Since 2.14
-  @see-function{gtk-link-button-get-visited}"
-  (setf (gtk-link-button-visited link-button) visited))
-
-(export 'gtk-link-button-set-visited)
 
 ;;; --- End of file gtk.link-button.lisp ---------------------------------------

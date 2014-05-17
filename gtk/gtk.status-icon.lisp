@@ -367,7 +367,7 @@
 
   The storage type of the status icon must be the value @code{:empty} or
   @code{:gicon} of the @symbol{gtk-image-type} enumeration. See the function
-  @fun{gtk-status-icon-get-storage-type}. The caller of this function does not
+  @fun{gtk-status-icon-storage-type}. The caller of this function does not
   own a reference to the returned @class{g-icon}.
 
   If this function fails, icon is left unchanged.
@@ -376,7 +376,7 @@
   @see-class{gtk-status-icon}
   @see-class{g-icon}
   @see-symbol{gtk-image-type}
-  @see-function{gtk-status-icon-get-storage-type}")
+  @see-function{gtk-status-icon-storage-type}")
 
 ;;; --- gtk-status-icon-has-tooltip --------------------------------------------
 
@@ -447,13 +447,13 @@
 
   The storage type of the status icon must be the value @code{:empty} or
   @code{:icon-name} of the @symbol{gtk-image-type} enumeration. See the function
-  @fun{gtk-status-icon-get-storage-type}. The returned string is owned by the
+  @fun{gtk-status-icon-storage-type}. The returned string is owned by the
   @class{gtk-status-icon} and should not be freed or modified.
 
   Since 2.10
   @see-class{gtk-status-icon}
   @see-symbol{gtk-image-type}
-  @see-function{gtk-status-icon-get-storage-type}
+  @see-function{gtk-status-icon-storage-type}
   @see-class{gtk-status-icon}
   @see-function{gtk-status-icon-get-icon-name}")
 
@@ -500,14 +500,14 @@
   being displayed by the @class{gtk-status-icon}.
 
   The storage type of the status icon must be the value @code{:empty} or
-  @code{:pixbuf}. See the function @fun{gtk-status-icon-get-storage-type}. The
+  @code{:pixbuf}. See the function @fun{gtk-status-icon-storage-type}. The
   caller of this function does not own a reference to the returned pixbuf.
 
   Since 2.10
   @see-class{gtk-status-icon}
   @see-class{gdk-pixbuf}
   @see-symbol{gtk-image-type}
-  @see-function{gtk-status-icon-get-storage-type}")
+  @see-function{gtk-status-icon-storage-type}")
 
 ;;; --- gtk-status-icon-screen -------------------------------------------------
 
@@ -576,13 +576,39 @@
   @see-class{gtk-status-icon}
   @see-function{gtk-status-icon-is-embedded}")
 
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-status-icon-stock --------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "stock" 'gtk-status-icon) 't)
  "The @code{\"stock\"} property of type @code{:string} (Read / Write) @br{}
   Stock ID for a stock image to display. @br{}
   Default value: @code{nil}")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-status-icon-stock atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-status-icon-stock 'function)
+ "@version{2014-4-11}
+  @argument[status-icon]{a @class{gtk-status-icon} widget}
+  @begin{short}
+    Accessor of the slot @slot[gtk-status-icon]{stock} of the
+    @class{gtk-status-icon} class.
+  @end{short}
+
+  The generic function @sym{gtk-status-icon-stock} gets the ID of the stock
+  icon being displayed by the @class{gtk-status-icon}.
+
+  The storage type of the status icon must be the value @code{:empty} or
+  @code{:stock} of the @symbol{gtk-image-type} enumeration. See the function
+  @fun{gtk-status-icon-storage-type}. The returned string is owned by
+  the @class{gtk-status-icon} and should not be freed or modified.
+
+  Since 2.10
+  @see-class{gtk-status-icon}
+  @see-symbol{gtk-image-type}
+  @see-function{gtk-status-icon-storage-type}")
+
+;;; ---gtk-status-icon-storage-type --------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "storage-type"
@@ -593,6 +619,30 @@
   Default value: @code{:empty}")
 
 #+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-status-icon-storage-type atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-status-icon-storage-type 'function)
+ "@version{2014-4-11}
+  @argument[object]{a @class{gtk-status-icon} widget}
+  @begin{short}
+    Accessor of the slot @slot[gtk-status-icon]{storage-type} of the
+    @class{gtk-status-icon} class.
+  @end{short}
+
+  The generic function @sym{gtk-status-icon-storage-type} gets the type of
+  representation being used by the @class{gtk-status-icon} to store image data.
+
+  If the @class{gtk-status-icon} has no image data, the return value will be the
+  value @code{:empty} of the @symbol{gtk-image-type} enumeration.
+
+  Since 2.10
+  @see-class{gtk-status-icon}
+  @see-symbol{gtk-image-type}
+  @see-function{gtk-status-icon-storage-type}")
+
+;;; --- gtk-status-icon-title --------------------------------------------------
+
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "title" 'gtk-status-icon) 't)
  "The @code{\"title\"} property of type @code{:string} @code{Read / Write} @br{}
   The title of this tray icon. This should be a short, human-readable,
@@ -600,6 +650,34 @@
   screen readers to render the tray icon. @br{}
   Default value: @code{nil} @br{}
   Since 2.18")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-status-icon-title atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-status-icon-title 'function)
+ "@version{2014-4-11}
+  @argument[object]{a @class{gtk-status-icon} widget}
+  @argument[title]{the title}
+  @syntax[]{(gtk-status-icon-title object) => title}
+  @syntax[]{(setf (gtk-status-icon-title object) title)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-status-icon]{title} of the
+    @class{gtk-status-icon} class.
+  @end{short}
+
+  The generic function @sym{gtk-status-icon-title} gets the title of this tray
+  icon.
+
+  The generic function @sym{(setf gtk-status-icon object)} sets the title of
+  this tray icon.
+
+  This should be a short, human-readable, localized string describing the tray
+  icon. It may be used by tools like screen readers to render the tray icon.
+
+  Since 2.18
+  @see-class{gtk-status-icon}")
+
+;;; --- gtk-status-icon-tooltip-markup -----------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "tooltip-markup"
@@ -616,6 +694,41 @@
   On some platforms, embedded markup will be ignored. @br{}
   Default value: @code{nil} @br{}
   Since 2.16")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-status-icon-tooltip-markup atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-status-icon-tooltip-markup 'function)
+ "@version{2014-4-11}
+  @argument[object]{a @class{gtk-status-icon} widget}
+  @argument[markup]{the contents of the tooltip for the status icon,
+    or @code{nil}}
+  @syntax[]{(gtk-status-icon-tooltip-markup object) => markup}
+  @syntax[]{(setf (gtk-status-icon-tooltip-markup object) markup)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-status-icon]{tooltip-markup} of the
+    @class{gtk-status-icon} class.
+  @end{short}
+
+  The generic function @sym{gtk-status-icon} gets the contents of the tooltip
+  for @arg{status-icon}.
+
+  The generic function @sym{(setf gtk-status-icon)} sets @arg{markup} as the
+  contents of the tooltip, which is marked up with the Pango text markup
+  language.
+
+  This function will take care of setting the
+  @slot[gtk-status-icon]{has-tooltip} property to @em{true} and of the default
+  handler for the \"query-tooltip\" signal.
+
+  See also the @slot[gtk-status-icon]{tooltip-markup} property and the function
+  @fun{gtk-tooltip-markup}.
+
+  Since 2.16
+  @see-class{gtk-status-icon}
+  @see-function{gtk-tooltip-markup}")
+
+;;; --- gtk-status-icon-tooltip-text -------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "tooltip-text"
@@ -635,79 +748,62 @@
   Since 2.16")
 
 #+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-status-icon-tooltip-text atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-status-icon-tooltip-text 'function)
+ "@version{2014-4-11}
+  @argument[object]{a @class{gtk-status-icon} widget}
+  @argument[text]{the contents of the tooltip for the status icon}
+  @begin{short}
+    Accessor of the slot @slot[gtk-status-icon]{tooltip-text} of the
+    @class{gtk-status-icon} class.
+  @end{short}
+
+  The generic function @sym{gtk-status-icon-tooltip-text} gets the contents of
+  the tooltip for the status icon.
+
+  The generic function @sym{gtk-status-icon-tooltip-text} sets text as the
+  contents of the tooltip.
+
+  This function will take care of setting the
+  @slot[gtk-status-icon]{has-tooltip} property to @em{true} and of the default
+  handler for the \"query-tooltip\" signal.
+
+  See also the @slot[gtk-status-icon]{tooltip-text} property.
+
+  Since 2.16
+  @see-class{gtk-status-icon}")
+
+;;; --- gtk-status-icon-visible ------------------------------------------------
+
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "visible" 'gtk-status-icon) 't)
  "The @code{\"visible\"} property of type @code{:boolean} (Read / Write) @br{}
   Whether the status icon is visible. @br{}
   Default value: @em{true}")
 
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-status-icon-stock atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-status-icon-stock 'function)
- "@version{2013-11-6}
-  Accessor of the slot @code{\"stock\"} of the @class{gtk-status-icon} class.
-  @see-class{gtk-status-icon}
-  @see-class{gtk-status-icon-get-stock}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-status-icon-storage-type atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-status-icon-storage-type 'function)
- "@version{2013-11-6}
-  Accessor of the slot @code{\"storage-type\"} of the @class{gtk-status-icon}
-  class.
-  @see-class{gtk-status-icon}
-  @see-function{gtk-status-icon-get-storage-type}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-status-icon-title atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-status-icon-title 'function)
- "@version{2013-11-10}
-  Accessor of the slot @code{\"title\"} of the @class{gtk-status-icon}
-  class.
-  @see-class{gtk-status-icon}
-  @see-function{gtk-status-icon-get-title}
-  @see-function{gtk-status-icon-set-title}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-status-icon-tooltip-markup atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-status-icon-tooltip-markup 'function)
- "@version{2013-11-10}
-  Accessor of the slot @code{\"tooltip-markup\"} of the @class{gtk-status-icon}
-  class.
-  @see-class{gtk-status-icon}
-  @see-function{gtk-status-icon-get-tooltip-markup}
-  @see-function{gtk-status-icon-set-tooltip-markup}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-status-icon-tooltip-text atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-status-icon-tooltip-text 'function)
- "@version{2013-11-10}
-  Accessor of the slot @code{\"tooltip-text\"} of the @class{gtk-status-icon}
-  class.
-  @see-class{gtk-status-icon}
-  @see-function{gtk-status-icon-get-tooltip-text}
-  @see-function{gtk-status-icon-set-tooltip-text}")
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-status-icon-visible atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-status-icon-visible 'function)
- "@version{2013-11-10}
-  Accessor of the slot @code{\"visible\"} of the @class{gtk-status-icon}
-  class.
-  @see-class{gtk-status-icon}
-  @see-function{gtk-status-icon-get-visible}
-  @see-function{gtk-status-icon-set-visible}")
+ "@version{2014-4-11}
+  @argument[object]{a @class{gtk-status-icon} widget}
+  @argument[visible]{@em{true} to show the status icon, @code{nil} to hide it}
+  @syntax[]{(gtk-status-icon-visible object) => visible}
+  @syntax[]{(setf (gtk-status-icon-visible object) visible)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-status-icon]{visible} of the
+    @class{gtk-status-icon} class.
+  @end{short}
+
+  The generic function @sym{gtk-status-icon} returns whether the status icon is
+  visible or not.
+
+  Note that being visible does not guarantee that the user can actually see the
+  icon, see also the function @fun{gtk-status-icon-is-embedded}.
+
+  Since 2.10
+  @see-class{gtk-status-icon}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_status_icon_new ()
@@ -956,214 +1052,6 @@
 (export 'gtk-status-icon-set-from-gicon)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_status_icon_get_storage_type ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-status-icon-get-storage-type))
-
-(defun gtk-status-icon-get-storage-type (status-icon)
- #+cl-cffi-gtk-documentation
- "@version{2013-11-6}
-  @argument[status-icon]{a @class{gtk-status-icon} widget}
-  @return{The image representation being used.}
-  @begin{short}
-    Gets the type of representation being used by the @class{gtk-status-icon}
-    to store image data.
-  @end{short}
-  If the @class{gtk-status-icon} has no image data, the return value will be the
-  value @code{:empty} of the @symbol{gtk-image-type} enumeration.
-
-  Since 2.10
-  @see-class{gtk-status-icon}
-  @see-symbol{gtk-image-type}"
-  (gtk-status-icon-storage-type status-icon))
-
-(export 'gtk-status-icon-get-storage-type)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_status_icon_get_stock ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-status-icon-get-stock))
-
-(defun gtk-status-icon-get-stock (status-icon)
- #+cl-cffi-gtk-documentation
- "@version{2013-11-6}
-  @argument[status-icon]{a @class{gtk-status-icon} widget}
-  @begin{return}
-    Stock ID of the displayed stock icon, or @code{nil} if the image is empty.
-  @end{return}
-  @begin{short}
-    Gets the ID of the stock icon being displayed by the
-    @class{gtk-status-icon}.
-  @end{short}
-  The storage type of the status icon must be the value @code{:empty} or
-  @code{:stock} of the @symbol{gtk-image-type} enumeration. See the function
-  @fun{gtk-status-icon-get-storage-type}. The returned string is owned by
-  the @class{gtk-status-icon} and should not be freed or modified.
-
-  Since 2.10
-  @see-class{gtk-status-icon}
-  @see-symbol{gtk-image-type}
-  @see-function{gtk-status-icon-get-storage-type}"
-  (gtk-status-icon-stock status-icon))
-
-(export 'gtk-status-icon-get-stock)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_status_icon_set_tooltip_text ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-status-icon-set-tooltip-text))
-
-(defun gtk-status-icon-set-tooltip-text (status-icon text)
- #+cl-cffi-gtk-documentation
- "@version{2013-11-10}
-  @argument[status-icon]{a @class{gtk-status-icon} widget}
-  @argument[text]{the contents of the tooltip for @arg{status-icon}}
-  @begin{short}
-    Sets text as the contents of the tooltip.
-  @end{short}
-
-  This function will take care of setting the @code{\"has-tooltip\"} property
-  to @em{true} and of the default handler for the \"query-tooltip\" signal.
-
-  See also the @code{\"tooltip-text\"} property and the function
-  @fun{gtk-tooltip-set-text}.
-
-  Since 2.16
-  @see-class{gtk-status-icon}
-  @see-function{gtk-tooltip-set-text}
-  @see-function{gtk-status-icon-get-tooltip-text}"
-  (setf (gtk-status-icon-tooltip-text status-icon) text))
-
-(export 'gtk-status-icon-set-tooltip-text)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_status_icon_get_tooltip_text ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-status-icon-get-tooltip-text))
-
-(defun gtk-status-icon-get-tooltip-text (status-icon)
- #+cl-cffi-gtk-documentation
- "@version{2013-11-10}
-  @argument[status-icon]{a @class{gtk-status-icon} widget}
-  @begin{return}
-    The tooltip text, or @code{nil}.
-  @end{return}
-  @begin{short}
-    Gets the contents of the tooltip for @arg{status-icon}.
-  @end{short}
-
-  Since 2.16
-  @see-class{gtk-status-icon}
-  @see-function{gtk-status-icon-set-tooltip-text}"
-  (gtk-status-icon-tooltip-text status-icon))
-
-(export 'gtk-status-icon-get-tooltip-text)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_status_icon_set_tooltip_markup ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-status-icon-set-tooltip-markup))
-
-(defun gtk-status-icon-set-tooltip-markup (status-icon markup)
- #+cl-cffi-gtk-documentation
- "@version{2013-11-10}
-  @argument[status-icon]{a @class{gtk-status-icon} widget}
-  @argument[markup]{the contents of the tooltip for @arg{status-icon},
-    or @code{nil}}
-  @begin{short}
-    Sets markup as the contents of the tooltip, which is marked up with the
-    Pango text markup language.
-  @end{short}
-
-  This function will take care of setting the @code{\"has-tooltip\"} property
-  to @em{true} and of the default handler for the \"query-tooltip\" signal.
-
-  See also the @code{\"tooltip-markup\"} property and the function
-  @fun{gtk-tooltip-set-markup}.
-
-  Since 2.16
-  @see-class{gtk-status-icon}
-  @see-function{gtk-tooltip-set-markup}
-  @see-function{gtk-status-icon-get-tooltip-markup}"
-  (setf (gtk-status-icon-tooltip-markup status-icon) markup))
-
-(export 'gtk-status-icon-set-tooltip-markup)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_status_icon_get_tooltip_markup ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-status-icon-get-tooltip-markup))
-
-(defun gtk-status-icon-get-tooltip-markup (status-icon)
- #+cl-cffi-gtk-documentation
- "@version{2013-11-10}
-  @argument[status-icon]{a @class{gtk-status-icon} widget}
-  @return{The tooltip text, or @code{nil}.}
-  @begin{short}
-    Gets the contents of the tooltip for @arg{status-icon}.
-  @end{short}
-
-  Since 2.16
-  @see-class{gtk-status-icon}
-  @see-function{gtk-status-icon-set-tooltip-markup}"
-  (gtk-status-icon-tooltip-markup status-icon))
-
-(export 'gtk-status-icon-get-tooltip-markup)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_status_icon_set_title ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-status-icon-set-title))
-
-(defun gtk-status-icon-set-title (status-icon title)
- #+cl-cffi-gtk-documentation
- "@version{2013-11-10}
-  @argument[status-icon]{a @class{gtk-status-icon} widget}
-  @argument[title]{the title}
-  @begin{short}
-    Sets the title of this tray icon.
-  @end{short}
-  This should be a short, human-readable, localized string describing the tray
-  icon. It may be used by tools like screen readers to render the tray icon.
-
-  Since 2.18
-  @see-class{gtk-status-icon}
-  @see-function{gtk-status-icon-get-title}"
-  (setf (gtk-status-icon-title status-icon) title))
-
-(export 'gtk-status-icon-set-title)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_status_icon_get_title ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-status-icon-get-title))
-
-(defun gtk-status-icon-get-title (status-icon)
- #+cl-cffi-gtk-documentation
- "@version{2013-11-10}
-  @argument[status-icon]{a @class{gtk-status-icon} widget}
-  @return{The title of the status icon.}
-  @begin{short}
-    Gets the title of this tray icon.
-  @end{short}
-  See the function @fun{gtk-status-icon-set-title}.
-
-  Since 2.18
-  @see-class{gtk-status-icon}
-  @see-function{gtk-status-icon-set-title}"
-  (gtk-status-icon-title status-icon))
-
-(export 'gtk-status-icon-get-title)
-
-;;; ----------------------------------------------------------------------------
 ;;; gtk_status_icon_set_name ()
 ;;; ----------------------------------------------------------------------------
 
@@ -1184,53 +1072,6 @@
   (name :string))
 
 (export 'gtk-status-icon-set-name)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_status_icon_set_visible ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-status-icon-set-visible))
-
-(defun gtk-status-icon-set-visible (status-icon visible)
- #+cl-cffi-gtk-documentation
- "@version{2013-11-10}
-  @argument[status-icon]{a @class{gtk-status-icon} widget}
-  @argument[visible]{@em{true} to show the status icon, @code{nil} to hide it}
-  @begin{short}
-    Shows or hides a status icon.
-  @end{short}
-
-  Since 2.10
-  @see-class{gtk-status-icon}
-  @see-function{gtk-status-icon-get-visible}"
-  (setf (gtk-status-icon-visible status-icon) visible))
-
-(export 'gtk-status-icon-set-visible)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_status_icon_get_visible ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-status-icon-get-visible))
-
-(defun gtk-status-icon-get-visible (status-icon)
- #+cl-cffi-gtk-documentation
- "@version{2013-11-10}
-  @argument[status-icon]{a @class{gtk-status-icon} widget}
-  @return{@em{true} if the status icon is visible}
-  @begin{short}
-    Returns whether the status icon is visible or not.
-  @end{short}
-  Note that being visible does not guarantee that the user can actually see the
-  icon, see also the function @fun{gtk-status-icon-is-embedded}.
-
-  Since 2.10
-  @see-class{gtk-status-icon}
-  @see-function{gtk-status-icon-is-embedded}
-  @see-function{gtk-status-icon-set-visible}"
-  (gtk-status-icon-visible status-icon))
-
-(export 'gtk-status-icon-get-visible)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_status_icon_is_embedded ()

@@ -363,7 +363,7 @@
       "Accessor"
       (documentation 'gtk-progress-bar-text 'function)
  "@version{2014-3-16}
-  @argument[object]{a @sym{gtk-progress-bar} widget}
+  @argument[object]{a @class{gtk-progress-bar} widget}
   @argument[text]{a UTF-8 string, or @code{nil}}
   @syntax[]{(gtk-progress-bar-text object) => text}
   @syntax[]{(setf (gtk-progress-bar-text object) text)}

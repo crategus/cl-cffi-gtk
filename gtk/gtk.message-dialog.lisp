@@ -224,8 +224,8 @@
                                                'gtk-message-dialog) 't)
  "The @code{\"message-area\"} property of type @class{gtk-widget} (Read) @br{}
   The @class{gtk-box} widget of orientation @code{:vertical} that corresponds
-  to the message area of this dialog. See the function
-  @fun{gtk-message-dialog-get-message-area} for a detailed description of this
+  to the message area of this dialog. See the generic function
+  @fun{gtk-message-dialog-message-area} for a detailed description of this
   area. @br{}
   Since 2.22")
 

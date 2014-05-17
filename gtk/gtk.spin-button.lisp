@@ -946,7 +946,7 @@
     Returns whether the values are corrected to the nearest step.
   @end{short}
   See the function @fun{gtk-spin-button-set-snap-to-ticks}.
-  @see-class{gtk-spint-button}
+  @see-class{gtk-spin-button}
   @see-function{gtk-spin-button-set-snap-to-ticks}"
   (gtk-spin-button-snap-to-ticks spin-button))
 
