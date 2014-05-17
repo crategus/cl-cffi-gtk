@@ -133,7 +133,7 @@
         (gtk-message-dialog-format-secondary-text dialog
                 "This is a message dialog of type :info with a secondary text.")
         ;; Add a label to the message area.
-        (gtk-container-add (gtk-message-dialog-get-message-area dialog) label)                             
+        (gtk-container-add (gtk-message-dialog-message-area dialog) label)
         ;; Show the dialog
         (gtk-widget-show-all dialog)))
     (join-gtk-main)

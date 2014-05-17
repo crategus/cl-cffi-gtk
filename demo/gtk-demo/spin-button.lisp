@@ -152,7 +152,7 @@
              (lambda (widget)
                (gtk-spin-button-set-snap-to-ticks
                                      spinner1
-                                     (gtk-toggle-button-get-active widget))))
+                                     (gtk-toggle-button-active widget))))
           (gtk-box-pack-start vbox2 check))
         (let ((check (make-instance 'gtk-check-button
                                     :label "Numeric only input mode"
@@ -161,7 +161,7 @@
              (lambda (widget)
                (gtk-spin-button-set-numeric
                                      spinner1
-                                     (gtk-toggle-button-get-active widget))))
+                                     (gtk-toggle-button-active widget))))
           (gtk-box-pack-start vbox2 check))
         (gtk-container-add frame2 vbox2)
         (setq hbox (make-instance 'gtk-hbox))

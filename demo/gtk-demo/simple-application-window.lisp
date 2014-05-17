@@ -13,7 +13,8 @@
                                                 </submenu> ~
                                               </menu> ~
                                             </interface>"))
-      (gtk-application-set-menubar app (gtk-builder-get-object builder "menubar")) 
+      (setf (gtk-application-menubar app)
+            (gtk-builder-get-object builder "menubar"))
       (let ((window (gtk-application-window-new app)))
         (gtk-widget-show-all window)
         ))))
@@ -41,6 +42,6 @@
  ...
 
 
- window = gtk_application_window_new (app);  
+ window = gtk_application_window_new (app);
 
 |#

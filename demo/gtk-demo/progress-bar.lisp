@@ -50,7 +50,7 @@
                          "Some text")
                    (setf (gtk-progress-bar-text (pbar-data-pbar pdata)) ""))
                (setf (gtk-progress-bar-show-text (pbar-data-pbar pdata))
-                     (gtk-toggle-button-get-active check)))))
+                     (gtk-toggle-button-active check)))))
         (gtk-table-attach table check 0 1 0 1))
       (let ((check (gtk-check-button-new-with-label "Activity mode")))
         (g-signal-connect check "clicked"
@@ -68,7 +68,7 @@
            (lambda (widget)
              (declare (ignore widget))
              (setf (gtk-progress-bar-inverted (pbar-data-pbar pdata))
-                   (gtk-toggle-button-get-active check))))
+                   (gtk-toggle-button-active check))))
         (gtk-table-attach table check 0 1 2 3))
       (let ((button (gtk-button-new-with-label "Close")))
         (g-signal-connect button "clicked"

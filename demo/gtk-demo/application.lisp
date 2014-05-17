@@ -264,13 +264,11 @@
     ;; Read the menus from a string
     (gtk-builder-add-from-string builder *menu*)
     ;; Set the application menu
-    (gtk-application-set-app-menu application
-                                  (gtk-builder-get-object builder
-                                                          "app-menu"))
+    (setf (gtk-application-app-menu application)
+          (gtk-builder-get-object builder "app-menu"))
     ;; Set the menubar
-    (gtk-application-set-menubar application
-                                 (gtk-builder-get-object builder
-                                                         "menubar"))))
+    (setf (gtk-application-menubar application)
+          (gtk-builder-get-object builder "menubar"))))
 
 (defun bloat-pad-open (application)
   (declare (ignore application))

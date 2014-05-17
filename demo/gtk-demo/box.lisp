@@ -97,14 +97,14 @@
                                  :wrap t)))
 
         (g-signal-connect spin "value-changed"
-           (lambda (spin) 
+           (lambda (spin)
              (setf (gtk-box-spacing box)
                    (truncate (gtk-spin-button-value spin)))))
 
         (gtk-container-add hbox
                            (make-instance 'gtk-label
                                           :label "Spacing:"))
-        
+
         (gtk-container-add hbox spin)
         (gtk-container-add action hbox))
 
@@ -212,7 +212,7 @@
       (let ((toggle (gtk-check-button-new-with-label "Show Stock Image")))
         (g-signal-connect toggle "toggled"
            (lambda (widget)
-             (if (gtk-toggle-button-get-active widget)
+             (if (gtk-toggle-button-active widget)
                  (let ((image (gtk-image-new-from-stock "gtk-home" :button)))
                    ;; Store the actual Label Widget.
                    (setf label-widget (gtk-frame-get-label-widget frame))

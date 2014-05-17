@@ -24,17 +24,17 @@
                           (leave-gtk-main)))
       (g-signal-connect button1 "toggled"
           (lambda (widget)
-            (if (gtk-toggle-button-get-active widget)
+            (if (gtk-toggle-button-active widget)
                 (progn
-                  (gtk-button-set-label button1 "I have the grab")
-                  (gtk-button-set-label button2 "You cannot press me")
+                  (setf (gtk-button-label button1) "I have the grab")
+                  (setf (gtk-button-label button2) "You cannot press me")
                   (gtk-grab-add widget))
                 (progn
-                  (gtk-button-set-label button1 "Press me to grab me")
-                  (gtk-button-set-label button2 "You can press me.")
+                  (setf (gtk-button-label button1) "Press me to grab me")
+                  (setf (gtk-button-label button2) "You can press me.")
                   (gtk-grab-remove widget)))))
-      (gtk-toggle-button-set-active button1 t)
-  
+      (setf (gtk-toggle-button-active button1) t)
+
       (gtk-container-add vgrid button1)
       (gtk-container-add vgrid button2)
       (gtk-container-add hgrid label)

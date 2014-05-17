@@ -174,13 +174,13 @@
              (let ((childs (gtk-container-get-children vgrid)))
                (dolist (child childs)
                  (unless (g-type-is-a (g-object-type child) "GtkToggleButton")
-                   (if (gtk-toggle-button-get-active button)
+                   (if (gtk-toggle-button-active button)
                        (progn
                          (setf (gtk-widget-sensitive child) nil)
-                         (gtk-button-set-label button "Sensitive"))
+                         (setf (gtk-button-label button) "Sensitive"))
                        (progn
                          (setf (gtk-widget-sensitive child) t)
-                         (gtk-button-set-label button "Insensitve"))))))))
+                         (setf (gtk-button-label button) "Insensitve"))))))))
         (gtk-container-add vgrid button))
 
       (gtk-container-add window vgrid)

@@ -67,10 +67,10 @@
            (lambda (widget)
              (gtk-scale-set-draw-value
                                      hscale
-                                     (gtk-toggle-button-get-active widget))
+                                     (gtk-toggle-button-active widget))
              (gtk-scale-set-draw-value
                                      vscale
-                                     (gtk-toggle-button-get-active widget))))
+                                     (gtk-toggle-button-active widget))))
         (gtk-box-pack-start box button)
         (gtk-box-pack-start box1 box))
       ;; A ComboBox to change the position of the value.

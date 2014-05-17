@@ -25,7 +25,7 @@
               (gtk-radio-button-new-with-label
                                           (gtk-radio-button-get-group button)
                                           "Radio Button 2"))
-        (gtk-toggle-button-set-active button t)
+        (setf (gtk-toggle-button-active button) t)
         (gtk-box-pack-start vbox button)
         (setq button
               (gtk-radio-button-new-with-mnemonic

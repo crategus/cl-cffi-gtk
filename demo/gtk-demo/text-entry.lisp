@@ -29,15 +29,15 @@
            (lambda (widget)
              (declare (ignore widget))
              (gtk-editable-set-editable entry
-                                        (gtk-toggle-button-get-active check))))
+                                        (gtk-toggle-button-active check))))
         (gtk-box-pack-start hbox check))
       (let ((check (gtk-check-button-new-with-label "Visible")))
-        (gtk-toggle-button-set-active check t)
+        (setf (gtk-toggle-button-active check) t)
         (g-signal-connect check "toggled"
            (lambda (widget)
              (declare (ignore widget))
              (gtk-entry-set-visibility entry
-                                       (gtk-toggle-button-get-active check))))
+                                       (gtk-toggle-button-active check))))
         (gtk-box-pack-start hbox check))
       (gtk-box-pack-start vbox hbox)
       (let ((button (gtk-button-new-from-stock "gtk-close")))

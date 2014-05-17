@@ -142,7 +142,7 @@
       (let ((toggle (gtk-check-button-new-with-label "Show Stock Image")))
         (g-signal-connect toggle "toggled"
            (lambda (widget)
-             (if (gtk-toggle-button-get-active widget)
+             (if (gtk-toggle-button-active widget)
                  (let ((image (gtk-image-new-from-stock "gtk-home" :button)))
                    ;; Store the actual Label Widget.
                    (setf label-widget (gtk-frame-get-label-widget frame))
