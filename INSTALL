@@ -1,10 +1,10 @@
 With SBCL the command to load the cl-cffi-gtk library is:
 
-   (asdf:load-system 'cl-gtk)
+   (asdf:load-system 'cl-cffi-gtk)
 
 The following libraries are loaded in addition with the above command:
 
-   glib, gobject, gdk, pango, and cario.
+   glib, gobject, gdk, pango, cario, gdk-pixbuf, gio .
 
 These libraries can be loaded individually with the commands:
 
@@ -13,10 +13,13 @@ These libraries can be loaded individually with the commands:
    (asdf:load-system 'cl-cffi-gtk-gdk)
    (asdf:load-system 'cl-cffi-gtk-pango)
    (asdf:load-system 'cl-cffi-gtk-cairo)
+   (asdf:load-system 'cl-cffi-gtk-gdk-pixbuf)
+   (asdf:load-system 'cl-cffi-gtk-gio)
 
 It is assumed, that the corresponding system definition files cl-cffi-gtk.asd,
 cl-cffi-gtk-glib.asd, cl-cffi-gtk-gobject.asd, cl-cffi-gtk-gdk.asd,
-cl-cffi-gtk-pango.asd, and cl-cffi-gtk-cairo.asd are correctly registered to
+cl-cffi-gtk-pango.asd, cl-cffi-gtk-cairo.asd, cl-cffi-gtk-gdk-pixbuf.asd, and
+cl-cffi-gtk-gio.asd are correctly registered to
 asdf:*central-registry* or the corresponding symlinks are created.
 
 For example for SBCL on a Linux system the symlinks are added to the directory
@@ -30,7 +33,8 @@ For example for SBCL on a Linux system the symlinks are added to the directory
    ln -s /path-to-cl-cffi-gtk/glib/cl-cffi-gtk-glib.asd
    ln -s /path-to-cl-cffi-gtk/pango/cl-cffi-gtk-pango.asd
    ln -s /path-to-cl-cffi-gtk/cairo/cl-cffi-gtk-cairo.asd
-
+   ln -s /path-to-cl-cffi-gtk/gdk-pixbuf/cl-cffi-gtk-gdk-pixbuf.asd
+   ln -s /path-to-cl-cffi-gtk/gio/cl-cffi-gtk-gio.asd
 
 The cl-cffi-gtk library depends further on the following libraries, which
 must be installed:
