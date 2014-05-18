@@ -1453,8 +1453,6 @@
 
       @about-class{gtk-switch}
       @about-function{gtk-switch-new}
-      @about-function{gtk-switch-set-active}
-      @about-function{gtk-switch-get-active}
     @end{subsection}
     @begin[GtkLockButton]{subsection}
       not implemented

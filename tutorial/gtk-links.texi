@@ -585,8 +585,7 @@
 
 @set gtk-switch http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-switch.html
 @set gtk-switch-new http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-switch-new.html
-@set gtk-switch-get-active http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-switch-get-active.html
-@set gtk-switch-set-active http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-switch-set-active.html
+@set gtk-switch-active http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-switch-active.html
 
 @c GtkTable
 

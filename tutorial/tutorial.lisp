@@ -897,7 +897,7 @@
       (g-signal-connect switch "notify::active"
          (lambda (widget param)
            (declare (ignore param))
-           (if (gtk-switch-get-active widget)
+           (if (gtk-switch-active widget)
                (setf (gtk-label-set-label label) "The Switch is ON")
                (setf (gtk-label-set-label label) "The Switch is OFF"))))
       (gtk-container-add grid switch)

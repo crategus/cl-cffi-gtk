@@ -540,12 +540,10 @@ is shown in @ref{example-link-button}.
 @findex switch, gtk-switch
 
 @findex gtk-switch-new
-@findex gtk-switch-get-active
-@findex gtk-switch-set-active
+@findex gtk-switch-active
 
 @findex switch-new, gtk-switch-new
-@findex switch-get-active, gtk-switch-get-active
-@findex switch-set-active, gtk-switch-set-active
+@findex switch-active, gtk-switch-active
 
 @ifnotinfo
 @float Figure, figure-switch
@@ -559,9 +557,8 @@ control which state should be active by clicking the empty area, or by dragging
 the handle.  The switch is created with the function @xurl{gtk-switch-new} or
 the call @code{(make-instance 'gtk-switch)}.
 
-@xurl{gtk-switch} has the property @code{active}, which can be set with the
-function @xurl{gtk-switch-set-active} or retrieved with the function
-@xurl{gtk-switch-get-active}.
+@xurl{gtk-switch} has the property @code{active}, which can be set or retrieved
+with the generic function @xurl{gtk-switch-set-active}.
 
 An example of a switch is shown in @ref{figure-switch}.  The code is shown in
 @ref{example-switch}.  Note that in the example the signal "notify::active"
@@ -593,7 +590,7 @@ is connected to the switch to display a label with the state of the switch.
       (g-signal-connect switch "notify::active"
          (lambda (widget param)
            (declare (ignore param))
-           (if (gtk-switch-get-active widget)
+           (if (gtk-switch-active widget)
                (setf (gtk-label-label label) "The Switch is ON")
                (setf (gtk-label-label label) "The Switch is OFF"))))
       (gtk-container-add grid switch)
