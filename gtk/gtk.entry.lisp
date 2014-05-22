@@ -5,12 +5,12 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.8.8 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.8.9 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -788,7 +788,7 @@
   class.
   @see-class{gtk-entry}")
 
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-entry-has-frame ----------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "has-frame" 'gtk-entry) 't)
@@ -796,9 +796,28 @@
   @code{Nil} removes outside bevel from entry. @br{}
   Default value: @em{true}")
 
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-entry-has-frame atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-entry-has-frame 'function)
+ "@version{2014-5-18}
+  @argument[object]{a @class{gtk-entry} widget}
+  @argument[setting]{new value}
+  @syntax[]{(gtk-entry-has-frame object) => setting}
+  @syntax[]{(setf (gtk-entry-has-frame object) setting)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-entry]{has-frame} of the @class{gtk-entry}
+    class.
+  @end{short}
 
+  The generic function @sym{gtk-entry-has-frame} returns whether the @arg{entry}
+  has a beveled frame.
 
-;;; ----------------------------------------------------------------------------
+  The generic function @sym{(setf gtk-entry-has-frame} sets whether the
+  @arg{entry} has a beveled frame around it.
+  @see-class{gtk-entry}")
+
+;;; --- gtk-entry-im-module ----------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "im-module" 'gtk-entry) 't)
@@ -806,9 +825,21 @@
   Which IM (input method) module should be used for this entry. See
   @class{gtk-im-context}.
   Setting this to a non-@code{nil} value overrides the system-wide IM module
-  setting. See the @class{gtk-settings} @code{\"gtk-im-module\"} property. @br{}
+  setting. See the @class{gtk-settings} @slot[gtk-settings]{gtk-im-module}
+  property. @br{}
   Default value: @code{nil} @br{}
   Since 2.16")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-entry-im-module atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-entry-im-module 'function)
+ "@version{2014-5-18}
+  Accessor of the slot @slot[gtk-entry]{im-module} of the @class{gtk-entry}
+  class.
+  @see-class{gtk-entry}")
+
+;;; --- gtk-entry-inner-border -------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "inner-border" 'gtk-entry) 't)
@@ -822,6 +853,46 @@
   Sets the text area's border between the text and the frame. @br{}
   Since 2.10")
 
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-entry-inner-border atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-entry-inner-border 'function)
+ "@version{2014-5-18}
+  @argument[object]{a @class{gtk-entry} widget}
+  @argument[border]{a @class{gtk-border}, or @code{nil}}
+  @begin{short}
+    Accessor of the slot @slot[gtk-entry]{inner-border} of the @class{gtk-entry}
+    class.
+  @end{short}
+
+  The generic function @sym{gtk-entry-inner-border} returns the entry's
+  @slot[gtk-entry]{inner-border} property.
+
+  The generic function @sym{(setf gtk-entry-inner-border)} sets entry's 
+  @slot[gtk-entry]{inner-border} property to @arg{border}, or clears it if
+  @code{nil} is passed. The \"inner-border\" is the area around the entry's
+  text, but inside its frame.
+
+  If set, this property overrides the @code{\"inner-border\"} style property.
+  Overriding the style-provided border is useful when you want to do in-place
+  editing of some text in a canvas or list widget, where pixel-exact positioning
+  of the entry is important.
+
+  Since 2.10
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-entry-inner-border} has been deprecated since
+    version 3.4 and should not be used in newly written code. Use the standard
+    border and padding CSS properties through objects like
+    @class{gtk-style-context} and @class{gtk-css-provider}; the value returned
+    by this function is ignored by @class{gtk-entry}.
+  @end{dictionary}
+  @see-class{gtk-entry}
+  @see-class{gtk-border}
+  @see-class{gtk-style-context}
+  @see-class{gtk-css-provider}")
+
+;;; --- gtk-entry-input-hints --------------------------------------------------
+
 #+(and gtk-3-6 cl-cffi-gtk-documentation)
 (setf (documentation (atdoc:get-slot-from-name "input-hints" 'gtk-entry) t)
  "The @code{\"input-hints\"} property of type @symbol{gtk-input-hints}
@@ -829,6 +900,33 @@
   Additional hints (beyond the @code{\"input-purpose\"} property) that allow
   input methods to fine-tune their behaviour. @br{}
   Since 3.6")
+
+#+(and gtk-3-6 cl-cffi-gtk-documentation)
+(setf (gethash 'gtk-entry-input-hints atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-entry-input-hints 'function)
+ "@version{2014-5-18}
+  @argument[object]{a @class{gtk-entry} widget}
+  @argument[hints]{the hints}
+  @syntax[]{(gtk-entry-input-hints object) => hints}
+  @syntax[]{(setf (gtk-entry-input-hints object) hints)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-entry]{input-hints} of the @class{gtk-entry}
+    class.
+  @end{short}
+
+  The generic function @sym{gtk-entry-input-hints} gets the value of the
+  @slot[gtk-entry]{input-hints} property.
+
+  The generic function @sym{(setf gtk-entry-input-hints)} sets the
+  @slot[gtk-entry]{input-hints} property, which allows input methods to
+  fine-tune their behaviour.
+
+  Since 3.6
+  @see-class{gtk-entry}
+  @see-symbol{gtk-input-hints}")
+
+;;; --- gtk-entry-input-purpose ------------------------------------------------
 
 #+(and gtk-3-6 cl-cffi-gtk-documentation)
 (setf (documentation (atdoc:get-slot-from-name "input-purpose" 'gtk-entry) t)
@@ -841,6 +939,32 @@
   independent from setting the @code{\"visibility\"} property. @br{}
   Default value: @code{:free-form} @br{}
   Since 3.6")
+
+#+(and gtk-3-6 cl-cffi-gtk-documentation)
+(setf (gethash 'gtk-entry-input-purpose atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-entry-input-purpose 'function)
+ "@version{2014-5-18}
+  @argument[object]{a @class{gtk-entry} widget}
+  @argument[purpose]{the purpose}
+  @syntax[]{(gtk-entry-input-purpose object) => purpose}
+  @syntax[]{(setf (gtk-entry-input-purpose object) purpose)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-entry]{input-purpose} of the
+    @class{gtk-entry} class.
+  @end{short}
+
+  The generic function @sym{gtk-entry-input-purpose} gets the value of the
+  @slot[gtk-entry]{input-purpose} property.
+
+  The generic function @sym{(setf gtk-entry-input-purpose)} sets the
+  @slot[gtk-entry]{input-purpose} property which can be used by on-screen
+  keyboards and other input methods to adjust their behaviour.
+
+  Since 3.6
+  @see-class{gtk-entry}")
+
+;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "invisible-char" 'gtk-entry) 't)
@@ -1175,56 +1299,6 @@
 ;;; Accessors of Properties
 ;;;
 ;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-entry-has-frame atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-entry-has-frame 'function)
- "@version{2013-8-25}
-  Accessor of the slot @code{\"has-frame\"} of the @class{gtk-entry} class.
-  @see-class{gtk-entry}
-  @see-function{gtk-entry-get-has-frame}
-  @see-function{gtk-entry-set-has-frame}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-entry-im-module atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-entry-im-module 'function)
- "@version{2013-8-25}
-  Accessor of the slot @code{\"im-module\"} of the @class{gtk-entry} class.
-  @see-class{gtk-entry}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-entry-inner-border atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-entry-inner-border 'function)
- "@version{2013-8-25}
-  Accessor of the slot @code{\"inner-border\"} of the @class{gtk-entry} class.
-  @see-class{gtk-entry}
-  @see-function{gtk-entry-get-inner-border}
-  @see-function{gtk-entry-set-inner-border}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-entry-input-hints atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-entry-input-hints 'function)
- "@version{2013-8-25}
-  Accessor of the slot @code{\"input-hints\"} of the @class{gtk-entry} class.
-  @see-class{gtk-entry}
-  @see-symbol{gtk-input-hints}
-  @see-function{gtk-entry-get-input-hints}
-  @see-function{gtk-entry-set-input-hints}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-entry-input-purpose atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-entry-input-purpose 'function)
- "@version{2013-8-25}
-  Accessor of the slot @code{\"input-purpose\"} of the @class{gtk-entry}
-  class.
-  @see-class{gtk-entry}
-  @see-function{gtk-entry-get-input-purpose}
-  @see-function{gtk-entry-set-input-purpose}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-entry-invisible-char atdoc:*function-name-alias*)
@@ -1824,57 +1898,6 @@
 (export 'gtk-entry-set-max-length)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_entry_get_has_frame ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-entry-get-has-frame))
-
-(defun gtk-entry-get-has-frame (entry)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-25}
-  @argument[entry]{a @class{gtk-entry} widget}
-  @return{Whether the @arg{entry} has a beveled frame.}
-  Gets the value set by the function @fun{gtk-entry-set-has-frame}.
-  @see-class{gtk-entry}
-  @see-function{gtk-entry-set-has-frame}"
-  (gtk-entry-has-frame entry))
-
-(export 'gtk-entry-get-has-frame)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_entry_get_inner_border ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-entry-get-inner-border))
-
-(defun gtk-entry-get-inner-border (entry)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-25}
-  @argument[entry]{a @class{gtk-entry} widget}
-  @return{The @arg{entry}'s @class{gtk-border}, or @code{nil} if none was set.}
-  @subheading{Warning}
-    The function @sym{gtk-entry-get-inner-border} has been deprecated since
-    version 3.4 and should not be used in newly written code. Use the standard
-    border and padding CSS properties through objects like
-    @class{gtk-style-context} and @class{gtk-css-provider}; the value returned
-    by this function is ignored by @class{gtk-entry}.
-
-  @begin{short}
-    This function returns the @arg{entry}'s @code{\"inner-border\"} property.
-    See the function @fun{gtk-entry-set-inner-border} for more information.
-  @end{short}
-
-  Since 2.10
-  @see-class{gtk-entry}
-  @see-class{gtk-border}
-  @see-class{gtk-style-context}
-  @see-class{gtk-css-provider}
-  @see-function{gtk-entry-set-inner-border}"
-  (gtk-entry-inner-border entry))
-
-(export 'gtk-entry-get-inner-border)
-
-;;; ----------------------------------------------------------------------------
 ;;; gtk_entry_get_width_chars ()
 ;;; ----------------------------------------------------------------------------
 
@@ -1891,63 +1914,6 @@
   (gtk-entry-width-chars entry))
 
 (export 'gtk-entry-get-width-chars)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_entry_set_has_frame ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-entry-set-has-frame))
-
-(defun gtk-entry-set-has-frame (entry setting)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-25}
-  @argument[entry]{a @class{gtk-entry} widget}
-  @argument[setting]{new value}
-  Sets whether the @arg{entry} has a beveled frame around it.
-  @see-class{gtk-entry}
-  @see-function{gtk-entry-get-has-frame}"
-  (setf (gtk-entry-has-frame entry) setting))
-
-(export 'gtk-entry-set-has-frame)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_entry_set_inner_border ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-entry-set-inner-border))
-
-(defun gtk-entry-set-inner-border (entry border)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-25}
-  @argument[entry]{a @class{gtk-entry} widget}
-  @argument[border]{a @class{gtk-border}, or @code{nil}}
-  @subheading{Warning}
-    The function @sym{gtk-entry-set-inner-border} has been deprecated since
-    version 3.4 and should not be used in newly written code. Use the standard
-    border and padding CSS properties through objects like
-    @class{gtk-style-context} and @class{gtk-css-provider}; the value set with
-    this function is ignored by @class{gtk-entry}.
-
-  @begin{short}
-    Sets @arg{entry}'s @code{\"inner-border\"} property to @arg{border}, or
-    clears it if @code{nil} is passed. The @code{\"inner-border\"} is the area
-    around the @arg{entry}'s text, but inside its frame.
-  @end{short}
-
-  If set, this property overrides the @code{\"inner-border\"} style property.
-  Overriding the style-provided border is useful when you want to do in-place
-  editing of some text in a canvas or list widget, where pixel-exact positioning
-  of the entry is important.
-
-  Since 2.10
-  @see-class{gtk-entry}
-  @see-class{gtk-border}
-  @see-class{gtk-style-context}
-  @see-class{gtk-css-provider}
-  @see-function{gtk-entry-get-inner-border}"
-  (setf (gtk-entry-inner-border entry) border))
-
-(export 'gtk-entry-set-inner-border)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_entry_set_width_chars ()
@@ -3239,56 +3205,6 @@
   @see-symbol{gtk-input-hints}")
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_entry_set_input_purpose ()
-;;; ----------------------------------------------------------------------------
-
-#+gtk-3-6
-(declaim (inline gtk-entry-set-input-purpose))
-
-#+gtk-3-6
-(defun gtk-entry-set-input-purpose (entry purpose)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-25}
-  @argument[entry]{a @class{gtk-entry} widget}
-  @argument[purpose]{the purpose}
-  @begin{short}
-    Sets the @code{\"input-purpose\"} property which can be used by on-screen
-    keyboards and other input methods to adjust their behaviour.
-  @end{short}
-
-  Since 3.6
-  @see-class{gtk-entry}
-  @see-function{gtk-entry-get-input-purpose}"
-  (setf (gtk-entry-input-purpose entry) purpose))
-
-#+gtk-3-6
-(export 'gtk-entry-set-input-purpose)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_entry_get_input_purpose ()
-;;; ----------------------------------------------------------------------------
-
-#+gtk-3-6
-(declaim (inline gtk-entry-get-input-purpose))
-
-#+gtk-3-6
-(defun gtk-entry-get-input-purpose (entry)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-25}
-  @argument[entry]{a @class{gtk-entry} widget}
-  @begin{short}
-    Gets the value of the @code{\"input-purpose\"} property.
-  @end{short}
-
-  Since 3.6
-  @see-class{gtk-entry}
-  @see-function{gtk-entry-set-input-purpose}"
-  (gtk-entry-input-purpose entry))
-
-#+gtk-3-6
-(export 'gtk-entry-get-input-purpose)
-
-;;; ----------------------------------------------------------------------------
 ;;; enum GtkInputHints
 ;;; ----------------------------------------------------------------------------
 
@@ -3351,56 +3267,5 @@
   @end{table}
   Since 3.6
   @see-symbol{gtk-input-purpose}")
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_entry_set_input_hints ()
-;;; ----------------------------------------------------------------------------
-
-#+gtk-3-6
-(declaim (inline gtk-entry-set-input-hints))
-
-#+gtk-3-6
-(defun gtk-entry-set-input-hints (entry hints)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-25}
-  @argument[entry]{a @class{gtk-entry} widget}
-  @argument[hints]{the hints}
-  @begin{short}
-    Sets the @code{\"input-hints\"} property, which allows input methods to
-    fine-tune their behaviour.
-  @end{short}
-
-  Since 3.6
-  @see-class{gtk-entry}
-  @see-function{gtk-entry-get-input-hints}
-  @see-function{gtk-entry-set-input-hints}"
-  (setf (gtk-entry-input-hints entry) hints))
-
-#+gtk-3-6
-(export 'gtk-entry-set-input-hints)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_entry_get_input_hints ()
-;;; ----------------------------------------------------------------------------
-
-#+gtk-3-6
-(declaim (inline gtk-entry-get-input-hints))
-
-#+gtk-3-6
-(defun gtk-entry-get-input-hints (entry)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-25}
-  @argument[entry]{a @class{gtk-entry} widget}
-  @begin{short}
-    Gets the value of the @code{\"input-hints\"} property.
-  @end{short}
-
-  Since 3.6
-  @see-class{gtk-entry}
-  @see-function{gtk-entry-set-input-hints}"
-  (gtk-entry-input-hints entry))
-
-#+gtk-3-6
-(export 'gtk-entry-get-input-hints)
 
 ;;; --- End of file gtk.entry.lisp ---------------------------------------------
