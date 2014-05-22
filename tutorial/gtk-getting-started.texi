@@ -132,7 +132,7 @@ C library and the implementation of the Lisp binding.  The code of the Lisp
 program is shown in @ref{example-simple-window}.
 
 @float Example, example-simple-window-C
-@caption{A simple window in the programing language C}
+@caption{A simple window in the programming language C}
 @end float
 @verbatim
 #include <gtk/gtk.h>
@@ -173,7 +173,7 @@ int main (int argc, char *argv[])
 @findex main-quit, gtk-main-quit
 
 @float Example, example-simple-window
-@caption{A Simple Window in the programing language Lisp}
+@caption{A Simple Window in the programming language Lisp}
 @end float
 @verbatim
 (asdf:load-system :cl-cffi-gtk)
@@ -415,7 +415,7 @@ Reference Manual} is shown first in @ref{example-hello-world-C} to learn more
 about the differences between a C and a Lisp implementation.
 
 @float Example, example-hello-world-C
-@caption{Hello World in the programing language C}
+@caption{Hello World in the programming language C}
 @end float
 @verbatim
 #include <gtk/gtk.h>
@@ -544,7 +544,7 @@ accessor function has the prefix @code{gtk_container} in C and
 is available at @xurl{gtk-container}.
 
 @float Example, example-hello-world
-@caption{Hello World in the programing language Lisp}
+@caption{Hello World in the programming language Lisp}
 @end float
 @verbatim
 (defun example-hello-world ()
@@ -742,7 +742,7 @@ also introduce the next topic, packing widgets.  First, the C program is shown
 in @ref{example-upgraded-hello-world-C}.
 
 @float Example, example-upgraded-hello-world-C
-@caption{An upgraded Hello World in the programing language C}
+@caption{An upgraded Hello World in the programming language C}
 @end float
 @verbatim
 #include <gtk/gtk.h>

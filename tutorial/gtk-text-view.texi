@@ -4,15 +4,15 @@
 @c Language : English
 @c Author   : Dieter Kaiser
 @c Date     : 22.05.2012
-@c Revision : 18.08.2013
+@c Revision : 18.05.2014
 @c
-@c Copyright (C) 2012, 2013 by Dieter Kaiser
+@c Copyright (C) 2012, 2013, 2014 by Dieter Kaiser
 @c -----------------------------------------------------------------------------
 
 @menu
 * Text Widget Overview::
 * Simple Multiline Text Widget::
-* Formated Text in Text Widget::
+* Formatted Text in Text Widget::
 * Cut Copy and Paste::
 * Searching::
 * Examing and Modify Text::
@@ -121,7 +121,7 @@ are represented with multiple bytes in UTF-8, and the two-character sequence
 "\r\n" is also considered a line separator.
 
 @c -----------------------------------------------------------------------------
-@node Simple Multiline Text Widget, Formated Text in Text Widget, Text Widget Overview, Top
+@node Simple Multiline Text Widget, Formatted Text in Text Widget, Text Widget Overview, Top
 @section Simple Multiline Text Widget
 
 @ifnotinfo
@@ -171,8 +171,8 @@ In many cases it is also convenient to first create the buffer with
 displays after the widget is created with @xurl{gtk-text-view-set-buffer}.
 
 @c -----------------------------------------------------------------------------
-@node Formated Text in Text Widget, Cut Copy and Paste, Simple Multiline Text Widget, Top
-@section Formated Text in Text Widget
+@node Formatted Text in Text Widget, Cut Copy and Paste, Simple Multiline Text Widget, Top
+@section Formatted Text in Text Widget
 
 @ifnotinfo
 @float Figure, figure-text-view-attributes
@@ -373,7 +373,7 @@ functions, on the entire widget, can be overridden by applying tags to portions
 of text in the buffer.
 
 @c -----------------------------------------------------------------------------
-@node Cut Copy and Paste, Searching, Formated Text in Text Widget, Top
+@node Cut Copy and Paste, Searching, Formatted Text in Text Widget, Top
 @section Cut, Copy and Paste
 
 @c -----------------------------------------------------------------------------
@@ -923,7 +923,7 @@ Images in a buffer are represented by the character @code{0xFFFC} (Unicode
 object replacement character).  When text containing images is retrieved from
 a buffer using the function @xurl{gtk-text-buffer-get-text} the @code{0xFFFC}
 characters representing images are dropped off in the returned text. If these
-characters representing images are required, use the slice variant - 
+characters representing images are required, use the slice variant -
 @xurl{gtk-text-buffer-get-slice}.  The image at a given position can be
 retrieved using the function @xurl{gtk-text-iter-get-pixbuf}.
 

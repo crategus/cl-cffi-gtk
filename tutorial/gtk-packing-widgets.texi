@@ -61,7 +61,7 @@ other boxes to create the desired effect.
 To create a new box of the type @xurl{gtk-box}, the function @xurl{gtk-box-new}
 or the call @code{(make-instance 'gtk-box)} is used.  The first argument of the
 function @xurl{gtk-box-new} takes a keyword of the enumeration type
-@code{GtkOrientation}, which is in the Lisp binding implemented as
+@code{GtkOrientation}, which, in the Lisp binding, is implemented as
 @xurl{gtk-orientation} with the values @code{:horizontal} or @code{:vertical}
 to determine a horizontal or a vertical box.  Because @xurl{gtk-box} implements
 the interface @xurl{gtk-orientable} an instance of @xurl{gtk-box} has the
@@ -187,7 +187,7 @@ are in the C implementation @code{expand}, @code{fill} and @code{padding}.  In
 the Lisp binding to GTK+ these arguments are defined as the keyword arguments
 @code{:expand} and @code{:fill}, which both have a default value of
 @emph{true}, and @code{:padding} with a default value of @code{0}.  The keyword
-arguments can be omitted, when the default values should not be changed.
+arguments can be omitted, in which case the default values will be used.
 
 The keyword argument @code{:expand} with a value @emph{true} to the functions
 @xurl{gtk-box-pack-start} and @xurl{gtk-box-pack-end} controls whether the

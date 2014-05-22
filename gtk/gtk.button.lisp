@@ -443,7 +443,7 @@
   @end{short}
 
   The generic function @sym{gtk-button-label} fetches the text from the label
-  of the button, as set by the generic function @fun{(setf gtk-button-label)}.
+  of the button, as set by the generic function @sym{(setf gtk-button-label)}.
 
   If the label text has not been set the return value will be @code{nil}. This
   will be the case if you create an empty button with the function
@@ -518,7 +518,7 @@
     Accessor of the slot @slot[gtk-button]{use-stock} of the @class{gtk-button}
     class.
   @end{short}
-  
+
   The generic function @sym{gtk-button-use-stock} returns whether the button
   label is a stock item.
 

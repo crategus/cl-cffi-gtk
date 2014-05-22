@@ -151,7 +151,7 @@ Multiline Text Editor
 * Multiline Text Editor::
 * Text Widget Overview::
 * Simple Multiline Text Widget::
-* Formated Text in Text Widget::
+* Formatted Text in Text Widget::
 * Cut Copy and Paste::
 * Searching::
 * Examing and Modify Text::
