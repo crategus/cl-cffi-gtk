@@ -51,7 +51,6 @@
 
 (glib::at-init ()
   (eval-when (:compile-toplevel :load-toplevel :execute)
-    (format t "~&Loading GTK ...~%")
     (define-foreign-library gtk
       ((:and :unix (:not :darwin))
        (:or "libgtk-3.so.0" "libgtk-3.so"))

@@ -710,7 +710,8 @@
   ;; Do not print a warning for types which are not derived from GObject
   ;; TODO: This is a hack.
   (when (or (numberp name)
-            (not (member name '("LispArrayListStore"
+            (not (member name '("AtkImplementorIface"
+                                "LispArrayListStore"
                                 "LispTreeStore")
                      :test #'equal)))
     (warn "cl-cffi-gtk: GType ~A is not known to GObject" name)))

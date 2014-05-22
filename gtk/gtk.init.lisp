@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -38,12 +38,6 @@
 (finalize-gtk-classes)
 
 ;;; ----------------------------------------------------------------------------
-
-#+thread-support
-(format t "THREAD-SUPPORT is available~%")
-
-#-thread-support
-(format t "THREAD-SUPPORT not available~%")
 
 #+thread-support
 (progn
