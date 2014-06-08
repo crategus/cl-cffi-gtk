@@ -1944,11 +1944,11 @@
   @see-function{gtk-widget-override-color}
   @see-function{gtk-window-default-size}
   @see-function{gtk-window-set-geometry-hints}
-  @see-function{gtk-widget-set-hexpand}
-  @see-function{gtk-widget-get-hexpand-set}
+  @see-function{gtk-widget-hexpand}
+  @see-function{gtk-widget-hexpand-set}
   @see-function{gtk-widget-show-all}
-  @see-function{gtk-widget-set-vexpand}
-  @see-function{gtk-widget-get-vexpand-set}
+  @see-function{gtk-widget-vexpand}
+  @see-function{gtk-widget-vexpand-set}
   @see-function{gtk-drag-source-set-icon-pixbuf}
   @see-function{gdk-drag-status}
   @see-function{gtk-drag-finish}
@@ -2454,8 +2454,8 @@
 (setf (documentation (atdoc:get-slot-from-name "hexpand-set" 'gtk-widget) 't)
  "The @code{\"hexpand-set\"} property of type @code{:boolean}
   (Read / Write) @br{}
-  Whether to use the @code{\"hexpand\"} property. See the function
-  @fun{gtk-widget-get-hexpand-set}. @br{}
+  Whether to use the @code{\"hexpand\"} property. See the generic function
+  @fun{gtk-widget-hexpand-set}. @br{}
   Default value: @code{nil} @br{}
   Since 3.0")
 
