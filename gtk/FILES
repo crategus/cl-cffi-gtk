@@ -73,7 +73,7 @@ GTK+ Widgets and Objects
 
   Numeric/Text Data Entry
 
-    gtk.entry.lisp                   - GtkEntry                    - GTK+ 3.8.8*
+    gtk.entry.lisp                   - GtkEntry                    - GTK+ 3.8.9
     gtk.entry-buffer.lisp            - GtkEntryBuffer              - GTK+ 3.6.4*
     gtk.entry-completion.lisp        - GtkEntryCompletion          - GTK+ 3.8.8*
     gtk.scale.lisp                   - GtkScale, ...               - GTK+ 3.6.4*
