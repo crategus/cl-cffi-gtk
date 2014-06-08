@@ -339,8 +339,7 @@
 @set gtk-link-button http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-link-button.html
 @set gtk-link-button-new http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-link-button-new.html
 @set gtk-link-button-new-with-label http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-link-button-new-with-label.html
-@set gtk-link-button-set-uri http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-link-button-set-uri.html
-@set gtk-link-button-get-uri http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-link-button-get-uri.html
+@set gtk-link-button-uri http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-link-button-uri.html
 
 @c GtkLabel
 
@@ -394,8 +393,8 @@
 @set gtk-menu-item-new http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-menu-item-new.html
 @set gtk-menu-item-new-with-label http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-menu-item-new-with-label.html
 @set gtk-menu-item-new-with-mnemonic http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-menu-item-new-with-mnemonic.html
-@set gtk-menu-item-set-submenu http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-menu-item-set-submenu.html
-@set gtk-menu-item-set-label http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-menu-item-set-label.html
+@set gtk-menu-item-submenu http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-menu-item-submenu.html
+@set gtk-menu-item-label http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-menu-item-label.html
 
 @c GtkMenuShell
 
