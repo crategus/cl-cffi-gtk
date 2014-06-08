@@ -67,7 +67,7 @@
           ;; Add the item file quit to the submenu
           (gtk-menu-shell-append submenu item-file-quit)
           ;; Set the submenu of the item file.
-          (gtk-menu-item-set-submenu item-file submenu))
+          (setf (gtk-menu-item-submenu item-file) submenu))
         ;; Create submenu for the item edit.
         (let ((submenu (make-instance 'gtk-menu
                                       :visible t
@@ -94,7 +94,7 @@
           (gtk-menu-shell-append submenu item-edit-paste)
           (gtk-menu-shell-append submenu item-edit-delete)
           ;; Set the submenu of the item edit.
-          (gtk-menu-item-set-submenu item-edit submenu))
+          (setf (gtk-menu-item-submenu item-edit) submenu))
         ;; Create submenu for the item help.
         (let ((submenu (make-instance 'gtk-menu
                                       :visible t
@@ -106,7 +106,7 @@
           ;; Add the items to to the submenu.
           (gtk-menu-shell-append submenu item-help-about)
           ;; Set the submenu of the item help.
-          (gtk-menu-item-set-submenu item-help submenu))
+          (setf (gtk-menu-item-submenu item-help) submenu))
         ;; Add the items file, edit, and help into the menubar.
         (gtk-menu-shell-append menubar item-file)
         (gtk-menu-shell-append menubar item-edit)
