@@ -1234,8 +1234,6 @@
       @about-function{gtk-progress-bar-get-show-text}
       @about-function{gtk-progress-bar-set-ellipsize}
       @about-function{gtk-progress-bar-get-ellipsize}
-      @about-function{gtk-progress-bar-set-pulse-step}
-      @about-function{gtk-progress-bar-get-pulse-step}
     @end{subsection}
     @begin[GtkStatusbar]{subsection}
       Report messages of minor importance to the user.
@@ -1308,7 +1306,6 @@
       @about-function{gtk-status-icon-set-from-stock}
       @about-function{gtk-status-icon-set-from-icon-name}
       @about-function{gtk-status-icon-set-from-gicon}
-      @about-function{gtk-status-icon-get-storage-type}
       @about-function{gtk-status-icon-get-pixbuf}
       @about-function{gtk-status-icon-get-stock}
       @about-function{gtk-status-icon-get-icon-name}
@@ -1377,8 +1374,6 @@
       @about-function{gtk-button-get-alignment}
       @about-function{gtk-button-set-image-position}
       @about-function{gtk-button-get-image-position}
-      @about-function{gtk-button-set-always-show-image}
-      @about-function{gtk-button-get-always-show-image}
       @about-function{gtk-button-get-event-window}
     @end{subsection}
     @begin[GtkCheckButton]{subsection}
@@ -1422,8 +1417,6 @@
       @about-class{gtk-link-button}
       @about-function{gtk-link-button-new}
       @about-function{gtk-link-button-new-with-label}
-      @about-function{gtk-link-button-get-uri}
-      @about-function{gtk-link-button-set-uri}
       @about-function{gtk-link-button-get-visited}
       @about-function{gtk-link-button-set-visited}
     @end{subsection}
@@ -3155,12 +3148,8 @@ setup_tree (void)
       @about-function{gtk-menu-item-new-with-mnemonic}
       @about-function{gtk-menu-item-set-right-justified}
       @about-function{gtk-menu-item-get-right-justified}
-      @about-function{gtk-menu-item-get-label}
-      @about-function{gtk-menu-item-set-label}
       @about-function{gtk-menu-item-get-use-underline}
       @about-function{gtk-menu-item-set-use-underline}
-      @about-function{gtk-menu-item-set-submenu}
-      @about-function{gtk-menu-item-get-submenu}
       @about-function{gtk-menu-item-set-accel-path}
       @about-function{gtk-menu-item-get-accel-path}
       @about-function{gtk-menu-item-select}
@@ -4738,7 +4727,6 @@ setup_tree (void)
       @about-function{gtk-widget-has-rc-style}
       @about-function{gtk-widget-is-drawable}
       @about-function{gtk-widget-is-toplevel}
-      @about-function{gtk-widget-set-window}
       @about-function{gtk-widget-set-support-multidevice}
       @about-function{gtk-widget-get-support-multidevice}
       @about-function{gtk-widget-set-realized}
@@ -4779,8 +4767,6 @@ setup_tree (void)
       @about-function{gtk-widget-set-margin-top}
       @about-function{gtk-widget-get-margin-bottom}
       @about-function{gtk-widget-set-margin-bottom}
-      @about-function{gtk-widget-get-hexpand}
-      @about-function{gtk-widget-set-hexpand}
       @about-function{gtk-widget-get-vexpand}
       @about-function{gtk-widget-set-vexpand}
       @about-function{gtk-widget-get-vexpand-set}
