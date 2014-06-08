@@ -71,8 +71,9 @@
   @begin{short}
     @sym{gtk-recent-chooser-menu} is a widget suitable for displaying recently
     used files inside a menu. It can be used to set a sub-menu of a
-    @class{gtk-menu-item} using the function @fun{gtk-menu-item-set-submenu},
-    or as the menu of a @class{gtk-menu-tool-button}.
+    @class{gtk-menu-item} using the generic function
+    @fun{gtk-menu-item-submenu}, or as the menu of a
+    @class{gtk-menu-tool-button}.
   @end{short}
 
   Note that @sym{gtk-recent-chooser-menu} does not have any methods of its own.
