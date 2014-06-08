@@ -231,12 +231,39 @@
   Default value: @code{nil} @br{}
   Since 2.14")
 
+;;; --- gtk-menu-item-label ----------------------------------------------------
+
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "label" 'gtk-menu-item) 't)
  "The @code{\"label\"} property of type @code{:string} (Read / Write) @br{}
   The text for the child label. @br{}
   Default value: \"\" @br{}
   Since 2.16")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-menu-item-label atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-menu-item-label 'function)
+ "@version{2014-5-25}
+  @argument[object]{a @class{gtk-menu-item} widget}
+  @argument[label]{the text you want to set}
+  @syntax[]{(gtk-menu-item-label object) => label}
+  @syntax[]{(setf (gtk-menu-item-label object) label)}
+  @begin{short}
+    Accessor of the slot @code{\"label\"} of the @class{gtk-menu-item}
+    class.
+  @end{short}
+
+  The generic function @sym{gtk-menu-item-label} sets text on the
+  menu item label.
+
+  The generic function @sym{(setf gtk-menu-item-label)} sets text on the menu
+  item label.
+
+  Since 2.16
+  @see-class{gtk-menu-item}")
+
+;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "right-justified"
@@ -248,12 +275,37 @@
   Default value: @code{nil} @br{}
   Since 2.14")
 
+;;; --- gtk-menu-item-submenu --------------------------------------------------
+
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "submenu" 'gtk-menu-item) 't)
  "The @code{\"submenu\"} property of type @class{gtk-menu}
   (Read / Write) @br{}
   The submenu attached to the menu item, or @code{nil} if it has none. @br{}
   Since 2.12")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-menu-item-submenu atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-menu-item-submenu 'function)
+ "@version{2014-5-25}
+  @argument[object]{a @class{gtk-menu-item} widget}
+  @argument[submenu]{the submenu, or @code{nil}}
+  @syntax[]{(gtk-menu-item-submenu object) => submenu}
+  @syntax[]{(setf (gtk-menu-item-submenu object) submenu)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-menu-item]{submenu} of the
+    @class{gtk-menu-item} class.
+  @end{short}
+
+  The generic function @sym{gtk-menu-item-submenu} gets the submenu underneath
+  this menu item, if any.
+
+  The generic function @sym{(setf gtk-menu-item-submenu)} sets or replaces the
+  menu item's submenu, or removes it when a @code{nil} submenu is passed.
+  @see-class{gtk-menu-item}")
+
+;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "use-underline"
@@ -282,17 +334,6 @@
   @see-function{gtk-menu-item-set-accel-path}")
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-menu-item-label atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-menu-item-label 'function)
- "@version{2013-12-8}
-  Accessor of the slot @code{\"label\"} of the @class{gtk-menu-item}
-  class.
-  @see-class{gtk-menu-item}
-  @see-function{gtk-menu-item-get-label}
-  @see-function{gtk-menu-item-set-label}")
-
-#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-menu-item-right-justified atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-menu-item-right-justified 'function)
@@ -302,17 +343,6 @@
   @see-class{gtk-menu-item}
   @see-function{gtk-menu-item-get-right-justified}
   @see-function{gtk-menu-item-set-right-justified}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-menu-item-submenu atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-menu-item-submenu 'function)
- "@version{2014-1-26}
-  Accessor of the slot @slot[gtk-menu-item]{submenu} of the
-  @class{gtk-menu-item} class.
-  @see-class{gtk-menu-item}
-  @see-function{gtk-menu-item-get-submenu}
-  @see-function{gtk-menu-item-set-submenu}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-menu-item-use-underline atdoc:*function-name-alias*)
@@ -448,46 +478,6 @@
 (export 'gtk-menu-item-get-right-justified)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_menu_item_get_label ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-menu-item-get-label))
-
-(defun gtk-menu-item-get-label (menu-item)
- #+cl-cffi-gtk-documentation
- "@version{2014-1-1}
-  @argument[menu-item]{a @class{gtk-menu-item} widget}
-  @return{The text in the @arg{menu-item} label.}
-  @short{Sets text on the @arg{menu-item} label.}
-
-  Since 2.16
-  @see-class{gtk-menu-item}
-  @see-function{gtk-menu-item-set-label}"
-  (gtk-menu-item-label menu-item))
-
-(export 'gtk-menu-item-get-label)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_menu_item_set_label ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-menu-item-set-label))
-
-(defun gtk-menu-item-set-label (menu-item label)
- #+cl-cffi-gtk-documentation
- "@version{2014-1-1}
-  @argument[menu-item]{a @class{gtk-menu-item} widget}
-  @argument[label]{the text you want to set}
-  @short{Sets text on the @arg{menu-item} label.}
-
-  Since 2.16
-  @see-class{gtk-menu-item}
-  @see-function{gtk-menu-item-get-label}"
-  (setf (gtk-menu-item-label menu-item) label))
-
-(export 'gtk-menu-item-set-label)
-
-;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_item_get_use_underline ()
 ;;; ----------------------------------------------------------------------------
 
@@ -535,46 +525,6 @@
   (setf (gtk-menu-item-use-underline menu-item) use-underline))
 
 (export 'gtk-menu-item-set-use-underline)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_menu_item_set_submenu ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-menu-item-set-submenu))
-
-(defun gtk-menu-item-set-submenu (menu-item submenu)
- #+cl-cffi-gtk-documentation
- "@version{2014-1-26}
-  @argument[menu-item]{a @class{gtk-menu-item} widget}
-  @argument[submenu]{the submenu, or @code{nil}}
-  Sets or replaces the menu item's submenu, or removes it when a @code{nil}
-  submenu is passed.
-  @see-class{gtk-menu-item}
-  @see-function{gtk-menu-item-get-submenu}"
-  (setf (gtk-menu-item-submenu menu-item) submenu))
-
-(export 'gtk-menu-item-set-submenu)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_menu_item_get_submenu ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-menu-item-get-submenu))
-
-(defun gtk-menu-item-get-submenu (menu-item)
- #+cl-cffi-gtk-documentation
- "@version{2013-12-8}
-  @argument[menu-item]{a @class{gtk-menu-item} widget}
-  @return{submenu for this menu item, or @code{nil} if none}
-  @begin{short}
-    Gets the submenu underneath this menu item, if any.
-  @end{short}
-  See the @fun{gtk-menu-item-set-submenu} function.
-  @see-class{gtk-menu-item}
-  @see-function{gtk-menu-item-set-submenu}"
-  (gtk-menu-item-submenu menu-item))
-
-(export 'gtk-menu-item-get-submenu)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_item_set_accel_path ()
