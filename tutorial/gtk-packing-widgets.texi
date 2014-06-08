@@ -562,7 +562,7 @@ shown in @ref{example-table-packing}.
       (gtk-table-attach table button2 1 2 0 1)
       (gtk-table-attach table quit    0 2 1 2)
       (gtk-container-add window table)
-      (gtk-widget-show window))))
+      (gtk-widget-show-all window))))
 @end verbatim
 
 @ref{figure-table-packing-2} is an extended example to show the possibility to
@@ -629,7 +629,7 @@ described in @ref{Toggle Buttons} later in this tutorial.  The code of
       (gtk-table-attach table button2 1 2 0 1)
       (gtk-table-attach table quit    0 2 1 2)
       (gtk-container-add window table)
-      (gtk-widget-show window))))
+      (gtk-widget-show-all window))))
 @end verbatim
 
 @c -----------------------------------------------------------------------------
