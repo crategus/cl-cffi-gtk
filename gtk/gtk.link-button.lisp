@@ -76,9 +76,8 @@
   the former, the URI you pass to the constructor is used as a label for the
   widget.
 
-  The URI bound to a @sym{gtk-link-button} can be set specifically using the
-  function @fun{gtk-link-button-set-uri}, and retrieved using the function
-  @fun{gtk-link-button-get-uri}.
+  The URI bound to a @sym{gtk-link-button} can be set specifically or retrieved
+  using the generic function @fun{gtk-link-button-uri}.
 
   By default, @sym{gtk-link-button} calls the function @fun{gtk-show-uri} when
   the button is clicked. This behaviour can be overridden by connecting to the
@@ -131,7 +130,7 @@
   @end{short}
 
   The generic function @sym{gtk-link-button-uri} retrieves the URI set using
-  the generic function @sym{(setf gtk-link-button-set-uri)}.
+  the generic function @sym{(setf gtk-link-button-uri)}.
 
   The generic function @sym{gtk-link-button-uri} sets @arg{uri} as the URI
   where the @class{gtk-link-button} points.
