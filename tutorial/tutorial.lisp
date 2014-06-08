@@ -3956,10 +3956,10 @@ happen.")
               (tools-menu (gtk-menu-new))
               (help-menu (gtk-menu-new)))
           ;; Attach the submenus to the items of the menu bar
-          (gtk-menu-item-set-submenu file-item file-menu)
-          (gtk-menu-item-set-submenu view-item view-menu)
-          (gtk-menu-item-set-submenu tools-item tools-menu)
-          (gtk-menu-item-set-submenu help-item help-menu)
+          (setf (gtk-menu-item-submenu file-item) file-menu)
+          (setf (gtk-menu-item-submenu view-item) view-menu)
+          (setf (gtk-menu-item-submenu tools-item) tools-menu)
+          (setf (gtk-menu-item-submenu help-item) help-menu)
           ;; Create items to put into the File menu
           (let ((open-item (gtk-menu-item-new-with-label "Open"))
                 (close-item (gtk-menu-item-new-with-label "Close"))
@@ -3989,7 +3989,7 @@ happen.")
                   (about-tool-item (gtk-menu-item-new-with-label "About This"))
                   (about-more-item (gtk-menu-item-new-with-label "About That")))
               ;; Attach the submenu to the about-help-item
-              (gtk-menu-item-set-submenu about-help-item about-help-menu)
+              (setf (gtk-menu-item-submenu about-help-item) about-help-menu)
               ;; Append the items to the about-help-menu
               (gtk-menu-shell-append about-help-menu about-tool-item)
               (gtk-menu-shell-append about-help-menu about-more-item)))))
@@ -4165,7 +4165,7 @@ happen.")
           ;; Add the item file quit to the submenu
           (gtk-menu-shell-append submenu item-file-quit)
           ;; Set the submenu of the item file.
-          (gtk-menu-item-set-submenu item-file submenu))
+          (setf (gtk-menu-item-submenu item-file) submenu))
         ;; Create submenu for the item edit.
         (let ((submenu (make-instance 'gtk-menu
                                       :visible t
@@ -4192,7 +4192,7 @@ happen.")
           (gtk-menu-shell-append submenu item-edit-paste)
           (gtk-menu-shell-append submenu item-edit-delete)
           ;; Set the submenu of the item edit.
-          (gtk-menu-item-set-submenu item-edit submenu))
+          (setf (gtk-menu-item-submenu item-edit) submenu))
         ;; Create submenu for the item help.
         (let ((submenu (make-instance 'gtk-menu
                                       :visible t
@@ -4204,7 +4204,7 @@ happen.")
           ;; Add the items to to the submenu.
           (gtk-menu-shell-append submenu item-help-about)
           ;; Set the submenu of the item help.
-          (gtk-menu-item-set-submenu item-help submenu))
+          (setf (gtk-menu-item-submenu item-help) submenu))
         ;; Add the items file, edit, and help into the menubar.
         (gtk-menu-shell-append menubar item-file)
         (gtk-menu-shell-append menubar item-edit)

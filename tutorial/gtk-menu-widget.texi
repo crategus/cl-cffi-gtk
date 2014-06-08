@@ -4,7 +4,7 @@
 @c Language : English
 @c Author   : Dieter Kaiser
 @c Date     : 05.04.2012
-@c Revision : 25.01.2014
+@c Revision : 25.05.2014
 @c .
 @c Copyright (C) 2012, 2013, 2014 by Dieter Kaiser
 @c -----------------------------------------------------------------------------
@@ -29,6 +29,34 @@ quick access to frequently used menu items.
 @c -----------------------------------------------------------------------------
 @node Menus, Toolbars, Top, Top
 @section Menus
+
+@findex GtkMenuShell
+@findex gtk-menu-shell
+@findex menu-shell, gtk-menu-shell
+
+@findex GtkMenuBar
+@findex gtk-menu-bar
+@findex menu-bar, gtk-menu-bar
+
+@findex GtkMenu
+@findex gtk-menu
+@findex menu, gtk-menu
+
+@findex GtkMenuItem
+@findex gtk-menu-item
+@findex menu-item, gtk-menu-item
+
+@findex GtkCheckMenuItem
+@findex gtk-check-menu-item
+@findex check-menu-item, gtk-check-menu-item
+
+@findex GtkImageMenuItem
+@findex gtk-image-menu-item
+@findex image-menu-item, gtk-image-menu-item
+
+@findex GtkSeparatorMenuItem
+@findex gtk-separator-menu-item
+@findex separator-menu-item, gtk-separator-menu-item
 
 GTK+ knows several classes related to the creation of menus:
 @table @code
@@ -81,42 +109,42 @@ GTK+ knows several classes related to the creation of menus:
 @node Principles of Menus, Creating Menus by Hand, Top, Top
 @subsection Principles of Menus
 
-You will find menu creation and menu handling confusing unless you remember the
-following principles:
+Menu creation and menu handling follows the following:
 @itemize @bullet
   @item Menus of the @xurl{gtk-menu} class and menubars of the
         @xurl{gtk-menu-bar} class are containers.  They are dervid from the
-        same abstact base class @xurl{gtk-menu-shell}.
-  @item The only thing you can put into a menu or a menubar is a menu item.
+        same abstract base class @xurl{gtk-menu-shell}.
+  @item The only thing that can be put into a menu or a menubar is a menu item.
   @item Menus can be attached to menu items so that when the item is activated,
         the menu drops down or pops up.  If a menu item is a child of a menubar,
-        the the menu attached to it drops down.  If it is a child of a menu, the
-        the menu attached to it pops up.
-  @item Menu items are the only things that you can activate, and these emit an
-        activate signal, which must be connected to a callback to handle the
+        the menu attached to it drops down.  If it is a child of a menu, the
+        menu attached to it pops up.
+  @item Menu items are the only things that can be activated, and these emit an
+        "activate" signal, which must be connected to a callback to handle the
         user's clicks on that item.  Although they emit other signals, this is
-        the one you will normally use.
+        the normally used.
 @end itemize
 
-If you remember these principles going forwad, things will be easy to
-understand.  In essence, menus form a recursively defined hierarchy.  The root
-of this hierarchy is always a menubar.  We usually think of menubars as
-horizontal, rectangular regions at the top of a window, but they can be vertical
-as well, and can be placed anywhere you choose.  Those labels that you see in
-the menubar, such as "File", "Edit" or "Help", are menu items.  Menu items can
-have menus attached to them, so that when they get clicked, the menu appears.
-Each of the menus attached to a menu item may have menu items that have menus
-attached to them, and these may have items that have menus attached to them,
-and so on.
+In essence, menus form a recursively defined hierarchy.  The root of this
+hierarchy is always a menubar.  Usually menubars are horizontal, rectangular
+regions at the top of a window, but they can be vertical as well, and can be
+placed anywhere.  Those labels that can be seen in the menubar, such as "File",
+"Edit" or "Help", are menu items.  Menu items can have menus attached to them,
+so that when they get clicked, the menu appears.  Each of the menus attached to
+a menu item may have menu items that have menus attached to them, and these may
+have items that have menus attached to them, and so on.
 
-We use the term submenu to refer to a menu that is attached to a menu item
-within another menu, but there is no special class of submenus; a submenu is
-just a menu.  Because a menu item always exists as a child of either a menu or
-a menubar, the menu that is attached to a menu item is always a submenu of
+@findex gtk-menu-item-submenu
+@findex menu-item-submenu, gtk-menu-item-submenu
+
+Use the term submenu refers to a menu that is attached to a menu item within
+another menu, but there is no special class of submenus; a submenu is just a
+menu.  Because a menu item always exists as a child of either a menu or a
+menubar, the menu that is attached to a menu item is always a submenu of
 something else.  This should make it easy to remember the fact that there is but
-a single way to attach a menu to a menu item with the function
-@xurl{gtk-menu-item-set-submenu} which we will discuss below.  The point is that
-the attached menu is of necessity a submenu of something else.
+a single way to attach a menu to a menu item with the generic function
+@xurl{gtk-menu-item-submenu}.  The point is that the attached menu is of
+necessity a submenu of something else.
 
 @c -----------------------------------------------------------------------------
 @node Creating Menus by Hand, Pop-Up Menus for Widgets, Principles of Menus, Top
@@ -131,9 +159,7 @@ the attached menu is of necessity a submenu of something else.
 
 This method is called "by hand" because the menu is constructed in the same way
 that a typical house is constructed, by assembling the pieces and attaching them
-to each other, one by one.
-
-The outline of the steps that must be taken is:
+to each other, one by one.  The outline of the steps that must be taken is:
 @enumerate
   @item Create the menubar.
   @item Create the menu items that will be packed into the menubar.
@@ -145,17 +171,21 @@ The outline of the steps that must be taken is:
 @end enumerate
 
 These steps are listed in a top-down sequence, but it is conceivable to carry
-them out in many different permutations.  The above sequence has a natural logic
-to it and it the order in which they are described in detail below.
+them out in many different permutations.
 
-You create the menubar with the function @xurl{gtk-menu-bar-new}.  This creates
-an empty menubar.  Menubars themselves have almost no methods methods.  When
-menus and menubars were unified by creating a menushell class and deriving them
-from this parent class, their specific methods were deprecated.  The menubar
-itself should be added to its parent container with an appropriate packing
-function.  Typically you will put it at the top of the content area just below
-the top-level windows's title bar, and there will be other "stuff" underneath
-it, so the usual sequence is
+@findex gtk-menu-item-new
+@findex gtk-menu-item-new-with-label
+@findex gtk-menu-item-new-with-mnemonic
+
+@findex menu-item-new, gtk-menu-item-new
+@findex menu-item-new-with-label, gtk-menu-item-new-with-label
+@findex menu-item-new-with-mnemonic, gtk-menu-item-new-with-mnemonic
+
+An empty menubar is created with the function @xurl{gtk-menu-bar-new} or the
+call @code{(make-instance 'gtk-menu-bar)}. The menubar itself should be added
+to its parent container with an appropriate packing function.  Typically the
+menubar is put at the top of the content area just below the top-level windows's
+title bar, so the usual sequence is
 @example
 (let ((vbox (gtk-box-new :vertical 0)))
   (let ((menu-bar (gtk-menu-bar-new)))
@@ -163,17 +193,28 @@ it, so the usual sequence is
   (gtk-container-add window vbox)
   ... )
 @end example
-For each menu that you want to put into the menubar, you will need a separate
-menu item.  Regular menu items can be created with the functions
-@xurl{gtk-menu-item-new}, @xurl{gtk-menu-item-new-with-label}, or
-@xurl{gtk-menu-item-new-with-mnemonic}.
+For each menu in the menubar, a separate menu item is needed.  Regular menu
+items can be created with the functions @xurl{gtk-menu-item-new},
+@xurl{gtk-menu-item-new-with-label}, @xurl{gtk-menu-item-new-with-mnemonic}, or
+with the appropriate calls of the function @code{make-instance}.
 
-The first of these creates a menu item with no label; you would use later
-the function @xurl{gtk-menu-item-set-label} to create a label for it.  The
-second and third functions create menu items with either a plain label or with
-a label and a mnemonic, just like is done with buttons.  Later you will see that
-there are four subclasses of menu items, among which are image menu items, which
-can contain an image instead of or in addition to a label.
+@findex gtk-menu-item-label
+@findex menu-item-label, gtk-menu-item-label
+
+The first of these creates a menu item with no label; later the generic function
+@xurl{gtk-menu-item-label} can be used to create a label for it.  The second
+and third functions create menu items with either a plain label or with a label
+and a mnemonic, just like is done with buttons.  There are four subclasses of
+menu items, among which are image menu items, which can contain an image instead
+of or in addition to a label.
+
+@findex gtk-menu-shell-append
+@findex gtk-menu-shell-prepend
+@findex gtk-menu-shell-insert
+
+@findex menu-shell-append, gtk-menu-shell-append
+@findex menu-shell-prepend, gtk-menu-shell-prepend
+@findex menu-shell-insert, gtk-menu-shell-insert
 
 There are three different ways to pack menu items into menubars and menus; they
 are all methods of the @xurl{gtk-menu-shell} base class:
@@ -205,36 +246,32 @@ into the menubar in left-to-right order:
 The next step is to create the menus that will be dropped down when these menu
 items are activated.  Menus are created with the function @xurl{gtk-menu-new}.
 
-For the above menu items, we would create for menus:
+For the above menu items, four menus are created and attached to the menu items
+with the generic function @xurl{gtk-menu-item-submenu}:
 @example
 (let ((file-menu (gtk-menu-new))
       (view-menu (gtk-menu-new))
       (tools-menu (gtk-menu-new))
       (help-menu (gtk-menu-new)))
-  (gtk-menu-item-set-submenu file-item file-menu)
-  (gtk-menu-item-set-submenu view-item view-menu)
-  (gtk-menu-item-set-submenu tools-item tools-menu)
-  (gtk-menu-item-set-submenu help-item help-menu)
+  (setf (gtk-menu-item-submenu file-item) file-menu)
+  (setf (gtk-menu-item-submenu view-item) view-menu)
+  (setf (gtk-menu-item-submenu tools-item) tools-menu)
+  (setf (gtk-menu-item-submenu help-item) help-menu)
   ... )
 @end example
-Having created the menus, we have to attach them to the menu items using the
-function @xurl{gtk-menu-item-set-submenu}.  This takes the menu item, and the
-menu to be attached.  We attach the for menus as follows:
-@example
- (gtk-menu-item-set-submenu file-item file-menu)
- (gtk-menu-item-set-submenu view-item view-menu)
- (gtk-menu-item-set-submenu tool-item tools-menu)
- (gtk-menu-item-set-submenu help-item help-menu)
-@end example
-The next step is to create the menu items to populate each of the menus, and add
-them to these menus.  There are no new functions to learn for these steps.  It
-is simply a matter of creating menu items and packing them.  In the example we
-are using, our File menu will have an Open item, a Close item, and an Exit item.
-We will also use a separator between the Close item and the Exit item.
-Separators are members of the @xurl{gtk-separator-menu-item} class and are
-created with @xurl{gtk-separator-menu-item-new}.
 
-The File menus's items will be simple labeled items.  The code to create them
+@findex gtk-separator-menu-item-new
+@findex separator-menu-item-new, gtk-separator-menu-item-new
+
+The next step is to create the menu items to populate each of the menus, and add
+them to these menus.  In the example, the "File" menu will have an "Open" item,
+a "Close" item, and an "Exit" item.  Between the "Close" item and the "Exit"
+item a separator item is added.  Separators are members of the
+@xurl{gtk-separator-menu-item} class and are created with the function
+@xurl{gtk-separator-menu-item-new} or the call
+@code{(make-instance 'gtk-separator)}.
+
+The "File" menus's items will be simple labeled items.  The code to create them
 and pack them is:
 @example
  (let ((open-item (gtk-menu-item-new-with-label "Open"))
@@ -248,9 +285,9 @@ and pack them is:
 @end example
 To create a menu that contains submenus does not involve anything other than
 descending a level in the menu hierarchy and repeating these steps.  To
-illustrate, we will design the Help menu so that it has two items, one of which
+illustrate, a "Help" menu is designed so that it has two items, one of which
 is a menu item that, when activated, pops up a submenu.  The first two steps are
-to create the two menu items and pack the into the Help menu:
+to create the two menu items and pack the into the "Help" menu:
 @example
 (let ((query-item (gtk-menu-item-new-with-label "What's this?"))
       (about-help-item (gtk-menu-item-new-with-label "About this program")))
@@ -263,7 +300,7 @@ The next step is to create a submenu and attach it to the
 @code{about-help-item}:
 @example
 (let ((about-help-menu (gtk-menu-new)))
-  (gtk-menu-item-set-submenu about-help-item about-help-menu)
+  (setf (gtk-menu-item-submenu about-help-item) about-help-menu)
   ... )
 @end example
 The last step is to create a submenu and attach it to the
@@ -278,8 +315,8 @@ The last step is to create a submenu and attach it to the
 The preceding steps create the menu items, but they are not yet connected to the
 "activate" signal.  Menu items that have a submenu do not need to be connected
 to the "activate" signal; GTK+ arranges for that signal to open the submenu.
-But the others need to be connected.  For example, we would connect the Exit
-menu item to a callback to quit the application with
+But the others need to be connected.  For example, the "Exit" menu item is
+connected to a callback to quit the application with
 @example
 (g-signal-connect exit-item "activate"
                   (lambda (widget)
@@ -306,7 +343,7 @@ It includes all code snippets shown above. The output is shown in
                                  :default-width 425
                                  :default-height 250
                                  :title "Example Menus by Hand"))
-          ;; A vbox to put a menu and a button in
+          ;; A vbox to put in a menu and a button
           (vbox (gtk-box-new :vertical 0)))
       ;; Create a menu bar and the menu items for the menu bar
       (let ((menu-bar (gtk-menu-bar-new))
@@ -327,10 +364,10 @@ It includes all code snippets shown above. The output is shown in
               (tools-menu (gtk-menu-new))
               (help-menu (gtk-menu-new)))
           ;; Attach the submenus to the items of the menu bar
-          (gtk-menu-item-set-submenu file-item file-menu)
-          (gtk-menu-item-set-submenu view-item view-menu)
-          (gtk-menu-item-set-submenu tools-item tools-menu)
-          (gtk-menu-item-set-submenu help-item help-menu)
+          (setf (gtk-menu-item-submenu file-item) file-menu)
+          (setf (gtk-menu-item-submenu view-item) view-menu)
+          (setf (gtk-menu-item-submenu tools-item) tools-menu)
+          (setf (gtk-menu-item-submenu help-item) help-menu)
           ;; Create items to put into the File menu
           (let ((open-item (gtk-menu-item-new-with-label "Open"))
                 (close-item (gtk-menu-item-new-with-label "Close"))
@@ -360,7 +397,7 @@ It includes all code snippets shown above. The output is shown in
                   (about-tool-item (gtk-menu-item-new-with-label "About This"))
                   (about-more-item (gtk-menu-item-new-with-label "About That")))
               ;; Attach the submenu to the about-help-item
-              (gtk-menu-item-set-submenu about-help-item about-help-menu)
+              (setf (gtk-menu-item-submenu about-help-item) about-help-menu)
               ;; Append the items to the about-help-menu
               (gtk-menu-shell-append about-help-menu about-tool-item)
               (gtk-menu-shell-append about-help-menu about-more-item)))))
@@ -384,13 +421,12 @@ It includes all code snippets shown above. The output is shown in
 @end ifnotinfo
 
 The same techniques for creating menus rooted in a menubar applies to the
-creation of pop-up menus for other widgets.  For example, if you wanted to
-create a button, which when the mouse button is pressed on it, would pop up a
-menu instead of taking some action, you would first create the menu using the
-instructions above.  Then you would connect a mouse button press event signal
-to a callback that popped up the menu, using the function
-@xurl{g-signal-connect}.  To illustrate, we begin by creating a small pop-up
-menu and packing two menu items into it.
+creation of pop-up menus for other widgets.  For example, to create a button,
+which when the mouse button is pressed on it, would pop up a menu instead of
+taking some action, first the menu is created using the instructions above.
+Then a mouse button press event signal is connected to a callback that popped up
+the menu, using the function @xurl{g-signal-connect}.  To illustrate, a small
+pop-up menu is created and two menu items are packed into it.
 @example
 (let ((popup-menu (gtk-menu-new))
       (big-item (gtk-menu-item-new-with-label "Larger"))
@@ -399,24 +435,28 @@ menu and packing two menu items into it.
   (gtk-menu-shell-append popup-menu small-item)
   ... )
 @end example
-Next we connect a callback to the "button-press-event" signal.  The callback
-will be responsible for popping up the menu.  To pop up a menu, we need the
-function @xurl{gtk-menu-popup}.  This function displays a menu and makes it
-available for selection.  It exists precisely for the purpose of displaying
-context sensitive menus.
+
+@findex gtk-menu-popup
+@findex menu-popup, gtk-menu-popup
+
+Next a callback is connected to the "button-press-event" signal.  The callback
+will be responsible for popping up the menu with the function
+@xurl{gtk-menu-popup}.  This function displays a menu and makes it available for
+selection.  It exists precisely for the purpose of displaying context sensitive
+menus.
 
 The first argument of the function is the menu to pop-up.  All other arguments
 are keyword arguments with the keywords @code{:parent-menu-shell},
-@code{:parent-menu-item}, @code{:position-func}, @code{:position-func},
-@code{:button}, and @code{:activate-time}.  For normal use you can accept the
-default values for most of the arguments.
+@code{:parent-menu-item}, @code{:position-func}, @code{:button}, and
+@code{:activate-time}.  For normal use the default values for most of the
+arguments can be accepted.
 
 The @code{:button} parameter should be the mouse button pressed to initiate the
 menu popup.  If the menu popup was initiated by something other than a mouse
 press, such as a mouse button release or a key-press, button should be 0.
 
 The API documentation states that the @code{:activate-time} parameter is used
-to  conflict-resolve initiation of concurrent requests for mouse/keyboard grab
+to conflict-resolve initiation of concurrent requests for mouse/keyboard grab
 requests.  To function properly, this needs to be the time stamp of the user
 event that caused the initiation of the popup.
 
