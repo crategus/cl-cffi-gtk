@@ -457,13 +457,11 @@ becoming active).
 
 @findex gtk-link-button-new
 @findex gtk-link-button-new-with-label
-@findex gtk-link-button-set-uri
-@findex gtk-link-button-get-uri
+@findex gtk-link-button-uri
 
 @findex link-button-new, gtk-link-button-new
 @findex link-button-new-with-label, gtk-link-button-new-with-label
-@findex link-button-set-uri, gtk-link-button-set-uri
-@findex link-button-get-uri, gtk-link-button-get-uri
+@findex link-button-uri, gtk-link-button-uri
 
 @ifnotinfo
 @float Figure, figure-link-button
@@ -481,9 +479,8 @@ A link button is created by calling either the functions
 the former, the URI you pass to the constructor is used as a label for the
 widget.
 
-The URI bound to a @xurl{gtk-link-button} can be set specifically using the
-function @xurl{gtk-link-button-set-uri}, and retrieved using the function
-@xurl{gtk-link-button-get-uri}.
+The URI bound to a @xurl{gtk-link-button} can be set specifically or retrieved
+using the generic function @xurl{gtk-link-button-uri}.
 
 By default, @xurl{gtk-link-button} calls @xurl{gtk-show-uri} when the button is
 clicked.  This behaviour can be overridden by connecting to the "activate-link"
