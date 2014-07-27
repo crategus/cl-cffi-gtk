@@ -5,12 +5,12 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.10 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -118,31 +118,40 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Property Details
+;;; Property and Accessor Details
 ;;;
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "layout-style" 'gtk-button-box) 't)
+(setf (documentation (atdoc:get-slot-from-name "layout-style" 'gtk-button-box)
+                     't)
  "The @code{\"layout-style\"} property of type @symbol{gtk-button-box-style}
   (Read / Write)@br{}
   How to lay out the buttons in the box. Possible values are: spread, edge,
   start and end.@br{}
   Default value: @code{:edge}")
 
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-button-box-layout-style atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-button-box-layout-style 'function)
- "@version{2013-3-28}
-  Accessor of the slot @code{\"layout-style\"} of the @class{gtk-button-box}
-  class.")
+ "@version{2014-7-27}
+  @argument[object]{a @class{gtk-button-box} container}
+  @argument[layout-style]{the new layout style}
+  @syntax[]{(gtk-button-box-layout-style object) => layout-style}
+  @syntax[]{(setf (gtk-button-box-layout-style object) layout-style)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-button-box]{layout-style} of the
+    @class{gtk-button-box} class.
+  @end{short}
+
+  The generic function @sym{gtk-button-box-layout-style} retrieves the method
+  being used to arrange the buttons in a button box.
+
+  The generic function @sym{(setf gtk-button-box-layout-style} changes the way
+  buttons are arranged in their container.
+  @see-class{gtk-button-box}
+  @see-symbol{gtk-button-box-style}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -203,23 +212,6 @@
 (export 'gtk-button-box-new)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_button_box_get_layout ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-button-get-layout))
-
-(defun gtk-button-box-get-layout (widget)
- "@version{2013-5-18}
-  @argument[widget]{a @class{gtk-button-box} container}
-  @return{The method used to lay out buttons in @arg{widget}.}
-  @begin{short}
-    Retrieves the method being used to arrange the buttons in a button box.
-  @end{short}"
-  (gtk-button-box-layout-style widget))
-
-(export 'gtk-button-box-get-layout)
-
-;;; ----------------------------------------------------------------------------
 ;;; gtk_button_box_get_child_secondary ()
 ;;; ----------------------------------------------------------------------------
 
@@ -260,22 +252,6 @@
   (gtk-button-box-child-non-homogeneous widget child))
 
 (export 'gtk-button-box-get-child-non-homogeneous)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_button_box_set_layout ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-button-box-set-layout))
-
-(defun gtk-button-box-set-layout (widget layout-style)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-18}
-  @argument[widget]{a @class{gtk-button-box} container}
-  @argument[layout-style]{the new layout style}
-  @short{Changes the way buttons are arranged in their container.}"
-  (setf (gtk-button-box-layout-style widget) layout-style))
-
-(export 'gtk-button-box-set-layout)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_button_box_set_child_secondary ()
