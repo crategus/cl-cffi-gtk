@@ -472,7 +472,7 @@ happen.")
       (g-signal-connect button "clicked"
          (lambda (widget)
            (declare (ignore widget))
-           (let* ((text (gtk-entry-get-text entry))
+           (let* ((text (gtk-entry-text entry))
                   (buffer (gtk-text-view-get-buffer text-view))
                   (iter (gtk-text-buffer-get-start-iter buffer)))
              (multiple-value-bind (found start end)
@@ -601,14 +601,14 @@ The following example shows the usage of marks to continue the search.
       (g-signal-connect button-search "clicked"
          (lambda (widget)
            (declare (ignore widget))
-           (let* ((text (gtk-entry-get-text entry))
+           (let* ((text (gtk-entry-text entry))
                   (buffer (gtk-text-view-get-buffer text-view))
                   (iter (gtk-text-buffer-get-start-iter buffer)))
              (find-text text-view text iter))))
       (g-signal-connect button-next "clicked"
          (lambda (widget)
            (declare (ignore widget))
-           (let* ((text (gtk-entry-get-text entry))
+           (let* ((text (gtk-entry-text entry))
                   (buffer (gtk-text-view-get-buffer text-view))
                   (last-pos (gtk-text-buffer-get-mark buffer "last-pos")))
              (when last-pos

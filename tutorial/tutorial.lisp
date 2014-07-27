@@ -2225,7 +2225,7 @@ happen.")
       (g-signal-connect button "clicked"
          (lambda (widget)
            (declare (ignore widget))
-           (let* ((text (gtk-entry-get-text entry))
+           (let* ((text (gtk-entry-text entry))
                   (buffer (gtk-text-view-get-buffer text-view))
                   (iter (gtk-text-buffer-get-start-iter buffer)))
              (multiple-value-bind (found start end)
@@ -2280,14 +2280,14 @@ happen.")
       (g-signal-connect button-search "clicked"
          (lambda (widget)
            (declare (ignore widget))
-           (let* ((text (gtk-entry-get-text entry))
+           (let* ((text (gtk-entry-text entry))
                   (buffer (gtk-text-view-get-buffer text-view))
                   (iter (gtk-text-buffer-get-start-iter buffer)))
              (find-text text-view text iter))))
       (g-signal-connect button-next "clicked"
          (lambda (widget)
            (declare (ignore widget))
-           (let* ((text (gtk-entry-get-text entry))
+           (let* ((text (gtk-entry-text entry))
                   (buffer (gtk-text-view-get-buffer text-view))
                   (last-pos (gtk-text-buffer-get-mark buffer "last-pos")))
              (when last-pos
@@ -3492,7 +3492,7 @@ happen.")
            (entry (make-instance 'gtk-entry
                                  :text "Hello"
                                  :max-length 50))
-           (pos (gtk-entry-get-text-length entry)))
+           (pos (gtk-entry-text-length entry)))
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
@@ -3501,9 +3501,9 @@ happen.")
                         (lambda (widget)
                           (declare (ignore widget))
                           (format t "Entry contents: ~A"
-                                  (gtk-entry-get-text entry))))
+                                  (gtk-entry-text entry))))
       (gtk-editable-insert-text entry " world" pos)
-      (gtk-editable-select-region entry 0 (gtk-entry-get-text-length entry))
+      (gtk-editable-select-region entry 0 (gtk-entry-text-length entry))
       (gtk-box-pack-start vbox entry :expand t :fill t :padding 0)
       (let ((check (gtk-check-button-new-with-label "Editable")))
         (g-signal-connect check "toggled"
@@ -3517,8 +3517,8 @@ happen.")
         (g-signal-connect check "toggled"
            (lambda (widget)
              (declare (ignore widget))
-             (gtk-entry-set-visibility entry
-                                       (gtk-toggle-button-active check))))
+             (setf (gtk-entry-visibility entry)
+                   (gtk-toggle-button-active check))))
         (gtk-box-pack-start hbox check))
       (gtk-box-pack-start vbox hbox)
       (let ((button (gtk-button-new-from-stock "gtk-close")))
@@ -3868,7 +3868,7 @@ happen.")
              (declare (ignore icon-pos event))
              (gtk-combo-box-text-append combo
                                         nil ; no ID
-                                        (gtk-entry-get-text entry))))
+                                        (gtk-entry-text entry))))
         (gtk-container-add action
                            (make-instance 'gtk-label
                                           :use-markup t
@@ -3888,7 +3888,7 @@ happen.")
              (declare (ignore icon-pos event))
              (gtk-combo-box-text-prepend combo
                                          nil ; no ID
-                                         (gtk-entry-get-text entry))))
+                                         (gtk-entry-text entry))))
         (gtk-container-add action
                            (make-instance 'gtk-label
                                           :use-markup t
@@ -4414,7 +4414,7 @@ happen.")
             (label (make-instance 'gtk-label
                                   :label "Fullscreen:"))
             (switch (make-instance 'gtk-switch)))
-        (gtk-actionable-set-action-name switch "win.fullscreen")
+        (setf (gtk-actionable-action-name switch) "win.fullscreen")
         (gtk-container-add box label)
         (gtk-container-add box switch)
         (gtk-container-add button box)
