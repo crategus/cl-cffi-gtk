@@ -335,7 +335,7 @@ do_search_entry (GtkWidget *do_widget)
                                    (format nil
                                            "Search by name~%~
                                             Click here to change the search type"))
-  (gtk-entry-set-placeholder-text entry "name"))
+  (setf (gtk-entry-placeholder-text entry) "name"))
 
 
 
@@ -357,7 +357,7 @@ do_search_entry (GtkWidget *do_widget)
                                             (format nil
                                                     "Search by name~%~
                                                      Click here to change the search type"))
-           (gtk-entry-set-placeholder-text entry "name")))
+           (setf (gtk-entry-placeholder-text entry) "name")))
       (gtk-menu-shell-append menu item))
 
     (let* ((image (gtk-image-new-from-stock "gtk-edit" :menu))
@@ -375,7 +375,7 @@ do_search_entry (GtkWidget *do_widget)
                                             (format nil
                                                     "Search by description~%~
                                                      Click here to change the search type"))
-           (gtk-entry-set-placeholder-text entry "description")))
+           (setf (gtk-entry-placeholder-text entry) "description")))
       (gtk-menu-shell-append menu item))
 
     (let* ((image (gtk-image-new-from-stock "gtk-open" :menu))
@@ -394,7 +394,7 @@ do_search_entry (GtkWidget *do_widget)
                                             (format nil
                                                     "Search by file name~%~
                                                      Click here to change the search type"))
-           (gtk-entry-set-placeholder-text entry "file name")))
+           (setf (gtk-entry-placeholder-text entry) "file name")))
       (gtk-menu-shell-append menu item))
     (gtk-widget-show-all menu)
     menu))

@@ -106,7 +106,7 @@ button_press (GtkWidget      *widget,
                         (lambda (button)
                           (declare (ignore button))
                           (let ((clipboard (gtk-widget-get-clipboard entry1 "CLIPBOARD")))
-                            (gtk-clipboard-set-text clipboard (gtk-entry-get-text entry1)))))
+                            (gtk-clipboard-set-text clipboard (gtk-entry-text entry1)))))
 
       (g-signal-connect button2 "clicked"
                         (lambda (button)
@@ -117,7 +117,7 @@ button_press (GtkWidget      *widget,
                                                         (lambda (clipboard text)
                                                           (declare (ignore clipboard))
                                                           (when text
-                                                            (gtk-entry-set-text entry2 text)))))))
+                                                            (setf (gtk-entry-text entry2) text)))))))
 
 
       (gtk-box-pack-start vbox label1 :expand nil :fill nil :padding 0)

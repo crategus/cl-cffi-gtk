@@ -30,7 +30,7 @@
          (lambda (widget)
            (let* ((page-number (gtk-assistant-get-current-page assistant))
                   (current-page (gtk-assistant-get-nth-page assistant page-number))
-                  (text (gtk-entry-get-text widget)))
+                  (text (gtk-entry-text widget)))
              (if text
                  (gtk-assistant-set-page-complete assistant current-page t)
                  (gtk-assistant-set-page-complete assistant current-page nil)))))

@@ -11,7 +11,7 @@
            (entry (make-instance 'gtk-entry
                                  :text "Hello"
                                  :max-length 50))
-           (pos (gtk-entry-get-text-length entry)))
+           (pos (gtk-entry-text-length entry)))
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
@@ -20,9 +20,9 @@
                         (lambda (widget)
                           (declare (ignore widget))
                           (format t "Entry contents: ~A"
-                                  (gtk-entry-get-text entry))))
+                                  (gtk-entry-text entry))))
       (gtk-editable-insert-text entry " world" pos)
-      (gtk-editable-select-region entry 0 (gtk-entry-get-text-length entry))
+      (gtk-editable-select-region entry 0 (gtk-entry-text-length entry))
       (gtk-box-pack-start vbox entry :expand t :fill t :padding 0)
       (let ((check (gtk-check-button-new-with-label "Editable")))
         (g-signal-connect check "toggled"
@@ -36,8 +36,8 @@
         (g-signal-connect check "toggled"
            (lambda (widget)
              (declare (ignore widget))
-             (gtk-entry-set-visibility entry
-                                       (gtk-toggle-button-active check))))
+             (setf (gtk-entry-visibility entry)
+                   (gtk-toggle-button-active check))))
         (gtk-box-pack-start hbox check))
       (gtk-box-pack-start vbox hbox)
       (let ((button (gtk-button-new-from-stock "gtk-close")))

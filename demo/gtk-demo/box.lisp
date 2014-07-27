@@ -116,7 +116,7 @@
                           (lambda (entry icon-pos event)
                             (declare (ignore icon-pos event))
                             (gtk-frame-set-label frame
-                                                 (gtk-entry-get-text entry))))
+                                                 (gtk-entry-text entry))))
         (gtk-container-add action
                            (make-instance 'gtk-label
                                           :use-markup t
@@ -124,7 +124,7 @@
                                           :label
                                           "<b>Set Frame Label</b>"))
         ;; Put the actual Label text into the entry.
-        (gtk-entry-set-text entry (gtk-frame-get-label frame))
+        (setf (gtk-entry-text entry) (gtk-frame-get-label frame))
         ;; Pack the entry in the action widget.
         (gtk-container-add action entry))
 

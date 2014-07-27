@@ -123,7 +123,7 @@
             (label (make-instance 'gtk-label
                                   :label "Fullscreen:"))
             (switch (make-instance 'gtk-switch)))
-        (gtk-actionable-set-action-name switch "win.fullscreen")
+        (setf (gtk-actionable-action-name switch) "win.fullscreen")
         (gtk-container-add box label)
         (gtk-container-add box switch)
         (gtk-container-add button box)
