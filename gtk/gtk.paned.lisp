@@ -5,12 +5,12 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.10 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -128,24 +128,24 @@
   then this is treated as if @code{\"resize\"} is @em{true} for both children.
 
   The application can set the position of the slider as if it were set by the
-  user, by calling the function @fun{gtk-paned-set-position}.
+  user, by calling the generic function @fun{gtk-paned-position}.
 
-  @b{Example:} Creating a paned widget with minimum sizes.
-  @begin{pre}
- GtkWidget *hpaned = gtk_paned_new (GTK_ORIENTATION_HORIZONTAL);
- GtkWidget *frame1 = gtk_frame_new (NULL);
- GtkWidget *frame2 = gtk_frame_new (NULL);
- gtk_frame_set_shadow_type (GTK_FRAME (frame1), GTK_SHADOW_IN);
- gtk_frame_set_shadow_type (GTK_FRAME (frame2), GTK_SHADOW_IN);
-
- gtk_widget_set_size_request (hpaned, 200, -1);
-
- gtk_paned_pack1 (GTK_PANED (hpaned), frame1, TRUE, FALSE);
- gtk_widget_set_size_request (frame1, 50, -1);
-
- gtk_paned_pack2 (GTK_PANED (hpaned), frame2, FALSE, FALSE);
- gtk_widget_set_size_request (frame2, 50, -1);
-  @end{pre}
+  @begin[Example]{dictionary}
+    Creating a paned widget with minimum sizes.
+    @begin{pre}
+  (let ((paned (make-instance 'gtk-paned
+                              :orientation :horizontal
+                              :width-request 250
+                              :height-request 150))
+        (frame1 (make-instance 'gtk-frame :shadow-type :in
+                                          :width-request 100))
+        (frame2 (make-instance 'gtk-frame :shadow-type :in
+                                          :width-request 50)))
+      (gtk-paned-pack1 paned frame1 :resize t :shrink nil)
+      (gtk-paned-pack2 paned frame2 :resize nil :shrink nil)
+      ... )
+    @end{pre}
+  @end{dictionary}
   @begin[Child Property Details]{dictionary}
     @subheading{The @code{\"resize\"} child property}
       @code{\"resize\"} of type @code{:boolean} (Read / Write) @br{}
@@ -254,9 +254,11 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Property Details
+;;; Property and Accessor Details
 ;;;
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-paned-max-position -------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "max-position" 'gtk-paned) 't)
@@ -267,7 +269,15 @@
   Default value: 2147483647 @br{}
   Since 2.4")
 
-;;; ----------------------------------------------------------------------------
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-paned-max-position atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-paned-max-position 'function)
+ "@version{2014-7-27}
+  Accessor of the slot @slot[gtk-paned]{max-position} of the @class{gtk-paned}
+  class.")
+
+;;; --- gtk-paned-min-position -------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "min-position" 'gtk-paned) 't)
@@ -278,7 +288,15 @@
   Default value: 0 @br{}
   Since 2.4")
 
-;;; ----------------------------------------------------------------------------
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-paned-min-position atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-paned-min-position 'function)
+ "@version{2014-7-27}
+  Accessor of the slot @slot[gtk-panded]{min-position} of the @class{gtk-paned}
+  class.")
+
+;;; --- gtk-paned-position -----------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "position" 'gtk-paned) 't)
@@ -288,7 +306,29 @@
   Allowed values: >= 0 @br{}
   Default value: 0")
 
-;;; ----------------------------------------------------------------------------
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-paned-position atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-paned-position 'function)
+ "@version{2014-7-27}
+  @argument[object]{a @class{gtk-paned} container}
+  @argument[position]{pixel position of divider, a negative value means that
+    the position is unset}
+  @syntax[]{(gtk-paned-position object) => position}
+  @syntax[]{(setf (gtk-panded-position position) position)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-paned]{position} of the @class{gtk-paned}
+    class.
+  @end{short}
+
+  The generic function @sym{gtk-paned} obtains the position of the divider
+  between the two panes.
+
+  The generic function @sym{(setf gtk-paned-position)} sets the position of the
+  divider between the two panes.
+  @see-class{gtk-paned}")
+
+;;; --- gtk-paned-position-set -------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "position-set" 'gtk-paned) 't)
@@ -297,45 +337,13 @@
   @em{True} if the @code{\"position\"} property should be used. @br{}
   Default value: @code{nil}")
 
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-paned-max-position atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-paned-max-position 'function)
- "@version{2013-3-17}
-  Accessor of the slot @code{\"max-position\"} of the @class{gtk-paned} class.")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-paned-min-position atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-paned-min-position 'function)
- "@version{2013-3-17}
-  Accessor of the slot @code{\"min-position\"} of the @class{gtk-paned} class.")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-paned-position atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-paned-position 'function)
- "@version{2013-3-17}
-  Accessor of the slot @code{\"position\"} of the @class{gtk-paned} class.")
-
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-paned-position-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-paned-position-set 'function)
- "@version{2013-3-17}
-  Accessor of the slot @code{\"position-set\"} of the @class{gtk-paned} class.")
+ "@version{2014-7-27}
+  Accessor of the slot @slot[gtk-paned]{position-set} of the @class{gtk-paned}
+  class.")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -493,39 +501,6 @@
   (paned g-object))
 
 (export 'gtk-paned-get-child2)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_paned_set_position ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-paned-set-position))
-
-(defun gtk-paned-set-position (paned position)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-18}
-  @argument[paned]{a @class{gtk-paned} container}
-  @argument[position]{pixel position of divider, a negative value means that
-    the position is unset}
-  Sets the position of the divider between the two panes."
-  (setf (gtk-paned-position paned) position))
-
-(export 'gtk-paned-set-position)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_paned_get_position ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-paned-get-position))
-
-(defun gtk-paned-get-position (paned)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-18}
-  @argument[paned]{a @class{gtk-paned} container}
-  @return{Position of the divider.}
-  Obtains the position of the divider between the two panes."
-  (gtk-paned-position paned))
-
-(export 'gtk-paned-get-position)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_paned_get_handle_window ()
