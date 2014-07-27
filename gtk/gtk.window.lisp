@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.8.9 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.10 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -74,6 +74,7 @@
 ;;;     gtk_window_set_default
 ;;;     gtk_window_present
 ;;;     gtk_window_present_with_time
+;;;     gtk_window_close
 ;;;     gtk_window_iconify
 ;;;     gtk_window_deiconify
 ;;;     gtk_window_stick
@@ -151,6 +152,7 @@
 ;;;     gtk_window_get_application
 ;;;     gtk_window_set_application
 ;;;     gtk_window_set_has_user_ref_count
+;;;     gtk_window_set_titlebar
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -2079,6 +2081,23 @@
 (export 'gtk-window-present-with-time)
 
 ;;; ----------------------------------------------------------------------------
+;;; gtk_window_close ()
+;;;
+;;; void gtk_window_close (GtkWindow *window);
+;;;
+;;; Requests that the window is closed, similar to what happens when a window
+;;; manager close button is clicked.
+;;;
+;;; This function can be used with close buttons in custom titlebars.
+;;;
+;;; Parameters
+;;;
+;;; window
+;;;     a GtkWindow
+;;; Since 3.10
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_window_iconify ()
 ;;; ----------------------------------------------------------------------------
 
@@ -2874,7 +2893,19 @@
  "@version{2013-3-29}
   @argument[window]{a @class{gtk-window} widget}
   Hides @arg{window}, then reshows it, resetting the default size and position
-  of the @arg{window}. Used by GUI builders only."
+  of the window. Used by GUI builders only.
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-window-reshow-with-initial-size} has been deprecated
+    since version 3.10 and should not be used in newly-written code.
+
+    GUI builders can call the functions @fun{gtk-widget-hide}, 
+    @fun{gtk-widget-unrealize} and then @fun{gtk-widget-show} on window
+    themselves, if they still need this functionality.
+  @end{dictionary}
+  @see-class{gtk-window}
+  @see-function{gtk-widget-hide}
+  @see-function{gtk-widget-show}
+  @see-function{gtk-widget-undrealize}"
   (window (g-object gtk-window)))
 
 (export 'gtk-window-reshow-with-initial-size)
@@ -3203,6 +3234,29 @@
 ;;;     the new value
 ;;;
 ;;; Since 3.0
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_window_set_titlebar ()
+;;;
+;;; void gtk_window_set_titlebar (GtkWindow *window, GtkWidget *titlebar);
+;;;
+;;; Sets a custom titlebar for window .
+;;;
+;;; If you set a custom titlebar, GTK+ will do its best to convince the window
+;;; manager not to put its own titlebar on the window. Depending on the system,
+;;; this function may not work for a window that is already visible, so you set
+;;; the titlebar before calling gtk_widget_show().
+;;;
+;;; Parameters
+;;;
+;;; window
+;;;     a GtkWindow
+;;;
+;;; titlebar
+;;;     the widget to use as titlebar
+;;;
+;;; Since 3.10
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- End of file gtk.window.lisp --------------------------------------------

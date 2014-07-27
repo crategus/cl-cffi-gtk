@@ -4,12 +4,13 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.10 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -37,6 +38,7 @@
 ;;;     GtkArrowPlacement
 ;;;     GtkArrowType
 ;;;     GtkAttachOptions
+;;;     GtkBaselinePosition
 ;;;     GtkButtonBoxStyle
 ;;;     GtkCornerType
 ;;;     GtkDeleteType
@@ -202,6 +204,46 @@
     @entry[:shrink]{The widget should shrink as and when possible.}
     @entry[:fill]{The widget should fill the space allocated to it.}
   @end{table}")
+
+;;; ----------------------------------------------------------------------------
+;;; enum GtkBaselinePosition
+;;; ----------------------------------------------------------------------------
+
+#+gtk-3-10
+(define-g-enum "GtkBaselinePosition" gtk-baseline-position
+  (:export t
+   :type-initializer "gtk_baseline-position_get_type")
+  (:top 0)
+  (:center 1)
+  (:bottom 2))
+
+#+(and cl-cffi-gtk-documentation gtk-3-10)
+(setf (gethash 'gtk-baseline-position atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'gtk-baseline-position atdoc:*external-symbols*)
+ "@version{2014-7-26}
+  @begin{short}
+    Whenever a container has some form of natural row it may align children in
+    that row along a common typographical baseline.
+  @end{short}
+  If the amount of vertical space in the row is taller than the total requested
+  height of the baseline-aligned children then it can use a
+  @sym{gtk-baseline-position} to select where to put the baseline inside the
+  extra availible space.
+  @begin{pre}
+(define-g-enum \"GtkBaselinePosition\" gtk-baseline-position
+  (:export t
+   :type-initializer \"gtk_baseline-position_get_type\")
+  (:top 0)
+  (:center 1)
+  (:bottom 2))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:top]{Align the baseline at the top.}
+    @entry[:center]{Center the baseline.}
+    @entry[:bottom]{Align the baseline at the bottom.}
+  @end{table}
+  Since 3.10
+  @see-class{gtk-box}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkButtonBoxStyle
@@ -406,8 +448,9 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-im-preedit-style atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-im-preedit-style atdoc:*external-symbols*)
- "@version{2013-4-18}
-  @short{}
+ "@version{2014-7-26}
+  @short{Style for input method preedit.}
+  See also the @slot[gtk-settings]{gtk-im-preedit-style} property.
   @begin{pre}
 (define-g-enum \"GtkIMPreeditStyle\" gtk-im-preedit-style
   (:export t
@@ -415,7 +458,12 @@
   (:nothing 0)
   (:callback 1)
   (:none 2))
-  @end{pre}")
+  @end{pre}
+  @begin[Warning]{dictionary}
+    The enumeration @sym{gtk-im-preedit-style} has been deprecated since version
+    3.10 and should not be used in newly-written code.
+  @end{dictionary}
+  @see-class{gtk-settings}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkIMStatusStyle
@@ -431,8 +479,9 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-im-status-style atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-im-status-style atdoc:*external-symbols*)
- "@version{2013-4-18}
-  @short{}
+ "@version{2014-7-26}
+  @short{Style for input method status.}
+  See also the @slot[gtk-settings]{gtk-im-status-style} property.
   @begin{pre}
 (define-g-enum \"GtkIMStatusStyle\" gtk-im-status-style
   (:export t
@@ -440,7 +489,12 @@
   (:nothing 0)
   (:callback 1)
   (:none 2))
-  @end{pre}")
+  @end{pre}
+  @begin[Warning]{dictionary}
+    The enumeration @sym{gtk-im-status-style} has been deprecated since version
+    3.10 and should not be used in newly-written code.
+  @end{dictionary}
+  @see-class{gtk-settings}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkJustification
@@ -1010,25 +1064,43 @@
   (:insensitive #.(ash 1 3))
   (:inconsistent #.(ash 1 4))
   (:focused #.(ash 1 5))
-  (:backdrop #.(ash 1 6)))
+  (:backdrop #.(ash 1 6))
+  #+gtk-3-8
+  (:dir-ltr #.(ash 1 7))
+  #+gtk-3-8
+  (:dir-rtl #.(ash 1 8))
+  #+gtk-3-12
+  (:link #.(ash 1 9))
+  #+gtk-3-12
+  (:visited #.(ash 1 10)))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-state-flags atdoc:*symbol-name-alias*) "Flags"
       (gethash 'gtk-state-flags atdoc:*external-symbols*)
- "@version{2013-4-18}
+ "@version{2014-7-26}
   @short{Describes a widget state.}
+  Widget states are used to match the widget against CSS pseudo-classes. Note
+  that GTK extends the regular CSS classes and sometimes uses different names.
   @begin{pre}
 (define-g-flags \"GtkStateFlags\" gtk-state-flags
   (:export t
    :type-initializer \"gtk_state_flags_get_type\")
   (:normal 0)
-  (:active       #.(ash 1 0))
-  (:prelight     #.(ash 1 1))
-  (:selected     #.(ash 1 2))
-  (:insensitive  #.(ash 1 3))
+  (:active #.(ash 1 0))
+  (:prelight #.(ash 1 1))
+  (:selected #.(ash 1 2))
+  (:insensitive #.(ash 1 3))
   (:inconsistent #.(ash 1 4))
-  (:focused      #.(ash 1 5))
-  (:backdrop     #.(ash 1 6)))
+  (:focused #.(ash 1 5))
+  (:backdrop #.(ash 1 6))
+  #+gtk-3-8
+  (:dir-ltr #.(ash 1 7))
+  #+gtk-3-8
+  (:dir-rtl #.(ash 1 8))
+  #+gtk-3-12
+  (:link #.(ash 1 9))
+  #+gtk-3-12
+  (:visited #.(ash 1 10)))
   @end{pre}
   @begin[code]{table}
     @entry[:normal]{State during normal operation.}
@@ -1039,6 +1111,11 @@
     @entry[:inconsistent]{Widget is inconsistent.}
     @entry[:focused]{Widget has the keyboard focus.}
     @entry[:backdrop]{Widget is in a background toplevel window.}
+    @entry[:dir-ltr]{Widget is in left-to-right text direction. Since 3.8.}
+    @entry[:dir-rtl]{Widget is in right-to-left text direction. Since 3.8.}
+    @entry[:link]{Widget is a link. Since 3.12.}
+    @entry[:visited]{The location the widget points to has already been visited.
+                     Since 3.12.}
   @end{table}")
 
 ;;; ----------------------------------------------------------------------------

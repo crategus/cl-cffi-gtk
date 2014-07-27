@@ -4,11 +4,12 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.10 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011, 2012, 2013, 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -53,8 +54,6 @@
                  "GtkBuildable")
     :type-initializer "gtk_overlay_get_type")
   nil)
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-overlay 'type)
@@ -109,11 +108,12 @@
 
 (defun gtk-overlay-new ()
  #+cl-cffi-gtk-documentation
- "@version{2013-5-20}
+ "@version{2014-7-26}
   @return{A new @class{gtk-overlay} container.}
   @short{Creates a new @class{gtk-overlay} container.}
 
-  Since 3.2"
+  Since 3.2
+  @see-class{gtk-overlay}"
   (make-instance 'gtk-overlay))
 
 (export 'gtk-overlay-new)
@@ -124,7 +124,7 @@
 
 (defcfun ("gtk_overlay_add_overlay" gtk-overlay-add-overlay) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-5-20}
+ "@version{2014-7-26}
   @argument[overlay]{a @class{gtk-overlay} container}
   @argument[widget]{a @class{gtk-widget} to be added to the container}
   @short{Adds @arg{widget} to @arg{overlay}.}
@@ -133,9 +133,10 @@
   @fun{gtk-container-add}.
 
   The position at which @arg{widget} is placed is determined from its
-  @code{\"halign\"} and @code{\"valign\"} properties.
+  @slot[gtk-widget]{halign} and @slot[gtk-widget]{valign} properties.
 
-  Since 3.2"
+  Since 3.2
+  @see-class{gtk-overlay}"
   (overlay (g-object gtk-overlay))
   (widget (g-object gtk-widget)))
 

@@ -65,7 +65,8 @@
 #+sbcl
 (when (and (find-package "SB-EXT")
            (find-symbol "SET-FLOATING-POINT-MODES" (find-package "SB-EXT")))
-  (funcall (find-symbol "SET-FLOATING-POINT-MODES" (find-package "SB-EXT")) :traps nil))
+  (funcall (find-symbol "SET-FLOATING-POINT-MODES" (find-package "SB-EXT"))
+           :traps nil))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -79,6 +80,571 @@
   allows for maximum flexibility. Bindings for many other languages have been
   written, including C++, Objective-C, Guile/Scheme, Perl, Python, TOM, Ada95,
   Free Pascal, and Eiffel.
+  @begin[Application support]{section}
+    @begin[GtkApplication]{subsection}
+      Application class
+
+      @about-class{gtk-application}
+      @about-symbol{gtk-application-inhibit-flags}
+      @about-generic{gtk-application-active-window}
+      @about-generic{gtk-application-app-menu}
+      @about-generic{gtk-application-menubar}
+      @about-function{gtk-application-new}
+      @about-function{gtk-application-add-window}
+      @about-function{gtk-application-remove-window}
+      @about-function{gtk-application-get-windows}
+      @about-function{gtk-application-get-window-by-id}
+      @about-function{gtk-application-inhibit}
+      @about-function{gtk-application-uninhibit}
+      @about-function{gtk-application-is-inhibited}
+      @about-function{gtk-application-add-accelerator}
+      @about-function{gtk-application-remove-accelerator}
+    @end{subsection}
+    @begin[GtkApplicationWindow]{subsection}
+      @class{gtk-window} subclass with @class{gtk-application} support.
+
+      @about-class{gtk-application-window}
+      @about-generic{gtk-application-window-show-menubar}
+      @about-function{gtk-application-window-new}
+      @about-function{gtk-application-window-get-id}
+    @end{subsection}
+    @begin[GtkActionable]{subsection}
+      An interface for widgets that can be associated with actions.
+
+      @about-class{gtk-actionable}
+      @about-class{gtk-actionable-interface}
+      @about-generic{gtk-actionable-action-name}
+      @about-generic{gtk-actionable-action-target}
+      @about-function{gtk-actionable-set-action-target}
+      @about-function{gtk-actionable-set-detailed-action-name}
+    @end{subsection}
+  @end{section}
+  @begin[Interface builder]{section}
+    @begin[GtkBuilder]{subsection}
+      Build an interface from an XML UI definition.
+
+      @about-class{gtk-builder}
+      @about-generic{gtk-builder-translation-domain}
+      @about-symbol{gtk-builder-error}
+      @about-function{gtk-builder-new}
+      @about-function{gtk-builder-add-from-file}
+      @about-function{gtk-builder-add-from-resource}
+      @about-function{gtk-builder-add-from-string}
+      @about-function{gtk-builder-add-objects-from-file}
+      @about-function{gtk-builder-add-objects-from-string}
+      @about-function{gtk-builder-add-objects-from-resource}
+      @about-function{gtk-builder-get-object}
+      @about-function{gtk-builder-get-objects}
+      @about-function{gtk-builder-connect-signals}
+      @about-function{gtk-builder-connect-signals-full}
+      @about-function{gtk-builder-get-type-from-name}
+      @about-function{gtk-builder-value-from-string}
+      @about-function{gtk-builder-value-from-string-type}
+      @about-symbol{GTK_BUILDER_WARN_INVALID_CHILD_TYPE}
+      @about-symbol{GTK_BUILDER_ERROR}
+    @end{subsection}
+    @begin[GtkBuildable]{subsection}
+      Interface for objects that can be built by @class{gtk-builder}.
+
+      @about-class{gtk-buildable}
+      @about-class{gtk-buildable-iface}
+      @about-function{gtk-buildable-set-name}
+      @about-function{gtk-buildable-get-name}
+      @about-function{gtk-buildable-add-child}
+      @about-function{gtk-buildable-set-buildable-property}
+      @about-function{gtk-buildable-construct-child}
+      @about-function{gtk-buildable-custom-tag-start}
+      @about-function{gtk-buildable-custom-tag-end}
+      @about-function{gtk-buildable-custom-finished}
+      @about-function{gtk-buildable-parser-finished}
+      @about-function{gtk-buildable-get-internal-child}
+    @end{subsection}
+  @end{section}
+  @begin[Windows]{section}
+    @begin[GtkDialog]{subsection}
+      Create popup windows.
+
+      @about-class{gtk-dialog}
+      @about-symbol{gtk-dialog-flags}
+      @about-symbol{gtk-response-type}
+      @about-function{gtk-dialog-new}
+      @about-function{gtk-dialog-new-with-buttons}
+      @about-function{gtk-dialog-run}
+      @about-function{gtk-dialog-response}
+      @about-function{gtk-dialog-add-button}
+      @about-function{gtk-dialog-add-buttons}
+      @about-function{gtk-dialog-add-action-widget}
+      @about-function{gtk-dialog-set-default-response}
+      @about-function{gtk-dialog-set-response-sensitive}
+      @about-function{gtk-dialog-get-response-for-widget}
+      @about-function{gtk-dialog-get-widget-for-response}
+      @about-function{gtk-dialog-get-action-area}
+      @about-function{gtk-dialog-get-content-area}
+      @about-function{gtk-alternative-dialog-button-order}
+      @about-function{gtk-dialog-set-alternative-button-order}
+      @about-function{gtk-dialog-set-alternative-button-order-from-array}
+    @end{subsection}
+    @begin[GtkMessageDialog]{subsection}
+      A convenient message window.
+
+      @about-class{gtk-message-dialog}
+      @about-symbol{gtk-message-type}
+      @about-symbol{gtk-buttons-type}
+      @about-function{gtk-message-dialog-new}
+      @about-function{gtk-message-dialog-new-with-markup}
+      @about-function{gtk-message-dialog-set-markup}
+      @about-function{gtk-message-dialog-set-image}
+      @about-function{gtk-message-dialog-get-image}
+      @about-function{gtk-message-dialog-format-secondary-text}
+      @about-function{gtk-message-dialog-format-secondary-markup}
+    @end{subsection}
+    @begin[GtkAboutDialog]{subsection}
+      Display information about an application.
+
+      @about-class{gtk-about-dialog}
+      @about-symbol{gtk-license}
+      @about-generic{gtk-about-dialog-artists}
+      @about-generic{gtk-about-dialog-authors}
+      @about-generic{gtk-about-dialog-comments}
+      @about-generic{gtk-about-dialog-copyright}
+      @about-generic{gtk-about-dialog-documenters}
+      @about-generic{gtk-about-dialog-license}
+      @about-generic{gtk-about-dialog-license-type}
+      @about-generic{gtk-about-dialog-logo}
+      @about-generic{gtk-about-dialog-logo-icon-name}
+      @about-generic{gtk-about-dialog-program-name}
+      @about-generic{gtk-about-dialog-translator-credits}
+      @about-generic{gtk-about-dialog-version}
+      @about-generic{gtk-about-dialog-website}
+      @about-generic{gtk-about-dialog-website-label}
+      @about-generic{gtk-about-dialog-wrap-license}
+      @about-function{gtk-about-dialog-new}
+      @about-function{gtk-about-dialog-add-credit-section}
+      @about-function{gtk-show-about-dialog}
+    @end{subsection}
+    @begin[GtkAssistant]{subsection}
+      A widget used to guide users through multi-step operations.
+
+      @about-class{gtk-assistant}
+      @about-function{gtk-assistant-child-page-type}
+      @about-function{gtk-assistant-child-title}
+      @about-function{gtk-assistant-child-header-image}
+      @about-function{gtk-assistant-child-sidebar-image}
+      @about-function{gtk-assistant-child-complete}
+      @about-function{gtk-assistant-new}
+      @about-function{gtk-assistant-get-current-page}
+      @about-function{gtk-assistant-set-current-page}
+      @about-function{gtk-assistant-get-n-pages}
+      @about-function{gtk-assistant-get-nth-page}
+      @about-function{gtk-assistant-prepend-page}
+      @about-function{gtk-assistant-append-page}
+      @about-function{gtk-assistant-insert-page}
+      @about-function{gtk-assistant-remove-page}
+      @about-function{gtk-assistant-set-forward-page-func}
+      @about-symbol{gtk-assistant-page-type}
+      @about-function{gtk-assistant-set-page-type}
+      @about-function{gtk-assistant-get-page-type}
+      @about-function{gtk-assistant-set-page-title}
+      @about-function{gtk-assistant-get-page-title}
+      @about-function{gtk-assistant-set-page-header-image}
+      @about-function{gtk-assistant-get-page-header-image}
+      @about-function{gtk-assistant-set-page-side-image}
+      @about-function{gtk-assistant-get-page-side-image}
+      @about-function{gtk-assistant-set-page-complete}
+      @about-function{gtk-assistant-get-page-complete}
+      @about-function{gtk-assistant-add-action-widget}
+      @about-function{gtk-assistant-remove-action-widget}
+      @about-function{gtk-assistant-update-buttons-state}
+      @about-function{gtk-assistant-commit}
+      @about-function{gtk-assistant-next-page}
+      @about-function{gtk-assistant-previous-page}
+    @end{subsection}
+    @begin[GtkWindow]{subsection}
+      Toplevel which can contain other widgets.
+
+      @about-class{gtk-window}
+      @about-generic{gtk-window-accept-focus}
+      @about-generic{gtk-window-application}
+      @about-generic{gtk-window-attached-to}
+      @about-generic{gtk-window-decorated}
+      @about-generic{gtk-window-default-height}
+      @about-generic{gtk-window-default-width}
+      @about-generic{gtk-window-deletable}
+      @about-generic{gtk-window-destroy-with-parent}
+      @about-generic{gtk-window-focus-on-map}
+      @about-generic{gtk-window-focus-visible}
+      @about-generic{gtk-window-gravity}
+      @about-generic{gtk-window-has-resize-grip}
+      @about-generic{gtk-window-has-toplevel-focus}
+      @about-generic{gtk-window-hide-titlebar-when-maximized}
+      @about-generic{gtk-window-icon}
+      @about-generic{gtk-window-icon-name}
+      @about-generic{gtk-window-is-active}
+      @about-generic{gtk-window-mnemonics-visible}
+      @about-generic{gtk-window-modal}
+      @about-generic{gtk-window-opacity}
+      @about-generic{gtk-window-resizable}
+      @about-generic{gtk-window-resize-grip-visible}
+      @about-generic{gtk-window-role}
+      @about-generic{gtk-window-screen}
+      @about-generic{gtk-window-skip-pager-hint}
+      @about-generic{gtk-window-skip-taskbar-hint}
+      @about-generic{gtk-window-startup-id}
+      @about-generic{gtk-window-title}
+      @about-generic{gtk-window-transient-for}
+      @about-generic{gtk-window-type}
+      @about-generic{gtk-window-type-hint}
+      @about-generic{gtk-window-urgency-hint}
+      @about-generic{gtk-window-window-position}
+      @about-function{gtk-window-new}
+      @about-function{gtk-window-set-wmclass}
+      @about-function{gtk-window-set-resizable}
+      @about-function{gtk-window-get-resizable}
+      @about-function{gtk-window-add-accel-group}
+      @about-function{gtk-window-remove-accel-group}
+      @about-function{gtk-window-activate-focus}
+      @about-function{gtk-window-activate-default}
+      @about-function{gtk-window-set-default-geometry}
+      @about-function{gtk-window-set-geometry-hints}
+      @about-function{gtk-window-set-position}
+      @about-function{gtk-window-hide-titlebar-when-maximized}
+      @about-function{gtk-window-set-screen}
+      @about-function{gtk-window-get-screen}
+      @about-function{gtk-window-is-active}
+      @about-function{gtk-window-has-toplevel-focus}
+      @about-function{gtk-window-list-toplevels}
+      @about-function{gtk-window-add-mnemonic}
+      @about-function{gtk-window-remove-mnemonic}
+      @about-function{gtk-window-mnemonic-activate}
+      @about-function{gtk-window-activate-key}
+      @about-function{gtk-window-propagate-key-event}
+      @about-function{gtk-window-get-focus}
+      @about-function{gtk-window-set-focus}
+      @about-function{gtk-window-get-default-widget}
+      @about-function{gtk-window-set-default}
+      @about-function{gtk-window-present}
+      @about-function{gtk-window-present-with-time}
+      @about-function{gtk-window-close}
+      @about-function{gtk-window-iconify}
+      @about-function{gtk-window-deiconify}
+      @about-function{gtk-window-stick}
+      @about-function{gtk-window-unstick}
+      @about-function{gtk-window-maximize}
+      @about-function{gtk-window-unmaximize}
+      @about-function{gtk-window-fullscreen}
+      @about-function{gtk-window-unfullscreen}
+      @about-function{gtk-window-set-keep-above}
+      @about-function{gtk-window-set-keep-below}
+      @about-function{gtk-window-begin-resize-drag}
+      @about-function{gtk-window-begin-move-drag}
+      @about-function{gtk-window-set-deletable}
+      @about-function{gtk-window-set-mnemonic-modifier}
+      @about-function{gtk-window-set-type-hint}
+      @about-function{gtk-window-set-skip-taskbar-hint}
+      @about-function{gtk-window-set-skip-pager-hint}
+      @about-function{gtk-window-set-urgency-hint}
+      @about-function{gtk-window-set-focus-on-map}
+      @about-function{gtk-window-set-startup-id}
+      @about-function{gtk-window-set-role}
+      @about-function{gtk-window-get-deletable}
+      @about-function{gtk-window-get-default-icon-list}
+      @about-function{gtk-window-get-default-icon-name}
+      @about-generic{gtk-window-default-size}
+      @about-function{gtk-window-get-hide-titlebar-when-maximized}
+      @about-function{gtk-window-get-icon}
+      @about-function{gtk-window-get-icon-list}
+      @about-function{gtk-window-get-icon-name}
+      @about-function{gtk-window-get-mnemonic-modifier}
+      @about-function{gtk-window-get-modal}
+      @about-function{gtk-window-get-position}
+      @about-function{gtk-window-get-role}
+      @about-function{gtk-window-get-size}
+      @about-function{gtk-window-get-transient-for}
+      @about-function{gtk-window-get-type-hint}
+      @about-function{gtk-window-get-skip-taskbar-hint}
+      @about-function{gtk-window-get-skip-pager-hint}
+      @about-function{gtk-window-get-urgency-hint}
+      @about-function{gtk-window-get-focus-on-map}
+      @about-function{gtk-window-get-group}
+      @about-function{gtk-window-has-group}
+      @about-function{gtk-window-get-window-type}
+      @about-function{gtk-window-move}
+      @about-function{gtk-window-parse-geometry}
+      @about-function{gtk-window-reshow-with-initial-size}
+      @about-function{gtk-window-resize}
+      @about-function{gtk-window-resize-to-geometry}
+      @about-function{gtk-window-set-default-icon-list}
+      @about-function{gtk-window-set-default-icon}
+      @about-function{gtk-window-set-default-icon-from-file}
+      @about-function{gtk-window-set-default-icon-name}
+      @about-function{gtk-window-set-icon}
+      @about-function{gtk-window-set-icon-list}
+      @about-function{gtk-window-set-icon-from-file}
+      @about-function{gtk-window-set-icon-name}
+      @about-function{gtk-window-set-auto-startup-notification}
+      @about-function{gtk-window-get-opacity}
+      @about-function{gtk-window-set-opacity}
+      @about-function{gtk-window-get-mnemonics-visible}
+      @about-function{gtk-window-set-mnemonics-visible}
+      @about-function{gtk-window-get-focus-visible}
+      @about-function{gtk-window-set-focus-visible}
+      @about-function{gtk-window-set-has-resize-grip}
+      @about-function{gtk-window-get-has-resize-grip}
+      @about-function{gtk-window-resize-grip-is-visible}
+      @about-function{gtk-window-get-resize-grip-area}
+      @about-function{gtk-window-set-has-user-ref-count}
+      @about-function{gtk-window-set-titlebar}
+    @end{subsection}
+    @begin[GtkWindowGroup]{subsection}
+      Limit the effect of grabs.
+
+      @about-class{gtk-window-group}
+      @about-function{gtk-window-group-new}
+      @about-function{gtk-window-group-add-window}
+      @about-function{gtk-window-group-remove-window}
+      @about-function{gtk-window-group-list-windows}
+      @about-function{gtk-window-group-get-current-grab}
+      @about-function{gtk-window-group-get-current-device-grab}
+    @end{subsection}
+    @begin[GtkInvisible]{subsection}
+      A widget which is not displayed.
+
+      @about-class{gtk-invisible}
+      @about-generic{gtk-invisible-screen}
+      @about-function{gtk-invisible-new}
+      @about-function{gtk-invisible-new-for-screen}
+    @end{subsection}
+    @begin[GtkOffscreenWindow]{subsection}
+      A toplevel widget to manage offscreen rendering of child widgets.
+
+      @about-class{gtk-offscreen-window}
+      @about-function{gtk-offscreen-window-new}
+      @about-function{gtk-offscreen-window-get-surface}
+      @about-function{gtk-offscreen-window-get-pixbuf}
+    @end{subsection}
+  @end{section}
+  @begin[Layout Containers]{section}
+    @begin[GtkBox]{subsection}
+      A container box.
+
+      @about-class{gtk-box}
+      @about-function{gtk-box-new}
+      @about-function{gtk-box-child-expand}
+      @about-function{gtk-box-child-fill}
+      @about-function{gtk-box-child-padding}
+      @about-function{gtk-box-child-pack-type}
+      @about-function{gtk-box-child-position}
+      @about-function{gtk-box-pack-start}
+      @about-function{gtk-box-pack-end}
+      @about-function{gtk-box-get-spacing}
+      @about-function{gtk-box-set-spacing}
+      @about-function{gtk-box-reorder-child}
+      @about-function{gtk-box-query-child-packing}
+      @about-function{gtk-box-set-child-packing}
+    @end{subsection}
+    @begin[GtkGrid]{subsection}
+      Pack widgets in a rows and columns.
+
+      @about-class{gtk-grid}
+      @about-function{gtk-grid-child-height}
+      @about-function{gtk-grid-child-left-attach}
+      @about-function{gtk-grid-child-top-attach}
+      @about-function{gtk-grid-child-width}
+      @about-function{gtk-grid-new}
+      @about-function{gtk-grid-attach}
+      @about-function{gtk-grid-attach-next-to}
+      @about-function{gtk-grid-get-child-at}
+      @about-function{gtk-grid-insert-row}
+      @about-function{gtk-grid-insert-column}
+      @about-function{gtk-grid-insert-next-to}
+    @end{subsection}
+    @begin[GtkRevealer]{subsection}
+      Hide and show with animation.
+    @end{subsection}
+    @begin[GtkListBox]{subsection}
+      A list container.
+    @end{subsection}
+    @begin[GtkStack]{subsection}
+      A stacking container.
+    @end{subsection}
+    @begin[GtkStackSwitcher]{subsection}
+      A controller for GtkStack.
+    @end{subsection}
+    @begin[GtkHeaderBar]{subsection}
+      A box with a centered child.
+    @end{subsection}
+    @begin[GtkOverlay]{subsection}
+      A container which overlays widgets on top of each other.
+
+      @about-class{gtk-overlay}
+      @about-function{gtk-overlay-new}
+      @about-function{gtk-overlay-add-overlay}
+    @end{subsection}
+    @begin[GtkAlignment]{subsection}
+      A widget which controls the alignment and size of its child.
+
+      @about-class{gtk-alignment}
+      @about-function{gtk-alignment-new}
+      @about-function{gtk-alignment-set}
+      @about-function{gtk-alignment-get-padding}
+      @about-function{gtk-alignment-set-padding}
+    @end{subsection}
+    @begin[GtkButtonBox]{subsection}
+      A container for arranging buttons
+
+      @about-class{gtk-button-box}
+      @about-function{gtk-button-box-child-non-homogeneous}
+      @about-function{gtk-button-box-child-secondary}
+      @about-function{gtk-button-box-new}
+      @about-function{gtk-button-box-get-layout}
+      @about-function{gtk-button-box-get-child-secondary}
+      @about-function{gtk-button-box-get-child-non-homogeneous}
+      @about-function{gtk-button-box-set-layout}
+      @about-function{gtk-button-box-set-child-secondary}
+      @about-function{gtk-button-box-set-child-non-homogeneous}
+    @end{subsection}
+    @begin[GtkPaned]{subsection}
+      A widget with two adjustable panes.
+
+      @about-class{gtk-paned}
+      @about-function{gtk-paned-new}
+      @about-function{gtk-paned-child-resize}
+      @about-function{gtk-paned-child-shrink}
+      @about-function{gtk-paned-add1}
+      @about-function{gtk-paned-add2}
+      @about-function{gtk-paned-pack1}
+      @about-function{gtk-paned-pack2}
+      @about-function{gtk-paned-get-child1}
+      @about-function{gtk-paned-get-child2}
+      @about-function{gtk-paned-set-position}
+      @about-function{gtk-paned-get-position}
+      @about-function{gtk-paned-get-handle-window}
+    @end{subsection}
+    @begin[GtkLayout]{subsection}
+      Infinite scrollable area containing child widgets and/or custom drawing.
+
+      @about-class{gtk-layout}
+      @about-function{gtk-layout-child-x}
+      @about-function{gtk-layout-child-y}
+      @about-function{gtk-layout-new}
+      @about-function{gtk-layout-put}
+      @about-function{gtk-layout-move}
+      @about-function{gtk-layout-set-size}
+      @about-function{gtk-layout-get-size}
+      @about-function{gtk-layout-get-hadjustment}
+      @about-function{gtk-layout-get-vadjustment}
+      @about-function{gtk-layout-set-hadjustment}
+      @about-function{gtk-layout-set-vadjustment}
+      @about-function{gtk-layout-get-bin-window}
+    @end{subsection}
+    @begin[GtkNotebook]{subsection}
+      A tabbed notebook container.
+
+      @about-class{gtk-notebook}
+      @about-function{gtk-notebook-child-detachable}
+      @about-function{gtk-notebook-child-menu-label}
+      @about-function{gtk-notebook-child-position}
+      @about-function{gtk-notebook-child-reorderable}
+      @about-function{gtk-notebook-child-tab-expand}
+      @about-function{gtk-notebook-child-tab-fill}
+      @about-function{gtk-notebook-child-tab-label}
+      @about-function{gtk-notebook-new}
+      @about-function{gtk-notebook-append-page}
+      @about-function{gtk-notebook-append-page-menu}
+      @about-function{gtk-notebook-prepend-page}
+      @about-function{gtk-notebook-prepend-page-menu}
+      @about-function{gtk-notebook-insert-page}
+      @about-function{gtk-notebook-insert-page-menu}
+      @about-function{gtk-notebook-remove-page}
+      @about-function{gtk-notebook-page-num}
+      @about-function{gtk-notebook-next-page}
+      @about-function{gtk-notebook-prev-page}
+      @about-function{gtk-notebook-reorder-child}
+      @about-function{gtk-notebook-set-tab-pos}
+      @about-function{gtk-notebook-set-show-tabs}
+      @about-function{gtk-notebook-set-show-border}
+      @about-function{gtk-notebook-set-scrollable}
+      @about-function{gtk-notebook-popup-enable}
+      @about-function{gtk-notebook-popup-disable}
+      @about-function{gtk-notebook-get-current-page}
+      @about-function{gtk-notebook-get-menu-label}
+      @about-function{gtk-notebook-get-nth-page}
+      @about-function{gtk-notebook-get-n-pages}
+      @about-function{gtk-notebook-get-tab-label}
+      @about-function{gtk-notebook-set-menu-label}
+      @about-function{gtk-notebook-set-menu-label-text}
+      @about-function{gtk-notebook-set-tab-label}
+      @about-function{gtk-notebook-set-tab-label-text}
+      @about-function{gtk-notebook-set-tab-reorderable}
+      @about-function{gtk-notebook-set-tab-detachable}
+      @about-function{gtk-notebook-get-menu-label-text}
+      @about-function{gtk-notebook-get-scrollable}
+      @about-function{gtk-notebook-get-show-border}
+      @about-function{gtk-notebook-get-show-tabs}
+      @about-function{gtk-notebook-get-tab-label-text}
+      @about-function{gtk-notebook-get-tab-pos}
+      @about-function{gtk-notebook-get-tab-reorderable}
+      @about-function{gtk-notebook-get-tab-detachable}
+      @about-function{gtk-notebook-get-tab-hborder}
+      @about-function{gtk-notebook-get-tab-vborder}
+      @about-function{gtk-notebook-set-current-page}
+      @about-function{gtk-notebook-set-group-name}
+      @about-function{gtk-notebook-get-group-name}
+      @about-function{gtk-notebook-set-action-widget}
+      @about-function{gtk-notebook-get-action-widget}
+    @end{subsection}
+    @begin[GtkExpander]{subsection}
+      A container which can hide its child.
+
+      @about-class{gtk-expander}
+      @about-function{gtk-expander-new}
+      @about-function{gtk-expander-new-with-mnemonic}
+      @about-function{gtk-expander-set-expanded}
+      @about-function{gtk-expander-get-expanded}
+      @about-function{gtk-expander-set-spacing}
+      @about-function{gtk-expander-get-spacing}
+      @about-function{gtk-expander-set-label}
+      @about-function{gtk-expander-get-label}
+      @about-function{gtk-expander-set-use-underline}
+      @about-function{gtk-expander-get-use-underline}
+      @about-function{gtk-expander-set-use-markup}
+      @about-function{gtk-expander-get-use-markup}
+      @about-function{gtk-expander-set-label-widget}
+      @about-function{gtk-expander-get-label-widget}
+      @about-function{gtk-expander-set-label-fill}
+      @about-function{gtk-expander-get-label-fill}
+      @about-function{gtk-expander-set-resize-toplevel}
+      @about-function{gtk-expander-get-resize-toplevel}
+    @end{subsection}
+    @begin[GtkOrientable]{subsection}
+      An interface for flippable widgets.
+
+      @about-class{gtk-orientable}
+      @about-generic{gtk-orientable-orientation}
+    @end{subsection}
+    @begin[GtkAspectFrame]{subsection}
+      A frame that constrains its child to a particular aspect ratio.
+
+      @about-class{gtk-aspect-frame}
+      @about-function{gtk-aspect-frame-new}
+      @about-function{gtk-aspect-frame-set}
+    @end{subsection}
+    @begin[GtkFixed]{subsection}
+      A container which allows you to position widgets at fixed coordinates.
+
+      @about-class{gtk-fixed}
+      @about-function{gtk-fixed-child-x}
+      @about-function{gtk-fixed-child-y}
+      @about-function{gtk-fixed-new}
+      @about-function{gtk-fixed-put}
+      @about-function{gtk-fixed-move}
+    @end{subsection}
+  @end{section}
+
+
+
+
+
   @begin[GTK+ Core Reference]{section}
     @begin[Main loop and Events]{subsection}
       Library initialization, main event loop, and events.
@@ -874,267 +1440,6 @@
       @about-function{gtk-numerable-icon-set-style-context}
     @end{subsection}
   @end{section}
-  @begin[Windows]{section}
-    @begin[GtkWindow]{subsection}
-      Toplevel which can contain other widgets.
-
-      @about-class{gtk-window}
-      @about-generic{gtk-window-accept-focus}
-      @about-generic{gtk-window-application}
-      @about-generic{gtk-window-attached-to}
-      @about-generic{gtk-window-decorated}
-      @about-generic{gtk-window-default-height}
-      @about-generic{gtk-window-default-width}
-      @about-generic{gtk-window-deletable}
-      @about-generic{gtk-window-destroy-with-parent}
-      @about-generic{gtk-window-focus-on-map}
-      @about-generic{gtk-window-focus-visible}
-      @about-generic{gtk-window-gravity}
-      @about-generic{gtk-window-has-resize-grip}
-      @about-generic{gtk-window-has-toplevel-focus}
-      @about-generic{gtk-window-hide-titlebar-when-maximized}
-      @about-generic{gtk-window-icon}
-      @about-generic{gtk-window-icon-name}
-      @about-generic{gtk-window-is-active}
-      @about-generic{gtk-window-mnemonics-visible}
-      @about-generic{gtk-window-modal}
-      @about-generic{gtk-window-opacity}
-      @about-generic{gtk-window-resizable}
-      @about-generic{gtk-window-resize-grip-visible}
-      @about-generic{gtk-window-role}
-      @about-generic{gtk-window-screen}
-      @about-generic{gtk-window-skip-pager-hint}
-      @about-generic{gtk-window-skip-taskbar-hint}
-      @about-generic{gtk-window-startup-id}
-      @about-generic{gtk-window-title}
-      @about-generic{gtk-window-transient-for}
-      @about-generic{gtk-window-type}
-      @about-generic{gtk-window-type-hint}
-      @about-generic{gtk-window-urgency-hint}
-      @about-generic{gtk-window-window-position}
-      @about-function{gtk-window-new}
-      @about-function{gtk-window-set-wmclass}
-      @about-function{gtk-window-set-resizable}
-      @about-function{gtk-window-get-resizable}
-      @about-function{gtk-window-add-accel-group}
-      @about-function{gtk-window-remove-accel-group}
-      @about-function{gtk-window-activate-focus}
-      @about-function{gtk-window-activate-default}
-      @about-function{gtk-window-set-default-geometry}
-      @about-function{gtk-window-set-geometry-hints}
-      @about-function{gtk-window-set-position}
-      @about-function{gtk-window-hide-titlebar-when-maximized}
-      @about-function{gtk-window-set-screen}
-      @about-function{gtk-window-get-screen}
-      @about-function{gtk-window-is-active}
-      @about-function{gtk-window-has-toplevel-focus}
-      @about-function{gtk-window-list-toplevels}
-      @about-function{gtk-window-add-mnemonic}
-      @about-function{gtk-window-remove-mnemonic}
-      @about-function{gtk-window-mnemonic-activate}
-      @about-function{gtk-window-activate-key}
-      @about-function{gtk-window-propagate-key-event}
-      @about-function{gtk-window-get-focus}
-      @about-function{gtk-window-set-focus}
-      @about-function{gtk-window-get-default-widget}
-      @about-function{gtk-window-set-default}
-      @about-function{gtk-window-present}
-      @about-function{gtk-window-present-with-time}
-      @about-function{gtk-window-iconify}
-      @about-function{gtk-window-deiconify}
-      @about-function{gtk-window-stick}
-      @about-function{gtk-window-unstick}
-      @about-function{gtk-window-maximize}
-      @about-function{gtk-window-unmaximize}
-      @about-function{gtk-window-fullscreen}
-      @about-function{gtk-window-unfullscreen}
-      @about-function{gtk-window-set-keep-above}
-      @about-function{gtk-window-set-keep-below}
-      @about-function{gtk-window-begin-resize-drag}
-      @about-function{gtk-window-begin-move-drag}
-      @about-function{gtk-window-set-deletable}
-      @about-function{gtk-window-set-mnemonic-modifier}
-      @about-function{gtk-window-set-type-hint}
-      @about-function{gtk-window-set-skip-taskbar-hint}
-      @about-function{gtk-window-set-skip-pager-hint}
-      @about-function{gtk-window-set-urgency-hint}
-      @about-function{gtk-window-set-focus-on-map}
-      @about-function{gtk-window-set-startup-id}
-      @about-function{gtk-window-set-role}
-      @about-function{gtk-window-get-deletable}
-      @about-function{gtk-window-get-default-icon-list}
-      @about-function{gtk-window-get-default-icon-name}
-      @about-generic{gtk-window-default-size}
-      @about-function{gtk-window-get-hide-titlebar-when-maximized}
-      @about-function{gtk-window-get-icon}
-      @about-function{gtk-window-get-icon-list}
-      @about-function{gtk-window-get-icon-name}
-      @about-function{gtk-window-get-mnemonic-modifier}
-      @about-function{gtk-window-get-modal}
-      @about-function{gtk-window-get-position}
-      @about-function{gtk-window-get-role}
-      @about-function{gtk-window-get-size}
-      @about-function{gtk-window-get-transient-for}
-      @about-function{gtk-window-get-type-hint}
-      @about-function{gtk-window-get-skip-taskbar-hint}
-      @about-function{gtk-window-get-skip-pager-hint}
-      @about-function{gtk-window-get-urgency-hint}
-      @about-function{gtk-window-get-focus-on-map}
-      @about-function{gtk-window-get-group}
-      @about-function{gtk-window-has-group}
-      @about-function{gtk-window-get-window-type}
-      @about-function{gtk-window-move}
-      @about-function{gtk-window-parse-geometry}
-      @about-function{gtk-window-reshow-with-initial-size}
-      @about-function{gtk-window-resize}
-      @about-function{gtk-window-resize-to-geometry}
-      @about-function{gtk-window-set-default-icon-list}
-      @about-function{gtk-window-set-default-icon}
-      @about-function{gtk-window-set-default-icon-from-file}
-      @about-function{gtk-window-set-default-icon-name}
-      @about-function{gtk-window-set-icon}
-      @about-function{gtk-window-set-icon-list}
-      @about-function{gtk-window-set-icon-from-file}
-      @about-function{gtk-window-set-icon-name}
-      @about-function{gtk-window-set-auto-startup-notification}
-      @about-function{gtk-window-get-opacity}
-      @about-function{gtk-window-set-opacity}
-      @about-function{gtk-window-get-mnemonics-visible}
-      @about-function{gtk-window-set-mnemonics-visible}
-      @about-function{gtk-window-get-focus-visible}
-      @about-function{gtk-window-set-focus-visible}
-      @about-function{gtk-window-set-has-resize-grip}
-      @about-function{gtk-window-get-has-resize-grip}
-      @about-function{gtk-window-resize-grip-is-visible}
-      @about-function{gtk-window-get-resize-grip-area}
-      @about-function{gtk-window-set-has-user-ref-count}
-    @end{subsection}
-    @begin[GtkDialog]{subsection}
-      Create popup windows.
-
-      @about-class{gtk-dialog}
-      @about-symbol{gtk-dialog-flags}
-      @about-symbol{gtk-response-type}
-      @about-function{gtk-dialog-new}
-      @about-function{gtk-dialog-new-with-buttons}
-      @about-function{gtk-dialog-run}
-      @about-function{gtk-dialog-response}
-      @about-function{gtk-dialog-add-button}
-      @about-function{gtk-dialog-add-buttons}
-      @about-function{gtk-dialog-add-action-widget}
-      @about-function{gtk-dialog-set-default-response}
-      @about-function{gtk-dialog-set-response-sensitive}
-      @about-function{gtk-dialog-get-response-for-widget}
-      @about-function{gtk-dialog-get-widget-for-response}
-      @about-function{gtk-dialog-get-action-area}
-      @about-function{gtk-dialog-get-content-area}
-      @about-function{gtk-alternative-dialog-button-order}
-      @about-function{gtk-dialog-set-alternative-button-order}
-      @about-function{gtk-dialog-set-alternative-button-order-from-array}
-    @end{subsection}
-    @begin[GtkInvisible]{subsection}
-      A widget which is not displayed.
-
-      @about-class{gtk-invisible}
-      @about-generic{gtk-invisible-screen}
-      @about-function{gtk-invisible-new}
-      @about-function{gtk-invisible-new-for-screen}
-    @end{subsection}
-    @begin[GtkMessageDialog]{subsection}
-      A convenient message window.
-
-      @about-class{gtk-message-dialog}
-      @about-symbol{gtk-message-type}
-      @about-symbol{gtk-buttons-type}
-      @about-function{gtk-message-dialog-new}
-      @about-function{gtk-message-dialog-new-with-markup}
-      @about-function{gtk-message-dialog-set-markup}
-      @about-function{gtk-message-dialog-set-image}
-      @about-function{gtk-message-dialog-get-image}
-      @about-function{gtk-message-dialog-format-secondary-text}
-      @about-function{gtk-message-dialog-format-secondary-markup}
-    @end{subsection}
-    @begin[GtkWindowGroup]{subsection}
-      Limit the effect of grabs.
-
-      @about-class{gtk-window-group}
-      @about-function{gtk-window-group-new}
-      @about-function{gtk-window-group-add-window}
-      @about-function{gtk-window-group-remove-window}
-      @about-function{gtk-window-group-list-windows}
-      @about-function{gtk-window-group-get-current-grab}
-      @about-function{gtk-window-group-get-current-device-grab}
-    @end{subsection}
-    @begin[GtkAboutDialog]{subsection}
-      Display information about an application.
-
-      @about-class{gtk-about-dialog}
-      @about-symbol{gtk-license}
-      @about-generic{gtk-about-dialog-artists}
-      @about-generic{gtk-about-dialog-authors}
-      @about-generic{gtk-about-dialog-comments}
-      @about-generic{gtk-about-dialog-copyright}
-      @about-generic{gtk-about-dialog-documenters}
-      @about-generic{gtk-about-dialog-license}
-      @about-generic{gtk-about-dialog-license-type}
-      @about-generic{gtk-about-dialog-logo}
-      @about-generic{gtk-about-dialog-logo-icon-name}
-      @about-generic{gtk-about-dialog-program-name}
-      @about-generic{gtk-about-dialog-translator-credits}
-      @about-generic{gtk-about-dialog-version}
-      @about-generic{gtk-about-dialog-website}
-      @about-generic{gtk-about-dialog-website-label}
-      @about-generic{gtk-about-dialog-wrap-license}
-      @about-function{gtk-about-dialog-new}
-      @about-function{gtk-about-dialog-add-credit-section}
-      @about-function{gtk-show-about-dialog}
-    @end{subsection}
-    @begin[GtkAssistant]{subsection}
-      A widget used to guide users through multi-step operations.
-
-      @about-class{gtk-assistant}
-      @about-function{gtk-assistant-child-page-type}
-      @about-function{gtk-assistant-child-title}
-      @about-function{gtk-assistant-child-header-image}
-      @about-function{gtk-assistant-child-sidebar-image}
-      @about-function{gtk-assistant-child-complete}
-      @about-function{gtk-assistant-new}
-      @about-function{gtk-assistant-get-current-page}
-      @about-function{gtk-assistant-set-current-page}
-      @about-function{gtk-assistant-get-n-pages}
-      @about-function{gtk-assistant-get-nth-page}
-      @about-function{gtk-assistant-prepend-page}
-      @about-function{gtk-assistant-append-page}
-      @about-function{gtk-assistant-insert-page}
-      @about-function{gtk-assistant-remove-page}
-      @about-function{gtk-assistant-set-forward-page-func}
-      @about-symbol{gtk-assistant-page-type}
-      @about-function{gtk-assistant-set-page-type}
-      @about-function{gtk-assistant-get-page-type}
-      @about-function{gtk-assistant-set-page-title}
-      @about-function{gtk-assistant-get-page-title}
-      @about-function{gtk-assistant-set-page-header-image}
-      @about-function{gtk-assistant-get-page-header-image}
-      @about-function{gtk-assistant-set-page-side-image}
-      @about-function{gtk-assistant-get-page-side-image}
-      @about-function{gtk-assistant-set-page-complete}
-      @about-function{gtk-assistant-get-page-complete}
-      @about-function{gtk-assistant-add-action-widget}
-      @about-function{gtk-assistant-remove-action-widget}
-      @about-function{gtk-assistant-update-buttons-state}
-      @about-function{gtk-assistant-commit}
-      @about-function{gtk-assistant-next-page}
-      @about-function{gtk-assistant-previous-page}
-    @end{subsection}
-    @begin[GtkOffscreenWindow]{subsection}
-      A toplevel widget to manage offscreen rendering of child widgets.
-
-      @about-class{gtk-offscreen-window}
-      @about-function{gtk-offscreen-window-new}
-      @about-function{gtk-offscreen-window-get-surface}
-      @about-function{gtk-offscreen-window-get-pixbuf}
-    @end{subsection}
-  @end{section}
   @begin[Display Widgets]{section}
     @begin[GtkAccelLabel]{subsection}
       A label which displays an accelerator key on the right of the text.
@@ -1462,11 +1767,7 @@
       @about-function{gtk-entry-new-with-buffer}
       @about-function{gtk-entry-get-buffer}
       @about-function{gtk-entry-set-buffer}
-      @about-function{gtk-entry-set-text}
-      @about-function{gtk-entry-get-text}
-      @about-function{gtk-entry-get-text-length}
       @about-function{gtk-entry-get-text-area}
-      @about-function{gtk-entry-set-visibility}
       @about-function{gtk-entry-set-invisible-char}
       @about-function{gtk-entry-unset-invisible-char}
       @about-function{gtk-entry-set-max-length}
@@ -1481,8 +1782,6 @@
       @about-function{gtk-entry-get-invisible-char}
       @about-function{gtk-entry-set-alignment}
       @about-function{gtk-entry-get-alignment}
-      @about-function{gtk-entry-set-placeholder-text}
-      @about-function{gtk-entry-get-placeholder-text}
       @about-function{gtk-entry-set-overwrite-mode}
       @about-function{gtk-entry-get-overwrite-mode}
       @about-function{gtk-entry-get-layout}
@@ -3755,208 +4054,6 @@ setup_tree (void)
       @about-function{gtk-font-chooser-dialog-new}
     @end{subsection}
   @end{section}
-  @begin[Layout Containers]{section}
-    @begin[GtkGrid]{subsection}
-      Pack widgets in a rows and columns.
-
-      @about-class{gtk-grid}
-      @about-function{gtk-grid-child-height}
-      @about-function{gtk-grid-child-left-attach}
-      @about-function{gtk-grid-child-top-attach}
-      @about-function{gtk-grid-child-width}
-      @about-function{gtk-grid-new}
-      @about-function{gtk-grid-attach}
-      @about-function{gtk-grid-attach-next-to}
-      @about-function{gtk-grid-get-child-at}
-      @about-function{gtk-grid-insert-row}
-      @about-function{gtk-grid-insert-column}
-      @about-function{gtk-grid-insert-next-to}
-    @end{subsection}
-    @begin[GtkAlignment]{subsection}
-      A widget which controls the alignment and size of its child.
-
-      @about-class{gtk-alignment}
-      @about-function{gtk-alignment-new}
-      @about-function{gtk-alignment-set}
-      @about-function{gtk-alignment-get-padding}
-      @about-function{gtk-alignment-set-padding}
-    @end{subsection}
-    @begin[GtkAspectFrame]{subsection}
-      A frame that constrains its child to a particular aspect ratio.
-
-      @about-class{gtk-aspect-frame}
-      @about-function{gtk-aspect-frame-new}
-      @about-function{gtk-aspect-frame-set}
-    @end{subsection}
-    @begin[GtkBox]{subsection}
-      A container box.
-
-      @about-class{gtk-box}
-      @about-function{gtk-box-new}
-      @about-function{gtk-box-child-expand}
-      @about-function{gtk-box-child-fill}
-      @about-function{gtk-box-child-padding}
-      @about-function{gtk-box-child-pack-type}
-      @about-function{gtk-box-child-position}
-      @about-function{gtk-box-pack-start}
-      @about-function{gtk-box-pack-end}
-      @about-function{gtk-box-get-spacing}
-      @about-function{gtk-box-set-spacing}
-      @about-function{gtk-box-reorder-child}
-      @about-function{gtk-box-query-child-packing}
-      @about-function{gtk-box-set-child-packing}
-    @end{subsection}
-    @begin[GtkButtonBox]{subsection}
-      A container for arranging buttons
-
-      @about-class{gtk-button-box}
-      @about-function{gtk-button-box-child-non-homogeneous}
-      @about-function{gtk-button-box-child-secondary}
-      @about-function{gtk-button-box-new}
-      @about-function{gtk-button-box-get-layout}
-      @about-function{gtk-button-box-get-child-secondary}
-      @about-function{gtk-button-box-get-child-non-homogeneous}
-      @about-function{gtk-button-box-set-layout}
-      @about-function{gtk-button-box-set-child-secondary}
-      @about-function{gtk-button-box-set-child-non-homogeneous}
-    @end{subsection}
-    @begin[GtkFixed]{subsection}
-      A container which allows you to position widgets at fixed coordinates.
-
-      @about-class{gtk-fixed}
-      @about-function{gtk-fixed-child-x}
-      @about-function{gtk-fixed-child-y}
-      @about-function{gtk-fixed-new}
-      @about-function{gtk-fixed-put}
-      @about-function{gtk-fixed-move}
-    @end{subsection}
-    @begin[GtkPaned]{subsection}
-      A widget with two adjustable panes.
-
-      @about-class{gtk-paned}
-      @about-function{gtk-paned-new}
-      @about-function{gtk-paned-child-resize}
-      @about-function{gtk-paned-child-shrink}
-      @about-function{gtk-paned-add1}
-      @about-function{gtk-paned-add2}
-      @about-function{gtk-paned-pack1}
-      @about-function{gtk-paned-pack2}
-      @about-function{gtk-paned-get-child1}
-      @about-function{gtk-paned-get-child2}
-      @about-function{gtk-paned-set-position}
-      @about-function{gtk-paned-get-position}
-      @about-function{gtk-paned-get-handle-window}
-    @end{subsection}
-    @begin[GtkLayout]{subsection}
-      Infinite scrollable area containing child widgets and/or custom drawing.
-
-      @about-class{gtk-layout}
-      @about-function{gtk-layout-child-x}
-      @about-function{gtk-layout-child-y}
-      @about-function{gtk-layout-new}
-      @about-function{gtk-layout-put}
-      @about-function{gtk-layout-move}
-      @about-function{gtk-layout-set-size}
-      @about-function{gtk-layout-get-size}
-      @about-function{gtk-layout-get-hadjustment}
-      @about-function{gtk-layout-get-vadjustment}
-      @about-function{gtk-layout-set-hadjustment}
-      @about-function{gtk-layout-set-vadjustment}
-      @about-function{gtk-layout-get-bin-window}
-    @end{subsection}
-    @begin[GtkNotebook]{subsection}
-      A tabbed notebook container.
-
-      @about-class{gtk-notebook}
-      @about-function{gtk-notebook-child-detachable}
-      @about-function{gtk-notebook-child-menu-label}
-      @about-function{gtk-notebook-child-position}
-      @about-function{gtk-notebook-child-reorderable}
-      @about-function{gtk-notebook-child-tab-expand}
-      @about-function{gtk-notebook-child-tab-fill}
-      @about-function{gtk-notebook-child-tab-label}
-      @about-function{gtk-notebook-new}
-      @about-function{gtk-notebook-append-page}
-      @about-function{gtk-notebook-append-page-menu}
-      @about-function{gtk-notebook-prepend-page}
-      @about-function{gtk-notebook-prepend-page-menu}
-      @about-function{gtk-notebook-insert-page}
-      @about-function{gtk-notebook-insert-page-menu}
-      @about-function{gtk-notebook-remove-page}
-      @about-function{gtk-notebook-page-num}
-      @about-function{gtk-notebook-next-page}
-      @about-function{gtk-notebook-prev-page}
-      @about-function{gtk-notebook-reorder-child}
-      @about-function{gtk-notebook-set-tab-pos}
-      @about-function{gtk-notebook-set-show-tabs}
-      @about-function{gtk-notebook-set-show-border}
-      @about-function{gtk-notebook-set-scrollable}
-      @about-function{gtk-notebook-popup-enable}
-      @about-function{gtk-notebook-popup-disable}
-      @about-function{gtk-notebook-get-current-page}
-      @about-function{gtk-notebook-get-menu-label}
-      @about-function{gtk-notebook-get-nth-page}
-      @about-function{gtk-notebook-get-n-pages}
-      @about-function{gtk-notebook-get-tab-label}
-      @about-function{gtk-notebook-set-menu-label}
-      @about-function{gtk-notebook-set-menu-label-text}
-      @about-function{gtk-notebook-set-tab-label}
-      @about-function{gtk-notebook-set-tab-label-text}
-      @about-function{gtk-notebook-set-tab-reorderable}
-      @about-function{gtk-notebook-set-tab-detachable}
-      @about-function{gtk-notebook-get-menu-label-text}
-      @about-function{gtk-notebook-get-scrollable}
-      @about-function{gtk-notebook-get-show-border}
-      @about-function{gtk-notebook-get-show-tabs}
-      @about-function{gtk-notebook-get-tab-label-text}
-      @about-function{gtk-notebook-get-tab-pos}
-      @about-function{gtk-notebook-get-tab-reorderable}
-      @about-function{gtk-notebook-get-tab-detachable}
-      @about-function{gtk-notebook-get-tab-hborder}
-      @about-function{gtk-notebook-get-tab-vborder}
-      @about-function{gtk-notebook-set-current-page}
-      @about-function{gtk-notebook-set-group-name}
-      @about-function{gtk-notebook-get-group-name}
-      @about-function{gtk-notebook-set-action-widget}
-      @about-function{gtk-notebook-get-action-widget}
-    @end{subsection}
-    @begin[GtkExpander]{subsection}
-      A container which can hide its child.
-
-      @about-class{gtk-expander}
-      @about-function{gtk-expander-new}
-      @about-function{gtk-expander-new-with-mnemonic}
-      @about-function{gtk-expander-set-expanded}
-      @about-function{gtk-expander-get-expanded}
-      @about-function{gtk-expander-set-spacing}
-      @about-function{gtk-expander-get-spacing}
-      @about-function{gtk-expander-set-label}
-      @about-function{gtk-expander-get-label}
-      @about-function{gtk-expander-set-use-underline}
-      @about-function{gtk-expander-get-use-underline}
-      @about-function{gtk-expander-set-use-markup}
-      @about-function{gtk-expander-get-use-markup}
-      @about-function{gtk-expander-set-label-widget}
-      @about-function{gtk-expander-get-label-widget}
-      @about-function{gtk-expander-set-label-fill}
-      @about-function{gtk-expander-get-label-fill}
-      @about-function{gtk-expander-set-resize-toplevel}
-      @about-function{gtk-expander-get-resize-toplevel}
-    @end{subsection}
-    @begin[GtkOverlay]{subsection}
-      A container which overlays widgets on top of each other.
-
-      @about-class{gtk-overlay}
-      @about-function{gtk-overlay-new}
-      @about-function{gtk-overlay-add-overlay}
-    @end{subsection}
-    @begin[GtkOrientable]{subsection}
-      An interface for flippable widgets.
-
-      @about-class{gtk-orientable}
-      @about-generic{gtk-orientable-orientation}
-    @end{subsection}
-  @end{section}
   @begin[Ornaments]{section}
     @begin[GtkFrame]{subsection}
       A bin with a decorative frame and optional label.
@@ -5108,87 +5205,6 @@ setup_tree (void)
       @about-function{gtk-app-chooser-widget-get-show-all}
       @about-function{gtk-app-chooser-widget-set-default-text}
       @about-function{gtk-app-chooser-widget-get-default-text}
-    @end{subsection}
-  @end{section}
-  @begin[Interface builder]{section}
-    @begin[GtkBuildable]{subsection}
-      Interface for objects that can be built by GtkBuilder.
-
-      @about-class{gtk-buildable}
-      @about-class{gtk-buildable-iface}
-      @about-function{gtk-buildable-set-name}
-      @about-function{gtk-buildable-get-name}
-      @about-function{gtk-buildable-add-child}
-      @about-function{gtk-buildable-set-buildable-property}
-      @about-function{gtk-buildable-construct-child}
-      @about-function{gtk-buildable-custom-tag-start}
-      @about-function{gtk-buildable-custom-tag-end}
-      @about-function{gtk-buildable-custom-finished}
-      @about-function{gtk-buildable-parser-finished}
-      @about-function{gtk-buildable-get-internal-child}
-    @end{subsection}
-    @begin[GtkBuilder]{subsection}
-      Build an interface from an XML UI definition.
-
-      @about-class{gtk-builder}
-      @about-symbol{gtk-builder-error}
-      @about-function{gtk-builder-new}
-      @about-function{gtk-builder-add-from-file}
-      @about-function{gtk-builder-add-from-resource}
-      @about-function{gtk-builder-add-from-string}
-      @about-function{gtk-builder-add-objects-from-file}
-      @about-function{gtk-builder-add-objects-from-string}
-      @about-function{gtk-builder-add-objects-from-resource}
-      @about-function{gtk-builder-get-object}
-      @about-function{gtk-builder-get-objects}
-      @about-function{gtk-builder-connect-signals}
-      @about-function{gtk-builder-connect-signals-full}
-      @about-function{gtk-builder-set-translation-domain}
-      @about-function{gtk-builder-get-translation-domain}
-      @about-function{gtk-builder-get-type-from-name}
-      @about-function{gtk-builder-value-from-string}
-      @about-function{gtk-builder-value-from-string-type}
-      @about-symbol{GTK_BUILDER_WARN_INVALID_CHILD_TYPE}
-      @about-symbol{GTK_BUILDER_ERROR}
-    @end{subsection}
-  @end{section}
-  @begin[Application support]{section}
-    @begin[GtkApplication]{subsection}
-      Application class
-
-      @about-class{gtk-application}
-      @about-symbol{gtk-application-inhibit-flags}
-      @about-function{gtk-application-new}
-      @about-function{gtk-application-add-window}
-      @about-function{gtk-application-remove-window}
-      @about-function{gtk-application-get-windows}
-      @about-function{gtk-application-get-window-by-id}
-      @about-function{gtk-application-get-active-window}
-      @about-function{gtk-application-inhibit}
-      @about-function{gtk-application-uninhibit}
-      @about-function{gtk-application-is-inhibited}
-      @about-function{gtk-application-add-accelerator}
-      @about-function{gtk-application-remove-accelerator}
-    @end{subsection}
-    @begin[GtkApplicationWindow]{subsection}
-      @class{gtk-window} subclass with @class{gtk-application} support.
-
-      @about-class{gtk-application-window}
-      @about-generic{gtk-application-window-show-menubar}
-      @about-function{gtk-application-window-new}
-      @about-function{gtk-application-window-get-id}
-    @end{subsection}
-    @begin[GtkActionable]{subsection}
-      An interface for widgets that can be associated with actions.
-
-      @about-class{gtk-actionable}
-      @about-class{gtk-actionable-interface}
-      @about-function{gtk-actionable-get-action-name}
-      @about-function{gtk-actionable-set-action-name}
-      @about-function{gtk-actionable-get-action-target-value}
-      @about-function{gtk-actionable-set-action-target-value}
-      @about-function{gtk-actionable-set-action-target}
-      @about-function{gtk-actionable-set-detailed-action-name}
     @end{subsection}
   @end{section}
   @begin[Deprecated]{section}

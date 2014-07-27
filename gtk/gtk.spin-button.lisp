@@ -204,7 +204,7 @@
       @end{pre}
       The \"input\" signal can be used to influence the conversion of the users
       input into a double value. The signal handler is expected to use the
-      function @fun{gtk-entry-get-text} to retrieve the text of the entry and
+      function @fun{gtk-entry-text} to retrieve the text of the entry and
       set new_value to the new value.
       The default conversion uses @code{g_strtod()}.
       @begin[code]{table}

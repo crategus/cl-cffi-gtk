@@ -1,9 +1,58 @@
-Content from the GTK+ 3.8.9 Reference Manual
+Content from the GTK+ 3.10 Reference Manual
 
     *   - needs update
     %   - not fully implemented
-    &   - objects and structures are implemented, functions are missing
+    &   - objects and structures are implemented, some functions are missing
    (**) - deprecated
+
+GTK+ Widgets and Objects
+
+  Application support
+
+    gtk.application.lisp             - GtkApplication              - GTK+ 3.10
+    gtk.application-window.lisp      - GtkApplicationWindow        - GTK+ 3.10
+    gtk.actionable.lisp              - GtkActionable               - GTK+ 3.10&
+
+  Interface builder
+
+    gtk.builder.lisp                 - GtkBuilder                  - GTK+ 3.10&
+    gtk.buildable.lisp               - GtkBuildable                - GTK+ 3.10&
+
+  Windows
+
+    gtk.dialog.lisp                  - GtkDialog                   - GTK+ 3.10
+    gtk.message-dialog.lisp          - GtkMessageDialog            - GTK+ 3.10
+    gtk.about-dialog.lisp            - GtkAboutDialog              - GTK+ 3.10
+    gtk.assistant.lisp               - GtkAssistant                - GTK+ 3.10
+    gtk.window.lisp                  - GtkWindow                   - GTK+ 3.10&
+    gtk.window-group.lisp            - GtkWindowGroup              - GTK+ 3.10
+    gtk.invisible.lisp               - GtkInvisible                - GTK+ 3.10
+    gtk.offscreen-window.lisp        - GtkOffscreenWindow          - GTK+ 3.10
+
+  Layout Containers
+
+    gtk.box.lisp                     - GtkBox, GtkHBox, GtkVbox    - GTK+ 3.10
+    gtk.grid.lisp                    - GtkGrid                     - GTK+ 3.10&
+
+    GtkRevealer - Hide and show with animation
+    GtkListBox - A list container
+    GtkStack - A stacking container
+    GtkStackSwitcher - A controller for GtkStack
+    GtkHeaderBar - A box with a centered child
+
+    gtk.overlay.lisp                 - GtkOverlay                  - GTK+ 3.10
+    gtk.alignment.lisp               - GtkAlignment                - GTK+ 3.10
+    gtk.button-box.lisp              - GtkButtonBox, ...           - GTK+ 3.6.4*
+    gtk.paned.lisp                   - GtkPaned, ...               - GTK+ 3.6.4*
+    gtk.layout.lisp                  - GtkLayout                   - GTK+ 3.6.4*
+    gtk.notebook.lisp                - GtkNotebook                 - GTK+ 3.6.4*
+    gtk.expander.lisp                - GtkExpander                 - GTK+ 3.6.4*
+    gtk.orientable.lisp              - GtkOrientable               - GTK+ 3.8.9*
+    gtk.aspect-frame.lisp            - GtkAspectFrame              - GTK+ 3.6.4*
+    gtk.fixed.lisp                   - GtkFixed                    - GTK+ 3.6.4*
+
+
+
 
 GTK+ Core Reference
 
@@ -14,9 +63,9 @@ GTK+ Core Reference
     gtk.clipboard.lisp               - GtkClipboard                - GTK+ 3.6.4*
     gtk.drag-and-drop.lisp           - Drag and Drop handling      - GTK+ 3.8.6*
     gtk.stock-item.lisp              - Stock Items                 - GTK+ 3.4.3*
-    gtk.setting.lisp                 - GtkSettings                 - GTK+ 3.8.9*
+    gtk.setting.lisp                 - GtkSettings                 - GTK+ 3.10
     gtk.bindings.lisp                - Bindings                    - GTK+ 3.8.8*
-    gtk.enumerations.lisp            - Standard Enumerations       - GTK+ 3.6.4*
+    gtk.enumerations.lisp            - Standard Enumerations       - GTK+ 3.10
     gtk.selections.lisp              - Selections                  - GTK+ 3.8.6*
     gtk.mount-operation.lisp         - Filesystem utilities        - GTK+ 3.6.4*
 
@@ -31,19 +80,6 @@ Theming in GTK+
     gtk.icon-theme.lisp              - GtkIconTheme                - GTK+ 3.6.4*
     gtk.stock-images.lisp            - Themeable Stock Images      - GTK+ 3.6.4*
     gtk.numerable-icon.lisp          - GtkNumerableIcon            - GTK+ 3.8.8*
-
-GTK+ Widgets and Objects
-
-  Windows
-
-    gtk.dialog.lisp                  - GtkDialog                   - GTK+ 3.8.9
-    gtk.invisible.lisp               - GtkInvisible                - GTK+ 3.8.9
-    gtk.message-dialog.lisp          - GtkMessageDialog            - GTK+ 3.8.9
-    gtk.window.lisp                  - GtkWindow                   - GTK+ 3.8.9
-    gtk.window-group.lisp            - GtkWindowGroup              - GTK+ 3.8.9
-    gtk.about-dialog.lisp            - GtkAboutDialog              - GTK+ 3.8.9
-    gtk.assistant.lisp               - GtkAssistant                - GTK+ 3.8.9
-    gtk.offscreen-window.lisp        - GtkOffscreenWindow          - GTK+ 3.8.9
 
   Display Widgets
 
@@ -177,21 +213,6 @@ GTK+ Widgets and Objects
     gtk.font-chooser-widget.lisp     - GtkFontChooserWidget        - GTK+ 3.6.4*
     gtk.font-chooser-dialog.lisp     - GtkFontChooserDialog        - GTK+ 3.6.4*
 
-  Layout Containers
-
-    gtk.grid.lisp                    - GtkGrid                     - GTK+ 3.8.8*
-    gtk.alignment.lisp               - GtkAlignment                - GTK+ 3.8.8*
-    gtk.aspect-frame.lisp            - GtkAspectFrame              - GTK+ 3.6.4*
-    gtk.box.lisp                     - GtkBox, GtkHBox, GtkVbox    - GTK+ 3.8.9*
-    gtk.button-box.lisp              - GtkButtonBox, ...           - GTK+ 3.6.4*
-    gtk.fixed.lisp                   - GtkFixed                    - GTK+ 3.6.4*
-    gtk.paned.lisp                   - GtkPaned, ...               - GTK+ 3.6.4*
-    gtk.layout.lisp                  - GtkLayout                   - GTK+ 3.6.4*
-    gtk.notebook.lisp                - GtkNotebook                 - GTK+ 3.6.4*
-    gtk.expander.lisp                - GtkExpander                 - GTK+ 3.6.4*
-    gtk.overlay.lisp                 - GtkOverlay                  - GTK+ 3.6.4*
-    gtk.orientable.lisp              - GtkOrientable               - GTK+ 3.8.9*
-
   Ornaments
 
     gtk.frame.lisp                   - GtkFrame                    - GTK+ 3.8.8*
@@ -261,17 +282,6 @@ GTK+ Widgets and Objects
     gtk.app-chooser-button.lisp      - GtkAppChooserButton         - GTK+ 3.8.6*
     gtk.app-chooser-dialog.lisp      - GtkAppChooserDialog         - GTK+ 3.8.6*
     gtk.app-chooser-widget.lisp      - GtkAppChooserWidget         - GTK+ 3.8.6*
-
-  Interface builder
-
-    gtk.buildable.lisp               - GtkBuildable                - GTK+ 3.6.4*
-    gtk.builder.lisp                 - GtkBuilder                  - GTK+ 3.6.4*
-
-  Application support
-
-    gtk.application.lisp             - GtkApplication              - GTK+ 3.8.9
-    gtk.application-window.lisp      - GtkApplicationWindow        - GTK+ 3.8.9
-    gtk.actionable.lisp              - GtkActionable               - GTK+ 3.6.4*
 
   Deprecated
 

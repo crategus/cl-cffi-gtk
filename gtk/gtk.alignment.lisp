@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.8.8 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.10 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -103,8 +103,9 @@
 
   @subheading{Note}
     Note that the desired effect can in most cases be achieved by using the
-    @code{\"halign\"}, @code{\"valign\"} and @code{\"margin\"} properties on
-    the child widget, so @sym{gtk-alignment} should not be used in new code.
+    @slot[gtk-widget]{halign}, @slot[gtk-widget]{valign} and
+    @slot[gtk-widget]{margin} properties on the child widget, so
+    @sym{gtk-alignment} should not be used in new code.
   @see-slot{gtk-alignment-bottom-padding}
   @see-slot{gtk-alignment-left-padding}
   @see-slot{gtk-alignment-right-padding}
@@ -200,68 +201,71 @@
 (setf (gethash 'gtk-alignment-bottom-padding atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-alignment-bottom-padding 'function)
- "@version{2014-1-17}
-  Accessor of the slot @code{\"bottom-padding\"} of the @class{gtk-alignment}
-  class.
+ "@version{2014-7-26}
+  Accessor of the slot @slot[gtk-alignment]{bottom-padding} of the
+  @class{gtk-alignment} class.
   @see-class{gtk-alignment}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-alignment-left-padding atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-alignment-left-padding 'function)
- "@version{2014-1-17}
-  Accessor of the slot @code{\"left-padding\"} of the @class{gtk-alignment}
-  class.
+ "@version{2014-7-26}
+  Accessor of the slot @slot[gtk-alignment]{left-padding} of the
+  @class{gtk-alignment} class.
   @see-class{gtk-alignment}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-alignment-right-padding atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-alignment-right-padding 'function)
- "@version{2014-1-17}
-  Accessor of the slot @code{\"right-padding\"} of the @class{gtk-alignment}
-  class.
+ "@version{2014-7-26}
+  Accessor of the slot @slot[gtk-alignment]{right-padding} of the
+  @class{gtk-alignment} class.
   @see-class{gtk-alignment}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-alignment-top-padding atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-alignment-top-padding 'function)
- "@version{2014-1-17}
-  Accessor of the slot @code{\"top-padding\"} of the @class{gtk-alignment}
-  class.
+ "@version{2014-7-26}
+  Accessor of the slot @slot[gtk-alignment]{top-padding} of the
+  @class{gtk-alignment} class.
   @see-class{gtk-alignment}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-alignment-xalign atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-alignment-xalign 'function)
- "@version{2014-1-17}
-  Accessor of the slot @code{\"xalign\"} of the @class{gtk-alignment} class.
+ "@version{2014-7-26}
+  Accessor of the slot @slot[]{xalign} of the @class{gtk-alignment} class.
   @see-class{gtk-alignment}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-alignment-yalign atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-alignment-yalign 'function)
- "@version{2014-1-17}
-  Accessor of the slot @code{\"yalign\"} of the @class{gtk-alignment} class.
+ "@version{2014-7-26}
+  Accessor of the slot @slot[gtk-alignment]{yalign} of the @class{gtk-alignment}
+  class.
   @see-class{gtk-alignment}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-alignment-xscale atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-alignment-xscale 'function)
- "@version{2014-1-17}
-  Accessor of the slot @code{\"xscale\"} of the @class{gtk-alignment} class.
+ "@version{2014-7-26}
+  Accessor of the slot @slot[gtk-alignment]{xscale} of the @class{gtk-alignment}
+  class.
   @see-class{gtk-alignment}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-alignment-yscale atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-alignment-yscale 'function)
- "@version{2014-1-17}
-  Accessor of the slot @code{\"yscale\"} of the @class{gtk-alignment} class.
+ "@version{2014-7-26}
+  Accessor of the slot @slot[gtk-alignment]{yscale} of the @class{gtk-alignment}
+  class.
   @see-class{gtk-alignment}")
 
 ;;; ----------------------------------------------------------------------------

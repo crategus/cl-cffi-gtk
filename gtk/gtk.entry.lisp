@@ -870,7 +870,7 @@
   The generic function @sym{gtk-entry-inner-border} returns the entry's
   @slot[gtk-entry]{inner-border} property.
 
-  The generic function @sym{(setf gtk-entry-inner-border)} sets entry's 
+  The generic function @sym{(setf gtk-entry-inner-border)} sets entry's
   @slot[gtk-entry]{inner-border} property to @arg{border}, or clears it if
   @code{nil} is passed. The \"inner-border\" is the area around the entry's
   text, but inside its frame.
@@ -2118,11 +2118,11 @@
   @return{Byte index into the entry contents.}
   @begin{short}
     Converts from a position in the entry contents (returned by the function
-    @fun{gtk-entry-get-text}) to a position in the @arg{entry}'s
+    @fun{gtk-entry-text}) to a position in the @arg{entry}'s
     @class{pango-layout} (returned by the function @fun{gtk-entry-get-layout},
     with text retrieved via the function @fun{pango-layout-get-text}).
   @end{short}
-  @see-function{gtk-entry-get-text}
+  @see-function{gtk-entry-text}
   @see-function{gtk-entry-get-layout}
   @see-function{pango-layout-get-text}"
   (entry (g-object entry))
@@ -2144,10 +2144,10 @@
   @begin{short}
     Converts from a position in the @arg{entry}'s @class{pango-layout} (returned
     by the function @fun{gtk-entry-get-layout}) to a position in the @arg{entry}
-    contents (returned by the function @fun{gtk-entry-get-text}).
+    contents (returned by the function @fun{gtk-entry-text}).
   @end{short}
   @see-function{gtk-entry-get-layout}
-  @see-function{gtk-entry-get-text}"
+  @see-function{gtk-entry-text}"
   (entry (g-object entry))
   (text-index :int))
 

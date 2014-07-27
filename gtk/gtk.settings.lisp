@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.8.9 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.10 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -460,6 +460,9 @@
                                                'gtk-settings) 't)
  "The @code{\"gtk-auto-mnemonics\"} property of type @code{:boolean}
   (Read / Write) @br{}
+  @b{Warning:} @code{\"gtk-auto-mnemonics\"} has been deprecated since version
+  3.10 and should not be used in newly-written code. This setting is ignored.
+  @br{}
   Whether mnemonics should be automatically shown and hidden when the user
   presses the mnemonic activator. @br{}
   Default value: @code{nil} @br{}
@@ -478,6 +481,9 @@
                                                'gtk-settings) 't)
  "The @code{\"gtk-can-change-accels\"} property of type @code{:boolean}
   (Read / Write) @br{}
+  @b{Warning:} @code{\"gtk-can-change-accels\"} has been deprecated since
+  version 3.10 and should not be used in newly-written code. This setting is
+  ignored. @br{}
   Whether menu accelerators can be changed by pressing a key over the menu
   item. @br{}
   Default value: @code{nil}")
@@ -487,7 +493,9 @@
                                                'gtk-settings) 't)
  "The @code{\"gtk-color-palette\"} property of type @code{:string}
   (Read / Write) @br{}
-  Palette to use in the color selector. @br{}
+  @b{Warning:} @code{\"gtk-color-palette\"} has been deprecated since version
+  3.10 and should not be used in newly-written code. @br{}
+  Only used by the deprecated color selector widget. @br{}
   Default value: @br{}
     @code{\"black:
             white:
@@ -667,6 +675,9 @@
                                                'gtk-settings) 't)
  "The @code{\"gtk-enable-mnemonics\"} property of type @code{:boolean}
   (Read / Write) @br{}
+  @b{Warning:} @code{\"gtk-enable-mnemonics\"} has been deprecated since version
+  3.10 and should not be used in newly-written code. This setting can still be
+  used for application overrides, but will be ignored in the future. @br{}
   Whether labels and menu items should have visible mnemonics which can be
   activated. @br{}
   Default value: @em{true} @br{}
@@ -687,6 +698,9 @@
                                                'gtk-settings) 't)
  "The @code{\"gtk-enable-tooltips\"} property of type @code{:boolean}
   (Read / Write) @br{}
+  @b{Warning:} @code{\"gtk-enable-tooltips\"} has been deprecated since version
+  3.10 and should not be used in newly-written code. This setting is ignored.
+  @br{}
   Whether tooltips should be shown on widgets. @br{}
   Default value: @em{true} @br{}
   Since 2.14")
@@ -728,6 +742,9 @@
                                                'gtk-settings) 't)
  "The @code{\"gtk-fallback-icon-theme\"} property of type @code{:string}
   (Read / Write) @br{}
+  @b{Warning:} @code{\"gtk-fallback-icon-theme\"} has been deprecated since
+  version 3.10 and should not be used in newly-written code. This setting is
+  ignored. @br{}
   Name of a icon theme to fall back to. @br{}
   Default value: @code{nil}")
 
@@ -736,6 +753,9 @@
                                                'gtk-settings) 't)
  "The @code{\"gtk-file-chooser-backend\"} property of type @code{:string}
   (Read / Write) @br{}
+  @b{Warning:} @code{\"gtk-file-chooser-backend\"} has been deprecated since
+  version 3.10 and should not be used in newly-written code. This setting is
+  ignored. @classd{gtk-file-chooser} uses GIO by default. @br{}
   Name of the @class{gtk-file-chooser} backend to use by default. @br{}
   Default value: @code{nil}")
 
@@ -760,6 +780,8 @@
                                                'gtk-settings) 't)
  "The @code{\"gtk-icon-sizes\"} property of type @code{:string}
   (Read / Write) @br{}
+  @b{Warning:} @code{\"gtk-icon-sizes\"} has been deprecated since version 3.10
+  and should not be used in newly-written code. This setting is ignored. @br{}
   A list of icon sizes. The list is separated by colons, and item has the
   form:
   @begin{pre}
@@ -798,6 +820,9 @@
                                                'gtk-settings) 't)
  "The @code{\"gtk-im-preedit-style\"} property of type
   @symbol{gtk-im-preedit-style} (Read / Write) @br{}
+  @b{Warning:} @code{\"gtk-im-preedit-style\"} has been deprecated since version
+  3.10 and should not be used in newly-written code. This setting is ignored.
+  @br{}
   How to draw the input method preedit string. @br{}
   Default value: @code{:callback}")
 
@@ -806,6 +831,8 @@
                                                'gtk-settings) 't)
  "The @code{\"gtk-im-status-style\"} property of type
   @symbol{gtk-im-status-style} (Read / Write) @br{}
+  @b{Warning:} @code{gtk-im-status-style} has been deprecated since version 3.10
+  and should not be used in newly-written code. This setting is ignored. @br{}
   How to draw the input method statusbar. @br{}
   Default value: @code{:callback}")
 
@@ -822,6 +849,10 @@
                                                'gtk-settings) 't)
  "The @code{\"gtk-keynav-cursor-only\"} property of type @code{:boolean}
   (Read / Write) @br{}
+  @b{Warning:} @code{\"gtk-keynav-cursor-only\"} has been deprecated since
+  version 3.10 and should not be used in newly-written code. Generally, the
+  behavior for touchscreen input should be performed dynamically based on
+  the function @fun{gdk-event-get-source-device}. @br{}
   When @code{true}, keyboard navigation should be able to reach all widgets by
   using the cursor keys only. Tab, Shift etc. keys cannot be expected to be
   present on the used input device. @br{}
@@ -833,6 +864,9 @@
                                                'gtk-settings) 't)
  "The @code{\"gtk-keynav-wrap-around\"} property of type @code{:boolean}
   (Read / Write) @br{}
+  @b{Warning:} @code{gtk-keynav-wrap-around} has been deprecated since version
+  3.10 and should not be used in newly-written code. This setting is ignored.
+  @br{}
   When @code{true}, some widgets will wrap around when doing keyboard
   navigation, such as menus, menubars and notebooks. @br{}
   Default value: @em{true} @br{}
@@ -851,6 +885,9 @@
                                                'gtk-settings) 't)
  "The @code{\"gtk-menu-bar-accel\"} property of type @code{:string}
   (Read / Write) @br{}
+  @b{Warning:} @code{\"gtk-menu-bar-accel\"} has been deprecated since version
+  3.10 and should not be used in newly-written code. This setting can still be
+  used for application overrides, but will be ignored in the future. @br{}
   Keybinding to activate the menu bar. @br{}
   Default value: \"F10\"")
 
@@ -859,6 +896,9 @@
                                                'gtk-settings) 't)
  "The @code{\"gtk-menu-bar-popup-delay\"} property of type @code{:int}
   (Read / Write) @br{}
+  @b{Warning:} @code{gtk-menu-bar-popup-delay} has been deprecated since version
+  3.10 and should not be used in newly-written code. This setting is ignored.
+  @br{}
   Delay before the submenus of a menu bar appear. @br{}
   Allowed values: >= 0 @br{}
   Default value: 0")
@@ -876,6 +916,9 @@
                                                'gtk-settings) 't)
  "The @code{\"gtk-menu-popdown-delay\"} property of type @code{:int}
   (Read / Write) @br{}
+  @b{Warning:} @code{gtk-menu-popdown-delay} has been deprecated since version
+  3.10 and should not be used in newly-written code. This setting is ignored.
+  @br{}
   The time before hiding a submenu when the pointer is moving towards the
   submenu. @br{}
   Allowed values: >= 0 @br{}
@@ -886,6 +929,9 @@
                                                'gtk-settings) 't)
  "The @code{\"gtk-menu-popup-delay\"} property of type @code{:int}
   (Read / Write) @br{}
+  @b{Warning:} @code{gtk-menu-popup-delay} has been deprecated since version
+  3.10 and should not be used in newly-written code. This setting is ignored.
+  @br{}
   Minimum time the pointer must stay over a menu item before the submenu
   appear. @br{}
   Allowed values: >= 0 @br{}
@@ -951,6 +997,9 @@
                                                'gtk-settings) 't)
  "The @code{\"gtk-recent-files-limit\"} property of type @code{:int}
   (Read / Write) @br{}
+  @b{Warning:} @code{\"gtk-recent-files-limit\"} has been deprecated since
+  version 3.10 and should not be used in newly-written code. This setting is
+  ignored. @br{}
   The number of recently used files that should be displayed by default by
   @class{gtk-recent-chooser} implementations and by the
   @class{gtk-file-chooser} interface. A value of -1 means every recently used
@@ -977,6 +1026,9 @@
                                                'gtk-settings) 't)
  "The @code{\"gtk-scrolled-window-placement\"} property of type
   @symbol{gtk-corner-type} (Read / Write) @br{}
+  @b{Warning:} @code{gtk-scrolled-window-placement} has been deprecated since
+  version 3.10 and should not be used in newly-written code. This setting is
+  ignored. @br{}
   Where the contents of scrolled windows are located with respect to the
   scrollbars, if not overridden by the scrolled window's own placement. @br{}
   Default value: @code{:top-left} @br{}
@@ -1005,6 +1057,9 @@
                                                'gtk-settings) 't)
  "The @code{\"gtk-show-input-method-menu\"} property of type @code{:boolean}
   (Read / Write) @br{}
+  @b{Warning:} @code{\"gtk-show-input-method-menu\"} has been deprecated since
+  version 3.10 and should not be used in newly-written code. This setting is
+  ignored. @br{}
   Whether the context menus of entries and text views should offer to change
   the input method. @br{}
   Default value: @em{true}")
@@ -1014,9 +1069,12 @@
                                                'gtk-settings) 't)
  "The @code{\"gtk-show-unicode-menu\"} property of type @code{:boolean}
   (Read / Write) @br{}
+  @b{Warning:} @code{gtk-show-unicode-menu} has been deprecated since version
+  3.10 and should not be used in newly-written code. This setting is ignored.
+  @br{}
   Whether the context menus of entries and text views should offer to insert
   control characters. @br{}
-  Default value: @em{true}")
+  Default value: @em{false}")
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "gtk-sound-theme-name"
@@ -1053,6 +1111,8 @@
                                                'gtk-settings) 't)
  "The @code{\"gtk-timeout-expand\"} property of type @code{:int}
   (Read / Write) @br{}
+  @b{Warning:} @code{gtk-timeout-expand} has been deprecated since version 3.10
+  and should not be used in newly-written code. This setting is ignored. @br{}
   Expand value for timeouts, when a widget is expanding a new region. @br{}
   Allowed values: >= 0 @br{}
   Default value: 500")
@@ -1062,6 +1122,9 @@
                                                'gtk-settings) 't)
  "The @code{\"gtk-timeout-initial\"} property of type @code{:int}
   (Read / Write) @br{}
+  @b{Warning:} @code{\"gtk-timeout-initial\"} has been deprecated since version
+  3.10 and should not be used in newly-written code. This setting is ignored.
+  @br{}
   Starting value for timeouts, when button is pressed. @br{}
   Allowed values: >= 0 @br{}
   Default value: 200")
@@ -1071,6 +1134,9 @@
                                                'gtk-settings) 't)
  "The @code{\"gtk-timeout-repeat\"} property of type @code{:int}
   (Read / Write) @br{}
+  @b{Warning:} @code{\"gtk-timeout-repeat\"} has been deprecated since version
+  3.10 and should not be used in newly-written code. This setting is ignored.
+  @br{}
   Repeat value for timeouts, when button is pressed. @br{}
   Allowed values: >= 0 @br{}
   Default value: 20")
@@ -1080,6 +1146,9 @@
                                                'gtk-settings) 't)
  "The @code{\"gtk-toolbar-icon-size\"} property of type @symbol{gtk-icon-size}
   (Read / Write) @br{}
+  @b{Warning:} @code{gtk-toolbar-icon-size} has been deprecated since version
+  3.10 and should not be used in newly-written code. This setting is ignored.
+  @br{}
   The size of icons in default toolbars. @br{}
   Default value: @code{:large-toolbar}")
 
@@ -1088,6 +1157,8 @@
                                                'gtk-settings) 't)
  "The @code{\"gtk-toolbar-style\"} property of type @symbol{gtk-toolbar-style}
   (Read / Write) @br{}
+  @b{Warning:} @code{gtk-toolbar-style} has been deprecated since version 3.10
+  and should not be used in newly-written code. This setting is ignored. @br{}
   The size of icons in default toolbars. @br{}
   Default value: @code{:both}")
 
@@ -1096,10 +1167,13 @@
                                                'gtk-settings) 't)
  "The @code{\"gtk-tooltip-browse-mode-timeout\"} property of type @code{:int}
   (Read / Write) @br{}
+  @b{Warning:} @code{\"gtk-tooltip-browse-mode-timeout\"} has been deprecated
+  since version 3.10 and should not be used in newly-written code. This setting
+  is ignored. @br{}
   Amount of time, in milliseconds, after which the browse mode will be
   disabled.
-  See the @code{\"gtk-tooltip-browse-timeout\"} setting for more information
-  about browse mode. @br{}
+  See the @slot[gtk-settings]{gtk-tooltip-browse-timeout} setting for more
+  information about browse mode. @br{}
   Allowed values: >= 0 @br{}
   Default value: 500 @br{}
   Since 2.12")
@@ -1109,14 +1183,16 @@
                                                'gtk-settings) 't)
  "The @code{\"gtk-tooltip-browse-timeout\"} property of type @code{:int}
   (Read / Write) @br{}
+  @b{Warning:} @code{\"gtk-tooltip-browse-timeout\"} has been deprecated since
+  version 3.10 and should not be used in newly-written code. This setting is
+  ignored. @br{}
   Controls the time after which tooltips will appear when browse mode is
-  enabled, in milliseconds.
-  Browse mode is enabled when the mouse pointer moves off an object where a
-  tooltip was currently being displayed. If the mouse pointer hits another
-  object before the browse mode timeout expires (see the
-  @code{\"gtk-tooltip-browse-mode-timeout\"} setting), it will take the amount
-  of milliseconds specified by this setting to popup the tooltip for the new
-  object. @br{}
+  enabled, in milliseconds. Browse mode is enabled when the mouse pointer moves
+  off an object where a tooltip was currently being displayed. If the mouse
+  pointer hits another object before the browse mode timeout expires, see the
+  @slot[gtk-settings]{gtk-tooltip-browse-mode-timeout} setting, it will take the
+  amount of milliseconds specified by this setting to popup the tooltip for the
+  new object. @br{}
   Allowed values: >= 0 @br{}
   Default value: 60 @br{}
   Since 2.12")
@@ -1126,6 +1202,8 @@
                                                'gtk-settings) 't)
  "The @code{\"gtk-tooltip-timeout\"} property of type @code{:int}
   (Read / Write) @br{}
+  @b{Warning:} @code{gtk-tooltip-timeout} has been deprecated since version 3.10
+  and should not be used in newly-written code. This setting is ignored. @br{}
   Time, in milliseconds, after which a tooltip could appear if the cursor is
   hovering on top of a widget. @br{}
   Allowed values: >= 0 @br{}
@@ -1152,6 +1230,8 @@
                                                'gtk-settings) 't)
  "The @code{\"gtk-visible-focus\"} property of type @symbol{gtk-policy-type}
   (Read / Write) @br{}
+  @b{Warning:} @code{gtk-visible-focus} has been deprecated since version 3.10
+  and should not be used in newly-written code. This setting is ignored. @br{}
   Whether focus rectangles should be always visible, never visible, or
   hidden until the user starts to use the keyboard. @br{}
   Default value: @code{:always} @br{}

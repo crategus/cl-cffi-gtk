@@ -2,11 +2,11 @@
 ;;; gtk.grid.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.8.8 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.10 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012, 2013 Dieter Kaiser
+;;; Copyright (C) 2012, 2013, 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -40,6 +40,8 @@
 ;;;     gtk_grid_get_child_at
 ;;;     gtk_grid_insert_row
 ;;;     gtk_grid_insert_column
+;;;     gtk_grid_remove_row
+;;;     gtk_grid_remove_column
 ;;;     gtk_grid_insert_next_to
 ;;;     gtk_grid_set_row_homogeneous
 ;;;     gtk_grid_get_row_homogeneous
@@ -49,6 +51,10 @@
 ;;;     gtk_grid_get_column_homogeneous
 ;;;     gtk_grid_set_column_spacing
 ;;;     gtk_grid_get_column_spacing
+;;;     gtk_grid_get_baseline_row
+;;;     gtk_grid_set_baseline_row
+;;;     gtk_grid_get_row_baseline_position
+;;;     gtk_grid_set_row_baseline_position
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -67,7 +73,11 @@
                 "GtkBuildable"
                 "GtkOrientable")
    :type-initializer "gtk_grid_get_type")
-  ((column-homogeneous
+  (#+gtk-3-10
+   (baseline-row
+    gtk-grid-baseline-row
+    "baseline-row" "gint" t t)
+   (column-homogeneous
     gtk-grid-column-homogeneous
     "column-homogeneous" "gboolean" t t)
    (column-spacing
@@ -124,6 +134,7 @@
       Allowed values: >= 1 @br{}
       Default value: 1
   @end{dictionary}
+  @see-slot{gtk-grid-baseline-row}
   @see-slot{gtk-grid-column-homogeneous}
   @see-slot{gtk-grid-column-spacing}
   @see-slot{gtk-grid-row-homogeneous}
@@ -139,6 +150,42 @@
 ;;; Property Details
 ;;;
 ;;; ----------------------------------------------------------------------------
+
+#+(and gtk-3-10 cl-cffi-gtk-documentation)
+(setf (documentation (atdoc:get-slot-from-name "baseline-row"
+                                               'gtk-grid) 't)
+ "The @code{\"baseline-row\"} property of type @code{:int}
+  (Read / Write) @br{}
+  The row to align the to the baseline when valign has the value @code{:center}
+  of the @symbol{gtk-align} enumeration. @br{}
+  Allowed values: >= 0 @br{}
+  Default value: 0")
+
+#+(and gtk-3-10 cl-cffi-gtk-documentation)
+(setf (gethash 'gtk-grid-baseline-row atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-grid-baseline-row 'function)
+ "@version{2014-7-26}
+  @argument[object]{a @class{gtk-grid} container}
+  @argument[row]{the row index}
+  @syntax[]{(gtk-grid-baseline-row object) => row}
+  @syntax[]{(setf (gtk-grid-baseline-row object) row)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-grid]{baseline-row} of the @class{gtk-grid}
+    class.
+  @end{short}
+
+  The generic function @sym{gtk-grid-baseline-row} returns which row defines
+  the global baseline of the grid.
+
+  The generic function @sym{(setf gtk-grid-baseline-row)} sets which row defines
+  the global baseline for the entire grid. Each row in the grid can have its own
+  local baseline, but only one of those is global, meaning it will be the
+  baseline in the parent of the the grid.
+
+  Since 3.10
+  @see-class{gtk-grid}
+  @see-symbol{gtk-align}")
 
 ;;; --- gtk-grid-column-homogeneous --------------------------------------------
 
@@ -512,5 +559,49 @@
   (side gtk-position-type))
 
 (export 'gtk-grid-insert-next-to)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_grid_get_row_baseline_position ()
+;;; 
+;;; GtkBaselinePosition gtk_grid_get_row_baseline_position (GtkGrid *grid,
+;;;                                                         gint row);
+;;;
+;;; Returns the baseline position of row as set by
+;;; gtk_grid_set_row_baseline_position() or the default value
+;;; GTK_BASELINE_POSITION_CENTER.
+;;;
+;;; grid
+;;;     a GtkGrid
+;;;
+;;; row
+;;;     a row index
+;;;
+;;; Returns
+;;;     the baseline position of row
+;;;
+;;; Since 3.10
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_grid_set_row_baseline_position ()
+;;;
+;;; void gtk_grid_set_row_baseline_position (GtkGrid *grid,
+;;;                                          gint row,
+;;;                                          GtkBaselinePosition pos);
+;;;
+;;; Sets how the baseline should be positioned on row of the grid, in case that
+;;; row is assigned more space than is requested.
+;;;
+;;; grid
+;;;     a GtkGrid
+;;;
+;;; row
+;;;     a row index
+;;;
+;;; pos
+;;;     a GtkBaselinePosition
+;;;
+;;; Since 3.10
+;;; ----------------------------------------------------------------------------
 
 ;;; --- End of file gtk.grid.lisp ----------------------------------------------

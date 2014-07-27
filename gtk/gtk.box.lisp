@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.8.9 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.10 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -48,6 +48,8 @@
 ;;;     gtk_box_reorder_child
 ;;;     gtk_box_query_child_packing
 ;;;     gtk_box_set_child_packing
+;;;     gtk_box_get_baseline_position
+;;;     gtk_box_set_baseline_position
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -69,7 +71,11 @@
                 "GtkBuildable"
                 "GtkOrientable")
    :type-initializer "gtk_box_get_type")
-  ((homogeneous
+  (#+gtk-3-10
+   (baseline-position
+    gtk-box-base-line-position
+    "baseline-position" "GtkBaselinePosition" t t)
+   (homogeneous
     gtk-box-homogeneous
     "homogeneous" "gboolean" t t)
    (spacing
@@ -161,6 +167,7 @@
       Allowed values: <= @code{G_MAXULONG} @br{}
       Default value: 0
   @end{dictionary}
+  @see-slot{gtk-box-baseline-position}
   @see-slot{gtk-box-homogeneous}
   @see-slot{gtk-box-spacing}
   @see-class{gtk-container}
@@ -177,6 +184,42 @@
 ;;; Property and Accessor Details
 ;;;
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-box-baseline-position ----------------------------------------------
+
+#+(and cl-cffi-gtk-documentation gtk-3-10)
+(setf (documentation (atdoc:get-slot-from-name "baseline-position" 'gtk-box) 't)
+ "The @code{\"baseline-position\"} property of type
+  @symbol{gtk-baseline-position} (Read / Write) @br{}
+  The position of the baseline aligned widgets if extra space is available.
+  @br{}
+  Default value: @code{:center}")
+
+#+(and cl-cffi-gtk-documentation gtk-3-10)
+(setf (gethash 'gtk-box-baseline-position atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-box-baseline-position 'function)
+ "@version{2014-7-26}
+  @argument[object]{a @class{gtk-box} container}
+  @argument[position]{a @symbol{gtk-baseline-position}}
+  @syntax[]{(gtk-box-baseline-position object) => position)}
+  @syntax[]{(setf (gtk-box-baseline-position object) position)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-box]{baseline-position} of the
+    @class{gtk-box} class.
+  @end{short}
+
+  The generic function @sym{gtk-box-baseline-position} gets the value set by
+  the generic function @sym{(setf gtk-box-baseline-position)}.
+
+  The generic function @sym{(setf gtk-box-baseline-position)} sets the baseline
+  position of a box. This affects only horizontal boxes with at least one
+  baseline aligned child. If there is more vertical space available than
+  requested, and the baseline is not allocated by the parent then @arg{position}
+  is used to allocate the baseline wrt the extra space available.
+
+  Since 3.10
+  @see-class{gtk-box}")
 
 ;;; --- gtk-box-homogeneous ----------------------------------------------------
 

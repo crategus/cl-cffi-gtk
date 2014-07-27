@@ -2,7 +2,7 @@
 ;;; gtk.application-window.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.8.9 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.10 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -60,14 +60,15 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-application-window 'type)
- "@version{2013-12-14}
+ "@version{2014-7-19}
   @begin{short}
     @sym{gtk-application-window} is a @class{gtk-window} subclass that offers
     some extra functionality for better integration with @class{gtk-application}
-    features. Notably, it can handle both the application menu as well as the
-    menubar. See the functions @fun{gtk-application-app-menu} and
-    @fun{gtk-application-menubar}.
+    features.
   @end{short}
+  Notably, it can handle both the application menu as well as the menubar. See
+  the functions @fun{gtk-application-app-menu} and
+  @fun{gtk-application-menubar}.
 
   This class implements the @class{g-action-group} and @class{g-action-map}
   interfaces, to let you add window-specific actions that will be exported by
@@ -148,7 +149,7 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Property Details
+;;; Property and Accessor Details
 ;;;
 ;;; ----------------------------------------------------------------------------
 

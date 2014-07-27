@@ -2,7 +2,7 @@
 ;;; gtk.application.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.8.9 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.10 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -256,7 +256,7 @@
             (label (make-instance 'gtk-label
                                   :label \"Fullscreen:\"))
             (switch (make-instance 'gtk-switch)))
-        (gtk-actionable-set-action-name switch \"win.fullscreen\")
+        (setf (gtk-actionable-action-name switch) \"win.fullscreen\")
         (gtk-container-add box label)
         (gtk-container-add box switch)
         (gtk-container-add button box)
@@ -492,18 +492,30 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "active-window"
                                                'gtk-application) 't)
- "The @code{\"active-window\"} property of type @code{gtk-window} (Read) @br{}
+ "The @code{\"active-window\"} property of type @class{gtk-window} (Read) @br{}
   The window which most recently had focus.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-application-active-window atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-application-active-window 'function)
- "@version{2014-4-20}
-  Accessor of the slot @slot[gtk-application]{active-window} of the
-  @class{gtk-application} class.
-  @see-class{gtk-application}
-  @see-function{gtk-application-get-active-window}")
+ "@version{2014-7-19}
+  @argument[object]{a @class{gtk-application} object}
+  @begin{short}
+    Accessor of the slot @slot[gtk-application]{active-window} of the
+    @class{gtk-application} class.
+  @end{short}
+
+  The generic function @sym{gtk-application-active-window} gets the \"active\"
+  window for the application.
+
+  The active window is the one that was most recently focused within the
+  application. This window may not have the focus at the moment if another
+  application has it - this is just the most recently-focused window within
+  this application.
+
+  Since 3.6
+  @see-class{gtk-application}")
 
 ;;; --- gtk-application-app-menu -----------------------------------------------
 
@@ -575,8 +587,8 @@
     @class{gtk-application} class.
   @end{short}
 
-  The generic function @sym{gtk-application-menubar} returns the menu model that
-  has been set with the generic function
+  The generic function @sym{gtk-application-menubar} returns the menu model
+  that has been set with the generic function
   @sym{(setf gtk-application-menubar)}.
 
   The generic function @sym{(setf gtk-application-menubar)} sets or unsets the
@@ -776,33 +788,6 @@
 
   #+gtk-3-6
 (export 'gtk-application-get-window-by-id)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_application_get_active_window ()
-;;; ----------------------------------------------------------------------------
-
-#+gtk-3-6
-(defcfun ("gtk_application_get_active_window" gtk-application-get-active-window)
-    (g-object gtk-window)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-8}
-  @argument[application]{a @class{gtk-application} object}
-  @return{The active window.}
-  @begin{short}
-    Gets the \"active\" window for the application.
-  @end{short}
-
-  The active window is the one that was most recently focused within the
-  application. This window may not have the focus at the moment if another
-  application has it - this is just the most recently-focused window within
-  this application.
-
-  Since 3.6
-  @see-class{gtk-application}"
-  (application (g-object gtk-application)))
-
-#+gtk-3-6
-(export 'gtk-application-get-active-window)
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkApplicationInhibitFlags

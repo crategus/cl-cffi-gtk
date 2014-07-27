@@ -8231,12 +8231,14 @@
   (:fill 0)
   (:start 1)
   (:end 2)
-  (:center 3))
+  (:center 3)
+  #+gtk-3-10
+  (:baseline 4))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-align atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-align atdoc:*external-symbols*)
- "@version{2013-9-28}
+ "@version{2014-7-26}
   @begin{short}
     Controls how a widget deals with extra space in a single (x or y) dimension.
   @end{short}
@@ -8250,6 +8252,10 @@
 
   Note that in horizontal context @code{:start} and @code{:end} are
   interpreted relative to text direction.
+
+  @code{:baseline} support is optional for containers and widgets, and it is
+  only supported for vertical alignment. When its not supported by a child or
+  a container it is treated as @code{:fill}.
   @begin{pre}
 (define-g-enum \"GtkAlign\" gtk-align
   (:export t
@@ -8257,7 +8263,8 @@
   (:fill 0)
   (:start 1)
   (:end 2)
-  (:center 3))
+  (:center 3)
+  (:baseline 4))
   @end{pre}
   @begin[code]{table}
     @entry[:fill]{Stretch to fill all space if possible, center if no meaningful
@@ -8265,6 +8272,7 @@
     @entry[:start]{Snap to left or top side, leaving space on right or bottom.}
     @entry[:end]{Snap to right or bottom side, leaving space on left or top.}
     @entry[:center]{Center natural width of widget inside the allocation.}
+    @entry[:baseline]{Align the widget according to the baseline. Since 3.10.}
   @end{table}
   @see-class{gtk-widget}
   @see-function{gtk-widget-halign}
