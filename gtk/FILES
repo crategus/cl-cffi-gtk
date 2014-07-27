@@ -42,8 +42,8 @@ GTK+ Widgets and Objects
 
     gtk.overlay.lisp                 - GtkOverlay                  - GTK+ 3.10
     gtk.alignment.lisp               - GtkAlignment                - GTK+ 3.10
-    gtk.button-box.lisp              - GtkButtonBox, ...           - GTK+ 3.6.4*
-    gtk.paned.lisp                   - GtkPaned, ...               - GTK+ 3.6.4*
+    gtk.button-box.lisp              - GtkButtonBox, ...           - GTK+ 3.10
+    gtk.paned.lisp                   - GtkPaned, ...               - GTK+ 3.10
     gtk.layout.lisp                  - GtkLayout                   - GTK+ 3.6.4*
     gtk.notebook.lisp                - GtkNotebook                 - GTK+ 3.6.4*
     gtk.expander.lisp                - GtkExpander                 - GTK+ 3.6.4*

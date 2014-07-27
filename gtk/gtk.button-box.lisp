@@ -73,13 +73,12 @@
   @begin{short}
     A button box should be used to provide a consistent layout of buttons
     throughout your application. The layout/spacing can be altered by the
-    programmer, or if desired, by the user to alter the 'feel' of a program to a
-    small degree.
+    programmer, or if desired, by the user to alter the 'feel' of a program
+    to a small degree.
   @end{short}
 
-  The functions @fun{gtk-button-box-get-layout} and
-  @fun{gtk-button-box-set-layout} retrieve and alter the method used to spread
-  the buttons in a button box across the container, respectively.
+  The generic function @fun{gtk-button-box-layout-style} retrieve and alter the
+  method used to spread the buttons in a button box across the container.
 
   The main purpose of @sym{gtk-button-box} is to make sure the children have
   all the same size. @sym{gtk-button-box} gives all children the same size,
@@ -89,29 +88,35 @@
 
   To excempt individual children from homogeneous sizing regardless of their
   'outlier' status, you can set the @code{\"non-homogeneous\"} child property.
+  @begin[Note]{dictionary}
+    The C functions @code{gtk_button_box_get_layout} and
+    @code{gtk_button_box_set_layout} are not implemented in the Lisp binding. 
+    These functions are implemented as the generic function
+    @fun{gtk-button-box-layout-style}.
+  @end{dictionary}
   @begin[Style Property Details]{dictionary}
     @subheading{The \"child-internal-pad-x\" style property}
-      @code{\"child-internal-pad-x\"} of type @code{:int} (Read)@br{}
-      Amount to increase child's size on either side.@br{}
-      Allowed values: >= 0@br{}
+      @code{\"child-internal-pad-x\"} of type @code{:int} (Read) @br{}
+      Amount to increase child's size on either side. @br{}
+      Allowed values: >= 0 @br{}
       Default value: 4
 
     @subheading{The \"child-internal-pad-y\" style property}
-      @code{\"child-internal-pad-y\"} of type @code{:int} (Read)@br{}
-      Amount to increase child's size on the top and bottom.@br{}
-      Allowed values: >= 0@br{}
+      @code{\"child-internal-pad-y\"} of type @code{:int} (Read) @br{}
+      Amount to increase child's size on the top and bottom. @br{}
+      Allowed values: >= 0 @br{}
       Default value: 0
 
     @subheading{The \"child-min-height\" style property}
-      @code{\"child-min-height\"} of type @code{:int} (Read)@br{}
-      Minimum height of buttons inside the box.@br{}
-      Allowed values: >= 0@br{}
+      @code{\"child-min-height\"} of type @code{:int} (Read) @br{}
+      Minimum height of buttons inside the box. @br{}
+      Allowed values: >= 0 @br{}
       Default value: 27
 
     @subheading{The \"child-min-width\" style property}
-      @code{\"child-min-width\"} of type @code{:int} (Read)@br{}
-      Minimum width of buttons inside the box.@br{}
-      Allowed values: >= 0@br{}
+      @code{\"child-min-width\"} of type @code{:int} (Read) @br{}
+      Minimum width of buttons inside the box. @br{}
+      Allowed values: >= 0 @br{}
       Default value: 85
   @end{dictionary}
   @see-slot{gtk-button-box-layout-style}")
@@ -126,9 +131,9 @@
 (setf (documentation (atdoc:get-slot-from-name "layout-style" 'gtk-button-box)
                      't)
  "The @code{\"layout-style\"} property of type @symbol{gtk-button-box-style}
-  (Read / Write)@br{}
+  (Read / Write) @br{}
   How to lay out the buttons in the box. Possible values are: spread, edge,
-  start and end.@br{}
+  start and end. @br{}
   Default value: @code{:edge}")
 
 #+cl-cffi-gtk-documentation
