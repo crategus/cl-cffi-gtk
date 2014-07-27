@@ -212,7 +212,7 @@
 #+gtk-3-10
 (define-g-enum "GtkBaselinePosition" gtk-baseline-position
   (:export t
-   :type-initializer "gtk_baseline-position_get_type")
+   :type-initializer "gtk_baseline_position_get_type")
   (:top 0)
   (:center 1)
   (:bottom 2))
@@ -232,7 +232,7 @@
   @begin{pre}
 (define-g-enum \"GtkBaselinePosition\" gtk-baseline-position
   (:export t
-   :type-initializer \"gtk_baseline-position_get_type\")
+   :type-initializer \"gtk_baseline_position_get_type\")
   (:top 0)
   (:center 1)
   (:bottom 2))
