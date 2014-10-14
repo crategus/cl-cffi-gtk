@@ -68,6 +68,14 @@
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_format_stride_for_width ()
 ;;;
+
+(defcfun ("cairo_format_stride_for_width" cairo-format-stride-for-width)
+    :int
+  (format cairo-format-t)
+  (width :int))
+
+(export 'cairo-format-stride-for-width)
+
 ;;; int cairo_format_stride_for_width (cairo_format_t format, int width);
 ;;;
 ;;; This function provides a stride value that will respect all alignment
@@ -138,6 +146,18 @@
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_image_surface_create_for_data ()
 ;;;
+
+(defcfun ("cairo_image_surface_create_for_data" cairo-image-surface-create-for-data)
+    (:pointer (:struct cairo-surface-t))
+  (data :pointer)
+  (format cairo-format-t)
+  (width :int)
+  (height :int)
+  (stride :int))
+
+(export 'cairo-image-surface-create-for-data)
+
+
 ;;; cairo_surface_t * cairo_image_surface_create_for_data (unsigned char *data,
 ;;;                                                       cairo_format_t format,
 ;;;                                                        int width,
