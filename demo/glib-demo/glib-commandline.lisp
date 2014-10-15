@@ -1,6 +1,3 @@
-
-(asdf:load-system :cl-cffi-gtk)
-
 (defpackage :demo-commandline
   (:use :gtk :glib :cffi :common-lisp)
   (:export #:main))

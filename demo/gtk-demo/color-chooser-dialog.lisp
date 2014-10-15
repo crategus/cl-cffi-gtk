@@ -1,5 +1,7 @@
 ;;;; Color Chooser Dialog
 
+(in-package #:gtk-demo)
+
 (let ((color (gdk-rgba-parse "Blue"))
       ;; Color palette with 4 rgba colors
       (palette1 (list (gdk-rgba-parse "Red")

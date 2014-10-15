@@ -3,6 +3,8 @@
 ;;;; Demonstrates a typical application window with menubar, toolbar, statusbar.
 ;;;; This example uses GtkUIManager and GtkActionGroup.
 
+(in-package #:gtk-demo)
+
 (defstruct app
   window
   message
@@ -62,7 +64,7 @@
                          :license-type :lgpl-2-1
                          :website "http://www.gtk.org"
                          :comments "Program to demonstrate GTK+ Lisp functions."
-                         :logo (gdk-pixbuf-new-from-file "gtk-logo-old.png")
+                         :logo (gdk-pixbuf-new-from-file (rel-path "gtk-logo-old.png"))
                          :title "About GTK+ Lisp Code Demos"))
 
 (defvar *entries*
@@ -196,7 +198,7 @@
 
 (defun register-stock-icons ()
   (let* ((factory (make-instance 'gtk-icon-factory))
-         (pixbuf (gdk-pixbuf-new-from-file "gtk-logo-old.png"))
+         (pixbuf (gdk-pixbuf-new-from-file (rel-path "gtk-logo-old.png")))
          (icon-set (gtk-icon-set-new-from-pixbuf pixbuf)))
     (gtk-icon-factory-add-default factory)
     (gtk-icon-factory-add factory "demo-gtk-logo" icon-set)))

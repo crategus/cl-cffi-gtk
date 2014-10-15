@@ -2,6 +2,8 @@
 ;;;;
 ;;;; This demo allows to change interactively the appearance of a GtkGrid.
 
+(in-package #:gtk-demo)
+
 (defun demo-grid ()
   (within-main-loop
     (let* (;; Create a toplevel window.

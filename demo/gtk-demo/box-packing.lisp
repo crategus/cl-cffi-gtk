@@ -2,6 +2,8 @@
 ;;;;
 ;;;; Packing Demonstration Program
 
+(in-package #:gtk-demo)
+
 (defun make-box (homogeneous spacing expand fill padding)
   (let ((box (make-instance 'gtk-box
                             :orientation :horizontal

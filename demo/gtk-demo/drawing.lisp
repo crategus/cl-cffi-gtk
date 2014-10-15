@@ -1,5 +1,7 @@
 ;;;; Drawing in response to input
 
+(in-package #:gtk-demo)
+
 (let ((surface nil))
   (defun example-drawing ()
     (within-main-loop

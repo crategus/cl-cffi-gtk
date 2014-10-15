@@ -1,5 +1,7 @@
 ;;;; Status Bar
 
+(in-package #:gtk-demo)
+
 (defun example-statusbar ()
   (within-main-loop
     (let* ((window (make-instance 'gtk-window

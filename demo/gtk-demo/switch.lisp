@@ -1,5 +1,7 @@
 ;;;; Switch
 
+(in-package #:gtk-demo)
+
 (defun example-switch ()
   (within-main-loop
     (let ((window (make-instance 'gtk-window

@@ -3,6 +3,8 @@
 ;;;; A tool palette widget shows groups of toolbar items as a grid of icons or
 ;;;; a list of names.
 
+(in-package #:gtk-demo)
+
 (defun load-stock-items (palette)
   (let ((group (make-instance 'gtk-tool-item-group
                               :label "Stock Icons"))

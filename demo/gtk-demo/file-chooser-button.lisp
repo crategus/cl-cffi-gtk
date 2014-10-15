@@ -1,5 +1,7 @@
 ;;;; File Chooser Button
 
+(in-package #:gtk-demo)
+
 (defun example-file-chooser-button ()
   (within-main-loop
     (let ((window (make-instance 'gtk-window

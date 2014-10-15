@@ -1,5 +1,7 @@
 ;;;; Color Button
 
+(in-package #:gtk-demo)
+
 (let ((color (gdk-rgba-parse "Gray")))
   (defun example-color-button ()
     (within-main-loop

@@ -1,5 +1,7 @@
 ;;;; Button Boxes
 
+(in-package #:gtk-demo)
+
 (defun create-bbox (orientation title spacing layout)
   (let ((frame (make-instance 'gtk-frame
                               :label title))

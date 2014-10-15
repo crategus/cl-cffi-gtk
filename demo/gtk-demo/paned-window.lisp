@@ -1,5 +1,7 @@
 ;;;; Paned Window Widgets
 
+(in-package #:gtk-demo)
+
 (defun example-paned-window ()
   (within-main-loop
     (let ((window (make-instance 'gtk-window

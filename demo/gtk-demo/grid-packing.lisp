@@ -1,5 +1,7 @@
 ;;;; Grid Packing Example
 
+(in-package #:gtk-demo)
+
 (defun make-grid (homogeneous spacing expand align margin)
   (let ((box (make-instance 'gtk-grid
                             :orientation :horizontal

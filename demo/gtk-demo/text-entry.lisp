@@ -1,5 +1,7 @@
 ;;;; Text Entry
 
+(in-package #:gtk-demo)
+
 (defun example-text-entry ()
   (within-main-loop
     (let* ((window (make-instance 'gtk-window

@@ -1,5 +1,7 @@
 ;;;; Arrows
 
+(in-package #:gtk-demo)
+
 (defun create-arrow-button (arrow-type shadow-type)
   (let (;; Create a button
         (button (make-instance 'gtk-button

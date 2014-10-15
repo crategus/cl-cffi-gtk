@@ -1,9 +1,6 @@
-
-(asdf:load-system :cl-cffi-gtk)
-
 (defpackage :cairo-clock
   (:use :gtk :gdk :gobject :glib :pango :cairo :cffi :iterate :common-lisp)
-  (:export #:cairo-clock))
+  (:export #:demo-cairo-clock))
 
 (in-package :cairo-clock)
 

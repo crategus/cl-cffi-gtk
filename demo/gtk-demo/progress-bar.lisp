@@ -1,5 +1,7 @@
 ;;;; Progress Bar
 
+(in-package #:gtk-demo)
+
 (defstruct pbar-data
   pbar
   timer

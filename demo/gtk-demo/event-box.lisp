@@ -1,5 +1,7 @@
 ;;;; The Event Box
 
+(in-package #:gtk-demo)
+
 (defun example-event-box ()
   (within-main-loop
     (let ((window (make-instance 'gtk-window

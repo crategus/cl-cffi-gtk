@@ -1,5 +1,7 @@
 ;;;; Fixed Container
 
+(in-package #:gtk-demo)
+
 (defun move-button (button fixed)
   (let* ((allocation (gtk-widget-get-allocation fixed))
          (width (- (gdk-rectangle-width allocation) 50))

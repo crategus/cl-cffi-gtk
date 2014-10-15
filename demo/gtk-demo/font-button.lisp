@@ -1,5 +1,7 @@
 ;;;; Font Chooser Button
 
+(in-package #:gtk-demo)
+
 (defun font-filter (family face)
   (declare (ignore face))
   (member (pango-font-family-get-name family)
