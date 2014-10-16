@@ -1,5 +1,7 @@
 ;;;; Calendar
 
+(in-package #:gtk-demo)
+
 (defun calendar-detail (calendar year month day)
   (declare (ignore calendar year month))
   (when (= day 12)

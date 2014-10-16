@@ -3,6 +3,8 @@
 ;;;; GtkEntryCompletion provides a mechanism for adding support for completion
 ;;;; in GtkEntry.
 
+(in-package #:gtk-demo)
+
 (defun create-completion-model ()
   (let ((store (make-instance 'gtk-list-store
                               :column-types '("gchararray"))))

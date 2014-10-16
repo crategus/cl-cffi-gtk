@@ -1,5 +1,7 @@
 ;;;; Combo Box
 
+(in-package #:gtk-demo)
+
 (defun example-combo-box ()
   (within-main-loop
     (let* ((window (make-instance 'gtk-window

@@ -46,8 +46,6 @@
 ;;; the default context. The program makes 10 calls to timeout_callback(), which
 ;;; at the 10th call, calls g_main_loop_quit to make the main loop return.
 
-(asdf:load-system :cl-cffi-gtk-glib)
-
 (defpackage :demo-glib
   (:use :glib :cffi :common-lisp))
 

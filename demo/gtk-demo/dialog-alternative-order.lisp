@@ -1,3 +1,5 @@
+(in-package #:gtk-demo)
+
 (defun demo-dialog-alternative-order (message)
  (let ((response nil))
    (within-main-loop

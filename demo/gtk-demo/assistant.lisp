@@ -4,6 +4,8 @@
 ;;;; an operation into several simpler sequential steps, and to guide the user
 ;;;; through these steps.
 
+(in-package #:gtk-demo)
+
 (let ((assistant nil)
       (progress-bar nil))
 

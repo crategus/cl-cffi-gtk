@@ -1,3 +1,4 @@
+(in-package :gtk-example)
 
 (defun license-text ()
   (format nil

@@ -1,5 +1,7 @@
 ;;;; Info Bar
 
+(in-package #:gtk-demo)
+
 (defun example-info-bar ()
   (within-main-loop
     (let* ((window (make-instance 'gtk-window

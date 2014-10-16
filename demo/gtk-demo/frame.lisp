@@ -2,6 +2,8 @@
 ;;;;
 ;;;; This demo allows to change interactively the appearance of the frame.
 
+(in-package #:gtk-demo)
+
 (defun demo-frame ()
   (within-main-loop
     (let* (;; Create a toplevel window.

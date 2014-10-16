@@ -1,5 +1,7 @@
 ;;;; More Labels
 
+(in-package #:gtk-demo)
+
 (defun example-more-labels ()
   (within-main-loop
     (let ((window (make-instance 'gtk-window

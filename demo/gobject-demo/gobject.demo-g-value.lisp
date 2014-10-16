@@ -23,8 +23,6 @@
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
 
-(asdf:operate 'asdf:load-op :cl-gtk2-gobject)
-
 (defpackage :example-g-value
   (:use :common-lisp :gobject :cffi)
   (:export #:example-g-value))

@@ -1,5 +1,7 @@
 ;;;; More Buttons
 
+(in-package #:gtk-demo)
+
 (defun example-buttons ()
   (within-main-loop
     (let ((window (make-instance 'gtk-window

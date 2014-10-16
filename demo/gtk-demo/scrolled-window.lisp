@@ -1,5 +1,7 @@
 ;;;; Scrolled Windows
 
+(in-package #:gtk-demo)
+
 (defun example-scrolled-window ()
   (within-main-loop
     (let ((window (make-instance 'gtk-dialog

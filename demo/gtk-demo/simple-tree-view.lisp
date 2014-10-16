@@ -1,5 +1,7 @@
 ;;;; Example Simple Tree View
 
+(in-package #:gtk-demo)
+
 (defun simple-create-and-fill-model ()
   (let ((model (make-instance 'gtk-list-store
                               :column-types '("gchararray" "guint"))))

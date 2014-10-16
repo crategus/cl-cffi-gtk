@@ -1,5 +1,7 @@
 ;;;; Toggle Buttons
 
+(in-package #:gtk-demo)
+
 (defun example-toggle-buttons ()
   (within-main-loop
     (let ((window (make-instance 'gtk-window

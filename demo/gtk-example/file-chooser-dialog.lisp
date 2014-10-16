@@ -1,3 +1,4 @@
+(in-package :gtk-example)
 
 (defun create-file-chooser-dialog-open (window)
   (let ((dialog (gtk-file-chooser-dialog-new "Open File"

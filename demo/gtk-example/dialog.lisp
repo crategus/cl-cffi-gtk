@@ -1,5 +1,7 @@
 ;;;; Examples for GtkDialog
 
+(in-package :gtk-example)
+
 (defun create-dialog ()
   (let ((dialog (make-instance 'gtk-dialog
                                :title "Dialog Window"
@@ -129,7 +131,7 @@
 (defun example-dialog-ui ()
   (within-main-loop
     (let ((builder (make-instance 'gtk-builder)))
-      (gtk-builder-add-from-file builder "dialog.ui")
+      (gtk-builder-add-from-file builder (rel-path "dialog.ui"))
       (let ((dialog (gtk-builder-get-object builder "dialog")))
         (g-signal-connect dialog "destroy"
                           (lambda (widget)

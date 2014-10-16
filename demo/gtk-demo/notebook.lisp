@@ -1,5 +1,7 @@
 ;;;; Example of GtkNotebook
 
+(in-package #:gtk-demo)
+
 (defun example-notebook ()
   (within-main-loop
     (let ((window (make-instance 'gtk-window

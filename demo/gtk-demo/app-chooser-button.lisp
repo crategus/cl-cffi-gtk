@@ -1,5 +1,7 @@
 ;;;; App Chooser Button
 
+(in-package #:gtk-demo)
+
 (defun demo-app-chooser-button ()
   (within-main-loop
     (let ((window (make-instance 'gtk-window

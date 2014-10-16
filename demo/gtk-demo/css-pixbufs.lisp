@@ -3,6 +3,8 @@
 ;;;; This demo is done in honour of the Pixbufs demo further down.
 ;;;; It is done exclusively with CSS as the background of the window.
 
+(in-package #:gtk-demo)
+
 (defun apply-css (widget provider)
   (gtk-style-context-add-provider (gtk-widget-get-style-context widget)
                                   provider

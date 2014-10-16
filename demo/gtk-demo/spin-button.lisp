@@ -1,5 +1,7 @@
 ;;;; Spin Button
 
+(in-package #:gtk-demo)
+
 (defun example-spin-button ()
   (within-main-loop
     (let ((window (make-instance 'gtk-window

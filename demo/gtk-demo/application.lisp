@@ -1,5 +1,7 @@
 ;;;; Simple Application
 
+(in-package #:gtk-demo)
+
 (defclass bloat-pad (gtk-application)
   ()
   (:metaclass gobject-class)

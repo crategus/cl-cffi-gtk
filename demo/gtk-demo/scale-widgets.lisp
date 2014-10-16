@@ -1,5 +1,7 @@
 ;;;; Scale Widgets
 
+(in-package #:gtk-demo)
+
 (defun example-scale-widgets ()
   (within-main-loop
     (let* ((window (make-instance 'gtk-window
