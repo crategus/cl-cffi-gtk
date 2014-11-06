@@ -1,13 +1,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gio.app-info.lisp
 ;;;
-;;; The documentation has been copied from the GIO Reference Manual
-;;; for GIO 2.36.1. The latest version of this documentation can be found
-;;; on-line at <http://library.gnome.org/devel/gio/unstable/>. 
-;;; The API documentation of the Lisp binding is available at
-;;; <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GIO Reference Manual
+;;; Version 2.40 and modified to document the Lisp binding to the GIO library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012, 2013 Dieter Kaiser
+;;; Copyright (C) 2012, 2013, 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -329,7 +328,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'g-app-launch-context 'type)
- "@version{2013-5-1}
+ "@version{2014-9-20}
   @begin{short}
     Integrating the launch with the launching application. This is used to
     handle for instance startup notification and launching the new application
@@ -338,12 +337,12 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"launch-failed\" signal}
       @begin{pre}
- lambda (gapplaunchcontext) arg)   : Run Last
+ lambda (launch-context arg)   : Run Last
       @end{pre}
 
     @subheading{The \"launched\" signal}
       @begin{pre}
- lambda (gapplaunchcontext arg1 arg2)
+ lambda (launch-context arg1 arg2)
       @end{pre}
   @end{dictionary}")
 

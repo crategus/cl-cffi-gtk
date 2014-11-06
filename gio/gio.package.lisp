@@ -5,11 +5,11 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file is taken from the GIO Reference Manual
-;;; Version 2.36.4 and modified to document the Lisp binding to the GDK library.
+;;; Version 2.40 and modified to document the Lisp binding to the GIO library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012, 2013 Dieter Kaiser
+;;; Copyright (C) 2012, 2013, 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -129,12 +129,14 @@
       Icon theming support.
 
       @about-class{g-themed-icon}
+      @about-generic{g-themed-icon-name}
+      @about-generic{g-themed-icon-names}
+      @about-generic{g-themed-icon-use-default-fallbacks}
       @about-function{g-themed-icon-new}
       @about-function{g-themed-icon-new-from-names}
-      @about-function{g-themed-icon-new-with-default-fallbacks}
+      @about-function{g-themed-icon-new-witiconh-default-fallbacks}
       @about-function{g-themed-icon-prepend-name}
       @about-function{g-themed-icon-append-name}
-      @about-function{g-themed-icon-get-names}
     @end{subsection}
     @begin[GEmblemedIcon]{subsection}
       An implementation of GIcon for icons with emblems.
@@ -151,10 +153,10 @@
 
       @about-class{g-emblem}
       @about-symbol{g-emblem-origin}
+      @about-generic{g-emblem-icon}
+      @about-generic{g-emblem-origin}
       @about-function{g-emblem-new}
       @about-function{g-emblem-new-with-origin}
-      @about-function{g-emblem-get-icon}
-      @about-function{g-emblem-get-origin}
     @end{subsection}
   @end{section}
   @begin[Application support]{section}

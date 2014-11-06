@@ -2,7 +2,7 @@
 ;;; gio.emblem.lisp
 ;;;
 ;;; The documentation of this file is taken from the GIO Reference Manual
-;;; Version 2.38.2 and modified to document the Lisp binding to the GIO library.
+;;; Version 2.40 and modified to document the Lisp binding to the GIO library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -39,54 +39,12 @@
 ;;;     g_emblem_new_with_origin
 ;;;     g_emblem_get_icon
 ;;;     g_emblem_get_origin
-;;;
-;;; Object Hierarchy
-;;;
-;;;   GObject
-;;;    +----GEmblem
-;;;
-;;; Implemented Interfaces
-;;;
-;;; GEmblem implements GIcon.
-;;;
-;;; Properties
-;;;
-;;;   "icon"                     GObject*              : Read / Write / Construct Only
-;;;   "origin"                   GEmblemOrigin         : Read / Write / Construct Only
-;;;
-;;; Description
-;;;
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gio)
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GEmblemOrigin
-;;;
-;;; typedef enum {
-;;;   G_EMBLEM_ORIGIN_UNKNOWN,
-;;;   G_EMBLEM_ORIGIN_DEVICE,
-;;;   G_EMBLEM_ORIGIN_LIVEMETADATA,
-;;;   G_EMBLEM_ORIGIN_TAG
-;;; } GEmblemOrigin;
-;;;
-;;; GEmblemOrigin is used to add information about the origin of the emblem to
-;;; GEmblem.
-;;;
-;;; G_EMBLEM_ORIGIN_UNKNOWN
-;;;     Emblem of unknown origin
-;;;
-;;; G_EMBLEM_ORIGIN_DEVICE
-;;;     Emblem adds device-specific information
-;;;
-;;; G_EMBLEM_ORIGIN_LIVEMETADATA
-;;;     Emblem depicts live metadata, such as "readonly"
-;;;
-;;; G_EMBLEM_ORIGIN_TAG
-;;;     Emblem comes from a user-defined tag, e.g. set by nautilus
-;;;     (in the future)
-;;;
-;;; Since 2.18
 ;;; ----------------------------------------------------------------------------
 
 (define-g-enum "GEmblemOrigin" g-emblem-origin
@@ -100,7 +58,29 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-emblem-origin atdoc:*symbol-name-alias*) "Enum"
       (gethash 'g-emblem-origin atdoc:*external-symbols*)
- "")
+ "@version{2014-9-22}
+  @begin{short}
+    @sym{g-emblem-origin} is used to add information about the origin of the
+    emblem to @class{g-emblem}.
+  @end{short}
+  @begin{pre}
+(define-g-enum \"GEmblemOrigin\" g-emblem-origin
+  (:export t
+   :type-initializer \"g_emblem_origin_get_type\")
+  :unknown
+  :device
+  :livemetadata
+  :tag)
+  @end{pre}
+  @begin[code]{table}  
+    @entry[:unkown]{Emblem of unknown origin.}
+    @entry[:device]{Emblem adds device-specific information.}
+    @entry[:livedata]{Emblem depicts live metadata, such as \"readonly\".}
+    @entry[:tag]{Emblem comes from a user-defined tag, e. g. set by nautilus
+      (in the future).}
+  @end{table}
+  Since 2.18
+  @see-class{g-emblem}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; GEmblem
@@ -140,7 +120,7 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Property Details
+;;; Property and Accessor Details
 ;;;
 ;;; ----------------------------------------------------------------------------
 
@@ -150,20 +130,49 @@
   (Read / Write / Construct Only) @br{}
   The actual icon of the emblem.")
 
+#+cl-cffi-gtk-documentation
+(setf (gethash 'g-emblem-icon atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'g-emblem-icon 'function)
+ "@version{2014-9-22}
+  @argument[object]{a @class{g-emblem} from which the icon should be extracted}
+  @begin{short}
+    Accessor of the slot @slot[g-emblem]{icon} of the @class{g-emblem} class.
+  @end{short}
+
+  The generic function @sym{g-emblem-icon} gives back the icon from the emblem.
+  
+  Since 2.18
+  @see-class{g-emblem}")
+
 ;;; ----------------------------------------------------------------------------
-;;; The "origin" property
-;;;
-;;;   "origin"                   GEmblemOrigin : Read / Write / Construct Only
-;;;
-;;; Tells which origin the emblem is derived from.
-;;;
-;;; Default value: G_EMBLEM_ORIGIN_UNKNOWN
-;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "origin" 'g-emblem) 't)
+ "The @code{\"origin\"} property of type @symbol{g-emblem-origin}
+  (Read / Write / Construct Only) @br{}
+  Tells which origin the emblem is derived from. @br{} 
+  Default value: @code{:unkown}")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'g-emblem-origin atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'g-emblem-origin 'function)
+ "@version{2014-9-22}
+  @argument[object]{a @class{g-emblem}}
+  @begin{short}
+    Accessor of the slot @slot[g-emblem]{origin} of the @class{g-emblem} class.
+  @end{short}
+
+  The generic function @sym{g-emblem-origin} gets the origin of the emblem.
+
+  Since 2.18
+  @see-class{g-emblem}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_emblem_new ()
 ;;;
-;;; GEmblem *           g_emblem_new                        (GIcon *icon);
+;;; GEmblem * g_emblem_new (GIcon *icon);
 ;;;
 ;;; Creates a new emblem for icon.
 ;;;
@@ -191,39 +200,6 @@
 ;;;
 ;;; Returns :
 ;;;     a new GEmblem.
-;;;
-;;; Since 2.18
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; g_emblem_get_icon ()
-;;;
-;;; GIcon * g_emblem_get_icon (GEmblem *emblem);
-;;;
-;;; Gives back the icon from emblem.
-;;;
-;;; emblem :
-;;;     a GEmblem from which the icon should be extracted.
-;;;
-;;; Returns :
-;;;     A GIcon. The returned object belongs to the emblem and should not be
-;;;     modified or freed.
-;;;
-;;; Since 2.18
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; g_emblem_get_origin ()
-;;;
-;;; GEmblemOrigin g_emblem_get_origin (GEmblem *emblem);
-;;;
-;;; Gets the origin of the emblem.
-;;;
-;;; emblem :
-;;;     a GEmblem
-;;;
-;;; Returns :
-;;;     the origin of the emblem.
 ;;;
 ;;; Since 2.18
 ;;; ----------------------------------------------------------------------------

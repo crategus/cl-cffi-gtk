@@ -67,8 +67,8 @@ Streaming I/O
 
 File types and applications
 
-  gio.content-type.lisp - Platform-specific content typing         - GIO 2.38.1&
-  gio.app-info.lisp - GAppInfo                                     - GIO 2.36.1*
+  gio.content-type.lisp - Platform-specific content typing         - GIO 2.40&
+  gio.app-info.lisp - GAppInfo                                     - GIO 2.40%
 
   GDesktopAppInfo - Application information from desktop files
 
@@ -82,14 +82,14 @@ Volumes and Drives
 
 Icons
 
-  gio.icon.lisp - GIcon                                            - GIO 2.36.3*
+  gio.icon.lisp - GIcon                                            - GIO 2.40&
 
   GFileIcon - Icons pointing to an image file
   GLoadableIcon - Loadable Icons
 
-  gio.themed-icon.lisp    - GThemedIcon                            - GIO 2.36.3*
-  gio.emblemed-icon.lisp  - Icon with emblems                      - GIO 2.38.2&
-  gio.emblem.lisp         - An object for emblems                  - GIO 2.38.2&
+  gio.themed-icon.lisp    - GThemedIcon                            - GIO 2.40&
+  gio.emblemed-icon.lisp  - Icon with emblems                      - GIO 2.40&
+  gio.emblem.lisp         - An object for emblems                  - GIO 2.40&
 
 Failable Initialization
 

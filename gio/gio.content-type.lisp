@@ -2,7 +2,7 @@
 ;;; gio.content-type.lisp
 ;;;
 ;;; The documentation of this file is taken from the GIO Reference Manual
-;;; Version 2.38.1 and modified to document the Lisp binding to the GIO library.
+;;; Version 2.40 and modified to document the Lisp binding to the GIO library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -112,12 +112,19 @@
 (defcfun ("g_content_type_get_description" g-content-type-get-description)
     (:string :free-from-foreign t)
  #+cl-cffi-gtk-documentation
- "@version{2013-12-31}
+ "@version{2014-9-20}
   @argument[type]{a content type string}
   @begin{return}
-    A short description of the content type type.
+    A short description of the content type @arg{type}.
   @end{return}
-  Gets the human readable description of the content type."
+  Gets the human readable description of the content type.
+  @begin[Example]{dictionary}
+    @begin{pre}
+ (g-content-type-get-description \"text/plain\")
+=> \"Einfaches Textdokument\"
+    @end{pre}
+  @end{dictionary}
+  @see-function{g-content-types-get-registered}"
   (type :string))
 
 (export 'g-content-type-get-description)
@@ -144,12 +151,20 @@
 
 (defcfun ("g_content_type_get_icon" g-content-type-get-icon) (g-object g-icon)
  #+cl-cffi-gtk-documentation
- "@version{2013-12-31}
+ "@version{2014-9-20}
   @argument[type]{a content type string}
   @begin{return}
-    @class{g-icon} corresponding to the content type.
+    The @class{g-icon} corresponding to the content type.
   @end{return}
-  Gets the icon for a content type."
+  Gets the icon for a content type.
+  @begin[Example]{dictionary}
+    @begin{pre}
+ (g-content-type-get-icon \"text/plain\")
+=> #<G-THEMED-ICON {10089505F3@}>
+    @end{pre}
+  @end{dictionary}
+  @see-function{g-content-type-get-symbolic-icon}
+  @see-function{g-content-type-get-generic-icon-name}"
   (type :string))
 
 (export 'g-content-type-get-icon)
@@ -161,14 +176,16 @@
 (defcfun ("g_content_type_get_symbolic_icon" g-content-type-get-symbolic-icon)
     (g-object g-icon)
  #+cl-cffi-gtk-documentation
- "@version{2013-12-31}
+ "@version{2014-9-20}
   @argument[type]{a content type string}
   @begin{return}
     Symbolic @class{g-icon} corresponding to the content type.
   @end{return}
   @short{Gets the symbolic icon for a content type.}
 
-  Since 2.34"
+  Since 2.34
+  @see-function{g-content-type-get-icon}
+  @see-function{g-content-type-get-generic-icon-name}"
   (type :string))
 
 (export 'g-content-type-get-symbolic-icon)
@@ -178,9 +195,9 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_content_type_get_generic_icon_name"
-           g-content-type-get-generic-icon-name) :string
+           g-content-type-get-generic-icon-name) (:string :free-from-foreign t)
  #+cl-cffi-gtk-documentation
- "@version{2014-1-2}
+ "@version{2014-9-20}
   @argument[type]{a content type string}
   @begin{return}
     The registered generic icon name for the given type, or @code{nil} if
@@ -189,8 +206,15 @@
   @short{Gets the generic icon name for a content type.}
 
   See the shared-mime-info specification for more on the generic icon name.
-
-  Since 2.34"
+  @begin[Example]{dictionary}
+    @begin{pre}
+ (g-content-type-get-generic-icon-name \"text/plain\")
+=> \"text-x-generic\"
+    @end{pre}
+  @end{dictionary}
+  Since 2.34
+  @see-function{g-content-type-get-icon}
+  @see-function{g-content-type-get-symbolic-icon}"
   (type :string))
 
 (export 'g-content-type-get-generic-icon-name)
@@ -290,10 +314,11 @@
 (defcfun ("g_content_types_get_registered" g-content-types-get-registered)
     (g-list :string :free-from-foreign t)
  #+cl-cffi-gtk-documentation
- "@version{2013-11-2}
+ "@version{2014-9-20}
   @return{A list of strings of the registered content types.}
   Gets a list of strings containing all the registered content types known to
-  the system.")
+  the system.
+  @see-function{g-content-type-get-description}")
 
 (export 'g-content-types-get-registered)
 

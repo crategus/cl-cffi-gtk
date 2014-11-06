@@ -2,7 +2,7 @@
 ;;; gio.emblemed-icon.lisp
 ;;;
 ;;; The documentation of this file is taken from the GIO Reference Manual
-;;; Version 2.38.2 and modified to document the Lisp binding to the GIO library.
+;;; Version 2.40 and modified to document the Lisp binding to the GIO library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -67,11 +67,12 @@
 
   Note that @sym{g-emblemed-icon} allows no control over the position of the
   emblems. See also @class{g-emblem} for more information.
-  @see-slot{g-emblemed-icon-gicon}")
+  @see-slot{g-emblemed-icon-gicon}
+  @see-class{g-emblem}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Property Details
+;;; Property and Accessor Details
 ;;;
 ;;; ----------------------------------------------------------------------------
 
@@ -81,18 +82,13 @@
   (Read / Write / Construct Only) @br{}
   The @class{g-icon} to attach emblems to.")
 
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors
-;;;
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-emblemed-icon-gicon atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'g-emblemed-icon-gicon 'function)
- "@version{2014-1-5}
-  Accessor of the slot @code{\"gicon\"} of the @class{g-emblemed-icon} class.
+ "@version{2014-9-22}
+  Accessor of the slot @slot[g-emblemed-icon]{gicon} of the
+  @class{g-emblemed-icon} class.
   @see-class{g-emblemed-icon}
   @see-function{g-emblemed-icon-get-icon}")
 

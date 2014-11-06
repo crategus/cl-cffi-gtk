@@ -1,13 +1,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gio.icon.lisp
 ;;;
-;;; The documentation has been copied from the GIO Reference Manual
-;;; for GIO 2.36.3. The latest version of this documentation can be found
-;;; on-line at <http://library.gnome.org/devel/gio/unstable/>.
-;;; The API documentation of the Lisp binding is available at
-;;; <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GIO Reference Manual
+;;; Version 2.40 and modified to document the Lisp binding to the GIO library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2013 Dieter Kaiser
+;;; Copyright (C) 2013, 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -45,18 +44,6 @@
 ;;;
 ;;;   GInterface
 ;;;    +----GIcon
-;;;
-;;; Prerequisites
-;;;
-;;; GIcon requires GObject.
-;;;
-;;; Known Derived Interfaces
-;;;
-;;; GIcon is required by GLoadableIcon.
-;;;
-;;; Known Implementations
-;;;
-;;; GIcon is implemented by GEmblem, GEmblemedIcon, GFileIcon and GThemedIcon.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gio)
@@ -76,28 +63,26 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'g-icon atdoc:*class-name-alias*) "Interface"
       (documentation 'g-icon 'type)
- "@version{2013-7-18}
+ "@version{2014-9-20}
   @begin{short}
     @sym{g-icon} is a very minimal interface for icons. It provides functions
     for checking the equality of two icons, hashing of icons and serializing an
     icon to and from strings.
   @end{short}
 
-  @sym{g-icon} does not provide the actual pixmap for the icon as this is out of
-  GIO's scope, however implementations of @sym{g-icon} may contain the name of
-  an icon, see @class{g-themed-icon}, or the path to an icon, see
+  @sym{g-icon} does not provide the actual pixmap for the icon as this is out
+  of GIO's scope, however implementations of @sym{g-icon} may contain the name
+  of an icon, see @class{g-themed-icon}, or the path to an icon, see
   @class{g-loadable-icon}.
 
-  To obtain a hash of a @sym{g-icon}, see @fun{g-icon-hash}.
-
-  To check if two @sym{g-icon}s are equal, see @fun{g-icon-equal}.
-
-  For serializing a @sym{g-icon}, use @fun{g-icon-to-string} and
+  To obtain a hash of a @sym{g-icon}, see the function @fun{g-icon-hash}. To
+  check if two @sym{g-icon}s are equal, see the function @fun{g-icon-equal}.
+  For serializing a @sym{g-icon}, use the functions @fun{g-icon-to-string} and
   @fun{g-icon-new-for-string}.
 
-  If your application or library provides one or more GIcon implementations
-  you need to ensure that each @class{g-type} is registered with the type
-  system prior to calling @fun{g-icon-new-for-string}.
+  If your application or library provides one or more @sym{g-icon}
+  implementations you need to ensure that each @class{g-type} is registered with
+  the type system prior to calling the function @fun{g-icon-new-for-string}.
   @see-class{g-themed-icon}
   @see-class{g-loadable-icon}
   @see-function{g-icon-hash}
@@ -145,7 +130,8 @@
 ;;;
 ;;; from_tokens ()
 ;;;     Constructs a GIcon from tokens. Set the GError if the tokens are
-;;;     malformed. Don't implement if the GIcon can't be serialized (Since 2.20).
+;;;     malformed. Don't implement if the GIcon can't be serialized
+;;;     (Since 2.20).
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -155,12 +141,12 @@
 (defcfun ("g_icon_hash" g-icon-hash) :uint
  #+cl-cffi-gtk-documentation
  "@version{2013-7-19}
-  @argument[icon]{an icon object}
+  @argument[icon]{a @class{g-icon} object}
   @begin{return}
     An unsigned integer containing a hash for the icon, suitable for use in a
     Hash table or similar data structure.
   @end{return}
-  Gets a hash for an @arg{icon}."
+  Gets a hash for an icon."
   (icon (g-object g-icon)))
 
 (export 'g-icon-hash)
