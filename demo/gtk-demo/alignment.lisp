@@ -17,6 +17,8 @@
 ;;;;
 ;;;; Last update 17-01-2014
 
+(in-package #:gtk-demo)
+
 (defun demo-alignment ()
   (within-main-loop
     (let* (;; Create a toplevel window.

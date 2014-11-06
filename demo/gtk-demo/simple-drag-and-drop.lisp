@@ -1,5 +1,7 @@
 ;;;; Simple Drag and Drop
 
+(in-package #:gtk-demo)
+
 (defun get-image-pixbuf (image)
   (ecase (gtk-image-storage-type image)
     (:pixbuf (gtk-image-pixbuf image))

@@ -1,5 +1,7 @@
 ;;;; Table Packing Example
 
+(in-package #:gtk-demo)
+
 (defun example-table-packing ()
   (within-main-loop
     (let ((window (make-instance 'gtk-window

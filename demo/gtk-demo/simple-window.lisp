@@ -16,6 +16,8 @@
 ;;;;     leave-gtk-main
 ;;;;     within-main-loop
 
+(in-package #:gtk-demo)
+
 (defun example-simple-window ()
   (within-main-loop
     (let (;; Create a toplevel window.

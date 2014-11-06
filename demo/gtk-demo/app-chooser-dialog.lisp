@@ -1,5 +1,7 @@
 ;;;; Simple App Chooser Dialog
 
+(in-package #:gtk-demo)
+
 (defun demo-app-chooser-dialog ()
   (let ((file-name nil))
     (within-main-loop

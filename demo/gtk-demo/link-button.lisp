@@ -1,5 +1,7 @@
 ;;;; Link button
 
+(in-package #:gtk-demo)
+
 (defun example-link-button ()
   (within-main-loop
     (let ((window (make-instance 'gtk-window

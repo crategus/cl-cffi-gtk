@@ -1,5 +1,7 @@
 ;;;; Labels
 
+(in-package #:gtk-demo)
+
 (defun make-heading (text)
   (make-instance 'gtk-label
                  :xalign 0

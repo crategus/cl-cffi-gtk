@@ -7,6 +7,8 @@
 ;;;; This demo code shows some of the more obscure cases, in the simple case a
 ;;;; call to the function gtk-image-new-from-file is all you need.
 
+(in-package #:gtk-demo)
+
 (let ((load-timeout nil)
       (pixbuf-loader nil)
       (image-stream nil))
@@ -28,7 +30,7 @@
       (progn
         ;; Create the image stream and the GdkPixbufLoader
         (setf image-stream
-              (open "alphatest.png" :element-type '(unsigned-byte 8)))
+              (open (rel-path "alphatest.png") :element-type '(unsigned-byte 8)))
         (when pixbuf-loader
           (gdk-pixbuf-loader-close pixbuf-loader)
           (setf pixbuf-loader nil))
@@ -86,7 +88,7 @@
                                    "<b>Image loaded from a file</b>"))
              (frame (make-instance 'gtk-frame
                                    :shadow-type :in))
-             (pixbuf (gdk-pixbuf-new-from-file "gtk-logo-old.png"))
+             (pixbuf (gdk-pixbuf-new-from-file (rel-path "gtk-logo-old.png")))
              (image (gtk-image-new-from-pixbuf pixbuf)))
         (gtk-container-add vgrid label)
         (gtk-container-add frame image)
@@ -101,7 +103,7 @@
                                    "<b>Animation loaded from a file</b>"))
              (frame (make-instance 'gtk-frame
                                    :shadow-type :in))
-             (image (gtk-image-new-from-file "floppybuddy.gif")))
+             (image (gtk-image-new-from-file (rel-path "floppybuddy.gif"))))
         (gtk-container-add vgrid label)
         (gtk-container-add frame image)
         (gtk-container-add vgrid frame))

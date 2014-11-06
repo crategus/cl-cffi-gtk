@@ -1,6 +1,3 @@
-
-(asdf:load-system :cl-cffi-gtk)
-
 (defpackage :demo-composited-window
   (:use :gtk :gdk :gobject :glib :cairo :cffi :common-lisp)
   (:export #:demo-composited-window))

@@ -2,6 +2,8 @@
 ;;;;
 ;;;; GtkEntryBuffer provides the text content in a GtkEntry.
 
+(in-package #:gtk-demo)
+
 (defun example-entry-buffer ()
   (within-main-loop
     (let ((window (make-instance 'gtk-window

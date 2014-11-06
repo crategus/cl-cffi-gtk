@@ -9,6 +9,8 @@
 ;;;;
 ;;;; Last update: 1-2-2014
 
+(in-package #:gtk-demo)
+
 (defun demo-numerable-icon ()
   (within-main-loop
     (let (;; Create a toplevel window

@@ -1,5 +1,7 @@
 ;;;; Simple File Chooser Dialog
 
+(in-package #:gtk-demo)
+
 (defun example-simple-file-chooser-dialog ()
   (let ((file-name nil))
     (within-main-loop

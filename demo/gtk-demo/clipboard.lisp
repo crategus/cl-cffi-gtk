@@ -7,6 +7,8 @@
 ;;;; application exits. Clipboard persistence requires a clipboard manager to
 ;;;; run.
 
+(in-package #:gtk-demo)
+
 #|
 
 static void

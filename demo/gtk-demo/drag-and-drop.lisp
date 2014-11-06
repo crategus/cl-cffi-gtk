@@ -1,4 +1,6 @@
 
+(in-package #:gtk-demo)
+
 #|
 /* TestDnD - main.c : Simple tutorial for GTK+ Drag-N-Drop
  * Copyright (C) 2005 Ryan McDougall.

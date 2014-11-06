@@ -1,3 +1,4 @@
+(in-package :gtk-example)
 
 (defun example-grab ()
   (within-main-loop

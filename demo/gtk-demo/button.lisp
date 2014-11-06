@@ -1,5 +1,7 @@
 ;;;; Normal Buttons
 
+(in-package #:gtk-demo)
+
 (defun image-label-box (filename text)
   (let ((box (make-instance 'gtk-box
                             :orientation :horizontal
@@ -18,7 +20,7 @@
                                  :type :toplevel
                                  :border-width 12))
           (button (make-instance 'gtk-button))
-          (box (image-label-box "save.png" "Save to File")))
+          (box (image-label-box (rel-path "save.png") "Save to File")))
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))

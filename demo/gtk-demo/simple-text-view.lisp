@@ -1,5 +1,7 @@
 ;;;; Simple Text View
 
+(in-package #:gtk-demo)
+
 (defun example-simple-text-view ()
   (within-main-loop
     (let* ((window (make-instance 'gtk-window

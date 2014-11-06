@@ -1,8 +1,8 @@
-(asdf:load-system :cl-cffi-gtk)
-
 (defpackage :demo-cairo
   (:use :gtk :gdk :gobject :glib :pango :cairo :cffi :iterate :common-lisp)
-  (:export #:demo-cairo))
+  (:export #:demo-cairo-stroke #:demo-cairo-fill #:demo-cairo-text #:demo-cairo-paint
+           #:demo-cairo-mask #:demo-cairo-set-source-rgba #:demo-cairo-set-source-gradient
+           #:demo-cairo-path #:demo-cairo-dash))
 
 (in-package :demo-cairo)
 
@@ -145,7 +145,7 @@
                         (gdk-window-get-height window))
            ;; Drawing code goes here
            (cairo-set-source-rgb cr 0.0 0.0 0.0)
-           (cairo-paint-with-alpha cr 0.5)
+           (cairo-paint-with-alpha cr 0.5d0)
            ;; Destroy the Cairo context
            (cairo-destroy cr)
            t)))

@@ -1,5 +1,7 @@
 ;;;; Menu
 
+(in-package #:gtk-demo)
+
 (defun example-menu ()
   (within-main-loop
     (setf (gtk-settings-gtk-shell-shows-app-menu (gtk-settings-get-default))

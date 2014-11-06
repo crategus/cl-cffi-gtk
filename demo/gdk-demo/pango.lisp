@@ -1,7 +1,6 @@
-(asdf:load-system :cl-cffi-gtk)
-
 (defpackage :demo-pango
-  (:use :gtk :gdk :gobject :glib :pango :cairo :cffi :common-lisp))
+  (:use :gtk :gdk :gobject :glib :pango :cairo :cffi :common-lisp)
+  (:export #:demo-pango))
 
 (in-package :demo-pango)
 

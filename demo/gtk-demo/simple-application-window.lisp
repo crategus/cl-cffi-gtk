@@ -1,4 +1,6 @@
 
+(in-package #:gtk-demo)
+
 (defun demo-simple-application-window ()
   (within-main-loop
     (let ((app (gtk-application-new "demo.application-window" :none))

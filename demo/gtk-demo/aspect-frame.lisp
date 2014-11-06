@@ -1,5 +1,7 @@
 ;;;; Aspect Frames
 
+(in-package #:gtk-demo)
+
 (defun example-aspect-frame ()
   (within-main-loop
     (let ((window (make-instance 'gtk-window

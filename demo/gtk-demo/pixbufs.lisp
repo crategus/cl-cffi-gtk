@@ -11,6 +11,8 @@
 ;;;;
 ;;;; Look at the Image demo for additional pixbuf usage examples.
 
+(in-package #:gtk-demo)
+
 (defvar *image-files*
         '("apple-red.png"
           "gnome-applets.png"
@@ -43,7 +45,7 @@
                                         :width back-width :height back-height))
     (loop for i from 0 and file-name in *image-files*
           do (setf (aref *image-pixbufs* i)
-                   (gdk-pixbuf-new-from-file file-name))))
+                   (gdk-pixbuf-new-from-file (rel-path file-name)))))
 
   (defun timeout ()
     (let* ((cr (cairo-create surface))

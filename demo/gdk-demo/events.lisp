@@ -1,5 +1,3 @@
-(asdf:load-system :cl-cffi-gtk)
-
 (defpackage :demo-events
   (:use :gtk :gdk :gobject :glib :cairo :cffi :common-lisp)
   (:export #:demo-events))

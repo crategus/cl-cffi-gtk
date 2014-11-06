@@ -1,4 +1,4 @@
-
+(in-package :gtk-example)
 
 (defun create-and-fill-list-store ()
   (let ((list-data '("Name1" "Name2" "Name3" "Name4" "Name5"))

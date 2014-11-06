@@ -2,6 +2,8 @@
 ;;;;
 ;;;; This demo allows to change interactively the properties of GtkBox.
 
+(in-package #:gtk-demo)
+
 (defun demo-box ()
   (within-main-loop
     (let* (;; Create a toplevel window.

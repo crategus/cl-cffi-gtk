@@ -2,6 +2,8 @@
 ;;;;
 ;;;; 
 
+(in-package #:gtk-demo)
+
 (defun demo-size-management ()
   (within-main-loop
     (let* (;; Create a toplevel window.

@@ -1,5 +1,7 @@
 ;;;; Retrieving Selections
 
+(in-package #:gtk-demo)
+
 (defun selection-received (widget selection-data time)
   (declare (ignore widget time))
   (format t "Event 'selection-received' event: ~A~%" selection-data)

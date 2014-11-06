@@ -3,6 +3,8 @@
 ;;;; A simple accordion demo written using CSS transitions and multiple
 ;;;; backgrounds.
 
+(in-package #:gtk-demo)
+
 (defun apply-css (widget provider)
   (gtk-style-context-add-provider (gtk-widget-get-style-context widget)
                                   provider

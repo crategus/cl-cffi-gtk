@@ -1,5 +1,7 @@
 ;;;; Text View Attributes
 
+(in-package #:gtk-demo)
+
 (defun example-text-view-attributes ()
   (within-main-loop
     (let* ((window (make-instance 'gtk-window

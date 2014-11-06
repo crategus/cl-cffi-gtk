@@ -1,5 +1,7 @@
 ;;;; Examples for GtkMessageDialog
 
+(in-package :gtk-example)
+
 (defun example-message-dialog-new ()
   (let ((response))
     (within-main-loop
