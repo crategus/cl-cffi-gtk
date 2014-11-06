@@ -68,6 +68,7 @@
 (load "info-bar.lisp")
 (load "labels.lisp")
 (load "link-button.lisp")
+(load "list-content-types.lisp")
 (load "menu.lisp")
 (load "more-labels.lisp")
 (load "notebook.lisp")
