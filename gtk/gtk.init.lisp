@@ -61,13 +61,15 @@
                                 ;; version gtk-main which puts the C function
                                 ;; %gtk-main between gdk-thread-enter und
                                 ;; gdk-thread-leave
-                                (gdk-threads-init)
-                                (gdk-threads-enter)
+                                (unless (find :win32 *features*)
+                                  (gdk-threads-init)   ;; Calling on win32 will deadlock
+                                  (gdk-threads-enter)) ;; Calling on win32 will deadlock
                                 (unwind-protect
                                     (progn
 ;                                      (%gtk-init)
                                       (%gtk-main))
-                                  (gdk-threads-leave)
+                                  (unless (find :win32 *features*)
+                                    (gdk-threads-leave)) ;; Calling on win32 will deadlock
                                   ))
                               :name "cl-cffi-gtk main thread")
               *main-thread-level* 0))
