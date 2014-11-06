@@ -131,8 +131,20 @@
 
   @image[bloatpad-xfce]{}
 
-  @b{Example:} A simple application
-  @begin{pre}
+  @sym{gtk-application} optionally registers with a session manager of the
+  users session, if you set the @slot[gtk-application]{register-session}
+  property, and offers various functionality related to the session life-cycle.
+
+  An application can block various ways to end the session with the function
+  @fun{gtk-application-inhibit}. Typical use cases for this kind of
+  inhibiting are long-running, uninterruptible operations, such as burning a
+  CD or performing a disk backup. The session manager may not honor the
+  inhibitor, but it can be expected to inform the user about the negative
+  consequences of ending the session while inhibitors are present.
+
+  @begin[Example]{dictionary}
+    A simple application
+    @begin{pre}
 (defclass bloat-pad (gtk-application)
   ()
   (:metaclass gobject-class)
@@ -439,24 +451,15 @@
     (g-application-run bloat-pad argc argv)
     ;; Destroy the application
     (g-object-unref (pointer bloat-pad))))
-  @end{pre}
-  @sym{gtk-application} optionally registers with a session manager of the
-  users session, if you set the @code{\"register-session\"} property, and
-  offers various functionality related to the session life-cycle.
-
-  An application can block various ways to end the session with the function
-  @fun{gtk-application-inhibit}. Typical use cases for this kind of
-  inhibiting are long-running, uninterruptible operations, such as burning a
-  CD or performing a disk backup. The session manager may not honor the
-  inhibitor, but it can be expected to inform the user about the negative
-  consequences of ending the session while inhibitors are present.
+    @end{pre}
+  @end{dictionary}
   @begin[Signal Details]{dictionary}
     @subheading{The \"window-added\" signal}
       @begin{pre}
  lambda (application window)   : Run First
       @end{pre}
-      Emitted when a @class{gtk-window} is added to application through the
-      @fun{gtk-application-add-window} function.
+      Emitted when a @class{gtk-window} is added to @arg{application} through
+      the @fun{gtk-application-add-window} function.
       @begin[code]{table}
         @entry[application]{The @sym{gtk-application} which emitted the signal.}
         @entry[window]{The newly added @class{gtk-window} widget.}
@@ -467,8 +470,8 @@
       @begin{pre}
  lambda (application window)   : Run First
       @end{pre}
-      Emitted when a @class{gtk-window} is removed from application, either as
-      a side-effect of being destroyed or explicitly through the
+      Emitted when a @class{gtk-window} is removed from @arg{application},
+      either as a side-effect of being destroyed or explicitly through the
       @fun{gtk-application-remove-window} function.
       @begin[code]{table}
         @entry[application]{The @sym{gtk-application} which emitted the signal.}
@@ -529,7 +532,7 @@
 (setf (gethash 'gtk-application-app-menu atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-application-app-menu 'function)
- "@version{2014-4-20}
+ "@version{2014-10-18}
   @argument[object]{a @class{gtk-application} object}
   @argument[app-menu]{a @class{g-menu-model}, or @code{nil}}
   @syntax[]{(gtk-application-app-menu object) => app-menu}
@@ -547,7 +550,8 @@
   application menu for the application.
 
   This can only be done in the primary instance of the application, after it
-  has been registered. \"startup\" is a good place to call this.
+  has been registered. The handler for the \"startup\" signal is a good place
+  to call this.
 
   The application menu is a single menu containing items that typically impact
   the application as a whole, rather than acting on a specific window or
@@ -687,11 +691,11 @@
   @argument[application]{a @class{gtk-application} object}
   @argument[window]{a @class{gtk-window} widget}
   @begin{short}
-    Adds a @arg{window} to @arg{application}.
+    Adds a window to @arg{application}.
   @end{short}
 
-  This call is equivalent to setting the @code{\"application\"} property of
-  @arg{window} to @arg{application}.
+  This call is equivalent to setting the @slot[gtk-window]{application}
+  property of @arg{window} to @arg{application}.
 
   Normally, the connection between the application and the window will remain
   until the window is destroyed, but you can explicitly remove it with the
@@ -714,7 +718,7 @@
 
 (defcfun ("gtk_application_remove_window" gtk-application-remove-window) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-8-8}
+ "@version{2014-10-18}
   @argument[application]{a @class{gtk-application} object}
   @argument[window]{a @class{gtk-window} widget}
   @begin{short}
@@ -722,7 +726,8 @@
   @end{short}
 
   If @arg{window} belongs to @arg{application} then this call is equivalent to
-  setting the @code{\"application\"} property of window to @code{nil}.
+  setting the @slot[gtk-window]{application} property of window to
+  @code{nil}.
 
   The application may stop running as a result of a call to this function.
 
@@ -742,9 +747,9 @@
 (defcfun ("gtk_application_get_windows" gtk-application-get-windows)
     (g-list (g-object gtk-window))
  #+cl-cffi-gtk-documentation
- "@version{2013-8-8}
+ "@version{2014-10-18}
   @argument[application]{a @class{gtk-application} object}
-  @return{A list of @class{gtk-window} widgets}
+  @return{A list of @class{gtk-window} widgets.}
   @begin{short}
     Gets a list of the @class{gtk-window}'s associated with @arg{application}.
   @end{short}
@@ -758,7 +763,9 @@
 
   Since 3.0
   @see-class{gtk-application}
-  @see-class{gtk-window}"
+  @see-class{gtk-window}
+  @see-function{gtk-application-active-window}
+  @see-function{gtk-application-get-window-by-id}"
   (application (g-object gtk-application)))
 
 (export 'gtk-application-get-windows)
@@ -782,11 +789,13 @@
 
   Since 3.6
   @see-class{gtk-application}
-  @see-class{gtk-application-window}"
+  @see-class{gtk-application-window}
+  @see-function{gtk-application-active-window}
+  @see-function{gtk-application-get-windows}"
   (application (g-object gtk-application))
   (id :uint))
 
-  #+gtk-3-6
+#+gtk-3-6
 (export 'gtk-application-get-window-by-id)
 
 ;;; ----------------------------------------------------------------------------
@@ -834,11 +843,11 @@
 
 (defcfun ("gtk_application_inhibit" gtk-application-inhibit) :uint
  #+cl-cffi-gtk-documentation
- "@version{2013-8-8}
+ "@version{2014-10-18}
   @argument[application]{the @class{gtk-application} object}
   @argument[window]{a @class{gtk-window} widget, or @code{nil}}
-  @argument[flags]{what types of @symbol{gtk-application-inhibit-flags} of
-    actions should be inhibited}
+  @argument[flags]{what types of user actions of type
+                   @symbol{gtk-application-inhibit-flags} should be inhibited}
   @argument[reason]{a short, human-readable string that explains why these
     operations are inhibited}
   @begin{return}
@@ -868,14 +877,15 @@
 
   Reasons should be short and to the point.
 
-  If window is given, the session manager may point the user to this window to
-  find out more about why the action is inhibited.
+  If @arg{window} is given, the session manager may point the user to this
+  window to find out more about why the action is inhibited.
 
   Since 3.4
   @see-class{gtk-application}
   @see-class{gtk-window}
+  @see-symbol{gtk-application-inhibit-flags}
   @see-function{gtk-application-uninhibit}"
-  (applicationn (g-object gtk-application))
+  (application (g-object gtk-application))
   (window (g-object gtk-window))
   (flags gtk-application-inhibit-flags)
   (reason :string))

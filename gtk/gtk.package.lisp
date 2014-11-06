@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.8.9 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.10 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -31,10 +31,6 @@
 ;;; ----------------------------------------------------------------------------
 
 (in-package :cl-user)
-
-;; Muffle compiler-notes globally
-;#+sbcl
-;(declaim (sb-ext:muffle-conditions sb-ext:compiler-note))
 
 (defvar *cl-cffi-gtk-build-time* (multiple-value-list (get-decoded-time)))
 (defvar *cl-cffi-gtk-version* "1.0.0")
@@ -86,9 +82,6 @@
 
       @about-class{gtk-application}
       @about-symbol{gtk-application-inhibit-flags}
-      @about-generic{gtk-application-active-window}
-      @about-generic{gtk-application-app-menu}
-      @about-generic{gtk-application-menubar}
       @about-function{gtk-application-new}
       @about-function{gtk-application-add-window}
       @about-function{gtk-application-remove-window}
@@ -104,7 +97,6 @@
       @class{gtk-window} subclass with @class{gtk-application} support.
 
       @about-class{gtk-application-window}
-      @about-generic{gtk-application-window-show-menubar}
       @about-function{gtk-application-window-new}
       @about-function{gtk-application-window-get-id}
     @end{subsection}
@@ -113,8 +105,6 @@
 
       @about-class{gtk-actionable}
       @about-class{gtk-actionable-interface}
-      @about-generic{gtk-actionable-action-name}
-      @about-generic{gtk-actionable-action-target}
       @about-function{gtk-actionable-set-action-target}
       @about-function{gtk-actionable-set-detailed-action-name}
     @end{subsection}
@@ -124,7 +114,6 @@
       Build an interface from an XML UI definition.
 
       @about-class{gtk-builder}
-      @about-generic{gtk-builder-translation-domain}
       @about-symbol{gtk-builder-error}
       @about-function{gtk-builder-new}
       @about-function{gtk-builder-add-from-file}
@@ -203,21 +192,6 @@
 
       @about-class{gtk-about-dialog}
       @about-symbol{gtk-license}
-      @about-generic{gtk-about-dialog-artists}
-      @about-generic{gtk-about-dialog-authors}
-      @about-generic{gtk-about-dialog-comments}
-      @about-generic{gtk-about-dialog-copyright}
-      @about-generic{gtk-about-dialog-documenters}
-      @about-generic{gtk-about-dialog-license}
-      @about-generic{gtk-about-dialog-license-type}
-      @about-generic{gtk-about-dialog-logo}
-      @about-generic{gtk-about-dialog-logo-icon-name}
-      @about-generic{gtk-about-dialog-program-name}
-      @about-generic{gtk-about-dialog-translator-credits}
-      @about-generic{gtk-about-dialog-version}
-      @about-generic{gtk-about-dialog-website}
-      @about-generic{gtk-about-dialog-website-label}
-      @about-generic{gtk-about-dialog-wrap-license}
       @about-function{gtk-about-dialog-new}
       @about-function{gtk-about-dialog-add-credit-section}
       @about-function{gtk-show-about-dialog}
@@ -263,39 +237,6 @@
       Toplevel which can contain other widgets.
 
       @about-class{gtk-window}
-      @about-generic{gtk-window-accept-focus}
-      @about-generic{gtk-window-application}
-      @about-generic{gtk-window-attached-to}
-      @about-generic{gtk-window-decorated}
-      @about-generic{gtk-window-default-height}
-      @about-generic{gtk-window-default-width}
-      @about-generic{gtk-window-deletable}
-      @about-generic{gtk-window-destroy-with-parent}
-      @about-generic{gtk-window-focus-on-map}
-      @about-generic{gtk-window-focus-visible}
-      @about-generic{gtk-window-gravity}
-      @about-generic{gtk-window-has-resize-grip}
-      @about-generic{gtk-window-has-toplevel-focus}
-      @about-generic{gtk-window-hide-titlebar-when-maximized}
-      @about-generic{gtk-window-icon}
-      @about-generic{gtk-window-icon-name}
-      @about-generic{gtk-window-is-active}
-      @about-generic{gtk-window-mnemonics-visible}
-      @about-generic{gtk-window-modal}
-      @about-generic{gtk-window-opacity}
-      @about-generic{gtk-window-resizable}
-      @about-generic{gtk-window-resize-grip-visible}
-      @about-generic{gtk-window-role}
-      @about-generic{gtk-window-screen}
-      @about-generic{gtk-window-skip-pager-hint}
-      @about-generic{gtk-window-skip-taskbar-hint}
-      @about-generic{gtk-window-startup-id}
-      @about-generic{gtk-window-title}
-      @about-generic{gtk-window-transient-for}
-      @about-generic{gtk-window-type}
-      @about-generic{gtk-window-type-hint}
-      @about-generic{gtk-window-urgency-hint}
-      @about-generic{gtk-window-window-position}
       @about-function{gtk-window-new}
       @about-function{gtk-window-set-wmclass}
       @about-function{gtk-window-set-resizable}
@@ -349,7 +290,6 @@
       @about-function{gtk-window-get-deletable}
       @about-function{gtk-window-get-default-icon-list}
       @about-function{gtk-window-get-default-icon-name}
-      @about-generic{gtk-window-default-size}
       @about-function{gtk-window-get-hide-titlebar-when-maximized}
       @about-function{gtk-window-get-icon}
       @about-function{gtk-window-get-icon-list}
@@ -410,7 +350,6 @@
       A widget which is not displayed.
 
       @about-class{gtk-invisible}
-      @about-generic{gtk-invisible-screen}
       @about-function{gtk-invisible-new}
       @about-function{gtk-invisible-new-for-screen}
     @end{subsection}
@@ -436,8 +375,6 @@
       @about-function{gtk-box-child-position}
       @about-function{gtk-box-pack-start}
       @about-function{gtk-box-pack-end}
-      @about-function{gtk-box-get-spacing}
-      @about-function{gtk-box-set-spacing}
       @about-function{gtk-box-reorder-child}
       @about-function{gtk-box-query-child-packing}
       @about-function{gtk-box-set-child-packing}
@@ -599,28 +536,11 @@
       @about-class{gtk-expander}
       @about-function{gtk-expander-new}
       @about-function{gtk-expander-new-with-mnemonic}
-      @about-function{gtk-expander-set-expanded}
-      @about-function{gtk-expander-get-expanded}
-      @about-function{gtk-expander-set-spacing}
-      @about-function{gtk-expander-get-spacing}
-      @about-function{gtk-expander-set-label}
-      @about-function{gtk-expander-get-label}
-      @about-function{gtk-expander-set-use-underline}
-      @about-function{gtk-expander-get-use-underline}
-      @about-function{gtk-expander-set-use-markup}
-      @about-function{gtk-expander-get-use-markup}
-      @about-function{gtk-expander-set-label-widget}
-      @about-function{gtk-expander-get-label-widget}
-      @about-function{gtk-expander-set-label-fill}
-      @about-function{gtk-expander-get-label-fill}
-      @about-function{gtk-expander-set-resize-toplevel}
-      @about-function{gtk-expander-get-resize-toplevel}
     @end{subsection}
     @begin[GtkOrientable]{subsection}
       An interface for flippable widgets.
 
       @about-class{gtk-orientable}
-      @about-generic{gtk-orientable-orientation}
     @end{subsection}
     @begin[GtkAspectFrame]{subsection}
       A frame that constrains its child to a particular aspect ratio.
@@ -638,6 +558,171 @@
       @about-function{gtk-fixed-new}
       @about-function{gtk-fixed-put}
       @about-function{gtk-fixed-move}
+    @end{subsection}
+  @end{section}
+  @begin[Display Widgets]{section}
+    @begin[GtkLabel]{subsection}
+      A widget that displays a small to medium amount of text.
+
+      @about-class{gtk-label}
+      @about-function{gtk-label-new}
+      @about-function{gtk-label-set-text}
+      @about-function{gtk-label-set-markup}
+      @about-function{gtk-label-set-markup-with-mnemonic}
+      @about-function{gtk-label-set-line-wrap}
+      @about-function{gtk-label-set-line-wrap-mode}
+      @about-function{gtk-label-get-layout-offsets}
+      @about-function{gtk-label-get-text}
+      @about-function{gtk-label-new-with-mnemonic}
+      @about-function{gtk-label-select-region}
+      @about-function{gtk-label-set-text-with-mnemonic}
+      @about-function{gtk-label-get-layout}
+      @about-function{gtk-label-get-line-wrap}
+      @about-function{gtk-label-get-line-wrap-mode}
+      @about-function{gtk-label-get-selection-bounds}
+      @about-function{gtk-label-get-current-uri}
+    @end{subsection}
+    @begin[GtkImage]{subsection}
+      A widget displaying an image.
+
+      @about-class{gtk-image}
+      @about-symbol{gtk-image-type}
+      @about-function{gtk-image-get-icon-set}
+      @about-function{gtk-image-get-stock}
+      @about-function{gtk-image-get-animation}
+      @about-function{gtk-image-get-icon-name}
+      @about-function{gtk-image-get-gicon}
+      @about-function{gtk-image-new-from-file}
+      @about-function{gtk-image-new-from-icon-set}
+      @about-function{gtk-image-new-from-pixbuf}
+      @about-function{gtk-image-new-from-stock}
+      @about-function{gtk-image-new-from-animation}
+      @about-function{gtk-image-new-from-icon-name}
+      @about-function{gtk-image-new-from-gicon}
+      @about-function{gtk-image-new-from-resource}
+      @about-function{gtk-image-set-from-file}
+      @about-function{gtk-image-set-from-icon-set}
+      @about-function{gtk-image-set-from-pixbuf}
+      @about-function{gtk-image-set-from-stock}
+      @about-function{gtk-image-set-from-animation}
+      @about-function{gtk-image-set-from-icon-name}
+      @about-function{gtk-image-set-from-gicon}
+      @about-function{gtk-image-set-from-resource}
+      @about-function{gtk-image-clear}
+      @about-function{gtk-image-new}
+      @about-function{gtk-image-get-pixel-size}
+    @end{subsection}
+    @begin[GtkSpinner]{subsection}
+      Show a spinner animation.
+
+      @about-class{gtk-spinner}
+      @about-function{gtk-spinner-new}
+      @about-function{gtk-spinner-start}
+      @about-function{gtk-spinner-stop}
+    @end{subsection}
+    @begin[GtkInfoBar]{subsection}
+      Report important messages to the user.
+
+      @about-class{gtk-info-bar}
+      @about-function{gtk-info-bar-new}
+      @about-function{gtk-info-bar-new-with-buttons}
+      @about-function{gtk-info-bar-add-action-widget}
+      @about-function{gtk-info-bar-add-button}
+      @about-function{gtk-info-bar-add-buttons}
+      @about-function{gtk-info-bar-set-response-sensitive}
+      @about-function{gtk-info-bar-set-default-response}
+      @about-function{gtk-info-bar-response}
+      @about-function{gtk-info-bar-get-action-area}
+      @about-function{gtk-info-bar-get-content-area}
+    @end{subsection}
+    @begin[GtkProgressBar]{subsection}
+      A widget which indicates progress visually.
+
+      @about-class{gtk-progress-bar}
+      @about-function{gtk-progress-bar-new}
+      @about-function{gtk-progress-bar-pulse}
+    @end{subsection}
+    @begin[GtkLevelBar]{subsection}
+      A bar that can used as a level indicator.
+
+      @about-symbol{GTK_LEVEL_BAR_OFFSET_LOW}
+      @about-symbol{GTK_LEVEL_BAR_OFFSET_HIGH}
+      @about-class{gtk-level-bar}
+      @about-symbol{gtk-level-bar-mode}
+      @about-function{gtk-level-bar-new}
+      @about-function{gtk-level-bar-new-for-interval}
+      @about-function{gtk-level-bar-set-mode}
+      @about-function{gtk-level-bar-get-mode}
+      @about-function{gtk-level-bar-set-value}
+      @about-function{gtk-level-bar-get-value}
+      @about-function{gtk-level-bar-set-min-value}
+      @about-function{gtk-level-bar-get-min-value}
+      @about-function{gtk-level-bar-set-max-value}
+      @about-function{gtk-level-bar-get-max-value}
+      @about-function{gtk-level-bar-set-inverted}
+      @about-function{gtk-level-bar-get-inverted}
+      @about-function{gtk-level-bar-add-offset-value}
+      @about-function{gtk-level-bar-remove-offset-value}
+      @about-function{gtk-level-bar-get-offset-value}
+    @end{subsection}
+    @begin[GtkStatusbar]{subsection}
+      Report messages of minor importance to the user.
+
+      @about-class{gtk-statusbar}
+      @about-function{gtk-statusbar-new}
+      @about-function{gtk-statusbar-get-context-id}
+      @about-function{gtk-statusbar-push}
+      @about-function{gtk-statusbar-pop}
+      @about-function{gtk-statusbar-remove}
+      @about-function{gtk-statusbar-remove-all}
+      @about-function{gtk-statusbar-get-message-area}
+    @end{subsection}
+    @begin[GtkAccelLabel]{subsection}
+      A label which displays an accelerator key on the right of the text.
+
+      @about-class{gtk-accel-label}
+      @about-function{gtk-accel-label-new}
+      @about-function{gtk-accel-label-get-accel-width}
+      @about-function{gtk-accel-label-set-accel}
+      @about-function{gtk-accel-label-refetch}
+    @end{subsection}
+    @begin[GtkStatusIcon]{subsection}
+      Display an icon in the system tray.
+
+      @about-class{gtk-status-icon}
+      @about-function{gtk-status-icon-new}
+      @about-function{gtk-status-icon-new-from-pixbuf}
+      @about-function{gtk-status-icon-new-from-file}
+      @about-function{gtk-status-icon-new-from-stock}
+      @about-function{gtk-status-icon-new-from-icon-name}
+      @about-function{gtk-status-icon-new-from-gicon}
+      @about-function{gtk-status-icon-set-from-pixbuf}
+      @about-function{gtk-status-icon-set-from-file}
+      @about-function{gtk-status-icon-set-from-stock}
+      @about-function{gtk-status-icon-set-from-icon-name}
+      @about-function{gtk-status-icon-set-from-gicon}
+      @about-function{gtk-status-icon-get-pixbuf}
+      @about-function{gtk-status-icon-get-stock}
+      @about-function{gtk-status-icon-get-icon-name}
+      @about-function{gtk-status-icon-get-gicon}
+      @about-function{gtk-status-icon-get-size}
+      @about-function{gtk-status-icon-set-screen}
+      @about-function{gtk-status-icon-get-screen}
+      @about-function{gtk-status-icon-set-tooltip-text}
+      @about-function{gtk-status-icon-get-tooltip-text}
+      @about-function{gtk-status-icon-set-tooltip-markup}
+      @about-function{gtk-status-icon-get-tooltip-markup}
+      @about-function{gtk-status-icon-set-has-tooltip}
+      @about-function{gtk-status-icon-get-has-tooltip}
+      @about-function{gtk-status-icon-set-title}
+      @about-function{gtk-status-icon-get-title}
+      @about-function{gtk-status-icon-set-name}
+      @about-function{gtk-status-icon-set-visible}
+      @about-function{gtk-status-icon-get-visible}
+      @about-function{gtk-status-icon-is-embedded}
+      @about-function{gtk-status-icon-position-menu}
+      @about-function{gtk-status-icon-get-geometry}
+      @about-function{gtk-status-icon-get-x11-window-id}
     @end{subsection}
   @end{section}
 
@@ -747,8 +832,6 @@
       widget.
 
       @about-class{gtk-accel-group}
-      @about-generic{gtk-accel-group-modifier-mask}
-      @about-generic{gtk-accel-group-is-locked}
       @about-function{gtk-accel-group-new}
       @about-function{gtk-accel-group-connect}
       @about-function{gtk-accel-group-connect-by-path}
@@ -1423,11 +1506,6 @@
       @about-class{gtk-numerable-icon}
       @about-function{gtk-numerable-icon-new}
       @about-function{gtk-numerable-icon-new-with-style-context}
-      @about-generic{gtk-numerable-icon-background-icon}
-      @about-generic{gtk-numerable-icon-background-icon-name}
-      @about-generic{gtk-numerable-icon-count}
-      @about-generic{gtk-numerable-icon-label}
-      @about-generic{gtk-numerable-icon-style-context}
       @about-function{gtk-numerable-icon-get-background-gicon}
       @about-function{gtk-numerable-icon-set-background-gicon}
       @about-function{gtk-numerable-icon-get-background-icon-name}
@@ -1440,224 +1518,11 @@
       @about-function{gtk-numerable-icon-set-style-context}
     @end{subsection}
   @end{section}
-  @begin[Display Widgets]{section}
-    @begin[GtkAccelLabel]{subsection}
-      A label which displays an accelerator key on the right of the text.
-
-      @about-class{gtk-accel-label}
-      @about-generic{gtk-accel-label-accel-closure}
-      @about-generic{gtk-accel-label-accel-widget}
-      @about-function{gtk-accel-label-new}
-      @about-function{gtk-accel-label-get-accel-width}
-      @about-function{gtk-accel-label-set-accel}
-      @about-function{gtk-accel-label-refetch}
-    @end{subsection}
-    @begin[GtkImage]{subsection}
-      A widget displaying an image.
-
-      @about-class{gtk-image}
-      @about-symbol{gtk-image-type}
-      @about-function{gtk-image-get-icon-set}
-      @about-function{gtk-image-get-stock}
-      @about-function{gtk-image-get-animation}
-      @about-function{gtk-image-get-icon-name}
-      @about-function{gtk-image-get-gicon}
-      @about-function{gtk-image-new-from-file}
-      @about-function{gtk-image-new-from-icon-set}
-      @about-function{gtk-image-new-from-pixbuf}
-      @about-function{gtk-image-new-from-stock}
-      @about-function{gtk-image-new-from-animation}
-      @about-function{gtk-image-new-from-icon-name}
-      @about-function{gtk-image-new-from-gicon}
-      @about-function{gtk-image-new-from-resource}
-      @about-function{gtk-image-set-from-file}
-      @about-function{gtk-image-set-from-icon-set}
-      @about-function{gtk-image-set-from-pixbuf}
-      @about-function{gtk-image-set-from-stock}
-      @about-function{gtk-image-set-from-animation}
-      @about-function{gtk-image-set-from-icon-name}
-      @about-function{gtk-image-set-from-gicon}
-      @about-function{gtk-image-set-from-resource}
-      @about-function{gtk-image-clear}
-      @about-function{gtk-image-new}
-      @about-function{gtk-image-get-pixel-size}
-    @end{subsection}
-    @begin[GtkLabel]{subsection}
-      A widget that displays a small to medium amount of text.
-
-      @about-class{gtk-label}
-      @about-function{gtk-label-new}
-      @about-function{gtk-label-set-text}
-      @about-function{gtk-label-set-attributes}
-      @about-function{gtk-label-set-markup}
-      @about-function{gtk-label-set-markup-with-mnemonic}
-      @about-function{gtk-label-set-justify}
-      @about-function{gtk-label-set-ellipsize}
-      @about-function{gtk-label-set-width-chars}
-      @about-function{gtk-label-set-max-width-chars}
-      @about-function{gtk-label-set-line-wrap}
-      @about-function{gtk-label-set-line-wrap-mode}
-      @about-function{gtk-label-get-layout-offsets}
-      @about-function{gtk-label-get-mnemonic-keyval}
-      @about-function{gtk-label-get-selectable}
-      @about-function{gtk-label-get-text}
-      @about-function{gtk-label-new-with-mnemonic}
-      @about-function{gtk-label-select-region}
-      @about-function{gtk-label-set-mnemonic-widget}
-      @about-function{gtk-label-set-selectable}
-      @about-function{gtk-label-set-text-with-mnemonic}
-      @about-function{gtk-label-get-attributes}
-      @about-function{gtk-label-get-justify}
-      @about-function{gtk-label-get-ellipsize}
-      @about-function{gtk-label-get-width-chars}
-      @about-function{gtk-label-get-max-width-chars}
-      @about-function{gtk-label-get-label}
-      @about-function{gtk-label-get-layout}
-      @about-function{gtk-label-get-line-wrap}
-      @about-function{gtk-label-get-line-wrap-mode}
-      @about-function{gtk-label-get-mnemonic-widget}
-      @about-function{gtk-label-get-selection-bounds}
-      @about-function{gtk-label-get-use-markup}
-      @about-function{gtk-label-get-use-underline}
-      @about-function{gtk-label-get-single-line-mode}
-      @about-function{gtk-label-get-angle}
-      @about-function{gtk-label-set-use-markup}
-      @about-function{gtk-label-set-use-underline}
-      @about-function{gtk-label-set-single-line-mode}
-      @about-function{gtk-label-set-angle}
-      @about-function{gtk-label-get-current-uri}
-      @about-function{gtk-label-set-track-visited-links}
-      @about-function{gtk-label-get-track-visited-links}
-    @end{subsection}
-    @begin[GtkProgressBar]{subsection}
-      A widget which indicates progress visually.
-
-      @about-class{gtk-progress-bar}
-      @about-function{gtk-progress-bar-new}
-      @about-function{gtk-progress-bar-pulse}
-      @about-function{gtk-progress-bar-get-inverted}
-      @about-function{gtk-progress-bar-get-show-text}
-      @about-function{gtk-progress-bar-set-ellipsize}
-      @about-function{gtk-progress-bar-get-ellipsize}
-    @end{subsection}
-    @begin[GtkStatusbar]{subsection}
-      Report messages of minor importance to the user.
-
-      @about-class{gtk-statusbar}
-      @about-function{gtk-statusbar-new}
-      @about-function{gtk-statusbar-get-context-id}
-      @about-function{gtk-statusbar-push}
-      @about-function{gtk-statusbar-pop}
-      @about-function{gtk-statusbar-remove}
-      @about-function{gtk-statusbar-remove-all}
-      @about-function{gtk-statusbar-get-message-area}
-    @end{subsection}
-    @begin[GtkLevelBar]{subsection}
-      A bar that can used as a level indicator.
-
-      @about-symbol{GTK_LEVEL_BAR_OFFSET_LOW}
-      @about-symbol{GTK_LEVEL_BAR_OFFSET_HIGH}
-      @about-symbol{gtk-level-bar-mode}
-      @about-class{{gtk-level-bar}
-      @about-generic{gtk-level-bar-inverted}
-      @about-generic{gtk-level-bar-max-value}
-      @about-generic{gtk-level-bar-min-value}
-      @about-generic{gtk-level-bar-mode}
-      @about-generic{gtk-level-bar-value}
-      @about-function{gtk-level-bar-new}
-      @about-function{gtk-level-bar-new-for-interval}
-      @about-function{gtk-level-bar-set-mode}
-      @about-function{gtk-level-bar-get-mode}
-      @about-function{gtk-level-bar-set-value}
-      @about-function{gtk-level-bar-get-value}
-      @about-function{gtk-level-bar-set-min-value}
-      @about-function{gtk-level-bar-get-min-value}
-      @about-function{gtk-level-bar-set-max-value}
-      @about-function{gtk-level-bar-get-max-value}
-      @about-function{gtk-level-bar-set-inverted}
-      @about-function{gtk-level-bar-get-inverted}
-      @about-function{gtk-level-bar-add-offset-value}
-      @about-function{gtk-level-bar-remove-offset-value}
-      @about-function{gtk-level-bar-get-offset-value}
-    @end{subsection}
-    @begin[GtkInfoBar]{subsection}
-      Report important messages to the user.
-
-      @about-class{gtk-info-bar}
-      @about-function{gtk-info-bar-new}
-      @about-function{gtk-info-bar-new-with-buttons}
-      @about-function{gtk-info-bar-add-action-widget}
-      @about-function{gtk-info-bar-add-button}
-      @about-function{gtk-info-bar-add-buttons}
-      @about-function{gtk-info-bar-set-response-sensitive}
-      @about-function{gtk-info-bar-set-default-response}
-      @about-function{gtk-info-bar-response}
-      @about-function{gtk-info-bar-get-message-type}
-      @about-function{gtk-info-bar-get-action-area}
-      @about-function{gtk-info-bar-get-content-area}
-    @end{subsection}
-    @begin[GtkStatusIcon]{subsection}
-      Display an icon in the system tray.
-
-      @about-class{gtk-status-icon}
-      @about-function{gtk-status-icon-new}
-      @about-function{gtk-status-icon-new-from-pixbuf}
-      @about-function{gtk-status-icon-new-from-file}
-      @about-function{gtk-status-icon-new-from-stock}
-      @about-function{gtk-status-icon-new-from-icon-name}
-      @about-function{gtk-status-icon-new-from-gicon}
-      @about-function{gtk-status-icon-set-from-pixbuf}
-      @about-function{gtk-status-icon-set-from-file}
-      @about-function{gtk-status-icon-set-from-stock}
-      @about-function{gtk-status-icon-set-from-icon-name}
-      @about-function{gtk-status-icon-set-from-gicon}
-      @about-function{gtk-status-icon-get-pixbuf}
-      @about-function{gtk-status-icon-get-stock}
-      @about-function{gtk-status-icon-get-icon-name}
-      @about-function{gtk-status-icon-get-gicon}
-      @about-function{gtk-status-icon-get-size}
-      @about-function{gtk-status-icon-set-screen}
-      @about-function{gtk-status-icon-get-screen}
-      @about-function{gtk-status-icon-set-tooltip-text}
-      @about-function{gtk-status-icon-get-tooltip-text}
-      @about-function{gtk-status-icon-set-tooltip-markup}
-      @about-function{gtk-status-icon-get-tooltip-markup}
-      @about-function{gtk-status-icon-set-has-tooltip}
-      @about-function{gtk-status-icon-get-has-tooltip}
-      @about-function{gtk-status-icon-set-title}
-      @about-function{gtk-status-icon-get-title}
-      @about-function{gtk-status-icon-set-name}
-      @about-function{gtk-status-icon-set-visible}
-      @about-function{gtk-status-icon-get-visible}
-      @about-function{gtk-status-icon-is-embedded}
-      @about-function{gtk-status-icon-position-menu}
-      @about-function{gtk-status-icon-get-geometry}
-      @about-function{gtk-status-icon-get-x11-window-id}
-    @end{subsection}
-    @begin[GtkSpinner]{subsection}
-      Show a spinner animation.
-
-      @about-class{gtk-spinner}
-      @about-function{gtk-spinner-new}
-      @about-function{gtk-spinner-start}
-      @about-function{gtk-spinner-stop}
-    @end{subsection}
-  @end{section}
   @begin[Buttons and Toggles]{section}
     @begin[GtkButton]{subsection}
       A widget that emits a signal when clicked on.
 
       @about-class{gtk-button}
-      @about-generic{gtk-button-always-show-image}
-      @about-generic{gtk-button-focus-on-click}
-      @about-generic{gtk-button-image}
-      @about-generic{gtk-button-image-position}
-      @about-generic{gtk-button-label}
-      @about-generic{gtk-button-relief}
-      @about-generic{gtk-button-use-stock}
-      @about-generic{gtk-button-use-underline}
-      @about-generic{gtk-button-xalign}
-      @about-generic{gtk-button-yalign}
       @about-function{gtk-button-new}
       @about-function{gtk-button-new-with-label}
       @about-function{gtk-button-new-with-mnemonic}
@@ -1852,15 +1717,6 @@
       Completion functionality for GtkEntry.
 
       @about-class{gtk-entry-completion}
-      @about-generic{gtk-entry-completion-cell-area}
-      @about-generic{gtk-entry-completion-inline-completion}
-      @about-generic{gtk-entry-completion-inline-selection}
-      @about-generic{gtk-entry-completion-minimum-key-length}
-      @about-generic{gtk-entry-completion-model}
-      @about-generic{gtk-entry-completion-popup-completion}
-      @about-generic{gtk-entry-completion-popup-set-width}
-      @about-generic{gtk-entry-completion-popup-single-match}
-      @about-generic{gtk-entry-completion-text-column}
       @about-function{gtk-entry-completion-new}
       @about-function{gtk-entry-completion-new-with-area}
       @about-function{gtk-entry-completion-get-entry}
@@ -4385,10 +4241,7 @@ setup_tree (void)
       @about-function{gtk-printer-is-active}
       @about-function{gtk-printer-is-paused}
       @about-function{gtk-printer-is-accepting-jobs}
-      @about-generic{gtk-printer-is-virtual}
       @about-function{gtk-printer-is-default}
-      @about-generic{gtk-printer-accepts-ps}
-      @about-generic{gtk-printer-accepts-pdf}
       @about-function{gtk-printer-list-papers}
       @about-function{gtk-printer-compare}
       @about-function{gtk-printer-has-details}
@@ -4618,41 +4471,6 @@ setup_tree (void)
 
       @about-class{gtk-widget}
       @about-class{gtk-widget-class}
-      @about-generic{gtk-widget-app-paintable}
-      @about-generic{gtk-widget-can-default}
-      @about-generic{gtk-widget-can-focus}
-      @about-generic{gtk-widget-composite-child}
-      @about-generic{gtk-widget-double-buffered}
-      @about-generic{gtk-widget-events}
-      @about-generic{gtk-widget-expand}
-      @about-generic{gtk-widget-halign}
-      @about-generic{gtk-widget-has-default}
-      @about-generic{gtk-widget-has-focus}
-      @about-generic{gtk-widget-has-tooltip}
-      @about-generic{gtk-widget-height-request}
-      @about-generic{gtk-widget-hexpand}
-      @about-generic{gtk-widget-hexpand-set}
-      @about-generic{gtk-widget-is-focus}
-      @about-generic{gtk-widget-margin}
-      @about-generic{gtk-widget-margin-bottom}
-      @about-generic{gtk-widget-margin-left}
-      @about-generic{gtk-widget-margin-right}
-      @about-generic{gtk-widget-margin-top}
-      @about-generic{gtk-widget-name}
-      @about-generic{gtk-widget-no-show-all}
-      @about-generic{gtk-widget-opacity}
-      @about-generic{gtk-widget-parent}
-      @about-generic{gtk-widget-receives-default}
-      @about-generic{gtk-widget-sensitive}
-      @about-generic{gtk-widget-style}
-      @about-generic{gtk-widget-tooltip-markup}
-      @about-generic{gtk-widget-tooltip-text}
-      @about-generic{gtk-widget-valign}
-      @about-generic{gtk-widget-vexpand}
-      @about-generic{gtk-widget-vexpand-set}
-      @about-generic{gtk-widget-visible}
-      @about-generic{gtk-widget-width-request}
-      @about-generic{gtk-widget-window}
       @about-struct{gtk-requisition}
       @about-function{make-gtk-requisition}
       @about-function{copy-gtk-requisition}
@@ -4779,7 +4597,6 @@ setup_tree (void)
       @about-function{gtk-widget-get-root-window}
       @about-function{gtk-widget-get-screen}
       @about-function{gtk-widget-has-screen}
-      @about-generic{gtk-widget-size-request}
       @about-function{gtk-widget-set-child-visible}
       @about-function{gtk-widget-thaw-child-notify}
       @about-function{gtk-widget-list-mnemonic-labels}
@@ -4875,9 +4692,6 @@ setup_tree (void)
       Base class for widgets which contain other widgets.
 
       @about-class{gtk-container}
-      @about-generic{gtk-container-border-width}
-      @about-generic{gtk-container-child}
-      @about-generic{gtk-container-resize-mode}
       @about-function{GTK_IS_RESIZE_CONTAINER}
       @about-function{GTK_CONTAINER_WARN_INVALID_CHILD_PROPERTY_ID}
       @about-function{gtk-container-add}
@@ -5008,8 +4822,6 @@ setup_tree (void)
       Toplevel for embedding into other processes.
 
       @about-class{gtk-plug}
-      @about-generic{gtk-plug-embedded}
-      @about-generic{gtk-plug-socket-window}
       @about-function{gtk-plug-construct}
       @about-function{gtk-plug-construct-for-display}
       @about-function{gtk-plug-new}

@@ -108,7 +108,9 @@
 
   Because @sym{gtk-box} is a @class{gtk-container}, you may also use the
   function @fun{gtk-container-add} to insert widgets into the box, and they will
-  be packed with the default values for @code{\"expand\"} and @code{\"fill\"}.
+  be packed with the default values for the child properties @code{\"expand\"}
+  and @code{\"fill\"}.
+
   Use the function @fun{gtk-container-remove} to remove widgets from the
   @sym{gtk-box}.
 

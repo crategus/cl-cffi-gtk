@@ -5,12 +5,12 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>
 ;;; 
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.10 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;; 
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2014 Dieter Kaiser
 ;;; 
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -41,23 +41,6 @@
 ;;;     gtk_fixed_new
 ;;;     gtk_fixed_put
 ;;;     gtk_fixed_move
-;;;
-;;; Object Hierarchy
-;;;
-;;;   GObject
-;;;    +----GInitiallyUnowned
-;;;          +----GtkWidget
-;;;                +----GtkContainer
-;;;                      +----GtkFixed
-;;;
-;;; Implemented Interfaces
-;;;
-;;; GtkFixed implements AtkImplementorIface and GtkBuildable.
-;;;
-;;; Child Properties
-;;;
-;;;   "x"                        gint                  : Read / Write
-;;;   "y"                        gint                  : Read / Write
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -82,11 +65,11 @@
  "@version{2013-5-18}
   @begin{short}
     The @class{gtk-fixed} widget is a container which can place child widgets at
-    fixed positions and with fixed sizes, given in pixels. @class{gtk-fixed}
-    performs no automatic layout management.
+    fixed positions and with fixed sizes, given in pixels.
   @end{short}
+  @class{gtk-fixed} performs no automatic layout management.
 
-  For most applications, you should not use this container! It keeps you from
+  For most applications, you should not use this container. It keeps you from
   having to learn about the other GTK+ containers, but it results in broken
   applications. With @class{gtk-fixed}, the following things will result in
   truncated text, overlapping widgets, and other display bugs:
@@ -141,12 +124,6 @@
                        gtk-fixed-child-x
                        "x" "gint" t t t)
 
-(define-child-property "GtkFixed"
-                       gtk-fixed-child-y
-                       "y" "gint" t t t)
-
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-fixed-child-x atdoc:*function-name-alias*)
       "Accessor"
@@ -154,6 +131,12 @@
  "@version{2013-8-27}
   Accessor of the child property @code{\"x\"} of the @class{gtk-fixed} class.
   @see-class{gtk-fixed}")
+
+;;; ----------------------------------------------------------------------------
+
+(define-child-property "GtkFixed"
+                       gtk-fixed-child-y
+                       "y" "gint" t t t)
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-fixed-child-y atdoc:*function-name-alias*)
@@ -171,9 +154,10 @@
 
 (defun gtk-fixed-new ()
  #+cl-cffi-gtk-documentation
- "@version{2013-5-18}
+ "@version{2014-9-7}
   @return{A new @class{gtk-fixed} container.}
-  Creates a new @class{gtk-fixed} container."
+  Creates a new @class{gtk-fixed} container.
+  @see-class{gtk-fixed}"
   (make-instance 'gtk-fixed))
 
 (export 'gtk-fixed-new)
@@ -184,12 +168,14 @@
 
 (defcfun ("gtk_fixed_put" gtk-fixed-put) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-5-18}
+ "@version{2014-9-7}
   @argument[fixed]{a @class{gtk-fixed} container}
   @argument[widget]{the widget to add}
   @argument[x]{the horizontal position to place the @arg{widget} at}
   @argument[y]{the vertical position to place the @arg{widget} at}
-  Adds a widget to a @class{gtk-fixed} container at the given position."
+  Adds a widget to a @class{gtk-fixed} container at the given position.
+  @see-class{gtk-fixed}
+  @see-function{gtk-fixed-move}"
   (fixed g-object)
   (widget g-object)
   (x :int)
@@ -203,12 +189,14 @@
 
 (defcfun ("gtk_fixed_move" gtk-fixed-move) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-5-18}
+ "@version{2014-9-7}
   @argument[fixed]{a @class{gtk-fixed} container}
   @argument[widget]{the child widget}
   @argument[x]{the horizontal position to move the @arg{widget} to}
   @argument[y]{the vertical position to move the @arg{widget} to}
-  Moves a child of a @class{gtk-fixed} container to the given position."
+  Moves a child of a @class{gtk-fixed} container to the given position.
+  @see-class{gtk-fixed}
+  @see-function{gtk-fixed-put}"
   (fixed (g-object gtk-fixed))
   (widget g-object)
   (x :int)

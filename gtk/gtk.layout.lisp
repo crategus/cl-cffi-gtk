@@ -5,12 +5,12 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.10 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -75,15 +75,16 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-layout 'type)
- "@version{2013-3-10}
+ "@version{2014-8-20}
   @begin{short}
     @sym{gtk-layout} is similar to @class{gtk-drawing-area} in that it is a
     \"blank slate\" and does not do anything but paint a blank background by
-    default. It is different in that it supports scrolling natively (you can add
-    it to a @class{gtk-scrolled-window}), and it can contain child widgets,
-    since it is a @class{gtk-container}. However if you are just going to draw,
-    a @class{gtk-drawing-area} is a better choice since it has lower overhead.
+    default.
   @end{short}
+  It is different in that it supports scrolling natively, you can add it to a
+  @class{gtk-scrolled-window}, and it can contain child widgets, since it is a
+  @class{gtk-container}. However if you are just going to draw, a
+  @class{gtk-drawing-area} is a better choice since it has lower overhead.
 
   When handling expose events on a @sym{gtk-layout}, you must draw to
   @code{GTK_LAYOUT (layout)->bin_window}, rather than to
@@ -100,13 +101,18 @@
       Default value: 0
   @end{dictionary}
   @see-slot{gtk-layout-height}
-  @see-slot{gtk-layout-width}")
+  @see-slot{gtk-layout-width}
+  @see-class{gtk-drawing-area}
+  @see-class{gtk-container}
+  @see-class{gtk-scrolled-window}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Property Details
+;;; Property and Accessor Details
 ;;;
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-layout-height ------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "height" 'gtk-layout) 't)
@@ -116,35 +122,29 @@
   Default value: 100")
 
 #+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-layout-height atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-layout-height 'function)
+ "@version{2014-8-20}
+  Accessor of the slot @slot[gtk-layout]{height} of the @class{gtk-layout}
+  class.")
+
+;;; --- gtk-layout-width -------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "width" 'gtk-layout) 't)
  "The @code{\"width\"} property of type @code{:uint} (Read / Write) @br{}
   The width of the layout. @br{}
   Allowed values: <= @code{G_MAXINT} @br{}
   Default value: 100")
 
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors
-;;;
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-layout-height atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-layout-height 'function)
- "@version{2013-3-10}
-  @begin{short}
-    Accessor of the slot @code{\"height\"} of the @class{gtk-layout} class.
-  @end{short}")
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-layout-width atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-layout-width 'function)
- "@version{2013-3-10}
-  @begin{short}
-    Accessor of the slot @code{\"width\"} of the @class{gtk-layout} class.
-  @end{short}")
+ "@version{2014-8-20}
+  Accessor of the slot @slot[gtk-layout]{width} of the @class{gtk-layout}
+  class.")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -156,12 +156,6 @@
                        gtk-layout-child-x
                        "x" "gint" t t t)
 
-(define-child-property "GtkLayout"
-                       gtk-layout-child-y
-                       "y" "gint" t t t)
-
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-layout-child-x atdoc:*function-name-alias*)
       "Accessor"
@@ -169,6 +163,12 @@
  "@version{2013-9-10}
   Accessor of the child property @code{\"x\"} of the @class{gtk-layout} class.
   @see-class{gtk-layout}")
+
+;;; ----------------------------------------------------------------------------
+
+(define-child-property "GtkLayout"
+                       gtk-layout-child-y
+                       "y" "gint" t t t)
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-layout-child-y atdoc:*function-name-alias*)
@@ -186,13 +186,16 @@
 
 (defun gtk-layout-new (&optional (hadjustment nil) (vadjustment nil))
  #+cl-cffi-gtk-documentation
- "@version{2013-5-18}
+ "@version{2014-8-20}
   @argument[hadjustment]{horizontal scroll adjustment, or @code{nil}}
   @argument[vadjustment]{vertical scroll adjustment, or @code{nil}}
   @return{A new @class{gtk-layout} container.}
-  Creates a new @class{gtk-layout} container. Unless you have a specific
-  adjustment you would like the layout to use for scrolling, pass @code{nil}
-  for hadjustment and vadjustment."
+  @begin{short}
+    Creates a new @class{gtk-layout} container.
+  @end{short}
+  Unless you have a specific adjustment you would like the layout to use for
+  scrolling, pass @code{nil} for @arg{hadjustment} and @arg{vadjustment}.
+  @see-class{gtk-layout}"
   (make-instance 'gtk-layout
                  :hadjustment hadjustment
                  :vadjustment vadjustment))
@@ -205,13 +208,16 @@
 
 (defcfun ("gtk_layout_put" gtk-layout-put) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-5-18}
+ "@version{2014-8-20}
   @argument[layout]{a @class{gtk-layout} container}
   @argument[child-widget]{child widget}
   @argument[x]{x position of child widget}
   @argument[y]{y position of child widget}
-  Adds @arg{child-widget} to @arg{layout}, at position (@arg{x}, @arg{y}).
-  @arg{layout} becomes the new parent container of @arg{child-widget}."
+  @begin{short}
+    Adds @arg{child-widget} to @arg{layout}, at position (@arg{x}, @arg{y}).
+  @end{short}
+  @arg{layout} becomes the new parent container of @arg{child-widget}.
+  @see-class{gtk-layout}"
   (layout g-object)
   (widget g-object)
   (x :int)
@@ -225,12 +231,13 @@
 
 (defcfun ("gtk_layout_move" gtk-layout-move) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-5-18}
+ "@version{2014-8-20}
   @argument[layout]{a @class{gtk-layout} container}
   @argument[child-widget]{a current child of @arg{layout}}
   @argument[x]{x position to move to}
   @argument[y]{y position to move to}
-  @short{Moves a current child of @arg{layout} to a new position.}"
+  Moves a current child of @arg{layout} to a new position.
+  @see-class{gtk-layout}"
   (layout g-object)
   (widget g-object)
   (x :int)
@@ -246,11 +253,12 @@
 
 (defun gtk-layout-set-size (layout width height)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-18}
+ "@version{2014-8-20}
   @argument[layout]{a @class{gtk-layout} container}
   @argument[width]{width of entire scrollable area}
   @argument[height]{height of entire scrollable area}
-  @short{Sets the size of the scrollable area of the @arg{layout}.}"
+  Sets the size of the scrollable area of the @arg{layout}.
+  @see-class{gtk-layout}"
   (setf (gtk-layout-width layout) width
         (gtk-layout-height layout) height))
 
@@ -264,15 +272,18 @@
 
 (defun gtk-layout-get-size (layout)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-18}
+ "@version{2014-8-20}
   @argument[layout]{a @class{gtk-layout} container}
   @begin{return}
     @code{width} -- the width set on @arg{layout}, or @code{nil} @br{}
     @code{height} -- the height set on @arg{layout}, or @code{nil} @br{}
   @end{return}
-  Gets the size that has been set on the @arg{layout}, and that determines the
-  total extents of the @arg{layout}'s scrollbar area. See the function
-  @fun{gtk-layout-set-size}.
+  @begin{short}
+    Gets the size that has been set on the @arg{layout}, and that determines
+    the total extents of the @arg{layout}'s scrollbar area.
+  @end{short}
+  See the function @fun{gtk-layout-set-size}.
+  @see-class{gtk-layout}
   @see-function{gtk-layout-set-size}"
   (values (gtk-layout-width layout)
           (gtk-layout-height layout)))
@@ -378,14 +389,15 @@
 (defcfun ("gtk_layout_get_bin_window" gtk-layout-get-bin-window)
     (g-object gdk-window)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-18}
+ "@version{2014-8-20}
   @argument[layout]{a @class{gtk-layout} container}
   @return{A @class{gdk-window} object.}
   @begin{short}
     Retrieve the bin window of the @arg{layout} used for drawing operations.
   @end{short}
 
-  Since 2.14"
+  Since 2.14
+  @see-class{gtk-layout}"
   (layout (g-object gtk-layout)))
 
 (export 'gtk-layout-get-bin-window)

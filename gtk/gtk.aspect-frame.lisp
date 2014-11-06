@@ -4,12 +4,13 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.10 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -66,8 +67,6 @@
     gtk-aspect-frame-yalign
     "yalign" "gfloat" t t)))
 
-;;; --- gtk-aspect-frame -------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-aspect-frame 'type)
  "@version{2013-5-17}
@@ -86,82 +85,78 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "obey-child"
-                                               'gtk-aspect-frame) 't)
- "The @code{\"obey-child\"} property of type @code{:boolean} (Read / Write)@br{}
-  Force aspect ratio to match that of the frame's child.@br{}
-  Default value: @em{true}")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "ratio" 'gtk-aspect-frame) 't)
- "The @code{\"ratio\"} property of type @code{:float} (Read / Write)@br{}
-  Aspect ratio if @code{\"obey-child\"} is @code{nil}. @br{}
-  Allowed values: [0.0001, 10000.0] @br{}
-  Default value: 1.0")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "xalign" 'gtk-aspect-frame) 't)
- "The @code{\"xalign\"} property of type @code{:float} (Read / Write)@br{}
-  X alignment of the child.@br{}
-  Allowed values: [0.0, 1.0] @br{}
-  Default value: 0.5")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "yalign" 'gtk-aspect-frame) 't)
- "The @code{\"yalign\"} property of type @code{:float} (Read / Write)@br{}
-  Y alignment of the child. @br{}
-  Allowed values: [0.0, 1.0] @br{}
-  Default value: 0.5")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
+;;; Property and Accessor Details
 ;;;
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- gtk-aspect-frame-obey-child --------------------------------------------
 
 #+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "obey-child"
+                                               'gtk-aspect-frame) 't)
+ "The @code{\"obey-child\"} property of type @code{:boolean}
+  (Read / Write) @br{}
+  Force aspect ratio to match that of the frame's child. @br{}
+  Default value: @em{true}")
+
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-aspect-frame-obey-child atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-aspect-frame-obey-child 'function)
- "@version{2013-5-17}
-  Accessor of the slot @code{\"obey-child\"} of the @class{gtk-aspect-frame}
-  class.")
+ "@version{2014-9-7}
+  Accessor of the slot @slot[gtk-aspect-frame]{obey-child} of the
+  @class{gtk-aspect-frame} class.")
 
 ;;; --- gtk-aspect-frame-ratio -------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "ratio" 'gtk-aspect-frame) 't)
+ "The @code{\"ratio\"} property of type @code{:float} (Read / Write) @br{}
+  Aspect ratio if @code{\"obey-child\"} is @code{nil}. @br{}
+  Allowed values: [0.0001, 10000.0] @br{}
+  Default value: 1.0")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-aspect-frame-ratio atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-aspect-frame-ratio 'function)
- "@version{2013-5-17}
-  Accessor of the slot @code{\"ratio\"} of the @class{gtk-aspect-frame} class.")
+ "@version{2014-9-7}
+  Accessor of the slot @slot[gtk-aspect-frame]{ratio} of the
+  @class{gtk-aspect-frame} class.")
 
 ;;; --- gtk-aspect-frame-xalign ------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "xalign" 'gtk-aspect-frame) 't)
+ "The @code{\"xalign\"} property of type @code{:float} (Read / Write) @br{}
+  X alignment of the child. @br{}
+  Allowed values: [0.0, 1.0] @br{}
+  Default value: 0.5")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-aspect-frame-xalign atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-aspect-frame-xalign 'function)
- "@version{2013-5-17}
-  Accessor of the slot @code{\"xalign\"} of the @class{gtk-aspect-frame}
-  class.")
+ "@version{2014-9-7}
+  Accessor of the slot @slot[gtk-aspect-frame]{xalign} of the
+  @class{gtk-aspect-frame} class.")
 
 ;;; --- gtk-aspect-frame-yalign ------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "yalign" 'gtk-aspect-frame) 't)
+ "The @code{\"yalign\"} property of type @code{:float} (Read / Write) @br{}
+  Y alignment of the child. @br{}
+  Allowed values: [0.0, 1.0] @br{}
+  Default value: 0.5")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-aspect-frame-yalign atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-aspect-frame-yalign 'function)
- "@version{2013-5-17}
-  Accessor of the slot @code{\"yalign\"} of the @class{gtk-aspect-frame}
-  class.")
+ "@version{2014-9-7}
+  Accessor of the slot @slot[gtk-aspect-frame]{yalign} of the
+  @class{gtk-aspect-frame} class.")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_aspect_frame_new ()
@@ -171,7 +166,7 @@
 
 (defun gtk-aspect-frame-new (label xalign yalign ratio obey-child)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-17}
+ "@version{2014-9-7}
   @argument[label]{label text}
   @argument[xalign]{horizontal alignment of the child within the allocation of
     the @class{gtk-aspect-frame}. This ranges from 0.0 (left aligned) to 1.0
@@ -183,7 +178,8 @@
   @argument[obey-child]{If @em{true}, @arg{ratio} is ignored, and the aspect
     ratio is taken from the requistion of the child}
   @return{The new @class{gtk-aspect-frame} container.}
-  Create a new @class{gtk-aspect-frame} container."
+  Create a new @class{gtk-aspect-frame} container.
+  @see-class{gtk-aspect-frame}"
   (make-instance 'gtk-aspect-frame
                  :label label
                  :xalign xalign
@@ -201,7 +197,7 @@
 
 (defun gtk-aspect-frame-set (aspect-frame xalign yalign ratio obey-child)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-17}
+ "@version{2014-9-7}
   @argument[aspect-frame]{a @class{gtk-aspect-frame} container}
   @argument[xalign]{horizontal alignment of the child within the allocation of
     the @class{gtk-aspect-frame} container. This ranges from 0.0 (left aligned)
@@ -212,7 +208,8 @@
   @argument[ratio]{the desired aspect ratio}
   @argument[obey-child]{If @em{true}, @arg{ratio} is ignored, and the aspect
     ratio is taken from the requistion of the child}
-  Set parameters for an existing @class{gtk-aspect-frame} container."
+  Set parameters for an existing @class{gtk-aspect-frame} container.
+  @see-class{gtk-aspect-frame}"
   (setf (gtk-aspect-frame-xalign aspect-frame) xalign
         (gtk-aspect-frame-yalign aspect-frame) yalign
         (gtk-aspect-frame-ratio aspect-frame) ratio

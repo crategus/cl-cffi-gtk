@@ -412,7 +412,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-expander-style atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-expander-style atdoc:*external-symbols*)
- "@version{2013-4-18}
+ "@version{2014-9-7}
   @begin{short}
     Used to specify the style of the expanders drawn by a @class{gtk-tree-view}
     widget.

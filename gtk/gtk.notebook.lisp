@@ -5,12 +5,12 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GDK library.
+;;; Version 3.10 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -159,30 +159,28 @@
     gtk-notebook-tab-pos
     "tab-pos" "GtkPositionType" t t)))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-notebook 'type)
- "@version{2013-5-18}
+ "@version{2014-8-20}
   @begin{short}
     The @sym{gtk-notebook} container is a @class{gtk-container} whose children
     are pages that can be switched between using tab labels along one edge.
   @end{short}
 
   There are many configuration options for @sym{gtk-notebook}. Among other
-  things, you can choose on which edge the tabs appear (see the function
-  @fun{gtk-notebook-set-tab-pos}), whether, if there are too many tabs to fit
-  the notebook should be made bigger or scrolling arrows added (see the function
-  @fun{gtk-notebook-set-scrollable}), and whether there will be a popup menu
-  allowing the users to switch pages (see the functions
-  @fun{gtk-notebook-popup-enable} and @fun{gtk-notebook-popup-disable}).
+  things, you can choose on which edge the tabs appear, see the function
+  @fun{gtk-notebook-tab-pos}, whether, if there are too many tabs to fit
+  the notebook should be made bigger or scrolling arrows added, see the
+  function @fun{gtk-notebook-scrollable}, and whether there will be a popup
+  menu allowing the users to switch pages, see the functions
+  @fun{gtk-notebook-popup-enable} and @fun{gtk-notebook-popup-disable}.
 
   @subheading{GtkNotebook as GtkBuildable}
-    The @sym{gtk-notebook} implementation of the @class{gtk-buildable} interface
-    supports placing children into tabs by specifying \"tab\" as the \"type\"
-    attribute of a <child> element. Note that the content of the tab must be
-    created before the tab can be filled. A tab child can be specified without
-    specifying a <child> type attribute.
+    The @sym{gtk-notebook} implementation of the @class{gtk-buildable}
+    interface supports placing children into tabs by specifying \"tab\" as the
+    \"type\" attribute of a <child> element. Note that the content of the tab
+    must be created before the tab can be filled. A tab child can be specified
+    without specifying a <child> type attribute.
 
     To add a child widget in the notebooks action area, specify \"action-start\"
     or \"action-end\" as the \"type\" attribute of the <child> element.
@@ -204,100 +202,101 @@
     @end{pre}
   @begin[Child Property Details]{dictionary}
     @subheading{The \"detachable\" child property}
-      @code{\"detachable\"} of type @code{:boolean} (Read / Write)@br{}
+      @code{\"detachable\"} of type @code{:boolean} (Read / Write) @br{}
       Whether the tab is detachable. @br{}
       Default value: @code{nil}
 
     @subheading{The \"menu-label\" child property}
-      @code{\"menu-label\"} of type @code{:string} (Read / Write)@br{}
+      @code{\"menu-label\"} of type @code{:string} (Read / Write) @br{}
       The string displayed in the child's menu entry. @br{}
       Default value: @code{nil}
 
     @subheading{The \"position\" child property}
-      @code{\"position\"} of type @code{:int} (Read / Write)@br{}
+      @code{\"position\"} of type @code{:int} (Read / Write) @br{}
       The index of the child in the parent. @br{}
-      Allowed values: >= @code{G_MAXULONG}@br{}
+      Allowed values: >= @code{G_MAXULONG} @br{}
       Default value: 0
 
     @subheading{The \"reorderable\" child property}
-      @code{\"reorderable\"} of type @code{:boolean} (Read / Write)@br{}
+      @code{\"reorderable\"} of type @code{:boolean} (Read / Write) @br{}
       Whether the tab is reorderable by user action. @br{}
       Default value: @code{nil}
 
     @subheading{The \"tab-expand\" child property}
-      @code{\"tab-expand\"} of type @code{:boolean} (Read / Write)@br{}
+      @code{\"tab-expand\"} of type @code{:boolean} (Read / Write) @br{}
       Whether to expand the child's tab. @br{}
       Default value: @code{nil}
 
     @subheading{The \"tab-fill\" child property}
-      @code{\"tab-fill\"} of type @code{:boolean} (Read / Write)@br{}
+      @code{\"tab-fill\"} of type @code{:boolean} (Read / Write) @br{}
       Whether the child's tab should fill the allocated area. @br{}
       Default value: @em{true}
 
     @subheading{The \"tab-label\" child property}
-      @code{\"tab-label\"} of type @code{:string} (Read / Write)@br{}
+      @code{\"tab-label\"} of type @code{:string} (Read / Write) @br{}
       The string displayed on the child's tab label. @br{}
       Default value: @code{nil}
   @end{dictionary}
   @begin[Style Property Details]{dictionary}
     @subheading{The \"arrow-spacing\" style property}
-      @code{\"arrow-spacing\"} of type @code{:int} (Read)@br{}
+      @code{\"arrow-spacing\"} of type @code{:int} (Read) @br{}
       The @code{\"arrow-spacing\"} property defines the spacing between the
       scroll arrows and the tabs. @br{}
       Allowed values: >= 0 @br{}
-      Default value: 0@br{}
+      Default value: 0 @br{}
       Since 2.10
 
     @subheading{The \"has-backward-stepper\" style property}
-      @code{\"has-backward-stepper\"} of type @code{:boolean} (Read)@br{}
+      @code{\"has-backward-stepper\"} of type @code{:boolean} (Read) @br{}
       The @code{\"has-backward-stepper\"} property determines whether the
       standard backward arrow button is displayed. @br{}
-      Default value: @em{true}@br{}
+      Default value: @em{true} @br{}
       Since 2.4
 
     @subheading{The \"has-forward-stepper\" style property}
-      @code{\"has-forward-stepper\"} of type @code{:boolean} (Read)@br{}
+      @code{\"has-forward-stepper\"} of type @code{:boolean} (Read) @br{}
       The @code{\"has-forward-stepper\"} property determines whether the
       standard forward arrow button is displayed. @br{}
-      Default value: @em{true}@br{}
+      Default value: @em{true} @br{}
       Since 2.4
 
     @subheading{The \"has-secondary-backward-stepper\" style property}
       @code{\"has-secondary-backward-stepper\"} of type @code{:boolean}
-      (Read)@br{}
+      (Read) @br{}
       The @code{\"has-secondary-backward-stepper\"} property determines whether
-      a second backward arrow button is displayed on the opposite end of the tab
-      area. @br{}
-      Default value: @code{nil}@br{}
+      a second backward arrow button is displayed on the opposite end of the
+      tab area. @br{}
+      Default value: @code{nil} @br{}
       Since 2.4
 
     @subheading{The \"has-secondary-forward-stepper\" style property}
       @code{\"has-secondary-forward-stepper\"} of type @code{:boolean}
-      (Read)@br{}
-      The @code{\"has-secondary-forward-stepper\"} property determines whether a
-      second forward arrow button is displayed on the opposite end of the tab
+      (Read) @br{}
+      The @code{\"has-secondary-forward-stepper\"} property determines whether
+      a second forward arrow button is displayed on the opposite end of the tab
       area. @br{}
-      Default value: @code{nil}@br{}
+      Default value: @code{nil} @br{}
       Since 2.4
 
     @subheading{The \"initial-gap\" style property}
-      @code{\"initial-gap\"} of type @code{:int} (Read)@br{}
+      @code{\"initial-gap\"} of type @code{:int} (Read) @br{}
       The @code{\"initial-gap\"} property defines the minimum size for the
       initial gap between the first tab. @br{}
-      Allowed values: >= 0@br{}
-      Default value: 0@br{}
+      Allowed values: >= 0 @br{}
+      Default value: 0 @br{}
       Since 3.2
 
     @subheading{The \"tab-curvature\" style property}
-      @code{\"tab-curvature\"} of type @code{:int} (Read)@br{}
+      @code{\"tab-curvature\"} of type @code{:int} (Read) @br{}
       The @code{\"tab-curvature\"} property defines size of tab curvature. @br{}
-      Allowed values: >= 0@br{}
-      Default value: 1@br{}
+      Allowed values: >= 0 @br{}
+      Default value: 1 @br{}
       Since 2.10
 
     @subheading{The \"tab-overlap\" style property}
-      @code{\"tab-overlap\"} of type @code{:int} (Read)@br{}
-      The @code{\"tab-overlap\"} property defines size of tab overlap area.@br{}
+      @code{\"tab-overlap\"} of type @code{:int} (Read) @br{}
+      The @code{\"tab-overlap\"} property defines size of tab overlap
+      area. @br{}
       Default value: 2 @br{}
       Since 2.10
   @end{dictionary}
@@ -314,8 +313,8 @@
       on the root window.
       A handler for this signal can create a window containing a notebook where
       the tab will be attached. It is also responsible for moving/resizing the
-      window and adding the necessary properties to the notebook
-      (e. g. the \"group\").
+      window and adding the necessary properties to the notebook, e. g. the
+      \"group\".
       @begin[code]{table}
         @entry[notebook]{The @sym{gtk-notebook} emitting the signal.}
         @entry[page]{The tab of notebook that is being detached.}
@@ -338,8 +337,8 @@
       @begin{pre}
  lambda (notebook child page-num)   : Run Last
       @end{pre}
-      The \"page-added\" signal is emitted in the notebook right after a page is
-      added to the notebook.
+      The \"page-added\" signal is emitted in the notebook right after a page
+      is added to the notebook.
       @begin[code]{table}
         @entry[notebook]{The @sym{gtk-notebook}.}
         @entry[child]{The child @class{gtk-widget} affected.}
@@ -402,144 +401,210 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Property Details
+;;; Property and Accessor Details
 ;;;
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-notebook-enable-popup ----------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "enable-popup" 'gtk-notebook) 't)
  "The @code{\"enable-popup\"} property of type @code{:boolean}
-  (Read / Write)@br{}
+  (Read / Write) @br{}
   If @em{true}, pressing the right mouse button on the notebook pops up a menu
   that you can use to go to a page. @br{}
   Default value: @code{nil}")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "group-name" 'gtk-notebook) 't)
- "The @code{\"group-name\"} property of type @code{:string}
-  (Read / Write)@br{}
-  Group name for tab drag and drop. @br{}
-  Default value: @code{nil}@br{}
-  Since 2.24")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "page" 'gtk-notebook) 't)
- "The @code{\"page\"} property of type @code{:int} (Read / Write)@br{}
-  The index of the current page. @br{}
-  Allowed values: >= @code{G_MAXULONG}@br{}
-  Default value: -1")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "scrollable" 'gtk-notebook) 't)
- "The @code{\"scrollable\"} property of type @code{:boolean} (Read / Write)@br{}
-  If @em{true}, scroll arrows are added if there are too many tabs to fit. @br{}
-  Default value: @code{nil}")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "show-border" 'gtk-notebook) 't)
- "The @code{\"show-border\"} property of type @code{:boolean}
-  (Read / Write)@br{}
-  Whether the border should be shown. @br{}
-  Default value: @em{true}")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "show-tabs" 'gtk-notebook) 't)
- "The @code{\"show-tabs\"} property of type @code{:boolean} (Read / Write)@br{}
-  Whether tabs should be shown. @br{}
-  Default value: @em{true}")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "tab-pos" 'gtk-notebook) 't)
- "The @code{\"tab-pos\"} property of type @symbol{gtk-position-type}
-  (Read / Write)@br{}
-  Which side of the notebook holds the tabs. @br{}
-  Default value: @code{:top}")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-notebook-enable-popup atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-notebook-enable-popup 'function)
- "@version{2013-3-17}
-  Accessor of the slot @code{\"enable-popup\"} of the @class{gtk-notebook}
-  class.")
+ "@version{2014-8-20}
+  Accessor of the slot @slot[gtk-notebook]{enable-popup} of the
+  @class{gtk-notebook} class.
+  @see-class{gtk-notebook}
+  @see-function{gtk-notebook-popup-enable}
+  @see-function{gtk-notebook-popup-disable}")
 
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-notebook-group-name ------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "group-name" 'gtk-notebook) 't)
+ "The @code{\"group-name\"} property of type @code{:string}
+  (Read / Write) @br{}
+  Group name for tab drag and drop. @br{}
+  Default value: @code{nil} @br{}
+  Since 2.24")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-notebook-group-name atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-notebook-group-name 'function)
- "@version{2013-3-17}
-  Accessor of the slot @code{\"group-name\"} of the @class{gtk-notebook}
-  class.")
+ "@version{2014-8-20}
+  @argument[object]{a @class{gtk-notebook} container}
+  @argument[group-name]{the name of the notebook group, or @code{nil} to unset
+    it}
+  @syntax[]{(gtk-notebook-group-name object) => group-name}
+  @syntax[]{(setf (gtk-notebook-group-name object) group-name)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-notebook]{group-name} of the
+    @class{gtk-notebook} class.
+  @end{short}
 
-;;; ----------------------------------------------------------------------------
+  The generic function @sym{gtk-notebook-group-name} gets the current group
+  name for the notebook.
+
+  The generic function @sym{(setf gtk-notebook-group-name)} sets a group name
+  for notebook.
+
+  Notebooks with the same name will be able to exchange tabs via drag and
+  drop. A notebook with a @code{nil} group name will not be able to exchange
+  tabs with any other notebook.
+
+  Since 2.24
+  @see-class{gtk-notebook}")
+
+;;; --- gtk-notebook-page ------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "page" 'gtk-notebook) 't)
+ "The @code{\"page\"} property of type @code{:int} (Read / Write) @br{}
+  The index of the current page. @br{}
+  Allowed values: >= @code{G_MAXULONG} @br{}
+  Default value: -1")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-notebook-page atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-notebook-page 'function)
- "@version{2013-3-17}
-  Accessor of the slot @code{\"page\"} of the @class{gtk-notebook}
-  class.")
+ "@version{2014-8-20}
+  Accessor of the slot @slot[gtk-notebook]{page} of the @class{gtk-notebook}
+  class.
+  @see-class{gtk-notebook}")
 
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-notebook-scrollable ------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "scrollable" 'gtk-notebook) 't)
+ "The @code{\"scrollable\"} property of type @code{:boolean}
+  (Read / Write) @br{}
+  If @em{true}, scroll arrows are added if there are too many tabs to fit. @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-notebook-scrollable atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-notebook-scrollable 'function)
- "@version{2013-3-17}
-  Accessor of the slot @code{\"scrollable\"} of the @class{gtk-notebook}
-  class.")
+ "@version{2014-8-20}
+  @argument[object]{a @class{gtk-notebook} container}
+  @argument[scrollable]{@em{true} if scroll arrows should be added}
+  @syntax[]{(gtk-notebook-scrollable object) => scrollable}
+  @syntax[]{(setf (gtk-notebook-scrollable object) scrollable)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-notebook]{scrollable} of the
+    @class{gtk-notebook} class.
+  @end{short}
 
-;;; ----------------------------------------------------------------------------
+  The generic function @sym{gtk-notebook-scrollable} returns whether the tab
+  label area has arrows for scrolling.
+
+  The generic function @sym{(setf gtk-notebook-scrollable)} sets whether the
+  tab label area will have arrows for scrolling if there are too many tabs to
+  fit in the area.
+  @see-class{gtk-notebook}")
+
+;;; --- gtk-notebook-show-border -----------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "show-border" 'gtk-notebook) 't)
+ "The @code{\"show-border\"} property of type @code{:boolean}
+  (Read / Write) @br{}
+  Whether the border should be shown. @br{}
+  Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-notebook-show-border atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-notebook-show-border 'function)
- "@version{2013-3-17}
-  Accessor of the slot @code{\"show-border\"} of the @class{gtk-notebook}
-  class.")
+ "@version{2014-8-20}
+  @argument[notebook]{a @class{gtk-notebook} container}
+  @argument[show-border]{@em{true} if a bevel should be drawn around the
+    notebook}
+  @begin{short}
+    Accessor of the slot @slot[gtk-notebook]{show-border} of the
+    @class{gtk-notebook} class.
+  @end{short}
 
-;;; ----------------------------------------------------------------------------
+  @return{@em{True} if the bevel is drawn.}
+
+  The generic function @sym{gtk-notebook-show-border} returns whether a bevel
+  will be drawn around the notebook pages.
+
+  The generic function @sym{(setf gtk-notebook-show-border)} sets whether a
+  bevel will be drawn around the notebook pages. This only has a visual effect
+  when the tabs are not shown. See the generic function
+  @fun{gtk-notebook-show-tabs}.
+  @see-class{gtk-notebook}
+  @see-function{gtk-notebook-show-tabs}")
+
+;;; --- gtk-notebook-show-tabs -------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "show-tabs" 'gtk-notebook) 't)
+ "The @code{\"show-tabs\"} property of type @code{:boolean} (Read / Write) @br{}
+  Whether tabs should be shown. @br{}
+  Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-notebook-show-tabs atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-notebook-show-tabs 'function)
- "@version{2013-3-17}
-  Accessor of the slot @code{\"show-tabs\"} of the @class{gtk-notebook}
-  class.")
+ "@version{2014-8-20}
+  @argument[object]{a @class{gtk-notebook} container}
+  @argument[show-tabs]{@em{true} if the tabs should be shown}
+  @syntax[]{(gtk-notebook-show-tabs object) => show-tabs}
+  @syntax[]{(setf (gtk-notebook-show-tabs object) show-tabs)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-notebook]{show-tabs} of the
+    @class{gtk-notebook} class.
+  @end{short}
 
-;;; ----------------------------------------------------------------------------
+  The generic function @sym{gtk-notebook-show-tabs} returns whether the tabs of
+  the notebook are shown.
+
+  The generic function @sym{(setf gtk-notebook-show-tabs)} sets whether to show
+  the tabs for the notebook or not.
+  @see-class{gtk-notebook}")
+
+;;; --- gtk-notebook-tab-pos ---------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "tab-pos" 'gtk-notebook) 't)
+ "The @code{\"tab-pos\"} property of type @symbol{gtk-position-type}
+  (Read / Write) @br{}
+  Which side of the notebook holds the tabs. @br{}
+  Default value: @code{:top}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-notebook-tab-pos atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-notebook-tab-pos 'function)
- "@version{2013-3-17}
-  Accessor of the slot @code{\"tab-pos\"} of the @class{gtk-notebook}
-  class.")
+ "@version{2014-8-20}
+  @argument[object]{a @class{gtk-notebook} container}
+  @argument[pos]{the edge to draw the tabs at}
+  @syntax[]{(gtk-notebook-tab-pos object) => pos}
+  @syntax[]{(setf (gtk-notebook-tab-pos object) pos)}
+  @begin{short}
+    Accessor of the slot @code{\"tab-pos\"} of the @class{gtk-notebook}
+    class.
+  @end{short}
+
+  The generic function @sym{gtk-notebook-tab-pos} gets the edge at which the
+  tabs for switching pages in the notebook are drawn.
+
+  The generic function @sym{(setf gtk-notebook-tab-pos)} sets the edge at which
+  the tabs for switching pages in the notebook are drawn.
+  @see-class{gtk-notebook}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -551,32 +616,6 @@
                        gtk-notebook-child-detachable
                        "detachable" "gboolean" t t t)
 
-(define-child-property "GtkNotebook"
-                       gtk-notebook-child-menu-label
-                       "menu-label" "gchararray" t t t)
-
-(define-child-property "GtkNotebook"
-                       gtk-notebook-child-position
-                       "position" "gint" t t t)
-
-(define-child-property "GtkNotebook"
-                       gtk-notebook-child-reorderable
-                       "reorderable" "gboolean" t t t)
-
-(define-child-property "GtkNotebook"
-                       gtk-notebook-child-tab-expand
-                       "tab-expand" "gboolean" t t t)
-
-(define-child-property "GtkNotebook"
-                       gtk-notebook-child-tab-fill
-                       "tab-fill" "gboolean" t t t)
-
-(define-child-property "GtkNotebook"
-                       gtk-notebook-child-tab-label
-                       "tab-label" "gchararray" t t t)
-
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-notebook-child-detachable atdoc:*function-name-alias*)
       "Accessor"
@@ -585,6 +624,12 @@
   Accessor of the child property @code{\"detachable\"} of the
   @class{gtk-notebook} class.
   @see-class{gtk-notebook}")
+
+;;; ----------------------------------------------------------------------------
+
+(define-child-property "GtkNotebook"
+                       gtk-notebook-child-menu-label
+                       "menu-label" "gchararray" t t t)
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-notebook-child-menu-label atdoc:*function-name-alias*)
@@ -595,6 +640,12 @@
   @class{gtk-notebook} class.
   @see-class{gtk-notebook}")
 
+;;; ----------------------------------------------------------------------------
+
+(define-child-property "GtkNotebook"
+                       gtk-notebook-child-position
+                       "position" "gint" t t t)
+
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-notebook-child-position atdoc:*function-name-alias*)
       "Accessor"
@@ -603,6 +654,12 @@
   Accessor of the child property @code{\"position\"} of the
   @class{gtk-notebook} class.
   @see-class{gtk-notebook}")
+
+;;; ----------------------------------------------------------------------------
+
+(define-child-property "GtkNotebook"
+                       gtk-notebook-child-reorderable
+                       "reorderable" "gboolean" t t t)
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-notebook-child-reorderable atdoc:*function-name-alias*)
@@ -613,6 +670,12 @@
   @class{gtk-notebook} class.
   @see-class{gtk-notebook}")
 
+;;; ----------------------------------------------------------------------------
+
+(define-child-property "GtkNotebook"
+                       gtk-notebook-child-tab-expand
+                       "tab-expand" "gboolean" t t t)
+
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-notebook-child-tab-expand atdoc:*function-name-alias*)
       "Accessor"
@@ -622,6 +685,12 @@
   @class{gtk-notebook} class.
   @see-class{gtk-notebook}")
 
+;;; ----------------------------------------------------------------------------
+
+(define-child-property "GtkNotebook"
+                       gtk-notebook-child-tab-fill
+                       "tab-fill" "gboolean" t t t)
+
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-notebook-child-tab-fill atdoc:*function-name-alias*)
       "Accessor"
@@ -630,6 +699,12 @@
   Accessor of the child property @code{\"tab-fill\"} of the
   @class{gtk-notebook} class.
   @see-class{gtk-notebook}")
+
+;;; ----------------------------------------------------------------------------
+
+(define-child-property "GtkNotebook"
+                       gtk-notebook-child-tab-label
+                       "tab-label" "gchararray" t t t)
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-notebook-child-tab-label atdoc:*function-name-alias*)
@@ -648,9 +723,10 @@
 
 (defun gtk-notebook-new ()
  #+cl-cffi-gtk-documentation
- "@version{2013-5-18}
+ "@version{2014-8-20}
   @return{The newly created @class{gtk-notebook} container.}
-  Creates a new @class{gtk-notebook} container with no pages."
+  Creates a new @class{gtk-notebook} container with no pages.
+  @see-class{gtk-notebook}"
   (make-instance 'gtk-notebook))
 
 (export 'gtk-notebook-new)
@@ -661,16 +737,17 @@
 
 (defcfun ("gtk_notebook_append_page" gtk-notebook-append-page) :int
  #+cl-cffi-gtk-documentation
- "@version{2013-5-18}
+ "@version{2014-8-20}
   @argument[notebook]{a @class{gtk-notebook} container}
   @argument[child]{the @class{gtk-widget} to use as the contents of the page}
   @argument[tab-label]{the @class{gtk-widget} to be used as the label for the
     page, or @code{nil} to use the default label, \"page N\"}
   @begin{return}
-    The index (starting from 0) of the appended page in the notebook, or -1
+    The index starting from 0 of the appended page in the notebook, or -1
     if function fails.
   @end{return}
-  Appends a page to notebook."
+  Appends a page to notebook.
+  @see-class{gtk-notebook}"
   (notebook g-object)
   (child g-object)
   (tab-label g-object))
@@ -683,7 +760,7 @@
 
 (defcfun ("gtk_notebook_append_page_menu" gtk-notebook-append-page-menu) :int
  #+cl-cffi-gtk-documentation
- "@version{2013-5-18}
+ "@version{2014-8-20}
   @argument[notebook]{a @class{gtk-notebook} container}
   @argument[child]{the @class{gtk-widget} to use as the contents of the page}
   @argument[tab-label]{the @class{gtk-widget} to be used as the label for the
@@ -695,11 +772,13 @@
     @class{gtk-label}, @arg{menu-label} must be specified if the page-switch
     menu is to be used}
   @begin{return}
-    The index (starting from 0) of the appended page in the notebook, or -1
+    The index starting from 0 of the appended page in the notebook, or -1
     if function fails.
   @end{return}
   Appends a page to notebook, specifying the widget to use as the label in the
-  popup menu."
+  popup menu.
+  @see-class{gtk-notebook}
+  @see-function{gtk-notebook-append-page}"
   (notebook g-object)
   (child g-object)
   (tab-label g-object)
@@ -903,76 +982,6 @@
   (position :int))
 
 (export 'gtk-notebook-reorder-child)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_notebook_set_tab_pos ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-notebook-set-tab-pos))
-
-(defun gtk-notebook-set-tab-pos (notebook pos)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-20}
-  @argument[notebook]{a @class{gtk-notebook} container}
-  @argument[pos]{the edge to draw the tabs at}
-  Sets the edge at which the tabs for switching pages in the notebook are
-  drawn."
-  (setf (gtk-notebook-tab-pos notebook) pos))
-
-(export 'gtk-notebook-set-tab-pos)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_notebook_set_show_tabs ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-notebook-set-show-tabs))
-
-(defun gtk-notebook-set-show-tabs (notebook show-tabs)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-20}
-  @argument[notebook]{a @class{gtk-notebook} container}
-  @argument[show-tabs]{@em{true} if the tabs should be shown}
-  Sets whether to show the tabs for the notebook or not."
-  (setf (gtk-notebook-show-tabs notebook) show-tabs))
-
-(export 'gtk-notebook-set-show-tabs)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_notebook_set_show_border ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-notebook-set-show-border))
-
-(defun gtk-notebook-set-show-border (notebook show-border)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-20}
-  @argument[notebook]{a @class{gtk-notebook} container}
-  @argument[show-border]{@em{true} if a bevel should be drawn around the
-    notebook}
-  Sets whether a bevel will be drawn around the notebook pages. This only has
-  a visual effect when the tabs are not shown. See the function
-  @fun{gtk-notebook-set-show-tabs}.
-  @see-function{gtk-notebook-set-show-tabs}"
-  (setf (gtk-notebook-show-border notebook) show-border))
-
-(export 'gtk-notebook-set-show-border)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_notebook_set_scrollable ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-notebook-set-scrollable))
-
-(defun gtk-notebook-set-scrollable (notebook scrollable)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-20}
-  @argument[notebook]{a @class{gtk-notebook} container}
-  @argument[scrollable]{@em{true} if scroll arrows should be added}
-  Sets whether the tab label area will have arrows for scrolling if there are
-  too many tabs to fit in the area."
-  (setf (gtk-notebook-scrollable notebook) scrollable))
-
-(export 'gtk-notebook-set-scrollable)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_notebook_popup_enable ()
@@ -1270,60 +1279,6 @@
 (export 'gtk-notebook-get-menu-label-text)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_notebook_get_scrollable ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-notebook-get-scrollable))
-
-(defun gtk-notebook-get-scrollable (notebook)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-20}
-  @argument[notebook]{a @class{gtk-notebook} container}
-  @return{@em{True} if arrows for scrolling are present.}
-  Returns whether the tab label area has arrows for scrolling. See the function
-  @fun{gtk-notebook-set-scrollable}.
-  @see-function{gtk-notebook-set-scrollable}"
-  (gtk-notebook-scrollable notebook))
-
-(export 'gtk-notebook-get-scrollable)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_notebook_get_show_border ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-notebook-get-show-border))
-
-(defun gtk-notebook-get-show-border (notebook)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-20}
-  @argument[notebook]{a @class{gtk-notebook} container}
-  @return{@em{True} if the bevel is drawn.}
-  Returns whether a bevel will be drawn around the notebook pages. See the
-  function @fun{gtk-notebook-set-show-border}.
-  @see-function{gtk-notebook-set-show-border}"
-  (gtk-notebook-show-border notebook))
-
-(export 'gtk-notebook-get-show-border)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_notebook_get_show_tabs ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-notebook-get-show-tabs))
-
-(defun gtk-notebook-get-show-tabs (notebook)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-20}
-  @argument[notebook]{a @class{gtk-notebook} container}
-  @return{@em{True} if the tabs are shown.}
-  Returns whether the tabs of the @arg{notebook} are shown. See the function
-  @fun{gtk-notebook-set-show-tabs}.
-  @see-function{gtk-notebook-set-show-tabs}"
-  (gtk-notebook-show-tabs notebook))
-
-(export 'gtk-notebook-get-show-tabs)
-
-;;; ----------------------------------------------------------------------------
 ;;; gtk_notebook_get_tab_label_text ()
 ;;; ----------------------------------------------------------------------------
 
@@ -1342,23 +1297,6 @@
   (child (g-object gtk-widget)))
 
 (export 'gtk-notebook-get-tab-label-text)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_notebook_get_tab_pos ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-notebook-get-tab-pos))
-
-(defun gtk-notebook-get-tab-pos (notebook)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-20}
-  @argument[notebook]{a @class{gtk-notebook} container}
-  @return{The edge at which the tabs are drawn.}
-  Gets the edge at which the tabs for switching pages in the notebook are
-  drawn."
-  (gtk-notebook-tab-pos notebook))
-
-(export 'gtk-notebook-get-tab-pos)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_notebook_get_tab_reorderable ()
@@ -1460,47 +1398,6 @@
   (page-num :int))
 
 (export 'gtk-notebook-set-current-page)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_notebook_set_group_name ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-notebook-set-group-name))
-
-(defun gtk-notebook-set-group-name (notebook group-name)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-20}
-  @argument[notebook]{a @class{gtk-notebook} container}
-  @argument[group-name]{the name of the notebook group, or @code{nil} to unset
-    it}
-  @short{Sets a group name for notebook.}
-
-  Notebooks with the same name will be able to exchange tabs via drag and
-  drop. A notebook with a @code{nil} group name will not be able to exchange
-  tabs with any other notebook.
-
-  Since 2.24"
-  (setf (gtk-notebook-group-name notebook) group-name))
-
-(export 'gtk-notebook-set-group-name)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_notebook_get_group_name ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-notebook-get-group-name))
-
-(defun gtk-notebook-get-group-name (notebook)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-20}
-  @argument[notebook]{a @class{gtk-notebook} container}
-  @return{The group name, or @code{nil} if none is set.}
-  @short{Gets the current group name for @arg{notebook}.}
-
-  Since 2.24"
-  (gtk-notebook-group-name notebook))
-
-(export 'gtk-notebook-get-group-name)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_notebook_set_action_widget ()

@@ -2890,10 +2890,13 @@
 (defcfun ("gtk_window_reshow_with_initial_size"
           gtk-window-reshow-with-initial-size) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-3-29}
+ "@version{2014-10-18}
   @argument[window]{a @class{gtk-window} widget}
-  Hides @arg{window}, then reshows it, resetting the default size and position
-  of the window. Used by GUI builders only.
+  @begin{short}
+    Hides @arg{window}, then reshows it, resetting the default size and position
+    of the window.
+  @end{short}
+  Used by GUI builders only.
   @begin[Warning]{dictionary}
     The function @sym{gtk-window-reshow-with-initial-size} has been deprecated
     since version 3.10 and should not be used in newly-written code.

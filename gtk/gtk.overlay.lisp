@@ -57,18 +57,19 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-overlay 'type)
- "@version{2013-5-20}
+ "@version{2014-8-20}
   @begin{short}
     @sym{gtk-overlay} is a container which contains a single main child, on top
-    of which it can place overlay widgets. The position of each overlay widget
-    is determined by its @code{\"halign\"} and @code{\"valign\"} properties.
-    E. g. a widget with both alignments set to @code{:start} will be placed at
-    the top left corner of the main widget, whereas an overlay with
-    @code{\"halign\"} set to @code{:center} and @code{\"valign\"} set to
-    @code{:end} will be placed a the bottom edge of the main widget,
-    horizontally centered. The position can be adjusted by setting the margin
-    properties of the child to non-zero values.
+    of which it can place overlay widgets.
   @end{short}
+  The position of each overlay widget is determined by its
+  @slot[gtk-widget]{halign} and @slot[gtk-widget]{valign} properties. E. g. a
+  widget with both alignments set to @code{:start} will be placed at the top
+  left corner of the main widget, whereas an overlay with
+  @slot[gtk-widget]{halign} set to @code{:center} and @slot[gtk-widget]{valign}
+  set to @code{:end} will be placed a the bottom edge of the main widget,
+  horizontally centered. The position can be adjusted by setting the margin
+  properties of the child to non-zero values.
 
   More complicated placement of overlays is possible by connecting to the
   \"get-child-position\" signal.
@@ -82,23 +83,25 @@
       @begin{pre}
  lambda (overlay widget allocation)   : Run Last
       @end{pre}
-      The \"get-child-position\" signal is emitted to determine the position and
-      size of any overlay child widgets. A handler for this signal should fill
-      allocation with the desired position and size for widget, relative to the
-      'main' child of overlay.
-      The default handler for this signal uses the widget's @code{\"halign\"}
-      and @code{\"valign\"} properties to determine the position and gives the
-      widget its natural size (except that an alignment of @code{:fill} will
-      cause the overlay to be full-width/height). If the main child is a
-      @class{gtk-scrolled-window}, the overlays are placed relative to its
-      contents.
+      The \"get-child-position\" signal is emitted to determine the position
+      and size of any overlay child widgets. A handler for this signal should
+      fill allocation with the desired position and size for widget, relative
+      to the 'main' child of overlay.
+      The default handler for this signal uses the widget's
+      @slot[gtk-widget]{halign} and @slot[gtk-widget]{valign} properties to
+      determine the position and gives the widget its natural size (except that
+      an alignment of @code{:fill} will cause the overlay to be
+      full-width/height). If the main child is a @class{gtk-scrolled-window},
+      the overlays are placed relative to its contents.
       @begin[code]{table}
         @entry[overlay]{The @class{gtk-overlay}.}
         @entry[widget]{The child widget to position.}
         @entry[allocation]{Return location for the allocation.}
         @entry[Return]{@em{True} if the allocation has been filled.}
       @end{table}
-  @end{dictionary}")
+  @end{dictionary}
+  @see-class{gtk-buildable}
+  @see-class{gtk-scrolled-window}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_overlay_new ()

@@ -44,12 +44,27 @@ GTK+ Widgets and Objects
     gtk.alignment.lisp               - GtkAlignment                - GTK+ 3.10
     gtk.button-box.lisp              - GtkButtonBox, ...           - GTK+ 3.10
     gtk.paned.lisp                   - GtkPaned, ...               - GTK+ 3.10
-    gtk.layout.lisp                  - GtkLayout                   - GTK+ 3.6.4*
-    gtk.notebook.lisp                - GtkNotebook                 - GTK+ 3.6.4*
-    gtk.expander.lisp                - GtkExpander                 - GTK+ 3.6.4*
-    gtk.orientable.lisp              - GtkOrientable               - GTK+ 3.8.9*
-    gtk.aspect-frame.lisp            - GtkAspectFrame              - GTK+ 3.6.4*
-    gtk.fixed.lisp                   - GtkFixed                    - GTK+ 3.6.4*
+    gtk.layout.lisp                  - GtkLayout                   - GTK+ 3.10
+    gtk.notebook.lisp                - GtkNotebook                 - GTK+ 3.10
+    gtk.expander.lisp                - GtkExpander                 - GTK+ 3.10
+    gtk.orientable.lisp              - GtkOrientable               - GTK+ 3.10
+    gtk.aspect-frame.lisp            - GtkAspectFrame              - GTK+ 3.10
+    gtk.fixed.lisp                   - GtkFixed                    - GTK+ 3.10
+
+  Display Widgets
+
+    gtk.label.lisp                   - GtkLabel                    - GTK+ 3.10
+    gtk.image.lisp                   - GtkImage                    - GTK+ 3.10
+    gtk.spinner.lisp                 - GtkSpinner                  - GTK+ 3.10
+    gtk.info-bar.lisp                - GtkInfoBar                  - GTK+ 3.10
+    gtk.progress-bar.lisp            - GtkProgressBar              - GTK+ 3.10
+
+    gtk.level-bar.lisp               - GtkLevelBar                 - GTK+ 3.8.9
+
+    gtk.statusbar.lisp               - GtkStatusbar                - GTK+ 3.8.9
+    gtk.accel-label.lisp             - GtkAccelLabel               - GTK+ 3.8.9    
+    gtk.status-icon.lisp             - GtkStatusIcon               - GTK+ 3.8.9&
+    
 
 
 
@@ -80,18 +95,6 @@ Theming in GTK+
     gtk.icon-theme.lisp              - GtkIconTheme                - GTK+ 3.6.4*
     gtk.stock-images.lisp            - Themeable Stock Images      - GTK+ 3.6.4*
     gtk.numerable-icon.lisp          - GtkNumerableIcon            - GTK+ 3.8.8*
-
-  Display Widgets
-
-    gtk.accel-label.lisp             - GtkAccelLabel               - GTK+ 3.8.9
-    gtk.image.lisp                   - GtkImage                    - GTK+ 3.8.9
-    gtk.label.lisp                   - GtkLabel                    - GTK+ 3.8.9
-    gtk.progress-bar.lisp            - GtkProgressBar              - GTK+ 3.8.9
-    gtk.statusbar.lisp               - GtkStatusbar                - GTK+ 3.8.9
-    gtk.level-bar.lisp               - GtkLevelBar                 - GTK+ 3.8.9
-    gtk.info-bar.lisp                - GtkInfoBar                  - GTK+ 3.8.9
-    gtk.status-icon.lisp             - GtkStatusIcon               - GTK+ 3.8.9&
-    gtk.spinner.lisp                 - GtkSpinner                  - GTK+ 3.8.9
 
   Buttons and Toggles
 
