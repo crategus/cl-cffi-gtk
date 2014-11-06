@@ -170,11 +170,11 @@
 
 (defun pango-pixels (d)
  #+cl-cffi-gtk-documentation
- "@version{2013-8-27}
+ "@version{2014-10-27}
   @argument[d]{a dimension in Pango units}
   @return{Rounded dimension in device units.}
   Converts a dimension to device units by rounding.
-  @see-variable{+pango-scale}"
+  @see-variable{+pango-scale+}"
   (ash (+ d 512) -10)) ; #define PANGO_PIXELS(d) (((int)(d) + 512) >> 10)
 
 (export 'pango-pixels)
