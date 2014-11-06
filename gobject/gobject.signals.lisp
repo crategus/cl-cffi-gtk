@@ -1766,7 +1766,7 @@
   (signal-id :uint)
   (detail g-quark))
 
-(export 'gtk-signal-stop-emission)
+(export 'g-signal-stop-emission)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_signal_stop_emission_by_name ()
