@@ -10,7 +10,7 @@
 ;;; is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -747,7 +747,7 @@
 (defcfun ("g_param_spec_get_redirect_target" g-param-spec-get-redirect-target)
     (:pointer (:struct g-param-spec))
  #+cl-cffi-gtk-documentation
- "@version{2013-3-2}
+ "@version{2014-11-13}
   @argument[pspec]{a @symbol{g-param-spec} structure}
   @begin{return}
     paramspec to which requests on this paramspec should be redirected, or
@@ -760,10 +760,13 @@
   Redirect is used typically for providing a new implementation of a property in
   a derived type while preserving all the properties from the parent type.
   Redirection is established by creating a property of type
-  @code{GParamSpecOverride}. See @fun{g-object-class-override-property} for an
-  example of the use of this capability.
+  @code{GParamSpecOverride}. See the function
+  @fun{g-object-class-override-property} for an example of the use of this
+  capability.
 
-  Since 2.4"
+  Since 2.4
+  @see-symbol{g-param-spec}
+  @see-function{g-object-class-override-property}"
   (pspec (:pointer (:struct g-param-spec))))
 
 (export 'g-param-spec-get-redirect-target)
