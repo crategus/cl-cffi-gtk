@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.8.9 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.10 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -368,8 +368,6 @@
     class.
   @end{short}
 
-  @return{A @class{gtk-widget} or @code{nil} in case there is no image.}
-
   The generic function @sym{gtk-button-image} gets the widget that is currently
   set as the image of button. This may have been explicitly set by the generic
   function @sym{(setf gtk-button-image)} or constructed by the function
@@ -504,12 +502,14 @@
   (Read / Write / Construct) @br{}
   If set, the label is used to pick a stock item instead of being
   displayed. @br{}
+  @b{Warning:} The property @code{\"use-stock\"} has been deprecated since
+  version 3.10 and should not be used in newly-written code. @br{}
   Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-button-use-stock atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-button-use-stock 'function)
- "@version{2014-4-12}
+ "@version{2014-11-7}
   @argument[object]{a @class{gtk-button} widget}
   @argument[use-stock]{@em{true} if the button should use a stock item}
   @syntax[]{(gtk-button-use-stock object) => use-stock}
@@ -524,6 +524,10 @@
 
   If @em{true}, the label set on the button is used as a stock ID to
   select the stock item for the button.
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-button-use-stock} has been deprecated since version
+     3.10 and should not be used in newly-written code.
+  @end{dictionary}
   @see-class{gtk-button}")
 
 ;;; --- gtk-button-use-underline -----------------------------------------------
@@ -678,6 +682,36 @@
 (export 'gtk-button-new-with-mnemonic)
 
 ;;; ----------------------------------------------------------------------------
+;;; gtk_button_new_from_icon_name ()
+;;;
+;;; GtkWidget *
+;;; gtk_button_new_from_icon_name (const gchar *icon_name,
+;;;                                GtkIconSize size);
+;;;
+;;; Creates a new button containing an icon from the current icon theme.
+;;;
+;;; If the icon name isn't known, a "broken image" icon will be displayed
+;;; instead. If the current icon theme is changed, the icon will be updated
+;;; appropriately.
+;;;
+;;; This function is a convenience wrapper around gtk_button_new() and
+;;; gtk_button_set_image().
+;;;
+;;; Parameters
+;;;
+;;; icon_name
+;;;     an icon name
+;;;
+;;; size
+;;;     an icon size.
+;;;
+;;; Returns
+;;;     a new GtkButton displaying the themed icon
+;;;
+;;; Since 3.10
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_button_new_from_stock ()
 ;;; ----------------------------------------------------------------------------
 
@@ -685,7 +719,7 @@
 
 (defun gtk-button-new-from-stock (stock-id)
  #+cl-cffi-gtk-documentation
- "@version{2013-12-9}
+ "@version{2014-11-7}
   @argument[stock-id]{the name of the stock item}
   @return{A new @class{gtk-button} widget.}
   @begin{short}
@@ -695,6 +729,11 @@
 
   If @arg{stock-id} is unknown, then it will be treated as a mnemonic label
   as for the function @fun{gtk-button-new-with-mnemonic}.
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-button-new-from-stock} has been deprecated since
+    version 3.10 and should not be used in newly-written code. Use the function
+    @fun{gtk-button-new-with-label} instead.
+  @end{dictionary}
   @see-class{gtk-button}
   @see-function{gtk-button-new}
   @see-function{gtk-button-new-with-label}

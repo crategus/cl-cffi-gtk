@@ -261,6 +261,10 @@
    (shadow-type
     gtk-entry-shadow-type
     "shadow-type" "GtkShadowType" t t)
+   #+gtk-3-10
+   (tabs
+    gtk-entry-tabs
+    "tabs" "PangoTabArray" t t)
    (text
     gtk-entry-text
     "text" "gchararray" t t)
@@ -576,12 +580,15 @@
   @see-slot{gtk-entry-secondary-icon-tooltip-text}
   @see-slot{gtk-entry-selection-bound}
   @see-slot{gtk-entry-shadow-type}
+  @see-slot{gtk-entry-tabs}
   @see-slot{gtk-entry-text}
   @see-slot{gtk-entry-text-length}
   @see-slot{gtk-entry-truncate-multiline}
   @see-slot{gtk-entry-visibility}
   @see-slot{gtk-entry-width-chars}
-  @see-slot{gtk-entry-xalign}")
+  @see-slot{gtk-entry-xalign}
+  @see-class{gtk-text-view}
+  @see-class{gtk-entry-completion}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -1288,6 +1295,9 @@
                                                'gtk-entry) 't)
  "The @code{\"primary-icon-stock\"} property of type @code{:string}
   (Read / Write) @br{}
+  @b{Warning:} The @code{\"primary-icon-stock\"} property has been deprecated
+  since version 3.10 and should not be used in newly-written code. Use the
+  @code{\"primary-icon-name\"} property instead. @br{}
   The stock ID to use for the primary icon for the entry. @br{}
   Default value: @code{nil} @br{}
   Since 2.16")
@@ -1585,6 +1595,9 @@
                                                'gtk-entry) 't)
  "The @code{\"secondary-icon-stock\"} property of type @code{:string}
   (Read / Write) @br{}
+  @b{Warning:} The @code{\"secondary-icon-stock\"} property has been deprecated
+  since version 3.10 and should not be used in newly-written code. Use the
+  @code{\"secondary-icon-name\"} property instead. @br{}
   The stock ID to use for the secondary icon for the entry. @br{}
   Default value: @code{nil} @br{}
   Since 2.16")
@@ -1707,6 +1720,35 @@
  "@version{2014-6-8}
   Accessor of the slot @slot[gtk-entry]{shadow-type} of the @class{gtk-entry}
   class.
+  @see-class{gtk-entry}")
+
+;;; --- gtk-entry-tabs ---------------------------------------------------------
+
+#+(and gtk-3-10 cl-cffi-gtk-documentation)
+(setf (documentation (atdoc:get-slot-from-name "tabs" 'gtk-entry) 't)
+ "The @code{\"tabs\"} property of type @class{pango-tab-array}
+  (Read / Write) @br{}
+  A list of tabstop locations to apply to the text of the entry. @br{}")
+
+#+(and gtk-3-10 cl-cffi-gtk-documentation)
+(setf (gethash 'gtk-entry-tabs atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-entry-tabs 'function)
+ "@version{2014-11-9}
+  @argument[object]{a @class{gtk-entry} widget}
+  @argument[tabs]{a @class{pango-tab-array}}
+  @syntax[]{(gtk-entry-tabs object) => tabs}
+  @syntax[]{(setf (gtk-entry-tabs object) tabs)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-entry]{tabs} of the @class{gtk-entry} class.
+  @end{short}
+
+  The generic function @sym{gtk-entry-tabs} gets the tabstops that were set on
+  the entry using the generic function @sym{(setf gtk-entry-tabs)}, if any.
+
+  The tabstops in the array are applied to the entry text.
+
+  Since 3.10
   @see-class{gtk-entry}")
 
 ;;; --- gtk-entry-text ---------------------------------------------------------
@@ -1991,7 +2033,7 @@
 
 (defun gtk-entry-set-alignment (entry xalign)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-28}
+ "@version{2014-11-9}
   @argument[entry]{a @class{gtk-entry} widget}
   @argument[xalign]{the horizontal alignment, from 0 (left) to 1 (right),
     reversed for RTL layouts}
@@ -2001,7 +2043,8 @@
   This controls the horizontal positioning of the contents when the displayed
   text is shorter than the width of the @arg{entry}.
 
-  Since 2.4"
+  Since 2.4
+  @see-class{gtk-entry}"
   (setf (gtk-entry-xalign entry) xalign))
 
 (export 'gtk-entry-set-alignment)
@@ -2014,14 +2057,15 @@
 
 (defun gtk-entry-get-alignment (entry)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-28}
+ "@version{2014-9-11}
   @argument[entry]{a @class{gtk-entry} widget}
   @return{The alignment.}
   @begin{short}
     Gets the value set by the fucntion @fun{gtk-entry-set-alignment}.
   @end{short}
 
-  Since 2.4"
+  Since 2.4
+  @see-class{gtk-entry}"
   (gtk-entry-xalign entry))
 
 (export 'gtk-entry-get-alignment)
@@ -2032,7 +2076,7 @@
 
 (defcfun ("gtk_entry_get_layout" gtk-entry-get-layout) (g-object pango-layout)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-28}
+ "@version{2014-11-9}
   @argument[entry]{a @class{gtk-entry} widget}
   @return{The @class{pango-layout} object for this @arg{entry} widget.}
   @begin{short}
@@ -2047,6 +2091,7 @@
   functions @fun{gtk-entry-layout-index-to-text-index} and
   @fun{gtk-entry-text-index-to-layout-index} are needed to convert byte indices
   in the layout to byte indices in the entry contents.
+  @see-class{gtk-entry}
   @see-function{gtk-entry-get-layout-offsets}
   @see-function{gtk-entry-layout-index-to-text-index}
   @see-function{gtk-entry-text-index-to-layout-index}"
@@ -2112,7 +2157,7 @@
 (defcfun ("gtk_entry_layout_index_to_text_index"
           gtk-entry-layout-index-to-text-index) :int
  #+cl-cffi-gtk-documentation
- "@version{2013-4-28}
+ "@version{2014-11-9}
   @argument[entry]{a @class{gtk-entry} widget}
   @argument[layout-index]{byte index into the entry layout text}
   @return{Byte index into the entry contents.}
@@ -2122,6 +2167,7 @@
     @class{pango-layout} (returned by the function @fun{gtk-entry-get-layout},
     with text retrieved via the function @fun{pango-layout-get-text}).
   @end{short}
+  @see-class{gtk-entry}
   @see-function{gtk-entry-text}
   @see-function{gtk-entry-get-layout}
   @see-function{pango-layout-get-text}"
@@ -2137,7 +2183,7 @@
 (defcfun ("gtk_entry_text_index_to_layout_index"
           gtk-entry-text-index-to-layout-index) :int
  #+cl-cffi-gtk-documentation
- "@version{2013-4-28}
+ "@version{2014-11-9}
   @argument[entry]{a @class{gtk-entry} widget}
   @argument[text-index]{byte index into the @arg{entry} contents}
   @return{Byte index into the @arg{entry} layout text.}
@@ -2146,6 +2192,7 @@
     by the function @fun{gtk-entry-get-layout}) to a position in the @arg{entry}
     contents (returned by the function @fun{gtk-entry-text}).
   @end{short}
+  @see-class{gtk-entry}
   @see-function{gtk-entry-get-layout}
   @see-function{gtk-entry-text}"
   (entry (g-object entry))
@@ -2160,7 +2207,7 @@
 (defcfun ("gtk_entry_set_cursor_hadjustment" gtk-entry-set-cursor-hadjustment)
     :void
  #+cl-cffi-gtk-documentation
- "@version{2013-4-28}
+ "@version{2014-9-11}
   @argument[entry]{a @class{gtk-entry} widget}
   @argument[adjustment]{an adjustment which should be adjusted when the cursor
     is moved, or @code{nil}}
@@ -2176,6 +2223,7 @@
   system as the @arg{entry}.
 
   Since 2.12
+  @see-class{gtk-entry}
   @see-function{gtk-scrolled-window-get-hadjustment}"
   (entry (g-object gtk-entry))
   (adjustment (g-object gtk-adjustment)))
@@ -2189,7 +2237,7 @@
 (defcfun ("gtk_entry_get_cursor_hadjustment" gtk-entry-get-cursor-hadjustment)
     (g-object gtk-adjustment)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-28}
+ "@version{2014-11-9}
   @argument[entry]{a @class{gtk-entry} widget}
   @return{The horizontal cursor adjustment, or @code{nil} if none has been set.}
   @begin{short}
@@ -2198,6 +2246,7 @@
   See the function @fun{gtk-entry-set-cursor-hadjustment}.
 
   Since 2.12
+  @see-class{gtk-entry}
   @see-function{gtk-entry-set-cursor-hadjustment}"
   (entry (g-object gtk-entry)))
 
@@ -2218,7 +2267,7 @@
   a block bounces back and forth. Each call to the function
   @sym{gtk-entry-progress-pulse} causes the block to move by a little bit. The
   amount of movement per pulse is determined by the function
-  @fun{gtk-entry-set-progress-pulse-step}.
+  @fun{gtk-entry-progress-pulse-step}.
 
   Since 2.16
   @see-class{gtk-entry}
@@ -2295,7 +2344,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-entry-icon-position atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-entry-icon-position atdoc:*external-symbols*)
- "@version{2013-4-28}
+ "@version{2014-11-9}
   @begin{short}
     Specifies the side of the entry at which an icon is placed.
   @end{short}
@@ -2312,7 +2361,8 @@
     @entry[:secondary]{At the end of the entry (depending on the text
       direction).}
   @end{table}
-  Since 2.16")
+  Since 2.16
+  @see-class{gtk-entry}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_entry_set_icon_from_pixbuf ()
@@ -2350,7 +2400,7 @@
  "@version{2013-8-31}
   @argument[entry]{a @class{gtk-entry} widget}
   @argument[icon-pos]{icon position of type @symbol{gtk-entry-icon-position}}
-  @arg{stock-id]{the name of the stock item, or @code{nil}}
+  @argument[stock-id]{the name of the stock item, or @code{nil}}
   @begin{short}
     Sets the icon shown in the @arg{entry} at the specified position from a
     stock image.
@@ -2358,10 +2408,16 @@
 
   If @arg{stock-id} is @code{nil}, no icon will be shown in the specified
   position.
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-entry-set-icon-from-stock} has been deprecated since
+    version 3.10 and should not be used in newly-written code. Use the function
+    @fun{gtk-entry-set-icon-from-icon-name} instead.
+  @end{dictionary}  
 
   Since 2.16
   @see-class{gtk-entry}
-  @see-function{gtk-entry-get-icon-stock}"
+  @see-function{gtk-entry-get-icon-stock}
+  @see-function{gtk-entry-set-icon-from-stock}"
   (cond ((eq icon-pos :primary)
          (setf (gtk-entry-primary-icon-stock entry) stock-id))
         ((eq icon-pos :secondary)
@@ -2494,7 +2550,7 @@
 
 (defcfun ("gtk_entry_get_icon_stock" gtk-entry-get-icon-stock) :string
  #+cl-cffi-gtk-documentation
- "@version{2013-8-26}
+ "@version{2014-11-9}
   @argument[entry]{a @class{gtk-entry} widget}
   @argument[icon-pos]{icon position of type @symbol{gtk-entry-icon-position}}
   @begin{return}
@@ -2506,10 +2562,16 @@
     or if the icon was set by some other method, e. g., by pixbuf, icon name or
     gicon.
   @end{short}
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-entry-get-icon-stock} has been deprecated since
+    version 3.10 and should not be used in newly-written code. Use the function
+    @fun{gtk-entry-get-icon-name} instead.
+  @end{dictionary}
 
   Since 2.16
   @see-class{gtk-entry}
-  @see-symbol{gtk-entry-icon-position}"
+  @see-symbol{gtk-entry-icon-position}
+  @see-function{gtk-entry-get-icon-name}"
   (entry (g-object gtk-entry))
   (icon-pos gtk-entry-icon-position))
 
@@ -2669,7 +2731,7 @@
 
 (defcfun ("gtk_entry_get_icon_at_pos" gtk-entry-get-icon-at-pos) :int
  #+cl-cffi-gtk-documentation
- "@version{2013-4-28}
+ "@version{2014-11-9}
   @argument[entry]{a @class{gtk-entry} widget}
   @argument[x]{the x coordinate of the position to find}
   @argument[y]{the y coordinate of the position to find}
@@ -2681,7 +2743,8 @@
   If x, y does not lie inside an icon, -1 is returned. This function is intended
   for use in a \"query-tooltip\" signal handler.
 
-  Since 2.16"
+  Since 2.16
+  @see-class{gtk-entry}"
   (entry (g-object gtk-entry))
   (x :int)
   (y :int))
@@ -2887,7 +2950,7 @@
 
 (defun gtk-entry-get-icon-area (entry icon-pos)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-28}
+ "@version{2014-11-9}
   @argument[entry]{a @class{gtk-entry} widget}
   @argument[icon-pos]{icon position}
   @return{@code{icon-area} -- return the icon's area}
@@ -2903,6 +2966,7 @@
   See also the function @fun{gtk-entry-get-text-area}.
 
   Since 3.0
+  @see-class{gtk-entry}
   @see-function{gtk-entry-get-text-area}"
   (let ((icon-area (make-gdk-rectangle)))
     (%gtk-entry-get-icon-area entry icon-pos icon-area)
@@ -3003,7 +3067,7 @@
 #+(and gtk-3-6 cl-cffi-gtk-documentation)
 (setf (gethash 'gtk-input-hints atdoc:*symbol-name-alias*) "Flags"
       (gethash 'gtk-input-hints atdoc:*external-symbols*)
- "@version{2013-8-20}
+ "@version{2014-11-9}
   @begin{short}
     Describes hints that might be taken into account by input methods or
     applications. Note that input methods may already tailor their behaviour
@@ -3044,6 +3108,7 @@
       calculator that already has all the keys.}
   @end{table}
   Since 3.6
+  @see-class{gtk-entry}
   @see-symbol{gtk-input-purpose}")
 
 ;;; --- End of file gtk.entry.lisp ---------------------------------------------

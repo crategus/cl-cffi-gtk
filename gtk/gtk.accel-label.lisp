@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.8.9 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.10 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -199,10 +199,11 @@
 
 (defun gtk-accel-label-new (string)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-22}
+ "@version{2014-11-7}
   @argument[string]{the label string, must be @code{nil}}
   @return{A new @class{gtk-accel-label} widget.}
-  Creates a new @class{gtk-accel-label} widget."
+  Creates a new @class{gtk-accel-label} widget.
+  @see-class{gtk-accel-label}"
   (make-instance 'gtk-accel-label
                  :label string))
 
@@ -215,14 +216,15 @@
 (defcfun ("gtk_accel_label_get_accel_width" gtk-accel-label-get-accel-width)
     :int
   #+cl-cffi-gtk-documentation
- "@version{2013-4-22}
+ "@version{2014-11-7}
   @argument[label]{a @class{gtk-accel-label} widget}
   @return{The width needed to display the accelerator key(s).}
   @begin{short}
     Returns the width needed to display the accelerator key(s).
   @end{short}
   This is used by menus to align all of the @class{gtk-menu-item} widgets, and
-  should not be needed by applications."
+  should not be needed by applications.
+  @see-class{gtk-accel-label}"
   (label (g-object gtk-accel-label)))
 
 (export 'gtk-accel-label-get-accel-width)
@@ -265,14 +267,15 @@
 (defcfun ("gtk_accel_label_refetch" gtk-accel-label-refetch)
     :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-4-22}
+ "@version{2014-11-7}
   @argument[label]{a @class{gtk-accel-label} widget}
   @return{Always returns @code{nil}.}
   @begin{short}
     Recreates the string representing the accelerator keys.
   @end{short}
   This should not be needed since the string is automatically updated whenever
-  accelerators are added or removed from the associated widget."
+  accelerators are added or removed from the associated widget.
+  @see-class{gtk-accel-label}"
   (label (g-object gtk-accel-label)))
 
 (export 'gtk-accel-label-refetch)

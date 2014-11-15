@@ -643,7 +643,7 @@
       @about-function{gtk-progress-bar-pulse}
     @end{subsection}
     @begin[GtkLevelBar]{subsection}
-      A bar that can used as a level indicator.
+      A bar that can be used as a level indicator.
 
       @about-symbol{GTK_LEVEL_BAR_OFFSET_LOW}
       @about-symbol{GTK_LEVEL_BAR_OFFSET_HIGH}
@@ -651,16 +651,6 @@
       @about-symbol{gtk-level-bar-mode}
       @about-function{gtk-level-bar-new}
       @about-function{gtk-level-bar-new-for-interval}
-      @about-function{gtk-level-bar-set-mode}
-      @about-function{gtk-level-bar-get-mode}
-      @about-function{gtk-level-bar-set-value}
-      @about-function{gtk-level-bar-get-value}
-      @about-function{gtk-level-bar-set-min-value}
-      @about-function{gtk-level-bar-get-min-value}
-      @about-function{gtk-level-bar-set-max-value}
-      @about-function{gtk-level-bar-get-max-value}
-      @about-function{gtk-level-bar-set-inverted}
-      @about-function{gtk-level-bar-get-inverted}
       @about-function{gtk-level-bar-add-offset-value}
       @about-function{gtk-level-bar-remove-offset-value}
       @about-function{gtk-level-bar-get-offset-value}
@@ -725,6 +715,312 @@
       @about-function{gtk-status-icon-get-x11-window-id}
     @end{subsection}
   @end{section}
+  @begin[Buttons and Toggles]{section}
+    @begin[GtkButton]{subsection}
+      A widget that emits a signal when clicked on.
+
+      @about-class{gtk-button}
+      @about-function{gtk-button-new}
+      @about-function{gtk-button-new-with-label}
+      @about-function{gtk-button-new-with-mnemonic}
+      @about-function{gtk-button-new-from-stock}
+      @about-function{gtk-button-pressed}
+      @about-function{gtk-button-released}
+      @about-function{gtk-button-clicked}
+      @about-function{gtk-button-enter}
+      @about-function{gtk-button-leave}
+      @about-function{gtk-button-set-relief}
+      @about-function{gtk-button-get-relief}
+      @about-function{gtk-button-get-use-stock}
+      @about-function{gtk-button-set-use-stock}
+      @about-function{gtk-button-get-use-underline}
+      @about-function{gtk-button-set-use-underline}
+      @about-function{gtk-button-set-focus-on-click}
+      @about-function{gtk-button-get-focus-on-click}
+      @about-function{gtk-button-set-alignment}
+      @about-function{gtk-button-get-alignment}
+      @about-function{gtk-button-set-image-position}
+      @about-function{gtk-button-get-image-position}
+      @about-function{gtk-button-get-event-window}
+    @end{subsection}
+    @begin[GtkCheckButton]{subsection}
+      Create widgets with a discrete toggle button.
+
+      @about-class{gtk-check-button}
+      @about-function{gtk-check-button-new}
+      @about-function{gtk-check-button-new-with-label}
+      @about-function{gtk-check-button-new-with-mnemonic}
+    @end{subsection}
+    @begin[GtkRadioButton]{subsection}
+      A choice from multiple check buttons.
+
+      @about-class{gtk-radio-button}
+      @about-function{gtk-radio-button-new}
+      @about-function{gtk-radio-button-new-from-widget}
+      @about-function{gtk-radio-button-new-with-label}
+      @about-function{gtk-radio-button-new-with-label-from-widget}
+      @about-function{gtk-radio-button-new-with-mnemonic}
+      @about-function{gtk-radio-button-new-with-mnemonic-from-widget}
+      @about-function{gtk-radio-button-set-group}
+      @about-function{gtk-radio-button-get-group}
+      @about-function{gtk-radio-button-join-group}
+    @end{subsection}
+    @begin[GtkToggleButton]{subsection}
+      Create buttons which retain their state.
+
+      @about-class{gtk-toggle-button}
+      @about-function{gtk-toggle-button-new}
+      @about-function{gtk-toggle-button-new-with-label}
+      @about-function{gtk-toggle-button-new-with-mnemonic}
+      @about-function{gtk-toggle-button-set-mode}
+      @about-function{gtk-toggle-button-get-mode}
+      @about-function{gtk-toggle-button-toggled}
+      @about-function{gtk-toggle-button-get-inconsistent}
+      @about-function{gtk-toggle-button-set-inconsistent}
+    @end{subsection}
+    @begin[GtkLinkButton]{subsection}
+      Create buttons bound to a URL.
+
+      @about-class{gtk-link-button}
+      @about-function{gtk-link-button-new}
+      @about-function{gtk-link-button-new-with-label}
+      @about-function{gtk-link-button-get-visited}
+      @about-function{gtk-link-button-set-visited}
+    @end{subsection}
+    @begin[GtkMenuButton]{subsection}
+      not implemented
+    @end{subsection}
+    @begin[GtkSwitch]{subsection}
+      A \"light switch\" style toggle.
+
+      @about-class{gtk-switch}
+      @about-function{gtk-switch-new}
+    @end{subsection}
+    @begin[GtkScaleButton]{subsection}
+      A button which pops up a scale.
+
+      @about-class{gtk-scale-button}
+      @about-function{gtk-scale-button-new}
+      @about-function{gtk-scale-button-set-adjustment}
+      @about-function{gtk-scale-button-set-icons}
+      @about-function{gtk-scale-button-set-value}
+      @about-function{gtk-scale-button-get-adjustment}
+      @about-function{gtk-scale-button-get-value}
+      @about-function{gtk-scale-button-get-popup}
+      @about-function{gtk-scale-button-get-plus-button}
+      @about-function{gtk-scale-button-get-minus-button}
+    @end{subsection}
+    @begin[GtkVolumeButton]{subsection}
+      A button which pops up a volume control.
+
+      @about-class{gtk-volume-button}
+      @about-function{gtk-volume-button-new}
+    @end{subsection}
+    @begin[GtkLockButton]{subsection}
+      not implemented
+    @end{subsection}
+  @end{section}
+  @begin[Numeric and Text Data Entry]{section}
+    @begin[GtkEntry]{subsection}
+      A single line text entry field.
+
+      @about-class{gtk-entry}
+      @about-function{gtk-entry-new}
+      @about-function{gtk-entry-new-with-buffer}
+      @about-function{gtk-entry-get-buffer}
+      @about-function{gtk-entry-set-buffer}
+      @about-function{gtk-entry-get-text-area}
+      @about-function{gtk-entry-set-invisible-char}
+      @about-function{gtk-entry-unset-invisible-char}
+      @about-function{gtk-entry-set-max-length}
+      @about-function{gtk-entry-get-activates-default}
+      @about-function{gtk-entry-get-has-frame}
+      @about-function{gtk-entry-get-inner-border}
+      @about-function{gtk-entry-get-width-chars}
+      @about-function{gtk-entry-set-activates-default}
+      @about-function{gtk-entry-set-has-frame}
+      @about-function{gtk-entry-set-inner-border}
+      @about-function{gtk-entry-set-width-chars}
+      @about-function{gtk-entry-get-invisible-char}
+      @about-function{gtk-entry-set-alignment}
+      @about-function{gtk-entry-get-alignment}
+      @about-function{gtk-entry-set-overwrite-mode}
+      @about-function{gtk-entry-get-overwrite-mode}
+      @about-function{gtk-entry-get-layout}
+      @about-function{gtk-entry-get-layout-offsets}
+      @about-function{gtk-entry-layout-index-to-text-index}
+      @about-function{gtk-entry-text-index-to-layout-index}
+      @about-function{gtk-entry-set-attributes}
+      @about-function{gtk-entry-get-attributes}
+      @about-function{gtk-entry-get-max-length}
+      @about-function{gtk-entry-get-visibility}
+      @about-function{gtk-entry-set-completion}
+      @about-function{gtk-entry-get-completion}
+      @about-function{gtk-entry-set-cursor-hadjustment}
+      @about-function{gtk-entry-get-cursor-hadjustment}
+      @about-function{gtk-entry-set-progress-fraction}
+      @about-function{gtk-entry-get-progress-fraction}
+      @about-function{gtk-entry-set-progress-pulse-step}
+      @about-function{gtk-entry-get-progress-pulse-step}
+      @about-function{gtk-entry-progress-pulse}
+      @about-function{gtk-entry-im-context-filter-keypress}
+      @about-function{gtk-entry-reset-im-context}
+      @about-symbol{gtk-entry-icon-position}
+      @about-function{gtk-entry-set-icon-from-pixbuf}
+      @about-function{gtk-entry-set-icon-from-stock}
+      @about-function{gtk-entry-set-icon-from-icon-name}
+      @about-function{gtk-entry-set-icon-from-gicon}
+      @about-function{gtk-entry-get-icon-storage-type}
+      @about-function{gtk-entry-get-icon-pixbuf}
+      @about-function{gtk-entry-get-icon-stock}
+      @about-function{gtk-entry-get-icon-name}
+      @about-function{gtk-entry-get-icon-gicon}
+      @about-function{gtk-entry-set-icon-activatable}
+      @about-function{gtk-entry-get-icon-activatable}
+      @about-function{gtk-entry-set-icon-sensitive}
+      @about-function{gtk-entry-get-icon-sensitive}
+      @about-function{gtk-entry-get-icon-at-pos}
+      @about-function{gtk-entry-set-icon-tooltip-text}
+      @about-function{gtk-entry-get-icon-tooltip-text}
+      @about-function{gtk-entry-set-icon-tooltip-markup}
+      @about-function{gtk-entry-get-icon-tooltip-markup}
+      @about-function{gtk-entry-set-icon-drag-source}
+      @about-function{gtk-entry-get-current-icon-drag-source}
+      @about-function{gtk-entry-get-icon-area}
+      @about-symbol{gtk-input-purpose}
+      @about-function{gtk-entry-set-input-purpose}
+      @about-function{gtk-entry-get-input-purpose}
+      @about-symbol{gtk-input-hints}
+      @about-function{gtk-entry-set-input-hints}
+      @about-function{gtk-entry-get-input-hints}
+    @end{subsection}
+    @begin[GtkEntryBuffer]{subsection}
+      Text buffer for @class{gtk-entry}.
+
+      @about-class{gtk-entry-buffer}
+      @about-function{gtk-entry-buffer-new}
+      @about-function{gtk-entry-buffer-get-text}
+      @about-function{gtk-entry-buffer-set-text}
+      @about-function{gtk-entry-buffer-get-bytes}
+      @about-function{gtk-entry-buffer-get-length}
+      @about-function{gtk-entry-buffer-get-max-length}
+      @about-function{gtk-entry-buffer-set-max-length}
+      @about-function{gtk-entry-buffer-insert-text}
+      @about-function{gtk-entry-buffer-delete-text}
+      @about-function{gtk-entry-buffer-emit-deleted-text}
+      @about-function{gtk-entry-buffer-emit-inserted-text}
+    @end{subsection}
+    @begin[GtkEntryCompletion]{subsection}
+      Completion functionality for GtkEntry.
+
+      @about-class{gtk-entry-completion}
+      @about-function{gtk-entry-completion-new}
+      @about-function{gtk-entry-completion-new-with-area}
+      @about-function{gtk-entry-completion-get-entry}
+      @about-function{gtk-entry-completion-set-match-func}
+      @about-function{gtk-entry-completion-set-minimum-key-length}
+      @about-function{gtk-entry-completion-get-minimum-key-length}
+      @about-function{gtk-entry-completion-compute-prefix}
+      @about-function{gtk-entry-completion-complete}
+      @about-function{gtk-entry-completion-get-completion-prefix}
+      @about-function{gtk-entry-completion-insert-prefix}
+      @about-function{gtk-entry-completion-insert-action-text}
+      @about-function{gtk-entry-completion-insert-action-markup}
+      @about-function{gtk-entry-completion-delete-action}
+      @about-function{gtk-entry-completion-set-text-column}
+      @about-function{gtk-entry-completion-get-text-column}
+      @about-function{gtk-entry-completion-set-inline-completion}
+      @about-function{gtk-entry-completion-get-inline-completion}
+      @about-function{gtk-entry-completion-set-inline-selection}
+      @about-function{gtk-entry-completion-get-inline-selection}
+      @about-function{gtk-entry-completion-set-popup-completion}
+      @about-function{gtk-entry-completion-get-popup-completion}
+      @about-function{gtk-entry-completion-set-popup-set-width}
+      @about-function{gtk-entry-completion-get-popup-set-width}
+      @about-function{gtk-entry-completion-set-popup-single-match}
+      @about-function{gtk-entry-completion-get-popup-single-match}
+    @end{subsection}
+    @begin[GtkScale]{subsection}
+      A slider widget for selecting a value from a range.
+
+      @about-class{gtk-scale}
+      @about-function{gtk-scale-new}
+      @about-function{gtk-scale-new-with-range}
+      @about-function{gtk-scale-set-digits}
+      @about-function{gtk-scale-set-draw-value}
+      @about-function{gtk-scale-set-has-origin}
+      @about-function{gtk-scale-set-value-pos}
+      @about-function{gtk-scale-get-digits}
+      @about-function{gtk-scale-get-draw-value}
+      @about-function{gtk-scale-get-has-origin}
+      @about-function{gtk-scale-get-value-pos}
+      @about-function{gtk-scale-get-layout}
+      @about-function{gtk-scale-get-layout-offsets}
+      @about-function{gtk-scale-add-mark}
+      @about-function{gtk-scale-clear-marks}
+    @end{subsection}
+    @begin[GtkSpinButton]{subsection}
+      Retrieve an integer or floating-point number from the user.
+
+      @about-class{gtk-spin-button}
+      @about-symbol{gtk-spin-button-update-policy}
+      @about-symbol{gtk-spin-type}
+      @about-function{gtk-spin-button-configure}
+      @about-function{gtk-spin-button-new}
+      @about-function{gtk-spin-button-new-with-range}
+      @about-function{gtk-spin-button-set-adjustment}
+      @about-function{gtk-spin-button-get-adjustment}
+      @about-function{gtk-spin-button-set-digits}
+      @about-function{gtk-spin-button-set-increments}
+      @about-function{gtk-spin-button-set-range}
+      @about-function{gtk-spin-button-get-value-as-int}
+      @about-function{gtk-spin-button-set-value}
+      @about-function{gtk-spin-button-set-update-policy}
+      @about-function{gtk-spin-button-set-numeric}
+      @about-function{gtk-spin-button-spin}
+      @about-function{gtk-spin-button-set-wrap}
+      @about-function{gtk-spin-button-set-snap-to-ticks}
+      @about-function{gtk-spin-button-update}
+      @about-function{gtk-spin-button-get-digits}
+      @about-function{gtk-spin-button-get-increments}
+      @about-function{gtk-spin-button-get-numeric}
+      @about-function{gtk-spin-button-get-range}
+      @about-function{gtk-spin-button-get-snap-to-ticks}
+      @about-function{gtk-spin-button-get-update-policy}
+      @about-function{gtk-spin-button-get-value}
+      @about-function{gtk-spin-button-get-wrap}
+      @about-symbol{GTK_INPUT_ERROR}
+    @end{subsection}
+    @begin[GtkSearchEntry]{subsection}
+      An entry which shows a search icon.
+
+      @about-class{gtk-search-entry}
+      @about-function{gtk-search-entry-new}
+    @end{subsection}
+    @begin[GtkSearchBar]{subsection}
+      not implemented
+    @end{subsection}
+    @begin[GtkEditable]{subsection}
+      Interface for text-editing widgets.
+
+      @about-class{gtk-editable}
+      @about-function{gtk-editable-select-region}
+      @about-function{gtk-editable-get-selection-bounds}
+      @about-function{gtk-editable-insert-text}
+      @about-function{gtk-editable-delete-text}
+      @about-function{gtk-editable-get-chars}
+      @about-function{gtk-editable-cut-clipboard}
+      @about-function{gtk-editable-copy-clipboard}
+      @about-function{gtk-editable-paste-clipboard}
+      @about-function{gtk-editable-delete-selection}
+      @about-function{gtk-editable-set-position}
+      @about-function{gtk-editable-get-position}
+      @about-function{gtk-editable-set-editable}
+      @about-function{gtk-editable-get-editable}
+    @end{subsection}
+  @end{section}
+
+
 
 
 
@@ -1518,307 +1814,6 @@
       @about-function{gtk-numerable-icon-set-style-context}
     @end{subsection}
   @end{section}
-  @begin[Buttons and Toggles]{section}
-    @begin[GtkButton]{subsection}
-      A widget that emits a signal when clicked on.
-
-      @about-class{gtk-button}
-      @about-function{gtk-button-new}
-      @about-function{gtk-button-new-with-label}
-      @about-function{gtk-button-new-with-mnemonic}
-      @about-function{gtk-button-new-from-stock}
-      @about-function{gtk-button-pressed}
-      @about-function{gtk-button-released}
-      @about-function{gtk-button-clicked}
-      @about-function{gtk-button-enter}
-      @about-function{gtk-button-leave}
-      @about-function{gtk-button-set-relief}
-      @about-function{gtk-button-get-relief}
-      @about-function{gtk-button-get-use-stock}
-      @about-function{gtk-button-set-use-stock}
-      @about-function{gtk-button-get-use-underline}
-      @about-function{gtk-button-set-use-underline}
-      @about-function{gtk-button-set-focus-on-click}
-      @about-function{gtk-button-get-focus-on-click}
-      @about-function{gtk-button-set-alignment}
-      @about-function{gtk-button-get-alignment}
-      @about-function{gtk-button-set-image-position}
-      @about-function{gtk-button-get-image-position}
-      @about-function{gtk-button-get-event-window}
-    @end{subsection}
-    @begin[GtkCheckButton]{subsection}
-      Create widgets with a discrete toggle button.
-
-      @about-class{gtk-check-button}
-      @about-function{gtk-check-button-new}
-      @about-function{gtk-check-button-new-with-label}
-      @about-function{gtk-check-button-new-with-mnemonic}
-    @end{subsection}
-    @begin[GtkRadioButton]{subsection}
-      A choice from multiple check buttons.
-
-      @about-class{gtk-radio-button}
-      @about-function{gtk-radio-button-new}
-      @about-function{gtk-radio-button-new-from-widget}
-      @about-function{gtk-radio-button-new-with-label}
-      @about-function{gtk-radio-button-new-with-label-from-widget}
-      @about-function{gtk-radio-button-new-with-mnemonic}
-      @about-function{gtk-radio-button-new-with-mnemonic-from-widget}
-      @about-function{gtk-radio-button-set-group}
-      @about-function{gtk-radio-button-get-group}
-      @about-function{gtk-radio-button-join-group}
-    @end{subsection}
-    @begin[GtkToggleButton]{subsection}
-      Create buttons which retain their state.
-
-      @about-class{gtk-toggle-button}
-      @about-function{gtk-toggle-button-new}
-      @about-function{gtk-toggle-button-new-with-label}
-      @about-function{gtk-toggle-button-new-with-mnemonic}
-      @about-function{gtk-toggle-button-set-mode}
-      @about-function{gtk-toggle-button-get-mode}
-      @about-function{gtk-toggle-button-toggled}
-      @about-function{gtk-toggle-button-get-inconsistent}
-      @about-function{gtk-toggle-button-set-inconsistent}
-    @end{subsection}
-    @begin[GtkLinkButton]{subsection}
-      Create buttons bound to a URL.
-
-      @about-class{gtk-link-button}
-      @about-function{gtk-link-button-new}
-      @about-function{gtk-link-button-new-with-label}
-      @about-function{gtk-link-button-get-visited}
-      @about-function{gtk-link-button-set-visited}
-    @end{subsection}
-    @begin[GtkScaleButton]{subsection}
-      A button which pops up a scale.
-
-      @about-class{gtk-scale-button}
-      @about-function{gtk-scale-button-new}
-      @about-function{gtk-scale-button-set-adjustment}
-      @about-function{gtk-scale-button-set-icons}
-      @about-function{gtk-scale-button-set-value}
-      @about-function{gtk-scale-button-get-adjustment}
-      @about-function{gtk-scale-button-get-value}
-      @about-function{gtk-scale-button-get-popup}
-      @about-function{gtk-scale-button-get-plus-button}
-      @about-function{gtk-scale-button-get-minus-button}
-    @end{subsection}
-    @begin[GtkVolumeButton]{subsection}
-      A button which pops up a volume control.
-
-      @about-class{gtk-volume-button}
-      @about-function{gtk-volume-button-new}
-    @end{subsection}
-    @begin[GtkSwitch]{subsection}
-      A \"light switch\" style toggle.
-
-      @about-class{gtk-switch}
-      @about-function{gtk-switch-new}
-    @end{subsection}
-    @begin[GtkLockButton]{subsection}
-      not implemented
-    @end{subsection}
-    @begin[GtkMenuButton]{subsection}
-      not impplented
-    @end{subsection}
-  @end{section}
-  @begin[Numeric and Text Data Entry]{section}
-    @begin[GtkEntry]{subsection}
-      A single line text entry field.
-
-      @about-class{gtk-entry}
-      @about-function{gtk-entry-new}
-      @about-function{gtk-entry-new-with-buffer}
-      @about-function{gtk-entry-get-buffer}
-      @about-function{gtk-entry-set-buffer}
-      @about-function{gtk-entry-get-text-area}
-      @about-function{gtk-entry-set-invisible-char}
-      @about-function{gtk-entry-unset-invisible-char}
-      @about-function{gtk-entry-set-max-length}
-      @about-function{gtk-entry-get-activates-default}
-      @about-function{gtk-entry-get-has-frame}
-      @about-function{gtk-entry-get-inner-border}
-      @about-function{gtk-entry-get-width-chars}
-      @about-function{gtk-entry-set-activates-default}
-      @about-function{gtk-entry-set-has-frame}
-      @about-function{gtk-entry-set-inner-border}
-      @about-function{gtk-entry-set-width-chars}
-      @about-function{gtk-entry-get-invisible-char}
-      @about-function{gtk-entry-set-alignment}
-      @about-function{gtk-entry-get-alignment}
-      @about-function{gtk-entry-set-overwrite-mode}
-      @about-function{gtk-entry-get-overwrite-mode}
-      @about-function{gtk-entry-get-layout}
-      @about-function{gtk-entry-get-layout-offsets}
-      @about-function{gtk-entry-layout-index-to-text-index}
-      @about-function{gtk-entry-text-index-to-layout-index}
-      @about-function{gtk-entry-set-attributes}
-      @about-function{gtk-entry-get-attributes}
-      @about-function{gtk-entry-get-max-length}
-      @about-function{gtk-entry-get-visibility}
-      @about-function{gtk-entry-set-completion}
-      @about-function{gtk-entry-get-completion}
-      @about-function{gtk-entry-set-cursor-hadjustment}
-      @about-function{gtk-entry-get-cursor-hadjustment}
-      @about-function{gtk-entry-set-progress-fraction}
-      @about-function{gtk-entry-get-progress-fraction}
-      @about-function{gtk-entry-set-progress-pulse-step}
-      @about-function{gtk-entry-get-progress-pulse-step}
-      @about-function{gtk-entry-progress-pulse}
-      @about-function{gtk-entry-im-context-filter-keypress}
-      @about-function{gtk-entry-reset-im-context}
-      @about-symbol{gtk-entry-icon-position}
-      @about-function{gtk-entry-set-icon-from-pixbuf}
-      @about-function{gtk-entry-set-icon-from-stock}
-      @about-function{gtk-entry-set-icon-from-icon-name}
-      @about-function{gtk-entry-set-icon-from-gicon}
-      @about-function{gtk-entry-get-icon-storage-type}
-      @about-function{gtk-entry-get-icon-pixbuf}
-      @about-function{gtk-entry-get-icon-stock}
-      @about-function{gtk-entry-get-icon-name}
-      @about-function{gtk-entry-get-icon-gicon}
-      @about-function{gtk-entry-set-icon-activatable}
-      @about-function{gtk-entry-get-icon-activatable}
-      @about-function{gtk-entry-set-icon-sensitive}
-      @about-function{gtk-entry-get-icon-sensitive}
-      @about-function{gtk-entry-get-icon-at-pos}
-      @about-function{gtk-entry-set-icon-tooltip-text}
-      @about-function{gtk-entry-get-icon-tooltip-text}
-      @about-function{gtk-entry-set-icon-tooltip-markup}
-      @about-function{gtk-entry-get-icon-tooltip-markup}
-      @about-function{gtk-entry-set-icon-drag-source}
-      @about-function{gtk-entry-get-current-icon-drag-source}
-      @about-function{gtk-entry-get-icon-area}
-      @about-symbol{gtk-input-purpose}
-      @about-function{gtk-entry-set-input-purpose}
-      @about-function{gtk-entry-get-input-purpose}
-      @about-symbol{gtk-input-hints}
-      @about-function{gtk-entry-set-input-hints}
-      @about-function{gtk-entry-get-input-hints}
-    @end{subsection}
-    @begin[GtkEntryBuffer]{subsection}
-      Text buffer for @class{gtk-entry}.
-
-      @about-class{gtk-entry-buffer}
-      @about-function{gtk-entry-buffer-new}
-      @about-function{gtk-entry-buffer-get-text}
-      @about-function{gtk-entry-buffer-set-text}
-      @about-function{gtk-entry-buffer-get-bytes}
-      @about-function{gtk-entry-buffer-get-length}
-      @about-function{gtk-entry-buffer-get-max-length}
-      @about-function{gtk-entry-buffer-set-max-length}
-      @about-function{gtk-entry-buffer-insert-text}
-      @about-function{gtk-entry-buffer-delete-text}
-      @about-function{gtk-entry-buffer-emit-deleted-text}
-      @about-function{gtk-entry-buffer-emit-inserted-text}
-    @end{subsection}
-    @begin[GtkEntryCompletion]{subsection}
-      Completion functionality for GtkEntry.
-
-      @about-class{gtk-entry-completion}
-      @about-function{gtk-entry-completion-new}
-      @about-function{gtk-entry-completion-new-with-area}
-      @about-function{gtk-entry-completion-get-entry}
-      @about-function{gtk-entry-completion-set-match-func}
-      @about-function{gtk-entry-completion-set-minimum-key-length}
-      @about-function{gtk-entry-completion-get-minimum-key-length}
-      @about-function{gtk-entry-completion-compute-prefix}
-      @about-function{gtk-entry-completion-complete}
-      @about-function{gtk-entry-completion-get-completion-prefix}
-      @about-function{gtk-entry-completion-insert-prefix}
-      @about-function{gtk-entry-completion-insert-action-text}
-      @about-function{gtk-entry-completion-insert-action-markup}
-      @about-function{gtk-entry-completion-delete-action}
-      @about-function{gtk-entry-completion-set-text-column}
-      @about-function{gtk-entry-completion-get-text-column}
-      @about-function{gtk-entry-completion-set-inline-completion}
-      @about-function{gtk-entry-completion-get-inline-completion}
-      @about-function{gtk-entry-completion-set-inline-selection}
-      @about-function{gtk-entry-completion-get-inline-selection}
-      @about-function{gtk-entry-completion-set-popup-completion}
-      @about-function{gtk-entry-completion-get-popup-completion}
-      @about-function{gtk-entry-completion-set-popup-set-width}
-      @about-function{gtk-entry-completion-get-popup-set-width}
-      @about-function{gtk-entry-completion-set-popup-single-match}
-      @about-function{gtk-entry-completion-get-popup-single-match}
-    @end{subsection}
-    @begin[GtkScale]{subsection}
-      A slider widget for selecting a value from a range.
-
-      @about-class{gtk-scale}
-      @about-function{gtk-scale-new}
-      @about-function{gtk-scale-new-with-range}
-      @about-function{gtk-scale-set-digits}
-      @about-function{gtk-scale-set-draw-value}
-      @about-function{gtk-scale-set-has-origin}
-      @about-function{gtk-scale-set-value-pos}
-      @about-function{gtk-scale-get-digits}
-      @about-function{gtk-scale-get-draw-value}
-      @about-function{gtk-scale-get-has-origin}
-      @about-function{gtk-scale-get-value-pos}
-      @about-function{gtk-scale-get-layout}
-      @about-function{gtk-scale-get-layout-offsets}
-      @about-function{gtk-scale-add-mark}
-      @about-function{gtk-scale-clear-marks}
-    @end{subsection}
-    @begin[GtkSpinButton]{subsection}
-      Retrieve an integer or floating-point number from the user.
-
-      @about-class{gtk-spin-button}
-      @about-symbol{gtk-spin-button-update-policy}
-      @about-symbol{gtk-spin-type}
-      @about-function{gtk-spin-button-configure}
-      @about-function{gtk-spin-button-new}
-      @about-function{gtk-spin-button-new-with-range}
-      @about-function{gtk-spin-button-set-adjustment}
-      @about-function{gtk-spin-button-get-adjustment}
-      @about-function{gtk-spin-button-set-digits}
-      @about-function{gtk-spin-button-set-increments}
-      @about-function{gtk-spin-button-set-range}
-      @about-function{gtk-spin-button-get-value-as-int}
-      @about-function{gtk-spin-button-set-value}
-      @about-function{gtk-spin-button-set-update-policy}
-      @about-function{gtk-spin-button-set-numeric}
-      @about-function{gtk-spin-button-spin}
-      @about-function{gtk-spin-button-set-wrap}
-      @about-function{gtk-spin-button-set-snap-to-ticks}
-      @about-function{gtk-spin-button-update}
-      @about-function{gtk-spin-button-get-digits}
-      @about-function{gtk-spin-button-get-increments}
-      @about-function{gtk-spin-button-get-numeric}
-      @about-function{gtk-spin-button-get-range}
-      @about-function{gtk-spin-button-get-snap-to-ticks}
-      @about-function{gtk-spin-button-get-update-policy}
-      @about-function{gtk-spin-button-get-value}
-      @about-function{gtk-spin-button-get-wrap}
-      @about-symbol{GTK_INPUT_ERROR}
-    @end{subsection}
-    @begin[GtkSearchEntry]{subsection}
-      An entry which shows a search icon.
-
-      @about-class{gtk-search-entry}
-      @about-function{gtk-search-entry-new}
-    @end{subsection}
-    @begin[GtkEditable]{subsection}
-      Interface for text-editing widgets.
-
-      @about-class{gtk-editable}
-      @about-function{gtk-editable-select-region}
-      @about-function{gtk-editable-get-selection-bounds}
-      @about-function{gtk-editable-insert-text}
-      @about-function{gtk-editable-delete-text}
-      @about-function{gtk-editable-get-chars}
-      @about-function{gtk-editable-cut-clipboard}
-      @about-function{gtk-editable-copy-clipboard}
-      @about-function{gtk-editable-paste-clipboard}
-      @about-function{gtk-editable-delete-selection}
-      @about-function{gtk-editable-set-position}
-      @about-function{gtk-editable-get-position}
-      @about-function{gtk-editable-set-editable}
-      @about-function{gtk-editable-get-editable}
-    @end{subsection}
-  @end{section}
   @begin[Multiline Text Editor]{section}
     Overview of @class{gtk-text-buffer}, @class{gtk-text-view}, and friends.
 
@@ -1913,7 +1908,7 @@ gtk_text_buffer_set_text (buffer, \"Hello, this is some text\", -1);
       @fun{gtk-text-buffer-new}, then create a widget for that buffer with
       @fun{gtk-text-view-new-with-buffer}. Or you can change the buffer the
       widget displays after the widget is created with
-      @fun{gtk-text-view-set-buffer}.
+      @fun{gtk-text-view-buffer}.
 
     @subheading{Example of Changing Text Attributes}
       There are two ways to affect text attributes in @class{gtk-text-view}. You

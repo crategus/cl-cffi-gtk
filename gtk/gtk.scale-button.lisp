@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.8.9 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.10 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -263,7 +263,7 @@
 
 (defun gtk-scale-button-new (size min max step icons)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-12}
+ "@version{2014-11-9}
   @argument[size]{a stock icon size}
   @argument[min]{the minimum value of the scale (usually 0)}
   @argument[max]{the maximum value of the scale (usually 100)}
@@ -278,6 +278,7 @@
   @end{short}
 
   Since 2.12
+  @see-class{gtk-scale-button}
   @see-function{gtk-scale-button-set-icons}"
   (make-instance 'gtk-scale-button
                  :size size
@@ -296,12 +297,13 @@
 (defcfun ("gtk_scale_button_get_popup" gtk-scale-button-get-popup)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-12}
+ "@version{2014-11-9}
   @argument[button]{a @class{gtk-scale-button} widget}
   @return{The popup of the @class{gtk-scale-button} widget.}
   @short{Retrieves the popup of the @class{gtk-scale-button} widget.}
 
-  Since 2.14"
+  Since 2.14
+  @see-class{gtk-scale-button}"
   (scale-button (g-object gtk-scale-button)))
 
 (export 'gtk-scale-button-get-popup)
@@ -313,12 +315,14 @@
 (defcfun ("gtk_scale_button_get_plus_button" gtk-scale-button-get-plus-button)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-12}
+ "@version{2014-11-9}
   @argument[button]{a @class{gtk-scale-button} widget}
   @return{The plus button of the @class{gtk-scale-button} widget.}
   @short{Retrieves the plus button of the @class{gtk-scale-button} widget.}
 
-  Since 2.14"
+  Since 2.14
+  @see-class{gtk-scale-button}
+  @see-function{gtk-sacle-button-get-minus-button}"
   (scale-button (g-object gtk-scale-button)))
 
 (export 'gtk-scale-button-get-plus-button)
@@ -330,12 +334,14 @@
 (defcfun ("gtk_scale_button_get_minus_button" gtk-scale-button-get-minus-button)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-12}
+ "@version{2014-11-9}
   @argument[button]{a @class{gtk-scale-button} widget}
   @return{The minus button of the @class{gtk-scale-button} widget.}
   @short{Retrieves the minus button of the @class{gtk-scale-button} widget.}
 
-  Since 2.14"
+  Since 2.14
+  @see-class{gtk-scale-button}
+  @see-function{gtk-scale-button-get-plus-button}"
   (scale-button (g-object gtk-scale-button)))
 
 (export 'gtk-scale-button-get-minus-button)

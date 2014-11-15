@@ -2,11 +2,11 @@
 ;;; gtk.entry-buffer.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.10 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012, 2013 Dieter Kaiser
+;;; Copyright (C) 2012, 2013, 2014 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -77,8 +77,8 @@
   @end{short}
 
   A single @sym{gtk-entry-buffer} object can be shared by multiple
-  @class{gtk-entry} widgets which will then share the same text content, but not
-  the cursor position, visibility attributes, icon etc.
+  @class{gtk-entry} widgets which will then share the same text content, but
+  not the cursor position, visibility attributes, icon etc.
 
   @sym{gtk-entry-buffer} may be derived from. Such a derived class might allow
   text to be stored in an alternate location, such as non-pageable memory,
@@ -117,9 +117,11 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Property Details
+;;; Property and Accessor Details
 ;;;
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-entry-buffer-length ------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "length" 'gtk-entry-buffer) 't)
@@ -128,6 +130,26 @@
   Allowed values: <= 65535 @br{}
   Default value: 0 @br{}
   Since 2.18")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-entry-buffer-length atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-entry-buffer-length 'function)
+ "@version{2014-9-11}
+  @argument[object]{a @class{gtk-entry-buffer} object}
+  @begin{short}
+    Accessor of the slot @slot[gtk-entry-buffer]{length} of the
+    @class{gtk-entry-buffer} class.
+  @end{short}
+
+  The generic function @sym{gtk-entry-buffer-length} retrieves the length in
+  characters of the buffer.
+
+  Since 2.18
+  @see-class{gtk-entry-buffer}
+  @see-function{gtk-entry-buffer-get-bytes}")
+
+;;; --- gtk-entry-buffer-max-length --------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "max-length"
@@ -139,45 +161,67 @@
   Since 2.18")
 
 #+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-entry-buffer-max-length atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-entry-buffer-max-length 'function)
+ "@version{2014-11-9}
+  @argument[object]{a @class{gtk-entry-buffer} object}
+  @argument[max-length]{the maximum length of the entry @arg{buffer}, or 0 for
+    no maximum. The value passed in will be clamped to the range 0-65536.}
+  @syntax[]{(gtk-entry-buffer-max-length object) => max-length}
+  @syntax[]{(setf gtk-entry-buffer-max-length object) max-length)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-entry-buffer]{max-length} of the
+    @class{gtk-entry-buffer} class.
+  @end{short}
+
+  The generic function @sym{gtk-entry-buffer-max-length} returns the maximum
+  allowed number of characters in a @class{gtk-entry-buffer} object, or 0 if
+  there is no maximum.
+
+  The generic function @sym{(setf get-entry-buffer-max-length)} sets the
+  maximum allowed length of the contents of the buffer. If the current contents
+  are longer than the given length, then they will be truncated to fit.
+
+  Since 2.18
+  @see-class{gtk-entry-buffer}")
+
+;;; --- gtk-entry-buffer-text --------------------------------------------------
+
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "text" 'gtk-entry-buffer) 't)
  "The @code{\"text\"} property of type @code{:string} (Read / Write) @br{}
   The contents of the buffer. @br{}
   Default value: \"\" @br{}
   Since 2.18")
 
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-entry-buffer-length atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-entry-buffer-length 'function)
- "@version{2013-7-26}
-  Accessor of the slot @code{\"length\"} of the @class{gtk-entry-buffer}
-  class.
-  @see-function{gtk-entry-buffer-get-length}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-entry-buffer-max-length atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-entry-buffer-max-length 'function)
- "@version{2013-7-26}
-  Accessor of the slot @code{\"max-length\"} of the @class{gtk-entry-buffer}
-  class.
-  @see-function{gtk-entry-buffer-get-max-length}
-  @see-function{gtk-entry-buffer-set-max-length}")
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-entry-buffer-text atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-entry-buffer-text 'function)
- "@version{2013-7-26}
-  Accessor of the slot @code{\"text\"} of the @class{gtk-entry-buffer} class.
-  @see-function{gtk-entry-buffer-get-text}
-  @see-function{gtk-entry-buffer-set-text}")
+ "@version{2014-11-9}
+  @argument[object]{a @class{gtk-entry-buffer} object}
+  @argument[text]{the new text}
+  @syntax[]{(gtk-entry-buffer-text object) => text}
+  @syntax[]{(setf gtk-entry-buffer-text object) text)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-entry-buffer]{text} of the
+    @class{gtk-entry-buffer} class.
+  @end{short}
+
+  The generic function @sym{gtk-entry-buffer-text} retrieves the contents of
+  the buffer.
+
+  The generic function @sym{(setf gtk-entry-buffer-text} sets the @arg{text} in
+  the @arg{buffer}.
+
+  This is roughly equivalent to calling the functions
+  @fun{gtk-entry-buffer-delete-text} and @fun{gtk-entry-buffer-insert-text}.
+
+  Since 2.18
+  @see-class{gtk-entry-buffer}
+  @see-function{gtk-entry-buffer-delete-text}
+  @see-function{gtk-entry-buffer-insert-text}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_entry_buffer_new ()
@@ -204,62 +248,6 @@
 (export 'gtk-entry-buffer-new)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_entry_buffer_get_text ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-entry-buffer-get-text))
-
-(defun gtk-entry-buffer-get-text (buffer)
- #+cl-cffi-gtk-documentation
- "@version{2013-7-26}
-  @argument[buffer]{a @class{gtk-entry-buffer} object}
-  @begin{return}
-    A pointer to the contents of the @arg{buffer} as a string. This string
-    points to internally allocated storage in the buffer and must not be freed,
-    modified or stored.
-  @end{return}
-  @begin{short}
-    Retrieves the contents of the buffer.
-  @end{short}
-
-  The memory pointer returned by this call will not change unless this object
-  emits a signal, or is finalized.
-
-  Since 2.18
-  @see-class{gtk-entry-buffer}
-  @see-function{gtk-entry-buffer-set-text}"
-  (gtk-entry-buffer-text buffer))
-
-(export 'gtk-entry-buffer-get-text)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_entry_buffer_set_text ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-entry-buffer-set-text))
-
-(defun gtk-entry-buffer-set-text (buffer text)
- #+cl-cffi-gtk-documentation
- "@version{2013-7-26}
-  @argument[buffer]{a @class{gtk-entry-buffer} object}
-  @argument[text]{the new text}
-  @begin{short}
-    Sets the @arg{text} in the @arg{buffer}.
-  @end{short}
-
-  This is roughly equivalent to calling the functions
-  @fun{gtk-entry-buffer-delete-text} and @fun{gtk-entry-buffer-insert-text}.
-
-  Since 2.18
-  @see-class{gtk-entry-buffer}
-  @see-function{gtk-entry-buffer-get-text}
-  @see-function{gtk-entry-buffer-delete-text}
-  @see-function{gtk-entry-buffer-insert-text}"
-  (setf (gtk-entry-buffer-text buffer) text))
-
-(export 'gtk-entry-buffer-set-text)
-
-;;; ----------------------------------------------------------------------------
 ;;; gtk_entry_buffer_get_bytes ()
 ;;; ----------------------------------------------------------------------------
 
@@ -279,79 +267,6 @@
   (buffer (g-object gtk-entry-buffer)))
 
 (export 'gtk-entry-buffer-get-bytes)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_entry_buffer_get_length ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-entry-buffer-get-length))
-
-(defun gtk-entry-buffer-get-length (buffer)
- #+cl-cffi-gtk-documentation
- "@version{2013-7-26}
-  @argument[buffer]{a @class{gtk-entry-buffer} object}
-  @return{The number of characters in the @arg{buffer}.}
-  @begin{short}
-    Retrieves the length in characters of the @arg{buffer}.
-  @end{short}
-
-  Since 2.18
-  @see-class{gtk-entry-buffer}
-  @see-function{gtk-entry-buffer-get-bytes}"
-  (gtk-entry-buffer-length buffer))
-
-(export 'gtk-entry-buffer-get-length)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_entry_buffer_get_max_length ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-entry-buffer-get-max-length))
-
-(defun gtk-entry-buffer-get-max-length (buffer)
- #+cl-cffi-gtk-documentation
- "@version{2013-7-26}
-  @argument[buffer]{a @class{gtk-entry-buffer} object}
-  @begin{return}
-    The maximum allowed number of characters in @class{gtk-entry-buffer} object,
-    or 0 if there is no maximum.
-  @end{return}
-  @begin{short}
-    Retrieves the maximum allowed length of the text in buffer.
-  @end{short}
-  See the function @fun{gtk-entry-buffer-set-max-length}.
-
-  Since 2.18
-  @see-class{gtk-entry-buffer}
-  @see-function{gtk-entry-buffer-set-max-length}"
-  (gtk-entry-buffer-max-length buffer))
-
-(export 'gtk-entry-buffer-get-max-length)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_entry_buffer_set_max_length ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-entry-buffer-set-max-length))
-
-(defun gtk-entry-buffer-set-max-length (buffer max-length)
- #+cl-cffi-gtk-documentation
- "@version{2013-7-26}
-  @argument[buffer]{a @class{gtk-entry-buffer} object}
-  @argument[max-length]{the maximum length of the entry @arg{buffer}, or 0 for
-    no maximum. The value passed in will be clamped to the range 0-65536.}
-  @begin{short}
-    Sets the maximum allowed length of the contents of the @arg{buffer}.
-  @end{short}
-  If the current contents are longer than the given length, then they will be
-  truncated to fit.
-
-  Since 2.18
-  @see-class{gtk-entry-buffer}
-  @see-function{gtk-entry-buffer-get-max-length}"
-  (setf (gtk-entry-buffer-max-length buffer) max-length))
-
-(export 'gtk-entry-buffer-set-max-length)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_entry_buffer_insert_text ()

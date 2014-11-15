@@ -81,13 +81,14 @@
 ;;; enum GtkLevelBarMode
 ;;; ----------------------------------------------------------------------------
 
+#+gtk-3-6
 (define-g-enum "GtkLevelBarMode" gtk-level-bar-mode
   (:export t
    :type-initializer "gtk_level_bar_mode_get_type")
   (:continuous 0)
   (:discrete 1))
 
-#+cl-cffi-gtk-documentation
+#+(and gtk-3-6 cl-cffi-gtk-documentation)
 (setf (gethash 'gtk-level-bar-mode atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-level-bar-mode atdoc:*external-symbols*)
  "@version{2014-2-3}
@@ -149,15 +150,15 @@
     or showing the charge level of a battery.
   @end{short}
 
-  Use the function @fun{gtk-level-bar-set-value} to set the current value, and
+  Use the function @fun{gtk-level-bar-value} to set the current value, and
   the function @fun{gtk-level-bar-add-offset-value} to set the value offsets at
   which the bar will be considered in a different state. GTK will add two
   offsets by default on the level bar: @code{\"low\"} and @code{\"high\"},
   with values 0.25 and 0.75 respectively.
 
   The default interval of values is between zero and one, but it is possible to
-  modify the interval using the functions @fun{gtk-level-bar-set-min-value} and
-  @fun{gtk-level-bar-set-max-value}. The value will be always drawn in
+  modify the interval using the functions @fun{gtk-level-bar-min-value} and
+  @fun{gtk-level-bar-max-value}. The value will be always drawn in
   proportion to the admissible interval, i. e. a value of 15 with a specified
   interval between 10 and 20 is equivalent to a value of 0.5 with an interval
   between 0 and 1. When @code{:discrete} is used, the bar level is rendered as
@@ -292,7 +293,7 @@ lambda (levelbar name)   : Has Details
 (setf (gethash 'gtk-level-bar-max-value atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-level-bar-max-value 'function)
- "@version{2014-3-21}
+ "@version{2014-11-7}
   @argument[object]{a @class{gtk-level-bar} widget}
   @argument[value]{a positive value}
   @syntax[]{(gtk-level-bar-max-value object) => value)}
@@ -309,7 +310,8 @@ lambda (levelbar name)   : Has Details
   @slot[gtk-level-bar]{max-value} property.
 
   Since 3.6
-  @see-class{gtk-level-bar}")
+  @see-class{gtk-level-bar}
+  @see-function{gtk-level-bar-min-value}")
 
 ;;; --- gtk-level-bar-min-value ------------------------------------------------
 
@@ -326,7 +328,7 @@ lambda (levelbar name)   : Has Details
 (setf (gethash 'gtk-level-bar-min-value atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-level-bar-min-value 'function)
- "@version{2014-2-3}
+ "@version{2014-11-7}
   @argument[object]{a @class{gtk-level-bar} widget}
   @argument[value]{a positive value}
   @syntax[]{(gtk-level-bar-min-value object) => value}
@@ -343,7 +345,8 @@ lambda (levelbar name)   : Has Details
   the @slot[gtk-level-bar]{min-value} property.
 
   Since 3.6
-  @see-class{gtk-level-bar}")
+  @see-class{gtk-level-bar}
+  @see-function{gtk-level-bar-max-value}")
 
 ;;; --- gtk-level-bar-mode -----------------------------------------------------
 
@@ -478,9 +481,9 @@ lambda (levelbar name)   : Has Details
 
 #+gtk-3-6
 (defcfun ("gtk_level_bar_add_offset_value" gtk-level-bar-add-offset-value) :void
- "@version{2014-3-21}
+ "@version{2014-11-7}
   @argument[level-bar]{a @class{gtk-level-bar} widget}
-  @argument[name[{the name of the new offset}
+  @argument[name]{the name of the new offset}
   @argument[value]{the value for the new offset}
   @begin{short}
     Adds a new offset marker on the level bar at the position specified by

@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.8.9 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.10 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -453,9 +453,7 @@
   Since 2.10
   @see-class{gtk-status-icon}
   @see-symbol{gtk-image-type}
-  @see-function{gtk-status-icon-storage-type}
-  @see-class{gtk-status-icon}
-  @see-function{gtk-status-icon-get-icon-name}")
+  @see-function{gtk-status-icon-storage-type}")
 
 ;;; --- gtk-status-icon-orientation --------------------------------------------
 
@@ -582,6 +580,9 @@
 (setf (documentation (atdoc:get-slot-from-name "stock" 'gtk-status-icon) 't)
  "The @code{\"stock\"} property of type @code{:string} (Read / Write) @br{}
   Stock ID for a stock image to display. @br{}
+  @b{Warning:} The @code{\"stock\"} property has been deprecated since version
+  3.10 and should not be used in newly-written code. Use the
+  @code{\"icon-name\"} property instead. @br{}
   Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
@@ -602,6 +603,11 @@
   @code{:stock} of the @symbol{gtk-image-type} enumeration. See the function
   @fun{gtk-status-icon-storage-type}. The returned string is owned by
   the @class{gtk-status-icon} and should not be freed or modified.
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-status-icon-stock} has been deprecated since version
+    3.10 and should not be used in newly-written code. Use the function
+    @fun{gtk-status-icon-icon-name} instead.
+  @end{dictionary}
 
   Since 2.10
   @see-class{gtk-status-icon}
@@ -876,7 +882,7 @@
 (defcfun ("gtk_status_icon_new_from_stock" gtk-status-icon-new-from-stock)
     (g-object gtk-status-icon)
  #+cl-cffi-gtk-documentation
- "@version{2013-11-24}
+ "@version{2014-11-7}
   @argument[stock-id]{a stock icon ID}
   @return{A new @class{gtk-status-icon} widget.}
   @begin{short}
@@ -885,11 +891,17 @@
   Sample stock icon names are \"gtk-open\", \"gtk-quit\". You can register your
   own stock icon names, see the functions @fun{gtk-icon-factory-add-default}
   and @fun{gtk-icon-factory-add}.
+  @begin[Warning]{dictionary}
+    @sym{gtk-status-icon-new-from-stock} has been deprecated since version 3.10
+    and should not be used in newly-written code. Use the function
+    @func{gtk-status-icon-new-from-icon-name} instead.
+  @end{dictionary}
 
   Since 2.10
   @see-class{gtk-status-icon}
+  @see-function{gtk-icon-factory-add}
   @see-function{gtk-icon-factory-add-default}
-  @see-function{gtk-icon-factory-add}"
+  @see-function{gtk-status-icon-new-from-icon-name}"
   (stock-id :string))
 
 (export 'gtk-status-icon-new-from-stock)
@@ -996,10 +1008,16 @@
     Makes @arg{status-icon} display the stock icon with the ID @arg{stock-id.}
   @end{short}
   See the function @fun{gtk-status-icon-new-from-stock} for details.
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-status-icon-set-from-stock} has been deprecated since
+    version 3.10 and should not be used in newly-written code. Use the function
+    @fun{gtk-status-icon-set-from-icon-name} instead.
+  @end{dictionary}
 
   Since 2.10
   @see-class{gtk-status-icon}
-  @see-function{gtk-status-icon-new-from-stock}"
+  @see-function{gtk-status-icon-new-from-stock}
+  @see-function{gtk-status-icon-set-from-icon-name}"
   (status-icon (g-object gtk-status-icon))
   (stock-id :string))
 

@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.8.9 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.10 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -65,11 +65,11 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-link-button 'type)
- "@version{2013-4-27}
+ "@version{2014-11-9}
   @begin{short}
-    A @sym{gtk-link-button} is a @class{gtk-button} with a hyperlink, similar to
-    the one used by web browsers, which triggers an action when clicked. It is
-    useful to show quick links to resources.
+    A @sym{gtk-link-button} is a @class{gtk-button} with a hyperlink, similar
+    to the one used by web browsers, which triggers an action when clicked. It
+    is useful to show quick links to resources.
   @end{short}
   A link button is created by calling either the functions
   @fun{gtk-link-button-new} or @fun{gtk-link-button-new-with-label}. If using
@@ -89,17 +89,17 @@
       @end{pre}
       The \"activate-link\" signal is emitted each time the
       @sym{gtk-link-button} has been clicked.
-      The default handler will call the function @fun{gtk-show-uri} with the URI
-      stored inside the @code{\"uri\"} property.
-      To override the default behavior, you can connect to the \"activate-link\"
-      signal and stop the propagation of the signal by returning @arg{true} from
-      your handler.
+      The default handler will call the function @fun{gtk-show-uri} with the
+      URI stored inside the @code{\"uri\"} property. To override the default
+      behavior, you can connect to the \"activate-link\" signal and stop the
+      propagation of the signal by returning @arg{true} from your handler.
       @begin[code]{table}
         @entry[button]{The @sym{gtk-link-button} that emitted the signal.}
       @end{table}
   @end{dictionary}
   @see-slot{gtk-link-button-uri}
-  @see-slot{gtk-link-button-visited}")
+  @see-slot{gtk-link-button-visited}
+  @see-class{gtk-button}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -183,14 +183,15 @@
 
 (defun gtk-link-button-new (uri)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-27}
+ "@version{2014-11-9}
   @argument[uri]{a valid URI}
   @return{A new link button widget.}
   @begin{short}
     Creates a new @class{gtk-link-button} widget with the URI as its text.
   @end{short}
 
-  Since 2.10"
+  Since 2.10
+  @see-class{gtk-link-button}"
   (make-instance 'gtk-link-button
                  :uri uri
                  :label uri))
@@ -205,7 +206,7 @@
 
 (defun gtk-link-button-new-with-label (uri label)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-27}
+ "@version{2014-11-9}
   @argument[uri]{a valid URI}
   @argument[label]{the text of the button}
   @return{A new link button widget.}
@@ -213,7 +214,8 @@
     Creates a new @class{gtk-link-button} widget containing a label.
   @end{short}
 
-  Since 2.10"
+  Since 2.10
+  @see-class{gtk-link-button}"
   (make-instance 'gtk-link-button
                  :uri uri
                  :label label))

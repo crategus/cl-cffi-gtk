@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.8.9 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.10 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -132,7 +132,10 @@
   @end{dictionary}
   @see-slot{gtk-toggle-button-active}
   @see-slot{gtk-toggle-button-draw-indicator}
-  @see-slot{gtk-toggle-button-inconsistent}")
+  @see-slot{gtk-toggle-button-inconsistent}
+  @see-class{gtk-button}
+  @see-class{gtk-check-button}
+  @see-class{gtk-check-menu-item}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -192,7 +195,8 @@
       (documentation 'gtk-toggle-button-draw-indicator 'function)
  "@version{2014-4-14}
   Accessor of the slot @slot[gtk-toggle-button]{draw-indicator} of the
-  @class{gtk-toggle-button} class.")
+  @class{gtk-toggle-button} class.
+  @see-class{gtk-toggle-button}")
 
 ;;; --- gtk-toggle-button-inconsistent -----------------------------------------
 
@@ -235,14 +239,15 @@
 ;;; gtk-toggle-button-new
 ;;; ----------------------------------------------------------------------------
 
-(declaim (inline gtk-toogle-button-new))
+(declaim (inline gtk-toggle-button-new))
 
 (defun gtk-toggle-button-new ()
  #+cl-cffi-gtk-documentation
- "@version{2013-4-27}
+ "@version{2014-11-9}
   @return{A new toggle button.}
   Creates a new toggle button. A widget should be packed into the button, as
   in the function @fun{gtk-button-new}.
+  @see-class{gtk-toggle-button}
   @see-function{gtk-button-new}"
   (make-instance 'gtk-toggle-button))
 
@@ -256,11 +261,12 @@
 
 (defun gtk-toggle-button-new-with-label (label)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-27}
+ "@version{2014-11-9}
   @argument[label]{a string containing the message to be placed in the toggle
     button}
   @return{A new toggle button.}
-  Creates a new toggle button with a text label."
+  Creates a new toggle button with a text label.
+  @see-class{gtk-toggle-button}"
   (make-instance 'gtk-toggle-button
                  :label label))
 
@@ -276,7 +282,7 @@
            gtk-toggle-button-new-with-mnemonic)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-27}
+ "@version{2014-11-9}
   @argument[label]{the text of the button, with an underscore in front of the
     mnemonic character}
   @return{A new toggle button.}
@@ -284,6 +290,7 @@
   The label will be created using the function
   @fun{gtk-label-new-with-mnemonic}, so underscores in label indicate the
   mnemonic for the button.
+  @see-class{gtk-toggle-button}
   @see-function{gtk-label-new-with-mnemonic}"
   (label :string))
 
@@ -297,7 +304,7 @@
 
 (defun gtk-toggle-button-set-mode (toggle-button draw-indicator)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-27}
+ "@version{2014-11-9}
   @argument[toggle-button]{a @class{gtk-toggle-button} widget}
   @argument[draw-indicator]{if @arg{true}, draw the button as a separate
     indicator and label; if @code{nil}, draw the button like a normal button}
@@ -310,7 +317,8 @@
 
   This function only affects instances of classes like @class{gtk-check-button}
   and @class{gtk-radio-button} that derive from @class{gtk-toggle-button}, not
-  instances of @class{gtk-toggle-button} itself."
+  instances of @class{gtk-toggle-button} itself.
+  @see-class{gtk-toggle-button}"
   (setf (gtk-toggle-button-draw-indicator toggle-button) draw-indicator))
 
 (export 'gtk-toggle-button-set-mode)
@@ -323,12 +331,13 @@
 
 (defun gtk-toggle-button-get-mode (toggle-button)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-27}
+ "@version{2014-11-9}
   @argument[toggle-button]{a @class{gtk-toggle-button} widget}
   @return{@em{True} if the toggle button is drawn as a separate indicator and
     label.}
   Retrieves whether the button is displayed as a separate indicator and label.
   See the function @fun{gtk-toggle-button-set-mode}.
+  @see-class{gtk-toggle-button}
   @see-function{gtk-toggle-button-set-mode}"
   (gtk-toggle-button-draw-indicator toggle-button))
 
@@ -340,10 +349,11 @@
 
 (defcfun ("gtk_toggle_button_toggled" gtk-toggle-button-toggled) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-4-27}
+ "@version{2014-9-1}
   @argument[toggle-button]{a @class{gtk-toggle-button} widget}
   Emits the \"toggled\" signal on the @class{gtk-toggle-button} widget. There is
-  no good reason for an application ever to call this function."
+  no good reason for an application ever to call this function.
+  @see-class{gtk-toggle-button}"
   (toggle-button (g-object gtk-toggle-button)))
 
 (export 'gtk-toggle-button-toggled)

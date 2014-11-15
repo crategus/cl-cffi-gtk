@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.8.9 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.10 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -48,10 +48,10 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-check-button 'type)
- "@version{2013-4-26}
+ "@version{2014-11-7}
   @begin{short}
-    A @sym{gtk-check-button} places a discrete @class{gtk-toggle-button} next to
-    a widget, (usually a @class{gtk-label}). See the section on
+    A @sym{gtk-check-button} places a discrete @class{gtk-toggle-button} next
+    to a widget, usually a @class{gtk-label}. See the section on
     @class{gtk-toggle-button} widgets for more information about toggle/check
     buttons.
   @end{short}
@@ -70,7 +70,11 @@
       Spacing around check or radio indicator.@br{}
       Allowed values: >= 0@br{}
       Default value: 2
-  @end{dictionary}")
+  @end{dictionary}
+  @see-class{gtk-check-menu-item}
+  @see-class{gtk-button}
+  @see-class{gtk-toggle-button}
+  @see-class{gtk-radio-button}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk-check-button-new

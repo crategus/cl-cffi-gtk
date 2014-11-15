@@ -5,7 +5,7 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.8.9 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.10 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -132,9 +132,10 @@
 
 (defun gtk-statusbar-new ()
  #+cl-cffi-gtk-documentation
- "@version{2013-8-1}
+ "@version{2014-11-7}
   @return{The new @class{gtk-statusbar} widget.}
-  Creates a new @class{gtk-statusbar} ready for messages."
+  Creates a new @class{gtk-statusbar} ready for messages.
+  @see-class{gtk-statusbar}"
   (make-instance 'gtk-statusbar))
 
 (export 'gtk-statusbar-new)
@@ -149,7 +150,7 @@
 
 (defun gtk-statusbar-get-context-id (statusbar context)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-23}
+ "@version{2014-11-7}
   @argument[statusbar]{a @class{gtk-statusbar} widget}
   @argument[context]{textual description of what context the new message is
     being used in}
@@ -157,7 +158,8 @@
   @begin{short}
     Returns a new context identifier, given a description of the actual context.
   @end{short}
-  Note that the description is not shown in the UI."
+  Note that the description is not shown in the UI.
+  @see-class{gtk-statusbar}"
   (etypecase context
     (integer context)
     (string (%gtk-statusbar-get-context-id statusbar context))))
@@ -230,7 +232,7 @@
 
 (defun gtk-statusbar-remove (statusbar context message-id)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-23}
+ "@version{2014-11-7}
   @argument[statusbar]{a @class{gtk-statusbar} widget}
   @argument[context-id]{a context identifier}
   @argument[message-id]{a message identifier, as returned by the function
@@ -239,6 +241,7 @@
     Forces the removal of a message from a statusbar's stack. The exact
     @arg{context-id} and @arg{message-id} must be specified.
   @end{short}
+  @see-class{gtk-statusbar}
   @see-function{gtk-statusbar-push}"
   (%gtk-statusbar-remove statusbar
                          (gtk-statusbar-get-context-id statusbar context)
@@ -256,7 +259,7 @@
 
 (defun gtk-statusbar-remove-all (statusbar context)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-23}
+ "@version{2014-11-7}
   @argument[statusbar]{a @class{gtk-statusbar} widget}
   @argument[context-id]{a context identifier}
   @begin{short}
@@ -264,7 +267,8 @@
     @arg{context-id}.
   @end{short}
 
-  Since 2.22"
+  Since 2.22
+  @see-class{gtk-statusbar}"
   (%gtk-statusbar-remove-all statusbar
                              (gtk-statusbar-get-context-id statusbar context)))
 
@@ -277,14 +281,15 @@
 (defcfun ("gtk_statusbar_get_message_area" gtk-statusbar-get-message-area)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-23}
+ "@version{2014-11-7}
   @argument[statusbar]{a @class{gtk-statusbar} widget.}
   @return{A @class{gtk-box} widget.}
   @begin{short}
     Retrieves the box containing the label widget.
   @end{short}
 
-  Since 2.20"
+  Since 2.20
+  @see-class{gtk-statusbar}"
   (statusbar (g-object gtk-statusbar)))
 
 (export 'gtk-statusbar-get-message-area)
