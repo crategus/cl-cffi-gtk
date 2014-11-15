@@ -185,7 +185,7 @@
              (let ((view (gobject::get-g-object-for-pointer
                            (g-object-get-data window \"bloatpad-text\"))))
                (gtk-text-buffer-copy-clipboard
-                                  (gtk-text-view-get-buffer view)
+                                  (gtk-text-view-buffer view)
                                   (gtk-widget-get-clipboard view
                                                             \"CLIPBOARD\"))))))
 
@@ -198,7 +198,7 @@
              (let ((view (gobject::get-g-object-for-pointer
                            (g-object-get-data window \"bloatpad-text\"))))
                (gtk-text-buffer-paste-clipboard
-                                       (gtk-text-view-get-buffer view)
+                                       (gtk-text-view-buffer view)
                                        (gtk-widget-get-clipboard view
                                                                  \"CLIPBOARD\")
                                        :default-editable t)))))
@@ -212,7 +212,7 @@
         (g-signal-connect action \"activate\"
            (lambda (action parameter)
              (declare (ignore parameter))
-             (let* ((state (g-action-get-state action))
+             (let* ((state (g-action-state action))
                     (value (g-variant-get-boolean state)))
                (g-action-change-state action
                                       (g-variant-new-boolean (not value))))))
@@ -221,7 +221,7 @@
              (if (g-variant-get-boolean parameter)
                  (gtk-window-fullscreen window)
                  (gtk-window-unfullscreen window))
-             (g-simple-action-set-state action parameter))))
+             (setf (g-simple-action-state action) parameter))))
 
       ;; Add action \"justify\" to the application window
       (let ((action (g-simple-action-new-stateful
@@ -238,11 +238,11 @@
                            (g-object-get-data window \"bloatpad-text\")))
                    (str (g-variant-get-string parameter)))
                (cond ((equal str \"left\")
-                      (gtk-text-view-set-justification view :left))
+                      (setf (gtk-text-view-justification view) :left))
                      ((equal str \"center\")
-                      (gtk-text-view-set-justification view :center))
+                      (setf (gtk-text-view-justification view) :center))
                      (t
-                      (gtk-text-view-set-justification view :right)))
+                      (setf (gtk-text-view-justification view) :right)))
                (g-simple-action-set-state action parameter)))))
 
       (let ((button (make-instance 'gtk-toggle-tool-button

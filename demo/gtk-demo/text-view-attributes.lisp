@@ -9,7 +9,7 @@
                                   :title "Example Text View Attributes"
                                   :default-width 350))
            (view (make-instance 'gtk-text-view))
-           (buffer (gtk-text-view-get-buffer view)))
+           (buffer (gtk-text-view-buffer view)))
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))

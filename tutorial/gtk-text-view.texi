@@ -146,7 +146,7 @@ The simplest usage of @xurl{gtk-text-view} might look like in
                                   :title "Example Simple Text View"
                                   :default-width 300))
            (view (make-instance 'gtk-text-view))
-           (buffer (gtk-text-view-get-buffer view)))
+           (buffer (gtk-text-view-buffer view)))
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
@@ -162,13 +162,13 @@ The simplest usage of @xurl{gtk-text-view} might look like in
 @findex gtk-text-view-new-with-buffer
 @findex text-view-new-with-buffer, gtk-text-view-new-with-buffer
 
-@findex gtk-text-view-set-buffer
-@findex text-view-set-buffer, gtk-text-view-set-buffer
+@findex gtk-text-view-buffer
+@findex text-view-buffer, gtk-text-view-buffer
 
 In many cases it is also convenient to first create the buffer with
 @xurl{gtk-text-buffer-new}, then create a widget for that buffer with
 @xurl{gtk-text-view-new-with-buffer}.  Or you can change the buffer the widget
-displays after the widget is created with @xurl{gtk-text-view-set-buffer}.
+displays after the widget is created with @xurl{gtk-text-view-buffer}.
 
 @c -----------------------------------------------------------------------------
 @node Formatted Text in Text Widget, Cut Copy and Paste, Simple Multiline Text Widget, Top
@@ -206,7 +206,7 @@ attributes there are dedicated methods on @xurl{gtk-text-view} such as
                                   :title "Example Text View Attributes"
                                   :default-width 350))
            (view (make-instance 'gtk-text-view))
-           (buffer (gtk-text-view-get-buffer view)))
+           (buffer (gtk-text-view-buffer view)))
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
@@ -290,7 +290,7 @@ to selected regions of text.
            (text-view (make-instance 'gtk-text-view
                                      :hexpand t
                                      :vexpand t))
-           (buffer (gtk-text-view-get-buffer text-view)))
+           (buffer (gtk-text-view-buffer text-view)))
       (g-signal-connect window "destroy"
                                (lambda (widget)
                                  (declare (ignore widget))
@@ -473,13 +473,13 @@ happen.")
          (lambda (widget)
            (declare (ignore widget))
            (let* ((text (gtk-entry-text entry))
-                  (buffer (gtk-text-view-get-buffer text-view))
+                  (buffer (gtk-text-view-buffer text-view))
                   (iter (gtk-text-buffer-get-start-iter buffer)))
              (multiple-value-bind (found start end)
                  (gtk-text-iter-search iter text)
                (when found
                  (gtk-text-buffer-select-range buffer start end))))))
-      (gtk-text-buffer-set-text (gtk-text-view-get-buffer text-view)
+      (gtk-text-buffer-set-text (gtk-text-view-buffer text-view)
                                 *some-text*)
       (gtk-container-add scrolled text-view)
       (gtk-container-add hbox entry)
@@ -566,7 +566,7 @@ The following example shows the usage of marks to continue the search.
 @end float
 @verbatim
 (defun find-text (text-view text iter)
-  (let ((buffer (gtk-text-view-get-buffer text-view)))
+  (let ((buffer (gtk-text-view-buffer text-view)))
     (multiple-value-bind (found start end)
         (gtk-text-iter-search iter text)
       (when found
@@ -602,21 +602,21 @@ The following example shows the usage of marks to continue the search.
          (lambda (widget)
            (declare (ignore widget))
            (let* ((text (gtk-entry-text entry))
-                  (buffer (gtk-text-view-get-buffer text-view))
+                  (buffer (gtk-text-view-buffer text-view))
                   (iter (gtk-text-buffer-get-start-iter buffer)))
              (find-text text-view text iter))))
       (g-signal-connect button-next "clicked"
          (lambda (widget)
            (declare (ignore widget))
            (let* ((text (gtk-entry-text entry))
-                  (buffer (gtk-text-view-get-buffer text-view))
+                  (buffer (gtk-text-view-buffer text-view))
                   (last-pos (gtk-text-buffer-get-mark buffer "last-pos")))
              (when last-pos
                (find-text text-view
                           text
                           (gtk-text-buffer-get-iter-at-mark buffer
                                                             last-pos))))))
-      (gtk-text-buffer-set-text (gtk-text-view-get-buffer text-view)
+      (gtk-text-buffer-set-text (gtk-text-view-buffer text-view)
                                 *some-text*)
       (gtk-container-add scrolled text-view)
       (gtk-container-add hbox entry)
@@ -710,14 +710,14 @@ functions required to implement the first program, here is the code.
     (g-signal-connect button "clicked"
        (lambda (widget)
          (declare (ignore widget))
-         (let* ((buffer (gtk-text-view-get-buffer text-view))
+         (let* ((buffer (gtk-text-view-buffer text-view))
                 (cursor (gtk-text-buffer-get-mark buffer "insert"))
                 (iter (gtk-text-buffer-get-iter-at-mark buffer cursor)))
            (gtk-text-iter-set-line-offset iter 0)
            (gtk-text-buffer-insert buffer "<li>" :position iter)
            (gtk-text-iter-forward-to-line-end iter)
            (gtk-text-buffer-insert buffer "</li>" :position iter))))
-   (gtk-text-buffer-set-text (gtk-text-view-get-buffer text-view)
+   (gtk-text-buffer-set-text (gtk-text-view-buffer text-view)
                              (format nil "Item 1~%Item 2~%Item 3~%"))
    (gtk-container-add vbox text-view)
    (gtk-container-add vbox button)
@@ -829,7 +829,7 @@ follows.
       (g-signal-connect button "clicked"
          (lambda (widget)
            (declare (ignore widget))
-           (let* ((buffer (gtk-text-view-get-buffer text-view))
+           (let* ((buffer (gtk-text-view-buffer text-view))
                   (cursor (gtk-text-buffer-get-mark buffer "insert"))
                   (iter (gtk-text-buffer-get-iter-at-mark buffer cursor)))
 
@@ -845,7 +845,7 @@ follows.
                          (gtk-text-buffer-insert buffer
                                                  (format nil "</~a>" tag))
                          (return)))))))))
-      (gtk-text-buffer-set-text (gtk-text-view-get-buffer text-view)
+      (gtk-text-buffer-set-text (gtk-text-view-buffer text-view)
                                 (format nil
                                         "<html>~%~
                                          <head><title>Title</title></head>~%~
@@ -907,7 +907,7 @@ corresponding image into a buffer.
        (lambda (widget)
          (declare (ignore widget))
          (let* ((pixbuf (gdk-pixbuf-new-from-file "save.png"))
-                (buffer (gtk-text-view-get-buffer text-view))
+                (buffer (gtk-text-view-buffer text-view))
                 (cursor (gtk-text-buffer-get-insert buffer))
                 (iter (gtk-text-buffer-get-iter-at-mark buffer cursor)))
            (gtk-text-buffer-insert-pixbuf buffer iter pixbuf))))
@@ -980,7 +980,7 @@ clicks on the Insert button.
     (g-signal-connect button "clicked"
        (lambda (widget)
          (declare (ignore widget))
-         (let* ((buffer (gtk-text-view-get-buffer text-view))
+         (let* ((buffer (gtk-text-view-buffer text-view))
                 (cursor (gtk-text-buffer-get-insert buffer))
                 (iter (gtk-text-buffer-get-iter-at-mark buffer cursor))
                 (anchor (gtk-text-buffer-create-child-anchor buffer iter))
@@ -1155,7 +1155,7 @@ functions.
              (text-view (make-instance 'gtk-text-view
                                        :hexpand t
                                        :vexpand t))
-             (buffer (gtk-text-view-get-buffer text-view)))
+             (buffer (gtk-text-view-buffer text-view)))
         ;; Signal handler for the window
         (g-signal-connect window "destroy"
                         (lambda (widget)

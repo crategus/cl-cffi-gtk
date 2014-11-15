@@ -764,7 +764,7 @@
  "@version{2013-5-5}
   @return{A new @class{gtk-text-view} object.}
   Creates a new @class{gtk-text-view} object. If you do not call the function
-  @fun{gtk-text-view-set-buffer} before using the text view, an empty default
+  @fun{gtk-text-view-buffer} before using the text view, an empty default
   buffer will be created for you. Get the buffer with the function
   @fun{gtk-text-view-get-buffer}. If you want to specify your own buffer,
   consider the function @fun{gtk-text-view-new-with-buffer}.

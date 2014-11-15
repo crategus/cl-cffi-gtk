@@ -2033,7 +2033,7 @@
                                   :default-width 300
                                   :default-height 200))
            (view (make-instance 'gtk-text-view))
-           (buffer (gtk-text-view-get-buffer view)))
+           (buffer (gtk-text-view-buffer view)))
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
@@ -2051,7 +2051,7 @@
                                   :title "Example Text View Attributes"
                                   :default-width 350))
            (view (make-instance 'gtk-text-view))
-           (buffer (gtk-text-view-get-buffer view)))
+           (buffer (gtk-text-view-buffer view)))
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
@@ -2095,7 +2095,7 @@
                                 :homogeneous nil
                                 :spacing 3))
            (text-view (make-instance 'gtk-text-view))
-           (buffer (gtk-text-view-get-buffer text-view))
+           (buffer (gtk-text-view-buffer text-view))
            (button (make-instance 'gtk-button
                                   :label "Close")))
       (g-signal-connect window "destroy"
@@ -2137,7 +2137,7 @@
            (text-view (make-instance 'gtk-text-view
                                      :hexpand t
                                      :vexpand t))
-           (buffer (gtk-text-view-get-buffer text-view)))
+           (buffer (gtk-text-view-buffer text-view)))
       (g-signal-connect window "destroy"
                                (lambda (widget)
                                  (declare (ignore widget))
@@ -2226,13 +2226,13 @@ happen.")
          (lambda (widget)
            (declare (ignore widget))
            (let* ((text (gtk-entry-text entry))
-                  (buffer (gtk-text-view-get-buffer text-view))
+                  (buffer (gtk-text-view-buffer text-view))
                   (iter (gtk-text-buffer-get-start-iter buffer)))
              (multiple-value-bind (found start end)
                  (gtk-text-iter-search iter text)
                (when found
                  (gtk-text-buffer-select-range buffer start end))))))
-      (gtk-text-buffer-set-text (gtk-text-view-get-buffer text-view)
+      (gtk-text-buffer-set-text (gtk-text-view-buffer text-view)
                                 *some-text*)
       (gtk-container-add scrolled text-view)
       (gtk-container-add hbox entry)
@@ -2245,7 +2245,7 @@ happen.")
 ;;; ----------------------------------------------------------------------------
 
 (defun find-text (text-view text iter)
-  (let ((buffer (gtk-text-view-get-buffer text-view)))
+  (let ((buffer (gtk-text-view-buffer text-view)))
     (multiple-value-bind (found start end)
         (gtk-text-iter-search iter text)
       (when found
@@ -2281,21 +2281,21 @@ happen.")
          (lambda (widget)
            (declare (ignore widget))
            (let* ((text (gtk-entry-text entry))
-                  (buffer (gtk-text-view-get-buffer text-view))
+                  (buffer (gtk-text-view-buffer text-view))
                   (iter (gtk-text-buffer-get-start-iter buffer)))
              (find-text text-view text iter))))
       (g-signal-connect button-next "clicked"
          (lambda (widget)
            (declare (ignore widget))
            (let* ((text (gtk-entry-text entry))
-                  (buffer (gtk-text-view-get-buffer text-view))
+                  (buffer (gtk-text-view-buffer text-view))
                   (last-pos (gtk-text-buffer-get-mark buffer "last-pos")))
              (when last-pos
                (find-text text-view
                           text
                           (gtk-text-buffer-get-iter-at-mark buffer
                                                             last-pos))))))
-      (gtk-text-buffer-set-text (gtk-text-view-get-buffer text-view)
+      (gtk-text-buffer-set-text (gtk-text-view-buffer text-view)
                                 *some-text*)
       (gtk-container-add scrolled text-view)
       (gtk-container-add hbox entry)
@@ -2329,14 +2329,14 @@ happen.")
     (g-signal-connect button "clicked"
        (lambda (widget)
          (declare (ignore widget))
-         (let* ((buffer (gtk-text-view-get-buffer text-view))
+         (let* ((buffer (gtk-text-view-buffer text-view))
                 (cursor (gtk-text-buffer-get-mark buffer "insert"))
                 (iter (gtk-text-buffer-get-iter-at-mark buffer cursor)))
            (gtk-text-iter-set-line-offset iter 0)
            (gtk-text-buffer-insert buffer "<li>" :position iter)
            (gtk-text-iter-forward-to-line-end iter)
            (gtk-text-buffer-insert buffer "</li>" :position iter))))
-   (gtk-text-buffer-set-text (gtk-text-view-get-buffer text-view)
+   (gtk-text-buffer-set-text (gtk-text-view-buffer text-view)
                              (format nil "Item 1~%Item 2~%Item 3~%"))
    (gtk-container-add vbox text-view)
    (gtk-container-add vbox button)
@@ -2380,7 +2380,7 @@ happen.")
       (g-signal-connect button "clicked"
          (lambda (widget)
            (declare (ignore widget))
-           (let* ((buffer (gtk-text-view-get-buffer text-view))
+           (let* ((buffer (gtk-text-view-buffer text-view))
                   (cursor (gtk-text-buffer-get-mark buffer "insert"))
                   (iter (gtk-text-buffer-get-iter-at-mark buffer cursor)))
 
@@ -2396,7 +2396,7 @@ happen.")
                          (gtk-text-buffer-insert buffer
                                                  (format nil "</~a>" tag))
                          (return)))))))))
-      (gtk-text-buffer-set-text (gtk-text-view-get-buffer text-view)
+      (gtk-text-buffer-set-text (gtk-text-view-buffer text-view)
                                 (format nil
                                         "<html>~%~
                                          <head><title>Title</title></head>~%~
@@ -2432,7 +2432,7 @@ happen.")
        (lambda (widget)
          (declare (ignore widget))
          (let* ((pixbuf (gdk-pixbuf-new-from-file "save.png"))
-                (buffer (gtk-text-view-get-buffer text-view))
+                (buffer (gtk-text-view-buffer text-view))
                 (cursor (gtk-text-buffer-get-insert buffer))
                 (iter (gtk-text-buffer-get-iter-at-mark buffer cursor)))
            (gtk-text-buffer-insert-pixbuf buffer iter pixbuf))))
@@ -2465,7 +2465,7 @@ happen.")
     (g-signal-connect button "clicked"
        (lambda (widget)
          (declare (ignore widget))
-         (let* ((buffer (gtk-text-view-get-buffer text-view))
+         (let* ((buffer (gtk-text-view-buffer text-view))
                 (cursor (gtk-text-buffer-get-insert buffer))
                 (iter (gtk-text-buffer-get-iter-at-mark buffer cursor))
                 (anchor (gtk-text-buffer-create-child-anchor buffer iter))
@@ -2549,7 +2549,7 @@ happen.")
              (text-view (make-instance 'gtk-text-view
                                        :hexpand t
                                        :vexpand t))
-             (buffer (gtk-text-view-get-buffer text-view)))
+             (buffer (gtk-text-view-buffer text-view)))
         ;; Signal handler for the window
         (g-signal-connect window "destroy"
                         (lambda (widget)
@@ -4331,7 +4331,7 @@ happen.")
              (let ((view (gobject::get-g-object-for-pointer
                            (g-object-get-data window "bloatpad-text"))))
                (gtk-text-buffer-copy-clipboard
-                                  (gtk-text-view-get-buffer view)
+                                  (gtk-text-view-buffer view)
                                   (gtk-widget-get-clipboard view
                                                             "CLIPBOARD"))))))
 
@@ -4344,7 +4344,7 @@ happen.")
              (let ((view (gobject::get-g-object-for-pointer
                            (g-object-get-data window "bloatpad-text"))))
                (gtk-text-buffer-paste-clipboard
-                                       (gtk-text-view-get-buffer view)
+                                       (gtk-text-view-buffer view)
                                        (gtk-widget-get-clipboard view
                                                                  "CLIPBOARD")
                                        :default-editable t)))))
@@ -4358,7 +4358,7 @@ happen.")
         (g-signal-connect action "activate"
            (lambda (action parameter)
              (declare (ignore parameter))
-             (let* ((state (g-action-get-state action))
+             (let* ((state (g-action-state action))
                     (value (g-variant-get-boolean state)))
                (g-action-change-state action
                                       (g-variant-new-boolean (not value))))))
@@ -4384,11 +4384,11 @@ happen.")
                            (g-object-get-data window "bloatpad-text")))
                    (str (g-variant-get-string parameter)))
                (cond ((equal str "left")
-                      (gtk-text-view-set-justification view :left))
+                      (setf (gtk-text-view-justification view) :left))
                      ((equal str "center")
-                      (gtk-text-view-set-justification view :center))
+                      (setf (gtk-text-view-justification view) :center))
                      (t
-                      (gtk-text-view-set-justification view :right)))
+                      (setf (gtk-text-view-justification view) :right)))
                (g-simple-action-set-state action parameter)))))
 
       (let ((button (make-instance 'gtk-toggle-tool-button

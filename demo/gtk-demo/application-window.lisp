@@ -224,7 +224,7 @@
                                     :hexpand t
                                     :vexpand t))
            (contents (make-instance 'gtk-text-view))
-           (buffer (gtk-text-view-get-buffer contents))
+           (buffer (gtk-text-view-buffer contents))
            (statusbar (make-instance 'gtk-statusbar
                                      :halign :fill))
            (infobar (make-instance 'gtk-info-bar
