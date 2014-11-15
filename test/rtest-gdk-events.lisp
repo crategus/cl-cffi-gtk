@@ -59,7 +59,7 @@
                (foreign-slot-value query '(:struct g-type-query) :type)))
     (is (equal "GdkEventType"
                (foreign-slot-value query '(:struct g-type-query) :type-name)))
-    (is (= 20  (foreign-slot-value query '(:struct g-type-query) :class-size)))
+    (is (= 32  (foreign-slot-value query '(:struct g-type-query) :class-size)))
     (is (=  0  (foreign-slot-value query '(:struct g-type-query) :instance-size))))
 
   ;; Get the names of the class properties.

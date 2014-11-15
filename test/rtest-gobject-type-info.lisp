@@ -473,7 +473,7 @@
 
 (test g-type-interface
   (let ((interface (g-type-default-interface-ref "GtkOrientable")))
-    (is (= 8 (foreign-type-size '(:struct g-type-interface))))
+    (is (= 16 (foreign-type-size '(:struct g-type-interface))))
     (is (equal '(:instance-type :type)
                (stable-sort (foreign-slot-names '(:struct g-type-interface))
                             #'string-lessp)))
@@ -486,7 +486,7 @@
 
 (test g-type-class
   (let ((class (g-type-class-ref "GtkButton")))
-    (is (= 4 (foreign-type-size '(:struct g-type-class))))
+    (is (= 8 (foreign-type-size '(:struct g-type-class))))
     (is (equal '(:type) (foreign-slot-names '(:struct g-type-class))))
     (is-true (foreign-slot-value class '(:struct g-type-class) :type))))
 
@@ -494,7 +494,7 @@
 
 (test g-type-instance
   (let ((button (make-instance 'gtk-button)))
-    (is (= 4 (foreign-type-size '(:struct g-type-instance))))
+    (is (= 8 (foreign-type-size '(:struct g-type-instance))))
     (is (equal '(:class) (foreign-slot-names '(:struct g-type-instance))))
     (is-true (foreign-slot-value (pointer button)
                                  '(:struct g-type-instance) :class))))
@@ -502,7 +502,7 @@
 ;;;   g-type-info
 
 (test g-type-info
-  (is (= 36 (foreign-type-size '(:struct g-type-info))))
+  (is (= 72 (foreign-type-size '(:struct g-type-info))))
   (is (equal '(:BASE-FINALIZE-FN :BASE-INIT-FN :CLASS-DATA :CLASS-FINALIZE-FN
                :CLASS-INIT-FN :CLASS-SIZE :INSTANCE-INIT-FN :INSTANCE-SIZE
                :N-PREALLOCS :VALUE-TABLE)
@@ -519,7 +519,7 @@
 ;;;   GInterfaceInfo
 
 (test g-interface-info
-  (is (= 12 (foreign-type-size '(:struct g-interface-info))))
+  (is (= 24 (foreign-type-size '(:struct g-interface-info))))
   (is (equal '(:INTERFACE-DATA :INTERFACE-FINALIZE :INTERFACE-INIT)
              (stable-sort (foreign-slot-names '(:struct g-interface-info))
              #'string-lessp))))
@@ -527,7 +527,7 @@
 ;;;   GTypeValueTable
 
 (test g-type-value-table
-  (is (= 32 (foreign-type-size '(:struct g-type-value-table))))
+  (is (= 64 (foreign-type-size '(:struct g-type-value-table))))
   (is (equal '(:COLLECT-FORMAT :COLLECT-VALUE :LCOPY-FORMAT :LCOPY-VALUE
                :VALUE-COPY :VALUE-FREE :VALUE-INIT :VALUE-PEEK-POINTER)
              (stable-sort (foreign-slot-names '(:struct g-type-value-table))

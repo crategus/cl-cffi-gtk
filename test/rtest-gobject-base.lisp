@@ -6,7 +6,7 @@
 
 (test g-parameter
   #-windows
-  (is (= 24 (foreign-type-size '(:struct g-parameter))))
+  (is (= 32 (foreign-type-size '(:struct g-parameter))))
   #+windows
   (is (= 32 (foreign-type-size '(:struct g-parameter))))
   (is (equal '(:name :value)
@@ -103,42 +103,23 @@
 
 ;;;   g_object_class_list_properties
 
-#+gtk-3-8
 (test g-object-class-list-properties
   (is (equal '("name" "parent" "width-request" "height-request" "visible"
                "sensitive" "app-paintable" "can-focus" "has-focus" "is-focus"
                "can-default" "has-default" "receives-default" "composite-child"
                "style" "events" "no-show-all" "has-tooltip" "tooltip-markup"
-               "tooltip-text" "window" "opacity" "double-buffered" "halign" "valign"
-               "margin-left" "margin-right" "margin-top" "margin-bottom"
-               "margin" "hexpand" "vexpand" "hexpand-set" "vexpand-set"
-               "expand" "xalign" "yalign" "xpad" "ypad" "label" "attributes"
-               "use-markup" "use-underline" "justify" "pattern" "wrap"
-               "wrap-mode" "selectable" "mnemonic-keyval" "mnemonic-widget"
-               "cursor-position" "selection-bound" "ellipsize" "width-chars"
-               "single-line-mode" "angle" "max-width-chars"
-               "track-visited-links")
+               "tooltip-text" "window" "opacity" "double-buffered" "halign"
+               "valign" "margin-left" "margin-right" "margin-top"
+               "margin-bottom" "margin" "hexpand" "vexpand" "hexpand-set"
+               "vexpand-set" "expand" "scale-factor" "xalign" "yalign" "xpad"
+               "ypad" "label" "attributes" "use-markup" "use-underline"
+               "justify" "pattern" "wrap" "wrap-mode" "selectable"
+               "mnemonic-keyval" "mnemonic-widget" "cursor-position"
+               "selection-bound" "ellipsize" "width-chars" "single-line-mode"
+               "angle" "max-width-chars" "track-visited-links" "lines")
              (mapcar #'param-spec-name
                      (g-object-class-list-properties "GtkLabel")))))
 
-#-gtk-3-8
-(test g-object-class-list-properties
-  (is (equal '("name" "parent" "width-request" "height-request" "visible"
-               "sensitive" "app-paintable" "can-focus" "has-focus" "is-focus"
-               "can-default" "has-default" "receives-default" "composite-child"
-               "style" "events" "no-show-all" "has-tooltip" "tooltip-markup"
-               "tooltip-text" "window" "double-buffered" "halign" "valign"
-               "margin-left" "margin-right" "margin-top" "margin-bottom"
-               "margin" "hexpand" "vexpand" "hexpand-set" "vexpand-set"
-               "expand" "xalign" "yalign" "xpad" "ypad" "label" "attributes"
-               "use-markup" "use-underline" "justify" "pattern" "wrap"
-               "wrap-mode" "selectable" "mnemonic-keyval" "mnemonic-widget"
-               "cursor-position" "selection-bound" "ellipsize" "width-chars"
-               "single-line-mode" "angle" "max-width-chars"
-               "track-visited-links")
-             (mapcar #'param-spec-name
-                     (g-object-class-list-properties "GtkLabel")))))
-                     
 ;;;    g_object_class_override_property
 ;;;    g_object_interface_install_property
 

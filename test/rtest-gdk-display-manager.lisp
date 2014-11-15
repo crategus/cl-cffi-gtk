@@ -56,7 +56,7 @@
 
   ;; Check the children
   #-windows
-  (is (equal '("GdkX11DisplayManager")
+  (is (equal '()
              (mapcar #'gtype-name (g-type-children "GdkDisplayManager"))))
   #+windows
   (is (equal '("GdkWin32DisplayManager")
@@ -73,8 +73,8 @@
                (foreign-slot-value query '(:struct g-type-query) :type)))
     (is (equal "GdkDisplayManager"
                (foreign-slot-value query '(:struct g-type-query) :type-name)))
-    (is (= 108 (foreign-slot-value query '(:struct g-type-query) :class-size)))
-    (is (=  12 (foreign-slot-value query '(:struct g-type-query) :instance-size))))
+    (is (= 144 (foreign-slot-value query '(:struct g-type-query) :class-size)))
+    (is (=  40 (foreign-slot-value query '(:struct g-type-query) :instance-size))))
 
   ;; Get the names of the class properties.
   (is (equal '("name" "parameter-type" "enabled" "state-type" "state")

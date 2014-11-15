@@ -1,4 +1,3 @@
-
 (def-suite gio-themed-icon :in gio-suite)
 (in-suite gio-themed-icon)
 
@@ -103,10 +102,10 @@
 (test g-themed-icon-new
   (let ((icon (g-themed-icon-new "gnome-dev-cdrom")))
     (is (equal '("gnome-dev-cdrom")
-               (g-themed-icon-get-names icon)))
+               (g-themed-icon-names icon)))
     (g-themed-icon-append-name icon "gnome-dev")
     (is (equal '("gnome-dev-cdrom" "gnome-dev")
-               (g-themed-icon-get-names icon)))
+               (g-themed-icon-names icon)))
     (g-themed-icon-prepend-name icon "gnome-dev-cdrom-audio")
     (is (equal '("gnome-dev-cdrom-audio" "gnome-dev-cdrom" "gnome-dev")
                (g-themed-icon-names icon)))))
@@ -121,7 +120,7 @@
                                             "gnome")))
     (is (equal '("gnome-dev-cdrom-audio" "gnome-dev-cdrom" "gnome-dev"
                  "gnome")
-               (g-themed-icon-get-names icon)))))
+               (g-themed-icon-names icon)))))
 
 ;;;   g_themed_icon_new_with_default_fallbacks
 
@@ -129,8 +128,8 @@
   (let* ((names (list "gnome-dev-cdrom-audio" "gnome-dev-cdrom" "gnome-dev" "gnome"))
          (icon1 (g-themed-icon-new-from-names names))
          (icon2 (g-themed-icon-new-with-default-fallbacks "gnome-dev-cdrom-audio")))
-    (is (equal (g-themed-icon-get-names icon1)
-               (g-themed-icon-get-names icon2)))
+    (is (equal (g-themed-icon-names icon1)
+               (g-themed-icon-names icon2)))
     (is (= 2625354045 (g-icon-hash icon1)))
     (is (= 2625354045 (g-icon-hash icon2)))
     (is (= (g-icon-hash icon1) (g-icon-hash icon2)))

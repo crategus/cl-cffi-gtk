@@ -14,7 +14,7 @@
 ;;;   GParamSpecBoolean
 
 (test g-param-spec-boolean-struct
-  (is (= 8 (foreign-type-size '(:struct g-param-spec-boolean))))
+  (is (= 16 (foreign-type-size '(:struct g-param-spec-boolean))))
   (is (equal '(:parent-instance :default-value)
              (foreign-slot-names '(:struct g-param-spec-boolean)))))
 
@@ -97,7 +97,7 @@
 ;;;   GParamSpecChar
 
 (test g-param-spec-char-struct
-  (is (= 8 (foreign-type-size '(:struct g-param-spec-char))))
+  (is (= 16 (foreign-type-size '(:struct g-param-spec-char))))
   (is (equal '(:PARENT-INSTANCE :MINIMUM :MAXIMUM :DEFAULT-VALUE)
              (foreign-slot-names '(:struct g-param-spec-char)))))
 
@@ -188,7 +188,7 @@
 ;;;     GParamSpecUChar
 
 (test g-param-spec-uchar-struct
-  (is (= 8 (foreign-type-size '(:struct g-param-spec-uchar))))
+  (is (= 16 (foreign-type-size '(:struct g-param-spec-uchar))))
   (is (equal '(:PARENT-INSTANCE :MINIMUM :MAXIMUM :DEFAULT-VALUE)
              (foreign-slot-names '(:struct g-param-spec-uchar)))))
 
@@ -268,7 +268,7 @@
 ;;;     GParamSpecInt
 
 (test g-param-spec-int-struct
-  (is (= 16 (foreign-type-size '(:struct g-param-spec-int))))
+  (is (= 24 (foreign-type-size '(:struct g-param-spec-int))))
   (is (equal '(:PARENT-INSTANCE :MINIMUM :MAXIMUM :DEFAULT-VALUE)
              (foreign-slot-names '(:struct g-param-spec-int)))))
 

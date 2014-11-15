@@ -276,7 +276,7 @@
       (g-source-set-callback source (lambda () (timeout-callback loop)))
 
       (is-false (g-source-is-destroyed source))
-      (is (= g-priority-default (g-source-get-priority source)))
+      (is (= +g-priority-default+ (g-source-get-priority source)))
       (is-false (g-source-get-can-recurse source))
 
       (is (= id (g-source-get-id source)))

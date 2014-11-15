@@ -1,4 +1,3 @@
-
 (in-package :gtk-testsuite)
 
 (def-suite gobject-suite :in gtk-testsuite)

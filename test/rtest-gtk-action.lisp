@@ -72,8 +72,8 @@
                (foreign-slot-value query '(:struct g-type-query) :type)))
     (is (equal "GtkAction"
                (foreign-slot-value query '(:struct g-type-query) :type-name)))
-    (is (= 116 (foreign-slot-value query '(:struct g-type-query) :class-size)))
-    (is (=  16 (foreign-slot-value query '(:struct g-type-query) :instance-size))))
+    (is (= 232 (foreign-slot-value query '(:struct g-type-query) :class-size)))
+    (is (=  32 (foreign-slot-value query '(:struct g-type-query) :instance-size))))
 
   ;; Get the names of the class properties.
   (is (equal ' ("name" "label" "short-label" "tooltip" "stock-id" "icon-name"

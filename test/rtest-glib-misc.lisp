@@ -6,18 +6,18 @@
 
 (test g-size
   (is (eq :unsigned-long (cffi::canonicalize-foreign-type 'g-size)))
-  (is (= 4 (foreign-type-size 'g-size))))
+  (is (= 8 (foreign-type-size 'g-size))))
 
 ;;;   g_ssize
   
 (test g-ssize
   (is (eq :long (cffi::canonicalize-foreign-type 'g-ssize)))
-  (is (= 4 (foreign-type-size 'g-ssize))))
+  (is (= 8 (foreign-type-size 'g-ssize))))
 
 ;;;   g_offset
   
 (test g-offset
-  (is (eq :unsigned-long-long (cffi::canonicalize-foreign-type 'g-offset)))
+  (is (eq :unsigned-long (cffi::canonicalize-foreign-type 'g-offset)))
   (is (= 8 (foreign-type-size 'g-offset))))
 
 ;;;   g_malloc
