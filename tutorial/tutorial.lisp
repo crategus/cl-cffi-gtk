@@ -4580,10 +4580,10 @@ happen.")
 
 (defun bloat-pad-new ()
   (g-set-application-name "Bloatpad")
-  (setf (gtk-settings-gtk-shell-shows-app-menu (gtk-settings-get-default))
-        nil)
-  (setf (gtk-settings-gtk-shell-shows-menubar (gtk-settings-get-default))
-        nil)
+  ;;(setf (gtk-settings-gtk-shell-shows-app-menu (gtk-settings-get-default))
+  ;;      nil)
+  ;;(setf (gtk-settings-gtk-shell-shows-menubar (gtk-settings-get-default))
+  ;;      nil)
   (make-instance 'bloat-pad
                  :application-id "org.gtk.Test.bloatpad"
                  :flags :handles-open
