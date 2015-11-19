@@ -204,10 +204,11 @@
 
 (defmethod translate-from-foreign
     (native (foreign-type boxed-opaque-foreign-type))
-  (let* ((type (g-boxed-foreign-info foreign-type))
-         (proxy (make-instance (g-boxed-info-name type)
-                               :pointer native)))
-    proxy))
+  (unless (null-pointer-p native)
+    (let* ((type (g-boxed-foreign-info foreign-type))
+           (proxy (make-instance (g-boxed-info-name type)
+                                 :pointer native)))
+      proxy)))
 
 (defmethod cleanup-translated-object-for-callback
     ((type boxed-opaque-foreign-type) proxy native)
