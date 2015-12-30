@@ -8410,7 +8410,7 @@
   impose any restrictions on the child placement. It can be used to deduce
   toplevel window and menu sizes as well as child widgets in free-form
   containers such as @class{gtk-layout}.
-  @bgin[Note]{dictionary}
+  @begin[Note]{dictionary}
     Handle with care. Note that the natural height of a height-for-width widget
     will generally be a smaller size than the minimum height, since the required
     height for the natural width is generally smaller than the required height
