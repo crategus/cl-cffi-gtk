@@ -899,12 +899,7 @@
 
       @about-class{gtk-entry-buffer}
       @about-function{gtk-entry-buffer-new}
-      @about-function{gtk-entry-buffer-get-text}
-      @about-function{gtk-entry-buffer-set-text}
       @about-function{gtk-entry-buffer-get-bytes}
-      @about-function{gtk-entry-buffer-get-length}
-      @about-function{gtk-entry-buffer-get-max-length}
-      @about-function{gtk-entry-buffer-set-max-length}
       @about-function{gtk-entry-buffer-insert-text}
       @about-function{gtk-entry-buffer-delete-text}
       @about-function{gtk-entry-buffer-emit-deleted-text}
@@ -918,8 +913,6 @@
       @about-function{gtk-entry-completion-new-with-area}
       @about-function{gtk-entry-completion-get-entry}
       @about-function{gtk-entry-completion-set-match-func}
-      @about-function{gtk-entry-completion-set-minimum-key-length}
-      @about-function{gtk-entry-completion-get-minimum-key-length}
       @about-function{gtk-entry-completion-compute-prefix}
       @about-function{gtk-entry-completion-complete}
       @about-function{gtk-entry-completion-get-completion-prefix}
@@ -927,18 +920,6 @@
       @about-function{gtk-entry-completion-insert-action-text}
       @about-function{gtk-entry-completion-insert-action-markup}
       @about-function{gtk-entry-completion-delete-action}
-      @about-function{gtk-entry-completion-set-text-column}
-      @about-function{gtk-entry-completion-get-text-column}
-      @about-function{gtk-entry-completion-set-inline-completion}
-      @about-function{gtk-entry-completion-get-inline-completion}
-      @about-function{gtk-entry-completion-set-inline-selection}
-      @about-function{gtk-entry-completion-get-inline-selection}
-      @about-function{gtk-entry-completion-set-popup-completion}
-      @about-function{gtk-entry-completion-get-popup-completion}
-      @about-function{gtk-entry-completion-set-popup-set-width}
-      @about-function{gtk-entry-completion-get-popup-set-width}
-      @about-function{gtk-entry-completion-set-popup-single-match}
-      @about-function{gtk-entry-completion-get-popup-single-match}
     @end{subsection}
     @begin[GtkScale]{subsection}
       A slider widget for selecting a value from a range.
@@ -947,13 +928,10 @@
       @about-function{gtk-scale-new}
       @about-function{gtk-scale-new-with-range}
       @about-function{gtk-scale-set-digits}
-      @about-function{gtk-scale-set-draw-value}
       @about-function{gtk-scale-set-has-origin}
-      @about-function{gtk-scale-set-value-pos}
       @about-function{gtk-scale-get-digits}
       @about-function{gtk-scale-get-draw-value}
       @about-function{gtk-scale-get-has-origin}
-      @about-function{gtk-scale-get-value-pos}
       @about-function{gtk-scale-get-layout}
       @about-function{gtk-scale-get-layout-offsets}
       @about-function{gtk-scale-add-mark}
@@ -968,13 +946,10 @@
       @about-function{gtk-spin-button-configure}
       @about-function{gtk-spin-button-new}
       @about-function{gtk-spin-button-new-with-range}
-      @about-function{gtk-spin-button-set-adjustment}
-      @about-function{gtk-spin-button-get-adjustment}
       @about-function{gtk-spin-button-set-digits}
       @about-function{gtk-spin-button-set-increments}
       @about-function{gtk-spin-button-set-range}
       @about-function{gtk-spin-button-get-value-as-int}
-      @about-function{gtk-spin-button-set-value}
       @about-function{gtk-spin-button-set-update-policy}
       @about-function{gtk-spin-button-set-numeric}
       @about-function{gtk-spin-button-spin}
@@ -987,7 +962,6 @@
       @about-function{gtk-spin-button-get-range}
       @about-function{gtk-spin-button-get-snap-to-ticks}
       @about-function{gtk-spin-button-get-update-policy}
-      @about-function{gtk-spin-button-get-value}
       @about-function{gtk-spin-button-get-wrap}
       @about-symbol{GTK_INPUT_ERROR}
     @end{subsection}
