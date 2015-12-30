@@ -79,8 +79,8 @@
                (foreign-slot-value query '(:struct g-type-query) :type)))
     (is (equal "GtkDialog"
                (foreign-slot-value query '(:struct g-type-query) :type-name)))
-    (is (= 560 (foreign-slot-value query '(:struct g-type-query) :class-size)))
-    (is (=  32 (foreign-slot-value query '(:struct g-type-query) :instance-size))))
+    (is (= 1120 (foreign-slot-value query '(:struct g-type-query) :class-size)))
+    (is (=   64 (foreign-slot-value query '(:struct g-type-query) :instance-size))))
 
   ;; Get the names of the class properties.
   (is (equal '("accept-focus" "app-paintable" "application"
@@ -100,12 +100,13 @@
                                "modal" "name" "no-show-all" "opacity" "parent"
                                "receives-default" "resizable"
                                "resize-grip-visible" "resize-mode" "role"
-                               "screen" "sensitive" "skip-pager-hint"
-                               "skip-taskbar-hint" "startup-id" "style" "title"
-                               "tooltip-markup" "tooltip-text" "transient-for"
-                               "type" "type-hint" "urgency-hint" "valign"
-                               "vexpand" "vexpand-set" "visible"
-                               "width-request" "window" "window-position")
+                               "scale-factor" "screen" "sensitive"
+                               "skip-pager-hint" "skip-taskbar-hint"
+                               "startup-id" "style" "title" "tooltip-markup"
+                               "tooltip-text" "transient-for" "type"
+                               "type-hint" "urgency-hint" "valign" "vexpand"
+                               "vexpand-set" "visible" "width-request" "window"
+                               "window-position")
              (stable-sort (mapcar #'param-spec-name
                                   (g-object-class-list-properties "GtkDialog"))
                           #'string-lessp)))
@@ -116,7 +117,8 @@
                "scroll-arrow-hlength" "scroll-arrow-vlength"
                "secondary-cursor-color" "separator-height" "separator-width"
                "text-handle-height" "text-handle-width" "visited-link-color"
-               "wide-separators" "window-dragging" "resize-grip-height"
+               "wide-separators" "window-dragging" "decoration-button-layout"
+               "decoration-resize-handle" "resize-grip-height"
                "resize-grip-width" "action-area-border" "button-spacing"
                "content-area-border" "content-area-spacing")
              (mapcar #'param-spec-name

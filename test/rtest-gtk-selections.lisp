@@ -142,59 +142,38 @@
 (test gtk-target-list-add-image-targets.1
   (let ((target-list (gtk-target-list-new)))
     (gtk-target-list-add-image-targets target-list 0 t)
-    (is (equal '("image/png"
-                 "image/jpeg"
-                 "image/x-icon"
-                 "image/x-ico"
-                 "image/x-win-bitmap"
-                 "image/tiff"
-                 "image/bmp"
-                 "image/x-bmp"
-                 "image/x-MS-bmp")
-               (mapcar #'gtk-target-entry-target
-                       (gtk-target-table-new-from-list target-list))))))
+    (is (equal '("image/bmp" "image/jpeg" "image/png"
+                 "image/tiff" "image/x-bmp" "image/x-ico"
+                 "image/x-icon" "image/x-MS-bmp"
+                 "image/x-win-bitmap")
+               (stable-sort (mapcar #'gtk-target-entry-target
+                                    (gtk-target-table-new-from-list target-list))
+                            #'string-lessp)))))
 
 (test gtk-target-list-add-image-targets.2
   (let ((target-list (gtk-target-list-new)))
     (gtk-target-list-add-image-targets target-list 0 nil)
-    (is (equal '("image/png"
-                 "image/x-gdkpixdata"
-                 "image/jpeg"
-                 "image/vnd.wap.wbmp"
-                 "image/x-tga"
-                 "image/x-pcx"
-                 "image/x-xpixmap"
-                 "image/svg+xml"
-                 "image/svg"
-                 "image/svg-xml"
-                 "image/vnd.adobe.svg+xml"
-                 "text/xml-svg"
-                 "image/svg+xml-compressed"
-                 "image/x-xbitmap"
-                 "image/x-cmu-raster"
-                 "image/x-sun-raster"
-                 "image/x-quicktime"
-                 "image/qtif"
-                 "image/jp2"
-                 "image/jpeg2000"
-                 "image/jpx"
-                 "image/x-icns"
-                 "image/x-wmf"
-                 "image/gif"
-                 "image/x-icon"
-                 "image/x-ico"
-                 "image/x-win-bitmap"
-                 "image/x-portable-anymap"
-                 "image/x-portable-bitmap"
-                 "image/x-portable-graymap"
-                 "image/x-portable-pixmap"
-                 "application/x-navi-animation"
-                 "image/tiff"
-                 "image/bmp"
-                 "image/x-bmp"
-                 "image/x-MS-bmp")
-               (mapcar #'gtk-target-entry-target
-                       (gtk-target-table-new-from-list target-list))))))
+    (is (equal '("application/x-navi-animation" "image/bmp"
+                               "image/gif" "image/jp2" "image/jpeg"
+                               "image/jpeg2000" "image/jpx" "image/png"
+                               "image/qtif" "image/svg" "image/svg+xml"
+                               "image/svg+xml-compressed" "image/svg-xml"
+                               "image/tiff" "image/vnd.adobe.svg+xml"
+                               "image/vnd.wap.wbmp" "image/x-bmp"
+                               "image/x-cmu-raster" "image/x-gdkpixdata"
+                               "image/x-icns" "image/x-ico" "image/x-icon"
+                               "image/x-MS-bmp" "image/x-pcx"
+                               "image/x-portable-anymap"
+                               "image/x-portable-bitmap"
+                               "image/x-portable-graymap"
+                               "image/x-portable-pixmap" "image/x-quicktime"
+                               "image/x-sun-raster" "image/x-tga"
+                               "image/x-win-bitmap" "image/x-wmf"
+                               "image/x-xbitmap" "image/x-xpixmap"
+                               "text/xml-svg")
+               (stable-sort (mapcar #'gtk-target-entry-target
+                                    (gtk-target-table-new-from-list target-list))
+                            #'string-lessp)))))
 
 ;;;   gtk_target_list_add_uri_targets
 

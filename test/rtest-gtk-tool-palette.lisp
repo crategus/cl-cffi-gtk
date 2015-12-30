@@ -71,8 +71,10 @@
                (foreign-slot-value query '(:struct g-type-query) :type)))
     (is (equal "GtkToolPalette"
                (foreign-slot-value query '(:struct g-type-query) :type-name)))
-    (is (= 504 (foreign-slot-value query '(:struct g-type-query) :class-size)))
-    (is (=  24 (foreign-slot-value query '(:struct g-type-query) :instance-size))))
+    (is (= 1008 
+           (foreign-slot-value query '(:struct g-type-query) :class-size)))
+    (is (= 48
+           (foreign-slot-value query '(:struct g-type-query) :instance-size))))
 
   ;; Get the names of the class properties.
   (is (equal '("app-paintable" "border-width" "can-default"
@@ -85,7 +87,7 @@
                                "margin-bottom" "margin-left" "margin-right"
                                "margin-top" "name" "no-show-all" "opacity"
                                "orientation" "parent" "receives-default"
-                               "resize-mode" "sensitive" "style"
+                               "resize-mode" "scale-factor" "sensitive" "style"
                                "toolbar-style" "tooltip-markup" "tooltip-text"
                                "vadjustment" "valign" "vexpand" "vexpand-set"
                                "visible" "vscroll-policy" "width-request"

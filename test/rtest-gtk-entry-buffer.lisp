@@ -1,4 +1,3 @@
-
 (def-suite gtk-entry-buffer :in gtk-suite)
 (in-suite gtk-entry-buffer)
 
@@ -27,8 +26,10 @@
     (is (equal (gtype "GtkEntryBuffer") (g-type-from-class class)))
     (is (equal (gtype "GtkEntryBuffer") (g-object-class-type class)))
     (is (equal "GtkEntryBuffer" (g-object-class-name class)))
-    (is (equal (gtype "GtkEntryBuffer") (g-type-from-class  (g-type-class-peek "GtkEntryBuffer"))))
-    (is (equal (gtype "GtkEntryBuffer") (g-type-from-class  (g-type-class-peek-static "GtkEntryBuffer"))))
+    (is (equal (gtype "GtkEntryBuffer")
+               (g-type-from-class  (g-type-class-peek "GtkEntryBuffer"))))
+    (is (equal (gtype "GtkEntryBuffer")
+               (g-type-from-class  (g-type-class-peek-static "GtkEntryBuffer"))))
     (g-type-class-unref class))
 
   ;; Check infos about the Lisp class implementation
@@ -68,12 +69,13 @@
                (foreign-slot-value query '(:struct g-type-query) :type)))
     (is (equal "GtkEntryBuffer"
                (foreign-slot-value query '(:struct g-type-query) :type-name)))
-    (is (= 124 (foreign-slot-value query '(:struct g-type-query) :class-size)))
-    (is (=  16 (foreign-slot-value query '(:struct g-type-query) :instance-size))))
+    (is (= 248 (foreign-slot-value query '(:struct g-type-query) :class-size)))
+    (is (=  32 (foreign-slot-value query '(:struct g-type-query) :instance-size))))
 
   ;; Get the names of the class properties.
   (is (equal '("text" "length" "max-length")
-             (mapcar #'param-spec-name (g-object-class-list-properties "GtkEntryBuffer"))))
+             (mapcar #'param-spec-name 
+                     (g-object-class-list-properties "GtkEntryBuffer"))))
 
   ;; Get the class definition
   (is (equal '(DEFINE-G-OBJECT-CLASS "GtkEntryBuffer" GTK-ENTRY-BUFFER
@@ -115,69 +117,69 @@
 
 (test gtk-entry-buffer-get-text
   (let ((buffer (gtk-entry-buffer-new "text")))
-    (is (equal "text" (gtk-entry-buffer-get-text buffer)))))
+    (is (equal "text" (gtk-entry-buffer-text buffer)))))
 
 ;;;   gtk_entry_buffer_set_text
 
-(test gtk-entry-buffer-get-text
+(test gtk-entry-buffer-set-text
   (let ((buffer (gtk-entry-buffer-new "text")))
-    (is (equal "text" (gtk-entry-buffer-get-text buffer)))
-    (gtk-entry-buffer-set-text buffer "new text")
-    (is (equal "new text" (gtk-entry-buffer-get-text buffer)))
+    (is (equal "text" (gtk-entry-buffer-text buffer)))
+    (setf (gtk-entry-buffer-text buffer) "new text")
+    (is (equal "new text" (gtk-entry-buffer-text buffer)))
     (is (= 8 (gtk-entry-buffer-length buffer)))))
 
 ;;;   gtk_entry_buffer_get_bytes
 
 (test gtk-entry-buffer-get-bytes
   (let ((buffer (gtk-entry-buffer-new "text")))
-    (is (equal "text" (gtk-entry-buffer-get-text buffer)))
+    (is (equal "text" (gtk-entry-buffer-text buffer)))
     (is (= 4 (gtk-entry-buffer-get-bytes buffer)))
-    (gtk-entry-buffer-set-text buffer "Äpfel")
-    (is (equal "Äpfel" (gtk-entry-buffer-get-text buffer)))
+    (setf (gtk-entry-buffer-text buffer) "Äpfel")
+    (is (equal "Äpfel" (gtk-entry-buffer-text buffer)))
     (is (= 6 (gtk-entry-buffer-get-bytes buffer)))))
 
 ;;;   gtk_entry_buffer_get_length
 
 (test gtk-entry-buffer-get-length
   (let ((buffer (gtk-entry-buffer-new "Äpfel")))
-    (is (= 5 (gtk-entry-buffer-get-length buffer)))))
+    (is (= 5 (gtk-entry-buffer-length buffer)))))
 
 ;;;   gtk_entry_buffer_get_max_length
 
 (test gtk-entry-buffer-get-max-length
   (let ((buffer (gtk-entry-buffer-new "This is a text.")))
-    (is (= 0 (gtk-entry-buffer-get-max-length buffer)))))
+    (is (= 0 (gtk-entry-buffer-max-length buffer)))))
 
 ;;;   gtk_entry_buffer_set_max_length
 
 (test gtk-entry-buffer-set-max-length
   (let ((buffer (gtk-entry-buffer-new "This is a text.")))
-    (gtk-entry-buffer-set-max-length buffer 9)
-    (is (= 9 (gtk-entry-buffer-get-max-length buffer)))
-    (is (equal "This is a" (gtk-entry-buffer-get-text buffer)))))
+    (setf (gtk-entry-buffer-max-length buffer) 9)
+    (is (= 9 (gtk-entry-buffer-max-length buffer)))
+    (is (equal "This is a" (gtk-entry-buffer-text buffer)))))
 
 ;;;  gtk_entry_buffer_insert_text
 
 (test gtk-entry-buffer-insert-text
   (let ((buffer (gtk-entry-buffer-new)))
     (is (= 6 (gtk-entry-buffer-insert-text buffer 0 "first ")))
-    (is (equal "first " (gtk-entry-buffer-get-text buffer)))
+    (is (equal "first " (gtk-entry-buffer-text buffer)))
     (is (= 5 (gtk-entry-buffer-insert-text buffer 6 "third")))
-    (is (equal "first third" (gtk-entry-buffer-get-text buffer)))
+    (is (equal "first third" (gtk-entry-buffer-text buffer)))
     (is (= 7 (gtk-entry-buffer-insert-text buffer 6 "second ")))
-    (is (equal "first second third" (gtk-entry-buffer-get-text buffer)))
-    (gtk-entry-buffer-set-max-length buffer 27)
+    (is (equal "first second third" (gtk-entry-buffer-text buffer)))
+    (setf (gtk-entry-buffer-max-length buffer) 27)
     (is (= 9 (gtk-entry-buffer-insert-text buffer 6 "and than a ")))
-    (is (equal "first and than second third" (gtk-entry-buffer-get-text buffer)))))
+    (is (equal "first and than second third" (gtk-entry-buffer-text buffer)))))
 
 ;;;   gtk_entry_buffer_delete_text
 
 (test gtk-entry-buffer-delete-text
   (let ((buffer (gtk-entry-buffer-new "first second third")))
     (is (= 7 (gtk-entry-buffer-delete-text buffer 6 7)))
-    (is (equal "first third" (gtk-entry-buffer-get-text buffer)))
+    (is (equal "first third" (gtk-entry-buffer-text buffer)))
     (is (= 6 (gtk-entry-buffer-delete-text buffer 5 -1)))
-    (is (equal "first" (gtk-entry-buffer-get-text buffer)))))
+    (is (equal "first" (gtk-entry-buffer-text buffer)))))
 
 ;;;   gtk_entry_buffer_emit_deleted_text
 

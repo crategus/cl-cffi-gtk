@@ -69,8 +69,10 @@
                (foreign-slot-value query '(:struct g-type-query) :type)))
     (is (equal "GSimpleAction"
                (foreign-slot-value query '(:struct g-type-query) :type-name)))
-    (is (= 68 (foreign-slot-value query '(:struct g-type-query) :class-size)))
-    (is (= 28 (foreign-slot-value query '(:struct g-type-query) :instance-size))))
+    (is (= 136
+           (foreign-slot-value query '(:struct g-type-query) :class-size)))
+    (is (= 64
+           (foreign-slot-value query '(:struct g-type-query) :instance-size))))
 
   ;; Get the names of the class properties.
   (is (equal '("name" "parameter-type" "enabled" "state-type" "state")

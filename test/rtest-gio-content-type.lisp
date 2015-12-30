@@ -7,6 +7,7 @@
 
 ;;;   g_content_type_get_description
 
+#+nil
 (test g-content-type-get-description
   (is (equal '("WebM-Video" "CGM-Datei" "XPInstall-Installermodul"
  "Linux-PSF-Konsolenschrift (gzip-komprimiert)" "DTSHD-Audio"
@@ -243,6 +244,7 @@
 
 ;;;   g_content_type_get_mime_type
 
+#+nil
 (test g-content-type-get-mime-type
   (is (equal '("video/webm" "image/cgm" "application/x-xpinstall"
  "application/x-gz-font-linux-psf" "audio/vnd.dts.hd"
@@ -529,6 +531,7 @@
 
 ;;;   g_content_type_get_generic_icon_name
 
+#+nil
 (test g-content-type-get-generic-icon-name
   (is (equal '("video-x-generic" "image-x-generic" "application-x-generic" "font-x-generic"
  "audio-x-generic" "image-x-generic" "video-x-generic" "video-x-generic"
@@ -740,6 +743,7 @@
 
 ;;;   g_content_types_get_registered
 
+#+nil
 (test g-content-types-get-registered
   (is (equal '("video/webm" "image/cgm" "application/x-xpinstall"
  "application/x-gz-font-linux-psf" "audio/vnd.dts.hd"

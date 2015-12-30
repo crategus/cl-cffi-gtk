@@ -66,8 +66,10 @@
                (foreign-slot-value query '(:struct g-type-query) :type)))
     (is (equal "GThemedIcon"
                (foreign-slot-value query '(:struct g-type-query) :type-name)))
-    (is (= 68 (foreign-slot-value query '(:struct g-type-query) :class-size)))
-    (is (= 20 (foreign-slot-value query '(:struct g-type-query) :instance-size))))
+    (is (= 136
+           (foreign-slot-value query '(:struct g-type-query) :class-size)))
+    (is (= 40
+           (foreign-slot-value query '(:struct g-type-query) :instance-size))))
 
   ;; Get the names of the class properties.
   (is (equal '("name" "names" "use-default-fallbacks")

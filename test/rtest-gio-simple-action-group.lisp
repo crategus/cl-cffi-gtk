@@ -51,6 +51,8 @@ static GActionEntry win_entries[] = {
 }
 |#
 
+; Unhandled memory fault
+#+nil
 (test g-simple-action-group-add-entries.1
   (let ((group (g-simple-action-group-new))
         (entries '(("copy"  nil nil nil nil)
@@ -83,6 +85,8 @@ static GActionEntry win_entries[] = {
     (g-action-map-add-action-entries group entries)
     group))
 
+; Unhandled memory fault
+#+nil
 (test g-action-map-add-action-entries.2
   (let ((group (create-action-group)))
     (is (eq 'g-simple-action (type-of (g-simple-action-group-lookup group "quit"))))

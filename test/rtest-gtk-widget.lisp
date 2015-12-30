@@ -4,9 +4,183 @@
 
 ;;;     GtkRequisition
 ;;;     GtkAllocation
-;;;     GtkWidget
 
-;;;   gtk-widget-app-paintable
+;;; --- GtkWidget --------------------------------------------------------------
+
+(test gtk-widget-class
+  ;; Type checks
+  (is-true  (g-type-is-object "GtkWidget"))
+  (is-true  (g-type-is-abstract "GtkWidget"))
+  (is-true  (g-type-is-derived "GtkWidget"))
+  (is-false (g-type-is-fundamental "GtkWidget"))
+  (is-true  (g-type-is-value-type "GtkWidget"))
+  (is-true  (g-type-has-value-table "GtkWidget"))
+  (is-true  (g-type-is-classed "GtkWidget"))
+  (is-true  (g-type-is-instantiatable "GtkWidget")) ; Why is this true?
+  (is-true  (g-type-is-derivable "GtkWidget"))
+  (is-true  (g-type-is-deep-derivable "GtkWidget"))
+  (is-false (g-type-is-interface "GtkWidget"))
+
+  ;; Check the registered name
+  (is (eq 'gtk-widget
+          (registered-object-type-by-name "GtkWidget")))
+
+  ;; Check infos about the C class implementation
+  (let ((class (g-type-class-ref (gtype "GtkWidget"))))
+    (is (equal (gtype "GtkWidget") (g-type-from-class class)))
+    (is (equal (gtype "GtkWidget") (g-object-class-type class)))
+    (is (equal "GtkWidget" (g-object-class-name class)))
+    (is (equal (gtype "GtkWidget")
+               (g-type-from-class  (g-type-class-peek "GtkWidget"))))
+    (is (equal (gtype "GtkWidget")
+               (g-type-from-class  (g-type-class-peek-static "GtkWidget"))))
+    (g-type-class-unref class))
+
+  ;; Check infos about the Lisp class implementation
+  (let ((class (find-class 'gtk-widget)))
+    ;; Check the class name and type of the class
+    (is (eq 'gtk-widget (class-name class)))
+    (is (eq 'gobject-class (type-of class)))
+    (is (eq (find-class 'gobject-class) (class-of class)))
+    ;; Properties of the metaclass gobject-class
+    (is (equal "GtkWidget" (gobject-class-g-type-name class)))
+    (is (equal "GtkWidget" (gobject-class-direct-g-type-name class)))
+    (is (equal "gtk_widget_get_type"
+               (gobject-class-g-type-initializer class)))
+    (is-false (gobject-class-interface-p class)))
+
+  ;; Check some more GType information
+  (is (equal (gtype "GInitiallyUnowned") (g-type-parent "GtkWidget")))
+  (is (= 3 (g-type-depth "GtkWidget")))
+  (is (equal (gtype "GInitiallyUnowned")
+             (g-type-next-base "GtkWidget" "GObject")))
+  (is-true  (g-type-is-a "GtkWidget" "GObject"))
+  (is-true  (g-type-is-a "GtkWidget" "GInitiallyUnowned"))
+  (is-false (g-type-is-a "GtkWidget" "gboolean"))
+  (is-false (g-type-is-a "GtkWidget" "GtkWindow"))
+
+  ;; Check the children
+  (is (equal '("GtkMisc" "GtkContainer" "GtkRange" "GtkSeparator" "GtkInvisible"
+               "GtkProgressBar" "GtkLevelBar" "GtkSpinner" "GtkSwitch"
+               "GtkCellView" "GtkEntry" "GtkHSV" "GtkCalendar" "GtkDrawingArea")
+             (mapcar #'gtype-name (g-type-children "GtkWidget"))))
+             
+  ;; Check the interfaces
+  (is (equal '("AtkImplementorIface" "GtkBuildable")
+             (mapcar #'gtype-name (g-type-interfaces "GtkWidget"))))
+
+  ;; Query infos about the class
+  (with-foreign-object (query '(:struct g-type-query))
+    (g-type-query "GtkWidget" query)
+    (is (equal (gtype "GtkWidget")
+               (foreign-slot-value query '(:struct g-type-query) :type)))
+    (is (equal "GtkWidget"
+               (foreign-slot-value query '(:struct g-type-query) :type-name)))
+    (is (= 824
+           (foreign-slot-value query '(:struct g-type-query) :class-size)))
+    (is (= 32
+           (foreign-slot-value query '(:struct g-type-query) :instance-size))))
+
+  ;; Get the class properties.
+  (is (equal '("app-paintable" "can-default" "can-focus"
+                               "composite-child" "double-buffered" "events"
+                               "expand" "halign" "has-default" "has-focus"
+                               "has-tooltip" "height-request" "hexpand"
+                               "hexpand-set" "is-focus" "margin"
+                               "margin-bottom" "margin-left" "margin-right"
+                               "margin-top" "name" "no-show-all" "opacity"
+                               "parent" "receives-default" "scale-factor"
+                               "sensitive" "style" "tooltip-markup"
+                               "tooltip-text" "valign" "vexpand" "vexpand-set"
+                               "visible" "width-request" "window")
+             (stable-sort (mapcar #'param-spec-name
+                                  (g-object-class-list-properties "GtkWidget"))
+                          #'string-lessp)))
+
+  ;; Get the style properties.
+  (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern"
+               "focus-line-width" "focus-padding" "interior-focus" "link-color"
+               "scroll-arrow-hlength" "scroll-arrow-vlength"
+               "secondary-cursor-color" "separator-height" "separator-width"
+               "text-handle-height" "text-handle-width" "visited-link-color"
+               "wide-separators" "window-dragging")
+             (mapcar #'param-spec-name
+                     (gtk-widget-class-list-style-properties "GtkWidget"))))
+
+  ;; Get the names of the child properties
+  ;; No test because GtkWidget is not a Container
+
+  ;; Get the class definition
+  (is (equal '(DEFINE-G-OBJECT-CLASS "GtkWidget" GTK-WIDGET
+                       (:SUPERCLASS G-INITIALLY-UNOWNED :EXPORT T :INTERFACES
+                        ("AtkImplementorIface" "GtkBuildable")
+                        :TYPE-INITIALIZER "gtk_widget_get_type")
+                       ((APP-PAINTABLE GTK-WIDGET-APP-PAINTABLE "app-paintable"
+                         "gboolean" T T)
+                        (CAN-DEFAULT GTK-WIDGET-CAN-DEFAULT "can-default"
+                         "gboolean" T T)
+                        (CAN-FOCUS GTK-WIDGET-CAN-FOCUS "can-focus" "gboolean"
+                         T T)
+                        (COMPOSITE-CHILD GTK-WIDGET-COMPOSITE-CHILD
+                         "composite-child" "gboolean" T NIL)
+                        (DOUBLE-BUFFERED GTK-WIDGET-DOUBLE-BUFFERED
+                         "double-buffered" "gboolean" T T)
+                        (EVENTS GTK-WIDGET-EVENTS "events" "GdkEventMask" T T)
+                        (EXPAND GTK-WIDGET-EXPAND "expand" "gboolean" T T)
+                        (HALIGN GTK-WIDGET-HALIGN "halign" "GtkAlign" T T)
+                        (HAS-DEFAULT GTK-WIDGET-HAS-DEFAULT "has-default"
+                         "gboolean" T T)
+                        (HAS-FOCUS GTK-WIDGET-HAS-FOCUS "has-focus" "gboolean"
+                         T T)
+                        (HAS-TOOLTIP GTK-WIDGET-HAS-TOOLTIP "has-tooltip"
+                         "gboolean" T T)
+                        (HEIGHT-REQUEST GTK-WIDGET-HEIGHT-REQUEST
+                         "height-request" "gint" T T)
+                        (HEXPAND GTK-WIDGET-HEXPAND "hexpand" "gboolean" T T)
+                        (HEXPAND-SET GTK-WIDGET-HEXPAND-SET "hexpand-set"
+                         "gboolean" T T)
+                        (IS-FOCUS GTK-WIDGET-IS-FOCUS "is-focus" "gboolean" T
+                         T)
+                        (MARGIN GTK-WIDGET-MARGIN "margin" "gint" T T)
+                        (MARGIN-BOTTOM GTK-WIDGET-MARGIN-BOTTOM "margin-bottom"
+                         "gint" T T)
+                        (MARGIN-LEFT GTK-WIDGET-MARGIN-LEFT "margin-left"
+                         "gint" T T)
+                        (MARGIN-RIGHT GTK-WIDGET-MARGIN-RIGHT "margin-right"
+                         "gint" T T)
+                        (MARGIN-TOP GTK-WIDGET-MARGIN-TOP "margin-top" "gint" T
+                         T)
+                        (NAME GTK-WIDGET-NAME "name" "gchararray" T T)
+                        (NO-SHOW-ALL GTK-WIDGET-NO-SHOW-ALL "no-show-all"
+                         "gboolean" T T)
+                        (OPACITY GTK-WIDGET-OPACITY "opacity" "gdouble" T T)
+                        (PARENT GTK-WIDGET-PARENT "parent" "GtkContainer" T T)
+                        (RECEIVES-DEFAULT GTK-WIDGET-RECEIVES-DEFAULT
+                         "receives-default" "gboolean" T T)
+                        (SCALE-FACTOR GTK-WIDGET-SCALE-FACTOR "scale-factor"
+                         "gint" T NIL)
+                        (SENSITIVE GTK-WIDGET-SENSITIVE "sensitive" "gboolean"
+                         T T)
+                        (STYLE GTK-WIDGET-STYLE "style" "GtkStyle" T T)
+                        (TOOLTIP-MARKUP GTK-WIDGET-TOOLTIP-MARKUP
+                         "tooltip-markup" "gchararray" T T)
+                        (TOOLTIP-TEXT GTK-WIDGET-TOOLTIP-TEXT "tooltip-text"
+                         "gchararray" T T)
+                        (VALIGN GTK-WIDGET-VALIGN "valign" "GtkAlign" T T)
+                        (VEXPAND GTK-WIDGET-VEXPAND "vexpand" "gboolean" T T)
+                        (VEXPAND-SET GTK-WIDGET-VEXPAND-SET "vexpand-set"
+                         "gboolean" T T)
+                        (VISIBLE GTK-WIDGET-VISIBLE "visible" "gboolean" T T)
+                        (WIDTH-REQUEST GTK-WIDGET-WIDTH-REQUEST "width-request"
+                         "gint" T T)
+                        (WINDOW GTK-WIDGET-WINDOW "window" "GdkWindow" T NIL)))
+             (get-g-type-definition "GtkWidget"))))
+
+;;; ----------------------------------------------------------------------------
+;;; Check accessor functions of GtkWidget
+;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-widget-app-paintable -----------------------------------------------
 
 (test gtk-widget-app-paintable.1
   (let ((widget (make-instance 'gtk-label)))
@@ -22,7 +196,7 @@
     (is-false (setf (gtk-widget-app-paintable widget) nil))
     (is-false (gtk-widget-app-paintable widget))))
 
-;;;   gtk-widget-can-default
+;;; --- gtk-widget-can-default -------------------------------------------------
 
 (test gtk-widget-can-default.1
   (let ((widget (make-instance 'gtk-button)))
@@ -38,7 +212,7 @@
     (is-false (setf (gtk-widget-can-default widget) nil))
     (is-false (gtk-widget-can-default widget))))
 
-;;;   gtk-widget-can-focus
+;;; --- gtk-widget-can-focus ---------------------------------------------------
 
 (test gtk-widget-can-focus.1
   (let ((widget (make-instance 'gtk-button)))
@@ -49,12 +223,12 @@
 
 (test gtk-widget-can-focus.2
   (let ((widget (make-instance 'gtk-button :can-focus nil)))
-    ;; The value is set false.
+    ;; The value is set to false.
     (is-false (gtk-widget-can-focus widget))
     (is-true (setf (gtk-widget-can-focus widget) t))
     (is-true (gtk-widget-can-focus widget))))
 
-;;;   gtk-widget-composite-child
+;;; --- gtk-widget-composite-child ---------------------------------------------
 
 (test gtk-widget-composite-child
   (let ((widget (make-instance 'gtk-button)))
@@ -63,7 +237,7 @@
     ;; "composite-child" is not writable.
     (signals (error) (setf (gtk-widget-composite-child widget) t))))
 
-;;;   gtk-widget-double-buffered
+;;; --- gtk-widget-double-buffered ---------------------------------------------
 
 (test gtk-widget-double-buffered.1
   (let ((widget (make-instance 'gtk-button)))
@@ -74,12 +248,12 @@
 
 (test gtk-widget-double-buffered.2
   (let ((widget (make-instance 'gtk-button :double-buffered nil)))
-    ;; The value is set false.
+    ;; The value is set to false.
     (is-false (gtk-widget-double-buffered widget))
     (is-true (setf (gtk-widget-double-buffered widget) t))
     (is-true (gtk-widget-double-buffered widget))))
 
-;;;   gtk-widget-events
+;;; --- gtk-widget-events ------------------------------------------------------
 
 (test gtk-widget-events.1
   (let ((widget (make-instance 'gtk-event-box)))
@@ -91,10 +265,10 @@
 
 (test gtk-widget-events.2
   (let ((widget (make-instance 'gtk-event-box :events '(:button-press-mask))))
-    ;; The value is set '(:button-press-mask).
+    ;; The value is set to '(:button-press-mask).
     (is (equal '(:button-press-mask) (gtk-widget-events widget)))))
 
-;;;   gtk-widget-expand
+;;; --- gtk-widget-expand ------------------------------------------------------
 
 (test gtk-widget-expand.1
   (let ((widget (make-instance 'gtk-button)))
@@ -123,7 +297,7 @@
     (is-true (gtk-widget-vexpand widget))
     (is-true (gtk-widget-vexpand-set widget))))
 
-;;;   gtk-widget-halign
+;;; --- gtk-widget-halign ------------------------------------------------------
 
 (test gtk-widget-halign.1
   (let ((widget (make-instance 'gtk-button)))
@@ -134,12 +308,12 @@
 
 (test gtk-widget-halign.2
   (let ((widget (make-instance 'gtk-button :halign :end)))
-    ;; The value is set :end.
+    ;; The value is set to :end.
     (is (eql :end (gtk-widget-halign widget)))
     (is (eql :center (setf (gtk-widget-halign widget) :center)))
     (is (eql :center (gtk-widget-halign widget)))))
 
-;;;   gtk-widget-has-default
+;;; --- gtk-widget-has-default -------------------------------------------------
 
 (test gtk-widget-has-default
   (let ((window (make-instance 'gtk-window :type :toplevel))
@@ -152,7 +326,7 @@
     (gtk-widget-grab-focus button)
     (is-true (gtk-widget-has-default button))))
 
-;;;   gtk-widget-has-focus
+;;; --- gtk-widget-has-focus ---------------------------------------------------
 
 ;; Implement a test which gives a widget the focus.
 
@@ -169,23 +343,23 @@
     ;; This dos not return the expected true value.
     (is-false (gtk-widget-has-focus button))))
 
-;;;   gtk-widget-has-tooltip
+;;; --- gtk-widget-has-tooltip -------------------------------------------------
 
 (test gtk-widget-has-tooltip.1
   (let ((widget (make-instance 'gtk-button)))
     ;; The default value is false.
     (is-false (gtk-widget-has-tooltip widget))
-    ;; Set a tooltip text.
+    ;; Set a tooltip text and check again.
     (is (equal "Tooltip" (setf (gtk-widget-tooltip-text widget) "Tooltip")))
     (is-true (gtk-widget-has-tooltip widget))))
 
 (test gtk-widget-has-tooltip.2
   (let ((widget (make-instance 'gtk-button :tooltip-text "Tooltip")))
-    ;; The value is set true.
+    ;; A tooltip is added.
     (is-true (gtk-widget-has-tooltip widget))
     (is (equal "Tooltip" (gtk-widget-tooltip-text widget)))))
 
-;;;   gtk-widget-height-request
+;;; --- gtk-widget-height-request ----------------------------------------------
 
 (test gtk-widget-height-request
   (let ((widget (make-instance 'gtk-button)))
@@ -194,7 +368,6 @@
     (is (eql 10 (gtk-widget-height-request widget)))))
 
 #|
-  @see-slot{gtk-widget-height-request}
   @see-slot{gtk-widget-hexpand}
   @see-slot{gtk-widget-hexpand-set}
   @see-slot{gtk-widget-is-focus}
@@ -208,13 +381,16 @@
   @see-slot{gtk-widget-opacity}
   @see-slot{gtk-widget-parent}
   @see-slot{gtk-widget-receives-default}
+
+scale-factor  
+
   @see-slot{gtk-widget-sensitive}
   @see-slot{gtk-widget-style}
   @see-slot{gtk-widget-tooltip-markup}
   @see-slot{gtk-widget-tooltip-text}
 |#
 
-;;;   gtk-widget-valign
+;;; --- gtk-widget-valign ------------------------------------------------------
 
 (test gtk-widget-valign.1
   (let ((widget (make-instance 'gtk-button)))
@@ -225,7 +401,7 @@
 
 (test gtk-widget-valign.2
   (let ((widget (make-instance 'gtk-button :valign :end)))
-    ;; The value is set :end.
+    ;; The value is set to :end.
     (is (eql :end (gtk-widget-valign widget)))
     (is (eql :center (setf (gtk-widget-valign widget) :center)))
     (is (eql :center (gtk-widget-valign widget)))))
@@ -236,7 +412,7 @@
   @see-slot{gtk-widget-visible}
 |#
 
-;;;   gtk-widget-width-request
+;;; --- gtk-widget-width-request -----------------------------------------------
   
 (test gtk-widget-width-request
   (let ((widget (make-instance 'gtk-button)))
@@ -248,8 +424,8 @@
   @see-slot{gtk-widget-window}
 |#
 
+;;; ----------------------------------------------------------------------------
 
-;;;     GtkWidgetClass
 ;;;     GtkSelectionData
 ;;;     GtkWidgetAuxInfo
 ;;;     GtkWidgetHelpType
@@ -529,7 +705,18 @@
 ;;;     gtk_widget_get_preferred_width
 ;;;     gtk_widget_get_preferred_height_for_width
 ;;;     gtk_widget_get_preferred_width_for_height
-;;;     gtk_widget_get_request_mode
+
+;;; --- gtk_widget_get_request_mode --------------------------------------------
+
+(test gtk-widget-get-request-mode.1
+  (is (eql :constant-size
+           (gtk-widget-get-request-mode (make-instance 'gtk-button)))))
+
+(test gtk-widget-get-request-mode.2
+  (is (eql :constant-size
+           (gtk-widget-get-request-mode (make-instance 'gtk-button 
+                                                       :label "Hello")))))
+
 ;;;     gtk_widget_get_preferred_size
 ;;;     gtk_distribute_natural_allocation
 ;;;
