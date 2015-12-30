@@ -266,7 +266,7 @@
     Labels can automatically wrap text if you call the function
     @fun{gtk-label-set-line-wrap}.
 
-    The function @fun{gtk-label-set-justify} sets how the lines in a label align
+    The function @fun{gtk-label-justify} sets how the lines in a label align
     with one another. If you want to set how the label as a whole aligns in its
     available space, see the function @fun{gtk-misc-set-alignment}.
 
@@ -567,7 +567,7 @@
 (setf (gethash 'gtk-label-justify atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-label-justify 'function)
- "@version{2014-3-9}
+ "@version{2015-2-22}
   @argument[object]{a @class{gtk-label} widget}
   @argument[jtype]{a @symbol{gtk-justification}}
   @syntax[]{(gtk-label-justify object) => jtype}
@@ -580,7 +580,7 @@
   The generic function @sym{gtk-label-justify} returns the justification of
   type @symbol{gtk-justification} of the label.
 
-  The generic function @sym{(setf gtk-label-justify} sets the alignment of the
+  The generic function @sym{(setf gtk-label-justify)} sets the alignment of the
   lines in the text of the label relative to each other.
 
   @code{:left} is the default value when the widget is first created with the
