@@ -5,11 +5,11 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.10. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2015 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -31,11 +31,9 @@
 ;;;
 ;;; GtkEditable
 ;;;
-;;; Interface for text-editing widgets
+;;;     Interface for text-editing widgets
 ;;;
-;;; Synopsis
-;;;
-;;;     GtkEditable
+;;; Functions
 ;;;
 ;;;     gtk_editable_select_region
 ;;;     gtk_editable_get_selection_bounds
@@ -50,6 +48,25 @@
 ;;;     gtk_editable_get_position
 ;;;     gtk_editable_set_editable
 ;;;     gtk_editable_get_editable
+;;;
+;;; Signals
+;;;
+;;;     changed         Run Last
+;;;     delete-text     Run Last
+;;;     insert-text     Run Last
+;;;
+;;; Types and Values
+;;;
+;;;     class gtk-editable
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GInterface
+;;;      +--- GtkEditable
+;;;
+;;; Known Implementations
+;;;
+;;; GtkEditable is implemented by GtkEntry, GtkSearchEntry and GtkSpinButton.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -62,15 +79,13 @@
   (:export t
    :type-initializer "gtk_editable_get_type"))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-editable atdoc:*class-name-alias*) "Interface"
       (documentation 'gtk-editable 'type)
  "@version{2013-4-28}
   @begin{short}
-    The @sym{gtk-editable} interface is an interface which should be implemented
-    by text editing widgets, such as @class{gtk-entry} and
+    The @sym{gtk-editable} interface is an interface which should be
+    implemented by text editing widgets, such as @class{gtk-entry} and
     @class{gtk-spin-button}. It contains functions for generically manipulating
     an editable widget, a large number of action signals used for key bindings,
     and several signals that an application can connect to to modify the
@@ -174,7 +189,8 @@
   the the characters selected are those characters from @arg{start} to the end
   of the text.
 
-  Note that positions are specified in characters, not bytes."
+  Note that positions are specified in characters, not bytes.
+  @see-class{gtk-editable}"
   (editable (g-object gtk-editable))
   (start :int)
   (end :int))
@@ -208,7 +224,8 @@
   end. If no text was selected both will be identical and @code{nil} will be
   returned.
 
-  Note that positions are specified in characters, not bytes."
+  Note that positions are specified in characters, not bytes.
+  @see-class{gtk-editable}"
   (with-foreign-objects ((start :int) (end :int))
     (let ((selected-p (%gtk-editable-get-selection-bounds editable start end)))
       (values selected-p
@@ -229,17 +246,19 @@
 
 (defun gtk-editable-insert-text (editable text position)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-28}
+ "@version{2015-12-29}
   @argument[editable]{a @class{gtk-editable} object}
   @argument[new-text]{the text to append}
   @argument[position]{location of the position text will be inserted at}
+  @return[new-position]{Position after the newly inserted text.}
   @begin{short}
     Inserts @arg{new-text} into the contents of the widget, at position
     @arg{position}.
   @end{short}
 
   Note that the @arg{position} is in characters, not in bytes. The function
-  updates position to point after the newly inserted text."
+  returns the position to point after the newly inserted text.
+  @see-class{gtk-editable}"
   (with-foreign-object (pos :int)
     (setf (mem-ref pos :int) position)
     (%gtk-editable-insert-text editable text (length text) pos)
