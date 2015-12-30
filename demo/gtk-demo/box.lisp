@@ -167,7 +167,7 @@
                  (gtk-frame-get-label-align frame)
                (declare (ignore xalign))
                (gtk-frame-set-label-align frame
-                                          (gtk-spin-button-get-value spin)
+                                          (gtk-spin-button-value spin)
                                           yalign))))
         (g-signal-connect y-spin "value-changed"
            (lambda (spin)
@@ -176,7 +176,7 @@
                (declare (ignore yalign))
                (gtk-frame-set-label-align frame
                                           xalign
-                                          (gtk-spin-button-get-value spin)))))
+                                          (gtk-spin-button-value spin)))))
         (gtk-container-add action
                            (make-instance 'gtk-label
                                           :use-markup t

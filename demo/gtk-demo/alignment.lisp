@@ -88,11 +88,11 @@
         (g-signal-connect x-spin "value-changed"
            (lambda (spin)
              (setf (gtk-alignment-xalign alignment)
-                   (gtk-spin-button-get-value spin))))
+                   (gtk-spin-button-value spin))))
         (g-signal-connect y-spin "value-changed"
            (lambda (spin)
              (setf (gtk-alignment-yalign alignment)
-                   (gtk-spin-button-get-value spin))))
+                   (gtk-spin-button-value spin))))
         (gtk-container-add action
                            (make-instance 'gtk-label
                                           :use-markup t
@@ -137,11 +137,11 @@
         (g-signal-connect x-spin "value-changed"
            (lambda (spin)
              (setf (gtk-alignment-xscale alignment)
-                   (gtk-spin-button-get-value spin))))
+                   (gtk-spin-button-value spin))))
         (g-signal-connect y-spin "value-changed"
            (lambda (spin)
              (setf (gtk-alignment-yscale alignment)
-                   (gtk-spin-button-get-value spin))))
+                   (gtk-spin-button-value spin))))
         (gtk-container-add action
                            (make-instance 'gtk-label
                                           :use-markup t
@@ -186,11 +186,11 @@
         (g-signal-connect x-spin "value-changed"
            (lambda (spin)
              (setf (gtk-alignment-top-padding alignment)
-                   (truncate (gtk-spin-button-get-value spin)))))
+                   (truncate (gtk-spin-button-value spin)))))
         (g-signal-connect y-spin "value-changed"
            (lambda (spin)
              (setf (gtk-alignment-bottom-padding alignment)
-                   (truncate (gtk-spin-button-get-value spin)))))
+                   (truncate (gtk-spin-button-value spin)))))
         (gtk-container-add action
                            (make-instance 'gtk-label
                                           :use-markup t
@@ -235,11 +235,11 @@
         (g-signal-connect x-spin "value-changed"
            (lambda (spin)
              (setf (gtk-alignment-left-padding alignment)
-                   (truncate (gtk-spin-button-get-value spin)))))
+                   (truncate (gtk-spin-button-value spin)))))
         (g-signal-connect y-spin "value-changed"
            (lambda (spin)
              (setf (gtk-alignment-right-padding alignment)
-                   (truncate (gtk-spin-button-get-value spin)))))
+                   (truncate (gtk-spin-button-value spin)))))
         (gtk-container-add action
                            (make-instance 'gtk-label
                                           :use-markup t
