@@ -2,11 +2,11 @@
 ;;; gtk.seach-entry.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.10 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2013 Dieter Kaiser
+;;; Copyright (C) 2013, 2014, 2015 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -28,12 +28,19 @@
 ;;;
 ;;; GtkSearchEntry
 ;;;
-;;; An entry which shows a search icon
+;;;     An entry which shows a search icon
 ;;;
-;;; Synopsis
+;;; Functions
 ;;;
-;;;     GtkSearchEntry
-;;;     gtk_search_entry_new
+;;;     gtk-search-entry-new
+;;;
+;;; Signals
+;;;
+;;;     search-changed   Run Last
+;;;
+;;; Types and Values
+;;;
+;;;     class gtk-search-entry
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -46,7 +53,7 @@
 ;;; Implemented Interfaces
 ;;;
 ;;; GtkSearchEntry implements AtkImplementorIface, GtkBuildable, GtkEditable
-;;; and GtkCellEditable.
+;;; and GtkCellEditable
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -67,7 +74,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-search-entry 'type)
- "@version{2013-8-30}
+ "@version{2015-12-28}
   @begin{short}
     @sym{gtk-search-entry} is a subclass of @class{gtk-entry} that has been
     tailored for use as a search entry.
@@ -80,6 +87,23 @@
   Note that the search/clear icon is shown using a secondary icon, and thus
   does not work if you are using the secondary icon position for some other
   purpose.
+
+  To make filtering appear more reactive, it is a good idea to not react to
+  every change in the entry text immediately, but only after a short delay.
+  To support this, @sym{gtk-search-entry} emits the \"search-changed\" signal
+  which can be used instead of the \"changed\" signal.
+  @begin[Signal Details]{dictionary}
+    @subheading{The \"search-changed\" signal}
+      @begin{pre}
+ lambda (entry)   : Run Last
+      @end{pre}
+      The \"search-changed\" signal is emitted with a short delay of 150
+      milliseconds after the last change to the entry text.
+      @begin[code]{table}
+        @entry[entry]{The object on which the signal was emitted.}
+      @end{table}
+      Since 3.10
+  @end{dictionary}
   @see-class{gtk-entry}")
 
 ;;; ----------------------------------------------------------------------------
