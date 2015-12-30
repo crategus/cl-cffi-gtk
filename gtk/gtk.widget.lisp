@@ -5,12 +5,12 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.8.6 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.10 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2014 Dieter Kaiser
+;;; Copyright (C) 2011 - 2015 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -34,13 +34,7 @@
 ;;;
 ;;; Base class for all widgets
 ;;;
-;;; Synopsis
-;;;
-;;;     GtkRequisition
-;;;     GtkAllocation
-;;;     GtkWidget
-;;;     GtkWidgetAuxInfo
-;;;     GtkWidgetHelpType
+;;; Functions
 ;;;
 ;;;     gtk_widget_new
 ;;;     gtk_widget_destroy
@@ -65,6 +59,7 @@
 ;;;     gtk_widget_size_request                            * deprecated *
 ;;;     gtk_widget_get_child_requisition                   * deprecated *
 ;;;     gtk_widget_size_allocate
+;;;     gtk_widget_size_allocate_with_baseline
 ;;;     gtk_widget_add_accelerator
 ;;;     gtk_widget_remove_accelerator
 ;;;     gtk_widget_set_accel_path
@@ -139,7 +134,6 @@
 ;;;     gtk_widget_push_composite_child
 ;;;     gtk_widget_queue_draw_area
 ;;;     gtk_widget_queue_draw_region
-;;;     gtk_widget_set_app_paintable
 ;;;     gtk_widget_set_double_buffered
 ;;;     gtk_widget_set_redraw_on_allocate
 ;;;     gtk_widget_set_composite_name
@@ -199,12 +193,7 @@
 ;;;     gtk_widget_get_allocated_height
 ;;;     gtk_widget_get_allocation
 ;;;     gtk_widget_set_allocation
-;;;     gtk_widget_get_app_paintable
-;;;     gtk_widget_get_can_default
-;;;     gtk_widget_set_can_default
-;;;     gtk_widget_get_can_focus
-;;;     gtk_widget_set_can_focus
-;;;     gtk_widget_get_double_buffered
+;;;     gtk_widget_get_allocated_baseline
 ;;;     gtk_widget_get_has_window
 ;;;     gtk_widget_set_has_window
 ;;;     gtk_widget_get_sensitive
@@ -253,6 +242,7 @@
 ;;;     gtk_widget_get_preferred_width
 ;;;     gtk_widget_get_preferred_height_for_width
 ;;;     gtk_widget_get_preferred_width_for_height
+;;;     gtk_widget_get_preferred_height_and_baseline_for_width
 ;;;     gtk_widget_get_request_mode
 ;;;     gtk_widget_get_preferred_size
 ;;;     gtk_distribute_natural_allocation
@@ -262,6 +252,7 @@
 ;;;     gtk_widget_get_halign
 ;;;     gtk_widget_set_halign
 ;;;     gtk_widget_get_valign
+;;;     gtk_widget_get_valign_with_baseline
 ;;;     gtk_widget_set_valign
 ;;;     gtk_widget_get_margin_left
 ;;;     gtk_widget_set_margin_left
@@ -282,6 +273,26 @@
 ;;;     gtk_widget_set_vexpand_set
 ;;;     gtk_widget_queue_compute_expand
 ;;;     gtk_widget_compute_expand
+;;;
+;;;     gtk_widget_init_template
+;;;     gtk_widget_class_set_template
+;;;     gtk_widget_class_set_template_from_resource
+;;;     gtk_widget_get_template_child
+;;;     gtk_widget_class_bind_template_child
+;;;     gtk_widget_class_bind_template_child_internal
+;;;     gtk_widget_class_bind_template_child_private
+;;;     gtk_widget_class_bind_template_child_internal_private
+;;;     gtk_widget_class_bind_template_child_full
+;;;     gtk_widget_class_bind_template_callback
+;;;     gtk_widget_class_bind_template_callback_full
+;;;     gtk_widget_class_set_connect_func
+;;;
+;;;     GtkRequisition
+;;;     GtkAllocation
+;;;     GtkWidget
+;;;     GtkWidgetAuxInfo
+;;;     GtkWidgetHelpType
+;;;
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -480,6 +491,10 @@
    (receives-default
     gtk-widget-receives-default
     "receives-default" "gboolean" t t)
+   #+gtk-3-10
+   (scale-factor
+    gtk-widget-scale-factor
+    "scale-factor" "gint" t nil)
    (sensitive
     gtk-widget-sensitive
     "sensitive" "gboolean" t t)
@@ -513,7 +528,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-widget 'type)
- "@version{2013-11-4}
+ "@version{2015-12-29}
   @begin{short}
     @sym{gtk-widget} is the base class all widgets in GTK+ derive from. It
     manages the widget lifecycle, states and style.
@@ -525,20 +540,18 @@
     space it needs, depending on the amount of horizontal space that it is given
     and similar for width-for-height. The most common example is a label that
     reflows to fill up the available width, wraps to fewer lines, and therefore
-    needs less height.
-
-    Height-for-width geometry management is implemented in GTK+ by way of five
-    virtual methods:
+    needs less height. Height-for-width geometry management is implemented in
+    GTK+ by way of six virtual methods:
     @begin{pre}
  GtkWidgetClass.get_request_mode()
  GtkWidgetClass.get_preferred_width()
  GtkWidgetClass.get_preferred_height()
  GtkWidgetClass.get_preferred_height_for_width()
  GtkWidgetClass.get_preferred_width_for_height()
+ GtkWidgetClass.get_preferred_height_and_baseline_for_width()
     @end{pre}
     There are some important things to keep in mind when implementing
     height-for-width and when using it in container implementations.
-
     The geometry management system will query a widget hierarchy in only one
     orientation at a time. When widgets are initially queried for their minimum
     sizes it is generally done in two initial passes in the
@@ -662,6 +675,28 @@
     child of a container, you must use the wrapper APIs. Otherwise, you would
     not properly consider widget margins, @class{gtk-size-group}, and so forth.
 
+    Since 3.10 GTK+ also supports baseline vertical alignment of widgets. This
+    means that widgets are positioned such that the typographical baseline of
+    widgets in the same row are aligned. This happens if a widget supports
+    baselines, has a vertical alignment of @code{GTK_ALIGN_BASELINE}, and is
+    inside a container that supports baselines and has a natural \"row\" that
+    it aligns to the baseline, or a baseline assigned to it by the grandparent.
+
+    Baseline alignment support for a widget is done by the 
+    @code{GtkWidgetClass.get_preferred_height_and_baseline_for_width()} virtual
+    function. It allows you to report a baseline in combination with the minimum
+    and natural height. If there is no baseline you can return -1 to indicate
+    this. The default implementation of this virtual function calls into the
+    @code{GtkWidgetClass.get_preferred_height()} and 
+    @code{GtkWidgetClass.get_preferred_height_for_width()}, so if baselines are
+    not supported it doesn’t need to be implemented.
+
+    If a widget ends up baseline aligned it will be allocated all the space in
+    the parent as if it was @code{GTK_ALIGN_FILL}, but the selected baseline
+    can be found via @fun{gtk-widget-get-allocated-baseline}. If this has a
+    value other than -1 you need to align the widget such that the baseline
+    appears at the position.
+
   @subheading{Style Properties}
     @sym{gtk-widget} introduces style properties - these are basically object
     properties that are stored not on the object, but in the style object
@@ -725,6 +760,57 @@
    </style>
  </object>
     @end{pre}
+  @subheading{Building composite widgets from template XML}
+    @sym{gtk-widget} exposes some facilities to automate the proceedure of
+    creating composite widgets using @class{gtk-builder} interface description
+    language.
+
+    To create composite widgets with @class{gtk-builder} XML, one must associate
+    the interface description with the widget class at class initialization time
+    using the function @fun{gtk-widget-class-set-template}.
+
+    The interface description semantics expected in composite template
+    descriptions is slightly different from regulare @class{gtk-builder} XML.
+
+    Unlike regular interface descriptions, @fun{gtk-widget-class-set-template}
+    will expect a <template> tag as a direct child of the toplevel <interface>
+    tag. The <template> tag must specify the \"class\" attribute which must be
+    the type name of the widget. Optionally, the \"parent\" attribute may be
+    specified to specify the direct parent type of the widget type, this is
+    ignored by the @class{gtk-builder} but required for Glade to introspect what
+    kind of properties and internal children exist for a given type when the
+    actual type does not exist.
+
+    The XML which is contained inside the <template> tag behaves as if it were
+    added to the <object> tag defining widget itself. You may set properties on
+    widget by inserting <property> tags into the <template> tag, and also add
+    <child> tags to add children and extend widget in the normal way you would
+    with <object> tags.
+
+    Additionally, <object> tags can also be added before and after the initial
+    <template> tag in the normal way, allowing one to define auxilary objects
+    which might be referenced by other widgets declared as children of the
+    <template> tag.
+
+    @b{Example 71:} A @class{btk-builder} Template Definition
+      @begin{pre}
+<interface>
+  <template class=\"FooWidget\" parent=\"GtkBox\">
+    <property name=\"orientation\">GTK_ORIENTATION_HORIZONTAL</property>
+    <property name=\"spacing\">4</property>
+    <child>
+      <object class=\"GtkButton\" id=\"hello_button\">
+        <property name=\"label\">Hello World</property>
+      </object>
+    </child>
+    <child>
+      <object class=\"GtkButton\" id=\"goodbye_button\">
+        <property name=\"label\">Goodbye World</property>
+      </object>
+    </child>
+  </template>
+</interface>
+      @end{pre}
   @begin[Style Property Details]{dictionary}
     @subheading{The \"cursor-aspect-ratio\" style property}
       @code{\"cursor-aspect-ratio\"} of type @code{:float} (Read) @br{}
@@ -802,6 +888,18 @@
       Allowed values: >= 0 @br{}
       Default value: 0 @br{}
       Since 2.10
+
+    @subheading{The \"text-handle-height\" style property}
+      @code{\"text-handle-height\"} of type @code{:int} (Read) @br{}
+      Height of text selection handles. @br{}
+      Allowed values: >= 1 @br{}
+      Default value: 20
+
+    @subheading{The \"text-handle-width\" style property}
+      @code{\"text-handle-width\"} of type @code{:int} (Read) @br{}
+      Width of text selection handles. @br{}
+      Allowed values: >= 1 @br{}
+      Default value: 16
 
     @subheading{The \"visited-link-color\" style property}
       @code{\"visited-link-color\"} of type @class{gdk-color} (Read) @br{}
@@ -1392,6 +1490,8 @@
       @begin{pre}
  lambda (widget)   : Run First
       @end{pre}
+      The \"hide\" signal is emitted when @arg{widget} is hidden, for example
+      with the function @fun{gtk-widget-hide}.
       @begin[code]{table}
         @enty[widget]{The object which received the signal.}
       @end{table}
@@ -1475,6 +1575,13 @@
       @begin{pre}
  lambda (widget)   : Run First
       @end{pre}
+      The \"map\" signal is emitted when @arg{widget} is going to be mapped,
+      that is when the widget is visible (which is controlled with
+      @fun{gtk-widget-visible}) and all its parents up to the toplevel widget
+      are also visible. Once the map has occurred, the \"map-event\" signal
+      will be emitted. The \"map\" signal can be used to determine whether a
+      widget will be drawn, for instance it can resume an animation that was
+      stopped during the emission of \"unmap\".
       @begin[code]{table}
         @entry[widget]{The object which received the signal.}
       @end{table}
@@ -1501,6 +1608,8 @@
       @begin[code]{table}
         @entry[widget]{The object which received the signal.}
         @entry[arg]{No documentation.}
+        @entry[Returns]{@code{True} to stop other handlers from being invoked
+          for the event. @code{Nil} to propagate the event further.}
       @end{table}
     @subheading{The \"motion-notify-event\" signal}
       @begin{pre}
@@ -1606,7 +1715,7 @@
      this is the case @em{true} should be returned, @code{nil} otherwise. Note
      that if @arg{keyboard-mode} is @em{true}, the values of @arg{x} and @arg{y}
      are undefined and should not be used. The signal handler is free to
-     manipulate tooltip with the therefore destined function calls.
+     manipulate @arg{tooltip} with the therefore destined function calls.
      @begin[code]{table}
        @entry[widget]{The object which received the signal.}
        @entry[x]{The x coordinate of the cursor position where the request has
@@ -1625,6 +1734,10 @@
       @begin{pre}
  lambda (widget)   : Run First
       @end{pre}
+      The \"realize\" signal is emitted when @arg{widget} is associated with a
+      @class{gdk-window}, which means that the function @fun{gtk-widget-realize}
+      has been called or the widget has been mapped (that is, it is going to be
+      drawn).
       @begin[code]{table}
         @entry[widget]{The object which received the signal.}
       @end{table}
@@ -1714,6 +1827,8 @@
       @begin{pre}
  lambda (widget)
       @end{pre}
+      The \"show\" signal is emitted when @arg{widget} is shown, for example
+      with the function @fun{gtk-widget-show}.
       @begin[code]{table}
         @entry[widget]{The object which received the signal.}
       @end{table}
@@ -1725,6 +1840,8 @@
         @entry[widget]{The object which received the signal.}
         @entry[help-type]{A value of the @symbol{gtk-widget-help-type}
           enumeration.}
+        @entry[Returns]{@code{True} to stop other handlers from being invoked
+          for the event. @code{Nil} to propagate the event further.}
       @end{table}
     @subheading{The \"size-allocate\" signal}
       @begin{pre}
@@ -1803,6 +1920,11 @@
       @begin{pre}
  lambda (widget)   : Run First
       @end{pre}
+      The \"unmap\" signal is emitted when @arg{widget} is going to be
+      unmapped, which means that either it or any of its parents up to the
+      toplevel widget have been set as hidden.
+      As \"unmap\" indicates that a widget will not be shown any longer, it can
+      be used to, for example, stop an animation on the widget.
       @begin[code]{table}
         @entry[widget]{The object which received the signal.}
       @end{table}
@@ -1826,6 +1948,10 @@
       @begin{pre}
  lambda (widget)   : Run Last
       @end{pre}
+      The \"unrealize\" signal is emitted when the @class{gdk-window} associated
+      with widget is destroyed, which means that the function 
+      @fun{gtk-widget-unrealize} has been called or the widget has been unmapped
+      (that is, it is going to be hidden).
       @begin[code]{table}
         @entry[widget]{The object which received the signal.}
       @end{table}
@@ -1886,6 +2012,7 @@
   @see-slot{gtk-widget-opacity}
   @see-slot{gtk-widget-parent}
   @see-slot{gtk-widget-receives-default}
+  @see-slot{gtk-widget-scale-factor}
   @see-slot{gtk-widget-sensitive}
   @see-slot{gtk-widget-style}
   @see-slot{gtk-widget-tooltip-markup}
@@ -2873,6 +3000,35 @@
   @see-class{gtk-widget}
   @see-function{gtk-widget-grab-default}")
 
+;;; --- gtk-widget-scale-factor ------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "scale-factor" 'gtk-widget) 't)
+ "The @code{\"scale-factor\"} property of type @code{:int} (Read) @br{}
+  The scale factor of the widget. See @fun{gtk-widget-scale-factor} for more
+  details about widget scaling. @br{}
+  Allowed values: >= 1 @br{}
+  Default value: 1 @br{}
+  Since 3.10")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-widget-scale-factor atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-widget-scale-factor 'function)
+ "@version{2015-12-29}
+  @argument[object]{a @class{gtk-widget} object}
+  @syntax[]{(gtk-widget-scale-factor object) => scale-factor}
+  @begin{short}
+    The generic function @sym{gtk-widget-scale-factor} retrieves the internal
+    scale factor that maps from window coordinates to the actual device pixels.
+  @end{short}
+  On traditional systems this is 1, on high density outputs, it can be a higher
+  value (typically 2).
+
+  Since 3.10
+  @see-class{gtk-widget}
+  @see-function{gdk-window-get-scale-factor}")
+
 ;;; --- gtk-widget-sensitive ---------------------------------------------------
 
 #+cl-cffi-gtk-documentation
@@ -2947,10 +3103,10 @@
   Sets the text of tooltip to be the given string, which is marked up with the
   Pango text markup language. Also see the function
   @fun{gtk-tooltip-set-markup}. This is a convenience property which will take
-  care of getting the tooltip shown if the given string is not @code{nil}:
-  The @code{\"has-tooltip\"} property will automatically be set to @em{true}
-  and there will be taken care of the \"query-tooltip\" signal in the default
-  signal handler. @br{}
+  care of getting the tooltip shown if the given string is not @code{nil}.
+  The @slot[gtk-widget]{has-tooltip} property will automatically be set to
+  @em{true} and there will be taken care of the \"query-tooltip\" signal in the
+  default signal handler. @br{}
   Default value: @code{nil} @br{}
   Since 2.12")
 
@@ -2992,10 +3148,10 @@
   (Read / Write) @br{}
   Sets the text of tooltip to be the given string. Also see the function
   @fun{gtk-tooltip-set-text}. This is a convenience property which will take
-  care of getting the tooltip shown if the given string is not @code{nil}:
-  The @code{\"has-tooltip\"} property will automatically be set to @em{true}
-  and there will be taken care of the \"query-tooltip\" signal in the default
-  signal handler. @br{}
+  care of getting the tooltip shown if the given string is not @code{nil}.
+  The @slot[gtk-widget]{has-tooltip} property will automatically be set to
+  @em{true} and there will be taken care of the \"query-tooltip\" signal in the
+  default signal handler. @br{}
   Default value: @code{nil} @br{}
   Since 2.12")
 
@@ -3576,11 +3732,11 @@
   region with the function @fun{cairo-clip} prior to calling this function.
   Also, it is fine to modify the context with the functions @fun{cairo-save}
   and @fun{cairo-push-group} prior to calling this function.
-
-  @subheading{Note}
-  Special purpose widgets may contain special code for rendering to the screen
-  and might appear differently on screen and when rendered using the function
-  @sym{gtk-widget-draw}.
+  @begin[Note]{dictionary}
+    Special purpose widgets may contain special code for rendering to the screen
+    and might appear differently on screen and when rendered using the function
+    @sym{gtk-widget-draw}.
+  @end{dictionary}
 
   Since 3.0
   @see-class{gtk-widget}
@@ -3631,11 +3787,12 @@
   in a @class{gtk-label}, @class{gtk-label} queues a resize to ensure there is
   enough space for the new text.
 
-  @subheading{Note}
-  You cannot call the function @sym{gtk-widget-queue-resize} on a widget from
-  inside its implementation of the @code{GtkWidgetClass::size_allocate} virtual
-  method. Calls to the function @sym{gtk-widget-queue-resize} from inside
-  @code{GtkWidgetClass::size_allocate} will be silently ignored.
+  @begin[Note]{dictionary}
+    You cannot call the function @sym{gtk-widget-queue-resize} on a widget from
+    inside its implementation of the @code{GtkWidgetClass::size_allocate}
+    virtual method. Calls to the function @sym{gtk-widget-queue-resize} from
+    inside @code{GtkWidgetClass::size_allocate} will be silently ignored.
+  @end{dictionary}
   @see-class{gtk-widget}"
   (widget (g-object gtk-widget)))
 
@@ -3892,6 +4049,41 @@
   (allocation (g-boxed-foreign gdk-rectangle)))
 
 (export 'gtk-widget-size-allocate)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_widget_size_allocate_with_baseline ()
+;;;
+;;; void
+;;; gtk_widget_size_allocate_with_baseline
+;;;                               (GtkWidget *widget,
+;;;                                GtkAllocation *allocation,
+;;;                                gint baseline);
+;;;
+;;; This function is only used by GtkContainer subclasses, to assign a size,
+;;; position and (optionally) baseline to their child widgets.
+;;;
+;;; In this function, the allocation and baseline may be adjusted. It will be
+;;; forced to a 1x1 minimum size, and the adjust_size_allocation virtual and
+;;; adjust_baseline_allocation methods on the child will be used to adjust the
+;;; allocation and baseline. Standard adjustments include removing the widget's
+;;; margins, and applying the widget’s “halign” and “valign” properties.
+;;;
+;;; If the child widget does not have a valign of GTK_ALIGN_BASELINE the
+;;; baseline argument is ignored and -1 is used instead.
+;;;
+;;; Parameters
+;;;
+;;; widget :
+;;;     a GtkWidget
+;;;
+;;; allocation
+;;;     position and size to be allocated to widget
+;;;
+;;; baseline
+;;;     The baseline of the child, or -1
+;;;
+;;; Since: 3.10
+;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_add_accelerator ()
@@ -4914,39 +5106,6 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_path ()
-;;;
-;;; void gtk_widget_path (GtkWidget *widget,
-;;;                       guint *path_length,
-;;;                       gchar **path,
-;;;                       gchar **path_reversed);
-;;;
-;;; Warning
-;;;
-;;; gtk_widget_path has been deprecated since version 3.0 and should not be
-;;; used in newly-written code. Use gtk_widget_get_path() instead
-;;;
-;;; Obtains the full path to widget. The path is simply the name of a widget
-;;; and all its parents in the container hierarchy, separated by periods. The
-;;; name of a widget comes from gtk_widget_get_name(). Paths are used to apply
-;;; styles to a widget in gtkrc configuration files. Widget names are the type
-;;; of the widget by default (e.g. "GtkButton") or can be set to an
-;;; application-specific value with gtk_widget_set_name(). By setting the name
-;;; of a widget, you allow users or theme authors to apply styles to that
-;;; specific widget in their gtkrc file. path_reversed_p fills in the path in
-;;; reverse order, i.e. starting with widget's name instead of starting with the
-;;; name of widget's outermost ancestor.
-;;;
-;;; widget :
-;;;     a GtkWidget
-;;;
-;;; path_length :
-;;;     location to store length of the path, or NULL
-;;;
-;;; path :
-;;;     location to store allocated path string, or NULL
-;;;
-;;; path_reversed :
-;;;     location to store allocated reverse path string, or NULL
 ;;; ----------------------------------------------------------------------------
 
 ;; TODO: This function does not implement the argument path_reversed.
@@ -7217,6 +7376,28 @@
 (export 'gtk-widget-set-allocation)
 
 ;;; ----------------------------------------------------------------------------
+;;; gtk_widget_get_allocated_baseline ()
+;;;
+;;; int gtk_widget_get_allocated_baseline (GtkWidget *widget);
+;;;
+;;; Returns the baseline that has currently been allocated to widget. This
+;;; function is intended to be used when implementing handlers for the "draw"
+;;; function, and when allocating child widgets in "size_allocate".
+;;;
+;;; Parameters
+;;;
+;;; widget :
+;;;
+;;;     the widget to query
+;;;
+;;; Returns
+;;;
+;;;     the baseline of the widget , or -1 if none
+;;;
+;;; Since: 3.10
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_has_window ()
 ;;; ----------------------------------------------------------------------------
 
@@ -7572,19 +7753,22 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_realized ()
-;;;
-;;; gboolean gtk_widget_get_realized (GtkWidget *widget);
-;;;
-;;; Determines whether widget is realized.
-;;;
-;;; widget :
-;;;     a GtkWidget
-;;;
-;;; Returns :
-;;;     TRUE if widget is realized, FALSE otherwise
-;;;
-;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_widget_get_realized" gtk-widget-get-realized) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2015-12-30}
+  @argument[widget]{a @class{gtk-widget} object}
+  @return{@em{True} if @arg{widget} is realized, @code{nil} otherwise.}
+  @begin{short}
+    Determines whether @arg{widget} is realized.
+  @end{short}
+
+  Since 2.20
+  @see-class{gtk-widget}"
+  (widget (g-object gtk-widget)))
+
+(export 'gtk-widget-get-realized)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_set_mapped ()
@@ -7607,19 +7791,22 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_mapped ()
-;;;
-;;; gboolean gtk_widget_get_mapped (GtkWidget *widget);
-;;;
-;;; Whether the widget is mapped.
-;;;
-;;; widget :
-;;;     a GtkWidget
-;;;
-;;; Returns :
-;;;     TRUE if the widget is mapped, FALSE otherwise.
-;;;
-;;; Since 2.20
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_widget_get_mapped" gtk-widget-get-mapped) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2015-12-30}
+  @argument[widget]{a @class{gtk-widget} object}
+  @return{@em{True} if @arg{widget} is mapped, @code{nil} otherwise.}
+  @begin{short}
+    Determines whether @arg{widget} is mapped.
+  @end{short}
+
+  Since 2.20
+  @see-class{gtk-widget}"
+  (widget (g-object gtk-widget)))
+
+(export 'gtk-widget-get-mapped)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_requisition ()
@@ -7843,7 +8030,7 @@
     @entry[:constant-size]{Dont trade height-for-width or width-for-height.}
   @end{table}
   @see-class{gtk-widget}
-  @see-function{gtk-widget-get-size-request-mode}")
+  @see-function{gtk-widget-get-request-mode}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkRequestedSize
@@ -8121,6 +8308,54 @@
 
 (export 'gtk-widget-get-preferred-width-for-height)
 
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_widget_get_preferred_height_and_baseline_for_width ()
+;;;
+;;; void
+;;; gtk_widget_get_preferred_height_and_baseline_for_width
+;;;                               (GtkWidget *widget,
+;;;                                gint width,
+;;;                                gint *minimum_height,
+;;;                                gint *natural_height,
+;;;                                gint *minimum_baseline,
+;;;                                gint *natural_baseline);
+;;;
+;;; Retrieves a widget’s minimum and natural height and the corresponding
+;;; baselines if it would be given the specified width , or the default height
+;;; if width is -1. The baselines may be -1 which means that no baseline is
+;;; requested for this widget.
+;;;
+;;; The returned request will be modified by the
+;;; GtkWidgetClass::adjust_size_request and
+;;; GtkWidgetClass::adjust_baseline_request virtual methods and by any
+;;; GtkSizeGroups that have been applied. That is, the returned request is the
+;;; one that should be used for layout, not necessarily the one returned by the
+;;; widget itself.
+;;;
+;;; Parameters
+;;;
+;;; widget :
+;;;     a GtkWidget instance
+;;;
+;;; width :
+;;;     the width which is available for allocation, or -1 if none
+;;;
+;;; minimum_height :
+;;;     location for storing the minimum height, or NULL.
+;;;
+;;; natural_height :
+;;;     location for storing the natural height, or NULL.
+;;;
+;;; minimum_baseline :
+;;;     location for storing the baseline for the minimum height, or NULL.
+;;;
+;;; natural_baseline :
+;;;     location for storing the baseline for the natural height, or NULL.
+;;;
+;;; Since: 3.10
+;;; ----------------------------------------------------------------------------
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_request_mode ()
 ;;; ----------------------------------------------------------------------------
@@ -8135,10 +8370,11 @@
     Gets whether the widget prefers a height-for-width layout or a
     width-for-height layout.
   @end{short}
-  @subheading{Note}
+  @begin[Note]{dictionary}
     @class{gtk-bin} widgets generally propagate the preference of their child,
     container widgets need to request something either in context of their
     children or in context of their allocation capabilities.
+  @end{dictionary}
 
   Since 3.0
   @see-class{gtk-widget}
@@ -8174,12 +8410,12 @@
   impose any restrictions on the child placement. It can be used to deduce
   toplevel window and menu sizes as well as child widgets in free-form
   containers such as @class{gtk-layout}.
-
-  @subheading{Note}
+  @bgin[Note]{dictionary}
     Handle with care. Note that the natural height of a height-for-width widget
     will generally be a smaller size than the minimum height, since the required
     height for the natural width is generally smaller than the required height
     for the minimum width.
+  @end{dictionary}
 
   Since 3.0
   @see-class{gtk-widget}
@@ -8279,6 +8515,24 @@
   @see-function{gtk-widget-valign}")
 
 ;;; ----------------------------------------------------------------------------
+;;; gtk_widget_get_valign_with_baseline ()
+;;;
+;;; GtkAlign gtk_widget_get_valign_with_baseline (GtkWidget *widget);
+;;;
+;;; Gets the value of the “valign” property, including GTK_ALIGN_BASELINE.
+;;;
+;;; Parameters
+;;;
+;;; widget :
+;;;     a GtkWidget
+;;;
+;;; Returns :
+;;;     the vertical alignment of widget
+;;;
+;;; Since: 3.10
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_queue_compute_expand ()
 ;;; ----------------------------------------------------------------------------
 
@@ -8332,5 +8586,386 @@
   (orientation gtk-orientation))
 
 (export 'gtk-widget-compute-expand)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_widget_init_template ()
+;;;
+;;; void
+;;; gtk_widget_init_template (GtkWidget *widget);
+;;;
+;;; Creates and initializes child widgets defined in templates. This function
+;;; must be called in the instance initializer for any class which assigned
+;;; itself a template using gtk_widget_class_set_template()
+;;;
+;;; It is important to call this function in the instance initializer of a
+;;; GtkWidget subclass and not in GObject.constructed() or GObject.constructor()
+;;; for two reasons.
+;;;
+;;; One reason is that generally derived widgets will assume that parent class
+;;; composite widgets have been created in their instance initializers.
+;;;
+;;; Another reason is that when calling g_object_new() on a widget with
+;;; composite templates, it’s important to build the composite widgets before
+;;; the construct properties are set. Properties passed to g_object_new() should
+;;; take precedence over properties set in the private template XML.
+;;;
+;;; Parameters
+;;;
+;;; widget :
+;;;     a GtkWidget
+;;;
+;;; Since: 3.10
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_widget_class_set_template ()
+;;;
+;;; void
+;;; gtk_widget_class_set_template (GtkWidgetClass *widget_class,
+;;;                               GBytes *template_bytes);
+;;;
+;;; This should be called at class initialization time to specify the GtkBuilder
+;;; XML to be used to extend a widget.
+;;;
+;;; For convenience, gtk_widget_class_set_template_from_resource() is also
+;;; provided.
+;;;
+;;; Note that any class that installs templates must call
+;;; gtk_widget_init_template() in the widget’s instance initializer.
+;;;
+;;; Parameters
+;;;
+;;; widget_class :	
+;;;     A GtkWidgetClass
+;;;
+;;; template_bytes :
+;;;     A GBytes holding the GtkBuilder XML
+;;;
+;;; Since: 3.10
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_widget_class_set_template_from_resource ()
+;;;
+;;; void
+;;; gtk_widget_class_set_template_from_resource
+;;;                               (GtkWidgetClass *widget_class,
+;;;                                const gchar *resource_name);
+;;;
+;;; A convenience function to call gtk_widget_class_set_template().
+;;;
+;;; Note that any class that installs templates must call
+;;; gtk_widget_init_template() in the widget’s instance initializer.
+;;;
+;;; Parameters
+;;;
+;;; widget_class :
+;;;     A GtkWidgetClass
+;;; 
+;;; resource_name :
+;;;     The name of the resource to load the template from
+;;;
+;;; Since: 3.10
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_widget_get_template_child ()
+;;;
+;;; GObject *
+;;; gtk_widget_get_template_child (GtkWidget *widget,
+;;;                               GType widget_type,
+;;;                               const gchar *name);
+;;;
+;;; Fetch an object build from the template XML for widget_type in this widget
+;;; instance.
+;;;
+;;; This will only report children which were previously declared with
+;;; gtk_widget_class_bind_template_child_full() or one of its variants.
+;;;
+;;; This function is only meant to be called for code which is private to the
+;;; widget_type which declared the child and is meant for language bindings
+;;; which cannot easily make use of the GObject structure offsets.
+;;;
+;;; Parameters
+;;;
+;;; widget
+;;;     A GtkWidget
+;;;
+;;; widget_type
+;;;     The GType to get a template child for
+;;; 
+;;; name
+;;;     The “id” of the child defined in the template XML
+;;;
+;;; Returns
+;;;     The object built in the template XML with the id name.
+;;;
+;;; Since: 3.10
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_widget_class_bind_template_child()
+;;;
+;;; #define 
+;;; gtk_widget_class_bind_template_child(widget_class, TypeName, member_name)
+;;;
+;;; Binds a child widget defined in a template to the widget_class .
+;;;
+;;; This macro is a convenience wrapper around the
+;;; gtk_widget_class_bind_template_child_full() function.
+;;;
+;;; This macro will use the offset of the member_name inside the TypeName
+;;; instance structure.
+;;;
+;;; Parameters
+;;;
+;;; widget_class
+;;;     a GtkWidgetClass
+;;;
+;;; TypeName
+;;;     the type name of this widget
+;;;
+;;; member_name
+;;;     name of the instance member in the instance struct for data_type
+;;; 
+;;; Since: 3.10
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_widget_class_bind_template_child_internal()
+;;;
+;;; #define
+;;; gtk_widget_class_bind_template_child_internal(widget_class,
+;;;                                               TypeName, member_name)
+;;;
+;;; Binds a child widget defined in a template to the widget_class , and also
+;;; makes it available as an internal child in GtkBuilder, under the
+;;; name member_name .
+;;;
+;;; This macro is a convenience wrapper around the
+;;; gtk_widget_class_bind_template_child_full() function.
+;;;
+;;; This macro will use the offset of the member_name inside the TypeName
+;;; instance structure.
+;;;
+;;; Parameters
+;;;
+;;; widget_class
+;;;     a GtkWidgetClass
+;;; 
+;;; TypeName
+;;;     the type name, in CamelCase
+;;;
+;;; member_name
+;;;     name of the instance member in the instance struct for data_type
+;;; 
+;;; Since: 3.10
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_widget_class_bind_template_child_private()
+;;;
+;;; #define
+;;; gtk_widget_class_bind_template_child_private(widget_class,
+;;;                                              TypeName, member_name)
+;;;
+;;; Binds a child widget defined in a template to the widget_class .
+;;;
+;;; This macro is a convenience wrapper around the
+;;; gtk_widget_class_bind_template_child_full() function.
+;;;
+;;; This macro will use the offset of the member_name inside the TypeName
+;;; private data structure (it uses G_PRIVATE_OFFSET(), so the private struct
+;;; must be added with G_ADD_PRIVATE()).
+;;;
+;;; Parameters
+;;;
+;;; widget_class
+;;;     a GtkWidgetClass
+;;;
+;;; TypeName
+;;;     the type name of this widget
+;;;
+;;; member_name
+;;;     name of the instance private member in the private struct for data_type
+;;;
+;;; Since: 3.10
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_widget_class_bind_template_child_internal_private()
+;;;
+;;; #define
+;;; gtk_widget_class_bind_template_child_internal_private(widget_class,
+;;;                                                       TypeName, member_name)
+;;;
+;;; Binds a child widget defined in a template to the widget_class , and also
+;;; makes it available as an internal child in GtkBuilder, under the name
+;;; member_name .
+;;;
+;;; This macro is a convenience wrapper around the
+;;; gtk_widget_class_bind_template_child_full() function.
+;;;
+;;; This macro will use the offset of the member_name inside the TypeName
+;;; private data structure.
+;;;
+;;; Parameters
+;;;
+;;; widget_class
+;;;     a GtkWidgetClass
+;;;
+;;; TypeName
+;;;     the type name, in CamelCase
+;;;
+;;; member_name
+;;;     name of the instance private member on the private struct for data_type
+;;;
+;;; Since: 3.10
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_widget_class_bind_template_child_full ()
+;;;
+;;; void
+;;; gtk_widget_class_bind_template_child_full
+;;;                               (GtkWidgetClass *widget_class,
+;;;                                const gchar *name,
+;;;                                gboolean internal_child,
+;;;                                gssize struct_offset);
+;;;
+;;; Automatically assign an object declared in the class template XML to be set
+;;; to a location on a freshly built instance’s private data, or alternatively
+;;; accessible via gtk_widget_get_template_child().
+;;;
+;;; The struct can point either into the public instance, then you should use
+;;; G_STRUCT_OFFSET(WidgetType, member) for struct_offset , or in the private
+;;; struct, then you should use G_PRIVATE_OFFSET(WidgetType, member).
+;;;
+;;; An explicit strong reference will be held automatically for the duration of
+;;; your instance’s life cycle, it will be released automatically when
+;;; GObjectClass.dispose() runs on your instance and if a struct_offset that is
+;;; != 0 is specified, then the automatic location in your instance public or
+;;; private data will be set to NULL. You can however access an automated child
+;;; pointer the first time your classes GObjectClass.dispose() runs, or
+;;; alternatively in GtkWidgetClass.destroy().
+;;;
+;;; If internal_child is specified, GtkBuildableIface.get_internal_child() will
+;;; be automatically implemented by the GtkWidget class so there is no need to
+;;; implement it manually.
+;;;
+;;; The wrapper macros gtk_widget_class_bind_template_child(),
+;;; gtk_widget_class_bind_template_child_internal(),
+;;; gtk_widget_class_bind_template_child_private() and
+;;; gtk_widget_class_bind_template_child_internal_private() might be more
+;;; convenient to use.
+;;;
+;;; Note that this must be called from a composite widget classes class
+;;; initializer after calling gtk_widget_class_set_template().
+;;;
+;;; Parameters
+;;;
+;;; widget_class
+;;;     A GtkWidgetClass
+;;;
+;;; name
+;;;     The “id” of the child defined in the template XML 
+;;;
+;;; internal_child
+;;;     Whether the child should be accessible as an “internal-child” when this
+;;;     class is used in GtkBuilder XML
+;;;
+;;; struct_offset
+;;;     The structure offset into the composite widget’s instance public or
+;;;     private structure where the automated child pointer should be set, or
+;;;     0 to not assign the pointer.
+;;; 
+;;; Since: 3.10
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_widget_class_bind_template_callback()
+;;;
+;;; #define gtk_widget_class_bind_template_callback(widget_class, callback)
+;;;
+;;; Binds a callback function defined in a template to the widget_class .
+;;;
+;;; This macro is a convenience wrapper around the
+;;; gtk_widget_class_bind_template_callback_full() function.
+;;;
+;;; Parameters
+;;;
+;;; widget_class
+;;;     a GtkWidgetClass
+;;;
+;;; callback
+;;;     the callback symbol
+;;;
+;;; Since: 3.10
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_widget_class_bind_template_callback_full ()
+;;;
+;;; void
+;;; gtk_widget_class_bind_template_callback_full
+;;;                               (GtkWidgetClass *widget_class,
+;;;                                const gchar *callback_name,
+;;;                                GCallback callback_symbol);
+;;;
+;;; Declares a callback_symbol to handle callback_name from the template XML
+;;; defined for widget_type . See gtk_builder_add_callback_symbol().
+;;;
+;;; Note that this must be called from a composite widget classes class
+;;; initializer after calling gtk_widget_class_set_template().
+;;;
+;;; Parameters
+;;;
+;;; widget_class
+;;;     A GtkWidgetClass
+;;; 
+;;; callback_name
+;;;     The name of the callback as expected in the template XML
+;;;
+;;; callback_symbol
+;;;     The callback symbol.
+;;;
+;;; Since: 3.10
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_widget_class_set_connect_func ()
+;;;
+;;; void
+;;; gtk_widget_class_set_connect_func (GtkWidgetClass *widget_class,
+;;;                                   GtkBuilderConnectFunc connect_func,
+;;;                                   gpointer connect_data,
+;;;                                   GDestroyNotify connect_data_destroy);
+;;;
+;;; For use in language bindings, this will override the default
+;;; GtkBuilderConnectFunc to be used when parsing GtkBuilder XML from this
+;;; class’s template data.
+;;;
+;;; Note that this must be called from a composite widget classes class
+;;; initializer after calling gtk_widget_class_set_template().
+;;;
+;;; Parameters
+;;;
+;;; widget_class
+;;;     A GtkWidgetClass
+;;;
+;;; connect_func
+;;;     The GtkBuilderConnectFunc to use when connecting signals in the class
+;;;     template
+;;;
+;;; connect_data
+;;;     The data to pass to connect_func
+;;; 
+;;; connect_data_destroy
+;;;     The GDestroyNotify to free connect_data , this will only be used at
+;;;     class finalization time, when no classes of type widget_type are in use
+;;;     anymore.
+;;;
+;;; Since: 3.10
+;;; ----------------------------------------------------------------------------
 
 ;;; --- End of file gtk.widget.lisp --------------------------------------------
