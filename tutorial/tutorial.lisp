@@ -1408,12 +1408,10 @@
                                    :active t)))
         (g-signal-connect button "toggled"
            (lambda (widget)
-             (gtk-scale-set-draw-value
-                                     hscale
-                                     (gtk-toggle-button-active widget))
-             (gtk-scale-set-draw-value
-                                     vscale
-                                     (gtk-toggle-button-active widget))))
+             (setf (gtk-scale-draw-value hscale)
+                   (gtk-toggle-button-active widget))
+             (setf (gtk-scale-draw-value vscale)
+                   (gtk-toggle-button-active widget))))
         (gtk-box-pack-start box button)
         (gtk-box-pack-start box1 box))
       ;; A ComboBox to change the position of the value.
@@ -1436,8 +1434,8 @@
                (format t "active is : ~A~%"
                          (gtk-combo-box-get-active widget))
                (setq pos (if pos (intern pos :keyword) :top))
-               (gtk-scale-set-value-pos hscale pos)
-               (gtk-scale-set-value-pos vscale pos))))
+               (setf (gtk-scale-value-pos hscale) pos)
+               (setf (gtk-scale-value-pos vscale) pos))))
         (gtk-box-pack-start box
                             (make-instance 'gtk-label
                                            :label "Scale value position")
@@ -3715,7 +3713,7 @@ happen.")
                (gtk-label-set-text
                              label
                              (format nil "~A"
-                                     (gtk-spin-button-get-value spinner1)))))
+                                     (gtk-spin-button-value spinner1)))))
           (gtk-box-pack-start hbox button))
         (gtk-box-pack-start vbox2 hbox)
         (gtk-box-pack-start vbox2 label))

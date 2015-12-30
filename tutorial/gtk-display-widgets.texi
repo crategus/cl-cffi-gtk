@@ -188,10 +188,10 @@ switch on or to switch off the line wrapping.
 @findex gtk-justification
 @findex justification, gtk-justification
 
-@findex gtk-label-set-justify
-@findex label-set-justify, gtk-label-set-justify
+@findex gtk-label-justify
+@findex label-justify, gtk-label-justify
 
-@xurl{gtk-label-set-justify} sets how the lines in a label align with one
+@xurl{gtk-label-justify} sets how the lines in a label align with one
 another.  The first argument is the label and the second argument one of the
 following values of the enumeration type @xurl{gtk-justification}.  The possible
 values are shown in @ref{table-gtk-justification}.  If you want to set how the

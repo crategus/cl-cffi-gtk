@@ -355,7 +355,7 @@
 @set gtk-label-set-attributes http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-label-set-attributes.html
 @set gtk-label-set-selectable http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-label-set-selectable.html
 @set gtk-label-set-line-wrap http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-label-set-line-wrap.html
-@set gtk-label-set-justify http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-label-set-justify.html
+@set gtk-label-justify http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-label-justify.html
 @set gtk-label-pattern http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-label-pattern.html
 @set gtk-label-get-current-uri http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-label-get-current-uri.html
 
@@ -509,9 +509,9 @@
 @set gtk-scale http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-scale.html
 @set gtk-scale-new http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-scale-new.html
 @set gtk-scale-new-with-range http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-scale-new-with-range.html
-@set gtk-scale-set-draw-value http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-scale-set-draw-value.html
+@set gtk-scale-draw-value http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-scale-draw-value.html
 @set gtk-scale-set-digits http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-scale-set-digits.html
-@set gtk-scale-set-value-pos http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-scale-set-value-pos.html
+@set gtk-scale-value-pos http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-scale-value-pos.html
 
 @c GtkScrollable
 

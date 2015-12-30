@@ -532,7 +532,7 @@ The number of decimal places can also be altered using the function
 displaying can be changed using the function @code{gtk-spin-button-set-value}.
 
 The current value of a spin button can be retrieved as either a floating point
-or integer value with the functions @code{gtk-spin-button-get-value} and
+or integer value with the functions @code{gtk-spin-button-value} and
 @code{gtk-spin-button-get-value-as-int}.
 
 If you want to alter the value of a spin button relative to its current value,
@@ -792,7 +792,7 @@ function @code{gtk-spin-button-update}.
                (gtk-label-set-text
                              label
                              (format nil "~A"
-                                     (gtk-spin-button-get-value spinner1)))))
+                                     (gtk-spin-button-value spinner1)))))
           (gtk-box-pack-start hbox button))
         (gtk-box-pack-start vbox2 hbox)
         (gtk-box-pack-start vbox2 label))

@@ -128,17 +128,17 @@ them.
 @findex gtk-position-type
 @findex position-type, gtk-position-type
 
-@findex gtk-scale-set-draw-value
+@findex gtk-scale-draw-value
 @findex gtk-scale-set-digits
-@findex gtk-scale-set-value-pos
+@findex gtk-scale-value-pos
 
-@findex scale-set-draw-value, gtk-scale-set-draw-value
+@findex scale-draw-value, gtk-scale-draw-value
 @findex scale-set-digits, gtk-scale-set-digits
-@findex scale-set-value-pos, gtk-scale-set-value-pos
+@findex scale-value-pos, gtk-scale-value-pos
 
 Scale widgets can display their current value as a number beside the trough.
 The default behaviour is to show the value, but you can change this with this
-with the function @xurl{gtk-scale-set-draw-value}, which takes as the first
+with the generic function @xurl{gtk-scale-draw-value}, which takes as the first
 argument a widget of type @xurl{gtk-scale} and as the second argument
 @code{draw-value}, which is either @code{T} or @code{NIL}, with predictable
 consequences for either one.
@@ -151,8 +151,8 @@ the number of decimal places you want.  You can set digits to anything you like,
 but no more than 13 decimal places will actually be drawn on screen.
 
 Finally, the value can be drawn in different positions relative to the trough
-with the function @xurl{gtk-scale-set-value-pos}.  The first argument is again
-a scale widget.  The second argument @code{pos} is of the enumeration type
+with the generic function @xurl{gtk-scale-value-pos}.  The first argument is
+again a scale widget.  The second argument @code{pos} is of the enumeration type
 @xurl{gtk-position-type}.
 
 If you position the value on the "side" of the trough (e. g., on the top or
@@ -308,12 +308,10 @@ signal being given to the window.
                                    :active t)))
         (g-signal-connect button "toggled"
            (lambda (widget)
-             (gtk-scale-set-draw-value
-                                     hscale
-                                     (gtk-toggle-button-active widget))
-             (gtk-scale-set-draw-value
-                                     vscale
-                                     (gtk-toggle-button-active widget))))
+             (setf (gtk-scale-draw-value hscale)
+                   (gtk-toggle-button-active widget))
+             (setf (gtk-scale-draw-value vscale)
+                   (gtk-toggle-button-active widget))))
         (gtk-box-pack-start box button)
         (gtk-box-pack-start box1 box))
       ;; A ComboBox to change the position of the value.
@@ -336,8 +334,8 @@ signal being given to the window.
                (format t "active is : ~A~%"
                          (gtk-combo-box-get-active widget))
                (setq pos (if pos (intern pos :keyword) :top))
-               (gtk-scale-set-value-pos hscale pos)
-               (gtk-scale-set-value-pos vscale pos))))
+               (setf (gtk-scale-value-pos hscale) pos)
+               (setf (gtk-scale-value-pos vscale) pos))))
         (gtk-box-pack-start box
                             (make-instance 'gtk-label
                                            :label "Scale value position")
