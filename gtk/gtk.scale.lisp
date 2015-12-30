@@ -4,12 +4,13 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.10 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2015 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -39,14 +40,6 @@
 ;;;
 ;;;     gtk_scale_new
 ;;;     gtk_scale_new_with_range
-;;;     gtk_scale_set_digits
-;;;     gtk_scale_set_draw_value
-;;;     gtk_scale_set_has_origin
-;;;     gtk_scale_set_value_pos
-;;;     gtk_scale_get_digits
-;;;     gtk_scale_get_draw_value
-;;;     gtk_scale_get_has_origin
-;;;     gtk_scale_get_value_pos
 ;;;     gtk_scale_get_layout
 ;;;     gtk_scale_get_layout_offsets
 ;;;     gtk_scale_add_mark
@@ -79,25 +72,23 @@
     gtk-scale-value-pos
     "value-pos" "GtkPositionType" t t)))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-scale 'type)
  "@version{2013-4-28}
   @begin{short}
-    A @sym{gtk-scale} is a slider control used to select a numeric value. To use
-    it, you will probably want to investigate the methods on its base class,
-    @class{gtk-range}, in addition to the methods for @sym{gtk-scale} itself. To
-    set the value of a scale, you would normally use the function
+    A @sym{gtk-scale} is a slider control used to select a numeric value. To
+    use it, you will probably want to investigate the methods on its base class,
+    @class{gtk-range}, in addition to the methods for @sym{gtk-scale} itself.
+    To set the value of a scale, you would normally use the function
     @fun{gtk-range-set-value}. To detect changes to the value, you would
     normally use the \"value-changed\" signal.
   @end{short}
 
-  Note that using the same upper and lower bounds for the @sym{gtk-scale}
-  (through the @class{gtk-range} methods) will hide the slider itself. This is
+  Note that using the same upper and lower bounds for the @sym{gtk-scale},
+  through the @class{gtk-range} methods, will hide the slider itself. This is
   useful for applications that want to show an undeterminate value on the scale,
-  without changing the layout of the application (such as movie or music
-  players).
+  without changing the layout of the application, such as movie or music
+  players.
 
   @subheading{GtkScale as GtkBuildable}
     @sym{gtk-scale} supports a custom @code{<marks>} element, which can contain
@@ -151,81 +142,135 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Property Details
+;;; Property and Accessor Details
 ;;;
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-scale-digits -------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "digits" 'gtk-scale) 't)
- "The @code{\"digits\"} property of type @code{:int} (Read / Write)@br{}
+ "The @code{\"digits\"} property of type @code{:int} (Read / Write) @br{}
   The number of decimal places that are displayed in the value. @br{}
-  Allowed values: [@code{G_MAXULONG}, 64]@br{}
+  Allowed values: [-1, 64] @br{}
   Default value: 1")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "draw-value" 'gtk-scale) 't)
- "The @code{\"draw-value\"} property of type @code{:boolean} (Read / Write)@br{}
-  Whether the current value is displayed as a string next to the slider. @br{}
-  Default value: @em{true}")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "has-origin" 'gtk-scale) 't)
- "The @code{\"has-origin\"} property of type @code{:boolean} (Read / Write)@br{}
-  Whether the scale has an origin. @br{}
-  Default value: @em{true}")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "value-pos" 'gtk-scale) 't)
- "The @code{\"value-pos\"} property of type @symbol{gtk-position-type}
-  (Read / Write)@br{}
-  The position in which the current value is displayed. @br{}
-  Default value: @code{:top}")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-scale-digits atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-scale-digits 'function)
- "@version{2013-3-21}
-  Accessor of the slot @code{\"digits\"} of the @class{gtk-scale} class.")
+ "@version{2015-2-22}
+  @argument[object]{a @class{gtk-scale} widget}
+  @argument[digits]{the number of decimal places to display, e. g. use 1 to
+    display 1.0, 2 to display 1.00, etc}
+  @syntax[]{(gtk-scale-digits object) => digits}
+  @syntax[]{(setf (gtk-scale-digits object) digits)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-scale]{digits} of the @class{gtk-scale}
+    class.
+  @end{short}
 
-;;; ----------------------------------------------------------------------------
+  The generic function @sym{gtk-scale-digits} returns the number of decimal
+  places that are displayed.
+
+  The generic function @sym{(setf gtk-scale-digits)} sets the number of decimal
+  places that are displayed in the value. Also causes the value of the
+  adjustment to be rounded off to this number of @arg{digits}, so the retrieved
+  value matches the value the user saw.
+  @see-class{gtk-scale}")
+
+;;; --- gtk-scale-draw-value ---------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "draw-value" 'gtk-scale) 't)
+ "The @code{\"draw-value\"} property of type @code{:boolean}
+  (Read / Write) @br{}
+  Whether the current value is displayed as a string next to the slider. @br{}
+  Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-scale-draw-value atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-scale-draw-value 'function)
- "@version{2013-3-21}
-  Accessor of the slot @code{\"draw-value\"} of the @class{gtk-scale} class.")
+ "@version{2015-2-22}
+  @argument[object]{a @class{gtk-scale} widget}
+  @argument[draw-value]{@em{true} to draw the value}
+  @syntax[]{(gtk-scale-draw-value object) => draw-value}
+  @syntax[]{(setf (gtk-scale-digits object) draw-value)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-scale]{draw-value} of the @class{gtk-scale}
+    class.
+  @end{short}
 
-;;; ----------------------------------------------------------------------------
+  The generic function @sym{gtk-scale-draw-value} returns whether the current
+  value is displayed as a string next to the slider.
+
+  The generic function @sym{(setf gtk-scale-draw-value)} specifies whether the
+  current value is displayed as a string next to the slider. 
+  @see-class{gtk-scale}")
+
+;;; --- gtk-scale-has-origin ---------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "has-origin" 'gtk-scale) 't)
+ "The @code{\"has-origin\"} property of type @code{:boolean}
+  (Read / Write) @br{}
+  Whether the scale has an origin. @br{}
+  Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-scale-has-origin atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-scale-has-origin 'function)
- "@version{2013-3-21}
-  Accessor of the slot @code{\"has-origin\"} of the @class{gtk-scale} class.")
+ "@version{2015-2-22}
+  @argument[object]{a @class{gtk-scale} widget}
+  @argument[has-origin]{@em{true} if the scale has an origin}
+  @syntax[]{(gtk-scale-has-origin object) => has-origin}
+  @syntax[]{(setf (gtk-scale-digits object) has-origin)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-scale]{has-origin} of the @class{gtk-scale}
+    class.
+  @end{short}
 
-;;; ----------------------------------------------------------------------------
+  The generic function @sym{gtk-scale-has-origin} returns whether the scale has
+  an origin.
+
+  If @arg{has-origin} is set to @em{true} (the default), the scale will
+  highlight the part of the scale between the origin (bottom or left
+  side) of the scale and the current value.
+
+  Since 3.4
+  @see-class{gtk-scale}")
+
+;;; --- gtk-scale-value-pos ----------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "value-pos" 'gtk-scale) 't)
+ "The @code{\"value-pos\"} property of type @symbol{gtk-position-type}
+  (Read / Write) @br{}
+  The position in which the current value is displayed. @br{}
+  Default value: @code{:top}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-scale-value-pos atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-scale-value-pos 'function)
- "@version{2013-3-21}
-  Accessor of the slot @code{\"value-pos\"} of the @class{gtk-scale} class.")
+ "@version{2015-2-22}
+  @argument[object]{a @class{gtk-scale} widget}
+  @argument[pos]{the position in which the current value is displayed}
+  @syntax[]{(gtk-scale-value-pos object) => pos}
+  @syntax[]{(setf (gtk-scale-digits object) pos)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-scale]{value-pos} of the @class{gtk-scale}
+    class.
+  @end{short}
+
+  The generic function @sym{gtk-scale-value-pos} gets the position in which the
+  current value is displayed.
+
+  The generic function @sym{gtk-scale-value-pos} sets the position in which the
+  current value is displayed.
+  @see-class{gtk-scale}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_scale_new ()
@@ -285,147 +330,6 @@
                                             :step-increment step)))
 
 (export 'gtk-scale-new-with-range)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_scale_set_digits ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-scale-set-digits))
-
-(defun gtk-scale-set-digits (scale digits)
- #+cl-cffi-gtk-documentation
- "@version{2013-4-28}
-  @argument[scale]{a @class{gtk-scale} widget}
-  @argument[digits]{the number of decimal places to display, e. g. use 1 to
-    display 1.0, 2 to display 1.00, etc}
-  Sets the number of decimal places that are displayed in the value. Also
-  causes the value of the adjustment to be rounded off to this number of
-  @arg{digits}, so the retrieved value matches the value the user saw."
-  (setf (gtk-scale-digits scale) digits))
-
-(export 'gtk-scale-set-digits)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_scale_set_draw_value ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-scale-set-draw-value))
-
-(defun gtk-scale-set-draw-value (scale draw-value)
- #+cl-cffi-gtk-documentation
- "@version{2013-4-28}
-  @argument[scale]{a @class{gtk-scale} widget}
-  @argument[draw-value]{@em{true} to draw the value}
-  Specifies whether the current value is displayed as a string next to the
-  slider."
-  (setf (gtk-scale-draw-value scale) draw-value))
-
-(export 'gtk-scale-set-draw-value)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_scale_set_has_origin ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-scale-set-has-origin))
-
-(defun gtk-scale-set-has-origin (scale has-origin)
- #+cl-cffi-gtk-documentation
- "@version{2013-4-28}
-  @argument[scale]{a @class{gtk-scale} widget}
-  @argument[has-origin]{@em{true} if the scale has an origin}
-  @begin{short}
-    If @arg{has-origin} is set to @em{true} (the default), the scale will
-    highlight the part of the @arg{scale} between the origin (bottom or left
-    side) of the scale and the current value.
-  @end{short}
-
-  Since 3.4"
-  (setf (gtk-scale-has-origin scale) has-origin))
-
-(export 'gtk-scale-set-has-origin)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_scale_set_value_pos ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-scale-set-value-pos))
-
-(defun gtk-scale-set-value-pos (scale pos)
- #+cl-cffi-gtk-documentation
- "@version{2013-4-28}
-  @argument[scale]{a @class{gtk-scale} widget}
-  @argument[pos]{the position in which the current value is displayed}
-  Sets the position in which the current value is displayed."
-  (setf (gtk-scale-value-pos scale) pos))
-
-(export 'gtk-scale-set-value-pos)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_scale_get_digits ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-scale-get-digits))
-
-(defun gtk-scale-get-digits (scale)
- #+cl-cffi-gtk-documentation
- "@version{2013-4-28}
-  @argument[scale]{a @class{gtk-scale} widget}
-  @return{The number of decimal places that are displayed.}
-  Gets the number of decimal places that are displayed in the value."
-  (gtk-scale-digits scale))
-
-(export 'gtk-scale-get-digits)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_scale_get_draw_value ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-scale-get-draw-value))
-
-(defun gtk-scale-get-draw-value (scale)
- #+cl-cffi-gtk-documentation
- "@version{2013-4-28}
-  @argument[scale]{a @class{gtk-scale} widget}
-  @return{Whether the current value is displayed as a string.}
-  Returns whether the current value is displayed as a string next to the
-  slider."
-  (gtk-scale-draw-value scale))
-
-(export 'gtk-scale-get-draw-value)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_scale_get_has_origin ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-scale-get-has-origin))
-
-(defun gtk-scale-get-has-origin (scale)
- #+cl-cffi-gtk-documentation
- "@version{2013-4-28}
-  @argument[scale]{a @class{gtk-scale} widget}
-  @return{@em{True} if the scale has an origin.}
-  @short{Returns whether the scale has an origin.}
-
-  Since 3.4"
-  (gtk-scale-has-origin scale))
-
-(export 'gtk-scale-get-has-origin)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_scale_get_value_pos ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-scale-get-value-pos))
-
-(defun gtk-scale-get-value-pos (scale)
- #+cl-cffi-gtk-documentation
- "@version{2013-4-28}
-  @argument[scale]{a @class{gtk-scale} widget}
-  @return{The position in which the current value is displayed.}
-  Gets the position in which the current value is displayed."
-  (gtk-scale-value-pos scale))
-
-(export 'gtk-scale-get-value-pos)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_scale_get_layout ()
