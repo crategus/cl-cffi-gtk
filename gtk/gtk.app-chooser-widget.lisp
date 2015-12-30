@@ -367,7 +367,7 @@
   Since 3.0
   @see-class{gtk-app-chooser-widget}
   @see-function{gtk-app-chooser-widget-set-show-default}"
-  (gtk-app-chooser-widget-get-show-default self))
+  (gtk-app-chooser-widget-show-default self))
 
 (export 'gtk-app-chooser-widget-get-show-default)
 
