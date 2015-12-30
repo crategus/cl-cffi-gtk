@@ -10,7 +10,7 @@
 ;;; is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2015 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -1762,7 +1762,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("g_signal_stop_emission" g-signal-stop-emission) :void
-  (instance :pointer)
+  (instance g-object)
   (signal-id :uint)
   (detail g-quark))
 
@@ -1785,6 +1785,12 @@
 ;;; detailed_signal :
 ;;;     a string of the form "signal-name::detail".
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("g_signal_stop_emission_by_name" g-signal-stop-emission-by-name) :void
+  (instance g-object)
+  (detailed-signal :string))
+
+(export 'g-signal-stop-emission-by-name)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_signal_override_class_closure ()
