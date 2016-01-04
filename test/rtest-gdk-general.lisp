@@ -1,4 +1,3 @@
-
 (def-suite gdk-general :in gdk-suite)
 (in-suite gdk-general)
 
@@ -36,7 +35,7 @@
     (setf *first-run-program-class* nil))
   (is (equal "Program class" (gdk-get-program-class))))
 
-;;;   gdk_get_display
+;;;   gdk_get_display                            * deprecated *
 
 #-windows
 (test gdk-get-display
@@ -82,13 +81,4 @@
 ;;;   gdk_error_trap_push
 ;;;   gdk_error_trap_pop
 ;;;   gdk_error_trap_pop_ignored
-
-;;;   GDK_WINDOWING_X11
-;;;   GDK_WINDOWING_WIN32
-
-;;;   GDK_VERSION_3_0
-;;;   GDK_VERSION_3_2
-;;;   GDK_VERSION_3_4
-;;;   GDK_VERSION_MIN_REQUIRED
-;;;   GDK_VERSION_MAX_ALLOWED
 
