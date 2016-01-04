@@ -63,18 +63,10 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (find-package :gdk) t)
  "GDK is an intermediate layer which isolates GTK+ from the details of the
-  windowing system.
-  This is the API documentation of a Lisp binding to GDK.
+  windowing system. This is the API documentation of a Lisp binding to GDK.
   @begin[General]{section}
     This section describes the GDK initialization functions and miscellaneous
-    utility functions, as well as deprecation facilities.
-
-    GDK and GTK+ provide support for building applications against defined
-    subsets of deprecated or new APIs. Define the macro
-    @code{GDK_VERSION_MIN_REQUIRED} to specify up to what version you want to
-    receive warnings about deprecated APIs. Define the macro
-    @code{GDK_VERSION_MAX_ALLOWED} to specify the newest version whose API you
-    want to use.
+    utility functions.
 
     @about-function{gdk-init}
     @about-function{gdk-init-check}
@@ -91,7 +83,6 @@
     @about-function{gdk-screen-width-mm}
     @about-function{gdk-screen-height-mm}
     @about-function{gdk-pointer-grab}
-    @about-symbol{gdk-grab-status}
     @about-function{gdk-pointer-ungrab}
     @about-function{gdk-pointer-is-grabbed}
     @about-function{gdk-set-double-click-time}
@@ -101,13 +92,6 @@
     @about-function{gdk-error-trap-push}
     @about-function{gdk-error-trap-pop}
     @about-function{gdk-error-trap-pop-ignored}
-    @about-symbol{GDK_WINDOWING_X11}
-    @about-symbol{GDK_WINDOWING_WIN32}
-    @about-symbol{GDK_VERSION_3_0}
-    @about-symbol{GDK_VERSION_3_2}
-    @about-symbol{GDK_VERSION_3_4}
-    @about-symbol{GDK_VERSION_MIN_REQUIRED}
-    @about-symbol{GDK_VERSION_MAX_ALLOWED}
   @end{section}
   @begin[GdkDisplayManager]{section}
     Maintains a list of all open GdkDisplays.
@@ -168,6 +152,8 @@
     Object representing a physical screen.
 
     @about-class{gdk-screen}
+    @about-generic{gdk-screen-font-options}
+    @about-generic{gdk-screen-resolution}
     @about-function{gdk-screen-get-default}
     @about-function{gdk-screen-get-system-visual}
     @about-function{gdk-screen-get-rgba-visual}
@@ -217,6 +203,7 @@
     @about-symbol{gdk-axis-use}
     @about-symbol{gdk-device-type}
     @about-symbol{gdk-grab-ownership}
+    @about-symbol{gdk-grab-status}
     @about-function{gdk-device-get-name}
     @about-function{gdk-device-get-source}
     @about-function{gdk-device-set-mode}

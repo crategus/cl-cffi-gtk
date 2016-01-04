@@ -32,30 +32,31 @@
 ;;;
 ;;; General
 ;;;
-;;; Library initialization and miscellaneous functions
+;;;     Library initialization and miscellaneous functions
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
-;;;     gdk_init
-;;;     gdk_init_check
-;;;     gdk_parse_args
+;;;     GdkGrabStatus                            -> gdk.device.lisp
+;;;
+;;; Functions
+;;;
+;;;     gdk_init                                 * not implemented *
+;;;     gdk_init_check                           * not implemented *
+;;;     gdk_parse_args                           * not implemented *
 ;;;     gdk_get_display_arg_name
 ;;;     gdk_notify_startup_complete
 ;;;     gdk_notify_startup_complete_with_id
-;;;     gdk_set_allowed_backends
+;;;     gdk_set_allowed_backends                 * not implemented *
 ;;;     gdk_get_program_class
 ;;;     gdk_set_program_class
 ;;;
 ;;;     gdk_get_display                          * deprecated *
 ;;;
 ;;;     gdk_flush
-;;;
 ;;;     gdk_screen_width
 ;;;     gdk_screen_height
 ;;;     gdk_screen_width_mm
 ;;;     gdk_screen_height_mm
-;;;
-;;;     GdkGrabStatus                            -> gdk.device.lisp
 ;;;
 ;;;     gdk_pointer_grab                         * deprecated *
 ;;;     gdk_pointer_ungrab                       * deprecated *
@@ -67,35 +68,9 @@
 ;;;     gdk_keyboard_ungrab                      * deprecated *
 ;;;
 ;;;     gdk_beep
-;;;
 ;;;     gdk_error_trap_push
 ;;;     gdk_error_trap_pop
 ;;;     gdk_error_trap_pop_ignored
-;;;
-;;;     GDK_WINDOWING_X11
-;;;     GDK_WINDOWING_WIN32
-;;;
-;;;     GDK_VERSION_3_0
-;;;     GDK_VERSION_3_2
-;;;     GDK_VERSION_3_4
-;;;     GDK_VERSION_MIN_REQUIRED
-;;;     GDK_VERSION_MAX_ALLOWED
-;;;
-;;; Description
-;;;
-;;; This section describes the GDK initialization functions and miscellaneous
-;;; utility functions, as well as deprecation facilities.
-;;;
-;;; The GDK and GTK+ headers annotate deprecated APIs in a way that produces
-;;; compiler warnings if these deprecated APIs are used. The warnings can be
-;;; turned off by defining the macro GDK_DISABLE_DEPRECATION_WARNINGS before
-;;; including the glib.h header.
-;;;
-;;; GDK and GTK+ also provide support for building applications against defined
-;;; subsets of deprecated or new APIs. Define the macro GDK_VERSION_MIN_REQUIRED
-;;; to specify up to what version you want to receive warnings about deprecated
-;;; APIs. Define the macro GDK_VERSION_MAX_ALLOWED to specify the newest version
-;;; whose API you want to use.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gdk)
@@ -304,7 +279,7 @@
   @argument[program-class]{a string}
   Sets the program class. The X11 backend uses the program class to set the
   class name part of the @code{WM_CLASS} property on toplevel windows; see the
-  ICCCM.
+  Inter-Client Communication Conventions Manual (ICCCM).
   @see-function{gdk-get-program-class}"
   (program-class (:string :free-to-foreign t)))
 
@@ -318,14 +293,15 @@
  #+cl-cffi-gtk-documentation
  "@version{2015-12-30}
   @return{The name of the display.}
-  @subheading{Warning}
-    The function @sym{gdk-get-display} has been deprecated since version 3.8
-    and should not be used in newly-written code. Call
-    @code{(gdk-display-get-name (gdk-display-get-default))} instead.
   @begin{short}
     Gets the name of the display, which usually comes from the @code{DISPLAY}
     environment variable or the @code{--display} command line option.
   @end{short}
+  @begin[Warning]{dictionary}
+    The function @sym{gdk-get-display} has been deprecated since version 3.8
+    and should not be used in newly-written code. Call
+    @code{(gdk-display-get-name (gdk-display-get-default))} instead.
+  @end{dictionary}
   @see-function{gdk-display-get-name}
   @see-function{gdk-display-get-default}")
 
@@ -423,8 +399,8 @@
     with respect to window and only if selected by @arg{event-mask}. In either
     mode, unreported events are discarded.}
   @argument[event-mask]{specifies the event mask, which is used in accordance
-    with owner_events. Note that only pointer events (i. e. button and motion
-    events) may be selected.}
+    with @arg{owner-events}. Note that only pointer events (i. e. button and
+    motion events) may be selected.}
   @argument[confine-to]{If non-@code{NULL}, the pointer will be confined to this
     window during the grab. If the pointer is outside @arg{confine-to}, it will
     automatically be moved to the closest edge of @arg{confine-to} and enter and
@@ -436,10 +412,6 @@
     This usually comes from a @class{gdk-event-button} struct, though
     @var{+gdk-current-time+} can be used if the time isn't known.}
   @return{@code{:success} if the grab was successful.}
-  @subheading{Warning}
-    @sym{gdk-pointer-grab} has been deprecated since version 3.0 and should not
-    be used in newly-written code. Use @fun{gdk-device-grab} instead.
-
   @begin{short}
     Grabs the pointer (usually a mouse) so that all events are passed to this
     application until the pointer is ungrabbed with @fun{gdk-pointer-ungrab}, or
@@ -463,6 +435,10 @@
   cleaned up when the grab ends, you should handle the
   @class{gdk-event-grab-broken} events that are emitted when the grab ends
   unvoluntarily.
+  @begin[Warning]{dictionary}
+    @sym{gdk-pointer-grab} has been deprecated since version 3.0 and should not
+    be used in newly-written code. Use @fun{gdk-device-grab} instead.
+  @end{dictionary}
   @see-function{gdk-device-grab}
   @see-function{gdk-pointer-ungrab}"
   (window (g-object gdk-window))
@@ -483,15 +459,15 @@
  "@version{2013-4-3}
   @argument[time]{a timestamp from a @class{gdk-event}, or
     @var{+gdk-current-time+} if no timestamp is available}
-  @subheading{Warning}
-    @sym{gdk-pointer-ungrab} has been deprecated since version 3.0 and should
-    not be used in newly written code. Use @fun{gdk-device-ungrab}, together
-    with @fun{gdk-device-grab} instead.
-
   @begin{short}
     Ungrabs the pointer on the default display, if it is grabbed by this
     application.
   @end{short}
+  @begin[Warning]{dictionary}
+    @sym{gdk-pointer-ungrab} has been deprecated since version 3.0 and should
+    not be used in newly written code. Use @fun{gdk-device-ungrab}, together
+    with @fun{gdk-device-grab} instead.
+  @end{dictionary}
   @see-function{gdk-device-grab}
   @see-function{gdk-device-ungrab}"
   (time :uint32))
@@ -506,11 +482,6 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-4-3}
   @return{@em{True} if the pointer is currently grabbed by this application.}
-  @subheading{Warning}
-    @sym{gdk-pointer-is-grabbed} has been deprecated since version 3.0 and
-    should not be used in newly written code. Use
-    @fun{gdk-display-device-is-grabbed} instead.
-
   @begin{short}
     Returns @em{true} if the pointer on the default display is currently
     grabbed by this application.
@@ -518,6 +489,11 @@
 
   Note that this does not take the inmplicit pointer grab on button presses
   into account.
+  @begin[Warning]{dictionary}
+    @sym{gdk-pointer-is-grabbed} has been deprecated since version 3.0 and
+    should not be used in newly written code. Use
+    @fun{gdk-display-device-is-grabbed} instead.
+  @end{dictionary}
   @see-function{gdk-display-device-is-grabbed}")
 
 (export 'gdk-pointer-is-grabbed)
@@ -560,10 +536,6 @@
   @argument[time]{a timestamp from a @class{gdk-event}, or
     @var{+gdk-current-time+} if no timestamp is available.}
   @return{@code{:success} if the grab was successful.}
-  @subheading{Warning}
-    @sym{gdk-keyboard-grab} has been deprecated since version 3.0 and should not
-    be used in newly-written code. Use @fun{gdk-device-grab} instead.
-
   @begin{short}
     Grabs the keyboard so that all events are passed to this application until
     the keyboard is ungrabbed with @fun{gdk-keyboard-ungrab}. This overrides any
@@ -574,6 +546,10 @@
   cleaned up when the grab ends, you should handle the
   @class{gdk-event-grab-broken} events that are emitted when the grab ends
   unvoluntarily.
+  @begin[Warning]{dictionary}
+    @sym{gdk-keyboard-grab} has been deprecated since version 3.0 and should not
+    be used in newly-written code. Use @fun{gdk-device-grab} instead.
+  @end{dictionary}
   @see-function{gdk-device-grab}
   @see-function{gdk-keyboard-ungrab}"
   (window (g-object gdk-window))
@@ -591,15 +567,15 @@
  "@version{2013-4-3}
   @argument[time]{a timestamp from a @class{gdk-event}, or
     @var{+gdk-current-time+} if no timestamp is available}
-  @subheading{Warning}
-    @sym{gdk-keyboard-ungrab} has been deprecated since version 3.0 and should
-    not be used in newly written code. Use @fun{gdk-device-ungrab}, together
-    with @fun{gdk-device-grab} instead.
-
   @begin{short}
     Ungrabs the keyboard on the default display, if it is grabbed by this
     application.
   @end{short}
+  @begin[Warning]{dictionary}
+    @sym{gdk-keyboard-ungrab} has been deprecated since version 3.0 and should
+    not be used in newly written code. Use @fun{gdk-device-ungrab}, together
+    with @fun{gdk-device-grab} instead.
+  @end{dictionary}
   @see-function{gdk-device-grab}
   @see-function{gdk-device-ungrab}"
   (time :uint32))
@@ -704,94 +680,5 @@
   @see-fun{gdk-error-trap-push}")
 
 (export 'gdk-error-trap-pop-ignored)
-
-;;; ----------------------------------------------------------------------------
-;;; GDK_WINDOWING_X11
-;;;
-;;; #define GDK_WINDOWING_X11
-;;;
-;;; The GDK_WINDOWING_X11 macro is defined if the X11 backend is supported.
-;;;
-;;; Use this macro to guard code that is specific to the X11 backend.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; GDK_WINDOWING_WIN32
-;;;
-;;; #define GDK_WINDOWING_WIN32
-;;;
-;;; The GDK_WINDOWING_WIN32 macro is defined if the Win32 backend is supported.
-;;;
-;;; Use this macro to guard code that is specific to the Win32 backend.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; GDK_VERSION_3_0
-;;;
-;;; #define GDK_VERSION_3_0 (G_ENCODE_VERSION (3, 0))
-;;;
-;;; A macro that evaluates to the 3.0 version of GDK, in a format that can be
-;;; used by the C pre-processor.
-;;;
-;;; Since 3.4
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; GDK_VERSION_3_2
-;;;
-;;; #define GDK_VERSION_3_2 (G_ENCODE_VERSION (3, 2))
-;;;
-;;; A macro that evaluates to the 3.2 version of GDK, in a format that can be
-;;; used by the C pre-processor.
-;;;
-;;; Since 3.4
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; GDK_VERSION_3_4
-;;;
-;;; #define GDK_VERSION_3_4 (G_ENCODE_VERSION (3, 4))
-;;;
-;;; A macro that evaluates to the 3.4 version of GDK, in a format that can be
-;;; used by the C pre-processor.
-;;;
-;;; Since 3.4
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; GDK_VERSION_MIN_REQUIRED
-;;;
-;;; #define GDK_VERSION_MIN_REQUIRED (GDK_VERSION_PREV_STABLE)
-;;;
-;;; A macro that should be defined by the user prior to including the gdk.h
-;;; header. The definition should be one of the predefined GDK version macros:
-;;; GDK_VERSION_3_0, GDK_VERSION_3_2,...
-;;;
-;;; This macro defines the lower bound for the GLib API to use.
-;;;
-;;; If a function has been deprecated in a newer version of GDK, it is possible
-;;; to use this symbol to avoid the compiler warnings without disabling warning
-;;; for every deprecated function.
-;;;
-;;; Since 3.4
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; GDK_VERSION_MAX_ALLOWED
-;;;
-;;; #define GDK_VERSION_MAX_ALLOWED GDK_VERSION_MIN_REQUIRED
-;;;
-;;; A macro that should be defined by the user prior to including the gdk.h
-;;; header. The definition should be one of the predefined GDK version macros:
-;;; GDK_VERSION_3_0, GDK_VERSION_3_2,...
-;;;
-;;; This macro defines the upper bound for the GDK API to use.
-;;;
-;;; If a function has been introduced in a newer version of GDK, it is possible
-;;; to use this symbol to get compiler warnings when trying to use that
-;;; function.
-;;;
-;;; Since 3.4
-;;; ----------------------------------------------------------------------------
 
 ;;; --- End of file gdk.general.lisp -------------------------------------------
