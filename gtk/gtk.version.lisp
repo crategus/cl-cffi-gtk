@@ -297,15 +297,14 @@ NIL
 (glib::push-library-version-features gtk
                                      (gtk-get-major-version)
                                      (gtk-get-minor-version)
-                                     3 0
-                                     3 2
                                      3 4
                                      3 6
                                      3 8
                                      3 10
                                      3 12
                                      3 14
-                                     3 16)
+                                     3 16
+                                     3 18)
 
 (glib::require-library-version "GTK+" 3 4
                               (gtk-get-major-version)

@@ -1,29 +1,29 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gdk.cursor.lisp
-;;; 
+;;;
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;; 
+;;;
 ;;; The documentation of this file is taken from the GDK 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GDK library.
+;;; Version 3.16 and modified to document the Lisp binding to the GDK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
-;;; 
+;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
-;;; 
+;;; Copyright (C) 2011 - 2016 Dieter Kaiser
+;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
 ;;; as published by the Free Software Foundation, either version 3 of the
 ;;; License, or (at your option) any later version and with a preamble to
 ;;; the GNU Lesser General Public License that clarifies the terms for use
 ;;; with Lisp programs and is referred as the LLGPL.
-;;; 
+;;;
 ;;; This program is distributed in the hope that it will be useful,
 ;;; but WITHOUT ANY WARRANTY; without even the implied warranty of
 ;;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ;;; GNU Lesser General Public License for more details.
-;;; 
+;;;
 ;;; You should have received a copy of the GNU Lesser General Public
 ;;; License along with this program and the preamble to the Gnu Lesser
 ;;; General Public License.  If not, see <http://www.gnu.org/licenses/>
@@ -39,13 +39,13 @@
 ;;;     GdkCursor
 ;;;     GdkCursorType
 ;;;
-;;;     gdk_cursor_new
+;;;     gdk_cursor_new                           * deprectated *
 ;;;     gdk_cursor_new_from_pixbuf
+;;;     gdk_cursor_new_from_surface
 ;;;     gdk_cursor_new_from_name
 ;;;     gdk_cursor_new_for_display
-;;;     gdk_cursor_get_display
 ;;;     gdk_cursor_get_image
-;;;     gdk_cursor_get_cursor_type
+;;;     gdk_cursor_get_surface
 ;;;     gdk_cursor_ref                           * deprecated *
 ;;;     gdk_cursor_unref                         * deprecated *
 ;;;
@@ -77,15 +77,15 @@
 (setf (documentation 'gdk-cursor 'type)
  "@version{2013-7-29}
   @begin{short}
-    These functions are used to create and destroy cursors. There is a number
-    of standard cursors, but it is also possible to construct new cursors from
-    pixbufs. There may be limitations as to what kinds of cursors can be
-    constructed on a given display, see the functions
-    @fun{gdk-display-supports-cursor-alpha},
-    @fun{gdk-display-supports-cursor-color},
-    @fun{gdk-display-get-default-cursor-size} and
-    @fun{gdk-display-get-maximal-cursor-size}.
+    These functions are used to create and destroy cursors.
   @end{short}
+  There is a number of standard cursors, but it is also possible to construct
+  new cursors from pixbufs. There may be limitations as to what kinds of cursors
+  can be constructed on a given display, see the functions
+  @fun{gdk-display-supports-cursor-alpha},
+  @fun{gdk-display-supports-cursor-color},
+  @fun{gdk-display-get-default-cursor-size} and
+  @fun{gdk-display-get-maximal-cursor-size}.
 
   Cursors by themselves are not very interesting, they must be be bound to a
   window for users to see them. This is done with the function
@@ -102,9 +102,11 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Property Details
+;;; Property and Accessor Details
 ;;;
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gdk-cursor-cursor-type -------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "cursor-type" 'gdk-cursor) 't)
@@ -114,32 +116,51 @@
   Default value: @code{:x-cursor}")
 
 #+cl-cffi-gtk-documentation
+(setf (gethash 'gdk-cursor-cursor-type atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gdk-cursor-cursor-type 'function)
+ "@version{2016-1-2}
+  @argument[object]{a @class{gdk-cursor} object}
+  @syntax[]{(gtk-cursor-cursor-type object) => cursor-type}
+  @begin{short}
+    Accessor of the slot @slot[gdk-cursor]{cursor-type} of the
+    @class{gdk-cursor} class.
+  @end{short}
+
+  The generic function @sym{gdk-cursor-cursor-type} returns the cursor type for
+  this @arg{cursor}. This is a value from the @symbol{gdk-cursor-type}
+  enumeration.
+
+  Since 2.22
+  @see-class{gdk-cursor}
+  @see-symbol{gdk-cursor-type}")
+
+;;; --- gdk-cursor-display -----------------------------------------------------
+
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "display" 'gdk-cursor) 't)
  "The @code{\"display\"} property of type @class{gdk-display}
   (Read / Write / Construct) @br{}
   Display of this cursor.")
 
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-cursor-cursor-type atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gdk-cursor-cursor-type 'function)
- "@version{2013-7-29}
-  Accessor of the slot @code{\"cursor-type\"} of the @class{gdk-cursor} class.
-  @see-function{gdk-cursor-get-cursor-type}")
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-cursor-display atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-cursor-display 'function)
- "@version{2013-7-29}
-  Accessor of the slot @code{\"display\"} of the @class{gdk-cursor} class.
-  @see-function{gdk-cursor-get-display}")
+ "@version{2016-1-2}
+  @argument[object]{a @class{gdk-cursor} object}
+  @syntax[]{(gdk-cursor-display object) => display}
+  @begin{short}
+    Accessor of the slot @slot[gdk-cursor]{display} of the @class{gdk-cursor}
+    class.
+  @end{short}
+
+  The generic function @sym{gdk-cursor-display} returns the display of type
+  @class{gdk-display} on which the @arg{cursor} is defined.
+
+  Since 2.2
+  @see-class{gdk-cursor}
+  @see-class{gdk-display}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GdkCursorType
@@ -328,9 +349,8 @@
       @fun{gdk-cursor-new-from-pixbuf}.}
   @end{table}
   @see-class{gdk-cursor}
-  @see-function{gdk-cursor-new}
   @see-function{gdk-cursor-new-for-display}
-  @see-function{gdk-cursor-get-cursor-type}")
+  @see-function{gdk-cursor-cursor-type}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_cursor_new ()
@@ -348,6 +368,11 @@
 
   To make the cursor invisible, use the value @code{:blank-cursor} of the
   @symbol{gdk-cursor-type} enumeration.
+  @begin[Warning]{dictionary}
+    The function @sym{gdk-cursor-new} has been deprecated since version 3.16 and
+    should not be used in newly-written code. Use the function
+    @fun{gdk-cursor-new-for-display} instead.
+  @end{dictionary}
   @see-class{gdk-cursor}
   @see-symbol{gdk-cursor-type}
   @see-function{gdk-cursor-new-for-display}"
@@ -402,6 +427,47 @@
   (y :int))
 
 (export 'gdk-cursor-new-from-pixbuf)
+
+;;; ----------------------------------------------------------------------------
+;;; gdk_cursor_new_from_surface ()
+;;;
+;;; GdkCursor *
+;;; gdk_cursor_new_from_surface (GdkDisplay *display,
+;;;                              cairo_surface_t *surface,
+;;;                              gdouble x,
+;;;                              gdouble y);
+;;;
+;;; Creates a new cursor from a cairo image surface.
+;;;
+;;; Not all GDK backends support RGBA cursors. If they are not supported, a
+;;; monochrome approximation will be displayed. The functions
+;;; gdk_display_supports_cursor_alpha() and gdk_display_supports_cursor_color()
+;;; can be used to determine whether RGBA cursors are supported;
+;;; gdk_display_get_default_cursor_size() and
+;;; gdk_display_get_maximal_cursor_size() give information about cursor sizes.
+;;;
+;;; On the X backend, support for RGBA cursors requires a sufficently new
+;;; version of the X Render extension.
+;;;
+;;; Parameters
+;;;
+;;; display
+;;;     the GdkDisplay for which the cursor will be created
+;;;
+;;; surface
+;;;     the cairo image surface containing the cursor pixel data
+;;;
+;;; x
+;;;     the horizontal offset of the “hotspot” of the cursor
+;;;
+;;; y
+;;;     the vertical offset of the “hotspot” of the cursor
+;;;
+;;; Returns
+;;;    a new GdkCursor.
+;;;
+;;; Since: 3.10
+;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_cursor_new_from_name ()
@@ -475,28 +541,6 @@
 (export 'gdk-cursor-new-for-display)
 
 ;;; ----------------------------------------------------------------------------
-;;; gdk_cursor_get_display ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gdk-cursor-get-display))
-
-(defun gdk-cursor-get-display (cursor)
- #+cl-cffi-gtk-documentation
- "@version{2013-7-29}
-  @argument[cursor]{a @class{gdk-cursor} object}
-  @return{The @class{gdk-display} associated to @arg{cursor}.}
-  @begin{short}
-    Returns the display on which the @arg{cursor} is defined.
-  @end{short}
-
-  Since 2.2
-  @see-class{gdk-cursor}
-  @see-class{gdk-display}"
-  (gdk-cursor-display cursor))
-
-(export 'gdk-cursor-get-display)
-
-;;; ----------------------------------------------------------------------------
 ;;; gdk_cursor_get_image ()
 ;;; ----------------------------------------------------------------------------
 
@@ -522,26 +566,35 @@
 (export 'gdk-cursor-get-image)
 
 ;;; ----------------------------------------------------------------------------
-;;; gdk_cursor_get_cursor_type ()
+;;; gdk_cursor_get_surface ()
+;;;
+;;; cairo_surface_t *
+;;; gdk_cursor_get_surface (GdkCursor *cursor,
+;;;                         gdouble *x_hot,
+;;;                         gdouble *y_hot);
+;;;
+;;; Returns a cairo image surface with the image used to display the cursor.
+;;;
+;;; Note that depending on the capabilities of the windowing system and on the
+;;; cursor, GDK may not be able to obtain the image data. In this case, NULL is
+;;; returned.
+;;;
+;;; Parameters
+;;;
+;;; cursor
+;;;     a GdkCursor
+;;;
+;;; x_hot
+;;;     Location to store the hotspot x position, or NULL.
+;;;
+;;; y_hot
+;;;     Location to store the hotspot y position, or NULL.
+;;;
+;;; Returns
+;;;     a cairo_surface_t representing cursor , or NULL.
+;;;
+;;; Since: 3.10
 ;;; ----------------------------------------------------------------------------
-
-(declaim (inline gdk-cursor-get-cursor-type))
-
-(defun gdk-cursor-get-cursor-type (cursor)
- #+cl-cffi-gtk-documentation
- "@version{2013-7-29}
-  @argument[cursor]{a @class{gdk-cursor} object}
-  @return{A value from the @symbol{gdk-cursor-type} enumeration.}
-  @begin{short}
-    Returns the cursor type for this @arg{cursor}.
-  @end{short}
-
-  Since 2.22
-  @see-class{gdk-cursor}
-  @see-symbol{gdk-cursor-type}"
-  (gdk-cursor-cursor-type cursor))
-
-(export 'gdk-cursor-get-cursor-type)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_cursor_ref ()

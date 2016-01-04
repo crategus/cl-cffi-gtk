@@ -5,12 +5,12 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file is taken from the GDK 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GDK library.
+;;; Version 3.16 and modified to document the Lisp binding to the GDK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2014 Dieter Kaiser
+;;; Copyright (C) 2011 - 2016 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -229,15 +229,15 @@
  "@version{2013-6-5}
   @begin{short}
     Onscreen display areas in the target window system.
-
-    A @sym{gdk-window} object is a usually rectangular region on the screen.
-    It is a low-level object, used to implement high-level objects such as
-    @class{gtk-widget} and @class{gtk-window} widgets on the GTK+ level. A
-    @class{gtk-window} widget is a toplevel window, the thing a user might think
-    of as a \"window\" with a titlebar and so on; a @class{gtk-window} widget
-    may contain many @sym{gdk-window} objects. For example, each
-    @class{gtk-button} widget has a @sym{gdk-window} object associated with it.
   @end{short}
+
+  A @sym{gdk-window} object is a usually rectangular region on the screen.
+  It is a low-level object, used to implement high-level objects such as
+  @class{gtk-widget} and @class{gtk-window} widgets on the GTK+ level. A
+  @class{gtk-window} widget is a toplevel window, the thing a user might think
+  of as a \"window\" with a titlebar and so on; a @class{gtk-window} widget
+  may contain many @sym{gdk-window} objects. For example, each
+  @class{gtk-button} widget has a @sym{gdk-window} object associated with it.
 
   @subheading{Composited Windows}
     Normally, the windowing system takes care of rendering the contents of a
@@ -245,24 +245,6 @@
     calling the function @fun{gdk-window-set-composited} on the child window.
     For a composited window it is the responsibility of the application to
     render the window contents at the right spot.
-
-    @b{Example:} Composited windows
-
-    FIXME: MISSING XINCLUDE CONTENT
-
-    In the example Example, \"Composited windows\", a button is placed inside of
-    an event box inside of a window. The event box is set as composited and
-    therefore is no longer automatically drawn to the screen.
-
-    When the contents of the event box change, an expose event is generated on
-    its parent window which, in this case, belongs to the toplevel
-    @class{gtk-window} widget. The expose handler for this widget is
-    responsible for emerging the changes back on the screen in the way that it
-    wishes.
-
-    In our case, we merge the contents with a 50 % transparency. We also set the
-    background colour of the window to red. The effect is that the background
-    shows through the button.
 
   @subheading{Offscreen Windows}
     Offscreen windows are more general than composited windows, since they allow
@@ -359,32 +341,52 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Property Details
+;;; Property and Accessor Details
 ;;;
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "cursor" 'gdk-window) 't)
  "The @code{cursor} property of type @class{gdk-cursor} (Read / Write) @br{}
-  The mouse pointer for a @sym{gdk-window}. See the functions
-  @fun{gdk-window-set-cursor} and @fun{gdk-window-get-cursor} for details. @br{}
+  The mouse pointer for a @sym{gdk-window}.@br{}
   Since 2.18")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-window-cursor atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-window-cursor 'function)
- "@version{2013-8-23}
-  Accessor of the slot @code{\"cursor\"} of the @class{gdk-window} class.
+ "@version{2016-1-2}
+  @argument[object]{a @class{gdk-window} object}
+  @argument[cursor]{a @class{gdk-cursor}}
+  @syntax[]{(gdk-window-cursor object) => cursor}
+  @syntax[]{(setf (gdk-window-cursor object) cursor)}
+  @begin{short}
+    Accessor of the slot @slot[gdk-window]{cursor} of the @class{gdk-window}
+    class.
+  @end{short}
+
+  The generic function @sym{gdk-window-cursor} retrieves a @class{gdk-cursor}
+  pointer for the cursor currently set on the specified @class{gdk-window}, or
+  @code{nil}. If the return value is @code{nil} then there is no custom cursor
+  set on the specified window, and it is using the cursor for its parent window.
+
+  The generic function @sym{(setf gdk-window-cursor)} sets the default mouse
+  pointer for a @class{gdk-window} object.
+
+  Use the functions @fun{gdk-cursor-new-for-display} or
+  @fun{gdk-cursor-new-from-pixbuf} to create the @arg{cursor}. To make the
+  @arg{cursor} invisible, use @code{:blank-cursor} of the
+  @symbol{gdk-cursor-type} enumeration. Passing @code{nil} for the @arg{cursor}
+  argument to @sym{gdk-window-set-cursor} means that @arg{object} will use the
+  cursor of its parent window. Most windows should use this default.
+
+  Since 2.18
   @see-class{gdk-window}
-  @see-function{gdk-window-get-cursor}
-  @see-function{gdk-window-set-cursor}")
+  @see-class{gdk-cursor}
+  @see-symbol{gdk-cursor-type}
+  @see-function{gdk-cursor-get-cursor}
+  @see-function{gdk-cursor-new-for-display}
+  @see-function{gdk-cursor-new-from-pixbuf}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GdkWindowType
@@ -398,7 +400,10 @@
   (:child 2)
   (:temp 3)
   (:foreign 4)
-  (:offscreen 5))
+  (:offscreen 5)
+  #+gdk-3-14
+  (:subsurface 6)
+)
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-window-type atdoc:*symbol-name-alias*) "Enum"
@@ -414,7 +419,8 @@
   (:child 2)
   (:temp 3)
   (:foreign 4)
-  (:offscreen 5))
+  (:offscreen 5)
+  (:subsurface 6))
   @end{pre}
   @begin[code]{table}
     @entry[:root]{Root window; this window has no parent, covers the entire
@@ -426,6 +432,9 @@
     @entry[:foreign]{Foreign window.}
     @entry[:offscreen]{Offscreen window, see the section called
       \"Offscreen Windows\". Since 2.18.}
+    @entry[:subsurface]{Subsurface-based window. This window is visually tied
+      to a toplevel, and is moved/stacked with it. Currently this window type is
+      only implemented in Wayland. Since 3.14.}
   @end{table}
   @see-class{gdk-window}
   @see-class{gtk-window}
@@ -1044,7 +1053,7 @@
     @entry[visual]{A @class{gdk-visual} for window.}
     @entry[window-type]{Type of window.}
     @entry[cursor]{Cursor for the window, see the function
-      @fun{gdk-window-set-cursor}.}
+      @fun{gdk-window-cursor}.}
     @entry[wmclass-name]{Do not use,  see the function
       @fun{gtk-window-set-wmclass}.}
     @entry[wmclass-class]{Do not use, see the function
@@ -1070,7 +1079,7 @@
   @see-constructor{make-gdk-window-attr}
   @see-class{gdk-visual}
   @see-function{gdk-window-move}
-  @see-function{gdk-window-set-cursor}
+  @see-function{gdk-window-cursor}
   @see-function{gdk-window-set-events}
   @see-function{gtk-window-set-wmclass}")
 
@@ -1106,7 +1115,7 @@
   @argument[visual]{a @class{gdk-visual} for window}
   @argument[window-type]{type of window}
   @argument[cursor]{cursor for the window, see the function
-    @fun{gdk-window-set-cursor}}
+    @fun{gdk-window-cursor}}
   @argument[wmclass-name]{do not use, see the function
     @fun{gtk-window-set-wmclass}}
   @argument[wmclass-class]{do not use, see the function
@@ -1118,7 +1127,7 @@
   @end{short}
   @see-class{gdk-window-attr}
   @see-function{gdk-window-move}
-  @see-function{gdk-window-set-cursor}
+  @see-function{gdk-window-cursor}
   @see-function{gdk-window-set-events}
   @see-function{gtk-window-set-wmclass}")
 
@@ -1305,6 +1314,46 @@
   @see-function{gdk-window-new}")
 
 ;;; ----------------------------------------------------------------------------
+;;; enum GdkModifierIntent
+;;;
+;;; This enum is used with gdk_keymap_get_modifier_mask() in order to determine
+;;; what modifiers the currently used windowing system backend uses for
+;;; particular purposes. For example, on X11/Windows, the Control key is used
+;;; for invoking menu shortcuts (accelerators), whereas on Apple computers it’s
+;;; the Command key (which correspond to GDK_CONTROL_MASK and GDK_MOD2_MASK,
+;;; respectively).
+;;;
+;;; Members
+;;;
+;;; GDK_MODIFIER_INTENT_PRIMARY_ACCELERATOR
+;;;     the primary modifier used to invoke menu accelerators.
+;;;
+;;; GDK_MODIFIER_INTENT_CONTEXT_MENU
+;;;     the modifier used to invoke context menus. Note that mouse button 3
+;;;     always triggers context menus. When this modifier is not 0, it
+;;;     additionally triggers context menus when used with mouse button 1.
+;;;
+;;; GDK_MODIFIER_INTENT_EXTEND_SELECTION
+;;;     the modifier used to extend selections using modifier-click or
+;;;     modifier-cursor-key
+;;;
+;;; GDK_MODIFIER_INTENT_MODIFY_SELECTION
+;;;     the modifier used to modify selections, which in most cases means
+;;;     toggling the clicked item into or out of the selection.
+;;;
+;;; GDK_MODIFIER_INTENT_NO_TEXT_INPUT
+;;;     when any of these modifiers is pressed, the key event cannot produce a
+;;;     symbol directly. This is meant to be used for input methods, and for
+;;;     use cases like typeahead search.
+;;;
+;;; GDK_MODIFIER_INTENT_SHIFT_GROUP
+;;;     the modifier that switches between keyboard groups (AltGr on X11/Windows
+;;;     and Option/Alt on OS X).
+;;;
+;;; Since: 3.4
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; gdk_window_new ()
 ;;; ----------------------------------------------------------------------------
 
@@ -1456,16 +1505,16 @@
     @code{win-x} -- origin of the window under the pointer @br{}
     @code{win-y} -- origin of the window under the pointer
   @end{return}
-  @subheading{Warning}
-    @sym{gdk-window-at-pointer} has been deprecated since version 3.0 and
-    should not be used in newly written code.
-    Use the function @fun{gdk-device-get-window-at-position} instead.
-
   @begin{short}
     Obtains the window underneath the mouse pointer, returning the location of
     that window in @arg{win-x}, @arg{win-y}. Returns @code{nil} if the window
     under the mouse pointer is not known to GDK.
   @end{short}
+  @begin[Warning]{dictionary}
+    The function @sym{gdk-window-at-pointer} has been deprecated since version
+    3.0 and should not be used in newly written code. Use the function
+    @fun{gdk-device-get-window-at-position} instead.
+  @end{dictionary}
   @see-class{gdk-window}
   @fun{gdk-device-get-window-at-position}"
   (with-foreign-objects ((x :int) (y :int))
@@ -1884,6 +1933,78 @@
 (export 'gdk-window-unfullscreen)
 
 ;;; ----------------------------------------------------------------------------
+;;; enum GdkFullscreenMode
+;;;
+;;; Indicates which monitor (in a multi-head setup) a window should span over
+;;; when in fullscreen mode.
+;;;
+;;; Members
+;;;
+;;; GDK_FULLSCREEN_ON_CURRENT_MONITOR
+;;;     Fullscreen on current monitor only.
+;;;
+;;; GDK_FULLSCREEN_ON_ALL_MONITORS
+;;;     Span across all monitors when fullscreen.
+;;;
+;;; Since 3.8
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gdk_window_get_fullscreen_mode ()
+;;;
+;;; GdkFullscreenMode
+;;; gdk_window_get_fullscreen_mode (GdkWindow *window);
+;;;
+;;; Obtains the GdkFullscreenMode of the window .
+;;;
+;;; Parameters
+;;;
+;;; window
+;;;     a toplevel GdkWindow
+;;;
+;;; Returns
+;;;     The GdkFullscreenMode applied to the window when fullscreen.
+;;;
+;;; Since 3.8
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gdk_window_set_fullscreen_mode ()
+;;;
+;;; void
+;;; gdk_window_set_fullscreen_mode (GdkWindow *window,
+;;;                                 GdkFullscreenMode mode);
+;;;
+;;; Specifies whether the window should span over all monitors (in a multi-head
+;;; setup) or only the current monitor when in fullscreen mode.
+;;;
+;;; The mode argument is from the GdkFullscreenMode enumeration. If
+;;; GDK_FULLSCREEN_ON_ALL_MONITORS is specified, the fullscreen window will
+;;; span over all monitors from the GdkScreen.
+;;;
+;;; On X11, searches through the list of monitors from the GdkScreen the ones
+;;; which delimit the 4 edges of the entire GdkScreen and will ask the window
+;;; manager to span the window over these monitors.
+;;;
+;;; If the XINERAMA extension is not available or not usable, this function has
+;;; no effect.
+;;;
+;;; Not all window managers support this, so you can’t rely on the fullscreen
+;;; window to span over the multiple monitors when
+;;; GDK_FULLSCREEN_ON_ALL_MONITORS is specified.
+;;;
+;;; Parameters
+;;;
+;;; window
+;;;     a toplevel GdkWindow
+;;;
+;;; mode
+;;;     fullscreen mode
+;;;
+;;; Since: 3.8
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; gdk_window_set_keep_above ()
 ;;; ----------------------------------------------------------------------------
 
@@ -1998,6 +2119,11 @@
   enough Xcomposite and Xdamage extensions. You must call the function
   @fun{gdk-display-supports-composite} to check if setting a window as
   composited is supported before attempting to do so.
+  @begin[Warning]{dictionary}
+    The function @sym{gdk-window-set-composited} has been deprecated since
+    version 3.16 and should not be used in newly-written code.
+    Compositing is an outdated technology that only ever worked on X11.
+  @end{dictionary}
 
   Since 2.12
   @see-class{gdk-window}
@@ -2023,6 +2149,11 @@
   @end{short}
 
   See the function @fun{gdk-window-set-composited}.
+  @begin[Warning]{dictionary}
+    The function @sym{gdk-window-set-composited} has been deprecated since
+    version 3.16 and should not be used in newly-written code.
+    Compositing is an outdated technology that only ever worked on X11.
+  @end{dictionary}
 
   Since 2.22
   @see-class{gdk-window}
@@ -2191,21 +2322,12 @@
  "@version{2013-8-31}
   @argument[window]{a @class{gdk-window} object}
   @begin{short}
-    Flush all outstanding cached operations on a window, leaving the window in a
-    state which reflects all that has been drawn before.
+    This function does nothing.
   @end{short}
-
-  Gdk uses multiple kinds of caching to get better performance and nicer
-  drawing. For instance, during exposes all paints to a window using double
-  buffered rendering are keep on a surface until the last window has been
-  exposed. It also delays window moves/scrolls until as long as possible until
-  next update to avoid tearing when moving windows.
-
-  Normally this should be completely invisible to applications, as we
-  automatically flush the windows when required, but this might be needed if
-  you for instance mix direct native drawing with gdk drawing. For Gtk widgets
-  that do not use double buffering this will be called automatically before
-  sending the expose event.
+  @begin[Warning]{dictionary}
+    The function @sym{gdk-window-flush} has been deprecated since version 3.14
+    and should not be used in newly-written code.
+  @end{dictionary}
 
   Since 2.18
   @see-class{gdk-window}"
@@ -2541,6 +2663,32 @@
 (export 'gdk-window-begin-move-drag-for-device)
 
 ;;; ----------------------------------------------------------------------------
+;;; gdk_window_show_window_menu ()
+;;;
+;;; gboolean
+;;; gdk_window_show_window_menu (GdkWindow *window,
+;;;                              GdkEvent *event);
+;;;
+;;; Asks the windowing system to show the window menu. The window menu is the
+;;; menu shown when right-clicking the titlebar on traditional windows managed
+;;; by the window manager. This is useful for windows using client-side
+;;; decorations, activating it with a right-click on the window decorations.
+;;;
+;;; Parameters
+;;;
+;;; window
+;;;     a GdkWindow
+;;;
+;;; event
+;;;     a GdkEvent to show the menu for
+;;;
+;;; Returns
+;;;     TRUE if the window menu was shown and FALSE otherwise.
+;;;
+;;; Since 3.14
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; gdk_window_constrain_size ()
 ;;; ----------------------------------------------------------------------------
 
@@ -2600,6 +2748,123 @@
   (window (g-object gdk-window)))
 
 (export 'gdk-window-beep)
+
+;;; ----------------------------------------------------------------------------
+;;; gdk_window_get_scale_factor ()
+;;;
+;;; gint
+;;; gdk_window_get_scale_factor (GdkWindow *window);
+;;;
+;;; Returns the internal scale factor that maps from window coordiantes to the
+;;; actual device pixels. On traditional systems this is 1, but on very high
+;;; density outputs this can be a higher value (often 2).
+;;;
+;;; A higher value means that drawing is automatically scaled up to a higher
+;;; resolution, so any code doing drawing will automatically look nicer.
+;;; However, if you are supplying pixel-based data the scale value can be used
+;;; to determine whether to use a pixel resource with higher resolution data.
+;;;
+;;; The scale of a window may change during runtime, if this happens a configure
+;;; event will be sent to the toplevel window.
+;;;
+;;; Parameters
+;;;
+;;; window
+;;;     window to get scale factor for
+;;;
+;;; Returns
+;;;     the scale factor
+;;;
+;;; Since: 3.10
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gdk_window_set_opaque_region ()
+;;;
+;;; void
+;;; gdk_window_set_opaque_region (GdkWindow *window,
+;;;                               cairo_region_t *region);
+;;;
+;;; For optimisation purposes, compositing window managers may like to not draw
+;;; obscured regions of windows, or turn off blending during for these regions.
+;;; With RGB windows with no transparency, this is just the shape of the window,
+;;; but with ARGB32 windows, the compositor does not know what regions of the
+;;; window are transparent or not.
+;;;
+;;; This function only works for toplevel windows.
+;;;
+;;; GTK+ will update this property automatically if the window background is
+;;; opaque, as we know where the opaque regions are. If your window background
+;;; is not opaque, please update this property in your “style-updated” handler.
+;;;
+;;; Parameters
+;;;
+;;; window
+;;;     a top-level or non-native GdkWindow
+;;;
+;;; region
+;;;     a region, or NULL.
+;;;
+;;; Since: 3.10
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gdk_window_create_gl_context ()
+;;;
+;;; GdkGLContext *
+;;; gdk_window_create_gl_context (GdkWindow *window,
+;;;                               GError **error);
+;;;
+;;; Creates a new GdkGLContext matching the framebuffer format to the visual of
+;;; the GdkWindow. The context is disconnected from any particular window or
+;;; surface.
+;;;
+;;; If the creation of the GdkGLContext failed, error will be set.
+;;;
+;;; Before using the returned GdkGLContext, you will need to call
+;;; gdk_gl_context_make_current() or gdk_gl_context_realize().
+;;;
+;;; Parameters
+;;;
+;;; window
+;;;     a GdkWindow
+;;;
+;;; error
+;;;     return location for an error
+;;;
+;;; Returns
+;;;     the newly created GdkGLContext, or NULL on error.
+;;;
+;;; Since 3.16
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gdk_window_mark_paint_from_clip ()
+;;;
+;;; void
+;;; gdk_window_mark_paint_from_clip (GdkWindow *window,
+;;;                                  cairo_t *cr);
+;;;
+;;; If you call this during a paint (e.g. between
+;;; gdk_window_begin_paint_region() and gdk_window_end_paint() then GDK will
+;;; mark the current clip region of the window as being drawn. This is required
+;;; when mixing GL rendering via gdk_cairo_draw_from_gl() and cairo rendering,
+;;; as otherwise GDK has no way of knowing when something paints over the
+;;; GL-drawn regions.
+;;;
+;;; This is typically called automatically by GTK+ and you don't need to care
+;;; about this.
+;;;
+;;; Parameters
+;;;
+;;; window
+;;;     a GdkWindow
+;;;
+;;; cr
+;;;     a cairo_t
+;;;
+;;; Since: 3.16
+;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_get_clip_region ()
@@ -2751,6 +3016,56 @@
   (window (g-object gdk-window)))
 
 (export 'gdk-window-get-visible-region)
+
+;;; ----------------------------------------------------------------------------
+;;; GdkWindowInvalidateHandlerFunc ()
+;;;
+;;; void
+;;; (*GdkWindowInvalidateHandlerFunc) (GdkWindow *window,
+;;;                                    cairo_region_t *region);
+;;;
+;;; Whenever some area of the window is invalidated (directly in the window or
+;;; in a child window) this gets called with region in the coordinate space of
+;;; window . You can use region to just keep track of the dirty region, or you
+;;; can actually change region in case you are doing display tricks like showing
+;;; a child in multiple places.
+;;;
+;;; Parameters
+;;;
+;;; window
+;;;     a GdkWindow
+;;;
+;;; region
+;;;     a cairo_region_t
+;;;
+;;; Since: 3.10
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gdk_window_set_invalidate_handler ()
+;;;
+;;; void
+;;; gdk_window_set_invalidate_handler (GdkWindow *window,
+;;;                                    GdkWindowInvalidateHandlerFunc handler);
+;;;
+;;; Registers an invalidate handler for a specific window. This will get called
+;;; whenever a region in the window or its children is invalidated.
+;;;
+;;; This can be used to record the invalidated region, which is useful if you
+;;; are keeping an offscreen copy of some region and want to keep it up to date.
+;;; You can also modify the invalidated region in case you’re doing some effect
+;;; where e. g. a child widget appears in multiple places.
+;;;
+;;; Parameters
+;;;
+;;; window
+;;;     a GdkWindow
+;;;
+;;; handler
+;;;     a GdkWindowInvalidateHandlerFunc callback function
+;;;
+;;; Since: 3.10
+;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_invalidate_rect ()
@@ -3042,17 +3357,13 @@
  "@version{2013-9-1}
   @argument[window]{a toplevel @class{gdk-window} object}
   @begin{short}
-    Indicates that the application will cooperate with the window system in
-    synchronizing the window repaint with the window manager during resizing
-    operations.
+    Does nothing, present only for compatiblity.
   @end{short}
-  After an application calls this function, it must call the function
-  @fun{gdk-window-configure-finished} every time it has finished all processing
-  associated with a set of Configure events. Toplevel GTK+ windows automatically
-  use this protocol.
-
-  On X, calling this function makes window participate in the
-  @code{_NET_WM_SYNC_REQUEST} window manager protocol.
+  @begin[Warning]{dictionary}
+    The function @sym{gdk-window-enable-synchronized-configure} has been
+    deprecated since version 3.8 and should not be used in newly-written code.
+    This function is no longer needed.
+  @end{dictionary}
 
   Since 2.6
   @see-class{gdk-window}
@@ -3070,15 +3381,13 @@
  "@version{2013-10-2}
   @argument[window]{a toplevel @class{gdk-window} object}
   @begin{short}
-    Signal to the window system that the application has finished handling
-    Configure events it has received.
+    Does nothing, present only for compatiblity.
   @end{short}
-  Window Managers can use this to better synchronize the frame repaint with the
-  application. GTK+ applications will automatically call this function when
-  appropriate.
-
-  This function can only be called if the function
-  @fun{gdk-window-enable-synchronized-configure} was called previously.
+  @begin[Warning]{dictionary}
+    The function @sym{gdk-window-configure-finished} has been
+    deprecated since version 3.8 and should not be used in newly-written code.
+    This function is no longer needed.
+  @end{dictionary}
 
   Since 2.6
   @see-class{gdk-window}
@@ -3086,6 +3395,26 @@
   (window (g-object gdk-window)))
 
 (export 'gdk-window-configure-finished)
+
+;;; ----------------------------------------------------------------------------
+;;; gdk_window_get_frame_clock ()
+;;;
+;;; GdkFrameClock *
+;;; gdk_window_get_frame_clock (GdkWindow *window);
+;;;
+;;; Gets the frame clock for the window. The frame clock for a window never
+;;; changes unless the window is reparented to a new toplevel window.
+;;;
+;;; Parameters
+;;;
+;;; window
+;;;     window to get frame clock for
+;;;
+;;; Returns
+;;;     the frame clock.
+;;;
+;;; Since 3.8
+;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_set_user_data ()
@@ -3543,6 +3872,11 @@
   @end{short}
   This is used if you are implementing scary features that involve deep
   knowledge of the windowing system. Do not worry about it unless you have to.
+  @begin[Warning]{dictionary}
+    The function @sym{gdk-window-set-static-gravities} has been deprecated since
+    version 3.16 and should not be used in newly-written code. Static gravities
+    haven't worked on anything but X11 for a long time.
+  @end{dictionary}
   @see-class{gdk-window}"
   (window (g-object gdk-window))
   (use-static :boolean))
@@ -3694,64 +4028,6 @@
   @see-class{gdk-window}")
 
 (export '+gdk-parent-relative+)
-
-;;; ----------------------------------------------------------------------------
-;;; gdk_window_set_cursor ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gdk-window-set-cursor))
-
-(defun gdk-window-set-cursor (window cursor)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-23}
-  @argument[window]{a @class{gdk-window} object}
-  @argument[cursor]{a @class{gdk-cursor}}
-  @begin{short}
-    Sets the default mouse pointer for a @class{gdk-window} object.
-  @end{short}
-  Use the functions @fun{gdk-cursor-new-for-display} or
-  @fun{gdk-cursor-new-from-pixbuf} to create the @arg{cursor}. To make the
-  @arg{cursor} invisible, use @code{:blank-cursor} of the
-  @symbol{gdk-cursor-type} enumeration. Passing @code{nil} for the @arg{cursor}
-  argument to @sym{gdk-window-set-cursor} means that @arg{window} will use the
-  cursor of its parent window. Most windows should use this default.
-  @see-class{gdk-window}
-  @see-class{gdk-cursor}
-  @see-symbol{gdk-cursor-type}
-  @see-function{gdk-cursor-get-cursor}
-  @see-function{gdk-cursor-new-for-display}
-  @see-function{gdk-cursor-new-from-pixbuf}"
-  (setf (gdk-window-cursor window) cursor))
-
-(export 'gdk-window-set-cursor)
-
-;;; ----------------------------------------------------------------------------
-;;; gdk_window_get_cursor ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gdk-window-get-cursor))
-
-(defun gdk-window-get-cursor (window)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-23}
-  @argument[window]{a @class{gdk-window} object}
-  @return{A @class{gdk-cursor}, or @code{nil}. The returned object is owned by
-    the @class{gdk-window} and should not be unreferenced directly. Use
-    @fun{gdk-window-set-cursor} to unset the cursor of the window.}
-  @begin{short}
-    Retrieves a @class{gdk-cursor} pointer for the cursor currently set on the
-    specified @class{gdk-window}, or @code{nil}.
-  @end{short}
-  If the return value is @code{nil} then there is no custom cursor set on the
-  specified window, and it is using the cursor for its parent window.
-
-  Since 2.18
-  @see-class{gdk-window}
-  @see-class{gdk-cursor}
-  @see-function{gdk-window-set-cursor}"
-  (gdk-window-cursor window))
-
-(export 'gdk-window-get-cursor)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_get_user_data ()
@@ -4043,6 +4319,46 @@
 (export 'gdk-window-get-type-hint)
 
 ;;; ----------------------------------------------------------------------------
+;;; gdk_window_set_shadow_width ()
+;;;
+;;; void
+;;; gdk_window_set_shadow_width (GdkWindow *window,
+;;;                              gint left,
+;;;                              gint right,
+;;;                              gint top,
+;;;                              gint bottom);
+;;;
+;;; Newer GTK+ windows using client-side decorations use extra geometry around
+;;; their frames for effects like shadows and invisible borders. Window managers
+;;; that want to maximize windows or snap to edges need to know where the
+;;; extents of the actual frame lie, so that users don’t feel like windows are
+;;; snapping against random invisible edges.
+;;;
+;;; Note that this property is automatically updated by GTK+, so this function
+;;; should only be used by applications which do not use GTK+ to create toplevel
+;;; windows.
+;;;
+;;; Parameters
+;;;
+;;; window
+;;;     a GdkWindow
+;;;
+;;; left
+;;;     The left extent
+;;;
+;;; right
+;;;     The right extent
+;;;
+;;; top
+;;;     The top extent
+;;;
+;;; bottom
+;;;     The bottom extent
+;;;
+;;; Since 3.12
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; gdk_window_set_skip_taskbar_hint ()
 ;;; ----------------------------------------------------------------------------
 
@@ -4299,15 +4615,15 @@
     @code{y} -- y coordinate of pointer @br{}
     @code{mask} -- modifier mask
   @end{return}
-  @subheading{Warning}
-    The function @sym{gdk-window-get-pointer} has been deprecated since version
-    3.0 and should not be used in newly written code. Use the function
-    @fun{gdk-window-get-device-position} instead.
-
   @begin{short}
     Obtains the current pointer position and modifier state. The position is
     given in coordinates relative to the upper left corner of window.
   @end{short}
+  @begin[Warning]{dictionary}
+    The function @sym{gdk-window-get-pointer} has been deprecated since version
+    3.0 and should not be used in newly written code. Use the function
+    @fun{gdk-window-get-device-position} instead.
+  @end{dictionary}
   @see-class{gdk-window}
   @see-function{gdk-window-at-pointer}
   @see-function{gdk-window-get-device-position}"
@@ -4349,10 +4665,13 @@
     Obtains the current device position and modifier state. The position is
     given in coordinates relative to the upper left corner of window.
   @end{short}
+  Use the function @fun{gdk-window-get-device-position-double} if you need
+  subpixel precision.
 
   Since 3.0
   @see-class{gdk-window}
-  @see-function{gdk-device-get-window-at-position}"
+  @see-function{gdk-device-get-window-at-position}
+  @see-function{gdk-window-get-device-position-double}"
   (with-foreign-objects ((x :int) (y :int) (mask 'gdk-modifier-type))
     (let ((win (%gdk-window-get-device-position window device x y mask)))
       (values win
@@ -4361,6 +4680,45 @@
               (mem-ref mask 'gdk-modifier-type)))))
 
 (export 'gdk-window-get-device-position)
+
+;;; ----------------------------------------------------------------------------
+;;; gdk_window_get_device_position_double ()
+;;;
+;;; GdkWindow *
+;;; gdk_window_get_device_position_double (GdkWindow *window,
+;;;                                        GdkDevice *device,
+;;;                                        gdouble *x,
+;;;                                        gdouble *y,
+;;;                                        GdkModifierType *mask);
+;;;
+;;; Obtains the current device position in doubles and modifier state. The
+;;; position is given in coordinates relative to the upper left corner of
+;;; window .
+;;;
+;;; Parameters
+;;;
+;;; window
+;;;     a GdkWindow.
+;;;
+;;; device
+;;;     pointer GdkDevice to query to.
+;;;
+;;; x
+;;;     return location for the X coordinate of device , or NULL.
+;;;
+;;; y
+;;;     return location for the Y coordinate of device , or NULL.
+;;;
+;;; mask
+;;;     return location for the modifier mask, or NULL.
+;;;
+;;; Returns
+;;;     The window underneath device (as with
+;;;     gdk_device_get_window_at_position()), or NULL if the window is not
+;;;     known to GDK.
+;;;
+;;; Since 3.10
+;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_get_parent ()
@@ -4440,6 +4798,36 @@
   (window (g-object gdk-window)))
 
 (export 'gdk-window-get-children)
+
+;;; ----------------------------------------------------------------------------
+;;; gdk_window_get_children_with_user_data ()
+;;;
+;;; GList *
+;;; gdk_window_get_children_with_user_data
+;;;                                (GdkWindow *window,
+;;;                                 gpointer user_data);
+;;;
+;;; Gets the list of children of window known to GDK with a particular user_data
+;;; set on it.
+;;;
+;;; The returned list must be freed, but the elements in the list need not be.
+;;;
+;;; The list is returned in (relative) stacking order, i.e. the lowest window
+;;; is first.
+;;;
+;;; Parameters
+;;;
+;;; window
+;;;     a GdkWindow
+;;;
+;;; user_data
+;;;     user data to look for
+;;;
+;;; Returns
+;;;     list of child windows inside window .
+;;;
+;;; Since 3.10
+;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_peek_children ()
@@ -4915,7 +5303,7 @@
   @begin{return}
     A @class{gdk-cursor}, or @code{nil}. The returned object is owned by the
     @class{gdk-window} and should not be unreferenced directly. Use the function
-    @fun{gdk-window-set-cursor} to unset the cursor of the window.
+    @fun{gdk-window-cursor} to unset the cursor of the window.
   @end{return}
   @begin{short}
     Retrieves a @class{gdk-cursor} pointer for the device currently set on the
@@ -4951,7 +5339,7 @@
   Use the functions @fun{gdk-cursor-new-for-display} or
   @fun{gdk-cursor-new-from-pixbuf} to create the cursor. To make the cursor
   invisible, use @code{:blank-cursor}. Passing @code{nil} for the cursor
-  argument to the function @sym{gdk-window-set-cursor} means that window will
+  argument to the function @sym{gdk-window-cursor} means that window will
   use the cursor of its parent window. Most windows should use this default.
 
   Since 3.0
@@ -5068,6 +5456,51 @@
   (event-mask gdk-event-mask))
 
 (export 'gdk-window-set-source-events)
+
+;;; ----------------------------------------------------------------------------
+;;; gdk_window_get_event_compression ()
+;;;
+;;; gboolean
+;;; gdk_window_get_event_compression (GdkWindow *window);
+;;;
+;;; Get the current event compression setting for this window.
+;;;
+;;; Parameters
+;;;
+;;; window
+;;;     a GdkWindow
+;;;
+;;; Returns
+;;;     TRUE if motion events will be compressed
+;;;
+;;; Since 3.12
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gdk_window_set_event_compression ()
+;;;
+;;; void
+;;; gdk_window_set_event_compression (GdkWindow *window,
+;;;                                   gboolean event_compression);
+;;;
+;;; Determines whether or not extra unprocessed motion events in the event queue
+;;; can be discarded. If TRUE only the most recent event will be delivered.
+;;;
+;;; Some types of applications, e.g. paint programs, need to see all motion
+;;; events and will benefit from turning off event compression.
+;;;
+;;; By default, event compression is enabled.
+;;;
+;;; Parameters
+;;;
+;;; window
+;;;     a GdkWindow
+;;;
+;;; event_compression
+;;;     TRUE if motion events should be compressed
+;;;
+;;; Since 3.12
+;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_offscreen_window_get_surface ()

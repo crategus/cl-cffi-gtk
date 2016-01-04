@@ -2,11 +2,11 @@
 ;;; gdk.device-manager.lisp
 ;;;
 ;;; The documentation of this file is taken from the GDK 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GDK library.
+;;; Version 3.16 and modified to document the Lisp binding to the GDK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012, 2013 Dieter Kaiser
+;;; Copyright (C) 2012 - 2015 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -44,7 +44,6 @@
 ;;;   GObject
 ;;;    +----GdkDeviceManager
 ;;;
-;;;
 ;;; Signals
 ;;;
 ;;;   "device-added"                                  : Run Last
@@ -66,8 +65,6 @@
   ((display
     gdk-device-manager-display
     "display" "GdkDisplay" t t)))
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gdk-device-manager 'type)
@@ -225,7 +222,7 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Property Details
+;;; Property and Accessor Details
 ;;;
 ;;; ----------------------------------------------------------------------------
 
@@ -236,19 +233,26 @@
   (Read / Write / Construct) @br{}
   Display for the device manager.")
 
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-device-manager-display atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-device-manager-display 'function)
  "@version{2013-4-7}
-  Accessor of the slot @code{\"display\"} of the @class{gdk-device-manager}
-  class.")
+  @argument[device-manager]{a @class{gdk-device-manager} object}
+  @syntax[]{(gdk-device-manager-display object) => display}
+  @begin{short}
+    Accessor of the slot @slot[gdk-device-manager]{display} of the
+    @class{gdk-device-manager} class.
+  @end{short}
+
+  The generic function @sym{gdk-device-manager-display} returns the
+  @class{gdk-display} object to which @arg{device-manager} is associated to,
+  or @code{nil}. This memory is owned by GDK and must not be freed or
+  unreferenced.
+
+  Since 3.0
+  @see-class{gdk-device-manager}
+  @see-class{gdk-display}")
 
 ;;; ----------------------------------------------------------------------------
 
@@ -288,33 +292,10 @@
   observe the presence of XInput 2.
 
   Since 3.0
+  @see-class{gdk-device-manager}
   @see-function{gdk-display-open}")
 
 (export 'gdk-disable-multidevice)
-
-;;; ----------------------------------------------------------------------------
-;;; gdk_device_manager_get_display ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gdk-device-manager-get-display))
-
-(defun gdk-device-manager-get-display (device-manager)
- #+cl-cffi-gtk-documentation
- "@version{2013-6-18}
-  @argument[device-manager]{a @class{gdk-device-manager} object}
-  @begin{return}
-    The @class{gdk-display} object to which @arg{device-manager} is associated
-    to, or @code{nil}. This memory is owned by GDK and must not be freed or
-    unreferenced.
-  @end{return}
-  @begin{short}
-    Gets the @class{gdk-display} object associated to @arg{device-manager}.
-  @end{short}
-
-  Since 3.0"
-  (gdk-device-manager-display device-manager))
-
-(export 'gdk-device-manager-get-display)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_device_manager_list_devices ()
@@ -332,7 +313,8 @@
     @arg{device-manager}.
   @end{short}
 
-  Since 3.0"
+  Since 3.0
+  @see-class{gdk-device-manager}"
   (device-manager (g-object gdk-device-manager))
   (type gdk-device-type))
 
@@ -358,7 +340,8 @@
   a @class{gdk-event} event and there are not other means to get a meaningful
   @class{gdk-device} object to operate on.
 
-  Since 3.0"
+  Since 3.0
+  @see-class{gdk-device-manager}"
   (device-manager (g-object gdk-device-manager)))
 
 (export 'gdk-device-manager-get-client-pointer)

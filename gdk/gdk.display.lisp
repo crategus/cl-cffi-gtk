@@ -5,12 +5,12 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file is taken from the GDK 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GDK library.
+;;; Version 3.16 and modified to document the Lisp binding to the GDK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2015 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -41,7 +41,7 @@
 ;;;     gdk_display_open
 ;;;     gdk_display_get_default
 ;;;     gdk_display_get_name
-;;;     gdk_display_get_n_screens
+;;;     gdk_display_get_n_screens                     * deprecated *
 ;;;     gdk_display_get_screen
 ;;;     gdk_display_get_default_screen
 ;;;     gdk_display_get_device_manager
@@ -159,7 +159,8 @@
   @end{return}
   @short{Opens a display named by @arg{display-name}.}
 
-  Since 2.2"
+  Since 2.2
+  @see-class{gdk-display}"
   (display-name :string))
 
 (export 'gdk-display-open)
@@ -182,6 +183,7 @@
   @end{short}
 
   Since 2.2
+  @see-class{gdk-display}
   @see-function{gdk-display-manager-get}
   @see-function{gdk-display-manager-get-default-display}")
 
@@ -201,7 +203,8 @@
   @end{return}
   @short{Gets the name of the @arg{display}.}
 
-  Since 2.2"
+  Since 2.2
+  @see-class{gdk-display}"
   (display (g-object gdk-display)))
 
 (export 'gdk-display-get-name)
@@ -212,12 +215,18 @@
 
 (defcfun ("gdk_display_get_n_screens" gdk-display-get-n-screens) :int
  #+cl-cffi-gtk-documentation
- "@version{2013-4-4}
+ "@version{2015-12-30}
   @argument[display]{a @class{gdk-display} object}
   @return{Number of screens.}
+  @subheading{Warning}
+    The function @sym{gdk-display-get-n-screens} has been deprecated since
+    version 3.10 and should not be used in newly-written code. The number of
+    screens is always 1.
+
   @short{Gets the number of screens managed by the @arg{display}.}
 
-  Since 2.2"
+  Since 2.2
+  @see-class{gdk-display}"
   (display (g-object gdk-display)))
 
 (export 'gdk-display-get-n-screens)
@@ -234,7 +243,8 @@
   @return{The @class{gdk-screen} object.}
   @short{Returns a screen object for one of the screens of the @arg{display}.}
 
-  Since 2.2"
+  Since 2.2
+  @see-class{gdk-display}"
   (display (g-object gdk-display))
   (screen-num :int))
 
@@ -276,7 +286,9 @@
     Returns the @class{gdk-device-manager} object associated to @arg{display}.
   @end{short}
 
-  Since 3.0"
+  Since 3.0
+  @see-class{gdk-display}
+  @see-class{gdk-device-manager}"
   (display (g-object gdk-display)))
 
 (export 'gdk-display-get-device-manager)
@@ -359,7 +371,8 @@
   @argument[device]{a @class{gdk-device} object}
   @return{@em{True} if there is a grab in effect for @arg{device}.}
   Returns @em{true} if there is an ongoing grab on @arg{device} for
-  @arg{display}."
+  @arg{display}.
+  @see-class{gdk-display}"
   (display (g-object gdk-display))
   (device (g-object gdk-device)))
 
@@ -375,7 +388,8 @@
   @argument[display]{a @class{gdk-display} object}
   @short{Emits a short beep on @arg{display}.}
 
-  Since 2.2"
+  Since 2.2
+  @see-class{gdk-display}"
   (display (g-object gdk-display)))
 
 (export 'gdk-display-beep)
@@ -401,6 +415,7 @@
   synchronously, this function will do nothing.
 
   Since 2.2
+  @see-class{gdk-display}
   @see-function{gdk-error-trap-pop}"
   (display (g-object gdk-display)))
 
@@ -426,7 +441,8 @@
   This is most useful for X11. On windowing systems where requests are handled
   synchronously, this function will do nothing.
 
-  Since 2.4"
+  Since 2.4
+  @see-class{gdk-display}"
   (display (g-object gdk-display)))
 
 (export 'gdk-display-flush)
@@ -444,7 +460,8 @@
     and cleans up associated resources.
   @end{short}
 
- Since 2.2"
+  Since 2.2
+  @see-class{gdk-display}"
   (display (g-object gdk-display)))
 
 (export 'gdk-display-close)
@@ -460,7 +477,8 @@
   @return{@em{True} if the @arg{display} is closed.}
   @short{Finds out if the @arg{display} has been closed.}
 
-  Since 2.22"
+  Since 2.22
+  @see-class{gdk-display}"
   (display (g-object gdk-display)))
 
 (export 'gdk-display-is-closed)
@@ -531,7 +549,8 @@
     for @arg{display}.
   @end{short}
 
-  Since 2.2"
+  Since 2.2
+  @see-class{gdk-display}"
   (display (g-object gdk-display))
   (event (g-boxed-foreign gdk-event)))
 
@@ -551,7 +570,8 @@
     processed.
   @end{short}
 
-  Since 3.0"
+  Since 3.0
+  @see-class{gdk-display}"
   (display (g-object gdk-display)))
 
 (export 'gdk-display-has-pending)
@@ -572,7 +592,8 @@
     should not set this, it is a global user configured setting.
   @end{short}
 
-  Since 2.2"
+  Since 2.2
+  @see-class{gdk-display}"
   (display (g-object gdk-display))
   (msec :uint))
 
@@ -596,6 +617,7 @@
   @end{short}
 
   Since 2.4
+  @see-class{gdk-display}
   @see-function{gdk-display-set-double-click-time}"
   (display (g-object gdk-display))
   (distance :uint))
@@ -747,7 +769,8 @@
     Otherwise, cursors have only a forground and a background color.
   @end{short}
 
-  Since 2.4"
+  Since 2.4
+  @see-class{gdk-display}"
   (display (g-object gdk-display)))
 
 (export 'gdk-display-supports-cursor-color)
@@ -767,7 +790,8 @@
     Otherwise, cursors are restricted to bilevel alpha (i. e. a mask).
   @end{short}
 
-  Since 2.4"
+  Since 2.4
+  @see-class{gdk-display}"
   (display (g-object gdk-display)))
 
 (export 'gdk-display-supports-cursor-alpha)
@@ -784,7 +808,8 @@
   @return{The default cursor size.}
   @short{Returns the default size to use for cursors on @arg{display}.}
 
-  Since 2.4"
+  Since 2.4
+  @see-class{gdk-display}"
   (display (g-object gdk-display)))
 
 (export 'gdk-display-get-default-cursor-size)
@@ -804,12 +829,13 @@
  "@version{2013-4-4}
   @argument[display]{a @class{gdk-display} object}
   @begin{return}
-    @code{width} -- the maximal cursor width@br{}
+    @code{width} -- the maximal cursor width @br{}
     @code{height} -- the maximal cursor height
   @end{return}
   @short{Gets the maximal size to use for cursors on @arg{display}.}
 
-  Since 2.4"
+  Since 2.4
+  @see-class{gdk-display}"
   (with-foreign-objects ((width :uint)
                          (height :uint))
     (%gdk-display-get-maximal-cursor-size display width height)
@@ -835,6 +861,7 @@
   @end{short}
 
   Since 2.4
+  @see-class{gdk-display}
   @see-function{gdk-window-set-group}"
   (display (g-object gdk-display)))
 
@@ -855,7 +882,8 @@
     owner of a selection changes.
   @end{short}
 
-  Since 2.6"
+  Since 2.6
+  @see-class{gdk-display}"
   (display (g-object gdk-display)))
 
 (export 'gdk-display-supports-selection-notification)
@@ -877,7 +905,8 @@
     @arg{selection} named by the given atom.
   @end{short}
 
-  Since 2.6"
+  Since 2.6
+  @see-class{gdk-display}"
   (display (g-object gdk-display))
   (selection gdk-atom-as-string))
 
@@ -899,7 +928,8 @@
     quit. On X11 this checks if a clipboard daemon is running.
   @end{short}
 
-  Since 2.6"
+  Since 2.6
+  @see-class{gdk-display}"
   (display (g-object gdk-display)))
 
 (export 'gdk-display-supports-clipboard-persistence)
@@ -933,7 +963,8 @@
     @a[http://www.freedesktop.org/wiki/ClipboardManager]{freedesktop.org}.
   @end{short}
 
-  Since 2.6"
+  Since 2.6
+  @see-class{gdk-display}"
   (let ((n-targets (length targets)))
     (with-foreign-object (targets-ptr 'gdk-atom-as-string n-targets)
       (loop
@@ -963,6 +994,7 @@
   @end{short}
 
   Since 2.10
+  @see-class{gdk-display}
   @see-function{gdk-window-shape-combine-region}"
   (display (g-object gdk-display)))
 
@@ -985,6 +1017,7 @@
   @end{short}
 
   Since 2.10
+  @see-class{gdk-display}
   @see-function{gdk-window-input-shape-combine-region}"
   (display (g-object gdk-display)))
 
@@ -1009,6 +1042,7 @@
   available.
 
   Since 2.12
+  @see-class{gdk-display}
   @see-function{gdk-window-set-composited}"
   (display (g-object gdk-display)))
 
@@ -1032,7 +1066,8 @@
     applications on the given @arg{display}.
   @end{short}
 
-  Since 3.0"
+  Since 3.0
+  @see-class{gdk-display}"
   (display (g-object gdk-display)))
 
 (export 'gdk-display-get-app-launch-context)
@@ -1059,6 +1094,7 @@
   feature.
 
   Since 3.0
+  @see-class{gdk-display}
   @see-function{gtk-window-set-auto-startup-notification}"
   (display (g-object gdk-display))
   (startup-id :string))

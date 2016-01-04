@@ -5,12 +5,12 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file is taken from the GDK 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GDK library.
+;;; Version 3.16 and modified to document the Lisp binding to the GDK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2016 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -72,7 +72,6 @@
 ;;; GdkVisual
 ;;; ----------------------------------------------------------------------------
 
-
 (define-g-object-class "GdkVisual" gdk-visual
   (:superclass g-object
    :export t
@@ -83,15 +82,15 @@
 (setf (documentation 'gdk-visual 'type)
  "@version{2013-7-29}
   @begin{short}
-    A @sym{gdk-visual} describes a particular video hardware display format. It
-    includes information about the number of bits used for each color, the way
-    the bits are translated into an RGB value for display, and the way the bits
-    are stored in memory. For example, a piece of display hardware might support
-    24-bit color, 16-bit color, or 8-bit color; meaning 24/16/8-bit pixel sizes.
-    For a given pixel size, pixels can be in different formats; for example the
-    \"red\" element of an RGB pixel may be in the top 8 bits of the pixel, or
-    may be in the lower 4 bits.
+    A @sym{gdk-visual} describes a particular video hardware display format.
   @end{short}
+  It includes information about the number of bits used for each color, the way
+  the bits are translated into an RGB value for display, and the way the bits
+  are stored in memory. For example, a piece of display hardware might support
+  24-bit color, 16-bit color, or 8-bit color; meaning 24/16/8-bit pixel sizes.
+  For a given pixel size, pixels can be in different formats; for example the
+  \"red\" element of an RGB pixel may be in the top 8 bits of the pixel, or
+  may be in the lower 4 bits.
 
   There are several standard visuals. The visual returned by
   @fun{gdk-screen-get-system-visual} is the system's default visual.
@@ -217,9 +216,12 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-7-29}
   @return{A list of the available depths.}
-  This function returns the available bit depths for the default screen. It is
-  equivalent to listing the visuals with the function @fun{gdk-list-visuals}
-  and then looking at the depth field in each visual, removing duplicates.
+  @begin{short}
+    This function returns the available bit depths for the default screen.
+  @end{short}
+  It is equivalent to listing the visuals with the function
+  @fun{gdk-list-visuals} and then looking at the depth field in each visual,
+  removing duplicates.
   @see-class{gdk-visual}
   @see-function{gdk-list-visuals}"
   (with-foreign-objects ((count-r :int) (depths-r :pointer))
@@ -243,7 +245,9 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-7-29}
   @return{A list of the available visual types.}
-  This function returns the available visual types for the default screen.
+  @begin{short}
+    This function returns the available visual types for the default screen.
+  @end{short}
   It is equivalent to listing the visuals with the function
   @fun{gdk-list-visuals} and then looking at the type field in each visual,
   removing duplicates.
@@ -267,10 +271,12 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-7-29}
   @return{A list of visuals.}
-  Lists the available visuals for the default screen. See the function
-  @fun{gdk-screen-list-visuals}. A visual describes a hardware image data
-  format. For example, a visual might support 24-bit color, or 8-bit color, and
-  might expect pixels to be in a certain format.
+  @begin{short}
+    Lists the available visuals for the default screen.
+  @end{short}
+  See the function @fun{gdk-screen-list-visuals}. A visual describes a hardware
+  image data format. For example, a visual might support 24-bit color, or
+  8-bit color, and might expect pixels to be in a certain format.
   @see-class{gdk-visual}
   @see-function{gdk-screen-list-visuals}")
 
@@ -317,11 +323,12 @@
   @end{return}
   @begin{short}
     Obtains values that are needed to calculate blue pixel values in TrueColor
-    and DirectColor. The @arg{mask} is the significant bits within the pixel.
-    The @arg{shift} is the number of bits left we must shift a primary for it to
-    be in position according to the @arg{mask}. Finally, @arg{precision} refers
-    to how much precision the pixel value contains for a particular primary.
+    and DirectColor.
   @end{short}
+  The @arg{mask} is the significant bits within the pixel. The @arg{shift} is
+  the number of bits left we must shift a primary for it to be in position
+  according to the @arg{mask}. Finally, @arg{precision} refers to how much
+  precision the pixel value contains for a particular primary.
 
   Since 2.22
   @see-class{gdk-visual}
@@ -344,9 +351,9 @@
  "@version{2013-7-29}
   @argument[visual]{a @class{gdk-visual} object}
   @return{A @symbol{gdk-byte-order} stating the byte order of visual.}
-  @begin{return}
+  @begin{short}
     Returns the byte order of this visual.
-  @end{return}
+  @end{short}
 
   Since 2.22
   @see-class{gdk-visual}
@@ -414,11 +421,12 @@
   @end{return}
   @begin{short}
     Obtains values that are needed to calculate green pixel values in TrueColor
-    and DirectColor. The @arg{mask} is the significant bits within the pixel.
-    The @arg{shift} is the number of bits left we must shift a primary for it to
-    be in position according to the @arg{mask}. Finally, @arg{precision} refers
-    to how much precision the pixel value contains for a particular primary.
+    and DirectColor.
   @end{short}
+  The @arg{mask} is the significant bits within the pixel. The @arg{shift} is
+  the number of bits left we must shift a primary for it to be in position
+  according to the @arg{mask}. Finally, @arg{precision} refers to how much
+  precision the pixel value contains for a particular primary.
 
   Since 2.22
   @see-class{gdk-visual}
@@ -453,11 +461,12 @@
   @end{return}
   @begin{short}
     Obtains values that are needed to calculate red pixel values in TrueColor
-    and DirectColor. The @arg{mask} is the significant bits within the pixel.
-    The @arg{shift} is the number of bits left we must shift a primary for it to
-    be in position according to the @arg{mask}. Finally, @arg{precision} refers
-    to how much precision the pixel value contains for a particular primary.
+    and DirectColor.
   @end{short}
+  The @arg{mask} is the significant bits within the pixel. The @arg{shift} is
+  the number of bits left we must shift a primary for it to be in position
+  according to the @arg{mask}. Finally, @arg{precision} refers to how much
+  precision the pixel value contains for a particular primary.
 
   Since 2.22
   @see-class{gdk-visual}
@@ -481,9 +490,9 @@
  "@version{2013-7-29}
   @argument[visual]{a @class{gdk-visual} object}
   @return{A @symbol{gdk-visual-type} stating the type of visual.}
-  @begin{return}
+  @begin{short}
     Returns the type of visual this is (PseudoColor, TrueColor, etc).
-  @end{return}
+  @end{short}
 
   Since 2.22
   @see-class{gdk-visual}
@@ -500,8 +509,11 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-7-29}
   @return{Best available depth.}
-  Get the best available depth for the default GDK screen. \"Best\" means
-  \"largest\", i. e. 32 preferred over 24 preferred over 8 bits per pixel.
+  @begin{short}
+    Get the best available depth for the default GDK screen.
+  @end{short}
+  \"Best\" means \"largest\", i. e. 32 preferred over 24 preferred over 8 bits
+  per pixel.
   @see-class{gdk-visual}
   @see-function{gdk-visual-get-best-type}")
 
@@ -529,9 +541,10 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-7-29}
   @return{The system visual.}
-  Get the system's default visual for the default GDK screen. This is the
-  visual for the root window of the display. The return value should not be
-  freed.
+  @begin{short}
+    Get the system's default visual for the default GDK screen.
+  @end{short}
+  This is the visual for the root window of the display.
   @see-class{gdk-visual}
   @see-function{gdk-visual-get-best}")
 
@@ -546,7 +559,6 @@
  "@version{2013-7-29}
   @return{The best visual.}
   Get the visual with the most available colors for the default GDK screen.
-  The return value should not be freed.
   @see-class{gdk-visual}
   @see-function{gdk-visual-get-system}
   @see-function{gdk-visual-get-best-with-depth}
@@ -565,10 +577,12 @@
  "@version{2013-7-29}
   @argument[depth]{a bit depth}
   @return{The best visual for the given @arg{depth}.}
-  Get the best visual with depth @arg{depth} for the default GDK screen. Color
-  visuals and visuals with mutable colormaps are preferred over grayscale or
-  fixed-colormap visuals. The return value should not be freed. @code{Nil} may
-  be returned if no visual supports @arg{depth}.
+  @begin{short}
+    Get the best visual with depth @arg{depth} for the default GDK screen.
+  @end{short}
+  Color visuals and visuals with mutable colormaps are preferred over grayscale
+  or fixed-colormap visuals. @code{Nil} may be returned if no visual supports
+  @arg{depth}.
   @see-class{gdk-visual}
   @see-function{gdk-visual-get-system}
   @see-function{gdk-visual-get-best}
@@ -588,10 +602,12 @@
  "@version{2013-7-29}
   @argument[visual-type]{a visual type}
   @return{The best visual of the given type.}
-  Get the best visual of the given @arg{visual-type} for the default GDK screen.
-  Visuals with higher color depths are considered better. The return value
-  should not be freed. @code{Nil} may be returned if no visual has type
-  @arg{visual-type}.
+  @begin{short}
+    Get the best visual of the given @arg{visual-type} for the default GDK
+    screen.
+  @end{short}
+  Visuals with higher color depths are considered better. @code{Nil} may be
+  returned if no visual has type @arg{visual-type}.
   @see-class{gdk-visual}
   @see-function{gdk-visual-get-system}
   @see-function{gdk-visual-get-best}

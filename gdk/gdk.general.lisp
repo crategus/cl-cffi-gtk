@@ -5,12 +5,12 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>
 ;;;
 ;;; The documentation of this file is taken from the GDK 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GDK library.
+;;; Version 3.16 and modified to document the Lisp binding to the GDK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2015 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -42,11 +42,11 @@
 ;;;     gdk_get_display_arg_name
 ;;;     gdk_notify_startup_complete
 ;;;     gdk_notify_startup_complete_with_id
-;;;
+;;;     gdk_set_allowed_backends
 ;;;     gdk_get_program_class
 ;;;     gdk_set_program_class
 ;;;
-;;;     gdk_get_display
+;;;     gdk_get_display                          * deprecated *
 ;;;
 ;;;     gdk_flush
 ;;;
@@ -239,6 +239,43 @@
 (export 'gdk-notify-startup-complete-with-id)
 
 ;;; ----------------------------------------------------------------------------
+;;; gdk_set_allowed_backends ()
+;;;
+;;; void gdk_set_allowed_backends (const gchar *backends);
+;;;
+;;; Sets a list of backends that GDK should try to use.
+;;;
+;;; This can be be useful if your application does not work with certain GDK
+;;; backends.
+;;;
+;;; By default, GDK tries all included backends.
+;;;
+;;; For example,
+;;;
+;;; gdk_set_allowed_backends ("wayland,quartz,*");
+;;;
+;;; instructs GDK to try the Wayland backend first, followed by the Quartz
+;;; backend, and then all others.
+;;;
+;;; If the GDK_BACKEND environment variable is set, it determines what backends
+;;; are tried in what order, while still respecting the set of allowed backends
+;;; that are specified by this function.
+;;;
+;;; The possible backend names are x11, win32, quartz, broadway, wayland. You
+;;; can also include a * in the list to try all remaining backends.
+;;;
+;;; This call must happen prior to gdk_display_open(), gtk_init(),
+;;; gtk_init_with_args() or gtk_init_check() in order to take effect.
+;;;
+;;; Parameters
+;;;
+;;; backends
+;;;     a comma-separated list of backends
+;;;
+;;; Since 3.10
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; gdk_get_program_class ()
 ;;; ----------------------------------------------------------------------------
 
@@ -279,10 +316,18 @@
 
 (defcfun ("gdk_get_display" gdk-get-display) (:string :free-from-foreign nil)
  #+cl-cffi-gtk-documentation
- "@version{2013-7-30}
+ "@version{2015-12-30}
   @return{The name of the display.}
-  Gets the name of the display, which usually comes from the @code{DISPLAY}
-  environment variable or the @code{--display} command line option.")
+  @subheading{Warning}
+    The function @sym{gdk-get-display} has been deprecated since version 3.8
+    and should not be used in newly-written code. Call
+    @code{(gdk-display-get-name (gdk-display-get-default))} instead.
+  @begin{short}
+    Gets the name of the display, which usually comes from the @code{DISPLAY}
+    environment variable or the @code{--display} command line option.
+  @end{short}
+  @see-function{gdk-display-get-name}
+  @see-function{gdk-display-get-default}")
 
 (export 'gdk-get-display)
 

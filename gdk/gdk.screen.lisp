@@ -5,12 +5,12 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file is taken from the GDK 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GDK library.
+;;; Version 3.16 and modified to document the Lisp binding to the GDK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2015 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -151,9 +151,11 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Property Details
+;;; Property and Accessor Details
 ;;;
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gdk-screen-font-options ------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "font-options" 'gdk-screen) 't)
@@ -162,36 +164,70 @@
   The default font options for the screen.")
 
 #+cl-cffi-gtk-documentation
+(setf (gethash 'gdk-screen-font-options atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gdk-screen-font-options 'function)
+ "@version{2015-12-30}
+  @argument[object]{a @class{gdk-screen} object}
+  @argument[options]{a @symbol{cairo-font-options-t}, or @code{nil} to unset
+    any previously set default font options}
+  @syntax[]{(gdk-screen-font-options object) => options}
+  @syntax[]{(setf (gdk-screen-font-options object) options)}
+  @begin{short}
+    Accessor of the slot @slot[gdk-screen]{font-options} of the
+    @class{gdk-screen} class.
+  @end{short}
+
+  The generic function @sym{gdk-screen-font-options} returns the current font
+  options, or @code{nil} if no default font options have been set.
+
+  The generic function @sym{(setf gdk-screen-font-options)} sets the default
+  font options for the @arg{screen}.
+
+  These options will be set on any @class{pango-context}'s newly created with
+  the function @fun{gdk-pango-context-get-for-screen}. Changing the default set
+  of font options does not affect contexts that have already been created.
+
+  Since 2.10
+  @see-class{gdk-screen}
+  @see-function{gdk-pango-context-get-for-screen}")
+
+;;; --- gdk-screen-resolution --------------------------------------------------
+
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "resolution" 'gdk-screen) 't)
  "The @code{\"resolution\"} property of type @code{:double} (Read / Write) @br{}
   The resolution for fonts on the screen. @br{}
   Default value: -1")
 
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-screen-font-options atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gdk-screen-font-options 'function)
- "@version{2013-6-30}
-  Accessor of the slot @code{\"font-options\"} of the @class{gdk-screen}
-  class.
-  @see-function{gdk-screen-get-font-options}
-  @see-function{gdk-screen-set-font-options}")
-
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-screen-resolution atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-screen-resolution 'function)
- "@version{2013-6-30}
-  Accessor of the slot @code{\"resolution\"} of the @class{gdk-screen}
-  class.
-  @see-function{gdk-screen-get-resolution}
-  @see-function{gdk-screen-set-resolution}")
+ "@version{2015-12-30}
+  @argument[object]{a @class{gdk-screen} object}
+  @argument[dpi]{the resolution in \"dots per inch\". Physical inches are not
+    actually involved; the terminology is conventional.}
+  @syntax[]{(gdk-screen-resolution object) => dpi}
+  @syntax[]{(setf (gdk-screen-resolution object) dpi)}
+  @begin{short}
+    Accessor of the slot @slot[gdk-screen]{resolution} of the @class{gdk-screen}
+    class.
+  @end{short}
+
+  The generic function @sym{gdk-screen-resolution} gets the resolution for font
+  handling on the @arg{screen}, or -1 if no resolution has been set.
+
+  The generic function @sym{(setf gdk-screen-resolution} sets the resolution for
+  font handling on the @arg{screen}.
+
+  This is a scale factor between points specified in a
+  @class{pango-font-description} and cairo units. The default value is 96,
+  meaning that a 10 point font will be 13 units high (10 * 96. / 72. = 13.3).
+
+  Since 2.10
+  @see-class{gdk-screen}
+  @see-class{pango-font-description}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_screen_get_default ()
@@ -210,6 +246,7 @@
   See the function @fun{gdk-display-get-default}.
 
   Since 2.2
+  @see-class{gdk-screen}
   @see-function{gdk-display-get-default}")
 
 (export 'gdk-screen-get-default)
@@ -229,7 +266,8 @@
     root window of the display. The return value should not be freed.
   @end{short}
 
-  Since 2.2"
+  Since 2.2
+  @see-class{gdk-screen}"
   (screen (g-object gdk-screen)))
 
 (export 'gdk-screen-get-system-visual)
@@ -263,6 +301,7 @@
   @fun{gdk-window-set-opacity}.
 
   Since 2.8
+  @see-class{gdk-screen}
   @see-function{gdk-window-set-opacity}"
   (screen (g-object gdk-screen)))
 
@@ -288,7 +327,8 @@
   On X11 this function returns whether a compositing manager is compositing
   @arg{screen}.
 
-  Since 2.10"
+  Since 2.10
+  @see-class{gdk-screen}"
   (screen (g-object gdk-screen)))
 
 (export 'gdk-screen-is-composited)
@@ -305,7 +345,8 @@
   @return{The root window.}
   @short{Gets the root window of @arg{screen}.}
 
-  Since 2.2"
+  Since 2.2
+  @see-class{gdk-screen}"
   (screen (g-object gdk-screen)))
 
 (export 'gdk-screen-get-root-window)
@@ -322,7 +363,8 @@
   @return{The display to which @arg{screen} belongs.}
   @short{Gets the display to which the @arg{screen} belongs.}
 
-  Since 2.2"
+  Since 2.2
+  @see-class{gdk-screen}"
   (screen (g-object gdk-screen)))
 
 (export 'gdk-screen-get-display)
@@ -343,6 +385,7 @@
   See the function @fun{gdk-screen-get-display}.
 
   Since 2.2
+  @see-class{gdk-screen}
   @see-function{gdk-screen-get-display}"
   (screen (g-object gdk-screen)))
 
@@ -360,6 +403,7 @@
   @short{Gets the width of @arg{screen} in pixels.}
 
   Since 2.2
+  @see-class{gdk-screen}
   @see-function{gdk-screen-get-height}
   @see-function{gdk-screen-get-width-mm}"
   (screen (g-object gdk-screen)))
@@ -378,6 +422,7 @@
   @short{Gets the height of @arg{screen} in pixels.}
 
   Since 2.2
+  @see-class{gdk-screen}
   @see-function{gdk-screen-get-width}
   @see-function{gdk-screen-get-height-mm}"
   (screen (g-object gdk-screen)))
@@ -399,6 +444,7 @@
   Note that on some X servers this value will not be correct.
 
   Since 2.2
+  @see-class{gdk-screen}
   @see-function{gdk-screen-get-width}
   @see-function{gdk-screen-get-height-mm}"
   (screen (g-object gdk-screen)))
@@ -420,6 +466,7 @@
   Note that on some X servers this value will not be correct.
 
   Since 2.2
+  @see-class{gdk-screen}
   @see-function{gdk-screen-get-height}
   @see-function{gdk-screen-get-width-mm}"
   (screen (g-object gdk-screen)))
@@ -443,7 +490,8 @@
   support 24-bit color, or 8-bit color, and might expect pixels to be in a
   certain format.
 
-  Since 2.2"
+  Since 2.2
+  @see-class{gdk-screen}"
   (screen (g-object gdk-screen)))
 
 (export 'gdk-screen-list-visuals)
@@ -467,6 +515,7 @@
   @fun{gdk-get-default-root-window}.
 
   Since 2.2
+  @see-class{gdk-screen}
   @see-function{gdk-get-default-root-window}"
   (screen (g-object gdk-screen)))
 
@@ -488,6 +537,7 @@
   @end{short}
 
   Since 2.2
+  @see-class{gdk-screen}
   @see-function{gdk-display-open}"
   (screen (g-object gdk-screen)))
 
@@ -505,6 +555,7 @@
   @short{Returns the number of monitors which @arg{screen} consists of.}
 
   Since 2.2
+  @see-class{gdk-screen}
   @see-function{gdk-screen-get-primary-monitor}"
   (screen (g-object gdk-screen)))
 
@@ -531,6 +582,7 @@
   defaulting to the first monitor.
 
   Since 2.20
+  @see-class{gdk-screen}
   @see-function{gdk-screen-get-n-monitors}"
   (screen (g-object gdk-screen)))
 
@@ -564,6 +616,7 @@
   functions @fun{gdk-screen-get-width} and @fun{gdk-screen-get-height}.
 
   Since 2.2
+  @see-class{gdk-screen}
   @see-function{gdk-screen-get-n-monitors}
   @see-function{gdk-screen-get-width}
   @see-function{gdk-screen-get-height}"
@@ -602,6 +655,7 @@
   use the function @fun{gdk-screen-get-n-monitors}.
 
   Since 3.4
+  @see-class{gdk-screen}
   @see-function{gdk-screen-get-n-monitors}"
   (let ((dest (make-gdk-rectangle)))
     (%gdk-screen-get-monitor-workarea screen monitor-num dest)
@@ -629,6 +683,7 @@
   @end{short}
 
   Since 2.2
+  @see-class{gdk-screen}
   @see-function{gdk-screen-get-monitor-at-window}"
   (screen (g-object gdk-screen))
   (x :int)
@@ -657,6 +712,7 @@
   @end{short}
 
   Since 2.2
+  @see-class{gdk-screen}
   @see-function{gdk-screen-get-monitor-at-point}"
   (screen (g-object gdk-screen))
   (window (g-object gdk-window)))
@@ -680,6 +736,7 @@
   @end{short}
 
   Since 2.14
+  @see-class{gdk-screen}
   @see-function{gdk-screen-get-monitor-width-mm}"
   (screen (g-object gdk-screen))
   (monitor-num :int))
@@ -703,6 +760,7 @@
   @end{short}
 
   Since 2.14
+  @see-class{gdk-screen}
   @see-function{gdk-screen-get-monitor-height-mm}"
   (screen (g-object gdk-screen))
   (monitor-num :int))
@@ -729,11 +787,41 @@
     VGA, DVI, or TV, not the actual product name of the display device.
   @end{short}
 
-  Since 2.14"
+  Since 2.14
+  @see-class{gdk-screen}"
   (screen (g-object gdk-screen))
   (monitor-num :int))
 
 (export 'gdk-screen-get-monitor-plug-name)
+
+;;; ----------------------------------------------------------------------------
+;;; gdk_screen_get_monitor_scale_factor ()
+;;;
+;;; gint
+;;; gdk_screen_get_monitor_scale_factor (GdkScreen *screen,
+;;;                                      gint monitor_num);
+;;;
+;;; Returns the internal scale factor that maps from monitor coordiantes to the
+;;; actual device pixels. On traditional systems this is 1, but on very high
+;;; density outputs this can be a higher value (often 2).
+;;;
+;;; This can be used if you want to create pixel based data for a particula
+;;; monitor, but most of the time you're drawing to a window where it is better
+;;; to use gdk_window_get_scale_factor() instead.
+;;;
+;;; Parameters
+;;;
+;;; screen
+;;;     screen to get scale factor for
+;;;
+;;; monitor_num
+;;;     number of the monitor, between 0 and gdk_screen_get_n_monitors (screen)
+;;;
+;;; Returns
+;;;     the scale factor
+;;;
+;;; Since 3.10
+;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_screen_get_setting ()
@@ -760,7 +848,8 @@
 
   FIXME needs a list of valid settings here, or a link to more information.
 
-  Since 2.2"
+  Since 2.2
+  @see-class{gdk-screen}"
   (with-foreign-object (value '(:struct g-value))
     (g-value-init value)
     (when (%gdk-screen-get-setting screen name value)
@@ -769,104 +858,6 @@
         (g-value-unset value)))))
 
 (export 'gdk-screen-get-setting)
-
-;;; ----------------------------------------------------------------------------
-;;; gdk_screen_get_font_options ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gdk-screen-get-font-options))
-
-(defun gdk-screen-get-font-options (screen)
- #+cl-cffi-gtk-documentation
- "@version{2013-6-17}
-  @argument[screen]{a @class{gdk-screen} object}
-  @begin{return}
-    The current font options, or @code{nil} if no default font options have
-    been set.
-  @end{return}
-  @begin{short}
-    Gets any options previously set with the function
-    @fun{gdk-screen-set-font-options}.
-  @end{short}
-
-  Since 2.10
-  @see-function{gdk-screen-set-font-options}"
-  (gdk-screen-font-options screen))
-
-(export 'gdk-screen-get-font-options)
-
-;;; ----------------------------------------------------------------------------
-;;; gdk_screen_set_font_options ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gdk-screen-set-font-options))
-
-(defun gdk-screen-set-font-options (screen options)
- #+cl-cffi-gtk-documentation
- "@version{2013-6-17}
-  @argument[screen]{a @class{gdk-screen} object}
-  @argument[options]{a @symbol{cairo-font-options-t}, or @code{nil} to unset
-    any previously set default font options}
-  @begin{short}
-    Sets the default font options for the @arg{screen}.
-  @end{short}
-  These options will be set on any @class{pango-context}'s newly created with
-  the function @fun{gdk-pango-context-get-for-screen}. Changing the default set
-  of font options does not affect contexts that have already been created.
-
-  Since 2.10
-  @see-function{gdk-screen-get-font-options}
-  @see-function{gdk-pango-context-get-for-screen}"
-  (setf (gdk-screen-font-options screen) options))
-
-(export 'gdk-screen-set-font-options)
-
-;;; ----------------------------------------------------------------------------
-;;; gdk_screen_get_resolution ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gdk-screen-get-resolution))
-
-(defun gdk-screen-get-resolution (screen)
- #+cl-cffi-gtk-documentation
- "@version{2013-6-17}
-  @argument[screen]{a @class{gdk-screen} object}
-  @return{The current resolution, or -1 if no resolution has been set.}
-  @begin{short}
-    Gets the resolution for font handling on the @arg{screen}.
-  @end{short}
-  See the function @fun{gdk-screen-set-resolution} for full details.
-
-  Since 2.10
-  @see-function{gdk-screen-set-resolution}"
-  (gdk-screen-resolution screen))
-
-(export 'gdk-screen-get-resolution)
-
-;;; ----------------------------------------------------------------------------
-;;; gdk_screen_set_resolution ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gdk-screen-set-resolution))
-
-(defun gdk-screen-set-resolution (screen dpi)
- #+cl-cffi-gtk-documentation
- "@version{2013-6-17}
-  @argument[screen]{a @class{gdk-screen} object}
-  @argument[dpi]{the resolution in \"dots per inch\". (Physical inches are not
-    actually involved; the terminology is conventional.)}
-  @begin{short}
-    Sets the resolution for font handling on the @arg{screen}.
-  @end{short}
-  This is a scale factor between points specified in a
-  @class{pango-font-description} and cairo units. The default value is 96,
-  meaning that a 10 point font will be 13 units high. (10 * 96. / 72. = 13.3).
-
-  Since 2.10
-  @see-class{pango-font-description}"
-  (setf (gdk-screen-resolution screen) dpi))
-
-(export 'gdk-screen-set-resolution)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_screen_get_active_window ()
@@ -895,7 +886,8 @@
   The returned window should be unrefed using the function @fun{g-object-unref}
   when no longer needed.
 
-  Since 2.10"
+  Since 2.10
+  @see-class{gdk-screen}"
   (screen (g-object gdk-screen)))
 
 (export 'gdk-screen-get-active-window)
@@ -926,7 +918,8 @@
   On other platforms, this function may return @code{nil}, depending on whether
   it is implementable on that platform.
 
-  Since 2.10"
+  Since 2.10
+  @see-class{gdk-screen}"
   (screen (g-object gdk-screen)))
 
 (export 'gdk-screen-get-window-stack)

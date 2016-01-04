@@ -31,6 +31,35 @@
 
 (in-package :gdk)
 
+;; Moved from gtk.package.lisp to this place because we need the version
+;; of the GTK library when compiling GDK
+(glib::at-init ()
+  (eval-when (:compile-toplevel :load-toplevel :execute)
+    (define-foreign-library gtk
+      ((:and :unix (:not :darwin))
+       (:or "libgtk-3.so.0" "libgtk-3.so"))
+      (:darwin (:or "libgtk-3.0.dylib"
+                    "libgtk-3.dylib"
+                    "libgtk-x11-3.0.0.dylib"
+                    "libgtk-x11-3.0.dylib"))
+      (:windows (:or "libgtk-3-0.dll" "libgtk-win32-2.0-0.dll"))
+      (t "libgtk-3-0")))
+  (use-foreign-library gtk))
+
+(glib::push-library-version-features gdk
+    ;; We can not call the Lisp implementations gtk-get-major-version and
+    ;; gtk-get-minor-version because GTK is not compiled at this time
+    (cffi:foreign-funcall "gtk_get_major_version" :int)
+    (cffi:foreign-funcall "gtk_get_minor_version" :int)
+    3 4
+    3 6
+    3 8
+    3 10
+    3 12
+    3 14
+    3 16
+    3 18)
+
 #+cl-cffi-gtk-documentation
 (setf (documentation (find-package :gdk) t)
  "GDK is an intermediate layer which isolates GTK+ from the details of the
@@ -242,17 +271,6 @@
     @about-function{gdk-pixbuf-get-from-window}
     @about-function{gdk-pixbuf-get-from-surface}
   @end{section}
-  @begin[Colors]{section}
-    Manipulation of colors
-
-    @about-struct{gdk-color}
-    @about-function{gdk-color-copy}
-    @about-function{gdk-color-free}
-    @about-function{gdk-color-parse}
-    @about-function{gdk-color-equal}
-    @about-function{gdk-color-hash}
-    @about-function{gdk-color-to-string}
-  @end{section}
   @begin[RGBA Colors]{section}
     RGBA colors
 
@@ -462,6 +480,59 @@
     @about-function{gdk-window-coords-to-parent}
     @about-function{gdk-window-get-effective-parent}
     @about-function{gdk-window-get-effective-toplevel}
+  @end{section}
+  @begin[Frame Clock]{section}
+    A @sym{gdk-frame-clock} tells the application when to update and repaint a
+    window.
+
+    @about-class{gdk-frame-clock}
+    @about-symbol{gdk-frame-clock-phase}
+    @about-function{gdk-frame-clock-get-frame-time}
+    @about-function{gdk-frame-clock-request-phase}
+    @about-function{gdk-frame-clock-begin-updating}
+    @about-function{gdk-frame-clock-end-updating}
+    @about-function{gdk-frame-clock-get-frame-counter}
+    @about-function{gdk-frame-clock-get-history-start}
+    @about-function{gdk-frame-clock-get-timings}
+    @about-function{gdk-frame-clock-get-current-timings}
+    @about-function{gdk-frame-clock-get-refresh-info}
+  @end{section}
+  @begin[Frame timings]{section}
+    Object holding timing information for a single frame.
+
+    @about-class{gdk-frame-timings}
+    @about-function{gdk-frame-timings-ref}
+    @about-function{gdk-frame-timings-unref}
+    @about-function{gdk-frame-timings-get-frame-counter}
+    @about-function{gdk-frame-timings-get-complete}
+    @about-function{gdk-frame-timings-get-frame-time}
+    @about-function{gdk-frame-timings-get-presentation-time}
+    @about-function{gdk-frame-timings-get-refresh-interval}
+    @about-function{gdk-frame-timings-get-predicted-presentation-time}
+  @end{section}
+  @begin[OpenGL context]{section}
+    @sym{gdk-gl-context} is an object representing the platform-specific OpenGL
+    drawing context.
+
+    @about-class{gdk-gl-context}
+    @about-symbol{gdk-gl-error}
+    @about-generic{gdk-gl-context-display}
+    @about-generic{gdk-gl-context-shared-context}
+    @about-generic{gdk-gl-context-window}
+    @about-function{gdk-gl-context-get-display}
+    @about-function{gdk-gl-context-get-window}
+    @about-function{gdk-gl-context-get-shared-context}
+    @about-function{gdk-gl-context-get-version}
+    @about-function{gdk-gl-context-set-required-version}
+    @about-function{gdk-gl-context-get-required-version}
+    @about-function{gdk-gl-context-set-debug-enabled}
+    @about-function{gdk-gl-context-get-debug-enabled}
+    @about-function{gdk-gl-context-set-forward-compatible}
+    @about-function{gdk-gl-context-get-forward-compatible}
+    @about-function{gdk-gl-context-realize}
+    @about-function{gdk-gl-context-make-current}
+    @about-function{gdk-gl-context-get-current}
+    @about-function{gdk-gl-context-clear-current}
   @end{section}
   @begin[Events]{section}
     Functions for handling events from the window system.
@@ -937,6 +1008,18 @@
     @about-function{gdk-app-launch-context-set-icon}
     @about-function{gdk-app-launch-context-set-icon-name}
   @end{section}
- ")
+  @begin[Deprecated]{section}
+    @begin[Colors]{subsection}
+      Manipulation of colors
+
+      @about-struct{gdk-color}
+      @about-function{gdk-color-copy}
+      @about-function{gdk-color-free}
+      @about-function{gdk-color-parse}
+      @about-function{gdk-color-equal}
+      @about-function{gdk-color-hash}
+      @about-function{gdk-color-to-string}
+    @end{subsection}
+  @end{section}")
 
 ;;; --- End of file gdk.package.lisp -------------------------------------------

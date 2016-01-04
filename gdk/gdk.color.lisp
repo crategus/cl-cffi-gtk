@@ -5,12 +5,12 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file is taken from the GDK 3 Reference Manual
-;;; Version 3.8.8 and modified to document the Lisp binding to the GDK library.
+;;; Version 3.16 and modified to document the Lisp binding to the GDK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2016 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -60,13 +60,11 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gdk-color 'type)
- "@version{2013-12-25}
-  @short{A @sym{gdk-color} structure represents a color.}
-
-  The @sym{gdk-color} structure is used to describe a color, similar to the
-  XColor structure used in the X11 drawing API.
-  When working with cairo, it is often more convenient to use a @class{gdk-rgba}
-  structure instead.
+ "@version{2016-1-2}
+  @begin{short}
+    The @sym{gdk-color} structure is used to describe a color, similar to the
+    XColor structure used in the X11 drawing API.
+  @end{short}
   @begin{pre}
 (define-g-boxed-cstruct gdk-color \"GdkColor\"
   (pixel :uint32 :initform 0)
@@ -82,6 +80,10 @@
     @entry[green]{The green component of the color.}
     @entry[blue]{The blue component of the color.}
   @end{table}
+  @begin[Warning]{dictionary}
+    @sym{gdk-color} has been deprecated since version 3.14 and should not
+    be used in newly-written code. Use @class{gdk-rgba}.
+  @end{dictionary}
   @see-constructor{make-gdk-color}
   @see-constructor{copy-gdk-color}
   @see-slot{gdk-color-pixel}
@@ -172,8 +174,15 @@
  "@version{2013-12-25}
   @argument[color]{a @class{gdk-color} structure}
   @return{A copy of @arg{color}.}
-  Makes a copy of a color structure.
-  @see-class{gdk-color}"
+  @begin{short}
+    Makes a copy of a color structure.
+  @end{short}
+  @begin[Warning]{dictionary}
+    The function @sym{gdk-color-copy} has been deprecated since version 3.14
+    and should not be used in newly-written code. Use @class{gdk-rgba}.
+  @end{dictionary}
+  @see-class{gdk-color}
+  @see-class{gdk-rgba}"
   (copy-gdk-color color))
 
 (export 'gdk-color-copy)
@@ -201,7 +210,7 @@
 
 (defun gdk-color-parse (color-spec)
  #+cl-cffi-gtk-documentation
- "@version{2013-12-25}
+ "@version{2016-1-2}
   @argument[spec]{the string specifying the color}
   @return{The @class{gdk-color} structure or @code{nil} if the parsing did not
     succeed.}
@@ -211,11 +220,17 @@
   @end{short}
 
   The string can either one of a large set of standard names taken from the
-  X11 rgb.txt file, or it can be a hex value in the form '#rgb' '#rrggbb'
-  '#rrrgggbbb' or '#rrrrggggbbbb' where 'r', 'g' and 'b' are hex digits of the
-  red, green, and blue components of the color, respectively. White in the
-  four forms is '#fff', '#ffffff', '#fffffffff' and '#ffffffffffff'.
+  X11 rgb.txt file, or it can be a hex value in the form @code{#rgb},
+  @code{#rrggbb}, @code{#rrrgggbbb} or @code{#rrrrggggbbbb} where @code{r},
+  @code{g} and @code{b} are hex digits of the red, green, and blue components of
+  the color, respectively. White in the four forms is @code{#fff},
+  @code{#ffffff}, @code{#fffffffff} and @code{#ffffffffffff}.
+  @begin[Warning]{dictionary}
+    The function @sym{gdk-color-parse} has been deprecated since version 3.14
+    and should not be used in newly-written code. Use @class{gdk-rgba}.
+  @end{dictionary}
   @see-class{gdk-color}
+  @see-class{gdk-rgba}
   @see-function{gdk-color-to-string}"
   (let ((color (make-gdk-color)))
     (when (%gdk-color-parse color-spec color)
@@ -229,12 +244,19 @@
 
 (defcfun ("gdk_color_equal" gdk-color-equal) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-12-25}
+ "@version{2016-1-2}
   @argument[color1]{a @class{gdk-color} structure}
   @argument[color2]{another @class{gdk-color} structure}
   @return{@arg{True} if the two colors compare equal.}
-  Compares two colors.
-  @see-class{gdk-color}"
+  @begin{short}
+    Compares two colors.
+  @end{short}
+  @begin[Warning]{dictionary}
+    The function @sym{gdk-color-equal} has been deprecated since version 3.14
+    and should not be used in newly-written code. Use @class{gdk-rgba}.
+  @end{dictionary}
+  @see-class{gdk-color}
+  @see-class{gdk-rgba}"
   (color1 (g-boxed-foreign gdk-color))
   (color2 (g-boxed-foreign gdk-color)))
 
@@ -246,12 +268,19 @@
 
 (defcfun ("gdk_color_hash" gdk-color-hash) :uint
  #+cl-cffi-gtk-documentation
- "@version{2013-12-25}
+ "@version{2016-1-2}
   @argument[color]{a @class{gdk-color} structure}
   @return{The hash function applied to color.}
-  A hash function suitable for using for a hash table that stores
-  @class{gdk-color}'s.
-  @see-class{gdk-color}"
+  @begin{short}
+    A hash function suitable for using for a hash table that stores
+    @class{gdk-color}'s.
+  @end{short}
+  @begin[Warning]{dictionary}
+    The function @sym{gdk-color-hash} has been deprecated since version 3.14
+    and should not be used in newly-written code. Use @class{gdk-rgba}.
+  @end{dictionary}
+  @see-class{gdk-color}
+  @see-class{gdk-rgba}"
   (color (g-boxed-foreign gdk-color)))
 
 (export 'gdk-color-hash)
@@ -263,19 +292,23 @@
 (defcfun ("gdk_color_to_string" gdk-color-to-string)
     (g-string :free-from-foreign t)
  #+cl-cffi-gtk-documentation
- "@version{2013-12-25}
+ "@version{2016-1-2}
   @argument[color]{a @class{gdk-color} structure}
   @return{A newly-allocated text string.}
   @begin{short}
     Returns a textual specification of @arg{color} in the hexadecimal form
-    #rrrrggggbbbb, where r, g and b are hex digits representing the red, green
-    and blue components respectively.
+    @code{#rrrrggggbbbb}, where @code{r}, @code{g} and @code{b} are hex digits
+    representing the red, green and blue components respectively.
   @end{short}
 
   The returned string can be parsed by the function @fun{gdk-color-parse}.
-
+  @begin[Warning]{dictionary}
+    The function @sym{gdk-color-to-string} has been deprecated since version
+    3.14 and should not be used in newly-written code. Use @class{gdk-rgba}.
+  @end{dictionary}
   Since 2.12
   @see-class{gdk-color}
+  @see-class{gdk-rgba}
   @see-function{gdk-color-parse}"
   (color (g-boxed-foreign gdk-color)))
 

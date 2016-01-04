@@ -45,6 +45,9 @@
 
 (in-package :gtk)
 
+#|
+;;; Loading of the GTK+ library is moved to gdk.package.lisp,
+;;; because we need the version info from GTK+ when compiling GDK.
 (glib::at-init ()
   (eval-when (:compile-toplevel :load-toplevel :execute)
     (define-foreign-library gtk
@@ -57,6 +60,7 @@
       (:windows (:or "libgtk-3-0.dll" "libgtk-win32-2.0-0.dll"))
       (t "libgtk-3-0")))
   (use-foreign-library gtk))
+|#
 
 #+sbcl
 (when (and (find-package "SB-EXT")

@@ -2077,12 +2077,14 @@
 
 (defcfun ("g_type_parent" g-type-parent) g-type
  #+cl-cffi-gtk-documentation
- "@version{2013-4-1}
+ "@version{2016-1-2}
   @argument[type]{the derived type}
   @return{The parent type of @arg{type}.}
-  Return the direct parent type of the passed in @arg{type}. If the passed in
-  @arg{type} has no parent, i. e. is a fundamental type, @code{nil} is
-  returned.
+  @begin{short}
+   Returns the direct parent type of the passed in @arg{type}.
+  @end{short}
+  If the passed in @arg{type} has no parent, i. e. is a fundamental type,
+  @code{nil} is returned.
   @begin[Examples]{dictionary}
     @begin{pre}
  (g-type-parent \"GtkWindow\")

@@ -675,6 +675,10 @@
   values such as @code{GDK_MODIFIER_RESERVED_13_MASK}. Your code should preserve
   and ignore them. You can use @code{:modifier-mask} to remove all reserved
   values.
+
+  Also note that the GDK X backend interprets button press events for button 4-7
+  as scroll events, so @code{:button4-mask} and @code{:button5-mask} will never
+  be set.
   @begin{pre}
 (define-g-flags \"GdkModifierType\" gdk-modifier-type
   (:export t
