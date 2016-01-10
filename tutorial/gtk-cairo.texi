@@ -154,7 +154,7 @@ The following example shows the above code snippet in action and the code to
 produce the output:
 
 @ifnotinfo
-@image{figures/cairo-stroke, 268}
+@image{figures/cairo-stroke}
 @end ifnotinfo
 
 @float Example, demo-cairo-stroke
@@ -355,7 +355,8 @@ locations can be controlled with @xurl{cairo-pattern-set-extend}.
 @end ifnotinfo
 
 @example
-(let ((radpat (cairo-pattern-create-radial 0.25 0.25 0.10 0.50 0.50 0.50))
+(let ((radpat (cairo-pattern-create-radial 0.25
+                                           0.25 0.10 0.50 0.50 0.50))
       (linpat (cairo-pattern-create-linear 0.25 0.35 0.75 0.65)))
   (cairo-pattern-add-color-stop-rgb radpat 0.00 1.00 0.80 0.80)
   (cairo-pattern-add-color-stop-rgb radpat 1.00 0.90 0.00 0.00)
@@ -721,7 +722,10 @@ for (i=0; i < strlen(alphabet); i++) {
 @section Writing a Widget Using Cairo and GTK+
 
 @ifnotinfo
-@image{figures/cairo-clock}
+@float Figure, figure-cairo-clock
+@caption{Cairo Clock}
+@center @image{figures/cairo-clock}
+@end float
 @end ifnotinfo
 
 This demo shows a custom widget named @code{egg-clock-face} which draws a
@@ -791,7 +795,8 @@ redrawing of the widget.  The "draw" signal handler draws the clock into the
                  (setf inset (* 0.2 radius))
                  (progn
                    (setf inset (* 0.1 radius))
-                   (cairo-set-line-width cr (* 0.5 (cairo-get-line-width cr)))))
+                   (cairo-set-line-width cr
+                                         (* 0.5 (cairo-get-line-width cr)))))
              (cairo-move-to cr
                             (+ x (* (- radius inset) (cos angle)))
                             (+ y (* (- radius inset) (sin angle))))
@@ -803,7 +808,7 @@ redrawing of the widget.  The "draw" signal handler draws the clock into the
          (let ((seconds (first (egg-clock-face-time clock)))
                (minutes (second (egg-clock-face-time clock)))
                (hours (third (egg-clock-face-time clock))))
-           ;; Hour hand: The hour hand is rotated 30 degrees (pi/6 r) per hour
+           ;; The hour hand is rotated 30 degrees (pi/6 r) per hour
            ;; + 1/2 a degree (pi/360 r) per minute
            (let ((hours-angle (* (/ pi 6) hours))
                  (minutes-angle (* (/ pi 360) minutes)))
@@ -811,13 +816,15 @@ redrawing of the widget.  The "draw" signal handler draws the clock into the
              (cairo-set-line-width cr (* 2.5 (cairo-get-line-width cr)))
              (cairo-move-to cr x y)
              (cairo-line-to cr
-                            (+ x (* (/ radius 2)
-                                    (sin (+ hours-angle minutes-angle))))
-                            (+ y (* (/ radius 2)
-                                    (- (cos (+ hours-angle minutes-angle))))))
+                            (+ x
+                               (* (/ radius 2)
+                                  (sin (+ hours-angle minutes-angle))))
+                            (+ y
+                               (* (/ radius 2)
+                                  (- (cos (+ hours-angle minutes-angle))))))
              (cairo-stroke cr)
              (cairo-restore cr))
-           ;; Minute hand: The minute hand is rotated 6 degrees (pi/30 r)
+           ;; The minute hand is rotated 6 degrees (pi/30 r)
            ;; per minute
            (let ((angle (* (/ pi 30) minutes)))
              (cairo-move-to cr x y)

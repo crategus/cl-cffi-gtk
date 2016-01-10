@@ -372,8 +372,7 @@ label at the left hand end of the frame.
 
 The function @xurl{gtk-frame-set-shadow-type} alters the style of the box that
 is used to outline the frame.  The second argument is a keyword of the
-enumeration type @xurl{gtk-shadow-type}.  The possible values are listed in
-@ref{table-gtk-shadow-type}.
+enumeration type @xurl{gtk-shadow-type}.
 
 @ref{example-frame} illustrates the use of the frame widget.  The code of this
 example is shown in @ref{example-frame}.
@@ -622,7 +621,6 @@ and @xurl{gtk-scrollable-set-vadjustment}.
 
 The only other viewport function is @xurl{gtk-viewport-set-shadow-type} used to
 alter its appearance.  The second argument is of type @xurl{gtk-shadow-type}.
-Possible values are listed in @ref{table-gtk-shadow-type}.
 
 @c -----------------------------------------------------------------------------
 @node Scrolled Windows, Button Boxes, Viewports, Top

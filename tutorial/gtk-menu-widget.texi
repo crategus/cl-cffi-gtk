@@ -290,7 +290,8 @@ is a menu item that, when activated, pops up a submenu.  The first two steps are
 to create the two menu items and pack the into the "Help" menu:
 @example
 (let ((query-item (gtk-menu-item-new-with-label "What's this?"))
-      (about-help-item (gtk-menu-item-new-with-label "About this program")))
+      (about-help-item
+        (gtk-menu-item-new-with-label "About this program")))
   (gtk-menu-shell-append help-menu query-item)
   (gtk-menu-shell-append help-menu (gtk-separator-menu-item-new))
   (gtk-menu-shell-append help-menu about-help-item)
@@ -307,7 +308,8 @@ The last step is to create a submenu and attach it to the
 @code{about-help-menu}:
 @example
 (let ((about-tool-item (gtk-menu-item-new-with-label "About Tools"))
-      (about-stuff-item (gtk-menu-item-new-with-label "About Other Stuff")))
+      (about-stuff-item
+        (gtk-menu-item-new-with-label "About Other Stuff")))
   (gtk-menu-shell-append about-help-menu about-tool-item)
   (gtk-menu-shell-append about-help-menu about-stuff-item)
   ... )
@@ -394,8 +396,10 @@ It includes all code snippets shown above. The output is shown in
             (gtk-menu-shell-append help-menu about-help-item)
             ;; Create a submenu and items for about-help-item
             (let ((about-help-menu (gtk-menu-new))
-                  (about-tool-item (gtk-menu-item-new-with-label "About This"))
-                  (about-more-item (gtk-menu-item-new-with-label "About That")))
+                  (about-tool-item
+                    (gtk-menu-item-new-with-label "About This"))
+                  (about-more-item
+                    (gtk-menu-item-new-with-label "About That")))
               ;; Attach the submenu to the about-help-item
               (setf (gtk-menu-item-submenu about-help-item) about-help-menu)
               ;; Append the items to the about-help-menu
@@ -533,7 +537,7 @@ it is created, tool items can be inserted into it, using the function
 @xurl{gtk-toolbar-insert}.
 
 This inserts the tool item at position @code{pos}.  If @code{pos} is 0 the
-item is prepended to the start of the toolbar. If @coce{pos} is negative, the
+item is prepended to the start of the toolbar. If @code{pos} is negative, the
 item is appended to the end of the toolbar.  Therefore, if items are inserted
 successively into a toolbar passing -1 as @code{pos}, they will appear in the
 toolbar in left to right order.
@@ -570,7 +574,7 @@ You can create separator items using the function
 horizontal toolbar.  If for some reason you want the buttons to the right of the
 separator to be grouped at the far end of the toolbar, you can use the separator
 like a "spring" to push them to that end by setting its "expand" property to
-@emp{true} and its "draw" property to @code{nil}, using the sequence
+@emph{true} and its "draw" property to @code{nil}, using the sequence
 @example
 (let (...
       (separator (gtk-separator-tool-item-new))
@@ -706,41 +710,41 @@ pop-up menus, which can contain menus and menu items.  The set of tags that can
 be used in these UI definitions, with their descriptions and attributes, is
 
 
-@multitable @columnfractions .30 .30 .25 .15
-  @headitem Tag @tab Description @tab Attributes @tab Closing Tag
-  @itemx @code{<menubar>}
+@multitable @columnfractions .18 .41 .29 .12
+  @headitem Tag @tab Description @tab Attributes @tab Closing@* Tag
+  @item @code{<menubar>}
     @tab @xurl{gtk-menu-bar}
     @tab name, action
     @tab yes
-  @itemx @code{<toolbar>}
+  @item @code{<toolbar>}
     @tab @xurl{gtk-toolbar}
     @tab name, action
     @tab yes
-  @itemx @code{<popup>}
+  @item @code{<popup>}
     @tab toplevel @xurl{gtk-menu}
-    @tab name, action, accelerators
+    @tab name, action,@* accelerators
     @tab yes
-  @itemx @code{<menu>}
+  @item @code{<menu>}
     @tab @xurl{gtk-menu} attached to a menu item
     @tab name, action, position
     @tab yes
-  @itemx @code{<menuitem>}
+  @item @code{<menuitem>}
     @tab @xurl{gtk-menu-item} subclass, the exact type depends on the action
-    @tab name, action, position, always-show-image
+    @tab name, action, position,@* always-show-image
     @tab no
-  @itemx @code{<toolitem>}
+  @item @code{<toolitem>}
     @tab @xurl{gtk-tool-item} subclass, the exact type depends on the action
     @tab name, action, position
     @tab no
-  @itemx @code{<separator>}
-    @tab @xurl{gtk-separator-menu-item} or @xurl{gtk-separator-tool-item}
+  @item @code{<separator>}
+    @tab @xurl{gtk-separator-menu-item} or@* @xurl{gtk-separator-tool-item}
     @tab name, action, expand
     @tab no
-  @itemx @code{<accelerator>}
+  @item @code{<accelerator>}
     @tab keyboard accelerator
     @tab name, action
     @tab no
-  @itemx @code{<placeholder>}
+  @item @code{<placeholder>}
     @tab placeholder for dynamically adding an item
     @tab name, action
     @tab yes
@@ -804,17 +808,17 @@ The following example shows a UI definition of a menubar and its submenus.
         appear in the XML string. In the above example, the JustifyLeft action
         precedes the JustifyCenter action, so the former will appear above the
         latter. If however, the UI was defined as follows:
-        @verbatim
-   <menuitem name='JustifyLeft' action='JustifyLeft' position='top'/>
-   <menuitem name='JustifyCenter action='JustifyCenter' position='top'/>
-   <menuitem name='JustifyRight' action='JustifyRight' position='top'/>
-        @end verbatim
+
+@code{<menuitem name='JustifyLeft' action='JustifyLeft' position='top'/>}@*
+@code{<menuitem name='JustifyCenter action='JustifyCenter' position='top'/>}@*
+@code{<menuitem name='JustifyRight' action='JustifyRight' position='top'/>}
+
         then they would appear in the order
-        @verbatim
-   JustifyRight
-   JustifyCenter
-   JustifyLeft
-        @end verbatim
+
+@code{JustifyRight}@*
+@code{JustifyCenter}@*
+@code{JustifyLeft}
+
         because each time the element is inserted, the position='top' attribute
         forces it to be above its siblings. The 'top' attribute converts the
         packing into a stack push operation in effect.
@@ -841,7 +845,7 @@ The following example shows a UI definition of a menubar and its submenus.
         indentation, to make them easier to read.
 @end itemize
 
-We can create a to olbar definition in a similar way:
+We can create a toolbar definition in a similar way:
 @example
 <ui>
   <toolbar name='ToolBar' action="ToolBarAction">
@@ -1131,7 +1135,8 @@ another, the return value will be zero.  Therefore it is a good idea to check
 the return value of the function. The following code fragment tests both conditions
 and terminates the program with an error message if there is an error:
 @example
-(let ((merge-id (gtk-ui-manager-add-ui-from-file ui-manager "menu-1.xml")))
+(let ((merge-id (gtk-ui-manager-add-ui-from-file ui-manager
+                                                 "menu-1.xml")))
   (when (eql 0 merge-id)
     (error-message "Could not load UI Manager definition"))
   ... )
@@ -1169,7 +1174,8 @@ define a UI definition in a string.
 @end example
 This would then be added to the UI manager with the fragment
 @example
-(let ((merge-id (gtk-ui-manager-add-ui-from-string ui-manager ui-constant)))
+(let ((merge-id (gtk-ui-manager-add-ui-from-string ui-manager 
+                                                   ui-constant)))
   (when (eql 0 merge-id)
     (error-message "Could not load UI Manager definition"))
   ... )
@@ -1242,7 +1248,8 @@ that removes a UI definition is @xurl{gtk-ui-manager-remove-ui}.
 This is given the merge-id of the UI definition to be removed. For example, if
 I create a UI with the call
 @example
-(let ((merge-id (gtk-ui-manager-add-ui-from-string ui_manager ui_toolbar)))
+(let ((merge-id (gtk-ui-manager-add-ui-from-string ui_manager
+                                                   ui_toolbar)))
   ... )
 @end example
 and I later want to remove the toolbar from the window, I would call

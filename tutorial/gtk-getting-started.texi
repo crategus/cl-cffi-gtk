@@ -3,9 +3,9 @@
 @c License  : GNU General Public License (GPL)
 @c Author   : Dieter Kaiser
 @c Date     : 26.12.2011
-@c Revision : 01.08.2013
+@c Revision : 08.01.2016
 @c
-@c Copyright (C) 2011, 2012, 2013 by Dieter Kaiser
+@c Copyright (C) 2011 - 2016 by Dieter Kaiser
 @c -----------------------------------------------------------------------------
 
 @menu
@@ -27,13 +27,11 @@ install it.  The latest version is available from the repository at
 @url{http://github.com/crategus/cl-cffi-gtk}.  The @code{cl-cffi-gtk} library
 is ASDF installable and can be loaded with the command
 @code{(asdf:load-system :cl-cffi-gtk)} from the Lisp prompt.  The library is
-developed with the Lisp SBCL 1.1.9 on a Linux system and GTK+ 3.8.  Furthermore,
-the library runs successfully with Clozure Common Lisp 1.9 and CLISP 2.49 on
-Linux. The minimum version requirements are GTK+ 3.4 and GLIB 2.32.
+developed with the Lisp SBCL 1.2.14 on a Linux system and GTK+ 3.16.
+Furthermore, the library runs successfully with Clozure Common Lisp and
+CLISP on Linux.  The library compiles and the demos run with Windows 7.
 
-The library compiles and the demos run with Windows 7, too, but when moving
-the application window the application will freeze. This bug has not been solved
-at this time (January 2014).
+The minimum version requirements are GTK+ 3.4 and GLIB 2.32.
 
 GTK+ depends on the libraries GLib, GObject, GDK, GDK-Pixbuf, GIO, Pango, and
 Cairo. These libraries can be loaded separately with the following commands:
@@ -56,8 +54,7 @@ The @code{cl-cffi-gtk} library depends further on the following libraries:
 @item CFFI
       the Common Foreign Function Interface, purports to be a portable
       foreign function interface for Common Lisp.
-      See @url{http://common-lisp.net/project/cffi/} and
-      @url{http://www.crategus.com/books/cffi/}.
+      See @url{http://common-lisp.net/project/cffi/}.
 
       @b{Warning:} Yout must use the version 0.11.2 or newer of the CFFI
       library. Older versions of CFFI are no longer compatible with the
@@ -66,8 +63,7 @@ The @code{cl-cffi-gtk} library depends further on the following libraries:
 @item Trivial-Garbage
       provides a portable API to finalizers, weak hash-tables
       and weak pointers on all major CL implementations. See
-      @url{http://www.cliki.net/trivial-garbage} and
-      @url{http://www.crategus.com/books/trivial-garbage/}.
+      @url{http://common-lisp.net/project/trivial-garbage/}.
 
 @item Iterate
       is a lispy and extensible replacement for the LOOP macro.
@@ -75,14 +71,12 @@ The @code{cl-cffi-gtk} library depends further on the following libraries:
 
 @item Bordeaux-Threads
       lets you write multi-threaded applications in a portable way.
-      See @url{http://common-lisp.net/project/bordeaux-threads/} and
-      @url{http://www.crategus.com/books/bordeaux-threads/}.
+      See @url{http://common-lisp.net/project/bordeaux-threads/}.
 
 @item Closer-MOP
       Closer to MOP is a compatibility layer that rectifies many of the absent
       or incorrect MOP features as detected by MOP Feature Tests.
-      See @url{http://common-lisp.net/project/closer/closer-mop.html} and
-      @url{http://www.crategus.com/books/closer-mop}.
+      See @url{http://common-lisp.net/project/closer/closer-mop.html}.
 @end table
 
 @findex cl-cffi-gtk-build-info
@@ -94,18 +88,18 @@ the function from the Lisp prompt after loading the library:
 * (cl-cffi-gtk-build-info)
 
 cl-cffi-gtk version: 1.0.0
-cl-cffi-gtk build date: 11:22 7/25/2013
-GTK+ version: 3.6.4
-GLIB version: 2.36.0
-GDK-Pixbuf version: 2.28.0
-Pango version: 1.32.5
-Cairo version: 1.12.14
-Machine type: X86
-Machine version: Intel(R) Core(TM)2 Duo CPU     T7250  @ 2.00GHz
+cl-cffi-gtk build date: 20:55 1/5/2016
+GTK+ version: 3.16.7
+GLIB version: 2.46.1
+GDK-Pixbuf version: 2.32.1
+Pango version: 1.36.8
+Cairo version: 1.14.2
+Machine type: X86-64
+Machine version: Intel(R) Core(TM) i5-4210U CPU @ 1.70GHz
 Software type: Linux
-Software version: 3.8.0-27-generic
+Software version: 4.2.0-22-generic
 Lisp implementation type: SBCL
-Lisp implementation version: 1.1.9
+Lisp implementation version: 1.2.14.debian
 @end example
 
 @c -----------------------------------------------------------------------------
@@ -126,8 +120,8 @@ output of the simplest program possible is shown in @ref{figure-simple-window}.
 The program creates a 200 x 200 pixel window.  In this case the window has the
 default title "sbcl".  The window can be sized and moved.  First in
 @ref{example-simple-window-C} the C program of the
-@url{http://developer.gnome.org/gtk3/stable/gtk-getting-started.html, GTK+ 3
-Reference Manual} is presented to show the close connection between the
+@url{http://developer.gnome.org/gtk3/3.14/gtk-getting-started.html#id-1.2.3.3,
+GTK+ 3 Reference Manual} is presented to show the close connection between the
 C library and the implementation of the Lisp binding.  The code of the Lisp
 program is shown in @ref{example-simple-window}.
 
