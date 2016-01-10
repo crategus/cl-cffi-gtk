@@ -261,7 +261,7 @@ Application Support
 @chapter Tree and List Widgets
 @include gtk-tree-and-list-widget.texi
 
-@node Dialogs, Selection Colors Files and Fonts, Tree and List Widgets, Top
+@node Dialogs, Selecting Colors Files and Fonts, Tree and List Widgets, Top
 @chapter Dialogs
 @include gtk-dialogs.texi
 
@@ -277,7 +277,7 @@ Application Support
 @chapter Menus and Toolbars
 @include gtk-menu-widget.texi
 
-@node Application Support, Reference of Widgets, Menus and Toolbars, Top
+@node Application Support, GTK+ and Cairo, Menus and Toolbars, Top
 @chapter Application Support
 @include gtk-application.texi
 
@@ -297,7 +297,7 @@ Application Support
 @appendix Examples
 @listoffloats Example
 
-@node Function and Variable Index, Licenses, Menu Widget, Top
+@node Function and Variable Index, Licenses, Examples, Top
 @appendix Function and Variable Index
 @printindex fn
 

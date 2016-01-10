@@ -39,8 +39,13 @@ nouns: destination, source, mask, path, and context.  After that I will describe
 the verbs which offer ways to manipulate the nouns and draw the graphics you
 wish to create.
 
+@menu
+* Nouns::
+* Verbs::
+@end menu
+
 @c -----------------------------------------------------------------------------
-@node Nouns, Verbs, Top, Top
+@node Nouns, Verbs, Cairo Drawing Model
 @subsection Nouns
 
 Cairo's nouns are somewhat abstract.  To make them concrete I am including
@@ -119,7 +124,7 @@ can be created specific to most Cairo backends, see the
 Cairo API documentation} for details.
 
 @c -----------------------------------------------------------------------------
-@node Verbs, , Nouns, Top
+@node Verbs, , Nouns, Cairo Drawing Model
 @subsection Verbs
 
 The reason you are using Cairo in a program is to draw.  Cairo internally draws
@@ -300,8 +305,13 @@ by its insertion point.  To use @xurl{cairo-mask} you need a second source
 pattern or surface.  And to use any of the operations, including
 @xurl{cairo-paint}, you need a primary source.
 
+@menu
+* Preparing and Selecting a Source::
+* Creating a Path::
+@end menu
+
 @c -----------------------------------------------------------------------------
-@node Preparing and Selecting a Source, Creating a Path, Top, Top
+@node Preparing and Selecting a Source, Creating a Path, Drawing with Cairo
 @subsection Preparing and Selecting a Source
 
 @ifnotinfo
@@ -391,7 +401,7 @@ and @xurl{cairo-pop-group} when you want to save it so you can select it over
 and over again with @xurl{cairo-set-source}.
 
 @c -----------------------------------------------------------------------------
-@node Creating a Path, , Preparing and Selecting a Source, Top
+@node Creating a Path, , Preparing and Selecting a Source
 @subsection Creating a Path
 
 Cairo always has an active path.  If you call @xurl{cairo-stroke} it will draw
@@ -634,8 +644,13 @@ Cairo myself, so there may be other better ways to do these things.  If you find
 a better way, or find a cool way to do something else, let me know and perhaps I
 can incorporate it into these tips.
 
+@menu
+* Line Width::
+* Text Alignment::
+@end menu
+
 @c -----------------------------------------------------------------------------
-@node Line Width, Text Alignment, Top, Top
+@node Line Width, Text Alignment, Tips and Tricks
 @subsection Line Width
 
 When you are working under a uniform scaling transform, you can not just use
@@ -670,7 +685,7 @@ uniform scale.
 @end example
 
 @c -----------------------------------------------------------------------------
-@node Text Alignment, , Line Width, Top
+@node Text Alignment, , Line Width
 @subsection Text Alignment
 
 When you try to center text letter by letter at various locations, you have to
@@ -683,7 +698,7 @@ cairo_text_extents_t te;
 char alphabet[] = "AbCdEfGhIjKlMnOpQrStUvWxYz";
 char letter[2];
 
-for (i=0; i < strlen(alphabet); i++) {
+for (i=0; i < strlen(alphabet); i++) @{
     *letter = '\0';
     strncat (letter, alphabet + i, 1);
 
@@ -691,7 +706,7 @@ for (i=0; i < strlen(alphabet); i++) {
     cairo_move_to (cr, i + 0.5 - te.x_bearing - te.width / 2,
             0.5 - te.y_bearing - te.height / 2);
     cairo_show_text (cr, letter);
-}
+@}
 @end example
 
 Instead the vertical centering must be based on the general size of the font,
@@ -706,7 +721,7 @@ char alphabet[] = "AbCdEfGhIjKlMnOpQrStUvWxYz";
 char letter[2];
 
 cairo_font_extents (cr, &fe);
-for (i=0; i < strlen(alphabet); i++) {
+for (i=0; i < strlen(alphabet); i++) @{
     *letter = '\0';
     strncat (letter, alphabet + i, 1);
 
@@ -714,7 +729,7 @@ for (i=0; i < strlen(alphabet); i++) {
     cairo_move_to (cr, i + 0.5 - te.x_bearing - te.width / 2,
             0.5 - fe.descent + fe.height / 2);
     cairo_show_text (cr, letter);
-}
+@}
 @end example
 
 @c -----------------------------------------------------------------------------

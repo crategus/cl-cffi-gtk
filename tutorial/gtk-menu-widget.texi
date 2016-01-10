@@ -660,8 +660,16 @@ present in an application and is described in an XML format. A
 @xurl{gtk-ui-manager} makes it possible to change menus and toolbars dynamically
 using what is called UI merging.
 
+@menu
+* Actions::
+* UI Definitions::
+* Actions Groups::
+* Creating the UI::
+* UI Merging::
+@end menu
+
 @c -----------------------------------------------------------------------------
-@node Actions, UI Definitions, Top, Top
+@node Actions, UI Definitions, Top
 @subsection Actions
 
 The principal objects manipulated by a @xurl{gtk-ui-manager} are actions, which
@@ -696,7 +704,7 @@ and @xurl{gtk-recent-action}.  The @xurl{gtk-toggle-action} class has a
 buttons respectively.
 
 @c -----------------------------------------------------------------------------
-@node UI Definitions, Actions Groups, Actions, Top
+@node UI Definitions, Actions Groups, Actions
 @subsection UI Definitions
 
 You can specify the set user interface action elements in your application with
@@ -874,7 +882,7 @@ not occupy space in the toolbar widget; it just marks a position to be accessed,
 so there is no downside to putting these placeholders into the UI definition.
 
 @c -----------------------------------------------------------------------------
-@node Actions Groups, Creating the UI, UI Definitions, Top
+@node Actions Groups, Creating the UI, UI Definitions
 @subsection Actions Groups
 
 Actions are organized into action groups. An action group is essentially a map
@@ -892,7 +900,7 @@ the playback actions (play, pause, rewind, etc.) would be in a group that could
 be added and removed as needed.
 
 @c -----------------------------------------------------------------------------
-@node Creating the UI, UI Merging, Actions Groups, Top
+@node Creating the UI, UI Merging, Actions Groups
 @subsection Creating the UI
 
 The basic steps in creating the UI are to
@@ -1229,7 +1237,7 @@ the function @xurl{gtk-ui-manager-set-add-tearoffs}.  By passing @emph{true},
 all menus (except popup menus) will have the tear-off property.
 
 @c -----------------------------------------------------------------------------
-@node UI Merging, Controlling Position of Merged Elements, Creating the UI, Top
+@node UI Merging, , Creating the UI
 @subsection UI Merging
 
 One of the most powerful features of the UI manager is its ability to

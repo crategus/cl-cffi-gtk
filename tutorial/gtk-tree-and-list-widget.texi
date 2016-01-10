@@ -65,8 +65,14 @@ to allow multiple ways of rendering the same type of data.  For example,
 consider how to render a boolean variable.  Should it render as a string of
 "True" or "False", "On" or "Off", or should it be rendered as a checkbox?
 
+@menu
+* Creating a model::
+* Creating the view component::
+* Simple example::
+@end menu
+
 @c -----------------------------------------------------------------------------
-@node Creating a model, Creating the view component, Overview, Top
+@node Creating a model, Creating the view component, Overview
 @subsection Creating a model
 
 @findex GtkTreeStore
@@ -130,7 +136,7 @@ This can be written more compact as:
 It can be used to set the data in any or all columns in a given row.
 
 @c -----------------------------------------------------------------------------
-@node Creating the view component, Simple example, Creating a model, Top
+@node Creating the view component, Simple example, Creating a model
 @subsection Creating the view component
 
 While there are several different models to choose from, there is only one view
@@ -214,7 +220,7 @@ for the row selected:
 @end verbatim
 
 @c -----------------------------------------------------------------------------
-@node Simple example, , Creating the view component, Top
+@node Simple example, , Creating the view component
 @subsection Simple example
 
 @ifnotinfo
@@ -278,7 +284,7 @@ together.
 @end verbatim
 
 @c -----------------------------------------------------------------------------
-@node GtkListStore and GtkTreeStore, Creating a Tree View, Overview
+@node GtkListStore and GtkTreeStore, Creating a Tree View, Overview, Top
 @section GtkListStore and GtkTreeStore
 
 Gtk+ comes with two built-in data stores (models): @xurl{gtk-list-store} and
@@ -940,7 +946,7 @@ children have an 'expander' arrow with which a node's children can be collapsed
 
 
 @c -----------------------------------------------------------------------------
-@node Mapping Data to the Screen, Selections Double-Clicks and Centext Menus, Creating a Tree View
+@node Mapping Data to the Screen, Selections Double-Clicks and Context Menus, Creating a Tree View
 @section Mapping Data to the Screen
 
 As outlined above, tree view columns represent the visible columns on the screen
