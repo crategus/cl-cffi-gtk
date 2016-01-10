@@ -325,6 +325,26 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;;
+;;; A second approach to get started
+;;;
+;;; ----------------------------------------------------------------------------
+
+(defun example-simple-app ()
+  (within-main-loop
+    (let ((app (gtk-application-new "crategus.example-simple-app" :none)))
+      (g-signal-connect app "activate"
+                            (lambda (app)
+                              (let ((window (gtk-application-window-new app)))
+                                (setf (gtk-window-title window) "Window")
+                                (setf (gtk-window-default-size window)
+                                      '(200 200))
+                                (gtk-widget-show-all window))))
+      (let ((status (g-application-run app 0 (null-pointer))))
+        (g-object-unref (pointer app))
+        status))))
+
+;;; ----------------------------------------------------------------------------
+;;;
 ;;; Chapter 3. Packing Widgets
 ;;;
 ;;; ----------------------------------------------------------------------------
