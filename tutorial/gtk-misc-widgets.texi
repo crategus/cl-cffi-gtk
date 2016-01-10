@@ -912,8 +912,9 @@ contain an entry.
            (gtk-list-store-set model
                                (gtk-list-store-append model)
                                (gtk-entry-text title-entry)
-                               (or (parse-integer (gtk-entry-text value-entry)
-                                                  :junk-allowed t)
+                               (or (parse-integer
+                                     (gtk-entry-text value-entry)
+                                     :junk-allowed t)
                                    0))))
       (g-signal-connect combo-box "changed"
          (lambda (widget)

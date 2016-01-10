@@ -629,11 +629,11 @@ on an image.  The output of this example is in @ref{figure images}.
            (lambda (loader x y width height)
              (declare (ignore loader x y width height))
              ;; We know the pixbuf inside the GtkImage has changed, but the
-             ;; image itself does not know this; so queue a redraw. If we wanted
-             ;; to be really efficient, we could use a drawing area or something
-             ;; instead of a GtkImage, so we could control the exact position of
-             ;; the pixbuf on the display, then we could queue a draw for only
-             ;; the updated area of the image.
+             ;; image itself does not know this; so queue a redraw. If we
+             ;; wanted to be really efficient, we could use a drawing area
+             ;; or something instead of a GtkImage, so we could control the
+             ;; exact position of the pixbuf on the display, then we could
+             ;; queue a draw for only the updated area of the image.
              (gtk-widget-queue-draw image)))))
   ;; Continue the GSource
   +g-source-continue+)
@@ -744,8 +744,8 @@ on an image.  The output of this example is in @ref{figure images}.
                        (gdk-event-button-y event))
              (setf load-timeout
                    (gdk-threads-add-timeout 100
-                                            (lambda ()
-                                              (progressive-timeout image))))))
+                       (lambda ()
+                         (progressive-timeout image))))))
         (gtk-container-add vgrid label)
         (gtk-container-add event-box image)
         (gtk-container-add frame event-box)
@@ -759,7 +759,8 @@ on an image.  The output of this example is in @ref{figure images}.
            (lambda (widget)
              (let ((childs (gtk-container-get-children vgrid)))
                (dolist (child childs)
-                 (unless (g-type-is-a (g-object-type child) "GtkToggleButton")
+                 (unless (g-type-is-a (g-object-type child)
+                                      "GtkToggleButton")
                    (if (gtk-toggle-button-active button)
                        (progn
                          (setf (gtk-widget-sensitive child) nil)

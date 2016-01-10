@@ -211,8 +211,8 @@ back up.  Toggle buttons are the basis for check buttons and radio buttons, as
 such, many of the calls used for toggle buttons are inherited by radio and check
 buttons.
 
-Toggle buttons can be created with the functions @xurl{gtk-toggle-button-new},
-@xurl{gtk-toggle-button-new-with-label}, and
+Beside @code{make-instance}, toggle buttons can be created with the functions
+@xurl{gtk-toggle-button-new}, @xurl{gtk-toggle-button-new-with-label}, and
 @xurl{gtk-toggle-button-new-with-mnemonic}.  The first function creates a blank
 toggle button, and the last two functions, a toggle button with a label widget
 already packed into it.  The @xurl{gtk-toggle-button-new-with-mnemonic} variant

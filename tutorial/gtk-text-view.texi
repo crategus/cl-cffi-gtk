@@ -438,12 +438,12 @@ matched text.
 @end float
 @verbatim
 (defvar *some-text*
-        "One of the important things to remember about text in GTK+ is that it
-is in the UTF-8 encoding. This means that one character can be encoded as
-multiple bytes. Character counts are usually referred to as offsets, while byte
-counts are called indexes. If you confuse these two, things will work fine with
-ASCII, but as soon as your buffer contains multibyte characters, bad things will
-happen.")
+        "One of the important things to remember about text in GTK+ is that
+it is in the UTF-8 encoding. This means that one character can be encoded as
+multiple bytes. Character counts are usually referred to as offsets, while
+byte counts are called indexes. If you confuse these two, things will work
+fine with ASCII, but as soon as your buffer contains multibyte characters,
+bad things will happen.")
 
 (defun example-text-view-search ()
   (within-main-loop
@@ -1082,7 +1082,7 @@ functions.
 @end float
 @end ifnotinfo
 
-@float Example, example-text-insert-widget
+@float Example, example-text-view-tooltip
 @caption{Show tooltips in a Text View.}
 @end float
 @verbatim
@@ -1107,8 +1107,9 @@ functions.
                                     :border-width 1))
           (label (make-instance 'gtk-label
                                 :label tip-text)))
-      (gtk-widget-override-font label
-                                (pango-font-description-from-string "Courier"))
+      (gtk-widget-override-font
+          label
+          (pango-font-description-from-string "Courier"))
       (gtk-widget-override-background-color win
                                             :normal
                                             (gdk-rgba-parse "Black"))
@@ -1120,16 +1121,18 @@ functions.
   (defun insert-open-brace (window text-view location)
     (let ((start (gtk-text-iter-copy location)))
       (when (gtk-text-iter-backward-word-start start)
-        (let* ((word (string-trim " " (gtk-text-iter-get-text start location)))
+        (let* ((word (string-trim " "
+                                  (gtk-text-iter-get-text start location)))
                (tip-text (get-tip word)))
           (when tip-text
             (let ((rect (gtk-text-view-get-iter-location text-view location))
                   (win (gtk-text-view-get-window text-view :widget)))
               (multiple-value-bind (win-x win-y)
-                  (gtk-text-view-buffer-to-window-coords text-view
-                                                         :widget
-                                                         (gdk-rectangle-x rect)
-                                                         (gdk-rectangle-y rect))
+                  (gtk-text-view-buffer-to-window-coords
+                      text-view
+                      :widget
+                      (gdk-rectangle-x rect)
+                      (gdk-rectangle-y rect))
                 (multiple-value-bind (x y)
                     (gdk-window-get-origin win)
                   ;; Destroy any previous tool tip window

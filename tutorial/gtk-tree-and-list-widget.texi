@@ -383,7 +383,7 @@ insertion/deletion/resorting.  This is important to keep in mind.  See the
 section on @code{GtkTreeRowReferences} below for a tree path that keeps updating
 itself to make sure it always refers to the same row when the model changes.
 
-You can get a new @xurl{gtk-tree-path} from a path in string form using the 
+You can get a new @xurl{gtk-tree-path} from a path in string form using the
 function @xurl{gtk-tree-path-new-from-string}, and you can convert a given
 @xurl{gtk-tree-path} into its string notation with the function
 @xurl{gtk-tree-path-to-string}.  Usually you will rarely have to handle the
@@ -544,8 +544,9 @@ retrieve data from the store.
             ;; Get the iter from the path
             (iter (gtk-tree-model-get-iter model path)))
        (when iter
-         (format t "The row containing the name ~A has been double-clicked.~%"
-                   (gtk-tree-model-get-value model iter 0))))))
+         (format t
+                 "The row containing the name ~A has been double-clicked.~%"
+                 (gtk-tree-model-get-value model iter 0))))))
 @end verbatim
 
 Tree row references reveal the current path of a row with the function
@@ -1243,7 +1244,10 @@ for a particular cell renderer. Here is an example:
 
    gtk_tree_view_column_pack_start(col, cell, TRUE);
 
-   gtk_tree_view_column_set_cell_data_func(col, cell, age_cell_data_func, NULL, NULL);
+   gtk_tree_view_column_set_cell_data_func(col,
+                                           cell,
+                                           age_cell_data_func,
+                                           NULL, NULL);
 
    ...
 @end verbatim
@@ -1275,7 +1279,7 @@ its total height, and in order to calculate this it needs to know the height of
 each and every single row, and it can only know that by having it measured,
 which is going to be slow when you have a lot of rows with different heights
 (if your rows all have the same height, there should not be any visible delay
-though). 
+though).
 
 @subheading GtkCellRendererText and Integer, Boolean and Float Types
 
@@ -1382,7 +1386,8 @@ set @code{"markup"} (and have used the @code{"text"} property before), set the
   {
     ...
     if (foo->is_important)
-      g_object_set(renderer, "markup", "<b>important</b>", "text", NULL, NULL);
+      g_object_set(renderer, "markup",
+                             "<b>important</b>", "text", NULL, NULL);
     else
       g_object_set(renderer, "markup", NULL, "text", "not important", NULL);
     ...
@@ -1509,15 +1514,16 @@ age_cell_data_func (GtkTreeViewColumn *col,
     guint age = year_now - year_born;
 
     g_snprintf(buf, sizeof(buf), "%u years old", age);
-
-    g_object_set(renderer, "foreground-set", FALSE, NULL); /* print this normal */
+    /* print this normal */
+    g_object_set(renderer, "foreground-set", FALSE, NULL);
   }
   else
   {
     g_snprintf(buf, sizeof(buf), "age unknown");
 
     /* make red */
-    g_object_set(renderer, "foreground", "Red", "foreground-set", TRUE, NULL);
+    g_object_set(renderer, "foreground",
+                           "Red", "foreground-set", TRUE, NULL);
   }
 
   g_object_set(renderer, "text", buf, NULL);
@@ -1593,7 +1599,10 @@ create_view_and_model (void)
   gtk_tree_view_column_pack_start(col, renderer, TRUE);
 
   /* connect a cell data function */
-  gtk_tree_view_column_set_cell_data_func(col, renderer, age_cell_data_func, NULL, NULL);
+  gtk_tree_view_column_set_cell_data_func(col,
+                                          renderer,
+                                          age_cell_data_func,
+                                          NULL, NULL);
 
 
   model = create_and_fill_model();
@@ -1602,8 +1611,9 @@ create_view_and_model (void)
 
   g_object_unref(model); /* destroy model automatically with view */
 
-  gtk_tree_selection_set_mode(gtk_tree_view_get_selection(GTK_TREE_VIEW(view)),
-                              GTK_SELECTION_NONE);
+  gtk_tree_selection_set_mode(
+      gtk_tree_view_get_selection(GTK_TREE_VIEW(view)),
+      GTK_SELECTION_NONE);
 
   return view;
 }
