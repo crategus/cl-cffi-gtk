@@ -82,17 +82,15 @@
            (foreign-slot-value query '(:struct g-type-query) :instance-size))))
 
   ;; Get the class properties.
-  (is (equal '("app-paintable" "can-default" "can-focus"
-                               "composite-child" "double-buffered" "events"
-                               "expand" "halign" "has-default" "has-focus"
-                               "has-tooltip" "height-request" "hexpand"
-                               "hexpand-set" "is-focus" "margin"
-                               "margin-bottom" "margin-left" "margin-right"
-                               "margin-top" "name" "no-show-all" "opacity"
-                               "parent" "receives-default" "scale-factor"
-                               "sensitive" "style" "tooltip-markup"
-                               "tooltip-text" "valign" "vexpand" "vexpand-set"
-                               "visible" "width-request" "window")
+  (is (equal '("app-paintable" "can-default" "can-focus" "composite-child"
+               "double-buffered" "events" "expand" "halign" "has-default"
+               "has-focus" "has-tooltip" "height-request" "hexpand"
+               "hexpand-set" "is-focus" "margin" "margin-bottom" "margin-end"
+               "margin-left" "margin-right" "margin-start" "margin-top" "name"
+               "no-show-all" "opacity" "parent" "receives-default"
+               "scale-factor" "sensitive" "style" "tooltip-markup"
+               "tooltip-text" "valign" "vexpand" "vexpand-set" "visible"
+               "width-request" "window")
              (stable-sort (mapcar #'param-spec-name
                                   (g-object-class-list-properties "GtkWidget"))
                           #'string-lessp)))
@@ -144,9 +142,13 @@
                         (MARGIN GTK-WIDGET-MARGIN "margin" "gint" T T)
                         (MARGIN-BOTTOM GTK-WIDGET-MARGIN-BOTTOM "margin-bottom"
                          "gint" T T)
+                        (MARGIN-END GTK-WIDGET-MARGIN-END "margin-end" "gint" T
+                         T)
                         (MARGIN-LEFT GTK-WIDGET-MARGIN-LEFT "margin-left"
                          "gint" T T)
                         (MARGIN-RIGHT GTK-WIDGET-MARGIN-RIGHT "margin-right"
+                         "gint" T T)
+                        (MARGIN-START GTK-WIDGET-MARGIN-START "margin-start"
                          "gint" T T)
                         (MARGIN-TOP GTK-WIDGET-MARGIN-TOP "margin-top" "gint" T
                          T)
@@ -174,6 +176,7 @@
                         (WIDTH-REQUEST GTK-WIDGET-WIDTH-REQUEST "width-request"
                          "gint" T T)
                         (WINDOW GTK-WIDGET-WINDOW "window" "GdkWindow" T NIL)))
+
              (get-g-type-definition "GtkWidget"))))
 
 ;;; ----------------------------------------------------------------------------
@@ -593,7 +596,7 @@ scale-factor
     (is (equal ""
                (gtk-widget-style-get-property widget "focus-line-pattern")))
     (is (= 1 (gtk-widget-style-get-property widget "focus-line-width")))
-    (is (= 0 (gtk-widget-style-get-property widget "focus-padding")))
+    (is (= 1 (gtk-widget-style-get-property widget "focus-padding")))
     (is-true (gtk-widget-style-get-property widget "interior-focus"))
     (is (eq 'gdk-color
             (type-of (gtk-widget-style-get-property widget "link-color"))))
