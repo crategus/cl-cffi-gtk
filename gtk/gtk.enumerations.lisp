@@ -1048,7 +1048,14 @@
       buttons requiring the user attention.}
     @entry[:focused]{The widget has the keyboard focus.}
   @end{table}
-  @see-class{gtk-style}")
+  @begin[Warning:]{dictionary}
+    The @sym{gtk-state-type} enumeration has been deprecated since version 3.14
+    and should not be used in newly-written code. All APIs that are using this
+    enumeration have been deprecated in favor of alternatives using the
+    @symbol{gtk-state-flags} enumeration.
+  @end{dictionary}
+  @see-class{gtk-style}
+  @see-symbol{gtk-state-flags}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkStateFlags
