@@ -11,12 +11,12 @@ GTK+ Widgets and Objects
 
     gtk.application.lisp             - GtkApplication              - GTK+ 3.10
     gtk.application-window.lisp      - GtkApplicationWindow        - GTK+ 3.10
-    gtk.actionable.lisp              - GtkActionable               - GTK+ 3.10&
+    gtk.actionable.lisp              - GtkActionable               - GTK+ 3.10 &
 
   Interface builder
 
-    gtk.builder.lisp                 - GtkBuilder                  - GTK+ 3.10&
-    gtk.buildable.lisp               - GtkBuildable                - GTK+ 3.10&
+    gtk.builder.lisp                 - GtkBuilder                  - GTK+ 3.10 &
+    gtk.buildable.lisp               - GtkBuildable                - GTK+ 3.10 &
 
   Windows
 
@@ -24,7 +24,7 @@ GTK+ Widgets and Objects
     gtk.message-dialog.lisp          - GtkMessageDialog            - GTK+ 3.10
     gtk.about-dialog.lisp            - GtkAboutDialog              - GTK+ 3.10
     gtk.assistant.lisp               - GtkAssistant                - GTK+ 3.10
-    gtk.window.lisp                  - GtkWindow                   - GTK+ 3.10&
+    gtk.window.lisp                  - GtkWindow                   - GTK+ 3.10 &
     gtk.window-group.lisp            - GtkWindowGroup              - GTK+ 3.10
     gtk.invisible.lisp               - GtkInvisible                - GTK+ 3.10
     gtk.offscreen-window.lisp        - GtkOffscreenWindow          - GTK+ 3.10
@@ -32,7 +32,7 @@ GTK+ Widgets and Objects
   Layout Containers
 
     gtk.box.lisp                     - GtkBox, GtkHBox, GtkVbox    - GTK+ 3.10
-    gtk.grid.lisp                    - GtkGrid                     - GTK+ 3.10&
+    gtk.grid.lisp                    - GtkGrid                     - GTK+ 3.10 &
 
     GtkRevealer - Hide and show with animation
     GtkListBox - A list container
@@ -61,11 +61,11 @@ GTK+ Widgets and Objects
     gtk.level-bar.lisp               - GtkLevelBar                 - GTK+ 3.10
     gtk.statusbar.lisp               - GtkStatusbar                - GTK+ 3.10
     gtk.accel-label.lisp             - GtkAccelLabel               - GTK+ 3.10
-    gtk.status-icon.lisp             - GtkStatusIcon               - GTK+ 3.10&
+    gtk.status-icon.lisp             - GtkStatusIcon               - GTK+ 3.10 &
 
   Buttons and Toggles
 
-    gtk.button.lisp                  - GtkButton                   - GTK+ 3.10&
+    gtk.button.lisp                  - GtkButton                   - GTK+ 3.10 &
     gtk.check-button.lisp            - GtkCheckButton              - GTK+ 3.10
     gtk.radio-button.lisp            - GtkRadioButton              - GTK+ 3.10
     gtk.toggle-button.lisp           - GtkToggleButton             - GTK+ 3.10
@@ -261,7 +261,7 @@ Theming in GTK+
 
   Abstract Base Classes
 
-    gtk.widget.lisp                  - GtkWidget                   - GTK+ 3.10
+    gtk.widget.lisp                  - GtkWidget                   - GTK+ 3.16 &
 
     gtk.container.lisp               - GtkContainer                - GTK+ 3.8.9*
     gtk.bin.lisp                     - GtkBin                      - GTK+ 3.6.4*
