@@ -5,12 +5,12 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.10 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.16 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2015 Dieter Kaiser
+;;; Copyright (C) 2011 - 2016 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -34,6 +34,19 @@
 ;;;
 ;;; Base class for all widgets
 ;;;
+;;; Types and Values
+;;;
+;;;     GtkWidget
+;;;  	GtkRequisition
+;;;     GtkAllocation
+;;;     GtkWidgetAuxInfo
+;;;     GtkWidgetHelpType
+;;;     GtkTextDirection
+;;;     GtkStateType                                    -> gtk.enumerations.lisp
+;;;     GtkSizeRequestMode
+;;;     GtkRequestedSize
+;;;     GtkAlign
+;;;
 ;;; Functions
 ;;;
 ;;;     gtk_widget_new
@@ -54,6 +67,7 @@
 ;;;     gtk_widget_queue_resize
 ;;;     gtk_widget_queue_resize_no_redraw
 ;;;     gtk_widget_get_frame_clock
+;;;     gtk_widget_scale_factor
 ;;;     gtk_widget_add_tick_callback
 ;;;     gtk_widget_remove_tick_callback
 ;;;     gtk_widget_size_request                            * deprecated *
@@ -67,7 +81,7 @@
 ;;;     gtk_widget_can_activate_accel
 ;;;     gtk_widget_event
 ;;;     gtk_widget_activate
-;;;     gtk_widget_reparent
+;;;     gtk_widget_reparent                                * deprecated *
 ;;;     gtk_widget_intersect
 ;;;     gtk_widget_is_focus
 ;;;     gtk_widget_grab_focus
@@ -79,8 +93,8 @@
 ;;;     gtk_widget_set_parent
 ;;;     gtk_widget_set_parent_window
 ;;;     gtk_widget_get_parent_window
-;;;     gtk_widget_set_events
-;;;     gtk_widget_get_events
+;;;     gtk_widget_set_events                              -> Accessor
+;;;     gtk_widget_get_events                              -> Accessor
 ;;;     gtk_widget_add_events
 ;;;     gtk_widget_set_device_events
 ;;;     gtk_widget_get_device_events
@@ -101,9 +115,6 @@
 ;;;     gtk_widget_reset_rc_styles                         * deprecated *
 ;;;     gtk_widget_get_default_style                       * deprecated *
 ;;;     gtk_widget_set_direction
-;;;
-;;;     GtkTextDirection
-;;;
 ;;;     gtk_widget_get_direction
 ;;;     gtk_widget_set_default_direction
 ;;;     gtk_widget_get_default_direction
@@ -111,12 +122,12 @@
 ;;;     gtk_widget_input_shape_combine_region
 ;;;     gtk_widget_path                                    * deprecated *
 ;;;     gtk_widget_class_path                              * deprecated *
-;;;     gtk_widget_get_composite_name
-;;;     gtk_widget_override_background_color
-;;;     gtk_widget_override_color
-;;;     gtk_widget_override_font
-;;;     gtk_widget_override_symbolic_color
-;;;     gtk_widget_override_cursor
+;;;     gtk_widget_get_composite_name                      * deprecated *
+;;;     gtk_widget_override_background_color               * deprecated *
+;;;     gtk_widget_override_color                          * deprecated *
+;;;     gtk_widget_override_font                           * deprecated *
+;;;     gtk_widget_override_symbolic_color                 * deprecated *
+;;;     gtk_widget_override_cursor                         * deprecated *
 ;;;     gtk_widget_modify_style                            * deprecated *
 ;;;     gtk_widget_get_modifier_style                      * deprecated *
 ;;;     gtk_widget_modify_fg                               * deprecated *
@@ -129,12 +140,13 @@
 ;;;     gtk_widget_get_pango_context
 ;;;     gtk_widget_create_pango_layout
 ;;;     gtk_widget_render_icon                             * deprecated *
-;;;     gtk_widget_render_icon_pixbuf
-;;;     gtk_widget_pop_composite_child
-;;;     gtk_widget_push_composite_child
+;;;     gtk_widget_render_icon_pixbuf                      * deprecated *
+;;;     gtk_widget_pop_composite_child                     * deprecated *
+;;;     gtk_widget_push_composite_child                    * deprecated *
 ;;;     gtk_widget_queue_draw_area
 ;;;     gtk_widget_queue_draw_region
-;;;     gtk_widget_set_double_buffered
+;;;     gtk_widget_set_app_paintable
+;;;     gtk_widget_set_double_buffered                     -> Accessor
 ;;;     gtk_widget_set_redraw_on_allocate
 ;;;     gtk_widget_set_composite_name
 ;;;     gtk_widget_mnemonic_activate
@@ -142,7 +154,7 @@
 ;;;     gtk_widget_class_install_style_property_parser
 ;;;     gtk_widget_class_find_style_property
 ;;;     gtk_widget_class_list_style_properties
-;;;     gtk_widget_region_intersect
+;;;     gtk_widget_region_intersect                        * deprecated *
 ;;;     gtk_widget_send_expose
 ;;;     gtk_widget_send_focus_change
 ;;;     gtk_widget_style_get
@@ -160,7 +172,7 @@
 ;;;     gtk_widget_get_settings
 ;;;     gtk_widget_get_clipboard
 ;;;     gtk_widget_get_display
-;;;     gtk_widget_get_root_window
+;;;     gtk_widget_get_root_window                         * deprecated *
 ;;;     gtk_widget_get_screen
 ;;;     gtk_widget_has_screen
 ;;;     gtk_widget_get_size_request
@@ -194,6 +206,14 @@
 ;;;     gtk_widget_get_allocation
 ;;;     gtk_widget_set_allocation
 ;;;     gtk_widget_get_allocated_baseline
+;;;     gtk_widget_get_clip
+;;;     gtk_widget_set_clip
+;;;     gtk_widget_get_app_app_paintable                   -> Accessor
+;;;     gtk_widget_get_can_default                         -> Accessor
+;;;     gtk_widget_set_can_default                         -> Accessor
+;;;     gtk_widget_get_can_focus                           -> Accessor
+;;;     gtk_widget_set_can_focus                           -> Accessor
+;;;     gtk_widget_get_double_buffered                     -> Accessor
 ;;;     gtk_widget_get_has_window
 ;;;     gtk_widget_set_has_window
 ;;;     gtk_widget_get_sensitive
@@ -212,7 +232,7 @@
 ;;;     gtk_widget_has_rc_style                            * deprecated *
 ;;;     gtk_widget_is_drawable
 ;;;     gtk_widget_is_toplevel
-;;;     gtk_widget_set_window                    -> (setf gtk-widget-window)
+;;;     gtk_widget_set_window                              -> Accessor
 ;;;     gtk_widget_set_receives_default
 ;;;     gtk_widget_get_receives_default
 ;;;     gtk_widget_set_support_multidevice
@@ -225,19 +245,16 @@
 ;;;     gtk_widget_device_is_shadowed
 ;;;     gtk_widget_get_modifier_mask
 ;;;     gtk_widget_insert_action_group
-;;;     gtk_widget_get_opacity
-;;;     gtk_widget_set_opacity
+;;;     gtk_widget_get_opacity                             -> Accessor
+;;;     gtk_widget_set_opacity                             -> Accessor
+;;;     gtk_widget_list_action_prefixes
+;;;     gtk_widget_get_action_group
 ;;;     gtk_widget_get_path
 ;;;     gtk_widget_get_style_context
 ;;;     gtk_widget_reset_style
-;;;
 ;;;     gtk_requisition_new
 ;;;     gtk_requisition_copy
 ;;;     gtk_requisition_free
-;;;
-;;;     GtkSizeRequestMode
-;;;     GtkRequestedSize
-;;;
 ;;;     gtk_widget_get_preferred_height
 ;;;     gtk_widget_get_preferred_width
 ;;;     gtk_widget_get_preferred_height_for_width
@@ -246,34 +263,33 @@
 ;;;     gtk_widget_get_request_mode
 ;;;     gtk_widget_get_preferred_size
 ;;;     gtk_distribute_natural_allocation
-;;;
-;;;     GtkAlign
-;;;
-;;;     gtk_widget_get_halign
-;;;     gtk_widget_set_halign
-;;;     gtk_widget_get_valign
+;;;     gtk_widget_get_halign                              -> Accessor
+;;;     gtk_widget_set_halign                              -> Accessor
+;;;     gtk_widget_get_valign                              -> Accessor
 ;;;     gtk_widget_get_valign_with_baseline
-;;;     gtk_widget_set_valign
-;;;     gtk_widget_get_margin_left
-;;;     gtk_widget_set_margin_left
-;;;     gtk_widget_get_margin_right
-;;;     gtk_widget_set_margin_right
-;;;     gtk_widget_get_margin_top
-;;;     gtk_widget_set_margin_top
-;;;     gtk_widget_get_margin_bottom
-;;;     gtk_widget_set_margin_bottom
-;;;
-;;;     gtk_widget_get_hexpand
-;;;     gtk_widget_set_hexpand
-;;;     gtk_widget_get_hexpand_set
-;;;     gtk_widget_set_hexpand_set
-;;;     gtk_widget_get_vexpand
-;;;     gtk_widget_set_vexpand
-;;;     gtk_widget_get_vexpand_set
-;;;     gtk_widget_set_vexpand_set
+;;;     gtk_widget_set_valign                              -> Accessor
+;;;     gtk_widget_get_margin_left                         -> Accessor
+;;;     gtk_widget_set_margin_left                         -> Accessor
+;;;     gtk_widget_get_margin_right                        -> Accessor
+;;;     gtk_widget_set_margin_right                        -> Accessor
+;;;     gtk_widget_get_margin_start                        -> Accessor
+;;;     gtk_widget_set_margin_start                        -> Accessor
+;;;     gtk_widget_get_margin_end                          -> Accessor
+;;;     gtk_widget_set_margin_end                          -> Accessor
+;;;     gtk_widget_get_margin_top                          -> Accessor
+;;;     gtk_widget_set_margin_top                          -> Accessor
+;;;     gtk_widget_get_margin_bottom                       -> Accessor
+;;;     gtk_widget_set_margin_bottom                       -> Accessor
+;;;     gtk_widget_get_hexpand                             -> Accessor
+;;;     gtk_widget_set_hexpand                             -> Accessor
+;;;     gtk_widget_get_hexpand_set                         -> Accessor
+;;;     gtk_widget_set_hexpand_set                         -> Accessor
+;;;     gtk_widget_get_vexpand                             -> Accessor
+;;;     gtk_widget_set_vexpand                             -> Accessor
+;;;     gtk_widget_get_vexpand_set                         -> Accessor
+;;;     gtk_widget_set_vexpand_set                         -> Accessor
 ;;;     gtk_widget_queue_compute_expand
 ;;;     gtk_widget_compute_expand
-;;;
 ;;;     gtk_widget_init_template
 ;;;     gtk_widget_class_set_template
 ;;;     gtk_widget_class_set_template_from_resource
@@ -286,12 +302,6 @@
 ;;;     gtk_widget_class_bind_template_callback
 ;;;     gtk_widget_class_bind_template_callback_full
 ;;;     gtk_widget_class_set_connect_func
-;;;
-;;;     GtkRequisition
-;;;     GtkAllocation
-;;;     GtkWidget
-;;;     GtkWidgetAuxInfo
-;;;     GtkWidgetHelpType
 ;;;
 ;;; ----------------------------------------------------------------------------
 
@@ -466,12 +476,20 @@
    (margin-bottom
     gtk-widget-margin-bottom
     "margin-bottom" "gint" t t)
+   #+gtk-3-12
+   (margin-end
+    gtk-widget-margin-end
+    "margin-end" "gint" t t)
    (margin-left
     gtk-widget-margin-left
     "margin-left" "gint" t t)
    (margin-right
     gtk-widget-margin-right
     "margin-right" "gint" t t)
+   #+gtk-3-12
+   (margin-start
+    gtk-widget-margin-start
+    "margin-start" "gint" t t)
    (margin-top
     gtk-widget-margin-top
     "margin-top" "gint" t t)
@@ -682,12 +700,12 @@
     inside a container that supports baselines and has a natural \"row\" that
     it aligns to the baseline, or a baseline assigned to it by the grandparent.
 
-    Baseline alignment support for a widget is done by the 
+    Baseline alignment support for a widget is done by the
     @code{GtkWidgetClass.get_preferred_height_and_baseline_for_width()} virtual
     function. It allows you to report a baseline in combination with the minimum
     and natural height. If there is no baseline you can return -1 to indicate
     this. The default implementation of this virtual function calls into the
-    @code{GtkWidgetClass.get_preferred_height()} and 
+    @code{GtkWidgetClass.get_preferred_height()} and
     @code{GtkWidgetClass.get_preferred_height_for_width()}, so if baselines are
     not supported it doesn’t need to be implemented.
 
@@ -792,7 +810,7 @@
     which might be referenced by other widgets declared as children of the
     <template> tag.
 
-    @b{Example 71:} A @class{btk-builder} Template Definition
+    @b{Example:} A @class{btk-builder} Template Definition
       @begin{pre}
 <interface>
   <template class=\"FooWidget\" parent=\"GtkBox\">
@@ -824,30 +842,46 @@
 
     @subheading{The \"focus-line-pattern\" style property}
       @code{\"focus-line-pattern\"} of type @code{:string} (Read) @br{}
+      @b{Warning:} The @code{\"focus-line-pattern\"} style property has been
+      deprecated since version 3.14 and should not be used in newly-written
+      code. Use the outline-style CSS property instead. @br{}
       Dash pattern used to draw the focus indicator. @br{}
       Default value: \"\001\001\"
 
     @subheading{The \"focus-line-width\" style property}
       @code{\"focus-line-width\"} of type @code{:int} (Read) @br{}
+      @b{Warning:} The @code{\"focus-line-width\"} style property has been
+      deprecated since version 3.14 and should not be used in newly-written
+      code. Use the outline-width CSS property instead. @br{}
       Width, in pixels, of the focus indicator line. @br{}
       Allowed values: >= 0 @br{}
       Default value: 1
 
     @subheading{The \"focus-padding\" style property}
       @code{\"focus-padding\"} of type @code{:int} (Read) @br{}
+      @b{Warning:} The @code{\"focus-padding\"} style property has been
+      deprecated since version 3.14 and should not be used in newly-written
+      code. Use the padding CSS property instead. @br{}
       Width, in pixels, between focus indicator and the widget 'box'. @br{}
       Allowed values: >= 0 @br{}
       Default value: 1
 
     @subheading{The \"interior-focus\" style property}
       @code{\"interior-focus\"} of type @code{:boolean} (Read) @br{}
+      @b{Warning:} The @code{\"interior-focus\"} style property has been
+      deprecated since version 3.14 and should not be used in newly-written
+      code. Use the outline CSS property instead. @br{}
       Whether to draw the focus indicator inside widgets. @br{}
       Default value: @em{true}
 
     @subheading{The \"link-color\" style property}
       @code{\"link-color\"} of type @class{gdk-color} (Read)@br{}
+      @b{Warning:} The @code{\"link-color\"} style property has been deprecated
+      since version 3.12 and should not be used in newly-written code. Links
+      now use a separate state flags for selecting different theming, this
+      style property is ignored. @br{}
       The @code{\"link-color\"} style property defines the color of unvisited
-      links.@br{}
+      links. @br{}
       Since 2.10
 
     @subheading{The \"scroll-arrow-hlength\" style property}
@@ -872,25 +906,25 @@
       mixed right-to-left and left-to-right text.
 
     @subheading{The \"separator-height\" style property}
-      @code{\"separator-height\"} of type @code{:int} (Read) @br{}
-      The @code{\"separator-height\"} style property defines the height of
-      separators. This property only takes effect if @code{\"wide-separators\"}
-      is @em{true}. @br{}
+      @code{separator-height} of type @code{:int} (Read) @br{}
+      The @code{separator-height} style property defines the height of
+      separators. This property only takes effect if the @code{wide-separators}
+      style property is @em{true}. @br{}
       Allowed values: >= 0 @br{}
       Default value: 0 @br{}
       Since 2.10
 
     @subheading{The \"separator-width\" style property}
-      @code{\"separator-width\"} of type @code{:int} (Read) @br{}
-      The @code{\"separator-width\"} style property defines the width of
-      separators. This property only takes effect if @code{\"wide-separators\"}
-      is @em{true}. @br{}
+      @code{separator-width} of type @code{:int} (Read) @br{}
+      The @code{separator-width} style property defines the width of
+      separators. This property only takes effect if the @code{wide-separators}
+      style property is @em{true}. @br{}
       Allowed values: >= 0 @br{}
       Default value: 0 @br{}
       Since 2.10
 
     @subheading{The \"text-handle-height\" style property}
-      @code{\"text-handle-height\"} of type @code{:int} (Read) @br{}
+      @code{ \"text-handle-height\"} of type @code{:int} (Read) @br{}
       Height of text selection handles. @br{}
       Allowed values: >= 1 @br{}
       Default value: 20
@@ -903,6 +937,10 @@
 
     @subheading{The \"visited-link-color\" style property}
       @code{\"visited-link-color\"} of type @class{gdk-color} (Read) @br{}
+      @b{Warning:} The @code{\"visited-link-color\"} style property has been
+      deprecated since version 3.12 and should not be used in newly-written
+      code. Links now use a separate state flags for selecting different
+      theming, this style property is ignored. @br{}
       The @code{\"visited-link-color\"} style property defines the color of
       visited links. @br{}
       Since 2.10
@@ -1493,7 +1531,7 @@
       The \"hide\" signal is emitted when @arg{widget} is hidden, for example
       with the function @fun{gtk-widget-hide}.
       @begin[code]{table}
-        @enty[widget]{The object which received the signal.}
+        @entry[widget]{The object which received the signal.}
       @end{table}
     @subheading{The \"hierarchy-changed\" signal}
       @begin{pre}
@@ -1707,7 +1745,7 @@
      @begin{pre}
  lambda (widget x y keyboard-mode tooltip)   : Run Last
      @end{pre}
-     Emitted when the @code{\"has-tooltip\"} property is @em{true} and the
+     Emitted when the @code{has-tooltip} property is @em{true} and the
      @code{\"gtk-tooltip-timeout\"} property of the @class{gtk-settings} class
      has expired with the cursor hovering \"above\" widget; or emitted when
      widget got focus in keyboard mode. Using the given coordinates, the signal
@@ -1949,7 +1987,7 @@
  lambda (widget)   : Run Last
       @end{pre}
       The \"unrealize\" signal is emitted when the @class{gdk-window} associated
-      with widget is destroyed, which means that the function 
+      with widget is destroyed, which means that the function
       @fun{gtk-widget-unrealize} has been called or the widget has been unmapped
       (that is, it is going to be hidden).
       @begin[code]{table}
@@ -1959,6 +1997,12 @@
       @begin{pre}
  lambda (widget event)   : Run Last
       @end{pre}
+      @b{Warning:} The \"visibility-notify-event\" signal has been deprecated
+      since version 3.12 and should not be used in newly-written code. Modern
+      composited windowing systems with pervasive transparency make it
+      impossible to track the visibility of a window reliably, so this signal
+      can not be guaranteed to provide useful information.
+
       The \"visibility-notify-event\" will be emitted when the widget's window
       is obscured or unobscured. To receive this signal the @class{gdk-window}
       associated to the widget needs to enable the
@@ -2004,8 +2048,10 @@
   @see-slot{gtk-widget-is-focus}
   @see-slot{gtk-widget-margin}
   @see-slot{gtk-widget-margin-bottom}
+  @see-slot{gtk-widget-margin-end}
   @see-slot{gtk-widget-margin-left}
   @see-slot{gtk-widget-margin-right}
+  @see-slot{gtk-widget-margin-start}
   @see-slot{gtk-widget-margin-top}
   @see-slot{gtk-widget-name}
   @see-slot{gtk-widget-no-show-all}
@@ -2101,7 +2147,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "app-paintable" 'gtk-widget) 't)
- "The @code{\"app-paintable\"} property of type @code{:boolean}
+ "The @code{app-paintable} property of type @code{:boolean}
   (Read / Write) @br{}
   Whether the application will paint directly on the widget. @br{}
   Default value: @code{nil}")
@@ -2143,7 +2189,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "can-default" 'gtk-widget) 't)
- "The @code{\"can-default\"} property of type @code{:boolean}
+ "The @code{can-default} property of type @code{:boolean}
   (Read / Write) @br{}
   Whether the widget can be the default widget. @br{}
   Default value: @code{nil}")
@@ -2178,7 +2224,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "can-focus" 'gtk-widget) 't)
- "The @code{\"can-focus\"} property of type @code{:boolean}
+ "The @code{can-focus} property of type @code{:boolean}
   (Read / Write) @br{}
   Whether the widget can accept the input focus. @br{}
   Default value: @code{nil}")
@@ -2212,7 +2258,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "composite-child"
                                                'gtk-widget) 't)
- "The @code{\"composite-child\"} property of type @code{:boolean} (Read) @br{}
+ "The @code{composite-child} property of type @code{:boolean} (Read) @br{}
   Whether the widget is part of a composite widget. @br{}
   Default value: @code{nil}")
 
@@ -2238,8 +2284,11 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "double-buffered"
                                                'gtk-widget) 't)
- "The @code{\"double-buffered\"} property of type @code{:boolean}
+ "The @code{double-buffered} property of type @code{:boolean}
   (Read / Write) @br{}
+  @b{Warning:} The @code{double-buffered} property has been deprecated since
+  version 3.14 and should not be used in newly-written code. Widgets should not
+  use this property. @br{}
   Whether the widget is double buffered. @br{}
   Default value: @em{true} @br{}
   Since 2.18")
@@ -2274,11 +2323,23 @@
   In very simple terms, double buffered widgets do not flicker, so you would
   only use this function to turn off double buffering if you had special needs
   and really knew what you were doing.
-  @begin[Note]{dictionary}
-    If you turn off double-buffering, you have to handle expose events,
-    since even the clearing to the background color or pixmap will not happen
-    automatically as it is done in in the functions
-    @fun{gdk-window-begin-paint-region} function.
+
+  Note: If you turn off double-buffering, you have to handle expose events,
+  since even the clearing to the background color or pixmap will not happen
+  automatically as it is done in in the functions
+  @fun{gdk-window-begin-paint-region} function.
+
+  In 3.10 GTK and GDK have been restructured for translucent drawing. Since then
+  expose events for @code{double-buffered} widgets are culled into a single
+  event to the toplevel GDK window. If you now unset double buffering, you will
+  cause a separate rendering pass for every widget. This will likely cause
+  rendering problems - in particular related to stacking - and usually
+  increases rendering times significantly.
+  @begin[Warning]{dictionary}
+    The @code{double-buffered} property has been deprecated since version 3.14
+    and should not be used in newly-written code. This function does not work
+    under non-X11 backends or with non-native windows. Widgets should not use
+    this property.
   @end{dictionary}
 
   Since 2.18
@@ -2290,7 +2351,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "events" 'gtk-widget) 't)
- "The @code{\"events\"} property of type @symbol{gdk-event-mask}
+ "The @code{events} property of type @symbol{gdk-event-mask}
   (Read / Write) @br{}
   The event mask that decides what kind of @class{gdk-event} this widget
   gets. @br{}
@@ -2333,7 +2394,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "expand" 'gtk-widget) 't)
- "The @code{\"expand\"} property of type @code{:boolean} (Read / Write) @br{}
+ "The @code{expand} property of type @code{:boolean} (Read / Write) @br{}
   Whether to expand in both directions. Setting this sets both properties
   @code{\"hexpand\"} and @code{\"vexpand\"}. @br{}
   Default value: @code{nil} @br{}
@@ -2357,7 +2418,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "halign" 'gtk-widget) 't)
- "The @code{\"halign\"} property of type @symbol{gtk-align} (Read / Write) @br{}
+ "The @code{halign} property of type @symbol{gtk-align} (Read / Write) @br{}
   How to distribute horizontal space if widget gets extra space. @br{}
   Default value: @code{:fill} @br{}
   Since 3.0")
@@ -2387,7 +2448,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "has-default" 'gtk-widget) 't)
- "The @code{\"has-default\"} property of type @code{:boolean}
+ "The @code{has-default} property of type @code{:boolean}
   (Read / Write) @br{}
   Whether the widget is the default widget. @br{}
   Default value: @code{nil}")
@@ -2418,7 +2479,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "has-focus" 'gtk-widget) 't)
- "The @code{\"has-focus\"} property of type @code{:boolean} (Read / Write) @br{}
+ "The @code{has-focus} property of type @code{:boolean} (Read / Write) @br{}
   Whether the widget has the input focus. @br{}
   Default value: @code{nil}")
 
@@ -2448,7 +2509,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "has-tooltip" 'gtk-widget) 't)
- "The @code{\"has-tooltip\"} property of type @code{:boolean}
+ "The @code{has-tooltip} property of type @code{:boolean}
   (Read / Write) @br{}
   Enables or disables the emission of the \"query-tooltip\" signal on a widget.
   A value of @em{true} indicates that the widget can have a tooltip, in this
@@ -2488,7 +2549,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "height-request" 'gtk-widget) 't)
- "The @code{\"height-request\"} property of type @code{:int}
+ "The @code{height-request} property of type @code{:int}
   (Read / Write) @br{}
   Override for height request of the widget, or -1 if natural request
   should be used. @br{}
@@ -2514,7 +2575,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "hexpand" 'gtk-widget) 't)
- "The @code{\"hexpand\"} property of type @code{:boolean} (Read / Write) @br{}
+ "The @code{hexpand} property of type @code{:boolean} (Read / Write) @br{}
   Whether to expand horizontally.
   See the function @fun{gtk-widget-set-hexpand}. @br{}
   Default value: @code{nil} @br{}
@@ -2579,7 +2640,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "hexpand-set" 'gtk-widget) 't)
- "The @code{\"hexpand-set\"} property of type @code{:boolean}
+ "The @code{hexpand-set} property of type @code{:boolean}
   (Read / Write) @br{}
   Whether to use the @code{\"hexpand\"} property. See the generic function
   @fun{gtk-widget-hexpand-set}. @br{}
@@ -2622,7 +2683,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "is-focus" 'gtk-widget) 't)
- "The @code{\"is-focus\"} property of type @code{:boolean} (Read / Write) @br{}
+ "The @code{is-focus} property of type @code{:boolean} (Read / Write) @br{}
   Whether the widget is the focus widget within the toplevel. @br{}
   Default value: @code{nil}")
 
@@ -2645,7 +2706,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "margin" 'gtk-widget) 't)
- "The @code{\"margin\"} property of type @code{:int} (Read / Write) @br{}
+ "The @code{margin} property of type @code{:int} (Read / Write) @br{}
   Sets all four sides' margin at once. If read, returns max margin on any
   side. @br{}
   Allowed values: [0,32767] @br{}
@@ -2655,15 +2716,15 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-widget-margin atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-widget-margin 'function)
- "@version{2014-2-8}
+ "@version{2016-1-12}
   @argument[object]{a @class{gtk-widget} object}
   @begin{short}
     Accessor of the slot @slot[gtk-widget]{margin} of the @class{gtk-widget}
     class.
   @end{short}
   @see-class{gtk-widget}
-  @see-function{gtk-widget-margin-left}
-  @see-function{gtk-widget-margin-right}
+  @see-function{gtk-widget-margin-start}
+  @see-function{gtk-widget-margin-end}
   @see-function{gtk-widget-margin-top}
   @see-function{gtk-widget-margin-bottom}")
 
@@ -2671,7 +2732,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "margin-bottom" 'gtk-widget) 't)
- "The @code{\"margin-bottom\"} property of type @code{:int} (Read / Write) @br{}
+ "The @code{margin-bottom} property of type @code{:int} (Read / Write) @br{}
   Margin on bottom side of widget. This property adds margin outside of the
   widget's normal size request, the margin will be added in addition to the size
   from the function @fun{gtk-widget-size-request} for example. @br{}
@@ -2682,7 +2743,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-widget-margin-bottom atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-widget-margin-bottom 'function)
- "@version{2014-2-8}
+ "@version{2016-1-12}
   @argument[object]{a @class{gtk-widget} object}
   @syntax[]{(gtk-widget-margin-bottom object) => margin}
   @syntax[]{(setf (gtk-widget-margin-bottom object) margin)}
@@ -2701,11 +2762,49 @@
   @see-class{gtk-widget}
   @see-function{gtk-widget-margin}")
 
+;;; --- gtk-widget-margin-end --------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "margin-end" 'gtk-widget) 't)
+ "The @code{margin-end} property of type @code{:int} (Read / Write) @br{}
+  Margin on end of widget, horizontally. This property supports left-to-right
+  text directions. This property adds margin outside of the widget's normal
+  size request, the margin will be added in addition to the size from
+  @fun{gkt-widget-size-request} for example. @br{}
+  Allowed values: [0,32767] @br{}
+  Default value: 0 @br{}
+  Since 3.12")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-widget-margin-end atdoc:*function-name-alias*) "Accessor"
+      (documentation 'gtk-widget-margin-end 'function)
+ "@version{2016-1-11}
+  @argument[object]{a @class{gtk-widget} object}
+  @syntax[]{(gtk-widget-margin-end object) => margin}
+  @syntax[]{(setf (gtk-widget-margin-end object) margin)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-widget]{margin-end} of the
+    @class{gtk-widget} class.
+  @end{short}
+
+  The generic function @sym{gtk-widget-margin-end} gets the value of the
+  @slot[gtk-widget]{margin-end} property.
+
+  The generic function @sym{(setf gtk-widget-margin-end)} sets the end margin
+  of the widget.
+
+  Since 3.12
+  @see-class{gtk-widget}
+  @see-function{gtk-widget-margin}")
+
 ;;; --- gtk-widget-margin-left -------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "margin-left" 'gtk-widget) 't)
- "The @code{\"margin-left\"} property of type @code{:int} (Read / Write) @br{}
+ "The @code{margin-left} property of type @code{:int} (Read / Write) @br{}
+  @b{Warning:} The @code{margin-left} property has been deprecated since
+  version 3.12 and should not be used in newly-written code. Use the
+  @code{margin-start} property instead. @br{}
   Margin on left side of widget. This property adds margin outside of the
   widget's normal size request, the margin will be added in addition to the size
   from the function @fun{gtk-widget-size-request} for example. @br{}
@@ -2716,7 +2815,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-widget-margin-left atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-widget-margin-left 'function)
- "@version{2014-2-8}
+ "@version{2016-1-12}
   @argument[object]{a @class{gtk-widget} object}
   @syntax[]{(gtk-widget-margin-left object) => margin}
   @syntax[]{(setf (gtk-widget-margin-left object) margin)}
@@ -2730,16 +2829,25 @@
 
   The generic function @sym{(setf gtk-widget-margin-left)} sets the left margin
   of the widget. See the @slot[gtk-widget]{margin-left} property.
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-widget-margin-left} has been deprecated since version
+    3.12 and should not be used in newly-written code. Use the function
+    @fun{gtk-widget-margin-start} instead.
+  @end{dictionary}
 
   Since 3.0
   @see-class{gtk-widget}
-  @see-function{gtk-widget-margin}")
+  @see-function{gtk-widget-margin}
+  @see-function{gtk-widget-margin-start}")
 
 ;;; --- gtk-widget-margin-right ------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "margin-right" 'gtk-widget) 't)
- "The @code{\"margin-right\"} property of type @code{:int} (Read / Write) @br{}
+ "The @code{margin-right} property of type @code{:int} (Read / Write) @br{}
+  @b{Warning:} The @code{margin-right} property has been deprecated since
+  version 3.12 and should not be used in newly-written code. Use the
+  @code{margin-end} property instead. @br{}
   Margin on right side of widget. This property adds margin outside of the
   widget's normal size request, the margin will be added in addition to the
   size from the function @fun{gtk-widget-size-request} for example. @br{}
@@ -2750,7 +2858,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-widget-margin-right atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-widget-margin-right 'function)
- "@version{2014-2-8}
+ "@version{2016-1-12}
   @argument[object]{a @class{gtk-widget} object}
   @syntax[]{(gtk-widget-margin-right object) => margin}
   @syntax[]{(setf (gtk-widget-margin-right object) margin)}
@@ -2764,8 +2872,49 @@
 
   The generic function @sym{(setf gtk-widget-margin-right)} sets the right
   margin of the widget. See the @slot[gtk-widget]{margin-right} property.
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-widget-margin-right} has been deprecated since version
+    3.12 and should not be used in newly-written code. Use the function
+    @fun{gtk-widget-margin-end} instead.
+  @end{dictionary}
 
   Since 3.0
+  @see-class{gtk-widget}
+  @see-function{gtk-widget-margin}
+  @see-function{gtk-widget-end}")
+
+;;; --- gtk-widget-margin-start ------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "margin-start" 'gtk-widget) 't)
+ "The @code{margin-start} property of type @code{:int} (Read / Write) @br{}
+  Margin on start of the widget, horizontally. This property supports
+  left-to-right and right-to-left text directions. This property adds margin
+  outside of the widget's normal size request, the margin will be added in
+  addition to the size from @fun{gtk-widget-set-size-request} for example. @br{}
+  Allowed values: [0,32767] @br{}
+  Default value: 0 @br{}
+  Since 3.12")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-widget-margin-start atdoc:*function-name-alias*) "Accessor"
+      (documentation 'gtk-widget-margin-start 'function)
+ "@version{2016-1-12}
+  @argument[object]{a @class{gtk-widget} object}
+  @syntax[]{(gtk-widget-margin-start object) => margin}
+  @syntax[]{(setf (gtk-widget-margin-start object) margin)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-widget]{margin-start} of the
+    @class{gtk-widget} class.
+  @end{short}
+
+  The generic function @sym{gtk-widget-margin-start} returns the start margin
+  of the widget.
+
+  The generic function @sym{(setf gtk-widget-margin-start)} sets the start
+  margin of the widget. See the @slot[gtk-widget]{margin-start} property.
+
+  Since 3.12
   @see-class{gtk-widget}
   @see-function{gtk-widget-margin}")
 
@@ -2773,7 +2922,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "margin-top" 'gtk-widget) 't)
- "The @code{\"margin-top\"} property of type @code{:int} (Read / Write) @br{}
+ "The @code{margin-top} property of type @code{:int} (Read / Write) @br{}
   Margin on top side of widget. This property adds margin outside of the
   widget's normal size request, the margin will be added in addition to the
   size from the function @fun{gtk-widget-size-request} for example. @br{}
@@ -2807,7 +2956,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "name" 'gtk-widget) 't)
- "The @code{\"name\"} property of type @code{:string} (Read / Write) @br{}
+ "The @code{name} property of type @code{:string} (Read / Write) @br{}
   The name of the widget. @br{}
   Default value: @code{nil}")
 
@@ -2843,7 +2992,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "no-show-all" 'gtk-widget) 't)
- "The @code{\"no-show-all\"} property of type @code{:boolean}
+ "The @code{no-show-all} property of type @code{:boolean}
   (Read / Write) @br{}
   Whether the function @fun{gtk-widget-show-all} should not affect this
   widget. @br{}
@@ -2881,7 +3030,7 @@
 
 #+(and gtk-3-8 cl-cffi-gtk-documentation)
 (setf (documentation (atdoc:get-slot-from-name "opacity" 'gtk-widget) 't)
- "The @code{\"opacity\"} property of type @code{:double} (Read / Write) @br{}
+ "The @code{opacity} property of type @code{:double} (Read / Write) @br{}
   The requested opacity of the widget. See the generic function
   @fun{gtk-widget-opacity} for more details about window opacity. Before
   version 3.8 this was only available in @class{gtk-window}. @br{}
@@ -2931,7 +3080,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "parent" 'gtk-widget) 't)
- "The @code{\"parent\"} property of type @class{gtk-container}
+ "The @code{parent} property of type @class{gtk-container}
   (Read / Write) @br{}
   The parent widget of this widget. Must be a @class{gtk-container} widget.")
 
@@ -2966,7 +3115,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "receives-default"
                                                'gtk-widget) 't)
- "The @code{\"receives-default\"} property of type @code{:boolean}
+ "The @code{receives-default} property of type @code{:boolean}
   (Read / Write) @br{}
   If @em{true}, the widget will receive the default action when it is
   focused. @br{}
@@ -3002,16 +3151,16 @@
 
 ;;; --- gtk-widget-scale-factor ------------------------------------------------
 
-#+cl-cffi-gtk-documentation
+#+(and gtk-3-10 cl-cffi-gtk-documentation)
 (setf (documentation (atdoc:get-slot-from-name "scale-factor" 'gtk-widget) 't)
- "The @code{\"scale-factor\"} property of type @code{:int} (Read) @br{}
+ "The @code{scale-factor} property of type @code{:int} (Read) @br{}
   The scale factor of the widget. See @fun{gtk-widget-scale-factor} for more
   details about widget scaling. @br{}
   Allowed values: >= 1 @br{}
   Default value: 1 @br{}
   Since 3.10")
 
-#+cl-cffi-gtk-documentation
+#+(and gtk-3-10 cl-cffi-gtk-documentation)
 (setf (gethash 'gtk-widget-scale-factor atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-widget-scale-factor 'function)
@@ -3033,7 +3182,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "sensitive" 'gtk-widget) 't)
- "The @code{\"sensitive\"} property of type @code{:boolean} (Read / Write) @br{}
+ "The @code{sensitive} property of type @code{:boolean} (Read / Write) @br{}
   Whether the widget responds to input. @br{}
   Default value: @em{true}")
 
@@ -3068,7 +3217,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "style" 'gtk-widget) 't)
- "The @code{\"style\"} property of type @class{gtk-style} (Read / Write) @br{}
+ "The @code{style} property of type @class{gtk-style} (Read / Write) @br{}
   The style of the widget, which contains information about how it will look
   (colors etc).")
 
@@ -3086,7 +3235,6 @@
 
   Used to access the @code{GtkStyle} for a widget. Since GTK+ 3 this function
   does nothing, the passed in style is ignored.
-
   @begin[Warning]{dictionary}
     @sym{gtk-widget-style} has been deprecated since version 3.0 and should not
     be used in newly-written code. Use @class{gtk-style-context} instead.
@@ -3098,13 +3246,13 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "tooltip-markup" 'gtk-widget) 't)
- "The @code{\"tooltip-markup\"} property of type @code{:string}
+ "The @code{tooltip-markup} property of type @code{:string}
   (Read / Write) @br{}
   Sets the text of tooltip to be the given string, which is marked up with the
   Pango text markup language. Also see the function
   @fun{gtk-tooltip-set-markup}. This is a convenience property which will take
   care of getting the tooltip shown if the given string is not @code{nil}.
-  The @slot[gtk-widget]{has-tooltip} property will automatically be set to
+  The @code{has-tooltip} property will automatically be set to
   @em{true} and there will be taken care of the \"query-tooltip\" signal in the
   default signal handler. @br{}
   Default value: @code{nil} @br{}
@@ -3144,7 +3292,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "tooltip-text" 'gtk-widget) 't)
- "The @code{\"tooltip-text\"} property of type @code{:string}
+ "The @code{tooltip-text} property of type @code{:string}
   (Read / Write) @br{}
   Sets the text of tooltip to be the given string. Also see the function
   @fun{gtk-tooltip-set-text}. This is a convenience property which will take
@@ -3186,7 +3334,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "valign" 'gtk-widget) 't)
- "The @code{\"valign\"} property of type @symbol{gtk-align} (Read / Write) @br{}
+ "The @code{valign} property of type @symbol{gtk-align} (Read / Write) @br{}
   How to distribute vertical space if widget gets extra space. @br{}
   Default value: @code{:fill} @br{}
   Since 3.0")
@@ -3216,7 +3364,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "vexpand" 'gtk-widget) 't)
- "The @code{\"vexpand\"} property of type @code{:boolean} (Read / Write) @br{}
+ "The @code{vexpand} property of type @code{:boolean} (Read / Write) @br{}
   Whether to expand vertically. See the function @fun{gtk-widget-set-vexpand}.
   @br{}
   Default value: @code{nil} @br{}
@@ -3248,7 +3396,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "vexpand-set" 'gtk-widget) 't)
- "The @code{\"vexpand-set\"} property of type @code{:boolean}
+ "The @code{vexpand-set} property of type @code{:boolean}
   (Read / Write) @br{}
   Whether to use the @code{\"vexpand\"} property.
   See the function @fun{gtk-widget-get-vexpand-set}. @br{}
@@ -3283,7 +3431,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "visible" 'gtk-widget) 't)
- "The @code{\"visible\"} property of type @code{:boolean} (Read / Write) @br{}
+ "The @code{visible} property of type @code{:boolean} (Read / Write) @br{}
   Whether the widget is visible. @br{}
   Default value: @code{nil}")
 
@@ -3319,7 +3467,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "width-request" 'gtk-widget) 't)
- "The @code{\"width-request\"} property of type @code{:int} (Read / Write) @br{}
+ "The @code{width-request} property of type @code{:int} (Read / Write) @br{}
   Override for width request of the widget, or -1 if natural request
   should be used. @br{}
   Allowed values: >= -1 @br{}
@@ -3343,7 +3491,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "window" 'gtk-widget) 't)
- "The @code{\"window\"} property of type @class{gdk-window} (Read) @br{}
+ "The @code{window} property of type @class{gdk-window} (Read) @br{}
   The widget's window if it is realized, @code{nil} otherwise. @br{}
   Since 2.14")
 
@@ -4307,13 +4455,18 @@
 
 (defcfun ("gtk_widget_reparent" gtk-widget-reparent) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-11-18}
+ "@version{2016-1-12}
   @argument[widget]{a @class{gtk-widget} object}
   @argument[new-parent]{a @class{gtk-container} to move the widget into}
   @begin{short}
     Moves a widget from one @class{gtk-container} to another, handling reference
     count issues to avoid destroying the widget.
   @end{short}
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-widget-reparent} has been deprecated since version
+    3.14 and should not be used in newly-written code. Use the functions
+    @fun{gtk-container-remove} and @fun{gtk-container-add}.
+  @end{dictionary}
   @see-class{gtk-widget}
   @see-class{gtk-container}
   @see-function{gtk-widget-unparent}"
@@ -4416,16 +4569,17 @@
  "@version{2013-11-18}
   @argument[widget]{a @class{gtk-widget} object}
   @argument[state]{new state of type @symbol{gtk-state-type} for @arg{widget}}
-  @subheading{Warning}
   @begin{short}
+    This function is for use in widget implementations. Sets the state of a
+    widget, insensitive, prelighted, etc.
+  @end{short}
+  Usually you should set the state using wrapper functions such as the function
+  @fun{gtk-widget-sensitive}.
+  @begin[Warning]{dictionary}
     The function @sym{gtk-widget-set-state} is deprecated and should not be used
     in newly-written code. Use the function @fun{gtk-widget-set-state-flags}
     instead.
-  @end{short}
-
-  This function is for use in widget implementations. Sets the state of a
-  widget, insensitive, prelighted, etc. Usually you should set the state
-  using wrapper functions such as the function @fun{gtk-widget-sensitive}.
+  @end{dictionary}
   @see-class{gtk-widget}
   @see-symbol{gtk-state-type}
   @see-function{gtk-widget-set-state-flags}
@@ -4756,11 +4910,6 @@
     @code{x} -- x coordinate, or @code{nil} @br{}
     @code{y} -- y coordinate, or @code{nil}
   @end{return}
-  @subheading{Warning}
-    The function @sym{gtk-widget-get-pointer} has been deprecated since version
-    3.4 and should not be used in newly-written code. Use the function
-    @fun{gdk-window-get-device-position} instead.
-
   @begin{short}
     Obtains the location of the mouse pointer in widget coordinates.
   @end{short}
@@ -4768,6 +4917,11 @@
   @code{widget->window} coordinates for widgets that are not @code{:no-window}
   widgets, and are relative to @code{widget->allocation.x},
   @code{widget->allocation.y} for widgets that are @code{:no-window} widgets.
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-widget-get-pointer} has been deprecated since version
+    3.4 and should not be used in newly-written code. Use the function
+    @fun{gdk-window-get-device-position} instead.
+  @end{dictionary}
   @see-class{gtk-widget}
   @see-function{gdk-window-get-device-position}"
   (with-foreign-objects ((x :int) (y :int))
@@ -4872,16 +5026,16 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-11-22}
   @argument[widget]{a @class{gtk-widget} object}
-  @subheading{Warning}
-    The function @sym{gtk-widget-ensure-style} has been deprecated since
-    version 3.0 and should not be used in newly-written code.
-    Use @class{gtk-style-context} instead.
-
   @short{Ensures that @arg{widget} has a style.}
 
   Not a very useful function; most of the time, if you want the style, the
   widget is realized, and realized widgets are guaranteed to have a style
   already.
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-widget-ensure-style} has been deprecated since
+    version 3.0 and should not be used in newly-written code.
+    Use @class{gtk-style-context} instead.
+  @end{dictionary}
   @see-class{gtk-widget}
   @see-class{gtk-style-context}"
   (widget (g-object gtk-widget)))
@@ -4896,12 +5050,6 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-11-22}
   @argument[widget]{a @class{gtk-widget} object}
-  @subheading{Warning}
-    The function @sym{gtk-widget-reset-rc-styles} has been deprecated since
-    version 3.0 and should not be used in newly-written code. Use
-    @class{gtk-style-context} instead, and the function
-    @fun{gtk-widget-reset-style}.
-
   @begin{short}
     Reset the styles of @arg{widget} and all descendents, so when they are
     looked up again, they get the correct values for the currently loaded RC
@@ -4909,6 +5057,12 @@
   @end{short}
 
   This function is not useful for applications.
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-widget-reset-rc-styles} has been deprecated since
+    version 3.0 and should not be used in newly-written code. Use
+    @class{gtk-style-context} instead, and the function
+    @fun{gtk-widget-reset-style}.
+  @end{dictionary}
   @see-class{gtk-widget}
   @see-class{gtk-style-context}
   @see-function{gtk-widget-reset-style}"
@@ -4928,14 +5082,14 @@
     The default style. This @class{gtk-style} object is owned by GTK+ and
     should not be modified or freed.
   @end{return}
-  @subheading{Warning}
+  @short{Returns the default style used by all widgets initially.}
+  @begin[Warning]{dictionary}
     The function @sym{gtk-widget-get-default-style} has been deprecated since
     version 3.0 and should not be used in newly-written code. Use
     @class{gtk-style-context} instead, and the function
     @fun{gtk-css-provider-get-default} to obtain a @class{gtk-style-provider}
     with the default widget style information.
-
-  @short{Returns the default style used by all widgets initially.}
+  @end{dictionary}
   @see-class{gtk-widget}
   @see-class{gtk-style-context}
   @see-class{gtk-style-provider}
@@ -5123,11 +5277,6 @@
   @argument[path-type]{@code{:name} or @code{:class}, the default value is
     @code{:name}}
   @return{Returns the path string, or @code{nil}}
-  @subheading{Warning}
-    The function @sym{gtk-widget-path} has been deprecated since version 3.0 and
-    should not be used in newly-written code. Use the function
-    @fun{gtk-widget-get-path} instead.
-
   @begin{short}
     Obtains the full path to @arg{widget}.
   @end{short}
@@ -5143,6 +5292,11 @@
   With a value of @code{:class} for the argument @arg{path-type} always
   uses the name of a widget's type, never uses a custom name set with the
   generic function @fun{gtk-widget-name}.
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-widget-path} has been deprecated since version 3.0 and
+    should not be used in newly-written code. Use the function
+    @fun{gtk-widget-get-path} instead.
+  @end{dictionary}
   @see-class{gtk-widget}
   @see-function{gtk-widget-get-path}
   @see-function{gtk-widget-name}"
@@ -5207,6 +5361,11 @@
   @return{The composite name of @arg{widget}, or @code{nil} if @arg{widget} is
     not a composite child.}
   Obtains the composite name of a widget.
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-widget-get-composite-name} has been deprecated since
+    version 3.10 and should not be used in newly-written code. Use the function
+    @fun{gtk-widget-class-set-template}, or don not use this API at all.
+  @end{dictionary}
   @see-class{gtk-widget}
   @see-function{gtk-widget-set-composite-name}"
   (widget (g-object gtk-widget)))
@@ -5220,7 +5379,7 @@
 (defcfun ("gtk_widget_override_background_color"
            gtk-widget-override-background-color) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-11-25}
+ "@version{2016-1-12}
   @argument[widget]{a @class{gtk-widget} object}
   @argument[state]{the state of type @symbol{gtk-state-flags} for which to set
     the background color}
@@ -5231,6 +5390,17 @@
 
   All other style values are left untouched. See the function
   @fun{gtk-widget-override-color}.
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-widget-override-background-color} has been deprecated
+    since version 3.16 and should not be used in newly-written code.
+
+    This function is not useful in the context of CSS-based rendering. If you
+    wish to change the way a widget renders its background you should use a
+    custom CSS style, through an application-specific @class{gtk-style-provider}
+    and a CSS style class. You can also override the default drawing of a widget
+    through the \"draw\" signal, and use Cairo to draw a specific color,
+    regardless of the CSS style.
+  @end{dictionary}
 
   Since 3.0
   @see-class{gtk-widget}
@@ -5278,6 +5448,12 @@
         with the @var{+gtk-style-provider-priority-application+} priority.
       @end{item}
     @end{itemize}
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-widget-override-color} has been deprecated since
+    version 3.16 and should not be used in newly-written code. Use a custom
+    style provider and style classes instead.
+  @end{dictionary}
+
   Since 3.0
   @see-class{gtk-widget}
   @see-class{gdk-rgba}
@@ -5304,6 +5480,15 @@
   @short{Sets the font to use for a widget.}
   All other style values are left untouched. See the function
   @fun{gtk-widget-override-color}.
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-widget-override-font} has been deprecated since
+    version 3.16 and should not be used in newly-written code.
+
+    This function is not useful in the context of CSS-based rendering. If you
+    wish to change the font a widget uses to render its text you should use a
+     custom CSS style, through an application-specific
+     @class{gtk-style-provider} and a CSS style class.
+  @end{dictionary}
 
   Since 3.0
   @see-class{gtk-widget}
@@ -5320,6 +5505,17 @@
 ;;; void gtk_widget_override_symbolic_color (GtkWidget *widget,
 ;;;                                          const gchar *name,
 ;;;                                          const GdkRGBA *color);
+;;;
+;;; Warning
+;;;
+;;; gtk_widget_override_symbolic_color has been deprecated since version 3.16
+;;; and should not be used in newly-written code.
+;;;
+;;; This function is not useful in the context of CSS-based rendering. If you
+;;; wish to change the color used to render symbolic icons you should use a
+;;; custom CSS style, through an application-specific GtkStyleProvider and a
+;;; CSS style class.
+;;;
 ;;;
 ;;; Sets a symbolic color for a widget.
 ;;;
@@ -5345,6 +5541,17 @@
 ;;; void gtk_widget_override_cursor (GtkWidget *widget,
 ;;;                                  const GdkRGBA *cursor,
 ;;;                                  const GdkRGBA *secondary_cursor);
+;;;
+;;; Warning
+;;;
+;;; gtk_widget_override_cursor has been deprecated since version 3.16 and should
+;;; not be used in newly-written code.
+;;;
+;;; This function is not useful in the context of CSS-based rendering. If you
+;;; wish to change the color used to render the primary and seconday cursors you
+;;; should use a custom CSS style, through an application-specific
+;;; GtkStyleProvider and a CSS style class.
+;;;
 ;;;
 ;;; Sets the cursor color to use in a widget, overriding the "cursor-color" and
 ;;; "secondary-cursor-color" style properties. All other style values are left
@@ -5453,7 +5660,6 @@
     function @sym{gtk-widget-modify-fg}}
   @short{Sets the foreground color for a widget in a particular state.}
   All other style values are left untouched.
-
   @begin[Warning]{dictionary}
     The function @sym{gtk-widget-modify-fg} has been deprecated since version
     3.0 and should not be used in newly-written code. Use the function
@@ -5482,11 +5688,6 @@
   @argument[color]{the color of type @class{gdk-color} to assign, does not need
     to be allocated), or @code{nil} to undo the effect of previous calls of the
     function @sym{gtk-widget-modify-bg}}
-  @subheading{Warning}
-    The function @sym{gtk-widget-modify-bg} has been deprecated since version
-    3.0 and should not be used in newly-written code. Use the function
-    @fun{gtk-widget-override-background-color} instead.
-
   @short{Sets the background color for a @arg{widget} in a particular state.}
 
   All other style values are left untouched.
@@ -5500,6 +5701,11 @@
     color on their parent; if you want to set the background of a rectangular
     area around a label, try placing the label in a @class{gtk-event-box} widget
     and setting the background color on that.
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-widget-modify-bg} has been deprecated since version
+    3.0 and should not be used in newly-written code. Use the function
+    @fun{gtk-widget-override-background-color} instead.
+  @end{dictionary}
   @see-class{gtk-widget}
   @see-class{gdk-color}
   @see-symbol{gtk-state-type}
@@ -5523,17 +5729,17 @@
   @argument[color]{the color of type @class{gdk-color} to assign, does not need
     to be allocated, or @code{nil} to undo the effect of previous calls of
      the function @sym{gtk-widget-modify-text}}
-  @subheading{Warning}
-    The function @sym{gtk-widget-modify-text} has been deprecated since version
-    3.0 and should not be used in newly-written code. Use the function
-    @fun{gtk-widget-override-color} instead.
-
   @short{Sets the text color for a widget in a particular state.}
 
   All other style values are left untouched. The text color is the foreground
   color used along with the base color, see the function
   @fun{gtk-widget-modify-base}, for widgets such as @class{gtk-entry} and
   @class{gtk-text-view}.
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-widget-modify-text} has been deprecated since version
+    3.0 and should not be used in newly-written code. Use the function
+    @fun{gtk-widget-override-color} instead.
+  @end{dictionary}
   @see-class{gtk-widget}
   @see-class{gdk-color}
   @see-symbol{gtk-state-type}
@@ -5558,11 +5764,6 @@
   @argument[color]{the color of type @class{gdk-color} to assign, does not need
     to be allocated, or @code{nil} to undo the effect of previous calls to the
     function @sym{gtk-widget-modify-base}}
-  @subheading{Warning}
-    The function @sym{gtk-widget-modify-base} has been deprecated since version
-    3.0 and should not be used in newly-written code. Use the function
-    @fun{gtk-widget-override-background-color} instead.
-
   @begin{short}
     Sets the base color for a widget in a particular state.
   @end{short}
@@ -5580,6 +5781,11 @@
     their parent; if you want to set the background of a rectangular area around
     a label, try placing the label in a @class{gtk-event-box} widget and setting
     the base color on that.
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-widget-modify-base} has been deprecated since version
+    3.0 and should not be used in newly-written code. Use the function
+    @fun{gtk-widget-override-background-color} instead.
+  @end{dictionary}
   @see-class{gtk-widget}
   @see-class{gdk-color}
   @see-symbol{gtk-state-type}
@@ -5601,14 +5807,14 @@
   @argument[widget]{a @class{gtk-widget} object}
   @argument[font-desc]{the font description to use, or @code{nil} to undo the
     effect of previous calls to the function @sym{gtk-widget-modify-font}}
-  @subheading{Warning}
-    The function @sym{gtk-widget-modify-font} has been deprecated since version
-    3.0 and should not be used in newly written code. Use the function
-    @fun{gtk-widget-override-font} instead.
-
   @short{Sets the font to use for a widget.}
 
   All other style values are left untouched.
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-widget-modify-font} has been deprecated since version
+    3.0 and should not be used in newly written code. Use the function
+    @fun{gtk-widget-override-font} instead.
+  @end{dictionary}
   @see-class{gtk-widget}
   @see-function{gtk-widget-override-font}"
   (widget (g-object gtk-widget))
@@ -5630,11 +5836,6 @@
   @argument[secondary]{the color to use for secondary cursor, does not need to
     be allocated, or @code{nil} to undo the effect of previous calls to of the
     function @sym{gtk-widget-modify-cursor}.}
-  @subheading{Warning}
-    The function @sym{gtk-widget-modify-cursor} is deprecated since version 3.0
-    and should not be used in newly-written code. Use the function
-    @fun{gtk-widget-override-cursor} instead.
-
   @begin{short}
     Sets the cursor color to use in a widget, overriding the
     @code{\"cursor-color\"} and @code{\"secondary-cursor-color\"} style
@@ -5642,6 +5843,11 @@
   @end{short}
 
   All other style values are left untouched.
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-widget-modify-cursor} is deprecated since version 3.0
+    and should not be used in newly-written code. Use the function
+    @fun{gtk-widget-override-cursor} instead.
+  @end{dictionary}
 
   Since 2.12
   @see-class{gtk-widget}
@@ -5750,11 +5956,6 @@
     sizes}
   @argument[detail]{render detail to pass to theme engine}
   @return{A new pixbuf, or @code{nil} if the stock ID was not known.}
-  @subheading{Warning}
-    The function @sym{gtk-widget-render-icon} has been deprecated since version
-    3.0 and should not be used in newly-written code. Use the function
-    @fun{gtk-widget-render-icon-pixbuf} instead.
-
   @begin{short}
     A convenience function that uses the theme settings for widget to look up
     @arg{stock-id} and render it to a pixbuf.
@@ -5768,6 +5969,11 @@
   The pixels in the returned @class{gdk-pixbuf} are shared with the rest of the
   application and should not be modified. The pixbuf should be freed after use
   with the function @fun{g-object-unref}.
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-widget-render-icon} has been deprecated since version
+    3.0 and should not be used in newly-written code. Use the function
+    @fun{gtk-widget-render-icon-pixbuf} instead.
+  @end{dictionary}
   @see-class{gtk-widget}
   @see-class{gdk-pixbuf}
   @see-symbol{gtk-icon-size}
@@ -5805,6 +6011,11 @@
   The pixels in the returned @class{gdk-pixbuf} object are shared with the rest
   of the application and should not be modified. The pixbuf should be freed
   after use with the function @fun{g-object-unref}.
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-widget-render-icon-pixbuf} has been deprecated since
+    version 3.10 and should not be used in newly-written code. Use the function
+    @fun{gtk-icon-theme-load-icon} instead.
+  @end{dictionary}
 
   Since 3.0
   @see-class{gtk-widget}
@@ -5829,6 +6040,11 @@
     Cancels the effect of a previous call to the function
     @fun{gtk-widget-push-composite-child}.
   @end{short}
+  @begin[Warning]{dictionary}
+    The function @fun{gtk-widget-pop-composite-child} has been deprecated since
+    version 3.10 and should not be used in newly-written code. Use the function
+    @fun{gtk-widget-class-set-template}, or do not use this API at all.
+  @end{dictionary}
   @see-class{gtk-widget}
   @see-function{gtk-widget-push-composite-child}")
 
@@ -5849,21 +6065,15 @@
 
   A composite child is a child that is an implementation detail of the container
   it is inside and should not be visible to people using the container.
-  Composite children are not treated differently by GTK, but see the function
-  @fun{gtk-container-foreach} vs. the function @fun{gtk-container-forall}, but
-  e. g. GUI builders might want to treat them in a different way.
-
-  Here is a simple example:
-  @begin{pre}
- gtk_widget_push_composite_child ();
- scrolled_window->hscrollbar = gtk_scrollbar_new (GTK_ORIENTATION_HORIZONTAL,
-                                                  hadjustment);
- gtk_widget_set_composite_name (scrolled_window->hscrollbar, \"hscrollbar\");
- gtk_widget_pop_composite_child ();
- gtk_widget_set_parent (scrolled_window->hscrollbar,
-                        GTK_WIDGET (scrolled_window));
- g_object_ref (scrolled_window->hscrollbar);
-  @end{pre}
+  Composite children are not treated differently by GTK, but e. g. GUI builders
+  might want to treat them in a different way.
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-widget-push-composite-child} has been deprecated since
+    version 3.10 and should not be used in newly-written code. This API never
+    really worked well and was mostly unused, now we have a more complete
+    mechanism for composite children, see the function
+    @fun{gtk-widget-class-set-template}.
+  @end{dictionary}
   @see-class{gtk-widget}
   @see-function{gtk-widget-pop-composite-child}
   @see-function{gtk-container-foreach}
@@ -6146,6 +6356,12 @@
     returning the intersection.
   @end{short}
   The result may be empty, use @fun{cairo-region-is-empty} to check.
+  @begin[Warnin]{dictionary}
+    The function @sym{gtk-widget-region-intersect} has been deprecated since
+    version 3.14 and should not be used in newly-written code. Use the functions
+    @fun{gtk-widget-get-allocation} and @fun{cairo-region-intersect-rectangle}
+    to get the same behavior.
+  @end{dictionary}
   @see-class{gtk-widget}
   @see-symbol{cairo-region-t}
   @see-function{cairo-region-is-empty}"
@@ -6651,10 +6867,16 @@
   @class{gdk-window} associated with the window. In general, you should only
   create display specific resources when a widget has been realized, and you
   should free those resources when the widget is unrealized.
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-widget-get-root-window} has been deprecated since
+    version 3.12 and should not be used in newly-written code. Use the function
+    @fun{gdk-screen-get-root-window} instead.
+  @end{dictionary}
 
   Since 2.2
   @see-class{gtk-widget}
-  @see-class{gdk-window}"
+  @see-class{gdk-window}
+  @see-function{gdk-screen-get-root-window}"
   (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-get-root-window)
@@ -7090,11 +7312,11 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-7-31}
   @argument[widget]{a @class{gtk-widget} object}
-  @return{Current value of the @code{\"has-tooltip\"} property on @arg{widget}.}
+  @return{Current value of the @code{has-tooltip} property on @arg{widget}.}
   @begin{short}
-    Returns the current value of the @code{\"has-tooltip\"} property.
+    Returns the current value of the @slot[gtk-widget]{has-tooltip} property.
   @end{short}
-  See the @code{\"has-tooltip\"} property for more information.
+  See the @slot[gtk-widget]{has-tooltip} property for more information.
 
   Since 2.12
   @see-class{gtk-widget}
@@ -7395,6 +7617,61 @@
 ;;;     the baseline of the widget , or -1 if none
 ;;;
 ;;; Since: 3.10
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_widget_get_clip ()
+;;;
+;;; void
+;;; gtk_widget_get_clip (GtkWidget *widget,
+;;;                      GtkAllocation *clip);
+;;;
+;;; Retrieves the widget’s clip area.
+;;;
+;;; The clip area is the area in which all of widget 's drawing will happen.
+;;; Other toolkits call it the bounding box.
+;;;
+;;; Historically, in GTK+ the clip area has been equal to the allocation
+;;; retrieved via gtk_widget_get_allocation().
+;;;
+;;; Parameters
+;;;
+;;; widget
+;;;     a GtkWidget
+;;;
+;;; clip
+;;;     a pointer to a GtkAllocation to copy to.
+;;;
+;;; Since: 3.14
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_widget_set_clip ()
+;;;
+;;; void
+;;; gtk_widget_set_clip (GtkWidget *widget,
+;;;                      const GtkAllocation *clip);
+;;;
+;;; Sets the widget’s clip. This must not be used directly, but from within a
+;;; widget’s size_allocate method. It must be called after
+;;; gtk_widget_set_allocation() (or after chaning up to the parent class),
+;;; because that function resets the clip.
+;;;
+;;; The clip set should be the area that widget draws on. If widget is a
+;;; GtkContainer, the area must contain all children's clips.
+;;;
+;;; If this function is not called by widget during a ::size-allocate handler,
+;;; the clip will be set to widget 's allocation.
+;;;
+;;; Parameters
+;;;
+;;; widget
+;;;     a GtkWidget
+;;;
+;;; clip
+;;;     a pointer to a GtkAllocation to copy from
+;;;
+;;; Since: 3.14
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -7907,6 +8184,53 @@
 ;;;     a GActionGroup
 ;;;
 ;;; Since 3.6
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_widget_list_action_prefixes ()
+;;;
+;;; const gchar **
+;;; gtk_widget_list_action_prefixes (GtkWidget *widget);
+;;;
+;;; Retrieves a NULL-terminated array of strings containing the prefixes of
+;;; GActionGroup's available to widget .
+;;;
+;;; Parameters
+;;;
+;;; widget
+;;;     A GtkWidget
+;;;
+;;; Returns
+;;;     a NULL-terminated array of strings.
+;;;
+;;; Since: 3.16
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_widget_get_action_group ()
+;;;
+;;; GActionGroup *
+;;; gtk_widget_get_action_group (GtkWidget *widget,
+;;;                              const gchar *prefix);
+;;;
+;;; Retrieves the GActionGroup that was registered using prefix . The resulting
+;;; GActionGroup may have been registered to widget or any GtkWidget in its
+;;; ancestry.
+;;;
+;;; If no action group was found matching prefix , then NULL is returned.
+;;;
+;;; Parameters
+;;;
+;;; widget
+;;;     A GtkWidget
+;;;
+;;; prefix
+;;;     The “prefix” of the action group.
+;;;
+;;; Returns
+;;;     A GActionGroup or NULL.
+;;;
+;;; Since: 3.16
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -8635,7 +8959,7 @@
 ;;;
 ;;; Parameters
 ;;;
-;;; widget_class :	
+;;; widget_class :
 ;;;     A GtkWidgetClass
 ;;;
 ;;; template_bytes :
@@ -8661,7 +8985,7 @@
 ;;;
 ;;; widget_class :
 ;;;     A GtkWidgetClass
-;;; 
+;;;
 ;;; resource_name :
 ;;;     The name of the resource to load the template from
 ;;;
@@ -8693,7 +9017,7 @@
 ;;;
 ;;; widget_type
 ;;;     The GType to get a template child for
-;;; 
+;;;
 ;;; name
 ;;;     The “id” of the child defined in the template XML
 ;;;
@@ -8706,7 +9030,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_class_bind_template_child()
 ;;;
-;;; #define 
+;;; #define
 ;;; gtk_widget_class_bind_template_child(widget_class, TypeName, member_name)
 ;;;
 ;;; Binds a child widget defined in a template to the widget_class .
@@ -8727,7 +9051,7 @@
 ;;;
 ;;; member_name
 ;;;     name of the instance member in the instance struct for data_type
-;;; 
+;;;
 ;;; Since: 3.10
 ;;; ----------------------------------------------------------------------------
 
@@ -8752,13 +9076,13 @@
 ;;;
 ;;; widget_class
 ;;;     a GtkWidgetClass
-;;; 
+;;;
 ;;; TypeName
 ;;;     the type name, in CamelCase
 ;;;
 ;;; member_name
 ;;;     name of the instance member in the instance struct for data_type
-;;; 
+;;;
 ;;; Since: 3.10
 ;;; ----------------------------------------------------------------------------
 
@@ -8868,7 +9192,7 @@
 ;;;     A GtkWidgetClass
 ;;;
 ;;; name
-;;;     The “id” of the child defined in the template XML 
+;;;     The “id” of the child defined in the template XML
 ;;;
 ;;; internal_child
 ;;;     Whether the child should be accessible as an “internal-child” when this
@@ -8878,7 +9202,7 @@
 ;;;     The structure offset into the composite widget’s instance public or
 ;;;     private structure where the automated child pointer should be set, or
 ;;;     0 to not assign the pointer.
-;;; 
+;;;
 ;;; Since: 3.10
 ;;; ----------------------------------------------------------------------------
 
@@ -8922,7 +9246,7 @@
 ;;;
 ;;; widget_class
 ;;;     A GtkWidgetClass
-;;; 
+;;;
 ;;; callback_name
 ;;;     The name of the callback as expected in the template XML
 ;;;
@@ -8959,7 +9283,7 @@
 ;;;
 ;;; connect_data
 ;;;     The data to pass to connect_func
-;;; 
+;;;
 ;;; connect_data_destroy
 ;;;     The GDestroyNotify to free connect_data , this will only be used at
 ;;;     class finalization time, when no classes of type widget_type are in use
