@@ -171,20 +171,18 @@ functions that will work on all range widgets.
 
 @subheading Getting and Setting Adjustments
 
-@findex gtk-range-get-adjustment
-@findex gtk-range-set-adjustment
+@findex gtk-range-adjustment
 @findex gtk-range-adjustment-changed
 
-@findex range-get-adjustment, gtk-range-get-adjustment
-@findex range-set-adjustment, gtk-range-set-adjustment
+@findex range-adjustment, gtk-range-adjustment
 @findex range-adjustment-changed, gtk-range-adjustment-changed
 
 Getting and setting the adjustment for a range widget "on the fly" is done with
-the functions @xurl{gtk-range-get-adjustment} and
-@xurl{gtk-range-set-adjustment}.  The function @xurl{gtk-range-get-adjustment}
-returns the adjustment to which the range is connected.
+the function @xurl{gtk-range-adjustment}.  The function
+@xurl{gtk-range-adjustment} returns the adjustment to which the range is
+connected.
 
-@xurl{gtk-range-set-adjustment} does absolutely nothing if you pass it the
+@xurl{gtk-range-adjustment} does absolutely nothing if you pass it the
 adjustment that range is already using, regardless of whether you changed any
 of its fields or not.  If you pass it a new adjustment, it will unreference the
 old one if it exists (possibly destroying it), connect the appropriate signals

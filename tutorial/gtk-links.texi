@@ -493,8 +493,7 @@
 @c GtkRange
 
 @set gtk-range http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-range.html
-@set gtk-range-get-adjustment http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-range-get-adjustment.html
-@set gtk-range-set-adjustment http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-range-set-adjustment.html
+@set gtk-range-adjustment http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-range-adjustment.html
 
 @c GtkRecentAction
 
