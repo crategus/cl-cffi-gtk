@@ -5,12 +5,12 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.16 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2014 Dieter Kaiser
+;;; Copyright (C) 2011 - 2016 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -177,32 +177,66 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Property Details
+;;; Property and Accessor Details
 ;;;
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-menu-shell-take-focus ----------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "take-focus" 'gtk-menu-shell) 't)
- "The @code{\"take-focus\"} property of type @code{:boolean} (Read / Write)@br{}
+ "The @code{take-focus} property of type @code{:boolean} (Read / Write)@br{}
   A boolean that determines whether the menu and its submenus grab the
-  keyboard focus. See the functions @fun{gtk-menu-shell-set-take-focus} and
-  @fun{gtk-menu-shell-get-take-focus}. @br{}
+  keyboard focus. See the function @fun{gtk-menu-shell-take-focus}. @br{}
   Default value: @em{true}@br{}
   Since 2.8")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-menu-shell-take-focus atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-menu-shell-take-focus 'function)
- "@version{2013-5-26}
-  Accessor of the slot @code{\"take-focus\"} of the @class{gtk-menu-shell}
-  class.")
+ "@version{2016-1-16}
+  @argument[menu-shell]{a @class{gtk-menu-shell} widget}
+  @argument[take-focus]{@em{true} if the menu shell should take the keyboard
+    focus on popup}
+  @syntax[]{(gtk-menu-shell-take-focus object) => take-focus}
+  @syntax[]{(setf (gtk-menu-shell-take-focus object) take-focus)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-menu-shell]{take-focus} of the
+    @class{gtk-menu-shell} class.
+  @end{short}
+
+  The generic function @sym{gtk-menu-shell-take-focus} returns @em{true} if the
+  menu shell will take the keyboard focus on popup.
+  
+  If @arg{take-focus} is @em{true} (the default) the menu shell will take the
+  keyboard focus so that it will receive all keyboard events which is needed
+  to enable keyboard navigation in menus.
+  
+  Setting @arg{take-focus} to @code{nil} is useful only for special applications
+  like virtual keyboard implementations which should not take keyboard focus.
+
+  The @arg{take-focus} state of a menu or menu bar is automatically propagated
+  to submenus whenever a submenu is popped up, so you do not have to worry about
+  recursively setting it for your entire menu hierarchy. Only when
+  programmatically picking a submenu and popping it up manually, the
+  @arg{take-focus} property of the submenu needs to be set explicitely.
+
+  Note that setting it to @code{nil} has side-effects:
+
+  If the focus is in some other app, it keeps the focus and keynav in the menu
+  does not work. Consequently, keynav on the menu will only work if the focus
+  is on some toplevel owned by the onscreen keyboard.
+
+  To avoid confusing the user, menus with @arg{take-focus} set to @code{nil}
+  should not display mnemonics or accelerators, since it cannot be guaranteed
+  that they will work.
+
+  See also the function @fun{gdk-keyboard-grab}.
+
+  Since 2.8
+  @see-class{gtk-menu-shell}
+  @see-function{gdk-keyboard-grab}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_shell_append ()
@@ -273,7 +307,8 @@
   @argument[menu-shell]{a @class{gtk-menu-shell} widget}
   @short{Deactivates the menu shell.}
 
-  Typically this results in the menu shell being erased from the screen."
+  Typically this results in the menu shell being erased from the screen.
+  @see-class{gtk-menu-shell}"
   (menu-shell g-object))
 
 (export 'gtk-menu-shell-deactivate)
@@ -287,7 +322,8 @@
  "@version{2013-5-26}
   @argument[menu-shell]{a @class{gtk-menu-shell} widget}
   @argument[menu-item]{the @class{gtk-menu-item} to select}
-  Selects the menu item from the menu shell."
+  Selects the menu item from the menu shell.
+  @see-class{gtk-menu-shell}"
   (menu-shell g-object)
   (menu-item g-object))
 
@@ -313,7 +349,8 @@
     select tearoff items unless the only item is a tearoff item.
   @end{short}
 
-  Since 2.2"
+  Since 2.2
+  @see-class{gtk-menu-shell}"
   (%gtk-menu-shell-select-first menu-shell search-sensitive))
 
 (export 'gtk-menu-shell-select-first)
@@ -326,7 +363,8 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-5-26}
   @argument[menu-shell]{a @class{gtk-menu-shell} widget}
-  Deselects the currently selected item from the menu shell, if any."
+  Deselects the currently selected item from the menu shell, if any.
+  @see-class{gtk-menu-shell}"
   (menu-shell g-object))
 
 (export 'gtk-menu-shell-deselect)
@@ -348,7 +386,8 @@
   @argument[menu-item]{the @class{gtk-menu-item} to activate}
   @argument[force-deactivate]{if @em{true}, force the deactivation of the menu
     shell after the menu item is activated}
-  Activates the menu item within the menu shell."
+  Activates the menu item within the menu shell.
+  @see-class{gtk-menu-shell}"
   (%gtk-menu-shell-activate-item menu-shell menu-item force-deactivate))
 
 (export 'gtk-menu-shell-activate-item)
@@ -363,75 +402,11 @@
   @argument[menu-shell]{a @class{gtk-menu-shell} widget}
   @short{Cancels the selection within the menu shell.}
 
-  Since 2.4"
+  Since 2.4
+  @see-class{gtk-menu-shell}"
   (menu-shell g-object))
 
 (export 'gtk-menu-shell-cancel)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_menu_shell_set_take_focus ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-menu-shell-set-take-focus))
-
-(defun gtk-menu-shell-set-take-focus (menu-shell take-focus)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-26}
-  @argument[menu-shell]{a @class{gtk-menu-shell} widget}
-  @argument[take-focus]{@em{true} if the menu shell should take the keyboard
-    focus on popup}
-  @begin{short}
-    If @arg{take-focus} is @em{true} (the default) the menu shell will take the
-    keyboard focus so that it will receive all keyboard events which is needed
-    to enable keyboard navigation in menus.
-  @end{short}
-
-  Setting take_focus to @code{nil} is useful only for special applications like
-  virtual keyboard implementations which should not take keyboard focus.
-
-  The @arg{take-focus} state of a menu or menu bar is automatically propagated
-  to submenus whenever a submenu is popped up, so you do not have to worry about
-  recursively setting it for your entire menu hierarchy. Only when
-  programmatically picking a submenu and popping it up manually, the
-  @arg{take-focus} property of the submenu needs to be set explicitely.
-
-  Note that setting it to @code{nil} has side-effects:
-
-  If the focus is in some other app, it keeps the focus and keynav in the menu
-  does not work. Consequently, keynav on the menu will only work if the focus
-  is on some toplevel owned by the onscreen keyboard.
-
-  To avoid confusing the user, menus with @arg{take-focus} set to @code{nil}
-  should not display mnemonics or accelerators, since it cannot be guaranteed
-  that they will work.
-
-  See also the function @fun{gdk-keyboard-grab}.
-
-  Since 2.8
-  @see-function{gdk-keyboard-grab}"
-  (setf (gtk-menu-shell-take-focus menu-shell) take-focus))
-
-(export 'gtk-menu-shell-set-take-focus)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_menu_shell_get_take_focus ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-menu-shell-get-take-focus))
-
-(defun gtk-menu-shell-get-take-focus (menu-shell)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-26}
-  @argument[menu-shell]{a @class{gtk-menu-shell} widget}
-  @return{@em{True} if the menu shell will take the keyboard focus on popup.}
-  @begin{short}
-    Returns @em{true} if the menu shell will take the keyboard focus on popup.
-  @end{short}
-
-  Since 2.8"
-  (gtk-menu-shell-take-focus menu-shell))
-
-(export 'gtk-menu-shell-get-take-focus)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_shell_get_selected_item ()
@@ -545,6 +520,7 @@
     @entry[:child]{To the submenu, if any, associated with the item.}
     @entry[:next]{To the next menu item.}
     @entry[:prev]{To the previous menu item.}
-  @end{table}")
+  @end{table}
+  @see-class{gtk-menu-shell}")
 
 ;;; --- End of file gtk.menu-shell.lisp ----------------------------------------

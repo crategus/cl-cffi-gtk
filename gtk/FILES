@@ -20,14 +20,14 @@ GTK+ Widgets and Objects
 
   Windows
 
+    gtk.window.lisp                  - GtkWindow                   - GTK+ 3.10 &
     gtk.dialog.lisp                  - GtkDialog                   - GTK+ 3.10
     gtk.message-dialog.lisp          - GtkMessageDialog            - GTK+ 3.10
     gtk.about-dialog.lisp            - GtkAboutDialog              - GTK+ 3.10
     gtk.assistant.lisp               - GtkAssistant                - GTK+ 3.10
-    gtk.window.lisp                  - GtkWindow                   - GTK+ 3.10 &
-    gtk.window-group.lisp            - GtkWindowGroup              - GTK+ 3.10
     gtk.invisible.lisp               - GtkInvisible                - GTK+ 3.10
     gtk.offscreen-window.lisp        - GtkOffscreenWindow          - GTK+ 3.10
+    gtk.window-group.lisp            - GtkWindowGroup              - GTK+ 3.10
 
   Layout Containers
 
@@ -36,12 +36,14 @@ GTK+ Widgets and Objects
 
     GtkRevealer - Hide and show with animation
     GtkListBox - A list container
+    GtkFlowBox — A container that allows reflowing its children
     GtkStack - A stacking container
     GtkStackSwitcher - A controller for GtkStack
+    GtkStackSidebar — An automatic sidebar widget
+    GtkActionBar — A full width bar for presenting contextual actions
     GtkHeaderBar - A box with a centered child
 
     gtk.overlay.lisp                 - GtkOverlay                  - GTK+ 3.10
-    gtk.alignment.lisp               - GtkAlignment                - GTK+ 3.10
     gtk.button-box.lisp              - GtkButtonBox, ...           - GTK+ 3.10
     gtk.paned.lisp                   - GtkPaned, ...               - GTK+ 3.10
     gtk.layout.lisp                  - GtkLayout                   - GTK+ 3.10
@@ -50,7 +52,7 @@ GTK+ Widgets and Objects
     gtk.orientable.lisp              - GtkOrientable               - GTK+ 3.10
     gtk.aspect-frame.lisp            - GtkAspectFrame              - GTK+ 3.10
     gtk.fixed.lisp                   - GtkFixed                    - GTK+ 3.10
-
+    
   Display Widgets
 
     gtk.label.lisp                   - GtkLabel                    - GTK+ 3.10
@@ -61,7 +63,6 @@ GTK+ Widgets and Objects
     gtk.level-bar.lisp               - GtkLevelBar                 - GTK+ 3.10
     gtk.statusbar.lisp               - GtkStatusbar                - GTK+ 3.10
     gtk.accel-label.lisp             - GtkAccelLabel               - GTK+ 3.10
-    gtk.status-icon.lisp             - GtkStatusIcon               - GTK+ 3.10 &
 
   Buttons and Toggles
 
@@ -78,51 +79,21 @@ GTK+ Widgets and Objects
     gtk.volume-button.lisp           - GtkVolumeButton             - GTK+ 3.10
 
     not implemented                  - GtkLockButton
-    
-  Numeric/Text Data Entry
+
+    GtkModelButton — A button that uses a GAction as model
+
+  Numeric and Text Data Entry
 
     gtk.entry.lisp                   - GtkEntry                    - GTK+ 3.10
     gtk.entry-buffer.lisp            - GtkEntryBuffer              - GTK+ 3.10
     gtk.entry-completion.lisp        - GtkEntryCompletion          - GTK+ 3.10
     gtk.scale.lisp                   - GtkScale, ...               - GTK+ 3.10
-
     gtk.spin-button.lisp             - GtkSpinButton               - GTK+ 3.10
     gtk.search-entry.lisp            - GtkSearchEntry              - GTK+ 3.10
 
     not implemented                  - GtkSearchBar
 
     gtk.editable.lisp                - GtkEditable                 - GTK+ 3.6.4*
-
-
-
-GTK+ Core Reference
-
-    gtk.main-loop.lisp               - Main loop and Events        - GTK+ 3.8.8*
-
-    gtk.version.lisp                 - Version Information         - GTK+ 3.16
-
-    gtk.accel-group.lisp             - Accelerator Groups          - GTK+ 3.8.8*
-    gtk.accel-map.lisp               - Accelerator Maps            - GTK+ 3.6.4*
-    gtk.clipboard.lisp               - GtkClipboard                - GTK+ 3.6.4*
-    gtk.drag-and-drop.lisp           - Drag and Drop handling      - GTK+ 3.8.6*
-    gtk.stock-item.lisp              - Stock Items                 - GTK+ 3.4.3*
-    gtk.setting.lisp                 - GtkSettings                 - GTK+ 3.10
-    gtk.bindings.lisp                - Bindings                    - GTK+ 3.8.8*
-    gtk.enumerations.lisp            - Standard Enumerations       - GTK+ 3.10
-    gtk.selections.lisp              - Selections                  - GTK+ 3.8.6*
-    gtk.mount-operation.lisp         - Filesystem utilities        - GTK+ 3.6.4*
-
-Theming in GTK+
-
-    gtk.style-context.lisp           - GtkStyleContext             - GTK+ 3.6.4*
-    gtk.css-provider.lisp            - GtkCssProvider              - GTK+ 3.6.4*
-    gtk.style-provider.lisp          - GtkStyleProvider            - GTK+ 3.6.4*
-    gtk.style-properties.lisp        - GtkStyleProperties          - GTK+ 3.8.8*
-    gtk.theming-engine.lisp          - GtkThemingEngine            - GTK+ 3.8.8*
-    gtk.widget-path.lisp             - GtkWidgetPath               - GTK+ 3.6.4*
-    gtk.icon-theme.lisp              - GtkIconTheme                - GTK+ 3.6.4*
-    gtk.stock-images.lisp            - Themeable Stock Images      - GTK+ 3.6.4*
-    gtk.numerable-icon.lisp          - GtkNumerableIcon            - GTK+ 3.8.8*
 
   Multiline Text Editor
 
@@ -140,20 +111,15 @@ Theming in GTK+
     gtk.tree-view-column.lisp        - GtkTreeViewColumn           - GTK+ 3.6.4*
     gtk.tree-view.lisp               - GtkTreeView                 - GTK+ 3.6.4*
     gtk.tree-view-drag-and-drop.lisp - GtkTreeView drag and drop   - GTK+ 3.6.4*
-
     gtk.cell-view.lisp               - GtkCellView                 - GTK+ 3.6.4*
     gtk.icon-view.lisp               - GtkIconView                 - GTK+ 3.6.4*
-
     gtk.tree-sortable.lisp           - GtkTreeSortable             - GTK+ 3.6.4*
     gtk.tree-model-sort.lisp         - GtkTreeModelSort            - GTK+ 3.6.4*
     gtk.tree-model-filter.lisp       - GtkTreeModelFilter          - GTK+ 3.6.4*
-
     gtk.cell-layout.lisp             - GtkCellLayout               - GTK+ 3.6.4*
-
     gtk.cell-area.lisp               - GtkCellArea                 - GTK+ 3.6.4*
     gtk.cell-area-box.lisp           - GtkCellAreaBox              - GTK+ 3.6.4*
     gtk.cell-area-context.lisp       - GtkCellAreaContext          - GTK+ 3.6.4*
-
     gtk.cell-renderer.lisp           - GtkCellRenderer             - GTK+ 3.6.4*
     gtk.cell-editable.lisp           - GtkCellEditable             - GTK+ 3.6.4*
     gtk.cell-renderer-accel.lisp     - GtkCellRendererAccel        - GTK+ 3.6.4*
@@ -176,11 +142,9 @@ Theming in GTK+
     gtk.menu.lisp                    - GtkMenu                     - GTK+ 3.8.8*
     gtk.menu-bar.lisp                - GtkMenuBar                  - GTK+ 3.8.8*
     gtk.menu-item.lisp               - GtkMenuItem                 - GTK+ 3.8.8*
-    gtk.image-menu-item.lisp         - GtkImageMenuItem            - GTK+ 3.8.8*
     gtk.radio-menu-item.lisp         - GtkRadioMenuItem            - GTK+ 3.8.8*
     gtk.check-menu-item.lisp         - GtkCheckMenuItem            - GTK+ 3.6.4*
     gtk.separator-menu-item.lisp     - GtkSeparatorMenuItem        - GTK+ 3.6.4*
-
     gtk.tool-shell.lisp              - GtkToolShell                - GTK+ 3.6.4*
     gtk.toolbar.lisp                 - GtkToolbar                  - GTK+ 3.6.4*
     gtk.tool-item.lisp               - GtkToolItem                 - GTK+ 3.6.4*
@@ -192,17 +156,10 @@ Theming in GTK+
     gtk.toggle-tool-button.lisp      - GtkToggleToolButton         - GTK+ 3.6.4*
     gtk.radio-tool-button.lisp       - GtkRadioToolButton          - GTK+ 3.6.4*
 
-  Action-based menus and toolbars
+    GtkPopover — Context dependent bubbles
+    GtkPopoverMenu — Popovers to use as menus
 
-    gtk.ui-manager.lisp              - GtkUIManager                - GTK+ 3.8.8*
-    gtk.action-group.lisp            - GtkActionGroup              - GTK+ 3.8.8*
-    gtk.action.lisp                  - GtkAction                   - GTK+ 3.8.8*
-    gtk.toggle-action.lisp           - GtkToggleAction             - GTK+ 3.8.8*
-    gtk.radio-action.lisp            - GtkRadioAction              - GTK+ 3.8.8*
-    gtk.recent-action.lisp           - GtkRecentAction             - GTK+ 3.8.8*
-    gtk.activatable.lisp             - GtkActivatable              - GTK+ 3.8.8*
-
-  Selectors (Color/File/Font)
+  Selector Widgets and Dialogs
 
     gtk.color-chooser.lisp           - GtkColorChooser             - GTK+ 3.6.4*
     gtk.color-button.lisp            - GtkColorButton              - GTK+ 3.6.4*
@@ -219,6 +176,8 @@ Theming in GTK+
     gtk.font-button.lisp             - GtkFontButton               - GTK+ 3.6.4*
     gtk.font-chooser-widget.lisp     - GtkFontChooserWidget        - GTK+ 3.6.4*
     gtk.font-chooser-dialog.lisp     - GtkFontChooserDialog        - GTK+ 3.6.4*
+
+    GtkPlacesSidebar - Displays frequently-used places in the file system
 
   Ornaments
 
@@ -246,9 +205,11 @@ Theming in GTK+
   Miscellaneous
 
     gtk.adjustment.lisp              - GtkAdjustment               - GTK+ 3.6.4*
-    gtk.arrow.lisp                   - GtkArrow                    - GTK+ 3.6.4*
     gtk.calendar.lisp                - GtkCalendar                 - GTK+ 3.6.4*
     gtk.drawing-area.lisp            - GtkDrawingArea              - GTK+ 3.6.4*
+
+    GtkGLArea — A widget for custom drawing with OpenGL
+
     gtk.event-box.lisp               - GtkEventBox                 - GTK+ 3.6.4*
     gtk.handle-box.lisp              - GtkHandleBox (**)           - GTK+ 3.6.4*
     gtk.im-context-simple.lisp       - GtkIMContextSimple          - GTK+ 3.6.4*
@@ -262,13 +223,11 @@ Theming in GTK+
   Abstract Base Classes
 
     gtk.widget.lisp                  - GtkWidget                   - GTK+ 3.16 &
-
-    gtk.container.lisp               - GtkContainer                - GTK+ 3.8.9*
-    gtk.bin.lisp                     - GtkBin                      - GTK+ 3.6.4*
-    gtk.menu-shell.lisp              - GtkMenuShell                - GTK+ 3.6.4*
-    gtk.misc.lisp                    - GtkMisc                     - GTK+ 3.6.4*
-    gtk.range.lisp                   - GtkRange                    - GTK+ 3.6.4*
-    gtk.im-context.lisp              - GtkIMContext                - GTK+ 3.6.4*
+    gtk.container.lisp               - GtkContainer                - GTK+ 3.16 &
+    gtk.bin.lisp                     - GtkBin                      - GTK+ 3.16
+    gtk.menu-shell.lisp              - GtkMenuShell                - GTK+ 3.16 &
+    gtk.range.lisp                   - GtkRange                    - GTK+ 3.16
+    gtk.im-context.lisp              - GtkIMContext                - GTK+ 3.16 &
 
   Cross-process Embedding
 
@@ -291,7 +250,45 @@ Theming in GTK+
     gtk.app-chooser-dialog.lisp      - GtkAppChooserDialog         - GTK+ 3.8.6*
     gtk.app-chooser-widget.lisp      - GtkAppChooserWidget         - GTK+ 3.8.6*
 
-  Deprecated
+  Gestures
+
+    GtkEventController — Self-contained handler of series of events
+    GtkGesture — Base class for gestures
+    GtkGestureSingle — Base class for mouse/single-touch gestures
+    GtkGestureDrag — Drag gesture
+    GtkGestureLongPress — "Press and Hold" gesture
+    GtkGestureMultiPress — Multipress gesture
+    GtkGesturePan — Pan gesture
+    GtkGestureSwipe — Swipe gesture
+    GtkGestureRotate — Rotate gesture
+    GtkGestureZoom — Zoom gesture
+
+GTK+ Core Reference
+
+    gtk.main-loop.lisp               - Main loop and Events        - GTK+ 3.8.8*
+
+    gtk.version.lisp                 - Version Information         - GTK+ 3.16
+
+    gtk.accel-group.lisp             - Accelerator Groups          - GTK+ 3.8.8*
+    gtk.accel-map.lisp               - Accelerator Maps            - GTK+ 3.6.4*
+    gtk.clipboard.lisp               - GtkClipboard                - GTK+ 3.6.4*
+    gtk.drag-and-drop.lisp           - Drag and Drop handling      - GTK+ 3.8.6*
+    gtk.setting.lisp                 - GtkSettings                 - GTK+ 3.10
+    gtk.bindings.lisp                - Bindings                    - GTK+ 3.8.8*
+    gtk.enumerations.lisp            - Standard Enumerations       - GTK+ 3.10
+    gtk.selections.lisp              - Selections                  - GTK+ 3.8.6*
+    gtk.mount-operation.lisp         - Filesystem utilities        - GTK+ 3.6.4*
+
+Theming in GTK+
+
+    gtk.style-context.lisp           - GtkStyleContext             - GTK+ 3.6.4*
+    gtk.css-provider.lisp            - GtkCssProvider              - GTK+ 3.6.4*
+    gtk.style-provider.lisp          - GtkStyleProvider            - GTK+ 3.6.4*
+    gtk.style-properties.lisp        - GtkStyleProperties          - GTK+ 3.8.8*
+    gtk.widget-path.lisp             - GtkWidgetPath               - GTK+ 3.6.4*
+    gtk.icon-theme.lisp              - GtkIconTheme                - GTK+ 3.6.4*
+
+Deprecated
 
     not implemented                  - GtkSymbolicColor
     not implemented                  - GtkGradient
@@ -305,4 +302,20 @@ Theming in GTK+
     gtk.font-selection.lisp          - GtkFontSelection (**)       - GTK+ 3.6.4*
     gtk.font-selection-dialog.lisp   - GtkFontSelectionDialog (**) - GTK+ 3.6.4*
     gtk.table.lisp                   - GtkTable                    - GTK+ 3.6.4*
+    gtk.ui-manager.lisp              - GtkUIManager                - GTK+ 3.8.8*
+    gtk.action-group.lisp            - GtkActionGroup              - GTK+ 3.8.8*
+    gtk.action.lisp                  - GtkAction                   - GTK+ 3.8.8*
+    gtk.toggle-action.lisp           - GtkToggleAction             - GTK+ 3.8.8*
+    gtk.radio-action.lisp            - GtkRadioAction              - GTK+ 3.8.8*
+    gtk.recent-action.lisp           - GtkRecentAction             - GTK+ 3.8.8*
+    gtk.activatable.lisp             - GtkActivatable              - GTK+ 3.8.8*
+    gtk.image-menu-item.lisp         - GtkImageMenuItem            - GTK+ 3.8.8*
+    gtk.misc.lisp                    - GtkMisc                     - GTK+ 3.6.4*
+    gtk.stock-item.lisp              - Stock Items                 - GTK+ 3.4.3*
+    gtk.stock-images.lisp            - Themeable Stock Images      - GTK+ 3.6.4*
+    gtk.numerable-icon.lisp          - GtkNumerableIcon            - GTK+ 3.8.8*
+    gtk.arrow.lisp                   - GtkArrow                    - GTK+ 3.6.4*
+    gtk.status-icon.lisp             - GtkStatusIcon               - GTK+ 3.10 &
+    gtk.theming-engine.lisp          - GtkThemingEngine            - GTK+ 3.8.8*
+    gtk.alignment.lisp               - GtkAlignment                - GTK+ 3.10
 

@@ -4443,6 +4443,44 @@ setup_tree (void)
       Base class for all widgets.
 
       @about-class{gtk-widget}
+      @about-generic{gtk-widget-app-paintable}
+      @about-generic{gtk-widget-can-default}
+      @about-generic{gtk-widget-can-focus}
+      @about-generic{gtk-widget-composite-child}
+      @about-generic{gtk-widget-double-buffered}
+      @about-generic{gtk-widget-events}
+      @about-generic{gtk-widget-expand}
+      @about-generic{gtk-widget-halign}
+      @about-generic{gtk-widget-has-default}
+      @about-generic{gtk-widget-has-focus}
+      @about-generic{gtk-widget-has-tooltip}
+      @about-generic{gtk-widget-height-request}
+      @about-generic{gtk-widget-hexpand}
+      @about-generic{gtk-widget-hexpand-set}
+      @about-generic{gtk-widget-is-focus}
+      @about-generic{gtk-widget-margin}
+      @about-generic{gtk-widget-margin-bottom}
+      @about-generic{gtk-widget-margin-end}
+      @about-generic{gtk-widget-margin-left}
+      @about-generic{gtk-widget-margin-right}
+      @about-generic{gtk-widget-margin-start}
+      @about-generic{gtk-widget-margin-top}
+      @about-generic{gtk-widget-name}
+      @about-generic{gtk-widget-no-show-all}
+      @about-generic{gtk-widget-opacity}
+      @about-generic{gtk-widget-parent}
+      @about-generic{gtk-widget-receives-default}
+      @about-generic{gtk-widget-scale-factor}
+      @about-generic{gtk-widget-sensitive}
+      @about-generic{gtk-widget-style}
+      @about-generic{gtk-widget-tooltip-markup}
+      @about-generic{gtk-widget-tooltip-text}
+      @about-generic{gtk-widget-valign}
+      @about-generic{gtk-widget-vexpand}
+      @about-generic{gtk-widget-vexpand-set}
+      @about-generic{gtk-widget-visible}
+      @about-generic{gtk-widget-width-request}
+      @about-generic{gtk-widget-window}
       @about-class{gtk-widget-class}
       @about-struct{gtk-requisition}
       @about-function{make-gtk-requisition}
@@ -4473,7 +4511,7 @@ setup_tree (void)
       @about-function{gtk-widget-get-frame-clock}
       @about-function{gtk-widget-add-tick-callback}
       @about-function{gtk-widget-remove-tick-callback}
-      @about-function{gtk-widget-size-request}
+      @about-generic{gtk-widget-size-request}
       @about-function{gtk-widget-get-child-requisition}
       @about-function{gtk-widget-size-allocate}
       @about-function{gtk-widget-add-accelerator}
@@ -4665,6 +4703,9 @@ setup_tree (void)
       Base class for widgets which contain other widgets.
 
       @about-class{gtk-container}
+      @about-generic{gtk-container-border-width}
+      @about-generic{gtk-container-child}
+      @about-generic{gtk-container-resize-mode}
       @about-function{GTK_IS_RESIZE_CONTAINER}
       @about-function{GTK_CONTAINER_WARN_INVALID_CHILD_PROPERTY_ID}
       @about-function{gtk-container-add}
@@ -4712,6 +4753,7 @@ setup_tree (void)
       A base class for menu objects.
 
       @about-class{gtk-menu-shell}
+      @about-generic{gtk-menu-shell-take-focus}
       @about-function{gtk-menu-shell-append}
       @about-function{gtk-menu-shell-prepend}
       @about-function{gtk-menu-shell-insert}
@@ -4721,34 +4763,29 @@ setup_tree (void)
       @about-function{gtk-menu-shell-deselect}
       @about-function{gtk-menu-shell-activate-item}
       @about-function{gtk-menu-shell-cancel}
-      @about-function{gtk-menu-shell-set-take-focus}
-      @about-function{gtk-menu-shell-get-take-focus}
       @about-function{gtk-menu-shell-get-selected-item}
       @about-function{gtk-menu-shell-get-parent-shell}
       @about-function{gtk-menu-shell-bind-model}
       @about-symbol{gtk-menu-direction-type}
     @end{subsection}
-    @begin[GtkMisc]{subsection}
-      Base class for widgets with alignments and padding.
-
-      @about-class{gtk-misc}
-      @about-function{gtk-misc-set-alignment}
-      @about-function{gtk-misc-set-padding}
-      @about-function{gtk-misc-get-alignment}
-      @about-function{gtk-misc-get-padding}
-    @end{subsection}
     @begin[GtkRange]{subsection}
       Base class for widgets which visualize an adjustment
 
       @about-class{gtk-range}
+      @about-generic{gtk-range-adjustment}
+      @about-generic{gtk-range-fill-level}
+      @about-generic{gtk-range-inverted}
+      @about-generic{gtk-range-lower-stepper-sensitivity}
+      @about-generic{gtk-range-restrict-to-fill-level}
+      @about-generic{gtk-range-round-digits}
+      @about-generic{gtk-range-show-fill-level}
+      @about-generic{gtk-range-upper-stepper-sensitivity}
       @about-function{gtk-range-get-fill-level}
       @about-function{gtk-range-get-restrict-to-fill-level}
       @about-function{gtk-range-get-show-fill-level}
       @about-function{gtk-range-set-fill-level}
       @about-function{gtk-range-set-restrict-to-fill-level}
       @about-function{gtk-range-set-show-fill-level}
-      @about-function{gtk-range-get-adjustment}
-      @about-function{gtk-range-set-adjustment}
       @about-function{gtk-range-get-inverted}
       @about-function{gtk-range-set-inverted}
       @about-function{gtk-range-get-value}
@@ -4775,7 +4812,8 @@ setup_tree (void)
       Base class for input method contexts.
 
       @about-class{gtk-im-context}
-      @about-class{gtk-im-context-class}
+      @about-generic{gtk-im-context-input-hints}
+      @about-generic{gtk-im-context-input-purpose}
       @about-symbol{gtk-im-contextInfo}
       @about-function{gtk-im-context-set-client-window}
       @about-function{gtk-im-context-get-preedit-string}
@@ -5284,6 +5322,18 @@ setup_tree (void)
       @about-class{gtk-vscrollbar}
       @about-function{gtk-vscrollbar-new}
     @end{subsection}
+
+    @begin[GtkMisc]{subsection}
+      Base class for widgets with alignments and padding.
+
+      @about-class{gtk-misc}
+      @about-function{gtk-misc-set-alignment}
+      @about-function{gtk-misc-set-padding}
+      @about-function{gtk-misc-get-alignment}
+      @about-function{gtk-misc-get-padding}
+    @end{subsection}
+
+
   @end{section}")
 
 ;;; --- End of file gtk.package.lisp -------------------------------------------

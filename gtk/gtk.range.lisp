@@ -5,12 +5,12 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GDK library.
+;;; Version 3.16 and modified to document the Lisp binding to the GDK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2016 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -36,6 +36,7 @@
 ;;;
 ;;; Synopsis
 ;;;
+;;;     GtkSensitivityType
 ;;;     GtkRange
 ;;;
 ;;;     gtk_range_get_fill_level
@@ -54,9 +55,6 @@
 ;;;     gtk_range_set_range
 ;;;     gtk_range_get_round_digits
 ;;;     gtk_range_set_round_digits
-;;;
-;;;     GtkSensitivityType
-;;;
 ;;;     gtk_range_set_lower_stepper_sensitivity
 ;;;     gtk_range_get_lower_stepper_sensitivity
 ;;;     gtk_range_set_upper_stepper_sensitivity
@@ -72,6 +70,40 @@
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
+
+;;; ----------------------------------------------------------------------------
+;;; enum GtkSensitivityType
+;;; ----------------------------------------------------------------------------
+
+(define-g-enum "GtkSensitivityType" gtk-sensitivity-type
+  (:export t
+   :type-initializer "gtk_sensitivity_type_get_type")
+  (:auto 0)
+  (:on 1)
+  (:off 2))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-sensitivity-type atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'gtk-sensitivity-type atdoc:*external-symbols*)
+ "@version{2013-5-26}
+  @begin{short}
+    Determines how GTK+ handles the sensitivity of stepper arrows at the end of
+    range widgets.
+  @end{short}
+  @begin{pre}
+(define-g-enum \"GtkSensitivityType\" gtk-sensitivity-type
+  (:export t
+   :type-initializer \"gtk_sensitivity_type_get_type\")
+  (:auto 0)
+  (:on 1)
+  (:off 2))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:auto]{The arrow is made insensitive if the thumb is at the end.}
+    @entry[:on]{The arrow is always sensitive.}
+    @entry[:off]{The arrow is always insensitive.}
+  @end{table}
+  @see-class{gtk-range}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkRange
@@ -108,8 +140,6 @@
    (upper-stepper-sensitivity
     gtk-range-upper-stepper-sensitivity
     "upper-stepper-sensitivity" "GtkSensitivityType" t t)))
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-range 'type)
@@ -245,236 +275,75 @@
 ;;;
 ;;; ----------------------------------------------------------------------------
 
+;;; --- gtk-range-adjustment ---------------------------------------------------
+
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "adjustment" 'gtk-range) 't)
- "The @code{\"adjustment\"} property of type @class{gtk-adjustment}
+ "The @code{adjustment} property of type @class{gtk-adjustment}
   (Read / Write / Construct) @br{}
   The @class{gtk-adjustment} that contains the current value of this range
   object.")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "fill-level" 'gtk-range) 't)
- "The @code{\"fill-level\"} property of type @code{:double} (Read / Write) @br{}
-  The fill level (e. g. prebuffering of a network stream). @br{}
-  See the function @fun{gtk-range-set-fill-level}. @br{}
-  Default value: 1.79769e+308 @br{}
-  Since 2.12")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "inverted" 'gtk-range) 't)
- "The @code{\"inverted\"} property of type @code{:boolean} (Read / Write) @br{}
-  Invert direction slider moves to increase range value. @br{}
-  Default value: @code{nil}")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "lower-stepper-sensitivity"
-                                               'gtk-range) 't)
- "The @code{\"lower-stepper-sensitivity\"} property of type
-  @symbol{gtk-sensitivity-type} (Read / Write) @br{}
-  The sensitivity policy for the stepper that points to the adjustment's
-  lower side. @br{}
-  Default value: @code{:auto}")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "restrict-to-fill-level"
-                                               'gtk-range) 't)
- "The @code{\"restrict-to-fill-level\"} property of type @code{:boolean}
-  (Read / Write) @br{}
-  The @code{\"restrict-to-fill-level\"} property controls whether slider
-  movement is restricted to an upper boundary set by the fill level. See
-  the function @fun{gtk-range-set-restrict-to-fill-level}. @br{}
-  Default value: @em{true} @br{}
-  Since 2.12")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "round-digits" 'gtk-range) 't)
- "The @code{\"round-digits\"} property of type @code{:int} (Read / Write) @br{}
-  The number of digits to round the value to when it changes, or -1. See the
-  @code{\"change-value\"} signal. @br{}
-  Allowed values: >= @code{G_MAXULONG} @br{}
-  Default value: -1 @br{}
-  Since 2.24")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "show-fill-level" 'gtk-range) 't)
- "The @code{\"show-fill-level\"} property of type @code{:boolean}
-  (Read / Write) @br{}
-  The @code{\"show-fill-level\"} property controls whether fill level indicator
-  graphics are displayed on the trough.
-  See the function @fun{gtk-range-set-show-fill-level}. @br{}
-  Default value: @code{nil} @br{}
-  Since 2.12")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "upper-stepper-sensitivity"
-                                               'gtk-range) 't)
- "The @code{\"upper-stepper-sensitivity\"} property of type
-  @symbol{gtk-sensitivity-type} (Read / Write) @br{}
-  The sensitivity policy for the stepper that points to the adjustment's
-  upper side. @br{}
-  Default value: @code{:auto}")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-range-adjustment atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-range-adjustment 'function)
- "@version{2013-3-18}
-  Accessor of the slot @code{\"adjustment\"} of the @class{gtk-range} class.")
+ "@version{2016-1-16}
+  @argument[object]{a @class{gtk-range} widget}
+  @argument[adjustment]{a @class{gtk-adjustment} object}
+  @syntax[]{(gtk-range-adjustment object) => adjustement}
+  @syntax[]{(setf (gtk-range-adjustment object) adjustment)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-range]{adjustment} of the @class{gtk-range}
+    class.
+  @end{short}
 
-;;; ----------------------------------------------------------------------------
+  The generic function @sym{gtk-range-adjustment} gets the
+  @class{gtk-adjustment} object which is the \"model\" object for
+  @class{gtk-range}.
+
+  The generic function @sym{(setf gtk-range-adjustment)} sets the adjustment to
+  be used as the \"model\" object for this range widget.
+
+  The adjustment indicates the current range value, the minimum and maximum
+  range values, the step/page increments used for keybindings and scrolling,
+  and the page size. The page size is normally 0 for @class{gtk-scale} and
+  nonzero for @class{gtk-scrollbar}, and indicates the size of the visible area
+  of the widget being scrolled. The page size affects the size of the scrollbar
+  slider.
+  @see-class{gtk-range}
+  @see-class{gtk-scale}
+  @see-class{gtk-scrollbar}")
+
+;;; --- gtk-range-fill-level ---------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "fill-level" 'gtk-range) 't)
+ "The @code{fill-level} property of type @code{:double} (Read / Write) @br{}
+  The fill level (e. g. prebuffering of a network stream). @br{}
+  See the function @fun{gtk-range-fill-level}. @br{}
+  Default value: 1.79769e+308 @br{}
+  Since 2.12")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-range-fill-level atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-range-fill-level 'function)
- "@version{2013-3-18}
-  Accessor of the slot @code{\"fill-level\"} of the @class{gtk-range} class.")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-range-inverted atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-range-inverted 'function)
- "@version{2013-3-18}
-  Accessor of the slot @code{\"inverted\"} of the @class{gtk-range} class.")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-range-lower-stepper-sensitivity atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-range-lower-stepper-sensitivity 'function)
- "@version{2013-3-18}
-  Accessor of the slot @code{\"lower-stepper-sensitivity\"} of the
-  @class{gtk-range} class.")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-range-restrict-to-fill-level atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-range-restrict-to-fill-level 'function)
- "@version{2013-3-18}
-  Accessor of the slot @code{\"restrict-to-fill-level\"} of the
-  @class{gtk-range} class.")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-range-round-digits atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-range-round-digits 'function)
- "@version{2013-3-18}
-  Accessor of the slot @code{\"round-digits\"} of the @class{gtk-range}
-  class.")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-range-show-fill-level atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-range-show-fill-level 'function)
- "@version{2013-3-18}
-  Accessor of the slot @code{\"show-fill-level\"} of the @class{gtk-range}
-  class.")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-range-upper-stepper-sensitivity atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-range-upper-stepper-sensitivity 'function)
- "@version{2013-3-18}
-  Accessor of the slot @code{\"upper-stepper-sensitivity\"} of the
-  @class{gtk-range} class.")
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_range_get_fill_level ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-range-get-fill-level))
-
-(defun gtk-range-get-fill-level (range)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-26}
-  @argument[range]{a @class{gtk-range} widget}
-  @return{The current fill level.}
-  @short{Gets the current position of the fill level indicator.}
-
-  Since 2.12"
-  (gtk-range-fill-level range))
-
-(export 'gtk-range-get-fill-level)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_range_get_restrict_to_fill_level ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-range-get-restrict-to-fill-level))
-
-(defun gtk-range-get-restrict-to-fill-level (range)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-26}
-  @argument[range]{a @class{gtk-range} widget}
-  @return{@em{True} if @arg{range} is restricted to the fill level.}
-  @short{Gets whether the @arg{range} is restricted to the fill level.}
-
-  Since 2.12"
-  (gtk-range-restrict-to-fill-level range))
-
-(export 'gtk-range-get-restrict-to-fill-level)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_range_get_show_fill_level ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-range-get-show-fill-level))
-
-(defun gtk-range-get-show-fill-level (range)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-26}
-  @argument[range]{a @class{gtk-range} widget}
-  @return{@em{True} if @arg{range} shows the fill level.}
-  @short{Gets whether the @arg{range} displays the fill level graphically.}
-
-  Since 2.12"
-  (gtk-range-show-fill-level range))
-
-(export 'gtk-range-get-show-fill-level)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_range_set_fill_level ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-range-set-fill-level))
-
-(defun gtk-range-set-fill-level (range fill-level)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-26}
-  @argument[range]{a @class{gtk-range} widget}
+ "@version{2016-1-16}
+  @argument[object]{a @class{gtk-range} widget}
   @argument[fill-level]{the new position of the fill level indicator}
-  @short{Set the new position of the fill level indicator.}
+  @syntax[]{(gtk-range-fill-level object) => fill-level}
+  @syntax[]{(setf (gtk-range-fill-level object) fill-level)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-range]{fill-level} of the @class{gtk-range}
+    class.
+  @end{short}
+
+  The generic function @sym{gtk-range-fill-level} gets the current position of
+  the fill level indicator.
+
+  The generic function @sym{(setf gtk-range-fill-level)} sets the new position
+  of the fill level indicator.
 
   The \"fill level\" is probably best described by its most prominent use case,
   which is an indicator for the amount of pre-buffering in a streaming media
@@ -484,142 +353,232 @@
 
   This amount of prebuffering can be displayed on the range's trough and is
   themeable separately from the trough. To enable fill level display, use the
-  function @fun{gtk-range-set-show-fill-level}. The range defaults to not
+  function @fun{gtk-range-show-fill-level}. The range defaults to not
   showing the fill level.
 
   Additionally, it is possible to restrict the range's slider position to
   values which are smaller than the fill level. This is controller by the
-  function @fun{gtk-range-set-restrict-to-fill-level} and is by default enabled.
+  function @fun{gtk-range-restrict-to-fill-level} and is by default enabled.
 
   Since 2.12
-  @see-function{gtk-range-set-show-fill-level}
-  @see-function{gtk-range-set-restrict-to-fill-level}"
-  (setf (gtk-range-fill-level range) fill-level))
+  @see-class{gtk-range}
+  @see-function{gtk-range-show-fill-level}
+  @see-function{gtk-range-restrict-to-fill-level}")
 
-(export 'gtk-range-set-fill-level)
+;;; --- gtk-range-inverted -----------------------------------------------------
 
-;;; ----------------------------------------------------------------------------
-;;; gtk_range_set_restrict_to_fill_level ()
-;;; ----------------------------------------------------------------------------
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "inverted" 'gtk-range) 't)
+ "The @code{inverted} property of type @code{:boolean} (Read / Write) @br{}
+  Invert direction slider moves to increase range value. @br{}
+  Default value: @code{nil}")
 
-(declaim (inline gtk-range-set-restrict-to-fill-level))
-
-(defun gtk-range-set-restrict-to-fill-level (range restrict-to-fill-level)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-26}
-  @argument[range]{a @class{gtk-range} widget}
-  @argument[restrict-to-fill-level]{whether the fill level restricts slider
-    movement}
-  @begin{short}
-    Sets whether the slider is restricted to the fill level. See the function
-    @fun{gtk-range-set-fill-level} for a general description of the fill level
-    concept.
-  @end{short}
-
-  Since 2.12"
-  (setf (gtk-range-restrict-to-fill-level range) restrict-to-fill-level))
-
-(export 'gtk-range-set-restrict-to-fill-level)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_range_set_show_fill_level ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-range-set-show-fill-level))
-
-(defun gtk-range-set-show-fill-level (range show-fill-level)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-26}
-  @argument[range]{a @class{gtk-range} widget}
-  @argument[show-fill-level]{whether a fill level indicator graphics is shown}
-  @begin{short}
-    Sets whether a graphical fill level is show on the trough. See the function
-    @fun{gtk-range-set-fill-level} for a general description of the fill level
-    concept.
-  @end{short}
-
-  Since 2.12
-  @see-function{gtk-range-set-fill-level}"
-  (setf (gtk-range-show-fill-level range) show-fill-level))
-
-(export 'gtk-range-set-show-fill-level)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_range_get_adjustment ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-range-get-adjustment))
-
-(defun gtk-range-get-adjustment (range)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-26}
-  @argument[range]{a @class{gtk-range} widget}
-  @return{A @class{gtk-adjustment} object}
-  Get the @class{gtk-adjustment} object which is the \"model\" object for
-  @class{gtk-range}. See the function @fun{gtk-range-set-adjustment} for
-  details. The return value does not have a reference added, so should not be
-  unreferenced.
-  @see-function{gtk-range-set-adjustment}"
-  (gtk-range-adjustment range))
-
-(export 'gtk-range-get-adjustment)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_range_set_adjustment ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-range-set-adjustment))
-
-(defun gtk-range-set-adjustment (range adjustment)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-26}
-  @argument[range]{a @class{gtk-range} widget}
-  @argument[adjustment]{a @class{gtk-adjustment} object}
-  Sets the adjustment to be used as the \"model\" object for this range widget.
-  The adjustment indicates the current range value, the minimum and maximum
-  range values, the step/page increments used for keybindings and scrolling,
-  and the page size. The page size is normally 0 for @class{gtk-scale} and
-  nonzero for @class{gtk-scrollbar}, and indicates the size of the visible area
-  of the widget being scrolled. The page size affects the size of the scrollbar
-  slider."
-  (setf (gtk-range-adjustment range) adjustment))
-
-(export 'gtk-range-set-adjustment)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_range_get_inverted ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-range-get-inverted))
-
-(defun gtk-range-get-inverted (range)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-26}
-  @argument[range]{a @class{gtk-range} widget}
-  @return{@em{True} if the @arg{range} is inverted.}
-  Gets the value set by the function @fun{gtk-range-set-inverted}.
-  @see-function{gtk-range-set-inverted}"
-  (gtk-range-inverted range))
-
-(export 'gtk-range-get-inverted)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_range_set_inverted ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-range-set-inverted))
-
-(defun gtk-range-set-inverted (range setting)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-26}
-  @argument[range]{a @class{gtk-range} widget}
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-range-inverted atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-range-inverted 'function)
+ "@version{2016-1-16}
+  @argument[object]{a @class{gtk-range} widget}
   @argument[setting]{@em{true} to invert the @arg{range}}
+  @syntax[]{(gtk-range-inverted object) => setting}
+  @syntax[]{(setf (gtk-range-inverted object) setting)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-range]{inverted} of the @class{gtk-range}
+    class.
+  @end{short}
+
+  The generic function @sym{gtk-range-inverted} gets wheter the range is
+  inverted.
+
   Ranges normally move from lower to higher values as the slider moves from
   top to bottom or left to right. Inverted ranges have higher values at the
-  top or on the right rather than on the bottom or left."
-  (setf (gtk-range-inverted range) setting))
+  top or on the right rather than on the bottom or left.
+  @see-class{gtk-range}")
 
-(export 'gtk-range-set-inverted)
+;;; --- gtk-rangke-lower-stepper-sensitivity -----------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "lower-stepper-sensitivity"
+                                               'gtk-range) 't)
+ "The @code{lower-stepper-sensitivity} property of type
+  @symbol{gtk-sensitivity-type} (Read / Write) @br{}
+  The sensitivity policy for the stepper that points to the adjustment's
+  lower side. @br{}
+  Default value: @code{:auto}")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-range-lower-stepper-sensitivity atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-range-lower-stepper-sensitivity 'function)
+ "@version{2016-1-16}
+  @argument[object]{a @class{gtk-range} widget}
+  @argument[sensitivity]{the lower stepper's sensitivity policy}
+  @syntax[]{(gtk-range-lower-stepper-sensitivity object) => sensitivity}
+  @syntax[]{(setf (gtk-range-lower-stepper-sensitivity object) sensitivity)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-range]{lower-stepper-sensitivity} of the
+    @class{gtk-range} class.
+  @end{short}
+
+  The generic function @sym{gtk-range-lower-stepper-sensitivity} gets the
+  sensitivity policy for the stepper that points to the 'lower' end of the
+  @class{gtk-range}'s adjustment.
+ 
+  The generic function @sym{(setf gtk-range-lower-stepper-sensitivity} sets the
+  sensitivity policy for the stepper that points to the 'lower' end of the
+  @class{gtk-range}'s adjustment.
+
+  Since 2.10
+  @see-class{gtk-range}
+  @see-function{gtk-range-upper-stepper-sensitivity}")
+
+;;; --- gtk-range-restrict-to-fill-level ---------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "restrict-to-fill-level"
+                                               'gtk-range) 't)
+ "The @code{restrict-to-fill-level} property of type @code{:boolean}
+  (Read / Write) @br{}
+  The @code{restrict-to-fill-level} property controls whether slider
+  movement is restricted to an upper boundary set by the fill level. See
+  the function @fun{gtk-range-restrict-to-fill-level}. @br{}
+  Default value: @em{true} @br{}
+  Since 2.12")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-range-restrict-to-fill-level atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-range-restrict-to-fill-level 'function)
+ "@version{2013-3-18}
+  @argument[object]{a @class{gtk-range} widget}
+  @argument[setting]{whether the fill level restricts slider
+    movement}
+  @syntax[]{(gtk-range-restrict-to-fill-level object) => setting}
+  @syntax[]{(setf (gtk-range-restrict-to-fill-level object) setting)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-range]{restrict-to-fill-level} of the
+    @class{gtk-range} class.
+  @end{short}
+
+  The generic function @sym{gtk-range-restrict-to-fill-level} gets whether the
+  range is restricted to the fill level.
+
+  The generic function @sym{(setf gtk-range-restrict-to-fill-level)} sets
+  whether the slider is restricted to the fill level. See the function
+  @fun{gtk-range-fill-level} for a general description of the fill level
+  concept.
+
+  Since 2.12
+  @see-class{gtk-range}
+  @see-function{gtk-range-fill-level}")
+
+;;; --- gtk-range-round-digits -------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "round-digits" 'gtk-range) 't)
+ "The @code{round-digits} property of type @code{:int} (Read / Write) @br{}
+  The number of digits to round the value to when it changes, or -1. See the
+  @code{\"change-value\"} signal. @br{}
+  Allowed values: >= @code{G_MAXULONG} @br{}
+  Default value: -1 @br{}
+  Since 2.24")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-range-round-digits atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-range-round-digits 'function)
+ "@version{2016-1-16}
+  @argument[object]{a @class{gtk-range} widget}
+  @argument[round-digits]{the precision in digits, or -1}
+  @syntax[]{(gtk-range-round-digits object) => round-digits}
+  @syntax[]{(setf (gtk-range-round-digits object) round-digits)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-range]{round-digits} of the @class{gtk-range}
+    class.
+  @end{short}
+
+  The generic function @sym{gtk-range-round-digits} gets the number of digits
+  to round the value to when it changes.
+
+  The generic function @sym{(setf gtk-range-round-digits)} sets the number of
+  digits to round the value to when it changes. See the \"change-value\" signal.
+
+  Since 2.24
+  @see-class{gtk-range}")
+
+;;; --- gtk-range-show-fill-level ----------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "show-fill-level" 'gtk-range) 't)
+ "The @code{show-fill-level} property of type @code{:boolean}
+  (Read / Write) @br{}
+  The @code{show-fill-level} property controls whether fill level indicator
+  graphics are displayed on the trough.
+  See the function @fun{gtk-range-show-fill-level}. @br{}
+  Default value: @code{nil} @br{}
+  Since 2.12")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-range-show-fill-level atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-range-show-fill-level 'function)
+ "@version{2016-1-16}
+  @argument[object]{a @class{gtk-range} widget}
+  @argument[show-fill-level]{whether a fill level indicator graphics is shown}
+  @syntax[]{(gtk-range-show-fill-level object) => show-fill-level}
+  @syntax[]{(setf (gtk-range-show-fill-level object) show-fill-level)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-range]{show-fill-level} of the
+    @class{gtk-range} class.
+  @end{short}
+
+  The generic function @sym{gtk-range-show-fill-level} gets whether the range
+  displays the fill level graphically.
+
+  The generic function @sym{(setf gtk-range-show-fill-level)} sets whether a
+  graphical fill level is show on the trough. See the function
+  @fun{gtk-range-fill-level} for a general description of the fill level
+  concept.
+
+  Since 2.12
+  @see-class{gtk-range}
+  @see-function{gtk-range-fill-level}")
+
+;;; --- gtk-range-upper-stepper-sensitivity ------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "upper-stepper-sensitivity"
+                                               'gtk-range) 't)
+ "The @code{upper-stepper-sensitivity} property of type
+  @symbol{gtk-sensitivity-type} (Read / Write) @br{}
+  The sensitivity policy for the stepper that points to the adjustment's
+  upper side. @br{}
+  Default value: @code{:auto}")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-range-upper-stepper-sensitivity atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-range-upper-stepper-sensitivity 'function)
+ "@version{2016-1-16}
+  @argument[object]{a @class{gtk-range} widget}
+  @argument[sensitivity]{the upper stepper's sensitivity policy.}
+  @syntax[]{(gtk-range-upper-stepper-sensitivity object) => sensitivity}
+  @syntax[]{(setf (gtk-range-upper-stepper-sensitivity object) sensitivity)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-range]{upper-stepper-sensitivity} of the
+    @class{gtk-range} class.
+  @end{short}
+
+  The generic function @sym{gtk-range-upper-stepper-sensitivity} gets the
+  sensitivity policy for the stepper that points to the 'upper' end of the
+  @class{gtk-range}'s adjustment.
+
+  The generic function @sym{(setf gtk-range-upper-stepper-sensitivity)} sets
+  the sensitivity policy for the stepper that points to the 'upper' end of the
+  @class{gtk-range}'s adjustment.
+  
+  Since 2.10
+  @see-class{gtk-range}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_range_get_value ()
@@ -632,7 +591,8 @@
  "@version{2013-5-26}
   @argument[range]{a @class{gtk-range} widget}
   @return{Current value of the @arg{range}.}
-  Gets the current value of the @arg{range}."
+  Gets the current value of the @arg{range}.
+  @see-class{gtk-range}"
   (gtk-adjustment-value (gtk-range-adjustment range)))
 
 (export 'gtk-range-get-value)
@@ -650,7 +610,8 @@
   @argument[value]{new value of the @arg{range}}
   Sets the current value of the range; if the value is outside the minimum or
   maximum range values, it will be clamped to fit inside them. The range emits
-  the \"value-changed\" signal if the value changes."
+  the \"value-changed\" signal if the value changes.
+  @see-class{gtk-range}"
   (setf (gtk-adjustment-value (gtk-range-adjustment range)) value))
 
 (export 'gtk-range-set-value)
@@ -667,10 +628,13 @@
   @argument[range]{a @class{gtk-range} widget}
   @argument[step]{step size}
   @argument[page]{page size}
-  Sets the step and page sizes for the range. The step size is used when the
-  user clicks the @class{gtk-scrollbar} arrows or moves @class{gtk-scale} via
-  arrow keys. The page size is used for example when moving via Page Up or Page
-  Down keys."
+  @begin{short}
+    Sets the step and page sizes for the range.
+  @end{short}
+  The step size is used when the user clicks the @class{gtk-scrollbar} arrows
+  or moves @class{gtk-scale} via arrow keys. The page size is used for example
+  when moving via Page Up or Page Down keys.
+  @see-class{gtk-range}"
   (setf (gtk-adjustment-page-increment (gtk-range-adjustment range)) page
         (gtk-adjustment-step-increment (gtk-range-adjustment range)) step))
 
@@ -689,171 +653,13 @@
   @argument[min]{minimum range value}
   @argument[max]{maximum range value}
   Sets the allowable values in the @class{gtk-range}, and clamps the range value
-  to be between @arg{min} and @arg{max}. (If the range has a non-zero page size,
-  it is clamped between @arg{min} and @arg{max} - @code{page-size}.)"
+  to be between @arg{min} and @arg{max}. If the range has a non-zero page size,
+  it is clamped between @arg{min} and @arg{max} - @code{page-size}.
+  @see-class{gtk-range}"
   (setf (gtk-adjustment-lower (gtk-range-adjustment range)) min
         (gtk-adjustment-upper (gtk-range-adjustment range)) max))
 
 (export 'gtk-range-set-range)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_range_get_round_digits ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-range-get-round-digits))
-
-(defun gtk-range-get-round-digits (range)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-26}
-  @argument[range]{a @class{gtk-range} widget}
-  @return{The number of digits to round to.}
-  @begin{short}
-    Gets the number of digits to round the value to when it changes.
-  @end{short}
-  See the \"change-value\" signal.
-
-  Since 2.24"
-  (gtk-range-round-digits range))
-
-(export 'gtk-range-get-round-digits)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_range_set_round_digits ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-range-set-round-digits))
-
-(defun gtk-range-set-round-digits (range round-digits)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-26}
-  @argument[range]{a @class{gtk-range} widget}
-  @argument[round-digits]{the precision in digits, or -1}
-  @begin{short}
-    Sets the number of digits to round the value to when it changes.
-    See the \"change-value\" signal.
-  @end{short}
-
-  Since 2.24"
-  (setf (gtk-range-round-digits range) round-digits))
-
-(export 'gtk-range-set-round-digits)
-
-;;; ----------------------------------------------------------------------------
-;;; enum GtkSensitivityType
-;;; ----------------------------------------------------------------------------
-
-(define-g-enum "GtkSensitivityType" gtk-sensitivity-type
-  (:export t
-   :type-initializer "gtk_sensitivity_type_get_type")
-  (:auto 0)
-  (:on 1)
-  (:off 2))
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-sensitivity-type atdoc:*symbol-name-alias*) "Enum"
-      (gethash 'gtk-sensitivity-type atdoc:*external-symbols*)
- "@version{2013-5-26}
-  @begin{short}
-    Determines how GTK+ handles the sensitivity of stepper arrows at the end of
-    range widgets.
-  @end{short}
-  @begin{pre}
-(define-g-enum \"GtkSensitivityType\" gtk-sensitivity-type
-  (:export t
-   :type-initializer \"gtk_sensitivity_type_get_type\")
-  (:auto 0)
-  (:on 1)
-  (:off 2))
-  @end{pre}
-  @begin[code]{table}
-    @entry[:auto]{The arrow is made insensitive if the thumb is at the end.}
-    @entry[:on]{The arrow is always sensitive.}
-    @entry[:off]{The arrow is always insensitive.}
-  @end{table}")
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_range_set_lower_stepper_sensitivity ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-range-set-lower-stepper-sensitivity))
-
-(defun gtk-range-set-lower-stepper-sensitivity (range sensitivity)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-26}
-  @argument[range]{a @class{gtk-range} widget}
-  @argument[sensitivity]{the lower stepper's sensitivity policy}
-  @begin{short}
-    Sets the sensitivity policy for the stepper that points to the 'lower' end
-    of the @class{gtk-range}'s adjustment.
-  @end{short}
-
-  Since 2.10"
-  (setf (gtk-range-lower-stepper-sensitivity range) sensitivity))
-
-(export 'gtk-range-set-lower-stepper-sensitivity)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_range_get_lower_stepper_sensitivity ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-range-get-lower-stepper-sensitivity))
-
-(defun gtk-range-get-lower-stepper-sensitivity (range)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-26}
-  @argument[range]{a @class{gtk-range} widget}
-  @return{The lower stepper's sensitivity policy.}
-  @begin{short}
-    Gets the sensitivity policy for the stepper that points to the 'lower' end
-    of the @class{gtk-range}'s adjustment.
-  @end{short}
-
-  Since 2.10"
-  (gtk-range-lower-stepper-sensitivity range))
-
-(export 'gtk-range-get-lower-stepper-sensitivity)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_range_set_upper_stepper_sensitivity ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-range-set-upper-stepper-sensitivity))
-
-(defun gtk-range-set-upper-stepper-sensitivity (range sensitivity)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-26}
-  @argument[range]{a @class{gtk-range} widget}
-  @argument[sensitivity]{the upper stepper's sensitivity policy.}
-  @begin{short}
-    Sets the sensitivity policy for the stepper that points to the 'upper' end
-    of the @class{gtk-range}'s adjustment.
-  @end{short}
-
-  Since 2.10"
-  (setf (gtk-range-upper-stepper-sensitivity range) sensitivity))
-
-(export 'gtk-range-set-upper-stepper-sensitivity)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_range_get_upper_stepper_sensitivity ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-range-get-upper-stepper-sensitivity))
-
-(defun gtk-range-get-upper-stepper-sensitivity (range)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-26}
-  @argument[range]{a @class{gtk-range} widget}
-  @return{The upper stepper's sensitivity policy.}
-  @begin{short}
-    Gets the sensitivity policy for the stepper that points to the 'upper' end
-    of the @class{gtk-range}'s adjustment.
-  @end{short}
-
-  Since 2.10"
-  (gtk-range-upper-stepper-sensitivity range))
-
-(export 'gtk-range-get-upper-stepper-sensitivity)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_range_get_flippable ()
@@ -869,6 +675,7 @@
   @end{short}
 
   Since 2.18
+  @see-class{gtk-range}
   @see-function{gtk-range-set-flippable}"
   (range (g-object gtk-range)))
 
@@ -890,6 +697,7 @@
   See the function @fun{gtk-widget-get-direction}.
 
   Since 2.18
+  @see-class{gtk-range}
   @see-function{gtk-widget-get-direction}"
   (range (g-object gtk-range))
   (flippable :boolean))
@@ -911,6 +719,7 @@
   See the function @fun{gtk-range-set-min-slider-size}.
 
   Since 2.20
+  @see-class{gtk-range}
   @see-function{gtk-range-set-min-slider-size}"
   (range (g-object gtk-range)))
 
@@ -938,7 +747,8 @@
 
   This function is useful mainly for @class{gtk-range} subclasses.
 
-  Since 2.20"
+  Since 2.20
+  @see-class{gtk-range}"
   (let ((range-rect (make-gdk-rectangle)))
     (%gtk-range-get-range-rect range range-rect)
     range-rect))
@@ -969,7 +779,8 @@
 
   This function is useful mainly for @class{gtk-range} subclasses.
 
-  Since 2.20"
+  Since 2.20
+  @see-class{gtk-range}"
   (with-foreign-objects ((slider-start :int) (slider-end :int))
     (%gtk-range-get-slider-range range slider-start slider-end)
     (values (if (not (null-pointer-p slider-start))
@@ -997,6 +808,7 @@
   See the function @fun{gtk-range-set-slider-size-fixed}.
 
   Since 2.20
+  @see-class{gtk-range}
   @see-function{gtk-range-set-slider-size-fixed}"
   (range (g-object gtk-range)))
 
@@ -1017,7 +829,8 @@
 
   This function is useful mainly for @class{gtk-range} subclasses.
 
-  Since 2.20"
+  Since 2.20
+  @see-class{gtk-range}"
   (range (g-object gtk-range))
   (min-size :int))
 
@@ -1040,7 +853,8 @@
 
   This function is useful mainly for @class{gtk-range} subclasses.
 
-  Since 2.20"
+  Since 2.20
+  @see-class{gtk-range}"
   (range (g-object gtk-range))
   (size-fixed :boolean))
 

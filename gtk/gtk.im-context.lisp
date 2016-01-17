@@ -4,12 +4,13 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.16 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2016 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -63,9 +64,15 @@
    :export t
    :interfaces nil
    :type-initializer "gtk_im_context_get_type")
-  nil)
-
-;;; ----------------------------------------------------------------------------
+   (#+gtk-3-6
+    (input-hints
+    gtk-im-context-input-hints
+    "input-hints" "GtkInputHints" t t)
+    #+gtk-3-6
+    (input-purpose
+     gtk-im-context-input-purpose
+     "input-purpose" "GtkInputPurpose" t t)
+   ))
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-im-context 'type)
@@ -210,129 +217,52 @@
         @entry[context]{The object on which the signal is emitted.}
         @entry[Returns]{@em{True} if the signal was handled.}
       @end{table}
-  @end{dictionary}")
+  @end{dictionary}
+  @see-slot{gtk-im-context-input-hints}
+  @see-slot{gtk-im-context-input-purpose}")
 
 ;;; ----------------------------------------------------------------------------
-;;; struct GtkIMContextClass
 ;;;
-;;; struct GtkIMContextClass {
-;;;   /* Signals */
-;;;   void     (*preedit_start)        (GtkIMContext *context);
-;;;   void     (*preedit_end)          (GtkIMContext *context);
-;;;   void     (*preedit_changed)      (GtkIMContext *context);
-;;;   void     (*commit)               (GtkIMContext *context,
-;;;                                     const gchar  *str);
-;;;   gboolean (*retrieve_surrounding) (GtkIMContext *context);
-;;;   gboolean (*delete_surrounding)   (GtkIMContext *context,
-;;;                                     gint          offset,
-;;;                                     gint          n_chars);
+;;; Property and Accessor Details
 ;;;
-;;;   /* Virtual functions */
-;;;   void     (*set_client_window)   (GtkIMContext   *context,
-;;;                                    GdkWindow      *window);
-;;;   void     (*get_preedit_string)  (GtkIMContext   *context,
-;;;                                    gchar         **str,
-;;;                                    PangoAttrList **attrs,
-;;;                                    gint           *cursor_pos);
-;;;   gboolean (*filter_keypress)     (GtkIMContext   *context,
-;;;                                    GdkEventKey    *event);
-;;;   void     (*focus_in)            (GtkIMContext   *context);
-;;;   void     (*focus_out)           (GtkIMContext   *context);
-;;;   void     (*reset)               (GtkIMContext   *context);
-;;;   void     (*set_cursor_location) (GtkIMContext   *context,
-;;;                                    GdkRectangle   *area);
-;;;   void     (*set_use_preedit)     (GtkIMContext   *context,
-;;;                                    gboolean        use_preedit);
-;;;   void     (*set_surrounding)     (GtkIMContext   *context,
-;;;                                    const gchar    *text,
-;;;                                    gint            len,
-;;;                                    gint            cursor_index);
-;;;   gboolean (*get_surrounding)     (GtkIMContext   *context,
-;;;                                    gchar         **text,
-;;;                                    gint           *cursor_index);
-;;; };
-;;;
-;;; preedit_start ()
-;;;     Default handler of the "preedit-start" signal.
-;;;
-;;; preedit_end ()
-;;;     Default handler of the "preedit-end" signal.
-;;;
-;;; preedit_changed ()
-;;;     Default handler of the "preedit-changed" signal.
-;;;
-;;; commit ()
-;;;     Default handler of the "commit" signal.
-;;;
-;;; retrieve_surrounding ()
-;;;     Default handler of the "retrieve-surrounding" signal.
-;;;
-;;; delete_surrounding ()
-;;;     Default handler of the "delete-surrounding" signal.
-;;;
-;;; set_client_window ()
-;;;     Called via gtk_im_context_set_client_window() when the input window
-;;;     where the entered text will appear changes. Override this to keep track
-;;;     of the current input window, for instance for the purpose of positioning
-;;;     a status display of your input method.
-;;;
-;;; get_preedit_string ()
-;;;     Called via gtk_im_context_get_preedit_string() to retrieve the text
-;;;     currently being preedited for display at the cursor position. Any input
-;;;     method which composes complex characters or any other compositions from
-;;;     multiple sequential key presses should override this method to provide
-;;;     feedback.
-;;;
-;;; filter_keypress ()
-;;;     Called via gtk_im_context_filter_keypress() on every key press or
-;;;     release event. Every non-trivial input method needs to override this in
-;;;     order to implement the mapping from key events to text. A return value
-;;;     of TRUE indicates to the caller that the event was consumed by the input
-;;;     method. In that case, the "commit" signal should be emitted upon
-;;;     completion of a key sequence to pass the resulting text back to the
-;;;     input widget. Alternatively, FALSE may be returned to indicate that the
-;;;     event wasn't handled by the input method. If a builtin mapping exists
-;;;     for the key, it is used to produce a character.
-;;;
-;;; focus_in ()
-;;;     Called via gtk_im_context_focus_in() when the input widget has gained
-;;;     focus. May be overridden to keep track of the current focus.
-;;;
-;;; focus_out ()
-;;;     Called via gtk_im_context_focus_out() when the input widget has lost
-;;;     focus. May be overridden to keep track of the current focus.
-;;;
-;;; reset ()
-;;;     Called via gtk_im_context_reset() to signal a change such as a change in
-;;;     cursor position. An input method that implements preediting should
-;;;     override this method to clear the preedit state on reset.
-;;;
-;;; set_cursor_location ()
-;;;     Called via gtk_im_context_set_cursor_location() to inform the input
-;;;     method of the current cursor location relative to the client window. May
-;;;     be overridden to implement the display of popup windows at the cursor
-;;;     position.
-;;;
-;;; set_use_preedit ()
-;;;     Called via gtk_im_context_set_use_preedit() to control the use of the
-;;;     preedit string. Override this to display feedback by some other means if
-;;;     turned off.
-;;;
-;;; set_surrounding ()
-;;;     Called via gtk_im_context_set_surrounding() in response to signal
-;;;     "retrieve-surrounding" to update the input method's idea of the context
-;;;     around the cursor. It is not necessary to override this method even with
-;;;     input methods which implement context-dependent behavior. The base
-;;;     implementation is sufficient for gtk_im_context_get_surrounding() to
-;;;     work.
-;;;
-;;; get_surrounding ()
-;;;     Called via gtk_im_context_get_surrounding() to update the context around
-;;;     the cursor location. It is not necessary to override this method even
-;;;     with input methods which implement context-dependent behavior. The base
-;;;     implementation emits "retrieve-surrounding" and records the context
-;;;     received by the subsequent invocation of get_surrounding.
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-im-context-input-hints ---------------------------------------------
+
+#+(and gtk-3-6 cl-cffi-gtk-documentation)
+(setf (documentation (atdoc:get-slot-from-name "input-hints"
+                                               'gtk-im-context) 't)
+ "The @code{input-hints} property of type @symbol{gtk-input-hints}
+  (Read / Write) @br{}
+  Hints for the text field behaviour. @br{}")
+
+#+(and gtk-3-6 cl-cffi-gtk-documentation)
+(setf (gethash 'gtk-im-context-input-hints atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-im-context-input-hints 'function)
+ "@version{2016-1-16}
+  Accessor of the slot @slot[gtk-im-context]{input-hints} of the
+  @class{gtk-im-context} class.
+  @see-class{gtk-im-context}")
+
+;;; --- gtk-im-context-input-purpose -------------------------------------------
+
+#+(and gtk-3-6 cl-cffi-gtk-documentation)
+(setf (documentation (atdoc:get-slot-from-name "input-purpose"
+                                               'gtk-im-context) 't)
+ "The @code{input-purpose} property of type @symbol{gtk-input-purpose}
+  (Read / Write) @br{}
+  Purpose of the text field. @br{}
+  Default value: @code{:free-from}")
+
+#+(and gtk-3-6 cl-cffi-gtk-documentation)
+(setf (gethash 'gtk-im-context-input-purpose atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-im-context-input-purpose 'function)
+ "@version{2016-1-16}
+  Accessor of the slot @slot[gtk-im-context]{input-purpose} of the
+  @class{gtk-im-context} class.
+  @see-class{gtk-im-context}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkIMContextInfo
