@@ -1746,7 +1746,7 @@
  lambda (widget x y keyboard-mode tooltip)   : Run Last
      @end{pre}
      Emitted when the @code{has-tooltip} property is @em{true} and the
-     @code{\"gtk-tooltip-timeout\"} property of the @class{gtk-settings} class
+     @code{gtk-tooltip-timeout} property of the @class{gtk-settings} class
      has expired with the cursor hovering \"above\" widget; or emitted when
      widget got focus in keyboard mode. Using the given coordinates, the signal
      handler should determine whether a tooltip should be shown for widget. If
@@ -2396,7 +2396,7 @@
 (setf (documentation (atdoc:get-slot-from-name "expand" 'gtk-widget) 't)
  "The @code{expand} property of type @code{:boolean} (Read / Write) @br{}
   Whether to expand in both directions. Setting this sets both properties
-  @code{\"hexpand\"} and @code{\"vexpand\"}. @br{}
+  @code{hexpand} and @code{vexpand}. @br{}
   Default value: @code{nil} @br{}
   Since 3.0")
 
@@ -2577,7 +2577,7 @@
 (setf (documentation (atdoc:get-slot-from-name "hexpand" 'gtk-widget) 't)
  "The @code{hexpand} property of type @code{:boolean} (Read / Write) @br{}
   Whether to expand horizontally.
-  See the function @fun{gtk-widget-set-hexpand}. @br{}
+  See the function @fun{gtk-widget-hexpand}. @br{}
   Default value: @code{nil} @br{}
   Since 3.0")
 
@@ -2642,7 +2642,7 @@
 (setf (documentation (atdoc:get-slot-from-name "hexpand-set" 'gtk-widget) 't)
  "The @code{hexpand-set} property of type @code{:boolean}
   (Read / Write) @br{}
-  Whether to use the @code{\"hexpand\"} property. See the generic function
+  Whether to use the @code{hexpand} property. See the generic function
   @fun{gtk-widget-hexpand-set}. @br{}
   Default value: @code{nil} @br{}
   Since 3.0")
@@ -2661,7 +2661,7 @@
   @end{short}
 
   The generic function @sym{gtk-widget-hexpand-set} gets whether the generic
-  function @sym{(setf gtk-widget-set-hexpand)} has been used to explicitly set
+  function @fun{gtk-widget-hexpand} has been used to explicitly set
   the expand flag on this widget.
 
   If @slot[gtk-widget]{hexpand} is set, then it overrides any computed expand
@@ -2891,7 +2891,7 @@
   Margin on start of the widget, horizontally. This property supports
   left-to-right and right-to-left text directions. This property adds margin
   outside of the widget's normal size request, the margin will be added in
-  addition to the size from @fun{gtk-widget-set-size-request} for example. @br{}
+  addition to the size from @fun{gtk-widget-size-request} for example. @br{}
   Allowed values: [0,32767] @br{}
   Default value: 0 @br{}
   Since 3.12")
@@ -3365,7 +3365,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "vexpand" 'gtk-widget) 't)
  "The @code{vexpand} property of type @code{:boolean} (Read / Write) @br{}
-  Whether to expand vertically. See the function @fun{gtk-widget-set-vexpand}.
+  Whether to expand vertically. See the function @fun{gtk-widget-vexpand}.
   @br{}
   Default value: @code{nil} @br{}
   Since 3.0")
@@ -3398,8 +3398,8 @@
 (setf (documentation (atdoc:get-slot-from-name "vexpand-set" 'gtk-widget) 't)
  "The @code{vexpand-set} property of type @code{:boolean}
   (Read / Write) @br{}
-  Whether to use the @code{\"vexpand\"} property.
-  See the function @fun{gtk-widget-get-vexpand-set}. @br{}
+  Whether to use the @code{vexpand} property.
+  See the function @fun{gtk-widget-vexpand-set}. @br{}
   Default value: @code{nil} @br{}
   Since 3.0")
 
@@ -4188,8 +4188,8 @@
   In this function, the allocation may be adjusted. It will be forced to a 1 x 1
   minimum size, and the @code{adjust_size_allocation()} virtual method on the
   child will be used to adjust the allocation. Standard adjustments include
-  removing the widget's margins, and applying the widget's @code{\"halign\"}
-  and @code{\"valign\"} properties.
+  removing the widget's margins, and applying the widget's @code{halign}
+  and @code{valign} properties.
   @see-class{gtk-widget}
   @see-class{gtk-container}
   @see-class{gdk-rectangle}"
@@ -7230,7 +7230,7 @@
   @end{itemize}
   The default \"keynav-failed\" handler returns @em{true} for
   @code{:tab-forward} and @code{:tab-backward}. For the other values of
-  @symbol{gtk-direction-type}, it looks at the @code{\"gtk-keynav-cursor-only\"}
+  @symbol{gtk-direction-type}, it looks at the @code{gtk-keynav-cursor-only}
   setting and returns @code{nil} if the setting is @em{true}. This way the
   entire user interface becomes cursor-navigatable on input devices such as
   mobile phones which only have cursor keys but no tab key.
@@ -7337,9 +7337,9 @@
   @argument[widget]{a @class{gtk-widget} object}
   @argument[has-tooltip]{whether or not @arg{widget} has a tooltip.}
   @begin{short}
-    Sets the @code{\"has-tooltip\"} property on widget to @arg{has-tooltip}.
+    Sets the @code{has-tooltip} property on widget to @arg{has-tooltip}.
   @end{short}
-  See the @code{\"has-tooltip\"} property for more information.
+  See the @code{has-tooltip} property for more information.
 
   Since 2.12
   @see-class{gtk-widget}
