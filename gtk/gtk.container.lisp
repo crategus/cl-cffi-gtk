@@ -5,12 +5,12 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.8.9 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.16 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2014 Dieter Kaiser
+;;; Copyright (C) 2011 - 2016 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -34,9 +34,11 @@
 ;;;
 ;;; Base class for widgets which contain other widgets
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkContainer
+;;;
+;;; Functions
 ;;;
 ;;;     GTK_IS_RESIZE_CONTAINER
 ;;;     GTK_CONTAINER_WARN_INVALID_CHILD_PROPERTY_ID
@@ -270,20 +272,33 @@
     contain multiple @code{<property>} elements that specify child properties
     for the child.
 
+    Since 2.16, child properties can also be marked as translatable using the
+    same \"translatable\", \"comments\" and \"context\" attributes that are
+    used for regular properties.
+
+    Since 3.16, containers can have a @code{<focus-chain>} element containing
+    multiple @code{<widget>} elements, one for each child that should be added
+    to the focus chain. The \"name\" attribute gives the ID of the widget.
+
+    An example of these properties in UI definitions:
     @b{Example:} Child properties in UI definitions
   @begin{pre}
-  <object class=\"GtkVBox\">
-    <child>
-      <object class=\"GtkLabel\"/>
-      <packing>
-        <property name=\"pack-type\">start</property>
-      </packing>
-    </child>
-  </object>
-    @end{pre}
-    Since 2.16, child properties can also be marked as translatable using the
-    same \"translatable\", \"comments\" and \"context\" attributes that are used
-    for regular properties.
+<object class=\"GtkBox\">
+  <child>
+    <object class=\"GtkEntry\" id=\"entry1\"/>
+    <packing>
+      <property name=\"pack-type\">start</property>
+    </packing>
+  </child>
+  <child>
+    <object class=\"GtkEntry\" id=\"entry2\"/>
+  </child>
+  <focus-chain>
+    <widget name=\"entry1\"/>
+    <widget name=\"entry2\"/>
+  </focus-chain>
+</object>
+  @end{pre}
   @begin[Signal Details]{dictionary}
     @subheading{The \"add\" signal}
       @begin{pre}
@@ -383,7 +398,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "child" 'gtk-container) 't)
- "The @code{\"child\"} property of type @class{gtk-widget} (Write) @br{}
+ "The @code{child} property of type @class{gtk-widget} (Write) @br{}
   Can be used to add a new child to the container.")
 
 #+cl-cffi-gtk-documentation
@@ -398,7 +413,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "resize-mode" 'gtk-container) 't)
- "The @code{\"resize-mode\"} property of type @symbol{gtk-resize-mode}
+ "The @code{resize-mode} property of type @symbol{gtk-resize-mode}
   (Read / Write) @br{}
   Specify how resize events are handled. @br{}
   Default value: @code{:parent}")
@@ -406,7 +421,7 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-container-resize-mode atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-container-resize-mode 'function)
- "@version{2014-2-11}
+ "@version{2016-1-14}
   @argument[object]{a @class{gtk-container} widget}
   @syntax[]{(gtk-container-resize-mode object) => resize-mode}
   @syntax[]{(setf gtk-container-resize-mode object) resize-mode)}
@@ -424,7 +439,12 @@
   The resize mode of a container determines whether a resize request will be
   passed to the container's parent, queued for later execution or executed
   immediately.
-
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-container-resize-mode} has been deprecated since
+    version 3.12 and should not be used in newly-written code. Resize modes are
+    deprecated. They are not necessary anymore since frame clocks and might
+    introduce obscure bugs if used.
+  @end{dictionary}
   @see-class{gtk-container}")
 
 ;;; ----------------------------------------------------------------------------
@@ -630,7 +650,7 @@
 (defcfun ("gtk_container_set_reallocate_redraws"
            gtk-container-set-reallocate-redraws) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-5-24}
+ "@version{2016-1-14}
   @argument[container]{a @class{gtk-container} container}
   @argument[needs-redraws]{the new value for the container's
     @code{reallocate-redraws} flag}
@@ -640,7 +660,14 @@
   @end{short}
 
   Containers requesting reallocation redraws get automatically redrawn if any
-  of their children changed allocation."
+  of their children changed allocation.
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-container-set-reallocate-redraws} has been deprecated
+    since version 3.14 and should not be used in newly-written code. Call
+    the function @fun{gtk-widget-queue-draw}.
+  @end{dictionary}
+  @see-class{gtk-container}
+  @see-function{gtk-widget-queue-draw}"
   (container (g-object gtk-container))
   (needs-redraw :boolean))
 
@@ -793,7 +820,11 @@
 (defcfun ("gtk_container_resize_children" gtk-container-resize-children) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-1-4}
-  @short{undocumented}"
+  @short{undocumented}
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-container-resize-children} has been deprecated since
+    version 3.10 and should not be used in newly-written code.
+  @end{dictionary}"
   (container (g-object gtk-container)))
 
 (export 'gtk-container-resize-children)
