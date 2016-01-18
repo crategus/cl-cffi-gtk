@@ -30,8 +30,8 @@
       ;; Realize the event box
       (gtk-widget-realize eventbox)
       ;; Set a new cursor for the event box
-      (gdk-window-set-cursor (gtk-widget-window eventbox)
-                             (gdk-cursor-new :hand1))
+      (setf (gdk-window-cursor (gtk-widget-window eventbox))
+            (gdk-cursor-new :hand1))
       ;; Show the window
       (gtk-widget-show-all window))))
 
