@@ -413,6 +413,31 @@
     @end{subsection}
     @begin[GtkHeaderBar]{subsection}
       A box with a centered child.
+
+      @about-class{gtk-header-bar}
+      @about-generic{gtk-header-bar-custom-title}
+      @about-generic{gtk-header-bar-decoration-layout}
+      @about-generic{gtk-header-bar-decoration-layout-set}
+      @about-generic{gtk-header-bar-has-subtitle}
+      @about-generic{gtk-header-bar-show-close-button}
+      @about-generic{gtk-header-bar-spacing}
+      @about-generic{gtk-header-bar-subtitle}
+      @about-generic{gtk-header-bar-title}
+      @about-function{gtk-header-bar-new}
+      @about-function{gtk-header-bar-set-title}
+      @about-function{gtk-header-bar-get-title}
+      @about-function{gtk-header-bar-set-subtitle}
+      @about-function{gtk-header-bar-get-subtitle}
+      @about-function{gtk-header-bar-set-has-subtitle}
+      @about-function{gtk-header-bar-get-has-subtitle}
+      @about-function{gtk-header-bar-set-custom-title}
+      @about-function{gtk-header-bar-get-custom-title}
+      @about-function{gtk-header-bar-pack-start}
+      @about-function{gtk-header-bar-pack-end}
+      @about-function{gtk-header-bar-set-show-close-button}
+      @about-function{gtk-header-bar-get-show-close-button}
+      @about-function{gtk-header-bar-set-decoration-layout}
+      @about-function{gtk-header-bar-get-decoration-layout}
     @end{subsection}
     @begin[GtkOverlay]{subsection}
       A container which overlays widgets on top of each other.
@@ -4706,8 +4731,6 @@ setup_tree (void)
       @about-generic{gtk-container-border-width}
       @about-generic{gtk-container-child}
       @about-generic{gtk-container-resize-mode}
-      @about-function{GTK_IS_RESIZE_CONTAINER}
-      @about-function{GTK_CONTAINER_WARN_INVALID_CHILD_PROPERTY_ID}
       @about-function{gtk-container-add}
       @about-function{gtk-container-remove}
       @about-function{gtk-container-add-with-properties}

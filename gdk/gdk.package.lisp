@@ -314,6 +314,7 @@
     Onscreen display areas in the target window system.
 
     @about-class{gdk-window}
+    @about-generic{gdk-window-cursor}
     @about-symbol{gdk-window-type}
     @about-symbol{gdk-window-window-class}
     @about-symbol{gdk-window-hints}

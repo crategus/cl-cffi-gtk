@@ -21,7 +21,7 @@ GTK+ Widgets and Objects
   Windows
 
     gtk.window.lisp                  - GtkWindow                   - GTK+ 3.10 &
-    gtk.dialog.lisp                  - GtkDialog                   - GTK+ 3.10
+    gtk.dialog.lisp                  - GtkDialog                   - GTK+ 3.16
     gtk.message-dialog.lisp          - GtkMessageDialog            - GTK+ 3.10
     gtk.about-dialog.lisp            - GtkAboutDialog              - GTK+ 3.10
     gtk.assistant.lisp               - GtkAssistant                - GTK+ 3.10
@@ -42,6 +42,8 @@ GTK+ Widgets and Objects
     GtkStackSidebar — An automatic sidebar widget
     GtkActionBar — A full width bar for presenting contextual actions
     GtkHeaderBar - A box with a centered child
+
+    gtk.header-bar.lisp              . GtkHeaderBar                - GTK+ 3.16
 
     gtk.overlay.lisp                 - GtkOverlay                  - GTK+ 3.10
     gtk.button-box.lisp              - GtkButtonBox, ...           - GTK+ 3.10
