@@ -1,4 +1,3 @@
-
 (def-suite gtk-widget :in gtk-suite)
 (in-suite gtk-widget)
 
@@ -176,7 +175,6 @@
                         (WIDTH-REQUEST GTK-WIDGET-WIDTH-REQUEST "width-request"
                          "gint" T T)
                         (WINDOW GTK-WIDGET-WINDOW "window" "GdkWindow" T NIL)))
-
              (get-g-type-definition "GtkWidget"))))
 
 ;;; ----------------------------------------------------------------------------

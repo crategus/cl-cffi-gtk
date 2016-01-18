@@ -1,6 +1,8 @@
 (def-suite gtk-dialog :in gtk-suite)
 (in-suite gtk-dialog)
 
+(sb-ext:gc :full t)
+
 ;;;   GtkDialog
 
 (test gtk-dialog-class
@@ -83,30 +85,24 @@
     (is (=   64 (foreign-slot-value query '(:struct g-type-query) :instance-size))))
 
   ;; Get the names of the class properties.
-  (is (equal '("accept-focus" "app-paintable" "application"
-                               "attached-to" "border-width" "can-default"
-                               "can-focus" "child" "composite-child"
-                               "decorated" "default-height" "default-width"
-                               "deletable" "destroy-with-parent"
-                               "double-buffered" "events" "expand"
-                               "focus-on-map" "focus-visible" "gravity"
-                               "halign" "has-default" "has-focus"
-                               "has-resize-grip" "has-tooltip"
-                               "has-toplevel-focus" "height-request" "hexpand"
-                               "hexpand-set" "hide-titlebar-when-maximized"
-                               "icon" "icon-name" "is-active" "is-focus"
-                               "margin" "margin-bottom" "margin-left"
-                               "margin-right" "margin-top" "mnemonics-visible"
-                               "modal" "name" "no-show-all" "opacity" "parent"
-                               "receives-default" "resizable"
-                               "resize-grip-visible" "resize-mode" "role"
-                               "scale-factor" "screen" "sensitive"
-                               "skip-pager-hint" "skip-taskbar-hint"
-                               "startup-id" "style" "title" "tooltip-markup"
-                               "tooltip-text" "transient-for" "type"
-                               "type-hint" "urgency-hint" "valign" "vexpand"
-                               "vexpand-set" "visible" "width-request" "window"
-                               "window-position")
+  (is (equal '("accept-focus" "app-paintable" "application" "attached-to"
+               "border-width" "can-default" "can-focus" "child"
+               "composite-child" "decorated" "default-height" "default-width"
+               "deletable" "destroy-with-parent" "double-buffered" "events"
+               "expand" "focus-on-map" "focus-visible" "gravity" "halign"
+               "has-default" "has-focus" "has-resize-grip" "has-tooltip"
+               "has-toplevel-focus" "height-request" "hexpand" "hexpand-set"
+               "hide-titlebar-when-maximized" "icon" "icon-name" "is-active"
+               "is-focus" "is-maximized" "margin" "margin-bottom" "margin-end"
+               "margin-left" "margin-right" "margin-start" "margin-top"
+               "mnemonics-visible" "modal" "name" "no-show-all" "opacity"
+               "parent" "receives-default" "resizable" "resize-grip-visible"
+               "resize-mode" "role" "scale-factor" "screen" "sensitive"
+               "skip-pager-hint" "skip-taskbar-hint" "startup-id" "style"
+               "title" "tooltip-markup" "tooltip-text" "transient-for" "type"
+               "type-hint" "urgency-hint" "use-header-bar" "valign" "vexpand"
+               "vexpand-set" "visible" "width-request" "window"
+               "window-position")
              (stable-sort (mapcar #'param-spec-name
                                   (g-object-class-list-properties "GtkDialog"))
                           #'string-lessp)))
@@ -118,13 +114,12 @@
                "secondary-cursor-color" "separator-height" "separator-width"
                "text-handle-height" "text-handle-width" "visited-link-color"
                "wide-separators" "window-dragging" "decoration-button-layout"
-               "decoration-resize-handle" "resize-grip-height"
-               "resize-grip-width" "action-area-border" "button-spacing"
+               "decoration-resize-handle" "action-area-border" "button-spacing"
                "content-area-border" "content-area-spacing")
              (mapcar #'param-spec-name
                      (gtk-widget-class-list-style-properties "GtkDialog"))))
 
-  ;; Get the names to the child properties
+  ;; Get the names of the child properties
   (is (equal '()
              (mapcar #'param-spec-name (gtk-container-class-list-child-properties "GtkDialog"))))
 
@@ -133,7 +128,8 @@
                        (:SUPERCLASS GTK-WINDOW :EXPORT T :INTERFACES
                         ("AtkImplementorIface" "GtkBuildable")
                         :TYPE-INITIALIZER "gtk_dialog_get_type")
-                       NIL)
+                       ((USE-HEADER-BAR GTK-DIALOG-USE-HEADER-BAR
+                         "use-header-bar" "gint" T NIL)))
              (get-g-type-definition "GtkDialog"))))
 
 (test gtk-dialog-style-properties
@@ -155,8 +151,6 @@
     (is (eq 'gdk-color (type-of (gtk-widget-style-get-property widget "visited-link-color"))))
     (is-false  (gtk-widget-style-get-property widget "wide-separators"))
     (is-false (gtk-widget-style-get-property widget "window-dragging"))
-    (is-true (integerp (gtk-widget-style-get-property widget "resize-grip-height")))
-    (is-true (integerp (gtk-widget-style-get-property widget "resize-grip-width")))
     (is (= 5 (gtk-widget-style-get-property widget "action-area-border")))
     (is (= 6 (gtk-widget-style-get-property widget "button-spacing")))
     (is (= 2 (gtk-widget-style-get-property widget "content-area-border")))

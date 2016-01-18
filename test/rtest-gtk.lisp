@@ -1,9 +1,9 @@
-
 (in-package :gtk-testsuite)
 
 (def-suite gtk-suite :in gtk-testsuite)
 (in-suite gtk-suite)
 
+|#
 (def-fixture simple-window (widget title)
   (within-main-loop
     (let (;; Create a toplevel window.
@@ -57,12 +57,14 @@
 ;      (gtk-widget-destroy window)
   ))
   (join-gtk-main))
+|#
 
 (load "rtest-gtk-accel-group.lisp")
 (load "rtest-gtk-accel-map.lisp")
 (load "rtest-gtk-action.lisp")
 (load "rtest-gtk-action-group.lisp")
 (load "rtest-gtk-app-chooser.lisp")
+(load "rtest-gtk-container.lisp")
 (load "rtest-gtk-dialog.lisp")
 (load "rtest-gtk-entry-buffer.lisp")
 (load "rtest-gtk-frame.lisp")
