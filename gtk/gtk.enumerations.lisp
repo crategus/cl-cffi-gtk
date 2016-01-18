@@ -805,36 +805,6 @@
   @see-class{gtk-button}")
 
 ;;; ----------------------------------------------------------------------------
-;;; enum GtkResizeMode
-;;; ----------------------------------------------------------------------------
-
-(define-g-enum "GtkResizeMode" gtk-resize-mode
-  (:export t
-   :type-initializer "gtk_resize_mode_get_type")
-  (:parent 0)
-  (:queue 1)
-  (:immediate 2))
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-resize-mode atdoc:*symbol-name-alias*) "Enum"
-      (gethash 'gtk-resize-mode atdoc:*external-symbols*)
- "@version{2013-4-18}
-  @short{}
-  @begin{pre}
-(define-g-enum \"GtkResizeMode\" gtk-resize-mode
-  (:export t
-   :type-initializer \"gtk_resize_mode_get_type\")
-  (:parent 0)
-  (:queue 1)
-  (:immediate 2))
-  @end{pre}
-  @begin[code]{table}
-    @entry[:parent]{Pass resize request to the parent.}
-    @entry[:queue]{Queue resizes on this widget.}
-    @entry[:immediate]{Resize immediately. Deprecated.}
-  @end{table}")
-
-;;; ----------------------------------------------------------------------------
 ;;; enum GtkScrollStep
 ;;; ----------------------------------------------------------------------------
 
