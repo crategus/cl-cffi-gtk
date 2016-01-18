@@ -36,18 +36,16 @@
 ;;;
 ;;; Types and Values
 ;;;
+;;;     GtkResizeMode
 ;;;     GtkContainer
 ;;;
 ;;; Functions
 ;;;
-;;;     GTK_IS_RESIZE_CONTAINER
-;;;     GTK_CONTAINER_WARN_INVALID_CHILD_PROPERTY_ID
-;;;
 ;;;     gtk_container_add
 ;;;     gtk_container_remove
 ;;;     gtk_container_add_with_properties
-;;;     gtk_container_get_resize_mode
-;;;     gtk_container_set_resize_mode
+;;;     gtk_container_get_resize_mode                      -> Accessor
+;;;     gtk_container_set_resize_mode                      -> Accessor
 ;;;     gtk_container_check_resize
 ;;;     gtk_container_foreach
 ;;;     gtk_container_get_children
@@ -69,8 +67,8 @@
 ;;;     gtk_container_child_set_valist
 ;;;     gtk_container_child_notify
 ;;;     gtk_container_forall
-;;;     gtk_container_get_border_width      -> gtk-container-border-width
-;;;     gtk_container_set_border_width      -> (setf gtk-container-border-width)
+;;;     gtk_container_get_border_width                     -> Accessor
+;;;     gtk_container_set_border_width                     -> Accessor
 ;;;     gtk_container_propagate_draw
 ;;;     gtk_container_get_focus_chain
 ;;;     gtk_container_set_focus_chain
@@ -82,6 +80,37 @@
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
+
+;;; ----------------------------------------------------------------------------
+;;; enum GtkResizeMode
+;;; ----------------------------------------------------------------------------
+
+(define-g-enum "GtkResizeMode" gtk-resize-mode
+  (:export t
+   :type-initializer "gtk_resize_mode_get_type")
+  (:parent 0)
+  (:queue 1)
+  (:immediate 2))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-resize-mode atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'gtk-resize-mode atdoc:*external-symbols*)
+ "@version{2013-4-18}
+  @short{}
+  @begin{pre}
+(define-g-enum \"GtkResizeMode\" gtk-resize-mode
+  (:export t
+   :type-initializer \"gtk_resize_mode_get_type\")
+  (:parent 0)
+  (:queue 1)
+  (:immediate 2))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:parent]{Pass resize request to the parent.}
+    @entry[:queue]{Queue resizes on this widget.}
+    @entry[:immediate]{Resize immediately. Deprecated.}
+  @end{table}
+  @see-class{gtk-container}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkContainer
@@ -266,7 +295,7 @@
     To emit notification about child property changes, use the function
     @fun{gtk-widget-child-notify}.
 
-  @subheading{@sym{gtk-container} as @class{gtk-buildable}}
+  @subheading{GtkContainer as GtkBuildable}
     The @sym{gtk-container} implementation of the @class{gtk-buildable}
     interface supports a @code{<packing>} element for children, which can
     contain multiple @code{<property>} elements that specify child properties
@@ -357,7 +386,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "border-width"
                                                'gtk-container) 't)
- "The @code{\"border-width\"} property of type @code{:uint} (Read / Write) @br{}
+ "The @code{border-width} property of type @code{:uint} (Read / Write) @br{}
   The width of the empty border outside the containers children. @br{}
   Allowed values: <= 65535 @br{}
   Default value: 0")
@@ -523,6 +552,7 @@
   to use @arg{widget} again it is usually more efficient to simply destroy it
   directly using the function @fun{gtk-widget-destroy} since this will remove it
   from the @arg{container} and help break any circular reference count cycles.
+  @see-class{gtk-container}
   @see-function{g-object-ref}
   @see-function{gtk-widget-destroy}"
   (container (g-object gtk-container))
@@ -563,7 +593,8 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-5-24}
   @argument[container]{a @class{gtk-container} widget}
-  Emits the \"check-resize\" signal on @arg{widget}."
+  Emits the \"check-resize\" signal on @arg{widget}.
+  @see-class{gtk-container}"
   (container (g-object gtk-container)))
 
 (export 'gtk-container-check-resize)
@@ -637,7 +668,8 @@
   @argument[child]{a child of @arg{container}}
   @return{A newly created @class{gtk-widget-path}.}
   Returns a newly created widget path representing all the widget hierarchy
-  from the toplevel down to and including child."
+  from the toplevel down to and including child.
+  @see-class{gtk-container}"
   (container (g-object gtk-container))
   (child (g-object gtk-widget)))
 
@@ -689,6 +721,7 @@
   the function @fun{gtk-window-get-focus}.
 
   Since 2.14
+  @see-class{gtk-container}
   @see-function{gtk-window-get-focus}"
   (container (g-object gtk-container)))
 
@@ -715,6 +748,7 @@
   This function is mostly meant to be used by widgets. Applications can use the
   function @fun{gtk-widget-grab-focus} to manualy set the focus to a specific
   widget.
+  @see-class{gtk-container}
   @see-function{gtk-widget-grab-focus}"
   (container (g-object gtk-container))
   (child (g-object gtk-widget)))
@@ -733,7 +767,8 @@
   @return{The vertical focus adjustment, or nil if none has been set.}
   @short{Retrieves the vertical focus adjustment for the @arg{container}.}
   See the function @fun{gtk-container-set-focus-vadjustment}.
-  @see-function{gtk-container-set-focus-vadjustment}"
+  @see-function{gtk-container-set-focus-vadjustment}
+  @see-class{gtk-container}"
   (container (g-object gtk-container)))
 
 (export 'gtk-container-get-focus-vadjustment)
@@ -760,6 +795,7 @@
 
   The adjustments have to be in pixel units and in the same coordinate system
   as the allocation for immediate children of the container.
+  @see-class{gtk-container}
   @see-function{gtk-scrolled-window-get-vadjustment}
   @see-function{gtk-container-set-focus-hadjustment}"
   (container (g-object gtk-container))
@@ -779,7 +815,8 @@
   @return{The horizontal focus adjustment, or @code{nil} if none has been set.}
   @short{Retrieves the horizontal focus adjustment for the @arg{container}.}
   See the function @fun{gtk-container-set-focus-hadjustment}.
-  @see-function{gtk-container-set-focus-hadjustment}"
+  @see-function{gtk-container-set-focus-hadjustment}
+  @see-class{gtk-container}"
   (container (g-object gtk-container)))
 
 (export 'gtk-container-get-focus-hadjustment)
@@ -807,7 +844,8 @@
   The adjustments have to be in pixel units and in the same coordinate system
   as the allocation for immediate children of the container.
   @see-function{gtk-scrolled-window-get-hadjustment}
-  @see-function{gtk-container-set-focus-vadjustment}"
+  @see-function{gtk-container-set-focus-vadjustment}
+  @see-class{gtk-container}"
   (container (g-object gtk-container))
   (adjustment (g-object gtk-adjustment)))
 
@@ -824,7 +862,8 @@
   @begin[Warning]{dictionary}
     The function @sym{gtk-container-resize-children} has been deprecated since
     version 3.10 and should not be used in newly-written code.
-  @end{dictionary}"
+  @end{dictionary}
+  @see-class{gtk-container}"
   (container (g-object gtk-container)))
 
 (export 'gtk-container-resize-children)
@@ -842,7 +881,8 @@
 
   Note that this may return @variable{+g-type-none+} to indicate that no more
   children can be added, e. g. for a @class{gtk-paned} container which already
-  has two children."
+  has two children.
+  @see-class{gtk-container}"
   (container g-object))
 
 (export 'gtk-container-child-type)
@@ -859,7 +899,8 @@
   @arg[args]{a list of property names to get}
   @return{A list with the values of the properties.}
   Gets the values of one or more child properties for @arg{child} and
-  @arg{container}."
+  @arg{container}.
+  @see-class{gtk-container}"
   (iter (for arg in args)
         (collect (gtk-container-child-get-property container child arg))))
 
@@ -875,7 +916,8 @@
   @argument[container]{a @class{gtk-container} widget}
   @argument[child]{a widget which is a child of @arg{container}}
   @argument[args]{a list of property names and values}
-  Sets one or more child properties for @arg{child} and @arg{container}."
+  Sets one or more child properties for @arg{child} and @arg{container}.
+  @see-class{gtk-container}"
   (iter (for (name value) on args by #'cddr)
         (collect (gtk-container-child-set-property container child name value))))
 
@@ -899,7 +941,8 @@
   @argument[child]{a widget which is a child of @arg{container}}
   @argument[property-name]{the name of the property to get}
   @argument[value]{a location to return the value}
-  Gets the value of a child property for @arg{child} and @arg{container}."
+  Gets the value of a child property for @arg{child} and @arg{container}.
+  @see-class{gtk-container}"
   (let ((type (param-spec-type
                 (container-child-property-info (g-type-from-instance container)
                                                property-name))))
@@ -931,7 +974,8 @@
   @argument[child]{a widget which is a child of @arg{container}}
   @argument[property-name]{the name of the property to set}
   @argument[value]{the value to set the property to}
-  Sets a child property for @arg{child} and @arg{container}."
+  Sets a child property for @arg{child} and @arg{container}.
+  @see-class{gtk-container}"
   (let ((type (param-spec-type
                 (container-child-property-info (g-type-from-instance container)
                                                property-name))))
@@ -1011,6 +1055,7 @@
   properties. Also see the function @fun{gtk-widget-child-notify}.
 
   Since 3.2
+  @see-class{gtk-container}
   @see-function{g-object-notify}
   @see-function{gtk-widget-child-notify}"
   (container (g-object gtk-container))
@@ -1125,7 +1170,8 @@
   @arg{container}, but this is not enforced by this method, since it is allowed
   to set the focus chain before you pack the widgets, or have a widget in the
   chain that is not always packed. The necessary checks are done when the focus
-  chain is actually traversed."
+  chain is actually traversed.
+  @see-class{gtk-container}"
   (container (g-object gtk-container))
   (focusable-widgets (g-list (g-object gtk-widget))))
 
@@ -1144,6 +1190,7 @@
     Removes a focus chain explicitly set with the function
     @fun{gtk-container-set-focus-chain}.
   @end{short}
+  @see-class{gtk-container}
   @see-function{gtk-container-set-focus-chain}"
   (container (g-object gtk-container)))
 
@@ -1163,7 +1210,8 @@
     The @symbol{g-param-spec} of the child property or @code{nil} if @arg{class}
     has no child property with that name.
   @end{return}
-  Finds a child property of a container class by name."
+  Finds a child property of a container class by name.
+  @see-class{gtk-container}"
   (class :pointer)
   (property-name :string))
 
@@ -1204,10 +1252,11 @@
   @argument[type]{a @class{gtk-container} type}
   @return{A list of @symbol{g-param-spec}.}
   @short{Returns all child properties of a container type.}
-
-  @subheading{Note}
+  @begin[Note]{dictionary}
     In the Lisp binding we pass the type of a container class and not
-    a pointer to the container class as argument to the function."
+    a pointer to the container class as argument to the function.
+  @end{dictionary}
+  @see-class{gtk-container}"
   (setf type (gtype type))
   (let ((class (g-type-class-ref type)))
     (unwind-protect
