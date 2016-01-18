@@ -5,12 +5,12 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.10 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.16 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2014 Dieter Kaiser
+;;; Copyright (C) 2011 - 2016 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -34,12 +34,13 @@
 ;;;
 ;;; Create popup windows
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkDialog
-;;;
 ;;;     GtkDialogFlags
 ;;;     GtkResponseType
+;;;
+;;; Functions
 ;;;
 ;;;     gtk_dialog_new
 ;;;     gtk_dialog_new_with_buttons
@@ -54,9 +55,9 @@
 ;;;     gtk_dialog_get_widget_for_response
 ;;;     gtk_dialog_get_action_area
 ;;;     gtk_dialog_get_content_area
-;;;     gtk_alternative_dialog_button_order
-;;;     gtk_dialog_set_alternative_button_order
-;;;     gtk_dialog_set_alternative_button_order_from_array
+;;;     gtk_alternative_dialog_button_order                * deprecated *
+;;;     gtk_dialog_set_alternative_button_order            * deprecated *
+;;;     gtk_dialog_set_alternative_button_order_from_array * deprecated *
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -71,7 +72,10 @@
    :interfaces ("AtkImplementorIface"
                 "GtkBuildable")
    :type-initializer "gtk_dialog_get_type")
- nil)
+  (#+gtk-3-12
+   (use-header-bar
+    gtk-dialog-use-header-bar
+    "use-header-bar" "gint" t t)))
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-dialog 'type)
@@ -277,6 +281,43 @@
   @end{dictionary}")
 
 ;;; ----------------------------------------------------------------------------
+;;;
+;;; Property and Accessor Details
+;;;
+;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-dialog-use-header-bar ----------------------------------------------
+
+#+(and gtk-3-12 cl-cffi-gtk-documentation)
+(setf (documentation (atdoc:get-slot-from-name "use-header-bar"
+                                               'gtk-dialog) 't)
+ "The @code{use-header-bar} property of type @code{:int}
+  (Read / Write / Construct) @br{}
+  @emph{True} if the dialog uses a @class{gtk-header-bar} for action buttons
+  instead of the action-area.
+  For technical reasons, this property is declared as an integer property, but
+  you should only set it to @emph{true} or @code{nil}. @br{}
+  Allowed values: [-1, 1] @br{}
+  Default value: -1 @br{}
+  Since 3.12")
+
+#+(and gtk-3-12 cl-cffi-gtk-documentation)
+(setf (gethash 'gtk-dialog-use-header-bar atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-dialog-use-header-bar 'function)
+ "@version{2016-1-17}
+  @argument[object]{a @class{gtk-dialog} widget}
+  @syntax[]{(gtk-dialog-use-header-bar object) => header-bar}
+  @syntax[]{(setf gtk-dialog-use-header-bar object) header-bar)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-dialog]{use-header-bar} of the
+    @class{gtk-dialog} class.
+  @end{short}
+
+  Since 3.12
+  @see-class{gtk-dialog}")
+
+;;; ----------------------------------------------------------------------------
 ;;; enum GtkDialogFlags
 ;;; ----------------------------------------------------------------------------
 
@@ -284,25 +325,29 @@
   (:export t
    :type-initializer "gtk_dialog_flags_get_type")
   (:modal 1)
-  (:destroy-with-parent 2))
+  (:destroy-with-parent 2)
+  (:use-header-bar 3))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-dialog-flags atdoc:*symbol-name-alias*) "Flags"
       (gethash 'gtk-dialog-flags atdoc:*external-symbols*)
- "@version{2013-9-9}
+ "@version{2016-1-17}
   @short{Flags used to influence the dialog construction.}
   @begin{pre}
 (define-g-flags \"GtkDialogFlags\" gtk-dialog-flags
   (:export t
    :type-initializer \"gtk_dialog_flags_get_type\")
   (:modal 1)
-  (:destroy-with-parent 2))
+  (:destroy-with-parent 2)
+  (:use-header-bar 3))
   @end{pre}
   @begin[code]{table}
     @entry[:modal]{Make the constructed dialog modal,
       see the function @fun{gtk-window-modal}.}
     @entry[:destroy-with-parent]{Destroy the dialog when its parent is
       destroyed, see the function @fun{gtk-window-destroy-with-parent}.}
+    @entry[:use-header-bar]{Create dialog with actions in header bar instead of
+      action area. Since 3.12.}
   @end{table}
   @see-class{gtk-dialog}
   @see-function{gtk-window-modal}
@@ -732,10 +777,16 @@
 (defcfun ("gtk_dialog_get_action_area" gtk-dialog-get-action-area)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
- "@version{2013-9-9}
+ "@version{2016-1-17}
   @argument[dialog]{a @class{gtk-dialog} window}
   @return{The action area.}
   @short{Returns the action area of @arg{dialog}.}
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-dialog-get-action-area} has been deprecated since
+    version 3.12 and should not be used in newly-written code. Direct access to
+    the action area is discouraged; use the function
+    @fun{gtk-dialog-add-button}, etc.
+  @end{dictionary}
 
   Since 2.14
   @see-class{gtk-dialog}
@@ -768,13 +819,33 @@
 (export 'gtk-dialog-get-content-area)
 
 ;;; ----------------------------------------------------------------------------
+;;; gtk_dialog_get_header_bar ()
+;;;
+;;; GtkWidget *
+;;; gtk_dialog_get_header_bar (GtkDialog *dialog);
+;;;
+;;; Returns the header bar of dialog . Note that the headerbar is only used by
+;;; the dialog if the “use-header-bar” property is TRUE.
+;;;
+;;; Parameters
+;;;
+;;; dialog
+;;;      a GtkDialog
+;;;
+;;; Returns
+;;;     the header bar.
+;;;
+;;; Since 3.12
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_alternative_dialog_button_order ()
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_alternative_dialog_button_order"
           gtk-alternative-dialog-button-order) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-9-9}
+ "@version{2016-1-17}
   @argument[screen]{a @class{gdk-screen} object, or @code{nil} to use the
     default screen}
   @return{Whether the alternative button order should be used.}
@@ -789,6 +860,10 @@
   \"notify:gtk-alternative-button-order\" signal on the @class{gtk-settings}
   object associated to @arg{screen}, in order to be notified if the button order
   setting changes.
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-alternative-dialog-button-order} has been deprecated
+    since version 3.10 and should not be used in newly-written code.
+  @end{dictionary}
 
   Since 2.6
   @see-class{gtk-dialog}
@@ -847,6 +922,11 @@
 
    ...)
   @end{pre}
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-dialog-set-alternative-button-order} has been
+    deprecated since version 3.10 and should not be used in newly-written code.
+  @end{dictionary}
+
   Since 2.6
   @see-class{gtk-dialog}
   @see-class{gtk-message-dialog}
@@ -886,6 +966,10 @@
   information.
 
   This function is for use by language bindings.
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-dialog-set-alternative-button-order} has been
+    deprecated since version 3.10 and should not be used in newly-written code.
+  @end{dictionary}
 
   Since 2.6"
   (dialog (g-object gtk-dialog))
