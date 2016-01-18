@@ -824,7 +824,7 @@
 #+cairo-1-12
 (defcfun ("cairo_mesh_pattern_end_patch" cairo-mesh-pattern-end-patch) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-11-18}
+ "@version{2016-1-17}
   @argument[pattern]{a @symbol{cairo-pattern-t}}
   @begin{short}
     Indicates the end of the current patch in a mesh pattern.
@@ -844,7 +844,7 @@
   @see-symbol{cairo-pattern-t}
   @see-symbol{cairo-status-t}
   @see-function{cairo-mesh-pattern-line-to}"
-  (patten cairo-pattern-t))
+  (pattern (:pointer (:struct cairo-pattern-t))))
 
 #+cairo-1-12
 (export 'cairo-mesh-pattern-end-patch)
