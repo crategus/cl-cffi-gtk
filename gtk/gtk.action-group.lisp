@@ -940,8 +940,8 @@
         (gtk-radio-action-join-group action last-action)
         (setf last-action action)
         (if (eql value (sixth entry))
-            (gtk-toggle-action-set-active action t)
-            (gtk-toggle-action-set-active action nil))
+            (setf (gtk-toggle-action-active action) t)
+            (setf (gtk-toggle-action-active action) nil))
         (gtk-action-group-add-action action-group action (fourth entry))))
     (when on-change
       (g-signal-connect first-action "changed" on-change))))
