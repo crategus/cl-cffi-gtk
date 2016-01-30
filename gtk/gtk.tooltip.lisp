@@ -67,7 +67,7 @@
   @short{Add tips to your widgets.}
 
   Basic tooltips can be realized simply by using the functions
-  @fun{gtk-widget-tooltip-text} or @fun{gtk-widget-set-tooltip-markup}
+  @fun{gtk-widget-tooltip-text} or @fun{gtk-widget-tooltip-markup}
   without any explicit tooltip object.
 
   When you need a tooltip with a little more fancy contents, like adding an
@@ -114,7 +114,7 @@
   @see-class{gtk-tree-view}
   @see-class{gtk-window}
   @see-function{gtk-widget-tooltip-text}
-  @see-function{gtk-widget-set-tooltip-markup}
+  @see-function{gtk-widget-tooltip-markup}
   @see-function{gtk-widget-get-tooltip-window}
   @see-function{gtk-widget-set-tooltip-window}
   @see-function{gtk-tooltip-set-icon}")

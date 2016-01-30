@@ -622,7 +622,7 @@
 
   Since 3.0
   @see-class{gdk-drag-context}
-  @symbol{gdk-drag-protocol}"
+  @see-symbol{gdk-drag-protocol}"
   (context (g-object gdk-drag-context)))
 
 (export 'gdk-drag-context-get-protocol)

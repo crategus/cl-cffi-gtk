@@ -2831,14 +2831,14 @@
 
   Use @code{nil} for @arg{tooltip} to remove an existing tooltip.
 
-  See also the functions @fun{gtk-widget-set-tooltip-markup} and
+  See also the functions @fun{gtk-widget-tooltip-markup} and
   @fun{gtk-entry-set-icon-tooltip-text}.
 
   Since 2.16
   @see-class{gtk-entry}
   @see-symbol{gtk-entry-icon-position}
   @see-function{gtk-entry-get-icon-tooltip-markup}
-  @see-function{gtk-widget-set-tooltip-markup}
+  @see-function{gtk-widget-tooltip-markup}
   @see-function{gtk-entry-set-icon-tooltip-text}"
   (entry (g-object gtk-entry))
   (icon-pos gtk-entry-icon-position)

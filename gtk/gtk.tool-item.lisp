@@ -374,11 +374,11 @@
   @begin{short}
     Sets the markup text to be displayed as tooltip on the item.
   @end{short}
-  See the function @fun{gtk-widget-set-tooltip-markup}.
+  See the function @fun{gtk-widget-tooltip-markup}.
 
   Since 2.12
   @see-class{gtk-tool-item}
-  @see-function{gtk-widget-set-tooltip-markup}
+  @see-function{gtk-widget-tooltip-markup}
   @see-function{gtk-tool-item-set-tooltip-text}"
   (tool-item (g-object gtk-tool-item))
   (markup :string))
