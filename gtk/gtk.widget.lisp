@@ -196,7 +196,7 @@
 ;;;     gtk_widget_get_has_tooltip
 ;;;     gtk_widget_set_has_tooltip
 ;;;     gtk_widget_trigger_tooltip_query
-;;;     gtk_widget_get_window                    -> gtk-widget-window
+;;;     gtk_widget_get_window                              -> Accessor
 ;;;     gtk_widget_register_window
 ;;;     gtk_widget_unregister_window
 ;;;     gtk_cairo_should_draw_window
@@ -696,9 +696,9 @@
     Since 3.10 GTK+ also supports baseline vertical alignment of widgets. This
     means that widgets are positioned such that the typographical baseline of
     widgets in the same row are aligned. This happens if a widget supports
-    baselines, has a vertical alignment of @code{GTK_ALIGN_BASELINE}, and is
-    inside a container that supports baselines and has a natural \"row\" that
-    it aligns to the baseline, or a baseline assigned to it by the grandparent.
+    baselines, has a vertical alignment of @code{:baseline}, and is inside a
+    container that supports baselines and has a natural \"row\" that it aligns
+    to the baseline, or a baseline assigned to it by the grandparent.
 
     Baseline alignment support for a widget is done by the
     @code{GtkWidgetClass.get_preferred_height_and_baseline_for_width()} virtual
@@ -710,10 +710,10 @@
     not supported it doesn’t need to be implemented.
 
     If a widget ends up baseline aligned it will be allocated all the space in
-    the parent as if it was @code{GTK_ALIGN_FILL}, but the selected baseline
-    can be found via @fun{gtk-widget-get-allocated-baseline}. If this has a
-    value other than -1 you need to align the widget such that the baseline
-    appears at the position.
+    the parent as if it was @code{:fill}, but the selected baseline can be found
+    via @fun{gtk-widget-get-allocated-baseline}. If this has a value other than
+    -1 you need to align the widget such that the baseline appears at the
+    position.
 
   @subheading{Style Properties}
     @sym{gtk-widget} introduces style properties - these are basically object
@@ -778,10 +778,11 @@
    </style>
  </object>
     @end{pre}
+
   @subheading{Building composite widgets from template XML}
     @sym{gtk-widget} exposes some facilities to automate the proceedure of
-    creating composite widgets using @class{gtk-builder} interface description
-    language.
+    creating composite widgets using the @class{gtk-builder} interface
+    description language.
 
     To create composite widgets with @class{gtk-builder} XML, one must associate
     the interface description with the widget class at class initialization time
@@ -791,24 +792,24 @@
     descriptions is slightly different from regulare @class{gtk-builder} XML.
 
     Unlike regular interface descriptions, @fun{gtk-widget-class-set-template}
-    will expect a <template> tag as a direct child of the toplevel <interface>
-    tag. The <template> tag must specify the \"class\" attribute which must be
-    the type name of the widget. Optionally, the \"parent\" attribute may be
-    specified to specify the direct parent type of the widget type, this is
-    ignored by the @class{gtk-builder} but required for Glade to introspect what
-    kind of properties and internal children exist for a given type when the
-    actual type does not exist.
+    will expect a @code{<template>} tag as a direct child of the toplevel
+    @code{<interface>} tag. The @code{<template>} tag must specify the \"class\"
+    attribute which must be the type name of the widget. Optionally, the
+    \"parent\" attribute may be specified to specify the direct parent type of
+    the widget type, this is ignored by the @class{gtk-builder} but required for
+    Glade to introspect what kind of properties and internal children exist for
+    a given type when the actual type does not exist.
 
-    The XML which is contained inside the <template> tag behaves as if it were
-    added to the <object> tag defining widget itself. You may set properties on
-    widget by inserting <property> tags into the <template> tag, and also add
-    <child> tags to add children and extend widget in the normal way you would
-    with <object> tags.
+    The XML which is contained inside the @code{<template>} tag behaves as if it
+    were added to the @code{<object>} tag defining widget itself. You may set
+    properties on widget by inserting @code{<property>} tags into the
+    @code{<template>} tag, and also add @code{<child>} tags to add children and
+    extend widget in the normal way you would with @code{<object>} tags.
 
-    Additionally, <object> tags can also be added before and after the initial
-    <template> tag in the normal way, allowing one to define auxilary objects
-    which might be referenced by other widgets declared as children of the
-    <template> tag.
+    Additionally, @code{<object>} tags can also be added before and after the
+    initial @code{<template>} tag in the normal way, allowing one to define
+    auxilary objects which might be referenced by other widgets declared as
+    children of the @code{<template>} tag.
 
     @b{Example:} A @class{btk-builder} Template Definition
       @begin{pre}
@@ -842,46 +843,56 @@
 
     @subheading{The \"focus-line-pattern\" style property}
       @code{\"focus-line-pattern\"} of type @code{:string} (Read) @br{}
-      @b{Warning:} The @code{\"focus-line-pattern\"} style property has been
-      deprecated since version 3.14 and should not be used in newly-written
-      code. Use the outline-style CSS property instead. @br{}
-      Dash pattern used to draw the focus indicator. @br{}
+      Dash pattern used to draw the focus indicator.
+      @begin{indent}
+        @b{Warning:} The @code{\"focus-line-pattern\"} style property has been
+        deprecated since version 3.14 and should not be used in newly-written
+        code. Use the outline-style CSS property instead.
+      @end{indent}
       Default value: \"\001\001\"
 
     @subheading{The \"focus-line-width\" style property}
       @code{\"focus-line-width\"} of type @code{:int} (Read) @br{}
-      @b{Warning:} The @code{\"focus-line-width\"} style property has been
-      deprecated since version 3.14 and should not be used in newly-written
-      code. Use the outline-width CSS property instead. @br{}
-      Width, in pixels, of the focus indicator line. @br{}
+      Width, in pixels, of the focus indicator line.
+      @begin{indent}
+        @b{Warning:} The @code{\"focus-line-width\"} style property has been
+        deprecated since version 3.14 and should not be used in newly-written
+        code. Use the outline-width CSS property instead.
+      @end{indent}
       Allowed values: >= 0 @br{}
       Default value: 1
 
     @subheading{The \"focus-padding\" style property}
       @code{\"focus-padding\"} of type @code{:int} (Read) @br{}
-      @b{Warning:} The @code{\"focus-padding\"} style property has been
-      deprecated since version 3.14 and should not be used in newly-written
-      code. Use the padding CSS property instead. @br{}
-      Width, in pixels, between focus indicator and the widget 'box'. @br{}
+      Width, in pixels, between focus indicator and the widget 'box'.
+      @begin{indent}
+        @b{Warning:} The @code{\"focus-padding\"} style property has been
+        deprecated since version 3.14 and should not be used in newly-written
+        code. Use the padding CSS property instead.
+      @end{indent}
       Allowed values: >= 0 @br{}
       Default value: 1
 
     @subheading{The \"interior-focus\" style property}
       @code{\"interior-focus\"} of type @code{:boolean} (Read) @br{}
-      @b{Warning:} The @code{\"interior-focus\"} style property has been
-      deprecated since version 3.14 and should not be used in newly-written
-      code. Use the outline CSS property instead. @br{}
-      Whether to draw the focus indicator inside widgets. @br{}
+      Whether to draw the focus indicator inside widgets.
+      @begin{indent}
+        @b{Warning:} The @code{\"interior-focus\"} style property has been
+        deprecated since version 3.14 and should not be used in newly-written
+        code. Use the outline CSS property instead.
+      @end{indent}
       Default value: @em{true}
 
     @subheading{The \"link-color\" style property}
       @code{\"link-color\"} of type @class{gdk-color} (Read)@br{}
-      @b{Warning:} The @code{\"link-color\"} style property has been deprecated
-      since version 3.12 and should not be used in newly-written code. Links
-      now use a separate state flags for selecting different theming, this
-      style property is ignored. @br{}
       The @code{\"link-color\"} style property defines the color of unvisited
-      links. @br{}
+      links.
+      @begin{indent}
+        @b{Warning:} The @code{\"link-color\"} style property has been
+        deprecated since version 3.12 and should not be used in newly-written
+        code. Links now use a separate state flags for selecting different
+        theming, this style property is ignored.
+      @end{indent}
       Since 2.10
 
     @subheading{The \"scroll-arrow-hlength\" style property}
@@ -906,19 +917,19 @@
       mixed right-to-left and left-to-right text.
 
     @subheading{The \"separator-height\" style property}
-      @code{separator-height} of type @code{:int} (Read) @br{}
-      The @code{separator-height} style property defines the height of
-      separators. This property only takes effect if the @code{wide-separators}
-      style property is @em{true}. @br{}
+      @code{\"separator-height\"} of type @code{:int} (Read) @br{}
+      The @code{\"separator-height\"} style property defines the height of
+      separators. This property only takes effect if the
+      @code{\"wide-separators\"} style property is @em{true}. @br{}
       Allowed values: >= 0 @br{}
       Default value: 0 @br{}
       Since 2.10
 
     @subheading{The \"separator-width\" style property}
-      @code{separator-width} of type @code{:int} (Read) @br{}
-      The @code{separator-width} style property defines the width of
-      separators. This property only takes effect if the @code{wide-separators}
-      style property is @em{true}. @br{}
+      @code{\"separator-width\"} of type @code{:int} (Read) @br{}
+      The @code{\"separator-width\"} style property defines the width of
+      separators. This property only takes effect if the
+      @code{\"wide-separators\"} style property is @em{true}. @br{}
       Allowed values: >= 0 @br{}
       Default value: 0 @br{}
       Since 2.10
@@ -937,12 +948,14 @@
 
     @subheading{The \"visited-link-color\" style property}
       @code{\"visited-link-color\"} of type @class{gdk-color} (Read) @br{}
-      @b{Warning:} The @code{\"visited-link-color\"} style property has been
-      deprecated since version 3.12 and should not be used in newly-written
-      code. Links now use a separate state flags for selecting different
-      theming, this style property is ignored. @br{}
       The @code{\"visited-link-color\"} style property defines the color of
-      visited links. @br{}
+      visited links.
+      @begin{indent}
+        @b{Warning:} The @code{\"visited-link-color\"} style property has been
+        deprecated since version 3.12 and should not be used in newly-written
+        code. Links now use a separate state flags for selecting different
+        theming, this style property is ignored. @br{}
+      @end{indent}
       Since 2.10
 
     @subheading{The \"wide-separators\" style property}
@@ -2286,10 +2299,12 @@
                                                'gtk-widget) 't)
  "The @code{double-buffered} property of type @code{:boolean}
   (Read / Write) @br{}
-  @b{Warning:} The @code{double-buffered} property has been deprecated since
-  version 3.14 and should not be used in newly-written code. Widgets should not
-  use this property. @br{}
   Whether the widget is double buffered. @br{}
+  @begin{indent}
+    @b{Warning:} The @code{double-buffered} property has been deprecated since
+    version 3.14 and should not be used in newly-written code. Widgets should
+    not use this property.
+  @end{indent}
   Default value: @em{true} @br{}
   Since 2.18")
 
@@ -2395,8 +2410,8 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "expand" 'gtk-widget) 't)
  "The @code{expand} property of type @code{:boolean} (Read / Write) @br{}
-  Whether to expand in both directions. Setting this sets both properties
-  @code{hexpand} and @code{vexpand}. @br{}
+  Whether to expand in both directions. Setting @code{expand} sets both
+  properties @code{hexpand} and @code{vexpand}. @br{}
   Default value: @code{nil} @br{}
   Since 3.0")
 
@@ -2549,10 +2564,9 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "height-request" 'gtk-widget) 't)
- "The @code{height-request} property of type @code{:int}
-  (Read / Write) @br{}
+ "The @code{height-request} property of type @code{:int} (Read / Write) @br{}
   Override for height request of the widget, or -1 if natural request
-  should be used. @br{}
+  should be used.@br{}
   Allowed values: >= -1 @br{}
   Default value: -1")
 
@@ -2642,8 +2656,8 @@
 (setf (documentation (atdoc:get-slot-from-name "hexpand-set" 'gtk-widget) 't)
  "The @code{hexpand-set} property of type @code{:boolean}
   (Read / Write) @br{}
-  Whether to use the @code{hexpand} property. See the generic function
-  @fun{gtk-widget-hexpand-set}. @br{}
+  Whether to use the @code{hexpand} property. See the function
+  @fun{gtk-widget-hexpand-set}.@br{}
   Default value: @code{nil} @br{}
   Since 3.0")
 
@@ -2802,12 +2816,14 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "margin-left" 'gtk-widget) 't)
  "The @code{margin-left} property of type @code{:int} (Read / Write) @br{}
-  @b{Warning:} The @code{margin-left} property has been deprecated since
-  version 3.12 and should not be used in newly-written code. Use the
-  @code{margin-start} property instead. @br{}
   Margin on left side of widget. This property adds margin outside of the
   widget's normal size request, the margin will be added in addition to the size
-  from the function @fun{gtk-widget-size-request} for example. @br{}
+  from the function @fun{gtk-widget-size-request} for example.
+  @begin{indent}
+    @b{Warning:} The @code{margin-left} property has been deprecated since
+    version 3.12 and should not be used in newly-written code. Use the
+    @code{margin-start} property instead.
+  @end{indent}
   Allowed values: [0,32767] @br{}
   Default value: 0 @br{}
   Since 3.0")
@@ -2845,12 +2861,14 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "margin-right" 'gtk-widget) 't)
  "The @code{margin-right} property of type @code{:int} (Read / Write) @br{}
-  @b{Warning:} The @code{margin-right} property has been deprecated since
-  version 3.12 and should not be used in newly-written code. Use the
-  @code{margin-end} property instead. @br{}
   Margin on right side of widget. This property adds margin outside of the
   widget's normal size request, the margin will be added in addition to the
-  size from the function @fun{gtk-widget-size-request} for example. @br{}
+  size from the function @fun{gtk-widget-size-request} for example.
+  @begin{indent}
+    @b{Warning:} The @code{margin-right} property has been deprecated since
+    version 3.12 and should not be used in newly-written code. Use the
+    @code{margin-end} property instead.
+  @end{indent}
   Allowed values: [0,32767] @br{}
   Default value: 0 @br{}
   Since 3.0")
@@ -3031,9 +3049,9 @@
 #+(and gtk-3-8 cl-cffi-gtk-documentation)
 (setf (documentation (atdoc:get-slot-from-name "opacity" 'gtk-widget) 't)
  "The @code{opacity} property of type @code{:double} (Read / Write) @br{}
-  The requested opacity of the widget. See the generic function
-  @fun{gtk-widget-opacity} for more details about window opacity. Before
-  version 3.8 this was only available in @class{gtk-window}. @br{}
+  The requested opacity of the widget. See the function @fun{gtk-widget-opacity}
+  for more details about window opacity. Before version 3.8 this was only
+  available in @class{gtk-window}. @br{}
   Allowed values: [0,1] @br{}
   Default value: 1 @br{}
   Since 3.8")
@@ -3154,8 +3172,8 @@
 #+(and gtk-3-10 cl-cffi-gtk-documentation)
 (setf (documentation (atdoc:get-slot-from-name "scale-factor" 'gtk-widget) 't)
  "The @code{scale-factor} property of type @code{:int} (Read) @br{}
-  The scale factor of the widget. See @fun{gtk-widget-scale-factor} for more
-  details about widget scaling. @br{}
+  The scale factor of the widget. See the function @fun{gtk-widget-scale-factor}
+  for more details about widget scaling. @br{}
   Allowed values: >= 1 @br{}
   Default value: 1 @br{}
   Since 3.10")
@@ -3297,9 +3315,9 @@
   Sets the text of tooltip to be the given string. Also see the function
   @fun{gtk-tooltip-set-text}. This is a convenience property which will take
   care of getting the tooltip shown if the given string is not @code{nil}.
-  The @slot[gtk-widget]{has-tooltip} property will automatically be set to
-  @em{true} and there will be taken care of the \"query-tooltip\" signal in the
-  default signal handler. @br{}
+  The @code{has-tooltip} property will automatically be set to @em{true} and
+  there will be taken care of the \"query-tooltip\" signal in the default
+  signal handler. @br{}
   Default value: @code{nil} @br{}
   Since 2.12")
 
@@ -3398,8 +3416,8 @@
 (setf (documentation (atdoc:get-slot-from-name "vexpand-set" 'gtk-widget) 't)
  "The @code{vexpand-set} property of type @code{:boolean}
   (Read / Write) @br{}
-  Whether to use the @code{vexpand} property.
-  See the function @fun{gtk-widget-vexpand-set}. @br{}
+  Whether to use the @code{vexpand} property. See the function
+  @fun{gtk-widget-vexpand-set}.@br{}
   Default value: @code{nil} @br{}
   Since 3.0")
 
@@ -7301,52 +7319,6 @@
   (custom-window (g-object gtk-window)))
 
 (export 'gtk-widget-set-tooltip-window)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_widget_get_has_tooltip ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-widget-get-has-tooltip))
-
-(defun gtk-widget-get-has-tooltip (widget)
- #+cl-cffi-gtk-documentation
- "@version{2013-7-31}
-  @argument[widget]{a @class{gtk-widget} object}
-  @return{Current value of the @code{has-tooltip} property on @arg{widget}.}
-  @begin{short}
-    Returns the current value of the @slot[gtk-widget]{has-tooltip} property.
-  @end{short}
-  See the @slot[gtk-widget]{has-tooltip} property for more information.
-
-  Since 2.12
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-set-has-tooltip}"
-  (gtk-widget-has-tooltip widget))
-
-(export 'gtk-widget-get-has-tooltip)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_widget_set_has_tooltip ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-widget-set-has-tooltip))
-
-(defun gtk-widget-set-has-tooltip (widget has-tooltip)
- #+cl-cffi-gtk-documentation
- "@version{2013-7-31}
-  @argument[widget]{a @class{gtk-widget} object}
-  @argument[has-tooltip]{whether or not @arg{widget} has a tooltip.}
-  @begin{short}
-    Sets the @code{has-tooltip} property on widget to @arg{has-tooltip}.
-  @end{short}
-  See the @code{has-tooltip} property for more information.
-
-  Since 2.12
-  @see-class{gtk-widget}
-  @see-function{gtk-widget-get-has-tooltip}"
-  (setf (gtk-widget-has-tooltip widget) has-tooltip))
-
-(export 'gtk-widget-set-has-tooltip)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_trigger_tooltip_query ()
