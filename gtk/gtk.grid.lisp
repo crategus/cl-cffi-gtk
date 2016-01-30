@@ -2,11 +2,11 @@
 ;;; gtk.grid.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.10 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.16 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012, 2013, 2014 Dieter Kaiser
+;;; Copyright (C) 2012 - 2016 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -98,38 +98,38 @@
     columns.
   @end{short}
   It is a very similar to @class{gtk-table} and @class{gtk-box}, but it
-  consistently uses @class{gtk-widget}'s @code{\"margin\"} and @code{\"expand\"}
-  properties instead of custom child properties, and it fully supports
-  height-for-width geometry management.
+  consistently uses @class{gtk-widget}'s @slot[gtk-widget]{margin} and
+  @slot[gtk-widget]{expand} properties instead of custom child properties, and
+  it fully supports height-for-width geometry management.
 
   Children are added using the function @fun{gtk-grid-attach}. They can span
   multiple rows or columns. It is also possible to add a child next to an
   existing child, using the function @fun{gtk-grid-attach-next-to}. The
-  behaviour of @sym{gtk-grid} when several children occupy the same grid cell is
-  undefined.
+  behaviour of @sym{gtk-grid} when several children occupy the same grid cell
+  is undefined.
 
   @sym{gtk-grid} can be used like a @class{gtk-box} by just using
   @fun{gtk-container-add}, which will place children next to each other in the
-  direction determined by the @code{\"orientation\"} property.
+  direction determined by the @slot[gtk-orientable]{orientation} property.
   @begin[Child Property Details]{dictionary}
-    @subheading{The \"height\" child property}
-      @code{\"height\"} of type @code{:int} (Read / Write) @br{}
+    @subheading{The @code{height} child property}
+      @code{height} of type @code{:int} (Read / Write) @br{}
       The number of rows that a child spans. @br{}
       Allowed values: >= 1 @br{}
       Default value: 1
 
-    @subheading{The \"left-attach\" child property}
-      @code{\"left-attach\"} of type @code{:int} (Read / Write) @br{}
+    @subheading{The @code{left-attach} child property}
+      @code{left-attach} of type @code{:int} (Read / Write) @br{}
       The column number to attach the left side of the child to. @br{}
       Default value: 0
 
-    @subheading{The \"top-attach\" child property}
-      @code{\"top-attach\"} of type @code{:int} (Read / Write) @br{}
+    @subheading{The @code{top-attach} child property}
+      @code{top-attach} of type @code{:int} (Read / Write) @br{}
       The row number to attach the top side of a child widget to. @br{}
       Default value: 0
 
-    @subheading{The \"width\" child property}
-      @code{\"width\"} of type @code{:int} (Read / Write) @br{}
+    @subheading{The @code{width} child property}
+      @code{width} of type @code{:int} (Read / Write) @br{}
       The number of columns that a child spans. @br{}
       Allowed values: >= 1 @br{}
       Default value: 1
@@ -139,8 +139,8 @@
   @see-slot{gtk-grid-column-spacing}
   @see-slot{gtk-grid-row-homogeneous}
   @see-slot{gtk-grid-row-spacing}
-  @see-class{gtk-table}
   @see-class{gtk-box}
+  @see-class{gtk-table}
   @see-function{gtk-grid-attach}
   @see-function{gtk-grid-attach-next-to}
   @see-function{gtk-container-add}")
@@ -154,8 +154,7 @@
 #+(and gtk-3-10 cl-cffi-gtk-documentation)
 (setf (documentation (atdoc:get-slot-from-name "baseline-row"
                                                'gtk-grid) 't)
- "The @code{\"baseline-row\"} property of type @code{:int}
-  (Read / Write) @br{}
+ "The @code{baseline-row} property of type @code{:int} (Read / Write) @br{}
   The row to align the to the baseline when valign has the value @code{:center}
   of the @symbol{gtk-align} enumeration. @br{}
   Allowed values: >= 0 @br{}
@@ -166,10 +165,10 @@
       "Accessor"
       (documentation 'gtk-grid-baseline-row 'function)
  "@version{2014-7-26}
-  @argument[object]{a @class{gtk-grid} container}
-  @argument[row]{the row index}
   @syntax[]{(gtk-grid-baseline-row object) => row}
   @syntax[]{(setf (gtk-grid-baseline-row object) row)}
+  @argument[object]{a @class{gtk-grid} container}
+  @argument[row]{the row index}
   @begin{short}
     Accessor of the slot @slot[gtk-grid]{baseline-row} of the @class{gtk-grid}
     class.
@@ -192,7 +191,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "column-homogeneous"
                                                'gtk-grid) 't)
- "The @code{\"column-homogeneous\"} property of type @code{:boolean}
+ "The @code{column-homogeneous} property of type @code{:boolean}
   (Read / Write) @br{}
   If @em{true}, the columns are all the same width. @br{}
   Default value: @code{nil}")
@@ -202,10 +201,10 @@
       "Accessor"
       (documentation 'gtk-grid-column-homogeneous 'function)
  "@version{2014-2-21}
-  @argument[object]{a @class{gtk-grid} container}
-  @argument[homogeneous]{@em{true} to make columns homogeneous}
   @syntax[]{(gtk-grid-column-homogeneous object) => homogenous}
   @syntax[]{(setf (gtk-grid-column-homogeneous object) homogenous)}
+  @argument[object]{a @class{gtk-grid} container}
+  @argument[homogeneous]{@em{true} to make columns homogeneous}
   @begin{short}
     Accessor of the slot @slot[gtk-grid]{column-homogeneous} of the
     @class{gtk-grid} class.
@@ -222,7 +221,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "column-spacing" 'gtk-grid) 't)
- "The @code{\"column-spacing\"} property of type @code{:int}
+ "The @code{column-spacing} property of type @code{:int}
   (Read / Write) @br{}
   The amount of space between two consecutive columns. @br{}
   Allowed values: [0, 32767] @br{}
@@ -233,27 +232,27 @@
       "Accessor"
       (documentation 'gtk-grid-column-spacing 'function)
  "@version{2014-2-21}
-  @argument[object]{a @class{gtk-grid} container}
-  @argument[spacing]{the amount of space to insert between columns}
   @syntax[]{(gtk-grid-column-spacing object) => spacing}
   @syntax[]{(setf (gtk-grid-column-spacing object) spacing)}
+  @argument[object]{a @class{gtk-grid} container}
+  @argument[spacing]{the amount of space to insert between columns}
   @begin{short}
     Accessor of the slot @slot[gtk-grid]{column-spacing} of the @class{gtk-grid}
     class.
   @end{short}
 
   The generic function @sym{gtk-grid-column-spacing} returns the amount of space
-  between the columns of @arg{grid}.
+  between the columns of the grid.
 
-  The generic function @sym{(setf gtk-grid-column-spacing} sets the amount of
-  space between columns of @arg{grid}.
+  The generic function @sym{(setf gtk-grid-column-spacing)} sets the amount of
+  space between columns of the grid.
   @see-class{gtk-grid}")
 
 ;;; --- gtk-grid-row-homogeneous -----------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "row-homogeneous" 'gtk-grid) 't)
- "The @code{\"row-homogeneous\"} property of type @code{:boolean}
+ "The @code{row-homogeneous} property of type @code{:boolean}
   (Read / Write) @br{}
   If @em{true}, the rows are all the same height. @br{}
   Default value: @code{nil}")
@@ -263,10 +262,10 @@
       "Accessor"
       (documentation 'gtk-grid-row-homogeneous 'function)
  "@version{2014-2-26}
-  @argument[grid]{a @class{gtk-grid} container}
-  @argument[homogeneous]{@em{true} to make rows homogeneous}
   @syntax[]{(gtk-grid-row-homogeneous object) => homogeneous}
   @syntax[]{(setf (gtk-grid-row-homogeneous object) homogeneous)}
+  @argument[object]{a @class{gtk-grid} container}
+  @argument[homogeneous]{@em{true} to make rows homogeneous}
   @begin{short}
     Accessor of the slot @slot[gtk-grid]{row-homogeneous} of the
     @class{gtk-grid} class.
@@ -275,7 +274,7 @@
   The generic function @sym{gtk-grid-row-homogeneous} returns whether all rows
   of @arg{grid} have the same height.
 
-  The generic function @sym{(setf gtk-grid-row-homogeneous} sets whether all
+  The generic function @sym{(setf gtk-grid-row-homogeneous)} sets whether all
   rows of @arg{grid} will have the same height.
   @see-class{gtk-grid}")
 
@@ -283,7 +282,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "row-spacing" 'gtk-grid) 't)
- "The @code{\"row-spacing\"} property of type @code{:int} (Read / Write) @br{}
+ "The @code{row-spacing} property of type @code{:int} (Read / Write) @br{}
   The amount of space between two consecutive rows. @br{}
   Allowed values: [0, 32767] @br{}
   Default value: 0")
@@ -293,20 +292,20 @@
       "Accessor"
       (documentation 'gtk-grid-row-spacing 'function)
  "@version{2014-2-26}
-  @argument[grid]{a @class{gtk-grid} container}
-  @argument[spacing]{the amount of space to insert between rows}
   @syntax[]{(gtk-grid-row-spacing object) => spacing}
   @syntax[]{(setf (gtk-grid-row-spacing object) spacing)}
+  @argument[object]{a @class{gtk-grid} container}
+  @argument[spacing]{the amount of space to insert between rows}
   @begin{short}
     Accessor of the slot @slot[gtk-grid]{row-spacing} of the @class{gtk-grid}
     class.
   @end{short}
 
   The generic function @sym{gtk-grid-row-spacing} returns the amount of space
-  between the rows of @arg{grid}.
+  between the rows of the grid.
 
   The generic function @sym{(setf gtk-grid-row-spacing} sets the amount of
-  space between rows of @arg{grid}.
+  space between rows of the grid.
   @see-class{gtk-grid}")
 
 ;;; ----------------------------------------------------------------------------
@@ -314,6 +313,8 @@
 ;;; Accessors of Child Properties
 ;;;
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-grid-child-height --------------------------------------------------
 
 (define-child-property "GtkGrid"
                        gtk-grid-child-height
@@ -324,11 +325,10 @@
       "Accessor"
       (documentation 'gtk-grid-child-height 'function)
  "@version{2013-8-28}
-  Accessor of the child property @code{\"height\"} of the @class{gtk-grid}
-  class.
+  Accessor of the child property @code{height} of the @class{gtk-grid} class.
   @see-class{gtk-grid}")
 
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-grid-child-left-attach ---------------------------------------------
 
 (define-child-property "GtkGrid"
                        gtk-grid-child-left-attach
@@ -340,11 +340,11 @@
       "Accessor"
       (documentation 'gtk-grid-child-left-attach 'function)
  "@version{2013-8-28}
-  Accessor of the child property @code{\"left-attach\"} of the
-  @class{gtk-grid} class.
+  Accessor of the child property @code{left-attach} of the @class{gtk-grid}
+  class.
   @see-class{gtk-grid}")
 
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-grid-child-top-attach ----------------------------------------------
 
 (define-child-property "GtkGrid"
                        gtk-grid-child-top-attach
@@ -355,11 +355,11 @@
       "Accessor"
       (documentation 'gtk-grid-child-top-attach 'function)
  "@version{2013-8-28}
-  Accessor of the child property @code{\"top-attach\"} of the
-  @class{gtk-grid} class.
+  Accessor of the child property @code{top-attach} of the @class{gtk-grid}
+  class.
   @see-class{gtk-grid}")
 
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-grid-child-width ---------------------------------------------------
 
 (define-child-property "GtkGrid"
                        gtk-grid-child-width
@@ -370,8 +370,7 @@
       "Accessor"
       (documentation 'gtk-grid-child-width 'function)
  "@version{2013-8-28}
-  Accessor of the child property @code{\"width\"} of the @class{gtk-grid}
-  class.
+  Accessor of the child property @code{width} of the @class{gtk-grid} class.
   @see-class{gtk-grid}")
 
 ;;; ----------------------------------------------------------------------------

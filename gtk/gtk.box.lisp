@@ -5,12 +5,12 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.10 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.16 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2014 Dieter Kaiser
+;;; Copyright (C) 2011 - 2016 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -50,6 +50,8 @@
 ;;;     gtk_box_set_child_packing
 ;;;     gtk_box_get_baseline_position
 ;;;     gtk_box_set_baseline_position
+;;;     gtk_box_get_center_widget
+;;;     gtk_box_set_center_widget
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -108,8 +110,8 @@
 
   Because @sym{gtk-box} is a @class{gtk-container}, you may also use the
   function @fun{gtk-container-add} to insert widgets into the box, and they will
-  be packed with the default values for the child properties @code{\"expand\"}
-  and @code{\"fill\"}.
+  be packed with the default values for the child properties @code{expand}
+  and @code{fill}.
 
   Use the function @fun{gtk-container-remove} to remove widgets from the
   @sym{gtk-box}.
@@ -127,15 +129,15 @@
   a different place in the box.
 
   Use the function @fun{gtk-box-set-child-packing} to reset the
-  @code{\"expand\"}, @code{\"fill\"} and @code{\"padding\"} child properties.
+  @code{expand}, @code{fill} and @code{padding} child properties.
   Use the function @fun{gtk-box-query-child-packing} to query these fields.
   @begin[Note]{dictionary}
     Note that a single-row or single-column @class{gtk-grid} provides exactly
     the same functionality as @sym{gtk-box}.
   @end{dictionary}
   @begin[Child Property Details]{dictionary}
-    @subheading{The \"expand\" child property}
-      @code{\"expand\"} of type @code{:boolean} (Read / Write) @br{}
+    @subheading{The @code{expand} child property}
+      @code{expand} of type @code{:boolean} (Read / Write) @br{}
       Whether the child should receive extra space when the parent grows. Note
       that the default value for this property is @code{nil} for @sym{gtk-box}.
       Note that the @slot[gtk-widget]{halign}, @slot[gtk-widget]{valign},
@@ -143,28 +145,28 @@
       the preferred way to influence child size allocation in containers. @br{}
       Default value: @code{nil}
 
-    @subheading{The \"fill\" child property}
-      @code{\"fill\"} of type @code{:boolean} (Read / Write) @br{}
+    @subheading{The @code{fill} child property}
+      @code{fill} of type @code{:boolean} (Read / Write) @br{}
       Whether the child should receive extra space when the parent grows. Note
       that the @slot[gtk-widget]{halign}, @slot[gtk-widget]{valign},
       @slot[gtk-widget]{hexpand} and @slot[gtk-widget]{vexpand} properties are
       the preferred way to influence child size allocation in containers. @br{}
       Default value: @em{true}
 
-    @subheading{The \"pack-type\" child property}
-      @code{\"pack-type\"} of type @symbol{gtk-pack-type} (Read / Write) @br{}
+    @subheading{The @code{pack-type} child property}
+      @code{pack-type} of type @symbol{gtk-pack-type} (Read / Write) @br{}
       A @symbol{gtk-pack-type} indicating whether the child is packed with
       reference to the start or end of the parent. @br{}
       Default value: @code{:start}
 
-    @subheading{The \"padding\" child property}
-      @code{\"padding\"} of type @code{:uint} (Read / Write) @br{}
+    @subheading{The @code{padding} child property}
+      @code{padding} of type @code{:uint} (Read / Write) @br{}
       Extra space to put between the child and its neighbors, in pixels. @br{}
       Allowed values: <= @code{G_MAXINT} @br{}
       Default value: 0
 
-    @subheading{The \"position\" child property}
-      @code{\"position\"} of type @code{:int} (Read / Write) @br{}
+    @subheading{The @code{position} child property}
+      @code{position} of type @code{:int} (Read / Write) @br{}
       The index of the child in the parent. @br{}
       Allowed values: <= @code{G_MAXULONG} @br{}
       Default value: 0
@@ -189,23 +191,23 @@
 
 ;;; --- gtk-box-baseline-position ----------------------------------------------
 
-#+(and cl-cffi-gtk-documentation gtk-3-10)
+#+(and gtk-3-10 cl-cffi-gtk-documentation)
 (setf (documentation (atdoc:get-slot-from-name "baseline-position" 'gtk-box) 't)
- "The @code{\"baseline-position\"} property of type
+ "The @code{baseline-position} property of type
   @symbol{gtk-baseline-position} (Read / Write) @br{}
   The position of the baseline aligned widgets if extra space is available.
   @br{}
   Default value: @code{:center}")
 
-#+(and cl-cffi-gtk-documentation gtk-3-10)
+#+(and gtk-3-10 cl-cffi-gtk-documentation)
 (setf (gethash 'gtk-box-baseline-position atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-box-baseline-position 'function)
  "@version{2014-7-26}
-  @argument[object]{a @class{gtk-box} container}
-  @argument[position]{a @symbol{gtk-baseline-position}}
   @syntax[]{(gtk-box-baseline-position object) => position)}
   @syntax[]{(setf (gtk-box-baseline-position object) position)}
+  @argument[object]{a @class{gtk-box} container}
+  @argument[position]{a @symbol{gtk-baseline-position}}
   @begin{short}
     Accessor of the slot @slot[gtk-box]{baseline-position} of the
     @class{gtk-box} class.
@@ -227,8 +229,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "homogeneous" 'gtk-box) 't)
- "The @code{\"homogeneous\"} property of type @code{:boolean}
-  (Read / Write) @br{}
+ "The @code{homogeneous} property of type @code{:boolean} (Read / Write) @br{}
   Whether the children should all be the same size. @br{}
   Default value: @code{nil}")
 
@@ -237,9 +238,11 @@
       "Accessor"
       (documentation 'gtk-box-homogeneous 'function)
  "@version{2014-2-10}
-  @argument[object]{a @class{gtk-box} container}
   @syntax[]{(gtk-box-homogeneous object) => homogeneous)}
   @syntax[]{(setf (gtk-box-homogeneous object) homogeneous)}
+  @argument[object]{a @class{gtk-box} container}
+  @argument[homogeneous]{@emph{true} to create equal allotments, @code{nil}
+    for variable allotments}
   @begin{short}
     Accessor of the slot @slot[gtk-box]{homogeneous} of the @class{gtk-box}
     class.
@@ -249,16 +252,15 @@
   homogeneous, that is, all children are the same size.
 
   The generic function @sym{(setf gtk-box-homogeneous)} sets the
-  @slot[gtk-box]{homogeneous} property of @arg{box}, controlling whether
-  or not all children of @arg{box} are given equal space in the box.
-
+  @slot[gtk-box]{homogeneous} property of the box, controlling whether
+  or not all children of the box are given equal space in the box.
   @see-class{gtk-box}")
 
 ;;; --- gtk-box-spacing --------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "spacing" 'gtk-box) 't)
- "The @code{\"spacing\"} property of type @code{:int} (Read / Write) @br{}
+ "The @code{spacing} property of type @code{:int} (Read / Write) @br{}
   The amount of space between children. @br{}
   Allowed values: >= 0 @br{}
   Default value: 0")
@@ -268,19 +270,20 @@
       "Accessor"
       (documentation 'gtk-box-spacing 'function)
  "@version{2014-2-11}
-  @argument[object]{a @class{gtk-box} container}
   @syntax[]{(gtk-box-spacing object) => spacing)}
   @syntax[]{(setf (gtk-box-spacing object) spacing)}
+  @argument[object]{a @class{gtk-box} container}
+  @argument[spacing]{the number of pixels to put between children}
   @begin{short}
     Accessor of the slot @slot[gtk-box]{spacing} of the @class{gtk-box} class.
   @end{short}
 
-  The generic function @sym{gtk-box-spacing} return the spacing between
+  The generic function @sym{gtk-box-spacing} returns the spacing between
   children.
 
   The generic function @sym{(setf gtk-box-spacing)} sets the
-  @slot[gtk-box]{spacing} property of @arg{box}, which is the number of pixels
-  to place between children of @arg{box}.
+  @slot[gtk-box]{spacing} property of the box, which is the number of pixels
+  to place between children of the box.
   @see-class{gtk-box}")
 
 ;;; ----------------------------------------------------------------------------
@@ -288,6 +291,8 @@
 ;;; Accessors of Child Properties
 ;;;
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-box-child-expand ---------------------------------------------------
 
 (define-child-property "GtkBox"
                        gtk-box-child-expand
@@ -298,11 +303,10 @@
       "Accessor"
       (documentation 'gtk-box-child-expand 'function)
  "@version{2013-8-27}
-  Accessor of the child property @code{\"expand\"} of the @class{gtk-box}
-  class.
+  Accessor of the child property @code{expand} of the @class{gtk-box} class.
   @see-class{gtk-box}")
 
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-box-child-fill -----------------------------------------------------
 
 (define-child-property "GtkBox"
                        gtk-box-child-fill
@@ -313,11 +317,10 @@
       "Accessor"
       (documentation 'gtk-box-child-fill 'function)
  "@version{2013-8-27}
-  Accessor of the child property @code{\"fill\"} of the @class{gtk-box}
-  class.
+  Accessor of the child property @code{fill} of the @class{gtk-box} class.
   @see-class{gtk-box}")
 
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-box-child-padding --------------------------------------------------
 
 (define-child-property "GtkBox"
                        gtk-box-child-padding
@@ -328,11 +331,10 @@
       "Accessor"
       (documentation 'gtk-box-child-padding 'function)
  "@version{2013-8-27}
-  Accessor of the child property @code{\"padding\"} of the @class{gtk-box}
-  class.
+  Accessor of the child property @code{padding} of the @class{gtk-box} class.
   @see-class{gtk-box}")
 
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-box-child-pack-type ------------------------------------------------
 
 (define-child-property "GtkBox"
                        gtk-box-child-pack-type
@@ -343,11 +345,10 @@
       "Accessor"
       (documentation 'gtk-box-child-pack-type 'function)
  "@version{2013-8-27}
-  Accessor of the child property @code{\"pack-type\"} of the @class{gtk-box}
-  class.
+  Accessor of the child property @code{pack-type} of the @class{gtk-box} class.
   @see-class{gtk-box}")
 
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-box-child-position -------------------------------------------------
 
 (define-child-property "GtkBox"
                        gtk-box-child-position
@@ -358,8 +359,7 @@
       "Accessor"
       (documentation 'gtk-box-child-position 'function)
  "@version{2013-8-27}
-  Accessor of the child property @code{\"position\"} of the @class{gtk-box}
-  class.
+  Accessor of the child property @code{position} of the @class{gtk-box} class.
   @see-class{gtk-box}")
 
 ;;; ----------------------------------------------------------------------------
@@ -559,6 +559,49 @@
 (export 'gtk-box-set-child-packing)
 
 ;;; ----------------------------------------------------------------------------
+;;; gtk_box_get_center_widget ()
+;;; ----------------------------------------------------------------------------
+
+#+gtk-3-12
+(defcfun ("gtk_box_get_center_widget" gtk-box-get-center-widget) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2016-1-19}
+  @argument[box]{a @class{gtk-box} container}
+  @return{the center widget}
+  @begin{short}
+    Retrieves the center widget of the box.
+  @end{short}
+
+  Since 3.12
+  @see-class{gtk-box}"
+  (box (g-object gtk-box)))
+
+#+gtk-3-12
+(export 'gtk-box-get-center-widget)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_box_set_center_widget ()
+;;; ----------------------------------------------------------------------------
+
+#+gtk-3-12
+(defcfun ("gtk_box_set_center_widget" gtk-box-set-center-widget) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2016-1-19}
+  @argument[box]{a @class{gtk-box} container}
+  @return{the widget to center}
+  @begin{short}
+    Sets a center widget; that is a child widget that will be centered with
+    respect to the full width of the box, even if the children at either side
+    take up different amounts of space.
+  @end{short}
+
+  Since 3.12
+  @see-class{gtk-box}"
+  (box (g-object gtk-box)))
+
+(export 'gtk-box-set-center-widget)
+
+;;; ----------------------------------------------------------------------------
 ;;; GtkHBox
 ;;;
 ;;; A horizontal container box
@@ -600,7 +643,6 @@
   spacing, width, and alignment of @sym{gtk-hbox} children.
 
   All children are allocated the same height.
-
   @begin[Warning]{dictionary}
     @sym{gtk-hbox} has been deprecated. You can use @class{gtk-box} instead,
     which is a very quick and easy change. If you have derived your own classes
@@ -622,6 +664,8 @@
 ;;;
 ;;; ----------------------------------------------------------------------------
 
+;;; --- gtk-hbox-child-expand --------------------------------------------------
+
 (define-child-property "GtkHBox"
                        gtk-hbox-child-expand
                        "expand" "gboolean" t t t)
@@ -631,12 +675,11 @@
       "Accessor"
       (documentation 'gtk-hbox-child-expand 'function)
  "@version{2013-8-28}
-  Accessor of the child property @code{\"expand\"} of the @class{gtk-hbox}
-  class.
+  Accessor of the child property @code{expand} of the @class{gtk-hbox} class.
   @see-class{gtk-box}
   @see-class{gtk-hbox}")
 
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-hbox-child-fill ----------------------------------------------------
 
 (define-child-property "GtkHBox"
                        gtk-hbox-child-fill
@@ -647,11 +690,11 @@
       "Accessor"
       (documentation 'gtk-hbox-child-fill 'function)
  "@version{2013-8-28}
-  Accessor of the child property @code{\"fill\"} of the @class{gtk-hbox} class.
+  Accessor of the child property @code{fill} of the @class{gtk-hbox} class.
   @see-class{gtk-box}
   @see-class{gtk-hbox}")
 
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-hbox-child-padding -------------------------------------------------
 
 (define-child-property "GtkHBox"
                        gtk-hbox-child-padding
@@ -662,12 +705,11 @@
       "Accessor"
       (documentation 'gtk-hbox-child-padding 'function)
  "@version{2013-8-28}
-  Accessor of the child property @code{\"padding\"} of the @class{gtk-hbox}
-  class.
+  Accessor of the child property @code{padding} of the @class{gtk-hbox} class.
   @see-class{gtk-box}
   @see-class{gtk-hbox}")
 
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-hbox-child-pack-type -----------------------------------------------
 
 (define-child-property "GtkHBox"
                        gtk-hbox-child-pack-type
@@ -678,12 +720,11 @@
       "Accessor"
       (documentation 'gtk-hbox-child-pack-type 'function)
  "@version{2013-8-28}
-  Accessor of the child property @code{\"pack-type\"} of the @class{gtk-hbox}
-  class.
+  Accessor of the child property @code{pack-type} of the @class{gtk-hbox} class.
   @see-class{gtk-box}
   @see-class{gtk-hbox}")
 
-;;; ----------------------------------------------------------------------------
+;;; --- gth-hbox-child-position ------------------------------------------------
 
 (define-child-property "GtkHBox"
                        gtk-hbox-child-position
@@ -694,8 +735,7 @@
       "Accessor"
       (documentation 'gtk-hbox-child-position 'function)
  "@version{2013-8-28}
-  Accessor of the child property @code{\"position\"} of the @class{gtk-hbox}
-  class.
+  Accessor of the child property @code{position} of the @class{gtk-hbox} class.
   @see-class{gtk-box}
   @see-class{gtk-hbox}")
 
@@ -714,7 +754,6 @@
   @argument[spacing]{the number of pixels to place by default between children}
   @return{A new @class{gtk-hbox} container.}
   @short{Creates a new @class{gtk-hbox} container.}
-
   @begin[Warning]{dictionary}
     The function @sym{gtk-hbox-new} has been deprecated since version 3.2 and
     should not be used in newly-written code. You can use the function
@@ -775,7 +814,6 @@
   spacing, height, and alignment of @sym{gtk-vbox} children.
 
   All children are allocated the same width.
-
   @begin[Warning]{dictionary}
     @sym{gtk-vbox} has been deprecated. You can use @class{gtk-box} instead,
     which is a very quick and easy change. If you have derived your own classes
@@ -801,6 +839,8 @@
 ;;;
 ;;; ----------------------------------------------------------------------------
 
+;;; --- gtk-vbox-child-expand --------------------------------------------------
+
 (define-child-property "GtkVBox"
                        gtk-vbox-child-expand
                        "expand" "gboolean" t t t)
@@ -810,12 +850,11 @@
       "Accessor"
       (documentation 'gtk-vbox-child-expand 'function)
  "@version{2013-8-28}
-  Accessor of the child property @code{\"expand\"} of the @class{gtk-vbox}
-  class.
+  Accessor of the child property @code{expand} of the @class{gtk-vbox} class.
   @see-class{gtk-box}
   @see-class{gtk-vbox}")
 
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-vbox-child-fill ----------------------------------------------------
 
 (define-child-property "GtkVBox"
                        gtk-vbox-child-fill
@@ -826,12 +865,11 @@
       "Accessor"
       (documentation 'gtk-vbox-child-fill 'function)
  "@version{2013-8-28}
-  Accessor of the child property @code{\"fill\"} of the @class{gtk-vbox}
-  class.
+  Accessor of the child property @code{fill} of the @class{gtk-vbox} class.
   @see-class{gtk-box}
   @see-class{gtk-vbox}")
 
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-vbox-child-padding -------------------------------------------------
 
 (define-child-property "GtkVBox"
                        gtk-vbox-child-padding
@@ -842,12 +880,11 @@
       "Accessor"
       (documentation 'gtk-vbox-child-padding 'function)
  "@version{2013-8-28}
-  Accessor of the child property @code{\"padding\"} of the @class{gtk-vbox}
-  class.
+  Accessor of the child property @code{padding} of the @class{gtk-vbox} class.
   @see-class{gtk-box}
   @see-class{gtk-vbox}")
 
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-vbox-child-pack-type -----------------------------------------------
 
 (define-child-property "GtkVBox"
                        gtk-vbox-child-pack-type
@@ -858,12 +895,11 @@
       "Accessor"
       (documentation 'gtk-vbox-child-pack-type 'function)
  "@version{2013-8-28}
-  Accessor of the child property @code{\"pack-type\"} of the @class{gtk-vbox}
-  class.
+  Accessor of the child property @code{pack-type} of the @class{gtk-vbox} class.
   @see-class{gtk-box}
   @see-class{gtk-vbox}")
 
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-vbox-child-position ------------------------------------------------
 
 (define-child-property "GtkVBox"
                        gtk-vbox-child-position
@@ -874,8 +910,7 @@
       "Accessor"
       (documentation 'gtk-vbox-child-position 'function)
  "@version{2013-8-28}
-  Accessor of the child property @code{\"position\"} of the @class{gtk-vbox}
-  class.
+  Accessor of the child property @code{position} of the @class{gtk-vbox} class.
   @see-class{gtk-box}
   @see-class{gtk-vbox}")
 
@@ -900,7 +935,6 @@
   spacing, height, and alignment of @sym{gtk-vbox} children.
 
   All children are allocated the same width.
-
   @begin[Warning]{dictionary}
     @sym{gtk-vbox} has been deprecated. You can use @class{gtk-box} instead,
     which is a very quick and easy change. If you have derived your own classes

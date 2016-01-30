@@ -31,8 +31,8 @@ GTK+ Widgets and Objects
 
   Layout Containers
 
-    gtk.box.lisp                     - GtkBox, GtkHBox, GtkVbox    - GTK+ 3.10
-    gtk.grid.lisp                    - GtkGrid                     - GTK+ 3.10 &
+    gtk.box.lisp                     - GtkBox, GtkHBox, GtkVbox    - GTK+ 3.16
+    gtk.grid.lisp                    - GtkGrid                     - GTK+ 3.16 &
 
     GtkRevealer - Hide and show with animation
     GtkListBox - A list container
@@ -41,7 +41,6 @@ GTK+ Widgets and Objects
     GtkStackSwitcher - A controller for GtkStack
     GtkStackSidebar — An automatic sidebar widget
     GtkActionBar — A full width bar for presenting contextual actions
-    GtkHeaderBar - A box with a centered child
 
     gtk.header-bar.lisp              . GtkHeaderBar                - GTK+ 3.16
 

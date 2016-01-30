@@ -371,6 +371,9 @@
       A container box.
 
       @about-class{gtk-box}
+      @about-generic{gtk-box-baseline-position}
+      @about-generic{gtk-box-homogeneous}
+      @about-generic{gtk-box-spacing}
       @about-function{gtk-box-new}
       @about-function{gtk-box-child-expand}
       @about-function{gtk-box-child-fill}
@@ -382,11 +385,18 @@
       @about-function{gtk-box-reorder-child}
       @about-function{gtk-box-query-child-packing}
       @about-function{gtk-box-set-child-packing}
+      @about-function{gtk-box-get-center-widget}
+      @about-function{gtk-box-set-center-widget}
     @end{subsection}
     @begin[GtkGrid]{subsection}
       Pack widgets in a rows and columns.
 
       @about-class{gtk-grid}
+      @about-generic{gtk-grid-baseline-row}
+      @about-generic{gtk-grid-column-homogeneous}
+      @about-generic{gtk-grid-column-spacing}
+      @about-generic{gtk-grid-row-homogeneous}
+      @about-generic{gtk-grid-row-spacing}
       @about-function{gtk-grid-child-height}
       @about-function{gtk-grid-child-left-attach}
       @about-function{gtk-grid-child-top-attach}
@@ -4641,12 +4651,8 @@ setup_tree (void)
       @about-function{gtk-widget-is-composited}
       @about-function{gtk-widget-error-bell}
       @about-function{gtk-widget-keynav-failed}
-      @about-function{gtk-widget-get-tooltip-markup}
-      @about-function{gtk-widget-set-tooltip-markup}
       @about-function{gtk-widget-get-tooltip-window}
       @about-function{gtk-widget-set-tooltip-window}
-      @about-function{gtk-widget-get-has-tooltip}
-      @about-function{gtk-widget-set-has-tooltip}
       @about-function{gtk-widget-trigger-tooltip-query}
       @about-function{gtk-widget-get-window}
       @about-function{gtk-widget-register-window}
