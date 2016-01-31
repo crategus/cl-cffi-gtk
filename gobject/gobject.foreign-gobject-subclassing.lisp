@@ -34,7 +34,8 @@
   class
   parent
   interfaces
-  properties)
+  properties
+  class-init)
 
 ;;; ----------------------------------------------------------------------------
 
@@ -64,14 +65,17 @@
   (declare (ignore data))
   (let* ((type-name (gtype-name (g-type-from-class class)))
          (lisp-type-info (gethash type-name *registered-types*))
-         (lisp-class (object-type-class lisp-type-info)))
+         (lisp-class (object-type-class lisp-type-info))
+         (lisp-class-init (object-type-class-init lisp-type-info)))
     (log-for :subclass "class-init for ~A, ~A~%" type-name lisp-class)
     (register-object-type type-name lisp-class)
     (setf (foreign-slot-value class '(:struct g-object-class) :get-property)
           (callback c-object-property-get)
           (foreign-slot-value class '(:struct g-object-class) :set-property)
           (callback c-object-property-set))
-    (install-properties class lisp-type-info)))
+    (install-properties class lisp-type-info)
+    (when lisp-class-init
+      (funcall lisp-class-init class))))
 
 (defcallback c-class-init :void ((class :pointer) (data :pointer))
   (class-init class data))
@@ -431,7 +435,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
-(defmacro register-object-type-implementation (name class parent interfaces properties)
+(defmacro register-object-type-implementation (name class parent interfaces properties &optional class-init)
   (unless (stringp parent)
     (setf parent (gtype-name (gtype parent))))
   `(progn
@@ -440,7 +444,8 @@
                              :class ',class
                              :parent ,parent
                              :interfaces ',interfaces
-                             :properties ',properties))
+                             :properties ',properties
+                             :class-init ,class-init))
      (glib::at-init (',class)
        (log-for :subclass
                 "Registering GObject type implementation ~A for type ~A~%"
