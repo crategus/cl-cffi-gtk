@@ -70,28 +70,24 @@
     (format t "IN CLASS-INIT:~%")
     (format t "   name  = ~A~%" type-name)
     (format t "   class = ~A~%" lisp-class)
-    (register-object-type type-name lisp-class)
-    )
-
+    (register-object-type type-name lisp-class))
   (setf (foreign-slot-value class '(:struct g-object-class) :get-property)
         (callback c-object-property-get)
         (foreign-slot-value class '(:struct g-object-class) :set-property)
         (callback c-object-property-set))
-  (install-properties class))
+  (install-properties class lisp-type-info))
 
 (defcallback c-class-init :void ((class :pointer) (data :pointer))
   (class-init class data))
 
 ;;; ----------------------------------------------------------------------------
 
-(defun install-properties (class)
-  (let* ((name (gtype-name (foreign-slot-value class '(:struct g-type-class) :type)))
-         (lisp-type-info (gethash name *registered-types*)))
-    (iter (for property in (object-type-properties lisp-type-info))
-          (for param-spec = (property->param-spec property))
-          (for property-id from 123)
-          (log-for :subclass "installing property ~A~%" property)
-          (g-object-class-install-property class property-id param-spec))))
+(defun install-properties (class lisp-type-info)
+  (iter (for property in (object-type-properties lisp-type-info))
+        (for param-spec = (property->param-spec property))
+        (for property-id from 123)
+        (log-for :subclass "installing property ~A~%" property)
+        (g-object-class-install-property class property-id param-spec)))
 
 ;;; ----------------------------------------------------------------------------
 
