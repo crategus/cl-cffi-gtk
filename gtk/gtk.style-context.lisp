@@ -1379,7 +1379,7 @@ tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
   Since 3.4
   @see-class{gtk-style-context}
   @see-function{gtk-style-context-set-parent}"
-  (gtk-style-context-get-parent context))
+  (gtk-style-context-parent context))
 
 (export 'gtk-style-context-get-parent)
 
