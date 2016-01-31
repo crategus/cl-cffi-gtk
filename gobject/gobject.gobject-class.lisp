@@ -63,6 +63,11 @@
              (compute-new-initargs-for-metaclass initargs 'g-object))
       (call-next-method)))
 
+(defgeneric initialize-gobject-class (gobject-class foreign-class)
+  (:method ((class gobject-class) foreign-class)))
+
+(export 'initialize-gobject-class)
+
 ;;; ----------------------------------------------------------------------------
 
 (defun compute-new-initargs-for-metaclass (initargs base-class)
