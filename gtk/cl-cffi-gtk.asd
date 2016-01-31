@@ -266,8 +266,8 @@
 
    ;; Action-based menus and toolbars
    (:file "gtk.ui-manager")            ; Constructing menus and toolbars
-   (:file "gtk.action-group")          ; Group of actions
    (:file "gtk.action")                ; GtkAction
+   (:file "gtk.action-group")          ; Group of actions
    (:file "gtk.toggle-action")         ; GtkToggleAction
    (:file "gtk.radio-action")          ; GtkRadioAction
    (:file "gtk.recent-action")         ; List of recently used files
