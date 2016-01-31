@@ -62,14 +62,10 @@
 
 (defun class-init (class data)
   (declare (ignore data))
-  (log-for :subclass "class-init for ~A~%"
-           (gtype-name (g-type-from-class class)))
   (let* ((type-name (gtype-name (g-type-from-class class)))
          (lisp-type-info (gethash type-name *registered-types*))
          (lisp-class (object-type-class lisp-type-info)))
-    (format t "IN CLASS-INIT:~%")
-    (format t "   name  = ~A~%" type-name)
-    (format t "   class = ~A~%" lisp-class)
+    (log-for :subclass "class-init for ~A, ~A~%" type-name lisp-class)
     (register-object-type type-name lisp-class))
   (setf (foreign-slot-value class '(:struct g-object-class) :get-property)
         (callback c-object-property-get)
