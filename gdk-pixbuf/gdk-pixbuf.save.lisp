@@ -94,7 +94,7 @@
 ;; See the implementation of gdk-pixbuf-save
 
 (defcfun ("gdk_pixbuf_savev" %gdk-pixbuf-savev) :boolean
-  (pixbuf (g-object pixbuf))
+  (pixbuf (g-object gdk-pixbuf))
   (filename :string)
   (type :string)
   (option-keys (:pointer (:pointer :char)))
