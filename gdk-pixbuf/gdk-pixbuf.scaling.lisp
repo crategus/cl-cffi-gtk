@@ -57,9 +57,9 @@
   (:export t
    :type-initializer "gdk_interp_type_get_type")
   (:nearest 0)
-  (:tiles 0)
-  (:bilinear 0)
-  (:hyper 0))
+  (:tiles 1)
+  (:bilinear 2)
+  (:hyper 3))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-interp-type atdoc:*symbol-name-alias*) "Enum"
@@ -81,9 +81,9 @@
   (:export t
    :type-initializer \"gdk_interp_type_get_type\")
   (:nearest 0)
-  (:tiles 0)
-  (:bilinear 0)
-  (:hyper 0))
+  (:tiles 1)
+  (:bilinear 2)
+  (:hyper 3))
   @end{pre}
   @begin[code]{table}
     @entry[:nearest]{Nearest neighbor sampling; this is the fastest and lowest
