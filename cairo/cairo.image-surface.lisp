@@ -69,8 +69,7 @@
 ;;; cairo_format_stride_for_width ()
 ;;;
 
-(defcfun ("cairo_format_stride_for_width" cairo-format-stride-for-width)
-    :int
+(defcfun ("cairo_format_stride_for_width" cairo-format-stride-for-width) :int
   (format cairo-format-t)
   (width :int))
 
@@ -157,9 +156,8 @@
 
 (export 'cairo-image-surface-create-for-data)
 
-
 ;;; cairo_surface_t * cairo_image_surface_create_for_data (unsigned char *data,
-;;;                                                       cairo_format_t format,
+;;;                                                        cairo_format_t format,
 ;;;                                                        int width,
 ;;;                                                        int height,
 ;;;                                                        int stride);
@@ -234,6 +232,11 @@
 ;;; Since 1.2
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("cairo_image_surface_get_data" cairo-image-surface-get-data) :pointer
+  (surface (:pointer (:struct cairo-surface-t))))
+
+(export 'cairo-image-surface-get-data)
+
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_image_surface_get_format ()
 ;;;
@@ -249,6 +252,11 @@
 ;;;
 ;;; Since 1.2
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_image_surface_get_format" cairo-image-surface-get-format) cairo-format-t
+  (surface (:pointer (:struct cairo-surface-t))))
+
+(export 'cairo-image-surface-get-format)
 
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_image_surface_get_width ()
@@ -286,6 +294,11 @@
 ;;; Since 1.0
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("cairo_image_surface_get_height" cairo-image-surface-get-height) :int
+  (surface (:pointer (:struct cairo-surface-t))))
+
+(export 'cairo-image-surface-get-height)
+
 ;;; ----------------------------------------------------------------------------
 ;;; cairo_image_surface_get_stride ()
 ;;;
@@ -303,5 +316,10 @@
 ;;;
 ;;; Since 1.2
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("cairo_image_surface_get_stride" cairo-image-surface-get-stride) :int
+  (surface (:pointer (:struct cairo-surface-t))))
+
+(export 'cairo-image-surface-get-stride)
 
 ;;; --- End of file cairo.image-surface.lisp -----------------------------------
