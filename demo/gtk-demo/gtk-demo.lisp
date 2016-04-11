@@ -310,7 +310,7 @@
          (let* ((model (gtk-tree-view-get-model tree-view))
                 (iter (gtk-tree-model-get-iter model path))
                 (func-name (gtk-tree-model-get-value model iter 2))
-                (func (find-symbol func-name :gtk-demo)))
+                (func (and func-name (find-symbol func-name :gtk-demo))))
            (if func
                (funcall func)
                (format t "~%No function.~%")))))
