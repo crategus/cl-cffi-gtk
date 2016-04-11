@@ -38,7 +38,7 @@
                     "libgdk-x11-3.0.dylib"))
       (:windows "libgdk-3-0.dll")
       (t "libgdk-3-0")))
-
-  (use-foreign-library gdk))
+  (unless (foreign-library-loaded-p 'gdk)
+    (use-foreign-library gdk)))
 
 ;;; End of file gdk.init.lisp --------------------------------------------------
