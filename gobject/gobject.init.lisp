@@ -38,8 +38,8 @@
      (:darwin (:or "libgobject-2.0.0.dylib" "libgobject-2.0.dylib"))
      (:windows "libgobject-2.0-0.dll")
      (t "libgobject-2.0")))
-
- (cffi:use-foreign-library gobject))
+ (unless (foreign-library-loaded-p 'gobject)
+   (cffi:use-foreign-library gobject)))
 
 (in-package :gobject)
 
