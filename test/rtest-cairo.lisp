@@ -5,4 +5,5 @@
 (in-suite cairo-suite)
 
 (load "rtest-cairo-context.lisp")
+(load "rtest-cairo-image-surface.lisp")
 
