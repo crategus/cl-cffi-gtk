@@ -59,9 +59,7 @@
   (let ((vars (iter (for sym in (if (listp categories)
                                     categories
                                     (list categories)))
-                    (collect (intern (format nil "*DEBUG-~A*"
-                                             (symbol-name sym))
-                                     (find-package :gobject))))))
+                    (collect (format-symbol :gobject "*DEBUG-~A*" sym)))))
     `(progn
        (when (or ,@vars)
          (format *debug-stream* ,control-string ,@args))
