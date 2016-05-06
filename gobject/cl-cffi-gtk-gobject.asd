@@ -51,8 +51,8 @@
                (:file "gobject.closures")    ; Closures
                (:file "gobject.signals")     ; Signals
                
-               (:file "gobject.foreign-gobject-subclassing")
                (:file "gobject.utils")
+               (:file "gobject.foreign-gobject-subclassing")
                )
   :depends-on (:cl-cffi-gtk-glib
                :cffi

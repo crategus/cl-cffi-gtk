@@ -57,9 +57,9 @@
   (:export t
    :type-initializer "gdk_interp_type_get_type")
   (:nearest 0)
-  (:tiles 0)
-  (:bilinear 0)
-  (:hyper 0))
+  (:tiles 1)
+  (:bilinear 2)
+  (:hyper 3))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-interp-type atdoc:*symbol-name-alias*) "Enum"
@@ -81,9 +81,9 @@
   (:export t
    :type-initializer \"gdk_interp_type_get_type\")
   (:nearest 0)
-  (:tiles 0)
-  (:bilinear 0)
-  (:hyper 0))
+  (:tiles 1)
+  (:bilinear 2)
+  (:hyper 3))
   @end{pre}
   @begin[code]{table}
     @entry[:nearest]{Nearest neighbor sampling; this is the fastest and lowest
@@ -379,6 +379,14 @@
 ;;;     Rotate by 270 degrees.
 ;;; ----------------------------------------------------------------------------
 
+(define-g-enum "GdkPixbufRotation" gdk-pixbuf-rotation
+  (:export t
+   :type-initializer "gdk_pixbuf_rotation_get_type")
+  (:none 0)
+  (:counterclockwise 90)
+  (:upsidedown 180)
+  (:clockwise 270))
+
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pixbuf_rotate_simple ()
 ;;;
@@ -401,6 +409,13 @@
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gdk_pixbuf_rotate_simple" gdk-pixbuf-rotate-simple)
+    (g-object gdk-pixbuf)
+  (src (g-object gdk-pixbuf))
+  (angle gdk-pixbuf-rotation))
+
+(export 'gdk-pixbuf-rotate-simple)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pixbuf_flip ()
 ;;;
@@ -421,5 +436,12 @@
 ;;;
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gdk_pixbuf_flip" gdk-pixbuf-flip)
+    (g-object gdk-pixbuf)
+  (src (g-object gdk-pixbuf))
+  (horizontal :boolean))
+
+(export 'gdk-pixbuf-flip)
 
 ;;; --- End of file gdk-pixbuf.scaling.lisp ------------------------------------

@@ -3,7 +3,7 @@
 (def-suite gtk-suite :in gtk-testsuite)
 (in-suite gtk-suite)
 
-|#
+#|
 (def-fixture simple-window (widget title)
   (within-main-loop
     (let (;; Create a toplevel window.

@@ -204,10 +204,11 @@
 
 (defmethod translate-from-foreign
     (native (foreign-type boxed-opaque-foreign-type))
-  (let* ((type (g-boxed-foreign-info foreign-type))
-         (proxy (make-instance (g-boxed-info-name type)
-                               :pointer native)))
-    proxy))
+  (unless (null-pointer-p native)
+    (let* ((type (g-boxed-foreign-info foreign-type))
+           (proxy (make-instance (g-boxed-info-name type)
+                                 :pointer native)))
+      proxy)))
 
 (defmethod cleanup-translated-object-for-callback
     ((type boxed-opaque-foreign-type) proxy native)
@@ -816,8 +817,10 @@
                                                              :return-p nil))))
 
 (defmethod boxed-parse-g-value (gvalue-ptr (info g-boxed-opaque-wrapper-info))
-  (translate-from-foreign (boxed-copy-fn info (g-value-get-boxed gvalue-ptr))
-                          (make-foreign-type info :return-p nil)))
+  (let ((value (g-value-get-boxed gvalue-ptr)))
+    (unless (null-pointer-p value)
+      (translate-from-foreign (boxed-copy-fn info value)
+                              (make-foreign-type info :return-p nil)))))
 
 (defmethod boxed-set-g-value (gvalue-ptr
                               (info g-boxed-opaque-wrapper-info)
