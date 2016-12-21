@@ -47,6 +47,7 @@
                (:file "glib.random")         ; Pseudo-random number generator
               )
   :depends-on (:cffi
+               :alexandria
                :iterate
                :trivial-features))
 

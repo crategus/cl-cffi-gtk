@@ -82,12 +82,10 @@
 ;; Helper functions to create an internal symbol
 
 (defun generated-cstruct-name (symbol)
-  (intern (format nil "~A-CSTRUCT" (symbol-name symbol))
-          (symbol-package symbol)))
+  (format-symbol (symbol-package symbol) "~A-CSTRUCT" symbol))
 
 (defun generated-cunion-name (symbol)
-  (intern (format nil "~A-CUNION" (symbol-name symbol))
-          (symbol-package symbol)))
+  (format-symbol (symbol-package symbol) "~A-CUNION" symbol))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -331,8 +329,7 @@
                (gethash ,gtype *g-type-name->g-boxed-foreign-info*)
                (get ',name 'g-boxed-foreign-info)
                (get ',name 'structure-constructor)
-               ',(intern (format nil "MAKE-~A" (symbol-name name))
-                         (symbol-package name)))))))
+               ',(format-symbol (symbol-package name) "MAKE-~A" name))))))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -595,8 +592,7 @@
                  (collect `(,(cstruct-slot-description-name slot)
                              ,(cstruct-slot-description-initform slot)))))
        (setf (get ',name 'structure-constructor)
-             ',(intern (format nil "MAKE-~A" (symbol-name name))
-                       (symbol-package name))))))
+             ',(format-symbol (symbol-package name) "MAKE-~A" name)))))
 
 (defun generate-structures (str)
   (iter (for variant in (reverse (all-structures str)))
@@ -863,14 +859,12 @@
       (g-boxed-cstruct-wrapper-info
        (append
          (list name
-               (intern (format nil "MAKE-~A" (symbol-name name)))
-               (intern (format nil "COPY-~A" (symbol-name name))))
+               (format-symbol t "MAKE-~A" name)
+               (format-symbol t "COPY-~A" name))
          (iter (for slot in (cstruct-description-slots
                               (g-boxed-cstruct-wrapper-info-cstruct-description info)))
                (for slot-name = (cstruct-slot-description-name slot))
-               (collect (intern (format nil "~A-~A"
-                                        (symbol-name name)
-                                        (symbol-name slot-name)))))))
+               (collect (format-symbol t "~A-~A" name slot-name)))))
       (g-boxed-opaque-wrapper-info
        (list name))
       (g-boxed-variant-cstruct-info
@@ -881,13 +875,13 @@
                (for cstruct-description = (var-structure-resulting-cstruct-description var-struct))
                (appending (append
                             (list s-name)
-                            (list (intern (format nil "MAKE-~A" (symbol-name s-name)))
-                                  (intern (format nil "COPY-~A" (symbol-name s-name))))
+                            (list (format-symbol t "MAKE-~A" s-name)
+                                  (format-symbol t "COPY-~A" s-name))
                             (iter (for slot in (cstruct-description-slots cstruct-description))
                                   (for slot-name = (cstruct-slot-description-name slot))
-                                  (collect (intern (format nil "~A-~A"
-                                                           (symbol-name s-name)
-                                                           (symbol-name slot-name)))))))))))))
+                                  (collect (format-symbol t "~A-~A"
+                                                          s-name
+                                                          slot-name)))))))))))
 
 ;;; ----------------------------------------------------------------------------
 

@@ -313,6 +313,7 @@
                :cl-cffi-gtk-cairo
                :cffi
                :bordeaux-threads
+               :alexandria
                :iterate
                :trivial-features))
 
