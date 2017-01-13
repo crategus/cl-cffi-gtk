@@ -33,6 +33,7 @@
 (defpackage :gobject
   (:nicknames :g)
   (:use :c2cl :glib :cffi :tg :bordeaux-threads :iter :closer-mop)
+  (:import-from :alexandria :format-symbol)
   (:export
     #:*lisp-name-exceptions*
 

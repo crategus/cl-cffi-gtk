@@ -495,6 +495,12 @@
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gdk_drag_context_get_actions" gdk-drag-context-get-actions)
+    gdk-drag-action
+  (context (g-object gdk-drag-context)))
+
+(export 'gdk-drag-context-get-actions)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_drag_context_get_suggested_action ()
 ;;;
@@ -511,6 +517,12 @@
 ;;;
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gdk_drag_context_get_suggested_action" gdk-drag-context-get-suggested-action)
+    gdk-drag-action
+  (context (g-object gdk-drag-context)))
+
+(export 'gdk-drag-context-get-suggested-action)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_drag_context_get_selected_action ()

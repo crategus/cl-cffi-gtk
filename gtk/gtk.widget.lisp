@@ -4608,7 +4608,7 @@
     is realized.
   @see-class{gtk-widget}
   @see-function{gtk-widget-get-parent-window}"
-  (widget (g-object gtk-window))
+  (widget (g-object gtk-widget))
   (parent-window (g-object gdk-window)))
 
 (export 'gtk-widget-set-parent-window)
@@ -4626,7 +4626,7 @@
   Gets @arg{widget}'s parent window.
   @see-class{gtk-widget}
   @see-function{gtk-widget-set-parent-window}"
-  (widget (g-object gtk-window)))
+  (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-get-parent-window)
 

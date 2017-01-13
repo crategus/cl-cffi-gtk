@@ -27,6 +27,7 @@
 
 (defpackage :glib
   (:use :cl :cffi :iter)
+  (:import-from :alexandria :format-symbol)
   (:export ;; Symbols from glib.stable-pointer.lisp
            #:allocate-stable-pointer
            #:get-stable-pointer-value

@@ -134,10 +134,8 @@
                  `(when (or (and (= ,major-version-var ,major)
                                  (>= ,minor-version-var ,minor))
                             (> ,major-version-var ,major))
-                    (pushnew ,(intern (format nil "~A-~A-~A"
-                                              (string library-name)
-                                              major minor)
-                                      (find-package :keyword))
+                    (pushnew ,(format-symbol
+                               :keyword "~A-~A-~A" library-name major minor)
                              *features*))))))
 
 (define-condition foreign-library-minimum-version-mismatch (error)

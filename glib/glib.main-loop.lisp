@@ -1859,7 +1859,7 @@
   This internally creates a main loop source using g_idle_source_new() and
   attaches it to the main loop context using g_source_attach(). You can do
   these steps manually if you need greater control."
-  (priority :uint)
+  (priority :int)
   (function :pointer)
   (data :pointer)
   (notify :pointer))

@@ -33,7 +33,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defun load-file (filename)
-  (with-open-file (stream filename)
+  (with-open-file (stream (asdf:system-relative-pathname :cl-cffi-gtk-demo-gtk filename))
     ;; Read the info-header of the file
     (multiple-value-bind (start end)
         (gtk-text-buffer-get-bounds info-buffer)
