@@ -31,7 +31,7 @@
       (:darwin "libcairo.dylib")
       (:windows "libcairo-2.dll")
       (t (:default "libcairo"))))
-
-  (use-foreign-library cairo))
+  (unless (foreign-library-loaded-p 'cairo)
+    (use-foreign-library cairo)))
 
 ;;; --- End of file cairo.init.lisp --------------------------------------------

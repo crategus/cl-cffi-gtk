@@ -38,7 +38,7 @@
       (:darwin (:or "libgdk_pixbuf-2.0.0.dylib" "libgdk_pixbuf-2.0.dylib"))
       (:windows (:or "libgdk_pixbuf-win32-2.0-0" "libgdk_pixbuf-2.0-0.dll"))
       (t "libgdk_pixbuf-2.0")))
-
-  (use-foreign-library gdk-pixbuf))
+  (unless (foreign-library-loaded-p 'gdk-pixbuf)
+    (use-foreign-library gdk-pixbuf)))
 
 ;;; End of file gdk-pixbuf.init.lisp -------------------------------------------

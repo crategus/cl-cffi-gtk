@@ -35,8 +35,8 @@
      (:darwin (:or "libgobject-2.0.0.dylib" "libgobject-2.0.dylib"))
      (:windows "libgobject-2.0-0.dll")
      (t "libgobject-2.0")))
-
- (use-foreign-library gobject))
+  (unless (foreign-library-loaded-p 'gobject)
+    (use-foreign-library gobject)))
 
 (defvar *lisp-name-package* nil)
 (defvar *generated-types* nil)

@@ -44,7 +44,8 @@
                     "libgtk-x11-3.0.dylib"))
       (:windows (:or "libgtk-3-0.dll" "libgtk-win32-2.0-0.dll"))
       (t "libgtk-3-0")))
-  (use-foreign-library gtk))
+  (unless (foreign-library-loaded-p 'gtk)
+    (use-foreign-library gtk)))
 
 (glib::push-library-version-features gdk
     ;; We can not call the Lisp implementations gtk-get-major-version and

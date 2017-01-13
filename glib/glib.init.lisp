@@ -108,7 +108,8 @@
       (:darwin (:or "libglib-2.0.0.dylib" "libglib-2.0.dylib"))
       (:windows "libglib-2.0-0.dll")
       (t (:default "libglib-2.0"))))
-  (use-foreign-library glib))
+  (unless (foreign-library-loaded-p 'glib)
+    (use-foreign-library glib)))
 
 (at-init ()
   (eval-when (:compile-toplevel :load-toplevel :execute)
@@ -118,7 +119,8 @@
       (:darwin (:or "libgthread-2.0.0.dylib"  "libgthread-2.0.dylib"))
       (:windows "libgthread-2.0-0.dll")
       (t "libgthread-2.0")))
-  (use-foreign-library gthread))
+  (unless (foreign-library-loaded-p 'gthread)
+    (use-foreign-library gthread)))
 
 ;;; Lisp support to check the library version
 

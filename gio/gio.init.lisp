@@ -34,7 +34,7 @@
       (:darwin "libgio-2.0.dylib")
       (:windows "libgio-2.0-0.dll")
       (t (:default "libgio-2.0"))))
-  
-  (use-foreign-library gio))
+  (unless (foreign-library-loaded-p 'gio)
+    (use-foreign-library gio)))
 
 ;;; --- End of file gio.init.lisp ----------------------------------------------
