@@ -346,6 +346,7 @@
           (notebook (make-instance 'gtk-notebook
                                    :scrollable t))
           (view (create-view-and-model)))
+      (setf *demo-window* window)
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))

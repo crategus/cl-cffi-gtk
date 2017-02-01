@@ -8,3 +8,5 @@
 (defun rel-path (filename)
   (let ((system-path (asdf:system-source-directory :cl-cffi-gtk-demo-gtk)))
     (princ-to-string (merge-pathnames filename system-path))))
+
+(defvar *demo-window*)

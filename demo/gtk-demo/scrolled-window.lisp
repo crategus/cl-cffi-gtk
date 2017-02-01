@@ -20,6 +20,7 @@
                                 :row-spacing 10
                                 :column-spacing 10
                                 :homogeneous nil)))
+      (setf (gtk-window-transient-for window) *demo-window*)
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))

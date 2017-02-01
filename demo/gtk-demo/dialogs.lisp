@@ -24,6 +24,7 @@
 (defun create-dialog ()
   (let ((dialog (make-instance 'gtk-dialog
                                :title "Dialog Window"
+                               :transient-for *demo-window*
                                :has-separator t)))
     ;; Add a border width to the vbox of the content area
     (setf (gtk-container-border-width (gtk-dialog-get-content-area dialog)) 12)
@@ -61,6 +62,7 @@
                                :message-type :info
                                :buttons :ok
                                :text "Info Message Dialog"
+                               :transient-for *demo-window*
                                :secondary-text
                                (format nil
                                        "This is a message dialog of type ~
@@ -85,6 +87,7 @@
                                :artists '("None")
                                :logo-icon-name
                                "applications-development"
+                               :transient-for *demo-window*
                                :wrap-license t)))
     ;; Run the about dialog
     (gtk-dialog-run dialog)
