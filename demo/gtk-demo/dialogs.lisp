@@ -26,6 +26,7 @@
                                :title "Dialog Window"
                                :transient-for *demo-window*
                                :has-separator t)))
+    (setf (gtk-window-transient-for dialog) *demo-window*)
     ;; Add a border width to the vbox of the content area
     (setf (gtk-container-border-width (gtk-dialog-get-content-area dialog)) 12)
     ;; Add a label widget with text to the content area
