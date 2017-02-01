@@ -126,8 +126,9 @@
 (in-package :gobject)
 
 (defvar *foreign-gobjects-weak*
-        (make-weak-hash-table :test 'equal :weakness :value))
-(defvar *foreign-gobjects-strong* (make-hash-table :test 'equal))
+  (make-weak-hash-table :test 'equal :weakness :value :synchronized T))
+(defvar *foreign-gobjects-strong*
+  (make-hash-table :test 'equal :synchronized T))
 (defvar *current-creating-object* nil)
 (defvar *current-object-from-pointer* nil)
 (defvar *currently-making-object-p* nil)
