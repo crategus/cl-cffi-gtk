@@ -2,13 +2,6 @@
 
 (in-package #:gtk-demo)
 
-(defun get-image-pixbuf (image)
-  (ecase (gtk-image-storage-type image)
-    (:pixbuf (gtk-image-pixbuf image))
-    (:stock (multiple-value-bind (stock-id size)
-                (gtk-image-get-stock image)
-              (gtk-widget-render-icon-pixbuf image stock-id size)))))
-
 (defun demo-simple-drag-and-drop ()
   (within-main-loop
     (let ((window (make-instance 'gtk-window
