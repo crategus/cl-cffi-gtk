@@ -7,7 +7,7 @@
 ;;;; This demo is not all that educational, but looks cool. It was written
 ;;;; by Extreme Pixbuf Hacker Federico Mena Quintero and was translated to Lisp
 ;;;; by Crategus. It also shows off how to use GtkDrawingArea to do a
-;;;  simple animation.
+;;;; simple animation.
 ;;;;
 ;;;; Look at the Image demo for additional pixbuf usage examples.
 
