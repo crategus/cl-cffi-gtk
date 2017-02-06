@@ -4029,6 +4029,18 @@
 
 (export '+gdk-parent-relative+)
 
+(defcfun ("gdk_window_set_cursor" gdk-window-set-cursor) :void
+  (window (g-object gdk-window))
+  (cursor (g-object gdk-cursor)))
+
+(export 'gdk-window-set-cursor)
+
+(defcfun ("gdk_window_get_cursor" gdk-window-get-cursor)
+    (g-object gdk-cursor)
+  (window (g-object gdk-window)))
+
+(export 'gdk-window-get-cursor)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_get_user_data ()
 ;;; ----------------------------------------------------------------------------
