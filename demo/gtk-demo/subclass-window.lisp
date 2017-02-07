@@ -23,16 +23,15 @@
 (register-object-type-implementation
  "CustomWindow" custom-window "GtkWindow" NIL NIL 'custom-window-class-init)
 
-#+(or)
-(cffi:load-foreign-library "subclass.so" :search-path "/home/ferada/src/cl-cffi-gtk/demo/gtk-demo/")
+(cffi:load-foreign-library (asdf:system-relative-pathname :cl-cffi-gtk-demo-gtk "subclass.so"))
 
 (define-g-object-class "GtkAnotherCustomWindow" gtk-another-custom-window
   (:superclass custom-window
-   :export t
+   :export NIL
    :type-initializer "gtk_another_custom_window_get_type")
   ())
 
-(defun bar ()
+(defun custom-window-demo ()
   (within-main-loop
     (let ((custom (make-instance 'gtk-another-custom-window))
           (button (make-instance 'gtk-button :label "Button")))

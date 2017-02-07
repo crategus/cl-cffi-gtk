@@ -1,5 +1,33 @@
 ;;;; cl-cffi-gtk-demo-gtk.asd
 
+(asdf:load-system :cffi-toolchain)
+(asdf:load-system :split-sequence)
+
+;; copied from CFFI
+
+(defclass c-test-lib (asdf:c-source-file)
+  ())
+
+(defmethod asdf:perform ((o asdf:load-op) (c c-test-lib))
+  nil)
+
+(defmethod asdf:perform ((o asdf:load-source-op) (c c-test-lib))
+  nil)
+
+(defmethod asdf:output-files ((o asdf:compile-op) (c c-test-lib))
+  (let ((p (asdf:component-pathname c)))
+    (values
+     (list (make-pathname :defaults p :type (asdf/bundle:bundle-pathname-type :object))
+           (make-pathname :defaults p :type (asdf/bundle:bundle-pathname-type :shared-library)))
+     t)))
+
+(defmethod asdf:perform ((o asdf:compile-op) (c c-test-lib))
+  (let ((cffi-toolchain:*cc-flags* `(,@cffi-toolchain:*cc-flags* "-Wall" "-std=c99" "-pedantic" ,@(split-sequence:split-sequence #\Space (uiop:run-program "pkg-config --cflags gtk+-3.0" :output '(:string :stripped T)))))
+        (cffi-toolchain:*ld-dll-flags* `(,@cffi-toolchain:*ld-dll-flags* ,@(split-sequence:split-sequence #\Space (uiop:run-program "pkg-config --libs gtk+-3.0" :output '(:string :stripped T))))))
+    (destructuring-bind (obj dll) (output-files o c)
+      (cffi-toolchain:cc-compile obj (input-files o c))
+      (cffi-toolchain:link-shared-library dll (list obj)))))
+
 (asdf:defsystem :cl-cffi-gtk-demo-gtk
   :author "Dieter Kaiser"
   :license "LLGPL"
@@ -70,6 +98,8 @@
                (:file "simple-window")
                (:file "spin-button")
                (:file "statusbar")
+               (:c-test-lib "subclass")
+               (:file "subclass-window")
                (:file "switch")
                (:file "table-packing")
                (:file "text-entry")
