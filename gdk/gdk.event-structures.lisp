@@ -930,7 +930,7 @@
             ((:touch-begin
               :touch-update
               :touch-end
-              :touch-canel) gdk-event-touch
+              :touch-cancel) gdk-event-touch
              (time :uint32)
              (x :double)
              (y :double)
@@ -1104,7 +1104,7 @@
             ((:touch-begin
               :touch-update
               :touch-end
-              :touch-canel) gdk-event-touch
+              :touch-cancel) gdk-event-touch
              (time :uint32)
              (x :double)
              (y :double)
@@ -1655,14 +1655,14 @@
  "@version{2014-1-31}
   @begin{short}
     Used for touch events. The type field will be one of @code{:touch-begin},
-    @code{:touch-update}, @code{:touch-end} or @code{:touch-canel}.
+    @code{:touch-update}, @code{:touch-end} or @code{:touch-cancel}.
   @end{short}
 
   Touch events are grouped into sequences by means of the sequence field,
   which can also be obtained with the function
   @fun{gdk-event-get-event-sequence}. Each sequence begins with a
   @code{:touch-begin}, followed by any number of @code{:touch-update}, and ends
-  with a @code{:touch-end} or @code{:touch-canel} event. With multitouch
+  with a @code{:touch-end} or @code{:touch-cancel} event. With multitouch
   devices, there may be several active sequences at the same time.
   @begin{pre}
 (define-g-boxed-variant-cstruct gdk-event \"GdkEvent\"
@@ -1672,7 +1672,7 @@
             ((:touch-begin
               :touch-update
               :touch-end
-              :touch-canel) gdk-event-touch
+              :touch-cancel) gdk-event-touch
              (time :uint32)
              (x :double)
              (y :double)
@@ -1688,7 +1688,7 @@
   @begin[code]{table}
     @entry[type]{The type of type @symbol{gdk-event-type} of the event,
       one of the values @code{:touch-begin}, @code{:touch-update},
-      @code{:touch-end}, @code{:touch-canel}.}
+      @code{:touch-end}, @code{:touch-cancel}.}
     @entry[window]{The window which received the event.}
     @entry[send-event]{@em{True} if the event was sent explicitly, e. g. using
       @code{XSendEvent}.}
