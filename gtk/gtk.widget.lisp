@@ -8186,6 +8186,15 @@
 ;;; Since 3.6
 ;;; ----------------------------------------------------------------------------
 
+#+gtk-3-6
+(defcfun ("gtk_widget_insert_action_group" gtk-widget-insert-action-group) :void
+  (widget (g-object gtk-widget))
+  (name :string)
+  (group (g-object g-action-group)))
+
+#+gtk-3-6
+(export 'gtk-widget-insert-action-group)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_list_action_prefixes ()
 ;;;

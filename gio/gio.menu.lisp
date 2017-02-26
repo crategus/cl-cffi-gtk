@@ -221,6 +221,13 @@
 ;;; Since 2.32
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("g_menu_append" g-menu-append) :void
+  (menu (g-object g-menu))
+  (label :string)
+  (detailed-action :string))
+
+(export 'g-menu-append)
+
 ;;; ----------------------------------------------------------------------------
 ;;; g_menu_insert_item ()
 ;;;

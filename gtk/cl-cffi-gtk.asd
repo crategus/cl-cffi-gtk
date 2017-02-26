@@ -216,6 +216,7 @@
    (:file "gtk.toggle-tool-button")    ; GtkToggleToolButton
    (:file "gtk.radio-tool-button")     ; GtkRadioToolButton
    (:file "gtk.menu-tool-button")      ; GtkMenuToolButton
+   (:file "gtk.popover")               ; GtkPopover
 
    ;; Selectors
    (:file "gtk.color-chooser")         ; Interface for choosing colors

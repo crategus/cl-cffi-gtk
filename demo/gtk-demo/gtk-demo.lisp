@@ -289,6 +289,9 @@
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Demo Pixbufs"
                                 "pixbufs.lisp" "DEMO-PIXBUFS" 0)
+      (gtk-tree-store-set model (gtk-tree-store-append model parent)
+                                "Popover Demo"
+                                "popover.lisp" "POPOVER-DEMO" 0)
 
     )
     model))

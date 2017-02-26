@@ -52,6 +52,7 @@
                (:file "paned-window")
                (:file "pixbuf-scale")
                (:file "pixbufs")
+               (:file "popover")
                (:file "progress-bar")
                (:file "scale-widgets")
                (:file "scrolled-window")
