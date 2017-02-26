@@ -267,6 +267,9 @@
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Header Bar"
                                 "header-bar.lisp" "EXAMPLE-HEADER-BAR" 0)
+      (gtk-tree-store-set model (gtk-tree-store-append model parent)
+                                "Action Bar"
+                                "action-bar.lisp" "EXAMPLE-ACTION-BAR" 0)
     )
     (let ((parent (gtk-tree-store-set model (gtk-tree-store-append model nil)
                                             "Scrolling")))

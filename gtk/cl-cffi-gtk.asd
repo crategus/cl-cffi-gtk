@@ -108,6 +108,7 @@
    (:file "gtk.button-box")            ; Container for arranging buttons
    (:file "gtk.header-bar")            ; Box with a centered child
    (:file "gtk.overlay")               ; Container which overlays widgets
+   (:file "gtk.action-bar")            ; A full width bar for presenting contextual actions
 
    ;; Ornaments
    (:file "gtk.separator")             ; Separator widget

@@ -6,6 +6,7 @@
   :serial t
   :depends-on (:cl-cffi-gtk)
   :components ((:file "package")
+               (:file "action-bar")
                (:file "alignment")
                (:file "app-chooser-button")
                (:file "app-chooser-dialog")
