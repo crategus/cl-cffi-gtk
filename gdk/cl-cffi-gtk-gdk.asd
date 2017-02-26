@@ -49,6 +49,7 @@
 
                (:file "gdk.display")          ; Controls the keyboard/mouse
                (:file "gdk.display-manager")  ; Maintains a list GdkDisplays
+               (:file "gdk.monitor")          ; Object representing an output
                (:file "gdk.pixbuf")           ; Functions for obtaining pixbufs
 
                (:file "gdk.window")           ; Onscreen display areas

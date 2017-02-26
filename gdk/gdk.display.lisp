@@ -1101,4 +1101,20 @@
 
 (export 'gdk-display-notify-startup-complete)
 
+#+gdk-3-22
+(defcfun ("gdk_display_get_n_monitors" gdk-display-get-n-monitors) :int
+  (display (g-object gdk-display)))
+
+#+gdk-3-22
+(export 'gdk-display-get-n-monitors)
+
+#+gdk-3-22
+(defcfun ("gdk_display_get_monitor" gdk-display-get-monitor)
+    (g-object gdk-monitor)
+  (display (g-object gdk-display))
+  (monitor-num :int))
+
+#+gdk-3-22
+(export 'gdk-display-get-monitor)
+
 ;;; --- End of file gdk.display.lisp -------------------------------------------
