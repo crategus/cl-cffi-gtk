@@ -401,9 +401,7 @@
   (:temp 3)
   (:foreign 4)
   (:offscreen 5)
-  #+gdk-3-14
-  (:subsurface 6)
-)
+  (:subsurface 6))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-window-type atdoc:*symbol-name-alias*) "Enum"

@@ -257,7 +257,8 @@
   (:edge 2)
   (:start 3)
   (:end 4)
-  (:center 5))
+  (:center 5)
+  (:expand 6))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-button-box-style atdoc:*symbol-name-alias*) "Enum"
@@ -714,7 +715,8 @@
    :type-initializer "gtk_policy_type_get_type")
   (:always 0)
   (:automatic 1)
-  (:never 2))
+  (:never 2)
+  (:external 3))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-policy-type atdoc:*symbol-name-alias*) "Enum"
@@ -727,12 +729,16 @@
    :type-initializer \"gtk_policy_type_get_type\")
   (:always 0)
   (:automatic 1)
-  (:never 2))
+  (:never 2)
+  (:external 3))
   @end{pre}
   @begin[code]{table}
     @entry[:always]{The scrollbar is always visible.}
     @entry[:automatic]{The scrollbar will appear and disappear as necessary.}
     @entry[:never]{The scrollbar will never appear.}
+    @entry[:external]{Don't show a scrollbar, but don't force the size to
+                      follow the content. This can be used e.g. to make
+                      multiple scrolled windows share a scrollbar. Since: 3.16.}
   @end{table}")
 
 ;;; ----------------------------------------------------------------------------
@@ -1042,14 +1048,12 @@
   (:inconsistent #.(ash 1 4))
   (:focused #.(ash 1 5))
   (:backdrop #.(ash 1 6))
-  #+gtk-3-8
   (:dir-ltr #.(ash 1 7))
-  #+gtk-3-8
   (:dir-rtl #.(ash 1 8))
-  #+gtk-3-12
   (:link #.(ash 1 9))
-  #+gtk-3-12
-  (:visited #.(ash 1 10)))
+  (:visited #.(ash 1 10))
+  (:checked #.(ash 1 11))
+  (:drop-active #.(ash 1 12)))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-state-flags atdoc:*symbol-name-alias*) "Flags"
@@ -1070,14 +1074,12 @@
   (:inconsistent #.(ash 1 4))
   (:focused #.(ash 1 5))
   (:backdrop #.(ash 1 6))
-  #+gtk-3-8
   (:dir-ltr #.(ash 1 7))
-  #+gtk-3-8
   (:dir-rtl #.(ash 1 8))
-  #+gtk-3-12
   (:link #.(ash 1 9))
-  #+gtk-3-12
-  (:visited #.(ash 1 10)))
+  (:visited #.(ash 1 10))
+  (:checked #.(ash 1 11))
+  (:drop-active #.(ash 1 12)))
   @end{pre}
   @begin[code]{table}
     @entry[:normal]{State during normal operation.}
@@ -1093,6 +1095,9 @@
     @entry[:link]{Widget is a link. Since 3.12.}
     @entry[:visited]{The location the widget points to has already been visited.
                      Since 3.12.}
+    @entry[:checked]{Widget is checked. Since 3.14.}
+    @entry[:drop-active]{Widget is highlighted as a drop target for DND.
+                         Since 3.20.}
   @end{table}")
 
 ;;; ----------------------------------------------------------------------------

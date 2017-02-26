@@ -345,7 +345,8 @@
   (:fullscreen 16)
   (:above 32)
   (:below 64)
-  (:focused 128))
+  (:focused 128)
+  (:tiled 256))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-window-state atdoc:*symbol-name-alias*) "Flags"
@@ -493,7 +494,14 @@
   (:touch-begin 37)
   (:touch-update 38)
   (:touch-end 39)
-  (:touch-cancel 40))
+  (:touch-cancel 40)
+  (:touchpad-swipe 41)
+  (:touchpad-pinch 42)
+  (:pad-button-press 43)
+  (:pad-button-release 44)
+  (:pad-ring 45)
+  (:pad-strip 46)
+  (:pad-group-mode 47))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-event-type atdoc:*symbol-name-alias*) "Enum"
@@ -551,7 +559,14 @@
   (:touch-begin 37)
   (:touch-update 38)
   (:touch-end 39)
-  (:touch-cancel 40))
+  (:touch-cancel 40)
+  (:touchpad-swipe 41)
+  (:touchpad-pinch 42)
+  (:pad-button-press 43)
+  (:pad-button-release 44)
+  (:pad-ring 45)
+  (:pad-strip 46)
+  (:pad-group-mode 47))
   @end{pre}
   @begin[code]{table}
     @entry[:nothing]{A special code to indicate a null event.}
@@ -623,6 +638,20 @@
       added in 3.4.}
     @entry[:touch-cancel]{A touch event sequence has been canceled. This event
       type was added in 3.4.}
+    @entry[:touchpad-swipe]{A touchpad swipe gesture event, the current state
+      is determined by its phase field. This event type was added in 3.18.}
+    @entry[:touchpad-pinch]{A touchpad pinch gesture event, the current state
+      is determined by its phase field. This event type was added in 3.18.}
+    @entry[:pad-button-press]{A tablet pad button press event. This event type
+      was added in 3.22.}
+    @entry[:pad-button-release]{A tablet pad button release event. This event
+      type was added in 3.22.}
+    @entry[:pad-ring]{A tablet pad axis event from a "ring". This event type
+      was added in 3.22.}
+    @entry[:pad-strip]{A tablet pad axis event from a "strip". This event type
+      was added in 3.22.}
+    @entry[:pad-group-mode]{A tablet pad group mode change. This event type was
+      added in 3.22.}
   @end{table}
   @see-class{gdk-event}
   @see-symbol{gdk-window-type}
@@ -762,6 +791,8 @@
   (:scroll-mask 2097152)
   (:touch-mask #.(ash 1 22))
   (:smooth-scroll-mask #.(ash 1 23))
+  (:touchpad-gesture-mask #.(ash 1 24))
+  (:tablet-pad-mask #.(ash 1 25))
   (:all-events-mask 4194302))
 
 #+cl-cffi-gtk-documentation
@@ -818,6 +849,8 @@
   (:scroll-mask 2097152)
   (:touch-mask #.(ash 1 22))
   (:smooth-scroll-mask #.(ash 1 23))
+  (:touchpad-gesture-mask #.(ash 1 24))
+  (:tablet-pad-mask #.(ash 1 25))
   (:all-events-mask 4194302))
   @end{pre}
   @begin[code]{table}
@@ -850,6 +883,9 @@
     @entry[:scroll-mask]{Receive scroll events.}
     @entry[:touch-mask]{Receive touch events.}
     @entry[:smooth-scroll-mask]{Receive smooth scrolling events.}
+    @entry[:touchpad-gesture-mask]{Receive touchpad gesture events.
+      Since 3.18.}
+    @entry[:tablet-pad-mask]{Receive tablet pad events. Since 3.22.}
     @entry[:all-events-mask]{The combination of all the above event masks.}
   @end{table}
   @see-symbol{gdk-event-type}
@@ -952,7 +988,9 @@
              (x-root :double)
              (y-root :double)
              (delta-x :double)
-             (delta-y :double))
+             (delta-y :double)
+             #+gdk-3-20
+             (is-stop :uint))           ; bitfield
 
             ((:enter-notify :leave-notify) gdk-event-crossing
              (subwindow (g-object gdk-window))

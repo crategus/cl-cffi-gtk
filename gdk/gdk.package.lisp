@@ -59,7 +59,9 @@
     3 12
     3 14
     3 16
-    3 18)
+    3 18
+    3 20
+    3 22)
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (find-package :gdk) t)

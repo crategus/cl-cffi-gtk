@@ -199,11 +199,15 @@
 (define-g-flags "GtkIconLookupFlags" gtk-icon-lookup-flags
   (:export t
    :type-initializer "gtk_icon_lookup_flags_get_type")
-  (:no-svg 1)
-  (:force-svg 2)
-  (:use-builtin 4)
-  (:generic-fallback 8)
-  (:force-size 16))
+  (:no-svg #.(ash 1 0))
+  (:force-svg #.(ash 1 1))
+  (:use-builtin #.(ash 1 2))
+  (:generic-fallback #.(ash 1 3))
+  (:force-size #.(ash 1 4))
+  (:force-regular #.(ash 1 5))
+  (:force-symbolic #.(ash 1 6))
+  (:dir-ltr #.(ash 1 7))
+  (:dir-rtl #.(ash 1 8)))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-icon-lookup-flags atdoc:*symbol-name-alias*) "Flags"
@@ -214,11 +218,15 @@
 (define-g-flags \"GtkIconLookupFlags\" gtk-icon-lookup-flags
   (:export t
    :type-initializer \"gtk_icon_lookup_flags_get_type\")
-  (:no-svg 1)
-  (:force-svg 2)
-  (:use-builtin 4)
-  (:generic-fallback 8)
-  (:force-size 16))
+  (:no-svg #.(ash 1 0))
+  (:force-svg #.(ash 1 1))
+  (:use-builtin #.(ash 1 2))
+  (:generic-fallback #.(ash 1 3))
+  (:force-size #.(ash 1 4))
+  (:force-regular #.(ash 1 5))
+  (:force-symbolic #.(ash 1 6))
+  (:dir-ltr #.(ash 1 7))
+  (:dir-rtl #.(ash 1 8)))
   @end{pre}
   @begin[code]{table}
     @entry[:no-svg]{Never return SVG icons, even if GDK-Pixbuf supports them.
@@ -228,8 +236,20 @@
     @entry[:use-builtin]{When passed to @fun{gtk-icon-theme-lookup-icon}
       includes builtin icons as well as files. For a builtin icon,
       @fun{gtk-icon-info-get-filename}.}
-    @entry[:generic-fallback]{}
-    @entry[:force-size]{}
+    @entry[:generic-fallback]{Try to shorten icon name at '-' characters before
+      looking at inherited themes. This flag is only supported in functions
+      that take a single icon name. For more general fallback, see
+      @fun{gtk_icon_theme_choose_icon}. Since 2.12.}
+    @entry[:force-size]{Always get the icon scaled to the requested size. Since
+      2.14.}
+    @entry[:force-regular]{Try to always load regular icons, even when symbolic
+      icon names are given. Since 3.14.}
+    @entry[:force-symbolic]{Try to always load symbolic icons, even when
+      regular icon names are given. Since 3.14.}
+    @entry[:dir-ltr]{Try to load a variant of the icon for left-to-right text
+      direction. Since 3.14.}
+    @entry[:dir-rtl]{Try to load a variant of the icon for right-to-left text
+      direction. Since 3.14.}
   @end{table}")
 
 ;;; ----------------------------------------------------------------------------

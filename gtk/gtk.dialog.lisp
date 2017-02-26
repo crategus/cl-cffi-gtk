@@ -324,9 +324,9 @@
 (define-g-flags "GtkDialogFlags" gtk-dialog-flags
   (:export t
    :type-initializer "gtk_dialog_flags_get_type")
-  (:modal 1)
-  (:destroy-with-parent 2)
-  (:use-header-bar 3))
+  (:modal #.(ash 1 0))
+  (:destroy-with-parent #.(ash 1 1))
+  (:use-header-bar #.(ash 1 2)))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-dialog-flags atdoc:*symbol-name-alias*) "Flags"
@@ -337,9 +337,9 @@
 (define-g-flags \"GtkDialogFlags\" gtk-dialog-flags
   (:export t
    :type-initializer \"gtk_dialog_flags_get_type\")
-  (:modal 1)
-  (:destroy-with-parent 2)
-  (:use-header-bar 3))
+  (:modal #.(ash 1 0))
+  (:destroy-with-parent #.(ash 1 1))
+  (:use-header-bar #.(ash 1 2)))
   @end{pre}
   @begin[code]{table}
     @entry[:modal]{Make the constructed dialog modal,

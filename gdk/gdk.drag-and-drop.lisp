@@ -80,7 +80,8 @@
   (:rootwin 3)
   (:win32-dropfiles 4)
   (:ole2 5)
-  (:local 6))
+  (:local 6)
+  (:wayland 7))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-drag-protocol atdoc:*symbol-name-alias*) "Enum"

@@ -513,9 +513,7 @@
   (:animation 4)
   (:icon-name 5)
   (:gicon 6)
-  #+gtk-3-10
-  (:surface 7)
-  )
+  (:surface 7))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-image-type atdoc:*symbol-name-alias*) "Enum"

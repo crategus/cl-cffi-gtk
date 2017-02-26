@@ -8792,7 +8792,6 @@
   (:start 1)
   (:end 2)
   (:center 3)
-  #+gtk-3-10
   (:baseline 4))
 
 #+cl-cffi-gtk-documentation
