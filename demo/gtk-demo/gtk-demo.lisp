@@ -264,6 +264,9 @@
       (gtk-tree-store-set model (gtk-tree-store-append model parent)
                                 "Notebook"
                                 "notebook.lisp" "EXAMPLE-NOTEBOOK" 0)
+      (gtk-tree-store-set model (gtk-tree-store-append model parent)
+                                "Header Bar"
+                                "header-bar.lisp" "EXAMPLE-HEADER-BAR" 0)
     )
     (let ((parent (gtk-tree-store-set model (gtk-tree-store-append model nil)
                                             "Scrolling")))

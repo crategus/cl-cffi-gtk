@@ -41,6 +41,7 @@
                (:file "frame")
                (:file "grid")
                (:file "grid-packing")
+               (:file "header-bar")
                (:file "image")
                (:file "info-bar")
                (:file "labels")

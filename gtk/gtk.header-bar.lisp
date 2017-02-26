@@ -151,6 +151,16 @@
   @see-slot{gtk-header-bar-title}
   @see-class{gtk-box}")
 
+#+gtk-3-10
+(define-child-property "GtkHeaderBar"
+                       gtk-header-bar-child-pack-type
+                       "pack-type" "GtkPackType" t t t)
+
+#+gtk-3-10
+(define-child-property "GtkHeaderBar"
+                       gtk-header-bar-child-position
+                       "position" "gint" t t t)
+
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; Property and Accessor Details
@@ -375,6 +385,21 @@
   Since: 3.10
   @see-class{gtk-header-bar}")
 
+#+gtk-3-10
+(defcfun ("gtk_header_bar_pack_start" gtk-header-bar-pack-start) :void
+  (bar (g-object gtk-header-bar))
+  (child (g-object gtk-widget)))
+
+#+gtk-3-10
+(export 'gtk-header-bar-pack-start)
+
+#+gtk-3-10
+(defcfun ("gtk_header_bar_pack_end" gtk-header-bar-pack-end) :void
+  (bar (g-object gtk-header-bar))
+  (child (g-object gtk-widget)))
+
+#+gtk-3-10
+(export 'gtk-header-bar-pack-end)
 
 #|
 
