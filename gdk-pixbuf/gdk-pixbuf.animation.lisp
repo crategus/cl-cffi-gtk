@@ -430,6 +430,12 @@
 ;;;     TRUE if the "animation" was really just an image
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gdk_pixbuf_animation_is_static_image"
+          gdk-pixbuf-animation-is-static-image) :boolean
+  (animation (g-object gdk-pixbuf-animation)))
+
+(export 'gdk-pixbuf-animation-is-static-image)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_pixbuf_animation_get_static_image ()
 ;;; ----------------------------------------------------------------------------
