@@ -116,6 +116,30 @@
 ;;; struct GtkContainer
 ;;; ----------------------------------------------------------------------------
 
+;; TODO: would be nice if structs can have annotations for size of members
+;; aka bitfields
+(defbitfield gtk-container-flags
+  :handle-border-width)
+
+(export 'gtk-container-flags)
+
+(defcstruct gtk-container-class
+  (parent-class (:struct gtk-widget-class))
+  (add :pointer)
+  (remove :pointer)
+  (check-resize :pointer)
+  (forall :pointer)
+  (set-focus-child :pointer)
+  (child-type :pointer)
+  (composite-name :pointer)
+  (set-child-property :pointer)
+  (get-child-property :pointer)
+  (get-path-for-child :pointer)
+  (handle-border-width gtk-container-flags)
+  (reserved :pointer :count 8))
+
+(export 'gtk-container-class)
+
 (define-g-object-class "GtkContainer" gtk-container
   (:superclass gtk-widget
    :export t

@@ -161,6 +161,17 @@
 ;;; GtkWindow
 ;;; ----------------------------------------------------------------------------
 
+(defcstruct gtk-window-class
+  (parent-class (:struct gtk-bin-class))
+  (set-focus :pointer)
+  (activate-focus :pointer)
+  (activate-default :pointer)
+  (keys-changed :pointer)
+  (enable-debugging :pointer)
+  (reserved :pointer :count 3))
+
+(export 'gtk-window-class)
+
 (eval-when (:compile-toplevel :load-toplevel :execute)
   (register-object-type "GtkWindow" 'gtk-window))
 
