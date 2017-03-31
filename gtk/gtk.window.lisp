@@ -161,7 +161,7 @@
 ;;; GtkWindow
 ;;; ----------------------------------------------------------------------------
 
-(defcstruct gtk-window-class
+(defcstruct* gtk-window-class
   (parent-class (:struct gtk-bin-class))
   (set-focus :pointer)
   (activate-focus :pointer)

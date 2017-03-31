@@ -98,6 +98,24 @@
 
 ;;; ----------------------------------------------------------------------------
 
+;; Helper macro to export slots for a cstruct
+
+(defmacro defcstruct* (&whole whole name-and-options &body fields)
+  (declare (ignore name-and-options))
+  `(progn
+     (defcstruct ,@(cdr whole))
+     (export '(,.(mapcan (lambda (field)
+                           (unless (stringp field)
+                             (let* ((name (car field))
+                                    (string (symbol-name name)))
+                               (unless (or (starts-with-subseq (symbol-name '#:reserved)
+                                                               string)
+                                           (string= string (symbol-name '#:priv)))
+                                 (list name)))))
+                  fields)))))
+
+;;; ----------------------------------------------------------------------------
+
 ;; Define the base type g-boxed-foreign
 ;;
 ;; This type is specialized further to:

@@ -33,11 +33,13 @@
 (defpackage :gobject
   (:nicknames :g)
   (:use :c2cl :glib :cffi :tg :bordeaux-threads :iter :closer-mop)
-  (:import-from :alexandria :format-symbol)
+  (:import-from :alexandria :format-symbol :starts-with-subseq)
   (:export
     #:*lisp-name-exceptions*
 
     #:using*
+
+    #:defcstruct*
 
     #:parse-g-value
     #:parse-g-param-spec

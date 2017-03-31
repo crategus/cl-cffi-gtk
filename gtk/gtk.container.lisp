@@ -123,7 +123,7 @@
 
 (export 'gtk-container-flags)
 
-(defcstruct gtk-container-class
+(defcstruct* gtk-container-class
   (parent-class (:struct gtk-widget-class))
   (add :pointer)
   (remove :pointer)

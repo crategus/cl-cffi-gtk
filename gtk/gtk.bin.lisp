@@ -47,7 +47,7 @@
 ;;; struct GtkBin
 ;;; ----------------------------------------------------------------------------
 
-(defcstruct gtk-bin-class
+(defcstruct* gtk-bin-class
   (parent-class (:struct gtk-container-class))
   (reserved :pointer :count 4))
 

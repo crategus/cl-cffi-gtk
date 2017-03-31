@@ -421,7 +421,7 @@
 
 (defcstruct gtk-widget-class-private)
 
-(defcstruct gtk-widget-class
+(defcstruct* gtk-widget-class
   (parent-class (:struct g-object-class))
   (activate-signal :pointer)
   (dispatch-child-properties-changed :pointer)
