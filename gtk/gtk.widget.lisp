@@ -7297,7 +7297,7 @@
 
   Since 2.12
   @see-function{gtk-widget-name}"
-  (widget (g-object gtk-window))
+  (widget (g-object gtk-widget))
   (custom-window (g-object gtk-window)))
 
 (export 'gtk-widget-set-tooltip-window)
