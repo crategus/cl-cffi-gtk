@@ -3262,4 +3262,25 @@
 ;;; Since 3.10
 ;;; ----------------------------------------------------------------------------
 
+#+gtk-3-10
+(defcfun ("gtk_window_set_titlebar" gtk-window-set-titlebar) :void
+  (window (g-object gtk-window))
+  (titlebar (g-object gtk-widget)))
+
+#+gtk-3-10
+(export 'gtk-window-set-titlebar)
+
+#+gtk-3-16
+(defcfun ("gtk_window_get_titlebar" gtk-window-get-titlebar) (g-object gtk-widget)
+  (window (g-object gtk-window)))
+
+#+gtk-3-16
+(export 'gtk-window-get-titlebar)
+
+(defcfun ("gtk_window_set_interactive_debugging" gtk-window-set-interactive-debugging) :void
+  (enable :boolean))
+
+#+gtk-3-16
+(export 'gtk-window-set-interactive-debugging)
+
 ;;; --- End of file gtk.window.lisp --------------------------------------------
