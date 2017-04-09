@@ -859,4 +859,98 @@
 
 (export 'g-cond)
 
+(defcstruct %g-hash-table)
+
+(define-foreign-type g-hash-table-type ()
+  ((key-type :reader g-hash-table-type-key-type :initarg :key-type :initform :pointer)
+   (value-type :reader g-hash-table-type-value-type :initarg :value-type :initform :pointer)
+   (test :reader g-hash-table-type-test :initarg :test :initform 'eql))
+  (:actual-type :pointer))
+
+(define-parse-method g-hash-table (key-type value-type &key (test 'eql))
+  (make-instance 'g-hash-table-type
+                 :key-type key-type
+                 :value-type value-type
+                 :test test))
+
+(defcfun ("g_hash_table_new_full" %g-hash-table-new-full) (:pointer (:struct %g-hash-table))
+  (hash-func :pointer)
+  (key-equal-func :pointer)
+  (key-destroy-func :pointer)
+  (value-destroy-func :pointer))
+
+(defun %g-hash-table-new (&key (key-type :string))
+  (let ((null (null-pointer)))
+    (multiple-value-bind (equal hash)
+        (ecase key-type
+          (:string (values
+                    (foreign-symbol-pointer "g_str_equal")
+                    (foreign-symbol-pointer "g_str_hash")))
+          (:int (values
+                 (foreign-symbol-pointer "g_int_equal")
+                 (foreign-symbol-pointer "g_int_equal")))
+          (:int64 (values
+                   (foreign-symbol-pointer "g_int64_equal")
+                   (foreign-symbol-pointer "g_int64_equal")))
+          ((NIL :pointer) (values null null))
+          (:double (values
+                    (foreign-symbol-pointer "g_double_equal")
+                    (foreign-symbol-pointer "g_double_equal"))))
+      (%g-hash-table-new-full equal hash null null))))
+
+(defcfun ("g_hash_table_unref" %g-hash-table-unref) :void
+  (hash-table (:pointer (:struct %g-hash-table))))
+
+(defcfun ("g_hash_table_insert" %g-hash-table-insert) :boolean
+  (hash-table (:pointer (:struct %g-hash-table)))
+  (key :pointer)
+  (value :pointer))
+
+(defcstruct %g-hash-table-iter
+  (dummy1 :pointer)
+  (dummy2 :pointer)
+  (dummy3 :pointer)
+  (dummy4 :int)
+  (dummy5 :boolean)
+  (dummy6 :pointer))
+
+(defcfun ("g_hash_table_iter_init" %g-hash-table-iter-init) :void
+  (iter (:pointer (:struct %g-hash-table-iter)))
+  (hash-table (:pointer (:struct %g-hash-table))))
+
+(defcfun ("g_hash_table_iter_next" %g-hash-table-iter-next) :boolean
+  (iter (:pointer (:struct %g-hash-table-iter)))
+  (key :pointer)
+  (value :pointer))
+
+(defmethod translate-from-foreign (pointer (type g-hash-table-type))
+  (with-foreign-objects ((iter '(:struct %g-hash-table-iter))
+                         (foreign-key :pointer)
+                         (foreign-value :pointer))
+    (%g-hash-table-iter-init iter pointer)
+    (let ((result (make-hash-table :test (g-hash-table-type-test type))))
+      (iterate
+        (while (%g-hash-table-iter-next iter foreign-key foreign-value))
+        (let ((key (convert-from-foreign
+                    (mem-ref foreign-key :pointer)
+                    (g-hash-table-type-key-type type)))
+              (value (convert-from-foreign
+                      (mem-ref foreign-value :pointer)
+                      (g-hash-table-type-value-type type))))
+          (setf (gethash key result) value)))
+      result)))
+
+(defmethod translate-to-foreign (value (type g-hash-table-type))
+  (let ((result (%g-hash-table-new :key-type (g-hash-table-type-key-type type))))
+    (iterate
+      (for (key value) in-hashtable value)
+      (let ((foreign-key
+              (convert-to-foreign key (g-hash-table-type-key-type type)))
+            (foreign-value
+              (convert-to-foreign value (g-hash-table-type-value-type type))))
+        (%g-hash-table-insert result foreign-key foreign-value)))
+    result))
+
+(export 'g-hash-table)
+
 ;;; --- End of file glib.misc.lisp ---------------------------------------------
