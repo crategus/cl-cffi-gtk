@@ -172,7 +172,8 @@
           (demo parent 2 "Calendar" "calendar.lisp" 'example-calendar)
           (demo parent 3 "The Event Box" "event-box.lisp" 'example-event-box)
           (demo parent 4 "Demo Pixbufs" "pixbufs.lisp" 'demo-pixbufs)
-          (demo parent 5 "Popover Demo" "popover.lisp" 'popover-demo))))
+          (demo parent 5 "Popover Demo" "popover.lisp" 'popover-demo)
+          (demo parent 6 "Custom Subclass" "subclass-window.lisp" 'custom-window-demo))))
     model))
 
 (defun create-view-and-model ()
