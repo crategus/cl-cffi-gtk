@@ -1,5 +1,8 @@
 (in-package #:gtk-demo)
 
+(register-object-type-implementation
+ "CustomWindow" custom-window "GtkWindow" NIL NIL 'custom-window-class-init)
+
 (defclass custom-window (gtk-window)
   ()
   (:metaclass gobject-class)
@@ -19,9 +22,6 @@
   (format T "custom-window-class-init ~A~%" foreign-class)
   (setf (foreign-slot-value foreign-class '(:struct gtk-window-class) 'gtk::set-focus)
         (callback c-set-focus)))
-
-(register-object-type-implementation
- "CustomWindow" custom-window "GtkWindow" NIL NIL 'custom-window-class-init)
 
 (cffi:load-foreign-library (asdf:system-relative-pathname :cl-cffi-gtk-demo-gtk "subclass.so"))
 
