@@ -162,6 +162,8 @@
                           :adjustable t
                           :fill-pointer t)))
 
+(export 'make-tree-node)
+
 (register-object-type-implementation "LispTreeStore"
                                      tree-lisp-store
                                      "GObject"
@@ -181,6 +183,9 @@
                   :accessor tree-lisp-store-next-id-value))
   (:metaclass gobject-class)
   (:g-type-name . "LispTreeStore"))
+
+(export 'tree-lisp-store)
+(export 'tree-lisp-store-root)
 
 (defmethod initialize-instance :after ((object tree-lisp-store) &key
                                        &allow-other-keys)
@@ -214,8 +219,13 @@
   (notice-tree-node-insertion (tree-node-tree node) node child index)
   node)
 
+(export 'tree-node-insert-at)
+
 (defun tree-node-child-at (node index)
-  (aref (tree-node-children node) index))
+  (let* ((children (tree-node-children node))
+         (in-bounds-p (< index (length children))))
+    (values (and in-bounds-p (aref (tree-node-children node) index))
+            in-bounds-p)))
 
 (defun tree-node-remove-at (node index)
   (assert (<= 0 index (1- (length (tree-node-children node)))))
@@ -230,6 +240,8 @@
   (vector-push-extend column-getter (tree-lisp-store-getters store))
   (vector-push-extend column-type (tree-lisp-store-types store)))
 
+(export 'tree-lisp-store-add-column)
+
 (defmethod gtk-tree-model-get-flags-impl ((store tree-lisp-store))
   nil)
 
@@ -241,9 +253,11 @@
 
 (defun get-node-by-indices (root indices)
   (if indices
-      (get-node-by-indices (tree-node-child-at root (first indices))
-                           (rest indices))
-      root))
+      (multiple-value-bind (child in-bounds-p)
+          (tree-node-child-at root (first indices))
+        (values (and in-bounds-p (get-node-by-indices child (rest indices)))
+                in-bounds-p))
+      (values root t)))
 
 (defun get-node-by-path (tree path)
   (let ((indices (gtk-tree-path-get-indices path)))
@@ -275,10 +289,13 @@
   (gethash id (tree-lisp-store-id-map tree)))
 
 (defmethod gtk-tree-model-get-iter-impl ((store tree-lisp-store) iter path)
-  (let* ((node (get-node-by-path store path))
-         (node-idx (get-assigned-id store node)))
-    (setf (gtk-tree-iter-stamp iter) 0
-          (gtk-tree-iter-user-data iter) node-idx)))
+  (multiple-value-bind (node in-bounds-p)
+      (get-node-by-path store path)
+    (when in-bounds-p
+      (let ((node-idx (get-assigned-id store node)))
+        (setf (gtk-tree-iter-stamp iter) 0
+              (gtk-tree-iter-user-data iter) node-idx)
+        t))))
 
 (defun get-node-by-iter (tree iter)
   (get-node-by-id tree (gtk-tree-iter-user-data iter)))

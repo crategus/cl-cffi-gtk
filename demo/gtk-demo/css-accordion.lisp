@@ -48,7 +48,7 @@
       ;; Add container to window
       (gtk-container-add window container)
       ;; Load CSS from file into the provider
-      (gtk-css-provider-load-from-path provider (asdf:system-relative-pathname :cl-cffi-gtk-demo-gtk "css-accordion.css"))
+      (gtk-css-provider-load-from-path provider (namestring (asdf:system-relative-pathname :cl-cffi-gtk-demo-gtk "css-accordion.css")))
       ;; Apply CSS to the widgets
       (apply-css window provider)
       ;; Show the window.
