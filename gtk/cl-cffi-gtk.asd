@@ -186,6 +186,7 @@
    (:file "gtk.cell-view")             ; Displaying a single row
    (:file "gtk.icon-view")             ; List of icons in a grid
    (:file "gtk.list-store")            ; List-like data structure
+   (:file "gtk.array-list-store")      ; List-like data structures in Lisp
 
    ;; Numeric/Text Data Entry
    (:file "gtk.editable")              ; GtkEditable
