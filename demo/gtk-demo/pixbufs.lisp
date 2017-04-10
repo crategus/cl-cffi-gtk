@@ -38,7 +38,7 @@
       (surface nil))
 
   (defun load-pixbufs ()
-    (setf background (gdk-pixbuf-new-from-file "background.jpg"))
+    (setf background (gdk-pixbuf-new-from-file (rel-path "background.jpg")))
     (setf back-width (gdk-pixbuf-get-width background)
           back-height (gdk-pixbuf-get-height background))
     (setf back-rect (make-gdk-rectangle :x 0 :y 0
