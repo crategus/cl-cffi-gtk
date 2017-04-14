@@ -340,4 +340,33 @@
 
 (require-library-version "GLib" 2 32 +glib-major-version+ +glib-minor-version+)
 
+(defun library-version ()
+  (values +glib-major-version+ +glib-minor-version+))
+
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  ;; TODO: make this configurable so that people can turn it off
+  ;; in the meantime call the following to enable warnings in SBCL at least
+  ;; (pushnew 'cl-cffi-gtk-deprecation-warnings *features*)
+
+  (defmacro deprecated-function (library name since
+                                 &optional replacements)
+    (destructuring-bind (max-major-version max-minor-version) (or since '(NIL NIL))
+      (when (member 'cl-cffi-gtk-deprecation-warnings *features*)
+        (multiple-value-bind (major-version minor-version)
+            (funcall (find-symbol (string '#:library-version) library))
+          (when (or (not since)
+                    (or (> major-version max-major-version)
+                        (and (eql major-version max-major-version)
+                             (>= minor-version max-minor-version))))
+            #+sbcl
+            (when (find-symbol (string '#:deprecation-error) '#:sb-ext)
+              `(declaim (sb-ext:deprecated
+                         :late (,(string library)
+                                ,(if since
+                                     (format NIL "~D.~D" max-major-version max-minor-version)
+                                     "unknown"))
+                         (function ,name :replacement ,replacements)))))))))
+
+  (export 'deprecated-function))
+
 ;;; --- End of file glib.version.lisp ------------------------------------------

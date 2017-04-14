@@ -4453,6 +4453,7 @@
 ;;; gtk_widget_reparent ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gtk gtk-widget-reparent (3 14) (gtk-container-add gtk-container-remove))
 (defcfun ("gtk_widget_reparent" gtk-widget-reparent) :void
  #+cl-cffi-gtk-documentation
  "@version{2016-1-12}
@@ -4564,6 +4565,7 @@
 ;;; gtk_widget_set_state ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gtk gtk-widget-set-state NIL gtk-widget-set-state-flags)
 (defcfun ("gtk_widget_set_state" gtk-widget-set-state) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-11-18}
@@ -4902,6 +4904,7 @@
   (x (:pointer :int))
   (y (:pointer :int)))
 
+(deprecated-function :gtk gtk-widget-get-pointer (3 4) gdk:gdk-window-get-device-position)
 (defun gtk-widget-get-pointer (widget)
  #+cl-cffi-gtk-documentation
  "@version{2012-12-29}
@@ -5022,6 +5025,7 @@
 ;;; gtk_widget_ensure_style ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gtk gtk-widget-ensure-style (3 0) gtk-style-context)
 (defcfun ("gtk_widget_ensure_style" gtk-widget-ensure-style) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-11-22}
@@ -5046,6 +5050,7 @@
 ;;; gtk_widget_reset_rc_styles ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gtk gtk-widget-reset-rc-styles (3 0) gtk-widget-reset-style)
 (defcfun ("gtk_widget_reset_rc_styles" gtk-widget-reset-rc-styles) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-11-22}
@@ -5074,6 +5079,10 @@
 ;;; gtk_widget_get_default_style ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gtk gtk-widget-default-style (3 0)
+                     (gtk-style-context
+                      gtk-css-provider-get-default
+                      gtk-style-provider))
 (defcfun ("gtk_widget_get_default_style" gtk-widget-default-style)
     (g-object gtk-style)
  #+cl-cffi-gtk-documentation
@@ -5270,6 +5279,7 @@
   (path (:pointer (:pointer :char)))
   (path-reversed (:pointer (:pointer :char))))
 
+(deprecated-function :gtk gtk-widget-path (3 0) gtk-widget-get-path)
 (defun gtk-widget-path (widget &key (path-type :name))
  #+cl-cffi-gtk-documentation
  "@version{2013-11-25}
@@ -5354,6 +5364,7 @@
 ;;; gtk_widget_get_composite_name ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gtk gtk-widget-get-composite-name (3 10) gtk-widget-class-set-template)
 (defcfun ("gtk_widget_get_composite_name" gtk-widget-get-composite-name) :string
  #+cl-cffi-gtk-documentation
  "@version{2013-11-25}
@@ -5364,7 +5375,7 @@
   @begin[Warning]{dictionary}
     The function @sym{gtk-widget-get-composite-name} has been deprecated since
     version 3.10 and should not be used in newly-written code. Use the function
-    @fun{gtk-widget-class-set-template}, or don not use this API at all.
+    @fun{gtk-widget-class-set-template}, or do not use this API at all.
   @end{dictionary}
   @see-class{gtk-widget}
   @see-function{gtk-widget-set-composite-name}"
@@ -6851,6 +6862,7 @@
 ;;; gtk_widget_get_root_window ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gtk gtk-widget-get-root-window (3 12) (gdk:gdk-screen-get-root-window))
 (defcfun ("gtk_widget_get_root_window" gtk-widget-get-root-window)
     (g-object gdk-window)
  #+cl-cffi-gtk-documentation
@@ -8256,6 +8268,11 @@
 ;;; Returns :
 ;;;     The GtkWidgetPath representing widget
 ;;; ----------------------------------------------------------------------------
+(defcfun ("gtk_widget_get_path" gtk-widget-get-path)
+    (g-boxed-foreign gtk-widget-path)
+  (widget (g-object gtk-widget)))
+
+(export 'gtk-widget-get-path)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_style_context ()

@@ -289,6 +289,7 @@
 ;;; gdk_get_display ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gdk gdk-get-display (3 8) (gdk-display-get-name gdk-display-get-default))
 (defcfun ("gdk_get_display" gdk-get-display) (:string :free-from-foreign nil)
  #+cl-cffi-gtk-documentation
  "@version{2015-12-30}
@@ -387,6 +388,7 @@
 ;;; gdk_pointer_grab ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gdk gdk-pointer-grab (3 0) gdk-device-grab)
 (defcfun ("gdk_pointer_grab" gdk-pointer-grab) gdk-grab-status
  #+cl-cffi-gtk-documentation
  "@version{2013-4-3}
@@ -454,6 +456,7 @@
 ;;; gdk_pointer_ungrab ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gdk gdk-pointer-ungrab (3 0) (gdk-device-ungrab gdk-device-grab))
 (defcfun ("gdk_pointer_ungrab" gdk-pointer-ungrab) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-4-3}
@@ -478,6 +481,7 @@
 ;;; gdk_pointer_is_grabbed ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gdk gdk-pointer-is-grabbed (3 0) gdk-display-device-is-grabbed)
 (defcfun ("gdk_pointer_is_grabbed" gdk-pointer-is-grabbed) :boolean
  #+cl-cffi-gtk-documentation
  "@version{2013-4-3}
@@ -522,6 +526,7 @@
 ;;; gdk_keyboard_grab ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gdk gdk-keyboard-grab (3 0) gdk-device-grab)
 (defcfun ("gdk_keyboard_grab" gdk-keyboard-grab) gdk-grab-status
  #+cl-cffi-gtk-documentation
  "@version{2013-4-3}
@@ -562,6 +567,7 @@
 ;;; gdk_keyboard_ungrab ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gdk gdk-keyboard-ungrab (3 0) (gdk-device-ungrab gdk-device-grab))
 (defcfun ("gdk_keyboard_ungrab" gdk-keyboard-ungrab) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-4-3}

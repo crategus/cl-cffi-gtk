@@ -63,6 +63,11 @@
     3 20
     3 22)
 
+(defun library-version ()
+  (values
+   (cffi:foreign-funcall "gtk_get_major_version" :int)
+   (cffi:foreign-funcall "gtk_get_minor_version" :int)))
+
 #+cl-cffi-gtk-documentation
 (setf (documentation (find-package :gdk) t)
  "GDK is an intermediate layer which isolates GTK+ from the details of the

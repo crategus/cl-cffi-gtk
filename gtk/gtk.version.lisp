@@ -312,4 +312,7 @@ NIL
                               (gtk-get-major-version)
                               (gtk-get-minor-version))
 
+(defun library-version ()
+  (values (gtk-get-major-version) (gtk-get-minor-version)))
+
 ;;; --- End of file gtk.version.lisp -------------------------------------------
