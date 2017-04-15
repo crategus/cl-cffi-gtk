@@ -154,6 +154,11 @@
 ;;;
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+(defcfun ("gtk_widget_path_append_type" gtk-widget-path-append-type) :int
+  (path (g-boxed-foreign gtk-widget-path))
+  (type g-type))
+
+(export 'gtk-widget-path-append-type)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_path_append_with_siblings ()
@@ -185,6 +190,12 @@
 ;;;
 ;;; Since 3.2
 ;;; ----------------------------------------------------------------------------
+(defcfun ("gtk_widget_path_append_with_siblings" gtk-widget-path-append-with-siblings) :int
+  (path (g-boxed-foreign gtk-widget-path))
+  (siblings (g-boxed-foreign gtk-widget-path))
+  (sibling-index :uint))
+
+(export 'gtk-widget-path-append-with-siblings)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_path_append_for_widget ()
@@ -208,6 +219,11 @@
 ;;;
 ;;; Since 3.2
 ;;; ----------------------------------------------------------------------------
+(defcfun ("gtk_widget_path_append_for_widget" gtk-widget-path-append-for-widget) :int
+  (path (g-boxed-foreign gtk-widget-path))
+  (widget (g-object widget)))
+
+(export 'gtk-widget-path-append-for-widget)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_path_copy ()
@@ -224,6 +240,11 @@
 ;;;
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+(defcfun ("gtk_widget_path_copy" gtk-widget-path-copy)
+    (g-boxed-foreign gtk-widget-path)
+  (path (g-boxed-foreign gtk-widget-path)))
+
+(export 'gtk-widget-path-copy)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_path_ref ()
@@ -240,6 +261,11 @@
 ;;;
 ;;; Since 3.2
 ;;; ----------------------------------------------------------------------------
+(defcfun ("gtk_widget_path_ref" gtk-widget-path-ref)
+    (g-boxed-foreign gtk-widget-path)
+  (path (g-boxed-foreign gtk-widget-path)))
+
+(export 'gtk-widget-path-ref)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_path_unref ()
@@ -254,6 +280,10 @@
 ;;;
 ;;; Since 3.2
 ;;; ----------------------------------------------------------------------------
+(defcfun ("gtk_widget_path_unref" gtk-widget-path-unref) :void
+  (path (g-boxed-foreign gtk-widget-path)))
+
+(export 'gtk-widget-path-unref)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_path_free ()
@@ -268,6 +298,10 @@
 ;;;
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+(defcfun ("gtk_widget_path_free" gtk-widget-path-free) :void
+  (path (g-boxed-foreign gtk-widget-path)))
+
+(export 'gtk-widget-path-free)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_path_get_object_type ()
@@ -285,6 +319,10 @@
 ;;;
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+(defcfun ("gtk_widget_path_get_object_type" gtk-widget-path-get-object-type) g-type
+  (path (g-boxed-foreign gtk-widget-path)))
+
+(export 'gtk-widget-path-get-object-type)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_path_has_parent ()
@@ -306,6 +344,11 @@
 ;;;
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+(defcfun ("gtk_widget_path_has_parent" gtk-widget-path-has-parent) :boolean
+  (path (g-boxed-foreign gtk-widget-path))
+  (type g-type))
+
+(export 'gtk-widget-path-has-parent)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_path_is_type ()
@@ -327,6 +370,11 @@
 ;;;
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+(defcfun ("gtk_widget_path_is_type" gtk-widget-path-is-type) :boolean
+  (path (g-boxed-foreign gtk-widget-path))
+  (type g-type))
+
+(export 'gtk-widget-path-is-type)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_path_iter_add_class ()
@@ -349,6 +397,12 @@
 ;;;
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+(defcfun ("gtk_widget_path_iter_add_class" gtk-widget-path-iter-add-class) :void
+  (path (g-boxed-foreign gtk-widget-path))
+  (pos :int)
+  (name :string))
+
+(export 'gtk-widget-path-iter-add-class)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_path_iter_add_region ()
@@ -380,6 +434,13 @@
 ;;;
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+(defcfun ("gtk_widget_path_iter_add_region" gtk-widget-path-iter-add-region) :void
+  (path (g-boxed-foreign gtk-widget-path))
+  (pos :int)
+  (name :string)
+  (flags gtk-region-flags))
+
+(export 'gtk-widget-path-iter-add-region)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_path_iter_clear_classes ()
@@ -397,6 +458,11 @@
 ;;;
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+(defcfun ("gtk_widget_path_iter_clear_classes" gtk-widget-path-iter-clear-classes) :void
+  (path (g-boxed-foreign gtk-widget-path))
+  (pos :int))
+
+(export 'gtk-widget-path-iter-clear-classes)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_path_iter_clear_regions ()
@@ -414,6 +480,11 @@
 ;;;
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+(defcfun ("gtk_widget_path_iter_clear_regions" gtk-widget-path-iter-clear-regions) :void
+  (path (g-boxed-foreign gtk-widget-path))
+  (pos :int))
+
+(export 'gtk-widget-path-iter-clear-regions)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_path_iter_get_name ()
@@ -433,6 +504,11 @@
 ;;; Returns :
 ;;;     The widget name, or NULL if none was set.
 ;;; ----------------------------------------------------------------------------
+(defcfun ("gtk_widget_path_iter_get_name" gtk-widget-path-iter-get-name) :string
+  (path (g-boxed-foreign gtk-widget-path))
+  (pos :int))
+
+(export 'gtk-widget-path-iter-get-name)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_path_iter_get_object_type ()
@@ -454,6 +530,11 @@
 ;;;
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+(defcfun ("gtk_widget_path_iter_get_object_type" gtk-widget-path-iter-get-object-type) g-type
+  (path (g-boxed-foreign gtk-widget-path))
+  (pos :int))
+
+(export 'gtk-widget-path-iter-get-object-type)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_path_iter_get_siblings ()
@@ -474,6 +555,12 @@
 ;;; Returns :
 ;;;     NULL or the list of siblings for the element at pos.
 ;;; ----------------------------------------------------------------------------
+(defcfun ("gtk_widget_path_iter_get_siblings" gtk-widget-path-iter-get-siblings)
+    (g-boxed-foreign gtk-widget-path)
+  (path (g-boxed-foreign gtk-widget-path))
+  (pos :int))
+
+(export 'gtk-widget-path-iter-get-siblings)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_path_iter_get_sibling_index ()
@@ -495,6 +582,11 @@
 ;;; Returns :
 ;;;     0 or the index into the list of siblings for the element at pos.
 ;;; ----------------------------------------------------------------------------
+(defcfun ("gtk_widget_path_iter_get_sibling_index" gtk-widget-path-iter-get-sibling-index) :uint
+  (path (g-boxed-foreign gtk-widget-path))
+  (pos :int))
+
+(export 'gtk-widget-path-iter-get-sibling-index)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_path_iter_has_class ()
@@ -520,6 +612,12 @@
 ;;;
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+(defcfun ("gtk_widget_path_iter_has_class" gtk-widget-path-iter-has-class) :boolean
+  (path (g-boxed-foreign gtk-widget-path))
+  (pos :int)
+  (name :string))
+
+(export 'gtk-widget-path-iter-has-class)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_path_iter_has_name ()
@@ -545,6 +643,12 @@
 ;;;
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+(defcfun ("gtk_widget_path_iter_has_name" gtk-widget-path-iter-has-name) :boolean
+  (path (g-boxed-foreign gtk-widget-path))
+  (pos :int)
+  (name :string))
+
+(export 'gtk-widget-path-iter-has-name)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_path_iter_has_qclass ()
@@ -570,6 +674,12 @@
 ;;;
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+(defcfun ("gtk_widget_path_iter_has_qclass" gtk-widget-path-iter-has-qclass) :boolean
+  (path (g-boxed-foreign gtk-widget-path))
+  (pos :int)
+  (qname g-quark))
+
+(export 'gtk-widget-path-iter-has-qclass)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_path_iter_has_qname ()
@@ -595,6 +705,12 @@
 ;;;
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+(defcfun ("gtk_widget_path_iter_has_qname" gtk-widget-path-iter-has-qname) :boolean
+  (path (g-boxed-foreign gtk-widget-path))
+  (pos :int)
+  (qname g-quark))
+
+(export 'gtk-widget-path-iter-has-qname)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_path_iter_has_qregion ()
@@ -624,6 +740,13 @@
 ;;;
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+(defcfun ("gtk_widget_path_iter_has_qregion" gtk-widget-path-iter-has-qregion) :boolean
+  (path (g-boxed-foreign gtk-widget-path))
+  (pos :int)
+  (qname g-quark)
+  (flags gtk-region-flags))
+
+(export 'gtk-widget-path-iter-has-qregion)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_path_iter_has_region ()
@@ -653,6 +776,13 @@
 ;;;
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+(defcfun ("gtk_widget_path_iter_has_region" gtk-widget-path-iter-has-region) :boolean
+  (path (g-boxed-foreign gtk-widget-path))
+  (pos :int)
+  (qname g-quark)
+  (flags gtk-region-flags))
+
+(export 'gtk-widget-path-iter-has-region)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_path_iter_list_classes ()
@@ -676,6 +806,12 @@
 ;;;
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+(defcfun ("gtk_widget_path_iter_list_classes" gtk-widget-path-iter-list-classes)
+    (g-slist :string :free-from-foreign t)
+  (path (g-boxed-foreign gtk-widget-path))
+  (pos :int))
+
+(export 'gtk-widget-path-iter-list-classes)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_path_iter_list_regions ()
@@ -699,6 +835,12 @@
 ;;;
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+(defcfun ("gtk_widget_path_iter_list_regions" gtk-widget-path-iter-list-regions)
+    (g-slist :string :free-from-foreign t)
+  (path (g-boxed-foreign gtk-widget-path))
+  (pos :int))
+
+(export 'gtk-widget-path-iter-list-regions)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_path_iter_remove_class ()
@@ -721,6 +863,12 @@
 ;;;
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+(defcfun ("gtk_widget_path_iter_remove_class" gtk-widget-path-iter-remove-class) :void
+  (path (g-boxed-foreign gtk-widget-path))
+  (pos :int)
+  (name :string))
+
+(export 'gtk-widget-path-iter-remove-class)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_path_iter_remove_region ()
@@ -743,6 +891,12 @@
 ;;;
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+(defcfun ("gtk_widget_path_iter_remove_region" gtk-widget-path-iter-remove-region) :void
+  (path (g-boxed-foreign gtk-widget-path))
+  (pos :int)
+  (name :string))
+
+(export 'gtk-widget-path-iter-remove-region)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_path_iter_set_name ()
@@ -765,6 +919,12 @@
 ;;;
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+(defcfun ("gtk_widget_path_iter_set_name" gtk-widget-path-iter-set-name) :void
+  (path (g-boxed-foreign gtk-widget-path))
+  (pos :int)
+  (name :string))
+
+(export 'gtk-widget-path-iter-set-name)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_path_iter_set_object_type ()
@@ -787,6 +947,12 @@
 ;;;
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+(defcfun ("gtk_widget_path_iter_set_object_type" gtk-widget-path-iter-set-object-type) :void
+  (path (g-boxed-foreign gtk-widget-path))
+  (pos :int)
+  (type g-type))
+
+(export 'gtk-widget-path-iter-set-object-type)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_path_length ()
@@ -804,6 +970,10 @@
 ;;;
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+(defcfun ("gtk_widget_path_length" gtk-widget-path-length) :int
+  (path (g-boxed-foreign gtk-widget-path)))
+
+(export 'gtk-widget-path-length)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_path_new ()
@@ -835,6 +1005,11 @@
 ;;;
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+(defcfun ("gtk_widget_path_prepend_type" gtk-widget-path-prepend-type) :void
+  (path (g-boxed-foreign gtk-widget-path))
+  (type g-type))
+
+(export 'gtk-widget-path-prepend-type)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_path_to_string ()
