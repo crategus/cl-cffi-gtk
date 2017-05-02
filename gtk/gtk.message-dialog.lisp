@@ -188,6 +188,8 @@
 
 ;;; --- gtk-message-dialog-image -----------------------------------------------
 
+(deprecated-function :gtk gtk-message-dialog-image (3 12) gtk-dialog)
+
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "image" 'gtk-message-dialog) 't)
  "The @code{\"image\"} property of type @class{gtk-widget} (Read / Write) @br{}
