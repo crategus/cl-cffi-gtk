@@ -125,7 +125,7 @@
 
 (in-package :gobject)
 
-(defvar *foreign-gobjects-lock* (make-lock))
+(defvar *foreign-gobjects-lock* (make-recursive-lock))
 (defvar *foreign-gobjects-weak*
   (make-weak-hash-table :test 'equal :weakness :value))
 (defvar *foreign-gobjects-strong*
@@ -135,7 +135,7 @@
 (defvar *currently-making-object-p* nil)
 
 (glib::at-finalize ()
-  (with-lock-held (*foreign-gobjects-lock*)
+  (with-recursive-lock-held (*foreign-gobjects-lock*)
     (clrhash *foreign-gobjects-weak*)
     (clrhash *foreign-gobjects-strong*))
   (setf *current-creating-object* nil
@@ -476,7 +476,7 @@
     (log-for :gc "g_object_ref_sink(~A)~%" (pointer obj))
     (g-object-ref-sink (pointer obj)))
   (setf (g-object-has-reference obj) t)
-  (with-lock-held (*foreign-gobjects-lock*)
+  (with-recursive-lock-held (*foreign-gobjects-lock*)
     (setf (gethash (pointer-address (pointer obj)) *foreign-gobjects-strong*)
           obj))
   (g-object-add-toggle-ref (pointer obj)
@@ -493,7 +493,7 @@
   (declare (ignore data))
   (log-for :gc "~A is weak-ref-finalized with ~A refs~%"
            pointer (ref-count pointer))
-  (with-lock-held (*foreign-gobjects-lock*)
+  (with-recursive-lock-held (*foreign-gobjects-lock*)
     (remhash (pointer-address pointer) *foreign-gobjects-weak*)
     (when (gethash (pointer-address pointer) *foreign-gobjects-strong*)
       (warn "GObject at ~A was weak-ref-finalized while still holding lisp-side ~
@@ -574,7 +574,7 @@
 
 (defun get-g-object-for-pointer (pointer)
   (unless (null-pointer-p pointer)
-    (with-lock-held (*foreign-gobjects-lock*)
+    (with-recursive-lock-held (*foreign-gobjects-lock*)
       (or (gethash (pointer-address pointer) *foreign-gobjects-strong*)
           (gethash (pointer-address pointer) *foreign-gobjects-weak*)
           (progn
@@ -1920,7 +1920,7 @@
            object
            (if is-last-ref "weak pointer" "strong pointer")
            (ref-count object))
-  (with-lock-held (*foreign-gobjects-lock*)
+  (with-recursive-lock-held (*foreign-gobjects-lock*)
     (log-for :gc "obj: ~A~%"
              (or (gethash (pointer-address object) *foreign-gobjects-strong*)
                  (gethash (pointer-address object) *foreign-gobjects-weak*)))
