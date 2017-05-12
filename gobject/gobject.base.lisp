@@ -125,17 +125,19 @@
 
 (in-package :gobject)
 
+(defvar *foreign-gobjects-lock* (make-lock))
 (defvar *foreign-gobjects-weak*
-  (make-weak-hash-table :test 'equal :weakness :value :synchronized T))
+  (make-weak-hash-table :test 'equal :weakness :value))
 (defvar *foreign-gobjects-strong*
-  (make-hash-table :test 'equal :synchronized T))
+  (make-hash-table :test 'equal))
 (defvar *current-creating-object* nil)
 (defvar *current-object-from-pointer* nil)
 (defvar *currently-making-object-p* nil)
 
 (glib::at-finalize ()
-  (clrhash *foreign-gobjects-weak*)
-  (clrhash *foreign-gobjects-strong*)
+  (with-lock-held (*foreign-gobjects-lock*)
+    (clrhash *foreign-gobjects-weak*)
+    (clrhash *foreign-gobjects-strong*))
   (setf *current-creating-object* nil
         *current-object-from-pointer* nil
         *currently-making-object-p* nil))
@@ -474,8 +476,9 @@
     (log-for :gc "g_object_ref_sink(~A)~%" (pointer obj))
     (g-object-ref-sink (pointer obj)))
   (setf (g-object-has-reference obj) t)
-  (setf (gethash (pointer-address (pointer obj)) *foreign-gobjects-strong*)
-        obj)
+  (with-lock-held (*foreign-gobjects-lock*)
+    (setf (gethash (pointer-address (pointer obj)) *foreign-gobjects-strong*)
+          obj))
   (g-object-add-toggle-ref (pointer obj)
                            (callback g-toggle-notify)
                            (null-pointer))
@@ -490,15 +493,16 @@
   (declare (ignore data))
   (log-for :gc "~A is weak-ref-finalized with ~A refs~%"
            pointer (ref-count pointer))
-  (remhash (pointer-address pointer) *foreign-gobjects-weak*)
-  (when (gethash (pointer-address pointer) *foreign-gobjects-strong*)
-    (warn "GObject at ~A was weak-ref-finalized while still holding lisp-side ~
+  (with-lock-held (*foreign-gobjects-lock*)
+    (remhash (pointer-address pointer) *foreign-gobjects-weak*)
+    (when (gethash (pointer-address pointer) *foreign-gobjects-strong*)
+      (warn "GObject at ~A was weak-ref-finalized while still holding lisp-side ~
            strong reference to it"
-          pointer)
-    (log-for :gc "GObject at ~A was weak-ref-finalized while still holding ~
+            pointer)
+      (log-for :gc "GObject at ~A was weak-ref-finalized while still holding ~
                   lisp-side strong reference to it"
-             pointer))
-  (remhash (pointer-address pointer) *foreign-gobjects-strong*))
+               pointer))
+    (remhash (pointer-address pointer) *foreign-gobjects-strong*)))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -570,11 +574,12 @@
 
 (defun get-g-object-for-pointer (pointer)
   (unless (null-pointer-p pointer)
-    (or (gethash (pointer-address pointer) *foreign-gobjects-strong*)
-        (gethash (pointer-address pointer) *foreign-gobjects-weak*)
-        (progn
-          (log-for :gc "Now creating object for ~A~%" pointer)
-          (create-gobject-from-pointer pointer)))))
+    (with-lock-held (*foreign-gobjects-lock*)
+      (or (gethash (pointer-address pointer) *foreign-gobjects-strong*)
+          (gethash (pointer-address pointer) *foreign-gobjects-weak*)
+          (progn
+            (log-for :gc "Now creating object for ~A~%" pointer)
+            (create-gobject-from-pointer pointer))))))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -1915,29 +1920,30 @@
            object
            (if is-last-ref "weak pointer" "strong pointer")
            (ref-count object))
-  (log-for :gc "obj: ~A~%"
-           (or (gethash (pointer-address object) *foreign-gobjects-strong*)
-               (gethash (pointer-address object) *foreign-gobjects-weak*)))
-  (if is-last-ref
-      (let* ((obj-adr (pointer-address object))
-             (obj (gethash obj-adr *foreign-gobjects-strong*)))
-        (if obj
-            (progn
-              (remhash obj-adr *foreign-gobjects-strong*)
-              (setf (gethash obj-adr *foreign-gobjects-weak*) obj))
-            (progn
-              (log-for :gc "GObject at ~A has no lisp-side (strong) reference"
-                        object)
-              (warn "GObject at ~A has no lisp-side (strong) reference"
-                    object))))
-      (let* ((obj-adr (pointer-address object))
-             (obj (gethash obj-adr *foreign-gobjects-weak*)))
-        (unless obj
-          (log-for :gc "GObject at ~A has no lisp-side (weak) reference"
-                   object)
-          (warn "GObject at ~A has no lisp-side (weak) reference" object))
-        (remhash obj-adr *foreign-gobjects-weak*)
-        (setf (gethash obj-adr *foreign-gobjects-strong*) obj))))
+  (with-lock-held (*foreign-gobjects-lock*)
+    (log-for :gc "obj: ~A~%"
+             (or (gethash (pointer-address object) *foreign-gobjects-strong*)
+                 (gethash (pointer-address object) *foreign-gobjects-weak*)))
+    (if is-last-ref
+        (let* ((obj-adr (pointer-address object))
+               (obj (gethash obj-adr *foreign-gobjects-strong*)))
+          (if obj
+              (progn
+                (remhash obj-adr *foreign-gobjects-strong*)
+                (setf (gethash obj-adr *foreign-gobjects-weak*) obj))
+              (progn
+                (log-for :gc "GObject at ~A has no lisp-side (strong) reference"
+                         object)
+                (warn "GObject at ~A has no lisp-side (strong) reference"
+                      object))))
+        (let* ((obj-adr (pointer-address object))
+               (obj (gethash obj-adr *foreign-gobjects-weak*)))
+          (unless obj
+            (log-for :gc "GObject at ~A has no lisp-side (weak) reference"
+                     object)
+            (warn "GObject at ~A has no lisp-side (weak) reference" object))
+          (remhash obj-adr *foreign-gobjects-weak*)
+          (setf (gethash obj-adr *foreign-gobjects-strong*) obj)))))
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_object_add_toggle_ref ()
