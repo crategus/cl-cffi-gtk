@@ -148,7 +148,7 @@
   ;; Wait until the main loop has finished
   (join-gtk-main))
 
-(defun create-about-dialog ()
+(defun create-application-about-dialog ()
   (let (;; Create an about dialog
         (dialog (make-instance 'gtk-about-dialog
                                :program-name "Example Dialog"
@@ -241,7 +241,7 @@
     (g-signal-connect action "activate"
        (lambda (action parameter)
          (declare (ignore action parameter))
-         (create-about-dialog)))
+         (create-application-about-dialog)))
     ;; Add the action to the action map of the application
     (g-action-map-add-action application action))
 

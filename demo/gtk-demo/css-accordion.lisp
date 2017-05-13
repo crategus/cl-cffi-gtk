@@ -53,4 +53,3 @@
       (apply-css window provider)
       ;; Show the window.
       (gtk-widget-show-all window))))
-
