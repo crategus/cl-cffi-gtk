@@ -338,7 +338,7 @@
         (glib::free-stable-pointer data))
     (declare (ignorable class-name))
     (let* ((vtable (gethash interface-name *vtables*))
-           (vtable-cstruct (vtable-description-cstruct-name vtable)))
+           (vtable-cstruct `(:struct ,(vtable-description-cstruct-name vtable))))
       (log-for :subclass "interface-init for class ~A and interface ~A~%"
                class-name
                interface-name)
