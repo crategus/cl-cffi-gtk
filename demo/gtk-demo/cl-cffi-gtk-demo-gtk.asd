@@ -17,16 +17,16 @@
 (defmethod asdf:output-files ((o asdf:compile-op) (c c-test-lib))
   (let ((p (asdf:component-pathname c)))
     (values
-     (list (make-pathname :defaults p :type (asdf/bundle:bundle-pathname-type :object))
-           (make-pathname :defaults p :type (asdf/bundle:bundle-pathname-type :shared-library)))
+     (list (make-pathname :defaults p :type (asdf/bundle:bundle-pathname-type :shared-library)))
      t)))
 
 (defmethod asdf:perform ((o asdf:compile-op) (c c-test-lib))
   (let ((cffi-toolchain:*cc-flags* `(,@cffi-toolchain:*cc-flags* "-Wall" "-std=c99" "-pedantic" ,@(split-sequence:split-sequence #\Space (uiop:run-program "pkg-config --cflags gtk+-3.0" :output '(:string :stripped T)))))
-        (cffi-toolchain:*ld-dll-flags* `(,@cffi-toolchain:*ld-dll-flags* ,@(split-sequence:split-sequence #\Space (uiop:run-program "pkg-config --libs gtk+-3.0" :output '(:string :stripped T))))))
-    (destructuring-bind (obj dll) (output-files o c)
-      (cffi-toolchain:cc-compile obj (input-files o c))
-      (cffi-toolchain:link-shared-library dll (list obj)))))
+        (cffi-toolchain:*ld-dll-flags* `(,@cffi-toolchain:*ld-dll-flags* "-shared" ,@(split-sequence:split-sequence #\Space (uiop:run-program "pkg-config --libs gtk+-3.0" :output '(:string :stripped T))))))
+    (let ((dll (car (output-files o c))))
+      (uiop:with-temporary-file (:pathname obj)
+        (cffi-toolchain:cc-compile obj (input-files o c))
+        (apply 'cffi-toolchain:invoke cffi-toolchain:*ld* "-o" dll (append cffi-toolchain:*ld-dll-flags* (list obj)))))))
 
 (asdf:defsystem :cl-cffi-gtk-demo-gtk
   :author "Dieter Kaiser"
