@@ -1,0 +1,45 @@
+(in-package #:gtk-opengl-demo)
+
+(defun randomise-background (color)
+  (setf (first color) (random 1.0))
+  (setf (second color) (random 1.0))
+  (setf (third color) (random 1.0))
+  (apply #'gl:clear-color color))
+
+(defun draw-triangle ()
+  (gl:clear :color-buffer)
+  (gl:with-primitives :triangles
+    (gl:color 1.0 0.0 0.0)
+    (gl:vertex -0.5 -0.5 0.0)
+    (gl:color 0.0 1.0 0.0)
+    (gl:vertex 0.0 0.5 0.0)
+    (gl:color 0.0 0.0 1.0)
+    (gl:vertex 0.5 -0.5 0.0))
+  (gl:flush))
+
+(defun example-gl-area ()
+  (within-main-loop
+    (let ((window (gtk-window-new :toplevel))
+          (box (make-instance 'gtk-vbox))
+          (button (make-instance 'gtk-button :label "_Random Color" :use-underline T))
+          (area (make-instance 'gtk-gl-area :use-es T))
+          (color (list 0.5 0.5 0.5 0)))
+      (gtk-box-pack-start box area)
+      (gtk-box-pack-start box button)
+      (gtk-container-add window box)
+      (g-signal-connect button "clicked"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (gtk-gl-area-make-current area)
+                          (randomise-background color)
+                          (gtk-gl-area-queue-render area)))
+      (g-signal-connect area "render"
+                        (lambda (area context)
+                          (declare (ignore area context))
+                          (draw-triangle)
+                          NIL))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (leave-gtk-main)))
+      (gtk-widget-show-all window))))

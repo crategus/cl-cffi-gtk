@@ -252,6 +252,7 @@
    (:file "gtk.size-group")            ; Grouping widgets to the same size
    (:file "gtk.tooltip")               ; Add tips to your widgets
    (:file "gtk.viewport")              ; Adapter which makes widgets scrollable
+   (:file "gtk.gl-area")               ; A widget for custom drawing with OpenGL
 
    ;; Cross-process Embedding
    #-win32
