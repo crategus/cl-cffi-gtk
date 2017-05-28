@@ -2836,6 +2836,15 @@
 ;;; Since 3.16
 ;;; ----------------------------------------------------------------------------
 
+#+gdk-3-16
+(defcfun ("gdk_window_create_gl_context" gdk-window-create-gl-context)
+    (g-object gdk-gl-context)
+  (window (g-object gdk-window))
+  (error (:pointer (:pointer (:struct g-error)))))
+
+#+gdk-3-16
+(export 'gdk-window-create-gl-context)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_mark_paint_from_clip ()
 ;;;
