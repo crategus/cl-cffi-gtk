@@ -977,7 +977,7 @@
               ;; Emit a signal which has no return value
               (g-signal-emitv params
                               (signal-info-id signal-info)
-                              signal-name
+                              (signal-info-detail signal-info)
                               (null-pointer))
               ;; Emit a signal which has a return value
               (with-foreign-object (return-value '(:struct g-value)) ;
@@ -986,7 +986,7 @@
                               (signal-info-return-type signal-info))
                 (g-signal-emitv params
                                 (signal-info-id signal-info)
-                                signal-name
+                                (signal-info-detail signal-info)
                                 return-value)
                 (prog1
                   ;; Return value of the signal

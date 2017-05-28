@@ -422,7 +422,7 @@
   @see-class{gtk-tree-model}
   @see-class{gtk-tree-path}")
 
-(export 'gtk-tree-iter)
+(export (boxed-related-symbols 'gtk-tree-iter))
 
 ;;; ----------------------------------------------------------------------------
 ;;;

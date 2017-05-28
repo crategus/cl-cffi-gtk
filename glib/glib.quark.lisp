@@ -61,7 +61,7 @@
   (:simple-parser g-quark))
 
 (defmethod translate-to-foreign (value (type g-quark-type))
-  (g-quark-from-string value))
+  (g-quark-from-string (or value (null-pointer))))
 
 (defmethod translate-from-foreign (value (type g-quark-type))
   (g-quark-to-string value))
