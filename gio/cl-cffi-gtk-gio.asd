@@ -29,6 +29,7 @@
   :version "2.38.1"                  ; Version of GIO
   :author "Dieter Kaiser"
   :license "LLGPL"
+  :description "A Lisp binding to GIO 2"
   :serial t
   :components
   ((:file "gio.package")

@@ -30,6 +30,7 @@
   :version "2.36.0"          ; The version the library is developed for.
   :author "Dieter Kaiser"
   :license "LLGPL"
+  :description "A Lisp binding GObject 2"
   :serial t
   :components ((:file "gobject.package")
                (:file "gobject.init")

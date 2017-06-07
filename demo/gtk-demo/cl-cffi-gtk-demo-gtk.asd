@@ -31,6 +31,7 @@
 (asdf:defsystem :cl-cffi-gtk-demo-gtk
   :author "Dieter Kaiser"
   :license "LLGPL"
+  :description "GTK demos for CL-CFFI-GTK"
   :serial t
   :depends-on (:cl-cffi-gtk)
   :components ((:file "package")

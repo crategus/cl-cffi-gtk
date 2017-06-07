@@ -30,6 +30,7 @@
   :version "1.32.5"                              ; Version of Pango Library
   :author "Dieter Kaiser"
   :license "LLGPL"
+  :description "A Lisp binding to Pango"
   :serial t
   :components ((:file "pango.package")
                (:file "pango.init")

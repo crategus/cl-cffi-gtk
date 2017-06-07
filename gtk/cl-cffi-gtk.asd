@@ -44,6 +44,7 @@
   :version "3.8.8"                     ; Version of the library
   :author "Dieter Kaiser"
   :license "LLGPL"
+  :description "A Lisp binding to GTK 3"
   :serial t
   :components
   ((:file "gtk.package")

@@ -30,6 +30,7 @@
   :version "3.16"                             ; Version of the GDK Library
   :author "Dieter Kaiser"
   :license "LLGPL"
+  :description "A Lisp binding to GDK 3"
   :serial t
   :components ((:file "gdk.package")
                (:file "gdk.init")

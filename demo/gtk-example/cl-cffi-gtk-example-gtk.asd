@@ -3,6 +3,7 @@
 (asdf:defsystem :cl-cffi-gtk-example-gtk
   :author "Dieter Kaiser"
   :license "LLGPL"
+  :description "Example for CL-CFFI-GTK"
   :serial t
   :depends-on (:cl-cffi-gtk)
   :components ((:file "gtk-example")
