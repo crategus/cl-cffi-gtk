@@ -1271,7 +1271,13 @@
 ;;; g_signal_connect_closure ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_signal_connect_closure" g-signal-connect-closure) :ulong
+(defcfun ("g_signal_connect_closure" %g-signal-connect-closure) :ulong
+  (instance :pointer)
+  (detailed-signal :string)
+  (closure (:pointer (:struct g-closure)))
+  (after :boolean))
+
+(defun g-signal-connect-closure (instance detailed-signal closure after)
  #+cl-cffi-gtk-documentation
  "@version{2013-8-20}
   @argument[instance]{the instance to connect to}
@@ -1281,10 +1287,10 @@
     default handler of the signal}
   @return{The handler ID.}
   Connects a closure to a signal for a particular object."
-  (instance :pointer)
-  (detailed-signal :string)
-  (closure (:pointer (:struct g-closure)))
-  (after :boolean))
+  (let ((id (%g-signal-connect-closure instance detailed-signal closure after)))
+    (when (eql id 0)
+      (error "Couldn't connect signal ~A for instance ~A." detailed-signal instance))
+    id))
 
 (export 'g-signal-connect-closure)
 
