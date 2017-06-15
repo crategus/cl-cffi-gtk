@@ -102,7 +102,7 @@
     "edit-widget" "GtkCellEditable" t nil)
    (edited-cell
     gtk-cell-area-edit-cell
-    "edit-cell" "GtkCellRenderer" t nil)
+    "edited-cell" "GtkCellRenderer" t nil)
    (focus-cell
     gtk-cell-area-focus-cell
     "focus-cell" "GtkCellRenderer" t nil)))
