@@ -306,6 +306,16 @@
 ;;;     owner argument passed to gtk_clipboard_set_with_owner()
 ;;; ----------------------------------------------------------------------------
 
+(defcallback gtk-clipboard-get-func-cb :void
+    ((clipboard (g-object gtk-clipboard))
+     (selection-data (g-boxed-foreign gtk-selection-data))
+     (info :uint)
+     (data :pointer))
+  (let ((fn (car (glib::get-stable-pointer-value data))))
+    (restart-case
+        (funcall fn clipboard selection-data info)
+      (return-from-gtk-clipboard-get-func-cb () nil))))
+
 ;;; ----------------------------------------------------------------------------
 ;;; GtkClipboardClearFunc ()
 ;;;
@@ -323,6 +333,15 @@
 ;;;     the user_data argument passed to gtk_clipboard_set_with_data(), or the
 ;;;     owner argument passed to gtk_clipboard_set_with_owner()
 ;;; ----------------------------------------------------------------------------
+
+(defcallback gtk-clipboard-clear-func-cb :void
+    ((clipboard (g-object gtk-clipboard))
+     (data :pointer))
+  (let ((fn (cdr (glib::get-stable-pointer-value data))))
+    (glib::free-stable-pointer data)
+    (restart-case
+        (funcall fn clipboard)
+      (return-from-gtk-clipboard-clear-func-cb () nil))))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_clipboard_get ()
@@ -444,6 +463,27 @@
 ;;;     TRUE if setting the clipboard data succeeded. If setting the clipboard
 ;;;     data failed the provided callback functions will be ignored.
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_clipboard_set_with_data" %gtk-clipboard-set-with-data) :boolean
+  (clipboard (g-object gtk-clipboard))
+  (targets :pointer)
+  (n-targets :uint)
+  (get-func :pointer)
+  (clear-func :pointer)
+  (user-data :pointer))
+
+(defun gtk-clipboard-set-with-data (clipboard targets get-func clear-func)
+  (with-foreign-boxed-array (n-targets targets-ptr gtk-target-entry targets)
+    (let ((data (glib::allocate-stable-pointer (cons get-func clear-func))))
+      (unless (%gtk-clipboard-set-with-data
+               clipboard targets-ptr n-targets
+               (callback gtk-clipboard-get-func-cb)
+               (callback gtk-clipboard-clear-func-cb)
+               data)
+        (glib::free-stable-pointer data)
+        (error "Failed setting clipboard data.")))))
+
+(export 'gtk-clipboard-set-with-data)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_clipboard_set_with_owner ()
