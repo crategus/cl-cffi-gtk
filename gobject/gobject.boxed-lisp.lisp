@@ -299,7 +299,7 @@
                            &optional environment)
   (make-load-form-saving-slots object :environment environment))
 
-(defclass boxed-cstruct-foreign-type (g-boxed-foreign-type) ())
+(define-foreign-type boxed-cstruct-foreign-type (g-boxed-foreign-type) ())
 
 (defun parse-cstruct-slot (slot)
   (destructuring-bind (name type &key count initform inline) slot

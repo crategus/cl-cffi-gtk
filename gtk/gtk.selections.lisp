@@ -104,14 +104,8 @@
 ;;; GtkSelectionData
 ;;; ----------------------------------------------------------------------------
 
-(define-g-boxed-cstruct gtk-selection-data "GtkSelectionData"
-  (selection gdk-atom-as-string :initform nil)
-  (target gdk-atom-as-string :initform nil)
-  (type gdk-atom-as-string :initform nil)
-  (format :int :initform 0)
-  (data :pointer :initform (null-pointer))
-  (length :int :initform 0)
-  (display (g-object gdk-display) :initform nil))
+(define-g-boxed-opaque gtk-selection-data "GtkSelectionData"
+  :alloc (error "GtkSelectionData can not be created from Lisp side."))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-selection-data atdoc:*class-name-alias*) "CStruct"
@@ -119,14 +113,8 @@
  "@version{2013-8-27}
   @short{}
   @begin{pre}
-(define-g-boxed-cstruct gtk-selection-data \"GtkSelectionData\"
-  (selection gdk-atom-as-string :initform nil)
-  (target gdk-atom-as-string :initform nil)
-  (type gdk-atom-as-string :initform nil)
-  (format :int :initform 0)
-  (data :pointer :initform (null-pointer))
-  (length :int :initform 0)
-  (display (g-object gdk-display) :initform nil))
+(define-g-boxed-foreign gtk-selection-data \"GtkSelectionData\"
+  :alloc (error "GtkSelectionData can not be created from Lisp side."))
   @end{pre}
   @see-slot{gtk-selection-data-selection}
   @see-slot{gtk-selection-data-target}
@@ -135,8 +123,7 @@
   @see-slot{gtk-selection-data-data}
   @see-slot{gtk-selection-data-length}
   @see-slot{gtk-selection-data-display}
-  @see-constructor{make-gtk-selection-data}
-  @see-constructor{copy-gtk-selection-data}")
+  @see-constructor{gtk-selection-data-copy}")
 
 (export (boxed-related-symbols 'gtk-selection-data))
 
@@ -146,19 +133,17 @@
 ;;;
 ;;; ----------------------------------------------------------------------------
 
-#+cl-cffi-gtk-documentation
-(setf (documentation 'make-gtk-selection-data 'function)
- "@version{2013-8-27}
-  Returns an object of type @class{gtk-selection-data}.
-  @see-class{gtk-selection-data}
-  @see-function{copy-gtk-selection-data}")
+(defcfun ("gtk_selection_data_copy" gtk-selection-data-copy)
+    (g-boxed-foreign gtk-selection-data)
+  (selection-data (g-boxed-foreign gtk-selection-data)))
+
+(export 'gtk-selection-data-copy)
 
 #+cl-cffi-gtk-documentation
-(setf (documentation 'copy-gtk-selection-data 'function)
+(setf (documentation 'gtk-selection-data-copy 'function)
  "@version{2013-8-27}
   Copies an object of type @class{gtk-selection-data}.
-  @see-class{gtk-selection-data}
-  @see-function{make-gtk-selection-data}")
+  @see-class{gtk-selection-data}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -1201,9 +1186,8 @@
 ;;; gtk_selection_data_get_selection ()
 ;;; ----------------------------------------------------------------------------
 
-(declaim (inline gtk-selection-data-get-selection))
-
-(defun gtk-selection-data-get-selection (selection-data)
+(defcfun ("gtk_selection_data_get_selection" gtk-selection-data-get-selection)
+    gdk-atom-as-string
  #+cl-cffi-gtk-documentation
  "@version{2013-11-10}
   @argument[selection-data]{a @class{gtk-selection-data} structure}
@@ -1215,7 +1199,7 @@
   Since 2.16
   @see-class{gtk-selection-data}
   @see-symbol{gdk-atom}"
-  (gtk-selection-data-selection selection-data))
+  (selection-data (g-boxed-foreign gtk-selection-data)))
 
 (export 'gtk-selection-data-get-selection)
 
@@ -1223,9 +1207,8 @@
 ;;; gtk_selection_data_get_data ()
 ;;; ----------------------------------------------------------------------------
 
-(declaim (inline gtk-selection-data-get-data))
-
-(defun gtk-selection-data-get-data (selection-data)
+(defcfun ("gtk_selection_data_get_data" gtk-selection-data-get-data)
+    :pointer
  #+cl-cffi-gtk-documentation
  "@version{2013-11-10}
   @argument[selection-data]{a @class{gtk-selection-data} structure}
@@ -1237,7 +1220,7 @@
   Since 2.14
   @see-class{gtk-selection-data}
   @see-function{gtk-selection-data-get-data-with-length}"
-  (gtk-selection-data-data selection-data))
+  (selection-data (g-boxed-foreign gtk-selection-data)))
 
 (export 'gtk-selection-data-get-data)
 
@@ -1245,9 +1228,8 @@
 ;;; gtk_selection_data_get_length ()
 ;;; ----------------------------------------------------------------------------
 
-(declaim (inline gtk-selection-data-get-length))
-
-(defun gtk-selection-data-get-length (selection-data)
+(defcfun ("gtk_selection_data_get_length" gtk-selection-data-get-length)
+    :int
  #+cl-cffi-gtk-documentation
  "@version{2013-11-10}
   @argument[selection-data]{a @class{gtk-selection-data} structure}
@@ -1259,7 +1241,7 @@
   Since 2.14
   @see-class{gtk-selection-data}
   @see-function{gtk-selection-data-get-data-with-length}"
-  (gtk-selection-data-length selection-data))
+  (selection-data (g-boxed-foreign gtk-selection-data)))
 
 (export 'gtk-selection-data-get-length)
 
@@ -1302,9 +1284,8 @@
 ;;; gtk_selection_data_get_data_type ()
 ;;; ----------------------------------------------------------------------------
 
-(declaim (inline gtk-selection-data-get-data-type))
-
-(defun gtk-selection-data-get-data-type (selection-data)
+(defcfun ("gtk_selection_data_get_data_type" gtk-selection-data-get-data-type)
+    gdk-atom-as-string
  #+cl-cffi-gtk-documentation
  "@version{2013-11-10}
   @argument[selection-data]{a @class{gtk-selection-data} structure}
@@ -1315,7 +1296,7 @@
 
   Since 2.14
   @see-class{gtk-selection-data}"
-  (gtk-selection-data-type selection-data))
+  (selection-data (g-boxed-foreign gtk-selection-data)))
 
 (export 'gtk-selection-data-get-data-type)
 
@@ -1323,9 +1304,8 @@
 ;;; gtk_selection_data_get_display ()
 ;;; ----------------------------------------------------------------------------
 
-(declaim (inline gtk-selection-data-get-display))
-
-(defun gtk-selection-data-get-display (selection-data)
+(defcfun ("gtk_selection_data_get_display" gtk-selection-data-get-display)
+    (g-object gdk-display)
  #+cl-cffi-gtk-documentation
  "@version{2013-11-10}
   @argument[selection-data]{a @class{gtk-selection-data} structure}
@@ -1337,7 +1317,7 @@
   Since 2.14
   @see-class{gtk-selection-data}
   @see-class{gdk-display}"
-  (gtk-selection-data-display selection-data))
+  (selection-data (g-boxed-foreign gtk-selection-data)))
 
 (export 'gtk-selection-data-get-display)
 
@@ -1345,9 +1325,8 @@
 ;;; gtk_selection_data_get_format ()
 ;;; ----------------------------------------------------------------------------
 
-(declaim (inline gtk-selection-data-get-format))
-
-(defun gtk-selection-data-get-format (selection-data)
+(defcfun ("gtk_selection_data_get_format" gtk-selection-data-get-format)
+  :int
  #+cl-cffi-gtk-documentation
  "@version{2013-11-10}
   @argument[selection-data]{a @class{gtk-selection-data} structure}
@@ -1358,7 +1337,7 @@
 
   Since 2.14
   @see-class{gtk-selection-data}"
-  (gtk-selection-data-format selection-data))
+  (selection-data (g-boxed-foreign gtk-selection-data)))
 
 (export 'gtk-selection-data-get-format)
 
@@ -1366,9 +1345,8 @@
 ;;; gtk_selection_data_get_target ()
 ;;; ----------------------------------------------------------------------------
 
-(declaim (inline gtk-selection-data-get-target))
-
-(defun gtk-selection-data-get-target (selection-data)
+(defcfun ("gtk_selection_data_get_target" gtk-selection-data-get-target)
+    gdk-atom-as-string
  #+cl-cffi-gtk-documentation
  "@version{2013-11-10}
   @argument[selection-data]{a @class{gtk-selection-data} structure}
@@ -1379,7 +1357,7 @@
 
   Since 2.14
   @see-class{gtk-selection-data}"
-  (gtk-selection-data-target selection-data))
+  (selection-data (g-boxed-foreign gtk-selection-data)))
 
 (export 'gtk-selection-data-get-target)
 
