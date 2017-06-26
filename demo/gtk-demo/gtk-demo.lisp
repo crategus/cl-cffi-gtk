@@ -173,7 +173,9 @@
           (demo parent 3 "The Event Box" "event-box.lisp" 'example-event-box)
           (demo parent 4 "Demo Pixbufs" "pixbufs.lisp" 'demo-pixbufs)
           (demo parent 5 "Popover Demo" "popover.lisp" 'popover-demo)
-          (demo parent 6 "Custom Subclass" "subclass-window.lisp" 'custom-window-demo))))
+          (demo parent 6 "Custom Subclass" "subclass-window.lisp" 'custom-window-demo)
+          (demo parent 7 "Simple Drag And Drop" "simple-drag-and-drop.lisp" 'demo-simple-drag-and-drop)
+          (demo parent 8 "Drag And Drop" "drag-and-drop.lisp" 'demo-drag-and-drop))))
     model))
 
 (defun create-view-and-model ()

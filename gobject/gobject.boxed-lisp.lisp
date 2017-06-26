@@ -833,7 +833,7 @@
 (defmethod boxed-parse-g-value (gvalue-ptr (info g-boxed-opaque-wrapper-info))
   (let ((value (g-value-get-boxed gvalue-ptr)))
     (unless (null-pointer-p value)
-      (translate-from-foreign (boxed-copy-fn info value)
+      (translate-from-foreign value
                               (make-foreign-type info :return-p nil)))))
 
 (defmethod boxed-set-g-value (gvalue-ptr
