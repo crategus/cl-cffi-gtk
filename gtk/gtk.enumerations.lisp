@@ -1048,11 +1048,17 @@
   (:inconsistent #.(ash 1 4))
   (:focused #.(ash 1 5))
   (:backdrop #.(ash 1 6))
+  #+gtk-3-8
   (:dir-ltr #.(ash 1 7))
+  #+gtk-3-8
   (:dir-rtl #.(ash 1 8))
+  #+gtk-3-12
   (:link #.(ash 1 9))
+  #+gtk-3-12
   (:visited #.(ash 1 10))
+  #+gtk-3-14
   (:checked #.(ash 1 11))
+  #+gtk-3-20
   (:drop-active #.(ash 1 12)))
 
 #+cl-cffi-gtk-documentation

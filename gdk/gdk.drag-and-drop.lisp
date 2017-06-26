@@ -67,6 +67,14 @@
 
 (in-package :gdk)
 
+#+gdk-3-20
+(define-g-enum "GdkDragCancelReason" gdk-drag-cancel-reason
+  (:export t
+   :type-initializer "gdk_drag_cancel_reason_get_type")
+  (:no-target 0)
+  (:user-cancelled 1)
+  (:error 2))
+
 ;;; ----------------------------------------------------------------------------
 ;;; enum GdkDragProtocol
 ;;; ----------------------------------------------------------------------------
