@@ -5,13 +5,13 @@
 (defun selection-received (widget selection-data time)
   (declare (ignore widget time))
   (format t "Event 'selection-received' event: ~A~%" selection-data)
-  (cond ((< (gtk-selection-data-length selection-data) 0)
+  (cond ((< (gtk-selection-data-get-length selection-data) 0)
          (format t "Selection retrieval failed.~%"))
-        ((not (equal (gtk-selection-data-type selection-data)
+        ((not (equal (gtk-selection-data-get-data-type selection-data)
                      +gdk-selection-type-atom+))
          (format t "Selection 'Targets' was not returned as atoms.~%"))
         (t
-          (format t "All is fine: ~A~%" (gtk-selection-data-data selection-data))
+          (format t "All is fine: ~A~%" (gtk-selection-data-get-data selection-data))
           (format t " targets = ~A~%" (gtk-selection-data-get-targets selection-data))))
 
   )
