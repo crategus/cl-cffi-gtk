@@ -42,6 +42,12 @@
                    (format t "     ~a~%" selection-data)))
              t))
 
+        (g-signal-connect drag-source "drag-failed"
+           (lambda (widget context drag-result)
+             (format t "~&DRAG-FAILED context = ~A~%" context)
+             (format t "     ~a~%" drag-result)
+             NIL))
+
         ;; Create a button as the drag destination
         (let ((drag-dest (make-instance 'gtk-button
                                         :always-show-image t
@@ -59,17 +65,17 @@
                (declare (ignore x y))
                (format t "~&DRAG-DROP context = ~A~%" drag-context)
                (gtk-drag-get-data widget drag-context "image/png" time)
- ))
+               T))
 
           (g-signal-connect drag-dest "drag-data-received"
             (lambda (widget context x y selection-data info time)
-              (declare (ignore x y info time))
+              (declare (ignore x y info))
               (format t "~&DRAG-DATA-RECEIVED context = ~A~%" context)
               (format t "     ~a~%" selection-data)
               (let* ((pixbuf (gtk-selection-data-get-pixbuf selection-data))
                      (image (gtk-image-new-from-pixbuf pixbuf)))
                 (format t "pixbuf = ~A~%" pixbuf)
-                (setf (gtk-button-image widget) image)))))
+                (setf (gtk-button-image widget) image))
+              (gtk-drag-finish context T NIL time))))
         (gtk-container-add window hgrid))
       (gtk-widget-show-all window))))
-

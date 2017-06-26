@@ -541,6 +541,12 @@
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gdk_drag_context_get_selected_action" gdk-drag-context-get-selected-action)
+    gdk-drag-action
+  (context (g-object gdk-drag-context)))
+
+(export 'gdk-drag-context-get-selected-action)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_drag_context_list_targets ()
 ;;;
