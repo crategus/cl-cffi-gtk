@@ -956,7 +956,6 @@
                  (cairo-move-to cr (- (/ width 2 +pango-scale+)) (- circle)))
                (pango-cairo-show-layout cr layout)
                (cairo-restore cr)))
-           (cairo-destroy cr)
            t)))
       (gtk-widget-show-all window))))
     @end{pre}

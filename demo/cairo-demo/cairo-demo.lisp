@@ -36,8 +36,6 @@
            (cairo-set-source-rgb cr 1.0 0.0 0.0)
            (cairo-rectangle cr 0.25 0.25 0.5 0.5)
            (cairo-stroke cr)
-           ;; Destroy the Cario context
-           (cairo-destroy cr)
            t)))
       (gtk-widget-show-all window))))
 
@@ -70,8 +68,6 @@
            (cairo-set-source-rgb cr 1.0 0.0 0.0)
            (cairo-rectangle cr 0.25 0.25 0.5 0.5)
            (cairo-fill cr)
-           ;; Destroy the Cairo context
-           (cairo-destroy cr)
            t)))
         (gtk-widget-show-all window))))
 
@@ -113,8 +109,6 @@
                                (/ (cairo-text-extents-t-height text-extents) 2)
                                (cairo-text-extents-t-y-bearing text-extents)))
              (cairo-show-text cr "a"))
-           ;; Destroy the Cairo context
-           (cairo-destroy cr)
            t)))
         (gtk-widget-show-all window))))
 
@@ -146,8 +140,6 @@
            ;; Drawing code goes here
            (cairo-set-source-rgb cr 0.0 0.0 0.0)
            (cairo-paint-with-alpha cr 0.5d0)
-           ;; Destroy the Cairo context
-           (cairo-destroy cr)
            t)))
         (gtk-widget-show-all window))))
 
@@ -188,7 +180,6 @@
 
              (cairo-set-source cr linpat)
              (cairo-mask cr radpat))
-           (cairo-destroy cr)
            t)))
         (gtk-widget-show-all window))))
 
@@ -237,8 +228,6 @@
            (cairo-rectangle cr 0.5 0 0.5 0.5)
            (cairo-set-source-rgba cr 0 0 1 0.40)
            (cairo-fill cr)
-           ;; Destroy the Cairo context
-           (cairo-destroy cr)
            t)))
         (gtk-widget-show-all window))))
 
@@ -291,8 +280,6 @@
              (cairo-rectangle cr 0.0 0.0 1.0 1.0)
              (cairo-set-source cr linpat)
              (cairo-fill cr))
-           ;; Destroy the Cairo context
-           (cairo-destroy cr)
            t)))
         (gtk-widget-show-all window))))
 
@@ -335,8 +322,6 @@
            (cairo-close-path (pointer cr))
 
            (cairo-stroke (pointer cr))
-           ;; Destroy the Cairo context
-           (cairo-destroy (pointer cr))
            t)))
         (gtk-widget-show-all window))))
 
@@ -387,8 +372,6 @@
                                 (/ 128.0 scale)
                                 (/ 128.0 scale))
               (cairo-stroke cr))
-           ;; Destroy the Cario context
-           (cairo-destroy cr)
            t)))
       (gtk-widget-show-all window))))
 

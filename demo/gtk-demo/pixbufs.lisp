@@ -111,8 +111,6 @@
              (declare (ignore widget))
              (cairo-set-source-surface (pointer cr) surface 0.0d0 0.0d0)
              (cairo-paint (pointer cr))
-             ;; We must destroy the Cairo Context
-             (cairo-destroy (pointer cr))
              t))
         (g-signal-connect area "configure-event"
            (lambda (widget event)

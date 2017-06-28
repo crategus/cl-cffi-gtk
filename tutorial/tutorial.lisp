@@ -257,7 +257,6 @@
              (let ((cr (pointer cr)))
                (cairo-set-source-surface cr surface 0.0 0.0)
                (cairo-paint cr)
-               (cairo-destroy cr)
                +gdk-event-propagate+)))
         (g-signal-connect area "configure-event"
            (lambda (widget event)

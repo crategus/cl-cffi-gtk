@@ -92,8 +92,6 @@
                                (+ y (* radius 0.7 (- (cos angle)))))
              (cairo-stroke cr)
              (cairo-restore cr))))
-       ;; Destroy the Cario context
-       (cairo-destroy cr)
        t))))
 
 (defun demo-cairo-clock ()

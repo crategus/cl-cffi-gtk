@@ -40,7 +40,6 @@
              (cairo-set-operator cr :clear)
 ;             (gdk-cairo-region cr (gdk-event-expose-region event))
              (cairo-fill cr)
-             (cairo-destroy cr)
              nil)))
 
       ;; Put them inside one another
@@ -93,7 +92,6 @@
              (cairo-set-operator cr :over)
              (cairo-paint-with-alpha cr 0.5d0)
              ;; We are done
-             (cairo-destroy cr)
              nil)))
 )))
 
