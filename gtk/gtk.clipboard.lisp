@@ -228,6 +228,15 @@
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
+(defcallback gtk-clipboard-image-received-func-cb :void
+    ((clipboard (g-object gtk-clipboard))
+     (pixbuf (g-object gdk-pixbuf))
+     (data :pointer))
+  (let ((fn (glib::get-stable-pointer-value data)))
+    (restart-case
+        (funcall fn clipboard pixbuf)
+      (return-from-gtk-clipboard-image-received-func-cb () nil))))
+
 ;;; ----------------------------------------------------------------------------
 ;;; GtkClipboardTargetsReceivedFunc ()
 ;;;
@@ -609,6 +618,10 @@
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gtk_clipboard_set_image" gtk-clipboard-set-image) :void
+  (clipboard (g-object gtk-clipboard))
+  (pixbuf (g-object gdk-pixbuf)))
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_clipboard_request_contents ()
 ;;;
@@ -695,6 +708,16 @@
 ;;;
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_clipboard_request_image" %gtk-clipboard-request-image) :void
+  (clipboard (g-object gtk-clipboard))
+  (func :pointer)
+  (data :pointer))
+
+(defun gtk-clipboard-request-image (clipboard func)
+  (%gtk-clipboard-request-image clipboard
+                                (callback gtk-clipboard-image-received-func-cb)
+                                (glib::allocate-stable-pointer func)))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_clipboard_request_targets ()
@@ -1088,5 +1111,8 @@
 ;;;
 ;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_clipboard_store" gtk-clipboard-store) :void
+  (clipboard (g-object gtk-clipboard)))
 
 ;;; --- End of file gtk.clipboard.lisp -----------------------------------------
