@@ -65,6 +65,8 @@
                (:file "gdk.app")              ; Notification for applications
                (:file "gdk.pango")            ; Using Pango in GDK
                (:file "gdk.cairo")            ; Functions to support using cairo
+
+               (:file "gdk.x11window")
                )
   :depends-on (:cl-cffi-gtk-gobject
                :cl-cffi-gtk-glib
