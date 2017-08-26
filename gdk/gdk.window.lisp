@@ -2359,7 +2359,7 @@
 ;;; gdk_window_ensure_native ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_window_ensure_native" gdk-window-ensure-native) :void
+(defcfun ("gdk_window_ensure_native" gdk-window-ensure-native) :boolean
  #+cl-cffi-gtk-documentation
  "@version{2013-8-31}
   @argument[window]{a @class{gdk-window} object}

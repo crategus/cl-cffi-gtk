@@ -3927,7 +3927,7 @@
   @see-class{gtk-widget}
   @see-function{gtk-widget-unrealize}
   @see-function{g-signal-connect}"
-  (width (g-object gtk-widget)))
+  (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-realize)
 
