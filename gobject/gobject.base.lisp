@@ -2737,6 +2737,9 @@
       (parse-g-value value)
       (g-value-unset value))))
 
+(defsetf g-object-get-property (object property-name &optional property-type) (new-value)
+  `(g-object-set-property ,object ,property-name ,new-value ,property-type))
+
 (export 'g-object-get-property)
 
 ;;; ----------------------------------------------------------------------------
