@@ -1083,6 +1083,13 @@
 
 (export 'gtk-label-new)
 
+(declaim (inline gtk-label-new-with-mnemonic))
+
+(defun gtk-label-new-with-mnemonic (str)
+  (make-instance 'gtk-label :label str :use-underline T))
+
+(export 'gtk-label-new-with-mnemonic)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_label_set_text ()
 ;;; ----------------------------------------------------------------------------
