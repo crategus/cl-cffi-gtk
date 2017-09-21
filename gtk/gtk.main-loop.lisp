@@ -210,8 +210,8 @@
     called automatically when loading the library @code{cl-cffi-gtk}.
   @end{dictionary}
   @see-function{%gtk-init-check}"
-  (%gtk-init-check (foreign-alloc :int :initial-element 0)
-                   (foreign-alloc :string :initial-contents '("/usr/bin/sbcl")))
+  (%gtk-init-check (foreign-alloc :int :initial-element 1)
+                   (foreign-alloc :pointer :initial-element (foreign-alloc :string :initial-contents '("/usr/bin/sbcl"))))
   #+(and sbcl (not win32))
   (sb-unix::enable-interrupt sb-unix:sigpipe #'sb-unix::sigpipe-handler)
   #+nil(with-foreign-objects ((argc :int)
