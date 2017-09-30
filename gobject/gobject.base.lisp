@@ -2738,7 +2738,10 @@
       (g-value-unset value))))
 
 (defsetf g-object-get-property (object property-name &optional property-type) (new-value)
-  `(g-object-set-property ,object ,property-name ,new-value ,property-type))
+  (let ((sym (gensym)))
+    `(let ((,sym ,new-value))
+       (g-object-set-property ,object ,property-name ,sym ,property-type)
+       ,sym)))
 
 (export 'g-object-get-property)
 
