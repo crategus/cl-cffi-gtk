@@ -642,7 +642,7 @@
 (defun class-property-info (type property-name)
   (with-unwind (class (g-type-class-ref type) g-type-class-unref)
     (let* ((param-spec (g-object-class-find-property class property-name)))
-      (when param-spec
+      (when (and param-spec (not (cffi:null-pointer-p param-spec)))
         (parse-g-param-spec param-spec)))))
 
 ;;; ----------------------------------------------------------------------------
