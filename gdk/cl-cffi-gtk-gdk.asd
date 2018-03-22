@@ -52,6 +52,7 @@
                (:file "gdk.display-manager")  ; Maintains a list GdkDisplays
                (:file "gdk.monitor")          ; Object representing an output
                (:file "gdk.pixbuf")           ; Functions for obtaining pixbufs
+               (:file "gdk.seat")             ; Object representing an user seat
 
                (:file "gdk.window")           ; Onscreen display areas
                (:file "gdk.frame-timings")    ; Frame timings

@@ -59,6 +59,7 @@
 ;;;     gdk_device_get_n_axes
 ;;;     gdk_device_get_n_keys
 ;;;     gdk_device_warp
+;;;     gdk_device_get_seat                       -> Accessor
 ;;;
 ;;;     GdkGrabStatus               * from gdk.general.lisp *
 ;;;
@@ -120,6 +121,10 @@
    (product-id
     gdk-device-product-id
     "product-id" "gchar" t t)
+   #+gdk-3-20
+   (seat
+    gdk-device-seat
+    "seat" "GdkSeat" t t)
    (type
     gdk-device-type
     "type" "GdkDeviceType" t t)

@@ -11,4 +11,4 @@
 (load "rtest-gdk-key-values.lisp")
 (load "rtest-gdk-selections.lisp")
 (load "rtest-gdk-visual.lisp")
-
+(load "rtest-gdk-seat.lisp")
