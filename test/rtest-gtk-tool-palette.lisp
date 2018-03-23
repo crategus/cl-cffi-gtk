@@ -1,3 +1,4 @@
+(in-package :gtk-testsuite)
 
 (def-suite gtk-tool-palette :in gtk-suite)
 (in-suite gtk-tool-palette)

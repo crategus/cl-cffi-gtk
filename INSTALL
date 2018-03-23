@@ -65,3 +65,6 @@ The html version can be build with the command:
 
 For generating the documentation it is assumed that a Tex system is installed.
 
+The testsuite can be run with:
+
+   (asdf:test-system :cl-cffi-gtk)

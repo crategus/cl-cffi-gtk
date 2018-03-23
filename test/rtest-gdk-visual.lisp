@@ -1,3 +1,4 @@
+(in-package :gtk-testsuite)
 
 (def-suite gdk-visual :in gdk-suite)
 (in-suite gdk-visual)

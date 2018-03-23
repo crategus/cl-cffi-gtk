@@ -1,3 +1,4 @@
+(in-package :gtk-testsuite)
 
 (def-suite gtk-frame :in gtk-suite)
 (in-suite gtk-frame)

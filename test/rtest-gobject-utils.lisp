@@ -1,9 +1,7 @@
+(in-package :gtk-testsuite)
 
 (def-suite gobject-utils :in gobject-suite)
 (in-suite gobject-utils)
-
-;; Load Gdk to have examples for flags and enum definitions.
-(asdf:load-system :cl-cffi-gtk-gdk)
 
 (test get-enum-items
   (is (equal '("GDK_DRAG_PROTO_NONE"

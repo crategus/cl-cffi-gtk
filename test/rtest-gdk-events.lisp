@@ -1,3 +1,5 @@
+(in-package :gtk-testsuite)
+
 (def-suite gdk-events :in gdk-suite)
 (in-suite gdk-events)
 

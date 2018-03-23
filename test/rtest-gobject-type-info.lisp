@@ -1,3 +1,4 @@
+(in-package :gtk-testsuite)
 
 (def-suite gobject-type-info :in gobject-suite)
 (in-suite gobject-type-info)

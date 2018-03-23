@@ -1,3 +1,4 @@
+(in-package :gtk-testsuite)
 
 (def-suite gtk-list-store :in gtk-suite)
 (in-suite gtk-list-store)

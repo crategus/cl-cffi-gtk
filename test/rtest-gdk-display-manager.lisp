@@ -1,3 +1,5 @@
+(in-package :gtk-testsuite)
+
 (def-suite gdk-display-manager :in gdk-suite)
 (in-suite gdk-display-manager)
 

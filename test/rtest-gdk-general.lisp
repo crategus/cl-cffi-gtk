@@ -1,3 +1,5 @@
+(in-package :gtk-testsuite)
+
 (def-suite gdk-general :in gdk-suite)
 (in-suite gdk-general)
 

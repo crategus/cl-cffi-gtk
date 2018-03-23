@@ -1,3 +1,5 @@
+(in-package :gtk-testsuite)
+
 (def-suite gio-themed-icon :in gio-suite)
 (in-suite gio-themed-icon)
 

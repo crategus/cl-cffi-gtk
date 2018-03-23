@@ -1,3 +1,5 @@
+(in-package :gtk-testsuite)
+
 (def-suite gtk-entry-buffer :in gtk-suite)
 (in-suite gtk-entry-buffer)
 

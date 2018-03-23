@@ -1,3 +1,5 @@
+(in-package :gtk-testsuite)
+
 (def-suite gtk-widget :in gtk-suite)
 (in-suite gtk-widget)
 

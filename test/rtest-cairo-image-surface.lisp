@@ -1,3 +1,5 @@
+(in-package :gtk-testsuite)
+
 (def-suite cairo-image-surface :in cairo-suite)
 (in-suite cairo-image-surface)
 

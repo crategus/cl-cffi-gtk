@@ -1,3 +1,4 @@
+(in-package :gtk-testsuite)
 
 (def-suite gobject-param :in gobject-suite)
 (in-suite gobject-param)

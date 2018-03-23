@@ -1,3 +1,5 @@
+(in-package :gtk-testsuite)
+
 (def-suite gio-content-type :in gio-suite)
 (in-suite gio-content-type)
 

@@ -1,3 +1,5 @@
+(in-package :gtk-testsuite)
+
 (def-suite gtk-dialog :in gtk-suite)
 (in-suite gtk-dialog)
 

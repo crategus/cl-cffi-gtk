@@ -1,3 +1,4 @@
+(in-package :gtk-testsuite)
 
 (def-suite gtk-print-settings :in gtk-suite)
 (in-suite gtk-print-settings)
