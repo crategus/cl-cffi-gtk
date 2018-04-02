@@ -1,3 +1,4 @@
+(in-package :gtk-testsuite)
 
 (def-suite gtk-paper-size :in gtk-suite)
 (in-suite gtk-paper-size)

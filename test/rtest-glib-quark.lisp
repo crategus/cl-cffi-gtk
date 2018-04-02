@@ -1,3 +1,4 @@
+(in-package :gtk-testsuite)
 
 (def-suite glib-quark :in glib-suite)
 (in-suite glib-quark)

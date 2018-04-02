@@ -1,3 +1,4 @@
+(in-package :gtk-testsuite)
 
 (def-suite gobject-g-value :in gobject-suite)
 (in-suite gobject-g-value)

@@ -1,3 +1,4 @@
+(in-package :gtk-testsuite)
 
 (def-suite gtk-selections :in gtk-suite)
 (in-suite gtk-selections)

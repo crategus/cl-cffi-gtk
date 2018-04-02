@@ -1,3 +1,4 @@
+(in-package :gtk-testsuite)
 
 (def-suite glib-stable-pointer :in glib-suite)
 (in-suite glib-stable-pointer)

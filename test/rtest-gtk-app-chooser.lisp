@@ -1,3 +1,4 @@
+(in-package :gtk-testsuite)
 
 (def-suite gtk-app-chooser :in gtk-suite)
 (in-suite gtk-app-chooser)

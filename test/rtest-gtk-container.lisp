@@ -1,3 +1,5 @@
+(in-package :gtk-testsuite)
+
 (def-suite gtk-container :in gtk-suite)
 (in-suite gtk-container)
 
