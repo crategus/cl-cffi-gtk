@@ -705,7 +705,7 @@
 (defun invalidate-gtypes ()
   (bt:with-lock-held (*gtype-lock*)
     (clrhash *id-to-gtype*)
-    (iter (for (name gtype) in-hashtable *name-to-gtype*)
+    (iter (for (NIL gtype) in-hashtable *name-to-gtype*)
           (setf (gtype-%id gtype) nil))))
 
 (glib::at-finalize () (invalidate-gtypes))

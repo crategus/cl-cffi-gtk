@@ -350,6 +350,7 @@
 
   (defmacro deprecated-function (library name since
                                  &optional replacements)
+    (declare (ignorable name replacements))
     (destructuring-bind (max-major-version max-minor-version) (or since '(NIL NIL))
       (when (member 'cl-cffi-gtk-deprecation-warnings *features*)
         (multiple-value-bind (major-version minor-version)

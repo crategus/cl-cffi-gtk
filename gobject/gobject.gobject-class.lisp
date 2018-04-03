@@ -64,7 +64,7 @@
       (call-next-method)))
 
 (defgeneric initialize-gobject-class (gobject-class foreign-class)
-  (:method ((class gobject-class) foreign-class)))
+  (:method ((class gobject-class) (foreign-class T))))
 
 (export 'initialize-gobject-class)
 
