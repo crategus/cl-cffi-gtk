@@ -320,6 +320,8 @@
                :bordeaux-threads
                :alexandria
                :iterate
-               :trivial-features))
+               :trivial-features)
+
+  :in-order-to ((asdf:test-op (asdf:test-op :cl-cffi-gtk-test))))
 
 ;;; --- End of file cl-cffi-gtk.asd --------------------------------------------
