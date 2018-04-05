@@ -570,8 +570,7 @@
   (:ltr 305)
   (:rtl 306)
   (:color 307)
-  (:unbind 308)
-  (:last 309))
+  (:unbind 308))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-rc-token-type atdoc:*symbol-name-alias*) "Enum"
@@ -628,8 +627,7 @@
   (:ltr 305)
   (:rtl 306)
   (:color 307)
-  (:unbind 308)
-  (:last 309))
+  (:unbind 308))
   @end{pre}")
 
 ;;; ----------------------------------------------------------------------------

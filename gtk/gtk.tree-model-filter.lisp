@@ -444,7 +444,7 @@
   @end{short}
 
   Since 2.4"
-  (let ((filter-iter (make-instance 'gtk-tree-iter)))
+  (let ((filter-iter (make-gtk-tree-iter)))
     (when (%gtk-tree-model-filter-convert-child-iter-to-iter filter
                                                              filter-iter
                                                              child-iter)
@@ -477,7 +477,7 @@
   @end{short}
 
   Since 2.4"
-  (let ((child-iter (make-instance 'gtk-tree-iter)))
+  (let ((child-iter (make-gtk-tree-iter)))
     (%gtk-tree-model-filter-convert-iter-to-child-iter filter
                                                        child-iter
                                                        filter-iter)

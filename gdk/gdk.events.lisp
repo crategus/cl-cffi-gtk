@@ -75,6 +75,7 @@
 ;;;     gdk_events_get_center
 ;;;     gdk_events_get_distance
 ;;;     gdk_event_triggers_context_menu
+;;;     gdk_event_get_seat
 ;;;
 ;;;     gdk_event_handler_set
 ;;;
@@ -763,6 +764,18 @@
 ;;;
 ;;; Since 3.4
 ;;; ----------------------------------------------------------------------------
+
+
+;;; ----------------------------------------------------------------------------
+;;; gdk_event_get_seat ()
+;;; ----------------------------------------------------------------------------
+
+#+gdk-3-20
+(defcfun gdk-event-get-seat (g-object gdk-seat)
+  (event (g-boxed-foreign gdk-event)))
+
+#+gdk-3-20
+(export 'gdk-event-get-seat)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GdkEventFunc ()

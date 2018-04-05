@@ -1,3 +1,4 @@
+(in-package :gtk-testsuite)
 
 (def-suite gio-simple-action :in gio-suite)
 (in-suite gio-simple-action)

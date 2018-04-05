@@ -246,7 +246,6 @@
   (:ur-angle 148)
   (:watch 150)
   (:xterm 152)
-  (:last-cursor 153)
   (:blank-cursor -2)
   (:cursor-is-pixmap -1))
 
@@ -338,12 +337,10 @@
   (:ur-angle 148)
   (:watch 150)
   (:xterm 152)
-  (:last-cursor 153)
   (:blank-cursor -2)
   (:cursor-is-pixmap -1))
   @end{pre}
   @begin[code]{table}
-    @entry[:last-cursor]{Last cursor type.}
     @entry[:blank-cursor]{Blank cursor. Since 2.16.}
     @entry[:cursor-is-pixmap]{Type of cursors constructed with
       @fun{gdk-cursor-new-from-pixbuf}.}

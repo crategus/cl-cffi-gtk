@@ -9,6 +9,7 @@
                                    :message-type :info
                                    :buttons :ok
                                    :text "Info Message Dialog"
+                                   :transient-for *demo-window*
                                    :secondary-text
                                    (format nil
                                            "This is a message dialog of type ~

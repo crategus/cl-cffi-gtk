@@ -1,3 +1,4 @@
+(in-package :gtk-testsuite)
 
 (def-suite gtk-text-iter :in gtk-suite)
 (in-suite gtk-text-iter)

@@ -1,7 +1,14 @@
+(in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
 
 ;; Implementation of array-list-store
+
+(register-object-type-implementation "LispArrayListStore"
+                                     array-list-store
+                                     "GObject"
+                                     ("GtkTreeModel")
+                                     nil)
 
 (defclass array-list-store (gtk-tree-model)
   ((items :initform (make-array 0 :adjustable t :fill-pointer t)
@@ -15,12 +22,6 @@
 
 (export 'array-list-store)
 
-(register-object-type-implementation "LispArrayListStore"
-                                     array-list-store
-                                     "GObject"
-                                     ("GtkTreeModel")
-                                     nil)
-
 (defun store-items-count (store)
   (length (store-items store)))
 
@@ -33,9 +34,8 @@
 
 (defun store-add-item (store item)
   (vector-push-extend item (store-items store))
-  (let* ((path (make-instance 'gtk-tree-path))
+  (let* ((path (apply #'gtk-tree-path-new-from-indices (list (1- (length (store-items store))))))
          (iter (make-gtk-tree-iter)))
-    (setf (gtk-tree-path-indices path) (list (1- (length (store-items store)))))
     (setf (gtk-tree-iter-stamp iter)
           0
           (gtk-tree-iter-user-data iter)
@@ -49,9 +49,7 @@
     (let ((index (position item items :test test)))
       (unless index (error "No such item~%~A~%in list-store~%~A" item store))
       (setf items (delete item items :test test))
-      (let ((path (make-instance 'gtk-tree-path)))
-        (setf (gtk-tree-path-indices path) (list index))
-        (g-signal-emit store "row-deleted" path)))))
+      (g-signal-emit store "row-deleted" (gtk-tree-path-new-from-indices index)))))
 
 (export 'store-remove-item)
 
@@ -73,7 +71,7 @@
   (aref (store-types tree-model) index))
 
 (defmethod gtk-tree-model-get-iter-impl ((model array-list-store) iter path)
-  (let ((indices (gtk-tree-path-indices path)))
+  (let ((indices (gtk-tree-path-get-indices path)))
     (when (and (= 1 (length indices))
                (< (first indices) (length (store-items model))))
       (setf (gtk-tree-iter-stamp iter)
@@ -112,10 +110,7 @@
       0))
 
 (defmethod gtk-tree-model-get-path-impl ((model array-list-store) iter)
-  (let ((path (make-instance 'gtk-tree-path)))
-    (setf (gtk-tree-path-indices path)
-          (list (gtk-tree-iter-user-data iter)))
-    path))
+  (gtk-tree-path-new-from-indices (gtk-tree-iter-user-data iter)))
 
 (defmethod gtk-tree-model-iter-has-child-impl ((model array-list-store) iter)
   (declare (ignorable iter))
@@ -128,7 +123,7 @@
     (aref (store-items model) n-row)))
 
 (defmethod gtk-tree-model-item ((model array-list-store) (path gtk-tree-path))
-  (let ((n-row (first (gtk-tree-path-indices path))))
+  (let ((n-row (first (gtk-tree-path-get-indices path))))
     (aref (store-items model) n-row)))
 
 (export 'gtk-tree-model-item)
@@ -167,6 +162,14 @@
                           :adjustable t
                           :fill-pointer t)))
 
+(export 'make-tree-node)
+
+(register-object-type-implementation "LispTreeStore"
+                                     tree-lisp-store
+                                     "GObject"
+                                     ("GtkTreeModel")
+                                     nil)
+
 (defclass tree-lisp-store (gtk-tree-model)
   ((columns-getters :initform (make-array 0 :adjustable t :fill-pointer t)
                     :reader tree-lisp-store-getters)
@@ -181,15 +184,12 @@
   (:metaclass gobject-class)
   (:g-type-name . "LispTreeStore"))
 
+(export 'tree-lisp-store)
+(export 'tree-lisp-store-root)
+
 (defmethod initialize-instance :after ((object tree-lisp-store) &key
                                        &allow-other-keys)
   (setf (tree-node-tree (tree-lisp-store-root object)) object))
-
-(register-object-type-implementation "LispTreeStore"
-                                     tree-lisp-store
-                                     "GObject"
-                                     ("GtkTreeModel")
-                                     nil)
 
 (defun map-subtree (node fn)
   (funcall fn node)
@@ -219,8 +219,13 @@
   (notice-tree-node-insertion (tree-node-tree node) node child index)
   node)
 
+(export 'tree-node-insert-at)
+
 (defun tree-node-child-at (node index)
-  (aref (tree-node-children node) index))
+  (let* ((children (tree-node-children node))
+         (in-bounds-p (< index (length children))))
+    (values (and in-bounds-p (aref (tree-node-children node) index))
+            in-bounds-p)))
 
 (defun tree-node-remove-at (node index)
   (assert (<= 0 index (1- (length (tree-node-children node)))))
@@ -235,6 +240,8 @@
   (vector-push-extend column-getter (tree-lisp-store-getters store))
   (vector-push-extend column-type (tree-lisp-store-types store)))
 
+(export 'tree-lisp-store-add-column)
+
 (defmethod gtk-tree-model-get-flags-impl ((store tree-lisp-store))
   nil)
 
@@ -246,12 +253,14 @@
 
 (defun get-node-by-indices (root indices)
   (if indices
-      (get-node-by-indices (tree-node-child-at root (first indices))
-                           (rest indices))
-      root))
+      (multiple-value-bind (child in-bounds-p)
+          (tree-node-child-at root (first indices))
+        (values (and in-bounds-p (get-node-by-indices child (rest indices)))
+                in-bounds-p))
+      (values root t)))
 
 (defun get-node-by-path (tree path)
-  (let ((indices (gtk-tree-path-indices path)))
+  (let ((indices (gtk-tree-path-get-indices path)))
     (get-node-by-indices (tree-lisp-store-root tree) indices)))
 
 (defun get-node-path (node)
@@ -280,20 +289,21 @@
   (gethash id (tree-lisp-store-id-map tree)))
 
 (defmethod gtk-tree-model-get-iter-impl ((store tree-lisp-store) iter path)
-  (let* ((node (get-node-by-path store path))
-         (node-idx (get-assigned-id store node)))
-    (setf (gtk-tree-iter-stamp iter) 0
-          (gtk-tree-iter-user-data iter) node-idx)))
+  (multiple-value-bind (node in-bounds-p)
+      (get-node-by-path store path)
+    (when in-bounds-p
+      (let ((node-idx (get-assigned-id store node)))
+        (setf (gtk-tree-iter-stamp iter) 0
+              (gtk-tree-iter-user-data iter) node-idx)
+        t))))
 
 (defun get-node-by-iter (tree iter)
   (get-node-by-id tree (gtk-tree-iter-user-data iter)))
 
 (defmethod gtk-tree-model-get-path-impl ((store tree-lisp-store) iter)
-  (let* ((path (make-instance 'gtk-tree-path))
-         (node (get-node-by-iter store iter))
+  (let* ((node (get-node-by-iter store iter))
          (indices (get-node-path node)))
-    (setf (gtk-tree-path-indices path) indices)
-    path))
+    (apply #'gtk-tree-path-new-from-indices indices)))
 
 (defmethod gtk-tree-model-get-value-impl ((store tree-lisp-store) iter n)
   (let* ((node (get-node-by-iter store iter))
@@ -365,10 +375,9 @@
 (defun notice-tree-node-insertion (tree node child index)
   (declare (ignore node index))
   (when tree
-    (let* ((path (make-instance 'gtk-tree-path))
+    (let* ((path (apply #'gtk-tree-path-new-from-indices (get-node-path child)))
            (iter (make-gtk-tree-iter)))
-      (setf (gtk-tree-path-indices path) (get-node-path child)
-            (gtk-tree-iter-stamp iter) 0
+      (setf (gtk-tree-iter-stamp iter) 0
             (gtk-tree-iter-user-data iter) (get-assigned-id tree child))
       (g-signal-emit tree "row-inserted" path iter)
       (when (plusp (length (tree-node-children child)))
@@ -377,16 +386,12 @@
 (defun notice-tree-node-removal (tree node child index)
   (declare (ignore child))
   (when tree
-    (let ((path (make-instance 'gtk-tree-path)))
-      (setf (gtk-tree-path-indices path)
-            (nconc (get-node-path node) (list index)))
+    (let ((path (apply #'gtk-tree-path-new-from-indices (nconc (get-node-path node) (list index)))))
       (g-signal-emit tree "row-deleted" path))
     (when (zerop (length (tree-node-children node)))
-      (let* ((path (make-instance 'gtk-tree-path))
+      (let* ((path (apply #'gtk-tree-path-new-from-indices (get-node-path node)))
              (iter (make-gtk-tree-iter)))
-        (setf (gtk-tree-path-indices path)
-              (get-node-path node)
-              (gtk-tree-iter-stamp iter)
+        (setf (gtk-tree-iter-stamp iter)
               0
               (gtk-tree-iter-user-data iter)
               (get-assigned-id tree node))

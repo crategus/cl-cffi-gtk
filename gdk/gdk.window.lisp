@@ -401,9 +401,7 @@
   (:temp 3)
   (:foreign 4)
   (:offscreen 5)
-  #+gdk-3-14
-  (:subsurface 6)
-)
+  (:subsurface 6))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-window-type atdoc:*symbol-name-alias*) "Enum"
@@ -2361,7 +2359,7 @@
 ;;; gdk_window_ensure_native ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_window_ensure_native" gdk-window-ensure-native) :void
+(defcfun ("gdk_window_ensure_native" gdk-window-ensure-native) :boolean
  #+cl-cffi-gtk-documentation
  "@version{2013-8-31}
   @argument[window]{a @class{gdk-window} object}
@@ -2837,6 +2835,15 @@
 ;;;
 ;;; Since 3.16
 ;;; ----------------------------------------------------------------------------
+
+#+gdk-3-16
+(defcfun ("gdk_window_create_gl_context" gdk-window-create-gl-context)
+    (g-object gdk-gl-context)
+  (window (g-object gdk-window))
+  (error (:pointer (:pointer (:struct g-error)))))
+
+#+gdk-3-16
+(export 'gdk-window-create-gl-context)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_mark_paint_from_clip ()
@@ -4028,6 +4035,18 @@
   @see-class{gdk-window}")
 
 (export '+gdk-parent-relative+)
+
+(defcfun ("gdk_window_set_cursor" gdk-window-set-cursor) :void
+  (window (g-object gdk-window))
+  (cursor (g-object gdk-cursor)))
+
+(export 'gdk-window-set-cursor)
+
+(defcfun ("gdk_window_get_cursor" gdk-window-get-cursor)
+    (g-object gdk-cursor)
+  (window (g-object gdk-window)))
+
+(export 'gdk-window-get-cursor)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_get_user_data ()

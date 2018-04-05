@@ -1,6 +1,4 @@
-
-;; We need GTK+ to have a button widget.
-(asdf:load-system :cl-cffi-gtk)
+(in-package :gtk-testsuite)
 
 (def-suite gobject-signals :in gobject-suite)
 (in-suite gobject-signals)

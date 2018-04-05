@@ -812,6 +812,37 @@
 
 (export 'gtk-menu-popup)
 
+#+gtk-3-22
+(defcfun ("gtk_menu_popup_at_rect" gtk-menu-popup-at-rect) :void
+  (menu (g-object gtk-menu))
+  (rect-window (g-object gdk-window))
+  (rect (g-boxed-foreign gdk-rectangle))
+  (rect-anchor gdk-gravity)
+  (menu-anchor gdk-gravity)
+  (trigger-event (g-boxed-foreign gdk-event)))
+
+#+gtk-3-22
+(export 'gtk-menu-popup-at-rect)
+
+#+gtk-3-22
+(defcfun ("gtk_menu_popup_at_widget" gtk-menu-popup-at-widget) :void
+  (menu (g-object gtk-menu))
+  (widget (g-object gtk-widget))
+  (widget-anchor gdk-gravity)
+  (menu-anchor gdk-gravity)
+  (trigger-event (g-boxed-foreign gdk-event)))
+
+#+gtk-3-22
+(export 'gtk-menu-popup-at-widget)
+
+#+gtk-3-22
+(defcfun ("gtk_menu_popup_at_pointer" gtk-menu-popup-at-pointer) :void
+  (menu (g-object gtk-menu))
+  (trigger-event (g-boxed-foreign gdk-event)))
+
+#+gtk-3-22
+(export 'gtk-menu-popup-at-pointer)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_set_accel_group ()
 ;;; ----------------------------------------------------------------------------

@@ -1,3 +1,4 @@
+(in-package :gtk-testsuite)
 
 (def-suite cairo-context :in cairo-suite)
 (in-suite cairo-context)

@@ -55,7 +55,11 @@
    :type-initializer "gtk_switch_get_type")
   ((active
     gtk-switch-active
-    "active" "gboolean" t t)))
+    "active" "gboolean" t t)
+   #+gtk-3-14
+   (state
+    gtk-switch-state
+    "state" "gboolean" t t)))
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-switch 'type)

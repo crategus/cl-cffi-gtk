@@ -1,18 +1,9 @@
 ;;;; Animated backgrounds
-;;;; 
+;;;;
 ;;;; This demo is done in honour of the Pixbufs demo further down.
 ;;;; It is done exclusively with CSS as the background of the window.
 
 (in-package #:gtk-demo)
-
-(defun apply-css (widget provider)
-  (gtk-style-context-add-provider (gtk-widget-get-style-context widget)
-                                  provider
-                                  +gtk-style-provider-priority-user+)
-  (when (g-type-is-a (g-type-from-instance widget) "GtkContainer")
-    (gtk-container-forall widget
-                          (lambda (widget)
-                            (apply-css widget provider)))))
 
 (defun demo-css-pixbufs ()
   (within-main-loop
@@ -35,9 +26,8 @@
       ;; Add container to window
       (gtk-container-add window container)
       ;; Load CSS from file into the provider
-      (gtk-css-provider-load-from-path provider "css-pixbufs.css")
+      (gtk-css-provider-load-from-path provider (namestring (asdf:system-relative-pathname :cl-cffi-gtk-demo-gtk "css-pixbufs.css")))
       ;; Apply CSS to the widgets
       (apply-css window provider)
       ;; Show the window.
       (gtk-widget-show-all window))))
-

@@ -1,11 +1,41 @@
 ;;;; cl-cffi-gtk-demo-gtk.asd
 
+(asdf:load-system :cffi-toolchain)
+(asdf:load-system :split-sequence)
+
+;; copied from CFFI
+
+(defclass c-test-lib (asdf:c-source-file)
+  ())
+
+(defmethod asdf:perform ((o asdf:load-op) (c c-test-lib))
+  nil)
+
+(defmethod asdf:perform ((o asdf:load-source-op) (c c-test-lib))
+  nil)
+
+(defmethod asdf:output-files ((o asdf:compile-op) (c c-test-lib))
+  (let ((p (asdf:component-pathname c)))
+    (values
+     (list (make-pathname :defaults p :type (asdf/bundle:bundle-pathname-type :shared-library)))
+     t)))
+
+(defmethod asdf:perform ((o asdf:compile-op) (c c-test-lib))
+  (let ((cffi-toolchain:*cc-flags* `(,@cffi-toolchain:*cc-flags* "-Wall" "-std=c99" "-pedantic" ,@(split-sequence:split-sequence #\Space (uiop:run-program "pkg-config --cflags gtk+-3.0" :output '(:string :stripped T)))))
+        (cffi-toolchain:*ld-dll-flags* `(,@cffi-toolchain:*ld-dll-flags* "-shared" ,@(split-sequence:split-sequence #\Space (uiop:run-program "pkg-config --libs gtk+-3.0" :output '(:string :stripped T))))))
+    (let ((dll (car (output-files o c))))
+      (uiop:with-temporary-file (:pathname obj)
+        (cffi-toolchain:cc-compile obj (input-files o c))
+        (apply 'cffi-toolchain:invoke cffi-toolchain:*ld* "-o" dll (append cffi-toolchain:*ld-dll-flags* (list obj)))))))
+
 (asdf:defsystem :cl-cffi-gtk-demo-gtk
   :author "Dieter Kaiser"
   :license "LLGPL"
+  :description "GTK demos for CL-CFFI-GTK"
   :serial t
   :depends-on (:cl-cffi-gtk)
   :components ((:file "package")
+               (:file "action-bar")
                (:file "alignment")
                (:file "app-chooser-button")
                (:file "app-chooser-dialog")
@@ -41,6 +71,7 @@
                (:file "frame")
                (:file "grid")
                (:file "grid-packing")
+               (:file "header-bar")
                (:file "image")
                (:file "info-bar")
                (:file "labels")
@@ -52,6 +83,7 @@
                (:file "paned-window")
                (:file "pixbuf-scale")
                (:file "pixbufs")
+               (:file "popover")
                (:file "progress-bar")
                (:file "scale-widgets")
                (:file "scrolled-window")
@@ -67,6 +99,8 @@
                (:file "simple-window")
                (:file "spin-button")
                (:file "statusbar")
+               (:c-test-lib "subclass")
+               (:file "subclass-window")
                (:file "switch")
                (:file "table-packing")
                (:file "text-entry")

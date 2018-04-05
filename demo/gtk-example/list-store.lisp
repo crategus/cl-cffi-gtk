@@ -24,10 +24,18 @@
     ;; Return the new list store
     list-store))
 
-(defun create-view-and-list-store ()
-  (let* ((list-store (create-and-fill-list-store))
-         (view (make-instance 'gtk-tree-view
-                              :model list-store)))
+(defun create-and-fill-lisp-store ()
+  (let ((list-data '("A name" "Another name" "and" "even" "more!"))
+        (list-store (make-instance 'array-list-store)))
+    (store-add-column list-store "gint" #'length)
+    (store-add-column list-store "gchararray" #'identity)
+    (store-add-column list-store "gboolean" (lambda (name) (evenp (length name))))
+    (dolist (name list-data list-store)
+      (store-add-item list-store name))))
+
+(defun create-view-and-list-store (list-store)
+  (let ((view (make-instance 'gtk-tree-view
+                             :model list-store)))
     ;; Create renderers for the cells
     (let* ((renderer (gtk-cell-renderer-text-new))
            (column (gtk-tree-view-column-new-with-attributes "Number"
@@ -48,13 +56,14 @@
 
 (defun example-simple-list-store ()
   (within-main-loop
-    (let ((window (make-instance 'gtk-window
-                                 :title "Example Simple List Store"
-                                 :type :toplevel
-                                 :border-width 12
-                                 :default-width 300
-                                 :default-height 200))
-          (view (create-view-and-list-store)))
+    (let* ((window (make-instance 'gtk-window
+                                  :title "Example Simple List Store"
+                                  :type :toplevel
+                                  :border-width 12
+                                  :default-width 300
+                                  :default-height 200))
+           (list-store (create-and-fill-list-store))
+           (view (create-view-and-list-store list-store)))
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
@@ -62,3 +71,19 @@
       (gtk-container-add window view)
       (gtk-widget-show-all window))))
 
+(defun example-lisp-list-store ()
+  (within-main-loop
+    (let* ((window (make-instance 'gtk-window
+                                  :title "Example Lisp List Store"
+                                  :type :toplevel
+                                  :border-width 12
+                                  :default-width 300
+                                  :default-height 200))
+           (list-store (create-and-fill-lisp-store))
+           (view (create-view-and-list-store list-store)))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (leave-gtk-main)))
+      (gtk-container-add window view)
+      (gtk-widget-show-all window))))

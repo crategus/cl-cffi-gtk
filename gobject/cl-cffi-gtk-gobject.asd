@@ -30,6 +30,7 @@
   :version "2.36.0"          ; The version the library is developed for.
   :author "Dieter Kaiser"
   :license "LLGPL"
+  :description "A Lisp binding GObject 2"
   :serial t
   :components ((:file "gobject.package")
                (:file "gobject.init")
@@ -51,12 +52,13 @@
                (:file "gobject.closures")    ; Closures
                (:file "gobject.signals")     ; Signals
                
-               (:file "gobject.foreign-gobject-subclassing")
                (:file "gobject.utils")
+               (:file "gobject.foreign-gobject-subclassing")
                )
   :depends-on (:cl-cffi-gtk-glib
                :cffi
                :trivial-garbage
+               :alexandria
                :iterate
                :bordeaux-threads
                :closer-mop))

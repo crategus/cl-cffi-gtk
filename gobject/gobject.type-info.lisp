@@ -179,9 +179,29 @@
 
 (in-package :gobject)
 
+;; The function gtype converts an integer or a string representation of
+;; a foreign GType to a Lisp gtype
+
+(defun gtype (thing)
+  (gtype1 thing))
+
+(define-compiler-macro gtype (&whole whole thing)
+  (if (constantp thing)
+      `(load-time-value (gtype1 ,thing))
+      whole))
+
+(defun gtype1 (thing)
+  (etypecase thing
+    (null nil)
+    (gtype thing)
+    (string (gtype-from-name thing))
+    (integer (gtype-from-id thing))))
+
 ;;; This constant is not exported.
 (eval-when (:execute :compile-toplevel :load-toplevel)
   (defconstant +g-type-fundamental-shift+ 2))
+
+;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_TYPE_INVALID
@@ -685,7 +705,7 @@
 (defun invalidate-gtypes ()
   (bt:with-lock-held (*gtype-lock*)
     (clrhash *id-to-gtype*)
-    (iter (for (name gtype) in-hashtable *name-to-gtype*)
+    (iter (for (NIL gtype) in-hashtable *name-to-gtype*)
           (setf (gtype-%id gtype) nil))))
 
 (glib::at-finalize () (invalidate-gtypes))
@@ -765,26 +785,6 @@
                   (setf (gethash id *id-to-gtype*) gtype
                         (gethash name *name-to-gtype*) gtype)
                   (return-from gtype-from-id gtype)))))))))
-
-;;; ----------------------------------------------------------------------------
-
-;; The function gtype converts an integer or a string representation of
-;; a foreign GType to a Lisp gtype
-
-(defun gtype (thing)
-  (gtype1 thing))
-
-(define-compiler-macro gtype (&whole whole thing)
-  (if (constantp thing)
-      `(load-time-value (gtype1 ,thing))
-      whole))
-
-(defun gtype1 (thing)
-  (etypecase thing
-    (null nil)
-    (gtype thing)
-    (string (gtype-from-name thing))
-    (integer (gtype-from-id thing))))
 
 ;;; ----------------------------------------------------------------------------
 

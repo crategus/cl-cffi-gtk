@@ -344,6 +344,15 @@
 ;;; Since 3.16
 ;;; ----------------------------------------------------------------------------
 
+#+gdk-3-16
+(defcfun ("gdk_gl_context_set_debug_enabled" gdk-gl-context-set-debug-enabled)
+    :void
+  (context (g-object gdk-gl-context))
+  (enabled :boolean))
+
+#+gdk-3-16
+(export 'gdk-gl-context-set-debug-enabled)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_gl_context_get_debug_enabled ()
 ;;;
@@ -435,6 +444,15 @@
 ;;; Since 3.16
 ;;; ----------------------------------------------------------------------------
 
+#+gdk-3-16
+(defcfun ("gdk_gl_context_realize" gdk-gl-context-realize)
+    :boolean
+  (context (g-object gdk-gl-context))
+  (error (:pointer (:pointer (:struct g-error)))))
+
+#+gdk-3-16
+(export 'gdk-gl-context-realize)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_gl_context_make_current ()
 ;;;
@@ -478,5 +496,22 @@
 ;;;
 ;;; Since 3.16
 ;;; ----------------------------------------------------------------------------
+
+#+gdk-3-22
+(defcfun ("gdk_gl_context_set_use_es" gdk-gl-context-set-use-es)
+    :void
+  (context (g-object gdk-gl-context))
+  (use-es :int))
+
+#+gdk-3-22
+(export 'gdk-gl-context-set-use-es)
+
+#+gdk-3-22
+(defcfun ("gdk_gl_context_get_use_es" gdk-gl-context-get-use-es)
+    :boolean
+  (context (g-object gdk-gl-context)))
+
+#+gdk-3-22
+(export 'gdk-gl-context-get-use-es)
 
 ;;; --- End of file gdk.gl-context.lisp ----------------------------------------

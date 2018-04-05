@@ -25,23 +25,18 @@
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
 
-(defpackage :cl-gtk2-init
-  (:use :cl :glib))
-
-(in-package :cl-gtk2-init)
+(in-package :gobject)
 
 (glib::at-init ()
  (eval-when (:compile-toplevel :load-toplevel :execute)
-   (cffi:define-foreign-library gobject
+   (define-foreign-library gobject
      ((:and :unix (:not :darwin))
       (:or "libgobject-2.0.so.0" "libgobject-2.0.so"))
      (:darwin (:or "libgobject-2.0.0.dylib" "libgobject-2.0.dylib"))
      (:windows "libgobject-2.0-0.dll")
      (t "libgobject-2.0")))
-
- (cffi:use-foreign-library gobject))
-
-(in-package :gobject)
+  (unless (foreign-library-loaded-p 'gobject)
+    (use-foreign-library gobject)))
 
 (defvar *lisp-name-package* nil)
 (defvar *generated-types* nil)
@@ -59,9 +54,7 @@
   (let ((vars (iter (for sym in (if (listp categories)
                                     categories
                                     (list categories)))
-                    (collect (intern (format nil "*DEBUG-~A*"
-                                             (symbol-name sym))
-                                     (find-package :gobject))))))
+                    (collect (format-symbol :gobject "*DEBUG-~A*" sym)))))
     `(progn
        (when (or ,@vars)
          (format *debug-stream* ,control-string ,@args))

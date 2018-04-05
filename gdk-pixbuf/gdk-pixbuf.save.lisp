@@ -94,11 +94,11 @@
 ;; See the implementation of gdk-pixbuf-save
 
 (defcfun ("gdk_pixbuf_savev" %gdk-pixbuf-savev) :boolean
-  (pixbuf (g-object pixbuf))
+  (pixbuf (g-object gdk-pixbuf))
   (filename :string)
   (type :string)
-  (option-keys (:pointer (:pointer :char)))
-  (option-values (:pointer (:pointer :char)))
+  (option-keys g-strv)
+  (option-values g-strv)
   (error :pointer))
 
 ;;; ----------------------------------------------------------------------------
@@ -107,7 +107,7 @@
 
 ;; This implementation does not support the arguments error and Varargs.
 
-(defun gdk-pixbuf-save (pixbuf filename type)
+(defun gdk-pixbuf-save (pixbuf filename type &optional parameters)
  #+cl-cffi-gtk-documentation
  "@version{2013-2-16}
   @argument[pixbuf]{a GdkPixbuf.}
@@ -165,21 +165,27 @@
                   \"icc-profile\", contents_encode,
                   NULL);
   @end{pre}
-  TIFF images recognize a \"compression\" option which acceps an integer value.
+  TIFF images recognize a \"compression\" option which accepts an integer value.
   Among the codecs are 1 None, 2 Huffman, 5 LZW, 7 JPEG and 8 Deflate, see
   the libtiff documentation and tiff.h for all supported codec values.
 
   ICO images can be saved in depth 16, 24, or 32, by using the \"depth\"
   parameter. When the ICO saver is given \"x_hot\" and \"y_hot\" parameters, it
   produces a CUR instead of an ICO."
-  (%gdk-pixbuf-savev pixbuf
-                     (etypecase filename
-                       (string filename)
-                       (pathname (namestring filename)))
-                    type
-                    (null-pointer)
-                    (null-pointer)
-                    (null-pointer)))
+  (iterate
+    (for (key . value) in parameters)
+    (collect key into keys)
+    (collect value into values)
+    (finally
+     (with-g-error (error)
+       (%gdk-pixbuf-savev pixbuf
+                          (etypecase filename
+                            (string filename)
+                            (pathname (namestring filename)))
+                          type
+                          keys
+                          values
+                          error)))))
 
 (export 'gdk-pixbuf-save)
 

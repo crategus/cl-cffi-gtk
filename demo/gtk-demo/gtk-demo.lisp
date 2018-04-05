@@ -33,7 +33,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defun load-file (filename)
-  (with-open-file (stream filename)
+  (with-open-file (stream (asdf:system-relative-pathname :cl-cffi-gtk-demo-gtk filename))
     ;; Read the info-header of the file
     (multiple-value-bind (start end)
         (gtk-text-buffer-get-bounds info-buffer)
@@ -79,218 +79,104 @@
 
 ;;; ----------------------------------------------------------------------------
 
-(defun create-and-fill-model ()
-  (let ((model (make-instance 'gtk-tree-store
-                              :column-types '("gchararray" ; Title
-                                              "gchararray" ; Filename
-                                              "gchararray" ; Function name
-                                              "guint"))))
-    (let ((parent (gtk-tree-store-set model (gtk-tree-store-append model nil)
-                                            "Theming in GTK+" "" "" 0)))
-      (gtk-tree-store-set model (gtk-tree-store-append model parent)
-                                "CSS Accordion"
-                                "css-accordion.lisp" "DEMO-CSS-ACCORDION" 0)
-      (gtk-tree-store-set model (gtk-tree-store-append model parent)
-                                "CSS Pixbufs"
-                                "css-pixbufs.lisp" "DEMO-CSS-PIXBUFS" 0)
-      (gtk-tree-store-set model (gtk-tree-store-append model parent)
-                                "Numerable Icons"
-                                "numerable-icon.lisp" "DEMO-NUMERABLE-ICON" 0)
-    )
-    (let ((parent (gtk-tree-store-set model (gtk-tree-store-append model nil)
-                                            "Windows" "" "" 0)))
-      (gtk-tree-store-set model (gtk-tree-store-append model parent)
-                                "Simple Window"
-                                "simple-window.lisp" "EXAMPLE-SIMPLE-WINDOW" 0)
-      (gtk-tree-store-set model (gtk-tree-store-append model parent)
-                                "Simple Message"
-                                "simple-message.lisp"
-                                "EXAMPLE-SIMPLE-MESSAGE" 0)
-      (gtk-tree-store-set model (gtk-tree-store-append model parent)
-                                "Dialogs"
-                                "dialogs.lisp" "EXAMPLE-DIALOG" 0)
-      (gtk-tree-store-set model (gtk-tree-store-append model parent)
-                                "Assistant"
-                                "assistant.lisp" "DEMO-ASSISTANT" 0)
-      (gtk-tree-store-set model (gtk-tree-store-append model parent)
-                                "Application Window"
-                                "application-window.lisp"
-                                "DEMO-APPLICATION-WINDOW" 0)
-    )
-    (let ((parent (gtk-tree-store-set model (gtk-tree-store-append model nil)
-                                            "Display Widgets")))
-      (gtk-tree-store-set model (gtk-tree-store-append model parent)
-                                "Labels"
-                                "labels.lisp" "EXAMPLE-LABELS" 0)
-      (gtk-tree-store-set model (gtk-tree-store-append model parent)
-                                "Images"
-                                "image.lisp" "DEMO-IMAGE" 0)
-      (gtk-tree-store-set model (gtk-tree-store-append model parent)
-                                "More Labels"
-                                "more-labels.lisp" "EXAMPLE-MORE-LABELS" 0)
-      (gtk-tree-store-set model (gtk-tree-store-append model parent)
-                                "Progress Bar Widget"
-                                "progress-bar.lisp" "EXAMPLE-PROGRESS-BAR" 0)
-      (gtk-tree-store-set model (gtk-tree-store-append model parent)
-                                "Statusbar"
-                                "statusbar.lisp" "EXAMPLE-STATUSBAR" 0)
-      (gtk-tree-store-set model (gtk-tree-store-append model parent)
-                                "Info Bar"
-                                "info-bar.lisp" "EXAMPLE-INFO-BAR" 0)
-    )
-    (let ((parent (gtk-tree-store-set model (gtk-tree-store-append model nil)
-                                            "Button Widgets")))
-      (gtk-tree-store-set model (gtk-tree-store-append model parent)
-                                "Button"
-                                "button.lisp" "EXAMPLE-BUTTON" 0)
-      (gtk-tree-store-set model (gtk-tree-store-append model parent)
-                                "More Buttons"
-                                "buttons.lisp" "EXAMPLE-BUTTONS" 0)
-      (gtk-tree-store-set model (gtk-tree-store-append model parent)
-                                "Toggle Buttons"
-                                "toggle-buttons.lisp"
-                                "EXAMPLE-TOGGLE-BUTTONS" 0)
-      (gtk-tree-store-set model (gtk-tree-store-append model parent)
-                                "Link Button"
-                                "link-button.lisp" "EXAMPLE-LINK-BUTTON" 0)
-      (gtk-tree-store-set model (gtk-tree-store-append model parent)
-                                "Switch"
-                                "switch.lisp" "EXAMPLE-SWITCH" 0)
-    )
-    (let ((parent (gtk-tree-store-set model (gtk-tree-store-append model nil)
-                                            "Numeric/Text Data Entry")))
-      (gtk-tree-store-set model (gtk-tree-store-append model parent)
-                                "Text Entry"
-                                "text-entry.lisp" "EXAMPLE-TEXT-ENTRY" 0)
-      (gtk-tree-store-set model (gtk-tree-store-append model parent)
-                                "Text Entry Buffer"
-                                "entry-buffer.lisp" "EXAMPLE-ENTRY-BUFFER" 0)
-      (gtk-tree-store-set model (gtk-tree-store-append model parent)
-                                "Text Entry Completion"
-                                "entry-completion.lisp"
-                                "EXAMPLE-ENTRY-COMPLETION" 0)
-      (gtk-tree-store-set model (gtk-tree-store-append model parent)
-                                "Scale Widgets"
-                                "scale-widgets.lisp" "EXAMPLE-SCALE-WIDGETS" 0)
-      (gtk-tree-store-set model (gtk-tree-store-append model parent)
-                                "Spin Button"
-                                "spin-button.lisp" "EXAMPLE-SPIN-BUTTON" 0)
-    )
-    (let ((parent (gtk-tree-store-set model (gtk-tree-store-append model nil)
-                                             "Multiline Text Editor")))
-      (gtk-tree-store-set model (gtk-tree-store-append model parent)
-                                "Simple Text View"
-                                "simple-text-view.lisp"
-                                "EXAMPLE-SIMPLE-TEXT-VIEW" 0)
-      (gtk-tree-store-set model (gtk-tree-store-append model parent)
-                                "Text View Attributes"
-                                "text-view-attributes.lisp"
-                                "EXAMPLE-TEXT-VIEW-ATTRIBUTES" 0)
-    )
-    (let ((parent (gtk-tree-store-set model (gtk-tree-store-append model nil)
-                                            "Tree, List and Icon Grid Widgets")))
-      (gtk-tree-store-set model (gtk-tree-store-append model parent)
-                                "Simple Tree View"
-                                "simple-tree-view.lisp"
-                                "EXAMPLE-SIMPLE-TREE-VIEW" 0)
-    )
-    (let ((parent (gtk-tree-store-set model (gtk-tree-store-append model nil)
-                                            "Menus, Combo Box, Toolbar")))
-      (gtk-tree-store-set model (gtk-tree-store-append model parent)
-                                "Combo Box"
-                                "combo-box.lisp"
-                                "EXAMPLE-COMBO-BOX" 0)
-      (gtk-tree-store-set model (gtk-tree-store-append model parent)
-                                "Combo Box Text"
-                                "combo-box-text.lisp"
-                                "EXAMPLE-COMBO-BOX-TEXT" 0)
-      (gtk-tree-store-set model (gtk-tree-store-append model parent)
-                                "Menu"
-                                "menu.lisp" "EXAMPLE-MENU" 0)
-      (gtk-tree-store-set model (gtk-tree-store-append model parent)
-                                "Tool Palette"
-                                "tool-palette.lisp" "DEMO-TOOL-PALETTE" 0)
-    )
-    (let ((parent (gtk-tree-store-set model (gtk-tree-store-append model nil)
-                                            "Selectors (Color/File/Font)")))
-      (gtk-tree-store-set model (gtk-tree-store-append model parent)
-                                "Color Button"
-                                "color-button.lisp" "EXAMPLE-COLOR-BUTTON" 0)
-      (gtk-tree-store-set model (gtk-tree-store-append model parent)
-                                "Color Chooser Dialog"
-                                "color-chooser-dialog.lisp"
-                                "EXAMPLE-COLOR-CHOOSER-DIALOG" 0)
-      (gtk-tree-store-set model (gtk-tree-store-append model parent)
-                                 "Simple File Chooser Dialog"
-                                 "simple-file-chooser.lisp"
-                                 "EXAMPLE-SIMPLE-FILE-CHOOSER-DIALOG" 0)
-      (gtk-tree-store-set model (gtk-tree-store-append model parent)
-                                "File Chooser Button"
-                                "file-chooser-button.lisp"
-                                "EXAMPLE-FILE-CHOOSER-BUTTON" 0)
-      (gtk-tree-store-set model (gtk-tree-store-append model parent)
-                                "Font Button"
-                                "font-button.lisp" "EXAMPLE-FONT-BUTTON" 0)
-    )
-    (let ((parent (gtk-tree-store-set model (gtk-tree-store-append model nil)
-                                            "Layout Containers" "" "" 0)))
-      (gtk-tree-store-set model (gtk-tree-store-append model parent)
-                                "Box packing"
-                                "box-packing.lisp" "EXAMPLE-BOX-PACKING" 0)
-      (gtk-tree-store-set model (gtk-tree-store-append model parent)
-                                "Table packing"
-                                "table-packing.lisp" "EXAMPLE-TABLE-PACKING" 0)
-      (gtk-tree-store-set model (gtk-tree-store-append model parent)
-                                "Grid packing"
-                                "grid-packing.lisp" "EXAMPLE-GRID-PACKING" 0)
-      (gtk-tree-store-set model (gtk-tree-store-append model parent)
-                                "Button Boxes"
-                                "button-box.lisp" "EXAMPLE-BUTTON-BOX" 0)
-      (gtk-tree-store-set model (gtk-tree-store-append model parent)
-                                "Alignment"
-                                "alignment.lisp" "DEMO-ALIGNMENT" 0)
-      (gtk-tree-store-set model (gtk-tree-store-append model parent)
-                                "Fixed Container"
-                                "fixed.lisp" "EXAMPLE-FIXED" 0)
-      (gtk-tree-store-set model (gtk-tree-store-append model parent)
-                                "Frame Container"
-                                "frame.lisp" "DEMO-FRAME" 0)
-      (gtk-tree-store-set model (gtk-tree-store-append model parent)
-                                "Aspect Frame"
-                                "aspect-frame.lisp" "EXAMPLE-ASPECT-FRAME" 0)
-      (gtk-tree-store-set model (gtk-tree-store-append model parent)
-                                "Paned Window"
-                                "paned-window.lisp" "EXAMPLE-PANED-WINDOW" 0)
-      (gtk-tree-store-set model (gtk-tree-store-append model parent)
-                                "Notebook"
-                                "notebook.lisp" "EXAMPLE-NOTEBOOK" 0)
-    )
-    (let ((parent (gtk-tree-store-set model (gtk-tree-store-append model nil)
-                                            "Scrolling")))
-      (gtk-tree-store-set model (gtk-tree-store-append model parent)
-                                "Scrolled Window"
-                                "scrolled-window.lisp"
-                                "EXAMPLE-SCROLLED-WINDOW" 0)
-    )
-    (let ((parent (gtk-tree-store-set model (gtk-tree-store-append model nil)
-                                            "Miscellaneous")))
-      (gtk-tree-store-set model (gtk-tree-store-append model parent)
-                                "Drawing in response to input"
-                                "drawing.lisp" "EXAMPLE-DRAWING" 0)
-      (gtk-tree-store-set model (gtk-tree-store-append model parent)
-                                "Arrows"
-                                "arrows.lisp" "EXAMPLE-ARROWS" 0)
-      (gtk-tree-store-set model (gtk-tree-store-append model parent)
-                                "Calendar"
-                                "calendar.lisp" "EXAMPLE-CALENDAR" 0)
-      (gtk-tree-store-set model (gtk-tree-store-append model parent)
-                                "The Event Box"
-                                "event-box.lisp" "EXAMPLE-EVENT-BOX" 0)
-      (gtk-tree-store-set model (gtk-tree-store-append model parent)
-                                "Demo Pixbufs"
-                                "pixbufs.lisp" "DEMO-PIXBUFS" 0)
+(defstruct (demo-entry (:constructor make-demo-entry (title filename &optional function)))
+  title
+  filename
+  function)
 
-    )
+(defun create-and-fill-model ()
+  (let ((model (make-instance 'tree-lisp-store)))
+    (tree-lisp-store-add-column
+     model "gchararray"
+     #'demo-entry-title)
+    (tree-lisp-store-add-column
+     model "gchararray"
+     (lambda (demo-entry)
+       (namestring (demo-entry-filename demo-entry))))
+    (tree-lisp-store-add-column
+     model "gchararray"
+     (lambda (demo-entry)
+       (let ((function (demo-entry-function demo-entry)))
+         (or (and function (symbol-name function)) ""))))
+    (flet ((demo (parent index title &optional (filename #P"") function)
+             (let ((node (make-tree-node :item (make-demo-entry title filename function))))
+               (tree-node-insert-at parent node index)
+               node)))
+      (let ((root (tree-lisp-store-root model)))
+        (let ((parent (demo root 0 "Theming in GTK+")))
+          (demo parent 0 "CSS Accordion" #P"css-accordion.lisp" 'demo-css-accordion)
+          (demo parent 1 "CSS Pixbufs" #P"css-pixbufs.lisp" 'demo-css-pixbufs)
+          (demo parent 2 "Numerable Icons" #P"numerable-icon.lisp" 'demo-numerable-icon))
+        (let ((parent (demo root 1 "Windows""")))
+          (demo parent 0 "Simple Window" #P"simple-window.lisp" 'example-simple-window)
+          (demo parent 1 "Simple Message" #P"simple-message.lisp" 'example-simple-message)
+          (demo parent 2 "Dialogs" #P"dialogs.lisp" 'example-dialog)
+          (demo parent 3 "Assistant" #P"assistant.lisp" 'demo-assistant)
+          (demo parent 4 "Application Window" #P"application-window.lisp" 'demo-application-window))
+        (let ((parent (demo root 2 "Display Widgets")))
+          (demo parent 0 "Labels" #P"labels.lisp" 'example-labels)
+          (demo parent 1 "Images" #P"image.lisp" 'demo-image)
+          (demo parent 2 "More Labels" #P"more-labels.lisp" 'example-more-labels)
+          (demo parent 3 "Progress Bar Widget" #P"progress-bar.lisp" 'example-progress-bar)
+          (demo parent 4 "Statusbar" #P"statusbar.lisp" 'example-statusbar)
+          (demo parent 5 "Info Bar" #P"info-bar.lisp" 'example-info-bar))
+        (let ((parent (demo root 3 "Button Widgets")))
+          (demo parent 0 "Labels" #P"labels.lisp" 'example-labels)
+          (demo parent 1 "Button" #P"button.lisp" 'example-button)
+          (demo parent 2 "More Buttons" #P"buttons.lisp" 'example-buttons)
+          (demo parent 3 "Toggle Buttons" #P"toggle-buttons.lisp" 'example-toggle-buttons)
+          (demo parent 4 "Link Button" #P"link-button.lisp" 'example-link-button)
+          (demo parent 5 "Switch" #P"switch.lisp" 'example-switch))
+        (let ((parent (demo root 4 "Numeric/Text Data Entry")))
+          (demo parent 0 "Labels" #P"labels.lisp" 'example-labels)
+          (demo parent 1 "Text Entry" "text-entry.lisp" 'example-text-entry)
+          (demo parent 2 "Text Entry Buffer" "entry-buffer.lisp" 'example-entry-buffer)
+          (demo parent 3 "Text Entry Completion" "entry-completion.lisp" 'example-entry-completion)
+          (demo parent 4 "Scale Widgets" "scale-widgets.lisp" 'example-scale-widgets)
+          (demo parent 5 "Spin Button" "spin-button.lisp" 'example-spin-button))
+        (let ((parent (demo root 5 "Multiline Text Editor")))
+          (demo parent 0 "Simple Text View" "simple-text-view.lisp" 'example-simple-text-view)
+          (demo parent 1 "Text View Attributes" "text-view-attributes.lisp" 'example-text-view-attributes))
+        (let ((parent (demo root 6 "Tree, List and Icon Grid Widgets")))
+          (demo parent 0 "Simple Tree View" "simple-tree-view.lisp" 'example-simple-tree-view))
+        (let ((parent (demo root 7 "Menus, Combo Box, Toolbar")))
+          (demo parent 0 "Combo Box" "combo-box.lisp" 'example-combo-box)
+          (demo parent 1 "Combo Box Text" "combo-box-text.lisp" 'example-combo-box-text)
+          (demo parent 2 "Menu" "menu.lisp" 'example-menu)
+          (demo parent 3 "Tool Palette" "tool-palette.lisp" 'demo-tool-palette))
+        (let ((parent (demo root 8 "Selectors (Color/File/Font)")))
+          (demo parent 0 "Color Button" "color-button.lisp" 'example-color-button)
+          (demo parent 1 "Color Chooser Dialog" "color-chooser-dialog.lisp" 'example-color-chooser-dialog)
+          (demo parent 2 "Simple File Chooser Dialog" "simple-file-chooser.lisp" 'example-simple-file-chooser-dialog)
+          (demo parent 3 "File Chooser Button" "file-chooser-button.lisp" 'example-file-chooser-button)
+          (demo parent 4 "Font Button" "font-button.lisp" 'example-font-button))
+        (let ((parent (demo root 9 "Layout Containers")))
+          (demo parent 0 "Box packing" "box-packing.lisp" 'example-box-packing)
+          (demo parent 1 "Table packing" "table-packing.lisp" 'example-table-packing)
+          (demo parent 2 "Grid packing" "grid-packing.lisp" 'example-grid-packing)
+          (demo parent 3 "Button Boxes" "button-box.lisp" 'example-button-box)
+          (demo parent 4 "Alignment" "alignment.lisp" 'demo-alignment)
+          (demo parent 5 "Fixed Container" "fixed.lisp" 'example-fixed)
+          (demo parent 6 "Frame Container" "frame.lisp" 'demo-frame)
+          (demo parent 7 "Aspect Frame" "aspect-frame.lisp" 'example-aspect-frame)
+          (demo parent 8 "Paned Window" "paned-window.lisp" 'example-paned-window)
+          (demo parent 9 "Notebook" "notebook.lisp" 'example-notebook)
+          (demo parent 10 "Header Bar" "header-bar.lisp" 'example-header-bar)
+          (demo parent 11 "Action Bar" "action-bar.lisp" 'example-action-bar)
+          (demo parent 12 "Title Bar" "header-bar.lisp" 'example-title-bar))
+        (let ((parent (demo root 10 "Scrolling")))
+          (demo parent 0 "Scrolled Window" "scrolled-window.lisp" 'example-scrolled-window))
+        (let ((parent (demo root 11 "Miscellaneous")))
+          (demo parent 0 "Drawing in response to input" "drawing.lisp" 'example-drawing)
+          (demo parent 1 "Arrows" "arrows.lisp" 'example-arrows)
+          (demo parent 2 "Calendar" "calendar.lisp" 'example-calendar)
+          (demo parent 3 "The Event Box" "event-box.lisp" 'example-event-box)
+          (demo parent 4 "Demo Pixbufs" "pixbufs.lisp" 'demo-pixbufs)
+          (demo parent 5 "Popover Demo" "popover.lisp" 'popover-demo)
+          (demo parent 6 "Custom Subclass" "subclass-window.lisp" 'custom-window-demo)
+          (demo parent 7 "Simple Drag And Drop" "simple-drag-and-drop.lisp" 'demo-simple-drag-and-drop)
+          (demo parent 8 "Drag And Drop" "drag-and-drop.lisp" 'demo-drag-and-drop)
+          (demo parent 9 "Glade and GtkBuilder" "builder.lisp" 'example-builder))))
     model))
 
 (defun create-view-and-model ()
@@ -310,7 +196,7 @@
          (let* ((model (gtk-tree-view-get-model tree-view))
                 (iter (gtk-tree-model-get-iter model path))
                 (func-name (gtk-tree-model-get-value model iter 2))
-                (func (find-symbol func-name :gtk-demo)))
+                (func (and func-name (find-symbol func-name :gtk-demo))))
            (if func
                (funcall func)
                (format t "~%No function.~%")))))
@@ -346,6 +232,7 @@
           (notebook (make-instance 'gtk-notebook
                                    :scrollable t))
           (view (create-view-and-model)))
+      (setf *demo-window* window)
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))

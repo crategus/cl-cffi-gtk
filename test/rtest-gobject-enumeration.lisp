@@ -1,3 +1,4 @@
+(in-package :gtk-testsuite)
 
 (def-suite gobject-enumeration :in gobject-suite)
 (in-suite gobject-enumeration)

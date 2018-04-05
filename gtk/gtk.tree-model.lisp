@@ -422,7 +422,7 @@
   @see-class{gtk-tree-model}
   @see-class{gtk-tree-path}")
 
-(export 'gtk-tree-iter)
+(export (boxed-related-symbols 'gtk-tree-iter))
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -601,7 +601,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (define-vtable ("GtkTreeModel" gtk-tree-model)
-  (:skip parent-instance (:pointer (:struct g-type-interface)))
+  (:skip g-iface (:struct g-type-interface))
   ;; some signals
   (:skip tree-model-row-changed :pointer)
   (:skip tree-model-row-inserted :pointer)

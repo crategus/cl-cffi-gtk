@@ -78,6 +78,8 @@
 ;;;     gdk_display_supports_composite
 ;;;     gdk_display_get_app_launch_context
 ;;;     gdk_display_notify_startup_complete
+;;;     gdk_display_get_default_seat
+;;;     gdk_display_list_seats
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gdk)
@@ -1100,5 +1102,44 @@
   (startup-id :string))
 
 (export 'gdk-display-notify-startup-complete)
+
+;;; ----------------------------------------------------------------------------
+;;; gdk_display_get_default_seat ()
+;;; ----------------------------------------------------------------------------
+
+#+gdk-3-20
+(defcfun gdk-display-get-default-seat (g-object gdk-seat)
+  (display (g-object gdk-display)))
+
+#+gdk-3-20
+(export 'gdk-display-get-default-seat)
+
+;;; ----------------------------------------------------------------------------
+;;; gdk_display_list_seats ()
+;;; ----------------------------------------------------------------------------
+
+#+gdk-3-20
+(defcfun gdk-display-list-seats (g-list (g-object gdk-seat))
+  (display (g-object gdk-display)))
+
+#+gdk-3-20
+(export 'gdk-display-list-seats)
+
+
+#+gdk-3-22
+(defcfun ("gdk_display_get_n_monitors" gdk-display-get-n-monitors) :int
+  (display (g-object gdk-display)))
+
+#+gdk-3-22
+(export 'gdk-display-get-n-monitors)
+
+#+gdk-3-22
+(defcfun ("gdk_display_get_monitor" gdk-display-get-monitor)
+    (g-object gdk-monitor)
+  (display (g-object gdk-display))
+  (monitor-num :int))
+
+#+gdk-3-22
+(export 'gdk-display-get-monitor)
 
 ;;; --- End of file gdk.display.lisp -------------------------------------------

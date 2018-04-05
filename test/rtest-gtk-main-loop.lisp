@@ -1,3 +1,4 @@
+(in-package :gtk-testsuite)
 
 (def-suite gtk-main-loop :in gtk-suite)
 (in-suite gtk-main-loop)

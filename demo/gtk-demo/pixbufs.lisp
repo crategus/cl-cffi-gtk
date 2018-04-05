@@ -7,7 +7,7 @@
 ;;;; This demo is not all that educational, but looks cool. It was written
 ;;;; by Extreme Pixbuf Hacker Federico Mena Quintero and was translated to Lisp
 ;;;; by Crategus. It also shows off how to use GtkDrawingArea to do a
-;;;  simple animation.
+;;;; simple animation.
 ;;;;
 ;;;; Look at the Image demo for additional pixbuf usage examples.
 
@@ -38,7 +38,7 @@
       (surface nil))
 
   (defun load-pixbufs ()
-    (setf background (gdk-pixbuf-new-from-file "background.jpg"))
+    (setf background (gdk-pixbuf-new-from-file (rel-path "background.jpg")))
     (setf back-width (gdk-pixbuf-get-width background)
           back-height (gdk-pixbuf-get-height background))
     (setf back-rect (make-gdk-rectangle :x 0 :y 0
@@ -111,8 +111,6 @@
              (declare (ignore widget))
              (cairo-set-source-surface (pointer cr) surface 0.0d0 0.0d0)
              (cairo-paint (pointer cr))
-             ;; We must destroy the Cairo Context
-             (cairo-destroy (pointer cr))
              t))
         (g-signal-connect area "configure-event"
            (lambda (widget event)

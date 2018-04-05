@@ -3062,7 +3062,8 @@
   (:uppercase-chars #.(ash 1 4))
   (:uppercase-words #.(ash 1 5))
   (:uppercase-sentences #.(ash 1 6))
-  (:inhibit-osk #.(ash 1 7)))
+  (:inhibit-osk #.(ash 1 7))
+  (:vertical-writing #.(ash 1 8)))
 
 #+(and gtk-3-6 cl-cffi-gtk-documentation)
 (setf (gethash 'gtk-input-hints atdoc:*symbol-name-alias*) "Flags"
@@ -3091,7 +3092,8 @@
   (:uppercase-chars #.(1 4))
   (:uppercase-words #.(1 5))
   (:uppercase-sentences #.(1 6))
-  (:inhibit-osk #.(1 7)))
+  (:inhibit-osk #.(1 7))
+  (:vertical-writing #.(ash 1 8)))
   @end{pre}
   @begin[code]{table}
     @entry[:none]{No special behaviour suggested.}
@@ -3106,6 +3108,7 @@
       sentence.}
     @entry[:inhibit-osk]{Suggest to not show an onscreen keyboard, e. g for a
       calculator that already has all the keys.}
+    @entry[:vertical-writing]{The text is vertical. Since 3.18.}
   @end{table}
   Since 3.6
   @see-class{gtk-entry}

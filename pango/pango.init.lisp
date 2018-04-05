@@ -34,8 +34,8 @@
       (:darwin (:or "libpango-1.0.0.dylib" "libpango-1.0.dylib"))
       (:windows "libpango-1.0-0.dll")
       (t (:default "libgpango-1.0"))))
-
-  (use-foreign-library pango))
+  (unless (foreign-library-loaded-p 'pango)
+    (use-foreign-library pango)))
 
 (glib::at-init ()
   (eval-when (:compile-toplevel :load-toplevel :execute)
@@ -44,7 +44,7 @@
       (:darwin (:or "libpangocairo-1.0.0.dylib" "libpangocairo-1.0.dylib"))
       (:windows "libpangocairo-1.0-0.dll")
       (t (:default "libgpangocairo-1.0"))))
-
-  (use-foreign-library pangocairo))
+  (unless (foreign-library-loaded-p 'pangocairo)
+    (use-foreign-library pangocairo)))
 
 ;;; --- End of file pango.init.lisp --------------------------------------------

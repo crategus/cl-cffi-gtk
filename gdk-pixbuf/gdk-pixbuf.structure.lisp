@@ -663,4 +663,9 @@
 
 (export 'gdk-pixbuf-get-option)
 
+(defcfun ("gdk_pixbuf_get_options" gdk-pixbuf-get-options) (g-hash-table :string :string)
+  (pixbuf (g-object gdk-pixbuf)))
+
+(export 'gdk-pixbuf-get-options)
+
 ;;; --- End of file gdk-pixbuf.structure.lisp ----------------------------------

@@ -1,3 +1,5 @@
+(in-package :gtk-testsuite)
+
 (def-suite gdk-key-values :in gdk-suite)
 (in-suite gdk-key-values)
 

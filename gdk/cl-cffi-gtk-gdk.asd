@@ -30,6 +30,7 @@
   :version "3.16"                             ; Version of the GDK Library
   :author "Dieter Kaiser"
   :license "LLGPL"
+  :description "A Lisp binding to GDK 3"
   :serial t
   :components ((:file "gdk.package")
                (:file "gdk.init")
@@ -49,7 +50,9 @@
 
                (:file "gdk.display")          ; Controls the keyboard/mouse
                (:file "gdk.display-manager")  ; Maintains a list GdkDisplays
+               (:file "gdk.monitor")          ; Object representing an output
                (:file "gdk.pixbuf")           ; Functions for obtaining pixbufs
+               (:file "gdk.seat")             ; Object representing an user seat
 
                (:file "gdk.window")           ; Onscreen display areas
                (:file "gdk.frame-timings")    ; Frame timings
@@ -63,6 +66,8 @@
                (:file "gdk.app")              ; Notification for applications
                (:file "gdk.pango")            ; Using Pango in GDK
                (:file "gdk.cairo")            ; Functions to support using cairo
+
+               (:file "gdk.x11window")
                )
   :depends-on (:cl-cffi-gtk-gobject
                :cl-cffi-gtk-glib

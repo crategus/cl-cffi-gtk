@@ -1,3 +1,4 @@
+(in-package :gtk-testsuite)
 
 (def-suite glib-variant :in glib-suite)
 (in-suite glib-variant)

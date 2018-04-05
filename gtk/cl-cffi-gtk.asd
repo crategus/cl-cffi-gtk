@@ -44,6 +44,7 @@
   :version "3.8.8"                     ; Version of the library
   :author "Dieter Kaiser"
   :license "LLGPL"
+  :description "A Lisp binding to GTK 3"
   :serial t
   :components
   ((:file "gtk.package")
@@ -108,6 +109,7 @@
    (:file "gtk.button-box")            ; Container for arranging buttons
    (:file "gtk.header-bar")            ; Box with a centered child
    (:file "gtk.overlay")               ; Container which overlays widgets
+   (:file "gtk.action-bar")            ; A full width bar for presenting contextual actions
 
    ;; Ornaments
    (:file "gtk.separator")             ; Separator widget
@@ -185,6 +187,7 @@
    (:file "gtk.cell-view")             ; Displaying a single row
    (:file "gtk.icon-view")             ; List of icons in a grid
    (:file "gtk.list-store")            ; List-like data structure
+   (:file "gtk.array-list-store")      ; List-like data structures in Lisp
 
    ;; Numeric/Text Data Entry
    (:file "gtk.editable")              ; GtkEditable
@@ -216,6 +219,7 @@
    (:file "gtk.toggle-tool-button")    ; GtkToggleToolButton
    (:file "gtk.radio-tool-button")     ; GtkRadioToolButton
    (:file "gtk.menu-tool-button")      ; GtkMenuToolButton
+   (:file "gtk.popover")               ; GtkPopover
 
    ;; Selectors
    (:file "gtk.color-chooser")         ; Interface for choosing colors
@@ -249,6 +253,7 @@
    (:file "gtk.size-group")            ; Grouping widgets to the same size
    (:file "gtk.tooltip")               ; Add tips to your widgets
    (:file "gtk.viewport")              ; Adapter which makes widgets scrollable
+   (:file "gtk.gl-area")               ; A widget for custom drawing with OpenGL
 
    ;; Cross-process Embedding
    #-win32
@@ -266,8 +271,8 @@
 
    ;; Action-based menus and toolbars
    (:file "gtk.ui-manager")            ; Constructing menus and toolbars
-   (:file "gtk.action-group")          ; Group of actions
    (:file "gtk.action")                ; GtkAction
+   (:file "gtk.action-group")          ; Group of actions
    (:file "gtk.toggle-action")         ; GtkToggleAction
    (:file "gtk.radio-action")          ; GtkRadioAction
    (:file "gtk.recent-action")         ; List of recently used files
@@ -313,7 +318,10 @@
                :cl-cffi-gtk-cairo
                :cffi
                :bordeaux-threads
+               :alexandria
                :iterate
-               :trivial-features))
+               :trivial-features)
+
+  :in-order-to ((asdf:test-op (asdf:test-op :cl-cffi-gtk-test))))
 
 ;;; --- End of file cl-cffi-gtk.asd --------------------------------------------

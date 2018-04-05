@@ -1953,7 +1953,7 @@
   See the function @fun{gtk-file-chooser-set-use-preview-label}.
   @see-class{gtk-file-chooser}
   @see-function{gtk-file-chooser-set-use-preview-label}"
-  (gtk-file-chooser-get-use-preview-label chooser))
+  (gtk-file-chooser-use-preview-label chooser))
 
 (export 'gtk-file-chooser-get-use-preview-label)
 

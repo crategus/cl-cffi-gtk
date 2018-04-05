@@ -47,6 +47,12 @@
 ;;; struct GtkBin
 ;;; ----------------------------------------------------------------------------
 
+(defcstruct* gtk-bin-class
+  (parent-class (:struct gtk-container-class))
+  (reserved :pointer :count 4))
+
+(export 'gtk-bin-class)
+
 (define-g-object-class "GtkBin" gtk-bin
   (:superclass gtk-container
    :export t

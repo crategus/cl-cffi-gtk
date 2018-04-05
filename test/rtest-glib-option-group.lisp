@@ -1,3 +1,4 @@
+(in-package :gtk-testsuite)
 
 (def-suite glib-option-group :in glib-suite)
 (in-suite glib-option-group)

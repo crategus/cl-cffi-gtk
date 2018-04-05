@@ -7,7 +7,7 @@
            #:example-message-dialog-new #:example-message-dialog-new-with-markup
            #:example-message-dialog-set-image #:example-message-dialog-set-markup
            #:example-message-dialog-ui #:example-show-about-dialog
-           #:example-simple-list-store))
+           #:example-simple-list-store #:example-lisp-list-store))
 
 (in-package :gtk-example)
 

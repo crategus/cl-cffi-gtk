@@ -304,10 +304,15 @@ NIL
                                      3 12
                                      3 14
                                      3 16
-                                     3 18)
+                                     3 18
+                                     3 20
+                                     3 22)
 
 (glib::require-library-version "GTK+" 3 4
                               (gtk-get-major-version)
                               (gtk-get-minor-version))
+
+(defun library-version ()
+  (values (gtk-get-major-version) (gtk-get-minor-version)))
 
 ;;; --- End of file gtk.version.lisp -------------------------------------------

@@ -1053,7 +1053,7 @@
   Since 2.4
   @see-class{gtk-combo-box}
   @see-function{gtk-combo-box-set-active-iter}"
-  (let ((iter (make-instance 'gtk-tree-iter)))
+  (let ((iter (make-gtk-tree-iter)))
     (when (%gtk-combo-box-get-active-iter combo-box iter)
       iter)))
 

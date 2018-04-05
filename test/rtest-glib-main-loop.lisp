@@ -1,3 +1,4 @@
+(in-package :gtk-testsuite)
 
 (def-suite glib-main-loop :in glib-suite)
 (in-suite glib-main-loop)

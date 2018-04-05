@@ -30,6 +30,7 @@
   :version "2.28.1"                          ; Version of the GLib Library
   :author "Dieter Kaiser"
   :license "LLGPL"
+  :description "A Lisp binding to GLib 2"
   :serial t
   :components ((:file "glib.package")
                (:file "glib.init")           ; Lisp Initialization
@@ -47,6 +48,7 @@
                (:file "glib.random")         ; Pseudo-random number generator
               )
   :depends-on (:cffi
+               :alexandria
                :iterate
                :trivial-features))
 

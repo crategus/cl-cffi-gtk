@@ -34,7 +34,8 @@
   class
   parent
   interfaces
-  properties)
+  properties
+  class-init)
 
 ;;; ----------------------------------------------------------------------------
 
@@ -62,36 +63,31 @@
 
 (defun class-init (class data)
   (declare (ignore data))
-  (log-for :subclass "class-init for ~A~%"
-           (gtype-name (g-type-from-class class)))
   (let* ((type-name (gtype-name (g-type-from-class class)))
          (lisp-type-info (gethash type-name *registered-types*))
-         (lisp-class (object-type-class lisp-type-info)))
-    (format t "IN CLASS-INIT:~%")
-    (format t "   name  = ~A~%" type-name)
-    (format t "   class = ~A~%" lisp-class)
+         (lisp-class (object-type-class lisp-type-info))
+         (lisp-class-init (object-type-class-init lisp-type-info)))
+    (log-for :subclass "class-init for ~A, ~A~%" type-name lisp-class)
     (register-object-type type-name lisp-class)
-    )
-
-  (setf (foreign-slot-value class '(:struct g-object-class) :get-property)
-        (callback c-object-property-get)
-        (foreign-slot-value class '(:struct g-object-class) :set-property)
-        (callback c-object-property-set))
-  (install-properties class))
+    (setf (foreign-slot-value class '(:struct g-object-class) :get-property)
+          (callback c-object-property-get)
+          (foreign-slot-value class '(:struct g-object-class) :set-property)
+          (callback c-object-property-set))
+    (install-properties class lisp-type-info)
+    (when lisp-class-init
+      (funcall lisp-class-init class))))
 
 (defcallback c-class-init :void ((class :pointer) (data :pointer))
   (class-init class data))
 
 ;;; ----------------------------------------------------------------------------
 
-(defun install-properties (class)
-  (let* ((name (gtype-name (foreign-slot-value class '(:struct g-type-class) :type)))
-         (lisp-type-info (gethash name *registered-types*)))
-    (iter (for property in (object-type-properties lisp-type-info))
-          (for param-spec = (property->param-spec property))
-          (for property-id from 123)
-          (log-for :subclass "installing property ~A~%" property)
-          (g-object-class-install-property class property-id param-spec))))
+(defun install-properties (class lisp-type-info)
+  (iter (for property in (object-type-properties lisp-type-info))
+        (for param-spec = (property->param-spec property))
+        (for property-id from 123)
+        (log-for :subclass "installing property ~A~%" property)
+        (g-object-class-install-property class property-id param-spec)))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -283,12 +279,10 @@
   (iter (for item in items)
         (when (eq :skip (first item)) (next-iteration))
         (destructuring-bind (name (return-type &rest args) &key impl-call) item
-          (for method-name = (intern (format nil "~A-~A-IMPL"
-                                             (symbol-name iface-name)
-                                             (symbol-name name))))
-          (for callback-name = (intern (format nil "~A-~A-CALLBACK"
-                                               (symbol-name iface-name)
-                                               (symbol-name name))))
+          (for method-name = (format-symbol t "~A-~A-IMPL"
+                                            iface-name name))
+          (for callback-name = (format-symbol t "~A-~A-CALLBACK"
+                                              iface-name name))
           (collect (make-vtable-method-info :slot-name name
                                             :name method-name
                                             :return-type return-type
@@ -304,7 +298,7 @@
   methods)
 
 (defmacro define-vtable ((type-name name) &body items)
-  (let ((cstruct-name (intern (format nil "~A-VTABLE" (symbol-name name))))
+  (let ((cstruct-name (format-symbol t "~A-VTABLE" name))
         (methods (vtable-methods name items)))
     `(progn
        (defcstruct ,cstruct-name ,@(mapcar #'vtable-item->cstruct-item items))
@@ -344,7 +338,7 @@
         (glib::free-stable-pointer data))
     (declare (ignorable class-name))
     (let* ((vtable (gethash interface-name *vtables*))
-           (vtable-cstruct (vtable-description-cstruct-name vtable)))
+           (vtable-cstruct `(:struct ,(vtable-description-cstruct-name vtable))))
       (log-for :subclass "interface-init for class ~A and interface ~A~%"
                class-name
                interface-name)
@@ -441,7 +435,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
-(defmacro register-object-type-implementation (name class parent interfaces properties)
+(defmacro register-object-type-implementation (name class parent interfaces properties &optional class-init)
   (unless (stringp parent)
     (setf parent (gtype-name (gtype parent))))
   `(progn
@@ -450,7 +444,8 @@
                              :class ',class
                              :parent ,parent
                              :interfaces ',interfaces
-                             :properties ',properties))
+                             :properties ',properties
+                             :class-init ,class-init))
      (glib::at-init (',class)
        (log-for :subclass
                 "Registering GObject type implementation ~A for type ~A~%"
@@ -468,17 +463,6 @@
                                                             :instance-size)
                                         (callback c-instance-init) nil))
        (add-interfaces ,name))
-     (defmethod initialize-instance :before ((object ,class) &key pointer)
-       (log-for :subclass
-                "(initialize-instance ~A :pointer ~A) :before~%"
-                object pointer)
-       (unless (or pointer
-                   (and (slot-boundp object 'pointer)
-                        (pointer object)))
-         (log-for :subclass "calling g-object-constructor~%")
-         (setf (pointer object)
-               (call-gobject-constructor ,name nil nil)
-               (g-object-has-reference object) t)))
      (progn
        ,@(iter (for (prop-name prop-type prop-accessor prop-reader prop-writer)
                     in properties)

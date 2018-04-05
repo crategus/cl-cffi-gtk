@@ -694,7 +694,8 @@
   (:extend-selection 2)
   (:modify-selection 3)
   (:no-text-input 4)
-  (:shift-group 5))
+  (:shift-group 5)
+  (:default-mod-mask 6))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-modifier-intent atdoc:*symbol-name-alias*) "Enum"
@@ -718,7 +719,8 @@
   (:extend-selection 2)
   (:modify-selection 3)
   (:no-text-input 4)
-  (:shift-group 5))
+  (:shift-group 5)
+  (:default-mod-mask 6))
   @end{pre}
   @begin[code]{table}
     @entry[primary-accelerator]{The primary modifier used to invoke menu
@@ -735,6 +737,11 @@
       methods, and for use cases like typeahead search.}
     @entry[:shift-group]{The modifier that switches between keyboard groups
       (AltGr on X11/Windows and Option/Alt on OS X).}
+    @entry[:default-mod-mask]{The set of modifier masks accepted
+      as modifiers in accelerators. Needed because Command is mapped to MOD2 on
+      OSX, which is widely used, but on X11 MOD2 is NumLock and using that for a
+      mod key is problematic at best.
+      Ref: https://bugzilla.gnome.org/show_bug.cgi?id=736125.}
   @end{table}
   Since 3.4
   @see-symbol{gdk-modifier-type}

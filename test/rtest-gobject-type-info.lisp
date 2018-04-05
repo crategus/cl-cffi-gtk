@@ -1,3 +1,4 @@
+(in-package :gtk-testsuite)
 
 (def-suite gobject-type-info :in gobject-suite)
 (in-suite gobject-type-info)
@@ -50,8 +51,8 @@
   (is (equal '(:value-abstract)
              (foreign-bitfield-symbols 'g-type-flags (ash 1 5))))
   (is (equal '(:abstract :value-abstract)
-             (stable-sort (foreign-bitfield-symbols 'g-type-flags
-                                                    (+ (ash 1 4) (ash 1 5)))
+             (stable-sort (copy-list (foreign-bitfield-symbols 'g-type-flags
+                                                               (+ (ash 1 4) (ash 1 5))))
                           #'string-lessp)))
   (is (= (ash 1 4)
          (foreign-bitfield-value 'g-type-flags '(:abstract))))
@@ -74,9 +75,9 @@
   (is (equal '(:deep-derivable)
              (foreign-bitfield-symbols 'g-type-fundamental-flags (ash 1 3))))
   (is (equal '(:classed :deep-derivable :derivable :instantiatable)
-             (stable-sort (foreign-bitfield-symbols 'g-type-fundamental-flags
-                                                    (+ (ash 1 0) (ash 1 1)
-                                                    (ash 1 2) (ash 1 3)))
+             (stable-sort (copy-list (foreign-bitfield-symbols 'g-type-fundamental-flags
+                                                               (+ (ash 1 0) (ash 1 1)
+                                                                  (ash 1 2) (ash 1 3))))
                           #'string-lessp)))
   (is (= (ash 1 0)
          (foreign-bitfield-value 'g-type-fundamental-flags '(:classed))))

@@ -67,6 +67,14 @@
 
 (in-package :gdk)
 
+#+gdk-3-20
+(define-g-enum "GdkDragCancelReason" gdk-drag-cancel-reason
+  (:export t
+   :type-initializer "gdk_drag_cancel_reason_get_type")
+  (:no-target 0)
+  (:user-cancelled 1)
+  (:error 2))
+
 ;;; ----------------------------------------------------------------------------
 ;;; enum GdkDragProtocol
 ;;; ----------------------------------------------------------------------------
@@ -80,7 +88,8 @@
   (:rootwin 3)
   (:win32-dropfiles 4)
   (:ole2 5)
-  (:local 6))
+  (:local 6)
+  (:wayland 7))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-drag-protocol atdoc:*symbol-name-alias*) "Enum"
@@ -495,6 +504,12 @@
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gdk_drag_context_get_actions" gdk-drag-context-get-actions)
+    gdk-drag-action
+  (context (g-object gdk-drag-context)))
+
+(export 'gdk-drag-context-get-actions)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_drag_context_get_suggested_action ()
 ;;;
@@ -512,6 +527,12 @@
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gdk_drag_context_get_suggested_action" gdk-drag-context-get-suggested-action)
+    gdk-drag-action
+  (context (g-object gdk-drag-context)))
+
+(export 'gdk-drag-context-get-suggested-action)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_drag_context_get_selected_action ()
 ;;;
@@ -527,6 +548,12 @@
 ;;;
 ;;; Since 2.22
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gdk_drag_context_get_selected_action" gdk-drag-context-get-selected-action)
+    gdk-drag-action
+  (context (g-object gdk-drag-context)))
+
+(export 'gdk-drag-context-get-selected-action)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_drag_context_list_targets ()

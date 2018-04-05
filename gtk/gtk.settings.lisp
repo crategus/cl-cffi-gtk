@@ -216,7 +216,7 @@
    #+gtk-3-8
    (gtk-recent-files-enabled
     gtk-settings-gtk-recent-files-enabled
-    "gtk-settings-gtk-recent-files-enabled" "gboolean" t t)
+    "gtk-recent-files-enabled" "gboolean" t t)
    (gtk-recent-files-limit
     gtk-settings-gtk-recent-files-limit
     "gtk-recent-files-limit" "gint" t t)

@@ -67,9 +67,7 @@
                    (pango-layout-get-size layout)
                  (declare (ignore height))
                  (cairo-move-to cr (- (/ width 2 +pango-scale+)) (- circle)))
-               (pango-cairo-show-layout cr layout)
-               (cairo-restore cr)))
-           (cairo-destroy cr)
+               (pango-cairo-show-layout cr layout)))
            t)))
       (gtk-widget-show-all window))))
 

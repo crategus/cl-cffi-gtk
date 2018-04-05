@@ -94,8 +94,7 @@
   :device-type-mismatch
   :device-error
   :invalid-mesh-construction
-  :device-finished
-  :last-status)
+  :device-finished)
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'cairo-status-t atdoc:*symbol-name-alias*) "CEnum"
@@ -150,8 +149,7 @@
   :device-type-mismatch
   :device-error
   :invalid-mesh-construction
-  :device-finished
-  :last-status)
+  :device-finished)
   @end{pre}
   @begin[code]{table}
     @entry[:success]{No error has occurred. Since 1.0}
@@ -215,10 +213,6 @@
       @fun{cairo-mesh-pattern-begin-patch}/@fun{cairo-mesh-pattern-end-patch}
       pair of functions. Since 1.12}
     @entry[:device-finished]{Target device has been finished. Since 1.12}
-    @entry[:last-status]{This is a special value indicating the number of status
-      values defined in this enumeration. When using this value, note that the
-      version of cairo at run-time may have additional status values defined
-      than the value of this symbol at compile-time. Since 1.10}
   @end{table}
   Since 1.0
   @see-symbol{cairo-t}

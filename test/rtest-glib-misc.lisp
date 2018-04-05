@@ -1,3 +1,4 @@
+(in-package :gtk-testsuite)
 
 (def-suite glib-misc :in glib-suite)
 (in-suite glib-misc)

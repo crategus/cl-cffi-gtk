@@ -332,7 +332,7 @@
   The variable argument list should contain the values to be set.
 
   @subheading{Note:}
-    The Lisp implemenation does not support pairs of an index and a value, but
+    The Lisp implementation does not support pairs of an index and a value, but
     only a list of values. Therefore, it is not possible to set individual
     columns.
   @see-class{gtk-list-store}"

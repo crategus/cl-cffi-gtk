@@ -3397,21 +3397,24 @@
 (defcfun ("gtk_tree_view_get_tooltip_context"
           %gtk-tree-view-get-tooltip-context) :boolean
   (tree-view g-object)
-  (x :int)
-  (y :int)
+  (x (:pointer :int))
+  (y (:pointer :int))
   (keyboard-tip :boolean)
-  (model :pointer)
-  (path :pointer)
-  (iter :pointer))
+  (model (:pointer :pointer))
+  (path (:pointer :pointer))
+  (iter (g-boxed-foreign gtk-tree-iter)))
 
-(defun gtk-tree-view-get-tooltip-context (tree-view)
+(defun gtk-tree-view-get-tooltip-context (tree-view x y keyboard-tip)
  #+cl-cffi-gtk-documentation
  "@version{2013-5-31}
   @argument[tree-view]{a @class{gtk-tree-view} widget}
+  @argument{x} -- the x coordinate (relative to widget coordinates) @br{}
+  @argument{y} -- the y coordinate (relative to widget coordinates) @br{}
+  @argument{keyboard-tip} -- whether this is a keyboard tooltip or not @br{}
   @begin{return}
+    @code{points-to-row} -- whether there is a tree view row at the given coordinates @br{}
     @code{x} -- the x coordinate (relative to widget coordinates) @br{}
     @code{y} -- the y coordinate (relative to widget coordinates) @br{}
-    @code{keyboard-tip} -- whether this is a keyboard tooltip or not @br{}
     @code{model} -- a @class{gtk-tree-model} or @code{nil} @br{}
     @code{path} -- a @class{gtk-tree-path} or @code{nil} @br{}
     @code{iter} -- a @class{gtk-tree-iter} or @code{nil}
@@ -3432,25 +3435,21 @@
   @arg{keyboard-tip} is @code{nil}.
 
   Since 2.12"
-  (with-foreign-objects ((x :int)
-                         (y :int)
-                         (keyboard-tip :boolean)
+  (with-foreign-objects ((px :int)
+                         (py :int)
                          (model :pointer)
-                         (path :pointer)
-                         (iter :pointer))
-    (when (%gtk-tree-view-get-tooltip-context tree-view
-                                              x
-                                              y
-                                              keyboard-tip
-                                              model
-                                              path
-                                              iter)
-      (values (mem-ref x :int)
-              (mem-ref y :int)
-              (mem-ref keyboard-tip :boolean)
+                         (path :pointer))
+    (setf (mem-ref px :int) x
+          (mem-ref py :int) y)
+    (let* ((iter (make-gtk-tree-iter))
+           (points-to-row (%gtk-tree-view-get-tooltip-context
+                           tree-view px py keyboard-tip model path iter)))
+      (values points-to-row
+              (mem-ref px :int)
+              (mem-ref py :int)
               (mem-ref model 'g-object)
               (mem-ref path '(g-boxed-foreign gtk-tree-path :return))
-              (mem-ref iter '(g-boxed-foreign gtk-tree-iter :return))))))
+              iter))))
 
 (export 'gtk-tree-view-get-tooltip-context)
 

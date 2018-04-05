@@ -123,7 +123,15 @@
     "window-placement" "GtkCornerType" t t)
    (window-placement-set
     gtk-scrolled-window-window-placement-set
-    "window-placement-set" "gboolean" t t)))
+    "window-placement-set" "gboolean" t t)
+   #+gtk-3-22
+   (propagate-natural-height
+    gtk-scrolled-window-propagate-natural-height
+    "propagate-natural-height" "gboolean" t t)
+   #+gtk-3-22
+   (propagate-natural-width
+    gtk-scrolled-window-propagate-natural-width
+    "propagate-natural-width" "gboolean" t t)))
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-scrolled-window 'type)

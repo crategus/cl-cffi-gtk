@@ -196,8 +196,6 @@ produce the output:
            (cairo-set-source-rgb cr 1.0 0.0 0.0)
            (cairo-rectangle cr 0.25 0.25 0.5 0.5)
            (cairo-stroke cr)
-           ;; Destroy the Cario context
-           (cairo-destroy cr)
            t)))
       (gtk-widget-show-all window))))
 @end verbatim
@@ -856,8 +854,6 @@ redrawing of the widget.  The "draw" signal handler draws the clock into the
                                (+ y (* radius 0.7 (- (cos angle)))))
              (cairo-stroke cr)
              (cairo-restore cr))))
-       ;; Destroy the Cario context
-       (cairo-destroy cr)
        t))))
 
 (defun demo-cairo-clock ()

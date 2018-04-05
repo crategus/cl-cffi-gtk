@@ -59,6 +59,7 @@
 ;;;     gdk_device_get_n_axes
 ;;;     gdk_device_get_n_keys
 ;;;     gdk_device_warp
+;;;     gdk_device_get_seat                       -> Accessor
 ;;;
 ;;;     GdkGrabStatus               * from gdk.general.lisp *
 ;;;
@@ -120,6 +121,10 @@
    (product-id
     gdk-device-product-id
     "product-id" "gchar" t t)
+   #+gdk-3-20
+   (seat
+    gdk-device-seat
+    "seat" "GdkSeat" t t)
    (type
     gdk-device-type
     "type" "GdkDeviceType" t t)
@@ -535,7 +540,9 @@ get_device_settings (GdkDevice *device)
   (:cursor 3)
   (:keyboard 4)
   (:touchscreen 5)
-  (:touchpad 6))
+  (:touchpad 6)
+  (:trackpoint 7)
+  (:tablet-pad 8))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-input-source atdoc:*symbol-name-alias*) "Enum"
@@ -554,7 +561,9 @@ get_device_settings (GdkDevice *device)
   (:cursor 3)
   (:keyboard 4)
   (:touchscreen 5)
-  (:touchpad 6))
+  (:touchpad 6)
+  (:trackpoint 7)
+  (:tablet-pad 8))
   @end{pre}
   @begin[code]{table}
     @entry[:mouse]{The device is a mouse. This will be reported for the core
@@ -568,6 +577,11 @@ get_device_settings (GdkDevice *device)
       touchscreen or tablet. This device type has been added in 3.4.}
     @entry[:touchpad]{The device is an indirect touch device, such as a
       touchpad. This device type has been added in 3.4.}
+    @entry[:trackpoint]{The device is a trackpoint. This device type has been
+      added in 3.22.}
+    @entry[:tablet-pad]{The device is a "pad", a collection of buttons, rings
+      and strips found in drawing tablets. This device type has been added in
+      3.22.}
   @end{table}
   @see-class{gdk-device}")
 
@@ -622,7 +636,9 @@ get_device_settings (GdkDevice *device)
   (:xtilt 4)
   (:ytilt 5)
   (:wheel 6)
-  (:last 7))
+  (:distance 7)
+  (:rotation 8)
+  (:slider 9))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-axis-use atdoc:*symbol-name-alias*) "Enum"
@@ -643,7 +659,9 @@ get_device_settings (GdkDevice *device)
   (:xtilt 4)
   (:ytilt 5)
   (:wheel 6)
-  (:last 7))
+  (:distance 7)
+  (:rotation 8)
+  (:slider 9))
   @end{pre}
   @begin[code]{table}
     @entry[:ignore]{The axis is ignored.}
@@ -653,7 +671,11 @@ get_device_settings (GdkDevice *device)
     @entry[:xtilt]{The axis is used for x tilt information.}
     @entry[:ytilt]{The axis is used for y tilt information.}
     @entry[:wheel]{The axis is used for wheel information.}
-    @entry[:last]{A constant equal to the numerically highest axis value.}
+    @entry[:distance]{The axis is used for pen/tablet distance information.
+      (Since: 3.22)}
+    @entry[:rotation]{the axis is used for pen rotation information. (Since:
+      3.22)}
+    @entry[:slider]{The axis is used for pen slider information. (Since: 3.22)}
   @end{table}
   @see-class{gdk-device}")
 
@@ -972,7 +994,8 @@ get_device_settings (GdkDevice *device)
   :already-grabbed
   :invalid-time
   :not-viewable
-  :frozen)
+  :frozen
+  :failed)
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-grab-status atdoc:*symbol-name-alias*) "Enum"
@@ -990,7 +1013,8 @@ get_device_settings (GdkDevice *device)
   :already-grabbed
   :invalid-time
   :not-viewable
-  :frozen)
+  :frozen
+  :failed)
   @end{pre}
   @begin[code]{table}
     @entry[:success]{The resource was successfully grabbed.}
@@ -1001,6 +1025,7 @@ get_device_settings (GdkDevice *device)
     @entry[:not-viewable]{The grab window or the @arg{confine-to} window are not
       viewable.}
     @entry[:frozen]{The resource is frozen by an active grab of another client.}
+    @entry[:failed]{The grab failed for some other reason. Since 3.16.}
   @end{table}
   @see-class{gdk-device}")
 

@@ -26,6 +26,7 @@
   :version "1.12.14"                           ; Version of the Cairo Library
   :author  "Dieter Kaiser"
   :license "LLGPL"
+  :description "A Lisp binding to Cairo"
   :serial t
   :components ((:file "cairo.package")
                (:file "cairo.init")

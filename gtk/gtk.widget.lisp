@@ -419,6 +419,98 @@
 ;;; GtkWidget
 ;;; ----------------------------------------------------------------------------
 
+(defcstruct gtk-widget-class-private)
+
+(defcstruct* gtk-widget-class
+  (parent-class (:struct g-object-class))
+  (activate-signal :pointer)
+  (dispatch-child-properties-changed :pointer)
+  (destroy :pointer)
+  (show :pointer)
+  (show-all :pointer)
+  (hide :pointer)
+  (map :pointer)
+  (unmap :pointer)
+  (realize :pointer)
+  (unrealize :pointer)
+  (size-allocate :pointer)
+  (state-changed :pointer)
+  (state-flags-changed :pointer)
+  (parent-set :pointer)
+  (hierarchy-changed :pointer)
+  (style-set :pointer)
+  (direction-changed :pointer)
+  (grab-notify :pointer)
+  (child-notify :pointer)
+  (draw :pointer)
+  (get-request-mode :pointer)
+  (get-preferred-height :pointer)
+  (get-preferred-width-for-height :pointer)
+  (get-preferred-width :pointer)
+  (get-preferred-height-for-width :pointer)
+  (mnemonic-activate :pointer)
+  (grab-focus :pointer)
+  (focus :pointer)
+  (move-focus :pointer)
+  (keynav-failed :pointer)
+  (event :pointer)
+  (button-press-event :pointer)
+  (button-release-event :pointer)
+  (scroll-event :pointer)
+  (motion-notify-event :pointer)
+  (delete-event :pointer)
+  (destroy-event :pointer)
+  (key-press-event :pointer)
+  (key-release-event :pointer)
+  (enter-notify-event :pointer)
+  (leave-notify-event :pointer)
+  (configure-event :pointer)
+  (focus-in-event :pointer)
+  (focus-out-event :pointer)
+  (map-event :pointer)
+  (unmap-event :pointer)
+  (property-notify-event :pointer)
+  (selection-clear-event :pointer)
+  (selection-request-event :pointer)
+  (selection-notify-event :pointer)
+  (proximity-in-event :pointer)
+  (proximity-out-event :pointer)
+  (visibility-notify-event :pointer)
+  (window-state-event :pointer)
+  (damage-event :pointer)
+  (grab-broken-event :pointer)
+  (selection-get :pointer)
+  (selection-received :pointer)
+  (drag-begin :pointer)
+  (drag-end :pointer)
+  (drag-data-get :pointer)
+  (drag-data-delete :pointer)
+  (drag-leave :pointer)
+  (drag-motion :pointer)
+  (drag-drop :pointer)
+  (drag-data-received :pointer)
+  (drag-failed :pointer)
+  (popup-menu :pointer)
+  (show-help :pointer)
+  (get-accessible :pointer)
+  (screen-changed :pointer)
+  (can-activate-accel :pointer)
+  (composited-changed :pointer)
+  (query-tooltip :pointer)
+  (compute-expand :pointer)
+  (adjust-size-request :pointer)
+  (adjust-size-allocation :pointer)
+  (style-updated :pointer)
+  (touch-event :pointer)
+  (get-preferred-height-and-baseline-for-width :pointer)
+  (adjust-baseline-request :pointer)
+  (adjust-baseline-allocation :pointer)
+  (queue-draw-region :pointer)
+  (priv (:pointer (:struct gtk-widget-class-private)))
+  (reserved :pointer :count 2))
+
+(export 'gtk-widget-class)
+
 (define-g-object-class "GtkWidget" gtk-widget
   (:superclass g-initially-unowned
    :export t
@@ -3835,7 +3927,7 @@
   @see-class{gtk-widget}
   @see-function{gtk-widget-unrealize}
   @see-function{g-signal-connect}"
-  (width (g-object gtk-widget)))
+  (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-realize)
 
@@ -4453,6 +4545,7 @@
 ;;; gtk_widget_reparent ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gtk gtk-widget-reparent (3 14) (gtk-container-add gtk-container-remove))
 (defcfun ("gtk_widget_reparent" gtk-widget-reparent) :void
  #+cl-cffi-gtk-documentation
  "@version{2016-1-12}
@@ -4564,6 +4657,7 @@
 ;;; gtk_widget_set_state ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gtk gtk-widget-set-state NIL gtk-widget-set-state-flags)
 (defcfun ("gtk_widget_set_state" gtk-widget-set-state) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-11-18}
@@ -4608,7 +4702,7 @@
     is realized.
   @see-class{gtk-widget}
   @see-function{gtk-widget-get-parent-window}"
-  (widget (g-object gtk-window))
+  (widget (g-object gtk-widget))
   (parent-window (g-object gdk-window)))
 
 (export 'gtk-widget-set-parent-window)
@@ -4626,7 +4720,7 @@
   Gets @arg{widget}'s parent window.
   @see-class{gtk-widget}
   @see-function{gtk-widget-set-parent-window}"
-  (widget (g-object gtk-window)))
+  (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-get-parent-window)
 
@@ -4902,6 +4996,7 @@
   (x (:pointer :int))
   (y (:pointer :int)))
 
+(deprecated-function :gtk gtk-widget-get-pointer (3 4) gdk:gdk-window-get-device-position)
 (defun gtk-widget-get-pointer (widget)
  #+cl-cffi-gtk-documentation
  "@version{2012-12-29}
@@ -5022,6 +5117,7 @@
 ;;; gtk_widget_ensure_style ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gtk gtk-widget-ensure-style (3 0) gtk-style-context)
 (defcfun ("gtk_widget_ensure_style" gtk-widget-ensure-style) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-11-22}
@@ -5046,6 +5142,7 @@
 ;;; gtk_widget_reset_rc_styles ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gtk gtk-widget-reset-rc-styles (3 0) gtk-widget-reset-style)
 (defcfun ("gtk_widget_reset_rc_styles" gtk-widget-reset-rc-styles) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-11-22}
@@ -5074,6 +5171,10 @@
 ;;; gtk_widget_get_default_style ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gtk gtk-widget-default-style (3 0)
+                     (gtk-style-context
+                      gtk-css-provider-get-default
+                      gtk-style-provider))
 (defcfun ("gtk_widget_get_default_style" gtk-widget-default-style)
     (g-object gtk-style)
  #+cl-cffi-gtk-documentation
@@ -5270,6 +5371,7 @@
   (path (:pointer (:pointer :char)))
   (path-reversed (:pointer (:pointer :char))))
 
+(deprecated-function :gtk gtk-widget-path (3 0) gtk-widget-get-path)
 (defun gtk-widget-path (widget &key (path-type :name))
  #+cl-cffi-gtk-documentation
  "@version{2013-11-25}
@@ -5354,6 +5456,7 @@
 ;;; gtk_widget_get_composite_name ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gtk gtk-widget-get-composite-name (3 10) gtk-widget-class-set-template)
 (defcfun ("gtk_widget_get_composite_name" gtk-widget-get-composite-name) :string
  #+cl-cffi-gtk-documentation
  "@version{2013-11-25}
@@ -5364,7 +5467,7 @@
   @begin[Warning]{dictionary}
     The function @sym{gtk-widget-get-composite-name} has been deprecated since
     version 3.10 and should not be used in newly-written code. Use the function
-    @fun{gtk-widget-class-set-template}, or don not use this API at all.
+    @fun{gtk-widget-class-set-template}, or do not use this API at all.
   @end{dictionary}
   @see-class{gtk-widget}
   @see-function{gtk-widget-set-composite-name}"
@@ -6851,6 +6954,7 @@
 ;;; gtk_widget_get_root_window ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gtk gtk-widget-get-root-window (3 12) (gdk:gdk-screen-get-root-window))
 (defcfun ("gtk_widget_get_root_window" gtk-widget-get-root-window)
     (g-object gdk-window)
  #+cl-cffi-gtk-documentation
@@ -7297,7 +7401,7 @@
 
   Since 2.12
   @see-function{gtk-widget-name}"
-  (widget (g-object gtk-window))
+  (widget (g-object gtk-widget))
   (custom-window (g-object gtk-window)))
 
 (export 'gtk-widget-set-tooltip-window)
@@ -8186,6 +8290,15 @@
 ;;; Since 3.6
 ;;; ----------------------------------------------------------------------------
 
+#+gtk-3-6
+(defcfun ("gtk_widget_insert_action_group" gtk-widget-insert-action-group) :void
+  (widget (g-object gtk-widget))
+  (name :string)
+  (group (g-object g-action-group)))
+
+#+gtk-3-6
+(export 'gtk-widget-insert-action-group)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_list_action_prefixes ()
 ;;;
@@ -8247,6 +8360,11 @@
 ;;; Returns :
 ;;;     The GtkWidgetPath representing widget
 ;;; ----------------------------------------------------------------------------
+(defcfun ("gtk_widget_get_path" gtk-widget-get-path)
+    (g-boxed-foreign gtk-widget-path)
+  (widget (g-object gtk-widget)))
+
+(export 'gtk-widget-get-path)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_style_context ()
@@ -8792,7 +8910,6 @@
   (:start 1)
   (:end 2)
   (:center 3)
-  #+gtk-3-10
   (:baseline 4))
 
 #+cl-cffi-gtk-documentation

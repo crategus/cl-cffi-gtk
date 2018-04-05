@@ -30,6 +30,7 @@
   :version "2.28.0"                           ; Version of GdK Pixbuf Library
   :author "Dieter Kaiser"
   :license "LLGPL"
+  :description "A Lisp binding to GDK Pixbuf 2"
   :serial t
   :components ((:file "gdk-pixbuf.package")
                (:file "gdk-pixbuf.init")

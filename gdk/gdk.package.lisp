@@ -44,7 +44,8 @@
                     "libgtk-x11-3.0.dylib"))
       (:windows (:or "libgtk-3-0.dll" "libgtk-win32-2.0-0.dll"))
       (t "libgtk-3-0")))
-  (use-foreign-library gtk))
+  (unless (foreign-library-loaded-p 'gtk)
+    (use-foreign-library gtk)))
 
 (glib::push-library-version-features gdk
     ;; We can not call the Lisp implementations gtk-get-major-version and
@@ -58,7 +59,14 @@
     3 12
     3 14
     3 16
-    3 18)
+    3 18
+    3 20
+    3 22)
+
+(defun library-version ()
+  (values
+   (cffi:foreign-funcall "gtk_get_major_version" :int)
+   (cffi:foreign-funcall "gtk_get_minor_version" :int)))
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (find-package :gdk) t)
@@ -948,7 +956,6 @@
                  (cairo-move-to cr (- (/ width 2 +pango-scale+)) (- circle)))
                (pango-cairo-show-layout cr layout)
                (cairo-restore cr)))
-           (cairo-destroy cr)
            t)))
       (gtk-widget-show-all window))))
     @end{pre}
