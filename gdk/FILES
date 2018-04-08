@@ -9,7 +9,7 @@ List of files for the GDK Library
 
   gdk.general.lisp          - Library initialization - GDK 3.22 &
   gdk.display-manager.lisp  - GdkDisplayManager      - GDK 3.16
-  gdk.display.lisp          - GdkDisplay             - GDK 3.16
+  gdk.display.lisp          - GdkDisplay             - GDK 3.22
   gdk.screen.lisp           - GdkScreen              - GDK 3.16 &
   gdk.seat.lisp             - GdkSeat                - GDK 3.22
   gdk.device-manager.lisp   - GdkDeviceManger        - GDK 3.16

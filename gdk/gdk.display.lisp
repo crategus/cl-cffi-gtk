@@ -42,12 +42,12 @@
 ;;;     gdk_display_get_default
 ;;;     gdk_display_get_name
 ;;;     gdk_display_get_n_screens                     * deprecated *
-;;;     gdk_display_get_screen
+;;;     gdk_display_get_screen                        * deprecated *
 ;;;     gdk_display_get_default_screen
-;;;     gdk_display_get_device_manager
-;;;     gdk_display_pointer_ungrab                    * deprecated *
-;;;     gdk_display_keyboard_ungrab                   * deprecated *
-;;;     gdk_display_pointer_is_grabbed                * deprecated *
+;;;     gdk_display_get_device_manager                * deprecated *
+;;;     gdk_display_pointer_ungrab                    * deprecated, not implemented *
+;;;     gdk_display_keyboard_ungrab                   * deprecated, not implemented *
+;;;     gdk_display_pointer_is_grabbed                * deprecated, not implemented *
 ;;;     gdk_display_device_is_grabbed
 ;;;     gdk_display_beep
 ;;;     gdk_display_sync
@@ -60,10 +60,10 @@
 ;;;     gdk_display_has_pending
 ;;;     gdk_display_set_double_click_time
 ;;;     gdk_display_set_double_click_distance
-;;;     gdk_display_get_pointer                       * deprecated *
-;;;     gdk_display_list_devices                      * deprecated *
-;;;     gdk_display_get_window_at_pointer             * deprecated *
-;;;     gdk_display_warp_pointer                      * deprecated *
+;;;     gdk_display_get_pointer                       * deprecated, not implemented *
+;;;     gdk_display_list_devices                      * deprecated, not implemented *
+;;;     gdk_display_get_window_at_pointer             * deprecated, not implemented *
+;;;     gdk_display_warp_pointer                      * deprecated, not implemented *
 ;;;     gdk_display_supports_cursor_color
 ;;;     gdk_display_supports_cursor_alpha
 ;;;     gdk_display_get_default_cursor_size
@@ -75,11 +75,16 @@
 ;;;     gdk_display_store_clipboard
 ;;;     gdk_display_supports_shapes
 ;;;     gdk_display_supports_input_shapes
-;;;     gdk_display_supports_composite
+;;;     gdk_display_supports_composite                * deprecated *
 ;;;     gdk_display_get_app_launch_context
 ;;;     gdk_display_notify_startup_complete
 ;;;     gdk_display_get_default_seat
 ;;;     gdk_display_list_seats
+;;;     gdk_display_get_n_monitors
+;;;     gdk_display_get_monitor
+;;;     gdk_display_get_primary_monitor
+;;;     gdk_display_get_monitor_at_point
+;;;     gdk_display_get_monitor_at_window
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gdk)
@@ -215,6 +220,7 @@
 ;;; gdk_display_get_n_screens ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gdk gdk-display-get-n-screens (3 10))
 (defcfun ("gdk_display_get_n_screens" gdk-display-get-n-screens) :int
  #+cl-cffi-gtk-documentation
  "@version{2015-12-30}
@@ -237,6 +243,7 @@
 ;;; gdk_display_get_screen ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gdk gdk-display-get-screen (3 20) gdk-display-get-default-screen)
 (defcfun ("gdk_display_get_screen" gdk-display-get-screen) (g-object gdk-screen)
  #+cl-cffi-gtk-documentation
  "@version{2013-4-4}
@@ -275,6 +282,7 @@
 ;;; gdk_display_get_device_manager ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gdk gdk-display-get-device-manager (3 20) gdk-display-get-default-seat)
 (defcfun ("gdk_display_get_device_manager" gdk-display-get-device-manager)
     (g-object gdk-device-manager)
  #+cl-cffi-gtk-documentation
@@ -1029,6 +1037,7 @@
 ;;; gdk_display_supports_composite ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gdk gdk-display-supports-composite (3 16))
 (defcfun ("gdk_display_supports_composite" gdk-display-supports-composite)
     :boolean
  #+cl-cffi-gtk-documentation
@@ -1141,5 +1150,29 @@
 
 #+gdk-3-22
 (export 'gdk-display-get-monitor)
+
+#+gdk-3-22
+(defcfun gdk-display-get-primary-monitor (g-object gdk-monitor)
+  (display (g-object gdk-display)))
+
+#+gdk-3-22
+(export 'gdk-display-get-primary-monitor)
+
+#+gdk-3-22
+(defcfun gdk-display-get-monitor-at-point (g-object gdk-monitor)
+  (display (g-object gdk-display))
+  (x :int)
+  (y :int))
+
+#+gdk-3-22
+(export 'gdk-display-get-monitor-at-point)
+
+#+gdk-3-22
+(defcfun gdk-display-get-monitor-at-window (g-object gdk-monitor)
+  (display (g-object gdk-display))
+  (window (g-object gdk-window)))
+
+#+gdk-3-22
+(export 'gdk-display-get-monitor-at-window)
 
 ;;; --- End of file gdk.display.lisp -------------------------------------------
