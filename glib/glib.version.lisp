@@ -346,13 +346,13 @@
 (eval-when (:compile-toplevel :load-toplevel :execute)
   ;; TODO: make this configurable so that people can turn it off
   ;; in the meantime call the following to enable warnings in SBCL at least
-  ;; (pushnew 'cl-cffi-gtk-deprecation-warnings *features*)
+  ;; (pushnew :cl-cffi-gtk-deprecation-warnings *features*)
 
   (defmacro deprecated-function (library name since
                                  &optional replacements)
     (declare (ignorable name replacements))
     (destructuring-bind (max-major-version max-minor-version) (or since '(NIL NIL))
-      (when (member 'cl-cffi-gtk-deprecation-warnings *features*)
+      (when (member :cl-cffi-gtk-deprecation-warnings *features*)
         (multiple-value-bind (major-version minor-version)
             (funcall (find-symbol (string '#:library-version) library))
           (when (or (not since)
