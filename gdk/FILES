@@ -7,7 +7,7 @@ List of files for the GDK Library
 
  I. API Reference
 
-  gdk.general.lisp          - Library initialization - GDK 3.16 &
+  gdk.general.lisp          - Library initialization - GDK 3.22 &
   gdk.display-manager.lisp  - GdkDisplayManager      - GDK 3.16
   gdk.display.lisp          - GdkDisplay             - GDK 3.16
   gdk.screen.lisp           - GdkScreen              - GDK 3.16 &

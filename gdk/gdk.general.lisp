@@ -53,10 +53,10 @@
 ;;;     gdk_get_display                          * deprecated *
 ;;;
 ;;;     gdk_flush
-;;;     gdk_screen_width
-;;;     gdk_screen_height
-;;;     gdk_screen_width_mm
-;;;     gdk_screen_height_mm
+;;;     gdk_screen_width                         * deprecated *
+;;;     gdk_screen_height                        * deprecated *
+;;;     gdk_screen_width_mm                      * deprecated *
+;;;     gdk_screen_height_mm                     * deprecated *
 ;;;
 ;;;     gdk_pointer_grab                         * deprecated *
 ;;;     gdk_pointer_ungrab                       * deprecated *
@@ -324,6 +324,7 @@
 ;;; gdk_screen_width ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gdk gdk-screen-width (3 22) gdk-monitor-get-geometry)
 (defcfun ("gdk_screen_width" gdk-screen-width) :int
  #+cl-cffi-gtk-documentation
  "@version{2013-7-30}
@@ -339,6 +340,7 @@
 ;;; gdk_screen_height ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gdk gdk-screen-height (3 22) gdk-monitor-get-geometry)
 (defcfun ("gdk_screen_height" gdk-screen-height) :int
  #+cl-cffi-gtk-documentation
  "@version{2013-7-30}
@@ -354,6 +356,7 @@
 ;;; gdk_screen_width_mm ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gdk gdk-screen-width-mm (3 22) gdk-monitor-width-mm)
 (defcfun ("gdk_screen_width_mm" gdk-screen-width-mm) :int
  #+cl-cffi-gtk-documentation
  "@version{2013-7-30}
@@ -371,6 +374,7 @@
 ;;; gdk_screen_height_mm ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gdk gdk-screen-height-mm (3 22) gdk-monitor-height-mm)
 (defcfun ("gdk_screen_height_mm" gdk-screen-height-mm) :int
  #+cl-cffi-gtk-documentation
  "@version{2013-7-30}
