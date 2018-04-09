@@ -595,6 +595,8 @@
                   (setf gtype (g-type-parent gtype)))))
     (let* ((gtype (g-type-from-instance pointer))
            (lisp-type (get-gobject-lisp-type gtype)))
+      (unless gtype
+        (error "Couldn't find GTYPE for instance at ~A." pointer))
       (unless lisp-type
         (error "Type ~A is not registered with REGISTER-OBJECT-TYPE"
                (gtype-name gtype)))
