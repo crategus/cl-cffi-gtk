@@ -753,7 +753,8 @@ Example 9. A GtkBuilder UI Definition
   @code{G_FILE_ERROR domain}.
 
   Since 2.12"
-  (%gtk-builder-add-from-file builder filename (null-pointer)))
+  (with-g-error (err)
+    (%gtk-builder-add-from-file builder filename err)))
 
 (export 'gtk-builder-add-from-file)
 
@@ -812,7 +813,8 @@ Example 9. A GtkBuilder UI Definition
   from the @code{GTK_BUILDER_ERROR} or @code{G_MARKUP_ERROR domain}.
 
   Since 2.12"
-  (%gtk-builder-add-from-string builder buffer -1 (null-pointer)))
+  (with-g-error (err)
+    (%gtk-builder-add-from-string builder buffer -1 err)))
 
 (export 'gtk-builder-add-from-string)
 
@@ -855,7 +857,8 @@ Example 9. A GtkBuilder UI Definition
        for object-id in object-ids
        do (setf (mem-aref l :pointer i) (foreign-string-alloc object-id)))
     (unwind-protect
-         (%gtk-builder-add-objects-from-file builder filename l (null-pointer))
+         (with-g-error (err)
+           (%gtk-builder-add-objects-from-file builder filename l err))
       (loop
          for i from 0
          repeat (1- (length object-ids))
@@ -904,11 +907,8 @@ Example 9. A GtkBuilder UI Definition
        for object-id in object-ids
        do (setf (mem-aref l :pointer i) (foreign-string-alloc object-id)))
     (unwind-protect
-      (%gtk-builder-add-objects-from-string builder
-                                            buffer
-                                            -1
-                                            l
-                                            (null-pointer))
+         (with-g-error (err)
+           (%gtk-builder-add-objects-from-string builder buffer -1 l err))
       (loop
          for i from 0
          repeat (1- (length object-ids))
@@ -1066,10 +1066,12 @@ Example 9. A GtkBuilder UI Definition
 
 (export 'gtk-builder-connect-signals)
 
-(defun gtk-builder-connect-signals-auto (builder)
+(defun gtk-builder-connect-signals-auto (builder &optional (package *package*))
  #+cl-cffi-gtk-documentation
  "@version{2013-5-28}
   @argument[builder]{a @class{gtk-builder} object}
+  @argument[package]{the package in which symbols are read, @sym{*package*}
+    by default}
   @begin{short}
     This method is a simpler variation of the function
     @fun{gtk-builder-connect-signals-full}.
@@ -1079,7 +1081,8 @@ Example 9. A GtkBuilder UI Definition
   function can only be called once, subsequent calls will do nothing.
 
   Note that handler names are looked up via @fun{read-from-string} in the
-  current package, therefore supplying a package prefix might be necessary.
+  current package by default, therefore supplying a package prefix via the
+  @arg{package} parameter might be necessary.
 
   Since 2.12"
   (flet ((connect-func (builder
@@ -1089,7 +1092,9 @@ Example 9. A GtkBuilder UI Definition
                         connect-object
                         flags)
            (declare (ignore builder connect-object))
-           (let ((handler (fdefinition (read-from-string handler-name))))
+           (let ((handler (fdefinition (let ((*package* package)
+                                             (*read-eval* NIL))
+                                         (read-from-string handler-name)))))
              (when handler
                (g-signal-connect object
                                  signal-name
