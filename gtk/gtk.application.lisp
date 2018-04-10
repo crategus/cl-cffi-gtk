@@ -745,7 +745,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_application_get_windows" gtk-application-get-windows)
-    (g-list (g-object gtk-window))
+    (g-list (g-object gtk-window) :free-from-foreign NIL)
  #+cl-cffi-gtk-documentation
  "@version{2014-10-18}
   @argument[application]{a @class{gtk-application} object}
