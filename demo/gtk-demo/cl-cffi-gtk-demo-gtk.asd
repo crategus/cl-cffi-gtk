@@ -46,6 +46,7 @@
                (:file "assistant")
                (:file "box")
                (:file "box-packing")
+               (:file "builder")
                (:file "button")
                (:file "button-box")
                (:file "buttons")
