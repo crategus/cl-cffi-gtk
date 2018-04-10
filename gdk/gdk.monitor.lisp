@@ -1,3 +1,50 @@
+;;; ----------------------------------------------------------------------------
+;;; gdk.monitor.lisp
+;;;
+;;; Copyright (C) 2017 Olof-Joachim Frahm
+;;;
+;;; This program is free software: you can redistribute it and/or modify
+;;; it under the terms of the GNU Lesser General Public License for Lisp
+;;; as published by the Free Software Foundation, either version 3 of the
+;;; License, or (at your option) any later version and with a preamble to
+;;; the GNU Lesser General Public License that clarifies the terms for use
+;;; with Lisp programs and is referred as the LLGPL.
+;;;
+;;; This program is distributed in the hope that it will be useful,
+;;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;;; GNU Lesser General Public License for more details.
+;;;
+;;; You should have received a copy of the GNU Lesser General Public
+;;; License along with this program and the preamble to the Gnu Lesser
+;;; General Public License.  If not, see <http://www.gnu.org/licenses/>
+;;; and <http://opensource.franz.com/preamble.html>.
+;;; ----------------------------------------------------------------------------
+;;;
+;;; GdkMonitor
+;;;
+;;; Object representing an output
+;;;
+;;; Types and Values
+;;;
+;;;     GdkMonitor
+;;;     GdkSubpixelLayout
+;;;
+;;; Functions
+;;;
+;;;     gdk_monitor_get_display          -> Accessor
+;;;     gdk_monitor_get_geometry
+;;;     gdk_monitor_get_workarea
+;;;     gdk_monitor_get_width_mm         -> Accessor
+;;;     gdk_monitor_get_height_mm        -> Accessor
+;;;     gdk_monitor_get_manufacturer     -> Accessor
+;;;     gdk_monitor_get_model            -> Accessor
+;;;     gdk_monitor_get_scale_factor     -> Accessor
+;;;     gdk_monitor_get_refresh_rate     -> Accessor
+;;;     gdk_monitor_get_subpixel_layout  -> Accessor
+;;;     gdk_monitor_is_primary
+;;; ----------------------------------------------------------------------------
+
 (in-package :gdk)
 
 #+gdk-3-22
@@ -75,3 +122,10 @@
 
 #+gdk-3-22
 (export 'gdk-monitor-get-workarea)
+
+#+gdk-3-22
+(defcfun gdk-monitor-is-primary :boolean
+  (monitor (g-object gdk-monitor)))
+
+#+gdk-3-22
+(export 'gdk-monitor-is-primary)
