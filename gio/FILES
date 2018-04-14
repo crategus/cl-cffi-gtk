@@ -193,6 +193,11 @@ Permissions
                 action
   GSimplePermission - A GPermission that doesn't change value
 
+Data Models
+
+  GListModel - An interface describing a dynamic list of objects   - GIO 2.44
+  GListStore - A simple implementation of GListModel               - GIO 2.44
+
 Application support
 
   gio.application.lisp         - GApplication                      - GIO 2.36.4&

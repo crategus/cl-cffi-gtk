@@ -37,7 +37,7 @@
                (:file "gobject.object-function")
                (:file "gobject.glib-defcallback")
                (:file "gobject.generating")
-               
+
                (:file "gobject.type-info")   ; Type Information
                (:file "gobject.g-value")     ; Generic Values
                (:file "gobject.enumeration") ; Enumeration and flag types
@@ -51,10 +51,9 @@
                (:file "gobject.base")        ; The Base Object Type
                (:file "gobject.closures")    ; Closures
                (:file "gobject.signals")     ; Signals
-               
+
                (:file "gobject.utils")
-               (:file "gobject.foreign-gobject-subclassing")
-               )
+               (:file "gobject.foreign-gobject-subclassing"))
   :depends-on (:cl-cffi-gtk-glib
                :cffi
                :trivial-garbage
