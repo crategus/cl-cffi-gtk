@@ -146,7 +146,11 @@
       ((gtype +g-type-double+) (g-value-get-double gvalue))
       ((gtype +g-type-string+) (g-value-get-string gvalue))
       ((gtype +g-type-variant+) (g-value-get-variant gvalue))
-      (t (parse-g-value-for-type gvalue gtype parse-kind)))))
+      (t
+       ;; TODO: cache this?
+       (if (eq gtype (g-type-gtype))
+           (g-value-get-g-type gvalue)
+           (parse-g-value-for-type gvalue gtype parse-kind))))))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -248,7 +252,11 @@
        (g-value-set-double gvalue (coerce value 'double-float)))
       ((gtype +g-type-string+) (g-value-set-string gvalue value))
       ((gtype +g-type-variant+) (g-value-set-variant gvalue value))
-      (t (set-gvalue-for-type gvalue type value)))))
+      (t
+       ;; TODO: cache this?
+       (if (eq type (g-type-gtype))
+           (g-value-set-g-type gvalue value)
+           (set-gvalue-for-type gvalue type value))))))
 
 ;;; ----------------------------------------------------------------------------
 ;;; GValue
