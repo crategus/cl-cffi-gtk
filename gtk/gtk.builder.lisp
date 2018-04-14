@@ -143,7 +143,7 @@ Example 9. A GtkBuilder UI Definition
   In the (unusual) case that you want to add user interface descriptions from
   multiple sources to the same @class{gtk-builder} you can call the function
   @fun{gtk-builder-new} to get an empty builder and populate it by (multiple)
-  calls to the functions @fun{gtk-builder-add-from-file}, 
+  calls to the functions @fun{gtk-builder-add-from-file},
   @fun{gtk-builder-add-from-resource} or @fun{gtk-builder-add-from-string}.
 
   A @sym{gtk-builder} holds a reference to all objects that it has constructed
@@ -295,7 +295,7 @@ Example 9. A GtkBuilder UI Definition
     that has been constructed by a @class{gtk-ui-manager} in another part of
     the UI definition by specifying the ID of the @class{gtk-ui-manager} in the
     \"constructor\" attribute and the name of the object in the \"id\"
-    attribute. 
+    attribute.
 
     Objects must be given a name with the \"id\" attribute, which allows the
     application to retrieve them from the builder with the function
@@ -509,7 +509,12 @@ Example 9. A GtkBuilder UI Definition
   (:missing-property-value 5)
   (:invalid-value 6)
   (:version-mismatch 7)
-  (:duplicate-id 8))
+  (:duplicate-id 8)
+  (:object-type-refused 9)
+  (:template-mismatch 10)
+  (:invalid-property 11)
+  (:invalid-signal 12)
+  (:invalid-id 13))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-builder-error atdoc:*symbol-name-alias*) "Enum"
@@ -531,7 +536,12 @@ Example 9. A GtkBuilder UI Definition
   (:missing-property-value 5)
   (:invalid-value 6)
   (:version-mismatch 7)
-  (:duplicate-id 8))
+  (:duplicate-id 8)
+  (:object-type-refused 9)
+  (:template-mismatch 10)
+  (:invalid-property 11)
+  (:invalid-signal 12)
+  (:invalid-id 13))
   @end{pre}
   @begin[code]{table}
     @entry[:invalid-type-function]{A type-func attribute did not name a function
@@ -549,6 +559,16 @@ Example 9. A GtkBuilder UI Definition
       value.}
     @entry[:version-mismatch]{The input file requires a newer version of GTK+.}
     @entry[:duplicate-id]{An object id occurred twice.}
+    @entry[:object-type-refused]{A specified object type is of the same type or
+      derived from the type of the composite class being extended with builder
+      XML.}
+    @entry[:template-mismatch]{The wrong type was specified in a composite
+      class’s template XML.}
+    @entry[:invalid-property]{The specified property is unknown for the object
+      class.}
+    @entry[:invalid-signal]{The specified signal is unknown for the object
+      class.}
+    @entry[:invalid-id]{An object id is unknown.}
   @end{table}")
 
 ;;; ----------------------------------------------------------------------------
@@ -733,7 +753,7 @@ Example 9. A GtkBuilder UI Definition
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_builder_add_from_file" %gtk-builder-add-from-file) :uint
-  (builder g-object)
+  (builder (g-object gtk-builder))
   (filename :string)
   (error :pointer))
 
@@ -791,7 +811,7 @@ Example 9. A GtkBuilder UI Definition
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_builder_add_from_string" %gtk-builder-add-from-string) :uint
-  (builder g-object)
+  (builder (g-object gtk-builder))
   (string :string)
   (length :int)
   (error :pointer))
@@ -814,7 +834,7 @@ Example 9. A GtkBuilder UI Definition
 
   Since 2.12"
   (with-g-error (err)
-    (%gtk-builder-add-from-string builder buffer -1 err)))
+    (%gtk-builder-add-from-string builder buffer (length buffer) err)))
 
 (export 'gtk-builder-add-from-string)
 
@@ -824,9 +844,9 @@ Example 9. A GtkBuilder UI Definition
 
 (defcfun ("gtk_builder_add_objects_from_file"
           %gtk-builder-add-objects-from-file) :uint
-  (builder g-object)
+  (builder (g-object gtk-builder))
   (filename :string)
-  (object-ids :pointer)
+  (object-ids g-strv)
   (error :pointer))
 
 (defun gtk-builder-add-objects-from-file (builder filename object-ids)
@@ -851,19 +871,8 @@ Example 9. A GtkBuilder UI Definition
     @arg{object-ids}.
 
   Since 2.14"
-  (let ((l (foreign-alloc :pointer :count (1+ (length object-ids)))))
-    (loop
-       for i from 0
-       for object-id in object-ids
-       do (setf (mem-aref l :pointer i) (foreign-string-alloc object-id)))
-    (unwind-protect
-         (with-g-error (err)
-           (%gtk-builder-add-objects-from-file builder filename l err))
-      (loop
-         for i from 0
-         repeat (1- (length object-ids))
-         do (foreign-string-free (mem-aref l :pointer i)))
-      (foreign-free l))))
+  (with-g-error (err)
+    (%gtk-builder-add-objects-from-file builder filename object-ids err)))
 
 (export 'gtk-builder-add-objects-from-file)
 
@@ -873,10 +882,10 @@ Example 9. A GtkBuilder UI Definition
 
 (defcfun ("gtk_builder_add_objects_from_string"
           %gtk-builder-add-objects-from-string) :uint
-  (builder g-object)
+  (builder (g-object gtk-builder))
   (string :string)
   (length :int)
-  (object-ids :pointer)
+  (object-ids g-strv)
   (error :pointer))
 
 (defun gtk-builder-add-objects-from-string (builder buffer object-ids)
@@ -901,19 +910,8 @@ Example 9. A GtkBuilder UI Definition
     @arg{object-ids}.
 
   Since 2.14"
-  (let ((l (foreign-alloc :pointer :count (1+ (length object-ids)))))
-    (loop
-       for i from 0
-       for object-id in object-ids
-       do (setf (mem-aref l :pointer i) (foreign-string-alloc object-id)))
-    (unwind-protect
-         (with-g-error (err)
-           (%gtk-builder-add-objects-from-string builder buffer -1 l err))
-      (loop
-         for i from 0
-         repeat (1- (length object-ids))
-         do (foreign-string-free (mem-aref l :pointer i)))
-      (foreign-free l))))
+  (with-g-error (err)
+    (%gtk-builder-add-objects-from-string builder buffer (length buffer) object-ids err)))
 
 (export 'gtk-builder-add-objects-from-string)
 
@@ -1113,12 +1111,13 @@ Example 9. A GtkBuilder UI Definition
   :swapped)
 
 (defcallback builder-connect-func-callback :void
-    ((builder g-object)
+    ((builder (g-object gtk-builder))
      (object g-object)
      (signal-name (:string :free-from-foreign nil))
      (handler-name (:string :free-from-foreign nil))
      (connect-object g-object)
-     (flags connect-flags) (data :pointer))
+     (flags connect-flags)
+     (data :pointer))
   (restart-case
       (funcall (glib::get-stable-pointer-value data)
                builder object signal-name handler-name connect-object flags)
@@ -1126,7 +1125,7 @@ Example 9. A GtkBuilder UI Definition
 
 (defcfun ("gtk_builder_connect_signals_full" %gtk-builder-connect-signals-full)
     :void
-  (builder g-object)
+  (builder (g-object gtk-builder))
   (func :pointer)
   (data :pointer))
 
