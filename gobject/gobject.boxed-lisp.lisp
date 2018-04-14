@@ -778,8 +778,7 @@
 (defgeneric boxed-parse-g-value (gvalue-ptr info))
 
 (defmethod parse-g-value-for-type (gvalue-ptr
-                                   (type-numeric (eql (gtype "GBoxed")))
-                                   parse-kind)
+                                   (type-numeric (eql (gtype "GBoxed"))))
   (declare (ignore parse-kind))
   (if (g-type= (g-value-type gvalue-ptr) (g-type-strv))
       (convert-from-foreign (g-value-get-boxed gvalue-ptr)

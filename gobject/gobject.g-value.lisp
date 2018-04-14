@@ -67,46 +67,37 @@
 
 ;; A generic function for getting the value of a g-value structure.
 
-(defgeneric parse-g-value-for-type (gvalue-ptr gtype parse-kind))
+(defgeneric parse-g-value-for-type (gvalue-ptr gtype))
 
-(defmethod parse-g-value-for-type :around (gvalue-ptr gtype parse-kind)
-  (declare (ignorable gvalue-ptr parse-kind))
+(defmethod parse-g-value-for-type :around (gvalue-ptr gtype)
+  (declare (ignore gvalue-ptr))
   (assert (typep gtype '(or gtype nil)))
   (call-next-method))
 
-(defmethod parse-g-value-for-type (gvalue-ptr gtype parse-kind)
+(defmethod parse-g-value-for-type (gvalue-ptr gtype)
   (if (eq gtype (g-type-fundamental gtype))
       (call-next-method)
       (parse-g-value-for-type gvalue-ptr
-                              (g-type-fundamental gtype)
-                              parse-kind)))
+                              (g-type-fundamental gtype))))
 
 (defmethod parse-g-value-for-type (gvalue-ptr
-                                   (type (eql (gtype +g-type-pointer+)))
-                                   parse-kind)
-  (declare (ignore parse-kind))
+                                   (type (eql (gtype +g-type-pointer+))))
   (g-value-get-pointer gvalue-ptr))
 
 (defmethod parse-g-value-for-type (gvalue-ptr
-                                   (type (eql (gtype +g-type-param+)))
-                                   parse-kind)
-  (declare (ignore parse-kind))
+                                   (type (eql (gtype +g-type-param+))))
   (parse-g-param-spec (g-value-get-param gvalue-ptr)))
 
 (defmethod parse-g-value-for-type (gvalue-ptr
-                                   (type (eql (gtype +g-type-object+)))
-                                   parse-kind)
-  (declare (ignore parse-kind))
+                                   (type (eql (gtype +g-type-object+))))
   (g-value-get-object gvalue-ptr))
 
 (defmethod parse-g-value-for-type (gvalue-ptr
-                                   (type (eql (gtype +g-type-interface+)))
-                                   parse-kind)
-  (declare (ignore parse-kind))
+                                   (type (eql (gtype +g-type-interface+))))
   (g-value-get-object gvalue-ptr))
 
 ;;; ----------------------------------------------------------------------------
-;;; parse-g-value (gvalue parse-kind)
+;;; parse-g-value (gvalue)
 ;;;
 ;;; Parses the g-value structure and returns the corresponding Lisp object.
 ;;; This is a more general function which replaces the functions g-value-get-...
@@ -124,7 +115,7 @@
 ;;;     on GValue type
 ;;; ----------------------------------------------------------------------------
 
-(defun parse-g-value (gvalue &key (parse-kind :get-property))
+(defun parse-g-value (gvalue)
   (let* ((gtype (g-value-type gvalue))
          (fundamental-type (g-type-fundamental gtype)))
     (ev-case fundamental-type
@@ -150,7 +141,7 @@
        ;; TODO: cache this?
        (if (eq gtype (g-type-gtype))
            (g-value-get-g-type gvalue)
-           (parse-g-value-for-type gvalue gtype parse-kind))))))
+           (parse-g-value-for-type gvalue gtype))))))
 
 ;;; ----------------------------------------------------------------------------
 
@@ -159,7 +150,7 @@
 (defgeneric set-gvalue-for-type (gvalue-ptr type value))
 
 (defmethod set-gvalue-for-type :around (gvalue-ptr type value)
-  (declare (ignorable gvalue-ptr value))
+  (declare (ignore gvalue-ptr value))
   (assert (typep type '(or gtype null)))
   (call-next-method))
 
