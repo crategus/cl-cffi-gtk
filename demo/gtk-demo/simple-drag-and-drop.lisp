@@ -44,6 +44,7 @@
 
         (g-signal-connect drag-source "drag-failed"
            (lambda (widget context drag-result)
+             (declare (ignore widget))
              (format t "~&DRAG-FAILED context = ~A~%" context)
              (format t "     ~a~%" drag-result)
              NIL))
