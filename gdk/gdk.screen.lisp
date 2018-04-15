@@ -44,29 +44,30 @@
 ;;;     gdk_screen_is_composited
 ;;;     gdk_screen_get_root_window
 ;;;     gdk_screen_get_display
-;;;     gdk_screen_get_number
-;;;     gdk_screen_get_width
-;;;     gdk_screen_get_height
-;;;     gdk_screen_get_width_mm
-;;;     gdk_screen_get_height_mm
+;;;     gdk_screen_get_number                * deprecated *
+;;;     gdk_screen_get_width                 * deprecated *
+;;;     gdk_screen_get_height                * deprecated *
+;;;     gdk_screen_get_width_mm              * deprecated *
+;;;     gdk_screen_get_height_mm             * deprecated *
 ;;;     gdk_screen_list_visuals
 ;;;     gdk_screen_get_toplevel_windows
-;;;     gdk_screen_make_display_name
-;;;     gdk_screen_get_n_monitors
-;;;     gdk_screen_get_primary_monitor
-;;;     gdk_screen_get_monitor_geometry
-;;;     gdk_screen_get_monitor_workarea
-;;;     gdk_screen_get_monitor_at_point
-;;;     gdk_screen_get_monitor_at_window
-;;;     gdk_screen_get_monitor_height_mm
-;;;     gdk_screen_get_monitor_width_mm
-;;;     gdk_screen_get_monitor_plug_name
+;;;     gdk_screen_make_display_name         * deprecated *
+;;;     gdk_screen_get_n_monitors            * deprecated *
+;;;     gdk_screen_get_primary_monitor       * deprecated *
+;;;     gdk_screen_get_monitor_geometry      * deprecated *
+;;;     gdk_screen_get_monitor_workarea      * deprecated *
+;;;     gdk_screen_get_monitor_at_point      * deprecated *
+;;;     gdk_screen_get_monitor_at_window     * deprecated *
+;;;     gdk_screen_get_monitor_height_mm     * deprecated *
+;;;     gdk_screen_get_monitor_width_mm      * deprecated *
+;;;     gdk_screen_get_monitor_plug_name     * deprecated *
+;;;     gdk_screen_get_monitor_scale_factor  * deprecated, not implemented *
 ;;;     gdk_screen_get_setting
-;;;     gdk_screen_get_font_options
-;;;     gdk_screen_set_font_options
-;;;     gdk_screen_get_resolution
-;;;     gdk_screen_set_resolution
-;;;     gdk_screen_get_active_window
+;;;     gdk_screen_get_font_options          -> Accessor
+;;;     gdk_screen_set_font_options          -> Accessor
+;;;     gdk_screen_get_resolution            -> Accessor
+;;;     gdk_screen_set_resolution            -> Accessor
+;;;     gdk_screen_get_active_window         * deprecated *
 ;;;     gdk_screen_get_window_stack
 ;;; ----------------------------------------------------------------------------
 
@@ -373,6 +374,7 @@
 ;;; gdk_screen_get_number ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gdk gdk-screen-get-number (3 22))
 (defcfun ("gdk_screen_get_number" gdk-screen-get-number) :int
  #+cl-cffi-gtk-documentation
  "@version{2013-6-17}
@@ -395,6 +397,7 @@
 ;;; gdk_screen_get_width ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gdk gdk-screen-get-width (3 22) gdk-monitor-get-geometry)
 (defcfun ("gdk_screen_get_width" gdk-screen-get-width) :int
  #+cl-cffi-gtk-documentation
  "@version{2013-6-17}
@@ -414,6 +417,7 @@
 ;;; gdk_screen_get_height ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gdk gdk-screen-get-height (3 22) gdk-monitor-get-geometry)
 (defcfun ("gdk_screen_get_height" gdk-screen-get-height) :int
  #+cl-cffi-gtk-documentation
  "@version{2013-6-17}
@@ -433,6 +437,7 @@
 ;;; gdk_screen_get_width_mm ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gdk gdk-screen-get-width-mm (3 22) gdk-monitor-width-mm)
 (defcfun ("gdk_screen_get_width_mm" gdk-screen-get-width-mm) :int
  #+cl-cffi-gtk-documentation
  "@version{2013-6-17}
@@ -455,6 +460,7 @@
 ;;; gdk_screen_get_height_mm ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gdk gdk-screen-get-height-mm (3 22) gdk-monitor-height-mm)
 (defcfun ("gdk_screen_get_height_mm" gdk-screen-get-height-mm) :int
  #+cl-cffi-gtk-documentation
  "@version{2013-6-17}
@@ -525,6 +531,7 @@
 ;;; gdk_screen_make_display_name ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gdk gdk-screen-make-display-name (3 22))
 (defcfun ("gdk_screen_make_display_name" gdk-screen-make-display-name)
     (g-string :free-from-foreign t)
  #+cl-cffi-gtk-documentation
@@ -547,6 +554,7 @@
 ;;; gdk_screen_get_n_monitors ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gdk gdk-screen-get-n-monitors (3 22) gdk-display-get-n-monitors)
 (defcfun ("gdk_screen_get_n_monitors" gdk-screen-get-n-monitors) :int
  #+cl-cffi-gtk-documentation
  "@version{2013-6-17}
@@ -565,6 +573,7 @@
 ;;; gdk_screen_get_primary_monitor ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gdk gdk-screen-get-primary-monitor (3 22) gdk-display-get-primary-monitor)
 (defcfun ("gdk_screen_get_primary_monitor" gdk-screen-get-primary-monitor) :int
  #+cl-cffi-gtk-documentation
  "@version{2013-6-17}
@@ -592,6 +601,7 @@
 ;;; gdk_screen_get_monitor_geometry ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gdk gdk-screen-get-monitor-geometry (3 22) gdk-monitor-get-geometry)
 (defcfun ("gdk_screen_get_monitor_geometry" %gdk-screen-get-monitor-geometry)
     :void
   (screen (g-object gdk-screen))
@@ -630,6 +640,7 @@
 ;;; gdk_screen_get_monitor_workarea ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gdk gdk-screen-get-monitor-workarea (3 22) gdk-monitor-get-workarea)
 (defcfun ("gdk_screen_get_monitor_workarea" %gdk-screen-get-monitor-workarea)
     :void
   (screen (g-object gdk-screen))
@@ -667,6 +678,7 @@
 ;;; gdk_screen_get_monitor_at_point ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gdk gdk-screen-get-monitor-at-point (3 22) gdk-display-get-monitor-at-point)
 (defcfun ("gdk_screen_get_monitor_at_point" gdk-screen-get-monitor-at-point)
     :int
  #+cl-cffi-gtk-documentation
@@ -695,6 +707,7 @@
 ;;; gdk_screen_get_monitor_at_window ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gdk gdk-screen-get-monitor-at-window (3 22) gdk-display-get-monitor-at-window)
 (defcfun ("gdk_screen_get_monitor_at_window" gdk-screen-get-monitor-at-window)
     :int
  #+cl-cffi-gtk-documentation
@@ -723,6 +736,7 @@
 ;;; gdk_screen_get_monitor_height_mm ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gdk gdk-screen-get-monitor-height-mm (3 22) gdk-monitor-height-mm)
 (defcfun ("gdk_screen_get_monitor_height_mm" gdk-screen-get-monitor-height-mm)
     :int
  #+cl-cffi-gtk-documentation
@@ -747,6 +761,7 @@
 ;;; gdk_screen_get_monitor_width_mm ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gdk gdk-screen-get-monitor-width-mm (3 22) gdk-monitor-width-mm)
 (defcfun ("gdk_screen_get_monitor_width_mm" gdk-screen-get-monitor-width-mm)
     :int
  #+cl-cffi-gtk-documentation
@@ -771,6 +786,7 @@
 ;;; gdk_screen_get_monitor_plug_name ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gdk gdk-screen-get-monitor-plug-name (3 22) gdk-monitor-model)
 (defcfun ("gdk_screen_get_monitor_plug_name" gdk-screen-get-monitor-plug-name)
     (g-string :free-from-foreign t)
  #+cl-cffi-gtk-documentation
@@ -865,6 +881,7 @@
 
 ;; The returned window should be unrefed.
 
+(deprecated-function :gdk gdk-screen-get-active-window (3 22))
 (defcfun ("gdk_screen_get_active_window" gdk-screen-get-active-window)
     (g-object gdk-window)
  #+cl-cffi-gtk-documentation
