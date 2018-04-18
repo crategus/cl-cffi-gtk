@@ -41,6 +41,7 @@
 ;;;
 ;;;     gdk_rectangle_intersect
 ;;;     gdk_rectangle_union
+;;;     gdk_rectangle_equal
 ;;;
 ;;; Description
 ;;;
@@ -265,5 +266,16 @@
     dest))
 
 (export 'gdk-rectangle-union)
+
+;;; ----------------------------------------------------------------------------
+;;; gdk_rectangle_equal ()
+;;; ----------------------------------------------------------------------------
+
+#+gdk-3-20
+(defun gdk-rectangle-equal (rect1 rect2)
+  (equalp rect1 rect2))
+
+#+gdk-3-20
+(export 'gdk-rectangle-equal)
 
 ;;; --- End of file gdk.rectangle.lisp -----------------------------------------
