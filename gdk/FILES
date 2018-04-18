@@ -14,6 +14,7 @@ List of files for the GDK Library
   gdk.seat.lisp             - GdkSeat                - GDK 3.22
   gdk.monitor.lisp          - GdkMonitor             - GDK 3.22
   gdk.device.lisp           - GdkDevice              - GDK 3.22
+  gdk.device-pad.lisp       - GdkDevicePad           - GDK 3.22
   gdk.rectangle.lisp        - Points and Rectangles  - GDK 3.16
   gdk.pixbuf.lisp           - Pixbufs                - GDK 3.22
   gdk.rgba.lisp             - RGBA Colors            - GDK 3.22
