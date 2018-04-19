@@ -88,6 +88,7 @@
                (:file "pixbufs")
                (:file "popover")
                (:file "progress-bar")
+               (:file "revealer")
                (:file "scale-widgets")
                (:file "scrolled-window")
                (:file "search-entry")

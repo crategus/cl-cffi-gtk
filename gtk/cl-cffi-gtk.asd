@@ -112,6 +112,7 @@
    (:file "gtk.action-bar")            ; A full width bar for presenting contextual actions
    (:file "gtk.flow-box")              ; A container that allows reflowing its children
    (:file "gtk.list-box")              ; A list container
+   (:file "gtk.revealer")              ; Hide and show with animation
 
    ;; Ornaments
    (:file "gtk.separator")             ; Separator widget
