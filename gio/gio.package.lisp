@@ -30,7 +30,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defpackage :gio
-  (:use :glib :gobject :cl :cffi))
+  (:use :glib :gobject :cl :cffi :iterate))
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (find-package :gio) t)

@@ -51,7 +51,8 @@
    (:file "gio.application")         ; Core application class
    (:file "gio.menu-model")          ; Class representing the contents of a menu
    (:file "gio.menu")                ; Simple implementation of GMenuModel
-  )
+   (:file "gio.list-model")
+   (:file "gio.list-store"))
   :depends-on (:cl-cffi-gtk-glib
                :cl-cffi-gtk-gobject))
 

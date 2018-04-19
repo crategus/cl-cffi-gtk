@@ -68,6 +68,7 @@
                (:file "event-box")
                (:file "file-chooser-button")
                (:file "fixed")
+               (:file "flow-box")
                (:file "font-button")
                (:file "frame")
                (:file "grid")

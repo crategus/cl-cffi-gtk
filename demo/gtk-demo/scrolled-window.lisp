@@ -44,4 +44,3 @@
         (gtk-box-pack-start (gtk-dialog-get-action-area window) button)
         (gtk-widget-grab-default button))
       (gtk-widget-show-all window))))
-
