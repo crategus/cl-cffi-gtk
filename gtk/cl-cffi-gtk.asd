@@ -111,6 +111,7 @@
    (:file "gtk.overlay")               ; Container which overlays widgets
    (:file "gtk.action-bar")            ; A full width bar for presenting contextual actions
    (:file "gtk.flow-box")              ; A container that allows reflowing its children
+   (:file "gtk.list-box")              ; A list container
 
    ;; Ornaments
    (:file "gtk.separator")             ; Separator widget

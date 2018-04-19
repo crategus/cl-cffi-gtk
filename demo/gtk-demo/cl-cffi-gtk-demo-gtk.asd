@@ -78,6 +78,7 @@
                (:file "info-bar")
                (:file "labels")
                (:file "link-button")
+               (:file "list-box")
                (:file "menu")
                (:file "more-labels")
                (:file "notebook")
