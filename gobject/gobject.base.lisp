@@ -592,7 +592,10 @@
                   (for lisp-type = (gethash (gtype-name gtype)
                                             *registered-object-types*))
                   (when lisp-type (return lisp-type))
-                  (setf gtype (g-type-parent gtype)))))
+              (setf gtype (g-type-parent gtype))))
+         (make-lisp-object (lisp-type)
+           (let ((*current-object-from-pointer* pointer))
+             (make-instance lisp-type :pointer pointer))))
     (let* ((gtype (g-type-from-instance pointer))
            (lisp-type (get-gobject-lisp-type gtype)))
       (unless gtype
@@ -600,8 +603,33 @@
       (unless lisp-type
         (error "Type ~A is not registered with REGISTER-OBJECT-TYPE"
                (gtype-name gtype)))
-      (let ((*current-object-from-pointer* pointer))
-        (make-instance lisp-type :pointer pointer)))))
+      (cond
+        ;; if we arrive at the GObject root something likely went wrong
+        ;; in that we can't do much with a GObject by itself. therefore
+        ;; we try and find the interfaces the object conforms to,
+        ;; possibly having a 1:1 match anyway, but otherwise we might
+        ;; have to establish a corresponding class on the lisp side too.
+        ((eq lisp-type 'g-object)
+         (let ((lisp-interface-types
+                 (iterate
+                   (for interface in (g-type-interfaces gtype))
+                   (for lisp-type = (gethash (gtype-name interface)
+                                             *known-interfaces*))
+                   (when lisp-type
+                     (collect lisp-type)))))
+           (let ((name (gtype-name gtype)))
+             (if (eql (length lisp-interface-types) 1)
+                 (let ((lisp-type (car lisp-interface-types)))
+                   (log-for :subclass "recording translation for ~A as a ~A interface."
+                            name lisp-type)
+                   (setf (gethash name *registered-object-types*) lisp-type)
+                   (make-lisp-object lisp-type))
+                 ;; TODO: construct an artificial class here?
+                 (progn
+                   (warn "Couldn't handle multiple interfaces for ~A of type ~A: ~A."
+                         pointer name lisp-interface-types)
+                   (make-lisp-object lisp-type))))))
+        (T (make-lisp-object lisp-type))))))
 
 ;;; ----------------------------------------------------------------------------
 

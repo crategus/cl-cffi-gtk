@@ -174,7 +174,7 @@ GTK+ Widgets and Objects
     gtk.font-chooser-widget.lisp     - GtkFontChooserWidget        - GTK+ 3.6.4*
     gtk.font-chooser-dialog.lisp     - GtkFontChooserDialog        - GTK+ 3.6.4*
 
-    GtkPlacesSidebar - Displays frequently-used places in the file system
+    gtk.places-sidebar.lisp          - GtkPlacesSidebar            - GTK+ 3.10
 
   Ornaments
 

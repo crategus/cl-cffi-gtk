@@ -244,6 +244,7 @@
    (:file "gtk.font-chooser-dialog")   ; Dialog for selecting fonts
    (:file "gtk.font-selection")        ; Deprecated widget for selecting fonts
    (:file "gtk.font-selection-dialog") ; Deprecated widget for selecting fonts
+   (:file "gtk.places-sidebar")        ; Sidebar that displays frequently-used places in the file system
 
    ;; Miscellaneous
    (:file "gtk.adjustment")            ; Representation of a bounded value

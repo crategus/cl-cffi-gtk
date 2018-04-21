@@ -1,4 +1,4 @@
-﻿;;; ----------------------------------------------------------------------------
+;;; ----------------------------------------------------------------------------
 ;;; gio.file.lisp
 ;;;
 ;;; The documentation has been copied from the GIO Reference Manual
@@ -37,7 +37,6 @@
 ;;;     GFileCreateFlags
 ;;;     GFileCopyFlags
 ;;;     GFileMonitorFlags
-;;;     GFilesystemPreviewType
 ;;;
 ;;;     g_file_new_for_path
 ;;;     g_file_new_for_uri
@@ -230,6 +229,8 @@
 ;;; version on the file system. See the HTTP 1.1 specification for HTTP Etag
 ;;; headers, which are a very similar concept.
 ;;; ----------------------------------------------------------------------------
+
+(in-package :gio)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GFile
@@ -941,6 +942,10 @@
 ;;;     Finishes an poll operation for media changes. Since 2.22.
 ;;; ----------------------------------------------------------------------------
 
+(define-g-interface "GFile" g-file
+  (:export t
+   :type-initializer "g_file_get_type"))
+
 ;;; ----------------------------------------------------------------------------
 ;;; enum GFileQueryInfoFlags
 ;;;
@@ -1048,41 +1053,6 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; enum GFilesystemPreviewType
-;;; ----------------------------------------------------------------------------
-
-(define-g-enum "GFileSystemPreviewType" g-file-system-preview-type
-  (:export t
-   :type-initializer "g_file_system_preview_type_get_type")
-  (:if-always 0)
-  (:if-local 1)
-  (:never 2))
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'g-file-system-preview-type atdoc:*symbol-name-alias*) "Enum"
-      (gethash 'g-file-system-preview-type atdoc:*external-symbols*)
- "@version{2013-7-12}
-  @begin{short}
-    Indicates a hint from the file system whether files should be previewed in a
-    file manager. Returned as the value of the key
-    @code{G_FILE_ATTRIBUTE_FILESYSTEM_USE_PREVIEW}.
-  @end{short}
-  @begin{pre}
-(define-g-enum \"GFileSystemPreviewType\" g-file-system-preview-type
-  (:export t
-   :type-initializer \"g_file_system_preview_type_get_type\")
-  (:if-always 0)
-  (:if-local 1)
-  (:never 2))
-  @end{pre}
-  @begin[code]{table}
-    @entry[:if-always]{Only preview files if user has explicitly requested it.}
-    @entry[:if-local]{Preview files if user has requested preview of
-      \"local\" files.}
-    @entry[:never]{Never preview files.}
-  @end{table}")
-
-;;; ----------------------------------------------------------------------------
 ;;; GFileProgressCallback ()
 ;;;
 ;;; void                (*GFileProgressCallback)            (goffset current_num_bytes,
@@ -1129,6 +1099,12 @@
 ;;;
 ;;; Returns :
 ;;;     a new GFile for the given path. Free the returned object with g_object_unref(). [transfer full]
+
+(defcfun g-file-new-for-path (g-object g-file)
+  (path :string))
+
+(export 'g-file-new-for-path)
+
 ;;; g_file_new_for_uri ()
 ;;;
 ;;; GFile *             g_file_new_for_uri                  (const char *uri);
@@ -1262,6 +1238,12 @@
 ;;;
 ;;; Returns :
 ;;;     string containing the GFile's path, or NULL if no such path exists. The returned string should be freed with g_free() when no longer needed.
+
+(defcfun g-file-get-path :string
+  (file (g-object g-file)))
+
+(export 'g-file-get-path)
+
 ;;; g_file_get_uri ()
 ;;;
 ;;; char *              g_file_get_uri                      (GFile *file);
@@ -1275,6 +1257,12 @@
 ;;;
 ;;; Returns :
 ;;;     a string containing the GFile's URI. The returned string should be freed with g_free() when no longer needed.
+
+(defcfun g-file-get-uri :string
+  (file (g-object g-file)))
+
+(export 'g-file-get-uri)
+
 ;;; g_file_get_parse_name ()
 ;;;
 ;;; char *              g_file_get_parse_name               (GFile *file);
@@ -1292,6 +1280,12 @@
 ;;;
 ;;; Returns :
 ;;;     a string containing the GFile's parse name. The returned string should be freed with g_free() when no longer needed.
+
+(defcfun g-file-get-parse-name :string
+  (file (g-object g-file)))
+
+(export 'g-file-get-parse-name)
+
 ;;; g_file_get_parent ()
 ;;;
 ;;; GFile *             g_file_get_parent                   (GFile *file);

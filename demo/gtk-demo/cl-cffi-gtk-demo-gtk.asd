@@ -86,6 +86,7 @@
                (:file "paned-window")
                (:file "pixbuf-scale")
                (:file "pixbufs")
+               (:file "places-sidebar")
                (:file "popover")
                (:file "progress-bar")
                (:file "revealer")
