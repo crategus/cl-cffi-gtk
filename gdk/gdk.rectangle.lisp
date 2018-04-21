@@ -272,6 +272,9 @@
 ;;; ----------------------------------------------------------------------------
 
 #+gdk-3-20
+(declaim (inline gdk-rectangle-equal))
+
+#+gdk-3-20
 (defun gdk-rectangle-equal (rect1 rect2)
   (equalp rect1 rect2))
 
