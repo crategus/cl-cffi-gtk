@@ -61,10 +61,11 @@
   (is-false (g-type-is-a "GtkWidget" "GtkWindow"))
 
   ;; Check the children
-  (is (equal '("GtkMisc" "GtkContainer" "GtkRange" "GtkSeparator" "GtkInvisible"
-               "GtkProgressBar" "GtkLevelBar" "GtkSpinner" "GtkSwitch"
-               "GtkCellView" "GtkEntry" "GtkHSV" "GtkCalendar" "GtkDrawingArea")
-             (mapcar #'gtype-name (g-type-children "GtkWidget"))))
+  (is (subsetp '("GtkMisc" "GtkContainer" "GtkRange" "GtkSeparator" "GtkInvisible"
+                 "GtkProgressBar" "GtkLevelBar" "GtkSpinner" "GtkSwitch"
+                 "GtkCellView" "GtkEntry" "GtkHSV" "GtkCalendar" "GtkDrawingArea")
+               (mapcar #'gtype-name (g-type-children "GtkWidget"))
+               :test #'string=))
              
   ;; Check the interfaces
   (is (equal '("AtkImplementorIface" "GtkBuildable")
@@ -83,18 +84,18 @@
            (foreign-slot-value query '(:struct g-type-query) :instance-size))))
 
   ;; Get the class properties.
-  (is (equal '("app-paintable" "can-default" "can-focus" "composite-child"
-               "double-buffered" "events" "expand" "halign" "has-default"
-               "has-focus" "has-tooltip" "height-request" "hexpand"
-               "hexpand-set" "is-focus" "margin" "margin-bottom" "margin-end"
-               "margin-left" "margin-right" "margin-start" "margin-top" "name"
-               "no-show-all" "opacity" "parent" "receives-default"
-               "scale-factor" "sensitive" "style" "tooltip-markup"
-               "tooltip-text" "valign" "vexpand" "vexpand-set" "visible"
-               "width-request" "window")
-             (stable-sort (mapcar #'param-spec-name
-                                  (g-object-class-list-properties "GtkWidget"))
-                          #'string-lessp)))
+  (is (subsetp '("app-paintable" "can-default" "can-focus" "composite-child"
+                 "double-buffered" "events" "expand" "halign" "has-default"
+                 "has-focus" "has-tooltip" "height-request" "hexpand"
+                 "hexpand-set" "is-focus" "margin" "margin-bottom" "margin-end"
+                 "margin-left" "margin-right" "margin-start" "margin-top" "name"
+                 "no-show-all" "opacity" "parent" "receives-default"
+                 "scale-factor" "sensitive" "style" "tooltip-markup"
+                 "tooltip-text" "valign" "vexpand" "vexpand-set" "visible"
+                 "width-request" "window")
+                (mapcar #'param-spec-name
+                        (g-object-class-list-properties "GtkWidget"))
+                :test #'string=))
 
   ;; Get the style properties.
   (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern"

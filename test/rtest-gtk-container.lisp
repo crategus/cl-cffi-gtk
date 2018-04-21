@@ -108,11 +108,12 @@
   (is-false (g-type-is-a "GtkContainer" "GtkWindow"))
 
   ;; Check the children
-  (is (equal '("GtkBin" "GtkMenuShell" "GtkBox" "GtkTable" "GtkGrid" "GtkLayout"
-               "GtkFixed" "GtkNotebook" "GtkPaned" "GtkTextView" "GtkTreeView"
-               "GtkIconView" "GtkToolItemGroup" "GtkToolbar" "GtkToolPalette"
-               "GtkSocket" "GtkHeaderBar")
-             (mapcar #'gtype-name (g-type-children "GtkContainer"))))
+  (is (subsetp '("GtkBin" "GtkMenuShell" "GtkBox" "GtkTable" "GtkGrid" "GtkLayout"
+                 "GtkFixed" "GtkNotebook" "GtkPaned" "GtkTextView" "GtkTreeView"
+                 "GtkIconView" "GtkToolItemGroup" "GtkToolbar" "GtkToolPalette"
+                 "GtkSocket" "GtkHeaderBar")
+               (mapcar #'gtype-name (g-type-children "GtkContainer"))
+               :test #'string=))
              
   ;; Check the interfaces
   (is (equal '("AtkImplementorIface" "GtkBuildable")
@@ -131,18 +132,18 @@
            (foreign-slot-value query '(:struct g-type-query) :instance-size))))
 
   ;; Get the class properties.
-  (is (equal '("app-paintable" "border-width" "can-default" "can-focus" "child"
-               "composite-child" "double-buffered" "events" "expand" "halign"
-               "has-default" "has-focus" "has-tooltip" "height-request"
-               "hexpand" "hexpand-set" "is-focus" "margin" "margin-bottom"
-               "margin-end" "margin-left" "margin-right" "margin-start"
-               "margin-top" "name" "no-show-all" "opacity" "parent"
-               "receives-default" "resize-mode" "scale-factor" "sensitive"
-               "style" "tooltip-markup" "tooltip-text" "valign" "vexpand"
-               "vexpand-set" "visible" "width-request" "window")
-             (stable-sort (mapcar #'param-spec-name
-                                  (g-object-class-list-properties "GtkContainer"))
-                          #'string-lessp)))
+  (is (subsetp '("app-paintable" "border-width" "can-default" "can-focus" "child"
+                 "composite-child" "double-buffered" "events" "expand" "halign"
+                 "has-default" "has-focus" "has-tooltip" "height-request"
+                 "hexpand" "hexpand-set" "is-focus" "margin" "margin-bottom"
+                 "margin-end" "margin-left" "margin-right" "margin-start"
+                 "margin-top" "name" "no-show-all" "opacity" "parent"
+                 "receives-default" "resize-mode" "scale-factor" "sensitive"
+                 "style" "tooltip-markup" "tooltip-text" "valign" "vexpand"
+                 "vexpand-set" "visible" "width-request" "window")
+                (mapcar #'param-spec-name
+                        (g-object-class-list-properties "GtkContainer"))
+                :test #'string=))
 
   ;; Get the style properties.
   (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern"

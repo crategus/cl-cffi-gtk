@@ -78,24 +78,24 @@
            (foreign-slot-value query '(:struct g-type-query) :instance-size))))
 
   ;; Get the names of the class properties.
-  (is (equal '("app-paintable" "border-width" "can-default"
-                               "can-focus" "child" "composite-child"
-                               "double-buffered" "events" "expand"
-                               "hadjustment" "halign" "has-default" "has-focus"
-                               "has-tooltip" "height-request" "hexpand"
-                               "hexpand-set" "hscroll-policy" "icon-size"
-                               "icon-size-set" "is-focus" "margin"
-                               "margin-bottom" "margin-left" "margin-right"
-                               "margin-top" "name" "no-show-all" "opacity"
-                               "orientation" "parent" "receives-default"
-                               "resize-mode" "scale-factor" "sensitive" "style"
-                               "toolbar-style" "tooltip-markup" "tooltip-text"
-                               "vadjustment" "valign" "vexpand" "vexpand-set"
-                               "visible" "vscroll-policy" "width-request"
-                               "window")
-             (stable-sort (mapcar #'param-spec-name
-                                  (g-object-class-list-properties "GtkToolPalette"))
-                          #'string-lessp)))
+  (is (subsetp '("app-paintable" "border-width" "can-default"
+                 "can-focus" "child" "composite-child"
+                 "double-buffered" "events" "expand"
+                 "hadjustment" "halign" "has-default" "has-focus"
+                 "has-tooltip" "height-request" "hexpand"
+                 "hexpand-set" "hscroll-policy" "icon-size"
+                 "icon-size-set" "is-focus" "margin"
+                 "margin-bottom" "margin-left" "margin-right"
+                 "margin-top" "name" "no-show-all" "opacity"
+                 "orientation" "parent" "receives-default"
+                 "resize-mode" "scale-factor" "sensitive" "style"
+                 "toolbar-style" "tooltip-markup" "tooltip-text"
+                 "vadjustment" "valign" "vexpand" "vexpand-set"
+                 "visible" "vscroll-policy" "width-request"
+                 "window")
+                (mapcar #'param-spec-name
+                        (g-object-class-list-properties "GtkToolPalette"))
+                :test #'string=))
 
   ;; Get the names of the style properties.
   (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern" "focus-line-width"
