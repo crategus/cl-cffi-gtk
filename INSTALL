@@ -55,15 +55,12 @@ must be installed:
    Closer-MOP
    see http://common-lisp.net/project/closer/closer-mop.html
 
-The pdf version of the tutorial is build with the command:
+For building the PDF and HTML versions of the tutorial, run:
 
-   texi2pdf gtk-tutorial.texi
+  make -C tutorial
 
-The html version can be build with the command:
-
-   perl texi2html --css-include=manual.css -split_chapter gtk-tutorial.texi
-
-For generating the documentation it is assumed that a Tex system is installed.
+For generating the tutorial it is assumed that GNU Texinfo and a TeX
+distribution are installed.
 
 The testsuite can be run with:
 
