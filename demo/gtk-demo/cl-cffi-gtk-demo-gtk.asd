@@ -102,6 +102,7 @@
                (:file "simple-tree-view")
                (:file "simple-window")
                (:file "spin-button")
+               (:file "stack")
                (:file "statusbar")
                (:c-test-lib "subclass")
                (:file "subclass-window")

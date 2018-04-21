@@ -113,6 +113,7 @@
    (:file "gtk.flow-box")              ; A container that allows reflowing its children
    (:file "gtk.list-box")              ; A list container
    (:file "gtk.revealer")              ; Hide and show with animation
+   (:file "gtk.stack")                 ; A stacking container
 
    ;; Ornaments
    (:file "gtk.separator")             ; Separator widget
