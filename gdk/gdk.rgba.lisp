@@ -35,7 +35,7 @@
 ;;;     GdkRGBA
 ;;;
 ;;;     gdk_rgba_copy
-;;;     gdk_rgba_free
+;;;     gdk_rgba_free         * not implemented, irrelevant in CL *
 ;;;     gdk_rgba_parse
 ;;;     gdk_rgba_equal
 ;;;     gdk_rgba_hash

@@ -40,10 +40,15 @@
 ;;;     GdkInputSource
 ;;;     GdkInputMode
 ;;;     GdkAxisUse
+;;;     GdkAxisFlags
+;;;     GdkDeviceToolType
 ;;;     GdkDeviceType
 ;;;     GdkGrabOwnership
+;;;     GdkTimeCoord
 ;;;
-;;;     gdk_device_get_name
+;;;     gdk_device_get_name                       -> Accessor
+;;;     gdk_device_get_vendor_id                  -> Accessor
+;;;     gdk_device_get_product_id                 -> Accessor
 ;;;     gdk_device_get_source
 ;;;     gdk_device_set_mode
 ;;;     gdk_device_get_mode
@@ -53,25 +58,25 @@
 ;;;     gdk_device_get_axis_use
 ;;;     gdk_device_get_associated_device
 ;;;     gdk_device_list_slave_devices
-;;;     gdk_device_get_device_type
-;;;     gdk_device_get_display
-;;;     gdk_device_get_has_cursor
-;;;     gdk_device_get_n_axes
+;;;     gdk_device_get_device_type                -> Accessor
+;;;     gdk_device_get_display                    -> Accessor
+;;;     gdk_device_get_has_cursor                 -> Accessor
+;;;     gdk_device_get_n_axes                     -> Accessor
 ;;;     gdk_device_get_n_keys
+;;;     gdk_device_get_axes                       -> Accessor
 ;;;     gdk_device_warp
 ;;;     gdk_device_get_seat                       -> Accessor
 ;;;
 ;;;     GdkGrabStatus               * from gdk.general.lisp *
 ;;;
-;;;     gdk_device_grab
-;;;     gdk_device_ungrab
+;;;     gdk_device_grab                           * deprecated *
+;;;     gdk_device_ungrab                         * deprecated *
 ;;;
 ;;;     gdk_device_get_state
 ;;;     gdk_device_get_position
 ;;;     gdk_device_get_position_double
 ;;;     gdk_device_get_window_at_position
-;;;
-;;;     GdkTimeCoord
+;;;     gdk_device_get_window_at_position_double  * not implemented (irrelevant in CL) *
 ;;;
 ;;;     gdk_device_get_history
 ;;;     gdk_device_free_history
@@ -80,6 +85,11 @@
 ;;;     gdk_device_list_axes
 ;;;     gdk_device_get_axis_value
 ;;;     gdk_device_get_last_event_window
+;;;
+;;;     GdkDeviceTool                             (not documented)
+;;;
+;;;     gdk_device_tool_get_serial                -> Accessor
+;;;     gdk_device_tool_get_tool_type             -> Accessor
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gdk)
@@ -96,6 +106,10 @@
   ((associated-device
     gdk-device-associated-device
     "associated-device" "GdkDevice" t nil)
+   #+gdk-3-22
+   (axes
+    gdk-device-axes
+    "axes" "GdkAxisFlags" t nil)
    (device-manager
     gdk-device-device-manager
     "device-manager" "GdkDeviceManager" t t)
@@ -117,6 +131,10 @@
    (name
     gdk-device-name
     "name" "gchar" t t)
+   #+gdk-3-20
+   (num-touches
+    gdk-device-num-touches
+    "num-touches" "guint" t t)
    #+gdk-3-16
    (product-id
     gdk-device-product-id
@@ -125,6 +143,9 @@
    (seat
     gdk-device-seat
     "seat" "GdkSeat" t t)
+   (tool
+    gdk-device-tool
+    "tool" "GdkDeviceTool" t nil)
    (type
     gdk-device-type
     "type" "GdkDeviceType" t t)
@@ -680,6 +701,41 @@ get_device_settings (GdkDevice *device)
   @see-class{gdk-device}")
 
 ;;; ----------------------------------------------------------------------------
+;;; enum GdkAxisFlags
+;;; ----------------------------------------------------------------------------
+
+#+gdk-3-22
+(define-g-flags "GdkAxisFlags" gdk-axis-flags
+  (:export t
+   :type-initializer "gdk_axis_flags_get_type")
+  (:x 2)
+  (:y 4)
+  (:pressure 8)
+  (:xtilt 16)
+  (:ytilt 32)
+  (:wheel 64)
+  (:distance 128)
+  (:rotation 256)
+  (:slider 512))
+
+;;; ----------------------------------------------------------------------------
+;;; enum GdkDeviceToolType
+;;; ----------------------------------------------------------------------------
+
+#+gdk-3-22
+(define-g-enum "GdkDeviceToolType" gdk-device-tool-type
+  (:export t
+   :type-initializer "gdk_device_tool_type_get_type")
+  :unknown
+  :pen
+  :eraser
+  :brush
+  :pencil
+  :airbrush
+  :mouse
+  :lens)
+
+;;; ----------------------------------------------------------------------------
 ;;; enum GdkDeviceType
 ;;; ----------------------------------------------------------------------------
 
@@ -915,6 +971,15 @@ get_device_settings (GdkDevice *device)
 (export 'gdk-device-get-axis-use)
 
 ;;; ----------------------------------------------------------------------------
+;;; gdk_device_get_associated_device ()
+;;; ----------------------------------------------------------------------------
+
+(defcfun gdk-device-get-associated-device (g-object gdk-device)
+  (device (g-object gdk-device)))
+
+(export 'gdk-device-get-associated-device)
+
+;;; ----------------------------------------------------------------------------
 ;;; gdk_device_list_slave_devices ()
 ;;; ----------------------------------------------------------------------------
 
@@ -1033,6 +1098,7 @@ get_device_settings (GdkDevice *device)
 ;;; gdk_device_grab ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gdk gdk-device-grab (3 20) gdk-seat-grab)
 (defcfun ("gdk_device_grab" gdk-device-grab) gdk-grab-status
  #+cl-cffi-gtk-documentation
  "@version{2013-8-21}
@@ -1107,6 +1173,7 @@ get_device_settings (GdkDevice *device)
 ;;; gdk_device_ungrab ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gdk gdk-device-ungrab (3 20) gdk-seat-ungrab)
 (defcfun ("gdk_device_ungrab" gdk-device-ungrab) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-8-21}
@@ -1429,12 +1496,9 @@ get_device_settings (GdkDevice *device)
   (assert (= (gdk-device-n-axes device) (length axes)))
   (with-foreign-objects ((axes-ar :double (gdk-device-n-axes device))
                          (value :double))
-    (let ((i 0))
-      (map nil
-           (lambda (v)
-             (setf (mem-aref axes-ar :double i) v)
-             (incf i))
-           axes))
+    (iter (for i from 0)
+          (for v in-sequence axes)
+          (setf (mem-aref axes-ar :double i) v))
     (when (%gdk-device-get-axis device axes-ar axis-use value)
       (mem-ref value :double))))
 
@@ -1491,6 +1555,24 @@ get_device_settings (GdkDevice *device)
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
 
+(defcfun ("gdk_device_get_axis_value" %gdk-device-get-axis-value) :boolean
+  (device (g-object gdk-device))
+  (axes (:pointer :double))
+  (axis-label gdk-atom-as-string)
+  (value (:pointer :double)))
+
+(defun gdk-device-get-axis-value (device axes axis-label)
+  (assert (= (gdk-device-n-axes device) (length axes)))
+  (with-foreign-objects ((axes-ar :double (gdk-device-n-axes device))
+                         (value :double))
+    (iter (for i from 0)
+          (for v in-sequence axes)
+          (setf (mem-aref axes-ar :double i) v))
+    (when (%gdk-device-get-axis-value device axes-ar axis-label value)
+      (mem-ref value :double))))
+
+(export 'gdk-device-get-axis-value)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_device_get_last_event_window ()
 ;;;
@@ -1513,5 +1595,34 @@ get_device_settings (GdkDevice *device)
 ;;;
 ;;; Since 3.12
 ;;; ----------------------------------------------------------------------------
+
+#+gdk-3-12
+(defcfun gdk-device-get-last-event-window (g-object gdk-window)
+  (device (g-object gdk-device)))
+
+#+gdk-3-12
+(export 'gdk-device-get-last-event-window)
+
+;;; ----------------------------------------------------------------------------
+;;; GdkDeviceTool
+;;; ----------------------------------------------------------------------------
+
+(define-g-object-class "GdkDeviceTool" gdk-device-tool
+  (:superclass g-object
+   :export t
+   :interfaces nil
+   :type-initializer "gdk_device_tool_get_type")
+  ((serial
+    gdk-device-tool-serial
+    "serial" "guint64" t t)
+   (tool-type
+    gdk-device-tool-tool-type
+    "tool-type" "GdkDeviceToolType" t t)
+   (axes
+    gdk-device-tool-axes
+    "axes" "GdkAxisFlags" t t)
+   (hardware-id
+    gdk-device-tool-hardware-id
+    "hardware-id" "guint64" t t)))
 
 ;;; --- End of file gdk.device.lisp --------------------------------------------

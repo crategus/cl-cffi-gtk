@@ -42,6 +42,7 @@
 
                (:file "gdk.cursor")           ; Standard and pixmap cursors
                (:file "gdk.device")           ; Representing an input device
+               (:file "gdk.device-pad")       ; Pad device interface
                (:file "gdk.device-manager")   ; Handling input devices
                (:file "gdk.screen")           ; Representing a physical screen
                (:file "gdk.visual")           ; Low-level display information

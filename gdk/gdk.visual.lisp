@@ -41,23 +41,23 @@
 ;;;     GdkByteOrder
 ;;;
 ;;;     gdk_query_depths
-;;;     gdk_query_visual_types
-;;;     gdk_list_visuals
-;;;     gdk_visual_get_bits_per_rgb
+;;;     gdk_query_visual_types                    * deprecated *
+;;;     gdk_list_visuals                          * deprecated *
+;;;     gdk_visual_get_bits_per_rgb               * deprecated *
 ;;;     gdk_visual_get_blue_pixel_details
-;;;     gdk_visual_get_byte_order
-;;;     gdk_visual_get_colormap_size
+;;;     gdk_visual_get_byte_order                 * deprecated *
+;;;     gdk_visual_get_colormap_size              * deprecated *
 ;;;     gdk_visual_get_depth
 ;;;     gdk_visual_get_green_pixel_details
 ;;;     gdk_visual_get_red_pixel_details
 ;;;     gdk_visual_get_visual_type
-;;;     gdk_visual_get_best_depth
-;;;     gdk_visual_get_best_type
-;;;     gdk_visual_get_system
-;;;     gdk_visual_get_best
-;;;     gdk_visual_get_best_with_depth
-;;;     gdk_visual_get_best_with_type
-;;;     gdk_visual_get_best_with_both
+;;;     gdk_visual_get_best_depth                 * deprecated *
+;;;     gdk_visual_get_best_type                  * deprecated *
+;;;     gdk_visual_get_system                     * deprecated *
+;;;     gdk_visual_get_best                       * deprecated *
+;;;     gdk_visual_get_best_with_depth            * deprecated *
+;;;     gdk_visual_get_best_with_type             * deprecated *
+;;;     gdk_visual_get_best_with_both             * deprecated *
 ;;;     gdk_visual_get_screen
 ;;;
 ;;; Object Hierarchy
@@ -212,6 +212,7 @@
   (depths (:pointer (:pointer :int)))
   (count (:pointer :int)))
 
+(deprecated-function :gdk gdk-query-depths (3 22) (gdk-screen-get-system-visual gdk-screen-get-rgba-visual))
 (defun gdk-query-depths ()
  #+cl-cffi-gtk-documentation
  "@version{2013-7-29}
@@ -241,6 +242,7 @@
   (depths (:pointer (:pointer gdk-visual-type)))
   (count (:pointer :int)))
 
+(deprecated-function :gdk gdk-query-visual-types (3 22) (gdk-screen-get-system-visual gdk-screen-get-rgba-visual))
 (defun gdk-query-visual-types ()
  #+cl-cffi-gtk-documentation
  "@version{2013-7-29}
@@ -266,6 +268,7 @@
 ;;; gdk_list_visuals ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gdk gdk-list-visuals (3 22) gdk-screen-list-visuals)
 (defcfun ("gdk_list_visuals" gdk-list-visuals)
     (g-list (g-object gdk-visual) :free-from-foreign t)
  #+cl-cffi-gtk-documentation
@@ -286,6 +289,7 @@
 ;;; gdk_visual_get_bits_per_rgb ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gdk gdk-visual-get-bits-per-rgb (3 22) (gdk-visual-get-red-pixel-details gdk-visual-get-green-pixel-details gdk-visual-get-blue-pixel-details))
 (defcfun ("gdk_visual_get_bits_per_rgb" gdk-visual-get-bits-per-rgb) :int
  #+cl-cffi-gtk-documentation
  "@version{2013-7-29}
@@ -346,6 +350,7 @@
 ;;; gdk_visual_get_byte_order ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gdk gdk-visual-get-byte-order (3 22))
 (defcfun ("gdk_visual_get_byte_order" gdk-visual-get-byte-order) gdk-byte-order
  #+cl-cffi-gtk-documentation
  "@version{2013-7-29}
@@ -505,6 +510,7 @@
 ;;; gdk_visual_get_best_depth ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gdk gdk-visual-get-best-depth (3 22) (gdk-screen-get-system-visual gdk-screen-get-rgba-visual))
 (defcfun ("gdk_visual_get_best_depth" gdk-visual-get-best-depth) :int
  #+cl-cffi-gtk-documentation
  "@version{2013-7-29}
@@ -523,6 +529,7 @@
 ;;; gdk_visual_get_best_type ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gdk gdk-visual-get-best-type (3 22) (gdk-screen-get-system-visual gdk-screen-get-rgba-visual))
 (defcfun ("gdk_visual_get_best_type" gdk-visual-get-best-type) gdk-visual-type
  #+cl-cffi-gtk-documentation
  "@version{2013-7-29}
@@ -537,6 +544,7 @@
 ;;; gdk_visual_get_system ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gdk gdk-visual-get-system (3 22) gdk-screen-get-system-visual)
 (defcfun ("gdk_visual_get_system" gdk-visual-get-system) (g-object gdk-visual)
  #+cl-cffi-gtk-documentation
  "@version{2013-7-29}
@@ -554,6 +562,7 @@
 ;;; gdk_visual_get_best ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gdk gdk-visual-get-best (3 22) (gdk-screen-get-system-visual gdk-screen-get-rgba-visual))
 (defcfun ("gdk_visual_get_best" gdk-visual-get-best) (g-object gdk-visual)
  #+cl-cffi-gtk-documentation
  "@version{2013-7-29}
@@ -571,6 +580,7 @@
 ;;; gdk_visual_get_best_with_depth ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gdk gdk-visual-get-best-with-depth (3 22) (gdk-screen-get-system-visual gdk-screen-get-rgba-visual))
 (defcfun ("gdk_visual_get_best_with_depth" gdk-visual-get-best-with-depth)
     (g-object gdk-visual)
  #+cl-cffi-gtk-documentation
@@ -596,6 +606,7 @@
 ;;; gdk_visual_get_best_with_type ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gdk gdk-visual-get-best-with-type (3 22) (gdk-screen-get-system-visual gdk-screen-get-rgba-visual))
 (defcfun ("gdk_visual_get_best_with_type" gdk-visual-get-best-with-type)
     (g-object gdk-visual)
  #+cl-cffi-gtk-documentation
@@ -621,6 +632,7 @@
 ;;; gdk_visual_get_best_with_both ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gdk gdk-visual-get-best-with-both (3 22) (gdk-screen-get-system-visual gdk-screen-get-rgba-visual))
 (defcfun ("gdk_visual_get_best_with_both" gdk-visual-get-best-with-both)
     (g-object gdk-visual)
  #+cl-cffi-gtk-documentation

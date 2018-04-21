@@ -35,9 +35,9 @@
 ;;;     GdkDeviceManager
 ;;;
 ;;;     gdk_disable_multidevice
-;;;     gdk_device_manager_get_display
-;;;     gdk_device_manager_list_devices
-;;;     gdk_device_manager_get_client_pointer
+;;;     gdk_device_manager_get_display         -> Accessor
+;;;     gdk_device_manager_list_devices        * deprecated *
+;;;     gdk_device_manager_get_client_pointer  * deprecated *
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -301,6 +301,7 @@
 ;;; gdk_device_manager_list_devices ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gdk gdk-device-manager-list-devices (3 20) (gdk-seat-get-pointer gdk-seat-get-keyboard gdk-seat-get-slaves))
 (defcfun ("gdk_device_manager_list_devices" gdk-device-manager-list-devices)
     (g-list (g-object gdk-device) :free-from-foreign t)
  #+cl-cffi-gtk-documentation
@@ -324,6 +325,7 @@
 ;;; gdk_device_manager_get_client_pointer ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gdk gdk-device-manager-get-client-pointer (3 20) gdk-seat-get-pointer)
 (defcfun ("gdk_device_manager_get_client_pointer"
            gdk-device-manager-get-client-pointer) (g-object gdk-device)
  #+cl-cffi-gtk-documentation

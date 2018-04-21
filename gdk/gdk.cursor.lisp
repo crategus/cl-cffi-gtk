@@ -39,13 +39,15 @@
 ;;;     GdkCursor
 ;;;     GdkCursorType
 ;;;
-;;;     gdk_cursor_new                           * deprectated *
+;;;     gdk_cursor_new                           * deprecated *
 ;;;     gdk_cursor_new_from_pixbuf
 ;;;     gdk_cursor_new_from_surface
 ;;;     gdk_cursor_new_from_name
 ;;;     gdk_cursor_new_for_display
+;;;     gdk_cursor_get_display                   -> Accessor
 ;;;     gdk_cursor_get_image
 ;;;     gdk_cursor_get_surface
+;;;     gdk_cursor_get_cursor_type               -> Accessor
 ;;;     gdk_cursor_ref                           * deprecated *
 ;;;     gdk_cursor_unref                         * deprecated *
 ;;;
@@ -353,6 +355,7 @@
 ;;; gdk_cursor_new ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gdk gdk-cursor-new (3 16) gdk-cursor-new-for-display)
 (defcfun ("gdk_cursor_new" gdk-cursor-new) (g-object gdk-cursor)
  #+cl-cffi-gtk-documentation
  "@version{2013-7-29}
@@ -599,6 +602,7 @@
 
 (declaim (inline gdk-cursor-ref))
 
+(deprecated-function :gdk gdk-cursor-ref (3 0) g-object-ref)
 (defun gdk-cursor-ref (cursor)
  #+cl-cffi-gtk-documentation
  "@version{2013-7-29}
@@ -622,6 +626,7 @@
 
 (declaim (inline gdk-cursor-unref))
 
+(deprecated-function :gdk gdk-cursor-unref (3 0) g-object-unref)
 (defun gdk-cursor-unref (cursor)
  #+cl-cffi-gtk-documentation
  "@version{2013-7-29}
