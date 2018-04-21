@@ -320,8 +320,7 @@
     (setf iter (g-variant-type-next iter))
     (is (equal "n" (g-variant-type-dup-string iter)))
     (setf iter (g-variant-type-next iter))
-    ;; We do not get a NULL-POINTER,check this.
-    (is (eq 'g-variant-type (type-of iter)))))
+    (is (null iter))))
 
 ;;;   g_variant_type_key
 ;;;   g_variant_type_value

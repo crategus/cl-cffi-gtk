@@ -167,14 +167,13 @@
   (let* ((source (g-timeout-source-new 500))
          (context (g-main-context-new))
          (id (g-source-attach source context))
-         (loop (g-main-loop-new context t)))
+         (loop (g-main-loop-new context nil)))
     (g-source-set-callback source (lambda () (timeout-callback loop)))
-    (is-true (g-main-loop-is-running loop))
     (is-true (g-main-context-find-source-by-id context id))
     (is-true (pointer-eq source
                          (g-main-context-find-source-by-id context id)))
     (is-false (g-main-context-pending context))
-    (is-false (g-main-context-iteration context t))
+    (is-true (g-main-context-iteration context t))
 ))
 
 ;;;     g_main_iteration

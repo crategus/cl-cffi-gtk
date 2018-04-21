@@ -75,18 +75,19 @@
            (foreign-slot-value query '(:struct g-type-query) :instance-size))))
 
   ;; Get the names of the class properties.
-  (is (equal '("name" "parent" "width-request" "height-request" "visible"
-               "sensitive" "app-paintable" "can-focus" "has-focus" "is-focus"
-               "can-default" "has-default" "receives-default" "composite-child"
-               "style" "events" "no-show-all" "has-tooltip" "tooltip-markup"
-               "tooltip-text" "window" "opacity" "double-buffered" "halign"
-               "valign" "margin-left" "margin-right" "margin-top"
-               "margin-bottom" "margin" "hexpand" "vexpand" "hexpand-set"
-               "vexpand-set" "expand" "scale-factor" "border-width"
-               "resize-mode" "child" "label" "label-xalign" "label-yalign"
-               "shadow-type" "label-widget")
-             (mapcar #'param-spec-name
-                     (g-object-class-list-properties "GtkFrame"))))             
+  (is (subsetp '("name" "parent" "width-request" "height-request" "visible"
+                 "sensitive" "app-paintable" "can-focus" "has-focus" "is-focus"
+                 "can-default" "has-default" "receives-default" "composite-child"
+                 "style" "events" "no-show-all" "has-tooltip" "tooltip-markup"
+                 "tooltip-text" "window" "opacity" "double-buffered" "halign"
+                 "valign" "margin-left" "margin-right" "margin-top"
+                 "margin-bottom" "margin" "hexpand" "vexpand" "hexpand-set"
+                 "vexpand-set" "expand" "scale-factor" "border-width"
+                 "resize-mode" "child" "label" "label-xalign" "label-yalign"
+                 "shadow-type" "label-widget")
+               (mapcar #'param-spec-name
+                       (g-object-class-list-properties "GtkFrame"))
+               :test #'string=))
              
   ;; Get the names of the style properties.
   (is (equal '("cursor-aspect-ratio" "cursor-color" "focus-line-pattern" "focus-line-width"

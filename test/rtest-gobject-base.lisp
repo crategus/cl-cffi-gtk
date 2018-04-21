@@ -105,21 +105,22 @@
 ;;;   g_object_class_list_properties
 
 (test g-object-class-list-properties
-  (is (equal '("name" "parent" "width-request" "height-request" "visible"
-               "sensitive" "app-paintable" "can-focus" "has-focus" "is-focus"
-               "can-default" "has-default" "receives-default" "composite-child"
-               "style" "events" "no-show-all" "has-tooltip" "tooltip-markup"
-               "tooltip-text" "window" "opacity" "double-buffered" "halign"
-               "valign" "margin-left" "margin-right" "margin-top"
-               "margin-bottom" "margin" "hexpand" "vexpand" "hexpand-set"
-               "vexpand-set" "expand" "scale-factor" "xalign" "yalign" "xpad"
-               "ypad" "label" "attributes" "use-markup" "use-underline"
-               "justify" "pattern" "wrap" "wrap-mode" "selectable"
-               "mnemonic-keyval" "mnemonic-widget" "cursor-position"
-               "selection-bound" "ellipsize" "width-chars" "single-line-mode"
-               "angle" "max-width-chars" "track-visited-links" "lines")
-             (mapcar #'param-spec-name
-                     (g-object-class-list-properties "GtkLabel")))))
+  (is (subsetp '("name" "parent" "width-request" "height-request" "visible"
+                 "sensitive" "app-paintable" "can-focus" "has-focus" "is-focus"
+                 "can-default" "has-default" "receives-default" "composite-child"
+                 "style" "events" "no-show-all" "has-tooltip" "tooltip-markup"
+                 "tooltip-text" "window" "opacity" "double-buffered" "halign"
+                 "valign" "margin-left" "margin-right" "margin-top"
+                 "margin-bottom" "margin" "hexpand" "vexpand" "hexpand-set"
+                 "vexpand-set" "expand" "scale-factor" "xalign" "yalign" "xpad"
+                 "ypad" "label" "attributes" "use-markup" "use-underline"
+                 "justify" "pattern" "wrap" "wrap-mode" "selectable"
+                 "mnemonic-keyval" "mnemonic-widget" "cursor-position"
+                 "selection-bound" "ellipsize" "width-chars" "single-line-mode"
+                 "angle" "max-width-chars" "track-visited-links" "lines")
+               (mapcar #'param-spec-name
+                       (g-object-class-list-properties "GtkLabel"))
+               :test #'string=)))
 
 ;;;    g_object_class_override_property
 ;;;    g_object_interface_install_property
