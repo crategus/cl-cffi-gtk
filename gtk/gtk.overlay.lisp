@@ -39,6 +39,22 @@
 ;;;
 ;;;     gtk_overlay_new
 ;;;     gtk_overlay_add_overlay
+;;;     gtk_overlay_reorder_overlay
+;;;     gtk_overlay_get_overlay_pass_through                  -> Accessor
+;;;     gtk_overlay_set_overlay_pass_through                  -> Accessor
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;             ╰── GtkContainer
+;;;                 ╰── GtkBin
+;;;                     ╰── GtkOverlay
+;;;
+;;; Implemented Interfaces
+;;;
+;;; GtkOverlay implements AtkImplementorIface and GtkBuildable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -49,10 +65,10 @@
 
 (define-g-object-class "GtkOverlay" gtk-overlay
   (:superclass gtk-bin
-    :export t
-    :interfaces ("AtkImplementorIface"
-                 "GtkBuildable")
-    :type-initializer "gtk_overlay_get_type")
+   :export t
+   :interfaces ("AtkImplementorIface"
+                "GtkBuildable")
+   :type-initializer "gtk_overlay_get_type")
   nil)
 
 #+cl-cffi-gtk-documentation
@@ -103,6 +119,16 @@
   @see-class{gtk-buildable}
   @see-class{gtk-scrolled-window}")
 
+#+gtk-3-18
+(define-child-property "GtkOverlay"
+                       gtk-overlay-child-index
+                       "index" "gint" t t t)
+
+#+gtk-3-18
+(define-child-property "GtkOverlay"
+                       gtk-overlay-child-pass-through
+                       "pass-through" "gboolean" t t t)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_overlay_new ()
 ;;; ----------------------------------------------------------------------------
@@ -144,5 +170,18 @@
   (widget (g-object gtk-widget)))
 
 (export 'gtk-overlay-add-overlay)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_overlay_reorder_overlay ()
+;;; ----------------------------------------------------------------------------
+
+#+gtk-3-18
+(defcfun gtk-overlay-reorder-overlay :void
+  (overlay (g-object gtk-overlay))
+  (child (g-object gtk-widget))
+  (position :int))
+
+#+gtk-3-18
+(export 'gtk-overlay-reorder-overlay)
 
 ;;; --- End of file gtk.overlay.lisp -------------------------------------------
