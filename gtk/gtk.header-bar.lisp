@@ -37,20 +37,20 @@
 ;;; Functions
 ;;;
 ;;;     gtk_header_bar_new
-;;;     gtk_header_bar_set_title
-;;;     gtk_header_bar_get_title
-;;;     gtk_header_bar_set_subtitle
-;;;     gtk_header_bar_get_subtitle
-;;;     gtk_header_bar_set_has_subtitle
-;;;     gtk_header_bar_get_has_subtitle
-;;;     gtk_header_bar_set_custom_title
-;;;     gtk_header_bar_get_custom_title
+;;;     gtk_header_bar_set_title                              -> Accessor
+;;;     gtk_header_bar_get_title                              -> Accessor
+;;;     gtk_header_bar_set_subtitle                           -> Accessor
+;;;     gtk_header_bar_get_subtitle                           -> Accessor
+;;;     gtk_header_bar_set_has_subtitle                       -> Accessor
+;;;     gtk_header_bar_get_has_subtitle                       -> Accessor
+;;;     gtk_header_bar_set_custom_title                       -> Accessor
+;;;     gtk_header_bar_get_custom_title                       -> Accessor
 ;;;     gtk_header_bar_pack_start
 ;;;     gtk_header_bar_pack_end
-;;;     gtk_header_bar_set_show_close_button
-;;;     gtk_header_bar_get_show_close_button
-;;;     gtk_header_bar_set_decoration_layout
-;;;     gtk_header_bar_get_decoration_layout
+;;;     gtk_header_bar_set_show_close_button                  -> Accessor
+;;;     gtk_header_bar_get_show_close_button                  -> Accessor
+;;;     gtk_header_bar_set_decoration_layout                  -> Accessor
+;;;     gtk_header_bar_get_decoration_layout                  -> Accessor
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -84,7 +84,7 @@
    #+gtk-3-12
    (decoration-layout
     gtk-header-bar-decoration-layout
-    "decoration-layout" "gchar" t t)
+    "decoration-layout" "gchararray" t t)
    #+gtk-3-12
    (decoration-layout-set
     gtk-header-bar-decoration-layout-set
@@ -101,10 +101,10 @@
     "spacing" "gint" t t)
    (subtitle
     gtk-header-bar-subtitle
-    "subtitle" "gchar" t t)
+    "subtitle" "gchararray" t t)
    (title
     gtk-header-bar-title
-    "title" "gchar" t t)))
+    "title" "gchararray" t t)))
 
 #+(and gtk-3-10 cl-cffi-gtk-documentation)
 (setf (documentation 'gtk-header-bar 'type)
@@ -385,6 +385,24 @@
   Since: 3.10
   @see-class{gtk-header-bar}")
 
+;;; ----------------------------------------------------------------------------
+;;; gtk_header_bar_new ()
+;;; ----------------------------------------------------------------------------
+
+#+gtk-3-10
+(declaim (inline gtk-header-bar-new))
+
+#+gtk-3-10
+(defun gtk-header-bar-new ()
+  (make-instance 'gtk-header-bar))
+
+#+gtk-3-10
+(export 'gtk-header-bar-new)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_header_bar_pack_start ()
+;;; ----------------------------------------------------------------------------
+
 #+gtk-3-10
 (defcfun ("gtk_header_bar_pack_start" gtk-header-bar-pack-start) :void
   (bar (g-object gtk-header-bar))
@@ -393,6 +411,10 @@
 #+gtk-3-10
 (export 'gtk-header-bar-pack-start)
 
+;;; ----------------------------------------------------------------------------
+;;; gtk_header_bar_pack_end ()
+;;; ----------------------------------------------------------------------------
+
 #+gtk-3-10
 (defcfun ("gtk_header_bar_pack_end" gtk-header-bar-pack-end) :void
   (bar (g-object gtk-header-bar))
@@ -400,253 +422,5 @@
 
 #+gtk-3-10
 (export 'gtk-header-bar-pack-end)
-
-#|
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_header_bar_new ()
-;;;
-;;; GtkWidget *
-;;; gtk_header_bar_new (void);
-;;;
-;;; Creates a new GtkHeaderBar widget.
-;;;
-;;; Returns
-;;;     a new GtkHeaderBar
-;;;
-;;; Since: 3.10
-;;; ----------------------------------------------------------------------------
-
-
-
-gtk_header_bar_set_has_subtitle ()
-
-void
-gtk_header_bar_set_has_subtitle (GtkHeaderBar *bar,
-                                 gboolean setting);
-
-Sets whether the header bar should reserve space for a subtitle, even if none is currently set.
-Parameters
-
-bar
-	
-
-a GtkHeaderBar
-	 
-
-setting
-	
-
-TRUE to reserve space for a subtitle
-	 
-
-Since: 3.12
-
-gtk_header_bar_get_has_subtitle ()
-
-gboolean
-gtk_header_bar_get_has_subtitle (GtkHeaderBar *bar);
-
-Retrieves whether the header bar reserves space for a subtitle, regardless if one is currently set or not.
-Parameters
-
-bar
-	
-
-a GtkHeaderBar
-	 
-Returns
-
-TRUE if the header bar reserves space for a subtitle
-
-Since: 3.12
-
-gtk_header_bar_set_custom_title ()
-
-void
-gtk_header_bar_set_custom_title (GtkHeaderBar *bar,
-                                 GtkWidget *title_widget);
-
-Sets a custom title for the GtkHeaderBar.
-
-The title should help a user identify the current view. This supersedes any title set by gtk_header_bar_set_title() or gtk_header_bar_set_subtitle(). To achieve the same style as the builtin title and subtitle, use the “title” and “subtitle” style classes.
-
-You should set the custom title to NULL, for the header title label to be visible again.
-Parameters
-
-bar
-	
-
-a GtkHeaderBar
-	 
-
-title_widget
-	
-
-a custom widget to use for a title.
-	[allow-none]
-
-Since: 3.10
-
-gtk_header_bar_get_custom_title ()
-
-GtkWidget *
-gtk_header_bar_get_custom_title (GtkHeaderBar *bar);
-
-Retrieves the custom title widget of the header. See gtk_header_bar_set_custom_title().
-Parameters
-
-bar
-	
-
-a GtkHeaderBar
-	 
-Returns
-
-the custom title widget of the header, or NULL if none has been set explicitly.
-
-[transfer none]
-
-Since: 3.10
-
-gtk_header_bar_pack_start ()
-
-void
-gtk_header_bar_pack_start (GtkHeaderBar *bar,
-                           GtkWidget *child);
-
-Adds child to bar , packed with reference to the start of the bar .
-Parameters
-
-bar
-	
-
-A GtkHeaderBar
-	 
-
-child
-	
-
-the GtkWidget to be added to bar
-	 
-
-Since: 3.10
-
-gtk_header_bar_pack_end ()
-
-void
-gtk_header_bar_pack_end (GtkHeaderBar *bar,
-                         GtkWidget *child);
-
-Adds child to bar , packed with reference to the end of the bar .
-Parameters
-
-bar
-	
-
-A GtkHeaderBar
-	 
-
-child
-	
-
-the GtkWidget to be added to bar
-	 
-
-Since: 3.10
-
-gtk_header_bar_set_show_close_button ()
-
-void
-gtk_header_bar_set_show_close_button (GtkHeaderBar *bar,
-                                      gboolean setting);
-
-Sets whether this header bar shows the standard window decorations, including close, maximize, and minimize.
-Parameters
-
-bar
-	
-
-a GtkHeaderBar
-	 
-
-setting
-	
-
-TRUE to show standard widow decorations
-	 
-
-Since: 3.10
-
-gtk_header_bar_get_show_close_button ()
-
-gboolean
-gtk_header_bar_get_show_close_button (GtkHeaderBar *bar);
-
-Returns whether this header bar shows the standard window decorations.
-Parameters
-
-bar
-	
-
-a GtkHeaderBar
-	 
-Returns
-
-TRUE if the decorations are shown
-
-Since: 3.10
-
-gtk_header_bar_set_decoration_layout ()
-
-void
-gtk_header_bar_set_decoration_layout (GtkHeaderBar *bar,
-                                      const gchar *layout);
-
-Sets the decoration layout for this header bar, overriding the “gtk-decoration-layout” setting.
-
-There can be valid reasons for overriding the setting, such as a header bar design that does not allow for buttons to take room on the right, or only offers room for a single close button. Split header bars are another example for overriding the setting.
-
-The format of the string is button names, separated by commas. A colon separates the buttons that should appear on the left from those on the right. Recognized button names are minimize, maximize, close, icon (the window icon) and menu (a menu button for the fallback app menu).
-
-For example, “menu:minimize,maximize,close” specifies a menu on the left, and minimize, maximize and close buttons on the right.
-Parameters
-
-bar
-	
-
-a GtkHeaderBar
-	 
-
-layout
-	
-
-a decoration layout, or NULL to unset the layout.
-	[allow-none]
-
-Since: 3.12
-
-gtk_header_bar_get_decoration_layout ()
-
-const gchar *
-gtk_header_bar_get_decoration_layout (GtkHeaderBar *bar);
-
-Gets the decoration layout set with gtk_header_bar_set_decoration_layout().
-Parameters
-
-bar
-	
-
-a GtkHeaderBar
-	 
-Returns
-
-the decoration layout
-
-Since: 3.12
-
-
-
-|#
 
 ;;; --- End of file gtk.header-bar.lisp ----------------------------------------
