@@ -43,12 +43,12 @@ GTK+ Widgets and Objects
     gtk.overlay.lisp                 - GtkOverlay                  - GTK+ 3.22
     gtk.button-box.lisp              - GtkButtonBox, ...           - GTK+ 3.22
     gtk.paned.lisp                   - GtkPaned, ...               - GTK+ 3.22
-    gtk.layout.lisp                  - GtkLayout                   - GTK+ 3.10
+    gtk.layout.lisp                  - GtkLayout                   - GTK+ 3.22
     gtk.notebook.lisp                - GtkNotebook                 - GTK+ 3.10
     gtk.expander.lisp                - GtkExpander                 - GTK+ 3.10
-    gtk.orientable.lisp              - GtkOrientable               - GTK+ 3.10
-    gtk.aspect-frame.lisp            - GtkAspectFrame              - GTK+ 3.10
-    gtk.fixed.lisp                   - GtkFixed                    - GTK+ 3.10
+    gtk.orientable.lisp              - GtkOrientable               - GTK+ 3.22
+    gtk.aspect-frame.lisp            - GtkAspectFrame              - GTK+ 3.22
+    gtk.fixed.lisp                   - GtkFixed                    - GTK+ 3.22
 
   Display Widgets
 
