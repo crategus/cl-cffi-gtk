@@ -41,7 +41,7 @@ GTK+ Widgets and Objects
     gtk.action-bar.lisp              - GtkActionBar                - GTK+ 3.22
     gtk.header-bar.lisp              - GtkHeaderBar                - GTK+ 3.22
     gtk.overlay.lisp                 - GtkOverlay                  - GTK+ 3.22
-    gtk.button-box.lisp              - GtkButtonBox, ...           - GTK+ 3.10
+    gtk.button-box.lisp              - GtkButtonBox, ...           - GTK+ 3.22
     gtk.paned.lisp                   - GtkPaned, ...               - GTK+ 3.10
     gtk.layout.lisp                  - GtkLayout                   - GTK+ 3.10
     gtk.notebook.lisp                - GtkNotebook                 - GTK+ 3.10
