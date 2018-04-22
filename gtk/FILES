@@ -34,12 +34,12 @@ GTK+ Widgets and Objects
     gtk.box.lisp                     - GtkBox, GtkHBox, GtkVbox    - GTK+ 3.10
     gtk.grid.lisp                    - GtkGrid                     - GTK+ 3.10 &
 
-    gtk.revealer.lisp                - GtkRevealer                 - GTK+ 3.10
-    gtk.list-box.lisp                - GtkListBox                  - GTK+ 3.10
-    gtk.flow-box.lisp                - GtkFlowBox                  - GTK+ 3.12
-    gtk.stack.lisp                   - GtkStack, ...               - GTK+ 3.10
-    gtk.action-bar.lisp              - GtkActionBar                - GTK+ 3.12
-    gtk.header-bar.lisp              - GtkHeaderBar                - GTK+ 3.16
+    gtk.revealer.lisp                - GtkRevealer                 - GTK+ 3.22
+    gtk.list-box.lisp                - GtkListBox                  - GTK+ 3.22
+    gtk.flow-box.lisp                - GtkFlowBox                  - GTK+ 3.22
+    gtk.stack.lisp                   - GtkStack, ...               - GTK+ 3.22
+    gtk.action-bar.lisp              - GtkActionBar                - GTK+ 3.22
+    gtk.header-bar.lisp              - GtkHeaderBar                - GTK+ 3.22
     gtk.overlay.lisp                 - GtkOverlay                  - GTK+ 3.10
     gtk.button-box.lisp              - GtkButtonBox, ...           - GTK+ 3.10
     gtk.paned.lisp                   - GtkPaned, ...               - GTK+ 3.10
@@ -174,7 +174,7 @@ GTK+ Widgets and Objects
     gtk.font-chooser-widget.lisp     - GtkFontChooserWidget        - GTK+ 3.6.4*
     gtk.font-chooser-dialog.lisp     - GtkFontChooserDialog        - GTK+ 3.6.4*
 
-    gtk.places-sidebar.lisp          - GtkPlacesSidebar            - GTK+ 3.10
+    gtk.places-sidebar.lisp          - GtkPlacesSidebar            - GTK+ 3.22
 
   Ornaments
 
