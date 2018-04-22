@@ -45,9 +45,11 @@
 ;;;     gtk_paned_pack2
 ;;;     gtk_paned_get_child1
 ;;;     gtk_paned_get_child2
-;;;     gtk_paned_set_position
-;;;     gtk_paned_get_position
+;;;     gtk_paned_set_position                             -> Accessor
+;;;     gtk_paned_get_position                             -> Accessor
 ;;;     gtk_paned_get_handle_window
+;;;     gtk_paned_set_wide_handle                          -> Accessor
+;;;     gtk_paned_get_wide_handle                          -> Accessor
 ;;;
 ;;; Child Properties
 ;;;
@@ -66,6 +68,18 @@
 ;;;   "cycle-handle-focus"                             : Action
 ;;;   "move-handle"                                    : Action
 ;;;   "toggle-handle-focus"                            : Action
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;             ╰── GtkContainer
+;;;                 ╰── GtkPaned
+;;;
+;;; Implemented Interfaces
+;;;
+;;; GtkPaned implements AtkImplementorIface, GtkBuildable and GtkOrientable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -95,7 +109,11 @@
     "position" "gint" t t)
    (position-set
     gtk-paned-position-set
-    "position-set" "gboolean" t t)))
+    "position-set" "gboolean" t t)
+   #+gtk-3-16
+   (wide-handle
+    gtk-paned-wide-handle
+    "wide-handle" "gboolean" t t)))
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-paned 'type)
@@ -568,9 +586,11 @@
 ;;;
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gtk gtk-hpaned-child-resize NIL (gtk-paned-child-resize))
 (define-child-property "GtkHPaned"
                        gtk-hpaned-child-resize "resize" "gboolean" t t t)
 
+(deprecated-function :gtk gtk-hpaned-child-shrink NIL (gtk-paned-child-shrink))
 (define-child-property "GtkHPaned"
                        gtk-hpaned-child-shrink "shrink" "gboolean" t t t)
 
@@ -600,6 +620,7 @@
 ;;; gtk_hpaned_new ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gtk gtk-hpaned-new (3 2) (gtk-paned-new))
 (defun gtk-hpaned-new ()
  #+cl-cffi-gtk-documentation
  "@version{2013-5-18}
@@ -658,9 +679,11 @@
 ;;;
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gtk gtk-vpaned-child-resize NIL (gtk-paned-child-resize))
 (define-child-property "GtkVPaned"
                        gtk-vpaned-child-resize "resize" "gboolean" t t t)
 
+(deprecated-function :gtk gtk-vpaned-child-shrink NIL (gtk-paned-child-shrink))
 (define-child-property "GtkVPaned"
                        gtk-vpaned-child-shrink "shrink" "gboolean" t t t)
 
@@ -690,6 +713,7 @@
 ;;; gtk_vpaned_new ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gtk gtk-vpaned-new (3 2) (gtk-paned-new))
 (defun gtk-vpaned-new ()
  #+cl-cffi-gtk-documentation
  "@version{2013-5-18}
