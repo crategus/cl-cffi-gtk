@@ -34,7 +34,7 @@
 ;;;
 ;;; Onscreen display areas in the target window system
 ;;;
-;;; Synopsis
+;;; Types and values
 ;;;
 ;;;     GdkWindow
 ;;;     GdkWindowType
@@ -42,10 +42,19 @@
 ;;;     GdkWindowHints
 ;;;     GdkGeometry
 ;;;     GdkGravity
+;;;     GdkAnchorHints
 ;;;     GdkWindowEdge
 ;;;     GdkWindowTypeHint
 ;;;     GdkWindowAttr
 ;;;     GdkWindowAttributesType
+;;;     GdkFullscreenMode
+;;;     GdkFilterReturn
+;;;     GdkModifierType                                    (see gdk.event-structures.lisp)
+;;;     GdkModifierIntent                                  (see gdk.key-values.lisp)
+;;;     GdkWMDecoration
+;;;     GdkWMFunction
+;;;
+;;; Functions
 ;;;
 ;;;     gdk_window_new
 ;;;     gdk_window_destroy
@@ -71,18 +80,23 @@
 ;;;     gdk_window_maximize
 ;;;     gdk_window_unmaximize
 ;;;     gdk_window_fullscreen
+;;;     gdk_window_fullscreen_on_monitor
 ;;;     gdk_window_unfullscreen
+;;;     gdk_window_get_fullscreen_mode
+;;;     gdk_window_set_fullscreen_mode
 ;;;     gdk_window_set_keep_above
 ;;;     gdk_window_set_keep_below
 ;;;     gdk_window_set_opacity
-;;;     gdk_window_set_composited
-;;;     gdk_window_get_composited
+;;;     gdk_window_set_composited                          * deprecated *
+;;;     gdk_window_get_composited                          * deprecated *
+;;;     gdk_window_set_pass_through
+;;;     gdk_window_get_pass_through
 ;;;     gdk_window_move
 ;;;     gdk_window_resize
 ;;;     gdk_window_move_resize
 ;;;     gdk_window_scroll
 ;;;     gdk_window_move_region
-;;;     gdk_window_flush
+;;;     gdk_window_flush                                   * deprecated *
 ;;;     gdk_window_has_native
 ;;;     gdk_window_ensure_native
 ;;;     gdk_window_reparent
@@ -95,35 +109,41 @@
 ;;;     gdk_window_begin_resize_drag_for_device
 ;;;     gdk_window_begin_move_drag
 ;;;     gdk_window_begin_move_drag_for_device
+;;;     gdk_window_show_window_menu
 ;;;     gdk_window_constrain_size
 ;;;     gdk_window_beep
-;;;
+;;;     gdk_window_get_scale_factor
+;;;     gdk_window_set_opaque_region
+;;;     gdk_window_create_gl_context
+;;;     gdk_window_mark_paint_from_clip
 ;;;     gdk_window_get_clip_region
-;;;     gdk_window_begin_paint_rect
-;;;     gdk_window_begin_paint_region
-;;;     gdk_window_end_paint
+;;;     gdk_window_begin_paint_rect                        * deprecated *
+;;;     gdk_window_begin_paint_region                      * deprecated *
+;;;     gdk_window_end_paint                               * deprecated *
+;;;     gdk_window_begin_draw_frame                        * not implemented *
+;;;     gdk_window_end_draw_frame                          * not implemented *
 ;;;     gdk_window_get_visible_region
-;;;
+;;;     gdk_window_set_invalidate_handler                  * not implemented, no user_data pointer in C API *
 ;;;     gdk_window_invalidate_rect
 ;;;     gdk_window_invalidate_region
 ;;;     gdk_window_invalidate_maybe_recurse
 ;;;     gdk_window_get_update_area
 ;;;     gdk_window_freeze_updates
 ;;;     gdk_window_thaw_updates
-;;;     gdk_window_process_all_updates
-;;;     gdk_window_process_updates
-;;;     gdk_window_set_debug_updates
-;;;     gdk_window_enable_synchronized_configure
-;;;     gdk_window_configure_finished
-;;;
+;;;     gdk_window_process_all_updates                     * deprecated *
+;;;     gdk_window_process_updates                         * deprecated *
+;;;     gdk_window_set_debug_updates                       * deprecated *
+;;;     gdk_window_enable_synchronized_configure           * deprecated *
+;;;     gdk_window_configure_finished                      * deprecated *
+;;;     gdk_window_get_frame_clock
 ;;;     gdk_window_set_user_data
 ;;;     gdk_window_set_override_redirect
 ;;;     gdk_window_set_accept_focus
 ;;;     gdk_window_get_accept_focus
 ;;;     gdk_window_set_focus_on_map
 ;;;     gdk_window_get_focus_on_map
-;;;     gdk_window_add_filter
-;;;     gdk_window_remove_filter
+;;;     gdk_window_add_filter                              * not implemented, too low level *
+;;;     gdk_window_remove_filter                           * not implemented, too low level *
 ;;;
 ;;;     GdkFilterReturn
 ;;;     GdkXEvent
@@ -134,12 +154,12 @@
 ;;;     gdk_window_input_shape_combine_region
 ;;;     gdk_window_set_child_input_shapes
 ;;;     gdk_window_merge_child_input_shapes
-;;;     gdk_window_set_static_gravities
+;;;     gdk_window_set_static_gravities                    * deprecated *
 ;;;     gdk_window_set_title
 ;;;     gdk_window_set_background                          * deprecated *
-;;;     gdk_window_set_background_rgba
-;;;     gdk_window_set_background_pattern
-;;;     gdk_window_get_background_pattern
+;;;     gdk_window_set_background_rgba                     * deprecated *
+;;;     gdk_window_set_background_pattern                  * deprecated *
+;;;     gdk_window_get_background_pattern                  * deprecated *
 ;;;
 ;;;     GDK_PARENT_RELATIVE
 ;;;
@@ -155,6 +175,7 @@
 ;;;     gdk_window_get_modal_hint
 ;;;     gdk_window_set_type_hint
 ;;;     gdk_window_get_type_hint
+;;;     gdk_window_set_shadow_width
 ;;;     gdk_window_set_skip_taskbar_hint
 ;;;     gdk_window_set_skip_pager_hint
 ;;;     gdk_window_set_urgency_hint
@@ -165,12 +186,14 @@
 ;;;     gdk_window_get_root_coords
 ;;;     gdk_window_get_pointer                             * deprecated *
 ;;;     gdk_window_get_device_position
+;;;     gdk_window_get_device_position_double              * not implemented, irrelevant in CL *
 ;;;
 ;;;     GdkModifierType   --> gdk.event-structures.lisp
 ;;;
 ;;;     gdk_window_get_parent
 ;;;     gdk_window_get_toplevel
 ;;;     gdk_window_get_children
+;;;     gdk_window_get_children_with_user_data
 ;;;     gdk_window_peek_children
 ;;;     gdk_window_get_events
 ;;;     gdk_window_set_events
@@ -199,7 +222,8 @@
 ;;;     gdk_window_set_device_events
 ;;;     gdk_window_get_source_events
 ;;;     gdk_window_set_source_events
-;;;
+;;;     gdk_window_get_event_compression
+;;;     gdk_window_set_event_compression
 ;;;     gdk_offscreen_window_get_surface
 ;;;     gdk_offscreen_window_set_embedder
 ;;;     gdk_offscreen_window_get_embedder
@@ -868,6 +892,23 @@
   @see-class{gdk-geometry}")
 
 ;;; ----------------------------------------------------------------------------
+;;; enum GdkAnchorHints
+;;; ----------------------------------------------------------------------------
+
+#+gdk-3-22
+(define-g-flags "GdkAnchorHints" gdk-anchor-hints
+    (:type-initializer "gdk_anchor_hints_get_type")
+  (:flip-x 1)
+  (:flip-y 2)
+  (:slide-x 4)
+  (:slide-y 8)
+  (:resize-x 16)
+  (:resize-y 32)
+  (:flip 3)
+  (:slide 12)
+  (:resize 48))
+
+;;; ----------------------------------------------------------------------------
 ;;; enum GdkWindowEdge
 ;;; ----------------------------------------------------------------------------
 
@@ -1495,6 +1536,7 @@
   (win-x (:pointer :int))
   (win-y (:pointer :int)))
 
+(deprecated-function :gdk gdk-window-at-pointer (3 0) gdk-device-get-window-at-position)
 (defun gdk-window-at-pointer ()
  #+cl-cffi-gtk-documentation
  "@version{2013-8-23}
@@ -1904,6 +1946,18 @@
 (export 'gdk-window-fullscreen)
 
 ;;; ----------------------------------------------------------------------------
+;;; gdk_window_fullscreen_on_monitor ()
+;;; ----------------------------------------------------------------------------
+
+#+gdk-3-18
+(defcfun gdk-window-fullscreen-on-monitor :void
+  (window (g-object gdk-window))
+  (monitor :int))
+
+#+gdk-3-18
+(export 'gdk-window-fullscreen-on-monitor)
+
+;;; ----------------------------------------------------------------------------
 ;;; gdk_window_unfullscreen ()
 ;;; ----------------------------------------------------------------------------
 
@@ -1947,6 +2001,12 @@
 ;;; Since 3.8
 ;;; ----------------------------------------------------------------------------
 
+#+gdk-3-8
+(define-g-enum "GdkFullscreenMode" gdk-fullscreen-mode
+    (:type-initializer "gdk_fullscreen_mode_get_type")
+  :on-current-monitor
+  :on-all-monitors)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_get_fullscreen_mode ()
 ;;;
@@ -1965,6 +2025,13 @@
 ;;;
 ;;; Since 3.8
 ;;; ----------------------------------------------------------------------------
+
+#+gdk-3-8
+(defcfun gdk-window-get-fullscreen-mode gdk-fullscreen-mode
+  (window (g-object gdk-window)))
+
+#+gdk-3-8
+(export 'gdk-window-get-fullscreen-mode)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_set_fullscreen_mode ()
@@ -2001,6 +2068,14 @@
 ;;;
 ;;; Since: 3.8
 ;;; ----------------------------------------------------------------------------
+
+#+gdk-3-8
+(defcfun gdk-window-set-fullscreen-mode :void
+  (window (g-object gdk-window))
+  (mode gdk-fullscreen-mode))
+
+#+gdk-3-8
+(export 'gdk-window-set-fullscreen-mode)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_set_keep_above ()
@@ -2092,6 +2167,7 @@
 ;;; gdk_window_set_composited ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gdk gdk-window-set-composited (3 16))
 (defcfun ("gdk_window_set_composited" gdk-window-set-composited) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-8-31}
@@ -2137,6 +2213,7 @@
 ;;; gdk_window_get_composited ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gdk gdk-window-get-composited (3 16))
 (defcfun ("gdk_window_get_composited" gdk-window-get-composited) :boolean
  #+cl-cffi-gtk-documentation
  "@version{2013-8-31}
@@ -2159,6 +2236,29 @@
   (window (g-object gdk-window)))
 
 (export 'gdk-window-get-composited)
+
+;;; ----------------------------------------------------------------------------
+;;; gdk_window_set_pass_through ()
+;;; ----------------------------------------------------------------------------
+
+#+gdk-3-18
+(defcfun gdk-window-set-pass-through :void
+  (window (g-object gdk-window))
+  (pass-through :boolean))
+
+#+gdk-3-18
+(export 'gdk-window-set-pass-through)
+
+;;; ----------------------------------------------------------------------------
+;;; gdk_window_get_pass_through ()
+;;; ----------------------------------------------------------------------------
+
+#+gdk-3-18
+(defcfun gdk-window-get-pass-through :boolean
+  (window (g-object gdk-window)))
+
+#+gdk-3-18
+(export 'gdk-window-get-pass-through)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_move ()
@@ -2315,6 +2415,7 @@
 ;;; gdk_window_flush ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gdk gdk-window-flush (3 14))
 (defcfun ("gdk_window_flush" gdk-window-flush) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-8-31}
@@ -2686,6 +2787,14 @@
 ;;; Since 3.14
 ;;; ----------------------------------------------------------------------------
 
+#+gdk-3-14
+(defcfun gdk-window-show-window-menu :boolean
+  (window (g-object gdk-window))
+  (event (g-boxed-foreign gdk-event)))
+
+#+gdk-3-14
+(export 'gdk-window-show-window-menu)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_constrain_size ()
 ;;; ----------------------------------------------------------------------------
@@ -2776,6 +2885,13 @@
 ;;; Since: 3.10
 ;;; ----------------------------------------------------------------------------
 
+#+gdk-3-10
+(defcfun gdk-window-get-scale-factor :int
+  (window (g-object gdk-window)))
+
+#+gdk-3-10
+(export 'gdk-window-get-scale-factor)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_set_opaque_region ()
 ;;;
@@ -2805,6 +2921,14 @@
 ;;;
 ;;; Since: 3.10
 ;;; ----------------------------------------------------------------------------
+
+#+gdk-3-10
+(defcfun gdk-window-set-opaque-region :void
+  (window (g-object gdk-window))
+  (region (:pointer (:struct cairo-region-t))))
+
+#+gdk-3-10
+(export 'gdk-window-set-opaque-region)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_create_gl_context ()
@@ -2873,6 +2997,14 @@
 ;;; Since: 3.16
 ;;; ----------------------------------------------------------------------------
 
+#+gdk-3-16
+(defcfun gdk-window-mark-paint-from-clip :void
+  (window (g-object gdk-window))
+  (cr (:pointer (:struct cairo-t))))
+
+#+gdk-3-16
+(export 'gdk-window-mark-paint-from-clip)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_get_clip_region ()
 ;;; ----------------------------------------------------------------------------
@@ -2903,6 +3035,7 @@
 ;;; gdk_window_begin_paint_rect ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gdk gdk-window-begin-paint-rect (3 22) gdk-window-begin-draw-frame)
 (defcfun ("gdk_window_begin_paint_rect" gdk-window-begin-paint-rect) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-8-31}
@@ -2925,6 +3058,7 @@
 ;;; gdk_window_begin_paint_region ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gdk gdk-window-begin-paint-region (3 22) gdk-window-begin-draw-frame)
 (defcfun ("gdk_window_begin_paint_region" gdk-window-begin-paint-region) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-7-26}
@@ -2981,6 +3115,7 @@
 ;;; gdk_window_end_paint ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gdk gdk-window-end-paint (3 22))
 (defcfun ("gdk_window_end_paint" gdk-window-end-paint) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-7-26}
@@ -3279,6 +3414,7 @@
 ;;; gdk_window_process_all_updates ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gdk gdk-window-process-all-updates (3 22))
 (defcfun ("gdk_window_process_all_updates" gdk-window-process-all-updates)
     :void
  #+cl-cffi-gtk-documentation
@@ -3294,6 +3430,7 @@
 ;;; gdk_window_process_updates ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gdk gdk-window-process-updates (3 22))
 (defcfun ("gdk_window_process_updates" gdk-window-process-updates) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-9-1}
@@ -3321,6 +3458,7 @@
 ;;; gdk_window_set_debug_updates ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gdk gdk-window-set-debug-updates (3 22))
 (defcfun ("gdk_window_set_debug_updates" gdk-window-set-debug-updates) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-9-1}
@@ -3358,6 +3496,7 @@
 ;;; gdk_window_enable_synchronized_configure ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gdk gdk-window-enable-synchronized-configure (3 8))
 (defcfun ("gdk_window_enable_synchronized_configure"
            gdk-window-enable-synchronized-configure) :void
  #+cl-cffi-gtk-documentation
@@ -3383,6 +3522,7 @@
 ;;; gdk_window_configure_finished ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gdk gdk-window-configure-finished (3 8))
 (defcfun ("gdk_window_configure_finished" gdk-window-configure-finished) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-10-2}
@@ -3422,6 +3562,13 @@
 ;;;
 ;;; Since 3.8
 ;;; ----------------------------------------------------------------------------
+
+#+gdk-3-8
+(defcfun gdk-window-get-frame-clock (g-object gdk-frame-clock)
+  (window (g-object gdk-window)))
+
+#+gdk-3-8
+(export 'gdk-window-get-frame-clock)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_set_user_data ()
@@ -3866,6 +4013,7 @@
 ;;; gdk_window_set_static_gravities ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gdk gdk-window-set-static-gravities (3 16))
 (defcfun ("gdk_window_set_static_gravities" gdk-window-set-static-gravities)
     :boolean
  #+cl-cffi-gtk-documentation
@@ -3917,6 +4065,7 @@
 ;;; gdk_window_set_background ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gdk gdk-window-set-background (3 4))
 (defcfun ("gdk_window_set_background" gdk-window-set-background) :void
  #+cl-cffi-gtk-documentation
  "@version{2014-1-22}
@@ -3950,6 +4099,7 @@
 ;;; gdk_window_set_background_rgba ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gdk gdk-window-set-background-rgba (3 22))
 (defcfun ("gdk_window_set_background_rgba" gdk-window-set-background-rgba) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-9-1}
@@ -3975,6 +4125,7 @@
 
 (defctype cairo-pattern-t :pointer)
 
+(deprecated-function :gdk gdk-window-set-background-pattern (3 22))
 (defcfun ("gdk_window_set_background_pattern" gdk-window-set-background-pattern)
     :void
  #+cl-cffi-gtk-documentation
@@ -4001,6 +4152,7 @@
 ;;; gdk_window_get_background_pattern ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gdk gdk-window-get-background-pattern (3 22))
 (defcfun ("gdk_window_get_background_pattern" gdk-window-get-background-pattern)
     cairo-pattern-t
  #+cl-cffi-gtk-documentation
@@ -4036,11 +4188,19 @@
 
 (export '+gdk-parent-relative+)
 
+;;; ----------------------------------------------------------------------------
+;;; gdk_window_set_cursor ()
+;;; ----------------------------------------------------------------------------
+
 (defcfun ("gdk_window_set_cursor" gdk-window-set-cursor) :void
   (window (g-object gdk-window))
   (cursor (g-object gdk-cursor)))
 
 (export 'gdk-window-set-cursor)
+
+;;; ----------------------------------------------------------------------------
+;;; gdk_window_get_cursor ()
+;;; ----------------------------------------------------------------------------
 
 (defcfun ("gdk_window_get_cursor" gdk-window-get-cursor)
     (g-object gdk-cursor)
@@ -4377,6 +4537,17 @@
 ;;; Since 3.12
 ;;; ----------------------------------------------------------------------------
 
+#+gdk-3-12
+(defcfun gdk-window-set-shadow-width :void
+  (window (g-object gdk-window))
+  (left :int)
+  (right :int)
+  (top :int)
+  (bottom :int))
+
+#+gdk-3-12
+(export 'gdk-window-set-shadow-width)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_set_skip_taskbar_hint ()
 ;;; ----------------------------------------------------------------------------
@@ -4622,6 +4793,7 @@
   (y (:pointer :int))
   (mask (:pointer gdk-modifier-type)))
 
+(deprecated-function :gdk gdk-window-get-pointer (3 0) gdk-window-get-device-position)
 (defun gdk-window-get-pointer (window)
  #+cl-cffi-gtk-documentation
  "@version{2013-9-1}
@@ -4847,6 +5019,15 @@
 ;;;
 ;;; Since 3.10
 ;;; ----------------------------------------------------------------------------
+
+#+gdk-3-10
+(defcfun gdk-window-get-children-with-user-data
+    (g-list (g-object gdk-window))
+  (window (g-object gdk-window))
+  (user-data :pointer))
+
+#+gdk-3-10
+(export 'gdk-window-get-children-with-user-data)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_peek_children ()
@@ -5495,6 +5676,13 @@
 ;;; Since 3.12
 ;;; ----------------------------------------------------------------------------
 
+#+gdk-3-12
+(defcfun gdk-window-get-event-compression :boolean
+  (window (g-object gdk-window)))
+
+#+gdk-3-12
+(export 'gdk-window-get-event-compression)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_window_set_event_compression ()
 ;;;
@@ -5520,6 +5708,14 @@
 ;;;
 ;;; Since 3.12
 ;;; ----------------------------------------------------------------------------
+
+#+gdk-3-12
+(defcfun gdk-window-set-event-compression :void
+  (window (g-object gdk-window))
+  (event-compression :boolean))
+
+#+gdk-3-12
+(export 'gdk-window-set-event-compression)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_offscreen_window_get_surface ()
