@@ -55,6 +55,7 @@
 ;;;     gtk_dialog_get_widget_for_response
 ;;;     gtk_dialog_get_action_area
 ;;;     gtk_dialog_get_content_area
+;;;     gtk_dialog_get_header_bar
 ;;;     gtk_alternative_dialog_button_order                * deprecated *
 ;;;     gtk_dialog_set_alternative_button_order            * deprecated *
 ;;;     gtk_dialog_set_alternative_button_order_from_array * deprecated *
@@ -326,6 +327,7 @@
    :type-initializer "gtk_dialog_flags_get_type")
   (:modal #.(ash 1 0))
   (:destroy-with-parent #.(ash 1 1))
+  #+gtk-3-12
   (:use-header-bar #.(ash 1 2)))
 
 #+cl-cffi-gtk-documentation
@@ -837,6 +839,13 @@
 ;;;
 ;;; Since 3.12
 ;;; ----------------------------------------------------------------------------
+
+#+gtk-3-12
+(defcfun gtk-dialog-get-header-bar (g-object gtk-widget)
+  (dialog (g-object gtk-dialog)))
+
+#+gtk-3-12
+(export 'gtk-dialog-get-header-bar)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_alternative_dialog_button_order ()

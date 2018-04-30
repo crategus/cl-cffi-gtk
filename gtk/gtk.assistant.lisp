@@ -61,6 +61,8 @@
 ;;;     gtk_assistant_get_page_side_image                  * deprecated *
 ;;;     gtk_assistant_set_page_complete
 ;;;     gtk_assistant_get_page_complete
+;;;     gtk_assistant_set_page_has_padding
+;;;     gtk_assistant_get_page_has_padding
 ;;;     gtk_assistant_add_action_widget
 ;;;     gtk_assistant_remove_action_widget
 ;;;     gtk_assistant_update_buttons_state
@@ -899,6 +901,31 @@
   (page (g-object gtk-widget)))
 
 (export 'gtk-assistant-get-page-complete)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_assistant_set_page_has_padding ()
+;;; ----------------------------------------------------------------------------
+
+#+gtk-3-18
+(defcfun gtk-assistant-set-page-has-padding :void
+  (assistant (g-object gtk-assistant))
+  (page (g-object gtk-widget))
+  (has-padding :boolean))
+
+#+gtk-3-18
+(export 'gtk-assistant-set-page-has-padding)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_assistant_get_page_has_padding ()
+;;; ----------------------------------------------------------------------------
+
+#+gtk-3-18
+(defcfun gtk-assistant-get-page-has-padding :boolean
+  (assistant (g-object gtk-assistant))
+  (page (g-object gtk-widget)))
+
+#+gtk-3-18
+(export 'gtk-assistant-get-page-has-padding)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_assistant_add_action_widget ()

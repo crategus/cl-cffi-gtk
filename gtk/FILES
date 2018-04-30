@@ -20,14 +20,14 @@ GTK+ Widgets and Objects
 
   Windows
 
-    gtk.window.lisp                  - GtkWindow                   - GTK+ 3.10 &
-    gtk.dialog.lisp                  - GtkDialog                   - GTK+ 3.16
-    gtk.message-dialog.lisp          - GtkMessageDialog            - GTK+ 3.10
-    gtk.about-dialog.lisp            - GtkAboutDialog              - GTK+ 3.10
-    gtk.assistant.lisp               - GtkAssistant                - GTK+ 3.10
-    gtk.invisible.lisp               - GtkInvisible                - GTK+ 3.10
-    gtk.offscreen-window.lisp        - GtkOffscreenWindow          - GTK+ 3.10
-    gtk.window-group.lisp            - GtkWindowGroup              - GTK+ 3.10
+    gtk.window.lisp                  - GtkWindow                   - GTK+ 3.22
+    gtk.dialog.lisp                  - GtkDialog                   - GTK+ 3.22
+    gtk.message-dialog.lisp          - GtkMessageDialog            - GTK+ 3.22
+    gtk.about-dialog.lisp            - GtkAboutDialog              - GTK+ 3.22
+    gtk.assistant.lisp               - GtkAssistant                - GTK+ 3.22
+    gtk.invisible.lisp               - GtkInvisible                - GTK+ 3.22
+    gtk.offscreen-window.lisp        - GtkOffscreenWindow          - GTK+ 3.22
+    gtk.window-group.lisp            - GtkWindowGroup              - GTK+ 3.22
 
   Layout Containers
 

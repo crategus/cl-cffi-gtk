@@ -40,7 +40,7 @@
 ;;;
 ;;;     gtk_window_new
 ;;;     gtk_window_set_title                     -> (setf gtk-window-title)
-;;;     gtk_window_set_wmclass
+;;;     gtk_window_set_wmclass                   *deprecated*
 ;;;     gtk_window_set_resizable
 ;;;     gtk_window_get_resizable
 ;;;     gtk_window_add_accel_group
@@ -126,10 +126,10 @@
 ;;;     gtk_window_has_group
 ;;;     gtk_window_get_window_type
 ;;;     gtk_window_move
-;;;     gtk_window_parse_geometry
-;;;     gtk_window_reshow_with_initial_size
+;;;     gtk_window_parse_geometry                *deprecated*
+;;;     gtk_window_reshow_with_initial_size      *deprecated*
 ;;;     gtk_window_resize
-;;;     gtk_window_resize_to_geometry
+;;;     gtk_window_resize_to_geometry            *deprecated*
 ;;;     gtk_window_set_default_icon_list
 ;;;     gtk_window_set_default_icon
 ;;;     gtk_window_set_default_icon_from_file
@@ -139,20 +139,22 @@
 ;;;     gtk_window_set_icon_from_file
 ;;;     gtk_window_set_icon_name
 ;;;     gtk_window_set_auto_startup_notification
-;;;     gtk_window_get_opacity
-;;;     gtk_window_set_opacity
+;;;     gtk_window_get_opacity                   *deprecated*
+;;;     gtk_window_set_opacity                   *deprecated*
 ;;;     gtk_window_get_mnemonics_visible
 ;;;     gtk_window_set_mnemonics_visible
 ;;;     gtk_window_get_focus_visible
 ;;;     gtk_window_set_focus_visible
-;;;     gtk_window_set_has_resize_grip
-;;;     gtk_window_get_has_resize_grip
-;;;     gtk_window_resize_grip_is_visible
-;;;     gtk_window_get_resize_grip_area
+;;;     gtk_window_set_has_resize_grip           *deprecated*
+;;;     gtk_window_get_has_resize_grip           *deprecated*
+;;;     gtk_window_resize_grip_is_visible        *deprecated*
+;;;     gtk_window_get_resize_grip_area          *deprecated*
 ;;;     gtk_window_get_application
 ;;;     gtk_window_set_application
 ;;;     gtk_window_set_has_user_ref_count
 ;;;     gtk_window_set_titlebar
+;;;     gtk_window_get_titlebar
+;;;     gtk_window_set_interactive_debugging
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -232,6 +234,9 @@
    (is-active
     gtk-window-is-active
     "is-active" "gboolean" t nil)
+   (is-maximized
+    gtk-window-is-maximized
+    "is-maximized" "gboolean" t nil)
    (mnemonics-visible
     gtk-window-mnemonics-visible
     "mnemonics-visible" "gboolean" t t)
@@ -285,6 +290,10 @@
    (window-position
     gtk-window-window-position
     "window-position" "GtkWindowPosition" t t)))
+
+(deprecated-function :gtk gtk-window-opacity (3 8) gtk-widget-opacity)
+(deprecated-function :gtk gtk-window-has-resize-grip (3 14))
+(deprecated-function :gtk gtk-window-resize-grip-visible (3 14))
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-window 'type)
@@ -1745,6 +1754,8 @@
 ;;; gtk_window_set_default_geometry ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gtk gtk-window-set-default-geometry (3 20) ((setf gtk-window-default-size)))
+
 (defcfun ("gtk_window_set_default_geometry" gtk-window-set-default-geometry)
     :void
  #+cl-cffi-gtk-documentation
@@ -2107,6 +2118,13 @@
 ;;;     a GtkWindow
 ;;; Since 3.10
 ;;; ----------------------------------------------------------------------------
+
+#+gtk-3-10
+(defcfun gtk-window-close :void
+  (window (g-object gtk-window)))
+
+#+gtk-3-10
+(export 'gtk-window-close)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_iconify ()
@@ -2817,6 +2835,8 @@
 ;;; gtk_window_parse_geometry ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gtk gtk-window-parse-geometry (3 20))
+
 (defcfun ("gtk_window_parse_geometry" gtk-window-parse-geometry) :boolean
  #+cl-cffi-gtk-documentation
  "@version{2013-3-29}
@@ -2898,6 +2918,8 @@
 ;;; gtk_window_reshow_with_initial_size ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gtk gtk-window-reshow-with-initial-size (3 10))
+
 (defcfun ("gtk_window_reshow_with_initial_size"
           gtk-window-reshow-with-initial-size) :void
  #+cl-cffi-gtk-documentation
@@ -2912,7 +2934,7 @@
     The function @sym{gtk-window-reshow-with-initial-size} has been deprecated
     since version 3.10 and should not be used in newly-written code.
 
-    GUI builders can call the functions @fun{gtk-widget-hide}, 
+    GUI builders can call the functions @fun{gtk-widget-hide},
     @fun{gtk-widget-unrealize} and then @fun{gtk-widget-show} on window
     themselves, if they still need this functionality.
   @end{dictionary}
@@ -2956,6 +2978,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_resize_to_geometry ()
 ;;; ----------------------------------------------------------------------------
+
+(deprecated-function :gtk gtk-window-resize-to-geometry (3 20) gtk-window-resize)
 
 (defcfun ("gtk_window_resize_to_geometry" gtk-window-resize-to-geometry) :void
  #+cl-cffi-gtk-documentation
@@ -3178,6 +3202,8 @@
 ;;; gtk_window_resize_grip_is_visible ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gtk gtk-window-resize-grip-is-visible (3 14))
+
 (declaim (inline gtk-window-resize-grip-is-visible))
 
 (defun gtk-window-resize-grip-is-visible (window)
@@ -3202,12 +3228,14 @@
 ;;; gtk_window_get_resize_grip_area ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_window_get_resize_grip_area" %gtk-widget-get-resize-grip-area)
+(deprecated-function :gtk gtk-window-get-resize-grip-area (3 14))
+
+(defcfun ("gtk_window_get_resize_grip_area" %gtk-window-get-resize-grip-area)
     :boolean
   (window (g-object gtk-window))
   (rect (g-boxed-foreign gdk-rectangle)))
 
-(defun gtk-widget-get-resize-grip-area (window)
+(defun gtk-window-get-resize-grip-area (window)
  #+cl-cffi-gtk-documentation
  "@version{2013-7-30}
   @argument[window]{a @class{gtk-window} widget}
@@ -3223,10 +3251,10 @@
   @see-class{gtk-window}
   @see-function{gtk-window-has-resize-grip}"
   (let ((rect (make-gdk-rectangle)))
-    (when (%gtk-widget-get-resize-grip-area window rect)
+    (when (%gtk-window-get-resize-grip-area window rect)
       rect)))
 
-(export 'gtk-widget-get-resize-grip-area)
+(export 'gtk-window-get-resize-grip-area)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_set_has_user_ref_count ()
@@ -3249,6 +3277,10 @@
 ;;;
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
+
+(defcfun gtk-window-set-has-user-ref-count :void
+  (window (g-object gtk-window))
+  (settign :boolean))
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_set_titlebar ()

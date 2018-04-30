@@ -27,13 +27,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; GtkOffscreenWindow
-;;; 
+;;;
 ;;; A toplevel to manage offscreen rendering of child widgets
-;;;     
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;;     GtkOffscreenWindow
-;;;     
+;;;
 ;;;     gtk_offscreen_window_new
 ;;;     gtk_offscreen_window_get_surface
 ;;;     gtk_offscreen_window_get_pixbuf

@@ -737,11 +737,19 @@
   (:bsd 6)
   (:mit-x11 7)
   (:artistic 8)
+  #+gtk-3-12
   (:gpl-2-0-only 9)
+  #+gtk-3-12
   (:gpl-3-0-only 10)
+  #+gtk-3-12
   (:lgpl-2-1-only 11)
+  #+gtk-3-12
   (:lgpl-3-0-only 12)
-  (:agpl-3-0 13))
+  #+gtk-3-22
+  (:agpl-3-0 13)
+  ;; FIXME: should be 3.22.27 but we have no way of encoding that
+  #+gtk-3-22
+  (:agpl-3-0-only 14))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-license atdoc:*symbol-name-alias*) "Enum"
@@ -768,7 +776,8 @@
   (:gpl-3-0-only 10)
   (:lgpl-2-1-only 11)
   (:lgpl-3-0-only 12)
-  (:agpl-3-0 13))
+  (:agpl-3-0 13)
+  (:agpl-3-0-only 14))
   @end{pre}
   @begin[code]{table}
     @entry[:unknown]{No license specified.}
@@ -790,6 +799,8 @@
       only. Since 3.12.}
     @entry[:agpl-3-0]{The GNU Affero General Public License, version 3.0 or
       later. Since: 3.22.}
+    @entry[:agpl-3-0-only]{The GNU Affero General Public License, version 3.0
+      only. Since: 3.22.27.}
   @end{table}
   @see-class{gtk-about-dialog}")
 
