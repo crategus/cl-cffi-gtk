@@ -118,9 +118,7 @@
   (:superclass gtk-bin
    :export t
    :interfaces ("AtkImplementorIface"
-                "GtkBuildable"
-                ;; "GtkActionable"
-                )
+                "GtkBuildable")
    :type-initializer "gtk_list_box_row_get_type")
   ((activatable
     gtk-list-box-row-activatable
