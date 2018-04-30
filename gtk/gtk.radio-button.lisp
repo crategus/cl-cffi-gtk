@@ -333,8 +333,11 @@
 ;;; TODO: Check the implementation of gtk-radio-button-set-group and
 ;;; gtk-radio-button-get-group. How can this be combined in a generic function?
 
+;; FIXME: this does absolutely not work because the returned list needs to
+;; maintain its identity!
+
 (defcfun ("gtk_radio_button_get_group" gtk-radio-button-get-group)
-    (g-slist (g-object gtk-radio-button))
+    (g-slist (g-object gtk-radio-button) :free-from-foreign NIL)
  #+cl-cffi-gtk-documentation
  "@version{2014-11-9}
   @argument[radio-button]{a @class{gtk-radio-button} widget}
@@ -384,8 +387,8 @@
   @see-class{gtk-radio-button}
   @see-function{gtk-radio-button-get-group}
   @see-function{gtk-radio-button-set-group}"
-  (radio-button (g-object radio-button))
-  (group-source (g-slist (g-object radio-button))))
+  (radio-button (g-object gtk-radio-button))
+  (group-source (g-object gtk-radio-button)))
 
 (export 'gtk-radio-button-join-group)
 
