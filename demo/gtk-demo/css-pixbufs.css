@@ -50,7 +50,7 @@
     100% { background-size: 12px, 96px, 12px, 96px, 12px, 96px, 12px, 96px, auto }
 }
 
-GtkWindow {
+window {
     background-image: url("apple-red.png"),
                       url("gnome-applets.png"),
                       url("gnome-calendar.png"),
@@ -74,4 +74,3 @@ GtkWindow {
 .view:selected {
   background-color: rgba(127,127,255,0.5);
 }
-

@@ -13,12 +13,12 @@
                       (gdk-rgba-parse "Gray")
                       (gdk-rgba-parse "Black"))))
   (defun drawing-area-event (widget event area)
-    (declare (ignore widget))
     (let ((handled nil))
       (when (eql (gdk-event-type event) :button-press)
         (let ((dialog (make-instance 'gtk-color-chooser-dialog
-                                      :color color
-                                      :use-alpha nil)))
+                                     :transient-for (gtk-widget-parent widget)
+                                     :color color
+                                     :use-alpha nil)))
           (setq handled t)
           ;; Add a custom palette to the dialog
           (gtk-color-chooser-add-palette dialog :vertical 1 palette1)
@@ -51,4 +51,3 @@
                             (drawing-area-event widget event area)))
         (gtk-container-add window area)
         (gtk-widget-show-all window)))))
-

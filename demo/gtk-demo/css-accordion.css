@@ -4,10 +4,10 @@
     transition-property: color, background-color, border-color, background-image, padding, border-width;
     transition-duration: 1s;
 
-    font: Cantarell 20px;
+    font: 20px Cantarell;
 }
 
-GtkWindow {
+window {
     background: linear-gradient(153deg, #151515, #151515 5px, transparent 5px) 0 0,
                 linear-gradient(333deg, #151515, #151515 5px, transparent 5px) 10px 5px,
                 linear-gradient(153deg, #222, #222 5px, transparent 5px) 0 5px,
@@ -50,4 +50,3 @@ GtkWindow {
 .button:active {
     background-color: #993401;
 }
-

@@ -7,8 +7,8 @@
   (leave-gtk-main))
 
 (defun pressed (widget)
-  (declare (ignore widget))
   (let ((dialog (make-instance 'gtk-message-dialog
+                               :transient-for (gtk-widget-parent widget)
                                :message-type :info
                                :buttons :ok
                                :text "Hello, World!")))

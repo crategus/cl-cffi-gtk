@@ -47,6 +47,7 @@
          (lambda (widget)
            (declare (ignore widget))
            (let ((dialog (make-instance 'gtk-message-dialog
+                                        :transient-for window
                                         :message-type :info
                                         :buttons :ok
                                         :text "Info Message Dialog"

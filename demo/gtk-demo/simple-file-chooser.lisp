@@ -6,7 +6,7 @@
   (let ((file-name nil))
     (within-main-loop
       (let ((dialog (gtk-file-chooser-dialog-new "Open File"
-                                                 nil
+                                                 *demo-window*
                                                  :open
                                                  "gtk-cancel" :cancel
                                                  "gtk-open" :accept)))
@@ -32,4 +32,3 @@
              (gtk-widget-destroy dialog)))
         ;; Show the dialog.
         (gtk-widget-show dialog)))))
-
