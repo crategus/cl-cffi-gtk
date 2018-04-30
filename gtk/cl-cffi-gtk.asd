@@ -111,6 +111,9 @@
    (:file "gtk.overlay")               ; Container which overlays widgets
    (:file "gtk.action-bar")            ; A full width bar for presenting contextual actions
    (:file "gtk.flow-box")              ; A container that allows reflowing its children
+   (:file "gtk.list-box")              ; A list container
+   (:file "gtk.revealer")              ; Hide and show with animation
+   (:file "gtk.stack")                 ; A stacking container
 
    ;; Ornaments
    (:file "gtk.separator")             ; Separator widget
@@ -241,6 +244,7 @@
    (:file "gtk.font-chooser-dialog")   ; Dialog for selecting fonts
    (:file "gtk.font-selection")        ; Deprecated widget for selecting fonts
    (:file "gtk.font-selection-dialog") ; Deprecated widget for selecting fonts
+   (:file "gtk.places-sidebar")        ; Sidebar that displays frequently-used places in the file system
 
    ;; Miscellaneous
    (:file "gtk.adjustment")            ; Representation of a bounded value

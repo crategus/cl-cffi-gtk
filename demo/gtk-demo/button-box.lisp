@@ -10,11 +10,11 @@
                              :border-width 6
                              :layout-style layout
                              :spacing spacing)))
-  (gtk-container-add bbox (gtk-button-new-from-stock "gtk-ok"))
-  (gtk-container-add bbox (gtk-button-new-from-stock "gtk-cancel"))
-  (gtk-container-add bbox (gtk-button-new-from-stock "gtk-help"))
-  (gtk-container-add frame bbox)
-  frame))
+    (gtk-container-add bbox (gtk-button-new-from-stock "gtk-ok"))
+    (gtk-container-add bbox (gtk-button-new-from-stock "gtk-cancel"))
+    (gtk-container-add bbox (gtk-button-new-from-stock "gtk-help"))
+    (gtk-container-add frame bbox)
+    frame))
 
 (defun example-button-box ()
   (within-main-loop

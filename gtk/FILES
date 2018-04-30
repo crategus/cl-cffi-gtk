@@ -34,27 +34,22 @@ GTK+ Widgets and Objects
     gtk.box.lisp                     - GtkBox, GtkHBox, GtkVbox    - GTK+ 3.10
     gtk.grid.lisp                    - GtkGrid                     - GTK+ 3.10 &
 
-    GtkRevealer - Hide and show with animation
-    GtkListBox - A list container
-    GtkFlowBox — A container that allows reflowing its children
-    GtkStack - A stacking container
-    GtkStackSwitcher - A controller for GtkStack
-    GtkStackSidebar — An automatic sidebar widget
-    GtkActionBar — A full width bar for presenting contextual actions
-    GtkHeaderBar - A box with a centered child
-
-    gtk.header-bar.lisp              . GtkHeaderBar                - GTK+ 3.16
-
-    gtk.overlay.lisp                 - GtkOverlay                  - GTK+ 3.10
-    gtk.button-box.lisp              - GtkButtonBox, ...           - GTK+ 3.10
-    gtk.paned.lisp                   - GtkPaned, ...               - GTK+ 3.10
-    gtk.layout.lisp                  - GtkLayout                   - GTK+ 3.10
+    gtk.revealer.lisp                - GtkRevealer                 - GTK+ 3.22
+    gtk.list-box.lisp                - GtkListBox                  - GTK+ 3.22
+    gtk.flow-box.lisp                - GtkFlowBox                  - GTK+ 3.22
+    gtk.stack.lisp                   - GtkStack, ...               - GTK+ 3.22
+    gtk.action-bar.lisp              - GtkActionBar                - GTK+ 3.22
+    gtk.header-bar.lisp              - GtkHeaderBar                - GTK+ 3.22
+    gtk.overlay.lisp                 - GtkOverlay                  - GTK+ 3.22
+    gtk.button-box.lisp              - GtkButtonBox, ...           - GTK+ 3.22
+    gtk.paned.lisp                   - GtkPaned, ...               - GTK+ 3.22
+    gtk.layout.lisp                  - GtkLayout                   - GTK+ 3.22
     gtk.notebook.lisp                - GtkNotebook                 - GTK+ 3.10
     gtk.expander.lisp                - GtkExpander                 - GTK+ 3.10
-    gtk.orientable.lisp              - GtkOrientable               - GTK+ 3.10
-    gtk.aspect-frame.lisp            - GtkAspectFrame              - GTK+ 3.10
-    gtk.fixed.lisp                   - GtkFixed                    - GTK+ 3.10
-    
+    gtk.orientable.lisp              - GtkOrientable               - GTK+ 3.22
+    gtk.aspect-frame.lisp            - GtkAspectFrame              - GTK+ 3.22
+    gtk.fixed.lisp                   - GtkFixed                    - GTK+ 3.22
+
   Display Widgets
 
     gtk.label.lisp                   - GtkLabel                    - GTK+ 3.10
@@ -179,7 +174,7 @@ GTK+ Widgets and Objects
     gtk.font-chooser-widget.lisp     - GtkFontChooserWidget        - GTK+ 3.6.4*
     gtk.font-chooser-dialog.lisp     - GtkFontChooserDialog        - GTK+ 3.6.4*
 
-    GtkPlacesSidebar - Displays frequently-used places in the file system
+    gtk.places-sidebar.lisp          - GtkPlacesSidebar            - GTK+ 3.22
 
   Ornaments
 
@@ -320,4 +315,3 @@ Deprecated
     gtk.status-icon.lisp             - GtkStatusIcon               - GTK+ 3.10 &
     gtk.theming-engine.lisp          - GtkThemingEngine            - GTK+ 3.8.8*
     gtk.alignment.lisp               - GtkAlignment                - GTK+ 3.10
-

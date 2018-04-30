@@ -34,6 +34,8 @@
   :components
   ((:file "gio.package")
    (:file "gio.init")
+   ;; File Operations
+   (:file "gio.file")                ; File and Directory Handling
    ;; Application information and launch contexts
    (:file "gio.content-type")        ; Platform-specific content typing
    (:file "gio.app-info")            ; Application information, launch contexts

@@ -260,11 +260,11 @@
 
 #+gtk-3-12
 (defcallback gtk-flow-box-filter-func-callback :boolean
-    ((child g-object)
+    ((child (g-object gtk-flow-box-child))
      (data :pointer))
   (restart-case
       (funcall (glib::get-stable-pointer-value data) child)
-    (return () -1)))
+    (return () NIL)))
 
 #+gtk-3-12
 (defcfun ("gtk_flow_box_set_filter_func" %gtk-flow-box-set-filter-func) :void
@@ -301,8 +301,8 @@
 
 #+gtk-3-12
 (defcallback gtk-flow-box-sort-func-callback :int
-    ((child1 g-object)
-     (child2 g-object)
+    ((child1 (g-object gtk-flow-box-child))
+     (child2 (g-object gtk-flow-box-child))
      (data :pointer))
   (restart-case
       (funcall (glib::get-stable-pointer-value data) child1 child2)
