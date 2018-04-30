@@ -40,18 +40,18 @@
 ;;;
 ;;;     gtk_progress_bar_new
 ;;;     gtk_progress_bar_pulse
-;;;     gtk_progress_bar_set_fraction
-;;;     gtk_progress_bar_get_fraction
-;;;     gtk_progress_bar_set_inverted
-;;;     gtk_progress_bar_get_inverted
-;;;     gtk_progress_bar_set_show_text
-;;;     gtk_progress_bar_get_show_text
-;;;     gtk_progress_bar_set_text
-;;;     gtk_progress_bar_get_text
-;;;     gtk_progress_bar_set_ellipsize
-;;;     gtk_progress_bar_get_ellipsize
-;;;     gtk_progress_bar_set_pulse_step
-;;;     gtk_progress_bar_get_pulse_step
+;;;     gtk_progress_bar_set_fraction                      -> Accessor
+;;;     gtk_progress_bar_get_fraction                      -> Accessor
+;;;     gtk_progress_bar_set_inverted                      -> Accessor
+;;;     gtk_progress_bar_get_inverted                      -> Accessor
+;;;     gtk_progress_bar_set_show_text                     -> Accessor
+;;;     gtk_progress_bar_get_show_text                     -> Accessor
+;;;     gtk_progress_bar_set_text                          -> Accessor
+;;;     gtk_progress_bar_get_text                          -> Accessor
+;;;     gtk_progress_bar_set_ellipsize                     -> Accessor
+;;;     gtk_progress_bar_get_ellipsize                     -> Accessor
+;;;     gtk_progress_bar_set_pulse_step                    -> Accessor
+;;;     gtk_progress_bar_get_pulse_step                    -> Accessor
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -69,7 +69,7 @@
    :type-initializer "gtk_progress_bar_get_type")
   ((ellipsize
     gtk-progress-bar-ellipsize
-    "ellipsize" "PangoEllipsize" t t)
+    "ellipsize" "PangoEllipsizeMode" t t)
    (fraction
     gtk-progress-bar-fraction
     "fraction" "gdouble" t t)

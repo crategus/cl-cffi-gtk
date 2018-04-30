@@ -3219,6 +3219,7 @@
   @see-class{gtk-window}
   @see-function{gtk-window-get-has-resize-grip}
   @see-function{gtk-window-set-has-resize-grip}"
+  (declare #+sbcl (sb-ext:muffle-conditions sb-ext:deprecation-condition))
   (and (gtk-window-has-resize-grip window)
        (gtk-window-resize-grip-visible window)))
 

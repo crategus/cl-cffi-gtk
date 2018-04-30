@@ -31,8 +31,8 @@ GTK+ Widgets and Objects
 
   Layout Containers
 
-    gtk.box.lisp                     - GtkBox, GtkHBox, GtkVbox    - GTK+ 3.10
-    gtk.grid.lisp                    - GtkGrid                     - GTK+ 3.10 &
+    gtk.box.lisp                     - GtkBox, GtkHBox, GtkVbox    - GTK+ 3.22
+    gtk.grid.lisp                    - GtkGrid                     - GTK+ 3.22
 
     gtk.revealer.lisp                - GtkRevealer                 - GTK+ 3.22
     gtk.list-box.lisp                - GtkListBox                  - GTK+ 3.22
@@ -44,8 +44,8 @@ GTK+ Widgets and Objects
     gtk.button-box.lisp              - GtkButtonBox, ...           - GTK+ 3.22
     gtk.paned.lisp                   - GtkPaned, ...               - GTK+ 3.22
     gtk.layout.lisp                  - GtkLayout                   - GTK+ 3.22
-    gtk.notebook.lisp                - GtkNotebook                 - GTK+ 3.10
-    gtk.expander.lisp                - GtkExpander                 - GTK+ 3.10
+    gtk.notebook.lisp                - GtkNotebook                 - GTK+ 3.22
+    gtk.expander.lisp                - GtkExpander                 - GTK+ 3.22
     gtk.orientable.lisp              - GtkOrientable               - GTK+ 3.22
     gtk.aspect-frame.lisp            - GtkAspectFrame              - GTK+ 3.22
     gtk.fixed.lisp                   - GtkFixed                    - GTK+ 3.22
@@ -54,12 +54,12 @@ GTK+ Widgets and Objects
 
     gtk.label.lisp                   - GtkLabel                    - GTK+ 3.10
     gtk.image.lisp                   - GtkImage                    - GTK+ 3.10
-    gtk.spinner.lisp                 - GtkSpinner                  - GTK+ 3.10
+    gtk.spinner.lisp                 - GtkSpinner                  - GTK+ 3.22
     gtk.info-bar.lisp                - GtkInfoBar                  - GTK+ 3.10
-    gtk.progress-bar.lisp            - GtkProgressBar              - GTK+ 3.10
-    gtk.level-bar.lisp               - GtkLevelBar                 - GTK+ 3.10
-    gtk.statusbar.lisp               - GtkStatusbar                - GTK+ 3.10
-    gtk.accel-label.lisp             - GtkAccelLabel               - GTK+ 3.10
+    gtk.progress-bar.lisp            - GtkProgressBar              - GTK+ 3.22
+    gtk.level-bar.lisp               - GtkLevelBar                 - GTK+ 3.22
+    gtk.statusbar.lisp               - GtkStatusbar                - GTK+ 3.22
+    gtk.accel-label.lisp             - GtkAccelLabel               - GTK+ 3.22
 
   Buttons and Toggles
 

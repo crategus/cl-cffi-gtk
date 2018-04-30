@@ -41,15 +41,17 @@
 ;;;     gtk_box_new
 ;;;     gtk_box_pack_start
 ;;;     gtk_box_pack_end
-;;;     gtk_box_get_homogeneous
-;;;     gtk_box_set_homogeneous
-;;;     gtk_box_get_spacing
-;;;     gtk_box_set_spacing
+;;;     gtk_box_get_homogeneous                            -> Accessor
+;;;     gtk_box_set_homogeneous                            -> Accessor
+;;;     gtk_box_get_spacing                                -> Accessor
+;;;     gtk_box_set_spacing                                -> Accessor
 ;;;     gtk_box_reorder_child
 ;;;     gtk_box_query_child_packing
 ;;;     gtk_box_set_child_packing
-;;;     gtk_box_get_baseline_position
-;;;     gtk_box_set_baseline_position
+;;;     gtk_box_get_baseline_position                      -> Accessor
+;;;     gtk_box_set_baseline_position                      -> Accessor
+;;;     gtk_box_get_center_widget
+;;;     gtk_box_set_center_widget
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -557,6 +559,29 @@
         (gtk-box-child-pack-type box child) pack-type))
 
 (export 'gtk-box-set-child-packing)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_box_get_center_widget ()
+;;; ----------------------------------------------------------------------------
+
+#+gtk-3-12
+(defcfun gtk-box-get-center-widget (g-object gtk-widget)
+  (box (g-object gtk-box)))
+
+#+gtk-3-12
+(export 'gtk-box-get-center-widget)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_box_set_center_widget ()
+;;; ----------------------------------------------------------------------------
+
+#+gtk-3-12
+(defcfun gtk-box-set-center-widget :void
+  (box (g-object gtk-box))
+  (widget (g-object gtk-widget)))
+
+#+gtk-3-12
+(export 'gtk-box-set-center-widget)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkHBox

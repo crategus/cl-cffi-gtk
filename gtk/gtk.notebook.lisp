@@ -75,8 +75,8 @@
 ;;;     gtk_notebook_get_tab_pos
 ;;;     gtk_notebook_get_tab_reorderable
 ;;;     gtk_notebook_get_tab_detachable
-;;;     gtk_notebook_get_tab_hborder
-;;;     gtk_notebook_get_tab_vborder
+;;;     gtk_notebook_get_tab_hborder                       *deprecated*
+;;;     gtk_notebook_get_tab_vborder                       *deprecated*
 ;;;     gtk_notebook_set_current_page
 ;;;     gtk_notebook_set_group_name
 ;;;     gtk_notebook_get_group_name
@@ -142,7 +142,7 @@
     "enable-popup" "gboolean" t t)
    (group-name
     gtk-notebook-group-name
-    "group-name" "gchar" t t)
+    "group-name" "gchararray" t t)
    (page
     gtk-notebook-page
     "page" "gint" t t)

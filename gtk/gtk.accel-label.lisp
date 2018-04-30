@@ -39,11 +39,12 @@
 ;;;     GtkAccelLabel
 ;;;
 ;;;     gtk_accel_label_new
-;;;     gtk_accel_label_set_accel_closure
-;;;     gtk_accel_label_get_accel_widget
-;;;     gtk_accel_label_set_accel_widget
+;;;     gtk_accel_label_set_accel_closure                  -> Accessor
+;;;     gtk_accel_label_get_accel_widget                   -> Accessor
+;;;     gtk_accel_label_set_accel_widget                   -> Accessor
 ;;;     gtk_accel_label_get_accel_width
 ;;;     gtk_accel_label_set_accel
+;;;     gtk_accel_label_get_accel
 ;;;     gtk_accel_label_refetch
 ;;; ----------------------------------------------------------------------------
 
@@ -259,6 +260,26 @@
 
 #+gtk-3-6
 (export 'gtk-accel-label-set-accel)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_accel_label_get_accel ()
+;;; ----------------------------------------------------------------------------
+
+#+gtk-3-12
+(defcfun ("gtk_accel_label_get_accel" %gtk-accel-label-get-accel) :void
+  (accel-label (g-object gtk-accel-label))
+  (accelerator-key (:pointer :uint))
+  (accelerator-mods (:pointer gdk-modifier-type)))
+
+#+gtk-3-12
+(defun gtk-accel-label-get-accel (accel-label)
+  (with-foreign-objects ((accelerator-key :uint) (accelerator-mods 'gdk-modifier-type))
+    (%gtk-accel-label-get-accel accel-label accelerator-key accelerator-mods)
+    (values (mem-ref accelerator-key :uint)
+            (mem-ref accelerator-mods 'gdk-modifier-type))))
+
+#+gtk-3-12
+(export 'gtk-accel-label-get-accel)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_accel_label_refetch ()

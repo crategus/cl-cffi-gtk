@@ -71,6 +71,11 @@
                                          "Go to the ~
                                          <a href=\"http://gtk.org/\">~
                                          GTK+ Website</a> for more ...")))
+      (let ((accel-label (make-instance 'gtk-accel-label :label "Accel Label")))
+        (gtk-accel-label-set-accel accel-label (gdk-keyval-from-name "a") :hyper-mask)
+        (multiple-value-bind (keyval mods)
+            (gtk-accel-label-get-accel accel-label)
+          (format T "~A / ~A~%" keyval mods))
+        (gtk-box-pack-start vbox2 accel-label))
       (gtk-container-add window vbox2)
       (gtk-widget-show-all window))))
-

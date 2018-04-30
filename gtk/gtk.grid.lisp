@@ -43,16 +43,16 @@
 ;;;     gtk_grid_remove_row
 ;;;     gtk_grid_remove_column
 ;;;     gtk_grid_insert_next_to
-;;;     gtk_grid_set_row_homogeneous
-;;;     gtk_grid_get_row_homogeneous
-;;;     gtk_grid_set_row_spacing
-;;;     gtk_grid_get_row_spacing
-;;;     gtk_grid_set_column_homogeneous
-;;;     gtk_grid_get_column_homogeneous
-;;;     gtk_grid_set_column_spacing
-;;;     gtk_grid_get_column_spacing
-;;;     gtk_grid_get_baseline_row
-;;;     gtk_grid_set_baseline_row
+;;;     gtk_grid_set_row_homogeneous                       -> Accessor
+;;;     gtk_grid_get_row_homogeneous                       -> Accessor
+;;;     gtk_grid_set_row_spacing                           -> Accessor
+;;;     gtk_grid_get_row_spacing                           -> Accessor
+;;;     gtk_grid_set_column_homogeneous                    -> Accessor
+;;;     gtk_grid_get_column_homogeneous                    -> Accessor
+;;;     gtk_grid_set_column_spacing                        -> Accessor
+;;;     gtk_grid_get_column_spacing                        -> Accessor
+;;;     gtk_grid_get_baseline_row                          -> Accessor
+;;;     gtk_grid_set_baseline_row                          -> Accessor
 ;;;     gtk_grid_get_row_baseline_position
 ;;;     gtk_grid_set_row_baseline_position
 ;;; ----------------------------------------------------------------------------
@@ -531,6 +531,30 @@
 (export 'gtk-grid-insert-column)
 
 ;;; ----------------------------------------------------------------------------
+;;; gtk_grid_remove_row ()
+;;; ----------------------------------------------------------------------------
+
+#+gtk-3-10
+(defcfun gtk-grid-remove-row :void
+  (grid (g-object gtk-grid))
+  (position :int))
+
+#+gtk-3-10
+(export 'gtk-grid-remove-row)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_grid_remove_column ()
+;;; ----------------------------------------------------------------------------
+
+#+gtk-3-10
+(defcfun gtk-grid-remove-column :void
+  (grid (g-object gtk-grid))
+  (position :int))
+
+#+gtk-3-10
+(export 'gtk-grid-remove-column)
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_grid_insert_next_to ()
 ;;; ----------------------------------------------------------------------------
 
@@ -562,7 +586,7 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_grid_get_row_baseline_position ()
-;;; 
+;;;
 ;;; GtkBaselinePosition gtk_grid_get_row_baseline_position (GtkGrid *grid,
 ;;;                                                         gint row);
 ;;;
@@ -581,6 +605,14 @@
 ;;;
 ;;; Since 3.10
 ;;; ----------------------------------------------------------------------------
+
+#+gtk-3-10
+(defcfun gtk-grid-get-row-baseline-position gtk-baseline-position
+  (grid (g-object gtk-grid))
+  (row :int))
+
+#+gtk-3-10
+(export 'gtk-grid-get-row-baseline-position)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_grid_set_row_baseline_position ()
@@ -603,5 +635,14 @@
 ;;;
 ;;; Since 3.10
 ;;; ----------------------------------------------------------------------------
+
+#+gtk-3-10
+(defcfun gtk-grid-set-row-baseline-position :void
+  (grid (g-object gtk-grid))
+  (row :int)
+  (pos gtk-baseline-position))
+
+#+gtk-3-10
+(export 'gtk-grid-set-row-baseline-position)
 
 ;;; --- End of file gtk.grid.lisp ----------------------------------------------

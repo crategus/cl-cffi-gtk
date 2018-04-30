@@ -34,22 +34,23 @@
 ;;;
 ;;;     GTK_LEVEL_BAR_OFFSET_LOW
 ;;;     GTK_LEVEL_BAR_OFFSET_HIGH
+;;;     GTK_LEVEL_BAR_OFFSET_FULL
 ;;;
 ;;;     GtkLevelBarMode
 ;;;     GtkLevelBar
 ;;;
 ;;;     gtk_level_bar_new
 ;;;     gtk_level_bar_new_for_interval
-;;;     gtk_level_bar_set_mode
-;;;     gtk_level_bar_get_mode
-;;;     gtk_level_bar_set_value
-;;;     gtk_level_bar_get_value
-;;;     gtk_level_bar_set_min_value
-;;;     gtk_level_bar_get_min_value
-;;;     gtk_level_bar_set_max_value
-;;;     gtk_level_bar_get_max_value
-;;;     gtk_level_bar_set_inverted
-;;;     gtk_level_bar_get_inverted
+;;;     gtk_level_bar_set_mode                             -> Accessor
+;;;     gtk_level_bar_get_mode                             -> Accessor
+;;;     gtk_level_bar_set_value                            -> Accessor
+;;;     gtk_level_bar_get_value                            -> Accessor
+;;;     gtk_level_bar_set_min_value                        -> Accessor
+;;;     gtk_level_bar_get_min_value                        -> Accessor
+;;;     gtk_level_bar_set_max_value                        -> Accessor
+;;;     gtk_level_bar_get_max_value                        -> Accessor
+;;;     gtk_level_bar_set_inverted                         -> Accessor
+;;;     gtk_level_bar_get_inverted                         -> Accessor
 ;;;     gtk_level_bar_add_offset_value
 ;;;     gtk_level_bar_remove_offset_value
 ;;;     gtk_level_bar_get_offset_value
@@ -67,6 +68,12 @@
 ;;; Since 3.6
 ;;; ----------------------------------------------------------------------------
 
+#+gtk-3-6
+(defconstant +gtk-level-bar-offset-low+ "low")
+
+#+gtk-3-6
+(export '+gtk-level-bar-offset-low+)
+
 ;;; ----------------------------------------------------------------------------
 ;;; GTK_LEVEL_BAR_OFFSET_HIGH
 ;;;
@@ -76,6 +83,18 @@
 ;;;
 ;;; Since 3.6
 ;;; ----------------------------------------------------------------------------
+
+#+gtk-3-6
+(defconstant +gtk-level-bar-offset-high+ "high")
+
+#+gtk-3-6
+(export '+gtk-level-bar-offset-high+)
+
+#+gtk-3-20
+(defconstant +gtk-level-bar-offset-full+ "full")
+
+#+gtk-3-20
+(export '+gtk-level-bar-offset-full+)
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkLevelBarMode

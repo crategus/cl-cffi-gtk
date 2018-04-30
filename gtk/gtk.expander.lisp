@@ -31,15 +31,31 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; GtkExpander
-;;; 
+;;;
 ;;; A container which can hide its child
-;;;     
+;;;
 ;;; Synopsis
-;;; 
+;;;
 ;;;     GtkExpander
-;;;     
+;;;
 ;;;     gtk_expander_new
 ;;;     gtk_expander_new_with_mnemonic
+;;;     gtk_expander_set_expanded                          -> Accessor
+;;;     gtk_expander_get_expanded                          -> Accessor
+;;;     gtk_expander_set_spacing                           -> Accessor
+;;;     gtk_expander_get_spacing                           -> Accessor
+;;;     gtk_expander_set_label                             -> Accessor
+;;;     gtk_expander_get_label                             -> Accessor
+;;;     gtk_expander_set_use_underline                     -> Accessor
+;;;     gtk_expander_get_use_underline                     -> Accessor
+;;;     gtk_expander_set_use_markup                        -> Accessor
+;;;     gtk_expander_get_use_markup                        -> Accessor
+;;;     gtk_expander_set_label_widget                      -> Accessor
+;;;     gtk_expander_get_label_widget                      -> Accessor
+;;;     gtk_expander_set_label_fill                        -> Accessor
+;;;     gtk_expander_get_label_fill                        -> Accessor
+;;;     gtk_expander_set_resize_toplevel                   -> Accessor
+;;;     gtk_expander_get_resize_toplevel                   -> Accessor
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -79,6 +95,8 @@
     gtk-expander-use-underline
     "use-underline" "gboolean" t t)))
 
+(deprecated-function :gtk gtk-expander-spacing (3 20))
+
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-expander 'type)
  "@version{2014-8-22}
@@ -92,7 +110,7 @@
   @class{gtk-bin}; you create the child widget and use the function
   @fun{gtk-container-add} to add it to the expander. When the expander is
   toggled, it will take care of showing and hiding the child automatically.
- 
+
   @subheading{Special Usage}
     There are situations in which you may prefer to show and hide the expanded
     widget yourself, such as when you want to actually create the widget at
@@ -372,7 +390,7 @@
   The generic function @sym{(setf gtk-expander-spacing)} sets the spacing field
   of the expander, which is the number of pixels to place between the expander
   and the child.
- 
+
   Since 2.4
   @see-class{gtk-expander}")
 
