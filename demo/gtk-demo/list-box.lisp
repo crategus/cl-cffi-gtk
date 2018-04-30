@@ -64,8 +64,9 @@
        (lambda (row before)
          (declare (ignore before))
          (let ((label (gtk-label-label (gtk-bin-get-child row))))
-           (setf (gtk-list-box-row-header row)
-                 (gtk-label-new (format NIL "This is the header for ~A!" label))))))
+           (gtk-list-box-row-set-header
+            row
+            (gtk-label-new (format NIL "This is the header for ~A!" label))))))
 
       (gtk-list-box-invalidate-sort list-box2)
       (gtk-list-box-invalidate-filter list-box2)

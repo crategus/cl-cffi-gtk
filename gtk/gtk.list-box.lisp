@@ -266,26 +266,23 @@
 ;;; ----------------------------------------------------------------------------
 
 #+gtk-3-10
-(defcfun ("gtk_list_box_get_adjustment" gtk-list-box-adjustment)
-    (g-object gtk-adjustment)
+(defcfun gtk-list-box-get-adjustment (g-object gtk-adjustment)
   (box (g-object gtk-list-box)))
+
+#+gtk-3-10
+(export 'gtk-list-box-get-adjustment)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_list_box_set_adjustment ()
 ;;; ----------------------------------------------------------------------------
 
 #+gtk-3-10
-(defcfun ("gtk_list_box_set_adjustment" %gtk-list-box-set-adjustment)
-    :void
+(defcfun gtk-list-box-set-adjustment :void
   (list-box (g-object gtk-list-box))
   (adjustment (g-object gtk-adjustment)))
 
 #+gtk-3-10
-(defun (setf gtk-list-box-adjustment) (new-value list-box)
-  (%gtk-list-box-set-adjustment list-box new-value))
-
-#+gtk-3-10
-(export 'gtk-list-box-adjustment)
+(export 'gtk-list-box-set-adjustment)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_list_box_set_placeholder ()
@@ -544,26 +541,23 @@
 ;;; ----------------------------------------------------------------------------
 
 #+gtk-3-10
-(defcfun ("gtk_list_box_row_get_header" gtk-list-box-row-header)
-    (g-object gtk-widget)
+(defcfun gtk-list-box-row-get-header (g-object gtk-widget)
   (row (g-object gtk-list-box-row)))
+
+#+gtk-3-10
+(export 'gtk-list-box-row-get-header)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_list_box_row_set_header ()
 ;;; ----------------------------------------------------------------------------
 
 #+gtk-3-10
-(defcfun ("gtk_list_box_row_set_header" %gtk-list-box-row-set-header)
-    :void
+(defcfun gtk-list-box-row-set-header :void
   (row (g-object gtk-list-box-row))
   (header (g-object gtk-widget)))
 
 #+gtk-3-10
-(defun (setf gtk-list-box-row-header) (new-value row)
-  (%gtk-list-box-row-set-header row new-value))
-
-#+gtk-3-10
-(export 'gtk-list-box-row-header)
+(export 'gtk-list-box-row-set-header)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_list_box_row_get_index ()
