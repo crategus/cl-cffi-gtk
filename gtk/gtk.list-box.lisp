@@ -1,10 +1,6 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.list-box.lisp
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
-;;;
 ;;; Copyright (C) 2018 Olof-Joachim Frahm
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify

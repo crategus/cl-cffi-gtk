@@ -1,11 +1,6 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.places-sidebar.lisp
 ;;;
-;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
-;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
-;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
-;;;
 ;;; Copyright (C) 2018 Olof-Joachim Frahm
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
