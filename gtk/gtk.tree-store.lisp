@@ -334,12 +334,16 @@
 ;;; gtk_tree_store_remove ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_tree_store_remove" gtk-tree-store-remove) :boolean
+(defcfun ("gtk_tree_store_remove" %gtk-tree-store-remove) :boolean
+  (tree-store (g-object gtk-tree-store))
+  (iter (g-boxed-foreign gtk-tree-iter)))
+
+(defun gtk-tree-store-remove (tree-store iter)
  #+cl-cffi-gtk-documentation
  "@version{2013-9-13}
   @argument[tree-store]{a @class{gtk-tree-store} object}
   @argument[iter]{a valid @class{gtk-tree-iter}}
-  @return{@em{True} if @arg{iter} is still valid, @code{nil} if not.}
+  @return{@arg{iter} if it is still valid, otherwise @code{nil}.}
   @begin{short}
     Removes @arg{iter} from @arg{tree-store}.
   @end{short}
@@ -348,8 +352,8 @@
   @see-class{gtk-tree-store}
   @see-class{gtk-tree-iter}
   @see-function{gtk-tree-store-insert}"
-  (tree-store (g-object gtk-tree-store))
-  (iter (g-boxed-foreign gtk-tree-iter)))
+ (when (%gtk-tree-store-remove tree-store iter)
+   iter))
 
 (export 'gtk-tree-store-remove)
 
@@ -762,12 +766,20 @@
 ;;; gtk_tree_store_move_before ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_tree_store_move_before" gtk-tree-store-move-before) :void
+(defcfun ("gtk_tree_store_move_before" %gtk-tree-store-move-before) :void
+  (tree-store (g-object gtk-tree-store))
+  (iter (g-boxed-foreign gtk-tree-iter))
+  (position (g-boxed-foreign gtk-tree-iter)))
+
+(declaim (inline gtk-tree-store-move-before))
+
+(defun gtk-tree-store-move-before (tree-store iter position)
  #+cl-cffi-gtk-documentation
  "@version{2013-10-16}
   @argument[tree-store]{a @class{gtk-tree-store}}
   @argument[iter]{a @class{gtk-tree-iter}}
   @argument[position]{a @class{gtk-tree-iter} or @code{nil}}
+  @return{@arg{iter}}
   @begin{short}
     Moves @arg{iter} in @arg{tree-store} to the position before @arg{position}.
   @end{short}
@@ -779,9 +791,8 @@
   @see-class{gtk-tree-store}
   @see-class{gtk-tree-iter}
   @see-function{gtk-tree-store-move-after}"
-  (tree-store (g-object gtk-tree-store))
-  (iter (g-boxed-foreign gtk-tree-iter))
-  (position (g-boxed-foreign gtk-tree-iter)))
+ (%gtk-tree-store-move-before tree-store iter position)
+ iter)
 
 (export 'gtk-tree-store-move-before)
 
@@ -789,12 +800,20 @@
 ;;; gtk_tree_store_move_after ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_tree_store_move_after" gtk-tree-store-move-after) :void
+(defcfun ("gtk_tree_store_move_after" %gtk-tree-store-move-after) :void
+  (tree-store (g-object gtk-tree-store))
+  (iter (g-boxed-foreign gtk-tree-iter))
+  (position (g-boxed-foreign gtk-tree-iter)))
+
+(declaim (inline gtk-tree-store-move-after))
+
+(defun gtk-tree-store-move-after (tree-store iter position)
  #+cl-cffi-gtk-documentation
  "@version{2013-10-16}
   @argument[tree-store]{a @class{gtk-tree-store} object}
   @argument[iter]{a @class{gtk-tree-iter} object}
   @argument[position]{a @class{gtk-tree-iter} object}
+  @return{@arg{iter}}
   @begin{short}
     Moves @arg{iter} in @arg{tree-store} to the position after @arg{position}.
   @end{short}
@@ -806,9 +825,8 @@
   @see-class{gtk-tree-store}
   @see-class{gtk-tree-iter}
   @see-function{gtk-tree-store-move-before}"
-  (tree-store (g-object gtk-tree-store))
-  (iter (g-boxed-foreign gtk-tree-iter))
-  (position (g-boxed-foreign gtk-tree-iter)))
+ (%gtk-tree-store-move-after tree-store iter position)
+ iter)
 
 (export 'gtk-tree-store-move-after)
 
