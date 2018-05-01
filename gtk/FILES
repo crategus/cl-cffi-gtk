@@ -136,7 +136,7 @@ GTK+ Widgets and Objects
     gtk.combo-box.lisp               - GtkComboBox                 - GTK+ 3.6.4*
     gtk.combo-box-text.lisp          - GtkComboBoxText             - GTK+ 3.6.4*
 
-    gtk.menu.lisp                    - GtkMenu                     - GTK+ 3.8.8*
+    gtk.menu.lisp                    - GtkMenu                     - GTK+ 3.22
     gtk.menu-bar.lisp                - GtkMenuBar                  - GTK+ 3.8.8*
     gtk.menu-item.lisp               - GtkMenuItem                 - GTK+ 3.8.8*
     gtk.radio-menu-item.lisp         - GtkRadioMenuItem            - GTK+ 3.8.8*
