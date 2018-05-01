@@ -292,8 +292,11 @@
     "window-position" "GtkWindowPosition" t t)))
 
 (deprecated-function :gtk gtk-window-opacity (3 8) gtk-widget-opacity)
+(deprecated-function :gtk (setf gtk-window-opacity) (3 8) ((setf gtk-widget-opacity)))
 (deprecated-function :gtk gtk-window-has-resize-grip (3 14))
+(deprecated-function :gtk (setf gtk-window-has-resize-grip) (3 14))
 (deprecated-function :gtk gtk-window-resize-grip-visible (3 14))
+(deprecated-function :gtk (setf gtk-window-resize-grip-visible) (3 14))
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-window 'type)

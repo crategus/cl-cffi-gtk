@@ -127,7 +127,8 @@
     gtk-places-sidebar-show-trash
     "show-trash" "gboolean" t t)))
 
-(deprecated-function :gtk gtk-places-sidebar-show-connect-to-server (3 18) ())
+(deprecated-function :gtk gtk-places-sidebar-show-connect-to-server (3 18))
+(deprecated-function :gtk (setf gtk-places-sidebar-show-connect-to-server) (3 18))
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkPlacesOpenFlags

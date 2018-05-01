@@ -96,6 +96,7 @@
     "use-underline" "gboolean" t t)))
 
 (deprecated-function :gtk gtk-expander-spacing (3 20))
+(deprecated-function :gtk (setf gtk-expander-spacing) (3 20))
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-expander 'type)

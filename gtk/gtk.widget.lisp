@@ -6954,7 +6954,7 @@
 ;;; gtk_widget_get_root_window ()
 ;;; ----------------------------------------------------------------------------
 
-(deprecated-function :gtk gtk-widget-get-root-window (3 12) (gdk:gdk-screen-get-root-window))
+(deprecated-function :gtk gtk-widget-get-root-window (3 12) gdk:gdk-screen-get-root-window)
 (defcfun ("gtk_widget_get_root_window" gtk-widget-get-root-window)
     (g-object gdk-window)
  #+cl-cffi-gtk-documentation

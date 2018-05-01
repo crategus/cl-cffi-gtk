@@ -586,11 +586,13 @@
 ;;;
 ;;; ----------------------------------------------------------------------------
 
-(deprecated-function :gtk gtk-hpaned-child-resize NIL (gtk-paned-child-resize))
+(deprecated-function :gtk gtk-hpaned-child-resize NIL gtk-paned-child-resize)
+(deprecated-function :gtk (setf gtk-hpaned-child-resize) NIL ((setf gtk-paned-child-resize)))
 (define-child-property "GtkHPaned"
                        gtk-hpaned-child-resize "resize" "gboolean" t t t)
 
-(deprecated-function :gtk gtk-hpaned-child-shrink NIL (gtk-paned-child-shrink))
+(deprecated-function :gtk gtk-hpaned-child-shrink NIL gtk-paned-child-shrink)
+(deprecated-function :gtk (setf gtk-hpaned-child-shrink) NIL ((setf gtk-paned-child-shrink)))
 (define-child-property "GtkHPaned"
                        gtk-hpaned-child-shrink "shrink" "gboolean" t t t)
 
@@ -620,7 +622,7 @@
 ;;; gtk_hpaned_new ()
 ;;; ----------------------------------------------------------------------------
 
-(deprecated-function :gtk gtk-hpaned-new (3 2) (gtk-paned-new))
+(deprecated-function :gtk gtk-hpaned-new (3 2) gtk-paned-new)
 (defun gtk-hpaned-new ()
  #+cl-cffi-gtk-documentation
  "@version{2013-5-18}
@@ -679,11 +681,13 @@
 ;;;
 ;;; ----------------------------------------------------------------------------
 
-(deprecated-function :gtk gtk-vpaned-child-resize NIL (gtk-paned-child-resize))
+(deprecated-function :gtk gtk-vpaned-child-resize NIL gtk-paned-child-resize)
+(deprecated-function :gtk (setf gtk-vpaned-child-resize) NIL ((setf gtk-paned-child-resize)))
 (define-child-property "GtkVPaned"
                        gtk-vpaned-child-resize "resize" "gboolean" t t t)
 
-(deprecated-function :gtk gtk-vpaned-child-shrink NIL (gtk-paned-child-shrink))
+(deprecated-function :gtk gtk-vpaned-child-shrink NIL gtk-paned-child-shrink)
+(deprecated-function :gtk (setf gtk-vpaned-child-shrink) NIL ((setf gtk-paned-child-shrink)))
 (define-child-property "GtkVPaned"
                        gtk-vpaned-child-shrink "shrink" "gboolean" t t t)
 
@@ -713,7 +717,7 @@
 ;;; gtk_vpaned_new ()
 ;;; ----------------------------------------------------------------------------
 
-(deprecated-function :gtk gtk-vpaned-new (3 2) (gtk-paned-new))
+(deprecated-function :gtk gtk-vpaned-new (3 2) gtk-paned-new)
 (defun gtk-vpaned-new ()
  #+cl-cffi-gtk-documentation
  "@version{2013-5-18}

@@ -235,7 +235,7 @@
 
 (declaim (inline gtk-button-box-get-child-secondary))
 
-(deprecated-function :gtk gtk-button-box-get-child-secondary NIL (gtk-button-box-child-secondary))
+(deprecated-function :gtk gtk-button-box-get-child-secondary NIL gtk-button-box-child-secondary)
 (defun gtk-button-box-get-child-secondary (widget child)
  #+cl-cffi-gtk-documentation
  "@version{2013-5-18}
@@ -257,7 +257,7 @@
 
 (declaim (inline gtk-button-box-get-child-non-homogeneous))
 
-(deprecated-function :gtk gtk-button-box-get-child-non-homogeneous NIL (gtk-button-box-child-non-homogeneous))
+(deprecated-function :gtk gtk-button-box-get-child-non-homogeneous NIL gtk-button-box-child-non-homogeneous)
 (defun gtk-button-box-get-child-non-homogeneous (widget child)
  #+cl-cffi-gtk-documentation
  "@version{2013-5-18}
@@ -387,32 +387,38 @@
 ;;;
 ;;; ----------------------------------------------------------------------------
 
-(deprecated-function :gtk gtk-hbutton-box-child-expand NIL (gtk-box-child-expand))
+(deprecated-function :gtk gtk-hbutton-box-child-expand NIL gtk-box-child-expand)
+(deprecated-function :gtk (setf gtk-hbutton-box-child-expand) NIL ((setf gtk-box-child-expand)))
 (define-child-property "GtkHButtonBox"
                        gtk-hbutton-box-child-expand
                        "expand" "gboolean" t t t)
 
-(deprecated-function :gtk gtk-hbutton-box-child-fill NIL (gtk-box-child-fill))
+(deprecated-function :gtk gtk-hbutton-box-child-fill NIL gtk-box-child-fill)
+(deprecated-function :gtk (setf gtk-hbutton-box-child-fill) NIL ((setf gtk-box-child-fill)))
 (define-child-property "GtkHButtonBox"
                        gtk-hbutton-box-child-fill
                        "fill" "gboolean" t t t)
 
-(deprecated-function :gtk gtk-hbutton-box-child-padding NIL (gtk-box-child-padding))
+(deprecated-function :gtk gtk-hbutton-box-child-padding NIL gtk-box-child-padding)
+(deprecated-function :gtk (setf gtk-hbutton-box-child-padding) NIL ((setf gtk-box-child-padding)))
 (define-child-property "GtkHButtonBox"
                        gtk-hbutton-box-child-padding
                        "padding" "guint" t t t)
 
-(deprecated-function :gtk gtk-hbutton-box-child-pack-type NIL (gtk-box-child-pack-type))
+(deprecated-function :gtk gtk-hbutton-box-child-pack-type NIL gtk-box-child-pack-type)
+(deprecated-function :gtk (setf gtk-hbutton-box-child-pack-type) NIL ((setf gtk-box-child-pack-type)))
 (define-child-property "GtkHButtonBox"
                        gtk-hbutton-box-child-pack-type
                        "pack-type" "GtkPackType" t t t)
 
-(deprecated-function :gtk gtk-hbutton-box-child-position NIL (gtk-box-child-position))
+(deprecated-function :gtk gtk-hbutton-box-child-position NIL gtk-box-child-position)
+(deprecated-function :gtk (setf gtk-hbutton-box-child-position) NIL ((setf gtk-box-child-position)))
 (define-child-property "GtkHButtonBox"
                        gtk-hbutton-box-child-position
                        "position" "gint" t t t)
 
-(deprecated-function :gtk  NIL ())
+(deprecated-function :gtk gtk-hbutton-box-child-secondary NIL gtk-button-box-child-secondary)
+(deprecated-function :gtk (setf gtk-hbutton-box-child-secondary) NIL ((setf gtk-button-box-child-secondary)))
 (define-child-property "GtkHButtonBox"
                        gtk-hbutton-box-child-secondary
                        "secondary" "gboolean" t t t)
@@ -485,7 +491,7 @@
 
 (declaim (inline gtk-hbutton-box-new))
 
-(deprecated-function :gtk gtk-hbutton-box-new (3 2) (gtk-button-box-new))
+(deprecated-function :gtk gtk-hbutton-box-new (3 2) gtk-button-box-new)
 (defun gtk-hbutton-box-new ()
  #+cl-cffi-gtk-documentation
  "@version{2013-5-18}
@@ -561,32 +567,38 @@
 ;;;
 ;;; ----------------------------------------------------------------------------
 
-(deprecated-function :gtk gtk-vbutton-box-child-expand NIL (gtk-box-child-expand))
+(deprecated-function :gtk gtk-vbutton-box-child-expand NIL gtk-box-child-expand)
+(deprecated-function :gtk (setf gtk-vbutton-box-child-expand) NIL ((setf gtk-box-child-expand)))
 (define-child-property "GtkVButtonBox"
                        gtk-vbutton-box-child-expand
                        "expand" "gboolean" t t t)
 
-(deprecated-function :gtk gtk-vbutton-box-child-fill NIL (gtk-box-child-fill))
+(deprecated-function :gtk gtk-vbutton-box-child-fill NIL gtk-box-child-fill)
+(deprecated-function :gtk (setf gtk-vbutton-box-child-fill) NIL ((setf gtk-box-child-fill)))
 (define-child-property "GtkVButtonBox"
                        gtk-vbutton-box-child-fill
                        "fill" "gboolean" t t t)
 
-(deprecated-function :gtk gtk-vbutton-box-child-padding NIL (gtk-box-child-padding))
+(deprecated-function :gtk gtk-vbutton-box-child-padding NIL gtk-box-child-padding)
+(deprecated-function :gtk (setf gtk-vbutton-box-child-padding) NIL ((setf gtk-box-child-padding)))
 (define-child-property "GtkVButtonBox"
                        gtk-vbutton-box-child-padding
                        "padding" "guint" t t t)
 
-(deprecated-function :gtk gtk-vbutton-box-child-pack-type NIL (gtk-box-child-pack-type))
+(deprecated-function :gtk gtk-vbutton-box-child-pack-type NIL gtk-box-child-pack-type)
+(deprecated-function :gtk (setf gtk-vbutton-box-child-pack-type) NIL ((setf gtk-box-child-pack-type)))
 (define-child-property "GtkVButtonBox"
                        gtk-vbutton-box-child-pack-type
                        "pack-type" "GtkPackType" t t t)
 
-(deprecated-function :gtk gtk-vbutton-box-child-position NIL (gtk-box-child-position))
+(deprecated-function :gtk gtk-vbutton-box-child-position NIL gtk-box-child-position)
+(deprecated-function :gtk (setf gtk-vbutton-box-child-position) NIL ((setf gtk-box-child-position)))
 (define-child-property "GtkVButtonBox"
                        gtk-vbutton-box-child-position
                        "position" "gint" t t t)
 
-(deprecated-function :gtk gtk-vbutton-box-child-secondary NIL (gtk-box-child-secondary))
+(deprecated-function :gtk gtk-vbutton-box-child-secondary NIL gtk-button-box-child-secondary)
+(deprecated-function :gtk (setf gtk-vbutton-box-child-secondary) NIL ((setf gtk-button-box-child-secondary)))
 (define-child-property "GtkVButtonBox"
                        gtk-vbutton-box-child-secondary
                        "secondary" "gboolean" t t t)
@@ -659,7 +671,7 @@
 
 (declaim (inline gtk-vbutton-box-new))
 
-(deprecated-function :gtk gtk-vbutton-box-new (3 2) (gtk-button-box-new))
+(deprecated-function :gtk gtk-vbutton-box-new (3 2) gtk-button-box-new)
 (defun gtk-vbutton-box-new ()
  #+cl-cffi-gtk-documentation
  "@version{2013-5-18}
