@@ -69,7 +69,7 @@
 ;;; ----------------------------------------------------------------------------
 
 #+gtk-3-6
-(defconstant +gtk-level-bar-offset-low+ "low")
+(define-constant +gtk-level-bar-offset-low+ "low" :test 'equal)
 
 #+gtk-3-6
 (export '+gtk-level-bar-offset-low+)
@@ -85,13 +85,13 @@
 ;;; ----------------------------------------------------------------------------
 
 #+gtk-3-6
-(defconstant +gtk-level-bar-offset-high+ "high")
+(define-constant +gtk-level-bar-offset-high+ "high" :test 'equal)
 
 #+gtk-3-6
 (export '+gtk-level-bar-offset-high+)
 
 #+gtk-3-20
-(defconstant +gtk-level-bar-offset-full+ "full")
+(define-constant +gtk-level-bar-offset-full+ "full" :test 'equal)
 
 #+gtk-3-20
 (export '+gtk-level-bar-offset-full+)

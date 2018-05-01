@@ -143,7 +143,10 @@
 ;;; GDK_NONE
 ;;; ----------------------------------------------------------------------------
 
-(defparameter +gdk-none+ "NONE" ; in sbcl defconstant does not work for a string
+(define-constant +gdk-none+ "NONE"
+  :test 'equal
+ #+cl-cffi-gtk-documentation
+ :documentation
  #+cl-cffi-gtk-documentation
  "@version{2013-6-28}
   @variable-value{\"NONE\"}

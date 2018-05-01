@@ -27,7 +27,8 @@
 ;;; ----------------------------------------------------------------------------
 
 (defpackage :gdk
-  (:use :gdk-pixbuf :gobject :glib :gio :cffi :pango :cairo :iter :cl))
+  (:use :gdk-pixbuf :gobject :glib :gio :cffi :pango :cairo :iter :cl)
+  (:import-from :alexandria :define-constant))
 
 (in-package :gdk)
 
