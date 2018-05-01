@@ -807,13 +807,12 @@
  "@version{2013-5-12}
   @argument[path]{a @class{gtk-tree-path} object}
   @argument[index]{the index}
-  @return{The new path.}
+  @return{The updated @arg{path}.}
   @short{Appends a new @arg{index} to a @arg{path}.}
 
   As a result, the depth of the @arg{path} is increased."
-  (let ((path (gtk-tree-path-copy path)))
-    (%gtk-tree-path-append-index path index)
-    path))
+ (%gtk-tree-path-append-index path index)
+ path)
 
 (export 'gtk-tree-path-append-index)
 
@@ -832,13 +831,12 @@
  "@version{2013-5-12}
   @argument[path]{a @class{gtk-tree-path} object}
   @argument[index]{the index}
-  @return{The new path.}
+  @return{The updated @arg{path}.}
   @short{Prepends a new @arg{index} to a @arg{path}.}
 
   As a result, the depth of the @arg{path} is increased."
-  (let ((path (gtk-tree-path-copy path)))
-    (%gtk-tree-path-prepend-index path index)
-    path))
+ (%gtk-tree-path-prepend-index path index)
+ path)
 
 (export 'gtk-tree-path-prepend-index)
 
@@ -969,7 +967,7 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-10-15}
   @argument[path]{a @class{gtk-tree-path} object}
-  @return{The new path.}
+  @return{The updated @arg{path}.}
   @short{Moves the @arg{path} to point to the next node at the current depth.}
   @see-class{gtk-tree-path}
   @see-function{gtk-tree-path-prev}"
@@ -989,7 +987,7 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-10-15}
   @argument[path]{a @class{gtk-tree-path} object}
-  @return{@em{True} if @arg{path} has a previous node, and the move was made.}
+  @return{The updated @arg{path} if there is a previous node, and the move was made. Otherwise @code{nil}.}
   Moves the @arg{path} to point to the previous node at the current depth, if it
   exists.
   @see-class{gtk-tree-path}
@@ -1010,7 +1008,7 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-10-15}
   @argument[path]{a @class{gtk-tree-path} object}
-  @return{@em{True} if @arg{path} has a parent, and the move was made.}
+  @return{The updated @arg{path} if there is a parent, and the move was made. Otherwise @code{nil}.}
   Moves the @arg{path} to point to its parent node, if it has a parent.
   @see-class{gtk-tree-path}
   @see-function{gtk-tree-path-down}"
@@ -1030,6 +1028,7 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-10-15}
   @argument[path]{a @class{gtk-tree-path} object}
+  @return{The updated @arg{path}.}
   Moves @arg{path} to point to the first child of the current @arg{path}.
   @see-class{gtk-tree-path}
   @see-function{gtk-tree-path-up}"
@@ -1532,7 +1531,7 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-10-15}
   @argument[tree-model]{a @class{gtk-tree-model} object}
-  @return{@code{iter} -- the new @class{gtk-tree-iter} object}
+  @return{@arg{iter} if it is still valid, otherwise @code{nil}.}
   @begin{short}
     Sets @arg{iter} to point to the node following it at the current level.
   @end{short}
@@ -1542,9 +1541,8 @@
   @see-class{gtk-tree-model}
   @see-class{gtk-tree-iter}
   @see-function{gtk-tree-model-iter-first}"
-  (let ((iter-new (copy-gtk-tree-iter iter)))
-    (when (%gtk-tree-model-iter-next tree-model iter-new)
-      iter-new)))
+ (when (%gtk-tree-model-iter-next tree-model iter)
+   iter))
 
 (export 'gtk-tree-model-iter-next)
 
@@ -1560,7 +1558,7 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-5-12}
   @argument[tree-model]{a @class{gtk-tree-model} object}
-  @return{@code{iter} -- the @class{gtk-tree-iter} object}
+  @return{@arg{iter} if it is still valid, otherwise @code{nil}.}
   @begin{short}
     Sets @arg{iter} to point to the previous node at the current level.
   @end{short}
@@ -1569,9 +1567,8 @@
   set to be invalid.
 
   Since 3.0"
-  (let ((iter-new (copy-gtk-tree-iter iter)))
-    (when (%gtk-tree-model-iter-previous tree-model iter-new)
-      iter-new)))
+ (when (%gtk-tree-model-iter-previous tree-model iter)
+   iter))
 
 (export 'gtk-tree-model-iter-previous)
 

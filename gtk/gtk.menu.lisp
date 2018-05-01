@@ -34,37 +34,42 @@
 ;;;
 ;;; A menu widget
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkMenu
+;;;
+;;; Functions
 ;;;
 ;;;     gtk_menu_new
 ;;;     gtk_menu_new_from_model
 ;;;     gtk_menu_set_screen
 ;;;     gtk_menu_reorder_child
 ;;;     gtk_menu_attach
-;;;     gtk_menu_popup_for_device
-;;;     gtk_menu_popup
-;;;     gtk_menu_set_accel_group
-;;;     gtk_menu_get_accel_group
-;;;     gtk_menu_set_accel_path
-;;;     gtk_menu_get_accel_path
-;;;     gtk_menu_set_title
-;;;     gtk_menu_get_title
-;;;     gtk_menu_set_monitor
-;;;     gtk_menu_get_monitor
-;;;     gtk_menu_get_tearoff_state
-;;;     gtk_menu_set_reserve_toggle_size
-;;;     gtk_menu_get_reserve_toggle_size
-;;;
+;;;     gtk_menu_popup_at_rect
+;;;     gtk_menu_popup_at_widget
+;;;     gtk_menu_popup_at_pointer
+;;;     gtk_menu_popup_for_device                           * deprecated *
+;;;     gtk_menu_popup                                      * deprecated *
+;;;     gtk_menu_set_accel_group                            -> Accessor (also as separate, deprecated, function)
+;;;     gtk_menu_get_accel_group                            -> Accessor (also as separate, deprecated, function)
+;;;     gtk_menu_set_accel_path                             -> Accessor (also as separate, deprecated, function)
+;;;     gtk_menu_get_accel_path                             -> Accessor (also as separate, deprecated, function)
+;;;     gtk_menu_set_title                                  * deprecated *
+;;;     gtk_menu_get_title                                  * deprecated *
+;;;     gtk_menu_set_monitor                                -> Accessor (also as separate, deprecated, function)
+;;;     gtk_menu_get_monitor                                -> Accessor (also as separate, deprecated, function)
+;;;     gtk_menu_place_on_monitor
+;;;     gtk_menu_get_tearoff_state                          * deprecated *
+;;;     gtk_menu_set_reserve_toggle_size                    -> Accessor (also as separate, deprecated, function)
+;;;     gtk_menu_get_reserve_toggle_size                    -> Accessor (also as separate, deprecated, function)
 ;;;     gtk_menu_popdown
 ;;;     gtk_menu_reposition
-;;;     gtk_menu_get_active
-;;;     gtk_menu_set_active
-;;;     gtk_menu_set_tearoff_state
+;;;     gtk_menu_get_active                                 -> Accessor (also as separate, deprecated, function)
+;;;     gtk_menu_set_active                                 -> Accessor (also as separate, deprecated, function)
+;;;     gtk_menu_set_tearoff_state                          * deprecated *
 ;;;     gtk_menu_attach_to_widget
 ;;;     gtk_menu_detach
-;;;     gtk_menu_get_attach_widget
+;;;     gtk_menu_get_attach_widget                          -> Accessor (also as separate, deprecated, function)
 ;;;     gtk_menu_get_for_attach_widget
 ;;; ----------------------------------------------------------------------------
 
@@ -92,12 +97,28 @@
    (active
     gtk-menu-active
     "active" "gint" t t)
+   #+gtk-3-22
+   (anchor-hints
+    gtk-menu-anchor-hints
+    "anchor-hints" "GdkAnchorHints" t t)
    (attach-widget
     gtk-menu-attach-widget
     "attach-widget" "GtkWidget" t t)
+   #+gtk-3-22
+   (menu-type-hint
+    gtk-menu-menu-type-hint
+    "menu-type-hint" "GdkWindowTypeHint" t t)
    (monitor
     gtk-menu-monitor
     "monitor" "gint" t t)
+   #+gtk-3-22
+   (rect-anchor-dx
+    gtk-menu-rect-anchor-dx
+    "rect-anchor-dx" "gint" t t)
+   #+gtk-3-22
+   (rect-anchor-dy
+    gtk-menu-rect-anchor-dy
+    "rect-anchor-dy" "gint" t t)
    (reserve-toggle-size
     gtk-menu-reserve-toggle-size
     "reserve-toggle-size" "gboolean" t t)
@@ -107,6 +128,12 @@
    (tearoff-title
     gtk-menu-tearoff-title
     "tearoff-title" "gchararray" t t)))
+
+;; Mark some properties as deprecated
+(deprecated-function :gtk gtk-menu-tearoff-state (3 10))
+(deprecated-function :gtk (setf gtk-menu-tearoff-state) (3 10))
+(deprecated-function :gtk gtk-menu-tearoff-title (3 10))
+(deprecated-function :gtk (setf gtk-menu-tearoff-title) (3 10))
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-menu 'type)
@@ -684,6 +711,7 @@
   (button :uint)
   (activate-time :uint32))
 
+(deprecated-function :gtk gtk-menu-popup-for-device (3 22) (gtk-menu-popup-at-widget gtk-menu-popup-at-pointer gtk-menu-popup-at-rect))
 (defun gtk-menu-popup-for-device (menu
                                   device
                                   parent-menu-shell
@@ -754,6 +782,7 @@
   (button :uint)
   (activate-time :uint32))
 
+(deprecated-function :gtk gtk-menu-popup (3 22) (gtk-menu-popup-at-widget gtk-menu-popup-at-pointer gtk-menu-popup-at-rect))
 (defun gtk-menu-popup (menu &key parent-menu-shell
                                  parent-menu-item
                                  position-func
@@ -812,6 +841,10 @@
 
 (export 'gtk-menu-popup)
 
+;;; ----------------------------------------------------------------------------
+;;; gtk_menu_popup_at_rect ()
+;;; ----------------------------------------------------------------------------
+
 #+gtk-3-22
 (defcfun ("gtk_menu_popup_at_rect" gtk-menu-popup-at-rect) :void
   (menu (g-object gtk-menu))
@@ -824,6 +857,10 @@
 #+gtk-3-22
 (export 'gtk-menu-popup-at-rect)
 
+;;; ----------------------------------------------------------------------------
+;;; gtk_menu_popup_at_widget ()
+;;; ----------------------------------------------------------------------------
+
 #+gtk-3-22
 (defcfun ("gtk_menu_popup_at_widget" gtk-menu-popup-at-widget) :void
   (menu (g-object gtk-menu))
@@ -834,6 +871,10 @@
 
 #+gtk-3-22
 (export 'gtk-menu-popup-at-widget)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_menu_popup_at_pointer ()
+;;; ----------------------------------------------------------------------------
 
 #+gtk-3-22
 (defcfun ("gtk_menu_popup_at_pointer" gtk-menu-popup-at-pointer) :void
@@ -849,6 +890,7 @@
 
 (declaim (inline gtk-menu-set-accel-group))
 
+(deprecated-function :gtk gtk-menu-set-accel-group nil ((setf gtk-menu-accel-group)))
 (defun gtk-menu-set-accel-group (menu accel-group)
  #+cl-cffi-gtk-documentation
  "@version{2013-12-1}
@@ -875,6 +917,7 @@
 
 (declaim (inline gtk-menu-get-accel-group))
 
+(deprecated-function :gtk gtk-menu-get-accel-group nil gtk-menu-accel-group)
 (defun gtk-menu-get-accel-group (menu)
  #+cl-cffi-gtk-documentation
  "@version{2013-12-1}
@@ -897,6 +940,7 @@
 
 (declaim (inline gtk-menu-set-accel-path))
 
+(deprecated-function :gtk gtk-menu-set-accel-path nil ((setf gtk-menu-accel-path)))
 (defun gtk-menu-set-accel-path (menu accel-path)
  #+cl-cffi-gtk-documentation
  "@version{2014-1-1}
@@ -936,6 +980,7 @@
 
 (declaim (inline gtk-menu-get-accel-path))
 
+(deprecated-function :gtk gtk-menu-get-accel-path nil gtk-menu-accel-path)
 (defun gtk-menu-get-accel-path (menu)
  #+cl-cffi-gtk-documentation
  "@version{2013-12-1}
@@ -954,6 +999,7 @@
 ;;; gtk_menu_set_title ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gtk gtk-menu-set-title (3 10))
 (defcfun ("gtk_menu_set_title" gtk-menu-set-title) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-9-10}
@@ -976,6 +1022,7 @@
 ;;; gtk_menu_get_title ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gtk gtk-menu-get-title (3 10))
 (defcfun ("gtk_menu_get_title" gtk-menu-get-title) :string
  #+cl-cffi-gtk-documentation
  "@version{2013-9-10}
@@ -996,6 +1043,7 @@
 
 (declaim (inline gtk-menu-set-monitor))
 
+(deprecated-function :gtk gtk-menu-set-monitor nil ((setf gtk-menu-monitor)))
 (defun gtk-menu-set-monitor (menu monitor-num)
  #+cl-cffi-gtk-documentation
  "@version{2013-12-1}
@@ -1027,6 +1075,7 @@
 
 (declaim (inline gtk-menu-get-monitor))
 
+(deprecated-function :gtk gtk-menu-get-monitor nil gtk-menu-monitor)
 (defun gtk-menu-get-monitor (menu)
  #+cl-cffi-gtk-documentation
  "@version{2013-12-1}
@@ -1045,12 +1094,26 @@
 (export 'gtk-menu-get-monitor)
 
 ;;; ----------------------------------------------------------------------------
+;;; gtk_menu_place_on_monitor ()
+;;; ----------------------------------------------------------------------------
+
+#+gtk-3-22
+(defcfun gtk-menu-place-on-monitor :void
+  (menu (g-object gtk-menu))
+  (monitor (g-object gdk-monitor)))
+
+#+gtk-3-22
+(export 'gtk-menu-place-on-monitor)
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_menu_get_tearoff_state ()
 ;;; ----------------------------------------------------------------------------
 
-(declaim (inline gtk-menu-get-tearoff-state))
-
-(defun gtk-menu-get-tearoff-state (menu)
+(deprecated-function :gtk gtk-menu-get-tearoff-state (3 10))
+;; This is a call to the C function, instead of a call to
+;; gtk-menu-tearoff-state, because the latter is now deprecated and will
+;; therefore trigger a compilation warning
+(defcfun gtk-menu-get-tearoff-state :boolean
  #+cl-cffi-gtk-documentation
  "@version{2013-12-1}
   @argument[menu]{a @class{gtk-menu} widget}
@@ -1061,7 +1124,7 @@
   See the function @fun{gtk-menu-set-tearoff-state}.
   @see-class{gtk-menu}
   @see-function{gtk-menu-set-tearoff-state}"
-  (gtk-menu-tearoff-state menu))
+ (menu (g-object gtk-menu)))
 
 (export 'gtk-menu-get-tearoff-state)
 
@@ -1071,6 +1134,7 @@
 
 (declaim (inline gtk-menu-set-reserve-toggle-size))
 
+(deprecated-function :gtk gtk-menu-set-reserve-toggle-size nil ((setf gtk-menu-reserve-toggle-size)))
 (defun gtk-menu-set-reserve-toggle-size (menu reserve-toggle-size)
  #+cl-cffi-gtk-documentation
  "@version{2013-12-1}
@@ -1094,6 +1158,7 @@
 
 (declaim (inline gtk-menu-get-reserve-toggle-size))
 
+(deprecated-function :gtk gtk-menu-get-reserve-toggle-size nil gtk-menu-reserve-toggle-size)
 (defun gtk-menu-get-reserve-toggle-size (menu)
  #+cl-cffi-gtk-documentation
  "@version{2013-12-1}
@@ -1145,6 +1210,7 @@
 
 (declaim (inline gtk-menu-get-active))
 
+(deprecated-function :gtk gtk-menu-get-active nil gtk-menu-active)
 (defun gtk-menu-get-active (menu)
  #+cl-cffi-gtk-documentation
  "@version{2013-12-1}
@@ -1170,6 +1236,7 @@
 
 (declaim (inline gtk-menu-set-active))
 
+(deprecated-function :gtk gtk-menu-set-active nil (setf gtk-menu-active))
 (defun gtk-menu-set-active (menu index)
  #+cl-cffi-gtk-documentation
  "@version{2013-12-1}
@@ -1191,9 +1258,11 @@
 ;;; gtk_menu_set_tearoff_state ()
 ;;; ----------------------------------------------------------------------------
 
-(declaim (inline gtk-menu-set-tearoff-state))
-
-(defun gtk-menu-set-tearoff-state (menu torn-off)
+(deprecated-function :gtk gtk-menu-set-tearoff-state (3 10))
+;; This is a call to the C function, instead of a call to (setf
+;; gtk-menu-tearoff-state), because the latter is now deprecated and will
+;; therefore trigger a compilation warning
+(defcfun gtk-menu-set-tearoff-state :void
  #+cl-cffi-gtk-documentation
  "@version{2013-12-1}
   @argument[menu]{a @class{gtk-menu} widget}
@@ -1206,7 +1275,8 @@
   until it is closed or reattached.
   @see-class{gtk-menu}
   @see-function{gtk-menu-get-tearoff-state}"
-  (setf (gtk-menu-tearoff-state menu) torn-off))
+ (menu (g-object gtk-menu))
+ (torn-off :boolean))
 
 (export 'gtk-menu-set-tearoff-state)
 
@@ -1273,6 +1343,7 @@
 
 (declaim (inline gtk-menu-get-attach-widget))
 
+(deprecated-function :gtk gtk-menu-get-attach-widget nil gtk-menu-attach-widget)
 (defun gtk-menu-get-attach-widget (menu)
  #+cl-cffi-gtk-documentation
  "@version{2013-12-1}
