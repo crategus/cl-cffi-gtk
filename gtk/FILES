@@ -68,9 +68,7 @@ GTK+ Widgets and Objects
     gtk.radio-button.lisp            - GtkRadioButton              - GTK+ 3.10
     gtk.toggle-button.lisp           - GtkToggleButton             - GTK+ 3.10
     gtk.link-button.lisp             - GtkLinkButton               - GTK+ 3.10
-
-    not implemented                  - GtkMenuButton
-
+    gtk.menu-button.lisp             - GtkMenuButton               - GTK+ 3.22
     gtk.switch.lisp                  - GtkSwitch                   - GTK+ 3.22
     gtk.scale-button.lisp            - GtkScaleButton              - GTK+ 3.22
     gtk.volume-button.lisp           - GtkVolumeButton             - GTK+ 3.22
