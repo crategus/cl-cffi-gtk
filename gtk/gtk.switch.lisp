@@ -35,8 +35,10 @@
 ;;;     GtkSwitch
 ;;;
 ;;;     gtk_switch_new
-;;;     gtk_switch_set_active
-;;;     gtk_switch_get_active
+;;;     gtk_switch_set_active                              -> Accessor
+;;;     gtk_switch_get_active                              -> Accessor
+;;;     gtk_switch_set_state                               -> Accessor
+;;;     gtk_switch_get_state                               -> Accessor
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)

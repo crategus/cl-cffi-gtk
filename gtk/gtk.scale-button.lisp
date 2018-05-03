@@ -39,11 +39,11 @@
 ;;;     GtkScaleButton
 ;;;
 ;;;     gtk_scale_button_new
-;;;     gtk_scale_button_set_adjustment
-;;;     gtk_scale_button_set_icons
-;;;     gtk_scale_button_set_value
-;;;     gtk_scale_button_get_adjustment
-;;;     gtk_scale_button_get_value
+;;;     gtk_scale_button_set_adjustment                    -> Accessor
+;;;     gtk_scale_button_set_icons                         -> Accessor
+;;;     gtk_scale_button_set_value                         -> Accessor
+;;;     gtk_scale_button_get_adjustment                    -> Accessor
+;;;     gtk_scale_button_get_value                         -> Accessor
 ;;;     gtk_scale_button_get_popup
 ;;;     gtk_scale_button_get_plus_button
 ;;;     gtk_scale_button_get_minus_button
@@ -162,7 +162,7 @@
   scale.
 
   The generic function @sym{(setf gtk-scale-button-adjustment)} sets the
-  @class{gtk-adjustment} object to be used as a model for the 
+  @class{gtk-adjustment} object to be used as a model for the
   @class{gtk-scale-button}'s scale.
 
   Since 2.12

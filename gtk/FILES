@@ -71,9 +71,9 @@ GTK+ Widgets and Objects
 
     not implemented                  - GtkMenuButton
 
-    gtk.switch.lisp                  - GtkSwitch                   - GTK+ 3.10
-    gtk.scale-button.lisp            - GtkScaleButton              - GTK+ 3.10
-    gtk.volume-button.lisp           - GtkVolumeButton             - GTK+ 3.10
+    gtk.switch.lisp                  - GtkSwitch                   - GTK+ 3.22
+    gtk.scale-button.lisp            - GtkScaleButton              - GTK+ 3.22
+    gtk.volume-button.lisp           - GtkVolumeButton             - GTK+ 3.22
 
     not implemented                  - GtkLockButton
 
