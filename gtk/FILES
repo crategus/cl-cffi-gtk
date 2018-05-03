@@ -84,9 +84,7 @@ GTK+ Widgets and Objects
     gtk.scale.lisp                   - GtkScale, ...               - GTK+ 3.10
     gtk.spin-button.lisp             - GtkSpinButton               - GTK+ 3.10
     gtk.search-entry.lisp            - GtkSearchEntry              - GTK+ 3.10
-
-    not implemented                  - GtkSearchBar
-
+    gtk.search-bar.lisp              - GtkSearchBar                - GTK+ 3.22
     gtk.editable.lisp                - GtkEditable                 - GTK+ 3.6.4*
 
   Multiline Text Editor
