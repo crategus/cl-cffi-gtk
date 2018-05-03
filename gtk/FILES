@@ -72,8 +72,7 @@ GTK+ Widgets and Objects
     gtk.switch.lisp                  - GtkSwitch                   - GTK+ 3.22
     gtk.scale-button.lisp            - GtkScaleButton              - GTK+ 3.22
     gtk.volume-button.lisp           - GtkVolumeButton             - GTK+ 3.22
-
-    not implemented                  - GtkLockButton
+    gtk.lock-button.lisp             - GtkLockButton               - GTK+ 3.22
 
     GtkModelButton — A button that uses a GAction as model
 
