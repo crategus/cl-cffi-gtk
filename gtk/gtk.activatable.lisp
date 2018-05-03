@@ -39,12 +39,12 @@
 ;;;     GtkActivatable
 ;;;     GtkActivatableIface
 ;;;
-;;;     gtk_activatable_do_set_related_action
-;;;     gtk_activatable_get_related_action
-;;;     gtk_activatable_get_use_action_appearance
-;;;     gtk_activatable_sync_action_properties
-;;;     gtk_activatable_set_related_action
-;;;     gtk_activatable_set_use_action_appearance
+;;;     gtk_activatable_do_set_related_action              * deprecated *
+;;;     gtk_activatable_get_related_action                 * deprecated *
+;;;     gtk_activatable_get_use_action_appearance          * deprecated *
+;;;     gtk_activatable_sync_action_properties             * deprecated *
+;;;     gtk_activatable_set_related_action                 * deprecated *
+;;;     gtk_activatable_set_use_action_appearance          * deprecated *
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -62,6 +62,11 @@
   (use-action-appearance
    gtk-activatable-use-action-appearance
    "use-action-appearance" "gboolean" t t))
+
+(deprecated-function :gtk gtk-activatable-related-action (3 10))
+(deprecated-function :gtk (setf gtk-activatable-related-action) (3 10))
+(deprecated-function :gtk gtk-activatable-use-action-appearance (3 10))
+(deprecated-function :gtk (setf gtk-activatable-use-action-appearance) (3 10))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-activatable atdoc:*class-name-alias*) "Interface"
@@ -418,6 +423,8 @@ use-action-appearance property ...
 ;;; gtk_activatable_do_set_related_action ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gtk gtk-activatable-do-set-related-action (3 10))
+
 (defcfun ("gtk_activatable_do_set_related_action"
            gtk-activatable-do-set-related-action) :void
  #+cl-cffi-gtk-documentation
@@ -456,6 +463,8 @@ use-action-appearance property ...
 ;;; gtk_activatable_get_related_action ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gtk gtk-activable-get-related-action (3 10))
+
 (declaim (inline gtk-activable-get-related-action))
 
 (defun gtk-activatable-get-related-action (activatable)
@@ -475,6 +484,8 @@ use-action-appearance property ...
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_activatable_get_use_action_appearance ()
 ;;; ----------------------------------------------------------------------------
+
+(deprecated-function :gtk gtk-activatable-get-use-action-appearance (3 10))
 
 (declaim (inline gtk-activatable-get-use-action-appearance))
 
@@ -497,6 +508,8 @@ use-action-appearance property ...
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_activatable_sync_action_properties ()
 ;;; ----------------------------------------------------------------------------
+
+(deprecated-function :gtk gtk-activatable-sync-action-properties (3 10))
 
 (defcfun ("gtk_activatable_sync_action_properties"
            gtk-activatable-sync-action-properties) :void
@@ -521,6 +534,8 @@ use-action-appearance property ...
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_activatable_set_related_action ()
 ;;; ----------------------------------------------------------------------------
+
+(deprecated-function :gtk gtk-activatable-set-related-action (3 10))
 
 (declaim (inline gtk-activatable-set-related-action))
 
@@ -549,6 +564,8 @@ use-action-appearance property ...
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_activatable_set_use_action_appearance ()
 ;;; ----------------------------------------------------------------------------
+
+(deprecated-function :gtk gtk-activatable-set-use-action-appearance (3 10))
 
 (declaim (inline gtk-activatable-set-use-action-appearance))
 

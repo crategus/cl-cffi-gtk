@@ -305,7 +305,7 @@ Deprecated
     gtk.toggle-action.lisp           - GtkToggleAction             - GTK+ 3.8.8*
     gtk.radio-action.lisp            - GtkRadioAction              - GTK+ 3.8.8*
     gtk.recent-action.lisp           - GtkRecentAction             - GTK+ 3.8.8*
-    gtk.activatable.lisp             - GtkActivatable              - GTK+ 3.8.8*
+    gtk.activatable.lisp             - GtkActivatable              - GTK+ 3.22
     gtk.image-menu-item.lisp         - GtkImageMenuItem            - GTK+ 3.8.8*
     gtk.misc.lisp                    - GtkMisc                     - GTK+ 3.6.4*
     gtk.stock-item.lisp              - Stock Items                 - GTK+ 3.4.3*
