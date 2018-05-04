@@ -40,6 +40,25 @@
 ;;;
 ;;;     gtk_link_button_new
 ;;;     gtk_link_button_new_with_label
+;;;     gtk_link_button_get_uri                            -> Accessor
+;;;     gtk_link_button_set_uri                            -> Accessor
+;;;     gtk_link_button_get_visited                        -> Accessor
+;;;     gtk_link_button_set_visited                        -> Accessor
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;             ╰── GtkContainer
+;;;                 ╰── GtkBin
+;;;                     ╰── GtkButton
+;;;                         ╰── GtkLinkButton
+;;;
+;;; Implemented Interfaces
+;;;
+;;; GtkLinkButton implements AtkImplementorIface, GtkBuildable,
+;;; GtkActionable and GtkActivatable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)

@@ -44,6 +44,27 @@
 ;;;     gtk_toggle_button_set_mode
 ;;;     gtk_toggle_button_get_mode
 ;;;     gtk_toggle_button_toggled
+;;;     gtk_toggle_button_get_active                       -> Accessor
+;;;     gtk_toggle_button_set_active                       -> Accessor
+;;;     gtk_toggle_button_get_inconsistent                 -> Accessor
+;;;     gtk_toggle_button_set_inconsistent                 -> Accessor
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;             ╰── GtkContainer
+;;;                 ╰── GtkBin
+;;;                     ╰── GtkButton
+;;;                         ╰── GtkToggleButton
+;;;                             ├── GtkCheckButton
+;;;                             ╰── GtkMenuButton
+;;;
+;;; Implemented Interfaces
+;;;
+;;; GtkToggleButton implements AtkImplementorIface, GtkBuildable,
+;;; GtkActionable and GtkActivatable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -276,11 +297,9 @@
 ;;; gtk-toggle-button-new-with-mnemonic
 ;;; ----------------------------------------------------------------------------
 
-;; TODO: Rewrite the implementation in terms of the function make-instance
+(declaim (inline gtk-toggle-button-new-with-mnemonic))
 
-(defcfun ("gtk_toggle_button_new_with_mnemonic"
-           gtk-toggle-button-new-with-mnemonic)
-    (g-object gtk-widget)
+(defun gtk-toggle-button-new-with-mnemonic (label)
  #+cl-cffi-gtk-documentation
  "@version{2014-11-9}
   @argument[label]{the text of the button, with an underscore in front of the
@@ -292,7 +311,9 @@
   mnemonic for the button.
   @see-class{gtk-toggle-button}
   @see-function{gtk-label-new-with-mnemonic}"
-  (label :string))
+  (make-instance 'gtk-toggle-button
+                 :label label
+                 :use-underline T))
 
 (export 'gtk-toggle-button-new-with-mnemonic)
 
