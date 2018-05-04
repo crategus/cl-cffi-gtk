@@ -81,8 +81,8 @@ GTK+ Widgets and Objects
     gtk.entry.lisp                   - GtkEntry                    - GTK+ 3.10
     gtk.entry-buffer.lisp            - GtkEntryBuffer              - GTK+ 3.10
     gtk.entry-completion.lisp        - GtkEntryCompletion          - GTK+ 3.10
-    gtk.scale.lisp                   - GtkScale, ...               - GTK+ 3.10
-    gtk.spin-button.lisp             - GtkSpinButton               - GTK+ 3.10
+    gtk.scale.lisp                   - GtkScale, ...               - GTK+ 3.22
+    gtk.spin-button.lisp             - GtkSpinButton               - GTK+ 3.22
     gtk.search-entry.lisp            - GtkSearchEntry              - GTK+ 3.10
     gtk.search-bar.lisp              - GtkSearchBar                - GTK+ 3.22
     gtk.editable.lisp                - GtkEditable                 - GTK+ 3.6.4*

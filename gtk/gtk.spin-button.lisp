@@ -43,14 +43,41 @@
 ;;;     gtk_spin_button_configure
 ;;;     gtk_spin_button_new
 ;;;     gtk_spin_button_new_with_range
+;;;     gtk_spin_button_set_adjustment                     -> Accessor
+;;;     gtk_spin_button_get_adjustment                     -> Accessor
+;;;     gtk_spin_button_set_digits                         -> Accessor
 ;;;     gtk_spin_button_set_increments
 ;;;     gtk_spin_button_set_range
 ;;;     gtk_spin_button_get_value_as_int
+;;;     gtk_spin_button_set_value                          -> Accessor
+;;;     gtk_spin_button_set_update_policy                  -> Accessor
+;;;     gtk_spin_button_set_numeric                        -> Accessor
 ;;;     gtk_spin_button_spin
+;;;     gtk_spin_button_set_wrap                           -> Accessor
+;;;     gtk_spin_button_set_snap_to_ticks                  -> Accessor
 ;;;     gtk_spin_button_update
+;;;     gtk_spin_button_get_digits                         -> Accessor
 ;;;     gtk_spin_button_get_increments
+;;;     gtk_spin_button_get_numeric                        -> Accessor
 ;;;     gtk_spin_button_get_range
+;;;     gtk_spin_button_get_snap_to_ticks                  -> Accessor
+;;;     gtk_spin_button_get_update_policy                  -> Accessor
+;;;     gtk_spin_button_get_value                          -> Accessor
+;;;     gtk_spin_button_get_wrap                           -> Accessor
 ;;;     GTK_INPUT_ERROR
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;             ╰── GtkEntry
+;;;                 ╰── GtkSpinButton
+;;;
+;;; Implemented Interfaces
+;;;
+;;; GtkSpinButton implements AtkImplementorIface, GtkBuildable,
+;;; GtkEditable, GtkCellEditable and GtkOrientable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -110,7 +137,7 @@
   properties.
 
   @b{Example:} Code fragment for creating a spin button. The value from the
-  spin button is retrieved in a signal handler. 
+  spin button is retrieved in a signal handler.
   @begin{pre}
  (let (...
        (spinner (make-instance 'gtk-spin-button
@@ -209,7 +236,7 @@
      (lambda (spin-button)
        (let ((value (gtk-adjustment-value
                       (gtk-spin-button-adjustment spin-button)))
-             (digits (truncate 
+             (digits (truncate
                        (gtk-adjustment-value
                          (gtk-spin-button-adjustment spinner2)))))
          (setf (gtk-entry-text spin-button)
@@ -819,5 +846,7 @@
 ;;; Constant to return from a signal handler for the "input" signal in case of
 ;;; conversion failure.
 ;;; ----------------------------------------------------------------------------
+
+(defconstant gtk-input-error -1)
 
 ;;; --- End of file gtk.spin-button.lisp ---------------------------------------

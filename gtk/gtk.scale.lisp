@@ -40,10 +40,33 @@
 ;;;
 ;;;     gtk_scale_new
 ;;;     gtk_scale_new_with_range
+;;;     gtk_scale_set_digits                               -> Accessor
+;;;     gtk_scale_set_draw_value                           -> Accessor
+;;;     gtk_scale_set_has_origin                           -> Accessor
+;;;     gtk_scale_set_value_pos                            -> Accessor
+;;;     gtk_scale_get_digits                               -> Accessor
+;;;     gtk_scale_get_draw_value                           -> Accessor
+;;;     gtk_scale_get_has_origin                           -> Accessor
+;;;     gtk_scale_get_value_pos                            -> Accessor
 ;;;     gtk_scale_get_layout
 ;;;     gtk_scale_get_layout_offsets
 ;;;     gtk_scale_add_mark
 ;;;     gtk_scale_clear_marks
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;             ╰── GtkRange
+;;;                 ╰── GtkScale
+;;;                     ├── GtkHScale
+;;;                     ╰── GtkVScale
+;;;
+;;; Implemented Interfaces
+;;;
+;;; GtkSpinButton implements AtkImplementorIface, GtkBuildable and
+;;; GtkOrientable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -495,6 +518,7 @@
 
 (declaim (inline gtk-hscale-new))
 
+(deprecated-function :gtk gtk-hscale-new (3 2) gtk-scale-new)
 (defun gtk-hscale-new (adjustment)
  #+cl-cffi-gtk-documentation
  "@version{2013-4-28}
@@ -520,6 +544,7 @@
 
 (declaim (inline gtk-hscale-new-with-range))
 
+(deprecated-function :gtk gtk-hscale-new-with-range (3 2) gtk-scale-new-with-range)
 (defun gtk-hscale-new-with-range (min max step)
  #+cl-cffi-gtk-documentation
  "@version{2014-1-22}
@@ -607,6 +632,7 @@
 
 (declaim (inline gtk-vscale-new))
 
+(deprecated-function :gtk gtk-vscale-new (3 2) gtk-scale-new)
 (defun gtk-vscale-new (adjustment)
  #+cl-cffi-gtk-documentation
  "@version{2013-4-28}
@@ -631,6 +657,7 @@
 
 (declaim (inline gtk-vscale-new-with-range))
 
+(deprecated-function :gtk gtk-vscale-new-with-range (3 2) gtk-scale-new-with-range)
 (defun gtk-vscale-new-with-range (min max step)
  #+cl-cffi-gtk-documentation
  "@version{2013-4-28}
