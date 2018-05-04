@@ -68,15 +68,11 @@
 ;;; Object Hierarchy
 ;;;
 ;;;   GObject
-;;;    +----GMenuModel
-;;;          +----GDBusMenuModel
-;;;          +----GMenu
-;;;
-;;;   GObject
-;;;    +----GMenuAttributeIter
-;;;
-;;;   GObject
-;;;    +----GMenuLinkIter
+;;;   ├── GMenuAttributeIter
+;;;   ├── GMenuLinkIter
+;;;   ╰── GMenuModel
+;;;       ├── GDBusMenuModel
+;;;       ╰── GMenu
 ;;;
 ;;; Signals
 ;;;
@@ -261,6 +257,11 @@
 ;;; Since 2.32
 ;;; ----------------------------------------------------------------------------
 
+(defcfun g-menu-model-is-mutable :boolean
+  (model (g-object g-menu-model)))
+
+(export 'g-menu-model-is-mutable)
+
 ;;; ----------------------------------------------------------------------------
 ;;; g_menu_model_get_n_items ()
 ;;;
@@ -276,6 +277,11 @@
 ;;;
 ;;; Since 2.32
 ;;; ----------------------------------------------------------------------------
+
+(defcfun g-menu-model-get-n-items :int
+  (model (g-object g-menu-model)))
+
+(export 'g-menu-model-get-n-items)
 
 ;;; ----------------------------------------------------------------------------
 ;;; G_MENU_ATTRIBUTE_ACTION
@@ -434,6 +440,14 @@
 ;;; Since 2.32
 ;;; ----------------------------------------------------------------------------
 
+(defcfun g-menu-model-get-item-attribute-value (:pointer (:struct g-variant))
+  (model (g-object g-menu-model))
+  (item-index :int)
+  (attribute :string)
+  (expected-type (gobject:g-boxed-foreign g-variant-type)))
+
+(export 'g-menu-model-get-item-attribute-value)
+
 ;;; ----------------------------------------------------------------------------
 ;;; g_menu_model_get_item_attribute ()
 ;;;
@@ -507,6 +521,13 @@
 ;;;
 ;;; Since 2.32
 ;;; ----------------------------------------------------------------------------
+
+(defcfun g-menu-model-get-item-link (g-object g-menu-model)
+  (model (g-object g-menu-model))
+  (item-index :int)
+  (link :string))
+
+(export 'g-menu-model-get-item-link)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_menu_model_iterate_item_attributes ()
@@ -593,6 +614,14 @@
 ;;;
 ;;; Since 2.32
 ;;; ----------------------------------------------------------------------------
+
+(defcfun g-menu-model-items-changed :void
+  (model (g-object g-menu-model))
+  (position :int)
+  (removed :int)
+  (added :int))
+
+(export 'g-menu-model-items-changed)
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GMenuAttributeIter
