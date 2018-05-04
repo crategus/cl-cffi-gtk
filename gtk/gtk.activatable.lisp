@@ -477,6 +477,7 @@ use-action-appearance property ...
   Since 2.16
   @see-class{gtk-activatable}
   @see-function{gtk-activatable-set-related-action}"
+  (declare #+sbcl (sb-ext:muffle-conditions sb-ext:deprecation-condition))
   (gtk-activatable-related-action activatable))
 
 (export 'gtk-activatable-get-related-action)
@@ -501,6 +502,7 @@ use-action-appearance property ...
 
   Since 2.16
   @see-class{gtk-activatable}"
+  (declare #+sbcl (sb-ext:muffle-conditions sb-ext:deprecation-condition))
   (gtk-activatable-use-action-appearance activatable))
 
 (export 'gtk-activatable-get-use-action-appearance)
@@ -557,6 +559,7 @@ use-action-appearance property ...
   @see-class{gtk-activatable}
   @see-class{gtk-action}
   @see-fun{gtk-activatable-do-set-related-action}"
+  (declare #+sbcl (sb-ext:muffle-conditions sb-ext:deprecation-condition))
   (setf (gtk-activatable-related-action activatable) action))
 
 (export 'gtk-activatable-set-related-action)
@@ -588,6 +591,7 @@ use-action-appearance property ...
   Since 2.16
   @see-class{gtk-activatable}
   @see-function{gtk-activatable-sync-action-properties}"
+  (declare #+sbcl (sb-ext:muffle-conditions sb-ext:deprecation-condition))
   (setf (gtk-activatable-use-action-appearance activatable) use-appearance))
 
 (export 'gtk-activatable-set-use-action-appearance)
