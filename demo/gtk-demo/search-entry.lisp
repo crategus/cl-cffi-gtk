@@ -462,9 +462,7 @@ do_search_entry (GtkWidget *do_widget)
          (lambda (entry position event)
            (declare (ignore entry))
            (when (eq position :primary)
-             (gtk-menu-popup menu
-                             :button (gdk-event-button-button event)
-                             :activate-time (gdk-event-button-time event)))))
+             (gtk-menu-popup-at-pointer menu event))))
 
       (g-signal-connect entry "activate"
          (lambda (entry button)
@@ -478,4 +476,3 @@ do_search_entry (GtkWidget *do_widget)
       (gtk-container-add vbox hbox)
       (gtk-container-add window vbox)
       (gtk-widget-show-all window))))
-
