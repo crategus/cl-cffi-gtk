@@ -35,16 +35,6 @@
   (is-true  (g-type-is-a "GtkSelectionData" "GBoxed"))
 )
 
-(test make-gtk-selection-data
-  (let ((selection (make-gtk-selection-data)))
-    (is-false (gtk-selection-data-selection selection))
-    (is-false (gtk-selection-data-target selection))
-    (is-false (gtk-selection-data-type selection))
-    (is (eql 0 (gtk-selection-data-format selection)))
-    (is-true (null-pointer-p (gtk-selection-data-data selection)))
-    (is (eql 0 (gtk-selection-data-length selection)))
-    (is-false (gtk-selection-data-display selection))))
-
 ;;;   GtkTargetFlags  <-- gtk.drag-and-drop.lisp
 ;;;   GtkTargetEntry
 ;;;   GtkTargetList
