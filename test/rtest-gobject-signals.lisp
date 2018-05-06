@@ -3,6 +3,10 @@
 (def-suite gobject-signals :in gobject-suite)
 (in-suite gobject-signals)
 
+;; Ensure that GtkButton type is registered, otherwise there will be test
+;; failures at the first run
+(make-instance 'gtk-button)
+
 (test signal-info-id
   (let ((pressed-id (g-signal-lookup "pressed" "GtkButton"))
         (released-id (g-signal-lookup "released" "GtkButton"))
