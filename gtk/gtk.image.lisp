@@ -39,13 +39,13 @@
 ;;;     GtkImage
 ;;;     GtkImageType
 ;;;
-;;;     gtk_image_get_icon_set
-;;;     gtk_image_get_pixbuf
-;;;     gtk_image_get_stock
-;;;     gtk_image_get_animation
-;;;     gtk_image_get_icon_name
-;;;     gtk_image_get_gicon
-;;;     gtk_image_get_storage_type
+;;;     gtk_image_get_icon_set                             -> Accessor
+;;;     gtk_image_get_pixbuf                               -> Accessor
+;;;     gtk_image_get_stock                                -> Accessor
+;;;     gtk_image_get_animation                            -> Accessor
+;;;     gtk_image_get_icon_name                            -> Accessor
+;;;     gtk_image_get_gicon                                -> Accessor
+;;;     gtk_image_get_storage_type                         -> Accessor
 ;;;     gtk_image_new_from_file
 ;;;     gtk_image_new_from_icon_set
 ;;;     gtk_image_new_from_pixbuf
@@ -54,6 +54,7 @@
 ;;;     gtk_image_new_from_icon_name
 ;;;     gtk_image_new_from_gicon
 ;;;     gtk_image_new_from_resource
+;;;     gtk_image_new_from_surface
 ;;;     gtk_image_set_from_file
 ;;;     gtk_image_set_from_icon_set
 ;;;     gtk_image_set_from_pixbuf
@@ -62,10 +63,23 @@
 ;;;     gtk_image_set_from_icon_name
 ;;;     gtk_image_set_from_gicon
 ;;;     gtk_image_set_from_resource
+;;;     gtk_image_set_from_surface
 ;;;     gtk_image_clear
 ;;;     gtk_image_new
-;;;     gtk_image_set_pixel_size
-;;;     gtk_image_get_pixel_size
+;;;     gtk_image_set_pixel_size                           -> Accessor
+;;;     gtk_image_get_pixel_size                           -> Accessor
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;             ╰── GtkMisc
+;;;                 ╰── GtkImage
+;;;
+;;; Implemented Interfaces
+;;;
+;;; GtkImage implements AtkImplementorIface and GtkBuildable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -121,6 +135,11 @@
    (use-fallback
     gtk-image-use-fallback
     "use-fallback" "gboolean" t t)))
+
+(deprecated-function :gtk gtk-image-icon-set (3 10) gtk-image-icon-name)
+(deprecated-function :gtk (setf gtk-image-icon-set) (3 10) ((setf gtk-image-icon-name)))
+(deprecated-function :gtk gtk-image-stock (3 10) gtk-image-icon-name)
+(deprecated-function :gtk (setf gtk-image-stock) (3 10) ((setf gtk-image-icon-name)))
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-image 'type)
@@ -513,6 +532,7 @@
   (:animation 4)
   (:icon-name 5)
   (:gicon 6)
+  #+gtk-3-10
   (:surface 7))
 
 #+cl-cffi-gtk-documentation
@@ -539,6 +559,7 @@
   (:animation 4)
   (:icon-name 5)
   (:gicon 6)
+  #+gtk-3-10
   (:surface 7))
   @end{pre}
   @begin[code]{table}
@@ -571,6 +592,7 @@
 
 (declaim (inline gtk-image-get-icon-set))
 
+(deprecated-function :gtk gtk-image-get-icon-set (3 10) gtk-image-get-icon-name)
 (defun gtk-image-get-icon-set (image)
  #+cl-cffi-gtk-documentation
  "@version{2014-10-27}
@@ -604,6 +626,7 @@
 
 (declaim (inline gtk-image-get-stock))
 
+(deprecated-function :gtk gtk-image-get-stock (3 10) gtk-image-get-icon-name)
 (defun gtk-image-get-stock (image)
  #+cl-cffi-gtk-documentation
  "@version{2014-10-27}
@@ -755,6 +778,8 @@
 ;;; gtk_image_new_from_icon_set ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gtk gtk-image-new-from-icon-set (3 10)
+                     gtk-image-new-from-icon-name)
 (defcfun ("gtk_image_new_from_icon_set" gtk-image-new-from-icon-set)
     (g-object gtk-image)
  #+cl-cffi-gtk-documentation
@@ -819,6 +844,8 @@
 ;;; gtk_image_new_from_stock ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gtk gtk-image-new-from-stock (3 10)
+                     gtk-image-new-from-icon-name)
 (defcfun ("gtk_image_new_from_stock" gtk-image-new-from-stock)
     (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
@@ -964,6 +991,18 @@
 (export 'gtk-image-new-from-resource)
 
 ;;; ----------------------------------------------------------------------------
+;;; gtk_image_new_from_surface ()
+;;; ----------------------------------------------------------------------------
+
+#+gtk-3-10
+(defcfun ("gtk_image_new_from_resource" gtk-image-new-from-surface)
+    (g-object gtk-image)
+  (surface (:pointer (:struct cairo-surface-t))))
+
+#+gtk-3-10
+(export 'gtk-image-new-from-surface)
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_image_set_from_file ()
 ;;; ----------------------------------------------------------------------------
 
@@ -984,6 +1023,8 @@
 ;;; gtk_image_set_from_icon_set ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gtk gtk-image-set-from-icon-set (3 10)
+                     gtk-image-set-from-icon-name)
 (defcfun ("gtk_image_set_from_icon_set" gtk-image-set-from-icon-set) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-10-24}
@@ -1029,6 +1070,8 @@
 ;;; gtk_image_set_from_stock ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gtk gtk-image-set-from-stock (3 10)
+                     gtk-image-set-from-icon-name)
 (defcfun ("gtk_image_set_from_stock" gtk-image-set-from-stock) :void
  #+cl-cffi-gtk-documentation
  "@version{2014-10-27}
@@ -1134,6 +1177,18 @@
   (resource-path :string))
 
 (export 'gtk-image-set-from-resource)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_image_set_from_surface ()
+;;; ----------------------------------------------------------------------------
+
+#+gtk-3-10
+(defcfun gtk-image-set-from-surface :void
+  (image (g-object gtk-image))
+  (surface (:pointer (:struct cairo-surface-t))))
+
+#+gtk-3-10
+(export 'gtk-image-set-from-surface)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_image_clear ()

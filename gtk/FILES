@@ -53,9 +53,9 @@ GTK+ Widgets and Objects
   Display Widgets
 
     gtk.label.lisp                   - GtkLabel                    - GTK+ 3.10
-    gtk.image.lisp                   - GtkImage                    - GTK+ 3.10
+    gtk.image.lisp                   - GtkImage                    - GTK+ 3.22
     gtk.spinner.lisp                 - GtkSpinner                  - GTK+ 3.22
-    gtk.info-bar.lisp                - GtkInfoBar                  - GTK+ 3.10
+    gtk.info-bar.lisp                - GtkInfoBar                  - GTK+ 3.22
     gtk.progress-bar.lisp            - GtkProgressBar              - GTK+ 3.22
     gtk.level-bar.lisp               - GtkLevelBar                 - GTK+ 3.22
     gtk.statusbar.lisp               - GtkStatusbar                - GTK+ 3.22

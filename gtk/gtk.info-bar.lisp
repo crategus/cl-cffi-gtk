@@ -42,8 +42,25 @@
 ;;;     gtk_info_bar_set_response_sensitive
 ;;;     gtk_info_bar_set_default_response
 ;;;     gtk_info_bar_response
+;;;     gtk_info_bar_set_message_type                      -> Accessor
+;;;     gtk_info_bar_get_message_type                      -> Accessor
 ;;;     gtk_info_bar_get_action_area
 ;;;     gtk_info_bar_get_content_area
+;;;     gtk_info_bar_get_show_close_button                 -> Accessor
+;;;     gtk_info_bar_set_show_close_button                 -> Accessor
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;             ╰── GtkContainer
+;;;                 ╰── GtkBox
+;;;                     ╰── GtkInfoBar
+;;;
+;;; Implemented Interfaces
+;;;
+;;; GtkInfoBar implements AtkImplementorIface, GtkBuildable and GtkOrientable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -62,11 +79,11 @@
   ((message-type
     gtk-info-bar-message-type
     "message-type" "GtkMessageType" t t)
+   ;; TODO: "revealed" is in the docs, but not in the actual objects
    #+gtk-3-10
    (show-close-button
     gtk-info-bar-show-close-button
-    "show-close-button" "gboolean" t t)
-  ))
+    "show-close-button" "gboolean" t t)))
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-info-bar 'type)
@@ -331,7 +348,8 @@
   @see-class{gtk-info-bar}
   @see-symbol{gtk-response-type}"
   (let ((info-bar (make-instance 'gtk-info-bar-new)))
-    (gtk-info-bar-add-buttons info-bar args)))
+    (apply #'gtk-info-bar-add-buttons info-bar args)
+    info-bar))
 
 (export 'gtk-info-bar-new-with-buttons)
 
@@ -365,7 +383,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_info_bar_add_button" gtk-info-bar-add-button)
-    (g-object gtk-widget)
+    (g-object gtk-button)
  #+cl-cffi-gtk-documentation
  "@version{2013-12-30}
   @argument[info-bar]{a @class{gtk-info-bar} widget}
