@@ -111,7 +111,7 @@
 ;;;   gtk_accelerator_get_label
 
 (test gtk-accelerator-get-label
-  (is (equal "Strg+Q"
+  (is (equal "Ctrl+Q"
              (gtk-accelerator-get-label 113 '(:control-mask)))))
 
 ;;;   gtk_accelerator_parse_with_keycode
