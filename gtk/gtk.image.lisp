@@ -615,6 +615,7 @@
   @see-class{gtk-icon-set}
   @see-function{gtk-image-get-icon-name}
   @see-function{gtk-image-storage-type}"
+  (declare #+sbcl (sb-ext:muffle-conditions sb-ext:deprecation-condition))
   (values (gtk-image-icon-set image)
           (gtk-image-icon-size image)))
 
@@ -652,6 +653,7 @@
   @see-symbol{gtk-image-type}
   @see-function{gtk-image-storage-type}
   @see-function{gtk-image-get-icon-name}"
+  (declare #+sbcl (sb-ext:muffle-conditions sb-ext:deprecation-condition))
   (values (gtk-image-stock image)
           (gtk-image-icon-size image)))
 

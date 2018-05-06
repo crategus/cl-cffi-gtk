@@ -16,7 +16,7 @@
                           (leave-gtk-main)))
 
       ;; Create an event box as the drag source
-      (let ((image (gtk-image-new-from-stock "gtk-dialog-warning" :dialog))
+      (let ((image (gtk-image-new-from-icon-name "gtk-dialog-warning" :dialog))
             (drag-source (gtk-event-box-new)))
         (gtk-container-add drag-source image)
         (gtk-container-add hgrid drag-source)

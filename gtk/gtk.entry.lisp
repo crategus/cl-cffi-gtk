@@ -284,6 +284,19 @@
     gtk-entry-xalign
     "xalign" "gfloat" t t)))
 
+(deprecated-function :gtk gtk-entry-inner-border NIL)
+(deprecated-function :gtk (setf gtk-entry-inner-border) NIL)
+(deprecated-function :gtk gtk-entry-primary-icon-stock (3 10)
+                     gtk-entry-primary-icon-name)
+(deprecated-function :gtk (setf gtk-entry-primary-icon-stock) (3 10)
+                     ((setf gtk-entry-primary-icon-name)))
+(deprecated-function :gtk gtk-entry-secondary-icon-stock (3 10)
+                     gtk-entry-secondary-icon-name)
+(deprecated-function :gtk (setf gtk-entry-secondary-icon-stock) (3 10)
+                     ((setf gtk-entry-secondary-icon-name)))
+(deprecated-function :gtk gtk-entry-shadow-type (3 20))
+(deprecated-function :gtk (setf gtk-entry-shadow-type) (3 20))
+
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-entry 'type)
  "@version{2014-6-8}
@@ -2395,6 +2408,8 @@
 ;;; gtk_entry_set_icon_from_stock ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gtk gtk-entry-set-icon-from-stock (3 10)
+                     gtk-entry-set-icon-from-icon-name)
 (defun gtk-entry-set-icon-from-stock (entry icon-pos stock-id)
  #+cl-cffi-gtk-documentation
  "@version{2013-8-31}
@@ -2412,12 +2427,13 @@
     The function @sym{gtk-entry-set-icon-from-stock} has been deprecated since
     version 3.10 and should not be used in newly-written code. Use the function
     @fun{gtk-entry-set-icon-from-icon-name} instead.
-  @end{dictionary}  
+  @end{dictionary}
 
   Since 2.16
   @see-class{gtk-entry}
   @see-function{gtk-entry-get-icon-stock}
   @see-function{gtk-entry-set-icon-from-stock}"
+  (declare #+sbcl (sb-ext:muffle-conditions sb-ext:deprecation-condition))
   (cond ((eq icon-pos :primary)
          (setf (gtk-entry-primary-icon-stock entry) stock-id))
         ((eq icon-pos :secondary)
@@ -2548,6 +2564,8 @@
 ;;; gtk_entry_get_icon_stock ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gtk gtk-entry-get-icon-stock (3 10)
+                     gtk-entry-get-icon-name)
 (defcfun ("gtk_entry_get_icon_stock" gtk-entry-get-icon-stock) :string
  #+cl-cffi-gtk-documentation
  "@version{2014-11-9}

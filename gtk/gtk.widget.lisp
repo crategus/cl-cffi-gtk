@@ -37,7 +37,7 @@
 ;;; Types and Values
 ;;;
 ;;;     GtkWidget
-;;;  	GtkRequisition
+;;;     GtkRequisition
 ;;;     GtkAllocation
 ;;;     GtkWidgetAuxInfo
 ;;;     GtkWidgetHelpType
@@ -6048,6 +6048,8 @@
 ;;; gtk_widget_render_icon ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gtk gtk-widget-render-icon NIL
+                     gtk-widget-render-icon-pixbuf)
 (defcfun ("gtk_widget_render_icon" gtk-widget-render-icon) g-object
  #+cl-cffi-gtk-documentation
  "@version{2013-11-28}
@@ -6093,6 +6095,8 @@
 ;;; gtk_widget_render_icon_pixbuf ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gtk gtk-widget-render-icon-pixbuf (3 10)
+                     gtk-icon-theme-load-icon)
 (defcfun ("gtk_widget_render_icon_pixbuf" gtk-widget-render-icon-pixbuf)
     (g-object gdk-pixbuf)
  #+cl-cffi-gtk-documentation
@@ -6135,6 +6139,8 @@
 ;;; gtk_widget_pop_composite_child ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gtk gtk-widget-pop-composite-child (3 10)
+                     gtk-widget-class-set-template)
 (defcfun ("gtk_widget_pop_composite_child" gtk-widget-pop-composite-child)
     :void
  #+cl-cffi-gtk-documentation
@@ -6157,6 +6163,8 @@
 ;;; gtk_widget_push_composite_child ()
 ;;; ----------------------------------------------------------------------------
 
+(deprecated-function :gtk gtk-widget-push-composite-child (3 10)
+                     gtk-widget-class-set-template)
 (defcfun ("gtk_widget_push_composite_child" gtk-widget-push-composite-child)
     :void
  #+cl-cffi-gtk-documentation

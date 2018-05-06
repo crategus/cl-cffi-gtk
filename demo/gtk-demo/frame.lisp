@@ -145,7 +145,8 @@
         (g-signal-connect toggle "toggled"
            (lambda (widget)
              (if (gtk-toggle-button-active widget)
-                 (let ((image (gtk-image-new-from-stock "gtk-home" :button)))
+                 (let ((image (gtk-image-new-from-icon-name
+                               "gtk-home" :button)))
                    ;; Store the actual Label Widget.
                    (setf label-widget (gtk-frame-get-label-widget frame))
                    (setf (gtk-widget-sensitive entry) nil)

@@ -74,10 +74,11 @@ button_press (GtkWidget      *widget,
 (defun get-image-pixbuf (image)
   (ecase (gtk-image-storage-type image)
     (:pixbuf (gtk-image-pixbuf image))
-    (:stock
-     (multiple-value-bind (stock-id size)
-         (gtk-image-get-stock image)
-       (gtk-widget-render-icon-pixbuf image stock-id size)))))
+    (:icon-name
+     (multiple-value-bind (icon-name size)
+         (gtk-image-get-icon-name image)
+       (gtk-icon-theme-load-icon (gtk-icon-theme-get-default)
+                                 icon-name size NIL)))))
 
 (defun demo-clipboard ()
   (within-main-loop
@@ -141,7 +142,7 @@ button_press (GtkWidget      *widget,
                                  :border-width 8)))
 
       ;; Create the first image
-        (let ((image (gtk-image-new-from-stock "gtk-dialog-warning" :button))
+        (let ((image (gtk-image-new-from-icon-name "gtk-dialog-warning" :button))
               (ebox (gtk-event-box-new)))
         (gtk-container-add ebox image)
         (gtk-container-add hbox ebox)
@@ -169,7 +170,7 @@ button_press (GtkWidget      *widget,
 
         )
         ;; Create the second image
-        (let ((image (gtk-image-new-from-stock "gtk-stop" :button))
+        (let ((image (gtk-image-new-from-icon-name "gtk-stop" :button))
               (ebox (gtk-event-box-new)))
           (gtk-container-add ebox image)
           (gtk-container-add hbox ebox)

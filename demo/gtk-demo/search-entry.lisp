@@ -330,7 +330,7 @@ do_search_entry (GtkWidget *do_widget)
 
 (defun search-by-name (item entry)
   (declare (ignore item))
-  (gtk-entry-set-icon-from-stock entry :primary "gtk-find")
+  (gtk-entry-set-icon-from-icon-name entry :primary "gtk-find")
   (gtk-entry-set-icon-tooltip-text entry
                                    :primary
                                    (format nil
@@ -343,7 +343,7 @@ do_search_entry (GtkWidget *do_widget)
 (defun create-search-menu (entry)
   (let ((menu (make-instance 'gtk-menu)))
 
-    (let* ((image (gtk-image-new-from-stock "gtk-find" :menu))
+    (let* ((image (gtk-image-new-from-icon-name "gtk-find" :menu))
            (item (make-instance 'gtk-image-menu-item
                                :use-underline t
                                :label "Search by _name"
@@ -352,7 +352,7 @@ do_search_entry (GtkWidget *do_widget)
       (g-signal-connect item "activate"
          (lambda (item)
            (declare (ignore item))
-           (gtk-entry-set-icon-from-stock entry :primary "gtk-find")
+           (gtk-entry-set-icon-from-icon-name entry :primary "gtk-find")
            (gtk-entry-set-icon-tooltip-text entry
                                             :primary
                                             (format nil
@@ -361,7 +361,7 @@ do_search_entry (GtkWidget *do_widget)
            (setf (gtk-entry-placeholder-text entry) "name")))
       (gtk-menu-shell-append menu item))
 
-    (let* ((image (gtk-image-new-from-stock "gtk-edit" :menu))
+    (let* ((image (gtk-image-new-from-icon-name "gtk-edit" :menu))
            (item (make-instance 'gtk-image-menu-item
                                :use-underline t
                                :label "Search by _description"
@@ -370,7 +370,7 @@ do_search_entry (GtkWidget *do_widget)
       (g-signal-connect item "activate"
          (lambda (item)
            (declare (ignore item))
-           (gtk-entry-set-icon-from-stock entry :primary "gtk-edit")
+           (gtk-entry-set-icon-from-icon-name entry :primary "gtk-edit")
            (gtk-entry-set-icon-tooltip-text entry
                                             :primary
                                             (format nil
@@ -379,7 +379,7 @@ do_search_entry (GtkWidget *do_widget)
            (setf (gtk-entry-placeholder-text entry) "description")))
       (gtk-menu-shell-append menu item))
 
-    (let* ((image (gtk-image-new-from-stock "gtk-open" :menu))
+    (let* ((image (gtk-image-new-from-icon-name "gtk-open" :menu))
            (item (make-instance 'gtk-image-menu-item
                                :use-underline t
                                :label "Search by _file name"
@@ -389,7 +389,7 @@ do_search_entry (GtkWidget *do_widget)
       (g-signal-connect item "activate"
          (lambda (item)
            (declare (ignore item))
-           (gtk-entry-set-icon-from-stock entry :primary "gtk-open")
+           (gtk-entry-set-icon-from-icon-name entry :primary "gtk-open")
            (gtk-entry-set-icon-tooltip-text entry
                                             :primary
                                             (format nil

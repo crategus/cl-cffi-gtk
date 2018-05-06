@@ -36,24 +36,24 @@
                           (make-instance 'gtk-button
                                          :image-position :right
                                          :image
-                                         (gtk-image-new-from-stock "gtk-edit"
-                                                                   :button)
+                                         (gtk-image-new-from-icon-name
+                                          "gtk-edit" :button)
                                          :label "gtk-edit"
                                          :use-stock t))
       (gtk-box-pack-start vbox2
                           (make-instance 'gtk-button
                                          :image-position :top
                                          :image
-                                         (gtk-image-new-from-stock "gtk-cut"
-                                                                   :button)
+                                         (gtk-image-new-from-icon-name
+                                          "gtk-cut" :button)
                                          :label "gtk-cut"
                                          :use-stock t))
       (gtk-box-pack-start vbox2
                           (make-instance 'gtk-button
                                          :image-position :bottom
                                          :image
-                                         (gtk-image-new-from-stock "gtk-cancel"
-                                                                   :button)
+                                         (gtk-image-new-from-icon-name
+                                          "gtk-cancel" :button)
                                          :label "gtk-cancel"
                                          :use-stock t))
       (gtk-box-pack-start hbox vbox1)
