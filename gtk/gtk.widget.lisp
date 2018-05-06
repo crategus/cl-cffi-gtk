@@ -538,6 +538,10 @@
    (expand
     gtk-widget-expand
     "expand" "gboolean" t t)
+   #+gtk-3-20
+   (focus-on-click
+    gtk-widget-focus-on-click
+    "focus-on-click" "gboolean" t t)
    (halign
     gtk-widget-halign
     "halign" "GtkAlign" t t)

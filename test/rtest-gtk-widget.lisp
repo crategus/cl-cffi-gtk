@@ -127,6 +127,9 @@
                          "double-buffered" "gboolean" T T)
                         (EVENTS GTK-WIDGET-EVENTS "events" "GdkEventMask" T T)
                         (EXPAND GTK-WIDGET-EXPAND "expand" "gboolean" T T)
+                        #+gtk-3-20
+                        (FOCUS-ON-CLICK GTK-WIDGET-FOCUS-ON-CLICK
+                         "focus-on-click" "gboolean" T T)
                         (HALIGN GTK-WIDGET-HALIGN "halign" "GtkAlign" T T)
                         (HAS-DEFAULT GTK-WIDGET-HAS-DEFAULT "has-default"
                          "gboolean" T T)
