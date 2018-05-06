@@ -3,7 +3,8 @@
 (def-suite gtk-dialog :in gtk-suite)
 (in-suite gtk-dialog)
 
-(sb-ext:gc :full t)
+#+sbcl (sb-ext:gc :full t)
+#+openmcl (ccl:gc)
 
 ;;;   GtkDialog
 

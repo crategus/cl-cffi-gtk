@@ -3,7 +3,8 @@
 (def-suite gtk-container :in gtk-suite)
 (in-suite gtk-container)
 
-(sb-ext:gc :full t)
+#+sbcl (sb-ext:gc :full t)
+#+openmcl (ccl:gc)
 
 ;;; --- GtkResizeMode ----------------------------------------------------------
 
