@@ -32,19 +32,16 @@
 
 (in-package :cl-user)
 
-(defvar *cl-cffi-gtk-build-time* (multiple-value-list (get-decoded-time)))
-(defvar *cl-cffi-gtk-version* "1.0.0")
-
-(export '*cl-cffi-gtk-build-time*)
-(export '*cl-cffi-gtk-version*)
-
 (defpackage :gtk
-  (:use :cl :cl-user :cffi
+  (:use :cl :cffi
    :gobject :gdk :gdk-pixbuf :glib :gio :pango :cairo :iter :bordeaux-threads)
   (:import-from :alexandria :format-symbol :define-constant)
   (:export #:cl-cffi-gtk-build-info))
 
 (in-package :gtk)
+
+(defvar *cl-cffi-gtk-build-time* (multiple-value-list (get-decoded-time)))
+(defvar *cl-cffi-gtk-version* "1.0.0")
 
 #|
 ;;; Loading of the GTK+ library is moved to gdk.package.lisp,

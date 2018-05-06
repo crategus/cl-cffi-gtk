@@ -265,11 +265,11 @@ NIL
   @see-function{cairo-version-string}"
   (format t "~%cl-cffi-gtk version: ~a~%" *cl-cffi-gtk-version*)
   (format t "cl-cffi-gtk build date: ~a:~a ~a/~a/~a~%"
-          (third cl-user:*cl-cffi-gtk-build-time*)
-          (second cl-user:*cl-cffi-gtk-build-time*)
-          (fifth cl-user:*cl-cffi-gtk-build-time*)
-          (fourth cl-user:*cl-cffi-gtk-build-time*)
-          (sixth cl-user:*cl-cffi-gtk-build-time*))
+          (third *cl-cffi-gtk-build-time*)
+          (second *cl-cffi-gtk-build-time*)
+          (fifth *cl-cffi-gtk-build-time*)
+          (fourth *cl-cffi-gtk-build-time*)
+          (sixth *cl-cffi-gtk-build-time*))
   (format t "GTK+ version: ~a.~a.~a~%"
           (gtk-get-major-version)
           (gtk-get-minor-version)
