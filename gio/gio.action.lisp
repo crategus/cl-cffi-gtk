@@ -60,7 +60,7 @@
    "enabled" "gboolean" t nil)
   (name
    g-action-name
-   "name" "gchar" t nil)
+   "name" "gchararray" t nil)
   (parameter-type
    g-action-parameter-type
    "parameter-type" "GVariantType" t nil)

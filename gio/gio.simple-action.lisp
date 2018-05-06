@@ -79,7 +79,7 @@
     "enabled" "gboolean" t t)
    (name
     g-simple-action-name
-    "name" "gchar" t t)
+    "name" "gchararray" t t)
    (parameter-type
     g-simple-action-parameter-type
     "parameter-type" "GVariantType" t t)
