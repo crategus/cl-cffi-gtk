@@ -64,7 +64,7 @@ GTK+ Widgets and Objects
   Buttons and Toggles
 
     gtk.button.lisp                  - GtkButton                   - GTK+ 3.10 &
-    gtk.check-button.lisp            - GtkCheckButton              - GTK+ 3.10
+    gtk.check-button.lisp            - GtkCheckButton              - GTK+ 3.22
     gtk.radio-button.lisp            - GtkRadioButton              - GTK+ 3.10
     gtk.toggle-button.lisp           - GtkToggleButton             - GTK+ 3.22
     gtk.link-button.lisp             - GtkLinkButton               - GTK+ 3.22

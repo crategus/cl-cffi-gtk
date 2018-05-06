@@ -29,6 +29,36 @@
 ;;; General Public License.  If not, see <http://www.gnu.org/licenses/>
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
+;;;
+;;; GtkCheckButton
+;;;
+;;; Create widgets with a discrete toggle button
+;;;
+;;; Synopsis
+;;;
+;;;     GtkCheckButton
+;;;
+;;;     gtk_check_button_new
+;;;     gtk_check_button_new_with_label
+;;;     gtk_check_button_new_with_mnemonic
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;             ╰── GtkContainer
+;;;                 ╰── GtkBin
+;;;                     ╰── GtkButton
+;;;                         ╰── GtkToggleButton
+;;;                             ╰── GtkCheckButton
+;;;                                 ╰── GtkRadioButton
+;;;
+;;; Implemented Interfaces
+;;;
+;;; GtkCheckButton implements AtkImplementorIface, GtkBuildable,
+;;; GtkActionable and GtkActivatable.
+;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
 
@@ -115,11 +145,9 @@
 ;;; gtk-check-button-new-with-mnemonic
 ;;; ----------------------------------------------------------------------------
 
-;; TODO: Rewrite the implementation in terms of the function make-instance
+(declaim (inline gtk-check-button-new-with-mnemonic))
 
-(defcfun ("gtk_check_button_new_with_mnemonic"
-           gtk-check-button-new-with-mnemonic)
-    (g-object gtk-widget)
+(defun gtk-check-button-new-with-mnemonic (label)
 #+cl-cffi-gtk-documentation
  "@version{2013-4-26}
   @argument[label]{the text of the button, with an underscore in front of the
@@ -130,7 +158,9 @@
   @fun{gtk-label-new-with-mnemonic}, so underscores in label indicate the
   mnemonic for the check button.
   @see-function{gtk-label-new-with-mnemonic}"
-  (label :string))
+  (make-instance 'gtk-check-button
+                 :label label
+                 :use-underline T))
 
 (export 'gtk-check-button-new-with-mnemonic)
 
