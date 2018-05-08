@@ -72,7 +72,7 @@
 ;;;     g_variant_type_string_scan
 ;;;     g_variant_type_get_string_length
 ;;;     g_variant_type_peek_string
-;;;     g_variant_type_dup_string
+;;;     g_variant_type_dup_string                        * duplicates g_variant_type_peek_string from a CL perspective, marked as deprecated *
 ;;;
 ;;;     g_variant_type_is_definite
 ;;;     g_variant_type_is_container
@@ -936,7 +936,10 @@
 ;;; g_variant_type_peek_string ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_variant_type_peek_string" g-variant-type-peek-string) :string
+(defcfun ("g_variant_type_peek_string" %g-variant-type-peek-string) :pointer
+  (type (gobject:g-boxed-foreign g-variant-type)))
+
+(defun g-variant-type-peek-string (type)
  #+cl-cffi-gtk-documentation
  "@version{2013-4-9}
   @argument[type]{a @class{g-variant-type}}
@@ -944,13 +947,10 @@
   @begin{short}
     Returns the type string corresponding to the given @arg{type}.
   @end{short}
-  The result is not nul-terminated; in order to determine its length you must
-  call @fun{g-variant-type-get-string-length}.
-
-  To get a nul-terminated string, see @fun{g-variant-type-dup-string}.
 
   Since 2.24"
-  (type (gobject:g-boxed-foreign g-variant-type)))
+ (foreign-string-to-lisp (%g-variant-type-peek-string type)
+                         :count (g-variant-type-get-string-length type)))
 
 (export 'g-variant-type-peek-string)
 
@@ -958,7 +958,8 @@
 ;;; g_variant_type_dup_string ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("g_variant_type_dup_string" g-variant-type-dup-string) :string
+(deprecated-function :glib g-variant-type-dup-string nil g-variant-type-peek-string)
+(defcfun ("g_variant_type_dup_string" g-variant-type-dup-string) (:string :free-from-foreign t)
  #+cl-cffi-gtk-documentation
  "@version{2013-4-9}
   @argument[type]{a @class{g-variant-type}}
@@ -966,8 +967,6 @@
   @begin{short}
     Returns a newly allocated copy of the type string corresponding to type.
   @end{short}
-  The returned string is nul-terminated. It is appropriate to call @fun{g-free}
-  on the return value.
 
   Since 2.24"
   (type (gobject:g-boxed-foreign g-variant-type)))

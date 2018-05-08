@@ -32,17 +32,14 @@
 ;; free-stable-pointer. Stable pointers are used to pass references to lisp
 ;; objects to foreign code. thing is any object. The return value is an integer.
 
-(let ((stable-pointers (make-array 0 :adjustable t :fill-pointer t))
-      (stable-pointers-length 0))
+(let ((stable-pointers (make-array 0 :adjustable t :fill-pointer t)))
 
   (defun allocate-stable-pointer (thing)
     (flet ((find-fresh-id ()
              (or ;; Search a free place for the pointer
                  (position nil stable-pointers)
-                 ;; Add a place for the pointer and increment the array length.
-                 (progn
-                   (vector-push-extend nil stable-pointers)
-                   (1- (incf stable-pointers-length))))))
+                 ;; Add a place for the pointer
+                 (vector-push-extend nil stable-pointers))))
       (let ((id (find-fresh-id)))
         (setf (aref stable-pointers id) thing)
         (make-pointer id))))
@@ -58,12 +55,12 @@
 
   (defun get-stable-pointer-value (stable-pointer)
     (let ((ptr-id (pointer-address stable-pointer)))
-      (when (<= 0 ptr-id stable-pointers-length)
+      (when (<= 0 ptr-id (1- (length stable-pointers)))
         (aref stable-pointers ptr-id))))
 
   (defun set-stable-pointer-value (stable-pointer data)
     (let ((ptr-id (pointer-address stable-pointer)))
-      (when (<= 0 ptr-id stable-pointers-length)
+      (when (<= 0 ptr-id (1- (length stable-pointers)))
         (setf (aref stable-pointers ptr-id) data))))
 )
 

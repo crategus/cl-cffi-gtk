@@ -31,7 +31,8 @@
                 (:ROOTWIN 3)
                 (:WIN32-DROPFILES 4)
                 (:OLE2 5)
-                (:LOCAL 6))
+                (:LOCAL 6)
+                (:WAYLAND 7))
              (gobject::get-g-enum-definition "GdkDragProtocol"))))
 
 (test get-flags-items
@@ -63,7 +64,8 @@
                (:HANDLES-OPEN 4)
                (:HANDLES-COMMAND-LINE 8)
                (:SEND-ENVIRONMENT 16)
-               (:NON-UNIQUE 32))
+               (:NON-UNIQUE 32)
+               (:CAN-OVERRIDE-APP-ID 64))
             (gobject::get-g-flags-definition "GApplicationFlags"))))
 
 

@@ -5,12 +5,12 @@
 
 #-windows
 (test registered-object-types
-  (is (= 239
+  (is (<= 239
          (length (alexandria:hash-table-alist gobject::*registered-object-types*)))))
 
 #+windows
 (test registered-object-types
-  (is (= 226
+  (is (<= 226
          (length (alexandria:hash-table-alist gobject::*registered-object-types*)))))
 
 #+nil

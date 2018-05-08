@@ -127,6 +127,9 @@
                          "double-buffered" "gboolean" T T)
                         (EVENTS GTK-WIDGET-EVENTS "events" "GdkEventMask" T T)
                         (EXPAND GTK-WIDGET-EXPAND "expand" "gboolean" T T)
+                        #+gtk-3-20
+                        (FOCUS-ON-CLICK GTK-WIDGET-FOCUS-ON-CLICK
+                         "focus-on-click" "gboolean" T T)
                         (HALIGN GTK-WIDGET-HALIGN "halign" "GtkAlign" T T)
                         (HAS-DEFAULT GTK-WIDGET-HAS-DEFAULT "has-default"
                          "gboolean" T T)
@@ -599,18 +602,11 @@ scale-factor
     (is (= 1 (gtk-widget-style-get-property widget "focus-line-width")))
     (is (= 1 (gtk-widget-style-get-property widget "focus-padding")))
     (is-true (gtk-widget-style-get-property widget "interior-focus"))
-    (is (eq 'gdk-color
-            (type-of (gtk-widget-style-get-property widget "link-color"))))
     (is (= 16 (gtk-widget-style-get-property widget "scroll-arrow-hlength")))
     (is (= 16 (gtk-widget-style-get-property widget "scroll-arrow-vlength")))
     (is-false (gtk-widget-style-get-property widget "secondary-cursor-color"))
-    (is (=  2 (gtk-widget-style-get-property widget "separator-height")))
-    (is (=  2 (gtk-widget-style-get-property widget "separator-width")))
-    (is (= 20 (gtk-widget-style-get-property widget "text-handle-height")))
-    (is (= 16 (gtk-widget-style-get-property widget "text-handle-width")))
-    (is (eq 'gdk-color
-            (type-of (gtk-widget-style-get-property widget
-                                                    "visited-link-color"))))
+    (is (<= 1 (gtk-widget-style-get-property widget "text-handle-height")))
+    (is (<= 1 (gtk-widget-style-get-property widget "text-handle-width")))
     (is-false  (gtk-widget-style-get-property widget "wide-separators"))
     (is-false (gtk-widget-style-get-property widget "window-dragging"))))
 
