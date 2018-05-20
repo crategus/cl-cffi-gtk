@@ -175,6 +175,12 @@
 ;;;     the XID of the socket's window.
 ;;; ----------------------------------------------------------------------------
 
+(defcfun gtk-plug-construct :void
+  (plug (g-object gtk-plug))
+  (socket-id :pointer))
+
+(export 'gtk-plug-construct)
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_plug_construct_for_display ()
 ;;;
@@ -197,6 +203,13 @@
 ;;;
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
+
+(defcfun gtk-plug-construct-for-display :void
+  (plug (g-object gtk-plug))
+  (display (g-object gdk-display))
+  (socket-id :pointer))
+
+(export 'gtk-plug-construct-for-display)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_plug_new ()
@@ -238,6 +251,12 @@
 ;;;
 ;;; Since 2.2
 ;;; ----------------------------------------------------------------------------
+
+(defcfun gtk-plug-new-for-display (g-object gtk-plug)
+  (display (g-object gdk-display))
+  (socket-id :pointer))
+
+(export 'gtk-plug-new-for-display)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_plug_get_id ()

@@ -79,7 +79,7 @@ GTK+ Widgets and Objects
   Numeric and Text Data Entry
 
     gtk.entry.lisp                   - GtkEntry                    - GTK+ 3.10
-    gtk.entry-buffer.lisp            - GtkEntryBuffer              - GTK+ 3.10
+    gtk.entry-buffer.lisp            - GtkEntryBuffer              - GTK+ 3.22
     gtk.entry-completion.lisp        - GtkEntryCompletion          - GTK+ 3.10
     gtk.scale.lisp                   - GtkScale, ...               - GTK+ 3.22
     gtk.spin-button.lisp             - GtkSpinButton               - GTK+ 3.22
@@ -216,15 +216,15 @@ GTK+ Widgets and Objects
 
     gtk.widget.lisp                  - GtkWidget                   - GTK+ 3.16 &
     gtk.container.lisp               - GtkContainer                - GTK+ 3.16 &
-    gtk.bin.lisp                     - GtkBin                      - GTK+ 3.16
+    gtk.bin.lisp                     - GtkBin                      - GTK+ 3.22
     gtk.menu-shell.lisp              - GtkMenuShell                - GTK+ 3.16 &
     gtk.range.lisp                   - GtkRange                    - GTK+ 3.16
     gtk.im-context.lisp              - GtkIMContext                - GTK+ 3.16 &
 
   Cross-process Embedding
 
-    gtk.plug.lisp                    - GtkPlug                     - GTK+ 3.8.9*
-    gtk.socket.lisp                  - GtkSocket                   - GTK+ 3.6.4*
+    gtk.plug.lisp                    - GtkPlug                     - GTK+ 3.22
+    gtk.socket.lisp                  - GtkSocket                   - GTK+ 3.22
 
   Recently Used Documents
 

@@ -148,7 +148,8 @@
  "@version{2014-11-27}
   @return{The new @class{gtk-socket}.}
   Create a new empty @class{gtk-socket}.
-  @see-class{gtk-socket}")
+  @see-class{gtk-socket}"
+  (make-instance 'gtk-socket))
 
 (export 'gtk-socket-new)
 
