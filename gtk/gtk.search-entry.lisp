@@ -32,15 +32,8 @@
 ;;;
 ;;; Functions
 ;;;
-;;;     gtk-search-entry-new
-;;;
-;;; Signals
-;;;
-;;;     search-changed   Run Last
-;;;
-;;; Types and Values
-;;;
-;;;     class gtk-search-entry
+;;;     gtk_search_entry_new
+;;;     gtk_search_entry_handle_event
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -53,7 +46,7 @@
 ;;; Implemented Interfaces
 ;;;
 ;;; GtkSearchEntry implements AtkImplementorIface, GtkBuildable, GtkEditable
-;;; and GtkCellEditable
+;;; and GtkCellEditable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -129,5 +122,17 @@
 
 #+gtk-3-6
 (export 'gtk-search-entry-new)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_search_entry_handle_event ()
+;;; ----------------------------------------------------------------------------
+
+#+gtk-3-16
+(defcfun gtk-search-entry-handle-event :boolean
+  (entry (g-object gtk-search-entry))
+  (event (g-boxed-foreign gdk-event)))
+
+#+gtk-3-16
+(export 'gtk-search-entry-handle-event)
 
 ;;; --- End of file gtk.search-entry.lisp --------------------------------------
