@@ -149,18 +149,6 @@
 
 (export 'within-main-loop)
 
-#+thread-support
-(defmacro with-main-loop (&body body)
-  `(progn
-     (ensure-gtk-main)
-     (within-main-loop ,@body)))
-
-#-thread-support
-(defmacro with-main-loop (&body body)
-  `(progn
-     ,@body
-     (ensure-gtk-main)))
-
 ;;; ----------------------------------------------------------------------------
 
 (glib::at-init () (%gtk-init))
