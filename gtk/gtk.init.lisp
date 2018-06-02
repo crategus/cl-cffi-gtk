@@ -149,6 +149,18 @@
 
 (export 'within-main-loop)
 
+(defmacro within-gtk-thread (&body body)
+  "Executes the body within the GTK thread. Unlike GTK:WITHIN-MAIN-LOOP, this
+macro does not initialize GTK, and can be used several times in a program. It
+is mainly useful to execute some GTK code from a thread different from the main
+GTK thread."
+  `(gdk:gdk-threads-add-idle ; Could probably be replaced by glib:g-idle-add, but this is safer (see GDK Threads doc)
+    #'(lambda ()
+        ,@body
+        nil)))
+
+(export 'within-gtk-thread)
+
 ;;; ----------------------------------------------------------------------------
 
 (glib::at-init () (%gtk-init))
