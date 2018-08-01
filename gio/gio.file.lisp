@@ -1127,6 +1127,12 @@
 ;;;
 ;;; Returns :
 ;;;     a new GFile. Free the returned object with g_object_unref(). [transfer full]
+
+(defcfun g-file-new-for-uri (g-object g-file)
+  (uri :string))
+
+(export 'g-file-new-for-uri)
+
 ;;; g_file_new_tmp ()
 ;;;
 ;;; GFile *             g_file_new_tmp                      (const char *tmpl,
