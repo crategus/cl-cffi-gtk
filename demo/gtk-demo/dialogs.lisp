@@ -49,10 +49,11 @@
     (gtk-dialog-add-button dialog "gtk-yes" :yes)
     (gtk-dialog-add-button dialog "gtk-no" :no)
     (gtk-dialog-add-button dialog "gtk-cancel" :cancel)
+    (gtk-dialog-add-button dialog "_Custom" 1)
     (gtk-dialog-set-default-response dialog :cancel)
     ;; Change the order of the buttons
     (gtk-dialog-set-alternative-button-order dialog
-                                             (list :yes :cancel :no))
+                                             (list 1 :yes :cancel :no))
     ;; Run the dialog and print the message on the console
     (format t "Response was: ~S~%" (gtk-dialog-run dialog))
     ;; Destroy the dialog
