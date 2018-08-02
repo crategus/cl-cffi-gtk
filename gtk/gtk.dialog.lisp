@@ -510,7 +510,10 @@
 ;;; gtk_dialog_run ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_dialog_run" gtk-dialog-run) gtk-response-type
+(defcfun ("gtk_dialog_run" %gtk-dialog-run) :int
+  (dialog (g-object gtk-dialog)))
+
+(defun gtk-dialog-run (dialog)
  #+cl-cffi-gtk-documentation
  "@version{2013-9-9}
   @argument[dialog]{a @class{gtk-dialog} window}
@@ -559,7 +562,20 @@
   @see-symbol{gtk-response-type}
   @see-function{gtk-dialog-response}
   @see-function{gtk-widget-show}"
-  (dialog (g-object gtk-dialog)))
+  (let ((response (%gtk-dialog-run dialog)))
+    (case response
+      (-1 :none)
+      (-2 :reject)
+      (-3 :accept)
+      (-4 :delete-event)
+      (-5 :ok)
+      (-6 :cancel)
+      (-7 :close)
+      (-8 :yes)
+      (-9 :no)
+      (-10 :apply)
+      (-11 :help)
+      (t response))))
 
 (export 'gtk-dialog-run)
 
@@ -567,7 +583,11 @@
 ;;; gtk_dialog_response ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_dialog_response" gtk-dialog-response) :void
+(defcfun ("gtk_dialog_response" %gtk-dialog-response) :void
+  (dialog (g-object gtk-dialog))
+  (response-id :int))
+
+(defun gtk-dialog-response (dialog response-id)
  #+cl-cffi-gtk-documentation
  "@version{2013-9-9}
   @argument[dialog]{a @class{gtk-dialog} window}
@@ -581,8 +601,21 @@
   @see-class{gtk-dialog}
   @see-symbol{gtk-response-type}
   @see-function{gtk-dialog-run}"
-  (dialog (g-object gtk-dialog))
-  (response-id gtk-response-type))
+ (%gtk-dialog-response
+  dialog
+  (case response-id
+    (:none -1)
+    (:reject -2)
+    (:accept -3)
+    (:delete-event -4)
+    (:ok -5)
+    (:cancel -6)
+    (:close -7)
+    (:yes -8)
+    (:no -9)
+    (:apply -10)
+    (:help -11)
+    (t response-id))))
 
 (export 'gtk-dialog-response)
 
@@ -590,7 +623,12 @@
 ;;; gtk_dialog_add_button ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_dialog_add_button" gtk-dialog-add-button) (g-object gtk-widget)
+(defcfun ("gtk_dialog_add_button" %gtk-dialog-add-button) (g-object gtk-widget)
+  (dialog (g-object gtk-dialog))
+  (button-text :string)
+  (response-id :int))
+
+(defun gtk-dialog-add-button (dialog button-text response-id)
  #+cl-cffi-gtk-documentation
  "@version{2013-9-9}
   @argument[dialog]{a @class{gtk-dialog} window}
@@ -609,9 +647,22 @@
   @see-symbol{gtk-response-type}
   @see-function{gtk-dialog-add-buttons}
   @see-function{gtk-dialog-add-action-widget}"
-  (dialog (g-object gtk-dialog))
-  (button-text :string)
-  (response-id gtk-response-type))
+ (%gtk-dialog-add-button
+  dialog
+  button-text
+  (case response-id
+    (:none -1)
+    (:reject -2)
+    (:accept -3)
+    (:delete-event -4)
+    (:ok -5)
+    (:cancel -6)
+    (:close -7)
+    (:yes -8)
+    (:no -9)
+    (:apply -10)
+    (:help -11)
+    (t response-id))))
 
 (export 'gtk-dialog-add-button)
 
@@ -649,7 +700,12 @@
 ;;; gtk_dialog_add_action_widget ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_dialog_add_action_widget" gtk-dialog-add-action-widget) :void
+(defcfun ("gtk_dialog_add_action_widget" %gtk-dialog-add-action-widget) :void
+  (dialog (g-object gtk-dialog))
+  (child (g-object gtk-widget))
+  (response-id :int))
+
+(defun gtk-dialog-add-action-widget (dialog child response-id)
  #+cl-cffi-gtk-documentation
  "@version{2013-9-9}
   @argument[dialog]{a @class{gtk-dialog} window}
@@ -669,9 +725,22 @@
   @see-symbol{gtk-response-type}
   @see-function{gtk-dialog-add-button}
   @see-function{gtk-dialog-add-buttons}"
-  (dialog (g-object gtk-dialog))
-  (child (g-object gtk-widget))
-  (response-id gtk-response-type))
+ (%gtk-dialog-add-action-widget
+  dialog
+  child
+  (case response-id
+    (:none -1)
+    (:reject -2)
+    (:accept -3)
+    (:delete-event -4)
+    (:ok -5)
+    (:cancel -6)
+    (:close -7)
+    (:yes -8)
+    (:no -9)
+    (:apply -10)
+    (:help -11)
+    (t response-id))))
 
 (export 'gtk-dialog-add-action-widget)
 
@@ -679,8 +748,12 @@
 ;;; gtk_dialog_set_default_response ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_dialog_set_default_response" gtk-dialog-set-default-response)
+(defcfun ("gtk_dialog_set_default_response" %gtk-dialog-set-default-response)
     :void
+  (dialog (g-object gtk-dialog))
+  (response-id :int))
+
+(defun gtk-dialog-set-default-response (dialog response-id)
  #+cl-cffi-gtk-documentation
  "@version{2013-9-9}
   @argument[dialog]{a @class{gtk-dialog} window}
@@ -692,8 +765,21 @@
   Pressing \"Enter\" normally activates the default widget.
   @see-class{gtk-dialog}
   @see-symbol{gtk-response-type}"
-  (dialog (g-object gtk-dialog))
-  (response-id gtk-response-type))
+ (%gtk-dialog-set-default-response
+  dialog
+  (case response-id
+    (:none -1)
+    (:reject -2)
+    (:accept -3)
+    (:delete-event -4)
+    (:ok -5)
+    (:cancel -6)
+    (:close -7)
+    (:yes -8)
+    (:no -9)
+    (:apply -10)
+    (:help -11)
+    (t response-id))))
 
 (export 'gtk-dialog-set-default-response)
 
@@ -701,8 +787,13 @@
 ;;; gtk_dialog_set_response_sensitive ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_dialog_set_response_sensitive" gtk-dialog-set-response-sensitive)
+(defcfun ("gtk_dialog_set_response_sensitive" %gtk-dialog-set-response-sensitive)
     :void
+  (dialog (g-object gtk-dialog))
+  (response :int)
+  (setting :boolean))
+
+(defun gtk-dialog-set-response-sensitive (dialog response setting)
  #+cl-cffi-gtk-documentation
  "@version{2013-9-9}
   @argument[dialog]{a @class{gtk-dialog} window}
@@ -714,9 +805,22 @@
   @see-class{gtk-dialog}
   @see-symbol{gtk-response-type}
   @see-function{gtk-widget-sensitive}"
-  (dialog (g-object gtk-dialog))
-  (response gtk-response-type)
-  (setting :boolean))
+ (%gtk-dialog-set-response-sensitive
+  dialog
+  (case response
+    (:none -1)
+    (:reject -2)
+    (:accept -3)
+    (:delete-event -4)
+    (:ok -5)
+    (:cancel -6)
+    (:close -7)
+    (:yes -8)
+    (:no -9)
+    (:apply -10)
+    (:help -11)
+    (t response))
+  setting))
 
 (export 'gtk-dialog-set-response-sensitive)
 
@@ -725,7 +829,11 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_dialog_get_response_for_widget"
-          gtk-dialog-get-response-for-widget) :int
+          %gtk-dialog-get-response-for-widget) :int
+  (dialog (g-object gtk-dialog))
+  (widget (g-object gtk-widget)))
+
+(defun gtk-dialog-get-response-for-widget (dialog widget)
  #+cl-cffi-gtk-documentation
  "@version{2013-9-9}
   @argument[dialog]{a @class{gtk-dialog} window}
@@ -740,8 +848,20 @@
   @see-class{gtk-dialog}
   @see-symbol{gtk-response-type}
   @see-function{gtk-dialog-get-widget-for-response}"
-  (dialog (g-object gtk-dialog))
-  (widget (g-object gtk-widget)))
+ (let ((response (%gtk-dialog-get-response-for-widget dialog widget)))
+   (case response
+     (-1 :none)
+     (-2 :reject)
+     (-3 :accept)
+     (-4 :delete-event)
+     (-5 :ok)
+     (-6 :cancel)
+     (-7 :close)
+     (-8 :yes)
+     (-9 :no)
+     (-10 :apply)
+     (-11 :help)
+     (t response))))
 
 (export 'gtk-dialog-get-response-for-widget)
 
@@ -750,7 +870,11 @@
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_dialog_get_widget_for_response"
-          gtk-dialog-get-widget-for-response) g-object
+          %gtk-dialog-get-widget-for-response) g-object
+  (dialog (g-object gtk-dialog))
+  (response-id :int))
+
+(defun gtk-dialog-get-widget-for-response (dialog response-id)
  #+cl-cffi-gtk-documentation
  "@version{2013-9-9}
   @argument[dialog]{a @class{gtk-dialog} window}
@@ -767,8 +891,21 @@
   @see-class{gtk-dialog}
   @see-symbol{gtk-response-type}
   @see-function{gtk-dialog-get-response-for widget}"
-  (dialog (g-object gtk-dialog))
-  (response-id gtk-response-type))
+ (%gtk-dialog-get-widget-for-response
+  dialog
+  (case response-id
+    (:none -1)
+    (:reject -2)
+    (:accept -3)
+    (:delete-event -4)
+    (:ok -5)
+    (:cancel -6)
+    (:close -7)
+    (:yes -8)
+    (:no -9)
+    (:apply -10)
+    (:help -11)
+    (t response-id))))
 
 (export 'gtk-dialog-get-widget-for-response)
 
@@ -940,11 +1077,24 @@
   @see-class{gtk-dialog}
   @see-class{gtk-message-dialog}
   @see-symbol{gtk-response-type}"
-  (with-foreign-object (new-order 'gtk-response-type (length response-list))
+  (with-foreign-object (new-order :int (length response-list))
     (loop
        for i from 0
        for response in response-list
-       do (setf (mem-aref new-order 'gtk-response-type i) response))
+       do (setf (mem-aref new-order :int i)
+		(case response
+		  (:none -1)
+		  (:reject -2)
+		  (:accept -3)
+		  (:delete-event -4)
+		  (:ok -5)
+		  (:cancel -6)
+		  (:close -7)
+		  (:yes -8)
+		  (:no -9)
+		  (:apply -10)
+		  (:help -11)
+		  (t response))))
     (%gtk-dialog-set-alternative-button-order-from-array dialog
                                                          (length response-list)
                                                          new-order))
@@ -983,6 +1133,6 @@
   Since 2.6"
   (dialog (g-object gtk-dialog))
   (n-params :int)
-  (new-order (:pointer gtk-response-type)))
+  (new-order (:pointer :int)))
 
 ;;; --- End of file gtk.dialog.lisp --------------------------------------------
