@@ -563,19 +563,8 @@
   @see-function{gtk-dialog-response}
   @see-function{gtk-widget-show}"
   (let ((response (%gtk-dialog-run dialog)))
-    (case response
-      (-1 :none)
-      (-2 :reject)
-      (-3 :accept)
-      (-4 :delete-event)
-      (-5 :ok)
-      (-6 :cancel)
-      (-7 :close)
-      (-8 :yes)
-      (-9 :no)
-      (-10 :apply)
-      (-11 :help)
-      (t response))))
+    (or (foreign-enum-keyword 'gtk-response-type response :errorp nil)
+	response)))
 
 (export 'gtk-dialog-run)
 
@@ -603,19 +592,9 @@
   @see-function{gtk-dialog-run}"
  (%gtk-dialog-response
   dialog
-  (case response-id
-    (:none -1)
-    (:reject -2)
-    (:accept -3)
-    (:delete-event -4)
-    (:ok -5)
-    (:cancel -6)
-    (:close -7)
-    (:yes -8)
-    (:no -9)
-    (:apply -10)
-    (:help -11)
-    (t response-id))))
+  (or (and (typep response-id 'keyword)
+	   (foreign-enum-value 'gtk-response-type response-id))
+      response-id)))
 
 (export 'gtk-dialog-response)
 
@@ -650,19 +629,9 @@
  (%gtk-dialog-add-button
   dialog
   button-text
-  (case response-id
-    (:none -1)
-    (:reject -2)
-    (:accept -3)
-    (:delete-event -4)
-    (:ok -5)
-    (:cancel -6)
-    (:close -7)
-    (:yes -8)
-    (:no -9)
-    (:apply -10)
-    (:help -11)
-    (t response-id))))
+  (or (and (typep response-id 'keyword)
+	   (foreign-enum-value 'gtk-response-type response-id))
+      response-id)))
 
 (export 'gtk-dialog-add-button)
 
@@ -728,19 +697,9 @@
  (%gtk-dialog-add-action-widget
   dialog
   child
-  (case response-id
-    (:none -1)
-    (:reject -2)
-    (:accept -3)
-    (:delete-event -4)
-    (:ok -5)
-    (:cancel -6)
-    (:close -7)
-    (:yes -8)
-    (:no -9)
-    (:apply -10)
-    (:help -11)
-    (t response-id))))
+  (or (and (typep response-id 'keyword)
+	   (foreign-enum-value 'gtk-response-type response-id))
+      response-id)))
 
 (export 'gtk-dialog-add-action-widget)
 
@@ -767,19 +726,9 @@
   @see-symbol{gtk-response-type}"
  (%gtk-dialog-set-default-response
   dialog
-  (case response-id
-    (:none -1)
-    (:reject -2)
-    (:accept -3)
-    (:delete-event -4)
-    (:ok -5)
-    (:cancel -6)
-    (:close -7)
-    (:yes -8)
-    (:no -9)
-    (:apply -10)
-    (:help -11)
-    (t response-id))))
+  (or (and (typep response-id 'keyword)
+	   (foreign-enum-value 'gtk-response-type response-id))
+      response-id)))
 
 (export 'gtk-dialog-set-default-response)
 
@@ -807,19 +756,9 @@
   @see-function{gtk-widget-sensitive}"
  (%gtk-dialog-set-response-sensitive
   dialog
-  (case response
-    (:none -1)
-    (:reject -2)
-    (:accept -3)
-    (:delete-event -4)
-    (:ok -5)
-    (:cancel -6)
-    (:close -7)
-    (:yes -8)
-    (:no -9)
-    (:apply -10)
-    (:help -11)
-    (t response))
+  (or (and (typep response 'keyword)
+	   (foreign-enum-value 'gtk-response-type response))
+      response)
   setting))
 
 (export 'gtk-dialog-set-response-sensitive)
@@ -849,19 +788,8 @@
   @see-symbol{gtk-response-type}
   @see-function{gtk-dialog-get-widget-for-response}"
  (let ((response (%gtk-dialog-get-response-for-widget dialog widget)))
-   (case response
-     (-1 :none)
-     (-2 :reject)
-     (-3 :accept)
-     (-4 :delete-event)
-     (-5 :ok)
-     (-6 :cancel)
-     (-7 :close)
-     (-8 :yes)
-     (-9 :no)
-     (-10 :apply)
-     (-11 :help)
-     (t response))))
+   (or (foreign-enum-keyword 'gtk-response-type response :errorp nil)
+       response)))
 
 (export 'gtk-dialog-get-response-for-widget)
 
@@ -893,19 +821,9 @@
   @see-function{gtk-dialog-get-response-for widget}"
  (%gtk-dialog-get-widget-for-response
   dialog
-  (case response-id
-    (:none -1)
-    (:reject -2)
-    (:accept -3)
-    (:delete-event -4)
-    (:ok -5)
-    (:cancel -6)
-    (:close -7)
-    (:yes -8)
-    (:no -9)
-    (:apply -10)
-    (:help -11)
-    (t response-id))))
+  (or (and (typep response-id 'keyword)
+	   (foreign-enum-value 'gtk-response-type response-id))
+      response-id)))
 
 (export 'gtk-dialog-get-widget-for-response)
 
@@ -1082,19 +1000,9 @@
        for i from 0
        for response in response-list
        do (setf (mem-aref new-order :int i)
-		(case response
-		  (:none -1)
-		  (:reject -2)
-		  (:accept -3)
-		  (:delete-event -4)
-		  (:ok -5)
-		  (:cancel -6)
-		  (:close -7)
-		  (:yes -8)
-		  (:no -9)
-		  (:apply -10)
-		  (:help -11)
-		  (t response))))
+		(or (and (typep response 'keyword)
+			 (foreign-enum-value 'gtk-response-type response))
+		    response)))
     (%gtk-dialog-set-alternative-button-order-from-array dialog
                                                          (length response-list)
                                                          new-order))
