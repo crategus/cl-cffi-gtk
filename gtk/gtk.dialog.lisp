@@ -564,7 +564,7 @@
   @see-function{gtk-widget-show}"
   (let ((response (%gtk-dialog-run dialog)))
     (or (foreign-enum-keyword 'gtk-response-type response :errorp nil)
-	response)))
+        response)))
 
 (export 'gtk-dialog-run)
 
@@ -593,7 +593,7 @@
  (%gtk-dialog-response
   dialog
   (or (and (typep response-id 'keyword)
-	   (foreign-enum-value 'gtk-response-type response-id))
+           (foreign-enum-value 'gtk-response-type response-id))
       response-id)))
 
 (export 'gtk-dialog-response)
@@ -630,7 +630,7 @@
   dialog
   button-text
   (or (and (typep response-id 'keyword)
-	   (foreign-enum-value 'gtk-response-type response-id))
+           (foreign-enum-value 'gtk-response-type response-id))
       response-id)))
 
 (export 'gtk-dialog-add-button)
@@ -698,7 +698,7 @@
   dialog
   child
   (or (and (typep response-id 'keyword)
-	   (foreign-enum-value 'gtk-response-type response-id))
+           (foreign-enum-value 'gtk-response-type response-id))
       response-id)))
 
 (export 'gtk-dialog-add-action-widget)
@@ -727,7 +727,7 @@
  (%gtk-dialog-set-default-response
   dialog
   (or (and (typep response-id 'keyword)
-	   (foreign-enum-value 'gtk-response-type response-id))
+           (foreign-enum-value 'gtk-response-type response-id))
       response-id)))
 
 (export 'gtk-dialog-set-default-response)
@@ -757,7 +757,7 @@
  (%gtk-dialog-set-response-sensitive
   dialog
   (or (and (typep response 'keyword)
-	   (foreign-enum-value 'gtk-response-type response))
+           (foreign-enum-value 'gtk-response-type response))
       response)
   setting))
 
@@ -822,7 +822,7 @@
  (%gtk-dialog-get-widget-for-response
   dialog
   (or (and (typep response-id 'keyword)
-	   (foreign-enum-value 'gtk-response-type response-id))
+           (foreign-enum-value 'gtk-response-type response-id))
       response-id)))
 
 (export 'gtk-dialog-get-widget-for-response)
@@ -1000,9 +1000,9 @@
        for i from 0
        for response in response-list
        do (setf (mem-aref new-order :int i)
-		(or (and (typep response 'keyword)
-			 (foreign-enum-value 'gtk-response-type response))
-		    response)))
+                (or (and (typep response 'keyword)
+                         (foreign-enum-value 'gtk-response-type response))
+                    response)))
     (%gtk-dialog-set-alternative-button-order-from-array dialog
                                                          (length response-list)
                                                          new-order))
