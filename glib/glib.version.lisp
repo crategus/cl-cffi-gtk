@@ -361,7 +361,7 @@
                              (>= minor-version max-minor-version))))
             #+sbcl
             (when (find-symbol (string '#:deprecation-error) '#:sb-ext)
-              `(declaim (sb-ext:deprecated
+              `(declaim (,(find-symbol (string '#:deprecated) '#:sb-ext)
                          :late (,(string library)
                                 ,(if since
                                      (format NIL "~D.~D" max-major-version max-minor-version)
