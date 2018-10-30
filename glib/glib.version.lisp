@@ -333,6 +333,17 @@
 
 (push-library-version-features glib
   +glib-major-version+ +glib-minor-version+
+  2 58
+  2 56
+  2 54
+  2 52
+  2 50
+  2 48
+  2 46
+  2 44
+  2 42
+  2 40
+  2 38
   2 36
   2 34
   2 32

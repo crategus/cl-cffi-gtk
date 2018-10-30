@@ -39,6 +39,7 @@
 ;;; GListModel
 ;;; ----------------------------------------------------------------------------
 
+#+glib-2-44
 (define-g-interface "GListModel" g-list-model
   (:export t
    :type-initializer "g_list_model_get_type"))
@@ -47,49 +48,60 @@
 ;;; g_list_model_get_item_type ()
 ;;; ----------------------------------------------------------------------------
 
+#+glib-2-44
 (defcfun g-list-model-get-item-type g-type
   (model (g-object g-list-model)))
 
+#+glib-2-44
 (export 'g-list-model-get-item-type)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_list_model_get_n_items ()
 ;;; ----------------------------------------------------------------------------
 
+#+glib-2-44
 (defcfun g-list-model-get-n-items :uint
   (model (g-object g-list-model)))
 
+#+glib-2-44
 (export 'g-list-model-get-n-items)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_list_model_get_item ()
 ;;; ----------------------------------------------------------------------------
 
+#+glib-2-44
 (defcfun g-list-model-get-item g-object
   (model (g-object g-list-model))
   (position :uint))
 
+#+glib-2-44
 (export 'g-list-model-get-item)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_list_model_get_object ()
 ;;; ----------------------------------------------------------------------------
 
+#+glib-2-44
 (declaim (inline g-list-model-get-object))
 
+#+glib-2-44
 (defun g-list-model-get-object (model position)
   (g-list-model-get-item model position))
 
+#+glib-2-44
 (export 'g-list-model-get-object)
 
 ;;; ----------------------------------------------------------------------------
 ;;; g_list_model_items_changed ()
 ;;; ----------------------------------------------------------------------------
 
+#+glib-2-44
 (defcfun g-list-model-items-changed :void
   (model (g-object g-list-model))
   (position :uint)
   (removed :uint)
   (added :uint))
 
+#+glib-2-44
 (export 'g-list-model-items-changed)

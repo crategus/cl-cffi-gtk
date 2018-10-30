@@ -480,7 +480,7 @@
       (funcall (glib::get-stable-pointer-value data) item)
     (return () NIL)))
 
-#+gtk-3-16
+#+(and gtk-3-16 glib-2-44)
 (defcfun ("gtk_list_box_bind_model" %gtk-list-box-bind-model) :void
   (box (g-object gtk-list-box))
   (model (g-object g-list-model))
@@ -488,7 +488,7 @@
   (data :pointer)
   (destroy-notify :pointer))
 
-#+gtk-3-16
+#+(and gtk-3-16 glib-2-44)
 (defun gtk-list-box-bind-model (box model func)
   (%gtk-list-box-bind-model
    box
@@ -497,7 +497,7 @@
    (glib::allocate-stable-pointer func)
    (callback glib::stable-pointer-destroy-notify-cb)))
 
-#+gtk-3-16
+#+(and gtk-3-16 glib-2-44)
 (export 'gtk-list-box-bind-model)
 
 ;;; ----------------------------------------------------------------------------
