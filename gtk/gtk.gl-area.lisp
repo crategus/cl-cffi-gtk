@@ -69,9 +69,14 @@
 (export 'gtk-gl-area-set-error)
 
 #+gtk-3-16
-(defcfun ("gtk_gl_area_get_error" gtk-gl-area-get-error)
+(defcfun ("gtk_gl_area_get_error" %gtk-gl-area-get-error)
     (:pointer (:struct g-error))
   (area (g-object gtk-gl-area)))
+
+#+gtk-3-16
+(defun gtk-gl-area-get-error (area)
+  (with-g-error (err)
+    (%gtk-gl-area-get-error area)))
 
 #+gtk-3-16
 (export 'gtk-gl-area-get-error)
