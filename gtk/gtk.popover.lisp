@@ -1,6 +1,6 @@
 (in-package :gtk)
 
-#+gtk-3-12
+#+gtk-3-20
 (define-g-enum "GtkPopoverConstraint" gtk-popover-constraint
   (:export t
    :type-initializer "gtk_popover_constraint_get_type")
@@ -18,7 +18,8 @@
    :interfaces ("AtkImplementorIface"
                 "GtkBuildable")
    :type-initializer "gtk_popover_get_type")
-    ((constrain-to
+    (#+gtk-3-20
+     (constrain-to
       gtk-popover-constrain-to
       "constrain-to" "GtkPopoverConstraint" t t)
      (modal

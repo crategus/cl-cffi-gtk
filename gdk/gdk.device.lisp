@@ -143,6 +143,7 @@
    (seat
     gdk-device-seat
     "seat" "GdkSeat" t t)
+   #+gdk-3-22
    (tool
     gdk-device-tool
     "tool" "GdkDeviceTool" t nil)
@@ -1607,6 +1608,7 @@ get_device_settings (GdkDevice *device)
 ;;; GdkDeviceTool
 ;;; ----------------------------------------------------------------------------
 
+#+gdk-3-22
 (define-g-object-class "GdkDeviceTool" gdk-device-tool
   (:superclass g-object
    :export t
