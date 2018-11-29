@@ -21,8 +21,8 @@
      t)))
 
 (defmethod asdf:perform ((o asdf:compile-op) (c c-test-lib))
-  (let ((cffi-toolchain:*cc-flags* `(,@cffi-toolchain:*cc-flags* "-Wall" "-std=c99" "-pedantic" ,@(split-sequence:split-sequence #\Space (uiop:run-program "pkg-config --cflags gtk+-3.0" :output '(:string :stripped T)))))
-        (cffi-toolchain:*ld-dll-flags* `(,@cffi-toolchain:*ld-dll-flags* "-shared" ,@(split-sequence:split-sequence #\Space (uiop:run-program "pkg-config --libs gtk+-3.0" :output '(:string :stripped T))))))
+  (let ((cffi-toolchain:*cc-flags* `(,@cffi-toolchain:*cc-flags* "-Wall" "-std=c99" "-pedantic" ,@(split-sequence:split-sequence #\Space (uiop:run-program "pkg-config --cflags gtk+-3.0" :output '(:string :stripped T)) :remove-empty-subseqs T)))
+        (cffi-toolchain:*ld-dll-flags* `(,@cffi-toolchain:*ld-dll-flags* "-shared" ,@(split-sequence:split-sequence #\Space (uiop:run-program "pkg-config --libs gtk+-3.0" :output '(:string :stripped T)) :remove-empty-subseqs T))))
     (let ((dll (car (output-files o c))))
       (uiop:with-temporary-file (:pathname obj)
         (cffi-toolchain:cc-compile obj (input-files o c))
