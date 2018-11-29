@@ -24,7 +24,9 @@ GType gtk_custom_window_get_type (void) G_GNUC_CONST;
 
 #define GTK_TYPE_ANOTHER_CUSTOM_WINDOW (gtk_another_custom_window_get_type ())
 
+#ifdef G_DEFINE_AUTOPTR_CLEANUP_FUNC
 G_DEFINE_AUTOPTR_CLEANUP_FUNC(GtkCustomWindow, g_object_unref)
+#endif
 
 typedef struct _GtkAnotherCustomWindow GtkAnotherCustomWindow;
 typedef struct _GtkAnotherCustomWindowClass GtkAnotherCustomWindowClass;
@@ -42,6 +44,8 @@ struct _GtkAnotherCustomWindowClass
 GDK_AVAILABLE_IN_ALL
 GType gtk_another_custom_window_get_type (void) G_GNUC_CONST;
 
+#ifdef G_DEFINE_AUTOPTR_CLEANUP_FUNC
 G_DEFINE_AUTOPTR_CLEANUP_FUNC(GtkAnotherCustomWindow, g_object_unref)
+#endif
 
 G_END_DECLS
