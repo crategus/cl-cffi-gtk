@@ -167,13 +167,14 @@
 ;;; gtk_flow_box_get_child_at_pos ()
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-12
+;; FIXME: actually 3.22.6
+#+gtk-3-22
 (defcfun gtk-flow-box-get-child-at-pos (g-object gtk-flow-box-child)
   (box (g-object gtk-flow-box))
   (x :int)
   (y :int))
 
-#+gtk-3-12
+#+gtk-3-22
 (export 'gtk-flow-box-get-child-at-pos)
 
 ;;; ----------------------------------------------------------------------------
@@ -341,7 +342,7 @@
 ;;; gtk_flow_box_bind_model ()
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-12
+#+gtk-3-18
 (defcallback gtk-flow-box-create-widget-func-callback (g-object gtk-widget)
     ((item g-object)
      (data :pointer))
@@ -349,7 +350,7 @@
       (funcall (glib::get-stable-pointer-value data) item)
     (return () NIL)))
 
-#+gtk-3-12
+#+gtk-3-18
 (defcfun ("gtk_flow_box_bind_model" %gtk-flow-box-bind-model) :void
   (box (g-object gtk-flow-box))
   (model (g-object g-list-model))
@@ -357,7 +358,7 @@
   (data :pointer)
   (destroy-notify :pointer))
 
-#+gtk-3-12
+#+gtk-3-18
 (defun gtk-flow-box-bind-model (box model func)
   (%gtk-flow-box-bind-model
    box
@@ -366,7 +367,7 @@
    (glib::allocate-stable-pointer func)
    (callback glib::stable-pointer-destroy-notify-cb)))
 
-#+gtk-3-12
+#+gtk-3-18
 (export 'gtk-flow-box-bind-model)
 
 ;;; ----------------------------------------------------------------------------

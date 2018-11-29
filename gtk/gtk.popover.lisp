@@ -63,33 +63,33 @@
 #+gtk-3-12
 (export 'gtk-popover-new-from-model)
 
-#+gtk-3-12
+#+gtk-3-22
 (defcfun ("gtk_popover_popup" gtk-popover-popup) :void
   (popover (g-object gtk-popover)))
 
-#+gtk-3-12
+#+gtk-3-22
 (export 'gtk-popover-popup)
 
-#+gtk-3-12
+#+gtk-3-22
 (defcfun ("gtk_popover_popdown" gtk-popover-popdown) :void
   (popover (g-object gtk-popover)))
 
-#+gtk-3-12
+#+gtk-3-22
 (export 'gtk-popover-popdown)
 
-#+gtk-3-12
+#+gtk-3-18
 (defcfun ("gtk_popover_get_default_widget" gtk-popover-default-widget)
     (g-object gtk-widget)
   (popover (g-object gtk-popover)))
 
-#+gtk-3-12
+#+gtk-3-18
 (defcfun ("gtk_popover_set_default_widget" %gtk-popover-set-default-widget) :void
   (popover (g-object gtk-popover))
   (widget (g-object gtk-widget)))
 
-#+gtk-3-12
+#+gtk-3-18
 (defun (setf gtk-popover-default-widget) (new-value popover)
   (%gtk-popover-set-default-widget popover new-value))
 
-#+gtk-3-12
+#+gtk-3-18
 (export 'gtk-popover-default-widget)

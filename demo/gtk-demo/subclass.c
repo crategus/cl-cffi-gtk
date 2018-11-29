@@ -29,5 +29,6 @@ gtk_another_custom_window_class_init (GtkAnotherCustomWindowClass *klass)
 static void
 gtk_another_custom_window_init (GtkAnotherCustomWindow *window)
 {
+  (void)window;
   fprintf(stderr, "Hello from AnotherCustomWindow init.\n");
 }

@@ -117,8 +117,8 @@
    (show-recent
     gtk-places-sidebar-show-recent
     "show-recent" "gboolean" t t)
-   ;; FIXME
-   #+gtk-3-22-26
+   ;; FIXME: actually 3.22.26
+   #+gtk-3-22
    (show-starred-locations
     gtk-places-sidebar-show-starred-locations
     "show-starred-locations" "gboolean" t t)
@@ -207,13 +207,13 @@
 ;;; gtk_places_sidebar_set_drop_targets_visible ()
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-10
+#+gtk-3-18
 (defcfun gtk-places-sidebar-set-drop-targets-visible :void
   (widget (g-object gtk-places-sidebar))
   (visible :boolean)
   (context (g-object gdk-drag-context)))
 
-#+gtk-3-10
+#+gtk-3-18
 (export 'gtk-places-sidebar-set-drop-targets-visible)
 
 ;;; End of file gtk.places-sidebar.lisp ----------------------------------------
