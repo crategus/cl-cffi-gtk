@@ -5,12 +5,12 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GDK library.
+;;; Version 3.16 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2016 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -34,9 +34,12 @@
 ;;;
 ;;; Text buffer iterator
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkTextIter
+;;;     GtkTextSearchFlags
+;;;
+;;; Functions
 ;;;
 ;;;     gtk_text_iter_get_buffer
 ;;;     gtk_text_iter_copy
@@ -124,8 +127,6 @@
 ;;;     gtk_text_iter_forward_find_char
 ;;;     gtk_text_iter_backward_find_char
 ;;;
-;;;     GtkTextSearchFlags
-;;;
 ;;;     gtk_text_iter_forward_search
 ;;;     gtk_text_iter_backward_search
 ;;;     gtk_text_iter_equal
@@ -135,8 +136,8 @@
 ;;;
 ;;; Object Hierarchy
 ;;;
-;;;   GBoxed
-;;;    +----GtkTextIter
+;;;     GBoxed
+;;;     ╰── GtkTextIter
 ;;;
 ;;; Description
 ;;;
@@ -228,16 +229,18 @@
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-iter atdoc:*class-name-alias*) "CStruct"
       (documentation 'gtk-text-iter 'type)
- "@version{2013-8-13}
-  Most text manipulation is accomplished with iterators, represented by a
-  @sym{gtk-text-iter}. An iterator represents a position between two
-  characters in the text buffer. @sym{gtk-text-iter} is a structure
-  designed to be allocated on the stack; it is guaranteed to be copiable
-  by value and never contain any heap-allocated data. Iterators are not
-  valid indefinitely; whenever the buffer is modified in a way that affects
-  the number of characters in the buffer, all outstanding iterators become
-  invalid. Note that deleting 5 characters and then reinserting 5 still
-  invalidates iterators, though you end up with the same number of
+ "@version{2016-1-30}
+  @begin{short}
+    Most text manipulation is accomplished with iterators, represented by a
+    @sym{gtk-text-iter}. An iterator represents a position between two
+    characters in the text buffer.
+  @end{short}
+  @sym{gtk-text-iter} is a structure designed to be allocated on the stack; it
+  is guaranteed to be copiable by value and never contain any heap-allocated
+  data. Iterators are not valid indefinitely; whenever the buffer is modified
+  in a way that affects the number of characters in the buffer, all outstanding
+  iterators become invalid. Note that deleting 5 characters and then reinserting
+  5 still invalidates iterators, though you end up with the same number of
   characters you pass through a state with a different number.")
 
 (export (boxed-related-symbols 'gtk-text-iter))

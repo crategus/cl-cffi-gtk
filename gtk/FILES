@@ -94,12 +94,12 @@ GTK+ Widgets and Objects
 
     not implemented                  - GtkSearchBar
 
-    gtk.editable.lisp                - GtkEditable                 - GTK+ 3.6.4*
+    gtk.editable.lisp                - GtkEditable                 - GTK+ 3.16
 
   Multiline Text Editor
 
-    gtk.text-iter.lisp               - GtkTextIter                 - GTK+ 3.6.4*
-    gtk.text-mark.lisp               - GtkTextMark                 - GTK+ 3.6.4*
+    gtk.text-iter.lisp               - GtkTextIter                 - GTK+ 3.16 &
+    gtk.text-mark.lisp               - GtkTextMark                 - GTK+ 3.16
     gtk.text-buffer.lisp             - GtkTextBuffer               - GTK+ 3.6.4*
     gtk.text-tag.lisp                - GtkTextTag                  - GTK+ 3.6.4*
     gtk.text-tag-table.lisp          - GtkTextTagTable             - GTK+ 3.6.4*

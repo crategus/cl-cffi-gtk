@@ -5,11 +5,11 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.10. See <http://www.gtk.org>. The API documentation of the
+;;; Version 3.16. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2015 Dieter Kaiser
+;;; Copyright (C) 2011 - 2016 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -33,6 +33,10 @@
 ;;;
 ;;;     Interface for text-editing widgets
 ;;;
+;;; Types and Values
+;;;
+;;;     GtkEditable
+;;;
 ;;; Functions
 ;;;
 ;;;     gtk_editable_select_region
@@ -55,14 +59,10 @@
 ;;;     delete-text     Run Last
 ;;;     insert-text     Run Last
 ;;;
-;;; Types and Values
-;;;
-;;;     class gtk-editable
-;;;
 ;;; Object Hierarchy
 ;;;
 ;;;     GInterface
-;;;      +--- GtkEditable
+;;;     ╰── GtkEditable
 ;;;
 ;;; Known Implementations
 ;;;

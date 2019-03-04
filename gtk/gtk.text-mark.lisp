@@ -4,12 +4,13 @@
 ;;; This file contains code from a fork of cl-gtk2.
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.16 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2016 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -33,9 +34,11 @@
 ;;;
 ;;; A position in the buffer preserved across buffer modifications
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkTextMark
+;;;
+;;; Functions
 ;;;
 ;;;     gtk_text_mark_new
 ;;;     gtk_text_mark_set_visible
@@ -44,6 +47,11 @@
 ;;;     gtk_text_mark_get_name
 ;;;     gtk_text_mark_get_buffer
 ;;;     gtk_text_mark_get_left_gravity
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GtkTextMark
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -64,26 +72,21 @@
     gtk-text-mark-name
     "name" "gchararray" t nil)))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-text-mark 'type)
  "@version{2013-4-29}
   @begin{short}
-    You may wish to begin by reading the text widget conceptual overview which
-    gives an overview of all the objects and data types related to the text
-    widget and how they work together.
+    A @sym{gtk-text-mark} is like a bookmark in a text buffer; it preserves a
+    position in the text.
   @end{short}
 
-  A @sym{gtk-text-mark} is like a bookmark in a text buffer; it preserves a
-  position in the text. You can convert the mark to an iterator using the
-  function @fun{gtk-text-buffer-get-iter-at-mark}. Unlike iterators, marks
-  remain valid across buffer mutations, because their behavior is defined when
-  text is inserted or deleted. When text containing a mark is deleted, the mark
-  remains in the position originally occupied by the deleted text. When text
-  is inserted at a mark, a mark with left gravity will be moved to the
-  beginning of the newly-inserted text, and a mark with right gravity will be
-  moved to the end.
+  You can convert the mark to an iterator using the function
+  @fun{gtk-text-buffer-get-iter-at-mark}. Unlike iterators, marks remain valid
+  across buffer mutations, because their behavior is defined when text is
+  inserted or deleted. When text containing a mark is deleted, the mark remains
+  in the position originally occupied by the deleted text. When text is inserted
+  at a mark, a mark with left gravity will be moved to the beginning of the
+  newly-inserted text, and a mark with right gravity will be moved to the end.
 
   Marks are reference counted, but the reference count only controls the
   validity of the memory; marks can be deleted from the buffer at any time
@@ -96,7 +99,10 @@
   Marks are typically created using the @fun{gtk-text-buffer-create-mark}
   function.
   @see-slot{gtk-text-mark-left-gravity}
-  @see-slot{gtk-text-mark-name}")
+  @see-slot{gtk-text-mark-name}
+  @see-function{gtk-text-buffer-create-mark}
+  @see-function{gtk-text-buffer-delete-mark}
+  @see-function{gtk-text-buffer-get-iter-at-mark}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -104,45 +110,55 @@
 ;;;
 ;;; ----------------------------------------------------------------------------
 
+;;; --- gtk-text-mark-left-gravity ---------------------------------------------
+
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "left-gravity"
                                                'gtk-text-mark) 't)
- "The @code{\"left-gravity\"} property of type @code{:boolean}
+ "The @code{left-gravity} property of type @code{:boolean}
   (Read / Write / Construct)@br{}
   Whether the mark has left gravity. @br{}
   Default value: @code{nil}")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "name" 'gtk-text-mark) 't)
- "The @code{\"name\"} property of type @code{:string}
-  (Read / Write / Construct)@br{}
-  Mark name. @br{}
-  Default value: @code{nil}")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-mark-left-gravity atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-mark-left-gravity 'function)
- "@version{2013-3-24}
-  Accessor of the slot @code{\"left-gravity\"} of the @class{gtk-text-mark}
-  class.")
+ "@version{2016-1-30}
+  @syntax[]{(gtk-text-mark-left-gravity object) => gravity}
+  @argument[object]{a @class{gtk-text-mark} object}
+  @return{@emph{True} if the text mark has left gravity.}
+  @begin{short}
+    Accessor of the slot @slot[gtk-text-mark]{left-gravity} of the
+    @class{gtk-text-mark} class.
+  @end{short}
 
-;;; ----------------------------------------------------------------------------
+  The generic function @sym{gtk-text-mark-left-gravity} determines whether the
+  text mark has left gravity.
+  @see-class{gtk-text-mark}")
+
+;;; --- gtk-text-mark-name -----------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "name" 'gtk-text-mark) 't)
+ "The @code{name} property of type @code{:string}
+  (Read / Write / Construct) @br{}
+  Mark name. @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-mark-name atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-mark-name 'function)
- "@version{2013-3-24}
-  Accessor of the slot @code{\"name\"} of the @class{gtk-text-mark} class.")
+ "@version{2016-1-30}
+  @begin{short}
+    Accessor of the slot @slot[gtk-text-mark]{name} of the
+    @class{gtk-text-mark} class.
+  @end{short}
+
+  The generic function @sym{gtk-text-mark-name} returns the name of the text
+  mark or @code{nil} for anonymous marks.
+  @see-class{gtk-text-mark}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_mark_new ()
@@ -189,10 +205,14 @@
  "@version{2013-4-29}
   @argument[mark]{a @class{gtk-text-mark} object}
   @argument[setting]{visibility of @arg{mark}}
-  Sets the visibility of @arg{mark}; the insertion point is normally visible,
-  i. e. you can see it as a vertical bar. Also, the text widget uses a visible
-  mark to indicate where a drop will occur when dragging-and-dropping text. Most
-  other marks are not visible. Marks are not visible by default."
+  @begin{short}
+    Sets the visibility of @arg{mark}.
+  @end{short}
+  The insertion point is normally visible, i. e. you can see it as a vertical
+  bar. Also, the text widget uses a visible mark to indicate where a drop will
+  occur when dragging-and-dropping text. Most other marks are not visible.
+  Marks are not visible by default.
+  @see-class{gtk-text-mark}"
   (mark (g-object gtk-text-mark))
   (setting :boolean))
 
@@ -204,11 +224,12 @@
 
 (defcfun ("gtk_text_mark_get_visible" gtk-text-mark-get-visible) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-4-29}
+ "@version{2016-1-30}
   @argument[mark]{a @class{gtk-text-mark} object}
   @return{@em{True} if visible.}
-  Returns @em{true} if the @arg{mark} is visible (i. e. a cursor is displayed
-  for it)."
+  Returns @em{true} if @arg{mark} is visible (i. e. a cursor is displayed
+  for it).
+  @see-class{gtk-text-mark}"
   (mark (g-object gtk-text-mark)))
 
 (export 'gtk-text-mark-get-visible)
@@ -219,33 +240,21 @@
 
 (defcfun ("gtk_text_mark_get_deleted" gtk-text-mark-get-deleted) :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-4-29}
+ "@version{2016-1-30}
   @argument[mark]{a @class{gtk-text-mark} object}
   @return{Whether the @arg{mark} is deleted.}
-  Returns @em{true} if the @arg{mark} has been removed from its buffer with the
-  function @fun{gtk-text-buffer-delete-mark}. See the function
-  @fun{gtk-text-buffer-add-mark} for a way to add it to a buffer again.
+  @begin{short}
+    Returns @em{true} if @arg{mark} has been removed from its buffer with the
+    function @fun{gtk-text-buffer-delete-mark}.
+  @end{short}
+  See the function @fun{gtk-text-buffer-add-mark} for a way to add it to a
+  buffer again.
+  @see-class{gtk-text-mark}
   @see-function{gtk-text-buffer-delete-mark}
   @see-function{gtk-text-buffer-add-mark}"
   (mark (g-object gtk-text-mark)))
 
 (export 'gtk-text-mark-get-deleted)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_text_mark_get_name ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-text-mark-get-name))
-
-(defun gtk-text-mark-get-name (mark)
- #+cl-cffi-gtk-documentation
- "@version{2013-4-29}
-  @argument[mark]{a @class{gtk-text-mark} object}
-  @return{The name of @arg{mark}.}
-  Returns the @arg{mark} name; returns @code{nil} for anonymous marks."
-  (gtk-text-mark-name mark))
-
-(export 'gtk-text-mark-get-name)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_mark_get_buffer ()
@@ -254,29 +263,14 @@
 (defcfun ("gtk_text_mark_get_buffer" gtk-text-mark-get-buffer)
     (g-object gtk-text-buffer)
  #+cl-cffi-gtk-documentation
- "@version{2013-4-29}
+ "@version{2016-1-30}
   @argument[mark]{a @class{gtk-text-mark} object}
   @return{The @arg{mark}'s @class{gtk-text-buffer} object.}
   Gets the buffer this @arg{mark} is located inside, or @code{nil} if the
-  @arg{mark} is deleted."
+  @arg{mark} is deleted.
+  @see-class{gtk-text-mark}"
   (mark (g-object gtk-text-mark)))
 
 (export 'gtk-text-mark-get-buffer)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_text_mark_get_left_gravity ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-text-mark-get-left-gravity))
-
-(defun gtk-text-mark-get-left-gravity (mark)
- #+cl-cffi-gtk-documentation
- "@version{2013-4-29}
-  @argument[mark]{a @class{gtk-text-mark} object}
-  @return{@em{True} if the @arg{mark} has left gravity, @code{nil} otherwise.}
-  Determines whether the @arg{mark} has left gravity."
-  (gtk-text-mark-left-gravity mark))
-
-(export 'gtk-text-mark-get-left-gravity)
 
 ;;; --- End of file gtk.text-mark.lisp -----------------------------------------
