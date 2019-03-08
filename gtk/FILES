@@ -1,9 +1,8 @@
-Content from the GTK+ 3.22 Reference Manual
+Content from the GTK+ 3.24 Reference Manual
 
     *   - needs update
     %   - not fully implemented
     &   - objects and structures are implemented, some functions are missing
-   (**) - deprecated
 
 GTK+ Widgets and Objects
 
@@ -21,7 +20,7 @@ GTK+ Widgets and Objects
   Windows
 
     gtk.window.lisp                  - GtkWindow                   - GTK+ 3.10 *
-    gtk.dialog.lisp                  - GtkDialog                   - GTK+ 3.16 *
+    gtk.dialog.lisp                  - GtkDialog                   - GTK+ 3.24
     gtk.message-dialog.lisp          - GtkMessageDialog            - GTK+ 3.10 *
     gtk.about-dialog.lisp            - GtkAboutDialog              - GTK+ 3.10 *
     gtk.assistant.lisp               - GtkAssistant                - GTK+ 3.10 *
@@ -162,8 +161,6 @@ GTK+ Widgets and Objects
 
   Selector Widgets and Dialogs
 
-Selector Widgets and Dialogs
-
     gtk.color-chooser.lisp           - GtkColorChooser             - GTK+ 3.6.4*
     gtk.color-button.lisp            - GtkColorButton              - GTK+ 3.6.4*
     gtk.color-chooser-widget.lisp    - GtkColorChooserWidget       - GTK+ 3.6.4*
@@ -218,7 +215,7 @@ Selector Widgets and Dialogs
   Miscellaneous
 
     gtk.adjustment.lisp              - GtkAdjustment               - GTK+ 3.6.4*
-    gtk.calendar.lisp                - GtkCalendar                 - GTK+ 3.6.4*
+    gtk.calendar.lisp                - GtkCalendar                 - GTK+ 3.24
     gtk.drawing-area.lisp            - GtkDrawingArea              - GTK+ 3.6.4*
 
     GtkGLArea — A widget for custom drawing with OpenGL
@@ -235,10 +232,8 @@ Selector Widgets and Dialogs
 
   Abstract Base Classes
 
-Abstract Base Classes
-
-    gtk.widget.lisp                  - GtkWidget                   - GTK+ 3.16 *
-    gtk.container.lisp               - GtkContainer                - GTK+ 3.16 *
+    gtk.widget.lisp                  - GtkWidget                   - GTK+ 3.24 &
+    gtk.container.lisp               - GtkContainer                - GTK+ 3.24 &
     gtk.bin.lisp                     - GtkBin                      - GTK+ 3.16 *
     gtk.menu-shell.lisp              - GtkMenuShell                - GTK+ 3.16 *
     gtk.range.lisp                   - GtkRange                    - GTK+ 3.16 *
@@ -270,6 +265,9 @@ Abstract Base Classes
   Gestures and event handling
 
     GtkEventController — Self-contained handler of series of events
+    GtkEventControllerKey — Event controller for key events
+    GtkEventControllerScroll — Event controller for scroll events
+    GtkEventControllerMotion — Event controller for motion events
     GtkGesture — Base class for gestures
     GtkGestureSingle — Base class for mouse/single-touch gestures
     GtkGestureDrag — Drag gesture
@@ -279,7 +277,7 @@ Abstract Base Classes
     GtkGestureSwipe — Swipe gesture
     GtkGestureRotate — Rotate gesture
     GtkGestureZoom — Zoom gesture
-
+    GtkGestureStylus — Gesture for stylus input
     GtkPadController — Controller for drawing tablet pads
 
 GTK+ Core Reference
@@ -327,7 +325,7 @@ Deprecated
     gtk.recent-action.lisp           - GtkRecentAction             - GTK+ 3.8.8*
     gtk.activatable.lisp             - GtkActivatable              - GTK+ 3.8.8*
     gtk.image-menu-item.lisp         - GtkImageMenuItem            - GTK+ 3.8.8*
-    gtk.misc.lisp                    - GtkMisc                     - GTK+ 3.6.4*
+    gtk.misc.lisp                    - GtkMisc                     - GTK+ 3.24
     gtk.stock-item.lisp              - Stock Items                 - GTK+ 3.4.3*
     gtk.stock-images.lisp            - Themeable Stock Images      - GTK+ 3.6.4*
     gtk.numerable-icon.lisp          - GtkNumerableIcon            - GTK+ 3.8.8*
