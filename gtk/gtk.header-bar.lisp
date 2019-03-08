@@ -461,7 +461,7 @@
 
   Since 3.10
   @see-class{gtk-header-bar}"
-  (make-instace 'gtk-header-bar))
+  (make-instance 'gtk-header-bar))
 
 #+gtk-3-10
 (export 'gtk-header-bar-new)
