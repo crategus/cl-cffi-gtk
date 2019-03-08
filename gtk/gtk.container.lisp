@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.container.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.16 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2016 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -1063,6 +1060,30 @@
   (child-property :string))
 
 (export 'gtk-container-child-notify)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_container_child_notify_by_pspec ()
+;;;
+;;; void gtk_container_child_notify_by_pspec (GtkContainer *container,
+;;;                                           GtkWidget *child,
+;;;                                           GParamSpec *pspec);
+;;;
+;;; Emits a “child-notify” signal for the child property specified by pspec on
+;;; the child.
+;;;
+;;; This is an analogue of g_object_notify_by_pspec() for child properties.
+;;;
+;;; container :
+;;;     the GtkContainer
+;;;
+;;; child :
+;;;     the child widget
+;;;
+;;; pspec :
+;;;     the GParamSpec of a child property instealled on the class of container
+;;;
+;;; Since: 3.18
+;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_container_forall ()

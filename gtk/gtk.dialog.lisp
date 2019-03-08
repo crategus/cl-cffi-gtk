@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.dialog.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.16 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2016 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -193,14 +190,22 @@
   @end{pre}
   @subheading{GtkDialog as GtkBuildable}
     The @sym{gtk-dialog} implementation of the @class{gtk-buildable} interface
-    exposes the @code{vbox} and @code{action_area} as internal children with
-    the names \"vbox\" and \"action_area\".
+    exposes the @code{vbox} and @code{action-area} as internal children with the
+    names \"vbox\" and \"action_area\".
 
-    @sym{gtk-dialog} supports a custom @code{<action-widgets>} element, which
-    can contain multiple @code{<action-widget>} elements. The
+    @sym{gtk-dialog} supports a custom @code{<action-widgets> element, which
+    can contain multiple @code{<action-widget>} elements. The 
     @code{\"response\"} attribute specifies a numeric response, and the content
-    of the element is the ID of widget which should be a child of the dialogs
-    @code{action_area}.
+    of the element is the ID of widget, which should be a child of the dialogs
+    @code{action-area}. To mark a response as default, set the
+    @code{\"default\"} attribute of the @code{<action-widget>} element to true.
+
+    @sym{gtk-dialog} supports adding action widgets by specifying
+    @code{\"action\"} as the @code{\"type\"} attribute of a @code{<child>}
+    element. The widget will be added either to the action area or the headerbar
+    of the dialog, depending on the @code{\"use-header-bar\"} property. The 
+    response ID has to be associated with the action widget using the
+    @code{<action-widgets>} element.
 
     @b{Example:} A @sym{gtk-dialog} UI definition fragment.
     @begin{pre}
@@ -230,13 +235,13 @@
       @code{\"action-area-border\"} of type @code{:int} (Read) @br{}
       Width of border around the button area at the bottom of the dialog. @br{}
       Allowed values: >= 0 @br{}
-      Default value: 5
+      Default value: 0
 
     @subheading{The \"button-spacing\" style property}
       @code{\"button-spacing\"} of type @code{:int} (Read) @br{}
       Spacing between buttons. @br{}
       Allowed values: >= 0 @br{}
-      Default value: 6
+      Default value: 4
 
     @subheading{The \"content-area-border\" style property}
       @code{\"content-area-border\"} of type @code{:int} (Read) @br{}
@@ -326,7 +331,9 @@
    :type-initializer "gtk_dialog_flags_get_type")
   (:modal 1)
   (:destroy-with-parent 2)
-  (:use-header-bar 3))
+  #+gtk-3-12
+  (:use-header-bar 3)
+  )
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-dialog-flags atdoc:*symbol-name-alias*) "Flags"
@@ -820,23 +827,29 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_dialog_get_header_bar ()
-;;;
-;;; GtkWidget *
-;;; gtk_dialog_get_header_bar (GtkDialog *dialog);
-;;;
-;;; Returns the header bar of dialog . Note that the headerbar is only used by
-;;; the dialog if the “use-header-bar” property is TRUE.
-;;;
-;;; Parameters
-;;;
-;;; dialog
-;;;      a GtkDialog
-;;;
-;;; Returns
-;;;     the header bar.
-;;;
-;;; Since 3.12
 ;;; ----------------------------------------------------------------------------
+
+#+gtk-3-12
+(defcfun ("gtk_dialog_get_header_bar" gtk-dialog-get-header-bar)
+    (g-object gtk-widget)
+ #+cl-cffi-gtk-documentation
+ "@version{2019-3-8}
+  @argument[dialog]{a @class{gtk-dialog} window}
+  @begin{return}
+    The header bar.
+  @end{return}
+  @short{Returns the header bar of @arg{dialog}.} 
+  Note that the header bar is only used by the dialog if the
+  @code{\"use-header-bar\"} property is TRUE.
+
+  Since 3.12
+  @see-class{gtk-dialog}
+  @see-class{gtk-box}
+  @see-function{gtk-dialog-get-action-area}"
+  (dialog (g-object gtk-dialog)))
+
+#+gtk-3-12
+(export 'gtk-dialog-get-header-bar)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_alternative_dialog_button_order ()

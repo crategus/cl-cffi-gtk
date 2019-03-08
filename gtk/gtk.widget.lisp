@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.widget.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.16 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2016 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -446,6 +443,10 @@
    (expand
     gtk-widget-expand
     "expand" "gboolean" t t)
+   #+gtk-3-20
+   (focus-on-click
+    gtk-widget-focus-on-click
+    "focus-on-click" "gboolean" t t)
    (halign
     gtk-widget-halign
     "halign" "GtkAlign" t t)
@@ -920,7 +921,13 @@
       @code{\"separator-height\"} of type @code{:int} (Read) @br{}
       The @code{\"separator-height\"} style property defines the height of
       separators. This property only takes effect if the
-      @code{\"wide-separators\"} style property is @em{true}. @br{}
+      @code{\"wide-separators\"} style property is @em{true}.
+      @begin{ident}
+        @b{Warning:} @code{\"separator-height\"} has been deprecated since 
+        version 3.20 and should not be used in newly-written code. Use the
+        standard min-height CSS property on the separator elements to size
+        separators; the value of this style property is ignored.
+      @end{indent}
       Allowed values: >= 0 @br{}
       Default value: 0 @br{}
       Since 2.10
@@ -929,7 +936,13 @@
       @code{\"separator-width\"} of type @code{:int} (Read) @br{}
       The @code{\"separator-width\"} style property defines the width of
       separators. This property only takes effect if the
-      @code{\"wide-separators\"} style property is @em{true}. @br{}
+      @code{\"wide-separators\"} style property is @em{true}.
+      @begin{indent}
+        @b{Warning:} @code{\"separator-width\"} has been deprecated since
+        version 3.20 and should not be used in newly-written code. Use the
+        standard min-height CSS property on the separator elements to size
+        separators; the value of this style property is ignored.
+      @end{indent}
       Allowed values: >= 0 @br{}
       Default value: 0 @br{}
       Since 2.10
@@ -938,13 +951,13 @@
       @code{ \"text-handle-height\"} of type @code{:int} (Read) @br{}
       Height of text selection handles. @br{}
       Allowed values: >= 1 @br{}
-      Default value: 20
+      Default value: 24
 
     @subheading{The \"text-handle-width\" style property}
       @code{\"text-handle-width\"} of type @code{:int} (Read) @br{}
       Width of text selection handles. @br{}
       Allowed values: >= 1 @br{}
-      Default value: 16
+      Default value: 20
 
     @subheading{The \"visited-link-color\" style property}
       @code{\"visited-link-color\"} of type @class{gdk-color} (Read) @br{}
@@ -2051,6 +2064,7 @@
   @see-slot{gtk-widget-double-buffered}
   @see-slot{gtk-widget-events}
   @see-slot{gtk-widget-expand}
+  @see-slot{gtk-widget-focus-on-click}
   @see-slot{gtk-widget-halign}
   @see-slot{gtk-widget-has-default}
   @see-slot{gtk-widget-has-focus}
@@ -2427,6 +2441,46 @@
     class.
   @end{short}
   See the slot description for @slot[gtk-widget]{expand} for more information.
+  @see-class{gtk-widget}")
+
+;;; --- gtk-widget-focus-on-click ----------------------------------------------
+
+#+(and gtk-3-20 cl-cffi-gtk-documentation)
+(setf (documentation (atdoc:get-slot-from-name "focus-on-click" 'gtk-widget) 't)
+ "The @code{focus-on-click} property of type @code{:boolean} (Read / Write)@br{}
+  Whether the widget should grab focus when it is clicked with the mouse.
+  This property is only relevant for widgets that can take focus.
+  Before 3.20, several widgets (@class{gtk-button}, 
+  @class{gtk-file-chosser-button}, @class{gtk-combo-box}) implemented this
+  property individually.@br{}
+  Default value: @code{t}
+  Since: 3.20")
+
+#+(and gtk-3-20 cl-cffi-gtk-documentation)
+(setf (gethash 'gtk-widget-focus-on-click atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-widget-focus-on-click 'function)
+ "@version{2019-3-5}
+  @argument[object]{a @class{gtk-widget} object}
+  @syntax[]{(gtk-widget-expand object) => focus-on-click}
+  @syntax[]{(setf (gtk-widget-expand object) focus-on-click)}
+  @begin{short}
+    Accessor of the slot @slot[gtk-widget]{focus-on-click} of the
+    @class{gtk-widget} class.
+  @end{short}
+
+  The generic function @sym{(setf gtk-widget-events)} sets the event mask for
+  @arg{widget}.
+
+  The generic function @sym{gtk-widget-focus-on-click} returns @code{t}
+  if the widget should grab focus when it is clicked with the mouse.
+
+  The generic function @sym{(setf gtk-widget-focus-on-click)} sets whether the
+  widget should grab focus when it is clicked with the mouse. Making mouse
+  clicks not grab focus is useful in places like toolbars where you don’t want
+  the keyboard focus removed from the main area of the application.
+
+  Since 3.20
   @see-class{gtk-widget}")
 
 ;;; --- gtk-widget-halign ------------------------------------------------------
@@ -3981,6 +4035,25 @@
   (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-queue-resize-no-redraw)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_widget_queue_allocate ()
+;;;
+;;; void gtk_widget_queue_allocate (GtkWidget *widget)
+;;;
+;;; This function is only for use in widget implementations.
+;;;
+;;; Flags the widget for a rerun of the GtkWidgetClass::size_allocate function.
+;;; Use this function instead of gtk_widget_queue_resize() when the widget's 
+;;; size request didn't change but it wants to reposition its contents.
+;;;
+;;; An example user of this function is gtk_widget_set_halign().
+;;;
+;;; widget :
+;;;     a GtkWidget
+;;;
+;;; Since: 3.20
+;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_get_frame_clock ()
@@ -5930,6 +6003,75 @@
   (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-get-pango-context)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_widget_set_font_options ()
+;;;
+;;; void gtk_widget_set_font_options (GtkWidget *widget,
+;;;                                   const cairo_font_options_t *options);
+;;;
+;;; Sets the cairo_font_options_t used for Pango rendering in this widget. When
+;;; not set, the default font options for the GdkScreen will be used.
+;;;
+;;; widget :
+;;;     a GtkWidget
+;;;
+;;; options
+;;;     a cairo_font_options_t, or NULL to unset any previously set default font
+;;;     options.
+;;;
+;;; Since: 3.18
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_widget_get_font_options ()
+;;;
+;;; const cairo_font_options_t * gtk_widget_get_font_options (GtkWidget *widget)
+;;;
+;;; Returns the cairo_font_options_t used for Pango rendering. When not set, the
+;;; defaults font options for the GdkScreen will be used.
+;;;
+;;; widget :
+;;;     a GtkWidget
+;;; 
+;;; Returns
+;;;     the cairo_font_options_t or NULL if not set.
+;;;
+;;; Since: 3.18
+;;; ----------------------------------------------------------------------------
+ 
+;;; ----------------------------------------------------------------------------
+;;; gtk_widget_set_font_map ()
+;;;
+;;; void gtk_widget_set_font_map (GtkWidget *widget, PangoFontMap *font_map);
+;;;
+;;; Sets the font map to use for Pango rendering. When not set, the widget will
+;;; inherit the font map from its parent.
+;;;
+;;; widget :
+;;;     a GtkWidget
+;;; 
+;;; font_map :
+;;;     a PangoFontMap, or NULL to unset any previously set font map.
+;;;
+;;; Since: 3.18
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_widget_get_font_map ()
+;;;
+;;; PangoFontMap * gtk_widget_get_font_map (GtkWidget *widget);
+;;;
+;;; Gets the font map that has been set with gtk_widget_set_font_map().
+;;;
+;;; widget :
+;;;     a GtkWidget
+;;; 
+;;; Returns :
+;;;     A PangoFontMap, or NULL.
+;;;
+;;; Since: 3.18
+;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_create_pango_layout ()
@@ -8251,6 +8393,43 @@
 ;;;     a GtkWidget
 ;;;
 ;;; Since 3.0
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_widget_class_get_css_name ()
+;;;
+;;; const char * gtk_widget_class_get_css_name (GtkWidgetClass *widget_class);
+;;;
+;;; Gets the name used by this class for matching in CSS code. See
+;;;  gtk_widget_class_set_css_name() for details.
+;;;
+;;; widget_class :
+;;;     class to set the name on
+;;; 
+;;; Returns :
+;;;     the CSS name of the given class
+;;;
+;;; Since: 3.20
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_widget_class_set_css_name ()
+;;;
+;;; void gtk_widget_class_set_css_name (GtkWidgetClass *widget_class,
+;;;                                     const char *name);
+;;;
+;;; Sets the name to be used for CSS matching of widgets.
+;;;
+;;; If this function is not called for a given class, the name of the parent
+;;; class is used.
+;;;
+;;; widget_class :
+;;;     class to set the name on
+;;;
+;;; name :
+;;;     name to use
+;;;
+;;; Since: 3.20
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------

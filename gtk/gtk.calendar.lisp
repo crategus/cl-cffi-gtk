@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.calendar.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -270,6 +267,8 @@
 ;;;
 ;;; ----------------------------------------------------------------------------
 
+;;; --- gtk-calendar-day -------------------------------------------------------
+
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "day" 'gtk-calendar) 't)
  "The @code{\"day\"} property of type @code{:int} (Read / Write) @br{}
@@ -278,6 +277,18 @@
   day. @br{}
   Allowed values: [0, 31] @br{}
   Default value: 0")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-calendar-day atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-calendar-day 'function)
+ "@version{2013-8-16}
+  Accessor of the slot @code{\"day\"} of the @class{gtk-calendar} class.
+  @see-class{gtk-calendar}
+  @see-function{gtk-calendar-get-date}
+  @see-function{gtk-calendar-select-day}")
+
+;;; --- gtk-calendar-detail-height-rows ----------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "detail-height-rows"
@@ -291,6 +302,19 @@
   Since 2.14")
 
 #+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-calendar-detail-height-rows atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-calendar-detail-height-rows 'function)
+ "@version{2013-8-16}
+  Accessor of the slot @code{\"detail-height-rows\"} of the @class{gtk-calendar}
+  class.
+  @see-class{gtk-calendar}
+  @see-function{gtk-calendar-get-detail-height-rows}
+  @see-function{gtk-calendar-set-detail-height-rows}")
+
+;;; --- gtk-calendar-detail-width-chars ----------------------------------------
+
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "detail-width-chars"
                                                'gtk-calendar) 't)
  "The @code{\"detail-width-chars\"} property of type @code{:int}
@@ -302,12 +326,37 @@
   Since 2.14")
 
 #+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-calendar-detail-width-chars atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-calendar-detail-width-chars 'function)
+ "@version{2013-8-16}
+  Accessor of the slot @code{\"detail-width-chars\"} of the @class{gtk-calendar}
+  class.
+  @see-class{gtk-calendar}
+  @see-function{gtk-calendar-get-detail-width-chars}
+  @see-function{gtk-calendar-set-detail-width-chars}")
+
+;;; --- gtk-calendar-month -----------------------------------------------------
+
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "month" 'gtk-calendar) 't)
  "The @code{\"month\"} property of type @code{:int} (Read / Write) @br{}
   The selected month as a number between 0 and 11. This property gets
   initially set to the current month. @br{}
   Allowed values: [0, 11] @br{}
   Default value: 0")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-calendar-month atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-calendar-month 'function)
+ "@version{2013-8-16}
+  Accessor of the slot @code{\"month\"} of the @class{gtk-calendar} class.
+  @see-class{gtk-calendar}
+  @see-function{gtk-calendar-get-date}
+  @see-function{gtk-calendar-select-month}")
+
+;;; --- gtk-calendar-no-month-change -------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "no-month-change"
@@ -319,6 +368,18 @@
   Since 2.4")
 
 #+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-calendar-no-month-change atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-calendar-no-month-change 'function)
+ "@version{2013-8-16}
+  Accessor of the slot @code{\"no-month-change\"} of the @class{gtk-calendar}
+  class.
+  @see-class{gtk-calendar}
+  @see-symbol{gtk-calendar-display-options}")
+
+;;; --- gtk-calendar-show-day-names --------------------------------------------
+
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "show-day-names"
                                                'gtk-calendar) 't)
  "The @code{\"show-day-names\"} property of type @code{:boolean}
@@ -326,6 +387,18 @@
   Determines whether day names are displayed. @br{}
   Default value: @em{true} @br{}
   Since 2.4")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-calendar-show-day-names atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-calendar-show-day-names 'function)
+ "@version{2013-8-16}
+  Accessor of the slot @code{\"show-day-names\"} of the @class{gtk-calendar}
+  class.
+  @see-class{gtk-calendar}
+  @see-symbol{gtk-calendar-display-options}")
+
+;;; --- gtk-calendar-show-details ----------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "show-details"
@@ -339,99 +412,6 @@
   Since 2.14")
 
 #+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "show-heading"
-                                               'gtk-calendar) 't)
- "The @code{\"show-heading\"} property of type @code{:boolean}
-  (Read / Write) @br{}
-  Determines whether a heading is displayed. @br{}
-  Default value: @em{true} @br{}
-  Since 2.4")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "show-week-numbers"
-                                               'gtk-calendar) 't)
- "The @code{\"show-week-numbers\"} property of type @code{:boolean}
-  (Read / Write) @br{}
-  Determines whether week numbers are displayed. @br{}
-  Default value: @code{nil} @br{}
-  Since 2.4")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "year" 'gtk-calendar) 't)
- "The @code{\"year\"} property of type @code{gint} (Read / Write) @br{}
-  The selected year. This property gets initially set to the current year. @br{}
-  Allowed values: [0, 4194303] @br{}
-  Default value: 0")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-calendar-day atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-calendar-day 'function)
- "@version{2013-8-16}
-  Accessor of the slot @code{\"day\"} of the @class{gtk-calendar} class.
-  @see-class{gtk-calendar}
-  @see-function{gtk-calendar-get-date}
-  @see-function{gtk-calendar-select-day}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-calendar-detail-height-rows atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-calendar-detail-height-rows 'function)
- "@version{2013-8-16}
-  Accessor of the slot @code{\"detail-height-rows\"} of the @class{gtk-calendar}
-  class.
-  @see-class{gtk-calendar}
-  @see-function{gtk-calendar-get-detail-height-rows}
-  @see-function{gtk-calendar-set-detail-height-rows}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-calendar-detail-width-chars atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-calendar-detail-width-chars 'function)
- "@version{2013-8-16}
-  Accessor of the slot @code{\"detail-width-chars\"} of the @class{gtk-calendar}
-  class.
-  @see-class{gtk-calendar}
-  @see-function{gtk-calendar-get-detail-width-chars}
-  @see-function{gtk-calendar-set-detail-width-chars}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-calendar-month atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-calendar-month 'function)
- "@version{2013-8-16}
-  Accessor of the slot @code{\"month\"} of the @class{gtk-calendar} class.
-  @see-class{gtk-calendar}
-  @see-function{gtk-calendar-get-date}
-  @see-function{gtk-calendar-select-month}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-calendar-no-month-change atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-calendar-no-month-change 'function)
- "@version{2013-8-16}
-  Accessor of the slot @code{\"no-month-change\"} of the @class{gtk-calendar}
-  class.
-  @see-class{gtk-calendar}
-  @see-symbol{gtk-calendar-display-options}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-calendar-show-day-names atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-calendar-show-day-names 'function)
- "@version{2013-8-16}
-  Accessor of the slot @code{\"show-day-names\"} of the @class{gtk-calendar}
-  class.
-  @see-class{gtk-calendar}
-  @see-symbol{gtk-calendar-display-options}")
-
-#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-calendar-show-details atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-calendar-show-details 'function)
@@ -440,6 +420,17 @@
   class.
   @see-class{gtk-calendar}
   @see-symbol{gtk-calendar-display-options}")
+
+;;; --- gtk-calendar-show-heading ----------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "show-heading"
+                                               'gtk-calendar) 't)
+ "The @code{\"show-heading\"} property of type @code{:boolean}
+  (Read / Write) @br{}
+  Determines whether a heading is displayed. @br{}
+  Default value: @em{true} @br{}
+  Since 2.4")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-calendar-show-heading atdoc:*function-name-alias*)
@@ -451,6 +442,17 @@
   @see-class{gtk-calendar}
   @see-symbol{gtk-calendar-display-options}")
 
+;;; --- gtk-calendar-show-week-numbers -----------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "show-week-numbers"
+                                               'gtk-calendar) 't)
+ "The @code{\"show-week-numbers\"} property of type @code{:boolean}
+  (Read / Write) @br{}
+  Determines whether week numbers are displayed. @br{}
+  Default value: @code{nil} @br{}
+  Since 2.4")
+
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-calendar-show-week-numbers atdoc:*function-name-alias*)
       "Accessor"
@@ -460,6 +462,15 @@
   class.
   @see-class{gtk-calendar}
   @see-symbol{gtk-calendar-display-options}")
+
+;;; --- gtk-calendar-year ------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "year" 'gtk-calendar) 't)
+ "The @code{\"year\"} property of type @code{gint} (Read / Write) @br{}
+  The selected year. This property gets initially set to the current year. @br{}
+  Allowed values: [0, 4194303] @br{}
+  Default value: 0")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-calendar-year atdoc:*function-name-alias*)

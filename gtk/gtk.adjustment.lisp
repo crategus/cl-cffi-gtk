@@ -1,15 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.adjustment.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -41,8 +39,8 @@
 ;;;     gtk_adjustment_get_value
 ;;;     gtk_adjustment_set_value
 ;;;     gtk_adjustment_clamp_page
-;;;     gtk_adjustment_changed
-;;;     gtk_adjustment_value_changed
+;;;     gtk_adjustment_changed                   * deprecated *
+;;;     gtk_adjustment_value_changed             * deprecated *
 ;;;     gtk_adjustment_configure
 ;;;     gtk_adjustment_get_lower
 ;;;     gtk_adjustment_get_page_increment
@@ -91,23 +89,17 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-adjustment 'type)
- "@version{2013-5-23}
+ "@version{2019-3-4}
   @begin{short}
     The @sym{gtk-adjustment} object represents a value which has an associated
     lower and upper bound, together with step and page increments, and a page
     size. It is used within several GTK+ widgets, including
     @class{gtk-spin-button}, @class{gtk-viewport}, and @class{gtk-range} (which
-    is a base class for @class{gtk-hscrollbar}, @class{gtk-vscrollbar},
-    @class{gtk-hscale}, and @class{gtk-vscale}).
+    is a base class for @class{gtk-scrollbar}, and @class{gtk-scale}).
   @end{short}
 
   The @sym{gtk-adjustment} object does not update the value itself. Instead it
   is left up to the owner of the @sym{gtk-adjustment} to control the value.
-
-  The owner of the @sym{gtk-adjustment} typically calls the the functions
-  @fun{gtk-adjustment-value-changed} and @sym{gtk-adjustment-changed} functions
-  after changing the value and its bounds. This results in the emission of the
-  \"value_changed\" or \"changed\" signal respectively.
   @begin[Signal Details]{dictionary}
     @subheading{The \"changed\" signal}
       @begin{pre}
@@ -199,7 +191,7 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Accessors of Properties
+;;; Accessor Details
 ;;;
 ;;; ----------------------------------------------------------------------------
 
@@ -373,11 +365,17 @@
 
 (defcfun ("gtk_adjustment_changed" gtk-adjustment-changed) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-6-4}
+ "@version{2019-3-4}
   @argument[adjustment]{a @class{gtk-adjustment} object}
   Emits a \"changed\" signal from the @class{gtk-adjustment}. This is
   typically called by the owner of the @class{gtk-adjustment} after it has
-  changed any of the @class{gtk-adjustment} fields other than the value."
+  changed any of the @class{gtk-adjustment} fields other than the value.
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-adjustment-changed} has been deprecated since version 
+    3.18 and should not be used in newly-written code. GTK+ emits the
+    \“changed\” signal itself whenever any of the properties (other than value)
+    change.
+  @end{dictionary}"
   (adjustment (g-object gtk-adjustment)))
 
 (export 'gtk-adjustment-changed)
@@ -388,13 +386,19 @@
 
 (defcfun ("gtk_adjustment_value_changed" gtk-adjustment-value-changed) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-5-23}
+ "@version{2019-3-4}
   @argument[adjustment]{a @class{gtk-adjustment} object}
   @begin{short}
     Emits a \"value_changed\" signal from the @class{gtk-adjustment} object.
   @end{short}
   This is typically called by the owner of the @class{gtk-adjustment} object
-  after it has changed the @class{gtk-adjustment} value field."
+  after it has changed the @class{gtk-adjustment} value field.
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-adjustment-value-changed} has been deprecated since
+    version 3.18 and should not be used in newly-written code. GTK+ emits the
+    \“value-changed\” signal itself whenever any of the properties (other than
+    value) change.
+  @end{dictionary}"
   (adjustment (g-object gtk-adjustment)))
 
 (export 'gtk-adjustment-value-changed)
