@@ -82,7 +82,8 @@
 
   ;; Get the class properties.
   (is (equal '("app-paintable" "can-default" "can-focus" "composite-child"
-               "double-buffered" "events" "expand" "halign" "has-default"
+               "double-buffered" "events" "expand" "focus-on-click"
+               "halign" "has-default"
                "has-focus" "has-tooltip" "height-request" "hexpand"
                "hexpand-set" "is-focus" "margin" "margin-bottom" "margin-end"
                "margin-left" "margin-right" "margin-start" "margin-top" "name"
@@ -124,6 +125,8 @@
                          "double-buffered" "gboolean" T T)
                         (EVENTS GTK-WIDGET-EVENTS "events" "GdkEventMask" T T)
                         (EXPAND GTK-WIDGET-EXPAND "expand" "gboolean" T T)
+                        (FOCUS-ON-CLICK GTK-WIDGET-FOCUS-ON-CLICK 
+                         "focus-on-click" "gboolean" T T)
                         (HALIGN GTK-WIDGET-HALIGN "halign" "GtkAlign" T T)
                         (HAS-DEFAULT GTK-WIDGET-HAS-DEFAULT "has-default"
                          "gboolean" T T)
@@ -297,6 +300,22 @@
     (is-true (gtk-widget-hexpand-set widget))
     (is-true (gtk-widget-vexpand widget))
     (is-true (gtk-widget-vexpand-set widget))))
+
+;;; --- gtk-widget-focus-on-click ----------------------------------------------
+
+(test gtk-widget-focus-on-click.1
+  (let ((widget (make-instance 'gtk-button)))
+    ;; The default value is true.
+    (is-true (gtk-widget-focus-on-click widget))
+    (is-false (setf (gtk-widget-focus-on-click widget) nil))
+    (is-false (gtk-widget-focus-on-click widget))))
+
+(test gtk-widget-focus-on-click.2
+  (let ((widget (make-instance 'gtk-button :focus-on-click nil)))
+    ;; The value is set to false.
+    (is-false (gtk-widget-focus-on-click widget))
+    (is-true (setf (gtk-widget-focus-on-click widget) t))
+    (is-true (gtk-widget-focus-on-click widget))))
 
 ;;; --- gtk-widget-halign ------------------------------------------------------
 
@@ -594,10 +613,10 @@ scale-factor
     (is (= 16 (gtk-widget-style-get-property widget "scroll-arrow-hlength")))
     (is (= 16 (gtk-widget-style-get-property widget "scroll-arrow-vlength")))
     (is-false (gtk-widget-style-get-property widget "secondary-cursor-color"))
-    (is (=  2 (gtk-widget-style-get-property widget "separator-height")))
-    (is (=  2 (gtk-widget-style-get-property widget "separator-width")))
-    (is (= 20 (gtk-widget-style-get-property widget "text-handle-height")))
-    (is (= 16 (gtk-widget-style-get-property widget "text-handle-width")))
+    (is (=  0 (gtk-widget-style-get-property widget "separator-height")))
+    (is (=  0 (gtk-widget-style-get-property widget "separator-width")))
+    (is (= 24 (gtk-widget-style-get-property widget "text-handle-height")))
+    (is (= 20 (gtk-widget-style-get-property widget "text-handle-width")))
     (is-false  (gtk-widget-style-get-property widget "wide-separators"))
     (is-false (gtk-widget-style-get-property widget "window-dragging"))))
 
