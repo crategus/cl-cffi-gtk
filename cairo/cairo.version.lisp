@@ -210,6 +210,7 @@
 (glib::push-library-version-features cairo
   (truncate (/ (cairo-version) 10000))
   (- (truncate (/ (cairo-version) 100)) (* 100 (truncate (/ (cairo-version) 10000))))
+  1 15
   1 12
   1 10)
 

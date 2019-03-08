@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; glib.version.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GLib 2.36.3 Reference
 ;;; Manual and modified to document the Lisp binding to the GLib library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2014 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -333,6 +330,17 @@
 
 (push-library-version-features glib
   +glib-major-version+ +glib-minor-version+
+  2 58
+  2 56
+  2 54
+  2 52
+  2 50
+  2 48
+  2 46
+  2 44
+  2 42
+  2 40
+  2 38
   2 36
   2 34
   2 32

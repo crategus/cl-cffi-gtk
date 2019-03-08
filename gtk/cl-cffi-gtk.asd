@@ -41,7 +41,7 @@
 (defsystem :cl-cffi-gtk
 ;  :default-component-class gtk-source-file
   :name :cl-cffi-gtk
-  :version "3.8.8"                     ; Version of the library
+  :version "3.24.4"                     ; Version of the library
   :author "Dieter Kaiser"
   :license "LLGPL"
   :serial t
