@@ -411,6 +411,14 @@
     @end{subsection}
     @begin[GtkRevealer]{subsection}
       Hide and show with animation.
+
+      @about-symbol{gtk-revealer-transition-type}
+      @about-class{gtk-revealer}
+      @about-generic{gtk-revealer-child-revealed}
+      @about-generic{gtk-revealer-reveal-child}
+      @about-generic{gtk-revealer-transition-duration}
+      @about-generic{gtk-revealer-transition-type}
+      @about-function{gtk-revealer-new}
     @end{subsection}
     @begin[GtkListBox]{subsection}
       A list container.
@@ -1158,7 +1166,7 @@
       @about-function{gtk-accelerator-parse}
       @about-function{gtk-accelerator-name}
       @about-function{gtk-accelerator-get-label}
-      @about-function{gtk-accelerator-parse-with-keycode}
+      @about-function{gtk-accelerator-parse-with-keycode}    
       @about-function{gtk-accelerator-name-with-keycode}
       @about-function{gtk-accelerator-get-label-with-keycode}
       @about-function{gtk-accelerator-set-default-mod-mask}

@@ -99,6 +99,7 @@
    (:file "gtk.box")                   ; Container box
    (:file "gtk.table")                 ; Pack widgets in regular patterns
    (:file "gtk.grid")                  ; Pack widgets in a rows and columns
+   (:file "gtk.revealer")              ; Hide and show with animation
    (:file "gtk.layout")                ; Infinite scrollable
    (:file "gtk.fixed")                 ; Widgets at fixed coordinates
    (:file "gtk.notebook")              ; Tabbed notebook container
