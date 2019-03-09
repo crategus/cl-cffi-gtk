@@ -2,11 +2,11 @@
 ;;; gtk.grid.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.16 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012 - 2016 Dieter Kaiser
+;;; Copyright (C) 2012 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -28,7 +28,7 @@
 ;;;
 ;;; GtkGrid
 ;;;
-;;; Pack widgets in a rows and columns
+;;;     Pack widgets in a rows and columns
 ;;;
 ;;; Synopsis
 ;;;
@@ -147,7 +147,7 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Property Details
+;;; Property and Accessor Details
 ;;;
 ;;; ----------------------------------------------------------------------------
 
@@ -528,6 +528,46 @@
   (position :int))
 
 (export 'gtk-grid-insert-column)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_grid_remove_row ()
+;;;
+;;; void gtk_grid_remove_row (GtkGrid *grid, gint position);
+;;;
+;;; Removes a row from the grid.
+;;;
+;;; Children that are placed in this row are removed, spanning children that
+;;; overlap this row have their height reduced by one, and children below the
+;;; row are moved up.
+;;;
+;;; grid :
+;;;     a GtkGrid
+;;; 
+;;; position :
+;;;     the position of the row to remove
+;;;
+;;; Since: 3.10
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_grid_remove_column ()
+;;;
+;;; void gtk_grid_remove_column (GtkGrid *grid, gint position);
+;;;
+;;; Removes a column from the grid.
+;;;
+;;; Children that are placed in this column are removed, spanning children that
+;;; overlap this column have their width reduced by one, and children after the
+;;; column are moved to the left.
+;;;
+;;; grid :
+;;;     a GtkGrid
+;;;
+;;; position :
+;;;     the position of the column to remove
+;;; 
+;;; Since: 3.10
+;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_grid_insert_next_to ()

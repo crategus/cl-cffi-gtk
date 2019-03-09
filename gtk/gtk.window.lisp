@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.window.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.10 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2014 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,7 +29,7 @@
 ;;;
 ;;; GtkWindow
 ;;;
-;;; Toplevel which can contain other widgets
+;;;     Toplevel which can contain other widgets
 ;;;
 ;;; Synopsis
 ;;;
@@ -153,6 +150,8 @@
 ;;;     gtk_window_set_application
 ;;;     gtk_window_set_has_user_ref_count
 ;;;     gtk_window_set_titlebar
+;;;     gtk_window_get_titlebar
+;;;     gtk_window_set_interactive_debugging
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -221,6 +220,10 @@
    (is-active
     gtk-window-is-active
     "is-active" "gboolean" t nil)
+   #+gtk-3-12
+   (is-maximized
+    gtk-window-is-maximized
+    "is-maximized" "gboolean" t nil)
    (mnemonics-visible
     gtk-window-mnemonics-visible
     "mnemonics-visible" "gboolean" t t)
@@ -283,11 +286,6 @@
     Windows normally have decorations that are under the control of the
     windowing system and allow the user to manipulate the window, e. g. to
     resize it, move it, or close it.
-
-    GTK+ also allows windows to have a resize grip, a small area in the lower
-    right or left corner, which can be clicked to reszie the window. To control
-    whether a window has a resize grip, use the function
-    @fun{gtk-window-set-has-resize-grip}.
   @end{short}
 
   @subheading{GtkWindow as GtkBuildable}
@@ -823,6 +821,9 @@
   only shown if the window is actually resizable and not maximized. Use the
   @code{\"resize-grip-visible\"} property to find out if the resize grip is
   currently shown. @br{}
+  @b{Warning:} @code{\"has-resize-grip\"} has been deprecated since version 3.14
+  and should not be used in newly-written code.
+  Resize grips have been removed. @br{}
   Default value: @em{true} @br{}
   Since 3.0")
 
@@ -839,7 +840,7 @@
     Accessor of the slot @slot[gtk-window]{has-resize-grip} of the
     @class{gtk-window} class.
   @end{short}
-
+e
   The generic function @sym{gtk-window-has-resize-grip} determines whether the
   window may have a resize grip.
 
@@ -849,6 +850,11 @@
   Note that the resize grip is only shown if the window is actually resizable
   and not maximized. Use the function @fun{gtk-window-resize-grip-is-visible}
   to find out if the resize grip is currently shown.
+  @begin[Warning]{dictionary}
+    The generic function @sym{gtk-window-has-resize-grip} has been deprecated
+    since version 3.14 and should not be used in newly-written code.
+    Resize grips have been removed.
+  @end{dictionary}
 
   Since 3.0
   @see-class{gtk-window}
@@ -1039,6 +1045,35 @@
   @see-class{gtk-plug}
   @see-function{gtk-window-has-toplevel-focus}")
 
+;;; --- gtk-window-is-maximized ------------------------------------------------
+
+#+(and gtk-3-12 cl-cffi-gtk-documentation)
+(setf (documentation (atdoc:get-slot-from-name "is-maximized" 'gtk-window) 't)
+ "The @code{\"is-maximized\"} property of type @code{:boolean} (Read) @br{}
+  Whether the window is maximized. @br{}
+  Default value: @code{nil}")
+
+#+(and gtk-3-12 cl-cffi-gtk-documentation)
+(setf (gethash 'gtk-window-is-maximized atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-window-is-maximized 'function)
+ "@version{2019-3-9}
+  @argument[object]{a @class{gtk-window} widget}
+  @return{@em{True} if the window has a maximized state.}
+  @begin{short}
+    Retrieves the current maximized state of @arg{window}.
+  @end{short}
+  Note that since maximization is ultimately handled by the window manager and
+  happens asynchronously to an application request, you shouldn't assume the
+  return value of this function changing immediately (or at all), as an effect
+  of calling the functions @fun{gtk-window-maximize} or 
+  @fun{gtk-window-unmaximize}.
+
+  Since 3.12
+  @see-class{gtk-window}
+  @see-function{gtk-window-maximize}
+  @see-function{gtk-window-unmaximize}")
+
 ;;; --- gtk-window-mnemonics-visible -------------------------------------------
 
 #+cl-cffi-gtk-documentation
@@ -1154,6 +1189,7 @@
     version 3.8 and should not be used in newly-written code. Use the generic
     function @fun{gtk-widget-opacity} instead.
   @end{dictionary}
+
   Since 2.12
   @see-class{gtk-window}
   @see-function{gtk-widget-is-composited}")
@@ -1500,10 +1536,10 @@
 (setf (gethash 'gtk-window-type-hint atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-window-type-hint 'function)
- "@version{2014-2-10}
+ "@version{2019-3-8}
   @argument[object]{a @class{gtk-window} widget}
   @argument[hint]{the window type}
-  @syntax[]{(gtk-window-type-hint) => hint}
+  @syntax[]{(gtk-window-type-hint object) => hint}
   @syntax[]{(setf (gtk-window-type-hint object) hint)}
   @begin{short}
     Accessor of the slot @slot[gtk-window]{type-hint} of the @class{gtk-window}
@@ -1638,6 +1674,9 @@
 ;;; application, for the benefit of the session manager. Setting the role allows
 ;;; the window manager to restore window positions when loading a saved session.
 ;;;
+;;; gtk_window_set_wmclass has been deprecated since version 3.22 and should not
+;;; be used in newly-written code.
+;;;
 ;;; window :
 ;;;     a GtkWindow
 ;;;
@@ -1747,6 +1786,12 @@
     @arg{height} are interpreted in terms of the base size and increment set
     with the function @fun{gtk-window-set-geometry-hints}.
   @end{short}
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-window-set-default-geometry} has been deprecated since
+    version 3.20 and should not be used in newly-written code.
+    This function does nothing. If you want to set a default size, use
+    the function @fun{gtk-window-set-default-size} instead.
+  @end{dictionary}
 
   Since 3.0
   @see-class{gtk-window}
@@ -1767,7 +1812,8 @@
  "@version{2013-3-29}
   @argument[window]{a @class{gtk-window} widget}
   @argument[geometry-widget]{widget the geometry hints will be applied to or
-    @code{nil}}
+    @code{nil}. Since 3.20 this argument is ignored and GTK behaves as if 
+    @code{nil} was set.}
   @argument[geometry]{structure containing geometry information or @code{nil}}
   @argument[geometry-mask]{mask indicating which structure fields should be
     paid attention to}
@@ -2090,10 +2136,9 @@
 ;;;
 ;;; This function can be used with close buttons in custom titlebars.
 ;;;
-;;; Parameters
-;;;
-;;; window
+;;; window :
 ;;;     a GtkWindow
+;;;
 ;;; Since 3.10
 ;;; ----------------------------------------------------------------------------
 
@@ -2211,7 +2256,8 @@
   the @arg{window} will be maximized when it appears onscreen initially.
 
   You can track maximization via the \"window-state-event\" signal on
-  @class{gtk-widget}."
+  @class{gtk-widget}, or by listening to notifications on the 
+  @slot[gtk-window]{is-maximized} property."
   (window (g-object gtk-window)))
 
 (export 'gtk-window-maximize)
@@ -2262,6 +2308,31 @@
   (window (g-object gtk-window)))
 
 (export 'gtk-window-fullscreen)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_window_fullscreen_on_monitor ()
+;;;
+;;; void gtk_window_fullscreen_on_monitor (GtkWindow *window,
+;;;                                        GdkScreen *screen,
+;;;                                        gint monitor);
+;;;
+;;; Asks to place window in the fullscreen state. Note that you shouldn't assume
+;;; the window is definitely full screen afterward.
+;;;
+;;; You can track the fullscreen state via the "window-state-event" signal on
+;;; GtkWidget.
+;;;
+;;; window :
+;;;     a GtkWindow
+;;;
+;;; screen :
+;;;     a GdkScreen to draw to
+;;;
+;;; monitor :
+;;;     which monitor to go fullscreen on
+;;;
+;;;  Since: 3.18
+;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_unfullscreen ()
@@ -2877,7 +2948,12 @@
 
    return 0;
  @}
-  @end{pre}"
+  @end{pre}
+ @begin[Warning]{dictionary}
+   The function @sym{gtk-window-parse-geometry} has been deprecated since
+   version 3.20 and should not be used in newly-written code.
+   Geometry handling in GTK is deprecated.
+ @end{dictionary}"
   (window (g-object gtk-window))
   (geometry :string))
 
@@ -2957,6 +3033,12 @@
     interpreted in terms of the base size and increment set with
     the function @fun{gtk-window-set-geometry-hints}.
   @end{short}
+  @begin[Warning]{dictionary}
+    The function @fun{gtk-window-resize-to-geometry} has been deprecated since
+    version 3.20 and should not be used in newly-written code.
+    This function does nothing. Use the function @fun{gtk-window-resize} and
+    compute the geometry yourself.
+  @end{dictionary}
 
   Since 3.0
   @see-class{gtk-window}
@@ -3171,12 +3253,17 @@
 
 (defun gtk-window-resize-grip-is-visible (window)
  #+cl-cffi-gtk-documentation
- "@version{2013-7-30}
+ "@version{2019-3-9}
   @argument[window]{a @class{gtk-window} widget}
   @return{@em{True} if a resize grip exists and is visible.}
   @begin{short}
     Determines whether a resize grip is visible for the specified @arg{window}.
   @end{short}
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-window-resize-grip-is-visible} has been deprecated
+    since version 3.14 and should not be used in newly-written code.
+    Resize grips have been removed.
+  @end{dictionary}
 
   Since 3.0
   @see-class{gtk-window}
@@ -3207,6 +3294,11 @@
     If a @arg{window} has a resize grip, this function will retrieve the grip
     position, width and height into the specified @arg{rect}.
   @end{short}
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-window-get-resize-grip-area} has been deprecated since
+    version 3.14 and should not be used in newly-written code.
+    Resize grips have been removed.
+  @end{dictionary}
 
   Since 3.0
   @see-class{gtk-window}
@@ -3260,6 +3352,37 @@
 ;;;     the widget to use as titlebar
 ;;;
 ;;; Since 3.10
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_window_get_titlebar ()
+;;;
+;;; GtkWidget * gtk_window_get_titlebar (GtkWindow *window);
+;;;
+;;; Returns the custom titlebar that has been set with
+;;; gtk_window_set_titlebar().
+;;;
+;;; window :
+;;;     a GtkWindow
+;;;
+;;; Returns :
+;;;     the custom titlebar, or NULL.
+;;;
+;;; Since: 3.16
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_window_set_interactive_debugging ()
+;;;
+;;; void gtk_window_set_interactive_debugging (gboolean enable);
+;;;
+;;; Opens or closes the interactive debugger, which offers access to the widget
+;;; hierarchy of the application and to useful debugging tools.
+;;;
+;;; enable :
+;;;     TRUE to enable interactive debugging
+;;;
+;;; Since: 3.14
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- End of file gtk.window.lisp --------------------------------------------

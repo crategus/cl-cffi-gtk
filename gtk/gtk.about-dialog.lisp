@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.about-dialog.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.10 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2014 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,7 +29,7 @@
 ;;;
 ;;; GtkAboutDialog
 ;;;
-;;; Display information about an application
+;;;     Display information about an application
 ;;;
 ;;; Synopsis
 ;;;
@@ -736,7 +733,13 @@
   (:lgpl-3-0 5)
   (:bsd 6)
   (:mit-x11 7)
-  (:artistic 8))
+  (:artistic 8)
+  (:gpl-2-0-only 9)
+  (:gpl-3-0-only 10)
+  (:lgpl-2-1-only 11)
+  (:lgpl-3-0-only 12)
+  (:agpl-3-0 13)
+  (:agpl-3-0-only 14))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-license atdoc:*symbol-name-alias*) "Enum"
@@ -758,7 +761,13 @@
   (:lgpl-3-0 5)
   (:bsd 6)
   (:mit-x11 7)
-  (:artistic 8))
+  (:artistic 8)
+  (:gpl-2-0-only 9)
+  (:gpl-3-0-only 10)
+  (:lgpl-2-1-only 11)
+  (:lgpl-3-0-only 12)
+  (:agpl-3-0 13)
+  (:agpl-3-0-only 14))
   @end{pre}
   @begin[code]{table}
     @entry[:unknown]{No license specified.}
@@ -770,6 +779,18 @@
     @entry[:bsd]{The BSD standard license.}
     @entry[MIT_X11]{The MIT/X11 standard license.}
     @entry[:artistic]{The Artistic License, version 2.0.}
+    @entry[:gpl-2-0-only]{The GNU General Public License, version 2.0 only.
+      Since 3.12.}
+    @entry[:gpl-3-0-only]{The GNU General Public License, version 3.0 only.
+      Since 3.12.}
+    @entry[:lgpl-2-1-only]{The GNU Lesser General Public License, version 2.1
+      only. Since 3.12.}
+    @entry[:lgpl-3-0-only]{The GNU Lesser General Public License, version 3.0
+      only. Since 3.12.}
+    @entry[:agpl-3-0]{The GNU Affero General Public License, version 3.0 or
+      later. Since: 3.22.}
+    @entry[:agpl-3-0-only]{The GNU Affero General Public License, version 3.0
+      only. Since: 3.22.}
   @end{table}
   @see-class{gtk-about-dialog}")
 

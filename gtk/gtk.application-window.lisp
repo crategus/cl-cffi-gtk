@@ -2,11 +2,11 @@
 ;;; gtk.application-window.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.10 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2013, 2014 Dieter Kaiser
+;;; Copyright (C) 2013 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -28,7 +28,7 @@
 ;;;
 ;;; GtkApplicationWindow
 ;;;
-;;; GtkWindow subclass with GtkApplication support
+;;;     GtkWindow subclass with GtkApplication support
 ;;;
 ;;; Synopsis
 ;;;
@@ -38,6 +38,8 @@
 ;;;     gtk_application_window_set_show_menubar
 ;;;     gtk_application_window_get_show_menubar
 ;;;     gtk_application_window_get_id
+;;;     gtk_application_window_set_help_overlay
+;;;     gtk_application_window_get_help_overlay
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -233,5 +235,44 @@
 
 #+gtk-3-6
 (export 'gtk-application-window-get-id)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_application_window_set_help_overlay ()
+;;;
+;;; void gtk_application_window_set_help_overlay
+;;;                                          (GtkApplicationWindow *window,
+;;;                                           GtkShortcutsWindow *help_overlay);
+;;;
+;;; Associates a shortcuts window with the application window, and sets up an
+;;; action with the name win.show-help-overlay to present it.
+;;;
+;;; window takes resposibility for destroying help_overlay .
+;;;
+;;; window
+;;;     a GtkApplicationWindow
+;;;
+;;; help_overlay
+;;;     a GtkShortcutsWindow.
+;;;
+;;; Since: 3.20
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_application_window_get_help_overlay ()
+;;;
+;;; GtkShortcutsWindow * gtk_application_window_get_help_overlay
+;;;                                              (GtkApplicationWindow *window);
+;;;
+;;; Gets the GtkShortcutsWindow that has been set up with a prior call to
+;;; gtk_application_window_set_help_overlay().
+;;;
+;;; window
+;;;     a GtkApplicationWindow
+;;;
+;;; Returns
+;;;     the help overlay associated with window , or NULL.
+;;;
+;;; Since: 3.20
+;;; ----------------------------------------------------------------------------
 
 ;;; --- End of file gtk.application-window.lisp --------------------------------

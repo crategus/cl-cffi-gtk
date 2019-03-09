@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.range.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.16 and modified to document the Lisp binding to the GDK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2016 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -159,30 +156,55 @@
       @code{\"arrow-displacement-x\"} of type @code{:int} (Read) @br{}
       How far in the x direction to move the arrow when the button is
       depressed. @br{}
+      @begin{indent}
+        @code{\"arrow-displacement-x\"} has been deprecated since version 3.20
+        and should not be used in newly-written code. The value of this style
+        property is ignored.
+      @end{indent}
       Default value: 0
 
     @subheading{The \"arrow-displacement-y\" style property}
       @code{\"arrow-displacement-y\"} of type @code{:int} (Read) @br{}
       How far in the y direction to move the arrow when the button is
       depressed. @br{}
+     @begin{indent}
+        @code{\"arrow-displacement-y\"} has been deprecated since version 3.20
+        and should not be used in newly-written code. The value of this style
+        property is ignored.
+      @end{indent}
       Default value: 0
 
     @subheading{The \"arrow-scaling\" style property}
       @code{\"arrow-scaling\"} of type @code{:float} (Read) @br{}
       The arrow size proportion relative to the scroll button size. @br{}
       Allowed values: [0,1] @br{}
+     @begin{indent}
+        @code{\"arrow-scaling\"} has been deprecated since version 3.20
+        and should not be used in newly-written code. The value of this style
+        property is ignored.
+      @end{indent}
       Default value: 0.5 @br{}
       Since 2.14
 
     @subheading{The \"slider-width\" style property}
       @code{\"slider-width\"} of type @code{:int} (Read) @br{}
       Width of scrollbar or scale thumb. @br{}
+     @begin{indent}
+        @code{\"slider-width\"} has been deprecated since version 3.20
+        and should not be used in newly-written code. The value of this style
+        property is ignored.
+      @end{indent}
       Allowed values: >= 0 @br{}
       Default value: 14
 
     @subheading{The \"stepper-size\" style property}
       @code{\"stepper-size\"} of type @code{:int} (Read) @br{}
       Length of step buttons at ends. @br{}
+     @begin{indent}
+        @code{\"stepper-size\"} has been deprecated since version 3.20
+        and should not be used in newly-written code. The value of this style
+        property is ignored.
+      @end{indent}
       Allowed values: >= 0 @br{}
       Default value: 14
 
@@ -190,12 +212,22 @@
       @code{\"stepper-spacing\"} of type @code{:int} (Read) @br{}
       The spacing between the stepper buttons and thumb. Note that
       stepper-spacing will not have any effect if there are no steppers. @br{}
+     @begin{indent}
+        @code{\"stepper-spacing\"} has been deprecated since version 3.20
+        and should not be used in newly-written code. The value of this style
+        property is ignored.
+      @end{indent}
       Allowed values: >= 0 @br{}
       Default value: 0
 
     @subheading{The \"trough-border\" style property}
       @code{\"trough-border\"} of type @code{:int} (Read) @br{}
       Spacing between thumb/steppers and outer trough bevel. @br{}
+     @begin{indent}
+        @code{\"trough-border\"} has been deprecated since version 3.20
+        and should not be used in newly-written code. The value of this style
+        property is ignored.
+      @end{indent}
       Allowed values: >= 0 @br{}
       Default value: 1
 
@@ -203,6 +235,12 @@
       @code{\"trough-under-steppers\"} of type @code{:boolean} (Read) @br{}
       Whether to draw the trough across the full length of the range or to
       exclude the steppers and their spacing. @br{}
+     @begin{indent}
+        @code{\"trough-under-steppers\"} has been deprecated since version 3.20
+        and should not be used in newly-written code. The value of this style
+        property is ignored, and the widget will behave as if it was set to
+        @emph{true}.
+      @end{indent}
       Default value: @em{true} @br{}
       Since 2.10
   @end{dictionary}
@@ -271,7 +309,7 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;;
-;;; Property Details
+;;; Property and Accessor Details
 ;;;
 ;;; ----------------------------------------------------------------------------
 
@@ -717,7 +755,11 @@
     This function is useful mainly for @class{gtk-range} subclasses.
   @end{short}
   See the function @fun{gtk-range-set-min-slider-size}.
-
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-range-get-min-slider-size} has been deprecated since
+    version 3.20 and should not be used in newly-written code. Use the 
+    min-height/min-width CSS properties on the slider node.
+  @end{dictionary}
   Since 2.20
   @see-class{gtk-range}
   @see-function{gtk-range-set-min-slider-size}"
@@ -828,6 +870,11 @@
   @end{short}
 
   This function is useful mainly for @class{gtk-range} subclasses.
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-range-set-min-slider-size} has been deprecated since
+    version 3.20 and should not be used in newly-written code.
+    Use the min-height/min-width CSS properties on the slider node.
+  @end{dictionary}
 
   Since 2.20
   @see-class{gtk-range}"

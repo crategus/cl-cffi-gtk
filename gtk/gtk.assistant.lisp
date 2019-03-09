@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.assistant.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.10 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2014 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,7 +29,7 @@
 ;;;
 ;;; GtkAssistant
 ;;;
-;;; A widget used to guide users through multi-step operations
+;;;     A widget used to guide users through multi-step operations
 ;;;
 ;;; Synopsis
 ;;;
@@ -122,13 +119,18 @@
       Default value: @code{nil}@br{}
       Since 2.10
 
+    @subheading{The \"has-padding\" child property}
+      @code{\"has-padding\"} of type @code{:boolean} (Read / Write) @br{}
+      Whether the assistant adds padding around the page.@br{}
+      Default value: @em{true}
+
     @subheading{The \"header-image\" child property}
       @code{\"header-image\"} of type @class{gdk-pixbuf} (Read / Write)@br{}
+      This image used to be displayed in the page header.@br{}
       @b{Warning:}
       @code{\"header-image\"} has been deprecated since version 3.2 and
       should not be used in newly written code. Since GTK+ 3.2, a header is no
       longer shown; add your header decoration to the page content instead.@br{}
-      This image used to be displayed in the page header.@br{}
       Since 2.10
 
     @subheading{The \"page-type\" child property}
@@ -140,10 +142,10 @@
 
     @subheading{The \"sidebar-image\" child property}
       @code{\"sidebar-image\"} of type @class{gdk-pixbuf} (Read / Write)@br{}
+      This image used to be displayed in the \"sidebar\".@br{}
       @b{Warning:} @code{\"sidebar-image\"} has been deprecated since
       version 3.2 and should not be used in newly written code. Since GTK+ 3.2,
       the sidebar image is no longer shown.@br{}
-      This image used to be displayed in the \"sidebar\".@br{}
       Since 2.10
 
     @subheading{The \"title\" child property}
@@ -156,12 +158,18 @@
     @subheading{The \"content-padding\" style property}
       @code{\"content-padding\"} of type @code{:int} (Read)@br{}
       Number of pixels around the content pages.@br{}
+      @b{Warning:} @code{\"content-padding\"} has been deprecated since version
+      3.20 and should not be used in newly-written code. This style property is
+      ignored. @br{}
       Allowed values: >= 0@br{}
       Default value: 1
 
     @subheading{The \"header-padding\" style property}
       @code{\"header-padding\"} of type @code{:int} (Read)@br{}
       Number of pixels around the header.@br{}
+      @b{Warning:} @code{\"content-padding\"} has been deprecated since version
+      3.20 and should not be used in newly-written code. This style property is
+      ignored. @br{}
       Allowed values: >= 0@br{}
       Default value: 6
   @end{dictionary}
@@ -228,39 +236,45 @@
 ;;;
 ;;; ----------------------------------------------------------------------------
 
+;;; --- gtk-assistant-child-complete -------------------------------------------
+
 (define-child-property "GtkAssistant"
-  gtk-assistant-child-page-type
-  "page-type" "GtkAssistantPageType" t t t)
+  gtk-assistant-child-complete
+  "complete" "gboolean" t t t)
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-assistant-child-page-type atdoc:*function-name-alias*)
+(setf (gethash 'gtk-assistant-child-complete atdoc:*function-name-alias*)
       "Accessor"
-      (documentation 'gtk-assistant-child-page-type 'function)
+      (documentation 'gtk-assistant-child-complete 'function)
  "@version{2013-8-27}
   @argument[container]{a @class{gtk-assistant} widget}
   @argument[child]{a page of assistant}
-  Accessor of the child property @code{\"page-type\"} of the
+  Accessor of the child property @code{\"complete\"} of the
   @class{gtk-assistant} class.
   @see-class{gtk-assistant}")
 
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-assistant-child-has-padding ----------------------------------------
 
+#+gtk-3-18
 (define-child-property "GtkAssistant"
-  gtk-assistant-child-title
-  "title" "gchararray" t t t)
+  gtk-assistant-child-has-padding
+  "has-padding" "gboolean" t t t)
 
+#+gtk-3-18
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-assistant-child-title atdoc:*function-name-alias*)
+(setf (gethash 'gtk-assistant-child-has-padding atdoc:*function-name-alias*)
       "Accessor"
-      (documentation 'gtk-assistant-child-title 'function)
- "@version{2013-8-27}
+      (documentation 'gtk-assistant-child-has-padding 'function)
+ "@version{2019-3-9}
   @argument[container]{a @class{gtk-assistant} widget}
   @argument[child]{a page of assistant}
-  Accessor of the child property @code{\"title\"} of the
+  Accessor of the child property @code{\"has-padding\"} of the
   @class{gtk-assistant} class.
+
+  Since 3.18
   @see-class{gtk-assistant}")
 
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-assistant-child-header-image ---------------------------------------
 
 (define-child-property "GtkAssistant"
   gtk-assistant-child-header-image
@@ -277,7 +291,24 @@
   @class{gtk-assistant} class.
   @see-class{gtk-assistant}")
 
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-assistant-child-page-type ------------------------------------------
+
+(define-child-property "GtkAssistant"
+  gtk-assistant-child-page-type
+  "page-type" "GtkAssistantPageType" t t t)
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-assistant-child-page-type atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-assistant-child-page-type 'function)
+ "@version{2013-8-27}
+  @argument[container]{a @class{gtk-assistant} widget}
+  @argument[child]{a page of assistant}
+  Accessor of the child property @code{\"page-type\"} of the
+  @class{gtk-assistant} class.
+  @see-class{gtk-assistant}")
+
+;;; --- gtk-assistant-child-sidebar-image --------------------------------------
 
 (define-child-property "GtkAssistant"
   gtk-assistant-child-sidebar-image
@@ -294,20 +325,20 @@
   @class{gtk-assistant} class.
   @see-class{gtk-assistant}")
 
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-assistant-child-title ----------------------------------------------
 
 (define-child-property "GtkAssistant"
-  gtk-assistant-child-complete
-  "complete" "gboolean" t t t)
+  gtk-assistant-child-title
+  "title" "gchararray" t t t)
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-assistant-child-complete atdoc:*function-name-alias*)
+(setf (gethash 'gtk-assistant-child-title atdoc:*function-name-alias*)
       "Accessor"
-      (documentation 'gtk-assistant-child-complete 'function)
+      (documentation 'gtk-assistant-child-title 'function)
  "@version{2013-8-27}
   @argument[container]{a @class{gtk-assistant} widget}
   @argument[child]{a page of assistant}
-  Accessor of the child property @code{\"complete\"} of the
+  Accessor of the child property @code{\"title\"} of the
   @class{gtk-assistant} class.
   @see-class{gtk-assistant}")
 
@@ -899,6 +930,47 @@
   (page (g-object gtk-widget)))
 
 (export 'gtk-assistant-get-page-complete)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_assistant_set_page_has_padding ()
+;;;
+;;; void gtk_assistant_set_page_has_padding (GtkAssistant *assistant,
+;;;                                          GtkWidget *page,
+;;;                                          gboolean has_padding);
+;;;
+;;; Sets whether the assistant is adding padding around the page.
+;;;
+;;; assistant :
+;;;     a GtkAssistant
+;;;
+;;; page :
+;;;     a page of assistant
+;;; 
+;;; has_padding :
+;;;     whether this page has padding
+;;;
+;;; Since: 3.18
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_assistant_get_page_has_padding ()
+;;;
+;;; gboolean gtk_assistant_get_page_has_padding (GtkAssistant *assistant,
+;;;                                              GtkWidget *page);
+;;;
+;;; Gets whether page has padding.
+;;;
+;;; assistant :
+;;;     a GtkAssistant
+;;;
+;;; page :
+;;;     a page of assistant
+;;; 
+;;; Returns :
+;;;     TRUE if page has padding
+;;;
+;;; Since: 3.18
+;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_assistant_add_action_widget ()

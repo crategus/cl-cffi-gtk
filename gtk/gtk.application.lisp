@@ -2,11 +2,11 @@
 ;;; gtk.application.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.10 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2013, 2014 Dieter Kaiser
+;;; Copyright (C) 2013 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -941,6 +941,73 @@
 (export 'gtk-application-is-inhibited)
 
 ;;; ----------------------------------------------------------------------------
+;;; gtk_application_prefers_app_menu ()
+;;;
+;;; gboolean gtk_application_prefers_app_menu (GtkApplication *application);
+;;;
+;;; Determines if the desktop environment in which the application is running
+;;; would prefer an application menu be shown.
+;;;
+;;; If this function returns TRUE then the application should call
+;;; gtk_application_set_app_menu() with the contents of an application menu,
+;;; which will be shown by the desktop environment. If it returns FALSE then
+;;; you should consider using an alternate approach, such as a menubar.
+;;;
+;;; The value returned by this function is purely advisory and you are free to
+;;; ignore it. If you call gtk_application_set_app_menu() even if the desktop
+;;; environment doesn't support app menus, then a fallback will be provided.
+;;;
+;;; Applications are similarly free not to set an app menu even if the desktop
+;;; environment wants to show one. In that case, a fallback will also be created
+;;; by the desktop environment (GNOME, for example, uses a menu with only a
+;;; "Quit" item in it).
+;;;
+;;; The value returned by this function never changes. Once it returns a
+;;; particular value, it is guaranteed to always return the same value.
+;;;
+;;; You may only call this function after the application has been registered
+;;; and after the base startup handler has run. You're most likely to want to
+;;; use this from your own startup handler. It may also make sense to consult
+;;; this function while constructing UI (in activate, open or an action
+;;; activation handler) in order to determine if you should show a gear menu
+;;; or not.
+;;;
+;;; This function will return FALSE on Mac OS and a default app menu will be
+;;; created automatically with the "usual" contents of that menu typical to most
+;;; Mac OS applications. If you call gtk_application_set_app_menu() anyway, then
+;;; this menu will be replaced with your own.
+;;;
+;;; application
+;;;     a GtkApplication
+;;;
+;;; Returns
+;;;     TRUE if you should set an app menu
+;;;
+;;; Since: 3.14
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_application_get_menu_by_id ()
+;;;
+;;; GMenu * gtk_application_get_menu_by_id (GtkApplication *application,
+;;;                                         const gchar *id);
+;;;
+;;; Gets a menu from automatically loaded resources. See Automatic resources
+;;; for more information.
+;;;
+;;; application
+;;;     a GtkApplication
+;;;
+;;; id
+;;;     the id of the menu to look up
+;;;
+;;; Returns
+;;;     Gets the menu with the given id from the automatically loaded resources.
+;;;
+;;; Since: 3.14
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_application_add_accelerator ()
 ;;; ----------------------------------------------------------------------------
 
@@ -970,6 +1037,11 @@
   @fun{gtk-application-app-menu} and @fun{gtk-application-menubar},
   which is usually more convenient than calling this function for each
   accelerator.
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-application-add-accelerator} has been deprecated since
+    version 3.14 and should not be used in newly-written code.
+    Use the function @fun{gtk-application-set-accels-for-action} instead.
+  @end{dictionary}
 
   Since 3.4
   @see-class{gtk-application}
@@ -1000,6 +1072,11 @@
     Removes an accelerator that has been previously added with the function
     @fun{gtk-application-add-accelerator}.
   @end{short}
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-application-remove-accelerator} has been deprecated
+    since version 3.14 and should not be used in newly-written code.
+    Use @fun{gtk-application-set-accels-for-action} instead.
+  @end{dictionary}
 
   Since 3.4
   @see-class{gtk-application}
@@ -1009,5 +1086,109 @@
   (parameter (:pointer (:struct g-variant))))
 
 (export 'gtk-application-remove-accelerator)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_application_list_action_descriptions ()
+;;;
+;;; gchar ** gtk_application_list_action_descriptions
+;;;                                               (GtkApplication *application);
+;;;
+;;; Lists the detailed action names which have associated accelerators. 
+;;; See gtk_application_set_accels_for_action().
+;;;
+;;; application
+;;;     a GtkApplication
+;;;
+;;; Returns
+;;;     a NULL-terminated array of strings, free with g_strfreev() when done.
+;;;
+;;; Since: 3.12
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_application_get_accels_for_action ()
+;;;
+;;; gchar ** gtk_application_get_accels_for_action (GtkApplication *application,
+;;;                                          const gchar *detailed_action_name);
+;;;
+;;; Gets the accelerators that are currently associated with the given action.
+;;;
+;;; application
+;;;     a GtkApplication
+;;;
+;;; detailed_action_name
+;;;     a detailed action name, specifying an action and target to obtain
+;;;     accelerators for
+;;;
+;;; Returns
+;;;     accelerators for detailed_action_name , as a NULL-terminated array.
+;;;     Free with g_strfreev() when no longer needed.
+;;;
+;;; Since: 3.12
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_application_set_accels_for_action ()
+;;;
+;;; void gtk_application_set_accels_for_action (GtkApplication *application,
+;;;                                           const gchar *detailed_action_name,
+;;;                                                const gchar * const *accels);
+;;;
+;;; Sets zero or more keyboard accelerators that will trigger the given action.
+;;; The first item in accels will be the primary accelerator, which may be
+;;; displayed in the UI.
+;;;
+;;; To remove all accelerators for an action, use an empty, zero-terminated
+;;; array for accels .
+;;;
+;;; For the detailed_action_name , see g_action_parse_detailed_name() and
+;;; g_action_print_detailed_name().
+;;;
+;;; application
+;;;     a GtkApplication
+;;;
+;;; detailed_action_name
+;;;     a detailed action name, specifying an action and target to associate
+;;;     accelerators with
+;;; 
+;;; accels
+;;;     a list of accelerators in the format understood by
+;;;     gtk_accelerator_parse().
+;;;
+;;; Since: 3.12
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_application_get_actions_for_accel ()
+;;;
+;;; gchar ** gtk_application_get_actions_for_accel (GtkApplication *application,
+;;;                                                 const gchar *accel);
+;;;
+;;; Returns the list of actions (possibly empty) that accel maps to. Each item
+;;; in the list is a detailed action name in the usual form.
+;;;
+;;; This might be useful to discover if an accel already exists in order to
+;;; prevent installation of a conflicting accelerator (from an accelerator
+;;; editor or a plugin system, for example). Note that having more than one 
+;;; action per accelerator may not be a bad thing and might make sense in cases 
+;;; where the actions never appear in the same context.
+;;;
+;;; In case there are no actions for a given accelerator, an empty array is
+;;; returned. NULL is never returned.
+;;;
+;;; It is a programmer error to pass an invalid accelerator string. If you are
+;;; unsure, check it with gtk_accelerator_parse() first.
+;;;
+;;; application
+;;;     a GtkApplication
+;;; 
+;;; accel
+;;;     an accelerator that can be parsed by gtk_accelerator_parse()
+;;; 
+;;; Returns
+;;;     a NULL-terminated array of actions for accel .
+;;;
+;;; Since: 3.14
+;;; ----------------------------------------------------------------------------
 
 ;;; --- End of file gtk.application.lisp ---------------------------------------

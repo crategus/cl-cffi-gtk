@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.builder.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.10 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2014 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,7 +29,7 @@
 ;;;
 ;;; GtkBuilder
 ;;;
-;;; Build an interface from an XML UI definition
+;;;     Build an interface from an XML UI definition
 ;;;
 ;;; Synopsis
 ;;;
@@ -99,8 +96,6 @@
 
 #|
 
-
-
 Example 9. A GtkBuilder UI Definition
 
 <interface>
@@ -124,8 +119,6 @@ Example 9. A GtkBuilder UI Definition
     </child>
   </object>
 </interface>
-
-
 
 |#
 
@@ -509,7 +502,12 @@ Example 9. A GtkBuilder UI Definition
   (:missing-property-value 5)
   (:invalid-value 6)
   (:version-mismatch 7)
-  (:duplicate-id 8))
+  (:duplicate-id 8)
+  (:type-refused 9)
+  (:template-mismatch 10)
+  (:invalid-property 11)
+  (:invalid-signal 12)
+  (:invalid-id 13))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-builder-error atdoc:*symbol-name-alias*) "Enum"
@@ -531,7 +529,12 @@ Example 9. A GtkBuilder UI Definition
   (:missing-property-value 5)
   (:invalid-value 6)
   (:version-mismatch 7)
-  (:duplicate-id 8))
+  (:duplicate-id 8)
+  (:type-refused 9)
+  (:template-mismatch 10)
+  (:invalid-property 11)
+  (:invalid-signal 12)
+  (:invalid-id 13))
   @end{pre}
   @begin[code]{table}
     @entry[:invalid-type-function]{A type-func attribute did not name a function
@@ -549,6 +552,15 @@ Example 9. A GtkBuilder UI Definition
       value.}
     @entry[:version-mismatch]{The input file requires a newer version of GTK+.}
     @entry[:duplicate-id]{An object id occurred twice.}
+    @entry[:type-refused]{A specified object type is of the same type or derived
+      from the type of the composite class being extended with builder XML.}
+    @entry[:template-mismatch]{The wrong type was specified in a composite
+      class’s template XML.}
+    @entry[:invalid-property]{The specified property is unknown for the object
+      class.}
+    @entry[:invalid-signal]{The specified signal is unknown for the object
+      class.}
+    @entry[:invalid-id]{An object id is unknown.}
   @end{table}")
 
 ;;; ----------------------------------------------------------------------------
@@ -582,12 +594,10 @@ Example 9. A GtkBuilder UI Definition
 ;;; program will be aborted. You should only ever attempt to parse user
 ;;; interface descriptions that are shipped as part of your program.
 ;;;
-;;; Parameters
-;;;
-;;; filename
+;;; filename :
 ;;;     filename of user interface description file
 ;;;
-;;; Returns
+;;; Returns :
 ;;;     a Gtkbuilder containing the described interface
 ;;;
 ;;; Since 3.10
@@ -603,12 +613,10 @@ Example 9. A GtkBuilder UI Definition
 ;;; If there is an error locating the resurce or parsing the description then
 ;;; the program will be aborted.
 ;;;
-;;; Parameters
-;;;
-;;; resource_path
+;;; resource_path :
 ;;;     a GResource resource path
 ;;;
-;;; Returns
+;;; Returns :
 ;;;     a Gtkbuilder containing the described interface
 ;;;
 ;;; Since 3.10
@@ -630,15 +638,13 @@ Example 9. A GtkBuilder UI Definition
 ;;; should not attempt to parse user interface description from untrusted
 ;;; sources.
 ;;;
-;;; Parameters
-;;;
-;;; string
+;;; string :
 ;;;     a user interface (XML) description
 ;;;
-;;; length
+;;; length :
 ;;;     the length of string , or -1
 ;;;
-;;; Returns
+;;; Returns :
 ;;;     a Gtkbuilder containing the interface described by string
 ;;;
 ;;; Since 3.10
@@ -659,15 +665,13 @@ Example 9. A GtkBuilder UI Definition
 ;;; encapsulation as it does not require that callback symbols be declared in
 ;;; the global namespace.
 ;;;
-;;; Parameters
-;;;
-;;; builder
+;;; builder :
 ;;;     a GtkBuilder
 ;;;
-;;; callback_name
+;;; callback_name :
 ;;;     The name of the callback, as expected in the XML
 ;;;
-;;; callback_symbol
+;;; callback_symbol :
 ;;;     The callback pointer.
 ;;;
 ;;; Since 3.10
@@ -684,18 +688,16 @@ Example 9. A GtkBuilder UI Definition
 ;;; A convenience function to add many callbacks instead of calling
 ;;; gtk_builder_add_callback_symbol() for each symbol.
 ;;;
-;;; Parameters
-;;;
-;;; builder
+;;; builder :
 ;;;     a GtkBuilder
 ;;;
-;;; first_callback_name
+;;; first_callback_name :
 ;;;     The name of the callback, as expected in the XML
 ;;;
-;;; first_callback_symbol
+;;; first_callback_symbol :
 ;;;     The callback pointer.
 ;;;
-;;; ...
+;;; ... :
 ;;;     A list of callback name and callback symbol pairs terminated with NULL
 ;;;
 ;;; Since 3.10
@@ -714,15 +716,13 @@ Example 9. A GtkBuilder UI Definition
 ;;; case that one might be cusomizing signal connections using
 ;;; gtk_builder_connect_signals_full()
 ;;;
-;;; Parameters
-;;;
-;;; builder
+;;; builder :
 ;;;     a GtkBuilder
 ;;;
-;;; callback_name
+;;; callback_name :
 ;;;     The name of the callback
 ;;;
-;;; Returns
+;;; Returns :
 ;;;     The callback symbol in builder for callback_name , or NULL
 ;;;
 ;;; Since 3.10
@@ -1015,15 +1015,13 @@ Example 9. A GtkBuilder UI Definition
 ;;; Add object to the builder object pool so it can be referenced just like any
 ;;; other object built by builder.
 ;;;
-;;; Parameters
-;;;
-;;; builder
+;;; builder :
 ;;;     a GtkBuilder
 ;;;
-;;; name
+;;; name :
 ;;;     the name of the object exposed to the builder
 ;;;
-;;; object
+;;; object :
 ;;;     the object to expose
 ;;;
 ;;; Since 3.8
@@ -1121,6 +1119,49 @@ Example 9. A GtkBuilder UI Definition
                                        ptr)))
 
 (export 'gtk-builder-connect-signals-full)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_builder_set_application ()
+;;;
+;;; void gtk_builder_set_application (GtkBuilder *builder,
+;;;                                   GtkApplication *application);
+;;;
+;;; Sets the application associated with builder .
+;;;
+;;; You only need this function if there is more than one GApplication in your
+;;; process. application cannot be NULL.
+;;;
+;;; builder :
+;;;     a GtkBuilder
+;;;
+;;; application :
+;;;     a GtkApplication
+;;;
+;;; Since: 3.10
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_builder_get_application ()
+;;;
+;;; GtkApplication * gtk_builder_get_application (GtkBuilder *builder);
+;;;
+;;; Gets the GtkApplication associated with the builder.
+;;;
+;;; The GtkApplication is used for creating action proxies as requested from XML
+;;; that the builder is loading.
+;;;
+;;; By default, the builder uses the default application: the one from
+;;; g_application_get_default(). If you want to use another application for
+;;; constructing proxies, use gtk_builder_set_application().
+;;;
+;;; builder :
+;;;     a GtkBuilder
+;;;
+;;; Returns :
+;;;     the application being used by the builder, or NULL.
+;;;
+;;; Since: 3.10
+;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_builder_get_type_from_name ()
