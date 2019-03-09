@@ -193,7 +193,7 @@
     exposes the @code{vbox} and @code{action-area} as internal children with the
     names \"vbox\" and \"action_area\".
 
-    @sym{gtk-dialog} supports a custom @code{<action-widgets> element, which
+    @sym{gtk-dialog} supports a custom @code{<action-widgets>} element, which
     can contain multiple @code{<action-widget>} elements. The 
     @code{\"response\"} attribute specifies a numeric response, and the content
     of the element is the ID of widget, which should be a child of the dialogs

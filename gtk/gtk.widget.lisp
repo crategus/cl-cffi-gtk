@@ -922,7 +922,7 @@
       The @code{\"separator-height\"} style property defines the height of
       separators. This property only takes effect if the
       @code{\"wide-separators\"} style property is @em{true}.
-      @begin{ident}
+      @begin{indent}
         @b{Warning:} @code{\"separator-height\"} has been deprecated since 
         version 3.20 and should not be used in newly-written code. Use the
         standard min-height CSS property on the separator elements to size
