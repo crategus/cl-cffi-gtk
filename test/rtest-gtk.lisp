@@ -77,4 +77,5 @@
 (load "rtest-gtk-text-iter.lisp")
 (load "rtest-gtk-tool-palette.lisp")
 (load "rtest-gtk-widget.lisp")
+(load "rtest-gtk-window.lisp")
 

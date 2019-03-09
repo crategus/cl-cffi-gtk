@@ -107,9 +107,10 @@
 
   ;; Check the children
   (is (equal '("GtkBin" "GtkMenuShell" "GtkBox" "GtkTable" "GtkGrid" "GtkLayout"
-               "GtkFixed" "GtkNotebook" "GtkPaned" "GtkTextView" "GtkTreeView"
+               "GtkFixed" "GtkNotebook" "GtkPaned" "GtkHeaderBar" "GtkTextView"
+               "GtkTreeView"
                "GtkIconView" "GtkToolItemGroup" "GtkToolbar" "GtkToolPalette"
-               "GtkSocket" "GtkHeaderBar")
+               "GtkSocket")
              (mapcar #'gtype-name (g-type-children "GtkContainer"))))
              
   ;; Check the interfaces
@@ -130,7 +131,8 @@
 
   ;; Get the class properties.
   (is (equal '("app-paintable" "border-width" "can-default" "can-focus" "child"
-               "composite-child" "double-buffered" "events" "expand" "halign"
+               "composite-child" "double-buffered" "events" "expand"
+               "focus-on-click" "halign"
                "has-default" "has-focus" "has-tooltip" "height-request"
                "hexpand" "hexpand-set" "is-focus" "margin" "margin-bottom"
                "margin-end" "margin-left" "margin-right" "margin-start"
