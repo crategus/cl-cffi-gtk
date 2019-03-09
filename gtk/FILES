@@ -8,32 +8,32 @@ GTK+ Widgets and Objects
 
   Application support
 
-    gtk.application.lisp             - GtkApplication              - GTK+ 3.10 *
-    gtk.application-window.lisp      - GtkApplicationWindow        - GTK+ 3.10 *
-    gtk.actionable.lisp              - GtkActionable               - GTK+ 3.10 *
+    gtk.application.lisp             - GtkApplication              - GTK+ 3.24 &
+    gtk.application-window.lisp      - GtkApplicationWindow        - GTK+ 3.24 &
+    gtk.actionable.lisp              - GtkActionable               - GTK+ 3.24 &
 
   Interface builder
 
-    gtk.builder.lisp                 - GtkBuilder                  - GTK+ 3.10 *
-    gtk.buildable.lisp               - GtkBuildable                - GTK+ 3.10 *
+    gtk.builder.lisp                 - GtkBuilder                  - GTK+ 3.24 &
+    gtk.buildable.lisp               - GtkBuildable                - GTK+ 3.24 &
 
   Windows
 
-    gtk.window.lisp                  - GtkWindow                   - GTK+ 3.10 *
+    gtk.window.lisp                  - GtkWindow                   - GTK+ 3.24 &
     gtk.dialog.lisp                  - GtkDialog                   - GTK+ 3.24
-    gtk.message-dialog.lisp          - GtkMessageDialog            - GTK+ 3.10 *
-    gtk.about-dialog.lisp            - GtkAboutDialog              - GTK+ 3.10 *
-    gtk.assistant.lisp               - GtkAssistant                - GTK+ 3.10 *
-    gtk.invisible.lisp               - GtkInvisible                - GTK+ 3.10 *
-    gtk.offscreen-window.lisp        - GtkOffscreenWindow          - GTK+ 3.10 *
-    gtk.window-group.lisp            - GtkWindowGroup              - GTK+ 3.10 *
+    gtk.message-dialog.lisp          - GtkMessageDialog            - GTK+ 3.24
+    gtk.about-dialog.lisp            - GtkAboutDialog              - GTK+ 3.24
+    gtk.assistant.lisp               - GtkAssistant                - GTK+ 3.24 &
+    gtk.invisible.lisp               - GtkInvisible                - GTK+ 3.24
+    gtk.offscreen-window.lisp        - GtkOffscreenWindow          - GTK+ 3.24
+    gtk.window-group.lisp            - GtkWindowGroup              - GTK+ 3.24
 
   Layout Containers
 
-    gtk.box.lisp                     - GtkBox, GtkHBox, GtkVbox    - GTK+ 3.16 *
-    gtk.grid.lisp                    - GtkGrid                     - GTK+ 3.16 *
+    gtk.box.lisp                     - GtkBox, GtkHBox, GtkVbox    - GTK+ 3.24
+    gtk.grid.lisp                    - GtkGrid                     - GTK+ 3.24 &
+    gtk.revealer.lisp                - GtkRevealer                 - GTK+ 3.24 &
 
-    GtkRevealer - Hide and show with animation
     GtkListBox - A list container
     GtkFlowBox — A container that allows reflowing its children
     GtkStack - A stacking container
@@ -234,10 +234,10 @@ GTK+ Widgets and Objects
 
     gtk.widget.lisp                  - GtkWidget                   - GTK+ 3.24 &
     gtk.container.lisp               - GtkContainer                - GTK+ 3.24 &
-    gtk.bin.lisp                     - GtkBin                      - GTK+ 3.16 *
-    gtk.menu-shell.lisp              - GtkMenuShell                - GTK+ 3.16 *
-    gtk.range.lisp                   - GtkRange                    - GTK+ 3.16 *
-    gtk.im-context.lisp              - GtkIMContext                - GTK+ 3.16 *
+    gtk.bin.lisp                     - GtkBin                      - GTK+ 3.24
+    gtk.menu-shell.lisp              - GtkMenuShell                - GTK+ 3.24 &
+    gtk.range.lisp                   - GtkRange                    - GTK+ 3.24
+    gtk.im-context.lisp              - GtkIMContext                - GTK+ 3.24 &
 
     GtkNativeDialog — Integrate with native dialogs
 
