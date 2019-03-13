@@ -1,9 +1,6 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gobject.package.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GObject Reference Manual
 ;;; Version 2.36.2 and modified to document the Lisp binding to the GObject
 ;;; library. See <http://www.gtk.org>. The API documentation of the Lisp binding
@@ -842,6 +839,11 @@
     @about-function{g-closure-set-meta-marshal}
     @about-function{g-closure-set-closure}
     @about-function{g-closure-set-dummy-callback}
-  @end{section}")
+  @end{section}
+  @begin[GBinding]{section}
+    @about-symbol{g-binding-flags}
+    @about-class{g-binding}
+    @about-function{g-object-bind-property}
+  @end{section} ")
 
 ;;; --- End of file gobject.package.lisp ---------------------------------------
