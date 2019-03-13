@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.package.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.10 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2014 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -409,6 +406,7 @@
       @about-function{gtk-grid-insert-column}
       @about-function{gtk-grid-insert-next-to}
     @end{subsection}
+
     @begin[GtkRevealer]{subsection}
       Hide and show with animation.
 
@@ -420,15 +418,37 @@
       @about-generic{gtk-revealer-transition-type}
       @about-function{gtk-revealer-new}
     @end{subsection}
+
     @begin[GtkListBox]{subsection}
       A list container.
+
+      @about-class{gtk-list-box-row}
+      @about-class{gtk-list-box}
     @end{subsection}
+
+    @begin[GtkFlowBox]{subsection}
+      A container that allows reflowing its children.
+
+      @about-class{gtk-flow-box-child}
+      @about-class{gtk-flow-box}      
+    @end{subsection}
+
     @begin[GtkStack]{subsection}
       A stacking container.
     @end{subsection}
+
     @begin[GtkStackSwitcher]{subsection}
       A controller for GtkStack.
     @end{subsection}
+
+    @begin[GtkStackSidebar]{subsection}
+      An automatic sidebar widget
+    @end{subsection}
+
+    @begin[GtkActionBar]{subsection}
+      A full width bar for presenting contextual actions
+    @end{subsection}
+
     @begin[GtkHeaderBar]{subsection}
       A box with a centered child.
 

@@ -100,6 +100,8 @@
    (:file "gtk.table")                 ; Pack widgets in regular patterns
    (:file "gtk.grid")                  ; Pack widgets in a rows and columns
    (:file "gtk.revealer")              ; Hide and show with animation
+   (:file "gtk.list-box")              ; A list container
+   (:file "gtk.flow-box")              ; Allows reflowing its children
    (:file "gtk.layout")                ; Infinite scrollable
    (:file "gtk.fixed")                 ; Widgets at fixed coordinates
    (:file "gtk.notebook")              ; Tabbed notebook container

@@ -32,10 +32,10 @@ GTK+ Widgets and Objects
 
     gtk.box.lisp                     - GtkBox, GtkHBox, GtkVbox    - GTK+ 3.24
     gtk.grid.lisp                    - GtkGrid                     - GTK+ 3.24 &
-    gtk.revealer.lisp                - GtkRevealer                 - GTK+ 3.24 &
+    gtk.revealer.lisp                - GtkRevealer                 - GTK+ 3.24
+    gtk.list-box.lisp                - GtkListBox                  - GTK+ 3.24 &
+    gtk.flow-box.lisp                - GtkFlowBox                  - GTK+ 3.24 &
 
-    GtkListBox - A list container
-    GtkFlowBox — A container that allows reflowing its children
     GtkStack - A stacking container
     GtkStackSwitcher - A controller for GtkStack
     GtkStackSidebar — An automatic sidebar widget
