@@ -921,7 +921,7 @@
       user  cannot deselect a currently selected element except by selecting
       another element.}
     @entry[:multiple]{Any number of elements may be selected. The Ctrl key may
-      be used to enlarge the selection, and Shift key to select between the
+      be used to enlarge the selection, and the Shift key to select between the
       focus and the child pointed to. Some widgets may also allow Click-drag to
       select a range of elements.}
   @end{table}")
