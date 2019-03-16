@@ -551,40 +551,45 @@
       A widget with two adjustable panes.
 
       @about-class{gtk-paned}
-      @about-function{gtk-paned-new}
+      
+      @about-generic{gtk-paned-position}
+      @about-generic{gtk-paned-wide-handle}
+
       @about-function{gtk-paned-child-resize}
       @about-function{gtk-paned-child-shrink}
+      
+      @about-function{gtk-paned-new}
       @about-function{gtk-paned-add1}
       @about-function{gtk-paned-add2}
       @about-function{gtk-paned-pack1}
       @about-function{gtk-paned-pack2}
       @about-function{gtk-paned-get-child1}
       @about-function{gtk-paned-get-child2}
-      @about-function{gtk-paned-set-position}
-      @about-function{gtk-paned-get-position}
       @about-function{gtk-paned-get-handle-window}
     @end{subsection}
     @begin[GtkLayout]{subsection}
       Infinite scrollable area containing child widgets and/or custom drawing.
 
       @about-class{gtk-layout}
+      
+      @about-generic{gtk-layout-height}
+      @about-generic{gtk-layout-width}
+      
       @about-function{gtk-layout-child-x}
       @about-function{gtk-layout-child-y}
+
       @about-function{gtk-layout-new}
       @about-function{gtk-layout-put}
       @about-function{gtk-layout-move}
       @about-function{gtk-layout-set-size}
       @about-function{gtk-layout-get-size}
-      @about-function{gtk-layout-get-hadjustment}
-      @about-function{gtk-layout-get-vadjustment}
-      @about-function{gtk-layout-set-hadjustment}
-      @about-function{gtk-layout-set-vadjustment}
       @about-function{gtk-layout-get-bin-window}
     @end{subsection}
     @begin[GtkNotebook]{subsection}
       A tabbed notebook container.
 
       @about-class{gtk-notebook}
+      
       @about-function{gtk-notebook-child-detachable}
       @about-function{gtk-notebook-child-menu-label}
       @about-function{gtk-notebook-child-position}
@@ -592,6 +597,7 @@
       @about-function{gtk-notebook-child-tab-expand}
       @about-function{gtk-notebook-child-tab-fill}
       @about-function{gtk-notebook-child-tab-label}
+      
       @about-function{gtk-notebook-new}
       @about-function{gtk-notebook-append-page}
       @about-function{gtk-notebook-append-page-menu}

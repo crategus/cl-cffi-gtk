@@ -44,11 +44,11 @@
 ;;;     gtk_paned_pack2
 ;;;     gtk_paned_get_child1
 ;;;     gtk_paned_get_child2
-;;;     gtk_paned_set_position
-;;;     gtk_paned_get_position
+;;;     gtk_paned_set_position                             Accessor
+;;;     gtk_paned_get_position                             Accessor
 ;;;     gtk_paned_get_handle_window
-;;;     gtk_paned_set_wide_handle
-;;;     gtk_paned_get_wide_handle
+;;;     gtk_paned_set_wide_handle                          Accessor
+;;;     gtk_paned_get_wide_handle                          Accessor
 ;;;
 ;;; Properties
 ;;;
@@ -125,7 +125,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-paned 'type)
- "@version{2013-5-18}
+ "@version{2019-3-16}
   @begin{short}
     @sym{gtk-paned} has two panes, arranged either horizontally or vertically.
     The division between the two panes is adjustable by the user by dragging a
@@ -155,7 +155,21 @@
 
   The application can set the position of the slider as if it were set by the
   user, by calling the generic function @fun{gtk-paned-position}.
+  @begin[CSS nodes]{dictionary}
+    @begin{pre}
+  paned
+  ├── <child>
+  ├── separator\[.wide\]
+  ╰── <child>
+    @end{pre}
+    @sym{gtk-paned} has a main CSS node with name paned, and a subnode for the 
+    separator with name separator. The subnode gets a .wide style class when the
+    paned is supposed to be wide.
 
+    In horizontal orientation, the nodes of the children are always arranged 
+    from left to right. So :first-child will always select the leftmost child, 
+    regardless of text direction.
+  @end{dictionary}
   @begin[Example]{dictionary}
     Creating a paned widget with minimum sizes.
     @begin{pre}
@@ -173,15 +187,17 @@
     @end{pre}
   @end{dictionary}
   @begin[Child Property Details]{dictionary}
-    @subheading{The @code{\"resize\"} child property}
-      @code{\"resize\"} of type @code{:boolean} (Read / Write) @br{}
-      The @code{\"resize\"} child property determines whether the child expands
+    @subheading{The \"resize\" child property}
+      The @code{resize} child property of type @code{:boolean} (Read / Write) 
+      @br{}
+      The @code{resize} child property determines whether the child expands
       and shrinks along with the paned widget. @br{}
       Default value: @em{true} @br{}
       Since 2.4
 
-    @subheading{The @code{\"shrink\"} child property}
-      @code{\"shrink\"} of type @code{:boolean} (Read / Write) @br{}
+    @subheading{The \"shrink\" child property}
+      The @code{shrink} child property of type @code{:boolean} (Read / Write) 
+      @br{}
       The @code{\"shrink\"} child property determines whether the child can be
       made smaller than its requisition. @br{}
       Default value: @em{true} @br{}
@@ -276,7 +292,8 @@
   @see-slot{gtk-paned-max-position}
   @see-slot{gtk-paned-min-position}
   @see-slot{gtk-paned-position}
-  @see-slot{gtk-paned-position-set}")
+  @see-slot{gtk-paned-position-set}
+  @see-slot{gtk-paned-wide-handle}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Property and Accessor Details
@@ -286,7 +303,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "max-position" 'gtk-paned) 't)
- "The @code{\"max-position\"} property of type @code{:int} (Read)@br{}
+ "The @code{max-position} property of type @code{:int} (Read)@br{}
   The largest possible value for the position property. This property is
   derived from the size and shrinkability of the widget's children. @br{}
   Allowed values: >= 0 @br{}
@@ -305,7 +322,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "min-position" 'gtk-paned) 't)
- "The @code{\"min-position\"} property of type @code{:int} (Read)@br{}
+ "The @code{min-position} property of type @code{:int} (Read)@br{}
   The smallest possible value for the position property. This property is
   derived from the size and shrinkability of the widget's children. @br{}
   Allowed values: >= 0 @br{}
@@ -324,7 +341,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "position" 'gtk-paned) 't)
- "The @code{\"position\"} property of type @code{:int} (Read / Write)@br{}
+ "The @code{position} property of type @code{:int} (Read / Write)@br{}
   Position of paned separator in pixels (0 means all the way to the
   left/top). @br{}
   Allowed values: >= 0 @br{}
@@ -345,8 +362,8 @@
     class.
   @end{short}
 
-  The generic function @sym{gtk-paned} obtains the position of the divider
-  between the two panes.
+  The generic function @sym{gtk-paned-position} obtains the position of the 
+  divider between the two panes.
 
   The generic function @sym{(setf gtk-paned-position)} sets the position of the
   divider between the two panes.
@@ -356,7 +373,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "position-set" 'gtk-paned) 't)
- "The @code{\"position-set\"} property of type @code{:boolean}
+ "The @code{position-set} property of type @code{:boolean}
   (Read / Write)@br{}
   @em{True} if the @code{\"position\"} property should be used. @br{}
   Default value: @code{nil}")
@@ -369,25 +386,48 @@
   Accessor of the slot @slot[gtk-paned]{position-set} of the @class{gtk-paned}
   class.")
   
-;;; --- gtk-panded-wide-handled ------------------------------------------------
+;;; --- gtk-paned-wide-handled -------------------------------------------------
 
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "wide-handle" 'gtk-paned) 't)
+ "The @code{wide-handled} property of type @code{:boolean} (Read / Write) @br{}
+  Setting this property to @em{true} indicates that the paned needs to provide 
+  stronger visual separation (e. g. because it separates between two notebooks, 
+  whose tab rows would otherwise merge visually). @br{}
+  Since 3.16 @br{}
+  Default value: @code{nil}")
 
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-paned-wide-handle atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-paned-wide-handle 'function)
+ "@version{2019-3-16}
+  @syntax[]{(gtk-paned-wide-handle object) => wide}
+  @syntax[]{(setf (gtk-paned-wide-handle object) wide)}
+  @argument[object]{a @class{gtk-paned} object}
+  @argument[wide]{the new value for the @code{wide-handle} property}
+  @begin{short}
+    Accessor of the slot @slot[gtk-paned]{wide-handle} of the @class{gtk-paned}
+    class.
+  @end{short}
 
+  The generic function @sym{gtk-paned-wide-handled}
+  gets the @code{wide-handle} property.
 
-
-   
+  The generic function @sym{(setf gtk-paned-wide-handled)}
+  sets the @code{wide-handle} property.
+ 
+  Since 3.16  
+  @see-class{gtk-paned}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Child Property and Child Accessor Details
 ;;; ----------------------------------------------------------------------------
 
+;;; --- gtk-paned-child-resize -------------------------------------------------
+
 (define-child-property "GtkPaned"
                        gtk-paned-child-resize "resize" "gboolean" t t t)
-
-(define-child-property "GtkPaned"
-                       gtk-paned-child-shrink "shrink" "gboolean" t t t)
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-paned-child-resize atdoc:*function-name-alias*)
@@ -397,6 +437,11 @@
   Accessor of the child property @code{\"resize\"} of the @class{gtk-paned}
   class.
   @see-class{gtk-paned}")
+
+;;; --- gtk-paned-child-shrink -------------------------------------------------
+
+(define-child-property "GtkPaned"
+                       gtk-paned-child-shrink "shrink" "gboolean" t t t)
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-paned-child-shrink atdoc:*function-name-alias*)

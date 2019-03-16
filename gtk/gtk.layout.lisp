@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.layout.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.10 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2014 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,22 +29,46 @@
 ;;;
 ;;; GtkLayout
 ;;;
-;;; Infinite scrollable area containing child widgets and/or custom drawing
+;;;     Infinite scrollable area containing child widgets and/or custom drawing
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkLayout
+;;;
+;;; Functions
 ;;;
 ;;;     gtk_layout_new
 ;;;     gtk_layout_put
 ;;;     gtk_layout_move
 ;;;     gtk_layout_set_size
 ;;;     gtk_layout_get_size
-;;;     gtk_layout_get_hadjustment               * deprecated *
-;;;     gtk_layout_get_vadjustment               * deprecated *
-;;;     gtk_layout_set_hadjustment               * deprecated *
-;;;     gtk_layout_set_vadjustment               * deprecated *
+;;;     gtk_layout_get_hadjustment                         deprecated
+;;;     gtk_layout_get_vadjustment                         deprecated
+;;;     gtk_layout_set_hadjustment                         deprecated
+;;;     gtk_layout_set_vadjustment                         deprecated
 ;;;     gtk_layout_get_bin_window
+;;;
+;;; Properties
+;;;
+;;;     guint  height  Read / Write
+;;;     guint  width   Read / Write
+;;;
+;;; Child Properties
+;;;
+;;;     gint  x  Read / Write
+;;;     gint  y  Read / Write
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;             ╰── GtkContainer
+;;;                 ╰── GtkLayout
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GtkLayout implements AtkImplementorIface, GtkBuildable and GtkScrollable
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -107,9 +128,7 @@
   @see-class{gtk-scrolled-window}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
 ;;; Property and Accessor Details
-;;;
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- gtk-layout-height ------------------------------------------------------
@@ -152,6 +171,8 @@
 ;;;
 ;;; ----------------------------------------------------------------------------
 
+;;; --- gtk-layout-child-x -----------------------------------------------------
+
 (define-child-property "GtkLayout"
                        gtk-layout-child-x
                        "x" "gint" t t t)
@@ -164,7 +185,7 @@
   Accessor of the child property @code{\"x\"} of the @class{gtk-layout} class.
   @see-class{gtk-layout}")
 
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-layout-child-y -----------------------------------------------------
 
 (define-child-property "GtkLayout"
                        gtk-layout-child-y
