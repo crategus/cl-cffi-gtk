@@ -35,17 +35,16 @@ GTK+ Widgets and Objects
     gtk.revealer.lisp                - GtkRevealer                 - GTK+ 3.24
     gtk.list-box.lisp                - GtkListBox                  - GTK+ 3.24 &
     gtk.flow-box.lisp                - GtkFlowBox                  - GTK+ 3.24 &
+    gtk.stack.lisp                   - GtkStack                    - GTK+ 3.24
+    gtk.stack-switcher.lisp          - GtkStackSwitcher            - GTK+ 3.24
+    gtk.stack-sidebar.lisp           - GtkStackSidebar             - GTK+ 3.24
+    gtk.action-bar.lisp              - GtkActionBar                - GTK+ 3.24
+    gtk.header-bar.lisp              . GtkHeaderBar                - GTK+ 3.24
+    gtk.overlay.lisp                 - GtkOverlay                  - GTK+ 3.24
+    gtk.button-box.lisp              - GtkButtonBox, ...           - GTK+ 3.24
 
-    GtkStack - A stacking container
-    GtkStackSwitcher - A controller for GtkStack
-    GtkStackSidebar — An automatic sidebar widget
-    GtkActionBar — A full width bar for presenting contextual actions
-
-    gtk.header-bar.lisp              . GtkHeaderBar                - GTK+ 3.16 *
-
-    gtk.overlay.lisp                 - GtkOverlay                  - GTK+ 3.10 *
-    gtk.button-box.lisp              - GtkButtonBox, ...           - GTK+ 3.10 *
     gtk.paned.lisp                   - GtkPaned, ...               - GTK+ 3.10 *
+
     gtk.layout.lisp                  - GtkLayout                   - GTK+ 3.10 *
     gtk.notebook.lisp                - GtkNotebook                 - GTK+ 3.10 *
     gtk.expander.lisp                - GtkExpander                 - GTK+ 3.10 *
@@ -72,7 +71,7 @@ GTK+ Widgets and Objects
     gtk.toggle-button.lisp           - GtkToggleButton             - GTK+ 3.10 *
     gtk.link-button.lisp             - GtkLinkButton               - GTK+ 3.10 *
 
-    not implemented                  - GtkMenuButton
+    gtk.menu-button.lisp             - GtkMenuButton               - GTK+ 3.24
 
     gtk.switch.lisp                  - GtkSwitch                   - GTK+ 3.10 *
     gtk.scale-button.lisp            - GtkScaleButton              - GTK+ 3.10 *

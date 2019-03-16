@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.table.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -37,6 +34,7 @@
 ;;; Synopsis
 ;;;
 ;;;     GtkTable
+;;;     GtkAttachOptions
 ;;;
 ;;;     gtk_table_new
 ;;;     gtk_table_resize
@@ -56,6 +54,40 @@
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
+
+;;; ----------------------------------------------------------------------------
+;;; enum GtkAttachOptions
+;;; ----------------------------------------------------------------------------
+
+(define-g-flags "GtkAttachOptions" gtk-attach-options
+  (:export t
+   :type-initializer "gtk_attach_options_get_type")
+  (:expand 1)
+  (:shrink 2)
+  (:fill 4))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-attach-options atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'gtk-attach-options atdoc:*external-symbols*)
+ "@version{2013-4-18}
+  @begin{short}
+    Denotes the expansion properties that a widget will have when it or its
+    parent is resized.
+  @end{short}
+  @begin{pre}
+(define-g-flags \"GtkAttachOptions\" gtk-attach-options
+  (:export t
+   :type-initializer \"gtk_attach_options_get_type\")
+  (:expand 1)
+  (:shrink 2)
+  (:fill 4))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:expand]{The widget should expand to take up any extra space in its
+      container that has been allocated.}
+    @entry[:shrink]{The widget should shrink as and when possible.}
+    @entry[:fill]{The widget should fill the space allocated to it.}
+  @end{table}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkTable

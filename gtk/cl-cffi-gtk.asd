@@ -1,11 +1,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; cl-cffi-gtk.asd
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
-;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2016 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -96,26 +92,28 @@
    (:file "gtk.im-context")            ; Base class for input contexts
 
    ;; Layout Containers
-   (:file "gtk.box")                   ; Container box
-   (:file "gtk.table")                 ; Pack widgets in regular patterns
+   (:file "gtk.box")                   ; Container box   
    (:file "gtk.grid")                  ; Pack widgets in a rows and columns
    (:file "gtk.revealer")              ; Hide and show with animation
    (:file "gtk.list-box")              ; A list container
    (:file "gtk.flow-box")              ; Allows reflowing its children
-   (:file "gtk.layout")                ; Infinite scrollable
-   (:file "gtk.fixed")                 ; Widgets at fixed coordinates
-   (:file "gtk.notebook")              ; Tabbed notebook container
-   (:file "gtk.paned")                 ; Two adjustable panes
-   (:file "gtk.expander")              ; Container which can hide childs
-   (:file "gtk.alignment")             ; GtkAlignment
-   (:file "gtk.button-box")            ; Container for arranging buttons
+   (:file "gtk.stack")                 ; A stacking container
+   (:file "gtk.stack-switcher")        ; A controller for GtkStack
+   (:file "gtk.stack-sidebar")         ; An automatic sidebar widget
+   (:file "gtk.action-bar")            ; A bar for presenting contextual actions
    (:file "gtk.header-bar")            ; Box with a centered child
    (:file "gtk.overlay")               ; Container which overlays widgets
-
+   (:file "gtk.button-box")            ; Container for arranging buttons
+   (:file "gtk.paned")                 ; Two adjustable panes
+   (:file "gtk.layout")                ; Infinite scrollable
+   (:file "gtk.notebook")              ; Tabbed notebook container
+   (:file "gtk.expander")              ; Container which can hide childs
+   (:file "gtk.aspect-frame")          ; Constrain childs to a aspect ratio
+   (:file "gtk.fixed")                 ; Widgets at fixed coordinates
+   
    ;; Ornaments
    (:file "gtk.separator")             ; Separator widget
    (:file "gtk.frame")                 ; Decorative frame
-   (:file "gtk.aspect-frame")          ; Constrain childs to a aspect ratio
 
    ;; Scrolling
    (:file "gtk.scrollbar")             ; GtkScrollbar
@@ -148,6 +146,7 @@
    (:file "gtk.check-button")          ; GtkCheckButton
    (:file "gtk.radio-button")          ; GtkRadioButton
    (:file "gtk.link-button")           ; GtkLinkButton
+   (:file "gtk.menu-button")           ; GtkMenuButton
    (:file "gtk.scale-button")          ; GtkScaleButton
    (:file "gtk.volume-button")         ; GtkVolumeButton
    (:file "gtk.switch")                ; GtkSwitch
@@ -268,7 +267,6 @@
    (:file "gtk.recent-filter")         ; Selecting recently used files
 
    ;; Action-based menus and toolbars
-   (:file "gtk.ui-manager")            ; Constructing menus and toolbars
    (:file "gtk.action-group")          ; Group of actions
    (:file "gtk.action")                ; GtkAction
    (:file "gtk.toggle-action")         ; GtkToggleAction
@@ -302,7 +300,10 @@
 
    ;; Deprecated
 ;   (:file "gtk.style")                 ; Functions for drawing widget parts
+   (:file "gtk.alignment")             ; GtkAlignment
    (:file "gtk.resource-files")        ; Routines for handling resource files
+   (:file "gtk.table")                 ; Pack widgets in regular patterns
+   (:file "gtk.ui-manager")            ; Constructing menus and toolbars
 
    ;; Lisp
    (:file "gtk.init")

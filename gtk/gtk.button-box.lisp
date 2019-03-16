@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.button-box.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.10 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2014 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,11 +29,14 @@
 ;;;
 ;;; GtkButtonBox
 ;;;
-;;; A container for arranging buttons
+;;;     A container for arranging buttons
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkButtonBox
+;;;     GtkButtonBoxStyle
+;;;
+;;; Functions
 ;;;
 ;;;     gtk_button_box_new
 ;;;     gtk_button_box_get_layout
@@ -45,9 +45,91 @@
 ;;;     gtk_button_box_set_layout
 ;;;     gtk_button_box_set_child_secondary
 ;;;     gtk_button_box_set_child_non_homogeneous
+;;;
+;;; Properties
+;;;
+;;;     GtkButtonBoxStyle  layout-style          Read / Write
+;;;
+;;; Child Properties
+;;;
+;;;              gboolean  non-homogeneous       Read / Write
+;;;              gboolean  secondary             Read / Write
+;;;
+;;; Style Properties
+;;;
+;;;                  gint  child-internal-pad-x  Read
+;;;                  gint  child-internal-pad-y  Read
+;;;                  gint  child-min-height      Read
+;;;                  gint  child-min-width       Read
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;             ╰── GtkContainer
+;;;                 ╰── GtkBox
+;;;                     ╰── GtkButtonBox
+;;;                         ├── GtkHButtonBox
+;;;                         ╰── GtkVButtonBox
+;;;                        
+;;; Implemented Interfaces
+;;;
+;;;     GtkButtonBox implements AtkImplementorIface, GtkBuildable and
+;;;     GtkOrientable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
+
+;;; ----------------------------------------------------------------------------
+;;; enum GtkButtonBoxStyle
+;;; ----------------------------------------------------------------------------
+
+(define-g-enum "GtkButtonBoxStyle" gtk-button-box-style
+  (:export t
+   :type-initializer "gtk_button_box_style_get_type")
+  (:default-style 0)            ; TODO: not documented, check the implementation
+  (:spread 1)
+  (:edge 2)
+  (:start 3)
+  (:end 4)
+  (:center 5)
+  (:expand 6))
+  
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-button-box-style atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'gtk-button-box-style atdoc:*external-symbols*)
+ "@version{2019-3-16}
+  @begin{short}
+    Used to dictate the style that a @class{gtk-button-box} widget uses to
+    layout the buttons it contains.
+  @end{short}
+  @begin{pre}
+(define-g-enum \"GtkButtonBoxStyle\" gtk-button-box-style
+  (:export t
+   :type-initializer \"gtk_button_box_style_get_type\")
+  (:default-style 0)
+  (:spread 1)
+  (:edge 2)
+  (:start 3)
+  (:end 4)
+  (:center 5)
+  (:expand 6))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:spread]{Buttons are evenly spread across the box.}
+    @entry[:edge]{Buttons are placed at the edges of the box.}
+    @entry[:start]{Buttons are grouped towards the start of the box, on the
+      left for a horizontal box, or the top for a vertical box.}
+    @entry[:end]{Buttons are grouped towards the end of the box, on the right
+      for a horizontal box, or the bottom for a vertical box.}
+    @entry[:center]{Buttons are centered in the box. Since 2.12.}
+    @entry[:expand]{Buttons expand to fill the box. This entails giving buttons
+      a \"linked\" appearance, making button sizes homogeneous, and setting 
+      spacing to 0 (same as calling the functions @fun{gtk-box-homogeneous} and 
+      @fun{gtk-box-spacing} manually). Since 3.12.}    
+  @end{table}
+  @see-class{gtk-button-box}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkButtonBox
@@ -82,50 +164,57 @@
 
   The main purpose of @sym{gtk-button-box} is to make sure the children have
   all the same size. @sym{gtk-button-box} gives all children the same size,
-  but it does allow 'outliers' to keep their own larger size. To force all
-  children to be strictly the same size without exceptions, you can set the
-  @code{\"homogeneous\"} property to @em{true}.
+  but it does allow 'outliers' to keep their own larger size.
 
   To excempt individual children from homogeneous sizing regardless of their
   'outlier' status, you can set the @code{\"non-homogeneous\"} child property.
-  @begin[Note]{dictionary}
-    The C functions @code{gtk_button_box_get_layout} and
-    @code{gtk_button_box_set_layout} are not implemented in the Lisp binding. 
-    These functions are implemented as the generic function
-    @fun{gtk-button-box-layout-style}.
+  @begin[CSS nodes]{dictionary}
+    @class{gtk-button-box} uses a single CSS node with name buttonbox.
   @end{dictionary}
   @begin[Style Property Details]{dictionary}
     @subheading{The \"child-internal-pad-x\" style property}
       @code{\"child-internal-pad-x\"} of type @code{:int} (Read) @br{}
       Amount to increase child's size on either side. @br{}
+      @b{Warning:} @code{child-internal-pad-x} has been deprecated since version
+      3.20 and should not be used in newly-written code.
+      Use CSS padding instead. @br{}      
       Allowed values: >= 0 @br{}
       Default value: 4
 
     @subheading{The \"child-internal-pad-y\" style property}
       @code{\"child-internal-pad-y\"} of type @code{:int} (Read) @br{}
       Amount to increase child's size on the top and bottom. @br{}
+      @b{Warning:} @code{child-internal-pad-y} has been deprecated since version
+      3.20 and should not be used in newly-written code.
+      Use CSS padding instead. @br{}      
       Allowed values: >= 0 @br{}
       Default value: 0
 
     @subheading{The \"child-min-height\" style property}
       @code{\"child-min-height\"} of type @code{:int} (Read) @br{}
       Minimum height of buttons inside the box. @br{}
+      @b{Warning:} @code{child-min-height} has been deprecated since version
+      3.20 and should not be used in newly-written code.
+      Use CSS padding instead. @br{}
       Allowed values: >= 0 @br{}
       Default value: 27
 
     @subheading{The \"child-min-width\" style property}
       @code{\"child-min-width\"} of type @code{:int} (Read) @br{}
       Minimum width of buttons inside the box. @br{}
+      @b{Warning:} @code{child-min-width} has been deprecated since version
+      3.20 and should not be used in newly-written code.
+      Use CSS padding instead. @br{}
       Allowed values: >= 0 @br{}
       Default value: 85
   @end{dictionary}
   @see-slot{gtk-button-box-layout-style}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
 ;;; Property and Accessor Details
-;;;
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-button-box-layout-style --------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "layout-style" 'gtk-button-box)
@@ -159,20 +248,14 @@
   @see-symbol{gtk-button-box-style}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Child Properties
-;;;
+;;; Child Property and Child Accessor Details
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-button-box-child-non-homogeneous -----------------------------------
 
 (define-child-property "GtkButtonBox"
                        gtk-button-box-child-non-homogeneous
                        "non-homogeneous" "gboolean" t t t)
-
-(define-child-property "GtkButtonBox"
-                       gtk-button-box-child-secondary
-                       "secondary" "gboolean" t t t)
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-button-box-child-non-homogeneous atdoc:*function-name-alias*)
@@ -184,6 +267,12 @@
   If @em{true}, the child will not be subject to homogeneous sizing. @br{}
   Default value: @code{nil}
   @see-class{gtk-button-box}")
+
+;;; --- gtk-button-box-child-secondary -----------------------------------------
+
+(define-child-property "GtkButtonBox"
+                       gtk-button-box-child-secondary
+                       "secondary" "gboolean" t t t)
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-button-box-child-secondary atdoc:*function-name-alias*)
@@ -215,6 +304,24 @@
                  :orientation orientation))
 
 (export 'gtk-button-box-new)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_button_box_get_layout ()
+;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-button-box-get-layout))
+
+(defun gtk-button-box-get-layout (box)
+ #+cl-cffi-gtk-documentation
+ "@version{2019-3-16}
+  @argument[box]{a button box}
+  @return{The method used to layout buttons in @arg{box}.}
+  @begin{short}
+    Retrieves the method being used to arrange the buttons in a button box.
+  @end{short}"
+  (gtk-button-box-layout-style box))
+
+(export 'gtk-button-box-get-layout)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_button_box_get_child_secondary ()
@@ -257,6 +364,22 @@
   (gtk-button-box-child-non-homogeneous widget child))
 
 (export 'gtk-button-box-get-child-non-homogeneous)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_button_box_set_layout ()
+;;; ----------------------------------------------------------------------------
+
+(declaim (inline gtk-button-box-set-layout))
+
+(defun gtk-button-box-set-layout (box layout-style)
+ #+cl-cffi-gtk-documentation
+ "@version{2019-3-16}
+  @argument[box]{the button box}
+  @argument[layout-style]{the new layout style}
+  @short{Changes the way buttons are arranged in their container.}"
+  (setf (gtk-button-box-layout-style box) layout-style))
+
+(export 'gtk-button-box-set-layout)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_button_box_set_child_secondary ()

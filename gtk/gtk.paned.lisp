@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.paned.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.10 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2014 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,11 +29,13 @@
 ;;;
 ;;; GtkPaned
 ;;;
-;;; A widget with two adjustable panes
+;;;     A widget with two adjustable panes
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkPaned
+;;;
+;;; Functions
 ;;;
 ;;;     gtk_paned_new
 ;;;     gtk_paned_add1
@@ -48,24 +47,48 @@
 ;;;     gtk_paned_set_position
 ;;;     gtk_paned_get_position
 ;;;     gtk_paned_get_handle_window
+;;;     gtk_paned_set_wide_handle
+;;;     gtk_paned_get_wide_handle
+;;;
+;;; Properties
+;;;
+;;;         gint  max-position         Read
+;;;         gint  min-position         Read
+;;;         gint  position             Read / Write
+;;;     gboolean  position-set         Read / Write
+;;;     gboolean  wide-handle          Read / Write
 ;;;
 ;;; Child Properties
 ;;;
-;;;   "resize"                   gboolean              : Read / Write
-;;;   "shrink"                   gboolean              : Read / Write
+;;;     gboolean  resize	           Read / Write
+;;;     gboolean  shrink	           Read / Write
 ;;;
 ;;; Style Properties
 ;;;
-;;;   "handle-size"              gint                  : Read
+;;;         gint  handle-size          Read
 ;;;
 ;;; Signals
 ;;;
-;;;   "accept-position"                                : Action
-;;;   "cancel-position"                                : Action
-;;;   "cycle-child-focus"                              : Action
-;;;   "cycle-handle-focus"                             : Action
-;;;   "move-handle"                                    : Action
-;;;   "toggle-handle-focus"                            : Action
+;;;     gboolean  accept-position      Action
+;;;     gboolean  cancel-position      Action
+;;;     gboolean  cycle-child-focus    Action
+;;;     gboolean  cycle-handle-focus   Action
+;;;     gboolean  move-handle          Action
+;;;     gboolean  toggle-handle-focus  Action
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;             ╰── GtkContainer
+;;;                 ╰── GtkPaned
+;;;                     ├── GtkHPaned
+;;;                     ╰── GtkVPaned
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GtkPaned implements AtkImplementorIface, GtkBuildable and GtkOrientable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -95,7 +118,10 @@
     "position" "gint" t t)
    (position-set
     gtk-paned-position-set
-    "position-set" "gboolean" t t)))
+    "position-set" "gboolean" t t)
+   (wide-handle
+    gtk-pandes-wide-handle
+    "wide-handle" "gboolean" t t)))
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-paned 'type)
@@ -253,9 +279,7 @@
   @see-slot{gtk-paned-position-set}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
 ;;; Property and Accessor Details
-;;;
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- gtk-paned-max-position -------------------------------------------------
@@ -344,11 +368,17 @@
  "@version{2014-7-27}
   Accessor of the slot @slot[gtk-paned]{position-set} of the @class{gtk-paned}
   class.")
+  
+;;; --- gtk-panded-wide-handled ------------------------------------------------
+
+
+
+
+
+   
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Child Properties
-;;;
+;;; Child Property and Child Accessor Details
 ;;; ----------------------------------------------------------------------------
 
 (define-child-property "GtkPaned"

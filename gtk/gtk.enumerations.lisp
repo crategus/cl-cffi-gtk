@@ -1,11 +1,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.enumerations.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.10 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -32,178 +29,47 @@
 ;;;
 ;;; Standard Enumerations
 ;;;
-;;; Synopsis
+;;;     Public enumerated types used throughout GTK+   
 ;;;
-;;;     GtkAccelFlags
-;;;     GtkArrowPlacement
-;;;     GtkArrowType
-;;;     GtkAttachOptions
+;;; Types and Values
+;;;
 ;;;     GtkBaselinePosition
-;;;     GtkButtonBoxStyle
-;;;     GtkCornerType
 ;;;     GtkDeleteType
 ;;;     GtkDirectionType
-;;;     GtkExpanderStyle
-;;;     GtkIMPreeditStyle
-;;;     GtkIMStatusStyle
 ;;;     GtkJustification
 ;;;     GtkMovementStep
 ;;;     GtkOrientation
 ;;;     GtkPackType
-;;;     GtkPathPriorityType
-;;;     GtkPathType
-;;;     GtkPolicyType
 ;;;     GtkPositionType
 ;;;     GtkReliefStyle
-;;;     GtkResizeMode
 ;;;     GtkScrollStep
 ;;;     GtkScrollType
 ;;;     GtkSelectionMode
 ;;;     GtkShadowType
-;;;     GtkStateType
 ;;;     GtkStateFlags
 ;;;     GtkToolbarStyle
-;;;     GtkWindowPosition
-;;;     GtkWindowType
 ;;;     GtkSortType
+;;;
+;;; TODO: Move these implementations to other files
+;;;
 ;;;     GtkDragResult
 ;;;     GtkJunctionSides
 ;;;     GtkBorderStyle
 ;;;     GtkRegionFlags
+;;;     GtkCornerType
+;;;     GtkExpanderStyle
+;;;     GtkIMPreeditStyle
+;;;     GtkIMStatusStyle
+;;;     GtkPathPriorityType
+;;;     GtkPathType
+;;;     GtkPolicyType
+;;;     GtkResizeMode
+;;;     GtkStateType
+;;;     GtkWindowPosition
+;;;     GtkWindowType
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
-
-;;; ----------------------------------------------------------------------------
-;;; enum GtkAccelFlags
-;;; ----------------------------------------------------------------------------
-
-(define-g-flags "GtkAccelFlags" gtk-accel-flags
-  (:export t
-   :type-initializer "gtk_accel_flags_get_type")
-  (:visible 1)
-  (:locked 2)
-  (:mask 7))
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-accel-flags atdoc:*symbol-name-alias*) "Flags"
-      (gethash 'gtk-accel-flags atdoc:*external-symbols*)
- "@version{2013-4-18}
-  @short{}
-  @begin{pre}
-(define-g-flags \"GtkAccelFlags\" gtk-accel-flags
-  (:export t
-   :type-initializer \"gtk_accel_flags_get_type\")
-  (:visible 1)
-  (:locked 2)
-  (:mask 7))
-  @end{pre}")
-
-;;; ----------------------------------------------------------------------------
-;;; enum GtkArrowPlacement
-;;; ----------------------------------------------------------------------------
-
-(define-g-enum "GtkArrowPlacement" gtk-arrow-placement
-  (:export t
-   :type-initializer "gtk_arrow_placement_get_type")
-  (:both 0)
-  (:start 1)
-  (:end 2))
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-arrow-placement atdoc:*symbol-name-alias*) "Enum"
-      (gethash 'gtk-arrow-placement atdoc:*external-symbols*)
- "@version{2013-4-18}
-  @begin{short}
-    Used to specify the placement of scroll arrows in scrolling menus.
-  @end{short}
-  @begin{pre}
-(define-g-enum \"GtkArrowPlacement\" gtk-arrow-placement
-  (:export t
-   :type-initializer \"gtk_arrow_placement_get_type\")
-  (:both 0)
-  (:start 1)
-  (:end 2))
-  @end{pre}
-  @begin[code]{table}
-    @entry[:both]{Place one arrow on each end of the menu.}
-    @entry[:start]{Place both arrows at the top of the menu.}
-    @entry[:end]{Place both arrows at the bottom of the menu.}
-  @end{table}")
-
-;;; ----------------------------------------------------------------------------
-;;; enum GtkArrowType
-;;; ----------------------------------------------------------------------------
-
-(define-g-enum "GtkArrowType" gtk-arrow-type
-  (:export t
-   :type-initializer "gtk_arrow_type_get_type")
-  (:up 0)
-  (:down 1)
-  (:left 2)
-  (:right 3)
-  (:none 4))
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-arrow-type atdoc:*symbol-name-alias*) "Enum"
-      (gethash 'gtk-arrow-type atdoc:*external-symbols*)
- "@version{2013-4-18}
-  @begin{short}
-    Used to indicate the direction in which a @class{gtk-arrow} widget should
-    point.
-  @end{short}
-  @begin{pre}
-(define-g-enum \"GtkArrowType\" gtk-arrow-type
-  (:export t
-   :type-initializer \"gtk_arrow_type_get_type\")
-  (:up 0)
-  (:down 1)
-  (:left 2)
-  (:right 3)
-  (:none 4))
-  @end{pre}
-  @begin[code]{table}
-    @entry[:up]{Represents an upward pointing arrow.}
-    @entry[:down]{Represents a downward pointing arrow.}
-    @entry[:left]{Represents a left pointing arrow.}
-    @entry[:right]{Represents a right pointing arrow.}
-    @entry[:none]{No arrow. Since 2.10.}
-  @end{table}
-  @see-class{gtk-arrow}")
-
-;;; ----------------------------------------------------------------------------
-;;; enum GtkAttachOptions
-;;; ----------------------------------------------------------------------------
-
-(define-g-flags "GtkAttachOptions" gtk-attach-options
-  (:export t
-   :type-initializer "gtk_attach_options_get_type")
-  (:expand 1)
-  (:shrink 2)
-  (:fill 4))
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-attach-options atdoc:*symbol-name-alias*) "Enum"
-      (gethash 'gtk-attach-options atdoc:*external-symbols*)
- "@version{2013-4-18}
-  @begin{short}
-    Denotes the expansion properties that a widget will have when it or its
-    parent is resized.
-  @end{short}
-  @begin{pre}
-(define-g-flags \"GtkAttachOptions\" gtk-attach-options
-  (:export t
-   :type-initializer \"gtk_attach_options_get_type\")
-  (:expand 1)
-  (:shrink 2)
-  (:fill 4))
-  @end{pre}
-  @begin[code]{table}
-    @entry[:expand]{The widget should expand to take up any extra space in its
-      container that has been allocated.}
-    @entry[:shrink]{The widget should shrink as and when possible.}
-    @entry[:fill]{The widget should fill the space allocated to it.}
-  @end{table}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkBaselinePosition
@@ -228,7 +94,7 @@
   If the amount of vertical space in the row is taller than the total requested
   height of the baseline-aligned children then it can use a
   @sym{gtk-baseline-position} to select where to put the baseline inside the
-  extra availible space.
+  extra available space.
   @begin{pre}
 (define-g-enum \"GtkBaselinePosition\" gtk-baseline-position
   (:export t
@@ -244,50 +110,6 @@
   @end{table}
   Since 3.10
   @see-class{gtk-box}")
-
-;;; ----------------------------------------------------------------------------
-;;; enum GtkButtonBoxStyle
-;;; ----------------------------------------------------------------------------
-
-(define-g-enum "GtkButtonBoxStyle" gtk-button-box-style
-  (:export t
-   :type-initializer "gtk_button_box_style_get_type")
-  (:default-style 0)
-  (:spread 1)
-  (:edge 2)
-  (:start 3)
-  (:end 4)
-  (:center 5))
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-button-box-style atdoc:*symbol-name-alias*) "Enum"
-      (gethash 'gtk-button-box-style atdoc:*external-symbols*)
- "@version{2013-4-18}
-  @begin{short}
-    Used to dictate the style that a @class{gtk-button-box} widget uses to
-    layout the buttons it contains.
-  @end{short}
-  @begin{pre}
-(define-g-enum \"GtkButtonBoxStyle\" gtk-button-box-style
-  (:export t
-   :type-initializer \"gtk_button_box_style_get_type\")
-  (:default-style 0)
-  (:spread 1)
-  (:edge 2)
-  (:start 3)
-  (:end 4)
-  (:center 5))
-  @end{pre}
-  @begin[code]{table}
-    @entry[:spread]{Buttons are evenly spread across the box.}
-    @entry[:edge]{Buttons are placed at the edges of the box.}
-    @entry[:start]{Buttons are grouped towards the start of the box, on the
-      left for a horizontal box, or the top for a vertical box.}
-    @entry[:end]{Buttons are grouped towards the end of the box, on the right
-      for a horizontal box, or the bottom for a vertical box.}
-    @entry[:center]{Buttons are centered in the box. Since 2.12.}
-  @end{table}
-  @see-class{gtk-button-box}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkCornerType

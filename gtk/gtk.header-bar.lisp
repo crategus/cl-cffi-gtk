@@ -2,11 +2,11 @@
 ;;; gtk.header-bar.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.16 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2016 Dieter Kaiser
+;;; Copyright (C) 2016 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -28,7 +28,7 @@
 ;;;
 ;;; GtkHeaderBar
 ;;;
-;;; A box with a centered child
+;;;     A box with a centered child
 ;;;
 ;;; Types and Values
 ;;;
@@ -37,20 +37,36 @@
 ;;; Functions
 ;;;
 ;;;     gtk_header_bar_new
-;;;     gtk_header_bar_set_title
-;;;     gtk_header_bar_get_title
-;;;     gtk_header_bar_set_subtitle
-;;;     gtk_header_bar_get_subtitle
-;;;     gtk_header_bar_set_has_subtitle
-;;;     gtk_header_bar_get_has_subtitle
-;;;     gtk_header_bar_set_custom_title
-;;;     gtk_header_bar_get_custom_title
+;;;     gtk_header_bar_set_title                           Accessor
+;;;     gtk_header_bar_get_title                           Accessor
+;;;     gtk_header_bar_set_subtitle                        Accessor
+;;;     gtk_header_bar_get_subtitle                        Accessor
+;;;     gtk_header_bar_set_has_subtitle                    Accessor
+;;;     gtk_header_bar_get_has_subtitle                    Accessor
+;;;     gtk_header_bar_set_custom_title                    Accessor
+;;;     gtk_header_bar_get_custom_title                    Accessor
 ;;;     gtk_header_bar_pack_start
 ;;;     gtk_header_bar_pack_end
-;;;     gtk_header_bar_set_show_close_button
-;;;     gtk_header_bar_get_show_close_button
-;;;     gtk_header_bar_set_decoration_layout
-;;;     gtk_header_bar_get_decoration_layout
+;;;     gtk_header_bar_set_show_close_button               Accessor
+;;;     gtk_header_bar_get_show_close_button               Accessor
+;;;     gtk_header_bar_set_decoration_layout               Accessor
+;;;     gtk_header_bar_get_decoration_layout               Accessor
+;;;
+;;; Properties
+;;;
+;;;     GtkWidget *  custom-title           Read / Write
+;;;         gchar *  decoration-layout      Read / Write
+;;;        gboolean  decoration-layout-set  Read / Write
+;;;        gboolean  has-subtitle           Read / Write
+;;;        gboolean  show-close-button      Read / Write
+;;;            gint  spacing                Read / Write
+;;;         gchar *  subtitle               Read / Write
+;;;         gchar *  title                  Read / Write
+;;;
+;;; Child Properties
+;;;
+;;;     GtkPackType  pack-type              Read / Write
+;;;            gint  position               Read / Write
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -123,9 +139,6 @@
 
   @sym{gtk-header-bar} can add typical window frame controls, such as minimize,
   maximize and close buttons, or the window icon.
-
-  Since 3.10
-
   @begin[Child Property Details]{dictionary}
     @subheading{The \"pack-type\" child property}
       @code{\"pack-type\"} child property of type @symbol{gtk-pack-type}
@@ -141,6 +154,8 @@
       Allowed values: >= -1 @br{}
       Default value: 0
   @end{dictionary}
+  
+  Since 3.10
   @see-slot{gtk-header-bar-custom-title}
   @see-slot{gtk-header-bar-decoration-layout}
   @see-slot{gtk-header-bar-decoration-layout-set}
@@ -152,9 +167,7 @@
   @see-class{gtk-box}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
 ;;; Property and Accessor Details
-;;;
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- gtk-header-bar-custom-title --------------------------------------------
@@ -444,6 +457,59 @@
   application name.
 
   Since: 3.10
+  @see-class{gtk-header-bar}")
+
+;;; ----------------------------------------------------------------------------
+;;; Child Property and Child Accessor Details
+;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-header-bar-child-pack-type -----------------------------------------
+
+(define-child-property "GtkHeaderBar"
+                       gtk-header-bar-child-pack-type
+                       "pack-type" "GtkPackType" t t t)
+                       
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-header-bar-child-pack-type atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-header-bar-child-pack-type 'function)
+ "@version{2019-3-16}
+  @syntax[]{(gtk-header-bar-child-pack-type object) => pack-type)}
+  @syntax[]{(setf (gtk-header-bar-child-pack-type object) pack-type)}  
+  @argument[object]{a @class{gtk-header-bar} container}
+  @argument[child]{the @class{gtk-widget} child widget}
+  @argument[pack-type]{The @symbol{gtk-pack-type} type of the child.}
+  @begin{short}
+    Accessor of the child property @code{pack-type} of the 
+    @class{gtk-header-bar} class.
+  @end{short}
+  
+  Since 3.10
+  @see-class{gtk-header-bar}
+  @see-symbol{gtk-pack-type}")
+
+;;; --- gtk-header-bar-child-position ------------------------------------------
+
+(define-child-property "GtkHeaderBar"
+                       gtk-header-bar-child-position
+                       "position" "gint" t t t)
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-header-bar-child-position atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-header-bar-child-position 'function)
+ "@version{2019-3-16}
+  @syntax[]{(gtk-header-bar-child-position object) => position)}
+  @syntax[]{(setf (gtk-header-bar-child-position object) position)}  
+  @argument[object]{a @class{gtk-header-bar} container}
+  @argument[child]{the @class{gtk-widget} child widget}
+  @argument[position]{The index of the child in the parent.}
+  @begin{short}
+    Accessor of the child property @code{position} of the 
+    @class{gtk-header-bar} class.
+  @end{short}
+  
+  Since 3.10
   @see-class{gtk-header-bar}")
 
 ;;; ----------------------------------------------------------------------------

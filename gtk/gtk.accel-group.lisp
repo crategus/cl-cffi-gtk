@@ -36,6 +36,7 @@
 ;;;
 ;;; Synopsis
 ;;;
+;;;     GtkAccelFlags
 ;;;     GtkAccelGroup
 ;;;
 ;;;     gtk_accel_group_new
@@ -67,6 +68,31 @@
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
+
+;;; ----------------------------------------------------------------------------
+;;; enum GtkAccelFlags
+;;; ----------------------------------------------------------------------------
+
+(define-g-flags "GtkAccelFlags" gtk-accel-flags
+  (:export t
+   :type-initializer "gtk_accel_flags_get_type")
+  (:visible 1)
+  (:locked 2)
+  (:mask 7))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-accel-flags atdoc:*symbol-name-alias*) "Flags"
+      (gethash 'gtk-accel-flags atdoc:*external-symbols*)
+ "@version{2013-4-18}
+  @short{}
+  @begin{pre}
+(define-g-flags \"GtkAccelFlags\" gtk-accel-flags
+  (:export t
+   :type-initializer \"gtk_accel_flags_get_type\")
+  (:visible 1)
+  (:locked 2)
+  (:mask 7))
+  @end{pre}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkAccelGroup

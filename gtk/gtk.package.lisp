@@ -366,17 +366,20 @@
   @begin[Layout Containers]{section}
     @begin[GtkBox]{subsection}
       A container box.
-
+      
       @about-class{gtk-box}
+
       @about-generic{gtk-box-baseline-position}
       @about-generic{gtk-box-homogeneous}
       @about-generic{gtk-box-spacing}
-      @about-function{gtk-box-new}
+            
       @about-function{gtk-box-child-expand}
       @about-function{gtk-box-child-fill}
-      @about-function{gtk-box-child-padding}
       @about-function{gtk-box-child-pack-type}
+      @about-function{gtk-box-child-padding}
       @about-function{gtk-box-child-position}
+            
+      @about-function{gtk-box-new}
       @about-function{gtk-box-pack-start}
       @about-function{gtk-box-pack-end}
       @about-function{gtk-box-reorder-child}
@@ -406,7 +409,6 @@
       @about-function{gtk-grid-insert-column}
       @about-function{gtk-grid-insert-next-to}
     @end{subsection}
-
     @begin[GtkRevealer]{subsection}
       Hide and show with animation.
 
@@ -418,41 +420,84 @@
       @about-generic{gtk-revealer-transition-type}
       @about-function{gtk-revealer-new}
     @end{subsection}
-
     @begin[GtkListBox]{subsection}
       A list container.
 
       @about-class{gtk-list-box-row}
       @about-class{gtk-list-box}
     @end{subsection}
-
     @begin[GtkFlowBox]{subsection}
       A container that allows reflowing its children.
 
       @about-class{gtk-flow-box-child}
       @about-class{gtk-flow-box}      
     @end{subsection}
-
     @begin[GtkStack]{subsection}
       A stacking container.
-    @end{subsection}
+      
+      @about-symbol{gtk-stack-transition-type}
+      @about-class{gtk-stack}
 
+      @about-generic{gtk-stack-visible-child}
+      @about-generic{gtk-stack-visible-child-name}
+      @about-generic{gtk-stack-homogeneous}
+      @about-generic{gtk-stack-hhomogeneous}
+      @about-generic{gtk-stack-vhomogeneous}
+      @about-generic{gtk-stack-transition-duration}
+      @about-generic{gtk-stack-transition-type}
+      @about-generic{gtk-stack-transition-running}
+      @about-generic{gtk-stack-interpolate-size}
+      
+      @about-function{gtk-stack-child-icon-name}
+      @about-function{gtk-stack-child-name}
+      @about-function{gtk-stack-child-needs-attention}
+      @about-function{gtk-stack-child-position}
+      @about-function{gtk-stack-child-title}
+      
+      @about-function{gtk-stack-new}
+      @about-function{gtk-stack-add-named}
+      @about-function{gtk-stack-add-titled}
+      @about-function{gtk-stack-get-child-by-name}
+      @about-function{gtk-stack-set-visible-child-full}
+    @end{subsection}
     @begin[GtkStackSwitcher]{subsection}
       A controller for GtkStack.
-    @end{subsection}
+    
+      @about-class{gtk-stack-switcher}
 
+      @about-generic{gtk-stack-switcher-stack}      
+      @about-generic{gtk-stack-switcher-icon-size}
+      
+      @about-function{gtk-stack-switcher-new}
+    @end{subsection}
     @begin[GtkStackSidebar]{subsection}
       An automatic sidebar widget
-    @end{subsection}
 
+      @about-class{gtk-stack-sidebar}
+      
+      @about-generic{gtk-stack-sidebar-stack}
+      
+      @about-function{gtk-stack-sidebar-new}      
+    @end{subsection}
     @begin[GtkActionBar]{subsection}
       A full width bar for presenting contextual actions
-    @end{subsection}
+      
+      @about-class{gtk-action-bar}
 
+      @about-function{gtk-action-bar-child-pack-type}
+      @about-function{gtk-action-bar-child-position}
+      
+      @about-function{gtk-action-bar-new}
+      @about-function{gtk-action-bar-pack-start}
+      @about-function{gtk-action-bar-pack-end}
+      @about-function{gtk-action-bar-get-center-widget}
+      @about-function{gtk-action-bar-set-center-widget}      
+    @end{subsection}
     @begin[GtkHeaderBar]{subsection}
       A box with a centered child.
 
       @about-class{gtk-header-bar}
+      
       @about-generic{gtk-header-bar-custom-title}
       @about-generic{gtk-header-bar-decoration-layout}
       @about-generic{gtk-header-bar-decoration-layout-set}
@@ -461,44 +506,39 @@
       @about-generic{gtk-header-bar-spacing}
       @about-generic{gtk-header-bar-subtitle}
       @about-generic{gtk-header-bar-title}
+      
+      @about-function{gtk-header-bar-child-pack-type}
+      @about-function{gtk-header-bar-child-position}
+      
       @about-function{gtk-header-bar-new}
-      @about-function{gtk-header-bar-set-title}
-      @about-function{gtk-header-bar-get-title}
-      @about-function{gtk-header-bar-set-subtitle}
-      @about-function{gtk-header-bar-get-subtitle}
-      @about-function{gtk-header-bar-set-has-subtitle}
-      @about-function{gtk-header-bar-get-has-subtitle}
-      @about-function{gtk-header-bar-set-custom-title}
-      @about-function{gtk-header-bar-get-custom-title}
       @about-function{gtk-header-bar-pack-start}
       @about-function{gtk-header-bar-pack-end}
-      @about-function{gtk-header-bar-set-show-close-button}
-      @about-function{gtk-header-bar-get-show-close-button}
-      @about-function{gtk-header-bar-set-decoration-layout}
-      @about-function{gtk-header-bar-get-decoration-layout}
     @end{subsection}
     @begin[GtkOverlay]{subsection}
       A container which overlays widgets on top of each other.
 
       @about-class{gtk-overlay}
+      
+      @about-function{gtk-overlay-child-index}
+      @about-function{gtk-overlay-child-pass-through}
+      
       @about-function{gtk-overlay-new}
       @about-function{gtk-overlay-add-overlay}
-    @end{subsection}
-    @begin[GtkAlignment]{subsection}
-      A widget which controls the alignment and size of its child.
-
-      @about-class{gtk-alignment}
-      @about-function{gtk-alignment-new}
-      @about-function{gtk-alignment-set}
-      @about-function{gtk-alignment-get-padding}
-      @about-function{gtk-alignment-set-padding}
-    @end{subsection}
+      @about-function{gtk-overlay-reorder-overlay}
+      @about-function{gtk-overlay-get-overlay-pass-through}
+      @about-function{gtk-overlay-set-overlay-pass-through}
+    @end{subsection}    
     @begin[GtkButtonBox]{subsection}
       A container for arranging buttons
 
+      @about-symbol{gtk-button-box-style}
       @about-class{gtk-button-box}
+      
+      @about-generic{gtk-button-box-layout-style}
+
       @about-function{gtk-button-box-child-non-homogeneous}
       @about-function{gtk-button-box-child-secondary}
+      
       @about-function{gtk-button-box-new}
       @about-function{gtk-button-box-get-layout}
       @about-function{gtk-button-box-get-child-secondary}
@@ -627,6 +667,7 @@
       @about-function{gtk-fixed-move}
     @end{subsection}
   @end{section}
+  
   @begin[Display Widgets]{section}
     @begin[GtkLabel]{subsection}
       A widget that displays a small to medium amount of text.
@@ -855,7 +896,17 @@
       @about-function{gtk-link-button-set-visited}
     @end{subsection}
     @begin[GtkMenuButton]{subsection}
-      not implemented
+      A widget that shows a popup when clicked on.
+
+      @about-symbol{gtk-arrow-type}
+      @about-class{gtk-menu-button}
+      @about-generic{gtk-menu-button-align-widget}
+      @about-generic{gtk-menu-button-direction}
+      @about-generic{gtk-menu-button-menu-model}
+      @about-generic{gtk-menu-button-popover}
+      @about-generic{gtk-menu-button-popup}
+      @about-generic{gtk-menu-button-use-popover}
+      @about-function{gtk-menu-button-new}
     @end{subsection}
     @begin[GtkSwitch]{subsection}
       A \"light switch\" style toggle.
@@ -1168,6 +1219,7 @@
       Groups of global keyboard accelerators for an entire @class{gtk-window}
       widget.
 
+      @about-symbol{gtk-accel-flags}
       @about-class{gtk-accel-group}
       @about-function{gtk-accel-group-new}
       @about-function{gtk-accel-group-connect}
@@ -1328,13 +1380,13 @@
       not implemented
     @end{subsection}
     @begin[Standard Enumerations]{subsection}
-      Standard Enumerations
+      Public enumerated types used throughout GTK+.
 
       @about-symbol{gtk-accel-flags}
       @about-symbol{gtk-arrow-placement}
       @about-symbol{gtk-arrow-type}
       @about-symbol{gtk-attach-options}
-      @about-symbol{gtk-button-box-style}
+      @about-symbol{gtk-baseline-position}
       @about-symbol{gtk-corner-type}
       @about-symbol{gtk-delete-type}
       @about-symbol{gtk-direction-type}
@@ -3284,6 +3336,7 @@ setup_tree (void)
     @begin[GtkMenu]{subsection}
       A menu widget
 
+      @about-symbol{gtk-arrow-placement}
       @about-class{gtk-menu}
       @about-function{gtk-menu-child-left-attach}
       @about-function{gtk-menu-child-right-attach}
@@ -3296,7 +3349,7 @@ setup_tree (void)
       @about-function{gtk-menu-attach}
       @about-function{gtk-menu-popup-for-device}
       @about-function{gtk-menu-popup}
-      @about-function{gtk-menu-set-accel-group}
+      @about-function{gtk-menu-set-acrcel-group}
       @about-function{gtk-menu-get-accel-group}
       @about-function{gtk-menu-set-accel-path}
       @about-function{gtk-menu-get-accel-path}
@@ -5087,7 +5140,18 @@ setup_tree (void)
       @about-function{gtk-app-chooser-widget-get-default-text}
     @end{subsection}
   @end{section}
+  
   @begin[Deprecated]{section}
+    @begin[GtkAlignment]{subsection}
+      A widget which controls the alignment and size of its child.
+
+      @about-class{gtk-alignment}
+      @about-function{gtk-alignment-new}
+      @about-function{gtk-alignment-set}
+      @about-function{gtk-alignment-get-padding}
+      @about-function{gtk-alignment-set-padding}
+    @end{subsection}
+
     @begin[GtkSymbolicColor]{subsection}
       not implemented
     @end{subsection}

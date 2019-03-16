@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.menu.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.8.8 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2014 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,10 +29,11 @@
 ;;;
 ;;; GtkMenu
 ;;;
-;;; A menu widget
+;;;     A menu widget
 ;;;
 ;;; Synopsis
 ;;;
+;;;     GtkArrowPlacement
 ;;;     GtkMenu
 ;;;
 ;;;     gtk_menu_new
@@ -69,6 +67,38 @@
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
+
+;;; ----------------------------------------------------------------------------
+;;; enum GtkArrowPlacement
+;;; ----------------------------------------------------------------------------
+
+(define-g-enum "GtkArrowPlacement" gtk-arrow-placement
+  (:export t
+   :type-initializer "gtk_arrow_placement_get_type")
+  (:both 0)
+  (:start 1)
+  (:end 2))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-arrow-placement atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'gtk-arrow-placement atdoc:*external-symbols*)
+ "@version{2013-4-18}
+  @begin{short}
+    Used to specify the placement of scroll arrows in scrolling menus.
+  @end{short}
+  @begin{pre}
+(define-g-enum \"GtkArrowPlacement\" gtk-arrow-placement
+  (:export t
+   :type-initializer \"gtk_arrow_placement_get_type\")
+  (:both 0)
+  (:start 1)
+  (:end 2))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:both]{Place one arrow on each end of the menu.}
+    @entry[:start]{Place both arrows at the top of the menu.}
+    @entry[:end]{Place both arrows at the bottom of the menu.}
+  @end{table}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkMenu
