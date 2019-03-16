@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.fixed.lisp
 ;;; 
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>
-;;; 
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.10 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;; 
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2014 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;; 
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,15 +29,34 @@
 ;;;
 ;;; GtkFixed
 ;;;
-;;; A container which allows you to position widgets at fixed coordinates
+;;;     A container which allows you to position widgets at fixed coordinates
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkFixed
+;;;
+;;; Functions
 ;;;
 ;;;     gtk_fixed_new
 ;;;     gtk_fixed_put
 ;;;     gtk_fixed_move
+;;;
+;;; Child Properties
+;;;
+;;;     gint  x  Read / Write
+;;;     gint  y  Read / Write
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;             ╰── GtkContainer
+;;;                 ╰── GtkFixed
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GtkFixed implements AtkImplementorIface and GtkBuildable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -64,14 +80,14 @@
 (setf (documentation 'gtk-fixed 'type)
  "@version{2013-5-18}
   @begin{short}
-    The @class{gtk-fixed} widget is a container which can place child widgets at
+    The @sym{gtk-fixed} widget is a container which can place child widgets at
     fixed positions and with fixed sizes, given in pixels.
   @end{short}
-  @class{gtk-fixed} performs no automatic layout management.
+  @sym{gtk-fixed} performs no automatic layout management.
 
   For most applications, you should not use this container. It keeps you from
   having to learn about the other GTK+ containers, but it results in broken
-  applications. With @class{gtk-fixed}, the following things will result in
+  applications. With @sym{gtk-fixed}, the following things will result in
   truncated text, overlapping widgets, and other display bugs:
   @begin{itemize}
     @begin{item}
@@ -92,7 +108,7 @@
   In addition, the fixed widget cannot properly be mirrored in right-to-left
   languages such as Hebrew and Arabic. i. e. normally GTK+ will flip the
   interface to put labels to the right of the thing they label, but it cannot
-  do that with @class{gtk-fixed}. So your application will not be usable in
+  do that with @sym{gtk-fixed}. So your application will not be usable in
   right-to-left languages.
 
   Finally, fixed positioning makes it kind of annoying to add/remove GUI
@@ -102,6 +118,10 @@
   If you know none of these things are an issue for your application, and
   prefer the simplicity of @class{gtk-fixed}, by all means use the widget. But
   you should be aware of the tradeoffs.
+  
+  See also @class{gtk-layout}, which shares the ability to perform fixed 
+  positioning of child widgets and additionally adds custom drawing and 
+  scrollability.
   @begin[Child Property Details]{dictionary}
     @subheading{The \"x\" child property}
       @code{\"x\"} of type @code{:int} (Read / Write)@br{}
@@ -112,13 +132,14 @@
       @code{\"y\"} of type @code{:int} (Read / Write)@br{}
       y position of child widget.@br{}
       Default value: 0
-  @end{dictionary}")
+  @end{dictionary}
+  @see-class{gtk-layout}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Child Properties
-;;;
+;;; Child Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-fixed-child-x ------------------------------------------------------
 
 (define-child-property "GtkFixed"
                        gtk-fixed-child-x
@@ -132,7 +153,7 @@
   Accessor of the child property @code{\"x\"} of the @class{gtk-fixed} class.
   @see-class{gtk-fixed}")
 
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-fixed-child-y ------------------------------------------------------
 
 (define-child-property "GtkFixed"
                        gtk-fixed-child-y

@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.notebook.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.10 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2014 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,56 +29,116 @@
 ;;;
 ;;; GtkNotebook
 ;;;
-;;; A tabbed notebook container
+;;;     A tabbed notebook container
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkNotebook
 ;;;
-;;;     gtk_notebook_new
-;;;     gtk_notebook_append_page
-;;;     gtk_notebook_append_page_menu
-;;;     gtk_notebook_prepend_page
-;;;     gtk_notebook_prepend_page_menu
-;;;     gtk_notebook_insert_page
-;;;     gtk_notebook_insert_page_menu
-;;;     gtk_notebook_remove_page
-;;;     gtk_notebook_page_num
-;;;     gtk_notebook_next_page
-;;;     gtk_notebook_prev_page
-;;;     gtk_notebook_reorder_child
-;;;     gtk_notebook_set_tab_pos
-;;;     gtk_notebook_set_show_tabs
-;;;     gtk_notebook_set_show_border
-;;;     gtk_notebook_set_scrollable
-;;;     gtk_notebook_popup_enable
-;;;     gtk_notebook_popup_disable
-;;;     gtk_notebook_get_current_page
-;;;     gtk_notebook_get_menu_label
-;;;     gtk_notebook_get_nth_page
-;;;     gtk_notebook_get_n_pages
-;;;     gtk_notebook_get_tab_label
-;;;     gtk_notebook_set_menu_label
-;;;     gtk_notebook_set_menu_label_text
-;;;     gtk_notebook_set_tab_label
-;;;     gtk_notebook_set_tab_label_text
-;;;     gtk_notebook_set_tab_reorderable
-;;;     gtk_notebook_set_tab_detachable
-;;;     gtk_notebook_get_menu_label_text
-;;;     gtk_notebook_get_scrollable
-;;;     gtk_notebook_get_show_border
-;;;     gtk_notebook_get_show_tabs
-;;;     gtk_notebook_get_tab_label_text
-;;;     gtk_notebook_get_tab_pos
-;;;     gtk_notebook_get_tab_reorderable
-;;;     gtk_notebook_get_tab_detachable
-;;;     gtk_notebook_get_tab_hborder
-;;;     gtk_notebook_get_tab_vborder
-;;;     gtk_notebook_set_current_page
-;;;     gtk_notebook_set_group_name
-;;;     gtk_notebook_get_group_name
-;;;     gtk_notebook_set_action_widget
-;;;     gtk_notebook_get_action_widget
+;;; Functions
+;;;
+;;;     gtk_notebook_new 
+;;;     gtk_notebook_append_page 
+;;;     gtk_notebook_append_page_menu 
+;;;     gtk_notebook_prepend_page 
+;;;     gtk_notebook_prepend_page_menu 
+;;;     gtk_notebook_insert_page 
+;;;     gtk_notebook_insert_page_menu 
+;;;     gtk_notebook_remove_page 
+;;;     gtk_notebook_detach_tab 
+;;;     gtk_notebook_page_num 
+;;;     gtk_notebook_next_page 
+;;;     gtk_notebook_prev_page 
+;;;     gtk_notebook_reorder_child 
+;;;     gtk_notebook_set_tab_pos                           Accessor
+;;;     gtk_notebook_set_show_tabs                         Accessor
+;;;     gtk_notebook_set_show_border                       Accessor
+;;;     gtk_notebook_set_scrollable                        Accessor
+;;;     gtk_notebook_popup_enable 
+;;;     gtk_notebook_popup_disable 
+;;;     gtk_notebook_get_current_page 
+;;;     gtk_notebook_get_menu_label 
+;;;     gtk_notebook_get_nth_page 
+;;;     gtk_notebook_get_n_pages 
+;;;     gtk_notebook_get_tab_label 
+;;;     gtk_notebook_set_menu_label 
+;;;     gtk_notebook_set_menu_label_text 
+;;;     gtk_notebook_set_tab_label 
+;;;     gtk_notebook_set_tab_label_text 
+;;;     gtk_notebook_set_tab_reorderable 
+;;;     gtk_notebook_set_tab_detachable 
+;;;     gtk_notebook_get_menu_label_text 
+;;;     gtk_notebook_get_scrollable                        Accessor
+;;;     gtk_notebook_get_show_border                       Accessor
+;;;     gtk_notebook_get_show_tabs                         Accessor
+;;;     gtk_notebook_get_tab_label_text 
+;;;     gtk_notebook_get_tab_pos                           Accessor
+;;;     gtk_notebook_get_tab_reorderable 
+;;;     gtk_notebook_get_tab_detachable 
+;;;     gtk_notebook_get_tab_hborder                       deprecated
+;;;     gtk_notebook_get_tab_vborder                       deprecated
+;;;     gtk_notebook_set_current_page 
+;;;     gtk_notebook_set_group_name                        Accessor
+;;;     gtk_notebook_get_group_name                        Accessor
+;;;     gtk_notebook_set_action_widget 
+;;;     gtk_notebook_get_action_widget 
+;;;
+;;; Properties
+;;;
+;;;            gboolean  enable-popup  Read / Write
+;;;             gchar *  group-name    Read / Write
+;;;                gint  page          Read / Write
+;;;            gboolean  scrollable    Read / Write
+;;;            gboolean  show-border   Read / Write
+;;;            gboolean  show-tabs     Read / Write
+;;;     GtkPositionType  tab-pos       Read / Write
+;;;
+;;; Child Properties
+;;;
+;;;            gboolean  detachable    Read / Write
+;;;             gchar *  menu-label    Read / Write
+;;;                gint  position      Read / Write
+;;;            gboolean  reorderable   Read / Write
+;;;            gboolean  tab-expand    Read / Write
+;;;            gboolean  tab-fill      Read / Write
+;;;             gchar *  tab-label     Read / Write
+;;;
+;;; Style Properties
+;;;
+;;;                gint  arrow-spacing                   Read
+;;;            gboolean  has-backward-stepper            Read
+;;;            gboolean  has-forward-stepper             Read
+;;;            gboolean  has-secondary-backward-stepper  Read
+;;;            gboolean  has-secondary-forward-stepper   Read
+;;;            gboolean  has-tab-gap                     Read
+;;;                gint  initial-gap                     Read
+;;;                gint  tab-curvature                   Read
+;;;                gint  tab-overlap                     Read
+;;;
+;;; Signals
+;;;
+;;;            gboolean  change-current-page  Action
+;;;        GtkNotebook*  create-window        Run Last
+;;;            gboolean  focus-tab            Action 
+;;;                void  move-focus-out       Action
+;;;                void  page-added           Run Last
+;;;                void  page-removed         Run Last
+;;;                void  page-reordered       Run Last
+;;;            gboolean  reorder-tab	       Action
+;;;            gboolean  select-page	       Action
+;;;                void  switch-page          Run Last
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;             ╰── GtkContainer
+;;;                 ╰── GtkNotebook
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GtkNotebook implements AtkImplementorIface and GtkBuildable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -174,8 +231,7 @@
   function @fun{gtk-notebook-scrollable}, and whether there will be a popup
   menu allowing the users to switch pages, see the functions
   @fun{gtk-notebook-popup-enable} and @fun{gtk-notebook-popup-disable}.
-
-  @subheading{GtkNotebook as GtkBuildable}
+  @begin[GtkNotebook as GtkBuildable]{dictionary}
     The @sym{gtk-notebook} implementation of the @class{gtk-buildable}
     interface supports placing children into tabs by specifying \"tab\" as the
     \"type\" attribute of a <child> element. Note that the content of the tab
@@ -200,6 +256,47 @@
    </child>
  </object>
     @end{pre}
+  @end{dictionary}
+  @begin[CSS nodes]{dictionary}
+    @begin{pre}
+  notebook
+  ├── header.top
+  │   ├── [<action widget>]
+  │   ├── tabs
+  │   │   ├── [arrow]
+  │   │   ├── tab
+  │   │   │   ╰── <tab label>
+  ┊   ┊   ┊
+  │   │   ├── tab[.reorderable-page]
+  │   │   │   ╰── <tab label>
+  │   │   ╰── [arrow]
+  │   ╰── [<action widget>]
+  │
+  ╰── stack
+      ├── <child>
+      ┊
+      ╰── <child>
+    @end{pre}
+    @sym{gtk-notebook} has a main CSS node with name notebook, a subnode with 
+    name header and below that a subnode with name tabs which contains one 
+    subnode per tab with name tab.
+
+    If action widgets are present, their CSS nodes are placed next to the tabs 
+    node. If the notebook is scrollable, CSS nodes with name arrow are placed as
+    first and last child of the tabs node.
+
+    The main node gets the .frame style class when the notebook has a border 
+    (see @fun{gtk-notebook-show-border}).
+
+    The header node gets one of the style class .top, .bottom, .left or .right, 
+    depending on where the tabs are placed. For reorderable pages, the tab node 
+    gets the .reorderable-page class.
+
+    A tab node gets the .dnd style class while it is moved with drag-and-drop.
+
+    The nodes are always arranged from left-to-right, regarldess of text 
+    direction.  
+  @end{dictionary}
   @begin[Child Property Details]{dictionary}
     @subheading{The \"detachable\" child property}
       @code{\"detachable\"} of type @code{:boolean} (Read / Write) @br{}
@@ -242,6 +339,10 @@
       @code{\"arrow-spacing\"} of type @code{:int} (Read) @br{}
       The @code{\"arrow-spacing\"} property defines the spacing between the
       scroll arrows and the tabs. @br{}
+      @b{Warning:} @code{arrow-spacing} has been deprecated since version 3.20 
+      and should not be used in newly-written code.
+      This property is ignored. Use margins on arrows or the \"tabs\" node to 
+      achieve the same effect. @br{}      
       Allowed values: >= 0 @br{}
       Default value: 0 @br{}
       Since 2.10
@@ -277,11 +378,27 @@
       area. @br{}
       Default value: @code{nil} @br{}
       Since 2.4
+      
+    @subheading{The \"has-tab-gap\" style property}
+      @code{\"has-tab-gap\"} of type @code{:boolean} (Read) @br{}
+      The @code{\"has-tab-gap\"} property defines whether the active tab is draw
+      with a gap at the bottom. When @em{true} the theme engine uses 
+      @fun{gtk-render-extension} to draw the active tab. When @code{nil} 
+      @fun{gtk-render-background} and @fun{gtk-render-frame} are used. @br{}
+      @b{Warning:} @code{has-tab-gap} has been deprecated since version 3.20 and
+      should not be used in newly-written code.
+      This function always behaves as if it was set to @code{nil}.@br{}
+      Default value: @em{true}
+      Since 3.12
 
     @subheading{The \"initial-gap\" style property}
       @code{\"initial-gap\"} of type @code{:int} (Read) @br{}
       The @code{\"initial-gap\"} property defines the minimum size for the
       initial gap between the first tab. @br{}
+      @b{Warning:} @code{initial-gap} has been deprecated since version 3.20 and
+      should not be used in newly-written code.
+      The intial gap is ignored. Use margins on the header node to achieve the 
+      same effect. @br{}
       Allowed values: >= 0 @br{}
       Default value: 0 @br{}
       Since 3.2
@@ -289,6 +406,10 @@
     @subheading{The \"tab-curvature\" style property}
       @code{\"tab-curvature\"} of type @code{:int} (Read) @br{}
       The @code{\"tab-curvature\"} property defines size of tab curvature. @br{}
+      @b{Warning:} @code{tab-curvature} has been deprecated since version 3.20
+      and should not be used in newly-written code.
+      This property is ignored. Use margins on tab nodes to achieve the same 
+      effect. @br{}
       Allowed values: >= 0 @br{}
       Default value: 1 @br{}
       Since 2.10
@@ -297,6 +418,10 @@
       @code{\"tab-overlap\"} of type @code{:int} (Read) @br{}
       The @code{\"tab-overlap\"} property defines size of tab overlap
       area. @br{}
+      @b{Warning;} @code{tab-overlap} has been deprecated since version 3.20 and
+      should not be used in newly-written code.
+      This property is ignored. Use margins on tab nodes to achieve the same 
+      effect. @br{}
       Default value: 2 @br{}
       Since 2.10
   @end{dictionary}
@@ -305,6 +430,7 @@
       @begin{pre}
  lambda (notebook arg1)   : Action
       @end{pre}
+      
     @subheading{The \"create-window\" signal}
       @begin{pre}
  lambda (notebook page x y)   : Run Last
@@ -329,10 +455,12 @@
       @begin{pre}
  lambda (notebook arg1)   : Action
       @end{pre}
+      
     @subheading{The \"move-focus-out\" signal}
       @begin{pre}
  lambda (notebook arg1)   : Action
       @end{pre}
+      
     @subheading{The \"page-added\" signal}
       @begin{pre}
  lambda (notebook child page-num)   : Run Last
@@ -376,10 +504,12 @@
       @begin{pre}
  lambda (notebook arg1 arg2)   : Action
       @end{pre}
+      
     @subheading{The \"select-page\" signal}
       @begin{pre}
  lambda (notebook arg1)   : Action
       @end{pre}
+      
     @subheading{The \"switch-page\" signal}
       @begin{pre}
  lambda (notebook page page-num)   : Run Last
@@ -400,9 +530,7 @@
   @see-slot{gtk-notebook-tab-pos}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
 ;;; Property and Accessor Details
-;;;
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- gtk-notebook-enable-popup ----------------------------------------------
@@ -607,10 +735,10 @@
   @see-class{gtk-notebook}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Child Properties
-;;;
+;;; Child Property and Child Accessor Details
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-notebook-child-detachable ------------------------------------------
 
 (define-child-property "GtkNotebook"
                        gtk-notebook-child-detachable
@@ -625,7 +753,7 @@
   @class{gtk-notebook} class.
   @see-class{gtk-notebook}")
 
-;;; ----------------------------------------------------------------------------
+;;; --- gtl-notebook-child-menu-label ------------------------------------------
 
 (define-child-property "GtkNotebook"
                        gtk-notebook-child-menu-label
@@ -640,7 +768,7 @@
   @class{gtk-notebook} class.
   @see-class{gtk-notebook}")
 
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-notebook-child-position --------------------------------------------
 
 (define-child-property "GtkNotebook"
                        gtk-notebook-child-position
@@ -655,7 +783,7 @@
   @class{gtk-notebook} class.
   @see-class{gtk-notebook}")
 
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-notebook-child-reorderable -----------------------------------------
 
 (define-child-property "GtkNotebook"
                        gtk-notebook-child-reorderable
@@ -670,7 +798,7 @@
   @class{gtk-notebook} class.
   @see-class{gtk-notebook}")
 
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-notebook-child-tab-expand ------------------------------------------
 
 (define-child-property "GtkNotebook"
                        gtk-notebook-child-tab-expand
@@ -685,7 +813,7 @@
   @class{gtk-notebook} class.
   @see-class{gtk-notebook}")
 
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-notebook-child-tab-fill --------------------------------------------
 
 (define-child-property "GtkNotebook"
                        gtk-notebook-child-tab-fill
@@ -700,7 +828,7 @@
   @class{gtk-notebook} class.
   @see-class{gtk-notebook}")
 
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-notebook-child-tab-level -------------------------------------------
 
 (define-child-property "GtkNotebook"
                        gtk-notebook-child-tab-label
@@ -916,6 +1044,31 @@
                                                        page-or-number)))))
 
 (export 'gtk-notebook-remove-page)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_notebook_detach_tab ()
+;;; ----------------------------------------------------------------------------
+
+(defcfun ("gtk_notebook_detach_tab" gtk-notebook-detach-tab) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2019-3-16}
+  @argument[notebook]{a @class{gtk-notebook} container}
+  @argument[child]{a @class{gtk-widget} object}
+  @begin{short}
+    Removes the child from the notebook.
+  @end{short}
+
+  This function is very similar to @fun{gtk-container-remove}, but additionally 
+  informs the notebook that the removal is happening as part of a tab DND 
+  operation, which should not be cancelled.
+
+  Since 3.16
+  @see-class{gtk-notebook}
+  @see-function{gtk-container-remove}"
+  (notebook g-object)
+  (child (g-object gtk-widget)))
+
+(export 'gtk-notebook-detach-tab)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_notebook_page_num ()

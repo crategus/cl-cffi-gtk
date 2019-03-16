@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.aspect-frame.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.10 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2014 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,14 +29,37 @@
 ;;;
 ;;; GtkAspectFrame
 ;;;
-;;; A frame that constrains its child to a particular aspect ratio
+;;;     A frame that constrains its child to a particular aspect ratio
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkAspectFrame
 ;;;
+;;; Functions
+;;;
 ;;;     gtk_aspect_frame_new
 ;;;     gtk_aspect_frame_set
+;;;
+;;; Properties
+;;;
+;;;     gboolean  obey-child  Read / Write
+;;;       gfloat  ratio       Read / Write
+;;;       gfloat  xalign      Read / Write
+;;;       gfloat  yalign      Read / Write
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;        ╰── GtkWidget
+;;;             ╰── GtkContainer
+;;;                 ╰── GtkBin
+;;;                     ╰── GtkFrame
+;;;                        ╰── GtkAspectFrame
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GtkAspectFrame implements AtkImplementorIface and GtkBuildable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -78,15 +98,16 @@
   @sym{gtk-aspect-frame} derives from @class{gtk-frame}, so it can draw a label
   and a frame around the child. The frame will be \"shrink-wrapped\" to the size
   of the child.
+  @begin[CSS nodes]{dictionary}
+    @sym{gtk-aspect-frame} uses a CSS node with name frame.
+  @end{dictionary}
   @see-slot{gtk-aspect-frame-obey-child}
   @see-slot{gtk-aspect-frame-ratio}
   @see-slot{gtk-aspect-frame-xalign}
   @see-slot{gtk-aspect-frame-yalign}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
 ;;; Property and Accessor Details
-;;;
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- gtk-aspect-frame-obey-child --------------------------------------------

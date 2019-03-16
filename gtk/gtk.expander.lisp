@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.expander.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.10 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2014 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,14 +29,65 @@
 ;;;
 ;;; GtkExpander
 ;;; 
-;;; A container which can hide its child
-;;;     
-;;; Synopsis
-;;; 
+;;;     A container which can hide its child
+;;;
+;;; Types and Values
+;;;
 ;;;     GtkExpander
-;;;     
-;;;     gtk_expander_new
-;;;     gtk_expander_new_with_mnemonic
+;;;
+;;; Functions
+;;;
+;;;     gtk_expander_new 
+;;;     gtk_expander_new_with_mnemonic 
+;;;     gtk_expander_set_expanded                          Accessor
+;;;     gtk_expander_get_expanded                          Accessor
+;;;     gtk_expander_set_spacing                           Accessor
+;;;     gtk_expander_get_spacing                           Accessor
+;;;     gtk_expander_set_label                             Accessor
+;;;     gtk_expander_get_label                             Accessor
+;;;     gtk_expander_set_use_underline                     Accessor
+;;;     gtk_expander_get_use_underline                     Accessor
+;;;     gtk_expander_set_use_markup                        Accessor
+;;;     gtk_expander_get_use_markup                        Accessor
+;;;     gtk_expander_set_label_widget                      Accessor
+;;;     gtk_expander_get_label_widget                      Accessor
+;;;     gtk_expander_set_label_fill                        Accessor
+;;;     gtk_expander_get_label_fill                        Accessor
+;;;     gtk_expander_set_resize_toplevel                   Accessor
+;;;     gtk_expander_get_resize_toplevel                   Accessor
+;;;
+;;; Properties
+;;;
+;;;       gboolean  expanded          Read / Write / Construct
+;;;        gchar *  label             Read / Write / Construct
+;;;       gboolean  label-fill        Read / Write / Construct
+;;;     GtkWidget*  label-widget      Read / Write
+;;;       gboolean  resize-toplevel   Read / Write
+;;;           gint  spacing           Read / Write
+;;;       gboolean  use-markup        Read / Write / Construct
+;;;       gboolean  use-underline     Read / Write / Construct
+;;;
+;;; Style Properties
+;;;
+;;;           gint  expander-size     Read
+;;;           gint  expander-spacing  Read
+;;;
+;;; Signals
+;;;
+;;;           void  activate  Action
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;        ╰── GtkWidget
+;;;             ╰── GtkContainer
+;;;                 ╰── GtkBin
+;;;                     ╰── GtkExpander
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GtkExpander implements AtkImplementorIface and GtkBuildable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -81,7 +129,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-expander 'type)
- "@version{2014-8-22}
+ "@version{2019-3-16}
   @begin{short}
     A @sym{gtk-expander} allows the user to hide or show its child by clicking
     on an expander triangle similar to the triangles used in a
@@ -111,7 +159,7 @@
                             ... )))
     ... )
     @end{pre}
-  @subheading{GtkExpander as GtkBuildable}
+  @begin[GtkExpander as GtkBuildable]{dictionary}
     The @sym{gtk-expander} implementation of the @class{gtk-buildable}
     interface supports placing a child in the label position by specifying
     @code{\"label\"} as the @code{\"type\"} attribute of a @code{<child>}
@@ -128,16 +176,36 @@
    </child>
  </object>
     @end{pre}
+  @end{dictionary}
+  @begin[CSS nodes]{dictionary}
+    @begin{pre}
+  expander
+  ├── title
+  │   ├── arrow
+  │   ╰── <label widget>
+  ╰── <child>
+    @end{pre}
+    @sym{gtk-expander} has three CSS nodes, the main node with the name 
+    expander, a subnode with name title and node below it with name arrow. The 
+    arrow of an expander that is showing its child gets the :checked pseudoclass
+    added to it.
+  @end{dictionary}
   @begin[Style Property Details]{dictionary}
     @subheading{The \"expander-size\" style property}
       @code{\"expander-size\"} of type @code{:int} (Read) @br{}
-      Size of the expander arrow. @br{}
+      Size of the expander arrow. @br{}      
+      @b{Warning:} @code{expander-size} has been deprecated since version 3.20 
+      and should not be used in newly-written code. Use CSS min-width and 
+      min-height instead. @br{}
       Allowed values: >= 0 @br{}
       Default value: 10
 
     @subheading{The \"expander-spacing\" style property}
       @code{\"expander-spacing\"} of type @code{:int} (Read) @br{}
       Spacing around expander arrow. @br{}
+      @b{Warning:} @code{expander-spacing} has been deprecated since version 
+      3.20 and should not be used in newly-written code. Use CSS margins 
+      instead, the value of this style property is ignored. @br{}
       Allowed values: >= 0 @br{}
       Default value: 2
   @end{dictionary}
@@ -159,9 +227,7 @@
   @see-class{gtk-tree-view}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
 ;;; Property and Accessor Details
-;;;
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- gtk-expander-expanded --------------------------------------------------
@@ -348,7 +414,10 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "spacing" 'gtk-expander) 't)
  "The @code{\"spacing\"} property of type @code{:int} (Read / Write) @br{}
-  Space to put between the label and the child. @br{}
+  Space to put between the label and the child. @br{}  
+  @B{Warning:} @code{spacing} has been deprecated since version 3.20 and should 
+  not be used in newly-written code. This property is deprecated and ignored. 
+  Use margins on the child instead. @br{}
   Allowed values: >= 0 @br{}
   Default value: 0")
 
@@ -372,7 +441,12 @@
   The generic function @sym{(setf gtk-expander-spacing)} sets the spacing field
   of the expander, which is the number of pixels to place between the expander
   and the child.
- 
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-expander-spacing} has been deprecated since version 
+    3.20 and should not be used in newly-written code. Use margins on the child 
+    instead.  
+  @end{dictionary}
+  
   Since 2.4
   @see-class{gtk-expander}")
 

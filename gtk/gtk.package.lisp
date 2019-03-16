@@ -590,6 +590,14 @@
 
       @about-class{gtk-notebook}
       
+      @about-generic{gtk-notebook-enable-popup}
+      @about-generic{gtk-notebook-group-name}
+      @about-generic{gtk-notebook-page}
+      @about-generic{gtk-notebook-scrollable}
+      @about-generic{gtk-notebook-show-border}
+      @about-generic{gtk-notebook-show-tabs}
+      @about-generic{gtk-notebook-tab-pos}
+      
       @about-function{gtk-notebook-child-detachable}
       @about-function{gtk-notebook-child-menu-label}
       @about-function{gtk-notebook-child-position}
@@ -606,6 +614,7 @@
       @about-function{gtk-notebook-insert-page}
       @about-function{gtk-notebook-insert-page-menu}
       @about-function{gtk-notebook-remove-page}
+      @about-function{gtk-notebook-detach-tab}      
       @about-function{gtk-notebook-page-num}
       @about-function{gtk-notebook-next-page}
       @about-function{gtk-notebook-prev-page}
@@ -647,6 +656,16 @@
       A container which can hide its child.
 
       @about-class{gtk-expander}
+
+      @about-generic{gtk-expander-expanded}
+      @about-generic{gtk-expander-label}
+      @about-generic{gtk-expander-label-fill}
+      @about-generic{gtk-expander-label-widget}
+      @about-generic{gtk-expander-resize-toplevel}
+      @about-generic{gtk-expander-spacing}
+      @about-generic{gtk-expander-use-markup}
+      @about-generic{gtk-expander-use-underline}
+            
       @about-function{gtk-expander-new}
       @about-function{gtk-expander-new-with-mnemonic}
     @end{subsection}
@@ -654,11 +673,19 @@
       An interface for flippable widgets.
 
       @about-class{gtk-orientable}
+      
+      @about-generic{gtk-orientable-orientation}
     @end{subsection}
     @begin[GtkAspectFrame]{subsection}
       A frame that constrains its child to a particular aspect ratio.
 
       @about-class{gtk-aspect-frame}
+      
+      @about-generic{gtk-aspect-frame-obey-child}
+      @about-generic{gtk-aspect-frame-ratio}
+      @about-generic{gtk-aspect-frame-xalign}
+      @about-generic{gtk-aspect-frame-yalign}      
+      
       @about-function{gtk-aspect-frame-new}
       @about-function{gtk-aspect-frame-set}
     @end{subsection}
@@ -666,14 +693,15 @@
       A container which allows you to position widgets at fixed coordinates.
 
       @about-class{gtk-fixed}
+      
       @about-function{gtk-fixed-child-x}
       @about-function{gtk-fixed-child-y}
+
       @about-function{gtk-fixed-new}
       @about-function{gtk-fixed-put}
       @about-function{gtk-fixed-move}
     @end{subsection}
   @end{section}
-  
   @begin[Display Widgets]{section}
     @begin[GtkLabel]{subsection}
       A widget that displays a small to medium amount of text.
