@@ -29,9 +29,13 @@
 ;;;
 ;;; GtkMisc
 ;;;
-;;; Base class for widgets with alignments and padding
+;;;     Base class for widgets with alignments and padding
+;;;
+;;; Types and Values
 ;;;
 ;;;     GtkMisc
+;;;
+;;; Functions
 ;;;
 ;;;     gtk_misc_set_alignment
 ;;;     gtk_misc_set_padding
@@ -63,8 +67,6 @@
    (ypad
     gtk-misc-ypad "ypad" "gint" t t)))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-misc 'type)
  "@version{2019-3-5}
@@ -82,9 +84,10 @@
   area, the alignment settings will not alter the widgets position.
   @begin[Note]{dictionary}
     Note that the desired effect can in most cases be achieved by using the
-    @code{\"halign\"}, @code{\"valign\"} and @code{\"margin\"} properties on
-    the child widget, so @sym{gtk-misc} should not be used in new code.
-    To reflect this fact, all @sym{gtk-misc} API has been deprecates.
+    @slot[gtk-widget]{halign}, @slot[gtk-widget]{valign} and
+    @slot[gtk-widget]{margin} properties on the child widget, so @sym{gtk-misc}
+    should not be used in new code.
+    To reflect this fact, all @sym{gtk-misc} API has been deprecated.
   @end{dictionary}
   @see-slot{gtk-misc-xalign}
   @see-slot{gtk-misc-xpad}
@@ -92,9 +95,7 @@
   @see-slot{gtk-misc-ypad}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
 ;;; Property and Accessor Details
-;;;
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- gtk-misc-xalign --------------------------------------------------------
@@ -174,7 +175,7 @@
   @argument[misc]{a @class{gtk-misc} widget}
   @argument[xalign]{the horizontal alignment, from 0 (left) to 1 (right)}
   @argument[yalign]{the vertical alignment, from 0 (top) to 1 (bottom)}
-  Sets the alignment of the widget.
+  @short{Sets the alignment of the widget.}
   @begin[Warning]{dictionary}
     The function @sym{gtk-misc-set-alignment} has been deprecated since version
     3.14 and should not be used in newly-written code. Use @class{gtk-widget}
@@ -199,7 +200,7 @@
     widget, in pixels}
   @argument[ypad]{the amount of space to add on the top and bottom of the
     widget, in pixels}
-  Sets the amount of space to add around the widget.
+  @short{Sets the amount of space to add around the widget.}
   @begin[Warning]{dictionary}
     The function @sym{gtk-misc-set-padding} has been deprecated since version
     3.14 and should not be used in newly-written code. Use @class{gtk-widget}
