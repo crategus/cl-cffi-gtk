@@ -261,21 +261,22 @@ GTK+ Widgets and Objects
 
   Gestures and event handling
 
-    GtkEventController — Self-contained handler of series of events
-    GtkEventControllerKey — Event controller for key events
-    GtkEventControllerScroll — Event controller for scroll events
-    GtkEventControllerMotion — Event controller for motion events
-    GtkGesture — Base class for gestures
-    GtkGestureSingle — Base class for mouse/single-touch gestures
-    GtkGestureDrag — Drag gesture
-    GtkGestureLongPress — "Press and Hold" gesture
-    GtkGestureMultiPress — Multipress gesture
-    GtkGesturePan — Pan gesture
-    GtkGestureSwipe — Swipe gesture
-    GtkGestureRotate — Rotate gesture
-    GtkGestureZoom — Zoom gesture
-    GtkGestureStylus — Gesture for stylus input
-    GtkPadController — Controller for drawing tablet pads
+    gtk.event-controller.lisp        - GtkEventController          - GTK+ 3.24
+    gtk.event-controller-key.lisp    - GtkEventControllerKey       - GTK+ 3.24
+    gtk.event-controller-scroll.lisp - GtkEventControllerScroll    - GTK+ 3.24
+    gtk.event-controller-motion.lisp - GtkEventControllerMotion    - GTK+ 3.24
+    gtk.gesture.lisp                 - GtkGesture                  - GTK+ 3.24 &
+
+    gtk.gesture-single.lisp          - GtkGestureSingle            - GTK+
+    gtk.gesture-drag.lisp            - GtkGestureDrag              - GTK+
+    gtk.gesture-long-press.lisp      - GtkGestureLongPress         - GTK+
+    gtk.gesture-multi-press.lisp     - GtkGestureMultiPress        - GTK+
+    gtk.gesture-pan.lisp             - GtkGesturePan               - GTK+
+    gtk.gesture-swipe.lisp           - GtkGestureSwipe             - GTK+
+    gtk.gesture-rotate.lisp          - GtkGestureRotate            - GTK+
+    gtk.gesture-zoom.lisp            - GtkGestureZoom              - GTK+
+    gtk.gesture-stylus.lisp          - GtkGestureStylus            - GTK+
+    gtk.pad-controller.lisp          - GtkPadController            - GTK+
 
 GTK+ Core Reference
 

@@ -278,6 +278,23 @@
    (:file "gtk.app-chooser-button")    ; Button to launch an application
    (:file "gtk.app-chooser-dialog")    ; Application chooser dialog
    (:file "gtk.app-chooser-widget")    ; Application chooser widget
+   
+   ;; Gestures and event handling
+   (:file "gtk.event-controller")       ; Handler of series of events
+   (:file "gtk.event-controller-key")   ; Event controller for key events
+   (:file "gtk.event-controller-scroll"); Event controller for scroll events
+   (:file "gtk.event-controller-motion"); Event controller for motion events
+   (:file "gtk.gesture")                ; Base class for gestures
+   (:file "gtk.gesture-single")         ; Base class for single-touch gestures
+   (:file "gtk.gesture-drag")           ; Drag gesture
+   (:file "gtk.gesture-long-press")     ; "Press and Hold" gesture
+   (:file "gtk.gesture-multi-press")    ; Multipress gesture
+   (:file "gtk.gesture-pan")            ; Pan gesture
+   (:file "gtk.gesture-swipe")          ; Swipe gesture
+   (:file "gtk.gesture-rotate")         ; Rotate gesture
+   (:file "gtk.gesture-zoom")           ; Zoom gesture
+   (:file "gtk.gesture-stylus")         ; Gesture for stylus input
+   (:file "gtk.pad-controller")         ; Controller for drawing tablet pads
 
    ;; Printing
    (:file "gtk.print-operation")       ; High-level Printing API

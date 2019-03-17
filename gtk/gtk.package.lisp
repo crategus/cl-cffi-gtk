@@ -1145,13 +1145,6 @@
       @about-function{gtk-editable-get-editable}
     @end{subsection}
   @end{section}
-
-
-
-
-
-
-
   @begin[GTK+ Core Reference]{section}
     @begin[Main loop and Events]{subsection}
       Library initialization, main event loop, and events.
@@ -5174,7 +5167,134 @@ setup_tree (void)
       @about-function{gtk-app-chooser-widget-get-default-text}
     @end{subsection}
   @end{section}
-  
+  @begin[Gestures and event handling]{section}
+    @begin[GtkEventController]{subsection}
+      Self-contained handler of series of events
+      
+      @about-symbol{gtk-propagation-phase}
+      @about-class{gtk-event-controller}
+      
+      @about-generic{gtk-event-controller-propagation-phase}
+      @about-generic{gtk-event-controller-widget}
+      
+      @about-function{gtk-event-controller-handle-event}
+      @about-function{gtk-event-controller-reset}
+    @end{subsection}
+
+    @begin[GtkEventControllerKey]{subsection}
+      Event controller for key events
+      
+      @about-class{gtk-event-controller-key}
+
+      @about-class{gtk-event-controller-key-new}
+    @end{subsection}
+
+    @begin[GtkEventControllerScroll]{subsection}
+      Event controller for scroll events
+
+      @about-symbol{gtk-event-controller-scroll-flags}      
+      @about-class{gtk-event-controller-scroll}
+
+      @about-generic{gtk-event-controller-scroll-flags}
+
+      @about-function{gtk-event-controller-scroll-new}
+    @end{subsection}
+    
+    @begin[GtkEventControllerMotion]{subsection}
+      Event controller for motion events
+      
+      @about-class{gtk-event-controller-motion}
+
+      @about-function{gtk-event-controller-motion-new}
+    @end{subsection}
+    
+    @begin[GtkGesture]{subsection}
+      Base class for gestures
+      
+      @about-class{gtk-gesture}
+
+      @about-generic{gtk-gesture-n-points}
+      @about-generic{gtk-gesture-window}
+
+      @about-function{gtk-gesture-get-device}
+      @about-function{gtk-gesture-is-active} 
+      @about-function{gtk-gesture-is-recognized}
+      @about-function{gtk-gesture-get-sequence-state}
+      @about-function{gtk-gesture-set-sequence-state}
+      @about-function{gtk-gesture-set-state}
+      @about-function{gtk-gesture-get-sequences}
+      @about-function{gtk-gesture-handles-sequence}
+      @about-function{gtk-gesture-get-last-updated-sequence}
+      @about-function{gtk-gesture-get-last-event}
+      @about-function{gtk-gesture-get-point}
+      @about-function{gtk-gesture-get-bounding-box}
+      @about-function{gtk-gesture-get-bounding-box-center}
+      @about-function{gtk-gesture-group}
+      @about-function{gtk-gesture-ungroup}
+      @about-function{gtk-gesture-get-group}
+      @about-function{gtk-gesture-is-grouped-with}
+    @end{subsection}
+
+    @begin[GtkGestureSingle]{subsection}
+      Base class for mouse/single-touch gestures
+      
+      @about-class{gtk-gesture-single}
+    @end{subsection}
+
+    @begin[GtkGestureDrag]{subsection}
+      Drag gesture
+      
+      @about-class{gtk-gesture-drag}
+    @end{subsection}
+    
+    @begin[GtkGestureLongPress]{subsection}
+      \"Press and Hold\" gesture
+      
+      @about-class{gtk-gesture-long-press}
+    @end{subsection}
+    
+    @begin[GtkGestureMultiPress]{subsection}
+      Multipress gesture
+      
+      @about-class{gtk-gesture-multi-press}
+    @end{subsection}
+    
+    @begin[GtkGesturePan]{subsection}
+      Pan gesture
+      
+      @about-class{gtk-gesture-pan}
+    @end{subsection}
+    
+    @begin[GtkGestureSwipe]{subsection}
+      Swipe gesture
+      
+      @about-class{gtk-gesture-swipe}
+    @end{subsection}
+    
+    @begin[GtkGestureRotate]{subsection}
+      Rotate gesture
+      
+      @about-class{gtk-gesture-rotate}
+    @end{subsection}
+    
+    @begin[GtkGestureZoom]{subsection}
+      Zoom gesture
+      
+      @about-class{gtk-gesture-zoom}
+    @end{subsection}
+    
+    @begin[GtkGestureStylus]{subsection}
+      Gesture for stylus input
+      
+      @about-class{gtk-gesture-stylus}
+    @end{subsection}
+    
+    @begin[GtkPadController]{subsection}
+      Controller for drawing tablet pads
+      
+      @about-class{gtk-pad-controller}
+    @end{subsection}
+  @end{section}
   @begin[Deprecated]{section}
     @begin[GtkAlignment]{subsection}
       A widget which controls the alignment and size of its child.
@@ -5477,7 +5597,6 @@ setup_tree (void)
       @about-class{gtk-vscrollbar}
       @about-function{gtk-vscrollbar-new}
     @end{subsection}
-
     @begin[GtkMisc]{subsection}
       Base class for widgets with alignments and padding.
 
@@ -5487,8 +5606,6 @@ setup_tree (void)
       @about-function{gtk-misc-get-alignment}
       @about-function{gtk-misc-get-padding}
     @end{subsection}
-
-
   @end{section}")
 
 ;;; --- End of file gtk.package.lisp -------------------------------------------
