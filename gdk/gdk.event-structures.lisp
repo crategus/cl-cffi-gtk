@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gdk.event-structures.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GDK 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GDK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GDK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2014 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,9 +29,9 @@
 ;;;
 ;;; Event Structures
 ;;;
-;;; Data structures specific to each type of event
+;;;     Data structures specific to each type of event
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GdkScrollDirection
 ;;;     GdkVisibilityState
@@ -45,13 +42,12 @@
 ;;;     GdkSettingAction
 ;;;     GdkOwnerChange
 ;;;
-;;;     GdkEventType     <-- gdk.events.lisp
-;;;     GdkModifierType  <-- gdk.window.lisp
-;;;     GdkEventMask     <-- gdk.events.lisp
-;;;     GdkEventSequence <-- gdk-events.lisp
+;;;     GdkEventType        <-- gdk.events.lisp
+;;;     GdkModifierType     <-- gdk.window.lisp
+;;;     GdkEventMask        <-- gdk.events.lisp
+;;;     GdkEventSequence    <-- gdk-events.lisp
 ;;;
 ;;;     GdkEvent
-;;;
 ;;;     GdkEventAny
 ;;;     GdkEventKey
 ;;;     GdkEventButton
@@ -71,6 +67,12 @@
 ;;;     GdkEventSetting
 ;;;     GdkEventOwnerChange
 ;;;     GdkEventGrabBroken
+;;;
+;;;     GdkEventTouchpadSwipe
+;;;     GdkEventTouchpadPinch
+;;;     GdkEventPadButton
+;;;     GdkEventPadAxis
+;;;     GdkEventPadGroupMode
 ;;;
 ;;; Description
 ;;;
@@ -345,12 +347,21 @@
   (:fullscreen 16)
   (:above 32)
   (:below 64)
-  (:focused 128))
+  (:focused 128)
+  (:tiled 256)
+  (:top-tiled 512)
+  (:top-resizable 1024)
+  (:right-tiled 2048)
+  (:right-resizable 4096)
+  (:bottom-tiled 8192)
+  (:bottom-resizable 16384)
+  (:left-tiled 32768)
+  (:left-resizable 65536))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-window-state atdoc:*symbol-name-alias*) "Flags"
       (gethash 'gdk-window-state atdoc:*external-symbols*)
- "@version{2013-9-21}
+ "@version{2019-3-18}
   @short{Specifies the state of a toplevel window.}
   @begin{pre}
 (define-g-flags \"GdkWindowState\" gdk-window-state
@@ -363,7 +374,16 @@
   (:fullscreen 16)
   (:above 32)
   (:below 64)
-  (:focused 128))
+  (:focused 128)
+  (:tiled 256)
+  (:top-tiled 512)
+  (:top-resizable 1024)
+  (:right-tiled 2048)
+  (:right-resizable 4096)
+  (:bottom-tiled 8192)
+  (:bottom-resizable 16384)
+  (:left-tiled 32768)
+  (:left-resizable 65536))
   @end{pre}
   @begin[code]{table}
     @entry[:withdrawn]{The window is not shown.}
@@ -375,6 +395,16 @@
     @entry[:below]{The window is kept below other windows.}
     @entry[:focused]{The window is presented as focused (with active
       decorations).}
+    @entry[:tiled]{The window is in a tiled state, Since 3.10. Since 3.22, 
+      this is deprecated in favor of per-edge information.}
+    @entry[:top-tiled]{Whether the top edge is tiled. Since 3.22}
+    @entry{:top-resizable]{Whether the top edge is resizable. Since 3.22}
+    @entry[:right-tiled]{Whether the right edge is tiled. Since 3.22}
+    @entry[:right-resizable]{Whether the right edge is resizable. Since 3.22}
+    @entry[:bottom-tiled]{Whether the bottom edge is tiled. Since 3.22}
+    @entry[:bottom-resizable]{Whether the bottom edge is resizable. Since 3.22}
+    @entry[:left-tiled]{Whether the left edge is tiled. Since 3.22}
+    @entry[:left-resizable]{Whether the left edge is resizable. Since 3.22}
   @end{table}
   @see-class{gdk-window}")
 
@@ -493,12 +523,20 @@
   (:touch-begin 37)
   (:touch-update 38)
   (:touch-end 39)
-  (:touch-cancel 40))
-
+  (:touch-cancel 40)
+  (:touchpad-swipe 41)
+  (:touchpad-pinch 42)
+  (:pad-button-press 43)
+  (:pad-button-release 44)
+  (:pad-ring 45)
+  (:pad-strip 46)
+  (:pad-group-mode 47)
+  (:event-last 48))
+ 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-event-type atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gdk-event-type atdoc:*external-symbols*)
- "@version{2013-9-20}
+ "@version{2019-3-18}
   @short{Specifies the type of the event.}
 
   Do not confuse these events with the signals that GTK+ widgets emit.
@@ -515,9 +553,9 @@
   (:motion-notify 3)
   (:button-press 4)
   (:2button-press 5)
-  (:double-button-press 5)
+  (:double-button-press 5) ; Alias for :2button-press
   (:3button-press 6)
-  (:triple-button-press 6)
+  (:triple-button-press 6) ; Alias for :3button-press
   (:button-release 7)
   (:key-press 8)
   (:key-release 9)
@@ -541,7 +579,7 @@
   (:drop-finished 27)
   (:client-event 28)
   (:visibility-notify 29)
-  (:no-expose 30)   ;; not documented
+  (:no-expose 30)          ; not documented
   (:scroll 31)
   (:window-state 32)
   (:setting 33)
@@ -551,7 +589,15 @@
   (:touch-begin 37)
   (:touch-update 38)
   (:touch-end 39)
-  (:touch-cancel 40))
+  (:touch-cancel 40)
+  (:touchpad-swipe 41)
+  (:touchpad-pinch 42)
+  (:pad-button-press 43)
+  (:pad-button-release 44)
+  (:pad-ring 45)
+  (:pad-strip 46)
+  (:pad-group-mode 47)
+  (:event-last 48))
   @end{pre}
   @begin[code]{table}
     @entry[:nothing]{A special code to indicate a null event.}
@@ -623,6 +669,22 @@
       added in 3.4.}
     @entry[:touch-cancel]{A touch event sequence has been canceled. This event
       type was added in 3.4.}
+    @entry[:touchpad-swipe]{A touchpad swipe gesture event, the current state is
+      determined by its phase field. This event type was added in 3.18.}
+    @entry[:touchpad-pinch]{A touchpad pinch gesture event, the current state is
+      determined by its phase field. This event type was added in 3.18.}
+    @entry[:button-press]{A tablet pad button press event. This event type was
+      added in 3.22.}
+    @entry{:button-release]{A tablet pad button release event. This event type
+      was added in 3.22.}
+    @entry[:pad-ring]{A tablet pad axis event from a \"ring\". This event type
+      was added in 3.22.}
+    @entry[:pad-strip]{A tablet pad axis event from a \"strip\". This event type
+      was added in 3.22.}
+    @entry[:pad-group-mode]{A tablet pad group mode change. This event type was
+      added in 3.22.}
+    @entry[:event-last]{Marks the end of the @sym{gdk-event-type} enumeration.
+      Added in 2.18.}
   @end{table}
   @see-class{gdk-event}
   @see-symbol{gdk-window-type}
@@ -762,12 +824,14 @@
   (:scroll-mask 2097152)
   (:touch-mask #.(ash 1 22))
   (:smooth-scroll-mask #.(ash 1 23))
+  (:touchpad-gesture-maske #.(ash 1 24))
+  (:tabled-pad-mask #.(ash 1 25))
   (:all-events-mask 4194302))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-event-mask atdoc:*symbol-name-alias*) "Flags"
       (gethash 'gdk-event-mask atdoc:*external-symbols*)
- "@version{2013-7-17}
+ "@version{2019-3-18}
   @begin{short}
     A set of bit-flags to indicate which events a window is to receive. Most of
     these masks map onto one or more of the @symbol{gdk-event-type} event
@@ -784,6 +848,11 @@
   @em{true}). To receive more motion events after a motion hint event, the
   application needs to asks for more, by calling the function
   @fun{gdk-event-request-motions}.
+
+  Since GTK 3.8, motion events are already compressed by default, independent of
+  this mechanism. This compression can be disabled with the function 
+  @fun{gdk-window-set-event-compression}. See the documentation of that function
+  for details.
 
   If @code{:touch-mask} is enabled, the window will receive touch events from
   touch-enabled devices. Those will come as sequences of @class{gdk-event-touch}
@@ -818,6 +887,8 @@
   (:scroll-mask 2097152)
   (:touch-mask #.(ash 1 22))
   (:smooth-scroll-mask #.(ash 1 23))
+  (:touchpad-gesture-maske #.(ash 1 24))
+  (:tabled-pad-mask #.(ash 1 25))
   (:all-events-mask 4194302))
   @end{pre}
   @begin[code]{table}
@@ -850,6 +921,8 @@
     @entry[:scroll-mask]{Receive scroll events.}
     @entry[:touch-mask]{Receive touch events.}
     @entry[:smooth-scroll-mask]{Receive smooth scrolling events.}
+    @entry[:touchpad-gesture-mask]{Receive touchpad gesture events. Since 3.18}
+    @entry[:tablet-pad]{Receive tablet pad events. Since 3.22}
     @entry[:all-events-mask]{The combination of all the above event masks.}
   @end{table}
   @see-symbol{gdk-event-type}
@@ -881,6 +954,7 @@
   (window (g-object gdk-window))
   (send-event (:boolean :int8))
   (:variant type
+            ;; GdkEventKey
             ((:key-press :key-release) gdk-event-key
              (time :uint32)
              (state gdk-modifier-type)
@@ -891,26 +965,7 @@
              (hardware-keycode :uint16)
              (group :uint8)
              (is-modifier :uint))
-
-            ((:expose) gdk-event-expose
-             (area gdk-rectangle :inline t)
-             (region (:pointer (:struct cairo-region-t)))
-             (count :int))
-
-            ((:visibility-notify) gdk-event-visibility
-             (state gdk-visibility-state))
-
-            ((:motion-notify) gdk-event-motion
-             (time :uint32)
-             (x :double)
-             (y :double)
-             (axes (fixed-array :double 2))
-             (state gdk-modifier-type)
-             (is-hint :int16)
-             (device (g-object gdk-device))
-             (x-root :double)
-             (y-root :double))
-
+            ;; GdkEventButton
             ((:button-press
               :2button-press
               :double-button-press
@@ -926,7 +981,7 @@
              (device (g-object gdk-device))
              (x-root :double)
              (y-root :double))
-
+            ;; GdkEventTouch
             ((:touch-begin
               :touch-update
               :touch-end
@@ -941,7 +996,7 @@
              (device (g-object gdk-device))
              (x-root :double)
              (y-root :double))
-
+            ;; GdkEventScroll
             ((:scroll) gdk-event-scroll
              (time :uint32)
              (x :double)
@@ -953,7 +1008,26 @@
              (y-root :double)
              (delta-x :double)
              (delta-y :double))
-
+            ;; GdkEventMotion
+            ((:motion-notify) gdk-event-motion
+             (time :uint32)
+             (x :double)
+             (y :double)
+             (axes (fixed-array :double 2))
+             (state gdk-modifier-type)
+             (is-hint :int16)
+             (device (g-object gdk-device))
+             (x-root :double)
+             (y-root :double))
+            ;; GdkEventExpose
+            ((:expose) gdk-event-expose
+             (area gdk-rectangle :inline t)
+             (region (:pointer (:struct cairo-region-t)))
+             (count :int))
+            ;; GdkEventVisibity
+            ((:visibility-notify) gdk-event-visibility
+             (state gdk-visibility-state))
+            ;; GdkEventCrossing
             ((:enter-notify :leave-notify) gdk-event-crossing
              (subwindow (g-object gdk-window))
              (time :uint32)
@@ -965,21 +1039,21 @@
              (detail gdk-notify-type)
              (focus :boolean)
              (state :uint))
-
+            ;; GdkEventFocus
             ((:focus-change) gdk-event-focus
              (in :int16))
-
+            ;; GdkEventConfigure
             ((:configure) gdk-event-configure
              (x :int)
              (y :int)
              (width :int)
              (height :int))
-
+            ;; GdkEventProperty
             ((:property-notify) gdk-event-property
              (atom gdk-atom)
              (time :uint32)
              (state gdk-property-state))
-
+            ;; GdkEventSelection
             ((:selection-clear
               :selection-notify
               :selection-request) gdk-event-selection
@@ -988,19 +1062,7 @@
              (property gdk-atom)
              (time :uint32)
              (requestor (g-object gdk-window)))
-
-            ((:owner-change) gdk-event-owner-change
-             (owner (g-object gdk-window))
-             (reason gdk-owner-change)
-             (selection gdk-atom)
-             (time :uint32)
-             (selection-time :uint32))
-
-            ((:proximity-in
-              :proximity-out) gdk-event-proximity
-             (time :uint32)
-             (device (g-object gdk-device)))
-
+            ;; GdkEventDND
             ((:drag-enter
               :drag-leave
               :drag-motion
@@ -1011,25 +1073,81 @@
              (time :uint32)
              (x-root :short)
              (y-root :short))
-
+            ;; GdkEventProximity
+            ((:proximity-in
+              :proximity-out) gdk-event-proximity
+             (time :uint32)
+             (device (g-object gdk-device)))
+            ;; GdkEventWindowState
             ((:window-state) gdk-event-window-state
              (changed-mask gdk-window-state)
              (new-window-state gdk-window-state))
-
+            ;; GdkEventSetting
             ((:setting) gdk-event-setting
              (action gdk-setting-action)
              (name (:string :free-from-foreign nil :free-to-foreign nil)))
-
+            ;; GdkEventOwnerChange
+            ((:owner-change) gdk-event-owner-change
+             (owner (g-object gdk-window))
+             (reason gdk-owner-change)
+             (selection gdk-atom)
+             (time :uint32)
+             (selection-time :uint32))
+            ;; GdkEventGrabBroken
             ((:grab-broken) gdk-event-grab-broken
              (keyboard :boolean)
              (implicit :boolean)
-             (grab-window (g-object gdk-window)))))
+             (grab-window (g-object gdk-window)))
+            ;; GdkEventTouchpadSwipe
+            ((:touchpad-swipe) gdk-event-touchpad-swipe
+             (phase :int8)
+             (n-fingers :int8)
+             (time :uint32)
+             (x :double)
+             (y :double)
+             (dx :double)
+             (dy :double)
+             (x-root :double)
+             (y-root :double)
+             (state gdk-modifier-type))
+            ;; GdkEventTouchpadPinch
+            ((:touchpad-pinch) gdk-event-touchpad-pinch
+             (phase :int8)
+             (n-fingers :int8)
+             (time :uint32)
+             (x :double)
+             (y :double)
+             (dx :double)
+             (dy :double)
+             (angle-delta :double)
+             (scale :double)
+             (x-root :double)
+             (y-root :double)
+             (state gdk-modifier-type))
+            ;; GdkEventPadButton
+            ((:pad-button-press :pad-button-release) gdk-event-pad-button
+             (time :uint32)
+             (group :uint)
+             (button :uint)
+             (mode :uint)) ; TODO: Check the type of mode
+            ;; GdkEventPadAxis
+            ((:pad-ring :pad-strip) gdk-event-pad-axis
+             (time :uint32)
+             (group :uint)
+             (index :uint)
+             (mode :uint)
+             (value :double))
+            ;; GdkEventPadGroupMode
+            ((:pad-group-mode) gdk-event-pad-group-mode
+             (time :uint32)
+             (group :uint)
+             (mode :uint))))
 
 (export (boxed-related-symbols 'gdk-event))
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gdk-event 'type)
- "@version{2014-1-22}
+ "@version{2019-3-18}
   @begin{short}
     The @sym{gdk-event} structure contains a union of all of the event
     structures, and allows access to the data fields in a number of ways.
@@ -1060,6 +1178,7 @@
   (window (g-object gdk-window))
   (send-event (:boolean :int8))
   (:variant type
+            ;; GdkEventKey
             ((:key-press :key-release) gdk-event-key
              (time :uint32)
              (state gdk-modifier-type)
@@ -1070,22 +1189,7 @@
              (hardware-keycode :uint16)
              (group :uint8)
              (is-modifier :uint))
-            ((:expose) gdk-event-expose
-             (area gdk-rectangle :inline t)
-             (region (:pointer (:struct cairo-region-t)))
-             (count :int))
-            ((:visibility-notify) gdk-event-visibility
-             (state gdk-visibility-state))
-            ((:motion-notify) gdk-event-motion
-             (time :uint32)
-             (x :double)
-             (y :double)
-             (axes (fixed-array :double 2))
-             (state gdk-modifier-type)
-             (is-hint :int16)
-             (device (g-object gdk-device))
-             (x-root :double)
-             (y-root :double))
+            ;; GdkEventButton
             ((:button-press
               :2button-press
               :double-button-press
@@ -1101,6 +1205,7 @@
              (device (g-object gdk-device))
              (x-root :double)
              (y-root :double))
+            ;; GdkEventTouch
             ((:touch-begin
               :touch-update
               :touch-end
@@ -1115,6 +1220,7 @@
              (device (g-object gdk-device))
              (x-root :double)
              (y-root :double))
+            ;; GdkEventScroll
             ((:scroll) gdk-event-scroll
              (time :uint32)
              (x :double)
@@ -1126,6 +1232,26 @@
              (y-root :double)
              (delta-x :double)
              (delta-y :double))
+            ;; GdkEventMotion
+            ((:motion-notify) gdk-event-motion
+             (time :uint32)
+             (x :double)
+             (y :double)
+             (axes (fixed-array :double 2))
+             (state gdk-modifier-type)
+             (is-hint :int16)
+             (device (g-object gdk-device))
+             (x-root :double)
+             (y-root :double))
+            ;; GdkEventExpose
+            ((:expose) gdk-event-expose
+             (area gdk-rectangle :inline t)
+             (region (:pointer (:struct cairo-region-t)))
+             (count :int))
+            ;; GdkEventVisibity
+            ((:visibility-notify) gdk-event-visibility
+             (state gdk-visibility-state))
+            ;; GdkEventCrossing
             ((:enter-notify :leave-notify) gdk-event-crossing
              (subwindow (g-object gdk-window))
              (time :uint32)
@@ -1137,17 +1263,21 @@
              (detail gdk-notify-type)
              (focus :boolean)
              (state :uint))
+            ;; GdkEventFocus
             ((:focus-change) gdk-event-focus
              (in :int16))
+            ;; GdkEventConfigure
             ((:configure) gdk-event-configure
              (x :int)
              (y :int)
              (width :int)
              (height :int))
+            ;; GdkEventProperty
             ((:property-notify) gdk-event-property
              (atom gdk-atom)
              (time :uint32)
              (state gdk-property-state))
+            ;; GdkEventSelection
             ((:selection-clear
               :selection-notify
               :selection-request) gdk-event-selection
@@ -1156,16 +1286,7 @@
              (property gdk-atom)
              (time :uint32)
              (requestor (g-object gdk-window)))
-            ((:owner-change) gdk-event-owner-change
-             (owner (g-object gdk-window))
-             (reason gdk-owner-change)
-             (selection gdk-atom)
-             (time :uint32)
-             (selection-time :uint32))
-            ((:proximity-in
-              :proximity-out) gdk-event-proximity
-             (time :uint32)
-             (device (g-object gdk-device)))
+            ;; GdkEventDND
             ((:drag-enter
               :drag-leave
               :drag-motion
@@ -1176,16 +1297,75 @@
              (time :uint32)
              (x-root :short)
              (y-root :short))
+            ;; GdkEventProximity
+            ((:proximity-in
+              :proximity-out) gdk-event-proximity
+             (time :uint32)
+             (device (g-object gdk-device)))
+            ;; GdkEventWindowState
             ((:window-state) gdk-event-window-state
              (changed-mask gdk-window-state)
              (new-window-state gdk-window-state))
+            ;; GdkEventSetting
             ((:setting) gdk-event-setting
              (action gdk-setting-action)
              (name (:string :free-from-foreign nil :free-to-foreign nil)))
+            ;; GdkEventOwnerChange
+            ((:owner-change) gdk-event-owner-change
+             (owner (g-object gdk-window))
+             (reason gdk-owner-change)
+             (selection gdk-atom)
+             (time :uint32)
+             (selection-time :uint32))
+            ;; GdkEventGrabBroken
             ((:grab-broken) gdk-event-grab-broken
              (keyboard :boolean)
              (implicit :boolean)
-             (grab-window (g-object gdk-window)))))
+             (grab-window (g-object gdk-window)))
+            ;; GdkEventTouchpadSwipe
+            ((:touchpad-swipe) gdk-event-touchpad-swipe
+             (phase :int8)
+             (n-fingers :int8)
+             (time :uint32)
+             (x :double)
+             (y :double)
+             (dx :double)
+             (dy :double)
+             (x-root :double)
+             (y-root :double)
+             (state gdk-modifier-type))
+            ;; GdkEventTouchpadPinch
+            ((:touchpad-pinch) gdk-event-touchpad-pinch
+             (phase :int8)
+             (n-fingers :int8)
+             (time :uint32)
+             (x :double)
+             (y :double)
+             (dx :double)
+             (dy :double)
+             (angle-delta :double)
+             (scale :double)
+             (x-root :double)
+             (y-root :double)
+             (state gdk-modifier-type))
+            ;; GdkEventPadButton
+            ((:pad-button-press :pad-button-release) gdk-event-pad-button
+             (time :uint32)
+             (group :uint)
+             (button :uint)
+             (mode :uint)) ; TODO: Check the type of mode
+            ;; GdkEventPadAxis
+            ((:pad-ring :pad-strip) gdk-event-pad-axis
+             (time :uint32)
+             (group :uint)
+             (index :uint)
+             (mode :uint)
+             (value :double))
+            ;; GdkEventPadGroupMode
+            ((:pad-group-mode) gdk-event-pad-group-mode
+             (time :uint32)
+             (group :uint)
+             (mode :uint))))
   @end{pre}
   The following fields are common to all event structures.
   @begin{pre}
@@ -1210,11 +1390,7 @@
   @see-class{gdk-window}
   @see-symbol{gdk-event-type}")
 
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Constructors for the GdkEvent structure
-;;;
-;;; ----------------------------------------------------------------------------
+;;; --- copy-gdk-event ---------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'copy-gdk-event 'function)
@@ -1223,37 +1399,39 @@
   Copy constructor of a @class{gdk-event} structure.
   @see-class{gdk-event}")
 
+;;; --- make-gdk-event ---------------------------------------------------------
+
 #+cl-cffi-gtk-documentation
 (setf (documentation 'make-gdk-event 'function)
  "@version{2014-1-22}
   Creates a @class{gdk-event} structure.
   @see-class{gdk-event}")
 
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of the GdkEvent structure
-;;;
-;;; ----------------------------------------------------------------------------
+;;; --- gdk-event-type ---------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-event-type atdoc:*function-name-alias*) "Accessor"
       (documentation 'gdk-event-type 'function)
- "@version{2014-1-22}
-  Accessor of the slot @code{\"type\"} of the @class{gdk-event} structure.
+ "@version{2019-3-18}
+  Accessor of the slot @code{type} of the @class{gdk-event} structure.
   @see-class{gdk-event}")
+
+;;; --- gdk-event-window -------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-event-window atdoc:*function-name-alias*) "Accessor"
       (documentation 'gdk-event-window 'function)
- "@version{2014-1-22}
-  Accessor of the slot @code{\"window\"} of the @class{gdk-event} structure.
+ "@version{2019-3-18}
+  Accessor of the slot @code{window} of the @class{gdk-event} structure.
   @see-class{gdk-event}")
+
+;;; --- gdk-event-send-event ---------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-event-send-event atdoc:*function-name-alias*) "Accessor"
       (documentation 'gdk-event-send-event 'function)
- "@version{2014-1-22}
-  Accessor of the slot @code{\"send-event\"} of the @class{gdk-event} structure.
+ "@version{2019-3-18}
+  Accessor of the slot @code{send-event} of the @class{gdk-event} structure.
   @see-class{gdk-event}")
 
 ;;; ----------------------------------------------------------------------------
@@ -1271,8 +1449,11 @@
   Possible event types are @code{:key-press} or @code{:key-release}.
   @begin{pre}
 (define-g-boxed-variant-cstruct gdk-event \"GdkEvent\"
-  ...
+  (type gdk-event-type)
+  (window (g-object gdk-window))
+  (send-event (:boolean :int8))
   (:variant type
+            ...
             ((:key-press :key-release) gdk-event-key
              (time :uint32)
              (state gdk-modifier-type)
@@ -1286,6 +1467,11 @@
   ... ))
   @end{pre}
   @begin[code]{table}
+    @entry[type]{The @symbol{gdk-event-type} of the event (@code{:key-press},
+      @code{:key-release}).}
+    @entry[window]{The window of type @class{gdk-window} which received the
+      event.}
+    @entry[send-event]{@em{True} if the event was sent explicitly.}
     @entry[time]{The time of the event in milliseconds.}
     @entry[state]{The state of type @symbol{gdk-modifier-type} of the modifier
       keys, e. g. Control, Shift and Alt, and the pointer buttons.}
@@ -1323,11 +1509,7 @@
   @see-slot{gdk-event-key-group}
   @see-slot{gdk-event-key-is-modifier}")
 
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Constructors for the GdkEventKey structure
-;;;
-;;; ----------------------------------------------------------------------------
+;;; --- copy-gdk-event-key -----------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'copy-gdk-event-key 'function)
@@ -1336,97 +1518,115 @@
   Copy constructor of a @class{gdk-event-key} structure.
   @see-class{gdk-event-key}")
 
+;;; --- make-gdk-event-key -----------------------------------------------------
+
 #+cl-cffi-gtk-documentation
 (setf (documentation 'make-gdk-event-key 'function)
  "@version{2014-1-22}
   Creates a @class{gdk-event-key} structure.
   @see-class{gdk-event-key}")
 
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of the GdkEventKey structure
-;;;
-;;; ----------------------------------------------------------------------------
+;;; --- gdk-event-key-type -----------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-event-key-type atdoc:*function-name-alias*) "Accessor"
       (documentation 'gdk-event-key-type 'function)
  "@version{2014-1-22}
-  Accessor of the slot @code{\"type\"} of the @class{gdk-event-key} structure.
+  Accessor of the slot @code{type} of the @class{gdk-event-key} structure.
   @see-class{gdk-event-key}")
+
+;;; --- gdk-event-key-window ---------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-event-key-window atdoc:*function-name-alias*) "Accessor"
       (documentation 'gdk-event-key-window 'function)
  "@version{2014-1-22}
-  Accessor of the slot @code{\"window\"} of the @class{gdk-event-key} structure.
+  Accessor of the slot @code{window} of the @class{gdk-event-key} structure.
   @see-class{gdk-event-key}")
+
+;;; --- gdk-event-key-send-event -----------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-event-key-send-event atdoc:*function-name-alias*) "Accessor"
       (documentation 'gdk-event-key-send-event 'function)
  "@version{2014-1-22}
-  Accessor of the slot @code{\"send-event\"} of the @class{gdk-event-key}
+  Accessor of the slot @code{send-event} of the @class{gdk-event-key}
   structure.
   @see-class{gdk-event-key}")
+
+;;; --- gdk-event-key-time -----------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-event-key-time atdoc:*function-name-alias*) "Accessor"
       (documentation 'gdk-event-key-time 'function)
  "@version{2014-1-22}
-  Accessor of the slot @code{\"time\"} of the @class{gdk-event-key} structure.
+  Accessor of the slot @code{time} of the @class{gdk-event-key} structure.
   @see-class{gdk-event-key}")
+
+;;; --- gdk-event-key-state ----------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-event-key-state atdoc:*function-name-alias*) "Accessor"
       (documentation 'gdk-event-key-state 'function)
  "@version{2014-1-22}
-  Accessor of the slot @code{\"state\"} of the @class{gdk-event-key} structure.
+  Accessor of the slot @code{state} of the @class{gdk-event-key} structure.
   @see-class{gdk-event-key}")
+
+;;; --- gdk-event-key-keyval ---------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-event-key-keyval atdoc:*function-name-alias*) "Accessor"
       (documentation 'gdk-event-key-keyval 'function)
  "@version{2014-1-22}
-  Accessor of the slot @code{\"keyval\"} of the @class{gdk-event-key} structure.
+  Accessor of the slot @code{keyval} of the @class{gdk-event-key} structure.
   @see-slot{gdk-event-key}")
+
+;;; --- gdk-event-key-length ---------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-event-key-length atdoc:*function-name-alias*) "Accessor"
       (documentation 'gdk-event-key-length 'function)
  "@version{2014-1-22}
-  Accessor of the slot @code{\"length\"} of the @class{gdk-event-key} structure.
+  Accessor of the slot @code{length} of the @class{gdk-event-key} structure.
   @see-class{gdk-event-key}")
+
+;;; --- gdk-event-key-string ---------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-event-key-string atdoc:*function-name-alias*) "Accessor"
       (documentation 'gdk-event-key-string 'function)
  "@version{2014-1-22}
-  Accessor of the slot @code{\"string\"} of the @class{gdk-event-key} structure.
+  Accessor of the slot @code{string} of the @class{gdk-event-key} structure.
   @see-class{gdk-event-key}")
+
+;;; --- gdk-event-key-hardware-keycode -----------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-event-key-hardware-keycode atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-key-hardware-keycode 'function)
  "@version{2014-1-22}
-  Accessor of the slot @code{\"keycode\"} of the @class{gdk-event-key}
+  Accessor of the slot @code{keycode} of the @class{gdk-event-key}
   structure.
   @see-class{gdk-event-key}")
+
+;;; --- gdk-event-key-group ----------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-event-key-group atdoc:*function-name-alias*) "Accessor"
       (documentation 'gdk-event-key-group 'function)
  "@version{2014-1-22}
-  Accessor of the slot @code{\"group\"} of the @class{gdk-event-key} structure.
+  Accessor of the slot @code{group} of the @class{gdk-event-key} structure.
   @see-class{gdk-event-key}")
+
+;;; --- gdk-event-key-is-modifier ----------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-event-key-is-modifier atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-key-is-modifier 'function)
  "@version{2014-1-22}
-  Accessor of the slot @code{\"is-modifier\"} of the @class{gdk-event-key}
+  Accessor of the slot @code{is-modifier} of the @class{gdk-event-key}
   structure.
   @see-class{gdk-event-key}")
 
@@ -1472,7 +1672,9 @@
   press must also occur within 1/2 second of the first button press.
   @begin{pre}
 (define-g-boxed-variant-cstruct gdk-event \"GdkEvent\"
-  ...
+  (type gdk-event-type)
+  (window (g-object gdk-window))
+  (send-event (:boolean :int8))
   (:variant type
             ...
             ((:button-press
@@ -1493,6 +1695,12 @@
   ... ))
   @end{pre}
   @begin[code]{table}
+    @entry[type]{The @symbol{gdk-event-type} of the event (@code{:button-press},
+      @code{:2button-press}, @code{:double-button-press}, @code{:3button-press},
+      @code{:triple-button-press}, @code{:button-release}).}
+    @entry[window]{The window of type @class{gdk-window} which received the
+      event.}
+    @entry[send-event]{@em{True} if the event was sent explicitly.}
     @entry[time]{The time of the event in milliseconds.}
     @entry[x]{The x coordinate of the pointer relative to the window.}
     @entry[y]{The y coordinate of the pointer relative to the window.}
@@ -1526,11 +1734,7 @@
   @see-slot{gdk-event-button-x-root}
   @see-slot{gdk-event-button-y-root}")
 
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Constructors for the GdkEventButton structure
-;;;
-;;; ----------------------------------------------------------------------------
+;;; --- copy-gdk-event-button --------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'copy-gdk-event-button 'function)
@@ -1539,110 +1743,130 @@
   Copy constructor of a @class{gdk-event-button} structure.
   @see-class{gdk-event-button}")
 
+;;; --- make-gdk-event-button --------------------------------------------------
+
 #+cl-cffi-gtk-documentation
 (setf (documentation 'make-gdk-event-button 'function)
  "@version{2014-1-22}
   Creates a @class{gdk-event-button} structure.
   @see-class{gdk-event-button}")
 
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of the GdkEventButton structure
-;;;
-;;; ----------------------------------------------------------------------------
+;;; --- gdk-event-button-type --------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-event-button-type atdoc:*function-name-alias*) "Accessor"
       (documentation 'gdk-event-button-type 'function)
  "@version{2014-1-22}
-  Accessor of the slot @code{\"type\"} of the @class{gdk-event-button}
+  Accessor of the slot @code{type} of the @class{gdk-event-button}
   structure.
   @see-class{gdk-event-button}")
+
+;;; --- gdk-event-button-window ------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-event-button-window atdoc:*function-name-alias*) "Accessor"
       (documentation 'gdk-event-button-window 'function)
  "@version{2014-1-22}
-  Accessor of the slot @code{\"window\"} of the @class{gdk-event-button}
+  Accessor of the slot @code{window} of the @class{gdk-event-button}
   structure.
   @see-class{gdk-event-button}")
+
+;;; --- gdk-event-button-send-event --------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-event-button-send-event atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-button-send-event 'function)
  "@version{2014-1-22}
-  Accessor of the slot @code{\"send-event\"} of the @class{gdk-event-button}
+  Accessor of the slot @code{send-event} of the @class{gdk-event-button}
   structure.
   @see-class{gdk-event-button}")
+
+;;; --- gdk-event-button-time --------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-event-button-time atdoc:*function-name-alias*) "Accessor"
       (documentation 'gdk-event-button-time 'function)
  "@version{2014-1-22}
-  Accessor of the slot @code{\"time\"} of the @class{gdk-event-button}
+  Accessor of the slot @code{time} of the @class{gdk-event-button}
   structure.
   @see-class{gdk-event-button}")
+
+;;; --- gdk-event-button-x -----------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-event-button-x atdoc:*function-name-alias*) "Accessor"
       (documentation 'gdk-event-button-x 'function)
  "@version{2014-1-22}
-  Accessor of the slot @code{\"x\"} of the @class{gdk-event-button} structure.
+  Accessor of the slot @code{x} of the @class{gdk-event-button} structure.
   @see-class{gdk-event-button}")
+
+;;; --- gdk-event-button-y -----------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-event-button-y atdoc:*function-name-alias*) "Accessor"
       (documentation 'gdk-event-button-y 'function)
  "@version{2014-1-22}
-  Accessor of the slot @code{\"y\"} of the @class{gdk-event-button} structure.
+  Accessor of the slot @code{y} of the @class{gdk-event-button} structure.
   @see-class{gdk-event-button}")
+
+;;; --- gdk-event-button-axes --------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-event-button-axes atdoc:*function-name-alias*) "Accessor"
       (documentation 'gdk-event-button-axes 'function)
  "@version{2014-1-22}
-  Accessor of the slot @code{\"axes\"} of the @class{gdk-event-button}
+  Accessor of the slot @code{axes} of the @class{gdk-event-button}
   structure.
   @see-class{gdk-event-button}")
+
+;;; --- gdk-event-button-state -------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-event-button-state atdoc:*function-name-alias*) "Accessor"
       (documentation 'gdk-event-button-state 'function)
  "@version{2014-1-22}
-  Accessor of the slot @code{\"state\"} of the @class{gdk-event-button}
+  Accessor of the slot @code{state} of the @class{gdk-event-button}
   structure.
   @see-class{gdk-event-button}")
+
+;;; --- gdk-event-button-button ------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-event-button-button atdoc:*function-name-alias*) "Accessor"
       (documentation 'gdk-event-button-button 'function)
  "@version{2014-1-22}
-  Accessor of the slot @code{\"button\"} of the @class{gdk-event-button}
+  Accessor of the slot @code{button} of the @class{gdk-event-button}
   structure.
   @see-class{gdk-event-button}")
+
+;;; --- gdk-event-button-device ------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-event-button-device atdoc:*function-name-alias*) "Accessor"
       (documentation 'gdk-event-button-device 'function)
  "@version{2014-1-22}
-  Accessor of the slot @code{\"device\"} of the @class{gdk-event-button}
+  Accessor of the slot @code{device} of the @class{gdk-event-button}
   structure.
   @see-class{gdk-event-button}")
+
+;;; --- gdk-event-button-x-root ------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-event-button-x-root atdoc:*function-name-alias*) "Accessor"
       (documentation 'gdk-event-button-x-root 'function)
  "@version{2014-1-22}
-  Accessor of the slot @code{\"x-root\"} of the @class{gdk-event-button}
+  Accessor of the slot @code{x-root} of the @class{gdk-event-button}
   structure.
   @see-class{gdk-event-button}")
+
+;;; --- gdk-event-button-y-root ------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-event-button-y-root atdoc:*function-name-alias*) "Accessor"
       (documentation 'gdk-event-button-y-root 'function)
  "@version{2014-1-22}
-  Accessor of the slot @code{\"y-root\"} of the @class{gdk-event-button}
+  Accessor of the slot @code{y-root} of the @class{gdk-event-button}
   structure.
   @see-class{gdk-event-button}")
 
@@ -1666,7 +1890,9 @@
   devices, there may be several active sequences at the same time.
   @begin{pre}
 (define-g-boxed-variant-cstruct gdk-event \"GdkEvent\"
-  ...
+  (type gdk-event-type)
+  (window (g-object gdk-window))
+  (send-event (:boolean :int8))
   (:variant type
             ...
             ((:touch-begin
@@ -1870,7 +2096,9 @@
   be obtained with the function @fun{gdk-event-get-scroll-deltas}.
   @begin{pre}
 (define-g-boxed-variant-cstruct gdk-event \"GdkEvent\"
-  ...
+  (type gdk-event-type)
+  (window (g-object gdk-window))
+  (send-event (:boolean :int8))
   (:variant type
             ...
             ((:scroll) gdk-event-scroll
@@ -2066,7 +2294,9 @@
   @end{short}
   @begin{pre}
 (define-g-boxed-variant-cstruct gdk-event \"GdkEvent\"
-  ...
+  (type gdk-event-type)
+  (window (g-object gdk-window))
+  (send-event (:boolean :int8))
   (:variant type
             ...
             ((:motion-notify) gdk-event-motion
@@ -2250,7 +2480,9 @@
   @end{short}
   @begin{pre}
 (define-g-boxed-variant-cstruct gdk-event \"GdkEvent\"
-  ...
+  (type gdk-event-type)
+  (window (g-object gdk-window))
+  (send-event (:boolean :int8))
   (:variant type
             ...
             ((:expose) gdk-event-expose
@@ -2365,7 +2597,9 @@
   @short{Generated when the window visibility status has changed.}
   @begin{pre}
 (define-g-boxed-variant-cstruct gdk-event \"GdkEvent\"
-  ...
+  (type gdk-event-type)
+  (window (g-object gdk-window))
+  (send-event (:boolean :int8))
   (:variant type
             ...
             ((:visibility-notify) gdk-event-visibility
@@ -2459,7 +2693,9 @@
   @short{Generated when the pointer enters or leaves a window.}
   @begin{pre}
 (define-g-boxed-variant-cstruct gdk-event \"GdkEvent\"
-  ...
+  (type gdk-event-type)
+  (window (g-object gdk-window))
+  (send-event (:boolean :int8))
   (:variant type
             ...
             ((:enter-notify :leave-notify) gdk-event-crossing
@@ -2662,7 +2898,9 @@
   @short{Describes a change of keyboard focus.}
   @begin{pre}
 (define-g-boxed-variant-cstruct gdk-event \"GdkEvent\"
-  ...
+  (type gdk-event-type)
+  (window (g-object gdk-window))
+  (send-event (:boolean :int8))
   (:variant type
             ...
             ((:focus-change) gdk-event-focus
@@ -2753,7 +2991,9 @@
   @end{short}
   @begin{pre}
 (define-g-boxed-variant-cstruct gdk-event \"GdkEvent\"
-  ...
+  (type gdk-event-type)
+  (window (g-object gdk-window))
+  (send-event (:boolean :int8))
   (:variant type
             ...
             ((:configure) gdk-event-configure
@@ -2878,7 +3118,9 @@
   @end{short}
   @begin{pre}
 (define-g-boxed-variant-cstruct gdk-event \"GdkEvent\"
-  ...
+  (type gdk-event-type)
+  (window (g-object gdk-window))
+  (send-event (:boolean :int8))
   (:variant type
             ...
             ((:property-notify) gdk-event-property
@@ -3314,7 +3556,7 @@
   @see-slot{gdk-event-proximity-time}
   @see-slot{gdk-event-proximity-device}")
 
-;;; --- copy-gdk-event ---------------------------------------------------------
+;;; --- copy-gdk-event-proximity -----------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'copy-gdk-event-proximity 'function)
@@ -3904,5 +4146,331 @@
     Accessor of the slot @code{grab-window} of the @class{gdk-event-grab-broken}
     struct.
   @end{short}")
+
+;;; ----------------------------------------------------------------------------
+;;; GdkEventTouchpadSwipe
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gdk-event-touchpad-swipe 'type)
+ "@version{2019-3-18}
+  @begin{short}
+    Generated during touchpad swipe gestures.
+  @end{short}
+  Since 3.18
+  @begin{pre}
+(define-g-boxed-variant-cstruct gdk-event \"GdkEvent\"
+  (type gdk-event-type)
+  (window (g-object gdk-window))
+  (send-event (:boolean :int8))
+  (:variant type
+            ...
+            ;; GdkEventTouchpadSwipe
+            ((:touchpad-swipe) gdk-event-touchpad-swipe
+             (phase :int8)
+             (n-fingers :int8)
+             (time :uint32)
+             (x :double)
+             (y :double)
+             (dx :double)
+             (dy :double)
+             (x-root :double)
+             (y-root :double)
+             (state :uint))
+  ... ))
+  @end{pre}
+  @begin[code]{table}
+    @entry[type]{The @symbol{gdk-event-type} of the event (:touchpad-swipe).}
+    @entry[window]{The window of type @class{gdk-window} which received the
+      event.}
+    @entry[send-event]{@em{True} if the event was sent explicitly.}
+    @entry[phase]{The current phase of the gesture.}
+    @entry[n-fingers]{The number of fingers triggering the swipe.}
+    @entry[time]{The time of the event in milliseconds.}
+    @entry[x]{The X coordinate of the pointer.}
+    @entry[y]{The Y coordinate of the pointer.}
+    @entry[dx]{Movement delta in the X axis of the swipe focal point.}
+    @entry[dy]{Movement delta in the Y axis of the swipe focal point.}
+    @entry[x-root]{The X coordinate of the pointer, relative to the root of the
+      screen.}
+    @entry[y-root]{The Y coordinate of the pointer, relative to the root of the
+      screen.}
+    @entry[state]{A bit-mask of type @symbol{gdk-modifier-type} representing the
+      state of the modifier keys (e. g. Control, Shift and Alt) and the pointer
+      buttons.}
+  @end{table}
+  @see-constructor{copy-gdk-event-touchpad-swipe}
+  @see-constructor{make-gdk-event-touchpad-swipe}
+  @see-slot{gdk-event-touchpad-swipe-type}
+  @see-slot{gdk-event-touchpad-swipe-window}
+  @see-slot{gdk-event-touchpad-swipe-send-event}
+  @see-slot{gdk-event-touchpad-swipe-phase}
+  @see-slot{gdk-event-touchpad-swipe-n-fingers}
+  @see-slot{gdk-event-touchpad-swipe-time}
+  @see-slot{gdk-event-touchpad-swipe-x}
+  @see-slot{gdk-event-touchpad-swipe-y}
+  @see-slot{gdk-event-touchpad-swipe-dx}
+  @see-slot{gdk-event-touchpad-swipe-dy}
+  @see-slot{gdk-event-touchpad-swipe-x-root}
+  @see-slot{gdk-event-touchpad-swipe-y-root}
+  @see-slot{gdk-event-touchpad-swipe-state}")
+
+;;; --- copy-gdk-event-touchpad-swipe ------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'copy-gdk-event-touchpad-swipe 'function)
+ "@version{2019-3-18}
+  @argument[instance]{a @class{gdk-event-touchpad-swipe} structure}
+  Copy constructor of a @class{gdk-event-touchpad-swipe} structure.")
+
+;;; --- make-gdk-event-touchpad-swipe ------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'make-gdk-event-touchpad-swipe 'function)
+ "@version{2019-3-18}
+  Creates a @class{gdk-event-touchpad-swipe} structure.")
+
+;;; --- gdk-event-touchpad-swipe-type ------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gdk-event-touchpad-swipe-type atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gdk-event-touchpad-swipe-type 'function)
+ "@version{2013-1-19}
+  @begin{short}
+    Accessor of the slot @code{type} of the @class{gdk-event-touchpad-swipe}
+    struct.
+  @end{short}")
+
+;;; --- alle weiteren Accessors
+
+
+
+;;; ----------------------------------------------------------------------------
+;;; GdkEventTouchpadPinch
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gdk-event-touchpad-pinch 'type)
+ "@version{2019-3-18}
+  @begin{short}
+    Generated during touchpad swipe gestures.
+  @end{short}
+  Since 3.18
+  @begin{pre}
+(define-g-boxed-variant-cstruct gdk-event \"GdkEvent\"
+  (type gdk-event-type)
+  (window (g-object gdk-window))
+  (send-event (:boolean :int8))
+  (:variant type
+            ...
+            ;; GdkEventTouchpadPinch
+            ((:touchpad-pinch) gdk-event-touchpad-pinch
+             (phase :int8)
+             (n-fingers :int8)
+             (time :uint32)
+             (x :double)
+             (y :double)
+             (dx :double)
+             (dy :double)
+             (angle-delta :double)
+             (scale :double)
+             (x-root :double)
+             (y-root :double)
+             (state gdk-modifier-type))
+  ... ))
+  @end{pre}
+  @begin[code]{table}
+    @entry[type]{The @symbol{gdk-event-type} of the event (:touchpad-pinch).}
+    @entry[window]{The window of type @class{gdk-window} which received the
+      event.}
+    @entry[send-event]{@em{True} if the event was sent explicitly.}
+    @entry[phase]{The current phase of the gesture.}
+    @entry[n-fingers]{The number of fingers triggering the swipe.}
+    @entry[time]{The time of the event in milliseconds.}
+    @entry[x]{The X coordinate of the pointer.}
+    @entry[y]{The Y coordinate of the pointer.}
+    @entry[angle-delta]{The angle change in radians, negative angles denote
+      counter-clockwise movements.}
+    @entry[scale]{The current scale, relative to that at the time of the
+      corresponding @code{:touchpad-gesture-phase-begin} event.}
+    @entry[x-root]{The X coordinate of the pointer, relative to the root of the
+      screen.}
+    @entry[y-root]{The Y coordinate of the pointer, relative to the root of the
+      screen.}
+    @entry[state]{A bit-mask of type @symbol{gdk-modifier-type} representing the
+      state of the modifier keys (e. g. Control, Shift and Alt) and the pointer
+      buttons.}
+  @end{table}
+  @see-constructor{copy-gdk-event-touchpad-pinch}
+  @see-constructor{make-gdk-event-touchpad-pinch}
+  @see-slot{gdk-event-touchpad-pinch-type}
+  @see-slot{gdk-event-touchpad-pinch-window}
+  @see-slot{gdk-event-touchpad-pinch-send-event}
+  @see-slot{gdk-event-touchpad-pinch-phase}
+  @see-slot{gdk-event-touchpad-pinch-n-fingers}
+  @see-slot{gdk-event-touchpad-pinch-time}
+  @see-slot{gdk-event-touchpad-pinch-x}
+  @see-slot{gdk-event-touchpad-pinch-y}
+  @see-slot{gdk-event-touchpad-pinch-angle-delta}
+  @see-slot{gdk-event-touchpad-pinch-scale}
+  @see-slot{gdk-event-touchpad-pinch-x-root}
+  @see-slot{gdk-event-touchpad-pinch-y-root}
+  @see-slot{gdk-event-touchpad-pinch-state}")
+
+;;; --- Contstuctors and Accessors ---------------------------------------------
+
+
+
+;;; ----------------------------------------------------------------------------
+;;; struct GdkEventPadButton
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gdk-event-pad-button 'type)
+ "@version{2019-3-18}
+  @begin{short}
+    Generated during @code{:tablet-pad} button presses and releases.
+  @end{short}
+  @begin{pre}
+(define-g-boxed-variant-cstruct gdk-event \"GdkEvent\"
+  (type gdk-event-type)
+  (window (g-object gdk-window))
+  (send-event (:boolean :int8))
+  (:variant type
+            ...
+            ;; GdkEventPadButton
+            ((:pad-button-press :pad-button-release) gdk-event-pad-button
+             (time :uint32)
+             (group :uint)
+             (button :uint)
+             (mode :uint))
+  ... ))
+  @end{pre}
+  @begin[code]{table}
+    @entry[type]{The @symbol{gdk-event-type} of the event (:pad-button-press,
+      :pad-button-release).}
+    @entry[window]{The window of type @class{gdk-window} which received the
+      event.}
+    @entry[send-event]{@em{True} if the event was sent explicitly.}
+    @entry[group]{The pad group the button belongs to. A @code{:tablet-pad}
+      device may have one or more groups containing a set of 
+      buttons/rings/strips each.}
+    @entry[button]{The pad button that was pressed.}
+    @entry[mode]{The current mode of @arg{group}. Different groups in a
+      @code{:tablet-pad} device may have different current modes.}
+  @end{table}
+  Since 3.22
+  @see-constructor{copy-gdk-event-pad-button}
+  @see-constructor{make-gdk-event-pad-button}
+  @see-slot{gdk-event-pad-button-type}
+  @see-slot{gdk-event-pad-button-window}
+  @see-slot{gdk-event-pad-button-send-event}
+  @see-slot{gdk-event-pad-button-group}
+  @see-slot{gdk-event-pad-button-button}
+  @see-slot{gdk-event-pad-button-mode}")
+
+
+;;; ----------------------------------------------------------------------------
+;;; struct GdkEventPadAxis
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gdk-event-pad-axis 'type)
+ "@version{2019-3-18}
+  @begin{short}
+    Generated during @code{:tablet-pad} interaction with tactile sensors.
+  @end{short}
+  @begin{pre}
+(define-g-boxed-variant-cstruct gdk-event \"GdkEvent\"
+  (type gdk-event-type)
+  (window (g-object gdk-window))
+  (send-event (:boolean :int8))
+  (:variant type
+            ...
+            ;; GdkEventPadAxis
+            ((:pad-ring :pad-strip) gdk-event-pad-axis
+             (time :uint32)
+             (group :uint)
+             (index :uint)
+             (mode :uint)
+             (value :double))
+  ... ))
+  @end{pre}
+  @begin[code]{table}
+    @entry[type]{The @symbol{gdk-event-type} of the event (:pad-ring,
+      :pad-strip).}
+    @entry[window]{The window of type @class{gdk-window} which received the
+      event.}
+    @entry[send-event]{@em{True} if the event was sent explicitly.}
+    @entry[time]{The time of the event in milliseconds.}
+    @entry[group]{the pad group the ring/strip belongs to. A @code{:tablet-pad}
+      device may have one or more groups containing a set of 
+      buttons/rings/strips each.}
+    @entry[index]{Number of strip/ring that was interacted. This number is 
+      0-indexed.}
+    @entry[mode]{The current mode of @arg{group}. Different groups in a
+      @code{:tablet-pad} device may have different current modes.}
+    @entry[:value]{The current value for the given axis.}
+  @end{table}
+  Since 3.22
+  @see-constructor{copy-gdk-event-pad-axis}
+  @see-constructor{make-gdk-event-pad-axis}
+  @see-slot{gdk-event-pad-axis-type}
+  @see-slot{gdk-event-pad-axis-window}
+  @see-slot{gdk-event-pad-axis-send-event}
+  @see-slot{gdk-event-pad-axis-time}
+  @see-slot{gdk-event-pad-axis-group}
+  @see-slot{gdk-event-pad-axis-index}
+  @see-slot{gdk-event-pad-axis-mode}
+  @see-slot{gdk-event-pad-axis-value}")
+
+
+
+;;; ----------------------------------------------------------------------------
+;;; struct GdkEventPadGroupMode
+;;; ----------------------------------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gdk-event-pad-group 'type)
+ "@version{2019-3-18}
+  @begin{short}
+    Generated during @code{:tablet-pad} mode switches in a group.
+  @end{short}
+  @begin{pre}
+(define-g-boxed-variant-cstruct gdk-event \"GdkEvent\"
+  (type gdk-event-type)
+  (window (g-object gdk-window))
+  (send-event (:boolean :int8))
+  (:variant type
+            ...
+            ;; GdkEventPadGroupMode
+            ((:pad-group-mode) gdk-event-pad-group-mode
+             (time :uint32)
+             (group :uint)
+             (mode :uint))
+  ... ))
+  @end{pre}
+  @begin[code]{table}
+    @entry[type]{The @symbol{gdk-event-type} of the event (:pad-group-mode).}
+    @entry[window]{The window of type @class{gdk-window} which received the
+      event.}
+    @entry[send-event]{@em{True} if the event was sent explicitly.}
+    @entry[time]{The time of the event in milliseconds.}
+    @entry[group]{The pad group that is switching mode. A @code{:tablet-pad}
+      device may have one or more groups containing a set of 
+      buttons/rings/strips each.}
+    @entry[mode]{The new mode of @arg{group}. Different groups in a
+      @code{:tablet-pad} device may have different current modes.}
+  @end{table}
+  Since 3.22
+  @see-constructor{copy-gdk-event-pad-group-mode}
+  @see-constructor{make-gdk-event-pad-group-mode}
+  @see-slot{gdk-event-pad-group-mode-type}
+  @see-slot{gdk-event-pad-group-mode-window}
+  @see-slot{gdk-event-pad-group-mode-send-event}
+  @see-slot{gdk-event-pad-group-mode-time}
+  @see-slot{gdk-event-pad-group-mode-group}
+  @see-slot{gdk-event-pad-group-mode-mode}")
 
 ;;; --- End of file gdk.event-structures.lisp ----------------------------------

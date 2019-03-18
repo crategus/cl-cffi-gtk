@@ -3,7 +3,6 @@ List of files for the GDK Library
     *   - needs update
     %   - not fully implemented
     &   - objects and structures are implemented, some functions are missing
-   (**) - deprecated
 
  I. API Reference
 
@@ -11,8 +10,14 @@ List of files for the GDK Library
   gdk.display-manager.lisp  - GdkDisplayManager      - GDK 3.16
   gdk.display.lisp          - GdkDisplay             - GDK 3.16
   gdk.screen.lisp           - GdkScreen              - GDK 3.16 &
-  gdk.device-manager.lisp   - GdkDeviceManger        - GDK 3.16
+ 
+  GdkSeat — Object representing an user seat
+  GdkMonitor — Object representing an output    
+
   gdk.device.lisp           - GdkDevice              - GDK 3.16 &
+
+  GtkDevicePad — Pad device interface
+
   gdk.rectangle.lisp        - Points and Rectangles  - GDK 3.16
   gdk.pixbuf.lisp           - Pixbufs                - GDK 3.16
   gdk.rgba.lisp             - RGBA Colors            - GDK 3.16
@@ -22,10 +27,13 @@ List of files for the GDK Library
   gdk.frame-clock.lisp      - Frame clock            - GDK 3.16 &
   gdk.frame-timings.lisp    - Frame timings          - GDK 3.16 &
 
+  GdkDrawingContext — Drawing context for GDK windows
+
   gdk.gl-context.lisp       - OpenGL context         - GDK 3.16 &
 
   gdk.events.lisp           - Events                 - GDK 3.6.4 &
-  gdk.event-structures.lisp - Event Structures       - GDK 3.6.4
+  gdk.event-structures.lisp - Event Structures       - GDK 3.24
+
   gdk.key-values.lisp       - Key Values             - GDK 3.6.4
   gdk.selections.lisp       - Selections             - GDK 3.6.4
   gdk.drag-and-drop-lisp    - Drag And Drop          - GDK 3.6.4 &
@@ -42,4 +50,5 @@ List of files for the GDK Library
  II. Deprecated
 
   gdk.color.lisp            - Colors                 - GDK 3.16 **
+  gdk.device-manager.lisp   - GdkDeviceManger        - GDK 3.16
 

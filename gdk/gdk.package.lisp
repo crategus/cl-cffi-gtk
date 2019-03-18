@@ -583,9 +583,9 @@
     The event structures contain data specific to each type of event in GDK.
 
     @subheading{Note}
-      A common mistake is to forget to set the event mask of a widget so that
-      the required events are received. See the function
-      @fun{gtk-widget-events}.
+    A common mistake is to forget to set the event mask of a widget so that
+    the required events are received. See the function
+    @fun{gtk-widget-events}.
 
     @about-symbol{gdk-scroll-direction}
     @about-symbol{gdk-visibility-state}
@@ -598,26 +598,33 @@
     @about-symbol{gdk-event-type}
     @about-symbol{gdk-modifier-type}
     @about-symbol{gdk-event-mask}
+
     @about-struct{gdk-event}
     @about-struct{gdk-event-any}
     @about-struct{gdk-event-key}
     @about-struct{gdk-event-button}
-    @about-struct{gdk-event-expose}
-    @about-struct{gdk-event-visibility}
-    @about-struct{gdk-event-motion}
     @about-struct{gdk-event-touch}
     @about-struct{gdk-event-scroll}
+    @about-struct{gdk-event-motion}
+    @about-struct{gdk-event-expose}
+    @about-struct{gdk-event-visibility}
     @about-struct{gdk-event-crossing}
     @about-struct{gdk-event-focus}
     @about-struct{gdk-event-configure}
     @about-struct{gdk-event-property}
     @about-struct{gdk-event-selection}
-    @about-struct{gdk-event-owner-change}
-    @about-struct{gdk-event-proximity}
     @about-struct{gdk-event-dnd}
+    @about-struct{gdk-event-proximity}
     @about-struct{gdk-event-window-state}
     @about-struct{gdk-event-setting}
+    @about-struct{gdk-event-owner-change}
     @about-struct{gdk-event-grab-broken}
+
+    @about-struct{gdk-event-touchpad-swipe}
+    @about-struct{gdk-event-touchpad-pinch}
+    @about-struct{gdk-event-pad-button}
+    @about-struct{gdk-event-pad-axis}
+    @about-struct{gdk-event-pad-group-mode}
   @end{section}
   @begin[Key Values]{section}
     Functions for manipulating keyboard codes.
