@@ -6,7 +6,7 @@
 ;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -61,7 +61,10 @@
     3 18
     3 20
     3 22
-    3 24)
+    3 24
+    3 26
+    3 28
+    3 30)
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (find-package :gdk) t)

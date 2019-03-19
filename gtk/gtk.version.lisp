@@ -304,7 +304,10 @@ NIL
                                      3 18
                                      3 20
                                      3 22
-                                     3 24)
+                                     3 24
+                                     3 26
+                                     3 28
+                                     3 30)
 
 (glib::require-library-version "GTK+" 3 4
                               (gtk-get-major-version)
