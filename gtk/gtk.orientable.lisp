@@ -81,9 +81,7 @@
   @see-slot{gtk-orientable-orientation}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
 ;;; Property and Accessor Details
-;;;
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- gtk-orientable-orientation ---------------------------------------------
@@ -91,20 +89,21 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "orientation"
                                                'gtk-orientable) 't)
- "The @code{\"orientation\"} property of type @symbol{gtk-orientation}
+ "The @code{orientation} property of type @symbol{gtk-orientation}
   (Read / Write) @br{}
   The orientation of the orientable. @br{}
-  Default value: @code{:horizontal}
+  Default value: @code{:horizontal} @br{}
   Since 2.16")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-orientable-orientation atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-orientable-orientation 'function)
- "@version{2014-2-21}
-  @argument[object]{a @class{gtk-orientable} widet}
-  @syntax[]{(gtk-orientable-orientation object) >= orientation}
+ "@version{2019-3-18}
+  @syntax[]{(gtk-orientable-orientation object) => orientation}
   @syntax[]{(setf (gtk-orientable-orientation object) orientation)}
+  @argument[object]{a @class{gtk-orientable} widget}
+  @argument[orientation]{an orientation of type @symbol{gtk-orientation}}
   @begin{short}
     Accessor of the slot @slot[gtk-orientable]{orientation} of the
     @class{gtk-orientable} interface.
@@ -117,6 +116,7 @@
   orientation of the orientable.
 
   Since 2.16
-  @see-class{gtk-orientable}")
+  @see-class{gtk-orientable}
+  @see-symbol{gtk-orientation}")
 
 ;;; --- End of file gtk.orientable.lisp ----------------------------------------

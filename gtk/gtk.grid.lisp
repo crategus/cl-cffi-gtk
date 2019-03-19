@@ -30,31 +30,60 @@
 ;;;
 ;;;     Pack widgets in a rows and columns
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkGrid
 ;;;
-;;;     gtk_grid_new
-;;;     gtk_grid_attach
-;;;     gtk_grid_attach_next_to
-;;;     gtk_grid_get_child_at
-;;;     gtk_grid_insert_row
-;;;     gtk_grid_insert_column
-;;;     gtk_grid_remove_row
-;;;     gtk_grid_remove_column
-;;;     gtk_grid_insert_next_to
-;;;     gtk_grid_set_row_homogeneous
-;;;     gtk_grid_get_row_homogeneous
-;;;     gtk_grid_set_row_spacing
-;;;     gtk_grid_get_row_spacing
-;;;     gtk_grid_set_column_homogeneous
-;;;     gtk_grid_get_column_homogeneous
-;;;     gtk_grid_set_column_spacing
-;;;     gtk_grid_get_column_spacing
-;;;     gtk_grid_get_baseline_row
-;;;     gtk_grid_set_baseline_row
-;;;     gtk_grid_get_row_baseline_position
-;;;     gtk_grid_set_row_baseline_position
+;;; Functions
+;;;
+;;;     gtk_grid_new 
+;;;     gtk_grid_attach 
+;;;     gtk_grid_attach_next_to 
+;;;     gtk_grid_get_child_at 
+;;;     gtk_grid_insert_row 
+;;;     gtk_grid_insert_column 
+;;;     gtk_grid_remove_row 
+;;;     gtk_grid_remove_column 
+;;;     gtk_grid_insert_next_to 
+;;;     gtk_grid_set_row_homogeneous                       Accessor
+;;;     gtk_grid_get_row_homogeneous                       Accessor
+;;;     gtk_grid_set_row_spacing                           Accessor
+;;;     gtk_grid_get_row_spacing                           Accessor
+;;;     gtk_grid_set_column_homogeneous                    Accessor
+;;;     gtk_grid_get_column_homogeneous                    Accessor
+;;;     gtk_grid_set_column_spacing                        Accessor 
+;;;     gtk_grid_get_column_spacing                        Accessor
+;;;     gtk_grid_get_baseline_row                          Accessor
+;;;     gtk_grid_set_baseline_row                          Accessor
+;;;     gtk_grid_get_row_baseline_position 
+;;;     gtk_grid_set_row_baseline_position 
+;;;
+;;; Properties
+;;;
+;;;         gint  baseline-row        Read / Write
+;;;     gboolean  column-homogeneous  Read / Write
+;;;         gint  column-spacing      Read / Write
+;;;     gboolean  row-homogeneous     Read / Write
+;;;         gint  row-spacing         Read / Write
+;;;
+;;; Child Properties
+;;;
+;;;         gint  height              Read / Write
+;;;         gint  left-attach         Read / Write
+;;;         gint  top-attach          Read / Write
+;;;         gint  width               Read / Write
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;             ╰── GtkContainer
+;;;                 ╰── GtkGrid
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GtkGrid implements AtkImplementorIface, GtkBuildable and GtkOrientable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -95,12 +124,8 @@
  "@version{2013-12-7}
   @begin{short}
     @sym{gtk-grid} is a container which arranges its child widgets in rows and
-    columns.
+    columns, with arbitrary positions and horizontal/vertical spans.
   @end{short}
-  It is a very similar to @class{gtk-table} and @class{gtk-box}, but it
-  consistently uses @class{gtk-widget}'s @slot[gtk-widget]{margin} and
-  @slot[gtk-widget]{expand} properties instead of custom child properties, and
-  it fully supports height-for-width geometry management.
 
   Children are added using the function @fun{gtk-grid-attach}. They can span
   multiple rows or columns. It is also possible to add a child next to an
@@ -108,31 +133,42 @@
   behaviour of @sym{gtk-grid} when several children occupy the same grid cell
   is undefined.
 
-  @sym{gtk-grid} can be used like a @class{gtk-box} by just using
+  @sym{gtk-grid} can be used like a @class{gtk-box} by just using the function
   @fun{gtk-container-add}, which will place children next to each other in the
   direction determined by the @slot[gtk-orientable]{orientation} property.
+  However, if all you want is a single row or column, then @class{gtk-box} is
+  the preferred widget.
+  @begin[CSS nodes]{dictionary}
+    @sym{gtk-grid} uses a single CSS node with name @code{grid}.
+  @end{dictionary}
   @begin[Child Property Details]{dictionary}
-    @subheading{The @code{height} child property}
-      @code{height} of type @code{:int} (Read / Write) @br{}
-      The number of rows that a child spans. @br{}
-      Allowed values: >= 1 @br{}
-      Default value: 1
-
-    @subheading{The @code{left-attach} child property}
-      @code{left-attach} of type @code{:int} (Read / Write) @br{}
-      The column number to attach the left side of the child to. @br{}
-      Default value: 0
-
-    @subheading{The @code{top-attach} child property}
-      @code{top-attach} of type @code{:int} (Read / Write) @br{}
-      The row number to attach the top side of a child widget to. @br{}
-      Default value: 0
-
-    @subheading{The @code{width} child property}
-      @code{width} of type @code{:int} (Read / Write) @br{}
-      The number of columns that a child spans. @br{}
-      Allowed values: >= 1 @br{}
-      Default value: 1
+    @begin[code]{table}
+      @begin[height]{entry} 
+        The code @code{height} child property of type @code{:int} (Read / Write)
+        @br{}
+        The number of rows that a child spans. @br{}
+        Allowed values: >= 1 @br{}
+        Default value: 1
+      @end{entry}
+      @begin[left-attach]{entry}
+        The @code{left-attach} child property of type @code{:int} (Read / Write)
+        @br{}
+        The column number to attach the left side of the child to. @br{}
+        Default value: 0
+      @end{entry}
+      @begin[top-attach]{entry}
+        The @code{top-attach} child property of type @code{:int} (Read / Write)
+        @br{}
+        The row number to attach the top side of a child widget to. @br{}
+        Default value: 0
+      @end{entry}
+      @begin[width]{entry}
+        The @code{width} child property of type @code{:int} (Read / Write) @br{}
+        The number of columns that a child spans. @br{}
+        Allowed values: >= 1 @br{}
+        Default value: 1
+      @end{entry}
+    @end{table}
   @end{dictionary}
   @see-slot{gtk-grid-baseline-row}
   @see-slot{gtk-grid-column-homogeneous}
@@ -140,25 +176,23 @@
   @see-slot{gtk-grid-row-homogeneous}
   @see-slot{gtk-grid-row-spacing}
   @see-class{gtk-box}
-  @see-class{gtk-table}
   @see-function{gtk-grid-attach}
   @see-function{gtk-grid-attach-next-to}
   @see-function{gtk-container-add}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
 ;;; Property and Accessor Details
-;;;
 ;;; ----------------------------------------------------------------------------
 
 #+(and gtk-3-10 cl-cffi-gtk-documentation)
 (setf (documentation (atdoc:get-slot-from-name "baseline-row"
                                                'gtk-grid) 't)
  "The @code{baseline-row} property of type @code{:int} (Read / Write) @br{}
-  The row to align the to the baseline when valign has the value @code{:center}
-  of the @symbol{gtk-align} enumeration. @br{}
+  The row to align to the baseline when @slot[gtk-widget]{valign} has the value
+  @code{:center} of the @symbol{gtk-align} enumeration. @br{}
   Allowed values: >= 0 @br{}
-  Default value: 0")
+  Default value: 0 @br{}
+  Since 3.10")
 
 #+(and gtk-3-10 cl-cffi-gtk-documentation)
 (setf (gethash 'gtk-grid-baseline-row atdoc:*function-name-alias*)
@@ -174,17 +208,16 @@
     class.
   @end{short}
 
-  The generic function @sym{gtk-grid-baseline-row} returns which row defines
+  The slot access function @sym{gtk-grid-baseline-row} returns which row defines
   the global baseline of the grid.
 
-  The generic function @sym{(setf gtk-grid-baseline-row)} sets which row defines
-  the global baseline for the entire grid. Each row in the grid can have its own
-  local baseline, but only one of those is global, meaning it will be the
-  baseline in the parent of the the grid.
+  The slot access function @sym{(setf gtk-grid-baseline-row)} sets which row
+  defines the global baseline for the entire grid. Each row in the grid can have
+  its own local baseline, but only one of those is global, meaning it will be
+  the baseline in the parent of the grid.
 
   Since 3.10
-  @see-class{gtk-grid}
-  @see-symbol{gtk-align}")
+  @see-class{gtk-grid}")
 
 ;;; --- gtk-grid-column-homogeneous --------------------------------------------
 
@@ -210,12 +243,13 @@
     @class{gtk-grid} class.
   @end{short}
 
-  The generic function @sym{gtk-grid-column-homogeneous} returns whether all
-  columns of @arg{grid} have the same width.
+  The slot access function @sym{gtk-grid-column-homogeneous} returns whether
+  all columns of the grid have the same width.
 
-  The generic function @sym{(setf gtk-grid-column-homogeneous)} sets whether
-  all columns of @arg{grid} will have the same width.
-  @see-class{gtk-grid}")
+  The slot access function @sym{(setf gtk-grid-column-homogeneous)} sets
+  whether all columns of the grid will have the same width.
+  @see-class{gtk-grid}
+  @see-function{gtk-grid-row-homogeneous}")
 
 ;;; --- gtk-grid-column-spacing ------------------------------------------------
 
@@ -241,12 +275,13 @@
     class.
   @end{short}
 
-  The generic function @sym{gtk-grid-column-spacing} returns the amount of space
-  between the columns of the grid.
+  The slot access function @sym{gtk-grid-column-spacing} returns the amount of
+  space between the columns of the grid.
 
-  The generic function @sym{(setf gtk-grid-column-spacing)} sets the amount of
-  space between columns of the grid.
-  @see-class{gtk-grid}")
+  The slot access function @sym{(setf gtk-grid-column-spacing)} sets the amount
+  of space between columns of the grid.
+  @see-class{gtk-grid}
+  @see-function{gtk-grid-row-spacing}")
 
 ;;; --- gtk-grid-row-homogeneous -----------------------------------------------
 
@@ -271,12 +306,13 @@
     @class{gtk-grid} class.
   @end{short}
 
-  The generic function @sym{gtk-grid-row-homogeneous} returns whether all rows
-  of @arg{grid} have the same height.
+  The slot access function @sym{gtk-grid-row-homogeneous} returns whether all
+  rows of the grid have the same height.
 
-  The generic function @sym{(setf gtk-grid-row-homogeneous)} sets whether all
-  rows of @arg{grid} will have the same height.
-  @see-class{gtk-grid}")
+  The slot access function @sym{(setf gtk-grid-row-homogeneous)} sets whether
+  all rows of the grid will have the same height.
+  @see-class{gtk-grid}
+  @see-function{gtk-grid-column-homogeneous}")
 
 ;;; --- gtk-grid-row-spacing ---------------------------------------------------
 
@@ -301,17 +337,16 @@
     class.
   @end{short}
 
-  The generic function @sym{gtk-grid-row-spacing} returns the amount of space
-  between the rows of the grid.
+  The slot access function @sym{gtk-grid-row-spacing} returns the amount of
+  space between the rows of the grid.
 
-  The generic function @sym{(setf gtk-grid-row-spacing} sets the amount of
+  The slot access function @sym{(setf gtk-grid-row-spacing)} sets the amount of
   space between rows of the grid.
-  @see-class{gtk-grid}")
+  @see-class{gtk-grid}
+  @see-function{gtk-grid-column-spacing}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Child Properties
-;;;
+;;; Child Property and Child Accessor Details
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- gtk-grid-child-height --------------------------------------------------
@@ -325,8 +360,9 @@
       "Accessor"
       (documentation 'gtk-grid-child-height 'function)
  "@version{2013-8-28}
-  Accessor of the child property @code{height} of the @class{gtk-grid} class.
-  @see-class{gtk-grid}")
+  Accessor of the @code{height} child property of the @class{gtk-grid} class.
+  @see-class{gtk-grid}
+  @see-function{gtk-grid-child-width}")
 
 ;;; --- gtk-grid-child-left-attach ---------------------------------------------
 
@@ -340,9 +376,10 @@
       "Accessor"
       (documentation 'gtk-grid-child-left-attach 'function)
  "@version{2013-8-28}
-  Accessor of the child property @code{left-attach} of the @class{gtk-grid}
+  Accessor of the @code{left-attach} child property of the @class{gtk-grid}
   class.
-  @see-class{gtk-grid}")
+  @see-class{gtk-grid}
+  @see-function{gtk-grid-child-top-attach}")
 
 ;;; --- gtk-grid-child-top-attach ----------------------------------------------
 
@@ -355,9 +392,10 @@
       "Accessor"
       (documentation 'gtk-grid-child-top-attach 'function)
  "@version{2013-8-28}
-  Accessor of the child property @code{top-attach} of the @class{gtk-grid}
+  Accessor of the @code{top-attach} child property of the @class{gtk-grid}
   class.
-  @see-class{gtk-grid}")
+  @see-class{gtk-grid}
+  @see-function{gtk-grid-child-left-attach}")
 
 ;;; --- gtk-grid-child-width ---------------------------------------------------
 
@@ -370,8 +408,9 @@
       "Accessor"
       (documentation 'gtk-grid-child-width 'function)
  "@version{2013-8-28}
-  Accessor of the child property @code{width} of the @class{gtk-grid} class.
-  @see-class{gtk-grid}")
+  Accessor of the @code{width} child property of the @class{gtk-grid} class.
+  @see-class{gtk-grid}
+  @see-function{gtk-grid-child-height}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_grid_new ()
@@ -397,18 +436,17 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-12-7}
   @argument[grid]{a @class{gtk-grid} container}
-  @argument[child]{the widget to add}
+  @argument[child]{the @class{gtk-widget} to add}
   @argument[left]{the column number to attach the left side of @arg{child} to}
   @argument[top]{the row number to attach the top side of @arg{child} to}
   @argument[width]{the number of columns that @arg{child} will span}
   @argument[height]{the number of rows that @arg{child} will span}
-  @short{Adds a @arg{child} widget to the @arg{grid}.}
+  @short{Adds a child widget to the grid.}
 
-  The position of @arg{child} is determined by @arg{left} and @arg{top}. The
-  number of \"cells\" that @arg{child} will occupy is determined by @arg{width}
-  and @arg{height}.
+  The position of the child widget is determined by the argumentes @arg{left} 
+  and @arg{top}. The number of \"cells\" that the child widget will occupy is
+  determined by the arguments @arg{width} and @arg{height}.
   @see-class{gtk-grid}
-  @see-class{gtk-widget}
   @see-function{gtk-grid-attach-next-to}"
   (grid (g-object gtk-grid))
   (child (g-object gtk-widget))
@@ -427,24 +465,24 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-12-7}
   @argument[grid]{a @class{gtk-grid} container}
-  @argument[child]{the widget to add}
-  @argument[sibling]{the child of grid that @arg{child} will be placed next to,
-    or @code{nil} to place @arg{child} at the beginning or end}
+  @argument[child]{the @class{gtk-widget} to add}
+  @argument[sibling]{the @class{gtk-widget} child of grid that @arg{child} will
+    be placed next to, or @code{nil} to place @arg{child} at the beginning or
+    end}
   @argument[side]{the side of @arg{sibling} of type @symbol{gtk-position-type}
     that @arg{child} is positioned next to}
   @argument[width]{the number of columns that @arg{child} will span}
   @argument[height]{the number of rows that @arg{child} will span}
-  @short{Adds a @arg{child} widget to the @arg{grid}.}
+  @short{Adds a child widget to the grid.}
 
-  The @arg{child} widget is placed next to @arg{sibling}, on the side determined
-  by @arg{side}. When @arg{sibling} is @code{nil}, the @arg{child} widget is
+  The child widget is placed next to @arg{sibling}, on the side determined
+  by @arg{side}. When @arg{sibling} is @code{nil}, the child widget is
   placed in row (for left or right placement) or column 0 (for top or bottom
   placement), at the end indicated by @arg{side}.
 
   Attaching widgets labeled [1], [2], [3] with @arg{sibling} = @code{nil} and
   @arg{side} = @code{:left} yields a layout of [3][2][1].
   @see-class{gtk-grid}
-  @see-class{gtk-widget}
   @see-symbol{gtk-position-type}
   @see-function{gtk-grid-attach}"
   (grid (g-object gtk-grid))
@@ -468,13 +506,12 @@
   @argument[top]{the top edge of the cell}
   @return{The child at the given position, or @code{nil}.}
   @begin{short}
-    Gets the child of @arg{grid} whose area covers the grid cell whose upper
+    Gets the child of the grid whose area covers the grid cell whose upper
     left corner is at @arg{left}, @arg{top}.
   @end{short}
 
   Since 3.2
-  @see-class{gtk-grid}
-  @see-class{gtk-widget}"
+  @see-class{gtk-grid}"
   (grid (g-object gtk-grid))
   (left :int)
   (top :int))
@@ -490,10 +527,10 @@
  "@version{2013-12-7}
   @argument[grid]{a @class{gtk-grid} container}
   @argument[position]{the position to insert the row at}
-  @short{Inserts a row at the specified @arg{position}.}
+  @short{Inserts a row at the specified position.}
 
-  Children which are attached at or below this @arg{position} are moved one row
-  down. Children which span across this @arg{position} are grown to span the new
+  Children which are attached at or below this position are moved one row
+  down. Children which span across this position are grown to span the new
   row.
 
   Since 3.2
@@ -514,10 +551,10 @@
  "@version{2013-12-7}
   @argument[grid]{a @class{gtk-grid} container}
   @argument[position]{the position to insert the column at}
-  @short{Inserts a column at the specified @arg{position}.}
+  @short{Inserts a column at the specified position.}
 
-  Children which are attached at or to the right of this @arg{position} are
-  moved one column to the right. Children which span across this @arg{position}
+  Children which are attached at or to the right of this position are
+  moved one column to the right. Children which span across this position
   are grown to span the new column.
 
   Since 3.2
@@ -531,43 +568,55 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_grid_remove_row ()
-;;;
-;;; void gtk_grid_remove_row (GtkGrid *grid, gint position);
-;;;
-;;; Removes a row from the grid.
-;;;
-;;; Children that are placed in this row are removed, spanning children that
-;;; overlap this row have their height reduced by one, and children below the
-;;; row are moved up.
-;;;
-;;; grid :
-;;;     a GtkGrid
-;;; 
-;;; position :
-;;;     the position of the row to remove
-;;;
-;;; Since: 3.10
 ;;; ----------------------------------------------------------------------------
+
+#+gtk-3-10
+(defcfun ("gtk_grid_remove_row" gtk-grid-remove-row) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2019-3-19}
+  @argument[grid]{a @class{gtk-grid} container}
+  @argument[position]{the position of the row to remove}
+  @short{Removes a row from the grid.}
+
+  Children that are placed in this row are removed, spanning children that
+  overlap this row have their height reduced by one, and children below the
+  row are moved up.
+
+  Since 3.10
+  @see-class{gtk-grid}
+  @see-function{gtk-grid-remove-column}
+  @see-function{gtk-grid-insert-row}"
+  (grid (g-object gtk-grid))
+  (position :int))
+
+#+gtk-3-10
+(export 'gtk-grid-remove-row)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_grid_remove_column ()
-;;;
-;;; void gtk_grid_remove_column (GtkGrid *grid, gint position);
-;;;
-;;; Removes a column from the grid.
-;;;
-;;; Children that are placed in this column are removed, spanning children that
-;;; overlap this column have their width reduced by one, and children after the
-;;; column are moved to the left.
-;;;
-;;; grid :
-;;;     a GtkGrid
-;;;
-;;; position :
-;;;     the position of the column to remove
-;;; 
-;;; Since: 3.10
 ;;; ----------------------------------------------------------------------------
+
+#+gtk-3-10
+(defcfun ("gtk_grid_remove_column" gtk-grid-remove-column) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2019-3-19}
+  @argument[grid]{a @class{gtk-grid} container}
+  @argument[position]{the position of the column to remove}
+  @short{Removes a column from the grid.}
+
+  Children that are placed in this column are removed, spanning children that
+  overlap this column have their width reduced by one, and children after the
+  column are moved to the left.
+
+  Since 3.10
+  @see-class{gtk-grid}
+  @see-function{gtk-grid-remove-row}
+  @see-function{gtk-grid-insert-column}"
+  (grid (g-object gtk-grid))
+  (position :int))
+
+#+gtk-3-10
+(export 'gtk-grid-remove-column)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_grid_insert_next_to ()
@@ -577,10 +626,10 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-12-7}
   @argument[grid]{a @class{gtk-grid} container}
-  @argument[sibling]{the child of @arg{grid} that the new row or column will be
-    placed next to}
+  @argument[sibling]{the @class{gtk-widget} child of @arg{grid} that the new
+    row or column will be placed next to}
   @argument[side]{the side of type @symbol{gtk-position-type} of @arg{sibling}
-    that child is positioned next to}
+    that @arg{child} is positioned next to}
   @short{Inserts a row or column at the specified position.}
 
   The new row or column is placed next to @arg{sibling}, on the side determined
@@ -589,7 +638,6 @@
 
   Since 3.2
   @see-class{gtk-grid}
-  @see-class{gtk-widget}
   @see-symbol{gtk-position-type}
   @see-function{gtk-grid-insert-column}
   @see-function{gtk-grid-insert-row}"
@@ -601,46 +649,58 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_grid_get_row_baseline_position ()
-;;; 
-;;; GtkBaselinePosition gtk_grid_get_row_baseline_position (GtkGrid *grid,
-;;;                                                         gint row);
-;;;
-;;; Returns the baseline position of row as set by
-;;; gtk_grid_set_row_baseline_position() or the default value
-;;; GTK_BASELINE_POSITION_CENTER.
-;;;
-;;; grid
-;;;     a GtkGrid
-;;;
-;;; row
-;;;     a row index
-;;;
-;;; Returns
-;;;     the baseline position of row
-;;;
-;;; Since 3.10
 ;;; ----------------------------------------------------------------------------
+
+#+gtk-3-10
+(defcfun ("gtk_grid_get_row_baseline_position" 
+           gtk-grid-get-row-baseline-position) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2019-3-19}
+  @argument[grid]{a @class{gtk-grid} container}
+  @argument[row]{a row index}
+  @return{The baseline position of @arg{row}.}
+  @begin{short}
+    Returns the baseline position of @arg{row} as set by the function
+    @fun{gtk-grid-set-row-baseline-position} or the default value
+    @code{:center}.
+  @end{short}
+
+  Since 3.10
+  @see-class{gtk-grid}
+  @see-function{gtk-grid-set-row-baseline-position}
+  @see-symbol{gtk-position-type}"
+  (grid (g-object gtk-grid))
+  (row :int))
+
+#+gtk-3-10
+(export 'gtk-grid-get-row-baseline-position)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_grid_set_row_baseline_position ()
-;;;
-;;; void gtk_grid_set_row_baseline_position (GtkGrid *grid,
-;;;                                          gint row,
-;;;                                          GtkBaselinePosition pos);
-;;;
-;;; Sets how the baseline should be positioned on row of the grid, in case that
-;;; row is assigned more space than is requested.
-;;;
-;;; grid
-;;;     a GtkGrid
-;;;
-;;; row
-;;;     a row index
-;;;
-;;; pos
-;;;     a GtkBaselinePosition
-;;;
-;;; Since 3.10
 ;;; ----------------------------------------------------------------------------
+
+#+gtk-3-10
+(defcfun ("gtk_grid_set_row_baseline_position" 
+           gtk-grid-set-row-baseline-position) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2019-3-19}
+  @argument[grid]{a @class{gtk-grid} container}
+  @argument[row]{a row index}
+  @argument[position]{a @symbol{gtk-baseline-positon}}
+  @begin{short}
+    Sets how the baseline should be positioned on @arg{row} of the grid, in
+    case that @arg{row} is assigned more space than is requested.
+  @end{short}
+
+  Since 3.10
+  @see-class{gtk-grid}
+  @see-function{gtk-grid-get-row-baseline-position}
+  @see-symbol{gtk-position-type}"
+  (grid (g-object gtk-grid))
+  (row :int)
+  (positon gtk-position-type))
+
+#+gtk-3-10
+(export 'gtk-grid-insert-next-to)
 
 ;;; --- End of file gtk.grid.lisp ----------------------------------------------

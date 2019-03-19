@@ -392,22 +392,29 @@
       Pack widgets in a rows and columns.
 
       @about-class{gtk-grid}
+
       @about-generic{gtk-grid-baseline-row}
       @about-generic{gtk-grid-column-homogeneous}
       @about-generic{gtk-grid-column-spacing}
       @about-generic{gtk-grid-row-homogeneous}
       @about-generic{gtk-grid-row-spacing}
+
       @about-function{gtk-grid-child-height}
       @about-function{gtk-grid-child-left-attach}
       @about-function{gtk-grid-child-top-attach}
       @about-function{gtk-grid-child-width}
+
       @about-function{gtk-grid-new}
       @about-function{gtk-grid-attach}
       @about-function{gtk-grid-attach-next-to}
       @about-function{gtk-grid-get-child-at}
       @about-function{gtk-grid-insert-row}
       @about-function{gtk-grid-insert-column}
+      @about-function{gtk-grid-remove-row}
+      @about-function{gtk-grid-remove-column}
       @about-function{gtk-grid-insert-next-to}
+      @about-function{gtk-grid-get-row-baseline-position}
+      @about-function{gtk-grid-set-row-baseline-position}
     @end{subsection}
     @begin[GtkRevealer]{subsection}
       Hide and show with animation.
