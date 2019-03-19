@@ -67,7 +67,6 @@
 ;;;     GdkEventSetting
 ;;;     GdkEventOwnerChange
 ;;;     GdkEventGrabBroken
-;;;
 ;;;     GdkEventTouchpadSwipe
 ;;;     GdkEventTouchpadPinch
 ;;;     GdkEventPadButton
@@ -524,12 +523,19 @@
   (:touch-update 38)
   (:touch-end 39)
   (:touch-cancel 40)
+  #+gdk-3-18
   (:touchpad-swipe 41)
+  #+gdk-3-18
   (:touchpad-pinch 42)
+  #+gdk-3-22
   (:pad-button-press 43)
+  #+gdk-3-22
   (:pad-button-release 44)
+  #+gdk-3-22
   (:pad-ring 45)
+  #+gdk-3-22
   (:pad-strip 46)
+  #+gdk-3-22
   (:pad-group-mode 47)
   (:event-last 48))
  
@@ -612,7 +618,7 @@
     @entry[:2button-press]{A mouse button has been double-clicked. Note that
       each click also generates a @code{:button-press} event.}
     @entry[:double-button-press]{Alias for @code{:2button-press}, added in 3.6.}
-    @entry[3button-press]{A mouse button has been clicked 3 times in a short
+    @entry[:3button-press]{A mouse button has been clicked 3 times in a short
       period of time. Note that each click also generates a @code{:button-press}
       event.}
     @entry[:triple-button-press]{Alias for @code{:3button-press}, added in 3.6.}
@@ -673,10 +679,10 @@
       determined by its phase field. This event type was added in 3.18.}
     @entry[:touchpad-pinch]{A touchpad pinch gesture event, the current state is
       determined by its phase field. This event type was added in 3.18.}
-    @entry[:button-press]{A tablet pad button press event. This event type was
-      added in 3.22.}
-    @entry{:button-release]{A tablet pad button release event. This event type
+    @entry[:pad-button-press]{A tablet pad button press event. This event type
       was added in 3.22.}
+    @entry{:pad-button-release]{A tablet pad button release event. This event
+      type was added in 3.22.}
     @entry[:pad-ring]{A tablet pad axis event from a \"ring\". This event type
       was added in 3.22.}
     @entry[:pad-strip]{A tablet pad axis event from a \"strip\". This event type
@@ -824,7 +830,9 @@
   (:scroll-mask 2097152)
   (:touch-mask #.(ash 1 22))
   (:smooth-scroll-mask #.(ash 1 23))
+  #+gdk-3-18
   (:touchpad-gesture-maske #.(ash 1 24))
+  #+gdk-3-22
   (:tabled-pad-mask #.(ash 1 25))
   (:all-events-mask 4194302))
 
@@ -1099,6 +1107,7 @@
              (implicit :boolean)
              (grab-window (g-object gdk-window)))
             ;; GdkEventTouchpadSwipe
+            #+gdk-3-18
             ((:touchpad-swipe) gdk-event-touchpad-swipe
              (phase :int8)
              (n-fingers :int8)
@@ -1111,6 +1120,7 @@
              (y-root :double)
              (state gdk-modifier-type))
             ;; GdkEventTouchpadPinch
+            #+gdk-3-18
             ((:touchpad-pinch) gdk-event-touchpad-pinch
              (phase :int8)
              (n-fingers :int8)
@@ -1125,12 +1135,14 @@
              (y-root :double)
              (state gdk-modifier-type))
             ;; GdkEventPadButton
+            #+gdk-3-22
             ((:pad-button-press :pad-button-release) gdk-event-pad-button
              (time :uint32)
              (group :uint)
              (button :uint)
              (mode :uint)) ; TODO: Check the type of mode
             ;; GdkEventPadAxis
+            #+gdk-3-22
             ((:pad-ring :pad-strip) gdk-event-pad-axis
              (time :uint32)
              (group :uint)
@@ -1138,10 +1150,12 @@
              (mode :uint)
              (value :double))
             ;; GdkEventPadGroupMode
+            #+gdk-3-22
             ((:pad-group-mode) gdk-event-pad-group-mode
              (time :uint32)
              (group :uint)
-             (mode :uint))))
+             (mode :uint))
+  ))
 
 (export (boxed-related-symbols 'gdk-event))
 
@@ -1410,7 +1424,8 @@
 ;;; --- gdk-event-type ---------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-type atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-event-type atdoc:*function-name-alias*) 
+      "Accessor"
       (documentation 'gdk-event-type 'function)
  "@version{2019-3-18}
   Accessor of the slot @code{type} of the @class{gdk-event} structure.
@@ -1419,7 +1434,8 @@
 ;;; --- gdk-event-window -------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-window atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-event-window atdoc:*function-name-alias*) 
+      "Accessor"
       (documentation 'gdk-event-window 'function)
  "@version{2019-3-18}
   Accessor of the slot @code{window} of the @class{gdk-event} structure.
@@ -1428,7 +1444,8 @@
 ;;; --- gdk-event-send-event ---------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-send-event atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-event-send-event atdoc:*function-name-alias*) 
+      "Accessor"
       (documentation 'gdk-event-send-event 'function)
  "@version{2019-3-18}
   Accessor of the slot @code{send-event} of the @class{gdk-event} structure.
@@ -1529,7 +1546,8 @@
 ;;; --- gdk-event-key-type -----------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-key-type atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-event-key-type atdoc:*function-name-alias*) 
+      "Accessor"
       (documentation 'gdk-event-key-type 'function)
  "@version{2014-1-22}
   Accessor of the slot @code{type} of the @class{gdk-event-key} structure.
@@ -1538,7 +1556,8 @@
 ;;; --- gdk-event-key-window ---------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-key-window atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-event-key-window atdoc:*function-name-alias*) 
+      "Accessor"
       (documentation 'gdk-event-key-window 'function)
  "@version{2014-1-22}
   Accessor of the slot @code{window} of the @class{gdk-event-key} structure.
@@ -1547,7 +1566,8 @@
 ;;; --- gdk-event-key-send-event -----------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-key-send-event atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-event-key-send-event atdoc:*function-name-alias*) 
+      "Accessor"
       (documentation 'gdk-event-key-send-event 'function)
  "@version{2014-1-22}
   Accessor of the slot @code{send-event} of the @class{gdk-event-key}
@@ -1557,7 +1577,8 @@
 ;;; --- gdk-event-key-time -----------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-key-time atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-event-key-time atdoc:*function-name-alias*) 
+      "Accessor"
       (documentation 'gdk-event-key-time 'function)
  "@version{2014-1-22}
   Accessor of the slot @code{time} of the @class{gdk-event-key} structure.
@@ -1566,7 +1587,8 @@
 ;;; --- gdk-event-key-state ----------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-key-state atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-event-key-state atdoc:*function-name-alias*) 
+      "Accessor"
       (documentation 'gdk-event-key-state 'function)
  "@version{2014-1-22}
   Accessor of the slot @code{state} of the @class{gdk-event-key} structure.
@@ -1575,7 +1597,8 @@
 ;;; --- gdk-event-key-keyval ---------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-key-keyval atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-event-key-keyval atdoc:*function-name-alias*) 
+      "Accessor"
       (documentation 'gdk-event-key-keyval 'function)
  "@version{2014-1-22}
   Accessor of the slot @code{keyval} of the @class{gdk-event-key} structure.
@@ -1584,7 +1607,8 @@
 ;;; --- gdk-event-key-length ---------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-key-length atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-event-key-length atdoc:*function-name-alias*) 
+      "Accessor"
       (documentation 'gdk-event-key-length 'function)
  "@version{2014-1-22}
   Accessor of the slot @code{length} of the @class{gdk-event-key} structure.
@@ -1593,7 +1617,8 @@
 ;;; --- gdk-event-key-string ---------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-key-string atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-event-key-string atdoc:*function-name-alias*) 
+      "Accessor"
       (documentation 'gdk-event-key-string 'function)
  "@version{2014-1-22}
   Accessor of the slot @code{string} of the @class{gdk-event-key} structure.
@@ -1613,7 +1638,8 @@
 ;;; --- gdk-event-key-group ----------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-key-group atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-event-key-group atdoc:*function-name-alias*) 
+      "Accessor"
       (documentation 'gdk-event-key-group 'function)
  "@version{2014-1-22}
   Accessor of the slot @code{group} of the @class{gdk-event-key} structure.
@@ -1754,7 +1780,8 @@
 ;;; --- gdk-event-button-type --------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-button-type atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-event-button-type atdoc:*function-name-alias*) 
+      "Accessor"
       (documentation 'gdk-event-button-type 'function)
  "@version{2014-1-22}
   Accessor of the slot @code{type} of the @class{gdk-event-button}
@@ -1764,7 +1791,8 @@
 ;;; --- gdk-event-button-window ------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-button-window atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-event-button-window atdoc:*function-name-alias*) 
+      "Accessor"
       (documentation 'gdk-event-button-window 'function)
  "@version{2014-1-22}
   Accessor of the slot @code{window} of the @class{gdk-event-button}
@@ -1785,7 +1813,8 @@
 ;;; --- gdk-event-button-time --------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-button-time atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-event-button-time atdoc:*function-name-alias*) 
+      "Accessor"
       (documentation 'gdk-event-button-time 'function)
  "@version{2014-1-22}
   Accessor of the slot @code{time} of the @class{gdk-event-button}
@@ -1795,7 +1824,8 @@
 ;;; --- gdk-event-button-x -----------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-button-x atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-event-button-x atdoc:*function-name-alias*) 
+      "Accessor"
       (documentation 'gdk-event-button-x 'function)
  "@version{2014-1-22}
   Accessor of the slot @code{x} of the @class{gdk-event-button} structure.
@@ -1804,7 +1834,8 @@
 ;;; --- gdk-event-button-y -----------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-button-y atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-event-button-y atdoc:*function-name-alias*) 
+      "Accessor"
       (documentation 'gdk-event-button-y 'function)
  "@version{2014-1-22}
   Accessor of the slot @code{y} of the @class{gdk-event-button} structure.
@@ -1813,7 +1844,8 @@
 ;;; --- gdk-event-button-axes --------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-button-axes atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-event-button-axes atdoc:*function-name-alias*) 
+      "Accessor"
       (documentation 'gdk-event-button-axes 'function)
  "@version{2014-1-22}
   Accessor of the slot @code{axes} of the @class{gdk-event-button}
@@ -1823,7 +1855,8 @@
 ;;; --- gdk-event-button-state -------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-button-state atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-event-button-state atdoc:*function-name-alias*) 
+      "Accessor"
       (documentation 'gdk-event-button-state 'function)
  "@version{2014-1-22}
   Accessor of the slot @code{state} of the @class{gdk-event-button}
@@ -1833,7 +1866,8 @@
 ;;; --- gdk-event-button-button ------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-button-button atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-event-button-button atdoc:*function-name-alias*) 
+      "Accessor"
       (documentation 'gdk-event-button-button 'function)
  "@version{2014-1-22}
   Accessor of the slot @code{button} of the @class{gdk-event-button}
@@ -1843,7 +1877,8 @@
 ;;; --- gdk-event-button-device ------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-button-device atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-event-button-device atdoc:*function-name-alias*) 
+      "Accessor"
       (documentation 'gdk-event-button-device 'function)
  "@version{2014-1-22}
   Accessor of the slot @code{device} of the @class{gdk-event-button}
@@ -1853,7 +1888,8 @@
 ;;; --- gdk-event-button-x-root ------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-button-x-root atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-event-button-x-root atdoc:*function-name-alias*) 
+      "Accessor"
       (documentation 'gdk-event-button-x-root 'function)
  "@version{2014-1-22}
   Accessor of the slot @code{x-root} of the @class{gdk-event-button}
@@ -1863,7 +1899,8 @@
 ;;; --- gdk-event-button-y-root ------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-button-y-root atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-event-button-y-root atdoc:*function-name-alias*) 
+      "Accessor"
       (documentation 'gdk-event-button-y-root 'function)
  "@version{2014-1-22}
   Accessor of the slot @code{y-root} of the @class{gdk-event-button}
@@ -1952,11 +1989,7 @@
   @see-slot{gdk-event-touch-y-root}
   @see-function{gdk-event-get-event-sequence}")
 
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Constructors for the GdkEventTouch structure
-;;;
-;;; ----------------------------------------------------------------------------
+;;; --- copy-gdk-event-touch ---------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'copy-gdk-event-touch 'function)
@@ -1965,116 +1998,147 @@
   Copy constructor of a @class{gdk-event-touch} structure.
   @see-class{gdk-event-touch}")
 
+;;; --- make-gdk-event-touch ---------------------------------------------------
+
 #+cl-cffi-gtk-documentation
 (setf (documentation 'make-gdk-event-touch 'function)
  "@version{2014-1-31}
   Creates a @class{gdk-event-touch} structure.
   @see-class{gdk-event-touch}")
 
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of the GdkEventTouch structure
-;;;
-;;; ----------------------------------------------------------------------------
+;;; --- gdk-event-touch-type ---------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-touch-type atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-event-touch-type atdoc:*function-name-alias*) 
+      "Accessor"
       (documentation 'gdk-event-touch-type 'function)
  "@version{2014-1-31}
-  Accessor of the slot @code{\"type\"} of the @class{gdk-event-touch} structure.
+  Accessor of the slot @code{type} of the @class{gdk-event-touch} structure.
   @see-class{gdk-event-touch}")
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-touch-window atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-event-touch-window atdoc:*function-name-alias*) 
+      "Accessor"
       (documentation 'gdk-event-touch-window 'function)
  "@version{2014-1-31}
-  Accessor of the slot @code{\"window\"} of the @class{gdk-event-touch}
+  Accessor of the slot @code{window} of the @class{gdk-event-touch}
   structure.
   @see-class{gdk-event-touch}")
+
+;;; --- gdk-event-touch-send-event ---------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-event-touch-send-event atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-touch-send-event 'function)
  "@version{2014-1-31}
-  Accessor of the slot @code{\"send-event\"} of the @class{gdk-event-touch}
+  Accessor of the slot @code{send-event} of the @class{gdk-event-touch}
   structure.
   @see-class{gdk-event-touch}")
 
+;;; --- gdk-event-touch-time ---------------------------------------------------
+
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-touch-time atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-event-touch-time atdoc:*function-name-alias*) 
+      "Accessor"
       (documentation 'gdk-event-touch-time 'function)
  "@version{2014-1-31}
-  Accessor of the slot @code{\"time\"} of the @class{gdk-event-touch} structure.
+  Accessor of the slot @code{time} of the @class{gdk-event-touch} structure.
   @see-class{gdk-event-touch}")
 
+;;; --- gdk-event-touch-x ------------------------------------------------------
+
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-touch-x atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-event-touch-x atdoc:*function-name-alias*) 
+      "Accessor"
       (documentation 'gdk-event-touch-x 'function)
  "@version{2014-1-31}
-  Accessor of the slot @code{\"x\"} of the @class{gdk-event-touch} structure.
+  Accessor of the slot @code{x} of the @class{gdk-event-touch} structure.
   @see-class{gdk-event-touch}")
 
+;;; --- gdk-event-touch-y ------------------------------------------------------
+
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-touch-y atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-event-touch-y atdoc:*function-name-alias*) 
+      "Accessor"
       (documentation 'gdk-event-touch-y 'function)
  "@version{2014-1-31}
-  Accessor of the slot @code{\"y\"} of the @class{gdk-event-touch} structure.
+  Accessor of the slot @code{y} of the @class{gdk-event-touch} structure.
   @see-class{gdk-event-touch}")
 
+;;; --- gdk-event-touch axes ---------------------------------------------------
+
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-touch-axes atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-event-touch-axes atdoc:*function-name-alias*) 
+      "Accessor"
       (documentation 'gdk-event-touch-axes 'function)
  "@version{2014-1-31}
-  Accessor of the slot @code{\"axes\"} of the @class{gdk-event-touch} structure.
+  Accessor of the slot @code{axes} of the @class{gdk-event-touch} structure.
   @see-class{gdk-event-touch}")
 
+;;; --- gdk-event-touch-state --------------------------------------------------
+
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-touch-state atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-event-touch-state atdoc:*function-name-alias*) 
+      "Accessor"
       (documentation 'gdk-event-touch-state 'function)
  "@version{2014-1-31}
-  Accessor of the slot @code{\"state\"} of the @class{gdk-event-touch}
+  Accessor of the slot @code{state} of the @class{gdk-event-touch}
   structure.
   @see-class{gdk-event-touch}")
 
+;;; --- gdk-event-touch-sequence -----------------------------------------------
+
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-touch-sequence atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-event-touch-sequence atdoc:*function-name-alias*) 
+      "Accessor"
       (documentation 'gdk-event-touch-sequence 'function)
  "@version{2014-1-31}
-  Accessor of the slot @code{\"sequence\"} of the @class{gdk-event-touch}
+  Accessor of the slot @code{sequence} of the @class{gdk-event-touch}
   structure.
   @see-class{gdk-event-touch}")
+
+;;; --- gdk-event-touch-emulating-pointer --------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-event-touch-emulating-pointer atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-touch-emulating-pointer 'function)
  "@version{2014-1-31}
-  Accessor of the slot @code{\"emulating-pointer\"} of the
+  Accessor of the slot @code{emulating-pointer} of the
   @class{gdk-event-touch} structure.
   @see-class{gdk-event-touch}")
 
+;;; --- gdk-event-touch-device -------------------------------------------------
+
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-touch-device atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-event-touch-device atdoc:*function-name-alias*) 
+      "Accessor"
       (documentation 'gdk-event-touch-device 'function)
  "@version{2014-1-31}
-  Accessor of the slot @code{\"device\"} of the @class{gdk-event-touch}
+  Accessor of the slot @code{device} of the @class{gdk-event-touch}
   structure.
   @see-class{gdk-event-touch}")
 
+;;; --- gdk-event-touch-x-root -------------------------------------------------
+
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-touch-x-root atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-event-touch-x-root atdoc:*function-name-alias*) 
+      "Accessor"
       (documentation 'gdk-event-touch-x-root 'function)
  "@version{2014-1-31}
-  Accessor of the slot @code{\"x-root\"} of the @class{gdk-event-touch}
+  Accessor of the slot @code{x-root} of the @class{gdk-event-touch}
   structure.
   @see-class{gdk-event-touch}")
 
+;;; --- gdk-event-touch-y-root -------------------------------------------------
+
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-touch-y-root atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-event-touch-y-root atdoc:*function-name-alias*) 
+      "Accessor"
       (documentation 'gdk-event-touch-y-root 'function)
  "@version{2014-1-31}
-  Accessor of the slot @code{\"y-root\"} of the @class{gdk-event-touch}
+  Accessor of the slot @code{y-root} of the @class{gdk-event-touch}
   structure.
   @see-class{gdk-event-touch}")
 
@@ -2154,11 +2218,7 @@
   @see-slot{gdk-event-scroll-delta-y}
   @see-function{gdk-event-get-scroll-deltas}")
 
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Constructors for the GdkEventScroll structure
-;;;
-;;; ----------------------------------------------------------------------------
+;;; --- copy-gdk-event-scroll --------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'copy-gdk-event-scroll 'function)
@@ -2167,118 +2227,152 @@
   Copy constructor of a @class{gdk-event-scroll} structure.
   @see-class{gdk-event-scroll}")
 
+;;; --- make-gdk-event-scroll --------------------------------------------------
+
 #+cl-cffi-gtk-documentation
 (setf (documentation 'make-gdk-event-scroll 'function)
  "@version{2014-1-31}
   Creates a @class{gdk-event-scroll} structure.
   @see-class{gdk-event-scroll}")
 
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of the GdkEventScroll structure
-;;;
-;;; ----------------------------------------------------------------------------
+;;; --- gdk-event-scroll-type --------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-scroll-type atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-event-scroll-type atdoc:*function-name-alias*) 
+      "Accessor"
       (documentation 'gdk-event-scroll-type 'function)
  "@version{2014-1-31}
-  Accessor of the slot @code{\"type\"} of the @class{gdk-event-scroll}
+  Accessor of the slot @code{type} of the @class{gdk-event-scroll}
   structure.
   @see-class{gdk-event-scroll}")
 
+;;; --- gdk-event-scroll-window ------------------------------------------------
+
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-scroll-window atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-event-scroll-window atdoc:*function-name-alias*) 
+      "Accessor"
       (documentation 'gdk-event-scroll-window 'function)
  "@version{2014-1-31}
-  Accessor of the slot @code{\"window\"} of the @class{gdk-event-scroll}
+  Accessor of the slot @code{window} of the @class{gdk-event-scroll}
   structure.
   @see-class{gdk-event-scroll}")
+
+;;; --- gdk-event-scroll-send-event --------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-event-scroll-send-event atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-scroll-send-event 'function)
  "@version{2014-1-31}
-  Accessor of the slot @code{\"send-event\"} of the @class{gdk-event-scroll}
+  Accessor of the slot @code{send-event} of the @class{gdk-event-scroll}
   structure.
   @see-class{gdk-event-scroll}")
 
+;;; --- gdk-event-scroll-time --------------------------------------------------
+
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-scroll-time atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-event-scroll-time atdoc:*function-name-alias*) 
+      "Accessor"
       (documentation 'gdk-event-scroll-time 'function)
  "@version{2014-1-31}
-  Accessor of the slot @code{\"time\"} of the @class{gdk-event-scroll}
+  Accessor of the slot @code{time} of the @class{gdk-event-scroll}
   structure.
   @see-class{gdk-event-scroll}")
 
+;;; --- gdk-event-scroll-x -----------------------------------------------------
+
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-scroll-x atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-event-scroll-x atdoc:*function-name-alias*) 
+      "Accessor"
       (documentation 'gdk-event-scroll-x 'function)
  "@version{2014-1-31}
-  Accessor of the slot @code{\"x\"} of the @class{gdk-event-scroll} structure.
+  Accessor of the slot @code{x} of the @class{gdk-event-scroll} structure.
   @see-class{gdk-event-scroll}")
 
+;;; --- gdk-event-scroll-y -----------------------------------------------------
+
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-scroll-y atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-event-scroll-y atdoc:*function-name-alias*) 
+      "Accessor"
       (documentation 'gdk-event-scroll-y 'function)
  "@version{2014-1-31}
-  Accessor of the slot @code{\"y\"} of the @class{gdk-event-scroll} structure.
+  Accessor of the slot @code{y} of the @class{gdk-event-scroll} structure.
   @see-class{gdk-event-scroll}")
 
+;;; --- gdk-event-scroll-state -------------------------------------------------
+
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-scroll-state atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-event-scroll-state atdoc:*function-name-alias*) 
+      "Accessor"
       (documentation 'gdk-event-scroll-state 'function)
  "@version{2014-1-31}
-  Accessor of the slot @code{\"state\"} of the @class{gdk-event-scroll}
+  Accessor of the slot @code{state} of the @class{gdk-event-scroll}
   structure.
   @see-class{gdk-event-scroll}")
 
+;;; --- gdk-event-scroll-direction ---------------------------------------------
+
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-scroll-direction atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-event-scroll-direction atdoc:*function-name-alias*) 
+      "Accessor"
       (documentation 'gdk-event-scroll-direction 'function)
  "@version{2014-1-31}
-  Accessor of the slot @code{\"direction\"} of the @class{gdk-event-scroll}
+  Accessor of the slot @code{direction} of the @class{gdk-event-scroll}
   structure.
   @see-class{gdk-event-scroll}")
 
+;;; --- gdk-event-scroll-device ------------------------------------------------
+
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-scroll-device atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-event-scroll-device atdoc:*function-name-alias*) 
+      "Accessor"
       (documentation 'gdk-event-scroll-device 'function)
  "@version{2014-1-31}
-  Accessor of the slot @code{\"device\"} of the @class{gdk-event-scroll}
+  Accessor of the slot @code{device} of the @class{gdk-event-scroll}
   structure.
   @see-class{gdk-event-scroll}")
 
+;;; --- gdk-event-scroll-x-root ------------------------------------------------
+
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-scroll-x-root atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-event-scroll-x-root atdoc:*function-name-alias*) 
+      "Accessor"
       (documentation 'gdk-event-scroll-x-root 'function)
  "@version{2014-1-31}
-  Accessor of the slot @code{\"x-root\"} of the @class{gdk-event-scroll}
+  Accessor of the slot @code{x-root} of the @class{gdk-event-scroll}
   structure.
   @see-class{gdk-event-scroll}")
 
+;;; --- gdk-event-scroll-y-root ------------------------------------------------
+
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-scroll-y-root atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-event-scroll-y-root atdoc:*function-name-alias*) 
+      "Accessor"
       (documentation 'gdk-event-scroll-y-root 'function)
  "@version{2014-1-31}
-  Accessor of the slot @code{\"y-root\"} of the @class{gdk-event-scroll}
+  Accessor of the slot @code{y-root} of the @class{gdk-event-scroll}
   structure.
   @see-class{gdk-event-scroll}")
 
+;;; --- gdk-event-scroll-delta-x -----------------------------------------------
+
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-scroll-delta-x atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-event-scroll-delta-x atdoc:*function-name-alias*) 
+      "Accessor"
       (documentation 'gdk-event-scroll-delta-x 'function)
  "@version{2014-1-31}
-  Accessor of the slot @code{\"delta-x\"} of the @class{gdk-event-scroll}
+  Accessor of the slot @code{delta-x} of the @class{gdk-event-scroll}
   structure.
   @see-class{gdk-event-scroll}")
 
+;;; --- gdk-event-scroll-delta-y -----------------------------------------------
+
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-scroll-delta-y atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-event-scroll-delta-y atdoc:*function-name-alias*) 
+      "Accessor"
       (documentation 'gdk-event-scroll-delta-y 'function)
  "@version{2014-1-31}
-  Accessor of the slot @code{\"delta-y\"} of the @class{gdk-event-scroll}
+  Accessor of the slot @code{delta-y} of the @class{gdk-event-scroll}
   structure.
   @see-class{gdk-event-scroll}")
 
@@ -2347,11 +2441,7 @@
   @see-slot{gdk-event-motion-x-root}
   @see-slot{gdk-event-motion-y-root}")
 
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Constructors for the GdkEventMotion structure
-;;;
-;;; ----------------------------------------------------------------------------
+;;; --- copy-gdk-event-motion --------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'copy-gdk-event-motion 'function)
@@ -2360,110 +2450,141 @@
   Copy constructor of a @class{gdk-event-motion} structure.
   @see-class{gdk-event-motion}")
 
+;;; --- make-gdk-event-motion --------------------------------------------------
+
 #+cl-cffi-gtk-documentation
 (setf (documentation 'make-gdk-event-motion 'function)
  "@version{2014-1-31}
   Creates a @class{gdk-event-motion} structure.
   @see-class{gdk-event-motion}")
 
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of the GdkEventMotion structure
-;;;
-;;; ----------------------------------------------------------------------------
+;;; --- gdk-event-motion-type --------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-motion-type atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-event-motion-type atdoc:*function-name-alias*) 
+      "Accessor"
       (documentation 'gdk-event-motion-type 'function)
  "@version{2014-1-31}
-  Accessor of the slot @code{\"motion\"} of the @class{gdk-event-motion}
+  Accessor of the slot @code{motion} of the @class{gdk-event-motion}
   structure.
   @see-class{gdk-event-motion}")
 
+;;; --- gdk-event-motion-window ------------------------------------------------
+
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-motion-window atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-event-motion-window atdoc:*function-name-alias*) 
+      "Accessor"
       (documentation 'gdk-event-motion-window 'function)
  "@version{2014-1-31}
-  Accessor of the slot @code{\"window\"} of the @class{gdk-event-motion}
+  Accessor of the slot @code{window} of the @class{gdk-event-motion}
   structure.
   @see-class{gdk-event-motion}")
+
+;;; --- gdk-event-motion-send-event --------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-event-motion-send-event atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-motion-send-event 'function)
  "@version{2014-1-31}
-  Accessor of the slot @code{\"send-event\"} of the @class{gdk-event-motion}
+  Accessor of the slot @code{send-event} of the @class{gdk-event-motion}
   structure.
   @see-class{gdk-event-motion}")
 
+;;; --- gdk-event-motion-time --------------------------------------------------
+
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-motion-time atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-event-motion-time atdoc:*function-name-alias*) 
+      "Accessor"
       (documentation 'gdk-event-motion-time 'function)
  "@version{2014-1-31}
-  Accessor of the slot @code{\"time\"} of the @class{gdk-event-motion}
+  Accessor of the slot @code{time} of the @class{gdk-event-motion}
   structure.
   @see-class{gdk-event-motion}")
 
+;;; --- gdk-event-motion-x -----------------------------------------------------
+
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-motion-x atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-event-motion-x atdoc:*function-name-alias*) 
+      "Accessor"
       (documentation 'gdk-event-motion-x 'function)
  "@version{2014-1-31}
-  Accessor of the slot @code{\"x\"} of the @class{gdk-event-motion} structure.
+  Accessor of the slot @code{x} of the @class{gdk-event-motion} structure.
   @see-class{gdk-event-motion}")
 
+;;; --- gdk-event-motion-y -----------------------------------------------------
+
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-motion-y atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-event-motion-y atdoc:*function-name-alias*) 
+      "Accessor"
       (documentation 'gdk-event-motion-y 'function)
  "@version{2014-1-31}
-  Accessor of the slot @code{\"y\"} of the @class{gdk-event-motion} structure.
+  Accessor of the slot @code{y} of the @class{gdk-event-motion} structure.
   @see-class{gdk-event-motion}")
 
+;;; --- gdk-event-motion-axes --------------------------------------------------
+
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-motion-axes atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-event-motion-axes atdoc:*function-name-alias*) 
+      "Accessor"
       (documentation 'gdk-event-motion-axes 'function)
  "@version{2014-1-31}
-  Accessor of the slot @code{\"axes\"} of the @class{gdk-event-motion}
+  Accessor of the slot @code{axes} of the @class{gdk-event-motion}
   structure.
   @see-class{gdk-event-motion}")
 
+;;; --- gdk-event-motion-state -------------------------------------------------
+
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-motion-state atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-event-motion-state atdoc:*function-name-alias*) 
+      "Accessor"
       (documentation 'gdk-event-motion-state 'function)
  "@version{2014-1-31}
-  Accessor of the slot @code{\"state\"} of the @class{gdk-event-motion}
+  Accessor of the slot @code{state} of the @class{gdk-event-motion}
   structure.
   @see-class{gdk-event-motion}")
 
+;;; --- gdk-event-motion-is-hint -----------------------------------------------
+
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-motion-is-hint atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-event-motion-is-hint atdoc:*function-name-alias*)  
+      "Accessor"
       (documentation 'gdk-event-motion-is-hint 'function)
  "@version{2014-1-31}
-  Accessor of the slot @code{\"is-hint\"} of the @class{gdk-event-motion}
+  Accessor of the slot @code{is-hint} of the @class{gdk-event-motion}
   structure.
   @see-class{gdk-event-motion}")
 
+;;; --- gdk-event-motion-device ------------------------------------------------
+
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-motion-device atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-event-motion-device atdoc:*function-name-alias*) 
+      "Accessor"
       (documentation 'gdk-event-motion-device 'function)
  "@version{2014-1-31}
-  Accessor of the slot @code{\"device\"} of the @class{gdk-event-motion}
+  Accessor of the slot @code{device} of the @class{gdk-event-motion}
   structure.
   @see-class{gdk-event-motion}")
 
+;;; --- gdk-event-motion-x-root ------------------------------------------------
+
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-motion-x-root atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-event-motion-x-root atdoc:*function-name-alias*) 
+      "Accessor"
       (documentation 'gdk-event-motion-x-root 'function)
  "@version{2014-1-31}
-  Accessor of the slot @code{\"x-root\"} of the @class{gdk-event-motion}
+  Accessor of the slot @code{x-root} of the @class{gdk-event-motion}
   structure.
   @see-class{gdk-event-motion}")
 
+;;; --- gdk-event-motion-y-root ------------------------------------------------
+
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-motion-y-root atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-event-motion-y-root atdoc:*function-name-alias*) 
+      "Accessor"
       (documentation 'gdk-event-motion-y-root 'function)
  "@version{2014-1-31}
-  Accessor of the slot @code{\"y-root\"} of the @class{gdk-event-motion}
+  Accessor of the slot @code{y-root} of the @class{gdk-event-motion}
   structure.
   @see-class{gdk-event-motion}")
 
@@ -2514,10 +2635,10 @@
   @see-slot{gdk-event-expose-count}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
 ;;; Constructors for the GdkEventExpose structure
-;;;
 ;;; ----------------------------------------------------------------------------
+
+;;; --- copy-gdk-event-expose --------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'copy-gdk-event-expose 'function)
@@ -2526,64 +2647,77 @@
   Copy constructor of a @class{gdk-event-expose} structure.
   @see-class{gdk-event-expose}")
 
+;;; --- make-gdk-event-expose --------------------------------------------------
+
 #+cl-cffi-gtk-documentation
 (setf (documentation 'make-gdk-event-expose 'function)
  "@version{2014-1-31}
   Creates a @class{gdk-event-expose} structure.
   @see-class{gdk-event-expose}")
 
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of the GdkEventExpose structure
-;;;
-;;; ----------------------------------------------------------------------------
+;;; --- gdk-event-expose-type --------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-expose-type atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-event-expose-type atdoc:*function-name-alias*) 
+      "Accessor"
       (documentation 'gdk-event-expose-type 'function)
  "@version{2014-1-31}
-  Accessor of the slot @code{\"type\"} of the @class{gdk-event-expose}
+  Accessor of the slot @code{type} of the @class{gdk-event-expose}
   structure.
   @see-class{gdk-event-expose}")
 
+;;; --- gdk-event-expose-window ------------------------------------------------
+
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-expose-window atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-event-expose-window atdoc:*function-name-alias*) 
+      "Accessor"
       (documentation 'gdk-event-expose-window 'function)
  "@version{2014-1-31}
-  Accessor of the slot @code{\"window\"} of the @class{gdk-event-expose}
+  Accessor of the slot @code{window} of the @class{gdk-event-expose}
   structure.
   @see-class{gdk-event-expose}")
+
+;;; --- gdk-event-expose-send-event --------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-event-expose-send-event atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-expose-send-event 'function)
  "@version{2014-1-31}
-  Accessor of the slot @code{\"send-event\"} of the @class{gdk-event-expose}
+  Accessor of the slot @code{send-event} of the @class{gdk-event-expose}
   structure.
   @see-class{gdk-event-expose}")
 
+;;; --- gdk-event-expose-area --------------------------------------------------
+
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-expose-area atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-event-expose-area atdoc:*function-name-alias*) 
+      "Accessor"
       (documentation 'gdk-event-expose-area 'function)
  "@version{2014-1-31}
-  Accessor of the slot @code{\"area\"} of the @class{gdk-event-expose}
+  Accessor of the slot @code{area} of the @class{gdk-event-expose}
   structure.
   @see-class{gdk-event-expose}")
 
+;;; --- gdk-event-expose-region ------------------------------------------------
+
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-expose-region atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-event-expose-region atdoc:*function-name-alias*) 
+      "Accessor"
       (documentation 'gdk-event-expose-region 'function)
  "@version{2014-1-31}
-  Accessor of the slot @code{\"region\"} of the @class{gdk-event-expose}
+  Accessor of the slot @code{region} of the @class{gdk-event-expose}
   structure.
   @see-class{gdk-event-expose}")
 
+;;; --- gdk-event-expose-count -------------------------------------------------
+
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-expose-count atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-event-expose-count atdoc:*function-name-alias*) 
+      "Accessor"
       (documentation 'gdk-event-expose-count 'function)
  "@version{2014-1-31}
-  Accessor of the slot @code{\"count\"} of the @class{gdk-event-expose}
+  Accessor of the slot @code{count} of the @class{gdk-event-expose}
   structure.
   @see-class{gdk-event-expose}")
 
@@ -2622,11 +2756,7 @@
   @see-slot{gdk-event-visibility-send-event}
   @see-slot{gdk-event-visibility-state}")
 
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Constructors for the GdkEventVisibility structure
-;;;
-;;; ----------------------------------------------------------------------------
+;;; --- copy-gdk-event-visibility ----------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'copy-gdk-event-visibility 'function)
@@ -2635,51 +2765,55 @@
   Copy constructor of a @class{gdk-event-visibility} structure.
   @see-class{gdk-event-visibility}")
 
+;;; --- make-gdk-event-visibility ----------------------------------------------
+
 #+cl-cffi-gtk-documentation
 (setf (documentation 'make-gdk-event-visibility 'function)
  "@version{2014-1-31}
   Creates a @class{gdk-event-visibility} structure.
   @see-class{gdk-event-visibility}")
 
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of the GdkEventVisibility structure
-;;;
-;;; ----------------------------------------------------------------------------
+;;; --- gdk-event-visibility-type ----------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-event-visibility-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-visibility-type 'function)
  "@version{2014-1-31}
-  Accessor of the slot @code{\"type\"} of the @class{gdk-event-visibility}
+  Accessor of the slot @code{type} of the @class{gdk-event-visibility}
   structure.
   @see-class{gdk-event-visibility}")
+
+;;; --- gdk-event-visibility-window --------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-event-visibility-window atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-visibility-window 'function)
  "@version{2014-1-31}
-  Accessor of the slot @code{\"window\"} of the @class{gdk-event-visibility}
+  Accessor of the slot @code{window} of the @class{gdk-event-visibility}
   structure.
   @see-class{gdk-event-visibility}")
+
+;;; --- gdk-event-visibility-send-event ----------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-event-visibility-send-event atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-visibility-send-event 'function)
  "@version{2014-1-31}
-  Accessor of the slot @code{\"send-event\"} of the @class{gdk-event-visibility}
+  Accessor of the slot @code{send-event} of the @class{gdk-event-visibility}
   structure.
   @see-class{gdk-event-visibility}")
+
+;;; --- gdk-event-visibility-state ---------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-event-visibility-state atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-visibility-state 'function)
  "@version{2014-1-31}
-  Accessor of the slot @code{\"state\"} of the @class{gdk-event-visibility}
+  Accessor of the slot @code{state} of the @class{gdk-event-visibility}
   structure.
   @see-class{gdk-event-visibility}")
 
@@ -2755,11 +2889,7 @@
   @see-slot{gdk-event-crossing-focus}
   @see-slot{gdk-event-crossing-state}")
 
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Constructors for the GdkEventCrossing structure
-;;;
-;;; ----------------------------------------------------------------------------
+;;; --- copy-gdk-event-crossing ------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'copy-gdk-event-crossing 'function)
@@ -2768,43 +2898,48 @@
   Copy constructor of a @class{gdk-event-crossing} structure.
   @see-class{gdk-event-crossing}")
 
+;;; --- make-gdk-event-crossing ------------------------------------------------
+
 #+cl-cffi-gtk-documentation
 (setf (documentation 'make-gdk-event-crossing 'function)
  "@version{2014-1-31}
   Creates a @class{gdk-event-crossing} structure.
   @see-class{gdk-event-crossing}")
 
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of the GdkEventCrossing structure
-;;;
-;;; ----------------------------------------------------------------------------
+;;; --- gdk-event-crossing-type ------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-crossing-type atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-event-crossing-type atdoc:*function-name-alias*) 
+      "Accessor"
       (documentation 'gdk-event-crossing-type 'function)
  "@version{2014-1-31}
-  Accessor of the slot @code{\"type\"} of the @class{gdk-event-crossing}
+  Accessor of the slot @code{type} of the @class{gdk-event-crossing}
   structure.
   @see-class{gdk-event-crossing}")
+
+;;; --- gdk-event-crossing-window ----------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-event-crossing-window atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-crossing-window 'function)
  "@version{2014-1-31}
-  Accessor of the slot @code{\"window\"} of the @class{gdk-event-crossing}
+  Accessor of the slot @code{window} of the @class{gdk-event-crossing}
   structure.
   @see-class{gdk-event-crossing}")
+
+;;; --- gdk-event-crossing-send-event ------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-event-crossing-send-event atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-crossing-send-event 'function)
  "@version{2014-1-31}
-  Accessor of the slot @code{\"send-event\"} of the @class{gdk-event-crossing}
+  Accessor of the slot @code{send-event} of the @class{gdk-event-crossing}
   structure.
   @see-class{gdk-event-crossing}")
+
+;;; --- gdk-event-crossing-subwindow -------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-event-crossing-subwindow atdoc:*function-name-alias*)
@@ -2815,73 +2950,95 @@
   structure
   @see-class{gdk-event-crossing}")
 
+;;; --- gdk-event-crossing-time ------------------------------------------------
+
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-crossing-time atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-event-crossing-time atdoc:*function-name-alias*) 
+      "Accessor"
       (documentation 'gdk-event-crossing-time 'function)
  "@version{2014-1-31}
-  Accessor of the slot @code{\"time\"} of the @class{gdk-event-crossing}
+  Accessor of the slot @code{time} of the @class{gdk-event-crossing}
   structure.
   @see-class{gdk-event-crossing}")
 
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-crossing-x atdoc:*function-name-alias*) "Accessor"
-      (documentation 'gdk-event-crossing-x 'function)
- "@version{2014-1-31}
-  Accessor of the slot @code{\"x\"} of the @class{gdk-event-crossing} structure.
-  @see-class{gdk-event-crossing}")
+;;; --- gdk-event-crossing-x ---------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-crossing-y atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-event-crossing-x atdoc:*function-name-alias*) 
+      "Accessor"
+      (documentation 'gdk-event-crossing-x 'function)
+ "@version{2014-1-31}
+  Accessor of the slot @code{x} of the @class{gdk-event-crossing} structure.
+  @see-class{gdk-event-crossing}")
+
+;;; --- gdk-event-crossing-y ---------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gdk-event-crossing-y atdoc:*function-name-alias*) 
+      "Accessor"
       (documentation 'gdk-event-crossing-y 'function)
  "@version{2014-1-31}
-  Accessor of the slot @code{\"y\"} of the @class{gdk-event-crossing} structure.
+  Accessor of the slot @code{y} of the @class{gdk-event-crossing} structure.
   @see-class{gdk-event-crossing}")
+
+;;; --- gdk-event-crossing-x-root ----------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-event-crossing-x-root atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-crossing-x-root 'function)
  "@version{2014-1-31}
-  Accessor of the slot @code{\"x-root\"} of the @class{gdk-event-crossing}
+  Accessor of the slot @code{x-root} of the @class{gdk-event-crossing}
   structure.
   @see-class{gdk-event-crossing}")
+
+;;; --- gdk-event-crossing-y-root ----------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-event-crossing-y-root atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-crossing-y-root 'function)
  "@version{2014-1-31}
-  Accessor of the slot @code{\"y-root\"} of the @class{gdk-event-crossing}
+  Accessor of the slot @code{y-root} of the @class{gdk-event-crossing}
   structure.
   @see-class{gdk-event-crossing}")
 
+;;; --- gdk-event-crossing-mode ------------------------------------------------
+
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-crossing-mode atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-event-crossing-mode atdoc:*function-name-alias*)
+      "Accessor"
       (documentation 'gdk-event-crossing-mode 'function)
  "@version{2014-1-31}
-  Accessor of the slot @code{\"mode\"} of the @class{gdk-event-crossing}
+  Accessor of the slot @code{mode} of the @class{gdk-event-crossing}
   structure.
   @see-class{gdk-event-crossing}")
+
+;;; --- gdk-event-crossing-detail ----------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-event-crossing-detail atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-crossing-detail 'function)
  "@version{2014-1-31}
-  Accessor of the slot @code{\"detail\"} of the @class{gdk-event-crossing}
+  Accessor of the slot @code{detail} of the @class{gdk-event-crossing}
   structure.
   @see-class{gdk-event-crossing}")
 
+;;; --- gdk-event-crossing-focus -----------------------------------------------
+
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-crossing-focus atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-event-crossing-focus atdoc:*function-name-alias*)
+      "Accessor"
       (documentation 'gdk-event-crossing-focus 'function)
  "@version{2014-1-31}
-  Accessor of the slot @code{\"focus\"} of the @class{gdk-event-crossing}
+  Accessor of the slot @code{focus} of the @class{gdk-event-crossing}
   structure.
   @see-class{gdk-event-crossing}")
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-crossing-state atdoc:*function-name-alias*) "Accessor"
+(setf (gethash 'gdk-event-crossing-state atdoc:*function-name-alias*)
+      "Accessor"
       (documentation 'gdk-event-crossing-state 'function)
  "@version{2014-1-31}
   Accessor of the slot @code{\"state\"} of the @class{gdk-event-crossing}
