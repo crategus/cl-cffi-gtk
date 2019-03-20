@@ -701,6 +701,6 @@
   (positon gtk-position-type))
 
 #+gtk-3-10
-(export 'gtk-grid-insert-next-to)
+(export 'gtk-grid-set-row-baseline-position)
 
 ;;; --- End of file gtk.grid.lisp ----------------------------------------------
