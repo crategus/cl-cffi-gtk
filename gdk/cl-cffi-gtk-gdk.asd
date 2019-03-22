@@ -1,11 +1,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; cl-cffi-gtk-gdk.asd
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See http://common-lisp.net/project/cl-gtk2/
-;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2016 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -25,9 +22,12 @@
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
 
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (asdf:load-system 'cl-cffi-gtk-gdk-init))
+
 (defsystem :cl-cffi-gtk-gdk
   :name :cl-cffi-gtk-gdk
-  :version "3.16"                             ; Version of the GDK Library
+  :version "0.1.0"                            ; Version of the GDK Library
   :author "Dieter Kaiser"
   :license "LLGPL"
   :serial t

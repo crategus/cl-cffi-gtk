@@ -1,15 +1,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; pango.attributes.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation has been copied from the Pango Reference Manual
 ;;; for Pango 1.30.0. See <http://www.gtk.org>. The API documentation of the
 ;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -1294,7 +1291,7 @@
 ;;; PangoAttrList
 ;;; ----------------------------------------------------------------------------
 
-(glib::at-init () (foreign-funcall "pango_attr_list_get_type" :int))
+(glib-init::at-init () (foreign-funcall "pango_attr_list_get_type" :int))
 
 (define-g-boxed-opaque pango-attr-list "PangoAttrList"
   :alloc (%pango-attr-list-new))

@@ -7,7 +7,7 @@
 ;;; is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -28,7 +28,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defpackage :gdk-pixbuf
-  (:use :cl :gobject :glib :cffi :iter))
+  (:use :cl :gobject :glib :glib-init :cffi :iter))
 
 ;;; ----------------------------------------------------------------------------
 

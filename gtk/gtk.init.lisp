@@ -1,11 +1,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.init.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2014 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -45,7 +42,7 @@
   (defvar *main-thread-level* 0)
   (defvar *main-thread-lock* (bt:make-lock "*main-thread* lock"))
 
-  (glib::at-finalize ()
+  (glib-init::at-finalize ()
     (when (and *main-thread* (bt:thread-alive-p *main-thread*))
       (bt:destroy-thread *main-thread*)
       (setf *main-thread* nil)))
@@ -163,6 +160,6 @@
 
 ;;; ----------------------------------------------------------------------------
 
-(glib::at-init () (%gtk-init))
+(glib-init::at-init () (%gtk-init))
 
 ;;; --- End of file gtk.init.lisp ----------------------------------------------

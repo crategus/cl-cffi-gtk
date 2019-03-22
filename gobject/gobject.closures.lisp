@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gobject.closures.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file has been copied from the
 ;;; GObject Reference Manual Version 2.36.2. See <http://www.gtk.org>.
 ;;; The API documentation of the Lisp binding is available at
 ;;; <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -246,7 +243,7 @@
  "@version{2013-6-12}
   The @class{g-type} for @symbol{g-closure}.")
 
-(glib::at-init nil (g-type-closure))
+(glib-init::at-init nil (g-type-closure))
 
 (export 'g-type-closure)
 

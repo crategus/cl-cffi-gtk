@@ -34,6 +34,9 @@
 ;    (let ((*compile-print* nil))
 ;      (call-next-method))))
 
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (asdf:load-system 'cl-cffi-gtk-init))
+
 (defsystem :cl-cffi-gtk
 ;  :default-component-class gtk-source-file
   :name :cl-cffi-gtk

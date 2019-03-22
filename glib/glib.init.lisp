@@ -22,7 +22,10 @@
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
 
-(in-package :glib)
+(defpackage :glib-init
+  (:use :cl :cffi :iter))
+
+(in-package :glib-init)
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
 
@@ -165,5 +168,30 @@
 
 (eval-when (:compile-toplevel :load-toplevel :execute)
   (pushnew :glib *features*))
+
+(defcvar ("glib_major_version" +glib-init-major-version+ :read-only t) :uint)
+(defcvar ("glib_minor_version" +glib-init-minor-version+ :read-only t) :uint)
+
+(push-library-version-features glib
+  +glib-init-major-version+ +glib-init-minor-version+
+  2 32
+  2 34
+  2 36
+  2 38
+  2 40
+  2 42
+  2 44
+  2 46
+  2 48
+  2 50
+  2 52
+  2 54
+  2 56
+  2 58
+  2 60
+  2 62
+  2 64)
+
+(require-library-version "GLib" 2 32 +glib-init-major-version+ +glib-init-minor-version+)
 
 ;;; --- End of file glib.init.lisp ---------------------------------------------

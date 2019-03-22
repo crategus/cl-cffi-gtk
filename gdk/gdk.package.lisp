@@ -28,44 +28,9 @@
 ;;; ----------------------------------------------------------------------------
 
 (defpackage :gdk
-  (:use :gdk-pixbuf :gobject :glib :gio :cffi :pango :cairo :iter :cl))
+  (:use :gdk-pixbuf :gobject :glib :glib-init :gio :cffi :pango :cairo :iter :cl))
 
 (in-package :gdk)
-
-;; Moved from gtk.package.lisp to this place because we need the version
-;; of the GTK library when compiling GDK
-(glib::at-init ()
-  (eval-when (:compile-toplevel :load-toplevel :execute)
-    (define-foreign-library gtk
-      ((:and :unix (:not :darwin))
-       (:or "libgtk-3.so.0" "libgtk-3.so"))
-      (:darwin (:or "libgtk-3.0.dylib"
-                    "libgtk-3.dylib"
-                    "libgtk-x11-3.0.0.dylib"
-                    "libgtk-x11-3.0.dylib"))
-      (:windows (:or "libgtk-3-0.dll" "libgtk-win32-2.0-0.dll"))
-      (t "libgtk-3-0")))
-  (use-foreign-library gtk))
-
-(glib::push-library-version-features gdk
-    ;; We can not call the Lisp implementations gtk-get-major-version and
-    ;; gtk-get-minor-version because GTK is not compiled at this time
-    (cffi:foreign-funcall "gtk_get_major_version" :int)
-    (cffi:foreign-funcall "gtk_get_minor_version" :int)
-    3 4
-    3 6
-    3 8
-    3 10
-    3 12
-    3 14
-    3 16
-    3 18
-    3 20
-    3 22
-    3 24
-    3 26
-    3 28
-    3 30)
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (find-package :gdk) t)

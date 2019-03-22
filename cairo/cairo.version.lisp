@@ -6,7 +6,7 @@
 ;;; The API documentation of the Lisp binding is available at
 ;;; <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012, 2013 Dieter Kaiser
+;;; Copyright (C) 2012 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -207,14 +207,14 @@
 (export 'cairo-version-string)
 
 
-(glib::push-library-version-features cairo
+(glib-init::push-library-version-features cairo
   (truncate (/ (cairo-version) 10000))
   (- (truncate (/ (cairo-version) 100)) (* 100 (truncate (/ (cairo-version) 10000))))
   1 15
   1 12
   1 10)
 
-(glib::require-library-version "Cairo" 1 10
+(glib-init::require-library-version "Cairo" 1 10
                          (truncate (/ (cairo-version) 10000))
                          (- (truncate (/ (cairo-version) 100)) (* 100 (truncate (/ (cairo-version) 10000)))))
 

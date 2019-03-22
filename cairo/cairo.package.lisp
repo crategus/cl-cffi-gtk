@@ -6,7 +6,7 @@
 ;;; library. See <http://cairographics.org>. The API documentation of the Lisp
 ;;; binding is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012, 2013 Dieter Kaiser
+;;; Copyright (C) 2012 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -27,7 +27,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defpackage :cairo
-  (:use :cl :cffi :glib))
+  (:use :cl :cffi :glib :glib-init))
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (find-package :cairo) t)

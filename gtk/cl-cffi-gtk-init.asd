@@ -1,7 +1,7 @@
 ;;; ----------------------------------------------------------------------------
-;;; gio.init.lisp
+;;; cl-cffi-gtk-init.asd
 ;;;
-;;; Copyright (C) 2012 - 2019 Dieter Kaiser
+;;; Copyright (C) 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -21,17 +21,19 @@
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
 
-(in-package :gio)
+(defsystem :cl-cffi-gtk-init
+  :name :cl-cffi-gtk-init
+  :version "0.1.0"
+  :author "Dieter Kaiser"
+  :license "LLGPL"
+  :serial t
+  :components (
+               (:file "gtk.init-features")           ; Libraray Initialization
+              )
+  :depends-on (:cl-cffi-gtk-glib-init
+               :cl-cffi-gtk-gdk-init
+               :cffi
+               :iterate
+               :trivial-features))
 
-(glib-init::at-init ()
-  (eval-when (:compile-toplevel :load-toplevel :execute)
-    (define-foreign-library glib
-      ((:and :unix (:not :darwin))
-       (:or "libgio-2.0.so.0" "libgio-2.0.so"))
-      (:darwin "libgio-2.0.dylib")
-      (:windows "libgio-2.0-0.dll")
-      (t (:default "libgio-2.0"))))
-  
-  (use-foreign-library glib))
-
-;;; --- End of file gio.init.lisp ----------------------------------------------
+;;; --- End of file cl-cffi-gtk-init.asd ---------------------------------------

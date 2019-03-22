@@ -1,11 +1,8 @@
 ;;; ----------------------------------------------------------------------------
 ;;; pango.init.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -27,7 +24,7 @@
 
 (in-package :pango)
 
-(glib::at-init ()
+(glib-init::at-init ()
   (eval-when (:compile-toplevel :load-toplevel :execute)
     (define-foreign-library pango
       ((:and :unix (:not :darwin)) "libpango-1.0.so.0")
@@ -37,7 +34,7 @@
 
   (use-foreign-library pango))
 
-(glib::at-init ()
+(glib-init::at-init ()
   (eval-when (:compile-toplevel :load-toplevel :execute)
     (define-foreign-library pangocairo
       ((:and :unix (:not :darwin)) "libpangocairo-1.0.so.0")

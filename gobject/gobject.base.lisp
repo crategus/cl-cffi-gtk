@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gobject.base.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GObject Reference Manual
 ;;; Version 2.36.2 and modified to document the Lisp binding to the GObject
 ;;; library. See <http://www.gtk.org>. The API documentation of the Lisp binding
 ;;; is available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2014 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -132,7 +129,7 @@
 (defvar *current-object-from-pointer* nil)
 (defvar *currently-making-object-p* nil)
 
-(glib::at-finalize ()
+(glib-init::at-finalize ()
   (clrhash *foreign-gobjects-weak*)
   (clrhash *foreign-gobjects-strong*)
   (setf *current-creating-object* nil
@@ -680,7 +677,7 @@
   (when (gobject-class-direct-g-type-name object)
     (register-object-type (gobject-class-direct-g-type-name object)
                           (class-name object))
-    (glib::at-init (object)
+    (glib-init::at-init (object)
              (initialize-gobject-class-g-type object))))
 
 ;;; ----------------------------------------------------------------------------

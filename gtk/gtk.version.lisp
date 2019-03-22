@@ -286,31 +286,4 @@ NIL
   (format t "Lisp implementation version: ~a~%~%" (lisp-implementation-version))
   nil)
 
-;;; ----------------------------------------------------------------------------
-
-(eval-when (:compile-toplevel :load-toplevel :execute)
-  (pushnew :gtk *features*))
-
-(glib::push-library-version-features gtk
-                                     (gtk-get-major-version)
-                                     (gtk-get-minor-version)
-                                     3 4
-                                     3 6
-                                     3 8
-                                     3 10
-                                     3 12
-                                     3 14
-                                     3 16
-                                     3 18
-                                     3 20
-                                     3 22
-                                     3 24
-                                     3 26
-                                     3 28
-                                     3 30)
-
-(glib::require-library-version "GTK+" 3 4
-                              (gtk-get-major-version)
-                              (gtk-get-minor-version))
-
 ;;; --- End of file gtk.version.lisp -------------------------------------------
