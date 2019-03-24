@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gdk.events.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GDK 3 Reference Manual
 ;;; Version 3.6.4 and modified to document the Lisp binding to the GDK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2014 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,7 +29,7 @@
 ;;;
 ;;; Events
 ;;;
-;;; Functions for handling events from the window system
+;;;     Functions for handling events from the window system
 ;;;
 ;;; Synopsis
 ;;;
@@ -614,12 +611,12 @@
   @argument[event]{a @class{gdk-event}}
   @return{The event sequence that the event belongs to.}
   @begin{short}
-    If @arg{event} if of type @code{:touch-begin}, @code{:touch-update},
+    If @arg{event} is of type @code{:touch-begin}, @code{:touch-update},
     @code{:touch-end} or @code{:touch-cancel}, returns the
     @class{gdk-event-sequence} to which the @arg{event} belongs.
-    Otherwise, return @code{nil}.
   @end{short}
-
+  Otherwise, return @code{nil}.
+  
   Since 3.4
   @see-class{gdk-event-sequence}"
   (event (g-boxed-foreign gdk-event)))
