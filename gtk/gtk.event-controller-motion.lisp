@@ -69,7 +69,7 @@
 (setf (documentation 'gtk-event-controller-motion 'type)
  "@version{2019-3-17}
   @begin{short}
-    @sym{gtk-event-controller-motion} is an event controller meant for 
+    @sym{gtk-event-controller-motion} is an event controller meant for
     situations where you need to track the position of the pointer.
   @end{short}
 
@@ -82,7 +82,7 @@
       @end{pre}
       Signals that the pointer has entered the widget.
       @begin[code]{table}
-        @entry[controller]{The @sym{gtk-event-controller-motion} object that 
+        @entry[controller]{The @sym{gtk-event-controller-motion} object that
           received the signal.}
         @entry[x]{the x coordinate}
         @entry[y]{the y coordinate}
@@ -95,7 +95,7 @@
       @end{pre}
       Signals that pointer has left the widget.
       @begin[code]{table}
-        @entry[controller]{The @sym{gtk-event-controller-motion} object that 
+        @entry[controller]{The @sym{gtk-event-controller-motion} object that
           received the signal.}
       @end{table}
       Since 3.24
@@ -106,7 +106,7 @@
       @end{pre}
       Emitted when the pointer moves inside the widget.
       @begin[code]{table}
-        @entry[controller]{The @sym{gtk-event-controller-motion} object that 
+        @entry[controller]{The @sym{gtk-event-controller-motion} object that
           received the signal.}
         @entry[x]{the x coordinate}
         @entry[y]{the y coordinate}

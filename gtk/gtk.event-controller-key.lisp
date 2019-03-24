@@ -84,7 +84,7 @@
   lambda (eventcontrollerkey)    : Run Last
       @end{pre}
       @begin[code]{table}
-        @entry[eventcontrollerkey]{The @sym{gtk-event-controller-key} object on 
+        @entry[eventcontrollerkey]{The @sym{gtk-event-controller-key} object on
           which the signal is emitted.}
       @end{table}
       Since 3.24
@@ -94,7 +94,7 @@
   lambda (controller)    : Run Last
       @end{pre}
       @begin[code]{table}
-        @entry[controller]{The @sym{gtk-event-controller-key} object on 
+        @entry[controller]{The @sym{gtk-event-controller-key} object on
           which the signal is emitted.}
       @end{table}
       Since 3.24
@@ -104,7 +104,7 @@
   lambda (controller)    : Run Last
       @end{pre}
       @begin[code]{table}
-        @entry[controller]{The @sym{gtk-event-controller-key} object on 
+        @entry[controller]{The @sym{gtk-event-controller-key} object on
           which the signal is emitted.}
       @end{table}
       Since 3.24
@@ -115,13 +115,13 @@
       @end{pre}
       This signal is emitted whenever a key is pressed.
       @begin[code]{table}
-        @entry[controller]{The @sytem{gtk-event-controller-key} object on 
+        @entry[controller]{The @sytem{gtk-event-controller-key} object on
           which received the signal.}
         @entry[keyval]{The pressed key.}
         @entry[keycode]{The raw code of the pressed key.}
-        @entry[state]{The bitmask, representing the state of modifier keys and 
+        @entry[state]{The bitmask, representing the state of modifier keys and
           pointer buttons. See @symbol{gdk-modifier-type}.}
-        @entry[Returns]{@em{True} if the key press was handled, @code{nil} 
+        @entry[Returns]{@em{True} if the key press was handled, @code{nil}
           otherwise.}
       @end{table}
       Since 3.24
@@ -132,11 +132,11 @@
       @end{pre}
       This signal is emitted whenever a key is released.
       @begin[code]{table}
-        @entry[controller]{The @sytem{gtk-event-controller-key} object on 
+        @entry[controller]{The @sytem{gtk-event-controller-key} object on
           which received the signal.}
         @entry[keyval]{The released key.}
         @entry[keycode]{The raw code of the released key.}
-        @entry[state]{The bitmask, representing the state of modifier keys and 
+        @entry[state]{The bitmask, representing the state of modifier keys and
           pointer buttons. See @symbol{gdk-modifier-type}.}
       @end{table}
       Since 3.24
@@ -146,7 +146,7 @@
   lambda (controller arg1)    : Run Last
       @end{pre}
       @begin[code]{table}
-        @entry[controller]{The @sytem{gtk-event-controller-key} object on 
+        @entry[controller]{The @sytem{gtk-event-controller-key} object on
           which received the signal.}
         @entry[arg1]{not documented}
         @entry[Returns]{a not documented boolean}
@@ -176,4 +176,4 @@
 #+gtk-3-24
 (export 'gtk-event-controller-key-new)
 
-;;; --- End of File gtk.event-controller-key.lisp ------------------------------ 
+;;; --- End of File gtk.event-controller-key.lisp ------------------------------
