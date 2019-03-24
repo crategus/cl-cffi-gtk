@@ -714,6 +714,30 @@
       A widget that displays a small to medium amount of text.
 
       @about-class{gtk-label}
+
+      @about-generic{gtk-label-angle}
+      @about-generic{gtk-label-attributes}
+      @about-generic{gtk-label-cursor-position}
+      @about-generic{gtk-label-ellipsize}
+      @about-generic{gtk-label-justify}
+      @about-generic{gtk-label-label}
+      @about-generic{gtk-label-lines}
+      @about-generic{gtk-label-max-width-chars}
+      @about-generic{gtk-label-mnemonic-keyval}
+      @about-generic{gtk-label-mnemonic-widget}
+      @about-generic{gtk-label-pattern}
+      @about-generic{gtk-label-selectable}
+      @about-generic{gtk-label-selection-bound}
+      @about-generic{gtk-label-single-line-mode}
+      @about-generic{gtk-label-track-visited-links}
+      @about-generic{gtk-label-use-markup}
+      @about-generic{gtk-label-use-underline}
+      @about-generic{gtk-label-width-chars}
+      @about-generic{gtk-label-wrap}
+      @about-generic{gtk-label-wrap-mode}
+      @about-generic{gtk-label-xalign}
+      @about-generic{gtk-label-yalign}
+
       @about-function{gtk-label-new}
       @about-function{gtk-label-set-text}
       @about-function{gtk-label-set-markup}

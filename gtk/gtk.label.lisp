@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.label.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.10 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2014 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -21,67 +18,121 @@
 ;;;
 ;;; This program is distributed in the hope that it will be useful,
 ;;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-;;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 ;;; GNU Lesser General Public License for more details.
 ;;;
 ;;; You should have received a copy of the GNU Lesser General Public
 ;;; License along with this program and the preamble to the Gnu Lesser
-;;; General Public License.  If not, see <http://www.gnu.org/licenses/>
+;;; General Public License. If not, see <http://www.gnu.org/licenses/>
 ;;; and <http://opensource.franz.com/preamble.html>.
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; GtkLabel
 ;;;
-;;; A widget that displays a small to medium amount of text
+;;;     A widget that displays a small to medium amount of text.
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkLabel
 ;;;
+;;; Functions
+;;;
 ;;;     gtk_label_new
 ;;;     gtk_label_set_text
-;;;     gtk_label_set_attributes
+;;;     gtk_label_set_attributes                           Accessor
 ;;;     gtk_label_set_markup
 ;;;     gtk_label_set_markup_with_mnemonic
-;;;     gtk_label_set_pattern
-;;;     gtk_label_set_justify
-;;;     gtk_label_set_ellipsize
-;;;     gtk_label_set_width_chars
-;;;     gtk_label_set_max_width_chars
+;;;     gtk_label_set_pattern                              Accessor
+;;;     gtk_label_set_justify                              Accessor
+;;;     gtk_label_set_xalign                               Accessor
+;;;     gtk_label_set_yalign                               Accessor
+;;;     gtk_label_set_ellipsize                            Accessor
+;;;     gtk_label_set_width_chars                          Accessor
+;;;     gtk_label_set_max_width_chars                      Accessor
 ;;;     gtk_label_set_line_wrap
 ;;;     gtk_label_set_line_wrap_mode
+;;;     gtk_label_set_lines                                Accessor
 ;;;     gtk_label_get_layout_offsets
-;;;     gtk_label_get_mnemonic_keyval
-;;;     gtk_label_get_selectable
+;;;     gtk_label_get_mnemonic_keyval                      Accessor
+;;;     gtk_label_get_selectable                           Accessor
 ;;;     gtk_label_get_text
 ;;;     gtk_label_new_with_mnemonic
 ;;;     gtk_label_select_region
-;;;     gtk_label_set_mnemonic_widget
-;;;     gtk_label_set_selectable
+;;;     gtk_label_set_mnemonic_widget                      Accessor
+;;;     gtk_label_set_selectable                           Accessor
 ;;;     gtk_label_set_text_with_mnemonic
-;;;     gtk_label_get_attributes
-;;;     gtk_label_get_justify
-;;;     gtk_label_get_ellipsize
-;;;     gtk_label_get_width_chars
-;;;     gtk_label_get_max_width_chars
-;;;     gtk_label_get_label
+;;;     gtk_label_get_attributes                           Accessor
+;;;     gtk_label_get_justify                              Accessor
+;;;     gtk_label_get_xalign                               Accessor
+;;;     gtk_label_get_yalign                               Accessor
+;;;     gtk_label_get_ellipsize                            Accessor
+;;;     gtk_label_get_width_chars                          Accessor
+;;;     gtk_label_get_max_width_chars                      Accessor
+;;;     gtk_label_get_label                                Accessor
 ;;;     gtk_label_get_layout
 ;;;     gtk_label_get_line_wrap
 ;;;     gtk_label_get_line_wrap_mode
-;;;     gtk_label_get_mnemonic_widget
+;;;     gtk_label_get_lines                                Accessor
+;;;     gtk_label_get_mnemonic_widget                      Accessor
 ;;;     gtk_label_get_selection_bounds
-;;;     gtk_label_get_use_markup
-;;;     gtk_label_get_use_underline
-;;;     gtk_label_get_single_line_mode
-;;;     gtk_label_get_angle
-;;;     gtk_label_set_label
-;;;     gtk_label_set_use_markup
-;;;     gtk_label_set_use_underline
-;;;     gtk_label_set_single_line_mode
-;;;     gtk_label_set_angle
+;;;     gtk_label_get_use_markup                           Accessor
+;;;     gtk_label_get_use_underline                        Accessor
+;;;     gtk_label_get_single_line_mode                     Accessor
+;;;     gtk_label_get_angle                                Accessor
+;;;     gtk_label_set_label                                Accessor
+;;;     gtk_label_set_use_markup                           Accessor
+;;;     gtk_label_set_use_underline                        Accessor
+;;;     gtk_label_set_single_line_mode                     Accessor
+;;;     gtk_label_set_angle                                Accessor
 ;;;     gtk_label_get_current_uri
-;;;     gtk_label_set_track_visited_links
-;;;     gtk_label_get_track_visited_links
+;;;     gtk_label_set_track_visited_links                  Accessor
+;;;     gtk_label_get_track_visited_links                  Accessor
+;;;
+;;; Properties
+;;;
+;;;                gdouble  angle                Read / Write
+;;;         PangoAttrList*  attributes           Read / Write
+;;;                   gint  cursor-position      Read
+;;;     PangoEllipsizeMode  ellipsize            Read / Write
+;;;       GtkJustification  justify              Read / Write
+;;;                gchar *  label                Read / Write
+;;;                   gint  lines                Read / Write
+;;;                   gint  max-width-chars      Read / Write
+;;;                  guint  mnemonic-keyval      Read
+;;;            GtkWidget *  mnemonic-widget      Read / Write
+;;;                gchar *  pattern              Write
+;;;               gboolean  selectable           Read / Write
+;;;                   gint  selection-bound      Read
+;;;               gboolean  single-line-mode     Read / Write
+;;;               gboolean  track-visited-links  Read / Write
+;;;               gboolean  use-markup           Read / Write
+;;;               gboolean  use-underline        Read / Write
+;;;                   gint  width-chars          Read / Write
+;;;               gboolean  wrap                 Read / Write
+;;;          PangoWrapMode  wrap-mode            Read / Write
+;;;                 gfloat  xalign               Read / Write
+;;;                 gfloat  yalign               Read / Write
+;;;
+;;; Signals
+;;;
+;;;         void  activate-current-link  Action
+;;;     gboolean  activate-link          Run Last
+;;;         void  copy-clipboard         Action
+;;;         void  move-cursor            Action
+;;;         void  populate-popup         Run Last
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;             ╰── GtkMisc
+;;;                 ╰── GtkLabel
+;;;                     ╰── GtkAccelLabel
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GtkLabel implements AtkImplementorIface and GtkBuildable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -159,18 +210,137 @@
     "wrap" "gboolean" t t)
    (wrap-mode
     gtk-label-wrap-mode
-    "wrap-mode" "PangoWrapMode" t t)))
+    "wrap-mode" "PangoWrapMode" t t)
+   #+gtk-3-16
+   (xalign
+    gtk-label-xalign
+    "xalign" "gfloat" t t)
+   #+gtk-3-16
+   (yalign
+    gtk-label-yalign
+    "yalign" "gfloat" t t)
+   ))
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-label 'type)
- "@version{2013-4-12}
+ "@version{2019-3-24}
   @begin{short}
     The @sym{gtk-label} widget displays a small amount of text. As the name
     implies, most labels are used to label another widget such as a
     @class{gtk-button}, a @class{gtk-menu-item}, or a @class{gtk-combo-box}.
   @end{short}
 
-  @subheading{GtkLabel as GtkBuildable}
+  @subheading{Mnemonics}
+  Labels may contain mnemonics. Mnemonics are underlined characters in the
+  label, used for keyboard navigation. Mnemonics are created by providing a
+  string with an underscore before the mnemonic character, such as \"_File\",
+  to the functions @fun{gtk-label-new-with-mnemonic} or
+  @fun{gtk-label-set-text-with-mnemonic}.
+
+  Mnemonics automatically activate any activatable widget the label is inside,
+  such as a @class{gtk-button} widget; if the label is not inside the
+  mnemonic's target widget, you have to tell the label about the target using
+  the function @fun{gtk-label-set-mnemonic-widget}. Here is a simple example
+  where the label is inside a button:
+  @begin{pre}
+ ;; Pressing Alt+H will activate this button
+ (let ((button (make-instance 'gtk-button)))
+    (gtk-container-add button
+                       (gtk-label-new-with-mneonic \"_Hello\"))
+    ... )
+  @end{pre}
+  There is a convenience function to create buttons with a mnemonic label
+  already inside:
+  @begin{pre}
+ ;; Pressing Alt+H will activate this button
+ (gtk-button-new-with-mnemonic \"_Hello\")
+  @end{pre}
+  To create a mnemonic for a widget alongside the label, such as a
+  @class{gtk-entry} widget, you have to point the label at the entry with the
+  function @fun{gtk-label-set-mnemonic-widget}:
+  @begin{pre}
+ ;; Pressing Alt+H will focus the entry
+ (let ((entry (make-instance 'gtk-entry))
+       (label (gtk-label-new-with-mnemonic \"_Hello\")))
+    (gtk-label-set-mnemonic-widget label entry)
+    ... )
+  @end{pre}
+  @subheading{Markup (styled text)}
+  To make it easy to format text in a label (changing colors, fonts, etc.),
+  label text can be provided in a simple markup format. Here is how to create
+  a label with a small font:
+  @begin{pre}
+  (let ((label (make-instance 'gtk-label)))
+    (gtk-label-set-markup label
+                          \"<span style=\"color: red\">
+                           <small>Small text</small></span>\")
+    ... )
+  @end{pre}
+  See complete documentation of available tags in the Pango manual.
+
+  The markup passed to the function @fun{gtk-label-set-markup} must be valid;
+  for example, literal <, > and & characters must be escaped as \<, \gt;, and
+  \&. If you pass text obtained from the user, file, or a network to the
+  function @fun{gtk-label-set-markup}, you'll want to escape it with
+  @code{g_markup_escape_text()} or @code{g_markup_printf_escaped()}.
+
+  Markup strings are just a convenient way to set the @class{pango-attr-list}
+  on a label; the slot access function @fun{gtk-label-attributes} may be a
+  simpler way to set attributes in some cases. Be careful though;
+  @class{pango-attr-list} tends to cause internationalization problems, unless
+  you are applying attributes to the entire string (i. e. unless you set the
+  range of each attribute to @code{[0, G_MAXINT]}). The reason is that
+  specifying the @code{start_index} and @code{end_index} for a
+  @code{PangoAttribute} requires knowledge of the exact string being displayed,
+  so translations will cause problems.
+
+  @subheading{Selectable labels}
+  Labels can be made selectable with the slot access function
+  @fun{gtk-label-selectable}. Selectable labels allow the user to copy the label
+  contents to the clipboard. Only labels that contain useful-to-copy information
+  - such as error messages - should be made selectable.
+
+  @subheading{Text layout}
+  A label can contain any number of paragraphs, but will have performance
+  problems if it contains more than a small number. Paragraphs are separated
+  by newlines or other paragraph separators understood by Pango.
+
+  Labels can automatically wrap text if you call the function
+  @fun{gtk-label-set-line-wrap}.
+
+  The slot access function @fun{gtk-label-justify} sets how the lines in a label
+  align with one another. If you want to set how the label as a whole aligns in
+  its available space, see the @slot[gtk-widget]{halign} and
+  @slot[gtk-widget]{valign} properties.
+
+  The @code{width-chars} and @code{max-width-chars} properties can be
+  used to control the size allocation of ellipsized or wrapped labels. For
+  ellipsizing labels, if either is specified (and less than the actual text
+  size), it is used as the minimum width, and the actual text size is used as
+  the natural width of the label. For wrapping labels, @code{width-chars}
+  is used as the minimum width, if specified, and @code{max-width-chars}
+  is used as the natural width. Even if @code{max-width-chars} specified,
+  wrapping labels will be rewrapped to use all of the available width.
+
+  Note that the interpretation of the properties @code{width-chars} and
+  @code{max-width-chars} has changed a bit with the introduction of
+  \"width-for-height\" geometry management.
+
+  @subheading{Links}
+  GTK+ supports markup for clickable hyperlinks in addition to regular Pango
+  markup. The markup for links is borrowed from HTML, using the @code{a} with
+  href and title attributes. GTK+ renders links similar to the way they appear
+  in web browsers, with colored, underlined text. The title attribute is
+  displayed as a tooltip on the link. An example looks like this:
+  @begin{pre}
+ (gtk-label-set-markup label
+                      \"Go to the <span style=\"color: red\">
+                                    <a>GTK+ website</a></span> for more...\")
+  @end{pre}
+  It is possible to implement custom handling for links and their tooltips
+  with the \"activate-link\" signal and the function
+  @fun{gtk-label-get-current-uri}.
+  @begin[GtkLabel as GtkBuildable]{dictionary}
     The @sym{gtk-label} implementation of the @class{gtk-buildable} interface
     supports a custom @code{<attributes>} element, which supports any number of
     @code{<attribute>} elements. The @code{<attribute>} element has attributes
@@ -191,117 +361,29 @@
     specified, the attribute is applied to the whole text. Note that specifying
     ranges does not make much sense with translatable attributes. Use markup
     embedded in the translatable content instead.
-
-  @subheading{Mnemonics}
-    Labels may contain mnemonics. Mnemonics are underlined characters in the
-    label, used for keyboard navigation. Mnemonics are created by providing a
-    string with an underscore before the mnemonic character, such as \"_File\",
-    to the functions @fun{gtk-label-new-with-mnemonic} or
-    @fun{gtk-label-set-text-with-mnemonic}.
-
-    Mnemonics automatically activate any activatable widget the label is inside,
-    such as a @class{gtk-button} widget; if the label is not inside the
-    mnemonic's target widget, you have to tell the label about the target using
-    @fun{gtk-label-set-mnemonic-widget}. Here is a simple example where the
-    label is inside a button:
+  @end{dictionary}
+  @begin[CSS nodes]{dictionary}
     @begin{pre}
- // Pressing Alt+H will activate this button
- button = gtk_button_new ();
- label = gtk_label_new_with_mnemonic (\"_Hello\");
- gtk_container_add (GTK_CONTAINER (button), label);
+ label
+ ├── [selection]
+ ├── [link]
+ ┊
+ ╰── [link]
     @end{pre}
-    There is a convenience function to create buttons with a mnemonic label
-    already inside:
-    @begin{pre}
- // Pressing Alt+H will activate this button
- button = gtk_button_new_with_mnemonic (\"_Hello\");
-    @end{pre}
-    To create a mnemonic for a widget alongside the label, such as a
-    @class{gtk-entry} widget, you have to point the label at the entry with
-    @fun{gtk-label-set-mnemonic-widget}:
-    @begin{pre}
- // Pressing Alt+H will focus the entry
- entry = gtk_entry_new ();
- label = gtk_label_new_with_mnemonic (\"_Hello\");
- gtk_label_set_mnemonic_widget (GTK_LABEL (label), entry);
-    @end{pre}
-  @subheading{Markup (styled text)}
-    To make it easy to format text in a label (changing colors, fonts, etc.),
-    label text can be provided in a simple markup format. Here is how to create
-    a label with a small font:
-    @begin{pre}
- label = gtk_label_new (NULL);
- gtk_label_set_markup (GTK_LABEL (label),
-                       \"<span style=\"color: red\">
-                          <small>Small text</small></span>\");
-    @end{pre}
-    (See complete documentation of available tags in the Pango manual.)
+    @sym{gtk-label} has a single CSS node with the name @code{label}. A wide
+    variety of style classes may be applied to labels, such as @code{.title},
+    @code{.subtitle}, @code{.dim-label}. In @class{gtk-shortcuts-window},
+    labels are used wth the @code{.keycap} style class.
 
-    The markup passed to @fun{gtk-label-set-markup} must be valid; for example,
-    literal <, > and & characters must be escaped as \<, \gt;, and \&. If you
-    pass text obtained from the user, file, or a network to
-    @fun{gtk-label-set-markup}, you'll want to escape it with
-    @code{g_markup_escape_text()} or @code{g_markup_printf_escaped()}.
+    If the label has a selection, it gets a subnode with name @code{selection}.
 
-    Markup strings are just a convenient way to set the @class{pango-attr-list}
-    on a label; @fun{gtk-label-set-attributes} may be a simpler way to set
-    attributes in some cases. Be careful though; @class{pango-attr-list} tends
-    to cause internationalization problems, unless you are applying attributes
-    to the entire string (i. e. unless you set the range of each attribute to
-    @code{[0, G_MAXINT]}). The reason is that specifying the @code{start_index}
-    and @code{end_index} for a @code{PangoAttribute} requires knowledge of the
-    exact string being displayed, so translations will cause problems.
-
-  @subheading{Selectable labels}
-    Labels can be made selectable with @fun{gtk-label-set-selectable}.
-    Selectable labels allow the user to copy the label contents to the
-    clipboard. Only labels that contain useful-to-copy information - such as
-    error messages - should be made selectable.
-
-  @subheading{Text layout}
-    A label can contain any number of paragraphs, but will have performance
-    problems if it contains more than a small number. Paragraphs are separated
-    by newlines or other paragraph separators understood by Pango.
-
-    Labels can automatically wrap text if you call the function
-    @fun{gtk-label-set-line-wrap}.
-
-    The function @fun{gtk-label-justify} sets how the lines in a label align
-    with one another. If you want to set how the label as a whole aligns in its
-    available space, see the function @fun{gtk-misc-set-alignment}.
-
-    The @code{\"width-chars\"} and @code{\"max-width-chars\"} properties can be
-    used to control the size allocation of ellipsized or wrapped labels. For
-    ellipsizing labels, if either is specified (and less than the actual text
-    size), it is used as the minimum width, and the actual text size is used as
-    the natural width of the label. For wrapping labels, @code{\"width-chars\"}
-    is used as the minimum width, if specified, and @code{\"max-width-chars\"}
-    is used as the natural width. Even if @code{\"max-width-chars\"} specified,
-    wrapping labels will be rewrapped to use all of the available width.
-
-  @subheading{Note}
-    Note that the interpretation of the properties @code{\"width-chars\"} and
-    @code{\"max-width-chars\"} has changed a bit with the introduction of
-    \"width-for-height\" geometry management.
-
-  @subheading{Links}
-    Since 2.18, GTK+ supports markup for clickable hyperlinks in addition to
-    regular Pango markup. The markup for links is borrowed from HTML, using the
-    @code{a} with href and title attributes. GTK+ renders links similar to the
-    way they appear in web browsers, with colored, underlined text. The title
-    attribute is displayed as a tooltip on the link. An example looks like this:
-    @begin{pre}
- gtk_label_set_markup (label,
-                       \"Go to the <span style=\"color: red\">
-                                    <a>GTK+ website</a></span> for more...\");
-    @end{pre}
-    It is possible to implement custom handling for links and their tooltips
-    with the \"activate-link\" signal and @fun{gtk-label-get-current-uri}
-    function.
+    If the label has links, there is one subnode per link. These subnodes carry
+    the link or visited state depending on whether they have been visited.
+  @end{dictionary}
   @begin[Signal Details]{dictionary}
     @subheading{The \"activate-current-link\" signal}
       @begin{pre}
- lambda (label)   : Action
+ lambda (label)    : Action
       @end{pre}
       A keybinding signal which gets emitted when the user activates a link in
       the label.
@@ -311,11 +393,9 @@
       @begin[code]{table}
         @entry[label]{The label on which the signal was emitted.}
       @end{table}
-      Since 2.18
-
     @subheading{The \"activate-link\" signal}
       @begin{pre}
- lambda (label uri)   : Run Last
+ lambda (label uri)    : Run Last
       @end{pre}
       The signal which gets emitted to activate a URI. Applications may connect
       to it to override the default behaviour, which is to call the function
@@ -325,11 +405,9 @@
         @entry[uri]{The URI that is activated.}
         @entry[Returns]{@em{True} if the link has been activated.}
       @end{table}
-      Since 2.18
-
     @subheading{The \"copy-clipboard\" signal}
       @begin{pre}
- lambda (label)   : Action
+ lambda (label)    : Action
       @end{pre}
       The \"copy-clipboard\" signal is a keybinding signal which gets emitted to
       copy the selection to the clipboard.
@@ -339,7 +417,7 @@
       @end{table}
     @subheading{The \"move-cursor\" signal}
       @begin{pre}
- lambda (entry step count extended-selection)   : Action
+ lambda (entry step count extended-selection)    : Action
       @end{pre}
       The \"move-cursor\" signal is a keybinding signal which gets emitted when
       the user initiates a cursor movement. If the cursor is not visible in
@@ -366,7 +444,7 @@
       @end{table}
     @subheading{The \"populate-popup\" signal}
       @begin{pre}
- lambda (label menu)   : Run Last
+ lambda (label menu)    : Run Last
       @end{pre}
       The \"populate-popup\" signal gets emitted before showing the context menu
       of the label. Note that only selectable labels have context menus.
@@ -396,26 +474,25 @@
   @see-slot{gtk-label-use-underline}
   @see-slot{gtk-label-width-chars}
   @see-slot{gtk-label-wrap}
-  @see-slot{gtk-label-wrap-mode}")
+  @see-slot{gtk-label-wrap-mode}
+  @see-slot{gtk-label-xalign}
+  @see-slot{gtk-label-yalign}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
 ;;; Property and Accessor Details
-;;;
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- gtk-label-angle --------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "angle" 'gtk-label) 't)
- "The @code{\"angle\"} property of type @code{:double} (Read / Write) @br{}
+ "The @code{angle} property of type @code{:double} (Read / Write) @br{}
   The angle that the baseline of the label makes with the horizontal, in
   degrees, measured counterclockwise. An angle of 90 reads from
   bottom to top, an angle of 270, from top to bottom. Ignored if the
   label is selectable, wrapped, or ellipsized. @br{}
   Allowed values: [0,360] @br{}
-  Default value: 0 @br{}
-  Since 2.6")
+  Default value: 0 @br{}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-label-angle atdoc:*function-name-alias*)
@@ -431,24 +508,22 @@
     Accessor of the slot @slot[gtk-label]{angle} of the @class{gtk-label} class.
   @end{short}
 
-  The generic function @sym{gtk-label-angle} sets the angle of rotation for the
-  label.
+  The slot access function @sym{gtk-label-angle}
+  sets the angle of rotation for the label.
 
-  The generic function @sym{(setf gtk-label-angle)} sets the angle of rotation
-  for the label. 
+  The slot access function @sym{(setf gtk-label-angle)}
+  sets the angle of rotation for the label.
 
   An angle of 90 reads from from bottom to top, an angle of 270, from top to
   bottom. The angle setting for the label is ignored if the label is selectable,
   wrapped, or ellipsized.
-
-  Since 2.6
   @see-class{gtk-label}")
 
 ;;; --- gtk-label-attributes ---------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "attributes" 'gtk-label) 't)
- "The @code{\"attributes\"} property of type @class{pango-attr-list}
+ "The @code{attributes} property of type @class{pango-attr-list}
   (Read / Write) @br{}
   A list of style attributes to apply to the text of the label.")
 
@@ -466,22 +541,20 @@
     class.
   @end{short}
 
-  The generic function @sym{gtk-label-attributes} gets the attribute list that
-  was set on the label using the generic function
-  @sym{(setf gtk-label-attributes)}, if any.
+  The slot access function @sym{gtk-label-attributes}
+  gets the attribute list that was set on the label, if any.
 
   This function does not reflect attributes that come from the labels markup,
   see the function @fun{gtk-label-set-markup}. If you want to get the
   effective attributes for the label, use
   @code{(pango-layout-get-attribute (gtk-label-get-layout label))}.
 
-  The generic function @sym{(setf gtk-label-attributes)} sets a
-  @class{pango-attr-list}; the attributes in the list are applied to the label
-  text.
-
+  The slot access function @sym{(setf gtk-label-attributes)}
+  sets a @class{pango-attr-list}; the attributes in the list are applied to the
+  label text.
   @begin[Note]{dictionary}
     The attributes set with this function will be applied and merged with any
-    other attributes previously effected by way of the 
+    other attributes previously effected by way of the
     @slot[gtk-label]{use-underline} or @slot[gtk-label]{use-markup} properties.
     While it is not recommended to mix markup strings with manually set
     attributes, if you must; know that the attributes will be applied to the
@@ -494,7 +567,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "cursor-position" 'gtk-label) 't)
- "The @code{\"cursor-position\"} property of type @code{:int} (Read) @br{}
+ "The @code{cursor-position} property of type @code{:int} (Read) @br{}
   The current position of the insertion cursor in chars. @br{}
   Allowed values: >= 0 @br{}
   Default value: 0")
@@ -512,7 +585,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "ellipsize" 'gtk-label) 't)
- "The @code{\"ellipsize\"} property of type @symbol{pango-ellipsize-mode}
+ "The @code{ellipsize} property of type @symbol{pango-ellipsize-mode}
   (Read / Write) @br{}
   The preferred place to ellipsize the string, if the label does not have
   enough room to display the entire string, specified as a value of the
@@ -520,11 +593,10 @@
   Note that setting this property to a value other than @code{:none} has the
   side-effect that the label requests only enough space to display the ellipsis
   \"...\". In particular, this means that ellipsizing labels do not work well
-  in notebook tabs, unless the tab's @code{\"tab-expand\"} property is set to
+  in notebook tabs, unless the tab's @code{tab-expand} property is set to
   @arg{true}. Other ways to set a label's width are the functions
   @fun{gtk-widget-size-request} and @fun{gtk-label-set-width-chars}. @br{}
-  Default value: @code{:none} @br{}
-  Since 2.6")
+  Default value: @code{:none} @br{}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-label-ellipsize atdoc:*function-name-alias*)
@@ -540,14 +612,12 @@
     class.
   @end{short}
 
-  The generic function @sym{gtk-label-ellipsize} returns the ellipsizing
+  The slot access function @sym{gtk-label-ellipsize} returns the ellipsizing
   position of type @symbol{pango-ellipsize-mode} of the label.
 
-  The generic function @sym{(setf gtk-label-ellipsize)} sets the mode used to
-  ellipsize, add an ellipsis: \"...\", to the text if there is not enough space
-  to render the entire string.
-
-  Since 2.6
+  The slot access function @sym{(setf gtk-label-ellipsize)} sets the mode used
+  to ellipsize, add an ellipsis: \"...\", to the text if there is not enough
+  space to render the entire string.
   @see-class{gtk-label}
   @see-symbol{pango-ellipsize-mode}")
 
@@ -555,7 +625,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "justify" 'gtk-label) 't)
- "The @code{\"justify\"} property of type @symbol{gtk-justification}
+ "The @code{justify} property of type @symbol{gtk-justification}
   (Read / Write) @br{}
   The alignment of the lines in the text of the label relative to each other.
   This does @em{not} affect the alignment of the label within its allocation.
@@ -597,7 +667,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "label" 'gtk-label) 't)
- "The @code{\"label\"} property of type @code{:string} (Read / Write) @br{}
+ "The @code{label} property of type @code{:string} (Read / Write) @br{}
   The text of the label. @br{}
   Default value: \"\"")
 
@@ -631,7 +701,7 @@
 
 #+(and gtk-3-10 cl-cffi-gtk-documentation)
 (setf (documentation (atdoc:get-slot-from-name "lines" 'gtk-label) 't)
- "The @code{\"lines\"} property of type @code{:int} (Read / Write) @br{}
+ "The @code{lines} property of type @code{:int} (Read / Write) @br{}
   The number of lines to which an ellipsized, wrapping label should be limited.
   This property has no effect if the label is not wrapping or ellipsized. Set
   this property to -1 if you do not want to limit the number of lines. @br{}
@@ -668,16 +738,15 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "max-width-chars" 'gtk-label) 't)
- "The @code{\"max-width-chars\"} property of type @code{:int}
+ "The @code{max-width-chars} property of type @code{:int}
   (Read / Write) @br{}
   The desired maximum width of the label, in characters. If this property is
   set to -1, the width will be calculated automatically. See the section on text
   layout for details of how the properties @slot[gtk-label]{width-chars} and
-  @code{\"max-width-chars\"} determine the width of ellipsized and wrapped
+  @code{max-width-chars} determine the width of ellipsized and wrapped
   labels. @br{}
   Allowed values: >= @code{G_MAXULONG} @br{}
-  Default value: -1 @br{}
-  Since 2.6")
+  Default value: -1 @br{}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-label-max-width-chars atdoc:*function-name-alias*)
@@ -698,15 +767,13 @@
 
   The generic function @sym{(setf gtk-label-max-width-chars)} sets the desired
   maximum width in characters of the label to @arg{n-chars}.
-
-  Since 2.6
   @see-class{gtk-label}")
 
 ;;; --- gtk-label-mnemonic-keyval ----------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "mnemonic-keyval" 'gtk-label) 't)
- "The @code{\"mnemonic-keyval\"} property of @code{:uint} (Read) @br{}
+ "The @code{mnemonic-keyval} property of @code{:uint} (Read) @br{}
   The mnemonic accelerator key for this label. @br{}
   Default value: 16777215")
 
@@ -730,7 +797,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "mnemonic-widget" 'gtk-label) 't)
- "The @code{\"mnemonic-widget\"} property of type @class{gtk-widget}
+ "The @code{mnemonic-widget} property of type @class{gtk-widget}
   (Read / Write) @br{}
   The widget to be activated when the label's mnemonic key is pressed.")
 
@@ -776,7 +843,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "pattern" 'gtk-label) 't)
- "The @code{\"pattern\"} property of type @code{:string} (Write) @br{}
+ "The @code{pattern} property of type @code{:string} (Write) @br{}
   A string with \"_\" characters in positions correspond to characters in the
   text to underline. @br{}
   Default value: @code{nil}")
@@ -804,7 +871,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "selectable" 'gtk-label) 't)
- "The @code{\"selectable\"} property of type @code{:boolean}
+ "The @code{selectable} property of type @code{:boolean}
   (Read / Write) @br{}
   Whether the label text can be selected with the mouse. @br{}
   Default value: @code{nil}")
@@ -834,7 +901,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "selection-bound" 'gtk-label) 't)
- "The @code{\"selection-bound\"} property of type @code{:int} (Read) @br{}
+ "The @code{selection-bound} property of type @code{:int} (Read) @br{}
   The position of the opposite end of the selection from the cursor in
   chars. @br{}
   Allowed values: >= 0 @br{}
@@ -854,15 +921,14 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "single-line-mode"
                                                'gtk-label) 't)
- "The @code{\"single-line-mode\"} property of type  @code{:boolean}
+ "The @code{single-line-mode} property of type  @code{:boolean}
   (Read / Write) @br{}
   Whether the label is in single line mode. In single line mode, the height
   of the label does not depend on the actual text, it is always set to ascent
   + descent of the font. This can be an advantage in situations where resizing
   the label because of text changes would be distracting, e. g. in a
   statusbar. @br{}
-  Default value: @code{nil} @br{}
-  Since 2.6")
+  Default value: @code{nil} @br{}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-label-single-line-mode atdoc:*function-name-alias*)
@@ -883,8 +949,6 @@
 
   The generic function @sym{(setf gtk-label-single-line-mode} sets whether the
   label is in single line mode.
-
-  Since 2.6
   @see-class{gtk-label}")
 
 ;;; --- gtk-label-track-visited-links ------------------------------------------
@@ -892,14 +956,13 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "track-visited-links"
                                                'gtk-label) 't)
- "The @code{\"track-visited-links\"} property of type @code{:boolean}
+ "The @code{track-visited-links} property of type @code{:boolean}
   (Read / Write) @br{}
   Set this property to @arg{true} to make the label track which links have been
   clicked. It will then apply the color of the style property
-  @code{\"visited-link-color\"} of a @class{gtk-widget} object, instead of
-  the color of the style property @code{\"link-color\"}. @br{}
-  Default value: @em{true} @br{}
-  Since 2.18")
+  @code{visited-link-color} of a @class{gtk-widget} object, instead of
+  the color of the style property @code{link-color}. @br{}
+  Default value: @em{true} @br{}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-label-track-visited-links atdoc:*function-name-alias*)
@@ -921,15 +984,13 @@
   The generic function @sym{(setf gtk-label-track-visited-links} sets whether
   the label should keep track of clicked links and use a different color for
   them.
-
-  Since 2.18
   @see-class{gtk-label}")
 
 ;;; --- gtk-label-use-markup ---------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "use-markup" 'gtk-label) 't)
- "The @code{\"use-markup\"} property of type @code{:boolean}
+ "The @code{use-markup} property of type @code{:boolean}
   (Read / Write) @br{}
   The text of the label includes XML markup. See the function
   @fun{pango-parse-markup}. @br{}
@@ -963,7 +1024,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "use-underline" 'gtk-label) 't)
- "The @code{\"use-underline\"} property of type @code{:boolean}
+ "The @code{use-underline} property of type @code{:boolean}
   (Read / Write) @br{}
   If set, an underline in the text indicates the next character should be used
   for the mnemonic accelerator key. @br{}
@@ -994,15 +1055,14 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "width-chars" 'gtk-label) 't)
- "The @code{\"width-chars\"} property of @code{:int} (Read / Write) @br{}
+ "The @code{width-chars} property of @code{:int} (Read / Write) @br{}
   The desired width of the label, in characters. If this property is set to
   -1, the width will be calculated automatically.
   See the section on text layout for details of how the properties
-  @code{\"width-chars\"} and @slot[gtk-label]{max-width-chars} determine the
+  @code{width-chars} and @slot[gtk-label]{max-width-chars} determine the
   width of ellipsized and wrapped labels. @br{}
   Allowed values: >= @code{G_MAXULONG} @br{}
-  Default value: -1 @br{}
-  Since 2.6")
+  Default value: -1 @br{}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-label-width-chars atdoc:*function-name-alias*)
@@ -1023,8 +1083,6 @@
 
   The generic function @sym{(setf gtk-label-width-chars)} sets the desired width
   in characters of the label to @arg{n-chars}.
-
-  Since 2.6
   @see-class{gtk-label}")
 
 ;;; --- gtk-label-wrap ---------------------------------------------------------
@@ -1052,8 +1110,7 @@
   If line wrapping is on, see the @slot[gtk-label]{wrap} property) this controls
   how the line wrapping is done. The default is @code{:word}, which means wrap
   on word boundaries. @br{}
-  Default value: @code{:word} @br{}
-  Since 2.10")
+  Default value: @code{:word} @br{}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-label-wrap-mode atdoc:*function-name-alias*)
@@ -1063,6 +1120,80 @@
   Accessor of the slot @slot[gtk-label]{wrap-mode} of the @class{gtk-label}
   class.
   @see-class{gtk-label}")
+
+;;; --- gtk-label-xalign -------------------------------------------------------
+
+#+(and gtk-3-16 cl-cffi-gtk-documentation)
+(setf (documentation (atdoc:get-slot-from-name "xalign" 'gtk-label) 't)
+ "The @code{xalign} property of type @code{:float} (Read / Write) @br{}
+  The @code{xalign} property determines the horizontal aligment of the label
+  text inside the labels size allocation. Compare this to
+  @slot[gtk-widget]{halign} property, which determines how the labels size
+  allocation is positioned in the space available for the label.@br{}
+  Allowed values: [0,1] @br{}
+  Default value: 0.5 @br{}
+  Since 3.16")
+
+#+(and gtk-3-16 cl-cffi-gtk-documentation)
+(setf (gethash 'gtk-label-xalign atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-label-xalign 'function)
+ "@version{2019-3-24}
+  @syntax[]{(gtk-label-xalign object) => xalign}
+  @syntax[]{(setf (gtk-label-xalign object) xalign)}
+  @argument[object]{a @class{gtk-label} widget}
+  @argument[xalign]{the xalign value, between 0 and 1}
+  @begin{short}
+    Accessor of the slot @slot[gtk-label]{xalign} of the @class{gtk-label}
+    class.
+  @end{short}
+
+  The slot access function @sym{gtk-label-xalign}
+  sets the @code{xalign} property for the label.
+
+  The slot access function @sym{(setf gtk-label-xalign)}
+  sets the @code{xalign} property for the label.
+
+  Since 3.16
+  @see-class{gtk-label}
+  @see-function{gtk-label-yalign}")
+
+;;; --- gtk-label-yalign -------------------------------------------------------
+
+#+(and gtk-3-16 cl-cffi-gtk-documentation)
+(setf (documentation (atdoc:get-slot-from-name "yalign" 'gtk-label) 't)
+ "The @code{yalign} property of type @code{:float} (Read / Write) @br{}
+  The @code{yalign} property determines the vertical aligment of the label text
+  inside the labels size allocation. Compare this to @slot[gtk-widget]{valign},
+  which determines how the labels size allocation is positioned in the space
+  available for the label. @br{}
+  Allowed values: [0,1] @br{}
+  Default value: 0.5 @br{}
+  Since 3.16")
+
+#+(and gtk-3-16 cl-cffi-gtk-documentation)
+(setf (gethash 'gtk-label-yalign atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-label-yalign 'function)
+ "@version{2019-3-24}
+  @syntax[]{(gtk-label-yalign object) => yalign}
+  @syntax[]{(setf (gtk-label-yalign object) yalign)}
+  @argument[object]{a @class{gtk-label} widget}
+  @argument[yalign]{the yalign value, between 0 and 1}
+  @begin{short}
+    Accessor of the slot @slot[gtk-label]{yalign} of the @class{gtk-label}
+    class.
+  @end{short}
+
+  The slot access function @sym{gtk-label-yalign}
+  sets the @code{yalign} property for the label.
+
+  The slot access function @sym{(setf gtk-label-yalign)}
+  sets the @code{yalign} property for the label.
+
+  Since 3.16
+  @see-class{gtk-label}
+  @see-function{gtk-label-yalign}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_label_new ()
@@ -1204,8 +1335,6 @@
     this controls how the line wrapping is done.
   @end{short}
   The default is @code{:word} which means wrap on word boundaries.
-
-  Since 2.10
   @see-class{gtk-label}
   @see-function{gtk-label-set-line-wrap}"
   (label (g-object gtk-label))
@@ -1410,8 +1539,6 @@
   @return{@em{True} if the lines of the label are automatically wrapped.}
   @short{Returns the line wrap mode used by the label.}
   See the function @fun{gtk-label-set-line-wrap-mode}.
-
-  Since 2.10
   @see-class{gtk-label}
   @see-function{gtk-label-set-line-wrap-mode}"
   (label (g-object gtk-label)))
@@ -1466,8 +1593,6 @@
 
   This function is intended for use in a \"activate-link\" signal handler or
   for use in a \"query-tooltip\" signal handler.
-
-  Since 2.18
   @see-class{gtk-label}"
   (label (g-object gtk-label)))
 
