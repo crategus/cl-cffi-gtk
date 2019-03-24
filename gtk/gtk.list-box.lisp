@@ -172,15 +172,15 @@
     @class{gtk-list-box-row} children.
   @end{short}
   These rows can by dynamically sorted and filtered, and headers can be added
-  dynamically depending on the row content. It also allows keyboard and mouse 
+  dynamically depending on the row content. It also allows keyboard and mouse
   navigation and selection like a typical list.
 
-  Using @sym{gtk-list-box} is often an alternative to @class{gtk-tree-view}, 
-  especially when the list contents has a more complicated layout than what is 
+  Using @sym{gtk-list-box} is often an alternative to @class{gtk-tree-view},
+  especially when the list contents has a more complicated layout than what is
   allowed by a @class{gtk-cell-renderer}, or when the contents is interactive
   (i. e. has a button in it).
 
-  Although a @sym{gtk-list-box} must have only @classl{gtk-list-box-row} 
+  Although a @sym{gtk-list-box} must have only @classl{gtk-list-box-row}
   children you can add any kind of widget to it via the function
   @fun{gtk-container-add}, and a @class{gtk-list-box-row} widget will
   automatically be inserted between the list and the widget.
@@ -190,18 +190,16 @@
   to activate it. If it is selectable, the row will be marked as selected when
   the user tries to select it.
 
-  The @sym{gtk-list-box} widget was added in GTK+ 3.10.
-
-  @subheading{CSS nodes}
+  Since 3.10
+  @begin[CSS Nodes]{dictionary}
     @begin{pre}
   list
    ╰── row[.activatable]
     @end{pre}
-    @sym{gtk-list-box} uses a single CSS node named list. Each 
-    @class{gtk-list-box-row} uses a single CSS node named row. The row nodes get
-    the .activatable style class added when appropriate.
-
-
+    @sym{gtk-list-box} uses a single CSS node named @code{list}. Each
+    @class{gtk-list-box-row} uses a single CSS node named @code{row}. The row
+    nodes get the @code{.activatable} style class added when appropriate.
+  @end{dictionary}
   @begin[Signal Details]{dictionary}
     @subheading{The \"activate-cursor-row\" signal}
       @begin{pre}
@@ -227,7 +225,7 @@
       @begin{pre}
   lambda (listbox row)
       @end{pre}
-      The \"row-activated\" signal is emitted when a row has been activated by 
+      The \"row-activated\" signal is emitted when a row has been activated by
       the user.
       @begin[code]{table}
         @entry[listbox]{The @sym{gtk-list-box} on which the signal is emitted.}
@@ -239,7 +237,7 @@
       @begin{pre}
   lambda (listbox row)
       @end{pre}
-      The \"row-selected\" signal is emitted when a new row is selected, or 
+      The \"row-selected\" signal is emitted when a new row is selected, or
       (with a @code{nil} row ) when the selection is cleared.
       When the box is using the selection mode @code{:multiple}, this signal
       will not give you the full picture of selection changes, and you should
@@ -259,7 +257,7 @@
       The default bindings for this signal is Ctrl-a.
       @begin[code]{table}
         @entry[listbox]{The @sym{gtk-list-box} on which the signal is emitted.}
-      @end{table}    
+      @end{table}
       Since 3.14
 
     @subheading{The \"selected-rows-changed\" signal}
@@ -270,7 +268,7 @@
       rows changes.
       @begin[code]{table}
         @entry[listbox]{The @sym{gtk-list-box} on which the signal is emitted.}
-      @end{table}    
+      @end{table}
       Since 3.14
 
     @subheading{The \"toggle-cursor-row\" signal}
@@ -279,7 +277,7 @@
       @end{pre}
       @begin[code]{table}
         @entry[listbox]{The @sym{gtk-list-box} on which the signal is emitted.}
-      @end{table}    
+      @end{table}
       Since 3.10
 
     @subheading{The \"unselect-all\" signal}
@@ -291,7 +289,7 @@
         The default bindings for this signal is Ctrl-Shift-a.
       @begin[code]{table}
         @entry[listbox]{The @sym{gtk-list-box} on which the signal is emitted.}
-      @end{table}    
+      @end{table}
       Since 3.14
 
     @subheading{The \"activate\" signal}
@@ -303,10 +301,9 @@
       use the \"row-activated\" signal on the row’s parent @class{gtk-list-box}.
       @begin[code]{table}
         @entry[listbox]{The @sym{gtk-list-box} on which the signal is emitted.}
-      @end{table}  
-      Since: 3.10
+      @end{table}
+      Since 3.10
   @end{dictionary}
-
   @see-slot{gtk-list-box-activate-on-single-click}
   @see-slot{gtk-list-box-selection-mode}
   @see-slot{gtk-list-box-activatable}
@@ -315,7 +312,7 @@
   @see-class{gtk-tree-view}
   @see-class{gtk-cell-renderer}")
 
-;;; ---------------------------------------------------------------------------- 	 
+;;; ----------------------------------------------------------------------------
 ;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
 
@@ -330,7 +327,7 @@
   Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-list-box-activate-on-single-click 
+(setf (gethash 'gtk-list-box-activate-on-single-click
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-list-box-activate-on-single-click 'function)
@@ -344,10 +341,10 @@
     @class{gtk-list-box} class.
   @end{short}
 
-  The generic function @sym{gtk-list-box-activate-on-single-click} returns 
+  The generic function @sym{gtk-list-box-activate-on-single-click} returns
   whether rows activate on single clicks.
 
-  If single is @em{true}, rows will be activated when you click on them, 
+  If single is @em{true}, rows will be activated when you click on them,
   otherwise you need to double-click.
 
   Since 3.10
@@ -392,7 +389,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "activatable"
                                                'gtk-list-box) 't)
- "The @code{\"activatable\"} property of type @code{:boolean} 
+ "The @code{\"activatable\"} property of type @code{:boolean}
   (Read / Write) @br{}
   The property determines whether the \"row-activated\" signal will be emitted
   for this row. @br{}
@@ -467,7 +464,7 @@
 ;;;
 ;;; row :
 ;;;     the row that may be filtered
-;;; 
+;;;
 ;;; user_data :
 ;;;     user data.
 ;;;
@@ -491,12 +488,12 @@
 ;;;
 ;;; row2 :
 ;;;     the second row
-;;; 
+;;;
 ;;; user_data :
 ;;;     user data.
 ;;;
 ;;; Returns :
-;;;     < 0 if row1 should be before row2 , 0 if they are equal and > 0 
+;;;     < 0 if row1 should be before row2 , 0 if they are equal and > 0
 ;;;     otherwise
 ;;;
 ;;; Since: 3.10
@@ -509,9 +506,9 @@
 ;;;                                     GtkListBoxRow *before,
 ;;;                                     gpointer user_data);
 ;;;
-;;; Whenever row changes or which row is before row changes this is called, 
-;;; which lets you update the header on row . You may remove or set a new one 
-;;; via gtk_list_box_row_set_header() or just change the state of the current 
+;;; Whenever row changes or which row is before row changes this is called,
+;;; which lets you update the header on row . You may remove or set a new one
+;;; via gtk_list_box_row_set_header() or just change the state of the current
 ;;; header widget.
 ;;;
 ;;; row :
@@ -565,10 +562,10 @@
 ;;;                           gint position);
 ;;;
 ;;; Insert the child into the box at position . If a sort function is set, the
-;;; widget will actually be inserted at the calculated position and this 
+;;; widget will actually be inserted at the calculated position and this
 ;;; function has the same effect of gtk_container_add().
 ;;;
-;;; If position is -1, or larger than the total number of items in the box , 
+;;; If position is -1, or larger than the total number of items in the box ,
 ;;; then the child will be appended to the end.
 ;;;
 ;;; box :
@@ -576,10 +573,10 @@
 ;;;
 ;;; child :
 ;;;     the GtkWidget to add
-;;; 
+;;;
 ;;; position :
 ;;;     the position to insert child in
-;;; 
+;;;
 ;;; Since: 3.10
 ;;; ----------------------------------------------------------------------------
 
@@ -592,7 +589,7 @@
 ;;;
 ;;; box :
 ;;;     a GtkListBox
-;;; 
+;;;
 ;;; row :
 ;;;     The row to select or NULL.
 ;;;
@@ -625,7 +622,7 @@
 ;;;
 ;;; box :
 ;;;     a GtkListBox
-;;; 
+;;;
 ;;; Since: 3.14
 ;;; ----------------------------------------------------------------------------
 
@@ -638,7 +635,7 @@
 ;;;
 ;;; box :
 ;;;     a GtkListBox
-;;; 
+;;;
 ;;; Since: 3.14
 ;;; ----------------------------------------------------------------------------
 
@@ -654,7 +651,7 @@
 ;;;
 ;;; box :
 ;;;     a GtkListBox
-;;; 
+;;;
 ;;; Returns :
 ;;;     the selected row.
 ;;;
@@ -668,15 +665,15 @@
 ;;;                                GtkListBoxRow *row,
 ;;;                                gpointer user_data);
 ;;;
-;;; A function used by gtk_list_box_selected_foreach(). It will be called on 
+;;; A function used by gtk_list_box_selected_foreach(). It will be called on
 ;;; every selected child of the box .
 ;;;
 ;;; box :
 ;;;     a GtkListBox
-;;; 
+;;;
 ;;; row :
 ;;;     a GtkListBoxRow
-;;; 
+;;;
 ;;; user_data :
 ;;;     user data.
 ;;;
@@ -696,13 +693,13 @@
 ;;;
 ;;; box :
 ;;;     a GtkListBox
-;;; 
+;;;
 ;;; func :
 ;;;     the function to call for each selected child.
 ;;;
 ;;; data :
 ;;;     user data to pass to the function
-;;; 
+;;;
 ;;; Since: 3.14
 ;;; ----------------------------------------------------------------------------
 
@@ -742,7 +739,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_list_box_set_adjustment ()
 ;;;
-;;; void gtk_list_box_set_adjustment (GtkListBox *box, 
+;;; void gtk_list_box_set_adjustment (GtkListBox *box,
 ;;;                                   GtkAdjustment *adjustment);
 ;;;
 ;;; Sets the adjustment (if any) that the widget uses to for vertical scrolling.
@@ -755,7 +752,7 @@
 ;;;
 ;;; box :
 ;;;     a GtkListBox
-;;; 
+;;;
 ;;; adjustment
 ;;;     the adjustment, or NULL.
 ;;;
@@ -773,7 +770,7 @@
 ;;;
 ;;; box :
 ;;;     a GtkListBox
-;;; 
+;;;
 ;;; placeholder :
 ;;;     a GtkWidget or NULL.
 ;;;
@@ -784,16 +781,16 @@
 ;;; gtk_list_box_get_row_at_index ()
 ;;;
 ;;; GtkListBoxRow * gtk_list_box_get_row_at_index (GtkListBox *box, gint index_)
-;;; 
+;;;
 ;;; Gets the n-th child in the list (not counting headers). If _index is
 ;;; negative or larger than the number of items in the list, NULL is returned.
 ;;;
 ;;; box :
 ;;;     a GtkListBox
-;;; 
+;;;
 ;;; index_ :
 ;;;     the index of the row
-;;; 
+;;;
 ;;; Returns :
 ;;;     the child GtkWidget or NULL.
 ;;;
@@ -809,10 +806,10 @@
 ;;;
 ;;; box :
 ;;;     a GtkListBox
-;;; 
+;;;
 ;;; y :
 ;;;     position
-;;; 
+;;;
 ;;; Returns :
 ;;;     the row or NULL in case no row exists for the given y coordinate.
 ;;;
@@ -826,12 +823,12 @@
 ;;;
 ;;; Update the filtering for all rows. Call this when result of the filter
 ;;; function on the box is changed due to an external factor. For instance, this
-;;; would be used if the filter function just looked for a specific search 
+;;; would be used if the filter function just looked for a specific search
 ;;; string and the entry with the search string has changed.
 ;;;
 ;;; box :
 ;;;     a GtkListBox
-;;; 
+;;;
 ;;; Since: 3.10
 ;;; ----------------------------------------------------------------------------
 
@@ -845,7 +842,7 @@
 ;;;
 ;;; box :
 ;;;     a GtkListBox
-;;; 
+;;;
 ;;; Since: 3.10
 ;;; ----------------------------------------------------------------------------
 
@@ -859,7 +856,7 @@
 ;;;
 ;;; box:
 ;;;     a GtkListBox
-;;; 
+;;;
 ;;; Since: 3.10
 ;;; ----------------------------------------------------------------------------
 
@@ -877,7 +874,7 @@
 ;;;
 ;;; The filter_func will be called for each row after the call, and it will
 ;;; continue to be called each time a row changes
-;;; (via gtk_list_box_row_changed()) or when gtk_list_box_invalidate_filter() 
+;;; (via gtk_list_box_row_changed()) or when gtk_list_box_invalidate_filter()
 ;;; is called.
 ;;;
 ;;; Note that using a filter function is incompatible with using a model
@@ -885,7 +882,7 @@
 ;;;
 ;;; box :
 ;;;     a GtkListBox
-;;; 
+;;;
 ;;; filter_func :
 ;;;     callback that lets you filter which rows to show.
 ;;;
@@ -930,7 +927,7 @@
 ;;;
 ;;; box :
 ;;;     a GtkListBox
-;;; 
+;;;
 ;;; update_header :
 ;;;     callback that lets you add row headers.
 ;;;
@@ -939,7 +936,7 @@
 ;;;
 ;;; destroy :
 ;;;     destroy notifier for user_data
-;;; 
+;;;
 ;;; Since: 3.10
 ;;; ----------------------------------------------------------------------------
 
@@ -969,7 +966,7 @@
 ;;;
 ;;; user_data :
 ;;;     user data passed to sort_func
-;;; 
+;;;
 ;;; destroy :
 ;;;     destroy notifier for user_data
 ;;;
@@ -990,7 +987,7 @@
 ;;;
 ;;; box :
 ;;;     a GtkListBox
-;;; 
+;;;
 ;;; row :
 ;;;     a GtkListBoxRow
 ;;;
