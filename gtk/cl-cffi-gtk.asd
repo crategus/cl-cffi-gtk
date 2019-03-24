@@ -97,14 +97,22 @@
    ;; Layout Containers
    (:file "gtk.box")                   ; Container box   
    (:file "gtk.grid")                  ; Pack widgets in a rows and columns
-   (:file "gtk.revealer")              ; Hide and show with animation
-   (:file "gtk.list-box")              ; A list container
-   (:file "gtk.flow-box")              ; Allows reflowing its children
-   (:file "gtk.stack")                 ; A stacking container
-   (:file "gtk.stack-switcher")        ; A controller for GtkStack
-   (:file "gtk.stack-sidebar")         ; An automatic sidebar widget
-   (:file "gtk.action-bar")            ; A bar for presenting contextual actions
-   (:file "gtk.header-bar")            ; Box with a centered child
+   (:file "gtk.revealer"               ; Hide and show with animation
+          :if-feature :gtk-3-10)      
+   (:file "gtk.list-box"               ; A list container
+          :if-feature :gtk-3-10)
+   (:file "gtk.flow-box"               ; Allows reflowing its children
+          :if-feature :gtk-3-12)         
+   (:file "gtk.stack"                  ; A stacking container
+          :if-feature :gtk-3-10)
+   (:file "gtk.stack-switcher"         ; A controller for GtkStack
+          :if-feature :gtk-3-10)
+   (:file "gtk.stack-sidebar"          ; An automatic sidebar widget
+          :if-feature :gtk-3-16)
+   (:file "gtk.action-bar"             ; A bar for presenting contextual actions
+          :if-feature :gtk-3-12)
+   (:file "gtk.header-bar"             ; Box with a centered child
+          :if-feature :gtk-3-10)
    (:file "gtk.overlay")               ; Container which overlays widgets
    (:file "gtk.button-box")            ; Container for arranging buttons
    (:file "gtk.paned")                 ; Two adjustable panes
@@ -283,21 +291,36 @@
    (:file "gtk.app-chooser-widget")    ; Application chooser widget
    
    ;; Gestures and event handling
-   (:file "gtk.event-controller")       ; Handler of series of events
-   (:file "gtk.event-controller-key")   ; Event controller for key events
-   (:file "gtk.event-controller-scroll"); Event controller for scroll events
-   (:file "gtk.event-controller-motion"); Event controller for motion events
-   (:file "gtk.gesture")                ; Base class for gestures
-   (:file "gtk.gesture-single")         ; Base class for single-touch gestures
-   (:file "gtk.gesture-drag")           ; Drag gesture
-   (:file "gtk.gesture-long-press")     ; "Press and Hold" gesture
-   (:file "gtk.gesture-multi-press")    ; Multipress gesture
-   (:file "gtk.gesture-pan")            ; Pan gesture
-   (:file "gtk.gesture-swipe")          ; Swipe gesture
-   (:file "gtk.gesture-rotate")         ; Rotate gesture
-   (:file "gtk.gesture-zoom")           ; Zoom gesture
-   (:file "gtk.gesture-stylus")         ; Gesture for stylus input
-   (:file "gtk.pad-controller")         ; Controller for drawing tablet pads
+   (:file "gtk.event-controller"        ; Handler of series of events
+          :if-feature :gtk-3-14)
+   (:file "gtk.event-controller-key"    ; Event controller for key events
+          :if-feature :gtk-3-24)
+   (:file "gtk.event-controller-scroll" ; Event controller for scroll events
+          :if-feature :gtk-3-24)
+   (:file "gtk.event-controller-motion" ; Event controller for motion events
+          :if-feature :gtk-3-24)
+   (:file "gtk.gesture"                 ; Base class for gestures
+          :if-feature :gtk-3-14)
+   (:file "gtk.gesture-single"          ; Base class for single-touch gestures
+          :if-feature :gtk-3-14)
+   (:file "gtk.gesture-drag"            ; Drag gesture
+          :if-feature :gtk-3-14)
+   (:file "gtk.gesture-long-press"      ; "Press and Hold" gesture
+          :if-feature :gtk-3-14)
+   (:file "gtk.gesture-multi-press"     ; Multipress gesture
+          :if-feature :gtk-3-14)
+   (:file "gtk.gesture-pan"             ; Pan gesture
+          :if-feature :gtk-3-14)
+   (:file "gtk.gesture-swipe"           ; Swipe gesture
+          :if-feature :gtk-3-14)
+   (:file "gtk.gesture-rotate"          ; Rotate gesture
+          :if-feature :gtk-3-14)
+   (:file "gtk.gesture-zoom"            ; Zoom gesture
+          :if-feature :gtk-3-14)
+   (:file "gtk.gesture-stylus"          ; Gesture for stylus input
+          :if-feature :gtk-3-24)
+   (:file "gtk.pad-controller"          ; Controller for drawing tablet pads
+          :if-feature :gtk-3-22)
 
    ;; Printing
    (:file "gtk.print-operation")       ; High-level Printing API

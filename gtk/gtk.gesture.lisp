@@ -40,7 +40,7 @@
 ;;;     gtk_gesture_get_device
 ;;;     gtk_gesture_get_window                             Accessor
 ;;;     gtk_gesture_set_window                             Accessor
-;;;     gtk_gesture_is_active 
+;;;     gtk_gesture_is_active
 ;;;     gtk_gesture_is_recognized
 ;;;     gtk_gesture_get_sequence_state
 ;;;     gtk_gesture_set_sequence_state
@@ -138,7 +138,7 @@
  "@version{2019-3-17}
   @begin{short}
     @sym{gtk-gesture} is the base object for gesture recognition, although this
-    object is quite generalized to serve as a base for multi-touch gestures, it 
+    object is quite generalized to serve as a base for multi-touch gestures, it
     is suitable to implement single-touch and pointer-based gestures (using the
     special @code{nil} @class{gdk-event-sequence} value for these).
   @end{short}
@@ -150,7 +150,7 @@
 
   As soon as the gesture has the expected number of touches, the gesture will
   run the \"check\" signal regularly on input events until the gesture is
-  recognized, the criteria to consider a gesture as \"recognized\" is left to 
+  recognized, the criteria to consider a gesture as \"recognized\" is left to
   @sym{gtk-gesture} subclasses.
 
   A recognized gesture will then emit the following signals:
@@ -212,7 +212,7 @@
     @item{Stopping event propagation after the gesture group handles the event.}
   @end{itemize}
 
-  Note: if a sequence is set early to @code{:claimed} on 
+  Note: if a sequence is set early to @code{:claimed} on
   @code{:touch-begin}/@code{:button-press} (so those events are captured before
   reaching the event widget, this implies @code{:phase-capture}), one similar
   event will emulated if the sequence changes to @code{:denied}. This way event
@@ -296,7 +296,7 @@
       @begin{pre}
   lambda (gesture sequence state)    : Run Last
       @end{pre}
-      This signal is emitted whenever a sequence state changes. See 
+      This signal is emitted whenever a sequence state changes. See
       @fun{gtk-gesture-set-sequence-state} to know more about the expectable
       sequence lifetimes.
       @begin[code]{table}
@@ -351,8 +351,8 @@
     Accessor of the slot @slot[gtk-gesture]{n-points} of the
     @class{gtk-gesture} class.
   @end{short}
-  
-  Since 3.14  
+
+  Since 3.14
   @see-class{gtk-gesture}")
 
 ;;; --- gtk-gesture-window -----------------------------------------------------
@@ -379,16 +379,16 @@
     @class{gtk-gesture} class.
   @end{short}
 
-  The generic function @sym{gtk-gesture-window} 
+  The generic function @sym{gtk-gesture-window}
   returns the user-defined window that receives the events handled by
   the gesture.
-  
+
   The generic function @sym{(setf gtk-gesture-window)}
   sets a specific window to receive events about, so gesture will effectively
   handle only events targeting window , or a child of it. window must pertain
   to @fun{gtk-event-controller-widget}.
-  
-  Since 3.14  
+
+  Since 3.14
   @see-class{gtk-gesture}")
 
 ;;; ----------------------------------------------------------------------------
@@ -419,7 +419,7 @@
 ;;;
 ;;; gesture :
 ;;;     a GtkGesture
-;;; 
+;;;
 ;;; Returns :
 ;;;     TRUE if gesture is active
 ;;;
@@ -456,7 +456,7 @@
 ;;;
 ;;; gesture :
 ;;;     a GtkGesture
-;;; 
+;;;
 ;;; sequence :
 ;;;     a GdkEventSequence
 ;;;
@@ -561,7 +561,7 @@
 ;;;
 ;;; gesture :
 ;;;     a GtkGesture
-;;; 
+;;;
 ;;; Returns :
 ;;;     A list of GdkEventSequences, the list elements are owned by GTK+ and
 ;;;     must not be freed or modified, the list itself must be deleted through
@@ -648,7 +648,7 @@
 ;;;
 ;;; gesture :
 ;;;     a GtkGesture
-;;; 
+;;;
 ;;; sequence :
 ;;;     a GdkEventSequence, or NULL for pointer events.
 ;;;
@@ -682,7 +682,7 @@
 ;;;
 ;;; gesture :
 ;;;     a GtkGesture
-;;; 
+;;;
 ;; rect :
 ;;;     bounding box containing all active touches.
 ;;;
@@ -706,7 +706,7 @@
 ;;;
 ;;; gesture :
 ;;;     a GtkGesture
-;;; 
+;;;
 ;;; x :
 ;;;     X coordinate for the bounding box center.
 ;;;
@@ -740,7 +740,7 @@
 ;;;
 ;;; gesture :
 ;;;     a GtkGesture
-;;; 
+;;;
 ;;; group_gesture :
 ;;;     GtkGesture to group gesture with
 ;;;
@@ -756,7 +756,7 @@
 ;;;
 ;;; gesture :
 ;;;     a GtkGesture
-;;; 
+;;;
 ;;; Since: 3.14
 ;;; ----------------------------------------------------------------------------
 
@@ -769,7 +769,7 @@
 ;;;
 ;;; gesture :
 ;;;     a GtkGesture
-;;; 
+;;;
 ;;; Returns :
 ;;;     The list of GtkGestures, free with g_list_free().
 ;;;

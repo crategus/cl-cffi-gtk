@@ -5246,60 +5246,107 @@ setup_tree (void)
       Base class for mouse/single-touch gestures
       
       @about-class{gtk-gesture-single}
+      
+      @about-generic{gtk-gesture-single-button}
+      @about-generic{gtk-gesture-single-exclusive}
+      @about-generic{gtk-gesture-single-touch-only}
+      
+      @about-function{gtk-gesture-single-get-current-button}
+      @about-function{gtk-gesture-single-get-current-sequence}
     @end{subsection}
 
     @begin[GtkGestureDrag]{subsection}
       Drag gesture
       
       @about-class{gtk-gesture-drag}
+
+      @about-function{gtk-gesture-drag-new}
+      @about-function{gtk-gesture-drag-get-start-point}
+      @about-function{gtk-gesture-drag-get-offset}
     @end{subsection}
     
     @begin[GtkGestureLongPress]{subsection}
       \"Press and Hold\" gesture
       
       @about-class{gtk-gesture-long-press}
+
+      @about-generic{gtk-gesture-long-press-delay-factor}
+
+      @about-function{gtk-gesture-long-press-new}
     @end{subsection}
     
     @begin[GtkGestureMultiPress]{subsection}
-      Multipress gesture
+      Multipress gesture.
       
       @about-class{gtk-gesture-multi-press}
+
+      @about-function{gtk-gesture-multi-press-new}
+      @about-function{gtk-gesture-multi-press-set-area}
+      @about-function{gtk-gesture-multi-press-get-area}
     @end{subsection}
     
     @begin[GtkGesturePan]{subsection}
       Pan gesture
       
+      @about-symbol{gtk-pan-direction}
       @about-class{gtk-gesture-pan}
+
+      @about-generic{gtk-gesture-pan-orientation}
+
+      @about-function{gtk-gesture-pan-new}
     @end{subsection}
     
     @begin[GtkGestureSwipe]{subsection}
       Swipe gesture
       
       @about-class{gtk-gesture-swipe}
+
+      @about-function{gtk-gesture-swipe-new}
+      @about-function{gtk-gesture-swipe-get-velocity}
     @end{subsection}
     
     @begin[GtkGestureRotate]{subsection}
-      Rotate gesture
+      Rotate gesture.
       
       @about-class{gtk-gesture-rotate}
+
+      @about-function{gtk-gesture-rotate-new}
+      @about-function{gtk-gesture-rotate-get-angle-delta}
     @end{subsection}
     
     @begin[GtkGestureZoom]{subsection}
-      Zoom gesture
+      Zoom gesture.
       
       @about-class{gtk-gesture-zoom}
+
+      @about-function{gtk-gesture-zoom-new}
+      @about-function{gtk-gesture-zoom-get-scale-delta}
     @end{subsection}
     
     @begin[GtkGestureStylus]{subsection}
       Gesture for stylus input
       
       @about-class{gtk-gesture-stylus}
+
+      @about-function{gtk-gesture-stylus-new}
+      @about-function{gtk-gesture-stylus-get-axis}
+      @about-function{gtk-gesture-stylus-get-axes}
+      @about-function{gtk-gesture-stylus-get-device-tool}
     @end{subsection}
     
     @begin[GtkPadController]{subsection}
       Controller for drawing tablet pads
-      
+
+      @about-symbol{gtk-pad-action-type}
+      @about-symbol{gtk-pad-action-entry}      
       @about-class{gtk-pad-controller}
+
+      @about-generic{gtk-pad-controller-action-group}
+      @about-generic{gtk-pad-controller-pad}
+
+      @about-function{gtk-pad-controller-new}
+      @about-function{gtk-pad-controller-set-action-entries}
+      @about-function{gtk-pad-controller-set-action}
     @end{subsection}
   @end{section}
   @begin[Deprecated]{section}
