@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gdk.pango.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GDK 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GDK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GDK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,14 +29,15 @@
 ;;;
 ;;; Pango Interaction
 ;;;
-;;; Using Pango in GDK
+;;;     Using Pango in GDK
 ;;;
-;;; Synopsis
+;;; Functions
 ;;;
 ;;;     gdk_pango_layout_get_clip_region
 ;;;     gdk_pango_layout_line_get_clip_region
 ;;;     gdk_pango_context_get
 ;;;     gdk_pango_context_get_for_screen
+;;;     gdk_pango_context_get_for_display
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gdk)
@@ -215,8 +213,6 @@
   it will not be updated. Using the function @fun{gtk-widget-get-pango-context}
   is more convenient if you want to keep a context around and track changes to
   the @arg{screen}'s font rendering settings.
-
-  Since 2.2
   @see-class{pango-context}
   @see-class{gdk-screen}
   @see-symbol{cairo-font-options-t}
@@ -224,5 +220,34 @@
   (screen (g-object gdk-screen)))
 
 (export 'gdk-pango-context-get-for-screen)
+
+;;; ----------------------------------------------------------------------------
+;;; gdk_pango_context_get_for_display ()
+;;;
+;;; PangoContext *
+;;; gdk_pango_context_get_for_display (GdkDisplay *display);
+;;;
+;;; Creates a PangoContext for display .
+;;;
+;;; The context must be freed when you’re finished with it.
+;;;
+;;; When using GTK+, normally you should use gtk_widget_get_pango_context()
+;;; instead of this function, to get the appropriate context for the widget you
+;;; intend to render text onto.
+;;;
+;;; The newly created context will have the default font options (see
+;;; cairo_font_options_t) for the display; if these options change it will not
+;;; be updated. Using gtk_widget_get_pango_context() is more convenient if you
+;;; want to keep a context around and track changes to the font rendering
+;;; settings.
+;;;
+;;; display :
+;;;     the GdkDisplay for which the context is to be created
+;;;
+;;; Returns :
+;;;     a new PangoContext for display .
+;;;
+;;; Since 3.22
+;;; ----------------------------------------------------------------------------
 
 ;;; --- End of file gdk.pango.lisp ---------------------------------------------

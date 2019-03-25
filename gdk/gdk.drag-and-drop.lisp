@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gdk.drag-and-drop.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GDK 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GDK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GDK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,21 +29,26 @@
 ;;;
 ;;; Drag And Drop
 ;;;
-;;; Functions for controlling drag and drop handling
+;;;     Functions for controlling drag and drop handling
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
+;;;     GdkDragContext
+;;;     GdkDragCancelReason
 ;;;     GdkDragProtocol
 ;;;     GdkDragAction
-;;;     GdkDragContext
+;;;
+;;; Functions
 ;;;
 ;;;     gdk_drag_get_selection
 ;;;     gdk_drag_abort
 ;;;     gdk_drop_reply
 ;;;     gdk_drag_drop
+;;;     gdk_drag_drop_done
 ;;;     gdk_drag_find_window_for_screen
 ;;;     gdk_drag_begin
 ;;;     gdk_drag_begin_for_device
+;;;     gdk_drag_begin_from_point
 ;;;     gdk_drag_motion
 ;;;     gdk_drop_finish
 ;;;     gdk_drag_status
@@ -63,9 +65,59 @@
 ;;;     gdk_drag_context_get_source_window
 ;;;     gdk_drag_context_get_dest_window
 ;;;     gdk_drag_context_get_protocol
+;;;     gdk_drag_context_get_drag_window
+;;;     gdk_drag_context_set_hotspot
+;;;     gdk_drag_context_manage_dnd
+;;;
+;;; Signals
+;;;
+;;;     void  action-changed  Run Last
+;;;     void  cancel          Run Last
+;;;     void  dnd-finished    Run Last
+;;;     void  drop-performed  Run Last
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GdkDragContext
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gdk)
+
+;;; ----------------------------------------------------------------------------
+;;; enum GdkDragCancelReason
+;;; ----------------------------------------------------------------------------
+
+#+gtk-3-20
+(define-g-enum "GdkDragCancelReason" gdk-drag-cancel-reason
+  (:export t
+   :type-initializer "gdk_drag_cancel_reason_get_type")
+  :no-target
+  :user-cancelled
+  :error)
+
+#+(and gtk-3-20 cl-cffi-gtk-documentation)
+(setf (gethash 'gdk-drag-cancel-reason atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'gdk-drag-cancel-reason atdoc:*external-symbols*)
+ "@version{2019-3-25}
+  @begin{short}
+    Used in @class{gdk-drag-context} to the reason of a cancelled DND operation.
+  @end{short}
+  @begin{pre}
+(define-g-enum \"GdkDragCancelReason\" gdk-drag-cancel-reason
+  (:export t
+   :type-initializer \"gdk_drag_cancel_reason_get_type\")
+  :no-target
+  :user-cancelled
+  :error)
+  @end{pre}
+  @begin[code]{table}
+    @entry[:no-target]{There is no suitable drop target.}
+    @entry[:user-cancelled]{Drag cancelled by the user.}
+    @entry[:error]{Unspecified error.}
+  @end{table}
+  Since 3.20
+  @see-class{gdk-drag-context}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GdkDragProtocol
@@ -175,14 +227,76 @@
 (setf (documentation 'gdk-drag-context 'type)
  "@version{2013-6-30}
   @begin{short}
-    These functions provide a low level interface for drag and drop. The X
-    backend of GDK supports both the Xdnd and Motif drag and drop protocols
-    transparently, the Win32 backend supports the @code{WM_DROPFILES} protocol.
+    These functions provide a low level interface for drag and drop.
   @end{short}
+  The X backend of GDK supports both the Xdnd and Motif drag and drop protocols
+  transparently, the Win32 backend supports the @code{WM_DROPFILES} protocol.
 
   GTK+ provides a higher level abstraction based on top of these functions,
   and so they are not normally needed in GTK+ applications. See the Drag and
-  Drop section of the GTK+ documentation for more information.")
+  Drop section of the GTK+ documentation for more information.
+
+  @begin[Signal Details]{dictionary}
+    @subheading{The \"action-changed\" signal}
+    @begin{pre}
+ lambda (context action)    : Run Last
+    @end{pre}
+    A new action is being chosen for the drag and drop operation.
+
+    This signal will only be emitted if the @sym{gtk-drag-context} manages the
+    drag and drop operation. See the function @fun{gdk-drag-context-manage-dnd}
+    for more information.
+    @begin[code]{table}
+      @entry[context]{The object on which the signal is emitted.}
+      @entry[action]{The action currently chosen.}
+    @end{table}
+    Since 3.20
+
+    @subheading{The \"cancel\" signal}
+    @begin{pre}
+ lambda (context reason)    : Run Last
+    @end{pre}
+    The drag and drop operation was cancelled.
+
+    This signal will only be emitted if the @class{gdk-drag-context} manages the
+    drag and drop operation. See the function @fun{gdk-drag-context-manage-dnd}
+    for more information.
+    @begin[code]{table}
+      @entry[context]{The object on which the signal is emitted.}
+      @entry[reason]{The reason the context was cancelled.}
+    @end{table}
+    Since 3.20
+
+    @subheading{The \"dnd-finished\" signal}
+    @begin{pre}
+ lambda (context)    : Run Last
+    @end{pre}
+    The drag and drop operation was finished, the drag destination finished
+    reading all data. The drag source can now free all miscellaneous data.
+
+    This signal will only be emitted if the @class{gdk-drag-context} manages the
+    drag and drop operation. See the function @fun{gdk-drag-context-manage-dnd}
+    for more information.
+    @begin[code]{table}
+      @entry[context]{The object on which the signal is emitted.}
+    @end{table}
+    Since 3.20
+
+    @subheading{The \"drop-performed\" signal}
+    @begin{pre}
+ lambda (context time)    : Run Last
+    @end{pre}
+    The drag and drop operation was performed on an accepting client.
+
+    This signal will only be emitted if the @sym{gdk-drag-context} manages the
+    drag and drop operation. See the function @fun{gdk-drag-context-manage-dnd}
+    for more information.
+    @begin[code]{table}
+      @entry[context]{The object on which the signal is emitted.}
+      @entry[time]{The time at which the drop happened.}
+    @end{table}
+    Since 3.20
+  @end{dictionary}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_drag_get_selection ()
@@ -259,6 +373,32 @@
 (export 'gdk-drag-drop)
 
 ;;; ----------------------------------------------------------------------------
+;;; gdk_drag_drop_done ()
+;;;
+;;; void
+;;; gdk_drag_drop_done (GdkDragContext *context,
+;;;                     gboolean success);
+;;;
+;;; Inform GDK if the drop ended successfully. Passing FALSE for success may
+;;; trigger a drag cancellation animation.
+;;;
+;;; This function is called by the drag source, and should be the last call
+;;; before dropping the reference to the context .
+;;;
+;;; The GdkDragContext will only take the first gdk_drag_drop_done() call as
+;;; effective, if this function is called multiple times, all subsequent calls
+;;; will be ignored.
+;;;
+;;; context :
+;;;     a GdkDragContext
+;;;
+;;; success :
+;;;     whether the drag was ultimatively successful
+;;;
+;;; Since 3.20
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; gdk_drag_find_window_for_screen ()
 ;;; ----------------------------------------------------------------------------
 
@@ -292,8 +432,6 @@
 
   This function is called by the drag source to obtain the @arg{dest-window}
   and protocol parameters for the function @fun{gdk-drag-motion}.
-
-  Since 2.2
   @see-function{gdk-drag-motion}"
   (with-foreign-objects ((dest-window :pointer) (protocol 'gdk-drag-protocol))
     (%gdk-drag-find-window-for-screen context
@@ -353,6 +491,41 @@
   (targets (g-list gdk-atom-as-string)))
 
 (export 'gdk-drag-begin-for-device)
+
+;;; ----------------------------------------------------------------------------
+;;; gdk_drag_begin_from_point ()
+;;;
+;;; GdkDragContext *
+;;; gdk_drag_begin_from_point (GdkWindow *window,
+;;;                            GdkDevice *device,
+;;;                            GList *targets,
+;;;                            gint x_root,
+;;;                            gint y_root);
+;;;
+;;; Starts a drag and creates a new drag context for it.
+;;;
+;;; This function is called by the drag source.
+;;;
+;;; window :
+;;;     the source window for this drag
+;;;
+;;; device :
+;;;     the device that controls this drag
+;;;
+;;; targets :
+;;;     the offered targets, as list of GdkAtoms.
+;;;
+;;; x_root :
+;;;     the x coordinate where the drag nominally started
+;;;
+;;; y_root :
+;;;     the y coordinate where the drag nominally started
+;;;
+;;; Returns :
+;;;     a newly created GdkDragContext.
+;;;
+;;; Since 3.20
+;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_drag_motion ()
@@ -451,8 +624,7 @@
   @end{short}
   This function is intended to be used while handling a @code{:drop-finished}
   event, its return value is meaningless at other times.
-
-  Since 2.6"
+  @see-class{gdk-drag-context}"
   (context (g-object gdk-drag-context)))
 
 (export 'gdk-drag-drop-succeeded)
@@ -626,5 +798,93 @@
   (context (g-object gdk-drag-context)))
 
 (export 'gdk-drag-context-get-protocol)
+
+;;; ----------------------------------------------------------------------------
+;;; gdk_drag_context_get_drag_window ()
+;;;
+;;; GdkWindow *
+;;; gdk_drag_context_get_drag_window (GdkDragContext *context);
+;;;
+;;; Returns the window on which the drag icon should be rendered during the drag
+;;; operation. Note that the window may not be available until the drag
+;;; operation has begun. GDK will move the window in accordance with the ongoing
+;;; drag operation. The window is owned by context and will be destroyed when
+;;; the drag operation is over.
+;;;
+;;; context :
+;;;     a GdkDragContext
+;;;
+;;; Returns :
+;;;     the drag window, or NULL.
+;;;
+;;; Since 3.20
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gdk_drag_context_set_hotspot ()
+;;;
+;;; void
+;;; gdk_drag_context_set_hotspot (GdkDragContext *context,
+;;;                               gint hot_x,
+;;;                               gint hot_y);
+;;;
+;;; Sets the position of the drag window that will be kept under the cursor
+;;; hotspot. Initially, the hotspot is at the top left corner of the drag
+;;; window.
+;;;
+;;; context :
+;;;     a GdkDragContext
+;;;
+;;; hot_x :
+;;;     x coordinate of the drag window hotspot
+;;;
+;;; hot_y :
+;;;     y coordinate of the drag window hotspot
+;;;
+;;; Since 3.20
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gdk_drag_context_manage_dnd ()
+;;;
+;;; gboolean
+;;; gdk_drag_context_manage_dnd (GdkDragContext *context,
+;;;                              GdkWindow *ipc_window,
+;;;                              GdkDragAction actions);
+;;;
+;;; Requests the drag and drop operation to be managed by context . When a drag
+;;; and drop operation becomes managed, the GdkDragContext will internally
+;;; handle all input and source-side GdkEventDND events as required by the
+;;; windowing system.
+;;;
+;;; Once the drag and drop operation is managed, the drag context will emit the
+;;; following signals:
+;;;
+;;; The “action-changed” signal whenever the final action to be performed by the
+;;; drag and drop operation changes.
+;;;
+;;; The “drop-performed” signal after the user performs the drag and drop
+;;; gesture (typically by releasing the mouse button).
+;;;
+;;; The “dnd-finished” signal after the drag and drop operation concludes (after
+;;; all GdkSelection transfers happen).
+;;;
+;;; The “cancel” signal if the drag and drop operation is finished but doesn't
+;;; happen over an accepting destination, or is cancelled through other means.
+;;;
+;;; context :
+;;;     a GdkDragContext
+;;;
+;;; ipc_window :
+;;;     Window to use for IPC messaging/events
+;;;
+;;; actions :
+;;;     the actions supported by the drag source
+;;;
+;;; Returns :
+;;;     TRUE if the drag and drop operation is managed.
+;;;
+;;; Since 3.20
+;;; ----------------------------------------------------------------------------
 
 ;;; --- End of file gdk.drag-and-drop.lisp -------------------------------------

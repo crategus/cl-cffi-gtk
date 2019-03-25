@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gdk.selections.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GDK 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GDK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GDK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -388,8 +385,6 @@
     Sets the @class{gdk-window} owner as the current owner of the selection
     selection.
   @end{short}
-
-  Since 2.2
   @see-class{gdk-display}
   @see-class{gdk-window}
   @see-symbol{gdk-atom}"
@@ -446,8 +441,6 @@
   Note that the return value may be owned by a different process if a foreign
   window was previously created for that window, but a new foreign window will
   never be created by this call.
-
-  Since 2.2
   @see-class{gdk-display}
   @see-class{gdk-window}
   @see-symbol{gdk-atom}"
@@ -568,8 +561,6 @@
     @var{+gdk-none+} to indicate that the request was rejected}
   @argument[time]{timestamp}
   @short{Send a response to the @code{SelectionRequest} event.}
-
-  Since 2.2
   @see-class{gdk-display}
   @see-class{gdk-window}
   @see-symbol{gdk-atom}"

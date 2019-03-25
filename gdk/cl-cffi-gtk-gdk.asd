@@ -41,6 +41,10 @@
 
                (:file "gdk.cursor")           ; Standard and pixmap cursors
                (:file "gdk.device")           ; Representing an input device
+
+               (:file "gdk.device-pad"        ; Pad device interface
+                      :if-feature :gtk-3-22)
+
                (:file "gdk.device-manager")   ; Handling input devices
                (:file "gdk.screen")           ; Representing a physical screen
                (:file "gdk.visual")           ; Low-level display information
@@ -51,9 +55,18 @@
                (:file "gdk.display-manager")  ; Maintains a list GdkDisplays
                (:file "gdk.pixbuf")           ; Functions for obtaining pixbufs
 
+               (:file "gdk.seat"              ; Object representing an user seat
+                      :if-feature :gdk-3-20)
+               (:file "gdk.monitor"           ; Object representing an output.
+                      :if-feature :gdk-3-22)
+
                (:file "gdk.window")           ; Onscreen display areas
                (:file "gdk.frame-timings")    ; Frame timings
                (:file "gdk.frame-clock")      ; Frame clock
+
+               (:file "gdk.drawing-context"   ; Drawing context for GDK windows
+                      :if-feature :gdk-3-22)
+
                (:file "gdk.gl-context")       ; Open GL context
                (:file "gdk.events")           ; Functions for handling events
                (:file "gdk.general")          ; Library initialization

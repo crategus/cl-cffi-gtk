@@ -394,7 +394,7 @@
     @entry[:below]{The window is kept below other windows.}
     @entry[:focused]{The window is presented as focused (with active
       decorations).}
-    @entry[:tiled]{The window is in a tiled state, Since 3.10. Since 3.22, 
+    @entry[:tiled]{The window is in a tiled state, Since 3.10. Since 3.22,
       this is deprecated in favor of per-edge information.}
     @entry[:top-tiled]{Whether the top edge is tiled. Since 3.22}
     @entry{:top-resizable]{Whether the top edge is resizable. Since 3.22}
@@ -538,7 +538,7 @@
   #+gdk-3-22
   (:pad-group-mode 47)
   (:event-last 48))
- 
+
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-event-type atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gdk-event-type atdoc:*external-symbols*)
@@ -735,7 +735,7 @@
 
   Like the X Window System, GDK supports 8 modifier keys and 5 mouse buttons.
 
-  GDK recognizes which of the Meta, Super or Hyper keys are mapped to Mod2 - 
+  GDK recognizes which of the Meta, Super or Hyper keys are mapped to Mod2 -
   Mod5, and indicates this by setting @code{:super-mask}, @code{:hyper-mask}
   or @code{:meta-mask} in the state field of key events.
 
@@ -812,7 +812,7 @@
   (:pointer-motion-hint-mask #.(ash 1 3))
   (:button-motion-mask       #.(ash 1 4))
   (:button1-motion-mask      #.(ash 1 5))
-  (:button2-motion-mask      #.(ash 1 6))  
+  (:button2-motion-mask      #.(ash 1 6))
   (:button3-motion-mask      #.(ash 1 7))
   (:button-press-mask        #.(ash 1 8))
   (:button-release-mask      #.(ash 1 9))
@@ -858,7 +858,7 @@
   @fun{gdk-event-request-motions}.
 
   Since GTK 3.8, motion events are already compressed by default, independent of
-  this mechanism. This compression can be disabled with the function 
+  this mechanism. This compression can be disabled with the function
   @fun{gdk-window-set-event-compression}. See the documentation of that function
   for details.
 
@@ -877,7 +877,7 @@
   (:pointer-motion-hint-mask #.(ash 1 3))
   (:button-motion-mask       #.(ash 1 4))
   (:button1-motion-mask      #.(ash 1 5))
-  (:button2-motion-mask      #.(ash 1 6))  
+  (:button2-motion-mask      #.(ash 1 6))
   (:button3-motion-mask      #.(ash 1 7))
   (:button-press-mask        #.(ash 1 8))
   (:button-release-mask      #.(ash 1 9))
@@ -1426,7 +1426,7 @@
 ;;; --- gdk-event-type ---------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-type atdoc:*function-name-alias*) 
+(setf (gethash 'gdk-event-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-type 'function)
  "@version{2019-3-18}
@@ -1436,7 +1436,7 @@
 ;;; --- gdk-event-window -------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-window atdoc:*function-name-alias*) 
+(setf (gethash 'gdk-event-window atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-window 'function)
  "@version{2019-3-18}
@@ -1446,7 +1446,7 @@
 ;;; --- gdk-event-send-event ---------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-send-event atdoc:*function-name-alias*) 
+(setf (gethash 'gdk-event-send-event atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-send-event 'function)
  "@version{2019-3-18}
@@ -1548,7 +1548,7 @@
 ;;; --- gdk-event-key-type -----------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-key-type atdoc:*function-name-alias*) 
+(setf (gethash 'gdk-event-key-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-key-type 'function)
  "@version{2014-1-22}
@@ -1558,7 +1558,7 @@
 ;;; --- gdk-event-key-window ---------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-key-window atdoc:*function-name-alias*) 
+(setf (gethash 'gdk-event-key-window atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-key-window 'function)
  "@version{2014-1-22}
@@ -1568,7 +1568,7 @@
 ;;; --- gdk-event-key-send-event -----------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-key-send-event atdoc:*function-name-alias*) 
+(setf (gethash 'gdk-event-key-send-event atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-key-send-event 'function)
  "@version{2014-1-22}
@@ -1579,7 +1579,7 @@
 ;;; --- gdk-event-key-time -----------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-key-time atdoc:*function-name-alias*) 
+(setf (gethash 'gdk-event-key-time atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-key-time 'function)
  "@version{2014-1-22}
@@ -1589,7 +1589,7 @@
 ;;; --- gdk-event-key-state ----------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-key-state atdoc:*function-name-alias*) 
+(setf (gethash 'gdk-event-key-state atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-key-state 'function)
  "@version{2014-1-22}
@@ -1599,7 +1599,7 @@
 ;;; --- gdk-event-key-keyval ---------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-key-keyval atdoc:*function-name-alias*) 
+(setf (gethash 'gdk-event-key-keyval atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-key-keyval 'function)
  "@version{2014-1-22}
@@ -1609,7 +1609,7 @@
 ;;; --- gdk-event-key-length ---------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-key-length atdoc:*function-name-alias*) 
+(setf (gethash 'gdk-event-key-length atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-key-length 'function)
  "@version{2014-1-22}
@@ -1619,7 +1619,7 @@
 ;;; --- gdk-event-key-string ---------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-key-string atdoc:*function-name-alias*) 
+(setf (gethash 'gdk-event-key-string atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-key-string 'function)
  "@version{2014-1-22}
@@ -1640,7 +1640,7 @@
 ;;; --- gdk-event-key-group ----------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-key-group atdoc:*function-name-alias*) 
+(setf (gethash 'gdk-event-key-group atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-key-group 'function)
  "@version{2014-1-22}
@@ -1782,7 +1782,7 @@
 ;;; --- gdk-event-button-type --------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-button-type atdoc:*function-name-alias*) 
+(setf (gethash 'gdk-event-button-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-button-type 'function)
  "@version{2014-1-22}
@@ -1793,7 +1793,7 @@
 ;;; --- gdk-event-button-window ------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-button-window atdoc:*function-name-alias*) 
+(setf (gethash 'gdk-event-button-window atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-button-window 'function)
  "@version{2014-1-22}
@@ -1815,7 +1815,7 @@
 ;;; --- gdk-event-button-time --------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-button-time atdoc:*function-name-alias*) 
+(setf (gethash 'gdk-event-button-time atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-button-time 'function)
  "@version{2014-1-22}
@@ -1826,7 +1826,7 @@
 ;;; --- gdk-event-button-x -----------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-button-x atdoc:*function-name-alias*) 
+(setf (gethash 'gdk-event-button-x atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-button-x 'function)
  "@version{2014-1-22}
@@ -1836,7 +1836,7 @@
 ;;; --- gdk-event-button-y -----------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-button-y atdoc:*function-name-alias*) 
+(setf (gethash 'gdk-event-button-y atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-button-y 'function)
  "@version{2014-1-22}
@@ -1846,7 +1846,7 @@
 ;;; --- gdk-event-button-axes --------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-button-axes atdoc:*function-name-alias*) 
+(setf (gethash 'gdk-event-button-axes atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-button-axes 'function)
  "@version{2014-1-22}
@@ -1857,7 +1857,7 @@
 ;;; --- gdk-event-button-state -------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-button-state atdoc:*function-name-alias*) 
+(setf (gethash 'gdk-event-button-state atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-button-state 'function)
  "@version{2014-1-22}
@@ -1868,7 +1868,7 @@
 ;;; --- gdk-event-button-button ------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-button-button atdoc:*function-name-alias*) 
+(setf (gethash 'gdk-event-button-button atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-button-button 'function)
  "@version{2014-1-22}
@@ -1879,7 +1879,7 @@
 ;;; --- gdk-event-button-device ------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-button-device atdoc:*function-name-alias*) 
+(setf (gethash 'gdk-event-button-device atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-button-device 'function)
  "@version{2014-1-22}
@@ -1890,7 +1890,7 @@
 ;;; --- gdk-event-button-x-root ------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-button-x-root atdoc:*function-name-alias*) 
+(setf (gethash 'gdk-event-button-x-root atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-button-x-root 'function)
  "@version{2014-1-22}
@@ -1901,7 +1901,7 @@
 ;;; --- gdk-event-button-y-root ------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-button-y-root atdoc:*function-name-alias*) 
+(setf (gethash 'gdk-event-button-y-root atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-button-y-root 'function)
  "@version{2014-1-22}
@@ -2011,7 +2011,7 @@
 ;;; --- gdk-event-touch-type ---------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-touch-type atdoc:*function-name-alias*) 
+(setf (gethash 'gdk-event-touch-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-touch-type 'function)
  "@version{2014-1-31}
@@ -2019,7 +2019,7 @@
   @see-class{gdk-event-touch}")
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-touch-window atdoc:*function-name-alias*) 
+(setf (gethash 'gdk-event-touch-window atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-touch-window 'function)
  "@version{2014-1-31}
@@ -2041,7 +2041,7 @@
 ;;; --- gdk-event-touch-time ---------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-touch-time atdoc:*function-name-alias*) 
+(setf (gethash 'gdk-event-touch-time atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-touch-time 'function)
  "@version{2014-1-31}
@@ -2051,7 +2051,7 @@
 ;;; --- gdk-event-touch-x ------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-touch-x atdoc:*function-name-alias*) 
+(setf (gethash 'gdk-event-touch-x atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-touch-x 'function)
  "@version{2014-1-31}
@@ -2061,7 +2061,7 @@
 ;;; --- gdk-event-touch-y ------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-touch-y atdoc:*function-name-alias*) 
+(setf (gethash 'gdk-event-touch-y atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-touch-y 'function)
  "@version{2014-1-31}
@@ -2071,7 +2071,7 @@
 ;;; --- gdk-event-touch axes ---------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-touch-axes atdoc:*function-name-alias*) 
+(setf (gethash 'gdk-event-touch-axes atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-touch-axes 'function)
  "@version{2014-1-31}
@@ -2081,7 +2081,7 @@
 ;;; --- gdk-event-touch-state --------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-touch-state atdoc:*function-name-alias*) 
+(setf (gethash 'gdk-event-touch-state atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-touch-state 'function)
  "@version{2014-1-31}
@@ -2092,7 +2092,7 @@
 ;;; --- gdk-event-touch-sequence -----------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-touch-sequence atdoc:*function-name-alias*) 
+(setf (gethash 'gdk-event-touch-sequence atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-touch-sequence 'function)
  "@version{2014-1-31}
@@ -2114,7 +2114,7 @@
 ;;; --- gdk-event-touch-device -------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-touch-device atdoc:*function-name-alias*) 
+(setf (gethash 'gdk-event-touch-device atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-touch-device 'function)
  "@version{2014-1-31}
@@ -2125,7 +2125,7 @@
 ;;; --- gdk-event-touch-x-root -------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-touch-x-root atdoc:*function-name-alias*) 
+(setf (gethash 'gdk-event-touch-x-root atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-touch-x-root 'function)
  "@version{2014-1-31}
@@ -2136,7 +2136,7 @@
 ;;; --- gdk-event-touch-y-root -------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-touch-y-root atdoc:*function-name-alias*) 
+(setf (gethash 'gdk-event-touch-y-root atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-touch-y-root 'function)
  "@version{2014-1-31}
@@ -2240,7 +2240,7 @@
 ;;; --- gdk-event-scroll-type --------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-scroll-type atdoc:*function-name-alias*) 
+(setf (gethash 'gdk-event-scroll-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-scroll-type 'function)
  "@version{2014-1-31}
@@ -2251,7 +2251,7 @@
 ;;; --- gdk-event-scroll-window ------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-scroll-window atdoc:*function-name-alias*) 
+(setf (gethash 'gdk-event-scroll-window atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-scroll-window 'function)
  "@version{2014-1-31}
@@ -2273,7 +2273,7 @@
 ;;; --- gdk-event-scroll-time --------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-scroll-time atdoc:*function-name-alias*) 
+(setf (gethash 'gdk-event-scroll-time atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-scroll-time 'function)
  "@version{2014-1-31}
@@ -2284,7 +2284,7 @@
 ;;; --- gdk-event-scroll-x -----------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-scroll-x atdoc:*function-name-alias*) 
+(setf (gethash 'gdk-event-scroll-x atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-scroll-x 'function)
  "@version{2014-1-31}
@@ -2294,7 +2294,7 @@
 ;;; --- gdk-event-scroll-y -----------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-scroll-y atdoc:*function-name-alias*) 
+(setf (gethash 'gdk-event-scroll-y atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-scroll-y 'function)
  "@version{2014-1-31}
@@ -2304,7 +2304,7 @@
 ;;; --- gdk-event-scroll-state -------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-scroll-state atdoc:*function-name-alias*) 
+(setf (gethash 'gdk-event-scroll-state atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-scroll-state 'function)
  "@version{2014-1-31}
@@ -2315,7 +2315,7 @@
 ;;; --- gdk-event-scroll-direction ---------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-scroll-direction atdoc:*function-name-alias*) 
+(setf (gethash 'gdk-event-scroll-direction atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-scroll-direction 'function)
  "@version{2014-1-31}
@@ -2326,7 +2326,7 @@
 ;;; --- gdk-event-scroll-device ------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-scroll-device atdoc:*function-name-alias*) 
+(setf (gethash 'gdk-event-scroll-device atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-scroll-device 'function)
  "@version{2014-1-31}
@@ -2337,7 +2337,7 @@
 ;;; --- gdk-event-scroll-x-root ------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-scroll-x-root atdoc:*function-name-alias*) 
+(setf (gethash 'gdk-event-scroll-x-root atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-scroll-x-root 'function)
  "@version{2014-1-31}
@@ -2348,7 +2348,7 @@
 ;;; --- gdk-event-scroll-y-root ------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-scroll-y-root atdoc:*function-name-alias*) 
+(setf (gethash 'gdk-event-scroll-y-root atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-scroll-y-root 'function)
  "@version{2014-1-31}
@@ -2359,7 +2359,7 @@
 ;;; --- gdk-event-scroll-delta-x -----------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-scroll-delta-x atdoc:*function-name-alias*) 
+(setf (gethash 'gdk-event-scroll-delta-x atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-scroll-delta-x 'function)
  "@version{2014-1-31}
@@ -2370,7 +2370,7 @@
 ;;; --- gdk-event-scroll-delta-y -----------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-scroll-delta-y atdoc:*function-name-alias*) 
+(setf (gethash 'gdk-event-scroll-delta-y atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-scroll-delta-y 'function)
  "@version{2014-1-31}
@@ -2463,7 +2463,7 @@
 ;;; --- gdk-event-motion-type --------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-motion-type atdoc:*function-name-alias*) 
+(setf (gethash 'gdk-event-motion-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-motion-type 'function)
  "@version{2014-1-31}
@@ -2474,7 +2474,7 @@
 ;;; --- gdk-event-motion-window ------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-motion-window atdoc:*function-name-alias*) 
+(setf (gethash 'gdk-event-motion-window atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-motion-window 'function)
  "@version{2014-1-31}
@@ -2496,7 +2496,7 @@
 ;;; --- gdk-event-motion-time --------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-motion-time atdoc:*function-name-alias*) 
+(setf (gethash 'gdk-event-motion-time atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-motion-time 'function)
  "@version{2014-1-31}
@@ -2507,7 +2507,7 @@
 ;;; --- gdk-event-motion-x -----------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-motion-x atdoc:*function-name-alias*) 
+(setf (gethash 'gdk-event-motion-x atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-motion-x 'function)
  "@version{2014-1-31}
@@ -2517,7 +2517,7 @@
 ;;; --- gdk-event-motion-y -----------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-motion-y atdoc:*function-name-alias*) 
+(setf (gethash 'gdk-event-motion-y atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-motion-y 'function)
  "@version{2014-1-31}
@@ -2527,7 +2527,7 @@
 ;;; --- gdk-event-motion-axes --------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-motion-axes atdoc:*function-name-alias*) 
+(setf (gethash 'gdk-event-motion-axes atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-motion-axes 'function)
  "@version{2014-1-31}
@@ -2538,7 +2538,7 @@
 ;;; --- gdk-event-motion-state -------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-motion-state atdoc:*function-name-alias*) 
+(setf (gethash 'gdk-event-motion-state atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-motion-state 'function)
  "@version{2014-1-31}
@@ -2549,7 +2549,7 @@
 ;;; --- gdk-event-motion-is-hint -----------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-motion-is-hint atdoc:*function-name-alias*)  
+(setf (gethash 'gdk-event-motion-is-hint atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-motion-is-hint 'function)
  "@version{2014-1-31}
@@ -2560,7 +2560,7 @@
 ;;; --- gdk-event-motion-device ------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-motion-device atdoc:*function-name-alias*) 
+(setf (gethash 'gdk-event-motion-device atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-motion-device 'function)
  "@version{2014-1-31}
@@ -2571,7 +2571,7 @@
 ;;; --- gdk-event-motion-x-root ------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-motion-x-root atdoc:*function-name-alias*) 
+(setf (gethash 'gdk-event-motion-x-root atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-motion-x-root 'function)
  "@version{2014-1-31}
@@ -2582,7 +2582,7 @@
 ;;; --- gdk-event-motion-y-root ------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-motion-y-root atdoc:*function-name-alias*) 
+(setf (gethash 'gdk-event-motion-y-root atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-motion-y-root 'function)
  "@version{2014-1-31}
@@ -2660,7 +2660,7 @@
 ;;; --- gdk-event-expose-type --------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-expose-type atdoc:*function-name-alias*) 
+(setf (gethash 'gdk-event-expose-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-expose-type 'function)
  "@version{2014-1-31}
@@ -2671,7 +2671,7 @@
 ;;; --- gdk-event-expose-window ------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-expose-window atdoc:*function-name-alias*) 
+(setf (gethash 'gdk-event-expose-window atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-expose-window 'function)
  "@version{2014-1-31}
@@ -2693,7 +2693,7 @@
 ;;; --- gdk-event-expose-area --------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-expose-area atdoc:*function-name-alias*) 
+(setf (gethash 'gdk-event-expose-area atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-expose-area 'function)
  "@version{2014-1-31}
@@ -2704,7 +2704,7 @@
 ;;; --- gdk-event-expose-region ------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-expose-region atdoc:*function-name-alias*) 
+(setf (gethash 'gdk-event-expose-region atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-expose-region 'function)
  "@version{2014-1-31}
@@ -2715,7 +2715,7 @@
 ;;; --- gdk-event-expose-count -------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-expose-count atdoc:*function-name-alias*) 
+(setf (gethash 'gdk-event-expose-count atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-expose-count 'function)
  "@version{2014-1-31}
@@ -2911,7 +2911,7 @@
 ;;; --- gdk-event-crossing-type ------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-crossing-type atdoc:*function-name-alias*) 
+(setf (gethash 'gdk-event-crossing-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-crossing-type 'function)
  "@version{2014-1-31}
@@ -2955,7 +2955,7 @@
 ;;; --- gdk-event-crossing-time ------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-crossing-time atdoc:*function-name-alias*) 
+(setf (gethash 'gdk-event-crossing-time atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-crossing-time 'function)
  "@version{2014-1-31}
@@ -2966,7 +2966,7 @@
 ;;; --- gdk-event-crossing-x ---------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-crossing-x atdoc:*function-name-alias*) 
+(setf (gethash 'gdk-event-crossing-x atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-crossing-x 'function)
  "@version{2014-1-31}
@@ -2976,7 +2976,7 @@
 ;;; --- gdk-event-crossing-y ---------------------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gdk-event-crossing-y atdoc:*function-name-alias*) 
+(setf (gethash 'gdk-event-crossing-y atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-crossing-y 'function)
  "@version{2014-1-31}
@@ -3420,7 +3420,7 @@
   ... ))
   @end{pre}
   @begin[code]{table}
-    @entry[type]{The type of the event (@code{:selection-clear}, 
+    @entry[type]{The type of the event (@code{:selection-clear},
       @code{:selection-notify} or @code{:selection-request}).}
     @entry[window]{The window which received the event.}
     @enty[send-event]{@em{True} if the event was sent explicitly (e. g. using
@@ -3837,7 +3837,7 @@
     @entry[send-event]{@em{True} if the event was sent explicitly (e. g. using
       XSendEvent).}
     @entry[changed-mask]{Mask specifying what flags have changed.}
-    @entry[new-window-state]{The new window state, a combination of 
+    @entry[new-window-state]{The new window state, a combination of
       @symbol{gdk-window-state} bits.}
   @end{table}
   @see-constructor{copy-gdk-event-window-state}
@@ -4068,7 +4068,7 @@
       XSendEvent).}
     @entry[owner]{The new owner of the selection, or @code{nil} if there is
       none}
-    @entry[reason]{The reason for the ownership change as a 
+    @entry[reason]{The reason for the ownership change as a
       @symbol{gk-owner-change} value.}
     @entry[selection]{The atom identifying the selection.}
     @entry[time]{The timestamp of the event.}
@@ -4785,7 +4785,7 @@
 ;;; --- gdk-event-touchpad-pinch-angle-delta -----------------------------------
 
 #+(and gdk-3-18 cl-cffi-gtk-documentation)
-(setf (gethash 'gdk-event-touchpad-pinch-angle-delta 
+(setf (gethash 'gdk-event-touchpad-pinch-angle-delta
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-event-touchpad-pinch-angle-delta 'function)
@@ -4876,7 +4876,7 @@
     @entry[send-event]{@em{True} if the event was sent explicitly.}
     @entry[time]{The time of the event in milliseconds.}
     @entry[group]{The pad group the button belongs to. A @code{:tablet-pad}
-      device may have one or more groups containing a set of 
+      device may have one or more groups containing a set of
       buttons/rings/strips each.}
     @entry[button]{The pad button that was pressed.}
     @entry[mode]{The current mode of @arg{group}. Different groups in a
@@ -5027,9 +5027,9 @@
     @entry[send-event]{@em{True} if the event was sent explicitly.}
     @entry[time]{The time of the event in milliseconds.}
     @entry[group]{the pad group the ring/strip belongs to. A @code{:tablet-pad}
-      device may have one or more groups containing a set of 
+      device may have one or more groups containing a set of
       buttons/rings/strips each.}
-    @entry[index]{Number of strip/ring that was interacted. This number is 
+    @entry[index]{Number of strip/ring that was interacted. This number is
       0-indexed.}
     @entry[mode]{The current mode of @arg{group}. Different groups in a
       @code{:tablet-pad} device may have different current modes.}
@@ -5190,7 +5190,7 @@
     @entry[send-event]{@em{True} if the event was sent explicitly.}
     @entry[time]{The time of the event in milliseconds.}
     @entry[group]{The pad group that is switching mode. A @code{:tablet-pad}
-      device may have one or more groups containing a set of 
+      device may have one or more groups containing a set of
       buttons/rings/strips each.}
     @entry[mode]{The new mode of @arg{group}. Different groups in a
       @code{:tablet-pad} device may have different current modes.}
@@ -5267,7 +5267,7 @@
   @begin{short}
     Accessor of the slot @code{time} of the @class{gdk-event-pad-group-mode}
     struct.
-  @end{short}") 
+  @end{short}")
 
 ;;; --- gdk-event-pad-group-mode-group -----------------------------------------
 

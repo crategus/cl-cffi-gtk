@@ -333,11 +333,6 @@
 (defcfun ("gdk_threads_init" gdk-threads-init) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-6-17}
-  @subheading{Warning}
-    The function @sym{gdk-threads-init} has been deprecated since version 3.6
-    and should not be used in newly-written code. All GDK and GTK+ calls should
-    be made from the main thread.
-
   @begin{short}
     Initializes GDK so that it can be used from multiple threads in conjunction
     with the functions @fun{gdk-threads-enter} and @fun{gdk-threads-leave}.
@@ -345,6 +340,11 @@
 
   This call must be made before any use of the main loop from GTK+; to be
   safe, call it before the function @code{gtk_init()}.
+  @begin[Warning]{dictionary}
+    The function @sym{gdk-threads-init} has been deprecated since version 3.6
+    and should not be used in newly-written code. All GDK and GTK+ calls should
+    be made from the main thread.
+  @end{dictionary}
   @see-function{gdk-threads-enter}
   @see-function{gdk-threads-leave}")
 
@@ -359,16 +359,16 @@
 (defcfun ("gdk_threads_enter" gdk-threads-enter) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-6-17}
-  @subheading{Warning}
-    The function @sym{gdk-threads-enter} has been deprecated since version 3.6
-    and should not be used in newly-written code. All GDK and GTK+ calls should
-    be made from the main thread.
-
   @begin{short}
     This function marks the beginning of a critical section in which GDK and
     GTK+ functions can be called safely and without causing race conditions.
     Only one thread at a time can be in such a critial section.
-  @end{short}")
+  @end{short}
+  @begin[Warning]{dictionary}
+    The function @sym{gdk-threads-enter} has been deprecated since version 3.6
+    and should not be used in newly-written code. All GDK and GTK+ calls should
+    be made from the main thread.
+  @end{dictionary}")
 
 (export 'gdk-threads-enter)
 
@@ -379,14 +379,14 @@
 (defcfun ("gdk_threads_leave" gdk-threads-leave) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-6-17}
-  @subheading{Warning}
-    The function @sym{gdk-threads-leave} has been deprecated since version 3.6
-    and should not be used in newly-written code. All GDK and GTK+ calls should
-    be made from the main thread.
-
   @begin{short}
     Leaves a critical region begun with the function @fun{gdk-threads-enter}.
   @end{short}
+  @begin[Warning]{dictionary}
+    The function @sym{gdk-threads-leave} has been deprecated since version 3.6
+    and should not be used in newly-written code. All GDK and GTK+ calls should
+    be made from the main thread.
+  @end{dictionary}
   @see-function{gdk-threads-enter}")
 
 (export 'gdk-threads-leave)
@@ -448,8 +448,6 @@
   @end{short}
 
   See the function @fun{gdk-threads-add-idle-full}.
-
-  Since 2.12
   @see-function{gdk-threads-add-idle-full}"
   (%gdk-threads-add-idle-full +g-priority-default-idle+
                              (callback source-func-cb)
@@ -524,8 +522,7 @@
         g_source_remove (self->idle_id);
       G_OBJECT_CLASS (parent_class)->finalize (object);
    @}
-  @end{pre}
-  Since 2.12"
+  @end{pre}"
   (%gdk-threads-add-idle-full priority
                               (callback source-func-cb)
                               (glib::allocate-stable-pointer func)
@@ -553,8 +550,6 @@
   @end{short}
 
   See the function @fun{gdk-threads-add-timeout-full}.
-
-  Since 2.12
   @see-function{gdk-threads-add-timeout-full}"
   (%gdk-threads-add-timeout-full
                              +g-priority-default+
@@ -631,9 +626,7 @@
 
       G_OBJECT_CLASS (parent_class)->finalize (object);
    @}
-  @end{pre}
-
-  Since 2.12"
+  @end{pre}"
   (%gdk-threads-add-timeout-full priority
                                  interval
                                  (callback source-func-cb)
@@ -661,8 +654,6 @@
   @end{short}
 
   For details, see the function @fun{gdk-threads-add-timeout-full}.
-
-  Since 2.14
   @see-function{gdk-threads-add-timeout-full}"
   (%gdk-threads-add-timeout-seconds-full
                              +g-priority-default+
@@ -701,9 +692,7 @@
     second-granularity.
   @end{short}
   See the function @fun{g-timeout-add-seconds} for a discussion of why it
-  is a good idea to use this function if you do not need finer granularity.
-
-  Since 2.14"
+  is a good idea to use this function if you do not need finer granularity."
   (%gdk-threads-add-timeout-seconds-full
                              priority
                              interval

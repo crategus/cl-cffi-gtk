@@ -157,14 +157,39 @@
     @about-function{gdk-screen-get-active-window}
     @about-function{gdk-screen-get-window-stack}
   @end{section}
-  @begin[GdkDeviceManager]{section}
-    Functions for handling input devices.
+  @begin[GdkSeat]{section}
+    Object representing an user seat.
 
-    @about-class{gdk-device-manager}
-    @about-function{gdk-disable-multidevice}
-    @about-function{gdk-device-manager-get-display}
-    @about-function{gdk-device-manager-list-devices}
-    @about-function{gdk-device-manager-get-client-pointer}
+    @about-symbol{gdk-seat-capabilities}
+    @about-class{gdk-seat}
+
+    @about-generic{gdk-seat-display}
+
+    @about-function{gdk-seat-grab}
+    @about-function{gdk-seat-ungrab}
+    @about-function{gdk-seat-get-capabilities}
+    @about-function{gdk-seat-get-pointer}
+    @about-function{gdk-seat-get-keyboard}
+    @about-function{gdk-seat-get-slaves}
+  @end{section}
+  @begin[GdkMonitor]{section}
+    Object representing an output.
+
+    @about-symbol{gdk-subpixel-layout}
+    @about-class{gdk-monitor}
+
+    @about-generic{gdk-monitor-display}
+    @about-generic{gdk-monitor-geometry}
+    @about-generic{gdk-monitor-workarea}
+    @about-generic{gdk-monitor-width-mm}
+    @about-generic{gdk-monitor-height-mm}
+    @about-generic{gdk-monitor-manufacturer}
+    @about-generic{gdk-monitor-model}
+    @about-generic{gdk-monitor-scale-factor}
+    @about-generic{gdk-monitor-refresh-rate}
+    @about-generic{gdk-monitor-subpixel-layout}
+
+    @about-function{gdk-monitor-is-primary}
   @end{section}
   @begin[GdkDevice]{section}
     Object representing an input device
@@ -204,6 +229,17 @@
     @about-function{gdk-device-get-axis}
     @about-function{gdk-device-list-axes}
     @about-function{gdk-device-get-axis-value}
+  @end{section}
+  @begin[GdkDevicePad]{section}
+    Pad device interface.
+
+    @about-symbol{gdk-device-pad-feature}
+    @about-class{gdk-device-pad}
+
+    @about-function{gdk-device-pad-get-n-groups}
+    @about-function{gdk-device-pad-get-group-n-modes}
+    @about-function{gdk-device-pad-get-n-features}
+    @about-function{gdk-device-pad-get-feature-group}
   @end{section}
   @begin[Points and Rectangles]{section}
     Simple graphical data types.
@@ -470,6 +506,17 @@
     @about-function{gdk-frame-timings-get-refresh-interval}
     @about-function{gdk-frame-timings-get-predicted-presentation-time}
   @end{section}
+  @begin[GdkDrawingContext]{section}
+    Drawing context for GDK windows.
+
+    @about-class{gdk-drawing-context}
+
+    @about-generic{gdk-drawing-context-window}
+    @about-generic{gdk-drawing-context-clip}
+
+    @about-function{gdk-drawing-context-get-cairo-context}
+    @about-function{gdk-drawing-context-is-valid}
+  @end{section}
   @begin[OpenGL context]{section}
     @sym{gdk-gl-context} is an object representing the platform-specific OpenGL
     drawing context.
@@ -504,6 +551,8 @@
 
     @about-symbol{gdk-event-type}
     @about-symbol{gdk-event-mask}
+    @about-symbol{gdk-event-sequence}
+
     @about-variable{+gdk-current-time+}
     @about-variable{+gdk-priority-events+}
     @about-variable{+gdk-priority-redraw+}
@@ -512,6 +561,7 @@
     @about-variable{+gdk-button-primary+}
     @about-variable{+gdk-button-middle+}
     @about-variable{+gdk-button-secondary+}
+
     @about-function{gdk-events-pending}
     @about-function{gdk-event-peek}
     @about-function{gdk-event-get}
@@ -530,13 +580,17 @@
     @about-function{gdk-event-get-scroll-deltas}
     @about-function{gdk-event-get-state}
     @about-function{gdk-event-get-time}
-    @about-symbol{gdk-event-sequence}
+    @about-function{gdk-event-get-window}
+    @about-function{gdk-event-get-event-type}
     @about-function{gdk-event-get-event-sequence}
     @about-function{gdk-event-request-motions}
     @about-function{gdk-event-get-angle}
     @about-function{gdk-event-get-center}
     @about-function{gdk-events-get-distance}
     @about-function{gdk-event-triggers-context-menu}
+    @about-function{gdk-event-get-seat}
+    @about-function{gdk-event-get-scancode}
+    @about-function{gdk-event-get-pointer-emulated}
     @about-function{gdk-event-handler-set}
     @about-function{gdk-get-show-events}
     @about-function{gdk-set-show-events}
@@ -546,6 +600,8 @@
     @about-function{gdk-event-set-device}
     @about-function{gdk-event-get-source-device}
     @about-function{gdk-event-set-source-device}
+    @about-function{gdk-event-get-device-tool}
+    @about-function{gdk-event-set-device-tool}
     @about-function{gdk-setting-get}
   @end{section}
   @begin[Event Structures]{section}
@@ -600,6 +656,7 @@
 
     @about-class{gdk-keymap}
     @about-struct{gdk-keymap-key}
+
     @about-function{gdk-keymap-get-default}
     @about-function{gdk-keymap-get-for-display}
     @about-function{gdk-keymap-lookup-key}
@@ -610,11 +667,13 @@
     @about-function{gdk-keymap-have-bidi-layouts}
     @about-function{gdk-keymap-get-caps-lock-state}
     @about-function{gdk-keymap-get-num-lock-state}
+    @about-function{gdk-keymap-get-scroll-lock-state}
     @about-function{gdk-keymap-get-modifier-state}
     @about-function{gdk-keymap-add-virtual-modifiers}
     @about-function{gdk-keymap-map-virtual-modifiers}
     @about-symbol{gdk-modifier-intent}
     @about-function{gdk-keymap-get-modifier-mask}
+
     @about-function{gdk-keyval-name}
     @about-function{gdk-keyval-from-name}
     @about-function{gdk-keyval-convert-case}
@@ -677,21 +736,27 @@
   @begin[Drag And Drop]{section}
     Functions for controlling drag and drop handling.
 
+    @about-symbol{gdk-drag-cancel-reason}
     @about-symbol{gdk-drag-protocol}
     @about-symbol{gdk-drag-action}
     @about-class{gdk-drag-context}
+
     @about-function{gdk-drag-get-selection}
     @about-function{gdk-drag-abort}
     @about-function{gdk-drop-reply}
     @about-function{gdk-drag-drop}
+    @about-function{gdk-drag-drop-done}
     @about-function{gdk-drag-find-window-for-screen}
     @about-function{gdk-drag-begin}
     @about-function{gdk-drag-begin-for-device}
+    @about-function{gdk-drag-begin-from-point}
     @about-function{gdk-drag-motion}
     @about-function{gdk-drop-finish}
     @about-function{gdk-drag-status}
     @about-function{gdk-drag-drop-succeeded}
+
     @about-function{gdk-window-get-drag-protocol}
+
     @about-function{gdk-drag-context-get-actions}
     @about-function{gdk-drag-context-get-suggested-action}
     @about-function{gdk-drag-context-get-selected-action}
@@ -701,6 +766,9 @@
     @about-function{gdk-drag-context-get-source-window}
     @about-function{gdk-drag-context-get-dest-window}
     @about-function{gdk-drag-context-get-protocol}
+    @about-function{gdk-drag-context-get-drag-window}
+    @about-function{gdk-drag-context-set-hotspot}
+    @about-function{gdk-drag-context-manage-dnd}
   @end{section}
   @begin[Properties and Atoms]{section}
     Functions to manipulate properties on windows.
@@ -935,6 +1003,7 @@
     @about-function{gdk-pango-layout-line-get-clip-region}
     @about-function{gdk-pango-context-get}
     @about-function{gdk-pango-context-get-for-screen}
+    @about-function{gdk-pango-context-get-for-display}
   @end{section}
   @begin[Cairo Interaction]{section}
     Functions to support using Cairo.
@@ -950,8 +1019,10 @@
     for drawing operations.
 
     @about-function{gdk-window-create-similar-surface}
+    @about-function{gdk-window-create-similar-image-surface}
     @about-function{gdk-cairo-create}
     @about-function{gdk-cairo-get-clip-rectangle}
+    @about-function{gdk-cairo-get-drawing-context}
     @about-function{gdk-cairo-set-source-color}
     @about-function{gdk-cairo-set-source-rgba}
     @about-function{gdk-cairo-set-source-pixbuf}
@@ -959,6 +1030,8 @@
     @about-function{gdk-cairo-rectangle}
     @about-function{gdk-cairo-region}
     @about-function{gdk-cairo-region-create-from-surface}
+    @about-function{gdk-cairo-surface-create-from-pixbuf}
+    @about-function{gdk-cairo-draw-from-gl}
   @end{section}
   @begin[X Window System Interaction]{section}
     X backend-specific functions
@@ -967,8 +1040,10 @@
     Startup notification for applications.
 
     @about-class{gdk-app-launch-context}
+
+    @about-generic{gdk-app-launch-context-display}
+
     @about-function{gdk-app-launch-context-new}
-    @about-function{gdk-app-launch-context-set-display}
     @about-function{gdk-app-launch-context-set-screen}
     @about-function{gdk-app-launch-context-set-desktop}
     @about-function{gdk-app-launch-context-set-timestamp}
@@ -986,6 +1061,15 @@
       @about-function{gdk-color-equal}
       @about-function{gdk-color-hash}
       @about-function{gdk-color-to-string}
+    @end{subsection}
+    @begin[GdkDeviceManager]{subsection}
+      Functions for handling input devices.
+
+      @about-class{gdk-device-manager}
+      @about-function{gdk-disable-multidevice}
+      @about-function{gdk-device-manager-get-display}
+      @about-function{gdk-device-manager-list-devices}
+      @about-function{gdk-device-manager-get-client-pointer}
     @end{subsection}
   @end{section}")
 

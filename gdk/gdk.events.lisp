@@ -2,7 +2,7 @@
 ;;; gdk.events.lisp
 ;;;
 ;;; The documentation of this file is taken from the GDK 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GDK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GDK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -31,10 +31,11 @@
 ;;;
 ;;;     Functions for handling events from the window system
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GdkEventType --> gdk.event-structures.lisp
 ;;;     GdkEventMask --> gdk.event-structures.lisp
+;;;     GdkEventSequence  --> gdk.event-structures.lisp
 ;;;
 ;;;     GDK_CURRENT_TIME
 ;;;     GDK_PRIORITY_EVENTS
@@ -44,6 +45,8 @@
 ;;;     GDK_BUTTON_PRIMARY
 ;;;     GDK_BUTTON_MIDDLE
 ;;;     GDK_BUTTON_SECONDARY
+;;;
+;;; Functions
 ;;;
 ;;;     gdk_events_pending
 ;;;     gdk_event_peek
@@ -61,20 +64,21 @@
 ;;;     gdk_event_get_root_coords
 ;;;     gdk_event_get_scroll_direction
 ;;;     gdk_event_get_scroll_deltas
+;;;     gdk_event_is_scroll_stop_event
 ;;;     gdk_event_get_state
 ;;;     gdk_event_get_time
-;;;
-;;;     GdkEventSequence  --> gdk.event-structures.lisp
-;;;
+;;;     gdk_event_get_window
+;;;     gdk_event_get_event_type
 ;;;     gdk_event_get_event_sequence
 ;;;     gdk_event_request_motions
 ;;;     gdk_events_get_angle
 ;;;     gdk_events_get_center
 ;;;     gdk_events_get_distance
 ;;;     gdk_event_triggers_context_menu
-;;;
+;;;     gdk_event_get_seat
+;;;     gdk_event_get_scancode
+;;;     gdk_event_get_pointer_emulated
 ;;;     gdk_event_handler_set
-;;;
 ;;;     gdk_get_show_events
 ;;;     gdk_set_show_events
 ;;;     gdk_event_set_screen
@@ -83,7 +87,8 @@
 ;;;     gdk_event_set_device
 ;;;     gdk_event_get_source_device
 ;;;     gdk_event_set_source_device
-;;;
+;;;     gdk_event_get_device_tool
+;;;     gdk_event_set_device_tool
 ;;;     gdk_setting_get
 ;;;
 ;;; Description
@@ -297,8 +302,6 @@
   @begin{short}
     Creates a new event of the given type. All fields are set to 0.
   @end{short}
-
-  Since 2.2
   @see-class{gdk-event}
   @see-symbol{gdk-event-type}"
   (type gdk-event-type))
@@ -552,6 +555,29 @@
 (export 'gdk-event-get-scroll-deltas)
 
 ;;; ----------------------------------------------------------------------------
+;;; gdk_event_is_scroll_stop_event ()
+;;;
+;;; gboolean
+;;; gdk_event_is_scroll_stop_event (const GdkEvent *event);
+;;;
+;;; Check whether a scroll event is a stop scroll event. Scroll sequences with
+;;; smooth scroll information may provide a stop scroll event once the
+;;; interaction with the device finishes, e.g. by lifting a finger. This stop
+;;; scroll event is the signal that a widget may trigger kinetic scrolling based
+;;; on the current velocity.
+;;;
+;;; Stop scroll events always have a a delta of 0/0.
+;;;
+;;; event :
+;;;     a GdkEvent
+;;;
+;;; Returns :
+;;;     TRUE if the event is a scroll stop event
+;;;
+;;; Since 3.20
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; gdk_event_get_state ()
 ;;; ----------------------------------------------------------------------------
 
@@ -601,6 +627,39 @@
 ;;; Implementation moved to gtk.event-structures.lisp
 
 ;;; ----------------------------------------------------------------------------
+;;; gdk_event_get_window ()
+;;;
+;;; GdkWindow *
+;;; gdk_event_get_window (const GdkEvent *event);
+;;;
+;;; Extracts the GdkWindow associated with an event.
+;;;
+;;; event :
+;;;     a GdkEvent
+;;;
+;;; Returns :
+;;;     The GdkWindow associated with the event.
+;;;
+;;; Since 3.10
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gdk_event_get_event_type ()
+;;;
+;;; GdkEventType gdk_event_get_event_type (const GdkEvent *event);
+;;;
+;;; Retrieves the type of the event.
+;;;
+;;; event :
+;;;     a GdkEvent
+;;;
+;;; Returns :
+;;;     a GdkEventType
+;;;
+;;; Since 3.10
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; gdk_event_get_event_sequence ()
 ;;; ----------------------------------------------------------------------------
 
@@ -616,7 +675,7 @@
     @class{gdk-event-sequence} to which the @arg{event} belongs.
   @end{short}
   Otherwise, return @code{nil}.
-  
+
   Since 3.4
   @see-class{gdk-event-sequence}"
   (event (g-boxed-foreign gdk-event)))
@@ -650,8 +709,6 @@
      gdk_event_request_motions (motion_event); /* handles is_hint events */
    @}
   @end{pre}
-
-  Since 2.12
   @see-function{gdk-window-get-pointer}"
   (event (g-boxed-foreign gdk-event)))
 
@@ -783,6 +840,55 @@
       (funcall (glib::get-stable-pointer-value user-data) event)
     (return-from-callback () nil)))
 
+;; -----------------------------------------------------------------------------
+;;; gdk_event_get_seat ()
+;;;
+;;; GdkSeat * gdk_event_get_seat (const GdkEvent *event);
+;;;
+;;; Returns the GdkSeat this event was generated for.
+;;;
+;;; event :
+;;;     a GdkEvent
+;;;
+;;; Returns :
+;;;     The GdkSeat of this event.
+;;;
+;;; Since 3.20
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gdk_event_get_scancode ()
+;;;
+;;; int gdk_event_get_scancode (GdkEvent *event);
+;;;
+;;; Gets the keyboard low-level scancode of a key event.
+;;;
+;;; This is usually hardware_keycode. On Windows this is the high word of
+;;; WM_KEY{DOWN,UP} lParam which contains the scancode and some extended flags.
+;;;
+;;; event :
+;;;     a GdkEvent
+;;;
+;;; Returns :
+;;;     The associated keyboard scancode or 0
+;;;
+;;; Since 3.22
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gdk_event_get_pointer_emulated ()
+;;;
+;;; gboolean gdk_event_get_pointer_emulated (GdkEvent *event);
+;;;
+;;; Returns whether this event is an 'emulated' pointer event (typically from a
+;;; touch event), as opposed to a real one.
+;;;
+;;; Returns :
+;;;     TRUE if this event is emulated
+;;;
+;;; Since 3.22
+;;; ----------------------------------------------------------------------------
+
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_event_handler_set ()
 ;;; ----------------------------------------------------------------------------
@@ -854,8 +960,6 @@
   @end{short}
   The event must have been allocated by GTK+, for instance, by the function
   @fun{gdk-event-copy}.
-
-  Since 2.2
   @see-class{gdk-event}
   @see-class{gdk-screen}"
   (event (g-boxed-foreign gdk-event))
@@ -879,8 +983,6 @@
   as mouse events, it is the screen where the pointer was when the event occurs
   - that is, the screen which has the root window to which event->motion.x_root
   and event->motion.y_root are relative.
-
-  Since 2.2
   @see-class{gdk-event}
   @see-class{gdk-screen}"
   (event (g-boxed-foreign gdk-event)))
@@ -984,6 +1086,46 @@
   (device (g-object gdk-device)))
 
 (export 'gdk-event-set-source-device)
+
+;;; ----------------------------------------------------------------------------
+;;; gdk_event_get_device_tool ()
+;;;
+;;; GdkDeviceTool * gdk_event_get_device_tool (const GdkEvent *event);
+;;;
+;;; If the event was generated by a device that supports different tools (eg. a
+;;; tablet), this function will return a GdkDeviceTool representing the tool
+;;; that caused the event. Otherwise, NULL will be returned.
+;;;
+;;; Note: the GdkDeviceTool<!-- -->s will be constant during the application
+;;; lifetime, if settings must be stored persistently across runs, see
+;;; gdk_device_tool_get_serial()
+;;;
+;;; event :
+;;;     a GdkEvent
+;;;
+;;; Returns :
+;;;     The current device tool, or NULL.
+;;;
+;;; Since 3.22
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gdk_event_set_device_tool ()
+;;;
+;;; void
+;;; gdk_event_set_device_tool (GdkEvent *event,
+;;;                            GdkDeviceTool *tool);
+;;;
+;;; Sets the device tool for this event, should be rarely used.
+;;;
+;;; event :
+;;;     a GdkEvent
+;;;
+;;; tool :
+;;;     tool to set on the event, or NULL.
+;;;
+;;; Since 3.22
+;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_setting_get ()

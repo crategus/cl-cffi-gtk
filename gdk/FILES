@@ -10,14 +10,10 @@ List of files for the GDK Library
   gdk.display-manager.lisp  - GdkDisplayManager      - GDK 3.16
   gdk.display.lisp          - GdkDisplay             - GDK 3.16
   gdk.screen.lisp           - GdkScreen              - GDK 3.16 &
- 
-  GdkSeat — Object representing an user seat
-  GdkMonitor — Object representing an output    
-
+  gdk.seat.lisp             - GdkSeat                - GDK 3.24 &
+  gdk.monitor.lisp          - GdkMonitor             - GDK 3.24 &
   gdk.device.lisp           - GdkDevice              - GDK 3.16 &
-
-  GtkDevicePad — Pad device interface
-
+  gdk.device-pad.lisp       - GtkDevicePad           - GDK 3.24 &
   gdk.rectangle.lisp        - Points and Rectangles  - GDK 3.16
   gdk.pixbuf.lisp           - Pixbufs                - GDK 3.16
   gdk.rgba.lisp             - RGBA Colors            - GDK 3.16
@@ -26,29 +22,25 @@ List of files for the GDK Library
   gdk.window.lisp           - Windows                - GDK 3.16 &
   gdk.frame-clock.lisp      - Frame clock            - GDK 3.16 &
   gdk.frame-timings.lisp    - Frame timings          - GDK 3.16 &
-
-  GdkDrawingContext — Drawing context for GDK windows
-
+  gdk.drawing-context.lisp  - GdkDrawingContext      - Gdk 3.24
   gdk.gl-context.lisp       - OpenGL context         - GDK 3.16 &
-
-  gdk.events.lisp           - Events                 - GDK 3.6.4 &
+  gdk.events.lisp           - Events                 - GDK 3.24 &
   gdk.event-structures.lisp - Event Structures       - GDK 3.24
-
-  gdk.key-values.lisp       - Key Values             - GDK 3.6.4
-  gdk.selections.lisp       - Selections             - GDK 3.6.4
-  gdk.drag-and-drop-lisp    - Drag And Drop          - GDK 3.6.4 &
-  gdk.properties.lisp       - Properties and Atoms   - GDK 3.6.4 &
-  gdk.threads.lisp          - Threads                - GDK 3.6.4 &
-  gdk.pango.lisp            - Pango Interaction      - GDK 3.6.4
-  gdk.cairo.lisp            - Cairo Interaction      - GDK 3.6.4 &
+  gdk.key-values.lisp       - Key Values             - GDK 3.24
+  gdk.selections.lisp       - Selections             - GDK 3.24
+  gdk.drag-and-drop-lisp    - Drag And Drop          - GDK 3.24 &
+  gdk.properties.lisp       - Properties and Atoms   - GDK 3.24 &
+  gdk.threads.lisp          - Threads                - GDK 3.24 &
+  gdk.pango.lisp            - Pango Interaction      - GDK 3.24 &
+  gdk.cairo.lisp            - Cairo Interaction      - GDK 3.24 &
 
   not implemented           - X Window System Interaction
   not implemented           - Wayland Interaction
 
-  gdk.app.lisp              - Application launching  - GDK 3.6.4
+  gdk.app.lisp              - Application launching  - GDK 3.24
 
  II. Deprecated
 
-  gdk.color.lisp            - Colors                 - GDK 3.16 **
+  gdk.color.lisp            - Colors                 - GDK 3.16
   gdk.device-manager.lisp   - GdkDeviceManger        - GDK 3.16
 
