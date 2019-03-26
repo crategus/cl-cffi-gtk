@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gdk.display.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GDK 3 Reference Manual
-;;; Version 3.16 and modified to document the Lisp binding to the GDK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GDK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2015 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,22 +29,24 @@
 ;;;
 ;;; GdkDisplay
 ;;;
-;;; Controls a set of GdkScreens and their associated input devices
+;;;     Controls a set of GdkScreens and their associated input devices
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GdkDisplay
+;;;
+;;; Functions
 ;;;
 ;;;     gdk_display_open
 ;;;     gdk_display_get_default
 ;;;     gdk_display_get_name
-;;;     gdk_display_get_n_screens                     * deprecated *
-;;;     gdk_display_get_screen
+;;;     gdk_display_get_n_screens                     * deprecated
+;;;     gdk_display_get_screen                        * deprecated
 ;;;     gdk_display_get_default_screen
-;;;     gdk_display_get_device_manager
-;;;     gdk_display_pointer_ungrab                    * deprecated *
-;;;     gdk_display_keyboard_ungrab                   * deprecated *
-;;;     gdk_display_pointer_is_grabbed                * deprecated *
+;;;     gdk_display_get_device_manager                * deprecated
+;;;     gdk_display_pointer_ungrab                    * deprecated
+;;;     gdk_display_keyboard_ungrab                   * deprecated
+;;;     gdk_display_pointer_is_grabbed                * deprecated
 ;;;     gdk_display_device_is_grabbed
 ;;;     gdk_display_beep
 ;;;     gdk_display_sync
@@ -60,10 +59,10 @@
 ;;;     gdk_display_has_pending
 ;;;     gdk_display_set_double_click_time
 ;;;     gdk_display_set_double_click_distance
-;;;     gdk_display_get_pointer                       * deprecated *
-;;;     gdk_display_list_devices                      * deprecated *
-;;;     gdk_display_get_window_at_pointer             * deprecated *
-;;;     gdk_display_warp_pointer                      * deprecated *
+;;;     gdk_display_get_pointer                       * deprecated
+;;;     gdk_display_list_devices                      * deprecated
+;;;     gdk_display_get_window_at_pointer             * deprecated
+;;;     gdk_display_warp_pointer                      * deprecated
 ;;;     gdk_display_supports_cursor_color
 ;;;     gdk_display_supports_cursor_alpha
 ;;;     gdk_display_get_default_cursor_size
@@ -75,9 +74,31 @@
 ;;;     gdk_display_store_clipboard
 ;;;     gdk_display_supports_shapes
 ;;;     gdk_display_supports_input_shapes
-;;;     gdk_display_supports_composite
+;;;     gdk_display_supports_composite                * deprecated
 ;;;     gdk_display_get_app_launch_context
 ;;;     gdk_display_notify_startup_complete
+;;;
+;;;     gdk_display_get_default_seat
+;;;     gdk_display_list_seats
+;;;     gdk_display_get_n_monitors
+;;;     gdk_display_get_monitor
+;;;     gdk_display_get_primary_monitor
+;;;     gdk_display_get_monitor_at_point
+;;;     gdk_display_get_monitor_at_window
+;;;
+;;; Signals
+;;;
+;;;     void  closed            Run Last
+;;;     void  monitor-added     Run Last
+;;;     void  monitor-removed   Run Last
+;;;     void  opened            Run Last
+;;;     void  seat-added        Run Last
+;;;     void  seat-removed      Run Last
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GdkDisplay
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gdk)
@@ -95,7 +116,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gdk-display 'type)
- "@version{2013-6-17}
+ "@version{2019-3-26}
   @begin{short}
     @sym{gdk-display} objects purpose are two fold:
     @begin{itemize}
@@ -117,18 +138,40 @@
   you can obtain using the function @fun{gdk-display-get-device-manager}.
   @begin[Signal Details]{dictionary}
     @subheading{The \"closed\" signal}
-      @begin{pre}
- lambda (display is-error)   : Run Last
-      @end{pre}
-      The \"closed\" signal is emitted when the connection to the windowing
-      system for @arg{display} is closed.
-      @begin[code]{table}
-        @entry[display]{The @sym{gdk-display} object on which the signal is
-          emitted.}
-        @entry[is-error]{@em{True} if the @arg{display} was closed due to an
-          error.}
-      @end{table}
-      Since 2.2
+    @begin{pre}
+ lambda (display is-error)    : Run Last
+    @end{pre}
+    The \"closed\" signal is emitted when the connection to the windowing
+    system for @arg{display} is closed.
+    @begin[code]{table}
+      @entry[display]{The @sym{gdk-display} object on which the signal is
+        emitted.}
+      @entry[is-error]{@em{True} if the @arg{display} was closed due to an
+        error.}
+    @end{table}
+    @subheading{The \"monitor-added\" signal}
+    @begin{pre}
+ lambda (display monitor)    : Run Last
+    @end{pre}
+    The \"monitor-addes\" signal is emitted whenever a monitor is added.
+    @begin[code]{table}
+      @entry[display]{The @sym{gdk-display} object on which the signal is
+        emitted.}
+      @entry[monitor]{The monitor that was just added.}
+    @end{table}
+    Since 3.22
+
+    @subheading{The \"monitor-removed\" signal}
+    @begin{pre}
+ lambda (display monitor)    : Run Last
+    @end{pre}
+    The \"monitor-removed\" signal is emitted whenever a monitor is removed.
+    @begin[code]{table}
+      @entry[display]{The @sym{gdk-display} object on which the signal is
+        emitted.}
+      @entry[monitor]{The monitor that was just removed.}
+    @end{table}
+    Since 3.22
 
     @subheading{The \"opened\" signal}
       @begin{pre}
@@ -140,6 +183,31 @@
         @entry[display]{The @sym{gdk-display} object on which the signal is
           emitted.}
       @end{table}
+    @subheading{The \"seat-added\" signal}
+    @begin{pre}
+ lambda (display seat)    : Run Last
+    @end{pre}
+    The \"seat-added\" signal is emitted whenever a new seat is made known to
+    the windowing system.
+    @begin[code]{table}
+      @entry[display]{The @sym{gdk-display} object on which the signal is
+        emitted.}
+      @entry[seat]{The seat that was just added.}
+    @end{table}
+    Since 3.20
+
+    @subheading{The \"seat-removed\" signal}
+    @begin{pre}
+ lambda (display seat)    : Run Last
+    @end{pre}
+    The \"seat-removed\" signal is emitted whenever a seat is removed by the
+    windowing system.
+    @begin[code]{table}
+      @entry[display]{The @sym{gdk-display} object on which the signal is
+        emitted.}
+      @entry[seat]{The seat that was just removed.}
+    @end{table}
+    Since 3.20
   @end{dictionary}
   @see-class{gdk-screen}
   @see-class{gdk-device-manager}
@@ -158,8 +226,6 @@
     opened.
   @end{return}
   @short{Opens a display named by @arg{display-name}.}
-
-  Since 2.2
   @see-class{gdk-display}"
   (display-name :string))
 
@@ -181,8 +247,6 @@
     for the call @code{(gdk-display-manager-get-default-display
     (gdk-display-manager-get))}.
   @end{short}
-
-  Since 2.2
   @see-class{gdk-display}
   @see-function{gdk-display-manager-get}
   @see-function{gdk-display-manager-get-default-display}")
@@ -202,8 +266,6 @@
     should not be modified or freed.
   @end{return}
   @short{Gets the name of the @arg{display}.}
-
-  Since 2.2
   @see-class{gdk-display}"
   (display (g-object gdk-display)))
 
@@ -218,14 +280,12 @@
  "@version{2015-12-30}
   @argument[display]{a @class{gdk-display} object}
   @return{Number of screens.}
-  @subheading{Warning}
+  @short{Gets the number of screens managed by the @arg{display}.}
+  @begin[Warning]{dictionary}
     The function @sym{gdk-display-get-n-screens} has been deprecated since
     version 3.10 and should not be used in newly-written code. The number of
     screens is always 1.
-
-  @short{Gets the number of screens managed by the @arg{display}.}
-
-  Since 2.2
+  @end{dictionary}
   @see-class{gdk-display}"
   (display (g-object gdk-display)))
 
@@ -242,9 +302,13 @@
   @argument[screen-num]{the screen number}
   @return{The @class{gdk-screen} object.}
   @short{Returns a screen object for one of the screens of the @arg{display}.}
-
-  Since 2.2
-  @see-class{gdk-display}"
+  @begin[Warning]{dictionary}
+    The function @sym{gdk-display-get-screen} has been deprecated since version
+    3.20 and should not be used in newly-written code. There is only one screen;
+    use the function @fun{gdk-display-get-default-screen} to get it.
+  @end{dictionary}
+  @see-class{gdk-display}
+  @see-function{gdk-display-get-default-screen}"
   (display (g-object gdk-display))
   (screen-num :int))
 
@@ -261,8 +325,6 @@
   @argument[display]{a @class{gdk-display} object}
   @return{The default @class{gdk-screen} object for @arg{display}.}
   @short{Get the default @class{gdk-screen} object for @arg{display}.}
-
-  Since 2.2
   @see-class{gdk-display}
   @see-class{gdk-screen}"
   (display (g-object gdk-display)))
@@ -285,10 +347,16 @@
   @begin{short}
     Returns the @class{gdk-device-manager} object associated to @arg{display}.
   @end{short}
-
+  @begin[Warning]{dictionary}
+    The function @sym{gdk-display-get-device-manager} has been deprecated since
+    version 3.20. and should not be used in newly-written code. Use the function
+    @fun{gdk-display-get-default-seat} and @class{gdk-seat} operations.
+  @end{dictionary}
   Since 3.0
   @see-class{gdk-display}
-  @see-class{gdk-device-manager}"
+  @see-class{gdk-device-manager}
+  @see-class{gdk-seat}
+  @see-function{gdk-display-get-default-seat}"
   (display (g-object gdk-display)))
 
 (export 'gdk-display-get-device-manager)
@@ -387,8 +455,6 @@
  "@version{2013-4-4}
   @argument[display]{a @class{gdk-display} object}
   @short{Emits a short beep on @arg{display}.}
-
-  Since 2.2
   @see-class{gdk-display}"
   (display (g-object gdk-display)))
 
@@ -413,8 +479,6 @@
 
   This is most useful for X11. On windowing systems where requests are handled
   synchronously, this function will do nothing.
-
-  Since 2.2
   @see-class{gdk-display}
   @see-function{gdk-error-trap-pop}"
   (display (g-object gdk-display)))
@@ -440,8 +504,6 @@
 
   This is most useful for X11. On windowing systems where requests are handled
   synchronously, this function will do nothing.
-
-  Since 2.4
   @see-class{gdk-display}"
   (display (g-object gdk-display)))
 
@@ -459,8 +521,6 @@
     Closes the connection to the windowing system for the given @arg{display},
     and cleans up associated resources.
   @end{short}
-
-  Since 2.2
   @see-class{gdk-display}"
   (display (g-object gdk-display)))
 
@@ -476,8 +536,6 @@
   @argument[display]{a @class{gdk-display} object}
   @return{@em{True} if the @arg{display} is closed.}
   @short{Finds out if the @arg{display} has been closed.}
-
-  Since 2.22
   @see-class{gdk-display}"
   (display (g-object gdk-display)))
 
@@ -500,8 +558,6 @@
     Gets the next @class{gdk-event} event to be processed for @arg{display},
     fetching events from the windowing system if necessary.
   @end{short}
-
-  Since 2.2
   @see-class{gdk-display}
   @see-class{gdk-event}"
   (display (g-object gdk-display)))
@@ -527,8 +583,6 @@
   @end{short}
   Note that this function will not get more events from the windowing system. It
   only checks the events that have already been moved to the GDK event queue.
-
-  Since 2.2
   @see-class{gdk-display}
   @see-class{gdk-event}"
   (display (g-object gdk-display)))
@@ -548,8 +602,6 @@
     Appends a copy of the given @arg{event} onto the front of the event queue
     for @arg{display}.
   @end{short}
-
-  Since 2.2
   @see-class{gdk-display}"
   (display (g-object gdk-display))
   (event (g-boxed-foreign gdk-event)))
@@ -591,8 +643,6 @@
     double click and result in a @code{:2button-press} event). Applications
     should not set this, it is a global user configured setting.
   @end{short}
-
-  Since 2.2
   @see-class{gdk-display}"
   (display (g-object gdk-display))
   (msec :uint))
@@ -611,12 +661,10 @@
   @argument[distance]{distance in pixels}
   @begin{short}
     Sets the double click distance (two clicks within this distance count as a
-    double click and result in a @code{:2button-press} event). See also the
-    function @fun{gdk-display-set-double-click-time}. Applications should not
-    set this, it is a global user-configured setting.
+    double click and result in a @code{:2button-press} event).
   @end{short}
-
-  Since 2.4
+  See also the function @fun{gdk-display-set-double-click-time}. Applications
+  should not set this, it is a global user-configured setting.
   @see-class{gdk-display}
   @see-function{gdk-display-set-double-click-time}"
   (display (g-object gdk-display))
@@ -768,8 +816,6 @@
     Returns @em{true} if multicolored cursors are supported on @arg{display}.
     Otherwise, cursors have only a forground and a background color.
   @end{short}
-
-  Since 2.4
   @see-class{gdk-display}"
   (display (g-object gdk-display)))
 
@@ -789,8 +835,6 @@
     Returns @em{true} if cursors can use an 8bit alpha channel on @arg{display}.
     Otherwise, cursors are restricted to bilevel alpha (i. e. a mask).
   @end{short}
-
-  Since 2.4
   @see-class{gdk-display}"
   (display (g-object gdk-display)))
 
@@ -807,8 +851,6 @@
   @argument[display]{a @class{gdk-display} object}
   @return{The default cursor size.}
   @short{Returns the default size to use for cursors on @arg{display}.}
-
-  Since 2.4
   @see-class{gdk-display}"
   (display (g-object gdk-display)))
 
@@ -833,8 +875,6 @@
     @code{height} -- the maximal cursor height
   @end{return}
   @short{Gets the maximal size to use for cursors on @arg{display}.}
-
-  Since 2.4
   @see-class{gdk-display}"
   (with-foreign-objects ((width :uint)
                          (height :uint))
@@ -859,8 +899,6 @@
     @arg{display}. This window is implicitly created by GDK. See the function
     @fun{gdk-window-set-group}.
   @end{short}
-
-  Since 2.4
   @see-class{gdk-display}
   @see-function{gdk-window-set-group}"
   (display (g-object gdk-display)))
@@ -881,8 +919,6 @@
     Returns whether @class{gdk-event-owner-change} events will be sent when the
     owner of a selection changes.
   @end{short}
-
-  Since 2.6
   @see-class{gdk-display}"
   (display (g-object gdk-display)))
 
@@ -904,8 +940,6 @@
     Request @class{gdk-event-owner-change} events for ownership changes of the
     @arg{selection} named by the given atom.
   @end{short}
-
-  Since 2.6
   @see-class{gdk-display}"
   (display (g-object gdk-display))
   (selection gdk-atom-as-string))
@@ -927,8 +961,6 @@
     i. e. if it is possible to store the clipboard data after an application has
     quit. On X11 this checks if a clipboard daemon is running.
   @end{short}
-
-  Since 2.6
   @see-class{gdk-display}"
   (display (g-object gdk-display)))
 
@@ -962,8 +994,6 @@
     clipboard specification, available at
     @a[http://www.freedesktop.org/wiki/ClipboardManager]{freedesktop.org}.
   @end{short}
-
-  Since 2.6
   @see-class{gdk-display}"
   (let ((n-targets (length targets)))
     (with-foreign-object (targets-ptr 'gdk-atom-as-string n-targets)
@@ -992,8 +1022,6 @@
     Returns @em{true} if the function @fun{gdk-window-shape-combine-region} can
     be used to create shaped windows on @arg{display}.
   @end{short}
-
-  Since 2.10
   @see-class{gdk-display}
   @see-function{gdk-window-shape-combine-region}"
   (display (g-object gdk-display)))
@@ -1015,8 +1043,6 @@
     @fun{gdk-window-input-shape-combine-region} can be used to modify the input
     shape of windows on @arg{display}.
   @end{short}
-
-  Since 2.10
   @see-class{gdk-display}
   @see-function{gdk-window-input-shape-combine-region}"
   (display (g-object gdk-display)))
@@ -1030,7 +1056,7 @@
 (defcfun ("gdk_display_supports_composite" gdk-display-supports-composite)
     :boolean
  #+cl-cffi-gtk-documentation
- "@version{2013-4-4}
+ "@version{2019-3-26}
   @argument[display]{a @class{gdk-display} object}
   @return{@em{True} if windows may be composited.}
   @begin{short}
@@ -1040,8 +1066,11 @@
 
   Currently this only works on X11 with XComposite and XDamage extensions
   available.
-
-  Since 2.12
+  @begin[Warning]{dictionary}
+    The function @sym{gdk-display-supports-composite} has been deprecated since
+    version 3.16 and should not be used in newly-written code. Compositing is an
+    outdated technology that only ever worked on X11.
+  @end{dictionary}
   @see-class{gdk-display}
   @see-function{gdk-window-set-composited}"
   (display (g-object gdk-display)))
@@ -1100,5 +1129,146 @@
   (startup-id :string))
 
 (export 'gdk-display-notify-startup-complete)
+
+;;; ----------------------------------------------------------------------------
+;;; gdk_display_get_default_seat ()
+;;;
+;;; GdkSeat * gdk_display_get_default_seat (GdkDisplay *display);
+;;;
+;;; Returns the default GdkSeat for this display.
+;;;
+;;; display :
+;;;     a GdkDisplay
+;;;
+;;; Returns :
+;;;     the default seat.
+;;;
+;;; Since: 3.20
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gdk_display_list_seats ()
+;;;
+;;; GList * gdk_display_list_seats (GdkDisplay *display);
+;;;
+;;; Returns the list of seats known to display .
+;;;
+;;; display :
+;;;     a GdkDisplay
+;;;
+;;; Returns :
+;;;     the list of seats known to the GdkDisplay.
+;;;
+;;; Since: 3.20
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gdk_display_get_n_monitors ()
+;;;
+;;; int gdk_display_get_n_monitors (GdkDisplay *display);
+;;;
+;;; Gets the number of monitors that belong to display .
+;;;
+;;; The returned number is valid until the next emission of the “monitor-added”
+;;; or “monitor-removed” signal.
+;;;
+;;; display :
+;;;     a GdkDisplay
+;;;
+;;; Returns :
+;;;     the number of monitors
+;;;
+;;; Since: 3.22
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gdk_display_get_monitor ()
+;;;
+;;; GdkMonitor *
+;;; gdk_display_get_monitor (GdkDisplay *display, int monitor_num);
+;;;
+;;; Gets a monitor associated with this display.
+;;;
+;;; display :
+;;;     a GdkDisplay
+;;;
+;;; monitor_num :
+;;;     number of the monitor
+;;;
+;;; Returns :
+;;;     the GdkMonitor, or NULL if monitor_num is not a valid monitor number.
+;;;
+;;; Since: 3.22
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gdk_display_get_primary_monitor ()
+;;;
+;;; GdkMonitor * gdk_display_get_primary_monitor (GdkDisplay *display);
+;;;
+;;; Gets the primary monitor for the display.
+;;;
+;;; The primary monitor is considered the monitor where the “main desktop”
+;;; lives. While normal application windows typically allow the window manager
+;;; to place the windows, specialized desktop applications such as panels should
+;;; place themselves on the primary monitor.
+;;;
+;;; display :
+;;;     a GdkDisplay
+;;;
+;;; Returns :
+;;;     the primary monitor, or NULL if no primary monitor is configured by the
+;;;     user.
+;;;
+;;; Since: 3.22
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gdk_display_get_monitor_at_point ()
+;;;
+;;; GdkMonitor *
+;;; gdk_display_get_monitor_at_point (GdkDisplay *display,
+;;;                                   int x,
+;;;                                   int y);
+;;;
+;;; Gets the monitor in which the point (x , y ) is located, or a nearby monitor
+;;; if the point is not in any monitor.
+;;;
+;;; display :
+;;;     a GdkDisplay
+;;;
+;;; x :
+;;;     the x coordinate of the point
+;;;
+;;; y :
+;;;     the y coordinate of the point
+;;;
+;;; Returns :
+;;;     the monitor containing the point.
+;;;
+;;; Since: 3.22
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gdk_display_get_monitor_at_window ()
+;;;
+;;; GdkMonitor *
+;;; gdk_display_get_monitor_at_window (GdkDisplay *display,
+;;;                                    GdkWindow *window);
+;;;
+;;; Gets the monitor in which the largest area of window resides, or a monitor
+;;; close to window if it is outside of all monitors.
+;;;
+;;; display :
+;;;     a GdkDisplay
+;;;
+;;; window :
+;;;     a GdkWindow
+;;;
+;;; Returns :
+;;;     the monitor with the largest overlap with window .
+;;;
+;;; Since: 3.22
+;;; ----------------------------------------------------------------------------
 
 ;;; --- End of file gdk.display.lisp -------------------------------------------

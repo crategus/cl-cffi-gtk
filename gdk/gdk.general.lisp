@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gdk.general.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>
-;;;
 ;;; The documentation of this file is taken from the GDK 3 Reference Manual
 ;;; Version 3.16 and modified to document the Lisp binding to the GDK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2015 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -40,37 +37,32 @@
 ;;;
 ;;; Functions
 ;;;
-;;;     gdk_init                                 * not implemented *
-;;;     gdk_init_check                           * not implemented *
-;;;     gdk_parse_args                           * not implemented *
+;;;     gdk_init                                 * not implemented
+;;;     gdk_init_check                           * not implemented
+;;;     gdk_parse_args                           * not implemented
 ;;;     gdk_get_display_arg_name
 ;;;     gdk_notify_startup_complete
 ;;;     gdk_notify_startup_complete_with_id
-;;;     gdk_set_allowed_backends                 * not implemented *
+;;;     gdk_set_allowed_backends                 * not implemented
 ;;;     gdk_get_program_class
 ;;;     gdk_set_program_class
 ;;;
-;;;     gdk_get_display                          * deprecated *
-;;;
-;;;     gdk_flush
-;;;     gdk_screen_width
-;;;     gdk_screen_height
-;;;     gdk_screen_width_mm
-;;;     gdk_screen_height_mm
-;;;
-;;;     gdk_pointer_grab                         * deprecated *
-;;;     gdk_pointer_ungrab                       * deprecated *
-;;;     gdk_pointer_is_grabbed                   * deprecated *
-;;;
-;;;     gdk_set_double_click_time
-;;;
-;;;     gdk_keyboard_grab                        * deprecated *
-;;;     gdk_keyboard_ungrab                      * deprecated *
-;;;
-;;;     gdk_beep
-;;;     gdk_error_trap_push
-;;;     gdk_error_trap_pop
-;;;     gdk_error_trap_pop_ignored
+;;;     gdk_get_display                          * deprecated
+;;;     gdk_flush                                * deprecated
+;;;     gdk_screen_width                         * deprecated
+;;;     gdk_screen_height                        * deprecated
+;;;     gdk_screen_width_mm                      * deprecated
+;;;     gdk_screen_height_mm                     * dprecateed
+;;;     gdk_pointer_grab                         * deprecated
+;;;     gdk_pointer_ungrab                       * deprecated
+;;;     gdk_pointer_is_grabbed                   * deprecated
+;;;     gdk_set_double_click_time                * deprecated
+;;;     gdk_keyboard_grab                        * deprecated
+;;;     gdk_keyboard_ungrab                      * deprecated
+;;;     gdk_beep                                 * deprecated
+;;;     gdk_error_trap_push                      * deprecated
+;;;     gdk_error_trap_pop                       * deprecated
+;;;     gdk_error_trap_pop_ignored               * deprecated
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gdk)
@@ -156,9 +148,7 @@
   @begin{short}
     Gets the display name specified in the command line arguments passed to
     the functions @code{gdk_init} or @code{gdk_parse_args}, if any.
-  @end{short}
-
-  Since 2.2")
+  @end{short}")
 
 (export 'gdk-get-display-arg-name)
 
@@ -179,8 +169,6 @@
   @class{gtk-window} unless the function
   @fun{gtk-window-set-auto-startup-notification} is called to disable that
   feature.
-
-  Since 2.2
   @see-function{gdk-notify-startup-complete-with-id}
   @see-function{gtk-window-set-auto-startup-notification}")
 
@@ -205,8 +193,6 @@
   startup notification identifier unless the function
   @fun{gtk-window-set-auto-startup-notification} is called to disable that
   feature.
-
-  Since 2.12
   @see-function{gdk-notify-startup-complete}
   @see-function{gtk-window-set-auto-startup-notification}"
   (startup-id :string))
@@ -313,9 +299,16 @@
 
 (defcfun ("gdk_flush" gdk-flush) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-7-30}
-  Flushes the output buffers of all display connections and waits until all
-  requests have been processed. This is rarely needed by applications.")
+ "@version{2019-3-25}
+  @begin{short}
+    Flushes the output buffers of all display connections and waits until all
+    requests have been processed.
+  @end{short}
+  This is rarely needed by applications.
+  @begin[Warning]{dictionary}
+    The function @sym{gdk-flush} is deprecated and should not be used in
+    newly-written code.
+  @end{dictionary}")
 
 (export 'gdk-flush)
 
@@ -325,9 +318,15 @@
 
 (defcfun ("gdk_screen_width" gdk-screen-width) :int
  #+cl-cffi-gtk-documentation
- "@version{2013-7-30}
+ "@version{2019-3-26}
   @return{The width of the default screen in pixels.}
-  Returns the width of the default screen in pixels.
+  @begin{short}
+    Returns the width of the default screen in pixels.
+  @end{short}
+  @begin[Warning]{dictionary}  
+    The function @sym{gdk-screen-width} has been deprecated since version 3.22
+    and should not be used in newly-written code. Use per-monitor information.
+  @end{dictionary}
   @see-function{gdk-screen-height}
   @see-function{gdk-screen-width-mm}
   @see-function{gdk-screen-height-mm}")
@@ -340,9 +339,15 @@
 
 (defcfun ("gdk_screen_height" gdk-screen-height) :int
  #+cl-cffi-gtk-documentation
- "@version{2013-7-30}
+ "@version{2019-3-26}
   @return{The height of the default screen in pixels.}
-  Returns the height of the default screen in pixels.
+  @begin{short}
+    Returns the height of the default screen in pixels.
+  @end{short}
+  @begin[Warning]{dictionary}  
+    The function @sym{gdk-screen-height} has been deprecated since version 3.22
+    and should not be used in newly-written code. Use per-monitor information.
+  @end{dictionary}
   @see-function{gdk-screen-width}
   @see-function{gdk-screen-width-mm}
   @see-function{gdk-screen-height-mm}")
@@ -355,11 +360,17 @@
 
 (defcfun ("gdk_screen_width_mm" gdk-screen-width-mm) :int
  #+cl-cffi-gtk-documentation
- "@version{2013-7-30}
-  @return{The width of the default screen in millimeters, though it is not
-    always correct.}
-  Returns the width of the default screen in millimeters. Note that on many X
-  servers this value will not be correct.
+ "@version{2019-3-26}
+  @return{The width of the default screen in millimeters.}
+  @begin{short}
+    Returns the width of the default screen in millimeters.
+  @end{short}
+  Note that on many X servers this value will not be correct.
+  @begin[Warning]{dictionary}  
+    The function @sym{gdk-screen-width-mm} has been deprecated since version
+    3.22 and should not be used in newly-written code. Use per-monitor
+    information.
+  @end{dictionary}
   @see-function{gdk-screen-width}
   @see-function{gdk-screen-height}
   @see-function{gdk-screen-height-mm}")
@@ -373,10 +384,16 @@
 (defcfun ("gdk_screen_height_mm" gdk-screen-height-mm) :int
  #+cl-cffi-gtk-documentation
  "@version{2013-7-30}
-  @return{The height of the default screen in millimeters, though it is not
-    always correct.}
-  Returns the height of the default screen in millimeters. Note that on many X
-  servers this value will not be correct.
+  @return{The height of the default screen in millimeters.}
+  @begin{short}
+    Returns the height of the default screen in millimeters.
+  @end{short}
+  Note that on many X servers this value will not be correct.
+  @begin[Warning]{dictionary}  
+    The function @sym{gdk-screen-height-mm} has been deprecated since version
+    3.22 and should not be used in newly-written code. Use per-monitor
+    information.
+  @end{dictionary}
   @see-function{gdk-screen-height}
   @see-function{gdk-screen-width}
   @see-function{gdk-screen-width-mm}")
@@ -436,8 +453,9 @@
   @class{gdk-event-grab-broken} events that are emitted when the grab ends
   unvoluntarily.
   @begin[Warning]{dictionary}
-    @sym{gdk-pointer-grab} has been deprecated since version 3.0 and should not
-    be used in newly-written code. Use @fun{gdk-device-grab} instead.
+    The function @sym{gdk-pointer-grab} has been deprecated since version 3.0
+    and should not be used in newly-written code. Use the function
+    @fun{gdk-device-grab} instead.
   @end{dictionary}
   @see-function{gdk-device-grab}
   @see-function{gdk-pointer-ungrab}"
@@ -464,9 +482,10 @@
     application.
   @end{short}
   @begin[Warning]{dictionary}
-    @sym{gdk-pointer-ungrab} has been deprecated since version 3.0 and should
-    not be used in newly written code. Use @fun{gdk-device-ungrab}, together
-    with @fun{gdk-device-grab} instead.
+    The function @sym{gdk-pointer-ungrab} has been deprecated since version 3.0
+    and should not be used in newly written code. Use the function
+    @fun{gdk-device-ungrab}, together with the function @fun{gdk-device-grab}
+    instead.
   @end{dictionary}
   @see-function{gdk-device-grab}
   @see-function{gdk-device-ungrab}"
@@ -490,8 +509,8 @@
   Note that this does not take the inmplicit pointer grab on button presses
   into account.
   @begin[Warning]{dictionary}
-    @sym{gdk-pointer-is-grabbed} has been deprecated since version 3.0 and
-    should not be used in newly written code. Use
+    The function @sym{gdk-pointer-is-grabbed} has been deprecated since version
+    3.0 and should not be used in newly written code. Use the function
     @fun{gdk-display-device-is-grabbed} instead.
   @end{dictionary}
   @see-function{gdk-display-device-is-grabbed}")
@@ -504,7 +523,7 @@
 
 (defcfun ("gdk_set_double_click_time" gdk-set-double-click-time) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-7-30}
+ "@version{2019-3-26}
   @argument[msec]{double click time in milliseconds (thousandths of a second)}
   @begin{short}
     Set the double click time for the default display.
@@ -512,6 +531,10 @@
   See the function @fun{gdk-display-set-double-click-time}. See also the
   function @fun{gdk-display-set-double-click-distance}. Applications should not
   set this, it is a global user-configured setting.
+  @begin[Warning]{dictionary}
+    The function @sym{gdk-set-double-click-time} is deprecated and should not
+    be used in newly-written code.
+  @end{dictionary}
   @see-function{gdk-display-set-double-click-time}
   @see-function{gdk-display-set-double-click-distance}"
   (msec :uint))
@@ -547,8 +570,9 @@
   @class{gdk-event-grab-broken} events that are emitted when the grab ends
   unvoluntarily.
   @begin[Warning]{dictionary}
-    @sym{gdk-keyboard-grab} has been deprecated since version 3.0 and should not
-    be used in newly-written code. Use @fun{gdk-device-grab} instead.
+    The function @sym{gdk-keyboard-grab} has been deprecated since version 3.0
+    and should not be used in newly-written code. Use the function
+    @fun{gdk-device-grab} instead.
   @end{dictionary}
   @see-function{gdk-device-grab}
   @see-function{gdk-keyboard-ungrab}"
@@ -572,9 +596,10 @@
     application.
   @end{short}
   @begin[Warning]{dictionary}
-    @sym{gdk-keyboard-ungrab} has been deprecated since version 3.0 and should
-    not be used in newly written code. Use @fun{gdk-device-ungrab}, together
-    with @fun{gdk-device-grab} instead.
+    The function @sym{gdk-keyboard-ungrab} has been deprecated since version 3.0
+    and should not be used in newly written code. Use the function
+    @fun{gdk-device-ungrab}, together with the function @fun{gdk-device-grab}
+    instead.
   @end{dictionary}
   @see-function{gdk-device-grab}
   @see-function{gdk-device-ungrab}"
@@ -588,8 +613,12 @@
 
 (defcfun ("gdk_beep" gdk-beep) :void
  #+cl-cffi-gtk-documentation
- "@version{2013-7-30}
-  Emits a short beep on the default display.")
+ "@version{2019-3-25}
+  @short{Emits a short beep on the default display.}
+  @begin[Warning]{dictionary}  
+    The function @sym{gdk-beep} is deprecated and should not be used in
+    newly-written code.
+  @end{dictionary}")
 
 (export 'gdk-beep)
 
@@ -629,6 +658,10 @@
       // ... Handle the error here ...
     @}
   @end{pre}
+  @begin[Warning]{dictionary}  
+    The function @sym{gdk-error-trap-push} is deprecated and should not be used
+    in newly-written code.
+  @end{dictionary}
   @see-class{gdk-display}
   @see-class{gdk-display-manager}
   @see-function{gdk-error-trap-pop-ignored}
@@ -656,6 +689,10 @@
   Prior to GDK 3.0, this function would not automatically sync for you, so you
   had to call the function @fun{gdk-flush} if your last call to Xlib was not a
   blocking round trip.
+  @begin[Warning]{dictionary}  
+    The function @sym{gdk-error-trap-pop} is deprecated and should not be used
+    in newly-written code.
+  @end{dictionary}
   @see-function{gdk-error-trap-push}
   @see-function{gdk-error-trap-pop-ignored}
   @see-fun{gdk-flush}")
@@ -677,6 +714,10 @@
   pushed, that error will be ignored.
 
   Since 3.0
+  @begin[Warning]{dictionary}  
+    The function @sym{gdk-error-trap-pop-ignored} is deprecated and should not
+    be used in newly-written code.
+  @end{dictionary}
   @see-fun{gdk-error-trap-push}")
 
 (export 'gdk-error-trap-pop-ignored)

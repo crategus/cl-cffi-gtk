@@ -46,6 +46,7 @@
     @about-function{gdk-get-display-arg-name}
     @about-function{gdk-notify-startup-complete}
     @about-function{gdk-notify-startup-complete-with-id}
+    @about-function{gdk-set-allowed-backends}
     @about-function{gdk-get-program-class}
     @about-function{gdk-set-program-class}
     @about-function{gdk-get-display}
@@ -69,9 +70,10 @@
     Maintains a list of all open GdkDisplays.
 
     @about-class{gdk-display-manager}
+
+    @about-generic{gdk-display-manager-default-display}
+
     @about-function{gdk-display-manager-get}
-    @about-function{gdk-display-manager-get-default-display}
-    @about-function{gdk-display-manager-set-default-display}
     @about-function{gdk-display-manager-list-displays}
     @about-function{gdk-display-manager-open-display}
   @end{section}
@@ -79,6 +81,7 @@
     Controls a set of GdkScreens and their associated input devices.
 
     @about-class{gdk-display}
+
     @about-function{gdk-display-open}
     @about-function{gdk-display-get-default}
     @about-function{gdk-display-get-name}
@@ -119,6 +122,13 @@
     @about-function{gdk-display-supports-composite}
     @about-function{gdk-display-get-app-launch-context}
     @about-function{gdk-display-notify-startup-complete}
+    @about-function{gdk-display-get-default-seat}
+    @about-function{gdk-display-list-seats}
+    @about-function{gdk-display-get-n-monitors}
+    @about-function{gdk-display-get-monitor}
+    @about-function{gdk-display-get-primary-monitor}
+    @about-function{gdk-display-get-monitor-at-point}
+    @about-function{gdk-display-get-monitor-at-window}
   @end{section}
   @begin[GdkScreen]{section}
     Object representing a physical screen.
