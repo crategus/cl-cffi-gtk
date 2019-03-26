@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gdk.display-manager.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GDK 3 Reference Manual
-;;; Version 3.16 and modified to document the Lisp binding to the GDK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GDK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2015 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,17 +29,32 @@
 ;;;
 ;;; GdkDisplayManager
 ;;;
-;;; Maintains a list of all open GdkDisplays
+;;;     Maintains a list of all open GdkDisplays
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GdkDisplayManager
 ;;;
+;;; Functions
+;;;
 ;;;     gdk_display_manager_get
-;;;     gdk_display_manager_get_default_display
-;;;     gdk_display_manager_set_default_display
+;;;     gdk_display_manager_get_default_display            Accessor
+;;;     gdk_display_manager_set_default_display            Accessor
 ;;;     gdk_display_manager_list_displays
 ;;;     gdk_display_manager_open_display
+;;;
+;;; Properties
+;;;
+;;;     GdkDisplay *  default-display    Read / Write
+;;;
+;;; Signals
+;;;
+;;;     void  display-opened    Run Last
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GdkDisplayManager
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gdk)
@@ -105,28 +117,27 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"display-opened\" signal}
       @begin{pre}
- lambda (manager display)   : Run Last
+ lambda (manager display)    : Run Last
       @end{pre}
       The \"display-opened\" signal is emitted when a display is opened.
       @begin[code]{table}
         @entry[manager]{The object on which the signal is emitted.}
         @entry[display]{The opened display.}
       @end{table}
-      Since 2.2
   @end{dictionary}
   @see-slot{gdk-display-manager-default-display}
   @see-function{gdk-display-manager-get}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
 ;;; Property and Accessor Details
-;;;
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gdk-display-manager-default-display ------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "default-display"
                                                'gdk-display-manager) 't)
- "The @code{\"default-display\"} property of type @class{gdk-display}
+ "The @code{default-display} property of type @class{gdk-display}
   (Read / Write) @br{}
   The default display for GDK.")
 
@@ -134,12 +145,29 @@
 (setf (gethash 'gdk-display-manager-default-display atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-display-manager-default-display 'function)
- "@version{2013-9-16}
-  Accessor of the slot @code{\"default-display\"} of the
-  @class{gdk-display-manager} class.
-  @see-class{gdk-display-manager}
-  @see-function{gdk-display-manager-get-default-display}
-  @see-function{gdk-display-manager-set-default-display}")
+ "@version{2019-3-26}
+  @syntax[]{(gdk-display-manager-default-display object) => display}
+  @syntax[]{(setf (gdk-display-manager-default-display object) display)}
+  @argument[object]{a @class{gdk-display-manager} object}
+  @argument[display]{the default display}
+  @begin{short}
+    Accessor of the slot @slot[gdk-display-manager]{default-display} of the
+    @class{gdk-display-manager} class.
+  @end{short}
+
+  The slot access function @sym{gdk-display-manager-default-display}
+  gets the default @class{gdk-display} object, or @code{nil} if there is no
+  default display.
+
+  The slot access function @sym{(setf gdk-display-manager-default-display)}
+  sets @arg{display} as the default display.
+  @begin[Example]{dictionary}
+    @begin{pre}
+ (gdk-display-manager-default-display (gdk-display-manager-get))
+=> #<GDK-DISPLAY {1001F9A233@}>
+    @end{pre}
+  @end{dictionary}
+  @see-class{gdk-display-manager}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_display_manager_get ()
@@ -157,54 +185,15 @@
   When called for the first time, this function consults the @code{GDK_BACKEND}
   environment variable to find out which of the supported GDK backends to use
   in case GDK has been compiled with multiple backends.
-
-  Since 2.2
+  @begin[Example]{dictionary}
+    @begin{pre}
+ (gdk-display-manager-get)
+=> #<GDK-DISPLAY-MANAGER {1001CFF103@}>
+    @end{pre}
+  @end{dictionary}
   @see-class{gdk-display-manager}")
 
 (export 'gdk-display-manager-get)
-
-;;; ----------------------------------------------------------------------------
-;;; gdk_display_manager_get_default_display ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gdk-display-manager-get-default-display))
-
-(defun gdk-display-manager-get-default-display (manager)
- #+cl-cffi-gtk-documentation
- "@version{2013-9-16}
-  @argument[manager]{a @class{gdk-display-manager} object}
-  @return{A @class{gdk-display} object, or @code{nil} if there is no default
-    display.}
-  @short{Gets the default @class{gdk-display} object.}
-
-  Since 2.2
-  @see-class{gdk-display-manager}
-  @see-class{gdk-display}
-  @see-function{gdk-display-manager-set-default-display}"
-  (gdk-display-manager-default-display manager))
-
-(export 'gdk-display-manager-get-default-display)
-
-;;; ----------------------------------------------------------------------------
-;;; gdk_display_manager_set_default_display ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gdk-display-manager-set-default-display))
-
-(defun gdk-display-manager-set-default-display (manager display)
- #+cl-cffi-gtk-documentation
- "@version{2013-9-16}
-  @argument[manager]{a @class{gdk-display-manager} object}
-  @argument[display]{a @class{gdk-display} object}
-  @short{Sets @arg{display} as the default display.}
-
-  Since 2.2
-  @see-class{gdk-display-manager}
-  @see-class{gdk-display}
-  @see-function{gdk-display-manager-get-default-display}"
-  (setf (gdk-display-manager-default-display manager) display))
-
-(export 'gdk-display-manager-set-default-display)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_display_manager_list_displays ()
@@ -217,8 +206,6 @@
   @argument[manager]{a @class{gdk-display-manager} object}
   @return{A  list of @class{gdk-display} objects.}
   @short{List all currently open displays.}
-
-  Since 2.2
   @see-class{gdk-display-manager}
   @see-class{gdk-display}"
   (manager (g-object gdk-display-manager)))
