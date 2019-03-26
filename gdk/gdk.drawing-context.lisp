@@ -62,7 +62,7 @@
   (:superclass g-object
    :export t
    :interfaces nil
-   :type-initializer "gdk_drawing-context_get_type")
+   :type-initializer "gdk_drawing_context_get_type")
   ((clip
     gdk-drawing-context-clip
     "clip" "CairoRegion" t t)
