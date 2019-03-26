@@ -170,6 +170,7 @@
   find particular monitors with the functions
   @fun{gdk-display-get-primary-monitor} or
   @fun{gdk-display-get-monitor-at-window}.
+
   @sym{gdk-monitor} was introduced in GTK+ 3.22 and supersedes earlier APIs in
   @class{gdk-screen} to obtain monitor-related information.
   @begin[Signal Details]{dictionary}
@@ -182,9 +183,18 @@
     @end{table}
     Since 3.22
   @end{dictionary}
+  @see-slot{gdk-monitor-display}
+  @see-slot{gdk-monitor-geometry}
+  @see-slot{gdk-monitor-height-mm}
+  @see-slot{gdk-monitor-manufacturer}
+  @see-slot{gdk-monitor-model}
+  @see-slot{gdk-monitor-refresh-rate}
+  @see-slot{gdk-monitor-scale-factor}
+  @see-slot{gdk-monitor-subpixel-layout}
+  @see-slot{gdk-monitor-width-mm}
+  @see-slot{gdk-monitor-workarea}
   @see-class{gdk-display}
   @see-class{gdk-screen}")
-
 
 ;;; ----------------------------------------------------------------------------
 ;;; Property and Accessor Details
