@@ -28,9 +28,9 @@
 ;;;
 ;;; Pixbufs
 ;;;
-;;; Functions for obtaining pixbufs
+;;;     Functions for obtaining pixbufs
 ;;;
-;;; Synopsis
+;;; Functions
 ;;;
 ;;;     gdk_pixbuf_get_from_window
 ;;;     gdk_pixbuf_get_from_surface

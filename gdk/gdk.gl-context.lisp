@@ -2,11 +2,11 @@
 ;;; gdk.gl-context.lisp
 ;;;
 ;;; The documentation of this file is taken from the GDK 3 Reference Manual
-;;; Version 3.16 and modified to document the Lisp binding to the GDK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GDK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2016 Dieter Kaiser
+;;; Copyright (C) 2016 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -37,6 +37,9 @@
 ;;;
 ;;; Functions
 ;;;
+;;;     gdk_gl_context_get_display ()                      Accessor
+;;;     gdk_gl_context_get_window ()                       Accessor
+;;;     gdk_gl_context_get_shared_context ()               Accessor
 ;;;     gdk_gl_context_get_version
 ;;;     gdk_gl_context_set_required_version
 ;;;     gdk_gl_context_get_required_version
@@ -44,10 +47,19 @@
 ;;;     gdk_gl_context_get_debug_enabled
 ;;;     gdk_gl_context_set_forward_compatible
 ;;;     gdk_gl_context_get_forward_compatible
+;;;     gdk_gl_context_set_use_es ()
+;;;     gdk_gl_context_get_use_es ()
+;;;     gdk_gl_context_is_legacy ()
 ;;;     gdk_gl_context_realize
 ;;;     gdk_gl_context_make_current
 ;;;     gdk_gl_context_get_current
 ;;;     gdk_gl_context_clear_current
+;;;
+;;; Properties
+;;;
+;;;       GdkDisplay* display           Read / Write / Construct Only
+;;;     GdkGLContext* shared-context    Read / Write / Construct Only
+;;;        GdkWindow* window            Read / Write / Construct Only
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -61,7 +73,6 @@
 ;;; GdkGLContext
 ;;; ----------------------------------------------------------------------------
 
-#+gdk-3-16
 (define-g-object-class "GdkGLContext" gdk-gl-context
   (:superclass g-object
    :export t
@@ -77,7 +88,7 @@
     gdk-gl-context-window
     "window" "GdkWindow" t t)))
 
-#+(and gdk-3-16 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation 'gdk-gl-context 'type)
  "@version{2016-1-3}
   @begin{short}
@@ -143,13 +154,13 @@
 
 ;;; --- gdk-gl-context-display -------------------------------------------------
 
-#+(and gdk-3-16 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "display" 'gdk-gl-context) 't)
  "The @code{display} property of type @class{gdk-display}
   (Read / Write / Construct) @br{}
   The @class{gdk-display} used to create the @sym{gdk-gl-context}.")
 
-#+(and gdk-3-16 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-gl-context-display atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-gl-context-display 'function)
@@ -169,7 +180,7 @@
 
 ;;; --- gdk-gl-context-shared-context ------------------------------------------
 
-#+(and gdk-3-16 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "shared-context"
                                                'gdk-gl-context) 't)
  "The @code{shared-context} property of type @sym{gdk-gl-context}
@@ -177,7 +188,7 @@
   The @sym{gdk-gl-context} that this context is sharing data with,
   or @code{nil}.")
 
-#+(and gdk-3-16 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-gl-context-shared-context atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-gl-context-shared-context 'function)
@@ -197,13 +208,13 @@
 
 ;;; --- gdk-gl-context-window --------------------------------------------------
 
-#+(and gdk-3-16 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "window" 'gdk-gl-context) 't)
  "The @code{window} property of type GdkWindow @class{gdk-window}
   (Read / Write / Construct) @br{}
   The @class{gdk-window} the gl context is bound to.")
 
-#+(and gdk-3-16 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-gl-context-window atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gdk-gl-context-window 'function)
@@ -408,6 +419,82 @@
 ;;;     TRUE if the context should be forward compatible
 ;;;
 ;;; Since 3.16
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gdk_gl_context_set_use_es ()
+;;;
+;;; void
+;;; gdk_gl_context_set_use_es (GdkGLContext *context,
+;;;                            int use_es);
+;;;
+;;; Requests that GDK create a OpenGL ES context instead of an OpenGL one, if
+;;; the platform and windowing system allows it.
+;;;
+;;; The context must not have been realized.
+;;;
+;;; By default, GDK will attempt to automatically detect whether the underlying
+;;; GL implementation is OpenGL or OpenGL ES once the context is realized.
+;;;
+;;; You should check the return value of gdk_gl_context_get_use_es() after
+;;; calling gdk_gl_context_realize() to decide whether to use the OpenGL or
+;;; OpenGL ES API, extensions, or shaders.
+;;;
+;;; context :
+;;;     a GdkGLContext:
+;;;
+;;; use_es :
+;;;     whether the context should use OpenGL ES instead of OpenGL, or -1 to
+;;;     allow auto-detection
+;;;
+;;; Since 3.22
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gdk_gl_context_get_use_es ()
+;;;
+;;; gboolean gdk_gl_context_get_use_es (GdkGLContext *context);
+;;;
+;;; Checks whether the context is using an OpenGL or OpenGL ES profile.
+;;;
+;;; context :
+;;;     a GdkGLContext
+;;;
+;;; Returns :
+;;;     TRUE if the GdkGLContext is using an OpenGL ES profile
+;;;
+;;; Since 3.22
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gdk_gl_context_is_legacy ()
+;;;
+;;;gboolean gdk_gl_context_is_legacy (GdkGLContext *context);
+;;;
+;;; Whether the GdkGLContext is in legacy mode or not.
+;;;
+;;; The GdkGLContext must be realized before calling this function.
+;;;
+;;; When realizing a GL context, GDK will try to use the OpenGL 3.2 core
+;;; profile; this profile removes all the OpenGL API that was deprecated prior
+;;; to the 3.2 version of the specification. If the realization is successful,
+;;; this function will return FALSE.
+;;;
+;;; If the underlying OpenGL implementation does not support core profiles, GDK
+;;; will fall back to a pre-3.2 compatibility profile, and this function will
+;;; return TRUE.
+;;;
+;;; You can use the value returned by this function to decide which kind of
+;;; OpenGL API to use, or whether to do extension discovery, or what kind of
+;;; shader programs to load.
+;;;
+;;; context :
+;;;     a GdkGLContext
+;;;
+;; Returns :
+;;;     TRUE if the GL context is in legacy mode
+;;;
+;;; Since 3.20
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------

@@ -95,9 +95,9 @@
   etc. to find out which backends are present in the GDK library you are
   building your application against. At runtime, use type check macros like
   @code{GDK_IS_X11_DISPLAY()} to find out which backend is in use:
-
-  @b{Example:} Backend specific code
-  @begin{pre}
+  @begin[Example]{dictionary}
+    Backend specific code
+    @begin{pre}
    #ifdef GDK_WINDOWING_X11
      if (GDK_IS_X11_DISPLAY (display))
        {
@@ -113,7 +113,8 @@
      else
    #endif
      g_error (\"Unsupported GDK backend\");
-  @end{pre}
+    @end{pre}
+  @end{dictionary}
   @begin[Signal Details]{dictionary}
     @subheading{The \"display-opened\" signal}
       @begin{pre}
@@ -121,11 +122,13 @@
       @end{pre}
       The \"display-opened\" signal is emitted when a display is opened.
       @begin[code]{table}
-        @entry[manager]{The object on which the signal is emitted.}
-        @entry[display]{The opened display.}
+        @entry[manager]{The @sym{gdk-display-manager} object on which the signal
+          is emitted.}
+        @entry[display]{The opened @class{gdk-display} object.}
       @end{table}
   @end{dictionary}
   @see-slot{gdk-display-manager-default-display}
+  @see-class{gdk-display}
   @see-function{gdk-display-manager-get}")
 
 ;;; ----------------------------------------------------------------------------
@@ -149,7 +152,7 @@
   @syntax[]{(gdk-display-manager-default-display object) => display}
   @syntax[]{(setf (gdk-display-manager-default-display object) display)}
   @argument[object]{a @class{gdk-display-manager} object}
-  @argument[display]{the default display}
+  @argument[display]{the default @class{gdk-display} object}
   @begin{short}
     Accessor of the slot @slot[gdk-display-manager]{default-display} of the
     @class{gdk-display-manager} class.
@@ -163,10 +166,11 @@
   sets @arg{display} as the default display.
   @begin[Example]{dictionary}
     @begin{pre}
- (gdk-display-manager-default-display (gdk-display-manager-get))
-=> #<GDK-DISPLAY {1001F9A233@}>
+  (gdk-display-manager-default-display (gdk-display-manager-get))
+ => #<GDK-DISPLAY {1001F9A233@}>
     @end{pre}
   @end{dictionary}
+  @see-class{gdk-display}
   @see-class{gdk-display-manager}")
 
 ;;; ----------------------------------------------------------------------------
@@ -206,8 +210,8 @@
   @argument[manager]{a @class{gdk-display-manager} object}
   @return{A  list of @class{gdk-display} objects.}
   @short{List all currently open displays.}
-  @see-class{gdk-display-manager}
-  @see-class{gdk-display}"
+  @see-class{gdk-display}
+  @see-class{gdk-display-manager}"
   (manager (g-object gdk-display-manager)))
 
 (export 'gdk-display-manager-list-displays)
@@ -221,15 +225,16 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-9-16}
   @argument[manager]{a @class{gdk-display-manager} object}
-  @argument[name]{the name of the display to open}
+  @argument[name]{the name of type @code{:string} of the display to open}
   @begin{return}
-    A @class{gdk-display}, or @code{nil} if the display could not be opened.
+    A @class{gdk-display} object, or @code{nil} if the display could not be
+    opened.
   @end{return}
   @short{Opens a display.}
 
   Since 3.0
-  @see-class{gdk-display-manager}
-  @see-class{gdk-display}"
+  @see-class{gdk-display}
+  @see-class{gdk-display-manager}"
   (manager (g-object gdk-display-manager))
   (name :string))
 

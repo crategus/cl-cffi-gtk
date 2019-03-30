@@ -2,11 +2,11 @@
 ;;; gdk.frame-clock.lisp
 ;;;
 ;;; The documentation of this file is taken from the GDK 3 Reference Manual
-;;; Version 3.16 and modified to document the Lisp binding to the GDK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GDK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2016 Dieter Kaiser
+;;; Copyright (C) 2016 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -28,7 +28,7 @@
 ;;;
 ;;; Frame clock
 ;;;
-;;; Frame clock syncs painting to a window or display
+;;;     Frame clock syncs painting to a window or display
 ;;;
 ;;; Types and Values
 ;;;
@@ -37,25 +37,25 @@
 ;;;
 ;;; Functions
 ;;;
-;;;     gdk_frame_clock_get_frame_time ()
-;;;     gdk_frame_clock_request_phase ()
-;;;     gdk_frame_clock_begin_updating ()
-;;;     gdk_frame_clock_end_updating ()
-;;;     gdk_frame_clock_get_frame_counter ()
-;;;     gdk_frame_clock_get_history_start ()
-;;;     gdk_frame_clock_get_timings ()
-;;;     gdk_frame_clock_get_current_timings ()
-;;;     gdk_frame_clock_get_refresh_info ()
+;;;     gdk_frame_clock_get_frame_time
+;;;     gdk_frame_clock_request_phase
+;;;     gdk_frame_clock_begin_updating
+;;;     gdk_frame_clock_end_updating
+;;;     gdk_frame_clock_get_frame_counter
+;;;     gdk_frame_clock_get_history_start
+;;;     gdk_frame_clock_get_timings
+;;;     gdk_frame_clock_get_current_timings
+;;;     gdk_frame_clock_get_refresh_info
 ;;;
 ;;; Signals
 ;;;
-;;;     after-paint 	Run Last
-;;;     before-paint 	Run Last
-;;;     flush-events 	Run Last
-;;;     layout 	Run Last
-;;;     paint 	Run Last
-;;;     resume-events 	Run Last
-;;;     update 	Run Last
+;;;     void  after-paint      Run Last
+;;;     void  before-paint     Run Last
+;;;     void  flush-events     Run Last
+;;;     void  layout           Run Last
+;;;     void  paint            Run Last
+;;;     void  resume-events    Run Last
+;;;     void  update           Run Last
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -69,7 +69,6 @@
 ;;; GdkFrameClock
 ;;; ----------------------------------------------------------------------------
 
-#+gdk-3-8
 (define-g-object-class "GdkFrameClock" gdk-frame-clock
   (:superclass g-object
    :export t
@@ -77,7 +76,7 @@
    :type-initializer "gdk_frame_clock_get_type")
   nil)
 
-#+(and gdk-3-8 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation 'gdk-frame-clock 'type)
  "@version{2016-1-2}
   @begin{short}
@@ -191,7 +190,6 @@
 ;;; enum GdkFrameClockPhase
 ;;; ----------------------------------------------------------------------------
 
-#+gdk-3-8
 (define-g-enum "GdkFrameClockPhase" gdk-frame-clock-phase
   (:export t
    :type-initializer "gdk_frame_clock_phase_get_type")
@@ -204,7 +202,7 @@
   (:resume-events 6)
   (:after-paint 7))
 
-#+(and gdk-3-8 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-frame-clock-phase atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gdk-frame-clock-phase atdoc:*external-symbols*)
  "@version{2016-1-4}

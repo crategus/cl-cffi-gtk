@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gdk.screen.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GDK 3 Reference Manual
-;;; Version 3.16 and modified to document the Lisp binding to the GDK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GDK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2015 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,11 +29,13 @@
 ;;;
 ;;; GdkScreen
 ;;;
-;;; Object representing a physical screen
+;;;     Object representing a physical screen
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GdkScreen
+;;;
+;;; Functions
 ;;;
 ;;;     gdk_screen_get_default
 ;;;     gdk_screen_get_system_visual
@@ -44,30 +43,47 @@
 ;;;     gdk_screen_is_composited
 ;;;     gdk_screen_get_root_window
 ;;;     gdk_screen_get_display
-;;;     gdk_screen_get_number
-;;;     gdk_screen_get_width
-;;;     gdk_screen_get_height
-;;;     gdk_screen_get_width_mm
-;;;     gdk_screen_get_height_mm
+;;;     gdk_screen_get_number                              * deprecated
+;;;     gdk_screen_get_width                               * deprecated
+;;;     gdk_screen_get_height                              * deprecated
+;;;     gdk_screen_get_width_mm                            * deprecated
+;;;     gdk_screen_get_height_mm                           * deprecated
 ;;;     gdk_screen_list_visuals
 ;;;     gdk_screen_get_toplevel_windows
-;;;     gdk_screen_make_display_name
-;;;     gdk_screen_get_n_monitors
-;;;     gdk_screen_get_primary_monitor
-;;;     gdk_screen_get_monitor_geometry
-;;;     gdk_screen_get_monitor_workarea
-;;;     gdk_screen_get_monitor_at_point
-;;;     gdk_screen_get_monitor_at_window
-;;;     gdk_screen_get_monitor_height_mm
-;;;     gdk_screen_get_monitor_width_mm
-;;;     gdk_screen_get_monitor_plug_name
+;;;     gdk_screen_make_display_name                       * deprecated
+;;;     gdk_screen_get_n_monitors                          * deprecated
+;;;     gdk_screen_get_primary_monitor                     * deprecated
+;;;     gdk_screen_get_monitor_geometry                    * deprecated
+;;;     gdk_screen_get_monitor_workarea                    * deprecated
+;;;     gdk_screen_get_monitor_at_point                    * deprecated
+;;;     gdk_screen_get_monitor_at_window                   * deprecated
+;;;     gdk_screen_get_monitor_height_mm                   * deprecated
+;;;     gdk_screen_get_monitor_width_mm                    * deprecated
+;;;     gdk_screen_get_monitor_plug_name                   * deprecated
+;;;     gdk_screen_get_monitor_scale_factor                * deprecated
 ;;;     gdk_screen_get_setting
-;;;     gdk_screen_get_font_options
-;;;     gdk_screen_set_font_options
-;;;     gdk_screen_get_resolution
-;;;     gdk_screen_set_resolution
-;;;     gdk_screen_get_active_window
+;;;     gdk_screen_get_font_options                          Accessor
+;;;     gdk_screen_set_font_options                          Accessor
+;;;     gdk_screen_get_resolution                            Accessor
+;;;     gdk_screen_set_resolution                            Accessor
+;;;     gdk_screen_get_active_window                       * deprecated
 ;;;     gdk_screen_get_window_stack
+;;;
+;;; Properties
+;;;
+;;;     gpointer  font-options    Read / Write
+;;;      gdouble  resolution      Read / Write
+;;;
+;;; Signals
+;;;
+;;;     void  composited-changed    Run Last
+;;;     void  monitors-changed      Run Last
+;;;     void  size-changed          Run Last
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GdkScreen
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gdk)
@@ -115,8 +131,6 @@
         @entry[screen]{The @sym{gdk-screen} object on which the signal is
           emitted.}
       @end{table}
-      Since 2.10
-
     @subheading{The \"monitors-changed\" signal}
       @begin{pre}
  lambda (screen)   : Run Last
@@ -129,8 +143,6 @@
         @entry[screen]{The @sym{gdk-screen} object on which the signal is
           emitted.}
       @end{table}
-      Since 2.14
-
     @subheading{The \"size-changed\" signal}
       @begin{pre}
  lambda (screen)   : Run Last
@@ -141,7 +153,6 @@
         @entry[screen]{The @sym{gdk-screen} object on which the signal is
           emitted.}
       @end{table}
-      Since 2.2
   @end{dictionary}
   @see-slot{gdk-screen-font-options}
   @see-slot{gdk-screen-resolution}
@@ -150,16 +161,14 @@
   @see-function{gdk-screen-get-monitor-geometry}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
 ;;; Property and Accessor Details
-;;;
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- gdk-screen-font-options ------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "font-options" 'gdk-screen) 't)
- "The @code{\"font-options\"} property of type @code{:pointer}
+ "The @code{font-options} property of type @code{:pointer}
   (Read / Write) @br{}
   The default font options for the screen.")
 
@@ -196,7 +205,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "resolution" 'gdk-screen) 't)
- "The @code{\"resolution\"} property of type @code{:double} (Read / Write) @br{}
+ "The @code{resolution} property of type @code{:double} (Read / Write) @br{}
   The resolution for fonts on the screen. @br{}
   Default value: -1")
 
@@ -224,8 +233,6 @@
   This is a scale factor between points specified in a
   @class{pango-font-description} and cairo units. The default value is 96,
   meaning that a 10 point font will be 13 units high (10 * 96. / 72. = 13.3).
-
-  Since 2.10
   @see-class{gdk-screen}
   @see-class{pango-font-description}")
 
@@ -244,8 +251,6 @@
     Gets the default screen for the default display.
   @end{short}
   See the function @fun{gdk-display-get-default}.
-
-  Since 2.2
   @see-class{gdk-screen}
   @see-function{gdk-display-get-default}")
 
@@ -265,8 +270,6 @@
     Get the system's default visual for @arg{screen}. This is the visual for the
     root window of the display. The return value should not be freed.
   @end{short}
-
-  Since 2.2
   @see-class{gdk-screen}"
   (screen (g-object gdk-screen)))
 
@@ -299,8 +302,6 @@
 
   For setting an overall opacity for a top-level window, see the function
   @fun{gdk-window-set-opacity}.
-
-  Since 2.8
   @see-class{gdk-screen}
   @see-function{gdk-window-set-opacity}"
   (screen (g-object gdk-screen)))
@@ -326,8 +327,6 @@
 
   On X11 this function returns whether a compositing manager is compositing
   @arg{screen}.
-
-  Since 2.10
   @see-class{gdk-screen}"
   (screen (g-object gdk-screen)))
 
@@ -344,8 +343,6 @@
   @argument[screen]{a @class{gdk-screen} object}
   @return{The root window.}
   @short{Gets the root window of @arg{screen}.}
-
-  Since 2.2
   @see-class{gdk-screen}"
   (screen (g-object gdk-screen)))
 
@@ -362,8 +359,6 @@
   @argument[screen]{a @class{gdk-screen} object}
   @return{The display to which @arg{screen} belongs.}
   @short{Gets the display to which the @arg{screen} belongs.}
-
-  Since 2.2
   @see-class{gdk-screen}"
   (screen (g-object gdk-screen)))
 
@@ -383,8 +378,10 @@
     it belongs.
   @end{short}
   See the function @fun{gdk-screen-get-display}.
-
-  Since 2.2
+  @begin[Warning]{dictionary}
+    The function @sym{gdk-screen-get-number} has been deprecated since version
+    3.22 and should not be used in newly-written code.
+  @end{dictionary}
   @see-class{gdk-screen}
   @see-function{gdk-screen-get-display}"
   (screen (g-object gdk-screen)))
@@ -401,8 +398,11 @@
   @argument[screen]{a @class{gdk-screen} object}
   @return{The width of @arg{screen} in pixels.}
   @short{Gets the width of @arg{screen} in pixels.}
-
-  Since 2.2
+  @begin[Warning]{dictionary}
+    The function @sym{gdk-screen-get-width} has been deprecated since version
+    3.22 and should not be used in newly-written code. Use per-monitor
+    information instead.
+  @end{dictionary}
   @see-class{gdk-screen}
   @see-function{gdk-screen-get-height}
   @see-function{gdk-screen-get-width-mm}"
@@ -420,8 +420,11 @@
   @argument[screen]{a @class{gdk-screen} object}
   @return{The height of @arg{screen} in pixels.}
   @short{Gets the height of @arg{screen} in pixels.}
-
-  Since 2.2
+  @begin[Warning]{dictionary}
+    The function @sym{gdk-screen-get-height} has been deprecated since version
+    3.22 and should not be used in newly-written code. Use per-monitor
+    information instead.
+  @end{dictionary}
   @see-class{gdk-screen}
   @see-function{gdk-screen-get-width}
   @see-function{gdk-screen-get-height-mm}"
@@ -442,8 +445,11 @@
     Gets the width of @arg{screen} in millimeters.
   @end{short}
   Note that on some X servers this value will not be correct.
-
-  Since 2.2
+  @begin[Warning]{dictionary}
+    The function @sym{gdk-screen-get-width-mm} has been deprecated since version
+    3.22 and should not be used in newly-written code. Use per-monitor
+    information instead.
+  @end{dictionary}
   @see-class{gdk-screen}
   @see-function{gdk-screen-get-width}
   @see-function{gdk-screen-get-height-mm}"
@@ -464,8 +470,11 @@
     Returns the height of @arg{screen} in millimeters.
   @end{short}
   Note that on some X servers this value will not be correct.
-
-  Since 2.2
+  @begin[Warning]{dictionary}
+    The function @sym{gdk-screen-get-height-mm} has been deprecated since
+    version 3.22 and should not be used in newly-written code. Use per-monitor
+    information instead.
+  @end{dictionary}
   @see-class{gdk-screen}
   @see-function{gdk-screen-get-height}
   @see-function{gdk-screen-get-width-mm}"
@@ -489,8 +498,6 @@
   A visual describes a hardware image data format. For example, a visual might
   support 24-bit color, or 8-bit color, and might expect pixels to be in a
   certain format.
-
-  Since 2.2
   @see-class{gdk-screen}"
   (screen (g-object gdk-screen)))
 
@@ -513,8 +520,6 @@
   @end{short}
   A toplevel window is a child of the root window. See the function
   @fun{gdk-get-default-root-window}.
-
-  Since 2.2
   @see-class{gdk-screen}
   @see-function{gdk-get-default-root-window}"
   (screen (g-object gdk-screen)))
@@ -535,8 +540,10 @@
     Determines the name to pass to the function @fun{gdk-display-open} to get a
     @class{gdk-display} object with this @arg{screen} as the default screen.
   @end{short}
-
-  Since 2.2
+  @begin[Warning]{dictionary}
+    The function @sym{gdk-screen-make-display-name} has been deprecated since
+    version 3.22 and should not be used in newly-written code.
+  @end{dictionary}
   @see-class{gdk-screen}
   @see-function{gdk-display-open}"
   (screen (g-object gdk-screen)))
@@ -553,8 +560,11 @@
   @argument[screen]{a @class{gdk-screen} object}
   @return{Number of monitors which @arg{screen} consists of.}
   @short{Returns the number of monitors which @arg{screen} consists of.}
-
-  Since 2.2
+  @begin[Warning]{dictionary}
+    The function @sym{gdk-screen-get-n-monitors} has been deprecated since
+    version 3.22 and should not be used in newly-written code. Use the function
+    @fun{gdk-display-get-n_monitors} instead.
+  @end{dictionary}
   @see-class{gdk-screen}
   @see-function{gdk-screen-get-primary-monitor}"
   (screen (g-object gdk-screen)))
@@ -580,8 +590,11 @@
 
   If no primary monitor is configured by the user, the return value will be 0,
   defaulting to the first monitor.
-
-  Since 2.20
+  @begin[Warning]{dictionary}
+    The function @sym{gdk-screen-get-primary-monitor} has been deprecated since
+    version 3.22 and should not be used in newly-written code. Use the function
+    @fun{gdk-display-get-primary-monitor} instead.
+  @end{dictionary}
   @see-class{gdk-screen}
   @see-function{gdk-screen-get-n-monitors}"
   (screen (g-object gdk-screen)))
@@ -614,8 +627,11 @@
 
   Note that the size of the entire screen area can be retrieved via the
   functions @fun{gdk-screen-get-width} and @fun{gdk-screen-get-height}.
-
-  Since 2.2
+  @begin[Warning]{dictionary}
+    The function @sym{gdk-screen-get-monitor-geometry} has been deprecated since
+    version 3.22 and should not be used in newly-written code. Use the function
+    @fun{gdk-monitor-get-geometry} instead.
+  @end{dictionary}
   @see-class{gdk-screen}
   @see-function{gdk-screen-get-n-monitors}
   @see-function{gdk-screen-get-width}
@@ -655,6 +671,11 @@
   use the function @fun{gdk-screen-get-n-monitors}.
 
   Since 3.4
+  @begin[Warning]{dictionary}
+    The function @sym{gdk-screen-get-monitor-workarea} has been deprecated since
+    version 3.22 and should not be used in newly-written code. Use the function
+    @fun{gdk-monitor-get-workarea} instead.
+  @end{dictionary}
   @see-class{gdk-screen}
   @see-function{gdk-screen-get-n-monitors}"
   (let ((dest (make-gdk-rectangle)))
@@ -681,8 +702,11 @@
   @begin{short}
     Returns the monitor number in which the point (x,y) is located.
   @end{short}
-
-  Since 2.2
+  @begin[Warning]{dictionary}
+    The function @sym{gdk-screen-get-monitor-at-point} has been deprecated since
+    version 3.22 and should not be used in newly-written code. Use the function
+    @fun{gdk-display-get-monitor-at-point} instead.
+  @end{dictionary}
   @see-class{gdk-screen}
   @see-function{gdk-screen-get-monitor-at-window}"
   (screen (g-object gdk-screen))
@@ -710,8 +734,11 @@
     Returns the number of the monitor in which the largest area of the bounding
     rectangle of @arg{window} resides.
   @end{short}
-
-  Since 2.2
+  @begin[Warning]{dictionary}
+    The function @sym{gdk-screen-get-monitor-at-window} has been deprecated
+    since version 3.22 and should not be used in newly-written code. Use the
+    function @fun{gdk-display-get-monitor-at-window} instead.
+  @end{dictionary}
   @see-class{gdk-screen}
   @see-function{gdk-screen-get-monitor-at-point}"
   (screen (g-object gdk-screen))
@@ -734,8 +761,11 @@
   @begin{short}
     Gets the height in millimeters of the specified monitor.
   @end{short}
-
-  Since 2.14
+  @begin[Warning]{dictionary}
+    The function @sym{gdk-screen-get-monitor-height-mm} has been deprecated
+    since version 3.22 and should not be used in newly-written code. Use the
+    functon @fun{gdk-monitor-get-height-mm} instead.
+  @end{dictionary}
   @see-class{gdk-screen}
   @see-function{gdk-screen-get-monitor-width-mm}"
   (screen (g-object gdk-screen))
@@ -758,8 +788,11 @@
   @begin{short}
     Gets the width in millimeters of the specified monitor, if available.
   @end{short}
-
-  Since 2.14
+  @begin[Warning]{dictionary}
+    The function @sym{gdk-screen-get-monitor-width-mm} has been deprecated since
+    version 3.22 and should not be used in newly-written code. Use the function
+    @fun{gdk-monitor-get-width-mm} instead.
+  @end{dictionary}
   @see-class{gdk-screen}
   @see-function{gdk-screen-get-monitor-height-mm}"
   (screen (g-object gdk-screen))
@@ -786,8 +819,11 @@
     Returns the output name of the specified monitor. Usually something like
     VGA, DVI, or TV, not the actual product name of the display device.
   @end{short}
-
-  Since 2.14
+  @begin[Warning]{dictionary}
+    The function @sym{gdk-screen-get-monitor-plug-name} has been deprecated
+    since version 3.22 and should not be used in newly-written code. Use the
+    function @fun{gdk-monitor-get-model} instead.
+  @end{dictionary}
   @see-class{gdk-screen}"
   (screen (g-object gdk-screen))
   (monitor-num :int))
@@ -808,6 +844,12 @@
 ;;; This can be used if you want to create pixel based data for a particula
 ;;; monitor, but most of the time you're drawing to a window where it is better
 ;;; to use gdk_window_get_scale_factor() instead.
+;;;
+;;; Warning
+;;;
+;;; The function gdk_screen_get_monitor_scale_factor has been deprecated since
+;;; version 3.22 and should not be used in newly-written code. Use the function
+;;; gdk_monitor_get_scale_factor() instead.
 ;;;
 ;;; Parameters
 ;;;
@@ -847,8 +889,6 @@
   @end{short}
 
   FIXME needs a list of valid settings here, or a link to more information.
-
-  Since 2.2
   @see-class{gdk-screen}"
   (with-foreign-object (value '(:struct g-value))
     (g-value-init value)
@@ -885,8 +925,10 @@
 
   The returned window should be unrefed using the function @fun{g-object-unref}
   when no longer needed.
-
-  Since 2.10
+  @begin[Warning]{dictionary}
+    The function @sym{gdk-screen-get-active-window} has been deprecated since
+    version 3.22 and should not be used in newly-written code.
+  @end{dictionary}
   @see-class{gdk-screen}"
   (screen (g-object gdk-screen)))
 
@@ -917,8 +959,6 @@
 
   On other platforms, this function may return @code{nil}, depending on whether
   it is implementable on that platform.
-
-  Since 2.10
   @see-class{gdk-screen}"
   (screen (g-object gdk-screen)))
 

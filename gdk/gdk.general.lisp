@@ -162,7 +162,7 @@
   @begin{short}
     Indicates to the GUI environment that the application has finished loading.
   @end{short}
-  If the applications opens windows, this function is normally called after
+  If the application open windows, this function is normally called after
   opening the application's initial set of windows.
 
   GTK+ will call this function automatically after opening the first
@@ -182,11 +182,11 @@
            gdk-notify-startup-complete-with-id) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-7-26}
-  @argument[startup-id]{a startup notification identifier, for which
-    notification process should be completed}
+  @argument[startup-id]{a startup notification identifier of type
+    @code{:string}}
   @begin{short}
     Indicates to the GUI environment that the application has finished loading,
-    using a given identifier.
+    using a given startup notification identifier.
   @end{short}
 
   GTK+ will call this function automatically for @class{gtk-window} with custom
@@ -244,12 +244,14 @@
     (:string :free-from-foreign nil)
  #+cl-cffi-gtk-documentation
  "@version{2013-7-30}
-  @return{The program class.}
-  Gets the program class. Unless the program class has explicitly been set
-  with the function @fun{gdk-set-program-class} or with the @code{--class}
-  commandline option, the default value is the program name determined with
-  the function @fun{g-get-prgname} and with the first character converted to
-  uppercase.
+  @return{The program class of type @code{:string}.}
+  @begin{short}
+    Gets the program class.
+  @end{short}
+  Unless the program class has explicitly been set with the function
+  @fun{gdk-set-program-class} or with the @code{--class} commandline option,
+  the default value is the program name determined with the function
+  @fun{g-get-prgname} and with the first character converted to uppercase.
   @see-function{gdk-set-program-class}
   @see-function{g-get-prgname}")
 
@@ -262,10 +264,13 @@
 (defcfun ("gdk_set_program_class" gdk-set-program-class) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-7-30}
-  @argument[program-class]{a string}
-  Sets the program class. The X11 backend uses the program class to set the
-  class name part of the @code{WM_CLASS} property on toplevel windows; see the
-  Inter-Client Communication Conventions Manual (ICCCM).
+  @argument[program-class]{a program class of type @code{:string}}
+  @begin{short}
+    Sets the program class.
+  @end{short}
+  The X11 backend uses the program class to set the class name part of the
+  @code{WM_CLASS} property on toplevel windows; see the Inter-Client
+  Communication Conventions Manual (ICCCM).
   @see-function{gdk-get-program-class}"
   (program-class (:string :free-to-foreign t)))
 
@@ -278,7 +283,7 @@
 (defcfun ("gdk_get_display" gdk-get-display) (:string :free-from-foreign nil)
  #+cl-cffi-gtk-documentation
  "@version{2015-12-30}
-  @return{The name of the display.}
+  @return{The name of the display of type @code{:string}.}
   @begin{short}
     Gets the name of the display, which usually comes from the @code{DISPLAY}
     environment variable or the @code{--display} command line option.
@@ -323,7 +328,7 @@
   @begin{short}
     Returns the width of the default screen in pixels.
   @end{short}
-  @begin[Warning]{dictionary}  
+  @begin[Warning]{dictionary}
     The function @sym{gdk-screen-width} has been deprecated since version 3.22
     and should not be used in newly-written code. Use per-monitor information.
   @end{dictionary}
@@ -344,7 +349,7 @@
   @begin{short}
     Returns the height of the default screen in pixels.
   @end{short}
-  @begin[Warning]{dictionary}  
+  @begin[Warning]{dictionary}
     The function @sym{gdk-screen-height} has been deprecated since version 3.22
     and should not be used in newly-written code. Use per-monitor information.
   @end{dictionary}
@@ -366,7 +371,7 @@
     Returns the width of the default screen in millimeters.
   @end{short}
   Note that on many X servers this value will not be correct.
-  @begin[Warning]{dictionary}  
+  @begin[Warning]{dictionary}
     The function @sym{gdk-screen-width-mm} has been deprecated since version
     3.22 and should not be used in newly-written code. Use per-monitor
     information.
@@ -389,7 +394,7 @@
     Returns the height of the default screen in millimeters.
   @end{short}
   Note that on many X servers this value will not be correct.
-  @begin[Warning]{dictionary}  
+  @begin[Warning]{dictionary}
     The function @sym{gdk-screen-height-mm} has been deprecated since version
     3.22 and should not be used in newly-written code. Use per-monitor
     information.
@@ -407,34 +412,38 @@
 (defcfun ("gdk_pointer_grab" gdk-pointer-grab) gdk-grab-status
  #+cl-cffi-gtk-documentation
  "@version{2013-4-3}
-  @argument[window]{the @class{gdk-window} which will own the grab
-    (the grab window)}
+  @argument[window]{the @class{gdk-window} which will own the grab}
   @argument[owner-events]{if @code{nil} then all pointer events are reported
-    with respect to window and are only reported if selected by
+    with respect to @arg{window} and are only reported if selected by
     @arg{event-mask}. If @em{true} then pointer events for this application are
     reported as normal, but pointer events outside this application are reported
-    with respect to window and only if selected by @arg{event-mask}. In either
-    mode, unreported events are discarded.}
-  @argument[event-mask]{specifies the event mask, which is used in accordance
-    with @arg{owner-events}. Note that only pointer events (i. e. button and
-    motion events) may be selected.}
-  @argument[confine-to]{If non-@code{NULL}, the pointer will be confined to this
-    window during the grab. If the pointer is outside @arg{confine-to}, it will
-    automatically be moved to the closest edge of @arg{confine-to} and enter and
-    leave events will be generated as necessary.}
-  @argument[cursor]{the cursor to display while the grab is active. If this is
-    @code{NULL} then the normal cursors are used for @arg{window} and its
-    descendants, and the cursor for @arg{window} is used for all other windows.}
-  @argument[time]{the timestamp of the event which led to this pointer grab.
-    This usually comes from a @class{gdk-event-button} struct, though
-    @var{+gdk-current-time+} can be used if the time isn't known.}
-  @return{@code{:success} if the grab was successful.}
+    with respect to @arg{window} and only if selected by @arg{event-mask}. In
+    either mode, unreported events are discarded.}
+  @argument[event-mask]{specifies the event mask of type
+    @symbol{gdk-event-mask}, which is used in accordance with
+    @arg{owner-events}. Note that only pointer events (i. e. button and motion
+    events) may be selected.}
+  @argument[confine-to]{a @class{gdk-window} object, if non-@code{nil}, the
+    pointer will be confined to this window during the grab. If the pointer is
+    outside @arg{confine-to}, it will automatically be moved to the closest edge
+    of @arg{confine-to} and enter and leave events will be generated as
+    necessary.}
+  @argument[cursor]{the @class{gdk-cursor} object to display while the grab is
+    active. If this is @code{nil} then the normal cursors are used for
+    @arg{window} and its descendants, and the cursor for @arg{window} is used
+    for all other windows.}
+  @argument[time]{the timestamp of type @code{:uint32} of the event which led to
+    this pointer grab. This usually comes from a @class{gdk-event-button}
+    struct, though @var{+gdk-current-time+} can be used if the time isn't
+    known.}
+  @return{The value @code{:success} of the @symbol{gdk-grab-status} enumeration
+    if the grab was successful.}
   @begin{short}
     Grabs the pointer (usually a mouse) so that all events are passed to this
-    application until the pointer is ungrabbed with @fun{gdk-pointer-ungrab}, or
-    the grab window becomes unviewable. This overrides any previous pointer grab
-    by this client.
+    application until the pointer is ungrabbed with the function
+    @fun{gdk-pointer-ungrab}, or the grab window becomes unviewable.
   @end{short}
+  This overrides any previous pointer grab by this client.
 
   Pointer grabs are used for operations which need complete control over mouse
   events, even if the mouse leaves the application. For example in GTK+ it is
@@ -455,10 +464,11 @@
   @begin[Warning]{dictionary}
     The function @sym{gdk-pointer-grab} has been deprecated since version 3.0
     and should not be used in newly-written code. Use the function
-    @fun{gdk-device-grab} instead.
+    @fun{gdk-seat-grab} instead.
   @end{dictionary}
-  @see-function{gdk-device-grab}
-  @see-function{gdk-pointer-ungrab}"
+  @see-symbol{gdk-grab-status}
+  @see-class{gdk-event-grab-broken}
+  @see-function{gdk-seat-grab}"
   (window (g-object gdk-window))
   (owner-events :boolean)
   (event-mask gdk-event-mask)
@@ -475,8 +485,8 @@
 (defcfun ("gdk_pointer_ungrab" gdk-pointer-ungrab) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-4-3}
-  @argument[time]{a timestamp from a @class{gdk-event}, or
-    @var{+gdk-current-time+} if no timestamp is available}
+  @argument[time]{a timestamp of type @code{:uint32} from a @class{gdk-event},
+    or @var{+gdk-current-time+} if no timestamp is available}
   @begin{short}
     Ungrabs the pointer on the default display, if it is grabbed by this
     application.
@@ -484,11 +494,11 @@
   @begin[Warning]{dictionary}
     The function @sym{gdk-pointer-ungrab} has been deprecated since version 3.0
     and should not be used in newly written code. Use the function
-    @fun{gdk-device-ungrab}, together with the function @fun{gdk-device-grab}
+    @fun{gdk-seat-ungrab}, together with the function @fun{gdk-seat-grab}
     instead.
   @end{dictionary}
-  @see-function{gdk-device-grab}
-  @see-function{gdk-device-ungrab}"
+  @see-function{gdk-seat-grab}
+  @see-function{gdk-seat-ungrab}"
   (time :uint32))
 
 (export 'gdk-pointer-ungrab)
@@ -500,10 +510,11 @@
 (defcfun ("gdk_pointer_is_grabbed" gdk-pointer-is-grabbed) :boolean
  #+cl-cffi-gtk-documentation
  "@version{2013-4-3}
-  @return{@em{True} if the pointer is currently grabbed by this application.}
+  @return{a boolean that is @em{true} if the pointer is currently grabbed by
+    this application.}
   @begin{short}
-    Returns @em{true} if the pointer on the default display is currently
-    grabbed by this application.
+    Returns @em{true} if the pointer on the default display is currently grabbed
+    by this application.
   @end{short}
 
   Note that this does not take the inmplicit pointer grab on button presses
@@ -524,7 +535,7 @@
 (defcfun ("gdk_set_double_click_time" gdk-set-double-click-time) :void
  #+cl-cffi-gtk-documentation
  "@version{2019-3-26}
-  @argument[msec]{double click time in milliseconds (thousandths of a second)}
+  @argument[msec]{double click time in milliseconds of type @code{:uint}}
   @begin{short}
     Set the double click time for the default display.
   @end{short}
@@ -548,22 +559,22 @@
 (defcfun ("gdk_keyboard_grab" gdk-keyboard-grab) gdk-grab-status
  #+cl-cffi-gtk-documentation
  "@version{2013-4-3}
-  @argument[window]{the @class{gdk-window} which will own the grab (the
-    grab window).}
-  @argument[owner-events]{if @code{nil} then all keyboard events are reported
-    with respect to window. If @em{true} then keyboard events for this
-    application are reported as normal, but keyboard events outside this
-    application are reported with respect to window. Both key press and key
-    release events are always reported, independant of the event mask set by the
-    application.}
-  @argument[time]{a timestamp from a @class{gdk-event}, or
-    @var{+gdk-current-time+} if no timestamp is available.}
-  @return{@code{:success} if the grab was successful.}
+  @argument[window]{the @class{gdk-window} which will own the grab}
+  @argument[owner-events]{a boolean, if @code{nil} then all keyboard events are
+    reported with respect to @arg{window}. If @em{true} then keyboard events for
+    this application are reported as normal, but keyboard events outside this
+    application are reported with respect to @arg{window}. Both key press and
+    key release events are always reported, independant of the event mask set by
+    the application.}
+  @argument[time]{a timestamp of type @code{:uint32} from a @class{gdk-event},
+    or @var{+gdk-current-time+} if no timestamp is available.}
+  @return{The value @code{:success} of the @symbol{gdk-grab-status} enumeration
+   if the grab was successful.}
   @begin{short}
     Grabs the keyboard so that all events are passed to this application until
-    the keyboard is ungrabbed with @fun{gdk-keyboard-ungrab}. This overrides any
-    previous keyboard grab by this client.
+    the keyboard is ungrabbed with the function @fun{gdk-keyboard-ungrab}.
   @end{short}
+  This overrides any previous keyboard grab by this client.
 
   If you set up anything at the time you take the grab that needs to be
   cleaned up when the grab ends, you should handle the
@@ -572,10 +583,9 @@
   @begin[Warning]{dictionary}
     The function @sym{gdk-keyboard-grab} has been deprecated since version 3.0
     and should not be used in newly-written code. Use the function
-    @fun{gdk-device-grab} instead.
+    @fun{gdk-seat-grab} instead.
   @end{dictionary}
-  @see-function{gdk-device-grab}
-  @see-function{gdk-keyboard-ungrab}"
+  @see-function{gdk-seat-grab}"
   (window (g-object gdk-window))
   (owner-events :boolean)
   (time :uint32))
@@ -589,8 +599,8 @@
 (defcfun ("gdk_keyboard_ungrab" gdk-keyboard-ungrab) :void
  #+cl-cffi-gtk-documentation
  "@version{2013-4-3}
-  @argument[time]{a timestamp from a @class{gdk-event}, or
-    @var{+gdk-current-time+} if no timestamp is available}
+  @argument[time]{a timestamp of type @code{:uint32} from a @class{gdk-event},
+    or @var{+gdk-current-time+} if no timestamp is available}
   @begin{short}
     Ungrabs the keyboard on the default display, if it is grabbed by this
     application.
@@ -598,11 +608,11 @@
   @begin[Warning]{dictionary}
     The function @sym{gdk-keyboard-ungrab} has been deprecated since version 3.0
     and should not be used in newly written code. Use the function
-    @fun{gdk-device-ungrab}, together with the function @fun{gdk-device-grab}
+    @fun{gdk-seat-ungrab}, together with the function @fun{gdk-seat-grab}
     instead.
   @end{dictionary}
-  @see-function{gdk-device-grab}
-  @see-function{gdk-device-ungrab}"
+  @see-function{gdk-seat-grab}
+  @see-function{gdk-seat-ungrab}"
   (time :uint32))
 
 (export 'gdk-keyboard-ungrab)
@@ -615,7 +625,7 @@
  #+cl-cffi-gtk-documentation
  "@version{2019-3-25}
   @short{Emits a short beep on the default display.}
-  @begin[Warning]{dictionary}  
+  @begin[Warning]{dictionary}
     The function @sym{gdk-beep} is deprecated and should not be used in
     newly-written code.
   @end{dictionary}")
@@ -645,9 +655,9 @@
 
   You can use the function @code{gdk-x11-display-error-trap-push} to ignore
   errors on only a single display.
-
-  @b{Example:} Trapping an X error
-  @begin{pre}
+  @begin[Example]{dictionary}
+    Trapping an X error
+    @begin{pre}
    gdk_error_trap_push ();
 
     // ... Call the X function which may cause an error here ...
@@ -657,15 +667,14 @@
     {
       // ... Handle the error here ...
     @}
-  @end{pre}
-  @begin[Warning]{dictionary}  
+    @end{pre}
+  @end{dictionary}
+  @begin[Warning]{dictionary}
     The function @sym{gdk-error-trap-push} is deprecated and should not be used
     in newly-written code.
   @end{dictionary}
   @see-class{gdk-display}
-  @see-class{gdk-display-manager}
-  @see-function{gdk-error-trap-pop-ignored}
-  @see-function{gdk-error-trap-pop}")
+  @see-class{gdk-display-manager}")
 
 (export 'gdk-error-trap-push)
 
@@ -676,26 +685,26 @@
 (defcfun ("gdk_error_trap_pop" gdk-error-trap-pop) :int
  #+cl-cffi-gtk-documentation
  "@version{2013-7-30}
-  @return{X error code or 0 on success.}
+  @return{X error code of type @code{:int} or 0 on success.}
   @begin{short}
     Removes an error trap pushed with the function @fun{gdk-error-trap-push}.
   @end{short}
   May block until an error has been definitively received or not received from
   the X server. The function @fun{gdk-error-trap-pop-ignored} is preferred if
   you do not need to know whether an error occurred, because it never has to
-  block. If you do not need the return value of @sym{gdk-error-trap-pop}, use
-  the function @fun{gdk-error-trap-pop-ignored}.
+  block. If you do not need the return value of the functon
+  @sym{gdk-error-trap-pop}, use the function @fun{gdk-error-trap-pop-ignored}.
 
   Prior to GDK 3.0, this function would not automatically sync for you, so you
   had to call the function @fun{gdk-flush} if your last call to Xlib was not a
   blocking round trip.
-  @begin[Warning]{dictionary}  
+  @begin[Warning]{dictionary}
     The function @sym{gdk-error-trap-pop} is deprecated and should not be used
     in newly-written code.
   @end{dictionary}
   @see-function{gdk-error-trap-push}
   @see-function{gdk-error-trap-pop-ignored}
-  @see-fun{gdk-flush}")
+  @see-function{gdk-flush}")
 
 (export 'gdk-error-trap-pop)
 
@@ -714,11 +723,11 @@
   pushed, that error will be ignored.
 
   Since 3.0
-  @begin[Warning]{dictionary}  
+  @begin[Warning]{dictionary}
     The function @sym{gdk-error-trap-pop-ignored} is deprecated and should not
     be used in newly-written code.
   @end{dictionary}
-  @see-fun{gdk-error-trap-push}")
+  @see-function{gdk-error-trap-push}")
 
 (export 'gdk-error-trap-pop-ignored)
 

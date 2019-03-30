@@ -2,11 +2,11 @@
 ;;; gdk.rgba.lisp
 ;;;
 ;;; The documentation of this file is taken from the GDK 3 Reference Manual
-;;; Version 3.16 and modified to document the Lisp binding to the GDK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GDK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012 - 2016 Dieter Kaiser
+;;; Copyright (C) 2012 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -28,11 +28,13 @@
 ;;;
 ;;; RGBA Colors
 ;;;
-;;; RGBA colors
+;;;     RGBA colors
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GdkRGBA
+;;;
+;;; Functions
 ;;;
 ;;;     gdk_rgba_copy
 ;;;     gdk_rgba_free

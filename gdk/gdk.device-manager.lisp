@@ -2,11 +2,11 @@
 ;;; gdk.device-manager.lisp
 ;;;
 ;;; The documentation of this file is taken from the GDK 3 Reference Manual
-;;; Version 3.16 and modified to document the Lisp binding to the GDK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GDK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012 - 2015 Dieter Kaiser
+;;; Copyright (C) 2012 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -28,27 +28,33 @@
 ;;;
 ;;; GdkDeviceManager
 ;;;
-;;; Functions for handling input devices
+;;;     Functions for handling input devices
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GdkDeviceManager
 ;;;
+;;; Functions
+;;;
 ;;;     gdk_disable_multidevice
-;;;     gdk_device_manager_get_display
+;;;     gdk_device_manager_get_display                     Accessor
 ;;;     gdk_device_manager_list_devices
 ;;;     gdk_device_manager_get_client_pointer
 ;;;
-;;; Object Hierarchy
+;;; Properties
 ;;;
-;;;   GObject
-;;;    +----GdkDeviceManager
+;;;     GdkDisplay* display    Read / Write / Construct Only
 ;;;
 ;;; Signals
 ;;;
-;;;   "device-added"                                  : Run Last
-;;;   "device-changed"                                : Run Last
-;;;   "device-removed"                                : Run Last
+;;;     void  device-added      Run Last
+;;;     void  device-changed    Run Last
+;;;     void  device-removed    Run Last
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GdkDeviceManager
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gdk)
@@ -207,6 +213,8 @@
       @end{table}
   @end{dictionary}
   @see-slot{gdk-device-manager-display}
+  @see-class{gdk-device}
+  @see-class{gdk-event}
   @see-function{gdk-disable-multidevice}
   @see-function{gdk-display-open}
   @see-function{gdk-window-set-support-multidevice}
@@ -221,9 +229,7 @@
   @see-function{gdk-device-set-key}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
 ;;; Property and Accessor Details
-;;;
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
@@ -314,6 +320,12 @@
   @end{short}
 
   Since 3.0
+  @begin[Warning]{dictionary}
+    The function @sym{gdk-device-manager-list-devices} has been deprecated since
+    version 3.20 and should not be used in newly-written code. Use the functions
+    @fun{gdk-seat-get-pointer}, @fun{gdk-seat-get-keyboard} and
+    @fun{gdk-seat-get-slaves} instead.
+  @end{dictionary}
   @see-class{gdk-device-manager}"
   (device-manager (g-object gdk-device-manager))
   (type gdk-device-type))
@@ -341,6 +353,11 @@
   @class{gdk-device} object to operate on.
 
   Since 3.0
+  @begin[Warning]{dictionary}
+    The function @sym{gdk-device-manager-get-client-pointer} has been deprecated
+    since version 3.20 and should not be used in newly-written code. Use the
+    function @fun{gdk-seat-get-pointer} instead.
+  @end{dictionary}
   @see-class{gdk-device-manager}"
   (device-manager (g-object gdk-device-manager)))
 

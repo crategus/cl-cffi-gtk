@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gdk.rectangle.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GDK 3 Reference Manual
-;;; Version 3.16 and modified to document the Lisp binding to the GDK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GDK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2016 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,15 +29,18 @@
 ;;;
 ;;; Points and Rectangles
 ;;;
-;;; Simple graphical data types
+;;;     Simple graphical data types
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GdkPoint
 ;;;     GdkRectangle
 ;;;
+;;; Functions
+;;;
 ;;;     gdk_rectangle_intersect
 ;;;     gdk_rectangle_union
+;;;     gdk_rectangle_equal
 ;;;
 ;;; Description
 ;;;
@@ -265,5 +265,26 @@
     dest))
 
 (export 'gdk-rectangle-union)
+
+;;; ----------------------------------------------------------------------------
+;;; gdk_rectangle_equal ()
+;;;
+;;; gboolean
+;;; gdk_rectangle_equal (const GdkRectangle *rect1,
+;;;                      const GdkRectangle *rect2);
+;;;
+;;; Checks if the two given rectangles are equal.
+;;;
+;;; rect1 :
+;;;     a GdkRectangle
+;;;
+;;; rect2 :
+;;;     a GdkRectangle
+;;;
+;;; Returns :
+;;;     TRUE if the rectangles are equal.
+;;;
+;;; Since: 3.20
+;;; ----------------------------------------------------------------------------
 
 ;;; --- End of file gdk.rectangle.lisp -----------------------------------------

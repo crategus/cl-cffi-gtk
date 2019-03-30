@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gdk.cursor.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GDK 3 Reference Manual
-;;; Version 3.16 and modified to document the Lisp binding to the GDK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GDK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2016 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,27 +29,36 @@
 ;;;
 ;;; Cursors
 ;;;
-;;; Standard and pixmap cursors
+;;;     Standard and pixmap cursors
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GdkCursor
 ;;;     GdkCursorType
+;;;
+;;; Functions
 ;;;
 ;;;     gdk_cursor_new                           * deprectated *
 ;;;     gdk_cursor_new_from_pixbuf
 ;;;     gdk_cursor_new_from_surface
 ;;;     gdk_cursor_new_from_name
 ;;;     gdk_cursor_new_for_display
+;;;     gdk_cursor_get_display ()                  Accessor
 ;;;     gdk_cursor_get_image
 ;;;     gdk_cursor_get_surface
+;;;     gdk_cursor_get_cursor_type ()              Accessor
 ;;;     gdk_cursor_ref                           * deprecated *
 ;;;     gdk_cursor_unref                         * deprecated *
 ;;;
+;;; Properties
+;;;
+;;;     GdkCursorType   cursor-type   Read / Write / Construct Only
+;;;        GdkDisplay*  display       Read / Write / Construct Only
+;;;
 ;;; Object Hierarchy
 ;;;
-;;;   GObject
-;;;    +----GdkCursor
+;;;     GObject
+;;;     ╰── GdkCursor
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gdk)
@@ -101,9 +107,7 @@
   @see-function{gdk-window-new}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
 ;;; Property and Accessor Details
-;;;
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- gdk-cursor-cursor-type -------------------------------------------------
@@ -130,8 +134,6 @@
   The generic function @sym{gdk-cursor-cursor-type} returns the cursor type for
   this @arg{cursor}. This is a value from the @symbol{gdk-cursor-type}
   enumeration.
-
-  Since 2.22
   @see-class{gdk-cursor}
   @see-symbol{gdk-cursor-type}")
 
@@ -157,8 +159,6 @@
 
   The generic function @sym{gdk-cursor-display} returns the display of type
   @class{gdk-display} on which the @arg{cursor} is defined.
-
-  Since 2.2
   @see-class{gdk-cursor}
   @see-class{gdk-display}")
 
@@ -607,11 +607,11 @@
  "@version{2013-7-29}
   @argument[cursor]{a @class{gdk-cursor} object}
   @return{Same @arg{cursor} that was passed in.}
-  @subheading{Warning}
+  @short{Adds a reference to @arg{cursor}.}
+  @begin[Warning]{dictionary}
     @sym{gdk-cursor-ref} has been deprecated since version 3.0 and should not
     be used in newly-written code. Use the function @fun{g-object-ref} instead.
-
-  @short{Adds a reference to @arg{cursor}.}
+  @end{dictionary}
   @see-class{gdk-cursor}
   @see-function{g-object-ref}
   @see-function{gdk-cursor-unref}"
@@ -629,15 +629,15 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-7-29}
   @argument[cursor]{a @class{gdk-cursor} object}
-  @subheading{Warning}
-    @sym{gdk-cursor-unref} has been deprecated since version 3.0 and should not
-    be used in newly-written code. Use the function @fun{g-object-unref}
-    instead.
-
   @begin{short}
     Removes a reference from @arg{cursor}, deallocating the @arg{cursor} if no
     references remain.
   @end{short}
+  @begin[Warning]{dictionary}
+    @sym{gdk-cursor-unref} has been deprecated since version 3.0 and should not
+    be used in newly-written code. Use the function @fun{g-object-unref}
+    instead.
+  @end{dictionary}
   @see-class{gdk-cursor}
   @see-function{g-object-unref}
   @see-function{gdk-cursor-ref}"

@@ -2,11 +2,11 @@
 ;;; gdk.frame-timings.lisp
 ;;;
 ;;; The documentation of this file is taken from the GDK 3 Reference Manual
-;;; Version 3.16 and modified to document the Lisp binding to the GDK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GDK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2016 Dieter Kaiser
+;;; Copyright (C) 2016 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -28,7 +28,7 @@
 ;;;
 ;;; Frame timings
 ;;;
-;;; Object holding timing information for a single frame
+;;;     Object holding timing information for a single frame
 ;;;
 ;;; Types and Values
 ;;;
@@ -52,11 +52,10 @@
 ;;; struct GdkFrameTimings
 ;;; ----------------------------------------------------------------------------
 
-#+gdk-3-8
 (define-g-boxed-opaque gdk-frame-timings "GdkFrameTimings"
   :alloc (error "GdkFrameTimings can not be created from Lisp side."))
 
-#+(and gdk-3-8 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-frame-timings atdoc:*class-name-alias*) "CStruct"
       (documentation 'gdk-frame-timings 'type)
  "@version{2016-1-3}
@@ -79,7 +78,6 @@
   @see-function{gdk-frame-clock-get-timings}
   @see-function{gdk-frame-clock-get-current-timings}")
 
-#+gdk-3-8
 (export (boxed-related-symbols 'gdk-frame-timings))
 
 ;;; ----------------------------------------------------------------------------
