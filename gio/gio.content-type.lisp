@@ -117,7 +117,9 @@
   @begin{return}
     A short description of the content type @arg{type}.
   @end{return}
-  Gets the human readable description of the content type.
+  @begin{short}
+    Gets the human readable description of the content type.
+  @end{short}
   @begin[Example]{dictionary}
     @begin{pre}
  (g-content-type-get-description \"text/plain\")
@@ -140,7 +142,9 @@
   @begin{return}
     The registered mime type for the given type, or @code{nil} if unknown.
   @end{return}
-  Gets the mime type for the content type, if one is registered."
+  @begin{short}
+    Gets the mime type for the content type, if one is registered.
+  @end{short}"
   (type :string))
 
 (export 'g-content-type-get-mime-type)
@@ -156,7 +160,9 @@
   @begin{return}
     The @class{g-icon} corresponding to the content type.
   @end{return}
-  Gets the icon for a content type.
+  @begin{short}
+    Gets the icon for a content type.
+  @end{short}
   @begin[Example]{dictionary}
     @begin{pre}
  (g-content-type-get-icon \"text/plain\")
@@ -316,8 +322,10 @@
  #+cl-cffi-gtk-documentation
  "@version{2014-9-20}
   @return{A list of strings of the registered content types.}
-  Gets a list of strings containing all the registered content types known to
-  the system.
+  @begin{short}
+    Gets a list of strings containing all the registered content types known to
+    the system.
+  @end{short}
   @see-function{g-content-type-get-description}")
 
 (export 'g-content-types-get-registered)
