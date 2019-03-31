@@ -81,7 +81,7 @@
 (define-g-enum "GdkSubpixelLayout" gdk-subpixel-layout
   (:export t
    :type-initializer "gdk_subpixel_layout_get_type")
-  :unkown
+  :unknown
   :none
   :horizontal-rgb
   :horizontal-bgr
@@ -508,19 +508,23 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_monitor_is_primary ()
-;;;
-;;; gboolean gdk_monitor_is_primary (GdkMonitor *monitor);
-;;;
-;;; Gets whether this monitor should be considered primary (see
-;;; gdk_display_get_primary_monitor()).
-;;;
-;;; monitor :
-;;;     a GdkMonitor
-;;;
-;;; Returns :
-;;;     TRUE if monitor is primary
-;;;
-;;; Since: 3.22
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gdk_monitor_is_primary" gdk-monitor-is-primary) :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2019-3-30}
+  @argument[monitor]{a @class{gdk-monitor} object}
+  @return{@em{True} if monitor is primary.}
+  @begin{short}
+    Gets whether this monitor should be considered primary.
+  @end{short}
+  See the function @fun{gdk-display-get-primary-monitor}.
+
+  Since 3.22
+  @see-class{gdk-monitor}
+  @see-function{gdk-display-get-primary-monitor}"
+  (monitor (g-object gdk-monitor)))
+
+(export 'gdk-monitor-is-primary)
 
 ;;; --- End of file gdk.monitor.lisp -------------------------------------------

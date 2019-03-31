@@ -243,13 +243,13 @@
     A @class{gdk-display} object, or @code{nil} if there is no default display.
   @end{return}
   @begin{short}
-    Gets the default @class{gdk-display} object. This is a convenience function
-    for the call @code{(gdk-display-manager-get-default-display
-    (gdk-display-manager-get))}.
+    Gets the default @class{gdk-display} object.
   @end{short}
+  This is a convenience function for the call
+  @code{(gdk-display-manager-default-display (gdk-display-manager-get))}.
   @see-class{gdk-display}
   @see-function{gdk-display-manager-get}
-  @see-function{gdk-display-manager-get-default-display}")
+  @see-function{gdk-display-manager-default-display}")
 
 (export 'gdk-display-get-default)
 
@@ -262,8 +262,7 @@
  "@version{2013-4-4}
   @argument[display]{a @class{gdk-display} object}
   @begin{return}
-    A string representing the display name. This string is owned by GDK and
-    should not be modified or freed.
+    A string representing the display name.
   @end{return}
   @short{Gets the name of the @arg{display}.}
   @see-class{gdk-display}"
@@ -1132,96 +1131,127 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_display_get_default_seat ()
-;;;
-;;; GdkSeat * gdk_display_get_default_seat (GdkDisplay *display);
-;;;
-;;; Returns the default GdkSeat for this display.
-;;;
-;;; display :
-;;;     a GdkDisplay
-;;;
-;;; Returns :
-;;;     the default seat.
-;;;
-;;; Since: 3.20
 ;;; ----------------------------------------------------------------------------
+
+#+gdk-3-20
+(defcfun ("gdk_display_get_default_seat"
+           gdk-display-get-default-seat) (g-object gdk-seat)
+ #+cl-cffi-gtk-documentation
+ "@version{2019-3-30}
+  @argument[display]{a @class{gdk-display} object}
+  @return{The default @class{gdk-seat} object.}
+  @begin{short}
+    Returns the default @class{gdk-seat} object for this display.
+  @end{short}
+
+  Since 3.20
+  @see-class{gdk-display}
+  @see-class{gdk-seat}"
+  (display (g-object gdk-display)))
+
+#+gdk-3-20
+(export 'gdk-display-get-default-seat)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_display_list_seats ()
-;;;
-;;; GList * gdk_display_list_seats (GdkDisplay *display);
-;;;
-;;; Returns the list of seats known to display .
-;;;
-;;; display :
-;;;     a GdkDisplay
-;;;
-;;; Returns :
-;;;     the list of seats known to the GdkDisplay.
-;;;
-;;; Since: 3.20
 ;;; ----------------------------------------------------------------------------
+
+#+gdk-3-20
+(defcfun ("gdk_display_list_seats" gdk-display-list-seats)
+    (g-list (g-object gdk-seat) :free-from-foreign t)
+ #+cl-cffi-gtk-documentation
+ "@version{2019-3-30}
+  @argument[display]{a @class{gdk-display} object}
+  @return{The list of @class{gdk-seat} objects known to @arg{display}.}
+  @begin{short}
+    Returns the list of seats known to @arg{display}.
+  @end{short}
+
+  Since 3.20
+  @see-class{gdk-display}
+  @see-class{gdk-seat}"
+  (display (g-object gdk-display)))
+
+#+gdk-3-20
+(export 'gdk-display-list-seats)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_display_get_n_monitors ()
-;;;
-;;; int gdk_display_get_n_monitors (GdkDisplay *display);
-;;;
-;;; Gets the number of monitors that belong to display .
-;;;
-;;; The returned number is valid until the next emission of the “monitor-added”
-;;; or “monitor-removed” signal.
-;;;
-;;; display :
-;;;     a GdkDisplay
-;;;
-;;; Returns :
-;;;     the number of monitors
-;;;
-;;; Since: 3.22
 ;;; ----------------------------------------------------------------------------
+
+#+gdk-3-22
+(defcfun ("gdk_display_get_n_monitors"
+           gdk-display-get-n-monitors) :int
+ #+cl-cffi-gtk-documentation
+ "@version{2019-3-30}
+  @argument[display]{a @class{gdk-display} object}
+  @return{The number of monitors of type @code{:int}.}
+  @begin{short}
+    Gets the number of monitors that belong to display .
+  @end{short}
+
+  The returned number is valid until the next emission of the \"monitor-added\"
+  or \"monitor-removed\" signal.
+
+  Since 3.22
+  @see-class{gdk-display}"
+  (display (g-object gdk-display)))
+
+#+gdk-3-22
+(export 'gdk-display-get-n-monitors)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_display_get_monitor ()
-;;;
-;;; GdkMonitor *
-;;; gdk_display_get_monitor (GdkDisplay *display, int monitor_num);
-;;;
-;;; Gets a monitor associated with this display.
-;;;
-;;; display :
-;;;     a GdkDisplay
-;;;
-;;; monitor_num :
-;;;     number of the monitor
-;;;
-;;; Returns :
-;;;     the GdkMonitor, or NULL if monitor_num is not a valid monitor number.
-;;;
-;;; Since: 3.22
 ;;; ----------------------------------------------------------------------------
+
+#+gdk-3-22
+(defcfun ("gdk_display_get_monitor" gdk-display-get-monitor)
+    (g-object gdk-monitor)
+ #+cl-cffi-gtk-documentation
+ "@version{2019-3-30}
+  @argument[display]{a @class{gdk-display} object}
+  @argument[monitor-num]{number of type @code{:int} of the monitor}
+  @return{The @class{gdk-monitor} object, or @code{nil} if @code{monitor-num}
+    is not a valid monitor number.}
+  @begin{short}
+    Gets a monitor associated with this display.
+  @end{short}
+
+  Since 3.22
+  @see-class{gdk-display}"
+  (display (g-object gdk-display))
+  (monitor-num :int))
+
+#+gdk-3-22
+(export 'gdk-display-get-monitor)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_display_get_primary_monitor ()
-;;;
-;;; GdkMonitor * gdk_display_get_primary_monitor (GdkDisplay *display);
-;;;
-;;; Gets the primary monitor for the display.
-;;;
-;;; The primary monitor is considered the monitor where the “main desktop”
-;;; lives. While normal application windows typically allow the window manager
-;;; to place the windows, specialized desktop applications such as panels should
-;;; place themselves on the primary monitor.
-;;;
-;;; display :
-;;;     a GdkDisplay
-;;;
-;;; Returns :
-;;;     the primary monitor, or NULL if no primary monitor is configured by the
-;;;     user.
-;;;
-;;; Since: 3.22
 ;;; ----------------------------------------------------------------------------
+
+#+gdk-3-22
+(defcfun ("gdk_display_get_primary_monitor" gdk-display-get-primary-monitor)
+    (g-object gdk-monitor)
+ #+cl-cffi-gtk-documentation
+ "@version{2019-3-30}
+  @argument[display]{a @class{gdk-display} object}
+  @return{The primary @class{gdk-monitor} object, or @code{nil} if no primary
+    monitor is configured by the user.}
+  @begin{short}
+    Gets the primary monitor for the display.
+  @end{short}
+
+  The primary monitor is considered the monitor where the \"main desktop\"
+  lives. While normal application windows typically allow the window manager
+  to place the windows, specialized desktop applications such as panels should
+  place themselves on the primary monitor.
+
+  Since 3.22
+  @see-class{gdk-display}"
+  (display (g-object gdk-display)))
+
+#+gdk-3-22
+(export 'gdk-display-get-primary-monitor)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_display_get_monitor_at_point ()
@@ -1246,7 +1276,7 @@
 ;;; Returns :
 ;;;     the monitor containing the point.
 ;;;
-;;; Since: 3.22
+;;; Since 3.22
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1268,7 +1298,7 @@
 ;;; Returns :
 ;;;     the monitor with the largest overlap with window .
 ;;;
-;;; Since: 3.22
+;;; Since 3.22
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- End of file gdk.display.lisp -------------------------------------------

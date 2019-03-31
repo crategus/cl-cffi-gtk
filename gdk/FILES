@@ -11,7 +11,7 @@ List of files for the GDK Library
   gdk.display.lisp          - GdkDisplay             - GDK 3.24 &
   gdk.screen.lisp           - GdkScreen              - GDK 3.24 &
   gdk.seat.lisp             - GdkSeat                - GDK 3.24 &
-  gdk.monitor.lisp          - GdkMonitor             - GDK 3.24 &
+  gdk.monitor.lisp          - GdkMonitor             - GDK 3.24
   gdk.device.lisp           - GdkDevice              - GDK 3.24 &
   gdk.device-pad.lisp       - GtkDevicePad           - GDK 3.24 &
   gdk.rectangle.lisp        - Points and Rectangles  - GDK 3.24 &

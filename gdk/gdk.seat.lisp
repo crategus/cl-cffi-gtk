@@ -49,14 +49,14 @@
 ;;;
 ;;; Properties
 ;;;
-;;;     GdkDisplay *  display  Read / Write / Construct Only
+;;;     GdkDisplay* display    Read / Write / Construct Only
 ;;;
 ;;; Signals
 ;;;
-;;;     void  device-added    Run Last
-;;;     void  device-removed  Run Last
-;;;     void  tool-added      Run Last
-;;;     void  tool-removed    Run Last
+;;;     void  device-added      Run Last
+;;;     void  device-removed    Run Last
+;;;     void  tool-added        Run Last
+;;;     void  tool-removed      Run Last
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -246,6 +246,12 @@
 ;;; Since: 3.20
 ;;; ----------------------------------------------------------------------------
 
+(defcallback gdk-seat-grab-prepare-func-cb :void
+    ((seat (g-object gdk-seat))
+     (window (g-object gdk-window))
+     (data :pointer))
+  (funcall (glib:get-stable-pointer-value data) seat window))
+
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_seat_grab ()
 ;;;
@@ -257,7 +263,7 @@
 ;;;                GdkCursor *cursor,
 ;;;                const GdkEvent *event,
 ;;;                GdkSeatGrabPrepareFunc prepare_func,
-;;;               gpointer prepare_func_data);
+;;;                gpointer prepare_func_data);
 ;;;
 ;;; Grabs the seat so that all events corresponding to the given capabilities
 ;;; are passed to this application until the seat is ungrabbed with
@@ -337,74 +343,88 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_seat_get_capabilities ()
-;;;
-;;; GdkSeatCapabilities gdk_seat_get_capabilities (GdkSeat *seat);
-;;;
-;;; Returns the capabilities this GdkSeat currently has.
-;;;
-;;; seat :
-;;;     a GdkSeat
-;;;
-;;; Returns :
-;;;     the seat capabilities
-;;;
-;;; Since: 3.20
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gdk_seat_get_capabilities"
+           gdk-seat-get-capabilities) gdk-seat-capabilities
+ #+cl-cffi-gtk-documentation
+ "@version{2019-3-30}
+  @argument[seat]{a @class{gdk-seat} object}
+  @return{The seat capabilities of type @symbol{gdk-seat-capabilities}.}
+  @begin{short}
+    Returns the capabilities this @class{gdk-seat} object currently has.
+  @end{short}
+
+  Since 3.20
+  @see-class{gdk-seat}
+  @see-class{gdk-seat-capabilities}"
+  (seat (g-object gdk-seat)))
+
+(export 'gdk-seat-get-capabilities)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_seat_get_pointer ()
-;;;
-;;; GdkDevice * gdk_seat_get_pointer (GdkSeat *seat);
-;;;
-;;; Returns the master device that routes pointer events.
-;;;
-;;; seat :
-;;;     a GdkSeat
-;;;
-;;; Returns :
-;;;     a master GdkDevice with pointer capabilities. This object is owned by
-;;;     GTK+ and must not be freed.
-;;;
-;;; Since: 3.20
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gdk_seat_get_pointer"
+           gdk-seat-get-pointer) (g-object gdk-device)
+ #+cl-cffi-gtk-documentation
+ "@version{2019-3-30}
+  @argument[seat]{a @class{gdk-seat} object}
+  @return{A master @class{gdk-device} with pointer capabilities.}
+  @begin{short}
+    Returns the master device that routes pointer events.
+  @end{short}
+
+  Since 3.20
+  @see-class{gdk-seat}
+  @see-class{gdk-device}"
+  (seat (g-object gdk-seat)))
+
+(export 'gdk-seat-get-pointer)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_seat_get_keyboard ()
-;;;
-;;; GdkDevice * gdk_seat_get_keyboard (GdkSeat *seat);
-;;;
-;;; Returns the master device that routes keyboard events.
-;;;
-;;; seat :
-;;;     a GdkSeat
-;;;
-;;; Returns :
-;;;     a master GdkDevice with keyboard capabilities. This object is owned by
-;;;     GTK+ and must not be freed.
-;;;
-;;; Since: 3.20
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gdk_seat_get_keyboard"
+           gdk-seat-get-keyboard) (g-object gdk-device)
+ #+cl-cffi-gtk-documentation
+ "@version{2019-3-30}
+  @argument[seat]{a @class{gdk-seat} object}
+  @return{A master @class{gdk-device} with keyboard capabilities.}
+  @begin{short}
+    Returns the master device that routes keyboard events.
+  @end{short}
+
+  Since 3.20
+  @see-class{gdk-seat}
+  @see-class{gdk-device}"
+  (seat (g-object gdk-seat)))
+
+(export 'gdk-seat-get-keyboard)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_seat_get_slaves ()
-;;;
-;;; GList *
-;;; gdk_seat_get_slaves (GdkSeat *seat,
-;;;                      GdkSeatCapabilities capabilities);
-;;;
-;;; Returns the slave devices that match the given capabilities.
-;;;
-;;; seat :
-;;;     a GdkSeat
-;;;
-;;; capabilities :
-;;;     capabilities to get devices for
-;;;
-;;; Returns :
-;;;     A list of GdkDevices. The list must be freed with g_list_free(), the
-;;;     elements are owned by GDK and must not be freed.
-;;;
-;;; Since: 3.20
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gdk_seat_get_slaves"
+           gdk-seat-get-slaves) (g-list (g-object gdk-device))
+ #+cl-cffi-gtk-documentation
+ "@version{2019-3-30}
+  @argument[seat]{a @class{gdk-seat} object}
+  @argument[capabilities]{capabilities to get devices for}
+  @return{A list of @class{gdk-device} objects.}
+  @begin{short}
+    Returns the slave devices that match the given capabilities.
+  @end{short}
+
+  Since 3.20
+  @see-class{gdk-seat}
+  @see-class{gdk-device}"
+  (seat (g-object gdk-seat))
+  (capabilities gdk-seat-capabilities))
+
+(export 'gdk-seat-get-slaves)
 
 ;;; --- End of file gdk.seat.lisp ----------------------------------------------

@@ -268,23 +268,22 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gdk_rectangle_equal ()
-;;;
-;;; gboolean
-;;; gdk_rectangle_equal (const GdkRectangle *rect1,
-;;;                      const GdkRectangle *rect2);
-;;;
-;;; Checks if the two given rectangles are equal.
-;;;
-;;; rect1 :
-;;;     a GdkRectangle
-;;;
-;;; rect2 :
-;;;     a GdkRectangle
-;;;
-;;; Returns :
-;;;     TRUE if the rectangles are equal.
-;;;
-;;; Since: 3.20
 ;;; ----------------------------------------------------------------------------
+
+(defcfun ("gdk_rectangle_equal" gdk-rectangle-equal) :boolean
+ #+(and gdk-3-20 cl-cffi-gtk-documentation)
+ "@version{2019-3-30}
+  @argument[rect1]{a @class{gdk-rectangle} structure}
+  @argument[rect2]{a @class{gdk-rectangle} structure}
+  @return{@em{True} if the rectangles are equal.}
+  @begin{short}
+    Checks if the two given rectangles are equal.
+  @end{short}
+
+  Since 3.20"
+  (rect1 (g-boxed-foreign gdk-rectangle))
+  (rect2 (g-boxed-foreign gdk-rectangle)))
+
+(export 'gdk-rectangle-equal)
 
 ;;; --- End of file gdk.rectangle.lisp -----------------------------------------

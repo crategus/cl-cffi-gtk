@@ -1197,9 +1197,11 @@ get_device_settings (GdkDevice *device)
   @argument[device]{a @class{gdk-device} object}
   @argument[index]{the index of the macro button to set}
   @argument[keyval]{the keyval to generate}
-  @argument[modifiers]{the modifiers to set}
-  Specifies the X key event to generate when a macro button of a device is
-  pressed.
+  @argument[modifiers]{the modifiers of type @symbol{gdk-modifier-type} to set}
+  @begin{short}
+    Specifies the X key event to generate when a macro button of a device is
+    pressed.
+  @end{short}
   @see-class{gdk-device}"
   (device (g-object gdk-device))
   (index :uint)
