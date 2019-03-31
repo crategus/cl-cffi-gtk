@@ -50,9 +50,8 @@
   (is (equal '(:value-abstract)
              (foreign-bitfield-symbols 'g-type-flags (ash 1 5))))
   (is (equal '(:abstract :value-abstract)
-             (stable-sort (foreign-bitfield-symbols 'g-type-flags
-                                                    (+ (ash 1 4) (ash 1 5)))
-                          #'string-lessp)))
+             (foreign-bitfield-symbols 'g-type-flags
+                                       (+ (ash 1 4) (ash 1 5)))))
   (is (= (ash 1 4)
          (foreign-bitfield-value 'g-type-flags '(:abstract))))
   (is (= (ash 1 5)
@@ -73,11 +72,10 @@
              (foreign-bitfield-symbols 'g-type-fundamental-flags (ash 1 2))))
   (is (equal '(:deep-derivable)
              (foreign-bitfield-symbols 'g-type-fundamental-flags (ash 1 3))))
-  (is (equal '(:classed :deep-derivable :derivable :instantiatable)
-             (stable-sort (foreign-bitfield-symbols 'g-type-fundamental-flags
-                                                    (+ (ash 1 0) (ash 1 1)
-                                                    (ash 1 2) (ash 1 3)))
-                          #'string-lessp)))
+  (is (equal '(:CLASSED :INSTANTIATABLE :DERIVABLE :DEEP-DERIVABLE)
+             (foreign-bitfield-symbols 'g-type-fundamental-flags
+                                       (+ (ash 1 0) (ash 1 1)
+                                                    (ash 1 2) (ash 1 3)))))
   (is (= (ash 1 0)
          (foreign-bitfield-value 'g-type-fundamental-flags '(:classed))))
   (is (= (ash 1 1)

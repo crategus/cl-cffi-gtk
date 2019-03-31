@@ -4,7 +4,7 @@
 
 #-windows
 (test registered-object-types
-  (is (= 239
+  (is (= 272
          (length (alexandria:hash-table-alist gobject::*registered-object-types*)))))
 
 #+windows

@@ -77,9 +77,9 @@
     (is (=  40 (foreign-slot-value query '(:struct g-type-query) :instance-size))))
 
   ;; Get the names of the class properties.
-  (is (equal '("name" "parameter-type" "enabled" "state-type" "state")
+  (is (equal '("default-display")
              (mapcar #'param-spec-name
-                     (g-object-class-list-properties "GSimpleAction"))))
+                     (g-object-class-list-properties "GdkDisplayManager"))))
 
   ;; No style properties
   ;; No child properties
@@ -92,26 +92,24 @@
                          "default-display" "GdkDisplay" T T)))
              (get-g-type-definition "GdkDisplayManager"))))
 
+;;;   gdk-display-manager-default-display
+
+(test gdk-display-manager-default-display.1
+  (let ((display-manager (gdk-display-manager-get)))
+    (is (eq 'gdk-display
+            (type-of (gdk-display-manager-default-display display-manager))))))
+
+(test gdk-display-manager-default-display.2
+  (let* ((display-manager (gdk-display-manager-get))
+         (display (gdk-display-manager-default-display display-manager)))
+    (setf (gdk-display-manager-default-display display-manager) display)
+    (is (eq display
+            (gdk-display-manager-default-display display-manager)))))
+
 ;;;   gdk_display_manager_get
 
 (test gdk-display-manager-get
   (is (eq 'gdk-display-manager (type-of (gdk-display-manager-get)))))
-
-;;;   gdk_display_manager_get_default_display
-
-(test gdk-display-manager-get-default-display
-  (let ((display-manager (gdk-display-manager-get)))
-    (is (eq 'gdk-display
-            (type-of (gdk-display-manager-get-default-display display-manager))))))
-
-;;;   gdk_display_manager_set_default_display
-
-(test gdk-display-manager-set-default-display
-  (let* ((display-manager (gdk-display-manager-get))
-         (display (gdk-display-manager-get-default-display display-manager)))
-    (gdk-display-manager-set-default-display display-manager display)
-    (is (eq display
-            (gdk-display-manager-get-default-display display-manager)))))
 
 ;;;   gdk_display_manager_list_displays
 
@@ -125,6 +123,6 @@
 
 (test gdk-display-manager-open-display
   (let* ((display-manager (gdk-display-manager-get))
-         (display-name (gdk-display-get-name (gdk-display-manager-get-default-display display-manager))))
+         (display-name (gdk-display-get-name (gdk-display-manager-default-display display-manager))))
     (is-true (gdk-display-manager-open-display display-manager display-name))))
 

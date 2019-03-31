@@ -12,11 +12,11 @@
         (enter-id (g-signal-lookup "enter" "GtkButton"))
         (leave-id (g-signal-lookup "leave" "GtkButton"))
         (activate-id (g-signal-lookup "activate" "GtkButton")))
-  (is (equal (list activate-id pressed-id released-id clicked-id enter-id leave-id)
+  (is (equal (list activate-id clicked-id pressed-id released-id enter-id leave-id)
              (mapcar #'signal-info-id (list-signals "GtkButton"))))))
 
 (test signal-info-name
-  (is (equal '("activate" "pressed" "released" "clicked" "enter" "leave")
+  (is (equal '("activate" "clicked" "pressed" "released" "enter" "leave")
              (mapcar #'signal-info-name (list-signals "GtkButton")))))
 
 #+nil             
@@ -95,7 +95,7 @@
         (activate-id (g-signal-lookup "activate" "GtkButton")))
     (is-false (g-signal-list-ids "gboolean"))
     (is (equal '(1) (g-signal-list-ids "GObject")))
-    (is (equal (list activate-id pressed-id released-id clicked-id enter-id leave-id)
+    (is (equal (list activate-id clicked-id pressed-id released-id enter-id leave-id)
                (g-signal-list-ids "GtkButton")))))
 
 ;;;   g_signal_emit

@@ -71,7 +71,7 @@
                (foreign-slot-value query '(:struct g-type-query) :type-name)))
     (is (= 136
            (foreign-slot-value query '(:struct g-type-query) :class-size)))
-    (is (= 64
+    (is (= 72
            (foreign-slot-value query '(:struct g-type-query) :instance-size))))
 
   ;; Get the names of the class properties.

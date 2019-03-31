@@ -11,4 +11,4 @@
   (is-false (glib-check-version 2 24 0))
   (is-false (glib-check-version 2 32 3))
   (is (equal "GLib version too old (micro mismatch)"
-             (glib-check-version 2 42 0))))
+             (glib-check-version 2 99 0))))

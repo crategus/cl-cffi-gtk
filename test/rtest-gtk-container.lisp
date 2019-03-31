@@ -106,11 +106,10 @@
   (is-false (g-type-is-a "GtkContainer" "GtkWindow"))
 
   ;; Check the children
-  (is (equal '("GtkBin" "GtkMenuShell" "GtkBox" "GtkTable" "GtkGrid" "GtkLayout"
-               "GtkFixed" "GtkNotebook" "GtkPaned" "GtkHeaderBar" "GtkTextView"
-               "GtkTreeView"
-               "GtkIconView" "GtkToolItemGroup" "GtkToolbar" "GtkToolPalette"
-               "GtkSocket")
+  (is (equal '("GtkBin" "GtkMenuShell" "GtkBox" "GtkGrid" "GtkListBox" "GtkFlowBox"
+ "GtkStack" "GtkHeaderBar" "GtkPaned" "GtkLayout" "GtkNotebook" "GtkFixed"
+ "GtkTextView" "GtkTreeView" "GtkIconView" "GtkToolItemGroup" "GtkToolbar"
+ "GtkToolPalette" "GtkSocket" "GtkTable")
              (mapcar #'gtype-name (g-type-children "GtkContainer"))))
              
   ;; Check the interfaces
