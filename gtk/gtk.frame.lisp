@@ -55,6 +55,9 @@
 ;;; struct GtkFrame
 ;;; ----------------------------------------------------------------------------
 
+(eval-when (:compile-toplevel :load-toplevel :execute)
+  (register-object-type "GtkFrame" 'gtk-frame))
+
 (define-g-object-class "GtkFrame" gtk-frame
   (:superclass gtk-bin
    :export t
