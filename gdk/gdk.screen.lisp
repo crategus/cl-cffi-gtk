@@ -563,7 +563,7 @@
   @begin[Warning]{dictionary}
     The function @sym{gdk-screen-get-n-monitors} has been deprecated since
     version 3.22 and should not be used in newly-written code. Use the function
-    @fun{gdk-display-get-n_monitors} instead.
+    @fun{gdk-display-get-n-monitors} instead.
   @end{dictionary}
   @see-class{gdk-screen}
   @see-function{gdk-screen-get-primary-monitor}"
