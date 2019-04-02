@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.accel-label.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.10 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2014 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,19 +29,39 @@
 ;;;
 ;;; GtkAccelLabel
 ;;;
-;;; A label which displays an accelerator key on the right of the text
+;;;     A label which displays an accelerator key on the right of the text.
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkAccelLabel
 ;;;
+;;; Functions
+;;;  
 ;;;     gtk_accel_label_new
 ;;;     gtk_accel_label_set_accel_closure
 ;;;     gtk_accel_label_get_accel_widget
 ;;;     gtk_accel_label_set_accel_widget
 ;;;     gtk_accel_label_get_accel_width
 ;;;     gtk_accel_label_set_accel
+;;;     gtk_accel_label_get_accel ()
 ;;;     gtk_accel_label_refetch
+;;;
+;;; Properties
+;;;
+;;;      GClosure*  accel-closure    Read / Write
+;;;     GtkWidget*  accel-widget     Read / Write
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;             ╰── GtkMisc
+;;;                 ╰── GtkLabel
+;;;                     ╰── GtkAccelLabel
+;;;
+;;; Implemented Interfaces
+;;;     GtkAccelLabel implements AtkImplementorIface and GtkBuildable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -127,9 +144,7 @@
   @see-slot{gtk-accel-label-accel-widget}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
 ;;; Property and Accessor Details
-;;;
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- gtk-accel-label-accel-closure ------------------------------------------

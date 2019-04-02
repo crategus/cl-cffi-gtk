@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.progress-bar.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.10 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2014 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,26 +29,58 @@
 ;;;
 ;;; GtkProgressBar
 ;;;
-;;; A widget which indicates progress visually
+;;;     A widget which indicates progress visually
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkProgressBar
 ;;;
+;;; Functions
+;;;
 ;;;     gtk_progress_bar_new
 ;;;     gtk_progress_bar_pulse
-;;;     gtk_progress_bar_set_fraction
-;;;     gtk_progress_bar_get_fraction
-;;;     gtk_progress_bar_set_inverted
-;;;     gtk_progress_bar_get_inverted
-;;;     gtk_progress_bar_set_show_text
-;;;     gtk_progress_bar_get_show_text
-;;;     gtk_progress_bar_set_text
-;;;     gtk_progress_bar_get_text
-;;;     gtk_progress_bar_set_ellipsize
-;;;     gtk_progress_bar_get_ellipsize
-;;;     gtk_progress_bar_set_pulse_step
-;;;     gtk_progress_bar_get_pulse_step
+;;;     gtk_progress_bar_set_fraction                      Accessor
+;;;     gtk_progress_bar_get_fraction                      Accessor
+;;;     gtk_progress_bar_set_inverted                      Accessor
+;;;     gtk_progress_bar_get_inverted                      Accessor
+;;;     gtk_progress_bar_set_show_text                     Accessor
+;;;     gtk_progress_bar_get_show_text                     Accessor
+;;;     gtk_progress_bar_set_text                          Accessor
+;;;     gtk_progress_bar_get_text                          Accessor
+;;;     gtk_progress_bar_set_ellipsize                     Accessor
+;;;     gtk_progress_bar_get_ellipsize                     Accessor
+;;;     gtk_progress_bar_set_pulse_step                    Accessor
+;;;     gtk_progress_bar_get_pulse_step                    Accessor
+;;;
+;;; Properties
+;;;
+;;;     PangoEllipsizeMode   ellipsize     Read / Write
+;;;                gdouble   fraction      Read / Write
+;;;               gboolean   inverted      Read / Write
+;;;                gdouble   pulse-step    Read / Write
+;;;               gboolean   show-text     Read / Write
+;;;                  gchar*  text          Read / Write
+;;;
+;;; Style Properties
+;;;
+;;;     gint  min-horizontal-bar-height    Read / Write
+;;;     gint  min-horizontal-bar-width     Read / Write
+;;;     gint  min-vertical-bar-height      Read / Write
+;;;     gint  min-vertical-bar-width       Read / Write
+;;;     gint  xspacing                     Read / Write
+;;;     gint  yspacing                     Read / Write
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;             ╰── GtkProgressBar
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GtkProgressBar implements AtkImplementorIface, GtkBuildable and
+;;;     GtkOrientable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -88,13 +117,14 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-progress-bar 'type)
- "@version{2014-3-16}
+ "@version{2019-3-31}
   @begin{short}
     The @sym{gtk-progress-bar} is typically used to display the progress of a
-    long running operation. It provides a visual clue that processing is
-    underway. The @sym{gtk-progress-bar} can be used in two different modes:
-    percentage mode and activity mode.
+    long running operation.
   @end{short}
+  It provides a visual clue that processing is underway. The
+  @sym{gtk-progress-bar} can be used in two different modes: percentage mode and
+  activity mode.
 
   When an application can determine how much work needs to take place, e. g.
   read a fixed number of bytes from a file, and can monitor its progress, it
@@ -113,48 +143,85 @@
   the @sym{gtk-progress-bar}. Functions are provided to control the orientation
   of the bar, optional text can be displayed along with the bar, and the step
   size used in activity mode can be set.
+  @begin[CSS nodes]{dictionary}
+    @begin{pre}
+ progressbar[.osd]
+ ├── [text]
+ ╰── trough[.empty][.full]
+     ╰── progress[.pulse]
+    @end{pre}
+    @sym{gtk-progress-bar} has a main CSS node with name progressbar and
+    subnodes with names text and trough, of which the latter has a subnode named
+    progress. The text subnode is only present if text is shown. The progress
+    subnode has the style class @code{.pulse} when in activity mode. It gets the
+    style classes @code{.left}, @code{.right}, @code{.top} or @code{.bottom}
+    added when the progress 'touches' the corresponding end of the
+    @sym{gtk-progress-bar}. The @code{.osd} class on the progressbar node is for
+    use in overlays like the one Epiphany has for page loading progress.
+  @end{dictionary}
   @begin[Style Property Details]{dictionary}
-    @subheading{The \"min-horizontal-bar-height\" style property}
-      @code{\"min-horizontal-bar-height\"} of type @code{:int}
-      (Read / Write)@br{}
-      Minimum horizontal height of the progress bar. @br{}
-      Allowed values: >= 1 @br{}
-      Default value: 20 @br{}
-      Since 2.14
-
-    @subheading{The \"min-horizontal-bar-width\" style property}
-      @code{\"min-horizontal-bar-width\"} of type @code{:int}
-      (Read / Write)@br{}
-      The minimum horizontal width of the progress bar. @br{}
-      Allowed values: >= 1 @br{}
-      Default value: 150 @br{}
-      Since 2.14
-
-    @subheading{The \"min-vertical-bar-height\" style property}
-      @code{\"min-vertical-bar-height\"} of type @code{:int} (Read / Write)@br{}
-      The minimum vertical height of the progress bar. @br{}
-      Allowed values: >= 1 @br{}
-      Default value: 80 @br{}
-      Since 2.14
-
-    @subheading{The \"min-vertical-bar-width\" style property}
-      @code{\"min-vertical-bar-width\"} of type @code{:int} (Read / Write)@br{}
-      The minimum vertical width of the progress bar. @br{}
-      Allowed values: >= 1 @br{}
-      Default value: 22 @br{}
-      Since 2.14
-
-    @subheading{The \"xspacing\" style property}
-      @code{\"xspacing\"} of type @code{:int} (Read / Write)@br{}
-      Extra spacing applied to the width of a progress bar. @br{}
-      Allowed values: >= 0 @br{}
-      Default value: 7
-
-    @subheading{The \"yspacing\" style property}
-      @code{\"yspacing\"} of type @code{:int} (Read / Write)@br{}
-      Extra spacing applied to the height of a progress bar. @br{}
-      Allowed values: >= 0 @br{}
-      Default value: 7
+    @begin[code]{table}
+      @begin[min-horizontal-bar-height]{entry}
+        The @code{min-horizontal-bar-height} style property of type @code{:int}
+        (Read / Write) @br{}
+        Minimum horizontal height of the progress bar. @br{}
+        @b{Warning:} @code{min-horizontal-bar-height} has been deprecated since
+        version 3.20 and should not be used in newly-written code. Use the
+        standard CSS property @code{min-height}. @br{}
+        Allowed values: >= 1 @br{}
+        Default value: 20 @br{}
+      @end{entry}
+      @begin[min-horizontal-bar-width]{entry}
+        The @code{min-horizontal-bar-width} style property of type @code{:int}
+        (Read / Write) @br{}
+        The minimum horizontal width of the progress bar. @br{}
+        @b{Warning:} @code{min-horizontal-bar-width} has been deprecated since
+        version 3.20 and should not be used in newly-written code. Use the
+        standard CSS property @code{min-width}. @br{}
+        Allowed values: >= 1 @br{}
+        Default value: 150 @br{}
+      @end{entry}
+      @begin[min-vertical-bar-height]{entry}
+        The @code{min-vertical-bar-height} style property of type @code{:int}
+        (Read / Write) @br{}
+        The minimum vertical height of the progress bar. @br{}
+        @b{Warning:} @code{min-vertical-bar-height} has been deprecated since
+        version 3.20 and should not be used in newly-written code. Use the
+        standard CSS property @code{min-height}. @br{}
+        Allowed values: >= 1 @br{}
+        Default value: 80 @br{}
+      @end{entry}
+      @begin[min-vertical-bar-width]{entry}
+        The @code{min-vertical-bar-width} style property of type @code{:int}
+        (Read / Write) @br{}
+        The minimum vertical width of the progress bar. @br{}
+        @b{Warning:} @code{min-vertical-bar-width} has been deprecated since
+        version 3.20 and should not be used in newly-written code. Use the
+        standard CSS property @code{min-width}. @br{}
+        Allowed values: >= 1 @br{}
+        Default value: 22 @br{}
+      @end{entry}
+      @begin[xspacing]{entry}
+        The @code{xspacing} style property of type @code{:int} (Read / Write)
+        @br{}
+        Extra spacing applied to the width of a progress bar. @br{}
+        @b{Warning:} @code{xspacing} has been deprecated since version 3.20 and
+        should not be used in newly-written code. Use the standard CSS padding
+        and margins; the value of this style property is ignored. @br{}
+        Allowed values: >= 0 @br{}
+        Default value: 7
+      @end{entry}
+      @begin[yspacing]{entry}
+        The @code{yspacing} style property of type @code{:int} (Read / Write)
+        @br{}
+        Extra spacing applied to the height of a progress bar. @br{}
+        @b{Warning:} @code{yspacing} has been deprecated since version 3.20 and
+        should not be used in newly-written code. Use the standard CSS padding
+        and margins; the value of this style property is ignored. @br{}
+        Allowed values: >= 0 @br{}
+        Default value: 7
+      @end{entry}
+    @end{table}
   @end{dictionary}
   @see-slot{gtk-progress-bar-ellipsize}
   @see-slot{gtk-progress-bar-fraction}
@@ -164,9 +231,7 @@
   @see-slot{gtk-progress-bar-text}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
 ;;; Property and Accessor Details
-;;;
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- gtk-progress-bar-ellipsize ---------------------------------------------
@@ -174,7 +239,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "ellipsize"
                                                'gtk-progress-bar) 't)
- "The @code{\"ellipsize\"} property of type @symbol{pango-ellipsize-mode}
+ "The @code{ellipsize} property of type @symbol{pango-ellipsize-mode}
   (Read / Write) @br{}
   The preferred place to ellipsize the string, if the progress bar does not
   have enough room to display the entire string, specified as a
@@ -183,8 +248,7 @@
   side-effect that the progress bar requests only enough space to display the
   ellipsis (\"...\"). Another means to set a progress bar's width is the
   function @fun{gtk-widget-size-request}. @br{}
-  Default value: @code{:none} @br{}
-  Since 2.6")
+  Default value: @code{:none}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-progress-bar-ellipsize atdoc:*function-name-alias*)
@@ -206,15 +270,13 @@
   The generic function @sym{(setf gtk-progress-bar-ellipsize)} sets the mode
   used to ellipsize, add an ellipsis: \"...\", the text if there is not enough
   space to render the entire string.
-
-  Since 2.6
   @see-class{gtk-progress-bar}")
 
 ;;; --- gtk-progress-bar-fraction ----------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "fraction" 'gtk-progress-bar) 't)
- "The @code{\"fraction\"} property of type @code{:double} (Read / Write) @br{}
+ "The @code{fraction} property of type @code{:double} (Read / Write) @br{}
   The fraction of total work that has been completed. @br{}
   Allowed values: [0,1] @br{}
   Default value: 0")
@@ -245,7 +307,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "inverted" 'gtk-progress-bar) 't)
- "The @code{\"inverted\"} property of type @code{:boolean} (Read / Write) @br{}
+ "The @code{inverted} property of type @code{:boolean} (Read / Write) @br{}
   Invert the direction in which the progress bar grows. @br{}
   Default value: @code{nil}")
 
@@ -277,7 +339,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "pulse-step"
                                                'gtk-progress-bar) 't)
- "The @code{\"pulse-step\"} property of type @code{:double} (Read / Write) @br{}
+ "The @code{pulse-step} property of type @code{:double} (Read / Write) @br{}
   The fraction of total progress to move the bouncing block when pulsed. @br{}
   Allowed values: [0,1] @br{}
   Default value: 0.1")
@@ -310,7 +372,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "show-text"
                                                'gtk-progress-bar) 't)
- "The @code{\"show-text\"} property of type @code{:boolean} (Read / Write) @br{}
+ "The @code{show-text} property of type @code{:boolean} (Read / Write) @br{}
   Sets whether the progress bar will show text superimposed over the bar.
   The shown text is either the value of the @code{\"text\"} property or, if that
   is @code{nil}, the @code{\"fraction\"} value, as a percentage.
@@ -354,7 +416,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "text" 'gtk-progress-bar) 't)
- "The @code{\"text\"} property of type @code{:string} (Read / Write) @br{}
+ "The @code{text} property of type @code{:string} (Read / Write) @br{}
   Text to be displayed in the progress bar. @br{}
   Default value: @code{nil}")
 

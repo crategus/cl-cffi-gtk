@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.link-button.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.10 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2014 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,14 +29,44 @@
 ;;;
 ;;; GtkLinkButton
 ;;;
-;;; Create buttons bound to a URL
+;;;     Create buttons bound to a URL
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkLinkButton
 ;;;
+;;; Functions
+;;;
 ;;;     gtk_link_button_new
 ;;;     gtk_link_button_new_with_label
+;;;     gtk_link_button_get_uri ()                         Accessor
+;;;     gtk_link_button_set_uri ()                         Accessor
+;;;     gtk_link_button_get_visited ()                     Accessor
+;;;     gtk_link_button_set_visited ()                     Accessor
+;;;
+;;; Properties
+;;;
+;;;        gchar*  uri        Read / Write
+;;;     gboolean   visited    Read / Write
+;;;
+;;; Signals
+;;;
+;;;     gboolean  activate-link    Run Last
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;             ╰── GtkContainer
+;;;                 ╰── GtkBin
+;;;                     ╰── GtkButton
+;;;                         ╰── GtkLinkButton
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GtkLinkButton implements AtkImplementorIface, GtkBuildable,
+;;;     GtkActionable and GtkActivatable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -82,10 +109,15 @@
   By default, @sym{gtk-link-button} calls the function @fun{gtk-show-uri} when
   the button is clicked. This behaviour can be overridden by connecting to the
   \"activate-link\" signal and returning @arg{true} from the signal handler.
+  @begin[CSS nodes]{dictionary}
+    @sym{gtk-link-button} has a single CSS node with name @code{button}. To
+    differentiate it from a plain @class{gtk-button}, it gets the @code{.link}
+    style class.
+  @end{dictionary}
   @begin[Signal Details]{dictionary}
     @subheading{The \"activate-link\" signal}
       @begin{pre}
- lambda (button)   : Run Last
+ lambda (button)    : Run Last
       @end{pre}
       The \"activate-link\" signal is emitted each time the
       @sym{gtk-link-button} has been clicked.
@@ -102,9 +134,7 @@
   @see-class{gtk-button}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
 ;;; Property and Accessor Details
-;;;
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- gtk-link-button-uri ----------------------------------------------------
@@ -113,8 +143,7 @@
 (setf (documentation (atdoc:get-slot-from-name "uri" 'gtk-link-button) 't)
  "The @code{\"uri\"} property of type @code{:string} (Read / Write) @br{}
   The URI bound to this button. @br{}
-  Default value: @code{nil} @br{}
-  Since 2.10")
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-link-button-uri atdoc:*function-name-alias*) "Accessor"
@@ -136,8 +165,6 @@
   where the @class{gtk-link-button} points.
 
   As a side-effect this unsets the visited state of the button.
-
-  Since 2.10
   @see-class{gtk-link-button}")
 
 ;;; --- gtk-link-button-visited ------------------------------------------------
@@ -147,8 +174,7 @@
  "The @code{\"visited\"} property of type @code{:boolean} (Read / Write) @br{}
   The @code{\"visited\"} state of this button. A visited link is drawn in a
   different color. @br{}
-  Default value: @code{nil} @br{}
-  Since 2.14")
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-link-button-visited atdoc:*function-name-alias*) "Accessor"
@@ -171,8 +197,6 @@
 
   The generic function @sym{(setf gtk-link-button-visited)} sets the \"visited\"
   state of the URI where the @class{gtk-link-button} points.
-
-  Since 2.14
   @see-class{gtk-link-button}")
 
 ;;; ----------------------------------------------------------------------------
@@ -189,8 +213,6 @@
   @begin{short}
     Creates a new @class{gtk-link-button} widget with the URI as its text.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-link-button}"
   (make-instance 'gtk-link-button
                  :uri uri
@@ -213,8 +235,6 @@
   @begin{short}
     Creates a new @class{gtk-link-button} widget containing a label.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-link-button}"
   (make-instance 'gtk-link-button
                  :uri uri

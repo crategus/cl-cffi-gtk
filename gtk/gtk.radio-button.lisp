@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.radio-button.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.10 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2014 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,9 +29,13 @@
 ;;;
 ;;; GtkRadioButton
 ;;;
-;;; A choice from multiple check buttons
+;;;     A choice from multiple check buttons
+;;;
+;;; Types and Values
 ;;;
 ;;;     GtkRadioButton
+;;;
+;;; Functions
 ;;;
 ;;;     gtk_radio_button_new
 ;;;     gtk_radio_button_new_from_widget
@@ -45,6 +46,30 @@
 ;;;     gtk_radio_button_set_group
 ;;;     gtk_radio_button_get_group
 ;;;     gtk_radio_button_join_group
+;;;
+;;; Properties
+;;;
+;;;     GtkRadioButton*  group    Write
+;;;
+;;; Signals
+;;;
+;;;     void  group-changed    Run First
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;             ╰── GtkContainer
+;;;                 ╰── GtkBin
+;;;                     ╰── GtkButton
+;;;                         ╰── GtkToggleButton
+;;;                             ╰── GtkCheckButton
+;;;                                 ╰── GtkRadioButton
+;;;
+;;; Implemented Interfaces
+;;;     GtkRadioButton implements AtkImplementorIface, GtkBuildable,
+;;;     GtkActionable and GtkActivatable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -98,8 +123,27 @@
   To remove a @sym{gtk-radio-button} from one group and make it part of a new
   one, use the function @fun{gtk-radio-button-set-group}.
 
-  Example 53. How to create a group of two radio buttons.
-  @begin{pre}
+  @begin[CSS nodes]{dictionary}
+    @begin{pre}
+ radiobutton
+ ├── radio
+ ╰── <child>
+    @end{pre}
+    A @sym{gtk-radio-button} with indicator, see the function
+    @fun{gtk-toggle-button-set-mode}, has a main CSS node with name
+    @code{radiobutton} and a subnode with name @code{radio}.
+    @begin{pre}
+ button.radio
+ ├── radio
+ ╰── <child>
+    @end{pre}
+    A @sym{gtk-radio-button} without indicator changes the name of its main node
+    to @code{button} and adds a @code{.radio} style class to it. The subnode is
+    invisible in this case.
+  @end{dictionary}
+  @begin[Example]{dictionary}
+    How to create a group of two radio buttons.
+    @begin{pre}
  void create_radio_buttons (void) {
 
     GtkWidget *window, *radio1, *radio2, *box, *entry;
@@ -124,11 +168,12 @@
     gtk_widget_show_all (window);
     return;
  @}
-  @end{pre}
-  When an unselected button in the group is clicked the clicked button
-  receives the \"toggled\" signal, as does the previously selected button.
-  Inside the \"toggled\" handler, the function @fun{gtk-toggle-button-active}
-  can be used to determine if the button has been selected or deselected.
+    @end{pre}
+    When an unselected button in the group is clicked the clicked button
+    receives the \"toggled\" signal, as does the previously selected button.
+    Inside the \"toggled\" handler, the function @fun{gtk-toggle-button-active}
+    can be used to determine if the button has been selected or deselected.
+  @end{dictionary}
   @begin[Signal Details]{dictionary}
     @subheading{The \"group-changed\" signal}
       @begin{pre}
@@ -149,14 +194,12 @@
   @see-class{gtk-combo-box}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
 ;;; Property and Accessor Details
-;;;
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "group" 'gtk-radio-button) 't)
- "The @code{\"group\"} property of type @sym{gtk-radio-button} (Write) @br{}
+ "The @code{group} property of type @sym{gtk-radio-button} (Write) @br{}
   Sets a new group for a radio button.")
 
 #+cl-cffi-gtk-documentation

@@ -760,6 +760,7 @@
 
       @about-class{gtk-image}
       @about-symbol{gtk-image-type}
+
       @about-function{gtk-image-get-icon-set}
       @about-function{gtk-image-get-stock}
       @about-function{gtk-image-get-animation}
@@ -773,6 +774,7 @@
       @about-function{gtk-image-new-from-icon-name}
       @about-function{gtk-image-new-from-gicon}
       @about-function{gtk-image-new-from-resource}
+      @about-function{gtk-image-new-from-surface}
       @about-function{gtk-image-set-from-file}
       @about-function{gtk-image-set-from-icon-set}
       @about-function{gtk-image-set-from-pixbuf}
@@ -781,6 +783,7 @@
       @about-function{gtk-image-set-from-icon-name}
       @about-function{gtk-image-set-from-gicon}
       @about-function{gtk-image-set-from-resource}
+      @about-function{gtk-image-set-from-surface}
       @about-function{gtk-image-clear}
       @about-function{gtk-image-new}
       @about-function{gtk-image-get-pixel-size}
@@ -797,6 +800,11 @@
       Report important messages to the user.
 
       @about-class{gtk-info-bar}
+
+      @about-gemeric{gtk-info-bar-message-type}
+      @about-gemeric{gtk-info-bar-revealed}
+      @about-gemeric{gtk-info-bar-show-close-button}
+
       @about-function{gtk-info-bar-new}
       @about-function{gtk-info-bar-new-with-buttons}
       @about-function{gtk-info-bar-add-action-widget}
@@ -812,6 +820,14 @@
       A widget which indicates progress visually.
 
       @about-class{gtk-progress-bar}
+
+      @about-generic{gtk-progress-bar-fraction}
+      @about-generic{gtk-progress-bar-inverted}
+      @about-generic{gtk-progress-bar-show-text}
+      @about-generic{gtk-progress-bar-text}
+      @about-generic{gtk-progress-bar-ellipsize}
+      @about-generic{gtk-progress-bar-pulse-step}
+
       @about-function{gtk-progress-bar-new}
       @about-function{gtk-progress-bar-pulse}
     @end{subsection}
@@ -1001,6 +1017,12 @@
     @end{subsection}
     @begin[GtkLockButton]{subsection}
       not implemented
+    @end{subsection}
+    @begin[GtkModelButton]{subsection}
+      A button that uses a GAction as model.
+
+      @about-class{gtk-model-button}
+      @about-function{gtk-model-button-new}
     @end{subsection}
   @end{section}
   @begin[Numeric and Text Data Entry]{section}

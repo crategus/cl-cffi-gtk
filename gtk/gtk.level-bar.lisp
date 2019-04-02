@@ -2,11 +2,11 @@
 ;;; gtk.level-bar.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.10 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2014 Dieter Kaiser
+;;; Copyright (C) 2014 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -28,15 +28,18 @@
 ;;;
 ;;; GtkLevelBar
 ;;;
-;;; A bar that can used as a level indicator
+;;;     A bar that can used as a level indicator.
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GTK_LEVEL_BAR_OFFSET_LOW
 ;;;     GTK_LEVEL_BAR_OFFSET_HIGH
+;;;     GTK_LEVEL_BAR_OFFSET_FULL
 ;;;
 ;;;     GtkLevelBarMode
 ;;;     GtkLevelBar
+;;;
+;;; Functions
 ;;;
 ;;;     gtk_level_bar_new
 ;;;     gtk_level_bar_new_for_interval
@@ -53,6 +56,35 @@
 ;;;     gtk_level_bar_add_offset_value
 ;;;     gtk_level_bar_remove_offset_value
 ;;;     gtk_level_bar_get_offset_value
+;;;
+;;; Properties
+;;;
+;;;            gboolean  inverted            Read / Write
+;;;             gdouble  max-value           Read / Write
+;;;             gdouble  min-value           Read / Write
+;;;     GtkLevelBarMode  mode                Read / Write
+;;;             gdouble  value               Read / Write
+;;;
+;;; Style Properties
+;;;
+;;;                gint  min-block-height    Read / Write
+;;;                gint  min-block-width     Read / Write
+;;;
+;;; Signals
+;;;
+;;;     void  offset-changed    Has Details
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;             ╰── GtkLevelBar
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GtkLevelBar implements AtkImplementorIface, GtkBuildable and
+;;;     GtkOrientable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -78,17 +110,26 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
+;;; GTK_LEVEL_BAR_OFFSET_FULL
+;;;
+;;; #define GTK_LEVEL_BAR_OFFSET_FULL "full"
+;;;
+;;; The name used for the stock full offset included by GtkLevelBar.
+;;;
+;;; Since: 3.20
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; enum GtkLevelBarMode
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-6
 (define-g-enum "GtkLevelBarMode" gtk-level-bar-mode
   (:export t
    :type-initializer "gtk_level_bar_mode_get_type")
   (:continuous 0)
   (:discrete 1))
 
-#+(and gtk-3-6 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-level-bar-mode atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-level-bar-mode atdoc:*external-symbols*)
  "@version{2014-2-3}
@@ -116,7 +157,6 @@
 ;;; struct GtkLevelBar
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-6
 (define-g-object-class "GtkLevelBar" gtk-level-bar
   (:superclass gtk-widget
    :export t
@@ -141,7 +181,7 @@
     gtk-level-bar-value
     "value" "gdouble" t t)))
 
-#+(and gtk-3-6 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-level-bar 'type)
  "@version{2014-2-3}
   @begin{short}
@@ -168,6 +208,34 @@
   blocks, it is sufficient to set the minimum value to 0 and the maximum value
   to 5 after changing the indicator mode to discrete.
 
+  GtkLevelBar was introduced in GTK+ 3.6.
+  @begin[GtkLevelBar as GtkBuildable]{dictionary}
+    The @sym{gtk-level-bar} implementation of the @class{gtk-buildable}
+    interface supports a custom @code{<offsets>} element, which can contain any
+    number of @code{<offset>} elements, each of which must have name and value
+    attributes.
+  @end{dictionary}
+  @begin[CSS nodes]{dictionary}
+    @begin{pre}
+ levelbar[.discrete]
+ ╰── trough
+     ├── block.filled.level-name
+     ┊
+     ├── block.empty
+     ┊
+    @end{pre}
+    @sym{gtk-level-bar} has a main CSS node with name @code{levelbar} and one of
+    the style classes @code{.discrete} or @code{.continuous} and a subnode with
+    name @code{trough}. Below the @code{trough} node are a number of nodes with
+    name @code{block} and style class @code{.filled} or @code{.empty}. In
+    continuous mode, there is exactly one node of each, in discrete mode, the
+    number of filled and unfilled nodes corresponds to blocks that are drawn.
+    The @code{block.filled} nodes also get a style class @code{.level-name}
+    corresponding to the level for the current value.
+
+    In horizontal orientation, the nodes are always arranged from left to right,
+    regardless of text direction.
+  @end{dictionary}
   @begin[Example]{dictionary}
     Adding a custom offset on the bar.
     @begin{pre}
@@ -201,21 +269,34 @@
     @end{pre}
   @end{dictionary}
   @begin[Style Property Details]{dictionary}
-    @subheading{The \"min-block-height\" style property}
-      @code{\"min-block-height\"} of type @code{:int} (Read / Write) @br{}
-      The @code{\"min-block-height\"} style property determines the minimum
-      height for blocks filling the @sym{gtk-level-bar} widget. @br{}
-      Allowed values: >= 1 @br{}
-      Default value: 3 @br{}
-      Since 3.6
-
-    @subheading{The \"min-block-width\" style property}
-      @code{\"min-block-width\"} of type @code{:int} (Read / Write) @br{}
-      The @code{\"min-block-width\"} style property determines the minimum width
-      for blocks filling the @sym{gtk-level-bar} widget. @br{}
-      Allowed values: >= 1 @br{}
-      Default value: 3 @br{}
-      Since 3.6
+    @begin[code]{table}
+      @begin[min-block-height]{entry}
+        The @code{min-block-height} style property of type @code{:int}
+        (Read / Write) @br{}
+        The @code{min-block-height} style property determines the minimum
+        height for blocks filling the @sym{gtk-level-bar} widget. @br{}
+        @b{Warning:} @code{min-block-height} has been deprecated since version
+        3.20 and should not be used in newly-written code. Use the standard
+        min-width/min-height CSS properties on the block elements; the value of
+        this style property is ignored. @br{}
+        Allowed values: >= 1 @br{}
+        Default value: 3 @br{}
+        Since 3.6
+      @end{entry}
+      @begin[min-block-width]{entry}
+        The @code{min-block-width} style property of type @code{:int}
+        (Read / Write) @br{}
+        The @code{\"min-block-width\"} style property determines the minimum
+        width for blocks filling the @sym{gtk-level-bar} widget. @br{}
+        @b{Warning:} @code{min-block-height} has been deprecated since version
+        3.20 and should not be used in newly-written code. Use the standard
+        min-width/min-height CSS properties on the block elements; the value of
+        this style property is ignored. @br{}
+        Allowed values: >= 1 @br{}
+        Default value: 3 @br{}
+        Since 3.6
+      @end{entry}
+    @end{table}
   @end{dictionary}
   @begin[Signal Details]{dictionary}
     @subheading{The \"offset-changed\" signal}
@@ -240,9 +321,7 @@ lambda (levelbar name)   : Has Details
   @see-slot{gtk-level-bar-value}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
 ;;; Property and Accessor Details
-;;;
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- gtk-level-bar-inverted -------------------------------------------------
@@ -280,7 +359,7 @@ lambda (levelbar name)   : Has Details
 
 ;;; --- gtk-level-bar-max-value ------------------------------------------------
 
-#+(and gtk-3-6 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "max-value" 'gtk-level-bar) 't)
  "The @code{\"max-value\"} property of type @code{:double} (Read / Write) @br{}
   The @code{\"max-value\"} property determines the maximum value of the interval
@@ -289,7 +368,7 @@ lambda (levelbar name)   : Has Details
   Default value: 1 @br{}
   Since 3.6")
 
-#+(and gtk-3-6 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-level-bar-max-value atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-level-bar-max-value 'function)
@@ -315,7 +394,7 @@ lambda (levelbar name)   : Has Details
 
 ;;; --- gtk-level-bar-min-value ------------------------------------------------
 
-#+(and gtk-3-6 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "min-value" 'gtk-level-bar) 't)
  "The @code{\"min-value\"} property of type @code{:double} (Read / Write) @br{}
   The @code{\"min-value\"} property determines the minimum value of the interval
@@ -324,7 +403,7 @@ lambda (levelbar name)   : Has Details
   Default value: 0 @br{}
   Since 3.6")
 
-#+(and gtk-3-6 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-level-bar-min-value atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-level-bar-min-value 'function)
@@ -350,7 +429,7 @@ lambda (levelbar name)   : Has Details
 
 ;;; --- gtk-level-bar-mode -----------------------------------------------------
 
-#+(and gtk-3-6 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "mode" 'gtk-level-bar) 't)
  "The @code{\"mode\"} property of type @symbol{gtk-level-bar-mode}
   (Read / Write) @br{}
@@ -364,7 +443,7 @@ lambda (levelbar name)   : Has Details
   Default value: @code{:continuous} @br{}
   Since 3.6")
 
-#+(and gtk-3-6 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-level-bar-mode atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-level-bar-mode 'function)
@@ -390,7 +469,7 @@ lambda (levelbar name)   : Has Details
 
 ;;; --- gtk-level-bar-value ----------------------------------------------------
 
-#+(and gtk-3-6 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "value" 'gtk-level-bar) 't)
  "The @code{\"value\"} property of type @code{:double} (Read / Write) @br{}
   The @code{\"value\"} property determines the currently filled value of the
@@ -399,7 +478,7 @@ lambda (levelbar name)   : Has Details
   Default value: 0 @br{}
   Since 3.6")
 
-#+(and gtk-3-6 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-level-bar-value atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-level-bar-value 'function)
@@ -428,10 +507,8 @@ lambda (levelbar name)   : Has Details
 ;;; gtk_level_bar_new ()
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-6
 (declaim (inline gtk-level-bar-new))
 
-#+gtk-3-6
 (defun gtk-level-bar-new ()
  #+cl-cffi-gtk-documentation
  "@version{2014-2-3}
@@ -443,17 +520,14 @@ lambda (levelbar name)   : Has Details
   @see-function{gtk-level-bar-new-for-interval}"
   (make-instance 'gtk-level-bar))
 
-#+gtk-3-6
 (export 'gtk-level-bar-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_level_bar_new_for_interval ()
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-6
 (declaim (inline gtk-level-bar-new-for-interval))
 
-#+gtk-3-6
 (defun gtk-level-bar-new-for-interval (min-value max-value)
  #+cl-cffi-gtk-documentation
  "@version{2014-2-3}
@@ -472,14 +546,12 @@ lambda (levelbar name)   : Has Details
                  :min-value min-value
                  :max-value max-value))
 
-#+gtk-3-6
 (export 'gtk-level-bar-new-for-interval)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_level_bar_add_offset_value ()
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-6
 (defcfun ("gtk_level_bar_add_offset_value" gtk-level-bar-add-offset-value) :void
  "@version{2014-11-7}
   @argument[level-bar]{a @class{gtk-level-bar} widget}
@@ -502,14 +574,12 @@ lambda (levelbar name)   : Has Details
   (name :string)
   (value :double))
 
-#+gtk-3-6
 (export 'gtk-level-bar-add-offset-value)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_level_bar_remove_offset_value ()
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-6
 (defcfun ("gtk_level_bar_remove_offset_value" gtk-level-bar-remove-offset-value)
     :void
  "@version{2014-3-21}
@@ -526,21 +596,18 @@ lambda (levelbar name)   : Has Details
   (level-bar (g-object gtk-level-bar))
   (name :string))
 
-#+gtk-3-6
 (export 'gtk-level-bar-remove-offset-value)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_level_bar_get_offset_value ()
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-6
 (defcfun ("gtk_level_bar_get_offset_value" %gtk-level-bar-get-offset-value)
     :boolean
   (level-bar (g-object gtk-level-bar-get-offset-value))
   (name :string)
   (value :double))
 
-#+gtk-3-6
 (defun gtk-level-bar-get-offset-value (level-bar name)
  "@version{2014-3-21}
   @argument[level-bar]{a @class{gtk-level-bar} widget}
@@ -557,7 +624,6 @@ lambda (levelbar name)   : Has Details
     (%gtk-level-bar-get-offset-value level-bar name value)
     (mem-ref value :double)))
 
-#+gtk-3-6
 (export 'gtk-level-bar-get-offset-value)
 
 ;;; --- End of file gtk.level-bar.lisp -----------------------------------------

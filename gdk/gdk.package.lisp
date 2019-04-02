@@ -678,12 +678,97 @@
     @about-symbol{gdk-event-mask}
 
     @about-struct{gdk-event}
+    @about-function{copy-gdk-event}
+    @about-function{make-gdk-event}
+    @about-function{gdk-event-type}
+    @about-function{gdk-event-window}
+    @about-function{gdk-event-send-event}
+
     @about-struct{gdk-event-any}
+
     @about-struct{gdk-event-key}
+    @about-function{copy-gdk-event-key}
+    @about-function{make-gdk-event-key}
+    @about-function{gdk-event-key-type}
+    @about-function{gdk-event-key-window}
+    @about-function{gdk-event-key-send-event}
+    @about-function{gdk-event-key-time}
+    @about-function{gdk-event-key-state}
+    @about-function{gdk-event-key-keyval}
+    @about-function{gdk-event-key-length}
+    @about-function{gdk-event-key-string}
+    @about-function{gdk-event-key-hardware-keycode}
+    @about-function{gdk-event-key-group}
+    @about-function{gdk-event-key-is-modifier}
+
     @about-struct{gdk-event-button}
+
+    @about-function{copy-gdk-event-button}
+    @about-function{make-gdk-event-button}
+    @about-function{gdk-event-button-type}
+    @about-function{gdk-event-button-window}
+    @about-function{gdk-event-button-send-event}
+    @about-function{gdk-event-button-time}
+    @about-function{gdk-event-button-x}
+    @about-function{gdk-event-button-y}
+    @about-function{gdk-event-button-axes}
+    @about-function{gdk-event-button-state}
+    @about-function{gdk-event-button-button}
+    @about-function{gdk-event-button-device}
+    @about-function{gdk-event-button-x-root}
+    @about-function{gdk-event-button-y-root}
+
     @about-struct{gdk-event-touch}
+
+    @about-function{copy-gdk-event-touch}
+    @about-function{make-gdk-event-touch}
+    @about-function{gdk-event-touch-type}
+    @about-function{gdk-event-touch-window}
+    @about-function{gdk-event-touch-send-event}
+    @about-function{gdk-event-touch-time}
+    @about-function{gdk-event-touch-x}
+    @about-function{gdk-event-touch-y}
+    @about-function{gdk-event-touch-axes}
+    @about-function{gdk-event-touch-state}
+    @about-function{gdk-event-touch-sequence}
+    @about-function{gdk-event-touch-emulating-pointer}
+    @about-function{gdk-event-touch-device}
+    @about-function{gdk-event-touch-x-root}
+    @about-function{gdk-event-touch-y-root}
+
     @about-struct{gdk-event-scroll}
+    @about-function{copy-gdk-event-scroll}
+    @about-function{make-gdk-event-scroll}
+    @about-function{gdk-event-scroll-type}
+    @about-function{gdk-event-scroll-window}
+    @about-function{gdk-event-scroll-send-event}
+    @about-function{gdk-event-scroll-time}
+    @about-function{gdk-event-scroll-x}
+    @about-function{gdk-event-scroll-y}
+    @about-function{gdk-event-scroll-state}
+    @about-function{gdk-event-scroll-direction}
+    @about-function{gdk-event-scroll-device}
+    @about-function{gdk-event-scroll-x-root}
+    @about-function{gdk-event-scroll-y-root}
+    @about-function{gdk-event-scroll-delta-x}
+    @about-function{gdk-event-scroll-delta-y}
+
     @about-struct{gdk-event-motion}
+    @about-function{copy-gdk-event-motion}
+    @about-function{make-gdk-event-motion}
+    @about-function{gdk-event-motion-type}
+    @about-function{gdk-event-motion-window}
+    @about-function{gdk-event-motion-send-event}
+    @about-function{gdk-event-motion-time}
+    @about-function{gdk-event-motion-x}
+    @about-function{gdk-event-motion-y}
+    @about-function{gdk-event-motion-axes}
+    @about-function{gdk-event-motion-state}
+    @about-function{gdk-event-motion-is-hint}
+    @about-function{gdk-event-motion-device}
+    @about-function{gdk-event-motion-x-root}
+    @about-function{gdk-event-motion-y-root}
+
     @about-struct{gdk-event-expose}
     @about-struct{gdk-event-visibility}
     @about-struct{gdk-event-crossing}
@@ -1108,6 +1193,15 @@
       Manipulation of colors
 
       @about-struct{gdk-color}
+
+      @about-function{copy-gdk-color}
+      @about-function{make-gdk-color}
+
+      @about-function{gdk-color-blue}
+      @about-function{gdk-color-green}
+      @about-function{gdk-color-red}
+      @about-function{gdk-color-pixel}
+
       @about-function{gdk-color-copy}
       @about-function{gdk-color-free}
       @about-function{gdk-color-parse}

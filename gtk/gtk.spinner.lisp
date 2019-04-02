@@ -2,11 +2,11 @@
 ;;; gtk.spinner.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.10 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012, 2013, 2014 Dieter Kaiser
+;;; Copyright (C) 2012 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -24,6 +24,32 @@
 ;;; License along with this program and the preamble to the Gnu Lesser
 ;;; General Public License.  If not, see <http://www.gnu.org/licenses/>
 ;;; and <http://opensource.franz.com/preamble.html>.
+;;; ----------------------------------------------------------------------------
+;;;
+;;; Types and Values
+;;;
+;;;     GtkSpinner
+;;;
+;;; Functions
+;;;
+;;;     gtk_spinner_new
+;;;     gtk_spinner_start
+;;;     gtk_spinner_stop
+;;;
+;;; Properties
+;;;
+;;;     gboolean  active    Read / Write
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;             ╰── GtkSpinner
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GtkSpinner implements AtkImplementorIface and GtkBuildable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -53,6 +79,11 @@
 
   To start the animation, use the function @fun{gtk-spinner-start}, to stop it
   use the function @fun{gtk-spinner-stop}.
+  @begin[CSS nodes]{dictionary}
+    @sym{gtk-spinner} has a single CSS node with the name @code{spinner}. When
+    the animation is active, the @code{:checked} pseudoclass is added to this
+    node.
+  @end{dictionary}
   @see-slot{gtk-spinner-active}
   @see-class{gtk-cell-renderer-spinner}
   @see-class{gtk-progress-bar}
@@ -65,7 +96,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "active" 'gtk-spinner) 't)
- "The @code{\"active\"} property of type @code{:boolean} (Read / Write) @br{}
+ "The @code{active} property of type @code{:boolean} (Read / Write) @br{}
   Whether the spinner is active. @br{}
   Default value: @code{nil}")
 
@@ -88,8 +119,6 @@
  "@version{2014-10-29}
   @return{A new @class{gtk-spinner} widget.}
   @short{Returns a new spinner widget. Not yet started.}
-
-  Since 2.20
   @see-class{gtk-spinner}
   @see-class{gtk-spinner-start}"
   (make-instance 'gtk-spinner))
@@ -105,8 +134,6 @@
  "@version{2014-10-29}
   @argument[spinner]{a @class{gtk-spinner} widget}
   @short{Starts the animation of the spinner.}
-
-  Since 2.20
   @see-class{gtk-spinner}
   @see-function{gtk-spinner-stop}"
   (spinner (g-object gtk-spinner)))
@@ -122,8 +149,6 @@
  "@version{2014-10-29}
   @argument[spinner]{a @class{gtk-spinner} widget}
   @short{Stops the animation of the spinner.}
-
-  Since 2.20
   @see-class{gtk-spinner}
   @see-function{gtk-spinner-start}"
   (spinner (g-object gtk-spinner)))

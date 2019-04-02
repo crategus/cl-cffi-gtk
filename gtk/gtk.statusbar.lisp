@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.statusbar.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.10 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2014 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,11 +29,13 @@
 ;;;
 ;;; GtkStatusbar
 ;;;
-;;; Report messages of minor importance to the user
+;;;     Report messages of minor importance to the user
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkStatusbar
+;;;
+;;; Functions
 ;;;
 ;;;     gtk_statusbar_new
 ;;;     gtk_statusbar_get_context_id
@@ -45,6 +44,29 @@
 ;;;     gtk_statusbar_remove
 ;;;     gtk_statusbar_remove_all
 ;;;     gtk_statusbar_get_message_area
+;;;
+;;; Style Properties
+;;;
+;;;     GtkShadowType  shadow-type    Read
+;;;
+;;; Signals
+;;;
+;;;     void  text-popped    Run Last
+;;;     void  text-pushed    Run Last
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;             ╰── GtkContainer
+;;;                 ╰── GtkBox
+;;;                     ╰── GtkStatusbar
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GtkStatusbar implements AtkImplementorIface, GtkBuildable and
+;;;     GtkOrientable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -95,11 +117,22 @@
   @fun{gtk-statusbar-pop}. A message can be removed from anywhere in the stack
   if its message id was recorded at the time it was added. This is done using
   the function @fun{gtk-statusbar-remove}.
+  @begin[CSS node]{dictionary}
+    @sym{gtk-statusbar} has a single CSS node with name @code{statusbar}.
+  @end{dictionary}
   @begin[Style Property Details]{dictionary}
-    @subheading{The \"shadow-type\" style property}
-      @code{\"shadow-type\"} of type @symbol{gtk-shadow-type} (Read)@br{}
-      Style of bevel around the statusbar text.@br{}
-      Default value: @code{:in}
+    @begin[code]{table}
+      @begin[shadow-type]{entry}
+        The @code{shadow-type} style property of type @symbol{gtk-shadow-type}
+        (Read) @br{}
+        Style of bevel around the statusbar text. @br{}
+        @b{Warning:} @code{shadow-type} has been deprecated since version 3.20
+        and should not be used in newly-written code. Use CSS properties to
+        determine the appearance, the value of this style property is ignored.
+        @br{}
+        Default value: @code{:in}
+      @end{entry}
+    @end{table}
   @end{dictionary}
   @begin[Signal Details]{dictionary}
     @subheading{The \"text-popped\" signal}
@@ -266,8 +299,6 @@
     Forces the removal of all messages from a statusbar's stack with the exact
     @arg{context-id}.
   @end{short}
-
-  Since 2.22
   @see-class{gtk-statusbar}"
   (%gtk-statusbar-remove-all statusbar
                              (gtk-statusbar-get-context-id statusbar context)))
@@ -287,8 +318,6 @@
   @begin{short}
     Retrieves the box containing the label widget.
   @end{short}
-
-  Since 2.20
   @see-class{gtk-statusbar}"
   (statusbar (g-object gtk-statusbar)))
 

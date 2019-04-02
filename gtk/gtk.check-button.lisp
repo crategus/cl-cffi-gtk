@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.check-button.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.10 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.14 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2014 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -28,6 +25,43 @@
 ;;; License along with this program and the preamble to the Gnu Lesser
 ;;; General Public License.  If not, see <http://www.gnu.org/licenses/>
 ;;; and <http://opensource.franz.com/preamble.html>.
+;;; ----------------------------------------------------------------------------
+;;;
+;;; GtkCheckButton
+;;;
+;;;     Create widgets with a discrete toggle button.
+;;;
+;;; Types and Values
+;;;
+;;;     GtkCheckButton
+;;;
+;;; Functions
+;;;
+;;;     GtkWidget*  gtk_check_button_new ()
+;;;     GtkWidget*  gtk_check_button_new_with_label ()
+;;;     GtkWidget*  gtk_check_button_new_with_mnemonic ()
+;;;
+;;; Style Properties
+;;;
+;;;     gint  indicator-size       Read
+;;;     gint  indicator-spacing    Read
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;             ╰── GtkContainer
+;;;                 ╰── GtkBin
+;;;                    ╰── GtkButton
+;;;                        ╰── GtkToggleButton
+;;;                            ╰── GtkCheckButton
+;;;                                ╰── GtkRadioButton
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GtkCheckButton implements AtkImplementorIface, GtkBuildable,
+;;;     GtkActionable and GtkActivatable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -58,18 +92,46 @@
 
   The important signal \"toggled\" is also inherited from
   @class{gtk-toggle-button}.
+  @begin[CSS nodes]{dictionary}
+    @begin{pre}
+ checkbutton
+ ├── check
+ ╰── <child>
+    @end{pre}
+    A @sym{gtk-check-button} with indicator, see the function
+    @fun{gtk-toggle-button-set-mode}, has a main CSS node with name
+    @code{checkbutton} and a subnode with name @code{check}.
+    @begin{pre}
+ button.check
+ ├── check
+ ╰── <child>
+    @end{pre}
+    A @sym{gtk-check-button} without indicator changes the name of its main node
+    to @code{button} and adds a @code{.check} style class to it. The subnode is
+    invisible in this case.
+  @end{dictionary}
   @begin[Style Property Details]{dictionary}
-    @subheading{The \"indicator-size\" style property}
-      @code{\"indicator-size\"} of type @code{:int} (Read)@br{}
-      Size of check or radio indicator.@br{}
-      Allowed values: >= 0 @br{}
-      Default value: 16
-
-    @subheading{The \"indicator-spacing\" style property}
-      @code{\"indicator-spacing\"} of type @code{:int} (Read)@br{}
-      Spacing around check or radio indicator.@br{}
-      Allowed values: >= 0@br{}
-      Default value: 2
+    @begin[code]{table}
+      @begin[indicator-size]{entry}
+        The @code{indicator-size} style property of type @code{:int} (Read)@br{}
+        Size of check or radio indicator. @br{}
+        @b{Warning:} @code{indicator-size} has been deprecated since version
+        3.20 and should not be used in newly-written code. Use CSS min-width and
+        min-height on the indicator node. @br{}
+        Allowed values: >= 0 @br{}
+        Default value: 16
+      @end{entry}
+      @begin[indicator-spacing]{entry}
+        The @code{indicator-spacing} style property of type @code{:int}
+        (Read) @br{}
+        Spacing around check or radio indicator. @br{}
+        @b{Warning:} @code{indicator-spacing} has been deprecated since version
+        3.20 and should not be used in newly-written code. Use CSS min-width and
+        min-height on the indicator node. @br{}
+        Allowed values: >= 0 @br{}
+        Default value: 2
+      @end{entry}
+    @end{table}
   @end{dictionary}
   @see-class{gtk-check-menu-item}
   @see-class{gtk-button}

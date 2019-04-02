@@ -146,7 +146,8 @@
    (:file "gtk.image")                 ; GtkImage
    (:file "gtk.progress-bar")          ; GtkProgessBar
    (:file "gtk.statusbar")             ; GTKStatusbar
-   (:file "gtk.level-bar")             ; GtkLevelBar
+   (:file "gtk.level-bar"              ; GtkLevelBar
+          :if-feature :gtk-3-6)             
    (:file "gtk.info-bar")              ; GtkInfoBar
    (:file "gtk.status-icon")           ; GtkStatusIcon
    (:file "gtk.spinner")               ; GtkSpinner
@@ -162,6 +163,8 @@
    (:file "gtk.volume-button")         ; GtkVolumeButton
    (:file "gtk.switch")                ; GtkSwitch
    ;; GtkLockButton not implemented
+   (:file "gtk.model-button"           ; A button that uses a GAction as model
+          :if-feature :gtk-3-16)
 
    ;; Multiline Text Editor
    (:file "gtk.text-tag")              ; GtkTextTag

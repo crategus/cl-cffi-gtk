@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.toggle-button.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.10 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2014 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,11 +29,13 @@
 ;;;
 ;;; GtkToggleButton
 ;;;
-;;; Create buttons which retain their state
+;;;     Create buttons which retain their state
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkToggleButton
+;;;
+;;; Functions
 ;;;
 ;;;     gtk_toggle_button_new
 ;;;     gtk_toggle_button_new_with_label
@@ -44,6 +43,37 @@
 ;;;     gtk_toggle_button_set_mode
 ;;;     gtk_toggle_button_get_mode
 ;;;     gtk_toggle_button_toggled
+;;;     gtk_toggle_button_get_active ()                    Accessor
+;;;     gtk_toggle_button_set_active ()                    Accessor
+;;;     gtk_toggle_button_get_inconsistent ()              Accessor
+;;;     gtk_toggle_button_set_inconsistent ()              Accessor
+;;;
+;;; Properties
+;;;
+;;;     gboolean  active            Read / Write
+;;;     gboolean  draw-indicator    Read / Write
+;;;     gboolean  inconsistent      Read / Write
+;;;
+;;; Signals
+;;;
+;;;     void	toggled	Run First
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;             ╰── GtkContainer
+;;;                 ╰── GtkBin
+;;;                     ╰── GtkButton
+;;;                         ╰── GtkToggleButton
+;;;                             ├── GtkCheckButton
+;;;                             ╰── GtkMenuButton
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GtkToggleButton implements AtkImplementorIface, GtkBuildable,
+;;;     GtkActionable and GtkActivatable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -91,9 +121,14 @@
 
   To simply switch the state of a toggle button, use the function
   @fun{gtk-toggle-button-toggled}.
-
-  @b{Example:} Creating two @sym{gtk-toggle-button} widgets.
-  @begin{pre}
+  @begin[CSS nodes]{dictionary}
+    @sym{gtk-toggle-button} has a single CSS node with name @code{button}. To
+    differentiate it from a plain @class{gtk-button}, it gets the @code{.toggle}
+    style class.
+  @end{dictionary}
+  @begin[Example]{dictionary}
+    Creating two @sym{gtk-toggle-button} widgets.
+    @begin{pre}
  void make_toggles (void) {
     GtkWidget *dialog, *toggle1, *toggle2;
 
@@ -118,7 +153,8 @@
 
     gtk_widget_show_all (dialog);
  @}
-  @end{pre}
+    @end{pre}
+  @end{dictionary}
   @begin[Signal Details]{dictionary}
     @subheading{The \"toggled\" signal}
       @begin{pre}
@@ -138,9 +174,7 @@
   @see-class{gtk-check-menu-item}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
+;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- gtk-toggle-button-active -----------------------------------------------

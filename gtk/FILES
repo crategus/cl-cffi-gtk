@@ -53,32 +53,27 @@ GTK+ Widgets and Objects
   Display Widgets
 
     gtk.label.lisp                   - GtkLabel                    - GTK+ 3.24
-
-    gtk.image.lisp                   - GtkImage                    - GTK+ 3.10 *
-    gtk.spinner.lisp                 - GtkSpinner                  - GTK+ 3.10 *
-    gtk.info-bar.lisp                - GtkInfoBar                  - GTK+ 3.10 *
-    gtk.progress-bar.lisp            - GtkProgressBar              - GTK+ 3.10 *
-    gtk.level-bar.lisp               - GtkLevelBar                 - GTK+ 3.10 *
-    gtk.statusbar.lisp               - GtkStatusbar                - GTK+ 3.10 *
-    gtk.accel-label.lisp             - GtkAccelLabel               - GTK+ 3.10 *
+    gtk.image.lisp                   - GtkImage                    - GTK+ 3.24 &
+    gtk.spinner.lisp                 - GtkSpinner                  - GTK+ 3.24
+    gtk.info-bar.lisp                - GtkInfoBar                  - GTK+ 3.24
+    gtk.progress-bar.lisp            - GtkProgressBar              - GTK+ 3.24
+    gtk.level-bar.lisp               - GtkLevelBar                 - GTK+ 3.24
+    gtk.statusbar.lisp               - GtkStatusbar                - GTK+ 3.24
+    gtk.accel-label.lisp             - GtkAccelLabel               - GTK+ 3.24
 
   Buttons and Toggles
 
-    gtk.button.lisp                  - GtkButton                   - GTK+ 3.10 *
-    gtk.check-button.lisp            - GtkCheckButton              - GTK+ 3.10 *
-    gtk.radio-button.lisp            - GtkRadioButton              - GTK+ 3.10 *
-    gtk.toggle-button.lisp           - GtkToggleButton             - GTK+ 3.10 *
-    gtk.link-button.lisp             - GtkLinkButton               - GTK+ 3.10 *
-
+    gtk.button.lisp                  - GtkButton                   - GTK+ 3.24 &
+    gtk.check-button.lisp            - GtkCheckButton              - GTK+ 3.24
+    gtk.radio-button.lisp            - GtkRadioButton              - GTK+ 3.24
+    gtk.toggle-button.lisp           - GtkToggleButton             - GTK+ 3.24
+    gtk.link-button.lisp             - GtkLinkButton               - GTK+ 3.24
     gtk.menu-button.lisp             - GtkMenuButton               - GTK+ 3.24
-
-    gtk.switch.lisp                  - GtkSwitch                   - GTK+ 3.10 *
-    gtk.scale-button.lisp            - GtkScaleButton              - GTK+ 3.10 *
-    gtk.volume-button.lisp           - GtkVolumeButton             - GTK+ 3.10 *
-
+    gtk.switch.lisp                  - GtkSwitch                   - GTK+ 3.24
+    gtk.scale-button.lisp            - GtkScaleButton              - GTK+ 3.24
+    gtk.volume-button.lisp           - GtkVolumeButton             - GTK+ 3.24
     not implemented                  - GtkLockButton
-
-    GtkModelButton — A button that uses a GAction as model
+    gtk.model-button.lisp            - GtkModelButton              - GTK+ 3.24
 
   Numeric and Text Data Entry
 
