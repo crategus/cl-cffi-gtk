@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.combo-box-text.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,11 +29,13 @@
 ;;;
 ;;; GtkComboBoxText
 ;;;
-;;; A simple, text-only combo box
+;;;     A simple, text-only combo box
 ;;;
 ;;; Synopsis
 ;;;
 ;;;     GtkComboBoxText
+;;;
+;;; Functions
 ;;;
 ;;;     gtk_combo_box_text_new
 ;;;     gtk_combo_box_text_new_with_entry
@@ -49,6 +48,21 @@
 ;;;     gtk_combo_box_text_remove
 ;;;     gtk_combo_box_text_remove_all
 ;;;     gtk_combo_box_text_get_active_text
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;             ╰── GtkContainer
+;;;                 ╰── GtkBin
+;;;                     ╰── GtkComboBox
+;;;                         ╰── GtkComboBoxText
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GtkComboBoxText implements AtkImplementorIface, GtkBuildable,
+;;;      GtkCellLayout and GtkCellEditable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -91,16 +105,16 @@
   You should not call the function @fun{gtk-combo-box-set-model} or attempt to
   pack more cells into this combo box via its @class{gtk-cell-layout} interface.
 
-  @subheading{GtkComboBoxText as GtkBuildable}
+  @begin[GtkComboBoxText as GtkBuildable]{dictionary}
     The @sym{gtk-combo-box-text} implementation of the @class{gtk-buildable}
-    interface supports adding items directly using the <items> element and
-    specifying <item> elements for each item. Each <item> element supports the
-    regular translation attributes \"translatable\", \"context\" and
-    \"comments\".
+    interface supports adding items directly using the @code{<items>} element
+    and specifying @code{<item>} elements for each item. Each @code{<item>}
+    element supports the regular translation attributes \"translatable\",
+    \"context\" and \"comments\".
 
     @b{Example:} A UI definition fragment specifying @sym{gtk-combo-box-text}
     items
-  @begin{pre}
+    @begin{pre}
  <object class=\"GtkComboBoxText\">
    <items>
      <item translatable=\"yes\">Factory</item>
@@ -108,7 +122,21 @@
      <item translatable=\"yes\">Subway</item>
    </items>
  </object>
-  @end{pre}
+    @end{pre}
+  @end{dictionary}
+  @begin[CSS nodes]{dictionary}
+    @begin{pre}
+ combobox
+ ╰── box.linked
+     ├── entry.combo
+     ├── button.combo
+     ╰── window.popup
+    @end{pre}
+    @sym{gtk-combo-box-text} has a single CSS node with name @code{combobox}. It
+    adds the style class @code{.combo} to the main CSS nodes of its entry and
+    button children, and the @code{.linked} class to the node of its internal
+    box.
+  @end{dictionary}
   @see-function{gtk-combo-box-text-new}
   @see-function{gtk-combo-box-text-new-with-entry}
   @see-function{gtk-combo-box-text-append-text}
@@ -133,8 +161,6 @@
     Creates a new @class{gtk-combo-box-text} widget, which is a
     @class{gtk-combo-box} just displaying strings.
   @end{short}
-
-  Since 2.24
   @see-class{gtk-combo-box-text}
   @see-function{gtk-combo-box-text-new-with-entry}"
   (make-instance 'gtk-combo-box-text))
@@ -156,8 +182,6 @@
     @class{gtk-combo-box} just displaying strings. The combo box created by
     this function has an entry.
   @end{short}
-
-  Since 2.24
   @see-class{gtk-combo-box-text}
   @see-function{gtk-combo-box-text-new}"
   (make-instance 'gtk-combo-box-text
@@ -187,8 +211,6 @@
 
   This is the same as calling the function @fun{gtk-combo-box-text-insert} with
   a position of -1.
-
-  Since 2.24
   @see-class{gtk-combo-box-text}
   @see-function{gtk-combo-box-text-insert}
   @see-function{gtk-combo-box-text-prepend}"
@@ -220,8 +242,6 @@
 
   This is the same as calling the function @fun{gtk-combo-box-text-insert} with
   a position of 0.
-
-  Since 2.24
   @see-class{gtk-combo-box-text}
   @see-function{gtk-combo-box-text-insert}"
   (%gtk-combo-box-text-prepend combo-box
@@ -280,8 +300,6 @@
 
   This is the same as calling the function @fun{gtk-combo-box-text-insert-text}
   with a position of -1.
-
-  Since 2.24
   @see-class{gtk-combo-box-text}
   @see-function{gtk-combo-box-text-insert-text}
   @see-function{gtk-combo-box-text-prepend}"
@@ -306,8 +324,6 @@
 
   This is the same as calling the function @fun{gtk-combo-box-text-insert-text}
   with a position of 0.
-
-  Since 2.24
   @see-class{gtk-combo-box-text}
   @see-function{gtk-combo-box-text-insert-text}
   @see-function{gtk-combo-box-text-append-text}"
@@ -335,8 +351,6 @@
 
   This is the same as calling the function @fun{gtk-combo-box-text-insert} with
   a @code{nil} ID string.
-
-  Since 2.24
   @see-class{gtk-combo-box-text}
   @see-function{gtk-combo-box-text-insert}"
   (combo-box (g-object gtk-combo-box-text))
@@ -357,8 +371,6 @@
   @begin{short}
     Removes the string at position from @arg{combo-box}.
   @end{short}
-
-  Since 2.24
   @see-class{gtk-combo-box-text}
   @see-function{gtk-combo-box-text-remove-all}"
   (combo-box (g-object gtk-combo-box-text))
@@ -403,8 +415,6 @@
   @end{short}
   If @arg{combo-box} contains an entry, this function will return its
   contents which will not necessarily be an item from the list.
-
-  Since 2.24
   @see-class{gtk-combo-box-text}"
   (combo-box (g-object gtk-combo-box-text)))
 

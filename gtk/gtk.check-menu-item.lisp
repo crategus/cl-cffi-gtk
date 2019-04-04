@@ -1,15 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.check-menu-item.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -31,11 +29,13 @@
 ;;;
 ;;; GtkCheckMenuItem
 ;;;
-;;; A menu item with a check box
+;;;     A menu item with a check box
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkCheckMenuItem
+;;;
+;;; Functions
 ;;;
 ;;;     gtk_check_menu_item_new
 ;;;     gtk_check_menu_item_new_with_label
@@ -47,6 +47,36 @@
 ;;;     gtk_check_menu_item_set_inconsistent
 ;;;     gtk_check_menu_item_set_draw_as_radio
 ;;;     gtk_check_menu_item_get_draw_as_radio
+
+;;; Properties
+;;;
+;;;     gboolean  active           Read / Write
+;;;     gboolean  draw-as-radio    Read / Write
+;;;     gboolean  inconsistent     Read / Write
+;;;
+;;; Style Properties
+;;;
+;;;     gint  indicator-size     Read
+;;;
+;;; Signals
+;;;
+;;;     void  toggled    Run First
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;             ╰── GtkContainer
+;;;                 ╰── GtkBin
+;;;                     ╰── GtkMenuItem
+;;;                         ╰── GtkCheckMenuItem
+;;;                             ╰── GtkRadioMenuItem
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GtkCheckMenuItem implements AtkImplementorIface, GtkBuildable,
+;;;     GtkActivatable and GtkActionable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -84,10 +114,24 @@
   A check box indicating the state of the boolean value is displayed at the
   left side of the @class{gtk-menu-item}. Activating the @class{gtk-menu-item}
   toggles the value.
+  @begin[CSS nodes]{dictionary}
+    @begin{pre}
+ menuitem
+ ├── check.left
+ ╰── <child>
+    @end{pre}
+    The @sym{gtk-check-menu-item} class has a main CSS node with name
+    @code{menuitem}, and a subnode with name @code{check}, which gets the 
+    @code{.left} or @code{.right} style class.
+  @end{dictionary}
   @begin[Style Property Details]{dictionary}
     @subheading{The \"indicator-size\" style property}
       @code{\"indicator-size\"} of type @code{:int} (Read) @br{}
       Size of check or radio indicator. @br{}
+      @b{Warning:} @code{indicator-size} has been deprecated since version 3.20
+      and should not be used in newly-written code. Use the standard CSS
+      property min-width on the check or radio nodes; the value of this style
+      property is ignored. @br{}
       Allowed values: >= 0 @br{}
       Default value: 16
   @end{dictionary}
@@ -108,39 +152,17 @@
   @see-slot{gtk-check-menu-item-inconsistent}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
+;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-check-menu-item-active ---------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "active"
                                                'gtk-check-menu-item) 't)
- "The @code{\"active\"} property of type @code{:boolean} (Read / Write) @br{}
+ "The @code{active} property of type @code{:boolean} (Read / Write) @br{}
   Whether the menu item is checked. @br{}
   Default value: @code{nil}")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "draw-as-radio"
-                                               'gtk-check-menu-item) 't)
- "The @code{\"draw-as-radio\"} property of type @code{:boolean}
-  (Read / Write) @br{}
-  Whether the menu item looks like a radio menu item. @br{}
-  Default value: @code{nil}")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "inconsistent"
-                                               'gtk-check-menu-item) 't)
- "The @code{\"inconsistent\"} property of type @code{:boolean}
-  (Read / Write) @br{}
-  Whether to display an \"inconsistent\" state. @br{}
-  Default value: @code{nil}")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-check-menu-item-active atdoc:*function-name-alias*)
@@ -148,9 +170,19 @@
       (documentation 'gtk-check-menu-item-active 'function)
  "@version{2013-2-24}
   @begin{short}
-    Accessor of the slot @code{\"active\"} of the @class{gtk-check-menu-item}
-    class.
+    Accessor of the slot @slot[gtk-check-menu-item]{active} of the
+    @class{gtk-check-menu-item} class.
   @end{short}")
+
+;;; --- gtk-check-menu-item-draw-as-radio --------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "draw-as-radio"
+                                               'gtk-check-menu-item) 't)
+ "The @code{draw-as-radio} property of type @code{:boolean}
+  (Read / Write) @br{}
+  Whether the menu item looks like a radio menu item. @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-check-menu-item-draw-as-radio atdoc:*function-name-alias*)
@@ -158,9 +190,19 @@
       (documentation 'gtk-check-menu-item-draw-as-radio 'function)
  "@version{2013-2-24}
   @begin{short}
-    Accessor of the slot @code{\"draw-as-radio\"} of the
+    Accessor of the slot @slot[gtk-check-menu-item]{draw-as-radio} of the
     @class{gtk-check-menu-item} class.
   @end{short}")
+
+;;; --- gtk-check-menu-item-inconsistent ---------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "inconsistent"
+                                               'gtk-check-menu-item) 't)
+ "The @code{inconsistent} property of type @code{:boolean}
+  (Read / Write) @br{}
+  Whether to display an \"inconsistent\" state. @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-check-menu-item-inconsistent atdoc:*function-name-alias*)
@@ -168,7 +210,7 @@
       (documentation 'gtk-check-menu-item-inconsistent 'function)
  "@version{2013-2-24}
   @begin{short}
-    Accessor of the slot @code{\"inconsistent\"} of the
+    Accessor of the slot @slot[gtk-check-menu-item]{inconsistent} of the
     @class{gtk-check-menu-item} class.
   @end{short}")
 
@@ -337,9 +379,7 @@
   @begin{short}
     Sets whether @arg{check-menu-item} is drawn like a
     @class{gtk-radio-menu-item}.
-  @end{short}
-
-  Since 2.4"
+  @end{short}"
   (setf (gtk-check-menu-item-draw-as-radio check-menu-item) setting))
 
 (export 'gtk-check-menu-item-set-draw-as-radio)
@@ -360,9 +400,7 @@
   @begin{short}
     Returns whether @arg{check-menu-item} looks like a
     @class{gtk-radio-menu-item}.
-  @end{short}
-
-  Since 2.4"
+  @end{short}"
   (gtk-check-menu-item-draw-as-radio check-menu-item))
 
 (export 'gtk-check-menu-item-get-draw-as-radio)

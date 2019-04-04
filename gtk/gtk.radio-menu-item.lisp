@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.radio-menu.item.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.8.8 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,7 +29,7 @@
 ;;;
 ;;; GtkRadioMenuItem
 ;;;
-;;; A choice from multiple check menu items
+;;;     A choice from multiple check menu items
 ;;;
 ;;; Synopsis
 ;;;
@@ -46,6 +43,31 @@
 ;;;     gtk_radio_menu_item_new_with_mnemonic_from_widget
 ;;;     gtk_radio_menu_item_set_group
 ;;;     gtk_radio_menu_item_get_group
+;;;     gtk_radio_menu_item_join_group
+;;;
+;;; Properties
+;;;
+;;;     GtkRadioMenuItem*  group    Write
+;;;
+;;; Signals
+;;;
+;;;     void  group-changed    Run First
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;             ╰── GtkContainer
+;;;                 ╰── GtkBin
+;;;                     ╰── GtkMenuItem
+;;;                         ╰── GtkCheckMenuItem
+;;;                             ╰── GtkRadioMenuItem
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GtkRadioMenuItem implements AtkImplementorIface, GtkBuildable,
+;;;     GtkActivatable and GtkActionable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -102,31 +124,24 @@
   @see-slot{gtk-radio-menu-item-group}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
+;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "group" 'gtk-radio-menu-item) 't)
  "The @code{\"group\"} property of type @class{gtk-radio-menu-item}
   (Write) @br{}
-  The radio menu item whose group this widget belongs to. @br{}
-  Since 2.8")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
+  The radio menu item whose group this widget belongs to.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-radio-menu-item-group atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-radio-menu-item-group 'function)
  "@version{2013-12-8}
-  Accessor of the slot @code{\"group\"} of the @class{gtk-radio-menu-item}
-  class.
+  @begin{short}
+    Accessor of the slot @slot[gtk-radio-menu-item]{group} of the
+    @class{gtk-radio-menu-item} class.
+  @end{short}
   @see-class{gtk-radio-menu-item}
   @see-function{gtk-radio-menu-item-get-group}
   @see-function{gtk-radio-menu-item-set-group}")
@@ -332,5 +347,43 @@
   (radio-menu-item (g-object gtk-radio-menu-item)))
 
 (export 'gtk-radio-menu-item-get-group)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_radio_menu_item_join_group ()
+;;;
+;;; void
+;;; gtk_radio_menu_item_join_group (GtkRadioMenuItem *radio_menu_item,
+;;;                                 GtkRadioMenuItem *group_source);
+;;;
+;;; Joins a GtkRadioMenuItem object to the group of another GtkRadioMenuItem
+;;; object.
+;;;
+;;; This function should be used by language bindings to avoid the memory
+;;; manangement of the opaque GSList of gtk_radio_menu_item_get_group() and
+;;; gtk_radio_menu_item_set_group().
+;;;
+;;; A common way to set up a group of GtkRadioMenuItem instances is:
+;;;
+;;; GtkRadioMenuItem *last_item = NULL;
+;;;
+;;; while ( ...more items to add... )
+;;;   {
+;;;     GtkRadioMenuItem *radio_item;
+;;;
+;;;     radio_item = gtk_radio_menu_item_new (...);
+;;;
+;;;     gtk_radio_menu_item_join_group (radio_item, last_item);
+;;;     last_item = radio_item;
+;;;   }
+;;;
+;;; radio_menu_item :
+;;;     a GtkRadioMenuItem
+;;; 
+;;; group_source :
+;;;     a GtkRadioMenuItem whose group we are joining, or NULL to remove the
+;;;     radio_menu_item from its current group.
+;;;
+;;; Since: 3.18
+;;; ----------------------------------------------------------------------------
 
 ;;; --- End of file gtk.radio-menu-item.lisp -----------------------------------

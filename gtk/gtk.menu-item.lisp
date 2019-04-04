@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.menu-item.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.8.8 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2014 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,11 +29,13 @@
 ;;;
 ;;; GtkMenuItem
 ;;;
-;;; The widget used for item in menus.
+;;;     The widget used for item in menus.
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkMenuItem
+;;;
+;;; Functions
 ;;;
 ;;;     gtk_menu_item_new
 ;;;     gtk_menu_item_new_with_label
@@ -58,6 +57,50 @@
 ;;;     gtk_menu_item_toggle_size_allocate
 ;;;     gtk_menu_item_get_reserve_indicator
 ;;;     gtk_menu_item_set_reserve_indicator
+;;;
+;;; Properties
+;;;
+;;;        gchar*  accel-path         Read / Write
+;;;        gchar*  label              Read / Write
+;;;     gboolean   right-justified    Read / Write
+;;;      GtkMenu*  submenu            Read / Write
+;;;     gboolean   use-underline      Read / Write
+;;;
+;;; Style Properties
+;;;
+;;;            gfloat  arrow-scaling           Read
+;;;              gint  arrow-spacing           Read
+;;;              gint  horizontal-padding      Read
+;;;     GtkShadowType  selected-shadow-type    Read
+;;;              gint  toggle-spacing          Read
+;;;              gint  width-chars             Read
+;;;
+;;; Signals
+;;;
+;;;     void  activate                Action
+;;;     void  activate-item           Run First
+;;;     void  deselect                Run First
+;;;     void  select                  Run First
+;;;     void  toggle-size-allocate    Run First
+;;;     void  toggle-size-request     Run First
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;             ╰── GtkContainer
+;;;                 ╰── GtkBin
+;;;                     ╰── GtkMenuItem
+;;;                         ├── GtkCheckMenuItem
+;;;                         ├── GtkImageMenuItem
+;;;                         ├── GtkSeparatorMenuItem
+;;;                         ╰── GtkTearoffMenuItem
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GtkMenuItem implements AtkImplementorIface, GtkBuildable, GtkActivatable
+;;;     and GtkActionable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -113,6 +156,17 @@
    </child>
  </object>
     @end{pre}
+  @begin[CSS nodes]{dictionary}
+    @begin{pre}
+ menuitem
+ ├── <child>
+ ╰── [arrow.right]
+    @end{pre}
+    The @sym{gtk-menu-item} class has a single CSS node with name
+    @code{menuitem}. If the menuitem has a submenu, it gets another CSS node
+    with name @code{arrow}, which has the @code{.left} or @code{.right} style
+    class.
+  @end{dictionary}
   @begin[Style Property Details]{dictionary}
     @subheading{The \"arrow-scaling\" style property}
       @code{\"arrow-scaling\"} of type @code{:float} (Read) @br{}
@@ -217,28 +271,39 @@
   @see-class{gtk-css-provider}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
+;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-menu-item-accel-path -----------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "accel-path" 'gtk-menu-item) 't)
- "The @code{\"accel-path\"} property of type @code{:string} (Read / Write) @br{}
+ "The @code{accel-path} property of type @code{:string} (Read / Write) @br{}
   Sets the accelerator path of the menu item, through which runtime changes of
   the menu item's accelerator caused by the user can be identified and saved
   to persistant storage. @br{}
-  Default value: @code{nil} @br{}
-  Since 2.14")
+  Default value: @code{nil}")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-menu-item-accel-path atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-menu-item-accel-path 'function)
+ "@version{2013-12-8}
+  @begin{short}
+    Accessor of the slot @slot[gtk-menu-item]{accel-path} of the
+    @class{gtk-menu-item} class.
+  @end{short}
+  @see-class{gtk-menu-item}
+  @see-function{gtk-menu-item-get-accel-path}
+  @see-function{gtk-menu-item-set-accel-path}")
 
 ;;; --- gtk-menu-item-label ----------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "label" 'gtk-menu-item) 't)
- "The @code{\"label\"} property of type @code{:string} (Read / Write) @br{}
+ "The @code{label} property of type @code{:string} (Read / Write) @br{}
   The text for the child label. @br{}
-  Default value: \"\" @br{}
-  Since 2.16")
+  Default value: \"\"")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-menu-item-label atdoc:*function-name-alias*)
@@ -250,8 +315,8 @@
   @syntax[]{(gtk-menu-item-label object) => label}
   @syntax[]{(setf (gtk-menu-item-label object) label)}
   @begin{short}
-    Accessor of the slot @code{\"label\"} of the @class{gtk-menu-item}
-    class.
+    Accessor of the slot @slot[gtk-menu-item]{label} of the
+    @class{gtk-menu-item} class.
   @end{short}
 
   The generic function @sym{gtk-menu-item-label} sets text on the
@@ -259,30 +324,39 @@
 
   The generic function @sym{(setf gtk-menu-item-label)} sets text on the menu
   item label.
-
-  Since 2.16
   @see-class{gtk-menu-item}")
 
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-menu-item-right-justified ------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "right-justified"
                                                'gtk-menu-item) 't)
- "The @code{\"right-justified\"} property of type @code{:boolean}
+ "The @code{right-justified} property of type @code{:boolean}
   (Read / Write) @br{}
   Sets whether the menu item appears justified at the right side of a menu
   bar. @br{}
-  Default value: @code{nil} @br{}
-  Since 2.14")
+  Default value: @code{nil}")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-menu-item-right-justified atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-menu-item-right-justified 'function)
+ "@version{2013-12-8}
+  @begin{short}
+    Accessor of the slot @slot[gtk-menu-item]{right-justified} of the
+    @class{gtk-menu-item} class.
+  @end{short}
+  @see-class{gtk-menu-item}
+  @see-function{gtk-menu-item-get-right-justified}
+  @see-function{gtk-menu-item-set-right-justified}")
 
 ;;; --- gtk-menu-item-submenu --------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "submenu" 'gtk-menu-item) 't)
- "The @code{\"submenu\"} property of type @class{gtk-menu}
+ "The @code{submenu} property of type @class{gtk-menu}
   (Read / Write) @br{}
-  The submenu attached to the menu item, or @code{nil} if it has none. @br{}
-  Since 2.12")
+  The submenu attached to the menu item, or @code{nil} if it has none.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-menu-item-submenu atdoc:*function-name-alias*)
@@ -305,52 +379,25 @@
   menu item's submenu, or removes it when a @code{nil} submenu is passed.
   @see-class{gtk-menu-item}")
 
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-menu-item-use-underline --------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "use-underline"
                                                'gtk-menu-item) 't)
- "The @code{\"use-underline\"} property of type @code{:boolean}
+ "The @code{use-underline} property of type @code{:boolean}
   (Read / Write) @br{}
   @em{True} if underlines in the text indicate mnemonics. @br{}
-  Default value: @code{nil} @br{}
-  Since 2.16")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-menu-item-accel-path atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-menu-item-accel-path 'function)
- "@version{2013-12-8}
-  Accessor of the slot @code{\"accel-path\"} of the @class{gtk-menu-item}
-  class.
-  @see-class{gtk-menu-item}
-  @see-function{gtk-menu-item-get-accel-path}
-  @see-function{gtk-menu-item-set-accel-path}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-menu-item-right-justified atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-menu-item-right-justified 'function)
- "@version{2013-12-8}
-  Accessor of the slot @code{\"right-justified\"} of the @class{gtk-menu-item}
-  class.
-  @see-class{gtk-menu-item}
-  @see-function{gtk-menu-item-get-right-justified}
-  @see-function{gtk-menu-item-set-right-justified}")
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-menu-item-use-underline atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-menu-item-use-underline 'function)
  "@version{2013-12-8}
-  Accessor of the slot @code{\"use-underline\"} of the @class{gtk-menu-item}
-  class.
+  @begin{short}
+    Accessor of the slot @slot[gtk-menu-item]{use-underline} of the
+    @class{gtk-menu-item} class.
+  @end{short}
   @see-class{gtk-menu-item}
   @see-function{gtk-menu-item-get-use-underline}
   @see-function{gtk-menu-item-set-use-underline}")
@@ -427,12 +474,6 @@
   @argument[menu-item]{a @class{gtk-menu-item} widget}
   @argument[right-justified]{if @em{true} the menu item will appear at the far
     right if added to a menu bar}
-  @subheading{Warning}
-    The function @sym{gtk-menu-item-set-right-justified} has been deprecated
-    since version 3.2 and should not be used in newly-written code. If you
-    insist on using it, use the functions @fun{gtk-widget-set-hexpand} and
-    @fun{gtk-widget-halign}.
-
   @begin{short}
     Sets whether the menu item appears justified at the right side of a
     menu bar.
@@ -440,6 +481,12 @@
   This was traditionally done for \"Help\" menu items, but is now considered a
   bad idea. If the widget layout is reversed for a right-to-left
   language like Hebrew or Arabic, right-justified-menu-items appear at the left.
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-menu-item-set-right-justified} has been deprecated
+    since version 3.2 and should not be used in newly-written code. If you
+    insist on using it, use the functions @fun{gtk-widget-set-hexpand} and
+    @fun{gtk-widget-halign}.
+  @end{dictionary}
   @see-class{gtk-menu-item}
   @see-function{gtk-menu-item-get-right-justified}
   @see-function{gtk-widget-set-hexpand}
@@ -462,15 +509,15 @@
     @em{True} if the menu item will appear at the far right if added to a menu
     bar.
   @end{return}
-  @subheading{Warning}
-    The function @sym{gtk-menu-item-get-right-justified} has been deprecated
-    since version 3.2 and should not be used in newly-written code. See the
-    function @fun{gtk-menu-item-set-right-justified}.
-
   @begin{short}
     Gets whether the menu item appears justified at the right side of the menu
     bar.
   @end{short}
+  @begin[Warning]{dictionary}
+    The function @sym{gtk-menu-item-get-right-justified} has been deprecated
+    since version 3.2 and should not be used in newly-written code. See the
+    function @fun{gtk-menu-item-set-right-justified}.
+  @end{dictionary}
   @see-class{gtk-menu-item}
   @see-function{gtk-menu-item-set-right-justified}"
   (gtk-menu-item-right-justified menu-item))
@@ -586,8 +633,6 @@
   @end{short}
 
   See the function @fun{gtk-menu-item-set-accel-path} for details.
-
-  Since 2.14
   @see-class{gtk-menu-item}
   @see-function{gtk-menu-item-set-accel-path}"
   (gtk-menu-item-accel-path menu-item))

@@ -1021,6 +1021,7 @@
     @begin[GtkModelButton]{subsection}
       A button that uses a GAction as model.
 
+      @about-symbol{gtk-button-role}
       @about-class{gtk-model-button}
       @about-function{gtk-model-button-new}
     @end{subsection}

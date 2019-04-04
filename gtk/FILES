@@ -1,6 +1,7 @@
 Content from the GTK+ 3.24 Reference Manual
 
     *   - needs update
+    +   - needs work
     %   - not fully implemented
     &   - objects and structures are implemented, some functions are missing
 
@@ -129,14 +130,14 @@ GTK+ Widgets and Objects
 
   Menus, Combo Box, Toolbar
 
-    gtk.combo-box.lisp               - GtkComboBox                 - GTK+ 3.6.4*
-    gtk.combo-box-text.lisp          - GtkComboBoxText             - GTK+ 3.6.4*
+    gtk.combo-box.lisp               - GtkComboBox                 - GTK+ 3.24 +
+    gtk.combo-box-text.lisp          - GtkComboBoxText             - GTK+ 3.24
+    gtk.menu.lisp                    - GtkMenu                     - GTK+ 3.24 +
+    gtk.menu-bar.lisp                - GtkMenuBar                  - GTK+ 3.24 +
+    gtk.menu-item.lisp               - GtkMenuItem                 - GTK+ 3.24 +
+    gtk.radio-menu-item.lisp         - GtkRadioMenuItem            - GTK+ 3.24 +
+    gtk.check-menu-item.lisp         - GtkCheckMenuItem            - GTK+ 3.24 +
 
-    gtk.menu.lisp                    - GtkMenu                     - GTK+ 3.8.8*
-    gtk.menu-bar.lisp                - GtkMenuBar                  - GTK+ 3.8.8*
-    gtk.menu-item.lisp               - GtkMenuItem                 - GTK+ 3.8.8*
-    gtk.radio-menu-item.lisp         - GtkRadioMenuItem            - GTK+ 3.8.8*
-    gtk.check-menu-item.lisp         - GtkCheckMenuItem            - GTK+ 3.6.4*
     gtk.separator-menu-item.lisp     - GtkSeparatorMenuItem        - GTK+ 3.6.4*
     gtk.tool-shell.lisp              - GtkToolShell                - GTK+ 3.6.4*
     gtk.toolbar.lisp                 - GtkToolbar                  - GTK+ 3.6.4*
