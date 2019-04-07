@@ -3723,6 +3723,33 @@ setup_tree (void)
       @about-function{gtk-radio-tool-button-get-group}
       @about-function{gtk-radio-tool-button-set-group}
     @end{subsection}
+
+    @begin[GtkPopover]{subsection}
+      @about-class{gtk-popover}
+      @about-symbol{gtk-popover-constraint}
+
+      @about-generic{gtk-popover-relative-to}
+      @about-generic{gtk-popover-pointing-to}
+      @about-generic{gtk-popover-position}
+      @about-generic{gtk-popover-constrain-to}
+      @about-generic{gtk-popover-modal}
+      @about-generic{gtk-popover-transitions-enabled}
+
+      @about-function{gtk-popover-new} 
+      @about-function{gtk-popover-new-from-model} 
+      @about-function{gtk-popover-bind-model} 
+      @about-function{gtk-popover-popup} 
+      @about-function{gtk-popover-popdown} 
+      @about-function{gtk-popover-set-default-widget} 
+      @about-function{gtk-popover-get-default-widget} 
+    @end{subsection}
+    @begin[GtkPopoverMenu]{subsection}
+
+      @about-class{gtk-popover-menu}
+
+      @about-function{gtk-popover-menu-new}
+      @about-function{gtk-popover-menu-open-submenu}
+    @end{subsection}
   @end{section}
   @begin[Action-based menus and toolbars]{section}
     @begin[GtkUIManager]{subsection}
@@ -3875,10 +3902,10 @@ setup_tree (void)
       Interface implemented by widgets for choosing colors.
 
       @about-class{gtk-color-chooser}
-      @about-function{gtk-color-chooser-get-rgba}
-      @about-function{gtk-color-chooser-set-rgba}
-      @about-function{gtk-color-chooser-get-use-alpha}
-      @about-function{gtk-color-chooser-set-use-alpha}
+
+      @about-generic{gtk-color-chooser-rgba}
+      @about-generic{gtk-color-chooser-use-alpha}
+
       @about-function{gtk-color-chooser-add-palette}
     @end{subsection}
     @begin[GtkColorButton]{subsection}
@@ -3997,6 +4024,16 @@ setup_tree (void)
       @about-function{gtk-file-chooser-button-get-focus-on-click}
       @about-function{gtk-file-chooser-button-set-focus-on-click}
     @end{subsection}
+    @begin[GtkFileChooserNative]{subsection}
+      A native file chooser dialog, suitable for “File/Open” or “File/Save”
+      commands.
+
+      @about-function{gtk-file-chooser-native-new}
+      @about-function{gtk-file-chooser-native-get-accept-label}
+      @about-function{gtk-file-chooser-native-set-accept-label}
+      @about-function{gtk-file-chooser-native-get-cancel-label}
+      @about-function{gtk-file-chooser-native-set-cancel-label}
+    @end{subsection}
     @begin[GtkFileChooserDialog]{subsection}
       A file chooser dialog, suitable for \"File/Open\" or \"File/Save\"
       commands.
@@ -4021,6 +4058,7 @@ setup_tree (void)
       @about-class{gtk-file-filter}
       @about-symbol{gtk-file-filter-flags}
       @about-symbol{gtk-file-filter-info}
+
       @about-function{gtk-file-filter-new}
       @about-function{gtk-file-filter-set-name}
       @about-function{gtk-file-filter-get-name}
@@ -4030,6 +4068,8 @@ setup_tree (void)
       @about-function{gtk-file-filter-add-custom}
       @about-function{gtk-file-filter-get-needed}
       @about-function{gtk-file-filter-filter}
+      @about-function{gtk-file-filter-new-from-gvariant}
+      @about-function{gtk-file-filter-to-gvariant}
     @end{subsection}
     @begin[GtkFontChooser]{subsection}
       Interface implemented by widgets displaying fonts.
@@ -4078,6 +4118,30 @@ setup_tree (void)
 
       @about-class{gtk-font-chooser-dialog}
       @about-function{gtk-font-chooser-dialog-new}
+    @end{subsection}
+
+    @begin[GtkPlacesSidebar]{subsection}
+      Sidebar that displays frequently-used places in the file system.
+
+      @about-symbol{gtk-places-open-flags}
+      @about-class{gtk-places-sidebar}
+
+      @about-generic{gtk-places-sidebar-open-flags}
+      @about-generic{gtk-places-sidebar-location}
+      @about-generic{gtk-places-sidebar-show-recent}
+      @about-generic{gtk-places-sidebar-show-desktop}
+      @about-generic{gtk-places-sidebar-show-connect-to-server}
+      @about-generic{gtk-places-sidebar-local-only}
+      @about-generic{gtk-places-sidebar-show-enter-location}
+      @about-generic{gtk-places-sidebar-show-trash}
+      @about-generic{gtk-places-sidebar-show-other-locations}
+
+      @about-function{gtk-places-sidebar-new}
+      @about-function{gtk-places-sidebar-add-shortcut}
+      @about-function{gtk-places-sidebar-remove-shortcut}
+      @about-function{gtk-places-sidebar-list-shortcuts}
+      @about-function{gtk-places-sidebar-get-nth-bookmark}
+      @about-function{gtk-places-sidebar-set-drop-targets-visible}
     @end{subsection}
   @end{section}
   @begin[Ornaments]{section}

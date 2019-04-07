@@ -232,6 +232,10 @@
    (:file "gtk.toggle-tool-button")    ; GtkToggleToolButton
    (:file "gtk.radio-tool-button")     ; GtkRadioToolButton
    (:file "gtk.menu-tool-button")      ; GtkMenuToolButton
+   (:file "gtk.popover"                ; Context dependent bubbles
+          :if-feature :gtk-3-12)
+   (:file "gtk.popover-menu"           ; Popovers to use as menus
+          :if-feature :gtk-3-16)
 
    ;; Selectors
    (:file "gtk.color-chooser")         ; Interface for choosing colors
@@ -245,6 +249,8 @@
    (:file "gtk.file-chooser-widget")   ; File chooser widget
    (:file "gtk.file-chooser-button")   ; Button to launch a file selection
    (:file "gtk.file-chooser-dialog")   ; File chooser dialog
+   (:file "gtk.file-chooser-native"    ; A native file chooser dialog
+          :if-feature :gtk-3-20)
    (:file "gtk.file-filter")           ; Selecting a file subset
    (:file "gtk.font-chooser")          ; Interface for displaying fonts
    (:file "gtk.font-button")           ; Button to launch a font chooser dialog
@@ -252,6 +258,8 @@
    (:file "gtk.font-chooser-dialog")   ; Dialog for selecting fonts
    (:file "gtk.font-selection")        ; Deprecated widget for selecting fonts
    (:file "gtk.font-selection-dialog") ; Deprecated widget for selecting fonts
+   (:file "gtk.places-sidebar"         ; Displays frequently-used places
+          :if-feature :gtk-3-10)
 
    ;; Miscellaneous
    (:file "gtk.adjustment")            ; Representation of a bounded value
