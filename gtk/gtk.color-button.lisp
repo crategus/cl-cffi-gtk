@@ -1,15 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.color-button.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -31,25 +29,55 @@
 ;;;
 ;;; GtkColorButton
 ;;;
-;;; A button to launch a color selection dialog
+;;;     A button to launch a color selection dialog
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkColorButton
+;;;
+;;; Functions
 ;;;
 ;;;     gtk_color_button_new
 ;;;     gtk_color_button_new_with_color
 ;;;     gtk_color_button_new_with_rgba
-;;;     gtk_color_button_set_color
-;;;     gtk_color_button_get_color
-;;;     gtk_color_button_set_alpha
-;;;     gtk_color_button_get_alpha
-;;;     gtk_color_button_set_rgba
-;;;     gtk_color_button_get_rgba
-;;;     gtk_color_button_set_use_alpha
-;;;     gtk_color_button_get_use_alpha
-;;;     gtk_color_button_set_title
-;;;     gtk_color_button_get_title
+;;;     gtk_color_button_set_color                         Accessor
+;;;     gtk_color_button_get_color                         Accessor
+;;;     gtk_color_button_set_alpha                         Accessor
+;;;     gtk_color_button_get_alpha                         Accessor
+;;;     gtk_color_button_set_rgba                          Accessor
+;;;     gtk_color_button_get_rgba                          Accessor
+;;;     gtk_color_button_set_use_alpha                     Accessor
+;;;     gtk_color_button_get_use_alpha                     Accessor
+;;;     gtk_color_button_set_title                         Accessor
+;;;     gtk_color_button_get_title                         Accessor
+;;;
+;;; Properties
+;;;
+;;;        guint   alpha          Read / Write
+;;;     GdkColor*  color          Read / Write
+;;;      GdkRGBA*  rgba           Read / Write
+;;;     gboolean   show-editor    Read / Write
+;;;        gchar*  title          Read / Write
+;;;     gboolean   use-alpha      Read / Write
+;;;
+;;; Signals
+;;;
+;;;         void   color-set      Run First
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;             ╰── GtkContainer
+;;;                 ╰── GtkBin
+;;;                     ╰── GtkButton
+;;;                         ╰── GtkColorButton
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GtkColorButton implements AtkImplementorIface, GtkBuildable,
+;;;     GtkActionable, GtkActivatable and GtkColorChooser.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -76,6 +104,10 @@
    (rgba
     gtk-color-button-rgba
     "rgba" "GdkRGBA" t t)
+   #+gtk-3-20
+   (show-editor
+    gtk-color-buton-show-editor
+    "show-editor" "gboolean" t t)
    (title
     gtk-color-button-title
     "title" "gchararray" t t)
@@ -94,7 +126,7 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"color-set\" signal}
       @begin{pre}
- lambda (widget)   : Run First
+ lambda (widget)    : Run First
       @end{pre}
       The \"color-set\" signal is emitted when the user selects a color. When
       handling this signal, use the @fun{gtk-color-button-get-color} function
@@ -107,7 +139,6 @@
       @begin[code]{table}
         @entry[widget]{The object which received the signal.}
       @end{table}
-      Since 2.4
   @end{dictionary}
   @see-slot{gtk-color-button-alpha}
   @see-slot{gtk-color-button-color}
@@ -116,56 +147,17 @@
   @see-slot{gtk-color-button-use-alpha}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
+;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-color-button-alpha -------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "alpha" 'gtk-color-button) 't)
- "The @code{\"alpha\"} property of tpye @code{:uint} (Read / Write) @br{}
+ "The @code{alpha} property of tpye @code{:uint} (Read / Write) @br{}
   The selected opacity value (0 fully transparent, 65535 fully opaque). @br{}
   Allowed values: <= 65535 @br{}
-  Default value: 65535 @br{}
-  Since 2.4")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "color" 'gtk-color-button) 't)
- "The @code{\"color\"} property of type @class{gdk-color} (Read / Write) @br{}
-  The selected color. @br{}
-  @b{Warning:}
-  \"color\" has been deprecated since version 3.4 and should not be
-  used in newly-written code. Use @code{\"rgba\"} instead. @br{}
-  Since 2.4")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "rgba" 'gtk-color-button) 't)
- "The @code{\"rgba\"} property of type @class{gdk-rgba} (Read / Write) @br{}
-  The RGBA color. @br{}
-  Since 3.0")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "title" 'gtk-color-button) 't)
- "The @code{\"title\"} property of type @code{:string} (Read / Write) @br{}
-  The title of the color selection dialog. @br{}
-  Default value: \"Pick a Color\" @br{}
-  Since 2.4")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "use-alpha"
-                                               'gtk-color-button) 't)
- "The @code{\"use-alpha\"} property of type @code{:boolean} (Read / Write) @br{}
-  If this property is set to @em{true}, the color swatch on the button is
-  rendered against a checkerboard background to show its opacity and the opacity
-  slider is displayed in the color selection dialog. @br{}
-  Default value: @code{nil} @br{}
-  Since 2.4")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
+  Default value: 65535")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-color-button-alpha atdoc:*function-name-alias*)
@@ -173,9 +165,19 @@
       (documentation 'gtk-color-button-alpha 'function)
  "@version{2013-2-24}
   @begin{short}
-    Accessor of the slot @code{\"alpha\"} of the @class{gtk-color-button}
-    class.
+    Accessor of the slot @slot[gtk-color-button]{alpha} of the
+    @class{gtk-color-button} class.
   @end{short}")
+
+;;; gtk-color-button-color -----------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "color" 'gtk-color-button) 't)
+ "The @code{color} property of type @class{gdk-color} (Read / Write) @br{}
+  The selected color. @br{}
+  @b{Warning:}
+  @code{color} has been deprecated since version 3.4 and should not be
+  used in newly-written code. Use @code{rgba} instead.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-color-button-color atdoc:*function-name-alias*)
@@ -183,9 +185,17 @@
       (documentation 'gtk-color-button-color 'function)
  "@version{2013-2-24}
   @begin{short}
-    Accessor of the slot @code{\"color\"} of the @class{gtk-color-button}
-    class.
+    Accessor of the slot @slot[gtk-color-button]{color} of the
+    @class{gtk-color-button} class.
   @end{short}")
+
+;;; --- gtk-color-button-rgba --------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "rgba" 'gtk-color-button) 't)
+ "The @code{rgba} property of type @class{gdk-rgba} (Read / Write) @br{}
+  The RGBA color. @br{}
+  Since 3.0")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-color-button-rgba atdoc:*function-name-alias*)
@@ -193,9 +203,40 @@
       (documentation 'gtk-color-button-rgba 'function)
  "@version{2013-2-24}
   @begin{short}
-    Accessor of the slot @code{\"rgba\"} of the @class{gtk-color-button}
-    class.
+    Accessor of the slot @slot[gtk-color-button]{rgba} of the
+    @class{gtk-color-button} class.
   @end{short}")
+
+;;; --- gtk-color-button-show-editor -------------------------------------------
+
+#+(and gtk-3-20 cl-cffi-gtk-documentation)
+(setf (documentation (atdoc:get-slot-from-name "show-editor" 'gtk-color-button)
+                     't)
+ "The @code{show-editor} property of type @code{:boolean} (Read / Write) @br{}
+  Set this property to @em{true} to skip the palette in the dialog and go
+  directly to the color editor. This property should be used in cases where the
+  palette in the editor would be redundant, such as when the color button is
+  already part of a palette. @br{}
+  Default value: @code{nil} @br{}
+  Since 3.20")
+
+#+(and gtk-3-20 cl-cffi-gtk-documentation)
+(setf (gethash 'gtk-color-button-show-editor atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-color-button-show-editor 'function)
+ "@version{2019-4-6}
+  @begin{short}
+    Accessor of the slot @slot[gtk-color-button]{show-editor} of the
+    @class{gtk-color-button} class.
+  @end{short}")
+
+;;; --- gtk-color-button-title -------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "title" 'gtk-color-button) 't)
+ "The @code{title} property of type @code{:string} (Read / Write) @br{}
+  The title of the color selection dialog. @br{}
+  Default value: \"Pick a Color\"")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-color-button-title atdoc:*function-name-alias*)
@@ -203,9 +244,20 @@
       (documentation 'gtk-color-button-title 'function)
  "@version{2013-2-24}
   @begin{short}
-    Accessor of the slot @code{\"title\"} of the @class{gtk-color-button}
-    class.
+    Accessor of the slot @slot[gtk-color-button]{title} of the
+    @class{gtk-color-button} class.
   @end{short}")
+
+;;; gtk-color-button-use-alpha -------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "use-alpha"
+                                               'gtk-color-button) 't)
+ "The @code{use-alpha} property of type @code{:boolean} (Read / Write) @br{}
+  If this property is set to @em{true}, the color swatch on the button is
+  rendered against a checkerboard background to show its opacity and the opacity
+  slider is displayed in the color selection dialog. @br{}
+  Default value: @code{nil} @br{}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-color-button-use-alpha atdoc:*function-name-alias*)
@@ -213,8 +265,8 @@
       (documentation 'gtk-color-button-use-alpha 'function)
  "@version{2013-2-24}
   @begin{short}
-    Accessor of the slot @code{\"use-alpha\"} of the @class{gtk-color-button}
-    class.
+    Accessor of the slot @slot[gtk-color-button]{use-alpha} of the
+    @class{gtk-color-button} class.
   @end{short}")
 
 ;;; ----------------------------------------------------------------------------
@@ -250,14 +302,12 @@
  "@version{2013-6-3}
   @argument[color]{a @class{gdk-color} to set the current color with}
   @return{A new color button.}
-  @subheading{Warning}
-    The @fun{gtk-color-button-new-with-color} function has been deprecated since
+  @short{Creates a new color button.}
+  @begin[Warning]{dictionary}
+    The @sym{gtk-color-button-new-with-color} function has been deprecated since
     version 3.4 and should not be used in newly-written code. Use the
     @fun{gtk-color-button-new-with-rgba} function instead.
-
-  @short{Creates a new color button.}
-
-  Since 2.4"
+  @end{dictionary}"
   (make-instance 'gtk-color-button
                  :color color))
 

@@ -1,15 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.file-filter.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -31,7 +29,7 @@
 ;;;
 ;;; GtkFileFilter
 ;;;
-;;; A filter for selecting a file subset
+;;;     A filter for selecting a file subset
 ;;;
 ;;; Synopsis
 ;;;
@@ -48,6 +46,18 @@
 ;;;     gtk_file_filter_add_custom
 ;;;     gtk_file_filter_get_needed
 ;;;     gtk_file_filter_filter
+;;;     gtk_file_filter_new_from_gvariant
+;;;     gtk_file_filter_to_gvariant
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkFileFilter
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GtkFileFilter implements GtkBuildable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -395,6 +405,39 @@
 ;;;     TRUE if the file should be displayed
 ;;;
 ;;; Since 2.4
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_file_filter_new_from_gvariant ()
+;;;
+;;; GtkFileFilter * gtk_file_filter_new_from_gvariant (GVariant *variant);
+;;;
+;;; Deserialize a file filter from an a{sv} variant in the format produced by
+;;; gtk_file_filter_to_gvariant().
+;;;
+;;; variant :
+;;;     an a{sv} GVariant
+;;; 
+;;; Returns :
+;;;     a new GtkFileFilter object.
+;;;
+;;; Since 3.22
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_file_filter_to_gvariant ()
+;;;
+;;; GVariant * gtk_file_filter_to_gvariant (GtkFileFilter *filter);
+;;;
+;;; Serialize a file filter to an a{sv} variant.
+;;;
+;;; filter :
+;;;     a GtkFileFilter
+;;;
+;;; Returns :
+;;;     a new, floating, GVariant.
+;;;
+;;; Since 3.22
 ;;; ----------------------------------------------------------------------------
 
 ;;; ---- End of file gtk.file-filter.lisp --------------------------------------

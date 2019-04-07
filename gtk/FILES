@@ -137,49 +137,45 @@ GTK+ Widgets and Objects
     gtk.menu-item.lisp               - GtkMenuItem                 - GTK+ 3.24 +
     gtk.radio-menu-item.lisp         - GtkRadioMenuItem            - GTK+ 3.24 +
     gtk.check-menu-item.lisp         - GtkCheckMenuItem            - GTK+ 3.24 +
-
-    gtk.separator-menu-item.lisp     - GtkSeparatorMenuItem        - GTK+ 3.6.4*
-    gtk.tool-shell.lisp              - GtkToolShell                - GTK+ 3.6.4*
-    gtk.toolbar.lisp                 - GtkToolbar                  - GTK+ 3.6.4*
-    gtk.tool-item.lisp               - GtkToolItem                 - GTK+ 3.6.4*
-    gtk.tool-palette.lisp            - GtkToolPalette              - GTK+ 3.8.6*
-    gtk.tool-item-group.lisp         - GtkToolItemGroup            - GTK+ 3.8.6*
-    gtk.separator-tool-item.lisp     - GtkSeparatorToolItem        - GTK+ 3.6.4*
-    gtk.tool-button.lisp             - GtkToolButton               - GTK+ 3.6.4*
-    gtk.menu-tool-button.lisp        - GtkMenuToolButton           - GTK+ 3.6.4*
-    gtk.toggle-tool-button.lisp      - GtkToggleToolButton         - GTK+ 3.6.4*
-    gtk.radio-tool-button.lisp       - GtkRadioToolButton          - GTK+ 3.6.4*
-
-    GtkPopover — Context dependent bubbles
-    GtkPopoverMenu — Popovers to use as menus
+    gtk.separator-menu-item.lisp     - GtkSeparatorMenuItem        - GTK+ 3.24
+    gtk.tool-shell.lisp              - GtkToolShell                - GTK+ 3.24
+    gtk.toolbar.lisp                 - GtkToolbar                  - GTK+ 3.24
+    gtk.tool-item.lisp               - GtkToolItem                 - GTK+ 3.24
+    gtk.tool-palette.lisp            - GtkToolPalette              - GTK+ 3.24
+    gtk.tool-item-group.lisp         - GtkToolItemGroup            - GTK+ 3.24
+    gtk.separator-tool-item.lisp     - GtkSeparatorToolItem        - GTK+ 3.24
+    gtk.tool-button.lisp             - GtkToolButton               - GTK+ 3.24
+    gtk.menu-tool-button.lisp        - GtkMenuToolButton           - GTK+ 3.24
+    gtk.toggle-tool-button.lisp      - GtkToggleToolButton         - GTK+ 3.24
+    gtk.radio-tool-button.lisp       - GtkRadioToolButton          - GTK+ 3.24
+    gtk.popover.lisp                 - GtkPopover                  - GTK+ 3.24 &
+    gtk.popover-menu.lisp            - GtkPopoverMenu              - GTK+ 3.24 &
 
   Selector Widgets and Dialogs
 
-    gtk.color-chooser.lisp           - GtkColorChooser             - GTK+ 3.6.4*
-    gtk.color-button.lisp            - GtkColorButton              - GTK+ 3.6.4*
-    gtk.color-chooser-widget.lisp    - GtkColorChooserWidget       - GTK+ 3.6.4*
-    gtk.color-chooser-dialog.lisp    - GtkColorChooserDialog       - GTK+ 3.6.4*
+    gtk.color-chooser.lisp           - GtkColorChooser             - GTK+ 3.24
+    gtk.color-button.lisp            - GtkColorButton              - GTK+ 3.24
+    gtk.color-chooser-widget.lisp    - GtkColorChooserWidget       - GTK+ 3.24
+    gtk.color-chooser-dialog.lisp    - GtkColorChooserDialog       - GTK+ 3.24
 
-    gtk.file-chooser.lisp            - GtkFileChooser              - GTK+ 3.8.8*
-    gtk.file-chooser-button.lisp     - GtkFileChooserButton        - GTK+ 3.6.4*
+    gtk.file-chooser.lisp            - GtkFileChooser              - GTK+ 3.24
+    gtk.file-chooser-button.lisp     - GtkFileChooserButton        - GTK+ 3.24
+    gtk.file-chooser-native.lisp     - GtkFileChooserNative        - GTK+ 3.24 &
+    gtk.file-chooser-dialog.lisp     - GtkFileChooserDialog        - GTK+ 3.24
+    gtk.file-chooser-widget.lisp     - GtkFileChooserWidget        - GTK+ 3.24
+    gtk.file-filter.lisp             - GtkFileFilter               - GTK+ 3.24 &
 
-    GtkFileChooserNative - A native file chooser dialog
+    gtk.font-chooser.lisp            - GtkFontChooser              - GTK+ 3.24
+    gtk.font-button.lisp             - GtkFontButton               - GTK+ 3.24
+    gtk.font-chooser-widget.lisp     - GtkFontChooserWidget        - GTK+ 3.24
+    gtk.font-chooser-dialog.lisp     - GtkFontChooserDialog        - GTK+ 3.24
 
-    gtk.file-chooser-dialog.lisp     - GtkFileChooserDialog        - GTK+ 3.8.7*
-    gtk.file-chooser-widget.lisp     - GtkFileChooserWidget        - GTK+ 3.6.4*
-    gtk.file-filter.lisp             - GtkFileFilter               - GTK+ 3.6.4*
-
-    gtk.font-chooser.lisp            - GtkFontChooser              - GTK+ 3.6.4*
-    gtk.font-button.lisp             - GtkFontButton               - GTK+ 3.6.4*
-    gtk.font-chooser-widget.lisp     - GtkFontChooserWidget        - GTK+ 3.6.4*
-    gtk.font-chooser-dialog.lisp     - GtkFontChooserDialog        - GTK+ 3.6.4*
-
-    GtkPlacesSidebar - Displays frequently-used places in the file system
+    gtk.places-sidebar.lisp          - GtkPlacesSidebar            - GTK+
 
   Ornaments
 
     gtk.frame.lisp                   - GtkFrame                    - GTK+ 3.8.8*
-    gtk.separator.lisp               - GtkSeparator, ...           - GTK+ 3.6.4*
+    gtk.separator.lisp               - GtkSeparator, ...           - GTK+ 3.24
 
   Scrolling
 

@@ -2,11 +2,11 @@
 ;;; gtk.tool-palette.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.8.6 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012, 2013, 2014 Dieter Kaiser
+;;; Copyright (C) 2012 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -28,11 +28,14 @@
 ;;;
 ;;; GtkToolPalette
 ;;;
-;;; A tool palette with categories
+;;;     A tool palette with categories
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkToolPalette
+;;;     GtkToolPaletteDragTargets
+;;;
+;;; Functions
 ;;;
 ;;;     gtk_tool_palette_new
 ;;;     gtk_tool_palette_get_exclusive
@@ -48,8 +51,6 @@
 ;;;     gtk_tool_palette_set_style
 ;;;     gtk_tool_palette_unset_style
 ;;;
-;;;     GtkToolPaletteDragTargets
-;;;
 ;;;     gtk_tool_palette_add_drag_dest
 ;;;     gtk_tool_palette_get_drag_item
 ;;;     gtk_tool_palette_get_drag_target_group
@@ -60,6 +61,30 @@
 ;;;
 ;;;     gtk_tool_palette_get_hadjustment                   * deprecated *
 ;;;     gtk_tool_palette_get_vadjustment                   * deprecated *
+;;;
+;;; Properties
+;;;
+;;;         GtkIconSize  icon-size        Read / Write
+;;;            gboolean  icon-size-set    Read / Write
+;;;     GtkToolbarStyle  toolbar-style    Read / Write
+;;;
+;;;     Child Properties
+;;;
+;;;     gboolean  exclusive    Read / Write
+;;;     gboolean  expand       Read / Write
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;             ╰── GtkContainer
+;;;                 ╰── GtkToolPalette
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GtkToolPalette implements AtkImplementorIface, GtkBuildable,
+;;;     GtkOrientable and GtkScrollable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -158,20 +183,27 @@
                                  GTK_TOOL_PALETTE_DRAG_ITEMS,
                                  GDK_ACTION_COPY);
   @end{pre}
+  @begin[CSS nodes]{dictionary}
+    The @sym{gtk-tool-palette} class has a single CSS node named
+    @code{toolpalette}.
+  @end{dictionary}
   @begin[Child Property Details]{dictionary}
-    @subheading{The \"exclusive\" child property}
-      @code{\"exclusive\"} of type @code{:boolean} (Read / Write) @br{}
-      Whether the item group should be the only one that is expanded at a given
-      time. @br{}
-      Default value: @code{nil} @br{}
-      Since 2.20
-
-    @subheading{The \"expand\" child property}
-      @code{\"expand\"} of type @code{:boolean} (Read / Write) @br{}
-      Whether the item group should receive extra space when the palette grows
-      at a given time. @br{}
-      Default value: @code{nil} @br{}
-      Since 2.20
+    @begin[code]{table}
+      @begin[exclusive]{entry}
+        The @code{exclusive} child property of type @code{:boolean}
+        (Read / Write) @br{}
+        Whether the item group should be the only one that is expanded at a
+        given time. @br{}
+        Default value: @code{nil}
+      @end{entry}
+      @begin[expand]{entry}
+        The @code{expand} child property of type @code{:boolean}
+        (Read / Write) @br{}
+        Whether the item group should receive extra space when the palette grows
+        at a given time. @br{}
+        Default value: @code{nil}
+      @end{entry}
+    @end{table}
   @end{dictionary}
   @see-slot{gtk-tool-palette-icon-size}
   @see-slot{gtk-tool-palette-icon-size-set}
@@ -184,85 +216,84 @@
   @see-function{gtk-tool-palette-get-drag-item}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
+;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-tool-palette-icon-size ---------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "icon-size"
                                                'gtk-tool-palette) 't)
- "The @code{\"icon-size\"} property of type @symbol{gtk-icon-size}
+ "The @code{icon-size} property of type @symbol{gtk-icon-size}
   (Read / Write) @br{}
   The size of the icons in a tool palette is normally determined by the
-  @code{\"toolbar-icon-size\"} setting. When this property is set, it overrides
+  @code{toolbar-icon-size} setting. When this property is set, it overrides
   the setting.
   This should only be used for special-purpose tool palettes, normal
   application tool palettes should respect the user preferences for the size
   of icons. @br{}
-  Default value: @code{:small-toolbar} @br{}
-  Since 2.20")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "icon-size-set"
-                                               'gtk-tool-palette) 't)
- "The @code{\"icon-size-set\"} property of type @code{:boolean}
-  (Read / Write) @br{}
-  Is @em{true} if the @code{\"icon-size\"} property has been set. @br{}
-  Default value: @code{nil} @br{}
-  Since 2.20")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "toolbar-style"
-                                               'gtk-tool-palette) 't)
- "The @code{\"toolbar-style\"} property of type @symbol{gtk-toolbar-style}
-  (Read / Write) @br{}
-  The style of items in the tool palette. @br{}
-  Default value: @code{:icons} @br{}
-  Since 2.20")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
+  Default value: @code{:small-toolbar}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tool-palette-icon-size atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tool-palette-icon-size 'function)
  "@version{2013-11-17}
-  Accessor of the slot @code{\"icon-size\"} of the @class{gtk-tool-palette}
-  class.
+  @begin{short}
+    Accessor of the slot @slot[gtk-tool-palette]{icon-size} of the
+    @class{gtk-tool-palette} class.
+  @end{short}
   @see-class{gtk-tool-palette}
   @see-function{gtk-tool-palette-get-icon-size}
   @see-function{gtk-tool-palette-set-icon-size}")
+
+;;; --- gtk-tool-palette-icon-size-set -----------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "icon-size-set"
+                                               'gtk-tool-palette) 't)
+ "The @code{icon-size-set} property of type @code{:boolean}
+  (Read / Write) @br{}
+  Is @em{true} if the @code{icon-size} property has been set. @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tool-palette-icon-size-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tool-palette-icon-size-set 'function)
  "@version{2013-11-17}
-  Accessor of the slot @code{\"icon-size-set\"} of the @class{gtk-tool-palette}
-  class.
+  @begin{short}
+    Accessor of the slot @slot[gtk-tool-palette]{icon-size-set} of the
+    @class{gtk-tool-palette} class.
+  @end{short}
   @see-class{gtk-tool-palette}
   @see-function{gtk-tool-palette-unset-icon-size}")
+
+;;; --- gtk-tool-palette-toolbar-style -----------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "toolbar-style"
+                                               'gtk-tool-palette) 't)
+ "The @code{toolbar-style} property of type @symbol{gtk-toolbar-style}
+  (Read / Write) @br{}
+  The style of items in the tool palette. @br{}
+  Default value: @code{:icons}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tool-palette-toolbar-style atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tool-palette-toolbar-style 'function)
  "@version{2013-11-17}
-  Accessor of the slot @code{\"toolbar-style\"} of the @class{gtk-tool-palette}
-  class.
+  @begin{short}
+    Accessor of the slot @slot[gtk-tool-palette]{toolbar-style} of the
+    @class{gtk-tool-palette} class.
+  @end{short}
   @see-class{gtk-tool-palette}
   @see-function{gtk-tool-palette-get-style}
   @see-function{gtk-tool-palette-set-style}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
 ;;; Accessors of Child Properties
-;;;
 ;;; ----------------------------------------------------------------------------
 
 (define-child-property "GtkToolPalette"
@@ -274,7 +305,7 @@
       "Accessor"
       (documentation 'gtk-tool-palette-child-exclusive 'function)
  "@version{2013-11-17}
-  Accessor of the child property @code{\"exclusive\"} of the
+  Accessor of the child property @code{exclusive} of the
   @class{gtk-tool-palette} class.
   @see-class{gtk-tool-palette}
   @see-function{gtk-tool-palette-get-exclusive}
@@ -289,7 +320,7 @@
       "Accessor"
       (documentation 'gtk-tool-palette-child-expand 'function)
  "@version{2013-11-17}
-  Accessor of the child property @code{\"expand\"} of the
+  Accessor of the child property @code{expand} of the
   @class{gtk-tool-palette} class.
   @see-class{gtk-tool-palette}
   @see-function{gtk-tool-palette-get-expand}
@@ -306,8 +337,6 @@
  "@version{2013-11-17}
   @return{A new @class{gtk-tool-palette} widget.}
   @short{Creates a new tool palette.}
-
-  Since 2.20
   @see-class{gtk-tool-palette}"
   (make-instance 'gtk-tool-palette))
 
@@ -330,8 +359,6 @@
     Gets whether @arg{group} is exclusive or not.
   @end{short}
   See the function @fun{gtk-tool-palette-set-exclusive}.
-
-  Since 2.20
   @see-class{gtk-tool-palette}
   @see-class{gtk-tool-item-group}
   @see-function{gtk-tool-palette-set-exclusive}"
@@ -356,8 +383,6 @@
     Sets whether the group should be exclusive or not.
   @end{short}
   If an exclusive group is expanded all other groups are collapsed.
-
-  Since 2.20
   @see-class{gtk-tool-palette}
   @see-class{gtk-tool-item-group}
   @see-function{gtk-tool-palette-get-exclusive}"
@@ -384,8 +409,6 @@
     Gets whether @arg{group} should be given extra space.
   @end{short}
   See the function @fun{gtk-tool-palette-set-expand}.
-
-  Since 2.20
   @see-class{gtk-tool-palette}
   @see-class{gtk-tool-item-group}
   @see-function{gtk-tool-palette-set-expand}"
@@ -409,8 +432,6 @@
   @begin{short}
     Sets whether the group should be given extra space.
   @end{short}
-
-  Since 2.20
   @see-class{gtk-tool-palette}
   @see-class{gtk-tool-item-group}
   @see-function{gtk-tool-palette-get-expand}"
@@ -436,8 +457,6 @@
     Gets the position of @arg{group} in @arg{palette} as index.
   @end{short}
   See the function @fun{gtk-tool-palette-set-group-position}.
-
-  Since 2.20
   @see-class{gtk-tool-palette}
   @see-class{gtk-tool-item-group}
   @see-function{gtk-tool-palette-set-group-position}"
@@ -463,8 +482,6 @@
   @end{short}
   If @arg{position} is 0 the group will become the first child, if
   @arg{position} is -1 it will become the last child.
-
-  Since 2.20
   @see-class{gtk-tool-palette}
   @see-class{gtk-tool-item-group}
   @see-function{gtk-tool-palette-get-group-position}"
@@ -489,8 +506,6 @@
     Gets the size of icons in the tool palette.
   @end{short}
   See the function @fun{gtk-tool-palette-set-icon-size}.
-
-  Since 2.20
   @see-class{gtk-tool-palette}
   @see-symbol{gtk-icon-size}
   @see-function{gtk-tool-palette-set-icon-size}"
@@ -513,8 +528,6 @@
   @begin{short}
     Sets the size of icons in the tool palette.
   @end{short}
-
-  Since 2.20
   @see-class{gtk-tool-palette}
   @see-symbol{gtk-icon-size}
   @see-function{gtk-tool-palette-get-icon-size}"
@@ -536,8 +549,6 @@
     @fun{gtk-tool-palette-set-icon-size}, so that user preferences will be used
     to determine the icon size.
   @end{short}
-
-  Since 2.20
   @see-class{gtk-tool-palette}
   @see-function{gtk-tool-palette-set-icon-size}"
   (palette (g-object gtk-tool-palette)))
@@ -558,8 +569,6 @@
   @begin{short}
     Gets the style, icons, text or both, of items in the tool palette.
   @end{short}
-
-  Since 2.20
   @see-class{gtk-tool-palette}
   @see-symbol{gtk-toolbar-style}
   @see-function{gtk-tool-palette-set-style}"
@@ -582,8 +591,6 @@
   @begin{short}
     Sets the style, text, icons or both, of items in the tool palette.
   @end{short}
-
-  Since 2.20
   @see-class{gtk-tool-palette}
   @see-symbol{gtk-toolbar-style}
   @see-function{gtk-tool-palette-get-style}
@@ -605,8 +612,6 @@
     @fun{gtk-tool-palette-set-style}, so that user preferences will be used to
     determine the toolbar style.
   @end{short}
-
-  Since 2.20
   @see-class{gtk-tool-palette}
   @see-function{gtk-tool-palette-get-style}
   @see-function{gtk-tool-palette-set-style}"
@@ -666,8 +671,6 @@
     destination for drags from palette. See the function
     @fun{gtk-drag-dest-set}.
   @end{short}
-
-  Since 2.20
   @see-class{gtk-tool-palette}
   @see-function{gtk-drag-dest-set}
   @see-function{gtk-tool-palette-set-drag-source}"
@@ -694,8 +697,6 @@
     Get the dragged item from the @arg{selection}. This could be a
     @class{gtk-tool-item} widget or a @class{gtk-tool-item-group}.
   @end{short}
-
-  Since 2.20
   @see-class{gtk-tool-palette}
   @see-class{gtk-tool-item}
   @see-class{gtk-tool-item-group}
@@ -718,8 +719,6 @@
   @begin{short}
     Get the target entry for a dragged @class{gtk-tool-item-group} widget.
   @end{short}
-
-  Since 2.20
   @see-class{gtk-tool-palette}
   @see-class{gtk-tool-item-group}
   @see-class{gtk-target-entry}")
@@ -739,8 +738,6 @@
   @begin{short}
     Gets the target entry for a dragged @class{gtk-tool-item} widget.
   @end{short}
-
-  Since 2.20
   @see-class{gtk-tool-palette}
   @see-class{gtk-tool-item}")
 
@@ -762,8 +759,6 @@
   @begin{short}
     Gets the group at position (@arg{x}, @arg{y}).
   @end{short}
-
-  Since 2.20
   @see-class{gtk-tool-palette}
   @see-class{gtk-tool-item-group}"
   (palette (g-object gtk-tool-palette))
@@ -791,8 +786,6 @@
     Gets the item at position (@arg{x}, @arg{y}).
   @end{short}
   See the function @fun{gtk-tool-palette-get-drop-group}.
-
-  Since 2.20
   @see-class{gtk-tool-palette}
   @see-class{gtk-tool-item}
   @see-function{gtk-tool-palette-get-drop-group}"
@@ -819,8 +812,6 @@
   Enables all groups and items in the tool palette as drag sources on button 1
   and button 3 press with copy and move actions. See the function
   @fun{gtk-drag-source-set}.
-
-  Since 2.20
   @see-class{gtk-tool-palette}
   @see-function{gtk-drag-source-set}"
   (palette (g-object gtk-tool-palette))

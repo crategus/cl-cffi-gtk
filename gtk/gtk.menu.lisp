@@ -91,25 +91,25 @@
 ;;;
 ;;; Child Properties
 ;;;
-;;;     gint  bottom-attach    Read / Write
-;;;     gint  left-attach      Read / Write
-;;;     gint  right-attach     Read / Write
-;;;     gint  top-attach       Read / Write
+;;;                  gint   bottom-attach          Read / Write
+;;;                  gint   left-attach            Read / Write
+;;;                  gint   right-attach           Read / Write
+;;;                  gint   top-attach             Read / Write
 ;;;
 ;;; Style Properties
 ;;;
-;;;     GtkArrowPlacement  arrow-placement       Read
-;;;                gfloat  arrow-scaling         Read
-;;;              gboolean  double-arrows         Read
-;;;                  gint  horizontal-offset     Read
-;;;                  gint  horizontal-padding    Read
-;;;                  gint  vertical-offset       Read
-;;;                  gint  vertical-padding      Read
+;;;     GtkArrowPlacement   arrow-placement        Read
+;;;                gfloat   arrow-scaling          Read
+;;;              gboolean   double-arrows          Read
+;;;                  gint   horizontal-offset      Read
+;;;                  gint   horizontal-padding     Read
+;;;                  gint   vertical-offset        Read
+;;;                  gint   vertical-padding       Read
 ;;;
 ;;; Signals
 ;;;
-;;;     void  move-scroll    Action
-;;;     void  popped-up      Run First
+;;;                  void   move-scroll            Action
+;;;                  void   popped-up              Run First
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -730,7 +730,7 @@
   @see-class{gtk-menu}")
 
 ;;; ----------------------------------------------------------------------------
-;;; Accessors of Child Properties
+;;; Child Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- gtk-menu-chil-left-attach ----------------------------------------------

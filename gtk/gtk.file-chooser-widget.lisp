@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.file-chooser-widget.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,13 +29,49 @@
 ;;;
 ;;; GtkFileChooserWidget
 ;;;
-;;; File chooser widget that can be embedded in other widgets
+;;;     File chooser widget that can be embedded in other widgets
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkFileChooserWidget
 ;;;
+;;; Functions
+;;;
 ;;;     gtk_file_chooser_widget_new
+;;;
+;;; Properties
+;;;
+;;;     gboolean   search-mode                Read / Write
+;;;        gchar*  subtitle                   Read
+;;;
+;;; Signals
+;;;
+;;;         void   desktop-folder             Action
+;;;         void   down-folder                Action
+;;;         void   home-folder                Action
+;;;         void   location-popup             Action
+;;;         void   location-popup-on-paste    Action
+;;;         void   location-toggle-popup      Action
+;;;         void   places-shortcut            Action
+;;;         void   quick-bookmark             Action
+;;;         void   recent-shortcut            Action
+;;;         void   search-shortcut            Action
+;;;         void   show-hidden                Action
+;;;         void   up-folder                  Action
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;             ╰── GtkContainer
+;;;                 ╰── GtkBox
+;;;                     ╰── GtkFileChooserWidget
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GtkFileChooserWidget implements AtkImplementorIface, GtkBuildable,
+;;;     GtkOrientable, GtkFileChooser and GtkFileChooserEmbed.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)

@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.file-chooser-button.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,11 +29,13 @@
 ;;;
 ;;; GtkFileChooserButton
 ;;;
-;;; A button to launch a file selection dialog
+;;;     A button to launch a file selection dialog
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkFileChooserButton
+;;;
+;;; Functions
 ;;;
 ;;;     gtk_file_chooser_button_new
 ;;;     gtk_file_chooser_button_new_with_dialog
@@ -46,6 +45,30 @@
 ;;;     gtk_file_chooser_button_set_width_chars
 ;;;     gtk_file_chooser_button_get_focus_on_click
 ;;;     gtk_file_chooser_button_set_focus_on_click
+;;;
+;;; Properties
+;;;
+;;;     GtkFileChooser*  dialog         Write / Construct Only
+;;;              gchar*  title          Read / Write
+;;;               gint   width-chars    Read / Write
+;;;
+;;; Signals
+;;;
+;;;               void   file-set       Run First
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;             ╰── GtkContainer
+;;;                 ╰── GtkBox
+;;;                     ╰── GtkFileChooserButton 
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GtkFileChooserButton implements AtkImplementorIface, GtkBuildable,
+;;;     GtkOrientable and GtkFileChooser.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -120,7 +143,6 @@
       @begin[code]{table}
         @entry[widget]{The object which received the signal.}
       @end{table}
-      Since 2.12
   @end{dictionary}
   @see-slot{gtk-file-chooser-button-dialog}
   @see-slot{gtk-file-chooser-button-focus-on-click}
@@ -139,8 +161,7 @@
  "The @code{\"dialog\"} property of type @class{gtk-file-chooser}
   (Write / Construct Only) @br{}
   Instance of the @class{gtk-file-chooser-dialog} associated with the
-  button. @br{}
-  Since 2.6")
+  button.")
 
 ;;; ----------------------------------------------------------------------------
 
@@ -151,8 +172,7 @@
   (Read / Write) @br{}
   Whether the @sym{gtk-file-chooser-button} button grabs focus when it is
   clicked with the mouse. @br{}
-  Default value: @em{true} @br{}
-  Since 2.10")
+  Default value: @em{true}")
 
 ;;; ----------------------------------------------------------------------------
 
@@ -162,8 +182,7 @@
  "The @code{\"title\"} property of type @code{:string} (Read / Write) @br{}
   Title to put on the @class{gtk-file-chooser-dialog} associated with the
   button. @br{}
-  Default value: \"Select a File\" @br{}
-  Since 2.6")
+  Default value: \"Select a File\"")
 
 ;;; ----------------------------------------------------------------------------
 
@@ -173,8 +192,7 @@
  "The @code{\"width-chars\"} property of type @code{:int} (Read / Write) @br{}
   The width of the entry and label inside the button, in characters. @br{}
   Allowed values: >= @code{G_MAXULONG} @br{}
-  Default value: -1 @br{}
-  Since 2.6")
+  Default value: -1")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -315,9 +333,7 @@
   @return{A new button widget.}
   @begin{short}
     Creates a new file-selecting button widget.
-  @end{short}
-
-  Since 2.6"
+  @end{short}"
   (make-instance 'gtk-file-chooser-button
                  :title title
                  :action action))
@@ -346,9 +362,7 @@
 
   Also note that the dialog needs to have its confirmative button added with
   response @code{:accept} or @code{:ok} in order for the button to take over the
-  file selected in the dialog.
-
-  Since 2.6"
+  file selected in the dialog."
   (make-instance 'gtk-file-chooser-button
                  :dialog dialog))
 
@@ -368,9 +382,7 @@
   @begin{short}
     Retrieves the title of the browse dialog used by @arg{button}. The returned
     value should not be modified or freed.
-  @end{short}
-
-  Since 2.6"
+  @end{short}"
   (gtk-file-chooser-button-title button))
 
 (export 'gtk-file-chooser-button-get-title)
@@ -388,9 +400,7 @@
   @argument[title]{the new browse dialog title}
   @begin{short}
     Modifies the title of the browse dialog used by button.
-  @end{short}
-
-  Since 2.6"
+  @end{short}"
   (setf (gtk-file-chooser-button-title button) title))
 
 (export 'gtk-file-chooser-button-set-title)
@@ -410,9 +420,7 @@
   @end{return}
   @begin{short}
     Retrieves the width in characters of the button widget's entry and/or label.
-  @end{short}
-
-  Since 2.6"
+  @end{short}"
   (gtk-file-chooser-button-width-chars button))
 
 (export 'gtk-file-chooser-button-get-width-chars)
@@ -430,9 +438,7 @@
   @argument[n-chars]{the new width, in characters}
   @begin{short}
     Sets the width (in characters) that button will use to @arg{n-chars}.
-  @end{short}
-
-  Since 2.6"
+  @end{short}"
   (setf (gtk-file-chooser-button-width-chars button) n-chars))
 
 (export 'gtk-file-chooser-button-set-width-chars)
@@ -453,8 +459,11 @@
     Returns whether the button grabs focus when it is clicked with the mouse.
   @end{short}
   See the function @fun{gtk-file-chooser-button-set-focus-on-click}.
-
-  Since 2.10
+  @begin[Warning]{dictionary}
+    The @sym{gtk-file-chooser-button-get-focus-on-click} function has been
+    deprecated since version 3.20 and should not be used in newly-written code.
+    Use the @fun{gtk-widget-get-focus-on-click} function instead.
+  @end{dictionary}
   @see-function{gtk-file-chooser-button-set-focus-on-click}"
   (gtk-file-chooser-button-focus-on-click button))
 
@@ -478,8 +487,11 @@
   Making mouse clicks not grab focus is useful in places like toolbars where
   you do not want the keyboard focus removed from the main area of the
   application.
-
-  Since 2.10"
+  @begin[Warning]{dictionary}
+    The @sym{gtk-file-chooser-button-set-focus-on-click} function has been
+    deprecated since version 3.20 and should not be used in newly-written code.
+    Use the @fun{gtk-widget-set-focus-on-click} function instead.
+  @end{dictionary}"
   (setf (gtk-file-chooser-button-focus-on-click button) focus-on-click))
 
 (export 'gtk-file-chooser-button-set-focus-on-click)

@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.file-chooser.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.8.7 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,17 +29,18 @@
 ;;;
 ;;; GtkFileChooser
 ;;;
-;;; File chooser interface used by GtkFileChooserWidget and GtkFileChooserDialog
+;;;     File chooser interface used by GtkFileChooserWidget and
+;;;     GtkFileChooserDialog
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkFileChooser
 ;;;     GtkFileChooserAction
 ;;;     GtkFileChooserConfirmation
-;;;
 ;;;     GTK_FILE_CHOOSER_ERROR
-;;;
 ;;;     GtkFileChooserError
+;;;
+;;; Functions
 ;;;
 ;;;     gtk_file_chooser_set_action
 ;;;     gtk_file_chooser_get_action
@@ -57,6 +55,7 @@
 ;;;     gtk_file_chooser_set_create_folders
 ;;;     gtk_file_chooser_get_create_folders
 ;;;     gtk_file_chooser_set_current_name
+;;;     gtk_file_chooser_get_current_name
 ;;;     gtk_file_chooser_get_filename
 ;;;     gtk_file_chooserset_filename
 ;;;     gtk_file_chooser_select_filename
@@ -102,6 +101,33 @@
 ;;;     gtk_file_chooser_set_current_folder_file
 ;;;     gtk_file_chooser_set_file
 ;;;     gtk_file_chooser_unselect_file
+;;;
+;;; Properties
+;;;
+;;:       GtkFileChooserAction   action                       Read / Write
+;;;                   gboolean   create-folders               Read / Write
+;;;                   gboolean   do-overwrite-confirmation    Read / Write
+;;;                  GtkWidget*  extra-widget                 Read / Write
+;;;              GtkFileFilter*  filter                       Read / Write
+;;;                   gboolean   local-only                   Read / Write
+;;;                  GtkWidget*  preview-widget               Read / Write
+;;;                   gboolean   preview-widget-active        Read / Write
+;;;                   gboolean   select-multiple              Read / Write
+;;;                   gboolean   show-hidden                  Read / Write
+;;;                   gboolean   use-preview-label            Read / Write
+;;;
+;;; Signals
+;;;
+;;; GtkFileChooserConfirmation   confirm-overwrite            Run Last
+;;;                       void   current-folder-changed       Run Last
+;;;                       void   file-activated               Run Last
+;;;                       void   selection-changed            Run Last
+;;;                       void   update-preview               Run Last
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GInterface
+;;;     ╰── GtkFileChooser
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -1307,6 +1333,33 @@
   (name :string :free-to-foreign t :encoding :utf-8))
 
 (export 'gtk-file-chooser-set-current-name)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_file_chooser_get_current_name ()
+;;;
+;;; gchar * gtk_file_chooser_get_current_name (GtkFileChooser *chooser);
+;;;
+;;; Gets the current name in the file selector, as entered by the user in the
+;;; text entry for “Name”.
+;;;
+;;; This is meant to be used in save dialogs, to get the currently typed
+;;; filename when the file itself does not exist yet. For example, an
+;;; application that adds a custom extra widget to the file chooser for
+;;; “file format” may want to change the extension of the typed filename based
+;;; on the chosen format, say, from “.jpg” to “.png”.
+;;;
+;;; chooser :
+;;;     a GtkFileChooser
+;;; 
+;;; Returns :
+;;;     The raw text from the file chooser’s “Name” entry. Free this with
+;;;     g_free(). Note that this string is not a full pathname or URI; it is
+;;;     whatever the contents of the entry are. Note also that this string is in
+;;;     UTF-8 encoding, which is not necessarily the system’s encoding for
+;;;     filenames.
+;;;
+;;; Since: 3.10
+;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_file_chooser_get_filename ()

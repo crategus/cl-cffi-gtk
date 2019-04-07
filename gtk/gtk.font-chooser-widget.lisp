@@ -1,11 +1,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.font-chooser-widget.lisp
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012, 2013 Dieter Kaiser
+;;; Copyright (C) 2012 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -27,13 +28,33 @@
 ;;;
 ;;; GtkFontChooserWidget
 ;;;
-;;; A widget for selecting fonts
+;;;     A widget for selecting fonts
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkFontChooserWidget
 ;;;
+;;; Functions
+;;;
 ;;;     gtk_font_chooser_widget_new
+;;;
+;;; Properties
+;;;
+;;;     GAction*  tweak-action    Read
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;             ╰── GtkContainer
+;;;                 ╰── GtkBox
+;;;                     ╰── GtkFontChooserWidget
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GtkFontChooserWidget implements AtkImplementorIface, GtkBuildable,
+;;;     GtkOrientable and GtkFontChooser.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -50,7 +71,9 @@
                 "GtkOrientable"
                 "GtkFontChooser")
    :type-initializer "gtk_font_chooser_widget_get_type")
-  nil)
+  ((tweak-action
+    gtk-font-chooser-widget-tweak-action
+    "tweak-action" "GAction" t nil)))
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-font-chooser-widget 'type)
@@ -69,7 +92,40 @@
   @fun{gtk-font-chooser-get-font-desc}.
 
   To change the text which is shown in the preview area, use the function
-  @fun{gtk-font-chooser-set-preview-text}.")
+  @fun{gtk-font-chooser-set-preview-text}.
+  @begin[CSS nodes]{dictionary}
+    The @sym{gtk-font-chooser-widget} class has a single CSS node with name
+    @code{fontchooser}.
+  @end{dictionary}
+  @see-class{gtk-font-chooser-dialog}")
+
+;;; ----------------------------------------------------------------------------
+;;; Property and Accessor Details
+;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-font-chooser-widget-tweak-action -----------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "tweak-action"
+                                               'gtk-font-chooser-widget) 't)
+ "The @code{tweak-action} property of type @class{g-action} (Read) @br{}
+  A toggle action that can be used to switch to the tweak page of the font
+  chooser widget, which lets the user tweak the OpenType features and variation
+  axes of the selected font.
+  The action will be enabled or disabled depending on whether the selected font
+  has any features or axes.")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-font-chooser-widget-tweak-action
+               atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-font-chooser-widget-tweak-action 'function)
+ "@version{2019-5-6}
+  @begin{short}
+    Accessor of the slot @slot[gtk-font-chooser-widget]{tweak-action} of the
+    @class{gtk-font-button} class.
+  @end{short}
+  @see-class{gtk-font-button}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_font_chooser_widget_new ()

@@ -1,11 +1,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.color-chooser-dialog.lisp
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012, 2013 Dieter Kaiser
+;;; Copyright (C) 2012 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -27,13 +28,35 @@
 ;;;
 ;;; GtkColorChooserDialog
 ;;; 
-;;; A dialog for choosing colors
+;;;     A dialog for choosing colors
 ;;;     
-;;; Synopsis
+;;; Types and Values
 ;;; 
 ;;;     GtkColorChooserDialog
 ;;;
+;;; Functions
+;;;
 ;;;     gtk_color_chooser_dialog_new
+;;;
+;;; Properties
+;;;
+;;;     gboolean   show-editor    Read / Write
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;             ╰── GtkContainer
+;;;                 ╰── GtkBin
+;;;                     ╰── GtkWindow
+;;;                         ╰── GtkDialog
+;;;                             ╰── GtkColorChooserDialog
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GtkColorChooserDialog implements AtkImplementorIface, GtkBuildable and
+;;;     GtkColorChooser.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -63,24 +86,16 @@
   @see-slot{gtk-color-chooser-dialog-show-editor}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
+;;; Property and Accesor Details
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "show-editor"
                                                'gtk-color-chooser-dialog) 't)
- "The @code{\"show-editor\"} property of type @code{:boolean}
+ "The @code{show-editor} property of type @code{:boolean}
   (Read / Write) @br{}
   Show editor. @br{}
   Default value: @code{nil}")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-color-chooser-dialog-show-editor atdoc:*function-name-alias*)
@@ -88,7 +103,7 @@
       (documentation 'gtk-color-chooser-dialog-show-editor 'function)
  "@version{2013-2-24}
   @begin{short}
-    Accessor of the slot @code{\"show-editor\"} of the
+    Accessor of the slot @slot[gtk-color-chooser-dialog]{show-editor} of the
     @class{gtk-color-chooser-dialog} class.
   @end{short}")
 

@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.tool-shell.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,12 +29,13 @@
 ;;;
 ;;; GtkToolShell
 ;;;
-;;; Interface for containers containing GtkToolItem widgets
+;;;     Interface for containers containing GtkToolItem widgets
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkToolShell
-;;;     GtkToolShellIface
+;;;
+;;; Functions
 ;;;
 ;;;     gtk_tool_shell_get_ellipsize_mode
 ;;;     gtk_tool_shell_get_icon_size
@@ -48,6 +46,11 @@
 ;;;     gtk_tool_shell_get_text_orientation
 ;;;     gtk_tool_shell_rebuild_menu
 ;;;     gtk_tool_shell_get_text_size_group
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GInterface
+;;;     ╰── GtkToolShell
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -71,51 +74,6 @@
   @see-class{gtk-tool-item}")
 
 ;;; ----------------------------------------------------------------------------
-;;; struct GtkToolShellIface
-;;;
-;;; struct GtkToolShellIface {
-;;;   GtkIconSize        (*get_icon_size)        (GtkToolShell *shell);
-;;;   GtkOrientation     (*get_orientation)      (GtkToolShell *shell);
-;;;   GtkToolbarStyle    (*get_style)            (GtkToolShell *shell);
-;;;   GtkReliefStyle     (*get_relief_style)     (GtkToolShell *shell);
-;;;   void               (*rebuild_menu)         (GtkToolShell *shell);
-;;;   GtkOrientation     (*get_text_orientation) (GtkToolShell *shell);
-;;;   gfloat             (*get_text_alignment)   (GtkToolShell *shell);
-;;;   PangoEllipsizeMode (*get_ellipsize_mode)   (GtkToolShell *shell);
-;;;   GtkSizeGroup *     (*get_text_size_group)  (GtkToolShell *shell);
-;;; };
-;;;
-;;; Virtual function table for the GtkToolShell interface.
-;;;
-;;; get_icon_size ()
-;;;     mandatory implementation of gtk_tool_shell_get_icon_size().
-;;;
-;;; get_orientation ()
-;;;     mandatory implementation of gtk_tool_shell_get_orientation().
-;;;
-;;; get_style ()
-;;;     mandatory implementation of gtk_tool_shell_get_style().
-;;;
-;;; get_relief_style ()
-;;;     optional implementation of gtk_tool_shell_get_relief_style().
-;;;
-;;; rebuild_menu ()
-;;;     optional implementation of gtk_tool_shell_rebuild_menu().
-;;;
-;;; get_text_orientation ()
-;;;     optional implementation of gtk_tool_shell_get_text_orientation().
-;;;
-;;; get_text_alignment ()
-;;;     optional implementation of gtk_tool_shell_get_text_alignment().
-;;;
-;;; get_ellipsize_mode ()
-;;;     optional implementation of gtk_tool_shell_get_ellipsize_mode().
-;;;
-;;; get_text_size_group ()
-;;;     optional implementation of gtk_tool_shell_get_text_size_group().
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
 ;;; gtk_tool_shell_get_ellipsize_mode ()
 ;;; ----------------------------------------------------------------------------
 
@@ -130,8 +88,6 @@
   @end{short}
   Tool items must not call this function directly, but rely on the function
   @fun{gtk-tool-item-get-ellipsize-mode} instead.
-
-  Since 2.20
   @see-class{gtk-tool-shell}
   @see-symbol{pango-ellipsize-mode}
   @see-function{gtk-tool-item-get-ellipsize-mode}"
@@ -154,8 +110,6 @@
   @end{short}
   Tool items must not call this function directly, but rely on the function
   @fun{gtk-tool-item-get-icon-size} instead.
-
-  Since 2.14
   @see-class{gtk-tool-shell}
   @see-function{gtk-tool-item-get-icon-size}"
   (shell (g-object gtk-tool-shell)))
@@ -177,8 +131,6 @@
   @end{short}
   Tool items must not call this function directly, but rely on the function
   @fun{gtk-tool-item-get-orientation} instead.
-
-  Since 2.14
   @see-class{gtk-tool-shell}
   @see-function{gtk-tool-item-get-orientation}"
   (shell (g-object gtk-tool-shell)))
@@ -200,8 +152,6 @@
   @end{short}
   Tool items must not call this function directly, but rely on the function
   @fun{gtk-tool-item-get-relief-style} instead.
-
-  Since 2.14
   @see-class{gtk-tool-shell-get-relief-style}
   @see-symbol{gtk-relief-style}
   @see-function{gtk-tool-item-get-relief-style}"
@@ -224,8 +174,6 @@
   @end{short}
   Tool items must not call this function directly, but rely on the function
   @fun{gtk-tool-item-get-toolbar-style} instead.
-
-  Since 2.14
   @see-class{gtk-tool-shell}
   @see-function{gtk-tool-item-get-toolbar-style}"
   (shell (g-object gtk-tool-shell)))
@@ -247,8 +195,6 @@
   @end{short}
   Tool items must not call this function directly, but rely on the function
   @fun{gtk-tool-item-get-text-alignment} instead.
-
-  Since 2.20
   @see-class{gtk-tool-shell}
   @see-function{gtk-tool-item-get-text-alignment}"
   (shell (g-object gtk-tool-shell)))
@@ -270,8 +216,6 @@
   @end{short}
   Tool items must not call this function directly, but rely on the function
   @fun{gtk-tool-item-get-text-orientation} instead.
-
-  Since 2.20
   @see-class{gtk-tool-shell}
   @see-symbol{gtk-orientation}
   @see-function{gtk-tool-item-get-text-orientation}"
@@ -295,8 +239,6 @@
 
   Tool items must not call this function directly, but rely on the
   @fun{gtk-tool-item-rebuild-menu} function instead.
-
-  Since 2.14
   @see-function{gtk-tool-item-rebuild-menu}"
   (shell (g-object gtk-tool-shell)))
 
@@ -317,8 +259,6 @@
   @end{short}
   Tool items must not call this function directly, but rely on the function
   @fun{gtk-tool-item-get-text-size-group} instead.
-
-  Since 2.20
   @see-class{gtk-tool-shell}
   @see-function{gtk-tool-item-get-text-size-group}"
   (shell (g-object gtk-tool-shell)))

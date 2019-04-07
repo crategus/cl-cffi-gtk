@@ -1,11 +1,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.color-chooser-widget.lisp
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012, 2013 Dieter Kaiser
+;;; Copyright (C) 2012 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -27,13 +28,33 @@
 ;;;
 ;;; GtkColorChooserWidget
 ;;; 
-;;; A widget for choosing colors
+;;;     A widget for choosing colors
 ;;;     
-;;; Synopsis
+;;; Types and Values
 ;;; 
 ;;;     GtkColorChooserWidget
 ;;;
+;;; Functions
+;;;
 ;;;     gtk_color_chooser_widget_new
+;;;
+;;; Properties
+;;;
+;;;     gboolean   show-editor    Read / Write
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;             ╰── GtkContainer
+;;;                 ╰── GtkBox
+;;;                     ╰── GtkColorChooserWidget
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GtkColorChooserWidget implements AtkImplementorIface, GtkBuildable,
+;;;     GtkOrientable and GtkColorChooser.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -75,12 +96,14 @@
 
   The @sym{gtk-color-chooser-widget} is used in the
   @class{gtk-color-chooser-dialog} to provide a dialog for selecting colors.
+  @begin[CSS nodes]{dictionary}
+    The @sym{gtk-color-chooser-widget} class has a single CSS node with name
+    @code{colorchooser}.
+  @end{dictionary}
   @see-slot{gtk-color-chooser-widget-show-editor}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
+;;; Property and Accesor Details
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
@@ -93,12 +116,6 @@
   into single-color editing mode. @br{}
   Default value: @code{nil} @br{}
   Since 3.4")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-color-chooser-widget-show-editor atdoc:*function-name-alias*)

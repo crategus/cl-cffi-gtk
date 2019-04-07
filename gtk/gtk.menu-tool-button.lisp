@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.menu-tool-button.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,11 +29,13 @@
 ;;;
 ;;; GtkMenuToolButton
 ;;;
-;;; A GtkToolItem containing a button with an additional dropdown menu
+;;;     A GtkToolItem containing a button with an additional dropdown menu
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkMenuToolButton
+;;;
+;;; Functions
 ;;;
 ;;;     gtk_menu_tool_button_new
 ;;;     gtk_menu_tool_button_new_from_stock
@@ -44,6 +43,31 @@
 ;;;     gtk_menu_tool_button_get_menu
 ;;;     gtk_menu_tool_button_set_arrow_tooltip_text
 ;;;     gtk_menu_tool_button_set_arrow_tooltip_markup
+;;;
+;;; Properties
+;;;
+;;;     GtkMenu*  menu         Read / Write
+;;;
+;;; Signals
+;;;
+;;;        void   show-menu    Run First
+;;;
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;             ╰── GtkContainer
+;;;                 ╰── GtkBin
+;;;                     ╰── GtkToolItem
+;;;                         ╰── GtkToolButton
+;;;                             ╰── GtkMenuToolButton
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GtkMenuToolButton implements AtkImplementorIface, GtkBuildable,
+;;;     GtkActivatable and GtkActionable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -109,30 +133,24 @@
   @see-slot{gtk-menu-tool-button-menu}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
+;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "menu" 'gtk-menu-tool-button) 't)
- "The @code{\"menu\"} property of type @class{gtk-menu-tool-button}
+ "The @code{menu} property of type @class{gtk-menu-tool-button}
   (Read / Write) @br{}
   The dropdown menu.")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-menu-tool-button-menu atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-menu-tool-button-menu 'function)
  "@version{2013-8-23}
-  Accessor of the slot @code{\"menu\"} of the @class{gtk-menu-tool-button}
-  class.
+  @begin{short}
+    Accessor of the slot @slot[gtk-menu-tool-button]{menu} of the
+    @class{gtk-menu-tool-button} class.
+  @end{short}
   @see-class{gtk-menu-tool-button}
   @see-function{gtk-menu-tool-button-get-menu}
   @see-function{gtk-menu-tool-button-set-menu}")
@@ -152,8 +170,6 @@
     Creates a new @class{gtk-menu-tool-button} using @arg{icon-widget} as icon
     and @arg{label} as label.
   @end{short}
-
-  Since 2.6
   @see-class{gtk-menu-tool-button}
   @see-function{gtk-menu-tool-button-new-from-stock}"
   (let ((button (make-instance 'gtk-menu-tool-button)))
@@ -173,7 +189,7 @@
 
 (defun gtk-menu-tool-button-new-from-stock (stock-id)
  #+cl-cffi-gtk-documentation
- "@version{2013-8-23}
+ "@version{2019-4-5}
   @argument[stock-id]{the name of a stock item}
   @return{The new @class{gtk-menu-tool-button} widget.}
   @begin{short}
@@ -181,8 +197,11 @@
   @end{short}
   The new @class{gtk-menu-tool-button} will contain an icon and label from the
   stock item indicated by @arg{stock-id}.
-
-  Since 2.6
+  @begin[Warning]{dictionary}
+    The @sym{gtk-menu-tool-button-new-from-stock} function has been deprecated
+    since version 3.10 and should not be used in newly-written code. Use the
+    @fun{gtk-menu-tool-button-new} function instead.
+  @end{dictionary}
   @see-class{gtk-menu-tool-button}
   @see-function{gtk-menu-tool-button-new}"
   (make-instance 'gtk-menu-tool-button
@@ -206,8 +225,6 @@
     arrow.
   @end{short}
   If @arg{menu} is @code{nil}, the arrow button becomes insensitive.
-
-  Since 2.6
   @see-class{gtk-menu}
   @see-class{gtk-menu-tool-button}
   @see-function{gtk-menu-tool-button-get-menu}"
@@ -229,8 +246,6 @@
   @begin{short}
     Gets the @class{gtk-menu} associated with @arg{button}.
   @end{short}
-
-  Since 2.6
   @see-class{gtk-menu}
   @see-class{gtk-menu-tool-button}
   @see-function{gtk-menu-tool-button-set-menu}"
@@ -255,8 +270,6 @@
   @end{short}
   See the function @fun{gtk-tool-item-set-tooltip-text} for setting a tooltip on
   the whole @class{gtk-menu-tool-button}.
-
-  Since 2.12
   @see-class{gtk-menu-tool-button}
   @see-function{gtk-tool-item-set-tooltip-text}"
   (button (g-object gtk-menu-tool-button))
@@ -281,8 +294,6 @@
   @end{short}
   See the function @fun{gtk-tool-item-set-tooltip-text} for setting a tooltip on
   the whole @class{gtk-menu-tool-button}.
-
-  Since 2.12
   @see-class{gtk-menu-tool-button}
   @see-function{gtk-tool-item-set-tooltip-text}"
   (button (g-object gtk-menu-tool-button))

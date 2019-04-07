@@ -1,15 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.font-button.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -31,11 +29,13 @@
 ;;;
 ;;; GtkFontButton
 ;;;
-;;; A button to launch a font chooser dialog
+;;;     A button to launch a font chooser dialog
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkFontButton
+;;;
+;;; Functions
 ;;;
 ;;;     gtk_font_button_new
 ;;;     gtk_font_button_new_with_font
@@ -51,6 +51,34 @@
 ;;;     gtk_font_button_get_use_size
 ;;;     gtk_font_button_set_title
 ;;;     gtk_font_button_get_title
+;;;
+;;; Properties
+;;;
+;;;        gchar*  font-name     Read / Write
+;;;     gboolean   show-size     Read / Write
+;;;     gboolean   show-style    Read / Write
+;;;        gchar*  title         Read / Write
+;;;     gboolean   use-font      Read / Write
+;;;     gboolean   use-size      Read / Write
+;;;
+;;; Signals
+;;;
+;;;         void   font-set      Run First
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;             ╰── GtkContainer
+;;;                 ╰── GtkBin
+;;;                     ╰── GtkButton
+;;;                         ╰── GtkFontButton
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GtkFontButton implements AtkImplementorIface, GtkBuildable,
+;;;     GtkActionable, GtkActivatable and GtkFontChooser.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -120,114 +148,133 @@
   @see-slot{gtk-font-button-use-size}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
+;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-font-button-font-name ----------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "font-name" 'gtk-font-button) 't)
- "The @code{\"font-name\"} property of type @code{:string} (Read / Write) @br{}
+ "The @code{font-name} property of type @code{:string} (Read / Write) @br{}
   The name of the currently selected font. @br{}
-  Default value: \"Sans 12\" @br{}
-  Since 2.4")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "show-size" 'gtk-font-button) 't)
- "The @code{\"show-size\"} property of type @code{:boolean}
-  (Read / Write) @br{}
-  If this property is set to @em{true}, the selected font size will be shown in
-  the label. For a more WYSIWYG way to show the selected size, see the
-  @code{\"use-size\"} property. @br{}
-  Default value: @em{true} @br{}
-  Since 2.4")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "show-style" 'gtk-font-button) 't)
- "The @code{\"show-style\"} property of type @code{:boolean}
-  (Read / Write) @br{}
-  If this property is set to @em{true}, the name of the selected font style will
-  be shown in the label. For a more WYSIWYG way to show the selected style, see
-  the @code{\"use-font\"} property. @br{}
-  Default value: @em{true} @br{}
-  Since 2.4")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "title" 'gtk-font-button) 't)
- "The @code{\"title\"} property of type @code{:string} (Read / Write) @br{}
-  The title of the font chooser dialog. @br{}
-  Default value: \"Pick a Font\" @br{}
-  Since 2.4")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "use-font" 'gtk-font-button) 't)
- "The @code{\"use-font\"} property of type  @code{:boolean} (Read / Write) @br{}
-  If this property is set to @em{true}, the label will be drawn in the selected
-  font. @br{}
-  Default value: @code{nil} @br{}
-  Since 2.4")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "use-size" 'gtk-font-button) 't)
- "The @code{\"use-size\"} property of type @code{:boolean} (Read / Write) @br{}
-  If this property is set to @em{true}, the label will be drawn with the
-  selected font size. @br{}
-  Default value: @code{nil} @br{}
-  Since 2.4")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors
-;;;
-;;; ----------------------------------------------------------------------------
+  @b{Warning:} @code{font-name} has been deprecated since version 3.22 and
+  should not be used in newly-written code. Use the @code{font} property
+  instead. @br{}
+  Default value: \"Sans 12\"")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-font-button-font-name atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-font-button-font-name 'function)
  "@version{2013-6-18}
-  Accessor of the slot @code{\"font-name\"} of the @class{gtk-font-button}
-  class.")
+  @begin{short}
+    Accessor of the slot @slot[gtk-font-button]{font-name} of the
+    @class{gtk-font-button} class.
+  @end{short}
+  @see-class{gtk-font-button}")
+
+;;; --- gtk-font-button-show-size ----------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "show-size" 'gtk-font-button) 't)
+ "The @code{show-size} property of type @code{:boolean}
+  (Read / Write) @br{}
+  If this property is set to @em{true}, the selected font size will be shown in
+  the label. For a more WYSIWYG way to show the selected size, see the
+  @code{\"use-size\"} property. @br{}
+  Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-font-button-show-size atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-font-button-show-size 'function)
  "@version{2013-6-18}
-  Accessor of the slot @code{\"show-size\"} of the @class{gtk-font-button}
-  class.")
+  @begin{short}
+    Accessor of the slot @slot[gtk-font-button]{show-size} of the
+    @class{gtk-font-button} class.
+  @end{short}
+  @see-class{gtk-font-button}")
+
+;;; --- gtk-font-button-show-style ---------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "show-style" 'gtk-font-button) 't)
+ "The @code{show-style} property of type @code{:boolean}
+  (Read / Write) @br{}
+  If this property is set to @em{true}, the name of the selected font style will
+  be shown in the label. For a more WYSIWYG way to show the selected style, see
+  the @code{\"use-font\"} property. @br{}
+  Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-font-button-show-style atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-font-button-show-style 'function)
  "@version{2013-6-18}
-  Accessor of the slot @code{\"show-style\"} of the @class{gtk-font-button}
-  class.")
+  @begin{short}
+    Accessor of the slot @slot[gtk-font-button]{show-style} of the
+    @class{gtk-font-button} class.
+  @end{short}
+  @see-class{gtk-font-button}")
+
+;;; --- gtk-font-button-title --------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "title" 'gtk-font-button) 't)
+ "The @code{title} property of type @code{:string} (Read / Write) @br{}
+  The title of the font chooser dialog. @br{}
+  Default value: \"Pick a Font\"")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-font-button-title atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-font-button-title 'function)
  "@version{2013-6-18}
-  Accessor of the slot @code{\"title\"} of the @class{gtk-font-button}
-  class.")
+  @begin{short}
+    Accessor of the slot @slot[gtk-font-button]{title} of the
+    @class{gtk-font-button} class.
+  @end{short}
+  @see-class{gtk-font-button}")
+
+;;; --- gtk-font-button-use-font -----------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "use-font" 'gtk-font-button) 't)
+ "The @code{use-font} property of type  @code{:boolean} (Read / Write) @br{}
+  If this property is set to @em{true}, the label will be drawn in the selected
+  font. @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-font-button-use-font atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-font-button-use-font 'function)
  "@version{2013-6-18}
-  Accessor of the slot @code{\"use-font\"} of the @class{gtk-font-button}
-  class.")
+  @begin{short}
+    Accessor of the slot @slot[gtk-font-button]{use-font} of the
+    @class{gtk-font-button} class.
+  @end{short}
+  @see-class{gtk-font-button}")
+
+;;; --- gtk-font-button-use-size -----------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "use-size" 'gtk-font-button) 't)
+ "The @code{\"use-size\"} property of type @code{:boolean} (Read / Write) @br{}
+  If this property is set to @em{true}, the label will be drawn with the
+  selected font size. @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-font-button-use-size atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-font-button-use-size 'function)
  "@version{2013-6-18}
-  Accessor of the slot @code{\"use-size\"} of the @class{gtk-font-button}
-  class.")
+  @begin{short}
+    Accessor of the slot @slot[gtk-font-button]{use-size} of the
+    @class{gtk-font-button} class.
+  @end{short}
+  @see-class{gtk-font-button}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_font_button_new ()
@@ -280,8 +327,11 @@
   @begin{short}
     Sets or updates the currently displayed font in the font picker dialog.
   @end{short}
-
-  Since 2.4
+  @begin[Warning]{dictionary}
+    The @sym{gtk-font-button-set-font-name} function has been deprecated since
+    version 3.22 and should not be used in newly-written code. Use the
+    @fun{gtk-font-chooser-set-font} function instead.
+  @end{dictionary}
   @see-function{gtk-font-button-get-font-name}"
   (setf (gtk-font-button-font-name font-button) fontname))
 
@@ -306,8 +356,11 @@
   @fun{pango-font-description-from-string}. If you are interested in peeking
   certain values (family name, style, size, weight) just query these properties
   from the @class{pango-font-description} object.
-
-  Since 2.4
+  @begin[Warning]{dictionary}
+    The @sym{gtk-font-button-get-font-name} function has been deprecated since
+    version 3.22 and should not be used in newly-written code. Use the
+    @fun{gtk-font-chooser-get-font} function instead.
+  @end{dictionary}
   @see-function{pango-font-description-from-string}
   @see-function{gtk-font-button-set-font-name}"
   (gtk-font-button-font-name font-button))

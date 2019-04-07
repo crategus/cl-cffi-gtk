@@ -1,11 +1,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.font-chooser-dialog.lisp
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012, 2013 Dieter Kaiser
+;;; Copyright (C) 2012 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -27,13 +28,31 @@
 ;;;
 ;;; GtkFontChooserDialog
 ;;;
-;;; A dialog for selecting fonts
+;;;     A dialog for selecting fonts
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkFontChooserDialog
 ;;;
+;;; Functions
+;;;
 ;;;     gtk_font_chooser_dialog_new
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;             ╰── GtkContainer
+;;;                 ╰── GtkBin
+;;;                     ╰── GtkWindow
+;;;                         ╰── GtkDialog
+;;;                             ╰── GtkFontChooserDialog
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GtkFontChooserDialog implements AtkImplementorIface, GtkBuildable and
+;;;     GtkFontChooser.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -62,7 +81,8 @@
   @subheading{GtkFontChooserDialog as GtkBuildable}
     The @sym{gtk-font-chooser-dialog} implementation of the
     @class{gtk-buildable} interface exposes the buttons with the names
-    \"select_button\" and \"cancel_button\".")
+    \"select_button\" and \"cancel_button\".
+  @see-class{gtk-font-chooser}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_font_chooser_dialog_new ()
@@ -78,7 +98,8 @@
   @return{A new @class{gtk-font-chooser-dialog} widget.}
   @short{Creates a new @class{gtk-font-chooser-dialog} widget.}
 
-  Since 3.2"
+  Since 3.2
+  @see-class{gtk-font-chooser-dialog}"
   (make-instance 'gtk-font-chooser-dialog
                  :title title
                  :parent parent))

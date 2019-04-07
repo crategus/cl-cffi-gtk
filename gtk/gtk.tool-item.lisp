@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.tool-item.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,11 +29,13 @@
 ;;;
 ;;; GtkToolItem
 ;;;
-;;; The base class of widgets that can be added to GtkToolShell
+;;;     The base class of widgets that can be added to GtkToolShell
 ;;;
 ;;; Synopsis
 ;;;
 ;;;     GtkToolItem
+;;;
+;;; Functions
 ;;;
 ;;;     gtk_tool_item_new
 ;;;     gtk_tool_item_set_homogeneous
@@ -66,6 +65,33 @@
 ;;;     gtk_tool_item_rebuild_menu
 ;;;     gtk_tool_item_toolbar_reconfigured
 ;;;     gtk_tool_item_get_text_size_group
+;;;
+;;; Properties
+;;;
+;;;     gboolean  is-important          Read / Write
+;;;     gboolean  visible-horizontal    Read / Write
+;;;     gboolean  visible-vertical      Read / Write
+;;;
+;;; Signals
+;;;
+;;;     gboolean  create-menu-proxy       Run Last
+;;;         void  toolbar-reconfigured    Run Last
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;             ╰── GtkContainer
+;;;                 ╰── GtkBin
+;;;                     ╰── GtkToolItem
+;;;                         ├── GtkToolButton
+;;;                         ╰── GtkSeparatorToolItem
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GtkToolItem implements AtkImplementorIface, GtkBuildable and
+;;;     GtkActivatable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -160,73 +186,77 @@
   @see-slot{gtk-tool-item-visible-vertical}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
+;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-tool-item-is-important ---------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "is-important"
                                                'gtk-tool-item) 't)
- "The @code{\"is-important\"} property of type @code{:boolean}
+ "The @code{is-important} property of type @code{:boolean}
   (Read / Write) @br{}
   Whether the toolbar item is considered important. When @em{true}, toolbar
   buttons show text in @code{:both-horiz} mode. @br{}
   Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-tool-item-is-important atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-tool-item-is-important 'function)
+ "@version{2013-11-16}
+  @begin{short}
+    Accessor of the slot @slot[gtk-tool-item]{is-important} of the
+    @class{gtk-tool-item} class.
+  @end{short}
+  @see-class{gtk-tool-item}
+  @see-function{gtk-tool-item-get-is-important}
+  @see-function{gtk-tool-item-set-is-important}")
+
+;;; --- gtk-tool-item-visible-horizontal ---------------------------------------
+
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "visible-horizontal"
                                                'gtk-tool-item) 't)
- "The @code{\"visible-horizontal\"} property of type @code{:boolean}
+ "The @code{visible-horizontal} property of type @code{:boolean}
   (Read / Write) @br{}
   Whether the toolbar item is visible when the toolbar is in a horizontal
   orientation. @br{}
   Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "visible-vertical"
-                                               'gtk-tool-item) 't)
- "The @code{\"visible-vertical\"} property of type @code{:boolean}
-  (Read / Write) @br{}
-  Whether the toolbar item is visible when the toolbar is in a vertical
-  orientation. @br{}
-  Default value: @em{true}")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-tool-item-is-important atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-tool-item-is-important 'function)
- "@version{2013-11-16}
-  Accessor of the slot @code{\"is-important\"} of the @class{gtk-tool-item}
-  class.
-  @see-class{gtk-tool-item}
-  @see-function{gtk-tool-item-get-is-important}
-  @see-function{gtk-tool-item-set-is-important}")
-
-#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tool-item-visible-horizontal atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tool-item-visible-horizontal 'function)
  "@version{2013-11-16}
-  Accessor of the slot @code{\"visible-horizontal\"} of the
-  @class{gtk-tool-item} class.
+  @begin{short}
+    Accessor of the slot @slot[gtk-tool-item]{visible-horizontal} of the
+    @class{gtk-tool-item} class.
+  @end{short}
   @see-class{gtk-tool-item}
   @see-function{gtk-tool-item-get-visible-horizontal}
   @see-function{gtk-tool-item-set-visible-horizontal}")
+
+;;; --- gtk-tool-item-visible-vertical -----------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "visible-vertical"
+                                               'gtk-tool-item) 't)
+ "The @code{visible-vertical} property of type @code{:boolean}
+  (Read / Write) @br{}
+  Whether the toolbar item is visible when the toolbar is in a vertical
+  orientation. @br{}
+  Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tool-item-visible-vertical atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tool-item-visible-vertical 'function)
  "@version{2013-11-16}
-  Accessor of the slot @code{\"visible-vertical\"} of the
-  @class{gtk-tool-item} class.
+  @begin{short}
+    Accessor of the slot @slot[gtk-tool-item]{visible-vertical} of the
+    @class{gtk-tool-item} class.
+  @end{short}
   @see-class{gtk-tool-item}
   @see-function{gtk-tool-item-get-visible-vertical}
   @see-function{gtk-tool-item-set-visible-vertical}")
@@ -242,8 +272,6 @@
  "@version{2013-11-16}
   @return{The new @class{gtk-tool-item} widget.}
   @short{Creates a new @class{gtk-tool-item} widget.}
-
-  Since 2.4
   @see-class{gtk-tool-item}"
   (make-instance 'gtk-tool-item-new))
 
@@ -265,8 +293,6 @@
   @end{short}
   The effect is that all homogeneous items will have the same width as the
   widest of the items.
-
-  Since 2.4
   @see-class{gtk-tool-item}
   @see-function{gtk-tool-item-get-homogeneous}"
   (tool-item (g-object gtk-tool-item))
@@ -288,8 +314,6 @@
     Returns whether @arg{tool-item} is the same size as other homogeneous items.
   @end{short}
   See the function @fun{gtk-tool-item-set-homogeneous}.
-
-  Since 2.4
   @see-class{gtk-tool-item}
   @see-function{gtk-tool-item-set-homogeneous}"
   (tool-item (g-object gtk-tool-item)))
@@ -311,8 +335,7 @@
     gets bigger when the toolbar gets bigger and smaller when the toolbar gets
     smaller.
   @end{short}
-
-  Since 2.4"
+  @see-class{gtk-tool-item}"
   (tool-item (g-object gtk-tool-item))
   (expand :boolean))
 
@@ -331,8 +354,6 @@
     Returns whether @arg{tool-item} is allocated extra space.
   @end{short}
   See the @fun{gtk-tool-item-set-expand} function.
-
-  Since 2.4
   @see-function{gtk-tool-item-set-expand}"
   (tool-item (g-object gtk-tool-item)))
 
@@ -351,8 +372,6 @@
     Sets the text to be displayed as tooltip on the item.
   @end{short}
   See the function @fun{gtk-widget-tooltip-text}.
-
-  Since 2.12
   @see-class{gtk-tool-item}
   @see-function{gtk-widget-tooltip-text}
   @see-function{gtk-tool-item-set-tooltip-markup}"
@@ -375,8 +394,6 @@
     Sets the markup text to be displayed as tooltip on the item.
   @end{short}
   See the function @fun{gtk-widget-tooltip-markup}.
-
-  Since 2.12
   @see-class{gtk-tool-item}
   @see-function{gtk-widget-tooltip-markup}
   @see-function{gtk-tool-item-set-tooltip-text}"
@@ -402,8 +419,6 @@
   the function @fun{gtk-drag-source-set}. When @arg{tool-item} has a drag
   window it will intercept all events, even those that would otherwise be sent
   to a child of @arg{tool-item}.
-
-  Since 2.4
   @see-class{gtk-tool-item}
   @see-function{gtk-drag-source-set}
   @see-function{gtk-tool-item-get-use-drag-window}"
@@ -426,8 +441,6 @@
     Returns whether @arg{tool-item} has a drag window.
   @end{short}
   See the function @fun{gtk-tool-item-set-use-drag-window}.
-
-  Since 2.4
   @see-class{gtk-tool-item}
   @see-function{gtk-tool-item-set-use-drag-window}"
   (tool-item (g-object gtk-tool-item)))
@@ -450,8 +463,6 @@
     Sets whether @arg{tool-item} is visible when the toolbar is docked
     horizontally.
   @end{short}
-
-  Since 2.4
   @see-class{gtk-tool-item}"
   (setf (gtk-tool-item-visible-horizontal tool-item) visible-horizontal))
 
@@ -473,8 +484,6 @@
     Returns whether the @arg{tool-item} is visible on toolbars that are docked
     horizontally.
   @end{short}
-
-  Since 2.4
   @see-class{gtk-tool-item}"
   (gtk-tool-item-visible-horizontal tool-item))
 
@@ -499,8 +508,6 @@
   Some tool items, such as text entries, are too wide to be useful on a
   vertically docked toolbar. If @arg{visible-vertical} is @code{nil}
   @arg{tool-item} will not appear on toolbars that are docked vertically.
-
-  Since 2.4
   @see-class{gtk-tool-item}
   @see-function{gtk-tool-item-get-visible-vertical}"
   (setf (gtk-tool-item-visible-vertical tool-item) visible-vertical))
@@ -524,8 +531,6 @@
     vertically.
   @end{short}
   See the function @fun{gtk-tool-item-set-visible-vertical}.
-
-  Since 2.4
   @see-class{gtk-tool-item}
   @see-function{gtk-tool-item-set-visible-vertical}"
   (gtk-tool-item-visible-vertical tool-item))
@@ -550,8 +555,6 @@
   show or hide its label when the toolbar style is @code{:both-horiz}. The
   result is that only tool buttons with the @code{\"is-important\"} property set
   have labels, an effect known as \"priority text\".
-
-  Since 2.4
   @see-class{gtk-tool-item}
   @see-class{gtk-tool-button}"
   (setf (gtk-tool-item-is-important tool-item) is-important))
@@ -573,8 +576,6 @@
     Returns whether @arg{tool-item} is considered important.
   @end{short}
   See the function @fun{gtk-tool-item-set-is-important}.
-
-  Since 2.4
   @see-class{gtk-tool-item}
   @see-function{gtk-tool-item-set-is-important}"
   (gtk-tool-item-is-important tool-item))
@@ -599,8 +600,6 @@
   @end{short}
   Custom subclasses of @class{gtk-tool-item} should call this function to find
   out how text should be ellipsized.
-
-  Since 2.20
   @see-class{gtk-tool-item}
   @see-symbol{pango-ellipsize-mode}"
   (tool-item (g-object gtk-tool-item)))
@@ -624,8 +623,6 @@
   @end{short}
   Custom subclasses of @class{gtk-tool-item} should call this function to find
   out what size icons they should use.
-
-  Since 2.4
   @see-class{gtk-tool-item}
   @see-symbol{gtk-icon-size}"
   (tool-item (g-object gtk-tool-item)))
@@ -650,8 +647,6 @@
   @end{short}
   Custom subclasses of @class{gtk-tool-item} should call this function to find
   out what size icons they should use.
-
-  Since 2.4
   @see-class{gtk-tool-item}
   @see-symbol{gtk-orientation}"
   (tool-item (g-object gtk-tool-item)))
@@ -689,7 +684,6 @@
       property that makes tool buttons not show labels when the toolbar style is
       @code{:both-horiz}.}
   @end{itemize}
-  Since 2.4
   @see-class{gtk-tool-item}
   @see-symbol{gtk-toolbar-style}"
   (tool-item (g-object gtk-tool-item)))
@@ -715,8 +709,6 @@
   See the function @fun{gtk-button-set-relief-style}. Custom subclasses of
   @class{gtk-tool-item} should call this function in the handler of the
   \"toolbar-reconfigured\" signal to find out the relief style of buttons.
-
-  Since 2.4
   @see-class{gtk-tool-item}
   @see-function{gtk-button-set-relief-style}"
   (tool-item (g-object gtk-tool-item)))
@@ -741,8 +733,6 @@
   @end{short}
   Custom subclasses of @class{gtk-tool-item} should call this function to find
   out how text should be aligned.
-
-  Since 2.20
   @see-class{gtk-tool-item}"
   (tool-item (g-object gtk-tool-item)))
 
@@ -766,8 +756,6 @@
   @end{short}
   Custom subclasses of @class{gtk-tool-item} should call this function to find
   out how text should be orientated.
-
-  Since 2.20
   @see-class{gtk-tool-item}
   @see-symbol{gtk-orientation}"
   (tool-item (g-object gtk-tool-item)))
@@ -792,8 +780,7 @@
     @fun{gtk-tool-item-set-proxy-menu-item} function, i. e. the
     @class{gtk-menu-item} that is going to appear in the overflow menu.
   @end{short}
-
-  Since 2.4"
+  @see-class{gtk-tool-item}"
   (tool-item g-object))
 
 (export 'gtk-tool-item-retrieve-proxy-menu-item)
@@ -822,8 +809,6 @@
   their menu item when the @class{gtk-tool-item} changes. That the
   @arg{menu-item-id}s must match ensures that a @class{gtk-tool-item} will not
   inadvertently change a menu item that they did not create.
-
-  Since 2.4
   @see-class{gtk-tool-item}
   @see-class{gtk-menu-item}
   @see-function{gtk-tool-item-set-proxy-menu-item}"
@@ -848,8 +833,6 @@
   @end{short}
   The @arg{menu-item-id} is used to identify the caller of this function and
   should also be used with the function @fun{gtk-tool-item-get-proxy-menu-item}.
-
-  Since 2.4
   @see-class{gtk-tool-item}
   @see-class{gtk-menu-item}
   @see-function{gtk-tool-item-get-proxy-menu-item}"
@@ -875,8 +858,7 @@
 
   The function must be called when the tool item changes what it will do in
   response to the \"create-menu-proxy\" signal.
-
-  Since 2.6"
+  @see-class{gtk-tool-item}"
   (tool-item g-object))
 
 (export 'gtk-tool-item-rebuild-menu)
@@ -895,8 +877,6 @@
   @end{short}
   @class{gtk-toolbar} and other @class{gtk-tool-shell} implementations use this
   function to notify children, when some aspect of their configuration changes.
-
-  Since 2.14
   @see-class{gtk-tool-item}
   @see-class{gtk-toolbar}
   @see-class{gtk-tool-shell}"
@@ -919,8 +899,6 @@
   @end{short}
   Custom subclasses of @class{gtk-tool-item} should call this function and use
   the size group for labels.
-
-  Since 2.20
   @see-class{gtk-tool-item}
   @see-class{gtk-size-group}"
   (tool-item (g-object gtk-tool-item)))

@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.toggle-tool-button.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,16 +29,43 @@
 ;;;
 ;;; GtkToggleToolButton
 ;;;
-;;; A GtkToolItem containing a toggle button
+;;;     A GtkToolItem containing a toggle button
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkToggleToolButton
+;;;
+;;; Functions
 ;;;
 ;;;     gtk_toggle_tool_button_new
 ;;;     gtk_toggle_tool_button_new_from_stock
 ;;;     gtk_toggle_tool_button_set_active
 ;;;     gtk_toggle_tool_button_get_active
+;;;
+;;; Properties
+;;;
+;;;     gboolean   active     Read / Write
+;;;
+;;; Signals
+;;;
+;;;         void   toggled    Run First
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;             ╰── GtkContainer
+;;;                 ╰── GtkBin
+;;;                     ╰── GtkToolItem
+;;;                         ╰── GtkToolButton
+;;;                             ╰── GtkToggleToolButton
+;;;                                 ╰── GtkRadioToolButton
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GtkToggleToolButton implements AtkImplementorIface, GtkBuildable,
+;;;     GtkActivatable and GtkActionable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -71,13 +95,15 @@
   @end{short}
 
   Use the @fun{gtk-toggle-tool-button-new} function to create a new
-  @sym{gtk-toggle-tool-button}. Use the
-  @fun{gtk-toggle-tool-button-new-from-stock} to create a new
-  @sym{gtk-toggle-tool-button} containing a stock item.
+  @sym{gtk-toggle-tool-button}.
+  @begin[CSS nodes]{dictionary}
+    The @sym{gtk-toggle-tool-button} class has a single CSS node with name
+    @code{togglebutton}.
+  @end{dictionary}
   @begin[Signal Details]{dictionary}
     @subheading{The \"toggled\" signal}
       @begin{pre}
- lambda (button)   : Run First
+ lambda (button)    : Run First
       @end{pre}
       Emitted whenever the toggle tool button changes state.
       @begin[code]{table}
@@ -90,31 +116,25 @@
   @see-function{gtk-toggle-tool-button-new-from-stock}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
+;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "active"
                                                'gtk-toggle-tool-button) 't)
- "The @code{\"active\"} property of type @code{:boolean} (Read / Write) @br{}
+ "The @code{active} property of type @code{:boolean} (Read / Write) @br{}
   If the toggle tool button should be pressed in. @br{}
-  Default value: @code{nil} @br{}
-  Since 2.8")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-toggle-tool-button-active atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-toggle-tool-button-active 'function)
  "@version{2013-8-23}
-  Accessor of the slot \"active\" of the @class{gtk-toggle-tool-button} class.
+  @begin{short}
+    Accessor of the slot @slot[gtk-toggle-tool-button]{active} of the
+    @class{gtk-toggle-tool-button} class.
+  @end{short}
   @see-class{gtk-toggle-tool-button}
   @see-function{gtk-toggle-tool-button-get-active}
   @see-function{gtk-toggle-tool-button-set-active}")
@@ -132,8 +152,6 @@
   @begin{short}
     Returns a new @class{gtk-toggle-tool-button} widget.
   @end{short}
-
-  Since 2.4
   @see-class{gtk-toggle-tool-button}
   @see-function{gtk-toggle-tool-button-new-from-stock}"
   (make-instance 'gtk-toggle-tool-button))
@@ -157,8 +175,6 @@
   @end{short}
 
   It is an error if @arg{stock-id} is not a name of a stock item.
-
-  Since 2.4
   @see-class{gtk-toggle-tool-button}
   @see-function{gtk-toggle-tool-button-new}"
   (make-instance 'gtk-toggle-tool-button
@@ -183,8 +199,6 @@
   Set to @em{true} if you want the @class{gtk-toggle-button} widget to be
   'pressed in', and @code{nil} to raise it. This action causes the toggled
   signal to be emitted.
-
-  Since 2.4
   @see-class{gtk-toggle-tool-button}
   @see-function{gtk-toggle-tool-button-get-active}"
   (setf (gtk-toggle-tool-button-active button) is-active))
@@ -207,8 +221,6 @@
   @end{short}
   Returns @em{true} if the toggle button is pressed in and @code{nil} if it
   is raised.
-
-  Since 2.4
   @see-class{gtk-toggle-tool-button}
   @see-function{gtk-toggle-tool-button-set-active}"
   (gtk-toggle-tool-button-active button))

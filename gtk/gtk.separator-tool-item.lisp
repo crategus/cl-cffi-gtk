@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.separator-tool-item.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2014 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,15 +29,36 @@
 ;;;
 ;;; GtkSeparatorToolItem
 ;;;
-;;; A toolbar item that separates groups of other toolbar items
+;;;     A toolbar item that separates groups of other toolbar items
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkSeparatorToolItem
+;;;
+;;; Functions
 ;;;
 ;;;     gtk_separator_tool_item_new
 ;;;     gtk_separator_tool_item_set_draw
 ;;;     gtk_separator_tool_item_get_draw
+;;;
+;;; Properties
+;;;
+;;;     gboolean  draw    Read / Write
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;             ╰── GtkContainer
+;;;                 ╰── GtkBin
+;;;                     ╰── GtkToolItem
+;;;                         ╰── GtkSeparatorToolItem
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GtkSeparatorToolItem implements AtkImplementorIface, GtkBuildable and
+;;;     GtkActivatable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -80,31 +98,25 @@
   @see-function{gtk-separator-tool-item-set-draw}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
+;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "draw"
                                                'gtk-separator-tool-item) 't)
- "The @code{\"draw\"} property of type @code{:boolean} (Read / Write) @br{}
+ "The @code{draw} property of type @code{:boolean} (Read / Write) @br{}
   Whether the separator is drawn, or just blank. @br{}
   Default value: @em{true}")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-separator-tool-item-draw atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-separator-tool-item-draw 'function)
  "@version{2014-1-26}
-  Accessor of the slot @slot[gtk-separator-tool-item]{draw} of the
-  @class{gtk-separator-tool-item} class.
+  @begin{short}
+    Accessor of the slot @slot[gtk-separator-tool-item]{draw} of the
+    @class{gtk-separator-tool-item} class.
+  @end{short}
   @see-class{gtk-separator-tool-item}")
 
 ;;; ----------------------------------------------------------------------------
@@ -118,8 +130,6 @@
  "@version{2014-1-26}
   @return{The new @class{gtk-separator-tool-item} widget.}
   @short{Create a new @class{gtk-separator-tool-item} widget.}
-
-  Since 2.4
   @see-class{gtk-separator-tool-item}"
   (make-instance 'gtk-separator-tool-item-new))
 
@@ -142,8 +152,6 @@
   Setting this to @code{nil} along with the function 
   @fun{gtk-tool-item-set-expand} is useful to create an item that forces
   following items to the end of the toolbar.
-
-  Since 2.4
   @see-class{gtk-separator-tool-item}
   @see-function{gtk-separator-tool-item-get-draw}
   @see-function{gtk-tool-item-set-expand}"
@@ -166,8 +174,6 @@
     Returns whether item is drawn as a line, or just blank.
   @end{short}
   See the function @fun{gtk-separator-tool-item-set-draw}.
-
-  Since 2.4
   @see-class{gtk-separator-tool-item}
   @see-function{gtk-separator-tool-item-set-draw}"
   (gtk-separator-tool-item-draw item))
