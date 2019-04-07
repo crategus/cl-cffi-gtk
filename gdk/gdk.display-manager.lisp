@@ -45,11 +45,11 @@
 ;;;
 ;;; Properties
 ;;;
-;;;     GdkDisplay *  default-display    Read / Write
+;;;     GdkDisplay*  default-display    Read / Write
 ;;;
 ;;; Signals
 ;;;
-;;;     void  display-opened    Run Last
+;;;           void   display-opened     Run Last
 ;;;
 ;;; Object Hierarchy
 ;;;

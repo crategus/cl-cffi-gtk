@@ -1135,27 +1135,33 @@
   (name :string)
   (value (:pointer (:struct g-value))))
 
-(defun gdk-get-setting (name)
+(defun gdk-setting-get (name gtype)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-17}
-  @argument[name]{the name of the setting}
+ "@version{2019-4-7}
+  @argument[name]{a @code{:string} with the name of the setting}
+  @argument[gtype]{a @code{:string} with the GType of the setting}
   @begin{return}
-    @code{value} -- the value of the setting
+    The value of the setting.
   @end{return}
   @begin{short}
     Obtains a desktop-wide setting, such as the double-click time, for the
     default screen.
   @end{short}
-  See the function @fun{gdk-screen-get-setting}.
+  See the function @fun{gdk-screen-get-setting}
+  @begin[Example]{dictionary}
+    @begin{pre}
+  (gdk-setting-get \"gtk-double-click-time\" \"gint\")
+=> 400
+    @end{pre}
+  @end{dictionary}
   @see-function{gdk-screen-get-setting}"
   (with-foreign-object (value '(:struct g-value))
-    (g-value-zero value)
+    (g-value-init value gtype)
     (when (%gdk-setting-get name value)
       (prog1
         (parse-g-value value)
         (g-value-unset value)))))
 
-(export 'gdk-get-setting)
+(export 'gdk-setting-get)
 
 ;;; --- gdk.events.lisp --------------------------------------------------------
-
