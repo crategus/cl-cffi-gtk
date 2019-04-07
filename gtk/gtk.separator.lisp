@@ -1,15 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.separator.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -31,13 +29,29 @@
 ;;;
 ;;; GtkSeparator
 ;;;
-;;; A separator widget
+;;;     A separator widget
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkSeparator
 ;;;
+;;; Functions
+;;;
 ;;;     gtk_separator_new
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;             ╰── GtkSeparator
+;;;                 ├── GtkHSeparator
+;;;                 ╰── GtkVSeparator
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GtkSeparator implements AtkImplementorIface, GtkBuildable and
+;;;     GtkOrientable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -58,17 +72,23 @@
    :type-initializer "gtk_separator_get_type")
   nil)
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-separator 'type)
  "@version{2013-1-29}
   @begin{short}
-    @sym{gtk-separator} is a horizontal or vertical separator widget, depending
-    on the value of the @code{\"orientation\"} property of the interface
-    @class{gtk-orientable}, used to group the widgets within a window.
+    The @sym{gtk-separator} widget is a horizontal or vertical separator widget,
+    depending on the value of the @slot[gtk-orientable]{orientation} property of
+    the @class{gtk-orientable} interface, used to group the widgets within a
+    window.
   @end{short}
-  It displays a line with a shadow to make it appear sunken into the interface.")
+  It displays a line with a shadow to make it appear sunken into the
+  interface.
+  @begin[CSS nodes]{dictionary}
+    The @sym{gtkk-separator} class has a single CSS node with name
+    @code{separator}. The node gets one of the @code{.horizontal} or
+    @code{.vertical} style classes.
+  @end{dictionary}
+  @see-class{gtk-orientable}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_separator_new ()
@@ -79,13 +99,14 @@
 (defun gtk-separator-new (orientation)
  #+cl-cffi-gtk-documentation
  "@version{2013-1-29}
-  @argument[orientation]{the separator's orientation}
+  @argument[orientation]{the separator's orientation of type
+  @symbol{gtk-orientation}}
   @return{A new @class{gtk-separator} widget.}
   @begin{short}
-    Creates a new @class{gtk-separator} with the given @arg{orientation}
+    Creates a new @class{gtk-separator} widget with the given @arg{orientation}
     @code{:horizontal} or @code{:vertical} of type @symbol{gtk-orientation}.
   @end{short}
-  See also the interface @class{gtk-orientable}.
+  See also the @class{gtk-orientable} interface.
 
   Since 3.0
   @see-class{gtk-orientable}
@@ -125,8 +146,6 @@
    :type-initializer "gtk_hseparator_get_type")
   nil)
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-hseparator 'type)
  "@version{2013-1-29}
@@ -137,14 +156,14 @@
   @end{short}
 
   @subheading{Note}
-    The @sym{gtk-hseparator} widget is not used as a separator within menus. To
-    create a separator in a menu create an empty @class{gtk-separator-menu-item}
-    widget using @fun{gtk-separator-menu-item-new} and add it to the menu with
-    @fun{gtk-menu-shell-append}.
-
-  @subheading{Warning}
-    @sym{gtk-hseparator} has been deprecated, use @class{gtk-separator}
-    with an orientation @code{:horizontal} instead.")
+  The @sym{gtk-hseparator} widget is not used as a separator within menus. To
+  create a separator in a menu create an empty @class{gtk-separator-menu-item}
+  widget using @fun{gtk-separator-menu-item-new} and add it to the menu with
+  @fun{gtk-menu-shell-append}.
+  @begin[Warning]{dictionary}
+    The @sym{gtk-hseparator} class has been deprecated, use the
+    @class{gtk-separator} class with an orientation @code{:horizontal} instead.
+  @end{dictionary}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_hseparator_new ()
@@ -159,11 +178,12 @@
   @begin{short}
     Creates a new @class{gtk-hseparator} widget.
   @end{short}
-
-  @subheading{Warning}
-    @sym{gtk-hseparator-new} has been deprecated since version 3.2 and should not
-    be used in newly-written code. Use @fun{gtk-separator-new} with an orientation
-    @code{:horizontal} instead.
+  @begin[Warning]{dictionary}
+    The @sym{gtk-hseparator-new} function has been deprecated since version 3.2
+    and should not be used in newly-written code. Use the
+    @fun{gtk-separator-new} function with an orientation @code{:horizontal}
+    instead.
+  @end{dictionary}
   @see-function{gtk-separator-new}"
   (make-instance 'gtk-hseparator))
 
@@ -199,8 +219,6 @@
    :type-initializer "gtk_vseparator_get_type")
   nil)
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-vseparator 'type)
  "@version{2013-1-29}
@@ -209,10 +227,10 @@
     widgets within a window. It displays a vertical line with a shadow to make
     it appear sunken into the interface.
   @end{short}
-
-  @subheading{Warning}
-    @sym{gtk-vseparator} has been deprecated, use @class{gtk-separator} with
-    orientation @code{:vertical} instead.
+  @begin[Warning]{dictionary}
+    The @sym{gtk-vseparator} class has been deprecated, use the
+    @class{gtk-separator} class with orientation @code{:vertical} instead.
+  @end{dictionary}
   @see-class{gtk-separator}")
 
 ;;; ----------------------------------------------------------------------------
@@ -228,11 +246,12 @@
   @begin{short}
     Creates a new @class{gtk-vseparator} widget.
   @end{short}
-
-  @subheading{Warning}
-    @sym{gtk-vseparator-new} has been deprecated since version 3.2 and should not
-    be used in newly-written code. Use @fun{gtk-separator-new} with the
-    orientation @code{:vertical} instead.
+  @begin[Warning]{dictionary}
+    The @sym{gtk-vseparator-new} function has been deprecated since version 3.2
+    and should not be used in newly-written code. Use the
+    @fun{gtk-separator-new} function with the orientation @code{:vertical}
+    instead.
+  @end{dictionary}
   @see-function{gtk-separator-new}"
   (make-instance 'gtk-vseparator))
 
