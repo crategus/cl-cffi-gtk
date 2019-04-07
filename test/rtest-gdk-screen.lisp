@@ -125,6 +125,10 @@
 
 ;;;     gdk_screen_get_setting
 
+(test gdk-screen-get-setting
+  (let ((screen (gdk-display-get-default-screen (gdk-display-get-default))))
+    (is (= 0 (gdk-screen-get-setting "gtk-double-click-time" "gint")))))
+
 ;;;     gdk_screen_get_active_window                       * deprecated
 ;;;     gdk_screen_get_window_stack
 
