@@ -81,8 +81,15 @@
     @begin[GtkApplication]{subsection}
       Application class
 
-      @about-class{gtk-application}
       @about-symbol{gtk-application-inhibit-flags}
+      @about-class{gtk-application}
+
+      @about-generic{gtk-application-active-window}
+      @about-generic{gtk-application-app-menu}
+      @about-generic{gtk-application-menubar}
+      @about-generic{gtk-application-register-session}
+      @about-generic{gtk-application-screensaver-active}
+
       @about-function{gtk-application-new}
       @about-function{gtk-application-add-window}
       @about-function{gtk-application-remove-window}
@@ -91,8 +98,14 @@
       @about-function{gtk-application-inhibit}
       @about-function{gtk-application-uninhibit}
       @about-function{gtk-application-is-inhibited}
+      @about-function{gtk-application-prefers-app-menu}
+      @about-function{gtk-application-get-menu-by-id}
       @about-function{gtk-application-add-accelerator}
       @about-function{gtk-application-remove-accelerator}
+      @about-function{gtk-application-list-action-descriptions}
+      @about-function{gtk-application-get-accels-for-action}
+      @about-function{gtk-application-set-accels-for-action}
+      @about-function{gtk-application-get-actions-for-accel}
     @end{subsection}
     @begin[GtkApplicationWindow]{subsection}
       @class{gtk-window} subclass with @class{gtk-application} support.

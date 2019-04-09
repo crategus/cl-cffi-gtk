@@ -28,32 +28,59 @@
 ;;;
 ;;; GtkApplication
 ;;;
-;;; Application class
+;;;     Application class
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkApplication
+;;;     GtkApplicationInhibitFlags
+;;;
+;;; Functions
 ;;;
 ;;;     gtk_application_new
 ;;;     gtk_application_add_window
 ;;;     gtk_application_remove_window
 ;;;     gtk_application_get_windows
 ;;;     gtk_application_get_window_by_id
-;;;     gtk_application_get_active_window
-;;;
-;;;     GtkApplicationInhibitFlags
-;;;
+;;;     gtk_application_get_active_window                  Accessor
 ;;;     gtk_application_inhibit
 ;;;     gtk_application_uninhibit
 ;;;     gtk_application_is_inhibited
-;;;
-;;;     gtk_application_get_app_menu
-;;;     gtk_application_set_app_menu
-;;;     gtk_application_get_menubar
-;;;     gtk_application_set_menubar
-;;;
+;;;     gtk_application_prefers_app_menu
+;;;     gtk_application_get_app_menu                       Accessor
+;;;     gtk_application_set_app_menu                       Accessor
+;;;     gtk_application_get_menubar                        Accessor
+;;;     gtk_application_set_menubar                        Accessor
+;;;     gtk_application_get_menu_by_id
 ;;;     gtk_application_add_accelerator
 ;;;     gtk_application_remove_accelerator
+;;;     gtk_application_list_action_descriptions
+;;;     gtk_application_get_accels_for_action
+;;;     gtk_application_set_accels_for_action
+;;;     gtk_application_get_actions_for_accel
+;;;
+;;; Properties
+;;;
+;;;      GtkWindow*  active-window         Read
+;;;     GMenuModel*  app-menu              Read / Write
+;;;     GMenuModel*  menubar               Read / Write
+;;;       gboolean   register-session      Read / Write
+;;;       gboolean   screensaver-active    Read
+;;;
+;;; Signals
+;;;
+;;;           void   window-added          Run First
+;;;           void   window-removed        Run First
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GApplication
+;;;         ╰── GtkApplication
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GtkApplication implements GActionGroup and GActionMap.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -68,7 +95,8 @@
    :interfaces ("GActionGroup"
                 "GActionMap")
    :type-initializer "gtk_application_get_type")
-   ((active-window
+   (#+gtk-3-6
+    (active-window
      gtk-application-active-window
      "active-window" "GtkWindow" t nil)
     (app-menu
@@ -79,7 +107,11 @@
      "menubar" "GMenuModel" t t)
     (register-session
      gtk-application-register-session
-     "register-session" "gboolean" t t)))
+     "register-session" "gboolean" t t)
+   #+gtk-3-24
+   (screensaver-active
+    gtk-application-screensaver-active
+    "screensaver-active" "gboolean" t nil)))
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-application 'type)
@@ -91,30 +123,31 @@
   @end{short}
 
   Currently, @sym{gtk-application} handles GTK+ initialization, application
-  uniqueness, session management, provides some basic scriptability and
-  desktop shell integration by exporting actions and menus and manages a list
-  of toplevel windows whose life-cycle is automatically tied to the life-cycle
-  of your application.
+  uniqueness, session management, provides some basic scriptability and desktop
+  shell integration by exporting actions and menus and manages a list of
+  toplevel windows whose life-cycle is automatically tied to the life-cycle of
+ your application.
 
-  While @sym{gtk-application} works fine with plain @class{gtk-window}'s, it is
-  recommended to use it together with @class{gtk-application-window}.
+  While @sym{gtk-application} works fine with plain @class{gtk-window} widgets,
+  it is recommended to use it together with @class{gtk-application-window}.
 
   When GDK threads are enabled, @sym{gtk-application} will acquire the GDK lock
   when invoking actions that arrive from other processes. The GDK lock is not
   touched for local action invocations. In order to have actions invoked in a
   predictable context it is therefore recommended that the GDK lock be held
-  while invoking actions locally with the function
-  @fun{g-action-group-activate-action}. The same applies to actions associated
-  with @class{gtk-application-window} and to the 'activate' and 'open'
+  while invoking actions locally with the @fun{g-action-group-activate-action}
+  function. The same applies to actions associated with
+  @class{gtk-application-window} and to the \"activate\" and \"open\"
   @class{g-application} methods.
 
-  To set an application menu for a @sym{gtk-application}, use the generic
-  function @fun{gtk-application-app-menu}. The @class{g-menu-model} that this
-  function expects is usually constructed using @class{gtk-builder}, as seen in
-  the following example. To specify a menubar that will be shown by
-  @class{gtk-application-window} widgets, use the generic function
-  @fun{gtk-application-menubar}. Use the base @class{g-action-map} interface
-  to add actions, to respond to the user selecting these menu items.
+  To set an application menu for a @sym{gtk-application}, use the
+  @fun{gtk-application-app-menu} slot access function. The @class{g-menu-model}
+  object that this function expects is usually constructed using
+  @class{gtk-builder}, as seen in the following example. To specify a menubar
+  that will be shown by @class{gtk-application-window} widgets, use the
+  @fun{gtk-application-menubar} slot access function. Use the base
+  @class{g-action-map} interface to add actions, to respond to the user
+  selecting these menu items.
 
   GTK+ displays these menus as expected, depending on the platform the
   application is running on.
@@ -132,11 +165,11 @@
   @image[bloatpad-xfce]{}
 
   @sym{gtk-application} optionally registers with a session manager of the
-  users session, if you set the @slot[gtk-application]{register-session}
-  property, and offers various functionality related to the session life-cycle.
+  users session, if you set the @code{register-session} property, and offers
+  various functionality related to the session life-cycle.
 
-  An application can block various ways to end the session with the function
-  @fun{gtk-application-inhibit}. Typical use cases for this kind of
+  An application can block various ways to end the session with the
+  @fun{gtk-application-inhibit} function. Typical use cases for this kind of
   inhibiting are long-running, uninterruptible operations, such as burning a
   CD or performing a disk backup. The session manager may not honor the
   inhibitor, but it can be expected to inform the user about the negative
@@ -148,7 +181,7 @@
 (defclass bloat-pad (gtk-application)
   ()
   (:metaclass gobject-class)
-  (:g-type-name . \"BloatPad\"))
+  (:g-type-name . \"BloatPad\"))t
 
 (register-object-type-implementation \"BloatPad\"
                                      bloat-pad
@@ -456,49 +489,48 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"window-added\" signal}
       @begin{pre}
- lambda (application window)   : Run First
+ lambda (application window)    : Run First
       @end{pre}
-      Emitted when a @class{gtk-window} is added to @arg{application} through
-      the @fun{gtk-application-add-window} function.
+      Emitted when a @class{gtk-window} widget is added to @arg{application}
+      through the @fun{gtk-application-add-window} function.
       @begin[code]{table}
-        @entry[application]{The @sym{gtk-application} which emitted the signal.}
+        @entry[application]{The @sym{gtk-application} object which emitted the
+          signal.}
         @entry[window]{The newly added @class{gtk-window} widget.}
       @end{table}
-      Since 3.2
-
     @subheading{The \"window-removed\" signal}
       @begin{pre}
- lambda (application window)   : Run First
+ lambda (application window)    : Run First
       @end{pre}
-      Emitted when a @class{gtk-window} is removed from @arg{application},
-      either as a side-effect of being destroyed or explicitly through the
-      @fun{gtk-application-remove-window} function.
+      Emitted when a @class{gtk-window} widget is removed from
+      @arg{application}, either as a side-effect of being destroyed or
+      explicitly through the @fun{gtk-application-remove-window} function.
       @begin[code]{table}
-        @entry[application]{The @sym{gtk-application} which emitted the signal.}
-        @entry[window]{The @class{gtk-window} that is being removed.}
+        @entry[application]{The @sym{gtk-application} object which emitted the
+          signal.}
+        @entry[window]{The @class{gtk-window} widget that is being removed.}
       @end{table}
-      Since 3.2
   @end{dictionary}
   @see-slot{gtk-application-active-window}
   @see-slot{gtk-application-app-menu}
   @see-slot{gtk-application-menubar}
-  @see-slot{gtk-application-register-session}")
+  @see-slot{gtk-application-register-session}
+  @see-slot{gtk-application-screensaver-active}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
 ;;; Property and Accessor Details
-;;;
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- gtk-application-active-window ------------------------------------------
 
-#+cl-cffi-gtk-documentation
+#+(and gtk-3-6 cl-cffi-gtk-documentation)
 (setf (documentation (atdoc:get-slot-from-name "active-window"
                                                'gtk-application) 't)
- "The @code{\"active-window\"} property of type @class{gtk-window} (Read) @br{}
-  The window which most recently had focus.")
+ "The @code{active-window} property of type @class{gtk-window} (Read) @br{}
+  The window which most recently had focus. @br{}
+  Since 3.6")
 
-#+cl-cffi-gtk-documentation
+#+(and gtk-3-6 cl-cffi-gtk-documentation)
 (setf (gethash 'gtk-application-active-window atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-application-active-window 'function)
@@ -509,8 +541,8 @@
     @class{gtk-application} class.
   @end{short}
 
-  The generic function @sym{gtk-application-active-window} gets the \"active\"
-  window for the application.
+  The @sym{gtk-application-active-window} slot access function
+  gets the \"active\" window for the application.
 
   The active window is the one that was most recently focused within the
   application. This window may not have the focus at the moment if another
@@ -524,9 +556,9 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "app-menu" 'gtk-application) 't)
- "The @code{\"app-menu\"} property of type @class{g-menu-model}
+ "The @code{app-menu} property of type @class{g-menu-model}
   (Read / Write) @br{}
-  The @class{g-menu-model} for the application menu.")
+  The @class{g-menu-model} object for the application menu.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-application-app-menu atdoc:*function-name-alias*)
@@ -542,12 +574,11 @@
     @class{gtk-application} class.
   @end{short}
 
-  The generic function @sym{gtk-application-app-menu} returns the menu model
-  that has been set with the generic function
-  @sym{(setf gtk-application-app-menu)}.
+  The @sym{gtk-application-app-menu} slot access function
+  returns the menu model that has been set.
 
-  The generic function @sym{(setf gtk-application-app-menu)} sets or unsets the
-  application menu for the application.
+  The @sym{(setf gtk-application-app-menu)} slot access function
+  sets the application menu for the application.
 
   This can only be done in the primary instance of the application, after it
   has been registered. The handler for the \"startup\" signal is a good place
@@ -563,8 +594,6 @@
 
   Use the base @class{g-action-map} interface to add actions, to respond to the
   user selecting these menu items.
-
-  Since 3.4
   @see-class{gtk-application}
   @see-class{g-menu-model}
   @see-class{g-action-map}")
@@ -573,9 +602,9 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "menubar" 'gtk-application) 't)
- "The @code{\"menubar\"} property of type @class{g-menu-model}
+ "The @code{menubar} property of type @class{g-menu-model}
   (Read / Write) @br{}
-  The @class{g-menu-model} for the menubar.")
+  The @class{g-menu-model} object for the menubar.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-application-menubar atdoc:*function-name-alias*)
@@ -613,8 +642,6 @@
 
   Use the base @class{g-action-map} interface to add actions, to respond to the
   user selecting these menu items.
-
-  Since 3.4
   @see-class{gtk-application}
   @see-class{g-menu-model}
   @see-class{g-action-map}")
@@ -624,11 +651,10 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "register-session"
                                                'gtk-application) 't)
- "The @code{\"register-session\"} property of type @code{:boolean}
+ "The @code{register-session} property of type @code{:boolean}
   (Read / Write) @br{}
   Set this property to @em{true} to register with the session manager. @br{}
-  Default value: @code{nil} @br{}
-  Since 3.4")
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-application-register-session atdoc:*function-name-alias*)
@@ -637,6 +663,32 @@
  "@version{2014-4-20}
   Accessor of the slot @slot[gtk-application]{register-session} of the
   @class{gtk-application} class.
+  @see-class{gtk-application}")
+
+;;; gtk-application-screensaver-active -----------------------------------------
+
+#+(and gtk-3-24 cl-cffi-gtk-documentation)
+(setf (documentation (atdoc:get-slot-from-name "screensaver-active"
+                                               'gtk-application) 't)
+ "The @code{screensaver-active} property of type @code{:boolean} (Read) @br{}
+  This property is @em{true} if GTK+ believes that the screensaver is currently
+  active. GTK+ only tracks session state (including this) when
+  @code{register-session} is set to @em{true}.
+  Tracking the screensaver state is supported on Linux. @br{}
+  Default value: @code{nil} @br{}
+  Since 3.24")
+
+#+(and gtk-3-24 cl-cffi-gtk-documentation)
+(setf (gethash 'gtk-application-screensaver-active atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-application-screensaver-active 'function)
+ "@version{2019-4-9}
+  @begin{short}
+    Accessor of the slot @slot[gtk-application]{screensaver-active} of the
+    @class{gtk-application} class.
+  @end{short}
+
+  Since 3.24
   @see-class{gtk-application}")
 
 ;;; ----------------------------------------------------------------------------
@@ -668,10 +720,8 @@
   support GTK+ commandline arguments, you can explicitly call the function
   @code{gtk_init} before creating the application instance.
 
-  The application ID must be valid. See the function
-  @fun{g-application-id-is-valid}.
-
-  Since 3.0
+  The application ID must be valid. See the  @fun{g-application-id-is-valid}
+  function.
   @see-class{gtk-application}
   @see-symbol{g-application-flags}
   @see-function{g-application-id-is-valid}"
@@ -691,19 +741,16 @@
   @argument[application]{a @class{gtk-application} object}
   @argument[window]{a @class{gtk-window} widget}
   @begin{short}
-    Adds a window to @arg{application}.
+    Adds a window to the application.
   @end{short}
-
   This call is equivalent to setting the @slot[gtk-window]{application}
   property of @arg{window} to @arg{application}.
 
   Normally, the connection between the application and the window will remain
   until the window is destroyed, but you can explicitly remove it with the
-  function @fun{gtk-application-remove-window}.
+  @fun{gtk-application-remove-window} function.
 
   GTK+ will keep the application running as long as it has any windows.
-
-  Since 3.0
   @see-class{gtk-application}
   @see-class{gtk-window}
   @see-function{gtk-application-remove-window}"
@@ -722,16 +769,12 @@
   @argument[application]{a @class{gtk-application} object}
   @argument[window]{a @class{gtk-window} widget}
   @begin{short}
-    Remove a @arg{window} from @arg{application}.
+    Remove a window from the application.
   @end{short}
-
   If @arg{window} belongs to @arg{application} then this call is equivalent to
-  setting the @slot[gtk-window]{application} property of window to
-  @code{nil}.
+  setting the @slot[gtk-window]{application} property of window to @code{nil}.
 
   The application may stop running as a result of a call to this function.
-
-  Since 3.0
   @see-class{gtk-application}
   @see-class{gtk-window}
   @see-function{gtk-application-add-window}"
@@ -751,17 +794,14 @@
   @argument[application]{a @class{gtk-application} object}
   @return{A list of @class{gtk-window} widgets.}
   @begin{short}
-    Gets a list of the @class{gtk-window}'s associated with @arg{application}.
+    Gets a list of the windows associated with the application.
   @end{short}
-
   The list is sorted by most recently focused window, such that the first
   element is the currently focused window. This is useful for choosing a parent
   for a transient window.
 
   The list that is returned should not be modified in any way. It will only
   remain valid until the next focus change or window creation or deletion.
-
-  Since 3.0
   @see-class{gtk-application}
   @see-class{gtk-window}
   @see-function{gtk-application-active-window}
@@ -780,11 +820,11 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-8-8}
   @argument[application]{a @class{gtk-application} object}
-  @argument[id]{an identifier number}
+  @argument[id]{an identifier number of type @code{:uint}}
   @return{The window with ID @arg{id}, or @code{nil} if there is no window with
     this ID.}
   @begin{short}
-    Returns the @class{gtk-application-window} with the given ID.
+    Returns the @class{gtk-application-window} widget with the given ID.
   @end{short}
 
   Since 3.6
@@ -805,27 +845,27 @@
 (define-g-flags "GtkApplicationInhibitFlags" gtk-application-inhibit-flags
   (:export t
    :type-initializer "gtk_application_inhibit_flags_get_type")
-  (:logout #.(ash 1 0))
-  (:switch #.(ash 1 1))
+  (:logout  #.(ash 1 0))
+  (:switch  #.(ash 1 1))
   (:suspend #.(ash 1 2))
-  (:idle #.(ash 1 3)))
+  (:idle    #.(ash 1 3)))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-application-inhibit-flags atdoc:*symbol-name-alias*) "Flags"
       (gethash 'gtk-application-inhibit-flags atdoc:*external-symbols*)
  "@version{2013-8-8}
   @begin{short}
-    Types of user actions that may be blocked by the function
-    @fun{gtk-application-inhibit}.
+    Types of user actions that may be blocked by the
+    @fun{gtk-application-inhibit} function.
   @end{short}
   @begin{pre}
 (define-g-flags \"GtkApplicationInhibitFlags\" gtk-application-inhibit-flags
   (:export t
    :type-initializer \"gtk_application_inhibit_flags_get_type\")
-  (:logout #.(ash 1 0))
-  (:switch #.(ash 1 1))
+  (:logout  #.(ash 1 0))
+  (:switch  #.(ash 1 1))
   (:suspend #.(ash 1 2))
-  (:idle #.(ash 1 3)))
+  (:idle    #.(ash 1 3)))
   @end{pre}
   @begin[code]{table}
     @entry[:logout]{Inhibit ending the user session by logging out or by
@@ -834,7 +874,6 @@
     @entry[:suspend]{Inhibit suspending the session or computer.}
     @entry[:idle]{Inhibit the session being marked as idle and possibly locked.}
   @end{table}
-  Since 3.4
   @see-function{gtk-application-inhibit}")
 
 ;;; ----------------------------------------------------------------------------
@@ -846,16 +885,16 @@
  "@version{2014-10-18}
   @argument[application]{the @class{gtk-application} object}
   @argument[window]{a @class{gtk-window} widget, or @code{nil}}
-  @argument[flags]{what types of user actions of type
-                   @symbol{gtk-application-inhibit-flags} should be inhibited}
+  @argument[flags]{what @symbol{gtk-application-inhibit-flags} types of user
+    actions should be inhibited}
   @argument[reason]{a short, human-readable string that explains why these
     operations are inhibited}
   @begin{return}
-    A non-zero cookie that is used to uniquely identify this request. It
-    should be used as an argument to the function
-    @fun{gtk-application-uninhibit} in order to remove the request. If the
-    platform does not support inhibiting or the request failed for some reason,
-    0 is returned.
+    A non-zero cookie of type @code{:uint} that is used to uniquely identify
+    this request. It should be used as an argument to the
+    @fun{gtk-application-uninhibit} function in order to remove the request. If
+    the platform does not support inhibiting or the request failed for some
+    reason, 0 is returned.
   @end{return}
   @begin{short}
     Inform the session manager that certain types of actions should be
@@ -866,8 +905,8 @@
   Applications should invoke this method when they begin an operation that
   should not be interrupted, such as creating a CD or DVD. The types of
   actions that may be blocked are specified by the flags parameter. When the
-  application completes the operation it should call the function
-  @fun{gtk-application-uninhibit} to remove the inhibitor. Note that an
+  application completes the operation it should call the
+  @fun{gtk-application-uninhibit} function to remove the inhibitor. Note that an
   application can have multiple inhibitors, and all of the must be individually
   removed. Inhibitors are also cleared when the application exits.
 
@@ -879,8 +918,6 @@
 
   If @arg{window} is given, the session manager may point the user to this
   window to find out more about why the action is inhibited.
-
-  Since 3.4
   @see-class{gtk-application}
   @see-class{gtk-window}
   @see-symbol{gtk-application-inhibit-flags}
@@ -900,15 +937,13 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-8-8}
   @argument[application]{the @class{gtk-application} object}
-  @argument[cookie]{a cookie that was returned by the function
-    @fun{gtk-application-inhibit}}
+  @argument[cookie]{a cookie of type @code{:uint} that was returned by the
+    @fun{gtk-application-inhibit} function}
   @begin{short}
-    Removes an inhibitor that has been established with the function
-    @fun{gtk-application-inhibit}. Inhibitors are also cleared when the
+    Removes an inhibitor that has been established with the
+    @fun{gtk-application-inhibit} function. Inhibitors are also cleared when the
     application exits.
   @end{short}
-
-  Since 3.4
   @see-class{gtk-application}
   @see-function{gtk-application-inhibit}"
   (application (g-object gtk-application))
@@ -920,19 +955,18 @@
 ;;; gtk_application_is_inhibited ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_application_is_inhibited" gtk-application-is-inhibites) :boolean
+(defcfun ("gtk_application_is_inhibited" gtk-application-is-inhibited) :boolean
  #+cl-cffi-gtk-documentation
  "@version{2013-8-8}
   @argument[application]{the @class{gtk-application} object}
-  @argument[flags]{what types of actions should be queried}
+  @argument[flags]{what @symbol{gtk-application-inhibit} types of actions should
+    be queried}
   @return{@em{True} if any of the actions specified in @arg{flags} are
     inhibited.}
   @begin{short}
     Determines if any of the actions specified in @arg{flags} are currently
     inhibited, possibly by another application.
   @end{short}
-
-  Since 3.4
   @see-class{gtk-application}
   @see-function{gtk-application-inhibit}"
   (application (g-object gtk-application))
@@ -942,70 +976,83 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_application_prefers_app_menu ()
-;;;
-;;; gboolean gtk_application_prefers_app_menu (GtkApplication *application);
-;;;
-;;; Determines if the desktop environment in which the application is running
-;;; would prefer an application menu be shown.
-;;;
-;;; If this function returns TRUE then the application should call
-;;; gtk_application_set_app_menu() with the contents of an application menu,
-;;; which will be shown by the desktop environment. If it returns FALSE then
-;;; you should consider using an alternate approach, such as a menubar.
-;;;
-;;; The value returned by this function is purely advisory and you are free to
-;;; ignore it. If you call gtk_application_set_app_menu() even if the desktop
-;;; environment doesn't support app menus, then a fallback will be provided.
-;;;
-;;; Applications are similarly free not to set an app menu even if the desktop
-;;; environment wants to show one. In that case, a fallback will also be created
-;;; by the desktop environment (GNOME, for example, uses a menu with only a
-;;; "Quit" item in it).
-;;;
-;;; The value returned by this function never changes. Once it returns a
-;;; particular value, it is guaranteed to always return the same value.
-;;;
-;;; You may only call this function after the application has been registered
-;;; and after the base startup handler has run. You're most likely to want to
-;;; use this from your own startup handler. It may also make sense to consult
-;;; this function while constructing UI (in activate, open or an action
-;;; activation handler) in order to determine if you should show a gear menu
-;;; or not.
-;;;
-;;; This function will return FALSE on Mac OS and a default app menu will be
-;;; created automatically with the "usual" contents of that menu typical to most
-;;; Mac OS applications. If you call gtk_application_set_app_menu() anyway, then
-;;; this menu will be replaced with your own.
-;;;
-;;; application
-;;;     a GtkApplication
-;;;
-;;; Returns
-;;;     TRUE if you should set an app menu
-;;;
-;;; Since: 3.14
 ;;; ----------------------------------------------------------------------------
+
+#+gtk-3-14
+(defcfun ("gtk_application_prefers_app_menu" gtk-application-prefers-app-menu)
+    :boolean
+ #+cl-cffi-gtk-documentation
+ "@version{2019-4-9}
+  @argument[application]{a @class{gtk-application} object}
+  @return{a @code{:boolean} that is @em{True} if you should set an app menu}
+  @begin{short}
+    Determines if the desktop environment in which the application is running
+    would prefer an application menu be shown.
+  @end{short}
+
+  If this function returns @em{true} then the application should call the
+  @fun{gtk-application-app-menu} slot access function with the contents of an
+  application menu, which will be shown by the desktop environment. If it
+  returns @code{nil} then you should consider using an alternate approach, such
+  as a menubar.
+
+  The value returned by this function is purely advisory and you are free to
+  ignore it. If you call the @fun{gtk-application-app-menu} slot access function
+  even if the desktop environment doesn't support app menus, then a fallback
+  will be provided.
+
+  Applications are similarly free not to set an app menu even if the desktop
+  environment wants to show one. In that case, a fallback will also be created
+  by the desktop environment. GNOME, for example, uses a menu with only a
+  \"Quit\" item in it.
+
+  The value returned by this function never changes. Once it returns a
+  particular value, it is guaranteed to always return the same value.
+
+  You may only call this function after the application has been registered
+  and after the base startup handler has run. You're most likely to want to
+  use this from your own startup handler. It may also make sense to consult
+  this function while constructing UI, in activate, open or an action
+  activation handler, in order to determine if you should show a gear menu
+  or not.
+
+  This function will return @code{nil} on Mac OS and a default app menu will be
+  created automatically with the \"usual\" contents of that menu typical to most
+  Mac OS applications. If you call the @fun{gtk-application-app-menu} slot
+  access function anyway, then this menu will be replaced with your own.
+  @see-class{gtk-application}
+  @see-function{gtk-application-app-menu}"
+  (application (g-object gtk-application)))
+
+#+gtk-3-14
+(export 'gtk-application-prefers-app-menu)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_application_get_menu_by_id ()
-;;;
-;;; GMenu * gtk_application_get_menu_by_id (GtkApplication *application,
-;;;                                         const gchar *id);
-;;;
-;;; Gets a menu from automatically loaded resources. See Automatic resources
-;;; for more information.
-;;;
-;;; application
-;;;     a GtkApplication
-;;;
-;;; id
-;;;     the id of the menu to look up
-;;;
-;;; Returns
-;;;     Gets the menu with the given id from the automatically loaded resources.
-;;;
-;;; Since: 3.14
 ;;; ----------------------------------------------------------------------------
+
+#+gkt-3-14
+(defcfun ("gtk_application_get_menu_by_id" gtk-application-get-menu-by-id)
+    (g-object g-menu)
+ #+cl-cffi-gtk-documentation
+ "@version{2019-4-9}
+  @argument[application]{a @class{gtk-application} object}
+  @argument[id]{a @code{:string} with the ID of the menu to look up}
+  @return{Gets the menu with the given @arg{id} from the automatically loaded
+    resources.}
+  @begin{short}
+    Gets a menu from automatically loaded resources.
+  @end{short}
+  See Automatic resources for more information.
+
+  Since 3.14
+  @see-class{gtk-application}
+  @see-function{gtk-application-add-accelerator}"
+  (application (g-object gtk-application))
+  (id :string))
+
+#+3-14
+(export 'gtk-application-get-menu-by-id)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_application_add_accelerator ()
@@ -1017,9 +1064,10 @@
  "@version{2013-8-8}
   @argument[application]{a @class{gtk-application} object}
   @argument[accelerator]{accelerator string}
-  @argument[action-name]{the name of the action to activate}
-  @argument[parameter]{parameter to pass when activating the action, or
-    @code{NULL} if the action does not accept an activation parameter}
+  @argument[action-name]{a string with the name of the action to activate}
+  @argument[parameter]{a @type{g-variant} parameter to pass when activating
+    the action, or @code{nil} if the action does not accept an activation
+    parameter}
   @begin{short}
     Installs an accelerator that will cause the named action to be activated
     when the key combination specificed by accelerator is pressed.
@@ -1038,12 +1086,10 @@
   which is usually more convenient than calling this function for each
   accelerator.
   @begin[Warning]{dictionary}
-    The function @sym{gtk-application-add-accelerator} has been deprecated since
-    version 3.14 and should not be used in newly-written code.
-    Use the function @fun{gtk-application-set-accels-for-action} instead.
+    The @sym{gtk-application-add-accelerator} function has been deprecated since
+    version 3.14 and should not be used in newly-written code. Use the
+    @fun{gtk-application-set-accels-for-action} function instead.
   @end{dictionary}
-
-  Since 3.4
   @see-class{gtk-application}
   @see-function{gtk-accelerator-parse}
   @see-function{gtk-application-app-menu}
@@ -1065,20 +1111,18 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-8-8}
   @argument[application]{a @class{gtk-application} object}
-  @argument[action-name]{the name of the action to activate}
-  @argument[parameter]{parameter to pass when activating the action, or
-    @code{NULL} if the action does not accept an activation parameter}
+  @argument[action-name]{a string with the name of the action to activate}
+  @argument[parameter]{a @type{g-variant} parameter to pass when activating the
+    action, or @code{nil} if the action does not accept an activation parameter}
   @begin{short}
     Removes an accelerator that has been previously added with the function
     @fun{gtk-application-add-accelerator}.
   @end{short}
   @begin[Warning]{dictionary}
-    The function @sym{gtk-application-remove-accelerator} has been deprecated
-    since version 3.14 and should not be used in newly-written code.
-    Use @fun{gtk-application-set-accels-for-action} instead.
+    The @sym{gtk-application-remove-accelerator} function has been deprecated
+    since version 3.14 and should not be used in newly-written code. Use the
+    @fun{gtk-application-set-accels-for-action} function instead.
   @end{dictionary}
-
-  Since 3.4
   @see-class{gtk-application}
   @see-function{gtk-application-add-accelerator}"
   (application (g-object gtk-application))
@@ -1089,21 +1133,26 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_application_list_action_descriptions ()
-;;;
-;;; gchar ** gtk_application_list_action_descriptions
-;;;                                               (GtkApplication *application);
-;;;
-;;; Lists the detailed action names which have associated accelerators. 
-;;; See gtk_application_set_accels_for_action().
-;;;
-;;; application
-;;;     a GtkApplication
-;;;
-;;; Returns
-;;;     a NULL-terminated array of strings, free with g_strfreev() when done.
-;;;
-;;; Since: 3.12
 ;;; ----------------------------------------------------------------------------
+
+#+gtk-3-12
+(defcfun ("gtk_application_list_action_desriptions"
+           gtk-application-list-action-descriptions) g-strv
+ #+cl-cffi-gtk-documentation
+ "@version{2013-8-8}
+  @argument[application]{a @class{gtk-application} object}
+  @return{A list of strings.}
+  @begin{short}
+    Lists the detailed action names which have associated accelerators.
+  @end{short}
+  See the @fun{gtk-application-set-accels-for-action} function.
+
+  Since 3.12
+  @see-class{gtk-application}"
+ (application (g-object gtk-application)))
+
+#+gtk-3-12
+(export 'gtk-application-list-action-descriptions)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_application_get_accels_for_action ()
@@ -1150,7 +1199,7 @@
 ;;; detailed_action_name
 ;;;     a detailed action name, specifying an action and target to associate
 ;;;     accelerators with
-;;; 
+;;;
 ;;; accels
 ;;;     a list of accelerators in the format understood by
 ;;;     gtk_accelerator_parse().
@@ -1169,8 +1218,8 @@
 ;;;
 ;;; This might be useful to discover if an accel already exists in order to
 ;;; prevent installation of a conflicting accelerator (from an accelerator
-;;; editor or a plugin system, for example). Note that having more than one 
-;;; action per accelerator may not be a bad thing and might make sense in cases 
+;;; editor or a plugin system, for example). Note that having more than one
+;;; action per accelerator may not be a bad thing and might make sense in cases
 ;;; where the actions never appear in the same context.
 ;;;
 ;;; In case there are no actions for a given accelerator, an empty array is
@@ -1181,10 +1230,10 @@
 ;;;
 ;;; application
 ;;;     a GtkApplication
-;;; 
+;;;
 ;;; accel
 ;;;     an accelerator that can be parsed by gtk_accelerator_parse()
-;;; 
+;;;
 ;;; Returns
 ;;;     a NULL-terminated array of actions for accel .
 ;;;
