@@ -4162,15 +4162,22 @@ setup_tree (void)
       A bin with a decorative frame and optional label.
 
       @about-class{gtk-frame}
+
+      @about-generic{gtk-frame-label}
+      @about-generic{gtk-frame-label-widget}
+      @about-generic{gtk-frame-label-xalign}
+      @about-generic{gtk-frame-label-yalign}
+      @about-generic{gtk-frame-shadow-type}
+
       @about-function{gtk-frame-new}
-     @about-function{gtk-frame-set-label}
-     @about-function{gtk-frame-set-label-widget}
-     @about-function{gtk-frame-set-label-align}
-     @about-function{gtk-frame-set-shadow-type}
-     @about-function{gtk-frame-get-label}
-     @about-function{gtk-frame-get-label-align}
-     @about-function{gtk-frame-get-label-widget}
-     @about-function{gtk-frame-get-shadow-type}
+      @about-function{gtk-frame-set-label}
+      @about-function{gtk-frame-set-label-widget}
+      @about-function{gtk-frame-set-label-align}
+      @about-function{gtk-frame-set-shadow-type}
+      @about-function{gtk-frame-get-label}
+      @about-function{gtk-frame-get-label-align}
+      @about-function{gtk-frame-get-label-widget}
+      @about-function{gtk-frame-get-shadow-type}
     @end{subsection}
     @begin[GtkSeparator]{subsection}
       A separator widget.

@@ -169,12 +169,11 @@ GTK+ Widgets and Objects
     gtk.font-button.lisp             - GtkFontButton               - GTK+ 3.24
     gtk.font-chooser-widget.lisp     - GtkFontChooserWidget        - GTK+ 3.24
     gtk.font-chooser-dialog.lisp     - GtkFontChooserDialog        - GTK+ 3.24
-
-    gtk.places-sidebar.lisp          - GtkPlacesSidebar            - GTK+
+    gtk.places-sidebar.lisp          - GtkPlacesSidebar            - GTK+ 3.24 &
 
   Ornaments
 
-    gtk.frame.lisp                   - GtkFrame                    - GTK+ 3.8.8*
+    gtk.frame.lisp                   - GtkFrame                    - GTK+ 3.24 +
     gtk.separator.lisp               - GtkSeparator, ...           - GTK+ 3.24
 
   Scrolling

@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.frame.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.8.8 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2014 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,21 +29,45 @@
 ;;;
 ;;; GtkFrame
 ;;;
-;;; A bin with a decorative frame and optional label
+;;;     A bin with a decorative frame and optional label
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkFrame
 ;;;
+;;; Functions
+;;;
 ;;;     gtk_frame_new
-;;;     gtk_frame_set_label
-;;;     gtk_frame_set_label_widget
+;;;     gtk_frame_set_label                                Accessor
+;;;     gtk_frame_set_label_widget                         Accessor
 ;;;     gtk_frame_set_label_align
-;;;     gtk_frame_set_shadow_type
-;;;     gtk_frame_get_label
+;;;     gtk_frame_set_shadow_type                          Accessor
+;;;     gtk_frame_get_label                                Accessor
 ;;;     gtk_frame_get_label_align
-;;;     gtk_frame_get_label_widget
-;;;     gtk_frame_get_shadow_type
+;;;     gtk_frame_get_label_widget                         Accessor
+;;;     gtk_frame_get_shadow_type                          Accessor
+;;;
+;;; Properties
+;;;
+;;;             gchar*  label           Read / Write
+;;;         GtkWidget*  label-widget    Read / Write
+;;;            gfloat   label-xalign    Read / Write
+;;;            gfloat   label-yalign    Read / Write
+;;;     GtkShadowType   shadow-type     Read / Write
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;             ╰── GtkContainer
+;;;                 ╰── GtkBin
+;;;                     ╰── GtkFrame
+;;;                         ╰── GtkAspectFrame
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GtkFrame implements AtkImplementorIface and GtkBuildable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -88,13 +109,12 @@
     a decorative frame and an optional label.
   @end{short}
   If present, the label is drawn in a gap in the top side of the frame. The
-  position of the label can be controlled with the function
-  @fun{gtk-frame-set-label-align}.
-
-  @subheading{GtkFrame as GtkBuildable}
+  position of the label can be controlled with the
+  @fun{gtk-frame-set-label-align} function.
+  @begin[GtkFrame as GtkBuildable]{dictionary}
     The @sym{gtk-frame} implementation of the @class{gtk-buildable} interface
     supports placing a child in the label position by specifying
-    @code{\"label\"} as the @code{\"type\"} attribute of a @code{<child>}
+    @code{\"label\"} as the @code{type} attribute of a @code{<child>}
     element. A normal content child can be specified without specifying a
     @code{<child>} type attribute.
 
@@ -109,6 +129,24 @@
   </child>
  </object>
     @end{pre}
+  @end{dictionary}
+  @begin[CSS nodes]{dictionary}
+    @begin{pre}
+ frame
+ ├── border[.flat]
+ ├── <label widget>
+ ╰── <child>
+    @end{pre}
+    @sym{gtk-frame} has a main CSS node named @code{frame} and a subnode named
+    @code{border}. The @code{border} node is used to draw the visible border.
+    You can set the appearance of the border using CSS properties like
+    @code{border-style} on the @code{border} node.
+
+    The border node can be given the style class @code{.flat}, which is used by
+    themes to disable drawing of the border. To do this from code, call the
+    @fun{gtk-frame-shadow-type} slot access function with @code{:none} to add
+    the @code{.flat} class or any other shadow type to remove it.
+  @end{dictionary}
   @see-slot{gtk-frame-label}
   @see-slot{gtk-frame-label-widget}
   @see-slot{gtk-frame-label-xalign}
@@ -121,51 +159,16 @@
   @see-function{gtk-frame-set-label-align}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
 ;;; Property Details
-;;;
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-frame-label --------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "label" 'gtk-frame) 't)
- "The @code{\"label\"} property of type  @code{:string} (Read / Write) @br{}
+ "The @code{label} property of type  @code{:string} (Read / Write) @br{}
   Text of the frame's label. @br{}
   Default value: @code{nil}")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "label-widget" 'gtk-frame) 't)
- "The @code{\"label-widget\"} property of type @class{gtk-widget}
-  (Read / Write) @br{}
-  A widget to display in place of the usual frame label.")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "label-xalign" 'gtk-frame) 't)
- "The @code{\"label-xalign\"} property of type @code{:float}
-  (Read / Write) @br{}
-  The horizontal alignment of the label. @br{}
-  Allowed values: [0,1] @br{}
-  Default value: 0")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "label-yalign" 'gtk-frame) 't)
- "The @code{\"label-yalign\"} property of type @code{:float}
-  (Read / Write) @br{}
-  The vertical alignment of the label. @br{}
-  Allowed values: [0,1] @br{}
-  Default value: 0.5")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "shadow-type" 'gtk-frame) 't)
- "The @code{\"shadow-type\"} property of type @symbol{gtk-shadow-type}
-  (Read / Write) @br{}
-  Appearance of the frame border. @br{}
-  Default value: @code{:etched-in}")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-frame-label atdoc:*function-name-alias*) "Accessor"
@@ -174,6 +177,14 @@
   Accessor of the slot @slot[gtk-frame]{label} of the @class{gtk-frame} class.
   @see-class{gtk-frame}")
 
+;;; --- gtk-frame-label-widget -------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "label-widget" 'gtk-frame) 't)
+ "The @code{label-widget} property of type @class{gtk-widget}
+  (Read / Write) @br{}
+  A widget to display in place of the usual frame label.")
+
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-frame-label-widget atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-frame-label-widget 'function)
@@ -181,6 +192,16 @@
   Accessor of the slot @slot[gtk-frame]{label-widget} of the @class{gtk-frame}
   class.
   @see-class{gtk-frame}")
+
+;;; --- gtk-frame-label-xalign -------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "label-xalign" 'gtk-frame) 't)
+ "The @code{label-xalign} property of type @code{:float}
+  (Read / Write) @br{}
+  The horizontal alignment of the label. @br{}
+  Allowed values: [0,1] @br{}
+  Default value: 0")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-frame-label-xalign atdoc:*function-name-alias*) "Accessor"
@@ -191,6 +212,16 @@
   @see-class{gtk-frame}
   @see-function{gtk-frame-label-yalign}")
 
+;;; --- gtk-frame-label-yalign -------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "label-yalign" 'gtk-frame) 't)
+ "The @code{label-yalign} property of type @code{:float}
+  (Read / Write) @br{}
+  The vertical alignment of the label. @br{}
+  Allowed values: [0,1] @br{}
+  Default value: 0.5")
+
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-frame-label-yalign atdoc:*function-name-alias*) "Accessor"
       (documentation 'gtk-frame-label-yalign 'function)
@@ -199,6 +230,15 @@
   class.
   @see-class{gtk-frame}
   @see-function{gtk-frame-xalign}")
+
+;;; --- gtk-frame-shadow-type --------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "shadow-type" 'gtk-frame) 't)
+ "The @code{shadow-type} property of type @symbol{gtk-shadow-type}
+  (Read / Write) @br{}
+  Appearance of the frame border. @br{}
+  Default value: @code{:etched-in}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-frame-shadow-type atdoc:*function-name-alias*) "Accessor"
