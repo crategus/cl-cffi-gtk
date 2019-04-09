@@ -178,7 +178,7 @@ GTK+ Widgets and Objects
 
   Scrolling
 
-    gtk.scrollbar.lisp               - GtkScrollbar, ...           - GTK+ 3.6.4*
+    gtk.scrollbar.lisp               - GtkScrollbar, ...           - GTK+ 3.24
     gtk.scrolled-window.lisp         - GtkScrolledWindow           - GTK+ 3.6.4*
     gtk.scrollable.lisp              - GtkScrollable               - GTK+ 3.6.4*
 

@@ -1,15 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.scrollbar.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -31,13 +29,34 @@
 ;;;
 ;;; GtkScrollbar
 ;;;
-;;; A Scrollbar
+;;;     A Scrollbar
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkScrollbar
 ;;;
+;;; Functions
+;;;
 ;;;     gtk_scrollbar_new
+;;;
+;;; Style Properties
+;;;
+;;;     gboolean   fixed-slider-length               Read
+;;;     gboolean   has-backward-stepper              Read
+;;;     gboolean   has-forward-stepper               Read
+;;;     gboolean   has-secondary-backward-stepper    Read
+;;;     gboolean   has-secondary-forward-stepper     Read
+;;;         gint   min-slider-length                 Read
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;             ╰── GtkRange
+;;;                 ╰── GtkScrollbar
+;;;                     ├── GtkHScrollbar
+;;;                     ╰── GtkVScrollbar
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -55,61 +74,100 @@
    :type-initializer "gtk_scrollbar_get_type")
   nil)
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-scrollbar 'type)
  "@version{2013-5-20}
   @begin{short}
     The @sym{gtk-scrollbar} widget is a horizontal or vertical scrollbar,
-    depending on the value of the @code{\"orientation\"} property.
+    depending on the value of the @slot[gtk-orientable]{orientation} property.
   @end{short}
 
   The position of the thumb in a scrollbar is controlled by the scroll
   adjustments. See @class{gtk-adjustment} for the properties in an adjustment -
-  for @sym{gtk-scrollbar}, the @code{\"value\"} property represents the position
-  of the scrollbar, which must be between the @code{\"lower\"} property and
-  @code{\"upper\"} - @code{\"page-size\"}. The @code{\"page-size\"} property
+  for @sym{gtk-scrollbar}, the @code{value} property represents the position
+  of the scrollbar, which must be between the @code{lower} property and
+  @code{upper} - @code{page-size}. The @code{page-size} property
   represents the size of the visible scrollable area. The
-  @code{\"step-increment\"} and @code{\"page-increment\"} properties are
-  used when the user asks to step down (using the small stepper arrows) or
-  page down (using for example the PageDown key).
+  @code{step-increment} and @code{page-increment} properties are
+  used when the user asks to step down, using the small stepper arrows, or
+  page down, using for example the PageDown key.
+  @begin[CSS nodes]{dictionary}
+    @begin{pre}
+ scrollbar[.fine-tune]
+ ╰── contents
+     ├── [button.up]
+     ├── [button.down]
+     ├── trough
+     │   ╰── slider
+     ├── [button.up]
+     ╰── [button.down]
+    @end{pre}
+    @sym{gtk-scrollbar} has a main CSS node with name @code{scrollbar} and a
+    subnode for its contents, with subnodes named @code{trough} and
+    @code{slider}.
+
+    The main node gets the style class @code{.fine-tune} added when the
+    scrollbar is in \"fine-tuning\" mode.
+
+    If steppers are enabled, they are represented by up to four additional
+    subnodes with name @code{button}. These get the style classes @code{.up}
+    and @code{.down} to indicate in which direction they are moving.
+
+    Other style classes that may be added to scrollbars inside
+    @class{gtk-scrolled-window} include the positional classes @code{.left},
+    @code{.right}, @code{.top}, @code{.bottom} and style classes related to
+    overlay scrolling @code{.overlay-indicator}, @code{.dragging},
+    @code{.hovering}.
+  @end{dictionary}
   @begin[Style Property Details]{dictionary}
-    @subheading{The \"fixed-slider-length\" style property}
-      @code{\"fixed-slider-length\"} of type @code{:boolean} (Read)@br{}
-      Don't change slider size, just lock it to the minimum length. @br{}
-      Default value: @code{nil}
-
-    @subheading{The \"has-backward-stepper\" style property}
-      @code{\"has-backward-stepper\"} of type @code{:boolean} (Read)@br{}
-      Display the standard backward arrow button. @br{}
-      Default value: @em{true}
-
-    @subheading{The \"has-forward-stepper\" style property}
-      @code{\"has-forward-stepper\"} of type @code{:boolean} (Read)@br{}
-      Display the standard forward arrow button. @br{}
-      Default value: @em{true}
-
-    @subheading{The \"has-secondary-backward-stepper\" style property}
-      @code{\"has-secondary-backward-stepper\"} of type @code{:boolean}
-      (Read)@br{}
-      Display a second backward arrow button on the opposite end of the
-      scrollbar. @br{}
-      Default value: @code{nil}
-
-    @subheading{The \"has-secondary-forward-stepper\" style property}
-      @code{\"has-secondary-forward-stepper\"} of type @code{:boolean}
-      (Read)@br{}
-      Display a second forward arrow button on the opposite end of the
-      scrollbar. @br{}
-      Default value: @code{nil}
-
-    @subheading{The \"min-slider-length\" style property}
-      @code{\"min-slider-length\"} of type @code{:int} (Read)@br{}
-      Minimum length of scrollbar slider. @br{}
-      Allowed values: >= 0@br{}
-      Default value: 21
-  @end{dictionary}")
+    @begin[code]{table}
+      @begin[fixed-slider-length]{entry}
+        The @code{fixed-slider-length} style property of type @code{:boolean}
+        (Read) @br{}
+        Don't change slider size, just lock it to the minimum length. @br{}
+        Default value: @code{nil}
+      @end{entry}
+      @begin[has-backward-stepper]{entry}
+        The @code{has-backward-stepper} style property of type @code{:boolean}
+        (Read)@br{}
+        Display the standard backward arrow button. @br{}
+        Default value: @em{true}
+      @end{entry}
+      @begin[has-forward-stepper]{entry}
+        The @code{has-forward-stepper} style property of type @code{:boolean}
+        (Read) @br{}
+        Display the standard forward arrow button. @br{}
+        Default value: @em{true}
+      @end{entry}
+      @begin[has-secondary-backward-stepper]{entry}
+        The @code{has-secondary-backward-stepper} style property of type
+        @code{:boolean} (Read) @br{}
+        Display a second backward arrow button on the opposite end of the
+        scrollbar. @br{}
+        Default value: @code{nil}
+      @end{entry}
+      @begin[has-secondary-forward-stepper]{entry}
+        The @code{has-secondary-forward-stepper} style property of type
+        @code{:boolean} (Read) @br{}
+        Display a second forward arrow button on the opposite end of the
+        scrollbar. @br{}
+        Default value: @code{nil}
+      @end{entry}
+      @begin[min-slider-length]{entry}
+        The @code{min-slider-length} style property of type @code{:int}
+        (Read) @br{}
+        Minimum length of scrollbar slider. @br{}
+        @b{Warning:} @code{min-slider-length} has been deprecated since version
+        3.20 and should not be used in newly-written code. Use
+        min-height/min-width CSS properties on the slider element instead. The
+        value of this style property is ignored. @br{}
+        Allowed values: >= 0 @br{}
+        Default value: 21
+      @end{entry}
+    @end{table}
+  @end{dictionary}
+  @see-class{gtk-adjustment}
+  @see-class{gtk-scrolled-window}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_scrollbar_new ()
@@ -125,8 +183,7 @@
     create a new adjustment}
   @return{The new @class{gtk-scrollbar} widget.}
   @short{Creates a new scrollbar with the given @arg{orientation}.}
-
-  Since 3.0"
+  @see-cass{gtk-scrollbar}"
   (make-instance 'gtk-scrollbar
                  :orientation orientation
                  :adjustment adjustment))
@@ -163,8 +220,6 @@
    :type-initializer "gtk_hscrollbar_get_type")
   nil)
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-hscrollbar 'type)
  "@version{2013-5-20}
@@ -176,10 +231,11 @@
   scrollbar or it may be left @code{nil} in which case one will be created for
   you. See @class{gtk-scrollbar} for a description of what the fields in an
   adjustment represent for a scrollbar.
-
-  @subheading{Warning}
+  @begin[Warning]{dictionary}
     @sym{gtk-hscrollbar} has been deprecated, use @class{gtk-scrollbar}
-    instead.")
+    instead.
+  @end{dictionary}
+  @see-class{gtk-scrollbar}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_hscrollbar_new ()
@@ -193,12 +249,13 @@
   @argument[adjustment]{the @class{gtk-adjustment} to use, or @code{nil} to
     create a new adjustment}
   @return{The new @class{gtk-hscrollbar} widget.}
-  @subheading{Warning}
-    @sym{gtk-hscrollbar-new} has been deprecated since version 3.2 and should
-    not be used in newly-written code. Use @fun{gtk-scrollbar-new} with
-    @code{:horizontal} instead.
-
   @short{Creates a new horizontal scrollbar.}
+  @begin[Warning]{dictionary}
+    @sym{gtk-hscrollbar-new} has been deprecated since version 3.2 and should
+    not be used in newly-written code. Use the @fun{gtk-scrollbar-new} function
+    with @code{:horizontal} instead.
+  @end{dictionary}
+  @see-class{scrollbar}
   @see-function{gtk-scrollbar-new}"
   (make-instance 'gtk-scrollbar
                  :orientation :horizontal
@@ -236,8 +293,6 @@
    :type-initializer "gtk_vscrollbar_get_type")
   nil)
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-vscrollbar 'type)
  "@version{2013-5-20}
@@ -249,10 +304,11 @@
     for you. See @class{gtk-scrollbar} for a description of what the fields in
     an adjustment represent for a scrollbar.
   @end{short}
-
-  @subheading{Warning}
+  @begin[Warning]{dictionary}
     @sym{gtk-vscrollbar} has been deprecated, use @class{gtk-scrollbar}
-    instead.")
+    instead.
+  @end{dictionary}
+  @see-class{gtk-scrollbar}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_vscrollbar_new ()
@@ -266,12 +322,13 @@
   @argument[adjustment]{the @class{gtk-adjustment} to use, or @code{nil} to
     create a new adjustment}
   @return{The new @class{gtk-vscrollbar} widget.}
-  @subheading{Warning}
+  @short{Creates a new vertical scrollbar.}
+  @begin[Warning]{dictionary}
     @sym{gtk-vscrollbar-new} has been deprecated since version 3.2 and should
     not be used in newly-written code. Use the function @fun{gtk-scrollbar-new}
-    with @code{;vertical} instead.
-
-  @short{Creates a new vertical scrollbar.}
+    with @code{:vertical} instead.
+  @end{dictionary}
+  @see-class{gtk-scrollbar}
   @see-function{gtk-scrollbar-new}"
   (make-instance 'gtk-scrollbar
                  :orientation :vertical
