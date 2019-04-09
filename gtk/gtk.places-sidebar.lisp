@@ -118,7 +118,7 @@
    :type-initializer "gtk_places_open_flags_get_type")
   (:normal     #.(ash 1 0))
   (:new-tab    #.(ash 1 1))
-  (:new-window #.(ash 1 2)))  
+  (:new-window #.(ash 1 2)))
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-places-open-flags atdoc:*symbol-name-alias*) "Flags"
@@ -140,7 +140,7 @@
   made.
 
   If the application never calls the @fun{gtk-places-sidebar-set-open-flags}
-  function, then the sidebar will only use @code{:normal} in the 
+  function, then the sidebar will only use @code{:normal} in the
   \"open-location\" signal. This is the default mode of operation.
   @begin{pre}
 (define-g-flags \"GtkPlacesOpenFlags\" gtk-places-open-flags
@@ -282,7 +282,7 @@
 
       The drag action to use must be the return value of the signal handler.
       @begin[code]{table}
-        @entry[sidebar]{The object which received the signal.} 
+        @entry[sidebar]{The object which received the signal.}
         @entry[context]{@class{gdk-drag-context} with information about the drag
           operation.}
         @entry[dest-file]{@class{g-file} with the tentative location that is
@@ -321,7 +321,7 @@
       the application using the @sym{gtk-places-sidebar} can track the progress
       of the operation and, for example, show a notification.
       @begin[code]{table}
-        @entry[sidebar]{The object which received the signal.} 
+        @entry[sidebar]{The object which received the signal.}
         @entry[mount-operation]{The @class{g-mount-operation} that is going to
           start.}
       @end{table}
@@ -336,7 +336,7 @@
       for example, a file manager should show a list of files in the specified
       location.
       @begin[code]{table}
-        @entry[sidebar]{The object which received the signal.} 
+        @entry[sidebar]{The object which received the signal.}
         @entry[location]{GFile to which the caller should switch.}
         @entry[open-flags]{A single value from the
           @symbol{gtk-places-open-flags} flags specifying how the location
@@ -344,834 +344,876 @@
       @end{table}
       Since 3.10
 
-The “populate-popup” signal
-void
-user_function (GtkPlacesSidebar *sidebar,
-               GtkWidget        *container,
-               GFile            *selected_item,
-               GVolume          *selected_volume,
-               gpointer          user_data)
-The places sidebar emits this signal when the user invokes a contextual popup on one of its items. In the signal handler, the application may add extra items to the menu as appropriate. For example, a file manager may want to add a \"Properties\" command to the menu.
-
-It is not necessary to store the selected_item for each menu item; during their callbacks, the application can use gtk_places_sidebar_get_location() to get the file to which the item refers.
-
-The selected_item argument may be NULL in case the selection refers to a volume. In this case, selected_volume will be non-NULL. In this case, the calling application will have to g_object_ref() the selected_volume and keep it around to use it in the callback.
-
-The container and all its contents are destroyed after the user dismisses the popup. The popup is re-created (and thus, this signal is emitted) every time the user activates the contextual menu.
-
-Before 3.18, the container always was a GtkMenu, and you were expected to add your items as GtkMenuItems. Since 3.18, the popup may be implemented as a GtkPopover, in which case container will be something else, e.g. a GtkBox, to which you may add GtkModelButtons or other widgets, such as GtkEntries, GtkSpinButtons, etc. If your application can deal with this situation, you can set “populate-all” to TRUE to request that this signal is emitted for populating popovers as well.
-
-Parameters
-sidebar
-
-the object which received the signal.
-
- 
-container
-
-a GtkMenu or another GtkContainer.
-
-[type Gtk.Widget]
-selected_item
-
-GFile with the item to which the popup should refer, or NULL in the case of a selected_volume .
-
-[type Gio.File][nullable]
-selected_volume
-
-GVolume if the selected item is a volume, or NULL if it is a file.
-
-[type Gio.Volume][nullable]
-user_data
-
-user data set when the signal handler was connected.
-
- 
-Flags: Run First
-
-Since 3.10
-
-The “show-connect-to-server” signal
-void
-user_function (GtkPlacesSidebar *sidebar,
-               gpointer          user_data)
-The places sidebar emits this signal when it needs the calling application to present an way to connect directly to a network server. For example, the application may bring up a dialog box asking for a URL like \"sftp://ftp.example.com\". It is up to the application to create the corresponding mount by using, for example, g_file_mount_enclosing_volume().
-
-GtkPlacesSidebar::show-connect-to-server has been deprecated since version 3.18 and should not be used in newly-written code.
-
-use the “show-other-locations” signal to connect to network servers.
-
-Parameters
-sidebar
-
-the object which received the signal.
-
- 
-user_data
-
-user data set when the signal handler was connected.
-
- 
-Flags: Run First
-
-The “show-enter-location” signal
-void
-user_function (GtkPlacesSidebar *sidebar,
-               gpointer          user_data)
-The places sidebar emits this signal when it needs the calling application to present an way to directly enter a location. For example, the application may bring up a dialog box asking for a URL like \"http://http.example.com\".
-
-Parameters
-sidebar
-
-the object which received the signal.
-
- 
-user_data
-
-user data set when the signal handler was connected.
-
- 
-Flags: Run First
-
-Since 3.14
-
-The “show-error-message” signal
-void
-user_function (GtkPlacesSidebar *sidebar,
-               gchar            *primary,
-               gchar            *secondary,
-               gpointer          user_data)
-The places sidebar emits this signal when it needs the calling application to present an error message. Most of these messages refer to mounting or unmounting media, for example, when a drive cannot be started for some reason.
-
-Parameters
-sidebar
-
-the object which received the signal.
-
- 
-primary
-
-primary message with a summary of the error to show.
-
- 
-secondary
-
-secondary message with details of the error to show.
-
- 
-user_data
-
-user data set when the signal handler was connected.
-
- 
-Flags: Run First
-
-Since 3.10
-
-The “show-other-locations” signal
-void
-user_function (GtkPlacesSidebar *sidebar,
-               gpointer          user_data)
-The places sidebar emits this signal when it needs the calling application to present a way to show other locations e.g. drives and network access points. For example, the application may bring up a page showing persistent volumes and discovered network addresses.
-
-GtkPlacesSidebar::show-other-locations has been deprecated since version 3.20 and should not be used in newly-written code.
-
-use the “show-other-locations-with-flags” which includes the open flags in order to allow the user to specify to open in a new tab or window, in a similar way than “open-location”
-
-Parameters
-sidebar
-
-the object which received the signal.
-
- 
-user_data
-
-user data set when the signal handler was connected.
-
- 
-Flags: Run First
-
-Since 3.18
-
-The “show-other-locations-with-flags” signal
-void
-user_function (GtkPlacesSidebar  *sidebar,
-               GtkPlacesOpenFlags open_flags,
-               gpointer           user_data)
-The places sidebar emits this signal when it needs the calling application to present a way to show other locations e.g. drives and network access points. For example, the application may bring up a page showing persistent volumes and discovered network addresses.
-
-Parameters
-sidebar
-
-the object which received the signal.
-
- 
-open_flags
-
-a single value from GtkPlacesOpenFlags specifying how it should be opened.
-
- 
-user_data
-
-user data set when the signal handler was connected.
-
-Flags: Run First
-
-Since 3.20
-
-The “show-starred-location” signal
-void
-user_function (GtkPlacesSidebar  *sidebar,
-               GtkPlacesOpenFlags open_flags,
-               gpointer           user_data)
-The places sidebar emits this signal when it needs the calling application to present a way to show the starred files. In GNOME, starred files are implemented by setting the nao:predefined-tag-favorite tag in the tracker database.
-
-Parameters
-sidebar
-
-the object which received the signal.
-
- 
-open_flags
-
-a single value from GtkPlacesOpenFlags specifying how the starred file should be opened.
-
- 
-user_data
-
-user data set when the signal handler was connected.
-
- 
-Flags: Run First
-
-Since 3.22.26
-
-The “unmount” signal
-void
-user_function (GtkPlacesSidebar *sidebar,
-               GMountOperation  *mount_operation,
-               gpointer          user_data)
-The places sidebar emits this signal when it starts a new operation because the user for example ejected some drive or unmounted a mount. In this way the application using the GtkPlacesSidebar can track the progress of the operation and, for example, show a notification.
-
-Parameters
-sidebar
-
-the object which received the signal.
-
- 
-mount_operation
-
-the GMountOperation that is going to start.
-
- 
-user_data
-
-user data set when the signal handler was connected.
-
- 
-Flags: Run First
-
-Since 3.20
-
+    @subheading{The \"populate-popup\" signal}
+      @begin{pre}
+ lambda (sidebar container selected-item selected-volume)    : Run First
+      @end{pre}
+      The places sidebar emits this signal when the user invokes a contextual
+      popup on one of its items. In the signal handler, the application may add
+      extra items to the menu as appropriate. For example, a file manager may
+      want to add a \"Properties\" command to the menu.
+
+      It is not necessary to store the @arg{selected-item} for each menu item;
+      during their callbacks, the application can use the
+      @fun{gtk-places-sidebar-location} slot access function to get the file to
+      which the item refers.
+
+      The @arg{selected-item} argument may be @code{nil} in case the selection
+      refers to a volume. In this case, @arg{selected-volume} will be
+      non-@code{nil}. In this case, the calling application will have to the
+      @fun{g-object-ref} function the @arg{selected-volume} and keep it around
+      to use it in the callback.
+
+      The container and all its contents are destroyed after the user dismisses
+      the popup. The popup is re-created, and thus, this signal is emitted,
+      every time the user activates the contextual menu.
+
+      Before 3.18, the container always was a @class{gtk-menu}, and you were
+      expected to add your items as @class{gtk-menu-item} objects. Since 3.18,
+      the popup may be implemented as a @class{gtk-popover}, in which case
+      container will be something else, e. g. a @class{gtk-box}, to which you
+      may add @class{gtk-model-button} widgets or other widgets, such as
+      @class{gtk-entry}, @class{gtk-spin-button} widgets, etc. If your
+      application can deal with this situation, you can set @code{populate-all}
+      to @em{true} to request that this signal is emitted for populating
+      popovers as well.
+      @begin[code]{table}
+        @entry[sidebar]{The object which received the signal.}
+        @entry[container]{A @class{gtk-menu} or another @class{gtk-container}.}
+        @entry[selected-item]{@class{g-file} with the item to which the popup
+          should refer, or @code{nil} in the case of a @arg{selected-volume}.}
+        @entry[selected-volume]{@class{g-volume} if the selected item is a
+          volume, or @code{nil} if it is a file.}
+      @end{table}
+      Since 3.10
+
+    @subheading{The \"show-connect-to-server\" signal}
+      @begin{pre}
+ lambda (sidebar)    : Run First
+      @end{pre}
+      The places sidebar emits this signal when it needs the calling application
+      to present an way to connect directly to a network server. For example,
+      the application may bring up a dialog box asking for a URL like
+      \"sftp://ftp.example.com\". It is up to the application to create the
+      corresponding mount by using, for example,
+      @code{g_file_mount_enclosing_volume()}.
+
+      @b{Warning:} \"show-connect-to-server\" has been deprecated since version
+      3.18 and should not be used in newly-written code. Use the
+      \"show-other-locations\" signal to connect to network servers.
+      @begin[code]{table}
+        @entry[sidebar]{The object which received the signal.}
+      @end{table}
+    @subheading{The \"show-enter-location\" signal}
+      @begin{pre}
+ lambda (sidebar)    : Run First
+      @end{pre}
+      The places sidebar emits this signal when it needs the calling application
+      to present an way to directly enter a location. For example, the
+      application may bring up a dialog box asking for a URL like
+      \"http://http.example.com\".
+      @begin[code]{table}
+        @entry[sidebar]{The object which received the signal.}
+      @end{table}
+      Since 3.14
+
+    @subheading{The \"show-error-message\" signal}
+      @begin{pre}
+ lambda (sidebar primary secondary)    : Run First
+      @end{pre}
+      The places sidebar emits this signal when it needs the calling application
+      to present an error message. Most of these messages refer to mounting or
+      unmounting media, for example, when a drive cannot be started for some
+      reason.
+      @begin[code]{table}
+        @entry[sidebar]{The object which received the signal.}
+        @entry[primary]{Primary message with a summary of the error to show.}
+        @entry[secondary]{Secondary message with details of the error to show.}
+      @end{table}
+      Since 3.10
+
+    @subheading{The \"show-other-locations\" signal}
+      @begin{pre}
+ lambda (sidebar)    : Run First
+      @end{pre}
+      The places sidebar emits this signal when it needs the calling application
+      to present a way to show other locations e. g. drives and network access
+      points. For example, the application may bring up a page showing
+      persistent volumes and discovered network addresses.
+
+      @b{Warning:} \"show-other-locations\" has been deprecated since version
+      3.20 and should not be used in newly-written code. Use the
+      \"show-other-locations-with-flags\" which includes the open flags in order
+      to allow the user to specify to open in a new tab or window, in a similar
+      way than \"open-location\".
+      @begin[code]{table}
+        @entry[sidebar]{The object which received the signal.}
+      @end{table}
+      Since 3.18
+
+    @subheading{The \"show-other-locations-with-flags\" signal}
+      @begin{pre}
+ lambda (sidebar open-flags)    : Run First
+      @end{pre}
+      The places sidebar emits this signal when it needs the calling application
+      to present a way to show other locations e. g. drives and network access
+      points. For example, the application may bring up a page showing
+      persistent volumes and discovered network addresses.
+      @begin[code]{table}
+        @entry[sidebar]{The object which received the signal.}
+        @entry[open-flags]{A single value from @symbol{gtk-places-open-flags}
+          specifying how it should be opened.}
+      @end{table}
+      Since 3.20
+
+    @subheading{The \"show-starred-location\" signal}
+      @begin{pre}
+ lambda (sidebar open-flags)    : Run First
+      @end{pre}
+      The places sidebar emits this signal when it needs the calling application
+      to present a way to show the starred files. In GNOME, starred files are
+      implemented by setting the @code{nao:predefined-tag-favorite} tag in the
+      tracker database.
+      @begin[code]{table}
+        @entry[sidebar]{The object which received the signal.}
+        @entry[open-flags]{A single value from @symbol{gtk-places-open-flags}
+          specifying how the starred file should be opened.}
+      @end{table}
+      Since 3.22
+
+    @subheading{The \"unmount\" signal}
+      @begin{pre}
+ lambda (sidebar mount-operation)    : Run First
+      @end{pre}
+      The places sidebar emits this signal when it starts a new operation
+      because the user for example ejected some drive or unmounted a mount. In
+      this way the application using the @sym{gtk-places-sidebar} can track the
+      progress of the operation and, for example, show a notification.
+      @begin[code]{table}
+        @entry[sidebar]{The object which received the signal.}
+        @entry[mount-operation]{The @code{GMountOperation} that is going to
+          start.}
+      @end{table}
+      Since 3.20
   @end{dictionary}
-
   @see-class{gtk-file-chooser}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
 
-#|
-
 ;;; --- gtk-places-sidebar-local-only ------------------------------------------
 
-The “local-only” property
-  “local-only”               gboolean
-Whether the sidebar only includes local files.
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "local-only" 'gtk-places-sidebar)
+                     't)
+ "The @code{local-only} property of type @code{:boolean} (Read / Write) @br{}
+  Whether the sidebar only includes local files. @br{}
+  Default value: @code{nil}")
 
-Flags: Read / Write
-
-Default value: FALSE
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-places-sidebar-local-only atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-places-sidebar-local-only 'function)
+ "@version{2019-4-8}
+  @begin{short}
+    Accessor of the slot @slot[gtk-places-sidebar]{local-only} of the
+    @class{gtk-places-sidebar} class.
+  @end{short}
+  @see-class{gtk-places-sidebar}")
 
 ;;; --- gtk-places-sidebar-location --------------------------------------------
 
-The “location” property
-  “location”                 GFile *
-The location to highlight in the sidebar.
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "location" 'gtk-places-sidebar)
+                     't)
+ "The @code{location} property of type @code{GFile} (Read / Write) @br{}
+  The location to highlight in the sidebar.")
 
-Flags: Read / Write
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-places-sidebar-location atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-places-sidebar-location 'function)
+ "@version{2019-4-8}
+  @syntax[]{(gtk-places-sidebar-location object) => location)}
+  @syntax[]{(setf (gtk-places-sidebar-location object) location)}
+  @argument[object]{a @class{gtk-places-sidebar} widget}
+  @argument[location]{location to select, or @code{nil} for no current path}
+  @begin{short}
+    Accessor of the slot @slot[gtk-places-sidebar]{location} of the
+    @class{gtk-places-sidebar} class.
+  @end{short}
+
+  The slot access function @sym{gtk-places-sidebar-open-flags}
+  gets the currently selected location in the sidebar. This can be @code{nil}
+  when nothing is selected, for example, when @sym{gtk-places-sidebar-location}
+  has been called with a location that is not among the sidebar’s list of places
+  to show.
+
+  You can use this function to get the selection in the sidebar. Also, if you
+  connect to the \"populate-popup\" signal, you can use this function to get the
+  location that is being referred to during the callbacks for your menu items.
+
+  The slot access function @sym{(setf gtk-places-sidebar-open-flags)}
+  sets the location that is being shown in the widgets surrounding the sidebar,
+  for example, in a folder view in a file manager. In turn, the sidebar will
+  highlight that location if it is being shown in the list of places, or it will
+  unhighlight everything if the location is not among the places in the list.
+
+  Since 3.10
+  @see-class{gtk-places-sidebar}")
 
 ;;; --- gtk-places-sidebar-open-flags ------------------------------------------
 
-The “open-flags” property
-  “open-flags”               GtkPlacesOpenFlags
-Modes in which the calling application can open locations selected in the sidebar.
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "open-flags" 'gtk-places-sidebar)
+                     't)
+ "The @code{open-flags} property of type @symbol{gtk-places-open-flags}
+  (Read / Write) @br{}
+  Modes in which the calling application can open locations selected in the
+  sidebar. @br{}
+  Default value: @code{:normal}")
 
-Flags: Read / Write
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-places-sidebar-open-flags atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-places-sidebar-open-flags 'function)
+ "@version{2019-4-8}
+  @syntax[]{(gtk-places-sidebar-open-flags object) => flags)}
+  @syntax[]{(setf (gtk-places-sidebar-open-flags object) flags)}
+  @argument[object]{a @class{gtk-places-sidebar} widget}
+  @argument[flags]{bitmask of modes in which the calling application can open
+    locations}
+  @begin{short}
+    Accessor of the slot @slot[gtk-places-sidebar]{open-flags} of the
+    @class{gtk-places-sidebar} class.
+  @end{short}
 
-Default value: GTK_PLACES_OPEN_NORMAL
+  The slot access function @sym{gtk-places-sidebar-open-flags}
+  gets the open flags.
+
+  The slot access function @sym{(setf gtk-places-sidebar-open-flags)}
+  sets the way in which the calling application can open new locations from the
+  places sidebar. For example, some applications only open locations
+  \"directly\" into their main view, while others may support opening locations
+  in a new notebook tab or a new window.
+
+  This function is used to tell the places sidebar about the ways in which the
+  application can open new locations, so that the sidebar can display (or not)
+  the \"Open in new tab\" and \"Open in new window\" menu items as appropriate.
+
+  When the \"open-location\" signal is emitted, its flags argument will be set
+  to one of the flags that was passed in the @sym{gtk-places-sidebar-open-flags}
+  function.
+
+  Passing 0 for flags will cause @code{:normal} to always be sent to callbacks
+  for the \"open-location\" signal.
+
+  Since 3.10
+  @see-class{gtk-places-sidebar}")
 
 ;;; --- gtk-places-sidebar-populate-all ----------------------------------------
 
-The “populate-all” property
-  “populate-all”             gboolean
-If :populate-all is TRUE, the “populate-popup” signal is also emitted for popovers.
+#+(and gtk-3-18 cl-cffi-gtk-documentation)
+(setf (documentation (atdoc:get-slot-from-name "populate-all"
+                      'gtk-places-sidebar) 't)
+ "The @code{populate-all} property of type @code{:boolean} (Read / Write) @br{}
+  If @code{populate-all} is @em{true}, the \"populate-popup\" signal is also
+  emitted for popovers. @br{}
+  Default value: @code{nil} @br{}
+  Since 3.18")
 
-Flags: Read / Write
+#+(and gtk-3-18 cl-cffi-gtk-documentation)
+(setf (gethash 'gtk-places-sidebar-populate-all atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-places-sidebar-populate-all 'function)
+ "@version{2019-4-8}
+  @begin{short}
+    Accessor of the slot @slot[gtk-places-sidebar]{populate-all} of the
+    @class{gtk-places-sidebar} class.
+  @end{short}
 
-Default value: FALSE
-
-Since 3.18
+  Since 3.18
+  @see-class{gtk-places-sidebar}")
 
 ;;; --- gtk-places-sidebar-show-connect-to-server ------------------------------
 
-The “show-connect-to-server” property
-  “show-connect-to-server”   gboolean
-Whether the sidebar includes a builtin shortcut to a 'Connect to server' dialog.
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "show-connect-to-server"
+                      'gtk-places-sidebar) 't)
+ "The @code{show-connect-to-server} property of type @code{:boolean}
+  (Read / Write) @br{}
+  Whether the sidebar includes a builtin shortcut to a 'Connect to server'
+  dialog. @br{}
+  Default value: @code{nil}")
 
-Flags: Read / Write
-
-Default value: FALSE
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-places-sidebar-show-connect-to-server
+               atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-places-sidebar-show-connect-to-server 'function)
+ "@version{2019-4-8}
+  @begin{short}
+    Accessor of the slot @slot[gtk-places-sidebar]{show-connect-to-server} of
+    the @class{gtk-places-sidebar} class.
+  @end{short}
+  @see-class{gtk-places-sidebar}")
 
 ;;; --- gtk-places-sidebar-show-desktop ----------------------------------------
 
-The “show-desktop” property
-  “show-desktop”             gboolean
-Whether the sidebar includes a builtin shortcut to the Desktop folder.
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "show-desktop"
+                      'gtk-places-sidebar) 't)
+ "The @code{show-desktop} property of type @code{:boolean}
+  (Read / Write) @br{}
+  Whether the sidebar includes a builtin shortcut to the Desktop folder. @br{}
+  Default value: @em{true}")
 
-Flags: Read / Write
-
-Default value: TRUE
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-places-sidebar-show-desktop
+               atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-places-sidebar-show-desktop 'function)
+ "@version{2019-4-8}
+  @begin{short}
+    Accessor of the slot @slot[gtk-places-sidebar]{show-desktop} of
+    the @class{gtk-places-sidebar} class.
+  @end{short}
+  @see-class{gtk-places-sidebar}")
 
 ;;; --- gtk-places-sidebar-show-enter-location ---------------------------------
 
-The “show-enter-location” property
-  “show-enter-location”      gboolean
-Whether the sidebar includes a builtin shortcut to manually enter a location.
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "show-enter-location"
+                      'gtk-places-sidebar) 't)
+ "The @code{show-enter-location} property of type @code{:boolean}
+  (Read / Write) @br{}
+  Whether the sidebar includes a builtin shortcut to manually enter a location.
+  @br{}
+  Default value: @code{nil}")
 
-Flags: Read / Write
-
-Default value: FALSE
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-places-sidebar-show-enter-location
+               atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-places-sidebar-show-enter-location 'function)
+ "@version{2019-4-8}
+  @begin{short}
+    Accessor of the slot @slot[gtk-places-sidebar]{show-enter-location} of
+    the @class{gtk-places-sidebar} class.
+  @end{short}
+  @see-class{gtk-places-sidebar}")
 
 ;;; --- gtk-places-sidebar-show-other-locations --------------------------------
 
-The “show-other-locations” property
-  “show-other-locations”     gboolean
-Whether the sidebar includes an item to show external locations.
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "show-other-locations"
+                      'gtk-places-sidebar) 't)
+ "The @code{show-other-locations} property of type @code{:boolean}
+  (Read / Write) @br{}
+  Whether the sidebar includes an item to show external locations. @br{}
+  Default value: @code{nil}")
 
-Flags: Read / Write
-
-Default value: FALSE
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-places-sidebar-show-other-locations
+               atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-places-sidebar-show-other-locations 'function)
+ "@version{2019-4-8}
+  @begin{short}
+    Accessor of the slot @slot[gtk-places-sidebar]{show-other-locations} of
+    the @class{gtk-places-sidebar} class.
+  @end{short}
+  @see-class{gtk-places-sidebar}")
 
 ;;; --- gtk-places-sidebar-show-recent -----------------------------------------
 
-The “show-recent” property
-  “show-recent”              gboolean
-Whether the sidebar includes a builtin shortcut for recent files.
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "show-recent"
+                      'gtk-places-sidebar) 't)
+ "The @code{show-recent} property of type @code{:boolean}
+  (Read / Write) @br{}
+  Whether the sidebar includes a builtin shortcut for recent files. @br{}
+  Default value: @em{true}")
 
-Flags: Read / Write
-
-Default value: TRUE
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-places-sidebar-show-recent atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-places-sidebar-show-recent 'function)
+ "@version{2019-4-8}
+  @begin{short}
+    Accessor of the slot @slot[gtk-places-sidebar]{show-recent} of
+    the @class{gtk-places-sidebar} class.
+  @end{short}
+  @see-class{gtk-places-sidebar}")
 
 ;;; --- gtk-places-sidebar-show-starred-location -------------------------------
 
-The “show-starred-location” property
-  “show-starred-location”    gboolean
-Whether the sidebar includes an item to show starred files.
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "show-starred-location"
+                      'gtk-places-sidebar) 't)
+ "The @code{show-starred-location} property of type @code{:boolean}
+  (Read / Write) @br{}
+  Whether the sidebar includes an item to show starred files. @br{}
+  Default value: @code{nil}")
 
-Flags: Read / Write
-
-Default value: FALSE
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-places-sidebar-show-starred-location
+               atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-places-sidebar-show-starred-location 'function)
+ "@version{2019-4-8}
+  @begin{short}
+    Accessor of the slot @slot[gtk-places-sidebar]{show-starred-location} of
+    the @class{gtk-places-sidebar} class.
+  @end{short}
+  @see-class{gtk-places-sidebar}")
 
 ;;; --- gtk-places-sidebar-show-trash ------------------------------------------
 
-The “show-trash” property
-  “show-trash”               gboolean
-Whether the sidebar includes a builtin shortcut to the Trash location.
-
-Flags: Read / Write
-
-Default value: TRUE
-
-|#
-
-
-
-
-#|
-
-gtk_places_sidebar_new ()
-GtkWidget *
-gtk_places_sidebar_new (void);
-Creates a new GtkPlacesSidebar widget.
-
-The application should connect to at least the “open-location” signal to be notified when the user makes a selection in the sidebar.
-
-Returns
-a newly created GtkPlacesSidebar
-
-Since 3.10
-
-gtk_places_sidebar_set_open_flags ()
-void
-gtk_places_sidebar_set_open_flags (GtkPlacesSidebar *sidebar,
-                                   GtkPlacesOpenFlags flags);
-Sets the way in which the calling application can open new locations from the places sidebar. For example, some applications only open locations “directly” into their main view, while others may support opening locations in a new notebook tab or a new window.
-
-This function is used to tell the places sidebar about the ways in which the application can open new locations, so that the sidebar can display (or not) the “Open in new tab” and “Open in new window” menu items as appropriate.
-
-When the “open-location” signal is emitted, its flags argument will be set to one of the flags that was passed in gtk_places_sidebar_set_open_flags().
-
-Passing 0 for flags will cause GTK_PLACES_OPEN_NORMAL to always be sent to callbacks for the “open-location” signal.
-
-Parameters
-sidebar
-
-a places sidebar
-
- 
-flags
-
-Bitmask of modes in which the calling application can open locations
-
- 
-Since 3.10
-
-gtk_places_sidebar_get_open_flags ()
-GtkPlacesOpenFlags
-gtk_places_sidebar_get_open_flags (GtkPlacesSidebar *sidebar);
-Gets the open flags.
-
-Parameters
-sidebar
-
-a GtkPlacesSidebar
-
- 
-Returns
-the GtkPlacesOpenFlags of sidebar
-
-Since 3.10
-
-gtk_places_sidebar_set_location ()
-void
-gtk_places_sidebar_set_location (GtkPlacesSidebar *sidebar,
-                                 GFile *location);
-Sets the location that is being shown in the widgets surrounding the sidebar , for example, in a folder view in a file manager. In turn, the sidebar will highlight that location if it is being shown in the list of places, or it will unhighlight everything if the location is not among the places in the list.
-
-Parameters
-sidebar
-
-a places sidebar
-
- 
-location
-
-location to select, or NULL for no current path.
-
-[nullable]
-Since 3.10
-
-gtk_places_sidebar_get_location ()
-GFile *
-gtk_places_sidebar_get_location (GtkPlacesSidebar *sidebar);
-Gets the currently selected location in the sidebar . This can be NULL when nothing is selected, for example, when gtk_places_sidebar_set_location() has been called with a location that is not among the sidebar’s list of places to show.
-
-You can use this function to get the selection in the sidebar . Also, if you connect to the “populate-popup” signal, you can use this function to get the location that is being referred to during the callbacks for your menu items.
-
-Parameters
-sidebar
-
-a places sidebar
-
- 
-Returns
-a GFile with the selected location, or NULL if nothing is visually selected.
-
-[nullable][transfer full]
-
-Since 3.10
-
-gtk_places_sidebar_set_show_recent ()
-void
-gtk_places_sidebar_set_show_recent (GtkPlacesSidebar *sidebar,
-                                    gboolean show_recent);
-Sets whether the sidebar should show an item for recent files. The default value for this option is determined by the desktop environment, but this function can be used to override it on a per-application basis.
-
-Parameters
-sidebar
-
-a places sidebar
-
- 
-show_recent
-
-whether to show an item for recent files
-
- 
-Since 3.18
-
-gtk_places_sidebar_get_show_recent ()
-gboolean
-gtk_places_sidebar_get_show_recent (GtkPlacesSidebar *sidebar);
-Returns the value previously set with gtk_places_sidebar_set_show_recent()
-
-Parameters
-sidebar
-
-a places sidebar
-
- 
-Returns
-TRUE if the sidebar will display a builtin shortcut for recent files
-
-Since 3.18
-
-gtk_places_sidebar_set_show_desktop ()
-void
-gtk_places_sidebar_set_show_desktop (GtkPlacesSidebar *sidebar,
-                                     gboolean show_desktop);
-Sets whether the sidebar should show an item for the Desktop folder. The default value for this option is determined by the desktop environment and the user’s configuration, but this function can be used to override it on a per-application basis.
-
-Parameters
-sidebar
-
-a places sidebar
-
- 
-show_desktop
-
-whether to show an item for the Desktop folder
-
- 
-Since 3.10
-
-gtk_places_sidebar_get_show_desktop ()
-gboolean
-gtk_places_sidebar_get_show_desktop (GtkPlacesSidebar *sidebar);
-Returns the value previously set with gtk_places_sidebar_set_show_desktop()
-
-Parameters
-sidebar
-
-a places sidebar
-
- 
-Returns
-TRUE if the sidebar will display a builtin shortcut to the desktop folder.
-
-Since 3.10
-
-gtk_places_sidebar_add_shortcut ()
-void
-gtk_places_sidebar_add_shortcut (GtkPlacesSidebar *sidebar,
-                                 GFile *location);
-Applications may want to present some folders in the places sidebar if they could be immediately useful to users. For example, a drawing program could add a “/usr/share/clipart” location when the sidebar is being used in an “Insert Clipart” dialog box.
-
-This function adds the specified location to a special place for immutable shortcuts. The shortcuts are application-specific; they are not shared across applications, and they are not persistent. If this function is called multiple times with different locations, then they are added to the sidebar’s list in the same order as the function is called.
-
-Parameters
-sidebar
-
-a places sidebar
-
- 
-location
-
-location to add as an application-specific shortcut
-
- 
-Since 3.10
-
-gtk_places_sidebar_remove_shortcut ()
-void
-gtk_places_sidebar_remove_shortcut (GtkPlacesSidebar *sidebar,
-                                    GFile *location);
-Removes an application-specific shortcut that has been previously been inserted with gtk_places_sidebar_add_shortcut(). If the location is not a shortcut in the sidebar, then nothing is done.
-
-Parameters
-sidebar
-
-a places sidebar
-
- 
-location
-
-location to remove
-
- 
-Since 3.10
-
-gtk_places_sidebar_list_shortcuts ()
-GSList *
-gtk_places_sidebar_list_shortcuts (GtkPlacesSidebar *sidebar);
-Gets the list of shortcuts.
-
-Parameters
-sidebar
-
-a places sidebar
-
- 
-Returns
-A GSList of GFile of the locations that have been added as application-specific shortcuts with gtk_places_sidebar_add_shortcut(). To free this list, you can use
-
-g_slist_free_full (list, (GDestroyNotify) g_object_unref);
-.
-
-[element-type GFile][transfer full]
-
-Since 3.10
-
-gtk_places_sidebar_get_nth_bookmark ()
-GFile *
-gtk_places_sidebar_get_nth_bookmark (GtkPlacesSidebar *sidebar,
-                                     gint n);
-This function queries the bookmarks added by the user to the places sidebar, and returns one of them. This function is used by GtkFileChooser to implement the “Alt-1”, “Alt-2”, etc. shortcuts, which activate the cooresponding bookmark.
-
-Parameters
-sidebar
-
-a places sidebar
-
- 
-n
-
-index of the bookmark to query
-
- 
-Returns
-The bookmark specified by the index n , or NULL if no such index exist. Note that the indices start at 0, even though the file chooser starts them with the keyboard shortcut "Alt-1".
-
-[nullable][transfer full]
-
-Since 3.10
-
-gtk_places_sidebar_get_show_connect_to_server ()
-gboolean
-gtk_places_sidebar_get_show_connect_to_server
-                               (GtkPlacesSidebar *sidebar);
-gtk_places_sidebar_get_show_connect_to_server has been deprecated since version 3.18 and should not be used in newly-written code.
-
-It is recommended to group this functionality with the drives and network location under the new 'Other Location' item
-
-Returns the value previously set with gtk_places_sidebar_set_show_connect_to_server()
-
-Parameters
-sidebar
-
-a places sidebar
-
- 
-Returns
-TRUE if the sidebar will display a “Connect to Server” item.
-
-gtk_places_sidebar_set_show_connect_to_server ()
-void
-gtk_places_sidebar_set_show_connect_to_server
-                               (GtkPlacesSidebar *sidebar,
-                                gboolean show_connect_to_server);
-gtk_places_sidebar_set_show_connect_to_server has been deprecated since version 3.18 and should not be used in newly-written code.
-
-It is recommended to group this functionality with the drives and network location under the new 'Other Location' item
-
-Sets whether the sidebar should show an item for connecting to a network server; this is off by default. An application may want to turn this on if it implements a way for the user to connect to network servers directly.
-
-If you enable this, you should connect to the “show-connect-to-server” signal.
-
-Parameters
-sidebar
-
-a places sidebar
-
- 
-show_connect_to_server
-
-whether to show an item for the Connect to Server command
-
- 
-Since 3.10
-
-gtk_places_sidebar_get_local_only ()
-gboolean
-gtk_places_sidebar_get_local_only (GtkPlacesSidebar *sidebar);
-Returns the value previously set with gtk_places_sidebar_set_local_only().
-
-Parameters
-sidebar
-
-a places sidebar
-
- 
-Returns
-TRUE if the sidebar will only show local files.
-
-Since 3.12
-
-gtk_places_sidebar_set_local_only ()
-void
-gtk_places_sidebar_set_local_only (GtkPlacesSidebar *sidebar,
-                                   gboolean local_only);
-Sets whether the sidebar should only show local files.
-
-Parameters
-sidebar
-
-a places sidebar
-
- 
-local_only
-
-whether to show only local files
-
- 
-Since 3.12
-
-gtk_places_sidebar_get_show_enter_location ()
-gboolean
-gtk_places_sidebar_get_show_enter_location
-                               (GtkPlacesSidebar *sidebar);
-Returns the value previously set with gtk_places_sidebar_set_show_enter_location()
-
-Parameters
-sidebar
-
-a places sidebar
-
- 
-Returns
-TRUE if the sidebar will display an “Enter Location” item.
-
-Since 3.14
-
-gtk_places_sidebar_set_show_enter_location ()
-void
-gtk_places_sidebar_set_show_enter_location
-                               (GtkPlacesSidebar *sidebar,
-                                gboolean show_enter_location);
-Sets whether the sidebar should show an item for entering a location; this is off by default. An application may want to turn this on if manually entering URLs is an expected user action.
-
-If you enable this, you should connect to the “show-enter-location” signal.
-
-Parameters
-sidebar
-
-a places sidebar
-
- 
-show_enter_location
-
-whether to show an item to enter a location
-
- 
-Since 3.14
-
-gtk_places_sidebar_get_show_trash ()
-gboolean
-gtk_places_sidebar_get_show_trash (GtkPlacesSidebar *sidebar);
-Returns the value previously set with gtk_places_sidebar_set_show_trash()
-
-Parameters
-sidebar
-
-a places sidebar
-
- 
-Returns
-TRUE if the sidebar will display a “Trash” item.
-
-Since 3.18
-
-gtk_places_sidebar_set_show_trash ()
-void
-gtk_places_sidebar_set_show_trash (GtkPlacesSidebar *sidebar,
-                                   gboolean show_trash);
-Sets whether the sidebar should show an item for the Trash location.
-
-Parameters
-sidebar
-
-a places sidebar
-
- 
-show_trash
-
-whether to show an item for the Trash location
-
- 
-Since 3.18
-
-gtk_places_sidebar_get_show_other_locations ()
-gboolean
-gtk_places_sidebar_get_show_other_locations
-                               (GtkPlacesSidebar *sidebar);
-Returns the value previously set with gtk_places_sidebar_set_show_other_locations()
-
-Parameters
-sidebar
-
-a places sidebar
-
- 
-Returns
-TRUE if the sidebar will display an “Other Locations” item.
-
-Since 3.18
-
-gtk_places_sidebar_set_show_other_locations ()
-void
-gtk_places_sidebar_set_show_other_locations
-                               (GtkPlacesSidebar *sidebar,
-                                gboolean show_other_locations);
-Sets whether the sidebar should show an item for the application to show an Other Locations view; this is off by default. When set to TRUE, persistent devices such as hard drives are hidden, otherwise they are shown in the sidebar. An application may want to turn this on if it implements a way for the user to see and interact with drives and network servers directly.
-
-If you enable this, you should connect to the “show-other-locations” signal.
-
-Parameters
-sidebar
-
-a places sidebar
-
- 
-show_other_locations
-
-whether to show an item for the Other Locations view
-
- 
-Since 3.18
-
-gtk_places_sidebar_set_drop_targets_visible ()
-void
-gtk_places_sidebar_set_drop_targets_visible
-                               (GtkPlacesSidebar *sidebar,
-                                gboolean visible,
-                                GdkDragContext *context);
-Make the GtkPlacesSidebar show drop targets, so it can show the available drop targets and a "new bookmark" row. This improves the Drag-and-Drop experience of the user and allows applications to show all available drop targets at once.
-
-This needs to be called when the application is aware of an ongoing drag that might target the sidebar. The drop-targets-visible state will be unset automatically if the drag finishes in the GtkPlacesSidebar. You only need to unset the state when the drag ends on some other widget on your application.
-
-Parameters
-sidebar
-
-a places sidebar.
-
- 
-visible
-
-whether to show the valid targets or not.
-
- 
-context
-
-drag context used to ask the source about the action that wants to perform, so hints are more accurate.
-
- 
-Since 3.18
-
-Types and Values
-GtkPlacesSidebar
-typedef struct _GtkPlacesSidebar GtkPlacesSidebar;
-
-|#
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "show-trash"
+                      'gtk-places-sidebar) 't)
+ "The @code{show-trash} property of type @code{:boolean}
+  (Read / Write) @br{}
+  Whether the sidebar includes a builtin shortcut to the Trash location. @br{}
+  Default value: @em{true}")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-places-sidebar-show-trash atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-places-sidebar-show-trash 'function)
+ "@version{2019-4-8}
+  @begin{short}
+    Accessor of the slot @slot[gtk-places-sidebar]{show-trash} of
+    the @class{gtk-places-sidebar} class.
+  @end{short}
+  @see-class{gtk-places-sidebar}")
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_places_sidebar_new ()
+;;;
+;;; GtkWidget * gtk_places_sidebar_new (void);
+;;;
+;;; Creates a new GtkPlacesSidebar widget.
+;;;
+;;; The application should connect to at least the “open-location” signal to be
+;;; notified when the user makes a selection in the sidebar.
+;;;
+;;; Returns :
+;;;     a newly created GtkPlacesSidebar
+;;;
+;;; Since 3.10
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_places_sidebar_set_show_recent ()
+;;;
+;;; void
+;;; gtk_places_sidebar_set_show_recent (GtkPlacesSidebar *sidebar,
+;;;                                     gboolean show_recent);
+;;;
+;;; Sets whether the sidebar should show an item for recent files. The default
+;;; value for this option is determined by the desktop environment, but this
+;;; function can be used to override it on a per-application basis.
+;;;
+;;; sidebar :
+;;;     a places sidebar
+;;;
+;;; show_recent :
+;;;     whether to show an item for recent files
+;;;
+;;; Since 3.18
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_places_sidebar_get_show_recent ()
+;;;
+;;; gboolean
+;;; gtk_places_sidebar_get_show_recent (GtkPlacesSidebar *sidebar);
+;;;
+;;; Returns the value previously set with gtk_places_sidebar_set_show_recent()
+;;;
+;;; sidebar :
+;;;     a places sidebar
+;;;
+;;; Returns :
+;;;     TRUE if the sidebar will display a builtin shortcut for recent files
+;;;
+;;; Since 3.18
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_places_sidebar_set_show_desktop ()
+;;;
+;;; void
+;;; gtk_places_sidebar_set_show_desktop (GtkPlacesSidebar *sidebar,
+;;;                                     gboolean show_desktop);
+;;;
+;;; Sets whether the sidebar should show an item for the Desktop folder. The
+;;; default value for this option is determined by the desktop environment and
+;;; the user’s configuration, but this function can be used to override it on a
+;;; per-application basis.
+;;;
+;;; sidebar :
+;;;     a places sidebar
+;;;
+;;; show_desktop :
+;;;     whether to show an item for the Desktop folder
+;;;
+;;; Since 3.10
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_places_sidebar_get_show_desktop ()
+;;;
+;;; gboolean
+;;; gtk_places_sidebar_get_show_desktop (GtkPlacesSidebar *sidebar);
+;;;
+;;; Returns the value previously set with gtk_places_sidebar_set_show_desktop()
+;;;
+;;; sidebar :
+;;;     a places sidebar
+;;;
+;;; Returns :
+;;;     TRUE if the sidebar will display a builtin shortcut to the desktop
+;;;     folder.
+;;;
+;;; Since 3.10
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_places_sidebar_add_shortcut ()
+;;;
+;;; void
+;;; gtk_places_sidebar_add_shortcut (GtkPlacesSidebar *sidebar,
+;;;                                  GFile *location);
+;;;
+;;; Applications may want to present some folders in the places sidebar if they
+;;; could be immediately useful to users. For example, a drawing program could
+;;; add a “/usr/share/clipart” location when the sidebar is being used in an
+;;; “Insert Clipart” dialog box.
+;;;
+;;; This function adds the specified location to a special place for immutable
+;;; shortcuts. The shortcuts are application-specific; they are not shared
+;;; across applications, and they are not persistent. If this function is called
+;;; multiple times with different locations, then they are added to the
+;;; sidebar’s list in the same order as the function is called.
+;;;
+;;; sidebar :
+;;;     a places sidebar
+;;;
+;;; location :
+;;;     location to add as an application-specific shortcut
+;;;
+;;; Since 3.10
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_places_sidebar_remove_shortcut ()
+;;;
+;;; void
+;;; gtk_places_sidebar_remove_shortcut (GtkPlacesSidebar *sidebar,
+;;;                                     GFile *location);
+;;;
+;;; Removes an application-specific shortcut that has been previously been
+;;; inserted with gtk_places_sidebar_add_shortcut(). If the location is not a
+;;; shortcut in the sidebar, then nothing is done.
+;;;
+;;; sidebar :
+;;;     a places sidebar
+;;;
+;;; location :
+;;;     location to remove
+;;;
+;;; Since 3.10
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_places_sidebar_list_shortcuts ()
+;;;
+;;; GSList *
+;;; gtk_places_sidebar_list_shortcuts (GtkPlacesSidebar *sidebar);
+;;;
+;;; Gets the list of shortcuts.
+;;;
+;;; sidebar :
+;;;     a places sidebar
+;;;
+;;; Returns :
+;;;     A GSList of GFile of the locations that have been added as
+;;;     application-specific shortcuts with gtk_places_sidebar_add_shortcut().
+;;;     To free this list, you can use
+;;;     g_slist_free_full (list, (GDestroyNotify) g_object_unref);
+;;;
+;;; Since 3.10
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_places_sidebar_get_nth_bookmark ()
+;;;
+;;; GFile *
+;;; gtk_places_sidebar_get_nth_bookmark (GtkPlacesSidebar *sidebar,
+;;;                                      gint n);
+;;;
+;;; This function queries the bookmarks added by the user to the places sidebar,
+;;; and returns one of them. This function is used by GtkFileChooser to
+;;; implement the “Alt-1”, “Alt-2”, etc. shortcuts, which activate the
+;;; cooresponding bookmark.
+;;;
+;;; sidebar :
+;;;     a places sidebar
+;;;
+;;; n :
+;;;     index of the bookmark to query
+;;;
+;;; Returns :
+;;;     The bookmark specified by the index n , or NULL if no such index exist.
+;;;     Note that the indices start at 0, even though the file chooser starts
+;;;     them with the keyboard shortcut "Alt-1".
+;;;
+;;; Since 3.10
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_places_sidebar_get_show_connect_to_server ()
+;;;
+;;; gboolean
+;;; gtk_places_sidebar_get_show_connect_to_server
+;;;                                (GtkPlacesSidebar *sidebar);
+;;;
+;;; gtk_places_sidebar_get_show_connect_to_server has been deprecated since
+;;; version 3.18 and should not be used in newly-written code.
+;;;
+;;; It is recommended to group this functionality with the drives and network
+;;; location under the new 'Other Location' item
+;;;
+;;; Returns the value previously set with
+;;; gtk_places_sidebar_set_show_connect_to_server()
+;;;
+;;; sidebar :
+;;;     a places sidebar
+;;;
+;;; Returns :
+;;;     TRUE if the sidebar will display a “Connect to Server” item.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_places_sidebar_set_show_connect_to_server ()
+;;;
+;;; void
+;;; gtk_places_sidebar_set_show_connect_to_server
+;;;                                (GtkPlacesSidebar *sidebar,
+;;;                                 gboolean show_connect_to_server);
+;;;
+;;; gtk_places_sidebar_set_show_connect_to_server has been deprecated since
+;;; version 3.18 and should not be used in newly-written code.
+;;;
+;;; It is recommended to group this functionality with the drives and network
+;;; location under the new 'Other Location' item
+;;;
+;;; Sets whether the sidebar should show an item for connecting to a network
+;;; server; this is off by default. An application may want to turn this on if
+;;; it implements a way for the user to connect to network servers directly.
+;;;
+;;; If you enable this, you should connect to the “show-connect-to-server”
+;;; signal.
+;;;
+;;; sidebar :
+;;;     a places sidebar
+;;;
+;;; show_connect_to_server :
+;;;     whether to show an item for the Connect to Server command
+;;;
+;;; Since 3.10
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_places_sidebar_get_local_only ()
+;;;
+;;; gboolean
+;;; gtk_places_sidebar_get_local_only (GtkPlacesSidebar *sidebar);
+;;;
+;;; Returns the value previously set with gtk_places_sidebar_set_local_only().
+;;;
+;;; sidebar :
+;;;     a places sidebar
+;;;
+;;; Returns :
+;;;     TRUE if the sidebar will only show local files.
+;;;
+;;; Since 3.12
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_places_sidebar_set_local_only ()
+;;;
+;;; void
+;;; gtk_places_sidebar_set_local_only (GtkPlacesSidebar *sidebar,
+;;;                                    gboolean local_only);
+;;;
+;;; Sets whether the sidebar should only show local files.
+;;;
+;;; sidebar :
+;;;     a places sidebar
+;;;
+;;; local_only :
+;;;     whether to show only local files
+;;;
+;;; Since 3.12
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_places_sidebar_get_show_enter_location ()
+;;;
+;;; gboolean
+;;; gtk_places_sidebar_get_show_enter_location
+;;;                                (GtkPlacesSidebar *sidebar);
+;;;
+;;; Returns the value previously set with
+;;; gtk_places_sidebar_set_show_enter_location()
+;;;
+;;; sidebar :
+;;;     a places sidebar
+;;;
+;;; Returns :
+;;;     TRUE if the sidebar will display an “Enter Location” item.
+;;;
+;;; Since 3.14
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_places_sidebar_set_show_enter_location ()
+;;;
+;;; void
+;;; gtk_places_sidebar_set_show_enter_location
+;;;                                (GtkPlacesSidebar *sidebar,
+;;;                                 gboolean show_enter_location);
+;;;
+;;; Sets whether the sidebar should show an item for entering a location; this
+;;; is off by default. An application may want to turn this on if manually
+;;; entering URLs is an expected user action.
+;;;
+;;; If you enable this, you should connect to the “show-enter-location” signal.
+;;;
+;;; sidebar :
+;;;     a places sidebar
+;;;
+;;; show_enter_location :
+;;;     whether to show an item to enter a location
+;;;
+;;; Since 3.14
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_places_sidebar_get_show_trash ()
+;;;
+;;; gboolean
+;;; gtk_places_sidebar_get_show_trash (GtkPlacesSidebar *sidebar);
+;;;
+;;; Returns the value previously set with gtk_places_sidebar_set_show_trash()
+;;;
+;;; sidebar :
+;;;     a places sidebar
+;;;
+;;; Returns :
+;;;     TRUE if the sidebar will display a “Trash” item.
+;;;
+;;; Since 3.18
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_places_sidebar_set_show_trash ()
+;;;
+;;; void
+;;; gtk_places_sidebar_set_show_trash (GtkPlacesSidebar *sidebar,
+;;;                                    gboolean show_trash);
+;;;
+;;; Sets whether the sidebar should show an item for the Trash location.
+;;;
+;;; sidebar :
+;;;     a places sidebar
+;;;
+;;; show_trash :
+;;;     whether to show an item for the Trash location
+;;;
+;;; Since 3.18
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_places_sidebar_get_show_other_locations ()
+;;;
+;;; gboolean
+;;; gtk_places_sidebar_get_show_other_locations (GtkPlacesSidebar *sidebar);
+;;;
+;;; Returns the value previously set with
+;;; gtk_places_sidebar_set_show_other_locations()
+;;;
+;;; sidebar :
+;;;     a places sidebar
+;;;
+;;; Returns :
+;;;     TRUE if the sidebar will display an “Other Locations” item.
+;;;
+;;; Since 3.18
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_places_sidebar_set_show_other_locations ()
+;;;
+;;; void
+;;; gtk_places_sidebar_set_show_other_locations
+;;;                                (GtkPlacesSidebar *sidebar,
+;;;                                 gboolean show_other_locations);
+;;;
+;;; Sets whether the sidebar should show an item for the application to show an
+;;; Other Locations view; this is off by default. When set to TRUE, persistent
+;;; devices such as hard drives are hidden, otherwise they are shown in the
+;;; sidebar. An application may want to turn this on if it implements a way for
+;;; the user to see and interact with drives and network servers directly.
+;;;
+;;; If you enable this, you should connect to the “show-other-locations” signal.
+;;;
+;;; sidebar :
+;;;     a places sidebar
+;;;
+;;; show_other_locations :
+;;;     whether to show an item for the Other Locations view
+;;;
+;;; Since 3.18
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_places_sidebar_set_drop_targets_visible ()
+;;;
+;;; void
+;;; gtk_places_sidebar_set_drop_targets_visible
+;;;                                (GtkPlacesSidebar *sidebar,
+;;;                                 gboolean visible,
+;;;                                 GdkDragContext *context);
+;;;
+;;; Make the GtkPlacesSidebar show drop targets, so it can show the available
+;;; drop targets and a "new bookmark" row. This improves the Drag-and-Drop
+;;; experience of the user and allows applications to show all available drop
+;;; targets at once.
+;;;
+;;; This needs to be called when the application is aware of an ongoing drag
+;;; that might target the sidebar. The drop-targets-visible state will be unset
+;;; automatically if the drag finishes in the GtkPlacesSidebar. You only need
+;;; to unset the state when the drag ends on some other widget on your
+;;; application.
+;;;
+;;; sidebar :
+;;;     a places sidebar.
+;;;
+;;; visible :
+;;;     whether to show the valid targets or not.
+;;;
+;;; context :
+;;;     drag context used to ask the source about the action that wants to
+;;;     perform, so hints are more accurate.
+;;;
+;;; Since 3.18
+;;; ----------------------------------------------------------------------------
 
 ;;; --- End of file gtk.places-sidebar.lisp ------------------------------------
