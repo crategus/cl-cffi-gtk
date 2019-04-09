@@ -1136,7 +1136,7 @@
 ;;; ----------------------------------------------------------------------------
 
 #+gtk-3-12
-(defcfun ("gtk_application_list_action_desriptions"
+(defcfun ("gtk_application_list_action_descriptions"
            gtk-application-list-action-descriptions) g-strv
  #+cl-cffi-gtk-documentation
  "@version{2013-8-8}
