@@ -1,3 +1,6 @@
+github
+github.pub
+TODO
 .project/tutorial/gtk-tutorial.aux
 /tutorial/gtk-tutorial.cp
 /tutorial/gtk-tutorial.fn
@@ -8,6 +11,7 @@
 /tutorial/gtk-tutorial.toc
 /tutorial/gtk-tutorial.tp
 /tutorial/gtk-tutorial.vr
+/tutorial/gtk-tutorial.pdf
 /.project
 /tutorial/gtk-tutorial.log
 /tutorial/gtk-tutorial.aux
