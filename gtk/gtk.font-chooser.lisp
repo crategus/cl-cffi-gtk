@@ -623,7 +623,7 @@ fontchooser
 
 a GtkFontChooser
 
- 
+
 fontmap
 
 a PangoFontMap.
@@ -641,7 +641,7 @@ fontchooser
 
 a GtkFontChooser
 
- 
+
 Returns
 a PangoFontMap, or NULL.
 
@@ -660,12 +660,12 @@ fontchooser
 
 a GtkFontChooser
 
- 
+
 level
 
 the desired level of granularity
 
- 
+
 Since: 3.24
 
 gtk_font_chooser_get_level ()
@@ -678,7 +678,7 @@ fontchooser
 
 a GtkFontChooser
 
- 
+
 Returns
 the current granularity level
 
@@ -694,7 +694,7 @@ fontchooser
 
 a GtkFontChooser
 
- 
+
 Returns
 the currently selected font features
 
@@ -711,12 +711,12 @@ fontchooser
 
 a GtkFontChooser
 
- 
+
 language
 
 a language
 
- 
+
 Since: 3.24
 
 gtk_font_chooser_get_language ()
@@ -729,7 +729,7 @@ fontchooser
 
 a GtkFontChooser
 
- 
+
 Returns
 the currently selected language
 

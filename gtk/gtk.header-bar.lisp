@@ -154,7 +154,7 @@
       Allowed values: >= -1 @br{}
       Default value: 0
   @end{dictionary}
-  
+
   Since 3.10
   @see-slot{gtk-header-bar-custom-title}
   @see-slot{gtk-header-bar-decoration-layout}
@@ -192,7 +192,7 @@
     Accessor of the slot @slot[gtk-header-bar]{custom-title} of the
     @class{gtk-header-bar} class.
   @end{short}
-    
+
   The generic function @sym{gtk-header-bar-custom-title} retrieves the custom
   title widget of the header.
 
@@ -313,7 +313,7 @@
     Accessor of the slot @slot[gtk-header-bar]{has-subtitle} of the
     @class{gtk-header-bar} class.
   @end{short}
-    
+
   The generic function @sym{gtk-header-bar-has-subtitle} retrieves whether the
   header bar reserves space for a subtitle, regardless if one is currently set
   or not.
@@ -382,7 +382,7 @@
     Accessor of the slot @slot[gtk-header-bar]{spacing} of the
     @class{gtk-header-bar} class.
   @end{short}
-  
+
   Since 3.10
   @see-class{gtk-header-bar}")
 
@@ -468,22 +468,22 @@
 (define-child-property "GtkHeaderBar"
                        gtk-header-bar-child-pack-type
                        "pack-type" "GtkPackType" t t t)
-                       
+
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-header-bar-child-pack-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-header-bar-child-pack-type 'function)
  "@version{2019-3-16}
   @syntax[]{(gtk-header-bar-child-pack-type object) => pack-type)}
-  @syntax[]{(setf (gtk-header-bar-child-pack-type object) pack-type)}  
+  @syntax[]{(setf (gtk-header-bar-child-pack-type object) pack-type)}
   @argument[object]{a @class{gtk-header-bar} container}
   @argument[child]{the @class{gtk-widget} child widget}
   @argument[pack-type]{The @symbol{gtk-pack-type} type of the child.}
   @begin{short}
-    Accessor of the child property @code{pack-type} of the 
+    Accessor of the child property @code{pack-type} of the
     @class{gtk-header-bar} class.
   @end{short}
-  
+
   Since 3.10
   @see-class{gtk-header-bar}
   @see-symbol{gtk-pack-type}")
@@ -500,15 +500,15 @@
       (documentation 'gtk-header-bar-child-position 'function)
  "@version{2019-3-16}
   @syntax[]{(gtk-header-bar-child-position object) => position)}
-  @syntax[]{(setf (gtk-header-bar-child-position object) position)}  
+  @syntax[]{(setf (gtk-header-bar-child-position object) position)}
   @argument[object]{a @class{gtk-header-bar} container}
   @argument[child]{the @class{gtk-widget} child widget}
   @argument[position]{The index of the child in the parent.}
   @begin{short}
-    Accessor of the child property @code{position} of the 
+    Accessor of the child property @code{position} of the
     @class{gtk-header-bar} class.
   @end{short}
-  
+
   Since 3.10
   @see-class{gtk-header-bar}")
 

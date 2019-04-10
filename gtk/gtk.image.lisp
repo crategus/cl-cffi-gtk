@@ -39,12 +39,12 @@
 ;;; Functions
 ;;;
 ;;;     gtk_image_get_icon_set                             * deprecated
-;;;     gtk_image_get_pixbuf                                 
+;;;     gtk_image_get_pixbuf
 ;;;     gtk_image_get_stock                                * deprecated
-;;;     gtk_image_get_animation                              
-;;;     gtk_image_get_icon_name                              
-;;;     gtk_image_get_gicon                                  
-;;;     gtk_image_get_storage_type                           
+;;;     gtk_image_get_animation
+;;;     gtk_image_get_icon_name
+;;;     gtk_image_get_gicon
+;;;     gtk_image_get_storage_type
 ;;;     gtk_image_new_from_file
 ;;;     gtk_image_new_from_icon_set                        * deprecated
 ;;;     gtk_image_new_from_pixbuf

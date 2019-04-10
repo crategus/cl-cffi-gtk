@@ -1066,7 +1066,7 @@ e
   Note that since maximization is ultimately handled by the window manager and
   happens asynchronously to an application request, you shouldn't assume the
   return value of this function changing immediately (or at all), as an effect
-  of calling the functions @fun{gtk-window-maximize} or 
+  of calling the functions @fun{gtk-window-maximize} or
   @fun{gtk-window-unmaximize}.
 
   Since 3.12
@@ -1812,7 +1812,7 @@ e
  "@version{2013-3-29}
   @argument[window]{a @class{gtk-window} widget}
   @argument[geometry-widget]{widget the geometry hints will be applied to or
-    @code{nil}. Since 3.20 this argument is ignored and GTK behaves as if 
+    @code{nil}. Since 3.20 this argument is ignored and GTK behaves as if
     @code{nil} was set.}
   @argument[geometry]{structure containing geometry information or @code{nil}}
   @argument[geometry-mask]{mask indicating which structure fields should be
@@ -2256,7 +2256,7 @@ e
   the @arg{window} will be maximized when it appears onscreen initially.
 
   You can track maximization via the \"window-state-event\" signal on
-  @class{gtk-widget}, or by listening to notifications on the 
+  @class{gtk-widget}, or by listening to notifications on the
   @slot[gtk-window]{is-maximized} property."
   (window (g-object gtk-window)))
 
@@ -2977,7 +2977,7 @@ e
     The function @sym{gtk-window-reshow-with-initial-size} has been deprecated
     since version 3.10 and should not be used in newly-written code.
 
-    GUI builders can call the functions @fun{gtk-widget-hide}, 
+    GUI builders can call the functions @fun{gtk-widget-hide},
     @fun{gtk-widget-unrealize} and then @fun{gtk-widget-show} on window
     themselves, if they still need this functionality.
   @end{dictionary}

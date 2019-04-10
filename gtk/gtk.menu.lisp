@@ -509,9 +509,9 @@
   of the monitor.
   See the @fun{gtk-menu-popup-at-rect}, @fun{gtk-menu-popup-at-widget},
   @fun{gtk-menu-popup-at-pointer} functions, and the @code{rect-anchor-dx},
-  @code{rect-anchor-dy}, @code{menu-type-hint}, and @code{popped-up} 
+  @code{rect-anchor-dy}, @code{menu-type-hint}, and @code{popped-up}
   properties. @br{}
-  Default value: @code{:flib-x} | @code{:flip-y} | @code{:slide-x} | 
+  Default value: @code{:flib-x} | @code{:flip-y} | @code{:slide-x} |
                  @code{:slide-y} | @code{:resize-x} | @code{:resize-y} @br{}
   Since 3.22")
 
@@ -945,7 +945,7 @@
 ;;;
 ;;; menu :
 ;;;     the GtkMenu to pop up
-;;; 
+;;;
 ;;; rect_window :
 ;;;     the GdkWindow rect is relative to.
 ;;;
@@ -954,10 +954,10 @@
 ;;;
 ;;; rect_anchor :
 ;;;     the point on rect to align with menu 's anchor point
-;;; 
+;;;
 ;;; menu_anchor :
 ;;;     the point on menu to align with rect 's anchor point
-;;; 
+;;;
 ;;; trigger_event :
 ;;;     the GdkEvent that initiated this request or NULL if it's the current
 ;;;     event.
@@ -996,16 +996,16 @@
 ;;;
 ;;; menu :
 ;;;     the GtkMenu to pop up
-;;; 
+;;;
 ;;; widget :
 ;;;     the GtkWidget to align menu with.
 ;;;
 ;;; widget_anchor :
 ;;;     the point on widget to align with menu 's anchor point
-;;; 
+;;;
 ;;; menu_anchor :
 ;;;     the point on menu to align with widget 's anchor point
-;;; 
+;;;
 ;;; trigger_event :
 ;;;     the GdkEvent that initiated this request or NULL if it's the current
 ;;;     event.
@@ -1034,7 +1034,7 @@
 ;;;
 ;;; menu :
 ;;;     the GtkMenu to pop up
-;;; 
+;;;
 ;;; trigger_event :
 ;;;     the GdkEvent that initiated this request or NULL if it's the current
 ;;;     event.
@@ -1156,7 +1156,7 @@
   @begin[Warning]{dictionary}
     The @sym{gtk-menu-popup-for-device} function has been deprecated since
     version 3.22 and should not be used in newly-written code. Please use the
-    @fun{gtk-menu-popup-at-widget}, @fun{gtk-menu-popup-at-pointer}, or 
+    @fun{gtk-menu-popup-at-widget}, @fun{gtk-menu-popup-at-pointer}, or
     @fun{gtk-menu-popup-at-rect} functions instead.
   @end{dictionary}
 
@@ -1473,10 +1473,10 @@
 ;;;
 ;;; menu :
 ;;;     a GtkMenu
-;;; 
+;;;
 ;;; monitor :
 ;;;     the monitor to place the menu on
-;;; 
+;;;
 ;;; Since 3.22
 ;;; ----------------------------------------------------------------------------
 

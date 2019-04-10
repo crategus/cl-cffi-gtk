@@ -445,7 +445,7 @@
     Accessor of the slot @slot[gtk-model-button]{use-markup} of the
     @class{gtk-model-button} class.
   @end{short}
-  
+
   Since 3.24
   @see-class{gtk-model-button}")
 

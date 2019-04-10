@@ -2412,7 +2412,7 @@
     The function @sym{gtk-entry-set-icon-from-stock} has been deprecated since
     version 3.10 and should not be used in newly-written code. Use the function
     @fun{gtk-entry-set-icon-from-icon-name} instead.
-  @end{dictionary}  
+  @end{dictionary}
 
   Since 2.16
   @see-class{gtk-entry}

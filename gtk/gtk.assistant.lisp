@@ -945,7 +945,7 @@
 ;;;
 ;;; page :
 ;;;     a page of assistant
-;;; 
+;;;
 ;;; has_padding :
 ;;;     whether this page has padding
 ;;;
@@ -965,7 +965,7 @@
 ;;;
 ;;; page :
 ;;;     a page of assistant
-;;; 
+;;;
 ;;; Returns :
 ;;;     TRUE if page has padding
 ;;;

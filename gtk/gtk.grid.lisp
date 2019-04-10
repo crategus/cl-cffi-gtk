@@ -36,27 +36,27 @@
 ;;;
 ;;; Functions
 ;;;
-;;;     gtk_grid_new 
-;;;     gtk_grid_attach 
-;;;     gtk_grid_attach_next_to 
-;;;     gtk_grid_get_child_at 
-;;;     gtk_grid_insert_row 
-;;;     gtk_grid_insert_column 
-;;;     gtk_grid_remove_row 
-;;;     gtk_grid_remove_column 
-;;;     gtk_grid_insert_next_to 
+;;;     gtk_grid_new
+;;;     gtk_grid_attach
+;;;     gtk_grid_attach_next_to
+;;;     gtk_grid_get_child_at
+;;;     gtk_grid_insert_row
+;;;     gtk_grid_insert_column
+;;;     gtk_grid_remove_row
+;;;     gtk_grid_remove_column
+;;;     gtk_grid_insert_next_to
 ;;;     gtk_grid_set_row_homogeneous                       Accessor
 ;;;     gtk_grid_get_row_homogeneous                       Accessor
 ;;;     gtk_grid_set_row_spacing                           Accessor
 ;;;     gtk_grid_get_row_spacing                           Accessor
 ;;;     gtk_grid_set_column_homogeneous                    Accessor
 ;;;     gtk_grid_get_column_homogeneous                    Accessor
-;;;     gtk_grid_set_column_spacing                        Accessor 
+;;;     gtk_grid_set_column_spacing                        Accessor
 ;;;     gtk_grid_get_column_spacing                        Accessor
 ;;;     gtk_grid_get_baseline_row                          Accessor
 ;;;     gtk_grid_set_baseline_row                          Accessor
-;;;     gtk_grid_get_row_baseline_position 
-;;;     gtk_grid_set_row_baseline_position 
+;;;     gtk_grid_get_row_baseline_position
+;;;     gtk_grid_set_row_baseline_position
 ;;;
 ;;; Properties
 ;;;
@@ -143,7 +143,7 @@
   @end{dictionary}
   @begin[Child Property Details]{dictionary}
     @begin[code]{table}
-      @begin[height]{entry} 
+      @begin[height]{entry}
         The code @code{height} child property of type @code{:int} (Read / Write)
         @br{}
         The number of rows that a child spans. @br{}
@@ -443,7 +443,7 @@
   @argument[height]{the number of rows that @arg{child} will span}
   @short{Adds a child widget to the grid.}
 
-  The position of the child widget is determined by the argumentes @arg{left} 
+  The position of the child widget is determined by the argumentes @arg{left}
   and @arg{top}. The number of \"cells\" that the child widget will occupy is
   determined by the arguments @arg{width} and @arg{height}.
   @see-class{gtk-grid}
@@ -652,7 +652,7 @@
 ;;; ----------------------------------------------------------------------------
 
 #+gtk-3-10
-(defcfun ("gtk_grid_get_row_baseline_position" 
+(defcfun ("gtk_grid_get_row_baseline_position"
            gtk-grid-get-row-baseline-position) :void
  #+cl-cffi-gtk-documentation
  "@version{2019-3-19}
@@ -680,7 +680,7 @@
 ;;; ----------------------------------------------------------------------------
 
 #+gtk-3-10
-(defcfun ("gtk_grid_set_row_baseline_position" 
+(defcfun ("gtk_grid_set_row_baseline_position"
            gtk-grid-set-row-baseline-position) :void
  #+cl-cffi-gtk-documentation
  "@version{2019-3-19}

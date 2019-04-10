@@ -245,7 +245,7 @@
         3.14 and should not be used in newly-written code. Use CSS margins and
         padding instead; the value of this style property is ignored.
       @end{entry}
-      @begin[displace-focus]{entry} 
+      @begin[displace-focus]{entry}
         The @code{displace-focus} style property of type @code{:boolean}
         (Read) @br{}
         Whether the @code{child-displacement-x} or @code{child-displacement-y}

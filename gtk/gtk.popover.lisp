@@ -37,11 +37,11 @@
 ;;;
 ;;; Functions
 ;;;
-;;;     gtk_popover_new 
-;;;     gtk_popover_new_from_model 
-;;;     gtk_popover_bind_model 
-;;;     gtk_popover_popup 
-;;;     gtk_popover_popdown 
+;;;     gtk_popover_new
+;;;     gtk_popover_new_from_model
+;;;     gtk_popover_bind_model
+;;;     gtk_popover_popup
+;;;     gtk_popover_popdown
 ;;;     gtk_popover_set_relative_to                        Accessor
 ;;;     gtk_popover_get_relative_to                        Accessor
 ;;;     gtk_popover_set_pointing_to                        Accessor
@@ -54,8 +54,8 @@
 ;;;     gtk_popover_get_modal                              Accessor
 ;;;     gtk_popover_set_transitions_enabled                Accessor
 ;;;     gtk_popover_get_transitions_enabled                Accessor
-;;;     gtk_popover_set_default_widget 
-;;;     gtk_popover_get_default_widget 
+;;;     gtk_popover_set_default_widget
+;;;     gtk_popover_get_default_widget
 ;;;
 ;;; Properties
 ;;;
@@ -408,7 +408,7 @@
 ;;;
 ;;; model :
 ;;;     a GMenuModel
-;;; 
+;;;
 ;;; Returns :
 ;;;     the new GtkPopover
 ;;;

@@ -36,7 +36,7 @@
 ;;;     GtkAccelLabel
 ;;;
 ;;; Functions
-;;;  
+;;;
 ;;;     gtk_accel_label_new
 ;;;     gtk_accel_label_set_accel_closure
 ;;;     gtk_accel_label_get_accel_widget

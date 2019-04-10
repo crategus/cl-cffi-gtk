@@ -1518,7 +1518,7 @@ Since: 3.20
 
 ;;;             guint   gtk-long-press-time                  Read / Write
 
-#| 
+#|
 
 The “gtk-long-press-time” property
   “gtk-long-press-time”      guint
@@ -2689,7 +2689,7 @@ Since: 3.14
 ;;;
 ;;; settings :
 ;;;     a GtkSettings object
-;;; 
+;;;
 ;;; name :
 ;;;     the name of the setting to reset
 ;;;

@@ -923,7 +923,7 @@
       separators. This property only takes effect if the
       @code{\"wide-separators\"} style property is @em{true}.
       @begin{indent}
-        @b{Warning:} @code{\"separator-height\"} has been deprecated since 
+        @b{Warning:} @code{\"separator-height\"} has been deprecated since
         version 3.20 and should not be used in newly-written code. Use the
         standard min-height CSS property on the separator elements to size
         separators; the value of this style property is ignored.
@@ -2450,7 +2450,7 @@
  "The @code{focus-on-click} property of type @code{:boolean} (Read / Write)@br{}
   Whether the widget should grab focus when it is clicked with the mouse.
   This property is only relevant for widgets that can take focus.
-  Before 3.20, several widgets (@class{gtk-button}, 
+  Before 3.20, several widgets (@class{gtk-button},
   @class{gtk-file-chosser-button}, @class{gtk-combo-box}) implemented this
   property individually.@br{}
   Default value: @code{t}
@@ -4044,7 +4044,7 @@
 ;;; This function is only for use in widget implementations.
 ;;;
 ;;; Flags the widget for a rerun of the GtkWidgetClass::size_allocate function.
-;;; Use this function instead of gtk_widget_queue_resize() when the widget's 
+;;; Use this function instead of gtk_widget_queue_resize() when the widget's
 ;;; size request didn't change but it wants to reposition its contents.
 ;;;
 ;;; An example user of this function is gtk_widget_set_halign().
@@ -6033,13 +6033,13 @@
 ;;;
 ;;; widget :
 ;;;     a GtkWidget
-;;; 
+;;;
 ;;; Returns
 ;;;     the cairo_font_options_t or NULL if not set.
 ;;;
 ;;; Since: 3.18
 ;;; ----------------------------------------------------------------------------
- 
+
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_set_font_map ()
 ;;;
@@ -6050,7 +6050,7 @@
 ;;;
 ;;; widget :
 ;;;     a GtkWidget
-;;; 
+;;;
 ;;; font_map :
 ;;;     a PangoFontMap, or NULL to unset any previously set font map.
 ;;;
@@ -6066,7 +6066,7 @@
 ;;;
 ;;; widget :
 ;;;     a GtkWidget
-;;; 
+;;;
 ;;; Returns :
 ;;;     A PangoFontMap, or NULL.
 ;;;
@@ -8405,7 +8405,7 @@
 ;;;
 ;;; widget_class :
 ;;;     class to set the name on
-;;; 
+;;;
 ;;; Returns :
 ;;;     the CSS name of the given class
 ;;;
@@ -8944,7 +8944,8 @@
   (:end 2)
   (:center 3)
   #+gtk-3-10
-  (:baseline 4))
+  (:baseline 4)
+  )
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-align atdoc:*symbol-name-alias*) "Enum"
