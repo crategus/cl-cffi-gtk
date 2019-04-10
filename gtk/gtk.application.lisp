@@ -111,7 +111,8 @@
    #+gtk-3-24
    (screensaver-active
     gtk-application-screensaver-active
-    "screensaver-active" "gboolean" t nil)))
+    "screensaver-active" "gboolean" t nil)
+   ))
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-application 'type)

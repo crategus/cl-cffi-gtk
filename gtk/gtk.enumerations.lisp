@@ -29,7 +29,7 @@
 ;;;
 ;;; Standard Enumerations
 ;;;
-;;;     Public enumerated types used throughout GTK+   
+;;;     Public enumerated types used throughout GTK+
 ;;;
 ;;; Types and Values
 ;;;
@@ -871,7 +871,8 @@
   #+gtk-3-12
   (:link #.(ash 1 9))
   #+gtk-3-12
-  (:visited #.(ash 1 10)))
+  (:visited #.(ash 1 10))
+  )
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-state-flags atdoc:*symbol-name-alias*) "Flags"

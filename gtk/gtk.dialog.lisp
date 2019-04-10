@@ -72,7 +72,8 @@
   (#+gtk-3-12
    (use-header-bar
     gtk-dialog-use-header-bar
-    "use-header-bar" "gint" t t)))
+    "use-header-bar" "gint" t t)
+    ))
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-dialog 'type)
@@ -194,7 +195,7 @@
     names \"vbox\" and \"action_area\".
 
     @sym{gtk-dialog} supports a custom @code{<action-widgets>} element, which
-    can contain multiple @code{<action-widget>} elements. The 
+    can contain multiple @code{<action-widget>} elements. The
     @code{\"response\"} attribute specifies a numeric response, and the content
     of the element is the ID of widget, which should be a child of the dialogs
     @code{action-area}. To mark a response as default, set the
@@ -203,7 +204,7 @@
     @sym{gtk-dialog} supports adding action widgets by specifying
     @code{\"action\"} as the @code{\"type\"} attribute of a @code{<child>}
     element. The widget will be added either to the action area or the headerbar
-    of the dialog, depending on the @code{\"use-header-bar\"} property. The 
+    of the dialog, depending on the @code{\"use-header-bar\"} property. The
     response ID has to be associated with the action widget using the
     @code{<action-widgets>} element.
 
@@ -838,7 +839,7 @@
   @begin{return}
     The header bar.
   @end{return}
-  @short{Returns the header bar of @arg{dialog}.} 
+  @short{Returns the header bar of @arg{dialog}.}
   Note that the header bar is only used by the dialog if the
   @code{\"use-header-bar\"} property is TRUE.
 

@@ -4196,30 +4196,37 @@ setup_tree (void)
     @begin[GtkScrolledWindow]{subsection}
       Adds scrollbars to its child widget.
 
+      @about-symbol{gtk-policy-type}
+      @about-symbol{gtk-corner-type}
       @about-class{gtk-scrolled-window}
+
+      @about-generic{gtk-scrolled-window-hadjustment}
+      @about-generic{gtk-scrolled-window-hscrollbar-policy}
+      @about-generic{gtk-scrolled-window-kinetic-scrolling}
+      @about-generic{gtk-scrolled-window-max-content-height}
+      @about-generic{gtk-scrolled-window-max-content-width}
+      @about-generic{gtk-scrolled-window-min-content-height}
+      @about-generic{gtk-scrolled-window-min-content-width}
+      @about-generic{gtk-scrolled-window-overlay-scrolling}
+      @about-generic{gtk-scrolled-window-propagate-natural-height}
+      @about-generic{gtk-scrolled-window-propagate-natural-width}
+      @about-generic{gtk-scrolled-window-shadow-type}
+      @about-generic{gtk-scrolled-window-vadjustment}
+      @about-generic{gtk-scrolled-window-vscrollbar-policy}
+      @about-generic{gtk-scrolled-window-window-placement}
+      @about-generic{gtk-scrolled-window-window-placement-set}
+
       @about-function{gtk-scrolled-window-new}
-      @about-function{gtk-scrolled-window-get-hadjustment}
-      @about-function{gtk-scrolled-window-get-vadjustment}
       @about-function{gtk-scrolled-window-get-hscrollbar}
       @about-function{gtk-scrolled-window-get-vscrollbar}
+      @about-function{gtk-scrolled-window-get-policy}
       @about-function{gtk-scrolled-window-set-policy}
       @about-function{gtk-scrolled-window-add-with-viewport}
+      @about-function{gtk-scrolled-window-get-placement}
       @about-function{gtk-scrolled-window-set-placement}
       @about-function{gtk-scrolled-window-unset-placement}
-      @about-function{gtk-scrolled-window-set-shadow-type}
-      @about-function{gtk-scrolled-window-set-hadjustment}
-      @about-function{gtk-scrolled-window-set-vadjustment}
-      @about-function{gtk-scrolled-window-get-placement}
-      @about-function{gtk-scrolled-window-get-policy}
-      @about-function{gtk-scrolled-window-get-shadow-type}
-      @about-function{gtk-scrolled-window-get-min-content-width}
-      @about-function{gtk-scrolled-window-set-min-content-width}
-      @about-function{gtk-scrolled-window-get-min-content-height}
-      @about-function{gtk-scrolled-window-set-min-content-height}
-      @about-function{gtk-scrolled-window-set-kinetic-scrolling}
-      @about-function{gtk-scrolled-window-get-kinetic-scrolling}
-      @about-function{gtk-scrolled-window-set-capture-button-press}
       @about-function{gtk-scrolled-window-get-capture-button-press}
+      @about-function{gtk-scrolled-window-set-capture-button-press}
     @end{subsection}
     @begin[GtkScrollable]{subsection}
       An interface for scrollable widgets.
