@@ -29,30 +29,52 @@
 ;;;
 ;;; GtkAdjustment
 ;;;
-;;; A representation of an adjustable bounded value
+;;;     A representation of an adjustable bounded value
 ;;;
-;;; Synopsis
+;;; Types and values
 ;;;
 ;;;     GtkAdjustment
 ;;;
+;;; Functions
+;;;
 ;;;     gtk_adjustment_new
-;;;     gtk_adjustment_get_value
-;;;     gtk_adjustment_set_value
+;;;     gtk_adjustment_get_value                           Accessor
+;;;     gtk_adjustment_set_value                           Accessor
 ;;;     gtk_adjustment_clamp_page
-;;;     gtk_adjustment_changed                   * deprecated *
-;;;     gtk_adjustment_value_changed             * deprecated *
+;;;     gtk_adjustment_changed                           * deprecated
+;;;     gtk_adjustment_value_changed                     * deprecated
 ;;;     gtk_adjustment_configure
-;;;     gtk_adjustment_get_lower
-;;;     gtk_adjustment_get_page_increment
-;;;     gtk_adjustment_get_page_size
-;;;     gtk_adjustment_get_step_increment
+;;;     gtk_adjustment_get_lower                           Accessor
+;;;     gtk_adjustment_get_page_increment                  Accessor
+;;;     gtk_adjustment_get_page_size                       Accessor
+;;;     gtk_adjustment_get_step_increment                  Accessor
 ;;;     gtk_adjustment_get_minimum_increment
-;;;     gtk_adjustment_get_upper
-;;;     gtk_adjustment_set_lower
-;;;     gtk_adjustment_set_page_increment
-;;;     gtk_adjustment_set_page_size
-;;;     gtk_adjustment_set_step_increment
-;;;     gtk_adjustment_set_upper
+;;;     gtk_adjustment_get_upper                           Accessor
+;;;     gtk_adjustment_set_lower                           Accessor
+;;;     gtk_adjustment_set_page_increment                  Accessor
+;;;     gtk_adjustment_set_page_size                       Accessor
+;;;     gtk_adjustment_set_step_increment                  Accessor
+;;;     gtk_adjustment_set_upper                           Accessor
+;;;
+;;; Properties
+;;;
+;;;     gdouble   lower             Read / Write
+;;;     gdouble   page-increment    Read / Write
+;;;     gdouble   page-size         Read / Write
+;;;     gdouble   step-increment    Read / Write
+;;;     gdouble   upper             Read / Write
+;;;     gdouble   value             Read / Write
+;;;
+;;; Signals
+;;;
+;;;        void   changed           No Recursion
+;;;        void   value-changed     No Recursion
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkAdjustment
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -84,8 +106,6 @@
    (value
     gtk-adjustment-value
     "value" "gdouble" t t)))
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-adjustment 'type)
@@ -127,75 +147,16 @@
   @see-slot{gtk-adjustment-value}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "lower" 'gtk-adjustment) 't)
- "The @code{\"lower\"} property of type @code{:double} (Read / Write) @br{}
-  The minimum value of the adjustment. @br{}
-  Default value: 0 @br{}
-  Since 2.4")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "page-increment" 'gtk-adjustment) 't)
- "The @code{\"page-increment\"} property of type @code{:double}
-  (Read / Write) @br{}
-  The page increment of the adjustment. @br{}
-  Default value: 0 @br{}
-  Since 2.4")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "page-size" 'gtk-adjustment) 't)
- "The @code{\"page-size\"} property of type @code{:double} (Read / Write) @br{}
-  The page size of the adjustment. Note that the @arg{page-size} is irrelevant
-  and should be set to zero if the adjustment is used for a simple scalar value,
-  e. g. in a @class{gtk-spin-button}. @br{}
-  Default value: 0 @br{}
-  Since 2.4")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "step-increment" 'gtk-adjustment) 't)
- "The @code{\"step-increment\"} property of type @code{:double}
-  (Read / Write) @br{}
-  The step increment of the adjustment. @br{}
-  Default value: 0 @br{}
-  Since 2.4")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "upper" 'gtk-adjustment) 't)
- "The @code{\"upper\"} property of type @code{:double} (Read / Write) @br{}
-  The maximum value of the adjustment. Note that values will be restricted by
-  @arg{upper} - @arg{page-size} if the @arg{page-size} property is nonzero.@br{}
-  Default value: 0 @br{}
-  Since 2.4")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "value" 'gtk-adjustment) 't)
- "The @code{\"value\"} property of type @code{:double} (Read / Write) @br{}
-  The value of the adjustment. @br{}
-  Default value: 0 @br{}
-  Since 2.4")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessor Details
-;;;
+;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- gtk-adjustment-lower ---------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "lower" 'gtk-adjustment) 't)
+ "The @code{lower} property of type @code{:double} (Read / Write) @br{}
+  The minimum value of the adjustment. @br{}
+  Default value: 0")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-adjustment-lower atdoc:*function-name-alias*)
@@ -203,10 +164,20 @@
       (documentation 'gtk-adjustment-lower 'function)
  "@version{2013-2-10}
   @begin{short}
-    Accessor of the slot @code{\"lower\"} of the @class{gtk-adjustment} class.
-  @end{short}")
+    Accessor of the slot @slot[gtk-adjustment]{lower} of the
+    @class{gtk-adjustment} class.
+  @end{short}
+  @see-class{gtk-adjustment}")
 
 ;;; --- gtk-adjustment-page-increment ------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "page-increment" 'gtk-adjustment)
+     't)
+ "The @code{page-increment} property of type @code{:double}
+  (Read / Write) @br{}
+  The page increment of the adjustment. @br{}
+  Default value: 0")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-adjustment-page-increment atdoc:*function-name-alias*)
@@ -214,11 +185,20 @@
       (documentation 'gtk-adjustment-page-increment 'function)
  "@version{2013-2-10}
   @begin{short}
-    Accessor of the slot @code{\"page-increment\"} of the @class{gtk-adjustment}
-    class.
-  @end{short}")
+    Accessor of the slot @slot[gtk-adjustment]{page-increment} of the
+    @class{gtk-adjustment} class.
+  @end{short}
+  @see-class{gtk-adjustment}")
 
 ;;; --- gtk-adjustment-page-size -----------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "page-size" 'gtk-adjustment) 't)
+ "The @code{page-size} property of type @code{:double} (Read / Write) @br{}
+  The page size of the adjustment. Note that the @arg{page-size} is irrelevant
+  and should be set to zero if the adjustment is used for a simple scalar value,
+  e. g. in a @class{gtk-spin-button}. @br{}
+  Default value: 0")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-adjustment-page-size atdoc:*function-name-alias*)
@@ -226,11 +206,19 @@
       (documentation 'gtk-adjustment-page-size 'function)
  "@version{2013-2-10}
   @begin{short}
-    Accessor of the slot @code{\"page-size\"} of the @class{gtk-adjustment}
-    class.
-  @end{short}")
+    Accessor of the slot @slot[gtk-adjustment]{page-size} of the
+    @class{gtk-adjustment} class.
+  @end{short}
+  @see-class{gtk-adjustment}")
 
 ;;; --- gtk-adjustment-step-increment ------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "step-increment" 'gtk-adjustment)
+      't)
+ "The @code{step-increment} property of type @code{:double} (Read / Write) @br{}
+  The step increment of the adjustment. @br{}
+  Default value: 0")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-adjustment-step-increment atdoc:*function-name-alias*)
@@ -238,11 +226,19 @@
       (documentation 'gtk-adjustment-step-increment 'function)
  "@version{2013-2-10}
   @begin{short}
-    Accessor of the slot @code{\"step-increment\"} of the @class{gtk-adjustment}
-    class.
-  @end{short}")
+    Accessor of the slot @slot[gtk-adjustment]{step-increment} of the
+    @class{gtk-adjustment} class.
+  @end{short}
+  @see-class{gtk-adjustment}")
 
 ;;; --- gtk-adjustment-upper ---------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "upper" 'gtk-adjustment) 't)
+ "The @code{upper} property of type @code{:double} (Read / Write) @br{}
+  The maximum value of the adjustment. Note that values will be restricted by
+  @arg{upper} - @arg{page-size} if the @arg{page-size} property is nonzero.@br{}
+  Default value: 0")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-adjustment-upper atdoc:*function-name-alias*)
@@ -250,10 +246,18 @@
       (documentation 'gtk-adjustment-upper 'function)
  "@version{2013-2-10}
   @begin{short}
-    Accessor of the slot @code{\"upper\"} of the @class{gtk-adjustment} class.
-  @end{short}")
+    Accessor of the slot @slot[gtk-adjustment]{upper} of the
+    @class{gtk-adjustment} class.
+  @end{short}
+  @see-class{gtk-adjustment}")
 
 ;;; --- gtk-adjustment-value ---------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "value" 'gtk-adjustment) 't)
+ "The @code{value} property of type @code{:double} (Read / Write) @br{}
+  The value of the adjustment. @br{}
+  Default value: 0")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-adjustment-value atdoc:*function-name-alias*)
@@ -261,8 +265,10 @@
       (documentation 'gtk-adjustment-value 'function)
  "@version{2013-2-10}
   @begin{short}
-    Accessor of the slot @code{\"value\"} of the @class{gtk-adjustment} class.
-  @end{short}")
+    Accessor of the slot @slot[gtk-adjustment]{value} of the
+    @class{gtk-adjustment} class.
+  @end{short}
+  @see-class{gtk-adjustment}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_adjustment_new ()
@@ -423,8 +429,6 @@
   Use this function to avoid multiple emissions of the \"changed\" signal. See
   the function @fun{gtk-adjustment-set-lower} for an alternative way of
   compressing multiple emissions of \"changed\" into one.
-
-  Since 2.14
   @see-function{gtk-adjustment-set-lower}"
   (adjustment (g-object gtk-adjustment))
   (value :double)
@@ -448,8 +452,7 @@
   @argument[adjustment]{a @class{gtk-adjustment} object}
   @return{The current minimum value of the adjustment.}
   @short{Retrieves the minimum value of the adjustment.}
-
-  Since 2.14"
+  @see-class{gtk-adjustment}"
   (gtk-adjustment-lower adjustment))
 
 (export 'gtk-adjustment-get-lower)
@@ -466,8 +469,7 @@
   @argument[adjustment]{a @class{gtk-adjustment} object}
   @return{The current page increment of the adjustment.}
   @short{Retrieves the page increment of the adjustment.}
-
-  Since 2.14"
+  @see-class{gtk-adjustment}"
   (gtk-adjustment-page-increment adjustment))
 
 (export 'gtk-adjustment-get-page-increment)
@@ -484,8 +486,7 @@
   @argument[adjustment]{a @class{gtk-adjustment} object}
   @return{The current page size of the adjustment.}
   @short{Retrieves the page size of the adjustment.}
-
-  Since 2.14"
+  @see-class{gtk-adjustment}"
   (gtk-adjustment-page-size adjustment))
 
 (export 'gtk-adjustment-get-page-size)
@@ -502,8 +503,7 @@
   @argument[adjustment]{a @class{gtk-adjustment} object}
   @return{The current step increment of the adjustment.}
   @short{Retrieves the step increment of the adjustment.}
-
-  Since 2.14"
+  @see-class{gtk-adjustment}"
   (gtk-adjustment-step-increment adjustment))
 
 (export 'gtk-adjustment-get-step-increment)
@@ -520,8 +520,7 @@
   @argument[adjustment]{a @class{gtk-adjustment} object}
   @return{The minimum increment of adjustment.}
   @short{Gets the smaller of step increment and page increment.}
-
-  Since 3.2"
+  @see-class{gtk-adjustment}"
   (min (gtk-adjustment-step-increment adjustment)
        (gtk-adjustment-page-increment adjustment)))
 
@@ -539,8 +538,7 @@
   @argument[adjustment]{a @class{gtk-adjustment} object}
   @return{The current maximum value of the adjustment.}
   @short{Retrieves the maximum value of the adjustment.}
-
-  Since 2.14"
+  @see-class{gtk-adjustment}"
   (gtk-adjustment-upper adjustment))
 
 (export 'gtk-adjustment-get-upper)
@@ -570,8 +568,6 @@
   Alternatively, using a single @fun{g-object-set} for all the properties to
   change, or using the function @fun{gtk-adjustment-configure} has the same
   effect of compressing \"changed\" emissions.
-
-  Since 2.14
   @see-function{g-object-freeze-notify}
   @see-function{g-object-thaw-notify}
   @see-function{g-object-set}"
@@ -597,8 +593,6 @@
   See the functions @fun{gtk-adjustment-set-lower} about how to compress
   multiple emissions of the \"changed\" signal when setting multiple adjustment
   properties.
-
-  Since 2.14
   @see-function{gtk-adjustment-set-lower}"
   (setf (gtk-adjustment-page-increment adjustment) page-increment))
 
@@ -622,8 +616,6 @@
   See the function @fun{gtk-adjustment-set-lower} about how to compress multiple
   emissions of the \"changed\" signal when setting multiple adjustment
   properties.
-
-  Since 2.14
   @see-function{gtk-adjustment-set-lower}"
   (setf (gtk-adjustment-page-size adjustment) page-size))
 
@@ -647,8 +639,6 @@
   See the function @fun{gtk-adjustment-set-lower} about how to compress multiple
   emissions of the \"changed\" signal when setting multiple adjustment
   properties.
-
-  Since 2.14
   @see-function{gtk-adjustment-set-lower}"
   (setf (gtk-adjustment-step-increment adjustment) step-increment))
 
@@ -675,8 +665,6 @@
   See the function @fun{gtk-adjustment-set-lower} about how to compress multiple
   emissions of the \"changed\" signal when setting multiple adjustment
   properties.
-
-  Since 2.14
   @see-function{gtk-adjustment-set-lower}"
   (setf (gtk-adjustment-upper adjustment) upper))
 
