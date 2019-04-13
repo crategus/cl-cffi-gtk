@@ -348,6 +348,16 @@
    #-win32
    (:file "gtk.print-job")             ; Represents a print job
 
+   ;; Shortcuts Overview
+   (:file "gtk.shortcuts-window"       ; Toplevel which shows help for shortcuts
+          :if-feature :gtk-3-20)
+   (:file "gtk.shortcuts-section"      ; An app mode in a GtkShortcutsWindow
+          :if-feature :gtk-3-20)
+   (:file "gtk.shortcuts-group"        ; Represents a group of shortcuts
+          :if-feature :gtk-3-20)
+   (:file "gtk.shortcuts-shortcut"     ; Represents a keyboard shortcut
+          :if-feature :gtk-3-20)
+
    ;; Application support
    (:file "gtk.application")           ; Application class
    (:file "gtk.application-window")    ; GtkApplicationWindow
