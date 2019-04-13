@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.plug.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.8.9 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2014 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,19 +29,44 @@
 ;;;
 ;;; GtkPlug
 ;;;
-;;; Toplevel for embedding into other processes
+;;;     Toplevel for embedding into other processes
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkPlug
+;;;
+;;; Functions
 ;;;
 ;;;     gtk_plug_construct
 ;;;     gtk_plug_construct_for_display
 ;;;     gtk_plug_new
 ;;;     gtk_plug_new_for_display
 ;;;     gtk_plug_get_id
-;;;     gtk_plug_get_embedded
-;;;     gtk_plug_get_socket_window
+;;;     gtk_plug_get_embedded                              Accessor
+;;;     gtk_plug_get_socket_window                         Accessor
+;;;
+;;; Properties
+;;;
+;;;      gboolean   embedded         Read
+;;;     GdkWindow*  socket-window    Read
+;;;
+;;; Signals
+;;;
+;;;          void   embedded         Run Last
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;             ╰── GtkContainer
+;;;                 ╰── GtkBin
+;;;                     ╰── GtkWindow
+;;;                         ╰── GtkPlug
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GtkPlug implements AtkImplementorIface and GtkBuildable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -92,7 +114,7 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"embedded\" signal}
       @begin{pre}
- lambda (plug)   : Run Last
+ lambda (plug)    : Run Last
       @end{pre}
       Gets emitted when the plug becomes embedded in a socket.
       @begin[code]{table}
@@ -103,9 +125,7 @@
   @see-slot{gtk-plug-socket-window}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
 ;;; Property and Accessor Details
-;;;
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- gtk-plug-embedded ------------------------------------------------------
@@ -114,8 +134,7 @@
 (setf (documentation (atdoc:get-slot-from-name "embedded" 'gtk-plug) 't)
  "The @code{\"embedded\"} property of type @code{:boolean} (Read) @br{}
   @em{True} if the plug is embedded in a socket. @br{}
-  Default value: @code{nil} @br{}
-  Since 2.12")
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-plug-embedded atdoc:*function-name-alias*)
@@ -130,8 +149,6 @@
   @end{short}
 
   Determines whether the plug is embedded in a socket.
-
-  Since 2.14
   @see-class{gtk-plug}")
 
 ;;; --- gtk-plug-socket-window -------------------------------------------------
@@ -139,8 +156,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "socket-window" 'gtk-plug) 't)
  "The @code{\"socket-window\"} property of type @class{gdk-window} (Read) @br{}
-  The window of the socket the plug is embedded in. @br{}
-  Since 2.14")
+  The window of the socket the plug is embedded in.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-plug-socket-window atdoc:*function-name-alias*)
@@ -155,8 +171,6 @@
   @end{short}
 
   Retrieves the socket the plug is embedded in.
-
-  Since 2.14
   @see-class{gtk-plug}")
 
 ;;; ----------------------------------------------------------------------------

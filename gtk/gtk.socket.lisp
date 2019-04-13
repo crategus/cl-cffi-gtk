@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.socket.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,7 +29,7 @@
 ;;;
 ;;; GtkSocket
 ;;;
-;;; Container for widgets from other processes
+;;;     Container for widgets from other processes
 ;;;
 ;;; Synopsis
 ;;;
@@ -42,6 +39,23 @@
 ;;;     gtk_socket_add_id
 ;;;     gtk_socket_get_id
 ;;;     gtk_socket_get_plug_window
+;;;
+;;; Signals
+;;;
+;;;         void   plug-added      Run Last
+;;;     gboolean   plug-removed    Run Last
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;             ╰── GtkContainer
+;;;                 ╰── GtkSocket
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GtkSocket implements AtkImplementorIface and GtkBuildable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -117,7 +131,7 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"plug-added\" signal}
       @begin{pre}
- lambda (socket)   : Run Last
+ lambda (socket)    : Run Last
       @end{pre}
       This signal is emitted when a client is successfully added to the socket.
       @begin[code]{table}
@@ -125,7 +139,7 @@
       @end{table}
     @subheading{The \"plug-removed\" signal}
       @begin{pre}
- lambda (socket)   : Run Last
+ lambda (socket)    : Run Last
       @end{pre}
       This signal is emitted when a client is removed from the socket. The
       default action is to destroy the @sym{gtk-socket} widget, so if you want
@@ -223,8 +237,6 @@
     Retrieves the window of the plug.
   @end{short}
   Use this to check if the plug has been created inside of the socket.
-
-  Since 2.14
   @see-class{gtk-socket}
   @see-class{gdk-window}"
   (socket (g-object gtk-socket)))
