@@ -182,7 +182,7 @@
 (defclass bloat-pad (gtk-application)
   ()
   (:metaclass gobject-class)
-  (:g-type-name . \"BloatPad\"))t
+  (:g-type-name . \"BloatPad\"))
 
 (register-object-type-implementation \"BloatPad\"
                                      bloat-pad
@@ -536,6 +536,7 @@
       "Accessor"
       (documentation 'gtk-application-active-window 'function)
  "@version{2014-7-19}
+  @syntax[]{(gtk-application-active-window object) => window}
   @argument[object]{a @class{gtk-application} object}
   @begin{short}
     Accessor of the slot @slot[gtk-application]{active-window} of the
@@ -566,10 +567,10 @@
       "Accessor"
       (documentation 'gtk-application-app-menu 'function)
  "@version{2014-10-18}
-  @argument[object]{a @class{gtk-application} object}
-  @argument[app-menu]{a @class{g-menu-model}, or @code{nil}}
   @syntax[]{(gtk-application-app-menu object) => app-menu}
   @syntax[]{(setf (gtk-application-app-menu object) app-menu)}
+  @argument[object]{a @class{gtk-application} object}
+  @argument[app-menu]{a @class{g-menu-model} object, or @code{nil}}
   @begin{short}
     Accessor of the slot @slot[gtk-application]{app-menu} of the
     @class{gtk-application} class.
@@ -613,7 +614,7 @@
       (documentation 'gtk-application-menubar 'function)
  "@version{2014-4-20}
   @argument[object]{a @class{gtk-application} object}
-  @argument[menubar]{a @class{g-menu-model}, or @code{nil}}
+  @argument[menubar]{a @class{g-menu-model} object, or @code{nil}}
   @syntax[]{(gtk-application-menubar object) => menubar}
   @syntax[]{(setf (gtk-application-menubar object) menubar)}
   @begin{short}
@@ -621,17 +622,16 @@
     @class{gtk-application} class.
   @end{short}
 
-  The generic function @sym{gtk-application-menubar} returns the menu model
-  that has been set with the generic function
-  @sym{(setf gtk-application-menubar)}.
+  The @sym{gtk-application-menubar} slot access function returns the menu model.
 
-  The generic function @sym{(setf gtk-application-menubar)} sets or unsets the
-  menubar for windows of the application.
+  The @sym{(setf gtk-application-menubar)} slot access function
+  sets or unsets the menubar for windows of the application.
 
   This is a menubar in the traditional sense.
 
   This can only be done in the primary instance of the application, after it
-  has been registered. \"startup\" is a good place to call this.
+  has been registered. The handler for the \"startup\" signal is a good place
+  to call this.
 
   Depending on the desktop environment, this may appear at the top of each
   window, or at the top of the screen. In some environments, if both the
@@ -773,7 +773,8 @@
     Remove a window from the application.
   @end{short}
   If @arg{window} belongs to @arg{application} then this call is equivalent to
-  setting the @slot[gtk-window]{application} property of window to @code{nil}.
+  setting the @slot[gtk-window]{application} property of @arg{window} to
+  @code{nil}.
 
   The application may stop running as a result of a call to this function.
   @see-class{gtk-application}
@@ -804,9 +805,7 @@
   The list that is returned should not be modified in any way. It will only
   remain valid until the next focus change or window creation or deletion.
   @see-class{gtk-application}
-  @see-class{gtk-window}
-  @see-function{gtk-application-active-window}
-  @see-function{gtk-application-get-window-by-id}"
+  @see-class{gtk-window}"
   (application (g-object gtk-application)))
 
 (export 'gtk-application-get-windows)
@@ -822,17 +821,18 @@
  "@version{2013-8-8}
   @argument[application]{a @class{gtk-application} object}
   @argument[id]{an identifier number of type @code{:uint}}
-  @return{The window with ID @arg{id}, or @code{nil} if there is no window with
-    this ID.}
+  @return{The @class{gtk-application-window} window with ID @arg{id}, or
+  @code{nil} if there is no window with this ID.}
   @begin{short}
     Returns the @class{gtk-application-window} widget with the given ID.
   @end{short}
+  The ID of a @class{gtk-application-window} window can be retrieved with
+  the @fun{gtk-application-window-get-id} function.
 
   Since 3.6
   @see-class{gtk-application}
   @see-class{gtk-application-window}
-  @see-function{gtk-application-active-window}
-  @see-function{gtk-application-get-windows}"
+  @see-function{gtk-application-window-get-id}"
   (application (g-object gtk-application))
   (id :uint))
 
@@ -960,16 +960,16 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-8-8}
   @argument[application]{the @class{gtk-application} object}
-  @argument[flags]{what @symbol{gtk-application-inhibit} types of actions should
-    be queried}
-  @return{@em{True} if any of the actions specified in @arg{flags} are
-    inhibited.}
+  @argument[flags]{what @symbol{gtk-application-inhibit-flags} types of actions
+    should be queried}
+  @return{A @code{:boolean} that is @em{true} if any of the actions specified in
+    @arg{flags} are inhibited.}
   @begin{short}
     Determines if any of the actions specified in @arg{flags} are currently
     inhibited, possibly by another application.
   @end{short}
   @see-class{gtk-application}
-  @see-function{gtk-application-inhibit}"
+  @see-symbol{gtk-application-inhibit-flags}"
   (application (g-object gtk-application))
   (flags gtk-application-inhibit-flags))
 
@@ -985,7 +985,7 @@
  #+cl-cffi-gtk-documentation
  "@version{2019-4-9}
   @argument[application]{a @class{gtk-application} object}
-  @return{a @code{:boolean} that is @em{True} if you should set an app menu}
+  @return{A @code{:boolean} that is @em{true} if you should set an app menu}
   @begin{short}
     Determines if the desktop environment in which the application is running
     would prefer an application menu be shown.
@@ -1074,16 +1074,18 @@
     when the key combination specificed by accelerator is pressed.
   @end{short}
 
-  @arg{accelerator} must be a string that can be parsed by the function
-  @fun{gtk-accelerator-parse}, e. g. \"<Primary>q\" or \"<Control><Alt>p\".
+  The @arg{accelerator} argument must be a string that can be parsed by the
+  @fun{gtk-accelerator-parse} function, e. g. \"<Primary>q\" or
+  \"<Control><Alt>p\".
 
-  @arg{action-name} must be the name of an action as it would be used in the app
-  menu, i. e. actions that have been added to the application are referred to
-  with an \"app.\" prefix, and window-specific actions with a \"win.\" prefix.
+  The @arg{action-name} argument must be the name of an action as it would be
+  used in the app menu, i. e. actions that have been added to the application
+  are referred to with an \"app.\" prefix, and window-specific actions with a
+  \"win.\" prefix.
 
   @class{gtk-application} also extracts accelerators out of 'accel' attributes
-  in the @class{g-menu-model}s passed to the functions
-  @fun{gtk-application-app-menu} and @fun{gtk-application-menubar},
+  in the @class{g-menu-model} objects passed to the
+  @fun{gtk-application-app-menu} and @fun{gtk-application-menubar} functions,
   which is usually more convenient than calling this function for each
   accelerator.
   @begin[Warning]{dictionary}
@@ -1116,8 +1118,8 @@
   @argument[parameter]{a @type{g-variant} parameter to pass when activating the
     action, or @code{nil} if the action does not accept an activation parameter}
   @begin{short}
-    Removes an accelerator that has been previously added with the function
-    @fun{gtk-application-add-accelerator}.
+    Removes an accelerator that has been previously added with the
+    @fun{gtk-application-add-accelerator} function.
   @end{short}
   @begin[Warning]{dictionary}
     The @sym{gtk-application-remove-accelerator} function has been deprecated
