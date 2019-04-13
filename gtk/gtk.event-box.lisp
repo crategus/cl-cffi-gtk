@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.event-box.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,17 +29,38 @@
 ;;;
 ;;; GtkEventBox
 ;;;
-;;; A widget used to catch events for widgets which do not have their own window
+;;;     A widget used to catch events for widgets which do not have their own
+;;;     window
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkEventBox
 ;;;
+;;; Functions
+;;;
 ;;;     gtk_event_box_new
-;;;     gtk_event_box_set_above_child
-;;;     gtk_event_box_get_above_child
-;;;     gtk_event_box_set_visible_window
-;;;     gtk_event_box_get_visible_window
+;;;     gtk_event_box_set_above_child                      Accessor
+;;;     gtk_event_box_get_above_child                      Accessor
+;;;     gtk_event_box_set_visible_window                   Accessor
+;;;     gtk_event_box_get_visible_window                   Accessor
+;;;
+;;; Properties
+;;;
+;;;     gboolean   above-child       Read / Write
+;;;     gboolean   visible-window    Read / Write
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;             ╰── GtkContainer
+;;;                 ╰── GtkBin
+;;;                     ╰── GtkEventBox
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GtkEventBox implements AtkImplementorIface and GtkBuildable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -75,51 +93,51 @@
   @see-class{gtk-bin}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
+;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-event-box-above-child ----------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "above-child" 'gtk-event-box) 't)
- "The @code{\"above-child\"} property of type @code{:boolean}
-  (Read / Write) @br{}
+ "The @code{above-child} property of type @code{:boolean} (Read / Write) @br{}
   Whether the event-trapping window of the eventbox is above the window of the
   child widget as opposed to below it. @br{}
   Default value: @code{nil}")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "visible-window" 'gtk-event-box) 't)
- "The @code{\"visible-window\"} property of type @code{:boolean}
-  (Read / Write) @br{}
-  Whether the event box is visible, as opposed to invisible and only used to
-  trap events. @br{}
-  Default value: @em{true}")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-event-box-above-child atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-event-box-above-child 'function)
  "@version{2013-8-17}
-  Accessor of the slot @code{\"above-child\"} of the @class{gtk-event-box}
-  class.
+  @begin{short}
+    Accessor of the slot @slot[gtk-event-box]{above-child} of the
+    @class{gtk-event-box} class.
+  @end{short}
   @see-class{gtk-event-box}
   @see-function{gtk-event-box-get-above-child}
   @see-function{gtk-event-box-set-above-child}")
+
+;;; --- gtk-event-box-visible-window -------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "visible-window" 'gtk-event-box)
+      't)
+ "The @code{visible-window} property of type @code{:boolean}
+  (Read / Write) @br{}
+  Whether the event box is visible, as opposed to invisible and only used to
+  trap events. @br{}
+  Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-event-box-visible-window atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-event-box-visible-window 'function)
  "@version{2013-8-17}
-  Accessor of the slot @code{\"visible-window\"} of the @class{gtk-event-box}
-  class.
+  @begin{short}
+    Accessor of the slot @slot[gtk-event-box]{visible-window} of the
+    @class{gtk-event-box} class.
+  @end{short}
   @see-class{gtk-event-box}
   @see-function{gtk-event-box-get-visible-window}
   @see-function{gtk-event-box-set-visible-window}")
@@ -160,8 +178,6 @@
   to that widget, and then to its parents.
 
   The default is to keep the window below the child.
-
-  Since 2.4
   @see-class{gtk-event-box}
   @see-function{gtk-event-box-get-above-child}"
   (setf (gtk-event-box-above-child event-box) above-child))
@@ -184,8 +200,6 @@
     child.
   @end{short}
   See the function @fun{gtk-event-box-set-above-child} for details.
-
-  Since 2.4
   @see-class{gtk-event-box}
   @see-function{gtk-event-box-set-above-child}"
   (gtk-event-box-above-child event-box))
@@ -236,8 +250,6 @@
     This problem does not occur for visible event boxes, because in that case,
     the event box window is actually the ancestor of the descendant windows, not
     just at the same place on the screen.
-
-  Since 2.4
   @see-class{gtk-event-box}
   @see-function{gtk-widget-add-events}
   @see-function{gtk-event-box-set-above-child}
@@ -261,8 +273,6 @@
     Returns whether the event box has a visible window.
   @end{short}
   See the function @fun{gtk-event-box-set-visible-window} for details.
-
-  Since 2.4
   @see-class{gtk-event-box}
   @see-function{gtk-event-box-set-visible-window}"
   (gtk-event-box-visible-window event-box))

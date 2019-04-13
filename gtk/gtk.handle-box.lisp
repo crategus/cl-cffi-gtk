@@ -1,15 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.handle-box.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -31,20 +29,49 @@
 ;;;
 ;;; GtkHandleBox
 ;;;
-;;; A widget for detachable window portions
+;;;     A widget for detachable window portions
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkHandleBox
 ;;;
+;;; Functions
+;;;
 ;;;     gtk_handle_box_new
-;;;     gtk_handle_box_set_shadow_type
-;;;     gtk_handle_box_set_handle_position
-;;;     gtk_handle_box_set_snap_edge
-;;;     gtk_handle_box_get_handle_position
-;;;     gtk_handle_box_get_shadow_type
-;;;     gtk_handle_box_get_snap_edge
-;;;     gtk_handle_box_get_child_detached
+;;;     gtk_handle_box_set_shadow_type                     Accessor
+;;;     gtk_handle_box_set_handle_position                 Accessor
+;;;     gtk_handle_box_set_snap_edge                       Accessor
+;;;     gtk_handle_box_get_handle_position                 Accessor
+;;;     gtk_handle_box_get_shadow_type                     Accessor
+;;;     gtk_handle_box_get_snap_edge                       Accessor
+;;;     gtk_handle_box_get_child_detached                  Accessor
+;;;
+;;; Properties
+;;;
+;;;            gboolean   child-detached     Read
+;;;     GtkPositionType   handle-position    Read / Write
+;;;       GtkShadowType   shadow-type        Read / Write
+;;;     GtkPositionType   snap-edge          Read / Write
+;;;            gboolean   snap-edge-set      Read / Write
+;;;
+;;; Signals
+;;;
+;;;     void   child-attached    Run First
+;;;     void   child-detached    Run First
+;;;
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;             ╰── GtkContainer
+;;;                 ╰── GtkBin
+;;;                     ╰── GtkHandleBox
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GtkHandleBox implements AtkImplementorIface and GtkBuildable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -74,8 +101,6 @@
    (snap-edge-set
     gtk-handle-box-snap-edge-set
     "snap-edge-set" "gboolean" t t)))
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-handle-box 'type)
@@ -146,113 +171,114 @@
   @see-slot{gtk-handle-box-snap-edge-set}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
+;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-handle-box-child-detached ------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "child-detached"
                                                'gtk-handle-box) 't)
- "The @code{\"child-detached\"} property of type @code{:boolean} (Read)@br{}
+ "The @code{child-detached} property of type @code{:boolean} (Read) @br{}
   A boolean value indicating whether the handlebox's child is attached or
-  detached.@br{}
+  detached. @br{}
   Default value: @code{nil}")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "handle-position"
-                                               'gtk-handle-box) 't)
- "The @code{\"handle-position\"} property of type @symbol{gtk-position-type}
-  (Read / Write)@br{}
-  Position of the handle relative to the child widget.@br{}
-  Default value: @code{:left}")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "shadow-type"
-                                               'gtk-handle-box) 't)
- "The @code{\"shadow-type\"} property of type @symbol{gtk-shadow-type}
-  (Read / Write)@br{}
-  Appearance of the shadow that surrounds the container.@br{}
-  Default value: @code{:out}")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "snap-edge" 'gtk-handle-box) 't)
- "The @code{\"snap-edge\"} property of type @symbol{gtk-position-type}
-  (Read / Write)@br{}
-  Side of the handlebox that's lined up with the docking point to dock the
-  handlebox.@br{}
-  Default value: @code{:top}")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "snap-edge-set"
-                                               'gtk-handle-box) 't)
- "The @code{\"snap-edge-set\"} property of type @code{:boolean}
-  (Read / Write)@br{}
-  Whether to use the value from the @code{\"snap-edge\"} property or a value
-  derived from @code{\"handle-position\"}.@br{}
-  Default value: @code{nil}")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-handle-box-child-detached atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-handle-box-child-detached 'function)
  "@version{2013-3-26}
-  Accessor of the slot @code{\"child-detached\"} of the @class{gtk-handle-box}
-  class.")
+  @begin{short}
+    Accessor of the slot @slot[gtk-handle-box]{child-detached} of the
+    @class{gtk-handle-box} class.
+  @end{short}
+  @see-class{handle-box}")
 
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-handle-box-handle-position -----------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "handle-position"
+                                               'gtk-handle-box) 't)
+ "The @code{handle-position} property of type @symbol{gtk-position-type}
+  (Read / Write) @br{}
+  Position of the handle relative to the child widget. @br{}
+  Default value: @code{:left}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-handle-box-handle-position atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-handle-box-handle-position 'function)
  "@version{2013-3-26}
-  Accessor of the slot @code{\"handle-position\"} of the @class{gtk-handle-box}
-  class.")
+  @begin{short}
+    Accessor of the slot @slot[gtk-handle-box]{handle-position} of the
+    @class{gtk-handle-box} class.
+  @end{short}
+  @see-class{gtk-handle-box}")
 
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-handle-box-shadow-type ---------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "shadow-type"
+                                               'gtk-handle-box) 't)
+ "The @code{shadow-type} property of type @symbol{gtk-shadow-type}
+  (Read / Write) @br{}
+  Appearance of the shadow that surrounds the container. @br{}
+  Default value: @code{:out}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-handle-box-shadow-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-handle-box-shadow-type 'function)
  "@version{2013-3-26}
-  Accessor of the slot @code{\"shadow-type\"} of the @class{gtk-handle-box}
-  class.")
+  @begin{short}
+    Accessor of the slot @slot[gtk-handle-box]{shadow-type} of the
+    @class{gtk-handle-box} class.
+  @end{short}
+  @see-class{gtk-handle-box}")
 
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-handle-box-snap-edge -----------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "snap-edge" 'gtk-handle-box) 't)
+ "The @code{snap-edge} property of type @symbol{gtk-position-type}
+  (Read / Write) @br{}
+  Side of the handlebox that's lined up with the docking point to dock the
+  handlebox. @br{}
+  Default value: @code{:top}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-handle-box-snap-edge atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-handle-box-snap-edge 'function)
  "@version{2013-3-26}
-  Accessor of the slot @code{\"snap-edge\"} of the @class{gtk-handle-box}
-  class.")
+  @begin{short}
+    Accessor of the slot @slot[gtk-handle-box]{snap-edge} of the
+    @class{gtk-handle-box} class.
+  @end{short}
+  @see-class{gtk-handle-box}")
 
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-handle-box-snap-edge-set -------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "snap-edge-set"
+                                               'gtk-handle-box) 't)
+ "The @code{snap-edge-set} property of type @code{:boolean}
+  (Read / Write) @br{}
+  Whether to use the value from the @code{snap-edge} property or a value
+  derived from @code{\"handle-position\"}. @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-handle-box-snap-edge-set atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-handle-box-snap-edge-set 'function)
  "@version{2013-3-26}
-  Accessor of the slot @code{\"snap-edge-set\"} of the @class{gtk-handle-box}
-  class.")
+  @begin{short}
+    Accessor of the slot @slot[gtk-handle-box]{snap-edge-set} of the
+    @class{gtk-handle-box} class.
+  @end{short}
+  @see-class{gtk-handle-box}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_handle_box_new ()

@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.tooltip.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,11 +29,13 @@
 ;;;
 ;;; GtkTooltip
 ;;;
-;;; Add tips to your widgets
+;;;     Add tips to your widgets
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkTooltip
+;;;
+;;; Functions
 ;;;
 ;;;     gtk_tooltip_set_markup
 ;;;     gtk_tooltip_set_text
@@ -47,6 +46,11 @@
 ;;;     gtk_tooltip_set_custom
 ;;;     gtk_tooltip_trigger_tooltip_query
 ;;;     gtk_tooltip_set_tip_area
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GtkTooltip
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -200,11 +204,14 @@
   @begin{short}
     Sets the icon of the @arg{tooltip} (which is in front of the text) to be
     the stock item indicated by @arg{stock-id} with the size indicated by
-    @arg{icon-size} of type @symbol{gtk-icon-size}. If @arg{stock-id} is
-    @code{nil}, the image will be hidden.
+    @arg{icon-size} of type @symbol{gtk-icon-size}.
   @end{short}
-
-  Since 2.12
+  If @arg{stock-id} is @code{nil}, the image will be hidden.
+  @begin[Warning]{dictionary}
+    The @sym{gtk-tooltip-set-icon-from-stock} function has been deprecated since
+    version 3.10 and should not be used in newly-written code.
+    Use the @fun{gtk-tooltip-set-icon-from-icon-name} function instead.
+  @end{dictionary}
   @see-class{gtk-tooltip}"
   (tooltip (g-object gtk-tooltip))
   (stock-id :string)

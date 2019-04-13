@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.viewport.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GDK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -39,10 +36,10 @@
 ;;;     GtkViewport
 ;;;
 ;;;     gtk_viewport_new
-;;;     gtk_viewport_get_hadjustment             * deprecated *
-;;;     gtk_viewport_get_vadjustment             * deprecated *
-;;;     gtk_viewport_set_hadjustment             * deprecated *
-;;;     gtk_viewport_set_vadjustment             * deprecated *
+;;;     gtk_viewport_get_hadjustment                     * deprecated
+;;;     gtk_viewport_get_vadjustment                     * deprecated
+;;;     gtk_viewport_set_hadjustment                     * deprecated
+;;;     gtk_viewport_set_vadjustment                     * deprecated
 ;;;     gtk_viewport_set_shadow_type
 ;;;     gtk_viewport_get_shadow_type
 ;;;     gtk_viewport_get_bin_window
@@ -66,8 +63,6 @@
     gtk-viewport-shadow-type
     "shadow-type" "GtkShadowType" t t)))
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-viewport 'type)
  "@version{2013-6-20}
@@ -88,36 +83,36 @@
 
   The @sym{gtk-viewport} will start scrolling content only if allocated less
   than the child widget's minimum size in a given orientation.
+  @begin[CSS nodes]{dictionary}
+    @sym{gtk-viewport} has a single CSS node with name @code{viewport}.
+  @end{dictionary}
   @see-slot{gtk-viewport-shadow-type}
   @see-class{gtk-scrolled-window}
   @see-class{gtk-adjustment}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
+;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-viewport-shadow-type -----------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "shadow-type" 'gtk-viewport) 't)
- "The @code{\"shadow-type\"} property of type @symbol{gtk-shadow-type}
+ "The @code{shadow-type} property of type @symbol{gtk-shadow-type}
   (Read / Write) @br{}
   Determines how the shadowed box around the viewport is drawn. @br{}
   Default value: @code{:in}")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-viewport-shadow-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-viewport-shadow-type 'function)
  "@version{2013-3-28}
-  Accessor of the slot @code{\"shadow-type\"} of the @class{gtk-viewport}
-  class.")
+  @begin{short}
+    Accessor of the slot @slot[gtk-viewport]{shadow-type} of the
+    @class{gtk-viewport} class.
+  @end{short}
+  @see-class{gtk-viewport}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_viewport_new ()
@@ -265,8 +260,7 @@
   @argument[viewport]{a @class{gtk-viewport} widget}
   @return{A @class{gdk-window} object.}
   @short{Gets the bin window of the @class{gtk-viewport} widget.}
-
-  Since 2.20"
+  @see-class{gtk-viewport}"
   (viewport (g-object gtk-viewport)))
 
 (export 'gtk-viewport-get-bin-window)
@@ -282,8 +276,7 @@
   @argument[viewport]{a @class{gtk-viewport} widget}
   @return{A @class{gdk-window} object.}
   @short{Gets the view window of the @class{gtk-viewport} widget.}
-
-  Since 2.22"
+  @see-class{gtk-viewport}"
   (viewport (g-object gtk-viewport)))
 
 (export 'gtk-viewport-get-view-window)

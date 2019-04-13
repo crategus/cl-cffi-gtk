@@ -1,11 +1,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.im-context-simple.lisp
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -27,19 +28,36 @@
 ;;;
 ;;; GtkIMContextSimple
 ;;;
-;;; An input method context supporting table-based input methods
+;;;     An input method context supporting table-based input methods
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkIMContextSimple
+;;;
+;;;     GTK_MAX_COMPOSE_LEN
+;;;
+;;;
+;;; Functions
 ;;;
 ;;;     gtk_im_context_simple_new
 ;;;     gtk_im_context_simple_add_table
 ;;;
-;;;     GTK_MAX_COMPOSE_LEN
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GtkIMContext
+;;;         ╰── GtkIMContextSimple
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
+
+;;; ----------------------------------------------------------------------------
+;;; GTK_MAX_COMPOSE_LEN
+;;;
+;;; #define GTK_MAX_COMPOSE_LEN 7
+;;;
+;;; The maximum length of sequences in compose tables.
+;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkIMContextSimple
@@ -52,12 +70,26 @@
    :type-initializer "gtk_im_context_simple_get_type")
   nil)
 
-;;; ----------------------------------------------------------------------------
-
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-im-context-simple 'type)
  "@version{2013-3-28}
-  An input method context supporting table-based input methods")
+  @begin{short}
+    @sym{gtk-im-context-simple} is a simple input method context supporting
+    table-based input methods.
+  @end{short}
+  It has a built-in table of compose sequences that is derived from the X11
+  Compose files.
+
+  @sym{gtk-im-context-simple} reads additional compose sequences from the first
+  of the following files that is found: @code{~/.config/gtk-3.0/Compose},
+  @code{~/.XCompose}, @code{/usr/share/X11/locale/$locale/Compose}, for locales
+  that have a nontrivial Compose file. The syntax of these files is described
+  in the Compose(5) manual page.
+
+  @sym{gtk-im-context-simple} also supports numeric entry of Unicode characters
+  by typing Ctrl-Shift-u, followed by a hexadecimal Unicode codepoint. For
+  example, Ctrl-Shift-u 1 2 3 Enter yields U+0123 LATIN SMALL LETTER G WITH
+  CEDILLA, i.e. ģ.")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_im_context_simple_new ()
@@ -98,14 +130,6 @@
 ;;;
 ;;; n_seqs :
 ;;;     number of sequences in the table
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; GTK_MAX_COMPOSE_LEN
-;;;
-;;; #define GTK_MAX_COMPOSE_LEN 7
-;;;
-;;; The maximum length of sequences in compose tables.
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- End of file gtk.im-context-simple.lisp ---------------------------------

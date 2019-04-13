@@ -1,15 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.size-group.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -31,12 +29,14 @@
 ;;;
 ;;; GtkSizeGroup
 ;;;
-;;; Grouping widgets so they request the same size
+;;;     Grouping widgets so they request the same size
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkSizeGroup
 ;;;     GtkSizeGroupMode
+;;;
+;;; Functions
 ;;;
 ;;;     gtk_size_group_new
 ;;;     gtk_size_group_set_mode
@@ -46,9 +46,59 @@
 ;;;     gtk_size_group_add_widget
 ;;;     gtk_size_group_remove_widget
 ;;;     gtk_size_group_get_widgets
+;;;
+;;; Properties
+;;;
+;;;             gboolean   ignore-hidden    Read / Write
+;;;     GtkSizeGroupMode   mode             Read / Write
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GtkSizeGroup
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GtkSizeGroup implements GtkBuildable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
+
+;;; ----------------------------------------------------------------------------
+;;; enum GtkSizeGroupMode
+;;; ----------------------------------------------------------------------------
+
+(define-g-enum "GtkSizeGroupMode" gtk-size-group-mode
+  (:export t
+   :type-initializer "gtk_size_group_mode_get_type")
+  (:none 0)
+  (:horizontal 1)
+  (:vertical 2)
+  (:both 3))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-size-group-mode atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'gtk-size-group-mode atdoc:*external-symbols*)
+ "@version{2013-5-23}
+  @begin{short}
+    The mode of the size group determines the directions in which the size group
+    affects the requested sizes of its component widgets.
+  @end{short}
+  @begin{pre}
+(define-g-enum \"GtkSizeGroupMode\" gtk-size-group-mode
+  (:export t
+   :type-initializer \"gtk_size_group_mode_get_type\")
+  (:none 0)
+  (:horizontal 1)
+  (:vertical 2)
+  (:both 3))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:none]{Group has no effect.}
+    @entry[:horizontal]{Group affects horizontal requisition.}
+    @entry[:vertical]{Group affects vertical requisition.}
+    @entry[:both]{Group affects both horizontal and vertical requisition.}
+  @end{table}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkSizeGroup
@@ -137,86 +187,58 @@
   @see-slot{gtk-size-group-mode}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
+;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-size-group- ignore-hidden ------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "ignore-hidden"
                                                'gtk-size-group) 't)
- "The @code{\"ignore-hidden\"} property of type @code{:boolean}
+ "The @code{ignore-hidden} property of type @code{:boolean}
   (Read / Write) @br{}
   If @em{true}, unmapped widgets are ignored when determining the size of the
   group. @br{}
-  Default value: @code{nil} @br{}
-  Since 2.8")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "mode" 'gtk-size-group) 't)
- "The @code{\"mode\"} property of type @symbol{gtk-size-group-mode}
-  (Read / Write) @br{}
-  The directions in which the size group affects the requested sizes of its
-  component widgets. @br{}
-  Default value: @code{:horizontal}")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
+  @b{Warning:} @code{ignore-hidden} has been deprecated since version 3.22 and
+  should not be used in newly-written code.
+  Measuring the size of hidden widgets has not worked reliably for a long time.
+  In most cases, they will report a size of 0 nowadays, and thus, their size
+  will not affect the other size group members. In effect, size groups will
+  always operate as if this property was @em{true}. Use a @class{gtk-stack}
+  instead to hide widgets while still having their size taken into account.@br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-size-group-ignore-hidden atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-size-group-ignore-hidden 'function)
  "@version{2013-3-23}
-  Accessor of the slot @code{\"ignore-hidden\"} of the @class{gtk-size-group}
-  class.")
+  @begin{short}
+    Accessor of the slot @slot[gtk-size-group]{ignore-hidden} of the
+    @class{gtk-size-group} class.
+  @end{short}
+  @see-class{gtk-size-group}")
+
+;;; --- gtk-size-group-mode ----------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "mode" 'gtk-size-group) 't)
+ "The @code{mode} property of type @symbol{gtk-size-group-mode}
+  (Read / Write) @br{}
+  The directions in which the size group affects the requested sizes of its
+  component widgets. @br{}
+  Default value: @code{:horizontal}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-size-group-mode atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-size-group-mode 'function)
  "@version{2013-3-23}
-  Accessor of the slot @code{\"mode\"} of the @class{gtk-size-group}
-  class.")
-
-;;; ----------------------------------------------------------------------------
-;;; enum GtkSizeGroupMode
-;;; ----------------------------------------------------------------------------
-
-(define-g-enum "GtkSizeGroupMode" gtk-size-group-mode
-  (:export t
-   :type-initializer "gtk_size_group_mode_get_type")
-  (:none 0)
-  (:horizontal 1)
-  (:vertical 2)
-  (:both 3))
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-size-group-mode atdoc:*symbol-name-alias*) "Enum"
-      (gethash 'gtk-size-group-mode atdoc:*external-symbols*)
- "@version{2013-5-23}
   @begin{short}
-    The mode of the size group determines the directions in which the size group
-    affects the requested sizes of its component widgets.
+    Accessor of the slot @slot[gtk-size-group]{mode} of the
+    @class{gtk-size-group} class.
   @end{short}
-  @begin{pre}
-(define-g-enum \"GtkSizeGroupMode\" gtk-size-group-mode
-  (:export t
-   :type-initializer \"gtk_size_group_mode_get_type\")
-  (:none 0)
-  (:horizontal 1)
-  (:vertical 2)
-  (:both 3))
-  @end{pre}
-  @begin[code]{table}
-    @entry[:none]{Group has no effect.}
-    @entry[:horizontal]{Group affects horizontal requisition.}
-    @entry[:vertical]{Group affects vertical requisition.}
-    @entry[:both]{Group affects both horizontal and vertical requisition.}
-  @end{table}")
+  @see-class{gtk-size-group}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_size_group_new ()
@@ -288,8 +310,17 @@
   @begin{short}
     Sets whether unmapped widgets should be ignored when calculating the size.
   @end{short}
-
-  Since 2.8"
+  @begin[Warning]{dictionary}
+    The @sym{gtk-size-group-set-ignore-hidden} has been deprecated since version
+    3.22 and should not be used in newly-written code.
+    Measuring the size of hidden widgets has not worked reliably for a long
+    time. In most cases, they will report a size of 0 nowadays, and thus, their
+    size will not affect the other size group members. In effect, size groups
+    will always operate as if this property was @emd{true}. Use a
+    @class{gtk-stack} instead to hide widgets while still having their size
+    taken into account.
+  @end{dictionary}
+  @see-class{gtk-size-group}"
   (setf (gtk-size-group-ignore-hidden size-group) ignore-hidden))
 
 (export 'gtk-size-group-set-ignore-hidden)
@@ -308,8 +339,17 @@
   @begin{short}
     Returns if invisible widgets are ignored when calculating the size.
   @end{short}
-
-  Since 2.8"
+  @begin[Warning]{dictionary}
+    The @sym{gtk-size-group-get-ignore-hidden} has been deprecated since version
+    3.22 and should not be used in newly-written code.
+    Measuring the size of hidden widgets has not worked reliably for a long
+    time. In most cases, they will report a size of 0 nowadays, and thus, their
+    size will not affect the other size group members. In effect, size groups
+    will always operate as if this property was @emd{true}. Use a
+    @class{gtk-stack} instead to hide widgets while still having their size
+    taken into account.
+  @end{dictionary}
+  @see-class{gtk-size-group}"
   (gtk-size-group-ignore-hidden size-group))
 
 (export 'gtk-size-group-get-ignore-hidden)
@@ -370,8 +410,7 @@
   @begin{short}
     Returns the list of widgets associated with @arg{size-group}.
   @end{short}
-
-  Since 2.10"
+  @see-class{gtk-size-group}"
   (size-group (g-object gtk-size-group)))
 
 (export 'gtk-size-group-get-widgets)
