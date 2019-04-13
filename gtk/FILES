@@ -92,8 +92,7 @@ GTK+ Widgets and Objects
     gtk.text-iter.lisp               - GtkTextIter                 - GTK+ 3.16 *
     gtk.text-mark.lisp               - GtkTextMark                 - GTK+ 3.16 *
     gtk.text-buffer.lisp             - GtkTextBuffer               - GTK+ 3.24
-
-    gtk.text-tag.lisp                - GtkTextTag                  - GTK+ 3.6.4*
+    gtk.text-tag.lisp                - GtkTextTag                  - GTK+ 3.24 &
 
     gtk.text-tag-table.lisp          - GtkTextTagTable             - GTK+ 3.6.4*
     gtk.text-view.lisp               - GtkTextView                 - GTK+ 3.6.4*
