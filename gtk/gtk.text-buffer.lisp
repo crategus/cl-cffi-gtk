@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.text-buffer.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,11 +29,14 @@
 ;;;
 ;;; GtkTextBuffer
 ;;;
-;;; Stores attributed text for display in a GtkTextView
+;;;     Stores attributed text for display in a GtkTextView
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkTextBuffer
+;;;     GtkTextBufferTargetInfo
+;;;
+;;; Functions
 ;;;
 ;;;     gtk_text_buffer_new
 ;;;     gtk_text_buffer_get_line_count
@@ -50,6 +50,7 @@
 ;;;     gtk_text_buffer_insert_range_interactive
 ;;;     gtk_text_buffer_insert_with_tags
 ;;;     gtk_text_buffer_insert_with_tags_by_name
+;;;     gtk_text_buffer_insert_markup
 ;;;     gtk_text_buffer_delete
 ;;;     gtk_text_buffer_delete_interactive
 ;;;     gtk_text_buffer_backspace
@@ -98,8 +99,6 @@
 ;;;     gtk_text_buffer_add_selection_clipboard
 ;;;     gtk_text_buffer_remove_selection_clipboard
 ;;;
-;;;     GtkTextBufferTargetInfo
-;;;
 ;;;     gtk_text_buffer_deserialize
 ;;;     gtk_text_buffer_deserialize_get_can_create_tags
 ;;;     gtk_text_buffer_deserialize_set_can_create_tags
@@ -114,6 +113,36 @@
 ;;;     gtk_text_buffer_serialize
 ;;;     gtk_text_buffer_unregister_deserialize_format
 ;;;     gtk_text_buffer_unregister_serialize_format
+;;;
+;;; Properties
+;;;
+;;;       GtkTargetList*  copy-target-list       Read
+;;;                gint   cursor-position        Read
+;;;            gboolean   has-selection          Read
+;;;       GtkTargetList*  paste-target-list      Read
+;;;     GtkTextTagTable*  tag-table              Read / Write / Construct Only
+;;;               gchar*  text                   Read / Write
+;;;
+;;; Signals
+;;;
+;;;                void   apply-tag              Run Last
+;;;                void   begin-user-action      Run Last
+;;;                void   changed                Run Last
+;;;                void   delete-range           Run Last
+;;;                void   end-user-action        Run Last
+;;;                void   insert-child-anchor    Run Last
+;;;                void   insert-pixbuf          Run Last
+;;;                void   insert-text            Run Last
+;;;                void   mark-deleted           Run Last
+;;;                void   mark-set               Run Last
+;;;                void   modified-changed       Run Last
+;;;                void   paste-done             Run Last
+;;;                void   remove-tag             Run Last
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GtkTextBuffer
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -157,7 +186,7 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"apply-tag\" signal}
       @begin{pre}
- lambda (buffer tag start end)   : Run Last
+ lambda (buffer tag start end)    : Run Last
       @end{pre}
       The \"apply-tag\" signal is emitted to apply a tag to a range of text in a
       @sym{gtk-text-buffer} object. Applying actually occurs in the default
@@ -175,7 +204,7 @@
       @end{table}
     @subheading{The \"begin-user-action\" signal}
       @begin{pre}
- lambda (buffer)   : Run Last
+ lambda (buffer)    : Run Last
       @end{pre}
       The \"begin-user-action\" signal is emitted at the beginning of a single
       user-visible operation on a @sym{gtk-text-buffer}. See also:
@@ -190,7 +219,7 @@
       @end{table}
     @subheading{The \"changed\" signal}
       @begin{pre}
- lambda (buffer)
+ lambda (buffer)    : Run Last
       @end{pre}
       The \"changed signal\" is emitted when the content of a
       @sym{gtk-text-buffer} object has changed.
@@ -199,7 +228,7 @@
       @end{table}
     @subheading{The \"delete-range\" signal}
       @begin{pre}
- lambda (buffer start end)   : Run Last
+ lambda (buffer start end)    : Run Last
       @end{pre}
       The \"delete-range\" signal is emitted to delete a range from a
       @sym{gtk-text-buffer}.
@@ -217,7 +246,7 @@
       @end{table}
     @subheading{The \"end-user-action\" signal}
       @begin{pre}
- lambda (buffer)   : Run Last
+ lambda (buffer)    : Run Last
       @end{pre}
       The \"end-user-action\" signal is emitted at the end of a single
       user-visible operation on the @sym{gtk-text-buffer}. See also:
@@ -233,7 +262,7 @@
       @end{table}
     @subheading{The \"insert-child-anchor\" signal}
       @begin{pre}
- lambda (buffer location anchor)   : Run Last
+ lambda (buffer location anchor)    : Run Last
       @end{pre}
       The \"insert-child-anchor\" signal is emitted to insert a
       @class{gtk-text-child-anchor} in a @sym{gtk-text-buffer}. Insertion
@@ -250,7 +279,7 @@
       @end{table}
     @subheading{The \"insert-pixbuf\" signal}
       @begin{pre}
- lambda (buffer location pixbuf)   : Run Last
+ lambda (buffer location pixbuf)    : Run Last
       @end{pre}
       The \"insert-pixbuf\" signal is emitted to insert a @class{gdk-pixbuf} in
       a @sym{gtk-text-buffer}. Insertion actually occurs in the default handler.
@@ -266,7 +295,7 @@
       @end{table}
     @subheading{The \"insert-text\" signal}
       @begin{pre}
- lambda (buffer location text len)   : Run Last
+ lambda (buffer location text len)    : Run Last
       @end{pre}
       The \"insert-text\" signal is emitted to insert text in a
       @sym{gtk-text-buffer}.
@@ -284,7 +313,7 @@
       @end{table}
     @subheading{The \"mark-deleted\" signal}
       @begin{pre}
- lambda (buffer mark)   : Run Last
+ lambda (buffer mark)    : Run Last
       @end{pre}
       The \"mark-deleted\" signal is emitted as notification after a
       @class{gtk-text-mark} is deleted.
@@ -295,7 +324,7 @@
       @end{table}
     @subheading{The \"mark-set\" signal}
       @begin{pre}
- lambda (buffer location mark)   : Run Last
+ lambda (buffer location mark)    : Run Last
       @end{pre}
       The \"mark-set\" signal is emitted as notification after a
       @class{gtk-text-mark} is set.
@@ -308,7 +337,7 @@
       @end{table}
     @subheading{The \"modified-changed\" signal}
       @begin{pre}
- lambda (buffer)   : Run Last
+ lambda (buffer)    : Run Last
       @end{pre}
       The \"modified-changed\" signal is emitted when the modified bit of a
       @sym{gtk-text-buffer} flips.
@@ -318,7 +347,7 @@
       @end{table}
     @subheading{The \"paste-done\" signal}
       @begin{pre}
- lambda (buffer clipboard)   : Run Last
+ lambda (buffer clipboard)    : Run Last
       @end{pre}
       The \"paste-done\" signal is emitted after paste operation has been
       completed. This is useful to properly scroll the view to the end of the
@@ -327,11 +356,9 @@
       @begin[code]{table}
         @entry[buffer]{The object which received the signal.}
       @end{table}
-      Since 2.16
-
     @subheading{The \"remove-tag\" signal}
       @begin{pre}
- lambda (buffer tag start end)   : Run Last
+ lambda (buffer tag start end)    : Run Last
       @end{pre}
       The \"remove-tag\" signal is emitted to remove all occurrences of tag from
       a range of text in a @sym{gtk-text-buffer}. Removal actually occurs in the
@@ -381,10 +408,10 @@
   @see-function{gtk-text-buffer-get-text}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
+;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-text-buffer-copy-target-list ---------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "copy-target-list"
@@ -392,55 +419,7 @@
  "The @code{\"copy-target-list\"} property of type @class{gtk-target-list}
   (Read) @br{}
   The list of targets this buffer supports for clipboard copying and as DND
-  source. @br{}
-  Since 2.10")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "cursor-position"
-                                               'gtk-text-buffer) 't)
- "The @code{\"cursor-position\"} property of type @code{:int} (Read) @br{}
-  The position of the insert mark, as offset from the beginning of the
-  buffer. It is useful for getting notified when the cursor moves. @br{}
-  Allowed values: >= 0 @br{}
-  Default value: 0 @br{}
-  Since 2.10")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "has-selection"
-                                               'gtk-text-buffer) 't)
- "The @code{\"has-selection\"} property of type @code{:boolean} (Read) @br{}
-  Whether the buffer has some text currently selected. @br{}
-  Default value: @code{nil} @br{}
-  Since 2.10")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "paste-target-list"
-                                               'gtk-text-buffer) 't)
- "The @code{\"paste-target-list\"} property of type @class{gtk-target-list}
-  (Read) @br{}
-  The list of targets this buffer supports for clipboard pasting and as DND
-  destination. @br{}
-  Since 2.10")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "tag-table" 'gtk-text-buffer) 't)
- "The @code{\"tag-table\"} property of type @class{gtk-text-tag-table}
-  (Read / Write / Construct) @br{}
-  Text Tag Table.")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "text" 'gtk-text-buffer) 't)
- "The @code{\"text\"} property of type @code{:string} (Read / Write) @br{}
-  The text content of the buffer. Without child widgets and images, see the
-  function @fun{gtk-text-buffer-get-text} for more information. @br{}
-  Default value: \"\" @br{}
-  Since 2.8")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
+  source.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-buffer-copy-target-list atdoc:*function-name-alias*)
@@ -452,6 +431,17 @@
   @see-class{gtk-text-buffer}
   @see-function{gtk-text-buffer-get-copy-target-list}")
 
+;;; --- gtk-text-buffer-cursor-position ----------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "cursor-position"
+                                               'gtk-text-buffer) 't)
+ "The @code{\"cursor-position\"} property of type @code{:int} (Read) @br{}
+  The position of the insert mark, as offset from the beginning of the
+  buffer. It is useful for getting notified when the cursor moves. @br{}
+  Allowed values: >= 0 @br{}
+  Default value: 0")
+
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-buffer-cursor-position atdoc:*function-name-alias*)
       "Accessor"
@@ -460,6 +450,15 @@
   Accessor of the slot @code{\"cursor-position\"} of the @class{gtk-text-buffer}
   class.
   @see-class{gtk-text-buffer}")
+
+;;; --- gtk-text-buffer-has-selection ------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "has-selection"
+                                               'gtk-text-buffer) 't)
+ "The @code{\"has-selection\"} property of type @code{:boolean} (Read) @br{}
+  Whether the buffer has some text currently selected. @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-buffer-has-selection atdoc:*function-name-alias*)
@@ -471,6 +470,16 @@
   @see-class{gtk-text-buffer}
   @see-function{gtk-text-buffer-get-has-selection}")
 
+;;; --- gtk-text-buffer-paste-target-list --------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "paste-target-list"
+                                               'gtk-text-buffer) 't)
+ "The @code{\"paste-target-list\"} property of type @class{gtk-target-list}
+  (Read) @br{}
+  The list of targets this buffer supports for clipboard pasting and as DND
+  destination.")
+
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-buffer-paste-target-list atdoc:*function-name-alias*)
       "Accessor"
@@ -481,6 +490,14 @@
   @see-class{gtk-text-buffer}
   @see-function{gtk-text-buffer-get-paste-target-list}")
 
+;;; --- gtk-text-buffer-tag-table ----------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "tag-table" 'gtk-text-buffer) 't)
+ "The @code{\"tag-table\"} property of type @class{gtk-text-tag-table}
+  (Read / Write / Construct) @br{}
+  Text Tag Table.")
+
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-buffer-tag-table atdoc:*function-name-alias*)
       "Accessor"
@@ -490,6 +507,15 @@
   class.
   @see-class{gtk-text-buffer}
   @see-function{gtk-text-buffer-get-tag-table}")
+
+;;; --- gtk-text-buffer-text ---------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "text" 'gtk-text-buffer) 't)
+ "The @code{\"text\"} property of type @code{:string} (Read / Write) @br{}
+  The text content of the buffer. Without child widgets and images, see the
+  function @fun{gtk-text-buffer-get-text} for more information. @br{}
+  Default value: \"\"")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-buffer-text atdoc:*function-name-alias*)
@@ -842,6 +868,36 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
+;;; gtk_text_buffer_insert_markup ()
+;;;
+;;; void
+;;; gtk_text_buffer_insert_markup (GtkTextBuffer *buffer,
+;;;                                GtkTextIter *iter,
+;;;                                const gchar *markup,
+;;;                                gint len);
+;;;
+;;; Inserts the text in markup at position iter . markup will be inserted in its
+;;; entirety and must be nul-terminated and valid UTF-8. Emits the “insert-text”
+;;; signal, possibly multiple times; insertion actually occurs in the default
+;;; handler for the signal. iter will point to the end of the inserted text on
+;;; return.
+;;;
+;;; buffer :
+;;;     a GtkTextBuffer
+;;; 
+;;; iter :
+;;; location to insert the markup
+;;;
+;;; markup :
+;;;     a nul-terminated UTF-8 string containing Pango markup
+;;; 
+;;; len :
+;;;     length of markup in bytes, or -1
+;;; 
+;;; Since 3.16
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_delete ()
 ;;; ----------------------------------------------------------------------------
 
@@ -931,8 +987,7 @@
   Because the buffer is modified, all outstanding iterators become invalid
   after calling this function; however, the iter will be re-initialized to
   point to the location where text was deleted.
-
-  Since 2.6"
+  @see-class{gtk-text-buffer}"
   (%gtk-text-buffer-backspace buffer iter interactive default-editable))
 
 (export 'gtk-text-buffer-backspace)
@@ -1217,8 +1272,7 @@
   @end{short}
 
   Emits the \"mark-set\" signal as notification of the mark's initial placement.
-
-  Since 2.12"
+  @see-class{gtk-text-buffer}"
   (buffer (g-object gtk-text-buffer))
   (mark (g-object gtk-text-mark))
   (position (g-boxed-foreign gtk-text-iter)))
@@ -1355,8 +1409,6 @@
   @begin{short}
     Indicates whether the @arg{buffer} has some text currently selected.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-text-buffer}"
   (gtk-text-buffer-has-selection buffer))
 
@@ -1401,8 +1453,6 @@
     the temporarily-selected region will force stuff to be recalculated. This
     function moves them as a unit, which can be optimized.
   @end{short}
-
-  Since 2.4
   @see-function{gtk-text-buffer-move-mark}"
   (buffer (g-object gtk-text-buffer))
   (insertion-point (g-boxed-foreign gtk-text-iter))
@@ -1581,15 +1631,22 @@
 
 (defun gtk-text-buffer-get-iter-at-line-offset (buffer line-number char-offset)
  #+cl-cffi-gtk-documentation
- "@version{2013-5-5}
+ "@version{2019-4-12}
   @argument[buffer]{a @class{gtk-text-buffer} object}
-  @argument[iter]{iterator to initialize}
-  @argument[line-number]{line number counting from 0}
-  @argument[char-offset]{char offset from start of line}
-  Obtains an iterator pointing to @arg{char-offset} within the given line. The
-  @arg{char-offset} must exist, offsets off the end of the line are not allowed.
-  Note characters, not bytes; UTF-8 may encode one character as multiple
-  bytes."
+  @argument[iter]{@class{gtk-text-iter} iterator to initialize}
+  @argument[line-number]{@code{:int} line number counting from 0}
+  @argument[char-offset]{@code{:int} char offset from start of line}
+  @begin{short}
+    Obtains an iterator pointing to @arg{char-offset} within the given line.
+  @end{short}
+  Note characters, not bytes; UTF-8 may encode one character as multiple bytes.
+
+  Before the 3.20 version, it was not allowed to pass an invalid location.
+
+  Since the 3.20 version, if @arg{line-number} is greater than the number of
+  lines in the buffer, the end iterator is returned. And if @arg{char-offset} is
+  off the end of the line, the iterator at the end of the line is returned.
+  @see-class{gtk-text-buffer}"
   (let ((iter (make-instance 'gtk-text-iter)))
     (%gtk-text-buffer-get-iter-at-line-offset buffer
                                               iter
@@ -1657,10 +1714,15 @@
 ;;;                                              gint line_number,
 ;;;                                              gint byte_index);
 ;;;
-;;; Obtains an iterator pointing to byte_index within the given line.
-;;; byte_index must be the start of a UTF-8 character, and must not be beyond
-;;; the end of the line. Note bytes, not characters; UTF-8 may encode one
-;;; character as multiple bytes.
+;;; Obtains an iterator pointing to byte_index within the given line. byte_index
+;;; must be the start of a UTF-8 character. Note bytes, not characters; UTF-8
+;;; may encode one character as multiple bytes.
+;;;
+;;; Before the 3.20 version, it was not allowed to pass an invalid location.
+;;;
+;;; Since the 3.20 version, if line_number is greater than the number of lines
+;;; in the buffer , the end iterator is returned. And if byte_index is off the
+;;; end of the line, the iterator at the end of the line is returned.
 ;;;
 ;;; buffer :
 ;;;     a GtkTextBuffer
@@ -2156,8 +2218,6 @@
   @arg{format}'s to be used must be registered using the functions
   @fun{gtk-text-buffer-register-deserialize-format} or
   @fun{gtk-text-buffer-register-deserialize-tagset} beforehand.
-
-  Since 2.10
   @see-function{gtk-text-buffer-register-deserialize-format}
   @see-function{gtk-text-buffer-register-deserialize-tagset}"
   (let ((bytes (foreign-alloc :uint8 :count (length data))))
@@ -2187,8 +2247,6 @@
     This functions returns the value set with the function
     @fun{gtk-text-buffer-deserialize-set-can-create-tags}.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-text-buffer}
   @see-symbol{gdk-atom}
   @see-function{gtk-text-buffer-deserialize-set-can-create-tags}"
@@ -2233,8 +2291,6 @@
   if you defined a tagset name for your application suite's text buffers and
   you know that it is fine to receive new tags from these buffers, because you
   know that your application can handle the newly created tags.
-
-  Since 2.10
   @see-function{gtk-text-buffer-register-deserialize-tagset}"
   (%gtk-text-buffer-deserialize-set-can-create-tags buffer format new-value))
 
@@ -2257,8 +2313,6 @@
   @symbol{gtk-text-buffer-target-info} enumeration, using the functions
   @fun{gtk-target-list-add-rich-text-targets} and
   @fun{gtk-target-list-add-text-targets}.
-
-  Since 2.10
   @see-class{gtk-text-buffer}
   @see-class{gtk-target-list}
   @see-symbol{gtk-text-buffer-target-info}
@@ -2289,8 +2343,6 @@
     @fun{gtk-text-buffer-register-deserialize-format} or
     @fun{gtk-text-buffer-register-deserialize-tagset}.
   @end{short}
-
-  Since 2.10
   @see-function{gtk-text-buffer-register-deserialize-format}
   @see-function{gtk-text-buffer-register-deserialize-tagset}"
   (with-foreign-object (n-formats :int)
@@ -2321,8 +2373,6 @@
   @symbol{gtk-text-buffer-target-info} enumeration, using the functions
   @fun{gtk-target-list-add-rich-text-targets} and
   @fun{gtk-target-list-add-text-targets}.
-
-  Since 2.10
   @see-class{gtk-text-buffer}
   @see-class{gtk-target-list}
   @see-symbol{gtk-text-buffer-target-info}
@@ -2352,8 +2402,6 @@
     @fun{gtk-text-buffer-register-serialize-format} or
     @fun{gtk-text-buffer-register-serialize-tagset}.
   @end{short}
-
-  Since 2.10
   @see-function{gtk-text-buffer-register-serialize-format}
   @see-function{gtk-text-buffer-register-serialize-tagset}"
   (with-foreign-object (n-formats :int)
@@ -2391,8 +2439,7 @@
     This function registers a rich text deserialization function along with its
     @arg{mime-type} with the passed @arg{buffer}.
   @end{short}
-
-  Since 2.10"
+  @see-class{gtk-text-buffer}"
   (%gtk-text-buffer-register-deserialize-format
                                    buffer
                                    mime-type
@@ -2452,8 +2499,6 @@
     the passed buffer. See the function
     @fun{gtk-text-buffer-register-serialize-tagset} for details.
   @end{short}
-
-  Since 2.10
   @see-function{gtk-text-buffer-register-serialize-tagset}"
   (buffer (g-object gtk-text-buffer))
   (tagset-name :string))
@@ -2486,8 +2531,7 @@
     This function registers a rich text serialization function along with its
     @arg{mime-type} with the passed @arg{buffer}.
   @end{short}
-
-  Since 2.10"
+  @see-class{gtk-text-buffer}"
   (%gtk-text-buffer-register-serialize-format
                                    buffer
                                    mime-type
@@ -2529,8 +2573,6 @@
   being pasted. It is probably the common case to pass an identifier
   != @code{nil} here, since the @code{nil} tagset requires the receiving buffer
   to deal with with pasting of arbitrary tags.
-
-  Since 2.10
   @see-function{gtk-text-buffer-register-serialize-format}"
   (buffer (g-object gtk-text-buffer))
   (tagset-name :string))
@@ -2625,8 +2667,6 @@
   @arg{format}'s to be used must be registered using the functions
   @fun{gtk-text-buffer-register-serialize-format} or
   @fun{gtk-text-buffer-register-serialize-tagset} beforehand.
-
-  Since 2.10
   @see-function{gtk-text-buffer-register-serialize-format}
   @see-function{gtk-text-buffer-register-serialize-tagset}"
   (with-foreign-object (length 'g-size)
@@ -2659,8 +2699,6 @@
     using the functions @fun{gtk-text-buffer-register-deserialize-format} or
     @fun{gtk-text-buffer-register-deserialize-tagset}.
   @end{short}
-
-  Since 2.10
   @see-function{gtk-text-buffer-register-deserialize-format}
   @see-function{gtk-text-buffer-register-deserialize-tagset}"
   (buffer (g-object gtk-text-buffer))
@@ -2684,8 +2722,6 @@
     using the functions @fun{gtk-text-buffer-register-serialize-format} or
     @fun{gtk-text-buffer-register-serialize-tagset}.
   @end{short}
-
-  Since 2.10
   @see-function{gtk-text-buffer-register-serialize-format}
   @see-function{gtk-text-buffer-register-serialize-tagset}"
   (buffer (g-object gtk-text-buffer))

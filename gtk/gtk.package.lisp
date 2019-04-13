@@ -2264,6 +2264,14 @@ gtk_text_buffer_apply_tag (buffer, tag, &start, &end);
       Stores attributed text for display in a @class{gtk-text-view} widget.
 
       @about-class{gtk-text-buffer}
+
+      @about-generic{gtk-text-buffer-copy-target-list}
+      @about-generic{gtk-text-buffer-cursor-position}
+      @about-generic{gtk-text-buffer-has-selection}
+      @about-generic{gtk-text-buffer-paste-target-list}
+      @about-generic{gtk-text-buffer-tag-table}
+      @about-generic{gtk-text-buffer-text}
+
       @about-function{gtk-text-buffer-new}
       @about-function{gtk-text-buffer-get-line-count}
       @about-function{gtk-text-buffer-get-char-count}
@@ -2276,6 +2284,7 @@ gtk_text_buffer_apply_tag (buffer, tag, &start, &end);
       @about-function{gtk-text-buffer-insert-range-interactive}
       @about-function{gtk-text-buffer-insert-with-tags}
       @about-function{gtk-text-buffer-insert-with-tags-by-name}
+      @about-function{gtk-text-buffer-insert-markup}
       @about-function{gtk-text-buffer-delete}
       @about-function{gtk-text-buffer-delete-interactive}
       @about-function{gtk-text-buffer-backspace}
@@ -2323,7 +2332,9 @@ gtk_text_buffer_apply_tag (buffer, tag, &start, &end);
       @about-function{gtk-text-buffer-end-user-action}
       @about-function{gtk-text-buffer-add-selection-clipboard}
       @about-function{gtk-text-buffer-remove-selection-clipboard}
+
       @about-symbol{gtk-text-buffer-target-info}
+
       @about-function{gtk-text-buffer-deserialize}
       @about-function{gtk-text-buffer-deserialize-get-can-create-tags}
       @about-function{gtk-text-buffer-deserialize-set-can-create-tags}
@@ -2342,14 +2353,91 @@ gtk_text_buffer_apply_tag (buffer, tag, &start, &end);
     @begin[GtkTextTag]{subsection}
       A tag that can be applied to text in a @class{gtk-text-buffer}.
 
-      @about-class{gtk-text-tag}
-      @about-symbol{gtk-wrap-mode}
       @about-symbol{gtk-text-attributes}
+      @about-symbol{gtk-wrap-mode}
+      @about-symbol{gtk-text-appearance}
+
+      @about-class{gtk-text-tag}
+
+      @about-generic{gtk-text-tag-accumulative-margin}
+      @about-generic{gtk-text-tag-background}
+      @about-generic{gtk-text-tag-background-full-height}
+      @about-generic{gtk-text-tag-background-full-height-set}
+      @about-generic{gtk-text-tag-background-gdk}
+      @about-generic{gtk-text-tag-background-rgba}
+      @about-generic{gtk-text-tag-background-set}
+      @about-generic{gtk-text-tag-direction}
+      @about-generic{gtk-text-tag-editable}
+      @about-generic{gtk-text-tag-editable-set}
+      @about-generic{gtk-text-tag-fallback}
+      @about-generic{gtk-text-tag-fallback-set}
+      @about-generic{gtk-text-tag-family}
+      @about-generic{gtk-text-tag-family-set}
+      @about-generic{gtk-text-tag-font}
+      @about-generic{gtk-text-tag-font-desc}
+      @about-generic{gtk-text-tag-font-features}
+      @about-generic{gtk-text-tag-font-features-set}
+      @about-generic{gtk-text-tag-foreground}
+      @about-generic{gtk-text-tag-foreground-gdk}
+      @about-generic{gtk-text-tag-foreground-rgba}
+      @about-generic{gtk-text-tag-foreground-set}
+      @about-generic{gtk-text-tag-indent}
+      @about-generic{gtk-text-tag-indent-set}
+      @about-generic{gtk-text-tag-invisible}
+      @about-generic{gtk-text-tag-invisible-set}
+      @about-generic{gtk-text-tag-justification}
+      @about-generic{gtk-text-tag-justification-set}
+      @about-generic{gtk-text-tag-language}
+      @about-generic{gtk-text-tag-language-set}
+      @about-generic{gtk-text-tag-left-margin}
+      @about-generic{gtk-text-tag-left-margin-set}
+      @about-generic{gtk-text-tag-letter-spacing}
+      @about-generic{gtk-text-tag-letter-spacing-set}
+      @about-generic{gtk-text-tag-name}
+      @about-generic{gtk-text-tag-paragraph-background}
+      @about-generic{gtk-text-tag-paragraph-background-gdk}
+      @about-generic{gtk-text-tag-paragraph-background-rgba}
+      @about-generic{gtk-text-tag-paragraph-background-set}
+      @about-generic{gtk-text-tag-pixels-above-lines}
+      @about-generic{gtk-text-tag-pixels-above-lines-set}
+      @about-generic{gtk-text-tag-pixels-below-lines}
+      @about-generic{gtk-text-tag-pixels-below-lines-set}
+      @about-generic{gtk-text-tag-pixels-inside-wrap}
+      @about-generic{gtk-text-tag-pixels-inside-wrap-set}
+      @about-generic{gtk-text-tag-right-margin}
+      @about-generic{gtk-text-tag-right-margin-set}
+      @about-generic{gtk-text-tag-rise}
+      @about-generic{gtk-text-tag-rise-set}
+      @about-generic{gtk-text-tag-scale}
+      @about-generic{gtk-text-tag-scale-set}
+      @about-generic{gtk-text-tag-size}
+      @about-generic{gtk-text-tag-size-points}
+      @about-generic{gtk-text-tag-size-set}
+      @about-generic{gtk-text-tag-stretch}
+      @about-generic{gtk-text-tag-stretch-set}
+      @about-generic{gtk-text-tag-strikethrough}
+      @about-generic{gtk-text-tag-strikethrough-rgba}
+      @about-generic{gtk-text-tag-strikethrough-rgba-set}
+      @about-generic{gtk-text-tag-strikethrough-set}
+      @about-generic{gtk-text-tag-style}
+      @about-generic{gtk-text-tag-style-set}
+      @about-generic{gtk-text-tag-tabs}
+      @about-generic{gtk-text-tag-tabs-set}
+      @about-generic{gtk-text-tag-underline}
+      @about-generic{gtk-text-tag-underline-rgba}
+      @about-generic{gtk-text-tag-underline-rgba-set}
+      @about-generic{gtk-text-tag-underline-set}
+      @about-generic{gtk-text-tag-variant}
+      @about-generic{gtk-text-tag-variant-set}
+      @about-generic{gtk-text-tag-weight}
+      @about-generic{gtk-text-tag-weight-set}
+      @about-generic{gtk-text-tag-wrap-mode}
+      @about-generic{gtk-text-tag-wrap-mode-set}
+
       @about-function{gtk-text-tag-new}
       @about-function{gtk-text-tag-get-priority}
       @about-function{gtk-text-tag-set-priority}
       @about-function{gtk-text-tag-event}
-      @about-symbol{gtk-text-appearance}
       @about-function{gtk-text-attributes-new}
       @about-function{gtk-text-attributes-copy}
       @about-function{gtk-text-attributes-copy-values}
@@ -5349,6 +5437,9 @@ setup_tree (void)
       Interface implemented by widgets for choosing an application.
 
       @about-class{gtk-app-chooser}
+
+      @about-generic{gtk-app-chooser-content-type}
+
       @about-function{gtk-app-chooser-get-app-info}
       @about-function{gtk-app-chooser-get-content-type}
       @about-function{gtk-app-chooser-refresh}
@@ -5357,6 +5448,11 @@ setup_tree (void)
       A button to launch an application chooser dialog.
 
       @about-class{gtk-app-chooser-button}
+
+      @about-generic{gtk-app-chooser-button-heading}
+      @about-generic{gtk-app-chooser-button-show-default-item}
+      @about-generic{gtk-app-chooser-button-show-dialog-item}
+
       @about-function{gtk-app-chooser-button-new}
       @about-function{gtk-app-chooser-button-append-custom-item}
       @about-function{gtk-app-chooser-button-append-separator}
@@ -5372,6 +5468,10 @@ setup_tree (void)
       An application chooser dialog.
 
       @about-class{gtk-app-chooser-dialog}
+
+      @about-generic{gtk-app-chooser-dialog-gfile}
+      @about-generic{gtk-app-chooser-dialog-heading}
+
       @about-function{gtk-app-chooser-dialog-new}
       @about-function{gtk-app-chooser-dialog-new-for-content-type}
       @about-function{gtk-app-chooser-dialog-get-widget}
@@ -5382,6 +5482,14 @@ setup_tree (void)
       Application chooser widget that can be embedded in other widgets.
 
       @about-class{gtk-app-chooser-widget}
+
+      @about-generic{gtk-app-chooser-widget-default-text}
+      @about-generic{gtk-app-chooser-widget-show-all}
+      @about-generic{gtk-app-chooser-widget-show-default}
+      @about-generic{gtk-app-chooser-widget-show-fallback}
+      @about-generic{gtk-app-chooser-widget-show-other}
+      @about-generic{gtk-app-chooser-widget-show-recommended}
+
       @about-function{gtk-app-chooser-widget-new}
       @about-function{gtk-app-chooser-widget-set-show-default}
       @about-function{gtk-app-chooser-widget-get-show-default}

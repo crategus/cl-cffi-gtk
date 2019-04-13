@@ -91,8 +91,10 @@ GTK+ Widgets and Objects
 
     gtk.text-iter.lisp               - GtkTextIter                 - GTK+ 3.16 *
     gtk.text-mark.lisp               - GtkTextMark                 - GTK+ 3.16 *
-    gtk.text-buffer.lisp             - GtkTextBuffer               - GTK+ 3.6.4*
+    gtk.text-buffer.lisp             - GtkTextBuffer               - GTK+ 3.24
+
     gtk.text-tag.lisp                - GtkTextTag                  - GTK+ 3.6.4*
+
     gtk.text-tag-table.lisp          - GtkTextTagTable             - GTK+ 3.6.4*
     gtk.text-view.lisp               - GtkTextView                 - GTK+ 3.6.4*
 
@@ -239,10 +241,10 @@ GTK+ Widgets and Objects
 
   Choosing from installed applications
 
-    gtk.app-chooser.lisp             - GtkAppChooser               - GTK+ 3.8.6*
-    gtk.app-chooser-button.lisp      - GtkAppChooserButton         - GTK+ 3.8.6*
-    gtk.app-chooser-dialog.lisp      - GtkAppChooserDialog         - GTK+ 3.8.6*
-    gtk.app-chooser-widget.lisp      - GtkAppChooserWidget         - GTK+ 3.8.6*
+    gtk.app-chooser.lisp             - GtkAppChooser               - GTK+ 3.24
+    gtk.app-chooser-button.lisp      - GtkAppChooserButton         - GTK+ 3.24
+    gtk.app-chooser-dialog.lisp      - GtkAppChooserDialog         - GTK+ 3.24
+    gtk.app-chooser-widget.lisp      - GtkAppChooserWidget         - GTK+ 3.24
 
   Gestures and event handling
 
