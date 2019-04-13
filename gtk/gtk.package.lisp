@@ -111,14 +111,24 @@
       @class{gtk-window} subclass with @class{gtk-application} support.
 
       @about-class{gtk-application-window}
+
+      @about-generic{gtk-application-window-show-menubar}
+
       @about-function{gtk-application-window-new}
       @about-function{gtk-application-window-get-id}
+      @about-function{gtk-application-window-set-help-overlay}
+      @about-function{gtk-application-window-get-help-overlay}
     @end{subsection}
     @begin[GtkActionable]{subsection}
       An interface for widgets that can be associated with actions.
 
       @about-class{gtk-actionable}
-      @about-class{gtk-actionable-interface}
+
+      @about-generic{gtk-actionable-action-name}
+      @about-generic{gtk-actionable-action-target}
+
+      @about-function{gtk-actionable-get-action-target-value}
+      @about-function{gtk-actionable-set-action-target-value}
       @about-function{gtk-actionable-set-action-target}
       @about-function{gtk-actionable-set-detailed-action-name}
     @end{subsection}
@@ -4231,16 +4241,15 @@ setup_tree (void)
     @begin[GtkScrollable]{subsection}
       An interface for scrollable widgets.
 
-      @about-class{gtk-scrollable}
-      @about-function{gtk-scrollable-get-hadjustment}
-      @about-function{gtk-scrollable-set-hadjustment}
-      @about-function{gtk-scrollable-get-vadjustment}
-      @about-function{gtk-scrollable-set-vadjustment}
       @about-symbol{gtk-scrollable-policy}
-      @about-function{gtk-scrollable-get-hscroll-policy}
-      @about-function{gtk-scrollable-set-hscroll-policy}
-      @about-function{gtk-scrollable-get-vscroll-policy}
-      @about-function{gtk-scrollable-set-vscroll-policy}
+      @about-class{gtk-scrollable}
+
+      @about-generic{gtk-scrollable-hadjustment}
+      @about-generic{gtk-scrollable-vadjustment}
+      @about-generic{gtk-scrollable-hscroll-policy}
+      @about-generic{gtk-scrollable-vscroll-policy}
+
+      @about-function{gtk-scrollable-get-border}
     @end{subsection}
   @end{section}
   @begin[Printing]{section}
@@ -4580,6 +4589,56 @@ setup_tree (void)
       @about-function{gtk-page-setup-unix-dialog-get-page-setup}
       @about-function{gtk-page-setup-unix-dialog-set-print-settings}
       @about-function{gtk-page-setup-unix-dialog-get-print-settings}
+    @end{subsection}
+  @end{section}
+
+  @begin[Shortcuts Overview]{section}
+    @begin[GtkShortcutsWindow]{subsection}
+      Toplevel which shows help for shortcuts
+
+      @about-class{gtk-shortcuts-window}
+
+      @about-generic{gtk-shortcuts-window-section-name}
+      @about-generic{gtk-shortcuts-window-view-name}
+    @end{subsection}
+    @begin[GtkShortcutsSection]{subsection}
+      Represents an application mode in a GtkShortcutsWindow
+
+      @about-class{gtk-shortcuts-section}
+
+      @about-generic{gtk-shortcuts-section-max-height}
+      @about-generic{gtk-shortcuts-section-section-name}
+      @about-generic{gtk-shortcuts-section-title}
+      @about-generic{gtk-shortcuts-section-view-name}
+    @end{subsection}
+    @begin[GtkShortcutsGroup]{subsection}
+      Represents a group of shortcuts in a GtkShortcutsWindow
+
+      @about-class{gtk-shortcuts-group}
+
+      @about-generic{gtk-shortcuts-group-accel-size-group}
+      @about-generic{gtk-shortcuts-group-height}
+      @about-generic{gtk-shortcuts-group-title}
+      @about-generic{gtk-shortcuts-group-title-size-group}
+      @about-generic{gtk-shortcuts-group-view}
+    @end{subsection}
+    @begin[GtkShortcutsShortcut]{subsection}
+      Represents a keyboard shortcut in a GtkShortcutsWindow
+
+      @about-symbol{gtk-shortcut-type}
+      @about-class{gtk-shortcuts-shortcut}
+
+      @about-generic{gtk-shortcuts-shortcut-accel-size-group}
+      @about-generic{gtk-shortcuts-shortcut-accelerator}
+      @about-generic{gtk-shortcuts-shortcut-action-name}
+      @about-generic{gtk-shortcuts-shortcut-direction}
+      @about-generic{gtk-shortcuts-shortcut-icon}
+      @about-generic{gtk-shortcuts-shortcut-icon-set}
+      @about-generic{gtk-shortcuts-shortcut-shortcut-type}
+      @about-generic{gtk-shortcuts-shortcut-subtitle}
+      @about-generic{gtk-shortcuts-shortcut-subtitle-set}
+      @about-generic{gtk-shortcuts-shortcut-title}
+      @about-generic{gtk-shortcuts-shortcut-title-size-group}
     @end{subsection}
   @end{section}
   @begin[Miscellaneous]{section}
@@ -5115,6 +5174,10 @@ setup_tree (void)
       Toplevel for embedding into other processes.
 
       @about-class{gtk-plug}
+
+      @about-generic{gtk-plug-embedded}
+      @about-generic{gtk-plug-socket-window}
+
       @about-function{gtk-plug-construct}
       @about-function{gtk-plug-construct-for-display}
       @about-function{gtk-plug-new}
@@ -5125,6 +5188,7 @@ setup_tree (void)
       Container for widgets from other processes.
 
       @about-class{gtk-socket}
+
       @about-function{gtk-socket-new}
       @about-function{gtk-socket-add-id}
       @about-function{gtk-socket-get-id}
@@ -5135,11 +5199,15 @@ setup_tree (void)
     @begin[GtkRecentManager]{subsection}
       Managing recently used files.
 
-      @about-class{gtk-recent-manager}
       @about-class{gtk-recent-info}
       @about-class{gtk-recent-data}
-      @about-symbol{GTK_RECENT_MANAGER_ERROR}
+      @about-symbol{gtk-recnet-manager-error}
       @about-symbol{gtk-recent-manager-error}
+      @about-class{gtk-recent-manager}
+
+      @about-generic{gtk-recent-manager-filename}
+      @about-generic{gtk-recent-manager-Read}
+
       @about-function{gtk-recent-manager-new}
       @about-function{gtk-recent-manager-get-default}
       @about-function{gtk-recent-manager-add-item}
@@ -5150,6 +5218,7 @@ setup_tree (void)
       @about-function{gtk-recent-manager-move-item}
       @about-function{gtk-recent-manager-get-items}
       @about-function{gtk-recent-manager-purge-items}
+
       @about-function{gtk-recent-info-ref}
       @about-function{gtk-recent-info-unref}
       @about-function{gtk-recent-info-get-uri}
@@ -5179,10 +5248,22 @@ setup_tree (void)
     @begin[GtkRecentChooser]{subsection}
       Interface implemented by widgets displaying recently used files.
 
-      @about-class{gtk-recent-chooser}
-      @about-class{gtk-recent-chooser-iface}
+      @about-symbol{gtk-recent-sort-type}
       @about-symbol{GTK_RECENT_CHOOSER_ERROR}
       @about-symbol{gtk-recent-chooser-error}
+      @about-class{gtk-recent-chooser}
+
+      @about-generic{gtk-recent-chooser-filter}
+      @about-generic{gtk-recent-chooser-limit}
+      @about-generic{gtk-recent-chooser-local-only}
+      @about-generic{gtk-recent-chooser-recent-manager}
+      @about-generic{gtk-recent-chooser-select-multiple}
+      @about-generic{gtk-recent-chooser-show-icons}
+      @about-generic{gtk-recent-chooser-show-not-found}
+      @about-generic{gtk-recent-chooser-show-private}
+      @about-generic{gtk-recent-chooser-show-tips}
+      @about-generic{gtk-recent-chooser-sort-type}
+
       @about-function{gtk-recent-chooser-set-show-private}
       @about-function{gtk-recent-chooser-get-show-private}
       @about-function{gtk-recent-chooser-set-show-not-found}
@@ -5197,7 +5278,7 @@ setup_tree (void)
       @about-function{gtk-recent-chooser-get-limit}
       @about-function{gtk-recent-chooser-set-show-tips}
       @about-function{gtk-recent-chooser-get-show-tips}
-      @about-symbol{gtk-recent-sort-type}
+
       @about-function{gtk-recent-chooser-set-sort-type}
       @about-function{gtk-recent-chooser-get-sort-type}
       @about-function{gtk-recent-chooser-set-sort-func}
@@ -5220,6 +5301,7 @@ setup_tree (void)
       Displays recently used files in a dialog.
 
       @about-class{gtk-recent-chooser-dialog}
+
       @about-function{gtk-recent-chooser-dialog-new}
       @about-function{gtk-recent-chooser-dialog-new-for-manager}
     @end{subsection}
@@ -5227,6 +5309,7 @@ setup_tree (void)
       Displays recently used files in a menu.
 
       @about-class{gtk-recent-chooser-menu}
+
       @about-function{gtk-recent-chooser-menu-new}
       @about-function{gtk-recent-chooser-menu-new-for-manager}
       @about-function{gtk-recent-chooser-menu-get-show-numbers}
@@ -5236,15 +5319,17 @@ setup_tree (void)
       Displays recently used files.
 
       @about-class{gtk-recent-chooser-widget}
+
       @about-function{gtk-recent-chooser-widget-new}
       @about-function{gtk-recent-chooser-widget-new-for-manager}
     @end{subsection}
     @begin[GtkRecentFilter]{subsection}
       A filter for selecting a subset of recently used files.
 
-      @about-class{gtk-recent-filter}
       @about-symbol{gtk-recent-filter-info}
       @about-symbol{gtk-recent-filter-flags}
+      @about-class{gtk-recent-filter}
+
       @about-function{gtk-recent-filter-new}
       @about-function{gtk-recent-filter-get-name}
       @about-function{gtk-recent-filter-set-name}
