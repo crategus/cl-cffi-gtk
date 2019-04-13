@@ -2,11 +2,11 @@
 ;;; gtk.app-chooser-widget.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.8.6 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2013 Dieter Kaiser
+;;; Copyright (C) 2013 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -28,54 +28,56 @@
 ;;;
 ;;; GtkAppChooserWidget
 ;;;
-;;; Application chooser widget that can be embedded in other widgets
+;;;     Application chooser widget that can be embedded in other widgets
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkAppChooserWidget
 ;;;
+;;; Functions
+;;;
 ;;;     gtk_app_chooser_widget_new
-;;;     gtk_app_chooser_widget_set_show_default
-;;;     gtk_app_chooser_widget_get_show_default
-;;;     gtk_app_chooser_widget_set_show_recommended
-;;;     gtk_app_chooser_widget_get_show_recommended
-;;;     gtk_app_chooser_widget_set_show_fallback
-;;;     gtk_app_chooser_widget_get_show_fallback
-;;;     gtk_app_chooser_widget_set_show_other
-;;;     gtk_app_chooser_widget_get_show_other
-;;;     gtk_app_chooser_widget_set_show_all
-;;;     gtk_app_chooser_widget_get_show_all
-;;;     gtk_app_chooser_widget_set_default_text
-;;;     gtk_app_chooser_widget_get_default_text
-;;;
-;;; Object Hierarchy
-;;;
-;;;   GObject
-;;;    +----GInitiallyUnowned
-;;;          +----GtkWidget
-;;;                +----GtkContainer
-;;;                      +----GtkBox
-;;;                            +----GtkAppChooserWidget
-;;;
-;;; Implemented Interfaces
-;;;
-;;; GtkAppChooserWidget implements AtkImplementorIface, GtkBuildable,
-;;; GtkOrientable and GtkAppChooser.
+;;;     gtk_app_chooser_widget_set_show_default            Accessor
+;;;     gtk_app_chooser_widget_get_show_default            Accessor
+;;;     gtk_app_chooser_widget_set_show_recommended        Accessor
+;;;     gtk_app_chooser_widget_get_show_recommended        Accessor
+;;;     gtk_app_chooser_widget_set_show_fallback           Accessor
+;;;     gtk_app_chooser_widget_get_show_fallback           Accessor
+;;;     gtk_app_chooser_widget_set_show_other              Accessor
+;;;     gtk_app_chooser_widget_get_show_other              Accessor
+;;;     gtk_app_chooser_widget_set_show_all                Accessor
+;;;     gtk_app_chooser_widget_get_show_all                Accessor
+;;;     gtk_app_chooser_widget_set_default_text            Accessor
+;;;     gtk_app_chooser_widget_get_default_text            Accessor
 ;;;
 ;;; Properties
 ;;;
-;;;   "default-text"             gchar*               : Read / Write
-;;;   "show-all"                 gboolean             : Read / Write / Construct
-;;;   "show-default"             gboolean             : Read / Write / Construct
-;;;   "show-fallback"            gboolean             : Read / Write / Construct
-;;;   "show-other"               gboolean             : Read / Write / Construct
-;;;   "show-recommended"         gboolean             : Read / Write / Construct
+;;;        gchar*  default-text             Read / Write
+;;;     gboolean   show-all                 Read / Write / Construct
+;;;     gboolean   show-default             Read / Write / Construct
+;;;     gboolean   show-fallback            Read / Write / Construct
+;;;     gboolean   show-other               Read / Write / Construct
+;;;     gboolean   show-recommended         Read / Write / Construct
 ;;;
 ;;; Signals
 ;;;
-;;;   "application-activated"                         : Run First
-;;;   "application-selected"                          : Run First
-;;;   "populate-popup"                                : Run First
+;;;         void   application-activated    Run First
+;;;         void   application-selected     Run First
+;;;         void   populate-popup           Run First
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;             ╰── GtkContainer
+;;;                 ╰── GtkBox
+;;;                     ╰── GtkAppChooserWidget
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GtkAppChooserWidget implements AtkImplementorIface, GtkBuildable,
+;;;     GtkOrientable and GtkAppChooser.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -129,10 +131,14 @@
 
   To keep track of the selected application, use the \"application-selected\"
   and \"application-activated\" signals.
+  @begin[CSS nodes]{dictionary}
+    @sym{gtk-app-chooser-widget} has a single CSS node with name
+    @code{appchooser}.
+  @end{dictionary}
   @begin[Signal Details]{dictionary}
     @subheading{The \"application-activated\" signal}
       @begin{pre}
- lambda (self application)   : Run First
+ lambda (self application)    : Run First
       @end{pre}
       Emitted when an application item is activated from the widget's list.
 
@@ -145,7 +151,7 @@
       @end{table}
     @subheading{The \"application-selected\" signal}
       @begin{pre}
- lambda (self application)   : Run First
+ lambda (self application)    : Run First
       @end{pre}
       Emitted when an application item is selected from the widget's list.
       @begin[code]{table}
@@ -174,103 +180,84 @@
   @see-slot{gtk-app-chooser-widget-show-recommended}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
+;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-app-chooser-widget-default-text ------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "default-text"
                                                'gtk-app-chooser-widget) 't)
- "The @code{\"default-text\"} property of type @code{:string}
+ "The @code{default-text} property of type @code{:string}
   (Read / Write) @br{}
-  The @code{\"default-text\"} property determines the text that appears in the
+  The @code{default-text} property determines the text that appears in the
   widget when there are no applications for the given content type. See also
   the function @fun{gtk-app-chooser-widget-set-default-text}. @br{}
   Default value: @code{nil}")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "show-all"
-                                               'gtk-app-chooser-widget) 't)
- "The @code{\"show-all\"} property of type @code{:boolean}
-  (Read / Write / Construct) @br{}
-  If the @code{\"show-all\"} property is @em{true}, the app chooser presents all
-  applications in a single list, without subsections for default, recommended
-  or related applications. @br{}
-  Default value: @code{nil}")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "show-default"
-                                               'gtk-app-chooser-widget) 't)
- "The @code{\"show-default\"} property of type @code{:boolean}
-  (Read / Write / Construct) @br{}
-  The @code{\"show-default\"} property determines whether the app chooser should
-  show the default handler for the content type in a separate section. If
-  @code{nil}, the default handler is listed among the recommended
-  applications. @br{}
-  Default value: @code{nil}")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "show-fallback"
-                                               'gtk-app-chooser-widget) 't)
- "The @code{\"show-fallback\"} property of type @code{:boolean}
-  (Read / Write / Construct) @br{}
-  The @code{\"show-fallback\"} property determines whether the app chooser
-  should show a section for fallback applications. If @code{nil}, the fallback
-  applications are listed among the other applications. @br{}
-  Default value: @code{nil}")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "show-other"
-                                               'gtk-app-chooser-widget) 't)
- "The @code{\"show-other\"} property of type @code{:boolean}
-  (Read / Write / Construct) @br{}
-  The @code{\"show-other\"} property determines whether the app chooser should
-  show a section for other applications. @br{}
-  Default value: @code{nil}")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "show-recommended"
-                                               'gtk-app-chooser-widget) 't)
- "The @code{\"show-recommended\"} property of type @code{:boolean}
-  (Read / Write / Construct) @br{}
-  The @code{\"show-recommended\"} property determines whether the app chooser
-  should show a section for recommended applications. If @code{nil}, the
-  recommended applications are listed among the other applications. @br{}
-  Default value: @em{true}")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-app-chooser-widget-default-text atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-app-chooser-widget-default-text 'function)
  "@version{2013-11-1}
-  Accessor of the slot @code{\"default-text\"} of the
+  Accessor of the slot @slot[gtk-app-chooser-widget]{default-text} of the
   @class{gtk-app-chooser-widget} class.
   @see-class{gtk-app-chooser-widget}")
+
+;;; --- gtk-app-chooser-widget-show-all ----------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "show-all"
+                                               'gtk-app-chooser-widget) 't)
+ "The @code{show-all} property of type @code{:boolean}
+  (Read / Write / Construct) @br{}
+  If the @code{show-all} property is @em{true}, the app chooser presents all
+  applications in a single list, without subsections for default, recommended
+  or related applications. @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-app-chooser-widget-show-all atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-app-chooser-widget-show-all 'function)
  "@version{2013-11-1}
-  Accessor of the slot @code{\"show-all\"} of the
+  Accessor of the slot @slot[gtk-app-chooser-widget]{show-all} of the
   @class{gtk-app-chooser-widget} class.
   @see-class{gtk-app-chooser-widget}")
+
+;;; --- gtk-app-chooser-widget-show-default ------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "show-default"
+                                               'gtk-app-chooser-widget) 't)
+ "The @code{show-default} property of type @code{:boolean}
+  (Read / Write / Construct) @br{}
+  The @code{show-default} property determines whether the app chooser should
+  show the default handler for the content type in a separate section. If
+  @code{nil}, the default handler is listed among the recommended
+  applications. @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-app-chooser-widget-show-default atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-app-chooser-widget-show-default 'function)
  "@version{2013-11-1}
-  Accessor of the slot @code{\"show-default\"} of the
+  Accessor of the slot @slot[gtk-app-chooser-widget]{show-default} of the
   @class{gtk-app-chooser-widget} class.
   @see-class{gtk-app-chooser-widget}")
+
+;;; --- gtk-app-chooser-widget-show-fallback -----------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "show-fallback"
+                                               'gtk-app-chooser-widget) 't)
+ "The @code{show-fallback} property of type @code{:boolean}
+  (Read / Write / Construct) @br{}
+  The @code{show-fallback} property determines whether the app chooser
+  should show a section for fallback applications. If @code{nil}, the fallback
+  applications are listed among the other applications. @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-app-chooser-widget-show-fallback
@@ -278,18 +265,41 @@
       "Accessor"
       (documentation 'gtk-app-chooser-widget-show-fallback 'function)
  "@version{2013-11-1}
-  Accessor of the slot @code{\"show-fallback\"} of the
+  Accessor of the slot @slot[gtk-app-chooser-widget]{show-fallback} of the
   @class{gtk-app-chooser-widget} class.
   @see-class{gtk-app-chooser-widget}")
+
+;;; --- gtk-app-chooser-widget-show-other --------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "show-other"
+                                               'gtk-app-chooser-widget) 't)
+ "The @code{show-other} property of type @code{:boolean}
+  (Read / Write / Construct) @br{}
+  The @code{show-other} property determines whether the app chooser should
+  show a section for other applications. @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-app-chooser-widget-show-other atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-app-chooser-widget-show-other 'function)
  "@version{2013-11-1}
-  Accessor of the slot @code{\"show-other\"} of the
+  Accessor of the slot @slot[gtk-app-chooser-widget]{show-other} of the
   @class{gtk-app-chooser-widget} class.
   @see-class{gtk-app-chooser-widget}")
+
+;;; --- gtk-app-chooser-widget-show-recommended --------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "show-recommended"
+                                               'gtk-app-chooser-widget) 't)
+ "The @code{show-recommended} property of type @code{:boolean}
+  (Read / Write / Construct) @br{}
+  The @code{show-recommended} property determines whether the app chooser
+  should show a section for recommended applications. If @code{nil}, the
+  recommended applications are listed among the other applications. @br{}
+  Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-app-chooser-widget-show-recommended
@@ -297,7 +307,7 @@
       "Accessor"
       (documentation 'gtk-app-chooser-widget-show-recommended 'function)
  "@version{2013-11-1}
-  Accessor of the slot @code{\"show-recommended\"} of the
+  Accessor of the slot @slot[gtk-app-chooser-widget]{show-recommended} of the
   @class{gtk-app-chooser-widget} class.
   @see-class{gtk-app-chooser-widget}")
 
@@ -316,8 +326,6 @@
     Creates a new @class{gtk-app-chooser-widget} for applications that can
     handle content of the given type.
   @end{short}
-
-  Since 3.0
   @see-class{gtk-app-chooser-widget}"
   (make-instance 'gtk-app-chooser-widget
                  :content-type content-type))
@@ -334,13 +342,11 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-11-2}
   @argument[self]{a @class{gtk-app-chooser-widget} widget}
-  @argument[setting]{the new value for the @code{\"show-default\"} property}
+  @argument[setting]{the new value for the @code{show-default} property}
   @begin{short}
     Sets whether the app chooser should show the default handler for the content
     type in a separate section.
   @end{short}
-
-  Since 3.0
   @see-class{gtk-app-chooser-widget}
   @see-function{gtk-app-chooser-widget-get-show-default}"
   (setf (gtk-app-chooser-widget-show-default self) setting))
@@ -358,13 +364,11 @@
  "@version{2013-11-2}
   @argument[self]{a @class{gtk-app-chooser-widget} widget}
   @begin{return}
-    The value of the @code{\"show-default\"} property.
+    The value of the @code{show-default} property.
   @end{return}
   @begin{short}
-    Returns the current value of the @code{\"show-default\"} property.
+    Returns the current value of the @code{show-default} property.
   @end{short}
-
-  Since 3.0
   @see-class{gtk-app-chooser-widget}
   @see-function{gtk-app-chooser-widget-set-show-default}"
   (gtk-app-chooser-widget-show-default self))
@@ -381,13 +385,11 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-11-2}
   @argument[self]{a @class{gtk-app-chooser-widget} widget}
-  @argument[setting]{the new value for the @code{\"show-recommended\"} property}
+  @argument[setting]{the new value for the @code{show-recommended} property}
   @begin{short}
     Sets whether the app chooser should show recommended applications for the
     content type in a separate section.
   @end{short}
-
-  Since 3.0
   @see-class{gtk-app-chooser-widget}
   @see-function{gtk-app-chooser-widget-get-show-recommended}"
   (setf (gtk-app-chooser-widget-show-recommended self) setting))
@@ -405,13 +407,11 @@
  "@version{2013-11-2}
   @argument[self]{a @class{gtk-app-chooser-widget} widget}
   @begin{return}
-    The value of the @code{\"show-recommended\"} property.
+    The value of the @code{show-recommended} property.
   @end{return}
   @begin{short}
-    Returns the current value of the @code{\"show-recommended\"} property.
+    Returns the current value of the @code{show-recommended} property.
   @end{short}
-
-  Since 3.0
   @see-class{gtk-app-chooser-widget}
   @see-function{gtk-app-chooser-widget-set-show-recommended}"
   (gtk-app-chooser-widget-show-recommended self))
@@ -428,13 +428,11 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-11-2}
   @argument[self]{a @class{gtk-app-chooser-widget} widget}
-  @argument[setting]{the new value for the @code{\"show-fallback\"} property}
+  @argument[setting]{the new value for the @code{show-fallback} property}
   @begin{short}
     Sets whether the app chooser should show related applications for the
     content type in a separate section.
   @end{short}
-
-  Since 3.0
   @see-class{gtk-app-chooser-widget}
   @see-function{gtk-app-chooser-widget-get-show-fallback}"
   (setf (gtk-app-chooser-widget-show-fallback self) setting))
@@ -451,12 +449,10 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-11-2}
   @argument[self]{a @class{gtk-app-chooser-widget} widget}
-  @return{The value of the @code{\"show-fallback\"} property.}
+  @return{The value of the @code{show-fallback} property.}
   @begin{short}
-    Returns the current value of the @code{\"show-fallback\"} property.
+    Returns the current value of the @code{show-fallback} property.
   @end{short}
-
-  Since 3.0
   @see-class{gtk-app-chooser-widget}
   @see-function{gtk-app-chooser-widget-set-show-fallback}"
   (gtk-app-chooser-widget-show-fallback self))
@@ -473,13 +469,11 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-11-2}
   @argument[self]{a @class{gtk-app-chooser-widget} widget}
-  @argument[setting]{the new value for the @code{\"show-other\"} property}
+  @argument[setting]{the new value for the @code{show-other} property}
   @begin{short}
     Sets whether the app chooser should show applications which are unrelated to
     the content type.
   @end{short}
-
-  Since 3.0
   @see-class{gtk-app-chooser-widget}
   @see-function{gtk-app-chooser-widget-get-show-other}"
   (setf (gtk-app-chooser-widget-show-other self) setting))
@@ -496,12 +490,10 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-11-2}
   @argument[self]{a @class{gtk-app-chooser-widget} widget}
-  @return{The value of the @code{\"show-other\"} property.}
+  @return{The value of the @code{show-other} property.}
   @begin{short}
-    Returns the current value of the @code{\"show-other\"} property.
+    Returns the current value of the @code{show-other} property.
   @end{short}
-
-  Since 3.0
   @see-class{gtk-app-chooser-widget}
   @see-function{gtk-app-chooser-widget-set-show-all}"
   (gtk-app-chooser-widget-show-other self))
@@ -518,12 +510,10 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-11-2}
   @argument[self]{a @class{gtk-app-chooser-widget} widget}
-  @argument[setting]{the new value for the @code{\"show-all\"} property}
+  @argument[setting]{the new value for the @code{show-all} property}
   @begin{short}
     Sets whether the app chooser should show all applications in a flat list.
   @end{short}
-
-  Since 3.0
   @see-class{gtk-app-chooser-widget}
   @see-function{gtk-app-chooser-widget-get-show-all}"
   (setf (gtk-app-chooser-widget-show-all self) setting))
@@ -540,12 +530,10 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-11-2}
   @argument[self]{a @class{gtk-app-chooser-widget} widget}
-  @return{The value of the @code{\"show-all\"} property.}
+  @return{The value of the @code{show-all} property.}
   @begin{short}
-    Returns the current value of the @code{\"show-all\"} property.
+    Returns the current value of the @code{show-all} property.
   @end{short}
-
-  Since 3.0
   @see-class{gtk-app-chooser-widget}
   @see-function{gtk-app-chooser-widget-set-show-all}"
   (gtk-app-chooser-widget-show-all self))
@@ -562,13 +550,11 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-11-2}
   @argument[self]{a @class{gtk-app-chooser-widget} widget}
-  @argument[text]{the new value for the @code{\"default-text\"} property}
+  @argument[text]{the new value for the @code{default-text} property}
   @begin{short}
     Sets the text that is shown if there are not applications that can handle
     the content type.
   @end{short}
-
-  Since 3.0
   @see-class{gtk-app-chooser-widget}
   @see-function{gtk-app-chooser-widget-get-default-text}"
   (setf (gtk-app-chooser-widget-default-text self) text))
@@ -585,13 +571,11 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-11-2}
   @argument[self]{a @class{gtk-app-chooser-widget} widget}
-  @return{The value of the @code{\"default-text\"} property.}
+  @return{The value of the @code{default-text} property.}
   @begin{short}
     Returns the text that is shown if there are not applications that can handle
     the content type.
   @end{short}
-
-  Since 3.0
   @see-class{gtk-app-chooser-widget}
   @see-function{gtk-app-chooser-widget-set-default-text}"
   (gtk-app-chooser-widget-default-text self))

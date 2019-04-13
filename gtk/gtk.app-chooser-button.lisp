@@ -2,11 +2,11 @@
 ;;; gtk.app-chooser-button.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.8.6 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2013 Dieter Kaiser
+;;; Copyright (C) 2013 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -28,11 +28,13 @@
 ;;;
 ;;; GtkAppChooserButton
 ;;;
-;;; A button to launch an application chooser dialog
+;;;     A button to launch an application chooser dialog
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkAppChooserButton
+;;;
+;;; Functions
 ;;;
 ;;;     gtk_app_chooser_button_new
 ;;;     gtk_app_chooser_button_append_custom_item
@@ -45,30 +47,30 @@
 ;;;     gtk_app_chooser_button_get_heading
 ;;;     gtk_app_chooser_button_set_heading
 ;;;
-;;; Object Hierarchy
-;;;
-;;;   GObject
-;;;    +----GInitiallyUnowned
-;;;          +----GtkWidget
-;;;                +----GtkContainer
-;;;                      +----GtkBin
-;;;                            +----GtkComboBox
-;;;                                  +----GtkAppChooserButton
-;;;
-;;; Implemented Interfaces
-;;;
-;;; GtkAppChooserButton implements AtkImplementorIface, GtkBuildable,
-;;; GtkCellLayout, GtkCellEditable and GtkAppChooser.
-;;;
 ;;; Properties
 ;;;
-;;;   "heading"                  gchar*               : Read / Write
-;;;   "show-default-item"        gboolean             : Read / Write / Construct
-;;;   "show-dialog-item"         gboolean             : Read / Write / Construct
+;;;        gchar*  heading                  Read / Write
+;;;     gboolean   show-default-item        Read / Write / Construct
+;;;     gboolean   show-dialog-item         Read / Write / Construct
 ;;;
 ;;; Signals
 ;;;
-;;;   "custom-item-activated"                         : Has Details
+;;;         void   custom-item-activated    Has Details
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;             ╰── GtkContainer
+;;;                 ╰── GtkBin
+;;;                     ╰── GtkComboBox
+;;;                         ╰── GtkAppChooserButton
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GtkAppChooserButton implements AtkImplementorIface, GtkBuildable,
+;;;     GtkCellLayout, GtkCellEditable and GtkAppChooser.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -141,56 +143,41 @@
   @see-function{gtk-app-chooser-button-append-custom-item}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
+;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-app-chooser-button-heading -----------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "heading"
                                                'gtk-app-chooser-button) 't)
- "The @code{\"heading\"} property of @code{:string} (Read / Write) @br{}
+ "The @code{heading} property of @code{:string} (Read / Write) @br{}
   The text to show at the top of the dialog that can be opened from the
   button. The string may contain Pango markup. @br{}
   Default value: @code{nil}")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "show-default-item"
-                                               'gtk-app-chooser-button) 't)
- "The @code{\"show-default-item\"} property of type @code{:boolean}
-  (Read / Write / Construct) @br{}
-  The @code{\"show-default-item\"} property determines whether the dropdown menu
-  should show the default application on top for the provided content type.
-  @br{}
-  Default value: @code{nil} @br{}
-  Since 3.2")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "show-dialog-item"
-                                               'gtk-app-chooser-button) 't)
- "The @code{\"show-dialog-item\"} property of type @code{:boolean}
-  (Read / Write / Construct) @br{}
-  The @code{\"show-dialog-item\"}\ property determines whether the dropdown menu
-  should show an item that triggers a @sym{gtk-app-chooser-dialog} when clicked.
-  @br{}
-  Default value: @code{nil}")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-app-chooser-button-heading atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-app-chooser-button-heading 'function)
  "@version{2013-11-1}
-  Accessor of the slot @code{\"heading\"} of the @class{gtk-app-chooser-button}
-  class.
+  Accessor of the slot @slot[gtk-app-chooser-button]{heading} of the
+  @class{gtk-app-chooser-button} class.
   @see-class{gtk-app-chooser-button}
   @see-function{gtk-app-chooser-button-get-heading}
   @see-function{gtk-app-chooser-button-set-heading}")
+
+;;; --- gtk-app-chooser-button-show-default-item -------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "show-default-item"
+                                               'gtk-app-chooser-button) 't)
+ "The @code{show-default-item} property of type @code{:boolean}
+  (Read / Write / Construct) @br{}
+  The @code{\"show-default-item\"} property determines whether the dropdown menu
+  should show the default application on top for the provided content type.
+  @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-app-chooser-button-show-default-item
@@ -198,11 +185,23 @@
       "Accessor"
       (documentation 'gtk-app-chooser-button-show-default-item 'function)
  "@version{2013-11-1}
-  Accessor of the slot @code{\"show-default-item\"} of the
+  Accessor of the slot @slot[gtk-app-chooser-button]{show-default-item} of the
   @class{gtk-app-chooser-button} class.
   @see-class{gtk-app-chooser-button}
   @see-function{gtk-app-chooser-button-get-show-default-item}
   @see-function{gtk-app-chooser-button-set-show-default-item}")
+
+;;; --- gtk-app-chooser-button-show-dialog-item --------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "show-dialog-item"
+                                               'gtk-app-chooser-button) 't)
+ "The @code{show-dialog-item} property of type @code{:boolean}
+  (Read / Write / Construct) @br{}
+  The @code{show-dialog-item}\ property determines whether the dropdown menu
+  should show an item that triggers a @sym{gtk-app-chooser-dialog} when clicked.
+  @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-app-chooser-button-show-dialog-item
@@ -210,7 +209,7 @@
       "Accessor"
       (documentation 'gtk-app-chooser-button-show-dialog-item 'function)
  "@version{2013-11-1}
-  Accessor of the slot @code{\"show-dialog-item\"} of the
+  Accessor of the slot @slot[gtk-app-chooser-button]{show-dialog-item} of the
   @class{gtk-app-chooser-button} class.
   @see-class{gtk-app-chooser-button}
   @see-function{gtk-app-chooser-button-get-show-dialog-item}
@@ -231,8 +230,6 @@
     Creates a new @class{gtk-app-chooser-button} widget for applications that
     can handle content of the given type.
   @end{short}
-
-  Since 3.0
   @see-class{gtk-app-chooser-button}"
   (make-instance 'gtk-app-chooser-button-new
                  :content-type content-type))
@@ -259,8 +256,6 @@
   \"custom-item-activated\" signal, to add a callback for the activation of a
   particular custom item in the list. See also the function
   @fun{gtk-app-chooser-button-append-separator}.
-
-  Since 3.0
   @see-class{gtk-app-chooser-button}
   @see-function{gtk-app-chooser-button-append-separator}"
   (self (g-object gtk-app-chooser-button))
@@ -282,8 +277,6 @@
   @begin{short}
     Appends a separator to the list of applications that is shown in the popup.
   @end{short}
-
-  Since 3.0
   @see-class{gtk-app-chooser-button}"
   (self (g-object gtk-app-chooser-button)))
 
@@ -306,8 +299,6 @@
 
   Use the function @fun{gtk-app-chooser-refresh} to bring the selection to its
   initial state.
-
-  Since 3.0
   @see-class{gtk-app-chooser-button}
   @see-function{gtk-app-chooser-refresh}
   @see-function{gtk-app-chooser-button-append-custom-item}"
@@ -330,8 +321,6 @@
   @begin{short}
     Returns the current value of the @code{\"show-default-item\"} property.
   @end{short}
-
-  Since 3.2
   @see-class{gtk-app-chooser-button}
   @see-function{gtk-app-chooser-button-set-show-default-item}"
   (gtk-app-chooser-button-show-default-item self))
@@ -354,8 +343,6 @@
     Sets whether the dropdown menu of this button should show the default
     application for the given content type at top.
   @end{short}
-
-  Since 3.2
   @see-class{gtk-app-chooser-button}
   @see-function{gtk-app-chooser-button-get-show-default-item}"
   (setf (gtk-app-chooser-button-show-default-item self) setting))
@@ -376,8 +363,6 @@
   @begin{short}
     Returns the current value of the @code{\"show-dialog-item\"} property.
   @end{short}
-
-  Since 3.0
   @see-class{gtk-app-chooser-button}
   @see-function{gtk-app-chooser-button-set-show-dialog-item}"
   (gtk-app-chooser-button-show-dialog-item self))
@@ -399,8 +384,6 @@
     Sets whether the dropdown menu of this button should show an entry to
     trigger a @class{gtk-app-chooser-dialog}.
   @end{short}
-
-  Since 3.0
   @see-class{gtk-app-chooser-button}
   @see-class{gtk-app-chooser-dialog}"
   (setf (gtk-app-chooser-button-show-dialog-item self) setting))

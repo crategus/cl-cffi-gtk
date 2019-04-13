@@ -2,11 +2,11 @@
 ;;; gtk.app-chooser.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.8.6 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2013 Dieter Kaiser
+;;; Copyright (C) 2013 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -28,33 +28,30 @@
 ;;;
 ;;; GtkAppChooser
 ;;;
-;;; Interface implemented by widgets for choosing an application
+;;;     Interface implemented by widgets for choosing an application
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
-;;;     GtkAppChooser;
+;;;     GtkAppChooser
 ;;;
+;;; Functions
+
 ;;;     gtk_app_chooser_get_app_info
 ;;;     gtk_app_chooser_get_content_type
 ;;;     gtk_app_chooser_refresh
 ;;;
+;;; Properties
+;;;
+;;;     gchar*  content-type    Read / Write / Construct Only
+;;;
 ;;; Object Hierarchy
 ;;;
-;;;   GInterface
-;;;    +----GtkAppChooser
+;;;     GInterface
+;;;     ╰── GtkAppChooser
 ;;;
 ;;; Prerequisites
 ;;;
-;;; GtkAppChooser requires GtkWidget.
-;;;
-;;; Known Implementations
-;;;
-;;; GtkAppChooser is implemented by GtkAppChooserButton, GtkAppChooserDialog and
-;;; GtkAppChooserWidget.
-;;;
-;;; Properties
-;;;
-;;;   "content-type"             gchar*               : Read / Write / Construct
+;;;     GtkAppChooser requires GtkWidget.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -101,33 +98,25 @@
   @see-function{gtk-app-chooser-get-app-info}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
+;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "content-type"
                                                'gtk-app-chooser) 't)
- "The @code{\"content-type\"} property of type @code{:string}
+ "The @code{content-type} property of type @code{:string}
   (Read / Write / Construct) @br{}
   The content type of the @sym{gtk-app-chooser} object.
   See @code{GContentType} for more information about content types. @br{}
   Default value: @code{nil}")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-app-chooser-content-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-app-chooser-content-type 'function)
  "@version{2013-10-31}
-  Accessor of the slot @code{\"content-type\"} of the @class{gtk-app-chooser}
-  interface.
+  Accessor of the slot @slot[gtk-app-chooser]{content-type} of the
+  @class{gtk-app-chooser} interface.
   @see-class{gtk-app-chooser}
   @see-function{gtk-app-chooser-get-content-type}")
 
@@ -147,8 +136,6 @@
   @begin{short}
     Returns the currently selected application.
   @end{short}
-
-  Since 3.0
   @see-class{gtk-app-chooser}"
   (self (g-object gtk-app-chooser)))
 
@@ -168,8 +155,6 @@
   @begin{short}
     Returns the current value of the @code{\"content-type\"} property.
   @end{short}
-
-  Since 3.0
   @see-class{gtk-app-chooser}"
   (gtk-app-chooser-content-type self))
 
@@ -184,8 +169,6 @@
  "@version{2013-11-1}
   @argument[self]{a @class{gtk-app-chooser} object}
   @short{Reloads the list of applications.}
-
-  Since 3.0
   @see-class{gtk-app-chooser-refresh}"
   (self (g-object gtk-app-chooser)))
 
