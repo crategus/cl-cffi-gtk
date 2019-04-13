@@ -1,15 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.recent-manager.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.8.6. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -31,17 +29,18 @@
 ;;;
 ;;; GtkRecentManager
 ;;;
-;;; Managing recently used files
+;;;     Managing recently used files
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkRecentManager
 ;;;     GtkRecentInfo
 ;;;     GtkRecentData
+;;;     GtkRecentManagerError
 ;;;
 ;;;     GTK_RECENT_MANAGER_ERROR
 ;;;
-;;;     GtkRecentManagerError
+;;; Functions
 ;;;
 ;;;     gtk_recent_manager_new
 ;;;     gtk_recent_manager_get_default
@@ -79,151 +78,23 @@
 ;;;     gtk_recent_info_is_local
 ;;;     gtk_recent_info_exists
 ;;;     gtk_recent_info_match
+;;;
+;;; Properties
+;;;
+;;;     gchar*  filename    Read / Write / Construct Only
+;;;      gint   size        Read
+;;;
+;; Signals
+;;;
+;;;      void   changed     Run First
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GtkRecentManager
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
-
-;;; ----------------------------------------------------------------------------
-;;; struct GtkRecentManager
-;;; ----------------------------------------------------------------------------
-
-(define-g-object-class "GtkRecentManager" gtk-recent-manager
-  (:superclass g-object
-   :export t
-   :interfaces nil
-   :type-initializer "gtk_recent_manager_get_type")
-  ((filename
-    gtk-recent-manager-filename
-    "filename" "gchararray" t nil)
-   (size
-    gtk-recent-manager-size
-    "size" "gint" t nil)))
-
-#+cl-cffi-gtk-documentation
-(setf (documentation 'gtk-recent-manager 'type)
- "@version{2013-5-26}
-  @begin{short}
-    @sym{gtk-recent-manager} provides a facility for adding, removing and
-    looking up recently used files. Each recently used file is identified by its
-    URI, and has meta-data associated to it, like the names and command lines of
-    the applications that have registered it, the number of time each
-    application has registered the same file, the mime type of the file and
-    whether the file should be displayed only by the applications that have
-    registered it.
-  @end{short}
-
-  @subheading{Note}
-    The recently used files list is per user.
-
-  The @sysm{gtk-recent-nanager} acts like a database of all the recently used
-  files. You can create new @sym{gtk-recent-manager} objects, but it is more
-  efficient to use the default manager created by GTK+.
-
-  Adding a new recently used file is as simple as:
-  @begin{pre}
- GtkRecentManager *manager;
-
- manager = gtk_recent_manager_get_default ();
- gtk_recent_manager_add_item (manager, file_uri);
-  @end{pre}
-  The @sym{gtk-recent-manager} will try to gather all the needed information
-  from the file itself through GIO.
-
-  Looking up the meta-data associated with a recently used file given its URI
-  requires calling the function @fun{gtk-recent-manager-lookup-item}:
-  @begin{pre}
- GtkRecentManager *manager;
- GtkRecentInfo *info;
- GError *error = NULL;
-
- manager = gtk_recent_manager_get_default ();
- info = gtk_recent_manager_lookup_item (manager, file_uri, &error);
- if (error)
-   {
-     g_warning (\"Could not find the file: %s\", error->message);
-     g_error_free (error);
-   @}
- else
-  {
-    /* Use the info object */
-    gtk_recent_info_unref (info);
-  @}
-  @end{pre}
-  In order to retrieve the list of recently used files, you can use the function
-  @fun{gtk-recent-manager-get-items}, which returns a list of
-  @class{gtk-recent-info} structures.
-
-  A @sym{gtk-recent-manager} is the model used to populate the contents of
-  one, or more @class{gtk-recent-chooser} implementations.
-
-  @subheading{Note}
-    The maximum age of the recently used files list is controllable through the
-    \"gtk-recent-files-max-age\" property.
-
-  Recently used files are supported since GTK+ 2.10.
-  @begin[Signal Details]{dictionary}
-    @subheading{The \"changed\" signal}
-      @begin{pre}
- lambda (recent-manager)   : Run First
-      @end{pre}
-      Emitted when the current recently used resources manager changes its
-      contents, either by calling the function @fun{gtk-recent-manager-add-item}
-      or by another application.
-      @begin[code]{table}
-        @entry[recent-manager]{The recent manager.}
-      @end{table}
-  @end{dictionary}
-  Since 2.10
-  @see-slot{gtk-recent-manager-filename}
-  @see-slot{gtk-recent-manager-size}")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "filename"
-                                               'gtk-recent-manager) 't)
- "The @code{\"filename\"} property of type @code{:string}
-  (Read / Write / Construct) @br{}
-  The full path to the file to be used to store and read the recently used
-  resources list. @br{}
-  Default value: @code{nil} @br{}
-  Since 2.10")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "size" 'gtk-recent-manager) 't)
- "The @code{\"size\"} property of type @code{:int} (Read) @br{}
-  The size of the recently used resources list. @br{}
-  Allowed values: >= @code{G_MAXULONG} @br{}
-  Default value: 0 @br{}
-  Since 2.10")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-recent-manager-filename atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-recent-manager-filename 'function)
- "@version{2013-11-22}
-  Accessor of the slot @code{\"filename\"} of the @class{gtk-recent-manager}
-  class.
-  @see-class{gtk-recent-manager}")
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-recent-manager-size atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-recent-manager-size 'function)
- "@version{2013-11-22}
-  Accessor of the slot @code{\"size\"} of the @class{gtk-recent-manager}
-  class.
-  @see-class{gtk-recent-manager}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkRecentInfo
@@ -247,7 +118,6 @@
 (define-g-boxed-opaque gtk-recent-info \"GtkRecentInfo\"
   :alloc (error \"GtkRecentInfo can not be created from Lisp side.\"))
   @end{pre}
-  Since 2.10
   @see-class{gtk-recent-manager}")
 
 (export (boxed-related-symbols 'gtk-recent-info))
@@ -330,7 +200,6 @@
       (gethash 'gtk-recent-manager-error atdoc:*external-symbols*)
  "@version{2013-11-22}
   @short{Error codes for @class{gtk-recent-manager} operations.}
-  Since 2.10
   @begin{pre}
 (define-g-enum \"GtkRecentManagerError\" gtk-recent-manager-error
   (:export t
@@ -356,6 +225,145 @@
   @see-class{gtk-recent-manager}")
 
 ;;; ----------------------------------------------------------------------------
+;;; struct GtkRecentManager
+;;; ----------------------------------------------------------------------------
+
+(define-g-object-class "GtkRecentManager" gtk-recent-manager
+  (:superclass g-object
+   :export t
+   :interfaces nil
+   :type-initializer "gtk_recent_manager_get_type")
+  ((filename
+    gtk-recent-manager-filename
+    "filename" "gchararray" t nil)
+   (size
+    gtk-recent-manager-size
+    "size" "gint" t nil)))
+
+#+cl-cffi-gtk-documentation
+(setf (documentation 'gtk-recent-manager 'type)
+ "@version{2013-5-26}
+  @begin{short}
+    @sym{gtk-recent-manager} provides a facility for adding, removing and
+    looking up recently used files. Each recently used file is identified by its
+    URI, and has meta-data associated to it, like the names and command lines of
+    the applications that have registered it, the number of time each
+    application has registered the same file, the mime type of the file and
+    whether the file should be displayed only by the applications that have
+    registered it.
+  @end{short}
+
+  @subheading{Note}
+    The recently used files list is per user.
+
+  The @sysm{gtk-recent-nanager} acts like a database of all the recently used
+  files. You can create new @sym{gtk-recent-manager} objects, but it is more
+  efficient to use the default manager created by GTK+.
+
+  Adding a new recently used file is as simple as:
+  @begin{pre}
+ GtkRecentManager *manager;
+
+ manager = gtk_recent_manager_get_default ();
+ gtk_recent_manager_add_item (manager, file_uri);
+  @end{pre}
+  The @sym{gtk-recent-manager} will try to gather all the needed information
+  from the file itself through GIO.
+
+  Looking up the meta-data associated with a recently used file given its URI
+  requires calling the function @fun{gtk-recent-manager-lookup-item}:
+  @begin{pre}
+ GtkRecentManager *manager;
+ GtkRecentInfo *info;
+ GError *error = NULL;
+
+ manager = gtk_recent_manager_get_default ();
+ info = gtk_recent_manager_lookup_item (manager, file_uri, &error);
+ if (error)
+   {
+     g_warning (\"Could not find the file: %s\", error->message);
+     g_error_free (error);
+   @}
+ else
+  {
+    /* Use the info object */
+    gtk_recent_info_unref (info);
+  @}
+  @end{pre}
+  In order to retrieve the list of recently used files, you can use the function
+  @fun{gtk-recent-manager-get-items}, which returns a list of
+  @class{gtk-recent-info} structures.
+
+  A @sym{gtk-recent-manager} is the model used to populate the contents of
+  one, or more @class{gtk-recent-chooser} implementations.
+
+  @subheading{Note}
+    The maximum age of the recently used files list is controllable through the
+    \"gtk-recent-files-max-age\" property.
+
+  Recently used files are supported since GTK+ 2.10.
+  @begin[Signal Details]{dictionary}
+    @subheading{The \"changed\" signal}
+      @begin{pre}
+ lambda (recent-manager)    : Run First
+      @end{pre}
+      Emitted when the current recently used resources manager changes its
+      contents, either by calling the function @fun{gtk-recent-manager-add-item}
+      or by another application.
+      @begin[code]{table}
+        @entry[recent-manager]{The recent manager.}
+      @end{table}
+  @end{dictionary}
+  @see-slot{gtk-recent-manager-filename}
+  @see-slot{gtk-recent-manager-size}")
+
+;;; ----------------------------------------------------------------------------
+;;; Property and Accessor Details
+;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-recent-manager-filename --------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "filename"
+                                               'gtk-recent-manager) 't)
+ "The @code{filename} property of type @code{:string}
+  (Read / Write / Construct) @br{}
+  The full path to the file to be used to store and read the recently used
+  resources list. @br{}
+  Default value: @code{nil}")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-recent-manager-filename atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-recent-manager-filename 'function)
+ "@version{2013-11-22}
+  @begin{short}
+    Accessor of the slot @slot[gtk-recent-manager]{filename} of the
+    @class{gtk-recent-manager} class.
+  @end[short}
+  @see-class{gtk-recent-manager}")
+
+;;; --- gtk-recent-manager-size ------------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "size" 'gtk-recent-manager) 't)
+ "The @code{size} property of type @code{:int} (Read) @br{}
+  The size of the recently used resources list. @br{}
+  Allowed values: >= @code{G_MAXULONG} @br{}
+  Default value: 0")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-recent-manager-size atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-recent-manager-size 'function)
+ "@version{2013-11-22}
+  @begin{short}
+    Accessor of the slot @slot[gtk-recent-manager]{size} of the
+    @class{gtk-recent-manager} class.
+  @end{short}
+  @see-class{gtk-recent-manager}")
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_manager_new ()
 ;;; ----------------------------------------------------------------------------
 
@@ -375,8 +383,6 @@
   @class{gtk-recent-manager} objects are expensive: be sure to create them only
   when needed. You should use the function @fun{gtk-recent-manager-get-default}
   instead.
-
-  Since 2.10
   @see-class{gtk-recent-manager}
   @see-function{gtk-recent-manager-get-default}"
   (make-instance 'gtk-recent-manager))
@@ -396,8 +402,6 @@
     Gets a unique instance of @class{gtk-recent-manager}, that you can share in
     your application without caring about memory management.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-recent-manager}")
 
 (export 'gtk-recent-manager-get-default)
@@ -425,8 +429,6 @@
 
   See the function @fun{gtk-recent-manager-add-full} if you want to explicitly
   define the metadata for the resource pointed by uri.
-
-  Since 2.10
   @see-class{gtk-recent-manager}
   @see-function{gtk-recent-manager-add-full}"
   (manager (g-object gtk-recent-manager))
@@ -498,8 +500,6 @@
     Removes a resource pointed by @arg{uri} from the recently used resources
     list handled by a recent manager.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-recent-manager}
   @see-function{gtk-recent-manager-add-item}"
   (with-g-error (err)
@@ -533,8 +533,6 @@
     structure containing informations about the resource like its MIME type, or
     its display name.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-recent-manager}
   @see-class{gtk-recent-info}
   @see-function{gtk-recent-info-unref}"
@@ -557,8 +555,6 @@
     Checks whether there is a recently used resource registered with @arg{uri}
     inside the recent manager.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-recent-manager}
   @see-function{gtk-recent-manager-add-item}"
   (manager (g-object gtk-recent-manager))
@@ -591,8 +587,6 @@
 
   Please note that this function will not affect the resource pointed by the
   URIs, but only the URI used in the recently used resources list.
-
-  Since 2.10
   @see-class{gtk-recent-manager}"
   (with-g-error (err)
     (%gtk-recent-manager-move-item manager uri new-uri err)))
@@ -614,8 +608,6 @@
   @begin{short}
     Gets the list of recently used resources.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-recent-manager}
   @see-class{gtk-recent-info}"
   (manager (g-object gtk-recent-manager)))
@@ -641,8 +633,6 @@
   @begin{short}
     Purges every item from the recently used resources list.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-recent-manager}"
   (with-g-error (err)
     (%gtk-recent-manager-purge-items manager err)))
@@ -662,8 +652,6 @@
   @begin{short}
     Increases the reference count of @arg{info} by one.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-recent-info}
   @see-function{gtk-recent-info-unref}"
   (info (g-boxed-foreign gtk-recent-info)))
@@ -683,8 +671,6 @@
   @end{short}
   If the reference count reaches zero, info is deallocated, and the memory
   freed.
-
-  Since 2.10
   @see-class{gtk-recent-info}
   @see-class{gtk-recent-info-ref}"
   (info (g-boxed-foreign gtk-recent-info)))
@@ -702,8 +688,6 @@
   @argument[info]{a @class{gtk-recent-info} structure}
   @return{The URI of the resource.}
   @short{Gets the URI of the resource.}
-
-  Since 2.10
   @see-class{gtk-recent-info}"
   (info (g-boxed-foreign gtk-recent-info)))
 
@@ -723,8 +707,6 @@
     Gets the name of the resource. If none has been defined, the basename of the
     resource is obtained.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-recent-info}"
   (info (g-boxed-foreign gtk-recent-info)))
 
@@ -743,8 +725,6 @@
   @begin{short}
     Gets the (short) description of the resource.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-recent-info}"
   (info (g-boxed-foreign gtk-recent-info)))
 
@@ -761,8 +741,6 @@
   @argument[info]{a @class{gtk-recent-info} structure}
   @return{The MIME type of the resource.}
   @short{Gets the MIME type of the resource.}
-
-  Since 2.10
   @see-class{gtk-recent-info}"
   (info (g-boxed-foreign gtk-recent-info)))
 
@@ -784,8 +762,6 @@
     Gets the timestamp, seconds from system's Epoch, when the resource was added
     to the recently used resources list.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-recent-info}"
   (info (g-boxed-foreign gtk-recent-info)))
 
@@ -807,8 +783,6 @@
     Gets the timestamp, seconds from system's Epoch, when the resource was last
     modified.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-recent-info}"
   (info (g-boxed-foreign gtk-recent-info)))
 
@@ -830,8 +804,6 @@
     Gets the timestamp, seconds from system's Epoch, when the resource was last
     visited.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-recent-info}"
   (info (g-boxed-foreign gtk-recent-info)))
 
@@ -852,8 +824,6 @@
   @end{short}
   Resources in the recently used list that have this flag set to @em{true}
   should only be displayed by the applications that have registered them.
-
-  Since 2.10
   @see-class{gtk-recent-info}"
   (info (g-boxed-foreign gtk-recent-info)))
 
@@ -889,8 +859,6 @@
 
   If the command line contains any escape characters defined inside the
   storage specification, they will be expanded.
-
-  Since 2.10
   @see-class{gtk-recent-info}"
   (with-foreign-objects ((app-exec :string) (count :uint) (time :long))
     (%gtk-recent-info-get-application-info info app-name app-exec count time)
@@ -917,8 +885,6 @@
   @begin{short}
     Retrieves the list of applications that have registered this resource.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-recent-info}"
   (with-foreign-object (length 'g-size)
     (%gtk-recent-info-get-applications info length)))
@@ -939,8 +905,6 @@
     Gets the name of the last application that have registered the recently used
     resource represented by info.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-recent-manager}"
   (info (g-boxed-foreign gtk-recent-info)))
 
@@ -961,8 +925,6 @@
   @begin{short}
     Checks whether an application registered this resource using @arg{app-name}.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-recent-manager}"
   (info (g-boxed-foreign gtk-recent-info))
   (app-name :string))
@@ -1015,8 +977,6 @@
   @begin{short}
     Returns all groups registered for the recently used item info.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-recent-info}"
   (with-foreign-object (length 'g-size)
     (%gtk-recent-info-get-groups info length)))
@@ -1037,8 +997,6 @@
     Checks whether @arg{group-name} appears inside the groups registered for
     the recently used item info.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-recent-info}"
   (info (g-boxed-foreign gtk-recent-info))
   (group-name :string))
@@ -1061,8 +1019,6 @@
   @begin{short}
     Retrieves the icon of size @arg{size} associated to the resource MIME type.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-recent-info}
   @see-class{gdk-pixbuf}"
   (info (g-boxed-foreign gtk-recent-info))
@@ -1083,8 +1039,6 @@
   @begin{short}
     Retrieves the icon associated to the resource MIME type.
   @end{short}
-
-  Since 2.22
   @see-class{gtk-recent-info}
   @see-class{g-icon}"
   (info (g-boxed-foreign gtk-recent-info)))
@@ -1106,8 +1060,6 @@
     menu or list. For example, calling this function on an item that refers to
     \"file:///foo/bar.txt\" will yield \"bar.txt\".
   @end{short}
-
-  Since 2.10
   @see-class{gtk-recent-info}"
   (info (g-boxed-foreign gtk-recent-info)))
 
@@ -1131,8 +1083,6 @@
   If the resource is local, it returns a local path; if the resource is not
   local, it returns the UTF-8 encoded content of the function
   @fun{gtk-recent-info-get-uri}.
-
-  Since 2.10
   @see-class{gtk-recent-info}
   @see-function{gtk-recent-info-get-uri}"
   (info (g-boxed-foreign gtk-recent-info)))
@@ -1155,8 +1105,6 @@
     Gets the number of days elapsed since the last update of the resource
     pointed by info.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-recent-info}"
   (info (g-boxed-foreign gtk-recent-info)))
 
@@ -1175,8 +1123,6 @@
     Checks whether the resource is local or not by looking at the scheme of its
     URI.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-recent-manager}"
   (info (g-boxed-foreign gtk-recent-info)))
 
@@ -1195,8 +1141,6 @@
     Checks whether the resource pointed by info still exists.
   @end{short}
   At the moment this check is done only on resources pointing to local files.
-
-  Since 2.10
   @see-class{gtk-recent-manager}"
   (info (g-boxed-foreign gtk-recent-info)))
 
@@ -1219,8 +1163,6 @@
     Checks whether two @class{gtk-recent-info} structures point to the same
     resource.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-recent-info}"
   (info-a (g-boxed-foreign gtk-recent-info))
   (info-b (g-boxed-foreign gtk-recent-info)))

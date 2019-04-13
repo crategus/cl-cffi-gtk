@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.recent-chooser-widget.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.8.6 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2014 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,14 +29,30 @@
 ;;;
 ;;; GtkRecentChooserWidget
 ;;;
-;;; Displays recently used files
+;;;     Displays recently used files
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkRecentChooserWidget
 ;;;
+;;; Functions
+;;;
 ;;;     gtk_recent_chooser_widget_new
 ;;;     gtk_recent_chooser_widget_new_for_manager
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;             ╰── GtkContainer
+;;;                 ╰── GtkBox
+;;;                     ╰── GtkRecentChooserWidget
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GtkRecentChooserWidget implements AtkImplementorIface, GtkBuildable,
+;;;     GtkOrientable and GtkRecentChooser.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -119,8 +132,6 @@
     Creates a new @class{gtk-recent-chooser-widget} object.
   @end{short}
   This is an embeddable widget used to access the recently used resources list.
-
-  Since 2.10
   @see-class{gtk-recent-chooser-widget}
   @see-function{gtk-recent-chooser-widget-new-for-manager}"
   (make-instance 'gtk-recent-chooser))
@@ -145,8 +156,6 @@
 
   This is useful if you have implemented your own recent manager, or if you
   have a customized instance of a @class{gtk-recent-manager} object.
-
-  Since 2.10
   @see-class{gtk-recent-chooser-widget}
   @see-class{gtk-recent-manager}
   @see-function{gtk-recent-chooser-widget-new}"

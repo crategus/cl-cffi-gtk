@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.recent-chooser.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.8.6 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2014 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,16 +29,17 @@
 ;;;
 ;;; GtkRecentChooser
 ;;;
-;;; Interface implemented by widgets displaying recently used files
+;;;     Interface implemented by widgets displaying recently used files
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkRecentChooser
-;;;     GtkRecentChooserIface
+;;;     GtkRecentChooserError
+;;;     GtkRecentSortType
 ;;;
 ;;;     GTK_RECENT_CHOOSER_ERROR
 ;;;
-;;;     GtkRecentChooserError
+;;; Functions
 ;;;
 ;;;     gtk_recent_chooser_set_show_private
 ;;;     gtk_recent_chooser_get_show_private
@@ -57,8 +55,6 @@
 ;;;     gtk_recent_chooser_get_limit
 ;;;     gtk_recent_chooser_set_show_tips
 ;;;     gtk_recent_chooser_get_show_tips
-;;;
-;;;     GtkRecentSortType
 ;;;
 ;;;     gtk_recent_chooser_set_sort_type
 ;;;     gtk_recent_chooser_get_sort_type
@@ -77,9 +73,72 @@
 ;;;     gtk_recent_chooser_list_filters
 ;;;     gtk_recent_chooser_set_filter
 ;;;     gtk_recent_chooser_get_filter
+;;;
+;;; Properties
+;;;
+;;;       GtkRecentFilter*  filter               Read / Write
+;;;                  gint   limit                Read / Write
+;;;              gboolean   local-only           Read / Write
+;;;      GtkRecentManager*  recent-manager       Write / Construct Only
+;;;              gboolean   select-multiple      Read / Write
+;;;              gboolean   show-icons           Read / Write
+;;;              gboolean   show-not-found       Read / Write
+;;;              gboolean   show-private         Read / Write
+;;;              gboolean   show-tips            Read / Write
+;;;     GtkRecentSortType   sort-type            Read / Write
+;;;
+;;; Signals
+;;;
+;;;                  void   item-activated       Run Last
+;;;                  void   selection-changed    Run Last
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GInterface
+;;;     ╰── GtkRecentChooser
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
+
+;;; ----------------------------------------------------------------------------
+;;; GTK_RECENT_CHOOSER_ERROR
+;;;
+;;; #define GTK_RECENT_CHOOSER_ERROR (gtk_recent_chooser_error_quark ())
+;;;
+;;; Used to get the GError quark for GtkRecentChooser errors.
+;;;
+;;; Since 2.10
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; enum GtkRecentChooserError
+;;; ----------------------------------------------------------------------------
+
+(define-g-enum "GtkRecentChooserError" gtk-recent-chooser-error
+  (:export t
+   :type-initializer "gtk_recent_chooser_error_get_type")
+  (:not-found 0)
+  (:invalid-uri 1))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-recent-chooser-error atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'gtk-recent-chooser-error atdoc:*external-symbols*)
+ "@version{2013-5-26}
+  @begin{short}
+    These identify the various errors that can occur while calling
+    @class{gtk-recent-chooser} functions.
+  @end{short}
+  @begin{pre}
+(define-g-enum \"GtkRecentChooserError\" gtk-recent-chooser-error
+  (:export t
+   :type-initializer \"gtk_recent_chooser_error_get_type\")
+  (:not-found 0)
+  (:invalid-uri 1))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:not-found]{Indicates that a file does not exist.}
+    @entry[:invalid-uri]{Indicates a malformed URI.}
+  @end{table}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkRecentChooser
@@ -141,8 +200,6 @@
       @begin[code]{table}
         @entry[chooser]{The object which received the signal.}
       @end{table}
-      Since 2.10
-
     @subheading{The \"selection-changed\" signal}
       @begin{pre}
  lambda (chooser)   : Run Last
@@ -154,7 +211,6 @@
       @begin[code]{table}
         @entry[chooser]{The object which received the signal.}
       @end{table}
-      Since 2.10
   @end{dictionary}
   @see-slot{gtk-recent-chooser-filter}
   @see-slot{gtk-recent-chooser-limit}
@@ -168,162 +224,122 @@
   @see-slot{gtk-recent-chooser-sort-type}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
+;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-recent-chooser-filter ----------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "filter" 'gtk-recent-chooser) 't)
- "The @code{\"filter\"} property of type @class{gtk-recent-filter}
+ "The @code{filter} property of type @class{gtk-recent-filter}
   (Read / Write) @br{}
   The @class{gtk-recent-filter} object to be used when displaying the recently
-  used resources. @br{}
-  Since 2.10")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "limit" 'gtk-recent-chooser) 't)
- "The @code{\"limit\"} property of type @code{:int} (Read / Write) @br{}
-  The maximum number of recently used resources to be displayed, or -1 to
-  display all items. By default, the @symbol{gtk-recent-files-limit} setting
-  is respected: you can override that limit on a particular instance of
-  @sym{gtk-recent-chooser} by setting this property. @br{}
-  Allowed values: >= @code{G_MAXULONG} @br{}
-  Default value: -1 @br{}
-  Since 2.10")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "local-only"
-                                               'gtk-recent-chooser) 't)
- "The @code{\"local-only\"} property of type @code{:boolean} (Read / Write)@br{}
-  Whether this @sym{gtk-recent-chooser} should display only local (file:)
-  resources. @br{}
-  Default value: @em{true} @br{}
-  Since 2.10")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "recent-manager"
-                                               'gtk-recent-chooser) 't)
- "The @code{\"recent-manager\"} property of type @class{gtk-recent-manager}
-  (Write / Construct Only) @br{}
-  The @class{gtk-recent-manager} instance used by the @sym{gtk-recent-chooser}
-  to display the list of recently used resources. @br{}
-  Since 2.10")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "select-multiple"
-                                               'gtk-recent-chooser) 't)
- "The @code{\"select-multiple\"} property of type @code{:boolean}
-  (Read / Write) @br{}
-  Allow the user to select multiple resources. @br{}
-  Default value: @code{nil} @br{}
-  Since 2.10")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "show-icons"
-                                               'gtk-recent-chooser) 't)
- "The @code{\"show-icons\"} property of type @code{:boolean} (Read / Write)@br{}
-  Whether this @sym{gtk-recent-chooser} should display an icon near the item.
-  @br{}
-  Default value: @em{true} @br{}
-  Since 2.10")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "show-not-found"
-                                               'gtk-recent-chooser) 't)
- "The @code{\"show-not-found\"} property of type @code{:boolean}
-  (Read / Write) @br{}
-  Whether this @sym{gtk-recent-chooser} should display the recently used
-  resources even if not present anymore. Setting this to @code{nil} will perform
-  a potentially expensive check on every local resource (every remote resource
-  will always be displayed). @br{}
-  Default value: @em{true} @br{}
-  Since 2.10")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "show-private"
-                                               'gtk-recent-chooser) 't)
- "The @code{\"show-private\"} property of type @code{:boolean}
-  (Read / Write) @br{}
-  Whether the private items should be displayed. @br{}
-  Default value: @code{nil}")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "show-tips"
-                                               'gtk-recent-chooser) 't)
- "The @code{\"show-tips\"} property of type @code{:boolean} (Read / Write) @br{}
-  Whether this @sym{gtk-recent-chooser} should display a tooltip containing the
-  full path of the recently used resources. @br{}
-  Default value: @code{nil} @br{}
-  Since 2.10")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "sort-type"
-                                               'gtk-recent-chooser) 't)
- "The @code{\"sort-type\"} property of type @symbol{gtk-recent-sort-type}
-  (Read / Write) @br{}
-  Sorting order to be used when displaying the recently used resources. @br{}
-  Default value: @code{:none} @br{}
-  Since 2.10")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
+  used resources.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-recent-chooser-filter atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-recent-chooser-filter 'function)
  "@version{2013-11-23}
-  Accessor of the slot @code{\"filter\"} of the @class{gtk-recent-chooser}
-  class.
+  Accessor of the slot @slot[gtk-recent-chosser]{filter} of the
+  @class{gtk-recent-chooser} class.
   @see-class{gtk-recent-chooser}
   @see-function{gtk-recent-chooser-get-filter}
   @see-function{gtk-recent-chooser-set-filter}")
+
+;;; --- gtk-recent-chooser-limit -----------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "limit" 'gtk-recent-chooser) 't)
+ "The @code{limit} property of type @code{:int} (Read / Write) @br{}
+  The maximum number of recently used resources to be displayed, or -1 to
+  display all items. By default, the @symbol{gtk-recent-files-limit} setting
+  is respected: you can override that limit on a particular instance of
+  @sym{gtk-recent-chooser} by setting this property. @br{}
+  Allowed values: >= @code{G_MAXULONG} @br{}
+  Default value: -1")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-recent-chooser-limit atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-recent-chooser-limit 'function)
  "@version{2013-11-23}
-  Accessor of the slot @code{\"limit\"} of the @class{gtk-recent-chooser}
-  class.
+  Accessor of the slot @slot[gtk-recent-chooser]{limit} of the
+  @class{gtk-recent-chooser} class.
   @see-class{gtk-recent-chooser}
   @see-function{gtk-recent-chooser-get-limit}
   @see-function{gtk-recent-chooser-set-limit}")
+
+;;; --- gtk-recent-chooser-local-only ------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "local-only"
+                                               'gtk-recent-chooser) 't)
+ "The @code{local-only} property of type @code{:boolean} (Read / Write)@br{}
+  Whether this @sym{gtk-recent-chooser} should display only local (file:)
+  resources. @br{}
+  Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-recent-chooser-local-only atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-recent-chooser-local-only 'function)
  "@version{2013-11-23}
-  Accessor of the slot @code{\"local-only\"} of the @class{gtk-recent-chooser}
-  class.
+  Accessor of the slot @slot[gtk-recent-chooser]{local-only} of the
+  @class{gtk-recent-chooser} class.
   @see-class{gtk-recent-chooser}
   @see-function{gtk-recent-chooser-get-local-only}
   @see-function{gtk-recent-chooser-set-local-only}")
+
+;;; --- gtk-recent-chooser-recent-manager --------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "recent-manager"
+                                               'gtk-recent-chooser) 't)
+ "The @code{recent-manager} property of type @class{gtk-recent-manager}
+  (Write / Construct Only) @br{}
+  The @class{gtk-recent-manager} instance used by the @sym{gtk-recent-chooser}
+  to display the list of recently used resources.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-recent-chooser-recent-manager atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-recent-chooser-recent-manager 'function)
  "@version{2013-11-23}
-  Accessor of the slot @code{\"recent-manager\"} of the
+  Accessor of the slot @slot[gtk-recent-chooser]{recent-manager} of the
   @class{gtk-recent-chooser} class.
   @see-class{gtk-recent-chooser}")
+
+;;; --- gtk-recent-chooser-select-multiple -------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "select-multiple"
+                                               'gtk-recent-chooser) 't)
+ "The @code{select-multiple} property of type @code{:boolean}
+  (Read / Write) @br{}
+  Allow the user to select multiple resources. @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-recent-chooser-select-multiple atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-recent-chooser-select-multiple 'function)
  "@version{2013-11-23}
-  Accessor of the slot @code{\"select-multiple\"} of the
+  Accessor of the slot @slot[gtk-recent-chooser]{select-multiple} of the
   @class{gtk-recent-chooser} class.
   @see-class{gtk-recent-chooser}
   @see-function{gtk-recent-chooser-get-select-multiple}
   @see-function{gtk-recent-chooser-set-select-multiple}")
+
+;;; --- gtk-recent-chooser-show-icons ------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "show-icons"
+                                               'gtk-recent-chooser) 't)
+ "The @code{show-icons} property of type @code{:boolean} (Read / Write)@br{}
+  Whether this @sym{gtk-recent-chooser} should display an icon near the item.
+  @br{}
+  Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-recent-chooser-show-icons atdoc:*function-name-alias*)
@@ -336,130 +352,92 @@
   @see-function{gtk-recent-chooser-get-show-icons}
   @see-function{gtk-recent-chooser-set-show-icons}")
 
+;;; --- gtk-recent-chooser-show-not-found --------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "show-not-found"
+                                               'gtk-recent-chooser) 't)
+ "The @code{show-not-found} property of type @code{:boolean}
+  (Read / Write) @br{}
+  Whether this @sym{gtk-recent-chooser} should display the recently used
+  resources even if not present anymore. Setting this to @code{nil} will perform
+  a potentially expensive check on every local resource (every remote resource
+  will always be displayed). @br{}
+  Default value: @em{true}")
+
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-recent-chooser-show-not-found atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-recent-chooser-show-not-found 'function)
  "@version{2013-11-23}
-  Accessor of the slot @code{\"show-not-found\"} of the
+  Accessor of the slot @slot[gtk-recent-chooser]{show-not-found} of the
   @class{gtk-recent-chooser} class.
   @see-class{gtk-recent-chooser}
   @see-function{gtk-recent-chooser-get-show-not-found}
   @see-function{gtk-recent-chooser-set-show-not-found}")
+
+;;; --- gtk-recent-chooser-show-private ----------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "show-private"
+                                               'gtk-recent-chooser) 't)
+ "The @code{show-private} property of type @code{:boolean}
+  (Read / Write) @br{}
+  Whether the private items should be displayed. @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-recent-chooser-show-private atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-recent-chooser-show-private 'function)
  "@version{2013-11-23}
-  Accessor of the slot @code{\"show-private\"} of the @class{gtk-recent-chooser}
-  class.
+  Accessor of the slot @slot[gtk-recent-chooser]{show-private} of the
+  @class{gtk-recent-chooser} class.
   @see-class{gtk-recent-chooser}
   @see-function{gtk-recent-chooser-get-show-private}
   @see-function{gtk-recent-chooser-set-show-private}")
+
+;;; --- gtk-recent-chooser-show-tips -------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "show-tips"
+                                               'gtk-recent-chooser) 't)
+ "The @code{show-tips} property of type @code{:boolean} (Read / Write) @br{}
+  Whether this @sym{gtk-recent-chooser} should display a tooltip containing the
+  full path of the recently used resources. @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-recent-chooser-show-tips atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-recent-chooser-show-tips 'function)
  "@version{2013-11-23}
-  Accessor of the slot @code{\"show-tips\"} of the @class{gtk-recent-chooser}
-  class.
+  Accessor of the slot @slot[gtk-recent-chooser]{show-tips} of the
+  @class{gtk-recent-chooser} class.
   @see-class{gtk-recent-chooser}
   @see-function{gtk-recent-chooser-get-show-tips}
   @see-function{gtk-recent-chooser-set-show-tips}")
+
+;;; --- gtk-recent-chooser-sort-type -------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "sort-type"
+                                               'gtk-recent-chooser) 't)
+ "The @code{sort-type} property of type @symbol{gtk-recent-sort-type}
+  (Read / Write) @br{}
+  Sorting order to be used when displaying the recently used resources. @br{}
+  Default value: @code{:none}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-recent-chooser-sort-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-recent-chooser-sort-type 'function)
  "@version{2013-11-23}
-  Accessor of the slot @code{\"sort-type\"} of the @class{gtk-recent-chooser}
-  class.
+  Accessor of the slot @slot[gtk-recent-chooser]{sort-type} of the
+  @class{gtk-recent-chooser} class.
   @see-class{gtk-recent-chooser}
   @see-function{gtk-recent-chooser-get-sort-type}
   @see-function{gtk-recent-chooser-set-sort-type}")
-
-;;; ----------------------------------------------------------------------------
-;;; struct GtkRecentChooserIface
-;;;
-;;; struct GtkRecentChooserIface {
-;;;   GTypeInterface base_iface;
-;;;
-;;;   /*
-;;;    * Methods
-;;;    */
-;;;   gboolean          (* set_current_uri)    (GtkRecentChooser  *chooser,
-;;;                                             const gchar       *uri,
-;;;                                             GError           **error);
-;;;   gchar *           (* get_current_uri)    (GtkRecentChooser  *chooser);
-;;;   gboolean          (* select_uri)         (GtkRecentChooser  *chooser,
-;;;                                             const gchar       *uri,
-;;;                                             GError           **error);
-;;;   void              (* unselect_uri)       (GtkRecentChooser  *chooser,
-;;;                                             const gchar       *uri);
-;;;   void              (* select_all)         (GtkRecentChooser  *chooser);
-;;;   void              (* unselect_all)       (GtkRecentChooser  *chooser);
-;;;   GList *           (* get_items)          (GtkRecentChooser  *chooser);
-;;;   GtkRecentManager *(* get_recent_manager) (GtkRecentChooser  *chooser);
-;;;   void              (* add_filter)         (GtkRecentChooser  *chooser,
-;;;                                             GtkRecentFilter   *filter);
-;;;   void              (* remove_filter)      (GtkRecentChooser  *chooser,
-;;;                                             GtkRecentFilter   *filter);
-;;;   GSList *          (* list_filters)       (GtkRecentChooser  *chooser);
-;;;   void              (* set_sort_func)      (GtkRecentChooser  *chooser,
-;;;                                             GtkRecentSortFunc  sort_func,
-;;;                                             gpointer           sort_data,
-;;;                                             GDestroyNotify     data_destroy)
-;;;
-;;;   /*
-;;;    * Signals
-;;;    */
-;;;   void            (* item_activated)     (GtkRecentChooser  *chooser);
-;;;   void            (* selection_changed)  (GtkRecentChooser  *chooser);
-;;; };
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; GTK_RECENT_CHOOSER_ERROR
-;;;
-;;; #define GTK_RECENT_CHOOSER_ERROR (gtk_recent_chooser_error_quark ())
-;;;
-;;; Used to get the GError quark for GtkRecentChooser errors.
-;;;
-;;; Since 2.10
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; enum GtkRecentChooserError
-;;; ----------------------------------------------------------------------------
-
-(define-g-enum "GtkRecentChooserError" gtk-recent-chooser-error
-  (:export t
-   :type-initializer "gtk_recent_chooser_error_get_type")
-  (:not-found 0)
-  (:invalid-uri 1))
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-recent-chooser-error atdoc:*symbol-name-alias*) "Enum"
-      (gethash 'gtk-recent-chooser-error atdoc:*external-symbols*)
- "@version{2013-5-26}
-  @begin{short}
-    These identify the various errors that can occur while calling
-    @class{gtk-recent-chooser} functions.
-  @end{short}
-  @begin{pre}
-(define-g-enum \"GtkRecentChooserError\" gtk-recent-chooser-error
-  (:export t
-   :type-initializer \"gtk_recent_chooser_error_get_type\")
-  (:not-found 0)
-  (:invalid-uri 1))
-  @end{pre}
-  @begin[code]{table}
-    @entry[:not-found]{Indicates that a file does not exist.}
-    @entry[:invalid-uri]{Indicates a malformed URI.}
-  @end{table}
-  Since 2.10")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_recent_chooser_set_show_private ()
@@ -475,8 +453,6 @@
   @begin{short}
     Whether to show recently used resources marked registered as private.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-recent-chooser}
   @see-function{gtk-recent-chooser-get-show-private}"
   (setf (gtk-recent-chooser-show-private chooser) show-private))
@@ -501,8 +477,6 @@
     Returns whether @arg{chooser} should display recently used resources
     registered as private.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-recent-chooser}
   @see-function{gtk-recent-chooser-set-show-private}"
   (gtk-recent-chooser-show-private chooser))
@@ -525,8 +499,6 @@
     it did not find.
   @end{short}
   This only applies to local resources.
-
-  Since 2.10
   @see-class{gtk-recent-chooser}
   @see-function{gtk-recent-chooser-get-show-not-found}"
   (setf (gtk-recent-chooser-show-not-found chooser) show-not-found))
@@ -551,8 +523,6 @@
     Retrieves whether @arg{chooser} should show the recently used resources
     that were not found.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-recent-chooser}
   @see-function{gtk-recent-chooser-set-show-not-found}"
   (gtk-recent-chooser-show-not-found chooser))
@@ -574,8 +544,6 @@
     Sets whether @arg{chooser} should show an icon near the resource when
     displaying it.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-recent-chooser}
   @see-function{gtk-recent-chooser-get-show-icons}"
   (setf (gtk-recent-chooser-show-icons chooser) show-icons))
@@ -596,8 +564,6 @@
   @begin{short}
     Retrieves whether @arg{chooser} should show an icon near the resource.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-recent-chooser}
   @see-function{gtk-recent-chooser-set-show-icons}"
   (gtk-recent-chooser-show-icons chooser))
@@ -617,8 +583,6 @@
   @argument[select-multiple]{@em{true} if @arg{chooser} can select more than
     one item}
   @short{Sets whether @arg{chooser} can select multiple items.}
-
-  Since 2.10
   @see-class{gtk-recent-chooser}
   @see-function{gtk-recent-chooser-get-select-multiple}"
   (setf (gtk-recent-chooser-select-multiple chooser) select-multiple))
@@ -639,8 +603,6 @@
   @begin{short}
     Gets whether @arg{chooser} can select multiple items.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-recent-chooser}
   @see-function{gtk-recent-chooser-set-select-multiple}"
   (gtk-recent-chooser-select-multiple chooser))
@@ -664,8 +626,6 @@
   @end{short}
   If @arg{local-only} is @em{true} (the default) then the shown resources are
   guaranteed to be accessible through the operating system native file system.
-
-  Since 2.10
   @see-class{gtk-recent-chooser}
   @see-function{gtk-recent-chooser-get-local-only}"
   (setf (gtk-recent-chooser-local-only chooser) local-only))
@@ -688,8 +648,6 @@
     resources selector.
   @end{short}
   See the function @fun{gtk-recent-chooser-set-local-only}.
-
-  Since 2.10
   @see-class{gtk-recent-chooser}
   @see-function{gtk-recent-chooser-set-local-only}"
   (gtk-recent-chooser-local-only chooser))
@@ -711,8 +669,6 @@
     Sets the number of items that should be returned by the functions
     @fun{gtk-recent-chooser-get-items} and @fun{gtk-recent-chooser-get-uris}.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-recent-chooser}
   @see-function{gtk-recent-chooser-get-limit}
   @see-function{gtk-recent-chooser-get-items}
@@ -736,8 +692,6 @@
     Gets the number of items returned by the functions
     @fun{gtk-recent-chooser-get-items} and @fun{gtk-recent-chooser-get-uris}.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-recent-chooser}
   @see-function{gtk-recent-chooser-set-limit}
   @see-function{gtk-recent-chooser-get-items}
@@ -761,8 +715,6 @@
     Sets whether to show a tooltips containing the full path of each recently
     used resource in a @class{gtk-recent-chooser} widget.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-recent-chooser}
   @see-function{gtk-recent-chooser-get-show-tips}"
   (setf (gtk-recent-chooser-show-tips chooser) show-tips))
@@ -786,8 +738,6 @@
     Gets whether @arg{chooser} should display tooltips containing the full path
     of a recently user resource.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-recent-chooser}
   @see-function{gtk-recent-chooser-set-show-tips}"
   (gtk-recent-chooser-show-tips chooser))
@@ -832,7 +782,6 @@
     @entry[:custom]{Sort the returned list using a custom sorting function
       passed using the function @fun{gtk-recent-manager-set-sort-func}.}
   @end{table}
-  Since 2.10
   @see-class{gtk-recent-chooser}
   @see-function{gtk-recent-chooser-set-sort-func}")
 
@@ -852,8 +801,6 @@
     Changes the sorting order of the recently used resources list displayed by
     chooser.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-recent-chooser}
   @see-symbol{gtk-recent-sort-type}
   @see-function{gtk-recent-chooser-get-sort-type}"
@@ -876,8 +823,6 @@
   @begin{short}
     Gets the value set by the function @fun{gtk-recent-chooser-set-sort-type}.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-recent-chooser}
   @see-symbol{gtk-recent-sort-type}
   @see-function{gtk-recent-chooser-set-sort-type}"
@@ -925,8 +870,6 @@
   structures; @arg{sort-func} should return a positive integer if the first
   item comes before the second, zero if the two items are equal and a negative
   integer if the first item comes after the second.
-
-  Since 2.10
   @see-class{gtk-recent-chooser}
   @see-class{gtk-recent-info}"
   (%gtk-recent-chooser-set-sort-func
@@ -954,8 +897,6 @@
   @argument[uri]{a URI}
   @return{@em{True} if the URI was found.}
   @short{Sets @arg{uri} as the current URI for @arg{chooser}.}
-
-  Since 2.10
   @see-class{gtk-recent-chooser}
   @see-function{gtk-recent-chooser-get-current-uri}"
   (with-g-error (err)
@@ -974,8 +915,6 @@
   @argument[chooser]{a @class{gtk-recent-chooser} object}
   @return{A string holding a URI.}
   @short{Gets the URI currently selected by @arg{chooser}.}
-
-  Since 2.10
   @see-class{gtk-recent-chooser}
   @see-function{gtk-recent-chooser-set-current-uri}"
   (chooser (g-object gtk-recent-chooser)))
@@ -1000,8 +939,6 @@
     Gets the @class{gtk-recent-info} structure currently selected by
     @arg{chooser}.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-recent-chooser}
   @see-class{gtk-recent-info}
   @see-function{gtk-recent-info-unref}"
@@ -1026,8 +963,6 @@
   @argument[uri]{a URI}
   @return{@em{True} if @arg{uri} was found.}
   @short{Selects @arg{uri} inside @arg{chooser}.}
-
-  Since 2.10
   @see-class{gtk-recent-chooser}
   @see-function{gtk-recent-chooser-unselect-uri}"
   (with-g-error (err)
@@ -1046,8 +981,6 @@
   @argument[chooser]{a @class{gtk-recent-chooser} object}
   @argument[uri]{a URI}
   @short{Unselects @arg{uri} inside @arg{chooser}.}
-
-  Since 2.10
   @see-class{gtk-recent-chooser}
   @see-function{gtk-recent-chooser-select-uri}"
   (chooser (g-object gtk-recent-chooser))
@@ -1067,8 +1000,6 @@
     Selects all the items inside @arg{chooser}, if the chooser supports multiple
     selection.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-recent-chooser}
   @see-function{gtk-recent-chooser-unselect-all}"
   (chooser (g-object gtk-recent-chooser)))
@@ -1085,8 +1016,6 @@
  "@version{2013-11-23}
   @argument[chooser]{a @class{gtk-recent-chooser} object}
   @short{Unselects all the items inside @arg{chooser}.}
-
-  Since 2.10
   @see-class{gtk-recent-chooser}
   @see-function{gtk-recent-chooser-unselect-all}"
   (chooser (g-object gtk-recent-chooser)))
@@ -1110,10 +1039,8 @@
     @class{gtk-recent-info} objects.
   @end{short}
 
-  The return value of this function is affected by the @code{\"sort-type\"} and
-  @code{\"limit\"} properties of chooser.
-
-  Since 2.10
+  The return value of this function is affected by the @code{sort-type} and
+  @code{limit} properties of chooser.
   @see-class{gtk-recent-chooser}
   @see-symbol{gtk-recent-info}
   @see-function{gtk-recent-chooser-get-uris}"
@@ -1138,10 +1065,8 @@
     Gets the URI of the recently used resources.
   @end{short}
 
-  The return value of this function is affected by the @code{\"sort-type\"} and
-  @code{\"limit\"} properties of @arg{chooser}.
-
-  Since 2.10
+  The return value of this function is affected by the @code{sort-type} and
+  @code{limit} properties of @arg{chooser}.
   @see-class{gtk-recent-chooser}
   @see-function{gtk-recent-chooser-get-items}"
   (with-foreign-object (length 'g-size)
@@ -1165,8 +1090,6 @@
 
   If no previous filter objects were defined, this function will call the
   function @fun{gtk-recent-chooser-set-filter}.
-
-  Since 2.10
   @see-class{gtk-recent-chooser}
   @see-class{gtk-recent-filter}
   @see-function{gtk-recent-chooser-set-filter}
@@ -1190,8 +1113,6 @@
     Removes @arg{filter} from the list of @class{gtk-recent-filter} objects
     held by @arg{chooser}.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-recent-chooser}
   @see-class{gtk-recent-filter}
   @see-function{gtk-recent-chooser-add-filter}"
@@ -1213,8 +1134,6 @@
   @begin{short}
     Gets the @class{gtk-recent-filter} objects held by chooser.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-recent-chooser}
   @see-class{gtk-recent-filter}"
   (chooser (g-object gtk-recent-chooser)))
@@ -1236,8 +1155,6 @@
     Sets filter as the current @class{gtk-recent-filter} object used by
     @arg{chooser} to affect the displayed recently used resources.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-recent-chooser}
   @see-class{gtk-recent-filter}
   @see-function{gtk-recent-chooser-get-filter}"
@@ -1260,8 +1177,6 @@
     Gets the @class{gtk-recent-filter} object currently used by chooser to
     affect the display of the recently used resources.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-recent-chooser}
   @see-class{gtk-recent-filter}
   @see-function{gtk-recent-chooser-set-filter}"

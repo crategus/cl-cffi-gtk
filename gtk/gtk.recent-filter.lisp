@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.recent-filter.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,13 +29,15 @@
 ;;;
 ;;; GtkRecentFilter
 ;;;
-;;; A filter for selecting a subset of recently used files
+;;;     A filter for selecting a subset of recently used files
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkRecentFilter
 ;;;     GtkRecentFilterInfo
 ;;;     GtkRecentFilterFlags
+;;;
+;;; Functions
 ;;;
 ;;;     gtk_recent_filter_new
 ;;;     gtk_recent_filter_get_name
@@ -52,6 +51,16 @@
 ;;;     gtk_recent_filter_add_custom
 ;;;     gtk_recent_filter_get_needed
 ;;;     gtk_recent_filter_filter
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkRecentFilter
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GtkRecentFilter implements GtkBuildable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -120,7 +129,7 @@
    </applications>
  </object>
     @end{pre}
-  @class{gtk-recent-chooser}
+  @see-class{gtk-recent-chooser}
   @see-function{gtk-recent-filter-add-pattern}
   @see-function{gtk-file-filter-add-mime-type}
   @see-function{gtk-recent-filter-add-application}
@@ -276,8 +285,6 @@
   @begin{short}
     Adds a rule that allows resources based on their registered MIME type.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-recent-filter}"
   (filter (g-object gtk-recent-filter))
   (mime-type :string))
@@ -297,8 +304,6 @@
     Adds a rule that allows resources based on a pattern matching their display
     name.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-recent-filter}"
   (filter (g-object gtk-recent-filter))
   (pattern :string))
@@ -332,8 +337,6 @@
     Adds a rule that allows resources based on the name of the application that
     has registered them.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-recent-filter}"
   (filter (g-object gtk-recent-filter))
   (application :string))
@@ -428,8 +431,6 @@
   what sorts of information that the filter function needs; this allows GTK+
   to avoid retrieving expensive information when it is not needed by the
   filter.
-
-  Since 2.10
   @see-class{gtk-recent-filter}
   @see-symbol{gtk-recent-filter-flags}"
   (%gtk-recent-filter-add-custom
@@ -481,8 +482,6 @@
 
   This function will not typically be used by applications; it is intended
   principally for use in the implementation of @class{gtk-recent-chooser}.
-
-  Since 2.10
   @see-class{gtk-recent-filter}
   @see-class{gtk-recent-chooser}
   @see-symbol{gtk-recent-filter-info}
