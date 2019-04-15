@@ -455,7 +455,7 @@
 
 (declaim (inline gtk-model-button-new))
 
-(defun gtk-volume-button-new ()
+(defun gtk-model-button-new ()
  #+cl-cffi-gtk-documentation
  "@version{2019-4-2}
   @return{A new @class{gtk-model-button} widget.}
@@ -467,6 +467,6 @@
   @see-class{gtk-model-button}"
   (make-instance 'gtk-model-button))
 
-(export 'gtk-volume-button-new)
+(export 'gtk-model-button-new)
 
 ;;; --- End of file gtk-model-button.lisp --------------------------------------
