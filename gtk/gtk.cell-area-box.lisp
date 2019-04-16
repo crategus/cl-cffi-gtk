@@ -2,11 +2,11 @@
 ;;; gtk.cell-area-box.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012, 2014 Dieter Kaiser
+;;; Copyright (C) 2012 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -28,18 +28,42 @@
 ;;;
 ;;; GtkCellAreaBox
 ;;;
-;;; A cell area that renders GtkCellRenderers into a row or a column
+;;;     A cell area that renders GtkCellRenderers into a row or a column
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkCellAreaBox
 ;;;     GtkCellAreaBoxClass
+;;;
+;;; Functions
 ;;;
 ;;;     gtk_cell_area_box_new
 ;;;     gtk_cell_area_box_pack_start
 ;;;     gtk_cell_area_box_pack_end
 ;;;     gtk_cell_area_box_get_spacing
 ;;;     gtk_cell_area_box_set_spacing
+;;;
+;;; Properties
+;;;
+;;;            gint   spacing       Read / Write
+;;;
+;;; Child Properties
+;;;
+;;;        gboolean   align         Read / Write
+;;;        gboolean   expand        Read / Write
+;;;        gboolean   fixed-size    Read / Write
+;;;     GtkPackType   pack-type     Read / Write
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkCellArea
+;;;             ╰── GtkCellAreaBox
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GtkCellAreaBox implements GtkCellLayout, GtkBuildable and GtkOrientable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)

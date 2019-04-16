@@ -2,11 +2,11 @@
 ;;; gtk.cell-area.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012, 2013 Dieter Kaiser
+;;; Copyright (C) 2012 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -28,12 +28,17 @@
 ;;;
 ;;; GtkCellArea
 ;;;
-;;; An abstract class for laying out GtkCellRenderers
+;;;     An abstract class for laying out GtkCellRenderers
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkCellArea
 ;;;     GtkCellAreaClass
+;;;
+;;; Functions
+;;;
+;;;     GtkCellCallback
+;;;     GtkCellAllocCallback
 ;;;
 ;;;     GTK_CELL_AREA_WARN_INVALID_CELL_PROPERTY_ID
 ;;;
@@ -57,6 +62,7 @@
 ;;;     gtk_cell_area_apply_attributes
 ;;;     gtk_cell_area_attribute_connect
 ;;;     gtk_cell_area_attribute_disconnect
+;;;     gtk_cell_area_attribute_get_column ()
 ;;;     gtk_cell_area_class_install_cell_property
 ;;;     gtk_cell_area_class_find_cell_property
 ;;;     gtk_cell_area_class_list_cell_properties
@@ -83,6 +89,30 @@
 ;;;     gtk_cell_area_stop_editing
 ;;;     gtk_cell_area_inner_cell_area
 ;;;     gtk_cell_area_request_renderer
+;;;
+;;; Properties
+;;;
+;;;     GtkCellEditable*  edit-widget        Read
+;;;     GtkCellRenderer*  edited-cell        Read
+;;;     GtkCellRenderer*  focus-cell         Read / Write
+;;;
+;;; Signals
+;;;
+;;;                void   add-editable       Run First
+;;;                void   apply-attributes   Run First
+;;;                void   focus-changed      Run First
+;;;                void   remove-editable    Run First
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkCellArea
+;;;             ╰── GtkCellAreaBox
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GtkCellArea implements GtkCellLayout and GtkBuildable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -1438,6 +1468,32 @@
 ;;;     the attribute name
 ;;;
 ;;; Since 3.0
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_cell_area_attribute_get_column ()
+;;;
+;;; gint
+;;; gtk_cell_area_attribute_get_column (GtkCellArea *area,
+;;;                                     GtkCellRenderer *renderer,
+;;;                                     const gchar *attribute);
+;;;
+;;; Returns the model column that an attribute has been mapped to, or -1 if the
+;;; attribute is not mapped.
+;;;
+;;; area :
+;;;     a GtkCellArea
+;;; 
+;;; renderer :
+;;;     a GtkCellRenderer
+;;; 
+;;; attribute :
+;;;     an attribute on the renderer
+;;; 
+;;; Returns :
+;;;     the model column, or -1
+;;;
+;;; Since 3.14
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------

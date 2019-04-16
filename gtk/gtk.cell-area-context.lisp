@@ -2,11 +2,11 @@
 ;;; gtk.cell-area-context.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012, 2013 Dieter Kaiser
+;;; Copyright (C) 2012 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -28,12 +28,13 @@
 ;;;
 ;;; GtkCellAreaContext
 ;;;
-;;; Stores geometrical information for a series of rows in a GtkCellArea
+;;;     Stores geometrical information for a series of rows in a GtkCellArea
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
-;;;     GtkCellAreaContextClass
 ;;;     GtkCellAreaContext
+;;;
+;;; Functions
 ;;;
 ;;;     gtk_cell_area_context_get_area
 ;;;     gtk_cell_area_context_allocate
@@ -45,6 +46,19 @@
 ;;;     gtk_cell_area_context_get_allocation
 ;;;     gtk_cell_area_context_push_preferred_width
 ;;;     gtk_cell_area_context_push_preferred_height
+;;;
+;;; Properties
+;;;
+;;;     GtkCellArea*  area              Read / Write / Construct Only
+;;;            gint   minimum-height    Read
+;;;            gint   minimum-width     Read
+;;;            gint   natural-height    Read
+;;;            gint   natural-width     Read
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GtkCellAreaContext
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
