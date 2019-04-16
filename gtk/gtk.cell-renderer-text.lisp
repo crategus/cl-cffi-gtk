@@ -1,15 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.cell-renderer-text.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -31,14 +29,80 @@
 ;;;
 ;;; GtkCellRendererText
 ;;;
-;;; Renders text in a cell
+;;;     Renders text in a cell
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkCellRendererText
 ;;;
+;;; Functions
+;;;
 ;;;     gtk_cell_renderer_text_new
 ;;;     gtk_cell_renderer_text_set_fixed_height_from_font
+;;;
+;;; Properties
+;;;
+;;;             gboolean   align-set                Read / Write
+;;;       PangoAlignment   alignment                Read / Write
+;;;        PangoAttrList*  attributes               Read / Write
+;;;                gchar*  background               Write
+;;;             GdkColor*  background-gdk           Read / Write
+;;;              GdkRGBA*  background-rgba          Read / Write
+;;;             gboolean   background-set           Read / Write
+;;;             gboolean   editable                 Read / Write
+;;;             gboolean   editable-set             Read / Write
+;;;   PangoEllipsizeMode   ellipsize                Read / Write
+;;;             gboolean   ellipsize-set            Read / Write
+;;;                gchar*  family                   Read / Write
+;;;             gboolean   family-set               Read / Write
+;;;                gchar*  font                     Read / Write
+;;; PangoFontDescription*  font-desc                Read / Write
+;;;                gchar*  foreground               Write
+;;;             GdkColor*  foreground-gdk           Read / Write
+;;;              GdkRGBA*  foreground-rgba          Read / Write
+;;;             gboolean   foreground-set           Read / Write
+;;;                gchar*  language                 Read / Write
+;;;             gboolean   language-set             Read / Write
+;;;                gchar*  markup                   Write
+;;;                 gint   max-width-chars          Read / Write
+;;;                gchar*  placeholder-text         Read / Write
+;;;             gboolean   rise-set                 Read / Write
+;;;              gdouble   scale                    Read / Write
+;;;             gboolean   scale-set                Read / Write
+;;;             gboolean   single-paragraph-mode    Read / Write
+;;;                 gint   size                     Read / Write
+;;;              gdouble   size-points              Read / Write
+;;;             gboolean   size-set                 Read / Write
+;;;         PangoStretch   stretch                  Read / Write
+;;;             gboolean   stretch-set              Read / Write
+;;;             gboolean   strikethrough            Read / Write
+;;;             gboolean   strikethrough-set        Read / Write
+;;;           PangoStyle   style                    Read / Write
+;;;             gboolean   style-set                Read / Write
+;;;                gchar*  text                     Read / Write
+;;;       PangoUnderline   underline                Read / Write
+;;;             gboolean   underline-set            Read / Write
+;;;         PangoVariant   variant                  Read / Write
+;;;             gboolean   variant-set              Read / Write
+;;;                 gint   weight                   Read / Write
+;;;             gboolean   weight-set               Read / Write
+;;;                 gint   width-chars              Read / Write
+;;;        PangoWrapMode   wrap-mode                Read / Write
+;;;                 gint   wrap-width               Read / Write
+;;;
+;;; Signals
+;;;
+;;;                 void    edited                  Run Last
+;;; 
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkCellRenderer
+;;;             ╰── GtkCellRendererText
+;;;                 ├── GtkCellRendererAccel
+;;;                 ├── GtkCellRendererCombo
+;;;                 ╰── GtkCellRendererSpin
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)

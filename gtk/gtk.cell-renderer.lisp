@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.cell-renderer.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,15 +29,18 @@
 ;;;
 ;;; GtkCellRenderer
 ;;;
-;;; An object for rendering a single cell
+;;;     An object for rendering a single cell
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkCellRendererState
 ;;;     GtkCellRendererMode
 ;;;     GtkCellRenderer
 ;;;     GtkCellRendererClass
 ;;;
+;;; Functions
+;;;
+;;;     gtk_cell_renderer_class_set_accessible_type
 ;;;     gtk_cell_renderer_get_aligned_area
 ;;;     gtk_cell_renderer_get_size
 ;;;     gtk_cell_renderer_render
@@ -59,13 +59,47 @@
 ;;;     gtk_cell_renderer_set_padding
 ;;;     gtk_cell_renderer_get_state
 ;;;     gtk_cell_renderer_is_activatable
-;;;
 ;;;     gtk_cell_renderer_get_preferred_height
 ;;;     gtk_cell_renderer_get_preferred_height_for_width
 ;;;     gtk_cell_renderer_get_preferred_size
 ;;;     gtk_cell_renderer_get_preferred_width
 ;;;     gtk_cell_renderer_get_preferred_width_for_height
 ;;;     gtk_cell_renderer_get_request_mode
+;;;
+;;; Properties
+;;;
+;;;               gchar*  cell-background         Write
+;;;            GdkColor*  cell-background-gdk     Read / Write
+;;;             GdkRGBA*  cell-background-rgba    Read / Write
+;;;            gboolean   cell-background-set     Read / Write
+;;;            gboolean   editing                 Read
+;;;                gint   height                  Read / Write
+;;;            gboolean   is-expanded             Read / Write
+;;;            gboolean   is-expander             Read / Write
+;;; GtkCellRendererMode   mode                    Read / Write
+;;;            gboolean   sensitive               Read / Write
+;;;            gboolean   visible                 Read / Write
+;;;                gint   width                   Read / Write
+;;;              gfloat   xalign                  Read / Write
+;;;               guint   xpad                    Read / Write
+;;;              gfloat   yalign                  Read / Write
+;;;               guint   ypad                    Read / Write
+;;;
+;;; Signals
+;;;
+;;;                void   editing-canceled        Run First
+;;;                void   editing-started         Run First
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkCellRenderer
+;;;             ├── GtkCellRendererText
+;;;             ├── GtkCellRendererPixbuf
+;;;             ├── GtkCellRendererProgress
+;;;             ├── GtkCellRendererSpinner
+;;;             ╰── GtkCellRendererToggle
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -663,6 +697,29 @@
 ;;;   void (*_gtk_reserved3) (void);
 ;;;   void (*_gtk_reserved4) (void);
 ;;; };
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_cell_renderer_class_set_accessible_type ()
+;;;
+;;; void
+;;; gtk_cell_renderer_class_set_accessible_type
+;;;                                (GtkCellRendererClass *renderer_class,
+;;;                                 GType type);
+;;;
+;;; Sets the type to be used for creating accessibles for cells rendered by cell
+;;; renderers of renderer_class . Note that multiple accessibles will be
+;;; created.
+;;;
+;;; This function should only be called from class init functions of cell
+;;; renderers.
+;;;
+;;; renderer_class :
+;;;     class to set the accessible type for
+;;; 
+;;; type :
+;;;     The object type that implements the accessible for widget_class . The
+;;;     type must be a subtype of GtkRendererCellAccessible
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------

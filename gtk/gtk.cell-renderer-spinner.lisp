@@ -1,11 +1,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.cell-renderer-spinner.lisp
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012, 2013 Dieter Kaiser
+;;; Copyright (C) 2012 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -27,13 +28,28 @@
 ;;;
 ;;; GtkCellRendererSpinner
 ;;;
-;;; Renders a spinning animation in a cell
+;;;     Renders a spinning animation in a cell
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkCellRendererSpinner
 ;;;
+;;; Functions
+;;;
 ;;;     gtk_cell_renderer_spinner_new
+;;;
+;;; Properties
+;;;
+;;;        gboolean   active    Read / Write
+;;;           guint   pulse     Read / Write
+;;;     GtkIconSize   size      Read / Write
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkCellRenderer
+;;;             ╰── GtkCellRendererSpinner
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
