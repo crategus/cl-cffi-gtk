@@ -15,8 +15,8 @@ GTK+ Widgets and Objects
 
   Interface builder
 
- +  gtk.builder.lisp                 - GtkBuilder                  - GTK+ 3.24 &
- +  gtk.buildable.lisp               - GtkBuildable                - GTK+ 3.24 &
+    gtk.builder.lisp                 - GtkBuilder                  - GTK+ 3.24 &
+    gtk.buildable.lisp               - GtkBuildable                - GTK+ 3.24 &
 
   Windows
 
@@ -93,39 +93,38 @@ GTK+ Widgets and Objects
     gtk.text-mark.lisp               - GtkTextMark                 - GTK+ 3.16 *
     gtk.text-buffer.lisp             - GtkTextBuffer               - GTK+ 3.24
     gtk.text-tag.lisp                - GtkTextTag                  - GTK+ 3.24 &
-
-    gtk.text-tag-table.lisp          - GtkTextTagTable             - GTK+ 3.6.4*
-    gtk.text-view.lisp               - GtkTextView                 - GTK+ 3.6.4*
+    gtk.text-tag-table.lisp          - GtkTextTagTable             - GTK+ 3.24
+    gtk.text-view.lisp               - GtkTextView                 - GTK+ 3.24 &
 
   Tree, List and Icon Grid Widgets
 
-    gtk.tree-model.lisp              - GtkTreeModel                - GTK+ 3.6.4*
-    gtk.tree-selection.lisp          - GtkTreeSelection            - GTK+ 3.6.4*
-    gtk.tree-view-column.lisp        - GtkTreeViewColumn           - GTK+ 3.6.4*
-    gtk.tree-view.lisp               - GtkTreeView                 - GTK+ 3.6.4*
-    gtk.tree-view-drag-and-drop.lisp - GtkTreeView drag and drop   - GTK+ 3.6.4*
-    gtk.cell-view.lisp               - GtkCellView                 - GTK+ 3.6.4*
-    gtk.icon-view.lisp               - GtkIconView                 - GTK+ 3.6.4*
-    gtk.tree-sortable.lisp           - GtkTreeSortable             - GTK+ 3.6.4*
-    gtk.tree-model-sort.lisp         - GtkTreeModelSort            - GTK+ 3.6.4*
-    gtk.tree-model-filter.lisp       - GtkTreeModelFilter          - GTK+ 3.6.4*
-    gtk.cell-layout.lisp             - GtkCellLayout               - GTK+ 3.6.4*
-    gtk.cell-area.lisp               - GtkCellArea                 - GTK+ 3.6.4*
-    gtk.cell-area-box.lisp           - GtkCellAreaBox              - GTK+ 3.6.4*
-    gtk.cell-area-context.lisp       - GtkCellAreaContext          - GTK+ 3.6.4*
-    gtk.cell-renderer.lisp           - GtkCellRenderer             - GTK+ 3.6.4*
-    gtk.cell-editable.lisp           - GtkCellEditable             - GTK+ 3.6.4*
-    gtk.cell-renderer-accel.lisp     - GtkCellRendererAccel        - GTK+ 3.6.4*
-    gtk.cell-renderer-combo.lisp     - GtkCellRendererCombo        - GTK+ 3.6.4*
-    gtk.cell-renderer-pixbuf.lisp    - GtkCellRendererPixbuf       - GTK+ 3.6.4*
-    gtk.cell-renderer-progress-lisp  - GtkCellRendererProgress     - GTK+ 3.6.4*
-    gtk.cell-renderer-spin.lisp      - GtkCellRendererSpin         - GTK+ 3.6.4*
-    gtk.cell-renderer-text.lisp      - GtkCellRendererText         - GTK+ 3.6.4*
-    gtk.cell-renderer-toggle.lisp    - GtkCellRendererToggle       - GTK+ 3.6.4*
-    gtk.cell-renderer-spinner.lisp   - GtkCellRendererSpinner      - GTK+ 3.6.4*
+    gtk.tree-model.lisp              - GtkTreeModel                - GTK+ 3.24 &
+    gtk.tree-selection.lisp          - GtkTreeSelection            - GTK+ 3.24 &
+    gtk.tree-view-column.lisp        - GtkTreeViewColumn           - GTK+ 3.24 &
+ +  gtk.tree-view.lisp               - GtkTreeView                 - GTK+ 3.24 &
+    gtk.tree-view-drag-and-drop.lisp - GtkTreeView drag and drop   - GTK+ 3.24 &
+    gtk.cell-view.lisp               - GtkCellView                 - GTK+ 3.24 &
+ +  gtk.icon-view.lisp               - GtkIconView                 - GTK+ 3.24
+    gtk.tree-sortable.lisp           - GtkTreeSortable             - GTK+ 3.24 &
+    gtk.tree-model-sort.lisp         - GtkTreeModelSort            - GTK+ 3.24 &
+    gtk.tree-model-filter.lisp       - GtkTreeModelFilter          - GTK+ 3.24 &
+    gtk.cell-layout.lisp             - GtkCellLayout               - GTK+ 3.24 &
+    gtk.cell-area.lisp               - GtkCellArea                 - GTK+ 3.24 &
+    gtk.cell-area-box.lisp           - GtkCellAreaBox              - GTK+ 3.24
+    gtk.cell-area-context.lisp       - GtkCellAreaContext          - GTK+ 3.24
+    gtk.cell-renderer.lisp           - GtkCellRenderer             - GTK+ 3.24 &
+    gtk.cell-editable.lisp           - GtkCellEditable             - GTK+ 3.24
+    gtk.cell-renderer-accel.lisp     - GtkCellRendererAccel        - GTK+ 3.24
+    gtk.cell-renderer-combo.lisp     - GtkCellRendererCombo        - GTK+ 3.24
+    gtk.cell-renderer-pixbuf.lisp    - GtkCellRendererPixbuf       - GTK+ 3.24
+    gtk.cell-renderer-progress-lisp  - GtkCellRendererProgress     - GTK+ 3.24
+    gtk.cell-renderer-spin.lisp      - GtkCellRendererSpin         - GTK+ 3.24
+    gtk.cell-renderer-text.lisp      - GtkCellRendererText         - GTK+ 3.24
+    gtk.cell-renderer-toggle.lisp    - GtkCellRendererToggle       - GTK+ 3.24
+    gtk.cell-renderer-spinner.lisp   - GtkCellRendererSpinner      - GTK+ 3.24
 
-    gtk.list-store.lisp              - GtkListStore                - GTK+ 3.6.4*
-    gtk.tree-store.lisp              - GtkTreeStore                - GTK+ 3.6.4*
+    gtk.list-store.lisp              - GtkListStore                - GTK+ 3.24 &
+    gtk.tree-store.lisp              - GtkTreeStore                - GTK+ 3.24 &
 
   Menus, Combo Box, Toolbar
 

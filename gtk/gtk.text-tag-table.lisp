@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.text-tag-table.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2014 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,11 +29,13 @@
 ;;;
 ;;; GtkTextTagTable
 ;;;
-;;; Collection of tags that can be used together
+;;;     Collection of tags that can be used together
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkTextTagTable
+;;;
+;;; Functions
 ;;;
 ;;;     gtk_text_tag_table_new
 ;;;     gtk_text_tag_table_add
@@ -44,6 +43,21 @@
 ;;;     gtk_text_tag_table_lookup
 ;;;     gtk_text_tag_table_foreach
 ;;;     gtk_text_tag_table_get_size
+;;;
+;;; Signals
+;;;
+;;;     void   tag-added      Run Last
+;;;     void   tag-changed    Run Last
+;;;     void   tag-removed    Run Last
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GtkTextTagTable
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GtkTextTagTable implements GtkBuildable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -84,7 +98,7 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"tag-added\" signal}
       @begin{pre}
- lambda (texttagtable tag)
+ lambda (texttagtable tag)    : Run Last
       @end{pre}
       @begin[code]{table}
         @entry[texttagtable]{The object which received the signal.}
@@ -92,7 +106,7 @@
       @end{table}
     @subheading{The \"tag-changed\" signal}
       @begin{pre}
- lambda (texttagtable tag size-changed)   : Run Last
+ lambda (texttagtable tag size-changed)    : Run Last
       @end{pre}
       @begin[code]{table}
         @entry[texttagtable]{The object which received the signal.}
@@ -101,7 +115,7 @@
       @end{table}
     @subheading{The \"tag-removed\" signal}
       @begin{pre}
- lambda (texttagtable tag)   : Run Last
+ lambda (texttagtable tag)    : Run Last
       @end{pre}
       @begin[code]{table}
         @entry[texttagtable]{The object which received the signal.}

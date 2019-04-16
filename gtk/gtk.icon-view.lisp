@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.icon-view.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,11 +29,16 @@
 ;;;
 ;;; GtkIconView
 ;;;
-;;; A widget which displays a list of icons in a grid
+;;;     A widget which displays a list of icons in a grid
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkIconView
+;;;     GtkIconViewDropPosition
+;;;
+;;; Functions
+;;;
+;;;     GtkIconViewForeachFunc
 ;;;
 ;;;     gtk_icon_view_new
 ;;;     gtk_icon_view_new_with_area
@@ -73,6 +75,8 @@
 ;;;     gtk_icon_view_get_margin
 ;;;     gtk_icon_view_set_item_padding
 ;;;     gtk_icon_view_get_item_padding
+;;;     gtk_icon_view_set_activate_on_single_click         Accessor
+;;;     gtk_icon_view_get_activate_on_single_click         Accessor
 ;;;     gtk_icon_view_get_cell_rect
 ;;;     gtk_icon_view_select_path
 ;;;     gtk_icon_view_unselect_path
@@ -91,8 +95,6 @@
 ;;;     gtk_icon_view_get_item_row
 ;;;     gtk_icon_view_get_item_column
 ;;;
-;;;     GtkIconViewDropPosition
-;;;
 ;;;     gtk_icon_view_enable_model_drag_source
 ;;;     gtk_icon_view_enable_model_drag_dest
 ;;;     gtk_icon_view_unset_model_drag_source
@@ -104,35 +106,54 @@
 ;;;     gtk_icon_view_get_dest_item_at_pos
 ;;;     gtk_icon_view_create_drag_icon
 ;;;
-;;; Object Hierarchy
+;;; Properties
 ;;;
-;;;   GObject
-;;;    +----GInitiallyUnowned
-;;;          +----GtkWidget
-;;;                +----GtkContainer
-;;;                      +----GtkIconView
-;;;
-;;; Implemented Interfaces
-;;;
-;;; GtkIconView implements AtkImplementorIface, GtkBuildable, GtkCellLayout and
-;;; GtkScrollable.
-;;;
+;;;         gboolean   activate-on-single-click    Read / Write
+;;;      GtkCellArea*  cell-area                   Read / Write / Construct Only
+;;;             gint   column-spacing              Read / Write
+;;;             gint   columns                     Read / Write
+;;;   GtkOrientation   item-orientation            Read / Write
+;;;             gint   item-padding                Read / Write
+;;;             gint   item-width                  Read / Write
+;;;             gint   margin                      Read / Write
+;;;             gint   markup-column               Read / Write
+;;;     GtkTreeModel*  model                       Read / Write
+;;;             gint   pixbuf-column               Read / Write
+;;;         gboolean   reorderable                 Read / Write
+;;;             gint   row-spacing                 Read / Write
+;;; GtkSelectionMode   selection-mode              Read / Write
+;;;             gint   spacing                     Read / Write
+;;;             gint   text-column                 Read / Write
+;;;             gint   tooltip-column              Read / Write
 ;;;
 ;;; Style Properties
 ;;;
-;;;   "selection-box-alpha"      guchar               : Read
-;;;   "selection-box-color"      GdkColor*            : Read
+;;;           guchar   selection-box-alpha         Read
+;;;         GdkColor*  selection-box-color         Read
 ;;;
 ;;; Signals
 ;;;
-;;;   "activate-cursor-item"                          : Action
-;;;   "item-activated"                                : Run Last
-;;;   "move-cursor"                                   : Action
-;;;   "select-all"                                    : Action
-;;;   "select-cursor-item"                            : Action
-;;;   "selection-changed"                             : Run First
-;;;   "toggle-cursor-item"                            : Action
-;;;   "unselect-all"                                  : Action
+;;;         gboolean   activate-cursor-item        Action
+;;;             void   item-activated              Run Last
+;;;         gboolean   move-cursor                 Action
+;;;             void   select-all                  Action
+;;;             void   select-cursor-item          Action
+;;;             void   selection-changed           Run First
+;;;             void   toggle-cursor-item          Action
+;;;             void   unselect-all                Action
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;             ╰── GtkContainer
+;;;                 ╰── GtkIconView
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GtkIconView implements AtkImplementorIface, GtkBuildable, GtkCellLayout
+;;;     and GtkScrollable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -148,7 +169,11 @@
                 "GtkBuildable"
                 "GtkCellLayout")
    :type-initializer "gtk_icon_view_get_type")
-  ((cell-area
+  (#+gtk-3-8
+   (activate-on-single-click
+    gtk-icon-view-activate-on-single-click
+    "activate-on-single-click" "gboolean" t t)
+   (cell-area
     gtk-icon-view-cell-area
     "cell-area" "GtkCellArea" t t)
    (column-spacing
@@ -204,29 +229,42 @@
     @sym{gtk-icon-view} provides an alternative view on a
     @class{gtk-tree-model}. It displays the model as a grid of icons with
     labels. Like @class{gtk-tree-view}, it allows to select one or multiple
-    items (depending on the selection mode, see the function
-    @fun{gtk-icon-view-set-selection-mode}). In addition to selection with the
-    arrow keys, @sym{gtk-icon-view} supports rubberband selection, which is
-    controlled by dragging the pointer.
+    items, depending on the selection mode, see the
+    @fun{gtk-icon-view-set-selection-mode} function.
   @end{short}
+  In addition to selection with the arrow keys, @sym{gtk-icon-view} supports
+  rubberband selection, which is controlled by dragging the pointer.
 
-  Note that if the tree model is backed by an actual tree store (as opposed to
-  a flat list where the mapping to icons is obvious), @sym{gtk-icon-view} will
+  Note that if the tree model is backed by an actual tree store, as opposed to
+  a flat list where the mapping to icons is obvious, @sym{gtk-icon-view} will
   only display the first level of the tree and ignore the tree's branches.
   @begin[Style Property Details]{dictionary}
-    @subheading{The \"selection-box-alpha\" style property}
-      @code{\"selection-box-alpha\"} of type @code{:uchar} (Read) @br{}
-      Opacity of the selection box. @br{}
-      Default value: 64
-
-    @subheading{The \"selection-box-color\" style property}
-      @code{\"selection-box-color\"} of type @class{gdk-color} (Read) @br{}
-      Color of the selection box.
+    @begin[code]{table}
+      @begin[selection-box-alpha]{entry}
+        The @code{selection-box-alpha} style property of type @code{:uchar}
+        (Read) @br{}
+        Opacity of the selection box. @br{}
+        @b{Warning:} @code{selection-box-alpha} has been deprecated since
+        version 3.20 and should not be used in newly-written code. The opacity
+        of the selection box is determined by CSS; the value of this style
+        property is ignored. @br{}
+        Default value: 64
+      @end{entry}
+      @begin[selection-box-color]{entry}
+        The @code{selection-box-color} style property of type @class{gdk-color}
+        (Read) @br{}
+        Color of the selection box. @br{}
+        @b{Warning:} @code{selection-box-color} has been deprecated since
+        version 3.20 and should not be used in newly-written code. The color of
+        the selection box is determined by CSS; the value of this style property
+        is ignored.
+      @end{entry}
+    @end{table}
   @end{dictionary}
   @begin[Signal Details]{dictionary}
     @subheading{The \"activate-cursor-item\" signal}
       @begin{pre}
- lambda (iconview)   : Action
+ lambda (iconview)    : Action
       @end{pre}
       A keybinding signal which gets emitted when the user activates the
       currently focused item.
@@ -239,7 +277,7 @@
       @end{table}
     @subheading{The \"item-activated\" signal}
       @begin{pre}
- lambda (iconview path)   : Run Last
+ lambda (iconview path)    : Run Last
       @end{pre}
       The \"item-activated\" signal is emitted when the method
       @fun{gtk-icon-view-item-activated} is called or the user double clicks an
@@ -251,7 +289,7 @@
       @end{table}
     @subheading{The \"move-cursor\" signal}
       @begin{pre}
- lambda (iconview step count)   : Action
+ lambda (iconview step count)    : Action
       @end{pre}
       The \"move-cursor\" signal is a keybinding signal which gets emitted when
       the user initiates a cursor movement.
@@ -274,7 +312,7 @@
       @end{table}
     @subheading{The \"select-all\" signal}
       @begin{pre}
- lambda (iconview)   : Action
+ lambda (iconview)    : Action
       @end{pre}
       A keybinding signal which gets emitted when the user selects all items.
       Applications should not connect to it, but may emit it with the function
@@ -286,7 +324,7 @@
       @end{table}
     @subheading{The \"select-cursor-item\" signal}
       @begin{pre}
- lambda (iconview)   : Action
+ lambda (iconview)    : Action
       @end{pre}
       A keybinding signal which gets emitted when the user selects the item that
       is currently focused.
@@ -299,7 +337,7 @@
       @end{table}
     @subheading{The \"selection-changed\" signal}
       @begin{pre}
- lambda (iconview)   : Run First
+ lambda (iconview)    : Run First
       @end{pre}
      The \"selection-changed\" signal is emitted when the selection (i. e. the
      set of selected items) changes.
@@ -308,7 +346,7 @@
      @end{table}
     @subheading{The \"toggle-cursor-item\" signal}
       @begin{pre}
- lambda (iconview)   : Action
+ lambda (iconview)    : Action
       @end{pre}
       A keybinding signal which gets emitted when the user toggles whether the
       currently focused item is selected or not. The exact effect of this depend
@@ -322,7 +360,7 @@
       @end{table}
     @subheading{The \"unselect-all\" signal}
       @begin{pre}
- lambda (iconview)   : Action
+ lambda (iconview)    : Action
       @end{pre}
       A keybinding signal which gets emitted when the user unselects all items.
       Applications should not connect to it, but may emit it with the function
@@ -333,6 +371,7 @@
         @entry[iconview]{The object on which the signal is emitted.}
       @end{table}
   @end{dictionary}
+  @see-slot{gzk-icon-view-activate-on-single-click}
   @see-slot{gtk-icon-view-cell-area}
   @see-slot{gtk-icon-view-column-spacing}
   @see-slot{gtk-icon-view-columns}
@@ -351,20 +390,67 @@
   @see-slot{gtk-icon-view-tooltip-column}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
+;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-icon-view-activate-on-single-click ---------------------------------
+
+#+gtk-3-8
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "activate-on-single-click"
+                                               'gtk-icon-view) 't)
+ "The @code{activate-on-single-click} property of type @code{:boolean}
+  (Read / Write / Construct) @br{}
+  The @code{activate-on-single-click} property specifies whether the
+  \"item-activated\" signal will be emitted after a single click. @br{}
+  Default value: @code{nil} @br{}
+  Since 3.8")
+
+#+(and gtk-3-8 cl-cffi-gtk-documentation)
+(setf (gethash 'gtk-icon-view-activate-on-single-click
+               atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-icon-view-activate-on-single-click 'function)
+ "@version{2013-3-9}
+  @syntax[]{(gtk-icon-view-activate-on-single-click object) => single}
+  @syntax[]{(setf (gtk-icon-view-activate-on-single-click object) single)}
+  @argument[object]{a @class{gtk-icon-view} object}
+  @argument[single]{a boolean that is @em{true} to emit item-activated on a
+    single click}
+  @begin{short}
+    Accessor of the @slot[gtk-icon-view]{activate-on-single-click} slot of the
+    @class{gtk-icon-view} class.
+  @end{short}
+
+  Causes the \"item-activated\" signal to be emitted on a single click instead
+  of a double click.
+
+  Since 3.8
+  @see-class{gtk-icon-view}")
+
+;;; --- gtk-icon-view-cell-area ------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "cell-area" 'gtk-icon-view) 't)
- "The @code{\"cell-area\"} property of type @class{gtk-cell-area}
+ "The @code{cell-area} property of type @class{gtk-cell-area}
   (Read / Write / Construct) @br{}
   The @class{gtk-cell-area} used to layout cell renderers for this view.
-  If no area is specified when creating the icon view with
-  @fun{gtk-icon-view-new-with-area} a @class{gtk-cell-area-box} will be
-  used. @br{}
-  Since 3.0")
+  If no area is specified when creating the icon view with the
+  @fun{gtk-icon-view-new-with-area} function a @class{gtk-cell-area-box} will be
+  used.")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-icon-view-cell-area atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-icon-view-cell-area 'function)
+ "@version{2013-3-9}
+  @begin{short}
+    Accessor of the @slot[gtk-icon-view]{cell-area} slot of the
+    @class{gtk-icon-view} class.
+  @end{short}
+  @see-class{gtk-icon-view}")
+
+;;; --- gtk-icon-view-column-spacing -------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "column-spacing"
@@ -515,20 +601,8 @@
   Default value: -1")
 
 ;;; ----------------------------------------------------------------------------
-;;;
 ;;; Accessors
-;;;
 ;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-icon-view-cell-area atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-icon-view-cell-area 'function)
- "@version{2013-3-9}
-  @begin{short}
-    Accessor of the slot @code{\"cell-area\"} of the @class{gtk-icon-view}
-    class.
-  @end{short}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-icon-view-column-spacing atdoc:*function-name-alias*)
