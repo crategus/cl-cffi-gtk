@@ -1,15 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.tree-selection.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -31,11 +29,16 @@
 ;;;
 ;;; GtkTreeSelection
 ;;;
-;;; The selection object for GtkTreeView
+;;;     The selection object for GtkTreeView
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkTreeSelection
+;;;
+;;; Functions
+;;;
+;;;     GtkTreeSelectionFunc
+;;;     GtkTreeSelectionForeachFunc
 ;;;
 ;;;     gtk_tree_selection_set_mode
 ;;;     gtk_tree_selection_get_mode
@@ -57,6 +60,19 @@
 ;;;     gtk_tree_selection_unselect_all
 ;;;     gtk_tree_selection_select_range
 ;;;     gtk_tree_selection_unselect_range
+;;;
+;;; Properties
+;;;
+;;;     GtkSelectionMode   mode       Read / Write
+;;;
+;;; Signals
+;;;
+;;;                 void   changed    Run First
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GtkTreeSelection
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -73,8 +89,6 @@
   ((mode
     gtk-tree-selection-mode
     "mode" "GtkSelectionMode" t t)))
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-tree-selection 'type)
@@ -105,7 +119,7 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"changed\" signal}
       @begin{pre}
- lambda (treeselection)   : Run First
+ lambda (treeselection)    : Run First
       @end{pre}
       Emitted whenever the selection has (possibly) changed. Please note that
       this signal is mostly a hint. It may only be emitted once when a range of
@@ -118,33 +132,27 @@
   @see-slot{gtk-tree-selection-mode}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
+;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "mode" 'gtk-tree-selection) 't)
- "The @code{\"mode\"} property of type @symbol{gtk-selection-mode}
-  (Read / Write)@br{}
-  Selection mode. See the function @fun{gtk-tree-selection-set-mode} for more
-  information on this property.@br{}
-  Default value: @code{:single}@br{}
-  Since 3.2")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
+ "The @code{mode} property of type @symbol{gtk-selection-mode}
+  (Read / Write) @br{}
+  Selection mode. See the @fun{gtk-tree-selection-set-mode} function for more
+  information on this property. @br{}
+  Default value: @code{:single}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tree-selection-mode atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tree-selection-mode 'function)
  "@version{2013-5-12}
-  Accessor of the slot @code{\"mode\"} of the @class{gtk-tree-selection}
-  class.")
+  @begin{short}
+    Accessor of the slot @slot[gtk-tree-selection]{mode} of the
+    @class{gtk-tree-selection} class.
+  @end{short}
+  @see-class{gtk-tree-selection}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkTreeSelectionFunc ()
@@ -301,8 +309,7 @@
   @argument[selection]{a @class{gtk-tree-selection} object}
   @return{The function.}
   @short{Returns the current selection function.}
-
-  Since 2.14"
+  @see-class{gtk-tree-selection}"
   (let ((ptr (%gtk-tree-selection-get-user-data selection)))
     (unless (null-pointer-p ptr)
       (glib::get-stable-pointer-value ptr))))
@@ -430,8 +437,7 @@
 
   To free the return value, use:
   @code{g_list_free_full (list, (GDestroyNotify) gtk_tree_path_free);}
-
-  Since 2.2
+  @see-class{gtk-tree-selection}
   @see-function{gtk-tree-row-reference-new}"
   (%gtk-tree-selection-get-selected-rows selection (null-pointer)))
 
@@ -448,8 +454,7 @@
   @argument[selection]{a @class{gtk-tree-selection} object}
   @return{The number of rows selected.}
   @short{Returns the number of rows that have been selected in tree.}
-
-  Since 2.2"
+  @see-class{gtk-tree-selection}"
   (selection g-object))
 
 (export 'gtk-tree-selection-count-selected-rows)
@@ -619,8 +624,7 @@
     Unselects a range of nodes, determined by @arg{start-path} and
     @arg{end-path} inclusive.
   @end{short}
-
-  Since 2.2"
+  @see-class{gtk-tree-selection}"
   (selection g-object)
   (start-path (g-boxed-foreign gtk-tree-path))
   (end-path (g-boxed-foreign gtk-tree-path)))

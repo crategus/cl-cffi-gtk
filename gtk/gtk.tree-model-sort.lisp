@@ -1,15 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.tree-model-sort.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -31,11 +29,13 @@
 ;;;
 ;;; GtkTreeModelSort
 ;;;
-;;; A GtkTreeModel which makes an underlying tree model sortable
+;;;     A GtkTreeModel which makes an underlying tree model sortable
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkTreeModelSort
+;;;
+;;; Functions
 ;;;
 ;;;     gtk_tree_model_sort_new_with_model
 ;;;     gtk_tree_model_sort_get_model
@@ -46,6 +46,20 @@
 ;;;     gtk_tree_model_sort_reset_default_sort_func
 ;;;     gtk_tree_model_sort_clear_cache
 ;;;     gtk_tree_model_sort_iter_is_valid
+;;;
+;;; Properties
+;;;
+;;;     GtkTreeModel*  model    Read / Write / Construct Only
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GtkTreeModelSort
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GtkTreeModelSort implements GtkTreeModel, GtkTreeSortable and
+;;;     GtkTreeDragSource.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -175,23 +189,18 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "model"
                                                'gtk-tree-model-sort) 't)
- "The @code{\"model\"} property of type @class{gtk-tree-model}
+ "The @code{model} property of type @class{gtk-tree-model}
   (Read / Write / Construct) @br{}
   The model for the @sym{gtk-tree-model-sort} to sort.")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors
-;;;
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tree-model-sort-model atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tree-model-sort-model 'function)
  "@version{2013-6-21}
-  Accessor of the slot @code{\"model\"} of the @class{gtk-tree-model-sort}
-  class.")
+  Accessor of the @slot[gtk-tree-model-sort]{model} slot of the
+  @class{gtk-tree-model-sort} class.
+  @see-class{gtk-tree-model-sort}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_model_sort_new_with_model ()

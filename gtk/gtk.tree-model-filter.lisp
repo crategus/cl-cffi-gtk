@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.tree-model-filter.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,11 +29,16 @@
 ;;;
 ;;; GtkTreeModelFilter
 ;;;
-;;; A GtkTreeModel which hides parts of an underlying tree model
+;;;     A GtkTreeModel which hides parts of an underlying tree model
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkTreeModelFilter
+;;;
+;;; Functions
+;;;
+;;;     GtkTreeModelFilterVisibleFunc
+;;;     GtkTreeModelFilterModifyFunc
 ;;;
 ;;;     gtk_tree_model_filter_new
 ;;;     gtk_tree_model_filter_set_visible_func
@@ -49,6 +51,19 @@
 ;;;     gtk_tree_model_filter_convert_path_to_child_path
 ;;;     gtk_tree_model_filter_refilter
 ;;;     gtk_tree_model_filter_clear_cache
+;;;
+;;; Properties
+;;;
+;;;     GtkTreeModel*  child-model     Read / Write / Construct Only
+;;;      GtkTreePath*  virtual-root    Read / Write / Construct Only
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GtkTreeModelFilter
+;;; Implemented Interfaces
+;;;
+;;;     GtkTreeModelFilter implements GtkTreeModel and GtkTreeDragSource.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -147,46 +162,44 @@
   @see-slot{gtk-tree-model-filter-virtual-root}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
+;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-tree-model-filter-child-model --------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "child-model"
                                                'gtk-tree-model-filter) 't)
- "The @code{\"child-model\"} property of type @class{gtk-tree-model}
+ "The @code{child-model} property of type @class{gtk-tree-model}
   (Read / Write / Construct) @br{}
   The model for the filter model to filter.")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "virtual-root"
-                                               'gtk-tree-model-filter) 't)
- "The @code{\"virtual-root\"} property of type @class{gtk-tree-path}
-  (Read / Write / Construct) @br{}
-  The virtual root (relative to the child model) for this filter model.")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors
-;;;
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tree-model-filter-child-model atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tree-model-filter-child-model 'function)
  "@version{2013-6-21}
-  Accessor of the slot @code{\"child-model\"} of the
-  @class{gtk-tree-model-filter} class.")
+  Accessor of the @slot[gtk-tree-model-filter]{child-model} slot of the
+  @class{gtk-tree-model-filter} class.
+  @see-class{gtk-tree-model-filter}")
+
+;;; --- gtk-tree-model-filter-virtual-root -------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "virtual-root"
+                                               'gtk-tree-model-filter) 't)
+ "The @code{virtual-root} property of type @class{gtk-tree-path}
+  (Read / Write / Construct) @br{}
+  The virtual root (relative to the child model) for this filter model.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tree-model-filter-virtual-root atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tree-model-filter-virtual-root 'function)
  "@version{2013-6-21}
-  Accessor of the slot @code{\"virtual-root\"} of the
-  @class{gtk-tree-model-filter} class.")
+  Accessor of the @slot[gtk-tree-model-filter]{virtual-root} slot of the
+  @class{gtk-tree-model-filter} class.
+  @see-class{gtk-tree-model-filter}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_model_filter_new ()

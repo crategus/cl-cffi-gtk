@@ -1,15 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.tree-sortable.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -31,12 +29,19 @@
 ;;;
 ;;; GtkTreeSortable
 ;;;
-;;; The interface for sortable models used by GtkTreeView
+;;;     The interface for sortable models used by GtkTreeView
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkTreeSortable
 ;;;     GtkTreeSortableIface
+;;;
+;;;     GTK_TREE_SORTABLE_DEFAULT_SORT_COLUMN_ID
+;;;     GTK_TREE_SORTABLE_UNSORTED_SORT_COLUMN_ID
+;;;
+;;; Functions
+;;;
+;;;     GtkTreeIterCompareFunc
 ;;;
 ;;;     gtk_tree_sortable_sort_column_changed
 ;;;     gtk_tree_sortable_get_sort_column_id
@@ -44,6 +49,19 @@
 ;;;     gtk_tree_sortable_set_sort_func
 ;;;     gtk_tree_sortable_set_default_sort_func
 ;;;     gtk_tree_sortable_has_default_sort_func
+;;;
+;;; Signals
+;;;
+;;;     void   sort-column-changed    Run Last
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GInterface
+;;;     ╰── GtkTreeSortable
+;;;
+;;; Prerequisites
+;;;
+;;;     GtkTreeSortable requires GtkTreeModel and GObject.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -68,7 +86,7 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"sort-column-changed\" signal}
       @begin{pre}
- lambda (sortable)   : Run Last
+ lambda (sortable)    : Run Last
       @end{pre}
       The \"sort-column-changed\" signal is emitted when the sort column or sort
       order of @arg{sortable} is changed. The signal is emitted before the

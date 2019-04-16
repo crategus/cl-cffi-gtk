@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.tree-view-column.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,12 +29,16 @@
 ;;;
 ;;; GtkTreeViewColumn
 ;;;
-;;; A visible column in a GtkTreeView widget
+;;;     A visible column in a GtkTreeView widget
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkTreeViewColumnSizing
 ;;;     GtkTreeViewColumn
+;;;
+;;; Functions
+;;;
+;;;     GtkTreeCellDataFunc
 ;;;
 ;;;     gtk_tree_view_column_new
 ;;;     gtk_tree_view_column_new_with_area
@@ -92,6 +93,42 @@
 ;;;     gtk_tree_view_column_queue_resize
 ;;;     gtk_tree_view_column_get_tree_view
 ;;;     gtk_tree_view_column_get_x_offset
+;;;
+;;; Properties
+;;;
+;;;                  gfloat   alignment         Read / Write
+;;;             GtkCellArea*  cell-area         Read / Write / Construct
+;;;                gboolean   clickable         Read / Write
+;;;                gboolean   expand            Read / Write
+;;;                    gint   fixed-width       Read / Write
+;;;                    gint   max-width         Read / Write
+;;;                    gint   min-width         Read / Write
+;;;                gboolean   reorderable       Read / Write
+;;;                gboolean   resizable         Read / Write
+;;; GtkTreeViewColumnSizing   sizing            Read / Write
+;;;                    gint   sort-column-id    Read / Write
+;;;                gboolean   sort-indicator    Read / Write
+;;;             GtkSortType   sort-order        Read / Write
+;;;                    gint   spacing           Read / Write
+;;;                   gchar*  title             Read / Write
+;;;                gboolean   visible           Read / Write
+;;;               GtkWidget*  widget            Read / Write
+;;;                    gint   width             Read
+;;;                    gint   x-offset          Read
+;;;
+;;; Signals
+;;;
+;;;                    void   clicked           Run Last
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkTreeViewColumn
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GtkTreeViewColumn implements GtkCellLayout and GtkBuildable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -242,391 +279,366 @@
   @see-slot{gtk-tree-view-column-x-offset}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
+;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-tree-view-column-alignment -----------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "alignment"
                                                'gtk-tree-view-column) 't)
- "The @code{\"alignment\"} property of type @code{:float} (Read / Write)@br{}
+ "The @code{alignment} property of type @code{:float} (Read / Write) @br{}
   X Alignment of the column header text or widget. @br{}
-  Allowed values: [0,1]@br{}
+  Allowed values: [0,1] @br{}
   Default value: 0")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "cell-area"
-                                               'gtk-tree-view-column) 't)
- "The @code{\"cell-area\"} property of type @class{gtk-cell-area}
-  (Read / Write / Construct)@br{}
-  The @class{gtk-cell-area} object used to layout cell renderers for this
-  column. If no area is specified when creating the tree view column with the
-  function @fun{gtk-tree-view-column-new-with-area} a horizontally oriented
-  @class{gtk-cell-area-box} object will be used. @br{}
-  Since 3.0")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "clickable"
-                                               'gtk-tree-view-column) 't)
- "The @code{\"clickable\"} property of type @code{:boolean} (Read / Write)@br{}
-  Whether the header can be clicked. @br{}
-  Default value: @code{nil}")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "expand"
-                                               'gtk-tree-view-column) 't)
- "The @code{\"expand\"} property of type @code{:boolean} (Read / Write)@br{}
-  Column gets share of extra width allocated to the widget. @br{}
-  Default value: @code{nil}")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "fixed-width"
-                                               'gtk-tree-view-column) 't)
- "The @code{\"fixed-width\"} property of type @code{:int} (Read / Write)@br{}
-  Current fixed width of the column. @br{}
-  Allowed values: >= 1@br{}
-  Default value: 1")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "max-width"
-                                               'gtk-tree-view-column) 't)
- "The @code{\"max-width\"} property of type @code{:int} (Read / Write)@br{}
-  Maximum allowed width of the column. @br{}
-  Allowed values: >= @code{G_MAXULONG} @br{}
-  Default value: -1 @br{}")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "min-width"
-                                               'gtk-tree-view-column) 't)
- "The @code{\"min-width\"} property of type @code{:int} (Read / Write)@br{}
-  Minimum allowed width of the column. @br{}
-  Allowed values: >= @code{G_MAXULONG} @br{}
-  Default value: -1")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "reorderable"
-                                               'gtk-tree-view-column) 't)
- "The @code{\"reorderable\"} property of type @code{:boolean}
-  (Read / Write)@br{}
-  Whether the column can be reordered around the headers. @br{}
-  Default value: @code{nil}")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "resizable"
-                                               'gtk-tree-view-column) 't)
- "The @code{\"resizable\"} property of type @code{:boolean} (Read / Write)@br{}
-  Column is user-resizable. @br{}
-  Default value: @code{nil}")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "sizing"
-                                               'gtk-tree-view-column) 't)
- "The @code{\"sizing\"} property of type @symbol{gtk-tree-view-column-sizing}
-  (Read / Write)@br{}
-  Resize mode of the column. @br{}
-  Default value: @code{:grow-only}")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "sort-column-id"
-                                               'gtk-tree-view-column) 't)
- "The @code{\"sort-column-id\"} property of type @code{:int} (Read / Write)@br{}
-  Logical sort column ID this column sorts on when selected for sorting.
-  Setting the sort column ID makes the column header clickable. Set to -1 to
-  make the column unsortable. @br{}
-  Allowed values: >= @code{G_MAXULONG} @br{}
-  Default value: -1@br{}
-  Since 2.18")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "sort-indicator"
-                                               'gtk-tree-view-column) 't)
- "The @code{\"sort-indicator\"} property of type @code{:boolean}
-  (Read / Write)@br{}
-  Whether to show a sort indicator. @br{}
-  Default value: @code{nil}")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "sort-order"
-                                               'gtk-tree-view-column) 't)
- "The @code{\"sort-order\"} property of type @symbol{gtk-sort-type}
-  (Read / Write)@br{}
-  Sort direction the sort indicator should indicate. @br{}
-  Default value: @code{:ascending}")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "spacing"
-                                               'gtk-tree-view-column) 't)
- "The @code{\"spacing\"} property of type @code{:int} (Read / Write)@br{}
-  Space which is inserted between cells. @br{}
-  Allowed values: >= 0@br{}
-  Default value: 0")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "title"
-                                               'gtk-tree-view-column) 't)
- "The @code{\"title\"} property of type @code{:string} (Read / Write)@br{}
-  Title to appear in column header. @br{}
-  Default value: \"\"")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "visible"
-                                               'gtk-tree-view-column) 't)
- "The @code{\"visible\"} property of type @code{:boolean} (Read / Write)@br{}
-  Whether to display the column. @br{}
-  Default value: @em{true}")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "widget"
-                                               'gtk-tree-view-column) 't)
- "The @code{\"widget\"} property of type @class{gtk-widget} (Read / Write)@br{}
-  Widget to put in column header button instead of column title.")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "width"
-                                               'gtk-tree-view-column) 't)
- "The @code{\"width\"} property of type @code{:int} (Read)@br{}
-  Current width of the column. @br{}
-  Allowed values: >= 0@br{}
-  Default value: 0")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "x-offset"
-                                               'gtk-tree-view-column) 't)
- "The @code{\"x-offset\"} property of type @code{:int} (Read)@br{}
-  Current X position of the column. @br{}
-  Allowed values: >= -2147483647 @br{}
-  Default value: 0")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tree-view-column-alignment atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tree-view-column-alignment 'function)
  "@version{2013-3-26}
-  Accessor of the slot \"alignment\" of the
-  @class{gtk-tree-view-column} class.")
+  Accessor of the slot @slot[gtk-tree-view-column]{alignment} of the
+  @class{gtk-tree-view-column} class.
+  @see-class{gtk-tree-view-column}")
 
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-tree-view-column-cell-area -----------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "cell-area"
+                                               'gtk-tree-view-column) 't)
+ "The @code{cell-area} property of type @class{gtk-cell-area}
+  (Read / Write / Construct) @br{}
+  The @class{gtk-cell-area} object used to layout cell renderers for this
+  column. If no area is specified when creating the tree view column with the
+  function @fun{gtk-tree-view-column-new-with-area} a horizontally oriented
+  @class{gtk-cell-area-box} object will be used.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tree-view-column-cell-area atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tree-view-column-cell-area 'function)
  "@version{2013-3-26}
-  Accessor of the slot \"cell-area\" of the
-  @class{gtk-tree-view-column} class.")
+  Accessor of the slot @slot[gtk-tree-view-column]{cell-area} of the
+  @class{gtk-tree-view-column} class.
+  @see-class{gtk-tree-view-column}")
 
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-tree-view-column-clickable -----------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "clickable"
+                                               'gtk-tree-view-column) 't)
+ "The @code{clickable} property of type @code{:boolean} (Read / Write) @br{}
+  Whether the header can be clicked. @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tree-view-column-clickable atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tree-view-column-clickable 'function)
  "@version{2013-3-26}
-  Accessor of the slot \"clickable\" of the
-  @class{gtk-tree-view-column} class.")
+  Accessor of the slot @slot[gtk-tree-view-column]{clickable} of the
+  @class{gtk-tree-view-column} class.
+  @see-class{gtk-tree-view-column}")
 
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-tree-view-column-expand --------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "expand"
+                                               'gtk-tree-view-column) 't)
+ "The @code{expand} property of type @code{:boolean} (Read / Write) @br{}
+  Column gets share of extra width allocated to the widget. @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tree-view-column-expand atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tree-view-column-expand 'function)
  "@version{2013-3-26}
-  Accessor of the slot \"expand\" of the
-  @class{gtk-tree-view-column} class.")
+  Accessor of the slot @slot[gtk-tree-view-column]{expand} of the
+  @class{gtk-tree-view-column} class.
+  @see-class{gtk-tree-view-column}")
 
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-tree-view-column-fixed-width ---------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "fixed-width"
+                                               'gtk-tree-view-column) 't)
+ "The @code{fixed-width} property of type @code{:int} (Read / Write) @br{}
+  Current fixed width of the column. @br{}
+  Allowed values: >= 1 @br{}
+  Default value: 1")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tree-view-column-fixed-width atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tree-view-column-fixed-width 'function)
  "@version{2013-3-26}
-  Accessor of the slot \"fixed-width\" of the
-  @class{gtk-tree-view-column} class.")
+  Accessor of the slot @slot[gtk-tree-view-column]{fixed-width} of the
+  @class{gtk-tree-view-column} class.
+  @see-class{gtk-tree-view-column}")
 
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-tree-view-column-max-width -----------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "max-width"
+                                               'gtk-tree-view-column) 't)
+ "The @code{max-width} property of type @code{:int} (Read / Write) @br{}
+  Maximum allowed width of the column. @br{}
+  Allowed values: >= @code{G_MAXULONG} @br{}
+  Default value: -1 @br{}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tree-view-column-max-width atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tree-view-column-max-width 'function)
  "@version{2013-3-26}
-  Accessor of the slot \"max-width\" of the
-  @class{gtk-tree-view-column} class.")
+  Accessor of the slot @slot[gtk-tree-view-column]{max-width} of the
+  @class{gtk-tree-view-column} class.
+  @see-class{gtk-tree-view-column}")
 
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-tree-view-column-min-width -----------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "min-width"
+                                               'gtk-tree-view-column) 't)
+ "The @code{min-width} property of type @code{:int} (Read / Write )@br{}
+  Minimum allowed width of the column. @br{}
+  Allowed values: >= @code{G_MAXULONG} @br{}
+  Default value: -1")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tree-view-column-min-width atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tree-view-column-min-width 'function)
  "@version{2013-3-26}
-  Accessor of the slot \"min-width\" of the
-  @class{gtk-tree-view-column} class.")
+  Accessor of the slot @slot[gtk-tree-view-column]{min-width} of the
+  @class{gtk-tree-view-column} class.
+  @see-class{gtk-tree-view-column}")
 
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-tree-view-column-reorderable ---------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "reorderable"
+                                               'gtk-tree-view-column) 't)
+ "The @code{reorderable} property of type @code{:boolean}
+  (Read / Write)@br{}
+  Whether the column can be reordered around the headers. @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tree-view-column-reorderable atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tree-view-column-reorderable 'function)
  "@version{2013-3-26}
-  Accessor of the slot \"reorderable\" of the
-  @class{gtk-tree-view-column} class.")
+  Accessor of the slot @slot[gtk-tree-view-column]{reorderable} of the
+  @class{gtk-tree-view-column} class.
+  @see-class{gtk-tree-view-column}")
 
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-tree-view-column-resizable -----------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "resizable"
+                                               'gtk-tree-view-column) 't)
+ "The @code{resizable} property of type @code{:boolean} (Read / Write) @br{}
+  Column is user-resizable. @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tree-view-column-resizable atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tree-view-column-resizable 'function)
  "@version{2013-3-26}
-  Accessor of the slot \"resizable\" of the
-  @class{gtk-tree-view-column} class.")
+  Accessor of the slot @slot[gtk-tree-view-column]{resizable} of the
+  @class{gtk-tree-view-column} class.
+  @see-class{gtk-tree-view-column}")
 
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-tree-view-column-sizing --------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "sizing"
+                                               'gtk-tree-view-column) 't)
+ "The @code{sizing} property of type @symbol{gtk-tree-view-column-sizing}
+  (Read / Write) @br{}
+  Resize mode of the column. @br{}
+  Default value: @code{:grow-only}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tree-view-column-sizing atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tree-view-column-sizing 'function)
  "@version{2013-3-26}
-  Accessor of the slot \"sizing\" of the
-  @class{gtk-tree-view-column} class.")
+  Accessor of the slot @slot[gtk-tree-view-column]{sizing} of the
+  @class{gtk-tree-view-column} class.
+  @see-class{gtk-tree-view-column}")
 
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-tree-view-column-sort-column-id ------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "sort-column-id"
+                                               'gtk-tree-view-column) 't)
+ "The @code{sort-column-id} property of type @code{:int} (Read / Write) @br{}
+  Logical sort column ID this column sorts on when selected for sorting.
+  Setting the sort column ID makes the column header clickable. Set to -1 to
+  make the column unsortable. @br{}
+  Allowed values: >= @code{G_MAXULONG} @br{}
+  Default value: -1")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tree-view-column-sort-column-id atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tree-view-column-sort-column-id 'function)
  "@version{2013-3-26}
-  Accessor of the slot \"sort-column-id\" of the
-  @class{gtk-tree-view-column} class.")
+  Accessor of the slot @slot[gtk-tree-view-column]{sort-column-id} of the
+  @class{gtk-tree-view-column} class.
+  @see-class{gtk-tree-view-column}")
 
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-tree-view-column-sort-indicator ------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "sort-indicator"
+                                               'gtk-tree-view-column) 't)
+ "The @code{sort-indicator} property of type @code{:boolean}
+  (Read / Write) @br{}
+  Whether to show a sort indicator. @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tree-view-column-sort-indicator atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tree-view-column-sort-indicator 'function)
  "@version{2013-3-26}
-  Accessor of the slot \"sort-indicator\" of the
-  @class{gtk-tree-view-column} class.")
+  Accessor of the slot @slot[gtk-tree-view-column]{sort-indicator} of the
+  @class{gtk-tree-view-column} class.
+  @see-class{gtk-tree-view-column}")
 
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-tree-view-column-sort-order ----------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "sort-order"
+                                               'gtk-tree-view-column) 't)
+ "The @code{sort-order} property of type @symbol{gtk-sort-type}
+  (Read / Write) @br{}
+  Sort direction the sort indicator should indicate. @br{}
+  Default value: @code{:ascending}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tree-view-column-sort-order atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tree-view-column-sort-order 'function)
  "@version{2013-3-26}
-  Accessor of the slot \"sort-order\" of the
-  @class{gtk-tree-view-column} class.")
+  Accessor of the slot @slot[gtk-tree-view-column]{sort-order} of the
+  @class{gtk-tree-view-column} class.
+  @see-class{gtk-tree-view-column}")
 
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-tree-view-column-spacing -------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "spacing"
+                                               'gtk-tree-view-column) 't)
+ "The @code{spacing} property of type @code{:int} (Read / Write) @br{}
+  Space which is inserted between cells. @br{}
+  Allowed values: >= 0 @br{}
+  Default value: 0")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tree-view-column-spacing atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tree-view-column-spacing 'function)
  "@version{2013-3-26}
-  Accessor of the slot \"spacing\" of the
-  @class{gtk-tree-view-column} class.")
+  Accessor of the slot @slot[gtk-tree-view-column]{spacing} of the
+  @class{gtk-tree-view-column} class.
+  @see-class{gtk-tree-view-column}")
 
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-tree-view-column-title ---------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "title"
+                                               'gtk-tree-view-column) 't)
+ "The @code{title} property of type @code{:string} (Read / Write) @br{}
+  Title to appear in column header. @br{}
+  Default value: \"\"")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tree-view-column-title atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tree-view-column-title 'function)
  "@version{2013-3-26}
-  Accessor of the slot \"title\" of the
-  @class{gtk-tree-view-column} class.")
+  Accessor of the slot @slot[gtk-tree-view-column]{title} of the
+  @class{gtk-tree-view-column} class.
+  @see-class{gtk-tree-view-column}")
 
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-tree-view-column-visible -------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "visible"
+                                               'gtk-tree-view-column) 't)
+ "The @code{visible} property of type @code{:boolean} (Read / Write) @br{}
+  Whether to display the column. @br{}
+  Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tree-view-column-visible atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tree-view-column-visible 'function)
  "@version{2013-3-26}
-  Accessor of the slot \"visible\" of the
-  @class{gtk-tree-view-column} class.")
+  Accessor of the slot @slot[gtk-tree-view-column]{visible} of the
+  @class{gtk-tree-view-column} class.
+  @see-class{gtk-tree-view-column}")
 
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-tree-view-column-widget --------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "widget"
+                                               'gtk-tree-view-column) 't)
+ "The @code{widget} property of type @class{gtk-widget} (Read / Write) @br{}
+  Widget to put in column header button instead of column title.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tree-view-column-widget atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tree-view-column-widget 'function)
  "@version{2013-3-26}
-  Accessor of the slot \"widget\" of the
-  @class{gtk-tree-view-column} class.")
+  Accessor of the slot @slot[gtk-tree-view-column]{widget} of the
+  @class{gtk-tree-view-column} class.
+  @see-class{gtk-tree-view-column}")
 
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-tree-view-column-width ---------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "width"
+                                               'gtk-tree-view-column) 't)
+ "The @code{width} property of type @code{:int} (Read) @br{}
+  Current width of the column. @br{}
+  Allowed values: >= 0 @br{}
+  Default value: 0")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tree-view-column-width atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tree-view-column-width 'function)
  "@version{2013-3-26}
-  Accessor of the slot \"width\" of the
-  @class{gtk-tree-view-column} class.")
+  Accessor of the slot @slot[gtk-tree-view-column]{width} of the
+  @class{gtk-tree-view-column} class.
+  @see-class{gtk-tree-view-column}")
 
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-tree-view-column-x-offset ------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "x-offset"
+                                               'gtk-tree-view-column) 't)
+ "The @code{x-offset} property of type @code{:int} (Read) @br{}
+  Current X position of the column. @br{}
+  Allowed values: >= -2147483647 @br{}
+  Default value: 0")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tree-view-column-x-offset atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tree-view-column-x-offset 'function)
  "@version{2013-3-26}
-  Accessor of the slot \"x-offset\" of the
-  @class{gtk-tree-view-column} class.")
+  Accessor of the slot @slot[gtk-tree-view-column]{x-offset} of the
+  @class{gtk-tree-view-column} class.
+  @see-class{gtk-tree-view-column}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_view_column_new ()
@@ -658,8 +670,7 @@
   @begin{short}
     Creates a new @class{gtk-tree-view-column} using area to render its cells.
   @end{short}
-
-  Since 3.0"
+  @see-class{gtk-tree-view-column}"
   (make-instance 'gtk-tree-view-column
                  :cell-area area))
 
@@ -1251,8 +1262,7 @@
     this option set, then the last column gets all extra space. By default,
     every column is created with this @code{nil}.
   @end{short}
-
-  Since 2.4"
+  @see-class{gtk-tree-view-column}"
   (setf (gtk-tree-view-column-expand tree-column) expand))
 
 (export 'gtk-tree-view-column-set-expand)
@@ -1271,8 +1281,7 @@
   @begin{short}
     Return @em{true} if the column expands to take any available space.
   @end{short}
-
-  Since 2.4"
+  @see-class{gtk-tree-view-column}"
   (gtk-tree-view-column-expand tree-column))
 
 (export 'gtk-tree-view-column-get-expand)
@@ -1358,8 +1367,7 @@
   @begin{short}
     Returns the button used in the treeview column header.
   @end{short}
-
-  Since 3.0"
+  @see-class{gtk-tree-view-column}"
   (tree-column (g-object gtk-tree-view-column)))
 
 (export 'gtk-tree-view-column-get-button)
@@ -1697,8 +1705,7 @@
     Sets the current keyboard focus to be at cell, if the column contains 2 or
     more editable and activatable cells.
   @end{short}
-
-  Since 2.2"
+  @see-class{gtk-tree-view-column}"
   (tree-column (g-object gtk-tree-view-column))
   (cell-renderer (g-object gtk-cell-renderer)))
 
@@ -1717,8 +1724,7 @@
     Flags the column, and the cell renderers added to this column, to have their
     sizes renegotiated.
   @end{short}
-
-  Since 2.8
+  @see-class{gtk-tree-view-column}
   @see-class{gtk-tree-view-column-queue-resize}"
   (tree-column (g-object gtk-tree-view-column)))
 
@@ -1741,8 +1747,7 @@
     inserted. If column is currently not inserted in any tree view,
     @code{nil} is returned.
   @end{short}
-
-  Since 2.12"
+  @see-class{gtk-tree-view-column}"
   (tree-column (g-object gtk-tree-view-column)))
 
 (export 'gtk-tree-view-column-get-tree-view)
@@ -1761,8 +1766,7 @@
   @begin{short}
     Returns the current X offset of @arg{tree-column} in pixels.
   @end{short}
-
-  Since 3.2"
+  @see-class{gtk-tree-view-column}"
   (gtk-tree-view-column-x-offset tree-column))
 
 (export 'gtk-tree-view-column-get-x-offset)

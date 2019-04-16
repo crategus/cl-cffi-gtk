@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.tree-view.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2014 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,13 +29,20 @@
 ;;;
 ;;; GtkTreeView
 ;;;
-;;; A widget for displaying both trees and lists
+;;;     A widget for displaying both trees and lists
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkTreeView
 ;;;     GtkTreeViewDropPosition
 ;;;     GtkTreeViewPrivate
+;;;     GtkTreeViewGridLines
+;;;
+;;; Functions
+;;;
+;;;     GtkTreeViewColumnDropFunc
+;;;     GtkTreeViewMappingFunc
+;;;     GtkTreeViewSearchEqualFunc
 ;;;
 ;;;     gtk_tree_view_new
 ;;;     gtk_tree_view_get_level_indentation
@@ -49,17 +53,21 @@
 ;;;     gtk_tree_view_get_model
 ;;;     gtk_tree_view_set_model
 ;;;     gtk_tree_view_get_selection
-;;;     gtk_tree_view_get_hadjustment                      * deprecated *
-;;;     gtk_tree_view_set_hadjustment                      * deprecated *
-;;;     gtk_tree_view_get_vadjustment                      * deprecated *
-;;;     gtk_tree_view_set_vadjustment                      * deprecated *
+;;;     gtk_tree_view_get_hadjustment                      * deprecated
+;;;     gtk_tree_view_set_hadjustment                      * deprecated
+;;;     gtk_tree_view_get_vadjustment                      * deprecated
+;;;     gtk_tree_view_set_vadjustment                      * deprecated
 ;;;     gtk_tree_view_get_headers_visible
 ;;;     gtk_tree_view_set_headers_visible
 ;;;     gtk_tree_view_columns_autosize
 ;;;     gtk_tree_view_get_headers_clickable
 ;;;     gtk_tree_view_set_headers_clickable
-;;;     gtk_tree_view_set_rules_hint
-;;;     gtk_tree_view_get_rules_hint
+;;;     gtk_tree_view_set_rules_hint                         Accessor
+;;;     gtk_tree_view_get_rules_hint                         Accessor
+;;;
+;;;     gtk_tree_view_set_activate_on_single_click           Accessor
+;;;     gtk_tree_view_get_activate_on_single_click           Accessor
+;;;
 ;;;     gtk_tree_view_append_column
 ;;;     gtk_tree_view_remove_column
 ;;;     gtk_tree_view_insert_column
@@ -112,6 +120,9 @@
 ;;;     gtk_tree_view_get_enable_search
 ;;;     gtk_tree_view_get_search_column
 ;;;     gtk_tree_view_set_search_column
+;;;
+;;;     GtkTreeViewSearchPositionFunc
+;;;
 ;;;     gtk_tree_view_get_search_equal_func
 ;;;     gtk_tree_view_set_search_equal_func
 ;;;     gtk_tree_view_get_search_entry
@@ -124,7 +135,13 @@
 ;;;     gtk_tree_view_set_hover_selection
 ;;;     gtk_tree_view_get_hover_expand
 ;;;     gtk_tree_view_set_hover_expand
+;;;
+;;;     GtkTreeDestroyCountFunc
+;;;
 ;;;     gtk_tree_view_set_destroy_count_func
+;;;
+;;;     GtkTreeViewRowSeparatorFunc
+;;;
 ;;;     gtk_tree_view_get_row_separator_func
 ;;;     gtk_tree_view_set_row_separator_func
 ;;;     gtk_tree_view_get_rubber_banding
@@ -133,8 +150,6 @@
 ;;;     gtk_tree_view_get_enable_tree_lines
 ;;;     gtk_tree_view_set_enable_tree_lines
 ;;;
-;;;     GtkTreeViewGridLines
-;;;
 ;;;     gtk_tree_view_get_grid_lines
 ;;;     gtk_tree_view_set_grid_lines
 ;;;     gtk_tree_view_set_tooltip_row
@@ -142,6 +157,72 @@
 ;;;     gtk_tree_view_get_tooltip_context
 ;;;     gtk_tree_view_get_tooltip_column
 ;;;     gtk_tree_view_set_tooltip_column
+;;;
+;;; Properties
+;;;
+;;;             gboolean   activate-on-single-click    Read / Write
+;;; GtkTreeViewGridLines   enable-grid-lines           Read / Write
+;;;             gboolean   enable-search               Read / Write
+;;;             gboolean   enable-tree-lines           Read / Write
+;;;    GtkTreeViewColumn*  expander-column             Read / Write
+;;;             gboolean   fixed-height-mode           Read / Write
+;;;             gboolean   headers-clickable           Read / Write
+;;;             gboolean   headers-visible             Read / Write
+;;;             gboolean   hover-expand                Read / Write
+;;;             gboolean   hover-selection             Read / Write
+;;;                 gint   level-indentation           Read / Write
+;;;         GtkTreeModel*  model                       Read / Write
+;;;             gboolean   reorderable                 Read / Write
+;;;             gboolean   rubber-banding              Read / Write
+;;;             gboolean   rules-hint                  Read / Write
+;;;                 gint   search-column               Read / Write
+;;;             gboolean   show-expanders              Read / Write
+;;;                 gint   tooltip-column              Read / Write
+;;;
+;;; Style Properties
+;;;
+;;;             gboolean   allow-rules                 Read
+;;;             GdkColor*  even-row-color              Read
+;;;                 gint   expander-size               Read
+;;;                gchar*  grid-line-pattern           Read
+;;;                 gint   grid-line-width             Read
+;;;                 gint   horizontal-separator        Read
+;;;             gboolean   indent-expanders            Read
+;;;             GdkColor*  odd-row-color               Read
+;;;                gchar*  tree-line-pattern           Read
+;;;                 gint   tree-line-width             Read
+;;;                 gint   vertical-separator          Read
+;;;
+;;; Signals
+;;;
+;;;                 void   columns-changed             Run Last
+;;;                 void   cursor-changed              Run Last
+;;;             gboolean   expand-collapse-cursor-row  Action
+;;;             gboolean   move-cursor                 Action
+;;;                 void   row-activated               Action
+;;;                 void   row-collapsed               Run Last
+;;;                 void   row-expanded                Run Last
+;;;             gboolean   select-all                  Action
+;;;             gboolean   select-cursor-parent        Action
+;;;             gboolean   select-cursor-row           Action
+;;;             gboolean   start-interactive-search    Action
+;;;             gboolean   test-collapse-row           Run Last
+;;;             gboolean   test-expand-row             Run Last
+;;;             gboolean   toggle-cursor-row           Action
+;;;             gboolean   unselect-all                Action
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;             ╰── GtkContainer
+;;;                 ╰── GtkTreeView
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GtkTreeView implements AtkImplementorIface, GtkBuildable and
+;;;     GtkScrollable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -157,7 +238,11 @@
                 "GtkBuildable"
                 "GtkScrollable")
    :type-initializer "gtk_tree_view_get_type")
-  ((enable-grid-lines
+  (#+gtk-3-8
+   (activate-on-single-click
+    gtk-tree-view-activate-on-single-click
+    "activate-on-single-click" "gboolean" t t)
+   (enable-grid-lines
     gtk-tree-view-enable-grid-lines
     "enable-grid-lines" "GtkTreeViewGridLines" t t)
    (enable-search
@@ -458,18 +543,61 @@
   @see-slot{gtk-tree-view-tooltip-column}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
+;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-tree-view-activate-on-single-click ---------------------------------
+
+#+(and gkt-3-8 cl-cffi-gtk-documentation)
+(setf (documentation (atdoc:get-slot-from-name "activate-on-single-click"
+                                               'gtk-tree-view) 't)
+ "The @code{activate-on-single-click} property of type @code{:boolean}
+  (Read / Write) @br{}
+  The @code{activate-on-single-click} property specifies whether the
+  \"row-activated\" signal will be emitted after a single click. @br{}
+  Default value: @code{nil} @br{}
+  Since 3.8")
+
+#+(and gtk-3-8 cl-cffi-gtk-documentation)
+(setf (gethash 'gtk-tree-view-activate-on-single-click
+               atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-tree-view-activate-on-single-click 'function)
+ "@version{2019-4-14}
+  @syntax[]{(gtk-tree-view-activate-on-single-click object) => single}
+  @syntax[]{(setf (gtk-tree-view-activate-on-single-click object) single)}
+  @argument[object]{a @class{gtk-tree-view} object}
+  @argument[single]{a @code{:boolean} that is @em{true} to emit the
+    \"row-activated\" signal on a single click}
+  @begin{short}
+    Accessor of the slot @slot[gtk-tree-view]{activate-on-single-click} of the
+    @class{gtk-tree-view} class.
+  @end{short}
+
+  Cause the \"row-activated\" signal to be emitted on a single click instead of
+  a double click.
+
+  Since 3.8
+  @see-class{gtk-tree-view}")
+
+;;; --- gtk-tree-view-enable-grid-lines ----------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "enable-grid-lines"
                                                'gtk-tree-view) 't)
- "The @code{\"enable-grid-lines\"} property of type
+ "The @code{enable-grid-lines} property of type
   @symbol{gtk-tree-view-grid-lines} (Read / Write) @br{}
   Whether grid lines should be drawn in the tree view. @br{}
   Default value: @code{:none}")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-tree-view-enable-grid-lines atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-tree-view-enable-grid-lines 'function)
+ "@version{2013-3-27}
+  Accessor of the slot @slot[gtk-tree-view]{enable-grid-lines} of the
+  @class{gtk-tree-view} class.
+  @see-class{gtk-tree-view}")
 
 ;;; ----------------------------------------------------------------------------
 
@@ -606,14 +734,26 @@
   pointer. @br{}
   Default value: @code{nil}")
 
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-tree-view-rules-hint -----------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "rules-hint"
                                                'gtk-tree-view) 't)
- "The @code{\"rules-hint\"} property of type @code{:boolean} (Read / Write)@br{}
+ "The @code{rules-hint} property of type @code{:boolean} (Read / Write) @br{}
   Set a hint to the theme engine to draw rows in alternating colors. @br{}
+  @b{Warning:} @code{rules-hint} has been deprecated since version 3.14 and
+  should not be used in newly-written code. The theme is responsible for drawing
+  rows using zebra striping. @br{}
   Default value: @code{nil}")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-tree-view-rules-hint atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-tree-view-rules-hint 'function)
+ "@version{2013-3-27}
+  Accessor of the slot @slot[gtk-tree-view]{rules-hint} of the
+  @class{gtk-tree-view} class.
+  @see-class{gtk-tree-view}")
 
 ;;; ----------------------------------------------------------------------------
 
@@ -650,16 +790,6 @@
 ;;;
 ;;; Accessors of Properties
 ;;;
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-tree-view-enable-grid-lines atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-tree-view-enable-grid-lines 'function)
- "@version{2013-3-27}
-  Accessor of the slot \"enable-grid-lines\" of the @class{gtk-tree-view}
-  class.")
-
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
@@ -774,12 +904,7 @@
 
 ;;; ----------------------------------------------------------------------------
 
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-tree-view-rules-hint atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-tree-view-rules-hint 'function)
- "@version{2013-3-27}
-  Accessor of the slot \"rules-hint\" of the @class{gtk-tree-view} class.")
+
 
 ;;; ----------------------------------------------------------------------------
 
@@ -1241,6 +1366,7 @@
     requires users to read across tree rows and associate cells with one
     another.
   @end{short}
+
   By default, GTK+ will then render the tree with alternating row
   colors. Do not use it just because you prefer the appearance of the ruled
   tree; that is a question for the theme. Some themes will draw tree rows in
@@ -1248,7 +1374,12 @@
   appearance all the time can choose those themes. You should call this
   function only as a semantic hint to the theme engine that your tree makes
   alternating colors useful from a functional standpoint (since it has lots of
-  columns, generally)."
+  columns, generally).
+  @begin[Warning]{dictionary}
+    The @sym{gtk-tree-view-set-rules-hint} function has been deprecated since
+    version 3.14 and should not be used in newly-written code.
+  @end{dictionary}
+  @see-class{gtk-tree-view}"
   (setf (gtk-tree-view-rules-hint tree-view) setting))
 
 (export 'gtk-tree-view-set-rules-hint)
@@ -1264,7 +1395,14 @@
  "@version{2013-5-31}
   @argument[tree-view]{a @class{gtk-tree-view} widget}
   @return{@em{True} if rules are useful for the user of this tree.}
-  Gets the setting set by the @fun{gtk-tree-view-set-rules-hint} function."
+  @begin{short}
+    Gets the setting set by the @fun{gtk-tree-view-set-rules-hint} function.
+  @end{short}
+  @begin[Warning]{dictionary}
+    The @sym{gtk-tree-view-get-rules-hint} function has been deprecated since
+    version 3.14 and should not be used in newly-written code.
+  @end{dictionary}
+  @see-class{gtk-tree-view}"
   (gtk-tree-view-rules-hint tree-view))
 
 (export 'gtk-tree-view-get-rules-hint)
@@ -3061,8 +3199,8 @@
 ;;; the function anymore.
 ;;;
 ;;; This function should almost never be used. It is meant for private use by
-;;; ATK for determining the number of visible children that are removed when the
-;;; user collapses a row, or a row is deleted.
+;;; ATK for determining the number of visible children that are removed when
+;;; the user collapses a row, or a row is deleted.
 ;;;
 ;;; tree_view :
 ;;;     A GtkTreeView.

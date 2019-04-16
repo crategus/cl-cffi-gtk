@@ -2,7 +2,7 @@
 ;;; gtk.tree-model.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -29,9 +29,9 @@
 ;;;
 ;;; GtkTreeModel
 ;;;
-;;; The tree interface used by GtkTreeView
+;;;     The tree interface used by GtkTreeView
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkTreeModel
 ;;;     GtkTreeIter
@@ -40,9 +40,14 @@
 ;;;     GtkTreeModelIface
 ;;;     GtkTreeModelFlags
 ;;;
+;;; Functions
+;;;
+;;;     GtkTreeModelForeachFunc
+;;;
 ;;;     gtk_tree_path_new
 ;;;     gtk_tree_path_new_from_string
 ;;;     gtk_tree_path_new_from_indices
+;;;     gtk_tree_path_new_from_indicesv
 ;;;     gtk_tree_path_to_string
 ;;;     gtk_tree_path_new_first
 ;;;     gtk_tree_path_append_index
@@ -97,6 +102,24 @@
 ;;;     gtk_tree_model_row_has_child_toggled
 ;;;     gtk_tree_model_row_deleted
 ;;;     gtk_tree_model_rows_reordered
+;;;     gtk_tree_model_rows_reordered_with_length
+;;;
+;;; Signals
+;;;
+;;;     void   row-changed              Run Last
+;;;     void   row-deleted              Run First
+;;;     void   row-has-child-toggled    Run Last
+;;;     void   row-inserted             Run First
+;;;     void   rows-reordered           Run First
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GBoxed
+;;;     ├── GtkTreeIter
+;;;     ╰── GtkTreePath
+;;;
+;;;     GInterface
+;;;     ╰── GtkTreeModel
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -748,12 +771,32 @@
   @begin{short}
     Creates a new path with @arg{indices} as indices.
   @end{short}
-
-  Since 2.2"
+  @see-class{gtk-tree-path}"
   (gtk-tree-path-new-from-string
     (string-right-trim ":" (format nil "~{~D:~}" indices))))
 
 (export 'gtk-tree-path-new-from-indices)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_tree_path_new_from_indicesv ()
+;;;
+;;; GtkTreePath *
+;;; gtk_tree_path_new_from_indicesv (gint *indices,
+;;;                                  gsize length);
+;;;
+;;; Creates a new path with the given indices array of length .
+;;;
+;;; indices :
+;;;     array of indices.
+;;;
+;;; length :
+;;;     length of indices array
+;;; 
+;;; Returns :
+;;;     A newly created GtkTreePath
+;;;
+;;; Since 3.12
+;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_path_to_string ()
@@ -1155,8 +1198,7 @@
   @argument[reference]{a @class{gtk-tree-row-reference} object}
   @return{The model.}
   @short{Returns the model that the row reference is monitoring.}
-
-  Since 2.8"
+  @see-class{gtk-tree-row-reference}"
   (%gtk-tree-row-reference-get-model reference))
 
 (export 'gtk-tree-row-reference-get-model)
@@ -1564,8 +1606,7 @@
 
   If there is no previous @arg{iter}, @code{nil} is returned and @arg{iter} is
   set to be invalid.
-
-  Since 3.0"
+  @see-class{gtk-tree-model}"
   (let ((iter-new (copy-gtk-tree-iter iter)))
     (when (%gtk-tree-model-iter-previous tree-model iter-new)
       iter-new)))
@@ -1730,8 +1771,7 @@
 
   This string is a ':' separated list of numbers. For example, \"4:10:0:3\"
   would be an acceptable return value for this string.
-
-  Since 2.2"
+  @see-class{gtk-tree-model}"
   (tree-model g-object)
   (iter (g-boxed-foreign gtk-tree-iter)))
 
@@ -1973,6 +2013,42 @@
 ;;; new_order :
 ;;;     an array of integers mapping the current position of each child to its
 ;;;     old position before the re-ordering, i.e. new_order[newpos] = oldpos
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_tree_model_rows_reordered_with_length ()
+;;;
+;;; void
+;;; gtk_tree_model_rows_reordered_with_length
+;;;                                (GtkTreeModel *tree_model,
+;;;                                 GtkTreePath *path,
+;;;                                 GtkTreeIter *iter,
+;;;                                 gint *new_order,
+;;;                                 gint length);
+;;;
+;;; Emits the “rows-reordered” signal on tree_model .
+;;;
+;;; This should be called by models when their rows have been reordered.
+;;;
+;;; tree_model :
+;;;     a GtkTreeModel
+;;;
+;;; path :
+;;;     a GtkTreePath pointing to the tree node whose children have been
+;;;     reordered
+;;; 
+;;; iter :
+;;;     a valid GtkTreeIter pointing to the node whose children have been
+;;;     reordered, or NULL if the depth of path is 0.
+;;;
+;;; new_order :
+;;;     an array of integers mapping the current position of each child to its
+;;;     old position before the re-ordering, i.e. new_order [newpos] = oldpos.
+;;;
+;;; length :
+;;;     length of new_order array
+;;; 
+;;; Since 3.10
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- End of file gtk.tree-model.lisp ----------------------------------------
