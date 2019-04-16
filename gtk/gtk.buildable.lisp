@@ -29,12 +29,13 @@
 ;;;
 ;;; GtkBuildable
 ;;;
-;;; Interface for objects that can be built by GtkBuilder
+;;;     Interface for objects that can be built by GtkBuilder
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkBuildable
-;;;     GtkBuildableIface
+;;;
+;;; Functions
 ;;;
 ;;;     gtk_buildable_set_name
 ;;;     gtk_buildable_get_name
@@ -46,6 +47,11 @@
 ;;;     gtk_buildable_custom_finished
 ;;;     gtk_buildable_parser_finished
 ;;;     gtk_buildable_get_internal_child
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GInterface
+;;;     ╰── GtkBuildable
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -63,7 +69,7 @@
       (documentation 'gtk-buildable 'type)
  "@short{Interface for objects that can be built by @class{gtk-builder}.}
 
-  @sym{gtk-buildable} allows objects to extend and customize their
+  The @sym{gtk-buildable} interface allows objects to extend and customize their
   deserialization from @class{gtk-builder} UI descriptions. The interface
   includes methods for setting names and properties of objects, parsing custom
   tags and constructing child objects.
@@ -74,119 +80,11 @@
   applications to call any @code{gtk-buildable-...} functions.
 
   @subheading{Note}
-    An object only needs to implement this interface if it needs to extend the
-    @class{gtk-builder} format or run any extra routines at deserialization
-    time.
-  @see-class{gtk-builder}")
-
-;;; ----------------------------------------------------------------------------
-;;; struct GtkBuildableIface
-;;;
-;;; struct GtkBuildableIface {
-;;;   GTypeInterface g_iface;
-;;;
-;;;   /* virtual table */
-;;;   void          (* set_name)               (GtkBuildable  *buildable,
-;;;                                             const gchar   *name);
-;;;   const gchar * (* get_name)               (GtkBuildable  *buildable);
-;;;   void          (* add_child)              (GtkBuildable  *buildable,
-;;;                                             GtkBuilder    *builder,
-;;;                                             GObject       *child,
-;;;                                             const gchar   *type);
-;;;   void          (* set_buildable_property) (GtkBuildable  *buildable,
-;;;                                             GtkBuilder    *builder,
-;;;                                             const gchar   *name,
-;;;                                             const GValue  *value);
-;;;   GObject *     (* construct_child)        (GtkBuildable  *buildable,
-;;;                                             GtkBuilder    *builder,
-;;;                                             const gchar   *name);
-;;;   gboolean      (* custom_tag_start)       (GtkBuildable  *buildable,
-;;;                                             GtkBuilder    *builder,
-;;;                                             GObject       *child,
-;;;                                             const gchar   *tagname,
-;;;                                             GMarkupParser *parser,
-;;;                                             gpointer      *data);
-;;;   void          (* custom_tag_end)         (GtkBuildable  *buildable,
-;;;                                             GtkBuilder    *builder,
-;;;                                             GObject       *child,
-;;;                                             const gchar   *tagname,
-;;;                                             gpointer      *data);
-;;;   void          (* custom_finished)        (GtkBuildable  *buildable,
-;;;                                             GtkBuilder    *builder,
-;;;                                             GObject       *child,
-;;;                                             const gchar   *tagname,
-;;;                                             gpointer       data);
-;;;   void          (* parser_finished)        (GtkBuildable  *buildable,
-;;;                                             GtkBuilder    *builder);
-;;;
-;;;   GObject *     (* get_internal_child)     (GtkBuildable  *buildable,
-;;;                                             GtkBuilder    *builder,
-;;;                                             const gchar   *childname);
-;;; };
-;;;
-;;; The GtkBuildableIface interface contains method that are necessary to allow
-;;; GtkBuilder to construct an object from a GtkBuilder UI definition.
-;;;
-;;; GTypeInterface g_iface;
-;;;     the parent class
-;;;
-;;; set_name ()
-;;;     Stores the name attribute given in the GtkBuilder UI definition.
-;;;     GtkWidget stores the name as object data. Implement this method if your
-;;;     object has some notion of "name" and it makes sense to map the XML name
-;;;     attribute to it.
-;;;
-;;; get_name ()
-;;;     The getter corresponding to set_name. Implement this if you implement
-;;;     set_name.
-;;;
-;;; add_child ()
-;;;     Adds a child. The type parameter can be used to differentiate the kind
-;;;     of child. GtkContainer implements this to add add a child widget to the
-;;;     container, GtkNotebook uses the type to distinguish between page labels
-;;;     (of type "page-label") and normal children.
-;;;
-;;; set_buildable_property ()
-;;;     Sets a property of a buildable object. It is normally not necessary to
-;;;     implement this, g_object_set_property() is used by default. GtkWindow
-;;;     implements this to delay showing itself (i.e. setting the "visible"
-;;;     property) until the whole interface is created.
-;;;
-;;; construct_child ()
-;;;     Constructs a child of a buildable that has been specified as
-;;;     "constructor" in the UI definition. GtkUIManager implements this to
-;;;     reference to a widget created in a <ui> tag which is outside of the
-;;;     normal GtkBuilder UI definition hierarchy. A reference to the
-;;;     constructed object is returned and becomes owned by the caller.
-;;;
-;;; custom_tag_start ()
-;;;     Implement this if the buildable needs to parse content below <child>. To
-;;;     handle an element, the implementation must fill in the parser structure
-;;;     and user_data and return TRUE. GtkWidget implements this to parse
-;;;     keyboard accelerators specified in <accelerator> elements. GtkContainer
-;;;     implements it to map properties defined via <packing> elements to child
-;;;     properties. Note that user_data must be freed in custom_tag_end or
-;;;     custom_finished.
-;;;
-;;; custom_tag_end ()
-;;;     Called for the end tag of each custom element that is handled by the
-;;;     buildable (see custom_tag_start).
-;;;
-;;; custom_finished ()
-;;;     Called for each custom tag handled by the buildable when the builder
-;;;     finishes parsing (see custom_tag_start)
-;;;
-;;; parser_finished ()
-;;;     Called when a builder finishes the parsing of a UI definition. It is
-;;;     normally not necessary to implement this, unless you need to perform
-;;;     special cleanup actions. GtkWindow sets the "visible" property here.
-;;;
-;;; get_internal_child ()
-;;;     Returns an internal child of a buildable. GtkDialog implements this to
-;;;     give access to its vbox, making it possible to add children to the vbox
-;;;     in a UI definition. Implement this if the buildable has internal
-;;      children that may need to be accessed from a UI definition.
-;;; ----------------------------------------------------------------------------
+  An object only needs to implement this interface if it needs to extend the
+  @class{gtk-builder} format or run any extra routines at deserialization
+  time.
+  @see-class{gtk-builder}
+  @see-class{gtk-buildable}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_buildable_set_name ()
@@ -196,14 +94,12 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-10-24}
   @argument[buildable]{a @class{gtk-buildable} object}
-  @argument[name]{name to set}
+  @argument[name]{a string with the name to set}
   @begin{short}
     Sets the name of the buildable object.
   @end{short}
-
-  Since 2.12
   @see-class{gtk-buildable}
-  @see-function{gtk-buildable-set-name}"
+  @see-function{gtk-buildable-get-name}"
   (buildable (g-object gtk-buildable))
   (name :string))
 
@@ -217,15 +113,13 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-10-24}
   @argument[buildable]{a @class{gtk-buildable} object}
-  @return{The name set with the function @fun{gtk-buildable-set-name}.}
+  @return{A string with the name of the buildable object.}
   @begin{short}
     Gets the name of the buildable object.
   @end{short}
 
   @class{gtk-builder} sets the name based on the the @class{gtk-builder} UI
   definition used to construct the buildable.
-
-  Since 2.12
   @see-class{gtk-buildable}
   @see-function{gtk-buildable-set-name}"
   (buildable (g-object gtk-buildable)))

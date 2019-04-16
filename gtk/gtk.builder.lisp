@@ -31,44 +31,131 @@
 ;;;
 ;;;     Build an interface from an XML UI definition
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkBuilder
 ;;;     GtkBuilderError
+;;;
+;;; Functions
+;;;
+;;;     GtkBuilderConnectFunc
 ;;;
 ;;;     gtk_builder_new
 ;;;     gtk_builder_new_from_file
 ;;;     gtk_builder_new_from_resource
 ;;;     gtk_builder_new_from_string
-;;;
 ;;;     gtk_builder_add_callback_symbol
 ;;;     gtk_builder_add_callback_symbols
 ;;;     gtk_builder_lookup_callback_symbol
-;;;
 ;;;     gtk_builder_add_from_file
 ;;;     gtk_builder_add_from_resource
 ;;;     gtk_builder_add_from_string
 ;;;     gtk_builder_add_objects_from_file
 ;;;     gtk_builder_add_objects_from_string
 ;;;     gtk_builder_add_objects_from_resource
+;;;     gtk_builder_extend_with_template
 ;;;     gtk_builder_get_object
 ;;;     gtk_builder_get_objects
-;;;
 ;;;     gtk_builder_expose_object
-;;;
 ;;;     gtk_builder_connect_signals
 ;;;     gtk_builder_connect_signals_full
-;;;     gtk_builder_set_translation_domain
-;;;     gtk_builder_get_translation_domain
+;;;     gtk_builder_set_translation_domain                 Accessor
+;;;     gtk_builder_get_translation_domain                 Accessor
+;;;     gtk_builder_set_application
+;;;     gtk_builder_get_application 
 ;;;     gtk_builder_get_type_from_name
 ;;;     gtk_builder_value_from_string
 ;;;     gtk_builder_value_from_string_type
 ;;;
 ;;;     GTK_BUILDER_WARN_INVALID_CHILD_TYPE
-;;;     GTK_BUILDER_ERROR
+;;;
+;;; Properties
+;;;
+;;;     gchar*   translation-domain    Read / Write
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GtkBuilder
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
+
+;;; ----------------------------------------------------------------------------
+;;; enum GtkBuilderError
+;;; ----------------------------------------------------------------------------
+
+(define-g-enum "GtkBuilderError" gtk-builder-error
+  (:export t
+   :type-initializer "gtk_builder_error_get_type")
+  (:invalid-type-function 0)
+  (:unhandled-tag 1)
+  (:missing-attribute 2)
+  (:invalid-attribute 3)
+  (:invalid-tag 4)
+  (:missing-property-value 5)
+  (:invalid-value 6)
+  (:version-mismatch 7)
+  (:duplicate-id 8)
+  (:type-refused 9)
+  (:template-mismatch 10)
+  (:invalid-property 11)
+  (:invalid-signal 12)
+  (:invalid-id 13))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-builder-error atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'gtk-builder-error atdoc:*external-symbols*)
+ "@version{2013-5-28}
+  @begin{short}
+    Error codes that identify various errors that can occur while using
+    @sym{gtk-builder}.
+  @end{short}
+  @begin{pre}
+(define-g-enum \"GtkBuilderError\" gtk-builder-error
+  (:export t
+   :type-initializer \"gtk_builder_error_get_type\")
+  (:invalid-type-function 0)
+  (:unhandled-tag 1)
+  (:missing-attribute 2)
+  (:invalid-attribute 3)
+  (:invalid-tag 4)
+  (:missing-property-value 5)
+  (:invalid-value 6)
+  (:version-mismatch 7)
+  (:duplicate-id 8)
+  (:type-refused 9)
+  (:template-mismatch 10)
+  (:invalid-property 11)
+  (:invalid-signal 12)
+  (:invalid-id 13))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:invalid-type-function]{A type-func attribute did not name a function
+      that returns a @class{g-type}.}
+    @entry[:unhandled-tag]{The input contained a tag that @class{gtk-builder}
+      cannot handle.}
+    @entry[:missing-attribute]{An attribute that is required by
+      @sym{gtk-builder} was missing.}
+    @entry[:invalid-attribute]{@sym{gtk-builder} found an attribute that it
+      does not understand.}
+    @entry[:invalid-tag]{@sym{gtk-builder} found a tag that it does not
+      understand.}
+    @entry[:missing-property-value]{A required property value was missing.}
+    @entry[:invalid-value]{@sym{gtk-builder} could not parse some attribute
+      value.}
+    @entry[:version-mismatch]{The input file requires a newer version of GTK+.}
+    @entry[:duplicate-id]{An object id occurred twice.}
+    @entry[:type-refused]{A specified object type is of the same type or derived
+      from the type of the composite class being extended with builder XML.}
+    @entry[:template-mismatch]{The wrong type was specified in a composite
+      class’s template XML.}
+    @entry[:invalid-property]{The specified property is unknown for the object
+      class.}
+    @entry[:invalid-signal]{The specified signal is unknown for the object
+      class.}
+    @entry[:invalid-id]{An object id is unknown.}
+  @end{table}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkBuilder
@@ -81,46 +168,15 @@
    :type-initializer "gtk_builder_get_type")
   ((translation-domain
     gtk-builder-translation-domain
-    "translation-domain" "gchararray" t t)))
+    "translation-domain" "gchar" t t)))
 
-;;; ----------------------------------------------------------------------------
-
+;;; This Lisp extension is not documented
 (defmethod initialize-instance :after ((builder gtk-builder)
                                        &key from-file from-string)
   (when from-file
     (gtk-builder-add-from-file builder from-file))
   (when from-string
     (gtk-builder-add-from-string builder from-string)))
-
-;;; ----------------------------------------------------------------------------
-
-#|
-
-Example 9. A GtkBuilder UI Definition
-
-<interface>
-  <object class="GtkDialog" id="dialog1">
-    <child internal-child="vbox">
-      <object class="GtkVBox" id="vbox1">
-        <property name="border-width">10</property>
-        <child internal-child="action_area">
-          <object class="GtkHButtonBox" id="hbuttonbox1">
-            <property name="border-width">20</property>
-            <child>
-              <object class="GtkButton" id="ok_button">
-                <property name="label">gtk-ok</property>
-                <property name="use-stock">TRUE</property>
-                <signal name="clicked" handler="ok_button_clicked"/>
-              </object>
-            </child>
-          </object>
-        </child>
-      </object>
-    </child>
-  </object>
-</interface>
-
-|#
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-builder 'type)
@@ -130,45 +186,46 @@ Example 9. A GtkBuilder UI Definition
     of a user interface and instantiates the described objects.
   @end{short}
   To create a @class{gtk-builder} from a user interface description, call
-  the functions @fun{gtk-builder-new-from-file},
-  @fun{gtk-builder-new-from-resource} or @fun{gtk-builder-new-from-string}.
+  the @fun{gtk-builder-new-from-file}, @fun{gtk-builder-new-from-resource} or
+  @fun{gtk-builder-new-from-string} functions.
 
   In the (unusual) case that you want to add user interface descriptions from
-  multiple sources to the same @class{gtk-builder} you can call the function
-  @fun{gtk-builder-new} to get an empty builder and populate it by (multiple)
-  calls to the functions @fun{gtk-builder-add-from-file}, 
-  @fun{gtk-builder-add-from-resource} or @fun{gtk-builder-add-from-string}.
+  multiple sources to the same @class{gtk-builder} you can call the
+  @fun{gtk-builder-new} function to get an empty builder and populate it by
+  (multiple) calls to the @fun{gtk-builder-add-from-file}, 
+  @fun{gtk-builder-add-from-resource} or @fun{gtk-builder-add-from-string}
+  functions.
 
   A @sym{gtk-builder} holds a reference to all objects that it has constructed
   and drops these references when it is finalized. This finalization can cause
   the destruction of non-widget objects or widgets which are not contained in a
   toplevel window. For toplevel windows constructed by a builder, it is the
-  responsibility of the user to call the function @fun{gtk-widget-destroy} to
+  responsibility of the user to call the @fun{gtk-widget-destroy} function to
   get rid of them and all the widgets they contain.
 
-  The functions @fun{gtk-builder-get-object} and @fun{gtk-builder-get-objects}
+  The @fun{gtk-builder-get-object} and @fun{gtk-builder-get-objects} functions
   can be used to access the widgets in the interface by the names assigned to
   them inside the UI description. Toplevel windows returned by these functions
-  will stay around until the user explicitly destroys them with the function
-  @fun{gtk-widget-destroy}. Other widgets will either be part of a larger
-  hierarchy constructed by the builder (in which case you should not have to
-  worry about their lifecycle), or without a parent, in which case they have
+  will stay around until the user explicitly destroys them with the
+  @fun{gtk-widget-destroy} function. Other widgets will either be part of a
+  larger hierarchy constructed by the builder, in which case you should not have
+  to worry about their lifecycle, or without a parent, in which case they have
   to be added to some container to make use of them. Non-widget objects need
-  to be reffed with the function @fun{g-object-ref} to keep them beyond the
+  to be reffed with the @fun{g-object-ref} function to keep them beyond the
   lifespan of the builder.
 
-  The function @fun{gtk-builder-connect-signals} and variants thereof can be
+  The @fun{gtk-builder-connect-signals} function and variants thereof can be
   used to connect handlers to the named signals in the description.
 
-  @subheading{@sym{gtk-builder} UI Definitions}
-    @sym{gtk-builder} parses textual descriptions of user interfaces which are
-    specified in an XML format which can be roughly described by the RELAX NG
-    schema below. We refer to these descriptions as @sym{gtk-builder} UI
-    definitions or just UI definitions if the context is clear. Do not confuse
-    @sym{gtk-builder} UI Definitions with @class{gtk-ui-manager} UI Definitions,
-    which are more limited in scope. It is common to use .ui as the filename
-    extension for files containing @class{gtk-builder} UI definitions.
-    @begin{pre}
+  @subheading{GtkBuilder UI Definitions}
+  @sym{gtk-builder} parses textual descriptions of user interfaces which are
+  specified in an XML format which can be roughly described by the RELAX NG
+  schema below. We refer to these descriptions as @sym{gtk-builder} UI
+  definitions or just UI definitions if the context is clear. Do not confuse
+  @sym{gtk-builder} UI Definitions with @class{gtk-ui-manager} UI Definitions,
+  which are more limited in scope. It is common to use @code{.ui} as the
+  filename extension for files containing @class{gtk-builder} UI definitions.
+  @begin{pre}
  start = element interface {
    attribute domain { text @} ?,
    ( requires | object | menu ) *
@@ -263,93 +320,96 @@ Example 9. A GtkBuilder UI Definition
    attribute * { text @} *,
    (ALL * & text ?)
  @}
-    @end{pre}
-    The toplevel element is <interface>. It optionally takes a \"domain\"
-    attribute, which will make the builder look for translated strings using
-    @code{dgettext()} in the domain specified. This can also be done by calling
-    @fun{gtk-builder-translation-domain} on the builder. Objects are described
-    by <object> elements, which can contain <property> elements to set
-    properties, <signal> elements which connect signals to handlers, and <child>
-    elements, which describe child objects (most often widgets inside a
-    container, but also e. g. actions in an action group, or columns in a tree
-    model). A <child> element contains an <object> element which describes the
-    child object. The target toolkit version(s) are described by <requires>
-    elements, the \"lib\" attribute specifies the widget library in question
-    (currently the only supported value is \"gtk+\") and the \"version\"
-    attribute specifies the target version in the form \"<major>.<minor>\".
-    The builder will error out if the version requirements are not met.
+  @end{pre}
+  The toplevel element is @code{<interface>}. It optionally takes a 
+  @code{\"domain\"} attribute, which will make the builder look for translated
+  strings using @code{dgettext()} in the domain specified. This can also be
+  done by calling the @fun{gtk-builder-translation-domain} function on the
+  builder. Objects are described by @code{<object>} elements, which can
+  contain @code{<property>} elements to set properties, @code{<signal>}
+  elements which connect signals to handlers, and @code{<child>} elements,
+  which describe child objects, most often widgets inside a container, but
+  also e. g. actions in an action group, or columns in a tree model. A
+  @code{<child>} element contains an @code{<object>} element which describes
+  the child object. The target toolkit version(s) are described by
+  @code{<requires>} elements, the @code{\"lib\"} attribute specifies the
+  widget library in question, (currently the only supported value is
+  @code{\"gtk+\"} and the @code{\"version\"} attribute specifies the target
+  version in the form @code{\"<major>.<minor>\"}. The builder will error out
+  if the version requirements are not met.
 
-    Typically, the specific kind of object represented by an <object> element is
-    specified by the \"class\" attribute. If the type has not been loaded yet,
-    GTK+ tries to find the @code{_get_type()} from the class name by applying
-    heuristics. This works in most cases, but if necessary, it is possible to
-    specify the name of the @code{_get_type()} explictly with the \"type-func\"
-    attribute. As a special case, @class{gtk-builder} allows to use an object
-    that has been constructed by a @class{gtk-ui-manager} in another part of
-    the UI definition by specifying the ID of the @class{gtk-ui-manager} in the
-    \"constructor\" attribute and the name of the object in the \"id\"
-    attribute. 
+  Typically, the specific kind of object represented by an @code{<object>}
+  element is specified by the @code{\"class\"} attribute. If the type has not
+  been loaded yet, GTK+ tries to find the @code{_get_type()} from the class
+  name by applying heuristics. This works in most cases, but if necessary, it
+  is possible to specify the name of the @code{_get_type()} explictly with the
+  @code{\"type-func\"} attribute. As a special case, @class{gtk-builder}
+  allows to use an object that has been constructed by a
+  @class{gtk-ui-manager} in another part of the UI definition by specifying
+  the ID of the @class{gtk-ui-manager} in the @code{\"constructor\"} attribute
+  and the name of the object in the @code{\"id\"} attribute. 
 
-    Objects must be given a name with the \"id\" attribute, which allows the
-    application to retrieve them from the builder with the function
-    @fun{gtk-builder-get-object}. An ID is also necessary to use the object as
-    property value in other parts of the UI definition.
+  Objects must be given a name with the @code{\"id\"} attribute, which allows
+  the application to retrieve them from the builder with the
+  @fun{gtk-builder-get-object} function. An ID is also necessary to use the
+  object as property value in other parts of the UI definition.
 
-    @subheading{Note}
-      Prior to 2.20, @sym{gtk-builder} was setting the \"name\" property of
-      constructed widgets to the \"id\" attribute. In GTK+ 2.20 or newer, you
-      have to use the function @fun{gtk-buildable-get-name} instead of the
-      function @fun{gtk-widget-name} to obtain the \"id\", or set the
-      \"name\" property in your UI definition.
+  @subheading{Note}
+  Prior to 2.20, @sym{gtk-builder} was setting the @code{\"name\"} property of
+  constructed widgets to the @code{\"id\"} attribute. In GTK+ 2.20 or newer, you
+  have to use the @fun{gtk-buildable-get-name} function instead of the
+  @fun{gtk-widget-name} function to obtain the @code{\"id\"}, or set the
+  @code{\"name\"} property in your UI definition.
 
-  Setting properties of objects is pretty straightforward with the <property>
-  element: the \"name\" attribute specifies the name of the property, and the
-  content of the element specifies the value. If the \"translatable\" attribute
-  is set to a true value, GTK+ uses @code{gettext()} (or @code{dgettext()} if
-  the builder has a translation domain set) to find a translation for the value.
-  This happens before the value is parsed, so it can be used for properties of
-  any type, but it is probably most useful for string properties. It is also
-  possible to specify a context to disambiguate short strings, and comments
-  which may help the translators.
+  Setting properties of objects is pretty straightforward with the
+  @code{<property>} element: the @code{\"name\"} attribute specifies the name of
+  the property, and the content of the element specifies the value. If the
+  @code{\"translatable\"} attribute is set to a true value, GTK+ uses
+  @code{gettext()}, or @code{dgettext()} if the builder has a translation domain
+  set, to find a translation for the value. This happens before the value is
+  parsed, so it can be used for properties of any type, but it is probably most
+  useful for string properties. It is also possible to specify a context to
+  disambiguate short strings, and comments which may help the translators.
 
   @sym{gtk-builder} can parse textual representations for the most common
   property types: characters, strings, integers, floating-point numbers,
-  booleans (strings like \"TRUE\", \"t\", \"yes\", \"y\", \"1\" are interpreted
-  as @em{true}, strings like \"FALSE, \"f\", \"no\", \"n\", \"0\" are
-  interpreted as @code{nil}), enumerations (can be specified by their name, nick
-  or integer value), flags (can be specified by their name, nick, integer value,
-  optionally combined with \"|\", e. g. \"GTK_VISIBLE|GTK_REALIZED\") and colors
-  (in a format understood by the function @fun{gdk-color-parse}). Objects can be
-  referred to by their name. Pixbufs can be specified as a filename of an image
-  file to load. In general, @sym{gtk-builder} allows forward references to
+  booleans, strings like \"TRUE\", \"t\", \"yes\", \"y\", \"1\" are interpreted
+  as @em{true}, strings like \"FALSE\", \"f\", \"no\", \"n\", \"0\" are
+  interpreted as @code{nil}), enumerations, can be specified by their name, nick
+  or integer value, flags, can be specified by their name, nick, integer value,
+  optionally combined with \"|\", e. g. \"GTK_VISIBLE | GTK_REALIZED\", and
+  colors, in a format understood by the @fun{gdk-color-parse} function. Objects
+  can be referred to by their name. Pixbufs can be specified as a filename of an
+  image file to load. In general, @sym{gtk-builder} allows forward references to
   objects - an object does not have to be constructed before it can be referred
   to. The exception to this rule is that an object has to be constructed before
   it can be used as the value of a construct-only property.
 
-  Signal handlers are set up with the <signal> element. The \"name\" attribute
-  specifies the name of the signal, and the \"handler\" attribute specifies the
-  function to connect to the signal. By default, GTK+ tries to find the
-  handler using the function @fun{g-module-symbol}, but this can be changed by
-  passing a custom @code{GtkBuilderConnectFunc} to the function
-  @fun{gtk-builder-connect-signals-full}. The remaining attributes, \"after\",
-  \"swapped\" and \"object\", have the same meaning as the corresponding
-  parameters of the @fun{g-signal-connect-object} or
-  @fun{g-signal-connect-data} functions. A \"last_modification_time\" attribute
-  is also allowed, but it does not have a meaning to the builder.
+  Signal handlers are set up with the @code{<signal>} element. The
+  @code{\"name\"} attribute specifies the name of the signal, and the
+  @code{\"handler\"} attribute specifies the function to connect to the signal.
+  By default, GTK+ tries to find the handler using the @fun{g-module-symbol}
+  function, but this can be changed by passing a custom
+  @code{GtkBuilderConnectFunc} to the @fun{gtk-builder-connect-signals-full}
+  function. The remaining attributes, @code{\"after\"}, @code{\"swapped\"} and
+  @code{\"object\"}, have the same meaning as the corresponding parameters of
+  the @fun{g-signal-connect-object} or @fun{g-signal-connect-data} functions. A
+  @code{\"last_modification_time\"} attribute is also allowed, but it does not
+  have a meaning to the builder.
 
   Sometimes it is necessary to refer to widgets which have implicitly been
   constructed by GTK+ as part of a composite widget, to set properties on them
-  or to add further children (e. g. the @code{vbox} of a @class{gtk-dialog}).
-  This can be achieved by setting the \"internal-child\" propery of the <child>
-  element to a @em{true} value. Note that @sym{gtk-builder} still requires an
-  <object> element for the internal child, even if it has already been
-  constructed.
+  or to add further children, e. g. the @code{vbox} of a @class{gtk-dialog}.
+  This can be achieved by setting the @code{\"internal-child\"} propery of the
+  @code{<child>} element to a @em{true} value. Note that @sym{gtk-builder} still
+  requires an @code{<object>} element for the internal child, even if it has
+  already been constructed.
 
-  A number of widgets have different places where a child can be added (e. g.
-  tabs vs. page content in notebooks). This can be reflected in a UI
-  definition by specifying the \"type\" attribute on a <child>. The possible
-  values for the \"type\" attribute are described in the sections describing the
-  widget-specific portions of UI definitions.
+  A number of widgets have different places where a child can be added, e. g.
+  tabs vs. page content in notebooks. This can be reflected in a UI
+  definition by specifying the @code{\"type\"} attribute on a @code{<child>}.
+  The possible values for the @code{\"type\"} attribute are described in the
+  sections describing the widget-specific portions of UI definitions.
 
   @b{Example:} A @sym{gtk-builder} UI Definition
   @begin{pre}
@@ -377,9 +437,9 @@ Example 9. A GtkBuilder UI Definition
   @end{pre}
   Beyond this general structure, several object classes define their own XML
   DTD fragments for filling in the ANY placeholders in the DTD above. Note
-  that a custom element in a <child> element gets parsed by the custom tag
-  handler of the parent object, while a custom element in an <object> element
-  gets parsed by the custom tag handler of the object.
+  that a custom element in a @code{<child>} element gets parsed by the custom
+  tag handler of the parent object, while a custom element in an @code{<object>}
+  element gets parsed by the custom tag handler of the object.
 
   These XML fragments are explained in the documentation of the respective
   objects, see @class{gtk-widget}, @class{gtk-label}, @class{gtk-window},
@@ -392,176 +452,52 @@ Example 9. A GtkBuilder UI Definition
   @class{gtk-scale}, @class{gtk-combo-box-text}, @class{gtk-recent-filter},
   @class{gtk-file-filter}, @class{gtk-text-tag-table}.
 
-  Additionally, since 3.10 a special <template> tag has been added to the format
-  allowing one to define a widget class's components.
+  Additionally, since 3.10 a special @code{<template>} tag has been added to the
+  format allowing one to define a widget class's components.
 
   @subheading{Embedding other XML}
-    Apart from the language for UI descriptions that has been explained in the
-    previous section, @sym{gtk-builder} can also parse XML fragments of
-    @code{GMenu} markup. The resulting @code{GMenu} object and its named
-    submenus are available via the function @fun{gtk-builder-get-object} like
-    other constructed objects.
+  Apart from the language for UI descriptions that has been explained in the
+  previous section, @sym{gtk-builder} can also parse XML fragments of
+  @code{GMenu} markup. The resulting @code{GMenu} object and its named
+  submenus are available via the @fun{gtk-builder-get-object} function like
+  other constructed objects.
   @see-slot{gtk-builder-translation-domain}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
 ;;; Property and Accessor Details
-;;;
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "translation-domain"
                                                'gtk-builder) 't)
- "The @code{\"translation-domain\"} property of type @code{:string}
+ "The @code{translation-domain} property of type @code{:string}
   (Read / Write) @br{}
   The translation domain used when translating property values that have been
   marked as translatable in interface descriptions. If the translation domain
   is @code{nil}, @sym{gtk-builder} uses @code{gettext()}, otherwise
   @code{g_dgettext()}. @br{}
-  Default value: @code{nil} @br{}
-  Since 2.12")
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-builder-translation-domain atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-builder-translation-domain 'function)
  "@version{2014-7-20}
-  @argument[object]{a @class{gtk-builder} object}
-  @argument[domain]{the translation domain or @code{nil}}
   @syntax[]{(gtk-builder-translation-domain object) => domain}
   @syntax[]{(setf (gtk-builder-translation-domain object) domain)}
+  @argument[object]{a @class{gtk-builder} object}
+  @argument[domain]{a string with the translation domain or @code{nil}}
   @begin{short}
-    Accessor of the slot @slot[gtk-builder]{translation-domain} of the
+    Accessor of the @slot[gtk-builder]{translation-domain} slot of the
     @class{gtk-builder} class.
   @end{short}
 
-  The generic function @sym{gtk-builder-translation-domain} gets the translation
-  domain of @arg{object}.
+  The @sym{gtk-builder-translation-domain} slot access function gets the
+  translation domain of @arg{object}.
 
-  The generic function @sym{(setf gtk-builder-translation-domain)} sets the
-  translation domain of @arg{object}. See the
-  @slot[gtk-builder]{translation-domain} property.
-
-  Since 2.12
+  The @sym{(setf gtk-builder-translation-domain)} slot access function sets the
+  translation domain of @arg{object}.
   @see-class{gtk-builder}")
-
-;;; ----------------------------------------------------------------------------
-;;; GtkBuilderConnectFunc ()
-;;;
-;;; void (*GtkBuilderConnectFunc) (GtkBuilder *builder,
-;;;                                GObject *object,
-;;;                                const gchar *signal_name,
-;;;                                const gchar *handler_name,
-;;;                                GObject *connect_object,
-;;;                                GConnectFlags flags,
-;;;                                gpointer user_data);
-;;;
-;;; This is the signature of a function used to connect signals. It is used by
-;;; the gtk_builder_connect_signals() and gtk_builder_connect_signals_full()
-;;; methods. It is mainly intended for interpreted language bindings, but could
-;;; be useful where the programmer wants more control over the signal connection
-;;; process. Note that this function can only be called once, subsequent calls
-;;; will do nothing.
-;;;
-;;; builder :
-;;;     a GtkBuilder
-;;;
-;;; object :
-;;;     object to connect a signal to
-;;;
-;;; signal_name :
-;;;     name of the signal
-;;;
-;;; handler_name :
-;;;     name of the handler
-;;;
-;;; connect_object :
-;;;     a GObject, if non-NULL, use g_signal_connect_object()
-;;;
-;;; flags :
-;;;     GConnectFlags to use
-;;;
-;;; user_data :
-;;;     user data
-;;;
-;;; Since 2.12
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; enum GtkBuilderError
-;;; ----------------------------------------------------------------------------
-
-(define-g-enum "GtkBuilderError" gtk-builder-error
-  (:export t
-   :type-initializer "gtk_builder_error_get_type")
-  (:invalid-type-function 0)
-  (:unhandled-tag 1)
-  (:missing-attribute 2)
-  (:invalid-attribute 3)
-  (:invalid-tag 4)
-  (:missing-property-value 5)
-  (:invalid-value 6)
-  (:version-mismatch 7)
-  (:duplicate-id 8)
-  (:type-refused 9)
-  (:template-mismatch 10)
-  (:invalid-property 11)
-  (:invalid-signal 12)
-  (:invalid-id 13))
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-builder-error atdoc:*symbol-name-alias*) "Enum"
-      (gethash 'gtk-builder-error atdoc:*external-symbols*)
- "@version{2013-5-28}
-  @begin{short}
-    Error codes that identify various errors that can occur while using
-    @sym{gtk-builder}.
-  @end{short}
-  @begin{pre}
-(define-g-enum \"GtkBuilderError\" gtk-builder-error
-  (:export t
-   :type-initializer \"gtk_builder_error_get_type\")
-  (:invalid-type-function 0)
-  (:unhandled-tag 1)
-  (:missing-attribute 2)
-  (:invalid-attribute 3)
-  (:invalid-tag 4)
-  (:missing-property-value 5)
-  (:invalid-value 6)
-  (:version-mismatch 7)
-  (:duplicate-id 8)
-  (:type-refused 9)
-  (:template-mismatch 10)
-  (:invalid-property 11)
-  (:invalid-signal 12)
-  (:invalid-id 13))
-  @end{pre}
-  @begin[code]{table}
-    @entry[:invalid-type-function]{A type-func attribute did not name a function
-      that returns a @class{g-type}.}
-    @entry[:unhandled-tag]{The input contained a tag that @class{gtk-builder}
-      cannot handle.}
-    @entry[:missing-attribute]{An attribute that is required by
-      @sym{gtk-builder} was missing.}
-    @entry[:invalid-attribute]{@sym{gtk-builder} found an attribute that it
-      does not understand.}
-    @entry[:invalid-tag]{@sym{gtk-builder} found a tag that it does not
-      understand.}
-    @entry[:missing-property-value]{A required property value was missing.}
-    @entry[:invalid-value]{@sym{gtk-builder} could not parse some attribute
-      value.}
-    @entry[:version-mismatch]{The input file requires a newer version of GTK+.}
-    @entry[:duplicate-id]{An object id occurred twice.}
-    @entry[:type-refused]{A specified object type is of the same type or derived
-      from the type of the composite class being extended with builder XML.}
-    @entry[:template-mismatch]{The wrong type was specified in a composite
-      class’s template XML.}
-    @entry[:invalid-property]{The specified property is unknown for the object
-      class.}
-    @entry[:invalid-signal]{The specified signal is unknown for the object
-      class.}
-    @entry[:invalid-id]{An object id is unknown.}
-  @end{table}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_builder_new ()
@@ -576,8 +512,6 @@ Example 9. A GtkBuilder UI Definition
   @begin{short}
     Creates a new builder object.
   @end{short}
-
-  Since 2.12
   @see-class{gtk-builder}"
   (make-instance 'gtk-builder))
 
@@ -585,23 +519,30 @@ Example 9. A GtkBuilder UI Definition
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_builder_new_from_file ()
-;;;
-;;; GtkBuilder * gtk_builder_new_from_file (const gchar *filename);
-;;;
-;;; Builds the GtkBuilder UI definition in the file filename .
-;;;
-;;; If there is an error opening the file or parsing the description then the
-;;; program will be aborted. You should only ever attempt to parse user
-;;; interface descriptions that are shipped as part of your program.
-;;;
-;;; filename :
-;;;     filename of user interface description file
-;;;
-;;; Returns :
-;;;     a Gtkbuilder containing the described interface
-;;;
-;;; Since 3.10
 ;;; ----------------------------------------------------------------------------
+
+#+gtk-3-10
+(defcfun ("gtk_builder_new_from_file" gtk-builder-new-from-file)
+    (g-object gtk-builder)
+ #+cl-cffi-gtk-documentation
+ "@version{2019-4-14}
+  @argument[filename]{a string with the filename of the user interface
+    descripton file}
+  @return{A @class{gtk-builder} object containing the described interface.}
+  @begin{short}
+    Builds the @class{gtk-builder} UI definition in the file filename .
+  @end{short}
+
+  If there is an error opening the file or parsing the description then the
+  program will be aborted. You should only ever attempt to parse user
+  interface descriptions that are shipped as part of your program.
+
+  Since 3.10
+  @see-class{gtk-builder}"
+  (filename :string))
+
+#+gtk-3-10
+(export 'gtk-builder-new-from-file)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_builder_new_from_resource ()
@@ -624,31 +565,36 @@ Example 9. A GtkBuilder UI Definition
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_builder_new_from_string ()
-;;;
-;;; GtkBuilder * gtk_builder_new_from_string (const gchar *string,
-;;;                                           gssize length);
-;;;
-;;; Builds the user interface described by string (in the GtkBuilder UI
-;;; definition format).
-;;;
-;;; If string is NULL-terminated then length should be -1. If length is not -1
-;;; then it is the length of string .
-;;;
-;;; If there is an error parsing string then the program will be aborted. You
-;;; should not attempt to parse user interface description from untrusted
-;;; sources.
-;;;
-;;; string :
-;;;     a user interface (XML) description
-;;;
-;;; length :
-;;;     the length of string , or -1
-;;;
-;;; Returns :
-;;;     a Gtkbuilder containing the interface described by string
-;;;
-;;; Since 3.10
 ;;; ----------------------------------------------------------------------------
+
+#+gtk-3-10
+(defcfun ("gtk_builder_new_from_string" %gtk-builder-new-from-string)
+    (g-object gtk-builder)
+  (string :string)
+  (length :int))
+
+#+gtk-3-10
+(defun gtk-builder-new-from-string (string)
+ #+cl-cffi-gtk-documentation
+ "@version{2019-4-15}
+  @argument[string]{a string with the user interface description}
+  @return{A @class{gtk-builder} object containing the interface described by
+    @arg{string}.}
+  @begin{short}
+    Builds the user interface described by @arg{string} in the 
+    @class{gtk-builder} UI definition format.
+  @end{short}
+
+  If there is an error parsing string then the program will be aborted. You
+  should not attempt to parse user interface description from untrusted
+  sources.
+
+  Since 3.10
+  @see-class{gtk-builder}"
+  (%gtk-builder-new-from-string string -1))
+
+#+gtk-3-10
+(export 'gtk-builder-new-from-string)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_builder_add_callback_symbol ()
@@ -741,18 +687,15 @@ Example 9. A GtkBuilder UI Definition
  #+cl-cffi-gtk-documentation
  "@version{2013-5-28}
   @argument[builder]{a @sym{gtk-builder} object}
-  @argument[filename]{the name of the file to parse}
+  @argument[filename]{a string with the name of the file to parse}
   @return{A positive value on success, 0 if an error occurred.}
   @begin{short}
     Parses a file containing a @class{gtk-builder} UI definition and merges it
     with the current contents of builder.
   @end{short}
 
-  Upon errors 0 will be returned and error will be assigned a @type{g-error}
-  from the @code{GTK_BUILDER_ERROR}, @code{G_MARKUP_ERROR} or
-  @code{G_FILE_ERROR domain}.
-
-  Since 2.12"
+  Upon errors 0 will be returned.
+  @see-class{gtk-builder}"
   (%gtk-builder-add-from-file builder filename (null-pointer)))
 
 (export 'gtk-builder-add-from-file)
@@ -795,24 +738,20 @@ Example 9. A GtkBuilder UI Definition
   (length :int)
   (error :pointer))
 
-(defun gtk-builder-add-from-string (builder buffer)
+(defun gtk-builder-add-from-string (builder string)
  #+cl-cffi-gtk-documentation
  "@version{2013-5-28}
   @argument[builder]{a @class{gtk-builder} object}
-  @argument[buffer]{the string to parse}
-  @argument[length]{the length of @arg{buffer} (may be -1 if @arg{buffer} is
-    nul-terminated)}
+  @argument[string]{the string to parse}
   @return{A positive value on success, 0 if an error occurred.}
   @begin{short}
-    Parses a string containing a @class{gtk-builder} UI definition and merges it
-    with the current contents of builder.
+    Parses a string containing a @class{gtk-builder} UI definition and merges
+    it with the current contents of builder.
   @end{short}
 
-  Upon errors 0 will be returned and error will be assigned a @type{g-error}
-  from the @code{GTK_BUILDER_ERROR} or @code{G_MARKUP_ERROR domain}.
-
-  Since 2.12"
-  (%gtk-builder-add-from-string builder buffer -1 (null-pointer)))
+  Upon errors 0 will be returned.
+  @see-class{gtk-builder}"
+  (%gtk-builder-add-from-string builder string -1 (null-pointer)))
 
 (export 'gtk-builder-add-from-string)
 
@@ -831,24 +770,21 @@ Example 9. A GtkBuilder UI Definition
  #+cl-cffi-gtk-documentation
  "@version{2013-5-28}
   @argument[builder]{a @class{gtk-builder} object}
-  @argument[filename]{the name of the file to parse}
-  @argument[object-ids]{nul-terminated array of objects to build}
+  @argument[filename]{a string with the name of the file to parse}
+  @argument[object-ids]{a list of object IDs to build}
   @return{A positive value on success, 0 if an error occurred.}
   @begin{short}
     Parses a file containing a @class{gtk-builder} UI definition building only
     the requested objects and merges them with the current contents of builder.
   @end{short}
-  Upon errors 0 will be returned and error will be assigned a @type{g-error}
-  from the @code{GTK_BUILDER_ERROR}, @code{G_MARKUP_ERROR} or
-  @code{G_FILE_ERROR domain}.
+  Upon errors 0 will be returned.
 
   @subheading{Note}
-    If you are adding an object that depends on an object that is not its child
-    (for instance a @class{gtk-tree-view} that depends on its
-    @class{gtk-tree-model}), you have to explicitely list all of them in
-    @arg{object-ids}.
-
-  Since 2.14"
+  If you are adding an object that depends on an object that is not its child,
+  for instance a @class{gtk-tree-view} that depends on its
+  @class{gtk-tree-model}, you have to explicitely list all of them in
+  @arg{object-ids}.
+  @see-class{gtk-builder}"
   (let ((l (foreign-alloc :pointer :count (1+ (length object-ids)))))
     (loop
        for i from 0
@@ -881,23 +817,21 @@ Example 9. A GtkBuilder UI Definition
  "@version{2013-5-28}
   @argument[builder]{a @class{gtk-builder} object}
   @argument[buffer]{the string to parse}
-  @argument[object-ids]{nul-terminated array of objects to build}
+  @argument[object-ids]{list of object IDs to build}
   @return{A positive value on success, 0 if an error occurred.}
   @begin{short}
     Parses a string containing a @class{gtk-builder} UI definition building only
     the requested objects and merges them with the current contents of builder.
   @end{short}
 
-  Upon errors 0 will be returned and error will be assigned a @type{g-error}
-  from the @code{GTK_BUILDER_ERROR} or @code{G_MARKUP_ERROR} domain.
+  Upon errors 0 will be returned.
 
   @subheading{Note}
-    If you are adding an object that depends on an object that is not its child
-    (for instance a @class{gtk-tree-view} that depends on its
-    @class{gtk-tree-model}), you have to explicitely list all of them in
-    @arg{object-ids}.
-
-  Since 2.14"
+  If you are adding an object that depends on an object that is not its child,
+  for instance a @class{gtk-tree-view} that depends on its
+  @class{gtk-tree-model}, you have to explicitely list all of them in
+  @arg{object-ids}.
+  @see-class{gtk-builder}"
   (let ((l (foreign-alloc :pointer :count (1+ (length object-ids)))))
     (loop
        for i from 0
@@ -956,6 +890,45 @@ Example 9. A GtkBuilder UI Definition
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
+;;; gtk_builder_extend_with_template ()
+;;;
+;;; guint
+;;; gtk_builder_extend_with_template (GtkBuilder *builder,
+;;;                                   GtkWidget *widget,
+;;;                                   GType template_type,
+;;;                                   const gchar *buffer,
+;;;                                   gsize length,
+;;;                                   GError **error);
+;;;
+;;; Main private entry point for building composite container components from
+;;; template XML.
+;;;
+;;; This is exported purely to let gtk-builder-tool validate templates,
+;;; applications have no need to call this function.
+;;;
+;;; builder :
+;;;     a GtkBuilder
+;;; 
+;;; widget :
+;;;     the widget that is being extended
+;;; 
+;;; template_type :
+;;; the type that the template is for
+;;; 
+;;; buffer :
+;;;     the string to parse
+;;; 
+;;; length :
+;;;     the length of buffer (may be -1 if buffer is nul-terminated)
+;;; 
+;;; error :
+;;;     return location for an error, or NULL.
+;;;
+;;; Returns :
+;;;     A positive value on success, 0 if an error occurred
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_builder_get_object ()
 ;;; ----------------------------------------------------------------------------
 
@@ -963,16 +936,14 @@ Example 9. A GtkBuilder UI Definition
  #+cl-cffi-gtk-documentation
  "@version{2013-12-1}
   @argument[builder]{a @class{gtk-builder} object}
-  @argument[name]{name of object to get}
-  @return{the object named name or @code{nil} if it could not be found in the
-    object tree}
+  @argument[name]{a string with the name of object to get}
+  @return{The object named @arg{name} or @code{nil} if it could not be found in
+   the object tree.}
   @begin{short}
     Gets the object named @arg{name}.
   @end{short}
   Note that this function does not increment the reference count of the
   returned object.
-
-  Since 2.12
   @see-class{gtk-builder}
   @see-function{gtk-builder-get-objects}"
   (builder (g-object gtk-builder))
@@ -997,8 +968,6 @@ Example 9. A GtkBuilder UI Definition
   @end{short}
   Note that this function does not increment the reference counts of the
   returned objects.
-
-  Since 2.12
   @see-class{gtk-builder}
   @see-function{gtk-builder-get-object}"
   (builder (g-object gtk-builder)))
@@ -1037,25 +1006,22 @@ Example 9. A GtkBuilder UI Definition
   @argument[builder]{a @class{gtk-builder} object}
   @argument[handlers-list]{a list sent in as user data to all signals}
   @begin{short}
-    This method is a simpler variation of the function
-    @fun{gtk-builder-connect-signals-full}.
+    This method is a simpler variation of the
+    @fun{gtk-builder-connect-signals-full} function.
   @end{short}
-  It uses @code{GModule}'s introspective features (by opening the module
-  @code{NULL}) to look at the application's symbol table. From here it tries to
-  match the signal handler names given in the interface description with symbols
-  in the application and connects the signals. Note that this function can only
-  be called once, subsequent calls will do nothing.
+  It uses @code{GModule}'s introspective features to look at the application's
+  symbol table. From here it tries to match the signal handler names given in
+  the interface description with symbols in the application and connects the
+  signals. Note that this function can only be called once, subsequent calls
+  will do nothing.
 
   Note that this function will not work correctly if @code{GModule} is not
   supported on the platform.
 
   When compiling applications for Windows, you must declare signal callbacks
   with @code{G_MODULE_EXPORT}, or they will not be put in the symbol table. On
-  Linux and Unices, this is not necessary; applications should instead be
-  compiled with the @code{-Wl}, @code{--export-dynamic CFLAGS}, and linked
-  against @code{gmodule-export-2.0}.
-
-  Since 2.12"
+  Linux and Unices, this is not necessary.
+  @see-class{gtk-builder}"
   (flet ((connect-func (builder
                         object
                         signal-name
@@ -1076,7 +1042,45 @@ Example 9. A GtkBuilder UI Definition
 (export 'gtk-builder-connect-signals)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_builder_connect_signals_full ()
+;;; GtkBuilderConnectFunc ()
+;;;
+;;; void (*GtkBuilderConnectFunc) (GtkBuilder *builder,
+;;;                                GObject *object,
+;;;                                const gchar *signal_name,
+;;;                                const gchar *handler_name,
+;;;                                GObject *connect_object,
+;;;                                GConnectFlags flags,
+;;;                                gpointer user_data);
+;;;
+;;; This is the signature of a function used to connect signals. It is used by
+;;; the gtk_builder_connect_signals() and gtk_builder_connect_signals_full()
+;;; methods. It is mainly intended for interpreted language bindings, but could
+;;; be useful where the programmer wants more control over the signal connection
+;;; process. Note that this function can only be called once, subsequent calls
+;;; will do nothing.
+;;;
+;;; builder :
+;;;     a GtkBuilder
+;;;
+;;; object :
+;;;     object to connect a signal to
+;;;
+;;; signal_name :
+;;;     name of the signal
+;;;
+;;; handler_name :
+;;;     name of the handler
+;;;
+;;; connect_object :
+;;;     a GObject, if non-NULL, use g_signal_connect_object()
+;;;
+;;; flags :
+;;;     GConnectFlags to use
+;;;
+;;; user_data :
+;;;     user data
+;;;
+;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
 
 (defbitfield connect-flags
@@ -1095,6 +1099,10 @@ Example 9. A GtkBuilder UI Definition
                builder object signal-name handler-name connect-object flags)
     (return () nil)))
 
+;;; ----------------------------------------------------------------------------
+;;; gtk_builder_connect_signals_full ()
+;;; ----------------------------------------------------------------------------
+
 (defcfun ("gtk_builder_connect_signals_full" %gtk-builder-connect-signals-full)
     :void
   (builder g-object)
@@ -1105,14 +1113,13 @@ Example 9. A GtkBuilder UI Definition
  #+cl-cffi-gtk-documentation
  "@version{2013-5-28}
   @argument[builder]{a @class{gtk-builder} object}
-  @argument[func]{the function used to connect the signals}
+  @argument[func]{a function used to connect the signals}
   @begin{short}
     This function can be thought of the interpreted language binding version of
-    the function @fun{gtk-builder-connect-signals}, except that it does not
+    the @fun{gtk-builder-connect-signals} function, except that it does not
     require @code{GModule} to function correctly.
   @end{short}
-
-  Since 2.12"
+  @see-class{gtk-builder}"
   (with-stable-pointer (ptr func)
     (%gtk-builder-connect-signals-full builder
                                        (callback builder-connect-func-callback)
@@ -1137,7 +1144,7 @@ Example 9. A GtkBuilder UI Definition
 ;;; application :
 ;;;     a GtkApplication
 ;;;
-;;; Since: 3.10
+;;; Since 3.10
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1160,7 +1167,7 @@ Example 9. A GtkBuilder UI Definition
 ;;; Returns :
 ;;;     the application being used by the builder, or NULL.
 ;;;
-;;; Since: 3.10
+;;; Since 3.10
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1277,12 +1284,6 @@ Example 9. A GtkBuilder UI Definition
 ;;;
 ;;; type :
 ;;;     the unexpected type value
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; GTK_BUILDER_ERROR
-;;;
-;;; #define GTK_BUILDER_ERROR (gtk_builder_error_quark ())
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- End of file gtk.builder.lisp -------------------------------------------
