@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.cell-editable.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,7 +29,7 @@
 ;;;
 ;;; GtkCellEditable
 ;;;
-;;; Interface for widgets which can are used for editing cells
+;;;     Interface for widgets which can are used for editing cells
 ;;;
 ;;; Synopsis
 ;;;
@@ -42,6 +39,20 @@
 ;;;     gtk_cell_editable_start_editing
 ;;;     gtk_cell_editable_editing_done
 ;;;     gtk_cell_editable_remove_widget
+;;;
+;;; Properties
+;;;
+;;;     gboolean   editing-canceled    Read / Write
+;;;
+;;; Signals
+;;;
+;;;         void   editing-done        Run Last
+;;;         void   remove-widget       Run Last
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GInterface
+;;;     ╰── GtkCellEditable
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -101,33 +112,25 @@
   @see-function{gtk-cell-editable-remove-widget}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
+;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "editing-canceled"
                                                'gtk-cell-editable) 't)
- "The @code{\"editing-canceled\"} property of type @code{:boolean}
+ "The @code{editing-canceled} property of type @code{:boolean}
   (Read / Write) @br{}
   Indicates whether editing on the cell has been canceled. @br{}
-  Default value: @code{nil} @br{}
-  Since 2.20")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-editable-editing-canceled atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-editable-editing-canceled 'function)
  "@version{2013-6-22}
-  Accessor of the slot @code{\"editing-canceled\"} of the
-  @class{gtk-cell-editable} class.")
+  Accessor of the @slot[gtk-cell-editable]{editing-canceled} slot of the
+  @class{gtk-cell-editable} class.
+  @see-class{gtk-editable}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkCellEditableIface
