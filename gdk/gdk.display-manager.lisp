@@ -154,15 +154,15 @@
   @argument[object]{a @class{gdk-display-manager} object}
   @argument[display]{the default @class{gdk-display} object}
   @begin{short}
-    Accessor of the slot @slot[gdk-display-manager]{default-display} of the
+    Accessor of the @slot[gdk-display-manager]{default-display} slot of the
     @class{gdk-display-manager} class.
   @end{short}
 
-  The slot access function @sym{gdk-display-manager-default-display}
+  The @sym{gdk-display-manager-default-display} slot access function
   gets the default @class{gdk-display} object, or @code{nil} if there is no
   default display.
 
-  The slot access function @sym{(setf gdk-display-manager-default-display)}
+  The @sym{(setf gdk-display-manager-default-display)} slot access function
   sets @arg{display} as the default display.
   @begin[Example]{dictionary}
     @begin{pre}
@@ -231,8 +231,6 @@
     opened.
   @end{return}
   @short{Opens a display.}
-
-  Since 3.0
   @see-class{gdk-display}
   @see-class{gdk-display-manager}"
   (manager (g-object gdk-display-manager))
