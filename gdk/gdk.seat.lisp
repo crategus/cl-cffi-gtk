@@ -74,10 +74,10 @@
   (:export t
    :type-initializer "gdk_seat_capabilities_get_type")
   (:none 0)
-  (:pointer #.(ash 1 0))
-  (:touch #.(ash 1 1))
+  (:pointer       #.(ash 1 0))
+  (:touch         #.(ash 1 1))
   (:tablet-stylus #.(ash 1 2))
-  (:keyboard #.(ash 1 3))
+  (:keyboard      #.(ash 1 3))
   (:all-pointing 7)          ; :pointer | :touch | :tablet-stylus
   (:all 15)                  ; :all-pointing | :keyboard
 )
@@ -104,14 +104,13 @@
   @end{pre}
   @begin[code]{table}
     @entry[:none]{No input capabilities.}
-    @entry[:pointer]{The seat has a pointer (e. g. mouse.)}
+    @entry[:pointer]{The seat has a pointer, e. g. mouse.}
     @entry[:touch]{The seat has touchscreen(s) attached.}
     @entry[:tablet-stylus]{The seat has drawing tablet(s) attached.}
     @entry[:keyboard]{The seat has keyboard(s) attached.}
     @entry[:all-pointing]{The union of all pointing capabilities.}
     @entry[:all]{The union of all capabilities.}
   @end{table}
-  Since 3.20
   @see-class{gdk-seat}")
 
 ;;; ----------------------------------------------------------------------------
@@ -134,57 +133,51 @@
     The @sym{gdk-seat} object represents a collection of input devices that
     belong to a user.
   @end{short}
+
+  Since 3.20
   @begin[Signal Details]{dictionary}
     @subheading{The \"device-added\" signal}
-    @begin{pre}
+      @begin{pre}
  lambda (seat device)    : Run Last
-    @end{pre}
-    The \"device-added\" signal is emitted when a new input device is related
-    to this seat.
-    @begin[code]{table}
-      @entry[seat]{The @sym{gdk-seat} on which the signal is emitted.}
-      @entry[device]{The newly added @class{gdk-device}.}
-    @end{table}
-    Since 3.20
-
+      @end{pre}
+      The \"device-added\" signal is emitted when a new input device is related
+      to this seat.
+      @begin[code]{table}
+        @entry[seat]{The @sym{gdk-seat} object on which the signal is emitted.}
+        @entry[device]{The newly added @class{gdk-device} object.}
+      @end{table}
     @subheading{The \"device-removed\" signal}
-    @begin{pre}
+      @begin{pre}
  lambda (seat device)    : Run Last
-    @end{pre}
-    The \"device-removed\" signal is emitted when an input device is removed
-    (e. g. unplugged).
-    @begin[code]{table}
-      @entry[seat]{The @sym{gdk-seat} on which the signal is emitted.}
-      @entry[device]{The just removed @class{gdk-device}.}
-    @end{table}
-    Since 3.20
-
+      @end{pre}
+      The \"device-removed\" signal is emitted when an input device is removed, 
+      e. g. unplugged.
+      @begin[code]{table}
+        @entry[seat]{The @sym{gdk-seat} object on which the signal is emitted.}
+        @entry[device]{The just removed @class{gdk-device} object.}
+      @end{table}
     @subheading{The \"tool-added\" signal}
-    @begin{pre}
+      @begin{pre}
  lambda (seat tool)    : Run Last
-    @end{pre}
-    The \"tool-added\" signal is emitted whenever a new tool is made known to
-    the seat. The tool may later be assigned to a device (i. e. on proximity
-    with a tablet). The device will emit the \"tool-changed\" signal
-    accordingly.
-
-    A same tool may be used by several devices.
-    @begin[code]{table}
-      @entry[seat]{The @sym{gdk-seat} on which the signal is emitted.}
-      @entry[tool]{The new @class{gdk-device-tool} known to the seat.}
-    @end{table}
-    Since 3.20
-
+      @end{pre}
+      The \"tool-added\" signal is emitted whenever a new tool is made known to
+      the seat. The tool may later be assigned to a device, i. e. on proximity
+      with a tablet. The device will emit the \"tool-changed\" signal
+      accordingly. A same tool may be used by several devices.
+      @begin[code]{table}
+        @entry[seat]{The @sym{gdk-seat} object on which the signal is emitted.}
+        @entry[tool]{The new @class{gdk-device-tool} object known to the seat.}
+      @end{table}
     @subheading{The \"tool-removed\" signal}
-    @begin{pre}
+      @begin{pre}
  lambda (seat tool)    : Run Last
-    @end{pre}
-    This signal is emitted whenever a tool is no longer known to this seat.
-    @begin[code]{table}
-      @entry[seat]{The @sym{gdk-seat} on which the signal is emitted.}
-      @entry[tool]{The just removed @class{gdk-device-tool}.}
-    @end{table}
-    Since 3.22
+      @end{pre}
+      This signal is emitted whenever a tool is no longer known to this seat.
+      @begin[code]{table}
+        @entry[seat]{The @sym{gdk-seat} objeczt on which the signal is emitted.}
+        @entry[tool]{The just removed @class{gdk-device-tool} object.}
+      @end{table}
+      Since 3.22
   @end{dictionary}
   @see-class{gdk-display}
   @see-class{gdk-device}")
@@ -198,9 +191,8 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "display" 'gdk-seat) 't)
  "The @code{display} property of type @class{gdk-display}
-  (Read / Write / Construct Only) @br{}
-  The @class{gdk-display} of this seat. @br{}
-  Since 3.20")
+  (Read / Write / Construct) @br{}
+  The @class{gdk-display} object of this seat.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-seat-display atdoc:*function-name-alias*)
@@ -209,17 +201,14 @@
  "@version{2019-3-24}
   @syntax[]{(gdk-seat-display object) => display}
   @argument[object]{a @class{gdk-seat} object}
-  @argument[display]{a @class{gdk-display}}
+  @argument[display]{a @class{gdk-display} object}
   @begin{short}
-    Accessor of the slot @slot[gdk-seat]{display} of the
+    Accessor of the @slot[gdk-seat]{display} slot of the
     @class{gdk-seat} class.
   @end{short}
 
-  The slot access function @sym{gdk-seat-display}
-  returns the @class{gdk-display} this seat belongs to. This object is owned by
-  GTK+ and must not be freed.
-
-  Since 3.20
+  The @sym{gdk-seat-display} slot access function
+  returns the @class{gdk-display} object this seat belongs to.
   @see-class{gdk-seat}")
 
 ;;; ----------------------------------------------------------------------------
@@ -354,10 +343,8 @@
   @begin{short}
     Returns the capabilities this @class{gdk-seat} object currently has.
   @end{short}
-
-  Since 3.20
   @see-class{gdk-seat}
-  @see-class{gdk-seat-capabilities}"
+  @see-symbol{gdk-seat-capabilities}"
   (seat (g-object gdk-seat)))
 
 (export 'gdk-seat-get-capabilities)
@@ -371,12 +358,10 @@
  #+cl-cffi-gtk-documentation
  "@version{2019-3-30}
   @argument[seat]{a @class{gdk-seat} object}
-  @return{A master @class{gdk-device} with pointer capabilities.}
+  @return{A master @class{gdk-device} object with pointer capabilities.}
   @begin{short}
     Returns the master device that routes pointer events.
   @end{short}
-
-  Since 3.20
   @see-class{gdk-seat}
   @see-class{gdk-device}"
   (seat (g-object gdk-seat)))
@@ -392,12 +377,10 @@
  #+cl-cffi-gtk-documentation
  "@version{2019-3-30}
   @argument[seat]{a @class{gdk-seat} object}
-  @return{A master @class{gdk-device} with keyboard capabilities.}
+  @return{A master @class{gdk-device} object with keyboard capabilities.}
   @begin{short}
     Returns the master device that routes keyboard events.
   @end{short}
-
-  Since 3.20
   @see-class{gdk-seat}
   @see-class{gdk-device}"
   (seat (g-object gdk-seat)))
@@ -413,13 +396,12 @@
  #+cl-cffi-gtk-documentation
  "@version{2019-3-30}
   @argument[seat]{a @class{gdk-seat} object}
-  @argument[capabilities]{capabilities to get devices for}
+  @argument[capabilities]{capabilities of the @symbol{gdk-seat-capabilities}
+    flags to get devices for}
   @return{A list of @class{gdk-device} objects.}
   @begin{short}
     Returns the slave devices that match the given capabilities.
   @end{short}
-
-  Since 3.20
   @see-class{gdk-seat}
   @see-class{gdk-device}"
   (seat (g-object gdk-seat))
