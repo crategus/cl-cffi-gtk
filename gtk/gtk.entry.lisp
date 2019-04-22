@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.entry.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.8.9 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2014 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,61 +29,67 @@
 ;;;
 ;;; GtkEntry
 ;;;
-;;; A single line text entry field
+;;;     A single line text entry field
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkEntry
+;;;     GtkEntryIconPosition
+;;;     GtkInputPurpose
+;;;     GtkInputHints
+;;;
+;;; Functions
 ;;;
 ;;;     gtk_entry_new
 ;;;     gtk_entry_new_with_buffer
-;;;     gtk_entry_get_buffer
-;;;     gtk_entry_set_buffer
-;;;     gtk_entry_set_text
-;;;     gtk_entry_get_text
-;;;     gtk_entry_get_text_length
+;;;     gtk_entry_get_buffer                               Accessor
+;;;     gtk_entry_set_buffer                               Accessor
+;;;     gtk_entry_set_text                                 Accessor
+;;;     gtk_entry_get_text                                 Accessor
+;;;     gtk_entry_get_text_length                          Accessor
 ;;;     gtk_entry_get_text_area
-;;;     gtk_entry_set_visibility
-;;;     gtk_entry_set_invisible_char
+;;;     gtk_entry_set_visibility                           Accessor
+;;;     gtk_entry_set_invisible_char                       Accessor
 ;;;     gtk_entry_unset_invisible_char
-;;;     gtk_entry_set_max_length
-;;;     gtk_entry_get_activates_default
-;;;     gtk_entry_get_has_frame
-;;;     gtk_entry_get_inner_border
-;;;     gtk_entry_get_width_chars
-;;;     gtk_entry_set_activates_default
-;;;     gtk_entry_set_has_frame
-;;;     gtk_entry_set_inner_border
-;;;     gtk_entry_set_width_chars
-;;;     gtk_entry_get_invisible_char
+;;;     gtk_entry_set_max_length                           Accessor
+;;;     gtk_entry_get_activates_default                    Accessor
+;;;     gtk_entry_get_has_frame                            Accessor
+;;;     gtk_entry_get_inner_border                         Accessor
+;;;     gtk_entry_get_width_chars                          Accessor
+;;;     gtk_entry_get_max_width_chars                      Accessor
+;;;     gtk_entry_set_activates_default                    Accessor
+;;;     gtk_entry_set_has_frame                            Accessor
+;;;     gtk_entry_set_inner_border                         Accessor
+;;;     gtk_entry_set_width_chars                          Accessor
+;;;     gtk_entry_set_max_width_chars                      Accessor
+;;;     gtk_entry_get_invisible_char                       Accessor
 ;;;     gtk_entry_set_alignment
 ;;;     gtk_entry_get_alignment
-;;;     gtk_entry_set_placeholder_text
-;;;     gtk_entry_get_placeholder_text
-;;;     gtk_entry_set_overwrite_mode
-;;;     gtk_entry_get_overwrite_mode
+;;;     gtk_entry_set_placeholder_text                     Accessor
+;;;     gtk_entry_get_placeholder_text                     Accessor
+;;;     gtk_entry_set_overwrite_mode                       Accessor
+;;;     gtk_entry_get_overwrite_mode                       Accessor
 ;;;     gtk_entry_get_layout
 ;;;     gtk_entry_get_layout_offsets
 ;;;     gtk_entry_layout_index_to_text_index
 ;;;     gtk_entry_text_index_to_layout_index
-;;;     gtk_entry_set_attributes
-;;;     gtk_entry_get_attributes
-;;;     gtk_entry_get_max_length
-;;;     gtk_entry_get_visibility
-;;;     gtk_entry_set_completion
-;;;     gtk_entry_get_completion
+;;;     gtk_entry_set_attributes                           Accessor
+;;;     gtk_entry_get_attributes                           Accessor
+;;;     gtk_entry_get_max_length                           Accessor
+;;;     gtk_entry_get_visibility                           Accessor
+;;;     gtk_entry_set_completion                           Accessor
+;;;     gtk_entry_get_completion                           Accessor
 ;;;     gtk_entry_set_cursor_hadjustment
 ;;;     gtk_entry_get_cursor_hadjustment
-;;;     gtk_entry_set_progress_fraction
-;;;     gtk_entry_get_progress_fraction
-;;;     gtk_entry_set_progress_pulse_step
-;;;     gtk_entry_get_progress_pulse_step
+;;;     gtk_entry_set_progress_fraction                    Accessor
+;;;     gtk_entry_get_progress_fraction                    Accessor
+;;;     gtk_entry_set_progress_pulse_step                  Accessor
+;;;     gtk_entry_get_progress_pulse_step                  Accessor
 ;;;     gtk_entry_progress_pulse
 ;;;     gtk_entry_im_context_filter_keypress
 ;;;     gtk_entry_reset_im_context
-;;;
-;;;     GtkEntryIconPosition
-;;;
+;;;     gtk_entry_get_tabs                                 Accessor
+;;;     gtk_entry_set_tabs                                 Accessor
 ;;;     gtk_entry_set_icon_from_pixbuf
 ;;;     gtk_entry_set_icon_from_stock
 ;;;     gtk_entry_set_icon_from_icon_name
@@ -108,19 +111,256 @@
 ;;;     gtk_entry_set_icon_drag_source
 ;;;     gtk_entry_get_current_icon_drag_source
 ;;;     gtk_entry_get_icon_area
+;;;     gtk_entry_set_input_purpose                        Accessor
+;;;     gtk_entry_get_input_purpose                        Accessor
+;;;     gtk_entry_set_input_hints                          Accessor
+;;;     gtk_entry_get_input_hints                          Accessor
+;;;     gtk_entry_grab_focus_without_selecting
 ;;;
-;;;     GtkInputPurpose
+;;; Properties
 ;;;
-;;;     gtk_entry_set_input_purpose
-;;;     gtk_entry_get_input_purpose
+;;;           gboolean   activates-default              Read / Write
+;;;      PangoAttrList*  attributes                     Read / Write
+;;;     GtkEntryBuffer*  buffer                         Read / Write / Construct
+;;;           gboolean   caps-lock-warning              Read / Write
+;;; GtkEntryCompletion*  completion                     Read / Write
+;;;               gint   cursor-position                Read
+;;;           gboolean   editable                       Read / Write
+;;;           gboolean   enable-emoji-completion        Read / Write
+;;;           gboolean   has-frame                      Read / Write
+;;;              gchar*  im-module                      Read / Write
+;;;          GtkBorder*  inner-border                   Read / Write
+;;;      GtkInputHints   input-hints                    Read / Write
+;;;    GtkInputPurpose   input-purpose                  Read / Write
+;;;              guint   invisible-char                 Read / Write
+;;;           gboolean   invisible-char-set             Read / Write
+;;;               gint   max-length                     Read / Write
+;;;               gint   max-width-chars                Read / Write
+;;;           gboolean   overwrite-mode                 Read / Write
+;;;              gchar*  placeholder-text               Read / Write
+;;;           gboolean   populate-all                   Read / Write
+;;;           gboolean   primary-icon-activatable       Read / Write
+;;;              GIcon*  primary-icon-gicon             Read / Write
+;;;              gchar*  primary-icon-name              Read / Write
+;;;          GdkPixbuf*  primary-icon-pixbuf            Read / Write
+;;;           gboolean   primary-icon-sensitive         Read / Write
+;;;              gchar*  primary-icon-stock             Read / Write
+;;;       GtkImageType   primary-icon-storage-type      Read
+;;;              gchar*  primary-icon-tooltip-markup    Read / Write
+;;;              gchar*  primary-icon-tooltip-text      Read / Write
+;;;            gdouble   progress-fraction              Read / Write
+;;;            gdouble   progress-pulse-step            Read / Write
+;;;               gint   scroll-offset                  Read
+;;;           gboolean   secondary-icon-activatable     Read / Write
+;;;              GIcon*  secondary-icon-gicon           Read / Write
+;;;              gchar*  secondary-icon-name            Read / Write
+;;;          GdkPixbuf*  secondary-icon-pixbuf          Read / Write
+;;;           gboolean   secondary-icon-sensitive       Read / Write
+;;;              gchar*  secondary-icon-stock           Read / Write
+;;;       GtkImageType   secondary-icon-storage-type    Read
+;;;              gchar*  secondary-icon-tooltip-markup  Read / Write
+;;;              gchar*  secondary-icon-tooltip-text    Read / Write
+;;;               gint   selection-bound                Read
+;;;      GtkShadowType   shadow-type                    Read / Write
+;;;           gboolean   show-emoji-icon                Read / Write
+;;;      PangoTabArray*  tabs                           Read / Write
+;;;              gchar*  text                           Read / Write
+;;;              guint   text-length                    Read
+;;;           gboolean   truncate-multiline             Read / Write
+;;;           gboolean   visibility                     Read / Write
+;;;               gint   width-chars                    Read / Write
+;;;             gfloat   xalign                         Read / Write
 ;;;
-;;;     GtkInputHints
+;;; Style Properties
 ;;;
-;;;     gtk_entry_set_input_hints
-;;;     gtk_entry_get_input_hints
+;;;           gboolean   icon-prelight                  Read
+;;;          GtkBorder*  inner-border                   Read
+;;;              guint   invisible-char                 Read
+;;;          GtkBorder*  progress-border                Read
+;;;
+;;; Signals
+;;;
+;;;               void   activate                       Action
+;;;               void   backspace                      Action
+;;;               void   copy-clipboard                 Action
+;;;               void   cut-clipboard                  Action
+;;;               void   delete-from-cursor             Action
+;;;               void   icon-press                     Run Last
+;;;               void   icon-release                   Run Last
+;;;               void   insert-at-cursor               Action
+;;;               void   insert-emoji                   Action
+;;;               void   move-cursor                    Action
+;;;               void   paste-clipboard                Action
+;;;               void   populate-popup                 Run Last
+;;;               void   preedit-changed                Action
+;;;               void   toggle-overwrite               Action
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;             ╰── GtkEntry
+;;;                 ├── GtkSearchEntry
+;;;                 ╰── GtkSpinButton
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GtkEntry implements AtkImplementorIface, GtkBuildable, GtkEditable and
+;;;     GtkCellEditable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
+
+;;; ----------------------------------------------------------------------------
+;;; enum GtkInputPurpose
+;;; ----------------------------------------------------------------------------
+
+#+gtk-3-6
+(define-g-enum "GtkInputPurpose" gtk-input-purpose
+  (:export t
+   :type-initializer "gtk_input_purpose_get_type")
+  (:free-form 0)
+  (:alpha 1)
+  (:digits 2)
+  (:number 3)
+  (:phone 4)
+  (:url 5)
+  (:email 6)
+  (:name 7)
+  (:password 8)
+  (:pin 9))
+
+#+(and gtk-3-6 cl-cffi-gtk-documentation)
+(setf (gethash 'gtk-input-purpose atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'gtk-input-purpose atdoc:*external-symbols*)
+ "@version{2013-8-25}
+  @begin{short}
+    Describes primary purpose of the input widget. This information is useful
+    for on-screen keyboards and similar input methods to decide which keys
+    should be presented to the user.
+  @end{short}
+
+  Note that the purpose is not meant to impose a totally strict rule about
+  allowed characters, and does not replace input validation. It is fine for an
+  on-screen keyboard to let the user override the character set restriction
+  that is expressed by the purpose. The application is expected to validate
+  the entry contents, even if it specified a purpose.
+
+  The difference between @code{:digits} and @code{:number} is that the former
+  accepts only digits while the latter also some punctuation (like commas or
+  points, plus, minus) and 'e' or 'E' as in 3.14E+000.
+
+  This enumeration may be extended in the future; input methods should
+  interpret unknown values as 'free form'.
+  @begin{pre}
+(define-g-enum \"GtkInputPurpose\" gtk-input-purpose
+  (:export t
+   :type-initializer \"gtk_input_purpose_get_type\")
+  (:free-form 0)
+  (:alpha 1)
+  (:digits 2)
+  (:number 3)
+  (:phone 4)
+  (:url 5)
+  (:email 6)
+  (:name 7)
+  (:password 8)
+  (:pin 9))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:free-form]{Allow any character.}
+    @entry[:alpha]{Allow only alphabetic characters.}
+    @entry[:digits]{Allow only digits.}
+    @entry[:number]{Edited field expects numbers.}
+    @entry[:phone]{Edited field expects phone number.}
+    @entry[:url]{Edited field expects URL.}
+    @entry[:email]{Edited field expects email address.}
+    @entry[:name]{Edited field expects the name of a person.}
+    @entry[:password]{Like @code{:free-form}, but characters are hidden.}
+    @entry[:pin]{Like @code{:digits}, but characters are hidden.}
+  @end{table}
+  Since 3.6
+  @see-class{gtk-entry}
+  @see-symbol{gtk-input-hints}")
+
+;;; ----------------------------------------------------------------------------
+;;; enum GtkInputHints
+;;; ----------------------------------------------------------------------------
+
+#+gtk-3-6
+(define-g-flags "GtkInputHints" gtk-input-hints
+  (:export t
+   :type-initializer "gtk_input_hints_get_type")
+  (:none 0)
+  (:spellcheck          #.(ash 1 0))
+  (:no-spellcheck       #.(ash 1 1))
+  (:word-completion     #.(ash 1 2))
+  (:lowercase           #.(ash 1 3))
+  (:uppercase-chars     #.(ash 1 4))
+  (:uppercase-words     #.(ash 1 5))
+  (:uppercase-sentences #.(ash 1 6))
+  (:inhibit-osk         #.(ash 1 7))
+  #+gtk-3-18
+  (:vertical-writing    #.(ash 1 8))
+  #+gtk-3-22
+  (:emoji               #.(ash 1 9))
+  #+gtk-3-22
+  (:no-emoji            #.(ash 1 10))
+)
+
+#+(and gtk-3-6 cl-cffi-gtk-documentation)
+(setf (gethash 'gtk-input-hints atdoc:*symbol-name-alias*) "Flags"
+      (gethash 'gtk-input-hints atdoc:*external-symbols*)
+ "@version{2014-11-9}
+  @begin{short}
+    Describes hints that might be taken into account by input methods or
+    applications. Note that input methods may already tailor their behaviour
+    according to the @symbol{gtk-input-purpose} of the entry.
+  @end{short}
+
+  Some common sense is expected when using these flags - mixing
+  @code{:lowercase} with any of the uppercase hints makes no sense.
+
+  This flags may be extended in the future; input methods should ignore
+  unknown values.
+  @begin{pre}
+(define-g-flags \"GtkInputHints\" gtk-input-hints
+  (:export t
+   :type-initializer \"gtk_input_hints_get_type\")
+  (:none 0)
+  (:spellcheck          #.(ash 1 0))
+  (:no-spellcheck       #.(ash 1 1))
+  (:word-completion     #.(ash 1 2))
+  (:lowercase           #.(ash 1 3))
+  (:uppercase-chars     #.(ash 1 4))
+  (:uppercase-words     #.(ash 1 5))
+  (:uppercase-sentences #.(ash 1 6))
+  (:inhibit-osk         #.(ash 1 7))
+  (:vertical-writing    #.(ash 1 8))
+  (:emoji               #.(ash 1 9))
+  (:no-emoji            #.(ash 1 10)))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:none]{No special behaviour suggested.}
+    @entry[:spellcheck]{Suggest checking for typos.}
+    @entry[:no-spellcheck]{Suggest not checking for typos.}
+    @entry[:word-completion]{Suggest word completion.}
+    @entry[:lowercase]{Suggest to convert all text to lowercase.}
+    @entry[:uppercase-chars]{Suggest to capitalize all text.}
+    @entry[:uppercase-words]{Suggest to capitalize the first character of each
+      word.}
+    @entry[:uppercase-sentences]{Suggest to capitalize the first word of each
+      sentence.}
+    @entry[:inhibit-osk]{Suggest to not show an onscreen keyboard, e. g for a
+      calculator that already has all the keys.}
+    @entry[:vertical-writing]{The text is vertical. Since 3.18}
+    @entry[:emoji]{Suggest offering Emoji support. Since 3.22}
+    @entry[:no-emoji]{Suggest not offering Emoji support. Since 3.22}
+  @end{table}
+  Since 3.6
+  @see-class{gtk-entry}
+  @see-symbol{gtk-input-purpose}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkEntry
@@ -156,6 +396,10 @@
    (editable
     gtk-entry-editable
     "editable" "gboolean" t t)
+   #+gtk-3-22
+   (enable-emoji-completion
+    gtk-entry-enable-emoji-completion
+    "enable-emoji-completion" "gboolean" t t)
    (has-frame
     gtk-entry-has-frame
     "has-frame" "gboolean" t t)
@@ -182,6 +426,10 @@
    (max-length
     gtk-entry-max-length
     "max-length" "gint" t t)
+   #+gtk-3-12
+   (max-width-chars
+    gtk-entry-max-width-chars
+    "max-width-chars" "gint" t t)
    (overwrite-mode
     gtk-entry-overwrite-mode
     "overwrite-mode" "gboolean" t t)
@@ -261,6 +509,10 @@
    (shadow-type
     gtk-entry-shadow-type
     "shadow-type" "GtkShadowType" t t)
+   #+gtk-3-22
+   (show-emoji-icon
+    gtk-entry-show-emoji-icon
+    "show-emoji-icon" "gboolean" t t)
    #+gtk-3-10
    (tabs
     gtk-entry-tabs
@@ -326,92 +578,100 @@
   any such functionality should also be available by other means, e. g. via the
   context menu of the entry.
   @begin[Style Property Details]{dictionary}
-    @subheading{The \"icon-prelight\" style property}
-      @code{\"icon-prelight\"} of type @code{:boolean} (Read) @br{}
-      The prelight style property determines whether activatable icons prelight
-      on mouseover. @br{}
-      Default value: @em{true} @br{}
-      Since 2.16
-
-    @subheading{The \"inner-border\" style property}
-      @code{\"inner-border\"} of type @class{gtk-border} (Read) @br{}
-      @b{Warning:}
-      The @code{\"inner-border\"} style property has been deprecated since
-      version 3.4 and should not be used in newly written code. Use the standard
-      border and padding CSS properties through objects like
-      @class{gtk-style-context} and @class{gtk-css-provider}; the value of this
-      style property is ignored. @br{}
-      Sets the text area's border between the text and the frame.@br{}
-      Since 2.10
-
-    @subheading{The \"invisible-char\" style property}
-      @code{\"invisible-char\"} of type @code{:uint} (Read) @br{}
-      The invisible character is used when masking entry contents in \"password
-      mode\". When it is not explicitly set with the @code{\"invisible-char\"}
-      property, GTK+ determines the character to use from a list of possible
-      candidates, depending on availability in the current font. This style
-      property allows the theme to prepend a character to the list of
-      candidates. @br{}
-      Default value: 0 @br{}
-      Since 2.18
-
-    @subheading{The \"progress-border\" style property}
-      @code{\"progress-border\"} of type @class{gtk-border} (Read) @br{}
-      @b{Warning:}
-      The @code{\"progress-border\"} style property has been deprecated since
-      version 3.4 and should not be used in newly written code. Use the standard
-      margin CSS property through objects like @class{gtk-style-context} and
-      @class{gtk-css-provider}; the value of this style property is
-      ignored. @br{}
-      The border around the progress bar in the entry. @br{}
-      Since 2.16
+    @begin[code]{table}
+      @begin[icon-prelight]{entry}
+        The @code{icon-prelight} style property of type @code{:boolean}
+        (Read) @br{}
+        The prelight style property determines whether activatable icons prelight
+        on mouseover. @br{}
+        @b{Warning:} The @code{icon-prelight} style property has been deprecated
+        since version 3.20 and should not be used in newly-written code. Use CSS
+        to control the appearance of prelighted icons; the value of this style
+        property is ignored. @br{}
+        Default value: @em{true}
+      @end{entry}
+      @begin[inner-border]{entry}
+        The @code{inner-border} style property of type @class{gtk-border}
+        (Read) @br{}
+        Sets the text area's border between the text and the frame. @br{}
+        @b{Warning:}
+        The @code{inner-border} style property has been deprecated since version
+        3.4 and should not be used in newly written code. Use the standard
+        border and padding CSS properties through objects like
+        @class{gtk-style-context} and @class{gtk-css-provider}; the value of
+        this style property is ignored.
+      @end{entry}
+      @begin[invisible-char]{entry}
+        The @code{invisible-char} style property of type @code{:uint}
+        (Read) @br{}
+        The invisible character is used when masking entry contents in
+        \"password mode\". When it is not explicitly set with the
+        @code{invisible-char} property, GTK+ determines the character to use
+        from a list of possible candidates, depending on availability in the
+        current font. This style property allows the theme to prepend a
+        character to the list of candidates. @br{}
+        Default value: 0
+      @end{entry}
+      @begin[progress-border]{entry}
+        The @code{progress-border} style property of type @class{gtk-border}
+        (Read) @br{}
+        The border around the progress bar in the entry. @br{}
+        @b{Warning:}
+        The @code{progress-border} style property has been deprecated since
+        version 3.4 and should not be used in newly written code. Use the
+        standard margin CSS property through objects like
+        @class{gtk-style-context} and @class{gtk-css-provider}; the value of
+        this style property is ignored.
+      @end{entry}
+    @end{table}
   @end{dictionary}
   @begin[Signal Details]{dictionary}
     @subheading{The \"activate\" signal}
       @begin{pre}
- lambda (entry)   : Action
+ lambda (entry)    : Action
       @end{pre}
       A keybinding signal which gets emitted when the user activates the entry.
-      Applications should not connect to it, but may emit it with the function
-      @fun{g-signal-emit-by-name} if they need to control activation
+      Applications should not connect to it, but may emit it with the
+      @fun{g-signal-emit-by-name} function if they need to control activation
       programmatically.
       The default bindings for this signal are all forms of the Enter key.
       @begin[code]{table}
-        @entry[entry]{The entry on which the signal is emitted.}
+        @entry[entry]{The @sym{gtk-entry} object on which the signal is
+          emitted.}
       @end{table}
     @subheading{The \"backspace\" signal}
       @begin{pre}
- lambda (entry)   : Action
+ lambda (entry)    : Action
       @end{pre}
       The \"backspace\" signal is a keybinding signal which gets emitted when
       the user asks for it.
       The default bindings for this signal are Backspace and Shift-Backspace.
       @begin[code]{table}
-        @entry[entry]{The object which received the signal.}
+        @entry[entry]{The @sym{gtk-entry} object which received the signal.}
       @end{table}
     @subheading{The \"copy-clipboard\" signal}
       @begin{pre}
- lambda (entry)   : Action
+ lambda (entry)    : Action
       @end{pre}
       The \"copy-clipboard\" signal is a keybinding signal which gets emitted
       to copy the selection to the clipboard.
       The default bindings for this signal are Ctrl-c and Ctrl-Insert.
       @begin[code]{table}
-        @entry[entry]{The object which received the signal.}
+        @entry[entry]{The @sym{gtk-entry} object which received the signal.}
       @end{table}
     @subheading{The \"cut-clipboard\" signal}
       @begin{pre}
- lambda (entry)   : Action
+ lambda (entry)    : Action
       @end{pre}
       The \"cut-clipboard\" signal is a keybinding signal which gets emitted to
       cut the selection to the clipboard.
       The default bindings for this signal are Ctrl-x and Shift-Delete.
       @begin[code]{table}
-        @entry[entry]{The object which received the signal.}
+        @entry[entry]{The @sym{gtk-entry} object which received the signal.}
       @end{table}
     @subheading{The \"delete-from-cursor\" signal}
       @begin{pre}
- lambda (entry type count)   : Action
+ lambda (entry type count)    : Action
       @end{pre}
       The \"delete-from-cursor\" signal is a keybinding signal which gets
       emitted when the user initiates a text deletion.
@@ -421,56 +681,66 @@
       The default bindings for this signal are Delete for deleting a character
       and Ctrl-Delete for deleting a word.
       @begin[code]{table}
-        @entry[entry]{The object which received the signal.}
+        @entry[entry]{The @sym{gtk-entry} object which received the signal.}
         @entry[type]{The granularity of the deletion, as a
           @symbol{gtk-delete-type} enumeration.}
         @entry[count]{The number of type units to delete.}
       @end{table}
     @subheading{The \"icon-press\" signal}
       @begin{pre}
- lambda (entry icon-pos event)   : Run Last
+ lambda (entry icon-pos event)    : Run Last
       @end{pre}
       The \"icon-press\" signal is emitted when an activatable icon is clicked.
       @begin[code]{table}
-        @entry[entry]{The entry on which the signal is emitted.}
+        @entry[entry]{The @sym{gtk-entry} object on which the signal is
+          emitted.}
         @entry[icon-pos]{The position of the clicked icon.}
         @entry[event]{The button press event.}
       @end{table}
-      Since 2.16
-
     @subheading{The \"icon-release\" signal}
       @begin{pre}
- lambda (entry icon-pos event)   : Run Last
+ lambda (entry icon-pos event)    : Run Last
       @end{pre}
       The \"icon-release\" signal is emitted on the button release from a mouse
       click over an activatable icon.
       @begin[code]{table}
-        @entry[entry]{The entry on which the signal is emitted.}
+        @entry[entry]{The @sym{gtk-entry} object on which the signal is
+          emitted.}
         @entry[icon-pos]{The position of the clicked icon.}
         @entry[event]{The button release event.}
       @end{table}
-      Since 2.16
-
     @subheading{The \"insert-at-cursor\" signal}
       @begin{pre}
- lambda (entry string)   : Action
+ lambda (entry string)    : Action
       @end{pre}
       The \"insert-at-cursor\" signal is a keybinding signal which gets emitted
       when the user initiates the insertion of a fixed string at the cursor.
       This signal has no default bindings.
       @begin[code]{table}
-        @entry[entry]{The object which received the signal.}
+        @entry[entry]{The @sym{gtk-entry} object which received the signal.}
         @entry[string]{The string to insert.}
       @end{table}
+    @subheading{The \"insert-emoji\" signal}
+      @begin{pre}
+ lambda (entry)    : Action
+      @end{pre}
+      The \"insert-emoji\" signal is a keybinding signal which gets emitted to
+      present the Emoji chooser for the entry. The default bindings for this
+      signal are Ctrl-. and Ctrl-;
+      @begin[code]{table}
+        @entry[entry]{The @sym{gtk-entry} object which received the signal.}
+      @end{table}
+      Since 3.22
+
     @subheading{The \"move-cursor\" signal}
       @begin{pre}
- lambda (entry step count extend-selection)   : Action
+ lambda (entry step count extend-selection)    : Action
       @end{pre}
       The \"move-cursor\" signal is a keybinding signal which gets emitted when
       the user initiates a cursor movement. If the cursor is not visible in
       entry, this signal causes the viewport to be moved instead.
-      Applications should not connect to it, but may emit it with the function
-      @fun{g-signal-emit-by-name} if they need to control the cursor
+      Applications should not connect to it, but may emit it with the
+      @fun{g-signal-emit-by-name} function if they need to control the cursor
       programmatically.
       The default bindings for this signal come in two variants, the variant
       with the Shift modifier extends the selection, the variant without the
@@ -482,7 +752,7 @@
         @item{Home/End keys move to the ends of the buffer.}
       @end{itemize}
       @begin[code]{table}
-        @entry[entry]{The object which received the signal.}
+        @entry[entry]{The @sym{gtk-entry} object which received the signal.}
         @entry[step]{The granularity of the move, as a
           @symbol{gtk-movement-step}.}
         @entry[count]{The number of step units to move.}
@@ -491,52 +761,51 @@
       @end{table}
     @subheading{The \"paste-clipboard\" signal}
       @begin{pre}
- lambda (entry)   : Action
+ lambda (entry)    : Action
       @end{pre}
       The \"paste-clipboard\" signal is a keybinding signal which gets emitted
       to paste the contents of the clipboard into the text view.
       The default bindings for this signal are Ctrl-v and Shift-Insert.
       @begin[code]{table}
-        @entry[entry]{The object which received the signal.}
+        @entry[entry]{The @sym{gtk-entry} object which received the signal.}
       @end{table}
     @subheading{The \"populate-popup\" signal}
       @begin{pre}
- lambda (entry menu)   : Run Last
+ lambda (entry menu)    : Run Last
       @end{pre}
       The \"populate-popup\" signal gets emitted before showing the context menu
       of the entry.
       If you need to add items to the context menu, connect to this signal and
       append your menuitems to the menu.
-      If the @code{\"populate-all\"} property is @em{true}, this signal will
+      If the @code{populate-all} property is @em{true}, this signal will
       also be emitted to populate touch popups. In this case, widget will be a
       different container, e. g. a @class{gtk-toolbar}. The signal handler
       should not make assumptions about the type of widget.
       @begin[code]{table}
-        @entry[entry]{The entry on which the signal is emitted.}
+        @entry[entry]{The @sym{gtk-entry} object on which the signal is
+          emitted.}
         @entry[menu]{The menu that is being populated.}
       @end{table}
     @subheading{The \"preedit-changed\" signal}
       @begin{pre}
- lambda (entry preedit)   : Action
+ lambda (entry preedit)    : Action
       @end{pre}
       If an input method is used, the typed text will not immediately be
       committed to the buffer. So if you are interested in the text, connect to
       this signal.
       @begin[code]{table}
-        @entry[entry]{The object which received the signal.}
+        @entry[entry]{The @sym{gtk-entry} object which received the signal.}
         @entry[preedit]{The current preedit string.}
       @end{table}
-      Since 2.20
-
     @subheading{The \"toggle-overwrite\" signal}
       @begin{pre}
- lambda (entry)   : Action
+ lambda (entry)    : Action
       @end{pre}
       The \"toggle-overwrite\" signal is a keybinding signal which gets emitted
       to toggle the overwrite mode of the entry.
       The default bindings for this signal is Insert.
       @begin[code]{table}
-        @entry[entry]{The object which received the signal.}
+        @entry[entry]{The @sym{gtk-entry} object which received the signal.}
       @end{table}
   @end{dictionary}
   @see-slot{gtk-entry-activates-default}
@@ -591,9 +860,7 @@
   @see-class{gtk-entry-completion}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
 ;;; Property and Accessor Details
-;;;
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- gtk-entry-activates-default --------------------------------------------
@@ -601,7 +868,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "activates-default"
                                                'gtk-entry) 't)
- "The @code{\"activates-default\"} property of type @code{:boolean}
+ "The @code{activates-default} property of type @code{:boolean}
   (Read / Write) @br{}
   Whether to activate the default widget (such as the default button in a
   dialog) when Enter is pressed. @br{}
@@ -641,7 +908,7 @@
 
 #+(and gtk-3-6 cl-cffi-gtk-documentation)
 (setf (documentation (atdoc:get-slot-from-name "attributes" 'gtk-entry) t)
- "The @code{\"attributes\"} property of type @class{pango-attr-list}
+ "The @code{attributes} property of type @class{pango-attr-list}
   (Read / Write) @br{}
   A list of Pango attributes to apply to the text of the entry.
   This is mainly useful to change the size or weight of the text. @br{}
@@ -676,7 +943,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "buffer" 'gtk-entry) 't)
- "The @code{\"buffer\"} property of type @class{gtk-entry-buffer}
+ "The @code{buffer} property of type @class{gtk-entry-buffer}
   (Read / Write / Construct) @br{}
   Text buffer object which actually stores entry text.")
 
@@ -699,8 +966,6 @@
 
   The generic function @sym{(setf gtk-entry-buffer)} sets the
   @class{gtk-entry-buffer} object which holds the text for this widget.
-
-  Since 2.18
   @see-class{gtk-entry}")
 
 ;;; --- gtk-entry-caps-lock-warning --------------------------------------------
@@ -708,13 +973,12 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "caps-lock-warning"
                                                'gtk-entry) 't)
- "The @code{\"caps-lock-warning\"} property of type @code{:boolean}
+ "The @code{caps-lock-warning} property of type @code{:boolean}
   (Read / Write) @br{}
   Whether password entries will show a warning when Caps Lock is on. Note that
   the warning is shown using a secondary icon, and thus does not work if you
   are using the secondary icon position for some other purpose. @br{}
-  Default value: @em{true} @br{}
-  Since 2.16")
+  Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-entry-caps-lock-warning atdoc:*function-name-alias*)
@@ -729,10 +993,9 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "completion" 'gtk-entry) 't)
- "The @code{\"completion\"} property of type @class{gtk-entry-completion}
+ "The @code{completion} property of type @class{gtk-entry-completion}
   (Read / Write) @br{}
-  The auxiliary completion object to use with the entry. @br{}
-  Since 3.2")
+  The auxiliary completion object to use with the entry.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-entry-completion atdoc:*function-name-alias*)
@@ -757,8 +1020,6 @@
   All further configuration of the completion mechanism is done on
   @arg{completion} using the @class{gtk-entry-completion} API. Completion is
   disabled if @arg{completion} is set to @code{nil}.
-
-  Since 2.4
   @see-class{gtk-entry}
   @see-class{gtk-entry-completion}")
 
@@ -766,7 +1027,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "cursor-position" 'gtk-entry) 't)
- "The @code{\"cursor-position\"} property of type @code{:int} (Read) @br{}
+ "The @code{cursor-position} property of type @code{:int} (Read) @br{}
   The current position of the insertion cursor in chars. @br{}
   Allowed values: [0,65535] @br{}
   Default value: 0")
@@ -784,7 +1045,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "editable" 'gtk-entry) 't)
- "The @code{\"editable\"} property of type @code{:boolean} (Read / Write) @br{}
+ "The @code{editable} property of type @code{:boolean} (Read / Write) @br{}
   Whether the entry contents can be edited. @br{}
   Default value: @em{true}")
 
@@ -797,11 +1058,33 @@
   class.
   @see-class{gtk-entry}")
 
+;;; --- gtk-entry-enable-emoji-completion --------------------------------------
+
+#+(and gtk-3-22 cl-cffi-gtk-documentation)
+(setf (documentation (atdoc:get-slot-from-name "enable-emoji-completion"
+                                               'gtk-entry) 't)
+ "The @code{enable-emoji-completion} property of type @code{:boolean}
+  (Read / Write) @br{}
+  Whether to suggest Emoji replacements. @br{}
+  Default value: @code{nil} @br{}
+  Since 3.22")
+
+#+(and gtk-3-22 cl-cffi-gtk-documentation)
+(setf (gethash 'gtk-entry-enable-emoji-completion atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-entry-enable-emoji-completion 'function)
+ "@version{2019-4-18}
+  Accessor of the @slot[gtk-entry]{enable-emoji-completion} slot of the
+  @class{gtk-entry} class.
+
+  Since 3.22
+  @see-class{gtk-entry}")
+
 ;;; --- gtk-entry-has-frame ----------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "has-frame" 'gtk-entry) 't)
- "The @code{\"has-frame\"} property of type @code{:boolean} (Read / Write) @br{}
+ "The @code{has-frame} property of type @code{:boolean} (Read / Write) @br{}
   @code{Nil} removes outside bevel from entry. @br{}
   Default value: @em{true}")
 
@@ -830,14 +1113,13 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "im-module" 'gtk-entry) 't)
- "The @code{\"im-module\"} property of type @code{:string} (Read / Write) @br{}
+ "The @code{im-module} property of type @code{:string} (Read / Write) @br{}
   Which IM (input method) module should be used for this entry. See
   @class{gtk-im-context}.
   Setting this to a non-@code{nil} value overrides the system-wide IM module
   setting. See the @class{gtk-settings} @slot[gtk-settings]{gtk-im-module}
   property. @br{}
-  Default value: @code{nil} @br{}
-  Since 2.16")
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-entry-im-module atdoc:*function-name-alias*)
@@ -852,45 +1134,44 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "inner-border" 'gtk-entry) 't)
- "The @code{\"inner-border\"} property of type @class{gtk-border}
+ "The @code{inner-border} property of type @class{gtk-border}
   (Read / Write) @br{}
+  Sets the text area's border between the text and the frame. @br{}
   @b{Warning:}
-  The @code{\"inner-border\"} property has been deprecated since version 3.4 and
+  The @code{inner-border} property has been deprecated since version 3.4 and
   should not be used in newly written code. Use the standard border and padding
   CSS properties through objects like @class{gtk-style-context} and
-  @class{gtk-css-provider}; the value of this style property is ignored. @br{}
-  Sets the text area's border between the text and the frame. @br{}
-  Since 2.10")
+  @class{gtk-css-provider}; the value of this style property is ignored.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-entry-inner-border atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-entry-inner-border 'function)
  "@version{2014-5-18}
+  @syntax[]{(gtk-entry-inner-border object) => border}
+  @syntax[]{(setf (gtk-entry-inner-border object) border)}
   @argument[object]{a @class{gtk-entry} widget}
-  @argument[border]{a @class{gtk-border}, or @code{nil}}
+  @argument[border]{a @class{gtk-border} structure, or @code{nil}}
   @begin{short}
-    Accessor of the slot @slot[gtk-entry]{inner-border} of the @class{gtk-entry}
+    Accessor of the @slot[gtk-entry]{inner-border} slot of the @class{gtk-entry}
     class.
   @end{short}
 
-  The generic function @sym{gtk-entry-inner-border} returns the entry's
+  The @sym{gtk-entry-inner-border} slot access function returns the entry's
   @slot[gtk-entry]{inner-border} property.
 
-  The generic function @sym{(setf gtk-entry-inner-border)} sets entry's
+  The @sym{(setf gtk-entry-inner-border)} slot access function sets entry's
   @slot[gtk-entry]{inner-border} property to @arg{border}, or clears it if
-  @code{nil} is passed. The \"inner-border\" is the area around the entry's
+  @code{nil} is passed. The inner border is the area around the entry's
   text, but inside its frame.
 
-  If set, this property overrides the @code{\"inner-border\"} style property.
+  If set, this property overrides the @code{inner-border} style property.
   Overriding the style-provided border is useful when you want to do in-place
   editing of some text in a canvas or list widget, where pixel-exact positioning
   of the entry is important.
-
-  Since 2.10
   @begin[Warning]{dictionary}
-    The function @sym{gtk-entry-inner-border} has been deprecated since
-    version 3.4 and should not be used in newly written code. Use the standard
+    The @sym{gtk-entry-inner-border} function has been deprecated since version
+    3.4 and should not be used in newly written code. Use the standard
     border and padding CSS properties through objects like
     @class{gtk-style-context} and @class{gtk-css-provider}; the value returned
     by this function is ignored by @class{gtk-entry}.
@@ -904,9 +1185,9 @@
 
 #+(and gtk-3-6 cl-cffi-gtk-documentation)
 (setf (documentation (atdoc:get-slot-from-name "input-hints" 'gtk-entry) t)
- "The @code{\"input-hints\"} property of type @symbol{gtk-input-hints}
+ "The @code{input-hints} property of type @symbol{gtk-input-hints}
   (Read / Write) @br{}
-  Additional hints (beyond the @code{\"input-purpose\"} property) that allow
+  Additional hints (beyond the @code{input-purpose} property) that allow
   input methods to fine-tune their behaviour. @br{}
   Since 3.6")
 
@@ -939,13 +1220,13 @@
 
 #+(and gtk-3-6 cl-cffi-gtk-documentation)
 (setf (documentation (atdoc:get-slot-from-name "input-purpose" 'gtk-entry) t)
- "The @code{\"input-purpose\"} property of type @symbol{gtk-input-purpose}
+ "The @code{input-purpose} property of type @symbol{gtk-input-purpose}
   (Read / Write) @br{}
   The purpose of this text field.
   This property can be used by on-screen keyboards and other input methods to
   adjust their behaviour.
   Note that setting the purpose to @code{:password} or @code{:pin} is
-  independent from setting the @code{\"visibility\"} property. @br{}
+  independent from setting the @code{visibility} property. @br{}
   Default value: @code{:free-form} @br{}
   Since 3.6")
 
@@ -977,10 +1258,10 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "invisible-char" 'gtk-entry) 't)
- "The @code{\"invisible-char\"} property of type @code{:uint}
+ "The @code{invisible-char} property of type @code{:uint}
   (Read / Write) @br{}
   The invisible character is used when masking entry contents in \"password
-  mode\". When it is not explicitly set with the @code{\"invisible-char\"}
+  mode\". When it is not explicitly set with the @code{invisible-char}
   property, GTK+ determines the character to use from a list of possible
   candidates, depending on availability in the current font.
   This style property allows the theme to prepend a character to the list of
@@ -1025,11 +1306,10 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "invisible-char-set"
                                                'gtk-entry) 't)
- "The @code{\"invisible-char-set\"} property of type @code{:boolean}
+ "The @code{invisible-char-set} property of type @code{:boolean}
   (Read / Write) @br{}
   Whether the invisible char has been set for the @sym{gtk-entry}. @br{}
-  Default value: @code{nil} @br{}
-  Since 2.16")
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-entry-invisible-char-set atdoc:*function-name-alias*)
@@ -1044,7 +1324,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "max-length" 'gtk-entry) 't)
- "The @code{\"max-length\"} property of type @code{:int} (Read / Write) @br{}
+ "The @code{max-length} property of type @code{:int} (Read / Write) @br{}
   Maximum number of characters for this entry. Zero if no maximum. @br{}
   Allowed values: [0,65535] @br{}
   Default value: 0")
@@ -1083,15 +1363,48 @@
   @see-function{gtk-entry-buffer}
   @see-function{gtk-entry-buffer-max-length}")
 
+;;; --- gtk-entry-max-width-chars ----------------------------------------------
+
+#+(and gtk-3-12 cl-cffi-gtk-documentation)
+(setf (documentation (atdoc:get-slot-from-name "max-width-chars" 'gtk-entry) 't)
+ "The @code{max-width-chars} property of type @code{:int} (Read / Write)
+  The desired maximum width of the entry, in characters. If this property is set
+  to -1, the width will be calculated automatically. @br{}
+  Allowed values: >= -1 @br{}
+  Default value: -1 @br{}
+  Since 3.12")
+
+#+(and gtk-3-22 cl-cffi-gtk-documentation)
+(setf (gethash 'gtk-entry-max-width-chars atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-entry-max-width-chars 'function)
+ "@version{2019-4-18}
+  @syntax[]{(gtk-entry-max-width-chars object) => n-chars}
+  @syntax[]{(setf (gtk-entry-max-width-chars object) n-chars)}
+  @argument[object]{a @class{gtk-entry} object}
+  @argument[n-chars]{the @code{:int} maximum width, in characters}
+  @begin{short}
+    Accessor of the @slot[gtk-entry]{max-width-chars} slot of the
+    @class{gtk-entry} class.
+  @end{short}
+
+  The @sym{gtk-entry-max-width-chars} slot access function
+  retrieves the desired maximum width of the entry, in characters.
+
+  The @sym{(setf gtk-entry-max-width-chars} slot access function
+  sets the desired maximum width in characters of the entry.
+
+  Since 3.12
+  @see-class{gtk-entry}")
+
 ;;; --- gtk-entry-overwrite-mode -----------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "overwrite-mode" 'gtk-entry) 't)
- "The @code{\"overwrite-mode\"} property of type @code{:boolean}
+ "The @code{overwrite-mode} property of type @code{:boolean}
   (Read / Write) @br{}
   If text is overwritten when typing in the @sym{gtk-entry}. @br{}
-  Default value: @code{nil} @br{}
-  Since 2.14")
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-entry-overwrite-mode atdoc:*function-name-alias*)
@@ -1119,12 +1432,11 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "placeholder-text"
                                                'gtk-entry) 't)
- "The @code{\"placeholder-text\"} property of type @code{:string}
+ "The @code{placeholder-text} property of type @code{:string}
   (Read / Write) @br{}
   The text that will be displayed in the @class{gtk-entry} when it is empty and
   unfocused. @br{}
-  Default value: @code{nil} @br{}
-  Since 3.2")
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-entry-placeholder-text atdoc:*function-name-alias*)
@@ -1152,15 +1464,13 @@
   focus, using this feature is a bit problematic if the entry is given the
   initial focus in a window. Sometimes this can be worked around by delaying
   the initial focus setting until the first key event arrives.
-
-  Since 3.2
   @see-class{gtk-entry}")
 
 ;;; --- gtk-entry-populate-all -------------------------------------------------
 
 #+(and gtk-3-8 cl-cffi-gtk-documentation)
 (setf (documentation (atdoc:get-slot-from-name "populate-all" 'gtk-entry) 't)
- "If @code{\"populate-all\"} is @em{true}, the \"populate-popup\" signal is
+ "If @code{populate-all} is @em{true}, the \"populate-popup\" signal is
   also emitted for touch popups. @br{}
   Default value: @code{nil} @br{}
   Since 3.8")
@@ -1179,15 +1489,14 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "primary-icon-activatable"
                                                 'gtk-entry) 't)
- "The @code{\"primary-icon-activatable\"} property of type @code{:boolean}
+ "The @code{primary-icon-activatable} property of type @code{:boolean}
   (Read / Write) @br{}
   Whether the primary icon is activatable.
   GTK+ emits the \"icon-press\" and \"icon-release\" signals only on sensitive,
   activatable icons.
   Sensitive, but non-activatable icons can be used for purely informational
   purposes. @br{}
-  Default value: @em{true} @br{}
-  Since 2.16")
+  Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-entry-primary-icon-activatable atdoc:*function-name-alias*)
@@ -1205,10 +1514,9 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "primary-icon-gicon"
                                                'gtk-entry) 't)
- "The @code{\"primary-icon-gicon\"} property of type @class{g-icon}
+ "The @code{primary-icon-gicon} property of type @class{g-icon}
   (Read / Write) @br{}
-  The @class{g-icon} to use for the primary icon for the entry. @br{}
-  Since 2.16")
+  The @class{g-icon} to use for the primary icon for the entry.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-entry-primary-icon-gicon atdoc:*function-name-alias*)
@@ -1225,11 +1533,10 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "primary-icon-name"
                                                'gtk-entry) 't)
- "The @code{\"primary-icon-name\"} property of type @code{:string}
+ "The @code{primary-icon-name} property of type @code{:string}
   (Read / Write) @br{}
   The icon name to use for the primary icon for the entry. @br{}
-  Default value: @code{nil} @br{}
-  Since 2.16")
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-entry-primary-icon-name atdoc:*function-name-alias*)
@@ -1246,10 +1553,9 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "primary-icon-pixbuf"
                                                'gtk-entry) 't)
- "The @code{\"primary-icon-pixbuf\"} property of type @class{gdk-pixbuf}
+ "The @code{primary-icon-pixbuf} property of type @class{gdk-pixbuf}
   (Read / Write) @br{}
-  A pixbuf to use as the primary icon for the entry. @br{}
-  Since 2.16")
+  A pixbuf to use as the primary icon for the entry.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-entry-primary-icon-pixbuf atdoc:*function-name-alias*)
@@ -1266,7 +1572,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "primary-icon-sensitive"
                                                'gtk-entry) 't)
- "The @code{\"primary-icon-sensitive\"} property of type @code{:boolean}
+ "The @code{primary-icon-sensitive} property of type @code{:boolean}
   (Read / Write) @br{}
   Whether the primary icon is sensitive.
   An insensitive icon appears grayed out. GTK+ does not emit the \"icon-press\"
@@ -1274,8 +1580,7 @@
   icons.
   An icon should be set insensitive if the action that would trigger when
   clicked is currently not available. @br{}
-  Default value: @em{true} @br{}
-  Since 2.16")
+  Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-entry-primary-icon-sensitive atdoc:*function-name-alias*)
@@ -1293,35 +1598,32 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "primary-icon-stock"
                                                'gtk-entry) 't)
- "The @code{\"primary-icon-stock\"} property of type @code{:string}
-  (Read / Write) @br{}
-  @b{Warning:} The @code{\"primary-icon-stock\"} property has been deprecated
-  since version 3.10 and should not be used in newly-written code. Use the
-  @code{\"primary-icon-name\"} property instead. @br{}
+ "The @code{primary-icon-stock} property of type @code{:string} (Read / Write)
+  @br{}
   The stock ID to use for the primary icon for the entry. @br{}
-  Default value: @code{nil} @br{}
-  Since 2.16")
+  @b{Warning:} The @code{primary-icon-stock} property has been deprecated
+  since version 3.10 and should not be used in newly-written code. Use the
+  @code{primary-icon-name} property instead. @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-entry-primary-icon-stock atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-entry-primary-icon-stock 'function)
  "@version{2014-6-8}
-  Accessor of the slot @slot[gtk-entry]{primary-icon-stock} of the
+  Accessor of the @slot[gtk-entry]{primary-icon-stock} slot of the
   @class{gtk-entry} class.
-  @see-class{gtk-entry}
-  @see-function{gtk-entry-get-icon-stock}")
+  @see-class{gtk-entry}")
 
 ;;; --- gtk-entry-primary-icon-storage-type ------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "primary-icon-storage-type"
                                                'gtk-entry) 't)
- "The @code{\"primary-icon-storage-type\"} property of type
+ "The @code{primary-icon-storage-type} property of type
   @symbol{gtk-image-type} (Read) @br{}
   The representation which is used for the primary icon of the entry. @br{}
-  Default value: @code{:empty} @br{}
-  Since 2.16")
+  Default value: @code{:empty}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-entry-primary-icon-storage-type atdoc:*function-name-alias*)
@@ -1338,13 +1640,12 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "primary-icon-tooltip-markup"
                                                'gtk-entry) 't)
- "The @code{\"primary-icon-tooltip-markup\"} property of type @code{:string}
+ "The @code{primary-icon-tooltip-markup} property of type @code{:string}
   (Read / Write) @br{}
   The contents of the tooltip on the primary icon, which is marked up with
   the Pango text markup language.
   Also see the function @fun{gtk-entry-set-icon-tooltip-markup}. @br{}
-  Default value: @code{nil} @br{}
-  Since 2.16")
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-entry-primary-icon-tooltip-markup
@@ -1363,12 +1664,11 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "primary-icon-tooltip-text"
                                                'gtk-entry) 't)
- "The @code{\"primary-icon-tooltip-text\"} property of type @code{:string}
+ "The @code{primary-icon-tooltip-text} property of type @code{:string}
   (Read / Write) @br{}
   The contents of the tooltip on the primary icon.
   Also see the function @fun{gtk-entry-set-icon-tooltip-text}. @br{}
-  Default value: @code{nil} @br{}
-  Since 2.16")
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-entry-primary-icon-tooltip-text atdoc:*function-name-alias*)
@@ -1386,12 +1686,11 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "progress-fraction"
                                                'gtk-entry) 't)
- "The @code{\"progress-fraction\"} property of type @code{:double}
+ "The @code{progress-fraction} property of type @code{:double}
   (Read / Write) @br{}
   The current fraction of the task that is been completed. @br{}
   Allowed values: [0,1] @br{}
-  Default value: 0 @br{}
-  Since 2.16")
+  Default value: 0")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-entry-progress-fraction atdoc:*function-name-alias*)
@@ -1413,8 +1712,6 @@
   The generic function @sym{(setf gtk-entry-progress-fraction)} causes the
   entry progress indicator to \"fill in\" the given @arg{fraction} of the bar.
   The @arg{fraction} should be between 0.0 and 1.0, inclusive.
-
-  Since 2.16
   @see-class{gtk-entry}")
 
 ;;; --- gtk-entry-progress-pulse-step ------------------------------------------
@@ -1422,13 +1719,12 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "progress-pulse-step"
                                                'gtk-entry) 't)
- "The @code{\"progress-pulse-step\"} property of type @code{:double}
+ "The @code{progress-pulse-step} property of type @code{:double}
   (Read / Write) @br{}
   The fraction of total entry width to move the progress bouncing block for
   each call to the function @fun{gtk-entry-progress-pulse}. @br{}
   Allowed values: [0,1] @br{}
-  Default value: 0.1 @br{}
-  Since 2.16")
+  Default value: 0.1")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-entry-progress-pulse-step atdoc:*function-name-alias*)
@@ -1450,8 +1746,6 @@
   The generic function @sym{(setf gtk-entry-progress-pulse-step)} sets the
   fraction of total entry width to move the progress bouncing block for each
   call to the function @fun{gtk-entry-progress-pulse}.
-
-  Since 2.16
   @see-class{gtk-entry}
   @see-function{gtk-entry-progress-pulse}")
 
@@ -1459,7 +1753,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "scroll-offset" 'gtk-entry) 't)
- "The @code{\"scroll-offset\"} property of type @code{:int} (Read) @br{}
+ "The @code{scroll-offset} property of type @code{:int} (Read) @br{}
   Number of pixels of the entry scrolled off the screen to the left. @br{}
   Allowed values: >= 0 @br{}
   Default value: 0")
@@ -1478,15 +1772,14 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "secondary-icon-activatable"
                                                'gtk-entry) 't)
- "The @code{\"secondary-icon-activatable\"} property of type @code{:boolean}
+ "The @code{secondary-icon-activatable} property of type @code{:boolean}
   (Read / Write) @br{}
   Whether the secondary icon is activatable.
   GTK+ emits the \"icon-press\" and \"icon-release\" signals only on sensitive,
   activatable icons.
   Sensitive, but non-activatable icons can be used for purely informational
   purposes. @br{}
-  Default value: @em{true} @br{}
-  Since 2.16")
+  Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-entry-secondary-icon-activatable
@@ -1505,10 +1798,9 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "secondary-icon-gicon"
                                                'gtk-entry) 't)
- "The @code{\"secondary-icon-gicon\"} property of type @class{g-icon}
+ "The @code{secondary-icon-gicon} property of type @class{g-icon}
   (Read / Write) @br{}
-  The @class{g-icon} to use for the secondary icon for the entry. @br{}
-  Since 2.16")
+  The @class{g-icon} to use for the secondary icon for the entry.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-entry-secondary-icon-gicon atdoc:*function-name-alias*)
@@ -1525,11 +1817,10 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "secondary-icon-name"
                                                'gtk-entry) 't)
- "The @code{\"secondary-icon-name\"} property of type @code{:string}
+ "The @code{secondary-icon-name} property of type @code{:string}
   (Read / Write) @br{}
   The icon name to use for the secondary icon for the entry. @br{}
-  Default value: @code{nil} @br{}
-  Since 2.16")
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-entry-secondary-icon-name atdoc:*function-name-alias*)
@@ -1546,10 +1837,9 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "secondary-icon-pixbuf"
                                                'gtk-entry) 't)
- "The @code{\"secondary-icon-pixbuf\"} property of type @class{gdk-pixbuf}
+ "The @code{secondary-icon-pixbuf} property of type @class{gdk-pixbuf}
   (Read / Write) @br{}
-  An pixbuf to use as the secondary icon for the entry. @br{}
-  Since 2.16")
+  An pixbuf to use as the secondary icon for the entry.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-entry-secondary-icon-pixbuf atdoc:*function-name-alias*)
@@ -1566,7 +1856,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "secondary-icon-sensitive"
                                                'gtk-entry) 't)
- "The @code{\"secondary-icon-sensitive\"} property of type @code{:boolean}
+ "The @code{secondary-icon-sensitive} property of type @code{:boolean}
   (Read / Write) @br{}
   Whether the secondary icon is sensitive.
   An insensitive icon appears grayed out. GTK+ does not emit the \"icon-press\"
@@ -1574,8 +1864,7 @@
   icons.
   An icon should be set insensitive if the action that would trigger when
   clicked is currently not available. @br{}
-  Default value: @em{true} @br{}
-  Since 2.16")
+  Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-entry-secondary-icon-sensitive atdoc:*function-name-alias*)
@@ -1593,35 +1882,32 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "secondary-icon-stock"
                                                'gtk-entry) 't)
- "The @code{\"secondary-icon-stock\"} property of type @code{:string}
+ "The @code{secondary-icon-stock} property of type @code{:string}
   (Read / Write) @br{}
-  @b{Warning:} The @code{\"secondary-icon-stock\"} property has been deprecated
-  since version 3.10 and should not be used in newly-written code. Use the
-  @code{\"secondary-icon-name\"} property instead. @br{}
   The stock ID to use for the secondary icon for the entry. @br{}
-  Default value: @code{nil} @br{}
-  Since 2.16")
+  @b{Warning:} The @code{secondary-icon-stock} property has been deprecated
+  since version 3.10 and should not be used in newly-written code. Use the
+  @code{secondary-icon-name} property instead. @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-entry-secondary-icon-stock atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-entry-secondary-icon-stock 'function)
  "@version{2014-6-8}
-  Accessor of the slot @slot[gtk-entry]{seconary-icon-stock} of the
+  Accessor of the @slot[gtk-entry]{seconary-icon-stock} slot of the
   @class{gtk-entry} class.
-  @see-class{gtk-entry}
-  @see-function{gtk-entry-get-icon-stock}")
+  @see-class{gtk-entry}")
 
 ;;; --- gtk-entry-secondary-icon-storage-type ----------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "secondary-icon-storage-type"
                                                'gtk-entry) 't)
- "The @code{\"secondary-icon-storage-type\"} property of type
+ "The @code{secondary-icon-storage-type} property of type
   @symbol{gtk-image-type} (Read) @br{}
   The representation which is used for the secondary icon of the entry. @br{}
-  Default value: @code{:empty} @br{}
-  Since 2.16")
+  Default value: @code{:empty}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-entry-secondary-icon-storage-type
@@ -1639,13 +1925,12 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "secondary-icon-tooltip-markup"
                                                'gtk-entry) 't)
- "The @code{\"secondary-icon-tooltip-markup\"} property of type @code{:string}
+ "The @code{secondary-icon-tooltip-markup} property of type @code{:string}
   (Read / Write) @br{}
   The contents of the tooltip on the secondary icon, which is marked up with
   the Pango text markup language.
   Also see the function @fun{gtk-entry-set-icon-tooltip-markup}. @br{}
-  Default value: @code{nil} @br{}
-  Since 2.16")
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-entry-secondary-icon-tooltip-markup
@@ -1664,12 +1949,11 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "secondary-icon-tooltip-text"
                                                'gtk-entry) 't)
- "The @code{\"secondary-icon-tooltip-text\"} property of type @code{:string}
+ "The @code{secondary-icon-tooltip-text} property of type @code{:string}
   (Read / Write) @br{}
   The contents of the tooltip on the secondary icon.
   Also see the function @fun{gtk-entry-set-icon-tooltip-text}. @br{}
-  Default value: @code{nil} @br{}
-  Since 2.16")
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-entry-secondary-icon-tooltip-text
@@ -1687,7 +1971,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "selection-bound" 'gtk-entry) 't)
- "The @code{\"selection-bound\"} property of type @code{:int} (Read) @br{}
+ "The @code{selection-bound} property of type @code{:int} (Read) @br{}
   The position of the opposite end of the selection from the cursor in
   chars. @br{}
   Allowed values: [0,65535] @br{}
@@ -1706,29 +1990,53 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "shadow-type" 'gtk-entry) 't)
- "The @code{\"shadow-type\"} property of type @symbol{gtk-shadow-type}
+ "The @code{shadow-type} property of type @symbol{gtk-shadow-type}
   (Read / Write) @br{}
   Which kind of shadow to draw around the entry when \"has-frame\" is set to
   @em{true}. @br{}
-  Default value: @code{:in} @br{}
-  Since 2.12")
+  @b{Warning:} The @code{shadow-type} property has been deprecated since version
+  3.20 and should not be used in newly-written code. Use CSS to determine the
+  style of the border; the value of this style property is ignored. @br{}
+  Default value: @code{:in}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-entry-shadow-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-entry-shadow-type 'function)
  "@version{2014-6-8}
-  Accessor of the slot @slot[gtk-entry]{shadow-type} of the @class{gtk-entry}
+  Accessor of the @slot[gtk-entry]{shadow-type} slot of the @class{gtk-entry}
   class.
+  @see-class{gtk-entry}")
+
+;;; --- gtk-entry-show-emoji-icon ----------------------------------------------
+
+#+(and gtk-3-22 cl-cffi-gtk-documentation)
+(setf (documentation (atdoc:get-slot-from-name "show-emoji-icon" 'gtk-entry) 't)
+ "The @code{show-emoji-icon} property of type @code{:boolean} (Read / Write)
+  @br{}
+  Whether to show an icon for Emoji. @br{}
+  Default value: @code{nil} @br{}
+  Since 3.22")
+
+#+(and gtk-3-22 cl-cffi-gtk-documentation)
+(setf (gethash 'gtk-entry-show-emoji-icon atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-entry-show-emoji-icon 'function)
+ "@version{2019-4-18}
+  Accessor of the @slot[gtk-entry]{show-emoji-icon} slot of the
+  @class{gtk-entry} class.
+
+  Since 3.22
   @see-class{gtk-entry}")
 
 ;;; --- gtk-entry-tabs ---------------------------------------------------------
 
 #+(and gtk-3-10 cl-cffi-gtk-documentation)
 (setf (documentation (atdoc:get-slot-from-name "tabs" 'gtk-entry) 't)
- "The @code{\"tabs\"} property of type @class{pango-tab-array}
+ "The @code{tabs} property of type @class{pango-tab-array}
   (Read / Write) @br{}
-  A list of tabstop locations to apply to the text of the entry. @br{}")
+  A list of tabstop locations to apply to the text of the entry. @br{}
+  Since 3.10")
 
 #+(and gtk-3-10 cl-cffi-gtk-documentation)
 (setf (gethash 'gtk-entry-tabs atdoc:*function-name-alias*)
@@ -1755,7 +2063,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "text" 'gtk-entry) 't)
- "The @code{\"text\"} property of type @code{:string} (Read / Write) @br{}
+ "The @code{text} property of type @code{:string} (Read / Write) @br{}
   The contents of the entry. @br{}
   Default value: \"\"")
 
@@ -1792,11 +2100,10 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "text-length" 'gtk-entry) 't)
- "The @code{\"text-length\"} property of type @code{:uint} (Read) @br{}
+ "The @code{text-length} property of type @code{:uint} (Read) @br{}
   The length of the text in the @class{gtk-entry}. @br{}
   Allowed values: <= 65535 @br{}
-  Default value: 0 @br{}
-  Since 2.14")
+  Default value: 0")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-entry-text-length atdoc:*function-name-alias*)
@@ -1815,8 +2122,6 @@
 
   This is equivalent to:
   @code{(gtk-entry-buffer-length (gtk-entry-buffer entry))}
-
-  Since 2.14
   @see-class{gtk-entry}
   @see-class{gtk-entry-buffer}
   @see-function{gtk-entry-buffer-length}")
@@ -1826,11 +2131,10 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "truncate-multiline"
                                                'gtk-entry) 't)
- "The @code{\"truncate-multiline\"} property of type @code{:boolean}
+ "The @code{truncate-multiline} property of type @code{:boolean}
   (Read / Write) @br{}
   When @em{true}, pasted multi-line text is truncated to the first line. @br{}
-  Default value: @code{nil} @br{}
-  Since 2.10")
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-entry-truncate-multiline atdoc:*function-name-alias*)
@@ -1845,7 +2149,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "visibility" 'gtk-entry) 't)
- "The @code{\"visibility\"} property of type @code{:boolean}
+ "The @code{visibility} property of type @code{:boolean}
   (Read / Write) @br{}
   @code{Nil} displays the \"invisible char\" instead of the actual text
   (password mode). @br{}
@@ -1886,7 +2190,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "width-chars" 'gtk-entry) 't)
- "The @code{\"width-chars\"} property of tpye @code{:int} (Read / Write) @br{}
+ "The @code{width-chars} property of tpye @code{:int} (Read / Write) @br{}
   Number of characters to leave space for in the entry. @br{}
   Allowed values: >= @code{G_MAXULONG} @br{}
   Default value: -1")
@@ -1920,12 +2224,11 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "xalign" 'gtk-entry) 't)
- "The @code{\"xalign\"} property of type @code{:float} (Read / Write) @br{}
+ "The @code{xalign} property of type @code{:float} (Read / Write) @br{}
   The horizontal alignment, from 0 (left) to 1 (right). Reversed for RTL
   layouts. @br{}
   Allowed values: [0,1] @br{}
-  Default value: 0 @br{}
-  Since 2.4")
+  Default value: 0")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-entry-xalign atdoc:*function-name-alias*)
@@ -1965,8 +2268,6 @@
   @begin{short}
     Creates a new entry with the specified text @arg{buffer}.
   @end{short}
-
-  Since 2.18
   @see-class{gtk-entry}"
   (make-instance 'gtk-entry
                  :buffer buffer))
@@ -2361,7 +2662,6 @@
     @entry[:secondary]{At the end of the entry (depending on the text
       direction).}
   @end{table}
-  Since 2.16
   @see-class{gtk-entry}")
 
 ;;; ----------------------------------------------------------------------------
@@ -2402,19 +2702,17 @@
   @argument[icon-pos]{icon position of type @symbol{gtk-entry-icon-position}}
   @argument[stock-id]{the name of the stock item, or @code{nil}}
   @begin{short}
-    Sets the icon shown in the @arg{entry} at the specified position from a
-    stock image.
+    Sets the icon shown in the entry at the specified position from a stock
+    image.
   @end{short}
 
   If @arg{stock-id} is @code{nil}, no icon will be shown in the specified
   position.
   @begin[Warning]{dictionary}
-    The function @sym{gtk-entry-set-icon-from-stock} has been deprecated since
-    version 3.10 and should not be used in newly-written code. Use the function
-    @fun{gtk-entry-set-icon-from-icon-name} instead.
+    The @sym{gtk-entry-set-icon-from-stock} function has been deprecated since
+    version 3.10 and should not be used in newly-written code. Use the
+    @fun{gtk-entry-set-icon-from-icon-name} function instead.
   @end{dictionary}
-
-  Since 2.16
   @see-class{gtk-entry}
   @see-function{gtk-entry-get-icon-stock}
   @see-function{gtk-entry-set-icon-from-stock}"
@@ -2563,12 +2861,10 @@
     gicon.
   @end{short}
   @begin[Warning]{dictionary}
-    The function @sym{gtk-entry-get-icon-stock} has been deprecated since
-    version 3.10 and should not be used in newly-written code. Use the function
-    @fun{gtk-entry-get-icon-name} instead.
+    The @sym{gtk-entry-get-icon-stock} function has been deprecated since
+    version 3.10 and should not be used in newly-written code. Use the
+    @fun{gtk-entry-get-icon-name} function instead.
   @end{dictionary}
-
-  Since 2.16
   @see-class{gtk-entry}
   @see-symbol{gtk-entry-icon-position}
   @see-function{gtk-entry-get-icon-name}"
@@ -2964,8 +3260,6 @@
   @arg{icon-area} is filled with zeros.
 
   See also the function @fun{gtk-entry-get-text-area}.
-
-  Since 3.0
   @see-class{gtk-entry}
   @see-function{gtk-entry-get-text-area}"
   (let ((icon-area (make-gdk-rectangle)))
@@ -2975,140 +3269,21 @@
 (export 'gtk-entry-get-icon-area)
 
 ;;; ----------------------------------------------------------------------------
-;;; enum GtkInputPurpose
+;;; gtk_entry_grab_focus_without_selecting ()
+;;;
+;;; void gtk_entry_grab_focus_without_selecting (GtkEntry *entry);
+;;;
+;;; Causes entry to have keyboard focus.
+;;;
+;;; It behaves like gtk_widget_grab_focus(), except that it doesn't select the
+;;; contents of the entry. You only want to call this on some special entries
+;;; which the user usually doesn't want to replace all text in, such as
+;;; search-as-you-type entries.
+;;;
+;;; entry :
+;;;     a GtkEntry
+;;;
+;;; Since 3.16
 ;;; ----------------------------------------------------------------------------
-
-#+gtk-3-6
-(define-g-enum "GtkInputPurpose" gtk-input-purpose
-  (:export t
-   :type-initializer "gtk_input_purpose_get_type")
-  (:free-form 0)
-  (:alpha 1)
-  (:digits 2)
-  (:number 3)
-  (:phone 4)
-  (:url 5)
-  (:email 6)
-  (:name 7)
-  (:password 8)
-  (:pin 9))
-
-#+(and gtk-3-6 cl-cffi-gtk-documentation)
-(setf (gethash 'gtk-input-purpose atdoc:*symbol-name-alias*) "Enum"
-      (gethash 'gtk-input-purpose atdoc:*external-symbols*)
- "@version{2013-8-25}
-  @begin{short}
-    Describes primary purpose of the input widget. This information is useful
-    for on-screen keyboards and similar input methods to decide which keys
-    should be presented to the user.
-  @end{short}
-
-  Note that the purpose is not meant to impose a totally strict rule about
-  allowed characters, and does not replace input validation. It is fine for an
-  on-screen keyboard to let the user override the character set restriction
-  that is expressed by the purpose. The application is expected to validate
-  the entry contents, even if it specified a purpose.
-
-  The difference between @code{:digits} and @code{:number} is that the former
-  accepts only digits while the latter also some punctuation (like commas or
-  points, plus, minus) and 'e' or 'E' as in 3.14E+000.
-
-  This enumeration may be extended in the future; input methods should
-  interpret unknown values as 'free form'.
-  @begin{pre}
-(define-g-enum \"GtkInputPurpose\" gtk-input-purpose
-  (:export t
-   :type-initializer \"gtk_input_purpose_get_type\")
-  (:free-form 0)
-  (:alpha 1)
-  (:digits 2)
-  (:number 3)
-  (:phone 4)
-  (:url 5)
-  (:email 6)
-  (:name 7)
-  (:password 8)
-  (:pin 9))
-  @end{pre}
-  @begin[code]{table}
-    @entry[:free-form]{Allow any character.}
-    @entry[:alpha]{Allow only alphabetic characters.}
-    @entry[:digits]{Allow only digits.}
-    @entry[:number]{Edited field expects numbers.}
-    @entry[:phone]{Edited field expects phone number.}
-    @entry[:url]{Edited field expects URL.}
-    @entry[:email]{Edited field expects email address.}
-    @entry[:name]{Edited field expects the name of a person.}
-    @entry[:password]{Like @code{:free-form}, but characters are hidden.}
-    @entry[:pin]{Like @code{:digits}, but characters are hidden.}
-  @end{table}
-  Since 3.6
-  @see-class{gtk-entry}
-  @see-symbol{gtk-input-hints}")
-
-;;; ----------------------------------------------------------------------------
-;;; enum GtkInputHints
-;;; ----------------------------------------------------------------------------
-
-#+gtk-3-6
-(define-g-flags "GtkInputHints" gtk-input-hints
-  (:export t
-   :type-initializer "gtk_input_hints_get_type")
-  (:none 0)
-  (:spellcheck #.(ash 1 0))
-  (:no-spellcheck #.(ash 1 1))
-  (:word-completion #.(ash 1 2))
-  (:lowercase #.(ash 1 3))
-  (:uppercase-chars #.(ash 1 4))
-  (:uppercase-words #.(ash 1 5))
-  (:uppercase-sentences #.(ash 1 6))
-  (:inhibit-osk #.(ash 1 7)))
-
-#+(and gtk-3-6 cl-cffi-gtk-documentation)
-(setf (gethash 'gtk-input-hints atdoc:*symbol-name-alias*) "Flags"
-      (gethash 'gtk-input-hints atdoc:*external-symbols*)
- "@version{2014-11-9}
-  @begin{short}
-    Describes hints that might be taken into account by input methods or
-    applications. Note that input methods may already tailor their behaviour
-    according to the @symbol{gtk-input-purpose} of the entry.
-  @end{short}
-
-  Some common sense is expected when using these flags - mixing
-  @code{:lowercase} with any of the uppercase hints makes no sense.
-
-  This flags may be extended in the future; input methods should ignore
-  unknown values.
-  @begin{pre}
-(define-g-flags \"GtkInputHints\" gtk-input-hints
-  (:export t
-   :type-initializer \"gtk_input_hints_get_type\")
-  (:none 0)
-  (:spellcheck #.(ash 1 0))
-  (:no-spellcheck #.(ash 1 1))
-  (:word-completion #.(ash 1 2))
-  (:lowercase #.(ash 1 3))
-  (:uppercase-chars #.(1 4))
-  (:uppercase-words #.(1 5))
-  (:uppercase-sentences #.(1 6))
-  (:inhibit-osk #.(1 7)))
-  @end{pre}
-  @begin[code]{table}
-    @entry[:none]{No special behaviour suggested.}
-    @entry[:spellcheck]{Suggest checking for typos.}
-    @entry[:no-spellcheck]{Suggest not checking for typos.}
-    @entry[:word-completion]{Suggest word completion.}
-    @entry[:lowercase]{Suggest to convert all text to lowercase.}
-    @entry[:uppercase-chars]{Suggest to capitalize all text.}
-    @entry[:uppercase-words]{Suggest to capitalize the first character of each
-      word.}
-    @entry[:uppercase-sentences]{Suggest to capitalize the first word of each
-      sentence.}
-    @entry[:inhibit-osk]{Suggest to not show an onscreen keyboard, e. g for a
-      calculator that already has all the keys.}
-  @end{table}
-  Since 3.6
-  @see-class{gtk-entry}
-  @see-symbol{gtk-input-purpose}")
 
 ;;; --- End of file gtk.entry.lisp ---------------------------------------------
