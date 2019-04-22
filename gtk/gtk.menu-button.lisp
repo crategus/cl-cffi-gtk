@@ -37,7 +37,7 @@
 ;;;
 ;;; Functions
 ;;;
-;;;     gtk_menu_button_new 
+;;;     gtk_menu_button_new
 ;;;     gtk_menu_button_set_popup                          Accessor
 ;;;     gtk_menu_button_get_popup                          Accessor
 ;;;     gtk_menu_button_set_popover                        Accessor
@@ -127,7 +127,7 @@
    :export t
    :interfaces ("AtkImplementorIface"
                 "GtkBuildable"
-                "GtkActionable" 
+                "GtkActionable"
                 "GtkActivatable")
    :type-initializer "gtk_menu_button_get_type")
   ((align-widget
@@ -169,15 +169,15 @@
   the menu button.
 
   For menus, the @code{halign} and @code{valign} properties of the menu are also
-  taken into account. For example, when the direction is @code{:down} and the 
-  horizontal alignment is @code{:start}, the menu will be positioned below the 
-  button, with the starting edge (depending on the text direction) of the menu 
-  aligned with the starting edge of the button. If there is not enough space 
+  taken into account. For example, when the direction is @code{:down} and the
+  horizontal alignment is @code{:start}, the menu will be positioned below the
+  button, with the starting edge (depending on the text direction) of the menu
+  aligned with the starting edge of the button. If there is not enough space
   below the button, the menu is popped up above the button instead. If the
   alignment would move part of the menu offscreen, it is \"pushed in\".
 
   @subheading{CSS nodes}
-    @class{gtk-menu-button} has a single CSS node with name button. To 
+    @class{gtk-menu-button} has a single CSS node with name button. To
     differentiate it from a plain @class{gtk-button}, it gets the .popup style
     class.
   @see-slot{gtk-menu-button-align-widget}
@@ -217,11 +217,11 @@
     @class{gtk-menu-button} class.
   @end{short}
 
-  The generic function @sym{gtk-menu-button-align-widget} returns the parent 
+  The generic function @sym{gtk-menu-button-align-widget} returns the parent
   @class{gtk-widget} to use to line up with menu or @code{nil}.
 
-  The generic function @sym{(setf gtk-menu-button-align-widget)} sets the 
-  @class{gtk-widget} to use to line the menu with when popped up. Note that the 
+  The generic function @sym{(setf gtk-menu-button-align-widget)} sets the
+  @class{gtk-widget} to use to line the menu with when popped up. Note that the
   @arg{align-widget} must contain the @class{gtk-menu-button} itself.
 
   Setting it to @code{nil} means that the menu will be aligned with the button
@@ -259,18 +259,18 @@
     @class{gtk-menu-button} class.
   @end{short}
 
-  The generic function @sym{gtk-menu-button-align-widget} 
+  The generic function @sym{gtk-menu-button-align-widget}
   returns the direction the popup will be pointing at when popped up.
-  
+
   The generic function @sym{(setf gtk-menu-button-align-widget)}
   sets the direction in which the popup will be popped up, as well as changing
-  the arrow’s direction. The child will not be changed to an arrow if it was 
+  the arrow’s direction. The child will not be changed to an arrow if it was
   customized.
 
-  If the does not fit in the available space in the given direction, GTK+ will 
+  If the does not fit in the available space in the given direction, GTK+ will
   its best to keep it inside the screen and fully visible.
 
-  If you pass @code{:none} for a @arg{direction}, the popup will behave as if 
+  If you pass @code{:none} for a @arg{direction}, the popup will behave as if
   you passed @code{:down} (although you won’t see any arrows).
 
   Since 3.6
@@ -283,7 +283,7 @@
                      't)
  "The @code{menu-model} property of type @class{g-menu-model}
   (Read / Write) @br{}
-  The @class{g-menu-model} from which the popup will be created. Depending on 
+  The @class{g-menu-model} from which the popup will be created. Depending on
   the @code{use-popover} property, that may be a menu or a popover. @br{}
   See the function @fun{gtk-menu-button-menu-model} for the interaction with the
   @code{popup} property. @br{}
@@ -295,7 +295,7 @@
       (documentation 'gtk-menu-button-menu-model 'function)
  "@version{2019-3-13}
   @argument[object]{a @class{gtk-menu-button} widget}
-  @argument[menu-model]{a @class{g-menu-model}, or @code{nil} to unset and 
+  @argument[menu-model]{a @class{g-menu-model}, or @code{nil} to unset and
     disable the button.}
   @syntax[]{(gtk-menu-button-menu-model object) => menu-model}
   @syntax[]{(setf gtk-menu-button-menu-model object) menu-model)}
@@ -306,17 +306,17 @@
 
   The generic function @sym{gtk-menu-button-align-widget}
   returns the @class{g-menu-model} used to generate the popup.
-  
+
   The generic function @sym{(setf gtk-menu-button-align-widget)}
   sets the @class{g-menu-model} from which the popup will be constructed, or
   @code{nil} to dissociate any existing menu model and disable the button.
 
-  Depending on the value of @code{use-popover}, either a @class{gtk-menu} will 
-  be created with @fun{gtk-menu-new-from-model}, or a @class{gtk-popover} with 
+  Depending on the value of @code{use-popover}, either a @class{gtk-menu} will
+  be created with @fun{gtk-menu-new-from-model}, or a @class{gtk-popover} with
   the function @fun{gtk-popover-new-from-model}. In either case, actions will be
   connected as documented for these functions.
 
-  If @code{popup} or @code{popover} are already set, those widgets are 
+  If @code{popup} or @code{popover} are already set, those widgets are
   dissociated from the menu button, and those properties are set to @code{nil}.
 
   Since 3.6
@@ -339,7 +339,7 @@
       (documentation 'gtk-menu-button-popover 'function)
  "@version{2019-3-13}
   @argument[object]{a @class{gtk-menu-button} widget}
-  @argument[popover]{a @lass{gtk-popover}, or @code{nil} to unset and disable 
+  @argument[popover]{a @lass{gtk-popover}, or @code{nil} to unset and disable
     the button.}
   @syntax[]{(gtk-menu-button-popover object) => popover}
   @syntax[]{(setf gtk-menu-button-popover object) popover)}
@@ -349,15 +349,15 @@
   @end{short}
 
   The generic function @sym{gtk-menu-button-align-widget}
-  returns the @class{gtk-popover} that pops out of the button. If the button is 
+  returns the @class{gtk-popover} that pops out of the button. If the button is
   not using a @class{gtk-popover}, this function returns @code{nil}.
-  
+
   The generic function @sym{(setf gtk-menu-button-align-widget)}
-  sets the @class{gtk-popover} that will be popped up when the menu button is 
-  clicked, or @code{nil} to dissociate any existing popover and disable the 
+  sets the @class{gtk-popover} that will be popped up when the menu button is
+  clicked, or @code{nil} to dissociate any existing popover and disable the
   button.
 
-  If @code{menu-model} or @code{popup} are set, those objects are dissociated 
+  If @code{menu-model} or @code{popup} are set, those objects are dissociated
   from the menu button, and those properties are set to @code{nil}.
 
   Since 3.12
@@ -371,7 +371,7 @@
  "The @code{popup} property of type @class{gtk-menu} (Read / Write) @br{}
   The @class{gtk-menu} that will be popped up when the button is clicked. @br{}
   Since 3.6")
-  
+
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-menu-button-popup atdoc:*function-name-alias*)
       "Accessor"
@@ -388,14 +388,14 @@
   @end{short}
 
   The generic function @sym{gtk-menu-button-align-widget}
-  returns the @class{gtk-menu} that pops out of the button. If the button does 
+  returns the @class{gtk-menu} that pops out of the button. If the button does
   not use a @class{gtk-menu}, this function returns @code{nil}.
-  
+
   The generic function @sym{(setf gtk-menu-button-align-widget)}
-  sets the @class{gtk-menu} that will be popped up when the menu button is 
+  sets the @class{gtk-menu} that will be popped up when the menu button is
   clicked, or @code{nil} to dissociate any existing menu and disable the button.
 
-  If @code{menu-model} or @code{popover} are set, those objects are dissociated 
+  If @code{menu-model} or @code{popover} are set, those objects are dissociated
   from the menu button, and those properties are set to @code{nil}.
 
   Since 3.6
@@ -407,7 +407,7 @@
 (setf (documentation (atdoc:get-slot-from-name "use-popover" 'gtk-menu-button)
                      't)
  "The @code{use-popover} property of type @code{:boolean} (Read / Write) @br{}
-  Whether to construct a @class{gtk-popover} from the menu model, or a 
+  Whether to construct a @class{gtk-popover} from the menu model, or a
   @class{gtk-menu}. @br{}
   Default value: @em{true}
   Since 3.12")
@@ -427,12 +427,12 @@
   @end{short}
 
   The generic function @sym{gtk-menu-button-align-widget}
-  returns whether a @class{gtk-popover} or a @class{gtk-menu} will be 
+  returns whether a @class{gtk-popover} or a @class{gtk-menu} will be
   constructed from the menu model.
-  
+
   The generic function @sym{(setf gtk-menu-button-align-widget)}
-  sets whether to construct a @class{gtk-popover} instead of @class{gtk-menu} 
-  when the function @fun{gtk-menu-button-menu-model} is called. Note that this 
+  sets whether to construct a @class{gtk-popover} instead of @class{gtk-menu}
+  when the function @fun{gtk-menu-button-menu-model} is called. Note that this
   property is only consulted when a new menu model is set.
 
   Since 3.12
@@ -449,12 +449,12 @@
  "@version{2019-3-13}
   @return{The new @class{gtk-menu-button} widget.}
   @begin{short}
-    Creates a new @class{gtk-menu-button} widget with downwards-pointing arrow 
+    Creates a new @class{gtk-menu-button} widget with downwards-pointing arrow
     as the only child.
   @end{short}
   You can replace the child widget with another @class{gtk-widget} should you
   wish to.
-      
+
   Since 3.6
   @see-class{gtk-menu-button}"
   (make-instance 'gtk-menu-button))
