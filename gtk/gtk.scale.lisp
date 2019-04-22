@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.scale.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.10 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2015 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,18 +29,58 @@
 ;;;
 ;;; GtkScale
 ;;;
-;;; A slider widget for selecting a value from a range
+;;;     A slider widget for selecting a value from a range
 ;;;
 ;;; Synopsis
 ;;;
 ;;;     GtkScale
 ;;;
+;;; Functions
+;;;
 ;;;     gtk_scale_new
 ;;;     gtk_scale_new_with_range
+;;;     gtk_scale_set_digits
+;;;     gtk_scale_set_draw_value
+;;;     gtk_scale_set_has_origin
+;;;     gtk_scale_set_value_pos
+;;;     gtk_scale_get_digits
+;;;     gtk_scale_get_draw_value
+;;;     gtk_scale_get_has_origin
+;;;     gtk_scale_get_value_pos
 ;;;     gtk_scale_get_layout
 ;;;     gtk_scale_get_layout_offsets
 ;;;     gtk_scale_add_mark
 ;;;     gtk_scale_clear_marks
+;;;
+;;; Properties
+;;;
+;;;                gint   digits        Read / Write
+;;;            gboolean   draw-value    Read / Write
+;;;            gboolean   has-origin    Read / Write
+;;;     GtkPositionType   value-pos     Read / Write
+;;;
+;;; Style Properties
+;;;
+;;;      gint   slider-length            Read
+;;;      gint   value-spacing            Read
+;;;
+;;; Signals
+;;;
+;;;     gchar*  format-value             Run Last
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;             ╰── GtkRange
+;;;                 ╰── GtkScale
+;;;                     ├── GtkHScale
+;;;                     ╰── GtkVScale
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GtkScale implements AtkImplementorIface, GtkBuildable and GtkOrientable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -98,17 +135,28 @@
     show at the mark. It can be translated with the usual \"translatable\" and
     \"context\" attributes.
   @begin[Style Property Details]{dictionary}
-    @subheading{The \"slider-length\" style property}
-      @code{\"slider-length\"} of type @code{:int} (Read)@br{}
-      Length of scale's slider. @br{}
-      Allowed values: >= 0@br{}
-      Default value: 31
-
-    @subheading{The \"value-spacing\" style property}
-      @code{\"value-spacing\"} of type @code{:int} (Read)@br{}
-      Space between value text and the slider/trough area. @br{}
-      Allowed values: >= 0@br{}
-      Default value: 2
+    @begin[code]{table}
+      @begin[slider-length]{entry}
+        The @code{slider-length} style property of type @code{:int} (Read) @br{}
+        Length of scale's slider. @br{}
+        @b{Warning:} The @code{slider-length} style property has been deprecated
+        since version 3.20 and should not be used in newly-written code. Use
+        min-height/min-width CSS properties on the slider element instead. The
+        value of this style property is ignored. @br{}
+        Allowed values: >= 0 @br{}
+        Default value: 31
+      @end{entry}
+      @begin[value-spacing]{entry}
+        The @code{value-spacing} style property of type @code{:int} (Read) @br{}
+        Space between value text and the slider/trough area. @br{}
+        @b{Warning:} The @code{value-spacing} style property has been deprecated
+        since version 3.20 and should not be used in newly-written code. Use
+        min-height/min-width CSS properties on the value element instead. The
+        value of this style property is ignored. @br{}
+        Allowed values: >= 0 @br{}
+        Default value: 2
+      @end{entry}
+    @end{table}
   @end{dictionary}
   @begin[Signal Details]{dictionary}
     @subheading{The \"format-value\" signal}
@@ -141,16 +189,14 @@
   @see-slot{gtk-scale-value-pos}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
 ;;; Property and Accessor Details
-;;;
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- gtk-scale-digits -------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "digits" 'gtk-scale) 't)
- "The @code{\"digits\"} property of type @code{:int} (Read / Write) @br{}
+ "The @code{digits} property of type @code{:int} (Read / Write) @br{}
   The number of decimal places that are displayed in the value. @br{}
   Allowed values: [-1, 64] @br{}
   Default value: 1")
@@ -183,7 +229,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "draw-value" 'gtk-scale) 't)
- "The @code{\"draw-value\"} property of type @code{:boolean}
+ "The @code{draw-value} property of type @code{:boolean}
   (Read / Write) @br{}
   Whether the current value is displayed as a string next to the slider. @br{}
   Default value: @em{true}")
@@ -206,14 +252,14 @@
   value is displayed as a string next to the slider.
 
   The generic function @sym{(setf gtk-scale-draw-value)} specifies whether the
-  current value is displayed as a string next to the slider. 
+  current value is displayed as a string next to the slider.
   @see-class{gtk-scale}")
 
 ;;; --- gtk-scale-has-origin ---------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "has-origin" 'gtk-scale) 't)
- "The @code{\"has-origin\"} property of type @code{:boolean}
+ "The @code{has-origin} property of type @code{:boolean}
   (Read / Write) @br{}
   Whether the scale has an origin. @br{}
   Default value: @em{true}")
@@ -238,15 +284,13 @@
   If @arg{has-origin} is set to @em{true} (the default), the scale will
   highlight the part of the scale between the origin (bottom or left
   side) of the scale and the current value.
-
-  Since 3.4
   @see-class{gtk-scale}")
 
 ;;; --- gtk-scale-value-pos ----------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "value-pos" 'gtk-scale) 't)
- "The @code{\"value-pos\"} property of type @symbol{gtk-position-type}
+ "The @code{value-pos} property of type @symbol{gtk-position-type}
   (Read / Write) @br{}
   The position in which the current value is displayed. @br{}
   Default value: @code{:top}")
