@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.print-settings.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.8.6 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,11 +29,62 @@
 ;;;
 ;;; GtkPrintSettings
 ;;;
-;;; Stores print settings
+;;;     Stores print settings
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkPrintSettings
+;;;
+;;;     GTK_PRINT_SETTINGS_PRINTER
+;;;
+;;;     GtkPageOrientation
+;;;     GTK_PRINT_SETTINGS_ORIENTATION
+;;;     GTK_PRINT_SETTINGS_PAPER_FORMAT
+;;;     GTK_PRINT_SETTINGS_PAPER_WIDTH
+;;;     GTK_PRINT_SETTINGS_PAPER_HEIGHT
+;;;     GTK_PRINT_SETTINGS_USE_COLOR
+;;;     GTK_PRINT_SETTINGS_COLLATE
+;;;     GTK_PRINT_SETTINGS_REVERSE
+;;;
+;;;     GtkPrintDuplex
+;;;     GTK_PRINT_SETTINGS_DUPLEX
+;;;
+;;;     GtkPrintQuality
+;;;     GTK_PRINT_SETTINGS_QUALITY
+;;;     GTK_PRINT_SETTINGS_N_COPIES
+;;;     GTK_PRINT_SETTINGS_NUMBER_UP
+;;;
+;;;     GtkNumberUpLayout
+;;;     GTK_PRINT_SETTINGS_NUMBER_UP_LAYOUT
+;;;     GTK_PRINT_SETTINGS_RESOLUTION
+;;;     GTK_PRINT_SETTINGS_RESOLUTION_X
+;;;     GTK_PRINT_SETTINGS_RESOLUTION_Y
+;;;     GTK_PRINT_SETTINGS_PRINTER_LPI
+;;;     GTK_PRINT_SETTINGS_SCALE
+;;;
+;;;     GtkPrintPages
+;;;     GTK_PRINT_SETTINGS_PRINT_PAGES
+;;;
+;;;     GtkPageRange
+;;;     GTK_PRINT_SETTINGS_PAGE_RANGES
+;;;d
+;;;     GtkPageSet
+;;;     GTK_PRINT_SETTINGS_PAGE_SET
+;;;     GTK_PRINT_SETTINGS_DEFAULT_SOURCE
+;;;     GTK_PRINT_SETTINGS_MEDIA_TYPE
+;;;     GTK_PRINT_SETTINGS_DITHER
+;;;     GTK_PRINT_SETTINGS_FINISHINGS
+;;;     GTK_PRINT_SETTINGS_OUTPUT_BIN
+;;;     GTK_PRINT_SETTINGS_OUTPUT_DIR
+;;;     GTK_PRINT_SETTINGS_OUTPUT_BASENAME
+;;;     GTK_PRINT_SETTINGS_OUTPUT_FILE_FORMAT
+;;;     GTK_PRINT_SETTINGS_OUTPUT_URI
+;;;     GTK_PRINT_SETTINGS_WIN32_DRIVER_EXTRA
+;;;     GTK_PRINT_SETTINGS_WIN32_DRIVER_VERSION
+;;;
+;;; Functions
+;;;
+;;;     GtkPrintSettingsFunc
 ;;;
 ;;;     gtk_print_settings_new
 ;;;     gtk_print_settings_copy
@@ -56,134 +104,70 @@
 ;;;     gtk_print_settings_get_int_with_default
 ;;;     gtk_print_settings_set_int
 ;;;
-;;;     GTK_PRINT_SETTINGS_PRINTER
 ;;;     gtk_print_settings_get_printer
 ;;;     gtk_print_settings_set_printer
-;;;
-;;;     GtkPageOrientation
-;;;
-;;;     GTK_PRINT_SETTINGS_ORIENTATION
 ;;;     gtk_print_settings_get_orientation
 ;;;     gtk_print_settings_set_orientation
-;;;
-;;;     GTK_PRINT_SETTINGS_PAPER_FORMAT
 ;;;     gtk_print_settings_get_paper_size
 ;;;     gtk_print_settings_set_paper_size
-;;;
-;;;     GTK_PRINT_SETTINGS_PAPER_WIDTH
 ;;;     gtk_print_settings_get_paper_width
 ;;;     gtk_print_settings_set_paper_width
-;;;
-;;;     GTK_PRINT_SETTINGS_PAPER_HEIGHT
 ;;;     gtk_print_settings_get_paper_height
 ;;;     gtk_print_settings_set_paper_height
-;;;
-;;;     GTK_PRINT_SETTINGS_USE_COLOR
 ;;;     gtk_print_settings_get_use_color
 ;;;     gtk_print_settings_set_use_color
-;;;
-;;;     GTK_PRINT_SETTINGS_COLLATE
 ;;;     gtk_print_settings_get_collate
 ;;;     gtk_print_settings_set_collate
-;;;
-;;;     GTK_PRINT_SETTINGS_REVERSE
 ;;;     gtk_print_settings_get_reverse
 ;;;     gtk_print_settings_set_reverse
-;;;
-;;;     GtkPrintDuplex
-;;;
-;;;     GTK_PRINT_SETTINGS_DUPLEX
 ;;;     gtk_print_settings_get_duplex
 ;;;     gtk_print_settings_set_duplex
-;;;
-;;;     GtkPrintQuality
-;;;
-;;;     GTK_PRINT_SETTINGS_QUALITY
 ;;;     gtk_print_settings_get_quality
 ;;;     gtk_print_settings_set_quality
-;;;
-;;;     GTK_PRINT_SETTINGS_N_COPIES
 ;;;     gtk_print_settings_get_n_copies
 ;;;     gtk_print_settings_set_n_copies
-;;;
-;;;     GTK_PRINT_SETTINGS_NUMBER_UP
 ;;;     gtk_print_settings_get_number_up
 ;;;     gtk_print_settings_set_number_up
-;;;
-;;;     GtkNumberUpLayout
-;;;
-;;;     GTK_PRINT_SETTINGS_NUMBER_UP_LAYOUT
 ;;;     gtk_print_settings_get_number_up_layout
 ;;;     gtk_print_settings_set_number_up_layout
-;;;
-;;;     GTK_PRINT_SETTINGS_RESOLUTION
 ;;;     gtk_print_settings_get_resolution
 ;;;     gtk_print_settings_set_resolution
 ;;;     gtk_print_settings_set_resolution_xy
-;;;
-;;;     GTK_PRINT_SETTINGS_RESOLUTION_X
 ;;;     gtk_print_settings_get_resolution_x
-;;;
-;;;     GTK_PRINT_SETTINGS_RESOLUTION_Y
 ;;;     gtk_print_settings_get_resolution_y
-;;;
-;;;     GTK_PRINT_SETTINGS_PRINTER_LPI
 ;;;     gtk_print_settings_get_printer_lpi
 ;;;     gtk_print_settings_set_printer_lpi
-;;;
-;;;     GTK_PRINT_SETTINGS_SCALE
 ;;;     gtk_print_settings_get_scale
 ;;;     gtk_print_settings_set_scale
-;;;
-;;;     GtkPrintPages
-;;;
-;;;     GTK_PRINT_SETTINGS_PRINT_PAGES
 ;;;     gtk_print_settings_get_print_pages
 ;;;     gtk_print_settings_set_print_pages
-;;;
-;;;     GtkPageRange
-;;;
-;;;     GTK_PRINT_SETTINGS_PAGE_RANGES
 ;;;     gtk_print_settings_get_page_ranges
 ;;;     gtk_print_settings_set_page_ranges
-;;;
-;;;     GtkPageSet
-;;;
-;;;     GTK_PRINT_SETTINGS_PAGE_SET
 ;;;     gtk_print_settings_get_page_set
 ;;;     gtk_print_settings_set_page_set
-;;;
-;;;     GTK_PRINT_SETTINGS_DEFAULT_SOURCE
 ;;;     gtk_print_settings_get_default_source
 ;;;     gtk_print_settings_set_default_source
-;;;
-;;;     GTK_PRINT_SETTINGS_MEDIA_TYPE
 ;;;     gtk_print_settings_get_media_type
 ;;;     gtk_print_settings_set_media_type
-;;;
-;;;     GTK_PRINT_SETTINGS_DITHER
 ;;;     gtk_print_settings_get_dither
 ;;;     gtk_print_settings_set_dither
-;;;
-;;;     GTK_PRINT_SETTINGS_FINISHINGS
 ;;;     gtk_print_settings_get_finishings
 ;;;     gtk_print_settings_set_finishings
-;;;
-;;;     GTK_PRINT_SETTINGS_OUTPUT_BIN
 ;;;     gtk_print_settings_get_output_bin
 ;;;     gtk_print_settings_set_output_bin
 ;;;
-;;;     GTK_PRINT_SETTINGS_OUTPUT_FILE_FORMAT
-;;;     GTK_PRINT_SETTINGS_OUTPUT_URI
-;;;     GTK_PRINT_SETTINGS_WIN32_DRIVER_EXTRA
-;;;     GTK_PRINT_SETTINGS_WIN32_DRIVER_VERSION
-;;;
 ;;;     gtk_print_settings_new_from_file
 ;;;     gtk_print_settings_new_from_key_file
+;;;     gtk_print_settings_new_from_gvariant
 ;;;     gtk_print_settings_load_file
 ;;;     gtk_print_settings_load_key_file
 ;;;     gtk_print_settings_to_file
 ;;;     gtk_print_settings_to_key_file
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GtkPrintSettings
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -2025,6 +2009,28 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
+;;; GTK_PRINT_SETTINGS_OUTPUT_DIR
+;;;
+;;; #define GTK_PRINT_SETTINGS_OUTPUT_DIR       "output-dir"
+;;;
+;;; The key used by the “Print to file” printer to store the directory to which
+;;; the output should be written.
+;;;
+;;; Since 3.6
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GTK_PRINT_SETTINGS_OUTPUT_BASENAME
+;;;
+;;; #define GTK_PRINT_SETTINGS_OUTPUT_BASENAME  "output-basename"
+;;;
+;;; The key used by the “Print to file” printer to store the file name of the
+;;; output without the path to the directory and the file extension.
+;;;
+;;; Since 3.6
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; GTK_PRINT_SETTINGS_OUTPUT_FILE_FORMAT
 ;;;
 ;;; #define GTK_PRINT_SETTINGS_OUTPUT_FILE_FORMAT  "output-file-format"
@@ -2104,6 +2110,24 @@
 ;;;     the restored GtkPrintSettings
 ;;;
 ;;; Since 2.12
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_print_settings_new_from_gvariant ()
+;;;
+;;; GtkPrintSettings *
+;;; gtk_print_settings_new_from_gvariant (GVariant *variant);
+;;;
+;;; Deserialize print settings from an a{sv} variant in the format produced by
+;;; gtk_print_settings_to_gvariant().
+;;;
+;;; variant :
+;;;     an a{sv} GVariant
+;;;
+;;; Returns :
+;;;     a new GtkPrintSettings object.
+;;;
+;;; Since 3.22
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2209,6 +2233,23 @@
 ;;;     "Print Settings"
 ;;;
 ;;; Since 2.12
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_print_settings_to_gvariant ()
+;;;
+;;; GVariant *
+;;; gtk_print_settings_to_gvariant (GtkPrintSettings *settings);
+;;;
+;;; Serialize print settings to an a{sv} variant.
+;;;
+;;; settings :
+;;;     a GtkPrintSettings
+;;;
+;;; Returns :
+;;;     a new, floating, GVariant.
+;;;
+;;; Since 3.22
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- End of file gtk.print-settings.lisp ------------------------------------
