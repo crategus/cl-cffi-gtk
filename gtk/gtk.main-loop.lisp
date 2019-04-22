@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.main-loop.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2014 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,12 +29,13 @@
 ;;;
 ;;; Main loop and Events
 ;;;
-;;; Library initialization, main event loop, and events
+;;;     Library initialization, main event loop, and events
 ;;;
 ;;; Synopsis
 ;;;
 ;;;     gtk_disable_setlocale                    * not exported *
 ;;;     gtk_get_default_language
+;;;     gtk_get_locale_direction
 ;;;     gtk_parse_args                           * not implemented *
 ;;;     gtk_init                                 * not exported *
 ;;;     gtk_init_check                           * not exported *
@@ -130,6 +128,37 @@
   @see-function{pango-language-get-default}")
 
 (export 'gtk-get-default-language)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_get_locale_direction ()
+;;;
+;;; GtkTextDirection gtk_get_locale_direction (void);
+;;;
+;;; Get the direction of the current locale. This is the expected reading
+;;; direction for text and UI.
+;;;
+;;; This function depends on the current locale being set with setlocale() and
+;;; will default to setting the GTK_TEXT_DIR_LTR direction otherwise.
+;;; GTK_TEXT_DIR_NONE will never be returned.
+;;;
+;;; GTK+ sets the default text direction according to the locale during
+;;; gtk_init(), and you should normally use gtk_widget_get_direction() or
+;;; gtk_widget_get_default_direction() to obtain the current direcion.
+;;;
+;;; This function is only needed rare cases when the locale is changed after
+;;; GTK+ has already been initialized. In this case, you can use it to update
+;;; the default text direction as follows:
+;;;
+;;; setlocale (LC_ALL, new_locale);
+;;;
+;;; direction = gtk_get_locale_direction ();
+;;; gtk_widget_set_default_direction (direction);
+;;;
+;;; Returns :
+;;;     the GtkTextDirection of the current locale
+;;;
+;;; Since 3.12
+;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_parse_args ()
