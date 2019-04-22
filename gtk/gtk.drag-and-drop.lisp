@@ -1,15 +1,14 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.drag-and-drop.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
+
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -31,12 +30,15 @@
 ;;;
 ;;; Drag and Drop
 ;;;
-;;; Functions for controlling drag and drop handling
+;;;     Functions for controlling drag and drop handling
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkDestDefaults
 ;;;     GtkTargetFlags  --> gtk.selections.lisp
+;;;     GtkDragResult
+;;;
+;;; Functions
 ;;;
 ;;;     gtk_drag_dest_set
 ;;;     gtk_drag_dest_set_proxy
@@ -55,6 +57,8 @@
 ;;;     gtk_drag_highlight
 ;;;     gtk_drag_unhighlight
 ;;;     gtk_drag_begin
+;;;     gtk_drag_begin_with_coordinates
+;;;     gtk_drag_cancel
 ;;;     gtk_drag_set_icon_widget
 ;;;     gtk_drag_set_icon_pixbuf
 ;;;     gtk_drag_set_icon_stock
@@ -216,13 +220,20 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-11-21}
   @argument[widget]{a @class{gtk-widget} object}
-  @argument[proxy-window]{the window to which to forward drag events}
+  @argument[proxy-window]{the @class{gdk-window} object to which to forward drag
+    events}
   @argument[protocol]{the drag protocol of type @symbol{gdk-drag-protocol} which
-    the @arg{proxy-window} accepts, you can use the function
-    @fun{gdk-drag-get-protocol} to determine this.}
+    the @arg{proxy-window} accepts, you can use the @fun{gdk-drag-get-protocol}
+    function to determine this}
   @argument[use-coordinates]{if @emph{true}, send the same coordinates to the
     destination, because it is an embedded subwindow}
-  Sets this widget as a proxy for drops to another window.
+  @begin{short}
+    Sets the widget as a proxy for drops to another window.
+  @end{short}
+  @begin[Warning]{dictionary}
+    The @sym{gtk-drag-dest-set-proxy} function has been deprecated since version
+    3.22 and should not be used in newly-written code.
+  @end{dictionary}
   @see-class{gtk-widget}
   @see-class{gdk-window}
   @see-symbol{gdk-drag-protocol}
@@ -346,8 +357,6 @@
   The targets are added with info = 0. If you need another value, use the
   functions @fun{gtk-target-list-add-text-targets} and
   @fun{gtk-drag-dest-set-target-list}.
-
-  Since 2.6
   @see-class{gtk-widget}
   @see-function{gtk-target-list-add-text-targets}
   @see-function{gtk-drag-dest-set-target-list}"
@@ -371,8 +380,6 @@
   The targets are added with info = 0. If you need another value, use the
   functions @fun{gtk-target-list-add-image-targets} and
   @fun{gtk-drag-dest-set-target-list}.
-
-  Since 2.6
   @see-class{gtk-widget}
   @see-function{gtk-target-list-add-image-targets}
   @see-function{gtk-drag-dest-set-target-list}"
@@ -395,8 +402,6 @@
   The targets are added with info = 0. If you need another value, use the
   functions @fun{gtk-target-list-add-uri-targets} and
   @fun{gtk-drag-dest-set-target-list}.
-
-  Since 2.6
   @see-class{gtk-widget}
   @see-function{gtk-target-list-add-uri-targets}
   @see-function{gtk-drag-dest-set-target-list}"
@@ -420,8 +425,6 @@
 
   This may be used when a widget wants to do generic actions regardless of the
   targets that the source offers.
-
-  Since 2.10
   @see-class{gtk-widget}"
   (widget (g-object gtk-widget))
   (track-motion :boolean))
@@ -442,8 +445,6 @@
     Returns whether the widget has been configured to always emit
     \"drag-motion\" signals.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-widget}"
   (widget (g-object gtk-widget)))
 
@@ -596,6 +597,11 @@
       event, pass @code{nil} instead.
     @end{entry}
   @end{enumeration}
+  @begin[Warning]{dictionary}
+    The @sy{gtk-drag-begin} function has been deprecated since version 3.10 and
+    should not be used in newly-written code. Use the
+    @fun{gtk-drag-begin-with-coordinates} instead.
+  @end{dictionary}
   @see-class{gtk-widget}
   @see-class{gtk-target-list}
   @see-symbol{gdk-drag-action}
@@ -611,6 +617,99 @@
   (event (g-boxed-foreign gdk-event)))
 
 (export 'gtk-drag-begin)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_drag_begin_with_coordinates ()
+;;;
+;;; GdkDragContext *
+;;; gtk_drag_begin_with_coordinates (GtkWidget *widget,
+;;;                                  GtkTargetList *targets,
+;;;                                  GdkDragAction actions,
+;;;                                  gint button,
+;;;                                  GdkEvent *event,
+;;;                                  gint x,
+;;;                                  gint y);
+;;;
+;;; Initiates a drag on the source side. The function only needs to be used when
+;;; the application is starting drags itself, and is not needed when
+;;; gtk_drag_source_set() is used.
+;;;
+;;; The event is used to retrieve the timestamp that will be used internally to
+;;; grab the pointer. If event is NULL, then GDK_CURRENT_TIME will be used.
+;;; However, you should try to pass a real event in all cases, since that can be
+;;; used to get information about the drag.
+;;;
+;;; Generally there are three cases when you want to start a drag by hand by
+;;; calling this function:
+;;;
+;;; During a “button-press-event” handler, if you want to start a drag
+;;; immediately when the user presses the mouse button. Pass the event that you
+;;; have in your “button-press-event” handler.
+;;;
+;;; During a “motion-notify-event” handler, if you want to start a drag when the
+;;; mouse moves past a certain threshold distance after a button-press. Pass the
+;;; event that you have in your “motion-notify-event” handler.
+;;;
+;;; During a timeout handler, if you want to start a drag after the mouse button
+;;; is held down for some time. Try to save the last event that you got from the
+;;; mouse, using gdk_event_copy(), and pass it to this function (remember to
+;;; free the event with gdk_event_free() when you are done). If you really
+;;; cannot pass a real event, pass NULL instead.
+;;;
+;;; widget :
+;;;     the source widget
+;;;
+;;; targets :
+;;;     The targets (data formats) in which the source can provide the data
+;;;
+;;; actions :
+;;;     A bitmask of the allowed drag actions for this drag
+;;;
+;;; button :
+;;;     The button the user clicked to start the drag
+;;;
+;;; event :
+;;;     The event that triggered the start of the drag, or NULL if none can be
+;;;     obtained.
+;;;
+;;; x :
+;;;     The initial x coordinate to start dragging from, in the coordinate space
+;;;     of widget . If -1 is passed, the coordinates are retrieved from event or
+;;;     the current pointer position
+;;;
+;;; y :
+;;;     The initial y coordinate to start dragging from, in the coordinate space
+;;;     of widget . If -1 is passed, the coordinates are retrieved from event or
+;;;     the current pointer position
+;;;
+;;; Returns :
+;;;     the context for this drag.
+;;;
+;;; Since 3.10
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_drag_cancel ()
+;;;
+;;; void gtk_drag_cancel (GdkDragContext *context);
+;;;
+;;; Cancels an ongoing drag operation on the source side.
+;;;
+;;; If you want to be able to cancel a drag operation in this way, you need to
+;;; keep a pointer to the drag context, either from an explicit call to
+;;; gtk_drag_begin_with_coordinates(), or by connecting to “drag-begin”.
+;;;
+;;; If context does not refer to an ongoing drag operation, this function does
+;;; nothing.
+;;;
+;;; If a drag is cancelled in this way, the result argument of “drag-failed” is
+;;; set to GTK_DRAG_RESULT_ERROR .
+;;;
+;;; context :
+;;;     a GdkDragContext, as e.g. returned by gtk_drag_begin_with_coordinates()
+;;;
+;;; Since 3.16
+;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_drag_set_icon_widget ()
@@ -672,7 +771,14 @@
   @argument[stock-id]{the ID of the stock icon to use for the drag}
   @argument[hot-x]{the x offset within the icon of the hotspot}
   @argument[hot-y]{the y offset within the icon of the hotspot}
-  Sets the icon for a given drag from a stock ID.
+  @begin{short}
+    Sets the icon for a given drag from a stock ID.
+  @end{short}
+  @begin[Warning]{dictionary}
+    The @sym{gtk-drag-set-icon-stock} function has been deprecated since version
+    3.10 and should not be used in newly-written code. Use the
+    @fun{gtk-drag-set-icon-name} instead.
+  @end{dictionary}
   @see-class{gdk-drag-context}"
   (context (g-object gdk-drag-context))
   (stock-id :string)
@@ -726,8 +832,6 @@
   See the docs for @class{gtk-icon-theme} for more details. Note that the size
   of the icon depends on the icon theme, the icon is loaded at the symbolic size
   @code{:dnd}, thus @arg{hot-x} and @arg{hot-y} have to be used with care.
-
-  Since 2.8
   @see-class{gdk-drag-context}
   @see-class{gtk-icon-theme}"
   (context (g-object gdk-drag-context))
@@ -754,8 +858,6 @@
   @end{short}
   See the documentation for the function @fun{gtk-drag-set-icon-name} for more
   details about using icons in drag and drop.
-
-  Since 3.2
   @see-class{gdk-drag-context}
   @see-class{g-icon}
   @see-function{gtk-drag-set-icon-name}"
@@ -869,9 +971,16 @@
  #+cl-cffi-gtk-documenation
  "@version{2013-11-21}
   @argument[widget]{a @class{gtk-widget} object}
-  @argument[stock-id]{the ID of the stock icon to use}
-  Sets the icon that will be used for drags from a particular source to a
-  stock icon.
+  @argument[stock-id]{a string with the ID of the stock icon to use}
+  @begin{short}
+    Sets the icon that will be used for drags from a particular source to a
+    stock icon.
+  @end{short}
+  @begin[Warning]{dictionary}
+    The @sym{gtk-drag-source-set-icon-stock} function has been deprecated since
+    version 3.10 and should not be used in newly-written code. Use the
+    @fun{gtk-drag-source-set-icon-name} instead.
+  @end{dictonary}
   @see-class{gtk-widget}"
   (widget (g-object gtk-widget))
   (stock-id :string))
@@ -892,8 +1001,6 @@
     themed icon.
   @end{short}
   See the docs for @class{gtk-icon-theme} for more details.
-
-  Since 2.8
   @see-class{gtk-widget}
   @see-class{gtk-icon-theme}"
   (widget (g-object gtk-widget))
@@ -915,8 +1022,6 @@
     @arg{icon}.
   @end{short}
   See the docs for @class{gtk-icon-theme} for more details.
-
-  Since 3.2
   @see-class{gtk-widget}
   @see-class{g-icon}
   @see-class{gtk-icon-theme}"
@@ -955,8 +1060,6 @@
   @end{short}
   The widget must first be made into a drag source with the function
   @fun{gtk-drag-source-set}.
-
-  Since 2.4
   @see-class{gtk-widget}
   @see-class{gtk-target-list}
   @see-function{gtk-drag-source-set}
@@ -979,8 +1082,6 @@
   @begin{short}
     Gets the list of targets this widget can provide for drag-and-drop.
   @end{short}
-
-  Since 2.4
   @see-class{gtk-widget}
   @see-class{gtk-target-list}
   @see-function{gtk-drag-source-set-target-list}"
@@ -1004,8 +1105,6 @@
   The targets are added with info = 0. If you need another value, use the
   functions @fun{gtk-target-list-add-text-targets} and
   @fun{gtk-drag-source-set-target-list}.
-
-  Since 2.6
   @see-class{gtk-widget}
   @see-function{gtk-target-list-add-text-targets}
   @see-function{gtk-drag-source-set-target-list}"
@@ -1029,8 +1128,6 @@
   The targets are added with info = 0. If you need another value, use
   the function @fun{gtk-target-list-add-image-targets} and
   @fun{gtk-drag-source-set-target-list}.
-
-  Since 2.6
   @see-class{gtk-widget}
   @see-function{gtk-target-list-add-image-targets}
   @see-function{gtk-drag-source-set-target-list}"
@@ -1054,8 +1151,6 @@
   The targets are added with info = 0. If you need another value, use the
   functions @fun{gtk-target-list-add-uri-targets} and
   @fun{gtk-drag-source-set-target-list}.
-
-  Since 2.6
   @see-class{gtk-widget}
   @see-function{gtk-target-list-add-uri-targets}
   @see-function{gtk-drag-source-set-target-list}"
