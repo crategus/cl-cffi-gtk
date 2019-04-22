@@ -162,12 +162,12 @@
   ├── separator\[.wide\]
   ╰── <child>
     @end{pre}
-    @sym{gtk-paned} has a main CSS node with name paned, and a subnode for the 
+    @sym{gtk-paned} has a main CSS node with name paned, and a subnode for the
     separator with name separator. The subnode gets a .wide style class when the
     paned is supposed to be wide.
 
-    In horizontal orientation, the nodes of the children are always arranged 
-    from left to right. So :first-child will always select the leftmost child, 
+    In horizontal orientation, the nodes of the children are always arranged
+    from left to right. So :first-child will always select the leftmost child,
     regardless of text direction.
   @end{dictionary}
   @begin[Example]{dictionary}
@@ -188,7 +188,7 @@
   @end{dictionary}
   @begin[Child Property Details]{dictionary}
     @subheading{The \"resize\" child property}
-      The @code{resize} child property of type @code{:boolean} (Read / Write) 
+      The @code{resize} child property of type @code{:boolean} (Read / Write)
       @br{}
       The @code{resize} child property determines whether the child expands
       and shrinks along with the paned widget. @br{}
@@ -196,7 +196,7 @@
       Since 2.4
 
     @subheading{The \"shrink\" child property}
-      The @code{shrink} child property of type @code{:boolean} (Read / Write) 
+      The @code{shrink} child property of type @code{:boolean} (Read / Write)
       @br{}
       The @code{\"shrink\"} child property determines whether the child can be
       made smaller than its requisition. @br{}
@@ -362,7 +362,7 @@
     class.
   @end{short}
 
-  The generic function @sym{gtk-paned-position} obtains the position of the 
+  The generic function @sym{gtk-paned-position} obtains the position of the
   divider between the two panes.
 
   The generic function @sym{(setf gtk-paned-position)} sets the position of the
@@ -385,14 +385,14 @@
  "@version{2014-7-27}
   Accessor of the slot @slot[gtk-paned]{position-set} of the @class{gtk-paned}
   class.")
-  
+
 ;;; --- gtk-paned-wide-handled -------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "wide-handle" 'gtk-paned) 't)
  "The @code{wide-handled} property of type @code{:boolean} (Read / Write) @br{}
-  Setting this property to @em{true} indicates that the paned needs to provide 
-  stronger visual separation (e. g. because it separates between two notebooks, 
+  Setting this property to @em{true} indicates that the paned needs to provide
+  stronger visual separation (e. g. because it separates between two notebooks,
   whose tab rows would otherwise merge visually). @br{}
   Since 3.16 @br{}
   Default value: @code{nil}")
@@ -416,8 +416,8 @@
 
   The generic function @sym{(setf gtk-paned-wide-handled)}
   sets the @code{wide-handle} property.
- 
-  Since 3.16  
+
+  Since 3.16
   @see-class{gtk-paned}")
 
 ;;; ----------------------------------------------------------------------------
