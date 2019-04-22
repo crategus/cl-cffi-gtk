@@ -884,16 +884,16 @@
 ;;;
 ;;; buffer :
 ;;;     a GtkTextBuffer
-;;; 
+;;;
 ;;; iter :
 ;;; location to insert the markup
 ;;;
 ;;; markup :
 ;;;     a nul-terminated UTF-8 string containing Pango markup
-;;; 
+;;;
 ;;; len :
 ;;;     length of markup in bytes, or -1
-;;; 
+;;;
 ;;; Since 3.16
 ;;; ----------------------------------------------------------------------------
 
