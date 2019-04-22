@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.entry-completion.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.10 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2015 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,16 +29,24 @@
 ;;;
 ;;; GtkEntryCompletion
 ;;;
-;;; Completion functionality for GtkEntry
+;;;     Completion functionality for GtkEntry
 ;;;
 ;;; Synopsis
 ;;;
 ;;;     GtkEntryCompletion
 ;;;
+;;; Functions
+;;;
+;;;     gboolean    GtkEntryCompletionMatchFunc
+;;;
 ;;;     gtk_entry_completion_new
 ;;;     gtk_entry_completion_new_with_area
 ;;;     gtk_entry_completion_get_entry
+;;;     gtk_entry_completion_set_model
+;;;     gtk_entry_completion_get_model
 ;;;     gtk_entry_completion_set_match_func
+;;;     gtk_entry_completion_set_minimum_key_length
+;;;     gtk_entry_completion_get_minimum_key_length
 ;;;     gtk_entry_completion_compute_prefix
 ;;;     gtk_entry_completion_complete
 ;;;     gtk_entry_completion_get_completion_prefix
@@ -49,6 +54,47 @@
 ;;;     gtk_entry_completion_insert_action_text
 ;;;     gtk_entry_completion_insert_action_markup
 ;;;     gtk_entry_completion_delete_action
+;;;     gtk_entry_completion_set_text_column
+;;;     gtk_entry_completion_get_text_column
+;;;     gtk_entry_completion_set_inline_completion
+;;;     gtk_entry_completion_get_inline_completion
+;;;     gtk_entry_completion_set_inline_selection
+;;;     gtk_entry_completion_get_inline_selection
+;;;     gtk_entry_completion_set_popup_completion
+;;;     gtk_entry_completion_get_popup_completion
+;;;     gtk_entry_completion_set_popup_set_width
+;;;     gtk_entry_completion_get_popup_set_width
+;;;     gtk_entry_completion_set_popup_single_match
+;;;     gtk_entry_completion_get_popup_single_match
+;;;
+;;; Properties
+;;;
+;;;     GtkCellArea*  cell-area             Read / Write / Construct Only
+;;;        gboolean   inline-completion     Read / Write
+;;;        gboolean   inline-selection      Read / Write
+;;;            gint   minimum-key-length    Read / Write
+;;;    GtkTreeModel*  model                 Read / Write
+;;;        gboolean   popup-completion      Read / Write
+;;;        gboolean   popup-set-width       Read / Write
+;;;        gboolean   popup-single-match    Read / Write
+;;;            gint   text-column           Read / Write
+;;;
+;;; Signals
+;;;
+;;;            void   action-activated      Run Last
+;;;        gboolean   cursor-on-match       Run Last
+;;;        gboolean   insert-prefix         Run Last
+;;;        gboolean   match-selected        Run Last
+;;;            void   no-matches            Run Last
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GtkEntryCompletion
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GtkEntryCompletion implements GtkCellLayout and GtkBuildable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -146,11 +192,9 @@
         @entry[widget]{The object which received the signal.}
         @entry[index]{The index of the activated action.}
       @end{table}
-      Since 2.4
-
     @subheading{The \"cursor-on-match\" signal}
       @begin{pre}
- lambda (widget model iter)   : Run Last
+ lambda (widget model iter)    : Run Last
       @end{pre}
       Gets emitted when a match from the cursor is on a match of the list. The
       default behaviour is to replace the contents of the entry with the
@@ -163,11 +207,9 @@
         @entry[iter]{A @class{gtk-tree-iter} positioned at the selected match.}
         @entry[Returns]{@em{True} if the signal has been handled.}
       @end{table}
-      Since 2.12
-
     @subheading{The \"insert-prefix\" signal}
       @begin{pre}
- lambda (widget prefix)   : Run Last
+ lambda (widget prefix)    : Run Last
       @end{pre}
       Gets emitted when the inline autocompletion is triggered. The default
       behaviour is to make the entry display the whole prefix and select the
@@ -181,11 +223,9 @@
         @entry[prefix]{The common prefix of all possible completions.}
         @entry[Returns]{@em{True} if the signal has been handled.}
       @end{table}
-      Since 2.6
-
     @subheading{The \"match-selected\" signal}
       @begin{pre}
- lambda (widget model  iter)   : Run Last
+ lambda (widget model  iter)    : Run Last
       @end{pre}
       Gets emitted when a match from the list is selected. The default behaviour
       is to replace the contents of the entry with the contents of the text
@@ -198,7 +238,17 @@
         @entry[iter]{A @class{gtk-tree-iter} positioned at the selected match.}
         @entry[Returns]{@em{True} if the signal has been handled.}
       @end{table}
-      Since 2.4
+    @subheading{The \"no-matches\" signal}
+      @begin{pre}
+ lambda (widget)    : Run Last
+      @end{pre}
+      Gets emitted when the filter model has zero number of rows in
+      @code{completion_complete} method. In other words when
+      @sym{gtk-entry-completion} is out of suggestions.
+      @begin[code]{table}
+        @entry[widget]{The object which received the signal.}
+      @end{table}
+      Since: 3.14
   @end{dictionary}
   @see-slot{gtk-entry-completion-cell-area}
   @see-slot{gtk-entry-completion-inline-completion}
@@ -286,8 +336,6 @@
   The generic function @sym{(setf gtk-entry-completion-inline-completion)} sets
   whether the common prefix of the possible completions should be automatically
   inserted in the entry.
-
-  Since 2.6
   @see-class{gtk-entry-completion}")
 
 ;;; --- gtk-entry-completion-inline-selection ----------------------------------
@@ -299,8 +347,7 @@
   (Read / Write) @br{}
   Determines whether the possible completions on the popup will appear in the
   entry as you navigate through them. @br{}
-  Default value: @code{nil} @br{}
-  Since 2.12")
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-entry-completion-inline-selection
@@ -325,8 +372,6 @@
   The generic function @sym{(setf gtk-entry-completion-inline-selection)} sets
   whether it is possible to cycle through the possible completions inside the
   entry.
-
-  Since 2.12
   @see-class{gtk-entry-completion}")
 
 ;;; --- gtk-entry-completion-minimum-key-length --------------------------------
@@ -510,7 +555,7 @@
   The generic function @sym{(setf gtk-entry-completion-popup-single-match)} sets
   whether the completion popup window will appear even if there is only a
   single match.
-  
+
   You may want to set this to @code{nil} if you are using inline completion.
 
   Since 2.8
@@ -542,7 +587,7 @@
     Accessor of the slot @slot[gtk-entry-completion]{text-column} of the
     @class{gtk-entry-completion} class.
   @end{short}
- 
+
   The generic function @sym{gtk-entry-completion-text-column} returns the column
   in the model of the completion to get strings from.
 
