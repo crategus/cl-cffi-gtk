@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.spin-button.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.10 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2015 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,13 +29,15 @@
 ;;;
 ;;; GtkSpinButton
 ;;;
-;;; Retrieve an integer or floating-point number from the user.
+;;;     Retrieve an integer or floating-point number from the user.
 ;;;
 ;;; Synopsis
 ;;;
 ;;;     GtkSpinButton
 ;;;     GtkSpinButtonUpdatePolicy
 ;;;     GtkSpinType
+;;;
+;;; Functions
 ;;;
 ;;;     gtk_spin_button_configure
 ;;;     gtk_spin_button_new
@@ -51,6 +50,9 @@
 ;;;     gtk_spin_button_get_increments
 ;;;     gtk_spin_button_get_range
 ;;;     GTK_INPUT_ERROR
+
+
+
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -110,7 +112,7 @@
   properties.
 
   @b{Example:} Code fragment for creating a spin button. The value from the
-  spin button is retrieved in a signal handler. 
+  spin button is retrieved in a signal handler.
   @begin{pre}
  (let (...
        (spinner (make-instance 'gtk-spin-button
@@ -134,15 +136,23 @@
   )
   @end{pre}
   @begin[Style Property Details]{dictionary}
-    @subheading{The \"shadow-type\" style property}
-      @code{\"shadow-type\"} of type @symbol{gtk-shadow-type} (Read) @br{}
-      Style of bevel around the spin button. @br{}
-      Default value: @code{:in}
+    @begin[code]{table}
+      @begin[shadow-type]{entry}
+        The \"shadow-type\" style property of type @symbol{gtk-shadow-type}
+        (Read) @br{}
+        Style of bevel around the spin button. @br{}
+        @b{Warning:} The @code{shadow-type} style property has been deprecated
+        since version 3.20 and should not be used in newly-written code. Use CSS
+        to determine the style of the border; the value of this style property
+        is ignored. @br{}
+        Default value: @code{:in}
+      @end{entry}
+    @end{table}
   @end{dictionary}
   @begin[Signal Details]{dictionary}
     @subheading{The \"change-value\" signal}
       @begin{pre}
- lambda (spin-button scroll)   : Action
+ lambda (spin-button scroll)    : Action
       @end{pre}
       The \"change-value\" signal is a keybinding signal which gets emitted when
       the user initiates a value change. Applications should not connect to it,
@@ -156,7 +166,7 @@
       @end{table}
     @subheading{The \"input\" signal}
       @begin{pre}
- lambda (spin-button new-value)   : Run Last
+ lambda (spin-button new-value)    : Run Last
       @end{pre}
       The \"input\" signal can be used to influence the conversion of the users
       input into a double value. The signal handler is expected to use the
@@ -172,7 +182,7 @@
       @end{table}
     @subheading{The \"output\" signal}
       @begin{pre}
- lambda (spin-button)   : Run Last
+ lambda (spin-button)    : Run Last
       @end{pre}
       The \"output\" signal can be used to change the formatting of the value
       that is displayed in the spin buttons entry.
@@ -209,7 +219,7 @@
      (lambda (spin-button)
        (let ((value (gtk-adjustment-value
                       (gtk-spin-button-adjustment spin-button)))
-             (digits (truncate 
+             (digits (truncate
                        (gtk-adjustment-value
                          (gtk-spin-button-adjustment spinner2)))))
          (setf (gtk-entry-text spin-button)
@@ -222,7 +232,7 @@
       @end{table}
     @subheading{The \"value-changed\" signal}
       @begin{pre}
- lambda (spin-button)   : Run Last
+ lambda (spin-button)    : Run Last
       @end{pre}
       The \"value-changed\" signal is emitted when the value represented by
       @arg{spin-button} changes. Also see the \"output\" signal.
@@ -231,14 +241,13 @@
       @end{table}
     @subheading{The \"wrapped\" signal}
       @begin{pre}
- lambda (spin-button)   : Run Last
+ lambda (spin-button)    : Run Last
       @end{pre}
       The wrapped signal is emitted right after the @arg{spin-button} wraps
       from its maximum to minimum value or vice-versa.
       @begin[code]{table}
         @entry[spin-button]{The object which received the signal.}
       @end{table}
-      Since 2.10
   @end{dictionary}
   @see-class{gtk-entry}
   @see-slot{gtk-spin-button-adjustment}
@@ -251,9 +260,7 @@
   @see-slot{gtk-spin-button-wrap}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
 ;;; Property and Accessor Details
-;;;
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- gtk-spin-button-adjustment ---------------------------------------------
