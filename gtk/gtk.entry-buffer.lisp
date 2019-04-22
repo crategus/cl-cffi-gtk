@@ -2,11 +2,11 @@
 ;;; gtk.entry-buffer.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.10 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2012, 2013, 2014 Dieter Kaiser
+;;; Copyright (C) 2012 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -28,11 +28,13 @@
 ;;;
 ;;; GtkEntryBuffer
 ;;;
-;;; Text buffer for GtkEntry
+;;;     Text buffer for GtkEntry
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkEntryBuffer
+;;;
+;;; Functions
 ;;;
 ;;;     gtk_entry_buffer_new
 ;;;     gtk_entry_buffer_get_text
@@ -45,6 +47,22 @@
 ;;;     gtk_entry_buffer_delete_text
 ;;;     gtk_entry_buffer_emit_deleted_text
 ;;;     gtk_entry_buffer_emit_inserted_text
+;;;
+;;; Properties
+;;;
+;;;     guint   length           Read
+;;;      gint   max-length       Read / Write
+;;;     gchar*  text             Read / Write
+;;;
+;;; Signals
+;;;
+;;;      void   deleted-text     Run First
+;;;      void   inserted-text    Run First
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GtkEntryBuffer
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
