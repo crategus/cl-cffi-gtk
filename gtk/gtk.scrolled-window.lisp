@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.scrolled-window.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GDK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GDK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -289,7 +286,7 @@
       Note: The @arg{pos} argument is LTR/RTL aware, so callers should be aware
       too if intending to provide behavior on horizontal edges.
       @begin[code]{table}
-        @entry[scrolled-window]{A @sym{gtk-scrolled-window} object.} 
+        @entry[scrolled-window]{A @sym{gtk-scrolled-window} object.}
         @entry[pos]{Edge side of type @symbol{gtk-position-type} that was hit.}
       @end{table}
       Since 3.16
@@ -306,7 +303,7 @@
       Note: The @arg{pos} argument is LTR/RTL aware, so callers should be aware
       too if intending to provide behavior on horizontal edges.
       @begin[code]{table}
-        @entry[scrolled-window]{A @sym{gtk-scrolled-window} object.} 
+        @entry[scrolled-window]{A @sym{gtk-scrolled-window} object.}
         @entry[pos]{Edge side of type @symbol{gtk-position-type} that was hit.}
       @end{table}
       Since 3.16
@@ -935,7 +932,7 @@
   @begin[Warning]{dictionary}
     The @sym{gtk-scrolled-window-add-with-viewport} function has been deprecated
     since version 3.8 and should not be used in newly-written code.
-    The @fun{gtk-container-add} function will automatically add a 
+    The @fun{gtk-container-add} function will automatically add a
     @class{gtk-viewport} if the child doesn’t implement @class{gtk-scrollable}.
   @end{dictionary}
   @see-class{gtk-scrolled-window}"
@@ -1179,7 +1176,7 @@
 ;;;
 ;;; overlay_scrolling :
 ;;;     whether to enable overlay scrolling
-;;; 
+;;;
 ;;; Since 3.16
 ;;; ----------------------------------------------------------------------------
 
@@ -1274,7 +1271,7 @@
 ;;;
 ;;; scrolled_window :
 ;;;     a GtkScrolledWindow
-;;; 
+;;;
 ;;; Returns :
 ;;;     the maximum content width, or -1
 ;;;
