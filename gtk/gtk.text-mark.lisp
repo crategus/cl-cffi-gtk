@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.text-mark.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.16 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2016 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,7 +29,7 @@
 ;;;
 ;;; GtkTextMark
 ;;;
-;;; A position in the buffer preserved across buffer modifications
+;;;     A position in the buffer preserved across buffer modifications
 ;;;
 ;;; Types and Values
 ;;;
@@ -47,6 +44,11 @@
 ;;;     gtk_text_mark_get_name
 ;;;     gtk_text_mark_get_buffer
 ;;;     gtk_text_mark_get_left_gravity
+;;;
+;;; Properties
+;;;
+;;;     gboolean   left-gravity    Read / Write / Construct Only
+;;;        gchar*  name            Read / Write / Construct Only
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -105,9 +107,7 @@
   @see-function{gtk-text-buffer-get-iter-at-mark}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
+;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- gtk-text-mark-left-gravity ---------------------------------------------
@@ -116,7 +116,7 @@
 (setf (documentation (atdoc:get-slot-from-name "left-gravity"
                                                'gtk-text-mark) 't)
  "The @code{left-gravity} property of type @code{:boolean}
-  (Read / Write / Construct)@br{}
+  (Read / Write / Construct) @br{}
   Whether the mark has left gravity. @br{}
   Default value: @code{nil}")
 
@@ -129,12 +129,12 @@
   @argument[object]{a @class{gtk-text-mark} object}
   @return{@emph{True} if the text mark has left gravity.}
   @begin{short}
-    Accessor of the slot @slot[gtk-text-mark]{left-gravity} of the
+    Accessor of the @slot[gtk-text-mark]{left-gravity} slot of the
     @class{gtk-text-mark} class.
   @end{short}
 
-  The generic function @sym{gtk-text-mark-left-gravity} determines whether the
-  text mark has left gravity.
+  The @sym{gtk-text-mark-left-gravity} slot access function determines whether
+  the text mark has left gravity.
   @see-class{gtk-text-mark}")
 
 ;;; --- gtk-text-mark-name -----------------------------------------------------
@@ -152,11 +152,11 @@
       (documentation 'gtk-text-mark-name 'function)
  "@version{2016-1-30}
   @begin{short}
-    Accessor of the slot @slot[gtk-text-mark]{name} of the
+    Accessor of the @slot[gtk-text-mark]{name} slot of the
     @class{gtk-text-mark} class.
   @end{short}
 
-  The generic function @sym{gtk-text-mark-name} returns the name of the text
+  The @sym{gtk-text-mark-name} slot access function returns the name of the text
   mark or @code{nil} for anonymous marks.
   @see-class{gtk-text-mark}")
 
@@ -182,8 +182,6 @@
   right of newly inserted text. The standard left-to-right cursor is a mark with
   right gravity, when you type, the cursor stays on the right side of the text
   you are typing.
-
-  Since 2.12
   @see-class{gtk-text-mark}
   @see-function{gtk-text-buffer-add-mark}
   @see-function{gtk-text-buffer-get-mark}"
