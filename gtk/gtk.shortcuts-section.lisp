@@ -107,7 +107,7 @@
  lambda (shortcutsection arg1)    : Action
       @end{pre}
       @begin[code]{table}
-        @entry[shortcutswindow]{The @sym{gtk-shortcuts-window} object.} 
+        @entry[shortcutswindow]{The @sym{gtk-shortcuts-window} object.}
       @end{table}
   @end{dictionary}
   @see-slot{gtk-shortcuts-section-max-height}
