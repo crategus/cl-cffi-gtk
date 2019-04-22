@@ -121,9 +121,8 @@
   @sym{gtk-application-window} will automatically show a @class{gtk-menu-bar}
   for it. See the @class{gtk-application} docs for some screenshots of how this
   looks on different platforms. This behaviour can be overridden with the
-  @slot[gtk-application-window]{show-menubar} property. If the desktop
-  environment does not display the application menu, then it will automatically
-  be included in the menubar.
+  @code{show-menubar} property. If the desktop environment does not display the
+  application menu, then it will automatically be included in the menubar.
 
   @b{Example:} A @class{gtk-application-window} with a menubar
   @begin{pre}
@@ -236,7 +235,7 @@
   @syntax[]{(gtk-application-window-show-menubar object) => show-menubar}
   @syntax[]{(setf (gtk-application-window-show-menubar object) show-menubar)}
   @begin{short}
-    Accessor of the slot @slot[gtk-application-window]{show-menubar} of the
+    Accessor of the @slot[gtk-application-window]{show-menubar} slot of the
     @class{gtk-application-window} class.
   @end{short}
 
@@ -294,41 +293,53 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_application_window_set_help_overlay ()
-;;;
-;;; void gtk_application_window_set_help_overlay
-;;;                                          (GtkApplicationWindow *window,
-;;;                                           GtkShortcutsWindow *help_overlay);
-;;;
-;;; Associates a shortcuts window with the application window, and sets up an
-;;; action with the name win.show-help-overlay to present it.
-;;;
-;;; window takes resposibility for destroying help_overlay .
-;;;
-;;; window
-;;;     a GtkApplicationWindow
-;;;
-;;; help_overlay
-;;;     a GtkShortcutsWindow.
-;;;
-;;; Since: 3.20
 ;;; ----------------------------------------------------------------------------
+
+#+gtk-3-20
+(defcfun ("gtk_application_window_set_help_overlay"
+           gtk-application-window-set-help-overlay) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2019-4-21}
+  @argument[window]{a @class{gtk-application-window} widget}
+  @argument[help-overlay]{a @class{gtk-shortcuts-window} widget}
+  @begin{short}
+   Associates a shortcuts window with the application window, and sets up an
+   action with the name \"win.show-help-overlay\" to present it.
+  @end{short}
+
+  Since 3.20
+  @see-class{gtk-shortcuts-window}
+  @see-class{gtk-application-window}"
+  (window (g-object gtk-application-window))
+  (help-overlay (g-object gtk-shortcuts-window)))
+
+#+gtk-3-20
+(export 'gtk-application-window-set-help-overlay)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_application_window_get_help_overlay ()
-;;;
-;;; GtkShortcutsWindow * gtk_application_window_get_help_overlay
-;;;                                              (GtkApplicationWindow *window);
-;;;
-;;; Gets the GtkShortcutsWindow that has been set up with a prior call to
-;;; gtk_application_window_set_help_overlay().
-;;;
-;;; window
-;;;     a GtkApplicationWindow
-;;;
-;;; Returns
-;;;     the help overlay associated with window , or NULL.
-;;;
-;;; Since: 3.20
 ;;; ----------------------------------------------------------------------------
+
+#+gtk-3-20
+(defcfun ("gtk_application_window_get_help_overlay"
+           gtk-application-window-get-help-overlay)
+    (g-object gtk-shortcuts-window)
+ #+cl-cffi-gtk-documentation
+ "@version{2019-4-21}
+  @argument[window]{a @class{gtk-application-window} widget}
+  @return{The help overlay associated with @arg{window}.}
+  @begin{short}
+    Gets the @class{gtk-shortcuts-window} widget that has been set up with a
+    prior call to the @fun{gtk-application-window-set-help-overlay} function.
+  @end{short}
+
+  Since 3.20
+  @see-class{gtk-shortcuts-window}
+  @see-class{gtk-application-window}
+  @see-function{gtk-application-window-set-help-overlay}"
+  (window (g-object gtk-application-window)))
+
+#+gtk-3-20
+(export 'gtk-application-window-get-help-overlay)
 
 ;;; --- End of file gtk.application-window.lisp --------------------------------
