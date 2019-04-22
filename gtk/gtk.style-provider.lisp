@@ -218,7 +218,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_provider_get_style ()
 ;;;
-;;; GtkStyleProperties * gtk_style_provider_get_style 
+;;; GtkStyleProperties * gtk_style_provider_get_style
 ;;;                                                 (GtkStyleProvider *provider,
 ;;;                                                  GtkWidgetPath *path);
 ;;;
