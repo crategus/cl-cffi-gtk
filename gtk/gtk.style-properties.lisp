@@ -2,11 +2,11 @@
 ;;; gtk.style-properties.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.8.8 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2013 Dieter Kaiser
+;;; Copyright (C) 2013 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -28,11 +28,13 @@
 ;;;
 ;;; GtkStyleProperties
 ;;;
-;;; Store for style property information
+;;;     Store for style property information
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkStyleProperties
+;;;
+;;; Functions
 ;;;
 ;;;     gtk_style_properties_clear
 ;;;     gtk_style_properties_get
@@ -43,6 +45,9 @@
 ;;;     gtk_style_properties_map_color
 ;;;     gtk_style_properties_merge
 ;;;     gtk_style_properties_new
+;;;
+;;;     GtkStylePropertyParser
+;;;
 ;;;     gtk_style_properties_register_property
 ;;;     gtk_style_properties_set
 ;;;     gtk_style_properties_set_property
@@ -62,6 +67,9 @@
 ;;; the preferred way to access styling information from widget implementations
 ;;; and theming engine implementations should use the APIs provided by
 ;;; GtkThemingEngine instead.
+;;;
+;;; GtkStyleProperties has been deprecated in GTK 3.16. The CSS machinery does
+;;; not use it anymore and all users of this object have been deprecated.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -82,6 +90,13 @@
 ;;;
 ;;; Clears all style information from props.
 ;;;
+;;; Warning
+;;;
+;;; gtk_style_properties_clear has been deprecated since version 3.16 and should
+;;; not be used in newly-written code.
+;;;
+;;; GtkStyleProperties are deprecated.
+;;;
 ;;; props :
 ;;;     a GtkStyleProperties
 ;;; ----------------------------------------------------------------------------
@@ -94,6 +109,13 @@
 ;;;                                ...);
 ;;;
 ;;; Retrieves several style property values from props for a given state.
+;;;
+;;; Warning
+;;;
+;;; gtk_style_properties_get has been deprecated since version 3.16 and should
+;;; not be used in newly-written code.
+;;;
+;;; GtkStyleProperties are deprecated.
 ;;;
 ;;; props :
 ;;;     a GtkStyleProperties
@@ -117,6 +139,13 @@
 ;;;
 ;;; Gets a style property from props for the given state. When done with value,
 ;;; g_value_unset() needs to be called to free any allocated memory.
+;;;
+;;; Warning
+;;;
+;;; gtk_style_properties_get_property has been deprecated since version 3.16 and
+;;; should not be used in newly-written code.
+;;;
+;;; GtkStyleProperties are deprecated.
 ;;;
 ;;; props :
 ;;;     a GtkStyleProperties
@@ -144,6 +173,13 @@
 ;;;                                       va_list args);
 ;;;
 ;;; Retrieves several style property values from props for a given state.
+;;;
+;;; Warning
+;;;
+;;; gtk_style_properties_get_valist has been deprecated since version 3.16 and
+;;; should not be used in newly-written code.
+;;;
+;;; GtkStyleProperties are deprecated.
 ;;;
 ;;; props :
 ;;;     a GtkStyleProperties
@@ -253,6 +289,13 @@
 ;;; replace is TRUE, the values will be overwritten, if it is FALSE, the older
 ;;; values will prevail.
 ;;;
+;;; Warning
+;;;
+;;; gtk_style_properties_merge has been deprecated since version 3.16 and should
+;;; not be used in newly-written code.
+;;;
+;;; GtkStyleProperties are deprecated.
+;;;
 ;;; props :
 ;;;     a GtkStyleProperties
 ;;;
@@ -271,6 +314,13 @@
 ;;; GtkStyleProperties * gtk_style_properties_new (void);
 ;;;
 ;;; Returns a newly created GtkStyleProperties
+;;;
+;;; Warning
+;;;
+;;; gtk_style_properties_new has been deprecated since version 3.16 and should
+;;; not be used in newly-written code.
+;;;
+;;; GtkStyleProperties are deprecated.
 ;;;
 ;;; Returns :
 ;;;     a new GtkStyleProperties
@@ -320,6 +370,13 @@
 ;;;
 ;;; Sets several style properties on props.
 ;;;
+;;; Warning
+;;;
+;;; gtk_style_properties_set has been deprecated since version 3.16 and should
+;;; not be used in newly-written code.
+;;;
+;;; GtkStyleProperties are deprecated.
+;;;
 ;;; props :
 ;;;     a GtkStyleProperties
 ;;;
@@ -341,6 +398,13 @@
 ;;;                                         const GValue *value);
 ;;;
 ;;; Sets a styling property in props.
+;;;
+;;; Warning
+;;;
+;;; gtk_style_properties_set_property has been deprecated since version 3.16 and
+;;; should not be used in newly-written code.
+;;;
+;;; GtkStyleProperties are deprecated.
 ;;;
 ;;; props :
 ;;;     a GtkStyleProperties
@@ -366,6 +430,13 @@
 ;;;
 ;;; Sets several style properties on props.
 ;;;
+;;; Warning
+;;;
+;;; gtk_style_properties_set_valist has been deprecated since version 3.16 and
+;;; should not be used in newly-written code.
+;;;
+;;; GtkStyleProperties are deprecated.
+;;;
 ;;; props :
 ;;;     a GtkStyleProperties
 ;;;
@@ -386,6 +457,13 @@
 ;;;                                           GtkStateFlags state);
 ;;;
 ;;; Unsets a style property in props.
+;;;
+;;; Warning
+;;;
+;;; gtk_style_properties_unset_property has been deprecated since version 3.16
+;;; and should not be used in newly-written code.
+;;;
+;;; GtkStyleProperties are deprecated.
 ;;;
 ;;; props :
 ;;;     a GtkStyleProperties

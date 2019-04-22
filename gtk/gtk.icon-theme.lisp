@@ -5,12 +5,12 @@
 ;;; See <http://common-lisp.net/project/cl-gtk2/>.
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,17 +32,19 @@
 ;;;
 ;;; GtkIconTheme
 ;;;
-;;; Looking up icons by name
+;;;     Looking up icons by name
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkIconInfo
 ;;;     GtkIconTheme
+;;;     GtkIconThemeClass
 ;;;     GtkIconLookupFlags
+;;;     GtkIconThemeError
 ;;;
 ;;;     GTK_ICON_THEME_ERROR
 ;;;
-;;;     GtkIconThemeError
+;;; Functions
 ;;;
 ;;;     gtk_icon_theme_new
 ;;;     gtk_icon_theme_get_default
@@ -52,12 +54,18 @@
 ;;;     gtk_icon_theme_get_search_path
 ;;;     gtk_icon_theme_append_search_path
 ;;;     gtk_icon_theme_prepend_search_path
+;;;     gtk_icon_theme_add_resource_path 
 ;;;     gtk_icon_theme_set_custom_theme
 ;;;     gtk_icon_theme_has_icon
 ;;;     gtk_icon_theme_lookup_icon
+;;;     gtk_icon_theme_lookup_icon_for_scale 
 ;;;     gtk_icon_theme_choose_icon
+;;;     gtk_icon_theme_choose_icon_for_scale 
 ;;;     gtk_icon_theme_lookup_by_gicon
+;;;     gtk_icon_theme_lookup_by_gicon_for_scale 
 ;;;     gtk_icon_theme_load_icon
+;;;     gtk_icon_theme_load_icon_for_scale 
+;;;     gtk_icon_theme_load_surface 
 ;;;     gtk_icon_theme_list_contexts
 ;;;     gtk_icon_theme_list_icons
 ;;;     gtk_icon_theme_get_icon_sizes
@@ -68,16 +76,35 @@
 ;;;     gtk_icon_info_free
 ;;;     gtk_icon_info_new_for_pixbuf
 ;;;     gtk_icon_info_get_base_size
+;;;     gtk_icon_info_get_base_scale 
 ;;;     gtk_icon_info_get_filename
 ;;;     gtk_icon_info_get_builtin_pixbuf
 ;;;     gtk_icon_info_load_icon
+;;;     gtk_icon_info_load_surface 
+;;;     gtk_icon_info_load_icon_async 
+;;;     gtk_icon_info_load_icon_finish 
 ;;;     gtk_icon_info_load_symbolic
+;;;     gtk_icon_info_load_symbolic 
+;;;     gtk_icon_info_load_symbolic_async 
+;;;     gtk_icon_info_load_symbolic_finish 
 ;;;     gtk_icon_info_load_symbolic_for_style
 ;;;     gtk_icon_info_load_symbolic_for_context
+;;;     gtk_icon_info_load_symbolic_for_context_async 
+;;;     gtk_icon_info_load_symbolic_for_context_finish 
 ;;;     gtk_icon_info_set_raw_coordinates
 ;;;     gtk_icon_info_get_embedded_rect
 ;;;     gtk_icon_info_get_attach_points
 ;;;     gtk_icon_info_get_display_name
+;;;     gtk_icon_info_is_symbolic 
+;;;
+;;; Signals
+;;;
+;;;     void   changed    Run Last
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GtkIconTheme
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -199,11 +226,20 @@
 (define-g-flags "GtkIconLookupFlags" gtk-icon-lookup-flags
   (:export t
    :type-initializer "gtk_icon_lookup_flags_get_type")
-  (:no-svg 1)
-  (:force-svg 2)
-  (:use-builtin 4)
-  (:generic-fallback 8)
-  (:force-size 16))
+  (:no-svg           #.(ash 1 0))
+  (:force-svg        #.(ash 1 1))
+  (:use-builtin      #.(ash 1 2))
+  (:generic-fallback #.(ash 1 3))
+  (:force-size       #.(ash 1 4))
+  #+gtk-3-14
+  (:force-regular    #.(ash 1 5))
+  #+gtk-3-14
+  (:force-symbolic   #.(ash 1 6))
+  #+gtk-3-14
+  (:dir-ltr          #.(ash 1 7))
+  #+gtk-3-14
+  (:dir-rtl          #.(ash 1 8))
+  )
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-icon-lookup-flags atdoc:*symbol-name-alias*) "Flags"
@@ -214,22 +250,39 @@
 (define-g-flags \"GtkIconLookupFlags\" gtk-icon-lookup-flags
   (:export t
    :type-initializer \"gtk_icon_lookup_flags_get_type\")
-  (:no-svg 1)
-  (:force-svg 2)
-  (:use-builtin 4)
-  (:generic-fallback 8)
-  (:force-size 16))
-  @end{pre}
+  (:no-svg           #.(ash 1 0))
+  (:force-svg        #.(ash 1 1))
+  (:use-builtin      #.(ash 1 2))
+  (:generic-fallback #.(ash 1 3))
+  (:force-size       #.(ash 1 4))
+  (:force-regular    #.(ash 1 5))
+  (:force-symbolic   #.(ash 1 6))
+  (:dir-ltr          #.(ash 1 7))
+  (:dir-rtl          #.(ash 1 8)))
+   @end{pre}
   @begin[code]{table}
-    @entry[:no-svg]{Never return SVG icons, even if GDK-Pixbuf supports them.
-      Cannot be used together with @code{:force-svg}.}
-    @entry[:force-svg]{Return SVG icons, even if GDK-Pixbuf does not support
+    @entry[:no-svg]{Never get SVG icons, even if @class{gdk-pixbuf} supports
+      them. Cannot be used together with @code{:force-svg}.}
+    @entry[:force-svg]{Get SVG icons, even if @class{gdk-pixbuf} doesn’t support
       them. Cannot be used together with @code{:no-svg}.}
-    @entry[:use-builtin]{When passed to @fun{gtk-icon-theme-lookup-icon}
-      includes builtin icons as well as files. For a builtin icon,
-      @fun{gtk-icon-info-get-filename}.}
-    @entry[:generic-fallback]{}
-    @entry[:force-size]{}
+    @entry[:use-builtin]{When passed to the @fun{gtk-icon-theme-lookup-icon}
+      function includes builtin icons as well as files. For a builtin icon,
+      the @fun{gtk-icon-info-get-filename} functions is NULL and you need to
+      call the @fun{gtk-icon-info-get-builtin-pixbuf} function.}
+    @entry[:generic-fallback]{Try to shorten icon name at '-' characters before
+      looking at inherited themes. This flag is only supported in functions that
+      take a single icon name. For more general fallback, see the 
+      @fun{gtk-icon-theme-choose-icon} function. Since 2.12}
+    @entry[:force-size]{Always get the icon scaled to the requested size.
+      Since 2.14}
+    @entry[:force-regular]{Try to always load regular icons, even when symbolic
+      icon names are given. Since 3.14}
+    @entry[:force-symbolic]{Try to always load symbolic icons, even when regular
+      icon names are given. Since 3.14}
+    @entry[:dir-ltr]{Try to load a variant of the icon for left-to-right
+      text direction. Since 3.14}
+    @entry[:dir-ltr]{Try to load a variant of the icon for right-to-left text
+      direction. Since 3.14}
   @end{table}")
 
 ;;; ----------------------------------------------------------------------------
@@ -456,6 +509,34 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
+;;; gtk_icon_theme_add_resource_path ()
+;;;
+;;; void
+;;; gtk_icon_theme_add_resource_path (GtkIconTheme *icon_theme,
+;;;                                   const gchar *path);
+;;;
+;;; Adds a resource path that will be looked at when looking for icons, similar
+;;; to search paths.
+;;;
+;;; This function should be used to make application-specific icons available as
+;;; part of the icon theme.
+;;;
+;;; The resources are considered as part of the hicolor icon theme and must be
+;;; located in subdirectories that are defined in the hicolor icon theme, such
+;;; as @path/16x16/actions/run.png. Icons that are directly placed in the
+;;; resource path instead of a subdirectory are also considered as ultimate
+;;; fallback.
+;;;
+;;; icon_theme :
+;;;     a GtkIconTheme
+;;; 
+;;; path :
+;;;     a resource path
+;;; 
+;;; Since 3.14
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_theme_set_custom_theme ()
 ;;;
 ;;; void gtk_icon_theme_set_custom_theme (GtkIconTheme *icon_theme,
@@ -532,6 +613,44 @@
 (export 'gtk-icon-theme-lookup-icon)
 
 ;;; ----------------------------------------------------------------------------
+;;; gtk_icon_theme_lookup_icon_for_scale ()
+;;;
+;;; GtkIconInfo *
+;;; gtk_icon_theme_lookup_icon_for_scale (GtkIconTheme *icon_theme,
+;;;                                       const gchar *icon_name,
+;;;                                       gint size,
+;;;                                       gint scale,
+;;;                                       GtkIconLookupFlags flags);
+;;;
+;;; Looks up a named icon for a particular window scale and returns a
+;;; GtkIconInfo containing information such as the filename of the icon. The
+;;; icon can then be rendered into a pixbuf using gtk_icon_info_load_icon().
+;;; (gtk_icon_theme_load_icon() combines these two steps if all you need is the
+;;; pixbuf.)
+;;;
+;;; icon_theme :
+;;;     a GtkIconTheme
+;;; 
+;;; icon_name :
+;;;     the name of the icon to lookup
+;;; 
+;;; size :
+;;;     desired icon size
+;;; 
+;;; scale :
+;;;     the desired scale
+;;; 
+;;; flags :
+;;;     flags modifying the behavior of the icon lookup
+;;; 
+;;; Returns :
+;;;     a GtkIconInfo object containing information about the icon, or NULL if
+;;;     the icon wasn’t found.
+;;;
+;;; Since: 3.10
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_theme_choose_icon ()
 ;;; ----------------------------------------------------------------------------
 
@@ -571,6 +690,47 @@
 (export 'gtk-icon-theme-choose-icon)
 
 ;;; ----------------------------------------------------------------------------
+;;; gtk_icon_theme_choose_icon_for_scale ()
+;;;
+;;; GtkIconInfo *
+;;; gtk_icon_theme_choose_icon_for_scale (GtkIconTheme *icon_theme,
+;;;                                       const gchar *icon_names[],
+;;;                                       gint size,
+;;;                                       gint scale,
+;;;                                       GtkIconLookupFlags flags);
+;;;
+;;; Looks up a named icon for a particular window scale and returns a
+;;; GtkIconInfo containing information such as the filename of the icon. The
+;;; icon can then be rendered into a pixbuf using gtk_icon_info_load_icon().
+;;; (gtk_icon_theme_load_icon() combines these two steps if all you need is the
+;;; pixbuf.)
+;;;
+;;; If icon_names contains more than one name, this function tries them all in
+;;; the given order before falling back to inherited icon themes.
+;;;
+;;; icon_theme :
+;;;     a GtkIconTheme
+;;;
+;;; icon_names :
+;;;     NULL-terminated array of icon names to lookup.
+;;;
+;;; size :
+;;;     desired icon size
+;;; 
+;;; scale :
+;;;     desired scale
+;;; 
+;;; flags :
+;;;     flags modifying the behavior of the icon lookup
+;;; 
+;;; Returns :
+;;;     a GtkIconInfo object containing information about the icon, or NULL if
+;;;     the icon wasn’t found.
+;;;
+;;; Since 3.10
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_theme_lookup_by_gicon ()
 ;;;
 ;;; GtkIconInfo * gtk_icon_theme_lookup_by_gicon (GtkIconTheme *icon_theme,
@@ -599,6 +759,43 @@
 ;;;     if the icon wasn't found. Free with gtk_icon_info_free()
 ;;;
 ;;; Since 2.14
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_icon_theme_lookup_by_gicon_for_scale ()
+;;;
+;;; GtkIconInfo *
+;;; gtk_icon_theme_lookup_by_gicon_for_scale
+;;;                                (GtkIconTheme *icon_theme,
+;;;                                 GIcon *icon,
+;;;                                 gint size,
+;;;                                 gint scale,
+;;;                                 GtkIconLookupFlags flags);
+;;;
+;;; Looks up an icon and returns a GtkIconInfo containing information such as
+;;; the filename of the icon. The icon can then be rendered into a pixbuf using
+;;; gtk_icon_info_load_icon().
+;;;
+;;; icon_theme :
+;;;     a GtkIconTheme
+;;;
+;;; icon :
+;;;     the GIcon to look up
+;;;
+;;; size :
+;;;     desired icon size
+;;;
+;;; scale :
+;;;     the desired scale
+;;;
+;;; flags :
+;;;     flags modifying the behavior of the icon lookup
+;;;
+;;; Returns :
+;;;     a GtkIconInfo containing information about the icon, or NULL if the icon
+;;;     wasn’t found. Unref with g_object_unref().
+;;;
+;;; Since 3.10
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -646,6 +843,108 @@
     (%gtk-icon-theme-load-icon icon-theme icon-name size flags err)))
 
 (export 'gtk-icon-theme-load-icon)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_icon_theme_load_icon_for_scale ()
+;;;
+;;; GdkPixbuf *
+;;; gtk_icon_theme_load_icon_for_scale (GtkIconTheme *icon_theme,
+;;;                                     const gchar *icon_name,
+;;;                                     gint size,
+;;;                                     gint scale,
+;;;                                     GtkIconLookupFlags flags,
+;;;                                     GError **error);
+;;;
+;;; Looks up an icon in an icon theme for a particular window scale, scales it
+;;; to the given size and renders it into a pixbuf. This is a convenience
+;;; function; if more details about the icon are needed, use
+;;; gtk_icon_theme_lookup_icon() followed by gtk_icon_info_load_icon().
+;;;
+;;; Note that you probably want to listen for icon theme changes and update the
+;;; icon. This is usually done by connecting to the GtkWidget::style-set signal.
+;;; If for some reason you do not want to update the icon when the icon theme
+;;; changes, you should consider using gdk_pixbuf_copy() to make a private copy
+;;; of the pixbuf returned by this function. Otherwise GTK+ may need to keep the
+;;; old icon theme loaded, which would be a waste of memory.
+;;;
+;;; icon_theme :
+;;;     a GtkIconTheme
+;;;
+;;; icon_name :
+;;;     the name of the icon to lookup
+;;;
+;;; size :
+;;;     the desired icon size. The resulting icon may not be exactly this size;
+;;;     see gtk_icon_info_load_icon().
+;;;
+;;; scale :
+;;;     desired scale
+;;;
+;;; flags :
+;;;     flags modifying the behavior of the icon lookup
+;;;
+;;; error :
+;;;     Location to store error information on failure, or NULL.
+;;;
+;;; Returns :
+;;;     the rendered icon; this may be a newly created icon or a new reference
+;;;     to an internal icon, so you must not modify the icon. Use
+;;;     g_object_unref() to release your reference to the icon. NULL if the
+;;;     icon isn’t found.
+;;;
+;;; Since 3.10
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_icon_theme_load_surface ()
+;;;
+;;; cairo_surface_t *
+;;; gtk_icon_theme_load_surface (GtkIconTheme *icon_theme,
+;;;                              const gchar *icon_name,
+;;;                              gint size,
+;;;                              gint scale,
+;;;                              GdkWindow *for_window,
+;;;                              GtkIconLookupFlags flags,
+;;;                              GError **error);
+;;;
+;;; Looks up an icon in an icon theme for a particular window scale, scales it
+;;; to the given size and renders it into a cairo surface. This is a convenience
+;;; function; if more details about the icon are needed, use
+;;; gtk_icon_theme_lookup_icon() followed by gtk_icon_info_load_surface().
+;;;
+;;; Note that you probably want to listen for icon theme changes and update the
+;;; icon. This is usually done by connecting to the GtkWidget::style-set signal.
+;;;
+;;; icon_theme :
+;;;     a GtkIconTheme
+;;;
+;;; icon_name :
+;;;     the name of the icon to lookup
+;;;
+;;; size :
+;;;     the desired icon size. The resulting icon may not be exactly this size;
+;;;     see gtk_icon_info_load_icon().
+;;;
+;;; scale :
+;;;     desired scale
+;;;
+;;; for_window :
+;;;     GdkWindow to optimize drawing for, or NULL.
+;;;
+;;; flags :
+;;;     flags modifying the behavior of the icon lookup
+;;;
+;;; error :
+;;;     Location to store error information on failure, or NULL.
+;;;
+;;; Returns :
+;;;     the rendered icon; this may be a newly created icon or a new reference
+;;;     to an internal icon, so you must not modify the icon. Use
+;;;     cairo_surface_destroy() to release your reference to the icon. NULL if
+;;;     the icon isn’t found.
+;;;
+;;; Since 3.10
+;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_theme_list_contexts ()
@@ -787,6 +1086,14 @@
 ;;; This function will generally be used with pixbufs loaded via
 ;;; gdk_pixbuf_new_from_inline().
 ;;;
+;;; Warning
+;;;
+;;; gtk_icon_theme_add_builtin_icon has been deprecated since version 3.14 and
+;;; should not be used in newly-written code.
+;;;
+;;; Use gtk_icon_theme_add_resource_path() to add application-specific icons to
+;;; the icon theme.
+;;;
 ;;; icon_name :
 ;;;     the name of the icon to register
 ;;;
@@ -807,6 +1114,13 @@
 ;;;
 ;;; Make a copy of a GtkIconInfo.
 ;;;
+;;; Warning
+;;;
+;;; gtk_icon_info_copy has been deprecated since version 3.8 and should not be
+;;; used in newly-written code.
+;;;
+;;; Use g_object_ref()
+;;;
 ;;; icon_info :
 ;;;     a GtkIconInfo
 ;;;
@@ -822,6 +1136,13 @@
 ;;; void gtk_icon_info_free (GtkIconInfo *icon_info);
 ;;;
 ;;; Free a GtkIconInfo and associated information
+;;;
+;;; Warning
+;;;
+;;; gtk_icon_info_free has been deprecated since version 3.8 and should not be
+;;; used in newly-written code.
+;;;
+;;; Use g_object_unref()
 ;;;
 ;;; icon_info :
 ;;;     a GtkIconInfo
@@ -867,6 +1188,25 @@
 ;;;     the base size, or 0, if no base size is known for the icon.
 ;;;
 ;;; Since 2.4
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_icon_info_get_base_scale ()
+;;;
+;;; gint gtk_icon_info_get_base_scale (GtkIconInfo *icon_info);
+;;;
+;;; Gets the base scale for the icon. The base scale is a scale for the icon
+;;; that was specified by the icon theme creator. For instance an icon drawn for
+;;; a high-dpi screen with window scale 2 for a base size of 32 will be 64
+;;; pixels tall and have a base scale of 2.
+;;;
+;;; icon_info :
+;;;     a GtkIconInfo
+;;;
+;;; Returns :
+;;;     the base scale
+;;;
+;;; Since 3.10
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -920,8 +1260,11 @@
   @end{short}
   To allow GTK+ to use built in icon images, you must pass the
   @code{:use-builtin} to the function @fun{gtk-icon-theme-lookup-icon}.
-
-  Since 2.4
+  @begin[Warning]{dictionary}
+    The @sym{gtk-icon-info-get-builtin-pixbuf} function has been deprecated
+    since version 3.14 and should not be used in newly-written code. Use the
+    @fun{gtk-icon-theme-add-resource-path} function instead of builtin icons.
+  @end{dictionary}
   @see-symbol{gtk-icon-info}
   @see-function{gtk-icon-theme-lookup-icon}"
   (icon-info (:pointer (:struct gtk-icon-info))))
@@ -964,6 +1307,99 @@
     (%gtk-icon-info-load-icon icon-info err)))
 
 (export 'gtk-icon-info-load-icon)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_icon_info_load_surface ()
+;;;
+;;; cairo_surface_t *
+;;; gtk_icon_info_load_surface (GtkIconInfo *icon_info,
+;;;                             GdkWindow *for_window,
+;;;                             GError **error);
+;;;
+;;; Renders an icon previously looked up in an icon theme using
+;;; gtk_icon_theme_lookup_icon(); the size will be based on the size passed to
+;;; gtk_icon_theme_lookup_icon(). Note that the resulting surface may not be
+;;; exactly this size; an icon theme may have icons that differ slightly from
+;;; their nominal sizes, and in addition GTK+ will avoid scaling icons that it
+;;; considers sufficiently close to the requested size or for which the source
+;;; image would have to be scaled up too far. (This maintains sharpness.). This
+;;; behaviour can be changed by passing the GTK_ICON_LOOKUP_FORCE_SIZE flag when
+;;; obtaining the GtkIconInfo. If this flag has been specified, the pixbuf
+;;; returned by this function will be scaled to the exact size.
+;;;
+;;; icon_info :
+;;;     a GtkIconInfo from gtk_icon_theme_lookup_icon()
+;;; 
+;;; for_window :
+;;;     GdkWindow to optimize drawing for, or NULL.
+;;;
+;;; error :
+;;;     location for error information on failure, or NULL.
+;;;
+;;; Returns :
+;;;     the rendered icon; this may be a newly created icon or a new reference
+;;;     to an internal icon, so you must not modify the icon. Use
+;;;     cairo_surface_destroy() to release your reference to the icon.
+;;;
+;;; Since 3.10
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_icon_info_load_icon_async ()
+;;;
+;;; void
+;;; gtk_icon_info_load_icon_async (GtkIconInfo *icon_info,
+;;;                                GCancellable *cancellable,
+;;;                                GAsyncReadyCallback callback,
+;;;                                gpointer user_data);
+;;;
+;;; Asynchronously load, render and scale an icon previously looked up from the
+;;; icon theme using gtk_icon_theme_lookup_icon().
+;;;
+;;; For more details, see gtk_icon_info_load_icon() which is the synchronous
+;;; version of this call.
+;;;
+;;; icon_info :
+;;;     a GtkIconInfo from gtk_icon_theme_lookup_icon()
+;;;
+;;; cancellable :
+;;;     optional GCancellable object, NULL to ignore.
+;;;
+;;; callback :
+;;;     a GAsyncReadyCallback to call when the request is satisfied.
+;;;
+;;; user_data :
+;;;     the data to pass to callback function.
+;;;
+;;; Since 3.8
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_icon_info_load_icon_finish ()
+;;;
+;;; GdkPixbuf *
+;;; gtk_icon_info_load_icon_finish (GtkIconInfo *icon_info,
+;;;                                 GAsyncResult *res,
+;;;                                 GError **error);
+;;;
+;;; Finishes an async icon load, see gtk_icon_info_load_icon_async().
+;;;
+;;; icon_info :
+;;;     a GtkIconInfo from gtk_icon_theme_lookup_icon()
+;;;
+;;; res :
+;;;     a GAsyncResult
+;;; 
+;;; error :
+;;;     location to store error information on failure, or NULL.
+;;;
+;;; Returns :
+;;;     the rendered icon; this may be a newly created icon or a new reference
+;;;     to an internal icon, so you must not modify the icon. Use
+;;;     g_object_unref() to release your reference to the icon.
+;;;
+;;; Since 3.8
+;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_info_load_symbolic ()
@@ -1020,6 +1456,87 @@
 ;;;     a GdkPixbuf representing the loaded icon
 ;;;
 ;;; Since 3.0
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_icon_info_load_symbolic_async ()
+;;;
+;;; void
+;;; gtk_icon_info_load_symbolic_async (GtkIconInfo *icon_info,
+;;;                                    const GdkRGBA *fg,
+;;;                                    const GdkRGBA *success_color,
+;;;                                    const GdkRGBA *warning_color,
+;;;                                    const GdkRGBA *error_color,
+;;;                                    GCancellable *cancellable,
+;;;                                    GAsyncReadyCallback callback,
+;;;                                    gpointer user_data);
+;;;
+;;; Asynchronously load, render and scale a symbolic icon previously looked up
+;;; from the icon theme using gtk_icon_theme_lookup_icon().
+;;;
+;;; For more details, see gtk_icon_info_load_symbolic() which is the synchronous
+;;; version of this call.
+;;;
+;;; icon_info :
+;;;     a GtkIconInfo from gtk_icon_theme_lookup_icon()
+;;;
+;;; fg :
+;;;     a GdkRGBA representing the foreground color of the icon
+;;;
+;;; success_color :
+;;;     a GdkRGBA representing the warning color of the icon or NULL to use the
+;;;     default color.
+;;;
+;;; warning_color :
+;;;     a GdkRGBA representing the warning color of the icon or NULL to use the
+;;;     default color.
+;;;
+;;; error_color :
+;;;     a GdkRGBA representing the error color of the icon or NULL to use the
+;;;     default color (allow-none).
+;;;
+;;; cancellable :
+;;;     optional GCancellable object, NULL to ignore.
+;;;
+;;; callback :
+;;;     a GAsyncReadyCallback to call when the request is satisfied.
+;;;
+;;; user_data :
+;;;     the data to pass to callback function.
+;;;
+;;; Since 3.8
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_icon_info_load_symbolic_finish ()
+;;;
+;;; GdkPixbuf *
+;;; gtk_icon_info_load_symbolic_finish (GtkIconInfo *icon_info,
+;;;                                     GAsyncResult *res,
+;;;                                     gboolean *was_symbolic,
+;;;                                     GError **error);
+;;;
+;;; Finishes an async icon load, see gtk_icon_info_load_symbolic_async().
+;;;
+;;; icon_info :
+;;;     a GtkIconInfo from gtk_icon_theme_lookup_icon()
+;;; 
+;;; res :
+;;;     a GAsyncResult
+;;; 
+;;; was_symbolic :
+;;;     a gboolean, returns whether the loaded icon was a symbolic one and
+;;;     whether the fg color was applied to it.
+;;;
+;;; error :
+;;;     location to store error information on failure, or NULL.
+;;;
+;;; Returns :
+;;;     the rendered icon; this may be a newly created icon or a new reference
+;;;     to an internal icon, so you must not modify the icon. Use
+;;;     g_object_unref() to release your reference to the icon.
+;;;
+;;; Since 3.8
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1107,6 +1624,75 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
+;;; gtk_icon_info_load_symbolic_for_context_async ()
+;;;
+;;; void
+;;; gtk_icon_info_load_symbolic_for_context_async
+;;;                                (GtkIconInfo *icon_info,
+;;;                                 GtkStyleContext *context,
+;;;                                 GCancellable *cancellable,
+;;;                                 GAsyncReadyCallback callback,
+;;;                                 gpointer user_data);
+;;;
+;;; Asynchronously load, render and scale a symbolic icon previously looked up
+;;; from the icon theme using gtk_icon_theme_lookup_icon().
+;;;
+;;; For more details, see gtk_icon_info_load_symbolic_for_context() which is the
+;;; synchronous version of this call.
+;;;
+;;; icon_info :
+;;;     a GtkIconInfo from gtk_icon_theme_lookup_icon()
+;;;
+;;; context :
+;;;     a GtkStyleContext
+;;;
+;;; cancellable :
+;;;     optional GCancellable object, NULL to ignore.
+;;;
+;;; callback :
+;;;     a GAsyncReadyCallback to call when the request is satisfied.
+;;;
+;;; user_data :
+;;;     the data to pass to callback function.
+;;;
+;;; Since 3.8
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_icon_info_load_symbolic_for_context_finish ()
+;;;
+;;; GdkPixbuf *
+;;; gtk_icon_info_load_symbolic_for_context_finish
+;;;                                (GtkIconInfo *icon_info,
+;;;                                 GAsyncResult *res,
+;;;                                 gboolean *was_symbolic,
+;;;                                 GError **error);
+;;;
+;;; Finishes an async icon load, see
+;;; gtk_icon_info_load_symbolic_for_context_async().
+;;;
+;;; icon_info :
+;;;     a GtkIconInfo from gtk_icon_theme_lookup_icon()
+;;; 
+;;; res :
+;;;     a GAsyncResult
+;;;
+;;; was_symbolic :
+;;;     a gboolean, returns whether the loaded icon was a symbolic one and
+;;;     whether the fg color was applied to it.
+;;;
+;;; error :
+;;;     location to store error information on failure, or NULL.
+;;;
+;;; Returns :
+;;;     the rendered icon; this may be a newly created icon or a new reference
+;;;     to an internal icon, so you must not modify the icon. Use
+;;;     g_object_unref() to release your reference to the icon.
+;;;
+;;; Since 3.8
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_icon_info_set_raw_coordinates ()
 ;;;
 ;;; void gtk_icon_info_set_raw_coordinates (GtkIconInfo *icon_info,
@@ -1126,6 +1712,13 @@
 ;;;
 ;;; This function is provided primarily to allow compatibility wrappers for
 ;;; older API's, and is not expected to be useful for applications.
+;;;
+;;; Warning
+;;;
+;;; gtk_icon_info_set_raw_coordinates has been deprecated since version 3.14 and
+;;; should not be used in newly-written code.
+;;;
+;;; Embedded rectangles and attachment points are deprecated
 ;;;
 ;;; icon_info :
 ;;;     a GtkIconInfo
@@ -1147,6 +1740,13 @@
 ;;; display of information such as a preview of the contents of a text file. See
 ;;; gtk_icon_info_set_raw_coordinates() for further information about the
 ;;; coordinate system.
+;;;
+;;; Warning
+;;;
+;;; gtk_icon_info_get_embedded_rect has been deprecated since version 3.14 and
+;;; should not be used in newly-written code.
+;;;
+;;; Embedded rectangles are deprecated
 ;;;
 ;;; icon_info :
 ;;;     a GtkIconInfo
@@ -1172,6 +1772,13 @@
 ;;; in the icon that can be used as anchor points for attaching emblems or
 ;;; overlays to the icon.
 ;;;
+;;; Warning
+;;;
+;;; gtk_icon_info_get_attach_points has been deprecated since version 3.14 and
+;;; should not be used in newly-written code.
+;;;
+;;; Attachment points are deprecated
+;;;
 ;;; icon_info :
 ;;;     a GtkIconInfo
 ;;;
@@ -1196,6 +1803,13 @@
 ;;; Gets the display name for an icon. A display name is a string to be used in
 ;;; place of the icon name in a user visible context like a list of icons.
 ;;;
+;;; Warning
+;;;
+;;; gtk_icon_info_get_display_name has been deprecated since version 3.14 and
+;;; should not be used in newly-written code.
+;;;
+;;; Display names are deprecated
+;;;
 ;;; icon_info :
 ;;;     a GtkIconInfo
 ;;;
@@ -1205,6 +1819,24 @@
 ;;;     modified or free.
 ;;;
 ;;; Since 2.4
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_icon_info_is_symbolic ()
+;;;
+;;; gboolean gtk_icon_info_is_symbolic (GtkIconInfo *icon_info);
+;;;
+;;; Checks if the icon is symbolic or not. This currently uses only the file
+;;; name and not the file contents for determining this. This behaviour may
+;;; change in the future.
+;;;
+;;; icon_info :
+;;;     a GtkIconInfo
+;;;
+;;; Returns :
+;;;     TRUE if the icon is symbolic, FALSE otherwise
+;;;
+;;; Since 3.12
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- End of file gtk.icon-theme.lisp ----------------------------------------

@@ -2,11 +2,11 @@
 ;;; gtk.css-provider.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GTK+ library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2013 Dieter Kaiser
+;;; Copyright (C) 2013 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -28,24 +28,27 @@
 ;;;
 ;;; GtkCssProvider
 ;;;
-;;; CSS-like styling for widgets
+;;;     CSS-like styling for widgets
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkCssProvider
+;;;     GtkCssProviderError
+;;;     GtkCssSection
+;;;     GtkCssSectionType
+;;;
+;;;     GTK_CSS_PROVIDER_ERROR
+;;;
+;;; Functions
 ;;;
 ;;;     gtk_css_provider_get_default
 ;;;     gtk_css_provider_get_named
 ;;;     gtk_css_provider_load_from_data
 ;;;     gtk_css_provider_load_from_file
 ;;;     gtk_css_provider_load_from_path
+;;;     gtk_css_provider_load_from_resource
 ;;;     gtk_css_provider_new
 ;;;     gtk_css_provider_to_string
-;;;     GTK_CSS_PROVIDER_ERROR
-;;;     GtkCssProviderError
-;;;
-;;;     GtkCssSection
-;;;     GtkCssSectionType
 ;;;
 ;;;     gtk_css_section_get_end_line
 ;;;     gtk_css_section_get_end_position
@@ -57,21 +60,21 @@
 ;;;     gtk_css_section_ref
 ;;;     gtk_css_section_unref
 ;;;
+;;; Signals
+;;;
+;;;     void   parsing-error    Run Last
+;;;
 ;;; Object Hierarchy
 ;;;
-;;;   GObject
-;;;    +----GtkCssProvider
+;;;     GBoxed
+;;;     ╰── GtkCssSection
 ;;;
-;;;   GBoxed
-;;;    +----GtkCssSection
+;;;     GObject
+;;;     ╰── GtkCssProvider
 ;;;
 ;;; Implemented Interfaces
 ;;;
-;;; GtkCssProvider implements GtkStyleProvider and GtkStyleProviderPrivate.
-;;;
-;;; Signals
-;;;
-;;;   "parsing-error"                                  : Run Last
+;;;     GtkCssProvider implements GtkStyleProvider and GtkStyleProviderPrivate.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -1084,6 +1087,11 @@
   @end{return}
   Returns the provider containing the style settings used as a fallback for
   all widgets.
+  @begin[Warning]{dictionary}
+    The @sym{gtk-css-provider-get-default} function has been deprecated since
+    version 3.24 and should not be used in newly-written code. Use the
+    @fun{gtk-css-provider-new} function instead.
+  @end{dictionary}
   @see-class{gtk-css-provider}")
 
 (export 'gtk-css-provider-get-default)
@@ -1195,6 +1203,27 @@
 (export 'gtk-css-provider-load-from-path)
 
 ;;; ----------------------------------------------------------------------------
+;;; gtk_css_provider_load_from_resource ()
+;;;
+;;; void
+;;; gtk_css_provider_load_from_resource (GtkCssProvider *css_provider,
+;;;                                      const gchar *resource_path);
+;;;
+;;; Loads the data contained in the resource at resource_path into the
+;;; GtkCssProvider, clearing any previously loaded information.
+;;;
+;;; To track errors while loading CSS, connect to the “parsing-error” signal.
+;;;
+;;;css_provider :
+;;;     a GtkCssProvider
+;;; 
+;;; resource_path :
+;;;     a GResource resource path
+;;; 
+;;; Since 3.16
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_css_provider_new ()
 ;;; ----------------------------------------------------------------------------
 
@@ -1226,8 +1255,6 @@
   Using the function @fun{gtk-css-provider-load-from-data} with the return value
   from this function on a new provider created with the function
   @fun{gtk-css-provider-new} will basically create a duplicate of this provider.
-
-  Since 3.2
   @see-class{gtk-css-provider}
   @see-function{gtk-css-provider-new}
   @see-function{gtk-css-provider-load-from-data}"

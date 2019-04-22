@@ -2,11 +2,11 @@
 ;;; gtk.style-provider.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GTK+ library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK+ library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2013 Dieter Kaiser
+;;; Copyright (C) 2013 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -28,9 +28,9 @@
 ;;;
 ;;; GtkStyleProvider
 ;;;
-;;; Interface to provide style information to GtkStyleContext
+;;;     Interface to provide style information to GtkStyleContext
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkStyleProviderIface
 ;;;     GtkStyleProvider
@@ -40,18 +40,20 @@
 ;;;     GTK_STYLE_PROVIDER_PRIORITY_SETTINGS
 ;;;     GTK_STYLE_PROVIDER_PRIORITY_APPLICATION
 ;;;     GTK_STYLE_PROVIDER_PRIORITY_USER
+;;;
+;;; Functions
+;;;
 ;;;     gtk_style_provider_get_icon_factory
 ;;;     gtk_style_provider_get_style
 ;;;     gtk_style_provider_get_style_property
 ;;;
 ;;; Object Hierarchy
 ;;;
-;;;   GInterface
-;;;    +----GtkStyleProvider
+;;;     GInterface
+;;;     ╰── GtkStyleProvider
 ;;;
 ;;; Known Implementations
-;;;
-;;; GtkStyleProvider is implemented by GtkCssProvider and GtkSettings.
+;;;     GtkStyleProvider is implemented by GtkCssProvider and GtkSettings.
 ;;;
 ;;; Description
 ;;;
@@ -203,6 +205,13 @@
 ;;; Returns the GtkIconFactory defined to be in use for path, or NULL if none is
 ;;; defined.
 ;;;
+;;; Warning
+;;;
+;;; gtk_style_provider_get_icon_factory has been deprecated since version 3.8
+;;; and should not be used in newly-written code.
+;;;
+;;; Will always return NULL for all GTK-provided style providers.
+;;;
 ;;; provider :
 ;;;     a GtkStyleProvider
 ;;;
@@ -224,6 +233,14 @@
 ;;;
 ;;; Returns the style settings affecting a widget defined by path, or NULL if
 ;;; provider doesn't contemplate styling path.
+;;;
+;;; Warning
+;;;
+;;; gtk_style_provider_get_style has been deprecated since version 3.8 and
+;;; should not be used in newly-written code.
+;;;
+;;; Will always return NULL for all GTK-provided style providers as the
+;;; interface cannot correctly work the way CSS is specified.
 ;;;
 ;;; provider :
 ;;;     a GtkStyleProvider

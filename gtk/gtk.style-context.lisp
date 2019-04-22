@@ -2,11 +2,10 @@
 ;;; gtk.style-context.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
@@ -29,9 +28,17 @@
 ;;;
 ;;; GtkStyleContext
 ;;;
-;;; Rendering UI elements
+;;;     Rendering UI elements
 ;;;
-;;; Synopsis
+;;; Types and Values
+;;;
+;;;     GtkStyleContext
+;;;
+;;;     GtkJunctionSides
+;;;     GtkRegionFlags
+;;;     GtkStyleContextPrintFlags
+;;;     GtkBorder
+;;;     GtkBorderStyle
 ;;;
 ;;;     GTK_STYLE_PROPERTY_BACKGROUND_COLOR
 ;;;     GTK_STYLE_PROPERTY_COLOR
@@ -44,70 +51,97 @@
 ;;;     GTK_STYLE_PROPERTY_BORDER_COLOR
 ;;;     GTK_STYLE_PROPERTY_BACKGROUND_IMAGE
 ;;;
+;;;     GTK_STYLE_CLASS_ACCELERATOR
+;;;     GTK_STYLE_CLASS_ARROW
 ;;;     GTK_STYLE_CLASS_BACKGROUND
+;;;     GTK_STYLE_CLASS_BOTTOM
 ;;;     GTK_STYLE_CLASS_BUTTON
 ;;;     GTK_STYLE_CLASS_CALENDAR
 ;;;     GTK_STYLE_CLASS_CELL
 ;;;     GTK_STYLE_CLASS_COMBOBOX_ENTRY
+;;;     GTK_STYLE_CLASS_CONTEXT_MENU
 ;;;     GTK_STYLE_CLASS_CHECK
+;;;     GTK_STYLE_CLASS_CSD
+;;;     GTK_STYLE_CLASS_CURSOR_HANDLE
 ;;;     GTK_STYLE_CLASS_DEFAULT
-;;;     GTK_STYLE_CLASS_ENTRY
-;;;     GTK_STYLE_CLASS_HEADER
-;;;     GTK_STYLE_CLASS_MENU
-;;;     GTK_STYLE_CLASS_RADIO
-;;;     GTK_STYLE_CLASS_RUBBERBAND
-;;;     GTK_STYLE_CLASS_SCROLLBAR
-;;;     GTK_STYLE_CLASS_SCROLLBARS_JUNCTION
-;;;     GTK_STYLE_CLASS_SLIDER
-;;;     GTK_STYLE_CLASS_TOOLTIP
-;;;     GTK_STYLE_CLASS_TROUGH
-;;;     GTK_STYLE_CLASS_ACCELERATOR
-;;;     GTK_STYLE_CLASS_DOCK
-;;;     GTK_STYLE_CLASS_GRIP
-;;;     GTK_STYLE_CLASS_MENUBAR
-;;;     GTK_STYLE_CLASS_MENUITEM
-;;;     GTK_STYLE_CLASS_PROGRESSBAR
-;;;     GTK_STYLE_CLASS_SPINNER
-;;;     GTK_STYLE_CLASS_TOOLBAR
-;;;     GTK_STYLE_CLASS_PRIMARY_TOOLBAR
-;;;     GTK_STYLE_CLASS_INLINE_TOOLBAR
-;;;     GTK_STYLE_CLASS_PANE_SEPARATOR
-;;;     GTK_STYLE_CLASS_SEPARATOR
-;;;     GTK_STYLE_CLASS_SIDEBAR
+;;;     GTK_STYLE_CLASS_DESTRUCTIVE_ACTION
+;;;     GTK_STYLE_CLASS_DIM_LABEL
 ;;;     GTK_STYLE_CLASS_DND
+;;;     GTK_STYLE_CLASS_DOCK
+;;;     GTK_STYLE_CLASS_ENTRY
 ;;;     GTK_STYLE_CLASS_ERROR
 ;;;     GTK_STYLE_CLASS_EXPANDER
 ;;;     GTK_STYLE_CLASS_FRAME
+;;;     GTK_STYLE_CLASS_FLAT
+;;;     GTK_STYLE_CLASS_GRIP
+;;;     GTK_STYLE_CLASS_HEADER
 ;;;     GTK_STYLE_CLASS_HIGHLIGHT
+;;;     GTK_STYLE_CLASS_HORIZONTAL
 ;;;     GTK_STYLE_CLASS_IMAGE
 ;;;     GTK_STYLE_CLASS_INFO
+;;;     GTK_STYLE_CLASS_INLINE_TOOLBAR
+;;;     GTK_STYLE_CLASS_INSERTION_CURSOR
+;;;     GTK_STYLE_CLASS_LABEL
+;;;     GTK_STYLE_CLASS_LEFT
+;;;     GTK_STYLE_CLASS_LEVEL_BAR
+;;;     GTK_STYLE_CLASS_LINKED
+;;;     GTK_STYLE_CLASS_LIST
+;;;     GTK_STYLE_CLASS_LIST_ROW
 ;;;     GTK_STYLE_CLASS_MARK
+;;;     GTK_STYLE_CLASS_MENU
+;;;     GTK_STYLE_CLASS_MENUBAR
+;;;     GTK_STYLE_CLASS_MENUITEM
+;;;     GTK_STYLE_CLASS_MESSAGE_DIALOG
+;;;     GTK_STYLE_CLASS_MONOSPACE
+;;;     GTK_STYLE_CLASS_NEEDS_ATTENTION
 ;;;     GTK_STYLE_CLASS_NOTEBOOK
+;;;     GTK_STYLE_CLASS_OSD
+;;;     GTK_STYLE_CLASS_OVERSHOOT
+;;;     GTK_STYLE_CLASS_PANE_SEPARATOR
+;;;     GTK_STYLE_CLASS_PAPER
+;;;     GTK_STYLE_CLASS_POPUP
+;;;     GTK_STYLE_CLASS_POPOVER
+;;;     GTK_STYLE_CLASS_PRIMARY_TOOLBAR
+;;;     GTK_STYLE_CLASS_PROGRESSBAR
+;;;     GTK_STYLE_CLASS_PULSE
 ;;;     GTK_STYLE_CLASS_QUESTION
+;;;     GTK_STYLE_CLASS_RADIO
+;;;     GTK_STYLE_CLASS_RAISED
+;;;     GTK_STYLE_CLASS_READ_ONLY
+;;;     GTK_STYLE_CLASS_RIGHT
+;;;     GTK_STYLE_CLASS_RUBBERBAND
 ;;;     GTK_STYLE_CLASS_SCALE
 ;;;     GTK_STYLE_CLASS_SCALE_HAS_MARKS_ABOVE
 ;;;     GTK_STYLE_CLASS_SCALE_HAS_MARKS_BELOW
+;;;     GTK_STYLE_CLASS_SCROLLBAR
+;;;     GTK_STYLE_CLASS_SCROLLBARS_JUNCTION
+;;;     GTK_STYLE_CLASS_SEPARATOR
+;;;     GTK_STYLE_CLASS_SIDEBAR
+;;;     GTK_STYLE_CLASS_SLIDER
 ;;;     GTK_STYLE_CLASS_SPINBUTTON
+;;;     GTK_STYLE_CLASS_SPINNER
+;;;     GTK_STYLE_CLASS_STATUSBAR
+;;;     GTK_STYLE_CLASS_SUBTITLE
+;;;     GTK_STYLE_CLASS_SUGGESTED_ACTION
+;;;     GTK_STYLE_CLASS_TITLE
+;;;     GTK_STYLE_CLASS_TITLEBAR
+;;;     GTK_STYLE_CLASS_TOOLBAR
+;;;     GTK_STYLE_CLASS_TOOLTIP
+;;;     GTK_STYLE_CLASS_TOUCH_SELECTION
+;;;     GTK_STYLE_CLASS_TOP
+;;;     GTK_STYLE_CLASS_TROUGH
+;;;     GTK_STYLE_CLASS_UNDERSHOOT
+;;;     GTK_STYLE_CLASS_VERTICAL
 ;;;     GTK_STYLE_CLASS_VIEW
 ;;;     GTK_STYLE_CLASS_WARNING
-;;;     GTK_STYLE_CLASS_HORIZONTAL
-;;;     GTK_STYLE_CLASS_VERTICAL
-;;;     GTK_STYLE_CLASS_TOP
-;;;     GTK_STYLE_CLASS_BOTTOM
-;;;     GTK_STYLE_CLASS_LEFT
-;;;     GTK_STYLE_CLASS_RIGHT
-;;;     GTK_STYLE_CLASS_LINKED
-;;;     GTK_STYLE_CLASS_ARROW
-;;;     GTK_STYLE_CLASS_OSD
-;;;     GTK_STYLE_CLASS_LEVEL_BAR
-;;;     GTK_STYLE_CLASS_CURSOR_HANDLE
+;;;     GTK_STYLE_CLASS_WIDE
 ;;;
 ;;;     GTK_STYLE_REGION_COLUMN
 ;;;     GTK_STYLE_REGION_COLUMN_HEADER
 ;;;     GTK_STYLE_REGION_ROW
 ;;;     GTK_STYLE_REGION_TAB
 ;;;
-;;;     GtkStyleContext
+;;; Functions
 ;;;
 ;;;     gtk_style_context_new
 ;;;     gtk_style_context_add_provider
@@ -119,6 +153,7 @@
 ;;;     gtk_style_context_get_path
 ;;;     gtk_style_context_get_property
 ;;;     gtk_style_context_get_screen
+;;;     gtk_style_context_get_frame_clock
 ;;;     gtk_style_context_get_state
 ;;;     gtk_style_context_get_style
 ;;;     gtk_style_context_get_style_property
@@ -160,7 +195,11 @@
 ;;;     gtk_style_context_has_region
 ;;;     gtk_style_context_list_regions
 ;;;     gtk_style_context_set_screen
+;;;     gtk_style_context_set_frame_clock
 ;;;     gtk_style_context_set_state
+;;;     gtk_style_context_set_scale
+;;;     gtk_style_context_get_scale
+;;;     gtk_style_context_to_string
 ;;;
 ;;;     GtkBorder
 ;;;
@@ -170,6 +209,7 @@
 ;;;
 ;;;     gtk_render_arrow
 ;;;     gtk_render_background
+;;;     gtk_render_background_get_clip
 ;;;     gtk_render_check
 ;;;     gtk_render_expander
 ;;;     gtk_render_extension
@@ -183,8 +223,28 @@
 ;;;     gtk_render_slider
 ;;;     gtk_render_activity
 ;;;     gtk_render_icon_pixbuf
+;;;     gtk_render_icon_surface
 ;;;     gtk_render_icon
 ;;;     gtk_render_insertion_cursor
+;;;
+;;; Properties
+;;;
+;;;  GtkTextDirection   direction      Read / Write
+;;;     GdkFrameClock*  paint-clock    Read / Write
+;;;   GtkStyleContext*  parent         Read / Write
+;;;         GdkScreen*  screen         Read / Write
+;;;
+;;; Signals
+;;;
+;;;              void   changed        Run First
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GBoxed
+;;;     ╰── GtkBorder
+;;;
+;;;     GObject
+;;;     ╰── GtkStyleContext
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -286,11 +346,45 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
+;;; GTK_STYLE_CLASS_ACCELERATOR
+;;;
+;;; #define GTK_STYLE_CLASS_ACCELERATOR "accelerator"
+;;;
+;;; A CSS class to match an accelerator.
+;;;
+;;; Refer to individual widget documentation for used style classes.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GTK_STYLE_CLASS_ARROW
+;;;
+;;; #define GTK_STYLE_CLASS_ARROW "arrow"
+;;;
+;;; A CSS class used when rendering an arrow element.
+;;;
+;;; Refer to individual widget documentation for used style classes.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; GTK_STYLE_CLASS_BACKGROUND
 ;;;
 ;;; #define GTK_STYLE_CLASS_BACKGROUND "background"
 ;;;
 ;;; A CSS class to match the window background.
+;;;
+;;; Refer to individual widget documentation for used style classes.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GTK_STYLE_CLASS_BOTTOM
+;;;
+;;; #define GTK_STYLE_CLASS_BOTTOM "bottom"
+;;;
+;;; A CSS class to indicate an area at the bottom of a widget.
+;;;
+;;; This is used by widgets that can render an area in different positions, such
+;;; as tabs in a GtkNotebook. Refer to individual widget documentation for used
+;;; style classes.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -302,6 +396,7 @@
 ;;;
 ;;; This is used by GtkButton and its subclasses, as well as various other
 ;;; widget pieces that appear like buttons, e.g. the arrows in a GtkCalendar.
+;;; Refer to individual widget documentation for used style classes.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -311,7 +406,7 @@
 ;;;
 ;;; A CSS class to match calendars.
 ;;;
-;;; This is not used by GTK+ itself, currently.
+;;; Refer to individual widget documentation for used style classes.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -321,7 +416,8 @@
 ;;;
 ;;; A CSS class to match content rendered in cell views.
 ;;;
-;;; This is used by cell renderers, e.g. in GtkIconView and GtkTreeView.
+;;; This is used by cell renderers, e.g. in GtkIconView and GtkTreeView. 
+;;; Refer to individual widget documentation for used style classes.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -331,7 +427,18 @@
 ;;;
 ;;; A CSS class to match combobox entries.
 ;;;
-;;; This is used by GtkComboBox.
+;;; This is used by GtkComboBox. Refer to individual widget documentation for
+;;  used style classes.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GTK_STYLE_CLASS_CONTEXT_MENU
+;;;
+;;; #define GTK_STYLE_CLASS_CONTEXT_MENU "context-menu"
+;;;
+;;; A CSS class to match context menus.
+;;;
+;;; Refer to individual widget documentation for used style classes.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -342,6 +449,28 @@
 ;;; A CSS class to match check boxes.
 ;;;
 ;;; This is used in GtkCheckButton, GtkCheckMenuItem and GtkCellRendererToggle.
+;;; Refer to individual widget documentation for used style classes.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GTK_STYLE_CLASS_CSD
+;;;
+;;; #define GTK_STYLE_CLASS_CSD "csd"
+;;;
+;;; A CSS class that gets added to windows which have client-side decorations.
+;;;
+;;; Refer to individual widget documentation for used style classes.
+;;;
+;;; Since 3.14
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GTK_STYLE_CLASS_CURSOR_HANDLE
+;;;
+;;; #define GTK_STYLE_CLASS_CURSOR_HANDLE "cursor-handle"
+;;;
+;;; A CSS class used when rendering a drag handle for text selection.
+;;; Refer to individual widget documentation for used style classes.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -351,238 +480,31 @@
 ;;;
 ;;; A CSS class to match the default widget.
 ;;;
-;;; This is used by GtkButton.
+;;; This is used by GtkButton. Refer to individual widget documentation for used
+;;; style classes.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; GTK_STYLE_CLASS_ENTRY
+;;; GTK_STYLE_CLASS_DESTRUCTIVE_ACTION
 ;;;
-;;; #define GTK_STYLE_CLASS_ENTRY "entry"
+;;; #define GTK_STYLE_CLASS_DESTRUCTIVE_ACTION "destructive-action"
 ;;;
-;;; A CSS class to match text entries.
+;;; A CSS class used when an action (usually a button) is one that is expected
+;;; to remove or destroy something visible to the user.
 ;;;
-;;; This is used by GtkEntry.
+;;; Refer to individual widget documentation for used style classes.
+;;;
+;;; Since 3.12
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; GTK_STYLE_CLASS_HEADER
+;;; GTK_STYLE_CLASS_DIM_LABEL
 ;;;
-;;; #define GTK_STYLE_CLASS_HEADER "header"
+;;; #define GTK_STYLE_CLASS_DIM_LABEL "dim-label"
 ;;;
-;;; A CSS class to match a header element.
+;;; A CSS class to match dimmed labels.
 ;;;
-;;; This is used for the header in GtkCalendar.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; GTK_STYLE_CLASS_MENU
-;;;
-;;; #define GTK_STYLE_CLASS_MENU "menu"
-;;;
-;;; A CSS class to match popup menus.
-;;;
-;;; This is used in GtkMenu.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; GTK_STYLE_CLASS_RADIO
-;;;
-;;; #define GTK_STYLE_CLASS_RADIO "radio"
-;;;
-;;; A CSS class to match radio buttons.
-;;;
-;;; This is used in GtkRadioButton, GtkRadioMenuItem and GtkCellRendererToggle.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; GTK_STYLE_CLASS_RUBBERBAND
-;;;
-;;; #define GTK_STYLE_CLASS_RUBBERBAND "rubberband"
-;;;
-;;; A CSS class to match the rubberband selection rectangle.
-;;;
-;;; This is used in GtkIconView and GtkTreeView.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; GTK_STYLE_CLASS_SCROLLBAR
-;;;
-;;; #define GTK_STYLE_CLASS_SCROLLBAR "scrollbar"
-;;;
-;;; A CSS class to match scrollbars.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; GTK_STYLE_CLASS_SCROLLBARS_JUNCTION
-;;;
-;;; #define GTK_STYLE_CLASS_SCROLLBARS_JUNCTION "scrollbars-junction"
-;;;
-;;; A CSS class to match the junction area between an horizontal and vertical
-;;; scrollbar, when they're both shown.
-;;;
-;;; This is used in GtkScrolledWindow.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; GTK_STYLE_CLASS_SLIDER
-;;;
-;;; #define GTK_STYLE_CLASS_SLIDER "slider"
-;;;
-;;; A CSS class to match sliders.
-;;;
-;;; This is used by GtkSwitch and GtkRange and its subclasses.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; GTK_STYLE_CLASS_TOOLTIP
-;;;
-;;; #define GTK_STYLE_CLASS_TOOLTIP "tooltip"
-;;;
-;;; A CSS class to match tooltip windows.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; GTK_STYLE_CLASS_TROUGH
-;;;
-;;; #define GTK_STYLE_CLASS_TROUGH "trough"
-;;;
-;;; A CSS class to match troughs, as in scrollbars and progressbars.
-;;;
-;;; This is used in GtkRange and its subclasses, GtkProgressBar and GtkSwitch.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; GTK_STYLE_CLASS_ACCELERATOR
-;;;
-;;; #define GTK_STYLE_CLASS_ACCELERATOR "accelerator"
-;;;
-;;; A CSS class to match an accelerator.
-;;;
-;;; This is used for the accelerator in GtkAccelLabel.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; GTK_STYLE_CLASS_DOCK
-;;;
-;;; #define GTK_STYLE_CLASS_DOCK "dock"
-;;;
-;;; A CSS class defining a dock area.
-;;;
-;;; This is used by GtkHandleBox.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; GTK_STYLE_CLASS_GRIP
-;;;
-;;; #define GTK_STYLE_CLASS_GRIP "grip"
-;;;
-;;; A CSS class defining a resize grip.
-;;;
-;;; This is used for the resize grip in GtkWindow.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; GTK_STYLE_CLASS_MENUBAR
-;;;
-;;; #define GTK_STYLE_CLASS_MENUBAR "menubar"
-;;;
-;;; A CSS class to menubars.
-;;;
-;;; This is used in GtkMenuBar.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; GTK_STYLE_CLASS_MENUITEM
-;;;
-;;; #define GTK_STYLE_CLASS_MENUITEM "menuitem"
-;;;
-;;; A CSS class to match menu items.
-;;;
-;;; This is used in GtkMenuItem and its subclasses.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; GTK_STYLE_CLASS_PROGRESSBAR
-;;;
-;;; #define GTK_STYLE_CLASS_PROGRESSBAR "progressbar"
-;;;
-;;; A CSS class to use when rendering activity as a progressbar.
-;;;
-;;; This is used in GtkProgressBar and when drawing progress inside a GtkEntry
-;;; or in GtkCellRendererProgress.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; GTK_STYLE_CLASS_SPINNER
-;;;
-;;; #define GTK_STYLE_CLASS_SPINNER "spinner"
-;;;
-;;; A CSS class to use when rendering activity as a 'spinner'.
-;;;
-;;; This is used by GtkSpinner and GtkCellRendererSpinner.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; GTK_STYLE_CLASS_TOOLBAR
-;;;
-;;; #define GTK_STYLE_CLASS_TOOLBAR "toolbar"
-;;;
-;;; A CSS class to match toolbars.
-;;;
-;;; This is used in GtkToolbar.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; GTK_STYLE_CLASS_PRIMARY_TOOLBAR
-;;;
-;;; #define GTK_STYLE_CLASS_PRIMARY_TOOLBAR "primary-toolbar"
-;;;
-;;; A CSS class to match primary toolbars.
-;;;
-;;; This should be used for the 'main' toolbar of an application, right below
-;;; its menubar.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; GTK_STYLE_CLASS_INLINE_TOOLBAR
-;;;
-;;; #define GTK_STYLE_CLASS_INLINE_TOOLBAR "inline-toolbar"
-;;;
-;;; A CSS class to match inline toolbars.
-;;;
-;;; This should be used for toolbars that are used to hold actions below lists,
-;;; as seen e.g. in the left pane of the file chooser.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; GTK_STYLE_CLASS_PANE_SEPARATOR
-;;;
-;;; #define GTK_STYLE_CLASS_PANE_SEPARATOR "pane-separator"
-;;;
-;;; A CSS class for a pane separator, such as those in GtkPaned.
-;;;
-;;; Used in GtkPaned.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; GTK_STYLE_CLASS_SEPARATOR
-;;;
-;;; #define GTK_STYLE_CLASS_SEPARATOR "separator"
-;;;
-;;; A CSS class for a separator.
-;;;
-;;; This is used in GtkSeparator, GtkSeparatorMenuItem, GtkSeparatorToolItem,
-;;; and when drawing separators in GtkTreeView.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; GTK_STYLE_CLASS_SIDEBAR
-;;;
-;;; #define GTK_STYLE_CLASS_SIDEBAR "sidebar"
-;;;
-;;; A CSS class defining a sidebar, such as the left side in a file chooser.
-;;;
-;;; This is used in GtkFileChooser and in GtkAssistant.
+;;; Refer to individual widget documentation for used style classes.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -593,7 +515,29 @@
 ;;; A CSS class for a drag-and-drop indicator.
 ;;;
 ;;; This is used when drawing an outline around a potential drop target during
-;;; DND.
+;;; DND. Refer to individual widget documentation for used style classes.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GTK_STYLE_CLASS_DOCK
+;;;
+;;; #define GTK_STYLE_CLASS_DOCK "dock"
+;;;
+;;; A CSS class defining a dock area.
+;;;
+;;; This is used by GtkHandleBox. Refer to individual widget documentation for
+;;; used style classes.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GTK_STYLE_CLASS_ENTRY
+;;;
+;;; #define GTK_STYLE_CLASS_ENTRY "entry"
+;;;
+;;; A CSS class to match text entries.
+;;;
+;;; This is used by GtkEntry. Refer to individual widget documentation for used
+;;; style classes.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -604,7 +548,8 @@
 ;;; A CSS class for an area displaying an error message, such as those in
 ;;; infobars.
 ;;;
-;;; This is used by GtkInfoBar.
+;;; This is used by GtkInfoBar. Refer to individual widget documentation for
+;;; used style classes.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -615,6 +560,7 @@
 ;;; A CSS class defining an expander, such as those in treeviews.
 ;;;
 ;;; Used for drawing expanders in GtkTreeView, GtkExpander and GtkToolItemGroup.
+;;; Refer to individual widget documentation for used style classes.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -625,7 +571,43 @@
 ;;; A CSS class defining a frame delimiting content, such as GtkFrame or the
 ;;; scrolled window frame around the scrollable area.
 ;;;
-;;; This is used in GtkFrame and GtkScrollbar.
+;;; This is used in GtkFrame and GtkScrollbar. Refer to individual widget
+;;; documentation for used style classes.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GTK_STYLE_CLASS_FLAT
+;;;
+;;; #define GTK_STYLE_CLASS_FLAT "flat"
+;;;
+;;; A CSS class that is added when widgets that usually have a frame or border
+;;; (like buttons or entries) should appear without it.
+;;;
+;;; Refer to individual widget documentation for used style classes.
+;;;
+;;; Since 3.14
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GTK_STYLE_CLASS_GRIP
+;;;
+;;; #define GTK_STYLE_CLASS_GRIP "grip"
+;;;
+;;; A CSS class defining a resize grip.
+;;;
+;;; This is used for the resize grip in GtkWindow. Refer to individual widget
+;;; documentation for used style classes.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GTK_STYLE_CLASS_HEADER
+;;;
+;;; #define GTK_STYLE_CLASS_HEADER "header"
+;;;
+;;; A CSS class to match a header element.
+;;;
+;;; This is used for the header in GtkCalendar.
+;;; Refer to individual widget documentation for used style classes.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -637,6 +619,18 @@
 ;;; calendars.
 ;;;
 ;;; This is used in GtkAssistant and GtkCalendar.
+;;; Refer to individual widget documentation for used style classes.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GTK_STYLE_CLASS_HORIZONTAL
+;;;
+;;; #define GTK_STYLE_CLASS_HORIZONTAL "horizontal"
+;;;
+;;; A CSS class for horizontally layered widgets.
+;;;
+;;; This is used by widgets implementing GtkOrientable.
+;;; Refer to individual widget documentation for used style classes.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -647,6 +641,7 @@
 ;;; A CSS class defining an image, such as the icon in an entry.
 ;;;
 ;;; This is used when rendering icons in GtkEntry.
+;;; Refer to individual widget documentation for used style classes.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -658,139 +653,42 @@
 ;;; in infobars.
 ;;;
 ;;; This is used by GtkInfoBar.
+;;; Refer to individual widget documentation for used style classes.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; GTK_STYLE_CLASS_MARK
+;;; GTK_STYLE_CLASS_INLINE_TOOLBAR
 ;;;
-;;; #define GTK_STYLE_CLASS_MARK "mark"
+;;; #define GTK_STYLE_CLASS_INLINE_TOOLBAR "inline-toolbar"
 ;;;
-;;; A CSS class defining marks in a widget, such as in scales.
+;;; A CSS class to match inline toolbars.
 ;;;
-;;; Used in GtkScale.
+;;; This should be used for toolbars that are used to hold actions below lists,
+;;; as seen e.g. in the left pane of the file chooser.
+;;; Refer to individual widget documentation for used style classes.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; GTK_STYLE_CLASS_NOTEBOOK
+;;; GTK_STYLE_CLASS_INSERTION_CURSOR
 ;;;
-;;; #define GTK_STYLE_CLASS_NOTEBOOK "notebook"
+;;; #define GTK_STYLE_CLASS_INSERTION_CURSOR "insertion-cursor"
 ;;;
-;;; A CSS class defining a notebook.
+;;; A CSS class used when rendering a drag handle for the insertion cursor
+;;; position.
 ;;;
-;;; Used in GtkNotebook.
+;;; Refer to individual widget documentation for used style classes.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; GTK_STYLE_CLASS_QUESTION
+;;; GTK_STYLE_CLASS_LABEL
 ;;;
-;;; #define GTK_STYLE_CLASS_QUESTION "question"
+;;; #define GTK_STYLE_CLASS_LABEL "label"
 ;;;
-;;; A CSS class for an area displaying a question to the user, such as those in
-;;; infobars.
+;;; A CSS class to match labels.
 ;;;
-;;; This is used by GtkInfoBar.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; GTK_STYLE_CLASS_SCALE
+;;; Refer to individual widget documentation for used style classes.
 ;;;
-;;; #define GTK_STYLE_CLASS_SCALE "scale"
-;;;
-;;; A CSS class to match scale widgets.
-;;;
-;;; This is used in GtkScale.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; GTK_STYLE_CLASS_SCALE_HAS_MARKS_ABOVE
-;;;
-;;; #define GTK_STYLE_CLASS_SCALE_HAS_MARKS_ABOVE "scale-has-marks-above"
-;;;
-;;; A CSS class to match scale widgets with marks attached, all the marks are
-;;; above for horizontal GtkScale. left for vertical GtkScale.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; GTK_STYLE_CLASS_SCALE_HAS_MARKS_BELOW
-;;;
-;;; #define GTK_STYLE_CLASS_SCALE_HAS_MARKS_BELOW "scale-has-marks-below"
-;;;
-;;; A CSS class to match scale widgets with marks attached, all the marks are
-;;; below for horizontal GtkScale, right for vertical GtkScale.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; GTK_STYLE_CLASS_SPINBUTTON
-;;;
-;;; #define GTK_STYLE_CLASS_SPINBUTTON "spinbutton"
-;;;
-;;; A CSS class defining an spinbutton.
-;;;
-;;; This is used in GtkSpinButton.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; GTK_STYLE_CLASS_VIEW
-;;;
-;;; #define GTK_STYLE_CLASS_VIEW "view"
-;;;
-;;; A CSS class defining a view, such as iconviews or treeviews.
-;;;
-;;; This is used in GtkTreeView, GtkIconView, GtkTextView, as well as
-;;; GtkCalendar.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; GTK_STYLE_CLASS_WARNING
-;;;
-;;; #define GTK_STYLE_CLASS_WARNING "warning"
-;;;
-;;; A CSS class for an area displaying a warning message, such as those in
-;;; infobars.
-;;;
-;;; This is used by GtkInfoBar.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; GTK_STYLE_CLASS_HORIZONTAL
-;;;
-;;; #define GTK_STYLE_CLASS_HORIZONTAL "horizontal"
-;;;
-;;; A CSS class for horizontally layered widgets.
-;;;
-;;; This is used by widgets implementing GtkOrientable.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; GTK_STYLE_CLASS_VERTICAL
-;;;
-;;; #define GTK_STYLE_CLASS_VERTICAL "vertical"
-;;;
-;;; A CSS class for vertically layered widgets.
-;;;
-;;; This is used by widgets implementing GtkOrientable.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; GTK_STYLE_CLASS_TOP
-;;;
-;;; #define GTK_STYLE_CLASS_TOP "top"
-;;;
-;;; A CSS class to indicate an area at the top of a widget.
-;;;
-;;; This is used by widgets that can render an area in different positions, such
-;;; as tabs in a GtkNotebook.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; GTK_STYLE_CLASS_BOTTOM
-;;;
-;;; #define GTK_STYLE_CLASS_BOTTOM "bottom"
-;;;
-;;; A CSS class to indicate an area at the bottom of a widget.
-;;;
-;;; This is used by widgets that can render an area in different positions, such
-;;; as tabs in a GtkNotebook.
+;;; Since 3.16
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -802,46 +700,7 @@
 ;;;
 ;;; This is used by widgets that can render an area in different positions, such
 ;;; as tabs in a GtkNotebook.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; GTK_STYLE_CLASS_RIGHT
-;;;
-;;; #define GTK_STYLE_CLASS_RIGHT "right"
-;;;
-;;; A CSS class to indicate an area at the right of a widget.
-;;;
-;;; This is used by widgets that can render an area in different positions, such
-;;; as tabs in a GtkNotebook.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; GTK_STYLE_CLASS_LINKED
-;;;
-;;; #define GTK_STYLE_CLASS_LINKED "linked"
-;;;
-;;; A CSS class to match a linked area, such as a box containing buttons
-;;; belonging to the same control.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; GTK_STYLE_CLASS_ARROW
-;;;
-;;; #define GTK_STYLE_CLASS_ARROW "arrow"
-;;;
-;;; A CSS class used when rendering an arrow element.
-;;;
-;;; Note that gtk_render_arrow automatically adds this style class to the style
-;;; context when rendering an arrow element.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; GTK_STYLE_CLASS_OSD
-;;;
-;;; #define GTK_STYLE_CLASS_OSD "osd"
-;;;
-;;; A CSS class used when rendering an OSD (On Screen Display) element, on top
-;;; of another container.
+;;; Refer to individual widget documentation for used style classes.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -853,14 +712,588 @@
 ;;; level, or a password strength.
 ;;;
 ;;; This is used by GtkLevelBar.
+;;; Refer to individual widget documentation for used style classes.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; GTK_STYLE_CLASS_CURSOR_HANDLE
+;;; GTK_STYLE_CLASS_LINKED
 ;;;
-;;; #define GTK_STYLE_CLASS_CURSOR_HANDLE "cursor-handle"
+;;; #define GTK_STYLE_CLASS_LINKED "linked"
 ;;;
-;;; A CSS class used when rendering a drag handle for text selection.
+;;; A CSS class to match a linked area, such as a box containing buttons
+;;; belonging to the same control.
+;;; Refer to individual widget documentation for used style classes.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GTK_STYLE_CLASS_LIST
+;;;
+;;; #define GTK_STYLE_CLASS_LIST "list"
+;;;
+;;; A CSS class to match lists.
+;;;
+;;; Refer to individual widget documentation for used style classes.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GTK_STYLE_CLASS_LIST_ROW
+;;;
+;;; #define GTK_STYLE_CLASS_LIST_ROW "list-row"
+;;;
+;;; A CSS class to match list rows.
+;;;
+;;; Refer to individual widget documentation for used style classes.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GTK_STYLE_CLASS_MARK
+;;;
+;;; #define GTK_STYLE_CLASS_MARK "mark"
+;;;
+;;; A CSS class defining marks in a widget, such as in scales.
+;;;
+;;; Used in GtkScale.
+;;; Refer to individual widget documentation for used style classes.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GTK_STYLE_CLASS_MENU
+;;;
+;;; #define GTK_STYLE_CLASS_MENU "menu"
+;;;
+;;; A CSS class to match popup menus.
+;;;
+;;; This is used in GtkMenu.
+;;; Refer to individual widget documentation for used style classes.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GTK_STYLE_CLASS_MENUBAR
+;;;
+;;; #define GTK_STYLE_CLASS_MENUBAR "menubar"
+;;;
+;;; A CSS class to menubars.
+;;;
+;;; This is used in GtkMenuBar.
+;;; Refer to individual widget documentation for used style classes.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GTK_STYLE_CLASS_MENUITEM
+;;;
+;;; #define GTK_STYLE_CLASS_MENUITEM "menuitem"
+;;;
+;;; A CSS class to match menu items.
+;;;
+;;; This is used in GtkMenuItem and its subclasses.
+;;; Refer to individual widget documentation for used style classes.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GTK_STYLE_CLASS_MESSAGE_DIALOG
+;;;
+;;; #define GTK_STYLE_CLASS_MESSAGE_DIALOG "message-dialog"
+;;;
+;;; A CSS class that is added to message dialogs.
+;;;
+;;; Refer to individual widget documentation for used style classes.
+;;;
+;;; Since 3.14
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GTK_STYLE_CLASS_MONOSPACE
+;;;
+;;; #define GTK_STYLE_CLASS_MONOSPACE "monospace"
+;;;
+;;; A CSS class that is added to text view that should use a monospace font.
+;;;
+;;; Refer to individual widget documentation for used style classes.
+;;;
+;;; Since: 3.16
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GTK_STYLE_CLASS_NEEDS_ATTENTION
+;;;
+;;; #define GTK_STYLE_CLASS_NEEDS_ATTENTION "needs-attention"
+;;;
+;;; A CSS class used when an element needs the user attention, for instance a
+;;; button in a stack switcher corresponding to a hidden page that changed
+;;; state.
+;;;
+;;; Refer to individual widget documentation for used style classes.
+;;;
+;;; Since 3.12
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GTK_STYLE_CLASS_NOTEBOOK
+;;;
+;;; #define GTK_STYLE_CLASS_NOTEBOOK "notebook"
+;;;
+;;; A CSS class defining a notebook.
+;;;
+;;; Used in GtkNotebook.
+;;; Refer to individual widget documentation for used style classes.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GTK_STYLE_CLASS_OSD
+;;;
+;;; #define GTK_STYLE_CLASS_OSD "osd"
+;;;
+;;; A CSS class used when rendering an OSD (On Screen Display) element, on top
+;;; of another container.
+;;; Refer to individual widget documentation for used style classes.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GTK_STYLE_CLASS_OVERSHOOT
+;;;
+;;; #define GTK_STYLE_CLASS_OVERSHOOT "overshoot"
+;;;
+;;; A CSS class that is added on the visual hints that happen when scrolling is
+;;; attempted past the limits of a scrollable area.
+;;;
+;;; Refer to individual widget documentation for used style classes.
+;;;
+;;; Since 3.14
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GTK_STYLE_CLASS_PANE_SEPARATOR
+;;;
+;;; #define GTK_STYLE_CLASS_PANE_SEPARATOR "pane-separator"
+;;;
+;;; A CSS class for a pane separator, such as those in GtkPaned.
+;;;
+;;; Used in GtkPaned.
+;;; Refer to individual widget documentation for used style classes.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GTK_STYLE_CLASS_PAPER
+;;;
+;;; #define GTK_STYLE_CLASS_PAPER "paper"
+;;;
+;;; A CSS class that is added to areas that should look like paper.
+;;;
+;;; This is used in print previews and themes are encouraged to style it as
+;;; black text on white background.
+;;;
+;;; Refer to individual widget documentation for used style classes.
+;;;
+;;; Since 3.16
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GTK_STYLE_CLASS_POPUP
+;;;
+;;; #define GTK_STYLE_CLASS_POPUP "popup"
+;;;
+;;; A CSS class that is added to the toplevel windows used for menus.
+;;;
+;;; Refer to individual widget documentation for used style classes.
+;;;
+;;; Since 3.14
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GTK_STYLE_CLASS_POPOVER
+;;;
+;;; #define GTK_STYLE_CLASS_POPOVER "popover"
+;;;
+;;; A CSS class that matches popovers.
+;;;
+;;; Refer to individual widget documentation for used style classes.
+;;;
+;;; Since 3.14
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GTK_STYLE_CLASS_PRIMARY_TOOLBAR
+;;;
+;;; #define GTK_STYLE_CLASS_PRIMARY_TOOLBAR "primary-toolbar"
+;;;
+;;; A CSS class to match primary toolbars.
+;;;
+;;; This should be used for the 'main' toolbar of an application, right below
+;;; its menubar.
+;;; Refer to individual widget documentation for used style classes.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GTK_STYLE_CLASS_PROGRESSBAR
+;;;
+;;; #define GTK_STYLE_CLASS_PROGRESSBAR "progressbar"
+;;;
+;;; A CSS class to use when rendering activity as a progressbar.
+;;;
+;;; This is used in GtkProgressBar and when drawing progress inside a GtkEntry
+;;; or in GtkCellRendererProgress.
+;;; Refer to individual widget documentation for used style classes.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GTK_STYLE_CLASS_PULSE
+;;;
+;;; #define GTK_STYLE_CLASS_PULSE "pulse"
+;;;
+;;; A CSS class to use when rendering a pulse in an indeterminate progress bar.
+;;;
+;;; Refer to individual widget documentation for used style classes.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GTK_STYLE_CLASS_QUESTION
+;;;
+;;; #define GTK_STYLE_CLASS_QUESTION "question"
+;;;
+;;; A CSS class for an area displaying a question to the user, such as those in
+;;; infobars.
+;;;
+;;; This is used by GtkInfoBar.
+;;; Refer to individual widget documentation for used style classes.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GTK_STYLE_CLASS_RADIO
+;;;
+;;; #define GTK_STYLE_CLASS_RADIO "radio"
+;;;
+;;; A CSS class to match radio buttons.
+;;;
+;;; This is used in GtkRadioButton, GtkRadioMenuItem and GtkCellRendererToggle.
+;;; Refer to individual widget documentation for used style classes.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GTK_STYLE_CLASS_RAISED
+;;;
+;;; #define GTK_STYLE_CLASS_RAISED "raised"
+;;;
+;;; A CSS class to match a raised control, such as a raised button on a toolbar.
+;;;
+;;; Refer to individual widget documentation for used style classes.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GTK_STYLE_CLASS_READ_ONLY
+;;;
+;;; #define GTK_STYLE_CLASS_READ_ONLY "read-only"
+;;;
+;;; A CSS class used to indicate a read-only state.
+;;;
+;;; Refer to individual widget documentation for used style classes.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GTK_STYLE_CLASS_RIGHT
+;;;
+;;; #define GTK_STYLE_CLASS_RIGHT "right"
+;;;
+;;; A CSS class to indicate an area at the right of a widget.
+;;;
+;;; This is used by widgets that can render an area in different positions, such
+;;; as tabs in a GtkNotebook.
+;;; Refer to individual widget documentation for used style classes.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GTK_STYLE_CLASS_RUBBERBAND
+;;;
+;;; #define GTK_STYLE_CLASS_RUBBERBAND "rubberband"
+;;;
+;;; A CSS class to match the rubberband selection rectangle.
+;;;
+;;; This is used in GtkIconView and GtkTreeView.
+;;; Refer to individual widget documentation for used style classes.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GTK_STYLE_CLASS_SCALE
+;;;
+;;; #define GTK_STYLE_CLASS_SCALE "scale"
+;;;
+;;; A CSS class to match scale widgets.
+;;;
+;;; This is used in GtkScale.
+;;; Refer to individual widget documentation for used style classes.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GTK_STYLE_CLASS_SCALE_HAS_MARKS_ABOVE
+;;;
+;;; #define GTK_STYLE_CLASS_SCALE_HAS_MARKS_ABOVE "scale-has-marks-above"
+;;;
+;;; A CSS class to match scale widgets with marks attached, all the marks are
+;;; above for horizontal GtkScale. left for vertical GtkScale.
+;;;
+;;; Refer to individual widget documentation for used style classes.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GTK_STYLE_CLASS_SCALE_HAS_MARKS_BELOW
+;;;
+;;; #define GTK_STYLE_CLASS_SCALE_HAS_MARKS_BELOW "scale-has-marks-below"
+;;;
+;;; A CSS class to match scale widgets with marks attached, all the marks are
+;;; below for horizontal GtkScale, right for vertical GtkScale.
+;;;
+;;; Refer to individual widget documentation for used style classes.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GTK_STYLE_CLASS_SCROLLBAR
+;;;
+;;; #define GTK_STYLE_CLASS_SCROLLBAR "scrollbar"
+;;;
+;;; A CSS class to match scrollbars.
+;;; Refer to individual widget documentation for used style classes.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GTK_STYLE_CLASS_SCROLLBARS_JUNCTION
+;;;
+;;; #define GTK_STYLE_CLASS_SCROLLBARS_JUNCTION "scrollbars-junction"
+;;;
+;;; A CSS class to match the junction area between an horizontal and vertical
+;;; scrollbar, when they're both shown.
+;;;
+;;; This is used in GtkScrolledWindow.
+;;; Refer to individual widget documentation for used style classes.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GTK_STYLE_CLASS_SEPARATOR
+;;;
+;;; #define GTK_STYLE_CLASS_SEPARATOR "separator"
+;;;
+;;; A CSS class for a separator.
+;;;
+;;; This is used in GtkSeparator, GtkSeparatorMenuItem, GtkSeparatorToolItem,
+;;; and when drawing separators in GtkTreeView.
+;;; Refer to individual widget documentation for used style classes.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GTK_STYLE_CLASS_SIDEBAR
+;;;
+;;; #define GTK_STYLE_CLASS_SIDEBAR "sidebar"
+;;;
+;;; A CSS class defining a sidebar, such as the left side in a file chooser.
+;;;
+;;; This is used in GtkFileChooser and in GtkAssistant.
+;;; Refer to individual widget documentation for used style classes.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GTK_STYLE_CLASS_SLIDER
+;;;
+;;; #define GTK_STYLE_CLASS_SLIDER "slider"
+;;;
+;;; A CSS class to match sliders.
+;;;
+;;; This is used by GtkSwitch and GtkRange and its subclasses.
+;;; Refer to individual widget documentation for used style classes.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GTK_STYLE_CLASS_SPINBUTTON
+;;;
+;;; #define GTK_STYLE_CLASS_SPINBUTTON "spinbutton"
+;;;
+;;; A CSS class defining an spinbutton.
+;;;
+;;; This is used in GtkSpinButton.
+;;; Refer to individual widget documentation for used style classes.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GTK_STYLE_CLASS_SPINNER
+;;;
+;;; #define GTK_STYLE_CLASS_SPINNER "spinner"
+;;;
+;;; A CSS class to use when rendering activity as a 'spinner'.
+;;;
+;;; This is used by GtkSpinner and GtkCellRendererSpinner.
+;;; Refer to individual widget documentation for used style classes.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GTK_STYLE_CLASS_STATUSBAR
+;;;
+;;; #define GTK_STYLE_CLASS_STATUSBAR "statusbar"
+;;;
+;;; A CSS class to match statusbars.
+;;;
+;;; Refer to individual widget documentation for used style classes.
+;;;
+;;; Since 3.16
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GTK_STYLE_CLASS_SUBTITLE
+;;;
+;;; #define GTK_STYLE_CLASS_SUBTITLE "subtitle"
+;;;
+;;; A CSS class used for the subtitle label in a titlebar in a toplevel window.
+;;;
+;;; Refer to individual widget documentation for used style classes.
+;;;
+;;; Since: 3.14
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GTK_STYLE_CLASS_SUGGESTED_ACTION
+;;;
+;;; #define GTK_STYLE_CLASS_SUGGESTED_ACTION "suggested-action"
+;;;
+;;; A CSS class used when an action (usually a button) is the primary suggested
+;;; action in a specific context.
+;;;
+;;; Refer to individual widget documentation for used style classes.
+;;;
+;;; Since 3.12
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GTK_STYLE_CLASS_TITLE
+;;;
+;;; #define GTK_STYLE_CLASS_TITLE "title"
+;;;
+;;; A CSS class used for the title label in a titlebar in a toplevel window.
+;;;
+;;; Refer to individual widget documentation for used style classes.
+;;;
+;;; Since 3.14
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GTK_STYLE_CLASS_TITLEBAR
+;;;
+;;; #define GTK_STYLE_CLASS_TITLEBAR "titlebar"
+;;;
+;;; A CSS class used when rendering a titlebar in a toplevel window.
+;;;
+;;; Refer to individual widget documentation for used style classes.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GTK_STYLE_CLASS_TOOLBAR
+;;;
+;;; #define GTK_STYLE_CLASS_TOOLBAR "toolbar"
+;;;
+;;; A CSS class to match toolbars.
+;;;
+;;; This is used in GtkToolbar.
+;;; Refer to individual widget documentation for used style classes.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GTK_STYLE_CLASS_TOOLTIP
+;;;
+;;; #define GTK_STYLE_CLASS_TOOLTIP "tooltip"
+;;;
+;;; A CSS class to match tooltip windows.
+;;; Refer to individual widget documentation for used style classes.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GTK_STYLE_CLASS_TOUCH_SELECTION
+;;;
+;;; #define GTK_STYLE_CLASS_TOUCH_SELECTION "touch-selection"
+;;;
+;;; A CSS class for touch selection popups on entries and text views.
+;;;
+;;; Refer to individual widget documentation for used style classes.
+;;;
+;;; Since 3.16
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GTK_STYLE_CLASS_TOP
+;;;
+;;; #define GTK_STYLE_CLASS_TOP "top"
+;;;
+;;; A CSS class to indicate an area at the top of a widget.
+;;;
+;;; This is used by widgets that can render an area in different positions, such
+;;; as tabs in a GtkNotebook.
+;;; Refer to individual widget documentation for used style classes.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GTK_STYLE_CLASS_TROUGH
+;;;
+;;; #define GTK_STYLE_CLASS_TROUGH "trough"
+;;;
+;;; A CSS class to match troughs, as in scrollbars and progressbars.
+;;;
+;;; This is used in GtkRange and its subclasses, GtkProgressBar and GtkSwitch.
+;;; Refer to individual widget documentation for used style classes.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GTK_STYLE_CLASS_UNDERSHOOT
+;;;
+;;; #define GTK_STYLE_CLASS_UNDERSHOOT "undershoot"
+;;;
+;;; A CSS class that is added on the visual hints that happen where content is
+;;; 'scrolled off' and can be made visible by scrolling.
+;;;
+;;; Refer to individual widget documentation for used style classes.
+;;;
+;;; Since 3.16
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GTK_STYLE_CLASS_VERTICAL
+;;;
+;;; #define GTK_STYLE_CLASS_VERTICAL "vertical"
+;;;
+;;; A CSS class for vertically layered widgets.
+;;;
+;;; This is used by widgets implementing GtkOrientable.
+;;; Refer to individual widget documentation for used style classes.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GTK_STYLE_CLASS_VIEW
+;;;
+;;; #define GTK_STYLE_CLASS_VIEW "view"
+;;;
+;;; A CSS class defining a view, such as iconviews or treeviews.
+;;;
+;;; This is used in GtkTreeView, GtkIconView, GtkTextView, as well as
+;;; GtkCalendar.
+;;; Refer to individual widget documentation for used style classes.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; GTK_STYLE_CLASS_WARNING
+;;;
+;;; #define GTK_STYLE_CLASS_WARNING "warning"
+;;;
+;;; A CSS class for an area displaying a warning message, such as those in
+;;; infobars.
+;;;
+;;; This is used by GtkInfoBar.
+;;; Refer to individual widget documentation for used style classes.
+;;; ----------------------------------------------------------------------------
+
+;;;-----------------------------------------------------------------------------
+;;; GTK_STYLE_CLASS_WIDE
+;;;
+;;; #define GTK_STYLE_CLASS_WIDE "wide"
+;;;
+;;; A CSS class to indicate that a UI element should be 'wide'. Used by
+;;; GtkPaned.
+;;;
+;;; Refer to individual widget documentation for used style classes.
+;;;
+;;; Since 3.16
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -869,6 +1302,13 @@
 ;;; #define GTK_STYLE_REGION_COLUMN "column"
 ;;;
 ;;; A widget region name to define a treeview column.
+;;;
+;;; Warning
+;;;
+;;; GTK_STYLE_REGION_COLUMN has been deprecated since version 3.20 and should
+;;; not be used in newly-written code.
+;;;
+;;; Don't use regions.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -877,6 +1317,13 @@
 ;;; #define GTK_STYLE_REGION_COLUMN_HEADER "column-header"
 ;;;
 ;;; A widget region name to define a treeview column header.
+;;;
+;;; Warning
+;;;
+;;; GTK_STYLE_REGION_COLUMN_HEADER has been deprecated since version 3.20 and
+;;; should not be used in newly-written code.
+;;;
+;;; Don't use regions.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -885,6 +1332,13 @@
 ;;; #define GTK_STYLE_REGION_ROW "row"
 ;;;
 ;;; A widget region name to define a treeview row.
+;;;
+;;; Warning
+;;;
+;;; GTK_STYLE_REGION_ROW has been deprecated since version 3.20 and should not
+;;; be used in newly-written code.
+;;;
+;;; Don't use regions.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -893,6 +1347,13 @@
 ;;; #define GTK_STYLE_REGION_TAB "tab"
 ;;;
 ;;; A widget region name to define a notebook tab.
+;;;
+;;; Warning
+;;;
+;;; GTK_STYLE_REGION_TAB has been deprecated since version 3.20 and should not
+;;; be used in newly-written code.
+;;;
+;;; Don't use regions.
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -907,6 +1368,10 @@
   ((direction
     gtk-style-context-direction
     "direction" "GtkTextDirection" t t)
+   #+gtk-3-8
+   (paint-clock
+    gtk-style-context-paint-clock
+    "paint-clock" "GdkFrameClock" t t)
    (parent
     gtk-style-context-parent
     "parent" "GtkStyleContext" t t)
@@ -1130,76 +1595,99 @@ tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
   @begin[Signal Details]{dictionary}
     @subheading{The \"changed\" signal}
       @begin{pre}
- lambda (stylecontext)   : Run First
+ lambda (stylecontext)    : Run First
       @end{pre}
   @end{dictionary}
   @see-slot{gtk-style-context-direction}
+  @see-slot{gtk-style-context-paint-clock}
   @see-slot{gtk-style-context-parent}
   @see-slot{gtk-style-context-screen}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
+;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-style-context-direction --------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "direction"
                                                'gtk-style-context) 't)
- "The @code{\"direction\"} property of type @symbol{gtk-text-direction}
+ "The @code{direction} property of type @symbol{gtk-text-direction}
   (Read / Write) @br{}
   Text direction. @br{}
   Default value: @code{:ltr}")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "parent" 'gtk-style-context) 't)
- "The @code{\"parent\"} property of type @class{gtk-style-context}
-  (Read / Write) @br{}
-  Sets or gets the style context's parent.
-  See the function @fun{gtk-style-context-set-parent} for details. @br{}
-  Since 3.4")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "screen" 'gtk-style-context) 't)
- "The @code{\"screen\"} property of type @class{gdk-screen}
-  (Read / Write) @br{}
-  The associated @class{gdk-screen} object.")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-style-context-direction atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-style-context-direction 'function)
  "@version{2013-11-28}
-  Accessor of the slot @code{\"direction\"} of the @class{gtk-style-context}
-  class.
+  @begin{short}
+    Accessor of the @slot[gtk-style-context]{direction} slot of the
+    @class{gtk-style-context} class.
+  @end{short}
   @see-class{gtk-style-context}
   @see-function{gtk-style-context-get-direction}
   @see-function{gtk-style-context-set-direction}")
+
+;;; --- gtk-style-context-paint-clock ------------------------------------------
+
+#+(and gtk-3-8 cl-cffi-gtk-documentation)
+(setf (documentation (atdoc:get-slot-from-name "paint-clock"
+                                               'gtk-style-context) 't)
+ "The @code{paint-clock} property of type @class{gkd-frame-clock}
+  (Read / Write) @br{}
+  The associated @class{gdk-frame-clock} object.")
+
+#+(and gtk-3-8 cl-cffi-gtk-documentation)
+(setf (gethash 'gtk-style-context-paint-clock atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-style-context-paint-clock 'function)
+ "@version{2019-4-22}
+  @begin{short}
+    Accessor of the @slot[gtk-style-context]{paint-clock} slot of the
+    @class{gtk-style-context} class.
+  @end{short}
+  @see-class{gtk-style-context}")
+
+;;; --- gtk-style-context-parent -----------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "parent" 'gtk-style-context) 't)
+ "The @code{parent} property of type @class{gtk-style-context}
+  (Read / Write) @br{}
+  Sets or gets the style context's parent.
+  See the @fun{gtk-style-context-set-parent} function for details.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-style-context-parent atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-style-context-parent 'function)
  "@version{2013-11-28}
-  Accessor of the slot @code{\"parent\"} of the @class{gtk-style-context}
-  class.
+  @begin{short}
+    Accessor of the @slot[gtk-style-context]{parent} slot of the
+    @class{gtk-style-context} class.
+  @end{short}
   @see-class{gtk-style-context}
   @see-function{gtk-style-context-get-parent}
   @see-function{gtk-style-context-set-parent}")
+
+;;; --- gtk-style-context-screen -----------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "screen" 'gtk-style-context) 't)
+ "The @code{screen} property of type @class{gdk-screen} (Read / Write) @br{}
+  The associated @class{gdk-screen} object.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-style-context-screen atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-style-context-screen 'function)
  "@version{2013-11-28}
-  Accessor of the slot @code{\"screen\"} of the @class{gtk-style-context}
-  class.
+  @begin{short}
+    Accessor of the @slot[gtk-style-context]{screen} slot of the
+    @class{gtk-style-context} class.
+  @end{short}
   @see-class{gtk-style-context}
   @see-function{gtk-style-context-get-screen}
   @see-function{gtk-style-context-set-screen}")
@@ -1330,8 +1818,12 @@ tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
   @argument[context]{a @class{gtk-style-context} object}
   @return{The widget direction of type @symbol{gtk-text-direction}.}
   @short{Returns the widget direction used for rendering.}
-
-  Since 3.0
+  @begin[Warning]{dictionary}
+    The @sym{gtk-style-context-get-direction} function has been deprecated since
+    version 3.8 and should not be used in newly-written code. Use the
+    @fun{gtk-style-context-get-state} function and check for
+    @code{GTK_STATE_FLAG_DIR_LTR} and @code{GTK_STATE_FLAG_DIR_RTL} instead.
+  @end{dictionary}
   @see-class{gtk-style-context}
   @see-symbol{gtk-text-direction}
   @see-function{gtk-style-context-set-direction}"
@@ -1342,8 +1834,8 @@ tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_get_junction_sides ()
 ;;;
-;;; GtkJunctionSides gtk_style_context_get_junction_sides
-;;;                                                  (GtkStyleContext *context);
+;;; GtkJunctionSides 
+;;; gtk_style_context_get_junction_sides (GtkStyleContext *context);
 ;;;
 ;;; Returns the sides where rendered elements connect visually with others.
 ;;;
@@ -1372,8 +1864,6 @@ tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
     @fun{gtk-style-context-set-parent}.
   @end{short}
   See that function for details.
-
-  Since 3.4
   @see-class{gtk-style-context}
   @see-function{gtk-style-context-set-parent}"
   (gtk-style-context-get-parent context))
@@ -1441,6 +1931,24 @@ tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
   (gtk-style-context-screen context))
 
 (export 'gtk-style-context-get-screen)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_style_context_get_frame_clock ()
+;;;
+;;; GdkFrameClock *
+;;; gtk_style_context_get_frame_clock (GtkStyleContext *context);
+;;;
+;;; Returns the GdkFrameClock to which context is attached.
+;;;
+;;; context :
+;;;     a GtkStyleContext
+;;; 
+;;; Returns :
+;;;     a GdkFrameClock, or NULL if context does not have an attached frame
+;;;     clock.
+;;;
+;;; Since 3.8
+;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_get_state ()
@@ -1603,6 +2111,13 @@ tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
 ;;;
 ;;; Gets the background color for a given state.
 ;;;
+;;; Warning
+;;;
+;;; gtk_style_context_get_background_color has been deprecated since version
+;;; 3.16 and should not be used in newly-written code.
+;;;
+;;; Use gtk_render_background() instead.
+;;;
 ;;; context :
 ;;;     a GtkStyleContext
 ;;;
@@ -1623,6 +2138,13 @@ tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
 ;;;                                          GdkRGBA *color);
 ;;;
 ;;; Gets the border color for a given state.
+;;;
+;;; Warning
+;;;
+;;; gtk_style_context_get_border_color has been deprecated since version 3.16
+;;; and should not be used in newly-written code.
+;;;
+;;; Use gtk_render_frame() instead.
 ;;;
 ;;; context :
 ;;;     a GtkStyleContext
@@ -1712,6 +2234,13 @@ tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
 ;;; Returns the font description for a given state. The returned object is const
 ;;; and will remain valid until the "changed" signal happens.
 ;;;
+;;; Warning
+;;;
+;;; gtk_style_context_get_font has been deprecated since version 3.8 and should
+;;; not be used in newly-written code.
+;;;
+;;; Use gtk_style_context_get() for "font" or subproperties instead.
+;;;
 ;;; context :
 ;;;     a GtkStyleContext
 ;;;
@@ -1737,10 +2266,14 @@ tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
     Invalidates context style information, so it will be reconstructed again.
   @end{short}
 
-  If you are using a @class{gtk-style-context} returned from the function
-  @fun{gtk-widget-get-style-context}, you do not need to call this yourself.
-
-  Since 3.0
+  If you are using a @class{gtk-style-context} returned from the
+  @fun{gtk-widget-get-style-context} function, you do not need to call this
+  yourself.
+  @begin[Warning]{dictionary}
+    The @sym{gtk-style-context-invalidate} function has been deprecated since
+    version 3.12 and should not be used in newly-written code. Style contexts
+    are invalidated automatically.
+  @end{dictionary}
   @see-class{gtk-widget}
   @see-function{gtk-widget-get-style-context}"
   (context (g-object gtk-style-context)))
@@ -1761,6 +2294,13 @@ tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
 ;;; means the state is closest to being unset, while 1.0 means it's closest to
 ;;; being set. This means transition animation will run from 0 to 1 when state
 ;;; is being set and from 1 to 0 when it's being unset.
+;;;
+;;; Warning
+;;;
+;;; gtk_style_context_state_is_running has been deprecated since version 3.6 and
+;;; should not be used in newly-written code.
+;;;
+;;; This function always returns FALSE
 ;;;
 ;;; context :
 ;;;     a GtkStyleContext
@@ -1808,10 +2348,15 @@ tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
  #+cl-cffi-gtk-documentation
  "@version{2013-12-5}
   @argument[context]{a @class{gtk-style-context} object}
-  @argument[stock-id]{an icon name}
+  @argument[stock-id]{a @code{:string} with an icon name}
   @return{The looked up @class{gtk-icon-set}, or @code{nil}.}
   Looks up @arg{stock-id} in the icon factories associated to context and the
   default icon factory, returning an icon set if found, otherwise @code{nil}.
+  @begin[Warning]{dictionary}
+    The @sym{gtk-style-context-lookup-icon-set} function has been deprecated
+    since version 3.10 and should not be used in newly-written code. Use the
+    @fun{gtk-icon-theme-lookup-icon} function instead.
+  @end{dictionary}
   @see-class{gtk-style-context}
   @see-class{gtk-icon-set}"
   (context (g-object gtk-style-context))
@@ -1873,8 +2418,11 @@ tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
 
   Note that state is used when finding the transition parameters, which is why
   the style places the transition under the @code{:hover} pseudo-class.
-
-  Since 3.0
+  @begin[Warning]{dictionary}
+    The @sym{gtk-style-context-notify-state-change} function has been deprecated
+    since version 3.6 and should not be used in newly-written code. This
+    function does nothing.
+  @end{dictionary}
   @see-class{gtk-style-context}
   @see-class{gdk-window}
   @see-symbol{gtk-state-type}
@@ -1899,9 +2447,12 @@ tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
   @begin{short}
     Pops an animatable region from context.
   @end{short}
-  See the function @fun{gtk-style-context-push-animatable-region}.
-
-  Since 3.0
+  See the @fun{gtk-style-context-push-animatable-region} function.
+  @begin[Warning]{dictionary}
+    The @sym{gtk-style-context-pop-animatable-region} has been deprecated since
+    version 3.6 and should not be used in newly-written code. This function does
+    nothing.
+  @end{dictionary}
   @see-class{gtk-style-context}
   @see-function{gtk-style-context-push-animatable-region}"
   (context (g-object gtk-style-context)))
@@ -1921,15 +2472,19 @@ tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
   @begin{short}
     Pushes an animatable region, so all further @sym{gtk-render-*} calls between
     this call and the following @fun{gtk-style-context-pop-animatable-region}
-    will potentially show transition animations for this region if the function
-    @fun{gtk-style-context-notify-state-change} is called for a given state, and
-    the current theme/style defines transition animations for state changes.
+    will potentially show transition animations for this region if the
+    @fun{gtk-style-context-notify-state-change} function is called for a given
+    state, and the current theme/style defines transition animations for state
+    changes.
   @end{short}
 
   The @arg{region-id} used must be unique in context so the theming engine can
   uniquely identify rendered elements subject to a state transition.
-
-  Since 3.0
+  @begin[Warning]{dictionary}
+    The @sym{gtk-style-context-push-animatable-region} has been deprecated since
+    version 3.6 and should not be used in newly-written code. This function does
+    nothing.
+  @end{dictionary}
   @see-class{gtk-style-context}
   @see-function{gtk-style-context-pop-animatable-region}
   @see-function{gtk-style-context-notify-state-change}"
@@ -1953,6 +2508,13 @@ tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
 ;;; be stopped, so this should be only used in complex widgets with different
 ;;; animatable regions.
 ;;;
+;;; Warning
+;;;
+;;; gtk_style_context_cancel_animations has been deprecated since version 3.6
+;;; and should not be used in newly-written code.
+;;;
+;;; This function does nothing.
+;;;
 ;;; context :
 ;;;     a GtkStyleContext
 ;;;
@@ -1974,6 +2536,13 @@ tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
 ;;; This function is analogous to gdk_window_scroll(), and should be called
 ;;; together with it so the invalidation areas for any ongoing animation are
 ;;; scrolled together with it.
+;;;
+;;; Warning
+;;;
+;;; gtk_style_context_scroll_animations has been deprecated since version 3.6
+;;; and should not be used in newly-written code.
+;;;
+;;; This function does nothing.
 ;;;
 ;;; context :
 ;;;     a GtkStyleContext
@@ -2052,6 +2621,15 @@ tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
 ;;; Sets the background of window to the background pattern or color specified
 ;;; in context for its current state.
 ;;;
+;;; Warning
+;;;
+;;; gtk_style_context_set_background has been deprecated since version 3.18 and
+;;; should not be used in newly-written code.
+;;;
+;;; Use gtk_render_background() instead. Note that clients still using this
+;;; function are now responsible for calling this function again whenever
+;;; context is invalidated.
+;;;
 ;;; context :
 ;;;     a GtkStyleContext
 ;;;
@@ -2108,8 +2686,12 @@ tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
 
   If you are using a @class{gtk-style-context} returned from the function
   @fun{gtk-widget-get-style-context}, you do not need to call this yourself.
-
-  Since 3.0
+  @begin[Warning]{dictionary}
+    The @sym{gtk-style-context-set-direction} function has been deprecated since
+    version 3.8 and should not be used in newly-written code. Use the
+    @fun{gtk-style-context-set-state} function with
+    @code{GTK_STATE_FLAG_DIR_LTR} and @code{GTK_STATE_FLAG_DIR_RTL} instead.
+  @end{dictionary}
   @see-class{gtk-style-context}
   @see-symbol{gtk-text-direction}
   @see-function{gtk-style-context-get-direction}
@@ -2306,6 +2888,11 @@ tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
 ;;; Region names must only contain lowercase letters and '-', starting always
 ;;; with a lowercase letter.
 ;;;
+;;; Warning
+;;;
+;;; gtk_style_context_add_region has been deprecated since version 3.14 and
+;;; should not be used in newly-written code.
+;;;
 ;;; context :
 ;;;     a GtkStyleContext
 ;;;
@@ -2326,6 +2913,11 @@ tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
 ;;;
 ;;; Removes a region from context.
 ;;;
+;;; Warning
+;;;
+;;; gtk_style_context_remove_region has been deprecated since version 3.14 and
+;;; should not be used in newly-written code.
+;;;
 ;;; context :
 ;;;     a GtkStyleContext
 ;;;
@@ -2344,6 +2936,11 @@ tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
 ;;;
 ;;; Returns TRUE if context has the region defined. If flags_return is not NULL,
 ;;; it is set to the flags affecting the region.
+;;;
+;;; Warning
+;;;
+;;; gtk_style_context_has_region has been deprecated since version 3.14 and
+;;; should not be used in newly-written code.
 ;;;
 ;;; context :
 ;;;     a GtkStyleContext
@@ -2366,6 +2963,11 @@ tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
 ;;; GList * gtk_style_context_list_regions (GtkStyleContext *context);
 ;;;
 ;;; Returns the list of regions currently defined in context.
+;;;
+;;; Warning
+;;;
+;;; gtk_style_context_list_regions has been deprecated since version 3.14 and
+;;; should not be used in newly-written code.
 ;;;
 ;;; context :
 ;;;     a GtkStyleContext
@@ -2409,6 +3011,29 @@ tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
 (export 'gtk-style-context-set-screen)
 
 ;;; ----------------------------------------------------------------------------
+;;; gtk_style_context_set_frame_clock ()
+;;;
+;;; void
+;;; gtk_style_context_set_frame_clock (GtkStyleContext *context,
+;;;                                    GdkFrameClock *frame_clock);
+;;;
+;;; Attaches context to the given frame clock.
+;;;
+;;; The frame clock is used for the timing of animations.
+;;;
+;;; If you are using a GtkStyleContext returned from
+;;; gtk_widget_get_style_context(), you do not need to call this yourself.
+;;;
+;;; context :
+;;;     a GdkFrameClock
+;;; 
+;;; frame_clock :
+;;;     a GdkFrameClock
+;;; 
+;;; Since 3.8
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_style_context_set_state ()
 ;;;
 ;;; void gtk_style_context_set_state (GtkStyleContext *context,
@@ -2424,6 +3049,68 @@ tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
 ;;;     state to represent
 ;;;
 ;;; Since 3.0
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_style_context_set_scale ()
+;;;
+;;; void
+;;; gtk_style_context_set_scale (GtkStyleContext *context, gint scale);
+;;;
+;;; Sets the scale to use when getting image assets for the style.
+;;;
+;;; context :
+;;;     a GtkStyleContext
+;;; 
+;;; scale :
+;;;     scale
+;;; 
+;;; Since 3.10
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_style_context_get_scale ()
+;;;
+;;; gint gtk_style_context_get_scale (GtkStyleContext *context);
+;;;
+;;; Returns the scale used for assets.
+;;;
+;;; context :
+;;;     a GtkStyleContext
+;;; 
+;;; Returns :
+;;;     the scale
+;;;
+;;; Since 3.10
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_style_context_to_string ()
+;;;
+;;; char *
+;;; gtk_style_context_to_string (GtkStyleContext *context,
+;;;                              GtkStyleContextPrintFlags flags);
+;;;
+;;; Converts the style context into a string representation.
+;;;
+;;; The string representation always includes information about the name, state,
+;;; id, visibility and style classes of the CSS node that is backing context . 
+;;; Depending on the flags, more information may be included.
+;;;
+;;; This function is intended for testing and debugging of the CSS
+;;; implementation in GTK+. There are no guarantees about the format of the
+;;; returned string, it may change.
+;;;
+;;; context :
+;;;     a GtkStyleContext
+;;; 
+;;; flags :
+;;;     Flags that determine what to print
+;;; 
+;;; Returns :
+;;;     a newly allocated string representing context
+;;;
+;;; Since 3.20
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2635,6 +3322,41 @@ tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
+;;; gtk_render_background_get_clip ()
+;;;
+;;; void
+;;; gtk_render_background_get_clip (GtkStyleContext *context,
+;;;                                 gdouble x,
+;;;                                 gdouble y,
+;;;                                 gdouble width,
+;;;                                 gdouble height,
+;;;                                 GdkRectangle *out_clip);
+;;;
+;;; Returns the area that will be affected (i.e. drawn to) when calling
+;;; gtk_render_background() for the given context and rectangle.
+;;;
+;;; context :
+;;;     a GtkStyleContext
+;;; 
+;;; x :
+;;;     X origin of the rectangle
+;;; 
+;;; y :
+;;;     Y origin of the rectangle
+;;; 
+;;; width :
+;;;     rectangle width
+;;; 
+;;; height :
+;;;     rectangle height
+;;; 
+;;; out_clip :
+;;;     return location for the clip.
+;;;
+;;; Since 3.20
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_render_check ()
 ;;;
 ;;; void gtk_render_check (GtkStyleContext *context,
@@ -2823,6 +3545,12 @@ tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
 ;;; leaving a gap on one side. xy0_gap and xy1_gap will mean X coordinates for
 ;;; GTK_POS_TOP and GTK_POS_BOTTOM gap sides, and Y coordinates for GTK_POS_LEFT
 ;;; and GTK_POS_RIGHT.
+;;;
+;;; Warning
+;;;
+;;; gtk_render_frame_gap has been deprecated since version 3.24 and should not
+;;; be used in newly-written code. Use gtk_render_frame() instead. Themes can
+;;; create gaps by omitting borders via CSS.
 ;;;
 ;;; context :
 ;;;     a GtkStyleContext
@@ -3075,8 +3803,11 @@ tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
     Renders the icon specified by @arg{source} at the given @arg{size},
     returning the result in a pixbuf.
   @end{short}
-
-  Since 3.0
+  @begin[Warning]{dictionary}
+    The @sym{gtk-render-icon-pixbuf} function has been deprecated since version
+    3.10 and should not be used in newly-written code. Use the
+    @fun{gtk-icon-theme-load-icon} function instead.
+  @end{dictionary}
   @see-class{gtk-style-context}
   @see-class{gtk-icon-source}
   @see-class{gdk-pixbuf}"
@@ -3085,6 +3816,36 @@ tab            even, odd,     GTK_STYLE_REGION_TAB        GtkNotebook
   (size gtk-icon-size))
 
 (export 'gtk-render-icon-pixbuf)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_render_icon_surface ()
+;;;
+;;; void
+;;; gtk_render_icon_surface (GtkStyleContext *context,
+;;;                          cairo_t *cr,
+;;;                          cairo_surface_t *surface,
+;;;                          gdouble x,
+;;;                          gdouble y);
+;;;
+;;; Renders the icon in surface at the specified x and y coordinates.
+;;;
+;;; context :
+;;;     a GtkStyleContext
+;;; 
+;;; cr :
+;;;     a cairo_t
+;;; 
+;;; surface :
+;;;     a cairo_surface_t containing the icon to draw
+;;; 
+;;; x :
+;;;     X position for the icon
+;;; 
+;;; y :
+;;;     Y position for the incon
+;;; 
+;;; Since 3.10
+;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_render_icon ()

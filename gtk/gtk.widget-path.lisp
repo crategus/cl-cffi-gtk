@@ -1,16 +1,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.widget-path.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2013 Dieter Kaiser
+;;; Copyright (C) 2013 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,11 +28,13 @@
 ;;;
 ;;; GtkWidgetPath
 ;;;
-;;; Widget path abstraction
+;;;     Widget path abstraction
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkWidgetPath
+;;;
+;;; Functions
 ;;;
 ;;;     gtk_widget_path_append_type
 ;;;     gtk_widget_path_append_with_siblings
@@ -53,9 +51,11 @@
 ;;;     gtk_widget_path_iter_clear_classes
 ;;;     gtk_widget_path_iter_clear_regions
 ;;;     gtk_widget_path_iter_get_name
+;;;     gtk_widget_path_iter_get_object_name
 ;;;     gtk_widget_path_iter_get_object_type
 ;;;     gtk_widget_path_iter_get_siblings
 ;;;     gtk_widget_path_iter_get_sibling_index
+;;;     gtk_widget_path_iter_get_state
 ;;;     gtk_widget_path_iter_has_class
 ;;;     gtk_widget_path_iter_has_name
 ;;;     gtk_widget_path_iter_has_qclass
@@ -67,7 +67,9 @@
 ;;;     gtk_widget_path_iter_remove_class
 ;;;     gtk_widget_path_iter_remove_region
 ;;;     gtk_widget_path_iter_set_name
+;;;     gtk_widget_path_iter_set_object_name
 ;;;     gtk_widget_path_iter_set_object_type
+;;;     gtk_widget_path_iter_set_state
 ;;;     gtk_widget_path_length
 ;;;     gtk_widget_path_new
 ;;;     gtk_widget_path_prepend_type
@@ -366,6 +368,13 @@
 ;;; Region names must only contain lowercase letters and '-', starting always
 ;;; with a lowercase letter.
 ;;;
+;;; Warning
+;;;
+;;; gtk_widget_path_iter_add_region has been deprecated since version 3.14 and
+;;; should not be used in newly-written code.
+;;;
+;;; The use of regions is deprecated.
+;;;
 ;;; path :
 ;;;     a GtkWidgetPath
 ;;;
@@ -406,6 +415,13 @@
 ;;; Removes all regions from the widget at position pos in the hierarchy defined
 ;;; in path.
 ;;;
+;;; Warningt
+;;;
+;;; gtk_widget_path_iter_clear_regions has been deprecated since version 3.14
+;;; and should not be used in newly-written code.
+;;;
+;;; The use of regions is deprecated.
+;;;
 ;;; path :
 ;;;     a GtkWidgetPath
 ;;;
@@ -432,6 +448,28 @@
 ;;;
 ;;; Returns :
 ;;;     The widget name, or NULL if none was set.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_widget_path_iter_get_object_name ()
+;;;
+;;; const char *
+;;; gtk_widget_path_iter_get_object_name (const GtkWidgetPath *path,
+;;;                                       gint pos);
+;;;
+;;; Returns the object name that is at position pos in the widget hierarchy
+;;; defined in path .
+;;;
+;;; path :
+;;;     a GtkWidgetPath
+;;;
+;;; pos :
+;;;     position to get the object name for, -1 for the path head
+;;;
+;;; Returns :
+;;;     the name or NULL.
+;;;
+;;; Since 3.20
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -494,6 +532,27 @@
 ;;;
 ;;; Returns :
 ;;;     0 or the index into the list of siblings for the element at pos.
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_widget_path_iter_get_state ()
+;;;
+;;; GtkStateFlags
+;;; gtk_widget_path_iter_get_state (const GtkWidgetPath *path, gint pos);
+;;;
+;;; Returns the state flags corresponding to the widget found at the position
+;;; pos in the widget hierarchy defined by path
+;;;
+;;; path :
+;;;     a GtkWidgetPath
+;;;
+;;; pos :
+;;;     position to get the state for, -1 for the path head
+;;;
+;;; Returns :
+;;;     The state flags
+;;;
+;;; Since 3.14
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -607,6 +666,13 @@
 ;;; See gtk_widget_path_iter_has_region(). This is a version that operates with
 ;;; GQuarks.
 ;;;
+;;; Warning
+;;;
+;;; gtk_widget_path_iter_has_qregion has been deprecated since version 3.14 and
+;;; should not be used in newly-written code.
+;;;
+;;; The use of regions is deprecated.
+;;;
 ;;; path :
 ;;;     a GtkWidgetPath
 ;;;
@@ -635,6 +701,13 @@
 ;;;
 ;;; Returns TRUE if the widget at position pos has the class name defined,
 ;;; FALSE otherwise.
+;;;
+;;; Warning
+;;;
+;;; gtk_widget_path_iter_has_region has been deprecated since version 3.14 and
+;;; should not be used in newly-written code.
+;;;
+;;; The use of regions is deprecated.
 ;;;
 ;;; path :
 ;;;     a GtkWidgetPath
@@ -686,6 +759,13 @@
 ;;; Returns a list with all the region names defined for the widget at position
 ;;; pos in the hierarchy defined in path.
 ;;;
+;;; Warning
+;;;
+;;; gtk_widget_path_iter_list_regions has been deprecated since version 3.14 and
+;;; should not be used in newly-written code.
+;;;
+;;; The use of regions is deprecated.
+;;;
 ;;; path :
 ;;;     a GtkWidgetPath
 ;;;
@@ -732,6 +812,13 @@
 ;;; Removes the region name from the widget at position pos in the hierarchy
 ;;; defined in path.
 ;;;
+;;; Warning
+;;;
+;;; gtk_widget_path_iter_remove_region has been deprecated since version 3.14
+;;; and should not be used in newly-written code.
+;;;
+;;; The use of regions is deprecated.
+;;;
 ;;; path :
 ;;;     a GtkWidgetPath
 ;;;
@@ -767,6 +854,31 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
+;;; gtk_widget_path_iter_set_object_name ()
+;;;
+;;; void
+;;; gtk_widget_path_iter_set_object_name (GtkWidgetPath *path,
+;;;                                       gint pos,
+;;;                                       const char *name);
+;;;
+;;; Sets the object name for a given position in the widget hierarchy defined by
+;;; path .
+;;;
+;;; When set, the object name overrides the object type when matching CSS.
+;;;
+;;; path :
+;;;     a GtkWidgetPath
+;;; 
+;;; pos :
+;;;     position to modify, -1 for the path head
+;;;
+;;; name :
+;;;     object name to set or NULL to unset.
+;;;
+;;; Since 3.20
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_widget_path_iter_set_object_type ()
 ;;;
 ;;; void gtk_widget_path_iter_set_object_type (GtkWidgetPath *path,
@@ -786,6 +898,41 @@
 ;;;     object type to set
 ;;;
 ;;; Since 3.0
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_widget_path_iter_set_state ()
+;;;
+;;; void
+;;; gtk_widget_path_iter_set_state (GtkWidgetPath *path,
+;;;                                 gint pos,
+;;;                                 GtkStateFlags state);
+;;;
+;;; Sets the widget name for the widget found at position pos in the widget
+;;; hierarchy defined by path .
+;;;
+;;; If you want to update just a single state flag, you need to do this
+;;; manually, as this function updates all state flags.
+;;;
+;;; Setting a flag
+;;;
+;;; gtk_widget_path_iter_set_state (path, pos, gtk_widget_path_iter_get_state
+;;; (path, pos) | flag);
+;;;
+;;; Unsetting a flag
+;;; gtk_widget_path_iter_set_state (path, pos, gtk_widget_path_iter_get_state
+;;; (path, pos) & ~flag);
+;;;
+;;; path :
+;;;     a GtkWidgetPath
+;;; 
+;;; pos :
+;;;     position to modify, -1 for the path head
+;;; 
+;;; state ;
+;;;     state flags
+;;; 
+;;; Since 3.14
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
