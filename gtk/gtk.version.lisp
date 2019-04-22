@@ -29,7 +29,7 @@
 ;;;
 ;;; Version Information
 ;;;
-;;; Variables and functions to check the GTK+ version
+;;;     Variables and functions to check the GTK+ version
 ;;;
 ;;; Synopsis
 ;;;
@@ -64,8 +64,6 @@
 
   This function is in the library, so it represents the GTK+ library your code
   is running against.
-
-  Since 3.0
   @see-function{gtk-check-version}")
 
 (export 'gtk-get-major-version)
@@ -84,8 +82,6 @@
 
   This function is in the library, so it represents the GTK+ library your code
   is are running against.
-
-  Since 3.0
   @see-function{gtk-check-version}")
 
 (export 'gtk-get-minor-version)
@@ -104,8 +100,6 @@
 
   This function is in the library, so it represents the GTK+ library your code
   is are running against.
-
-  Since 3.0
   @see-function{gtk-check-version}")
 
 (export 'gtk-get-micro-version)
@@ -123,8 +117,6 @@
     library the process is running against.
   @end{short}
   If @code{libtool} means nothing to you, do not worry about it.
-
-  Since 3.0
   @see-function{gtk-get-interface-age}")
 
 (export 'gtk-get-binary-age)
@@ -142,8 +134,6 @@
     library the process is running against.
   @end{short}
   If @code{libtool} means nothing to you, do not worry about it.
-
-  Since 3.0
   @see-function{gtk-get-binary-age}")
 
 (export 'gtk-get-interface-age)
