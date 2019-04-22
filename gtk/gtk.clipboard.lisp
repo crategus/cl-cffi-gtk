@@ -426,7 +426,7 @@
 ;;;
 ;;; display :
 ;;;     the GdkDisplay for which the clipboard is to be retrieved.
-;;; 
+;;;
 ;;; Returns :
 ;;;     the default clipboard object.
 ;;;
@@ -1085,7 +1085,7 @@
 ;;;
 ;;; clipboard :
 ;;;     a GtkClipboard
-;;; 
+;;;
 ;;; Returns :
 ;;;     the selection
 ;;;
