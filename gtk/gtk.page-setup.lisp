@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.page-setup.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.8.6 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,11 +29,13 @@
 ;;;
 ;;; GtkPageSetup
 ;;;
-;;; Stores page setup information
+;;;     Stores page setup information
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkPageSetup
+;;;
+;;; Fucntions
 ;;;
 ;;;     gtk_page_setup_new
 ;;;     gtk_page_setup_copy
@@ -60,10 +59,17 @@
 ;;;
 ;;;     gtk_page_setup_new_from_file
 ;;;     gtk_page_setup_new_from_key_file
+;;;     gtk_page_setup_new_from_gvariant
 ;;;     gtk_page_setup_load_file
 ;;;     gtk_page_setup_load_key_file
 ;;;     gtk_page_setup_to_file
 ;;;     gtk_page_setup_to_key_file
+;;;     gtk_page_setup_to_gvariant
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GtkPageSetup
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -550,6 +556,24 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
+;;; gtk_page_setup_new_from_gvariant ()
+;;;
+;;; GtkPageSetup *
+;;; gtk_page_setup_new_from_gvariant (GVariant *variant);
+;;;
+;;; Desrialize a page setup from an a{sv} variant in the format produced by
+;;; gtk_page_setup_to_gvariant().
+;;;
+;;; variant :
+;;;     an a{sv} GVariant
+;;;
+;;; Returns :
+;;;     a new GtkPageSetup object.
+;;;
+;;; Since 3.22
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_page_setup_load_file ()
 ;;;
 ;;; gboolean gtk_page_setup_load_file (GtkPageSetup *setup,
@@ -648,4 +672,22 @@
 ;;; Since 2.12
 ;;; ----------------------------------------------------------------------------
 
+;;; ----------------------------------------------------------------------------
+;;; gtk_page_setup_to_gvariant ()
+;;;
+;;; GVariant *
+;;; gtk_page_setup_to_gvariant (GtkPageSetup *setup);
+;;;
+;;; Serialize page setup to an a{sv} variant.
+;;;
+;;; Return:
+;;;     a new, floating, GVariant
+;;;
+;;; setup :
+;;;     a GtkPageSetup
+;;;
+;;; Since 3.22
+;;; ----------------------------------------------------------------------------
+
 ;;; ---- End of file gtk.page-setup.lisp ---------------------------------------
+
