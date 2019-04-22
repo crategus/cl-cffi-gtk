@@ -1,15 +1,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.printer.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2013 Dieter Kaiser
+;;; Copyright (C) 2013 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -31,12 +28,15 @@
 ;;;
 ;;; GtkPrinter
 ;;;
-;;; Represents a printer
+;;;     Represents a printer
 ;;;
 ;;; Synopsis
 ;;;
 ;;;     GtkPrinter
 ;;;     GtkPrintBackend
+;;;
+;;; Functions
+;;;
 ;;;     gtk_printer_new
 ;;;     gtk_printer_get_backend
 ;;;     gtk_printer_get_name
@@ -61,31 +61,29 @@
 ;;;     gtk_printer_get_hard_margins
 ;;;     gtk_enumerate_printers
 ;;;
-;;; Object Hierarchy
-;;;
-;;;   GObject
-;;;    +----GtkPrinter
-;;;
-;;;   GObject
-;;;    +----GtkPrintBackend
-;;;
 ;;; Properties
 ;;;
-;;;   "accepting-jobs"           gboolean             : Read
-;;;   "accepts-pdf"              gboolean             : Read / Write / Construct
-;;;   "accepts-ps"               gboolean             : Read / Write / Construct
-;;;   "backend"                  GtkPrintBackend*     : Read / Write / Construct
-;;;   "icon-name"                gchar*               : Read
-;;;   "is-virtual"               gboolean             : Read / Write / Construct
-;;;   "job-count"                gint                 : Read
-;;;   "location"                 gchar*               : Read
-;;;   "name"                     gchar*               : Read / Write / Construct
-;;;   "paused"                   gboolean             : Read
-;;;   "state-message"            gchar*               : Read
+;;;        gboolean   accepting-jobs      Read
+;;;        gboolean   accepts-pdf         Read / Write / Construct Only
+;;;        gboolean   accepts-ps          Read / Write / Construct Only
+;;; GtkPrintBackend*  backend             Read / Write / Construct Only
+;;;           gchar*  icon-name           Read
+;;;        gboolean   is-virtual          Read / Write / Construct Only
+;;;            gint   job-count           Read
+;;;           gchar*  location            Read
+;;;           gchar*  name                Read / Write / Construct Only
+;;;        gboolean   paused              Read
+;;;           gchar*  state-message       Read
 ;;;
 ;;; Signals
 ;;;
-;;;   "details-acquired"                              : Run Last
+;;;            void   details-acquired    Run Last
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ├── GtkPrintBackend
+;;;     ╰── GtkPrinter
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
