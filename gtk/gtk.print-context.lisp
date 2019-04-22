@@ -1,15 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.print-context.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -31,11 +29,13 @@
 ;;;
 ;;; GtkPrintContext
 ;;;
-;;; Encapsulates context for drawing pages
+;;;     Encapsulates context for drawing pages
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkPrintContext
+;;;
+;;; Functions
 ;;;
 ;;;     gtk_print_context_get_cairo_context
 ;;;     gtk_print_context_set_cairo_context
@@ -48,6 +48,11 @@
 ;;;     gtk_print_context_create_pango_context
 ;;;     gtk_print_context_create_pango_layout
 ;;;     gtk_print_context_get_hard_margins
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GtkPrintContext
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
