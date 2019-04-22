@@ -7,7 +7,7 @@
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2014 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -83,7 +83,7 @@
   (:center 1)
   (:bottom 2))
 
-#+(and cl-cffi-gtk-documentation gtk-3-10)
+#+(and gtk-3-10 cl-cffi-gtk-documentation)
 (setf (gethash 'gtk-baseline-position atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-baseline-position atdoc:*external-symbols*)
  "@version{2014-7-26}
@@ -621,7 +621,8 @@
   @end{pre}
   @begin[code]{table}
     @entry[:normal]{Draw a normal relief.}
-    @entry[:half]{Draw a half relief.}
+    @entry[:half]{Draw a half relief. Deprecated in 3.14, does the same as
+      @code{:normal}.}
     @entry[:none]{Draw no relief.}
   @end{table}
   @see-class{gtk-button}")
@@ -857,21 +858,25 @@
   (:export t
    :type-initializer "gtk_state_flags_get_type")
   (:normal 0)
-  (:active #.(ash 1 0))
-  (:prelight #.(ash 1 1))
-  (:selected #.(ash 1 2))
-  (:insensitive #.(ash 1 3))
+  (:active       #.(ash 1 0))
+  (:prelight     #.(ash 1 1))
+  (:selected     #.(ash 1 2))
+  (:insensitive  #.(ash 1 3))
   (:inconsistent #.(ash 1 4))
-  (:focused #.(ash 1 5))
-  (:backdrop #.(ash 1 6))
+  (:focused      #.(ash 1 5))
+  (:backdrop     #.(ash 1 6))
   #+gtk-3-8
-  (:dir-ltr #.(ash 1 7))
+  (:dir-ltr      #.(ash 1 7))
   #+gtk-3-8
-  (:dir-rtl #.(ash 1 8))
+  (:dir-rtl      #.(ash 1 8))
   #+gtk-3-12
-  (:link #.(ash 1 9))
+  (:link         #.(ash 1 9))
   #+gtk-3-12
-  (:visited #.(ash 1 10))
+  (:visited      #.(ash 1 10))
+  #+gtk-3-14
+  (:checked      #.(ash 1 11))
+  #+gtk-3-20
+  (:drop-active  #.(ash 1 12))
   )
 
 #+cl-cffi-gtk-documentation
@@ -886,21 +891,19 @@
   (:export t
    :type-initializer \"gtk_state_flags_get_type\")
   (:normal 0)
-  (:active #.(ash 1 0))
-  (:prelight #.(ash 1 1))
-  (:selected #.(ash 1 2))
-  (:insensitive #.(ash 1 3))
+  (:active       #.(ash 1 0))
+  (:prelight     #.(ash 1 1))
+  (:selected     #.(ash 1 2))
+  (:insensitive  #.(ash 1 3))
   (:inconsistent #.(ash 1 4))
-  (:focused #.(ash 1 5))
-  (:backdrop #.(ash 1 6))
-  #+gtk-3-8
-  (:dir-ltr #.(ash 1 7))
-  #+gtk-3-8
-  (:dir-rtl #.(ash 1 8))
-  #+gtk-3-12
-  (:link #.(ash 1 9))
-  #+gtk-3-12
-  (:visited #.(ash 1 10)))
+  (:focused      #.(ash 1 5))
+  (:backdrop     #.(ash 1 6))
+  (:dir-ltr      #.(ash 1 7))
+  (:dir-rtl      #.(ash 1 8))
+  (:link         #.(ash 1 9))
+  (:visited      #.(ash 1 10))
+  (:checked      #.(ash 1 11))
+  (:drop-active  #.(ash 1 12)))
   @end{pre}
   @begin[code]{table}
     @entry[:normal]{State during normal operation.}
@@ -915,7 +918,10 @@
     @entry[:dir-rtl]{Widget is in right-to-left text direction. Since 3.8.}
     @entry[:link]{Widget is a link. Since 3.12.}
     @entry[:visited]{The location the widget points to has already been visited.
-                     Since 3.12.}
+      Since 3.12.}
+    @entry[:checked]{Widget is checked. Since 3.14}
+    @entry[:drop-active]{Widget is highlighted as a drop target for DND.
+      Since 3.20}
   @end{table}")
 
 ;;; ----------------------------------------------------------------------------
