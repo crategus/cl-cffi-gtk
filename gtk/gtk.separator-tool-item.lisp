@@ -149,7 +149,7 @@
   @begin{short}
     Whether item is drawn as a vertical line, or just blank.
   @end{short}
-  Setting this to @code{nil} along with the function 
+  Setting this to @code{nil} along with the function
   @fun{gtk-tool-item-set-expand} is useful to create an item that forces
   following items to the end of the toolbar.
   @see-class{gtk-separator-tool-item}
