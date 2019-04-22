@@ -2,7 +2,7 @@
 ;;; gtk.selections.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.8.6 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -29,14 +29,17 @@
 ;;;
 ;;; Selections
 ;;;
-;;; Functions for handling inter-process communication via selections
+;;;     Functions for handling inter-process communication via selections
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkSelectionData
 ;;;     GtkTargetFlags  <-- gtk.drag-and-drop.lisp
 ;;;     GtkTargetEntry
 ;;;     GtkTargetList
+;;;     GtkTargetPair
+;;;
+;;; Functions
 ;;;
 ;;;     gtk_target_entry_new
 ;;;     gtk_target_entry_copy
@@ -93,6 +96,12 @@
 ;;;     gtk_selection_remove_all
 ;;;     gtk_selection_data_copy
 ;;;     gtk_selection_data_free
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GBoxed
+;;;     ├── GtkSelectionData
+;;;     ╰── GtkTargetList
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -383,6 +392,32 @@
   @see-class{gtk-target-entry}")
 
 (export (boxed-related-symbols 'gtk-target-list))
+
+;;; ----------------------------------------------------------------------------
+;;; struct GtkTargetPair
+;;;
+;;; struct GtkTargetPair {
+;;;   GdkAtom   target;
+;;;   guint     flags;
+;;;   guint     info;
+;;; };
+;;;
+;;; A GtkTargetPair is used to represent the same information as a table of
+;;; GtkTargetEntry, but in an efficient form.
+;;;
+;;; Members
+;;;
+;;; GdkAtom target;
+;;; GdkAtom representation of the target type
+;;;
+;;; guint flags;
+;;; GtkTargetFlags for DND
+;;;
+;;; guint info;
+;;; an application-assigned integer ID which will get passed as a parameter to
+;;; e.g the “selection-get” signal. It allows the application to identify the
+;;; target type without extensive string compares.
+;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_target_entry_new ()
