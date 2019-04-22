@@ -34,12 +34,12 @@
 ;;;
 ;;;    GtkActionable
 ;;;
-;;; Fucntions
+;;; Functions
 ;;;
 ;;;    gtk_actionable_get_action_name                      Accessor
 ;;;    gtk_actionable_set_action_name                      Accessor
-;;;    gtk_actionable_get_action_target_value
-;;;    gtk_actionable_set_action_target_value
+;;;    gtk_actionable_get_action_target_value              Accessor
+;;;    gtk_actionable_set_action_target_value              Accessor
 ;;;    gtk_actionable_set_action_target
 ;;;    gtk_actionable_set_detailed_action_name
 ;;;
@@ -137,9 +137,9 @@
   in the @class{g-menu} object associated with the window.
   @begin[Example]{dictionary}
     @begin{pre}
- (let ((button (make-instance 'gtk-button))) 
+ (let ((button (make-instance 'gtk-button)))
    (setf (gtk-actionable-action-name button) \"win.save\")
-     (gtk-actionable-action-name button))
+         (gtk-actionable-action-name button))
  => \"win.save\"
     @end{pre}
   @end{dictionary}
@@ -157,7 +157,7 @@
   @br{}
   The parameter for action invocations. @br{}
   Allowed values: a @type{g-variant} @br{}
-  Default value: @code{nil}")
+  Default value: @code{null-pointer}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-actionable-action-target atdoc:*function-name-alias*)
@@ -180,7 +180,8 @@
   The @sym{(setf gtk-actionable-action-target)} slot access function sets the
   target value of an actionable widget.
 
-  If the @arg{target-value} argument is @code{nil} then the target value is unset.
+  If the @arg{target-value} argument is @code{null-pointer} then the target
+  value is unset.
 
   The target value has two purposes. First, it is used as the parameter to
   activation of the action associated with the @class{gtk-actionable} widget.
