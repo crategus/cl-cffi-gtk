@@ -78,12 +78,12 @@
 (setf (documentation 'gtk-stack-sidebar 'type)
  "@version{2019-3-16}
   @begin{short}
-    A @sym{gtk-stack-sidebar} enables you to quickly and easily provide a 
+    A @sym{gtk-stack-sidebar} enables you to quickly and easily provide a
     consistent \"sidebar\" object for your user interface.
   @end{short}
 
-  In order to use a @sym{gtk-stack-sidebar}, you simply use a @class{gtk-stack} 
-  to organize your UI flow, and add the sidebar to your sidebar area. You can 
+  In order to use a @sym{gtk-stack-sidebar}, you simply use a @class{gtk-stack}
+  to organize your UI flow, and add the sidebar to your sidebar area. You can
   use the generic function @fun{gtk-stack-sidebar-stack} to connect the
   @sym{gtk-stack-sidebar} to the @class{gtk-stack}.
   @begin[CSS nodes]{dictionary}
@@ -93,7 +93,7 @@
     When circumstances require it, @sym{gtk-stack-sidebar} adds the
     .needs-attention style class to the widgets representing the stack pages.
   @end{dictionary}
-  
+
   Since 3.16
   @see-slot{gtk-stack-sidebar-stack}
   @see-class{gtk-stack}")
@@ -121,7 +121,7 @@
   @argument[object]{a @class{gtk-stack-sidebar} object}
   @argument[stack]{a @class{gtk-stack} container}
   @begin{short}
-    Accessor of the slot @slot[gtk-stack-sidebar]{stack} of the 
+    Accessor of the slot @slot[gtk-stack-sidebar]{stack} of the
     @class{gtk-stack-sidebar} class.
   @end{short}
 
@@ -133,7 +133,7 @@
 
   The sidebar widget will automatically update according to the order
   (packing) and items within the given @class{gtk-stack}.
-  
+
   Since 3.16
   @see-class{gtk-stack-sidebar}
   @see-class{gtk-stack}")
