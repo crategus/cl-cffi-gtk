@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.accel-group.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.8.8 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2014 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,16 +29,23 @@
 ;;;
 ;;; Accelerator Groups
 ;;;
-;;; Groups of global keyboard accelerators for an entire GtkWindow
+;;;     Groups of global keyboard accelerators for an entire GtkWindow
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
-;;;     GtkAccelFlags
 ;;;     GtkAccelGroup
+;;;     GtkAccelFlags
+;;;     GtkAccelKey
+;;;
+;;; Functions
 ;;;
 ;;;     gtk_accel_group_new
 ;;;     gtk_accel_group_connect
 ;;;     gtk_accel_group_connect_by_path
+;;;
+;;;     GtkAccelGroupActivate
+;;;     GtkAccelGroupFindFunc
+;;;
 ;;;     gtk_accel_group_disconnect
 ;;;     gtk_accel_group_disconnect_key
 ;;;     gtk_accel_group_activate
@@ -54,8 +58,6 @@
 ;;;     gtk_accel_groups_from_object
 ;;;     gtk_accel_group_find
 ;;;
-;;;     GtkAccelKey
-;;;
 ;;;     gtk_accelerator_valid
 ;;;     gtk_accelerator_parse
 ;;;     gtk_accelerator_name
@@ -65,6 +67,21 @@
 ;;;     gtk_accelerator_get_label_with_keycode   * not implemented *
 ;;;     gtk_accelerator_set_default_mod_mask
 ;;;     gtk_accelerator_get_default_mod_mask
+;;;
+;;; Properties
+;;;
+;;;            gboolean   is-locked         Read
+;;;     GdkModifierType   modifier-mask     Read
+;;;
+;;; Signals
+;;;
+;;;            gboolean   accel-activate    Has Details
+;;;                void   accel-changed     Has Details
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GtkAccelGroup
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -115,24 +132,24 @@
  "@version{2014-1-8}
   @begin{short}
     A @sym{gtk-accel-group} object represents a group of keyboard accelerators,
-    typically attached to a toplevel @class{gtk-window} widget with the function
-    @fun{gtk-window-add-accel-group}. Usually you will not need to create a
-    @sym{gtk-accel-group} object directly; instead, when using
-    @class{gtk-ui-manager}, GTK+ automatically sets up the accelerators for your
-    menus in the UI manager's @sym{gtk-accel-group} object.
+    typically attached to a toplevel @class{gtk-window} widget with the
+    @fun{gtk-window-add-accel-group} function.
   @end{short}
+  Usually you will not need to create a @sym{gtk-accel-group} object directly;
+  instead, when using @class{gtk-ui-manager}, GTK+ automatically sets up the
+  accelerators for your menus in the UI manager's @sym{gtk-accel-group} object.
 
   Note that accelerators are different from mnemonics. Accelerators are
   shortcuts for activating a menu item; they appear alongside the menu item
   they are a shortcut for. For example \"Ctrl+Q\" might appear alongside the
   \"Quit\" menu item. Mnemonics are shortcuts for GUI elements such as text
-  entries or buttons; they appear as underlined characters, see the function
-  @fun{gtk-label-new-with-mnemonic}. Menu items can have both accelerators and
-  mnemonics, of course.
+  entries or buttons; they appear as underlined characters, see the
+  @fun{gtk-label-new-with-mnemonic} function. Menu items can have both
+  accelerators and mnemonics, of course.
   @begin[Signal Details]{dictionary}
     @subheading{The \"accel-activate\" signal}
       @begin{pre}
- lambda (accel-group acceleratable keyval modifier)   : Has Details
+ lambda (accel-group acceleratable keyval modifier)    : Has Details
       @end{pre}
       The \"accel-activate\" signal is an implementation detail of
       @sym{gtk-accel-group} and not meant to be used by applications.
@@ -148,7 +165,7 @@
       @end{table}
     @subheading{The \"accel-changed\" signal}
       @begin{pre}
- lambda (accel-group keyval modifier accel-closure)   : Has Details
+ lambda (accel-group keyval modifier accel-closure)    : Has Details
       @end{pre}
       The \"accel-changed\" signal is emitted when an entry is added to or
       removed from the accel group.
@@ -175,9 +192,7 @@
   @see-function{gtk-label-new-with-menmonic}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
 ;;; Property and Accessor Details
-;;;
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- gtk-accel-group-is-locked ----------------------------------------------
@@ -185,7 +200,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "is-locked"
                                                'gtk-accel-group) 't)
- "The @code{\"is-locked\"} property of type @code{:boolean} (Read) @br{}
+ "The @code{is-locked} property of type @code{:boolean} (Read) @br{}
   Is the accel group locked. @br{}
   Default value: @code{nil}")
 
@@ -196,17 +211,15 @@
  "@version{2014-2-13}
   @argument[object]{a @class{gtk-accel-group} object}
   @begin{short}
-    Accessor of the slot @slot[gtk-accel-group]{is-locked} of the
+    Accessor of the @slot[gtk-accel-group]{is-locked} slot of the
     @class{gtk-accel-group} class.
   @end{short}
 
-  The generic function @sym{gtk-accel-group-is-locked} returns @em{true} if
+  The @sym{gtk-accel-group-is-locked} slot access function returns @em{true} if
   there are 1 or more locks on the accel-group, @code{nil} otherwise.
 
-  Locks are added and removed using the functions @fun{gtk-accel-group-lock}
-  and @fun{gtk-accel-group-unlock}.
-
-  Since 2.14
+  Locks are added and removed using the @fun{gtk-accel-group-lock}
+  and @fun{gtk-accel-group-unlock} functions.
   @see-class{gtk-accel-group}
   @see-function{gtk-accel-group-lock}
   @see-function{gtk-accel-group-unlock}")
@@ -216,7 +229,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "modifier-mask"
                                                'gtk-accel-group) 't)
- "The @code{\"modifier-mask\"} property of type @symbol{gdk-modifier-type}
+ "The @code{modifier-mask} property of type @symbol{gdk-modifier-type}
   (Read) @br{}
   The modifier mask. @br{}
   Default value: @code{'(:shift-mask :control-mask :mod1-mask :super-mask
@@ -229,15 +242,13 @@
  "@version{2014-2-13}
   @argument[object]{a @class{gtk-accel-group} object}
   @begin{short}
-    Accessor of the slot @slot[gtk-accel-group]{modifier-mask} of the
+    Accessor of the @slot[gtk-accel-group]{modifier-mask} slot of the
     @class{gtk-accel-group} class.
   @end{short}
 
-  The generic function @sym{gtk-accel-group-modifer-mask} gets a
+  The @sym{gtk-accel-group-modifer-mask} slot access function gets a
   @symbol{gdk-modifier-type} representing the mask for this accel group.
   For example, @code{:control-mask}, @code{:shift-mask}, etc.
-
-  Since 2.14
   @see-class{gtk-accel-group}")
 
 ;;; ----------------------------------------------------------------------------
@@ -403,8 +414,10 @@
   @argument[accel-mods]{keyboard state mask of type @symbol{gdk-modifier-type}
     from a key event}
   @return{@em{True} if an accelerator was activated and handled this keypress.}
-  Finds the first accelerator in @arg{accel-group} that matches @arg{accel-key}
-  and @arg{accel-mods}, and activates it.
+  @begin{short}
+    Finds the first accelerator in @arg{accel-group} that matches
+    @arg{accel-key} and @arg{accel-mods}, and activates it.
+  @end{short}
   @see-class{gtk-accel-group}
   @see-class{gtk-window}
   @see-symbol{gdk-modifier-type}"
@@ -429,11 +442,12 @@
   @end{short}
 
   Locking an acelerator group prevents the accelerators contained within it to
-  be changed during runtime. Refer to the function
-  @fun{gtk-accel-map-change-entry} about runtime accelerator changes.
+  be changed during runtime. Refer to the @fun{gtk-accel-map-change-entry}
+  function about runtime accelerator changes.
 
-  If called more than once, @arg{accel-group} remains locked until the function
-  @fun{gtk-accel-group-unlock} has been called an equivalent number of times.
+  If called more than once, @arg{accel-group} remains locked until the
+  @fun{gtk-accel-group-unlock} function has been called an equivalent number of
+  times.
   @see-class{gtk-accel-group}
   @see-function{gtk-accel-group-unlock}
   @see-function{gtk-accel-map-change-entry}"
@@ -449,8 +463,10 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-10-24}
   @argument[accel-group]{a @class{gtk-accel-group} object}
-  Undoes the last call to the function @fun{gtk-accel-group-lock} on this
-  @arg{accel-group}.
+  @begin{short}
+    Undoes the last call to the @fun{gtk-accel-group-lock} function on this
+    @arg{accel-group}.
+  @end{short}
   @see-class{gtk-accel-group}
   @see-function{gtk-accel-group-lock}"
   (accel-group (g-object gtk-accel-group)))
@@ -605,13 +621,13 @@
   @end{return}
   @begin{short}
     Parses a string representing an accelerator. The format looks like
-    \"<Control>a\" or \"<Shift><Alt>F1\" or \"<Release>z\" (the last one is for
-    key release).
+    \"<Control>a\" or \"<Shift><Alt>F1\" or \"<Release>z\". The last one is for
+    key release.
   @end{short}
 
   The parser is fairly liberal and allows lower or upper case, and also
   abbreviations such as \"<Ctl>\" and \"<Ctrl>\". Key names are parsed using
-  the function @fun{gdk-keyval-from-name}. For character keys the name is not
+  the @fun{gdk-keyval-from-name} function. For character keys the name is not
   the symbol, but the lowercase name, e. g. one would use \"<Ctrl>minus\"
   instead of \"<Ctrl>-\".
 
@@ -640,58 +656,64 @@
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_accelerator_name ()
-;;;
-;;; gchar * gtk_accelerator_name (guint accelerator_key,
-;;;                               GdkModifierType accelerator_mods);
-;;;
-;;; Converts an accelerator keyval and modifier mask into a string parseable by
-;;; gtk_accelerator_parse(). For example, if you pass in GDK_KEY_q and
-;;; GDK_CONTROL_MASK, this function returns "<Control>q".
-;;;
-;;; If you need to display accelerators in the user interface, see
-;;; gtk_accelerator_get_label().
-;;;
-;;; accelerator_key :
-;;;     accelerator keyval
-;;;
-;;; accelerator_mods :
-;;;     accelerator modifier mask
-;;;
-;;; Returns :
-;;;     a newly-allocated accelerator name
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_accelerator_name" gtk-accelerator-name) :string
+ #+cl-cffi-gtk-documentation
+ "@version{2019-4-21}
+  @argument[accelerator-key]{accelerator keyval of type @code{:uint}}
+  @argument[accelerator-mods]{accelerator modifier mask of type
+    @symbol{gdk-modifier-type}}
+  @return{A @code{:string} with the accelerator name.}
+  @begin{short}
+    Converts an accelerator keyval and modifier mask into a string parseable by
+    the @fun{gtk-accelerator-parse} function.
+  @end{short}
+
+  If you need to display accelerators in the user interface, see the
+  @fun{gtk-accelerator-get-label} function.
+
+  @begin[Example]{dictionary}
+    @begin{pre}
+  (gtk-accelerator-name 65470 '(:shift-mask :mod1-mask))
+=> \"<Shift><Alt>F1\"
+    @end{pre}
+  @end{dictionary}
+  @see-class{gtk-accel-group}
+  @see-function{gtk-accelerator-parse}
+  @see-function{gtk-accelerator-get-label}"
   (accelerator-key :uint)
   (accelerator-mods gdk-modifier-type))
-  
+
 (export 'gtk-accelerator-name)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_accelerator_get_label ()
-;;;
-;;; gchar * gtk_accelerator_get_label (guint accelerator_key,
-;;;                                    GdkModifierType accelerator_mods);
-;;;
-;;; Converts an accelerator keyval and modifier mask into a string which can be
-;;; used to represent the accelerator to the user.
-;;;
-;;; accelerator_key :
-;;;     accelerator keyval
-;;;
-;;; accelerator_mods :
-;;;     accelerator modifier mask
-;;;
-;;; Returns :
-;;;     a newly-allocated string representing the accelerator.
-;;;
-;;; Since 2.6
 ;;; ----------------------------------------------------------------------------
 
 (defcfun ("gtk_accelerator_get_label" gtk-accelerator-get-label) :string
+ #+cl-cffi-gtk-documentation
+ "@version{2019-4-21}
+  @argument[accelerator-key]{accelerator keyval of type @code{:uint}}
+  @argument[accelerator-mods]{accelerator modifier mask of type
+    @symbol{gdk-modifier-type}}
+  @return{A @code{:string} representing the accelerator.}
+  @begin{short}
+    Converts an accelerator keyval and modifier mask into a string which can be
+    used to represent the accelerator to the user.
+  @end{short}
+  @begin[Example]{dictionary}
+    @begin{pre}
+  (gtk-accelerator-get-label 65470 '(:shift-mask :mod1-mask))
+=> \"Umschalt+Alt+F1\"
+    @end{pre}
+  @end{dictionary}
+  @see-class{gtk-accel-group}
+  @see-function{gtk-accelerator-parse}
+  @see-function{gtk-accelerator-name}"
   (accelerator-key :uint)
   (accelerator-mods gdk-modifier-type))
-  
+
 (export 'gtk-accelerator-get-label)
 
 ;;; ----------------------------------------------------------------------------
@@ -832,7 +854,9 @@
  #+cl-cffi-gtk-documentation
  "@version{2014-1-16}
   @return{The default accelerator modifier mask.}
-  Gets the value set by the function @fun{gtk-accelerator-set-default-mod-mask}.
+  @begin{short}
+    Gets the value set by the @fun{gtk-accelerator-set-default-mod-mask}
+    function.
   @see-class{gtk-accel-group}
   @see-symbol{gdk-modifier-type}
   @see-function{gtk-accelerator-set-default-mod-mask}")
