@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.accel-map.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,11 +29,13 @@
 ;;;
 ;;; Accelerator Maps
 ;;;
-;;; Loadable keyboard accelerator specifications
+;;;     Loadable keyboard accelerator specifications
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkAccelMap
+;;;
+;;; Functions
 ;;;
 ;;;     gtk_accel_map_add_entry
 ;;;     gtk_accel_map_lookup_entry
@@ -52,6 +51,15 @@
 ;;;     gtk_accel_map_get
 ;;;     gtk_accel_map_lock_path
 ;;;     gtk_accel_map_unlock_path
+;;;
+;;; Signals
+;;;
+;;;     void   changed    Has Details
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GtkAccelMap
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -122,7 +130,6 @@
     changes of all accelerators. It is also possible to monitor only a single
     accelerator path by using it as a detail of the \"changed\" signal.
 
-  Since 2.4
   @begin[Signal Details]{dictionary}
     @subheading{The \"changed\" signal}
       @begin{pre}
@@ -416,8 +423,6 @@
   This object is useful only for notification of changes to the accelerator map
   via the \"changed\" signal; it is not a parameter to the other accelerator
   map functions.
-
-  Since 2.4
   @see-class{gtk-accel-map}")
 
 (export 'gtk-accel-map-get)
@@ -449,8 +454,6 @@
   locking the @class{gtk-accel-group} containing them. For runtime accelerator
   changes to be possible both the accelerator path and its
   @class{gtk-accel-group} have to be unlocked.
-
-  Since 2.4
   @see-class{gtk-accel-map}
   @see-class{gtk-accel-group}
   @see-function{gtk-accel-map-unlock-path}
@@ -473,8 +476,6 @@
   @end{short}
   Refer to the function @fun{gtk-accel-map-lock-path} for information about
   accelerator path locking.
-
-  Since 2.4
   @see-class{gtk-accel-map}
   @see-function{gtk-accel-map-lock-path}"
   (accel-path :string))
