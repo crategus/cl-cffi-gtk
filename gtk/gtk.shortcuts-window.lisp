@@ -132,7 +132,7 @@
       The \"close\" signal is a keybinding signal which gets emitted when the
       user uses a keybinding to close the window.
       The default binding for this signal is the Escape key.
-      @begin[code]{table} 
+      @begin[code]{table}
         @entry[shortcutswindow]{The @sym{gtk-shortcuts-window} object.}
       @end{table}
     @subheading{The \"search\" signal}
@@ -156,7 +156,7 @@
 ;;; --- gtk-shortcuts-window-section-name --------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "section-name" 
+(setf (documentation (atdoc:get-slot-from-name "section-name"
                       'gtk-shortcuts-window) 't)
  "The @code{section-name} property of type @code{:string} (Read / Write) @br{}
   The name of the section to show.
@@ -178,7 +178,7 @@
 ;;; --- gtk-shortcuts-window-view-name -----------------------------------------
 
 #+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "view-name" 
+(setf (documentation (atdoc:get-slot-from-name "view-name"
                       'gtk-shortcuts-window) 't)
  "The @code{view-name} property of type @code{:string} (Read / Write) @br{}
   The view name by which to filter the contents.
