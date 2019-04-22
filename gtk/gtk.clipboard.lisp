@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.clipboard.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,15 +29,18 @@
 ;;;
 ;;; Clipboards
 ;;;
-;;; Storing data on clipboards
+;;;     Storing data on clipboards
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkClipboard
+;;;
+;;; Functions
 ;;;
 ;;;     gtk_clipboard_get
 ;;;     gtk_clipboard_get_for_display
 ;;;     gtk_clipboard_get_display
+;;;     gtk_clipboard_get_default ()
 ;;;     gtk_clipboard_set_with_data
 ;;;     gtk_clipboard_set_with_owner
 ;;;     gtk_clipboard_get_owner
@@ -66,6 +66,16 @@
 ;;;     gtk_clipboard_wait_is_target_available
 ;;;     gtk_clipboard_set_can_store
 ;;;     gtk_clipboard_store
+;;;     gtk_clipboard_get_selection
+;;;
+;;; Signals
+;;;
+;;;     void   owner-change    Run First
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GtkClipboard
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -142,7 +152,7 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"owner-change\" signal}
       @begin{pre}
- lambda (clipboard event)   : Run First
+ lambda (clipboard event)    : Run First
       @end{pre}
       The \"owner-change\" signal is emitted when GTK+ receives an @arg{event}
       that indicates that the ownership of the selection associated with
@@ -404,6 +414,23 @@
 ;;;     the GdkDisplay associated with clipboard
 ;;;
 ;;; Since 2.2
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_clipboard_get_default ()
+;;;
+;;; GtkClipboard * gtk_clipboard_get_default (GdkDisplay *display);
+;;;
+;;; Returns the default clipboard object for use with cut/copy/paste menu items
+;;; and keyboard shortcuts.
+;;;
+;;; display :
+;;;     the GdkDisplay for which the clipboard is to be retrieved.
+;;; 
+;;; Returns :
+;;;     the default clipboard object.
+;;;
+;;; Since 3.16
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1047,6 +1074,22 @@
 ;;;     a GtkClipboard
 ;;;
 ;;; Since 2.6
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_clipboard_get_selection ()
+;;;
+;;; GdkAtom gtk_clipboard_get_selection (GtkClipboard *clipboard);
+;;;
+;;; Gets the selection that this clipboard is for.
+;;;
+;;; clipboard :
+;;;     a GtkClipboard
+;;; 
+;;; Returns :
+;;;     the selection
+;;;
+;;; Since 3.22
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- End of file gtk.clipboard.lisp -----------------------------------------
