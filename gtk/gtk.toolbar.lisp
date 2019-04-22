@@ -158,7 +158,7 @@
  "@version{2014-1-26}
   @begin{short}
     A toolbar can contain instances of a subclass of @class{gtk-tool-item}.
-  @end{short}  
+  @end{short}
   A toolbar is created with a call to the @fun{gtk-toolbar-new} function.
   To add a @class{gtk-tool-item widget} to the toolbar, use the
   @fun{gtk-toolbar-insert} function. To remove an item from the toolbar use the
