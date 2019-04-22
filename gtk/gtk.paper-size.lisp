@@ -2,7 +2,7 @@
 ;;; gtk.paper-size.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -29,9 +29,9 @@
 ;;;
 ;;; GtkPaperSize
 ;;;
-;;; Support for named paper sizes
+;;;     Support for named paper sizes
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkPaperSize
 ;;;     GtkUnit
@@ -44,8 +44,11 @@
 ;;;     GTK_PAPER_NAME_EXECUTIVE
 ;;;     GTK_PAPER_NAME_LEGAL
 ;;;
+;;; Functions
+;;;
 ;;;     gtk_paper_size_new
 ;;;     gtk_paper_size_new_from_ppd
+;;;     gtk_paper_size_new_from_ipp
 ;;;     gtk_paper_size_new_custom
 ;;;     gtk_paper_size_copy
 ;;;     gtk_paper_size_free
@@ -66,6 +69,7 @@
 ;;;
 ;;;     gtk_paper_size_new_from_key_file
 ;;;     gtk_paper_size_to_key_file
+;;;     gtk_paper_size_to_gvariant
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -253,6 +257,34 @@
   (height :double))
 
 (export 'gtk-paper-size-new-from-ppd)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_paper_size_new_from_ipp ()
+;;;
+;;; GtkPaperSize *
+;;; gtk_paper_size_new_from_ipp (const gchar *ipp_name,
+;;;                              gdouble width,
+;;;                              gdouble height);
+;;;
+;;; Creates a new GtkPaperSize object by using IPP information.
+;;;
+;;; If ipp_name is not a recognized paper name, width and height are used to
+;;; construct a custom GtkPaperSize object.
+;;;
+;;; ipp_name :
+;;;     an IPP paper name
+;;;
+;;; width :
+;;; the paper width, in points
+;;;
+;;; height :
+;;;     the paper height in points
+;;;
+;;; Returns :
+;;;     a new GtkPaperSize, use gtk_paper_size_free() to free it
+;;;
+;;; Since 3.16
+;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_paper_size_new_custom ()
@@ -665,6 +697,23 @@
 (export 'gtk-paper-size-new-from-key-file)
 
 ;;; ----------------------------------------------------------------------------
+;;; gtk_paper_size_new_from_gvariant ()
+;;;
+;;; GtkPaperSize *
+;;; gtk_paper_size_new_from_gvariant (GVariant *variant);
+;;;
+;;; Deserialize a paper size from an a{sv} variant in the format produced by
+;;; gtk_paper_size_to_gvariant().
+;;; variant :
+;;;     an a{sv} GVariant
+;;;
+;;; Returns :
+;;;     a new GtkPaperSize object.
+;;;
+;;; Since 3.22
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_paper_size_to_key_file ()
 ;;; ----------------------------------------------------------------------------
 
@@ -686,5 +735,22 @@
   (group-name :string))
 
 (export 'gtk-paper-size-to-key-file)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_paper_size_to_gvariant ()
+;;;
+;;; GVariant *
+;;; gtk_paper_size_to_gvariant (GtkPaperSize *paper_size);
+;;;
+;;; Serialize a paper size to an a{sv} variant.
+;;;
+;;; paper_size :
+;;;     a GtkPaperSize
+;;;
+;;; Returns :
+;;;     a new, floating, GVariant.
+;;;
+;;; Since 3.22
+;;; ----------------------------------------------------------------------------
 
 ;;; --- End of file gtk.paper-size.lisp ----------------------------------------
