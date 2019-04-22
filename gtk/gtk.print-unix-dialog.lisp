@@ -1,15 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.print-unix-dialog.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -31,11 +29,14 @@
 ;;;
 ;;; GtkPrintUnixDialog
 ;;;
-;;; A print dialog
+;;;     A print dialog
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkPrintUnixDialog
+;;;     GtkPrintCapabilities
+;;;
+;;; Functions
 ;;;
 ;;;     gtk_print_unix_dialog_new
 ;;;     gtk_print_unix_dialog_set_page_setup
@@ -54,36 +55,34 @@
 ;;;     gtk_print_unix_dialog_get_embed_page_setup
 ;;;     gtk_print_unix_dialog_get_page_setup_set
 ;;;
-;;;     GtkPrintCapabilities
-;;;
 ;;;     gtk_print_unix_dialog_set_manual_capabilities
 ;;;     gtk_print_unix_dialog_get_manual_capabilities
 ;;;
+;;; Properties
+;;;
+;;;                 gint   current-page           Read / Write
+;;;             gboolean   embed-page-setup       Read / Write
+;;;             gboolean   has-selection          Read / Write
+;;; GtkPrintCapabilities   manual-capabilities    Read / Write
+;;;         GtkPageSetup*  page-setup             Read / Write
+;;;     GtkPrintSettings*  print-settings         Read / Write
+;;;           GtkPrinter*  selected-printer       Read
+;;;             gboolean   support-selection      Read / Write
+;;;
 ;;; Object Hierarchy
 ;;;
-;;;   GObject
-;;;    +----GInitiallyUnowned
-;;;          +----GtkWidget
-;;;                +----GtkContainer
-;;;                      +----GtkBin
-;;;                            +----GtkWindow
-;;;                                  +----GtkDialog
-;;;                                        +----GtkPrintUnixDialog
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;             ╰── GtkContainer
+;;;                 ╰── GtkBin
+;;;                     ╰── GtkWindow
+;;;                         ╰── GtkDialog
+;;;                             ╰── GtkPrintUnixDialog
 ;;;
 ;;; Implemented Interfaces
 ;;;
-;;; GtkPrintUnixDialog implements AtkImplementorIface and GtkBuildable.
-;;;
-;;; Properties
-;;;
-;;;   "current-page"             gint                  : Read / Write
-;;;   "embed-page-setup"         gboolean              : Read / Write
-;;;   "has-selection"            gboolean              : Read / Write
-;;;   "manual-capabilities"      GtkPrintCapabilities  : Read / Write
-;;;   "page-setup"               GtkPageSetup*         : Read / Write
-;;;   "print-settings"           GtkPrintSettings*     : Read / Write
-;;;   "selected-printer"         GtkPrinter*           : Read
-;;;   "support-selection"        gboolean              : Read / Write
+;;;     GtkPrintUnixDialog implements AtkImplementorIface and GtkBuildable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
