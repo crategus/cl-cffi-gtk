@@ -2,11 +2,11 @@
 ;;; gtk.seach-entry.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.10 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2013, 2014, 2015 Dieter Kaiser
+;;; Copyright (C) 2013 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -30,30 +30,34 @@
 ;;;
 ;;;     An entry which shows a search icon
 ;;;
+;;; Types and Values
+;;;
+;;;     GtkSearchEntry
+;;;
 ;;; Functions
 ;;;
 ;;;     gtk-search-entry-new
+;;;     gtk_search_entry_handle_event ()
 ;;;
 ;;; Signals
 ;;;
-;;;     search-changed   Run Last
-;;;
-;;; Types and Values
-;;;
-;;;     class gtk-search-entry
+;;;     void   next-match        Action
+;;;     void   previous-match    Action
+;;;     void   search-changed    Run Last
+;;;     void   stop-search       Action
 ;;;
 ;;; Object Hierarchy
 ;;;
-;;;   GObject
-;;;    +----GInitiallyUnowned
-;;;          +----GtkWidget
-;;;                +----GtkEntry
-;;;                      +----GtkSearchEntry
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;             ╰── GtkEntry
+;;;                 ╰── GtkSearchEntry
 ;;;
 ;;; Implemented Interfaces
 ;;;
-;;; GtkSearchEntry implements AtkImplementorIface, GtkBuildable, GtkEditable
-;;; and GtkCellEditable
+;;;     GtkSearchEntry implements AtkImplementorIface, GtkBuildable, GtkEditable
+;;;     and GtkCellEditable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -93,16 +97,59 @@
   To support this, @sym{gtk-search-entry} emits the \"search-changed\" signal
   which can be used instead of the \"changed\" signal.
   @begin[Signal Details]{dictionary}
+    @subheading{The \"next-match\" signal}
+      @begin{pre}
+ lambda (entry)    : Action
+      @end{pre}
+      The \"next-match\" signal is a keybinding signal which gets emitted when
+      the user initiates a move to the next match for the current search string.
+      Applications should connect to it, to implement moving between matches.
+      The default bindings for this signal is Ctrl-g.
+      @begin[code]{table}
+        @entry[entry]{The @class{gtk-entry} object on which the signal was
+          emitted.}
+      @end{table}
+      Since: 3.16
+
+    @subheading{The \"previous-match\" signal}
+      @begin{pre}
+ lambda (entry)    : Action
+      @end{pre}
+      The \"previous-match\" signal is a keybinding signal which gets emitted
+      when the user initiates a move to the previous match for the current
+      search string. Applications should connect to it, to implement moving
+      between matches. The default bindings for this signal is Ctrl-Shift-g.
+      @begin[code]{table}
+        @entry[entry]{The @class{gtk-entry} object on which the signal was
+          emitted.}
+        @end{table}
+        Since: 3.16
+
     @subheading{The \"search-changed\" signal}
       @begin{pre}
- lambda (entry)   : Run Last
+ lambda (entry)    : Run Last
       @end{pre}
       The \"search-changed\" signal is emitted with a short delay of 150
       milliseconds after the last change to the entry text.
       @begin[code]{table}
-        @entry[entry]{The object on which the signal was emitted.}
+        @entry[entry]{The @class{gtk-entry} object on which the signal was
+          emitted.}
       @end{table}
       Since 3.10
+
+    @subheading{The \"stop-search\" signal}
+      @begin{pre}
+ lambda (entry)    : Action
+      @end{pre}
+      The \"stop-search\" signal is a keybinding signal which gets emitted when
+      the user stops a search via keyboard input. Applications should connect to
+      it, to implement hiding the search entry in this case. The default
+      bindings for this signal is Escape.
+      @begin[code]{table}
+        @entry[entry]{The @class{gtk-entry} object on which the signal was
+          emitted.}
+      @end{table}
+      Since 3.16
   @end{dictionary}
   @see-class{gtk-entry}")
 
@@ -129,5 +176,33 @@
 
 #+gtk-3-6
 (export 'gtk-search-entry-new)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_search_entry_handle_event ()
+;;;
+;;; gboolean
+;;; gtk_search_entry_handle_event (GtkSearchEntry *entry, GdkEvent *event);
+;;;
+;;; This function should be called when the top-level window which contains the
+;;; search entry received a key event. If the entry is part of a GtkSearchBar,
+;;; it is preferable to call gtk_search_bar_handle_event() instead, which will
+;;; reveal the entry in addition to passing the event to this function.
+;;;
+;;; If the key event is handled by the search entry and starts or continues a
+;;; search, GDK_EVENT_STOP will be returned. The caller should ensure that the
+;;; entry is shown in this case, and not propagate the event further.
+;;;
+;;; entry ;
+;;;     a GtkSearchEntry
+;;;
+;;; event :
+;;;     a key event
+;;;
+;;: Returns :
+;;;     GDK_EVENT_STOP if the key press event resulted in a search beginning or
+;;;     continuing, GDK_EVENT_PROPAGATE otherwise.
+;;;
+;;; Since 3.16
+;;; ----------------------------------------------------------------------------
 
 ;;; --- End of file gtk.search-entry.lisp --------------------------------------
