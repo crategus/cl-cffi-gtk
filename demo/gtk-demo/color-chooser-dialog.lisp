@@ -27,7 +27,7 @@
           ;; Run the color chooser dialog
           (let ((response (gtk-dialog-run dialog)))
             (when (eql response :ok)
-              (setq color (gtk-color-chooser-get-rgba dialog)))
+              (setq color (gtk-color-chooser-rgba dialog)))
             ;; Set the color of the area widget
             (gtk-widget-override-background-color area :normal color)
             ;; Destroy the color chooser dialog

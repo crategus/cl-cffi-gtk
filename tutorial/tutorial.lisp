@@ -2969,7 +2969,7 @@ happen.")
                             (leave-gtk-main)))
         (g-signal-connect button "color-set"
            (lambda (widget)
-             (let ((rgba (gtk-color-chooser-get-rgba widget)))
+             (let ((rgba (gtk-color-chooser-rgba widget)))
                (format t "Selected color is ~A~%"
                        (gdk-rgba-to-string rgba)))))
         (gtk-container-add window button)
@@ -3004,7 +3004,7 @@ happen.")
           ;; Run the color chooser dialog
           (let ((response (gtk-dialog-run dialog)))
             (when (eql response :ok)
-              (setq color (gtk-color-chooser-get-rgba dialog)))
+              (setq color (gtk-color-chooser-rgba dialog)))
             ;; Set the color of the area widget
             (gtk-widget-override-background-color area :normal color)
             ;; Destroy the color chooser dialog

@@ -187,8 +187,7 @@
 @c GtkColorChooser
 
 @set gtk-color-chooser http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_class_gtk-color-chooser.html
-@set gtk-color-chooser-get-rgba http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-color-chooser-get-rgba.html
-@set gtk-color-chooser-set-rgba http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-color-chooser-set-rgba.html
+@set gtk-color-chooser-rgba http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-color-chooser-rgba.html
 @set gtk-color-chooser-add-palette http://www.crategus.com/books/cl-cffi-gtk/pages/gtk_fun_gtk-color-chooser-add-palette.html
 
 @c GtkColorChooserDialog

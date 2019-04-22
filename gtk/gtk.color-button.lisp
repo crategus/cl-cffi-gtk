@@ -363,18 +363,17 @@
 
 (defun gtk-color-button-get-color (button)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-3}
+ "@version{2019-4-22}
   @argument[button]{a @class{gtk-color-button} widget}
   @argument[color]{a @class{gdk-color} to fill in with the current color}
-  @subheading{Warning}
-    The @fun{gtk-color-button-get-color} function has been deprecated since
-    version 3.4 and should not be used in newly-written code. Use the
-    @fun{gtk-color-chooser-get-rgba} function instead.
   @begin{short}
     Sets color to be the current color in the @class{gtk-color-button} widget.
   @end{short}
-
-  Since 2.4"
+  @begin[Warning]{dictionary}
+    The @sym{gtk-color-button-get-color} function has been deprecated since
+    version 3.4 and should not be used in newly-written code. Use the
+    @fun{gtk-color-chooser-rgba} slot access function instead.
+  @end{dictionary}"
   (gtk-color-button-color button))
 
 (export 'gtk-color-button-get-color)
@@ -410,17 +409,15 @@
 
 (defun gtk-color-button-get-alpha (button)
  #+cl-cffi-gtk-documentation
- "@version{2013-6-3}
+ "@version{2019-4-22}
   @argument[button]{a @class{gtk-color-button} widget}
-  @return{an integer between 0 and 65535}
-  @subheading{Warning}
-    The @fun{gtk-color-button-get-alpha} function has been deprecated since
-    version 3.4 and should not be used in newly-written code. Use the
-    @fun{gtk-color-chooser-get-rgba} function instead.
-
+  @return{An integer between 0 and 65535.}
   @short{Returns the current alpha value.}
-
-  Since 2.4"
+  @begin[Warning]{dictionary}
+    The @sym{gtk-color-button-get-alpha} function has been deprecated since
+    version 3.4 and should not be used in newly-written code. Use the
+    @fun{gtk-color-chooser-rgba} slot access function instead.
+  @end{dictionary}"
   (gtk-color-button-alpha button))
 
 (export 'gtk-color-button-get-alpha)
@@ -458,16 +455,14 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-6-3}
   @argument[button]{a @class{gtk-color-button} widget}
-  @subheading{Warning}
-    The @fun{gtk-color-button-get-rgba} function has been deprecated since
-    version 3.4 and should not be used in newly-written code. Use the
-    @fun{gtk-color-chooser-get-rgba} function instead.
-
   @begin{short}
     Returns the current color in the @class{gtk-color-button} widget.
   @end{short}
-
-  Since 3.0"
+  @begin[Warning]{dictionary}
+    The @sym{gtk-color-button-get-rgba} function has been deprecated since
+    version 3.4 and should not be used in newly-written code. Use the
+    @fun{gtk-color-chooser-rgba} slot access function instead.
+  @end{dictionary}"
   (gtk-color-button-rgba button))
 
 (export 'gtk-color-button-get-rgba)

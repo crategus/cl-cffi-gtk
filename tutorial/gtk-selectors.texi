@@ -94,8 +94,8 @@ implements the @xurl{gtk-color-chooser} interface.
 @code{GtkColorButton}.  The example displays a button with the predefined color
 gray.  When clicking the button, a color selection dialog is opened.  The dialog
 is shown in @ref{figure-color-button}.  To get the currently selected color you
-should connect a signal handler to the signal "color-set" and the retrieve the
-color with the function @xurl{gtk-color-chooser-get-rgba}.
+should connect a signal handler to the signal "color-set" and retrieve the
+color with the @xurl{gtk-color-chooser-rgba} slot access function.
 
 @float Example, example-color-button
 @caption{Color Button}
@@ -117,7 +117,7 @@ color with the function @xurl{gtk-color-chooser-get-rgba}.
                             (leave-gtk-main)))
         (g-signal-connect button "color-set"
            (lambda (widget)
-             (let ((rgba (gtk-color-chooser-get-rgba widget)))
+             (let ((rgba (gtk-color-chooser-rgba widget)))
                (format t "Selected color is ~A~%"
                        (gdk-rgba-to-string rgba)))))
         (gtk-container-add window button)
@@ -137,9 +137,8 @@ custom color.
 The chooser automatically remembers the last selection, as well as custom
 colors.
 
-To change the initially selected color, use the function
-@xurl{gtk-color-chooser-set-rgba}.  To get the selected color use the function
-@xurl{gtk-color-chooser-get-rgba}.
+To change the initially selected color or to get the selected color use the
+@xurl{gtk-color-chooser-rgba} slot access function.
 
 @ref{example-color-chooser-dialog} shows how to replace the default color
 palette and the default gray palette with the function
@@ -181,7 +180,7 @@ palette and the default gray palette with the function
           ;; Run the color chooser dialog
           (let ((response (gtk-dialog-run dialog)))
             (when (eql response :ok)
-              (setq color (gtk-color-chooser-get-rgba dialog)))
+              (setq color (gtk-color-chooser-rgba dialog)))
             ;; Set the color of the area widget
             (gtk-widget-override-background-color area :normal color)
             ;; Destroy the color chooser dialog

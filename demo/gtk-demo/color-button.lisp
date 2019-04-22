@@ -18,7 +18,7 @@
                             (leave-gtk-main)))
         (g-signal-connect button "color-set"
            (lambda (widget)
-             (let ((rgba (gtk-color-chooser-get-rgba widget)))
+             (let ((rgba (gtk-color-chooser-rgba widget)))
                (format t "Selected color is ~A~%"
                        (gdk-rgba-to-string rgba)))))
         (gtk-container-add window button)

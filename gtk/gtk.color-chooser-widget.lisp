@@ -27,11 +27,11 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; GtkColorChooserWidget
-;;; 
+;;;
 ;;;     A widget for choosing colors
-;;;     
+;;;
 ;;; Types and Values
-;;; 
+;;;
 ;;;     GtkColorChooserWidget
 ;;;
 ;;; Functions
@@ -89,10 +89,9 @@
 
   The chooser automatically remembers the last selection, as well as custom
   colors.
- 
-  To change the initially selected color, use the
-  @fun{gtk-color-chooser-set-rgba} function. To get the selected font use the
-  @fun{gtk-color-chooser-get-rgba} function.
+
+  To change the initially selected color or to get the selected font use the
+  @fun{gtk-color-chooser-rgba} slot access function.
 
   The @sym{gtk-color-chooser-widget} is used in the
   @class{gtk-color-chooser-dialog} to provide a dialog for selecting colors.
