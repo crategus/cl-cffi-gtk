@@ -812,7 +812,7 @@
 ;;; --- gtk-text-tag-font-features-set -----------------------------------------
 
 #+(and gtk-3-18 cl-cffi-gtk-documentation)
-(setf (documentation (atdoc:get-slot-from-name "font-features-set" 
+(setf (documentation (atdoc:get-slot-from-name "font-features-set"
                                                'gtk-text-tag) 't)
  "The @code{font-features-set} property of type @code{:boolean} (Read / Write)
   @br{}
@@ -1733,7 +1733,7 @@
  "The @code{underline-rgba} property of type @symbol{gdk-rgba}
   (Read / Write) @br{}
   This property modifies the color of underlines. If not set, underlines will
-  use the forground color. If @code{underline} is set to 
+  use the forground color. If @code{underline} is set to
   @code{PANGO_UNDERLINE_ERROR}, an alternate color may be applied instead of the
   foreground. Setting this property will always override those defaults. @br{}
   Since 3.16")
@@ -2200,10 +2200,10 @@
 ;;;
 ;;; tag :
 ;;;     a GtkTextTag.
-;;; 
+;;;
 ;;; size_changed :
 ;;;     whether the change affects the GtkTextView layout.
-;;; 
+;;;
 ;;; Since 3.20
 ;;; ----------------------------------------------------------------------------
 
