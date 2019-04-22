@@ -2,7 +2,7 @@
 ;;; gtk.text-iter.lisp
 ;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.16 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
@@ -29,7 +29,7 @@
 ;;;
 ;;; GtkTextIter
 ;;;
-;;; Text buffer iterator
+;;;     Text buffer iterator
 ;;;
 ;;; Types and Values
 ;;;
@@ -57,6 +57,7 @@
 ;;;     gtk_text_iter_get_marks
 ;;;     gtk_text_iter_get_toggled_tags
 ;;;     gtk_text_iter_get_child_anchor
+;;;     gtk_text_iter_starts_tag
 ;;;     gtk_text_iter_begins_tag
 ;;;     gtk_text_iter_ends_tag
 ;;;     gtk_text_iter_toggles_tag
@@ -711,6 +712,34 @@
 (export 'gtk-text-iter-get-child-anchor)
 
 ;;; ----------------------------------------------------------------------------
+;;; gtk_text_iter_starts_tag ()
+;;;
+;;; gboolean
+;;; gtk_text_iter_starts_tag (const GtkTextIter *iter,
+;;;                           GtkTextTag *tag);
+;;;
+;;; Returns TRUE if tag is toggled on at exactly this point. If tag is NULL,
+;;; returns TRUE if any tag is toggled on at this point.
+;;;
+;;; Note that if gtk_text_iter_starts_tag() returns TRUE, it means that iter is
+;;; at the beginning of the tagged range, and that the character at iter is
+;;; inside the tagged range. In other words, unlike gtk_text_iter_ends_tag(),
+;;; if gtk_text_iter_starts_tag() returns TRUE, gtk_text_iter_has_tag() will
+;;; also return TRUE for the same parameters.
+;;;
+;;; iter :
+;;;     an iterator
+;;;
+;;; tag :
+;;;     a GtkTextTag, or NULL.
+;;;
+;;; Returns :
+;;;     whether iter is the start of a range tagged with tag
+;;;
+;;; Since 3.20
+;;; ----------------------------------------------------------------------------
+
+;;; ----------------------------------------------------------------------------
 ;;; gtk_text_iter_begins_tag ()
 ;;; ----------------------------------------------------------------------------
 
@@ -728,6 +757,11 @@
   @em{true} if @arg{iter} is the start of the tagged range; the function
   @fun{gtk-text-iter-has-tag} tells you whether an iterator is within a
   tagged range.
+  @begin[Warning]{dictionary}
+    The @sym{gtk-text-iter-begins-tag} function has been deprecated since
+    version 3.20 and should not be used in newly-written code. Use the
+    @func{gtk-text-iter-starts-tag} function instead.
+  @end{dictionary}
   @see-class{gtk-text-iter}
   @see-class{gtk-text-tag}
   @see-function{gtk-text-iter-has-tag}"
