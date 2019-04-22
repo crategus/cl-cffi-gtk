@@ -75,7 +75,7 @@
    :type-initializer "gtk_shortcut_type_get_type")
   :accelerator
   :gesture-pinch
-  :gesture-stretch  
+  :gesture-stretch
   :gesture-rotate-clockwise
   :gesture-rotate-conterclockwise
   :gesture-two-finger-swipe-left
@@ -87,7 +87,7 @@
       (gethash 'gtk-shortcut-type atdoc:*external-symbols*)
  "@version{2019-4-12}
   @begin{short}
-    GtkShortcutType specifies the kind of shortcut that is being described. 
+    GtkShortcutType specifies the kind of shortcut that is being described.
   @end{short}
   More values may be added to this enumeration over time.
   @begin{pre}
@@ -96,7 +96,7 @@
    :type-initializer \"gtk_shortcut_type_get_type\")
   :accelerator
   :gesture-pinch
-  :gesture-stretch  
+  :gesture-stretch
   :gesture-rotate-clockwise
   :gesture-rotate-conterclockwise
   :gesture-two-finger-swipe-left
@@ -105,7 +105,7 @@
   @end{pre}
   @begin[code]{table}
     @entry[:accelerator]{The shortcut is a keyboard accelerator. The
-      @code{accelerator} property will be used.} 
+      @code{accelerator} property will be used.}
     @entry[:gesture-pinch]{The shortcut is a pinch gesture. GTK+ provides an
       icon and subtitle.}
     @entry[:gesture-stretch]{The shortcut is a stretch gesture. GTK+ provides an
@@ -233,7 +233,7 @@
   @em{Examples:} @br{}
   A single shortcut: <ctl><alt>delete @br{}
   Two alternative shortcuts: <shift>a Home @br{}
-  A range of shortcuts: <alt>1...<alt>9 @br{} 
+  A range of shortcuts: <alt>1...<alt>9 @br{}
   Several keys pressed together: Control_L&Control_R @br{}
   A sequence of shortcuts or keys: <ctl>c+<ctl>x @br{}
   Use + instead of & when the keys may (or have to be) pressed sequentially
