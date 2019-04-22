@@ -1,16 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.print-operation.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.6.4 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -32,9 +29,9 @@
 ;;;
 ;;; GtkPrintOperation
 ;;;
-;;; High-level Printing API
+;;;     High-level Printing API
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkPrintOperation
 ;;;     GtkPrintStatus
@@ -43,6 +40,9 @@
 ;;;     GtkPrintError
 ;;;
 ;;;     GTK_PRINT_ERROR
+;;;     GtkPrintOperationPreview
+;;;
+;;; Functions
 ;;;
 ;;;     gtk_print_operation_new
 ;;;     gtk_print_operation_set_allow_async
@@ -61,6 +61,9 @@
 ;;;     gtk_print_operation_set_show_progress
 ;;;     gtk_print_operation_set_track_print_status
 ;;;     gtk_print_operation_set_custom_tab_label
+;;;
+;;;     GtkPageSetupDoneFunc
+;;;
 ;;;     gtk_print_operation_run
 ;;;     gtk_print_operation_cancel
 ;;;     gtk_print_operation_draw_page_finish
@@ -77,11 +80,58 @@
 ;;;     gtk_print_run_page_setup_dialog
 ;;;     gtk_print_run_page_setup_dialog_async
 ;;;
-;;;     GtkPrintOperationPreview
-;;;
 ;;;     gtk_print_operation_preview_end_preview
 ;;;     gtk_print_operation_preview_is_selected
 ;;;     gtk_print_operation_preview_render_page
+;;;
+;;; Properties
+;;;
+;;;         gboolean   allow-async             Read / Write
+;;;             gint   current-page            Read / Write
+;;;            gchar*  custom-tab-label        Read / Write
+;;;     GtkPageSetup*  default-page-setup      Read / Write
+;;;         gboolean   embed-page-setup        Read / Write
+;;;            gchar*  export-filename         Read / Write
+;;;         gboolean   has-selection           Read / Write
+;;;            gchar*  job-name                Read / Write
+;;;             gint   n-pages                 Read / Write
+;;;             gint   n-pages-to-print        Read
+;;; GtkPrintSettings*  print-settings          Read / Write
+;;;         gboolean   show-progress           Read / Write
+;;;   GtkPrintStatus   status                  Read
+;;;            gchar*  status-string           Read
+;;;         gboolean   support-selection	   Read / Write
+;;;         gboolean   track-print-status      Read / Write
+;;;          GtkUnit   unit                    Read / Write
+;;;         gboolean   use-full-page           Read / Write
+;;;
+;;; Signals
+;;;
+;;;             void   begin-print             Run Last
+;;;          GObject*  create-custom-widget    Run Last
+;;;             void   custom-widget-apply     Run Last
+;;;             void   done                    Run Last
+;;;             void   draw-page               Run Last
+;;;             void   end-print               Run Last
+;;;         gboolean   paginate                Run Last
+;;;         gboolean   preview                 Run Last
+;;;             void   request-page-setup      Run Last
+;;;             void   status-changed          Run Last
+;;;             void   update-custom-widget    Run Last
+;;;             void   got-page-size           Run Last
+;;;             void   ready                   Run Last
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GInterface
+;;;     ╰── GtkPrintOperationPreview
+;;;
+;;;     GObject
+;;;     ╰── GtkPrintOperation
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GtkPrintOperation implements GtkPrintOperationPreview.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
