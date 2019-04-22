@@ -51,7 +51,7 @@
 ;;; Properties
 ;;;
 ;;;           GtkAdjustment*  hadjustment       Read / Write / Construct
-;;;     GtkScrollablePolicy   hscroll-policy    Read / Write 
+;;;     GtkScrollablePolicy   hscroll-policy    Read / Write
 ;;;           GtkAdjustment*  vadjustment       Read / Write / Construct
 ;;;     GtkScrollablePolicy   vscroll-policy    Read / Write
 ;;;
@@ -107,7 +107,7 @@
     @begin{item}
       Because its preferred size is the size for a fully expanded widget, the
       scrollable widget must be able to cope with underallocations. This means
-      that it must accept any value passed to its 
+      that it must accept any value passed to its
       @code{GtkWidgetClass.size_allocate()} function.
     @end{item}
     @begin{item}
