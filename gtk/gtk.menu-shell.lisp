@@ -222,11 +222,11 @@
 
   The generic function @sym{gtk-menu-shell-take-focus} returns @em{true} if the
   menu shell will take the keyboard focus on popup.
-  
+
   If @arg{take-focus} is @em{true} (the default) the menu shell will take the
   keyboard focus so that it will receive all keyboard events which is needed
   to enable keyboard navigation in menus.
-  
+
   Setting @arg{take-focus} to @code{nil} is useful only for special applications
   like virtual keyboard implementations which should not take keyboard focus.
 
