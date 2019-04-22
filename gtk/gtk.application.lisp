@@ -539,7 +539,7 @@
   @syntax[]{(gtk-application-active-window object) => window}
   @argument[object]{a @class{gtk-application} object}
   @begin{short}
-    Accessor of the slot @slot[gtk-application]{active-window} of the
+    Accessor of the @slot[gtk-application]{active-window} slot of the
     @class{gtk-application} class.
   @end{short}
 
@@ -572,7 +572,7 @@
   @argument[object]{a @class{gtk-application} object}
   @argument[app-menu]{a @class{g-menu-model} object, or @code{nil}}
   @begin{short}
-    Accessor of the slot @slot[gtk-application]{app-menu} of the
+    Accessor of the @slot[gtk-application]{app-menu} slot of the
     @class{gtk-application} class.
   @end{short}
 
@@ -618,7 +618,7 @@
   @syntax[]{(gtk-application-menubar object) => menubar}
   @syntax[]{(setf (gtk-application-menubar object) menubar)}
   @begin{short}
-    Accessor of the slot @slot[gtk-application]{menubar} of the
+    Accessor of the @slot[gtk-application]{menubar} slot of the
     @class{gtk-application} class.
   @end{short}
 
@@ -662,7 +662,7 @@
       "Accessor"
       (documentation 'gtk-application-register-session 'function)
  "@version{2014-4-20}
-  Accessor of the slot @slot[gtk-application]{register-session} of the
+  Accessor of the @slot[gtk-application]{register-session} slot of the
   @class{gtk-application} class.
   @see-class{gtk-application}")
 
@@ -685,7 +685,7 @@
       (documentation 'gtk-application-screensaver-active 'function)
  "@version{2019-4-9}
   @begin{short}
-    Accessor of the slot @slot[gtk-application]{screensaver-active} of the
+    Accessor of the @slot[gtk-application]{screensaver-active} slot of the
     @class{gtk-application} class.
   @end{short}
 
