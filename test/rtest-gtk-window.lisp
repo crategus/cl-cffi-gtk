@@ -6,7 +6,7 @@
 (test gtk-window-class
   ;; Type checks
   (is-true  (g-type-is-object "GtkWindow"))
-  (is-false  (g-type-is-abstract "GtkWindow"))
+  (is-false (g-type-is-abstract "GtkWindow"))
   (is-true  (g-type-is-derived "GtkWindow"))
   (is-false (g-type-is-fundamental "GtkWindow"))
   (is-true  (g-type-is-value-type "GtkWindow"))
@@ -56,7 +56,7 @@
   (is-true (g-type-is-a "GtkWindow" "GtkWindow"))
 
   ;; Check the children
-  (is (equal '("GtkDialog" "GtkAssistant" "GtkOffscreenWindow" "GtkPlug"
+  (is (equal '("GtkDialog" "GtkAssistant" "GtkOffscreenWindow" "GtkPlug" "GtkShortcutsWindow"
  "GtkApplicationWindow")
              (mapcar #'gtype-name (g-type-children "GtkWindow"))))
              
@@ -92,7 +92,6 @@
  "tooltip-markup" "tooltip-text" "transient-for" "type" "type-hint"
  "urgency-hint" "valign" "vexpand" "vexpand-set" "visible" "width-request"
  "window" "window-position")
-
              (stable-sort (mapcar #'param-spec-name
                                   (g-object-class-list-properties "GtkWindow"))
                           #'string-lessp)))
@@ -104,7 +103,6 @@
  "separator-width" "text-handle-height" "text-handle-width"
  "visited-link-color" "wide-separators" "window-dragging"
  "decoration-button-layout" "decoration-resize-handle")
-
              (mapcar #'param-spec-name
                      (gtk-widget-class-list-style-properties "GtkWindow"))))
 

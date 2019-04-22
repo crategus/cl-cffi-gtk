@@ -222,36 +222,36 @@
 
 (test gdk-seat-get-slaves
   (let ((seat (gdk-display-get-default-seat (gdk-display-get-default))))
-    (is (equal '("Virtual core XTEST pointer" "Logitech USB Receiver Consumer Control"
- "Logitech USB Receiver Mouse" "SYN1B7E:01 06CB:2970 Touchpad")
+    (is (equal '("Logitech USB Receiver Consumer Control" "Virtual core XTEST pointer"
+ "SYN1B7E:01 06CB:2970 Touchpad" "Logitech USB Receiver Mouse")
                (mapcar #'gdk-device-name (gdk-seat-get-slaves seat :pointer))))
     (is (equal '()
                (mapcar #'gdk-device-name (gdk-seat-get-slaves seat :touch))))
     (is (equal '()
                (mapcar #'gdk-device-name (gdk-seat-get-slaves seat :tablet-stylus))))
-    (is (equal '("Virtual core XTEST keyboard" "Power Button" "Video Bus" "Power Button"
- "Sleep Button" "Video Bus" "Logitech USB Receiver"
- "Logitech USB Receiver System Control" "HD WebCam: HD WebCam"
- "AT Translated Set 2 keyboard" "Acer WMI hotkeys"
- "Logitech USB Receiver Consumer Control")
+    (is (equal '("AT Translated Set 2 keyboard" "Power Button" "Sleep Button"
+ "HD WebCam: HD WebCam" "Acer WMI hotkeys" "Video Bus" "Video Bus"
+ "Logitech USB Receiver System Control"
+ "Logitech USB Receiver Consumer Control" "Virtual core XTEST keyboard"
+ "Power Button" "Logitech USB Receiver")
                (mapcar #'gdk-device-name (gdk-seat-get-slaves seat :keyboard))))
-    (is (equal '("Virtual core XTEST pointer" "Logitech USB Receiver Consumer Control"
- "Logitech USB Receiver Mouse" "SYN1B7E:01 06CB:2970 Touchpad")
+    (is (equal '("Logitech USB Receiver Consumer Control" "Virtual core XTEST pointer"
+ "SYN1B7E:01 06CB:2970 Touchpad" "Logitech USB Receiver Mouse")
                (mapcar #'gdk-device-name (gdk-seat-get-slaves seat :all-pointing))))
-    (is (equal '("Virtual core XTEST keyboard" "Power Button" "Video Bus" "Power Button"
- "Sleep Button" "Video Bus" "Logitech USB Receiver"
- "Logitech USB Receiver System Control" "HD WebCam: HD WebCam"
- "AT Translated Set 2 keyboard" "Acer WMI hotkeys"
+    (is (equal '("AT Translated Set 2 keyboard" "Power Button" "Sleep Button"
+ "HD WebCam: HD WebCam" "Acer WMI hotkeys" "Video Bus" "Video Bus"
+ "Logitech USB Receiver System Control"
+ "Logitech USB Receiver Consumer Control" "Virtual core XTEST keyboard"
+ "Power Button" "Logitech USB Receiver"
  "Logitech USB Receiver Consumer Control" "Virtual core XTEST pointer"
- "Logitech USB Receiver Consumer Control" "Logitech USB Receiver Mouse"
- "SYN1B7E:01 06CB:2970 Touchpad")
+ "SYN1B7E:01 06CB:2970 Touchpad" "Logitech USB Receiver Mouse")
                (mapcar #'gdk-device-name (gdk-seat-get-slaves seat :all))))
-    (is (equal '("Virtual core XTEST keyboard" "Power Button" "Video Bus" "Power Button"
- "Sleep Button" "Video Bus" "Logitech USB Receiver"
- "Logitech USB Receiver System Control" "HD WebCam: HD WebCam"
- "AT Translated Set 2 keyboard" "Acer WMI hotkeys"
+    (is (equal '("AT Translated Set 2 keyboard" "Power Button" "Sleep Button"
+ "HD WebCam: HD WebCam" "Acer WMI hotkeys" "Video Bus" "Video Bus"
+ "Logitech USB Receiver System Control"
+ "Logitech USB Receiver Consumer Control" "Virtual core XTEST keyboard"
+ "Power Button" "Logitech USB Receiver"
  "Logitech USB Receiver Consumer Control" "Virtual core XTEST pointer"
- "Logitech USB Receiver Consumer Control" "Logitech USB Receiver Mouse"
- "SYN1B7E:01 06CB:2970 Touchpad")
+ "SYN1B7E:01 06CB:2970 Touchpad" "Logitech USB Receiver Mouse")
                (mapcar #'gdk-device-name (gdk-seat-get-slaves seat '(:pointer :keyboard)))))))
 

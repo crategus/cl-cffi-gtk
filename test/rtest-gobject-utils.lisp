@@ -36,14 +36,16 @@
   (is (equal '("G_APPLICATION_FLAGS_NONE" "G_APPLICATION_IS_SERVICE"
  "G_APPLICATION_IS_LAUNCHER" "G_APPLICATION_HANDLES_OPEN"
  "G_APPLICATION_HANDLES_COMMAND_LINE" "G_APPLICATION_SEND_ENVIRONMENT"
- "G_APPLICATION_NON_UNIQUE" "G_APPLICATION_CAN_OVERRIDE_APP_ID")
+ "G_APPLICATION_NON_UNIQUE" "G_APPLICATION_CAN_OVERRIDE_APP_ID"
+ "G_APPLICATION_ALLOW_REPLACEMENT" "G_APPLICATION_REPLACE")
              (mapcar #'gobject::flags-item-name
                      (gobject::get-flags-items "GApplicationFlags"))))
-  (is (equal '(0 1 2 4 8 16 32 64)
+  (is (equal '(0 1 2 4 8 16 32 64 128 256)
              (mapcar #'gobject::flags-item-value
                      (gobject::get-flags-items "GApplicationFlags"))))
   (is (equal '("flags-none" "is-service" "is-launcher" "handles-open" "handles-command-line"
- "send-environment" "non-unique" "can-override-app-id")
+ "send-environment" "non-unique" "can-override-app-id" "allow-replacement"
+ "replace")
              (mapcar #'gobject::flags-item-nick
                      (gobject::get-flags-items "GApplicationFlags")))))
 
@@ -58,7 +60,9 @@
   (:HANDLES-COMMAND-LINE 8)
   (:SEND-ENVIRONMENT 16)
   (:NON-UNIQUE 32)
-  (:CAN-OVERRIDE-APP-ID 64))
+  (:CAN-OVERRIDE-APP-ID 64)
+  (:ALLOW-REPLACEMENT 128)
+  (:REPLACE 256))
             (gobject::get-g-flags-definition "GApplicationFlags"))))
 
 

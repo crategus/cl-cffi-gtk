@@ -89,7 +89,7 @@
     (gtk-action-group-add-action group
                                  (make-instance 'gtk-action
                                                 :name "Close"))
-    (is (equal '("Save" "Open" "Close")
+    (is (equal '("Close" "Save" "Open")
                (mapcar #'gtk-action-get-name
                        (gtk-action-group-list-actions group))))))
 
@@ -156,12 +156,12 @@
     (gtk-action-group-add-action group
                                  (make-instance 'gtk-action
                                                 :name "Close"))
-    (is (equal '("Save" "Open" "Close")
+    (is (equal '("Close" "Save" "Open")
                (mapcar #'gtk-action-get-name
                        (gtk-action-group-list-actions group))))
     (gtk-action-group-remove-action group 
                                     (gtk-action-group-get-action group "Open"))
-    (is (equal '("Save" "Close")
+    (is (equal '("Close" "Save")
                (mapcar #'gtk-action-get-name
                        (gtk-action-group-list-actions group))))))
 
@@ -364,7 +364,7 @@
                          "_Blue" "<control>B"           ; label, accelerator
                          "Sky" 2))))
     (gtk-action-group-add-radio-actions group actions 0 nil)
-    (is (equal '( "Blue" "Red" "Green")
+    (is (equal '("Red" "Blue" "Green")
                (mapcar #'gtk-action-get-name
                        (gtk-action-group-list-actions group))))
     (is (equal "<Actions>/AppWindowActions/Red"

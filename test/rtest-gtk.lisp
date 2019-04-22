@@ -59,6 +59,16 @@
   (join-gtk-main))
 |#
 
+;;; Application support
+
+(load "rtest-gtk-application.lisp")
+(load "rtest-gtk-application-window.lisp")
+(load "rtest-gtk-actionable.lisp")
+
+;;; Interface builder
+
+(load "rtest-gtk-builder.lisp")
+
 (load "rtest-gtk-accel-group.lisp")
 (load "rtest-gtk-accel-map.lisp")
 (load "rtest-gtk-action.lisp")
