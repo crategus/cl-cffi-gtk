@@ -1,15 +1,13 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.page-setup-unix-dialog.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp Binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
-;;; Copyright (C) 2011 - 2013 Dieter Kaiser
+;;; Copyright (C) 2011 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -31,11 +29,13 @@
 ;;;
 ;;; GtkPageSetupUnixDialog
 ;;;
-;;; A page setup dialog
+;;;     A page setup dialog
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkPageSetupUnixDialog
+;;;
+;;; Functions
 ;;;
 ;;;     gtk_page_setup_unix_dialog_new
 ;;;     gtk_page_setup_unix_dialog_set_page_setup
@@ -45,18 +45,18 @@
 ;;;
 ;;; Object Hierarchy
 ;;;
-;;;   GObject
-;;;    +----GInitiallyUnowned
-;;;          +----GtkWidget
-;;;                +----GtkContainer
-;;;                      +----GtkBin
-;;;                            +----GtkWindow
-;;;                                  +----GtkDialog
-;;;                                        +----GtkPageSetupUnixDialog
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;             ╰── GtkContainer
+;;;                 ╰── GtkBin
+;;;                     ╰── GtkWindow
+;;;                         ╰── GtkDialog
+;;;                             ╰── GtkPageSetupUnixDialog
 ;;;
 ;;; Implemented Interfaces
 ;;;
-;;; GtkPageSetupUnixDialog implements AtkImplementorIface and GtkBuildable.
+;;;     GtkPageSetupUnixDialog implements AtkImplementorIface and GtkBuildable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
