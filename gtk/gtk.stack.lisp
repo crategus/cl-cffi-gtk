@@ -37,15 +37,15 @@
 ;;;
 ;;; Functions
 ;;;
-;;;     gtk_stack_new 
-;;;     gtk_stack_add_named 
-;;;     gtk_stack_add_titled 
-;;;     gtk_stack_get_child_by_name 
+;;;     gtk_stack_new
+;;;     gtk_stack_add_named
+;;;     gtk_stack_add_titled
+;;;     gtk_stack_get_child_by_name
 ;;;     gtk_stack_set_visible_child                        Accessor
 ;;;     gtk_stack_get_visible_child                        Accessor
 ;;;     gtk_stack_set_visible_child_name                   Accessor
 ;;;     gtk_stack_get_visible_child_name                   Accessor
-;;;     gtk_stack_set_visible_child_full 
+;;;     gtk_stack_set_visible_child_full
 ;;;     gtk_stack_set_homogeneous                          Accessor
 ;;;     gtk_stack_get_homogeneous                          Accessor
 ;;;     gtk_stack_set_hhomogeneous                         Accessor
@@ -133,7 +133,7 @@
   @end{short}
 
   New values may be added to this enumeration over time.
-  
+
   Since 3.10
   @begin{pre}
 (define-g-enum \"GtkStackTransitionType\" gtk-stack-transition-type
@@ -178,16 +178,16 @@
     @entry[:under-up]{Uncover the new page by sliding up. Since 3.12}
     @entry[:under-down]{Uncover the new page by sliding down. Since 3.12}
     @entry[:under-left]{Uncover the new page by sliding to the left. Since 3.12}
-    @entry[:under-right]{Uncover the new page by sliding to the right. 
+    @entry[:under-right]{Uncover the new page by sliding to the right.
       Since 3.12}
-    @entry[:over-up-down]{Cover the old page sliding up or uncover the new page 
+    @entry[:over-up-down]{Cover the old page sliding up or uncover the new page
       sliding down, according to order. Since 3.12}
     @entry[:over-down-up]{Cover the old page sliding down or uncover the new
       page sliding up, according to order. Since 3.14}
     @entry[:over-left-right]{Cover the old page sliding left or uncover the new
       page sliding right, according to order. Since 3.14}
     @entry[:over-right-left]{Cover the old page sliding right or uncover the
-      new page sliding left, according to order. Since 3.14}  
+      new page sliding left, according to order. Since 3.14}
   @end{table}")
 
 ;;; ----------------------------------------------------------------------------
@@ -232,14 +232,14 @@
 (setf (documentation 'gtk-stack 'type)
  "@version{2019-3-15}
   @begin{short}
-    The @sym{gtk-stack} widget is a container which only shows one of its 
+    The @sym{gtk-stack} widget is a container which only shows one of its
     children at a time.
   @end{short}
-  In contrast to @class{gtk-notebook}, @sym{gtk-stack} does not provide a means 
+  In contrast to @class{gtk-notebook}, @sym{gtk-stack} does not provide a means
   for users to change the visible child. Instead, the @class{gtk-stack-switcher}
   widget can be used with @sym{gtk-stack} to provide this functionality.
 
-  Transitions between pages can be animated as slides or fades. This can be 
+  Transitions between pages can be animated as slides or fades. This can be
   controlled with the function @fun{gtk-stack-transition-type}. These animations
   respect the \"gtk-enable-animations\" setting.
   The @sym{gtk-stack} widget was added in GTK+ 3.10.
@@ -258,12 +258,12 @@
       @br{}
       The name of the child page. @br{}
       Default value: @code{nil}
-  
+
     @subheading{The @code{needs-attention} child property}
-      The @code{needs-attention} child property of type @code{:boolean} 
+      The @code{needs-attention} child property of type @code{:boolean}
       (Read / Write) @br{}
       Sets a flag specifying whether the child requires the user attention. This
-      is used by the @class{gtk-stack-switcher} to change the appearance of the 
+      is used by the @class{gtk-stack-switcher} to change the appearance of the
       corresponding button when a page needs attention and it is not the current
       one. @br{}
       Since 3.12 @br{}
@@ -272,13 +272,13 @@
     @subheading{The @code{position} child property}
       The @code{position} child property of type @code{:int} (Read / Write)@br{}
       The index of the child in the parent. @br{}
-      Allowed values: >= -1 @br{}     
+      Allowed values: >= -1 @br{}
       Default value: 0
 
     @subheading{The @code{title} child property}
       The @code{title} child property of type @code{:string} (Read / Write)@br{}
       The title of the child page. @br{}
-      Default value: @code{nil}      
+      Default value: @code{nil}
   @end{dictionary}
   @see-slot{gtk-stack-hhomogeneous}
   @see-slot{gtk-stack-homogeneous}
@@ -320,14 +320,14 @@
   @end{short}
 
   The generic function @sym{gtk-stack-hhomogeneous}
-  gets whether the stack is horizontally homogeneous. 
+  gets whether the stack is horizontally homogeneous.
 
   The generic function @sym{(setf gtk-stack-hhomogeneous)}
   sets the @class{gtk-stack} to be horizontally homogeneous or not. If it is
-  homogeneous, the @class{gtk-stack} will request the same width for all its 
-  children. If it isn't, the stack may change width when a different child 
+  homogeneous, the @class{gtk-stack} will request the same width for all its
+  children. If it isn't, the stack may change width when a different child
   becomes visible.
-  
+
   Since 3.16
   @see-class{gtk-stack}")
 
@@ -354,17 +354,17 @@
   @end{short}
 
   The generic function @sym{gtk-stack-homogeneous}
-  gets whether the stack is homogeneous. 
+  gets whether the stack is homogeneous.
 
   The generic function @sym{(setf gtk-stack-homogeneous)}
   sets the @class{gtk-stack} to be homogeneous or not. If it is homogeneous, the
-  @class{gtk-stack} will request the same size for all its children. If it 
+  @class{gtk-stack} will request the same size for all its children. If it
   isn't, the stack may change size when a different child becomes visible.
 
   Since 3.16, homogeneity can be controlled separately for horizontal and
-  vertical size, with the @slot[gtk-stack]{hhomogeneous} and 
+  vertical size, with the @slot[gtk-stack]{hhomogeneous} and
   @slot[gtk-stack]{vhomogeneous} properties.
-  
+
   Since 3.10
   @see-class{gtk-stack}
   @see-function{gtk-stack-hhomogeneous}
@@ -375,15 +375,15 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "interpolate-size" 'gtk-stack)
                      't)
- "The @code{interpolate-size} property of type @code{:boolean} (Read / Write) 
+ "The @code{interpolate-size} property of type @code{:boolean} (Read / Write)
   @br{}
-  Whether or not the size should smoothly change when changing between 
+  Whether or not the size should smoothly change when changing between
   differently sized children. @br{}
   Since 3.18 @br{}
-  Default value: @code{nil}")  
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-stack-interpolate-size atdoc:*function-name-alias*) 
+(setf (gethash 'gtk-stack-interpolate-size atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-stack-interpolate-size 'function)
  "@version{2019-3-16}
@@ -392,20 +392,20 @@
   @argument[object]{a @class{gtk-stack} object}
   @argument[interpolate-size]{@em{true} if child sizes are interpolated}
   @begin{short}
-    Accessor of the slot @slot[gtk-stack]{interpolate-size} of the 
+    Accessor of the slot @slot[gtk-stack]{interpolate-size} of the
     @class{gtk-stack} class.
   @end{short}
 
   The generic function @sym{gtk-stack-interpolate-size}
-  returns wether the @class{gtk-stack} is set up to interpolate between the 
+  returns wether the @class{gtk-stack} is set up to interpolate between the
   sizes of children on page switch.
 
   The generic function @sym{(setf gtk-stack-interpolate-size)}
-  sets whether or not stack will interpolate its size when changing the visible 
+  sets whether or not stack will interpolate its size when changing the visible
   child. If the @code{interpolate-size} property is set to @em{true}, stack will
   interpolate its size between the current one and the one it'll take after
   changing the visible child, according to the set transition duration.
-  
+
   Since 3.18
   @see-class{gtk-stack}")
 
@@ -414,14 +414,14 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "transition-duration" 'gtk-stack)
                      't)
- "The @code{transition-duration} property of type @code{:uint} (Read / Write) 
+ "The @code{transition-duration} property of type @code{:uint} (Read / Write)
   @br{}
   The animation duration, in milliseconds. @br{}
   Since 3.10 @br{}
   Default value: 200")
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-stack-transition-duration atdoc:*function-name-alias*) 
+(setf (gethash 'gtk-stack-transition-duration atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-stack-transition-duration 'function)
  "@version{2019-3-16}
@@ -430,7 +430,7 @@
   @argument[object]{a @class{gtk-stack} object}
   @argument[duration]{the duration, in milliseconds}
   @begin{short}
-    Accessor of the slot @slot[gtk-stack]{transition-duration} of the 
+    Accessor of the slot @slot[gtk-stack]{transition-duration} of the
     @class{gtk-stack} class.
   @end{short}
 
@@ -440,7 +440,7 @@
 
   The generic function @sym{(setf gtk-stack-transition-duration)}
   sets the duration that transitions between pages in stack will take.
-  
+
   Since 3.10
   @see-class{gtk-stack}")
 
@@ -449,32 +449,32 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "transition-running" 'gtk-stack)
                      't)
- "The @code{transition-running} property of type @code{:boolean} (Read) 
+ "The @code{transition-running} property of type @code{:boolean} (Read)
   @br{}
   Whether or not the transition is currently running. @br{}
   Since 3.12 @br{}
   Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-stack-transition-running atdoc:*function-name-alias*) 
+(setf (gethash 'gtk-stack-transition-running atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-stack-transition-running 'function)
  "@version{2019-3-16}
   @syntax[]{(gtk-stack-transition-running object) => duration}
   @argument[object]{a @class{gtk-stack} object}
   @begin{short}
-    Accessor of the slot @slot[gtk-stack]{transition-running} of the 
+    Accessor of the slot @slot[gtk-stack]{transition-running} of the
     @class{gtk-stack} class.
   @end{short}
 
   The generic function @sym{gtk-stack-transition-running}
   returns whether the stack is currently in a transition from one page to
   another.
-  
+
   Since 3.12
   @see-class{gtk-stack}")
 
-;;; --- gtk-stack-transition-type ---------------------------------------------- 
+;;; --- gtk-stack-transition-type ----------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "transition-type" 'gtk-stack)
@@ -484,19 +484,19 @@
   The type of animation used to transition. @br{}
   Since 3.10 @br{}
   Default value: @code{:none}")
-  
+
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-stack-transition-type atdoc:*function-name-alias*) 
+(setf (gethash 'gtk-stack-transition-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-stack-transition-type 'function)
  "@version{2019-3-16}
   @syntax[]{(gtk-stack-transition-type object) => transition}
   @syntax[]{(setf (gtk-stack-transition-type object) transition)}
   @argument[object]{a @class{gtk-stack} object}
-  @argument[transition]{the transition of type 
+  @argument[transition]{the transition of type
     @symbol{gtk-stack-transition-type}}
   @begin{short}
-    Accessor of the slot @slot[gtk-stack]{transition-type} of the 
+    Accessor of the slot @slot[gtk-stack]{transition-type} of the
     @class{gtk-stack} class.
   @end{short}
 
@@ -511,7 +511,7 @@
   The transition type can be changed without problems at runtime, so it is
   possible to change the animation based on the page that is about to become
   current.
-    
+
   Since 3.10
   @see-class{gtk-stack}
   @see-symbol{gtk-stack-transition-type}")
@@ -528,7 +528,7 @@
   Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-stack-vhomogeneous atdoc:*function-name-alias*) 
+(setf (gethash 'gtk-stack-vhomogeneous atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-stack-vhomogeneous 'function)
  "@version{2019-3-16}
@@ -537,7 +537,7 @@
   @argument[object]{a @class{gtk-stack} object}
   @argument[vhomogeneous]{@em{true} to make stack vertically homogeneous}
   @begin{short}
-    Accessor of the slot @slot[gtk-stack]{vhomogeneous} of the 
+    Accessor of the slot @slot[gtk-stack]{vhomogeneous} of the
     @class{gtk-stack} class.
   @end{short}
 
@@ -545,11 +545,11 @@
   gets whether stack is vertically homogeneous.
 
   The generic function @sym{(setf gtk-stack-vhomogeneous)}
-  sets the @class{gtk-stack} to be vertically homogeneous or not. If it is 
-  homogeneous, the @class{gtk-stack} will request the same height for all its 
-  children. If it isn't, the stack may change height when a different child 
+  sets the @class{gtk-stack} to be vertically homogeneous or not. If it is
+  homogeneous, the @class{gtk-stack} will request the same height for all its
+  children. If it isn't, the stack may change height when a different child
   becomes visible.
-    
+
   Since 3.16
   @see-class{gtk-stack}
   @see-function{gtk-stack-homogeneous}")
@@ -565,7 +565,7 @@
   Since 3.10 @br{}")
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-stack-visible-child atdoc:*function-name-alias*) 
+(setf (gethash 'gtk-stack-visible-child atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-stack-visible-child 'function)
  "@version{2019-3-16}
@@ -574,14 +574,14 @@
   @argument[object]{a @class{gtk-stack} object}
   @argument[child]{a child of stack}
   @begin{short}
-    Accessor of the slot @slot[gtk-stack]{visible-child} of the 
+    Accessor of the slot @slot[gtk-stack]{visible-child} of the
     @class{gtk-stack} class.
   @end{short}
 
   The generic function @sym{gtk-stack-visible-child}
-  gets the currently visible child of stack, or @code{nil} if there are no 
+  gets the currently visible child of stack, or @code{nil} if there are no
   visible children.
-  
+
   The generic function @sym{(setf gtk-stack-visible-child)}
   makes child the visible child of stack .
 
@@ -600,14 +600,14 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "visible-child-name" 'gtk-stack)
                      't)
- "The @code{visible-child-name} property of type @code{:string} (Read / Write) 
+ "The @code{visible-child-name} property of type @code{:string} (Read / Write)
   @br{}
   The name of the widget currently visible in the stack. @br{}
   Since 3.10 @br{}
   Default value: @code{nil}")
-  
+
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-stack-visible-child-name atdoc:*function-name-alias*) 
+(setf (gethash 'gtk-stack-visible-child-name atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-stack-visible-child-name 'function)
  "@version{2019-3-16}
@@ -616,14 +616,14 @@
   @argument[object]{a @class{gtk-stack} object}
   @argument[name]{the name of the visible child of the stack.}
   @begin{short}
-    Accessor of the slot @slot[gtk-stack]{visible-child-name} of the 
+    Accessor of the slot @slot[gtk-stack]{visible-child-name} of the
     @class{gtk-stack} class.
   @end{short}
 
   The generic function @sym{gtk-stack-visible-child-name}
-  returns the name of the currently visible child of stack, or @code{nil} if 
+  returns the name of the currently visible child of stack, or @code{nil} if
   there is no visible child.
-  
+
   The generic function @sym{(setf gtk-stack-visible-child-name)}
   makes the child with the given name visible.
 
@@ -646,22 +646,22 @@
 (define-child-property "GtkStack"
                        gtk-stack-child-icon-name
                        "icon-name" "gchar" t t t)
-                       
+
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-stack-child-icon-name atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-stack-child-icon-name 'function)
  "@version{2019-3-16}
   @syntax[]{(gtk-stack-child-icon-name object) => name)}
-  @syntax[]{(setf (gtk-stack-child-icon-name object) name)}  
+  @syntax[]{(setf (gtk-stack-child-icon-name object) name)}
   @argument[object]{a @class{gtk-stack} container}
   @argument[child]{the @class{gtk-widget} child widget}
   @argument[name]{The icon name of the child page.}
   @begin{short}
-    Accessor of the child property @code{icon-name} of the @class{gtk-stack} 
+    Accessor of the child property @code{icon-name} of the @class{gtk-stack}
     class.
   @end{short}
-  
+
   Since 3.10
   @see-class{gtk-stack}")
 
@@ -670,21 +670,21 @@
 (define-child-property "GtkStack"
                        gtk-stack-child-name
                        "name" "gchar" t t t)
-                       
+
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-stack-child-name atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-stack-child-name 'function)
  "@version{2019-3-16}
   @syntax[]{(gtk-stack-child-name object) => name)}
-  @syntax[]{(setf (gtk-stack-child-name object) name)}  
+  @syntax[]{(setf (gtk-stack-child-name object) name)}
   @argument[object]{a @class{gtk-stack} container}
   @argument[child]{the @class{gtk-widget} child widget}
   @argument[name]{The name of the child page.}
   @begin{short}
     Accessor of the child property @code{name} of the @class{gtk-stack} class.
   @end{short}
-  
+
   Since 3.10
   @see-class{gtk-stack}")
 
@@ -693,27 +693,27 @@
 (define-child-property "GtkStack"
                        gtk-stack-child-needs-attention
                        "needs-attention" "gboolean" t t t)
-                       
+
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-stack-child-needs-attention atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-stack-child-needs-attention 'function)
  "@version{2019-3-16}
   @syntax[]{(gtk-stack-child-needs-attention object) => attention)}
-  @syntax[]{(setf (gtk-stack-child-needs-attention object) attention)}  
+  @syntax[]{(setf (gtk-stack-child-needs-attention object) attention)}
   @argument[object]{a @class{gtk-stack} container}
   @argument[child]{the @class{gtk-widget} child widget}
   @argument[attention]{flag specifying whether the child requires attention}
   @begin{short}
-    Accessor of the child property @code{needs-attention} of the 
+    Accessor of the child property @code{needs-attention} of the
     @class{gtk-stack} class.
   @end{short}
-  
+
   Sets a flag specifying whether the child requires the user attention. This
-  is used by the @class{gtk-stack-switcher} to change the appearance of the 
+  is used by the @class{gtk-stack-switcher} to change the appearance of the
   corresponding button when a page needs attention and it is not the current
-  one.  
-  
+  one.
+
   Since 3.12
   @see-class{gtk-stack}
   @see-class{gtk-stack-switcher}")
@@ -723,14 +723,14 @@
 (define-child-property "GtkStack"
                        gtk-stack-child-position
                        "position" "gint" t t t)
-                       
+
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-stack-child-position atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-stack-child-position 'function)
  "@version{2019-3-16}
   @syntax[]{(gtk-stack-child-position object) => position)}
-  @syntax[]{(setf (gtk-stack-child-position object) position)}  
+  @syntax[]{(setf (gtk-stack-child-position object) position)}
   @argument[object]{a @class{gtk-stack} container}
   @argument[child]{the @class{gtk-widget} child widget}
   @argument[position]{The index of the child in the parent.}
@@ -740,27 +740,27 @@
 
   Since 3.10
   @see-class{gtk-stack}")
-  
+
 ;;; --- gtk-stack-child-title --------------------------------------------------
 
 (define-child-property "GtkStack"
                        gtk-stack-child-title
                        "title" "gchar" t t t)
-                       
+
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-stack-child-title atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-stack-child-title 'function)
  "@version{2019-3-16}
   @syntax[]{(gtk-stack-child-title object) => title)}
-  @syntax[]{(setf (gtk-stack-child-title object) title)}  
+  @syntax[]{(setf (gtk-stack-child-title object) title)}
   @argument[object]{a @class{gtk-stack} container}
   @argument[child]{the @class{gtk-widget} child widget}
   @argument[position]{The title of the child page.}
   @begin{short}
     Accessor of the child property @code{title} of the @class{gtk-stack} class.
   @end{short}
-  
+
   Since 3.10
   @see-class{gtk-stack}")
 
@@ -793,7 +793,7 @@
   @argument[child]{the @class{gtk-widget} to add}
   @argument[name]{the name for child}
   @begin{short}
-    Adds a child to @arg{stack}. The child is identified by the @arg{name}.    
+    Adds a child to @arg{stack}. The child is identified by the @arg{name}.
   @end{short}
 
   Since 3.10
@@ -816,9 +816,9 @@
   @argument[name]{the name for child}
   @argument[title]{a human-readable title for child}
   @begin{short}
-    Adds a child to @arg{stack}.    
+    Adds a child to @arg{stack}.
   @end{short}
-  The child is identified by the @arg{name}. The title will be used by 
+  The child is identified by the @arg{name}. The title will be used by
   @class{gtk-stack-switcher} to represent child in a tab bar, so it should be
   short.
 
@@ -836,7 +836,7 @@
 ;;; gtk_stack_get_child_by_name ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_stack_get_child_by_name" gtk-stack-get-child-by-name) 
+(defcfun ("gtk_stack_get_child_by_name" gtk-stack-get-child-by-name)
          (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
  "@version{2019-3-16}
@@ -844,7 +844,7 @@
   @argument[name]{the name for the child to find}
   @return{The requested child of the @arg{stack}.}
   @begin{short}
-    Finds the child of the @arg{stack} with the name given as the argument.     
+    Finds the child of the @arg{stack} with the name given as the argument.
   @end{short}
   Returns @code{nil} if there is no child with this name.
 
@@ -859,18 +859,18 @@
 ;;; gtk_stack_set_visible_child_full ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_stack_set_visible_child_full" gtk-stack-set-visible-child-full) 
+(defcfun ("gtk_stack_set_visible_child_full" gtk-stack-set-visible-child-full)
          :void
  #+cl-cffi-gtk-documentation
  "@version{2019-3-16}
   @argument[stack]{a @class{gtk-stack} container}
   @argument[name]{the name of the child to make visible}
-  @argument[transition]{the transition of type 
+  @argument[transition]{the transition of type
     @symbol{gtk-stack-transition-type} to use}
   @begin{short}
-    Makes the child with the given name visible. 
+    Makes the child with the given name visible.
   @end{short}
-  
+
   Note that the child widget has to be visible itself, see the function
   @fun{gtk-widget-show}, in order to become the visible child of stack .
 
