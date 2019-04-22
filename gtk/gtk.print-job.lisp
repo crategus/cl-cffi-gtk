@@ -1,15 +1,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.print-job.lisp
 ;;;
-;;; This file contains code from a fork of cl-gtk2.
-;;; See <http://common-lisp.net/project/cl-gtk2/>.
-;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
-;;; Version 3.8.6 and modified to document the Lisp binding to the GTK library.
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2013 Dieter Kaiser
+;;; Copyright (C) 2013 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -31,7 +28,7 @@
 ;;;
 ;;; GtkPrintJob
 ;;;
-;;; Represents a print job
+;;;     Represents a print job
 ;;;
 ;;; Synopsis
 ;;;
@@ -42,6 +39,7 @@
 ;;;     gtk_print_job_get_printer
 ;;;     gtk_print_job_get_title
 ;;;     gtk_print_job_get_status
+;;;     gtk_print_job_set_source_fd
 ;;;     gtk_print_job_set_source_file
 ;;;     gtk_print_job_get_surface
 ;;;     gtk_print_job_send
@@ -68,22 +66,22 @@
 ;;;     gtk_print_job_get_reverse
 ;;;     gtk_print_job_set_reverse
 ;;;
-;;; Object Hierarchy
-;;;
-;;;   GObject
-;;;    +----GtkPrintJob
-;;;
 ;;; Properties
 ;;;
-;;;   "page-setup"               GtkPageSetup*        : Read / Write / Construct
-;;;   "printer"                  GtkPrinter*          : Read / Write / Construct
-;;;   "settings"                 GtkPrintSettings*    : Read / Write / Construct
-;;;   "title"                    gchar*               : Read / Write / Construct
-;;;   "track-print-status"       gboolean             : Read / Write
+;;;     GtkPageSetup*  page-setup            Read / Write / Construct Only
+;;;       GtkPrinter*  printer               Read / Write / Construct Only
+;;; GtkPrintSettings*  settings              Read / Write / Construct Only
+;;;            gchar*  title                 Read / Write / Construct Only
+;;;         gboolean   track-print-status    Read / Write
 ;;;
 ;;; Signals
 ;;;
-;;;   "status-changed"                                : Run Last
+;;;     void   status-changed    Run Last
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GtkPrintJob
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -352,6 +350,37 @@
   (job (g-object gtk-print-job)))
 
 (export 'gtk-print-job-get-status)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_print_job_set_source_fd ()
+;;;
+;;; gboolean
+;;; gtk_print_job_set_source_fd (GtkPrintJob *job,
+;;;                              int fd,
+;;;                              GError **error);
+;;;
+;;; Make the GtkPrintJob send an existing document to the printing system. The
+;;; file can be in any format understood by the platforms printing system
+;;; (typically PostScript, but on many platforms PDF may work too). See
+;;; gtk_printer_accepts_pdf() and gtk_printer_accepts_ps().
+;;;
+;;; This is similar to gtk_print_job_set_source_file(), but takes expects an
+;;; open file descriptor for the file, instead of a filename.
+;;;
+;;; job :
+;;;     a GtkPrintJob
+;;;
+;;; fd :
+;;;     a file descriptor
+;;;
+;;; error :
+;;;     return location for errors
+;;;
+;;; Returns :
+;;;     FALSE if an error occurred
+;;;
+;;; Since 3.22
+;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_job_set_source_file ()
