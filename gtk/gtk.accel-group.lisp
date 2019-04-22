@@ -857,6 +857,7 @@
   @begin{short}
     Gets the value set by the @fun{gtk-accelerator-set-default-mod-mask}
     function.
+  @end{short}
   @see-class{gtk-accel-group}
   @see-symbol{gdk-modifier-type}
   @see-function{gtk-accelerator-set-default-mod-mask}")
