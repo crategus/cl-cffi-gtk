@@ -355,7 +355,7 @@
   @begin[Warning]{dictionary}
     The @sym{gtk-tool-button-new-from-stock} function has been deprecated since
     version 3.10 and should not be used in newly-written code. Use the
-    @fun{gtk-tool-button-new} function together with the 
+    @fun{gtk-tool-button-new} function together with the
     @fun{gtk-image-new-from-icon-name} function instead.
   @end{dictionary}
   @see-class{gtk-tool-button}
