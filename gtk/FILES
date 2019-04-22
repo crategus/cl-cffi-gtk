@@ -10,7 +10,7 @@ GTK+ Widgets and Objects
   Application support
 
     gtk.application.lisp             - GtkApplication              - GTK+ 3.24 &
-    gtk.application-window.lisp      - GtkApplicationWindow        - GTK+ 3.24 &
+    gtk.application-window.lisp      - GtkApplicationWindow        - GTK+ 3.24
     gtk.actionable.lisp              - GtkActionable               - GTK+ 3.24 &
 
   Interface builder
@@ -78,19 +78,19 @@ GTK+ Widgets and Objects
 
   Numeric and Text Data Entry
 
-    gtk.entry.lisp                   - GtkEntry                    - GTK+ 3.10 *
-    gtk.entry-buffer.lisp            - GtkEntryBuffer              - GTK+ 3.10 *
-    gtk.entry-completion.lisp        - GtkEntryCompletion          - GTK+ 3.10 *
-    gtk.scale.lisp                   - GtkScale, ...               - GTK+ 3.10 *
-    gtk.spin-button.lisp             - GtkSpinButton               - GTK+ 3.10 *
-    gtk.search-entry.lisp            - GtkSearchEntry              - GTK+ 3.10 *
-    not implemented                  - GtkSearchBar
-    gtk.editable.lisp                - GtkEditable                 - GTK+ 3.16 *
+    gtk.entry.lisp                   - GtkEntry                    - GTK+ 3.24 &
+    gtk.entry-buffer.lisp            - GtkEntryBuffer              - GTK+ 3.24
+    gtk.entry-completion.lisp        - GtkEntryCompletion          - GTK+ 3.24
+    gtk.scale.lisp                   - GtkScale, ...               - GTK+ 3.24
+    gtk.spin-button.lisp             - GtkSpinButton               - GTK+ 3.24
+    gtk.search-entry.lisp            - GtkSearchEntry              - GTK+ 3.24 &
+    gtk.search-bar.lisp              - GtkSearchBar                - Gtk+ 3.24 &
+    gtk.editable.lisp                - GtkEditable                 - GTK+ 3.24
 
   Multiline Text Editor
 
-    gtk.text-iter.lisp               - GtkTextIter                 - GTK+ 3.16 *
-    gtk.text-mark.lisp               - GtkTextMark                 - GTK+ 3.16 *
+    gtk.text-iter.lisp               - GtkTextIter                 - GTK+ 3.24 &
+    gtk.text-mark.lisp               - GtkTextMark                 - GTK+ 3.24
     gtk.text-buffer.lisp             - GtkTextBuffer               - GTK+ 3.24
     gtk.text-tag.lisp                - GtkTextTag                  - GTK+ 3.24 &
     gtk.text-tag-table.lisp          - GtkTextTagTable             - GTK+ 3.24
@@ -182,15 +182,15 @@ GTK+ Widgets and Objects
 
   Printing
 
-    gtk.print-operation.lisp         - GtkPrintOperation           - GTK+ 3.6.4*
-    gtk.print-context.lisp           - GtkPrintContext             - GTK+ 3.6.4*
-    gtk.print-settings.lisp          - GtkPrintSettings            - GTK+ 3.8.6*
-    gtk.page-setup.lisp              - GtkPageSetup                - GTK+ 3.8.6*
-    gtk.paper-size.lisp              - GtkPaperSize                - GTK+ 3.6.4*
-    gtk.printer.lisp                 - GtkPrinter                  - GTK+ 3.6.4*
-    gtk.print-job.lisp               - GtkPrintJob                 - GTK+ 3.8.6*
-    gtk.print-unix-dialog.lisp       - GtkPrintUnixDialog          - GTK+ 3.6.4*
-    gtk.page-setup-unix-dialog.lisp  - GtkPageSetupUnixDialog      - GTK+ 3.6.4*
+    gtk.print-operation.lisp         - GtkPrintOperation           - GTK+ 3.24
+    gtk.print-context.lisp           - GtkPrintContext             - GTK+ 3.24
+    gtk.print-settings.lisp          - GtkPrintSettings            - GTK+ 3.24 &
+    gtk.page-setup.lisp              - GtkPageSetup                - GTK+ 3.24 &
+    gtk.paper-size.lisp              - GtkPaperSize                - GTK+ 3.24 &
+    gtk.printer.lisp                 - GtkPrinter                  - GTK+ 3.24 &
+    gtk.print-job.lisp               - GtkPrintJob                 - GTK+ 3.24 &
+    gtk.print-unix-dialog.lisp       - GtkPrintUnixDialog          - GTK+ 3.24 &
+    gtk.page-setup-unix-dialog.lisp  - GtkPageSetupUnixDialog      - GTK+ 3.24 &
 
   Shortcuts Overview
   
@@ -264,17 +264,17 @@ GTK+ Widgets and Objects
 
 GTK+ Core Reference
 
-    gtk.main-loop.lisp               - Main loop and Events        - GTK+ 3.8.8*
-    gtk.version.lisp                 - Version Information         - GTK+ 3.16 *
-    gtk.accel-group.lisp             - Accelerator Groups          - GTK+ 3.8.8*
-    gtk.accel-map.lisp               - Accelerator Maps            - GTK+ 3.6.4*
-    gtk.clipboard.lisp               - GtkClipboard                - GTK+ 3.6.4*
-    gtk.drag-and-drop.lisp           - Drag and Drop handling      - GTK+ 3.8.6*
-    gtk.setting.lisp                 - GtkSettings                 - GTK+ 3.10 *
-    gtk.bindings.lisp                - Bindings                    - GTK+ 3.8.8*
-    gtk.enumerations.lisp            - Standard Enumerations       - GTK+ 3.10 *
-    gtk.selections.lisp              - Selections                  - GTK+ 3.8.6*
-    gtk.mount-operation.lisp         - Filesystem utilities        - GTK+ 3.6.4*
+    gtk.main-loop.lisp               - Main loop and Events        - GTK+ 3.24 &
+    gtk.version.lisp                 - Version Information         - GTK+ 3.24
+    gtk.accel-group.lisp             - Accelerator Groups          - GTK+ 3.24 &
+    gtk.accel-map.lisp               - Accelerator Maps            - GTK+ 3.24 &
+    gtk.clipboard.lisp               - GtkClipboard                - GTK+ 3.24 &
+    gtk.drag-and-drop.lisp           - Drag and Drop handling      - GTK+ 3.24 &
+    gtk.settings.lisp                - GtkSettings                 - GTK+ 3.24 &
+    gtk.bindings.lisp                - Bindings                    - GTK+ 3.24 %
+    gtk.enumerations.lisp            - Standard Enumerations       - GTK+ 3.24
+    gtk.selections.lisp              - Selections                  - GTK+ 3.24 &
+    gtk.mount-operation.lisp         - Filesystem utilities        - GTK+ 3.24 %
 
 Theming in GTK+
 

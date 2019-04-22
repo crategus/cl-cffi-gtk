@@ -10,8 +10,8 @@ List of files for the GDK Library
   gdk.display-manager.lisp  - GdkDisplayManager      - GDK 3.24
   gdk.display.lisp          - GdkDisplay             - GDK 3.24
   gdk.screen.lisp           - GdkScreen              - GDK 3.24
-
   gdk.seat.lisp             - GdkSeat                - GDK 3.24 &
+
   gdk.monitor.lisp          - GdkMonitor             - GDK 3.24
   gdk.device.lisp           - GdkDevice              - GDK 3.24 &
   gdk.device-pad.lisp       - GtkDevicePad           - GDK 3.24 &

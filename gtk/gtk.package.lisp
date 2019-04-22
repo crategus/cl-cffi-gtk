@@ -1078,48 +1078,78 @@
     @begin[GtkEntry]{subsection}
       A single line text entry field.
 
+      @about-symbol{gtk-entry-icon-position}
+      @about-symbol{gtkk-input-purpose}
+      @about-symbol{gtk-input-hints}
       @about-class{gtk-entry}
+
+      @about-generic{gtk-entry-activates-default}
+      @about-generic{gtk-entry-attributes}
+      @about-generic{gtk-entry-buffer}
+      @about-generic{gtk-entry-caps-lock-warning}
+      @about-generic{gtk-entry-completion}
+      @about-generic{gtk-entry-cursor-position}
+      @about-generic{gtk-entry-editable}
+      @about-generic{gtk-entry-enable-emoji-completion}
+      @about-generic{gtk-entry-has-frame}
+      @about-generic{gtk-entry-im-module}
+      @about-generic{gtk-entry-inner-border}
+      @about-generic{gtk-entry-input-hints}
+      @about-generic{gtk-entry-input-purpose}
+      @about-generic{gtk-entry-invisible-char}
+      @about-generic{gtk-entry-invisible-char-set}
+      @about-generic{gtk-entry-max-length}
+      @about-generic{gtk-entry-max-width-chars}
+      @about-generic{gtk-entry-overwrite-mode}
+      @about-generic{gtk-entry-placeholder-text}
+      @about-generic{gtk-entry-populate-all}
+      @about-generic{gtk-entry-primary-icon-activatable}
+      @about-generic{gtk-entry-primary-icon-gicon}
+      @about-generic{gtk-entry-primary-icon-name}
+      @about-generic{gtk-entry-primary-icon-pixbuf}
+      @about-generic{gtk-entry-primary-icon-sensitive}
+      @about-generic{gtk-entry-primary-icon-stock}
+      @about-generic{gtk-entry-primary-icon-storage-type}
+      @about-generic{gtk-entry-primary-icon-tooltip-markup}
+      @about-generic{gtk-entry-primary-icon-tooltip-text}
+      @about-generic{gtk-entry-progress-fraction}
+      @about-generic{gtk-entry-progress-pulse-step}
+      @about-generic{gtk-entry-scroll-offset}
+      @about-generic{gtk-entry-secondary-icon-activatable}
+      @about-generic{gtk-entry-secondary-icon-gicon}
+      @about-generic{gtk-entry-secondary-icon-name}
+      @about-generic{gtk-entry-secondary-icon-pixbuf}
+      @about-generic{gtk-entry-secondary-icon-sensitive}
+      @about-generic{gtk-entry-secondary-icon-stock}
+      @about-generic{gtk-entry-secondary-icon-storage-type}
+      @about-generic{gtk-entry-secondary-icon-tooltip-markup}
+      @about-generic{gtk-entry-secondary-icon-tooltip-text}
+      @about-generic{gtk-entry-selection-bound}
+      @about-generic{gtk-entry-shadow-type}
+      @about-generic{gtk-entry-show-emoji-icon}
+      @about-generic{gtk-entry-tabs}
+      @about-generic{gtk-entry-text}
+      @about-generic{gtk-entry-text-length}
+      @about-generic{gtk-entry-truncate-multiline}
+      @about-generic{gtk-entry-visibility}
+      @about-generic{gtk-entry-width-chars}
+      @about-generic{gtk-entry-xalign}
+
       @about-function{gtk-entry-new}
       @about-function{gtk-entry-new-with-buffer}
-      @about-function{gtk-entry-get-buffer}
-      @about-function{gtk-entry-set-buffer}
       @about-function{gtk-entry-get-text-area}
       @about-function{gtk-entry-set-invisible-char}
-      @about-function{gtk-entry-unset-invisible-char}
-      @about-function{gtk-entry-set-max-length}
-      @about-function{gtk-entry-get-activates-default}
-      @about-function{gtk-entry-get-has-frame}
-      @about-function{gtk-entry-get-inner-border}
-      @about-function{gtk-entry-get-width-chars}
-      @about-function{gtk-entry-set-activates-default}
-      @about-function{gtk-entry-set-has-frame}
-      @about-function{gtk-entry-set-inner-border}
-      @about-function{gtk-entry-set-width-chars}
-      @about-function{gtk-entry-get-invisible-char}
       @about-function{gtk-entry-set-alignment}
       @about-function{gtk-entry-get-alignment}
-      @about-function{gtk-entry-set-overwrite-mode}
-      @about-function{gtk-entry-get-overwrite-mode}
       @about-function{gtk-entry-get-layout}
       @about-function{gtk-entry-get-layout-offsets}
       @about-function{gtk-entry-layout-index-to-text-index}
       @about-function{gtk-entry-text-index-to-layout-index}
-      @about-function{gtk-entry-set-attributes}
-      @about-function{gtk-entry-get-attributes}
-      @about-function{gtk-entry-get-max-length}
-      @about-function{gtk-entry-get-visibility}
-      @about-function{gtk-entry-set-completion}
-      @about-function{gtk-entry-get-completion}
       @about-function{gtk-entry-set-cursor-hadjustment}
       @about-function{gtk-entry-get-cursor-hadjustment}
-      @about-function{gtk-entry-set-progress-fraction}
-      @about-function{gtk-entry-get-progress-fraction}
-      @about-function{gtk-entry-set-progress-pulse-step}
-      @about-function{gtk-entry-get-progress-pulse-step}
       @about-function{gtk-entry-progress-pulse}
       @about-function{gtk-entry-im-context-filter-keypress}
       @about-function{gtk-entry-reset-im-context}
-      @about-symbol{gtk-entry-icon-position}
       @about-function{gtk-entry-set-icon-from-pixbuf}
       @about-function{gtk-entry-set-icon-from-stock}
       @about-function{gtk-entry-set-icon-from-icon-name}
@@ -1141,12 +1171,7 @@
       @about-function{gtk-entry-set-icon-drag-source}
       @about-function{gtk-entry-get-current-icon-drag-source}
       @about-function{gtk-entry-get-icon-area}
-      @about-symbol{gtk-input-purpose}
-      @about-function{gtk-entry-set-input-purpose}
-      @about-function{gtk-entry-get-input-purpose}
-      @about-symbol{gtk-input-hints}
-      @about-function{gtk-entry-set-input-hints}
-      @about-function{gtk-entry-get-input-hints}
+      @about-function{gtk-entry-grab-focus-without-selecting}
     @end{subsection}
     @begin[GtkEntryBuffer]{subsection}
       Text buffer for @class{gtk-entry}.
@@ -4730,7 +4755,6 @@ setup_tree (void)
       @about-function{gtk-page-setup-unix-dialog-get-print-settings}
     @end{subsection}
   @end{section}
-
   @begin[Shortcuts Overview]{section}
     @begin[GtkShortcutsWindow]{subsection}
       Toplevel which shows help for shortcuts
