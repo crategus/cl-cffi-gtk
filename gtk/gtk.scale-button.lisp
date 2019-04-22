@@ -183,7 +183,7 @@
   scale.
 
   The generic function @sym{(setf gtk-scale-button-adjustment)} sets the
-  @class{gtk-adjustment} object to be used as a model for the 
+  @class{gtk-adjustment} object to be used as a model for the
   @class{gtk-scale-button}'s scale.
   @see-class{gtk-scale-button}")
 
