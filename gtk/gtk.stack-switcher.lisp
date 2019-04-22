@@ -84,13 +84,13 @@
 (setf (documentation 'gtk-stack-switcher 'type)
  "@version{2019-3-15}
   @begin{short}
-    The @sym{gtk-stack-switcher} widget acts as a controller for a 
-    @class{gtk-stack}; it shows a row of buttons to switch between the various 
+    The @sym{gtk-stack-switcher} widget acts as a controller for a
+    @class{gtk-stack}; it shows a row of buttons to switch between the various
     pages of the associated stack widget.
   @end{short}
 
-  All the content for the buttons comes from the child properties of the 
-  @class{gtk-stack}; the button visibility in a @sym{gtk-stack-switcher} 
+  All the content for the buttons comes from the child properties of the
+  @class{gtk-stack}; the button visibility in a @sym{gtk-stack-switcher}
   widget is controlled by the visibility of the child in the @class{gtk-stack}.
 
   It is possible to associate multiple @sym{gtk-stack-switcher} widgets with the
@@ -101,7 +101,7 @@
     @sym{gtk-stack-switcher} has a single CSS node named stackswitcher and style
     class .stack-switcher.
 
-    When circumstances require it, @sym{gtk-stack-switcher} adds the 
+    When circumstances require it, @sym{gtk-stack-switcher} adds the
     .needs-attention style class to the widgets representing the stack pages.
   @end{dictionary}
   @see-slot{gtk-stack-switcher-icon-size}
@@ -134,10 +134,10 @@
   @argument[object]{a @class{gtk-stack-switcher} object}
   @argument[icon-size]{size of the image}
   @begin{short}
-    Accessor of the slot @slot[gtk-stack-switcher]{icon-size} of the 
+    Accessor of the slot @slot[gtk-stack-switcher]{icon-size} of the
     @class{gtk-stack-switcher} class.
   @end{short}
-  
+
   Since 3.20
   @see-class{gtk-stack-switcher}")
 
@@ -160,7 +160,7 @@
   @argument[object]{a @class{gtk-stack-switcher} object}
   @argument[stack]{a @class{gtk-stack} container}
   @begin{short}
-    Accessor of the slot @slot[gtk-stack-switcher]{stack} of the 
+    Accessor of the slot @slot[gtk-stack-switcher]{stack} of the
     @class{gtk-stack-switcher} class.
   @end{short}
 
@@ -169,7 +169,7 @@
 
   The generic function @sym{(setf gtk-stack-switcher-stack)}
   sets the stack to control.
-  
+
   Since 3.10
   @see-class{gtk-stack-switcher}")
 
