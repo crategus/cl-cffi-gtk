@@ -791,7 +791,7 @@
 ;;;
 ;;; length :
 ;;;     length of indices array
-;;; 
+;;;
 ;;; Returns :
 ;;;     A newly created GtkTreePath
 ;;;
@@ -2036,7 +2036,7 @@
 ;;; path :
 ;;;     a GtkTreePath pointing to the tree node whose children have been
 ;;;     reordered
-;;; 
+;;;
 ;;; iter :
 ;;;     a valid GtkTreeIter pointing to the node whose children have been
 ;;;     reordered, or NULL if the depth of path is 0.
@@ -2047,7 +2047,7 @@
 ;;;
 ;;; length :
 ;;;     length of new_order array
-;;; 
+;;;
 ;;; Since 3.10
 ;;; ----------------------------------------------------------------------------
 
