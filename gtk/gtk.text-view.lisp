@@ -243,7 +243,7 @@
 #+gtk-3-14
 (define-g-enum "GtkTextViewLayer" gtk-text-view-layer
   (:export t
-   :type-initializer "gtk_text_view_layer_type_get_type")
+   :type-initializer "gtk_text_view_layer_get_type")
   (:below 0)
   (:above 1)
   #+gtk-3-20
@@ -263,7 +263,7 @@
   @begin{pre}
 (define-g-enum \"GtkTextViewLayer\" gtk-text-view-layer
   (:export t
-   :type-initializer \"gtk_text_view_layer_type_get_type\")
+   :type-initializer \"gtk_text_view_layer_get_type\")
   (:below 0)
   (:above 1)
   (:below-text 2)
@@ -286,7 +286,7 @@
 #+gtk-3-16
 (define-g-enum "GtkTextExtendSelection" gtk-text-extend-selection
   (:export t
-   :type-initializer "gtk_text_extend_selection_type_get_type")
+   :type-initializer "gtk_text_extend_selection_get_type")
   (:word 0)
   (:line 1))
 
@@ -301,7 +301,7 @@
   @begin{pre}
 (define-g-enum \"GtkTextExtendSelection\" gtk-text-extend-selection
   (:export t
-   :type-initializer \"gtk_text_extend_selection_type_get_type\")
+   :type-initializer \"gtk_text_extend_selection_get_type\")
   (:word 0)
   (:line 1))
   @end{pre}
@@ -587,7 +587,7 @@
       @begin[code]{table}
         @entry[text-view]{The @class{gtk-text-view} object which received the
           signal.}
-      @end{table} 
+      @end{table}
       Since 3.22
 
     @subheading{The \"move-cursor\" signal}
@@ -2306,7 +2306,7 @@
 ;;;
 ;;; text_view :
 ;;;     a GtkTextView
-;;; 
+;;;
 ;;; Since 3.20
 ;;; ----------------------------------------------------------------------------
 
@@ -2612,10 +2612,10 @@
 ;;;
 ;;; text_view :
 ;;;     a GtkTextView
-;;; 
+;;;
 ;;; top_margin :
 ;;; top margin in pixels
-;;; 
+;;;
 ;;; Since 3.18
 ;;; ----------------------------------------------------------------------------
 
@@ -2628,7 +2628,7 @@
 ;;;
 ;;; text_view :
 ;;;     a GtkTextView
-;;; 
+;;;
 ;;; Returns :
 ;;;     top margin in pixels
 ;;;
@@ -2649,7 +2649,7 @@
 ;;;
 ;;; text_view :
 ;;;     a GtkTextView
-;;; 
+;;;
 ;;; bottom_margin :
 ;;;     bottom margin in pixels
 ;;;
@@ -2665,7 +2665,7 @@
 ;;;
 ;;; text_view :
 ;;;     a GtkTextView
-;;; 
+;;;
 ;;; Returns :
 ;;;     bottom margin in pixels
 ;;;
