@@ -1,11 +1,12 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.mount-operation.lisp
 ;;;
-;;; The documentation has been copied from the GTK+ 3 Reference Manual
-;;; Version 3.6.4. See <http://www.gtk.org>. The API documentation of the
-;;; Lisp binding is available at <http://www.crategus.com/books/cl-cffi-gtk/>.
+;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
+;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
+;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
+;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
 ;;;
-;;; Copyright (C) 2013 Dieter Kaiser
+;;; Copyright (C) 2013 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -27,11 +28,14 @@
 ;;;
 ;;; Filesystem utilities
 ;;;
-;;; Functions for working with GIO
+;;;     Functions for working with GIO
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkMountOperation
+;;;
+;;; Functions
+;;;
 ;;;     gtk_mount_operation_new
 ;;;     gtk_mount_operation_is_showing
 ;;;     gtk_mount_operation_set_parent
@@ -39,12 +43,19 @@
 ;;;     gtk_mount_operation_set_screen
 ;;;     gtk_mount_operation_get_screen
 ;;;     gtk_show_uri
+;;;     gtk_show_uri_on_window ()
 ;;;
 ;;; Properties
 ;;;
-;;;   "is-showing"               gboolean              : Read
-;;;   "parent"                   GtkWindow*            : Read / Write
-;;;   "screen"                   GdkScreen*            : Read / Write
+;;;      gboolean   is-showing    Read
+;;;     GtkWindow*  parent        Read / Write
+;;;     GdkScreen*  screen        Read / Write
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GMountOperation
+;;;         ╰── GtkMountOperation
 ;;;
 ;;; Description
 ;;;
@@ -241,5 +252,47 @@
     (%gtk-show-uri screen uri timestamp err)))
 
 (export 'gtk-show-uri)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_show_uri_on_window ()
+;;;
+;;; gboolean
+;;; gtk_show_uri_on_window (GtkWindow *parent,
+;;;                         const char *uri,
+;;;                         guint32 timestamp,
+;;;                         GError **error);
+;;;
+;;; This is a convenience function for launching the default application to show
+;;; the uri. The uri must be of a form understood by GIO (i.e. you need to
+;;; install gvfs to get support for uri schemes such as http:// or ftp://, as
+;;; only local files are handled by GIO itself). Typical examples are
+;;;
+;;; file:///home/gnome/pict.jpg
+;;; http://www.gnome.org
+;;; mailto:me@gnome.org
+;;;
+;;; Ideally the timestamp is taken from the event triggering the gtk_show_uri()
+;;; call. If timestamp is not known you can take GDK_CURRENT_TIME.
+;;;
+;;; This is the recommended call to be used as it passes information necessary
+;;; for sandbox helpers to parent their dialogs properly.
+;;;
+;;; parent :
+;;;     parent window.
+;;;
+;;; uri :
+;;;     the uri to show
+;;;
+;;; timestamp :
+;;;     a timestamp to prevent focus stealing
+;;;
+;;; error :
+;;;     a GError that is returned in case of errors
+;;;
+;;; Returns :
+;;;     TRUE on success, FALSE on error
+;;;
+;;; Since 3.22
+;;; ----------------------------------------------------------------------------
 
 ;;; --- End of file gtk-mount-operation.lisp -----------------------------------
