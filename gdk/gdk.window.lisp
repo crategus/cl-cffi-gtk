@@ -662,14 +662,15 @@
  "@version{2013-9-16}
   @begin{short}
     The @sym{gdk-geometry} structure gives the window manager information about
-    a window's geometry constraints. Normally you would set these on the GTK+
-    level using the function @fun{gtk-window-set-geometry-hints}.
-    @class{gtk-window} then sets the hints on the @class{gdk-window} it creates.
+    a window's geometry constraints.
   @end{short}
+  Normally you would set these on the GTK+ level using the
+  @fun{gtk-window-set-geometry-hints} function. @class{gtk-window} then sets
+  the hints on the @class{gdk-window} it creates.
 
-  The function @fun{gdk-window-set-geometry-hints} expects the hints to be fully
+  The @fun{gdk-window-set-geometry-hints} function expects the hints to be fully
   valid already and simply passes them to the window manager; in contrast, the
-  function @fun{gtk-window-set-geometry-hints} performs some interpretation. For
+  @fun{gtk-window-set-geometry-hints} function performs some interpretation. For
   example, @class{gtk-window} will apply the hints to the geometry widget
   instead of the toplevel window, if you set a geometry widget. Also, the
   @code{min-width}/@code{min-height}/@code{max-width}/@code{max-height} fields
@@ -680,15 +681,16 @@
   take the minimum size as the minimum size of the geometry widget rather than
   the entire window. The base size is treated similarly.
 
-  The canonical use-case for the function @fun{gtk-window-set-geometry-hints} is
+  The canonical use-case for the @fun{gtk-window-set-geometry-hints} function is
   to get a terminal widget to resize properly. Here, the terminal text area
   should be the geometry widget; @class{gtk-window} will then automatically set
   the base size to the size of other widgets in the terminal window, such as the
-  menubar and scrollbar. Then, the @code{width-inc} and @code{height-inc} fields
-  should be set to the size of one character in the terminal. Finally, the base
-  size should be set to the size of one character. The net effect is that the
-  minimum size of the terminal will have a 1 x 1 character terminal area, and
-  only terminal sizes on the \"character grid\" will be allowed.
+  menubar and scrollbar. Then, the @code{width-increment} and
+  @code{height-incement} fields should be set to the size of one character in
+  the terminal. Finally, the base size should be set to the size of one
+  character. The net effect is that the minimum size of the terminal will have
+  a 1 x 1 character terminal area, and only terminal sizes on the
+  \"character grid\" will be allowed.
 
   Here is an example of how the terminal example would be implemented, assuming
   a terminal area widget called \"terminal\" and a toplevel window \"toplevel\":
@@ -748,8 +750,8 @@
     @entry[height-increment]{Height resize increment.}
     @entry[min-aspect]{Minimum width/height ratio.}
     @entry[max-aspect]{Maximum width/height ratio.}
-    @entry[win-gravity]{Window gravity, see the function
-      @fun{gtk-window-gravity}.}
+    @entry[win-gravity]{Window gravity of type @symbol{gdk-gravity}, see the
+      @fun{gtk-window-gravity} function.}
   @end{table}
   @see-constructor{make-gdk-geometry}
   @see-constructor{copy-gdk-geometry}
@@ -773,9 +775,7 @@
 (export (boxed-related-symbols 'gdk-geometry))
 
 ;;; ----------------------------------------------------------------------------
-;;;
 ;;; Constructors for GdkGeometry
-;;;
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
@@ -793,7 +793,7 @@
       with @class{gtk-window} only}
     @argument[min-height]{minimum height of window or -1 to use requisition,
       with @class{gtk-window} only}
-    @argument[max-width}{maximum width of window or -1 to use requisition,
+    @argument[max-width]{maximum width of window or -1 to use requisition,
       with @class{gtk-window} only}
     @argument[max-height]{maximum height of window or -1 to use requisition,
       with @class{gtk-window} only}
@@ -807,8 +807,8 @@
     @argument[height-increment]{height resize increment}
     @argument[min-aspect]{minimum width/height ratio}
     @argument[max-aspect]{maximum width/height ratio}
-    @argument[win-gravity]{window gravity, see the function
-      @fun{gtk-window-gravity}}
+    @argument[win-gravity]{window gravity of type @symbol{gdk-gravity}, see the
+      @fun{gtk-window-gravity} function}
   @begin{short}
     Creates a @class{gdk-geometry} structure.
   @end{short}
@@ -817,9 +817,7 @@
   @see-function{gtk-window-gravity}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
 ;;; Accessors of the GdkGeometry structure
-;;;
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
@@ -827,7 +825,7 @@
       "Accessor"
       (documentation 'gdk-geometry-min-width 'function)
  "@version{2013-8-23}
-  Accessor of the slot @code{min-width} of the @class{gdk-geometry} structure.
+  Accessor of the @code{min-width} slot of the @class{gdk-geometry} structure.
   @see-class{gdk-geometry}")
 
 #+cl-cffi-gtk-documentation
@@ -835,7 +833,7 @@
       "Accessor"
       (documentation 'gdk-geometry-min-height 'function)
  "@version{2013-8-23}
-  Accessor of the slot @code{min-height} of the @class{gdk-geometry} structure.
+  Accessor of the @code{min-height} slot of the @class{gdk-geometry} structure.
   @see-class{gdk-geometry}")
 
 #+cl-cffi-gtk-documentation
@@ -843,7 +841,7 @@
       "Accessor"
       (documentation 'gdk-geometry-max-width 'function)
  "@version{2013-8-23}
-  Accessor of the slot @code{max-width} of the @class{gdk-geometry} structure.
+  Accessor of the @code{max-width} slot of the @class{gdk-geometry} structure.
   @see-class{gdk-geometry}")
 
 #+cl-cffi-gtk-documentation
@@ -851,7 +849,7 @@
       "Accessor"
       (documentation 'gdk-geometry-max-height 'function)
  "@version{2013-8-23}
-  Accessor of the slot @code{max-height} of the @class{gdk-geometry} structure.
+  Accessor of the @code{max-height} slot of the @class{gdk-geometry} structure.
   @see-class{gdk-geometry}")
 
 #+cl-cffi-gtk-documentation
@@ -859,7 +857,7 @@
       "Accessor"
       (documentation 'gdk-geometry-base-width 'function)
  "@version{2013-8-23}
-  Accessor of the slot @code{base-width} of the @class{gdk-geometry} structure.
+  Accessor of the @code{base-width} slot of the @class{gdk-geometry} structure.
   @see-class{gdk-geometry}")
 
 #+cl-cffi-gtk-documentation
@@ -867,7 +865,7 @@
       "Accessor"
       (documentation 'gdk-geometry-base-height 'function)
  "@version{2013-8-23}
-  Accessor of the slot @code{base-height} of the @class{gdk-geometry} structure.
+  Accessor of the @code{base-height} slot of the @class{gdk-geometry} structure.
   @see-class{gdk-geometry}")
 
 #+cl-cffi-gtk-documentation
@@ -875,7 +873,7 @@
       "Accessor"
       (documentation 'gdk-geometry-width-increment 'function)
  "@version{2013-8-23}
-  Accessor of the slot @code{width-increment} of the @class{gdk-geometry}
+  Accessor of the @code{width-increment} slot of the @class{gdk-geometry}
   structure.
   @see-class{gdk-geometry}")
 
@@ -884,7 +882,7 @@
       "Accessor"
       (documentation 'gdk-geometry-height-increment 'function)
  "@version{2013-8-23}
-  Accessor of the slot @code{height-increment} of the @class{gdk-geometry}
+  Accessor of the @code{height-increment} slot of the @class{gdk-geometry}
   structure.
   @see-class{gdk-geometry}")
 
@@ -893,7 +891,7 @@
       "Accessor"
       (documentation 'gdk-geometry-min-aspect 'function)
  "@version{2013-8-23}
-  Accessor of the slot @code{min-aspect} of the @class{gdk-geometry} structure.
+  Accessor of the @code{min-aspect} slot of the @class{gdk-geometry} structure.
   @see-class{gdk-geometry}")
 
 #+cl-cffi-gtk-documentation
@@ -901,7 +899,7 @@
       "Accessor"
       (documentation 'gdk-geometry-max-aspect 'function)
  "@version{2013-8-23}
-  Accessor of the slot @code{max-aspect} of the @class{gdk-geometry} structure.
+  Accessor of the @code{max-aspect} slot of the @class{gdk-geometry} structure.
   @see-class{gdk-geometry}")
 
 #+cl-cffi-gtk-documentation
@@ -909,7 +907,7 @@
       "Accessor"
       (documentation 'gdk-geometry-win-gravity 'function)
  "@version{2013-9-16}
-  Accessor of the slot @code{gravity} of the @class{gdk-geometry} structure.
+  Accessor of the @code{gravity} slot of the @class{gdk-geometry} structure.
   @see-class{gdk-geometry}")
 
 ;;; ----------------------------------------------------------------------------
