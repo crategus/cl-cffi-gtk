@@ -299,7 +299,10 @@
 
       @about-symbol{gtk-dialog-flags}
       @about-symbol{gtk-response-type}
+
       @about-class{gtk-dialog}
+
+      @about-generic{gtk-dialog-use-header-bar}
 
       @about-function{gtk-dialog-new}
       @about-function{gtk-dialog-new-with-buttons}
@@ -314,6 +317,7 @@
       @about-function{gtk-dialog-get-widget-for-response}
       @about-function{gtk-dialog-get-action-area}
       @about-function{gtk-dialog-get-content-area}
+      @about-function{gtk-dialog-get-header-bar}
       @about-function{gtk-alternative-dialog-button-order}
       @about-function{gtk-dialog-set-alternative-button-order}
       @about-function{gtk-dialog-set-alternative-button-order-from-array}
@@ -323,7 +327,17 @@
 
       @about-symbol{gtk-message-type}
       @about-symbol{gtk-buttons-type}
+
       @about-class{gtk-message-dialog}
+
+      @about-generic{gtk-message-dialog-buttons}
+      @about-generic{gtk-message-dialog-image}
+      @about-generic{gtk-message-dialog-message-area}
+      @about-generic{gtk-message-dialog-message-type}
+      @about-generic{gtk-message-dialog-secondary-text}
+      @about-generic{gtk-message-dialog-secondary-use-markup}
+      @about-generic{gtk-message-dialog-text}
+      @about-generic{gtk-message-dialog-use-markup}
 
       @about-function{gtk-message-dialog-new}
       @about-function{gtk-message-dialog-new-with-markup}
@@ -332,6 +346,7 @@
       @about-function{gtk-message-dialog-get-image}
       @about-function{gtk-message-dialog-format-secondary-text}
       @about-function{gtk-message-dialog-format-secondary-markup}
+      @about-function{gtk-message-dialog-get-message-area}
     @end{subsection}
     @begin[GtkAboutDialog]{subsection}
       Display information about an application.
