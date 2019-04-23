@@ -82,6 +82,94 @@
 (in-package :gtk)
 
 ;;; ----------------------------------------------------------------------------
+;;; enum GtkMessageType
+;;; ----------------------------------------------------------------------------
+
+(define-g-enum "GtkMessageType" gtk-message-type
+  (:export t
+   :type-initializer "gtk_message_type_get_type")
+  (:info 0)
+  (:warning 1)
+  (:question 2)
+  (:error 3)
+  (:other 4))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-message-type atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'gtk-message-type atdoc:*external-symbols*)
+ "@version{2013-9-10}
+  @begin{short}
+    The type of message being displayed in the dialog.
+  @end{short}
+  @begin{pre}
+(define-g-enum \"GtkMessageType\" gtk-message-type
+  (:export t
+   :type-initializer \"gtk_message_type_get_type\")
+  (:info 0)
+  (:warning 1)
+  (:question 2)
+  (:error 3)
+  (:other 4))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:info]{Informational message.}
+    @entry[:warning]{Nonfatal warning message.}
+    @entry[:question]{Question requiring a choice.}
+    @entry[:error]{Fatal error message.}
+    @entry[:other]{None of the above, does not get an icon.}
+  @end{table}
+  @see-class{gtk-message-dialog}")
+
+;;; ----------------------------------------------------------------------------
+;;; enum GtkButtonsType
+;;; ----------------------------------------------------------------------------
+
+(define-g-enum "GtkButtonsType" gtk-buttons-type
+  (:export t
+   :type-initializer "gtk_buttons_type_get_type")
+  (:none 0)
+  (:ok 1)
+  (:close 2)
+  (:cancel 3)
+  (:yes-no 4)
+  (:ok-cancel 5))
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-buttons-type atdoc:*symbol-name-alias*) "Enum"
+      (gethash 'gtk-buttons-type atdoc:*external-symbols*)
+ "@version{2013-9-10}
+  @begin{short}
+    Prebuilt sets of buttons for the dialog. If none of these choices are
+    appropriate, simply use @code{:none} and call the
+    @fun{gtk-dialog-add-buttons} function to add your own buttons.
+  @end{short}
+
+  @subheading{Note}
+    Please note that @code{:ok}, @code{:yes-no} and @code{:ok-cancel} are
+    discouraged by the Gnome Human Interface Guidelines.
+  @begin{pre}
+(define-g-enum \"GtkButtonsType\" gtk-buttons-type
+  (:export t
+   :type-initializer \"gtk_buttons_type_get_type\")
+  (:none 0)
+  (:ok 1)
+  (:close 2)
+  (:cancel 3)
+  (:yes-no 4)
+  (:ok-cancel 5))
+  @end{pre}
+  @begin[code]{table}
+    @entry[:none]{No buttons at all.}
+    @entry[:ok]{An OK button.}
+    @entry[:close]{A Close button.}
+    @entry[:cancel]{A Cancel button.}
+    @entry[:yes-no]{Yes and No buttons.}
+    @entry[:ok-cancel]{OK and Cancel buttons.}
+  @end{table}
+  @see-class{gtk-message-dialog}
+  @see-function{gtk-dialog-add-buttons}")
+
+;;; ----------------------------------------------------------------------------
 ;;; struct GtkMessageDialog
 ;;; ----------------------------------------------------------------------------
 
@@ -137,9 +225,9 @@
   flag of type @symbol{gtk-dialog-flags}, the @fun{gtk-dialog-run} function
   automatically makes the dialog modal and waits for the user to respond to it.
   The @fun{gtk-dialog-run} function returns when any dialog button is clicked.
-
-  @b{Example:} A modal dialog.
-  @begin{pre}
+  @begin[Example]{dictionary}
+    A modal dialog.
+    @begin{pre}
 (let ((dialog (gtk-message-dialog-new main-window
                                       '(:destroy-with-parent)
                                       :error
@@ -148,11 +236,11 @@
                                       filename)))
   (gtk-dialog-run dialog)
   (gtk-widget-destroy dialog))
-  @end{pre}
-  You might do a non-modal @sym{gtk-message-dialog} as follows:
+    @end{pre}
+    You might do a non-modal @sym{gtk-message-dialog} as follows:
 
-  @b{Example:} A non-modal dialog.
-  @begin{pre}
+    A non-modal dialog.
+    @begin{pre}
 (let ((dialog (gtk-message-dialog-new main-window
                                       '(:destroy-with-parent)
                                       :error
@@ -165,17 +253,22 @@
                       (declare (ignore response-id))
                       (gtk-widget-destroy dialog)))
   ... )
-  @end{pre}
-  @subheading{GtkMessageDialog as GtkBuildable}
+    @end{pre}
+  @end{dictionary}
+  @begin[GtkMessageDialog as GtkBuildable]{dictionary}
     The @sym{gtk-message-dialog} implementation of the @class{gtk-buildable}
     interface exposes the message area as an internal child with the name
-    \"message_area\".
+    @code{message_area}.
+  @end{dictionary}
   @begin[Style Properties]{dictionary}
-    @subheading{The \"message-border\" style property}
-      @code{\"message-border\"} of type @code{:int} (Read) @br{}
-      Width of border around the label and image in the message dialog. @br{}
-      Allowed values: >= 0 @br{}
-      Default value: 12
+    @begin[code]{table}
+      @begin[message-border]{entry}
+        The @code{message-border} style property of type @code{:int} (Read)@br{}
+        Width of border around the label and image in the message dialog. @br{}
+        Allowed values: >= 0 @br{}
+        Default value: 12
+      @end{entry}
+    @end{table}
   @end{dictionary}
   @see-slot{gtk-message-dialog-buttons}
   @see-slot{gtk-message-dialog-image}
@@ -387,94 +480,6 @@
   @see-class{gtk-message-dialog}")
 
 ;;; ----------------------------------------------------------------------------
-;;; enum GtkMessageType
-;;; ----------------------------------------------------------------------------
-
-(define-g-enum "GtkMessageType" gtk-message-type
-  (:export t
-   :type-initializer "gtk_message_type_get_type")
-  (:info 0)
-  (:warning 1)
-  (:question 2)
-  (:error 3)
-  (:other 4))
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-message-type atdoc:*symbol-name-alias*) "Enum"
-      (gethash 'gtk-message-type atdoc:*external-symbols*)
- "@version{2013-9-10}
-  @begin{short}
-    The type of message being displayed in the dialog.
-  @end{short}
-  @begin{pre}
-(define-g-enum \"GtkMessageType\" gtk-message-type
-  (:export t
-   :type-initializer \"gtk_message_type_get_type\")
-  (:info 0)
-  (:warning 1)
-  (:question 2)
-  (:error 3)
-  (:other 4))
-  @end{pre}
-  @begin[code]{table}
-    @entry[:info]{Informational message.}
-    @entry[:warning]{Nonfatal warning message.}
-    @entry[:question]{Question requiring a choice.}
-    @entry[:error]{Fatal error message.}
-    @entry[:other]{None of the above, does not get an icon.}
-  @end{table}
-  @see-class{gtk-message-dialog}")
-
-;;; ----------------------------------------------------------------------------
-;;; enum GtkButtonsType
-;;; ----------------------------------------------------------------------------
-
-(define-g-enum "GtkButtonsType" gtk-buttons-type
-  (:export t
-   :type-initializer "gtk_buttons_type_get_type")
-  (:none 0)
-  (:ok 1)
-  (:close 2)
-  (:cancel 3)
-  (:yes-no 4)
-  (:ok-cancel 5))
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-buttons-type atdoc:*symbol-name-alias*) "Enum"
-      (gethash 'gtk-buttons-type atdoc:*external-symbols*)
- "@version{2013-9-10}
-  @begin{short}
-    Prebuilt sets of buttons for the dialog. If none of these choices are
-    appropriate, simply use @code{:none} and call the
-    @fun{gtk-dialog-add-buttons} function to add your own buttons.
-  @end{short}
-
-  @subheading{Note}
-    Please note that @code{:ok}, @code{:yes-no} and @code{:ok-cancel} are
-    discouraged by the Gnome Human Interface Guidelines.
-  @begin{pre}
-(define-g-enum \"GtkButtonsType\" gtk-buttons-type
-  (:export t
-   :type-initializer \"gtk_buttons_type_get_type\")
-  (:none 0)
-  (:ok 1)
-  (:close 2)
-  (:cancel 3)
-  (:yes-no 4)
-  (:ok-cancel 5))
-  @end{pre}
-  @begin[code]{table}
-    @entry[:none]{No buttons at all.}
-    @entry[:ok]{An OK button.}
-    @entry[:close]{A Close button.}
-    @entry[:cancel]{A Cancel button.}
-    @entry[:yes-no]{Yes and No buttons.}
-    @entry[:ok-cancel]{OK and Cancel buttons.}
-  @end{table}
-  @see-class{gtk-message-dialog}
-  @see-function{gtk-dialog-add-buttons}")
-
-;;; ----------------------------------------------------------------------------
 ;;; gtk_message_dialog_new ()
 ;;; ----------------------------------------------------------------------------
 
@@ -548,7 +553,8 @@
   label, then you need to use the @fun{gtk-message-dialog-set-markup} function
   instead, since you cannot pass the markup string either as the format, it
   might contain '%' characters, or as a string argument.
-  @begin{pre}
+  @begin[Example]{dictionary}
+    @begin{pre}
 (let ((dialog (gtk-message-dialog-new main-window
                                       '(:destroy-with-parent)
                                       :error
@@ -556,7 +562,8 @@
                                       nil)))
   (gtk-message-dialog-set-markup dialog markup)
   ... )
-  @end{pre}
+    @end{pre}
+  @end{dictionary}
   @see-class{gtk-message-dialog}
   @see-symbol{gtk-dialog-flags}
   @see-symbol{gtk-message-type}
