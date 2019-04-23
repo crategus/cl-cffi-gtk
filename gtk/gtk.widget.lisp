@@ -2953,7 +2953,7 @@
   Since 3.0
   @see-class{gtk-widget}
   @see-function{gtk-widget-margin}
-  @see-function{gtk-widget-end}")
+  @see-function{gtk-widget-margin-end}")
 
 ;;; --- gtk-widget-margin-start ------------------------------------------------
 
