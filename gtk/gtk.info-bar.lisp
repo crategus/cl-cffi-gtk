@@ -195,8 +195,8 @@
         @br{}
         Spacing between buttons in the action area of the info bar. @br{}
         @code{button-spacing} has been deprecated since version 3.6 and should
-        not be used in newly-written code. Use the function
-        @fun{gtk-box-set-spacing}. @br{}
+        not be used in newly-written code. Use the @fun{gtk-box-spacing}
+        function. @br{}
         Allowed values: >= 0 @br{}
         Default value: 6 @br{}
       @end{entry}
@@ -217,8 +217,8 @@
         The default spacing used between elements of the content area of the
         info bar. @br{}
         @code{content-area-spacing} has been deprecated since version 3.6 and
-        should not be used in newly-written code. Use the function
-        @fun{gtk-box-set-spacing}. @br{}
+        should not be used in newly-written code. Use the @fun{gtk-box-spacing}
+        function. @br{}
         Allowed values: >= 0 @br{}
         Default value: 16 @br{}
       @end{entry}

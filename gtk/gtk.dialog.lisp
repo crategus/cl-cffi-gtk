@@ -29,7 +29,7 @@
 ;;;
 ;;; GtkDialog
 ;;;
-;;; Create popup windows
+;;;     Create popup windows
 ;;;
 ;;; Types and Values
 ;;;
@@ -254,7 +254,7 @@
       @code{\"content-area-spacing\"} of type @code{:int} Read) @br{}
       The default spacing used between elements of the content area of the
       dialog, as returned by the function @fun{gtk-dialog-get-content-area},
-      unless the function @fun{gtk-box-set-spacing} was called on that widget
+      unless the @fun{gtk-box-spacing} function was called on that widget
       directly. @br{}
       Allowed values: >= 0 @br{}
       Default value: 0 @br{}
@@ -263,7 +263,7 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"close\" signal}
       @begin{pre}
- lambda (dialog)   : Action
+ lambda (dialog)    : Action
       @end{pre}
       The \"close signal\" is a keybinding signal which gets emitted when the
       user uses a keybinding to close the dialog.
@@ -273,7 +273,7 @@
       @end{table}
     @subheading{The \"response\" signal}
       @begin{pre}
- lambda (dialog response-id)   : Run Last
+ lambda (dialog response-id)    : Run Last
       @end{pre}
       Emitted when an action widget is clicked, the dialog receives a delete
       event, or the application programmer calls the function
@@ -287,9 +287,7 @@
   @end{dictionary}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
 ;;; Property and Accessor Details
-;;;
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- gtk-dialog-use-header-bar ----------------------------------------------
@@ -316,7 +314,7 @@
   @syntax[]{(gtk-dialog-use-header-bar object) => header-bar}
   @syntax[]{(setf gtk-dialog-use-header-bar object) header-bar)}
   @begin{short}
-    Accessor of the slot @slot[gtk-dialog]{use-header-bar} of the
+    Accessor of the @slot[gtk-dialog]{use-header-bar} slot of the
     @class{gtk-dialog} class.
   @end{short}
 

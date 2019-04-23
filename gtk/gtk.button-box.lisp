@@ -72,7 +72,7 @@
 ;;;                     ╰── GtkButtonBox
 ;;;                         ├── GtkHButtonBox
 ;;;                         ╰── GtkVButtonBox
-;;;                        
+;;;
 ;;; Implemented Interfaces
 ;;;
 ;;;     GtkButtonBox implements AtkImplementorIface, GtkBuildable and
@@ -95,7 +95,7 @@
   (:end 4)
   (:center 5)
   (:expand 6))
-  
+
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-button-box-style atdoc:*symbol-name-alias*) "Enum"
       (gethash 'gtk-button-box-style atdoc:*external-symbols*)
@@ -125,9 +125,9 @@
       for a horizontal box, or the bottom for a vertical box.}
     @entry[:center]{Buttons are centered in the box. Since 2.12.}
     @entry[:expand]{Buttons expand to fill the box. This entails giving buttons
-      a \"linked\" appearance, making button sizes homogeneous, and setting 
-      spacing to 0 (same as calling the functions @fun{gtk-box-homogeneous} and 
-      @fun{gtk-box-spacing} manually). Since 3.12.}    
+      a \"linked\" appearance, making button sizes homogeneous, and setting
+      spacing to 0 (same as calling the functions @fun{gtk-box-homogeneous} and
+      @fun{gtk-box-spacing} manually). Since 3.12.}
   @end{table}
   @see-class{gtk-button-box}")
 
@@ -177,7 +177,7 @@
       Amount to increase child's size on either side. @br{}
       @b{Warning:} @code{child-internal-pad-x} has been deprecated since version
       3.20 and should not be used in newly-written code.
-      Use CSS padding instead. @br{}      
+      Use CSS padding instead. @br{}
       Allowed values: >= 0 @br{}
       Default value: 4
 
@@ -186,7 +186,7 @@
       Amount to increase child's size on the top and bottom. @br{}
       @b{Warning:} @code{child-internal-pad-y} has been deprecated since version
       3.20 and should not be used in newly-written code.
-      Use CSS padding instead. @br{}      
+      Use CSS padding instead. @br{}
       Allowed values: >= 0 @br{}
       Default value: 0
 
@@ -480,8 +480,8 @@
   whether the button has had the function
   @fun{gtk-button-box-set-child-secondary} called on it.
 
-  The spacing between buttons can be set with the function
-  @fun{gtk-box-set-spacing}. The arrangement and layout of the buttons can be
+  The spacing between buttons can be set with the @fun{gtk-box-spacing}
+  function. The arrangement and layout of the buttons can be
   changed with the function @fun{gtk-button-box-set-layout}.
 
   @class{gtk-hbutton-box} has been deprecated, use @class{gtk-button-box}
@@ -647,8 +647,8 @@
   whether the button has had the function
   @fun{gtk-button-box-set-child-secondary} called on it.
 
-  The spacing between buttons can be set with the function
-  @fun{gtk-box-set-spacing}. The arrangement and layout of the buttons can be
+  The spacing between buttons can be set with the @fun{gtk-box-spacing}
+  function. The arrangement and layout of the buttons can be
   changed with the function @fun{gtk-button-box-set-layout}.
 
   @class{gtk-vbutton-box} has been deprecated, use @class{gtk-button-box}
