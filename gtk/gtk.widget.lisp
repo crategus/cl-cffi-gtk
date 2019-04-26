@@ -3888,14 +3888,14 @@
  "@version{2013-11-12}
   @argument[widget]{a @class{gtk-widget} object}
   @begin{short}
-    Creates the GDK (windowing system) resources associated with a widget.
+    Creates the GDK windowing system resources associated with a widget.
   @end{short}
   For example, @code{widget->window} will be created when a widget is realized.
   Normally realization happens implicitly; if you show a widget and all its
   parent containers, then the widget will be realized and mapped automatically.
 
   Realizing a widget requires all the widget's parent widgets to be realized;
-  calling the function @sym{gtk-widget-realize} realizes the widget's parents in
+  calling the @sym{gtk-widget-realize} function realizes the widget's parents in
   addition to @arg{widget} itself. If a widget is not yet inside a toplevel
   window when you realize it, bad things will happen.
 
@@ -3903,11 +3903,11 @@
   useful otherwise. Many times when you think you might need it, a better
   approach is to connect to a signal that will be called after the widget is
   realized automatically, such as the \"draw\" signal. Or simply use the
-  function @fun{g-signal-connect} with the \"realize\" signal.
+  @fun{g-signal-connect} function with the \"realize\" signal.
   @see-class{gtk-widget}
   @see-function{gtk-widget-unrealize}
   @see-function{g-signal-connect}"
-  (width (g-object gtk-widget)))
+  (widget (g-object gtk-widget)))
 
 (export 'gtk-widget-realize)
 
