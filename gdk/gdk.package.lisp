@@ -353,7 +353,6 @@
     @about-symbol{gdk-window-type}
     @about-symbol{gdk-window-window-class}
     @about-symbol{gdk-window-hints}
-    @about-symbol{gdk-geometry}
     @about-symbol{gdk-gravity}
     @about-symbol{gdk-anchor-hints}
     @about-symbol{gdk-window-edge}
@@ -366,6 +365,21 @@
     @about-symbol{gdk-wm-decoration}
     @about-symbol{gdk-wm-function}
 
+    @about-struct{gdk-geometry}
+    @about-function{make-gdk-geometry}
+    @about-function{copy-gdk-geometry}
+    @about-function{gdk-geometry-min-width}
+    @about-function{gdk-geometry-min-height}
+    @about-function{gdk-geometry-max-width}
+    @about-function{gdk-geometry-max-height}
+    @about-function{gdk-geometry-base-width}
+    @about-function{gdk-geometry-base-height}
+    @about-function{gdk-geometry-width-increment}
+    @about-function{gdk-geometry-height-increment}
+    @about-function{gdk-geometry-min-aspect}
+    @about-function{gdk-geometry-max-aspect}
+    @about-function{gdk-geometry-win-gravity}
+    
     @about-class{gdk-window}
 
     @about-generic{gdk-window-cursor}
