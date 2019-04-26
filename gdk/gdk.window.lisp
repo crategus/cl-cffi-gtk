@@ -59,7 +59,7 @@
 ;;;     gdk_window_get_display
 ;;;     gdk_window_get_screen
 ;;;     gdk_window_get_visual
-;;;     gdk_window_at_pointer                              * deprecated *
+;;;     gdk_window_at_pointer                              * deprecated
 ;;;     gdk_window_show
 ;;;     gdk_window_show_unraised
 ;;;     gdk_window_hide
@@ -177,7 +177,7 @@
 ;;;     gdk_window_get_frame_extents
 ;;;     gdk_window_get_origin
 ;;;     gdk_window_get_root_coords
-;;;     gdk_window_get_pointer                             * deprecated *
+;;;     gdk_window_get_pointer                             * deprecated
 ;;;     gdk_window_get_device_position
 ;;;     gdk_window_get_device_position_double ()
 ;;;     gdk_window_get_parent
@@ -235,6 +235,57 @@
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gdk)
+
+;;; ----------------------------------------------------------------------------
+;;; enum GdkAnchorHints
+;;;
+;;; Positioning hints for aligning a window relative to a rectangle.
+;;;
+;;; These hints determine how the window should be positioned in the case that
+;;; the window would fall off-screen if placed in its ideal position.
+;;;
+;;; For example, GDK_ANCHOR_FLIP_X will replace GDK_GRAVITY_NORTH_WEST with
+;;; GDK_GRAVITY_NORTH_EAST and vice versa if the window extends beyond the left
+;;; or right edges of the monitor.
+;;;
+;;; If GDK_ANCHOR_SLIDE_X is set, the window can be shifted horizontally to fit
+;;; on-screen. If GDK_ANCHOR_RESIZE_X is set, the window can be shrunken
+;;; horizontally to fit.
+;;;
+;;; In general, when multiple flags are set, flipping should take precedence
+;;; over sliding, which should take precedence over resizing.
+;;;
+;;; Members
+;;;
+;;; GDK_ANCHOR_FLIP_X
+;;;     allow flipping anchors horizontally
+;;; 
+;;; GDK_ANCHOR_FLIP_Y
+;;;     allow flipping anchors vertically
+;;; 
+;;; GDK_ANCHOR_SLIDE_X
+;;;     allow sliding window horizontally
+;;; 
+;;; GDK_ANCHOR_SLIDE_Y
+;;;     allow sliding window vertically
+;;; 
+;;; GDK_ANCHOR_RESIZE_X
+;;;     allow resizing window horizontally
+;;; 
+;;; GDK_ANCHOR_RESIZE_Y
+;;;     allow resizing window vertically
+;;; 
+;;; GDK_ANCHOR_FLIP
+;;;     allow flipping anchors on both axes
+;;; 
+;;; GDK_ANCHOR_SLIDE
+;;;     allow sliding window on both axes
+;;; 
+;;; GDK_ANCHOR_RESIZE
+;;;     allow resizing window on both axes
+;;; 
+;;; Since 3.22
+;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; GdkWindow
@@ -305,8 +356,6 @@
         @entry[Returns]{The newly created @symbol{cairo-surface-t} for the
           offscreen window.}
       @end{table}
-      Since 3.0
-
     @subheading{The \"from-embedder\" signal}
       @begin{pre}
  lambda (window embedder-x embedder-y offscreen-x offscreen-y)   : Run Last
@@ -391,8 +440,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "cursor" 'gdk-window) 't)
  "The @code{cursor} property of type @class{gdk-cursor} (Read / Write) @br{}
-  The mouse pointer for a @sym{gdk-window}.@br{}
-  Since 2.18")
+  The mouse pointer for a @sym{gdk-window}.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gdk-window-cursor atdoc:*function-name-alias*)
@@ -422,8 +470,6 @@
   @symbol{gdk-cursor-type} enumeration. Passing @code{nil} for the @arg{cursor}
   argument to @sym{gdk-window-set-cursor} means that @arg{object} will use the
   cursor of its parent window. Most windows should use this default.
-
-  Since 2.18
   @see-class{gdk-window}
   @see-class{gdk-cursor}
   @see-symbol{gdk-cursor-type}
@@ -474,10 +520,10 @@
       @class{gtk-menu}.}
     @entry[:foreign]{Foreign window.}
     @entry[:offscreen]{Offscreen window, see the section called
-      \"Offscreen Windows\". Since 2.18.}
+      \"Offscreen Windows\".}
     @entry[:subsurface]{Subsurface-based window. This window is visually tied
       to a toplevel, and is moved/stacked with it. Currently this window type is
-      only implemented in Wayland. Since 3.14.}
+      only implemented in Wayland. Since 3.14}
   @end{table}
   @see-class{gdk-window}
   @see-class{gtk-window}
@@ -1391,7 +1437,7 @@
 ;;;     the modifier that switches between keyboard groups (AltGr on X11/Windows
 ;;;     and Option/Alt on OS X).
 ;;;
-;;; Since: 3.4
+;;; Since 3.4
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -1950,7 +1996,7 @@
 ;;; monitor :
 ;;;     Which monitor to display fullscreen on.
 ;;;
-;;; Since: UNRELEASED
+;;; Since UNRELEASED
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2709,8 +2755,6 @@
   example; in fact @class{gtk-statusbar} uses it. The function works best with
   window managers that support the Extended Window Manager Hints, but has a
   fallback implementation for other window managers.
-
-  Since 3.4
   @see-class{gdk-window}
   @see-class{gdk-device}
   @see-class{gtk-statusbar}
@@ -2774,8 +2818,6 @@
   You might use this function to implement a \"window move grip\", for example.
   The function works best with window managers that support the Extended Window
   Manager Hints, but has a fallback implementation for other window managers.
-
-  Since 3.4
   @see-class{gdk-window}
   @see-class{gdk-device}
   @see-function{gdk-window-begin-move-drag}"
@@ -4289,10 +4331,10 @@
  "@version{2013-9-1}
   @argument[window]{a @class{gdk-window} object}
   @begin{return}
-    @code{x} -- x coordinate of window, relative to its parent @br{}
-    @code{y} -- y coordinate of window, relative to its parent @br{}
-    @code{width} -- width of window @br{}
-    @code{height} -- height of window
+    @code{x} -- x coordinate of @arg{window}, relative to its parent @br{}
+    @code{y} -- y coordinate of @arg{window}, relative to its parent @br{}
+    @code{width} -- width of @arg{window} @br{}
+    @code{height} -- height of @arg{window}
   @end{return}
   @begin{short}
     The @arg{x} and @arg{y} coordinates returned are relative to the parent
@@ -4303,17 +4345,17 @@
 
   On the X11 platform, the geometry is obtained from the X server, so reflects
   the latest position of window; this may be out-of-sync with the position of
-  window delivered in the most-recently-processed @class{gdk-event-configure}.
-  The function @fun{gdk-window-get-position} in contrast gets the position from
-  the most recent configure event.
-
-  @subheading{Note}
-    If @arg{window} is not a toplevel, it is much better to call the functions
+  window delivered in the most-recently-processed @class{gdk-event-configure}
+  event. The @fun{gdk-window-get-position} function in contrast gets the
+  position from the most recent configure event.
+  @begin[Note]{dictionary}
+    If @arg{window} is not a toplevel, it is much better to call the
     @fun{gdk-window-get-position}, @fun{gdk-window-get-width} and
-    @fun{gdk-window-get-height} instead, because it avoids the roundtrip to the
-    X server and because these functions support the full 32-bit coordinate
-    space, whereas the function @sym{gdk-window-get-geometry} is restricted to
-    the 16-bit coordinates of X11.
+    @fun{gdk-window-get-height} functions instead, because it avoids the
+    roundtrip to the X server and because these functions support the full
+    32-bit coordinate space, whereas the @sym{gdk-window-get-geometry} function
+    is restricted to the 16-bit coordinates of X11.
+  @end{dictionary}
   @see-class{gdk-window}
   @see-class{gdk-event-configure}
   @see-function{gdk-window-get-position}
@@ -4332,46 +4374,87 @@
 ;;; gdk_window_set_geometry_hints ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gdk_window_set_geometry_hints" gdk-window-set-geometry-hints) :void
+;; TODO: The implementation is changed to pass the geometry as a CStruct.
+;; The case nil for geometry is not implemented. Can we do it better?
+
+(defcfun ("gdk_window_set_geometry_hints" %gdk-window-set-geometry-hints) :void
+  (window (g-object gdk-window))
+  (geometry :pointer)
+  (geometry-mask gdk-window-hints))
+
+(defun gdk-window-set-geometry-hints (window geometry geometry-mask)
  #+cl-cffi-gtk-documentation
- "@version{2013-9-1}
+ "@version{2019-4-26}
   @argument[window]{a toplevel @class{gdk-window} object}
-  @argument[geometry]{geometry hints}
-  @argument[geom-mask]{bitmask indicating fields of geometry to pay attention
-    to}
+  @argument[geometry]{geometry hints of type @class{gdk-geometry}}
+  @argument[geometry-mask]{bitmask of type @symbol{gdk-window-hints} indicating
+    fields of geometry to pay attention to}
   @begin{short}
-    Sets the geometry hints for @arg{window}. Hints flagged in @arg{geom-mask}
-    are set, hints not flagged in @arg{geom-mask} are unset. To unset all hints,
-    use a @arg{geom-mask} of 0 and a geometry of @code{nil}.
+    Sets the geometry hints for the window. 
   @end{short}
+  Hints flagged in @arg{geometry-mask} are set, hints not flagged in
+  @arg{geometry-mask} are unset.
 
   This function provides hints to the windowing system about acceptable sizes
   for a toplevel window. The purpose of this is to constrain user resizing,
   but the windowing system will typically, but is not required to, also
   constrain the current size of the window to the provided values and
-  constrain programatic resizing via the functions @fun{gdk-window-resize} or
-  @fun{gdk-window-move-resize}.
+  constrain programatic resizing via the @fun{gdk-window-resize} or
+  @fun{gdk-window-move-resize} functions.
 
   Note that on X11, this effect has no effect on windows of type @code{:temp}
-  or windows where override redirect has been turned on via the function
-  @fun{gdk-window-set-override-redirect} since these windows are not resizable by
-  the user.
+  or windows where override redirect has been turned on via the
+  @fun{gdk-window-set-override-redirect} function since these windows are not
+  resizable by the user.
 
   Since you cannot count on the windowing system doing the constraints for
-  programmatic resizes, you should generally call the function
-  @fun{gdk-window-constrain-size} yourself to determine appropriate sizes.
+  programmatic resizes, you should generally call the
+  @fun{gdk-window-constrain-size} function yourself to determine appropriate
+  sizes.
   @see-class{gdk-window}
   @see-function{gdk-window-resize}
   @see-function{gdk-window-move-resize}
   @see-function{gdk-window-set-override-redirect}
   @see-function{gdk-window-constrain-size}"
-  (window (g-object gdk-window))
-  (geometry (g-boxed-foreign gdk-geometry))
-  (geometry-mask gdk-window-hints))
+  (with-foreign-object (ptr '(:struct gdk::gdk-geometry-cstruct))
+    (setf (foreign-slot-value ptr '(:struct gdk::gdk-geometry-cstruct) 
+                                  'gdk::min-width) 
+          (gdk-geometry-min-width geometry))
+    (setf (foreign-slot-value ptr '(:struct gdk::gdk-geometry-cstruct)
+                                  'gdk::min-height)
+          (gdk-geometry-min-height geometry))
+    (setf (foreign-slot-value ptr '(:struct gdk::gdk-geometry-cstruct) 
+                                  'gdk::max-width)
+          (gdk-geometry-max-width geometry))
+    (setf (foreign-slot-value ptr '(:struct gdk::gdk-geometry-cstruct)
+                                  'gdk::max-height)
+          (gdk-geometry-max-height geometry))
+    (setf (foreign-slot-value ptr '(:struct gdk::gdk-geometry-cstruct)
+                                  'gdk::base-width)
+          (gdk-geometry-base-width geometry))
+    (setf (foreign-slot-value ptr '(:struct gdk::gdk-geometry-cstruct)
+                                  'gdk::base-height)
+          (gdk-geometry-base-height geometry))
+    (setf (foreign-slot-value ptr '(:struct gdk::gdk-geometry-cstruct)
+                                  'gdk::width-increment)
+          (gdk-geometry-width-increment geometry))
+    (setf (foreign-slot-value ptr '(:struct gdk::gdk-geometry-cstruct)
+                                  'gdk::height-increment)
+          (gdk-geometry-height-increment geometry))
+    (setf (foreign-slot-value ptr '(:struct gdk::gdk-geometry-cstruct)
+                                  'gdk::min-aspect)
+          (gdk-geometry-min-aspect geometry))
+    (setf (foreign-slot-value ptr '(:struct gdk::gdk-geometry-cstruct)
+                                  'gdk::max-aspect)
+          (gdk-geometry-max-aspect geometry))
+    (setf (foreign-slot-value ptr '(:struct gdk::gdk-geometry-cstruct)
+                                  'gdk::win-gravity)
+          (gdk-geometry-win-gravity geometry))
+    (%gdk-window-set-geometry-hints window ptr geometry-mask)))
 
 (export 'gdk-window-set-geometry-hints)
 
-;;; ----------------------------------------------------------------------------
+;;; -------------------------------------------------------------_---------------
 ;;; gdk_window_get_width ()
 ;;; ----------------------------------------------------------------------------
 
@@ -4379,16 +4462,17 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-9-1}
   @argument[window]{a @class{gdk-window} object}
-  @return{The width of window.}
+  @return{The width of @arg{window}.}
   @begin{short}
-    Returns the width of the given @arg{window}.
+    Returns the width of the given the window.
   @end{short}
 
   On the X11 platform the returned size is the size reported in the
   most-recently-processed configure event, rather than the current size on the
   X server.
   @see-class{gdk-window}
-  @see-function{gdk-window-get-height}"
+  @see-function{gdk-window-get-height}
+  @see-function{gdk-window-get-position}"
   (window (g-object gdk-window)))
 
 (export 'gdk-window-get-width)
@@ -4401,16 +4485,17 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-10-2}
   @argument[window]{a @class{gdk-window} object}
-  @return{The height of window.}
+  @return{The height of @arg{window}.}
   @begin{short}
-    Returns the height of the given @arg{window}.
+    Returns the height of the given the window.
   @end{short}
 
   On the X11 platform the returned size is the size reported in the
   most-recently-processed configure event, rather than the current size on the
   X server.
   @see-class{gdk-window}
-  @see-function{gdk-window-get-width}"
+  @see-function{gdk-window-get-width}
+  @see-function{gdk-window-get-position}"
   (window (g-object gdk-window)))
 
 (export 'gdk-window-get-height)
@@ -4649,18 +4734,21 @@
  "@version{2013-9-1}
   @argument[window]{a @class{gdk-window} object}
   @begin{return}
-    @code{x} -- x coordinate of window @br{}
-    @code{y} -- y coordinate of window
+    @code{x} -- an integer with the x coordinate of @arg{window} @br{}
+    @code{y} -- an integer with the y coordinate of @arg{window}
   @end{return}
-  @begin{return}
+  @begin{short}
     Obtains the position of the window as reported in the
-    most-recently-processed @class{gdk-event-configure}. Contrast with the
-    @fun{gdk-window-get-geometry} which queries the X server for the current
-    window position, regardless of which events have been received or processed.
-  @end{return}
-  The position coordinates are relative to the window's parent window.
+    most-recently-processed @class{gdk-event-configure} event.
+  @end{short}
+  Contrast with the @fun{gdk-window-get-geometry} function which queries the X
+  server for the current window position, regardless of which events have been
+  received or processed. The position coordinates are relative to the window's
+  parent window.
   @see-class{gdk-window}
   @see-class{gdk-event-configure}
+  @see-function{gdk-window-width}
+  @see-function{gdk-window-height}
   @see-function{gdk-window-get-geometry}"
   (with-foreign-objects ((x :int) (y :int))
     (%gdk-window-get-position window x y)
@@ -4869,8 +4957,6 @@
   @end{short}
   Use the function @fun{gdk-window-get-device-position-double} if you need
   subpixel precision.
-
-  Since 3.0
   @see-class{gdk-window}
   @see-function{gdk-device-get-window-at-position}
   @see-function{gdk-window-get-device-position-double}"
@@ -5454,8 +5540,6 @@
     Returns @em{true} if the window is aware of the existence of multiple
     devices.
   @end{short}
-
-  Since 3.0
   @see-class{gdk-window}
   @see-function{gdk-window-set-support-multidevice}"
   (window (g-object gdk-window)))
@@ -5479,8 +5563,6 @@
 
   Multidevice aware windows will need to handle properly multiple, per device
   enter/leave events, device grabs and grab ownerships.
-
-  Since 3.0
   @see-class{gdk-window}
   @see-function{gdk-window-get-support-multidevice}"
   (window (g-object gdk-window))
@@ -5509,8 +5591,6 @@
   @end{short}
   If the return value is @code{nil} then there is no custom cursor set on the
   specified window, and it is using the cursor for its parent window.
-
-  Since 3.0
   @see-class{gdk-window}
   @see-class{gdk-device}
   @see-class{gdk-cursor}
@@ -5539,8 +5619,6 @@
   invisible, use @code{:blank-cursor}. Passing @code{nil} for the cursor
   argument to the function @sym{gdk-window-cursor} means that window will
   use the cursor of its parent window. Most windows should use this default.
-
-  Since 3.0
   @see-class{gdk-window}
   @see-class{gdk-device}
   @see-class{gdk-cursor}
@@ -5567,8 +5645,6 @@
   @begin{short}
     Returns the event mask for window corresponding to an specific device.
   @end{short}
-
-  Since 3.0
   @see-class{gdk-window}
   @see-class{gdk-device}
   @see-function{gdk-window-set-device-events}"
@@ -5594,8 +5670,6 @@
   For example, an event mask including @code{:button-press-mask} means the
   window should report button press events. The event mask is the bitwise OR of
   values from the @symbol{gdk-event-mask} flags.
-
-  Since 3.0
   @see-class{gdk-window}
   @see-class{gdk-device}
   @see-symbol{gdk-event-mask}
@@ -5643,8 +5717,6 @@
   @end{short}
   This event mask will be applied both to currently existing, newly added
   devices after this call, and devices being attached/detached.
-
-  Since 3.0
   @see-class{gdk-window}
   @see-symbol{gdk-input-source}
   @see-symbol{gdk-event-mask}
