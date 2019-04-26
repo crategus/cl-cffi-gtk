@@ -176,3 +176,181 @@
                          "window-position" "GtkWindowPosition" T T)))
              (get-g-type-definition "GtkWindow"))))
 
+;;; Types and Values
+;;;
+;;;     GtkWindow
+;;;     GtkWindowType                                  --> gtk.enumerations.lisp
+;;;     GtkWindowPosition                              --> gtk.enumerations.lisp
+;;;
+;;; Functions
+;;;
+;;;     gtk_window_new
+;;;     gtk_window_set_title                               Accessor
+;;;     gtk_window_set_wmclass
+;;;     gtk_window_set_resizable                           Accessor
+;;;     gtk_window_get_resizable                           Accessor
+;;;     gtk_window_add_accel_group
+;;;     gtk_window_remove_accel_group
+;;;     gtk_window_activate_focus
+;;;     gtk_window_activate_default
+;;;     gtk_window_set_modal                               Accessor
+;;;     gtk_window_set_default_size
+;;;     gtk_window_set_default_geometry
+
+;;; --- gtk-window-set-geometry-hints ------------------------------------------
+
+(test gtk-window-set-geometry-hints
+  (let ((toplevel (make-instance 'gtk-window :type :toplevel)))
+    (gtk-widget-show toplevel)
+    (is (eq 'gtk-window (type-of toplevel)))
+    ;; TODO: Find a way to test the settiongs
+    (gtk-window-set-geometry-hints toplevel nil (make-gdk-geometry) '(:min-size :max-size))
+))
+
+;;;     gtk_window_set_gravity                             Accessor
+;;;     gtk_window_get_gravity                             Accessor
+;;;     gtk_window_set_position
+;;;     gtk_window_set_transient_for                       Accessor
+;;;     gtk_window_set_attached_to                         Accessor
+;;;     gtk_window_set_destroy_with_parent                 Accessor
+;;;     gtk_window_set_hide_titlebar_when_maximized        Accessor
+;;;     gtk_window_set_screen                              Accessor
+;;;     gtk_window_get_screen                              Accessor
+;;;     gtk_window_is_active
+;;;     gtk_window_is_maximized                            Accessor
+;;;     gtk_window_has_toplevel_focus
+;;;     gtk_window_list_toplevels
+;;;     gtk_window_add_mnemonic
+;;;     gtk_window_remove_mnemonic
+;;;     gtk_window_mnemonic_activate
+;;;     gtk_window_activate_key
+;;;     gtk_window_propagate_key_event
+;;;     gtk_window_get_focus
+;;;     gtk_window_set_focus
+;;;     gtk_window_get_default_widget
+;;;     gtk_window_set_default
+;;;     gtk_window_present
+;;;     gtk_window_present_with_time
+;;;     gtk_window_close
+;;;     gtk_window_iconify
+;;;     gtk_window_deiconify
+;;;     gtk_window_stick
+;;;     gtk_window_unstick
+;;;     gtk_window_maximize
+;;;     gtk_window_unmaximize
+;;;     gtk_window_fullscreen
+;;;     gtk_window_fullscreen_on_monitor ()
+;;;     gtk_window_unfullscreen
+;;;     gtk_window_set_keep_above
+;;;     gtk_window_set_keep_below
+;;;     gtk_window_begin_resize_drag
+;;;     gtk_window_begin_move_drag
+;;;     gtk_window_set_decorated                           Accessor
+;;;     gtk_window_set_deletable                           Accessor
+;;;     gtk_window_set_mnemonic_modifier
+;;;     gtk_window_set_type_hint                           Accessor
+;;;     gtk_window_set_skip_taskbar_hint                   Accessor
+;;;     gtk_window_set_skip_pager_hint                     Accessor
+;;;     gtk_window_set_urgency_hint                        Accessor
+;;;     gtk_window_set_accept_focus                        Accessor
+;;;     gtk_window_set_focus_on_map                        Accessor
+;;;     gtk_window_set_startup_id                          Accessor
+;;;     gtk_window_set_role                                Accessor
+;;;     gtk_window_get_decorated                           Accessor
+;;;     gtk_window_get_deletable                           Accessor
+;;;     gtk_window_get_default_icon_list
+;;;     gtk_window_get_default_icon_name
+;;;     gtk_window_get_default_size
+;;;     gtk_window_get_destroy_with_parent                 Accessor
+;;;     gtk_window_get_hide_titlebar_when_maximized        Accessor
+;;;     gtk_window_get_icon                                Accessor
+;;;     gtk_window_get_icon_list
+;;;     gtk_window_get_icon_name                           Accessor
+;;;     gtk_window_get_mnemonic_modifier
+;;;     gtk_window_get_modal                               Accessor
+;;;     gtk_window_get_position
+;;;     gtk_window_get_role                                Accessor
+;;;     gtk_window_get_size
+;;;     gtk_window_get_title                               Accessor     
+;;;     gtk_window_get_transient_for                       Accessor
+;;;     gtk_window_get_attached_to                         Accessor
+;;;     gtk_window_get_type_hint                           Accessor
+;;;     gtk_window_get_skip_taskbar_hint                   Accessor
+;;;     gtk_window_get_skip_pager_hint                     Accessor
+;;;     gtk_window_get_urgency_hint                        Accessor
+;;;     gtk_window_get_accept_focus                        Accessor
+;;;     gtk_window_get_focus_on_map                        Accessor
+;;;     gtk_window_get_group
+;;;     gtk_window_has_group
+;;;     gtk_window_get_window_type
+;;;     gtk_window_move
+;;;     gtk_window_parse_geometry
+;;;     gtk_window_reshow_with_initial_size
+;;;     gtk_window_resize
+;;;     gtk_window_resize_to_geometry
+;;;     gtk_window_set_default_icon_list
+;;;     gtk_window_set_default_icon
+;;;     gtk_window_set_default_icon_from_file
+;;;     gtk_window_set_default_icon_name
+;;;     gtk_window_set_icon                                Accessor
+;;;     gtk_window_set_icon_list
+;;;     gtk_window_set_icon_from_file
+;;;     gtk_window_set_icon_name                           Accessor
+;;;     gtk_window_set_auto_startup_notification
+;;;     gtk_window_get_opacity
+;;;     gtk_window_set_opacity
+;;;     gtk_window_get_mnemonics_visible                   Accessor
+;;;     gtk_window_set_mnemonics_visible                   Accessor
+;;;     gtk_window_get_focus_visible                       Accessor
+;;;     gtk_window_set_focus_visible                       Accessor
+;;;     gtk_window_set_has_resize_grip                     Accessor
+;;;     gtk_window_get_has_resize_grip                     Accessor
+;;;     gtk_window_resize_grip_is_visible
+;;;     gtk_window_get_resize_grip_area
+;;;     gtk_window_get_application                         Accessor
+;;;     gtk_window_set_application                         Accessor
+;;;     gtk_window_set_has_user_ref_count
+;;;     gtk_window_set_titlebar
+;;;     gtk_window_get_titlebar
+;;;     gtk_window_set_interactive_debugging
+;;
+;;; Properties
+;;;
+;;;           gboolean   accept-focus                   Read / Write
+;;;     GtkApplication*  application                    Read / Write
+;;;          GtkWidget*  attached-to                    Read / Write / Construct
+;;;           gboolean   decorated                      Read / Write
+;;;               gint   default-height                 Read / Write
+;;;               gint   default-width                  Read / Write
+;;;           gboolean   deletable                      Read / Write
+;;;           gboolean   destroy-with-parent            Read / Write
+;;;           gboolean   focus-on-map                   Read / Write
+;;;           gboolean   focus-visible                  Read / Write
+;;;         GdkGravity   gravity                        Read / Write
+;;;           gboolean   has-resize-grip                Read / Write
+;;;           gboolean   has-toplevel-focus             Read
+;;;           gboolean   hide-titlebar-when-maximized   Read / Write
+;;;          GdkPixbuf*  icon                           Read / Write
+;;;              gchar*  icon-name                      Read / Write
+;;;           gboolean   is-active                      Read
+;;;           gboolean   is-maximized                   Read
+;;;           gboolean   mnemonics-visible              Read / Write
+;;;           gboolean   modal                          Read / Write
+;;;           gboolean   resizable                      Read / Write
+;;;           gboolean   resize-grip-visible            Read
+;;;              gchar*  role                           Read / Write
+;;;          GdkScreen*  screen                         Read / Write
+;;;           gboolean   skip-pager-hint                Read / Write
+;;;           gboolean   skip-taskbar-hint              Read / Write
+;;;              gchar*  startup-id                     Write
+;;;              gchar*  title                          Read / Write
+;;;          GtkWindow*  transient-for                  Read / Write / Construct
+;;;      GtkWindowType   type                           Read / Write / Construct
+;;;  GdkWindowTypeHint   type-hint                      Read / Write
+;;;           gboolean   urgency-hint                   Read / Write
+;;;  GtkWindowPosition   window-position                Read / Write
+;;;
+;;; Style Properties
+;;;
+;;;              gchar*  decoration-button-layout    Read
+;;;               gint   decoration-resize-handle    Read / Wr

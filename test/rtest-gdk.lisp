@@ -19,3 +19,5 @@
 
 (load "rtest-gdk-color.lisp")
 
+(load "rtest-gdk-window.lisp")
+
