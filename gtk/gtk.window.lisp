@@ -1836,15 +1836,24 @@
 ;;; gtk_window_set_geometry_hints ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_window_set_geometry_hints" gtk-window-set-geometry-hints) :void
+;; TODO: The implementation is changed to pass the geometry as a CStruct.
+;; The case nil for geometry is not implemented. Can we do it better?
+
+(defcfun ("gtk_window_set_geometry_hints" %gtk-window-set-geometry-hints) :void
+  (window (g-object gtk-window))
+  (widget (g-object gtk-widget))
+  (geometry :pointer)
+  (geometry-mask gdk-window-hints))
+
+(defun gtk-window-set-geometry-hints (window widget geometry geometry-mask)
  #+cl-cffi-gtk-documentation
- "@version{2013-3-29}
+ "@version{2019-4-26}
   @argument[window]{a @class{gtk-window} widget}
-  @argument[geometry-widget]{a @class{gtk-widget} object the geometry hints will
+  @argument[widget]{a @class{gtk-widget} object the geometry hints will
     be applied to or @code{nil}. Since 3.20 this argument is ignored and GTK
     behaves as if @code{nil} was set.}
   @argument[geometry]{a @class{gdk-geometry} structure containing geometry
-    information or @code{nil}}
+    information}
   @argument[geometry-mask]{mask of type @symbol{gdk-window-hints} indicating
     which structure fields should be paid attention to}
   @begin{short}
@@ -1856,10 +1865,41 @@
   @see-class{gtk-window}
   @see-class{gdk-geometry}
   @see-symbol{gdk-window-hints}"
-  (window (g-object gtk-window))
-  (geometry-widget (g-object gtk-widget))
-  (geometry (g-boxed-foreign gdk-geometry))
-  (geometry-mask gdk-window-hints))
+  (with-foreign-object (ptr '(:struct gdk::gdk-geometry-cstruct))
+    (setf (foreign-slot-value ptr '(:struct gdk::gdk-geometry-cstruct) 
+                                  'gdk::min-width) 
+          (gdk-geometry-min-width geometry))
+    (setf (foreign-slot-value ptr '(:struct gdk::gdk-geometry-cstruct)
+                                  'gdk::min-height)
+          (gdk-geometry-min-height geometry))
+    (setf (foreign-slot-value ptr '(:struct gdk::gdk-geometry-cstruct) 
+                                  'gdk::max-width)
+          (gdk-geometry-max-width geometry))
+    (setf (foreign-slot-value ptr '(:struct gdk::gdk-geometry-cstruct)
+                                  'gdk::max-height)
+          (gdk-geometry-max-height geometry))
+    (setf (foreign-slot-value ptr '(:struct gdk::gdk-geometry-cstruct)
+                                  'gdk::base-width)
+          (gdk-geometry-base-width geometry))
+    (setf (foreign-slot-value ptr '(:struct gdk::gdk-geometry-cstruct)
+                                  'gdk::base-height)
+          (gdk-geometry-base-height geometry))
+    (setf (foreign-slot-value ptr '(:struct gdk::gdk-geometry-cstruct)
+                                  'gdk::width-increment)
+          (gdk-geometry-width-increment geometry))
+    (setf (foreign-slot-value ptr '(:struct gdk::gdk-geometry-cstruct)
+                                  'gdk::height-increment)
+          (gdk-geometry-height-increment geometry))
+    (setf (foreign-slot-value ptr '(:struct gdk::gdk-geometry-cstruct)
+                                  'gdk::min-aspect)
+          (gdk-geometry-min-aspect geometry))
+    (setf (foreign-slot-value ptr '(:struct gdk::gdk-geometry-cstruct)
+                                  'gdk::max-aspect)
+          (gdk-geometry-max-aspect geometry))
+    (setf (foreign-slot-value ptr '(:struct gdk::gdk-geometry-cstruct)
+                                  'gdk::win-gravity)
+          (gdk-geometry-win-gravity geometry))
+    (%gtk-window-set-geometry-hints window widget ptr geometry-mask)))
 
 (export 'gtk-window-set-geometry-hints)
 
