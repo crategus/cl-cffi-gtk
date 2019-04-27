@@ -12,7 +12,7 @@
   (is-true  (g-type-is-value-type "GtkWindow"))
   (is-true  (g-type-has-value-table "GtkWindow"))
   (is-true  (g-type-is-classed "GtkWindow"))
-  (is-true  (g-type-is-instantiatable "GtkWindow")) ; Why is this true?
+  (is-true  (g-type-is-instantiatable "GtkWindow"))
   (is-true  (g-type-is-derivable "GtkWindow"))
   (is-true  (g-type-is-deep-derivable "GtkWindow"))
   (is-false (g-type-is-interface "GtkWindow"))
@@ -181,9 +181,47 @@
 ;;;     GtkWindow
 ;;;     GtkWindowType                                  --> gtk.enumerations.lisp
 ;;;     GtkWindowPosition                              --> gtk.enumerations.lisp
-;;;
-;;; Functions
-;;;
+
+;;; --- gtk-window-properties --------------------------------------------------
+
+(test gtk-window-properties
+  (let ((window (make-instance 'gtk-window)))
+    (is-true  (gtk-window-accept-focus window))
+    (is-false (gtk-window-application window))
+    (is-false (gtk-window-attached-to window))
+    (is-true  (gtk-window-decorated window))
+    (is (= -1 (gtk-window-default-height window)))
+    (is (= -1 (gtk-window-default-width window)))
+    (is-true  (gtk-window-deletable window))
+    (is-false (gtk-window-destroy-with-parent window))
+    (is-true  (gtk-window-focus-on-map window))
+    (is-true  (gtk-window-focus-visible window))
+    (is (eq :north-west (gtk-window-gravity window)))
+    (is-false (gtk-window-has-resize-grip window))
+    (is-false (gtk-window-has-toplevel-focus window))
+    (is-false (gtk-window-hide-titlebar-when-maximized window))
+    (is-false (gtk-window-icon window))
+    (is-false (gtk-window-icon-name window))
+    (is-false (gtk-window-is-active window))
+    (is-false (gtk-window-is-maximized window))
+    (is-true  (gtk-window-mnemonics-visible window))
+    (is-false (gtk-window-modal window))
+    (is-true  (gtk-window-resizable window))
+    (is-false (gtk-window-resize-grip-visible window))
+    (is-false (gtk-window-role window))
+    (is (eq 'gdk-screen (type-of (gtk-window-screen window))))
+    (is-false (gtk-window-skip-pager-hint window))
+    (is-false (gtk-window-skip-taskbar-hint window))
+    ;; startup-id is not readable
+    (signals (error) (gtk-window-startup-id window))
+    (is-false (gtk-window-title window))
+    (is-false (gtk-window-transient-for window))
+    (is (eq :toplevel (gtk-window-type window)))
+    (is (eq :normal (gtk-window-type-hint window)))
+    (is-false (gtk-window-urgency-hint window))
+    (is (eq :none (gtk-window-window-position window)))
+))
+
 ;;;     gtk_window_new
 ;;;     gtk_window_set_title                               Accessor
 ;;;     gtk_window_set_wmclass

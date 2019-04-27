@@ -123,6 +123,7 @@
 ;;;
 ;;;     gdk_window_new
 
+#+nil
 (test gdk-window-new
   (let ((root-window (gdk-get-default-root-window))
         (attributes (make-gdk-window-attr :title  "title"
