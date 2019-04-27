@@ -361,13 +361,12 @@
   Windows normally have decorations that are under the control of the
   windowing system and allow the user to manipulate the window, e. g. to
   resize it, move it, or close it.
-
-  @subheading{GtkWindow as GtkBuildable}
+  @begin[GtkWindow as GtkBuildable]{dictionary}
     The @sym{gtk-window} implementation of the @class{gtk-buildable} interface
     supports a custom @code{<accel-groups>} element, which supports any number
     of @code{<group>} elements representing the @class{gtk-accel-group} objects
-    you want to add to your window. This is synonymous with the function
-    @fun{gtk-window-add-accel-group}.
+    you want to add to your window. This is synonymous with the
+    @fun{gtk-window-add-accel-group} function.
 
     @b{Example:} A UI definition fragment with accel groups
   @begin{pre}
@@ -384,6 +383,7 @@
     The @sym{gtk-window} implementation of the @class{gtk-buildable} interface
     supports setting a child as the titlebar by specifying @code{\"titlebar\"}
     as the @code{\"type\"} attribute of a @code{<child>} element.
+  @end{dictionary}
   @begin[CSS nodes]{dictionary}
     @begin{pre}
  window.background
@@ -441,6 +441,22 @@
       when the user activates the currently focused widget of @arg{window}.
       @begin[code]{table}
         @entry[window]{The window which received the signal.}
+      @end{table}
+    @subheading{The \"enable-debugging\" signal}
+      @begin{pre}
+ lambda (window toggle)    : Action
+      @end{pre}
+      The \"enable-debugging\" signal is a keybinding signal which gets emitted
+      when the user enables or disables interactive debugging. When @arg{toggle}
+      is @em{true}, interactive debugging is toggled on or off, when it is
+      @code{nil}, the debugger will be pointed at the widget under the pointer.
+      The default bindings for this signal are Ctrl-Shift-I and Ctrl-Shift-D.
+      @begin[code]{table}
+        @entry[window]{The @class{gdk-window} object on which the signal is
+          emitted.}
+        @entry[toggle]{A @code{:boolean} which toggles the debugger.}
+        @entry[Return]{A @code{:boolean} which is @em{true} if the key binding
+          was handled.}
       @end{table}
     @subheading{The \"keys-changed\" signal}
       @begin{pre}
@@ -1727,9 +1743,9 @@
  "@version{2014-2-13}
   @argument[window]{the window to attach accelerator group to}
   @argument[accel-group]{a @class{gtk-accel-group} object}
-  Associate @arg{accel-group} with @arg{window}, such that calling the function
-  @fun{gtk-accel-group-activate} on @arg{window} will activate accelerators
-  in @arg{accel-group}.
+  Associate @arg{accel-group} with @arg{window}, such that calling the
+  @fun{gtk-accel-group-activate} function on @arg{window} will activate
+  accelerators in @arg{accel-group}.
   @see-class{gtk-window}
   @see-function{gtk-accel-group-activate}"
   (window (g-object gtk-window))
@@ -1780,9 +1796,9 @@
   @argument[window]{a @class{gtk-window} widget}
   @return{@em{True} if a widget got activated.}
   Activates the default widget for the window, unless the current focused widget
-  has been configured to receive the default action, see the function
-  @fun{gtk-widget-set-receives-default}, in which case the focused widget is
-  activated.
+  has been configured to receive the default action, see the
+  @fun{gtk-widget-set-receives-default} function, in which case the focused
+  widget is activated.
   @see-class{gtk-window}
   @see-function{gtk-window-activate-focus}
   @see-function{gtk-widget-set-receives-default}"
@@ -2087,7 +2103,8 @@
   @end{short}
   If @arg{focus} is @code{nil}, unsets the focus widget for this @arg{window}.
   To set the focus to a particular widget in the toplevel, it is usually more
-  convenient to use @fun{gtk-widget-grab-focus} instead of this function.
+  convenient to use the @fun{gtk-widget-grab-focus} function instead of this
+  function.
   @see-class{gtk-window}
   @see-function{gtk-widget-grab-focus}"
   (window (g-object gtk-window))
@@ -2106,8 +2123,8 @@
   @argument[window]{a @class{gtk-window} widget}
   @return{The default widget, or @code{nil} if there is none.}
   @begin{short}
-    Returns the default widget for @arg{window}. See
-    @fun{gtk-window-set-default} for more details.
+    Returns the default widget for @arg{window}. See the
+    @fun{gtk-window-set-default} function for more details.
   @end{short}
   @see-class{gtk-window}
   @see-function{gtk-window-set-default}"
@@ -2132,8 +2149,8 @@
   @end{short}
   When setting, rather than unsetting, the default widget it is generally easier
   to call the @fun{gtk-widget-grab-focus} function on the widget. Before making
-  a widget the default widget, you must call the function
-  @fun{gtk-widget-can-default} on the widget you would like to make the default.
+  a widget the default widget, you must call the @fun{gtk-widget-can-default}
+  function on the widget you would like to make the default.
   @see-class{gtk-window}
   @see-function{gtk-widget-can-default}
   @see-function{gtk-widget-grab-focus}"
@@ -2157,16 +2174,17 @@
     window manager, and preferences.
   @end{short}
 
-  If window is hidden, this function calls @fun{gtk-widget-show} as well.
+  If window is hidden, this function calls the @fun{gtk-widget-show} function
+  as well.
 
   This function should be used when the user tries to open a window that is
   already open. Say for example the preferences dialog is currently open, and
-  the user chooses Preferences from the menu a second time; use
-  @sym{gtk-window-present} to move the already open dialog where the user can
-  see it.
+  the user chooses Preferences from the menu a second time; use the
+  @sym{gtk-window-present} function to move the already open dialog where the
+  user can see it.
 
   If you are calling this function in response to a user interaction, it is
-  preferable to use @fun{gtk-window-present-with-time}.
+  preferable to use the @fun{gtk-window-present-with-time} function.
   @see-class{gtk-window}
   @see-function{gtk-widget-show}
   @see-function{gtk-window-present-with-time}"
@@ -2186,8 +2204,8 @@
     or key press event) which triggered this call}
   @begin{short}
     Presents a window to the user in response to a user interaction. If you need
-    to present a window without a timestamp, use @fun{gtk-window-present}. See
-    @fun{gtk-window-present} for details.
+    to present a window without a timestamp, use the @fun{gtk-window-present}
+    function.
   @end{short}
   @see-class{gtk-window}
   @see-function{gtk-window-present}"
@@ -2582,9 +2600,9 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-3-29}
   @return{Copy of default icon list.}
-  Gets the value set by @fun{gtk-window-set-default-icon-list}. The list is a
-  copy and should be freed with g_list_free(), but the pixbufs in the list have
-  not had their reference count incremented.
+  Gets the value set by the @fun{gtk-window-set-default-icon-list} function. The
+  list is a copy and should be freed with g_list_free(), but the pixbufs in the
+  list have not had their reference count incremented.
   @see-class{gtk-window}")
 
 (export 'gtk-window-get-default-icon-list)
@@ -2599,10 +2617,10 @@
  "@version{2013-3-29}
   @return{The fallback icon name for windows.}
   @begin{short}
-    Returns the fallback icon name for windows that has been set with
-    @fun{gtk-window-set-default-icon-name}. The returned string is owned by
-    GTK+ and should not be modified. It is only valid until the next call to
-    @fun{gtk-window-set-default-icon-name}.
+    Returns the fallback icon name for windows that has been set with the
+    @fun{gtk-window-set-default-icon-name} function. The returned string is
+    owned by GTK+ and should not be modified. It is only valid until the next
+    call to the @fun{gtk-window-set-default-icon-name} function.
   @end{short}
   @see-class{gtk-window}")
 
@@ -2634,9 +2652,9 @@
 
   If the window's \"natural\" size, its size request, is larger than the
   default, the default will be ignored. More generally, if the default size
-  does not obey the geometry hints for the window, the function
-  @fun{gtk-window-set-geometry-hints} can be used to set these explicitly, the
-  default size will be clamped to the nearest permitted size.
+  does not obey the geometry hints for the window, the
+  @fun{gtk-window-set-geometry-hints} function can be used to set these
+  explicitly, the default size will be clamped to the nearest permitted size.
 
   Unlike the @fun{gtk-widget-size-request} function, which sets a size
   request for a widget and thus would keep users from shrinking the window,
@@ -2688,7 +2706,8 @@
   @argument[window]{a @class{gtk-window} widget}
   @return{Copy of @arg{window}'s icon list.}
   @begin{short}
-    Retrieves the list of icons set by @fun{gtk-window-set-icon-list}.
+    Retrieves the list of icons set by the @fun{gtk-window-set-icon-list}
+    function.
   @end{short}
   The list is copied, but the reference count on each member won't be
   incremented.
@@ -2711,7 +2730,7 @@
   @begin{short}
     Returns the mnemonic modifier for this @arg{window}.
   @end{short}
-  See @fun{gtk-window-set-mnemonic-modifier}.
+  See the @fun{gtk-window-set-mnemonic-modifier} function.
   @see-class{gtk-window}
   @see-function{gtk-window-set-mnemonic-modifier}"
   (window (g-object gtk-window)))
@@ -2740,17 +2759,17 @@
     or @code{nil}
   @end{return}
   @begin{short}
-    This function returns the position you need to pass to the function
-    @fun{gtk-window-move} to keep window in its current position. This means
-    that the meaning of the returned value varies with window gravity. See
+    This function returns the position you need to pass to the
+    @fun{gtk-window-move} function to keep window in its current position. This
+    means that the meaning of the returned value varies with window gravity. See
     the @fun{gtk-window-move} function for more details.
   @end{short}
 
   If you have not changed the window gravity, its gravity will be
   @code{:north-west} of the @symbol{gdk-gravity} enumeration. This means that
-  @sym{gtk-window-get-position} gets the position of the top-left corner of the
-  window manager frame for the window. The @fun{gtk-window-move} function sets
-  the position of this same top-left corner.
+  the @sym{gtk-window-get-position} function gets the position of the top-left
+  corner of the window manager frame for the window. The @fun{gtk-window-move}
+  function sets the position of this same top-left corner.
 
   The @sym{gtk-window-get-position} function is not 100 % reliable because the
   X Window System does not specify a way to obtain the geometry of the
@@ -2832,18 +2851,20 @@
 
   Note 3: If you are getting a window size in order to position the window
   onscreen, there may be a better way. The preferred way is to simply set the
-  window's semantic type with @fun{gtk-window-set-type-hint}, which allows the
-  window manager to e. g. center dialogs. Also, if you set the transient parent
-  of dialogs with @fun{gtk-window-transient-for} window managers will often
-  center the dialog over its parent window. It is much preferred to let the
-  window manager handle these things rather than doing it yourself, because
-  all apps will behave consistently and according to user prefs if the window
-  manager handles it. Also, the window manager can take the size of the window
-  decorations/border into account, while your application cannot.
+  window's semantic type with the @fun{gtk-window-set-type-hint} function, which
+  allows the window manager to e. g. center dialogs. Also, if you set the
+  transient parent of dialogs with the @fun{gtk-window-transient-for} function
+  window managers will often center the dialog over its parent window. It is
+  much preferred to let the window manager handle these things rather than doing
+  it yourself, because all apps will behave consistently and according to user
+  prefs if the window manager handles it. Also, the window manager can take the
+  size of the window decorations/border into account, while your application
+  cannot.
 
-  In any case, if you insist on application-specified window positioning,
-  there is still a better way than doing it yourself -
-  @sym{gtk-window-set-position} will frequently handle the details for you.
+  In any case, if you insist on application-specified window positioning, there
+  is still a better way than doing it yourself - the
+  @sym{gtk-window-set-position} function will frequently handle the details for
+  you.
   @see-class{gtk-window}"
   (with-foreign-objects ((width :int) (height :int))
     (%gtk-window-get-size window width height)
@@ -2923,10 +2944,10 @@
   the window is positioned at the reference point.
 
   By default the gravity is @code{:north-west}, so the reference point is
-  simply the x, y supplied to @sym{gtk-window-move}. The top-left corner of the
-  window decorations (aka window frame or border) will be placed at x, y.
-  Therefore, to position a window at the top left of the screen, you want to
-  use the default gravity (which is @code{:north-west}) and move the
+  simply the x, y supplied to the @sym{gtk-window-move} function. The top-left
+  corner of the window decorations (aka window frame or border) will be placed
+  at x, y. Therefore, to position a window at the top left of the screen, you
+  want to use the default gravity (which is @code{:north-west}) and move the
   window to 0,0.
 
   To position a window at the bottom right corner of the screen, you would set
@@ -2942,7 +2963,7 @@
   http://www.freedesktop.org/Standards/wm-spec has a nice table of gravities
   in the \"implementation notes\" section.
 
-  The @fun{gtk-window-get-position} documentation may also be relevant.
+  The @fun{gtk-window-get-position} function documentation may also be relevant.
   @see-class{gtk-window}"
   (window (g-object gtk-window))
   (x :int)
@@ -2962,25 +2983,25 @@
   @return{@em{True} if string was parsed successfully.}
   @begin{short}
     Parses a standard X Window System geometry string - see the manual page for
-    X (type 'man X') for details on this. @sym{gtk-window-parse-geometry} does
-    work on all GTK+ ports including Win32 but is primarily intended for an X
-    environment.
+    X (type 'man X') for details on this. The @sym{gtk-window-parse-geometry}
+    function does work on all GTK+ ports including Win32 but is primarily
+    intended for an X environment.
   @end{short}
 
-  If either a size or a position can be extracted from the geometry string,
-  @sym{gtk-window-parse-geometry} returns @em{true} and calls
-  @fun{gtk-window-default-size} and/or @fun{gtk-window-move} to resize/move
-  the window.
+  If either a size or a position can be extracted from the geometry string, the
+  @sym{gtk-window-parse-geometry} function returns @em{true} and calls the
+  @fun{gtk-window-default-size} and/or @fun{gtk-window-move} functions
+  to resize/move the window.
 
-  If @sym{gtk-window-parse-geometry} returns @em{true}, it will also set the
-  @code{:user-pos} and/or @code{:user-size} hints indicating to the window
-  manager that the size/position of the window was user specified. This causes
-  most window managers to honor the geometry.
+  If the @sym{gtk-window-parse-geometry} functions returns @em{true}, it will
+  also set the @code{:user-pos} and/or @code{:user-size} hints indicating to the
+  window manager that the size/position of the window was user specified. This
+  causes most window managers to honor the geometry.
 
-  Note that for @sym{gtk-window-parse-geometry} to work as expected, it has to
-  be called when the window has its \"final\" size, i. e. after calling
-  @fun{gtk-widget-show-all} on the contents and
-  @fun{gtk-window-set-geometry-hints} on the window.
+  Note that for the @sym{gtk-window-parse-geometry} function to work as
+  expected, it has to be called when the window has its \"final\" size, i. e.
+  after calling the @fun{gtk-widget-show-all} function on the contents and the
+  @fun{gtk-window-set-geometry-hints} function on the window.
   @begin{pre}
  #include <gtk/gtk.h>
 
@@ -3055,9 +3076,9 @@
     The @sym{gtk-window-reshow-with-initial-size} function has been deprecated
     since version 3.10 and should not be used in newly-written code.
 
-    GUI builders can call the functions @fun{gtk-widget-hide},
-    @fun{gtk-widget-unrealize} and then @fun{gtk-widget-show} on window
-    themselves, if they still need this functionality.
+    GUI builders can call the @fun{gtk-widget-hide}, @fun{gtk-widget-unrealize}
+    and then @fun{gtk-widget-show} functions on window themselves, if they still
+    need this functionality.
   @end{dictionary}
   @see-class{gtk-window}
   @see-function{gtk-widget-hide}
@@ -3080,14 +3101,14 @@
   @begin{short}
     Resizes the window as if the user had done so, obeying geometry constraints.
     The default geometry constraint is that windows may not be smaller than
-    their size request; to override this constraint, call
-    @fun{gtk-widget-size-request} to set the window's request to a smaller
-    value.
+    their size request; to override this constraint, call the
+    @fun{gtk-widget-size-request} function to set the window's request to a
+    smaller value.
   @end{short}
 
-  If @sym{gtk-window-resize} is called before showing a window for the first
-  time, it overrides any default size set with
-  @fun{gtk-window-default-size}.
+  If the @sym{gtk-window-resize} function is called before showing a window for
+  the first time, it overrides any default size set with the
+  @fun{gtk-window-default-size} function.
 
   Windows may not be resized smaller than 1 by 1 pixels.
   @see-class{gtk-window}"
@@ -3108,8 +3129,8 @@
   @argument[width]{width in resize increments to resize the @arg{window} to}
   @argument[height]{height in resize increments to resize the @arg{window} to}
   @begin{short}
-    Like the @fun{gtk-window-resize}, but @arg{width} and @arg{height} are
-    interpreted in terms of the base size and increment set with
+    Like the @fun{gtk-window-resize} function, but @arg{width} and @arg{height}
+    are interpreted in terms of the base size and increment set with
     the @fun{gtk-window-set-geometry-hints} function.
   @end{short}
   @begin[Warning]{dictionary}
@@ -3146,7 +3167,7 @@
     windows in your app at once.
   @end{short}
 
-  See @fun{gtk-window-set-icon-list} for more details.
+  See the @fun{gtk-window-set-icon-list} function for more details.
   @see-class{gtk-window}
   @see-function{gtk-window-set-icon-list}"
   ;; We have to pass a list of pointers.
@@ -3163,8 +3184,8 @@
  "@version{2014-2-5}
   @argument[icon]{the icon of type @class{gdk-pixbuf}}
   @begin{short}
-    Sets an icon to be used as fallback for windows that have not had
-    @fun{gtk-window-set-icon} called on them from a pixbuf.
+    Sets an icon to be used as fallback for windows that have not had the
+    @fun{gtk-window-set-icon} function called on them from a pixbuf.
   @end{short}
   @see-class{gtk-window}
   @see-class{gdk-pixbuf}
@@ -3233,11 +3254,11 @@
   Some window managers or desktop environments may also place it in the window
   frame, or display it in other contexts.
 
-  @sym{gtk-window-set-icon-list} allows you to pass in the same icon in several
-  hand-drawn sizes. The list should contain the natural sizes your icon is
-  available in; that is, don't scale the image before passing it to GTK+.
-  Scaling is postponed until the last minute, when the desired final size is
-  known, to allow best quality.
+  The @sym{gtk-window-set-icon-list} function allows you to pass in the same
+  icon in several hand-drawn. The list should contain the natural sizes your
+  icon is available in; that is, don't scale the image before passing it to
+  GTK+. Scaling is postponed until the last minute, when the desired final size
+  is known, to allow best quality.
 
   By passing several sizes, you may improve the final image quality of the
   icon, by reducing or eliminating automatic image scaling.
@@ -3245,13 +3266,13 @@
   Recommended sizes to provide: 16 x 16, 32 x 32, 48 x 48 at minimum, and larger
   images (64 x 64, 128 x 128) if you have them.
 
-  See also @fun{gtk-window-set-default-icon-list} to set the icon for all
-  windows in your application in one go.
+  See also the @fun{gtk-window-set-default-icon-list} function to set the icon
+  for all windows in your application in one go.
 
   Note that transient windows (those who have been set transient for another
-  window using @fun{gtk-window-transient-for}) will inherit their icon from
-  their transient parent. So there's no need to explicitly set the icon on
-  transient windows.
+  window using the @fun{gtk-window-transient-for} function) will inherit their
+  icon from their transient parent. So there's no need to explicitly set the
+  icon on transient windows.
   @see-class{gtk-window}
   @see-function{gtk-window-set-default-icon-list}
   @see-function{gtk-window-transient-for}"
