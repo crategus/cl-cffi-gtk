@@ -5,8 +5,37 @@
 ;;; Types and Values
 ;;;
 ;;;     GdkWindow
+
 ;;;     GdkWindowType
-;;;     GdkWindowWindowClass
+
+(test gdk-window-type
+  ;; Check the enum definition
+  (is (equal '(DEFINE-G-ENUM "GdkWindowType"
+    GDK-WINDOW-TYPE
+    (:EXPORT T :TYPE-INITIALIZER "gdk_window_type_get_type")
+  (:ROOT 0)
+  (:TOPLEVEL 1)
+  (:CHILD 2)
+  (:TEMP 3)
+  (:FOREIGN 4)
+  (:OFFSCREEN 5)
+  (:SUBSURFACE 6))
+             (gobject::get-g-type-definition "GdkWindowType")))
+  ;; Check the names
+  (is (equal '("GDK_WINDOW_ROOT" "GDK_WINDOW_TOPLEVEL" "GDK_WINDOW_CHILD" "GDK_WINDOW_TEMP"
+ "GDK_WINDOW_FOREIGN" "GDK_WINDOW_OFFSCREEN" "GDK_WINDOW_SUBSURFACE")
+             (mapcar #'gobject::enum-item-name
+                     (gobject::get-enum-items "GdkWindowType"))))
+  ;; Check the values
+  (is (equal '(0 1 2 3 4 5 6)
+             (mapcar #'gobject::enum-item-value
+                     (gobject::get-enum-items "GdkWindowType"))))
+  ;; Check the nick names
+  (is (equal '("root" "toplevel" "child" "temp" "foreign" "offscreen" "subsurface")
+             (mapcar #'gobject::enum-item-nick
+                     (gobject::get-enum-items "GdkWindowType"))))
+)
+
 ;;;     GdkWindowHints
 
 ;;; --- GdkGeometry ------------------------------------------------------------
@@ -69,8 +98,21 @@
 ;;;     GdkAnchorHint
 ;;;     GdkWindowEdge
 ;;;     GdkWindowTypeHint
+
 ;;;     GdkWindowAttr
+
+(test gdk-window-attr
+
+  (is (eq 'gdk-window-attr (type-of (make-gdk-window-attr))))
+
+  (let ((attributes (make-gdk-window-attr :title "title")))
+    (is (equal "title" (gdk-window-attr-title attributes)))
+  ))
+
 ;;;     GdkWindowAttributesType
+
+
+
 ;;;     GdkFullscreenMode
 ;;;     GdkFilterReturn
 ;;;     GdkModifierType        --> gdk.event-structures.lisp
@@ -78,14 +120,56 @@
 ;;;     GdkWMDecoration
 ;;;     GdkWMFunction
 ;;;
-;;; Functions
 ;;;
 ;;;     gdk_window_new
+
+(test gdk-window-new
+  (let ((root-window (gdk-get-default-root-window))
+        (attributes (make-gdk-window-attr :title  "title"
+                                          :x       10
+                                          :y       10
+                                          :width  400
+                                          :height 300))
+        (attributes-mask '(:title :x :y)))
+    ;; TODO: Causes a memory fault
+;    (is-false (gdk-window-new root-window attributes attributes-mask)) 
+))
+
 ;;;     gdk_window_destroy
-;;;     gdk_window_get_window_type
+
+;;; --- gdk-window-get-window-type ---------------------------------------------
+
+(test gdk-window-get-window-type
+  (is (eq :root (gdk-window-get-window-type (gdk-get-default-root-window))))
+  (let ((toplevel (make-instance 'gtk-window :type :toplevel))
+        (child (make-instance 'gtk-button)))
+    (gtk-container-add toplevel child)
+    (gtk-widget-show-all toplevel)
+    (is (eq 'gdk-window (type-of (gtk-widget-window toplevel))))
+    (is (eq :toplevel (gdk-window-get-window-type (gtk-widget-window toplevel))))
+    (is (eq 'gdk-window (type-of (gtk-widget-window child))))
+    ;; Button is a child widget, but the GdkWindow is :toplevel
+    (is (eq :toplevel (gdk-window-get-window-type (gtk-widget-window child))))
+  ))
+
 ;;;     gdk_window_get_display
+
+(test gdk-window-get-display
+  (is (eq 'gdk-display (type-of (gdk-window-get-display (gdk-get-default-root-window)))))
+)
+
 ;;;     gdk_window_get_screen
+
+(test gdk-window-get-screen
+  (is (eq 'gdk-screen (type-of (gdk-window-get-screen (gdk-get-default-root-window)))))
+)
+
 ;;;     gdk_window_get_visual
+
+(test gdk-window-get-visual
+  (is (eq 'gdk-visual (type-of (gdk-window-get-visual (gdk-get-default-root-window)))))
+)
+
 ;;;     gdk_window_at_pointer                              * deprecated *
 ;;;     gdk_window_show
 ;;;     gdk_window_show_unraised
@@ -211,7 +295,7 @@
     (let ((window (gtk-widget-window toplevel)))
       (is (eq 'gtk-window (type-of toplevel)))
       (is (eq 'gdk-window (type-of window)))
-      ;; TODO: Find a way to test the settiongs
+      ;; TODO: Find a way to test the settings
       (gdk-window-set-geometry-hints window (make-gdk-geometry) '(:min-size :max-size))
 )))
 
@@ -275,7 +359,16 @@
 ;;;     gdk_window_set_decorations
 ;;;     gdk_window_get_decorations
 ;;;     gdk_window_set_functions
-;;;     gdk_get_default_root_window
+
+;;; --- gdk-get-default-root-window --------------------------------------------
+
+(test gdk-get-default-root-window
+  (let ((root-window (gdk-get-default-root-window)))
+    (is (eq 'gdk-window (type-of root-window)))
+    (is-true (integerp (gdk-window-get-width root-window)))
+    (is-true (integerp (gdk-window-get-height root-window)))
+  ))
+
 ;;;     gdk_window_get_support_multidevice
 ;;;     gdk_window_set_support_multidevice
 ;;;     gdk_window_get_device_cursor
