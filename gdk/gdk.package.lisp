@@ -357,7 +357,7 @@
     @about-symbol{gdk-anchor-hints}
     @about-symbol{gdk-window-edge}
     @about-symbol{gdk-window-type-hint}
-    @about-symbol{gdk-window-attr}
+    @about-struct{gdk-window-attr}
     @about-symbol{gdk-window-attributes-type}
     @about-symbol{gdk-fullscreen-mode}
     @about-symbol{gdk-filter-return}
