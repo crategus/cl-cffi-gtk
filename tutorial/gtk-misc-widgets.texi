@@ -303,15 +303,15 @@ reveals varying amounts of the label.
 
 @findex gtk-widget-window
 @findex widget-window, gtk-widget-window
-@findex gdk-window-set-cursor
-@findex window-set-cursor, gdk-window-set-cursor
+@findex gdk-window-cursor
+@findex window-cursor, gdk-window-cursor
 
 @findex :hand1, GdkCursorType
 
 In addition, @ref{example-event-box} shows how to change the mouse pointer
 over a window.  Every widget has an associated window of type @code{GdkWindow},
 which can be get with the function @code{gtk-widget-window}. The function
-@code{gdk-window-set-cursor} sets a mouse pointer for this @code{GdkWindow}.
+@code{gdk-window-cursor} sets a mouse pointer for this @code{GdkWindow}.
 A new mouse pointer is created with the function @code{gdk-cursor-new}.  The
 functions takes one argument, which is a keyword of the enumeration type
 @code{GdkCursorType} for a predefined mouse pointer.  GTK+ has about 150
@@ -319,7 +319,7 @@ predefined mouse pointers.  Look at the implementation of @code{GdkCursorType}
 in the file @code{gdk.cursor.lisp} to see all possible keywords.  In
 @ref{example-event-box} the mouse pointer @code{:hand1} is chosen.  This
 mouse pointer is than associated to the @code{GdkWindow} with the function
-@code{gdk-window-set-cursor}.
+@code{gdk-window-cursor}.
 
 @float Example, example-event-box
 @caption{Event Box}
@@ -352,8 +352,8 @@ mouse pointer is than associated to the @code{GdkWindow} with the function
       ;; Realize the event box
       (gtk-widget-realize eventbox)
       ;; Set a new cursor for the event box
-      (gdk-window-set-cursor (gtk-widget-window eventbox)
-                             (gdk-cursor-new :hand1))
+      (setf (gdk-window-cursor (gtk-widget-window eventbox))
+            (gdk-cursor-new :hand1))
       ;; Show the window
       (gtk-widget-show-all window))))
 @end verbatim

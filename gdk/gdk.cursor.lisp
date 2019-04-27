@@ -87,23 +87,23 @@
   @end{short}
   There is a number of standard cursors, but it is also possible to construct
   new cursors from pixbufs. There may be limitations as to what kinds of cursors
-  can be constructed on a given display, see the functions
+  can be constructed on a given display, see the
   @fun{gdk-display-supports-cursor-alpha},
   @fun{gdk-display-supports-cursor-color},
   @fun{gdk-display-get-default-cursor-size} and
-  @fun{gdk-display-get-maximal-cursor-size}.
+  @fun{gdk-display-get-maximal-cursor-size} functions.
 
-  Cursors by themselves are not very interesting, they must be be bound to a
-  window for users to see them. This is done with the function
-  @fun{gdk-window-set-cursor} or by setting the cursor member of the
-  @class{gdk-window-attr} structure passed to the function @fun{gdk-window-new}.
+  Cursors by themselves are not very interesting, they must be bound to a
+  window for users to see them. This is done with the @fun{gdk-window-cursor}
+  function or by setting the cursor member of the
+  @class{gdk-window-attr} structure passed to the @fun{gdk-window-new} function.
   @see-slot{gdk-cursor-cursor-type}
   @see-slot{gdk-cursor-display}
   @see-function{gdk-display-supports-cursor-alpha}
   @see-function{gdk-display-supports-cursor-color}
   @see-function{gdk-display-get-default-cursor-size}
   @see-function{gdk-display-get-maximal-cursor-size}
-  @see-function{gdk-window-set-cursor}
+  @see-function{gdk-window-cursor}
   @see-function{gdk-window-new}")
 
 ;;; ----------------------------------------------------------------------------
