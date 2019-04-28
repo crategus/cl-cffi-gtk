@@ -1,7 +1,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk-demo.lisp
 ;;;
-;;; Copyright (C) 2013, 2014 Dieter Kaiser
+;;; Copyright (C) 2013 - 2019 Dieter Kaiser
 ;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
@@ -33,7 +33,7 @@
 ;;; ----------------------------------------------------------------------------
 
 (defun load-file (filename)
-  (with-open-file (stream filename)
+  (with-open-file (stream (rel-path filename))
     ;; Read the info-header of the file
     (multiple-value-bind (start end)
         (gtk-text-buffer-get-bounds info-buffer)
@@ -325,14 +325,14 @@
 
 ;;; ----------------------------------------------------------------------------
 
-(defun main ()
+(defun main (application)
   (within-main-loop
-    (let ((window (make-instance 'gtk-window
+    (let ((window (make-instance 'gtk-application-window
+                                 :application application
                                  :type :toplevel
                                  :title "GTK+ Lisp Code Demos"
                                  :default-width 800
-                                 :default-height 600
-                                 :border-width 6))
+                                 :default-height 600))
           ;; A horizontal pane
           (content (make-instance 'gtk-paned
                                   :orientation :horizontal))
@@ -349,7 +349,8 @@
       (g-signal-connect window "destroy"
                         (lambda (widget)
                           (declare (ignore widget))
-                          (leave-gtk-main)))
+                          (leave-gtk-main)
+                          (g-application-quit application)))
       ;; Set an icon for the application
       (let ((pixbuf (gdk-pixbuf-new-from-file (rel-path "gtk-logo-rgb.gif"))))
         (setq pixbuf (gdk-pixbuf-add-alpha pixbuf t 255 255 255))
@@ -370,6 +371,149 @@
       (gtk-widget-show-all window)))
   (join-gtk-main))
 
-(export 'main)
+(defun gtk-demo-activate (application)
+  (format t "~a~%" "in GTK-DEMO-ACTIVATE")
+
+    (let ((window (make-instance 'gtk-application-window
+                                 :application application
+                                 :type :toplevel
+                                 :title "GTK+ Lisp Code Demos"
+                                 :default-width 800
+                                 :default-height 600))
+          ;; A horizontal pane
+          (content (make-instance 'gtk-paned
+                                  :orientation :horizontal))
+          ;; A scrollable
+          (scroller (make-instance 'gtk-scrolled-window
+                                   :hscrollbar-policy :never
+                                   :vscrollbar-policy :automatic
+                                   :hexpand t
+                                   :vexpand t))
+          ;; A notebook
+          (notebook (make-instance 'gtk-notebook
+                                   :scrollable t))
+          (view (create-view-and-model)))
+      (g-signal-connect window "destroy"
+                        (lambda (widget)
+                          (declare (ignore widget))
+                          (leave-gtk-main)
+                          (g-application-quit application)))
+      ;; Set an icon for the application
+      (let ((pixbuf (gdk-pixbuf-new-from-file (rel-path "gtk-logo-rgb.gif"))))
+        (setq pixbuf (gdk-pixbuf-add-alpha pixbuf t 255 255 255))
+        (gtk-window-set-default-icon-list (list pixbuf)))
+      ;; Add the widgets to the content of the window
+      (gtk-container-add scroller view)
+      (gtk-paned-add1 content scroller)
+      (gtk-paned-add2 content notebook)
+      ;; Add the notebook pages to the notebook
+      (gtk-notebook-append-page notebook
+                                (create-text info-buffer nil)
+                                (gtk-label-new-with-mnemonic "_Info"))
+      (gtk-notebook-append-page notebook
+                                (create-text source-buffer t)
+                                (gtk-label-new-with-mnemonic "_Source"))
+      ;; Add the content to the window
+      (gtk-container-add window content)
+      (gtk-widget-show-all window)))
+
+(defun activate-about-dialog ()
+  (let (;; Create an about dialog
+        (dialog (make-instance 'gtk-about-dialog
+                               :program-name "GTK Lisp Demo"
+                               :version "0.9"
+                               :copyright "(c) Dieter Kaiser"
+                               :website
+                               "github.com/crategus/cl-cffi-gtk"
+                               :website-label "Project web site"
+                               :license "LLGPL"
+                               :authors '("Dieter Kaiser")
+                               :documenters '("Dieter Kaiser")
+                               :artists '("None")
+                               :logo-icon-name
+                               "applications-development"
+                               :wrap-license t)))
+    ;; Run the about dialog
+    (gtk-dialog-run dialog)
+    ;; Destroy the about dialog
+    (gtk-widget-destroy dialog)))
+
+(defvar *appmenu*
+"<?xml version=\"1.0\" encoding=\"UTF-8\"?>
+<interface>
+  <!-- interface-requires gtk+ 3.10 -->
+  <menu id=\"appmenu\">
+    <section>
+      <item>
+        <attribute name=\"label\" translatable=\"yes\">About</attribute>
+        <attribute name=\"action\">app.about</attribute>
+      </item>
+    </section>
+    <section>
+      <item>
+        <attribute name=\"label\" translatable=\"yes\">_Quit</attribute>
+        <attribute name=\"action\">app.quit</attribute>
+        <attribute name=\"accel\">&lt;Primary&gt;q</attribute>
+      </item>
+    </section>
+  </menu>
+</interface>")
+
+(defun gtk-demo-startup (application)
+  (format t "~a~%" "in GTK-DEMO-STARTUP")
+  (let ((builder (make-instance 'gtk-builder)))
+    (gtk-builder-add-from-string builder *appmenu*)
+    (setf (gtk-application-app-menu application)
+          (gtk-builder-get-object builder "appmenu"))
+    (setf (gtk-settings-gtk-shell-shows-app-menu (gtk-settings-get-default)) nil)
+
+
+  ;; Add action "about" to the application
+  (let ((action (g-simple-action-new "about" nil)))
+    ;; Connect a handler to the signal "activate"
+    (g-signal-connect action "activate"
+       (lambda (action parameter)
+         (declare (ignore action parameter))
+         (activate-about-dialog)))
+    ;; Add the action to the action map of the application
+    (g-action-map-add-action application action))
+
+  ;; Add action "quit" to the application
+  (let ((action (g-simple-action-new "quit" nil)))
+    ;; Connect a handler to the signal activate
+    (g-signal-connect action "activate"
+       (lambda (action parameter)
+         (declare (ignore action parameter))
+         ;; Destroy all windows of the application
+         (dolist (window (gtk-application-get-windows application))
+           (gtk-widget-destroy window))
+         ;; Quit the main loop
+         (leave-gtk-main)
+         ;; Quit the application
+         (g-application-quit application)))
+    ;; Add the action to action map of the application
+    (g-action-map-add-action application action))
+
+
+  )
+)
+
+(defun gtk-demo (&optional (argc 0) (argv (null-pointer)))
+  (within-main-loop
+    (unless (equal "GTK Lisp Demo" (g-get-application-name))
+      (g-set-application-name "GTK Lisp Demo"))
+    (format t "Application name is '~a'~%" (g-get-application-name))
+    (let ((gtk-demo (make-instance 'gtk-application
+                                   :application-id "org.gtk.lisp.demo"
+                                   :register-session t)))
+
+      (g-signal-connect gtk-demo "activate" #'gtk-demo-activate)
+      (g-signal-connect gtk-demo "startup" #'gtk-demo-startup)
+
+      (g-application-run gtk-demo argc argv)
+  
+
+      (format t "back from G-APPLICATION-RUN.~%")
+)))
 
 ;;; --- End of file gtk-demo.lisp ----------------------------------------------
