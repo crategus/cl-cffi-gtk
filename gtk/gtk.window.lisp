@@ -116,7 +116,7 @@
 ;;;     gtk_window_get_position
 ;;;     gtk_window_get_role                                Accessor
 ;;;     gtk_window_get_size
-;;;     gtk_window_get_title                               Accessor     
+;;;     gtk_window_get_title                               Accessor
 ;;;     gtk_window_get_transient_for                       Accessor
 ;;;     gtk_window_get_attached_to                         Accessor
 ;;;     gtk_window_get_type_hint                           Accessor
@@ -1882,13 +1882,13 @@
   @see-class{gdk-geometry}
   @see-symbol{gdk-window-hints}"
   (with-foreign-object (ptr '(:struct gdk::gdk-geometry-cstruct))
-    (setf (foreign-slot-value ptr '(:struct gdk::gdk-geometry-cstruct) 
-                                  'gdk::min-width) 
+    (setf (foreign-slot-value ptr '(:struct gdk::gdk-geometry-cstruct)
+                                  'gdk::min-width)
           (gdk-geometry-min-width geometry))
     (setf (foreign-slot-value ptr '(:struct gdk::gdk-geometry-cstruct)
                                   'gdk::min-height)
           (gdk-geometry-min-height geometry))
-    (setf (foreign-slot-value ptr '(:struct gdk::gdk-geometry-cstruct) 
+    (setf (foreign-slot-value ptr '(:struct gdk::gdk-geometry-cstruct)
                                   'gdk::max-width)
           (gdk-geometry-max-width geometry))
     (setf (foreign-slot-value ptr '(:struct gdk::gdk-geometry-cstruct)
