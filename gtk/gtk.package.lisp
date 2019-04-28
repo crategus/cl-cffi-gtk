@@ -1287,795 +1287,6 @@
       @about-function{gtk-editable-get-editable}
     @end{subsection}
   @end{section}
-  @begin[GTK+ Core Reference]{section}
-    @begin[Main loop and Events]{subsection}
-      Library initialization, main event loop, and events.
-
-      Before using GTK+, it needs to be initialized; initialization connects to
-      the window system display, and parses some standard command line
-      arguments. In the C library the macro @code{gtk_init()} initializes GTK+.
-      In the Lisp binding to GTK+, GTK+ is initialized, when loading the
-      @code{cl-cffi-gtk} library. Therefore, no functions are exported, which
-      initialize GTK+.
-
-      Like all GUI toolkits, GTK+ uses an event-driven programming model. When
-      the user is doing nothing, GTK+ sits in the main loop and waits for input.
-      If the user performs some action - say, a mouse click - then the main loop
-      \"wakes up\" and delivers an event to GTK+. GTK+ forwards the event to one
-      or more widgets.
-
-      In the C library the main loop is executed with the function
-      @code{gtk_main()}. In the Lisp binding this function is implemented as
-      the function @fun{gtk-main}, but in general it is not used. The function
-      @code{gtk_main()} is replaced with the macro @fun{within-main-loop}, which
-      does all necessary work to run the main loop. See the example for a
-      typical main function in the Lisp binding.
-
-      When widgets receive an event, they frequently emit one or more signals.
-      Signals notify your program that \"something interesting happened\" by
-      invoking functions you have connected to the signal with the function
-      @fun{g-signal-connect}. Functions connected to a signal are often termed
-      callbacks.
-
-      When your callbacks are invoked, you would typically take some action -
-      for example, when an Open button is clicked you might display a
-      @class{gtk-file-chooser-dialog} window. After a callback finishes, GTK+
-      will return to the main loop and await more user input.
-
-      @b{Example:} Typical main function in Lisp for a GTK+ application.
-      @begin{pre}
-(defun main ()
-  (within-main-loop
-    (let (;; Create the main window.
-          (window (gtk-window-new :toplevel)))
-
-      ;; Set up the GUI elements
-      ...
-
-      ;; Show the application window.
-      (gtk-widget-show-all window))))
-      @end{pre}
-
-      @about-function{gtk-disable-setlocale}
-      @about-function{gtk-get-default-language}
-      @about-function{gtk-parse-args}
-      @about-function{gtk-init}
-      @about-function{gtk-init-check}
-      @about-function{gtk-init-with-args}
-      @about-function{gtk-get-option-group}
-      @about-function{gtk-events-pending}
-      @about-function{gtk-main}
-      @about-function{gtk-main-level}
-      @about-function{gtk-main-quit}
-      @about-function{gtk-main-iteration}
-      @about-function{gtk-main-iteration-do}
-      @about-function{gtk-main-do-event}
-      @about-function{gtk-true}
-      @about-function{gtk-false}
-      @about-function{gtk-grab-add}
-      @about-function{gtk-grab-get-current}
-      @about-function{gtk-grab-remove}
-      @about-function{gtk-device-grab-add}
-      @about-function{gtk-device-grab-remove}
-      @about-function{gtk-priority-resize}
-      @about-function{gtk-key-snooper-install}
-      @about-function{gtk-key-snooper-remove}
-      @about-function{gtk-get-current-event}
-      @about-function{gtk-get-current-event-time}
-      @about-function{gtk-get-current-event-state}
-      @about-function{gtk-get-current-event-device}
-      @about-function{gtk-get-event-widget}
-      @about-function{gtk-propagate-event}
-    @end{subsection}
-    @begin[Version Information]{subsection}
-      GTK+ provides version information, primarily useful in configure checks
-      for builds that have a configure script. Applications will not typically
-      use the features described here.
-
-      @about-function{gtk-get-major-version}
-      @about-function{gtk-get-minor-version}
-      @about-function{gtk-get-micro-version}
-      @about-function{gtk-get-binary-age}
-      @about-function{gtk-get-interface-age}
-      @about-function{gtk-check-version}
-      @about-function{cl-cffi-gtk-build-info}
-      @about-variable{+gtk-minor-version+}
-      @about-variable{+gtk-micro-version+}
-      @about-variable{+gtk-binary-age+}
-      @about-variable{+gtk-interface-age+}
-    @end{subsection}
-    @begin[Accelerator Groups]{subsection}
-      Groups of global keyboard accelerators for an entire @class{gtk-window}
-      widget.
-
-      @about-symbol{gtk-accel-flags}
-      @about-class{gtk-accel-group}
-      @about-function{gtk-accel-group-new}
-      @about-function{gtk-accel-group-connect}
-      @about-function{gtk-accel-group-connect-by-path}
-      @about-function{gtk-accel-group-disconnect}
-      @about-function{gtk-accel-group-disconnect-key}
-      @about-function{gtk-accel-group-activate}
-      @about-function{gtk-accel-group-lock}
-      @about-function{gtk-accel-group-unlock}
-      @about-function{gtk-accel-group-from-accel-closure}
-      @about-function{gtk-accel-groups-activate}
-      @about-function{gtk-accel-groups-from-object}
-      @about-function{gtk-accel-group-find}
-      @about-symbol{gtk-accel-key}
-      @about-function{gtk-accelerator-valid}
-      @about-function{gtk-accelerator-parse}
-      @about-function{gtk-accelerator-name}
-      @about-function{gtk-accelerator-get-label}
-      @about-function{gtk-accelerator-parse-with-keycode}    
-      @about-function{gtk-accelerator-name-with-keycode}
-      @about-function{gtk-accelerator-get-label-with-keycode}
-      @about-function{gtk-accelerator-set-default-mod-mask}
-      @about-function{gtk-accelerator-get-default-mod-mask}
-    @end{subsection}
-    @begin[Accelerator Maps]{subsection}
-      Loadable keyboard accelerator specifications.
-
-      @about-class{gtk-accel-map}
-      @about-function{gtk-accel-map-add-entry}
-      @about-function{gtk-accel-map-lookup-entry}
-      @about-function{gtk-accel-map-change-entry}
-      @about-function{gtk-accel-map-load}
-      @about-function{gtk-accel-map-save}
-      @about-function{gtk-accel-map-foreach}
-      @about-function{gtk-accel-map-load-fd}
-      @about-function{gtk-accel-map-save-fd}
-      @about-function{gtk-accel-map-load-scanner}
-      @about-function{gtk-accel-map-add-filter}
-      @about-function{gtk-accel-map-foreach-unfiltered}
-      @about-function{gtk-accel-map-get}
-      @about-function{gtk-accel-map-lock-path}
-      @about-function{gtk-accel-map-unlock-path}
-    @end{subsection}
-    @begin[GtkClipboard]{subsection}
-      Storing data on clipboards.
-
-      @about-class{gtk-clipboard}
-      @about-function{gtk-clipboard-get}
-      @about-function{gtk-clipboard-get-for-display}
-      @about-function{gtk-clipboard-get-display}
-      @about-function{gtk-clipboard-set-with-data}
-      @about-function{gtk-clipboard-set-with-owner}
-      @about-function{gtk-clipboard-get-owner}
-      @about-function{gtk-clipboard-clear}
-      @about-function{gtk-clipboard-set-text}
-      @about-function{gtk-clipboard-set-image}
-      @about-function{gtk-clipboard-request-contents}
-      @about-function{gtk-clipboard-request-text}
-      @about-function{gtk-clipboard-request-image}
-      @about-function{gtk-clipboard-request-targets}
-      @about-function{gtk-clipboard-request-rich-text}
-      @about-function{gtk-clipboard-request-uris}
-      @about-function{gtk-clipboard-wait-for-contents}
-      @about-function{gtk-clipboard-wait-for-text}
-      @about-function{gtk-clipboard-wait-for-image}
-      @about-function{gtk-clipboard-wait-for-rich-text}
-      @about-function{gtk-clipboard-wait-for-uris}
-      @about-function{gtk-clipboard-wait-is-text-available}
-      @about-function{gtk-clipboard-wait-is-image-available}
-      @about-function{gtk-clipboard-wait-is-rich-text-available}
-      @about-function{gtk-clipboard-wait-is-uris-available}
-      @about-function{gtk-clipboard-wait-for-targets}
-      @about-function{gtk-clipboard-wait-is-target-available}
-      @about-function{gtk-clipboard-set-can-store}
-      @about-function{gtk-clipboard-store}
-    @end{subsection}
-    @begin[Drag and drop handling]{subsection}
-      GTK+ has a rich set of functions for doing inter-process communication via
-      the drag-and-drop metaphor. GTK+ can do drag-and-drop (DND) via multiple
-      protocols. The currently supported protocols are the Xdnd and Motif
-      protocols.
-
-      As well as the functions listed here, applications may need to use some
-      facilities provided for Selections. Also, the Drag and Drop API makes use
-      of signals in the @class{gtk-widget} class.
-
-      @about-symbol{gtk-dest-defaults}
-      @about-symbol{gtk-target-flags}
-      @about-function{gtk-drag-dest-set}
-      @about-function{gtk-drag-dest-set-proxy}
-      @about-function{gtk-drag-dest-unset}
-      @about-function{gtk-drag-dest-find-target}
-      @about-function{gtk-drag-dest-get-target-list}
-      @about-function{gtk-drag-dest-set-target-list}
-      @about-function{gtk-drag-dest-add-text-targets}
-      @about-function{gtk-drag-dest-add-image-targets}
-      @about-function{gtk-drag-dest-add-uri-targets}
-      @about-function{gtk-drag-dest-set-track-motion}
-      @about-function{gtk-drag-dest-get-track-motion}
-      @about-function{gtk-drag-finish}
-      @about-function{gtk-drag-get-data}
-      @about-function{gtk-drag-get-source-widget}
-      @about-function{gtk-drag-highlight}
-      @about-function{gtk-drag-unhighlight}
-      @about-function{gtk-drag-begin}
-      @about-function{gtk-drag-set-icon-widget}
-      @about-function{gtk-drag-set-icon-pixbuf}
-      @about-function{gtk-drag-set-icon-stock}
-      @about-function{gtk-drag-set-icon-surface}
-      @about-function{gtk-drag-set-icon-name}
-      @about-function{gtk-drag-set-icon-gicon}
-      @about-function{gtk-drag-set-icon-default}
-      @about-function{gtk-drag-check-threshold}
-      @about-function{gtk-drag-source-set}
-      @about-function{gtk-drag-source-set-icon-pixbuf}
-      @about-function{gtk-drag-source-set-icon-stock}
-      @about-function{gtk-drag-source-set-icon-name}
-      @about-function{gtk-drag-source-set-icon-gicon}
-      @about-function{gtk-drag-source-unset}
-      @about-function{gtk-drag-source-set-target-list}
-      @about-function{gtk-drag-source-get-target-list}
-      @about-function{gtk-drag-source-add-text-targets}
-      @about-function{gtk-drag-source-add-image-targets}
-      @about-function{gtk-drag-source-add-uri-targets}
-    @end{subsection}
-    @begin[Stock items]{subsection}
-      Prebuilt common menu/toolbar items and corresponding icons.
-
-      @about-class{gtk-stock-item}
-      @about-function{gtk-stock-add}
-      @about-function{gtk-stock-add-static}
-      @about-function{gtk-stock-item-copy}
-      @about-function{gtk-stock-item-free}
-      @about-function{gtk-stock-list-ids}
-      @about-function{gtk-stock-lookup}
-      @about-function{gtk-stock-set-translate-func}
-    @end{subsection}
-    @begin[GtkSettings]{subsection}
-      Sharing settings between applications.
-
-      @about-class{gtk-settings}
-      @about-symbol{GtkSettingsValue}
-      @about-function{gtk-settings-get-default}
-      @about-function{gtk-settings-get-for-screen}
-      @about-function{gtk-settings-install-property}
-      @about-function{gtk-settings-install-property-parser}
-      @about-function{gtk-rc-property-parse-color}
-      @about-function{gtk-rc-property-parse-enum}
-      @about-function{gtk-rc-property-parse-flags}
-      @about-function{gtk-rc-property-parse-requisition}
-      @about-function{gtk-rc-property-parse-border}
-      @about-function{gtk-settings-set-property-value}
-      @about-function{gtk-settings-set-string-property}
-      @about-function{gtk-settings-set-long-property}
-      @about-function{gtk-settings-set-double-property}
-    @end{subsection}
-    @begin[Bindings]{subsection}
-      not implemented
-    @end{subsection}
-    @begin[Standard Enumerations]{subsection}
-      Public enumerated types used throughout GTK+.
-
-      @about-symbol{gtk-accel-flags}
-      @about-symbol{gtk-arrow-placement}
-      @about-symbol{gtk-arrow-type}
-      @about-symbol{gtk-attach-options}
-      @about-symbol{gtk-baseline-position}
-      @about-symbol{gtk-corner-type}
-      @about-symbol{gtk-delete-type}
-      @about-symbol{gtk-direction-type}
-      @about-symbol{gtk-expander-style}
-      @about-symbol{gtk-im-preedit-style}
-      @about-symbol{gtk-im-status-style}
-      @about-symbol{gtk-justification}
-      @about-symbol{gtk-movement-step}
-      @about-symbol{gtk-orientation}
-      @about-symbol{gtk-pack-type}
-      @about-symbol{gtk-path-priority-type}
-      @about-symbol{gtk-path-type}
-      @about-symbol{gtk-policy-type}
-      @about-symbol{gtk-position-type}
-      @about-symbol{gtk-relief-style}
-      @about-symbol{gtk-resize-mode}
-      @about-symbol{gtk-scroll-step}
-      @about-symbol{gtk-scroll-type}
-      @about-symbol{gtk-selection-mode}
-      @about-symbol{gtk-shadow-type}
-      @about-symbol{gtk-state-type}
-      @about-symbol{gtk-state-flags}
-      @about-symbol{gtk-toolbar-style}
-      @about-symbol{gtk-window-position}
-      @about-symbol{gtk-window-type}
-      @about-symbol{gtk-sort-type}
-      @about-symbol{gtk-drag-result}
-      @about-symbol{gtk-junction-sides}
-      @about-symbol{gtk-border-style}
-      @about-symbol{gtk-region-flags}
-    @end{subsection}
-    @begin[Selections]{subsection}
-      The selection mechanism provides the basis for different types of
-      communication between processes. In particular, drag and drop and
-      @class{gtk-clipboard} work via selections. You will very seldom or never
-      need to use most of the functions in this section directly;
-      @class{gtk-clipboard} provides a nicer interface to the same
-      functionality.
-
-      Some of the datatypes defined this section are used in the
-      @class{gtk-clipboard} and drag-and-drop API's as well. The
-      @class{gtk-target-entry} structure and @class{gtk-target-list}
-      objects represent lists of data types that are supported when sending or
-      receiving data. The @class{gtk-selection-data} object is used to store a
-      chunk of data along with the data type and other associated information.
-
-      @about-struct{gtk-selection-data}
-      @about-function{make-gtk-selection-data}
-      @about-function{copy-gtk-selection-data}
-      @about-function{gtk-selection-data-selection}
-      @about-function{gtk-selection-data-target}
-      @about-function{make-gtk-target-entry}
-      @about-function{copy-gtk-target-entry}
-      @about-function{gtk-target-entry-target}
-      @about-function{gtk-target-entry-flags}
-      @about-function{gtk-target-entry-info}
-      @about-function{gtk-selection-data-type}
-      @about-function{gtk-selection-data-format}
-      @about-function{gtk-selection-data-data}
-      @about-function{gtk-selection-data-length}
-      @about-function{gtk-selection-data-display}
-      @about-struct{gtk-target-entry}
-      @about-class{gtk-target-list}
-      @about-function{gtk-target-entry-new}
-      @about-function{gtk-target-entry-copy}
-      @about-function{gtk-target-entry-free}
-      @about-function{gtk-target-list-new}
-      @about-function{gtk-target-list-ref}
-      @about-function{gtk-target-list-unref}
-      @about-function{gtk-target-list-add}
-      @about-function{gtk-target-list-add-table}
-      @about-function{gtk-target-list-add-text-targets}
-      @about-function{gtk-target-list-add-image-targets}
-      @about-function{gtk-target-list-add-uri-targets}
-      @about-function{gtk-target-list-add-rich-text-targets}
-      @about-function{gtk-target-list-remove}
-      @about-function{gtk-target-list-find}
-      @about-function{gtk-target-table-free}
-      @about-function{gtk-target-table-new-from-list}
-      @about-function{gtk-selection-owner-set}
-      @about-function{gtk-selection-owner-set-for-display}
-      @about-function{gtk-selection-add-target}
-      @about-function{gtk-selection-add-targets}
-      @about-function{gtk-selection-clear-targets}
-      @about-function{gtk-selection-convert}
-      @about-function{gtk-selection-data-set}
-      @about-function{gtk-selection-data-set-text}
-      @about-function{gtk-selection-data-get-text}
-      @about-function{gtk-selection-data-set-pixbuf}
-      @about-function{gtk-selection-data-get-pixbuf}
-      @about-function{gtk-selection-data-set-uris}
-      @about-function{gtk-selection-data-get-uris}
-      @about-function{gtk-selection-data-get-targets}
-      @about-function{gtk-selection-data-targets-include-image}
-      @about-function{gtk-selection-data-targets-include-text}
-      @about-function{gtk-selection-data-targets-include-uri}
-      @about-function{gtk-selection-data-targets-include-rich-text}
-      @about-function{gtk-selection-data-get-selection}
-      @about-function{gtk-selection-data-get-data}
-      @about-function{gtk-selection-data-get-length}
-      @about-function{gtk-selection-data-get-data-with-length}
-      @about-function{gtk-selection-data-get-data-type}
-      @about-function{gtk-selection-data-get-display}
-      @about-function{gtk-selection-data-get-format}
-      @about-function{gtk-selection-data-get-target}
-      @about-function{gtk-targets-include-image}
-      @about-function{gtk-targets-include-text}
-      @about-function{gtk-targets-include-uri}
-      @about-function{gtk-targets-include-rich-text}
-      @about-function{gtk-selection-remove-all}
-      @about-function{gtk-selection-data-copy}
-      @about-function{gtk-selection-data-free}
-    @end{subsection}
-    @begin[Filesystem utilities]{subsection}
-      Functions for working with GIO
-
-      @about-class{gtk-mount-operation}
-      @about-function{gtk-mount-operation-new}
-      @about-function{gtk-mount-operation-is-showing}
-      @about-function{gtk-mount-operation-set-parent}
-      @about-function{gtk-mount-operation-get-parent}
-      @about-function{gtk-mount-operation-set-screen}
-      @about-function{gtk-mount-operation-get-screen}
-      @about-function{gtk-show-uri}
-    @end{subsection}
-  @end{section}
-  @begin[Theming in GTK+]{section}
-    @begin[GtkStyleContext]{subsection}
-      Rendering UI elements
-
-      @about-symbol{GTK_STYLE_PROPERTY_BACKGROUND_COLOR}
-      @about-symbol{GTK_STYLE_PROPERTY_COLOR}
-      @about-symbol{GTK_STYLE_PROPERTY_FONT}
-      @about-symbol{GTK_STYLE_PROPERTY_MARGIN}
-      @about-symbol{GTK_STYLE_PROPERTY_PADDING}
-      @about-symbol{GTK_STYLE_PROPERTY_BORDER_WIDTH}
-      @about-symbol{GTK_STYLE_PROPERTY_BORDER_RADIUS}
-      @about-symbol{GTK_STYLE_PROPERTY_BORDER_STYLE}
-      @about-symbol{GTK_STYLE_PROPERTY_BORDER_COLOR}
-      @about-symbol{GTK_STYLE_PROPERTY_BACKGROUND_IMAGE}
-      @about-symbol{GTK_STYLE_CLASS_BACKGROUND}
-      @about-symbol{GTK_STYLE_CLASS_BUTTON}
-      @about-symbol{GTK_STYLE_CLASS_CALENDAR}
-      @about-symbol{GTK_STYLE_CLASS_CELL}
-      @about-symbol{GTK_STYLE_CLASS_COMBOBOX_ENTRY}
-      @about-symbol{GTK_STYLE_CLASS_CHECK}
-      @about-symbol{GTK_STYLE_CLASS_DEFAULT}
-      @about-symbol{GTK_STYLE_CLASS_ENTRY}
-      @about-symbol{GTK_STYLE_CLASS_HEADER}
-      @about-symbol{GTK_STYLE_CLASS_MENU}
-      @about-symbol{GTK_STYLE_CLASS_RADIO}
-      @about-symbol{GTK_STYLE_CLASS_RUBBERBAND}
-      @about-symbol{GTK_STYLE_CLASS_SCROLLBAR}
-      @about-symbol{GTK_STYLE_CLASS_SCROLLBARS_JUNCTION}
-      @about-symbol{GTK_STYLE_CLASS_SLIDER}
-      @about-symbol{GTK_STYLE_CLASS_TOOLTIP}
-      @about-symbol{GTK_STYLE_CLASS_TROUGH}
-      @about-symbol{GTK_STYLE_CLASS_ACCELERATOR}
-      @about-symbol{GTK_STYLE_CLASS_DOCK}
-      @about-symbol{GTK_STYLE_CLASS_GRIP}
-      @about-symbol{GTK_STYLE_CLASS_MENUBAR}
-      @about-symbol{GTK_STYLE_CLASS_MENUITEM}
-      @about-symbol{GTK_STYLE_CLASS_PROGRESSBAR}
-      @about-symbol{GTK_STYLE_CLASS_SPINNER}
-      @about-symbol{GTK_STYLE_CLASS_TOOLBAR}
-      @about-symbol{GTK_STYLE_CLASS_PRIMARY_TOOLBAR}
-      @about-symbol{GTK_STYLE_CLASS_INLINE_TOOLBAR}
-      @about-symbol{GTK_STYLE_CLASS_PANE_SEPARATOR}
-      @about-symbol{GTK_STYLE_CLASS_SEPARATOR}
-      @about-symbol{GTK_STYLE_CLASS_SIDEBAR}
-      @about-symbol{GTK_STYLE_CLASS_DND}
-      @about-symbol{GTK_STYLE_CLASS_ERROR}
-      @about-symbol{GTK_STYLE_CLASS_EXPANDER}
-      @about-symbol{GTK_STYLE_CLASS_FRAME}
-      @about-symbol{GTK_STYLE_CLASS_HIGHLIGHT}
-      @about-symbol{GTK_STYLE_CLASS_IMAGE}
-      @about-symbol{GTK_STYLE_CLASS_INFO}
-      @about-symbol{GTK_STYLE_CLASS_MARK}
-      @about-symbol{GTK_STYLE_CLASS_NOTEBOOK}
-      @about-symbol{GTK_STYLE_CLASS_QUESTION}
-      @about-symbol{GTK_STYLE_CLASS_SCALE}
-      @about-symbol{GTK_STYLE_CLASS_SCALE_HAS_MARKS_ABOVE}
-      @about-symbol{GTK_STYLE_CLASS_SCALE_HAS_MARKS_BELOW}
-      @about-symbol{GTK_STYLE_CLASS_SPINBUTTON}
-      @about-symbol{GTK_STYLE_CLASS_VIEW}
-      @about-symbol{GTK_STYLE_CLASS_WARNING}
-      @about-symbol{GTK_STYLE_CLASS_HORIZONTAL}
-      @about-symbol{GTK_STYLE_CLASS_VERTICAL}
-      @about-symbol{GTK_STYLE_CLASS_TOP}
-      @about-symbol{GTK_STYLE_CLASS_BOTTOM}
-      @about-symbol{GTK_STYLE_CLASS_LEFT}
-      @about-symbol{GTK_STYLE_CLASS_RIGHT}
-      @about-symbol{GTK_STYLE_CLASS_LINKED}
-      @about-symbol{GTK_STYLE_CLASS_ARROW}
-      @about-symbol{GTK_STYLE_CLASS_OSD}
-      @about-symbol{GTK_STYLE_CLASS_LEVEL_BAR}
-      @about-symbol{GTK_STYLE_CLASS_CURSOR_HANDLE}
-      @about-symbol{GTK_STYLE_REGION_COLUMN}
-      @about-symbol{GTK_STYLE_REGION_COLUMN_HEADER}
-      @about-symbol{GTK_STYLE_REGION_ROW}
-      @about-symbol{GTK_STYLE_REGION_TAB}
-      @about-class{gtk-style-context}
-      @about-function{gtk-style-context-new}
-      @about-function{gtk-style-context-add-provider}
-      @about-function{gtk-style-context-add-provider-for-screen}
-      @about-function{gtk-style-context-get}
-      @about-function{gtk-style-context-get-direction}
-      @about-function{gtk-style-context-get-junction-sides}
-      @about-function{gtk-style-context-get-parent}
-      @about-function{gtk-style-context-get-path}
-      @about-function{gtk-style-context-get-property}
-      @about-function{gtk-style-context-get-screen}
-      @about-function{gtk-style-context-get-state}
-      @about-function{gtk-style-context-get-style}
-      @about-function{gtk-style-context-get-style-property}
-      @about-function{gtk-style-context-get-style-valist}
-      @about-function{gtk-style-context-get-valist}
-      @about-function{gtk-style-context-get-section}
-      @about-function{gtk-style-context-get-color}
-      @about-function{gtk-style-context-get-background-color}
-      @about-function{gtk-style-context-get-border-color}
-      @about-function{gtk-style-context-get-border}
-      @about-function{gtk-style-context-get-padding}
-      @about-function{gtk-style-context-get-margin}
-      @about-function{gtk-style-context-get-font}
-      @about-function{gtk-style-context-invalidate}
-      @about-function{gtk-style-context-state-is-running}
-      @about-function{gtk-style-context-lookup-color}
-      @about-function{gtk-style-context-lookup-icon-set}
-      @about-function{gtk-style-context-notify-state-change}
-      @about-function{gtk-style-context-pop-animatable-region}
-      @about-function{gtk-style-context-push-animatable-region}
-      @about-function{gtk-style-context-cancel-animations}
-      @about-function{gtk-style-context-scroll-animations}
-      @about-function{gtk-style-context-remove-provider}
-      @about-function{gtk-style-context-remove-provider-for-screen}
-      @about-function{gtk-style-context-reset-widgets}
-      @about-function{gtk-style-context-set-background}
-      @about-function{gtk-style-context-restore}
-      @about-function{gtk-style-context-save}
-      @about-function{gtk-style-context-set-direction}
-      @about-function{gtk-style-context-set-junction-sides}
-      @about-function{gtk-style-context-set-parent}
-      @about-function{gtk-style-context-set-path}
-      @about-function{gtk-style-context-add-class}
-      @about-function{gtk-style-context-remove-class}
-      @about-function{gtk-style-context-has-class}
-      @about-function{gtk-style-context-list-classes}
-      @about-function{gtk-style-context-add-region}
-      @about-function{gtk-style-context-remove-region}
-      @about-function{gtk-style-context-has-region}
-      @about-function{gtk-style-context-list-regions}
-      @about-function{gtk-style-context-set-screen}
-      @about-function{gtk-style-context-set-state}
-      @about-struct{gtk-border}
-      @about-function{make-gtk-border}
-      @about-function{copy-gtk-border}
-      @about-function{gtk-border-left}
-      @about-function{gtk-border-right}
-      @about-function{gtk-border-top}
-      @about-function{gtk-border-bottom}
-      @about-function{gtk-border-new}
-      @about-function{gtk-border-copy}
-      @about-function{gtk-border-free}
-      @about-function{gtk-render-arrow}
-      @about-function{gtk-render-background}
-      @about-function{gtk-render-check}
-      @about-function{gtk-render-expander}
-      @about-function{gtk-render-extension}
-      @about-function{gtk-render-focus}
-      @about-function{gtk-render-frame}
-      @about-function{gtk-render-frame-gap}
-      @about-function{gtk-render-handle}
-      @about-function{gtk-render-layout}
-      @about-function{gtk-render-line}
-      @about-function{gtk-render-option}
-      @about-function{gtk-render-slider}
-      @about-function{gtk-render-activity}
-      @about-function{gtk-render-icon-pixbuf}
-      @about-function{gtk-render-icon}
-      @about-function{gtk-render-insertion-cursor}
-    @end{subsection}
-    @begin[GtkCssProvider]{subsection}
-      CSS-like styling for widgets.
-
-      @about-class{gtk-css-provider}
-      @about-function{gtk-css-provider-get-default}
-      @about-function{gtk-css-provider-get-named}
-      @about-function{gtk-css-provider-load-from-data}
-      @about-function{gtk-css-provider-load-from-file}
-      @about-function{gtk-css-provider-load-from-path}
-      @about-function{gtk-css-provider-new}
-      @about-function{gtk-css-provider-to-string}
-      @about-symbol{GTK-CSS-PROVIDER-ERROR}
-      @about-symbol{GtkCssProviderError}
-      @about-symbol{GtkCssSection}
-      @about-symbol{GtkCssSectionType}
-      @about-function{gtk-css-section-get-end-line}
-      @about-function{gtk-css-section-get-end-position}
-      @about-function{gtk-css-section-get-file}
-      @about-function{gtk-css-section-get-parent}
-      @about-function{gtk-css-section-get-section-type}
-      @about-function{gtk-css-section-get-start-line}
-      @about-function{gtk-css-section-get-start-position}
-      @about-function{gtk-css-section-ref}
-      @about-function{gtk-css-section-unref}
-    @end{subsection}
-    @begin[GtkStyleProvider]{subsection}
-      Interface to provide style information to @class{gtk-style-context}.
-
-      @about-class{GtkStyleProviderIface}
-      @about-class{gtk-style-provider}
-      @about-symbol{GTK-STYLE-PROVIDER-PRIORITY-FALLBACK}
-      @about-symbol{GTK-STYLE-PROVIDER-PRIORITY-THEME}
-      @about-symbol{GTK-STYLE-PROVIDER-PRIORITY-SETTINGS}
-      @about-symbol{GTK-STYLE-PROVIDER-PRIORITY-APPLICATION}
-      @about-symbol{GTK-STYLE-PROVIDER-PRIORITY-USER}
-      @about-function{gtk-style-provider-get-icon-factory}
-      @about-function{gtk-style-provider-get-style}
-      @about-function{gtk-style-provider-get-style-property}
-    @end{subsection}
-    @begin[GtkStyleProperties]{subsection}
-      Store for style property information
-
-      @about-class{gtk-style-properties}
-      @about-function{gtk-style-properties-clear}
-      @about-function{gtk-style-properties-get}
-      @about-function{gtk-style-properties-get-property}
-      @about-function{gtk-style-properties-get-valist}
-      @about-function{gtk-style-properties-lookup-color}
-      @about-function{gtk-style-properties-lookup-property}
-      @about-function{gtk-style-properties-map-color}
-      @about-function{gtk-style-properties-merge}
-      @about-function{gtk-style-properties-new}
-      @about-function{gtk-style-properties-register-property}
-      @about-function{gtk-style-properties-set}
-      @about-function{gtk-style-properties-set-property}
-      @about-function{gtk-style-properties-set-valist}
-      @about-function{gtk-style-properties-unset-property}
-    @end{subsection}
-    @begin[GtkThemingEngine]{subsection}
-      Theming renderers
-
-      @about-class{GtkThemingEngineClass}
-      @about-class{gtk-theming-engine}
-      @about-function{gtk-theming-engine-get}
-      @about-function{gtk-theming-engine-get-direction}
-      @about-function{gtk-theming-engine-get-junction-sides}
-      @about-function{gtk-theming-engine-get-path}
-      @about-function{gtk-theming-engine-get-property}
-      @about-function{gtk-theming-engine-get-screen}
-      @about-function{gtk-theming-engine-get-state}
-      @about-function{gtk-theming-engine-get-style}
-      @about-function{gtk-theming-engine-get-style-property}
-      @about-function{gtk-theming-engine-get-style-valist}
-      @about-function{gtk-theming-engine-get-valist}
-      @about-function{gtk-theming-engine-get-color}
-      @about-function{gtk-theming-engine-get-background-color}
-      @about-function{gtk-theming-engine-get-border-color}
-      @about-function{gtk-theming-engine-get-border}
-      @about-function{gtk-theming-engine-get-padding}
-      @about-function{gtk-theming-engine-get-margin}
-      @about-function{gtk-theming-engine-get-font}
-      @about-function{gtk-theming-engine-has-class}
-      @about-function{gtk-theming-engine-has-region}
-      @about-function{gtk-theming-engine-lookup-color}
-      @about-function{gtk-theming-engine-state-is-running}
-      @about-function{gtk-theming-engine-load}
-      @about-function{gtk-theming-engine-register-property}
-    @end{subsection}
-    @begin[GtkWidgetPath]{subsection}
-      Widget path abstraction.
-
-      @about-class{gtk-widget-path}
-      @about-function{gtk-widget-path-append-type}
-      @about-function{gtk-widget-path-append-with-siblings}
-      @about-function{gtk-widget-path-append-for-widget}
-      @about-function{gtk-widget-path-copy}
-      @about-function{gtk-widget-path-ref}
-      @about-function{gtk-widget-path-unref}
-      @about-function{gtk-widget-path-free}
-      @about-function{gtk-widget-path-get-object-type}
-      @about-function{gtk-widget-path-has-parent}
-      @about-function{gtk-widget-path-is-type}
-      @about-function{gtk-widget-path-iter-add-class}
-      @about-function{gtk-widget-path-iter-add-region}
-      @about-function{gtk-widget-path-iter-clear-classes}
-      @about-function{gtk-widget-path-iter-clear-regions}
-      @about-function{gtk-widget-path-iter-get-name}
-      @about-function{gtk-widget-path-iter-get-object-type}
-      @about-function{gtk-widget-path-iter-get-siblings}
-      @about-function{gtk-widget-path-iter-get-sibling-index}
-      @about-function{gtk-widget-path-iter-has-class}
-      @about-function{gtk-widget-path-iter-has-name}
-      @about-function{gtk-widget-path-iter-has-qclass}
-      @about-function{gtk-widget-path-iter-has-qname}
-      @about-function{gtk-widget-path-iter-has-qregion}
-      @about-function{gtk-widget-path-iter-has-region}
-      @about-function{gtk-widget-path-iter-list-classes}
-      @about-function{gtk-widget-path-iter-list-regions}
-      @about-function{gtk-widget-path-iter-remove-class}
-      @about-function{gtk-widget-path-iter-remove-region}
-      @about-function{gtk-widget-path-iter-set-name}
-      @about-function{gtk-widget-path-iter-set-object-type}
-      @about-function{gtk-widget-path-length}
-      @about-function{gtk-widget-path-new}
-      @about-function{gtk-widget-path-prepend-type}
-      @about-function{gtk-widget-path-to-string}
-    @end{subsection}
-    @begin[GtkIconTheme]{subsection}
-      Looking up icons by name
-
-      @about-class{gtk-icon-theme}
-      @about-symbol{gtk-icon-info}
-      @about-symbol{gtk-icon-lookup-flags}
-      @about-class{gtk-icon-theme-error}
-      @about-function{gtk-icon-theme-error}
-      @about-function{gtk-icon-theme-new}
-      @about-function{gtk-icon-theme-get-default}
-      @about-function{gtk-icon-theme-get-for-screen}
-      @about-function{gtk-icon-theme-set-screen}
-      @about-function{gtk-icon-theme-set-search-path}
-      @about-function{gtk-icon-theme-get-search-path}
-      @about-function{gtk-icon-theme-append-search-path}
-      @about-function{gtk-icon-theme-prepend-search-path}
-      @about-function{gtk-icon-theme-set-custom-theme}
-      @about-function{gtk-icon-theme-has-icon}
-      @about-function{gtk-icon-theme-lookup-icon}
-      @about-function{gtk-icon-theme-choose-icon}
-      @about-function{gtk-icon-theme-lookup-by-gicon}
-      @about-function{gtk-icon-theme-load-icon}
-      @about-function{gtk-icon-theme-list-contexts}
-      @about-function{gtk-icon-theme-list-icons}
-      @about-function{gtk-icon-theme-get-icon-sizes}
-      @about-function{gtk-icon-theme-get-example-icon-name}
-      @about-function{gtk-icon-theme-rescan-if-needed}
-      @about-function{gtk-icon-theme-add-builtin-icon}
-      @about-function{gtk-icon-info-copy}
-      @about-function{gtk-icon-info-free}
-      @about-function{gtk-icon-info-new-for-pixbuf}
-      @about-function{gtk-icon-info-get-base-size}
-      @about-function{gtk-icon-info-get-filename}
-      @about-function{gtk-icon-info-get-builtin-pixbuf}
-      @about-function{gtk-icon-info-load-icon}
-      @about-function{gtk-icon-info-load-symbolic}
-      @about-function{gtk-icon-info-load-symbolic-for-style}
-      @about-function{gtk-icon-info-load-symbolic-for-context}
-      @about-function{gtk-icon-info-set-raw-coordinates}
-      @about-function{gtk-icon-info-get-embedded-rect}
-      @about-function{gtk-icon-info-get-attach-points}
-      @about-function{gtk-icon-info-get-display-name}
-    @end{subsection}
-    @begin[Themable Stock Images]{subsection}
-      Manipulating stock icons
-
-      @about-class{gtk-icon-source}
-      @about-class{gtk-icon-factory}
-      @about-class{gtk-icon-set}
-      @about-symbol{gtk-icon-size}
-      @about-function{gtk-icon-source-copy}
-      @about-function{gtk-icon-source-free}
-      @about-function{gtk-icon-factory-add}
-      @about-function{gtk-icon-factory-add-default}
-      @about-function{gtk-icon-factory-lookup}
-      @about-function{gtk-icon-factory-lookup-default}
-      @about-function{gtk-icon-factory-new}
-      @about-function{gtk-icon-factory-remove-default}
-      @about-function{gtk-icon-set-add-source}
-      @about-function{gtk-icon-set-copy}
-      @about-function{gtk-icon-set-new}
-      @about-function{gtk-icon-set-new-from-pixbuf}
-      @about-function{gtk-icon-set-ref}
-      @about-function{gtk-icon-set-render-icon}
-      @about-function{gtk-icon-set-render-icon-pixbuf}
-      @about-function{gtk-icon-set-unref}
-      @about-function{gtk-icon-size-lookup}
-      @about-function{gtk-icon-size-lookup-for-settings}
-      @about-function{gtk-icon-size-register}
-      @about-function{gtk-icon-size-register-alias}
-      @about-function{gtk-icon-size-from-name}
-      @about-function{gtk-icon-size-get-name}
-      @about-function{gtk-icon-size-get-sizes}
-      @about-function{gtk-icon-source-get-direction}
-      @about-function{gtk-icon-source-get-direction-wildcarded}
-      @about-function{gtk-icon-source-get-filename}
-      @about-function{gtk-icon-source-get-pixbuf}
-      @about-function{gtk-icon-source-get-icon-name}
-      @about-function{gtk-icon-source-get-size}
-      @about-function{gtk-icon-source-get-size-wildcarded}
-      @about-function{gtk-icon-source-get-state}
-      @about-function{gtk-icon-source-get-state-wildcarded}
-      @about-function{gtk-icon-source-new}
-      @about-function{gtk-icon-source-set-direction}
-      @about-function{gtk-icon-source-set-direction-wildcarded}
-      @about-function{gtk-icon-source-set-filename}
-      @about-function{gtk-icon-source-set-pixbuf}
-      @about-function{gtk-icon-source-set-icon-name}
-      @about-function{gtk-icon-source-set-size}
-      @about-function{gtk-icon-source-set-size-wildcarded}
-      @about-function{gtk-icon-source-set-state}
-      @about-function{gtk-icon-source-set-state-wildcarded}
-    @end{subsection}
-    @begin[GtkNumerableIcon]{subsection}
-      A @class{g-icon} that allows numbered emblems.
-
-      @about-class{gtk-numerable-icon}
-      @about-function{gtk-numerable-icon-new}
-      @about-function{gtk-numerable-icon-new-with-style-context}
-      @about-function{gtk-numerable-icon-get-background-gicon}
-      @about-function{gtk-numerable-icon-set-background-gicon}
-      @about-function{gtk-numerable-icon-get-background-icon-name}
-      @about-function{gtk-numerable-icon-set-background-icon-name}
-      @about-function{gtk-numerable-icon-get-count}
-      @about-function{gtk-numerable-icon-set-count}
-      @about-function{gtk-numerable-icon-get-label}
-      @about-function{gtk-numerable-icon-set-label}
-      @about-function{gtk-numerable-icon-get-style-context}
-      @about-function{gtk-numerable-icon-set-style-context}
-    @end{subsection}
-  @end{section}
   @begin[Multiline Text Editor]{section}
     Overview of @class{gtk-text-buffer}, @class{gtk-text-view}, and friends.
 
@@ -3953,152 +3164,6 @@ setup_tree (void)
       @about-function{gtk-popover-menu-open-submenu}
     @end{subsection}
   @end{section}
-  @begin[Action-based menus and toolbars]{section}
-    @begin[GtkUIManager]{subsection}
-      Constructing menus and toolbars from an XML description.
-
-      @about-class{gtk-ui-manager}
-      @about-function{gtk-ui-manager-new}
-      @about-function{gtk-ui-manager-set-add-tearoffs}
-      @about-function{gtk-ui-manager-get-add-tearoffs}
-      @about-function{gtk-ui-manager-insert-action-group}
-      @about-function{gtk-ui-manager-remove-action-group}
-      @about-function{gtk-ui-manager-get-action-groups}
-      @about-function{gtk-ui-manager-get-accel-group}
-      @about-function{gtk-ui-manager-get-widget}
-      @about-function{gtk-ui-manager-get-toplevels}
-      @about-function{gtk-ui-manager-get-action}
-      @about-function{gtk-ui-manager-add-ui-from-resource}
-      @about-function{gtk-ui-manager-add-ui-from-string}
-      @about-function{gtk-ui-manager-add-ui-from-file}
-      @about-function{gtk-ui-manager-new-merge-id}
-      @about-symbol{gtk-ui-manager-item-type}
-      @about-function{gtk-ui-manager-add-ui}
-      @about-function{gtk-ui-manager-remove-ui}
-      @about-function{gtk-ui-manager-get-ui}
-      @about-function{gtk-ui-manager-ensure-update}
-    @end{subsection}
-    @begin[GtkActionGroup]{subsection}
-      A group of actions.
-
-      @about-class{gtk-action-group}
-      @about-function{gtk-action-group-new}
-      @about-function{gtk-action-group-get-name}
-      @about-function{gtk-action-group-get-sensitive}
-      @about-function{gtk-action-group-set-sensitive}
-      @about-function{gtk-action-group-get-visible}
-      @about-function{gtk-action-group-set-visible}
-      @about-function{gtk-action-group-get-accel-group}
-      @about-function{gtk-action-group-set-accel-group}
-      @about-function{gtk-action-group-get-action}
-      @about-function{gtk-action-group-list-actions}
-      @about-function{gtk-action-group-add-action}
-      @about-function{gtk-action-group-add-action-with-accel}
-      @about-function{gtk-action-group-remove-action}
-      @about-symbol{gtk-action-entry}
-      @about-function{gtk-action-group-add-actions}
-      @about-function{gtk-action-group-add-actions-full}
-      @about-symbol{gtk-toggle-action-entry}
-      @about-function{gtk-action-group-add-toggle-actions}
-      @about-function{gtk-action-group-add-toggle-actions-full}
-      @about-symbol{gtk-radio-action-entry}
-      @about-function{gtk-action-group-add-radio-actions}
-      @about-function{gtk-action-group-add-radio-actions-full}
-      @about-function{gtk-action-group-set-translate-func}
-      @about-function{gtk-action-group-set-translation-domain}
-      @about-function{gtk-action-group-translate-string}
-    @end{subsection}
-    @begin[GtkAction]{subsection}
-      An action which can be triggered by a menu or toolbar item.
-
-      @about-class{gtk-action}
-      @about-function{gtk-action-new}
-      @about-function{gtk-action-get-name}
-      @about-function{gtk-action-is-sensitive}
-      @about-function{gtk-action-get-sensitive}
-      @about-function{gtk-action-set-sensitive}
-      @about-function{gtk-action-is-visible}
-      @about-function{gtk-action-get-visible}
-      @about-function{gtk-action-set-visible}
-      @about-function{gtk-action-activate}
-      @about-function{gtk-action-create-icon}
-      @about-function{gtk-action-create-menu-item}
-      @about-function{gtk-action-create-tool-item}
-      @about-function{gtk-action-create-menu}
-      @about-function{gtk-action-get-proxies}
-      @about-function{gtk-action-connect-accelerator}
-      @about-function{gtk-action-disconnect-accelerator}
-      @about-function{gtk-action-block-activate}
-      @about-function{gtk-action-unblock-activate}
-      @about-function{gtk-action-get-always-show-image}
-      @about-function{gtk-action-set-always-show-image}
-      @about-function{gtk-action-get-accel-path}
-      @about-function{gtk-action-set-accel-path}
-      @about-function{gtk-action-get-accel-closure}
-      @about-function{gtk-action-set-accel-group}
-      @about-function{gtk-action-set-label}
-      @about-function{gtk-action-get-label}
-      @about-function{gtk-action-set-short-label}
-      @about-function{gtk-action-get-short-label}
-      @about-function{gtk-action-set-tooltip}
-      @about-function{gtk-action-get-tooltip}
-      @about-function{gtk-action-set-stock-id}
-      @about-function{gtk-action-get-stock-id}
-      @about-function{gtk-action-set-gicon}
-      @about-function{gtk-action-get-gicon}
-      @about-function{gtk-action-set-icon-name}
-      @about-function{gtk-action-get-icon-name}
-      @about-function{gtk-action-set-visible-horizontal}
-      @about-function{gtk-action-get-visible-horizontal}
-      @about-function{gtk-action-set-visible-vertical}
-      @about-function{gtk-action-get-visible-vertical}
-      @about-function{gtk-action-set-is-important}
-      @about-function{gtk-action-get-is-important}
-    @end{subsection}
-    @begin[GtkToogleAction]{subsection}
-      An action which can be toggled between two states.
-
-      @about-class{gtk-toggle-action}
-      @about-function{gtk-toggle-action-new}
-      @about-function{gtk-toggle-action-toggled}
-      @about-function{gtk-toggle-action-set-active}
-      @about-function{gtk-toggle-action-get-active}
-      @about-function{gtk-toggle-action-set-draw-as-radio}
-      @about-function{gtk-toggle-action-get-draw-as-radio}
-    @end{subsection}
-    @begin[GtkRadioAction]{subsection}
-      An action of which only one in a group can be active.
-
-      @about-class{gtk-radio-action}
-      @about-function{gtk-radio-action-new}
-      @about-function{gtk-radio-action-get-group}
-      @about-function{gtk-radio-action-set-group}
-      @about-function{gtk-radio-action-join-group}
-      @about-function{gtk-radio-action-get-current-value}
-      @about-function{gtk-radio-action-set-current-value}
-    @end{subsection}
-    @begin[GtkRecentAction]{subsection}
-      An action of which represents a list of recently used files.
-
-      @about-class{gtk-recent-action}
-      @about-function{gtk-recent-action-new}
-      @about-function{gtk-recent-action-new-for-manager}
-      @about-function{gtk-recent-action-get-show-numbers}
-      @about-function{gtk-recent-action-set-show-numbers}
-    @end{subsection}
-    @begin[GtkActivatable]{subsection}
-      An interface for activatable widgets.
-
-      @about-class{gtk-activatable}
-      @about-class{gtk-activatable-iface}
-      @about-function{gtk-activatable-do-set-related-action}
-      @about-function{gtk-activatable-get-related-action}
-      @about-function{gtk-activatable-get-use-action-appearance}
-      @about-function{gtk-activatable-sync-action-properties}
-      @about-function{gtk-activatable-set-related-action}
-      @about-function{gtk-activatable-set-use-action-appearance}
-    @end{subsection}
-  @end{section}
   @begin[Selectors (Color, File and Font)]{section}
     @begin[GtkColorChooser]{subsection}
       Interface implemented by widgets for choosing colors.
@@ -5768,6 +4833,881 @@ setup_tree (void)
       @about-function{gtk-pad-controller-new}
       @about-function{gtk-pad-controller-set-action-entries}
       @about-function{gtk-pad-controller-set-action}
+    @end{subsection}
+  @end{section}
+  @begin[GTK+ Core Reference]{section}
+    @begin[Main loop and Events]{subsection}
+      Library initialization, main event loop, and events.
+
+      Before using GTK+, it needs to be initialized; initialization connects to
+      the window system display, and parses some standard command line
+      arguments. In the C library the macro @code{gtk_init()} initializes GTK+.
+      In the Lisp binding to GTK+, GTK+ is initialized, when loading the
+      @code{cl-cffi-gtk} library. Therefore, no functions are exported, which
+      initialize GTK+.
+
+      Like all GUI toolkits, GTK+ uses an event-driven programming model. When
+      the user is doing nothing, GTK+ sits in the main loop and waits for input.
+      If the user performs some action - say, a mouse click - then the main loop
+      \"wakes up\" and delivers an event to GTK+. GTK+ forwards the event to one
+      or more widgets.
+
+      In the C library the main loop is executed with the function
+      @code{gtk_main()}. In the Lisp binding this function is implemented as
+      the function @fun{gtk-main}, but in general it is not used. The function
+      @code{gtk_main()} is replaced with the macro @fun{within-main-loop}, which
+      does all necessary work to run the main loop. See the example for a
+      typical main function in the Lisp binding.
+
+      When widgets receive an event, they frequently emit one or more signals.
+      Signals notify your program that \"something interesting happened\" by
+      invoking functions you have connected to the signal with the function
+      @fun{g-signal-connect}. Functions connected to a signal are often termed
+      callbacks.
+
+      When your callbacks are invoked, you would typically take some action -
+      for example, when an Open button is clicked you might display a
+      @class{gtk-file-chooser-dialog} window. After a callback finishes, GTK+
+      will return to the main loop and await more user input.
+
+      @b{Example:} Typical main function in Lisp for a GTK+ application.
+      @begin{pre}
+(defun main ()
+  (within-main-loop
+    (let (;; Create the main window.
+          (window (gtk-window-new :toplevel)))
+
+      ;; Set up the GUI elements
+      ...
+
+      ;; Show the application window.
+      (gtk-widget-show-all window))))
+      @end{pre}
+
+      @about-function{gtk-disable-setlocale}
+      @about-function{gtk-get-default-language}
+      @about-function{gtk-parse-args}
+      @about-function{gtk-init}
+      @about-function{gtk-init-check}
+      @about-function{gtk-init-with-args}
+      @about-function{gtk-get-option-group}
+      @about-function{gtk-events-pending}
+      @about-function{gtk-main}
+      @about-function{gtk-main-level}
+      @about-function{gtk-main-quit}
+      @about-function{gtk-main-iteration}
+      @about-function{gtk-main-iteration-do}
+      @about-function{gtk-main-do-event}
+      @about-function{gtk-true}
+      @about-function{gtk-false}
+      @about-function{gtk-grab-add}
+      @about-function{gtk-grab-get-current}
+      @about-function{gtk-grab-remove}
+      @about-function{gtk-device-grab-add}
+      @about-function{gtk-device-grab-remove}
+      @about-function{gtk-priority-resize}
+      @about-function{gtk-key-snooper-install}
+      @about-function{gtk-key-snooper-remove}
+      @about-function{gtk-get-current-event}
+      @about-function{gtk-get-current-event-time}
+      @about-function{gtk-get-current-event-state}
+      @about-function{gtk-get-current-event-device}
+      @about-function{gtk-get-event-widget}
+      @about-function{gtk-propagate-event}
+    @end{subsection}
+    @begin[Version Information]{subsection}
+      GTK+ provides version information, primarily useful in configure checks
+      for builds that have a configure script. Applications will not typically
+      use the features described here.
+
+      @about-function{gtk-get-major-version}
+      @about-function{gtk-get-minor-version}
+      @about-function{gtk-get-micro-version}
+      @about-function{gtk-get-binary-age}
+      @about-function{gtk-get-interface-age}
+      @about-function{gtk-check-version}
+      @about-function{cl-cffi-gtk-build-info}
+      @about-variable{+gtk-minor-version+}
+      @about-variable{+gtk-micro-version+}
+      @about-variable{+gtk-binary-age+}
+      @about-variable{+gtk-interface-age+}
+    @end{subsection}
+    @begin[Accelerator Groups]{subsection}
+      Groups of global keyboard accelerators for an entire @class{gtk-window}
+      widget.
+
+      @about-symbol{gtk-accel-flags}
+      @about-class{gtk-accel-group}
+      @about-function{gtk-accel-group-new}
+      @about-function{gtk-accel-group-connect}
+      @about-function{gtk-accel-group-connect-by-path}
+      @about-function{gtk-accel-group-disconnect}
+      @about-function{gtk-accel-group-disconnect-key}
+      @about-function{gtk-accel-group-activate}
+      @about-function{gtk-accel-group-lock}
+      @about-function{gtk-accel-group-unlock}
+      @about-function{gtk-accel-group-from-accel-closure}
+      @about-function{gtk-accel-groups-activate}
+      @about-function{gtk-accel-groups-from-object}
+      @about-function{gtk-accel-group-find}
+      @about-symbol{gtk-accel-key}
+      @about-function{gtk-accelerator-valid}
+      @about-function{gtk-accelerator-parse}
+      @about-function{gtk-accelerator-name}
+      @about-function{gtk-accelerator-get-label}
+      @about-function{gtk-accelerator-parse-with-keycode}    
+      @about-function{gtk-accelerator-name-with-keycode}
+      @about-function{gtk-accelerator-get-label-with-keycode}
+      @about-function{gtk-accelerator-set-default-mod-mask}
+      @about-function{gtk-accelerator-get-default-mod-mask}
+    @end{subsection}
+    @begin[Accelerator Maps]{subsection}
+      Loadable keyboard accelerator specifications.
+
+      @about-class{gtk-accel-map}
+      @about-function{gtk-accel-map-add-entry}
+      @about-function{gtk-accel-map-lookup-entry}
+      @about-function{gtk-accel-map-change-entry}
+      @about-function{gtk-accel-map-load}
+      @about-function{gtk-accel-map-save}
+      @about-function{gtk-accel-map-foreach}
+      @about-function{gtk-accel-map-load-fd}
+      @about-function{gtk-accel-map-save-fd}
+      @about-function{gtk-accel-map-load-scanner}
+      @about-function{gtk-accel-map-add-filter}
+      @about-function{gtk-accel-map-foreach-unfiltered}
+      @about-function{gtk-accel-map-get}
+      @about-function{gtk-accel-map-lock-path}
+      @about-function{gtk-accel-map-unlock-path}
+    @end{subsection}
+    @begin[GtkClipboard]{subsection}
+      Storing data on clipboards.
+
+      @about-class{gtk-clipboard}
+      @about-function{gtk-clipboard-get}
+      @about-function{gtk-clipboard-get-for-display}
+      @about-function{gtk-clipboard-get-display}
+      @about-function{gtk-clipboard-set-with-data}
+      @about-function{gtk-clipboard-set-with-owner}
+      @about-function{gtk-clipboard-get-owner}
+      @about-function{gtk-clipboard-clear}
+      @about-function{gtk-clipboard-set-text}
+      @about-function{gtk-clipboard-set-image}
+      @about-function{gtk-clipboard-request-contents}
+      @about-function{gtk-clipboard-request-text}
+      @about-function{gtk-clipboard-request-image}
+      @about-function{gtk-clipboard-request-targets}
+      @about-function{gtk-clipboard-request-rich-text}
+      @about-function{gtk-clipboard-request-uris}
+      @about-function{gtk-clipboard-wait-for-contents}
+      @about-function{gtk-clipboard-wait-for-text}
+      @about-function{gtk-clipboard-wait-for-image}
+      @about-function{gtk-clipboard-wait-for-rich-text}
+      @about-function{gtk-clipboard-wait-for-uris}
+      @about-function{gtk-clipboard-wait-is-text-available}
+      @about-function{gtk-clipboard-wait-is-image-available}
+      @about-function{gtk-clipboard-wait-is-rich-text-available}
+      @about-function{gtk-clipboard-wait-is-uris-available}
+      @about-function{gtk-clipboard-wait-for-targets}
+      @about-function{gtk-clipboard-wait-is-target-available}
+      @about-function{gtk-clipboard-set-can-store}
+      @about-function{gtk-clipboard-store}
+    @end{subsection}
+    @begin[Drag and drop handling]{subsection}
+      GTK+ has a rich set of functions for doing inter-process communication via
+      the drag-and-drop metaphor. GTK+ can do drag-and-drop (DND) via multiple
+      protocols. The currently supported protocols are the Xdnd and Motif
+      protocols.
+
+      As well as the functions listed here, applications may need to use some
+      facilities provided for Selections. Also, the Drag and Drop API makes use
+      of signals in the @class{gtk-widget} class.
+
+      @about-symbol{gtk-dest-defaults}
+      @about-symbol{gtk-target-flags}
+      @about-function{gtk-drag-dest-set}
+      @about-function{gtk-drag-dest-set-proxy}
+      @about-function{gtk-drag-dest-unset}
+      @about-function{gtk-drag-dest-find-target}
+      @about-function{gtk-drag-dest-get-target-list}
+      @about-function{gtk-drag-dest-set-target-list}
+      @about-function{gtk-drag-dest-add-text-targets}
+      @about-function{gtk-drag-dest-add-image-targets}
+      @about-function{gtk-drag-dest-add-uri-targets}
+      @about-function{gtk-drag-dest-set-track-motion}
+      @about-function{gtk-drag-dest-get-track-motion}
+      @about-function{gtk-drag-finish}
+      @about-function{gtk-drag-get-data}
+      @about-function{gtk-drag-get-source-widget}
+      @about-function{gtk-drag-highlight}
+      @about-function{gtk-drag-unhighlight}
+      @about-function{gtk-drag-begin}
+      @about-function{gtk-drag-set-icon-widget}
+      @about-function{gtk-drag-set-icon-pixbuf}
+      @about-function{gtk-drag-set-icon-stock}
+      @about-function{gtk-drag-set-icon-surface}
+      @about-function{gtk-drag-set-icon-name}
+      @about-function{gtk-drag-set-icon-gicon}
+      @about-function{gtk-drag-set-icon-default}
+      @about-function{gtk-drag-check-threshold}
+      @about-function{gtk-drag-source-set}
+      @about-function{gtk-drag-source-set-icon-pixbuf}
+      @about-function{gtk-drag-source-set-icon-stock}
+      @about-function{gtk-drag-source-set-icon-name}
+      @about-function{gtk-drag-source-set-icon-gicon}
+      @about-function{gtk-drag-source-unset}
+      @about-function{gtk-drag-source-set-target-list}
+      @about-function{gtk-drag-source-get-target-list}
+      @about-function{gtk-drag-source-add-text-targets}
+      @about-function{gtk-drag-source-add-image-targets}
+      @about-function{gtk-drag-source-add-uri-targets}
+    @end{subsection}
+    @begin[Stock items]{subsection}
+      Prebuilt common menu/toolbar items and corresponding icons.
+
+      @about-class{gtk-stock-item}
+      @about-function{gtk-stock-add}
+      @about-function{gtk-stock-add-static}
+      @about-function{gtk-stock-item-copy}
+      @about-function{gtk-stock-item-free}
+      @about-function{gtk-stock-list-ids}
+      @about-function{gtk-stock-lookup}
+      @about-function{gtk-stock-set-translate-func}
+    @end{subsection}
+    @begin[GtkSettings]{subsection}
+      Sharing settings between applications.
+
+      @about-class{gtk-settings}
+      @about-symbol{GtkSettingsValue}
+      @about-function{gtk-settings-get-default}
+      @about-function{gtk-settings-get-for-screen}
+      @about-function{gtk-settings-install-property}
+      @about-function{gtk-settings-install-property-parser}
+      @about-function{gtk-rc-property-parse-color}
+      @about-function{gtk-rc-property-parse-enum}
+      @about-function{gtk-rc-property-parse-flags}
+      @about-function{gtk-rc-property-parse-requisition}
+      @about-function{gtk-rc-property-parse-border}
+      @about-function{gtk-settings-set-property-value}
+      @about-function{gtk-settings-set-string-property}
+      @about-function{gtk-settings-set-long-property}
+      @about-function{gtk-settings-set-double-property}
+    @end{subsection}
+    @begin[Bindings]{subsection}
+      not implemented
+    @end{subsection}
+    @begin[Standard Enumerations]{subsection}
+      Public enumerated types used throughout GTK+.
+
+      @about-symbol{gtk-accel-flags}
+      @about-symbol{gtk-arrow-placement}
+      @about-symbol{gtk-arrow-type}
+      @about-symbol{gtk-attach-options}
+      @about-symbol{gtk-baseline-position}
+      @about-symbol{gtk-corner-type}
+      @about-symbol{gtk-delete-type}
+      @about-symbol{gtk-direction-type}
+      @about-symbol{gtk-expander-style}
+      @about-symbol{gtk-im-preedit-style}
+      @about-symbol{gtk-im-status-style}
+      @about-symbol{gtk-justification}
+      @about-symbol{gtk-movement-step}
+      @about-symbol{gtk-orientation}
+      @about-symbol{gtk-pack-type}
+      @about-symbol{gtk-path-priority-type}
+      @about-symbol{gtk-path-type}
+      @about-symbol{gtk-policy-type}
+      @about-symbol{gtk-position-type}
+      @about-symbol{gtk-relief-style}
+      @about-symbol{gtk-resize-mode}
+      @about-symbol{gtk-scroll-step}
+      @about-symbol{gtk-scroll-type}
+      @about-symbol{gtk-selection-mode}
+      @about-symbol{gtk-shadow-type}
+      @about-symbol{gtk-state-type}
+      @about-symbol{gtk-state-flags}
+      @about-symbol{gtk-toolbar-style}
+      @about-symbol{gtk-window-position}
+      @about-symbol{gtk-window-type}
+      @about-symbol{gtk-sort-type}
+      @about-symbol{gtk-drag-result}
+      @about-symbol{gtk-junction-sides}
+      @about-symbol{gtk-border-style}
+      @about-symbol{gtk-region-flags}
+    @end{subsection}
+    @begin[Selections]{subsection}
+      The selection mechanism provides the basis for different types of
+      communication between processes. In particular, drag and drop and
+      @class{gtk-clipboard} work via selections. You will very seldom or never
+      need to use most of the functions in this section directly;
+      @class{gtk-clipboard} provides a nicer interface to the same
+      functionality.
+
+      Some of the datatypes defined this section are used in the
+      @class{gtk-clipboard} and drag-and-drop API's as well. The
+      @class{gtk-target-entry} structure and @class{gtk-target-list}
+      objects represent lists of data types that are supported when sending or
+      receiving data. The @class{gtk-selection-data} object is used to store a
+      chunk of data along with the data type and other associated information.
+
+      @about-struct{gtk-selection-data}
+      @about-function{make-gtk-selection-data}
+      @about-function{copy-gtk-selection-data}
+      @about-function{gtk-selection-data-selection}
+      @about-function{gtk-selection-data-target}
+      @about-function{make-gtk-target-entry}
+      @about-function{copy-gtk-target-entry}
+      @about-function{gtk-target-entry-target}
+      @about-function{gtk-target-entry-flags}
+      @about-function{gtk-target-entry-info}
+      @about-function{gtk-selection-data-type}
+      @about-function{gtk-selection-data-format}
+      @about-function{gtk-selection-data-data}
+      @about-function{gtk-selection-data-length}
+      @about-function{gtk-selection-data-display}
+      @about-struct{gtk-target-entry}
+      @about-class{gtk-target-list}
+      @about-function{gtk-target-entry-new}
+      @about-function{gtk-target-entry-copy}
+      @about-function{gtk-target-entry-free}
+      @about-function{gtk-target-list-new}
+      @about-function{gtk-target-list-ref}
+      @about-function{gtk-target-list-unref}
+      @about-function{gtk-target-list-add}
+      @about-function{gtk-target-list-add-table}
+      @about-function{gtk-target-list-add-text-targets}
+      @about-function{gtk-target-list-add-image-targets}
+      @about-function{gtk-target-list-add-uri-targets}
+      @about-function{gtk-target-list-add-rich-text-targets}
+      @about-function{gtk-target-list-remove}
+      @about-function{gtk-target-list-find}
+      @about-function{gtk-target-table-free}
+      @about-function{gtk-target-table-new-from-list}
+      @about-function{gtk-selection-owner-set}
+      @about-function{gtk-selection-owner-set-for-display}
+      @about-function{gtk-selection-add-target}
+      @about-function{gtk-selection-add-targets}
+      @about-function{gtk-selection-clear-targets}
+      @about-function{gtk-selection-convert}
+      @about-function{gtk-selection-data-set}
+      @about-function{gtk-selection-data-set-text}
+      @about-function{gtk-selection-data-get-text}
+      @about-function{gtk-selection-data-set-pixbuf}
+      @about-function{gtk-selection-data-get-pixbuf}
+      @about-function{gtk-selection-data-set-uris}
+      @about-function{gtk-selection-data-get-uris}
+      @about-function{gtk-selection-data-get-targets}
+      @about-function{gtk-selection-data-targets-include-image}
+      @about-function{gtk-selection-data-targets-include-text}
+      @about-function{gtk-selection-data-targets-include-uri}
+      @about-function{gtk-selection-data-targets-include-rich-text}
+      @about-function{gtk-selection-data-get-selection}
+      @about-function{gtk-selection-data-get-data}
+      @about-function{gtk-selection-data-get-length}
+      @about-function{gtk-selection-data-get-data-with-length}
+      @about-function{gtk-selection-data-get-data-type}
+      @about-function{gtk-selection-data-get-display}
+      @about-function{gtk-selection-data-get-format}
+      @about-function{gtk-selection-data-get-target}
+      @about-function{gtk-targets-include-image}
+      @about-function{gtk-targets-include-text}
+      @about-function{gtk-targets-include-uri}
+      @about-function{gtk-targets-include-rich-text}
+      @about-function{gtk-selection-remove-all}
+      @about-function{gtk-selection-data-copy}
+      @about-function{gtk-selection-data-free}
+    @end{subsection}
+    @begin[Filesystem utilities]{subsection}
+      Functions for working with GIO
+
+      @about-class{gtk-mount-operation}
+      @about-function{gtk-mount-operation-new}
+      @about-function{gtk-mount-operation-is-showing}
+      @about-function{gtk-mount-operation-set-parent}
+      @about-function{gtk-mount-operation-get-parent}
+      @about-function{gtk-mount-operation-set-screen}
+      @about-function{gtk-mount-operation-get-screen}
+      @about-function{gtk-show-uri}
+    @end{subsection}
+  @end{section}
+  @begin[Theming in GTK+]{section}
+    @begin[GtkStyleContext]{subsection}
+      Rendering UI elements
+
+      @about-symbol{gtk-style-context-print-flags}
+
+      @about-class{gtk-style-context}
+
+      @about-generic{gtk-style-context-direction}
+      @about-generic{gtk-style-context-paint-clock}
+      @about-generic{gtk-style-context-parent}
+      @about-generic{gtk-style-context-screen}
+
+      @about-function{gtk-style-context-new}
+      @about-function{gtk-style-context-add-provider}
+      @about-function{gtk-style-context-add-provider-for-screen}
+      @about-function{gtk-style-context-get}
+      @about-function{gtk-style-context-get-junction-sides}
+      @about-function{gtk-style-context-get-path}
+      @about-function{gtk-style-context-get-property}
+      @about-function{gtk-style-context-get-frame-clock}
+      @about-function{gtk-style-context-get-state}
+      @about-function{gtk-style-context-get-style}
+      @about-function{gtk-style-context-get-style-property}
+      @about-function{gtk-style-context-get-style-valist}
+      @about-function{gtk-style-context-get-valist}
+      @about-function{gtk-style-context-get-section}
+      @about-function{gtk-style-context-get-color}
+      @about-function{gtk-style-context-get-background-color}
+      @about-function{gtk-style-context-get-border-color}
+      @about-function{gtk-style-context-get-border}
+      @about-function{gtk-style-context-get-padding}
+      @about-function{gtk-style-context-get-margin}
+      @about-function{gtk-style-context-get-font}
+      @about-function{gtk-style-context-invalidate}
+      @about-function{gtk-style-context-state-is-running}
+      @about-function{gtk-style-context-lookup-color}
+      @about-function{gtk-style-context-lookup-icon-set}
+      @about-function{gtk-style-context-notify-state-change}
+      @about-function{gtk-style-context-pop-animatable-region}
+      @about-function{gtk-style-context-push-animatable-region}
+      @about-function{gtk-style-context-cancel-animations}
+      @about-function{gtk-style-context-scroll-animations}
+      @about-function{gtk-style-context-remove-provider}
+      @about-function{gtk-style-context-remove-provider-for-screen}
+      @about-function{gtk-style-context-reset-widgets}
+      @about-function{gtk-style-context-set-background}
+      @about-function{gtk-style-context-restore}
+      @about-function{gtk-style-context-save}
+      @about-function{gtk-style-context-set-junction-sides}
+      @about-function{gtk-style-context-set-path}
+      @about-function{gtk-style-context-add-class}
+      @about-function{gtk-style-context-remove-class}
+      @about-function{gtk-style-context-has-class}
+      @about-function{gtk-style-context-list-classes}
+      @about-function{gtk-style-context-add-region}
+      @about-function{gtk-style-context-remove-region}
+      @about-function{gtk-style-context-has-region}
+      @about-function{gtk-style-context-list-regions}
+      @about-function{gtk-style-context-set-frame-clock}
+      @about-function{gtk-style-context-set-state}
+      @about-function{gtk-style-context-set-scale}
+      @about-function{gtk-style-context-get-scale}
+      @about-function{gtk-style-context-to-string}
+
+      @about-struct{gtk-border}
+      @about-function{make-gtk-border}
+      @about-function{copy-gtk-border}
+      @about-function{gtk-border-left}
+      @about-function{gtk-border-right}
+      @about-function{gtk-border-top}
+      @about-function{gtk-border-bottom}
+      @about-function{gtk-border-new}
+      @about-function{gtk-border-copy}
+      @about-function{gtk-border-free}
+
+      @about-function{gtk-render-arrow}
+      @about-function{gtk-render-background}
+      @about-function{gtk-render-background-get-clip}
+      @about-function{gtk-render-check}
+      @about-function{gtk-render-expander}
+      @about-function{gtk-render-extension}
+      @about-function{gtk-render-focus}
+      @about-function{gtk-render-frame}
+      @about-function{gtk-render-frame-gap}
+      @about-function{gtk-render-handle}
+      @about-function{gtk-render-layout}
+      @about-function{gtk-render-line}
+      @about-function{gtk-render-option}
+      @about-function{gtk-render-slider}
+      @about-function{gtk-render-activity}
+      @about-function{gtk-render-icon-pixbuf}
+      @about-function{gtk-render-icon-surface}
+      @about-function{gtk-render-icon}
+      @about-function{gtk-render-insertion-cursor}
+    @end{subsection}
+    @begin[GtkCssProvider]{subsection}
+      CSS-like styling for widgets.
+
+      @about-class{gtk-css-provider}
+      @about-function{gtk-css-provider-get-default}
+      @about-function{gtk-css-provider-get-named}
+      @about-function{gtk-css-provider-load-from-data}
+      @about-function{gtk-css-provider-load-from-file}
+      @about-function{gtk-css-provider-load-from-path}
+      @about-function{gtk-css-provider-new}
+      @about-function{gtk-css-provider-to-string}
+      @about-symbol{GTK-CSS-PROVIDER-ERROR}
+      @about-symbol{GtkCssProviderError}
+      @about-symbol{GtkCssSection}
+      @about-symbol{GtkCssSectionType}
+      @about-function{gtk-css-section-get-end-line}
+      @about-function{gtk-css-section-get-end-position}
+      @about-function{gtk-css-section-get-file}
+      @about-function{gtk-css-section-get-parent}
+      @about-function{gtk-css-section-get-section-type}
+      @about-function{gtk-css-section-get-start-line}
+      @about-function{gtk-css-section-get-start-position}
+      @about-function{gtk-css-section-ref}
+      @about-function{gtk-css-section-unref}
+    @end{subsection}
+    @begin[GtkStyleProvider]{subsection}
+      Interface to provide style information to @class{gtk-style-context}.
+
+      @about-class{GtkStyleProviderIface}
+      @about-class{gtk-style-provider}
+      @about-symbol{GTK-STYLE-PROVIDER-PRIORITY-FALLBACK}
+      @about-symbol{GTK-STYLE-PROVIDER-PRIORITY-THEME}
+      @about-symbol{GTK-STYLE-PROVIDER-PRIORITY-SETTINGS}
+      @about-symbol{GTK-STYLE-PROVIDER-PRIORITY-APPLICATION}
+      @about-symbol{GTK-STYLE-PROVIDER-PRIORITY-USER}
+      @about-function{gtk-style-provider-get-icon-factory}
+      @about-function{gtk-style-provider-get-style}
+      @about-function{gtk-style-provider-get-style-property}
+    @end{subsection}
+    @begin[GtkStyleProperties]{subsection}
+      Store for style property information
+
+      @about-class{gtk-style-properties}
+      @about-function{gtk-style-properties-clear}
+      @about-function{gtk-style-properties-get}
+      @about-function{gtk-style-properties-get-property}
+      @about-function{gtk-style-properties-get-valist}
+      @about-function{gtk-style-properties-lookup-color}
+      @about-function{gtk-style-properties-lookup-property}
+      @about-function{gtk-style-properties-map-color}
+      @about-function{gtk-style-properties-merge}
+      @about-function{gtk-style-properties-new}
+      @about-function{gtk-style-properties-register-property}
+      @about-function{gtk-style-properties-set}
+      @about-function{gtk-style-properties-set-property}
+      @about-function{gtk-style-properties-set-valist}
+      @about-function{gtk-style-properties-unset-property}
+    @end{subsection}
+    @begin[GtkThemingEngine]{subsection}
+      Theming renderers
+
+      @about-class{GtkThemingEngineClass}
+      @about-class{gtk-theming-engine}
+      @about-function{gtk-theming-engine-get}
+      @about-function{gtk-theming-engine-get-direction}
+      @about-function{gtk-theming-engine-get-junction-sides}
+      @about-function{gtk-theming-engine-get-path}
+      @about-function{gtk-theming-engine-get-property}
+      @about-function{gtk-theming-engine-get-screen}
+      @about-function{gtk-theming-engine-get-state}
+      @about-function{gtk-theming-engine-get-style}
+      @about-function{gtk-theming-engine-get-style-property}
+      @about-function{gtk-theming-engine-get-style-valist}
+      @about-function{gtk-theming-engine-get-valist}
+      @about-function{gtk-theming-engine-get-color}
+      @about-function{gtk-theming-engine-get-background-color}
+      @about-function{gtk-theming-engine-get-border-color}
+      @about-function{gtk-theming-engine-get-border}
+      @about-function{gtk-theming-engine-get-padding}
+      @about-function{gtk-theming-engine-get-margin}
+      @about-function{gtk-theming-engine-get-font}
+      @about-function{gtk-theming-engine-has-class}
+      @about-function{gtk-theming-engine-has-region}
+      @about-function{gtk-theming-engine-lookup-color}
+      @about-function{gtk-theming-engine-state-is-running}
+      @about-function{gtk-theming-engine-load}
+      @about-function{gtk-theming-engine-register-property}
+    @end{subsection}
+    @begin[GtkWidgetPath]{subsection}
+      Widget path abstraction.
+
+      @about-class{gtk-widget-path}
+      @about-function{gtk-widget-path-append-type}
+      @about-function{gtk-widget-path-append-with-siblings}
+      @about-function{gtk-widget-path-append-for-widget}
+      @about-function{gtk-widget-path-copy}
+      @about-function{gtk-widget-path-ref}
+      @about-function{gtk-widget-path-unref}
+      @about-function{gtk-widget-path-free}
+      @about-function{gtk-widget-path-get-object-type}
+      @about-function{gtk-widget-path-has-parent}
+      @about-function{gtk-widget-path-is-type}
+      @about-function{gtk-widget-path-iter-add-class}
+      @about-function{gtk-widget-path-iter-add-region}
+      @about-function{gtk-widget-path-iter-clear-classes}
+      @about-function{gtk-widget-path-iter-clear-regions}
+      @about-function{gtk-widget-path-iter-get-name}
+      @about-function{gtk-widget-path-iter-get-object-type}
+      @about-function{gtk-widget-path-iter-get-siblings}
+      @about-function{gtk-widget-path-iter-get-sibling-index}
+      @about-function{gtk-widget-path-iter-has-class}
+      @about-function{gtk-widget-path-iter-has-name}
+      @about-function{gtk-widget-path-iter-has-qclass}
+      @about-function{gtk-widget-path-iter-has-qname}
+      @about-function{gtk-widget-path-iter-has-qregion}
+      @about-function{gtk-widget-path-iter-has-region}
+      @about-function{gtk-widget-path-iter-list-classes}
+      @about-function{gtk-widget-path-iter-list-regions}
+      @about-function{gtk-widget-path-iter-remove-class}
+      @about-function{gtk-widget-path-iter-remove-region}
+      @about-function{gtk-widget-path-iter-set-name}
+      @about-function{gtk-widget-path-iter-set-object-type}
+      @about-function{gtk-widget-path-length}
+      @about-function{gtk-widget-path-new}
+      @about-function{gtk-widget-path-prepend-type}
+      @about-function{gtk-widget-path-to-string}
+    @end{subsection}
+    @begin[GtkIconTheme]{subsection}
+      Looking up icons by name
+
+      @about-class{gtk-icon-theme}
+      @about-symbol{gtk-icon-info}
+      @about-symbol{gtk-icon-lookup-flags}
+      @about-class{gtk-icon-theme-error}
+      @about-function{gtk-icon-theme-error}
+      @about-function{gtk-icon-theme-new}
+      @about-function{gtk-icon-theme-get-default}
+      @about-function{gtk-icon-theme-get-for-screen}
+      @about-function{gtk-icon-theme-set-screen}
+      @about-function{gtk-icon-theme-set-search-path}
+      @about-function{gtk-icon-theme-get-search-path}
+      @about-function{gtk-icon-theme-append-search-path}
+      @about-function{gtk-icon-theme-prepend-search-path}
+      @about-function{gtk-icon-theme-set-custom-theme}
+      @about-function{gtk-icon-theme-has-icon}
+      @about-function{gtk-icon-theme-lookup-icon}
+      @about-function{gtk-icon-theme-choose-icon}
+      @about-function{gtk-icon-theme-lookup-by-gicon}
+      @about-function{gtk-icon-theme-load-icon}
+      @about-function{gtk-icon-theme-list-contexts}
+      @about-function{gtk-icon-theme-list-icons}
+      @about-function{gtk-icon-theme-get-icon-sizes}
+      @about-function{gtk-icon-theme-get-example-icon-name}
+      @about-function{gtk-icon-theme-rescan-if-needed}
+      @about-function{gtk-icon-theme-add-builtin-icon}
+      @about-function{gtk-icon-info-copy}
+      @about-function{gtk-icon-info-free}
+      @about-function{gtk-icon-info-new-for-pixbuf}
+      @about-function{gtk-icon-info-get-base-size}
+      @about-function{gtk-icon-info-get-filename}
+      @about-function{gtk-icon-info-get-builtin-pixbuf}
+      @about-function{gtk-icon-info-load-icon}
+      @about-function{gtk-icon-info-load-symbolic}
+      @about-function{gtk-icon-info-load-symbolic-for-style}
+      @about-function{gtk-icon-info-load-symbolic-for-context}
+      @about-function{gtk-icon-info-set-raw-coordinates}
+      @about-function{gtk-icon-info-get-embedded-rect}
+      @about-function{gtk-icon-info-get-attach-points}
+      @about-function{gtk-icon-info-get-display-name}
+    @end{subsection}
+    @begin[Themable Stock Images]{subsection}
+      Manipulating stock icons
+
+      @about-class{gtk-icon-source}
+      @about-class{gtk-icon-factory}
+      @about-class{gtk-icon-set}
+      @about-symbol{gtk-icon-size}
+      @about-function{gtk-icon-source-copy}
+      @about-function{gtk-icon-source-free}
+      @about-function{gtk-icon-factory-add}
+      @about-function{gtk-icon-factory-add-default}
+      @about-function{gtk-icon-factory-lookup}
+      @about-function{gtk-icon-factory-lookup-default}
+      @about-function{gtk-icon-factory-new}
+      @about-function{gtk-icon-factory-remove-default}
+      @about-function{gtk-icon-set-add-source}
+      @about-function{gtk-icon-set-copy}
+      @about-function{gtk-icon-set-new}
+      @about-function{gtk-icon-set-new-from-pixbuf}
+      @about-function{gtk-icon-set-ref}
+      @about-function{gtk-icon-set-render-icon}
+      @about-function{gtk-icon-set-render-icon-pixbuf}
+      @about-function{gtk-icon-set-unref}
+      @about-function{gtk-icon-size-lookup}
+      @about-function{gtk-icon-size-lookup-for-settings}
+      @about-function{gtk-icon-size-register}
+      @about-function{gtk-icon-size-register-alias}
+      @about-function{gtk-icon-size-from-name}
+      @about-function{gtk-icon-size-get-name}
+      @about-function{gtk-icon-size-get-sizes}
+      @about-function{gtk-icon-source-get-direction}
+      @about-function{gtk-icon-source-get-direction-wildcarded}
+      @about-function{gtk-icon-source-get-filename}
+      @about-function{gtk-icon-source-get-pixbuf}
+      @about-function{gtk-icon-source-get-icon-name}
+      @about-function{gtk-icon-source-get-size}
+      @about-function{gtk-icon-source-get-size-wildcarded}
+      @about-function{gtk-icon-source-get-state}
+      @about-function{gtk-icon-source-get-state-wildcarded}
+      @about-function{gtk-icon-source-new}
+      @about-function{gtk-icon-source-set-direction}
+      @about-function{gtk-icon-source-set-direction-wildcarded}
+      @about-function{gtk-icon-source-set-filename}
+      @about-function{gtk-icon-source-set-pixbuf}
+      @about-function{gtk-icon-source-set-icon-name}
+      @about-function{gtk-icon-source-set-size}
+      @about-function{gtk-icon-source-set-size-wildcarded}
+      @about-function{gtk-icon-source-set-state}
+      @about-function{gtk-icon-source-set-state-wildcarded}
+    @end{subsection}
+    @begin[GtkNumerableIcon]{subsection}
+      A @class{g-icon} that allows numbered emblems.
+
+      @about-class{gtk-numerable-icon}
+      @about-function{gtk-numerable-icon-new}
+      @about-function{gtk-numerable-icon-new-with-style-context}
+      @about-function{gtk-numerable-icon-get-background-gicon}
+      @about-function{gtk-numerable-icon-set-background-gicon}
+      @about-function{gtk-numerable-icon-get-background-icon-name}
+      @about-function{gtk-numerable-icon-set-background-icon-name}
+      @about-function{gtk-numerable-icon-get-count}
+      @about-function{gtk-numerable-icon-set-count}
+      @about-function{gtk-numerable-icon-get-label}
+      @about-function{gtk-numerable-icon-set-label}
+      @about-function{gtk-numerable-icon-get-style-context}
+      @about-function{gtk-numerable-icon-set-style-context}
+    @end{subsection}
+  @end{section}
+  @begin[Action-based menus and toolbars]{section}
+    @begin[GtkUIManager]{subsection}
+      Constructing menus and toolbars from an XML description.
+
+      @about-class{gtk-ui-manager}
+      @about-function{gtk-ui-manager-new}
+      @about-function{gtk-ui-manager-set-add-tearoffs}
+      @about-function{gtk-ui-manager-get-add-tearoffs}
+      @about-function{gtk-ui-manager-insert-action-group}
+      @about-function{gtk-ui-manager-remove-action-group}
+      @about-function{gtk-ui-manager-get-action-groups}
+      @about-function{gtk-ui-manager-get-accel-group}
+      @about-function{gtk-ui-manager-get-widget}
+      @about-function{gtk-ui-manager-get-toplevels}
+      @about-function{gtk-ui-manager-get-action}
+      @about-function{gtk-ui-manager-add-ui-from-resource}
+      @about-function{gtk-ui-manager-add-ui-from-string}
+      @about-function{gtk-ui-manager-add-ui-from-file}
+      @about-function{gtk-ui-manager-new-merge-id}
+      @about-symbol{gtk-ui-manager-item-type}
+      @about-function{gtk-ui-manager-add-ui}
+      @about-function{gtk-ui-manager-remove-ui}
+      @about-function{gtk-ui-manager-get-ui}
+      @about-function{gtk-ui-manager-ensure-update}
+    @end{subsection}
+    @begin[GtkActionGroup]{subsection}
+      A group of actions.
+
+      @about-class{gtk-action-group}
+      @about-function{gtk-action-group-new}
+      @about-function{gtk-action-group-get-name}
+      @about-function{gtk-action-group-get-sensitive}
+      @about-function{gtk-action-group-set-sensitive}
+      @about-function{gtk-action-group-get-visible}
+      @about-function{gtk-action-group-set-visible}
+      @about-function{gtk-action-group-get-accel-group}
+      @about-function{gtk-action-group-set-accel-group}
+      @about-function{gtk-action-group-get-action}
+      @about-function{gtk-action-group-list-actions}
+      @about-function{gtk-action-group-add-action}
+      @about-function{gtk-action-group-add-action-with-accel}
+      @about-function{gtk-action-group-remove-action}
+      @about-symbol{gtk-action-entry}
+      @about-function{gtk-action-group-add-actions}
+      @about-function{gtk-action-group-add-actions-full}
+      @about-symbol{gtk-toggle-action-entry}
+      @about-function{gtk-action-group-add-toggle-actions}
+      @about-function{gtk-action-group-add-toggle-actions-full}
+      @about-symbol{gtk-radio-action-entry}
+      @about-function{gtk-action-group-add-radio-actions}
+      @about-function{gtk-action-group-add-radio-actions-full}
+      @about-function{gtk-action-group-set-translate-func}
+      @about-function{gtk-action-group-set-translation-domain}
+      @about-function{gtk-action-group-translate-string}
+    @end{subsection}
+    @begin[GtkAction]{subsection}
+      An action which can be triggered by a menu or toolbar item.
+
+      @about-class{gtk-action}
+      @about-function{gtk-action-new}
+      @about-function{gtk-action-get-name}
+      @about-function{gtk-action-is-sensitive}
+      @about-function{gtk-action-get-sensitive}
+      @about-function{gtk-action-set-sensitive}
+      @about-function{gtk-action-is-visible}
+      @about-function{gtk-action-get-visible}
+      @about-function{gtk-action-set-visible}
+      @about-function{gtk-action-activate}
+      @about-function{gtk-action-create-icon}
+      @about-function{gtk-action-create-menu-item}
+      @about-function{gtk-action-create-tool-item}
+      @about-function{gtk-action-create-menu}
+      @about-function{gtk-action-get-proxies}
+      @about-function{gtk-action-connect-accelerator}
+      @about-function{gtk-action-disconnect-accelerator}
+      @about-function{gtk-action-block-activate}
+      @about-function{gtk-action-unblock-activate}
+      @about-function{gtk-action-get-always-show-image}
+      @about-function{gtk-action-set-always-show-image}
+      @about-function{gtk-action-get-accel-path}
+      @about-function{gtk-action-set-accel-path}
+      @about-function{gtk-action-get-accel-closure}
+      @about-function{gtk-action-set-accel-group}
+      @about-function{gtk-action-set-label}
+      @about-function{gtk-action-get-label}
+      @about-function{gtk-action-set-short-label}
+      @about-function{gtk-action-get-short-label}
+      @about-function{gtk-action-set-tooltip}
+      @about-function{gtk-action-get-tooltip}
+      @about-function{gtk-action-set-stock-id}
+      @about-function{gtk-action-get-stock-id}
+      @about-function{gtk-action-set-gicon}
+      @about-function{gtk-action-get-gicon}
+      @about-function{gtk-action-set-icon-name}
+      @about-function{gtk-action-get-icon-name}
+      @about-function{gtk-action-set-visible-horizontal}
+      @about-function{gtk-action-get-visible-horizontal}
+      @about-function{gtk-action-set-visible-vertical}
+      @about-function{gtk-action-get-visible-vertical}
+      @about-function{gtk-action-set-is-important}
+      @about-function{gtk-action-get-is-important}
+    @end{subsection}
+    @begin[GtkToogleAction]{subsection}
+      An action which can be toggled between two states.
+
+      @about-class{gtk-toggle-action}
+      @about-function{gtk-toggle-action-new}
+      @about-function{gtk-toggle-action-toggled}
+      @about-function{gtk-toggle-action-set-active}
+      @about-function{gtk-toggle-action-get-active}
+      @about-function{gtk-toggle-action-set-draw-as-radio}
+      @about-function{gtk-toggle-action-get-draw-as-radio}
+    @end{subsection}
+    @begin[GtkRadioAction]{subsection}
+      An action of which only one in a group can be active.
+
+      @about-class{gtk-radio-action}
+      @about-function{gtk-radio-action-new}
+      @about-function{gtk-radio-action-get-group}
+      @about-function{gtk-radio-action-set-group}
+      @about-function{gtk-radio-action-join-group}
+      @about-function{gtk-radio-action-get-current-value}
+      @about-function{gtk-radio-action-set-current-value}
+    @end{subsection}
+    @begin[GtkRecentAction]{subsection}
+      An action of which represents a list of recently used files.
+
+      @about-class{gtk-recent-action}
+      @about-function{gtk-recent-action-new}
+      @about-function{gtk-recent-action-new-for-manager}
+      @about-function{gtk-recent-action-get-show-numbers}
+      @about-function{gtk-recent-action-set-show-numbers}
+    @end{subsection}
+    @begin[GtkActivatable]{subsection}
+      An interface for activatable widgets.
+
+      @about-class{gtk-activatable}
+      @about-class{gtk-activatable-iface}
+      @about-function{gtk-activatable-do-set-related-action}
+      @about-function{gtk-activatable-get-related-action}
+      @about-function{gtk-activatable-get-use-action-appearance}
+      @about-function{gtk-activatable-sync-action-properties}
+      @about-function{gtk-activatable-set-related-action}
+      @about-function{gtk-activatable-set-use-action-appearance}
     @end{subsection}
   @end{section}
   @begin[Deprecated]{section}

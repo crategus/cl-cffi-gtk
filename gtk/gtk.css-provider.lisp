@@ -101,10 +101,10 @@
 
   @subheading{Default files}
     An application can cause GTK+ to parse a specific CSS style sheet by calling
-    the function @fun{gtk-css-provider-load-from-file} and adding the provider
-    with the functions @fun{gtk-style-context-add-provider} or
-    @fun{gtk-style-context-add-provider-for-screen}. In addition, certain files
-    will be read when GTK+ is initialized. First, the file
+    the @fun{gtk-css-provider-load-from-file} function and adding the provider
+    with the @fun{gtk-style-context-add-provider} or
+    @fun{gtk-style-context-add-provider-for-screen} functions. In addition,
+    certain files will be read when GTK+ is initialized. First, the file
     @code{$XDG_CONFIG_HOME/gtk-3.0/gtk.css} is loaded if it exists. Then, GTK+
     tries to load @code{$HOME/.themes/theme-name/gtk-3.0/gtk.css}, falling back
     to @code{datadir/share/themes/theme-name/gtk-3.0/gtk.css}, where theme-name
@@ -1051,7 +1051,7 @@
       @end{entry}
     @end{table}
     @code{GtkThemingEngines} can register their own, engine-specific style
-    properties with the function @fun{gtk-theming-engine-register-property}.
+    properties with the @fun{gtk-theming-engine-register-property} function.
     These properties can be set in CSS like other properties, using a name of
     the form
 
@@ -1059,7 +1059,7 @@
 
     where namespace is typically the name of the theming engine, and name is
     the name of the property. Style properties that have been registered by
-    widgets using the function @fun{gtk-widget-class-install-style-property} can
+    widgets using the @fun{gtk-widget-class-install-style-property} function can
     also be set in this way, using the widget class name for namespace.
 
     Example 39. Using engine-specific style properties
@@ -1071,6 +1071,30 @@
      -clearlooks-colorize-scrollbar: false;
  @}
     @end{pre}
+  @begin[Signal Details]{dictionary}
+    @subheading{The \"parsing-error\" signal}
+      @begin{pre}
+ lambda (provider section error)    : Run Last
+      @end{pre}
+      Signals that a parsing error occured. The path, line and position describe
+      the actual location of the error as accurately as possible.
+
+      Parsing errors are never fatal, so the parsing will resume after the
+      error. Errors may however cause parts of the given data or even all of it
+      to not be parsed at all. So it is a useful idea to check that the parsing
+      succeeds by connecting to this signal.
+
+      Note that this signal may be emitted at any time as the css provider may
+      opt to defer parsing parts or all of the input to a later time than when
+      a loading function was called.
+      @begin[code]{table}
+        @entry[provider]{The @sym{gtk-css-provider} object that had a parsing
+          error.}
+        @entry[section]{The @class{gtk-css-section} object the error happened
+          in.}
+        @entry[error]{The parsing error of type @code{GError}.}
+      @end{table}
+  @end{dictionary}
   @see-function{gtk-theming-engine-register-property}
   @see-function{gtk-widget-class-install-style-property}")
 
@@ -1252,9 +1276,10 @@
     Convertes the provider into a string representation in CSS format.
   @end{short}
 
-  Using the function @fun{gtk-css-provider-load-from-data} with the return value
-  from this function on a new provider created with the function
-  @fun{gtk-css-provider-new} will basically create a duplicate of this provider.
+  Using the @fun{gtk-css-provider-load-from-data} function with the return value
+  from this function on a new provider created with the
+  @fun{gtk-css-provider-new} function will basically create a duplicate of this
+  provider.
   @see-class{gtk-css-provider}
   @see-function{gtk-css-provider-new}
   @see-function{gtk-css-provider-load-from-data}"
@@ -1523,44 +1548,6 @@
 ;;;     a GtkCssSection
 ;;;
 ;;; Since 3.2
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Signal Details
-;;;
-;;; ----------------------------------------------------------------------------
-;;;
-;;; The "parsing-error" signal
-;;;
-;;; void user_function (GtkCssProvider *provider,
-;;;                     GtkCssSection  *section,
-;;;                     GError         *error,
-;;;                     gpointer        user_data)      : Run Last
-;;;
-;;; Signals that a parsing error occured. the path, line and position describe
-;;; the actual location of the error as accurately as possible.
-;;;
-;;; Parsing errors are never fatal, so the parsing will resume after the error.
-;;; Errors may however cause parts of the given data or even all of it to not be
-;;; parsed at all. So it is a useful idea to check that the parsing succeeds by
-;;; connecting to this signal.
-;;;
-;;; Note that this signal may be emitted at any time as the css provider may opt
-;;; to defer parsing parts or all of the input to a later time than when a
-;;; loading function was called.
-;;;
-;;; provider :
-;;;     the provider that had a parsing error
-;;;
-;;; section :
-;;;     section the error happened in
-;;;
-;;; error :
-;;;     The parsing error
-;;;
-;;; user_data :
-;;;     user data set when the signal handler was connected.
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- End of file gtk.css-provider.lisp --------------------------------------
