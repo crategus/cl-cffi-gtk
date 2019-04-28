@@ -31,9 +31,11 @@
 ;;;
 ;;;     Limit the effect of grabs
 ;;;
-;;; Synopsis
+;;; Types and Values
 ;;;
 ;;;     GtkWindowGroup
+;;;
+;;; Functions
 ;;;
 ;;;     gtk_window_group_new
 ;;;     gtk_window_group_add_window
@@ -41,6 +43,11 @@
 ;;;     gtk_window_group_list_windows
 ;;;     gtk_window_group_get_current_grab
 ;;;     gtk_window_group_get_current_device_grab
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GtkWindowGroup
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -60,10 +67,18 @@
 (setf (documentation 'gtk-window-group 'type)
  "@version{2013-3-28}
   @begin{short}
-    @sym{gtk-window-group} objects are referenced by each window in the group,
-    so once you have added all windows to a @sym{gtk-window-group}, you can drop
-    the initial reference to the window group with @fun{g-object-unref}.
+    A @sym{gtk-window-group} restricts the effect of grabs to windows in the
+    same group, thereby making window groups almost behave like separate
+    applications.
   @end{short}
+
+  A window can be a member in at most one window group at a time. Windows that
+  have not been explicitly assigned to a group are implicitly treated like
+  windows of the default window group.
+
+  @sym{gtk-window-group} objects are referenced by each window in the group, so
+  once you have added all windows to a @sym{gtk-window-group}, you can drop the
+  initial reference to the window group with the @fun{g-object-unref} function.
   If the windows in the window group are subsequently destroyed, then they will
   be removed from the window group and drop their references on the window
   group; when all window have been removed, the window group will be freed.")
@@ -78,9 +93,13 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-3-29}
   @return{A new @class{gtk-window-group} object.}
-  Creates a new @class{gtk-window-group} object. Grabs added with
-  @fun{gtk-grab-add} only affect windows within the same
-  @class{gtk-window-group}."
+  @begin{short}
+    Creates a new @class{gtk-window-group} object.
+  @end{short}
+  Grabs added with the @fun{gtk-grab-add} function only affect windows within
+  the same @class{gtk-window-group}.
+  @see-class{gtk-window-group}
+  @see-function{gtk-grap-add}"
   (make-instance 'gtk-window-group))
 
 (export 'gtk-window-group-new)
@@ -93,10 +112,12 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-3-29}
   @argument[window-group]{a @class{gtk-window-group} object}
-  @argument[window]{the @class{gtk-window} to add}
+  @argument[window]{the @class{gtk-window} window to add}
   @begin{short}
     Adds a window to a @class{gtk-window-group} object.
-  @end{short}"
+  @end{short}
+  @see-class{gtk-window-group}
+  @see-class{gtk-window}"
   (window-group (g-object gtk-window-group))
   (window (g-object gtk-window)))
 
@@ -110,8 +131,12 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-3-29}
   @argument[window-group]{a @class{gtk-window-group} object}
-  @argument[window]{the @class{gtk-window} to remove}
-  Removes a window from a @class{gtk-window-group} object."
+  @argument[window]{the @class{gtk-window} window to remove}
+  @begin{short}
+    Removes a window from a @class{gtk-window-group} object.
+  @end{short}
+  @see-class{gtk-window-group}
+  @see-class{gtk-window}"
   (window-group (g-object gtk-window-group))
   (window (g-object gtk-window)))
 
@@ -131,8 +156,8 @@
     Returns a list of the @class{gtk-window} windows that belong to
     @arg{window-group}.
   @end{short}
-
-  Since 2.14"
+  @see-class{gtk-window-group}
+  @see-class{gtk-window}"
   (window-group (g-object gtk-window-group)))
 
 (export 'gtk-window-group-list-windows)
@@ -146,12 +171,14 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-3-29}
   @argument[window-group]{a @class{gtk-window-group} object}
-  @return{The current grab widget of the group.}
+  @return{The current @class{gtk-widget} grab widget of the group.}
   @begin{short}
-    Gets the current grab widget of the given group, see @fun{gtk-grab-add}.
+    Gets the current grab widget of the given group.
   @end{short}
-
-  Since 2.22"
+  See the @fun{gtk-grab-add} function.
+  @see-class{gtk-window-group}
+  @see-class{gtk-widget}
+  @see-function{gtk-grab-add}"
   (window-group (g-object gtk-window-group)))
 
 (export 'gtk-window-group-get-current-grab)
@@ -167,12 +194,13 @@
  "@version{2013-3-29}
   @argument[window-group]{a @class{gtk-window-group} object}
   @argument[device]{a @class{gdk-device} object}
-  @return{The grab widget, or @code{nil}.}
+  @return{The @class{gtk-widget} grab widget, or @code{nil}.}
   @begin{short}
     Returns the current grab widget for @arg{device}, or @code{nil} if none.
   @end{short}
-
-  Since 3.0"
+  @see-class{gtk-window-group}
+  @see-class{gdk-device}
+  @see-class{gtk-widget}"
   (window-group (g-object gtk-window-group))
   (device (g-object gdk-device)))
 

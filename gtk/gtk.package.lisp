@@ -354,6 +354,22 @@
       @about-symbol{gtk-license}
       @about-class{gtk-about-dialog}
 
+      @about-generic{gtk-about-dialog-artists}
+      @about-generic{gtk-about-dialog-authors}
+      @about-generic{gtk-about-dialog-comments}
+      @about-generic{gtk-about-dialog-copyright}
+      @about-generic{gtk-about-dialog-documenters}
+      @about-generic{gtk-about-dialog-license}
+      @about-generic{gtk-about-dialog-license-type}
+      @about-generic{gtk-about-dialog-logo}
+      @about-generic{gtk-about-dialog-logo-icon-name}
+      @about-generic{gtk-about-dialog-program-name}
+      @about-generic{gtk-about-dialog-translator-credits}
+      @about-generic{gtk-about-dialog-version}
+      @about-generic{gtk-about-dialog-website}
+      @about-generic{gtk-about-dialog-website-label}
+      @about-generic{gtk-about-dialog-wrap-license}
+
       @about-function{gtk-about-dialog-new}
       @about-function{gtk-about-dialog-add-credit-section}
       @about-function{gtk-show-about-dialog}
@@ -361,13 +377,16 @@
     @begin[GtkAssistant]{subsection}
       A widget used to guide users through multi-step operations.
 
+      @about-symbol{gtk-assistant-page-type}
       @about-class{gtk-assistant}
 
-      @about-function{gtk-assistant-child-page-type}
-      @about-function{gtk-assistant-child-title}
-      @about-function{gtk-assistant-child-header-image}
-      @about-function{gtk-assistant-child-sidebar-image}
       @about-function{gtk-assistant-child-complete}
+      @about-function{gtk-assistant-child-has-padding}
+      @about-function{gtk-assistant-child-header-image}
+      @about-function{gtk-assistant-child-page-type}
+      @about-function{gtk-assistant-child-sidebar-image}
+      @about-function{gtk-assistant-child-title}
+
       @about-function{gtk-assistant-new}
       @about-function{gtk-assistant-get-current-page}
       @about-function{gtk-assistant-set-current-page}
@@ -378,7 +397,6 @@
       @about-function{gtk-assistant-insert-page}
       @about-function{gtk-assistant-remove-page}
       @about-function{gtk-assistant-set-forward-page-func}
-      @about-symbol{gtk-assistant-page-type}
       @about-function{gtk-assistant-set-page-type}
       @about-function{gtk-assistant-get-page-type}
       @about-function{gtk-assistant-set-page-title}
@@ -400,6 +418,8 @@
       A widget which is not displayed.
 
       @about-class{gtk-invisible}
+
+      @about-generic{gtk-invisible-screen}
 
       @about-function{gtk-invisible-new}
       @about-function{gtk-invisible-new-for-screen}

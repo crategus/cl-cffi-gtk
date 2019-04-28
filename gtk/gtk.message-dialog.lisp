@@ -216,6 +216,8 @@
   @sym{gtk-message-dialog} window from a @class{gtk-dialog} window without too
   much effort, but @sym{gtk-message-dialog} saves typing.
 
+  @image[messagedialog]{}
+
   One difference from @class{gtk-dialog} is that @sym{gtk-message-dialog} sets
   the @slot[gtk-window]{skip-taskbar-hint} property to @em{true}, so that the
   dialog is hidden from the taskbar by default.
@@ -294,7 +296,7 @@
  "The @code{buttons} property of type @symbol{gtk-buttons-type}
   (Write / Construct Only) @br{}
   The buttons shown in the message dialog. @br{}
-  @b{Warning:} This property is not accessible from the Lisp binding. @br{}
+  @em{Warning:} This property is not accessible from the Lisp binding. @br{}
   Default value: @code{:none}")
 
 #+cl-cffi-gtk-documentation
@@ -312,7 +314,7 @@
 (setf (documentation (atdoc:get-slot-from-name "image" 'gtk-message-dialog) 't)
  "The @code{image} property of type @class{gtk-widget} (Read / Write) @br{}
   The image for this dialog. @br{}
-  @b{Warning:} The @code{image} property has been deprecated since version 3.12
+  @em{Warning:} The @code{image} property has been deprecated since version 3.12
   and should not be used in newly-written code. Use @class{gtk-dialog} to create
   dialogs with images.")
 

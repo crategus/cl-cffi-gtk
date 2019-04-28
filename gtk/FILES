@@ -25,9 +25,9 @@ GTK+ Widgets and Objects
  +  gtk.message-dialog.lisp          - GtkMessageDialog            - GTK+ 3.24
  +  gtk.about-dialog.lisp            - GtkAboutDialog              - GTK+ 3.24
  +  gtk.assistant.lisp               - GtkAssistant                - GTK+ 3.24 &
- +  gtk.invisible.lisp               - GtkInvisible                - GTK+ 3.24
- +  gtk.offscreen-window.lisp        - GtkOffscreenWindow          - GTK+ 3.24
- +  gtk.window-group.lisp            - GtkWindowGroup              - GTK+ 3.24
+    gtk.invisible.lisp               - GtkInvisible                - GTK+ 3.24
+    gtk.offscreen-window.lisp        - GtkOffscreenWindow          - GTK+ 3.24
+    gtk.window-group.lisp            - GtkWindowGroup              - GTK+ 3.24
 
   Layout Containers
 

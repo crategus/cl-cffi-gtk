@@ -27,16 +27,32 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; GtkOffscreenWindow
-;;; 
+;;;
 ;;;     A toplevel to manage offscreen rendering of child widgets
-;;;     
-;;; Synopsis
-;;; 
+;;;
+;;; Types and Values
+;;;
 ;;;     GtkOffscreenWindow
-;;;     
+;;;
+;;; Functions
+;;;
 ;;;     gtk_offscreen_window_new
 ;;;     gtk_offscreen_window_get_surface
 ;;;     gtk_offscreen_window_get_pixbuf
+;;;
+;;; Object Hierarchy
+;;;
+;;;     GObject
+;;;     ╰── GInitiallyUnowned
+;;;         ╰── GtkWidget
+;;;             ╰── GtkContainer
+;;;                 ╰── GtkBin
+;;;                     ╰── GtkWindow
+;;;                         ╰── GtkOffscreenWindow
+;;;
+;;; Implemented Interfaces
+;;;
+;;;     GtkOffscreenWindow implements AtkImplementorIface and GtkBuildable.
 ;;; ----------------------------------------------------------------------------
 
 (in-package :gtk)
@@ -76,6 +92,7 @@
   When contained offscreen widgets are redrawn, @sym{gtk-offscreen-window} will
   emit a \"damage-event\" signal.
   @see-class{gtk-bin}
+  @see-class{gtk-window}
   @see-class{gdk-pixbuf}
   @see-symbol{cairo-surface-t}")
 
@@ -93,8 +110,6 @@
     Creates a toplevel container widget that is used to retrieve snapshots of
     widgets without showing them on the screen.
   @end{short}
-
-  Since 2.20
   @see-class{gtk-offscreen-window}"
   (make-instance 'gtk-offscreen-window))
 
@@ -109,15 +124,14 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-9-11}
   @argument[offscreen]{the @class{gtk-offscreen-window} contained widget}
-  @return{A @symbol{cairo-surface-t} to the @arg{offscreen} surface,
+  @return{A @symbol{cairo-surface-t} structure to the @arg{offscreen} surface,
     or a @code{null}-pointer.}
   @begin{short}
     Retrieves a snapshot of the contained widget in the form of a
-    @symbol{cairo-surface-t}. If you need to keep this around over window
-    resizes then you should add a reference to it.
+    @symbol{cairo-surface-t} structure.
   @end{short}
-
-  Since 2.20
+  If you need to keep this around over window resizes then you should add a
+  reference to it.
   @see-class{gtk-offscreen-window}
   @see-symbol{cairo-surface-t}
   @see-function{gtk-offscreen-window-get-pixbuf}"
@@ -139,8 +153,6 @@
     Retrieves a snapshot of the contained widget in the form of a
     @class{gdk-pixbuf} object.
   @end{short}
-
-  Since 2.20
   @see-class{gtk-offscreen-window}
   @see-class{gdk-pixbuf}
   @see-function{gtk-offscreen-window-get-surface}"
