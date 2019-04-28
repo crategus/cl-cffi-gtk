@@ -6,5 +6,5 @@
 (in-package :gtk-demo)
 
 (defun rel-path (filename)
-  (let ((system-path (asdf:system-source-directory :cl-cffi-gtk-demo-gtk)))
+  (let ((system-path (asdf:system-source-directory :gtk-demo)))
     (princ-to-string (merge-pathnames filename system-path))))

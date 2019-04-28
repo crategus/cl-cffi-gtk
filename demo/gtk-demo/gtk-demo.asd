@@ -1,6 +1,6 @@
-;;;; cl-cffi-gtk-demo-gtk.asd
+;;;; gtk-demo.lisp
 
-(asdf:defsystem :cl-cffi-gtk-demo-gtk
+(asdf:defsystem :gtk-demo
   :author "Dieter Kaiser"
   :license "LLGPL"
   :serial t
