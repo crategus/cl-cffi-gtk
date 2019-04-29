@@ -91,3 +91,4 @@ TODO
 /gdk/atdoc/.atdoc-html.xml
 /gtk/atdoc/.atdoc-html.xml
 /gtk/atdoc/.atdoc-cleanup.xml
+/test/rtest-gtk-accel-map.rc
