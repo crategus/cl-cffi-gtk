@@ -264,7 +264,7 @@
       @about-function{gtk-window-set-mnemonic-modifier}
       @about-function{gtk-window-get-default-icon-list}
       @about-function{gtk-window-get-default-icon-name}
-      @about-function{gtk-window-default-size}
+      @about-generic{gtk-window-default-size}
       @about-function{gtk-window-get-icon-list}
       @about-function{gtk-window-get-mnemonic-modifier}
       @about-function{gtk-window-get-position}

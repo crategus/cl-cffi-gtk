@@ -358,6 +358,9 @@
   @begin{short}
     A @sym{gtk-window} is a toplevel window which can contain other widgets.
   @end{short}
+
+  @image[window]{}
+
   Windows normally have decorations that are under the control of the
   windowing system and allow the user to manipulate the window, e. g. to
   resize it, move it, or close it.
@@ -941,7 +944,7 @@
   @end{dictionary}
   @see-class{gtk-window}
   @see-function{gtk-window-resize-grip-is-visible}")
-
+e
 ;;; --- gtk-window-has-toplevel-focus ------------------------------------------
 
 #+cl-cffi-gtk-documentation
@@ -3386,8 +3389,7 @@
     Resize grips have been removed.
   @end{dictionary}
   @see-class{gtk-window}
-  @see-function{gtk-window-get-has-resize-grip}
-  @see-function{gtk-window-set-has-resize-grip}"
+  @see-function{gtk-window-has-resize-grip}"
   (and (gtk-window-has-resize-grip window)
        (gtk-window-resize-grip-visible window)))
 
@@ -3397,7 +3399,7 @@
 ;;; gtk_window_get_resize_grip_area ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_window_get_resize_grip_area" %gtk-widget-get-resize-grip-area)
+(defcfun ("gtk_window_get_resize_grip_area" %gtk-window-get-resize-grip-area)
     :boolean
   (window (g-object gtk-window))
   (rect (g-boxed-foreign gdk-rectangle)))
@@ -3421,7 +3423,7 @@
   @see-class{gtk-window}
   @see-function{gtk-window-has-resize-grip}"
   (let ((rect (make-gdk-rectangle)))
-    (when (%gtk-widget-get-resize-grip-area window rect)
+    (when (%gtk-window-get-resize-grip-area window rect)
       rect)))
 
 (export 'gtk-window-get-resize-grip-area)
