@@ -230,7 +230,6 @@
       @about-function{gtk-window-remove-accel-group}
       @about-function{gtk-window-activate-focus}
       @about-function{gtk-window-activate-default}
-      @about-function{gtk-window-set-default-size}
       @about-function{gtk-window-set-default-geometry}
       @about-function{gtk-window-set-geometry-hints}
       @about-function{gtk-window-set-position}
@@ -265,7 +264,7 @@
       @about-function{gtk-window-set-mnemonic-modifier}
       @about-function{gtk-window-get-default-icon-list}
       @about-function{gtk-window-get-default-icon-name}
-      @about-function{gtk-window-get-default-size}
+      @about-function{gtk-window-default-size}
       @about-function{gtk-window-get-icon-list}
       @about-function{gtk-window-get-mnemonic-modifier}
       @about-function{gtk-window-get-position}
