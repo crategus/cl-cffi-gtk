@@ -944,7 +944,7 @@
   @end{dictionary}
   @see-class{gtk-window}
   @see-function{gtk-window-resize-grip-is-visible}")
-e
+
 ;;; --- gtk-window-has-toplevel-focus ------------------------------------------
 
 #+cl-cffi-gtk-documentation
@@ -2223,19 +2223,26 @@ e
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_close ()
-;;;
-;;; void gtk_window_close (GtkWindow *window);
-;;;
-;;; Requests that the window is closed, similar to what happens when a window
-;;; manager close button is clicked.
-;;;
-;;; This function can be used with close buttons in custom titlebars.
-;;;
-;;; window :
-;;;     a GtkWindow
-;;;
-;;; Since 3.10
 ;;; ----------------------------------------------------------------------------
+
+#+gtk-3-10
+(defcfun ("gtk_window_close" gtk-window-close) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-29}
+  @argument[window]{a @class{gtk-window} widget}
+  @begin{short}
+    Requests that the window is closed, similar to what happens when a window
+    manager close button is clicked.
+  @end{short}
+
+  This function can be used with close buttons in custom titlebars.
+
+  Since 3.10
+  @see-class{gtk-window}"
+  (window (g-object gtk-window)))
+
+#+gtk-3-10
+(export 'gtk-window-close)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_iconify ()
@@ -2413,28 +2420,32 @@ e
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_fullscreen_on_monitor ()
-;;;
-;;; void gtk_window_fullscreen_on_monitor (GtkWindow *window,
-;;;                                        GdkScreen *screen,
-;;;                                        gint monitor);
-;;;
-;;; Asks to place window in the fullscreen state. Note that you shouldn't assume
-;;; the window is definitely full screen afterward.
-;;;
-;;; You can track the fullscreen state via the "window-state-event" signal on
-;;; GtkWidget.
-;;;
-;;; window :
-;;;     a GtkWindow
-;;;
-;;; screen :
-;;;     a GdkScreen to draw to
-;;;
-;;; monitor :
-;;;     which monitor to go fullscreen on
-;;;
-;;;  Since 3.18
 ;;; ----------------------------------------------------------------------------
+
+#+gtk-3-18
+(defcfun ("gtk_window_fullscreen_on_monitor" gtk-window-fullscreen-on-monitor)
+    :void
+ #+cl-cffi-gtk-documentation
+ "@version{2013-3-29}
+  @argument[window]{a @class{gtk-window} widget}
+  @argument[screen]{a @class{gdk-screen} object to draw on}
+  @argument[monitor]{an integer which monitor to go fullscreen on}
+  @begin{short}
+    Asks to place the window in the fullscreen state.
+  @end{short}
+  Note that you shouldn't assume the window is definitely full screen afterward.
+
+  You can track the fullscreen state via the \"window-state-event\" signal on
+  @class{gtk-widget}.
+
+  Since 3.18
+  @see-class{gtk-window}"
+  (window (g-object gtk-window))
+  (screen (g-object gdk-screen))
+  (monitor :int))
+
+#+gtk-3-18
+(export 'gtk-window-fullscreen-on-monitor)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_unfullscreen ()
@@ -3452,43 +3463,53 @@ e
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_set_titlebar ()
-;;;
-;;; void gtk_window_set_titlebar (GtkWindow *window, GtkWidget *titlebar);
-;;;
-;;; Sets a custom titlebar for window .
-;;;
-;;; If you set a custom titlebar, GTK+ will do its best to convince the window
-;;; manager not to put its own titlebar on the window. Depending on the system,
-;;; this function may not work for a window that is already visible, so you set
-;;; the titlebar before calling gtk_widget_show().
-;;;
-;;; Parameters
-;;;
-;;; window
-;;;     a GtkWindow
-;;;
-;;; titlebar
-;;;     the widget to use as titlebar
-;;;
-;;; Since 3.10
 ;;; ----------------------------------------------------------------------------
+
+#+gtk-3-10
+(defcfun ("gtk_window_set_titlebar" gtk-window-set-titlebar) :void
+ #+cl-cffi-gtk-documentation
+ "@version{2019-4-29}
+  @argument[window]{a @class{gtk-window} widget}
+  @argument[widget]{a @class{gtk-widget} object to use as titlebar}
+  @begin{short}
+    Sets a custom titlebar for the window.
+  @end{short}
+
+  If you set a custom titlebar, GTK+ will do its best to convince the window
+  manager not to put its own titlebar on the window. Depending on the system,
+  this function may not work for a window that is already visible, so you set
+  the titlebar before calling the @fun{gtk-widget-show} function.
+
+  Since 3.10
+  @see-class{gtk-window}"
+  (window (g-object gtk-window))
+  (titlebar (g-object gtk-widget)))
+
+#+gtk-3-10
+(export 'gtk-window-set-titlebar)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_get_titlebar ()
-;;;
-;;; GtkWidget * gtk_window_get_titlebar (GtkWindow *window);
-;;;
-;;; Returns the custom titlebar that has been set with
-;;; gtk_window_set_titlebar().
-;;;
-;;; window :
-;;;     a GtkWindow
-;;;
-;;; Returns :
-;;;     the custom titlebar, or NULL.
-;;;
-;;; Since 3.16
 ;;; ----------------------------------------------------------------------------
+
+#+gtk-3-16
+(defcfun ("gtk_window_get_titlebar" gtk-window-get-titlebar)
+    (g-object gtk-widget)
+ #+cl-cffi-gtk-documentation
+ "@version{2019-4-29}
+  @argument[window]{a @class{gtk-window} widget}
+  @return{The @class{gtk-widget} custom titlebar, or @code{nil}.}
+  @begin{short}
+    Returns the custom titlebar that has been set with the
+    @fun{gtk-window-set-titlebar} function.
+  @end{short}
+
+  Since 3.16
+  @see-class{gtk-window}"
+  (window (g-object gtk-window)))
+
+#+gtk-3-16
+(export 'gtk-window-get-titlebar)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_window_set_interactive_debugging ()
