@@ -78,15 +78,16 @@
   @begin{short}
     Together with @class{gtk-plug}, @sym{gtk-socket} provides the ability to
     embed widgets from one process into another process in a fashion that is
-    transparent to the user. One process creates a @sym{gtk-socket} widget and
-    passes that widget's window ID to the other process, which then creates a
-    @class{gtk-plug} with that window ID. Any widgets contained in the
-    @class{gtk-plug} then will appear inside the first application's window.
+    transparent to the user.
   @end{short}
+  One process creates a @sym{gtk-socket} widget and passes that widget's window
+  ID to the other process, which then creates a @class{gtk-plug} with that
+  window ID. Any widgets contained in the @class{gtk-plug} then will appear
+  inside the first application's window.
 
-  The socket's window ID is obtained by using the function
-  @fun{gtk-socket-get-id}. Before using this function, the socket must have been
-  realized, and for hence, have been added to its parent.
+  The socket's window ID is obtained by using the @fun{gtk-socket-get-id}
+  function. Before using this function, the socket must have been realized, and
+  for hence, have been added to its parent.
 
   @b{Example:} Obtaining the window ID of a socket.
   @begin{pre}
@@ -107,7 +108,7 @@
   is not destroyed until that plug is created. Violating this rule will cause
   unpredictable consequences, the most likely consequence being that the plug
   will appear as a separate toplevel window. You can check if the plug has
-  been created by using the function @fun{gtk-socket-get-plug-window}. If it
+  been created by using the @fun{gtk-socket-get-plug-window} function. If it
   returns a non-@code{nil} value, then the plug has been successfully created
   inside of the socket.
 
@@ -122,12 +123,9 @@
   toolkits, e. g. Qt, allowing the same level of integration when embedding a
   Qt widget in GTK or vice versa.
 
-  @subheading{Note}
-    The @class{gtk-plug} and @sym{gtk-socket} widgets are only available when
-    GTK+ is compiled for the X11 platform and @code{GDK_WINDOWING_X11} is
-    defined. They can only be used on a @code{gdk-x11-display}. To use
-    @class{gtk-plug} and @sym{gtk-socket}, you need to include the
-    @code{gtk/gtkx.h} header.
+  The @class{gtk-plug} and @sym{gtk-socket} widgets are only available when GTK+
+  is compiled for the X11 platform and @code{GDK_WINDOWING_X11} is defined. They
+  can only be used on a @code{gdk-x11-display}.
   @begin[Signal Details]{dictionary}
     @subheading{The \"plug-added\" signal}
       @begin{pre}
@@ -160,9 +158,10 @@
 (defun gtk-socket-new ()
  #+cl-cffi-gtk-documentation
  "@version{2014-11-27}
-  @return{The new @class{gtk-socket}.}
-  Create a new empty @class{gtk-socket}.
-  @see-class{gtk-socket}")
+  @return{The new @class{gtk-socket} widget.}
+  @short{Create a new empty @class{gtk-socket} widget.}
+  @see-class{gtk-socket}"
+  (make-instance 'gtk-socket))
 
 (export 'gtk-socket-new)
 
@@ -182,11 +181,11 @@
   The client may be in the same process or in a different process.
 
   To embed a @class{gtk-plug} in a @class{gtk-socket}, you can either create the
-  @class{gtk-plug} with @code{gtk-plug-new 0)}, call the function
-  @fun{gtk-plug-get-id} to get the window ID of the plug, and then pass that to
-  the function @sym{gtk-socket-add-id}, or you can call the function
-  @fun{gtk-socket-get-id} to get the window ID for the socket, and call the
-  function @fun{gtk-plug-new} passing in that ID.
+  @class{gtk-plug} with the @fun{gtk-plug-new} function, call the
+  @fun{gtk-plug-get-id} function to get the window ID of the plug, and then pass
+  that to the @sym{gtk-socket-add-id} function, or you can call the
+  @fun{gtk-socket-get-id} function to get the window ID for the socket, and call
+  the @fun{gtk-plug-new} function passing in that ID.
 
   The @class{gtk-socket} must have already be added into a toplevel window
   before you can make this call.
@@ -207,12 +206,12 @@
 (defcfun ("gtk_socket_get_id" gtk-socket-get-id) :pointer
  #+cl-cffi-gtk-documentation
  "@version{2013-11-27}
-  @argument[socket]{a @class{gtk-socket}}
+  @argument[socket]{a @class{gtk-socket} widget}
   @return{The window ID for the socket.}
   @begin{short}
     Gets the window ID of a @class{gtk-socket} widget, which can then be used
     to create a client embedded inside the socket, for instance with the
-    function @fun{gtk-plug-new}.
+    @fun{gtk-plug-new} function.
   @end{short}
 
   The @class{gtk-socket} must have already be added into a toplevel window
