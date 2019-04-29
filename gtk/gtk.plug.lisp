@@ -94,23 +94,21 @@
   @begin{short}
     Together with @class{gtk-socket}, @sym{gtk-plug} provides the ability to
     embed widgets from one process into another process in a fashion that is
-    transparent to the user. One process creates a @class{gtk-socket} widget and
-    passes the ID of that widget's window to the other process, which then
-    creates a @sym{gtk-plug} with that window ID. Any widgets contained in the
-    @sym{gtk-plug} then will appear inside the first application's window.
+    transparent to the user.
   @end{short}
+  One process creates a @class{gtk-socket} widget and passes the ID of that
+  widget's window to the other process, which then creates a @sym{gtk-plug} with
+  that window ID. Any widgets contained in the @sym{gtk-plug} then will appear
+  inside the first application's window.
 
   The communication between a @class{gtk-socket} and a @sym{gtk-plug} follows
   the XEmbed protocol. This protocol has also been implemented in other
   toolkits, e. g. Qt, allowing the same level of integration when embedding a Qt
   widget in GTK+ or vice versa.
 
-  @subheading{Note}
-    The @sym{gtk-plug} and @class{gtk-socket} widgets are only available when
-    GTK+ is compiled for the X11 platform and @code{GDK_WINDOWING_X11} is
-    defined. They can only be used on a @code{gdk-x11-display}. To use
-    @sym{gtk-plug} and @class{gtk-socket}, you need to include the
-    @code{gtk/gtkx.h} header.
+  The @sym{gtk-plug} and @class{gtk-socket} widgets are only available when GTK+
+  is compiled for the X11 platform and @code{GDK_WINDOWING_X11} is defined. They
+  can only be used on a @code{gdk-x11-display}.
   @begin[Signal Details]{dictionary}
     @subheading{The \"embedded\" signal}
       @begin{pre}
@@ -122,7 +120,8 @@
       @end{table}
   @end{dictionary}
   @see-slot{gtk-plug-embedded}
-  @see-slot{gtk-plug-socket-window}")
+  @see-slot{gtk-plug-socket-window}
+  @see-class{gtk-socket}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Property and Accessor Details
@@ -132,7 +131,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "embedded" 'gtk-plug) 't)
- "The @code{\"embedded\"} property of type @code{:boolean} (Read) @br{}
+ "The @code{embedded} property of type @code{:boolean} (Read) @br{}
   @em{True} if the plug is embedded in a socket. @br{}
   Default value: @code{nil}")
 
@@ -141,10 +140,10 @@
       "Accessor"
       (documentation 'gtk-plug-embedded 'function)
  "@version{2014-2-12}
-  @argument[object]{a @class{gtk-plug}}
+  @argument[object]{a @class{gtk-plug} widget}
   @return{@em{True} if the plug is embedded in a socket.}
   @begin{short}
-    Accessor of the slot @slot[gtk-plug]{embedded} of the @class{gtk-plug}
+    Accessor of the @slot[gtk-plug]{embedded} slot of the @class{gtk-plug}
     class.
   @end{short}
 
@@ -155,7 +154,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "socket-window" 'gtk-plug) 't)
- "The @code{\"socket-window\"} property of type @class{gdk-window} (Read) @br{}
+ "The @code{socket-window} property of type @class{gdk-window} (Read) @br{}
   The window of the socket the plug is embedded in.")
 
 #+cl-cffi-gtk-documentation
@@ -163,10 +162,10 @@
       "Accessor"
       (documentation 'gtk-plug-socket-window 'function)
  "@version{2014-2-12}
-  @argument[plug]{a @class{gtk-plug}}
-  @return{the window of the socket, or @code{nil}}
+  @argument[plug]{a @class{gtk-plug} widget}
+  @return{The window of the socket, or @code{nil}.}
   @begin{short}
-    Accessor of the slot @slot[gtk-plug]{socket-window} of the @class{gtk-plug}
+    Accessor of the @slot[gtk-plug]{socket-window} slot of the @class{gtk-plug}
     class.
   @end{short}
 
@@ -226,7 +225,7 @@
     @arg{socket-id}.
   @end{short}
   If @arg{socket-id} is 0, the plug is left \"unplugged\" and can later be
-  plugged into a @class{gtk-socket} by the function @fun{gtk-socket-add-id}.
+  plugged into a @class{gtk-socket} by the @fun{gtk-socket-add-id} function.
   @see-class{gtk-plug}
   @see-class{gtk-socket}
   @see-function{gtk-socket-add-id}"
@@ -260,12 +259,14 @@
 (defcfun ("gtk_plug_get_id" gtk-plug-get-id) :pointer
  #+cl-cffi-gtk-documentation
  "@version{2014-2-12}
-  @argument[plug]{a @class{gtk-plug}}
+  @argument[plug]{a @class{gtk-plug} widget}
   @return{the window ID for the plug}
-  Gets the window ID of a @class{gtk-plug} widget, which can then be used to
-  embed this window inside another window, for instance with the function
-  @fun{gtk-socket-add-id}.
-  @see-class{gtk-plug}
+  @begin{short}
+    Gets the window ID of a @class{gtk-plug} widget, which can then be used to
+    embed this window inside another window, for instance with the function
+    @fun{gtk-socket-add-id}.
+  @end{short}
+  @see-class{gtk-plug} 
   @see-function{gtk-socket-add-id}"
   (plug (g-object gtk-plug)))
 
