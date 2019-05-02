@@ -1,4 +1,3 @@
-
 (def-suite gtk-accel-group :in gtk-suite)
 (in-suite gtk-accel-group)
 

@@ -69,6 +69,14 @@
 
 (load "rtest-gtk-builder.lisp")
 
+;;; Printing
+
+(load "rtest-gtk-print-operation.lisp")
+(load "rtest-gtk-paper-size.lisp")
+(load "rtest-gtk-print-settings.lisp")
+
+
+
 (load "rtest-gtk-accel-group.lisp")
 (load "rtest-gtk-accel-map.lisp")
 (load "rtest-gtk-action.lisp")
@@ -80,8 +88,6 @@
 (load "rtest-gtk-frame.lisp")
 (load "rtest-gtk-list-store.lisp")
 (load "rtest-gtk-main-loop.lisp")
-(load "rtest-gtk-paper-size.lisp")
-(load "rtest-gtk-print-settings.lisp")
 (load "rtest-gtk-selections.lisp")
 (load "rtest-gtk-text-buffer.lisp")
 (load "rtest-gtk-text-iter.lisp")
