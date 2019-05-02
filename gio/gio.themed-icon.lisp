@@ -59,7 +59,7 @@
    :type-initializer "g_themed_icon_get_type")
   ((name
     g-themed-icon-name
-    "name" "gchar" nil t)
+    "name" "gchararray" nil t)
    (names
     g-themed-icon-names
     "names" "GStrv" t t)
@@ -251,7 +251,7 @@
   @begin{short}
     Prepend a name to the list of icons from within @arg{icon}.
   @end{short}
-  
+
   @subheading{Note}
     Note that doing so invalidates the hash computed by prior calls to
     @fun{g-icon-hash}.

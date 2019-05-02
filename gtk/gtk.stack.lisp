@@ -226,7 +226,7 @@
     "visible-child" "GtkWidget" t t)
    (visible-child-name
     gkt-stack-visible-child-name
-    "visible-child-name" "gchar" t t)))
+    "visible-child-name" "gchararray" t t)))
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-stack 'type)
@@ -645,7 +645,7 @@
 
 (define-child-property "GtkStack"
                        gtk-stack-child-icon-name
-                       "icon-name" "gchar" t t t)
+                       "icon-name" "gchararray" t t t)
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-stack-child-icon-name atdoc:*function-name-alias*)
@@ -669,7 +669,7 @@
 
 (define-child-property "GtkStack"
                        gtk-stack-child-name
-                       "name" "gchar" t t t)
+                       "name" "gchararray" t t t)
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-stack-child-name atdoc:*function-name-alias*)
@@ -745,7 +745,7 @@
 
 (define-child-property "GtkStack"
                        gtk-stack-child-title
-                       "title" "gchar" t t t)
+                       "title" "gchararray" t t t)
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-stack-child-title atdoc:*function-name-alias*)

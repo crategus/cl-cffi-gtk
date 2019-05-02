@@ -131,13 +131,13 @@
     "inverted" "gboolean" t t)
    (menu-name
     gtk-model-menu-menu-name
-    "menu-name" "gchar" t t)
+    "menu-name" "gchararray" t t)
    (role
     gtk-model-menu-role
     "role" "GtkButtonRole" t t)
    (text
     gtk-model-button-text
-    "text" "gchar" t t)
+    "text" "gchararray" t t)
    #+gtk-3-24
    (use-markup
     gtk-model-button-use-markup

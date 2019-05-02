@@ -86,25 +86,25 @@
    :type-initializer "gtk_font_chooser_get_type")
   (font
    gtk-font-chooser-font
-   "font" "gchar" t t)
+   "font" "gchararray" t t)
   (font-desc
    gtk-font-chooser-font-desc
    "font-desc" "PangoFontDescription" t t)
   #+gtk-3-22
   (font-features
    gtk-font-chooser-font-features
-   "font-features" "gchar" t nil)
+   "font-features" "gchararray" t nil)
   #+gtk-3-22
   (language
    gtk-font-chooser-language
-   "language" "gchar" t t)
+   "language" "gchararray" t t)
   #+gtk-3-22
   (level
    gtk-font-chooser-level
    "level" "GtkFontChooserLevel" t t)
   (preview-text
    gtk-font-chooser-preview-text
-   "preview-text" "gchar" t t)
+   "preview-text" "gchararray" t t)
   (show-preview-entry
    gtk-font-chooser-show-preview-entry
    "show-preview-entry" "gboolean" t t))

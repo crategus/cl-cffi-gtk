@@ -149,7 +149,7 @@
     "active" "gint" t t)
    (active-id
     gtk-combo-box-active-id
-    "active-id" "gchar" t t)
+    "active-id" "gchararray" t t)
    (add-tearoffs
     gtk-combo-box-add-tearoffs
     "add-tearoffs" "gboolean" t t)
@@ -250,7 +250,7 @@
     @end{pre}
     A @sym{gtk-combo-box} with an entry has a single CSS node with name
     @code{combobox}. It contains a @code{box} with the @code{.linked} class.
-    That box contains an @code{entry} and a @code{button}, both with the 
+    That box contains an @code{entry} and a @code{button}, both with the
     @code{.combo} class added. The button also contains another node with name
     @code{arrow}.
   @end{dictionary}
@@ -543,7 +543,7 @@
       "Accessor"
       (documentation 'gtk-combo-box-column-span-column 'function)
  "@version{2013-10-16}
-  @begin{short}  
+  @begin{short}
     Accessor of the slot @slot[gtk-combo-box]{column-span-column} of the
     @class{gtk-combo-box} class.
   @end{short}

@@ -103,7 +103,7 @@
     "action-group" "GActionGroup" nil t)
    (application-id
     g-application-application-id
-    "application-id" "gchar" t t)
+    "application-id" "gchararray" t t)
    (flags
     g-application-flags
     "flags" "GApplicationFlags" t t)

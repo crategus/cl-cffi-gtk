@@ -207,7 +207,7 @@
    #+gtk-3-12
    (gtk-decoration-layout
     gtk-settings-gtk-decoration-layout
-    "gtk-decoration-layout" "gchar" t t)
+    "gtk-decoration-layout" "gchararray" t t)
    #+gtk-3-12
    (gtk-dialogs-use-header
     gtk-settings-gtk-dialogs-use-header
@@ -376,15 +376,15 @@
    #+gtk-3-14
    (gtk-titlebar-double-click
     gtk-settings-gtk-titlebar-double-click
-    "gtk-titlebar-double-click" "gchar" t t)
+    "gtk-titlebar-double-click" "gchararray" t t)
    #+gtk-3-14
    (gtk-titlebar-middle-click
     gtk-settings-gtk-titlebar-middle-click
-    "gtk-titlebar-middle-click" "gchar" t t)
+    "gtk-titlebar-middle-click" "gchararray" t t)
    #+gtk-3-14
    (gtk-titlebar-right-click
     gtk-settings-gtk-titlebar-right-click
-    "gtk-titlebar-right-click" "gchar" t t)
+    "gtk-titlebar-right-click" "gchararray" t t)
    (gtk-toolbar-icon-size
     gtk-settings-gtk-toolbar-icon-size
     "gtk-toolbar-icon-size" "GtkIconSize" t t)

@@ -138,10 +138,10 @@
     "height-mm" "gint" t nil)
    (manufacturer
     gdk-monitor-manufacturer
-    "manufacturer" "gchar" t nil)
+    "manufacturer" "gchararray" t nil)
    (model
     gdk-monitor-model
-    "model" "gchar" t nil)
+    "model" "gchararray" t nil)
    (refresh-rate
     gdk-monitor-refresh-rate
     "refresh-rate" "gint" t nil)

@@ -120,7 +120,7 @@
     "storage-type" "GtkImageType" t nil)
    (title
     gtk-status-icon-title
-    "title" "gchar" t t)
+    "title" "gchararray" t t)
    (tooltip-markup
     gtk-status-icon-tooltip-markup
     "tooltip-markup" "gchararray" t t)

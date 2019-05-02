@@ -116,7 +116,7 @@
     "header-relief" "GtkReliefStyle" t t)
    (label
     gtk-tool-item-group-label
-    "label" "gchar" t t)
+    "label" "gchararray" t t)
    (label-widget
     gtk-tool-item-group-label-widget
     "label-widget" "GtkWidget" t t)))

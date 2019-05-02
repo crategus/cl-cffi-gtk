@@ -78,13 +78,13 @@
     "height" "guint" t nil)
    (title
     gtk-shortcuts-group-title
-    "title" "gchar" t t)
+    "title" "gchararray" t t)
    (title-size-group
     gtk-shortcuts-group-title-size-group
     "title-size-group" "GtkSizeGroup" nil t)
    (view
     gtk-shortcuts-group-view
-    "view" "gchar" t t)))
+    "view" "gchararray" t t)))
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-shortcuts-group 'type)

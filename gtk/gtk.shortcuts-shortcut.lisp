@@ -140,11 +140,11 @@
     "accel-size-group" "GtkSizeGroup" nil t)
    (accelerator
     gtk-shortcuts-shortcut-accelerator
-    "accelerator" "gchar" t t)
+    "accelerator" "gchararray" t t)
    #+gtk-3-22
    (action-name
     gtk-shortcuts-shortcut-action-name
-    "action-name" "gchar" t t)
+    "action-name" "gchararray" t t)
    (direction
     gtk-shortcuts-shortcut-direction
     "direction" "GtkTextDirection" t t)
@@ -159,13 +159,13 @@
     "shortcut-type" "GtkShortcutType" t t)
    (subtitle
     gtk-shortcuts-shortcut-subtitle
-    "subtitle" "gchar" t t)
+    "subtitle" "gchararray" t t)
    (subtitle-set
     gtk-shortcuts-shortcut-subtitle-set
     "subtitle-set" "gboolean" t t)
    (title
     gtk-shortcuts-shortcut-title
-    "title" "gchar" t t)
+    "title" "gchararray" t t)
    (title-size-group
     gtk-shortcuts-shortcut-title-size-group
     "title-size-group" "GtkSizeGroup" nil t)))

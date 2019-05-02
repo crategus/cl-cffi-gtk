@@ -80,7 +80,7 @@
     :type-initializer "gtk_popover_menu_get_type")
   ((visible-submenu
     gtk-popover-menu-visible-submenu
-    "visible-submenu" "gchar" t t)))
+    "visible-submenu" "gchararray" t t)))
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-popover-menu 'type)
@@ -232,7 +232,7 @@
 
 (define-child-property "GtkPopoverMenu"
                        gtk-popover-menu-child-submenu
-                       "submenu" "gchar" t t t)
+                       "submenu" "gchararray" t t t)
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-popover-menu-child-position atdoc:*function-name-alias*)

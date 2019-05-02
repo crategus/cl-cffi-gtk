@@ -65,7 +65,7 @@
    :type-initializer "gtk_actionable_get_type")
   (action-name
    gtk-actionable-action-name
-   "action-name" "gchar" t t)
+   "action-name" "gchararray" t t)
   (action-target
    gtk-actionable-action-target
    "action-target" "GVariant" t t))

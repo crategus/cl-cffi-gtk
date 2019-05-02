@@ -100,7 +100,7 @@
    #+gtk-3-12
    (decoration-layout
     gtk-header-bar-decoration-layout
-    "decoration-layout" "gchar" t t)
+    "decoration-layout" "gchararray" t t)
    #+gtk-3-12
    (decoration-layout-set
     gtk-header-bar-decoration-layout-set
@@ -117,10 +117,10 @@
     "spacing" "gint" t t)
    (subtitle
     gtk-header-bar-subtitle
-    "subtitle" "gchar" t t)
+    "subtitle" "gchararray" t t)
    (title
     gtk-header-bar-title
-    "title" "gchar" t t)))
+    "title" "gchararray" t t)))
 
 #+(and gtk-3-10 cl-cffi-gtk-documentation)
 (setf (documentation 'gtk-header-bar 'type)

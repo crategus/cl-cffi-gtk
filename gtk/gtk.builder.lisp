@@ -62,7 +62,7 @@
 ;;;     gtk_builder_set_translation_domain                 Accessor
 ;;;     gtk_builder_get_translation_domain                 Accessor
 ;;;     gtk_builder_set_application
-;;;     gtk_builder_get_application 
+;;;     gtk_builder_get_application
 ;;;     gtk_builder_get_type_from_name
 ;;;     gtk_builder_value_from_string
 ;;;     gtk_builder_value_from_string_type
@@ -168,7 +168,7 @@
    :type-initializer "gtk_builder_get_type")
   ((translation-domain
     gtk-builder-translation-domain
-    "translation-domain" "gchar" t t)))
+    "translation-domain" "gchararray" t t)))
 
 ;;; This Lisp extension is not documented
 (defmethod initialize-instance :after ((builder gtk-builder)
@@ -192,7 +192,7 @@
   In the (unusual) case that you want to add user interface descriptions from
   multiple sources to the same @class{gtk-builder} you can call the
   @fun{gtk-builder-new} function to get an empty builder and populate it by
-  (multiple) calls to the @fun{gtk-builder-add-from-file}, 
+  (multiple) calls to the @fun{gtk-builder-add-from-file},
   @fun{gtk-builder-add-from-resource} or @fun{gtk-builder-add-from-string}
   functions.
 
@@ -321,7 +321,7 @@
    (ALL * & text ?)
  @}
   @end{pre}
-  The toplevel element is @code{<interface>}. It optionally takes a 
+  The toplevel element is @code{<interface>}. It optionally takes a
   @code{\"domain\"} attribute, which will make the builder look for translated
   strings using @code{dgettext()} in the domain specified. This can also be
   done by calling the @fun{gtk-builder-translation-domain} function on the
@@ -347,7 +347,7 @@
   allows to use an object that has been constructed by a
   @class{gtk-ui-manager} in another part of the UI definition by specifying
   the ID of the @class{gtk-ui-manager} in the @code{\"constructor\"} attribute
-  and the name of the object in the @code{\"id\"} attribute. 
+  and the name of the object in the @code{\"id\"} attribute.
 
   Objects must be given a name with the @code{\"id\"} attribute, which allows
   the application to retrieve them from the builder with the
@@ -581,7 +581,7 @@
   @return{A @class{gtk-builder} object containing the interface described by
     @arg{string}.}
   @begin{short}
-    Builds the user interface described by @arg{string} in the 
+    Builds the user interface described by @arg{string} in the
     @class{gtk-builder} UI definition format.
   @end{short}
 
@@ -908,19 +908,19 @@
 ;;;
 ;;; builder :
 ;;;     a GtkBuilder
-;;; 
+;;;
 ;;; widget :
 ;;;     the widget that is being extended
-;;; 
+;;;
 ;;; template_type :
 ;;; the type that the template is for
-;;; 
+;;;
 ;;; buffer :
 ;;;     the string to parse
-;;; 
+;;;
 ;;; length :
 ;;;     the length of buffer (may be -1 if buffer is nul-terminated)
-;;; 
+;;;
 ;;; error :
 ;;;     return location for an error, or NULL.
 ;;;

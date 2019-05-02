@@ -78,13 +78,13 @@
     "max-height" "guint" t t)
    (section-name
     gtk-shortcuts-section-section-name
-    "section-name" "gchar" t t)
+    "section-name" "gchararray" t t)
    (title
     gtk-shortcuts-section-title
-    "title" "gchar" t t)
+    "title" "gchararray" t t)
    (view-name
     gtk-shortcus-section-view-name
-    "view-name" "gchar" t t)))
+    "view-name" "gchararray" t t)))
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-shortcuts-section 'type)

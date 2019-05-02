@@ -594,7 +594,7 @@
     "n-axes" "gint" t nil)
    (name
     gdk-device-name
-    "name" "gchar" t t)
+    "name" "gchararray" t t)
    #+gdk-3-20
    (num-touches
     gdk-device-num-touches
@@ -602,7 +602,7 @@
    #+gdk-3-16
    (product-id
     gdk-device-product-id
-    "product-id" "gchar" t t)
+    "product-id" "gchararray" t t)
    #+gdk-3-20
    (seat
     gdk-device-seat
@@ -617,7 +617,7 @@
    #+gdk-3-16
    (vendor-id
     gdk-device-vendor-id
-    "vendor-id" "gchar" t t)
+    "vendor-id" "gchararray" t t)
    ))
 
 #+cl-cffi-gtk-documentation

@@ -73,10 +73,10 @@
    :type-initializer "gtk_shortcuts_window_get_type")
    ((section-name
     gtk-shortcuts-window-section-name
-    "section-name" "gchar" t t)
+    "section-name" "gchararray" t t)
    (view-name
     gtk-shortcuts-window-view-name
-    "view-name" "gchar" t t)))
+    "view-name" "gchararray" t t)))
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-shortcuts-window 'type)

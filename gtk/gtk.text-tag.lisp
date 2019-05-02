@@ -204,7 +204,7 @@
    #+gtk-3-18
    (font-features
     gtk-text-tag-font-features
-    "font-features" "gchar" t t)
+    "font-features" "gchararray" t t)
    #+gtk-3-18
    (font-features-set
     gtk-text-tag-font-features-set

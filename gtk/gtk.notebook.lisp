@@ -37,51 +37,51 @@
 ;;;
 ;;; Functions
 ;;;
-;;;     gtk_notebook_new 
-;;;     gtk_notebook_append_page 
-;;;     gtk_notebook_append_page_menu 
-;;;     gtk_notebook_prepend_page 
-;;;     gtk_notebook_prepend_page_menu 
-;;;     gtk_notebook_insert_page 
-;;;     gtk_notebook_insert_page_menu 
-;;;     gtk_notebook_remove_page 
-;;;     gtk_notebook_detach_tab 
-;;;     gtk_notebook_page_num 
-;;;     gtk_notebook_next_page 
-;;;     gtk_notebook_prev_page 
-;;;     gtk_notebook_reorder_child 
+;;;     gtk_notebook_new
+;;;     gtk_notebook_append_page
+;;;     gtk_notebook_append_page_menu
+;;;     gtk_notebook_prepend_page
+;;;     gtk_notebook_prepend_page_menu
+;;;     gtk_notebook_insert_page
+;;;     gtk_notebook_insert_page_menu
+;;;     gtk_notebook_remove_page
+;;;     gtk_notebook_detach_tab
+;;;     gtk_notebook_page_num
+;;;     gtk_notebook_next_page
+;;;     gtk_notebook_prev_page
+;;;     gtk_notebook_reorder_child
 ;;;     gtk_notebook_set_tab_pos                           Accessor
 ;;;     gtk_notebook_set_show_tabs                         Accessor
 ;;;     gtk_notebook_set_show_border                       Accessor
 ;;;     gtk_notebook_set_scrollable                        Accessor
-;;;     gtk_notebook_popup_enable 
-;;;     gtk_notebook_popup_disable 
-;;;     gtk_notebook_get_current_page 
-;;;     gtk_notebook_get_menu_label 
-;;;     gtk_notebook_get_nth_page 
-;;;     gtk_notebook_get_n_pages 
-;;;     gtk_notebook_get_tab_label 
-;;;     gtk_notebook_set_menu_label 
-;;;     gtk_notebook_set_menu_label_text 
-;;;     gtk_notebook_set_tab_label 
-;;;     gtk_notebook_set_tab_label_text 
-;;;     gtk_notebook_set_tab_reorderable 
-;;;     gtk_notebook_set_tab_detachable 
-;;;     gtk_notebook_get_menu_label_text 
+;;;     gtk_notebook_popup_enable
+;;;     gtk_notebook_popup_disable
+;;;     gtk_notebook_get_current_page
+;;;     gtk_notebook_get_menu_label
+;;;     gtk_notebook_get_nth_page
+;;;     gtk_notebook_get_n_pages
+;;;     gtk_notebook_get_tab_label
+;;;     gtk_notebook_set_menu_label
+;;;     gtk_notebook_set_menu_label_text
+;;;     gtk_notebook_set_tab_label
+;;;     gtk_notebook_set_tab_label_text
+;;;     gtk_notebook_set_tab_reorderable
+;;;     gtk_notebook_set_tab_detachable
+;;;     gtk_notebook_get_menu_label_text
 ;;;     gtk_notebook_get_scrollable                        Accessor
 ;;;     gtk_notebook_get_show_border                       Accessor
 ;;;     gtk_notebook_get_show_tabs                         Accessor
-;;;     gtk_notebook_get_tab_label_text 
+;;;     gtk_notebook_get_tab_label_text
 ;;;     gtk_notebook_get_tab_pos                           Accessor
-;;;     gtk_notebook_get_tab_reorderable 
-;;;     gtk_notebook_get_tab_detachable 
+;;;     gtk_notebook_get_tab_reorderable
+;;;     gtk_notebook_get_tab_detachable
 ;;;     gtk_notebook_get_tab_hborder                       deprecated
 ;;;     gtk_notebook_get_tab_vborder                       deprecated
-;;;     gtk_notebook_set_current_page 
+;;;     gtk_notebook_set_current_page
 ;;;     gtk_notebook_set_group_name                        Accessor
 ;;;     gtk_notebook_get_group_name                        Accessor
-;;;     gtk_notebook_set_action_widget 
-;;;     gtk_notebook_get_action_widget 
+;;;     gtk_notebook_set_action_widget
+;;;     gtk_notebook_get_action_widget
 ;;;
 ;;; Properties
 ;;;
@@ -119,7 +119,7 @@
 ;;;
 ;;;            gboolean  change-current-page  Action
 ;;;        GtkNotebook*  create-window        Run Last
-;;;            gboolean  focus-tab            Action 
+;;;            gboolean  focus-tab            Action
 ;;;                void  move-focus-out       Action
 ;;;                void  page-added           Run Last
 ;;;                void  page-removed         Run Last
@@ -199,7 +199,7 @@
     "enable-popup" "gboolean" t t)
    (group-name
     gtk-notebook-group-name
-    "group-name" "gchar" t t)
+    "group-name" "gchararray" t t)
    (page
     gtk-notebook-page
     "page" "gint" t t)
@@ -277,25 +277,25 @@
       ┊
       ╰── <child>
     @end{pre}
-    @sym{gtk-notebook} has a main CSS node with name notebook, a subnode with 
-    name header and below that a subnode with name tabs which contains one 
+    @sym{gtk-notebook} has a main CSS node with name notebook, a subnode with
+    name header and below that a subnode with name tabs which contains one
     subnode per tab with name tab.
 
-    If action widgets are present, their CSS nodes are placed next to the tabs 
+    If action widgets are present, their CSS nodes are placed next to the tabs
     node. If the notebook is scrollable, CSS nodes with name arrow are placed as
     first and last child of the tabs node.
 
-    The main node gets the .frame style class when the notebook has a border 
+    The main node gets the .frame style class when the notebook has a border
     (see @fun{gtk-notebook-show-border}).
 
-    The header node gets one of the style class .top, .bottom, .left or .right, 
-    depending on where the tabs are placed. For reorderable pages, the tab node 
+    The header node gets one of the style class .top, .bottom, .left or .right,
+    depending on where the tabs are placed. For reorderable pages, the tab node
     gets the .reorderable-page class.
 
     A tab node gets the .dnd style class while it is moved with drag-and-drop.
 
-    The nodes are always arranged from left-to-right, regarldess of text 
-    direction.  
+    The nodes are always arranged from left-to-right, regarldess of text
+    direction.
   @end{dictionary}
   @begin[Child Property Details]{dictionary}
     @subheading{The \"detachable\" child property}
@@ -339,10 +339,10 @@
       @code{\"arrow-spacing\"} of type @code{:int} (Read) @br{}
       The @code{\"arrow-spacing\"} property defines the spacing between the
       scroll arrows and the tabs. @br{}
-      @b{Warning:} @code{arrow-spacing} has been deprecated since version 3.20 
+      @b{Warning:} @code{arrow-spacing} has been deprecated since version 3.20
       and should not be used in newly-written code.
-      This property is ignored. Use margins on arrows or the \"tabs\" node to 
-      achieve the same effect. @br{}      
+      This property is ignored. Use margins on arrows or the \"tabs\" node to
+      achieve the same effect. @br{}
       Allowed values: >= 0 @br{}
       Default value: 0 @br{}
       Since 2.10
@@ -378,12 +378,12 @@
       area. @br{}
       Default value: @code{nil} @br{}
       Since 2.4
-      
+
     @subheading{The \"has-tab-gap\" style property}
       @code{\"has-tab-gap\"} of type @code{:boolean} (Read) @br{}
       The @code{\"has-tab-gap\"} property defines whether the active tab is draw
-      with a gap at the bottom. When @em{true} the theme engine uses 
-      @fun{gtk-render-extension} to draw the active tab. When @code{nil} 
+      with a gap at the bottom. When @em{true} the theme engine uses
+      @fun{gtk-render-extension} to draw the active tab. When @code{nil}
       @fun{gtk-render-background} and @fun{gtk-render-frame} are used. @br{}
       @b{Warning:} @code{has-tab-gap} has been deprecated since version 3.20 and
       should not be used in newly-written code.
@@ -397,7 +397,7 @@
       initial gap between the first tab. @br{}
       @b{Warning:} @code{initial-gap} has been deprecated since version 3.20 and
       should not be used in newly-written code.
-      The intial gap is ignored. Use margins on the header node to achieve the 
+      The intial gap is ignored. Use margins on the header node to achieve the
       same effect. @br{}
       Allowed values: >= 0 @br{}
       Default value: 0 @br{}
@@ -408,7 +408,7 @@
       The @code{\"tab-curvature\"} property defines size of tab curvature. @br{}
       @b{Warning:} @code{tab-curvature} has been deprecated since version 3.20
       and should not be used in newly-written code.
-      This property is ignored. Use margins on tab nodes to achieve the same 
+      This property is ignored. Use margins on tab nodes to achieve the same
       effect. @br{}
       Allowed values: >= 0 @br{}
       Default value: 1 @br{}
@@ -420,7 +420,7 @@
       area. @br{}
       @b{Warning;} @code{tab-overlap} has been deprecated since version 3.20 and
       should not be used in newly-written code.
-      This property is ignored. Use margins on tab nodes to achieve the same 
+      This property is ignored. Use margins on tab nodes to achieve the same
       effect. @br{}
       Default value: 2 @br{}
       Since 2.10
@@ -430,7 +430,7 @@
       @begin{pre}
  lambda (notebook arg1)   : Action
       @end{pre}
-      
+
     @subheading{The \"create-window\" signal}
       @begin{pre}
  lambda (notebook page x y)   : Run Last
@@ -455,12 +455,12 @@
       @begin{pre}
  lambda (notebook arg1)   : Action
       @end{pre}
-      
+
     @subheading{The \"move-focus-out\" signal}
       @begin{pre}
  lambda (notebook arg1)   : Action
       @end{pre}
-      
+
     @subheading{The \"page-added\" signal}
       @begin{pre}
  lambda (notebook child page-num)   : Run Last
@@ -504,12 +504,12 @@
       @begin{pre}
  lambda (notebook arg1 arg2)   : Action
       @end{pre}
-      
+
     @subheading{The \"select-page\" signal}
       @begin{pre}
  lambda (notebook arg1)   : Action
       @end{pre}
-      
+
     @subheading{The \"switch-page\" signal}
       @begin{pre}
  lambda (notebook page page-num)   : Run Last
@@ -1058,8 +1058,8 @@
     Removes the child from the notebook.
   @end{short}
 
-  This function is very similar to @fun{gtk-container-remove}, but additionally 
-  informs the notebook that the removal is happening as part of a tab DND 
+  This function is very similar to @fun{gtk-container-remove}, but additionally
+  informs the notebook that the removal is happening as part of a tab DND
   operation, which should not be cancelled.
 
   Since 3.16

@@ -188,7 +188,7 @@
    #+gtk-3-6
    (placeholder-text
     gtk-cell-renderer-text-placeholder-text
-    "placeholder-text" "gchar" t t)
+    "placeholder-text" "gchararray" t t)
    (rise
     gtk-cell-renderer-text-rise
     "rise" "gint" t t)

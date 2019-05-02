@@ -435,7 +435,7 @@
     "overwrite-mode" "gboolean" t t)
    (placeholder-text
     gtk-entry-placeholder-text
-    "placeholder-text" "gchar" t t)
+    "placeholder-text" "gchararray" t t)
    #+gtk-3-8
    (populate-all
     gtk-entry-populate-all
