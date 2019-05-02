@@ -3519,45 +3519,45 @@ setup_tree (void)
     @begin[GtkPrintOperation]{subsection}
       High-level Printing API.
 
-      @about-class{gtk-print-operation}
       @about-symbol{gtk-print-status}
       @about-symbol{gtk-print-operation-action}
       @about-symbol{gtk-print-operation-result}
       @about-symbol{gtk-print-error}
       @about-symbol{GTK_PRINT_ERROR}
+
+      @about-class{gtk-print-operation}
+
+      @about-generic{gtk-print-operation-allow-async}
+      @about-generic{gtk-print-operation-current-page}
+      @about-generic{gtk-print-operation-custom-tab-label}
+      @about-generic{gtk-print-operation-default-page-setup}
+      @about-generic{gtk-print-operation-embed-page-setup}
+      @about-generic{gtk-print-operation-export-filename}
+      @about-generic{gtk-print-operation-has-selection}
+      @about-generic{gtk-print-operation-job-name}
+      @about-generic{gtk-print-operation-n-pages}
+      @about-generic{gtk-print-operation-n-pages-to-print}
+      @about-generic{gtk-print-operation-print-settings}
+      @about-generic{gtk-print-operation-show-progress}
+      @about-generic{gtk-print-operation-status}
+      @about-generic{gtk-print-operation-status-string}
+      @about-generic{gtk-print-operation-support-selection}
+      @about-generic{gtk-print-operation-track-print-status}
+      @about-generic{gtk-print-operation-unit}
+      @about-generic{gtk-print-operation-use-full-page}
+
       @about-function{gtk-print-operation-new}
-      @about-function{gtk-print-operation-set-allow-async}
       @about-function{gtk-print-operation-get-error}
-      @about-function{gtk-print-operation-set-default-page-setup}
-      @about-function{gtk-print-operation-get-default-page-setup}
-      @about-function{gtk-print-operation-set-print-settings}
-      @about-function{gtk-print-operation-get-print-settings}
-      @about-function{gtk-print-operation-set-job-name}
-      @about-function{gtk-print-operation-set-n-pages}
-      @about-function{gtk-print-operation-get-n-pages-to-print}
-      @about-function{gtk-print-operation-set-current-page}
-      @about-function{gtk-print-operation-set-use-full-page}
-      @about-function{gtk-print-operation-set-unit}
-      @about-function{gtk-print-operation-set-export-filename}
-      @about-function{gtk-print-operation-set-show-progress}
-      @about-function{gtk-print-operation-set-track-print-status}
-      @about-function{gtk-print-operation-set-custom-tab-label}
       @about-function{gtk-print-operation-run}
       @about-function{gtk-print-operation-cancel}
       @about-function{gtk-print-operation-draw-page-finish}
       @about-function{gtk-print-operation-set-defer-drawing}
-      @about-function{gtk-print-operation-get-status}
-      @about-function{gtk-print-operation-get-status-string}
       @about-function{gtk-print-operation-is-finished}
-      @about-function{gtk-print-operation-set-support-selection}
-      @about-function{gtk-print-operation-get-support-selection}
-      @about-function{gtk-print-operation-set-has-selection}
-      @about-function{gtk-print-operation-get-has-selection}
-      @about-function{gtk-print-operation-set-embed-page-setup}
-      @about-function{gtk-print-operation-get-embed-page-setup}
       @about-function{gtk-print-run-page-setup-dialog}
       @about-function{gtk-print-run-page-setup-dialog-async}
+
       @about-class{gtk-print-operation-preview}
+
       @about-function{gtk-print-operation-preview-end-preview}
       @about-function{gtk-print-operation-preview-is-selected}
       @about-function{gtk-print-operation-preview-render-page}
@@ -3566,6 +3566,7 @@ setup_tree (void)
       Encapsulates context for drawing pages.
 
       @about-class{gtk-print-context}
+
       @about-function{gtk-print-context-get-cairo-context}
       @about-function{gtk-print-context-set-cairo-context}
       @about-function{gtk-print-context-get-page-setup}
@@ -3582,6 +3583,7 @@ setup_tree (void)
       Stores print settings.
 
       @about-class{gtk-print-settings}
+
       @about-function{gtk-print-settings-new}
       @about-function{gtk-print-settings-copy}
       @about-function{gtk-print-settings-has-key}
@@ -3599,9 +3601,11 @@ setup_tree (void)
       @about-function{gtk-print-settings-get-int}
       @about-function{gtk-print-settings-get-int-with-default}
       @about-function{gtk-print-settings-set-int}
+
       @about-function{GTK_PRINT_SETTINGS_PRINTER}
       @about-function{gtk-print-settings-get-printer}
       @about-function{gtk-print-settings-set-printer}
+
       @about-symbol{gtk-page-orientation}
       @about-function{GTK_PRINT_SETTINGS_ORIENTATION}
       @about-function{gtk-print-settings-get-orientation}
@@ -3624,10 +3628,12 @@ setup_tree (void)
       @about-function{GTK_PRINT_SETTINGS_REVERSE}
       @about-function{gtk-print-settings-get-reverse}
       @about-function{gtk-print-settings-set-reverse}
+
       @about-symbol{gtk-print-duplex}
       @about-function{GTK_PRINT_SETTINGS_DUPLEX}
       @about-function{gtk-print-settings-get-duplex}
       @about-function{gtk-print-settings-set-duplex}
+
       @about-symbol{gtk-print-quality}
       @about-function{GTK_PRINT_SETTINGS_QUALITY}
       @about-function{gtk-print-settings-get-quality}
@@ -3638,7 +3644,8 @@ setup_tree (void)
       @about-function{GTK_PRINT_SETTINGS_NUMBER_UP}
       @about-function{gtk-print-settings-get-number-up}
       @about-function{gtk-print-settings-set-number-up}
-      @about-function{gtk-number-up-layout}
+
+      @about-symbol{gtk-number-up-layout}
       @about-function{GTK_PRINT_SETTINGS_NUMBER_UP_LAYOUT}
       @about-function{gtk-print-settings-get-number-up-layout}
       @about-function{gtk-print-settings-set-number-up-layout}
@@ -3656,15 +3663,18 @@ setup_tree (void)
       @about-function{GTK_PRINT_SETTINGS_SCALE}
       @about-function{gtk-print-settings-get-scale}
       @about-function{gtk-print-settings-set-scale}
-      @about-function{gtk-print-pages}
+
+      @about-symbol{gtk-print-pages}
       @about-function{GTK_PRINT_SETTINGS_PRINT_PAGES}
       @about-function{gtk-print-settings-get-print-pages}
       @about-function{gtk-print-settings-set-print-pages}
-      @about-function{gtk-page-range}
+
+      @about-symbol{gtk-page-range}
       @about-function{GTK_PRINT_SETTINGS_PAGE_RANGES}
       @about-function{gtk-print-settings-get-page-ranges}
       @about-function{gtk-print-settings-set-page-ranges}
-      @about-function{gtk-page-set}
+
+      @about-symbol{gtk-page-set}
       @about-function{GTK_PRINT_SETTINGS_PAGE_SET}
       @about-function{gtk-print-settings-get-page-set}
       @about-function{gtk-print-settings-set-page-set}
@@ -3687,12 +3697,15 @@ setup_tree (void)
       @about-function{GTK_PRINT_SETTINGS_OUTPUT_URI}
       @about-function{GTK_PRINT_SETTINGS_WIN32_DRIVER_EXTRA}
       @about-function{GTK_PRINT_SETTINGS_WIN32_DRIVER_VERSION}
+
       @about-function{gtk-print-settings-new-from-file}
       @about-function{gtk-print-settings-new-from-key-file}
+      @about-function{gtk-print-settings-new-from-gvariant}
       @about-function{gtk-print-settings-load-file}
       @about-function{gtk-print-settings-load-key-file}
       @about-function{gtk-print-settings-to-file}
       @about-function{gtk-print-settings-to-key-file}
+      @about-function{gtk-print-settings-to-gvariant}
     @end{subsection}
     @begin[GtkPageSetup]{subsection}
       Stores page setup information.
@@ -3823,6 +3836,16 @@ setup_tree (void)
       A print dialog.
 
       @about-class{gtk-print-unix-dialog}
+
+      @about-generic{gtk-print-unix-dialog-current-page}
+      @about-generic{gtk-print-unix-dialog-embed-page-setup}
+      @about-generic{gtk-print-unix-dialog-has-selection}
+      @about-generic{gtk-print-unix-dialog-manual-capabilities}
+      @about-generic{gtk-print-unix-dialog-page-setup}
+      @about-generic{gtk-print-unix-dialog-print-settings}
+      @about-generic{gtk-print-unix-dialog-selected-printer}
+      @about-generic{gtk-print-unix-dialog-support-selection}
+
       @about-function{gtk-print-unix-dialog-new}
       @about-function{gtk-print-unix-dialog-set-page-setup}
       @about-function{gtk-print-unix-dialog-get-page-setup}
@@ -3847,6 +3870,7 @@ setup_tree (void)
       A page setup dialog.
 
       @about-class{gtk-page-setup-unix-dialog}
+
       @about-function{gtk-page-setup-unix-dialog-new}
       @about-function{gtk-page-setup-unix-dialog-set-page-setup}
       @about-function{gtk-page-setup-unix-dialog-get-page-setup}

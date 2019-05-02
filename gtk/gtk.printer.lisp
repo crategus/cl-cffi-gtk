@@ -111,7 +111,7 @@
     "backend" "GtkPrintBackend" t t)
    (icon-name
     gtk-printer-icon-name
-    "icon-name" "gchar" t nil)
+    "icon-name" "gchararray" t nil)
    (is-virtual
     gtk-printer-is-virtual
     "is-virtual" "gboolean" t t)
@@ -120,16 +120,16 @@
     "job-count" "gint" t nil)
    (location
     gtk-printer-location
-    "location" "gchar" t nil)
+    "location" "gchararray" t nil)
    (name
     gtk-printer-name
-    "name" "gchar" t t)
+    "name" "gchararray" t t)
    (paused
     gtk-printer-paused
     "paused" "gboolean" t nil)
    (state-message
     gtk-printer-message
-    "state-message" "gchar" t nil)))
+    "state-message" "gchararray" t nil)))
 
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-printer 'type)

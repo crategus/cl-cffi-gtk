@@ -78,12 +78,13 @@
  "@version{2013-5-30}
   @begin{short}
     @sym{gtk-page-setup-unix-dialog} implements a page setup dialog for
-    platforms which do not provide a native page setup dialog, like Unix. It
-    can be used very much like any other GTK+ dialog, at the cost of the
-    portability offered by the high-level printing API.
+    platforms which do not provide a native page setup dialog, like Unix.
   @end{short}
 
-  Printing support was added in GTK+ 2.10.")
+  @image[pagesetupdialog]{}
+
+  It can be used very much like any other GTK+ dialog, at the cost of the
+  portability offered by the high-level printing API.")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_page_setup_unix_dialog_new ()
@@ -94,14 +95,14 @@
 (defun gtk-page-setup-unix-dialog-new (title parent)
  #+cl-cffi-gtk-documentation
  "@version{2013-5-30}
-  @argument[title]{the title of the dialog, or @code{nil}}
-  @argument[parent]{transient parent of the dialog, or @code{nil}}
+  @argument[title]{a string with the title of the dialog, or @code{nil}}
+  @argument[parent]{a @class{gtk-window} transient parent of the dialog,
+    or @code{nil}}
   @return{The new @class{gtk-page-setup-unix-dialog} widget.}
   @begin{short}
     Creates a new page setup dialog.
   @end{short}
-
-  Since 2.10"
+  @see-class{gtk-page-setup-unix-dialog}"
   (make-instance 'gtk-page-setup-unix-dialog
                  :title title
                  :parent parent))
@@ -122,8 +123,8 @@
     Sets the @class{gtk-page-setup} object from which the page setup dialog
     takes its values.
   @end{short}
-
-  Since 2.10
+  @see-class{gtk-page-setup-unix-dialog}
+  @see-class{gtk-page-setup}
   @see-function{gtk-page-setup-unix-dialog-get-page-setup}"
   (dialog (g-object gtk-page-setup-unix-dialog))
   (page-setup (g-object gtk-page-setup)))
@@ -139,12 +140,12 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-6-9}
   @argument[dialog]{a @class{gtk-page-setup-unix-dialog} widget}
-  @return{The current page setup.}
+  @return{The current @see-class{gtk-page-setup} object.}
   @begin{short}
     Gets the currently selected page setup from the dialog.
   @end{short}
-
-  Since 2.10
+  @see-class{gtk-page-setup-unix-dialog}
+  @see-class{gtk-page-setup}
   @see-function{gtk-page-setup-unix-dialog-set-page-setup}"
   (dialog (g-object gtk-page-setup-unix-dialog)))
 
@@ -161,11 +162,11 @@
   @argument[dialog]{a @class{gtk-page-setup-unix-dialog} widget}
   @argument[print-settings]{a @class{gtk-print-settings} object}
   @begin{short}
-    Sets the @class{gtk-print-settings} from which the page setup dialog takes
-    its values.
+    Sets the @class{gtk-print-settings} object from which the page setup dialog
+    takes its values.
   @end{short}
-
-  Since 2.10"
+  @see-class{gtk-page-setup-unix-dialog}
+  @see-class{gtk-print-settings}"
   (dialog (g-object gtk-page-setup-unix-dialog))
   (print-settings (g-object gtk-print-settings)))
 
@@ -180,12 +181,12 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-5-30}
   @argument[dialog]{a @class{gtk-page-setup-unix-dialog} widget}
-  @return{The current print settings.}
+  @return{The current @class{gtk-print-settings} object.}
   @begin{short}
     Gets the current print settings from the dialog.
   @end{short}
-
-  Since 2.10"
+  @see-class{gtk-page-setup-unix-dialog}
+  @see-class{gtk-print-settings}"
   (dialog (g-object gtk-page-setup-unix-dialog))
   (print-settings (g-object gtk-print-settings)))
 

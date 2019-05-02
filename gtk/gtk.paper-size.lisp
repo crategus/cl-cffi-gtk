@@ -123,6 +123,7 @@
   (:export t
    :type-initializer "gtk_unit_get_type")
   (:none 0)
+  (:pixel 0) ; alias for :none
   (:points 1)
   (:inch 2)
   (:mm 3))

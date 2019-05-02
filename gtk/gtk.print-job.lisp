@@ -106,7 +106,7 @@
     "settings" "GtkPrintSettings" t t)
    (title
     gtk-print-job-title
-    "title" "gchar" t t)
+    "title" "gchararray" t t)
    (track-print-status
     gtk-print-job-track-print-status
     "track-print-status" "gboolean" t t)))

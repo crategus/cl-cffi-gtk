@@ -74,17 +74,17 @@
   @begin{short}
     A @sym{gtk-print-context} encapsulates context information that is required
     when drawing pages for printing, such as the cairo context and important
-    parameters like page size and resolution. It also lets you easily create
-    @class{pango-layout} and @class{pango-context} objects that match the font
-    metrics of the cairo surface.
+    parameters like page size and resolution.
   @end{short}
+  It also lets you easily create @class{pango-layout} and @class{pango-context}
+  objects that match the font metrics of the cairo surface.
 
   @sym{gtk-print-context} objects gets passed to the \"begin-print\",
   \"end-print\", \"request-page-setup\" and \"draw-page\" signals on the
   @class{gtk-print-operation}.
-
-  @b{Example:} Using @sym{gtk-print-context} in a \"draw-page\" callback
-  @begin{pre}
+  @begin[Example]{dictionary}
+    Using @sym{gtk-print-context} in a \"draw-page\" callback.
+    @begin{pre}
    static void
    draw_page (GtkPrintOperation *operation,
               GtkPrintContext   *context,
@@ -136,8 +136,8 @@
 
      g_object_unref (layout);
    @}
-  @end{pre}
-  Printing support was added in GTK+ 2.10.")
+    @end{pre}
+  @end{dictionary}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_print_context_get_cairo_context ()
@@ -153,8 +153,6 @@
     Obtains the cairo context that is associated with the
     @class{gtk-print-context}.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-print-context}
   @see-symbol{cairo-t}"
   (context (g-object gtk-print-context)))
@@ -180,8 +178,6 @@
   This function is intended to be used when implementing an internal print
   preview, it is not needed for printing, since GTK+ itself creates a suitable
   cairo context in that case.
-
-  Since 2.10
   @see-class{gtk-print-context}
   @see-symbol{cairo-t}"
   (context (g-object gtk-print-context))
@@ -205,8 +201,6 @@
     Obtains the @class{gtk-page-setup} that determines the page dimensions of
     the @class{gtk-print-context}.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-print-context}
   @see-class{gtk-page-setup}"
   (context (g-object gtk-print-context)))
@@ -225,8 +219,6 @@
   @begin{short}
     Obtains the width of the @class{gtk-print-context}, in pixels.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-print-context}
   @see-function{gtk-print-context-get-height}"
   (context (g-object gtk-print-context)))
@@ -245,8 +237,6 @@
   @begin{short}
     Obtains the height of the @class{gtk-print-context}, in pixels.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-print-context}
   @see-function{gtk-print-context-get-width}"
   (context (g-object gtk-print-context)))
@@ -266,8 +256,6 @@
     Obtains the horizontal resolution of the @class{gtk-print-context} object,
     in dots per inch.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-print-context}
   @see-function{gtk-print-context-get-dpi-y}"
   (context (g-object gtk-print-context)))
@@ -287,8 +275,6 @@
     Obtains the vertical resolution of the @class{gtk-print-context}, in dots
     per inch.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-print-context}"
   (context (g-object gtk-print-context)))
 
@@ -308,8 +294,6 @@
     Returns a @class{pango-font-map} that is suitable for use with the
     @class{gtk-print-context} object.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-print-context}
   @see-class{pango-font-map}"
   (context (g-object gtk-print-context)))
@@ -330,8 +314,6 @@
     Creates a new @class{pango-context} object that can be used with the
     @class{gtk-print-context}.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-print-context}
   @see-class{pango-context}"
   (context (g-object gtk-print-context)))
@@ -352,8 +334,6 @@
     Creates a new @class{pango-layout} that is suitable for use with the
     @class{gtk-print-context} object.
   @end{short}
-
-  Since 2.10
   @see-class{gtk-print-context}
   @see-class{pango-layout}"
   (context (g-object gtk-print-context)))
@@ -386,8 +366,6 @@
     Obtains the hardware printer margins of the @class{gtk-print-context},
     in units.
   @end{short}
-
-  Since 2.20
   @see-class{gtk-print-context}"
   (with-foreign-objects ((top :int) (bottom :int) (left :int) (right :int))
     (%gtk-print-context-get-hard-margins context top bottom left right)))
