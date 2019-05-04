@@ -79,38 +79,43 @@
 (setf (documentation 'gtk-action-bar 'type)
  "@version{2019-3-16}
   @begin{short}
-    @sym{gtk-action-bar} is designed to present contextual actions. 
+    @sym{gtk-action-bar} is designed to present contextual actions.
   @end{short}
-  It is expected to be displayed below the content and expand horizontally to 
+  It is expected to be displayed below the content and expand horizontally to
   fill the area.
 
-  It allows placing children at the start or the end. In addition, it contains 
-  an internal centered box which is centered with respect to the full width of 
-  the box, even if the children at either side take up different amounts of 
+  @image[action-bar]{}
+
+  It allows placing children at the start or the end. In addition, it contains
+  an internal centered box which is centered with respect to the full width of
+  the box, even if the children at either side take up different amounts of
   space.
+
+  Since 3.12
   @begin[CSS nodes]{dictionary}
-    @sym{gtk-action-bar} has a single CSS node with name actionbar.
+    @sym{gtk-action-bar} has a single CSS node with name @code{actionbar}.
   @end{dictionary}
   @begin[Child Property Details]{dictionary}
-    @subheading{The @code{pack-type} child property}
-      The @code{pack-type} child property of type @symbol{gtk-pack-type}
-      (Read / Write) @br{}
-      A @symbol{gtk-pack-type} indicating whether the child is packed with 
-      reference to the start or end of the parent. @br{}
-      Default value: @code{:start}
-
-    @subheading{The @code{position} child property}
-      The @code{position} child property of type @code{:int}
-      (Read / Write) @br{}
-      The index of the child in the parent. @br{}
-      Allowed values: >= -1 @br{}
-      Default value: 0
+    @begin[code]{table}
+      @begin[pack-type]{entry}
+        The @code{pack-type} child property of type @symbol{gtk-pack-type}
+        (Read / Write) @br{}
+        A @symbol{gtk-pack-type} indicating whether the child is packed with
+        reference to the start or end of the parent. @br{}
+        Default value: @code{:start}
+      @end{entry}
+      @begin[position]{entry}
+        The @code{position} child property of type @code{:int}
+        (Read / Write) @br{}
+        The index of the child in the parent. @br{}
+        Allowed values: >= -1 @br{}
+        Default value: 0
+      @end{entry}
+    @end{table}
   @end{dictionary}
-  
-  Since 3.12
   @see-class{gtk-stack}
   @see-class{gtk-box}")
-    
+
 ;;; ----------------------------------------------------------------------------
 ;;; Child Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
@@ -120,22 +125,22 @@
 (define-child-property "GtkActionBar"
                        gtk-action-bar-child-pack-type
                        "pack-type" "GtkPackType" t t t)
-                       
+
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-action-bar-child-pack-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-action-bar-child-pack-type 'function)
  "@version{2019-3-16}
   @syntax[]{(gtk-action-bar-child-pack-type object) => pack-type)}
-  @syntax[]{(setf (gtk-action-bar-child-pack-type object) pack-type)}  
+  @syntax[]{(setf (gtk-action-bar-child-pack-type object) pack-type)}
   @argument[object]{a @class{gtk-action-bar} container}
   @argument[child]{the @class{gtk-widget} child widget}
   @argument[pack-type]{The @symbol{gtk-pack-type} type of the child.}
   @begin{short}
-    Accessor of the child property @code{pack-type} of the 
+    Accessor of the child property @code{pack-type} of the
     @class{gtk-action-bar} class.
   @end{short}
-  
+
   Since 3.12
   @see-class{gtk-action-bar}
   @see-symbol{gtk-pack-type}")
@@ -152,15 +157,15 @@
       (documentation 'gtk-action-bar-child-position 'function)
  "@version{2019-3-16}
   @syntax[]{(gtk-action-bar-child-position object) => position)}
-  @syntax[]{(setf (gtk-action-bar-child-position object) position)}  
+  @syntax[]{(setf (gtk-action-bar-child-position object) position)}
   @argument[object]{a @class{gtk-action-bar} container}
   @argument[child]{the @class{gtk-widget} child widget}
   @argument[position]{The index of the child in the parent.}
   @begin{short}
-    Accessor of the child property @code{position} of the 
+    Accessor of the child property @code{position} of the
     @class{gtk-action-bar} class.
   @end{short}
-  
+
   Since 3.12
   @see-class{gtk-action-bar}")
 
@@ -228,7 +233,7 @@
 ;;; gtk_action_bar_get_center_widget ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_action_bar_get_center_widget" gtk-action-bar-get-center-widget) 
+(defcfun ("gtk_action_bar_get_center_widget" gtk-action-bar-get-center-widget)
          (g-object gtk-widget)
  #+cl-cffi-gtk-documentation
  "@version{2019-3-16}
@@ -248,7 +253,7 @@
 ;;; gtk_action_bar_set_center_widget ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_action_bar_set_center_widget" gtk-action-bar-set-center-widget) 
+(defcfun ("gtk_action_bar_set_center_widget" gtk-action-bar-set-center-widget)
          :void
  #+cl-cffi-gtk-documentation
  "@version{2019-3-16}
