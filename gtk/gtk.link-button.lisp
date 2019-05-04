@@ -103,6 +103,8 @@
   the former, the URI you pass to the constructor is used as a label for the
   widget.
 
+  @image[link-button]{}
+
   The URI bound to a @sym{gtk-link-button} can be set specifically or retrieved
   using the generic function @fun{gtk-link-button-uri}.
 
@@ -122,7 +124,7 @@
       The \"activate-link\" signal is emitted each time the
       @sym{gtk-link-button} has been clicked.
       The default handler will call the function @fun{gtk-show-uri} with the
-      URI stored inside the @code{\"uri\"} property. To override the default
+      URI stored inside the @code{uri} property. To override the default
       behavior, you can connect to the \"activate-link\" signal and stop the
       propagation of the signal by returning @arg{true} from your handler.
       @begin[code]{table}
@@ -141,7 +143,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "uri" 'gtk-link-button) 't)
- "The @code{\"uri\"} property of type @code{:string} (Read / Write) @br{}
+ "The @code{uri} property of type @code{:string} (Read / Write) @br{}
   The URI bound to this button. @br{}
   Default value: @code{nil}")
 
@@ -171,8 +173,8 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "visited" 'gtk-link-button) 't)
- "The @code{\"visited\"} property of type @code{:boolean} (Read / Write) @br{}
-  The @code{\"visited\"} state of this button. A visited link is drawn in a
+ "The @code{visited} property of type @code{:boolean} (Read / Write) @br{}
+  The @code{visited} state of this button. A visited link is drawn in a
   different color. @br{}
   Default value: @code{nil}")
 
