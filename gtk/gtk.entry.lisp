@@ -546,19 +546,21 @@
     the cursor position is visible.
   @end{short}
 
+  @image[entry]{}
+
   When using an entry for passwords and other sensitive information, it can be
   put into \"password mode\" using the generic function
   @fun{gtk-entry-visibility}. In this mode, entered text is displayed using a
   'invisible' character. By default, GTK+ picks the best invisible character
   that is available in the current font, but it can be changed with the generic
-  function @fun{gtk-entry-invisible-char}. Since 2.16, GTK+ displays a warning
-  when Caps Lock or input methods might interfere with entering text in a
-  password entry. The warning can be turned off with the
-  @slot[gtk-entry]{caps-lock-warning} property.
+  function @fun{gtk-entry-invisible-char}. GTK+ displays a warning when Caps
+  Lock or input methods might interfere with entering text in a password entry.
+  The warning can be turned off with the @slot[gtk-entry]{caps-lock-warning}
+  property.
 
-  Since 2.16, @sym{gtk-entry} has the ability to display progress or activity
-  information behind the text. To make an entry display such information, use
-  the generic functions @fun{gtk-entry-progress-fraction} or
+  @sym{gtk-entry} has the ability to display progress or activity information
+  behind the text. To make an entry display such information, use the generic
+  functions @fun{gtk-entry-progress-fraction} or
   @fun{gtk-entry-progress-pulse-step}.
 
   Additionally, @sym{gtk-entry} can show icons at either side of the entry.
@@ -584,17 +586,17 @@
         (Read) @br{}
         The prelight style property determines whether activatable icons prelight
         on mouseover. @br{}
-        @b{Warning:} The @code{icon-prelight} style property has been deprecated
-        since version 3.20 and should not be used in newly-written code. Use CSS
-        to control the appearance of prelighted icons; the value of this style
-        property is ignored. @br{}
+        @em{Warning:} The @code{icon-prelight} style property has been
+        deprecated since version 3.20 and should not be used in newly-written
+        code. Use CSS to control the appearance of prelighted icons; the value
+        of this style property is ignored. @br{}
         Default value: @em{true}
       @end{entry}
       @begin[inner-border]{entry}
         The @code{inner-border} style property of type @class{gtk-border}
         (Read) @br{}
         Sets the text area's border between the text and the frame. @br{}
-        @b{Warning:}
+        @em{Warning:}
         The @code{inner-border} style property has been deprecated since version
         3.4 and should not be used in newly written code. Use the standard
         border and padding CSS properties through objects like
@@ -616,7 +618,7 @@
         The @code{progress-border} style property of type @class{gtk-border}
         (Read) @br{}
         The border around the progress bar in the entry. @br{}
-        @b{Warning:}
+        @em{Warning:}
         The @code{progress-border} style property has been deprecated since
         version 3.4 and should not be used in newly written code. Use the
         standard margin CSS property through objects like
@@ -1137,7 +1139,7 @@
  "The @code{inner-border} property of type @class{gtk-border}
   (Read / Write) @br{}
   Sets the text area's border between the text and the frame. @br{}
-  @b{Warning:}
+  @em{Warning:}
   The @code{inner-border} property has been deprecated since version 3.4 and
   should not be used in newly written code. Use the standard border and padding
   CSS properties through objects like @class{gtk-style-context} and
@@ -1266,8 +1268,7 @@
   candidates, depending on availability in the current font.
   This style property allows the theme to prepend a character to the list of
   candidates. @br{}
-  Default value: \"*\" @br{}
-  Since 2.18")
+  Default value: \"*\"")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-entry-invisible-char atdoc:*function-name-alias*)
@@ -1601,7 +1602,7 @@
  "The @code{primary-icon-stock} property of type @code{:string} (Read / Write)
   @br{}
   The stock ID to use for the primary icon for the entry. @br{}
-  @b{Warning:} The @code{primary-icon-stock} property has been deprecated
+  @em{Warning:} The @code{primary-icon-stock} property has been deprecated
   since version 3.10 and should not be used in newly-written code. Use the
   @code{primary-icon-name} property instead. @br{}
   Default value: @code{nil}")
@@ -1885,7 +1886,7 @@
  "The @code{secondary-icon-stock} property of type @code{:string}
   (Read / Write) @br{}
   The stock ID to use for the secondary icon for the entry. @br{}
-  @b{Warning:} The @code{secondary-icon-stock} property has been deprecated
+  @em{Warning:} The @code{secondary-icon-stock} property has been deprecated
   since version 3.10 and should not be used in newly-written code. Use the
   @code{secondary-icon-name} property instead. @br{}
   Default value: @code{nil}")
@@ -1994,7 +1995,7 @@
   (Read / Write) @br{}
   Which kind of shadow to draw around the entry when \"has-frame\" is set to
   @em{true}. @br{}
-  @b{Warning:} The @code{shadow-type} property has been deprecated since version
+  @em{Warning:} The @code{shadow-type} property has been deprecated since version
   3.20 and should not be used in newly-written code. Use CSS to determine the
   style of the border; the value of this style property is ignored. @br{}
   Default value: @code{:in}")
@@ -2295,8 +2296,6 @@
   If the entry is not realized, @arg{text-area} is filled with zeros.
 
   See also the function @fun{gtk-entry-get-icon-area}.
-
-  Since 3.0
   @see-class{gtk-entry}
   @see-function{gtk-entry-get-icon-area}"
   (let ((text-area (make-gdk-rectangle)))
@@ -2318,8 +2317,6 @@
     @fun{gtk-entry-invisible-char}. So that the default invisible char is
     used again.
   @end{short}
-
-  Since 2.16
   @see-class{gtk-entry}
   @see-function{gtk-entry-invisible-char}"
   (entry (g-object gtk-entry)))
@@ -2343,8 +2340,6 @@
   @end{short}
   This controls the horizontal positioning of the contents when the displayed
   text is shorter than the width of the @arg{entry}.
-
-  Since 2.4
   @see-class{gtk-entry}"
   (setf (gtk-entry-xalign entry) xalign))
 
@@ -2364,8 +2359,6 @@
   @begin{short}
     Gets the value set by the fucntion @fun{gtk-entry-set-alignment}.
   @end{short}
-
-  Since 2.4
   @see-class{gtk-entry}"
   (gtk-entry-xalign entry))
 
@@ -2522,8 +2515,6 @@
 
   The @arg{adjustment} has to be in pixel units and in the same coordinate
   system as the @arg{entry}.
-
-  Since 2.12
   @see-class{gtk-entry}
   @see-function{gtk-scrolled-window-get-hadjustment}"
   (entry (g-object gtk-entry))
@@ -2545,8 +2536,6 @@
     Retrieves the horizontal cursor adjustment for the @arg{entry}.
   @end{short}
   See the function @fun{gtk-entry-set-cursor-hadjustment}.
-
-  Since 2.12
   @see-class{gtk-entry}
   @see-function{gtk-entry-set-cursor-hadjustment}"
   (entry (g-object gtk-entry)))
@@ -2569,8 +2558,6 @@
   @sym{gtk-entry-progress-pulse} causes the block to move by a little bit. The
   amount of movement per pulse is determined by the function
   @fun{gtk-entry-progress-pulse-step}.
-
-  Since 2.16
   @see-class{gtk-entry}
   @see-function{gtk-entry-set-progress-pulse-step}"
   (entry (g-object gtk-entry)))
@@ -2601,8 +2588,6 @@
   insert your own key handling between the input method and the default key
   event handling of the @class{gtk-entry}. See the function
   @fun{gtk-text-view-reset-im-context} for an example of use.
-
-  Since 2.22
   @see-class{gtk-entry}
   @see-class{gdk-event-key}
   @see-function{gtk-im-context-filter-keypress}"
@@ -2625,8 +2610,6 @@
 
   This can be necessary in the case where modifying the buffer would confuse
   on-going input method behavior.
-
-  Since 2.22
   @see-class{gtk-entry}"
   (entry (g-object gtk-entry)))
 
@@ -2680,8 +2663,6 @@
 
   If @arg{pixbuf} is @code{nil}, no icon will be shown in the specified
   position.
-
-  Since 2.16
   @see-class{gtk-entry}
   @see-class{gdk-pixbuf}
   @see-symbol{gtk-entry-icon-position}"
@@ -2746,8 +2727,6 @@
 
   If @arg{icon-name} is @code{nil}, no icon will be shown in the specified
   position.
-
-  Since 2.16
   @see-class{gtk-entry}
   @see-symbol{gtk-entry-icon-position}"
   (entry (g-object gtk-entry))
@@ -2775,8 +2754,6 @@
   displayed instead.
 
   If @arg{icon} is @code{nil}, no icon will be shown in the specified position.
-
-  Since 2.16
   @see-class{gtk-entry}
   @see-class{g-icon}
   @see-symbol{gtk-entry-icon-position}"
@@ -2801,8 +2778,6 @@
     Gets the type of representation being used by the icon to store image data.
     If the icon has no image data, the return value will be @code{:empty}.
   @end{short}
-
-  Since 2.16
   @see-class{gtk-entry}
   @see-symbol{gtk-entry-icon-position}
   @see-symbol{gtk-image-type}"
@@ -2831,8 +2806,6 @@
   Unlike the other methods of setting and getting icon data, this method will
   work regardless of whether the icon was set using a @class{gdk-pixbuf}, a
   @class{g-icon}, a stock item, or an icon name.
-
-  Since 2.16
   @see-class{gtk-entry}
   @see-class{g-icon}
   @see-class{gdk-pixbuf}
@@ -2891,8 +2864,6 @@
     or if the icon was set by some other method, e. g., by pixbuf, stock or
     gicon.
   @end{short}
-
-  Since 2.16
   @see-class{gtk-entry}
   @see-symbol{gtk-entry-icon-position}"
   (entry (g-object gtk-entry))
@@ -2916,8 +2887,6 @@
     icon or if the icon was set by some other method, e. g., by stock, pixbuf,
     or icon name.
   @end{short}
-
-  Since 2.16
   @see-class{gtk-entry}
   @see-symbol{gtk-entry-icon-position}"
   (entry (g-object gtk-entry))
@@ -2938,8 +2907,6 @@
   @begin{short}
     Sets whether the icon is activatable.
   @end{short}
-
-  Since 2.16
   @see-class{gtk-entry}
   @see-symbol{gtk-entry-icon-position}
   @see-function{gtk-entry-get-icon-activatable}"
@@ -2963,8 +2930,6 @@
   @begin{short}
     Returns whether the icon is activatable.
   @end{short}
-
-  Since 2.16
   @see-class{gtk-entry}
   @see-symbol{gtk-entry-icon-activatable}
   @see-function{gtk-entry-set-icon-activatable}"
@@ -2987,8 +2952,6 @@
   @begin{short}
     Sets the sensitivity for the specified icon.
   @end{short}
-
-  Since 2.16
   @see-class{gtk-entry}
   @see-symbol{gtk-entry-icon-position}
   @see-function{gtk-entry-get-icon-sensitive}"
@@ -3011,8 +2974,6 @@
   @begin{short}
     Returns whether the icon appears sensitive or insensitive.
   @end{short}
-
-  Since 2.16
   @see-class{gtk-entry}
   @see-symbol{gtk-entry-icon-position}
   @see-function{gtk-entry-set-icon-sensitive}"
@@ -3038,8 +2999,6 @@
   The position's coordinates are relative to the @arg{entry}'s top left corner.
   If x, y does not lie inside an icon, -1 is returned. This function is intended
   for use in a \"query-tooltip\" signal handler.
-
-  Since 2.16
   @see-class{gtk-entry}"
   (entry (g-object gtk-entry))
   (x :int)
@@ -3068,8 +3027,6 @@
 
   See also the functions @fun{gtk-widget-tooltip-text} and
   @fun{gtk-entry-set-icon-tooltip-markup}.
-
-  Since 2.16
   @see-class{gtk-entry}
   @see-symbol{gtk-entry-icon-position}
   @see-function{gtk-entry-get-icon-tooltip-text}
@@ -3097,8 +3054,6 @@
     Gets the contents of the tooltip on the icon at the specified position in
     entry.
   @end{short}
-
-  Since 2.16
   @see-class{gtk-entry}
   @see-symbol{gtk-entry-icon-position}
   @see-function{gtk-entry-set-icon-tooltip-text}"
@@ -3129,8 +3084,6 @@
 
   See also the functions @fun{gtk-widget-tooltip-markup} and
   @fun{gtk-entry-set-icon-tooltip-text}.
-
-  Since 2.16
   @see-class{gtk-entry}
   @see-symbol{gtk-entry-icon-position}
   @see-function{gtk-entry-get-icon-tooltip-markup}
@@ -3158,8 +3111,6 @@
     Gets the contents of the tooltip on the icon at the specified position in
     entry.
   @end{short}
-
-  Since 2.16
   @see-class{gtk-entry}
   @see-symbol{gtk-entry-icon-position}
   @see-function{gtk-entry-set-icon-tooltip-markup}"
@@ -3195,8 +3146,6 @@
   \"drag-begin\" signal to set a different icon. Note that you have to use the
   function @fun{g-signal-connect-after} to ensure that your signal handler gets
   executed after the default handler.
-
-  Since 2.16
   @see-class{gtk-entry}
   @see-class{gtk-target-list}
   @see-symbol{gdk-drag-action}
@@ -3228,8 +3177,6 @@
   @end{short}
 
   This function is meant to be used in a \"drag-data-get\" callback.
-
-  Since 2.16
   @see-class{gtk-entry}"
   (entry (g-object gtk-entry)))
 
