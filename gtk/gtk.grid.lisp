@@ -509,8 +509,6 @@
     Gets the child of the grid whose area covers the grid cell whose upper
     left corner is at @arg{left}, @arg{top}.
   @end{short}
-
-  Since 3.2
   @see-class{gtk-grid}"
   (grid (g-object gtk-grid))
   (left :int)
@@ -532,8 +530,6 @@
   Children which are attached at or below this position are moved one row
   down. Children which span across this position are grown to span the new
   row.
-
-  Since 3.2
   @see-class{gtk-grid}
   @see-function{gtk-grid-insert-column}
   @see-function{gtk-grid-insert-next-to}"
@@ -556,8 +552,6 @@
   Children which are attached at or to the right of this position are
   moved one column to the right. Children which span across this position
   are grown to span the new column.
-
-  Since 3.2
   @see-class{gtk-grid}
   @see-function{gtk-grid-insert-row}
   @see-function{gtk-grid-insert-next-to}"
@@ -635,8 +629,6 @@
   The new row or column is placed next to @arg{sibling}, on the side determined
   by @arg{side}. If side is @code{:top} or @code{:bottom}, a row is inserted.
   If @arg{side} is @code{:left} of @code{:right}, a column is inserted.
-
-  Since 3.2
   @see-class{gtk-grid}
   @see-symbol{gtk-position-type}
   @see-function{gtk-grid-insert-column}
