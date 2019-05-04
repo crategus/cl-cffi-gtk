@@ -312,8 +312,8 @@
  "The @code{icon-set} property of type @class{gtk-icon-set}
   (Read / Write) @br{}
   Icon set to display. @br{}
-  @b{Warning:} @code{icon-set} has been deprecated since version 3.10 and should
-  not be used in newly-written code. Use @code{icon-name} instead.")
+  @em{Warning:} @code{icon-set} has been deprecated since version 3.10 and
+  should not be used in newly-written code. Use @code{icon-name} instead.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-image-icon-set atdoc:*function-name-alias*)
@@ -397,7 +397,7 @@
 (setf (documentation (atdoc:get-slot-from-name "pixel-size" 'gtk-image) 't)
  "The @code{pixel-size} property of type @code{:int} (Read / Write) @br{}
   The @code{pixel-size} property can be used to specify a fixed size
-  overriding the @code{\"icon-size\"} property for images of type
+  overriding the @code{icon-size} property for images of type
   @code{:icon-name}. @br{}
   Allowed values: >= @code{G_MAXULONG} @br{}
   Default value: -1")
@@ -430,7 +430,7 @@
 
 #+(and gtk-3-8 cl-cffi-gtk-documentation)
 (setf (documentation (atdoc:get-slot-from-name "resource" 'gtk-image) 't)
- "The @code{\"resource\"} property of type @code{:string} (Read / Write) @br{}
+ "The @code{resource} property of type @code{:string} (Read / Write) @br{}
   A path to a resource file to display. @br{}
   Default value: @code{nil} @br{}
   Since 3.8")
@@ -449,7 +449,7 @@
 (setf (documentation (atdoc:get-slot-from-name "stock" 'gtk-image) 't)
  "The @code{stock} property of type @code{:string} (Read / Write) @br{}
   Stock ID for a stock image to display. @br{}
-  @b{Warning:} @code{stock} has been deprecated since version 3.10 and should
+  @em{Warning:} @code{stock} has been deprecated since version 3.10 and should
   not be used in newly-written code. Use @code{icon-name} instead. @br{}
   Default value: @code{nil}")
 
@@ -510,13 +510,12 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "use-fallback" 'gtk-image) 't)
- "The @code{\"use-fallback\"} property of type @code{:boolean}
+ "The @code{use-fallback} property of type @code{:boolean}
   (Read / Write) @br{}
   Whether the icon displayed in the @sym{gtk-image} will use standard icon names
   fallback. The value of this property is only relevant for images of type
   @code{:icon-name} and @code{:gicon}. @br{}
-  Default value: @code{nil} @br{}
-  Since 3.0")
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-image-use-fallback atdoc:*function-name-alias*)
