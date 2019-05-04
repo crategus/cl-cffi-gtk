@@ -158,6 +158,8 @@
   This popup can be provided either as a @class{gtk-menu}, a @class{gtk-popover}
   or an abstract @class{g-menu-model}.
 
+  @image[menu-button]{}
+
   The @sym{gtk-menu-button} widget can hold any valid child widget. That is, it
   can hold almost any other standard @class{gtk-widget}. The most commonly used
   child is @class{gtk-image}. If no widget is explicitely added to the
@@ -188,9 +190,7 @@
   @see-slot{gtk-menu-button-use-popover}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
 ;;; Accessor and Property Details
-;;;
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- gtk-menu-button-align-widget -------------------------------------------
