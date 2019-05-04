@@ -43,7 +43,7 @@
 ;;;     gtk_accel_label_set_accel_widget
 ;;;     gtk_accel_label_get_accel_width
 ;;;     gtk_accel_label_set_accel
-;;;     gtk_accel_label_get_accel ()
+;;;     gtk_accel_label_get_accel
 ;;;     gtk_accel_label_refetch
 ;;;
 ;;; Properties
@@ -152,7 +152,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "accel-closure"
                                                'gtk-accel-label) 't)
- "The @code{\"accel-closure\"} property of type @symbol{g-closure}
+ "The @code{accel-closure} property of type @symbol{g-closure}
   (Read / Write) @br{}
   The closure to be monitored for accelerator changes.")
 
@@ -181,7 +181,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "accel-widget"
                                                'gtk-accel-label) 't)
- "The @code{\"accel-widget\"} property of type @class{gtk-widget}
+ "The @code{accel-widget} property of type @class{gtk-widget}
   (Read / Write) @br{}
   The widget to be monitored for accelerator changes.")
 
@@ -274,6 +274,28 @@
 
 #+gtk-3-6
 (export 'gtk-accel-label-set-accel)
+
+;;; ----------------------------------------------------------------------------
+;;; gtk_accel_label_get_accel ()
+;;;
+;;; void
+;;; gtk_accel_label_get_accel (GtkAccelLabel *accel_label,
+;;;                            guint *accelerator_key,
+;;;                           GdkModifierType *accelerator_mods);
+;;;
+;;; Gets the keyval and modifier mask set with gtk_accel_label_set_accel().
+;;;
+;;; accel_label :
+;;;     a GtkAccelLabel
+;;;
+;;; accelerator_key :
+;;;     return location for the keyval.
+;;;
+;;; accelerator_mods :
+;;;     return location for the modifier mask.
+;;;
+;;; Since: 3.12
+;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_accel_label_refetch ()
