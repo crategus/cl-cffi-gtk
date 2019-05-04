@@ -76,8 +76,6 @@
   or @class{gtk-vscale}). @sym{gtk-orientable} is more flexible in that it
   allows the orientation to be changed at runtime, allowing the widgets to
   \"flip\".
-
-  @sym{gtk-orientable} was introduced in GTK+ 2.16.
   @see-slot{gtk-orientable-orientation}")
 
 ;;; ----------------------------------------------------------------------------
@@ -92,8 +90,7 @@
  "The @code{orientation} property of type @symbol{gtk-orientation}
   (Read / Write) @br{}
   The orientation of the orientable. @br{}
-  Default value: @code{:horizontal} @br{}
-  Since 2.16")
+  Default value: @code{:horizontal}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-orientable-orientation atdoc:*function-name-alias*)
@@ -114,8 +111,6 @@
 
   The generic function @sym{(setf gtk-orientable-orientation)} sets the
   orientation of the orientable.
-
-  Since 2.16
   @see-class{gtk-orientable}
   @see-symbol{gtk-orientation}")
 
