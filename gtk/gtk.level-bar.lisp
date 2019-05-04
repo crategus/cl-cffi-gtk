@@ -149,7 +149,6 @@
     @entry[:continuous]{The bar has a continuous mode.}
     @entry[:discrete]{The bar has a discrete mode.}
   @end{table}
-
   Since 3.6
   @see-class{gtk-level-bar}")
 
@@ -275,7 +274,7 @@
         (Read / Write) @br{}
         The @code{min-block-height} style property determines the minimum
         height for blocks filling the @sym{gtk-level-bar} widget. @br{}
-        @b{Warning:} @code{min-block-height} has been deprecated since version
+        @em{Warning:} @code{min-block-height} has been deprecated since version
         3.20 and should not be used in newly-written code. Use the standard
         min-width/min-height CSS properties on the block elements; the value of
         this style property is ignored. @br{}
@@ -288,7 +287,7 @@
         (Read / Write) @br{}
         The @code{\"min-block-width\"} style property determines the minimum
         width for blocks filling the @sym{gtk-level-bar} widget. @br{}
-        @b{Warning:} @code{min-block-height} has been deprecated since version
+        @em{Warning:} @code{min-block-height} has been deprecated since version
         3.20 and should not be used in newly-written code. Use the standard
         min-width/min-height CSS properties on the block elements; the value of
         this style property is ignored. @br{}
@@ -328,7 +327,7 @@ lambda (levelbar name)   : Has Details
 
 #+(and gtk-3-8 cl-cffi-gtk-documentation)
 (setf (documentation (atdoc:get-slot-from-name "inverted" 'gtk-level-bar) 't)
- "The @code{\"inverted\" property} of type @code{:boolean} (Read / Write) @br{}
+ "The @code{inverted} property of type @code{:boolean} (Read / Write) @br{}
   Level bars normally grow from top to bottom or left to right. Inverted level
   bars grow in the opposite direction. @br{}
   Default value: @code{nil} @br{}
@@ -361,8 +360,8 @@ lambda (levelbar name)   : Has Details
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "max-value" 'gtk-level-bar) 't)
- "The @code{\"max-value\"} property of type @code{:double} (Read / Write) @br{}
-  The @code{\"max-value\"} property determines the maximum value of the interval
+ "The @code{max-value} property of type @code{:double} (Read / Write) @br{}
+  The @code{max-value} property determines the maximum value of the interval
   that can be displayed by the bar. @br{}
   Allowed values: >= 0 @br{}
   Default value: 1 @br{}
@@ -396,8 +395,8 @@ lambda (levelbar name)   : Has Details
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "min-value" 'gtk-level-bar) 't)
- "The @code{\"min-value\"} property of type @code{:double} (Read / Write) @br{}
-  The @code{\"min-value\"} property determines the minimum value of the interval
+ "The @code{min-value} property of type @code{:double} (Read / Write) @br{}
+  The @code{min-value} property determines the minimum value of the interval
   that can be displayed by the bar. @br{}
   Allowed values: >= 0 @br{}
   Default value: 0 @br{}
@@ -431,15 +430,15 @@ lambda (levelbar name)   : Has Details
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "mode" 'gtk-level-bar) 't)
- "The @code{\"mode\"} property of type @symbol{gtk-level-bar-mode}
+ "The @code{mode} property of type @symbol{gtk-level-bar-mode}
   (Read / Write) @br{}
-  The @code{\"mode\"} property determines the way @sym{gtk-level-bar} interprets
+  The @code{mode} property determines the way @sym{gtk-level-bar} interprets
   the value properties to draw the level fill area. Specifically, when the value
   is @code{:continuous}, @sym{gtk-level-bar} will draw a single block
   representing the current value in that area; when the value is
   @code{:discrete}, the widget will draw a succession of separate blocks filling
   the draw area, with the number of blocks being equal to the units separating
-  the integral roundings of @code{\"min-value\"} and @code{\"max-value\"}. @br{}
+  the integral roundings of @code{min-value} and @code{max-value}. @br{}
   Default value: @code{:continuous} @br{}
   Since 3.6")
 
@@ -471,8 +470,8 @@ lambda (levelbar name)   : Has Details
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "value" 'gtk-level-bar) 't)
- "The @code{\"value\"} property of type @code{:double} (Read / Write) @br{}
-  The @code{\"value\"} property determines the currently filled value of the
+ "The @code{value} property of type @code{:double} (Read / Write) @br{}
+  The @code{value} property determines the currently filled value of the
   level bar. @br{}
   Allowed values: >= 0 @br{}
   Default value: 0 @br{}
