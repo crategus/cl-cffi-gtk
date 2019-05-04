@@ -87,7 +87,6 @@
 ;;; GtkHeaderBar
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-10
 (define-g-object-class "GtkHeaderBar" gtk-header-bar
   (:superclass gtk-container
    :export t
@@ -122,7 +121,7 @@
     gtk-header-bar-title
     "title" "gchararray" t t)))
 
-#+(and gtk-3-10 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-header-bar 'type)
  "@version{2016-1-17}
   @begin{short}
@@ -130,6 +129,8 @@
     children to be placed at the start or the end. In addition, it allows a
     title and subtitle to be displayed.
   @end{short}
+
+  @image[headerbar]{}
 
   The title will be centered with respect to the width of the box, even if the
   children at either side take up different amounts of space. The height of the
@@ -139,23 +140,26 @@
 
   @sym{gtk-header-bar} can add typical window frame controls, such as minimize,
   maximize and close buttons, or the window icon.
-  @begin[Child Property Details]{dictionary}
-    @subheading{The \"pack-type\" child property}
-      @code{\"pack-type\"} child property of type @symbol{gtk-pack-type}
-      (Read / Write) @br{}
-      A @symbol{gtk-pack-type} indicating whether the child is packed with
-      reference to the start or end of the parent. @br{}
-      Default value: @code{:start}
-
-    @subheading{The \"position\" child property}
-      @code{\"position\"} child property of type @code{:int}
-      (Read / Write) @br{}
-      The index of the child in the parent. @br{}
-      Allowed values: >= -1 @br{}
-      Default value: 0
-  @end{dictionary}
 
   Since 3.10
+  @begin[Child Property Details]{dictionary}
+    @begin[code]{table}
+      @begin[pack-type]{entry}
+        The @code{pack-type} child property of type @symbol{gtk-pack-type}
+        (Read / Write) @br{}
+        A @symbol{gtk-pack-type} indicating whether the child is packed with
+        reference to the start or end of the parent. @br{}
+        Default value: @code{:start}
+      @end{entry}
+      @begin[position]{entry}
+        The @code{position} child property of type @code{:int}
+        (Read / Write) @br{}
+        The index of the child in the parent. @br{}
+        Allowed values: >= -1 @br{}
+        Default value: 0
+      @end{entry}
+    @end{table}
+  @end{dictionary}
   @see-slot{gtk-header-bar-custom-title}
   @see-slot{gtk-header-bar-decoration-layout}
   @see-slot{gtk-header-bar-decoration-layout-set}
@@ -172,14 +176,14 @@
 
 ;;; --- gtk-header-bar-custom-title --------------------------------------------
 
-#+(and gtk-3-10 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "custom-title"
                                                'gtk-header-bar) 't)
  "The @code{custom-title} property of type @class{gtk-widget}
   (Read / Write / Construct) @br{}
   Custom title widget to display. @br{}")
 
-#+(and gtk-3-10 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-header-bar-custom-title atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-header-bar-custom-title 'function)
@@ -326,7 +330,7 @@
 
 ;;; --- gtk-header-bar-show-close-button ---------------------------------------
 
-#+(and gtk-3-10 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "show-close-button"
                                                'gtk-header-bar) 't)
  "The @code{show-close-button} property of type @class{:boolean}
@@ -337,7 +341,7 @@
   close button will not be shown if the window can not be closed). @br{}
   Default value: @code{nil}")
 
-#+(and gtk-3-10 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-header-bar-show-close-button
                atdoc:*function-name-alias*)
       "Accessor"
@@ -364,7 +368,7 @@
 
 ;;; --- gtk-header-bar-spacing -------------------------------------------------
 
-#+(and gtk-3-10 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "spacing"
                                                'gtk-header-bar) 't)
  "The @code{spacing} property of type @class{:int} (Read / Write) @br{}
@@ -372,7 +376,7 @@
   Allowed values: >= 0 @br{}
   Default value: 6")
 
-#+(and gtk-3-10 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-header-bar-spacing
                atdoc:*function-name-alias*)
       "Accessor"
@@ -388,14 +392,14 @@
 
 ;;; --- gtk-header-bar-subtitle ------------------------------------------------
 
-#+(and gtk-3-10 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "subtitle"
                                                'gtk-header-bar) 't)
  "The @code{subtitle} property of type @class{:string} (Read / Write) @br{}
   The subtitle to display. @br{}
   Default value: @code{nil}")
 
-#+(and gtk-3-10 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-header-bar-subtitle
                atdoc:*function-name-alias*)
       "Accessor"
@@ -426,14 +430,14 @@
 
 ;;; --- gtk-header-bar-title ---------------------------------------------------
 
-#+(and gtk-3-10 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "title"
                                                'gtk-header-bar) 't)
  "The @code{title} property of type @class{:string} (Read / Write) @br{}
   The title to display. @br{}
   Default value: @code{nil}")
 
-#+(and gtk-3-10 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-header-bar-title
                atdoc:*function-name-alias*)
       "Accessor"
@@ -516,7 +520,6 @@
 ;;; gtk_header_bar_new ()
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-10
 (defun gtk-header-bar-new ()
  #+cl-cffi-gtk-documentation
  "@version{2016-1-30}
@@ -529,14 +532,12 @@
   @see-class{gtk-header-bar}"
   (make-instance 'gtk-header-bar))
 
-#+gtk-3-10
 (export 'gtk-header-bar-new)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_header_bar_pack_start ()
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-10
 (defcfun ("gtk_header_bar_pack_start" gtk-header-bar-pack-start) :void
  #+cl-cffi-gtk-documentation
  "@version{2016-1-30}
@@ -553,14 +554,12 @@
   (bar (g-object gtk-header-bar))
   (child (g-object gtk-widget)))
 
-#+gtk-3-10
 (export 'gtk-header-bar-pack-start)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_header_bar_pack_end ()
 ;;; ----------------------------------------------------------------------------
 
-#+gtk-3-10
 (defcfun ("gtk_header_bar_pack_end" gtk-header-bar-pack-end) :void
  #+cl-cffi-gtk-documentation
  "@version{2016-1-30}
@@ -577,7 +576,6 @@
   (bar (g-object gtk-header-bar))
   (child (g-object gtk-widget)))
 
-#+gtk-3-10
 (export 'gtk-header-bar-pack-end)
 
 ;;; --- End of file gtk.header-bar.lisp ----------------------------------------
