@@ -28,7 +28,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;;
 ;;; GtkExpander
-;;; 
+;;;
 ;;;     A container which can hide its child
 ;;;
 ;;; Types and Values
@@ -37,8 +37,8 @@
 ;;;
 ;;; Functions
 ;;;
-;;;     gtk_expander_new 
-;;;     gtk_expander_new_with_mnemonic 
+;;;     gtk_expander_new
+;;;     gtk_expander_new_with_mnemonic
 ;;;     gtk_expander_set_expanded                          Accessor
 ;;;     gtk_expander_get_expanded                          Accessor
 ;;;     gtk_expander_set_spacing                           Accessor
@@ -140,7 +140,7 @@
   @class{gtk-bin}; you create the child widget and use the function
   @fun{gtk-container-add} to add it to the expander. When the expander is
   toggled, it will take care of showing and hiding the child automatically.
- 
+
   @subheading{Special Usage}
     There are situations in which you may prefer to show and hide the expanded
     widget yourself, such as when you want to actually create the widget at
@@ -185,29 +185,33 @@
   │   ╰── <label widget>
   ╰── <child>
     @end{pre}
-    @sym{gtk-expander} has three CSS nodes, the main node with the name 
-    expander, a subnode with name title and node below it with name arrow. The 
+    @sym{gtk-expander} has three CSS nodes, the main node with the name
+    expander, a subnode with name title and node below it with name arrow. The
     arrow of an expander that is showing its child gets the :checked pseudoclass
     added to it.
   @end{dictionary}
   @begin[Style Property Details]{dictionary}
-    @subheading{The \"expander-size\" style property}
-      @code{\"expander-size\"} of type @code{:int} (Read) @br{}
-      Size of the expander arrow. @br{}      
-      @b{Warning:} @code{expander-size} has been deprecated since version 3.20 
-      and should not be used in newly-written code. Use CSS min-width and 
-      min-height instead. @br{}
-      Allowed values: >= 0 @br{}
-      Default value: 10
-
-    @subheading{The \"expander-spacing\" style property}
-      @code{\"expander-spacing\"} of type @code{:int} (Read) @br{}
-      Spacing around expander arrow. @br{}
-      @b{Warning:} @code{expander-spacing} has been deprecated since version 
-      3.20 and should not be used in newly-written code. Use CSS margins 
-      instead, the value of this style property is ignored. @br{}
-      Allowed values: >= 0 @br{}
-      Default value: 2
+    @begin[code]{table}
+      @begin[expander-size]{entry}
+        The @code{expander-size} style property of type @code{:int} (Read) @br{}
+        Size of the expander arrow. @br{}
+        @em{Warning:} @code{expander-size} has been deprecated since version
+        3.20 and should not be used in newly-written code. Use CSS min-width and
+        min-height instead. @br{}
+        Allowed values: >= 0 @br{}
+        Default value: 10
+      @end{entry}
+      @begin[expander-spacing]{entry}
+        The @code{expander-spacing} style property of type @code{:int}
+        (Read) @br{}
+        Spacing around expander arrow. @br{}
+        @em{Warning:} @code{expander-spacing} has been deprecated since version
+        3.20 and should not be used in newly-written code. Use CSS margins
+        instead, the value of this style property is ignored. @br{}
+        Allowed values: >= 0 @br{}
+        Default value: 2
+      @end{entry}
+    @end{table}
   @end{dictionary}
   @begin[Signal Details]{dictionary}
     @subheading{The \"activate\" signal}
@@ -234,7 +238,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "expanded" 'gtk-expander) 't)
- "The @code{\"expanded\"} property of type @code{:boolean}
+ "The @code{expanded} property of type @code{:boolean}
   (Read / Write / Construct) @br{}
   Whether the expander has been opened to reveal the child widget. @br{}
   Default value: @code{nil}")
@@ -259,15 +263,13 @@
 
   Set to @em{true}, if you want the child widget to be revealed, and @code{nil}
   if you want the child widget to be hidden.
-
-  Since 2.4
   @see-class{gtk-expander}")
 
 ;;; --- gtk-expander-label -----------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "label" 'gtk-expander) 't)
- "The @code{\"label\"} property of type @code{:string}
+ "The @code{label} property of type @code{:string}
   (Read / Write / Construct) @br{}
   Text of the expander's label. @br{}
   Default value: @code{nil}")
@@ -304,8 +306,6 @@
   label of the expander to @arg{label}.
 
   This will also clear any previously set labels.
-
-  Since 2.4
   @see-class{gtk-expander}
   @see-function{gtk-button-new}")
 
@@ -313,7 +313,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "label-fill" 'gtk-expander) 't)
- "The @code{\"label-fill\"} property of type @code{:boolean}
+ "The @code{label-fill} property of type @code{:boolean}
   (Read / Write / Construct) @br{}
   Whether the label widget should fill all available horizontal space. @br{}
   Default value: @code{nil}")
@@ -336,15 +336,13 @@
 
   The generic function @sym{(setf gtk-expander-label-fill)} sets whether the
   label widget should fill all available horizontal space allocated to expander.
-
-  Since 2.22
   @see-class{gtk-expander}")
 
 ;;; --- gtk-expander-label-widget ----------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "label-widget" 'gtk-expander) 't)
- "The @code{\"label-widget\"} property of type @code{gtk-widget}
+ "The @code{label-widget} property of type @code{gtk-widget}
   (Read / Write) @br{}
   A widget to display in place of the usual expander label.")
 
@@ -368,8 +366,6 @@
   The generic function @sym{(setf gtk-expander-label-widget)} sets the label
   widget for the expander. This is the widget that will appear embedded
   alongside the expander arrow.
-
-  Since 2.4
   @see-class{gtk-expander}")
 
 ;;; --- gtk-expander-resize-toplevel -------------------------------------------
@@ -377,12 +373,11 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "resize-toplevel"
                                                'gtk-expander) 't)
- "The @code{\"resize-toplevel\"} property of type @code{:boolean}
+ "The @code{resize-toplevel} property of type @code{:boolean}
   (Read / Write) @br{}
   When this property is @em{true}, the expander will resize the toplevel widget
   containing the expander upon expanding and collapsing. @br{}
-  Default value: @code{nil} @br{}
-  Since 3.2")
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-expander-resize-toplevel atdoc:*function-name-alias*)
@@ -405,18 +400,16 @@
   The generic function @sym{(setf gtk-expander-resize-toplevel)} sets whether
   the expander will resize the toplevel widget containing the expander upon
   resizing and collpasing.
-
-  Since 3.2
   @see-class{gtk-expander}")
 
 ;;; --- gtk-expander-spacing ---------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "spacing" 'gtk-expander) 't)
- "The @code{\"spacing\"} property of type @code{:int} (Read / Write) @br{}
-  Space to put between the label and the child. @br{}  
-  @B{Warning:} @code{spacing} has been deprecated since version 3.20 and should 
-  not be used in newly-written code. This property is deprecated and ignored. 
+ "The @code{spacing} property of type @code{:int} (Read / Write) @br{}
+  Space to put between the label and the child. @br{}
+  @B{Warning:} @code{spacing} has been deprecated since version 3.20 and should
+  not be used in newly-written code. This property is deprecated and ignored.
   Use margins on the child instead. @br{}
   Allowed values: >= 0 @br{}
   Default value: 0")
@@ -442,19 +435,17 @@
   of the expander, which is the number of pixels to place between the expander
   and the child.
   @begin[Warning]{dictionary}
-    The function @sym{gtk-expander-spacing} has been deprecated since version 
-    3.20 and should not be used in newly-written code. Use margins on the child 
-    instead.  
+    The function @sym{gtk-expander-spacing} has been deprecated since version
+    3.20 and should not be used in newly-written code. Use margins on the child
+    instead.
   @end{dictionary}
-  
-  Since 2.4
   @see-class{gtk-expander}")
 
 ;;; --- gtk-expander-use-markup ------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "use-markup" 'gtk-expander) 't)
- "The @code{\"use-markup\"} property of type @code{:boolean}
+ "The @code{use-markup} property of type @code{:boolean}
   (Read / Write / Construct) @br{}
   The text of the label includes XML markup. See the function
   @fun{pango-parse-markup}. @br{}
@@ -481,8 +472,6 @@
   The generic function @sym{(setf gtk-expander-use-markup)} sets whether the
   text of the label contains markup in Pango's text markup language. See the
   function @fun{gtk-label-set-markup}.
-
-  Since 2.4
   @see-class{gtk-expander}
   @see-function{gtk-label-set-markup}")
 
@@ -491,7 +480,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "use-underline"
                                                'gtk-expander) 't)
- "The @code{\"use-underline\"} property of type @code{:boolean}
+ "The @code{use-underline} property of type @code{:boolean}
   (Read / Write / Construct) @br{}
   If set, an underline in the text indicates the next character should be used
   for the mnemonic accelerator key. @br{}
@@ -517,8 +506,6 @@
 
   If @em{true}, an underline in the text of the expander label indicates the
   next character should be used for the mnemonic accelerator key.
-
-  Since 2.4
   @see-class{gtk-expander}")
 
 ;;; ----------------------------------------------------------------------------
@@ -535,8 +522,6 @@
   @begin{short}
     Creates a new expander using @arg{label} as the text of the label.
   @end{short}
-
-  Since 2.4
   @see-class{gtk-expander}
   @see-function{gtk-expander-new-with-mnemonic}"
   (make-instance 'gtk-expander
@@ -563,8 +548,6 @@
   you need a literal underscore character in a label, use two underscores '__'.
   The first underlined character represents a keyboard accelerator called a
   mnemonic. Pressing Alt and that key activates the button.
-
-  Since 2.4
   @see-class{gtk-expander}
   @see-function{gtk-expander-new}"
   (make-instance 'gtk-expander
