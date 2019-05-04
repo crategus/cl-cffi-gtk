@@ -270,9 +270,7 @@
   @see-function{gtk-tree-model-filter-convert-iter-to-child-iter}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
 ;;; Property and Accessor Details
-;;;
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- gtk-entry-completion-cell-area -----------------------------------------
@@ -280,14 +278,13 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "cell-area"
                                                'gtk-entry-completion) 't)
- "The @code{\"cell-area\"} property of type @class{gtk-cell-area}
+ "The @code{cell-area} property of type @class{gtk-cell-area}
   (Read / Write / Construct) @br{}
   The @class{gtk-cell-area} used to layout cell renderers in the treeview
   column.
   If no area is specified when creating the entry completion with the function
   @fun{gtk-entry-completion-new-with-area} a horizontally oriented
-  @class{gtk-cell-area-box} will be used. @br{}
-  Since 3.0")
+  @class{gtk-cell-area-box} will be used.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-entry-completion-cell-area atdoc:*function-name-alias*)
@@ -303,14 +300,13 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "inline-completion"
                                                'gtk-entry-completion) 't)
- "The @code{\"inline-completion\"} property of type @code{:boolean}
+ "The @code{inline-completion} property of type @code{:boolean}
   (Read / Write) @br{}
   Determines whether the common prefix of the possible completions should be
   inserted automatically in the entry. Note that this requires the
-  @code{\"text-column\"} property to be set, even if you are using a custom
+  @code{text-column} property to be set, even if you are using a custom
   match function. @br{}
-  Default value: @code{nil} @br{}
-  Since 2.6")
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-entry-completion-inline-completion
@@ -343,7 +339,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "inline-selection"
                                                'gtk-entry-completion) 't)
- "The @code{\"inline-selection\"} property of type @code{:boolean}
+ "The @code{inline-selection} property of type @code{:boolean}
   (Read / Write) @br{}
   Determines whether the possible completions on the popup will appear in the
   entry as you navigate through them. @br{}
@@ -379,7 +375,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "minimum-key-length"
                                                'gtk-entry-completion) 't)
- "The @code{\"minimum-key-length\"} property of type @code{:int}
+ "The @code{minimum-key-length} property of type @code{:int}
   (Read / Write) @br{}
   Minimum length of the search key in order to look up matches. @br{}
   Allowed values: >= 0 @br{}
@@ -408,8 +404,6 @@
   This is useful for long lists, where completing using a small key takes a
   lot of time and will come up with meaningless results anyway, i. e., a too
   large dataset.
-
-  Since 2.4
   @see-class{gtk-entry-completion}")
 
 ;;; --- gtk-entry-completion-model ---------------------------------------------
@@ -417,7 +411,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "model"
                                                'gtk-entry-completion) 't)
- "The @code{\"model\"} property of type @class{gtk-tree-model}
+ "The @code{model} property of type @class{gtk-tree-model}
   (Read / Write) @br{}
   The model to find matches in.")
 
@@ -442,8 +436,6 @@
   for a @class{gtk-entry-completion}. If the entry completion already has a
   model set, it will remove it before setting the new model. If @arg{model} is
   @code{nil}, then it will unset the model.
-
-  Since 2.4
   @see-class{gtk-entry-completion}
   @see-class{gtk-tree-model}")
 
@@ -452,12 +444,11 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "popup-completion"
                                                'gtk-entry-completion) 't)
- "The @code{\"popup-completion\"} property of type @code{:boolean}
+ "The @code{popup-completion} property of type @code{:boolean}
   (Read / Write) @br{}
   Determines whether the possible completions should be shown in a popup
   window. @br{}
-  Default value: @em{true} @br{}
-  Since 2.6")
+  Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-entry-completion-popup-completion
@@ -470,7 +461,7 @@
   @syntax[]{(gtk-entry-completion-popup object) => popup-completion}
   @syntax[]{(setf (gtk-entry-completion-popup object) popup-completion)}
   @begin{short}
-    Accessor of the slot @code{\"popup-completion\"} of the
+    Accessor of the @slot[gtk-entry-completition]{popup-completion} slot of the
     @class{gtk-entry-completion} class.
   @end{short}
 
@@ -479,8 +470,6 @@
 
   The generic function @sym{(setf gtk-entry-completion-popup-completion)} sets
   whether the completions should be presented in a popup window.
-
-  Since 2.6
   @see-class{gtk-entry-completion}")
 
 ;;; --- gtk-entry-completion-popup-set-width -----------------------------------
@@ -488,12 +477,11 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "popup-set-width"
                                                'gtk-entry-completion) 't)
- "The @code{\"popup-set-width\"} property of type @code{:boolean}
+ "The @code{popup-set-width} property of type @code{:boolean}
   (Read / Write) @br{}
   Determines whether the completions popup window will be resized to the width
   of the entry. @br{}
-  Default value: @em{true} @br{}
-  Since 2.8")
+  Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-entry-completion-popup-set-width
@@ -507,7 +495,7 @@
   @syntax[]{(gtk-entry-completion-popup-set-width object) => popup-set-width}
   @syntax[]{(setf (gtk-entry-completion-popup-set-width object) popup-set-width)}
   @begin{short}
-    Accessor of the slot @code{\"popup-set-width\"} of the
+    Accessor of the @slot[gtk-entry-completion]{popup-set-width} slot of the
     @class{gtk-entry-completion} class.
   @end{short}
 
@@ -516,8 +504,6 @@
 
   The generic function @sym{(setf gtk-entry-completion)} sets whether the
   completion popup window will be resized to be the same width as the entry.
-
-  Since 2.8
   @see-class{gtk-entry-completion}")
 
 ;;; --- gtk-entry-completion-popup-single-match --------------------------------
@@ -525,13 +511,12 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "popup-single-match"
                                                'gtk-entry-completion) 't)
- "The @code{\"popup-single-match\"} property of type @code{:boolean}
+ "The @code{popup-single-match} property of type @code{:boolean}
   (Read / Write) @br{}
   Determines whether the completions popup window will shown for a single
   possible completion. You probably want to set this to @code{nil} if you are
   using inline completion. @br{}
-  Default value: @em{true} @br{}
-  Since 2.8")
+  Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-entry-completion-popup-single-match
@@ -557,8 +542,6 @@
   single match.
 
   You may want to set this to @code{nil} if you are using inline completion.
-
-  Since 2.8
   @see-class{gtk-entry-completion}")
 
 ;;; --- gtk-entry-completion-text-column ---------------------------------------
@@ -566,12 +549,11 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "text-column"
                                                'gtk-entry-completion) 't)
- "The @code{\"text-column\"} property of type @code{:int} (Read / Write) @br{}
+ "The @code{text-column} property of type @code{:int} (Read / Write) @br{}
   The column of the model containing the strings. Note that the strings must
   be UTF-8. @br{}
   Allowed values: >= @code{G_MAXULONG} @br{}
-  Default value: -1 @br{}
-  Since 2.6")
+  Default value: -1")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-entry-completion-text-column atdoc:*function-name-alias*)
@@ -603,8 +585,6 @@
   selected column. If you need to set the text column, but do not want the cell
   renderer, use the function @fun{g-object-set} to set the
   @slot[gtk-entry-completion]{text-column} property directly.
-
-  Since 2.4
   @see-class{gtk-entry-completion}
   @see-class{gtk-cell-renderer-text}
   @see-function{g-object-set}
@@ -621,8 +601,6 @@
  "@version{2013-11-30}
   @return{A newly created @class{gtk-entry-completion} object.}
   @short{Creates a new @class{gtk-entry-completion} object.}
-
-  Since 2.4
   @see-class{gtk-entry-completion}
   @see-function{gtk-entry-completion-new-with-area}"
   (make-instance 'gtk-entry-completion))
@@ -645,8 +623,6 @@
     to layout cells in the underlying @class{gtk-tree-view-column} for the
     drop-down menu.
   @end{short}
-
-  Since 3.0
   @see-class{gtk-entry-completion}
   @see-class{gtk-cell-area}
   @see-class{gtk-tree-view-column}
@@ -667,8 +643,6 @@
   @argument[completion]{a @class{gtk-entry-completion} object}
   @return{The entry @arg{completion} has been attached to.}
   @short{Gets the entry @arg{completion} has been attached to.}
-
-  Since 2.4
   @see-class{gtk-entry-completion}
   @see-class{gtk-entry}"
   (completion (g-object gtk-entry-completion)))
@@ -732,8 +706,7 @@
   @end{short}
   The match function is used to determine if a row should or should not be in
   the completion list.
-
-  Since 2.4"
+  @see-class{gtk-entry-completion}"
   (if func
       (%gtk-entry-completion-set-match-func
                           completion
@@ -768,8 +741,6 @@
   If no row matches @arg{key}, @code{nil} will be returned. Note that a
   text column must have been set for this function to work, see the function
   @fun{gtk-entry-completion-text-column} for details.
-
-  Since 3.4
   @see-class{gtk-entry-completion}
   @see-function{gtk-entry-completion-text-column}"
   (completion (g-object gtk-entry-completion))
@@ -790,8 +761,6 @@
     current list with completions, using the current key.
   @end{short}
   The completion list view will be updated accordingly.
-
-  Since 2.4
   @see-class{gtk-entry-completion}"
   (completion (g-object gtk-entry-completion)))
 
@@ -812,8 +781,6 @@
     Get the original text entered by the user that triggered the completion or
     @code{nil} if there is no completion ongoing.
   @end{short}
-
-  Since 2.12
   @see-class{gtk-entry-completion}"
   (completion (g-object gtk-entry-completion)))
 
@@ -831,8 +798,6 @@
   @begin{short}
     Requests a prefix insertion.
   @end{short}
-
-  Since 2.6
   @see-class{gtk-entry-completion}"
   (completion (g-object gtk-entry-completion)))
 
@@ -855,8 +820,6 @@
   @end{short}
   If you want the action item to have markup, use the function
   @fun{gtk-entry-completion-insert-action-markup}.
-
-  Since 2.4
   @see-class{gtk-entry-completion}
   @see-function{gtk-entry-completion-insert-action-markup}"
   (completion (g-object gtk-entry-completion))
@@ -880,8 +843,6 @@
     Inserts an action in @arg{completion}'s action item list at position
     @arg{index} with markup @arg{markup}.
   @end{short}
-
-  Since 2.4
   @see-class{gtk-entry-completion}"
   (completion (g-object gtk-entry-completion))
   (index :int)
@@ -902,8 +863,6 @@
   @begin{short}
     Deletes the action at @arg{index} from @arg{completion}'s action list.
   @end{short}
-
-  Since 2.4
   @see-class{gtk-entry-completion}"
   (completion (g-object gtk-entry-completion))
   (index :int))
