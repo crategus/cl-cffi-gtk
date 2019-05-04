@@ -162,7 +162,7 @@
       @about-function{gtk-builder-connect-signals}
       @about-function{gtk-builder-connect-signals-full}
       @about-function{gtk-builder-set-application}
-      @about-function{gtk-builder-get-application} 
+      @about-function{gtk-builder-get-application}
       @about-function{gtk-builder-get-type-from-name}
       @about-function{gtk-builder-value-from-string}
       @about-function{gtk-builder-value-from-string-type}
@@ -448,19 +448,19 @@
   @begin[Layout Containers]{section}
     @begin[GtkBox]{subsection}
       A container box.
-      
+
       @about-class{gtk-box}
 
       @about-generic{gtk-box-baseline-position}
       @about-generic{gtk-box-homogeneous}
       @about-generic{gtk-box-spacing}
-            
+
       @about-function{gtk-box-child-expand}
       @about-function{gtk-box-child-fill}
       @about-function{gtk-box-child-pack-type}
       @about-function{gtk-box-child-padding}
       @about-function{gtk-box-child-position}
-            
+
       @about-function{gtk-box-new}
       @about-function{gtk-box-pack-start}
       @about-function{gtk-box-pack-end}
@@ -502,29 +502,103 @@
       Hide and show with animation.
 
       @about-symbol{gtk-revealer-transition-type}
+
       @about-class{gtk-revealer}
+
       @about-generic{gtk-revealer-child-revealed}
       @about-generic{gtk-revealer-reveal-child}
       @about-generic{gtk-revealer-transition-duration}
       @about-generic{gtk-revealer-transition-type}
+
       @about-function{gtk-revealer-new}
     @end{subsection}
     @begin[GtkListBox]{subsection}
       A list container.
 
-      @about-class{gtk-list-box-row}
       @about-class{gtk-list-box}
+
+      @about-generic{gtk-list-box-activate-on-single-click}
+      @about-generic{gtk-list-box-selection-mode}
+      @about-generic{gtk-list-box-activatable}
+      @about-generic{gtk-list-box-selectable}
+
+      @about-function{gtk-list-box-new}
+      @about-function{gtk-list-box-prepend}
+      @about-function{gtk-list-box-insert}
+      @about-function{gtk-list-box-select-row}
+      @about-function{gtk-list-box-unselect-row}
+      @about-function{gtk-list-box-select-all}
+      @about-function{gtk-list-box-unselect-all}
+      @about-function{gtk-list-box-get-selected-row}
+      @about-function{gtk-list-box-selected-foreach}
+      @about-function{gtk-list-box-get-selected-rows}
+      @about-function{gtk-list-box-get-adjustment}
+      @about-function{gtk-list-box-set-adjustment}
+      @about-function{gtk-list-box-set-placeholder}
+      @about-function{gtk-list-box-get-row-at-index}
+      @about-function{gtk-list-box-get-row-at-y}
+      @about-function{gtk-list-box-invalidate-filter}
+      @about-function{gtk-list-box-invalidate-headers}
+      @about-function{gtk-list-box-invalidate-sort}
+      @about-function{gtk-list-box-set-filter-func}
+      @about-function{gtk-list-box-set-header-func}
+      @about-function{gtk-list-box-set-sort-func}
+      @about-function{gtk-list-box-drag-highlight-row}
+      @about-function{gtk-list-box-drag-unhighlight-row}
+      @about-function{gtk-list-box-bind-model}
+
+      @about-class{gtk-list-box-row}
+
+      @about-function{gtk-list-box-row-new}
+      @about-function{gtk-list-box-row-changed}
+      @about-function{gtk-list-box-row-is-selected}
+      @about-function{gtk-list-box-row-get-header}
+      @about-function{gtk-list-box-row-set-header}
+      @about-function{gtk-list-box-row-get-index}
     @end{subsection}
     @begin[GtkFlowBox]{subsection}
       A container that allows reflowing its children.
 
+      @about-class{gtk-flow-box}
+
+      @about-generic{gtk-flow-box-activate-on-single-click}
+      @about-generic{gtk-flow-box-column-spacing}
+      @about-generic{gtk-flow-box-homogeneous}
+      @about-generic{gtk-flow-box-max-children-per-line}
+      @about-generic{gtk-flow-box-min-children-per-line}
+      @about-generic{gtk-flow-box-row-spacing}
+      @about-generic{gtk-flow-box-selection-mode}
+
+      @about-function{gtk-flow-box-new}
+      @about-function{gtk-flow-box-insert}
+      @about-function{gtk-flow-box-get-child-at-index}
+      @about-function{gtk-flow-box-get-child-at-pos}
+      @about-function{gtk-flow-box-set-hadjustment}
+      @about-function{gtk-flow-box-set-vadjustment}
+      @about-function{gtk-flow-box-selected-foreach}
+      @about-function{gtk-flow-box-get-selected-children}
+      @about-function{gtk-flow-box-select-child}
+      @about-function{gtk-flow-box-unselect-child}
+      @about-function{gtk-flow-box-select-all}
+      @about-function{gtk-flow-box-unselect-all}
+      @about-function{gtk-flow-box-set-filter-func}
+      @about-function{gtk-flow-box-invalidate-filter}
+      @about-function{gtk-flow-box-set-sort-func}
+      @about-function{gtk-flow-box-invalidate-sort}
+      @about-function{gtk-flow-box-bind-model}
+
       @about-class{gtk-flow-box-child}
-      @about-class{gtk-flow-box}      
+
+      @about-function{gtk-flow-box-child-new}
+      @about-function{gtk-flow-box-child-get-index}
+      @about-function{gtk-flow-box-child-is-selected}
+      @about-function{gtk-flow-box-child-changed}
     @end{subsection}
     @begin[GtkStack]{subsection}
       A stacking container.
-      
+
       @about-symbol{gtk-stack-transition-type}
+
       @about-class{gtk-stack}
 
       @about-generic{gtk-stack-visible-child}
@@ -536,13 +610,13 @@
       @about-generic{gtk-stack-transition-type}
       @about-generic{gtk-stack-transition-running}
       @about-generic{gtk-stack-interpolate-size}
-      
+
       @about-function{gtk-stack-child-icon-name}
       @about-function{gtk-stack-child-name}
       @about-function{gtk-stack-child-needs-attention}
       @about-function{gtk-stack-child-position}
       @about-function{gtk-stack-child-title}
-      
+
       @about-function{gtk-stack-new}
       @about-function{gtk-stack-add-named}
       @about-function{gtk-stack-add-titled}
@@ -551,42 +625,42 @@
     @end{subsection}
     @begin[GtkStackSwitcher]{subsection}
       A controller for GtkStack.
-    
+
       @about-class{gtk-stack-switcher}
 
-      @about-generic{gtk-stack-switcher-stack}      
+      @about-generic{gtk-stack-switcher-stack}
       @about-generic{gtk-stack-switcher-icon-size}
-      
+
       @about-function{gtk-stack-switcher-new}
     @end{subsection}
     @begin[GtkStackSidebar]{subsection}
       An automatic sidebar widget
 
       @about-class{gtk-stack-sidebar}
-      
+
       @about-generic{gtk-stack-sidebar-stack}
-      
-      @about-function{gtk-stack-sidebar-new}      
+
+      @about-function{gtk-stack-sidebar-new}
     @end{subsection}
     @begin[GtkActionBar]{subsection}
       A full width bar for presenting contextual actions
-      
+
       @about-class{gtk-action-bar}
 
       @about-function{gtk-action-bar-child-pack-type}
       @about-function{gtk-action-bar-child-position}
-      
+
       @about-function{gtk-action-bar-new}
       @about-function{gtk-action-bar-pack-start}
       @about-function{gtk-action-bar-pack-end}
       @about-function{gtk-action-bar-get-center-widget}
-      @about-function{gtk-action-bar-set-center-widget}      
+      @about-function{gtk-action-bar-set-center-widget}
     @end{subsection}
     @begin[GtkHeaderBar]{subsection}
       A box with a centered child.
 
       @about-class{gtk-header-bar}
-      
+
       @about-generic{gtk-header-bar-custom-title}
       @about-generic{gtk-header-bar-decoration-layout}
       @about-generic{gtk-header-bar-decoration-layout-set}
@@ -595,10 +669,10 @@
       @about-generic{gtk-header-bar-spacing}
       @about-generic{gtk-header-bar-subtitle}
       @about-generic{gtk-header-bar-title}
-      
+
       @about-function{gtk-header-bar-child-pack-type}
       @about-function{gtk-header-bar-child-position}
-      
+
       @about-function{gtk-header-bar-new}
       @about-function{gtk-header-bar-pack-start}
       @about-function{gtk-header-bar-pack-end}
@@ -607,27 +681,28 @@
       A container which overlays widgets on top of each other.
 
       @about-class{gtk-overlay}
-      
+
       @about-function{gtk-overlay-child-index}
       @about-function{gtk-overlay-child-pass-through}
-      
+
       @about-function{gtk-overlay-new}
       @about-function{gtk-overlay-add-overlay}
       @about-function{gtk-overlay-reorder-overlay}
       @about-function{gtk-overlay-get-overlay-pass-through}
       @about-function{gtk-overlay-set-overlay-pass-through}
-    @end{subsection}    
+    @end{subsection}
     @begin[GtkButtonBox]{subsection}
       A container for arranging buttons
 
       @about-symbol{gtk-button-box-style}
+
       @about-class{gtk-button-box}
-      
+
       @about-generic{gtk-button-box-layout-style}
 
       @about-function{gtk-button-box-child-non-homogeneous}
       @about-function{gtk-button-box-child-secondary}
-      
+
       @about-function{gtk-button-box-new}
       @about-function{gtk-button-box-get-layout}
       @about-function{gtk-button-box-get-child-secondary}
@@ -640,13 +715,16 @@
       A widget with two adjustable panes.
 
       @about-class{gtk-paned}
-      
+
+      @about-generic{gtk-paned-max-position}
+      @about-generic{gtk-paned-min-position}
       @about-generic{gtk-paned-position}
+      @about-generic{gtk-paned-position-set}
       @about-generic{gtk-paned-wide-handle}
 
       @about-function{gtk-paned-child-resize}
       @about-function{gtk-paned-child-shrink}
-      
+
       @about-function{gtk-paned-new}
       @about-function{gtk-paned-add1}
       @about-function{gtk-paned-add2}
@@ -660,10 +738,10 @@
       Infinite scrollable area containing child widgets and/or custom drawing.
 
       @about-class{gtk-layout}
-      
+
       @about-generic{gtk-layout-height}
       @about-generic{gtk-layout-width}
-      
+
       @about-function{gtk-layout-child-x}
       @about-function{gtk-layout-child-y}
 
@@ -672,13 +750,17 @@
       @about-function{gtk-layout-move}
       @about-function{gtk-layout-set-size}
       @about-function{gtk-layout-get-size}
+      @about-function{gtk-layout-get-hadjustment}
+      @about-function{gtk-layout-get-vadjustment}
+      @about-function{gtk-layout-set-hadjustment}
+      @about-function{gtk-layout-set-vadjustment}
       @about-function{gtk-layout-get-bin-window}
     @end{subsection}
     @begin[GtkNotebook]{subsection}
       A tabbed notebook container.
 
       @about-class{gtk-notebook}
-      
+
       @about-generic{gtk-notebook-enable-popup}
       @about-generic{gtk-notebook-group-name}
       @about-generic{gtk-notebook-page}
@@ -686,7 +768,7 @@
       @about-generic{gtk-notebook-show-border}
       @about-generic{gtk-notebook-show-tabs}
       @about-generic{gtk-notebook-tab-pos}
-      
+
       @about-function{gtk-notebook-child-detachable}
       @about-function{gtk-notebook-child-menu-label}
       @about-function{gtk-notebook-child-position}
@@ -694,7 +776,7 @@
       @about-function{gtk-notebook-child-tab-expand}
       @about-function{gtk-notebook-child-tab-fill}
       @about-function{gtk-notebook-child-tab-label}
-      
+
       @about-function{gtk-notebook-new}
       @about-function{gtk-notebook-append-page}
       @about-function{gtk-notebook-append-page-menu}
@@ -703,7 +785,7 @@
       @about-function{gtk-notebook-insert-page}
       @about-function{gtk-notebook-insert-page-menu}
       @about-function{gtk-notebook-remove-page}
-      @about-function{gtk-notebook-detach-tab}      
+      @about-function{gtk-notebook-detach-tab}
       @about-function{gtk-notebook-page-num}
       @about-function{gtk-notebook-next-page}
       @about-function{gtk-notebook-prev-page}
@@ -754,7 +836,7 @@
       @about-generic{gtk-expander-spacing}
       @about-generic{gtk-expander-use-markup}
       @about-generic{gtk-expander-use-underline}
-            
+
       @about-function{gtk-expander-new}
       @about-function{gtk-expander-new-with-mnemonic}
     @end{subsection}
@@ -762,19 +844,19 @@
       An interface for flippable widgets.
 
       @about-class{gtk-orientable}
-      
+
       @about-generic{gtk-orientable-orientation}
     @end{subsection}
     @begin[GtkAspectFrame]{subsection}
       A frame that constrains its child to a particular aspect ratio.
 
       @about-class{gtk-aspect-frame}
-      
+
       @about-generic{gtk-aspect-frame-obey-child}
       @about-generic{gtk-aspect-frame-ratio}
       @about-generic{gtk-aspect-frame-xalign}
-      @about-generic{gtk-aspect-frame-yalign}      
-      
+      @about-generic{gtk-aspect-frame-yalign}
+
       @about-function{gtk-aspect-frame-new}
       @about-function{gtk-aspect-frame-set}
     @end{subsection}
@@ -782,7 +864,7 @@
       A container which allows you to position widgets at fixed coordinates.
 
       @about-class{gtk-fixed}
-      
+
       @about-function{gtk-fixed-child-x}
       @about-function{gtk-fixed-child-y}
 
@@ -840,8 +922,23 @@
     @begin[GtkImage]{subsection}
       A widget displaying an image.
 
-      @about-class{gtk-image}
       @about-symbol{gtk-image-type}
+
+      @about-class{gtk-image}
+
+      @about-generic{gtk-image-file}
+      @about-generic{gtk-image-gicon}
+      @about-generic{gtk-image-icon-name}
+      @about-generic{gtk-image-icon-set}
+      @about-generic{gtk-image-icon-size}
+      @about-generic{gtk-image-pixbuf}
+      @about-generic{gtk-image-pixbuf-animation}
+      @about-generic{gtk-image-pixel-size}
+      @about-generic{gtk-image-resource}
+      @about-generic{gtk-image-stock}
+      @about-generic{gtk-image-storage-type}
+      @about-generic{gtk-image-surface}
+      @about-generic{gtk-image-use-fallback}
 
       @about-function{gtk-image-get-icon-set}
       @about-function{gtk-image-get-stock}
@@ -868,12 +965,12 @@
       @about-function{gtk-image-set-from-surface}
       @about-function{gtk-image-clear}
       @about-function{gtk-image-new}
-      @about-function{gtk-image-get-pixel-size}
     @end{subsection}
     @begin[GtkSpinner]{subsection}
       Show a spinner animation.
 
       @about-class{gtk-spinner}
+
       @about-function{gtk-spinner-new}
       @about-function{gtk-spinner-start}
       @about-function{gtk-spinner-stop}
@@ -883,9 +980,9 @@
 
       @about-class{gtk-info-bar}
 
-      @about-gemeric{gtk-info-bar-message-type}
-      @about-gemeric{gtk-info-bar-revealed}
-      @about-gemeric{gtk-info-bar-show-close-button}
+      @about-generic{gtk-info-bar-message-type}
+      @about-generic{gtk-info-bar-revealed}
+      @about-generic{gtk-info-bar-show-close-button}
 
       @about-function{gtk-info-bar-new}
       @about-function{gtk-info-bar-new-with-buttons}
@@ -916,10 +1013,19 @@
     @begin[GtkLevelBar]{subsection}
       A bar that can be used as a level indicator.
 
+      @about-symbol{gtk-level-bar-mode}
       @about-symbol{GTK_LEVEL_BAR_OFFSET_LOW}
       @about-symbol{GTK_LEVEL_BAR_OFFSET_HIGH}
+      @about-symbol{GTK_LEVEL_BAR_OFFSET_FULL}
+
       @about-class{gtk-level-bar}
-      @about-symbol{gtk-level-bar-mode}
+
+      @about-generic{gtk-level-bar-inverted}
+      @about-generic{gtk-level-bar-max-value}
+      @about-generic{gtk-level-bar-min-value}
+      @about-generic{gtk-level-bar-mode}
+      @about-generic{gtk-level-bar-value}
+
       @about-function{gtk-level-bar-new}
       @about-function{gtk-level-bar-new-for-interval}
       @about-function{gtk-level-bar-add-offset-value}
@@ -930,6 +1036,7 @@
       Report messages of minor importance to the user.
 
       @about-class{gtk-statusbar}
+
       @about-function{gtk-statusbar-new}
       @about-function{gtk-statusbar-get-context-id}
       @about-function{gtk-statusbar-push}
@@ -942,48 +1049,15 @@
       A label which displays an accelerator key on the right of the text.
 
       @about-class{gtk-accel-label}
+
+      @about-generic{gtk-accel-label-accel-closure}
+      @about-generic{gtk-accel-label-accel-widget}
+
       @about-function{gtk-accel-label-new}
       @about-function{gtk-accel-label-get-accel-width}
       @about-function{gtk-accel-label-set-accel}
+      @about-function{gtk-accel-label-get-accel}
       @about-function{gtk-accel-label-refetch}
-    @end{subsection}
-    @begin[GtkStatusIcon]{subsection}
-      Display an icon in the system tray.
-
-      @about-class{gtk-status-icon}
-      @about-function{gtk-status-icon-new}
-      @about-function{gtk-status-icon-new-from-pixbuf}
-      @about-function{gtk-status-icon-new-from-file}
-      @about-function{gtk-status-icon-new-from-stock}
-      @about-function{gtk-status-icon-new-from-icon-name}
-      @about-function{gtk-status-icon-new-from-gicon}
-      @about-function{gtk-status-icon-set-from-pixbuf}
-      @about-function{gtk-status-icon-set-from-file}
-      @about-function{gtk-status-icon-set-from-stock}
-      @about-function{gtk-status-icon-set-from-icon-name}
-      @about-function{gtk-status-icon-set-from-gicon}
-      @about-function{gtk-status-icon-get-pixbuf}
-      @about-function{gtk-status-icon-get-stock}
-      @about-function{gtk-status-icon-get-icon-name}
-      @about-function{gtk-status-icon-get-gicon}
-      @about-function{gtk-status-icon-get-size}
-      @about-function{gtk-status-icon-set-screen}
-      @about-function{gtk-status-icon-get-screen}
-      @about-function{gtk-status-icon-set-tooltip-text}
-      @about-function{gtk-status-icon-get-tooltip-text}
-      @about-function{gtk-status-icon-set-tooltip-markup}
-      @about-function{gtk-status-icon-get-tooltip-markup}
-      @about-function{gtk-status-icon-set-has-tooltip}
-      @about-function{gtk-status-icon-get-has-tooltip}
-      @about-function{gtk-status-icon-set-title}
-      @about-function{gtk-status-icon-get-title}
-      @about-function{gtk-status-icon-set-name}
-      @about-function{gtk-status-icon-set-visible}
-      @about-function{gtk-status-icon-get-visible}
-      @about-function{gtk-status-icon-is-embedded}
-      @about-function{gtk-status-icon-position-menu}
-      @about-function{gtk-status-icon-get-geometry}
-      @about-function{gtk-status-icon-get-x11-window-id}
     @end{subsection}
   @end{section}
   @begin[Buttons and Toggles]{section}
@@ -991,33 +1065,38 @@
       A widget that emits a signal when clicked on.
 
       @about-class{gtk-button}
+
+      @about-generic{gtk-button-always-show-image}
+      @about-generic{gtk-button-image}
+      @about-generic{gtk-button-image-position}
+      @about-generic{gtk-button-label}
+      @about-generic{gtk-button-relief}
+      @about-generic{gtk-button-use-stock}
+      @about-generic{gtk-button-use-underline}
+      @about-generic{gtk-button-xalign}
+      @about-generic{gtk-button-yalign}
+
       @about-function{gtk-button-new}
       @about-function{gtk-button-new-with-label}
       @about-function{gtk-button-new-with-mnemonic}
+      @about-function{gtk-button-new-from-icon-name}
       @about-function{gtk-button-new-from-stock}
       @about-function{gtk-button-pressed}
       @about-function{gtk-button-released}
       @about-function{gtk-button-clicked}
       @about-function{gtk-button-enter}
       @about-function{gtk-button-leave}
-      @about-function{gtk-button-set-relief}
-      @about-function{gtk-button-get-relief}
-      @about-function{gtk-button-get-use-stock}
-      @about-function{gtk-button-set-use-stock}
-      @about-function{gtk-button-get-use-underline}
-      @about-function{gtk-button-set-use-underline}
       @about-function{gtk-button-set-focus-on-click}
       @about-function{gtk-button-get-focus-on-click}
       @about-function{gtk-button-set-alignment}
       @about-function{gtk-button-get-alignment}
-      @about-function{gtk-button-set-image-position}
-      @about-function{gtk-button-get-image-position}
       @about-function{gtk-button-get-event-window}
     @end{subsection}
     @begin[GtkCheckButton]{subsection}
       Create widgets with a discrete toggle button.
 
       @about-class{gtk-check-button}
+
       @about-function{gtk-check-button-new}
       @about-function{gtk-check-button-new-with-label}
       @about-function{gtk-check-button-new-with-mnemonic}
@@ -1026,6 +1105,9 @@
       A choice from multiple check buttons.
 
       @about-class{gtk-radio-button}
+
+      @about-generic{gtk-radio-button-group}
+
       @about-function{gtk-radio-button-new}
       @about-function{gtk-radio-button-new-from-widget}
       @about-function{gtk-radio-button-new-with-label}
@@ -1040,61 +1122,77 @@
       Create buttons which retain their state.
 
       @about-class{gtk-toggle-button}
+
+      @about-generic{gtk-toggle-button-active}
+      @about-generic{gtk-toggle-button-draw-indicator}
+      @about-generic{gtk-toggle-button-inconsistent}
+
       @about-function{gtk-toggle-button-new}
       @about-function{gtk-toggle-button-new-with-label}
       @about-function{gtk-toggle-button-new-with-mnemonic}
       @about-function{gtk-toggle-button-set-mode}
       @about-function{gtk-toggle-button-get-mode}
       @about-function{gtk-toggle-button-toggled}
-      @about-function{gtk-toggle-button-get-inconsistent}
-      @about-function{gtk-toggle-button-set-inconsistent}
     @end{subsection}
     @begin[GtkLinkButton]{subsection}
       Create buttons bound to a URL.
 
       @about-class{gtk-link-button}
+
+      @about-generic{gtk-link-button-uri}
+      @about-generic{gtk-link-button-visited}
+
       @about-function{gtk-link-button-new}
       @about-function{gtk-link-button-new-with-label}
-      @about-function{gtk-link-button-get-visited}
-      @about-function{gtk-link-button-set-visited}
     @end{subsection}
     @begin[GtkMenuButton]{subsection}
       A widget that shows a popup when clicked on.
 
       @about-symbol{gtk-arrow-type}
+
       @about-class{gtk-menu-button}
+
       @about-generic{gtk-menu-button-align-widget}
       @about-generic{gtk-menu-button-direction}
       @about-generic{gtk-menu-button-menu-model}
       @about-generic{gtk-menu-button-popover}
       @about-generic{gtk-menu-button-popup}
       @about-generic{gtk-menu-button-use-popover}
+
       @about-function{gtk-menu-button-new}
     @end{subsection}
     @begin[GtkSwitch]{subsection}
       A \"light switch\" style toggle.
 
       @about-class{gtk-switch}
+
+      @about-generic{gtk-switch-active}
+      @about-generic{gtk-switch-state}
+
       @about-function{gtk-switch-new}
     @end{subsection}
     @begin[GtkScaleButton]{subsection}
       A button which pops up a scale.
 
       @about-class{gtk-scale-button}
+
+      @about-generic{gtk-scale-button-adjustment}
+      @about-generic{gtk-scale-button-icons}
+      @about-generic{gtk-scale-button-size}
+      @about-generic{gtk-scale-button-value}
+
       @about-function{gtk-scale-button-new}
-      @about-function{gtk-scale-button-set-adjustment}
-      @about-function{gtk-scale-button-set-icons}
-      @about-function{gtk-scale-button-set-value}
-      @about-function{gtk-scale-button-get-adjustment}
-      @about-function{gtk-scale-button-get-value}
       @about-function{gtk-scale-button-get-popup}
       @about-function{gtk-scale-button-get-plus-button}
       @about-function{gtk-scale-button-get-minus-button}
     @end{subsection}
-    @begin[GtkVolumeButton]{subsection}
+    @begin[GtkVolumeButton]{subsection}use-symbolic
       A button which pops up a volume control.
 
       @about-class{gtk-volume-button}
+
+      @about-generic{gtk-volume-use-symbolic}
+
       @about-function{gtk-volume-button-new}
     @end{subsection}
     @begin[GtkLockButton]{subsection}
@@ -1104,7 +1202,19 @@
       A button that uses a GAction as model.
 
       @about-symbol{gtk-button-role}
+
       @about-class{gtk-model-button}
+
+      @about-generic{gtk-model-button-active}
+      @about-generic{gtk-model-button-centered}
+      @about-generic{gtk-model-button-icon}
+      @about-generic{gtk-model-button-iconic}
+      @about-generic{gtk-model-button-inverted}
+      @about-generic{gtk-model-button-menu-name}
+      @about-generic{gtk-model-button-role}
+      @about-generic{gtk-model-button-text}
+      @about-generic{gtk-model-button-use-markup}
+
       @about-function{gtk-model-button-new}
     @end{subsection}
   @end{section}
@@ -1211,6 +1321,11 @@
       Text buffer for @class{gtk-entry}.
 
       @about-class{gtk-entry-buffer}
+
+      @about-generic{gtk-entry-buffer-length}
+      @about-generic{gtk-entry-buffer-max-length}
+      @about-generic{gtk-entry-buffer-text}
+
       @about-function{gtk-entry-buffer-new}
       @about-function{gtk-entry-buffer-get-bytes}
       @about-function{gtk-entry-buffer-insert-text}
@@ -1222,6 +1337,17 @@
       Completion functionality for GtkEntry.
 
       @about-class{gtk-entry-completion}
+
+      @about-generic{gtk-entry-completion-cell-area}
+      @about-generic{gtk-entry-completion-inline-completion}
+      @about-generic{gtk-entry-completion-inline-selection}
+      @about-generic{gtk-entry-completion-minimum-key-length}
+      @about-generic{gtk-entry-completion-model}
+      @about-generic{gtk-entry-completion-popup-completion}
+      @about-generic{gtk-entry-completion-popup-set-width}
+      @about-generic{gtk-entry-completion-popup-single-match}
+      @about-generic{gtk-entry-completion-text-column}
+
       @about-function{gtk-entry-completion-new}
       @about-function{gtk-entry-completion-new-with-area}
       @about-function{gtk-entry-completion-get-entry}
@@ -1238,13 +1364,14 @@
       A slider widget for selecting a value from a range.
 
       @about-class{gtk-scale}
+
+      @about-generic{gtk-scale-digits}
+      @about-generic{gtk-scale-draw-value}
+      @about-generic{gtk-scale-has-origin}
+      @about-generic{gtk-scale-value-pos}
+
       @about-function{gtk-scale-new}
       @about-function{gtk-scale-new-with-range}
-      @about-function{gtk-scale-set-digits}
-      @about-function{gtk-scale-set-has-origin}
-      @about-function{gtk-scale-get-digits}
-      @about-function{gtk-scale-get-draw-value}
-      @about-function{gtk-scale-get-has-origin}
       @about-function{gtk-scale-get-layout}
       @about-function{gtk-scale-get-layout-offsets}
       @about-function{gtk-scale-add-mark}
@@ -1253,30 +1380,30 @@
     @begin[GtkSpinButton]{subsection}
       Retrieve an integer or floating-point number from the user.
 
-      @about-class{gtk-spin-button}
       @about-symbol{gtk-spin-button-update-policy}
       @about-symbol{gtk-spin-type}
+
+      @about-class{gtk-spin-button}
+
+      @about-generic{gtk-spin-button-adjustment}
+      @about-generic{gtk-spin-button-climb-rate}
+      @about-generic{gtk-spin-button-digits}
+      @about-generic{gtk-spin-button-numeric}
+      @about-generic{gtk-spin-button-snap-to-ticks}
+      @about-generic{gtk-spin-button-update-policy}
+      @about-generic{gtk-spin-button-value}
+      @about-generic{gtk-spin-button-wrap}
+
       @about-function{gtk-spin-button-configure}
       @about-function{gtk-spin-button-new}
       @about-function{gtk-spin-button-new-with-range}
-      @about-function{gtk-spin-button-set-digits}
       @about-function{gtk-spin-button-set-increments}
       @about-function{gtk-spin-button-set-range}
       @about-function{gtk-spin-button-get-value-as-int}
-      @about-function{gtk-spin-button-set-update-policy}
-      @about-function{gtk-spin-button-set-numeric}
       @about-function{gtk-spin-button-spin}
-      @about-function{gtk-spin-button-set-wrap}
-      @about-function{gtk-spin-button-set-snap-to-ticks}
       @about-function{gtk-spin-button-update}
-      @about-function{gtk-spin-button-get-digits}
       @about-function{gtk-spin-button-get-increments}
-      @about-function{gtk-spin-button-get-numeric}
       @about-function{gtk-spin-button-get-range}
-      @about-function{gtk-spin-button-get-snap-to-ticks}
-      @about-function{gtk-spin-button-get-update-policy}
-      @about-function{gtk-spin-button-get-wrap}
-      @about-symbol{GTK_INPUT_ERROR}
     @end{subsection}
     @begin[GtkSearchEntry]{subsection}
       An entry which shows a search icon.
@@ -3167,13 +3294,13 @@ setup_tree (void)
       @about-generic{gtk-popover-modal}
       @about-generic{gtk-popover-transitions-enabled}
 
-      @about-function{gtk-popover-new} 
-      @about-function{gtk-popover-new-from-model} 
-      @about-function{gtk-popover-bind-model} 
-      @about-function{gtk-popover-popup} 
-      @about-function{gtk-popover-popdown} 
-      @about-function{gtk-popover-set-default-widget} 
-      @about-function{gtk-popover-get-default-widget} 
+      @about-function{gtk-popover-new}
+      @about-function{gtk-popover-new-from-model}
+      @about-function{gtk-popover-bind-model}
+      @about-function{gtk-popover-popup}
+      @about-function{gtk-popover-popdown}
+      @about-function{gtk-popover-set-default-widget}
+      @about-function{gtk-popover-get-default-widget}
     @end{subsection}
     @begin[GtkPopoverMenu]{subsection}
 
@@ -4706,20 +4833,20 @@ setup_tree (void)
   @begin[Gestures and event handling]{section}
     @begin[GtkEventController]{subsection}
       Self-contained handler of series of events
-      
+
       @about-symbol{gtk-propagation-phase}
       @about-class{gtk-event-controller}
-      
+
       @about-generic{gtk-event-controller-propagation-phase}
       @about-generic{gtk-event-controller-widget}
-      
+
       @about-function{gtk-event-controller-handle-event}
       @about-function{gtk-event-controller-reset}
     @end{subsection}
 
     @begin[GtkEventControllerKey]{subsection}
       Event controller for key events
-      
+
       @about-class{gtk-event-controller-key}
 
       @about-class{gtk-event-controller-key-new}
@@ -4728,32 +4855,32 @@ setup_tree (void)
     @begin[GtkEventControllerScroll]{subsection}
       Event controller for scroll events
 
-      @about-symbol{gtk-event-controller-scroll-flags}      
+      @about-symbol{gtk-event-controller-scroll-flags}
       @about-class{gtk-event-controller-scroll}
 
       @about-generic{gtk-event-controller-scroll-flags}
 
       @about-function{gtk-event-controller-scroll-new}
     @end{subsection}
-    
+
     @begin[GtkEventControllerMotion]{subsection}
       Event controller for motion events
-      
+
       @about-class{gtk-event-controller-motion}
 
       @about-function{gtk-event-controller-motion-new}
     @end{subsection}
-    
+
     @begin[GtkGesture]{subsection}
       Base class for gestures
-      
+
       @about-class{gtk-gesture}
 
       @about-generic{gtk-gesture-n-points}
       @about-generic{gtk-gesture-window}
 
       @about-function{gtk-gesture-get-device}
-      @about-function{gtk-gesture-is-active} 
+      @about-function{gtk-gesture-is-active}
       @about-function{gtk-gesture-is-recognized}
       @about-function{gtk-gesture-get-sequence-state}
       @about-function{gtk-gesture-set-sequence-state}
@@ -4773,50 +4900,50 @@ setup_tree (void)
 
     @begin[GtkGestureSingle]{subsection}
       Base class for mouse/single-touch gestures
-      
+
       @about-class{gtk-gesture-single}
-      
+
       @about-generic{gtk-gesture-single-button}
       @about-generic{gtk-gesture-single-exclusive}
       @about-generic{gtk-gesture-single-touch-only}
-      
+
       @about-function{gtk-gesture-single-get-current-button}
       @about-function{gtk-gesture-single-get-current-sequence}
     @end{subsection}
 
     @begin[GtkGestureDrag]{subsection}
       Drag gesture
-      
+
       @about-class{gtk-gesture-drag}
 
       @about-function{gtk-gesture-drag-new}
       @about-function{gtk-gesture-drag-get-start-point}
       @about-function{gtk-gesture-drag-get-offset}
     @end{subsection}
-    
+
     @begin[GtkGestureLongPress]{subsection}
       \"Press and Hold\" gesture
-      
+
       @about-class{gtk-gesture-long-press}
 
       @about-generic{gtk-gesture-long-press-delay-factor}
 
       @about-function{gtk-gesture-long-press-new}
     @end{subsection}
-    
+
     @begin[GtkGestureMultiPress]{subsection}
       Multipress gesture.
-      
+
       @about-class{gtk-gesture-multi-press}
 
       @about-function{gtk-gesture-multi-press-new}
       @about-function{gtk-gesture-multi-press-set-area}
       @about-function{gtk-gesture-multi-press-get-area}
     @end{subsection}
-    
+
     @begin[GtkGesturePan]{subsection}
       Pan gesture
-      
+
       @about-symbol{gtk-pan-direction}
       @about-class{gtk-gesture-pan}
 
@@ -4824,37 +4951,37 @@ setup_tree (void)
 
       @about-function{gtk-gesture-pan-new}
     @end{subsection}
-    
+
     @begin[GtkGestureSwipe]{subsection}
       Swipe gesture
-      
+
       @about-class{gtk-gesture-swipe}
 
       @about-function{gtk-gesture-swipe-new}
       @about-function{gtk-gesture-swipe-get-velocity}
     @end{subsection}
-    
+
     @begin[GtkGestureRotate]{subsection}
       Rotate gesture.
-      
+
       @about-class{gtk-gesture-rotate}
 
       @about-function{gtk-gesture-rotate-new}
       @about-function{gtk-gesture-rotate-get-angle-delta}
     @end{subsection}
-    
+
     @begin[GtkGestureZoom]{subsection}
       Zoom gesture.
-      
+
       @about-class{gtk-gesture-zoom}
 
       @about-function{gtk-gesture-zoom-new}
       @about-function{gtk-gesture-zoom-get-scale-delta}
     @end{subsection}
-    
+
     @begin[GtkGestureStylus]{subsection}
       Gesture for stylus input
-      
+
       @about-class{gtk-gesture-stylus}
 
       @about-function{gtk-gesture-stylus-new}
@@ -4862,12 +4989,12 @@ setup_tree (void)
       @about-function{gtk-gesture-stylus-get-axes}
       @about-function{gtk-gesture-stylus-get-device-tool}
     @end{subsection}
-    
+
     @begin[GtkPadController]{subsection}
       Controller for drawing tablet pads
 
       @about-symbol{gtk-pad-action-type}
-      @about-symbol{gtk-pad-action-entry}      
+      @about-symbol{gtk-pad-action-entry}
       @about-class{gtk-pad-controller}
 
       @about-generic{gtk-pad-controller-action-group}
@@ -4998,7 +5125,7 @@ setup_tree (void)
       @about-function{gtk-accelerator-parse}
       @about-function{gtk-accelerator-name}
       @about-function{gtk-accelerator-get-label}
-      @about-function{gtk-accelerator-parse-with-keycode}    
+      @about-function{gtk-accelerator-parse-with-keycode}
       @about-function{gtk-accelerator-name-with-keycode}
       @about-function{gtk-accelerator-get-label-with-keycode}
       @about-function{gtk-accelerator-set-default-mod-mask}
@@ -6063,6 +6190,44 @@ setup_tree (void)
       @about-function{gtk-misc-set-padding}
       @about-function{gtk-misc-get-alignment}
       @about-function{gtk-misc-get-padding}
+    @end{subsection}
+    @begin[GtkStatusIcon]{subsection}
+      Display an icon in the system tray.
+
+      @about-class{gtk-status-icon}
+      @about-function{gtk-status-icon-new}
+      @about-function{gtk-status-icon-new-from-pixbuf}
+      @about-function{gtk-status-icon-new-from-file}
+      @about-function{gtk-status-icon-new-from-stock}
+      @about-function{gtk-status-icon-new-from-icon-name}
+      @about-function{gtk-status-icon-new-from-gicon}
+      @about-function{gtk-status-icon-set-from-pixbuf}
+      @about-function{gtk-status-icon-set-from-file}
+      @about-function{gtk-status-icon-set-from-stock}
+      @about-function{gtk-status-icon-set-from-icon-name}
+      @about-function{gtk-status-icon-set-from-gicon}
+      @about-function{gtk-status-icon-get-pixbuf}
+      @about-function{gtk-status-icon-get-stock}
+      @about-function{gtk-status-icon-get-icon-name}
+      @about-function{gtk-status-icon-get-gicon}
+      @about-function{gtk-status-icon-get-size}
+      @about-function{gtk-status-icon-set-screen}
+      @about-function{gtk-status-icon-get-screen}
+      @about-function{gtk-status-icon-set-tooltip-text}
+      @about-function{gtk-status-icon-get-tooltip-text}
+      @about-function{gtk-status-icon-set-tooltip-markup}
+      @about-function{gtk-status-icon-get-tooltip-markup}
+      @about-function{gtk-status-icon-set-has-tooltip}
+      @about-function{gtk-status-icon-get-has-tooltip}
+      @about-function{gtk-status-icon-set-title}
+      @about-function{gtk-status-icon-get-title}
+      @about-function{gtk-status-icon-set-name}
+      @about-function{gtk-status-icon-set-visible}
+      @about-function{gtk-status-icon-get-visible}
+      @about-function{gtk-status-icon-is-embedded}
+      @about-function{gtk-status-icon-position-menu}
+      @about-function{gtk-status-icon-get-geometry}
+      @about-function{gtk-status-icon-get-x11-window-id}
     @end{subsection}
   @end{section}")
 
