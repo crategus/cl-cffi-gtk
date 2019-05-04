@@ -113,8 +113,6 @@
         @entry[position]{The position the text was deleted at.}
         @entry[n-chars]{The number of characters that were deleted.}
       @end{table}
-      Since 2.18
-
     @subheading{The \"inserted-text\" signal}
       @begin{pre}
  lambda (buffer position chars n-chars)   : Run First
@@ -126,7 +124,6 @@
         @entry[chars]{The text that was inserted.}
         @entry[n-chars]{The number of characters that were inserted.}
       @end{table}
-      Since 2.18
   @end{dictionary}
   @see-slot{gtk-entry-buffer-length}
   @see-slot{gtk-entry-buffer-max-length}
@@ -134,20 +131,17 @@
   @see-class{gtk-entry}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
 ;;; Property and Accessor Details
-;;;
 ;;; ----------------------------------------------------------------------------
 
 ;;; --- gtk-entry-buffer-length ------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "length" 'gtk-entry-buffer) 't)
- "The @code{\"length\"} property of type @code{:uint} (Read) @br{}
+ "The @code{length} property of type @code{:uint} (Read) @br{}
   The length (in characters) of the text in buffer. @br{}
   Allowed values: <= 65535 @br{}
-  Default value: 0 @br{}
-  Since 2.18")
+  Default value: 0")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-entry-buffer-length atdoc:*function-name-alias*)
@@ -162,8 +156,6 @@
 
   The generic function @sym{gtk-entry-buffer-length} retrieves the length in
   characters of the buffer.
-
-  Since 2.18
   @see-class{gtk-entry-buffer}
   @see-function{gtk-entry-buffer-get-bytes}")
 
@@ -172,11 +164,10 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "max-length"
                                                'gtk-entry-buffer) 't)
- "The @code{\"max-length\"} property of type @code{:int} (Read / Write) @br{}
+ "The @code{max-length} property of type @code{:int} (Read / Write) @br{}
   The maximum length (in characters) of the text in the buffer. @br{}
   Allowed values: [0,65535] @br{}
-  Default value: 0 @br{}
-  Since 2.18")
+  Default value: 0")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-entry-buffer-max-length atdoc:*function-name-alias*)
@@ -200,18 +191,15 @@
   The generic function @sym{(setf get-entry-buffer-max-length)} sets the
   maximum allowed length of the contents of the buffer. If the current contents
   are longer than the given length, then they will be truncated to fit.
-
-  Since 2.18
   @see-class{gtk-entry-buffer}")
 
 ;;; --- gtk-entry-buffer-text --------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "text" 'gtk-entry-buffer) 't)
- "The @code{\"text\"} property of type @code{:string} (Read / Write) @br{}
+ "The @code{text} property of type @code{:string} (Read / Write) @br{}
   The contents of the buffer. @br{}
-  Default value: \"\" @br{}
-  Since 2.18")
+  Default value: \"\"")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-entry-buffer-text atdoc:*function-name-alias*)
@@ -235,8 +223,6 @@
 
   This is roughly equivalent to calling the functions
   @fun{gtk-entry-buffer-delete-text} and @fun{gtk-entry-buffer-insert-text}.
-
-  Since 2.18
   @see-class{gtk-entry-buffer}
   @see-function{gtk-entry-buffer-delete-text}
   @see-function{gtk-entry-buffer-insert-text}")
@@ -255,8 +241,6 @@
   @end{short}
 
   Optionally, specify initial text to set in the buffer.
-
-  Since 2.18
   @see-class{gtk-entry-buffer}"
   (let ((buffer (make-instance 'gtk-entry-buffer)))
     (when text
@@ -278,8 +262,6 @@
     Retrieves the length in bytes of the @arg{buffer}.
   @end{short}
   See the function @fun{gtk-entry-buffer-get-length}.
-
-  Since 2.18
   @see-class{gtk-entry-buffer}
   @see-function{gtk-entry-buffer-get-length}"
   (buffer (g-object gtk-entry-buffer)))
@@ -313,8 +295,6 @@
   values.
 
   Note that the @arg{position} is in characters, not in bytes.
-
-  Since 2.18
   @see-class{gtk-entry-buffer}
   @see-function{gtk-entry-buffer-delete-text}"
   (%gtk-entry-buffer-insert-text buffer position text -1))
@@ -343,8 +323,6 @@
   to sane values.
 
   Note that the positions are specified in characters, not bytes.
-
-  Since 2.18
   @see-class{gtk-entry-buffer}
   @see-function{gtk-entry-buffer-insert-text}"
   (buffer (g-object gtk-entry-buffer))
@@ -367,8 +345,6 @@
   @begin{short}
     Used when subclassing @class{gtk-entry-buffer}.
   @end{short}
-
-  Since 2.18
   @see-class{gtk-entry-buffer}
   @see-function{gtk-entry-buffer-emit-inserted-text}"
   (buffer (g-object gtk-entry-buffer))
@@ -392,8 +368,6 @@
   @begin{short}
     Used when subclassing @class{gtk-entry-buffer} object.
   @end{short}
-
-  Since 2.18
   @see-class{gtk-entry-buffer}
   @see-function{gtk-entry-buffer-emit-deleted-text}"
   (buffer (g-object gtk-entry-buffer))
