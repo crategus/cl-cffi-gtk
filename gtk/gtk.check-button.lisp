@@ -37,9 +37,9 @@
 ;;;
 ;;; Functions
 ;;;
-;;;     GtkWidget*  gtk_check_button_new ()
-;;;     GtkWidget*  gtk_check_button_new_with_label ()
-;;;     GtkWidget*  gtk_check_button_new_with_mnemonic ()
+;;;     GtkWidget*  gtk_check_button_new
+;;;     GtkWidget*  gtk_check_button_new_with_label
+;;;     GtkWidget*  gtk_check_button_new_with_mnemonic
 ;;;
 ;;; Style Properties
 ;;;
@@ -89,6 +89,8 @@
     @class{gtk-toggle-button} widgets for more information about toggle/check
     buttons.
   @end{short}
+
+  @image[check-button]{}
 
   The important signal \"toggled\" is also inherited from
   @class{gtk-toggle-button}.
