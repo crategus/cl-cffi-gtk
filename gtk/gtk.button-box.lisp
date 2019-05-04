@@ -167,46 +167,70 @@
   but it does allow 'outliers' to keep their own larger size.
 
   To excempt individual children from homogeneous sizing regardless of their
-  'outlier' status, you can set the @code{\"non-homogeneous\"} child property.
+  'outlier' status, you can set the @code{non-homogeneous} child property.
   @begin[CSS nodes]{dictionary}
-    @class{gtk-button-box} uses a single CSS node with name buttonbox.
+    @class{gtk-button-box} uses a single CSS node with name @code{buttonbox}.
+  @end{dictionary}
+  @begin[Child Property Details]{dictionary}
+    @begin[code]{table}
+      @begin[non-homogeneous]{entry}
+        The @code{non-homogeneous} child property of type @code{:boolean}
+        (Read / Write) @br{}
+        If @em{true}, the child will not be subject to homogeneous sizing. @br{}
+        Default value: @code{nil}
+      @end{entry}
+      @begin[secondary]{entry}
+        The @code{secondary} child property of type @code{:boolean}
+        (Read / Write) @br{}
+        If @em{true}, the child appears in a secondary group of children,
+        suitable for, e.g., help buttons. @br{}
+        Default value: @code{nil}
+      @end{entry}
+    @end{table}
   @end{dictionary}
   @begin[Style Property Details]{dictionary}
-    @subheading{The \"child-internal-pad-x\" style property}
-      @code{\"child-internal-pad-x\"} of type @code{:int} (Read) @br{}
-      Amount to increase child's size on either side. @br{}
-      @b{Warning:} @code{child-internal-pad-x} has been deprecated since version
-      3.20 and should not be used in newly-written code.
-      Use CSS padding instead. @br{}
-      Allowed values: >= 0 @br{}
-      Default value: 4
-
-    @subheading{The \"child-internal-pad-y\" style property}
-      @code{\"child-internal-pad-y\"} of type @code{:int} (Read) @br{}
-      Amount to increase child's size on the top and bottom. @br{}
-      @b{Warning:} @code{child-internal-pad-y} has been deprecated since version
-      3.20 and should not be used in newly-written code.
-      Use CSS padding instead. @br{}
-      Allowed values: >= 0 @br{}
-      Default value: 0
-
-    @subheading{The \"child-min-height\" style property}
-      @code{\"child-min-height\"} of type @code{:int} (Read) @br{}
-      Minimum height of buttons inside the box. @br{}
-      @b{Warning:} @code{child-min-height} has been deprecated since version
-      3.20 and should not be used in newly-written code.
-      Use CSS padding instead. @br{}
-      Allowed values: >= 0 @br{}
-      Default value: 27
-
-    @subheading{The \"child-min-width\" style property}
-      @code{\"child-min-width\"} of type @code{:int} (Read) @br{}
-      Minimum width of buttons inside the box. @br{}
-      @b{Warning:} @code{child-min-width} has been deprecated since version
-      3.20 and should not be used in newly-written code.
-      Use CSS padding instead. @br{}
-      Allowed values: >= 0 @br{}
-      Default value: 85
+    @begin[code]{table}
+      @begin[child-internal-pad-x]{entry}
+        The @code{child-internal-pad-x} style property of type @code{:int}
+        (Read) @br{}
+        Amount to increase child's size on either side. @br{}
+        @em{Warning:} @code{child-internal-pad-x} has been deprecated since
+        version 3.20 and should not be used in newly-written code. Use CSS
+        padding instead. @br{}
+        Allowed values: >= 0 @br{}
+        Default value: 4
+      @end{entry}
+      @begin[child-internal-pad-y]{entry}
+        The  @code{child-internal-pad-y} style property of type @code{:int}
+        (Read) @br{}
+        Amount to increase child's size on the top and bottom. @br{}
+        @em{Warning:} @code{child-internal-pad-y} has been deprecated since
+        version 3.20 and should not be used in newly-written code.
+        Use CSS padding instead. @br{}
+        Allowed values: >= 0 @br{}
+        Default value: 0
+      @end{entry}
+      @begin[child-min-height]{entry}
+        The @code{child-min-height} style property of type @code{:int}
+        (Read) @br{}
+        Minimum height of buttons inside the box. @br{}
+        @em{Warning:} @code{child-min-height} has been deprecated since version
+        3.20 and should not be used in newly-written code.
+        Use CSS padding instead. @br{}
+        Allowed values: >= 0 @br{}
+        Default value: 27
+      @end{entry}
+      @begin[child-min-width]{entry}
+        The @code{child-min-width} style property of type @code{:int} (Read)
+        @br{}
+        Minimum width of buttons inside the box. @br{}
+        @em{Warning:} @code{child-min-width} has been deprecated since version
+        3.20 and should not be used in newly-written code.
+        Use CSS padding instead. @br{}
+        Allowed values: >= 0 @br{}
+        Default value: 85
+      @end{entry}
+    @end{table}
   @end{dictionary}
   @see-slot{gtk-button-box-layout-style}")
 
@@ -219,7 +243,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "layout-style" 'gtk-button-box)
                      't)
- "The @code{\"layout-style\"} property of type @symbol{gtk-button-box-style}
+ "The @code{layout-style} property of type @symbol{gtk-button-box-style}
   (Read / Write) @br{}
   How to lay out the buttons in the box. Possible values are: spread, edge,
   start and end. @br{}
@@ -262,7 +286,7 @@
       "Accessor"
       (documentation 'gtk-button-box-child-non-homogeneous 'function)
  "@version{2013-8-27}
-  The @code{\"non-homogeneous\"} child property of type @code{:boolean}
+  The @code{non-homogeneous} child property of type @code{:boolean}
   (Read / Write) @br{}
   If @em{true}, the child will not be subject to homogeneous sizing. @br{}
   Default value: @code{nil}
@@ -279,7 +303,7 @@
       "Accessor"
       (documentation 'gtk-button-box-child-secondary 'function)
  "@version{2013-8-27}
-  The @codee{\"secondary\"} child property of type @code{:boolean}
+  The @codee{secondary} child property of type @code{:boolean}
   (Read / Write) @br{}
   If @em{true}, the child appears in a secondary group of children, suitable
   for, e. g., help buttons. @br{}
@@ -298,8 +322,7 @@
   @argument[orientation]{the box' orientation}
   @return{A new @class{gtk-button-box} container}
   @short{Creates a new @class{gtk-button-box} container.}
-
-  Since 3.0"
+  @see-class{gtk-button-box}"
   (make-instance 'gtk-button-box
                  :orientation orientation))
 
@@ -318,7 +341,8 @@
   @return{The method used to layout buttons in @arg{box}.}
   @begin{short}
     Retrieves the method being used to arrange the buttons in a button box.
-  @end{short}"
+  @end{short}
+  @see-class{gtk-button-box}"
   (gtk-button-box-layout-style box))
 
 (export 'gtk-button-box-get-layout)
@@ -338,8 +362,7 @@
   @begin{short}
     Returns whether child should appear in a secondary group of children.
   @end{short}
-
-  Since 2.4"
+  @see-class{gtk-button-box}"
   (gtk-button-box-child-secondary widget child))
 
 (export 'gtk-button-box-get-child-secondary)
@@ -359,8 +382,7 @@
   @begin{short}
     Returns whether the child is exempted from homogeneous sizing.
   @end{short}
-
-  Since 3.2"
+  @see-class{gtk-button-box}"
   (gtk-button-box-child-non-homogeneous widget child))
 
 (export 'gtk-button-box-get-child-non-homogeneous)
@@ -376,7 +398,8 @@
  "@version{2019-3-16}
   @argument[box]{the button box}
   @argument[layout-style]{the new layout style}
-  @short{Changes the way buttons are arranged in their container.}"
+  @short{Changes the way buttons are arranged in their container.}
+  @see-class{gtk-button-box}"
   (setf (gtk-button-box-layout-style box) layout-style))
 
 (export 'gtk-button-box-set-layout)
@@ -406,7 +429,8 @@
   @fun{gtk-widget-set-direction}). If the style is @code{:start} or @code{:end},
   then the secondary children are aligned at the other end of the button box
   from the main children. For the other styles, they appear immediately next to
-  the main children."
+  the main children.
+  @see-class{gtk-button-box}"
   (setf (gtk-button-box-child-secondary widget child) is-secondary))
 
 (export 'gtk-button-box-set-child-secondary)
@@ -426,8 +450,7 @@
   @begin{short}
     Sets whether the @arg{child} is exempted from homogeous sizing.
   @end{short}
-
-  Since 3.2"
+  @see-class{gtk-button-box}"
   (setf (gtk-button-box-child-non-homogeneous widget child) non-homogeneous))
 
 (export 'gtk-button-box-set-child-non-homogeneous)
@@ -524,7 +547,7 @@
       "Accessor"
       (documentation 'gtk-hbutton-box-child-expand 'function)
  "@version{2013-8-28}
-  Accessor of the child property @code{\"expand\"} of the
+  Accessor of the child property @code{expand} of the
   @class{gtk-hbutton-box} class.
   @see-class{gtk-button-box}
   @see-class{gtk-hbutton-box}")
@@ -534,7 +557,7 @@
       "Accessor"
       (documentation 'gtk-hbutton-box-child-fill 'function)
  "@version{2013-8-28}
-  Accessor of the child property @code{\"fill\"} of the
+  Accessor of the child property @code{fill} of the
   @class{gtk-hbutton-box} class.
   @see-class{gtk-button-box}
   @see-class{gtk-hbutton-box}")
@@ -544,7 +567,7 @@
       "Accessor"
       (documentation 'gtk-hbutton-box-child-padding 'function)
  "@version{2013-8-28}
-  Accessor of the child property @code{\"padding\"} of the
+  Accessor of the child property @code{padding} of the
   @class{gtk-hbutton-box} class.
   @see-class{gtk-button-box}
   @see-class{gtk-hbutton-box}")
@@ -554,7 +577,7 @@
       "Accessor"
       (documentation 'gtk-hbutton-box-child-pack-type 'function)
  "@version{2013-8-28}
-  Accessor of the child property @code{\"pack-type\"} of the
+  Accessor of the child property @code{pack-type} of the
   @class{gtk-hbutton-box} class.
   @see-class{gtk-button-box}
   @see-class{gtk-hbutton-box}")
@@ -564,7 +587,7 @@
       "Accessor"
       (documentation 'gtk-hbutton-box-child-position 'function)
  "@version{2013-8-28}
-  Accessor of the child property @code{\"position\"} of the
+  Accessor of the child property @code{position} of the
   @class{gtk-hbutton-box} class.
   @see-class{gtk-button-box}
   @see-class{gtk-hbutton-box}")
@@ -574,7 +597,7 @@
       "Accessor"
       (documentation 'gtk-hbutton-box-child-secondary 'function)
  "@version{2013-8-28}
-  Accessor of the child property @code{\"secondary\"} of the
+  Accessor of the child property @code{secondary} of the
   @class{gtk-hbutton-box} class.
   @see-class{gtk-button-box}
   @see-class{gtk-hbutton-box}")
@@ -691,7 +714,7 @@
       "Accessor"
       (documentation 'gtk-vbutton-box-child-expand 'function)
  "@version{2013-8-28}
-  Accessor of the child property @code{\"expand\"} of the
+  Accessor of the child property @code{expand} of the
   @class{gtk-vbutton-box} class.
   @see-class{gtk-button-box}
   @see-class{gtk-vbutton-box}")
@@ -701,7 +724,7 @@
       "Accessor"
       (documentation 'gtk-vbutton-box-child-fill 'function)
  "@version{2013-8-28}
-  Accessor of the child property @code{\"fill\"} of the
+  Accessor of the child property @code{fill} of the
   @class{gtk-vbutton-box} class.
   @see-class{gtk-button-box}
   @see-class{gtk-vbutton-box}")
@@ -711,7 +734,7 @@
       "Accessor"
       (documentation 'gtk-vbutton-box-child-padding 'function)
  "@version{2013-8-28}
-  Accessor of the child property @code{\"padding\"} of the
+  Accessor of the child property @code{padding} of the
   @class{gtk-vbutton-box} class.
   @see-class{gtk-button-box}
   @see-class{gtk-vbutton-box}")
@@ -721,7 +744,7 @@
       "Accessor"
       (documentation 'gtk-vbutton-box-child-pack-type 'function)
  "@version{2013-8-28}
-  Accessor of the child property @code{\"pack-type\"} of the
+  Accessor of the child property @code{pack-type} of the
   @class{gtk-vbutton-box} class.
   @see-class{gtk-button-box}
   @see-class{gtk-vbutton-box}")
@@ -731,7 +754,7 @@
       "Accessor"
       (documentation 'gtk-vbutton-box-child-position 'function)
  "@version{2013-8-28}
-  Accessor of the child property @code{\"position\"} of the
+  Accessor of the child property @code{position} of the
   @class{gtk-vbutton-box} class.
   @see-class{gtk-button-box}
   @see-class{gtk-vbutton-box}")
@@ -741,7 +764,7 @@
       "Accessor"
       (documentation 'gtk-vbutton-box-child-secondary 'function)
  "@version{2013-8-28}
-  Accessor of the child property @code{\"secondary\"} of the
+  Accessor of the child property @code{secondary} of the
   @class{gtk-vbutton-box} class.
   @see-class{gtk-button-box}
   @see-class{gtk-vbutton-box}")
