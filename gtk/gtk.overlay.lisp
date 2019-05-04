@@ -103,25 +103,28 @@
     \"type\" attribute of a <child> element.
   @end{dictionary}
   @begin[CSS nodes]{dictionary}
-    @sym{gtk-overlay} has a single CSS node with the name \"overlay\". Overlay 
-    children whose alignments cause them to be positioned at an edge get the 
-    style classes \".left\", \".right\", \".top\", and/or \".bottom\" according 
-    to their position.  
-  @end{dictionary} 
+    @sym{gtk-overlay} has a single CSS node with the name @code{overlay}.
+    Overlay children whose alignments cause them to be positioned at an edge get
+    the style classes @code{.left}, @code{.right}, @code{.top}, and/or
+    @code{.bottom} according to their position.
+  @end{dictionary}
   @begin[Child Property Details]{dictionary}
-    @subheading{The \"index\" child property}
-      The @code{index} child property of type @code{:int} (Read / Write) @br{}
-      The index of the overlay in the parent, -1 for the main child. @br{}
-      Since 3.18 @br{}
-      Allowed values: >= -1 @br{}      
-      Default value: 0
-
-    @subheading{The \"pass-through\" child property}
-      The @code{pass-through} child property of type @code{:boolean} 
-      (Read / Write) @br{}
-      Pass through input, does not affect main child. @br{}
-      Since 3.18 @br{}
-      Default value: @code{nil}    
+    @begin[code]{table}
+      @begin[index]{entry}
+        The @code{index} child property of type @code{:int} (Read / Write) @br{}
+        The index of the overlay in the parent, -1 for the main child. @br{}
+        Allowed values: >= -1 @br{}
+        Default value: 0 @br{}
+        Since 3.18
+      @end{entry}
+      @begin[pass-through]{entry}
+        The @code{pass-through} child property of type @code{:boolean}
+        (Read / Write) @br{}
+        Pass through input, does not affect main child. @br{}
+        Default value: @code{nil} @br{}
+        Since 3.18
+      @end{entry}
+    @end{table}
   @end{dictionary}
   @begin[Signal Details]{dictionary}
     @subheading{The \"get-child-position\" signal}
@@ -147,7 +150,7 @@
   @end{dictionary}
   @see-class{gtk-buildable}
   @see-class{gtk-scrolled-window}")
-  
+
 ;;; ----------------------------------------------------------------------------
 ;;; Child Property and Child Accessor Details
 ;;; ----------------------------------------------------------------------------
@@ -157,7 +160,7 @@
 (define-child-property "GtkOverlay"
                        gtk-overlay-child-index
                        "index" "gint" t t t)
-                       
+
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-overlay-child-index atdoc:*function-name-alias*)
       "Accessor"
@@ -169,10 +172,10 @@
   @argument[child]{the @class{gtk-widget} child widget}
   @argument[index]{The index of the overlay in the parent.}
   @begin{short}
-    Accessor of the child property @code{index} of the 
+    Accessor of the child property @code{index} of the
     @class{gtk-overlay} class.
   @end{short}
-  
+
   Since 3.18
   @see-class{gtk-overlay}")
 
@@ -181,7 +184,7 @@
 (define-child-property "GtkOverlay"
                        gtk-overlay-child-pass-through
                        "pass-through" "gboolean" t t t)
-                       
+
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-overlay-child-pass-through atdoc:*function-name-alias*)
       "Accessor"
@@ -193,10 +196,10 @@
   @argument[child]{the @class{gtk-widget} child widget}
   @argument[index]{The pass through input.}
   @begin{short}
-    Accessor of the child property @code{pass-through} of the 
+    Accessor of the child property @code{pass-through} of the
     @class{gtk-overlay} class.
   @end{short}
-  
+
   Since 3.18
   @see-class{gtk-overlay}")
 
@@ -253,13 +256,13 @@
   @argument[child]{the overlaid @class{gtk-widget} to move}
   @argument[position]{the new index for child in the list of overlay children of
     @arg{overlay}, starting from 0. If negative, indicates the end of the list}
-  @begin{short} 
-    Moves @arg{child} to a new index in the list of overlay children. The list 
+  @begin{short}
+    Moves @arg{child} to a new index in the list of overlay children. The list
     contains overlays in the order that these were added to @arg{overlay}.
   @end{short}
 
-  A widget’s index in the overlay children list determines which order the 
-  children are drawn if they overlap. The first child is drawn at the bottom. 
+  A widget’s index in the overlay children list determines which order the
+  children are drawn if they overlap. The first child is drawn at the bottom.
   It also affects the default focus chain order.
 
   Since 3.18
@@ -274,7 +277,7 @@
 ;;; gtk_overlay_get_overlay_pass_through ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_overlay_get_overlay_pass_through" 
+(defcfun ("gtk_overlay_get_overlay_pass_through"
           gtk-overlay-get-overlay-pass-through) :boolean
  #+cl-cffi-gtk-documentation
  "@version{2019-3-16}
@@ -282,7 +285,7 @@
   @argument[widget]{an overlay child of @class{gtk-overlay}}
   @return{Whether the widget is a pass through child.}
   @begin{short}
-    Convenience function to get the value of the @code{pass-through} child 
+    Convenience function to get the value of the @code{pass-through} child
     property for @arg{widget}.
   @end{short}
 
@@ -297,7 +300,7 @@
 ;;; gtk_overlay_set_overlay_pass_through ()
 ;;; ----------------------------------------------------------------------------
 
-(defcfun ("gtk_overlay_set_overlay_pass_through" 
+(defcfun ("gtk_overlay_set_overlay_pass_through"
           gtk-overlay-set-overlay-pass-through) :void
  #+cl-cffi-gtk-documentation
  "@version{2019-3-16}
@@ -305,8 +308,8 @@
   @argument[widget]{an overlay child of @class{gtk-overlay}}
   @argument[pass-through]{whether the child should pass the input through}
   @begin{short}
-    Convenience function to set the value of the @code{pass-through} child 
-    property for @arg{widget}.  
+    Convenience function to set the value of the @code{pass-through} child
+    property for @arg{widget}.
   @end{short}
 
   Since 3.18
