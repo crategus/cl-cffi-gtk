@@ -174,6 +174,8 @@
  "@version{2013-12-9}
   @short{A widget that emits a signal when clicked on.}
 
+  @image[button]{}
+
   The @sym{gtk-button} widget is generally used to trigger a callback function
   that is called when the button is pressed. The various signals and how to use
   them are outlined below.
@@ -205,7 +207,7 @@
         (Read) @br{}
         How far in the x direction to move the child when the button is
         depressed. @br{}
-        @b{Warning:} @code{child-displacement-x} has been deprecated since
+        @em{Warning:} @code{child-displacement-x} has been deprecated since
         version 3.20 and should not be used in newly-written code. Use CSS
         margins and padding instead; the value of this style property is
         ignored. @br{}
@@ -216,7 +218,7 @@
         (Read) @br{}
         How far in the y direction to move the child when the button is
         depressed. @br{}
-        @b{Warning:} @code{child-displacement-x} has been deprecated since
+        @em{Warning:} @code{child-displacement-x} has been deprecated since
         version 3.20 and should not be used in newly-written code. Use CSS
         margins and padding instead; the value of this style property is
         ignored. @br{}
@@ -229,7 +231,7 @@
         around a button that can become the default widget of its window. For
         more information about default widgets, see the function
         @fun{gtk-widget-grab-default}. @br{}
-        @b{Warning:} @code{default-border} has been deprecated since version
+        @em{Warning:} @code{default-border} has been deprecated since version
         3.14 and should not be used in newly-written code. Use CSS margins and
         padding instead; the value of this style property is ignored.
       @end{entry}
@@ -241,7 +243,7 @@
         of its window. Extra outside space is always drawn outside the button
         border. For more information about default widgets, see the function
         @fun{gtk-widget-grab-default}. @br{}
-        @b{Warning:} @code{default-border} has been deprecated since version
+        @em{Warning:} @code{default-border} has been deprecated since version
         3.14 and should not be used in newly-written code. Use CSS margins and
         padding instead; the value of this style property is ignored.
       @end{entry}
@@ -250,7 +252,7 @@
         (Read) @br{}
         Whether the @code{child-displacement-x} or @code{child-displacement-y}
         properties should also affect the focus rectangle. @br{}
-        @b{Warning:} @code{displace-focus} has been deprecated since version
+        @em{Warning:} @code{displace-focus} has been deprecated since version
         3.20 and should not be used in newly-written code. Use CSS margins and
         padding instead; the value of this style property is ignored. @br{}
         Default value: @code{nil} @br{}
@@ -265,7 +267,7 @@
         The @code{inner-border} style property of type @class{gtk-border}
         (Read) @br{}
         Sets the border between the button edges and child. @br{}
-        @b{Warning:} The @code{inner-border} style property has been deprecated
+        @em{Warning:} The @code{inner-border} style property has been deprecated
         since version 3.4 and should not be used in newly written code. Use the
         standard border and padding CSS properties; the value of this style
         property is ignored. @br{}
@@ -295,7 +297,7 @@
       @begin{pre}
  lambda (button)    : Run First
       @end{pre}
-      @b{Warning:}
+      @em{Warning:}
       The \"enter\" signal has been deprecated since version 2.8 and should not
       be used in newly written code. Use the \"enter-notify-event\"
       signal. @br{}
@@ -307,7 +309,7 @@
       @begin{pre}
  lambda (button)    : Run First
       @end{pre}
-      @b{Warning:}
+      @em{Warning:}
       The \"leave\" signal has been deprecated since version 2.8 and should not
       be used in newly written code. Use the \"leave-notify-event\"
       signal. @br{}
@@ -319,7 +321,7 @@
       @begin{pre}
  lambda (button)    : Run First
       @end{pre}
-      @b{Warning:}
+      @em{Warning:}
       The \"pressed\" signal has been deprecated since version 2.8 and should
       not be used in newly-written code. Use the \"button-press-event\"
       signal. @br{}
@@ -331,7 +333,7 @@
       @begin{pre}
  lambda (button)    : Run First
       @end{pre}
-      @b{Warning:}
+      @em{Warning:}
       The \"released\" has been deprecated since version 2.8 and should
       not be used in newly written code. Use the \"button-release-event\"
       signal. @br{}
@@ -479,7 +481,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "image-position" 'gtk-button) 't)
- "The @code{\"image-position\"} property of type @symbol{gtk-position-type}
+ "The @code{image-position} property of type @symbol{gtk-position-type}
   (Read / Write) @br{}
   The position of the image relative to the text inside the button. @br{}
   Default value: @code{:left}")
@@ -588,7 +590,7 @@
   (Read / Write / Construct) @br{}
   If set, the label is used to pick a stock item instead of being
   displayed. @br{}
-  @b{Warning:} The property @code{use-stock} has been deprecated since
+  @em{Warning:} The property @code{use-stock} has been deprecated since
   version 3.10 and should not be used in newly-written code. @br{}
   Default value: @code{nil}")
 
@@ -655,7 +657,7 @@
   If the child of the button is a @class{gtk-misc} or @class{gtk-alignment},
   this property can be used to control its horizontal alignment. The value 0.0
   is left aligned, 1.0 is right aligned. @br{}
-  @b{Warning:} @code{xalign} has been deprecated since version 3.14 and should
+  @em{Warning:} @code{xalign} has been deprecated since version 3.14 and should
   not be used in newly-written code. Access the child widget directly if you
   need to control its alignment. @br{}
   Allowed values: [0,1] @br{}
@@ -679,7 +681,7 @@
   If the child of the button is a @class{gtk-misc} or @class{gtk-alignment},
   this property can be used to control its vertical alignment. The value 0.0 is
   top aligned, 1.0 is bottom aligned. @br{}
-  @b{Warning:} @code{yalign} has been deprecated since version 3.14 and should
+  @em{Warning:} @code{yalign} has been deprecated since version 3.14 and should
   not be used in newly-written code. Access the child widget directly if you
   need to control its alignment. @br{}
   Allowed values: [0,1] @br{}
