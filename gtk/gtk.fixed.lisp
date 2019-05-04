@@ -1,26 +1,26 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk.fixed.lisp
-;;; 
+;;;
 ;;; The documentation of this file is taken from the GTK+ 3 Reference Manual
 ;;; Version 3.24 and modified to document the Lisp binding to the GTK library.
 ;;; See <http://www.gtk.org>. The API documentation of the Lisp binding is
 ;;; available from <http://www.crategus.com/books/cl-cffi-gtk/>.
-;;; 
+;;;
 ;;; Copyright (C) 2009 - 2011 Kalyanov Dmitry
 ;;; Copyright (C) 2011 - 2019 Dieter Kaiser
-;;; 
+;;;
 ;;; This program is free software: you can redistribute it and/or modify
 ;;; it under the terms of the GNU Lesser General Public License for Lisp
 ;;; as published by the Free Software Foundation, either version 3 of the
 ;;; License, or (at your option) any later version and with a preamble to
 ;;; the GNU Lesser General Public License that clarifies the terms for use
 ;;; with Lisp programs and is referred as the LLGPL.
-;;; 
+;;;
 ;;; This program is distributed in the hope that it will be useful,
 ;;; but WITHOUT ANY WARRANTY; without even the implied warranty of
 ;;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ;;; GNU Lesser General Public License for more details.
-;;; 
+;;;
 ;;; You should have received a copy of the GNU Lesser General Public
 ;;; License along with this program and the preamble to the Gnu Lesser
 ;;; General Public License.  If not, see <http://www.gnu.org/licenses/>
@@ -118,20 +118,23 @@
   If you know none of these things are an issue for your application, and
   prefer the simplicity of @class{gtk-fixed}, by all means use the widget. But
   you should be aware of the tradeoffs.
-  
-  See also @class{gtk-layout}, which shares the ability to perform fixed 
-  positioning of child widgets and additionally adds custom drawing and 
+
+  See also @class{gtk-layout}, which shares the ability to perform fixed
+  positioning of child widgets and additionally adds custom drawing and
   scrollability.
   @begin[Child Property Details]{dictionary}
-    @subheading{The \"x\" child property}
-      @code{\"x\"} of type @code{:int} (Read / Write)@br{}
-      x position of child widget.@br{}
-      Default value: 0
-
-    @subheading{The @code{\"y\"} child property}
-      @code{\"y\"} of type @code{:int} (Read / Write)@br{}
-      y position of child widget.@br{}
-      Default value: 0
+    @begin[code]{table}
+      @begin[x]{entry}
+        The @code{x} child property of type @code{:int} (Read / Write) @br{}
+        x position of child widget. @br{}
+        Default value: 0
+      @end{entry}
+      @begin[y]{entry}
+        The @code{y} child property of type @code{:int} (Read / Write) @br{}
+        y position of child widget. @br{}
+        Default value: 0
+      @end{entry}
+    @end{table}
   @end{dictionary}
   @see-class{gtk-layout}")
 
@@ -150,7 +153,7 @@
       "Accessor"
       (documentation 'gtk-fixed-child-x 'function)
  "@version{2013-8-27}
-  Accessor of the child property @code{\"x\"} of the @class{gtk-fixed} class.
+  Accessor of the child property @code{x} of the @class{gtk-fixed} class.
   @see-class{gtk-fixed}")
 
 ;;; --- gtk-fixed-child-y ------------------------------------------------------
@@ -164,7 +167,7 @@
       "Accessor"
       (documentation 'gtk-fixed-child-y 'function)
  "@version{2013-8-27}
-  Accessor of the child property @code{\"y\"} of the @class{gtk-fixed} class.
+  Accessor of the child property @code{y} of the @class{gtk-fixed} class.
   @see-class{gtk-fixed}")
 
 ;;; ----------------------------------------------------------------------------
