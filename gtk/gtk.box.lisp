@@ -456,8 +456,6 @@
   @argument[spacing]{the number of pixels to place by default between children}
   @return{A new @class{gtk-box} container.}
   @short{Creates a new @class{gtk-box} container.}
-
-  Since 3.0
   @see-class{gtk-box}
   @see-symbol{gtk-orientation}
   @see-function{gtk-box-spacing}"
