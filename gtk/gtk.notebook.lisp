@@ -224,6 +224,8 @@
     are pages that can be switched between using tab labels along one edge.
   @end{short}
 
+  @image[notebook]{}
+
   There are many configuration options for @sym{gtk-notebook}. Among other
   things, you can choose on which edge the tabs appear, see the function
   @fun{gtk-notebook-tab-pos}, whether, if there are too many tabs to fit
@@ -277,153 +279,161 @@
       ┊
       ╰── <child>
     @end{pre}
-    @sym{gtk-notebook} has a main CSS node with name notebook, a subnode with
-    name header and below that a subnode with name tabs which contains one
-    subnode per tab with name tab.
+    @sym{gtk-notebook} has a main CSS node with name @code{notebook}, a subnode
+    with name @code{header} and below that a subnode with name @code{tabs} which
+    contains one subnode per tab with name @code{tab}.
 
     If action widgets are present, their CSS nodes are placed next to the tabs
-    node. If the notebook is scrollable, CSS nodes with name arrow are placed as
-    first and last child of the tabs node.
+    node. If the notebook is scrollable, CSS nodes with name @code{arrow} are
+    placed as first and last child of the tabs node.
 
-    The main node gets the .frame style class when the notebook has a border
-    (see @fun{gtk-notebook-show-border}).
+    The main node gets the @code{.frame} style class when the notebook has a
+    border, see the @fun{gtk-notebook-show-border} function.
 
-    The header node gets one of the style class .top, .bottom, .left or .right,
-    depending on where the tabs are placed. For reorderable pages, the tab node
-    gets the .reorderable-page class.
+    The header node gets one of the style class @code{.top}, @code{.bottom},
+    @code{.left} or @code{.right}, depending on where the tabs are placed. For
+    reorderable pages, the tab node gets the @code{.reorderable-page} class.
 
-    A tab node gets the .dnd style class while it is moved with drag-and-drop.
+    A tab node gets the @code{.dnd} style class while it is moved with
+    drag-and-drop.
 
     The nodes are always arranged from left-to-right, regarldess of text
     direction.
   @end{dictionary}
   @begin[Child Property Details]{dictionary}
-    @subheading{The \"detachable\" child property}
-      @code{\"detachable\"} of type @code{:boolean} (Read / Write) @br{}
-      Whether the tab is detachable. @br{}
-      Default value: @code{nil}
-
-    @subheading{The \"menu-label\" child property}
-      @code{\"menu-label\"} of type @code{:string} (Read / Write) @br{}
-      The string displayed in the child's menu entry. @br{}
-      Default value: @code{nil}
-
-    @subheading{The \"position\" child property}
-      @code{\"position\"} of type @code{:int} (Read / Write) @br{}
-      The index of the child in the parent. @br{}
-      Allowed values: >= @code{G_MAXULONG} @br{}
-      Default value: 0
-
-    @subheading{The \"reorderable\" child property}
-      @code{\"reorderable\"} of type @code{:boolean} (Read / Write) @br{}
-      Whether the tab is reorderable by user action. @br{}
-      Default value: @code{nil}
-
-    @subheading{The \"tab-expand\" child property}
-      @code{\"tab-expand\"} of type @code{:boolean} (Read / Write) @br{}
-      Whether to expand the child's tab. @br{}
-      Default value: @code{nil}
-
-    @subheading{The \"tab-fill\" child property}
-      @code{\"tab-fill\"} of type @code{:boolean} (Read / Write) @br{}
-      Whether the child's tab should fill the allocated area. @br{}
-      Default value: @em{true}
-
-    @subheading{The \"tab-label\" child property}
-      @code{\"tab-label\"} of type @code{:string} (Read / Write) @br{}
-      The string displayed on the child's tab label. @br{}
-      Default value: @code{nil}
+    @begin[code]{table}
+      @begin[detachable]{entry}
+        The @code{detachable} child property of type @code{:boolean}
+        (Read / Write) @br{}
+        Whether the tab is detachable. @br{}
+        Default value: @code{nil}
+      @end{entry}
+      @begin[menu-label]{entry}
+        The @code{menu-label} child property of type @code{:string}
+        (Read / Write) @br{}
+        The string displayed in the child's menu entry. @br{}
+        Default value: @code{nil}
+      @end{entry}
+      @begin[position]{entry}
+        The @code{position} child property of type @code{:int}
+        (Read / Write) @br{}
+        The index of the child in the parent. @br{}
+        Allowed values: >= @code{G_MAXULONG} @br{}
+        Default value: 0
+      @end{entry}
+      @begin[reorderable]{entry}
+        The @code{reorderable} child property of type @code{:boolean}
+        (Read / Write) @br{}
+        Whether the tab is reorderable by user action. @br{}
+        Default value: @code{nil}
+      @end{entry}
+      @begin[tab-expand]{entry}
+        The @code{tab-expand} child property of type @code{:boolean}
+        (Read / Write) @br{}
+        Whether to expand the child's tab. @br{}
+        Default value: @code{nil}
+      @end{entry}
+      @begin[tab-fill]{entry}
+        The @code{tab-fill} child property of type @code{:boolean}
+        (Read / Write) @br{}
+        Whether the child's tab should fill the allocated area. @br{}
+        Default value: @em{true}
+      @end{entry}
+      @begin[tab-label]{entry}
+        The @code{tab-label} child property of type @code{:string}
+        (Read / Write) @br{}
+        The string displayed on the child's tab label. @br{}
+        Default value: @code{nil}
+      @end{entry}
+    @end{table}
   @end{dictionary}
   @begin[Style Property Details]{dictionary}
-    @subheading{The \"arrow-spacing\" style property}
-      @code{\"arrow-spacing\"} of type @code{:int} (Read) @br{}
-      The @code{\"arrow-spacing\"} property defines the spacing between the
-      scroll arrows and the tabs. @br{}
-      @b{Warning:} @code{arrow-spacing} has been deprecated since version 3.20
-      and should not be used in newly-written code.
-      This property is ignored. Use margins on arrows or the \"tabs\" node to
-      achieve the same effect. @br{}
-      Allowed values: >= 0 @br{}
-      Default value: 0 @br{}
-      Since 2.10
-
-    @subheading{The \"has-backward-stepper\" style property}
-      @code{\"has-backward-stepper\"} of type @code{:boolean} (Read) @br{}
-      The @code{\"has-backward-stepper\"} property determines whether the
-      standard backward arrow button is displayed. @br{}
-      Default value: @em{true} @br{}
-      Since 2.4
-
-    @subheading{The \"has-forward-stepper\" style property}
-      @code{\"has-forward-stepper\"} of type @code{:boolean} (Read) @br{}
-      The @code{\"has-forward-stepper\"} property determines whether the
-      standard forward arrow button is displayed. @br{}
-      Default value: @em{true} @br{}
-      Since 2.4
-
-    @subheading{The \"has-secondary-backward-stepper\" style property}
-      @code{\"has-secondary-backward-stepper\"} of type @code{:boolean}
-      (Read) @br{}
-      The @code{\"has-secondary-backward-stepper\"} property determines whether
-      a second backward arrow button is displayed on the opposite end of the
-      tab area. @br{}
-      Default value: @code{nil} @br{}
-      Since 2.4
-
-    @subheading{The \"has-secondary-forward-stepper\" style property}
-      @code{\"has-secondary-forward-stepper\"} of type @code{:boolean}
-      (Read) @br{}
-      The @code{\"has-secondary-forward-stepper\"} property determines whether
-      a second forward arrow button is displayed on the opposite end of the tab
-      area. @br{}
-      Default value: @code{nil} @br{}
-      Since 2.4
-
-    @subheading{The \"has-tab-gap\" style property}
-      @code{\"has-tab-gap\"} of type @code{:boolean} (Read) @br{}
-      The @code{\"has-tab-gap\"} property defines whether the active tab is draw
-      with a gap at the bottom. When @em{true} the theme engine uses
-      @fun{gtk-render-extension} to draw the active tab. When @code{nil}
-      @fun{gtk-render-background} and @fun{gtk-render-frame} are used. @br{}
-      @b{Warning:} @code{has-tab-gap} has been deprecated since version 3.20 and
-      should not be used in newly-written code.
-      This function always behaves as if it was set to @code{nil}.@br{}
-      Default value: @em{true}
-      Since 3.12
-
-    @subheading{The \"initial-gap\" style property}
-      @code{\"initial-gap\"} of type @code{:int} (Read) @br{}
-      The @code{\"initial-gap\"} property defines the minimum size for the
-      initial gap between the first tab. @br{}
-      @b{Warning:} @code{initial-gap} has been deprecated since version 3.20 and
-      should not be used in newly-written code.
-      The intial gap is ignored. Use margins on the header node to achieve the
-      same effect. @br{}
-      Allowed values: >= 0 @br{}
-      Default value: 0 @br{}
-      Since 3.2
-
-    @subheading{The \"tab-curvature\" style property}
-      @code{\"tab-curvature\"} of type @code{:int} (Read) @br{}
-      The @code{\"tab-curvature\"} property defines size of tab curvature. @br{}
-      @b{Warning:} @code{tab-curvature} has been deprecated since version 3.20
-      and should not be used in newly-written code.
-      This property is ignored. Use margins on tab nodes to achieve the same
-      effect. @br{}
-      Allowed values: >= 0 @br{}
-      Default value: 1 @br{}
-      Since 2.10
-
-    @subheading{The \"tab-overlap\" style property}
-      @code{\"tab-overlap\"} of type @code{:int} (Read) @br{}
-      The @code{\"tab-overlap\"} property defines size of tab overlap
-      area. @br{}
-      @b{Warning;} @code{tab-overlap} has been deprecated since version 3.20 and
-      should not be used in newly-written code.
-      This property is ignored. Use margins on tab nodes to achieve the same
-      effect. @br{}
-      Default value: 2 @br{}
-      Since 2.10
+    @begin[code]{table}
+      @begin[arrow-spacing]{entry}
+        The @code{arrow-spacing} style property of type @code{:int} (Read) @br{}
+        The @code{arrow-spacing} property defines the spacing between the
+        scroll arrows and the tabs. @br{}
+        @em{Warning:} @code{arrow-spacing} has been deprecated since version
+        3.20 and should not be used in newly-written code.
+        This property is ignored. Use margins on arrows or the \"tabs\" node to
+        achieve the same effect. @br{}
+        Allowed values: >= 0 @br{}
+        Default value: 0
+      @end{entry}
+      @begin[has-backward-stepper]{entry}
+        The @code{has-backward-stepper} style property of type @code{:boolean}
+        (Read) @br{}
+        The @code{has-backward-stepper} property determines whether the
+        standard backward arrow button is displayed. @br{}
+        Default value: @em{true}
+      @end{entry}
+      @begin[has-forward-stepper]{entry}
+        The @code{has-forward-stepper} style property of type @code{:boolean}
+        (Read) @br{}
+        The @code{has-forward-stepper} property determines whether the
+        standard forward arrow button is displayed. @br{}
+        Default value: @em{true}
+      @end{entry}
+      @begin[has-secondary-backward-stepper]{entry}
+        The @code{has-secondary-backward-stepper} style property of type
+        @code{:boolean} (Read) @br{}
+        The @code{has-secondary-backward-stepper} property determines whether
+        a second backward arrow button is displayed on the opposite end of the
+        tab area. @br{}
+        Default value: @code{nil}
+      @end{entry}
+      @begin[has-secondary-forward-stepper]{entry}
+        The @code{has-secondary-forward-stepper} style property of type
+        @code{:boolean} (Read) @br{}
+        The @code{has-secondary-forward-stepper} property determines whether
+        a second forward arrow button is displayed on the opposite end of the
+        tab area. @br{}
+        Default value: @code{nil}
+      @end{entry}
+      @begin[has-tab-gap]{entry}
+        The @code{has-tab-gap} style property of type @code{:boolean}
+        (Read) @br{}
+        The @code{has-tab-gap} property defines whether the active tab is draw
+        with a gap at the bottom. When @em{true} the theme engine uses
+        @fun{gtk-render-extension} to draw the active tab. When @code{nil}
+        @fun{gtk-render-background} and @fun{gtk-render-frame} are used. @br{}
+        @em{Warning:} @code{has-tab-gap} has been deprecated since version 3.20
+        and should not be used in newly-written code.
+        This function always behaves as if it was set to @code{nil}. @br{}
+        Default value: @em{true} @br{}
+        Since 3.12
+      @end{entry}
+      @begin[initial-gap]{entry}
+        The @code{initial-gap} style property of type @code{:int} (Read) @br{}
+        The @code{initial-gap} property defines the minimum size for the
+        initial gap between the first tab. @br{}
+        @em{Warning:} @code{initial-gap} has been deprecated since version 3.20
+        and should not be used in newly-written code.
+        The intial gap is ignored. Use margins on the header node to achieve the
+        same effect. @br{}
+        Allowed values: >= 0 @br{}
+        Default value: 0
+      @end{entry}
+      @begin[tab-curvature]{entry}
+        The @code{tab-curvature} style property of type @code{:int} (Read) @br{}
+        The @code{tab-curvature} property defines size of tab curvature. @br{}
+        @em{Warning:} @code{tab-curvature} has been deprecated since version
+        3.20 and should not be used in newly-written code.
+        This property is ignored. Use margins on tab nodes to achieve the same
+        effect. @br{}
+        Allowed values: >= 0 @br{}
+        Default value: 1
+      @end{entry}
+      @begin[tab-overlap]{entry}
+        The @code{tab-overlap} style property of type @code{:int} (Read) @br{}
+        The @code{tab-overlap} property defines size of tab overlap area. @br{}
+        @em{Warning;} @code{tab-overlap} has been deprecated since version 3.20
+        and should not be used in newly-written code.
+        This property is ignored. Use margins on tab nodes to achieve the same
+        effect. @br{}
+        Default value: 2
+      @end{entry}
+    @end{table}
   @end{dictionary}
   @begin[Signal Details]{dictionary}
     @subheading{The \"change-current-page\" signal}
@@ -449,8 +459,6 @@
         @entry[Returns]{A @sym{gtk-notebook} that page should be added to,
           or @code{nil}.}
       @end{table}
-      Since 2.12
-
     @subheading{The \"focus-tab\" signal}
       @begin{pre}
  lambda (notebook arg1)   : Action
@@ -472,8 +480,6 @@
         @entry[child]{The child @class{gtk-widget} affected.}
         @entry[page-num]{The new page number for child.}
       @end{table}
-      Since 2.10
-
     @subheading{The \"page-removed\" signal}
       @begin{pre}
  lambda (notebook child page-num)   : Run Last
@@ -485,8 +491,6 @@
         @entry[child]{The child @class{gtk-widget} affected.}
         @entry[page-num]{The child page number.}
       @end{table}
-      Since 2.10
-
     @subheading{The \"page-reordered\" signal}
       @begin{pre}
  lambda (notebook child page-num)   : Run Last
@@ -498,8 +502,6 @@
         @entry[child]{The child @class{gtk-widget} affected.}
         @entry[page-num]{The new page number for child.}
       @end{table}
-      Since 2.10
-
     @subheading{The \"reorder-tab\" signal}
       @begin{pre}
  lambda (notebook arg1 arg2)   : Action
@@ -537,7 +539,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "enable-popup" 'gtk-notebook) 't)
- "The @code{\"enable-popup\"} property of type @code{:boolean}
+ "The @code{enable-popup} property of type @code{:boolean}
   (Read / Write) @br{}
   If @em{true}, pressing the right mouse button on the notebook pops up a menu
   that you can use to go to a page. @br{}
@@ -548,7 +550,7 @@
       "Accessor"
       (documentation 'gtk-notebook-enable-popup 'function)
  "@version{2014-8-20}
-  Accessor of the slot @slot[gtk-notebook]{enable-popup} of the
+  Accessor of the @slot[gtk-notebook]{enable-popup} slot of the
   @class{gtk-notebook} class.
   @see-class{gtk-notebook}
   @see-function{gtk-notebook-popup-enable}
@@ -558,11 +560,10 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "group-name" 'gtk-notebook) 't)
- "The @code{\"group-name\"} property of type @code{:string}
+ "The @code{group-name} property of type @code{:string}
   (Read / Write) @br{}
   Group name for tab drag and drop. @br{}
-  Default value: @code{nil} @br{}
-  Since 2.24")
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-notebook-group-name atdoc:*function-name-alias*)
@@ -575,7 +576,7 @@
   @syntax[]{(gtk-notebook-group-name object) => group-name}
   @syntax[]{(setf (gtk-notebook-group-name object) group-name)}
   @begin{short}
-    Accessor of the slot @slot[gtk-notebook]{group-name} of the
+    Accessor of the @slot[gtk-notebook]{group-name} slot of the
     @class{gtk-notebook} class.
   @end{short}
 
@@ -588,15 +589,13 @@
   Notebooks with the same name will be able to exchange tabs via drag and
   drop. A notebook with a @code{nil} group name will not be able to exchange
   tabs with any other notebook.
-
-  Since 2.24
   @see-class{gtk-notebook}")
 
 ;;; --- gtk-notebook-page ------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "page" 'gtk-notebook) 't)
- "The @code{\"page\"} property of type @code{:int} (Read / Write) @br{}
+ "The @code{page} property of type @code{:int} (Read / Write) @br{}
   The index of the current page. @br{}
   Allowed values: >= @code{G_MAXULONG} @br{}
   Default value: -1")
@@ -606,7 +605,7 @@
       "Accessor"
       (documentation 'gtk-notebook-page 'function)
  "@version{2014-8-20}
-  Accessor of the slot @slot[gtk-notebook]{page} of the @class{gtk-notebook}
+  Accessor of the @slot[gtk-notebook]{page} slot of the @class{gtk-notebook}
   class.
   @see-class{gtk-notebook}")
 
@@ -614,7 +613,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "scrollable" 'gtk-notebook) 't)
- "The @code{\"scrollable\"} property of type @code{:boolean}
+ "The @code{scrollable} property of type @code{:boolean}
   (Read / Write) @br{}
   If @em{true}, scroll arrows are added if there are too many tabs to fit. @br{}
   Default value: @code{nil}")
@@ -629,7 +628,7 @@
   @syntax[]{(gtk-notebook-scrollable object) => scrollable}
   @syntax[]{(setf (gtk-notebook-scrollable object) scrollable)}
   @begin{short}
-    Accessor of the slot @slot[gtk-notebook]{scrollable} of the
+    Accessor of the @slot[gtk-notebook]{scrollable} slot of the
     @class{gtk-notebook} class.
   @end{short}
 
@@ -645,7 +644,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "show-border" 'gtk-notebook) 't)
- "The @code{\"show-border\"} property of type @code{:boolean}
+ "The @code{show-border} property of type @code{:boolean}
   (Read / Write) @br{}
   Whether the border should be shown. @br{}
   Default value: @em{true}")
@@ -659,7 +658,7 @@
   @argument[show-border]{@em{true} if a bevel should be drawn around the
     notebook}
   @begin{short}
-    Accessor of the slot @slot[gtk-notebook]{show-border} of the
+    Accessor of the @slot[gtk-notebook]{show-border} slot of the
     @class{gtk-notebook} class.
   @end{short}
 
@@ -679,7 +678,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "show-tabs" 'gtk-notebook) 't)
- "The @code{\"show-tabs\"} property of type @code{:boolean} (Read / Write) @br{}
+ "The @code{show-tabs} property of type @code{:boolean} (Read / Write) @br{}
   Whether tabs should be shown. @br{}
   Default value: @em{true}")
 
@@ -693,7 +692,7 @@
   @syntax[]{(gtk-notebook-show-tabs object) => show-tabs}
   @syntax[]{(setf (gtk-notebook-show-tabs object) show-tabs)}
   @begin{short}
-    Accessor of the slot @slot[gtk-notebook]{show-tabs} of the
+    Accessor of the @slot[gtk-notebook]{show-tabs} slot of the
     @class{gtk-notebook} class.
   @end{short}
 
@@ -708,7 +707,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "tab-pos" 'gtk-notebook) 't)
- "The @code{\"tab-pos\"} property of type @symbol{gtk-position-type}
+ "The @code{tab-pos} property of type @symbol{gtk-position-type}
   (Read / Write) @br{}
   Which side of the notebook holds the tabs. @br{}
   Default value: @code{:top}")
@@ -723,8 +722,8 @@
   @syntax[]{(gtk-notebook-tab-pos object) => pos}
   @syntax[]{(setf (gtk-notebook-tab-pos object) pos)}
   @begin{short}
-    Accessor of the slot @code{\"tab-pos\"} of the @class{gtk-notebook}
-    class.
+    Accessor of the @slot[gtk-notebook]{tab-pos} slot of the
+    @class{gtk-notebook} class.
   @end{short}
 
   The generic function @sym{gtk-notebook-tab-pos} gets the edge at which the
@@ -749,7 +748,7 @@
       "Accessor"
       (documentation 'gtk-notebook-child-detachable 'function)
  "@version{2013-9-10}
-  Accessor of the child property @code{\"detachable\"} of the
+  Accessor of the child property @code{detachable} of the
   @class{gtk-notebook} class.
   @see-class{gtk-notebook}")
 
@@ -764,7 +763,7 @@
       "Accessor"
       (documentation 'gtk-notebook-child-menu-label 'function)
  "@version{2013-9-10}
-  Accessor of the child property @code{\"menu-label\"} of the
+  Accessor of the child property @code{menu-label} of the
   @class{gtk-notebook} class.
   @see-class{gtk-notebook}")
 
@@ -779,7 +778,7 @@
       "Accessor"
       (documentation 'gtk-notebook-child-position 'function)
  "@version{2013-9-10}
-  Accessor of the child property @code{\"position\"} of the
+  Accessor of the child property @code{position} of the
   @class{gtk-notebook} class.
   @see-class{gtk-notebook}")
 
@@ -794,7 +793,7 @@
       "Accessor"
       (documentation 'gtk-notebook-child-reorderable 'function)
  "@version{2013-9-10}
-  Accessor of the child property @code{\"reorderable\"} of the
+  Accessor of the child property @code{reorderable} of the
   @class{gtk-notebook} class.
   @see-class{gtk-notebook}")
 
@@ -809,7 +808,7 @@
       "Accessor"
       (documentation 'gtk-notebook-child-tab-expand 'function)
  "@version{2013-9-10}
-  Accessor of the child property @code{\"tab-expand\"} of the
+  Accessor of the child property @code{tab-expand} of the
   @class{gtk-notebook} class.
   @see-class{gtk-notebook}")
 
@@ -824,7 +823,7 @@
       "Accessor"
       (documentation 'gtk-notebook-child-tab-fill 'function)
  "@version{2013-9-10}
-  Accessor of the child property @code{\"tab-fill\"} of the
+  Accessor of the child property @code{tab-fill} of the
   @class{gtk-notebook} class.
   @see-class{gtk-notebook}")
 
@@ -839,7 +838,7 @@
       "Accessor"
       (documentation 'gtk-notebook-child-tab-label 'function)
  "@version{2013-9-10}
-  Accessor of the child property @code{\"tab-label\"} of the
+  Accessor of the child property @code{tab-label} of the
   @class{gtk-notebook} class.
   @see-class{gtk-notebook}")
 
@@ -929,7 +928,8 @@
     The index (starting from 0) of the prepended page in the notebook, or -1
     if function fails.
   @end{return}
-  Prepends a page to notebook."
+  Prepends a page to notebook.
+  @see-class{gtk-notebook}"
   (notebook g-object)
   (child g-object)
   (tab-label g-object))
@@ -958,7 +958,8 @@
     if function fails.
   @end{return}
   Prepends a page to notebook, specifying the widget to use as the label in
-  the popup menu."
+  the popup menu.
+  @see-class{gtk-notebook}"
   (notebook (g-object gtk-notebook))
   (child (g-object gtk-widget))
   (tab-label (g-object gtk-widget))
@@ -983,7 +984,8 @@
     The index (starting from 0) of the inserted page in the notebook, or -1
     if function fails.
   @end{return}
-  Insert a page into notebook at the given position."
+  Insert a page into notebook at the given position.
+  @see-class{gtk-notebook}"
   (notebook g-object)
   (child g-object)
   (tab-label g-object)
@@ -1013,7 +1015,8 @@
   @return{The index (starting from 0) of the inserted page in the
     @arg{notebook}.}
   Insert a page into @arg{notebook} at the given position, specifying the widget
-  to use as the label in the popup menu."
+  to use as the label in the popup menu.
+  @see-class{gtk-notebook}"
   (notebook g-object)
   (child g-object)
   (tab-label g-object)
@@ -1036,7 +1039,8 @@
   @argument[notebook]{a @class{gtk-notebook} container}
   @argument[page_num]{the index of a notebook page, starting from 0. If -1, the
     last page will be removed}
-  Removes a page from the notebook given its index in the notebook."
+  Removes a page from the notebook given its index in the notebook.
+  @see-class{gtk-notebook}"
   (%gtk-notebook-remove-page notebook
                   (etypecase page-or-number
                     (integer page-or-number)
@@ -1083,7 +1087,8 @@
     The index of the page containing child, or -1 if child is not in the
     notebook.
   @end{return}
-  Finds the index of the page which contains the given child widget."
+  Finds the index of the page which contains the given child widget.
+  @see-class{gtk-notebook}"
   (notebook g-object)
   (child g-object))
 
@@ -1098,7 +1103,8 @@
  "@version{2013-5-20}
   @argument[notebook]{a @class{gtk-notebook} container}
   Switches to the next page. Nothing happens if the current page is the last
-  page."
+  page.
+  @see-class{gtk-notebook}"
   (notebook g-object))
 
 (export 'gtk-notebook-next-page)
@@ -1112,7 +1118,8 @@
  "@version{2013-5-20}
   @argument[notebook]{a @class{gtk-notebook} container}
   Switches to the previous page. Nothing happens if the current page is the
-  first page."
+  first page.
+  @see-class{gtk-notebook}"
   (notebook g-object))
 
 (export 'gtk-notebook-prev-page)
@@ -1129,7 +1136,8 @@
   @argument[position]{the new position, or -1 to move to the end}
   Reorders the page containing child, so that it appears in position position.
   If position is greater than or equal to the number of children in the list
-  or negative, child will be moved to the end of the list."
+  or negative, child will be moved to the end of the list.
+  @see-class{gtk-notebook}"
   (notebook g-object)
   (child g-object)
   (position :int))
@@ -1147,7 +1155,8 @@
  "@version{2013-5-20}
   @argument[notebook]{a @class{gtk-notebook} container}
   Enables the popup menu: if the user clicks with the right mouse button on
-  the tab labels, a menu with all the pages will be popped up."
+  the tab labels, a menu with all the pages will be popped up.
+  @see-class{gtk-notebook}"
   (setf (gtk-notebook-enable-popup notebook) t))
 
 (export 'gtk-notebook-popup-enable)
@@ -1162,7 +1171,8 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-5-20}
   @argument[notebook]{a @class{gtk-notebook} container}
-  Disables the popup menu."
+  Disables the popup menu.
+  @see-class{gtk-notebook}"
   (setf (gtk-notebook-enable-popup notebook) nil))
 
 (export 'gtk-notebook-popup-disable)
@@ -1179,7 +1189,8 @@
     The index (starting from 0) of the current page in the notebook. If the
     notebook has no pages, then -1 will be returned.
   @end{return}
-  Returns the page number of the current page."
+  Returns the page number of the current page.
+  @see-class{gtk-notebook}"
   (notebook (g-object gtk-notebook)))
 
 (export 'gtk-notebook-get-current-page)
@@ -1199,7 +1210,8 @@
     The menu label, or @code{nil} if the notebook page does not have a menu
     label other than the default (the tab label).
   @end{return}
-  Retrieves the menu label widget of the page containing child."
+  Retrieves the menu label widget of the page containing child.
+  @see-class{gtk-notebook}"
   (gtk-notebook-child-menu-label notebook child))
 
 (export 'gtk-notebook-get-menu-label)
@@ -1232,8 +1244,6 @@
   @argument[notebook]{a @class{gtk-notebook} widget}
   @return{The number of pages in the notebook.}
   @short{Gets the number of pages in a notebook.}
-
-  Since 2.2
   @see-class{gtk-notebook}"
   (notebook (g-object gtk-notebook)))
 
@@ -1253,7 +1263,8 @@
   @return{The tab label.}
   Returns the tab label widget for the page @arg{child}. @code{nil} is returned
   if @arg{child} is not in @arg{notebook} or if no tab label has specifically
-  been set for @arg{child}."
+  been set for @arg{child}.
+  @see-class{gtk-notebook}"
   (gtk-notebook-child-tab-label notebook child))
 
 (export 'gtk-notebook-get-tab-label)
@@ -1270,7 +1281,8 @@
   @argument[notebook]{a @class{gtk-notebook} container}
   @argument[child]{the child widget}
   @argument[menu-label]{the menu label, or @code{nil} for default}
-  Changes the menu label for the page containing @arg{child}."
+  Changes the menu label for the page containing @arg{child}.
+  @see-class{gtk-notebook}"
   (setf (gtk-notebook-child-menu-label notebook child) menu-label))
 
 (export 'gtk-notebook-set-menu-label)
@@ -1286,7 +1298,8 @@
   @argument[notebook]{a @class{gtk-notebook} container}
   @argument[child]{the child widget}
   @argument[menu-text]{the label text}
-  Creates a new label and sets it as the menu label of @arg{child}."
+  Creates a new label and sets it as the menu label of @arg{child}.
+  @see-class{gtk-notebook}"
   (notebook (g-object gtk-notebook))
   (child (g-object gtk-widget))
   (menu-text :string))
@@ -1307,7 +1320,8 @@
   @argument[tab-label]{the tab label widget to use, or @code{nil} for default
     tab label}
   Changes the tab label for @arg{child}. If @code{nil} is specified for
-  @arg{tab-label}, then the page will have the label 'page N'."
+  @arg{tab-label}, then the page will have the label 'page N'.
+  @see-class{gtk-notebook}"
   (setf (gtk-notebook-child-tab-label notebook child) tab-label))
 
 (export 'gtk-notebook-set-tab-label)
@@ -1324,7 +1338,8 @@
   @argument[child]{the page}
   @argument[tab-text]{the label text}
   Creates a new label and sets it as the tab label for the page containing
-  child."
+  child.
+  @see-class{gtk-notebook}"
   (notebook (g-object gtk-notebook))
   (child (g-object gtk-widget))
   (tab-text :string))
@@ -1347,8 +1362,7 @@
     Sets whether the @arg{notebook} tab can be reordered via drag and drop or
     not.
   @end{short}
-
-  Since 2.10"
+  @see-class{gtk-notebook}"
   (setf (gtk-notebook-child-reorderable notebook child) reorderable))
 
 (export 'gtk-notebook-set-tab-reorderable)
@@ -1402,8 +1416,7 @@
   @end{pre}
   If you want a notebook to accept drags from other widgets, you will have to
   set your own DnD code to do it.
-
-  Since 2.10
+  @see-class{gtk-notebook}
   @see-function{gtk-notebook-set-group-name}"
   (setf (gtk-notebook-child-detachable notebook child) detachable))
 
@@ -1425,7 +1438,8 @@
     not a @class{gtk-label}. The string is owned by the widget and must not be
     freed.
   @end{return}
-  Retrieves the text of the menu label for the page containing child."
+  Retrieves the text of the menu label for the page containing child.
+  @see-class{gtk-notebook}"
   (notebook (g-object gtk-notebook))
   (child (g-object gtk-widget)))
 
@@ -1445,7 +1459,8 @@
     The text of the tab label, or @code{nil} if the tab label widget is not a
     @class{gtk-label}. The string is owned by the widget and must not be freed.
   @end{return}
-  Retrieves the text of the tab label for the page containing child."
+  Retrieves the text of the tab label for the page containing child.
+  @see-class{gtk-notebook}"
   (notebook (g-object gtk-notebook))
   (child (g-object gtk-widget)))
 
@@ -1464,8 +1479,7 @@
   @argument[child]{a child @class{gtk-widget}}
   @return{@em{True} if the tab is reorderable.}
   @short{Gets whether the tab can be reordered via drag and drop or not.}
-
-  Since 2.10"
+  @see-class{gtk-notebook}"
   (gtk-notebook-child-reorderable notebook child))
 
 (export 'gtk-notebook-get-tab-reorderable)
@@ -1483,8 +1497,7 @@
   @argument[child]{a child @class{gtk-widget}}
   @return{@em{True} if the tab is detachable.}
   @short{Returns whether the tab contents can be detached from @arg{notebook}.}
-
-  Since 2.10"
+  @see-class{gtk-notebook}"
   (gtk-notebook-child-detachable notebook child))
 
 (export 'gtk-notebook-get-tab-detachable)
@@ -1546,7 +1559,8 @@
 
   Note that due to historical reasons, @class{gtk-notebook} refuses to switch to
   a page unless the child widget is visible. Therefore, it is recommended to
-  show child widgets before adding them to a notebook."
+  show child widgets before adding them to a notebook.
+  @see-class{gtk-notebook}"
   (notebook (g-object gtk-notebook))
   (page-num :int))
 
@@ -1571,8 +1585,7 @@
   Note that action widgets are \"internal\" children of the notebook and thus
   not included in the list returned from the function
   @fun{gtk-container-foreach}.
-
-  Since 2.20
+  @see-class{gtk-notebook}
   @see-function{gtk-container-foreach}"
   (notebook (g-object gtk-notebook))
   (widget (g-object gtk-widget))
@@ -1598,8 +1611,7 @@
     Gets one of the action widgets. See the function
     @fun{gtk-notebook-set-action-widget}.
   @end{short}
-
-  Since 2.20
+  @see-class{gtk-notebook}
   @see-function{gtk-notebook-set-action-widget}"
   (notebook (g-object gtk-notebook))
   (pack-type gtk-pack-type))
