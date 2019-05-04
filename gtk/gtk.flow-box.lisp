@@ -30,47 +30,52 @@
 ;;;
 ;;;     A container that allows reflowing its children
 ;;;
+;;; Types and Values
+;;;
+;;;     GtkFlowBox
+;;;     GtkFlowBoxChild
+;;;
 ;;; Functions
 ;;;
 ;;;     gtk_flow_box_new
-;;;     gtk_flow_box_insert 
-;;;     gtk_flow_box_get_child_at_index 
-;;;     gtk_flow_box_get_child_at_pos 
-;;;     gtk_flow_box_set_hadjustment 
-;;;     gtk_flow_box_set_vadjustment 
-;;;     gtk_flow_box_set_homogeneous 
-;;;     gtk_flow_box_get_homogeneous 
-;;;     gtk_flow_box_set_row_spacing 
-;;;     gtk_flow_box_get_row_spacing 
-;;;     gtk_flow_box_set_column_spacing 
-;;;     gtk_flow_box_get_column_spacing 
-;;;     gtk_flow_box_set_min_children_per_line 
-;;;     gtk_flow_box_get_min_children_per_line 
-;;;     gtk_flow_box_set_max_children_per_line 
-;;;     gtk_flow_box_get_max_children_per_line 
-;;;     gtk_flow_box_set_activate_on_single_click 
-;;;     gtk_flow_box_get_activate_on_single_click 
-;;;     (*GtkFlowBoxForeachFunc) 
-;;;     gtk_flow_box_selected_foreach 
-;;;     gtk_flow_box_get_selected_children 
-;;;     gtk_flow_box_select_child 
-;;;     gtk_flow_box_unselect_child 
-;;;     gtk_flow_box_select_all 
-;;;     gtk_flow_box_unselect_all 
-;;;     gtk_flow_box_set_selection_mode 
-;;;     gtk_flow_box_get_selection_mode 
-;;;     (*GtkFlowBoxFilterFunc) 
-;;;     gtk_flow_box_set_filter_func 
-;;;     gtk_flow_box_invalidate_filter 
-;;;     (*GtkFlowBoxSortFunc) 
-;;;     gtk_flow_box_set_sort_func 
-;;;     gtk_flow_box_invalidate_sort 
-;;;     (*GtkFlowBoxCreateWidgetFunc) 
-;;;     gtk_flow_box_bind_model 
-;;;     gtk_flow_box_child_new 
-;;;     gtk_flow_box_child_get_index 
-;;;     gtk_flow_box_child_is_selected 
-;;;     gtk_flow_box_child_changed 
+;;;     gtk_flow_box_insert
+;;;     gtk_flow_box_get_child_at_index
+;;;     gtk_flow_box_get_child_at_pos
+;;;     gtk_flow_box_set_hadjustment
+;;;     gtk_flow_box_set_vadjustment
+;;;     gtk_flow_box_set_homogeneous
+;;;     gtk_flow_box_get_homogeneous
+;;;     gtk_flow_box_set_row_spacing
+;;;     gtk_flow_box_get_row_spacing
+;;;     gtk_flow_box_set_column_spacing
+;;;     gtk_flow_box_get_column_spacing
+;;;     gtk_flow_box_set_min_children_per_line
+;;;     gtk_flow_box_get_min_children_per_line
+;;;     gtk_flow_box_set_max_children_per_line
+;;;     gtk_flow_box_get_max_children_per_line
+;;;     gtk_flow_box_set_activate_on_single_click
+;;;     gtk_flow_box_get_activate_on_single_click
+;;;     (*GtkFlowBoxForeachFunc)
+;;;     gtk_flow_box_selected_foreach
+;;;     gtk_flow_box_get_selected_children
+;;;     gtk_flow_box_select_child
+;;;     gtk_flow_box_unselect_child
+;;;     gtk_flow_box_select_all
+;;;     gtk_flow_box_unselect_all
+;;;     gtk_flow_box_set_selection_mode
+;;;     gtk_flow_box_get_selection_mode
+;;;     (*GtkFlowBoxFilterFunc)
+;;;     gtk_flow_box_set_filter_func
+;;;     gtk_flow_box_invalidate_filter
+;;;     (*GtkFlowBoxSortFunc)
+;;;     gtk_flow_box_set_sort_func
+;;;     gtk_flow_box_invalidate_sort
+;;;     (*GtkFlowBoxCreateWidgetFunc)
+;;;     gtk_flow_box_bind_model
+;;;     gtk_flow_box_child_new
+;;;     gtk_flow_box_child_get_index
+;;;     gtk_flow_box_child_is_selected
+;;;     gtk_flow_box_child_changed
 ;;;
 ;;; Properties
 ;;;
@@ -92,11 +97,6 @@
 ;;;     void      toggle-cursor-child        Action
 ;;;     void      unselect-all               Action
 ;;;     void      activate                   Action
-;;;
-;;; Types and Values
-;;;
-;;;     GtkFlowBox
-;;;     GtkFlowBoxChild
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -170,6 +170,8 @@
     orientation.
   @end{short}
 
+  @image[flow-box]{}
+
   For instance, with the horizontal orientation, the widgets will be arranged
   from left to right, starting a new row under the previous row when necessary.
   Reducing the width in this case will require more rows, so a larger height
@@ -186,7 +188,7 @@
 
   The children of a @sym{gtk-flow-box} can be dynamically sorted and filtered.
 
-  Although a @sym{gtk-flow-box} must have only @class{gtk-flow-box-child} 
+  Although a @sym{gtk-flow-box} must have only @class{gtk-flow-box-child}
   children, you can add any kind of widget to it via the function
   @fun{gtk-container-add}, and a @class{gtk-flow-box-child} widget will
   automatically be inserted between the box and the widget.
@@ -205,9 +207,10 @@
   │
    ╰── [rubberband]
     @end{pre}
-    @sym{gtk-fow-box} uses a single CSS node with name flowbox. 
-    @class{gtk-flow-box-child} uses a single CSS node with name flowboxchild.
-    For rubberband selection, a subnode with name rubberband is used.
+    @sym{gtk-fow-box} uses a single CSS node with name @code{flowbox}.
+    @class{gtk-flow-box-child} uses a single CSS node with name
+    @code{flowboxchild}. For rubberband selection, a subnode with name
+    @code{rubberband} is used.
   @begin[Signal Details]{dictionary}
     @subheading{The \"activate-cursor-child\" signal}
       @begin{pre}
@@ -335,8 +338,7 @@
   @see-slot{gtk-flow-box-max-children-per-line}
   @see-slot{gtk-flow-box-min-children-per-line}
   @see-slot{gtk-flow-box-row-spacing}
-  @see-slot{gtk-flow-box-selection-mode}
-")
+  @see-slot{gtk-flow-box-selection-mode}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Property and Accessor Details
@@ -347,14 +349,14 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "activate-on-single-click"
                                                'gtk-flow-box) 't)
- "The @code{\"activate-on-single-click\"} property of type @code{:boolean}
+ "The @code{activate-on-single-click} property of type @code{:boolean}
   (Read / Write) @br{}
   Determines whether children can be activated with a single click, or require
   a double-click.@br{}
   Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-flow-box-activate-on-single-click 
+(setf (gethash 'gtk-flow-box-activate-on-single-click
                atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-flow-box-activate-on-single-click 'function)
@@ -382,7 +384,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "column-spacing"
                                                'gtk-flow-box) 't)
- "The @code{\"column-spacing\"} property of type @code{:uint}
+ "The @code{column-spacing} property of type @code{:uint}
   (Read / Write) @br{}
   The amount of horizontal space between two children. @br{}
   Default value: 0")
@@ -405,7 +407,7 @@
   horizontal spacing.
 
   The generic function @sym{(setf gtk-flow-box-column-spacing)} sets the
-  horizontal space to add between children. See the \"column-spacing\"
+  horizontal space to add between children. See the @code{column-spacing}
   property.
 
   Since 3.12
@@ -416,7 +418,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "homogeneous"
                                                'gtk-flow-box) 't)
- "The @code{\"homogeneous\"} property of type @code{:boolean}
+ "The @code{homogeneous} property of type @code{:boolean}
   (Read / Write) @br{}
   Determines whether all children should be allocated the same size. @br{}
   Default value: @code{nil}")
@@ -440,7 +442,7 @@
   is homogeneous (all children are the same size).
 
   The generic function @sym{(setf gtk-flow-box-column-spacing)} sets the
-  \"homogeneous\" property of the flow box, controlling whether or not all
+  @code{homogeneous} property of the flow box, controlling whether or not all
   children of box are given equal space in the box.
 
   Since 3.12
@@ -451,7 +453,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "max-children-per-line"
                                                'gtk-flow-box) 't)
- "The @code{\"max-children-per-line\"} property of type @code{:uint}
+ "The @code{max-children-per-line} property of type @code{:uint}
   (Read / Write) @br{}
   The maximum amount of children to request space for consecutively in the given
   orientation. @br{}
@@ -490,7 +492,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "min-children-per-line"
                                                'gtk-flow-box) 't)
- "The @code{\"min-children-per-line\"} property of type @code{:uint}
+ "The @code{min-children-per-line} property of type @code{:uint}
   (Read / Write) @br{}
   The minimum number of children to allocate consecutively in the given
   orientation.
@@ -528,7 +530,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "row-spacing"
                                                'gtk-flow-box) 't)
- "The @code{\"row-spacing\"} property of type @code{:uint} (Read / Write) @br{}
+ "The @code{row-spacing} property of type @code{:uint} (Read / Write) @br{}
   The amount of vertical space between two children. @br{}
   Default value: 0")
 
@@ -550,7 +552,7 @@
   vertical spacing.
 
   The generic function @sym{(setf gtk-flow-box-max-children-per-line)}
-  sets the vertical space to add between children. See the \"row-spacing\"
+  sets the vertical space to add between children. See the @code{row-spacing}
   property.
 
   Since 3.12
@@ -561,7 +563,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "selection-mode"
                                                'gtk-flow-box) 't)
- "The @code{\"selection-mode\"} property of type @symbol{gtk-selection-mode}
+ "The @code{selection-mode} property of type @symbol{gtk-selection-mode}
  (Read / Write) @br{}
   The selection mode used by the flow box. @br{}
   Default value: @code{:single}")
@@ -677,7 +679,7 @@
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_flow_box_set_hadjustment ()
 ;;;
-;;; void gtk_flow_box_set_hadjustment (GtkFlowBox *box, 
+;;; void gtk_flow_box_set_hadjustment (GtkFlowBox *box,
 ;;;                                    GtkAdjustment *adjustment);
 ;;;
 ;;; Hooks up an adjustment to focus handling in box . The adjustment is also
@@ -708,7 +710,7 @@
 ;;; Hooks up an adjustment to focus handling in box . The adjustment is also
 ;;; used for autoscrolling during rubberband selection. See
 ;;; gtk_scrolled_window_get_vadjustment() for a typical way of obtaining the
-;;; adjustment, and gtk_flow_box_set_hadjustment()for setting the horizontal 
+;;; adjustment, and gtk_flow_box_set_hadjustment()for setting the horizontal
 ;;; adjustment.
 ;;;
 ;;; The adjustments have to be in pixel units and in the same coordinate system
@@ -716,11 +718,11 @@
 ;;;
 ;;; box :
 ;;;     a GtkFlowBox
-;;; 
+;;;
 ;;; adjustment :
 ;;;     an adjustment which should be adjusted when the focus is moved among
 ;;;     the descendents of container
-;;; 
+;;;
 ;;; Since: 3.12
 ;;; ----------------------------------------------------------------------------
 
@@ -754,7 +756,7 @@
 ;;;                                     gpointer data);
 ;;;
 ;;; Calls a function for each selected child.
-;;; 
+;;;
 ;;; Note that the selection cannot be modified from within this function.
 ;;;
 ;;; box :
@@ -795,10 +797,10 @@
 ;;;
 ;;; box :
 ;;;     a GtkFlowBox
-;;; 
+;;;
 ;;; child :
 ;;;     a child of box
-;;; 
+;;;
 ;;; Since: 3.12
 ;;; ----------------------------------------------------------------------------
 
@@ -840,7 +842,7 @@
 ;;;
 ;;; box :
 ;;;     a GtkFlowBox
-;;; 
+;;;
 ;;; Since: 3.12
 ;;; ----------------------------------------------------------------------------
 
@@ -855,7 +857,7 @@
 ;;;
 ;;; child :
 ;;;     a GtkFlowBoxChild that may be filtered
-;;; 
+;;;
 ;;; user_data :
 ;;;     user data.
 ;;;
@@ -964,7 +966,7 @@
 ;;;
 ;;; box :
 ;;;     a GtkFlowBox
-;;; 
+;;;
 ;;; sort_func :
 ;;;     the sort function.
 ;;;
@@ -973,7 +975,7 @@
 ;;;
 ;;; destroy :
 ;;;     destroy notifier for user_data
-;;; 
+;;;
 ;;; Since: 3.12
 ;;; ----------------------------------------------------------------------------
 
@@ -1040,16 +1042,16 @@
 ;;;
 ;;; box :
 ;;;     a GtkFlowBox
-;;; 
+;;;
 ;;; model :
 ;;;     the GListModel to be bound to box .
 ;;;
 ;;; create_widget_func :
 ;;;     a function that creates widgets for items
-;;; 
+;;;
 ;;; user_data :
 ;;;     user data passed to create_widget_func
-;;; 
+;;;
 ;;; user_data_free_func :
 ;;;     function for freeing user_data
 ;;;
@@ -1078,7 +1080,7 @@
 ;;;
 ;;; child :
 ;;;     a GtkFlowBoxChild
-;;; 
+;;;
 ;;; Returns :
 ;;;     the index of the child , or -1 if the child is not in a flow box.
 ;;;
@@ -1124,7 +1126,7 @@
 ;;;
 ;;; child :
 ;;;     a GtkFlowBoxChild
-;;; 
+;;;
 ;;; Since: 3.12
 ;;; ----------------------------------------------------------------------------
 
