@@ -111,15 +111,18 @@
   @code{GTK_LAYOUT (layout)->bin_window}, rather than to
   @code{GTK_WIDGET (layout)->window}, as you would for a drawing area.
   @begin[Child Property Details]{dictionary}
-    @subheading{The \"x\" child property}
-      @code{\"x\"} of type @code{:int} (Read / Write) @br{}
-      x position of child widget. @br{}
-      Default value: 0
-
-    @subheading{The \"y\" child property}
-      @code{\"y\"} of type @code{:int} (Read / Write) @br{}
-      y position of child widget. @br{}
-      Default value: 0
+    @begin[code]{table}
+      @begin[x]{entry}
+        The @code{x} child property of type @code{:int} (Read / Write) @br{}
+        x position of child widget. @br{}
+        Default value: 0
+      @end{entry}
+      @begin[y]{entry}
+        The @code{y} child property of type @code{:int} (Read / Write) @br{}
+        y position of child widget. @br{}
+        Default value: 0
+      @end{entry}
+    @end{table}
   @end{dictionary}
   @see-slot{gtk-layout-height}
   @see-slot{gtk-layout-width}
@@ -135,7 +138,7 @@
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "height" 'gtk-layout) 't)
- "The @code{\"height\"} property of type @code{:uint} (Read / Write) @br{}
+ "The @code{height} property of type @code{:uint} (Read / Write) @br{}
   The height of the layout. @br{}
   Allowed values: <= @code{G_MAXINT} @br{}
   Default value: 100")
@@ -146,13 +149,14 @@
       (documentation 'gtk-layout-height 'function)
  "@version{2014-8-20}
   Accessor of the slot @slot[gtk-layout]{height} of the @class{gtk-layout}
-  class.")
+  class.
+  @see-class{gtk-layout}")
 
 ;;; --- gtk-layout-width -------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "width" 'gtk-layout) 't)
- "The @code{\"width\"} property of type @code{:uint} (Read / Write) @br{}
+ "The @code{width} property of type @code{:uint} (Read / Write) @br{}
   The width of the layout. @br{}
   Allowed values: <= @code{G_MAXINT} @br{}
   Default value: 100")
@@ -163,7 +167,8 @@
       (documentation 'gtk-layout-width 'function)
  "@version{2014-8-20}
   Accessor of the slot @slot[gtk-layout]{width} of the @class{gtk-layout}
-  class.")
+  class.
+  @see-class{gtk-layout}")
 
 ;;; ----------------------------------------------------------------------------
 ;;;
@@ -182,7 +187,7 @@
       "Accessor"
       (documentation 'gtk-layout-child-x 'function)
  "@version{2013-9-10}
-  Accessor of the child property @code{\"x\"} of the @class{gtk-layout} class.
+  Accessor of the child property @code{x} of the @class{gtk-layout} class.
   @see-class{gtk-layout}")
 
 ;;; --- gtk-layout-child-y -----------------------------------------------------
@@ -196,7 +201,7 @@
       "Accessor"
       (documentation 'gtk-layout-child-y 'function)
  "@version{2013-9-10}
-  Accessor of the child property @code{\"y\"} of the @class{gtk-layout} class.
+  Accessor of the child property @code{y} of the @class{gtk-layout} class.
   @see-class{gtk-layout}")
 
 ;;; ----------------------------------------------------------------------------
