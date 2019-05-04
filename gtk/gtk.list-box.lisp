@@ -30,6 +30,11 @@
 ;;;
 ;;;     A list container
 ;;;
+;;; Types and Values
+;;;
+;;;     GtkListBox
+;;;     GtkListBoxRow
+;;;
 ;;; Functions
 ;;;
 ;;;     (*GtkListBoxFilterFunc)
@@ -80,7 +85,6 @@
 
 ;;;     gtk_list_box_row_set_selectable                    Accessor
 ;;;     gtk_list_box_row_get_selectable                    Accessor
-
 ;;;
 ;;; Properties
 ;;;
@@ -100,13 +104,6 @@
 ;;;     toggle-cursor-row
 ;;;     unselect-all
 ;;;     activate
-;;;
-;;; Types and Values
-;;;
-;;;     GtkListBox
-;;;     GtkListBoxClass
-;;;     GtkListBoxRow
-;;;     GtkListBoxRowClass
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -174,6 +171,8 @@
   These rows can by dynamically sorted and filtered, and headers can be added
   dynamically depending on the row content. It also allows keyboard and mouse
   navigation and selection like a typical list.
+
+  @image[list-box]{}
 
   Using @sym{gtk-list-box} is often an alternative to @class{gtk-tree-view},
   especially when the list contents has a more complicated layout than what is
@@ -321,7 +320,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "activate-on-single-click"
                                                'gtk-list-box) 't)
- "The @code{\"activate-on-single-click\"} property of type @code{:boolean}
+ "The @code{activate-on-single-click} property of type @code{:boolean}
   (Read / Write) @br{}
   Activate row on a single click.@br{}
   Default value: @em{true}")
@@ -355,7 +354,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "selection-mode"
                                                'gtk-list-box) 't)
- "The @code{\"selection-mode\"} property of type @symbol{gtk-selection-mode}
+ "The @code{selection-mode} property of type @symbol{gtk-selection-mode}
   (Read / Write) @br{}
   The selection mode.
   Default value: @code{:single}")
@@ -389,7 +388,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "activatable"
                                                'gtk-list-box) 't)
- "The @code{\"activatable\"} property of type @code{:boolean}
+ "The @code{activatable} property of type @code{:boolean}
   (Read / Write) @br{}
   The property determines whether the \"row-activated\" signal will be emitted
   for this row. @br{}
@@ -397,7 +396,7 @@
   Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-list-box-acivatable atdoc:*function-name-alias*)
+(setf (gethash 'gtk-list-box-activatable atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-list-box-activatable 'function)
  "@version{2019-3-10}
@@ -411,10 +410,10 @@
   @end{short}
 
   The generic function @sym{gtk-list-box-activatable} gets the value of the
-  \"activatable\" property for this row.
+  @code{activatable} property for this row.
 
   The generic function @sym{(setf gtk-list-box-activatable)} set the
-  \"activatable\" property for this row.
+  @code{activatable} property for this row.
 
   Since 3.14
   @see-class{gtk-list-box}")
@@ -424,10 +423,10 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "selectable"
                                                'gtk-list-box) 't)
- "The @code{\"selectable\"} property of type @code{:boolean}
+ "The @code{selectable} property of type @code{:boolean}
   (Read / Write) @br{}
   The property determines whether this row can be selected. @br{}
-  Since 3.14@br{}
+  Since 3.14 @br{}
   Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
@@ -445,10 +444,10 @@
   @end{short}
 
   The generic function @sym{gtk-list-box-selectable} gets the value of the
-  \"selectable\" property for this row.
+  @code{selectable} property for this row.
 
   The generic function @sym{(setf gtk-list-box-selectable)} set the
-  \"selectable\" property for this row.
+  @code{selectable} property for this row.
 
   Since 3.14
   @see-class{gtk-list-box}")
