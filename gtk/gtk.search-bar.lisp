@@ -93,6 +93,8 @@
   The search bar would appear when a search is started through typing on the
   keyboard, or the application’s search mode is toggled on.
 
+  @image[search-bar]{}
+
   For keyboard presses to start a search, events will need to be forwarded from
   the top-level window that contains the search bar. See the
   @func{gtk-search-bar-handle-event} function for example code. Common shortcuts
