@@ -82,6 +82,8 @@
     consistent \"sidebar\" object for your user interface.
   @end{short}
 
+  @image[stack-sidebar]{}
+
   In order to use a @sym{gtk-stack-sidebar}, you simply use a @class{gtk-stack}
   to organize your UI flow, and add the sidebar to your sidebar area. You can
   use the generic function @fun{gtk-stack-sidebar-stack} to connect the
