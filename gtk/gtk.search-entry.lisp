@@ -84,6 +84,8 @@
     tailored for use as a search entry.
   @end{short}
 
+  @image[search-entry]{}
+
   It will show an inactive symbolic \"find\" icon when the search entry is
   empty, and a symbolic \"clear\" icon when there is text. Clicking on the
   \"clear\" icon will empty the search entry.
