@@ -30,6 +30,12 @@
 ;;;
 ;;;     Hide and show with animation
 ;;;
+;;; Types and Values
+;;;
+;;;     GtkRevealer
+;;;     GtkRevealerClass
+;;;     GtkRevealerTransitionType
+;;;
 ;;; Functions
 ;;;
 ;;;     gtk_revealer_new
@@ -47,12 +53,6 @@
 ;;;     reveal-child
 ;;;     transition-duration
 ;;;     transition-type
-;;;
-;;; Types and Values
-;;;
-;;;     GtkRevealer
-;;;     GtkRevealerClass
-;;;     GtkRevealerTransitionType
 ;;;
 ;;; Object Hierarchy
 ;;;
@@ -152,10 +152,11 @@
 
   These animations respect the \"gtk-enable-animations\" setting.
 
-  @subheading{CSS nodes}
-    @sym{gtk-revealer} has a single CSS node with name revealer.
-
   The GtkRevealer widget was added in GTK+ 3.10.
+
+  @begin[CSS nodes]{dictionary}
+    @sym{gtk-revealer} has a single CSS node with name revealer.
+  @end{dictionary}
   @see-slot{gtk-revealer-child-revealed}
   @see-slot{gtk-revealer-reveal-child}
   @see-slot{gtk-revealer-transition-duration}
@@ -167,14 +168,14 @@
 
 ;;; --- gtk-revealer-child-revealed --------------------------------------------
 
-#+(and gtk-3-10 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "child-revealed"
                                                'gtk-revealer) 't)
  "The @code{child-revealed} property of type @code{:boolean} (Read) @br{}
   Whether the child is revealed and the animation target reached.@br{}
   Default value: @code{nil}")
 
-#+(and gtk-3-10 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-revealer-child-revealed atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-revealer-child-revealed 'function)
@@ -191,14 +192,14 @@
 
 ;;; --- gtk-revealer-reveal-child ----------------------------------------------
 
-#+(and gtk-3-10 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "reveal-child"
                                                'gtk-revealer) 't)
  "The @code{reveal-child} property of type @code{:boolean} (Read / Write) @br{}
   Whether the container should reveal the child.@br{}
   Default value: @code{nil}")
 
-#+(and gtk-3-10 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-revealer-reveal-child atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-revealer-reveal-child 'function)
@@ -230,7 +231,7 @@
 
 ;;; --- gtk-revealer-transition-duration ---------------------------------------
 
-#+(and gtk-3-10 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "transition-duration"
                                                'gtk-revealer) 't)
  "The @code{transition-duration} property of type @code{:boolean}
@@ -238,7 +239,7 @@
   The animation duration, in milliseconds.@br{}
   Default value: 250")
 
-#+(and gtk-3-10 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-revealer-transition-duration atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-revealer-transition-duration 'function)
@@ -263,7 +264,7 @@
 
 ;;; --- gtk-revealer-transition-type -------------------------------------------
 
-#+(and gtk-3-10 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "transition-type"
                                                'gtk-revealer) 't)
  "The @code{transition-type} property of type 
@@ -271,7 +272,7 @@
   The type of animation used to transition.@br{}
   Default value: @code{:slide-down}")
 
-#+(and gtk-3-10 cl-cffi-gtk-documentation)
+#+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-revealer-transition-type atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-revealer-transition-type 'function)
