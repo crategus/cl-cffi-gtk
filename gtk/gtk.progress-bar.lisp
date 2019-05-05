@@ -165,47 +165,47 @@
         The @code{min-horizontal-bar-height} style property of type @code{:int}
         (Read / Write) @br{}
         Minimum horizontal height of the progress bar. @br{}
-        @b{Warning:} @code{min-horizontal-bar-height} has been deprecated since
+        @em{Warning:} @code{min-horizontal-bar-height} has been deprecated since
         version 3.20 and should not be used in newly-written code. Use the
         standard CSS property @code{min-height}. @br{}
         Allowed values: >= 1 @br{}
-        Default value: 20 @br{}
+        Default value: 20
       @end{entry}
       @begin[min-horizontal-bar-width]{entry}
         The @code{min-horizontal-bar-width} style property of type @code{:int}
         (Read / Write) @br{}
         The minimum horizontal width of the progress bar. @br{}
-        @b{Warning:} @code{min-horizontal-bar-width} has been deprecated since
+        @em{Warning:} @code{min-horizontal-bar-width} has been deprecated since
         version 3.20 and should not be used in newly-written code. Use the
         standard CSS property @code{min-width}. @br{}
         Allowed values: >= 1 @br{}
-        Default value: 150 @br{}
+        Default value: 150
       @end{entry}
       @begin[min-vertical-bar-height]{entry}
         The @code{min-vertical-bar-height} style property of type @code{:int}
         (Read / Write) @br{}
         The minimum vertical height of the progress bar. @br{}
-        @b{Warning:} @code{min-vertical-bar-height} has been deprecated since
+        @em{Warning:} @code{min-vertical-bar-height} has been deprecated since
         version 3.20 and should not be used in newly-written code. Use the
         standard CSS property @code{min-height}. @br{}
         Allowed values: >= 1 @br{}
-        Default value: 80 @br{}
+        Default value: 80
       @end{entry}
       @begin[min-vertical-bar-width]{entry}
         The @code{min-vertical-bar-width} style property of type @code{:int}
         (Read / Write) @br{}
         The minimum vertical width of the progress bar. @br{}
-        @b{Warning:} @code{min-vertical-bar-width} has been deprecated since
+        @em{Warning:} @code{min-vertical-bar-width} has been deprecated since
         version 3.20 and should not be used in newly-written code. Use the
         standard CSS property @code{min-width}. @br{}
         Allowed values: >= 1 @br{}
-        Default value: 22 @br{}
+        Default value: 22
       @end{entry}
       @begin[xspacing]{entry}
         The @code{xspacing} style property of type @code{:int} (Read / Write)
         @br{}
         Extra spacing applied to the width of a progress bar. @br{}
-        @b{Warning:} @code{xspacing} has been deprecated since version 3.20 and
+        @em{Warning:} @code{xspacing} has been deprecated since version 3.20 and
         should not be used in newly-written code. Use the standard CSS padding
         and margins; the value of this style property is ignored. @br{}
         Allowed values: >= 0 @br{}
@@ -215,7 +215,7 @@
         The @code{yspacing} style property of type @code{:int} (Read / Write)
         @br{}
         Extra spacing applied to the height of a progress bar. @br{}
-        @b{Warning:} @code{yspacing} has been deprecated since version 3.20 and
+        @em{Warning:} @code{yspacing} has been deprecated since version 3.20 and
         should not be used in newly-written code. Use the standard CSS padding
         and margins; the value of this style property is ignored. @br{}
         Allowed values: >= 0 @br{}
@@ -379,8 +379,7 @@
   To make a progress bar that is styled and sized suitably for containing text,
   even if the actual text is blank, set @code{\"show-text\"} to @em{true} and
   @code{\"text\"} to the empty string (not @code{nil}). @br{}
-  Default value: @code{nil} @br{}
-  Since 3.0")
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-progress-bar-show-text atdoc:*function-name-alias*)
@@ -408,8 +407,6 @@
   even if the actual text is blank, set the @code{\"show-text\"} property to
   @em{true} and the @slot[gtk-progress-bar]{text} property to the empty string,
   not @code{nil}.
-
-  Since 3.0
   @see-class{gtk-progress-bar}")
 
 ;;; --- gtk-progress-bar-text --------------------------------------------------
