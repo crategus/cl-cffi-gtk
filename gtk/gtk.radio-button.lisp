@@ -100,6 +100,8 @@
     become a different user interface component in their own right.
   @end{short}
 
+  @image[radio-group]{}
+
   Every radio button is a member of some group of radio buttons. When one is
   selected, all other radio buttons in the same group are deselected. A
   @sym{gtk-radio-button} is one way of giving the user a choice from many
@@ -122,7 +124,6 @@
 
   To remove a @sym{gtk-radio-button} from one group and make it part of a new
   one, use the function @fun{gtk-radio-button-set-group}.
-
   @begin[CSS nodes]{dictionary}
     @begin{pre}
  radiobutton
@@ -188,7 +189,6 @@
       @begin[code]{table}
         @entry[button]{The object which received the signal.}
       @end{table}
-      Since 2.4
   @end{dictionary}
   @see-slot{gtk-radio-button-group}
   @see-class{gtk-combo-box}")
@@ -423,7 +423,6 @@
       last_button = radio_button;
    @}
   @end{pre}
-  Since 3.0
   @see-class{gtk-radio-button}
   @see-function{gtk-radio-button-get-group}
   @see-function{gtk-radio-button-set-group}"
