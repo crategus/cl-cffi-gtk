@@ -132,6 +132,8 @@
     handle.
   @end{short}
 
+  @image[panes]{}
+
   Child widgets are added to the panes of the widget with the functions
   @fun{gtk-paned-pack1} and @fun{gtk-paned-pack2}. The division between the two
   children is set by default from the size requests of the children, but it can
@@ -187,33 +189,37 @@
     @end{pre}
   @end{dictionary}
   @begin[Child Property Details]{dictionary}
-    @subheading{The \"resize\" child property}
-      The @code{resize} child property of type @code{:boolean} (Read / Write)
-      @br{}
-      The @code{resize} child property determines whether the child expands
-      and shrinks along with the paned widget. @br{}
-      Default value: @em{true} @br{}
-      Since 2.4
-
-    @subheading{The \"shrink\" child property}
-      The @code{shrink} child property of type @code{:boolean} (Read / Write)
-      @br{}
-      The @code{\"shrink\"} child property determines whether the child can be
-      made smaller than its requisition. @br{}
-      Default value: @em{true} @br{}
-      Since 2.4
+    @begin[code]{table}
+      @begin[resize]{entry}
+        The @code{resize} child property of type @code{:boolean} (Read / Write)
+        @br{}
+        The @code{resize} child property determines whether the child expands
+        and shrinks along with the paned widget. @br{}
+        Default value: @em{true} @br{}
+      @end{entry}
+      @begin[shrink]{entry}
+        The @code{shrink} child property of type @code{:boolean} (Read / Write)
+        @br{}
+        The @code{shrink} child property determines whether the child can be
+        made smaller than its requisition. @br{}
+        Default value: @em{true} @br{}
+      @end{entry}
+    @end{table}
   @end{dictionary}
   @begin[Style Property Details]{dictionary}
-    @subheading{The \"handle-size\" style property}
-      @code{\"handle-size\"} of type @code{:int} (Read) @br{}
-      Width of handle. @br{}
-      Allowed values: >= 0 @br{}
-      Default value: 5
+    @begin[code]{table}
+      @begin[handle-size]{entry}
+        The @code{handle-size} style property of type @code{:int} (Read) @br{}
+        Width of handle. @br{}
+        Allowed values: >= 0 @br{}
+        Default value: 5
+      @end{entry}
+    @end{table}
   @end{dictionary}
   @begin[Signal Details]{dictionary}
     @subheading{The \"accept-position\" signal}
       @begin{pre}
- lambda (widget)   : Action
+ lambda (widget)    : Action
       @end{pre}
       The \"accept-position\" signal is a keybinding signal which gets emitted
       to accept the current position of the handle when moving it using key
@@ -222,11 +228,9 @@
       @begin[code]{table}
         @entry[widget]{The object that received the signal.}
       @end{table}
-      Since 2.0
-
     @subheading{The \"cancel-position\" signal}
       @begin{pre}
- lambda (widget)   : Action
+ lambda (widget)    : Action
       @end{pre}
       The \"cancel-position\" signal is a keybinding signal which gets emitted
       to cancel moving the position of the handle using key bindings. The
@@ -235,11 +239,9 @@
       @begin[code]{table}
         @entry[widget]{The object that received the signal.}
       @end{table}
-      Since 2.0
-
     @subheading{The \"cycle-child-focus\" signal}
       @begin{pre}
- lambda (widget reversed)   : Action
+ lambda (widget reversed)    : Action
       @end{pre}
       The \"cycle-child-focus\" signal is a keybinding signal which gets emitted
       to cycle the focus between the children of the paned.
@@ -248,11 +250,9 @@
         @entry[widget]{The object that received the signal.}
         @entry[reversed]{Whether cycling backward or forward.}
       @end{table}
-      Since 2.0
-
     @subheading{The \"cycle-handle-focus\" signal}
       @begin{pre}
- lambda (widget reversed)   : Action
+ lambda (widget reversed)    : Action
       @end{pre}
       The \"cycle-handle-focus\" signal is a keybinding signal which gets
       emitted to cycle whether the paned should grab focus to allow the user
@@ -262,11 +262,9 @@
         @entry[widget]{The object that received the signal.}
         @entry[reversed]{Whether cycling backward or forward.}
       @end{table}
-      Since 2.0
-
     @subheading{The \"move-handle\" signal}
       @begin{pre}
- lambda (widget scroll-type)   : Action
+ lambda (widget scroll-type)    : Action
       @end{pre}
       The \"move-handle\" signal is a keybinding signal which gets emitted to
       move the handle when the user is using key bindings to move it.
@@ -274,11 +272,9 @@
         @entry[widget]{The object that received the signal.}
         @entry[scroll-type]{A @symbol{gtk-scroll-type}.}
       @end{table}
-      Since 2.0
-
     @subheading{The \"toggle-handle-focus\" signal}
       @begin{pre}
- lambda (widget)   : Action
+ lambda (widget)    : Action
       @end{pre}
       The \"toggle-handle-focus\" is a keybinding signal which gets emitted to
       accept the current position of the handle and then move focus to the next
@@ -287,7 +283,6 @@
       @begin[code]{table}
         @entry[widget]{The object that received the signal.}
       @end{table}
-      Since 2.0
   @end{dictionary}
   @see-slot{gtk-paned-max-position}
   @see-slot{gtk-paned-min-position}
@@ -307,8 +302,7 @@
   The largest possible value for the position property. This property is
   derived from the size and shrinkability of the widget's children. @br{}
   Allowed values: >= 0 @br{}
-  Default value: 2147483647 @br{}
-  Since 2.4")
+  Default value: 2147483647")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-paned-max-position atdoc:*function-name-alias*)
@@ -326,8 +320,7 @@
   The smallest possible value for the position property. This property is
   derived from the size and shrinkability of the widget's children. @br{}
   Allowed values: >= 0 @br{}
-  Default value: 0 @br{}
-  Since 2.4")
+  Default value: 0")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-paned-min-position atdoc:*function-name-alias*)
@@ -384,7 +377,8 @@
       (documentation 'gtk-paned-position-set 'function)
  "@version{2014-7-27}
   Accessor of the slot @slot[gtk-paned]{position-set} of the @class{gtk-paned}
-  class.")
+  class.
+  @see-class{gtk-paned}")
 
 ;;; --- gtk-paned-wide-handled -------------------------------------------------
 
@@ -394,8 +388,8 @@
   Setting this property to @em{true} indicates that the paned needs to provide
   stronger visual separation (e. g. because it separates between two notebooks,
   whose tab rows would otherwise merge visually). @br{}
-  Since 3.16 @br{}
-  Default value: @code{nil}")
+  Default value: @code{nil} @br{}
+  Since 3.16")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-paned-wide-handle atdoc:*function-name-alias*)
@@ -464,8 +458,7 @@
   @argument[orientation]{the paned's orientation.}
   @return{A new @class{gtk-paned} containter.}
   @short{Creates a new @class{gtk-paned} container.}
-
-  Since 3.0"
+  @see-class{gtk-paned}"
   (make-instance 'gtk-paned
                  :orientation orientation))
 
@@ -481,7 +474,8 @@
   @argument[paned]{a paned container}
   @argument[child]{the child to add}
   Adds a child to the top or left pane with default parameters. This is
-  equivalent to @code{(gtk-paned-pack1 paned child nil t)}."
+  equivalent to @code{(gtk-paned-pack1 paned child nil t)}.
+  @see-class{gtk-paned}"
   (gtk-paned-pack1 paned child :resize nil :shrink t))
 
 (export 'gtk-paned-add1)
@@ -496,7 +490,8 @@
   @argument[paned]{a paned container}
   @argument[child]{the child to add}
   Adds a child to the bottom or right pane with default parameters. This is
-  equivalent to @code{(gtk-paned-pack2 paned child t t)}."
+  equivalent to @code{(gtk-paned-pack2 paned child t t)}.
+  @see-class{gtk-paned}"
   (gtk-paned-pack2 paned child :resize t :shrink t))
 
 (export 'gtk-paned-add2)
@@ -518,7 +513,8 @@
   @argument[child]{the child to add}
   @argument[resize]{should this child expand when the paned widget is resized}
   @argument[shrink]{can this child be made smaller than its requisition}
-  Adds a child to the top or left pane."
+  Adds a child to the top or left pane.
+  @see-class{gtk-paned}"
   (%gtk-paned-pack1 paned child resize shrink))
 
 (export 'gtk-paned-pack1)
@@ -540,7 +536,8 @@
   @argument[child]{the child to add}
   @argument[resize]{should this child expand when the paned widget is resized}
   @argument[shrink]{can this child be made smaller than its requisition}
-  Adds a child to the bottom or right pane."
+  Adds a child to the bottom or right pane.
+  @see-class{gtk-paned}"
   (%gtk-paned-pack2 paned child resize shrink))
 
 (export 'gtk-paned-pack2)
@@ -555,8 +552,7 @@
   @argument[paned]{a @class{gtk-paned} container}
   @return{First child, or @code{nil} if it is not set.}
   @short{Obtains the first child of the paned container.}
-
-  Since 2.4"
+  @see-class{gtk-paned}"
   (paned g-object))
 
 (export 'gtk-paned-get-child1)
@@ -571,8 +567,7 @@
   @argument[paned]{a @class{gtk-paned} container}
   @return{Second child, or @code{nil} if it is not set.}
   @short{Obtains the second child of the paned container.}
-
-  Since 2.4"
+  @see-class{gtk-paned}"
   (paned g-object))
 
 (export 'gtk-paned-get-child2)
@@ -592,8 +587,7 @@
     when handling button or motion events because it enables the callback to
     distinguish between the window of the paned, a child and the handle.
   @end{short}
-
-  Since 2.20"
+  @see-class{gtk-paned}"
   (paned (g-object gtk-paned)))
 
 (export 'gtk-paned-get-handle-window)
@@ -684,7 +678,8 @@
     used in newly-written code. Use @fun{gtk-paned-new} with @code{:horizontal}
     instead.
 
-  @short{Create a new @class{gtk-hpaned} container.}"
+  @short{Create a new @class{gtk-hpaned} container.}
+  @see-class{gtk-paned}"
   (make-instance 'gtk-paned
                  :orientation :horizontal))
 
@@ -774,7 +769,8 @@
     used in newly-written code. Use the function @fun{gtk-paned-new} with
     @code{:vertival} instead.
 
-  @short{Create a new @class{gtk-vpaned} container.}"
+  @short{Create a new @class{gtk-vpaned} container.}
+  @see-class{gtk-paned}"
   (make-instance 'gtk-paned
                  :orientation :vertical))
 
