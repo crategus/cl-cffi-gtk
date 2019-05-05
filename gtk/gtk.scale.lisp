@@ -121,38 +121,40 @@
     normally use the \"value-changed\" signal.
   @end{short}
 
+  @image[scales]{}
+
   Note that using the same upper and lower bounds for the @sym{gtk-scale},
   through the @class{gtk-range} methods, will hide the slider itself. This is
   useful for applications that want to show an undeterminate value on the scale,
   without changing the layout of the application, such as movie or music
   players.
-
-  @subheading{GtkScale as GtkBuildable}
+  @begin[GtkScale as GtkBuildable]{dictionary}
     @sym{gtk-scale} supports a custom @code{<marks>} element, which can contain
     multiple @code{<mark>} elements. The \"value\" and \"position\" attributes
     have the same meaning as @fun{gtk-scale-add-mark} parameters of the same
     name. If the element is not empty, its content is taken as the markup to
     show at the mark. It can be translated with the usual \"translatable\" and
     \"context\" attributes.
+  @end{dictionary}
   @begin[Style Property Details]{dictionary}
     @begin[code]{table}
       @begin[slider-length]{entry}
         The @code{slider-length} style property of type @code{:int} (Read) @br{}
         Length of scale's slider. @br{}
-        @b{Warning:} The @code{slider-length} style property has been deprecated
-        since version 3.20 and should not be used in newly-written code. Use
-        min-height/min-width CSS properties on the slider element instead. The
-        value of this style property is ignored. @br{}
+        @em{Warning:} The @code{slider-length} style property has been
+        deprecated since version 3.20 and should not be used in newly-written
+        code. Use min-height/min-width CSS properties on the slider element
+        instead. The value of this style property is ignored. @br{}
         Allowed values: >= 0 @br{}
         Default value: 31
       @end{entry}
       @begin[value-spacing]{entry}
         The @code{value-spacing} style property of type @code{:int} (Read) @br{}
         Space between value text and the slider/trough area. @br{}
-        @b{Warning:} The @code{value-spacing} style property has been deprecated
-        since version 3.20 and should not be used in newly-written code. Use
-        min-height/min-width CSS properties on the value element instead. The
-        value of this style property is ignored. @br{}
+        @em{Warning:} The @code{value-spacing} style property has been
+        deprecated since version 3.20 and should not be used in newly-written
+        code. Use min-height/min-width CSS properties on the value element
+        instead. The value of this style property is ignored. @br{}
         Allowed values: >= 0 @br{}
         Default value: 2
       @end{entry}
@@ -330,8 +332,7 @@
     of the scale, or @code{nil} to create a new adjustment}
   @return{A new @class{gtk-scale} widget.}
   @short{Creates a new @class{gtk-scale} widget.}
-
-  Since 3.0"
+  @see-class{gtk-scale}"
   (make-instance 'gtk-scale
                  :orientation orientation
                  :adjustment adjustment))
@@ -363,8 +364,7 @@
   Note that the way in which the precision is derived works best if @arg{step}
   is a power of ten. If the resulting precision is not suitable for your needs,
   use the function @fun{gtk-scale-set-digits} to correct it.
-
-  Since 3.0
+  @see-class{gtk-scale}
   @see-function{gtk-scale-set-digits}"
   (make-instance 'gtk-scale
                  :orientation orientation
@@ -385,14 +385,13 @@
   @argument[scale]{a @class{gtk-scale} widget}
   @begin{return}
     The @class{pango-layout} for this scale, or @code{nil} if the
-    @code{\"draw-value\"} property is @code{nil}.
+    @slot[gtk-scale]{draw-value} property is @code{nil}.
   @end{return}
   @begin{short}
     Gets the @class{pango-layout} used to display the scale. The returned object
     is owned by the scale so does not need to be freed by the caller.
   @end{short}
-
-  Since 2.4"
+  @see-class{gtk-scale}"
   (scale (g-object gtk-scale)))
 
 (export 'gtk-scale-get-layout)
@@ -421,10 +420,9 @@
     @code{PANGO_PIXELS()} or @code{PANGO_SCALE}.
   @end{short}
 
-  If the @code{\"draw-value\"} property is @code{nil}, the return values are
+  If the @slot[gtk-scale]{draw-value} property is @code{nil}, the return values are
   undefined.
-
-  Since 2.4"
+  @see-class{gtk-scale}"
   (with-foreign-objects ((x :int) (y :int))
     (%gtk-scale-get-layout-offsets scale x y)
     (values (mem-ref x :int)
@@ -456,8 +454,7 @@
   If markup is not @code{nil}, text is shown next to the tick mark.
 
   To remove marks from a scale, use the function @fun{gtk-scale-clear-marks}.
-
-  Since 2.16
+  @see-class{gtk-scale}
   @see-function{gtk-scale-clear-marks}"
   (scale (g-object gtk-scale))
   (value :double)
@@ -478,8 +475,7 @@
     Removes any marks that have been added with the function
     @fun{gtk-scale-add-mark}.
   @end{short}
-
-  Since 2.16
+  @see-class{gtk-scale}
   @see-function{gtk-scale-add-mark}"
   (scale (g-object gtk-scale)))
 
@@ -521,9 +517,6 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-hscale 'type)
  "@version{2013-4-28}
-  @subheading{Warning}
-    @sym{gtk-hscale} has been deprecated, use @class{gtk-scale} instead.
-
   @begin{short}
     The @sym{gtk-hscale} widget is used to allow the user to select a value
     using a horizontal slider. To create one, use the function
@@ -531,7 +524,10 @@
   @end{short}
 
   The position to show the current value, and the number of decimal places
-  shown can be set using the parent @class{gtk-scale} class's functions.")
+  shown can be set using the parent @class{gtk-scale} class's functions.
+  @begin[Warning]{dictionary}
+    @sym{gtk-hscale} has been deprecated, use @class{gtk-scale} instead.
+  @end{dictionary}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_hscale_new ()
@@ -545,12 +541,12 @@
   @argument[adjustment]{the @class{gtk-adjustment} which sets the range of the
     scale}
   @return{A new @class{gtk-hscale} widget.}
-  @subheading{Warning}
+  @short{Creates a new @class{gtk-hscale} widget.}
+  @begin[Warning]{dictionary}
     @sym{gtk-hscale-new} has been deprecated since version 3.2 and should not be
     used in newly written code. Use the function @fun{gtk-scale-new} with
     @code{:horizontal} instead.
-
-  @short{Creates a new @class{gtk-hscale} widget.}
+  @end{dictionary}
   @see-function{gtk-scale-new}"
   (make-instance 'gtk-scale
                  :orientation :horizontal
@@ -571,11 +567,6 @@
   @argument[max]{maximum value}
   @argument[step]{step increment (tick size) used with keyboard shortcuts}
   @return{A new @class{gtk-hscale} widget.}
-  @subheading{Warning}
-    @sym{gtk-hscale-new-with-range} has been deprecated since version 3.2 and
-    should not be used in newly written code. Use the function
-    @fun{gtk-scale-new-with-range} with @code{:horizontal} instead.
-
   @begin{short}
     Creates a new horizontal scale widget that lets the user input a number
     between @arg{min} and @arg{max} (including @arg{min} and @arg{max}) with the
@@ -586,6 +577,11 @@
   Note that the way in which the precision is derived works best if @arg{step}
   is a power of ten. If the resulting precision is not suitable for your needs,
   use  the function @fun{gtk-scale-set-digits} to correct it.
+  @begin[Warning]{dictionary}
+    @sym{gtk-hscale-new-with-range} has been deprecated since version 3.2 and
+    should not be used in newly written code. Use the function
+    @fun{gtk-scale-new-with-range} with @code{:horizontal} instead.
+  @end{dictionary}
   @see-class{gtk-hscale}
   @see-function{gtk-scale-new-with-range}
   @see-function{gtk-scale-set-digits}"
@@ -632,9 +628,6 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation 'gtk-vscale 'type)
  "@version{2013-10-2}
-  @subheading{Warning}
-    @sym{gtk-vscale} has been deprecated, use @class{gtk-scale} instead.
-
   @begin{short}
     The @sym{gtk-vscale} widget is used to allow the user to select a value
     using a vertical slider. To create one, use the function
@@ -643,6 +636,9 @@
 
   The position to show the current value, and the number of decimal places
   shown can be set using the parent @class{gtk-scale} class's functions.
+  @begin[Warning]{dictionary}
+    @sym{gtk-vscale} has been deprecated, use @class{gtk-scale} instead.
+  @end{dictionary}
   @see-class{gtk-scale}")
 
 ;;; ----------------------------------------------------------------------------
@@ -657,12 +653,12 @@
   @argument[adjustment]{the @class{gtk-adjustment} which sets the range of the
     scale}
   @return{A new @class{gtk-vscale} widget.}
-  @subheading{Warning}
+  @short{Creates a new @class{gtk-vscale}.}
+  @begin[Warning]{dictionary}
     @sym{gtk-vscale-new} has been deprecated since version 3.2 and should not be
     used in newly written code. Use the function @fun{gtk-scale-new} with
     @code{:vertival} instead.
-
-  @short{Creates a new @class{gtk-vscale}.}"
+  @end{dictionary}"
   (make-instance 'gtk-scale
                  :orientation :vertical
                  :adjustment adjustment))
@@ -682,11 +678,6 @@
   @argument[max]{maximum value}
   @argument[step]{step increment (tick size) used with keyboard shortcuts}
   @return{A new @class{gtk-vscale}.}
-  @subheading{Warning}
-    @sym{gtk-vscale-new-with-range} has been deprecated since version 3.2 and
-    should not be used in newly written code. Use the function
-    @fun{gtk-scale-new-with-range} with @code{:vertical} instead.
-
   @begin{short}
     Creates a new vertical scale widget that lets the user input a number
     between min and max (including @arg{min} and @arg{max}) with the increment
@@ -697,6 +688,11 @@
   Note that the way in which the precision is derived works best if @arg{step}
   is a power of ten. If the resulting precision is not suitable for your needs,
   use the function @fun{gtk-scale-set-digits} to correct it.
+  @begin[Warning]{dictionary}
+    @sym{gtk-vscale-new-with-range} has been deprecated since version 3.2 and
+    should not be used in newly written code. Use the function
+    @fun{gtk-scale-new-with-range} with @code{:vertical} instead.
+  @end{dictionary}
   @see-function{gtk-scale-set-digits}"
   (make-instance 'gtk-scale
                  :orientation :vertical
