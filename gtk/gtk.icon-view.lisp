@@ -2046,13 +2046,11 @@
   @arg{column} should be set to the column in @arg{icon-view}'s model containing
   the tooltip texts, or -1 to disable this feature.
 
-  When enabled, @code{\"has-tooltip\"} will be set to @em{true} and
-  @arg{icon-view} will connect a @code{\"query-tooltip\"} signal handler.
+  When enabled, the @slot[gtk-widget]{has-tooltip} property will be set to
+  @em{true} and @arg{icon-view} will connect a \"query-tooltip\" signal handler.
 
   Note that the signal handler sets the text with the function
   @fun{gtk-tooltip-set-markup}, so &, <, etc have to be escaped in the text.
-
-  Since 2.12
   @see-class{gtk-icon-view}
   @see-function{gtk-icon-view-get-tooltip-column}"
   (setf (gtk-icon-view-tooltip-column icon-view) column))
