@@ -1772,13 +1772,13 @@
  lambda (widget x y keyboard-mode tooltip)   : Run Last
      @end{pre}
      Emitted when the @code{has-tooltip} property is @em{true} and the
-     @code{gtk-tooltip-timeout} property of the @class{gtk-settings} class
-     has expired with the cursor hovering \"above\" widget; or emitted when
-     widget got focus in keyboard mode. Using the given coordinates, the signal
-     handler should determine whether a tooltip should be shown for widget. If
-     this is the case @em{true} should be returned, @code{nil} otherwise. Note
-     that if @arg{keyboard-mode} is @em{true}, the values of @arg{x} and @arg{y}
-     are undefined and should not be used. The signal handler is free to
+     @slot[gtk-settings]{gtk-tooltip-timeout} property has expired with the
+     cursor hovering \"above\" widget; or emitted when widget got focus in
+     keyboard mode. Using the given coordinates, the signal handler should
+     determine whether a tooltip should be shown for widget. If this is the
+     case @em{true} should be returned, @code{nil} otherwise. Note that if
+     @arg{keyboard-mode} is @em{true}, the values of @arg{x} and @arg{y} are
+     undefined and should not be used. The signal handler is free to
      manipulate @arg{tooltip} with the therefore destined function calls.
      @begin[code]{table}
        @entry[widget]{The object which received the signal.}
