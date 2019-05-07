@@ -76,15 +76,15 @@
 ;;;     gtk_cell_area_is_activatable
 ;;;     gtk_cell_area_activate
 ;;;     gtk_cell_area_focus
-;;;     gtk_cell_area_set_focus_cell
-;;;     gtk_cell_area_get_focus_cell
+;;;     gtk_cell_area_set_focus_cell                       Accessor
+;;;     gtk_cell_area_get_focus_cell                       Accessor
 ;;;     gtk_cell_area_add_focus_sibling
 ;;;     gtk_cell_area_remove_focus_sibling
 ;;;     gtk_cell_area_is_focus_sibling
 ;;;     gtk_cell_area_get_focus_siblings
 ;;;     gtk_cell_area_get_focus_from_sibling
-;;;     gtk_cell_area_get_edited_cell
-;;;     gtk_cell_area_get_edit_widget
+;;;     gtk_cell_area_get_edited_cell                      Accessor
+;;;     gtk_cell_area_get_edit_widget                      Accessor
 ;;;     gtk_cell_area_activate_cell
 ;;;     gtk_cell_area_stop_editing
 ;;;     gtk_cell_area_inner_cell_area
@@ -470,8 +470,6 @@
         @entry[path]{The @class{gtk-tree-path} string this edit was initiated
           for.}
       @end{table}
-      Since 3.0
-
     @subheading{The \"apply-attributes\" signal}
       @begin{pre}
  lambda (area model iter is-expander is-expanded)   : Run First
@@ -486,8 +484,6 @@
         @entry[is-expanded]{Whether the view is currently showing the children
           of this row.}
       @end{table}
-      Since 3.0
-
     @subheading{The \"focus-changed\" signal}
       @begin{pre}
  lambda (area renderer path)   : Run First
@@ -502,8 +498,6 @@
         @entry[renderer]{The @class{gtk-cell-renderer} that has focus.}
         @entry[path]{The current @class{gtk-tree-path} string set for area.}
       @end{table}
-      Since 3.0
-
     @subheading{The \"remove-editable\" signal}
       @begin{pre}
  lambda (area renderer editable)   : Run First
@@ -515,79 +509,102 @@
         @entry[renderer]{The @class{gtk-cell-renderer} that finished editeding.}
         @entry[editable]{The @class{gtk-cell-editable} widget to remove.}
       @end{table}
-      Since 3.0
   @end{dictionary}
   @see-slot{gtk-cell-area-edit-widget}
   @see-slot{gtk-cell-area-edited-cell}
   @see-slot{gtk-cell-area-focus-cell}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
 ;;; Property Details
-;;;
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-cell-area-edit-widget ----------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "edit-widget" 'gtk-cell-area) 't)
- "The @code{\"edit-widget\"} property of type @class{gtk-cell-editable}
+ "The @code{edit-widget} property of type @class{gtk-cell-editable}
   (Read) @br{}
   The widget currently editing the edited cell. This property is read-only and
-  only changes as a result of a call the function
-  @fun{gtk-cell-area-activate-cell}. @br{}
-  Since 3.0")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "edited-cell" 'gtk-cell-area) 't)
- "The @code{\"edited-cell\"} property of type @class{gtk-cell-renderer}
-  (Read) @br{}
-  The cell in the area that is currently edited. This property is read-only and
-  only changes as a result of a call the function
-  @fun{gtk-cell-area-activate-cell}. @br{}
-  Since 3.0")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "focus-cell" 'gtk-cell-area) 't)
- "The @code{\"focus-cell\"} property of type @class{gtk-cell-renderer}
-  (Read / Write) @br{}
-  The cell in the area that currently has focus. @br{}
-  Since 3.0")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors
-;;;
-;;; ----------------------------------------------------------------------------
+  only changes as a result of a call the @fun{gtk-cell-area-activate-cell}
+  function.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-area-edit-widget atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-area-edit-widget 'function)
- "@version{2013-10-24}
-  Accessor of the slot @code{\"edit-widget\"} of the @class{gtk-cell-area}
-  class.
-  @see-class{gtk-cell-area}
-  @see-function{gtk-cell-area-get-edit-widget}")
+ "@version{2019-5-6}
+  @syntax[]{(gtk-cell-area-edit-widget object) => edit-widget}
+  @argument[object]{a @class{gtk-cell-area} object}
+  @argument[edit-widget]{the @class{gtk-cell-editable} widget}
+  @begin{short}
+    Accessor of the @slot[gtk-cell-area]{edit-widget} slot of the
+    @class{gtk-cell-area} class.
+  @end{short}
+
+  The @sym{gtk-cell-area-edit-widget} slot access function
+  gets the @class{gtk-cell-editable} widget currently used to edit the
+  currently edited cell.
+  @see-class{gtk-cell-area}")
+
+;;; --- gtk-cell-area-edited-cell ----------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "edited-cell" 'gtk-cell-area) 't)
+ "The @code{edited-cell} property of type @class{gtk-cell-renderer}
+  (Read) @br{}
+  The cell in the area that is currently edited. This property is read-only and
+  only changes as a result of a call the  @fun{gtk-cell-area-activate-cell}
+  function.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-area-edited-cell atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-area-edited-cell 'function)
- "@version{2013-10-24}
-  Accessor of the slot @code{\"edited-cell\"} of the @class{gtk-cell-area}
-  class.
-  @see-class{gtk-cell-area}
-  @see-function{gtk-cell-area-get-edited-cell}")
+ "@version{2019-5-6}
+  @syntax[]{(gtk-cell-area-edited-cell object) => cell}
+  @argument[object]{a @class{gtk-cell-area} object}
+  @argument[renderer]{the @class{gtk-cell-renderer} object}
+  @begin{short}
+    Accessor of the @slot[gtk-cell-area]{edited-cell} of the
+    @class{gtk-cell-area} class.
+  @end{short}
+
+  The @sym{gtk-cell-area-edited-cell} slot access function
+  gets the @class{gtk-cell-renderer} in the area that is currently being edited.
+  @see-class{gtk-cell-area}")
+
+;;; --- gtk-cell-area-focus-cell -----------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "focus-cell" 'gtk-cell-area) 't)
+ "The @code{focus-cell} property of type @class{gtk-cell-renderer}
+  (Read / Write) @br{}
+  The cell in the area that currently has focus.")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-area-focus-cell atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-area-focus-cell 'function)
- "@version{2013-10-24}
-  Accessor of the slot @code{\"focus-cell\"} of the @class{gtk-cell-area}
-  class.
-  @see-class{gtk-cell-area}
-  @see-function{gtk-cell-area-get-focus-cell}
-  @see-function{gtk-cell-area-set-focus-cell}")
+ "@version{2019-5-6}
+  @syntax[]{(gtk-cell-area-edited-cell object) => renderer}
+  @syntax[]{(setf (gtk-cell-area-edited-cell object) renderer}
+  @argument[area]{a @class{gtk-cell-area} widget}
+  @argument[renderer]{the @class{gtk-cell-renderer} to give focus to}
+  @begin{short}
+    Accessor of the @slot[gtk-cell-area]{focus-cell} of the
+    @class{gtk-cell-area} class.
+  @end{short}
+
+  The @sym{gtk-cell-area-focus-cell} slot access function
+  retrieves the currently focused cell for the area.
+
+  The @sym{(setf gtk-cell-area-focus-cell)} slot access function
+  explicitly sets the currently focused cell to @arg{renderer}.
+
+  This is generally called by implementations of @code{GtkCellAreaClass.focus()}
+  or @code{GtkCellAreaClass.event()}, however it can also be used to implement
+  functions such as the function @fun{gtk-tree-view-set-cursor-on-cell}.
+  @see-class{gtk-cell-area}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; struct GtkCellAreaClass
@@ -820,8 +837,7 @@
   @begin{short}
     Adds @arg{renderer} to @arg{area} with the default child cell properties.
   @end{short}
-
-  Since 3.0"
+  @see-class{gtk-cell-area}"
   (area (g-object gtk-cell-area))
   (renderer (g-object gtk-cell-renderer)))
 
@@ -837,8 +853,7 @@
   @argument[area]{a @class{gtk-cell-area} object}
   @argument[renderer]{the @class{gtk-cell-renderer} object to remove from area}
   @short{Removes @arg{renderer} from @arg{area}.}
-
-  Since 3.0"
+  @see-class{gtk-cell-area}"
   (area (g-object gtk-cell-area))
   (renderer (g-object gtk-cell-renderer)))
 
@@ -855,7 +870,7 @@
   @argument[renderer]{the @class{gtk-cell-renderer} object to check}
   @return{@em{True} if @arg{renderer} is in the @arg{area}.}
   @short{Checks if @arg{area} contains @arg{renderer}.}
-  Since 3.0"
+  @see-class{gtk-cell-area}"
   (area (g-object gtk-cell-area))
   (renderer (g-object gtk-cell-renderer)))
 
@@ -986,8 +1001,6 @@
   @begin{short}
     Delegates event handling to a @class{gtk-cell-area}.
   @end{short}
-
-  Since 3.0
   @see-class{gtk-cell-area}
   @see-class{gtk-cell-area-context}
   @see-class{gtk-widget}
@@ -1221,8 +1234,7 @@
   to check the @arg{minimum-width} and @arg{natural-width} of this call but
   rather to consult @fun{gtk-cell-area-context-get-preferred-width} after a
   series of requests.
-
-  Since 3.0
+  @see-class{gtk-cell-area}
   @see-function{gtk-cell-area-context-get-preferred-width}"
   (with-foreign-objects ((minimum-width :int) (natural-width :int))
     (%gtk-cell-area-get-preferred-width area
@@ -1313,8 +1325,7 @@
   to check the @arg{minimum-height} and @arg{natural-height} of this call but
   rather to consult @fun{gtk-cell-area-context-get-preferred-height} after a
   series of requests.
-
-  Since 3.0
+  @see-class{gtk-cell-area}
   @see-function{gtk-cell-area-context-get-preferred-height}"
   (with-foreign-objects ((minimum-height :int) (natural-height :int))
     (%gtk-cell-area-get-preferred-height area
@@ -1782,8 +1793,6 @@
     however some subclasses which embed widgets in the area can also activate a
     widget if it currently has the focus.
   @end{short}
-
-  Since 3.0
   @see-class{gtk-cell-area}
   @see-class{gtk-cell-area-context}
   @see-class{gtk-widget}
@@ -1821,54 +1830,6 @@
 ;;;
 ;;; Since 3.0
 ;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_cell_area_set_focus_cell ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-cell-area-set-focus-cell))
-
-(defun gtk-cell-area-set-focus-cell (area renderer)
- #+cl-cffi-gtk-documentation
- "@version{2013-10-24}
-  @argument[area]{a @class{gtk-cell-area} widget}
-  @argument[renderer]{the @class{gtk-cell-renderer} to give focus to}
-  @begin{short}
-    Explicitly sets the currently focused cell to renderer.
-  @end{short}
-
-  This is generally called by implementations of @code{GtkCellAreaClass.focus()}
-  or @code{GtkCellAreaClass.event()}, however it can also be used to implement
-  functions such as the function @fun{gtk-tree-view-set-cursor-on-cell}.
-
-  Since 3.0
-  @see-class{gtk-cell-area}
-  @see-function{gtk-tree-view-set-cursor-on-cell}"
-  (setf (gtk-cell-area-focus-cell area) renderer))
-
-(export 'gtk-cell-area-set-focus-cell)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_cell_area_get_focus_cell ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-cell-area-get-focus-cell))
-
-(defun gtk-cell-area-get-focus-cell (area)
- #+cl-cffi-gtk-documentation
- "@version{2013-10-24}
-  @argument[area]{a @class{gtk-cell-area} widget}
-  @return{The currently focused cell in @arg{area}.}
-  @begin{short}
-    Retrieves the currently focused cell for @arg{area}.
-  @end{short}
-
-  Since 3.0
-  @see-class{gtk-cell-area}
-  @see-function{gtk-cell-area-set-focus-cell}"
-  (gtk-cell-area-focus-cell area))
-
-(export 'gtk-cell-area-get-focus-cell)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_area_add_focus_sibling ()
@@ -1990,52 +1951,6 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_cell_area_get_edited_cell ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-cell-area-get-edited-cell))
-
-(defun gtk-cell-area-get-edited-cell (area)
- #+cl-cffi-gtk-documentation
- "@version{2013-10-24}
-  @argument[area]{a @class{gtk-cell-area} object}
-  @return{The currently edited @class{gtk-cell-renderer} object.}
-  @begin{short}
-    Gets the @class{gtk-cell-renderer} in @arg{area} that is currently being
-    edited.
-  @end{short}
-
-  Since 3.0
-  @see-class{gtk-cell-area}
-  @see-class{gtk-cell-renderer}"
-  (gtk-cell-area-edited-cell area))
-
-(export 'gtk-cell-area-get-edited-cell)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_cell_area_get_edit_widget ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-cell-area-get-edit-widget))
-
-(defun gtk-cell-area-get-edit-widget (area)
- #+cl-cffi-gtk-documentation
- "@version{2013-6-21}
-  @argument[area]{a @class{gtk-cell-area} object}
-  @return{The currently active @class{gtk-cell-editable} widget.}
-  @begin{short}
-    Gets the @class{gtk-cell-editable} widget currently used to edit the
-    currently edited cell.
-  @end{short}
-
-  Since 3.0
-  @see-class{gtk-cell-area}
-  @see-class{gtk-cell-editable}"
-  (gtk-cell-area-edit-widget area))
-
-(export 'gtk-cell-area-get-edit-widget)
-
-;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_area_activate_cell ()
 ;;; ----------------------------------------------------------------------------
 
@@ -2056,8 +1971,6 @@
     keyboard events for free in its own @code{GtkCellArea->activate()}
     implementation.
   @end{short}
-
-  Since 3.0
   @see-class{gtk-cell-area}
   @see-class{gtk-widget}
   @see-class{gtk-cell-renderer}
