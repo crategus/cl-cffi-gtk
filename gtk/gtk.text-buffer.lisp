@@ -41,7 +41,7 @@
 ;;;     gtk_text_buffer_new
 ;;;     gtk_text_buffer_get_line_count
 ;;;     gtk_text_buffer_get_char_count
-;;;     gtk_text_buffer_get_tag_table
+;;;     gtk_text_buffer_get_tag_table                      Accessor
 ;;;     gtk_text_buffer_insert
 ;;;     gtk_text_buffer_insert_at_cursor
 ;;;     gtk_text_buffer_insert_interactive
@@ -54,7 +54,7 @@
 ;;;     gtk_text_buffer_delete
 ;;;     gtk_text_buffer_delete_interactive
 ;;;     gtk_text_buffer_backspace
-;;;     gtk_text_buffer_set_text
+;;;     gtk_text_buffer_set_text                           Accessor
 ;;;     gtk_text_buffer_get_text
 ;;;     gtk_text_buffer_get_slice
 ;;;     gtk_text_buffer_insert_pixbuf
@@ -69,7 +69,7 @@
 ;;;     gtk_text_buffer_get_mark
 ;;;     gtk_text_buffer_get_insert
 ;;;     gtk_text_buffer_get_selection_bound
-;;;     gtk_text_buffer_get_has_selection
+;;;     gtk_text_buffer_get_has_selection                  Accessor
 ;;;     gtk_text_buffer_place_cursor
 ;;;     gtk_text_buffer_select_range
 ;;;     gtk_text_buffer_apply_tag
@@ -102,9 +102,9 @@
 ;;;     gtk_text_buffer_deserialize
 ;;;     gtk_text_buffer_deserialize_get_can_create_tags
 ;;;     gtk_text_buffer_deserialize_set_can_create_tags
-;;;     gtk_text_buffer_get_copy_target_list
+;;;     gtk_text_buffer_get_copy_target_list               Accessor
 ;;;     gtk_text_buffer_get_deserialize_formats
-;;;     gtk_text_buffer_get_paste_target_list
+;;;     gtk_text_buffer_get_paste_target_list              Accessor
 ;;;     gtk_text_buffer_get_serialize_formats
 ;;;     gtk_text_buffer_register_deserialize_format
 ;;;     gtk_text_buffer_register_deserialize_tagset
@@ -416,7 +416,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "copy-target-list"
                                                'gtk-text-buffer) 't)
- "The @code{\"copy-target-list\"} property of type @class{gtk-target-list}
+ "The @code{copy-target-list} property of type @class{gtk-target-list}
   (Read) @br{}
   The list of targets this buffer supports for clipboard copying and as DND
   source.")
@@ -425,18 +425,28 @@
 (setf (gethash 'gtk-text-buffer-copy-target-list atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-buffer-copy-target-list 'function)
- "@version{2013-8-14}
-  Accessor of the slot @code{\"copy-target-list\"} of the
-  @class{gtk-text-buffer} class.
-  @see-class{gtk-text-buffer}
-  @see-function{gtk-text-buffer-get-copy-target-list}")
+ "@version{2019-5-4}
+  @syntax[]{(gtk-text-buffer-copy-target-list object) => target-list}
+  @argument[object]{a @class{gtk-text-buffer} object}
+  @argument[target-list]{a @class{gtk-target-list} object}
+  @begin{short}
+    Accessor of the @slot[gtk-text-buffer]{copy-target-list} slot of the
+    @class{gtk-text-buffer} class.
+  @end{short}
+
+  This function returns the list of targets this text buffer can provide
+  for copying and as DND source. The targets in the list are added with info
+  values from the @symbol{gtk-text-buffer-target-info} enumeration, using the
+  @fun{gtk-target-list-add-rich-text-targets} and
+  @fun{gtk-target-list-add-text-targets} functions.
+  @see-class{gtk-text-buffer}")
 
 ;;; --- gtk-text-buffer-cursor-position ----------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "cursor-position"
                                                'gtk-text-buffer) 't)
- "The @code{\"cursor-position\"} property of type @code{:int} (Read) @br{}
+ "The @code{cursor-position} property of type @code{:int} (Read) @br{}
   The position of the insert mark, as offset from the beginning of the
   buffer. It is useful for getting notified when the cursor moves. @br{}
   Allowed values: >= 0 @br{}
@@ -447,8 +457,10 @@
       "Accessor"
       (documentation 'gtk-text-buffer-cursor-position 'function)
  "@version{2013-8-14}
-  Accessor of the slot @code{\"cursor-position\"} of the @class{gtk-text-buffer}
-  class.
+  @begin{short}
+    Accessor of the @slot[gtk-text-buffer]{cursor-position} slot of the
+    @class{gtk-text-buffer} class.
+  @end{short}
   @see-class{gtk-text-buffer}")
 
 ;;; --- gtk-text-buffer-has-selection ------------------------------------------
@@ -456,7 +468,7 @@
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "has-selection"
                                                'gtk-text-buffer) 't)
- "The @code{\"has-selection\"} property of type @code{:boolean} (Read) @br{}
+ "The @code{has-selection} property of type @code{:boolean} (Read) @br{}
   Whether the buffer has some text currently selected. @br{}
   Default value: @code{nil}")
 
@@ -464,18 +476,24 @@
 (setf (gethash 'gtk-text-buffer-has-selection atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-buffer-has-selection 'function)
- "@version{2013-8-14}
-  Accessor of the slot @code{\"has-selection\"} of the @class{gtk-text-buffer}
-  class.
-  @see-class{gtk-text-buffer}
-  @see-function{gtk-text-buffer-get-has-selection}")
+ "@version{2019-5-4}
+  @syntax[]{(gtk-text-buffer-has-selection object) => has-selection}
+  @argument[object]{a @class{gtk-text-buffer} object}
+  @argument[has-selection]{@em{true} if there is text selected}
+  @begin{short}
+    Accessor of the @slot[gtk-text-buffer]{has-selection} slot of the
+    @class{gtk-text-buffer} class.
+  @end{short}
+
+  Indicates whether the text buffer has some text currently selected.
+  @see-class{gtk-text-buffer}")
 
 ;;; --- gtk-text-buffer-paste-target-list --------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "paste-target-list"
                                                'gtk-text-buffer) 't)
- "The @code{\"paste-target-list\"} property of type @class{gtk-target-list}
+ "The @code{paste-target-list} property of type @class{gtk-target-list}
   (Read) @br{}
   The list of targets this buffer supports for clipboard pasting and as DND
   destination.")
@@ -484,17 +502,27 @@
 (setf (gethash 'gtk-text-buffer-paste-target-list atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-buffer-paste-target-list 'function)
- "@version{2013-8-14}
-  Accessor of the slot @code{\"paste-target-list\"} of the
-  @class{gtk-text-buffer} class.
-  @see-class{gtk-text-buffer}
-  @see-function{gtk-text-buffer-get-paste-target-list}")
+ "@version{2019-5-4}
+  @syntax[]{(gtk-text-buffer-paste-target-list object) => target-list}
+  @argument[object]{a @class{gtk-text-buffer} object}
+  @argument[target-list]{a @class{gtk-target-list}}
+  @begin{short}
+    Accessor of the @slot[gtk-text-buffer]{paste-target-list} slot of the
+    @class{gtk-text-buffer} class.
+  @end{short}
+
+  This function returns the list of targets this text buffer supports for
+  pasting and as DND destination. The targets in the list are added with info
+  values from the @symbol{gtk-text-buffer-target-info} enumeration, using the
+  @fun{gtk-target-list-add-rich-text-targets} and
+  @fun{gtk-target-list-add-text-targets} functions.
+  @see-class{gtk-text-buffer}")
 
 ;;; --- gtk-text-buffer-tag-table ----------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "tag-table" 'gtk-text-buffer) 't)
- "The @code{\"tag-table\"} property of type @class{gtk-text-tag-table}
+ "The @code{tag-table} property of type @class{gtk-text-tag-table}
   (Read / Write / Construct) @br{}
   Text Tag Table.")
 
@@ -502,27 +530,42 @@
 (setf (gethash 'gtk-text-buffer-tag-table atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-buffer-tag-table 'function)
- "@version{2013-8-14}
-  Accessor of the slot @code{\"tag-table\"} of the @class{gtk-text-buffer}
-  class.
-  @see-class{gtk-text-buffer}
-  @see-function{gtk-text-buffer-get-tag-table}")
+ "@version{2019-5-4}
+  @syntax[]{(gtk-text-buffer-tag-table object) => tag-table}
+  @argument[object]{a @class{gtk-text-buffer} object}
+  @argument[tag-table]{a @class{gtk-text-tag-table}}
+  @begin{short}
+    Accessor of the @slot[gtk-text-buffer]{tag-table} slot of the
+    @class{gtk-text-buffer} class.
+  @end{short}
+
+  Get the @class{gtk-text-tag-table} object associated with the buffer.
+  @see-class{gtk-text-buffer}")
 
 ;;; --- gtk-text-buffer-text ---------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "text" 'gtk-text-buffer) 't)
- "The @code{\"text\"} property of type @code{:string} (Read / Write) @br{}
+ "The @code{text} property of type @code{:string} (Read / Write) @br{}
   The text content of the buffer. Without child widgets and images, see the
-  function @fun{gtk-text-buffer-get-text} for more information. @br{}
+  @fun{gtk-text-buffer-get-text} function for more information. @br{}
   Default value: \"\"")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-text-buffer-text atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-text-buffer-text 'function)
- "@version{2013-8-14}
-  Accessor of the slot @code{\"text\"} of the @class{gtk-text-buffer} class.
+ "@version{2019-5-4}
+  @syntax[]{(setf (gtk-text-buffer-text object) text}
+  @argument[object]{a @class{gtk-text-buffer} object}
+  @argument[text]{UTF-8 text to insert}
+  @begin{short}
+    Accessor of the @slot[gtk-text-buffer]{text} slot of the
+    @class{gtk-text-buffer} class.
+  @end{short}
+
+  Deletes current contents of the buffer, and inserts @arg{text} instead.
+  @arg{text} must be valid UTF-8.
   @see-class{gtk-text-buffer}
   @see-function{gtk-text-buffer-get-text}
   @see-function{gtk-text-buffer-set-text}")
@@ -584,24 +627,6 @@
   (buffer (g-object gtk-text-buffer)))
 
 (export 'gtk-text-buffer-get-char-count)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_text_buffer_get_tag_table ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-text-buffer-get-tag-table))
-
-(defun gtk-text-buffer-get-tag-table (buffer)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-13}
-  @argument[buffer]{a @class{gtk-text-buffer} object}
-  @return{The @arg{buffer}'s tag table.}
-  Get the @class{gtk-text-tag-table} object associated with this @arg{buffer}.
-  @see-class{gtk-text-buffer}
-  @see-class{gtk-text-tag-table}"
-  (gtk-text-buffer-tag-table buffer))
-
-(export 'gtk-text-buffer-get-tag-table)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_insert ()
@@ -993,25 +1018,6 @@
 (export 'gtk-text-buffer-backspace)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_text_buffer_set_text ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-text-buffer-set-text))
-
-(defun gtk-text-buffer-set-text (buffer text)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-14}
-  @argument[buffer]{a @class{gtk-text-buffer} object}
-  @argument[text]{UTF-8 text to insert}
-  Deletes current contents of @arg{buffer}, and inserts @arg{text} instead.
-  @arg{text} must be valid UTF-8.
-  @see-class{gtk-text-buffer}
-  @see-function{gtk-text-buffer-get-text}"
-  (setf (gtk-text-buffer-text buffer) text))
-
-(export 'gtk-text-buffer-set-text)
-
-;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_get_text ()
 ;;; ----------------------------------------------------------------------------
 
@@ -1395,24 +1401,7 @@
 
 (export 'gtk-text-buffer-get-selection-bound)
 
-;;; ----------------------------------------------------------------------------
-;;; gtk_text_buffer_get_has_selection ()
-;;; ----------------------------------------------------------------------------
 
-(declaim (inline gtk-text-buffer-get-has-selection))
-
-(defun gtk-text-buffer-get-has-selection (buffer)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-14}
-  @argument[buffer]{a @class{gtk-text-buffer} object}
-  @return{@em{True} if the there is text selected.}
-  @begin{short}
-    Indicates whether the @arg{buffer} has some text currently selected.
-  @end{short}
-  @see-class{gtk-text-buffer}"
-  (gtk-text-buffer-has-selection buffer))
-
-(export 'gtk-text-buffer-get-has-selection)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_place_cursor ()
@@ -2295,34 +2284,6 @@
   (%gtk-text-buffer-deserialize-set-can-create-tags buffer format new-value))
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_text_buffer_get_copy_target_list ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-text-buffer-get-copy-target-list))
-
-(defun gtk-text-buffer-get-copy-target-list (buffer)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-14}
-  @argument[buffer]{a @class{gtk-text-buffer} object}
-  @return{The @class{gtk-target-list}.}
-  @begin{short}
-    This function returns the list of targets this text @arg{buffer} can provide
-    for copying and as DND source.
-  @end{short}
-  The targets in the list are added with info values from the
-  @symbol{gtk-text-buffer-target-info} enumeration, using the functions
-  @fun{gtk-target-list-add-rich-text-targets} and
-  @fun{gtk-target-list-add-text-targets}.
-  @see-class{gtk-text-buffer}
-  @see-class{gtk-target-list}
-  @see-symbol{gtk-text-buffer-target-info}
-  @see-function{gtk-target-list-add-rich-text-targets}
-  @see-function{gtk-target-list-add-text-targets}"
-  (gtk-text-buffer-copy-target-list buffer))
-
-(export 'gtk-text-buffer-get-copy-target-list)
-
-;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_get_deserialize_formats ()
 ;;; ----------------------------------------------------------------------------
 
@@ -2353,34 +2314,6 @@
             (collect atom)))))
 
 (export 'gtk-text-buffer-get-deserialize-formats)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_text_buffer_get_paste_target_list ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-text-buffer-get-paste-target-list))
-
-(defun gtk-text-buffer-get-paste-target-list (buffer)
- #+cl-cffi-gtk-documentation
- "@version{2013-8-14}
-  @argument[buffer]{a @class{gtk-text-buffer} object}
-  @return{The @class{gtk-target-list}.}
-  @begin{short}
-    This function returns the list of targets this text @arg{buffer} supports
-    for pasting and as DND destination.
-  @end{short}
-  The targets in the list are added with info values from the
-  @symbol{gtk-text-buffer-target-info} enumeration, using the functions
-  @fun{gtk-target-list-add-rich-text-targets} and
-  @fun{gtk-target-list-add-text-targets}.
-  @see-class{gtk-text-buffer}
-  @see-class{gtk-target-list}
-  @see-symbol{gtk-text-buffer-target-info}
-  @see-function{gtk-target-list-add-rich-text-targets}
-  @see-function{gtk-target-list-add-text-targets}"
-  (gtk-text-buffer-paste-target-list buffer))
-
-(export 'gtk-text-buffer-get-paste-target-list)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_text_buffer_get_serialize_formats ()
