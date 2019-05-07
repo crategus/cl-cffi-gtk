@@ -239,46 +239,53 @@
   for users to change the visible child. Instead, the @class{gtk-stack-switcher}
   widget can be used with @sym{gtk-stack} to provide this functionality.
 
+  @image[stack]{}
+
   Transitions between pages can be animated as slides or fades. This can be
   controlled with the function @fun{gtk-stack-transition-type}. These animations
   respect the \"gtk-enable-animations\" setting.
   The @sym{gtk-stack} widget was added in GTK+ 3.10.
   @begin[CSS nodes]{dictionary}
-    @sym{gtk-stack} has a single CSS node named stack.
+    @sym{gtk-stack} has a single CSS node named @code{stack}.
   @end{dictionary}
   @begin[Child Property Details]{dictionary}
-    @subheading{The @code{icon-name} child property}
-      The @code{icon-name} child property of type @code{:string} (Read / Write)
-      @br{}
-      The icon name of the child page. @br{}
-      Default value: @code{nil}
-
-    @subheading{The @code{name} child property}
-      The @code{name} child property of type @code{:string} (Read / Write)
-      @br{}
-      The name of the child page. @br{}
-      Default value: @code{nil}
-
-    @subheading{The @code{needs-attention} child property}
-      The @code{needs-attention} child property of type @code{:boolean}
-      (Read / Write) @br{}
-      Sets a flag specifying whether the child requires the user attention. This
-      is used by the @class{gtk-stack-switcher} to change the appearance of the
-      corresponding button when a page needs attention and it is not the current
-      one. @br{}
-      Since 3.12 @br{}
-      Default value: @code{nil}
-
-    @subheading{The @code{position} child property}
-      The @code{position} child property of type @code{:int} (Read / Write)@br{}
-      The index of the child in the parent. @br{}
-      Allowed values: >= -1 @br{}
-      Default value: 0
-
-    @subheading{The @code{title} child property}
-      The @code{title} child property of type @code{:string} (Read / Write)@br{}
-      The title of the child page. @br{}
-      Default value: @code{nil}
+    @begin[code]{table}
+      @begin[icon-name]{entry}
+        The @code{icon-name} child property of type @code{:string}
+        (Read / Write) @br{}
+        The icon name of the child page. @br{}
+        Default value: @code{nil}
+      @end{entry}
+      @begin[name]{entry}
+        The @code{name} child property of type @code{:string} (Read / Write)
+        @br{}
+        The name of the child page. @br{}
+        Default value: @code{nil}
+      @end{entry}
+      @begin[needs-attention]{entry}
+        The @code{needs-attention} child property of type @code{:boolean}
+        (Read / Write) @br{}
+        Sets a flag specifying whether the child requires the user attention.
+        This is used by the @class{gtk-stack-switcher} to change the appearance
+        of the corresponding button when a page needs attention and it is not
+        the current one. @br{}
+        Default value: @code{nil}
+        Since 3.12 @br{}
+      @end{entry}
+      @begin[position]{entry}
+        The @code{position} child property of type @code{:int}
+        (Read / Write) @br{}
+        The index of the child in the parent. @br{}
+        Allowed values: >= -1 @br{}
+        Default value: 0
+      @end{entry}
+      @begin[title]{entry}
+        The @code{title} child property of type @code{:string}
+        (Read / Write)@br{}
+        The title of the child page. @br{}
+        Default value: @code{nil}
+      @end{entry}
+    @end{table}
   @end{dictionary}
   @see-slot{gtk-stack-hhomogeneous}
   @see-slot{gtk-stack-homogeneous}
@@ -290,8 +297,7 @@
   @see-slot{gtk-stack-visible-child}
   @see-slot{gtk-stack-visisble-child-name}
   @see-class{gtk-stack-switcher}
-  @see-class{gtt-notebook}
-  ")
+  @see-class{gtk-notebook}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; Property and Accessor Details
