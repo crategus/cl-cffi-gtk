@@ -45,23 +45,23 @@
 ;;;     GtkTreeViewSearchEqualFunc
 ;;;
 ;;;     gtk_tree_view_new
-;;;     gtk_tree_view_get_level_indentation
-;;;     gtk_tree_view_get_show_expanders
-;;;     gtk_tree_view_set_level_indentation
-;;;     gtk_tree_view_set_show_expanders
+;;;     gtk_tree_view_get_level_indentation                  Accessor
+;;;     gtk_tree_view_get_show_expanders                     Accessor
+;;;     gtk_tree_view_set_level_indentation                  Accessor
+;;;     gtk_tree_view_set_show_expanders                     Accessor
 ;;;     gtk_tree_view_new_with_model
-;;;     gtk_tree_view_get_model
-;;;     gtk_tree_view_set_model
+;;;     gtk_tree_view_get_model                              Accessor
+;;;     gtk_tree_view_set_model                              Accessor
 ;;;     gtk_tree_view_get_selection
 ;;;     gtk_tree_view_get_hadjustment                      * deprecated
 ;;;     gtk_tree_view_set_hadjustment                      * deprecated
 ;;;     gtk_tree_view_get_vadjustment                      * deprecated
 ;;;     gtk_tree_view_set_vadjustment                      * deprecated
-;;;     gtk_tree_view_get_headers_visible
-;;;     gtk_tree_view_set_headers_visible
+;;;     gtk_tree_view_get_headers_visible                    Accessor
+;;;     gtk_tree_view_set_headers_visible                    Accessor
 ;;;     gtk_tree_view_columns_autosize
-;;;     gtk_tree_view_get_headers_clickable
-;;;     gtk_tree_view_set_headers_clickable
+;;;     gtk_tree_view_get_headers_clickable                  Accessor
+;;;     gtk_tree_view_set_headers_clickable                  Accessor
 ;;;     gtk_tree_view_set_rules_hint                         Accessor
 ;;;     gtk_tree_view_get_rules_hint                         Accessor
 ;;;
@@ -77,8 +77,8 @@
 ;;;     gtk_tree_view_get_column
 ;;;     gtk_tree_view_get_columns
 ;;;     gtk_tree_view_move_column_after
-;;;     gtk_tree_view_set_expander_column
-;;;     gtk_tree_view_get_expander_column
+;;;     gtk_tree_view_set_expander_column                    Accessor
+;;;     gtk_tree_view_get_expander_column                    Accessor
 ;;;     gtk_tree_view_set_column_drag_function
 ;;;     gtk_tree_view_scroll_to_point
 ;;;     gtk_tree_view_scroll_to_cell
@@ -93,8 +93,8 @@
 ;;;     gtk_tree_view_collapse_row
 ;;;     gtk_tree_view_map_expanded_rows
 ;;;     gtk_tree_view_row_expanded
-;;;     gtk_tree_view_set_reorderable
-;;;     gtk_tree_view_get_reorderable
+;;;     gtk_tree_view_set_reorderable                        Accessor
+;;;     gtk_tree_view_get_reorderable                        Accessor
 ;;;     gtk_tree_view_get_path_at_pos
 ;;;     gtk_tree_view_is_blank_at_pos
 ;;;     gtk_tree_view_get_cell_area
@@ -116,10 +116,10 @@
 ;;;     gtk_tree_view_get_drag_dest_row
 ;;;     gtk_tree_view_get_dest_row_at_pos
 ;;;     gtk_tree_view_create_row_drag_icon
-;;;     gtk_tree_view_set_enable_search
-;;;     gtk_tree_view_get_enable_search
-;;;     gtk_tree_view_get_search_column
-;;;     gtk_tree_view_set_search_column
+;;;     gtk_tree_view_set_enable_search                      Accessor
+;;;     gtk_tree_view_get_enable_search                      Accessor
+;;;     gtk_tree_view_get_search_column                      Accessor
+;;;     gtk_tree_view_set_search_column                      Accessor
 ;;;
 ;;;     GtkTreeViewSearchPositionFunc
 ;;;
@@ -129,12 +129,12 @@
 ;;;     gtk_tree_view_set_search_entry
 ;;;     gtk_tree_view_get_search_position_func
 ;;;     gtk_tree_view_set_search_position_func
-;;;     gtk_tree_view_get_fixed_height_mode
-;;;     gtk_tree_view_set_fixed_height_mode
-;;;     gtk_tree_view_get_hover_selection
-;;;     gtk_tree_view_set_hover_selection
-;;;     gtk_tree_view_get_hover_expand
-;;;     gtk_tree_view_set_hover_expand
+;;;     gtk_tree_view_get_fixed_height_mode                  Accessor
+;;;     gtk_tree_view_set_fixed_height_mode                  Accessor
+;;;     gtk_tree_view_get_hover_selection                    Accessor
+;;;     gtk_tree_view_set_hover_selection                    Accessor
+;;;     gtk_tree_view_get_hover_expand                       Accessor
+;;;     gtk_tree_view_set_hover_expand                       Accessor
 ;;;
 ;;;     GtkTreeDestroyCountFunc
 ;;;
@@ -144,19 +144,19 @@
 ;;;
 ;;;     gtk_tree_view_get_row_separator_func
 ;;;     gtk_tree_view_set_row_separator_func
-;;;     gtk_tree_view_get_rubber_banding
-;;;     gtk_tree_view_set_rubber_banding
+;;;     gtk_tree_view_get_rubber_banding                     Accessor
+;;;     gtk_tree_view_set_rubber_banding                     Accessor
 ;;;     gtk_tree_view_is_rubber_banding_active
-;;;     gtk_tree_view_get_enable_tree_lines
-;;;     gtk_tree_view_set_enable_tree_lines
+;;;     gtk_tree_view_get_enable_tree_lines                  Accessor
+;;;     gtk_tree_view_set_enable_tree_lines                  Accessor
 ;;;
 ;;;     gtk_tree_view_get_grid_lines
 ;;;     gtk_tree_view_set_grid_lines
 ;;;     gtk_tree_view_set_tooltip_row
 ;;;     gtk_tree_view_set_tooltip_cell
 ;;;     gtk_tree_view_get_tooltip_context
-;;;     gtk_tree_view_get_tooltip_column
-;;;     gtk_tree_view_set_tooltip_column
+;;;     gtk_tree_view_get_tooltip_column                     Accessor
+;;;     gtk_tree_view_set_tooltip_column                     Accessor
 ;;;
 ;;; Properties
 ;;;
@@ -302,6 +302,8 @@
     interface.
   @end{short}
 
+  @image[tree-view]{}
+
   Please refer to the tree widget conceptual overview for an overview of all
   the objects and data types related to the tree widget and how they work
   together.
@@ -309,8 +311,8 @@
   Several different coordinate systems are exposed in the @sym{gtk-tree-view}
   API.
   These are:
-  @begin{table}
-    @entry[Coordinate systems in @sym{gtk-tree-view} API]{}
+  @begin[]{table}
+    @entry[Coordinate systems in GtkTreeView API]{}
     @entry[Widget coordinates]{Coordinates relative to the widget (usually
       @code{widget->window}).}
     @entry[Bin window coordinates]{Coordinates relative to the window that
@@ -327,7 +329,7 @@
   @fun{gtk-tree-view-convert-bin-window-to-tree-coords} function (and vice
   versa).
 
-  @subheading{GtkTreeView as GtkBuildable}
+  @begin[GtkTreeView as GtkBuildable]{dictionary}
     The @sym{gtk-tree-view} implementation of the @class{gtk-buildable}
     interface accepts @class{gtk-tree-view-column} objects as @code{<child>}
     elements and exposes the internal @class{gtk-tree-selection} in UI
@@ -355,64 +357,78 @@
      </child>
    </object>
     @end{pre}
+  @end{dictionary}
   @begin[Style Property Details]{dictionary}
-    @subheading{The \"allow-rules\" style property}
-      @code{\"allow-rules\"} of type @code{:boolean} (Read) @br{}
-      Allow drawing of alternating color rows. @br{}
-      Default value: @em{true}
-
-    @subheading{The \"even-row-color\" style property}
-      @code{\"even-row-color\"} of type @class{gdk-color} (Read) @br{}
-      Color to use for even rows.
-
-    @subheading{The \"expander-size\" style property}
-      @code{\"expander-size\"} of type @code{:int} (Read) @br{}
-      Size of the expander arrow. @br{}
-      Allowed values: >= 0 @br{}
-      Default value: 14
-
-    @subheading{The \"grid-line-pattern\" style property}
-      @code{\"grid-line-pattern\"} of type @code{:string} (Read) @br{}
-      Dash pattern used to draw the tree view grid lines. @br{}
-      Default value: \"\001\001\"
-
-    @subheading{The \"grid-line-width\" style property}
-      @code{\"grid-line-width\"} of type @code{:int} (Read) @br{}
-      Width, in pixels, of the tree view grid lines. @br{}
-      Allowed values: >= 0 @br{}
-      Default value: 1
-
-    @subheading{The \"horizontal-separator\" style property}
-      @code{\"horizontal-separator\"} of tpye @code{:int} (Read) @br{}
-      Horizontal space between cells. Must be an even number. @br{}
-      Allowed values: >= 0 @br{}
-      Default value: 2
-
-    @subheading{The \"indent-expanders\" style property}
-      @code{\"indent-expanders\"} of type @code{:boolean} (Read) @br{}
-      Make the expanders indented. @br{}
-      Default value: @em{true}
-
-    @subheading{The \"odd-row-color\" style property}
-      @code{\"odd-row-color\"} of type @class{gdk-color} (Read)@br{}
-      Color to use for odd rows.
-
-    @subheading{The \"tree-line-pattern\" style property}
-      @code{\"tree-line-pattern\"} of type @code{:string} (Read) @br{}
-      Dash pattern used to draw the tree view lines. @br{}
-      Default value: \"\001\001\"
-
-    @subheading{The \"tree-line-width\" style property}
-      @code{\"tree-line-width\"} of type @code{:int} (Read) @br{}
-      Width, in pixels, of the tree view lines. @br{}
-      Allowed values: >= 0 @br{}
-      Default value: 1
-
-    @subheading{The \"vertical-separator\" style property}
-      @code{\"vertical-separator\"} of type @code{:int} (Read) @br{}
-      Vertical space between cells. Must be an even number. @br{}
-      Allowed values: >= 0 @br{}
-      Default value: 2
+    @begin[code]{table}
+      @begin[allow-rules]{entry}
+        The @code{allow-rules} style property of type @code{:boolean}
+        (Read) @br{}
+        Allow drawing of alternating color rows. @br{}
+        Default value: @em{true}
+      @end{entry}
+      @begin[even-row-color]{entry}
+        The @code{even-row-color} style property of type @class{gdk-color}
+        (Read) @br{}
+        Color to use for even rows.
+      @end{entry}
+      @begin[expander-size]{entry}
+        The @code{expander-size} style property of type @code{:int} (Read) @br{}
+        Size of the expander arrow. @br{}
+        Allowed values: >= 0 @br{}
+        Default value: 14
+      @end{entry}
+      @begin[grid-line-pattern]{entry}
+        The @code{grid-line-pattern} style property of type @code{:string}
+        (Read) @br{}
+        Dash pattern used to draw the tree view grid lines. @br{}
+        Default value: \"\001\001\"
+      @end{entry}
+      @begin[grid-line-width]{entry}
+        The @code{grid-line-width} style property of type @code{:int}
+        (Read) @br{}
+        Width, in pixels, of the tree view grid lines. @br{}
+        Allowed values: >= 0 @br{}
+        Default value: 1
+      @end{entry}
+      @begin[horizontal-separator]{entry}
+        The @code{horizontal-separator} style property of tpye @code{:int}
+        (Read) @br{}
+        Horizontal space between cells. Must be an even number. @br{}
+        Allowed values: >= 0 @br{}
+        Default value: 2
+      @end{entry}
+      @begin[indent-expanders]{entry}
+        The @code{indent-expanders} style property of type @code{:boolean}
+        (Read) @br{}
+        Make the expanders indented. @br{}
+        Default value: @em{true}
+      @end{entry}
+      @begin[odd-row-color]{entry}
+        The @code{odd-row-color} style property of type @class{gdk-color}
+        (Read) @br{}
+        Color to use for odd rows.
+      @end{entry}
+      @begin[tree-line-pattern]{entry}
+        The @code{tree-line-pattern} style property of type @code{:string}
+        (Read) @br{}
+        Dash pattern used to draw the tree view lines. @br{}
+        Default value: \"\001\001\"
+      @end{entry}
+      @begin[tree-line-width]{entry}
+        The @code{tree-line-width} style property of type @code{:int}
+        (Read) @br{}
+        Width, in pixels, of the tree view lines. @br{}
+        Allowed values: >= 0 @br{}
+        Default value: 1
+      @end{entry}
+      @begin[vertical-separator]{entry}
+        The @code{vertical-separator} style property of type @code{:int}
+        (Read) @br{}
+        Vertical space between cells. Must be an even number. @br{}
+        Allowed values: >= 0 @br{}
+        Default value: 2
+      @end{entry}
+    @end{table}
   @end{dictionary}
   @begin[Signal Details]{dictionary}
     @subheading{The \"columns-changed\" signal}
@@ -524,6 +540,7 @@
  lambda (treeview)   : Action
       @end{pre}
   @end{dictionary}
+  @see-slot{gtk-tree-view-activate-on-single-click}
   @see-slot{gtk-tree-view-enable-grid-lines}
   @see-slot{gtk-tree-view-enable-search}
   @see-slot{gtk-tree-view-enable-tree-lines}
@@ -548,7 +565,7 @@
 
 ;;; --- gtk-tree-view-activate-on-single-click ---------------------------------
 
-#+(and gkt-3-8 cl-cffi-gtk-documentation)
+#+(and gtk-3-8 cl-cffi-gtk-documentation)
 (setf (documentation (atdoc:get-slot-from-name "activate-on-single-click"
                                                'gtk-tree-view) 't)
  "The @code{activate-on-single-click} property of type @code{:boolean}
@@ -570,7 +587,7 @@
   @argument[single]{a @code{:boolean} that is @em{true} to emit the
     \"row-activated\" signal on a single click}
   @begin{short}
-    Accessor of the slot @slot[gtk-tree-view]{activate-on-single-click} of the
+    Accessor of the @slot[gtk-tree-view]{activate-on-single-click} slot of the
     @class{gtk-tree-view} class.
   @end{short}
 
@@ -595,144 +612,428 @@
       "Accessor"
       (documentation 'gtk-tree-view-enable-grid-lines 'function)
  "@version{2013-3-27}
-  Accessor of the slot @slot[gtk-tree-view]{enable-grid-lines} of the
+  Accessor of the @slot[gtk-tree-view]{enable-grid-lines} slot of the
   @class{gtk-tree-view} class.
   @see-class{gtk-tree-view}")
 
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-tree-view-enable-search --------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "enable-search"
                                                'gtk-tree-view) 't)
- "The @code{\"enable-search\"} property of type @code{:boolean}
+ "The @code{enable-search} property of type @code{:boolean}
   (Read / Write) @br{}
   View allows user to search through columns interactively. @br{}
   Default value: @em{true}")
 
-;;; ----------------------------------------------------------------------------
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-tree-view-enable-search atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-tree-view-enable-search 'function)
+ "@version{2019-5-4}
+  @syntax[]{(gtk-tree-view-enable-search object) => enable-search}
+  @syntax[]{(setf (gtk-tree-view-enable-search object) enable-search)}
+  @argument[object]{a @class{gtk-tree-view} object}
+  @argument[enable-search]{@em{true}, if the user can search interactively}
+  @begin{short}
+    Accessor of the @slot[gtk-tree-view]{enable-search} slot of the
+    @class{gtk-tree-view} class.
+  @end{short}
+
+  If the @code{enable-search} property is set, then the user can type in text to
+  search through the tree interactively, this is sometimes called
+  \"typeahead find\".
+
+  Note that even if this is @code{nil}, the user can still initiate a search
+  using the \"start-interactive-search\" key binding.
+  @see-class{gtk-tree-view}")
+
+;;; --- gtk-tree-view-enable-tree-lines ----------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "enable-tree-lines"
                                                'gtk-tree-view) 't)
- "The @code{\"enable-tree-lines\"} property of type @code{:boolean}
+ "The @code{enable-tree-lines} property of type @code{:boolean}
   (Read / Write) @br{}
   Whether tree lines should be drawn in the tree view. @br{}
   Default value: @code{nil}")
 
-;;; ----------------------------------------------------------------------------
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-tree-view-enable-tree-lines atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-tree-view-enable-tree-lines 'function)
+ "@version{2019-5-4}
+  @syntax[]{(gtk-tree-view-enable-tree-lines object) => enable-tree-lines}
+  @syntax[]{(setf (gtk-tree-view-enable-tree-lines object) enable-tree-lines)}
+  @argument[object]{a @class{gtk-tree-view} object}
+  @argument[enable-search]{@em{true}, to enable tree line drawing, @code{nil}
+    otherwise}
+  @begin{short}
+    Accessor of the @slot[gtk-tree-view]{enable-tree-lines} slot of the
+    @class{gtk-tree-view} class.
+  @end{short}
+
+  The @sym{gtk-tree-view-enable-tree-lines} slot access function
+  returns whether or not tree lines are drawn in the tree view.
+
+  The @sym{(setf gtk-tree-view-enable-tree-lines)} slot access function  
+  sets whether to draw lines interconnecting the expanders in the tree view.
+  This does not have any visible effects for lists.
+  @see-class{gtk-tree-view}")
+
+;;; --- gtk-tree-view-expander-column  -----------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "expander-column"
                                                'gtk-tree-view) 't)
- "The @code{\"expander-column\"} property of type @class{gtk-tree-view-column}
+ "The @code{expander-column} property of type @class{gtk-tree-view-column}
   (Read / Write) @br{}
   Set the column for the expander column.")
 
-;;; ----------------------------------------------------------------------------
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-tree-view-expander-column atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-tree-view-expander-column 'function)
+ "@version{2019-5-4}
+  @syntax[]{(gtk-tree-view-expander-column object) => column}
+  @syntax[]{(setf (gtk-tree-view-expander-column object) column)}
+  @argument[object]{a @class{gtk-tree-view} widget}
+  @argument[column]{@code{nil}, or the column to draw the expander arrow at}
+  @begin{short}
+    Accessor of the @slot[gtk-tree-view]{expander-column} slot of the
+    @class{gtk-tree-view} class.
+  @end{short}
+
+  The @sym{gtk-tree-view-expander-column} slot access function
+  returns the column that is the current expander column. This column has the
+  expander arrow drawn next to it.
+
+  The @sym{(setf gtk-tree-view-expander-column)} slot access function
+  sets the column to draw the expander arrow at. It must be in the tree view.
+  If column is @code{nil}, then the expander arrow is always at the first
+  visible column.
+
+  If you do not want expander arrow to appear in your tree, set the expander
+  column to a hidden column.
+  @see-class{gtk-tree-view}")
+
+;;; --- gtk-tree-view-fixed-height-mode ----------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "fixed-height-mode"
                                                'gtk-tree-view) 't)
- "The @code{\"fixed-height-mode\"} property of type @code{:boolean}
+ "The @code{fixed-height-mode} property of type @code{:boolean}
   (Read / Write) @br{}
-  Setting the @code{\"fixed-height-mode\"} property to @em{true} speeds up
+  Setting the @code{fixed-height-mode} property to @em{true} speeds up
   @sym{gtk-tree-view} by assuming that all rows have the same height. Only
   enable this option if all rows are the same height. Please see the function
-  @fun{gtk-tree-view-set-fixed-height-mode} for more information on this
+  @fun{gtk-tree-view-fixed-height-mode} for more information on this
   option. @br{}
-  Default value: @code{nil} @br{}
-  Since 2.4")
+  Default value: @code{nil}")
 
-;;; ----------------------------------------------------------------------------
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-tree-view-fixed-height-mode atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-tree-view-fixed-height-mode 'function)
+ "@version{2019-5-4}
+  @syntax[]{(gtk-tree-view-fixed-height-mode object) => enable}
+  @syntax[]{(setf (gtk-tree-view-fixed-height-mode object) enable)}
+  @argument[tree-view]{a @class{gtk-tree-view} widget}
+  @argument[enable]{@em{true} to enable fixed height mode}
+  @begin{short}
+    Accessor of the @slot[gtk-tree-view]{fixed-height-mode} of the
+    @class{gtk-tree-view} class.
+  @end{short}
+
+  The @sym{gtk-tree-view-fixed-height-mode} slot access function
+  returns whether fixed height mode is turned on for the tree view.
+
+  The @sym{(setf gtk-tree-view-fixed-height-mode)} slot access function
+  enables or disables the fixed height mode of the tree view.
+
+  Fixed height mode speeds up @class{gtk-tree-view} by assuming that all rows
+  have the same height. Only enable this option if all rows are the same height
+  and all columns are of type @code{:column-fixed} of the
+  @symbol{gtk-tree-view-column-sizing} enumeration.
+  @see-class{gtk-tree-view}")
+
+;;;  --- gtk-tree-view-headers-clickable ---------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "headers-clickable"
                                                'gtk-tree-view) 't)
- "The @code{\"headers-clickable\"} property of type @code{:boolean}
+ "The @code{headers-clickable} property of type @code{:boolean}
   (Read / Write) @br{}
   Column headers respond to click events. @br{}
   Default value: @em{true}")
 
-;;; ----------------------------------------------------------------------------
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-tree-view-headers-clickable atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-tree-view-headers-clickable 'function)
+ "@version{2019-5-4}
+  @syntax[]{(gtk-tree-view-headers-clickable object) => setting}
+  @syntax[]{(setf (gtk-tree-view-headers-clickable object) setting)}
+  @argument[tree-view]{a @class{gtk-tree-view} widget}
+  @argument[setting]{@em{true} if the columns are clickable}
+  @begin{short}
+    Accessor of the @slot[gtk-tree-view]{headers-clickable} of the
+    @class{gtk-tree-view} class.
+  @end{short}
+
+  The @sym{gtk-tree-view-headers-clickable} slot access function
+  returns whether all header columns are clickable.
+
+  The @sym{(setf gtk-tree-view-headers-clickable)} slot access function
+  allow the column title buttons to be clicked.
+  @see-class{gtk-tree-view}")
+
+;;; --- gtk-tree-view-headers-visible ------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "headers-visible"
                                                'gtk-tree-view) 't)
- "The @code{\"headers-visible\"} property of type @code{:boolean}
+ "The @code{headers-visible} property of type @code{:boolean}
   (Read / Write) @br{}
   Show the column header buttons. @br{}
   Default value: @em{true}")
 
-;;; ----------------------------------------------------------------------------
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-tree-view-headers-visible atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-tree-view-headers-visible 'function)
+ "@version{2019-5-4}
+  @syntax[]{(gtk-tree-view-headers-visible object) => headers-visible}
+  @syntax[]{(setf (gtk-tree-view-headers-visible object) headers-visible)}
+  @argument[tree-view]{a @class{gtk-tree-view} widget}
+  @argument[headers-visible]{@em{true} if the headers are visible}
+  @begin{short}
+    Accessor of the @slot[gtk-tree-view]{headers-visible} of the
+    @class{gtk-tree-view} class.
+  @end{short}
+
+  The @sym{gtk-tree-view-headers-visible} slot access function
+  returns @em{true} if the headers on the tree view are visible.
+
+  The @sym{(setf gtk-tree-view-headers-visible)} slot access function
+  sets the visibility state of the headers.
+  @see-class{gtk-tree-view}")
+
+;;; --- gtk-tree-view-hover-expand ---------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "hover-expand"
                                                'gtk-tree-view) 't)
- "The @code{\"hover-expand\"} property of type @code{:boolean}
-  (Read / Write) @br{}
-  Enables or disables the hover expansion mode of @arg{tree-view}. Hover
+ "The @code{hover-expand} property of type @code{:boolean} (Read / Write) @br{}
+  Enables or disables the hover expansion mode of the tree view. Hover
   expansion makes rows expand or collapse if the pointer moves over them.
   This mode is primarily intended for treeviews in popups, e. g. in
-  @class{gtk-combo-box} or @class{gtk-entry-completion}. @br{}
-  Default value: @code{nil} @br{}
-  Since 2.6")
+  @class{gtk-combo-box} or @class{gtk-entry-completion} widgets. @br{}
+  Default value: @code{nil}")
 
-;;; ----------------------------------------------------------------------------
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-tree-view-hover-expand atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-tree-view-hover-expand 'function)
+ "@version{2019-5-4}
+  @syntax[]{(gtk-tree-view-hover-expand object) => expand}
+  @syntax[]{(setf (gtk-tree-view-hover-expand object) expand)}
+  @argument[tree-view]{a @class{gtk-tree-view} widget}
+  @argument[expand]{@em{true} to enable hover selection mode}
+  @begin{short}
+    Accessor of the @slot[gtk-tree-view]{hover-expand} slot of the
+    @class{gtk-tree-view} class.
+  @end{short}
+
+  The @sym{gtk-tree-view-hover-expand} slot access function
+  returns whether hover expansion mode is turned on for the tree view.
+
+  The @sym{(setf gtk-tree-view-hover-expand)} slot access function
+  enables or disables the hover expansion mode of the tree view. Hover expansion
+  makes rows expand or collapse if the pointer moves over them.
+  @see-class{gtk-tree-view}")
+
+;;; --- gtk-tree-view-hover-selection ------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "hover-selection"
                                                'gtk-tree-view) 't)
- "The @code{\"hover-selection\"} property of type @code{:boolean}
+ "The @code{hover-selection} property of type @code{:boolean}
   (Read / Write) @br{}
-  Enables or disables the hover selection mode of @arg{tree-view}. Hover
+  Enables or disables the hover selection mode of the tree view. Hover
   selection makes the selected row follow the pointer. Currently, this works
   only for the selection modes @code{:single} and @code{:browse}. This mode is
   primarily intended for treeviews in popups, e. g. in @class{gtk-combo-box}
-  or @class{gtk-entry-completion}. @br{}
-  Default value: @code{nil} @br{}
-  Since 2.6")
+  or @class{gtk-entry-completion} widgets. @br{}
+  Default value: @code{nil}")
 
-;;; ----------------------------------------------------------------------------
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-tree-view-hover-selection atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-tree-view-hover-selection 'function)
+ "@version{2013-3-27}
+  @syntax[]{(gtk-tree-view-hover-selection object) => hover}
+  @syntax[]{(setf (gtk-tree-view-hover-selection object) hover)}
+  @argument[tree-view]{a @class{gtk-tree-view} widget}
+  @argument[hover]{@em{true} to enable hover selection mode}
+  @begin{short}
+    Accessor of the @slot[gtk-tree-view]{hover-selection} of the
+    @class{gtk-tree-view} class.
+  @end{short}
+
+  The @sym{gtk-tree-view-hover-selection} slot access function
+  returns whether hover selection mode is turned on for the tree view.
+
+  The @sym{(setf gtk-tree-view-hover-selection)} slot access function
+  enables or disables the hover selection mode of the tree view. Hover selection
+  makes the selected row follow the pointer. Currently, this works only for
+  the selection modes @code{:single} and @code{:browse}.
+  @see-class{gtk-tree-view}")
+
+;;; --- gtk-tree-viewlevel-indentation -----------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "level-indentation"
                                                'gtk-tree-view) 't)
- "The @code{\"level-indentation\"} property of type @code{:int}
+ "The @code{level-indentation} property of type @code{:int}
   (Read / Write) @br{}
   Extra indentation for each level. @br{}
   Allowed values: >= 0 @br{}
-  Default value: 0 @br{}
-  Since 2.12")
+  Default value: 0")
 
-;;; ----------------------------------------------------------------------------
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-tree-view-level-indentation atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-tree-view-level-indentation 'function)
+ "@version{2019-5-4}
+  @syntax[]{(gtk-tree-view-level-indentation object) => indentation}
+  @syntax[]{(setf (gtk-tree-view-level-indentation object) indentation)}
+  @argument[tree-view]{a @class{gtk-tree-view} widget}
+  @argument[indentation]{the amount, in pixels, of extra indentation in
+    @arg{tree-view}}
+  @begin{short}
+    Accessor of the @slot[gtk-tree-view]{level-indentation} of the
+    @class{gtk-tree-view} class.
+  @end{short}
+
+  The @sym{gtk-tree-view-level-indentation} slot access function
+  returns the amount, in pixels, of extra indentation for child levels in
+  the tree view.
+
+  The @sym{(setf gtk-tree-view-level-indentation)} slot access function
+  sets the amount of extra indentation for child levels to use in the tree view
+  in addition to the default indentation. The value should be specified in
+  pixels, a value of 0 disables this feature and in this case only the default
+  indentation will be used. This does not have any visible effects for lists.
+  @see-class{gtk-tree-view}")
+
+;;; --- gtk-tree-view-model ----------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "model"
                                                'gtk-tree-view) 't)
- "The @code{\"model\"} property of type @class{gtk-tree-model}
+ "The @code{model} property of type @class{gtk-tree-model}
   (Read / Write) @br{}
   The model for the tree view.")
 
-;;; ----------------------------------------------------------------------------
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-tree-view-model atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-tree-view-model 'function)
+ "@version{2019-5-4}
+  @syntax[]{(gtk-tree-view-model object) => model}
+  @syntax[]{(setf (gtk-tree-view-model object) model)}
+  @argument[tree-view]{a @class{gtk-tree-view} object}
+  @argument[model]{the model}
+  @begin{short}
+    Accessor of the @slot[gtk-tree-view]{model} of the
+    @class{gtk-tree-view} class.
+  @end{short}
+
+  The @sym{gtk-tree-view-model} slot access function
+  returns the model the tree view is based on. Returns @code{nil} if the model
+  is unset.
+
+  The @sym{(setf gtk-tree-view-model)} slot access function
+  sets the model for a tree view. If the tree view already has a model set, it
+  will remove it before setting the new @arg{model}. If @arg{model} is
+  @code{nil}, then it will unset the old model.
+  @see-class{gtk-tree-view}")
+
+;;; --- gtk-tree-view-reorderable ----------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "reorderable"
                                                'gtk-tree-view) 't)
- "The @code{\"reorderable\"} property of type @code{:boolean}
+ "The @code{reorderable} property of type @code{:boolean}
   (Read / Write) @br{}
   View is reorderable. @br{}
   Default value: @code{nil}")
 
-;;; ----------------------------------------------------------------------------
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-tree-view-reorderable atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-tree-view-reorderable 'function)
+ "@version{2019-5-4}
+  @syntax[]{(gtk-tree-view-reorderable object) => model}
+  @syntax[]{(setf (gtk-tree-view-reorderable object) model)}
+  @argument[tree-view]{a @class{gtk-tree-view} widget}
+  @argument[reorderable]{@em{true}, if the tree can be reordered}
+  @begin{short}
+    Accessor of the @slot[gtk-tree-view]{reorderable} of the
+    @class{gtk-tree-view} class.
+  @end{short}
+
+  This function is a convenience function to allow you to reorder models that
+  support the @class{gtk-tree-drag-source} interface and the
+  @class{gtk-tree-drag-dest} interface.
+
+  Both @class{gtk-tree-store} and @class{gtk-list-store} support these. If
+  @arg{reorderable} is @em{true}, then the user can reorder the model by
+  dragging and dropping rows. The developer can listen to these changes by
+  connecting to the model's \"row-inserted\" and \"row-deleted\" signals. The
+  reordering is implemented by setting up the tree view as a drag source and
+  destination. Therefore, drag and drop can not be used in a reorderable view
+  for any other purpose.
+
+  This function does not give you any degree of control over the order - any
+  reordering is allowed. If more control is needed, you should probably handle
+  drag and drop manually.
+  @see-class{gtk-tree-view}")
+
+;;; --- gtk-tree-view-rubber-banding -------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "rubber-banding"
                                                'gtk-tree-view) 't)
- "The @code{\"rubber-banding\"} property of type @code{:boolean}
+ "The @code{rubber-banding} property of type @code{:boolean}
   (Read / Write) @br{}
   Whether to enable selection of multiple items by dragging the mouse
   pointer. @br{}
   Default value: @code{nil}")
+
+#+cl-cffi-gtk-documentation
+(setf (gethash 'gtk-tree-view-rubber-banding atdoc:*function-name-alias*)
+      "Accessor"
+      (documentation 'gtk-tree-view-rubber-banding 'function)
+ "@version{2019-5-4}
+  @syntax[]{(gtk-tree-view-rubber-banding object) => enable}
+  @syntax[]{(setf (gtk-tree-view-rubber-banding object) enable)}
+  @argument[tree-view]{a @class{gtk-tree-view} widget}
+  @argument[enable]{@em{true}, to enable rubber banding}
+  @begin{short}
+    Accessor of the @slot[gtk-tree-view]{rubber-banding} of the
+    @class{gtk-tree-view} class.
+  @end{short}
+
+  The @sym{gtk-tree-view-rubber-banding} slot access function
+  returns whether rubber banding is turned on for the tree view.
+
+  The @sym{(setf gtk-tree-view-rubber-banding)} slot access function
+  enables or disables rubber banding in the tree view. If the selection mode is
+  @code{:multiple}, rubber banding will allow the user to select multiple rows
+  by dragging the mouse.
+  @see-class{gtk-tree-view}")
 
 ;;; --- gtk-tree-view-rules-hint -----------------------------------------------
 
@@ -741,9 +1042,9 @@
                                                'gtk-tree-view) 't)
  "The @code{rules-hint} property of type @code{:boolean} (Read / Write) @br{}
   Set a hint to the theme engine to draw rows in alternating colors. @br{}
-  @b{Warning:} @code{rules-hint} has been deprecated since version 3.14 and
-  should not be used in newly-written code. The theme is responsible for drawing
-  rows using zebra striping. @br{}
+  @em{Warning:} The @code{rules-hint} property has been deprecated since version
+  3.14 and should not be used in newly-written code. The theme is responsible
+  for drawing rows using zebra striping. @br{}
   Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
@@ -751,187 +1052,148 @@
       "Accessor"
       (documentation 'gtk-tree-view-rules-hint 'function)
  "@version{2013-3-27}
-  Accessor of the slot @slot[gtk-tree-view]{rules-hint} of the
-  @class{gtk-tree-view} class.
+  @syntax[]{(gtk-tree-view-rules-hint object) => setting}
+  @syntax[]{(setf (gtk-tree-view-rules-hint object) setting)}
+  @argument[tree-view]{a @class{gtk-tree-view} widget}
+  @argument[setting]{@em{true} if the tree requires reading across rows}
+  @begin{short}
+    Accessor of the slot @slot[gtk-tree-view]{rules-hint} of the
+    @class{gtk-tree-view} class.
+  @end{short}
+
+  This function tells GTK+ that the user interface for your application requires
+  users to read across tree rows and associate cells with one another.
+  By default, GTK+ will then render the tree with alternating row
+  colors. Do not use it just because you prefer the appearance of the ruled
+  tree; that is a question for the theme. Some themes will draw tree rows in
+  alternating colors even when rules are turned off, and users who prefer that
+  appearance all the time can choose those themes. You should call this
+  function only as a semantic hint to the theme engine that your tree makes
+  alternating colors useful from a functional standpoint, since it has lots of
+  columns, generally.
+  @begin[Warning]{dictionary}
+    The @sym{gtk-tree-view-rules-hint} function has been deprecated since
+    version 3.14 and should not be used in newly-written code.
+  @end{dictionary}
   @see-class{gtk-tree-view}")
 
-;;; ----------------------------------------------------------------------------
+;;; --- gtk-tree-view-search-column --------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "search-column"
                                                'gtk-tree-view) 't)
- "The @code{\"search-column\"} property of type @code{:int} (Read / Write) @br{}
+ "The @code{search-column} property of type @code{:int} (Read / Write) @br{}
   Model column to search through during interactive search. @br{}
-  Allowed values: >= @code{G_MAXULONG} @br{}
+  Allowed values: >= -1 @br{}
   Default value: -1")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "show-expanders"
-                                               'gtk-tree-view) 't)
- "The @code{\"show-expanders\"} property of type @code{:boolean}
-  (Read / Write) @br{}
-  @em{True} if the view has expanders. @br{}
-  Default value: @em{true} @br{}
-  Since 2.12")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "tooltip-column"
-                                               'gtk-tree-view) 't)
- "The @code{\"tooltip-column\"} property of type @code{:int} (Read / Write)@br{}
-  The column in the model containing the tooltip texts for the rows. @br{}
-  Allowed values: >= @code{G_MAXULONG} @br{}
-  Default value: -1")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors of Properties
-;;;
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-tree-view-enable-search atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-tree-view-enable-search 'function)
- "@version{2013-3-27}
-  Accessor of the slot \"enable-search\" of the @class{gtk-tree-view} class.")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-tree-view-enable-tree-lines atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-tree-view-enable-tree-lines 'function)
- "@version{2013-3-27}
-  Accessor of the slot \"enable-tree-lines\" of the @class{gtk-tree-view}
-  class.")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-tree-view-expander-column atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-tree-view-expander-column 'function)
- "@version{2013-3-27}
-  Accessor of the slot \"expander-column\" of the @class{gtk-tree-view} class.")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-tree-view-fixed-height-mode atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-tree-view-fixed-height-mode 'function)
- "@version{2013-3-27}
-  Accessor of the slot \"fixed-height-mode\" of the @class{gtk-tree-view}
-  class.")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-tree-view-headers-clickable atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-tree-view-headers-clickable 'function)
- "@version{2013-3-27}
-  Accessor of the slot \"headers-clickable\" of the @class{gtk-tree-view}
-  class.")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-tree-view-headers-visible atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-tree-view-headers-visible 'function)
- "@version{2013-3-27}
-  Accessor of the slot \"headers-visible\" of the @class{gtk-tree-view} class.")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-tree-view-hover-expand atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-tree-view-hover-expand 'function)
- "@version{2013-3-27}
-  Accessor of the slot \"hover-expand\" of the @class{gtk-tree-view} class.")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-tree-view-hover-selection atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-tree-view-hover-selection 'function)
- "@version{2013-3-27}
-  Accessor of the slot \"hover-selection\" of the @class{gtk-tree-view} class.")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-tree-view-level-indentation atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-tree-view-level-indentation 'function)
- "@version{2013-3-27}
-  Accessor of the slot \"level-indentation\" of the @class{gtk-tree-view}
-  class.")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-tree-view-model atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-tree-view-model 'function)
- "@version{2013-3-27}
-  Accessor of the slot \"model\" of the @class{gtk-tree-view} class.")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-tree-view-reorderable atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-tree-view-reorderable 'function)
- "@version{2013-3-27}
-  Accessor of the slot \"reorderable\" of the @class{gtk-tree-view} class.")
-
-;;; ----------------------------------------------------------------------------
-
-#+cl-cffi-gtk-documentation
-(setf (gethash 'gtk-tree-view-rubber-banding atdoc:*function-name-alias*)
-      "Accessor"
-      (documentation 'gtk-tree-view-rubber-banding 'function)
- "@version{2013-3-27}
-  Accessor of the slot \"rubber-banding\" of the @class{gtk-tree-view} class.")
-
-;;; ----------------------------------------------------------------------------
-
-
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tree-view-search-column atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tree-view-search-column 'function)
  "@version{2013-3-27}
-  Accessor of the slot \"search-column\" of the @class{gtk-tree-view} class.")
+  @syntax[]{(gtk-tree-view-search-column object) => column}
+  @syntax[]{(setf (gtk-tree-view-search-column object) column)}
+  @argument[tree-view]{a @class{gtk-tree-view} widget}
+  @argument[column]{the column of the model to search in, or -1 to disable
+    searching}
+  @begin{short}
+    Accessor of the @slot[gtk-tree-view]{search-column} slot of the
+    @class{gtk-tree-view} class.
+  @end{short}
 
-;;; ----------------------------------------------------------------------------
+  The @sym{gtk-tree-view-search-column} slot access function
+  gets the column searched on by the interactive search code.
+
+  The @sym{(setf gtk-tree-view-search-column)} slot access function
+  sets @arg{column} as the column where the interactive search code should
+  search in for the current model.
+
+  If the search column is set, users can use the \"start-interactive-search\"
+  key binding to bring up search popup. The @code{enable-search} property
+  controls whether simply typing text will also start an interactive search.
+
+  Note that @arg{column} refers to a column of the current model. The search
+  column is reset to -1 when the model is changed.
+  @see-class{gtk-tree-view}")
+
+;;; --- gtk-tree-view-show-expanders -------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "show-expanders"
+                                               'gtk-tree-view) 't)
+ "The @code{show-expanders} property of type @code{:boolean}
+  (Read / Write) @br{}
+  @em{True} if the view has expanders. @br{}
+  Default value: @em{true}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tree-view-show-expanders atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tree-view-show-expanders 'function)
- "@version{2013-3-27}
-  Accessor of the slot \"show-expanders\" of the @class{gtk-tree-view} class.")
+ "@version{2019-5-5}
+  @syntax[]{(gtk-tree-view-show-expanders object) => enabled}
+  @syntax[]{(setf (gtk-tree-view-show-expanders object) enabled)}
+  @argument[tree-view]{a @class{gtk-tree-view} object}
+  @argument[enabled]{@em{True} to enable expander drawing, @code{nil}
+    otherwise}
+  @begin{short}
+    Accessor of the @slot[gtk-tree-view]{show-expanders} of the
+    @class{gtk-tree-view} class.
+  @end{short}
 
-;;; ----------------------------------------------------------------------------
+  The @sym{gtk-tree-view-show-expanders} slot access function
+  returns whether or not expanders are drawn in the tree view.
+
+  The @sym{(setf gtk-tree-view-show-expanders)} slot access function
+  sets whether to draw and enable expanders and indent child rows in the tree
+  view. When disabled there will be no expanders visible in trees and there will
+  be no way to expand and collapse rows by default. Also note that hiding the
+  expanders will disable the default indentation. You can set a custom
+  indentation in this case using the @fun{gtk-tree-view-level-indentation}
+  function. This does not have any visible effects for lists.
+  @see-class{gzk-tree-view}")
+
+;;; --- gtk-tree-view-tooltip-column -------------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "tooltip-column"
+                                               'gtk-tree-view) 't)
+ "The @code{tooltip-column} property of type @code{:int} (Read / Write)@br{}
+  The column in the model containing the tooltip texts for the rows. @br{}
+  Allowed values: >= -1 @br{}
+  Default value: -1")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tree-view-tooltip-column atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-tree-view-tooltip-column 'function)
  "@version{2013-3-27}
-  Accessor of the slot \"tooltip-column\" of the @class{gtk-tree-view} class.")
+  @syntax[]{(gtk-tree-view-tooltip-column object) => column}
+  @syntax[]{(setf (gtk-tree-view-tooltip-column object) column)}
+  @argument[tree-view]{a @class{gtk-tree-view} object}
+  @argument[column]{an integer, which is a valid column number for tree_view's
+    model}
+  @begin{short} 
+    Accessor of the @slot[gtk-tree-view]{tooltip-column} of the
+    @class{gtk-tree-view} class.
+  @end{short}
+
+  The @sym{gtk-tree-view-tooltip-column} slot access function
+  returns the column of the tree view's model which is being used for displaying
+  tooltips on the tree view's rows.
+
+  If you only plan to have simple (text-only) tooltips on full rows, you can use
+  this function to have @class{gtk-tree-view} handle these automatically for
+  you. @arg{column} should be set to the column in the tree view's model
+  containing the tooltip texts, or -1 to disable this feature.
+
+  When enabled, the @slot[gtk-widget]{has-tooltip} property will be set to
+  @em{true} and the tree view will connect a \"query-tooltip\" signal handler.
+
+  Note that the signal handler sets the text with the
+  @fun{gtk-tooltip-set-markup}, so &, <, etc have to be escaped in the text.
+  @see-class{gtk-tree-view}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkTreeViewDropPosition
@@ -944,8 +1206,6 @@
   (:after 1)
   (:into-or-before 2)
   (:into-or-after 3))
-
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-tree-view-drop-position atdoc:*symbol-name-alias*) "Enum"
@@ -1011,107 +1271,11 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-5-17}
   @return{A newly created @class{gtk-tree-view} widget.}
-  Creates a new @class{gtk-tree-view} widget."
+  Creates a new @class{gtk-tree-view} widget.
+  @see-class{gtk-tree-view}"
   (make-instance 'gtk-tree-view))
 
 (export 'gtk-tree-view-new)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tree_view_get_level_indentation ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-tree-view-get-level-indentation))
-
-(defun gtk-tree-view-get-level-indentation (tree-view)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-17}
-  @argument[tree-view]{a @class{gtk-tree-view} widget}
-  @begin{return}
-    the amount of extra indentation for child levels in @arg{tree-view}. A
-    return value of 0 means that this feature is disabled.
-  @end{return}
-  @begin{short}
-    Returns the amount, in pixels, of extra indentation for child levels in
-    @arg{tree-view}.
-  @end{short}
-
-  Since 2.12"
-  (gtk-tree-view-level-indentation tree-view))
-
-(export 'gtk-tree-view-get-level-indentation)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tree_view_get_show_expanders ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-tree-view-get-show-expanders))
-
-(defun gtk-tree-view-get-show-expanders (tree-view)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-17}
-  @argument[tree-view]{a @class{gtk-tree-view} widget}
-  @return{@em{True} if expanders are drawn in @arg{tree-view}, @code{nil}
-    otherwise.}
-  @begin{short}
-    Returns whether or not expanders are drawn in @arg{tree-view}.
-  @end{short}
-
-  Since 2.12"
-  (gtk-tree-view-show-expanders tree-view))
-
-(export 'gtk-tree-view-get-show-expanders)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tree_view_set_level_indentation ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-tree-view-set-level-indentation indentation))
-
-(defun gtk-tree-view-set-level-indentation (tree-view indentation)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-17}
-  @argument[tree-view]{a @class{gtk-tree-view} widget}
-  @argument[indentation]{the amount, in pixels, of extra indentation in
-    @arg{tree-view}}
-  @begin{short}
-    Sets the amount of extra indentation for child levels to use in
-    @arg{tree-view} in addition to the default indentation. The value should be
-    specified in pixels, a value of 0 disables this feature and in this case
-    only the default indentation will be used. This does not have any visible
-    effects for lists.
-  @end{short}
-
-  Since 2.12"
-  (setf (gtk-tree-view-level-indentation tree-view) indentation))
-
-(export 'gtk-tree-view-set-level-indentation)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tree_view_set_show_expanders ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-tree-view-set-show-expanders))
-
-(defun gtk-tree-view-set-show-expanders (tree-view enabled)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-17}
-  @argument[tree-view]{a @class{gtk-tree-view} object}
-  @argument[enabled]{@em{True} to enable expander drawing, @code{nil}
-    otherwise}
-  @begin{short}
-    Sets whether to draw and enable expanders and indent child rows in
-    @arg{tree-view}. When disabled there will be no expanders visible in trees
-    and there will be no way to expand and collapse rows by default. Also note
-    that hiding the expanders will disable the default indentation. You can set
-    a custom indentation in this case using the function
-    @fun{gtk-tree-view-set-level-indentation}. This does not have any visible
-    effects for lists.
-  @end{short}
-
-  Since 2.12"
-  (setf (gtk-tree-view-show-expanders tree-view) enabled))
-
-(export 'gtk-tree-view-set-show-expanders)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_view_new_with_model ()
@@ -1134,46 +1298,6 @@
 (export 'gtk-tree-view-new-with-model)
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_tree_view_get_model ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-tree-view-get-model))
-
-(defun gtk-tree-view-get-model (tree-view)
- #+cl-cffi-gtk-documentation
- "@version{2013-10-16}
-  @argument[tree-view]{a @class{gtk-tree-view} widget}
-  @return{A @class{gtk-tree-model} object, or @code{nil} if none is currently
-    being used.}
-  Returns the model the @class{gtk-tree-view} widget is based on. Returns
-  @code{nil} if the model is unset.
-  @see-class{gtk-tree-view}
-  @see-function{gtk-tree-view-set-model}"
-  (gtk-tree-view-model tree-view))
-
-(export 'gtk-tree-view-get-model)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tree_view_set_model ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-tree-view-set-model))
-
-(defun gtk-tree-view-set-model (tree-view model)
- #+cl-cffi-gtk-documentation
- "@version{2014-1-29}
-  @argument[tree-view]{a @class{gtk-tree-view} object}
-  @argument[model]{the model}
-  Sets the model for a @class{gtk-tree-view}. If the @arg{tree-view} already has
-  a model set, it will remove it before setting the new @arg{model}. If
-  @arg{model} is @code{nil}, then it will unset the old model.
-  @see-class{gtk-tree-view}
-  @see-function{gtk-tree-view-get-model}"
-  (setf (gtk-tree-view-model tree-view) model))
-
-(export 'gtk-tree-view-set-model)
-
-;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_view_get_selection ()
 ;;; ----------------------------------------------------------------------------
 
@@ -1183,7 +1307,8 @@
  "@version{2014-5-17}
   @argument[tree-view]{a @class{gtk-tree-view} widget}
   @return{A @class{gtk-tree-selection} object.}
-  Gets the @class{gtk-tree-selection} object associated with @arg{tree-view}."
+  Gets the @class{gtk-tree-selection} object associated with @arg{tree-view}.
+  @see-class{gtk-tree-view}"
   (tree-view (g-object gtk-tree-view)))
 
 (export 'gtk-tree-view-get-selection)
@@ -1271,38 +1396,6 @@
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
-;;; gtk_tree_view_get_headers_visible ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-tree-view-get-headers-visible))
-
-(defun gtk-tree-view-get-headers-visible (tree-view)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-17}
-  @argument[tree-view]{a @class{gtk-tree-view} widget}
-  @return{Whether the headers are visible or not.}
-  Returns @em{true} if the headers on the @arg{tree-view} are visible."
-  (gtk-tree-view-headers-visible tree-view))
-
-(export 'gtk-tree-view-get-headers-visible)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tree_view_set_headers_visible ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-tree-view-set-headers-visible))
-
-(defun gtk-tree-view-set-headers-visible (tree-view headers-visible)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-17}
-  @argument[tree-view]{a @class{gtk-tree-view} widget}
-  @argument[headers-visible]{@em{true} if the headers are visible}
-  Sets the visibility state of the headers."
-  (setf (gtk-tree-view-headers-visible tree-view) headers-visible))
-
-(export 'gtk-tree-view-set-headers-visible)
-
-;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_view_columns_autosize ()
 ;;; ----------------------------------------------------------------------------
 
@@ -1311,101 +1404,11 @@
  "@version{2013-5-17}
   @argument[tree-view]{a @class{gtk-tree-view} widget}
   Resizes all columns to their optimal width. Only works after the treeview
-  has been realized."
+  has been realized.
+  @see-class{gtk-tree-view}"
   (tree-view g-object))
 
 (export 'gtk-tree-view-columns-autosize)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tree_view_get_headers_clickable ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-tree-view-get-headers-clickable))
-
-(defun gtk-tree-view-get-headers-clickable (tree-view)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-31}
-  @argument[tree-view]{a @class{gtk-tree-view} widget}
-  @return{@em{True} if all header columns are clickable, otherwise @code{nil}.}
-  @short{Returns whether all header columns are clickable.}
-
-  Since 2.10"
-  (gtk-tree-view-headers-clickable tree-view))
-
-(export 'gtk-tree-view-get-headers-clickable)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tree_view_set_headers_clickable ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-tree-view-set-headers-clickable))
-
-(defun gtk-tree-view-set-headers-clickable (tree-view headers-clickable)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-31}
-  @argument[tree-view]{a @class{gtk-tree-view} widget}
-  @argument[setting]{@em{true} if the columns are clickable}
-  Allow the column title buttons to be clicked."
-  (setf (gtk-tree-view-headers-clickable tree-view) headers-clickable))
-
-(export 'gtk-tree-view-set-headers-clickable)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tree_view_set_rules_hint ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-tree-view-set-rules-hint))
-
-(defun gtk-tree-view-set-rules-hint (tree-view setting)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-31}
-  @argument[tree-view]{a @class{gtk-tree-view} widget}
-  @argument[setting]{@em{true} if the tree requires reading across rows}
-  @begin{short}
-    This function tells GTK+ that the user interface for your application
-    requires users to read across tree rows and associate cells with one
-    another.
-  @end{short}
-
-  By default, GTK+ will then render the tree with alternating row
-  colors. Do not use it just because you prefer the appearance of the ruled
-  tree; that is a question for the theme. Some themes will draw tree rows in
-  alternating colors even when rules are turned off, and users who prefer that
-  appearance all the time can choose those themes. You should call this
-  function only as a semantic hint to the theme engine that your tree makes
-  alternating colors useful from a functional standpoint (since it has lots of
-  columns, generally).
-  @begin[Warning]{dictionary}
-    The @sym{gtk-tree-view-set-rules-hint} function has been deprecated since
-    version 3.14 and should not be used in newly-written code.
-  @end{dictionary}
-  @see-class{gtk-tree-view}"
-  (setf (gtk-tree-view-rules-hint tree-view) setting))
-
-(export 'gtk-tree-view-set-rules-hint)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tree_view_get_rules_hint ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-tree-view-get-rules-hint))
-
-(defun gtk-tree-view-get-rules-hint (tree-view)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-31}
-  @argument[tree-view]{a @class{gtk-tree-view} widget}
-  @return{@em{True} if rules are useful for the user of this tree.}
-  @begin{short}
-    Gets the setting set by the @fun{gtk-tree-view-set-rules-hint} function.
-  @end{short}
-  @begin[Warning]{dictionary}
-    The @sym{gtk-tree-view-get-rules-hint} function has been deprecated since
-    version 3.14 and should not be used in newly-written code.
-  @end{dictionary}
-  @see-class{gtk-tree-view}"
-  (gtk-tree-view-rules-hint tree-view))
-
-(export 'gtk-tree-view-get-rules-hint)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_view_append_column ()
@@ -1419,7 +1422,8 @@
   @return{The number of columns in @arg{tree-view} after appending.}
   Appends column to the list of columns. If @arg{tree-view} has
   @code{\"fixed_height\"} mode enabled, then column must have its
-  @code{\"sizing\"} property set to be @code{:fixed}."
+  @code{\"sizing\"} property set to be @code{:fixed}.
+  @see-class{gtk-tree-view}"
   (tree-view (g-object gtk-tree-view))
   (column (g-object gtk-tree-view-column)))
 
@@ -1435,7 +1439,8 @@
   @argument[tree-view]{a @class{gtk-tree-view} widget}
   @argument[column]{the @class{gtk-tree-view-column} to remove}
   @return{The number of columns in @arg{tree-view} after removing.}
-  Removes column from @arg{tree-view}."
+  Removes column from @arg{tree-view}.
+  @see-class{gtk-tree-view}"
   (tree-view (g-object gtk-tree-view))
   (column (g-object gtk-tree-view-column)))
 
@@ -1455,7 +1460,8 @@
   This inserts the column into the @arg{tree-view} at position. If position is
   -1, then the column is inserted at the end. If @arg{tree-view} has
   @code{\"fixed_height\"} mode enabled, then column must have its
-  @code{\"sizing\"} property set to be @code{:fixed}."
+  @code{\"sizing\"} property set to be @code{:fixed}.
+  @see-class{gtk-tree-view}"
   (tree-view g-object)
   (column g-object)
   (pos :int))
@@ -1552,8 +1558,7 @@
   @begin{short}
     Queries the number of columns in the given @arg{tree-view}.
   @end{short}
-
-  Since 3.4"
+  @see-class{gtk-tree-view}"
   (tree-view (g-object gtk-tree-view)))
 
 (export 'gtk-tree-view-get-n-columns)
@@ -1572,7 +1577,8 @@
     the range of columns.
   @end{return}
   Gets the @class{gtk-tree-view-column} at the given position in the
-  @arg{tree-view}."
+  @arg{tree-view}.
+  @see-class{gtk-tree-view}"
   (tree-view g-object)
   (n :int))
 
@@ -1589,7 +1595,8 @@
   @argument[tree-view]{a @class{gtk-tree-view} widget}
   @return{A list of @class{gtk-tree-view-column}'s.}
   Returns a list of all the @class{gtk-tree-view-column}'s currently in
-  @arg{tree-view}."
+  @arg{tree-view}.
+  @see-class{gtk-tree-view}"
   (tree-view g-object))
 
 (export 'gtk-tree-view-get-columns)
@@ -1607,52 +1614,13 @@
   @argument[base-column]{the @class{gtk-tree-view-column} to be moved relative
     to, or @code{nil}}
   Moves column to be after to @arg{base-column}. If @arg{base-column} is
-  @code{nil}, then column is placed in the first position."
+  @code{nil}, then column is placed in the first position.
+  @see-class{gtk-tree-view}"
   (tree-view g-object)
   (column g-object)
   (base-column g-object))
 
 (export 'gtk-tree-view-move-column-after)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tree_view_set_expander_column ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-tree-view-set-expander-column))
-
-(defun gtk-tree-view-set-expander-column (tree-view column)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-31}
-  @argument[tree-view]{a @class{gtk-tree-view} widget}
-  @argument[column]{@code{nil}, or the column to draw the expander arrow at}
-  @begin{short}
-    Sets the column to draw the expander arrow at. It must be in
-    @arg{tree-view}. If column is @code{nil}, then the expander arrow is always
-    at the first visible column.
-  @end{short}
-
-  If you do not want expander arrow to appear in your tree, set the expander
-  column to a hidden column."
-  (setf (gtk-tree-view-expander-column tree-view) column))
-
-(export 'gtk-tree-view-set-expander-column)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tree_view_get_expander_column ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-tree-view-get-expander-column))
-
-(defun gtk-tree-view-get-expander-column (tree-view)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-31}
-  @argument[tree-view]{a @class{gtk-tree-view} widget}
-  @return{The expander column.}
-  Returns the column that is the current expander column. This column has the
-  expander arrow drawn next to it."
-  (gtk-tree-view-expander-column tree-view))
-
-(export 'gtk-tree-view-get-expander-column)
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkTreeViewColumnDropFunc ()
@@ -1727,7 +1695,8 @@
   If either of the @class{gtk-tree-view-column} arguments for the drop spot
   are @code{nil}, then they indicate an edge. If func is set to be @code{nil},
   then @arg{tree-view} reverts to the default behavior of allowing all columns
-  to be dropped everywhere."
+  to be dropped everywhere.
+  @see-class{gtk-tree-view}"
   (%gtk-tree-view-set-column-drag-function
                              tree-view
                              (callback gtk-tree-view-column-drop-func-cb)
@@ -1754,7 +1723,8 @@
   function.
 
   If either @arg{tree-x} or @arg{tree-y} are -1, then that direction is not
-  scrolled."
+  scrolled.
+  @see-class{gtk-tree-view}"
   (tree-view g-object)
   (tree-x :int)
   (tree-y :int))
@@ -1807,7 +1777,8 @@
 
   This function only works if the model is set, and path is a valid row on the
   model. If the model changes before the @arg{tree-view} is realized, the
-  centered path will be modified to reflect this change."
+  centered path will be modified to reflect this change.
+  @see-class{gtk-tree-view}"
   (%gtk-tree-view-scroll-to-cell tree-view
                                  path
                                  column
@@ -1848,7 +1819,8 @@
   realized.
 
   If @arg{path} is invalid for model, the current cursor (if any) will be unset
-  and the function will return without failing."
+  and the function will return without failing.
+  @see-class{gtk-tree-view}"
   (%gtk-tree-view-set-cursor tree-view path focus-column start-editing))
 
 (export 'gtk-tree-view-set-cursor)
@@ -1894,8 +1866,7 @@
 
   If @arg{path} is invalid for model, the current cursor (if any) will be unset
   and the function will return without failing.
-
-  Since 2.2"
+  @see-class{gtk-tree-view}"
   (%gtk-tree-view-set-cursor-on-cell tree-view
                                      path
                                      focus-column
@@ -1925,7 +1896,8 @@
     Fills in path and @arg{focus-column} with the current path and focus column.
   @end{short}
   If the cursor is not currently set, then path will be @code{nil}. If no column
-  currently has focus, then @arg{focus-column} will be @code{nil}."
+  currently has focus, then @arg{focus-column} will be @code{nil}.
+  @see-class{gtk-tree-view}"
   (with-foreign-objects ((path :pointer) (focus-column :pointer))
     (%gtk-tree-view-get-cursor tree-view path focus-column)
     (values (mem-ref path '(g-boxed-foreign gtk-tree-path :return))
@@ -1943,7 +1915,8 @@
   @argument[tree-view]{a @class{gtk-tree-view} widget}
   @argument[path]{the @class{gtk-tree-path} to be activated}
   @argument[column]{the @class{gtk-tree-view-column} to be activated}
-  Activates the cell determined by @arg{path} and @arg{column}."
+  Activates the cell determined by @arg{path} and @arg{column}.
+  @see-class{gtk-tree-view}"
   (tree-view (g-object gtk-tree-view))
   (path (g-boxed-foreign gtk-tree-path))
   (column (g-object gtk-tree-view-column)))
@@ -1958,7 +1931,8 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-5-31}
   @argument[tree-view]{a @class{gtk-tree-view} widget}
-  Recursively expands all nodes in the @arg{tree-view}."
+  Recursively expands all nodes in the @arg{tree-view}.
+  @see-class{gtk-tree-view}"
   (tree-view g-object))
 
 (export 'gtk-tree-view-expand-all)
@@ -1971,7 +1945,8 @@
  #+cl-cffi-gtk-documentation
  "@version{2013-5-31}
   @argument[tree-view]{a @class{gtk-tree-view} widget}
-  Recursively collapses all visible, expanded nodes in @arg{tree-view}."
+  Recursively collapses all visible, expanded nodes in @arg{tree-view}.
+  @see-class{gtk-tree-view}"
   (tree-view g-object))
 
 (export 'gtk-tree-view-collapse-all)
@@ -1989,8 +1964,7 @@
     Expands the row at path. This will also expand all parent rows of path as
     necessary.
   @end{short}
-
-  Since 2.2"
+  @see-class{gtk-tree-view}"
   (tree-view g-object)
   (path (g-boxed-foreign gtk-tree-path)))
 
@@ -2027,7 +2001,8 @@
   @argument[tree-view]{a @class{gtk-tree-view} widget}
   @argument[path]{path to a row in the @arg{tree-view}}
   @return{@em{True} if the row was collapsed.}
-  Collapses a row (hides its child rows, if they exist)."
+  Collapses a row (hides its child rows, if they exist).
+  @see-class{gtk-tree-view}"
   (tree-view g-object)
   (path (g-boxed-foreign gtk-tree-path)))
 
@@ -2073,7 +2048,8 @@
  "@version{2013-5-31}
   @argument[tree-view]{a @class{gtk-tree-view} widget}
   @argument[func]{a function to be called}
-  Calls @arg{func} on all expanded rows."
+  Calls @arg{func} on all expanded rows.
+  @see-class{gtk-tree-view}"
   (with-stable-pointer (ptr func)
     (%gtk-tree-view-map-expanded-rows tree-view
                                       (callback gtk-tree-view-mapping-func-cb)
@@ -2092,59 +2068,12 @@
   @argument[path]{a @class{gtk-tree-path} object to test expansion state}
   @return{@em{True} if path is expanded.}
   Returns @em{true} if the node pointed to by path is expanded in
-  @arg{tree-view}."
+  @arg{tree-view}.
+  @see-class{gtk-tree-view}"
   (tree-view g-object)
   (path (g-boxed-foreign gtk-tree-path)))
 
 (export 'gtk-tree-view-row-expanded)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tree_view_set_reorderable ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-tree-view-set-reorderable))
-
-(defun gtk-tree-view-set-reorderable (tree-view reorderable)
- #+cl-cffi-gtk-documentation
- "@version{2013-6-21}
-  @argument[tree-view]{a @class{gtk-tree-view} widget}
-  @argument[reorderable]{@em{true}, if the tree can be reordered}
-  @begin{short}
-    This function is a convenience function to allow you to reorder models that
-    support the @class{gtk-tree-drag-source} interface and the
-    @class{gtk-tree-drag-dest} interface.
-  @end{short}
-  Both @class{gtk-tree-store} and @class{gtk-list-store} support these. If
-  @arg{reorderable} is @em{true}, then the user can reorder the model by
-  dragging and dropping rows. The developer can listen to these changes by
-  connecting to the model's \"row-inserted\" and \"row-deleted\" signals. The
-  reordering is implemented by setting up the tree view as a drag source and
-  destination. Therefore, drag and drop can not be used in a reorderable view
-  for any other purpose.
-
-  This function does not give you any degree of control over the order - any
-  reordering is allowed. If more control is needed, you should probably handle
-  drag and drop manually."
-  (setf (gtk-tree-view-reorderable tree-view) reorderable))
-
-(export 'gtk-tree-view-set-reorderable)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tree_view_get_reorderable ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-tree-view-get-reorderable))
-
-(defun gtk-tree-view-get-reorderable (tree-view)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-31}
-  @argument[tree-view]{a @class{gtk-tree-view} widget}
-  @return{@em{True} if the tree can be reordered.}
-  Retrieves whether the user can reorder the tree via drag-and-drop. See the
-  @fun{gtk-tree-view-set-reorderable} function."
-  (gtk-tree-view-reorderable tree-view))
-
-(export 'gtk-tree-view-get-reorderable)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_view_get_path_at_pos ()
@@ -2193,6 +2122,7 @@
   For converting widget coordinates (e. g. the ones you get from
   @code{GtkWidget::query-tooltip}), please see the function
   @fun{gtk-tree-view-convert-widget-to-bin-window-coords}.
+  @see-class{gtk-tree-view}
   @see-function{gtk-tree-view-get-bin-window}
   @see-function{gtk-tree-view-convert-widget-to-bin-window-coords}"
   (with-foreign-objects ((path :pointer)
@@ -2259,8 +2189,7 @@
   filled in likewise as for the @fun{gtk-tree-view-get-path-at-pos} function.
   Please see the @fun{gtk-tree-view-get-path-at-pos} function for more
   information.
-
-  Since 3.0
+  @see-class{gtk-tree-view}
   @see-function{gtk-tree-view-convert-widget-to-bin-window-coords}"
   (with-foreign-objects ((path :pointer)
                          (column :pointer)
@@ -2305,7 +2234,8 @@
   rects does not cover the entire tree; there are extra pixels in between rows,
   for example. The returned rectangle is equivalent to the @arg{cell-area}
   passed to the @fun{gtk-cell-renderer-render} function. This function is only
-  valid if @arg{tree-view} is realized."
+  valid if @arg{tree-view} is realized.
+  @see-class{gtk-tree-view}"
   (let ((rect (make-gdk-rectangle :x 0 :y 0 :width 0 :height 0)))
     (%gtk-tree-view-get-cell-area tree-view path column rect)
     rect))
@@ -2343,7 +2273,8 @@
   @fun{gtk-cell-renderer-render} function. These background areas tile to cover
   the entire bin window. Contrast with the @code{cell-area}, returned by the
   @fun{gtk-tree-view-get-cell-area} function, which returns only the cell
-  itself, excluding surrounding borders and the tree expander area."
+  itself, excluding surrounding borders and the tree expander area.
+  @see-class{gtk-tree-view}"
   (let ((rect (make-gdk-rectangle :x 0 :y 0 :width 0 :height 0)))
     (%gtk-tree-view-get-background-area tree-view path column rect)
     rect))
@@ -2368,7 +2299,8 @@
   tree coordinates. Convert to bin_window coordinates with the
   @fun{gtk-tree-view-convert-tree-to-bin-window-coords} function. Tree
   coordinates start at 0,0 for row 0 of the tree, and cover the entire
-  scrollable area of the tree."
+  scrollable area of the tree.
+  @see-class{gtk-tree-view}"
   (let ((rect (make-gdk-rectangle :x 0 :y 0 :width 0 :height 0)))
     (%gtk-tree-view-get-visible-rect tree-view rect)
     rect))
@@ -2397,8 +2329,7 @@
     Returns @arg{start-path} and @arg{end-path} to be the first and last visible
     path. Note that there may be invisible paths in between.
   @end{short}
-
-  Since 2.8"
+  @see-class{gtk-tree-view}"
   (with-foreign-objects ((start-path :pointer) (end-path :pointer))
     (when (%gtk-tree-view-get-visible-range tree-view start-path end-path)
       (values (mem-ref start-path '(g-boxed-foreign gtk-tree-path :return))
@@ -2421,7 +2352,8 @@
     Returns the window that @arg{tree-view} renders to.
   @end{short}
   This is used primarily to compare to @code{event->window} to confirm that the
-  event on @arg{tree-view} is on the right window."
+  event on @arg{tree-view} is on the right window.
+  @see-class{gtk-tree-view}"
   (tree-view (g-object gtk-tree-view)))
 
 (export 'gtk-tree-view-get-bin-window)
@@ -2452,8 +2384,7 @@
     Converts \"bin-window\" coordinates to coordinates for the tree (the full
     scrollable area of the tree).
   @end{short}
-
-  Since 2.12"
+  @see-class{gtk-tree-view}"
   (with-foreign-objects ((rx :int) (ry :int))
     (%gtk-tree-view-convert-bin-window-to-tree-coords tree-view x y rx ry)
     (values (mem-ref rx :int)
@@ -2487,8 +2418,7 @@
     Converts \"bin-window\" coordinates (see the function
     @fun{gtk-tree-view-get-bin-window}) to widget relative coordinates.
   @end{short}
-
-  Since 2.12
+  @see-class{gtk-tree-view}
   @see-function{gtk-tree-view-get-bin-window}"
   (with-foreign-objects ((rx :int) (ry :int))
     (%gtk-tree-view-convert-bin-window-to-widget-coords tree-view x y rx ry)
@@ -2523,8 +2453,7 @@
     Converts tree coordinates (coordinates in full scrollable area of the tree)
     to \"bin-window\" coordinates.
   @end{short}
-
-  Since 2.12"
+  @see-class{gtk-tree-view}"
   (with-foreign-objects ((rx :int) (ry :int))
     (%gtk-tree-view-convert-tree-to-bin-window-coords tree-view x y rx ry)
     (values (mem-ref rx :int)
@@ -2558,8 +2487,7 @@
     Converts tree coordinates (coordinates in full scrollable area of the tree)
     to widget coordinates.
   @end{short}
-
-  Since 2.12"
+  @see-class{gtk-tree-view}"
   (with-foreign-objects ((rx :int) (ry :int))
     (%gtk-tree-view-convert-tree-to-widget-coords tree-view x y rx ry)
     (values (mem-ref rx :int)
@@ -2593,8 +2521,7 @@
     Converts widget coordinates to coordinates for the \"bin-window\" (see the
     function @fun{gtk-tree-view-get-bin-window}).
   @end{short}
-
-  Since 2.12
+  @see-class{gtk-tree-view}
   @see-function{gtk-tree-view-get-bin-window}"
   (with-foreign-objects ((rx :int) (ry :int))
     (%gtk-tree-view-convert-widget-to-bin-window-coords tree-view x y rx ry)
@@ -2629,8 +2556,7 @@
     Converts widget coordinates to coordinates for the tree (the full scrollable
     area of the tree).
   @end{short}
-
-  Since 2.12"
+  @see-class{gtk-tree-view}"
   (with-foreign-objects ((rx :int) (ry :int))
     (%gtk-tree-view-convert-widget-to-tree-coords tree-view x y rx ry)
     (values (mem-ref rx :int)
@@ -2657,7 +2583,8 @@
   @argument[actions]{the bitmask of possible actions for a drag from this
     widget}
   Turns @arg{tree-view} into a drop destination for automatic DND. Calling this
-  method sets \"reorderable\" to @code{nil}."
+  method sets \"reorderable\" to @code{nil}.
+  @see-class{gtk-tree-view}"
   (with-foreign-boxed-array (n-targets targets-ptr gtk-target-entry targets)
     (%gtk-tree-view-enable-model-drag-dest tree-view
                                            targets-ptr
@@ -2688,7 +2615,8 @@
   @argument[actions]{the bitmask of possible actions for a drag from this
     widget}
   Turns @arg{tree-view} into a drag source for automatic DND. Calling this
-  method sets \"reorderable\" to @code{nil}."
+  method sets \"reorderable\" to @code{nil}.
+  @see-class{gtk-tree-view}"
   (with-foreign-boxed-array (n-targets targets-ptr gtk-target-entry targets)
     (%gtk-tree-view-enable-model-drag-source tree-view
                                              start-button-mask
@@ -2802,7 +2730,8 @@
   Determines the destination row for a given position. @arg{x} and @arg{y} are
   expected to be in widget coordinates. This function is only meaningful if
   @arg{tree-view} is realized. Therefore this function will always return
-  @code{nil} if @arg{tree-view} is not realized or does not have a model."
+  @code{nil} if @arg{tree-view} is not realized or does not have a model.
+  @see-class{gtk-tree-view}"
   (with-foreign-objects ((path :pointer) (pos :int))
     (when (%gtk-tree-view-get-dest-row-at-pos tree-view x y path pos)
       (values (mem-ref path '(g-boxed-foreign gtk-tree-path :return))
@@ -2828,76 +2757,6 @@
 ;;;
 ;;; Returns :
 ;;;     a newly-allocated surface of the drag icon
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tree_view_set_enable_search ()
-;;;
-;;; void gtk_tree_view_set_enable_search (GtkTreeView *tree_view,
-;;;                                       gboolean enable_search);
-;;;
-;;; If enable_search is set, then the user can type in text to search through
-;;; the tree interactively (this is sometimes called "typeahead find").
-;;;
-;;; Note that even if this is FALSE, the user can still initiate a search using
-;;; the "start-interactive-search" key binding.
-;;;
-;;; tree_view :
-;;;     A GtkTreeView
-;;;
-;;; enable_search :
-;;;     TRUE, if the user can search interactively
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tree_view_get_enable_search ()
-;;;
-;;; gboolean gtk_tree_view_get_enable_search (GtkTreeView *tree_view);
-;;;
-;;; Returns whether or not the tree allows to start interactive searching by
-;;; typing in text.
-;;;
-;;; tree_view :
-;;;     A GtkTreeView
-;;;
-;;; Returns :
-;;;     whether or not to let the user search interactively
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tree_view_get_search_column ()
-;;;
-;;; gint gtk_tree_view_get_search_column (GtkTreeView *tree_view);
-;;;
-;;; Gets the column searched on by the interactive search code.
-;;;
-;;; tree_view :
-;;;     A GtkTreeView
-;;;
-;;; Returns :
-;;;     the column the interactive search code searches in.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tree_view_set_search_column ()
-;;;
-;;; void gtk_tree_view_set_search_column (GtkTreeView *tree_view, gint column);
-;;;
-;;; Sets column as the column where the interactive search code should search in
-;;; for the current model.
-;;;
-;;; If the search column is set, users can use the "start-interactive-search"
-;;; key binding to bring up search popup. The enable-search property controls
-;;; whether simply typing text will also start an interactive search.
-;;;
-;;; Note that column refers to a column of the current model. The search column
-;;; is reset to -1 when the model is changed.
-;;;
-;;; tree_view :
-;;;     A GtkTreeView
-;;;
-;;; column :
-;;;     the column of the model to search in, or -1 to disable searching
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
@@ -2945,7 +2804,8 @@
   @argument[func]{the compare function to use during the search}
   Sets the compare function for the interactive search capabilities; note that
   somewhat like @code{strcmp()} returning 0 for equality
-  @code{GtkTreeViewSearchEqualFunc} returns @code{nil} on matches."
+  @code{GtkTreeViewSearchEqualFunc} returns @code{nil} on matches.
+  @see-class{gtk-tree-view}"
   (%gtk-tree-view-set-search-equal-func
                              tree-view
                              (callback gtk-tree-view-search-equal-func-cb)
@@ -3045,8 +2905,7 @@
   @begin{short}
     Sets the function to use when positioning the search dialog.
   @end{short}
-
-  Since 2.10"
+  @see-class{gtk-tree-view}"
   (if func
       (%gtk-tree-view-set-search-position-func
                                tree-view
@@ -3059,121 +2918,6 @@
                                                (null-pointer))))
 
 (export 'gtk-tree-view-set-search-position-func)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tree_view_get_fixed_height_mode ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-tree-view-get-fixed-height-mode))
-
-(defun gtk-tree-view-get-fixed-height-mode (tree-view)
- #+cl-cffi-gtk-documentation
- "@version{2013-6-30}
-  @argument[tree-view]{a @class{gtk-tree-view} widget}
-  @return{@em{True} if @arg{tree-view} is in fixed height mode.}
-  @begin{short}
-    Returns whether fixed height mode is turned on for @arg{tree-view}.
-  @end{short}
-
-  Since 2.6
-  @see-function{gtk-tree-view-set-fixed-height-mode}"
-  (gtk-tree-view-fixed-height-mode tree-view))
-
-(export 'gtk-tree-view-get-fixed-height-mode)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tree_view_set_fixed_height_mode ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-tree-view-set-fixed-height-mode))
-
-(defun gtk-tree-view-set-fixed-height-mode (tree-view enable)
- #+cl-cffi-gtk-documentation
- "@version{2013-6-30}
-  @argument[tree-view]{a @class{gtk-tree-view} widget}
-  @argument[enable]{@em{true} to enable fixed height mode}
-  @begin{short}
-    Enables or disables the fixed height mode of @arg{tree-view}.
-  @end{short}
-  Fixed height mode speeds up @class{gtk-tree-view} by assuming that all rows
-  have the same height. Only enable this option if all rows are the same height
-  and all columns are of type @code{:column-fixed} of the
-  @symbol{gtk-tree-view-column-sizing} enumeration.
-
-  Since 2.6
-  @see-function{gtk-tree-view-get-fixed-height-mode}"
-  (setf (gtk-tree-view-fixed-height-mode tree-view) enable))
-
-(export 'gtk-tree-view-set-fixed-height-mode)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tree_view_get_hover_selection ()
-;;;
-;;; gboolean gtk_tree_view_get_hover_selection (GtkTreeView *tree_view);
-;;;
-;;; Returns whether hover selection mode is turned on for tree_view.
-;;;
-;;; tree_view :
-;;;     a GtkTreeView
-;;;
-;;; Returns :
-;;;     TRUE if tree_view is in hover selection mode
-;;;
-;;; Since 2.6
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tree_view_set_hover_selection ()
-;;;
-;;; void gtk_tree_view_set_hover_selection (GtkTreeView *tree_view,
-;;;                                         gboolean hover);
-;;;
-;;; Enables or disables the hover selection mode of tree_view. Hover selection
-;;; makes the selected row follow the pointer. Currently, this works only for
-;;; the selection modes GTK_SELECTION_SINGLE and GTK_SELECTION_BROWSE.
-;;;
-;;; tree_view :
-;;;     a GtkTreeView
-;;;
-;;; hover :
-;;;     TRUE to enable hover selection mode
-;;;
-;;; Since 2.6
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tree_view_get_hover_expand ()
-;;;
-;;; gboolean gtk_tree_view_get_hover_expand (GtkTreeView *tree_view);
-;;;
-;;; Returns whether hover expansion mode is turned on for tree_view.
-;;;
-;;; tree_view :
-;;;     a GtkTreeView
-;;;
-;;; Returns :
-;;;     TRUE if tree_view is in hover expansion mode
-;;;
-;;; Since 2.6
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tree_view_set_hover_expand ()
-;;;
-;;; void gtk_tree_view_set_hover_expand (GtkTreeView *tree_view,
-;;;                                      gboolean expand);
-;;;
-;;; Enables or disables the hover expansion mode of tree_view. Hover expansion
-;;; makes rows expand or collapse if the pointer moves over them.
-;;;
-;;; tree_view :
-;;;     a GtkTreeView
-;;;
-;;; expand :
-;;;     TRUE to enable hover selection mode
-;;;
-;;; Since 2.6
-;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; GtkTreeDestroyCountFunc ()
@@ -3288,8 +3032,7 @@
     should be drawn as a separator. If the row separator function is @code{nil},
     no separators are drawn. This is the default value.
   @end{short}
-
-  Since 2.6"
+  @see-class{gtk-tree-view}"
   (if func
       (%gtk-tree-view-set-row-separator-func tree-view
                             (callback gtk-tree-view-row-separator-func-callback)
@@ -3301,43 +3044,6 @@
                                              (null-pointer))))
 
 (export 'gtk-tree-view-set-row-separator-func)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tree_view_get_rubber_banding ()
-;;;
-;;; gboolean gtk_tree_view_get_rubber_banding (GtkTreeView *tree_view);
-;;;
-;;; Returns whether rubber banding is turned on for tree_view. If the selection
-;;; mode is GTK_SELECTION_MULTIPLE, rubber banding will allow the user to select
-;;; multiple rows by dragging the mouse.
-;;;
-;;; tree_view :
-;;;     a GtkTreeView
-;;;
-;;; Returns :
-;;;     TRUE if rubber banding in tree_view is enabled.
-;;;
-;;; Since 2.10
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tree_view_set_rubber_banding ()
-;;;
-;;; void gtk_tree_view_set_rubber_banding (GtkTreeView *tree_view,
-;;;                                        gboolean enable);
-;;;
-;;; Enables or disables rubber banding in tree_view. If the selection mode is
-;;; GTK_SELECTION_MULTIPLE, rubber banding will allow the user to select
-;;; multiple rows by dragging the mouse.
-;;;
-;;; tree_view :
-;;;     a GtkTreeView
-;;;
-;;; enable :
-;;;     TRUE to enable rubber banding
-;;;
-;;; Since 2.10
-;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_view_is_rubber_banding_active ()
@@ -3356,45 +3062,10 @@
     Returns whether a rubber banding operation is currently being done in
     @arg{tree-view}.
   @end{short}
-
-  Since 2.12"
+  @see-class{gtk-tree-view}"
   (tree-view g-object))
 
 (export 'gtk-tree-view-is-rubber-banding-active)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tree_view_get_enable_tree_lines ()
-;;;
-;;; gboolean gtk_tree_view_get_enable_tree_lines (GtkTreeView *tree_view);
-;;;
-;;; Returns whether or not tree lines are drawn in tree_view.
-;;;
-;;; tree_view :
-;;;     a GtkTreeView.
-;;;
-;;; Returns :
-;;;     TRUE if tree lines are drawn in tree_view, FALSE otherwise.
-;;;
-;;; Since 2.10
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tree_view_set_enable_tree_lines ()
-;;;
-;;; void gtk_tree_view_set_enable_tree_lines (GtkTreeView *tree_view,
-;;;                                           gboolean enabled);
-;;;
-;;; Sets whether to draw lines interconnecting the expanders in tree_view. This
-;;; does not have any visible effects for lists.
-;;;
-;;; tree_view :
-;;;     a GtkTreeView
-;;;
-;;; enabled :
-;;;     TRUE to enable tree line drawing, FALSE otherwise.
-;;;
-;;; Since 2.10
-;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
 ;;; enum GtkTreeViewGridLines
@@ -3480,8 +3151,7 @@
   @end{short}
   See also the @fun{gtk-tree-view-set-tooltip-column} function for a simpler
   alternative. See also the @fun{gtk-tooltip-set-tip-area} function.
-
-  Since 2.12
+  @see-class{gtk-tree-view}
   @see-function{gtk-tree-view-set-tooltip-column}
   @see-function{gtk-tooltip-set-tip-area}"
   (tree-view g-object)
@@ -3517,8 +3187,7 @@
 
   See also the @fun{gtk-tree-view-set-tooltip-column} function for a simpler
   alternative.
-
-  Since 2.12
+  @see-class{gtk-tree-view}
   @see-function{gtk-tooltip-set-tip-area}"
   (tree-view g-object)
   (tooltip g-object)
@@ -3568,8 +3237,7 @@
   point to that row and the corresponding model. @arg{x} and @arg{y} will always
   be converted to be relative to @arg{tree-view}'s \"bin-window\" if
   @arg{keyboard-tip} is @code{nil}.
-
-  Since 2.12"
+  @see-class{gtk-tree-view}"
   (with-foreign-objects ((x :int)
                          (y :int)
                          (keyboard-tip :boolean)
@@ -3591,48 +3259,5 @@
               (mem-ref iter '(g-boxed-foreign gtk-tree-iter :return))))))
 
 (export 'gtk-tree-view-get-tooltip-context)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tree_view_get_tooltip_column ()
-;;;
-;;; gint gtk_tree_view_get_tooltip_column (GtkTreeView *tree_view);
-;;;
-;;; Returns the column of tree_view's model which is being used for displaying
-;;; tooltips on tree_view's rows.
-;;;
-;;; tree_view :
-;;;     a GtkTreeView
-;;;
-;;; Returns :
-;;;     the index of the tooltip column that is currently being used, or -1 if
-;;;     this is disabled.
-;;;
-;;; Since 2.12
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tree_view_set_tooltip_column ()
-;;;
-;;; void gtk_tree_view_set_tooltip_column (GtkTreeView *tree_view, gint column);
-;;;
-;;; If you only plan to have simple (text-only) tooltips on full rows, you can
-;;; use this function to have GtkTreeView handle these automatically for you.
-;;; column should be set to the column in tree_view's model containing the
-;;; tooltip texts, or -1 to disable this feature.
-;;;
-;;; When enabled, "has-tooltip" will be set to TRUE and tree_view will connect a
-;;; "query-tooltip" signal handler.
-;;;
-;;; Note that the signal handler sets the text with gtk_tooltip_set_markup(), so
-;;; &, <, etc have to be escaped in the text.
-;;;
-;;; tree_view :
-;;;     a GtkTreeView
-;;;
-;;; column :
-;;;     an integer, which is a valid column number for tree_view's model
-;;;
-;;; Since 2.12
-;;; ----------------------------------------------------------------------------
 
 ;;; --- End of file gtk.tree-view.lisp -----------------------------------------
