@@ -287,29 +287,36 @@
     get the @code{.top} and @code{.bottom} style classes.
   @end{dictionary}
   @begin[Child Property Details]{dictionary}
-    @subheading{The \"bottom-attach\" child property}
-      @code{\"bottom-attach\"} of type @code{:int} (Read / Write) @br{}
-      The row number to attach the bottom of the child to. @br{}
-      Allowed values: >= @code{G_MAXULONG} @br{}
-      Default value: @code{-1}
-
-    @subheading{The \"left-attach\" child property}
-      @code{\"left-attach\"} of type @code{:int} (Read / Write) @br{}
-      The column number to attach the left side of the child to. @br{}
-      Allowed values: >= @code{G_MAXULONG} @br{}
-      Default value: @code{-1}
-
-    @subheading{The \"right-attach\" child property}
-      @code{\"right-attach\"} of type @code{:int} (Read / Write) @br{}
-      The column number to attach the right side of the child to. @br{}
-      Allowed values: >= @code{G_MAXULONG} @br{}
-      Default value: @code{-1}
-
-    @subheading{The \"top-attach\" child property}
-      @code{\"top-attach\"} of type @code{:int} (Read / Write) @br{}
-      The row number to attach the top of the child to. @br{}
-      Allowed values: >= @code{G_MAXULONG} @br{}
-      Default value: @code{-1}
+    @begin[code]{table}
+      @begin[bottom-attach]{entry}
+        The @code{bottom-attach} child property of type @code{:int}
+        (Read / Write) @br{}
+        The row number to attach the bottom of the child to. @br{}
+        Allowed values: >= -1 @br{}
+        Default value: @code{-1}
+      @end{entry}
+      @begin[left-attach]{entry}
+        The @code{left-attach} child property of type @code{:int}
+        (Read / Write) @br{}
+        The column number to attach the left side of the child to. @br{}
+        Allowed values: >= -1 @br{}
+        Default value: @code{-1}
+      @end{entry}
+      @begin[right-attach]{entry}
+        The @code{right-attach} child property of type @code{:int}
+        (Read / Write) @br{}
+        The column number to attach the right side of the child to. @br{}
+        Allowed values: >= -1 @br{}
+        Default value: @code{-1}
+      @end{entry}
+      @begin[top-attach]{entry}
+        The @code{top-attach} child property of type @code{:int}
+        (Read / Write) @br{}
+        The row number to attach the top of the child to. @br{}
+        Allowed values: >= -1 @br{}
+        Default value: @code{-1}
+      @end{entry}
+    @end{table}
   @end{dictionary}
   @begin[Style Property Details]{dictionary}
     @subheading{The \"arrow-placement\" style property}
@@ -480,7 +487,7 @@
  "The @code{active} property of type @code{:int} (Read / Write) @br{}
   The index of the currently selected menu item, or -1 if no menu item is
   selected. @br{}
-  Allowed values: >= @code{G_MAXULONG} @br{}
+  Allowed values: >= -1 @br{}
   Default value: -1")
 
 #+cl-cffi-gtk-documentation
@@ -586,7 +593,7 @@
 (setf (documentation (atdoc:get-slot-from-name "monitor" 'gtk-menu) 't)
  "The @code{monitor} property of type @code{:int} (Read / Write) @br{}
   The monitor the menu will be popped up on. @br{}
-  Allowed values: >= @code{G_MAXULONG} @br{}
+  Allowed values: >= -1 @br{}
   Default value: -1")
 
 #+cl-cffi-gtk-documentation
