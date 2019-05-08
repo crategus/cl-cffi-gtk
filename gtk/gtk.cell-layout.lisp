@@ -255,8 +255,7 @@
   @em{true}.
 
   Note that reusing the same cell renderer is not supported.
-
-  Since 2.4"
+  @see-class{gtk-cell-layout}"
   (%gtk-cell-layout-pack-start cell-layout cell expand))
 
 (export 'gtk-cell-layout-pack-start)
@@ -285,8 +284,7 @@
   @end{short}
 
   Note that reusing the same cell renderer is not supported.
-
-  Since 2.4"
+  @see-class{gtk-cell-layout}"
   (%gtk-cell-layout-pack-end cell-layout cell expand))
 
 (export 'gtk-cell-layout-pack-end)
@@ -321,8 +319,7 @@
   @begin{short}
     Returns the cell renderers which have been added to @arg{cell-layout}.
   @end{short}
-
-  Since 2.12"
+  @see-class{gtk-cell-layout}"
   (cell-layout (g-object gtk-cell-layout)))
 
 (export 'gtk-cell-layout-get-cells)
@@ -343,8 +340,7 @@
 
   Note that @arg{cell} has already to be packed into @arg{cell-layout} for this
   to function properly.
-
-  Since 2.4"
+  @see-class{gtk-cell-layout}"
   (cell-layout g-object)
   (cell g-object)
   (positin :int))
@@ -363,8 +359,7 @@
     Unsets all the mappings on all renderers on @arg{cell-layout} and removes
     all renderers from @arg{cell-layout}.
   @end{short}
-
-  Since 2.4"
+  @see-class{gtk-cell-layout}"
   (cell-layout g-object))
 
 (export 'gtk-cell-layout-clear)
@@ -413,8 +408,7 @@
   attribute is the parameter on @arg{cell} to be set from the value. So for
   example if column 2 of the model contains strings, you could have the \"text\"
   attribute of a @class{gtk-cell-renderer-text} get its values from column 2.
-
-  Since 2.4"
+  @see-class{gtk-cell-layout}"
   (cell-layout g-object)
   (cell g-object)
   (attribute (:string :free-to-foreign t))
@@ -460,8 +454,7 @@
   renderer(s) as appropriate.
 
   @arg{func} may be @code{nil} to remove a previously set function.
-
-  Since 2.4"
+  @see-class{gtk-cell-layout}"
   (%gtk-cell-layout-set-cell-data-func
       cell-layout
       cell
@@ -485,8 +478,7 @@
     Clears all existing attributes previously set with the function
     @fun{gtk-cell-layout-set-attributes}.
   @end{short}
-
-  Since 2.4
+  @see-class{gtk-cell-layout}
   @see-function{gtk-cell-layout-set-attributes}"
   (cell-layout g-object)
   (cell g-object))
