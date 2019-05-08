@@ -676,7 +676,7 @@
   The @sym{gtk-tree-view-enable-tree-lines} slot access function
   returns whether or not tree lines are drawn in the tree view.
 
-  The @sym{(setf gtk-tree-view-enable-tree-lines)} slot access function  
+  The @sym{(setf gtk-tree-view-enable-tree-lines)} slot access function
   sets whether to draw lines interconnecting the expanders in the tree view.
   This does not have any visible effects for lists.
   @see-class{gtk-tree-view}")
@@ -1174,7 +1174,7 @@
   @argument[tree-view]{a @class{gtk-tree-view} object}
   @argument[column]{an integer, which is a valid column number for tree_view's
     model}
-  @begin{short} 
+  @begin{short}
     Accessor of the @slot[gtk-tree-view]{tooltip-column} of the
     @class{gtk-tree-view} class.
   @end{short}
