@@ -104,7 +104,7 @@
   @end{short}
 
   The @sym{gtk-tree-selection} object is gotten from a @class{gtk-tree-view} by
-  calling the function @fun{gtk-tree-view-get-selection}. It can be manipulated
+  calling the @fun{gtk-tree-view-get-selection} function. It can be manipulated
   to check the selection status of the tree, as well as select and deselect
   individual rows. Selection is done completely view side. As a result, multiple
   views of the same model can have completely different selections.
@@ -139,7 +139,7 @@
 (setf (documentation (atdoc:get-slot-from-name "mode" 'gtk-tree-selection) 't)
  "The @code{mode} property of type @symbol{gtk-selection-mode}
   (Read / Write) @br{}
-  Selection mode. See the @fun{gtk-tree-selection-set-mode} function for more
+  Selection mode. See the @fun{gtk-tree-selection-mode} function for more
   information on this property. @br{}
   Default value: @code{:single}")
 
@@ -148,10 +148,22 @@
       "Accessor"
       (documentation 'gtk-tree-selection-mode 'function)
  "@version{2013-5-12}
+  @syntax[]{(gtk-tree-selection-mode object) => mode}
+  @syntax[]{(setf (gtk-tree-selection-mode object) mode)}
+  @argument[object]{a @class{gtk-tree-selection} object}
+  @argument[mode]{the selection mode}
   @begin{short}
-    Accessor of the slot @slot[gtk-tree-selection]{mode} of the
+    Accessor of the @slot[gtk-tree-selection]{mode} slot of the
     @class{gtk-tree-selection} class.
   @end{short}
+
+  The @sym{gtk-tree-selection-mode} slot access function
+  gets the current selection mode.
+
+  The @sym{(setf gtk-tree-selection-mode)} slot access function
+  sets the selection mode of the selection. If the previous type was
+  @code{:multiple}, then the anchor is kept selected, if it was previously
+  selected.
   @see-class{gtk-tree-selection}")
 
 ;;; ----------------------------------------------------------------------------
@@ -230,42 +242,6 @@
      (data :pointer))
   (let ((fn (glib::get-stable-pointer-value data)))
     (funcall fn model path iter)))
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tree_selection_set_mode ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-tree-selection-set-mode))
-
-(defun gtk-tree-selection-set-mode (selection mode)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-12}
-  @argument[selection]{a @class{gtk-tree-selection} object}
-  @argument[mode]{the selection mode}
-  Sets the selection mode of the @arg{selection}. If the previous type was
-  @code{:multiple}, then the anchor is kept selected, if it was previously
-  selected."
-  (setf (gtk-tree-selection-mode selection) mode))
-
-(export 'gtk-tree-selection-set-mode)
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tree_selection_get_mode ()
-;;; ----------------------------------------------------------------------------
-
-(declaim (inline gtk-tree-selection-get-mode))
-
-(defun gtk-tree-selection-get-mode (selection)
- #+cl-cffi-gtk-documentation
- "@version{2013-5-12}
-  @argument[selection]{a @class{gtk-tree-selection} object}
-  @return{The current selection mode.}
-  @short{Gets the selection mode for @arg{selection}.}
-  See the function @fun{gtk-tree-selection-set-mode}.
-  @see-function{gtk-tree-selection-set-mode}"
-  (gtk-tree-selection-mode selection))
-
-(export 'gtk-tree-selection-get-mode)
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_tree_selection_set_select_function ()
@@ -400,7 +376,7 @@
     Calls a function for each selected node.
   @end{short}
   Note that you cannot modify the tree or selection from within this function.
-  As a result, the function @fun{gtk-tree-selection-get-selected-rows} might be
+  As a result, the @fun{gtk-tree-selection-get-selected-rows} function might be
   more useful.
   @see-function{gtk-tree-selection-get-selected-rows}"
   (with-stable-pointer (ptr fn)
@@ -432,7 +408,7 @@
     Creates a list of path of all selected rows. Additionally, if you are
     planning on modifying the model after calling this function, you may want to
     convert the returned list into a list of @class{gtk-tree-row-reference}'s.
-    To do this, you can use the function @fun{gtk-tree-row-reference-new}.
+    To do this, you can use the @fun{gtk-tree-row-reference-new} function.
   @end{short}
 
   To free the return value, use:
