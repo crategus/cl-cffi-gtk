@@ -415,7 +415,7 @@
   and the active item is not an immediate child of the root of the tree, this
   property has the value @code{gtk_tree_path_get_indices (path)[0]}, where
   @arg{path} is the @class{gtk-tree-path} of the active item. @br{}
-  Allowed values: >= @code{G_MAXULONG} @br{}
+  Allowed values: >= -1 @br{}
   Default value: -1")
 
 #+cl-cffi-gtk-documentation
@@ -535,7 +535,7 @@
   type @variable{+g-type-int+} in the model.
   The values of that column are used to determine how many columns a value in
   the list will span. @br{}
-  Allowed values: >= @code{G_MAXULONG} @br{}
+  Allowed values: >= -1 @br{}
   Default value: -1")
 
 #+cl-cffi-gtk-documentation
@@ -561,7 +561,7 @@
   (Read / Write) @br{}
   The column in the combo box's model to associate with strings from the entry
   if the combo was created with @code{has-entry} = @em{true}. @br{}
-  Allowed values: >= @code{G_MAXULONG} @br{}
+  Allowed values: >= -1 @br{}
   Default value: -1")
 
 #+cl-cffi-gtk-documentation
@@ -648,9 +648,8 @@
  "The @code{id-column} property of type @code{:int} (Read / Write) @br{}
   The column in the combo box's model that provides string IDs for the values
   in the model, if != -1. @br{}
-  Allowed values: >= @code{G_MAXULONG} @br{}
-  Default value: -1 @br{}
-  Since 3.0")
+  Allowed values: >= -1 @br{}
+  Default value: -1")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-combo-box-id-column atdoc:*function-name-alias*)
@@ -745,7 +744,7 @@
   list will span. Therefore, the values in the model column pointed to by this
   property must be greater than zero and not larger than
   @code{wrap-width}. @br{}
-  Allowed values: >= @code{G_MAXULONG} @br{}
+  Allowed values: >= -1 @br{}
   Default value: -1")
 
 #+cl-cffi-gtk-documentation
