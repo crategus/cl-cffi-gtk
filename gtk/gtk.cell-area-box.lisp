@@ -114,7 +114,7 @@
         (Read / Write) @br{}
         Whether the cell renderer should be aligned in adjacent rows. @br{}
         Default value: @code{nil} @br{}
-      @end{entry} 
+      @end{entry}
       @begin[expand]{entry}
         The @code{expand} child property of type @code{:boolean}
         (Read / Write) @br{}
