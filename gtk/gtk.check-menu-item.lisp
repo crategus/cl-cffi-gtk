@@ -121,7 +121,7 @@
  ╰── <child>
     @end{pre}
     The @sym{gtk-check-menu-item} class has a main CSS node with name
-    @code{menuitem}, and a subnode with name @code{check}, which gets the 
+    @code{menuitem}, and a subnode with name @code{check}, which gets the
     @code{.left} or @code{.right} style class.
   @end{dictionary}
   @begin[Style Property Details]{dictionary}
