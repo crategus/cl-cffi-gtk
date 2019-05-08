@@ -103,103 +103,83 @@
   @see-slot{gtk-cell-renderer-progress-value}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
+;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
+
+;;; --- gtk-cell-renderer-progress-inverted ------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (documentation (atdoc:get-slot-from-name "inverted"
                                                'gtk-cell-renderer-progress) 't)
- "The @code{\"inverted\"} property of type @code{:boolean} (Read / Write) @br{}
+ "The @code{inverted} property of type @code{:boolean} (Read / Write) @br{}
   Invert the direction in which the progress bar grows. @br{}
   Default value: @code{nil}")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "pulse"
-                                               'gtk-cell-renderer-progress) 't)
- "The @code{\"pulse\"} property of type @code{:int} (Read / Write) @br{}
-  Setting this to a non-negative value causes the cell renderer to enter
-  \"activity mode\", where a block bounces back and forth to indicate that some
-  progress is made, without specifying exactly how much.
-  Each increment of the property causes the block to move by a little bit.
-  To indicate that the activity has not started yet, set the property to zero.
-  To indicate completion, set the property to @code{G_MAXINT}. @br{}
-  Allowed values: >= @code{G_MAXULONG} @br{}
-  Default value: -1 @br{}
-  Since 2.12")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "text"
-                                               'gtk-cell-renderer-progress) 't)
- "The @code{\"text\"} property of type @code{:string} (Read / Write) @br{}
-  The @code{\"text\"} property determines the label which will be drawn over the
-  progress bar. Setting this property to @code{nil} causes the default label to
-  be displayed. Setting this property to an empty string causes no label to be
-  displayed. @br{}
-  Default value: @code{nil} @br{}
-  Since 2.6")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "text-xalign"
-                                               'gtk-cell-renderer-progress) 't)
- "The @code{\"text-xalign\"} property of type @code{:float} (Read / Write) @br{}
-  The @code{\"text-xalign\"} property controls the horizontal alignment of the
-  text in the progress bar. Valid values range from 0 (left) to 1 (right).
-  Reserved for RTL layouts. @br{}
-  Allowed values: [0,1] @br{}
-  Default value: 0.5 @br{}
-  Since 2.12")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "text-yalign"
-                                               'gtk-cell-renderer-progress) 't)
- "The @code{\"text-yalign\"} property of type @code{:float} (Read / Write) @br{}
-  The @code{\"text-yalign\"} property controls the vertical alignment of the
-  text in the progress bar. Valid values range from 0 (top) to 1 (bottom). @br{}
-  Allowed values: [0,1] @br{}
-  Default value: 0.5 @br{}
-  Since 2.12")
-
-#+cl-cffi-gtk-documentation
-(setf (documentation (atdoc:get-slot-from-name "value"
-                                               'gtk-cell-renderer-progress) 't)
- "The @code{\"value\"} property of type @code{:int} (Read / Write) @br{}
-  The @code{\"value\"} property determines the percentage to which the progress
-  bar will be \"filled in\". @br{}
-  Allowed values: [0,100] @br{}
-  Default value: 0 @br{}
-  Since 2.6")
-
-;;; ----------------------------------------------------------------------------
-;;;
-;;; Accessors
-;;;
-;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-renderer-progress-inverted atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-renderer-progress-inverted 'function)
  "@version{2013-6-22}
-  Accessor of the slot @code{\"inverted\"} of the
-  @class{gtk-cell-renderer-progress} class.")
+  Accessor of the @slotgtk-cell-renderer-progress[]{inverted} slot of the
+  @class{gtk-cell-renderer-progress} class.
+  @see-class{gtk-cell-renderer-progress}")
+
+;;; --- gtk-cell-renderer-progress-pulse ---------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "pulse"
+                                               'gtk-cell-renderer-progress) 't)
+ "The @code{pulse} property of type @code{:int} (Read / Write) @br{}
+  Setting this to a non-negative value causes the cell renderer to enter
+  \"activity mode\", where a block bounces back and forth to indicate that some
+  progress is made, without specifying exactly how much.
+  Each increment of the property causes the block to move by a little bit.
+  To indicate that the activity has not started yet, set the property to zero.
+  To indicate completion, set the property to @code{G_MAXINT}. @br{}
+  Allowed values: >= -1 @br{}
+  Default value: -1")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-renderer-progress-pulse atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-renderer-progress-pulse 'function)
  "@version{2013-6-22}
-  Accessor of the slot @code{\"pulse\"} of the
-  @class{gtk-cell-renderer-progress} class.")
+  Accessor of the @slot[gtk-cell-renderer-progress]{pulse} slot of the
+  @class{gtk-cell-renderer-progress} class.
+  @see-class{gtk-cell-renderer-progress}")
+
+;;; --- gtk-cell-renderer-progress-text ----------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "text"
+                                               'gtk-cell-renderer-progress) 't)
+ "The @code{text} property of type @code{:string} (Read / Write) @br{}
+  The @code{text} property determines the label which will be drawn over the
+  progress bar. Setting this property to @code{nil} causes the default label to
+  be displayed. Setting this property to an empty string causes no label to be
+  displayed. @br{}
+  Default value: @code{nil}")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-renderer-progress-text atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-renderer-progress-text 'function)
  "@version{2013-6-22}
-  Accessor of the slot @code{\"text\"} of the
-  @class{gtk-cell-renderer-progress} class.")
+  Accessor of the @slot[gtk-cell-renderer-progress]{text} slot of the
+  @class{gtk-cell-renderer-progress} class.
+  @see-class{gtk-cell-renderer-progress}")
+
+;;; --- gtk-cell-renderer-progress-text-xalign ---------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "text-xalign"
+                                               'gtk-cell-renderer-progress) 't)
+ "The @code{text-xalign} property of type @code{:float} (Read / Write) @br{}
+  The @code{text-xalign} property controls the horizontal alignment of the
+  text in the progress bar. Valid values range from 0 (left) to 1 (right).
+  Reserved for RTL layouts. @br{}
+  Allowed values: [0,1] @br{}
+  Default value: 0.5")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-renderer-progress-text-xalign
@@ -207,8 +187,20 @@
       "Accessor"
       (documentation 'gtk-cell-renderer-progress-text-xalign 'function)
  "@version{2013-6-22}
-  Accessor of the slot @code{\"text-xalign\"} of the
-  @class{gtk-cell-renderer-progress} class.")
+  Accessor of the @slot[gtk-cell-renderer-progress]{text-xalign} slot of the
+  @class{gtk-cell-renderer-progress} class.
+  @see-class{gtk-cell-renderer-progress}")
+
+;;; --- gtk-cell-renderer-progress-text-yalign ---------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "text-yalign"
+                                               'gtk-cell-renderer-progress) 't)
+ "The @code{text-yalign} property of type @code{:float} (Read / Write) @br{}
+  The @code{text-yalign} property controls the vertical alignment of the
+  text in the progress bar. Valid values range from 0 (top) to 1 (bottom). @br{}
+  Allowed values: [0,1] @br{}
+  Default value: 0.5")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-renderer-progress-text-yalign
@@ -216,16 +208,29 @@
       "Accessor"
       (documentation 'gtk-cell-renderer-progress-text-yalign 'function)
  "@version{2013-6-22}
-  Accessor of the slot @code{\"text-yalign\"} of the
-  @class{gtk-cell-renderer-progress} class.")
+  Accessor of the @slot[gtk-cell-renderer-progress]{text-yalign} slot of the
+  @class{gtk-cell-renderer-progress} class.
+  @see-class{gtk-cell-renderer-progress}")
+
+;;; --- gtk-cell-renderer-progress-value ---------------------------------------
+
+#+cl-cffi-gtk-documentation
+(setf (documentation (atdoc:get-slot-from-name "value"
+                                               'gtk-cell-renderer-progress) 't)
+ "The @code{value} property of type @code{:int} (Read / Write) @br{}
+  The @code{value} property determines the percentage to which the progress
+  bar will be \"filled in\". @br{}
+  Allowed values: [0,100] @br{}
+  Default value: 0")
 
 #+cl-cffi-gtk-documentation
 (setf (gethash 'gtk-cell-renderer-progress-value atdoc:*function-name-alias*)
       "Accessor"
       (documentation 'gtk-cell-renderer-progress-value 'function)
  "@version{2013-6-22}
-  Accessor of the slot @code{\"value\"} of the
-  @class{gtk-cell-renderer-progress} class.")
+  Accessor of the @slot[gtk-cell-renderer-progress]{value} slot of the
+  @class{gtk-cell-renderer-progress} class.
+  @see-class{gtk-cell-renderer-progress}")
 
 ;;; ----------------------------------------------------------------------------
 ;;; gtk_cell_renderer_progress_new ()
@@ -240,8 +245,7 @@
   @begin{short}
     Creates a new @sym{gtk-cell-renderer-progress} object.
   @end{short}
-
-  Since 2.6"
+  @see-class{gtk-cell-renderer-progress}"
   (make-instance 'gtk-cell-renderer-progress))
 
 (export 'gtk-cell-renderer-progress-new)
