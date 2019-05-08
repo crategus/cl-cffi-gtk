@@ -33,7 +33,7 @@
 ;;; GtkColorSelectionDialog
 ;;;
 ;;; Deprecated dialog box for selecting a color
-;;;	
+;;;
 ;;; Synopsis
 ;;;
 ;;;    GtkColorSelectionDialog
