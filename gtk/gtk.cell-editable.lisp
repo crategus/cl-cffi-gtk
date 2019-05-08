@@ -79,7 +79,7 @@
   @begin[Signal Details]{dictionary}
     @subheading{The \"editing-done\" signal}
       @begin{pre}
- lambda (cell-editable)   : Run Last
+ lambda (cell-editable)    : Run Last
       @end{pre}
       This signal is a sign for the cell renderer to update its value from the
       @arg{cell-editable}.
@@ -93,7 +93,7 @@
       @end{table}
     @subheading{The \"remove-widget\" signal}
       @begin{pre}
- lambda (cell-editable)   : Run Last
+ lambda (cell-editable)    : Run Last
       @end{pre}
       This signal is meant to indicate that the cell is finished editing, and
       the widget may now be destroyed.
