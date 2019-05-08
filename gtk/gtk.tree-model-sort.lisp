@@ -38,7 +38,7 @@
 ;;; Functions
 ;;;
 ;;;     gtk_tree_model_sort_new_with_model
-;;;     gtk_tree_model_sort_get_model
+;;;     gtk_tree_model_sort_get_model                      Accessor
 ;;;     gtk_tree_model_sort_convert_child_path_to_path
 ;;;     gtk_tree_model_sort_convert_child_iter_to_iter
 ;;;     gtk_tree_model_sort_convert_path_to_child_path
@@ -181,9 +181,7 @@
   @see-slot{gtk-tree-model-sort-model}")
 
 ;;; ----------------------------------------------------------------------------
-;;;
-;;; Property Details
-;;;
+;;; Property and Accessor Details
 ;;; ----------------------------------------------------------------------------
 
 #+cl-cffi-gtk-documentation
@@ -198,8 +196,16 @@
       "Accessor"
       (documentation 'gtk-tree-model-sort-model 'function)
  "@version{2013-6-21}
-  Accessor of the @slot[gtk-tree-model-sort]{model} slot of the
-  @class{gtk-tree-model-sort} class.
+  @syntax[]{((gtk-tree-model-sort-model object) => model}
+  @argument[object]{a @class{gtk-tree-model-sort} object}
+  @argument[model]{the child model being sorted}
+  @begin{short}
+    Accessor of the @slot[gtk-tree-model-sort]{model} slot of the
+    @class{gtk-tree-model-sort} class.
+  @end{short}
+
+  The @sym{gtk-tree-model-sort-model} slot access function
+  returns the model the @class{gtk-tree-model-sort} is sorting.
   @see-class{gtk-tree-model-sort}")
 
 ;;; ----------------------------------------------------------------------------
@@ -215,20 +221,6 @@
 ;;;
 ;;; Returns :
 ;;;     A new GtkTreeModel.
-;;; ----------------------------------------------------------------------------
-
-;;; ----------------------------------------------------------------------------
-;;; gtk_tree_model_sort_get_model ()
-;;;
-;;; GtkTreeModel * gtk_tree_model_sort_get_model (GtkTreeModelSort *tree_model);
-;;;
-;;; Returns the model the GtkTreeModelSort is sorting.
-;;;
-;;; tree_model :
-;;;     a GtkTreeModelSort
-;;;
-;;; Returns :
-;;;     the "child model" being sorted
 ;;; ----------------------------------------------------------------------------
 
 ;;; ----------------------------------------------------------------------------
